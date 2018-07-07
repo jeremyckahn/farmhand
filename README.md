@@ -1,41 +1,36 @@
-# React Project Starter
+# Farmhand
 
-### My personal starting point for React projects
+### A farming game
 
-This project provides a bootstrap for:
+## Milestone 1 tasks
 
-  * Authoring in ES6
-  * Running tests (written in [Mocha](https://mochajs.org/))
-  * Browser dev tool support
-  * A build process
-  * Versioned releases
-
-## Getting started
-
-Here's a handy snippet you can add to your `.bash_profile` to create new apps easily:
-
-```
-function new_react_project() {
-  if [ -z "$1" ];
-  then
-    "Must specify a project name as the first argument"
-    return
-  else
-    git clone --depth=1 https://github.com/jeremyckahn/farmhand.git "$1"
-    cd "$1" || exit 1
-    rm -rf .git
-    find . -type f -exec sed -i "" "s/farmhand/$1/g" {} \;
-    git init
-    git add --all
-    git commit -m "Initial commit"
-    npm install
-  fi
-}
-```
-
-## Authoring in ES6
-
-Painlessly write your code as beautiful ES6!  Thanks to [Webpack](https://webpack.github.io/), all of your code will be compiled down to more compatible ES5 syntax that can be easily used by downstream projects.
+- [ ] Stand up basic layout
+  - [ ] Info/detail pane
+  - [ ] Field grid
+- [ ] [Local](https://github.com/localForage/localForage) saves
+- [ ] Inventory (bin)
+- [ ] Day cycle
+  - [ ] Weather
+    - [ ] Rain
+  - [ ] Buffs
+    - [ ] Free seeds
+  - [ ] Nerfs
+    - [ ] Crows
+- [ ] Commerce
+  - [ ] Store
+    - [ ] Buy
+    - [ ] Sell
+  - [ ] Fluctuating prices for produce and seeds
+- [ ] Crop tending
+  - [ ] Planting
+  - [ ] Watering
+  - [ ] Harvesting
+- [ ] Tools/items
+  - [ ] Soil
+  - [ ] Irrigators
+  - [ ] Scarecrows
+  - [ ] Bigger bin
+  - [ ] Bigger field
 
 ## Running tests (written in Mocha)
 
@@ -106,4 +101,4 @@ This will also use the [gh-pages](https://github.com/tschaub/gh-pages) utility t
 
 ## License
 
-MIT.
+CC BY-NC-SA.
