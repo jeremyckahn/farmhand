@@ -1,0 +1,13 @@
+{
+  "plugins": ["plugins/markdown"],
+  "opts": {
+    "destination": "dist/doc",
+    "template": "node_modules/@jeremyckahn/minami",
+    "readme": "README.md"
+  },
+  "templates": {
+    "cleverLinks": true,
+    "useLongnameInNav": false,
+    "showInheritedInNav": true
+  }
+}

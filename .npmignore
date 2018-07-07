@@ -1,0 +1,7 @@
+.git*
+.babelrc
+node_modules
+index.html
+index.js
+README.md
+webpack.config*
