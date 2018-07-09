@@ -1,1 +1,1 @@
-export { App } from './app';
+export { default as Farmhand } from './farmhand';
