@@ -9,7 +9,7 @@ const { name, version } = require('./package.json');
 const dist = 'dist';
 
 module.exports = Object.assign(commonConfig, {
-  entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
   mode: 'production',
   output: {
     path: path.join(__dirname, `${dist}`),

@@ -20,7 +20,6 @@ export default class Farmhand extends Component {
   }
 
   createNewField() {
-    // FIXME: Set up Babel polyfill for Array#fill
     /* eslint-disable no-unused-vars */
     return new Array(initialFieldHeight)
       .fill(undefined)
