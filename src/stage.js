@@ -1,5 +1,16 @@
 import React from 'react';
+import { string } from 'prop-types';
+import Inventory from './inventory';
+import { stageFocus } from './enums';
 
-const Stage = () => <div className="stage" />;
+const Stage = ({ focusType }) => (
+  <div className="stage">
+    {focusType === stageFocus.INVENTORY && <Inventory />}
+  </div>
+);
+
+Stage.propTypes = {
+  focusType: string.isRequired
+};
 
 export default Stage;

@@ -14,3 +14,9 @@ const enumify = keys =>
  * @enum {string}
  */
 export const cropType = enumify(['CARROT']);
+
+/**
+ * @property farmhand.module:enums.stageFocus
+ * @enum {string}
+ */
+export const stageFocus = enumify(['NONE', 'INVENTORY']);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ContextPane from './context-pane';
 import Stage from './stage';
+import { stageFocus } from './enums';
 
 import { initialFieldWidth, initialFieldHeight } from './constants';
 
@@ -31,7 +32,7 @@ export default class Farmhand extends Component {
     return (
       <div className="fill farmhand-wrapper">
         <ContextPane />
-        <Stage />
+        <Stage focusType={stageFocus.NONE} />
       </div>
     );
   }
