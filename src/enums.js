@@ -4,7 +4,7 @@
 
 /**
  * @param {Array.<string>} keys
- * @return {Object.<string>}
+ * @returns {Object.<string>}
  */
 const enumify = keys =>
   keys.reduce((acc, key) => Object.assign(acc, { [key]: key }), {});
