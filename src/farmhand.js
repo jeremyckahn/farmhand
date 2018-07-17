@@ -6,7 +6,7 @@ import { stageFocus } from './enums';
 import { initialFieldWidth, initialFieldHeight } from './constants';
 
 /**
- * @typedef famrhand.state
+ * @typedef farmhand.state
  * @type {Object}
  * @property {Array.<Array.<farmhand.crop|null>>} field
  */
@@ -15,6 +15,10 @@ export default class Farmhand extends Component {
   constructor() {
     super(...arguments);
 
+    /**
+     * @member farmhand.Farmhand#state
+     * @type {farmhand.state}
+     */
     this.state = {
       field: this.createNewField(),
     };
