@@ -4,7 +4,7 @@
     "commonjs": true,
     "es6": true
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -12,11 +12,9 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react", "jsdoc"],
+  "plugins": ["react", "prettier", "jsdoc"],
   "rules": {
-    "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "jsdoc/check-param-names": 1,
     "jsdoc/check-tag-names": 1,
