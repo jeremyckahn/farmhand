@@ -1,5 +1,6 @@
 import React from 'react';
 import Inventory from '../../src/components/inventory';
+import Item from '../../src/components/item';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 
@@ -12,11 +13,13 @@ describe('inventory', () => {
 
   describe('rendering items', () => {
     beforeEach(() => {
-      component = shallow(getInventory({ items: [{}] }));
+      component = shallow(getInventory({ items: [{ name: 'some-item' }] }));
     });
 
     it('shows the inventory', () => {
-      assert.equal(component.find('li').length, 1);
+      const li = component.find('li');
+      assert.equal(li.length, 1);
+      assert.equal(li.find(Item).length, 1);
     });
   });
 });
