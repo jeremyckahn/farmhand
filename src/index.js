@@ -9,4 +9,4 @@
  * @property {farmhand.module:enums.cropType} type
  */
 
-export { default as Farmhand } from './farmhand';
+export { default as Farmhand } from './components/farmhand';

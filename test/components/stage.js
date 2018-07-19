@@ -1,6 +1,6 @@
 import React from 'react';
-import Stage from '../../src/stage';
-import Inventory from '../../src/inventory';
+import Stage from '../../src/components/stage';
+import Inventory from '../../src/components/inventory';
 import {
   stageFocus
 } from '../../src/enums';

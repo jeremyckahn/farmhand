@@ -1,5 +1,5 @@
 import React from 'react';
-import Farmhand from '../../src/farmhand';
+import Farmhand from '../../src/components/farmhand';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 

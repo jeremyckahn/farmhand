@@ -1,5 +1,5 @@
 import React from 'react';
-import Inventory from '../../src/inventory';
+import Inventory from '../../src/components/inventory';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 
