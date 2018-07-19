@@ -25,11 +25,9 @@ export default class Farmhand extends Component {
   }
 
   createNewField() {
-    /* eslint-disable no-unused-vars */
     return new Array(initialFieldHeight)
       .fill(undefined)
-      .map(_ => new Array(initialFieldWidth).fill(null));
-    /* eslint-enable no-unused-vars */
+      .map(() => new Array(initialFieldWidth).fill(null));
   }
 
   render() {
