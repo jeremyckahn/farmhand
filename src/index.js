@@ -5,7 +5,7 @@
 
 /**
  * @typedef farmhand.crop
- * @type farmhand.item
+ * @type {farmhand.item}
  * @property {farmhand.module:enums.cropType} type
  */
 
