@@ -7,7 +7,7 @@ import { stageFocus } from '../enums';
 const Stage = ({ focusType }) => (
   <div className="stage">
     {focusType === stageFocus.INVENTORY && <Inventory items={[]} />}
-    {focusType === stageFocus.SHOP && <Shop />}
+    {focusType === stageFocus.SHOP && <Shop items={[]} />}
   </div>
 );
 
