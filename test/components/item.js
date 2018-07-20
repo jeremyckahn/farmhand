@@ -8,13 +8,27 @@ let component;
 describe('item', () => {
   const getItem = props => <Item {...Object.assign({ name: '' }, props)} />;
 
-  describe('rendering properties', () => {
+  describe('static UI', () => {
     beforeEach(() => {
       component = shallow(getItem({ name: 'an-item' }));
     });
 
     it('renders the name', () => {
       assert.equal(component.find('header').text(), 'an-item');
+    });
+  });
+
+  describe('conditional UI', () => {
+    describe('purchase button', () => {
+      beforeEach(() => {
+        component = shallow(
+          getItem({ name: 'an-item', handlePurchaseItem: () => {} })
+        );
+      });
+
+      it('renders a purchase button', () => {
+        assert.equal(component.find('button.purchase').length, 1);
+      });
     });
   });
 });
