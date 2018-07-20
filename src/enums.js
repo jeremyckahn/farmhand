@@ -19,4 +19,4 @@ export const cropType = enumify(['CARROT']);
  * @property farmhand.module:enums.stageFocus
  * @enum {string}
  */
-export const stageFocus = enumify(['NONE', 'INVENTORY']);
+export const stageFocus = enumify(['NONE', 'INVENTORY', 'SHOP']);
