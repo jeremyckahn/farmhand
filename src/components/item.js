@@ -1,11 +1,11 @@
 import React from 'react';
-import { func, string } from 'prop-types';
+import { func, object } from 'prop-types';
 
-const Item = ({ name, handlePurchaseItem }) => (
+const Item = ({ item, handlePurchaseItem }) => (
   <div className="item">
-    <header>{name}</header>
+    <header>{item.name}</header>
     {handlePurchaseItem && (
-      <button className="purchase" onClick={handlePurchaseItem}>
+      <button className="purchase" onClick={() => handlePurchaseItem(item)}>
         Buy
       </button>
     )}
@@ -13,7 +13,7 @@ const Item = ({ name, handlePurchaseItem }) => (
 );
 
 Item.propTypes = {
-  name: string.isRequired,
+  item: object.isRequired,
   handlePurchaseItem: func,
 };
 

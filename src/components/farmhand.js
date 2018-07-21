@@ -48,6 +48,7 @@ export default class Farmhand extends Component {
     const {
       state: { shopInventory, stageFocus },
       handleChangeView,
+      handlePurchaseItem,
     } = this;
 
     return (
@@ -56,7 +57,9 @@ export default class Farmhand extends Component {
           <Navigation {...{ handleChangeView }} />
           <ContextPane />
         </div>
-        <Stage {...{ focusType: stageFocus, shopInventory }} />
+        <Stage
+          {...{ focusType: stageFocus, handlePurchaseItem, shopInventory }}
+        />
       </div>
     );
   }

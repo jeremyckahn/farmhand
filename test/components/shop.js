@@ -7,7 +7,11 @@ import assert from 'assert';
 let component;
 
 describe('shop', () => {
-  const getShop = props => <Shop {...Object.assign({ items: [] }, props)} />;
+  const getShop = props => (
+    <Shop
+      {...Object.assign({ handlePurchaseItem: () => {}, items: [] }, props)}
+    />
+  );
 
   beforeEach(() => {
     component = shallow(getShop());

@@ -6,11 +6,13 @@ import assert from 'assert';
 let component;
 
 describe('item', () => {
-  const getItem = props => <Item {...Object.assign({ name: '' }, props)} />;
+  const getItem = props => (
+    <Item {...Object.assign({ item: { name: '' } }, props)} />
+  );
 
   describe('static UI', () => {
     beforeEach(() => {
-      component = shallow(getItem({ name: 'an-item' }));
+      component = shallow(getItem({ item: { name: 'an-item' } }));
     });
 
     it('renders the name', () => {
@@ -22,7 +24,7 @@ describe('item', () => {
     describe('purchase button', () => {
       beforeEach(() => {
         component = shallow(
-          getItem({ name: 'an-item', handlePurchaseItem: () => {} })
+          getItem({ item: { name: 'an-item' }, handlePurchaseItem: () => {} })
         );
       });
 

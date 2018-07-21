@@ -1,13 +1,16 @@
 import React from 'react';
 import Inventory from './inventory';
-import { array } from 'prop-types';
+import { array, func } from 'prop-types';
 
-const Shop = ({ items }) => (
+const Shop = ({ handlePurchaseItem, items }) => (
   <div className="shop">
-    <Inventory {...{ items }} />
+    <Inventory {...{ handlePurchaseItem, items }} />
   </div>
 );
 
-Shop.propTypes = { items: array.isRequired };
+Shop.propTypes = {
+  items: array.isRequired,
+  handlePurchaseItem: func.isRequired,
+};
 
 export default Shop;
