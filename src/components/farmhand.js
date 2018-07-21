@@ -45,7 +45,9 @@ export default class Farmhand extends Component {
 
     return (
       <div className="fill farmhand-wrapper">
-        <ContextPane />
+        <div className="sidebar">
+          <ContextPane />
+        </div>
         <Stage {...{ focusType: stageFocus }} />
       </div>
     );
