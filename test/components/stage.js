@@ -10,7 +10,12 @@ let component;
 
 describe('stage', () => {
   const getStage = props => (
-    <Stage {...Object.assign({ focusType: stageFocusType.NONE }, props)} />
+    <Stage
+      {...Object.assign(
+        { focusType: stageFocusType.NONE, shopInventory: [] },
+        props
+      )}
+    />
   );
 
   describe('focus', () => {
