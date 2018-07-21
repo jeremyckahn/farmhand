@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import eventHandlers from '../event-handlers';
+import Navigation from './navigation';
 import ContextPane from './context-pane';
 import Stage from './stage';
 import { stageFocusType } from '../enums';
@@ -46,6 +47,7 @@ export default class Farmhand extends Component {
     return (
       <div className="fill farmhand-wrapper">
         <div className="sidebar">
+          <Navigation />
           <ContextPane />
         </div>
         <Stage {...{ focusType: stageFocus }} />
