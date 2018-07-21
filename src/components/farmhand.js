@@ -42,12 +42,15 @@ export default class Farmhand extends Component {
   }
 
   render() {
-    const { stageFocus } = this.state;
+    const {
+      state: { stageFocus },
+      handleChangeView,
+    } = this;
 
     return (
       <div className="fill farmhand-wrapper">
         <div className="sidebar">
-          <Navigation />
+          <Navigation {...{ handleChangeView }} />
           <ContextPane />
         </div>
         <Stage {...{ focusType: stageFocus }} />

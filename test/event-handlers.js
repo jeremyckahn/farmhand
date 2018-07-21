@@ -1,5 +1,6 @@
 import React from 'react';
 import Farmhand from '../src/components/farmhand';
+import { stageFocusType } from '../src/enums';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 
@@ -25,6 +26,18 @@ describe('event handlers', () => {
         component.instance().handlePurchaseItem({ name: 'some-item' });
         assert.deepEqual(component.state().inventory, { 'some-item': 2 });
       });
+    });
+  });
+
+  describe('handleChangeView', () => {
+    beforeEach(() => {
+      component
+        .instance()
+        .handleChangeView({ target: { value: stageFocusType.SHOP } });
+    });
+
+    it('changes the view type', () => {
+      assert.equal(component.state('stageFocus'), stageFocusType.SHOP);
     });
   });
 });
