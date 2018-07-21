@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import eventHandlers from '../event-handlers';
 import ContextPane from './context-pane';
 import Stage from './stage';
 import { stageFocus } from '../enums';
@@ -21,7 +22,13 @@ export default class Farmhand extends Component {
      */
     this.state = {
       field: this.createNewField(),
+      inventory: {},
     };
+
+    // Bind event handlers
+    Object.keys(eventHandlers).forEach(
+      method => (this[method] = eventHandlers[method].bind(this))
+    );
   }
 
   createNewField() {
