@@ -3,6 +3,7 @@ import eventHandlers from '../event-handlers';
 import Navigation from './navigation';
 import ContextPane from './context-pane';
 import Stage from './stage';
+import shopInventory from '../data/shop-inventory';
 import { stageFocusType } from '../enums';
 
 import { initialFieldWidth, initialFieldHeight } from '../constants';
@@ -27,7 +28,7 @@ export default class Farmhand extends Component {
     this.state = {
       field: this.createNewField(),
       inventory: {},
-      shopInventory: [],
+      shopInventory: [...shopInventory],
       stageFocus: stageFocusType.NONE,
     };
 
