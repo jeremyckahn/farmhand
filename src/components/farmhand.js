@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import eventHandlers from '../event-handlers';
 import ContextPane from './context-pane';
 import Stage from './stage';
-import { stageFocus } from '../enums';
+import { stageFocusType } from '../enums';
 
 import { initialFieldWidth, initialFieldHeight } from '../constants';
 
@@ -10,6 +10,8 @@ import { initialFieldWidth, initialFieldHeight } from '../constants';
  * @typedef farmhand.state
  * @type {Object}
  * @property {Array.<Array.<farmhand.crop|null>>} field
+ * @property {Object} inventory
+ * @property {farmhand.module:enums.stageFocusType} stageFocus
  */
 
 export default class Farmhand extends Component {
@@ -23,6 +25,7 @@ export default class Farmhand extends Component {
     this.state = {
       field: this.createNewField(),
       inventory: {},
+      stageFocus: stageFocusType.NONE,
     };
 
     // Bind event handlers
@@ -38,10 +41,12 @@ export default class Farmhand extends Component {
   }
 
   render() {
+    const { stageFocus } = this.state;
+
     return (
       <div className="fill farmhand-wrapper">
         <ContextPane />
-        <Stage focusType={stageFocus.NONE} />
+        <Stage {...{ focusType: stageFocus }} />
       </div>
     );
   }

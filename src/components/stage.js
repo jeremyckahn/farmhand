@@ -2,12 +2,12 @@ import React from 'react';
 import { string } from 'prop-types';
 import Inventory from './inventory';
 import Shop from './shop';
-import { stageFocus } from '../enums';
+import { stageFocusType } from '../enums';
 
 const Stage = ({ focusType }) => (
   <div className="stage">
-    {focusType === stageFocus.INVENTORY && <Inventory items={[]} />}
-    {focusType === stageFocus.SHOP && <Shop items={[]} />}
+    {focusType === stageFocusType.INVENTORY && <Inventory items={[]} />}
+    {focusType === stageFocusType.SHOP && <Shop items={[]} />}
   </div>
 );
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Stage from '../../src/components/stage';
 import Inventory from '../../src/components/inventory';
 import Shop from '../../src/components/shop';
-import { stageFocus } from '../../src/enums';
+import { stageFocusType } from '../../src/enums';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 
@@ -10,13 +10,13 @@ let component;
 
 describe('stage', () => {
   const getStage = props => (
-    <Stage {...Object.assign({ focusType: stageFocus.NONE }, props)} />
+    <Stage {...Object.assign({ focusType: stageFocusType.NONE }, props)} />
   );
 
   describe('focus', () => {
     describe('inventory', () => {
       beforeEach(() => {
-        component = shallow(getStage({ focusType: stageFocus.INVENTORY }));
+        component = shallow(getStage({ focusType: stageFocusType.INVENTORY }));
       });
 
       it('shows the inventory', () => {
@@ -26,7 +26,7 @@ describe('stage', () => {
 
     describe('shop', () => {
       beforeEach(() => {
-        component = shallow(getStage({ focusType: stageFocus.SHOP }));
+        component = shallow(getStage({ focusType: stageFocusType.SHOP }));
       });
 
       it('shows the shop', () => {
