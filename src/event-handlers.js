@@ -2,11 +2,11 @@ export default {
   /**
    * @param {farmhand.item} item
    */
-  handlePurchaseItem({ name }) {
+  handlePurchaseItem({ id }) {
     const { inventory } = this.state;
 
-    inventory[name] = inventory[name] || 0;
-    inventory[name]++;
+    inventory[id] = inventory[id] || 0;
+    inventory[id]++;
 
     this.setState({ inventory });
   },

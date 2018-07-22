@@ -14,7 +14,7 @@ describe('event handlers', () => {
 
   describe('handlePurchaseItem', () => {
     it('creates a new item in the inventory', () => {
-      component.instance().handlePurchaseItem(testItem({ name: 'some-item' }));
+      component.instance().handlePurchaseItem(testItem({ id: 'some-item' }));
       assert.deepEqual(component.state().inventory, { 'some-item': 1 });
     });
 
@@ -24,7 +24,7 @@ describe('event handlers', () => {
       });
 
       it('increments an existing item in the inventory', () => {
-        component.instance().handlePurchaseItem({ name: 'some-item' });
+        component.instance().handlePurchaseItem({ id: 'some-item' });
         assert.deepEqual(component.state().inventory, { 'some-item': 2 });
       });
     });
