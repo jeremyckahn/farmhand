@@ -11,4 +11,5 @@ const { freeze } = Object;
 export const carrotSeeds = freeze({
   id: 'carrot-seeds',
   name: 'Carrot Seeds',
+  value: 20,
 });

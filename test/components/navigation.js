@@ -7,7 +7,9 @@ let component;
 
 describe('navigation', () => {
   const getNavigation = props => (
-    <Navigation {...Object.assign({ handleChangeView: () => {} }, props)} />
+    <Navigation
+      {...Object.assign({ handleChangeView: () => {}, money: 0 }, props)}
+    />
   );
 
   beforeEach(() => {

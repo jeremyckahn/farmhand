@@ -13,6 +13,7 @@ import { initialFieldWidth, initialFieldHeight } from '../constants';
  * @type {Object}
  * @property {Array.<Array.<farmhand.crop|null>>} field
  * @property {Object} inventory
+ * @property {number} money
  * @property {Array.<farmhand.item>} shopInventory
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  */
@@ -28,6 +29,7 @@ export default class Farmhand extends Component {
     this.state = {
       field: this.createNewField(),
       inventory: {},
+      money: 500,
       shopInventory: [...shopInventory],
       stageFocus: stageFocusType.NONE,
     };
@@ -46,7 +48,7 @@ export default class Farmhand extends Component {
 
   render() {
     const {
-      state: { shopInventory, stageFocus },
+      state: { money, shopInventory, stageFocus },
       handleChangeView,
       handlePurchaseItem,
     } = this;
@@ -54,7 +56,7 @@ export default class Farmhand extends Component {
     return (
       <div className="fill farmhand-wrapper">
         <div className="sidebar">
-          <Navigation {...{ handleChangeView }} />
+          <Navigation {...{ handleChangeView, money }} />
           <ContextPane />
         </div>
         <Stage
