@@ -1,5 +1,9 @@
 /**
- * @typedef {farmhand.item}
+ * @namespace farmhand
+ */
+
+/**
+ * @typedef farmhand.item
  * @type {Object}
  * @property {string} name
  * @property {string} id

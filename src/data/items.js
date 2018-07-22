@@ -1,7 +1,11 @@
+/**
+ * @module farmhand.items
+ */
+
 const { freeze } = Object;
 
 /**
- * @typedef {farmhand.carrotSeeds}
+ * @property farmhand.module:items.carrotSeeds
  * @type {farmhand.item}
  */
 export const carrotSeeds = freeze({
