@@ -42,7 +42,20 @@ describe('event handlers', () => {
       });
     });
 
-    xdescribe('user does not have enough money', () => {});
+    describe('user does not have enough money', () => {
+      beforeEach(() => {
+        component.setState({ money: 5 });
+        component.instance().handlePurchaseItem(testItem({ id: 'expensive-item', value: 10 }));
+      });
+
+      it('does not add the item to the inventory', () => {
+        assert.deepEqual(component.state('inventory'), {});
+      });
+
+      it('does not deduct item value from money', () => {
+        assert.equal(component.state('money'), 5);
+      });
+    });
   });
 
   describe('handleChangeView', () => {
