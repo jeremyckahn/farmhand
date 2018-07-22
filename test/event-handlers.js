@@ -45,7 +45,9 @@ describe('event handlers', () => {
     describe('user does not have enough money', () => {
       beforeEach(() => {
         component.setState({ money: 5 });
-        component.instance().handlePurchaseItem(testItem({ id: 'expensive-item', value: 10 }));
+        component
+          .instance()
+          .handlePurchaseItem(testItem({ id: 'expensive-item', value: 10 }));
       });
 
       it('does not add the item to the inventory', () => {

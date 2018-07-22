@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
+import NotificationSystem from 'react-notification-system';
 import eventHandlers from '../event-handlers';
 import Navigation from './navigation';
 import ContextPane from './context-pane';
@@ -34,6 +35,8 @@ export default class Farmhand extends Component {
       stageFocus: stageFocusType.NONE,
     };
 
+    this.notificationSystemRef = createRef();
+
     // Bind event handlers
     Object.keys(eventHandlers).forEach(
       method => (this[method] = eventHandlers[method].bind(this))
@@ -46,15 +49,29 @@ export default class Farmhand extends Component {
       .map(() => new Array(initialFieldWidth).fill(null));
   }
 
+  /**
+   * @param {Object} options
+   * @see
+   * {@link https://github.com/igorprado/react-notification-system#creating-a-notification}
+   * for available options.
+   */
+  triggerNotification(options) {
+    this.notificationSystemRef.current.addNotification(
+      Object.assign({ level: 'info' }, options)
+    );
+  }
+
   render() {
     const {
       state: { money, shopInventory, stageFocus },
       handleChangeView,
       handlePurchaseItem,
+      notificationSystemRef,
     } = this;
 
     return (
       <div className="fill farmhand-wrapper">
+        <NotificationSystem ref={notificationSystemRef} />
         <div className="sidebar">
           <Navigation {...{ handleChangeView, money }} />
           <ContextPane />

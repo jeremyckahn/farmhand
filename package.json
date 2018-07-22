@@ -67,6 +67,7 @@
     "compass-mixins": "^0.12.10",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "react-notification-system": "^0.2.17"
   }
 }
