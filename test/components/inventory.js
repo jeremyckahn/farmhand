@@ -3,6 +3,7 @@ import Inventory from '../../src/components/inventory';
 import Item from '../../src/components/item';
 import { shallow } from 'enzyme';
 import assert from 'assert';
+import { testItem } from '../test-utils';
 
 let component;
 
@@ -13,7 +14,9 @@ describe('inventory', () => {
 
   describe('rendering items', () => {
     beforeEach(() => {
-      component = shallow(getInventory({ items: [{ name: 'some-item' }] }));
+      component = shallow(
+        getInventory({ items: [testItem({ name: 'some-item' })] })
+      );
     });
 
     it('shows the inventory', () => {

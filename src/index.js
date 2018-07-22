@@ -1,6 +1,8 @@
 /**
  * @typedef {farmhand.item}
  * @type {Object}
+ * @property {string} name
+ * @property {string} id
  */
 
 /**

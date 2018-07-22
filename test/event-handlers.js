@@ -3,6 +3,7 @@ import Farmhand from '../src/components/farmhand';
 import { stageFocusType } from '../src/enums';
 import { shallow } from 'enzyme';
 import assert from 'assert';
+import { testItem } from './test-utils';
 
 let component;
 
@@ -13,7 +14,7 @@ describe('event handlers', () => {
 
   describe('handlePurchaseItem', () => {
     it('creates a new item in the inventory', () => {
-      component.instance().handlePurchaseItem({ name: 'some-item' });
+      component.instance().handlePurchaseItem(testItem({ name: 'some-item' }));
       assert.deepEqual(component.state().inventory, { 'some-item': 1 });
     });
 

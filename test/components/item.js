@@ -2,17 +2,18 @@ import React from 'react';
 import Item from '../../src/components/item';
 import { shallow } from 'enzyme';
 import assert from 'assert';
+import { testItem } from '../test-utils';
 
 let component;
 
 describe('item', () => {
   const getItem = props => (
-    <Item {...Object.assign({ item: { name: '' } }, props)} />
+    <Item {...Object.assign({ item: testItem({ name: '' }) }, props)} />
   );
 
   describe('static UI', () => {
     beforeEach(() => {
-      component = shallow(getItem({ item: { name: 'an-item' } }));
+      component = shallow(getItem({ item: testItem({ name: 'an-item' }) }));
     });
 
     it('renders the name', () => {
@@ -24,7 +25,10 @@ describe('item', () => {
     describe('purchase button', () => {
       beforeEach(() => {
         component = shallow(
-          getItem({ item: { name: 'an-item' }, handlePurchaseItem: () => {} })
+          getItem({
+            item: testItem({ name: 'an-item' }),
+            handlePurchaseItem: () => {},
+          })
         );
       });
 
