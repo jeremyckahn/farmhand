@@ -1,14 +1,16 @@
 import React from 'react';
-import { array, func, string } from 'prop-types';
+import { array, func, number, string } from 'prop-types';
 import Inventory from './inventory';
 import Shop from './shop';
 import { stageFocusType } from '../enums';
 
-const Stage = ({ focusType, handlePurchaseItem, shopInventory }) => (
+const Stage = ({ focusType, handlePurchaseItem, money, shopInventory }) => (
   <div className="stage">
-    {focusType === stageFocusType.INVENTORY && <Inventory items={[]} />}
+    {focusType === stageFocusType.INVENTORY && (
+      <Inventory {...{ items: [], money }} />
+    )}
     {focusType === stageFocusType.SHOP && (
-      <Shop {...{ handlePurchaseItem, items: shopInventory }} />
+      <Shop {...{ handlePurchaseItem, items: shopInventory, money }} />
     )}
   </div>
 );
@@ -16,6 +18,7 @@ const Stage = ({ focusType, handlePurchaseItem, shopInventory }) => (
 Stage.propTypes = {
   focusType: string.isRequired,
   handlePurchaseItem: func.isRequired,
+  money: number.isRequired,
   shopInventory: array.isRequired,
 };
 

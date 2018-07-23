@@ -8,7 +8,9 @@ let component;
 
 describe('item', () => {
   const getItem = props => (
-    <Item {...Object.assign({ item: testItem({ name: '' }) }, props)} />
+    <Item
+      {...Object.assign({ item: testItem({ name: '' }), money: 0 }, props)}
+    />
   );
 
   describe('static UI', () => {
@@ -23,17 +25,42 @@ describe('item', () => {
 
   describe('conditional UI', () => {
     describe('purchase button', () => {
-      beforeEach(() => {
-        component = shallow(
-          getItem({
-            item: testItem({ name: 'an-item' }),
-            handlePurchaseItem: () => {},
-          })
-        );
+      describe('user has enough money', () => {
+        beforeEach(() => {
+          component = shallow(
+            getItem({
+              handlePurchaseItem: () => {},
+              item: testItem({ name: 'an-item' }),
+              money: 50,
+            })
+          );
+        });
+
+        it('enables purchase button', () => {
+          assert.equal(
+            component.find('button.purchase').props().disabled,
+            false
+          );
+        });
       });
 
-      it('renders a purchase button', () => {
-        assert.equal(component.find('button.purchase').length, 1);
+      describe('user does not have enough money', () => {
+        beforeEach(() => {
+          component = shallow(
+            getItem({
+              handlePurchaseItem: () => {},
+              item: testItem({ name: 'an-item', value: 10 }),
+              money: 5,
+            })
+          );
+        });
+
+        it('disables purchase button', () => {
+          assert.equal(
+            component.find('button.purchase').props().disabled,
+            true
+          );
+        });
       });
     });
   });

@@ -1,11 +1,15 @@
 import React from 'react';
-import { func, object } from 'prop-types';
+import { func, number, object } from 'prop-types';
 
-const Item = ({ item, handlePurchaseItem }) => (
+const Item = ({ item, handlePurchaseItem, money }) => (
   <div className="item">
     <header>{item.name}</header>
     {handlePurchaseItem && (
-      <button className="purchase" onClick={() => handlePurchaseItem(item)}>
+      <button
+        className="purchase"
+        disabled={item.value > money}
+        onClick={() => handlePurchaseItem(item)}
+      >
         Buy
       </button>
     )}
@@ -13,8 +17,9 @@ const Item = ({ item, handlePurchaseItem }) => (
 );
 
 Item.propTypes = {
-  item: object.isRequired,
   handlePurchaseItem: func,
+  item: object.isRequired,
+  money: number.isRequired,
 };
 
 export default Item;

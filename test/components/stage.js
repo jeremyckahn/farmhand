@@ -15,6 +15,7 @@ describe('stage', () => {
         {
           focusType: stageFocusType.NONE,
           handlePurchaseItem: () => {},
+          money: 0,
           shopInventory: [],
         },
         props

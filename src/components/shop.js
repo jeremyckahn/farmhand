@@ -1,16 +1,17 @@
 import React from 'react';
 import Inventory from './inventory';
-import { array, func } from 'prop-types';
+import { array, func, number } from 'prop-types';
 
-const Shop = ({ handlePurchaseItem, items }) => (
+const Shop = ({ handlePurchaseItem, items, money }) => (
   <div className="shop">
-    <Inventory {...{ handlePurchaseItem, items }} />
+    <Inventory {...{ handlePurchaseItem, items, money }} />
   </div>
 );
 
 Shop.propTypes = {
-  items: array.isRequired,
   handlePurchaseItem: func.isRequired,
+  items: array.isRequired,
+  money: number.isRequired,
 };
 
 export default Shop;

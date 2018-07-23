@@ -1,13 +1,13 @@
 import React from 'react';
 import Item from './item';
-import { array, func } from 'prop-types';
+import { array, func, number } from 'prop-types';
 
-const Inventory = ({ handlePurchaseItem, items }) => (
+const Inventory = ({ handlePurchaseItem, items, money }) => (
   <div className="inventory">
     <ul>
       {items.map((item, i) => (
         <li key={i}>
-          <Item {...{ item, handlePurchaseItem }} />
+          <Item {...{ handlePurchaseItem, item, money }} />
         </li>
       ))}
     </ul>
@@ -15,8 +15,9 @@ const Inventory = ({ handlePurchaseItem, items }) => (
 );
 
 Inventory.propTypes = {
-  items: array.isRequired,
   handlePurchaseItem: func,
+  items: array.isRequired,
+  money: number.isRequired,
 };
 
 export default Inventory;

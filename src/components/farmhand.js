@@ -77,7 +77,12 @@ export default class Farmhand extends Component {
           <ContextPane />
         </div>
         <Stage
-          {...{ focusType: stageFocus, handlePurchaseItem, shopInventory }}
+          {...{
+            focusType: stageFocus,
+            handlePurchaseItem,
+            money,
+            shopInventory,
+          }}
         />
       </div>
     );

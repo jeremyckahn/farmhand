@@ -9,7 +9,7 @@ let component;
 
 describe('inventory', () => {
   const getInventory = props => (
-    <Inventory {...Object.assign({ items: [] }, props)} />
+    <Inventory {...Object.assign({ items: [], money: 0 }, props)} />
   );
 
   describe('rendering items', () => {
