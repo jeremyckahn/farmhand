@@ -1,9 +1,12 @@
 import React from 'react';
 import { func, number, object } from 'prop-types';
 
-const Item = ({ item, handlePurchaseItem, money }) => (
+const Item = ({ handlePurchaseItem, item, money }) => (
   <div className="item">
-    <header>{item.name}</header>
+    <header>
+      <h2>{item.name}</h2>
+      <h3>${item.value}</h3>
+    </header>
     {handlePurchaseItem && (
       <button
         className="purchase"
