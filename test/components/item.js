@@ -19,7 +19,7 @@ describe('item', () => {
     });
 
     it('renders the name', () => {
-      assert.equal(component.find('header').text(), 'an-item');
+      assert.equal(component.find('header h2').text(), 'an-item');
     });
   });
 
