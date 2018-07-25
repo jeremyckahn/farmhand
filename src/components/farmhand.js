@@ -13,7 +13,7 @@ import { initialFieldWidth, initialFieldHeight } from '../constants';
  * @typedef farmhand.state
  * @type {Object}
  * @property {Array.<Array.<farmhand.crop|null>>} field
- * @property {Object} inventory
+ * @property {Array.<{ item: farmhand.item, amount: number }>} inventory
  * @property {number} money
  * @property {Array.<farmhand.item>} shopInventory
  * @property {farmhand.module:enums.stageFocusType} stageFocus
@@ -29,7 +29,7 @@ export default class Farmhand extends Component {
      */
     this.state = {
       field: this.createNewField(),
-      inventory: {},
+      inventory: [],
       money: 500,
       shopInventory: [...shopInventory],
       stageFocus: stageFocusType.NONE,

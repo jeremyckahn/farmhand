@@ -2,7 +2,8 @@ export default {
   /**
    * @param {farmhand.item} item
    */
-  handlePurchaseItem({ id, value = 0 }) {
+  handlePurchaseItem(item) {
+    const { id, value = 0 } = item;
     const { inventory } = this.state;
     let { money } = this.state;
 
@@ -10,8 +11,13 @@ export default {
       return;
     }
 
-    inventory[id] = inventory[id] || 0;
-    inventory[id]++;
+    const currentItemSlot = inventory.findIndex(({ item }) => item.id === id);
+
+    if (~currentItemSlot) {
+      inventory[currentItemSlot].amount++;
+    } else {
+      inventory.push({ item, amount: 1 });
+    }
 
     money -= value;
 
