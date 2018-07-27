@@ -4,10 +4,16 @@ import Inventory from './inventory';
 import Shop from './shop';
 import { stageFocusType } from '../enums';
 
-const Stage = ({ focusType, handlePurchaseItem, money, shopInventory }) => (
+const Stage = ({
+  focusType,
+  handlePurchaseItem,
+  inventory,
+  money,
+  shopInventory,
+}) => (
   <div className="stage">
     {focusType === stageFocusType.INVENTORY && (
-      <Inventory {...{ items: [], money }} />
+      <Inventory {...{ items: inventory, money }} />
     )}
     {focusType === stageFocusType.SHOP && (
       <Shop {...{ handlePurchaseItem, items: shopInventory, money }} />
@@ -18,6 +24,7 @@ const Stage = ({ focusType, handlePurchaseItem, money, shopInventory }) => (
 Stage.propTypes = {
   focusType: string.isRequired,
   handlePurchaseItem: func.isRequired,
+  inventory: array.isRequired,
   money: number.isRequired,
   shopInventory: array.isRequired,
 };

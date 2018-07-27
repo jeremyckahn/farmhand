@@ -5,6 +5,7 @@ import Navigation from './navigation';
 import ContextPane from './context-pane';
 import Stage from './stage';
 import shopInventory from '../data/shop-inventory';
+import { itemsMap } from '../data/maps';
 import { stageFocusType } from '../enums';
 
 import { initialFieldWidth, initialFieldHeight } from '../constants';
@@ -61,6 +62,11 @@ export default class Farmhand extends Component {
     );
   }
 
+  // FIXME: Test and memoize this
+  getPlayerInventory() {
+    return this.state.inventory.map(({ itemId }) => itemsMap[itemId]);
+  }
+
   render() {
     const {
       state: { money, shopInventory, stageFocus },
@@ -80,6 +86,7 @@ export default class Farmhand extends Component {
           {...{
             focusType: stageFocus,
             handlePurchaseItem,
+            inventory: this.getPlayerInventory(),
             money,
             shopInventory,
           }}
