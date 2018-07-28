@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
 import NotificationSystem from 'react-notification-system';
+import memoize from 'fast-memoize';
 import eventHandlers from '../event-handlers';
 import Navigation from './navigation';
 import ContextPane from './context-pane';
@@ -7,8 +8,11 @@ import Stage from './stage';
 import shopInventory from '../data/shop-inventory';
 import { itemsMap } from '../data/maps';
 import { stageFocusType } from '../enums';
-
 import { initialFieldWidth, initialFieldHeight } from '../constants';
+
+const computePlayerInventory = memoize(inventory =>
+  inventory.map(({ itemId }) => itemsMap[itemId])
+);
 
 /**
  * @typedef farmhand.state
@@ -62,9 +66,8 @@ export default class Farmhand extends Component {
     );
   }
 
-  // FIXME: Test and memoize this
   getPlayerInventory() {
-    return this.state.inventory.map(({ itemId }) => itemsMap[itemId]);
+    return computePlayerInventory(this.state.inventory);
   }
 
   render() {
