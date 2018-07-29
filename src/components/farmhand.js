@@ -11,8 +11,8 @@ import { stageFocusType } from '../enums';
 import { initialFieldWidth, initialFieldHeight } from '../constants';
 
 const computePlayerInventory = memoize(inventory =>
-  inventory.map(({ amount, itemId }) =>
-    Object.assign({ quantity: amount }, itemsMap[itemId])
+  inventory.map(({ quantity, itemId }) =>
+    Object.assign({ quantity }, itemsMap[itemId])
   )
 );
 
@@ -20,7 +20,7 @@ const computePlayerInventory = memoize(inventory =>
  * @typedef farmhand.state
  * @type {Object}
  * @property {Array.<Array.<farmhand.crop|null>>} field
- * @property {Array.<{ item: farmhand.item, amount: number }>} inventory
+ * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {number} money
  * @property {Array.<farmhand.item>} shopInventory
  * @property {farmhand.module:enums.stageFocusType} stageFocus

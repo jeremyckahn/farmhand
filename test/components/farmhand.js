@@ -25,7 +25,7 @@ describe('Farmhand', () => {
 
     beforeEach(() => {
       component.setState({
-        inventory: [{ amount: 1, itemId: 'carrot-seeds' }],
+        inventory: [{ quantity: 1, itemId: 'carrot-seeds' }],
       });
 
       playerInventory = component.instance().getPlayerInventory();
@@ -44,7 +44,7 @@ describe('Farmhand', () => {
 
     it('invalidates cache with changed input', () => {
       component.setState({
-        inventory: [{ amount: 2, itemId: 'pumpkin-seeds' }],
+        inventory: [{ quantity: 2, itemId: 'pumpkin-seeds' }],
       });
 
       playerInventory = component.instance().getPlayerInventory();
