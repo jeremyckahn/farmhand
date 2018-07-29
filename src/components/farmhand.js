@@ -11,9 +11,7 @@ import { stageFocusType } from '../enums';
 import { initialFieldWidth, initialFieldHeight } from '../constants';
 
 const computePlayerInventory = memoize(inventory =>
-  inventory.map(({ quantity, itemId }) =>
-    Object.assign({ quantity }, itemsMap[itemId])
-  )
+  inventory.map(({ quantity, itemId }) => ({ quantity, ...itemsMap[itemId] }))
 );
 
 /**
@@ -63,9 +61,10 @@ export default class Farmhand extends Component {
    * for available options.
    */
   triggerNotification(options) {
-    this.notificationSystemRef.current.addNotification(
-      Object.assign({ level: 'info' }, options)
-    );
+    this.notificationSystemRef.current.addNotification({
+      level: 'info',
+      ...options,
+    });
   }
 
   getPlayerInventory() {

@@ -1,8 +1,5 @@
-export const testItem = (properties = {}) =>
-  Object.assign(
-    {
-      id: '',
-      name: '',
-    },
-    properties
-  );
+export const testItem = (properties = {}) => ({
+  id: '',
+  name: '',
+  ...properties,
+});

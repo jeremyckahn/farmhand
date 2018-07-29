@@ -6,8 +6,7 @@
  * @param {Array.<string>} keys
  * @returns {Object.<string>}
  */
-const enumify = keys =>
-  keys.reduce((acc, key) => Object.assign(acc, { [key]: key }), {});
+const enumify = keys => keys.reduce((acc, key) => ({ [key]: key, ...acc }), {});
 
 /**
  * @property farmhand.module:enums.cropType

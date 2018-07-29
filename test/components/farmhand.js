@@ -32,9 +32,7 @@ describe('Farmhand', () => {
     });
 
     it('maps inventory state to renderable inventory data', () => {
-      assert.deepEqual(playerInventory, [
-        Object.assign({ quantity: 1 }, carrotSeeds),
-      ]);
+      assert.deepEqual(playerInventory, [{ quantity: 1, ...carrotSeeds }]);
     });
 
     it('returns cached result with unchanged input', () => {
@@ -48,9 +46,7 @@ describe('Farmhand', () => {
       });
 
       playerInventory = component.instance().getPlayerInventory();
-      assert.deepEqual(playerInventory, [
-        Object.assign({ quantity: 2 }, pumpkinSeeds),
-      ]);
+      assert.deepEqual(playerInventory, [{ quantity: 2, ...pumpkinSeeds }]);
     });
   });
 });

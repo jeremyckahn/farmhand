@@ -9,10 +9,12 @@ let component;
 describe('shop', () => {
   const getShop = props => (
     <Shop
-      {...Object.assign(
-        { handlePurchaseItem: () => {}, items: [], money: 0 },
-        props
-      )}
+      {...{
+        handlePurchaseItem: () => {},
+        items: [],
+        money: 0,
+        ...props,
+      }}
     />
   );
 

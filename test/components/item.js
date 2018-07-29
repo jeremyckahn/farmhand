@@ -8,9 +8,7 @@ let component;
 
 describe('item', () => {
   const getItem = props => (
-    <Item
-      {...Object.assign({ item: testItem({ name: '' }), money: 0 }, props)}
-    />
+    <Item {...{ item: testItem({ name: '' }), money: 0, ...props }} />
   );
 
   describe('static UI', () => {
