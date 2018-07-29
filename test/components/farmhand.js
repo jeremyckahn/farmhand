@@ -25,14 +25,16 @@ describe('Farmhand', () => {
 
     beforeEach(() => {
       component.setState({
-        inventory: [{ itemId: 'carrot-seeds' }],
+        inventory: [{ amount: 1, itemId: 'carrot-seeds' }],
       });
 
       playerInventory = component.instance().getPlayerInventory();
     });
 
     it('maps inventory state to renderable inventory data', () => {
-      assert.deepEqual(playerInventory, [carrotSeeds]);
+      assert.deepEqual(playerInventory, [
+        Object.assign({ quantity: 1 }, carrotSeeds),
+      ]);
     });
 
     it('returns cached result with unchanged input', () => {
@@ -42,11 +44,13 @@ describe('Farmhand', () => {
 
     it('invalidates cache with changed input', () => {
       component.setState({
-        inventory: [{ itemId: 'pumpkin-seeds' }],
+        inventory: [{ amount: 2, itemId: 'pumpkin-seeds' }],
       });
 
       playerInventory = component.instance().getPlayerInventory();
-      assert.deepEqual(playerInventory, [pumpkinSeeds]);
+      assert.deepEqual(playerInventory, [
+        Object.assign({ quantity: 2 }, pumpkinSeeds),
+      ]);
     });
   });
 });

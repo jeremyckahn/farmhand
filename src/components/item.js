@@ -16,6 +16,11 @@ const Item = ({ handlePurchaseItem, item, money }) => (
         Buy
       </button>
     )}
+    {typeof item.quantity === 'number' && (
+      <p>
+        <strong>Quantity:</strong> {item.quantity}
+      </p>
+    )}
   </div>
 );
 

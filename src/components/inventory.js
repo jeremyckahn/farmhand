@@ -7,7 +7,13 @@ const Inventory = ({ handlePurchaseItem, items, money }) => (
     <ul>
       {items.map((item, i) => (
         <li key={i}>
-          <Item {...{ handlePurchaseItem, item, money }} />
+          <Item
+            {...{
+              handlePurchaseItem,
+              item,
+              money,
+            }}
+          />
         </li>
       ))}
     </ul>
