@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = Object.assign(commonConfig, {
   entry: {
     tests: ['babel-polyfill', './test/index.js'],
-    demo: ['babel-polyfill', './demo/index.js'],
+    app: ['babel-polyfill', './index.js'],
   },
   output: {
     path: path.join(__dirname, 'dist'),
