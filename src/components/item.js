@@ -1,13 +1,20 @@
 import React from 'react';
 import { func, number, object } from 'prop-types';
 
-const Item = ({ handlePurchaseItem, item, money }) => (
+const Item = ({
+  handlePurchaseItem,
+  item,
+  money,
+  isPurchaseView = !!handlePurchaseItem, // eslint-disable-line react/prop-types
+}) => (
   <div className="item">
     <header>
       <h2>{item.name}</h2>
-      <h3>${item.value}</h3>
+      <h3>
+        {isPurchaseView ? `Price: ${item.value}` : `Sell price: ${item.value}`}
+      </h3>
     </header>
-    {handlePurchaseItem && (
+    {isPurchaseView && (
       <button
         className="purchase"
         disabled={item.value > money}

@@ -17,6 +17,7 @@ describe('stage', () => {
         inventory: [],
         money: 0,
         shopInventory: [],
+        valueAdjustments: {},
         ...props,
       }}
     />

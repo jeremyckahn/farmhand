@@ -15,29 +15,31 @@ describe('event handlers', () => {
   describe('handlePurchaseItem', () => {
     describe('user has enough money', () => {
       it('creates a new item in the inventory', () => {
-        component.instance().handlePurchaseItem(testItem({ id: 'some-item' }));
+        component
+          .instance()
+          .handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
         assert.deepEqual(component.state().inventory, [
-          { itemId: 'some-item', quantity: 1 },
+          { itemId: 'carrot-seeds', quantity: 1 },
         ]);
       });
 
       describe('existing items', () => {
         beforeEach(() => {
           component.setState({
-            inventory: [{ itemId: 'some-item', quantity: 1 }],
+            inventory: [testItem({ itemId: 'carrot-seeds', quantity: 1 })],
           });
         });
 
         it('increments an existing item in the inventory', () => {
           component
             .instance()
-            .handlePurchaseItem(testItem({ id: 'some-item' }));
+            .handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
 
           assert.deepEqual(component.state().inventory, [
-            {
-              itemId: 'some-item',
+            testItem({
+              itemId: 'carrot-seeds',
               quantity: 2,
-            },
+            }),
           ]);
         });
       });
@@ -45,7 +47,9 @@ describe('event handlers', () => {
       describe('money state', () => {
         beforeEach(() => {
           component.setState({ money: 100 });
-          component.instance().handlePurchaseItem(testItem({ value: 10 }));
+          component
+            .instance()
+            .handlePurchaseItem(testItem({ id: 'carrot-seeds', value: 10 }));
         });
 
         it('deducts item value from money', () => {

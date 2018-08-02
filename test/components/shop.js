@@ -13,6 +13,7 @@ describe('shop', () => {
         handlePurchaseItem: () => {},
         items: [],
         money: 0,
+        valueAdjustments: {},
         ...props,
       }}
     />

@@ -5,23 +5,44 @@ import eventHandlers from '../event-handlers';
 import Navigation from './navigation';
 import ContextPane from './context-pane';
 import Stage from './stage';
+import { getItemValue } from '../utils';
 import shopInventory from '../data/shop-inventory';
 import { itemsMap } from '../data/maps';
 import { stageFocusType } from '../enums';
 import { initialFieldWidth, initialFieldHeight } from '../constants';
 
-const computePlayerInventory = memoize(inventory =>
-  inventory.map(({ quantity, itemId }) => ({ quantity, ...itemsMap[itemId] }))
+/**
+ * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
+ * @param {Object.<number>} valueAdjustments
+ * @returns {Array.<farmhand.item>}
+ */
+export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
+  inventory.map(({ quantity, itemId }) => ({
+    quantity,
+    ...itemsMap[itemId],
+    value: getItemValue(itemsMap[itemId], valueAdjustments),
+  }))
 );
+
+export const getUpdatedValueAdjustments = () =>
+  Object.keys(itemsMap).reduce(
+    (acc, key) => ({
+      [key]: Math.random() + 0.5,
+      ...acc,
+    }),
+    {}
+  );
 
 /**
  * @typedef farmhand.state
  * @type {Object}
+ * @property {number} dayCount
  * @property {Array.<Array.<farmhand.crop|null>>} field
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {number} money
  * @property {Array.<farmhand.item>} shopInventory
  * @property {farmhand.module:enums.stageFocusType} stageFocus
+ * @property {Object.<number>} valueAdjustments
  */
 
 export default class Farmhand extends Component {
@@ -33,11 +54,13 @@ export default class Farmhand extends Component {
      * @type {farmhand.state}
      */
     this.state = {
+      dayCount: 0,
       field: this.createNewField(),
       inventory: [],
       money: 500,
       shopInventory: [...shopInventory],
       stageFocus: stageFocusType.NONE,
+      valueAdjustments: {},
     };
 
     this.notificationSystemRef = createRef();
@@ -46,6 +69,10 @@ export default class Farmhand extends Component {
     Object.keys(eventHandlers).forEach(
       method => (this[method] = eventHandlers[method].bind(this))
     );
+  }
+
+  componentDidMount() {
+    this.proceedDay();
   }
 
   createNewField() {
@@ -67,13 +94,23 @@ export default class Farmhand extends Component {
     });
   }
 
+  proceedDay() {
+    const { dayCount } = this.state;
+
+    this.setState({
+      dayCount: dayCount + 1,
+      valueAdjustments: getUpdatedValueAdjustments(),
+    });
+  }
+
   getPlayerInventory() {
-    return computePlayerInventory(this.state.inventory);
+    const { inventory, valueAdjustments } = this.state;
+    return computePlayerInventory(inventory, valueAdjustments);
   }
 
   render() {
     const {
-      state: { money, shopInventory, stageFocus },
+      state: { money, shopInventory, stageFocus, valueAdjustments },
       handleChangeView,
       handlePurchaseItem,
       notificationSystemRef,
@@ -93,6 +130,7 @@ export default class Farmhand extends Component {
             inventory: this.getPlayerInventory(),
             money,
             shopInventory,
+            valueAdjustments,
           }}
         />
       </div>

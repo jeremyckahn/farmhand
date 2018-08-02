@@ -1,8 +1,9 @@
 import React from 'react';
 import Item from './item';
-import { array, func, number } from 'prop-types';
+import { getItemValue } from '../utils';
+import { array, func, number, object } from 'prop-types';
 
-const Inventory = ({ handlePurchaseItem, items, money }) => (
+const Inventory = ({ handlePurchaseItem, items, money, valueAdjustments }) => (
   <div className="inventory">
     <ul>
       {items.map((item, i) => (
@@ -10,7 +11,7 @@ const Inventory = ({ handlePurchaseItem, items, money }) => (
           <Item
             {...{
               handlePurchaseItem,
-              item,
+              item: { ...item, value: getItemValue(item, valueAdjustments) },
               money,
             }}
           />
@@ -24,6 +25,7 @@ Inventory.propTypes = {
   handlePurchaseItem: func,
   items: array.isRequired,
   money: number.isRequired,
+  valueAdjustments: object.isRequired,
 };
 
 export default Inventory;

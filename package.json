@@ -57,8 +57,10 @@
     "node-sass": "^4.9.1",
     "nodemon": "^1.17.5",
     "prettier": "^1.13.7",
+    "proxyquire": "^2.0.1",
     "raf": "^3.4.0",
     "sass-loader": "^7.0.3",
+    "sinon": "^6.1.5",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.15.1",
@@ -68,6 +70,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "compass-mixins": "^0.12.10",
+    "dinero.js": "^1.4.0",
     "fast-memoize": "^2.5.1",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
