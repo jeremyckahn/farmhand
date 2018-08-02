@@ -17,7 +17,7 @@
     "preversion": "npm test",
     "start": "webpack-dev-server --config webpack.test.config.js",
     "lint": "eslint src test webpack.*",
-    "test": "mocha -r jsdom-global/register ./node_modules/babel-core/register.js test/setup.js test/index.js",
+    "test": "mocha test",
     "test:browsers": "karma start",
     "test:watch": "nodemon --exec \"npm test\" --watch src --watch test"
   },
