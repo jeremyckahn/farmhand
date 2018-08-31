@@ -20,7 +20,7 @@
   - [ ] Store
     - [ ] Buy
     - [ ] Sell
-  - [ ] Fluctuating prices for produce and seeds
+  - [x] Fluctuating prices for produce and seeds
 - [ ] Crop tending
   - [ ] Planting
   - [ ] Watering
