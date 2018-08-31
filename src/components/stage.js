@@ -5,29 +5,29 @@ import Shop from './shop';
 import { stageFocusType } from '../enums';
 
 const Stage = ({
-  focusType,
   handlePurchaseItem,
   inventory,
   money,
   shopInventory,
+  stageFocus,
   valueAdjustments,
 }) => (
   <div className="stage">
-    {focusType === stageFocusType.INVENTORY && (
+    {stageFocus === stageFocusType.INVENTORY && (
       <Inventory {...{ items: inventory, money, valueAdjustments }} />
     )}
-    {focusType === stageFocusType.SHOP && (
+    {stageFocus === stageFocusType.SHOP && (
       <Shop {...{ handlePurchaseItem, items: shopInventory, money, valueAdjustments }} />
     )}
   </div>
 );
 
 Stage.propTypes = {
-  focusType: string.isRequired,
   handlePurchaseItem: func.isRequired,
   inventory: array.isRequired,
   money: number.isRequired,
   shopInventory: array.isRequired,
+  stageFocus: string.isRequired,
   valueAdjustments: object.isRequired,
 };
 

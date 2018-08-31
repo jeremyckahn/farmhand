@@ -110,27 +110,24 @@ export default class Farmhand extends Component {
 
   render() {
     const {
-      state: { money, shopInventory, stageFocus, valueAdjustments },
       handleChangeView,
       handlePurchaseItem,
       notificationSystemRef,
+      state,
     } = this;
 
     return (
       <div className="fill farmhand-wrapper">
         <NotificationSystem ref={notificationSystemRef} />
         <div className="sidebar">
-          <Navigation {...{ handleChangeView, money }} />
+          <Navigation {...{ handleChangeView, ...state }} />
           <ContextPane />
         </div>
         <Stage
           {...{
-            focusType: stageFocus,
             handlePurchaseItem,
             inventory: this.getPlayerInventory(),
-            money,
-            shopInventory,
-            valueAdjustments,
+            ...state,
           }}
         />
       </div>

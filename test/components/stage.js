@@ -12,11 +12,11 @@ describe('stage', () => {
   const getStage = props => (
     <Stage
       {...{
-        focusType: stageFocusType.NONE,
         handlePurchaseItem: () => {},
         inventory: [],
         money: 0,
         shopInventory: [],
+        stageFocus: stageFocusType.NONE,
         valueAdjustments: {},
         ...props,
       }}
@@ -26,7 +26,7 @@ describe('stage', () => {
   describe('focus', () => {
     describe('inventory', () => {
       beforeEach(() => {
-        component = shallow(getStage({ focusType: stageFocusType.INVENTORY }));
+        component = shallow(getStage({ stageFocus: stageFocusType.INVENTORY }));
       });
 
       it('shows the inventory', () => {
@@ -36,7 +36,7 @@ describe('stage', () => {
 
     describe('shop', () => {
       beforeEach(() => {
-        component = shallow(getStage({ focusType: stageFocusType.SHOP }));
+        component = shallow(getStage({ stageFocus: stageFocusType.SHOP }));
       });
 
       it('shows the shop', () => {
