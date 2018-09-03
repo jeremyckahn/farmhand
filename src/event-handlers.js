@@ -11,12 +11,14 @@ export default {
       return;
     }
 
-    const currentItemSlot = inventory.findIndex(({ itemId }) => itemId === id);
+    const currentItemSlot = inventory.findIndex(
+      ({ id: itemId }) => id === itemId
+    );
 
     if (~currentItemSlot) {
       inventory[currentItemSlot].quantity++;
     } else {
-      inventory.push({ itemId: id, quantity: 1 });
+      inventory.push({ id, quantity: 1 });
     }
 
     money -= value;

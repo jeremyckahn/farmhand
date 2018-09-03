@@ -49,7 +49,7 @@ describe('Farmhand', () => {
       let valueAdjustments;
 
       beforeEach(() => {
-        inventory = [{ quantity: 1, itemId: 'sample-item-1' }];
+        inventory = [{ quantity: 1, id: 'sample-item-1' }];
         valueAdjustments = {};
         playerInventory = computePlayerInventory(inventory, valueAdjustments);
       });
@@ -68,7 +68,7 @@ describe('Farmhand', () => {
 
       it('invalidates cache with changed input', () => {
         playerInventory = computePlayerInventory(
-          [{ quantity: 1, itemId: 'sample-item-2' }],
+          [{ quantity: 1, id: 'sample-item-2' }],
           valueAdjustments
         );
         assert.deepEqual(playerInventory, [{ quantity: 1, ...sampleItem2 }]);

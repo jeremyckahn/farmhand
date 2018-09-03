@@ -17,10 +17,10 @@ import { initialFieldWidth, initialFieldHeight } from '../constants';
  * @returns {Array.<farmhand.item>}
  */
 export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
-  inventory.map(({ quantity, itemId }) => ({
+  inventory.map(({ quantity, id }) => ({
     quantity,
-    ...itemsMap[itemId],
-    value: getItemValue(itemsMap[itemId], valueAdjustments),
+    ...itemsMap[id],
+    value: getItemValue(itemsMap[id], valueAdjustments),
   }))
 );
 
