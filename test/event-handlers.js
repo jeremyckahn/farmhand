@@ -17,7 +17,7 @@ describe('event handlers', () => {
       it('creates a new item in the inventory', () => {
         component
           .instance()
-          .handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
+          .handlers.handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
         assert.deepEqual(component.state().inventory, [
           { id: 'carrot-seeds', quantity: 1 },
         ]);
@@ -33,7 +33,7 @@ describe('event handlers', () => {
         it('increments an existing item in the inventory', () => {
           component
             .instance()
-            .handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
+            .handlers.handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
 
           assert.deepEqual(component.state().inventory, [
             testItem({
@@ -49,7 +49,9 @@ describe('event handlers', () => {
           component.setState({ money: 100 });
           component
             .instance()
-            .handlePurchaseItem(testItem({ id: 'carrot-seeds', value: 10 }));
+            .handlers.handlePurchaseItem(
+              testItem({ id: 'carrot-seeds', value: 10 })
+            );
         });
 
         it('deducts item value from money', () => {
@@ -63,7 +65,9 @@ describe('event handlers', () => {
         component.setState({ money: 5 });
         component
           .instance()
-          .handlePurchaseItem(testItem({ id: 'expensive-item', value: 10 }));
+          .handlers.handlePurchaseItem(
+            testItem({ id: 'expensive-item', value: 10 })
+          );
       });
 
       it('does not add the item to the inventory', () => {
@@ -80,7 +84,7 @@ describe('event handlers', () => {
     beforeEach(() => {
       component
         .instance()
-        .handleChangeView({ target: { value: stageFocusType.SHOP } });
+        .handlers.handleChangeView({ target: { value: stageFocusType.SHOP } });
     });
 
     it('changes the view type', () => {

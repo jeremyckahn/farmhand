@@ -64,10 +64,11 @@ export default class Farmhand extends Component {
     };
 
     this.notificationSystemRef = createRef();
+    const handlers = (this.handlers = {});
 
     // Bind event handlers
     Object.keys(eventHandlers).forEach(
-      method => (this[method] = eventHandlers[method].bind(this))
+      method => (handlers[method] = eventHandlers[method].bind(this))
     );
   }
 
@@ -109,24 +110,19 @@ export default class Farmhand extends Component {
   }
 
   render() {
-    const {
-      handleChangeView,
-      handlePurchaseItem,
-      notificationSystemRef,
-      state,
-    } = this;
+    const { handlers, notificationSystemRef, state } = this;
 
     return (
       <div className="fill farmhand-wrapper">
         <NotificationSystem ref={notificationSystemRef} />
         <div className="sidebar">
-          <Navigation {...{ handleChangeView, ...state }} />
+          <Navigation {...{ ...handlers, ...state }} />
           <ContextPane />
         </div>
         <Stage
           {...{
-            handlePurchaseItem,
             inventory: this.getPlayerInventory(),
+            ...handlers,
             ...state,
           }}
         />
