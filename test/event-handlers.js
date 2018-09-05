@@ -7,6 +7,8 @@ import { testItem } from './test-utils';
 
 let component;
 
+const handlers = () => component.instance().handlers;
+
 describe('event handlers', () => {
   beforeEach(() => {
     component = shallow(<Farmhand />);
@@ -15,9 +17,7 @@ describe('event handlers', () => {
   describe('handlePurchaseItem', () => {
     describe('user has enough money', () => {
       it('creates a new item in the inventory', () => {
-        component
-          .instance()
-          .handlers.handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
+        handlers().handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
         assert.deepEqual(component.state().inventory, [
           { id: 'carrot-seeds', quantity: 1 },
         ]);
@@ -31,9 +31,7 @@ describe('event handlers', () => {
         });
 
         it('increments an existing item in the inventory', () => {
-          component
-            .instance()
-            .handlers.handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
+          handlers().handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
 
           assert.deepEqual(component.state().inventory, [
             testItem({
@@ -47,11 +45,9 @@ describe('event handlers', () => {
       describe('money state', () => {
         beforeEach(() => {
           component.setState({ money: 100 });
-          component
-            .instance()
-            .handlers.handlePurchaseItem(
-              testItem({ id: 'carrot-seeds', value: 10 })
-            );
+          handlers().handlePurchaseItem(
+            testItem({ id: 'carrot-seeds', value: 10 })
+          );
         });
 
         it('deducts item value from money', () => {
@@ -63,11 +59,9 @@ describe('event handlers', () => {
     describe('user does not have enough money', () => {
       beforeEach(() => {
         component.setState({ money: 5 });
-        component
-          .instance()
-          .handlers.handlePurchaseItem(
-            testItem({ id: 'expensive-item', value: 10 })
-          );
+        handlers().handlePurchaseItem(
+          testItem({ id: 'expensive-item', value: 10 })
+        );
       });
 
       it('does not add the item to the inventory', () => {
@@ -82,9 +76,7 @@ describe('event handlers', () => {
 
   describe('handleChangeView', () => {
     beforeEach(() => {
-      component
-        .instance()
-        .handlers.handleChangeView({ target: { value: stageFocusType.SHOP } });
+      handlers().handleChangeView({ target: { value: stageFocusType.SHOP } });
     });
 
     it('changes the view type', () => {
