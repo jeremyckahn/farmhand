@@ -13,6 +13,7 @@ describe('stage', () => {
     <Stage
       {...{
         handlePurchaseItem: () => {},
+        handleSellItem: () => {},
         inventory: [],
         money: 0,
         shopInventory: [],

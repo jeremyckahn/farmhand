@@ -74,6 +74,8 @@ describe('event handlers', () => {
     });
   });
 
+  xdescribe('handleSellItem', () => {});
+
   describe('handleChangeView', () => {
     beforeEach(() => {
       handlers().handleChangeView({ target: { value: stageFocusType.SHOP } });

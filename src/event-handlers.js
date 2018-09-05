@@ -26,6 +26,8 @@ export default {
     this.setState({ inventory, money });
   },
 
+  handleSellItem() {},
+
   /**
    * @param {external:React.SyntheticEvent} e
    */

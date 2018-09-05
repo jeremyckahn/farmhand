@@ -3,9 +3,11 @@ import { func, number, object } from 'prop-types';
 
 const Item = ({
   handlePurchaseItem,
+  handleSellItem,
   item,
   money,
   isPurchaseView = !!handlePurchaseItem, // eslint-disable-line react/prop-types
+  isSellView = !!handleSellItem, // eslint-disable-line react/prop-types
 }) => (
   <div className="item">
     <header>
@@ -23,6 +25,11 @@ const Item = ({
         Buy
       </button>
     )}
+    {isSellView && (
+      <button className="sell" onClick={() => handleSellItem(item)}>
+        Sell
+      </button>
+    )}
     {typeof item.quantity === 'number' && (
       <p>
         <strong>Quantity:</strong> {item.quantity}
@@ -33,6 +40,7 @@ const Item = ({
 
 Item.propTypes = {
   handlePurchaseItem: func,
+  handleSellItem: func,
   item: object.isRequired,
   money: number.isRequired,
 };

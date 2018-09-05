@@ -61,5 +61,20 @@ describe('item', () => {
         });
       });
     });
+
+    describe('sell button', () => {
+      beforeEach(() => {
+        component = shallow(
+          getItem({
+            handleSellItem: () => {},
+            item: testItem({ name: 'an-item' }),
+          })
+        );
+      });
+
+      it('renders sell button when given an event handler', () => {
+        assert.equal(component.find('button.sell').length, 1);
+      });
+    });
   });
 });

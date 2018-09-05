@@ -3,7 +3,13 @@ import Item from './item';
 import { getItemValue } from '../utils';
 import { array, func, number, object } from 'prop-types';
 
-const Inventory = ({ handlePurchaseItem, items, money, valueAdjustments }) => (
+const Inventory = ({
+  handlePurchaseItem,
+  handleSellItem,
+  items,
+  money,
+  valueAdjustments,
+}) => (
   <div className="inventory">
     <ul>
       {items.map((item, i) => (
@@ -11,6 +17,7 @@ const Inventory = ({ handlePurchaseItem, items, money, valueAdjustments }) => (
           <Item
             {...{
               handlePurchaseItem,
+              handleSellItem,
               item: { ...item, value: getItemValue(item, valueAdjustments) },
               money,
             }}
@@ -23,6 +30,7 @@ const Inventory = ({ handlePurchaseItem, items, money, valueAdjustments }) => (
 
 Inventory.propTypes = {
   handlePurchaseItem: func,
+  handleSellItem: func,
   items: array.isRequired,
   money: number.isRequired,
   valueAdjustments: object.isRequired,

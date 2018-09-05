@@ -6,6 +6,7 @@ import { stageFocusType } from '../enums';
 
 const Stage = ({
   handlePurchaseItem,
+  handleSellItem,
   inventory,
   money,
   shopInventory,
@@ -14,16 +15,26 @@ const Stage = ({
 }) => (
   <div className="stage">
     {stageFocus === stageFocusType.INVENTORY && (
-      <Inventory {...{ items: inventory, money, valueAdjustments }} />
+      <Inventory
+        {...{ handleSellItem, items: inventory, money, valueAdjustments }}
+      />
     )}
     {stageFocus === stageFocusType.SHOP && (
-      <Shop {...{ handlePurchaseItem, items: shopInventory, money, valueAdjustments }} />
+      <Shop
+        {...{
+          handlePurchaseItem,
+          items: shopInventory,
+          money,
+          valueAdjustments,
+        }}
+      />
     )}
   </div>
 );
 
 Stage.propTypes = {
   handlePurchaseItem: func.isRequired,
+  handleSellItem: func.isRequired,
   inventory: array.isRequired,
   money: number.isRequired,
   shopInventory: array.isRequired,
