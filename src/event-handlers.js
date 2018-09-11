@@ -26,7 +26,34 @@ export default {
     this.setState({ inventory, money });
   },
 
-  handleSellItem() {},
+  /**
+   * @param {farmhand.item} item
+   */
+  handleSellItem(item) {
+    const { id, value = 0 } = item;
+    let { inventory, money } = this.state;
+
+    inventory = [...inventory];
+
+    const itemInventoryIndex = inventory.findIndex(
+      ({ id: itemId }) => id === itemId
+    );
+
+    const { quantity } = inventory[itemInventoryIndex];
+
+    if (quantity > 1) {
+      inventory[itemInventoryIndex] = {
+        ...inventory[itemInventoryIndex],
+        quantity: quantity - 1,
+      };
+    } else {
+      inventory.splice(itemInventoryIndex, 1);
+    }
+
+    money += value;
+
+    this.setState({ inventory, money });
+  },
 
   /**
    * @param {external:React.SyntheticEvent} e

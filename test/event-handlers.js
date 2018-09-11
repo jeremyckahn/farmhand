@@ -5,6 +5,8 @@ import { shallow } from 'enzyme';
 import assert from 'assert';
 import { testItem } from './test-utils';
 
+// TODO: Use fixture/items.js for item data in this file
+
 let component;
 
 const handlers = () => component.instance().handlers;
@@ -74,7 +76,45 @@ describe('event handlers', () => {
     });
   });
 
-  xdescribe('handleSellItem', () => {});
+  describe('handleSellItem', () => {
+    describe('single instance of item in inventory', () => {
+      beforeEach(() => {
+        component.setState({
+          inventory: [testItem({ id: 'carrot-seeds', quantity: 1 })],
+          money: 100,
+        });
+
+        handlers().handleSellItem(testItem({ id: 'carrot-seeds', value: 20 }));
+      });
+
+      it('removes item from inventory', () => {
+        assert.deepEqual(component.state().inventory, []);
+      });
+
+      it('adds value of item to player money', () => {
+        assert.equal(component.state().money, 120);
+      });
+    });
+
+    describe('multiple instances of item in inventory', () => {
+      beforeEach(() => {
+        component.setState({
+          inventory: [testItem({ id: 'carrot-seeds', quantity: 2 })],
+        });
+
+        handlers().handleSellItem(testItem({ id: 'carrot-seeds', value: 20 }));
+      });
+
+      it('decrements item', () => {
+        assert.deepEqual(component.state().inventory, [
+          testItem({
+            id: 'carrot-seeds',
+            quantity: 1,
+          }),
+        ]);
+      });
+    });
+  });
 
   describe('handleChangeView', () => {
     beforeEach(() => {
