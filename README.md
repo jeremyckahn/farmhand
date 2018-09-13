@@ -8,7 +8,7 @@
   - [ ] Info/detail pane
   - [ ] Field grid
 - [ ] [Local](https://github.com/localForage/localForage) saves
-- [ ] Inventory (bin)
+- [ ] ~~Inventory (bin)~~
 - [ ] Day cycle
   - [ ] Weather
     - [ ] Rain
@@ -16,10 +16,10 @@
     - [ ] Free seeds
   - [ ] Nerfs
     - [ ] Crows
-- [ ] Commerce
-  - [ ] Store
-    - [ ] Buy
-    - [ ] Sell
+- [x] Commerce
+  - [x] Store
+    - [x] Buy
+    - [x] Sell
   - [x] Fluctuating prices for produce and seeds
 - [ ] Crop tending
   - [ ] Planting
