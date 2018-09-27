@@ -16,4 +16,11 @@
  * @property {farmhand.module:enums.cropType} type
  */
 
-export { default as Farmhand } from './components/farmhand';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './components/farmhand';
+import registerServiceWorker from './registerServiceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();

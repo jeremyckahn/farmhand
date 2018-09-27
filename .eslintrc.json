@@ -1,35 +1,3 @@
 {
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "es6": true
-  },
-  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
-  "plugins": ["react", "prettier", "jsdoc"],
-  "rules": {
-    "linebreak-style": ["error", "unix"],
-    "semi": ["error", "always"],
-    "jsdoc/check-param-names": 1,
-    "jsdoc/check-tag-names": 1,
-    "jsdoc/check-types": 1,
-    "jsdoc/newline-after-description": 1,
-    "jsdoc/no-undefined-types": 0,
-    "jsdoc/require-description-complete-sentence": 1,
-    "jsdoc/require-example": 0,
-    "jsdoc/require-hyphen-before-param-description": 0,
-    "jsdoc/require-param": 1,
-    "jsdoc/require-param-description": 0,
-    "jsdoc/require-param-name": 1,
-    "jsdoc/require-param-type": 1,
-    "jsdoc/require-returns-description": 0,
-    "jsdoc/require-returns-type": 1,
-    "jsdoc/valid-types": 1
-  }
+  "extends": "react-app"
 }

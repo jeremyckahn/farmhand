@@ -1,3 +1,0 @@
-{
-  "presets": ["babel-preset-env", "stage-3", "babel-preset-react"]
-}
