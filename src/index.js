@@ -21,7 +21,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/farmhand';
 import registerServiceWorker from './registerServiceWorker';
-import 'typeface-press-start-2p';
+import 'typeface-francois-one';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
