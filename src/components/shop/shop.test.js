@@ -1,6 +1,6 @@
 import React from 'react';
 import Shop from './';
-import Inventory from '../inventory';
+import Inventory from '../Inventory';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 

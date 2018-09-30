@@ -15,6 +15,6 @@ describe('navigation', () => {
   });
 
   it('renders', () => {
-    assert(component.hasClass('navigation'));
+    assert(component.hasClass('Navigation'));
   });
 });

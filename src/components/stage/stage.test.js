@@ -1,7 +1,7 @@
 import React from 'react';
 import Stage from './';
-import Inventory from '../inventory';
-import Shop from '../shop';
+import Inventory from '../Inventory';
+import Shop from '../Shop';
 import { stageFocusType } from '../../../src/enums';
 import { shallow } from 'enzyme';
 import assert from 'assert';

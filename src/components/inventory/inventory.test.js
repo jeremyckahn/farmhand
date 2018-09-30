@@ -3,11 +3,11 @@ jest.mock('../../data/maps');
 jest.mock('../../data/items');
 
 import React from 'react';
-import Item from '../item';
+import Item from '../Item';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 import { testItem } from '../../test-utils';
-import Inventory from './inventory';
+import Inventory from './Inventory';
 
 let component;
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import Inventory from '../inventory';
+import Inventory from '../Inventory';
 import { array, func, number, object } from 'prop-types';
 
 const Shop = ({ handlePurchaseItem, items, money, valueAdjustments }) => (
-  <div className="shop">
+  <div className="Shop">
     <Inventory {...{ handlePurchaseItem, items, money, valueAdjustments }} />
   </div>
 );

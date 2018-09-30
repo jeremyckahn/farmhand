@@ -1,5 +1,5 @@
 import React from 'react';
-import Farmhand from './components/farmhand';
+import Farmhand from './components/Farmhand';
 import { stageFocusType } from './enums';
 import { shallow } from 'enzyme';
 import assert from 'assert';

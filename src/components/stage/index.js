@@ -1,1 +1,1 @@
-export { default } from './stage';
+export { default } from './Stage';

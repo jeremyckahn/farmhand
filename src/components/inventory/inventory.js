@@ -1,9 +1,9 @@
 import React from 'react';
-import Item from '../item';
+import Item from '../Item';
 import { getItemValue } from '../../utils';
 import { array, func, number, object } from 'prop-types';
 
-import './inventory.css';
+import './Inventory.css';
 
 const Inventory = ({
   handlePurchaseItem,
@@ -12,7 +12,7 @@ const Inventory = ({
   money,
   valueAdjustments,
 }) => (
-  <div className="inventory">
+  <div className="Inventory">
     <ul>
       {items.map((item, i) => (
         <li key={i}>

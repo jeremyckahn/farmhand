@@ -1,7 +1,7 @@
 import React from 'react';
 import { func, number, object } from 'prop-types';
 
-import './item.css';
+import './Item.css';
 
 const Item = ({
   handlePurchaseItem,
@@ -11,7 +11,7 @@ const Item = ({
   isPurchaseView = !!handlePurchaseItem, // eslint-disable-line react/prop-types
   isSellView = !!handleSellItem, // eslint-disable-line react/prop-types
 }) => (
-  <div className="item">
+  <div className="Item">
     <header>
       <h2>{item.name}</h2>
       <h3>

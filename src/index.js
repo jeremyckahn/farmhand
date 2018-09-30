@@ -19,7 +19,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/farmhand';
+import App from './components/Farmhand';
 import registerServiceWorker from './registerServiceWorker';
 import 'typeface-francois-one';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { array, func, number, object, string } from 'prop-types';
-import Inventory from '../inventory';
-import Shop from '../shop';
+import Inventory from '../Inventory';
+import Shop from '../Shop';
 import { stageFocusType } from '../../enums';
 
-import './stage.css';
+import './Stage.css';
 
 const Stage = ({
   handlePurchaseItem,
@@ -15,7 +15,7 @@ const Stage = ({
   stageFocus,
   valueAdjustments,
 }) => (
-  <div className="stage">
+  <div className="Stage">
     {stageFocus === stageFocusType.INVENTORY && (
       <Inventory
         {...{ handleSellItem, items: inventory, money, valueAdjustments }}

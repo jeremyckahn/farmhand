@@ -2,16 +2,16 @@ import React, { Component, createRef } from 'react';
 import NotificationSystem from 'react-notification-system';
 import memoize from 'fast-memoize';
 import eventHandlers from '../../event-handlers';
-import Navigation from '../navigation';
-import ContextPane from '../context-pane';
-import Stage from '../stage';
+import Navigation from '../Navigation';
+import ContextPane from '../ContextPane';
+import Stage from '../Stage';
 import { getItemValue } from '../../utils';
 import shopInventory from '../../data/shop-inventory';
 import { itemsMap } from '../../data/maps';
 import { stageFocusType } from '../../enums';
 import { initialFieldWidth, initialFieldHeight } from '../../constants';
 
-import './farmhand.css';
+import './Farmhand.css';
 
 /**
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -115,7 +115,7 @@ export default class Farmhand extends Component {
     const { handlers, notificationSystemRef, state } = this;
 
     return (
-      <div className="fill farmhand-wrapper">
+      <div className="fill Farmhand">
         <NotificationSystem ref={notificationSystemRef} />
         <div className="sidebar">
           <Navigation {...{ ...handlers, ...state }} />

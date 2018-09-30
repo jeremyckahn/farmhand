@@ -1,1 +1,1 @@
-export { default } from './farmhand';
+export { default } from './Farmhand';

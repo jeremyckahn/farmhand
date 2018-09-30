@@ -3,10 +3,10 @@ import Dinero from 'dinero.js';
 import { func, number } from 'prop-types';
 import { stageFocusType } from '../../enums';
 
-import './navigation.css';
+import './Navigation.css';
 
 const Navigation = ({ handleChangeView, money }) => (
-  <header className="navigation">
+  <header className="Navigation">
     <h1>Farmhand</h1>
     <h2>
       You have: $
