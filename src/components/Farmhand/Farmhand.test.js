@@ -13,7 +13,7 @@ import { sampleItem1, sampleItem2 } from '../../data/items';
 import Farmhand, {
   computePlayerInventory,
   getUpdatedValueAdjustments,
-} from './farmhand';
+} from './Farmhand';
 
 let component;
 let mathStub;
