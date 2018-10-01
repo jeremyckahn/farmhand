@@ -1,11 +1,12 @@
+/* eslint-disable import/first */
+jest.mock('./data/items');
+
 import React from 'react';
 import Farmhand from './components/Farmhand';
 import { stageFocusType } from './enums';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 import { testItem } from './test-utils';
-
-// TODO: Use fixture/items.js for item data in this file
 
 let component;
 
@@ -18,25 +19,25 @@ beforeEach(() => {
 describe('handlePurchaseItem', () => {
   describe('user has enough money', () => {
     it('creates a new item in the inventory', () => {
-      handlers().handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
+      handlers().handlePurchaseItem(testItem({ id: 'sample-item-1' }));
       assert.deepEqual(component.state().inventory, [
-        { id: 'carrot-seeds', quantity: 1 },
+        { id: 'sample-item-1', quantity: 1 },
       ]);
     });
 
     describe('existing items', () => {
       beforeEach(() => {
         component.setState({
-          inventory: [testItem({ id: 'carrot-seeds', quantity: 1 })],
+          inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
         });
       });
 
       it('increments an existing item in the inventory', () => {
-        handlers().handlePurchaseItem(testItem({ id: 'carrot-seeds' }));
+        handlers().handlePurchaseItem(testItem({ id: 'sample-item-1' }));
 
         assert.deepEqual(component.state().inventory, [
           testItem({
-            id: 'carrot-seeds',
+            id: 'sample-item-1',
             quantity: 2,
           }),
         ]);
@@ -47,7 +48,7 @@ describe('handlePurchaseItem', () => {
       beforeEach(() => {
         component.setState({ money: 100 });
         handlers().handlePurchaseItem(
-          testItem({ id: 'carrot-seeds', value: 10 })
+          testItem({ id: 'sample-item-1', value: 10 })
         );
       });
 
@@ -79,11 +80,11 @@ describe('handleSellItem', () => {
   describe('single instance of item in inventory', () => {
     beforeEach(() => {
       component.setState({
-        inventory: [testItem({ id: 'carrot-seeds', quantity: 1 })],
+        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
         money: 100,
       });
 
-      handlers().handleSellItem(testItem({ id: 'carrot-seeds', value: 20 }));
+      handlers().handleSellItem(testItem({ id: 'sample-item-1', value: 20 }));
     });
 
     it('removes item from inventory', () => {
@@ -98,16 +99,16 @@ describe('handleSellItem', () => {
   describe('multiple instances of item in inventory', () => {
     beforeEach(() => {
       component.setState({
-        inventory: [testItem({ id: 'carrot-seeds', quantity: 2 })],
+        inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
       });
 
-      handlers().handleSellItem(testItem({ id: 'carrot-seeds', value: 20 }));
+      handlers().handleSellItem(testItem({ id: 'sample-item-1', value: 20 }));
     });
 
     it('decrements item', () => {
       assert.deepEqual(component.state().inventory, [
         testItem({
-          id: 'carrot-seeds',
+          id: 'sample-item-1',
           quantity: 1,
         }),
       ]);
