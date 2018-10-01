@@ -11,22 +11,20 @@ import Inventory from './Inventory';
 
 let component;
 
-describe('inventory', () => {
-  const getInventory = props => (
-    <Inventory {...{ items: [], money: 0, valueAdjustments: {}, ...props }} />
-  );
+const getInventory = props => (
+  <Inventory {...{ items: [], money: 0, valueAdjustments: {}, ...props }} />
+);
 
-  describe('rendering items', () => {
-    beforeEach(() => {
-      component = shallow(
-        getInventory({ items: [testItem({ id: 'sample-item-1' })] })
-      );
-    });
+describe('rendering items', () => {
+  beforeEach(() => {
+    component = shallow(
+      getInventory({ items: [testItem({ id: 'sample-item-1' })] })
+    );
+  });
 
-    it('shows the inventory', () => {
-      const li = component.find('li');
-      assert.equal(li.length, 1);
-      assert.equal(li.find(Item).length, 1);
-    });
+  it('shows the inventory', () => {
+    const li = component.find('li');
+    assert.equal(li.length, 1);
+    assert.equal(li.find(Item).length, 1);
   });
 });
