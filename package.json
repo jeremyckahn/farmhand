@@ -57,6 +57,6 @@
     "typeface-francois-one": "0.0.54"
   },
   "craGenerate": {
-    "cssExtension": "scss"
+    "cssExtension": "sass"
   }
 }
