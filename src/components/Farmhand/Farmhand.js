@@ -48,22 +48,22 @@ export const getUpdatedValueAdjustments = () =>
  */
 
 export default class Farmhand extends Component {
+  /**
+   * @member farmhand.Farmhand#state
+   * @type {farmhand.state}
+   */
+  state = {
+    dayCount: 0,
+    field: this.createNewField(),
+    inventory: [],
+    money: 500,
+    shopInventory: [...shopInventory],
+    stageFocus: stageFocusType.NONE,
+    valueAdjustments: {},
+  };
+
   constructor() {
     super(...arguments);
-
-    /**
-     * @member farmhand.Farmhand#state
-     * @type {farmhand.state}
-     */
-    this.state = {
-      dayCount: 0,
-      field: this.createNewField(),
-      inventory: [],
-      money: 500,
-      shopInventory: [...shopInventory],
-      stageFocus: stageFocusType.NONE,
-      valueAdjustments: {},
-    };
 
     this.notificationSystemRef = createRef();
     const handlers = (this.handlers = {});
