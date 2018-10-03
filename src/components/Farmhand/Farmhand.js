@@ -40,6 +40,8 @@ export const getUpdatedValueAdjustments = () =>
  * @type {Object}
  * @property {number} dayCount
  * @property {Array.<Array.<farmhand.crop|null>>} field
+ * @property {number} fieldHeight
+ * @property {number} fieldWidth
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {number} money
  * @property {Array.<farmhand.item>} shopInventory
@@ -55,10 +57,12 @@ export default class Farmhand extends Component {
   state = {
     dayCount: 0,
     field: this.createNewField(),
+    fieldHeight: initialFieldHeight,
+    fieldWidth: initialFieldWidth,
     inventory: [],
     money: 500,
     shopInventory: [...shopInventory],
-    stageFocus: stageFocusType.NONE,
+    stageFocus: stageFocusType.FIELD,
     valueAdjustments: {},
   };
 

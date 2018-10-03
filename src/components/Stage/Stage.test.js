@@ -1,5 +1,6 @@
 import React from 'react';
 import Stage from './';
+import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
 import { stageFocusType } from '../../../src/enums';
@@ -11,12 +12,14 @@ let component;
 const getStage = props => (
   <Stage
     {...{
+      fieldHeight: 4,
+      fieldWidth: 2,
       handlePurchaseItem: () => {},
       handleSellItem: () => {},
       inventory: [],
       money: 0,
       shopInventory: [],
-      stageFocus: stageFocusType.NONE,
+      stageFocus: stageFocusType.FIELD,
       valueAdjustments: {},
       ...props,
     }}
@@ -24,6 +27,16 @@ const getStage = props => (
 );
 
 describe('focus', () => {
+  describe('field', () => {
+    beforeEach(() => {
+      component = shallow(getStage({ stageFocus: stageFocusType.FIELD }));
+    });
+
+    it('shows the field', () => {
+      assert.equal(component.find(Field).length, 1);
+    });
+  });
+
   describe('inventory', () => {
     beforeEach(() => {
       component = shallow(getStage({ stageFocus: stageFocusType.INVENTORY }));

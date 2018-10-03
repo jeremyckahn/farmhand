@@ -16,6 +16,7 @@ const Navigation = ({ handleChangeView, money }) => (
       }).toUnit()}
     </h2>
     <select onChange={handleChangeView}>
+      <option value={stageFocusType.FIELD}>Field</option>
       <option value={stageFocusType.INVENTORY}>Inventory</option>
       <option value={stageFocusType.SHOP}>Shop</option>
     </select>
