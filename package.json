@@ -21,7 +21,7 @@
     "preversion": "npm test",
     "start": "npm-run-all -p watch-css start-js",
     "start-js": "react-scripts start",
-    "test": "react-scripts test --env=jsdom",
+    "test": "npm run build-css && react-scripts test --env=jsdom",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive"
   },
   "author": "Jeremy Kahn <jeremyckahn@gmail.com>",
