@@ -4,21 +4,17 @@ import './Field.css';
 
 const Field = ({ columns, rows }) => (
   <div className="Field">
-    <table>
-      <tbody>
-        {Array(rows)
-          .fill(null)
-          .map((_null, i) => (
-            <tr key={i}>
-              {Array(columns)
-                .fill(null)
-                .map((_null, j) => (
-                  <td key={j} />
-                ))}
-            </tr>
-          ))}
-      </tbody>
-    </table>
+    {Array(rows)
+      .fill(null)
+      .map((_null, i) => (
+        <div className="row" key={i}>
+          {Array(columns)
+            .fill(null)
+            .map((_null, j) => (
+              <div className="plot" key={j} />
+            ))}
+        </div>
+      ))}
   </div>
 );
 

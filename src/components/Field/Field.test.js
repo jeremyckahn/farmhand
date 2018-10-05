@@ -13,15 +13,15 @@ describe('table rendering', () => {
   });
 
   it('renders rows', () => {
-    assert.equal(component.find('tr').length, 3);
+    assert.equal(component.find('.row').length, 3);
   });
 
   it('renders columns', () => {
     assert.equal(
       component
-        .find('tr')
+        .find('.row')
         .at(0)
-        .find('td').length,
+        .find('.plot').length,
       2
     );
   });
