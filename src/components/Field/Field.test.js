@@ -1,5 +1,6 @@
 import React from 'react';
 import Field from './Field';
+import Plot from '../Plot';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 
@@ -21,7 +22,7 @@ describe('table rendering', () => {
       component
         .find('.row')
         .at(0)
-        .find('.plot').length,
+        .find(Plot).length,
       2
     );
   });

@@ -1,5 +1,6 @@
 import React from 'react';
 import { number } from 'prop-types';
+import Plot from '../Plot';
 import './Field.css';
 
 const Field = ({ columns, rows }) => (
@@ -11,7 +12,7 @@ const Field = ({ columns, rows }) => (
           {Array(columns)
             .fill(null)
             .map((_null, j) => (
-              <div className="plot" key={j} />
+              <Plot key={j} />
             ))}
         </div>
       ))}
