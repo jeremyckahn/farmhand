@@ -1,6 +1,7 @@
 import React from 'react';
 import ContextPane from './ContextPane';
 import { stageFocusType } from '../../../src/enums';
+import PlantableItems from '../PlantableItems';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 
@@ -33,7 +34,7 @@ describe('conditional UI', () => {
       });
 
       it('renders relevant UI', () => {
-        assert.equal(component.find('.plantable-items').length, 1);
+        assert.equal(component.find(PlantableItems).length, 1);
       });
     });
   });
