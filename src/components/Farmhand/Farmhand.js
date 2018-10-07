@@ -36,6 +36,14 @@ export const getUpdatedValueAdjustments = () =>
   );
 
 /**
+ * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
+ * @returns {Array.<{ item: farmhand.item, quantity: number }>}
+ */
+export const getPlantableInventory = memoize(inventory =>
+  inventory.filter(item => itemsMap[item.id].isPlantable)
+);
+
+/**
  * @typedef farmhand.state
  * @type {Object}
  * @property {number} dayCount

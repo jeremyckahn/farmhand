@@ -8,6 +8,7 @@
  * @property {string} id
  * @property {string} name
  * @property {number} value
+ * @property {boolean} [isPlantable]
  */
 
 /**

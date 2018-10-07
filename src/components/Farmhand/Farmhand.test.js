@@ -12,6 +12,7 @@ import { sampleItem1, sampleItem2 } from '../../data/items';
 
 import Farmhand, {
   computePlayerInventory,
+  getPlantableInventory,
   getUpdatedValueAdjustments,
 } from './Farmhand';
 
@@ -91,10 +92,27 @@ describe('private functions', () => {
     });
 
     it('updates valueAdjustments by random factor', () => {
-      assert.deepEqual(valueAdjustments, {
-        'sample-item-1': 1.5,
-        'sample-item-2': 1.5,
-      });
+      assert.equal(valueAdjustments['sample-item-1'], 1.5);
+      assert.equal(valueAdjustments['sample-item-2'], 1.5);
+    });
+  });
+
+  describe('getPlantableInventory', () => {
+    let plantableInventory;
+    let inventory;
+
+    beforeEach(() => {
+      inventory = [
+        { quantity: 1, id: 'sample-item-1' },
+        { quantity: 1, id: 'sample-item-3' },
+      ];
+      plantableInventory = getPlantableInventory(inventory);
+    });
+
+    it('filters out non-plantable items', () => {
+      assert.deepEqual(plantableInventory, [
+        { quantity: 1, id: 'sample-item-3' },
+      ]);
     });
   });
 });
@@ -114,10 +132,8 @@ describe('instance methods', () => {
       const { dayCount, valueAdjustments } = component.state();
 
       assert.equal(dayCount, 2);
-      assert.deepEqual(valueAdjustments, {
-        'sample-item-1': 1.25,
-        'sample-item-2': 1.25,
-      });
+      assert.equal(valueAdjustments['sample-item-1'], 1.25);
+      assert.equal(valueAdjustments['sample-item-2'], 1.25);
     });
   });
 });
