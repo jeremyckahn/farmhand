@@ -10,6 +10,7 @@ const { freeze } = Object;
  */
 export const carrotSeeds = freeze({
   id: 'carrot-seeds',
+  isPlantable: true,
   name: 'Carrot Seeds',
   value: 20,
 });
@@ -20,6 +21,7 @@ export const carrotSeeds = freeze({
  */
 export const pumpkinSeeds = freeze({
   id: 'pumpkin-seeds',
+  isPlantable: true,
   name: 'Pumpkin Seeds',
   value: 40,
 });

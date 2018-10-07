@@ -40,7 +40,9 @@ export const getUpdatedValueAdjustments = () =>
  * @returns {Array.<{ item: farmhand.item, quantity: number }>}
  */
 export const getPlantableInventory = memoize(inventory =>
-  inventory.filter(item => itemsMap[item.id].isPlantable)
+  inventory
+    .filter(({ id }) => itemsMap[id].isPlantable)
+    .map(({ id }) => itemsMap[id])
 );
 
 /**
@@ -123,6 +125,10 @@ export default class Farmhand extends Component {
     return computePlayerInventory(inventory, valueAdjustments);
   }
 
+  getPlantableInventory() {
+    return getPlantableInventory(this.state.inventory);
+  }
+
   render() {
     const { handlers, notificationSystemRef, state } = this;
 
@@ -131,13 +137,15 @@ export default class Farmhand extends Component {
         <NotificationSystem ref={notificationSystemRef} />
         <div className="sidebar">
           <Navigation {...{ ...handlers, ...state }} />
-          <ContextPane {...{ ...state }} />
+          <ContextPane
+            {...{ ...state, inventory: this.getPlantableInventory() }}
+          />
         </div>
         <Stage
           {...{
-            inventory: this.getPlayerInventory(),
             ...handlers,
             ...state,
+            inventory: this.getPlayerInventory(),
           }}
         />
       </div>

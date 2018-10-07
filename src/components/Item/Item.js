@@ -44,7 +44,7 @@ Item.propTypes = {
   handlePurchaseItem: func,
   handleSellItem: func,
   item: object.isRequired,
-  money: number.isRequired,
+  money: number,
 };
 
 export default Item;

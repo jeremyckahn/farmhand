@@ -10,6 +10,7 @@ let component;
 const getContextPane = props => (
   <ContextPane
     {...{
+      inventory: [],
       stageFocus: stageFocusType.NONE,
       ...props,
     }}
@@ -18,10 +19,6 @@ const getContextPane = props => (
 
 beforeEach(() => {
   component = shallow(getContextPane());
-});
-
-it('renders', () => {
-  assert.equal(component.length, 1);
 });
 
 describe('conditional UI', () => {

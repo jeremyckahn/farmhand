@@ -8,7 +8,7 @@ import assert from 'assert';
 import { stub } from 'sinon';
 import { testItem } from '../../test-utils';
 import { initialFieldWidth, initialFieldHeight } from '../../constants';
-import { sampleItem1, sampleItem2 } from '../../data/items';
+import { sampleItem1, sampleItem2, sampleItem3 } from '../../data/items';
 
 import Farmhand, {
   computePlayerInventory,
@@ -110,9 +110,7 @@ describe('private functions', () => {
     });
 
     it('filters out non-plantable items', () => {
-      assert.deepEqual(plantableInventory, [
-        { quantity: 1, id: 'sample-item-3' },
-      ]);
+      assert.deepEqual(plantableInventory, [sampleItem3]);
     });
   });
 });

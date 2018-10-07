@@ -1,12 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { array } from 'prop-types';
+import Item from '../Item';
 import './PlantableItems.css';
 
-class PlantableItems extends Component {
-  state = {};
+export const PlantableItems = ({ inventory }) => (
+  <div className="PlantableItems">
+    <ul>
+      {inventory.map(item => (
+        <li key={item.id}>
+          <Item {...{ item }} />
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 
-  render() {
-    return <div className="PlantableItems" />;
-  }
-}
+PlantableItems.propTypes = {
+  inventory: array.isRequired,
+};
 
 export default PlantableItems;
