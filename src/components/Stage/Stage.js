@@ -7,6 +7,12 @@ import { stageFocusType } from '../../enums';
 
 import './Stage.css';
 
+const stageTitleMap = {
+  [stageFocusType.FIELD]: 'Field',
+  [stageFocusType.INVENTORY]: 'Your inventory',
+  [stageFocusType.SHOP]: 'Shop',
+};
+
 const Stage = ({
   fieldHeight,
   fieldWidth,
@@ -19,6 +25,7 @@ const Stage = ({
   valueAdjustments,
 }) => (
   <div className="Stage">
+    <h2>{stageTitleMap[stageFocus]}</h2>
     {stageFocus === stageFocusType.FIELD && (
       <Field {...{ columns: fieldWidth, rows: fieldHeight }} />
     )}
