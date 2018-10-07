@@ -123,7 +123,7 @@ export default class Farmhand extends Component {
         <NotificationSystem ref={notificationSystemRef} />
         <div className="sidebar">
           <Navigation {...{ ...handlers, ...state }} />
-          <ContextPane />
+          <ContextPane {...{ ...state }} />
         </div>
         <Stage
           {...{
