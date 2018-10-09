@@ -12,7 +12,12 @@ let component;
 
 const getPlantableItems = props => (
   <PlantableItems
-    {...{ handleSelectPlantableItem: () => {}, inventory: [], ...props }}
+    {...{
+      handleSelectPlantableItem: () => {},
+      inventory: [],
+      selectedPlantableItemId: '',
+      ...props,
+    }}
   />
 );
 
@@ -23,11 +28,18 @@ beforeEach(() => {
 describe('rendering', () => {
   beforeEach(() => {
     component = shallow(
-      getPlantableItems({ inventory: [{ quantity: 1, id: 'sample-item-3' }] })
+      getPlantableItems({
+        inventory: [{ quantity: 1, id: 'sample-item-3' }],
+        selectedPlantableItemId: 'sample-item-3',
+      })
     );
   });
 
   it('renders items for provided inventory', () => {
     assert.equal(component.find(Item).length, 1);
+  });
+
+  it('renders selected item state', () => {
+    assert(component.find(Item).props().isSelected);
   });
 });

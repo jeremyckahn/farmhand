@@ -125,3 +125,13 @@ describe('handleChangeView', () => {
     assert.equal(component.state('stageFocus'), stageFocusType.SHOP);
   });
 });
+
+describe('handleSelectPlantableItem', () => {
+  beforeEach(() => {
+    handlers().handleSelectPlantableItem(testItem({ id: 'sample-item-3' }));
+  });
+
+  it('updates selectedPlantableItemId state', () => {
+    assert.equal(component.state().selectedPlantableItemId, 'sample-item-3');
+  });
+});

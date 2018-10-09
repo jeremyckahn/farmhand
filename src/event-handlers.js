@@ -65,5 +65,7 @@ export default {
   /**
    * @param {farmhand.item} item
    */
-  handleSelectPlantableItem(item) {},
+  handleSelectPlantableItem({ id }) {
+    this.setState({ selectedPlantableItemId: id });
+  },
 };

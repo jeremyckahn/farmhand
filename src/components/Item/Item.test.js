@@ -21,6 +21,16 @@ describe('static UI', () => {
 });
 
 describe('conditional UI', () => {
+  describe('class names', () => {
+    beforeEach(() => {
+      component = shallow(getItem({ isSelected: true }));
+    });
+
+    it('supports is-selected', () => {
+      assert(component.hasClass('is-selected'));
+    });
+  });
+
   describe('purchase button', () => {
     describe('user has enough money', () => {
       beforeEach(() => {

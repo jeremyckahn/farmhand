@@ -5,10 +5,17 @@ import { stageFocusType } from '../../enums';
 
 import './ContextPane.css';
 
-const ContextPane = ({ handleSelectPlantableItem, inventory, stageFocus }) => (
+const ContextPane = ({
+  handleSelectPlantableItem,
+  inventory,
+  selectedPlantableItemId,
+  stageFocus,
+}) => (
   <div className="ContextPane">
     {stageFocus === stageFocusType.FIELD && (
-      <PlantableItems {...{ handleSelectPlantableItem, inventory }} />
+      <PlantableItems
+        {...{ handleSelectPlantableItem, inventory, selectedPlantableItemId }}
+      />
     )}
   </div>
 );
@@ -16,6 +23,7 @@ const ContextPane = ({ handleSelectPlantableItem, inventory, stageFocus }) => (
 ContextPane.propTypes = {
   handleSelectPlantableItem: func.isRequired,
   inventory: array.isRequired,
+  selectedPlantableItemId: string.isRequired,
   stageFocus: string.isRequired,
 };
 

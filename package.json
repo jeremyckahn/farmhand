@@ -47,6 +47,7 @@
     "sinon": "^6.1.5"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "compass-mixins": "^0.12.10",
     "dinero.js": "^1.4.0",
     "fast-memoize": "^2.5.1",
