@@ -2,6 +2,9 @@
  * @module farmhand.items
  */
 
+import carrotSeedsImage from '../img/field-tiles/carrot-seeds.png';
+import pumpkinSeedsImage from '../img/field-tiles/pumpkin-seeds.png';
+
 const { freeze } = Object;
 
 /**
@@ -10,6 +13,7 @@ const { freeze } = Object;
  */
 export const carrotSeeds = freeze({
   id: 'carrot-seeds',
+  image: carrotSeedsImage,
   isPlantable: true,
   name: 'Carrot Seeds',
   value: 20,
@@ -21,6 +25,7 @@ export const carrotSeeds = freeze({
  */
 export const pumpkinSeeds = freeze({
   id: 'pumpkin-seeds',
+  image: pumpkinSeedsImage,
   isPlantable: true,
   name: 'Pumpkin Seeds',
   value: 40,

@@ -7,21 +7,21 @@ const Item = ({
   handlePurchaseItem,
   handleSellItem,
   item,
+  item: { image, name, quantity, value },
   money,
   isPurchaseView = !!handlePurchaseItem, // eslint-disable-line react/prop-types
   isSellView = !!handleSellItem, // eslint-disable-line react/prop-types
 }) => (
   <div className="Item">
     <header>
-      <h2>{item.name}</h2>
-      <h3>
-        {isPurchaseView ? `Price: ${item.value}` : `Sell price: ${item.value}`}
-      </h3>
+      <h2>{name}</h2>
+      <h3>{isPurchaseView ? `Price: ${value}` : `Sell price: ${value}`}</h3>
     </header>
+    <img src={image} alt={name} />
     {isPurchaseView && (
       <button
         className="purchase"
-        disabled={item.value > money}
+        disabled={value > money}
         onClick={() => handlePurchaseItem(item)}
       >
         Buy
@@ -32,9 +32,9 @@ const Item = ({
         Sell
       </button>
     )}
-    {typeof item.quantity === 'number' && (
+    {typeof quantity === 'number' && (
       <p>
-        <strong>Quantity:</strong> {item.quantity}
+        <strong>Quantity:</strong> {quantity}
       </p>
     )}
   </div>
