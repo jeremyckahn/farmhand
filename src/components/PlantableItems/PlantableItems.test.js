@@ -11,7 +11,9 @@ import assert from 'assert';
 let component;
 
 const getPlantableItems = props => (
-  <PlantableItems {...{ inventory: [], ...props }} />
+  <PlantableItems
+    {...{ handleSelectPlantableItem: () => {}, inventory: [], ...props }}
+  />
 );
 
 beforeEach(() => {

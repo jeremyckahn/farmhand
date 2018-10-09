@@ -138,7 +138,11 @@ export default class Farmhand extends Component {
         <div className="sidebar">
           <Navigation {...{ ...handlers, ...state }} />
           <ContextPane
-            {...{ ...state, inventory: this.getPlantableInventory() }}
+            {...{
+              ...handlers,
+              ...state,
+              inventory: this.getPlantableInventory(),
+            }}
           />
         </div>
         <Stage

@@ -10,6 +10,7 @@ let component;
 const getContextPane = props => (
   <ContextPane
     {...{
+      handleSelectPlantableItem: () => {},
       inventory: [],
       stageFocus: stageFocusType.NONE,
       ...props,

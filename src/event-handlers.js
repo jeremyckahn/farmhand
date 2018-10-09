@@ -61,4 +61,9 @@ export default {
   handleChangeView({ target: { value } }) {
     this.setState({ stageFocus: value });
   },
+
+  /**
+   * @param {farmhand.item} item
+   */
+  handleSelectPlantableItem(item) {},
 };
