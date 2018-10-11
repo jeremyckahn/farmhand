@@ -135,3 +135,37 @@ describe('handleSelectPlantableItem', () => {
     assert.equal(component.state().selectedPlantableItemId, 'sample-item-3');
   });
 });
+
+describe('handlePlotClick', () => {
+  beforeEach(() => {
+    component.setState({
+      selectedPlantableItemId: 'sample-item-3',
+    });
+  });
+
+  describe('item quantity > 1 (general logic)', () => {
+    beforeEach(() => {
+      component.setState({
+        inventory: [testItem({ id: 'sample-item-3', quantity: 2 })],
+      });
+
+      handlers().handlePlotClick(0, 0);
+    });
+
+    xit('plants the item', () => {});
+
+    xit('decrements item quantity', () => {});
+  });
+
+  describe('item quantity === 1', () => {
+    beforeEach(() => {
+      component.setState({
+        inventory: [testItem({ id: 'sample-item-3', quantity: 1 })],
+      });
+
+      handlers().handlePlotClick(0, 0);
+    });
+
+    xit('resets selectedPlantableItemId state', () => {});
+  });
+});

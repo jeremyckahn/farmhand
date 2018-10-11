@@ -73,7 +73,5 @@ export default {
    * @param {number} x
    * @param {number} y
    */
-  handlePlotClick(x, y) {
-    console.log({ x, y });
-  },
+  handlePlotClick(x, y) {},
 };
