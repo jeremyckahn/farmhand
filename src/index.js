@@ -17,6 +17,12 @@
  * @property {farmhand.module:enums.cropType} type
  */
 
+/**
+ * @typedef farmhand.plot
+ * @type {Object}
+ * @property {farmhand.module:enums.cropType} cropType
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
