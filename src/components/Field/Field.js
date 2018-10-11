@@ -1,9 +1,9 @@
 import React from 'react';
-import { number } from 'prop-types';
+import { func, number } from 'prop-types';
 import Plot from '../Plot';
 import './Field.css';
 
-const Field = ({ columns, rows }) => (
+const Field = ({ columns, handlePlotClick, rows }) => (
   <div className="Field">
     {Array(rows)
       .fill(null)
@@ -12,7 +12,7 @@ const Field = ({ columns, rows }) => (
           {Array(columns)
             .fill(null)
             .map((_null, j) => (
-              <Plot key={j} />
+              <Plot key={j} {...{ handlePlotClick, x: j, y: i }} />
             ))}
         </div>
       ))}
@@ -21,6 +21,7 @@ const Field = ({ columns, rows }) => (
 
 Field.propTypes = {
   columns: number.isRequired,
+  handlePlotClick: func.isRequired,
   rows: number.isRequired,
 };
 

@@ -16,6 +16,7 @@ const stageTitleMap = {
 const Stage = ({
   fieldHeight,
   fieldWidth,
+  handlePlotClick,
   handlePurchaseItem,
   handleSellItem,
   inventory,
@@ -27,7 +28,7 @@ const Stage = ({
   <div className="Stage">
     <h2>{stageTitleMap[stageFocus]}</h2>
     {stageFocus === stageFocusType.FIELD && (
-      <Field {...{ columns: fieldWidth, rows: fieldHeight }} />
+      <Field {...{ handlePlotClick, columns: fieldWidth, rows: fieldHeight }} />
     )}
     {stageFocus === stageFocusType.INVENTORY && (
       <Inventory
@@ -50,6 +51,7 @@ const Stage = ({
 Stage.propTypes = {
   fieldHeight: number.isRequired,
   fieldWidth: number.isRequired,
+  handlePlotClick: func.isRequired,
   handlePurchaseItem: func.isRequired,
   handleSellItem: func.isRequired,
   inventory: array.isRequired,

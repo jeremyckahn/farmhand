@@ -68,4 +68,12 @@ export default {
   handleSelectPlantableItem({ id }) {
     this.setState({ selectedPlantableItemId: id });
   },
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
+  handlePlotClick(x, y) {
+    console.log({ x, y });
+  },
 };

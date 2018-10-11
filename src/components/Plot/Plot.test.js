@@ -1,8 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Plot from './Plot';
+import { shallow } from 'enzyme';
+import assert from 'assert';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Plot />, div);
+let component;
+
+const getPlot = props => (
+  <Plot {...{ handlePlotClick: () => {}, x: 0, y: 0, ...props }} />
+);
+
+beforeEach(() => {
+  component = shallow(getPlot());
+});
+
+it('renders', () => {
+  assert.equal(component.length, 1);
 });

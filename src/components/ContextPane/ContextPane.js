@@ -14,7 +14,11 @@ const ContextPane = ({
   <div className="ContextPane">
     {stageFocus === stageFocusType.FIELD && (
       <PlantableItems
-        {...{ handleSelectPlantableItem, inventory, selectedPlantableItemId }}
+        {...{
+          handleSelectPlantableItem,
+          inventory,
+          selectedPlantableItemId,
+        }}
       />
     )}
   </div>

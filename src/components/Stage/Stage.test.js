@@ -14,6 +14,7 @@ const getStage = props => (
     {...{
       fieldHeight: 4,
       fieldWidth: 2,
+      handlePlotClick: () => {},
       handlePurchaseItem: () => {},
       handleSellItem: () => {},
       inventory: [],

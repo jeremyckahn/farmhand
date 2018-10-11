@@ -6,7 +6,9 @@ import assert from 'assert';
 
 let component;
 
-const getField = props => <Field {...{ columns: 0, rows: 0, ...props }} />;
+const getField = props => (
+  <Field {...{ columns: 0, handlePlotClick: () => {}, rows: 0, ...props }} />
+);
 
 describe('table rendering', () => {
   beforeEach(() => {
