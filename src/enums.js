@@ -12,7 +12,7 @@ const enumify = keys => keys.reduce((acc, key) => ({ [key]: key, ...acc }), {});
  * @property farmhand.module:enums.cropType
  * @enum {string}
  */
-export const cropType = enumify(['CARROT']);
+export const cropType = enumify(['CARROT', 'PUMPKIN']);
 
 /**
  * @property farmhand.module:enums.stageFocusType

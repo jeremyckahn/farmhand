@@ -6,21 +6,16 @@
  * @typedef farmhand.item
  * @type {Object}
  * @property {string} id
+ * @property {string} image
  * @property {string} name
  * @property {number} value
+ * @property {farmhand.module:enums.cropType} [cropType]
  * @property {boolean} [isPlantable]
  */
 
 /**
  * @typedef farmhand.crop
  * @type {farmhand.item}
- * @property {farmhand.module:enums.cropType} type
- */
-
-/**
- * @typedef farmhand.plot
- * @type {Object}
- * @property {farmhand.module:enums.cropType} cropType
  */
 
 import React from 'react';
