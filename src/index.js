@@ -15,7 +15,7 @@
 
 /**
  * @typedef farmhand.crop
- * @type {farmhand.item}
+ * @type {string} itemId
  */
 
 import React from 'react';

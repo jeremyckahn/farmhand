@@ -1,3 +1,5 @@
+import { getCropFromItemId } from './utils';
+
 export default {
   /**
    * @param {farmhand.item} item
@@ -73,5 +75,11 @@ export default {
    * @param {number} x
    * @param {number} y
    */
-  handlePlotClick(x, y) {},
+  handlePlotClick(x, y) {
+    const { selectedPlantableItemId } = this.state;
+
+    if (selectedPlantableItemId) {
+      console.log(getCropFromItemId(selectedPlantableItemId));
+    }
+  },
 };
