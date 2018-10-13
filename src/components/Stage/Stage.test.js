@@ -19,6 +19,7 @@ const getStage = props => (
       handleSellItem: () => {},
       inventory: [],
       money: 0,
+      selectedPlantableItemId: '',
       shopInventory: [],
       stageFocus: stageFocusType.FIELD,
       valueAdjustments: {},

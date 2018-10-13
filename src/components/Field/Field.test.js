@@ -7,10 +7,18 @@ import assert from 'assert';
 let component;
 
 const getField = props => (
-  <Field {...{ columns: 0, handlePlotClick: () => {}, rows: 0, ...props }} />
+  <Field
+    {...{
+      columns: 0,
+      handlePlotClick: () => {},
+      rows: 0,
+      selectedPlantableItemId: '',
+      ...props,
+    }}
+  />
 );
 
-describe('table rendering', () => {
+describe('field rendering', () => {
   beforeEach(() => {
     component = shallow(getField({ columns: 2, rows: 3 }));
   });
@@ -27,5 +35,16 @@ describe('table rendering', () => {
         .find(Plot).length,
       2
     );
+  });
+});
+
+describe('is-plantable-item-selected class', () => {
+  it('is not present when item is not selected', () => {
+    assert(!component.hasClass('is-plantable-item-selected'));
+  });
+
+  it('is present when item is selected', () => {
+    component = shallow(getField({ selectedPlantableItemId: 'stub-item' }));
+    assert(component.hasClass('is-plantable-item-selected'));
   });
 });
