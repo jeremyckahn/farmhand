@@ -145,23 +145,40 @@ describe('handlePlotClick', () => {
   });
 
   describe('item quantity > 1 (general logic)', () => {
-    beforeEach(() => {
-      component.setState({
-        inventory: [testItem({ id: 'sample-item-3', quantity: 2 })],
+    describe('plot is empty', () => {
+      beforeEach(() => {
+        component.setState({
+          inventory: [testItem({ id: 'sample-item-3', quantity: 2 })],
+        });
+
+        handlers().handlePlotClick(0, 0);
       });
 
-      handlers().handlePlotClick(0, 0);
+      it('plants the item', () => {
+        assert.deepEqual(
+          component.state().field[0][0],
+          getCropFromItemId('sample-item-3')
+        );
+      });
+
+      it('decrements item quantity', () => {
+        assert.equal(component.state().inventory[0].quantity, 1);
+      });
     });
 
-    it('plants the item', () => {
-      assert.deepEqual(
-        component.state().field[0][0],
-        getCropFromItemId('sample-item-3')
-      );
-    });
+    describe('plot is not empty', () => {
+      beforeEach(() => {
+        component.setState({
+          field: [[getCropFromItemId('sample-item-3')]],
+          inventory: [testItem({ id: 'sample-item-3', quantity: 2 })],
+        });
 
-    it('decrements item quantity', () => {
-      assert.equal(component.state().inventory[0].quantity, 1);
+        handlers().handlePlotClick(0, 0);
+      });
+
+      it('does not decrement item quantity', () => {
+        assert.equal(component.state().inventory[0].quantity, 2);
+      });
     });
   });
 

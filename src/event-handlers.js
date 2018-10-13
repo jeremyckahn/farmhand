@@ -84,6 +84,12 @@ export default {
 
     if (selectedPlantableItemId) {
       const row = field[y];
+
+      if (row[x]) {
+        // Something is already planted in field[x][y]
+        return;
+      }
+
       const newRow = row.slice();
       const crop = getCropFromItemId(selectedPlantableItemId);
       newRow.splice(x, 1, crop);
