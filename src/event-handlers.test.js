@@ -7,6 +7,7 @@ import { stageFocusType } from './enums';
 import { shallow } from 'enzyme';
 import assert from 'assert';
 import { testItem } from './test-utils';
+import { getCropFromItemId } from './utils';
 
 let component;
 
@@ -152,9 +153,16 @@ describe('handlePlotClick', () => {
       handlers().handlePlotClick(0, 0);
     });
 
-    xit('plants the item', () => {});
+    it('plants the item', () => {
+      assert.deepEqual(
+        component.state().field[0][0],
+        getCropFromItemId('sample-item-3')
+      );
+    });
 
-    xit('decrements item quantity', () => {});
+    it('decrements item quantity', () => {
+      assert.equal(component.state().inventory[0].quantity, 1);
+    });
   });
 
   describe('item quantity === 1', () => {

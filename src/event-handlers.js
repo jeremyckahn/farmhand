@@ -1,5 +1,24 @@
 import { getCropFromItemId } from './utils';
 
+const decrementItemFromInventory = (itemId, inventory) => {
+  inventory = [...inventory];
+
+  const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId);
+
+  const { quantity } = inventory[itemInventoryIndex];
+
+  if (quantity > 1) {
+    inventory[itemInventoryIndex] = {
+      ...inventory[itemInventoryIndex],
+      quantity: quantity - 1,
+    };
+  } else {
+    inventory.splice(itemInventoryIndex, 1);
+  }
+
+  return inventory;
+};
+
 export default {
   /**
    * @param {farmhand.item} item
@@ -33,28 +52,12 @@ export default {
    */
   handleSellItem(item) {
     const { id, value = 0 } = item;
-    let { inventory, money } = this.state;
+    const { inventory, money } = this.state;
 
-    inventory = [...inventory];
-
-    const itemInventoryIndex = inventory.findIndex(
-      ({ id: itemId }) => id === itemId
-    );
-
-    const { quantity } = inventory[itemInventoryIndex];
-
-    if (quantity > 1) {
-      inventory[itemInventoryIndex] = {
-        ...inventory[itemInventoryIndex],
-        quantity: quantity - 1,
-      };
-    } else {
-      inventory.splice(itemInventoryIndex, 1);
-    }
-
-    money += value;
-
-    this.setState({ inventory, money });
+    this.setState({
+      inventory: decrementItemFromInventory(id, inventory),
+      money: money + value,
+    });
   },
 
   /**
@@ -76,10 +79,24 @@ export default {
    * @param {number} y
    */
   handlePlotClick(x, y) {
-    const { selectedPlantableItemId } = this.state;
+    const { inventory, selectedPlantableItemId } = this.state;
 
     if (selectedPlantableItemId) {
-      console.log(getCropFromItemId(selectedPlantableItemId));
+      const crop = getCropFromItemId(selectedPlantableItemId);
+      const { field } = this.state;
+      const row = field[y];
+      const newRow = row.slice();
+      newRow.splice(x, 1, crop);
+      const newField = field.slice();
+      newField.splice(y, 1, newRow);
+
+      this.setState({
+        field: newField,
+        inventory: decrementItemFromInventory(
+          selectedPlantableItemId,
+          inventory
+        ),
+      });
     }
   },
 };

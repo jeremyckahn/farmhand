@@ -16,7 +16,6 @@ export const getItemValue = ({ id }, valueAdjustments) =>
     precision: 2,
   }).toUnit();
 
-// TODO: Test this
 /**
  * @param {string} itemId
  * @returns {farmhand.crop}
