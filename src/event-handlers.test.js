@@ -174,6 +174,8 @@ describe('handlePlotClick', () => {
       handlers().handlePlotClick(0, 0);
     });
 
-    xit('resets selectedPlantableItemId state', () => {});
+    it('resets selectedPlantableItemId state', () => {
+      assert.equal(component.state().selectedPlantableItemId, '');
+    });
   });
 });

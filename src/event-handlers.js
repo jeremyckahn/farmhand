@@ -79,23 +79,32 @@ export default {
    * @param {number} y
    */
   handlePlotClick(x, y) {
-    const { inventory, selectedPlantableItemId } = this.state;
+    const { field, inventory } = this.state;
+    let { selectedPlantableItemId } = this.state;
 
     if (selectedPlantableItemId) {
-      const crop = getCropFromItemId(selectedPlantableItemId);
-      const { field } = this.state;
       const row = field[y];
       const newRow = row.slice();
+      const crop = getCropFromItemId(selectedPlantableItemId);
       newRow.splice(x, 1, crop);
       const newField = field.slice();
       newField.splice(y, 1, newRow);
 
+      const updatedInventory = decrementItemFromInventory(
+        selectedPlantableItemId,
+        inventory
+      );
+
+      selectedPlantableItemId = updatedInventory.find(
+        ({ id }) => id === selectedPlantableItemId
+      )
+        ? selectedPlantableItemId
+        : '';
+
       this.setState({
         field: newField,
-        inventory: decrementItemFromInventory(
-          selectedPlantableItemId,
-          inventory
-        ),
+        inventory: updatedInventory,
+        selectedPlantableItemId,
       });
     }
   },
