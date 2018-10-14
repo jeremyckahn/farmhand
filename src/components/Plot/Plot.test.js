@@ -6,7 +6,7 @@ import assert from 'assert';
 let component;
 
 const getPlot = props => (
-  <Plot {...{ handlePlotClick: () => {}, x: 0, y: 0, ...props }} />
+  <Plot {...{ handlePlotClick: () => {}, x: 0, y: 0, state: {}, ...props }} />
 );
 
 beforeEach(() => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, func, string } from 'prop-types';
+import { array, func, object, string } from 'prop-types';
 import PlantableItems from '../PlantableItems';
 import { stageFocusType } from '../../enums';
 
@@ -7,17 +7,19 @@ import './ContextPane.css';
 
 const ContextPane = ({
   handleSelectPlantableItem,
-  inventory,
-  selectedPlantableItemId,
+  plantableInventory,
   stageFocus,
+  state,
+  state: { selectedPlantableItemId },
 }) => (
   <div className="ContextPane">
     {stageFocus === stageFocusType.FIELD && (
       <PlantableItems
         {...{
           handleSelectPlantableItem,
-          inventory,
+          plantableInventory,
           selectedPlantableItemId,
+          state,
         }}
       />
     )}
@@ -26,9 +28,9 @@ const ContextPane = ({
 
 ContextPane.propTypes = {
   handleSelectPlantableItem: func.isRequired,
-  inventory: array.isRequired,
-  selectedPlantableItemId: string.isRequired,
+  plantableInventory: array.isRequired,
   stageFocus: string.isRequired,
+  state: object.isRequired,
 };
 
 export default ContextPane;

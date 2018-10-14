@@ -6,7 +6,9 @@ import assert from 'assert';
 let component;
 
 const getNavigation = props => (
-  <Navigation {...{ handleChangeView: () => {}, money: 0, ...props }} />
+  <Navigation
+    {...{ handleChangeView: () => {}, money: 0, state: {}, ...props }}
+  />
 );
 
 beforeEach(() => {

@@ -11,8 +11,10 @@ const getShop = props => (
     {...{
       handlePurchaseItem: () => {},
       items: [],
-      money: 0,
-      valueAdjustments: {},
+      state: {
+        money: 0,
+        valueAdjustments: {},
+      },
       ...props,
     }}
   />

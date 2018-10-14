@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, func, number, object, string } from 'prop-types';
+import { array, func, object, string } from 'prop-types';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
@@ -14,17 +14,20 @@ const stageTitleMap = {
 };
 
 const Stage = ({
-  fieldHeight,
-  fieldWidth,
   handlePlotClick,
   handlePurchaseItem,
   handleSellItem,
-  inventory,
-  money,
-  selectedPlantableItemId,
-  shopInventory,
+  playerInventory,
   stageFocus,
-  valueAdjustments,
+  state,
+  state: {
+    fieldHeight,
+    fieldWidth,
+    money,
+    selectedPlantableItemId,
+    shopInventory,
+    valueAdjustments,
+  },
 }) => (
   <div className="Stage">
     <h2>{stageTitleMap[stageFocus]}</h2>
@@ -35,12 +38,19 @@ const Stage = ({
           columns: fieldWidth,
           rows: fieldHeight,
           selectedPlantableItemId,
+          state,
         }}
       />
     )}
     {stageFocus === stageFocusType.INVENTORY && (
       <Inventory
-        {...{ handleSellItem, items: inventory, money, valueAdjustments }}
+        {...{
+          handleSellItem,
+          items: playerInventory,
+          money,
+          state,
+          valueAdjustments,
+        }}
       />
     )}
     {stageFocus === stageFocusType.SHOP && (
@@ -48,8 +58,7 @@ const Stage = ({
         {...{
           handlePurchaseItem,
           items: shopInventory,
-          money,
-          valueAdjustments,
+          state,
         }}
       />
     )}
@@ -57,17 +66,12 @@ const Stage = ({
 );
 
 Stage.propTypes = {
-  fieldHeight: number.isRequired,
-  fieldWidth: number.isRequired,
   handlePlotClick: func.isRequired,
   handlePurchaseItem: func.isRequired,
   handleSellItem: func.isRequired,
-  inventory: array.isRequired,
-  money: number.isRequired,
-  selectedPlantableItemId: string.isRequired,
-  shopInventory: array.isRequired,
+  playerInventory: array.isRequired,
   stageFocus: string.isRequired,
-  valueAdjustments: object.isRequired,
+  state: object.isRequired,
 };
 
 export default Stage;

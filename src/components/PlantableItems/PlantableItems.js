@@ -1,19 +1,24 @@
 import React from 'react';
-import { array, func, string } from 'prop-types';
+import { array, func, object, string } from 'prop-types';
 import Item from '../Item';
 import './PlantableItems.css';
 
 export const PlantableItems = ({
   handleSelectPlantableItem,
-  inventory,
+  plantableInventory,
   selectedPlantableItemId,
+  state,
 }) => (
   <div className="PlantableItems">
     <ul>
-      {inventory.map(item => (
+      {plantableInventory.map(item => (
         <li key={item.id} onClick={() => handleSelectPlantableItem(item)}>
           <Item
-            {...{ item, isSelected: item.id === selectedPlantableItemId }}
+            {...{
+              item,
+              isSelected: item.id === selectedPlantableItemId,
+              state,
+            }}
           />
         </li>
       ))}
@@ -23,8 +28,9 @@ export const PlantableItems = ({
 
 PlantableItems.propTypes = {
   handleSelectPlantableItem: func.isRequired,
-  inventory: array.isRequired,
+  plantableInventory: array.isRequired,
   selectedPlantableItemId: string.isRequired,
+  state: object.isRequired,
 };
 
 export default PlantableItems;

@@ -14,8 +14,9 @@ const getPlantableItems = props => (
   <PlantableItems
     {...{
       handleSelectPlantableItem: () => {},
-      inventory: [],
+      plantableInventory: [],
       selectedPlantableItemId: '',
+      state: {},
       ...props,
     }}
   />
@@ -29,7 +30,7 @@ describe('rendering', () => {
   beforeEach(() => {
     component = shallow(
       getPlantableItems({
-        inventory: [{ quantity: 1, id: 'sample-item-3' }],
+        plantableInventory: [{ quantity: 1, id: 'sample-item-3' }],
         selectedPlantableItemId: 'sample-item-3',
       })
     );

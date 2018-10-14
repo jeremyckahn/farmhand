@@ -11,9 +11,9 @@ const getContextPane = props => (
   <ContextPane
     {...{
       handleSelectPlantableItem: () => {},
-      inventory: [],
-      selectedPlantableItemId: '',
+      plantableInventory: [],
       stageFocus: stageFocusType.NONE,
+      state: { selectedPlantableItemId: '' },
       ...props,
     }}
   />

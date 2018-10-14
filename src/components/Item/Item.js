@@ -11,8 +11,11 @@ const Item = ({
   item,
   item: { image, name, quantity, value },
   money,
-  isPurchaseView = !!handlePurchaseItem, // eslint-disable-line react/prop-types
-  isSellView = !!handleSellItem, // eslint-disable-line react/prop-types
+  state,
+  // eslint-disable react/prop-types
+  isPurchaseView = !!handlePurchaseItem,
+  isSellView = !!handleSellItem,
+  // eslint-enable react/prop-types
 }) => (
   <div className={classNames('Item', { 'is-selected': isSelected })}>
     <header>
@@ -48,6 +51,7 @@ Item.propTypes = {
   isSelected: bool,
   item: object.isRequired,
   money: number,
+  state: object.isRequired,
 };
 
 export default Item;

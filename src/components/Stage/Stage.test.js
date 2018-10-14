@@ -12,17 +12,19 @@ let component;
 const getStage = props => (
   <Stage
     {...{
-      fieldHeight: 4,
-      fieldWidth: 2,
       handlePlotClick: () => {},
       handlePurchaseItem: () => {},
       handleSellItem: () => {},
-      inventory: [],
-      money: 0,
-      selectedPlantableItemId: '',
-      shopInventory: [],
+      playerInventory: [],
       stageFocus: stageFocusType.FIELD,
-      valueAdjustments: {},
+      state: {
+        fieldHeight: 4,
+        fieldWidth: 2,
+        money: 0,
+        selectedPlantableItemId: '',
+        shopInventory: [],
+        valueAdjustments: {},
+      },
       ...props,
     }}
   />

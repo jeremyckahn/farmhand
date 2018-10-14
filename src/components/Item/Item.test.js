@@ -7,7 +7,7 @@ import { testItem } from '../../test-utils';
 let component;
 
 const getItem = props => (
-  <Item {...{ item: testItem({ name: '' }), money: 0, ...props }} />
+  <Item {...{ item: testItem({ name: '' }), money: 0, state: {}, ...props }} />
 );
 
 describe('static UI', () => {

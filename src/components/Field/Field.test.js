@@ -13,6 +13,7 @@ const getField = props => (
       handlePlotClick: () => {},
       rows: 0,
       selectedPlantableItemId: '',
+      state: {},
       ...props,
     }}
   />

@@ -12,7 +12,14 @@ import Inventory from './Inventory';
 let component;
 
 const getInventory = props => (
-  <Inventory {...{ items: [], money: 0, valueAdjustments: {}, ...props }} />
+  <Inventory
+    {...{
+      items: [],
+      state: {},
+      valueAdjustments: {},
+      ...props,
+    }}
+  />
 );
 
 describe('rendering items', () => {
