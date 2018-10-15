@@ -1,22 +1,19 @@
 import React from 'react';
-import { bool, func, number, object } from 'prop-types';
+import { bool, func, number, object, shape } from 'prop-types';
 import classNames from 'classnames';
 import { items } from '../../img';
 
 import './Item.css';
 
 const Item = ({
-  handlePurchaseItem,
-  handleSellItem,
+  handlers: { handlePurchaseItem, handleSellItem } = {},
   isSelected,
   item,
   item: { id, name, quantity, value },
   money,
   state,
-  // eslint-disable react/prop-types
-  isPurchaseView = !!handlePurchaseItem,
-  isSellView = !!handleSellItem,
-  // eslint-enable react/prop-types
+  isPurchaseView,
+  isSellView,
 }) => (
   <div className={classNames('Item', { 'is-selected': isSelected })}>
     <header>
@@ -47,9 +44,13 @@ const Item = ({
 );
 
 Item.propTypes = {
-  handlePurchaseItem: func,
-  handleSellItem: func,
+  handlers: shape({
+    handlePurchaseItem: func,
+    handleSellItem: func,
+  }),
+  isPurchaseView: bool,
   isSelected: bool,
+  isSellView: bool,
   item: object.isRequired,
   money: number,
   state: object.isRequired,

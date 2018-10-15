@@ -12,9 +12,11 @@ let component;
 const getStage = props => (
   <Stage
     {...{
-      handlePlotClick: () => {},
-      handlePurchaseItem: () => {},
-      handleSellItem: () => {},
+      handlers: {
+        handlePlotClick: () => {},
+        handlePurchaseItem: () => {},
+        handleSellItem: () => {},
+      },
       playerInventory: [],
       stageFocus: stageFocusType.FIELD,
       state: {

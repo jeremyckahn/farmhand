@@ -14,6 +14,7 @@ let component;
 const getInventory = props => (
   <Inventory
     {...{
+      handlers: {},
       items: [],
       state: {},
       valueAdjustments: {},

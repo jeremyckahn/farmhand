@@ -1,10 +1,10 @@
 import React from 'react';
-import { array, func, object, string } from 'prop-types';
+import { array, func, object, shape, string } from 'prop-types';
 import Item from '../Item';
 import './PlantableItems.css';
 
 export const PlantableItems = ({
-  handleSelectPlantableItem,
+  handlers: { handleSelectPlantableItem },
   plantableInventory,
   selectedPlantableItemId,
   state,
@@ -27,7 +27,9 @@ export const PlantableItems = ({
 );
 
 PlantableItems.propTypes = {
-  handleSelectPlantableItem: func.isRequired,
+  handlers: shape({
+    handleSelectPlantableItem: func.isRequired,
+  }).isRequired,
   plantableInventory: array.isRequired,
   selectedPlantableItemId: string.isRequired,
   state: object.isRequired,

@@ -1,17 +1,11 @@
 import React from 'react';
-import { func, number, object, string } from 'prop-types';
+import { number, object, string } from 'prop-types';
 import Plot from '../Plot';
 import classNames from 'classnames';
 
 import './Field.css';
 
-const Field = ({
-  columns,
-  handlePlotClick,
-  rows,
-  selectedPlantableItemId,
-  state,
-}) => (
+const Field = ({ columns, handlers, rows, selectedPlantableItemId, state }) => (
   <div
     className={classNames('Field', {
       'is-plantable-item-selected': selectedPlantableItemId,
@@ -24,7 +18,7 @@ const Field = ({
           {Array(columns)
             .fill(null)
             .map((_null, j) => (
-              <Plot key={j} {...{ handlePlotClick, state, x: j, y: i }} />
+              <Plot key={j} {...{ handlers, state, x: j, y: i }} />
             ))}
         </div>
       ))}
@@ -33,7 +27,7 @@ const Field = ({
 
 Field.propTypes = {
   columns: number.isRequired,
-  handlePlotClick: func.isRequired,
+  handlers: object.isRequired,
   rows: number.isRequired,
   selectedPlantableItemId: string.isRequired,
   state: object.isRequired,

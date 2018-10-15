@@ -1,11 +1,11 @@
 import React from 'react';
 import Dinero from 'dinero.js';
-import { func, number, object } from 'prop-types';
+import { func, number, object, shape } from 'prop-types';
 import { stageFocusType } from '../../enums';
 
 import './Navigation.css';
 
-const Navigation = ({ handleChangeView, money, state }) => (
+const Navigation = ({ handlers: { handleChangeView }, money, state }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
     <h2>
@@ -24,7 +24,9 @@ const Navigation = ({ handleChangeView, money, state }) => (
 );
 
 Navigation.propTypes = {
-  handleChangeView: func.isRequired,
+  handlers: shape({
+    handleChangeView: func.isRequired,
+  }).isRequired,
   money: number.isRequired,
   state: object.isRequired,
 };

@@ -143,10 +143,10 @@ export default class Farmhand extends Component {
       <div className="fill Farmhand">
         <NotificationSystem ref={notificationSystemRef} />
         <div className="sidebar">
-          <Navigation {...{ money, state, ...handlers }} />
+          <Navigation {...{ handlers, money, state }} />
           <ContextPane
             {...{
-              ...handlers,
+              handlers,
               plantableInventory: this.getPlantableInventory(),
               stageFocus,
               state,
@@ -155,7 +155,7 @@ export default class Farmhand extends Component {
         </div>
         <Stage
           {...{
-            ...handlers,
+            handlers,
             playerInventory: this.getPlayerInventory(),
             stageFocus,
             state,

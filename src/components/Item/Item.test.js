@@ -7,7 +7,15 @@ import { testItem } from '../../test-utils';
 let component;
 
 const getItem = props => (
-  <Item {...{ item: testItem({ name: '' }), money: 0, state: {}, ...props }} />
+  <Item
+    {...{
+      handlers: {},
+      item: testItem({ name: '' }),
+      money: 0,
+      state: {},
+      ...props,
+    }}
+  />
 );
 
 describe('static UI', () => {
@@ -31,12 +39,12 @@ describe('conditional UI', () => {
     });
   });
 
-  describe('purchase button', () => {
+  describe('isPurchaseView', () => {
     describe('user has enough money', () => {
       beforeEach(() => {
         component = shallow(
           getItem({
-            handlePurchaseItem: () => {},
+            isPurchaseView: true,
             item: testItem({ name: 'an-item' }),
             money: 50,
           })
@@ -52,7 +60,7 @@ describe('conditional UI', () => {
       beforeEach(() => {
         component = shallow(
           getItem({
-            handlePurchaseItem: () => {},
+            isPurchaseView: true,
             item: testItem({ name: 'an-item', value: 10 }),
             money: 5,
           })
@@ -65,11 +73,11 @@ describe('conditional UI', () => {
     });
   });
 
-  describe('sell button', () => {
+  describe('isSellView', () => {
     beforeEach(() => {
       component = shallow(
         getItem({
-          handleSellItem: () => {},
+          isSellView: true,
           item: testItem({ name: 'an-item' }),
         })
       );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, func, object, string } from 'prop-types';
+import { array, object, string } from 'prop-types';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
@@ -14,9 +14,7 @@ const stageTitleMap = {
 };
 
 const Stage = ({
-  handlePlotClick,
-  handlePurchaseItem,
-  handleSellItem,
+  handlers,
   playerInventory,
   stageFocus,
   state,
@@ -34,7 +32,7 @@ const Stage = ({
     {stageFocus === stageFocusType.FIELD && (
       <Field
         {...{
-          handlePlotClick,
+          handlers,
           columns: fieldWidth,
           rows: fieldHeight,
           selectedPlantableItemId,
@@ -45,7 +43,8 @@ const Stage = ({
     {stageFocus === stageFocusType.INVENTORY && (
       <Inventory
         {...{
-          handleSellItem,
+          handlers,
+          isSellView: true,
           items: playerInventory,
           money,
           state,
@@ -56,7 +55,7 @@ const Stage = ({
     {stageFocus === stageFocusType.SHOP && (
       <Shop
         {...{
-          handlePurchaseItem,
+          handlers,
           items: shopInventory,
           state,
         }}
@@ -66,9 +65,7 @@ const Stage = ({
 );
 
 Stage.propTypes = {
-  handlePlotClick: func.isRequired,
-  handlePurchaseItem: func.isRequired,
-  handleSellItem: func.isRequired,
+  handlers: object.isRequired,
   playerInventory: array.isRequired,
   stageFocus: string.isRequired,
   state: object.isRequired,

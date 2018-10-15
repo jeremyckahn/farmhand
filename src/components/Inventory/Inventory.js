@@ -1,13 +1,14 @@
 import React from 'react';
 import Item from '../Item';
 import { getItemValue } from '../../utils';
-import { array, func, object } from 'prop-types';
+import { array, bool, object } from 'prop-types';
 
 import './Inventory.css';
 
 const Inventory = ({
-  handlePurchaseItem,
-  handleSellItem,
+  handlers,
+  isPurchaseView,
+  isSellView,
   items,
   state,
   state: { money },
@@ -19,9 +20,13 @@ const Inventory = ({
         <li key={i}>
           <Item
             {...{
-              handlePurchaseItem,
-              handleSellItem,
-              item: { ...item, value: getItemValue(item, valueAdjustments) },
+              handlers,
+              isPurchaseView,
+              isSellView,
+              item: {
+                ...item,
+                value: getItemValue(item, valueAdjustments),
+              },
               money,
               state,
             }}
@@ -33,9 +38,10 @@ const Inventory = ({
 );
 
 Inventory.propTypes = {
-  handlePurchaseItem: func,
-  handleSellItem: func,
+  handlers: object.isRequired,
   items: array.isRequired,
+  isPurchaseView: bool,
+  isSellView: bool,
   state: object.isRequired,
   valueAdjustments: object.isRequired,
 };

@@ -10,7 +10,9 @@ const getField = props => (
   <Field
     {...{
       columns: 0,
-      handlePlotClick: () => {},
+      handlers: {
+        handlePlotClick: () => {},
+      },
       rows: 0,
       selectedPlantableItemId: '',
       state: {},

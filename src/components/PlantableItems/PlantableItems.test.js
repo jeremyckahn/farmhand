@@ -13,7 +13,9 @@ let component;
 const getPlantableItems = props => (
   <PlantableItems
     {...{
-      handleSelectPlantableItem: () => {},
+      handlers: {
+        handleSelectPlantableItem: () => {},
+      },
       plantableInventory: [],
       selectedPlantableItemId: '',
       state: {},

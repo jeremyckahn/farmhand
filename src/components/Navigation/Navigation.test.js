@@ -7,7 +7,12 @@ let component;
 
 const getNavigation = props => (
   <Navigation
-    {...{ handleChangeView: () => {}, money: 0, state: {}, ...props }}
+    {...{
+      handlers: { handleChangeView: () => {} },
+      money: 0,
+      state: {},
+      ...props,
+    }}
   />
 );
 
