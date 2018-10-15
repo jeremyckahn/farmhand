@@ -1,6 +1,7 @@
 import React from 'react';
 import { bool, func, number, object } from 'prop-types';
 import classNames from 'classnames';
+import { items } from '../../img';
 
 import './Item.css';
 
@@ -9,7 +10,7 @@ const Item = ({
   handleSellItem,
   isSelected,
   item,
-  item: { image, name, quantity, value },
+  item: { id, name, quantity, value },
   money,
   state,
   // eslint-disable react/prop-types
@@ -22,7 +23,7 @@ const Item = ({
       <h2>{name}</h2>
       <h3>{isPurchaseView ? `Price: ${value}` : `Sell price: ${value}`}</h3>
     </header>
-    <img src={image} alt={name} />
+    <img src={items[id]} alt={name} />
     {isPurchaseView && (
       <button
         className="purchase"

@@ -6,7 +6,6 @@
  * @typedef farmhand.item
  * @type {Object}
  * @property {string} id
- * @property {string} image
  * @property {string} name
  * @property {number} value
  * @property {farmhand.module:enums.cropType} [cropType]
