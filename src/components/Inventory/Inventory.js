@@ -1,7 +1,7 @@
 import React from 'react';
 import Item from '../Item';
 import { getItemValue } from '../../utils';
-import { array, bool, object } from 'prop-types';
+import { array, bool, object, shape } from 'prop-types';
 
 import './Inventory.css';
 
@@ -11,8 +11,7 @@ const Inventory = ({
   isSellView,
   items,
   state,
-  state: { money },
-  valueAdjustments,
+  state: { valueAdjustments },
 }) => (
   <div className="Inventory">
     <ul>
@@ -27,7 +26,6 @@ const Inventory = ({
                 ...item,
                 value: getItemValue(item, valueAdjustments),
               },
-              money,
               state,
             }}
           />
@@ -42,8 +40,9 @@ Inventory.propTypes = {
   items: array.isRequired,
   isPurchaseView: bool,
   isSellView: bool,
-  state: object.isRequired,
-  valueAdjustments: object.isRequired,
+  state: shape({
+    valueAdjustments: object.isRequired,
+  }).isRequired,
 };
 
 export default Inventory;

@@ -1,11 +1,17 @@
 import React from 'react';
-import { number, object, string } from 'prop-types';
+import { number, object, shape, string } from 'prop-types';
 import Plot from '../Plot';
 import classNames from 'classnames';
 
 import './Field.css';
 
-const Field = ({ columns, handlers, rows, selectedPlantableItemId, state }) => (
+const Field = ({
+  handlers,
+  columns,
+  rows,
+  state,
+  state: { selectedPlantableItemId },
+}) => (
   <div
     className={classNames('Field', {
       'is-plantable-item-selected': selectedPlantableItemId,
@@ -29,8 +35,9 @@ Field.propTypes = {
   columns: number.isRequired,
   handlers: object.isRequired,
   rows: number.isRequired,
-  selectedPlantableItemId: string.isRequired,
-  state: object.isRequired,
+  state: shape({
+    selectedPlantableItemId: string.isRequired,
+  }).isRequired,
 };
 
 export default Field;

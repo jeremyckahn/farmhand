@@ -7,13 +7,13 @@ import './Item.css';
 
 const Item = ({
   handlers: { handlePurchaseItem, handleSellItem } = {},
+  isPurchaseView,
   isSelected,
+  isSellView,
   item,
   item: { id, name, quantity, value },
-  money,
   state,
-  isPurchaseView,
-  isSellView,
+  state: { money },
 }) => (
   <div className={classNames('Item', { 'is-selected': isSelected })}>
     <header>
@@ -52,8 +52,9 @@ Item.propTypes = {
   isSelected: bool,
   isSellView: bool,
   item: object.isRequired,
-  money: number,
-  state: object.isRequired,
+  state: shape({
+    money: number,
+  }).isRequired,
 };
 
 export default Item;

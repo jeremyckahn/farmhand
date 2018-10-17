@@ -7,16 +7,19 @@ import assert from 'assert';
 
 let component;
 
-const getContextPane = props => (
+const getContextPane = (props = {}) => (
   <ContextPane
     {...{
       handlers: {
         handleSelectPlantableItem: () => {},
+        ...props.handlers,
       },
-      plantableInventory: [],
-      stageFocus: stageFocusType.NONE,
-      state: { selectedPlantableItemId: '' },
-      ...props,
+      state: {
+        selectedPlantableItemId: '',
+        stageFocus: stageFocusType.NONE,
+        plantableInventory: [],
+        ...props.state,
+      },
     }}
   />
 );
@@ -30,7 +33,7 @@ describe('conditional UI', () => {
     describe('stageFocus === stageFocusType.FIELD', () => {
       beforeEach(() => {
         component = shallow(
-          getContextPane({ stageFocus: stageFocusType.FIELD })
+          getContextPane({ state: { stageFocus: stageFocusType.FIELD } })
         );
       });
 

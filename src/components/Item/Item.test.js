@@ -6,21 +6,22 @@ import { testItem } from '../../test-utils';
 
 let component;
 
-const getItem = props => (
+const getItem = (props = {}) => (
   <Item
     {...{
-      handlers: {},
+      handlers: { ...props.handlers },
       item: testItem({ name: '' }),
-      money: 0,
-      state: {},
-      ...props,
+      state: { money: 0, ...props.state },
+      ...props.options,
     }}
   />
 );
 
 describe('static UI', () => {
   beforeEach(() => {
-    component = shallow(getItem({ item: testItem({ name: 'an-item' }) }));
+    component = shallow(
+      getItem({ options: { item: testItem({ name: 'an-item' }) } })
+    );
   });
 
   it('renders the name', () => {
@@ -31,7 +32,7 @@ describe('static UI', () => {
 describe('conditional UI', () => {
   describe('class names', () => {
     beforeEach(() => {
-      component = shallow(getItem({ isSelected: true }));
+      component = shallow(getItem({ options: { isSelected: true } }));
     });
 
     it('supports is-selected', () => {
@@ -44,9 +45,11 @@ describe('conditional UI', () => {
       beforeEach(() => {
         component = shallow(
           getItem({
-            isPurchaseView: true,
-            item: testItem({ name: 'an-item' }),
-            money: 50,
+            options: {
+              isPurchaseView: true,
+              item: testItem({ name: 'an-item' }),
+            },
+            state: { money: 50 },
           })
         );
       });
@@ -60,9 +63,11 @@ describe('conditional UI', () => {
       beforeEach(() => {
         component = shallow(
           getItem({
-            isPurchaseView: true,
-            item: testItem({ name: 'an-item', value: 10 }),
-            money: 5,
+            options: {
+              isPurchaseView: true,
+              item: testItem({ name: 'an-item', value: 10 }),
+            },
+            state: { money: 5 },
           })
         );
       });
@@ -77,8 +82,10 @@ describe('conditional UI', () => {
     beforeEach(() => {
       component = shallow(
         getItem({
-          isSellView: true,
-          item: testItem({ name: 'an-item' }),
+          options: {
+            isSellView: true,
+            item: testItem({ name: 'an-item' }),
+          },
         })
       );
     });

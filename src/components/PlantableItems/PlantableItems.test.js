@@ -10,16 +10,18 @@ import assert from 'assert';
 
 let component;
 
-const getPlantableItems = props => (
+const getPlantableItems = (props = {}) => (
   <PlantableItems
     {...{
       handlers: {
         handleSelectPlantableItem: () => {},
+        ...props.handlers,
       },
-      plantableInventory: [],
-      selectedPlantableItemId: '',
-      state: {},
-      ...props,
+      state: {
+        plantableInventory: [],
+        selectedPlantableItemId: '',
+        ...props.state,
+      },
     }}
   />
 );
@@ -32,8 +34,10 @@ describe('rendering', () => {
   beforeEach(() => {
     component = shallow(
       getPlantableItems({
-        plantableInventory: [{ quantity: 1, id: 'sample-item-3' }],
-        selectedPlantableItemId: 'sample-item-3',
+        state: {
+          plantableInventory: [{ quantity: 1, id: 'sample-item-3' }],
+          selectedPlantableItemId: 'sample-item-3',
+        },
       })
     );
   });

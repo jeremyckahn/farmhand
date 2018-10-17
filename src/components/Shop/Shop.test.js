@@ -6,16 +6,16 @@ import assert from 'assert';
 
 let component;
 
-const getShop = props => (
+const getShop = (props = {}) => (
   <Shop
     {...{
-      handlers: {},
+      handlers: { ...props.handlers },
       items: [],
       state: {
-        money: 0,
         valueAdjustments: {},
+        ...props.state,
       },
-      ...props,
+      ...props.options,
     }}
   />
 );

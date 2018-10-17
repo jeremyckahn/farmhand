@@ -11,14 +11,16 @@ import Inventory from './Inventory';
 
 let component;
 
-const getInventory = props => (
+const getInventory = (props = {}) => (
   <Inventory
     {...{
-      handlers: {},
+      handlers: { ...props.handlers },
       items: [],
-      state: {},
-      valueAdjustments: {},
-      ...props,
+      state: {
+        valueAdjustments: {},
+        ...props.state,
+      },
+      ...props.options,
     }}
   />
 );
@@ -26,7 +28,7 @@ const getInventory = props => (
 describe('rendering items', () => {
   beforeEach(() => {
     component = shallow(
-      getInventory({ items: [testItem({ id: 'sample-item-1' })] })
+      getInventory({ options: { items: [testItem({ id: 'sample-item-1' })] } })
     );
   });
 

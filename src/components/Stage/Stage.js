@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, object, string } from 'prop-types';
+import { array, number, object, shape, string } from 'prop-types';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
@@ -15,16 +15,13 @@ const stageTitleMap = {
 
 const Stage = ({
   handlers,
-  playerInventory,
-  stageFocus,
   state,
   state: {
     fieldHeight,
     fieldWidth,
-    money,
-    selectedPlantableItemId,
+    playerInventory,
     shopInventory,
-    valueAdjustments,
+    stageFocus,
   },
 }) => (
   <div className="Stage">
@@ -35,7 +32,6 @@ const Stage = ({
           handlers,
           columns: fieldWidth,
           rows: fieldHeight,
-          selectedPlantableItemId,
           state,
         }}
       />
@@ -46,9 +42,7 @@ const Stage = ({
           handlers,
           isSellView: true,
           items: playerInventory,
-          money,
           state,
-          valueAdjustments,
         }}
       />
     )}
@@ -66,9 +60,13 @@ const Stage = ({
 
 Stage.propTypes = {
   handlers: object.isRequired,
-  playerInventory: array.isRequired,
-  stageFocus: string.isRequired,
-  state: object.isRequired,
+  state: shape({
+    fieldHeight: number.isRequired,
+    fieldWidth: number.isRequired,
+    playerInventory: array.isRequired,
+    shopInventory: array.isRequired,
+    stageFocus: string.isRequired,
+  }).isRequired,
 };
 
 export default Stage;

@@ -5,13 +5,11 @@ import assert from 'assert';
 
 let component;
 
-const getNavigation = props => (
+const getNavigation = (props = {}) => (
   <Navigation
     {...{
-      handlers: { handleChangeView: () => {} },
-      money: 0,
-      state: {},
-      ...props,
+      handlers: { handleChangeView: () => {}, ...props.handlers },
+      state: { money: 0, ...props.state },
     }}
   />
 );

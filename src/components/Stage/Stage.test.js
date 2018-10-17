@@ -9,25 +9,22 @@ import assert from 'assert';
 
 let component;
 
-const getStage = props => (
+const getStage = (props = {}) => (
   <Stage
     {...{
       handlers: {
-        handlePlotClick: () => {},
-        handlePurchaseItem: () => {},
-        handleSellItem: () => {},
+        ...props.handlers,
       },
-      playerInventory: [],
-      stageFocus: stageFocusType.FIELD,
       state: {
         fieldHeight: 4,
         fieldWidth: 2,
-        money: 0,
+        playerInventory: [],
         selectedPlantableItemId: '',
         shopInventory: [],
+        stageFocus: stageFocusType.FIELD,
         valueAdjustments: {},
+        ...props.state,
       },
-      ...props,
     }}
   />
 );
@@ -35,7 +32,9 @@ const getStage = props => (
 describe('focus', () => {
   describe('field', () => {
     beforeEach(() => {
-      component = shallow(getStage({ stageFocus: stageFocusType.FIELD }));
+      component = shallow(
+        getStage({ state: { stageFocus: stageFocusType.FIELD } })
+      );
     });
 
     it('shows the field', () => {
@@ -45,7 +44,9 @@ describe('focus', () => {
 
   describe('inventory', () => {
     beforeEach(() => {
-      component = shallow(getStage({ stageFocus: stageFocusType.INVENTORY }));
+      component = shallow(
+        getStage({ state: { stageFocus: stageFocusType.INVENTORY } })
+      );
     });
 
     it('shows the inventory', () => {
@@ -55,7 +56,9 @@ describe('focus', () => {
 
   describe('shop', () => {
     beforeEach(() => {
-      component = shallow(getStage({ stageFocus: stageFocusType.SHOP }));
+      component = shallow(
+        getStage({ state: { stageFocus: stageFocusType.SHOP } })
+      );
     });
 
     it('shows the shop', () => {

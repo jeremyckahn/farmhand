@@ -6,24 +6,27 @@ import assert from 'assert';
 
 let component;
 
-const getField = props => (
+const getField = (props = {}) => (
   <Field
     {...{
       columns: 0,
       handlers: {
         handlePlotClick: () => {},
+        ...props.handlers,
       },
       rows: 0,
-      selectedPlantableItemId: '',
-      state: {},
-      ...props,
+      state: {
+        selectedPlantableItemId: '',
+        ...props.state,
+      },
+      ...props.options,
     }}
   />
 );
 
 describe('field rendering', () => {
   beforeEach(() => {
-    component = shallow(getField({ columns: 2, rows: 3 }));
+    component = shallow(getField({ options: { columns: 2, rows: 3 } }));
   });
 
   it('renders rows', () => {
@@ -47,7 +50,9 @@ describe('is-plantable-item-selected class', () => {
   });
 
   it('is present when item is selected', () => {
-    component = shallow(getField({ selectedPlantableItemId: 'stub-item' }));
+    component = shallow(
+      getField({ state: { selectedPlantableItemId: 'stub-item' } })
+    );
     assert(component.hasClass('is-plantable-item-selected'));
   });
 });
