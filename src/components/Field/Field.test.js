@@ -16,6 +16,7 @@ const getField = (props = {}) => (
       },
       rows: 0,
       state: {
+        field: [[null, null], [null, null], [null, null]],
         selectedPlantableItemId: '',
         ...props.state,
       },

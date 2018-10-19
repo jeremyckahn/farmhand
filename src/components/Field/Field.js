@@ -1,5 +1,5 @@
 import React from 'react';
-import { number, object, shape, string } from 'prop-types';
+import { array, number, object, shape, string } from 'prop-types';
 import Plot from '../Plot';
 import classNames from 'classnames';
 
@@ -10,7 +10,7 @@ const Field = ({
   columns,
   rows,
   state,
-  state: { selectedPlantableItemId },
+  state: { field, selectedPlantableItemId },
 }) => (
   <div
     className={classNames('Field', {
@@ -24,7 +24,10 @@ const Field = ({
           {Array(columns)
             .fill(null)
             .map((_null, j) => (
-              <Plot key={j} {...{ handlers, state, x: j, y: i }} />
+              <Plot
+                key={j}
+                {...{ handlers, item: field[i][j], state, x: j, y: i }}
+              />
             ))}
         </div>
       ))}
@@ -36,6 +39,7 @@ Field.propTypes = {
   handlers: object.isRequired,
   rows: number.isRequired,
   state: shape({
+    field: array.isRequired,
     selectedPlantableItemId: string.isRequired,
   }).isRequired,
 };

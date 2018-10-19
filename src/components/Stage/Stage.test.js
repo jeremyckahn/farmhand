@@ -16,6 +16,7 @@ const getStage = (props = {}) => (
         ...props.handlers,
       },
       state: {
+        field: [],
         fieldHeight: 4,
         fieldWidth: 2,
         playerInventory: [],
