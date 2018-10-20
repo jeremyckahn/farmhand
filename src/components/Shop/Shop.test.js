@@ -2,7 +2,6 @@ import React from 'react';
 import Shop from './';
 import Inventory from '../Inventory';
 import { shallow } from 'enzyme';
-import assert from 'assert';
 
 let component;
 
@@ -25,5 +24,5 @@ beforeEach(() => {
 });
 
 it('renders shop inventory', () => {
-  assert.equal(component.find(Inventory).length, 1);
+  expect(component.find(Inventory).length).toEqual(1);
 });

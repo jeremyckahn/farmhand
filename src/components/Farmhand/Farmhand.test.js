@@ -4,7 +4,6 @@ jest.mock('../../data/items');
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import assert from 'assert';
 import { stub } from 'sinon';
 import { testItem } from '../../test-utils';
 import { initialFieldWidth, initialFieldHeight } from '../../constants';
@@ -25,8 +24,8 @@ beforeEach(() => {
 
 describe('state', () => {
   it('inits field', () => {
-    assert.equal(component.state().field.length, initialFieldHeight);
-    assert.equal(component.state().field[0].length, initialFieldWidth);
+    expect(component.state().field.length).toEqual(initialFieldHeight);
+    expect(component.state().field[0].length).toEqual(initialFieldWidth);
   });
 });
 
@@ -43,7 +42,7 @@ describe('private functions', () => {
     });
 
     it('maps inventory state to renderable inventory data', () => {
-      assert.deepEqual(playerInventory, [{ quantity: 1, ...sampleItem1 }]);
+      expect(playerInventory).toEqual([{ quantity: 1, ...sampleItem1 }]);
     });
 
     it('returns cached result with unchanged input', () => {
@@ -51,7 +50,7 @@ describe('private functions', () => {
         inventory,
         valueAdjustments
       );
-      assert.equal(playerInventory, newPlayerInventory);
+      expect(playerInventory).toEqual(newPlayerInventory);
     });
 
     it('invalidates cache with changed input', () => {
@@ -59,7 +58,7 @@ describe('private functions', () => {
         [{ quantity: 1, id: 'sample-item-2' }],
         valueAdjustments
       );
-      assert.deepEqual(playerInventory, [{ quantity: 1, ...sampleItem2 }]);
+      expect(playerInventory).toEqual([{ quantity: 1, ...sampleItem2 }]);
     });
 
     describe('with valueAdjustments', () => {
@@ -72,7 +71,7 @@ describe('private functions', () => {
       });
 
       it('maps inventory state to renderable inventory data', () => {
-        assert.deepEqual(playerInventory, [
+        expect(playerInventory).toEqual([
           { quantity: 1, ...testItem({ id: 'sample-item-1', value: 2 }) },
         ]);
       });
@@ -92,8 +91,8 @@ describe('private functions', () => {
     });
 
     it('updates valueAdjustments by random factor', () => {
-      assert.equal(valueAdjustments['sample-item-1'], 1.5);
-      assert.equal(valueAdjustments['sample-item-2'], 1.5);
+      expect(valueAdjustments['sample-item-1']).toEqual(1.5);
+      expect(valueAdjustments['sample-item-2']).toEqual(1.5);
     });
   });
 
@@ -110,7 +109,7 @@ describe('private functions', () => {
     });
 
     it('filters out non-plantable items', () => {
-      assert.deepEqual(plantableInventory, [sampleItem3]);
+      expect(plantableInventory).toEqual([sampleItem3]);
     });
   });
 });
@@ -129,9 +128,9 @@ describe('instance methods', () => {
     it('updates component state', () => {
       const { dayCount, valueAdjustments } = component.state();
 
-      assert.equal(dayCount, 2);
-      assert.equal(valueAdjustments['sample-item-1'], 1.25);
-      assert.equal(valueAdjustments['sample-item-2'], 1.25);
+      expect(dayCount).toEqual(2);
+      expect(valueAdjustments['sample-item-1']).toEqual(1.25);
+      expect(valueAdjustments['sample-item-2']).toEqual(1.25);
     });
   });
 });

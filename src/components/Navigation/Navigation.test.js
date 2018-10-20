@@ -1,7 +1,6 @@
 import React from 'react';
 import Navigation from './';
 import { shallow } from 'enzyme';
-import assert from 'assert';
 
 let component;
 
@@ -19,5 +18,5 @@ beforeEach(() => {
 });
 
 it('renders', () => {
-  assert(component.hasClass('Navigation'));
+  expect(component.hasClass('Navigation')).toBeTruthy();
 });

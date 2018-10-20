@@ -6,7 +6,6 @@ import React from 'react';
 import PlantableItems from './PlantableItems';
 import Item from '../Item';
 import { shallow } from 'enzyme';
-import assert from 'assert';
 
 let component;
 
@@ -43,10 +42,10 @@ describe('rendering', () => {
   });
 
   it('renders items for provided inventory', () => {
-    assert.equal(component.find(Item).length, 1);
+    expect(component.find(Item).length).toEqual(1);
   });
 
   it('renders selected item state', () => {
-    assert(component.find(Item).props().isSelected);
+    expect(component.find(Item).props().isSelected).toBeTruthy();
   });
 });

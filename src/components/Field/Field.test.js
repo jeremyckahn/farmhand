@@ -2,7 +2,6 @@ import React from 'react';
 import Field from './Field';
 import Plot from '../Plot';
 import { shallow } from 'enzyme';
-import assert from 'assert';
 
 let component;
 
@@ -31,29 +30,28 @@ describe('field rendering', () => {
   });
 
   it('renders rows', () => {
-    assert.equal(component.find('.row').length, 3);
+    expect(component.find('.row').length).toEqual(3);
   });
 
   it('renders columns', () => {
-    assert.equal(
+    expect(
       component
         .find('.row')
         .at(0)
-        .find(Plot).length,
-      2
-    );
+        .find(Plot).length
+    ).toEqual(2);
   });
 });
 
 describe('is-plantable-item-selected class', () => {
   it('is not present when item is not selected', () => {
-    assert(!component.hasClass('is-plantable-item-selected'));
+    expect(component.hasClass('is-plantable-item-selected')).toBeFalsy();
   });
 
   it('is present when item is selected', () => {
     component = shallow(
       getField({ state: { selectedPlantableItemId: 'stub-item' } })
     );
-    assert(component.hasClass('is-plantable-item-selected'));
+    expect(component.hasClass('is-plantable-item-selected')).toBeTruthy();
   });
 });

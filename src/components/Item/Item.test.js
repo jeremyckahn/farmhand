@@ -1,7 +1,6 @@
 import React from 'react';
 import Item from './';
 import { shallow } from 'enzyme';
-import assert from 'assert';
 import { testItem } from '../../test-utils';
 
 let component;
@@ -25,7 +24,7 @@ describe('static UI', () => {
   });
 
   it('renders the name', () => {
-    assert.equal(component.find('header h2').text(), 'an-item');
+    expect(component.find('header h2').text()).toEqual('an-item');
   });
 });
 
@@ -36,7 +35,7 @@ describe('conditional UI', () => {
     });
 
     it('supports is-selected', () => {
-      assert(component.hasClass('is-selected'));
+      expect(component.hasClass('is-selected')).toBeTruthy();
     });
   });
 
@@ -55,7 +54,9 @@ describe('conditional UI', () => {
       });
 
       it('enables purchase button', () => {
-        assert.equal(component.find('button.purchase').props().disabled, false);
+        expect(component.find('button.purchase').props().disabled).toEqual(
+          false
+        );
       });
     });
 
@@ -73,7 +74,9 @@ describe('conditional UI', () => {
       });
 
       it('disables purchase button', () => {
-        assert.equal(component.find('button.purchase').props().disabled, true);
+        expect(component.find('button.purchase').props().disabled).toEqual(
+          true
+        );
       });
     });
   });
@@ -91,7 +94,7 @@ describe('conditional UI', () => {
     });
 
     it('renders sell button when given an event handler', () => {
-      assert.equal(component.find('button.sell').length, 1);
+      expect(component.find('button.sell').length).toEqual(1);
     });
   });
 });

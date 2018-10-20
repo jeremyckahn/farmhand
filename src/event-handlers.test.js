@@ -5,7 +5,6 @@ import React from 'react';
 import Farmhand from './components/Farmhand';
 import { stageFocusType } from './enums';
 import { shallow } from 'enzyme';
-import assert from 'assert';
 import { testItem } from './test-utils';
 import { getCropFromItemId } from './utils';
 
@@ -21,7 +20,7 @@ describe('handlePurchaseItem', () => {
   describe('user has enough money', () => {
     it('creates a new item in the inventory', () => {
       handlers().handlePurchaseItem(testItem({ id: 'sample-item-1' }));
-      assert.deepEqual(component.state().inventory, [
+      expect(component.state().inventory).toEqual([
         { id: 'sample-item-1', quantity: 1 },
       ]);
     });
@@ -36,7 +35,7 @@ describe('handlePurchaseItem', () => {
       it('increments an existing item in the inventory', () => {
         handlers().handlePurchaseItem(testItem({ id: 'sample-item-1' }));
 
-        assert.deepEqual(component.state().inventory, [
+        expect(component.state().inventory).toEqual([
           testItem({
             id: 'sample-item-1',
             quantity: 2,
@@ -54,7 +53,7 @@ describe('handlePurchaseItem', () => {
       });
 
       it('deducts item value from money', () => {
-        assert.equal(component.state('money'), 90);
+        expect(component.state('money')).toEqual(90);
       });
     });
   });
@@ -68,11 +67,11 @@ describe('handlePurchaseItem', () => {
     });
 
     it('does not add the item to the inventory', () => {
-      assert.deepEqual(component.state('inventory'), {});
+      expect(component.state('inventory')).toEqual([]);
     });
 
     it('does not deduct item value from money', () => {
-      assert.equal(component.state('money'), 5);
+      expect(component.state('money')).toEqual(5);
     });
   });
 });
@@ -89,11 +88,11 @@ describe('handleSellItem', () => {
     });
 
     it('removes item from inventory', () => {
-      assert.deepEqual(component.state().inventory, []);
+      expect(component.state().inventory).toEqual([]);
     });
 
     it('adds value of item to player money', () => {
-      assert.equal(component.state().money, 120);
+      expect(component.state().money).toEqual(120);
     });
   });
 
@@ -107,7 +106,7 @@ describe('handleSellItem', () => {
     });
 
     it('decrements item', () => {
-      assert.deepEqual(component.state().inventory, [
+      expect(component.state().inventory).toEqual([
         testItem({
           id: 'sample-item-1',
           quantity: 1,
@@ -123,7 +122,7 @@ describe('handleChangeView', () => {
   });
 
   it('changes the view type', () => {
-    assert.equal(component.state('stageFocus'), stageFocusType.SHOP);
+    expect(component.state('stageFocus')).toEqual(stageFocusType.SHOP);
   });
 });
 
@@ -133,7 +132,7 @@ describe('handleSelectPlantableItem', () => {
   });
 
   it('updates selectedPlantableItemId state', () => {
-    assert.equal(component.state().selectedPlantableItemId, 'sample-item-3');
+    expect(component.state().selectedPlantableItemId).toEqual('sample-item-3');
   });
 });
 
@@ -155,14 +154,13 @@ describe('handlePlotClick', () => {
       });
 
       it('plants the item', () => {
-        assert.deepEqual(
-          component.state().field[0][0],
+        expect(component.state().field[0][0]).toEqual(
           getCropFromItemId('sample-item-3')
         );
       });
 
       it('decrements item quantity', () => {
-        assert.equal(component.state().inventory[0].quantity, 1);
+        expect(component.state().inventory[0].quantity).toEqual(1);
       });
     });
 
@@ -177,7 +175,7 @@ describe('handlePlotClick', () => {
       });
 
       it('does not decrement item quantity', () => {
-        assert.equal(component.state().inventory[0].quantity, 2);
+        expect(component.state().inventory[0].quantity).toEqual(2);
       });
     });
   });
@@ -192,7 +190,7 @@ describe('handlePlotClick', () => {
     });
 
     it('resets selectedPlantableItemId state', () => {
-      assert.equal(component.state().selectedPlantableItemId, '');
+      expect(component.state().selectedPlantableItemId).toEqual('');
     });
   });
 });

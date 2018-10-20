@@ -5,7 +5,6 @@ import Inventory from '../Inventory';
 import Shop from '../Shop';
 import { stageFocusType } from '../../../src/enums';
 import { shallow } from 'enzyme';
-import assert from 'assert';
 
 let component;
 
@@ -39,7 +38,7 @@ describe('focus', () => {
     });
 
     it('shows the field', () => {
-      assert.equal(component.find(Field).length, 1);
+      expect(component.find(Field).length).toEqual(1);
     });
   });
 
@@ -51,7 +50,7 @@ describe('focus', () => {
     });
 
     it('shows the inventory', () => {
-      assert.equal(component.find(Inventory).length, 1);
+      expect(component.find(Inventory).length).toEqual(1);
     });
   });
 
@@ -63,7 +62,7 @@ describe('focus', () => {
     });
 
     it('shows the shop', () => {
-      assert.equal(component.find(Shop).length, 1);
+      expect(component.find(Shop).length).toEqual(1);
     });
   });
 });

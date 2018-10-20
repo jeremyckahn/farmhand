@@ -3,7 +3,6 @@ import ContextPane from './ContextPane';
 import { stageFocusType } from '../../../src/enums';
 import PlantableItems from '../PlantableItems';
 import { shallow } from 'enzyme';
-import assert from 'assert';
 
 let component;
 
@@ -38,7 +37,7 @@ describe('conditional UI', () => {
       });
 
       it('renders relevant UI', () => {
-        assert.equal(component.find(PlantableItems).length, 1);
+        expect(component.find(PlantableItems).length).toEqual(1);
       });
     });
   });
