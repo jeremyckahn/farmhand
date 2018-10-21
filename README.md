@@ -69,4 +69,4 @@ This will also use the [gh-pages](https://github.com/tschaub/gh-pages) utility t
 
 ## License
 
-CC BY-NC-SA.
+[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
