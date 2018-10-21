@@ -1,25 +1,25 @@
 /* eslint-disable import/first */
-jest.mock('../../data/maps');
-jest.mock('../../data/items');
+jest.mock('./data/maps');
+jest.mock('./data/items');
 
 import React from 'react';
 import { shallow } from 'enzyme';
 import { stub } from 'sinon';
-import { testItem } from '../../test-utils';
-import { initialFieldWidth, initialFieldHeight } from '../../constants';
-import { sampleItem1, sampleItem2, sampleItem3 } from '../../data/items';
+import { testItem } from './test-utils';
+import { initialFieldWidth, initialFieldHeight } from './constants';
+import { sampleItem1, sampleItem2, sampleItem3 } from './data/items';
 
-import Farmhand, {
+import App, {
   computePlayerInventory,
   getPlantableInventory,
   getUpdatedValueAdjustments,
-} from './Farmhand';
+} from './App';
 
 let component;
 let mathStub;
 
 beforeEach(() => {
-  component = shallow(<Farmhand />);
+  component = shallow(<App />);
 });
 
 describe('state', () => {

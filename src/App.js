@@ -1,17 +1,17 @@
 import React, { Component, createRef } from 'react';
 import NotificationSystem from 'react-notification-system';
 import memoize from 'fast-memoize';
-import eventHandlers from '../../event-handlers';
-import Navigation from '../Navigation';
-import ContextPane from '../ContextPane';
-import Stage from '../Stage';
-import { getItemValue } from '../../utils';
-import shopInventory from '../../data/shop-inventory';
-import { itemsMap } from '../../data/maps';
-import { stageFocusType } from '../../enums';
-import { initialFieldWidth, initialFieldHeight } from '../../constants';
+import eventHandlers from './event-handlers';
+import Navigation from './components/Navigation';
+import ContextPane from './components/ContextPane';
+import Stage from './components/Stage';
+import { getItemValue } from './utils';
+import shopInventory from './data/shop-inventory';
+import { itemsMap } from './data/maps';
+import { stageFocusType } from './enums';
+import { initialFieldWidth, initialFieldHeight } from './constants';
 
-import './Farmhand.css';
+import './App.css';
 
 /**
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -60,9 +60,9 @@ export const getPlantableInventory = memoize(inventory =>
  * @property {Object.<number>} valueAdjustments
  */
 
-export default class Farmhand extends Component {
+export default class App extends Component {
   /**
-   * @member farmhand.Farmhand#state
+   * @member farmhand.App#state
    * @type {farmhand.state}
    */
   state = {
@@ -140,7 +140,7 @@ export default class Farmhand extends Component {
     };
 
     return (
-      <div className="fill Farmhand">
+      <div className="App fill">
         <NotificationSystem ref={notificationSystemRef} />
         <div className="sidebar">
           <Navigation {...{ handlers, state }} />
