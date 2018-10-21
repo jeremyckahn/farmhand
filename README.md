@@ -4,9 +4,9 @@
 
 ## Milestone 1 tasks
 
-- [ ] Stand up basic layout
-  - [ ] Info/detail pane
-  - [ ] Field grid
+- [x] Stand up basic layout
+  - [x] Info/detail pane
+  - [x] Field grid
 - [ ] [Local](https://github.com/localForage/localForage) saves
 - [ ] ~~Inventory (bin)~~
 - [ ] Day cycle
@@ -21,6 +21,12 @@
     - [x] Buy
     - [x] Sell
   - [x] Fluctuating prices for produce and seeds
+- [ ] Crop lifecycle
+  - [ ] 1. Planted
+  - [ ] 2. Germinating
+  - [ ] 3. Growing
+  - [ ] 4. Flowering
+  - [ ] 5. Dead
 - [ ] Crop tending
   - [ ] Planting
   - [ ] Watering
@@ -34,7 +40,7 @@
 
 ## Running tests (written in Mocha)
 
-Code should be tested!  [Mocha](https://mochajs.org/) is a perennial test framework among JavaScript developers, so this project uses that and [Enzyme](http://airbnb.io/enzyme/).
+Code should be tested! [Mocha](https://mochajs.org/) is a perennial test framework among JavaScript developers, so this project uses that and [Enzyme](http://airbnb.io/enzyme/).
 
 ```
 # run tests in the CLI
@@ -47,7 +53,7 @@ npm test
 npm run test:watch
 ```
 
-You can also run the test suite in browsers via [Karma](https://karma-runner.github.io).  Only Chrome and Firefox are configured by default because other browsers are a little hard to get to run consistently.  Running the tests in IE are supported and known to work, but are disabled by default.  Please see the note in `karma.conf.js` in the `browsers` section if you would like instructions on how to run the tests in IE.
+You can also run the test suite in browsers via [Karma](https://karma-runner.github.io). Only Chrome and Firefox are configured by default because other browsers are a little hard to get to run consistently. Running the tests in IE are supported and known to work, but are disabled by default. Please see the note in `karma.conf.js` in the `browsers` section if you would like instructions on how to run the tests in IE.
 
 ```
 npm run test:browsers
@@ -62,7 +68,7 @@ This project configures Webpack to generate [source maps](https://www.html5rocks
 npm start
 ```
 
-From here, you can fire up your browser's dev tools and set breakpoints, step through code, etc.  You can run the app at <a href="http://localhost:9123">http://localhost:9123</a>, or run the tests at <a href="http://localhost:9123/test/">http://localhost:9123/test/</a>.
+From here, you can fire up your browser's dev tools and set breakpoints, step through code, etc. You can run the app at <a href="http://localhost:9123">http://localhost:9123</a>, or run the tests at <a href="http://localhost:9123/test/">http://localhost:9123/test/</a>.
 
 ## A build process
 
@@ -76,14 +82,14 @@ Your compiled code will wind up in the `dist` directory.
 
 ## Documentation
 
-You should make sure to update the [JSDoc](http://usejsdoc.org/) annotations as you work.  To view the formatted documentation in your browser:
+You should make sure to update the [JSDoc](http://usejsdoc.org/) annotations as you work. To view the formatted documentation in your browser:
 
 ```
 npm run doc
 npm run doc:view
 ```
 
-This will generate the docs and run them in your browser.  If you would like this to update automatically as you work, run this task:
+This will generate the docs and run them in your browser. If you would like this to update automatically as you work, run this task:
 
 ```
 npm run doc:live
@@ -91,7 +97,7 @@ npm run doc:live
 
 ## Versioned releases
 
-npm makes it super easy to make versioned releases!  This project is set up to run tests before making a release, which helps prevent you from releasing new versions with bugs.  This happens automatically thanks to the [npm version scripts](https://docs.npmjs.com/cli/version).
+npm makes it super easy to make versioned releases! This project is set up to run tests before making a release, which helps prevent you from releasing new versions with bugs. This happens automatically thanks to the [npm version scripts](https://docs.npmjs.com/cli/version).
 
 ```
 npm version patch # Or "minor," or "major"
