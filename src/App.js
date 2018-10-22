@@ -91,7 +91,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.proceedDay();
+    this.incrementDay();
   }
 
   createNewField() {
@@ -113,13 +113,26 @@ export default class App extends Component {
     });
   }
 
-  proceedDay() {
+  incrementDay() {
     const { dayCount } = this.state;
 
     this.setState({
       dayCount: dayCount + 1,
       valueAdjustments: getUpdatedValueAdjustments(),
+      field: this.incrementCropAges(),
     });
+  }
+
+  /**
+   * @param {?farmhand.crop} crop
+   * @returns {?farmhand.crop} crop
+   */
+  incrementCropAge(crop) {
+    return crop === null ? null : { ...crop, daysOld: crop.daysOld + 1 };
+  }
+
+  incrementCropAges() {
+    return this.state.field.map(row => row.map(this.incrementCropAge));
   }
 
   getPlayerInventory() {

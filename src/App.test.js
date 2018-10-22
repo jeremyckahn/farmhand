@@ -4,8 +4,7 @@ jest.mock('./data/items');
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import { stub } from 'sinon';
-import { testItem } from './test-utils';
+import { testCrop, testItem } from './test-utils';
 import { initialFieldWidth, initialFieldHeight } from './constants';
 import { sampleItem1, sampleItem2, sampleItem3 } from './data/items';
 
@@ -16,7 +15,7 @@ import App, {
 } from './App';
 
 let component;
-let mathStub;
+let mathSpy;
 
 beforeEach(() => {
   component = shallow(<App />);
@@ -82,12 +81,12 @@ describe('private functions', () => {
     let valueAdjustments;
 
     beforeEach(() => {
-      mathStub = stub(Math, 'random').returns(1);
+      mathSpy = jest.spyOn(Math, 'random').mockImplementation(() => 1);
       valueAdjustments = getUpdatedValueAdjustments();
     });
 
     afterEach(() => {
-      mathStub.restore();
+      mathSpy.mockRestore();
     });
 
     it('updates valueAdjustments by random factor', () => {
@@ -115,14 +114,21 @@ describe('private functions', () => {
 });
 
 describe('instance methods', () => {
-  describe('proceedDay', () => {
+  describe('incrementDay', () => {
+    let incrementCropAgesSpy;
+
     beforeEach(() => {
-      mathStub = stub(Math, 'random').returns(0.75);
-      component.instance().proceedDay();
+      mathSpy = jest.spyOn(Math, 'random').mockImplementation(() => 0.75);
+      incrementCropAgesSpy = jest.spyOn(
+        component.instance(),
+        'incrementCropAges'
+      );
+      component.instance().incrementDay();
     });
 
     afterEach(() => {
-      mathStub.restore();
+      mathSpy.mockRestore();
+      incrementCropAgesSpy.mockRestore();
     });
 
     it('updates component state', () => {
@@ -131,6 +137,51 @@ describe('instance methods', () => {
       expect(dayCount).toEqual(2);
       expect(valueAdjustments['sample-item-1']).toEqual(1.25);
       expect(valueAdjustments['sample-item-2']).toEqual(1.25);
+      expect(incrementCropAgesSpy.mock.calls.length).toEqual(1);
+    });
+  });
+
+  describe('incrementCropAge', () => {
+    it('updates daysOld', () => {
+      expect(
+        component
+          .instance()
+          .incrementCropAge(testCrop({ itemId: 'sample-item-1' })).daysOld
+      ).toBe(1);
+    });
+  });
+
+  describe('incrementCropAges', () => {
+    beforeEach(() => {
+      component.setState({
+        field: [
+          [
+            testCrop({ itemId: 'sample-item-1' }),
+            testCrop({ itemId: 'sample-item-2' }),
+            testCrop({ itemId: 'sample-item-3' }),
+          ],
+          [
+            testCrop({ itemId: 'sample-item-1', daysOld: 1 }),
+            testCrop({ itemId: 'sample-item-1', daysOld: 2 }),
+            testCrop({ itemId: 'sample-item-1', daysOld: 3 }),
+          ],
+        ],
+      });
+    });
+
+    it('update daysOld across all crops', () => {
+      expect(component.instance().incrementCropAges()).toEqual([
+        [
+          testCrop({ itemId: 'sample-item-1', daysOld: 1 }),
+          testCrop({ itemId: 'sample-item-2', daysOld: 1 }),
+          testCrop({ itemId: 'sample-item-3', daysOld: 1 }),
+        ],
+        [
+          testCrop({ itemId: 'sample-item-1', daysOld: 2 }),
+          testCrop({ itemId: 'sample-item-1', daysOld: 3 }),
+          testCrop({ itemId: 'sample-item-1', daysOld: 4 }),
+        ],
+      ]);
     });
   });
 });

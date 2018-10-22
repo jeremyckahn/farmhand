@@ -21,5 +21,6 @@ export const getItemValue = ({ id }, valueAdjustments) =>
  * @returns {farmhand.crop}
  */
 export const getCropFromItemId = itemId => ({
+  daysOld: 0,
   itemId,
 });
