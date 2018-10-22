@@ -3,18 +3,34 @@
  */
 
 /**
+ * Lookup table for the lifecycle durations of a crop (in days).
+ * @typedef farmhand.cropTimetable
+ * @readonly
+ * @type {Object}
+ * @property {number} germinate
+ * @property {number} grow
+ * @property {number} flower
+ */
+
+/**
+ * Reference object for an item>
  * @typedef farmhand.item
  * @type {Object}
+ * @readonly
  * @property {string} id
  * @property {string} name
  * @property {number} value
  * @property {farmhand.module:enums.cropType} [cropType]
  * @property {boolean} [isPlantable]
+ * @property {farmhand.cropTimetable} [cropTimetable]
  */
 
 /**
+ * Represents a crop as it proceeds through the lifecycle.
  * @typedef farmhand.crop
- * @type {string} itemId
+ * @type {object} Object
+ * @property {string} itemId
+ * @property {number} daysOld
  */
 
 import React from 'react';
