@@ -8,7 +8,7 @@
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "build-js": "react-scripts build",
     "ci": "npm run lint && cross-env CI=true react-scripts test --env=jsdom",
-    "deploy": "npm run build && gh-pages -d dist",
+    "deploy": "npm run build && gh-pages -d build",
     "doc": "jsdoc -c .jsdoc -r src",
     "doc:live": "npm-run-all -p doc:watch doc:view",
     "doc:view": "live-server dist/doc --port=9124",
