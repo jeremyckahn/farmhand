@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "A farming game",
   "main": "dist/app.js",
+  "homepage": "http://jeremyckahn.github.io/farmhand/",
   "scripts": {
     "build": "npm-run-all build-css build-js",
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
