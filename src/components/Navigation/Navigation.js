@@ -5,9 +5,15 @@ import { stageFocusType } from '../../enums';
 
 import './Navigation.css';
 
-const Navigation = ({ handlers: { handleChangeView }, state: { money } }) => (
+const Navigation = ({
+  handlers: { handleChangeView, handleClickEndDayButton },
+  state: { money },
+}) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
+    <button className="end-day" onClick={handleClickEndDayButton}>
+      Call it a day
+    </button>
     <h2>
       You have: $
       {Dinero({
@@ -26,6 +32,7 @@ const Navigation = ({ handlers: { handleChangeView }, state: { money } }) => (
 Navigation.propTypes = {
   handlers: shape({
     handleChangeView: func.isRequired,
+    handleClickEndDayButton: func.isRequired,
   }).isRequired,
   state: shape({
     money: number.isRequired,

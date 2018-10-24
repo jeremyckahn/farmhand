@@ -194,3 +194,11 @@ describe('handlePlotClick', () => {
     });
   });
 });
+
+describe('handleClickEndDayButton', () => {
+  it('increments the day', () => {
+    const incrementDaySpy = jest.spyOn(component.instance(), 'incrementDay');
+    handlers().handleClickEndDayButton();
+    expect(incrementDaySpy.mock.calls.length).toBe(1);
+  });
+});

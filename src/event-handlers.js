@@ -114,4 +114,8 @@ export default {
       });
     }
   },
+
+  handleClickEndDayButton() {
+    this.incrementDay();
+  },
 };

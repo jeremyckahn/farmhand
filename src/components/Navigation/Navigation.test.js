@@ -7,7 +7,11 @@ let component;
 const getNavigation = (props = {}) => (
   <Navigation
     {...{
-      handlers: { handleChangeView: () => {}, ...props.handlers },
+      handlers: {
+        handleChangeView: () => {},
+        handleClickEndDayButton: () => {},
+        ...props.handlers,
+      },
       state: { money: 0, ...props.state },
     }}
   />
