@@ -13,6 +13,11 @@ const { CARROT, PUMPKIN } = cropType;
  */
 export const carrotSeeds = freeze({
   cropType: CARROT,
+  cropTimetable: {
+    germinate: 2,
+    grow: 3,
+    flower: 5,
+  },
   id: 'carrot-seeds',
   isPlantable: true,
   name: 'Carrot Seeds',
@@ -25,6 +30,11 @@ export const carrotSeeds = freeze({
  */
 export const pumpkinSeeds = freeze({
   cropType: PUMPKIN,
+  cropTimetable: {
+    germinate: 3,
+    grow: 5,
+    flower: 6,
+  },
   id: 'pumpkin-seeds',
   isPlantable: true,
   name: 'Pumpkin Seeds',
