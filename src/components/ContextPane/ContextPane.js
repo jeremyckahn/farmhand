@@ -3,7 +3,7 @@ import { object, shape, string } from 'prop-types';
 import PlantableItems from '../PlantableItems';
 import { stageFocusType } from '../../enums';
 
-import './ContextPane.css';
+import './ContextPane.sass';
 
 const ContextPane = ({ handlers, state, state: { stageFocus } }) => (
   <div className="ContextPane">

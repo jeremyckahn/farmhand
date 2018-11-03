@@ -1,7 +1,7 @@
 import React from 'react';
 import { func, number, object, shape } from 'prop-types';
 import { items } from '../../img';
-import './Plot.css';
+import './Plot.sass';
 
 import pixel from '../../img/pixel.png';
 

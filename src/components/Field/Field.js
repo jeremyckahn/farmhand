@@ -3,7 +3,7 @@ import { array, number, object, shape, string } from 'prop-types';
 import Plot from '../Plot';
 import classNames from 'classnames';
 
-import './Field.css';
+import './Field.sass';
 
 const Field = ({
   handlers,

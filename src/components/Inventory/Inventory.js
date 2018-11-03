@@ -3,7 +3,7 @@ import Item from '../Item';
 import { getItemValue } from '../../utils';
 import { array, bool, object, shape } from 'prop-types';
 
-import './Inventory.css';
+import './Inventory.sass';
 
 const Inventory = ({
   handlers,

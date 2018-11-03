@@ -11,7 +11,7 @@ import { itemsMap } from './data/maps';
 import { stageFocusType } from './enums';
 import { initialFieldWidth, initialFieldHeight } from './constants';
 
-import './App.css';
+import './App.sass';
 
 /**
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory

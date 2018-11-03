@@ -5,7 +5,7 @@ import Inventory from '../Inventory';
 import Shop from '../Shop';
 import { stageFocusType } from '../../enums';
 
-import './Stage.css';
+import './Stage.sass';
 
 const stageTitleMap = {
   [stageFocusType.FIELD]: 'Field',

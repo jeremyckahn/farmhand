@@ -3,7 +3,7 @@ import { bool, func, number, object, shape } from 'prop-types';
 import classNames from 'classnames';
 import { items } from '../../img';
 
-import './Item.css';
+import './Item.sass';
 
 const Item = ({
   handlers: { handlePurchaseItem, handleSellItem } = {},

@@ -1,7 +1,7 @@
 import React from 'react';
 import { array, func, shape, string } from 'prop-types';
 import Item from '../Item';
-import './PlantableItems.css';
+import './PlantableItems.sass';
 
 export const PlantableItems = ({
   handlers: { handleSelectPlantableItem },

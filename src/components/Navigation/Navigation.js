@@ -3,7 +3,7 @@ import Dinero from 'dinero.js';
 import { func, number, shape } from 'prop-types';
 import { stageFocusType } from '../../enums';
 
-import './Navigation.css';
+import './Navigation.sass';
 
 const Navigation = ({
   handlers: { handleChangeView, handleClickEndDayButton },
