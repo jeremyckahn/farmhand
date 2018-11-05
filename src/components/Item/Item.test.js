@@ -1,7 +1,11 @@
+/* eslint-disable import/first */
+jest.mock('../../img');
+
 import React from 'react';
 import Item from './';
 import { shallow } from 'enzyme';
 import { testItem } from '../../test-utils';
+import { items as itemImages } from '../../img';
 
 let component;
 
@@ -95,6 +99,31 @@ describe('conditional UI', () => {
 
     it('renders sell button when given an event handler', () => {
       expect(component.find('button.sell').length).toEqual(1);
+    });
+  });
+
+  describe('image', () => {
+    beforeEach(() => {
+      component = shallow(
+        getItem({
+          options: {
+            item: testItem({ id: 'sample-item-1' }),
+          },
+        })
+      );
+    });
+
+    it("defaults to provided item's image", () => {
+      expect(component.find('img').props().src).toBe(
+        itemImages['sample-item-1']
+      );
+    });
+
+    it('renders provided image data', () => {
+      const image = 'data:image/png;base64,some-other-image';
+      component.setProps({ image });
+
+      expect(component.find('img').props().src).toBe(image);
     });
   });
 });
