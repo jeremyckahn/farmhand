@@ -1,13 +1,12 @@
 import React from 'react';
-import { bool, func, number, object, shape, string } from 'prop-types';
+import { bool, func, number, object, shape } from 'prop-types';
 import classNames from 'classnames';
-import { items as itemImages } from '../../img';
+import { items } from '../../img';
 
 import './Item.sass';
 
 const Item = ({
   handlers: { handlePurchaseItem, handleSellItem } = {},
-  image,
   isPurchaseView,
   isSelected,
   isSellView,
@@ -21,7 +20,7 @@ const Item = ({
       <h2>{name}</h2>
       <h3>{isPurchaseView ? `Price: ${value}` : `Sell price: ${value}`}</h3>
     </header>
-    <img src={image || itemImages[id]} alt={name} />
+    <img src={items[id]} alt={name} />
     {isPurchaseView && (
       <button
         className="purchase"
@@ -52,7 +51,6 @@ Item.propTypes = {
   isPurchaseView: bool,
   isSelected: bool,
   isSellView: bool,
-  image: string,
   item: object.isRequired,
   state: shape({
     money: number,
