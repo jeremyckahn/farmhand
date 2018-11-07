@@ -5,7 +5,7 @@ import React from 'react';
 import Plot from './Plot';
 import { shallow } from 'enzyme';
 import { testItem } from '../../test-utils';
-import { items } from '../../img';
+import { items as itemImages } from '../../img';
 import pixel from '../../img/pixel.png';
 
 let component;
@@ -36,6 +36,23 @@ it('renders provided item', () => {
   );
 
   expect(component.find('img').props().style.backgroundImage).toBe(
-    `url(${items['sample-item-1']})`
+    `url(${itemImages['sample-item-1']})`
+  );
+});
+
+it('renders provided image data', () => {
+  const image = 'data:image/png;base64,some-other-image';
+
+  component = shallow(
+    getPlot({
+      options: {
+        image,
+        item: testItem({ id: 'sample-item-1' }),
+      },
+    })
+  );
+
+  expect(component.find('img').props().style.backgroundImage).toBe(
+    `url(${image})`
   );
 });
