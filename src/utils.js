@@ -1,4 +1,4 @@
-import { itemsMap } from './data/maps';
+import { cropIdToTypeMap, itemsMap } from './data/maps';
 import Dinero from 'dinero.js';
 
 /**
@@ -24,3 +24,10 @@ export const getCropFromItemId = itemId => ({
   daysOld: 0,
   itemId,
 });
+
+/**
+ * @param {farmhand.crop} crop
+ * @return {string}
+ */
+export const getCropId = ({ itemId }) =>
+  cropIdToTypeMap[itemsMap[itemId].cropType];
