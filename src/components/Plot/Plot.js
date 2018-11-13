@@ -1,9 +1,7 @@
 import React from 'react';
 import { func, number, object, shape, string } from 'prop-types';
-import { items as itemImages } from '../../img';
+import { items as itemImages, pixel } from '../../img';
 import './Plot.sass';
-
-import pixel from '../../img/pixel.png';
 
 export const Plot = ({
   handlers: { handlePlotClick },
@@ -15,6 +13,7 @@ export const Plot = ({
 }) => (
   <div className="Plot" onClick={() => handlePlotClick(x, y)}>
     <img
+      className="square"
       style={{
         backgroundImage: `url(${image ||
           (item ? itemImages[item.itemId] : pixel)})`,

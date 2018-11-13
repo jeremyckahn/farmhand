@@ -1,6 +1,7 @@
 import React from 'react';
 import { object, shape, string } from 'prop-types';
 import PlantableItems from '../PlantableItems';
+import Toolbelt from '../Toolbelt';
 import { stageFocusType } from '../../enums';
 
 import './ContextPane.sass';
@@ -8,7 +9,10 @@ import './ContextPane.sass';
 const ContextPane = ({ handlers, state, state: { stageFocus } }) => (
   <div className="ContextPane">
     {stageFocus === stageFocusType.FIELD && (
-      <PlantableItems {...{ handlers, state }} />
+      <>
+        <Toolbelt {...{ handlers, state }} />
+        <PlantableItems {...{ handlers, state }} />
+      </>
     )}
   </div>
 );

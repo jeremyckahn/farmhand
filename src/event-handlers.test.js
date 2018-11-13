@@ -3,7 +3,7 @@ jest.mock('./data/items');
 
 import React from 'react';
 import App from './App';
-import { stageFocusType } from './enums';
+import { stageFocusType, toolType } from './enums';
 import { shallow } from 'enzyme';
 import { testItem } from './test-utils';
 import { getCropFromItemId } from './utils';
@@ -128,11 +128,37 @@ describe('handleChangeView', () => {
 
 describe('handleSelectPlantableItem', () => {
   beforeEach(() => {
+    component.setState({
+      selectedTool: toolType.WATERING_CAN,
+    });
+
     handlers().handleSelectPlantableItem(testItem({ id: 'sample-item-3' }));
   });
 
   it('updates selectedPlantableItemId state', () => {
     expect(component.state().selectedPlantableItemId).toEqual('sample-item-3');
+  });
+
+  it('resets state.selectedTool', () => {
+    expect(component.state().selectedTool).toEqual(toolType.NONE);
+  });
+});
+
+describe('handleToolSelect', () => {
+  beforeEach(() => {
+    component.setState({
+      selectedPlantableItemId: 'sample-item-3',
+    });
+
+    handlers().handleToolSelect(toolType.WATERING_CAN);
+  });
+
+  it('updates selectedTool state', () => {
+    expect(component.state().selectedTool).toEqual(toolType.WATERING_CAN);
+  });
+
+  it('resets state.selectedPlantableItemId', () => {
+    expect(component.state().selectedPlantableItemId).toEqual('');
   });
 });
 

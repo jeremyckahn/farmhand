@@ -8,7 +8,7 @@ import Stage from './components/Stage';
 import { getItemValue } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
-import { stageFocusType } from './enums';
+import { stageFocusType, toolType } from './enums';
 import { initialFieldWidth, initialFieldHeight } from './constants';
 
 import './App.sass';
@@ -54,6 +54,7 @@ export const getPlantableInventory = memoize(inventory =>
  * @property {number} fieldWidth
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {number} money
+ * @property {farmhand.module:enums.toolType} selectedTool
  * @property {string} selectedPlantableItemId
  * @property {Array.<farmhand.item>} shopInventory
  * @property {farmhand.module:enums.stageFocusType} stageFocus
@@ -72,6 +73,7 @@ export default class App extends Component {
     fieldWidth: initialFieldWidth,
     inventory: [],
     money: 500,
+    selectedTool: toolType.NONE,
     selectedPlantableItemId: '',
     shopInventory: [...shopInventory],
     stageFocus: stageFocusType.FIELD,

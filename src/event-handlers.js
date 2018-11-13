@@ -1,4 +1,5 @@
 import { getCropFromItemId } from './utils';
+import { toolType } from './enums';
 
 const decrementItemFromInventory = (itemId, inventory) => {
   inventory = [...inventory];
@@ -18,6 +19,8 @@ const decrementItemFromInventory = (itemId, inventory) => {
 
   return inventory;
 };
+
+// TODO: Make method naming scheme consistent: handle[subject][eventType]
 
 export default {
   /**
@@ -71,7 +74,14 @@ export default {
    * @param {farmhand.item} item
    */
   handleSelectPlantableItem({ id }) {
-    this.setState({ selectedPlantableItemId: id });
+    this.setState({ selectedPlantableItemId: id, selectedTool: toolType.NONE });
+  },
+
+  /**
+   * @param {farmhand.module:enums.toolType} toolType
+   */
+  handleToolSelect(toolType) {
+    this.setState({ selectedPlantableItemId: '', selectedTool: toolType });
   },
 
   /**

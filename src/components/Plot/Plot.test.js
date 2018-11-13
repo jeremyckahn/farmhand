@@ -5,8 +5,7 @@ import React from 'react';
 import Plot from './Plot';
 import { shallow } from 'enzyme';
 import { testItem } from '../../test-utils';
-import { items as itemImages } from '../../img';
-import pixel from '../../img/pixel.png';
+import { items as itemImages, pixel } from '../../img';
 
 let component;
 
