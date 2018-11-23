@@ -50,6 +50,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-hotkeys": "^1.1.4",
     "react-notification-system": "^0.2.17",
     "typeface-francois-one": "0.0.54"
   },

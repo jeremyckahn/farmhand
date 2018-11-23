@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
 import NotificationSystem from 'react-notification-system';
 import memoize from 'fast-memoize';
+import { HotKeys } from 'react-hotkeys';
 import eventHandlers from './event-handlers';
 import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
@@ -90,6 +91,36 @@ export default class App extends Component {
     Object.keys(eventHandlers).forEach(
       method => (handlers[method] = eventHandlers[method].bind(this))
     );
+
+    this.initKeyHandlers();
+  }
+
+  initKeyHandlers() {
+    this.keyMap = {
+      focusField: 'f',
+      focusInventory: 'i',
+      focusShop: 's',
+    };
+
+    this.keyHandlers = {
+      focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
+      focusInventory: () =>
+        this.setState({ stageFocus: stageFocusType.INVENTORY }),
+      focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
+    };
+
+    this.keyHandlers = Object.keys(this.keyHandlers).reduce((acc, key) => {
+      const original = this.keyHandlers[key];
+      const { activeElement } = document;
+
+      acc[key] = (...args) =>
+        // If user is not focused on an input element
+        (activeElement.nodeName === 'INPUT' &&
+          !activeElement.classList.contains('hotkeys')) ||
+        original(...args);
+
+      return acc;
+    }, {});
   }
 
   componentDidMount() {
@@ -147,7 +178,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { handlers, notificationSystemRef } = this;
+    const { handlers, keyHandlers, keyMap, notificationSystemRef } = this;
     const state = {
       ...this.state,
       plantableInventory: this.getPlantableInventory(),
@@ -155,14 +186,16 @@ export default class App extends Component {
     };
 
     return (
-      <div className="App fill">
-        <NotificationSystem ref={notificationSystemRef} />
-        <div className="sidebar">
-          <Navigation {...{ handlers, state }} />
-          <ContextPane {...{ handlers, state }} />
+      <HotKeys className="hotkeys" keyMap={keyMap} handlers={keyHandlers}>
+        <div className="App fill">
+          <NotificationSystem ref={notificationSystemRef} />
+          <div className="sidebar">
+            <Navigation {...{ handlers, state }} />
+            <ContextPane {...{ handlers, state }} />
+          </div>
+          <Stage {...{ handlers, state }} />
         </div>
-        <Stage {...{ handlers, state }} />
-      </div>
+      </HotKeys>
     );
   }
 }
