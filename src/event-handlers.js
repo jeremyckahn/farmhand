@@ -20,13 +20,11 @@ const decrementItemFromInventory = (itemId, inventory) => {
   return inventory;
 };
 
-// TODO: Make method naming scheme consistent: handle[subject][eventType]
-
 export default {
   /**
    * @param {farmhand.item} item
    */
-  handlePurchaseItem(item) {
+  handleItemPurchase(item) {
     const { id, value = 0 } = item;
     const { inventory } = this.state;
     let { money } = this.state;
@@ -53,7 +51,7 @@ export default {
   /**
    * @param {farmhand.item} item
    */
-  handleSellItem(item) {
+  handleItemSell(item) {
     const { id, value = 0 } = item;
     const { inventory, money } = this.state;
 
@@ -66,14 +64,14 @@ export default {
   /**
    * @param {external:React.SyntheticEvent} e
    */
-  handleChangeView({ target: { value } }) {
+  handleViewChange({ target: { value } }) {
     this.setState({ stageFocus: value });
   },
 
   /**
    * @param {farmhand.item} item
    */
-  handleSelectPlantableItem({ id }) {
+  handlePlantableItemSelect({ id }) {
     this.setState({ selectedPlantableItemId: id, selectedTool: toolType.NONE });
   },
 
@@ -125,7 +123,7 @@ export default {
     }
   },
 
-  handleClickEndDayButton() {
+  handleEndDayButtonClick() {
     this.incrementDay();
   },
 };

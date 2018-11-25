@@ -10,7 +10,7 @@ const getContextPane = (props = {}) => (
   <ContextPane
     {...{
       handlers: {
-        handleSelectPlantableItem: () => {},
+        handlePlantableItemSelect: () => {},
         handleToolSelect: () => {},
         ...props.handlers,
       },

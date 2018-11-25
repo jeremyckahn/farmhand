@@ -6,12 +6,12 @@ import { stageFocusType } from '../../enums';
 import './Navigation.sass';
 
 const Navigation = ({
-  handlers: { handleChangeView, handleClickEndDayButton },
+  handlers: { handleViewChange, handleEndDayButtonClick },
   state: { money, stageFocus },
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
-    <button className="end-day" onClick={handleClickEndDayButton}>
+    <button className="end-day" onClick={handleEndDayButtonClick}>
       Call it a day
     </button>
     <h2>
@@ -21,7 +21,7 @@ const Navigation = ({
         precision: 2,
       }).toUnit()}
     </h2>
-    <select onChange={handleChangeView} value={stageFocus}>
+    <select onChange={handleViewChange} value={stageFocus}>
       <option value={stageFocusType.FIELD}>Field</option>
       <option value={stageFocusType.INVENTORY}>Inventory</option>
       <option value={stageFocusType.SHOP}>Shop</option>
@@ -31,8 +31,8 @@ const Navigation = ({
 
 Navigation.propTypes = {
   handlers: shape({
-    handleChangeView: func.isRequired,
-    handleClickEndDayButton: func.isRequired,
+    handleViewChange: func.isRequired,
+    handleEndDayButtonClick: func.isRequired,
   }).isRequired,
   state: shape({
     money: number.isRequired,

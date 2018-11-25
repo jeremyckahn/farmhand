@@ -9,8 +9,8 @@ const getNavigation = (props = {}) => (
   <Navigation
     {...{
       handlers: {
-        handleChangeView: () => {},
-        handleClickEndDayButton: () => {},
+        handleViewChange: () => {},
+        handleEndDayButtonClick: () => {},
         ...props.handlers,
       },
       state: { money: 0, stageFocus: stageFocusType.FIELD, ...props.state },

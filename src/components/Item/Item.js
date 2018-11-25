@@ -6,7 +6,7 @@ import { items } from '../../img';
 import './Item.sass';
 
 const Item = ({
-  handlers: { handlePurchaseItem, handleSellItem } = {},
+  handlers: { handleItemPurchase, handleItemSell } = {},
   isPurchaseView,
   isSelected,
   isSellView,
@@ -25,13 +25,13 @@ const Item = ({
       <button
         className="purchase"
         disabled={value > money}
-        onClick={() => handlePurchaseItem(item)}
+        onClick={() => handleItemPurchase(item)}
       >
         Buy
       </button>
     )}
     {isSellView && (
-      <button className="sell" onClick={() => handleSellItem(item)}>
+      <button className="sell" onClick={() => handleItemSell(item)}>
         Sell
       </button>
     )}
@@ -45,8 +45,8 @@ const Item = ({
 
 Item.propTypes = {
   handlers: shape({
-    handlePurchaseItem: func,
-    handleSellItem: func,
+    handleItemPurchase: func,
+    handleItemSell: func,
   }),
   isPurchaseView: bool,
   isSelected: bool,

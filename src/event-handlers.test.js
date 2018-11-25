@@ -16,10 +16,10 @@ beforeEach(() => {
   component = shallow(<App />);
 });
 
-describe('handlePurchaseItem', () => {
+describe('handleItemPurchase', () => {
   describe('user has enough money', () => {
     it('creates a new item in the inventory', () => {
-      handlers().handlePurchaseItem(testItem({ id: 'sample-item-1' }));
+      handlers().handleItemPurchase(testItem({ id: 'sample-item-1' }));
       expect(component.state().inventory).toEqual([
         { id: 'sample-item-1', quantity: 1 },
       ]);
@@ -33,7 +33,7 @@ describe('handlePurchaseItem', () => {
       });
 
       it('increments an existing item in the inventory', () => {
-        handlers().handlePurchaseItem(testItem({ id: 'sample-item-1' }));
+        handlers().handleItemPurchase(testItem({ id: 'sample-item-1' }));
 
         expect(component.state().inventory).toEqual([
           testItem({
@@ -47,7 +47,7 @@ describe('handlePurchaseItem', () => {
     describe('money state', () => {
       beforeEach(() => {
         component.setState({ money: 100 });
-        handlers().handlePurchaseItem(
+        handlers().handleItemPurchase(
           testItem({ id: 'sample-item-1', value: 10 })
         );
       });
@@ -61,7 +61,7 @@ describe('handlePurchaseItem', () => {
   describe('user does not have enough money', () => {
     beforeEach(() => {
       component.setState({ money: 5 });
-      handlers().handlePurchaseItem(
+      handlers().handleItemPurchase(
         testItem({ id: 'expensive-item', value: 10 })
       );
     });
@@ -76,7 +76,7 @@ describe('handlePurchaseItem', () => {
   });
 });
 
-describe('handleSellItem', () => {
+describe('handleItemSell', () => {
   describe('single instance of item in inventory', () => {
     beforeEach(() => {
       component.setState({
@@ -84,7 +84,7 @@ describe('handleSellItem', () => {
         money: 100,
       });
 
-      handlers().handleSellItem(testItem({ id: 'sample-item-1', value: 20 }));
+      handlers().handleItemSell(testItem({ id: 'sample-item-1', value: 20 }));
     });
 
     it('removes item from inventory', () => {
@@ -102,7 +102,7 @@ describe('handleSellItem', () => {
         inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
       });
 
-      handlers().handleSellItem(testItem({ id: 'sample-item-1', value: 20 }));
+      handlers().handleItemSell(testItem({ id: 'sample-item-1', value: 20 }));
     });
 
     it('decrements item', () => {
@@ -116,9 +116,9 @@ describe('handleSellItem', () => {
   });
 });
 
-describe('handleChangeView', () => {
+describe('handleViewChange', () => {
   beforeEach(() => {
-    handlers().handleChangeView({ target: { value: stageFocusType.SHOP } });
+    handlers().handleViewChange({ target: { value: stageFocusType.SHOP } });
   });
 
   it('changes the view type', () => {
@@ -126,13 +126,13 @@ describe('handleChangeView', () => {
   });
 });
 
-describe('handleSelectPlantableItem', () => {
+describe('handlePlantableItemSelect', () => {
   beforeEach(() => {
     component.setState({
       selectedTool: toolType.WATERING_CAN,
     });
 
-    handlers().handleSelectPlantableItem(testItem({ id: 'sample-item-3' }));
+    handlers().handlePlantableItemSelect(testItem({ id: 'sample-item-3' }));
   });
 
   it('updates selectedPlantableItemId state', () => {
@@ -221,10 +221,10 @@ describe('handlePlotClick', () => {
   });
 });
 
-describe('handleClickEndDayButton', () => {
+describe('handleEndDayButtonClick', () => {
   it('increments the day', () => {
     const incrementDaySpy = jest.spyOn(component.instance(), 'incrementDay');
-    handlers().handleClickEndDayButton();
+    handlers().handleEndDayButtonClick();
     expect(incrementDaySpy.mock.calls.length).toBe(1);
   });
 });
