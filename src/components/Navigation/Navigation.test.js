@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from './';
 import { shallow } from 'enzyme';
+import { stageFocusType } from '../../enums';
 
 let component;
 
@@ -12,7 +13,7 @@ const getNavigation = (props = {}) => (
         handleClickEndDayButton: () => {},
         ...props.handlers,
       },
-      state: { money: 0, ...props.state },
+      state: { money: 0, stageFocus: stageFocusType.FIELD, ...props.state },
     }}
   />
 );

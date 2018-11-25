@@ -1,13 +1,13 @@
 import React from 'react';
 import Dinero from 'dinero.js';
-import { func, number, shape } from 'prop-types';
+import { func, number, shape, string } from 'prop-types';
 import { stageFocusType } from '../../enums';
 
 import './Navigation.sass';
 
 const Navigation = ({
   handlers: { handleChangeView, handleClickEndDayButton },
-  state: { money },
+  state: { money, stageFocus },
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
@@ -21,7 +21,7 @@ const Navigation = ({
         precision: 2,
       }).toUnit()}
     </h2>
-    <select onChange={handleChangeView}>
+    <select onChange={handleChangeView} value={stageFocus}>
       <option value={stageFocusType.FIELD}>Field</option>
       <option value={stageFocusType.INVENTORY}>Inventory</option>
       <option value={stageFocusType.SHOP}>Shop</option>
@@ -36,6 +36,7 @@ Navigation.propTypes = {
   }).isRequired,
   state: shape({
     money: number.isRequired,
+    stageFocus: string.isRequired,
   }).isRequired,
 };
 
