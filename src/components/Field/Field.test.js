@@ -11,6 +11,7 @@ import Field, {
   getPlotImage,
 } from './Field';
 import Plot from '../Plot';
+import { toolType } from '../../enums';
 import { shallow } from 'enzyme';
 
 import { items as itemImages } from '../../img';
@@ -29,6 +30,7 @@ const getField = (props = {}) => (
       state: {
         field: [[null, null], [null, null], [null, null]],
         selectedPlantableItemId: '',
+        selectedTool: toolType.NONE,
         ...props.state,
       },
       ...props.options,
@@ -64,7 +66,22 @@ describe('is-plantable-item-selected class', () => {
     component = shallow(
       getField({ state: { selectedPlantableItemId: 'stub-item' } })
     );
+
     expect(component.hasClass('is-plantable-item-selected')).toBeTruthy();
+  });
+});
+
+describe('is-watering-can-selected class', () => {
+  it('is not present when watering can is not selected', () => {
+    expect(component.hasClass('is-watering-can-selected')).toBeFalsy();
+  });
+
+  it('is present when watering can is selected', () => {
+    component = shallow(
+      getField({ state: { selectedTool: toolType.WATERING_CAN } })
+    );
+
+    expect(component.hasClass('is-watering-can-selected')).toBeTruthy();
   });
 });
 
@@ -88,8 +105,8 @@ describe('getCropLifeStage', () => {
     expect(getCropLifeStage({ cropTimetable }, 2)).toBe('grow');
   });
 
-  it('defaults to "dead"', () => {
-    expect(getCropLifeStage({ cropTimetable }, 6)).toBe('dead');
+  it('defaults to "flower"', () => {
+    expect(getCropLifeStage({ cropTimetable }, 6)).toBe('flower');
   });
 });
 
@@ -97,10 +114,9 @@ describe('getLifeStageImageId', () => {
   it('maps a life cycle label to an image name chunk', () => {
     const itemId = 'sample-crop-1';
 
-    expect(getLifeStageImageId({ itemId, daysOld: 0 })).toBe('seeds');
-    expect(getLifeStageImageId({ itemId, daysOld: 1 })).toBe('growing');
-    expect(getLifeStageImageId({ itemId, daysOld: 3 })).toBe('grown');
-    expect(getLifeStageImageId({ itemId, daysOld: 6 })).toBe('dead');
+    expect(getLifeStageImageId({ itemId, daysWatered: 0 })).toBe('seeds');
+    expect(getLifeStageImageId({ itemId, daysWatered: 1 })).toBe('growing');
+    expect(getLifeStageImageId({ itemId, daysWatered: 3 })).toBe('grown');
   });
 });
 
@@ -112,17 +128,14 @@ describe('getPlotImage', () => {
   it('returns a plot images for a crop', () => {
     const itemId = 'sample-crop-1';
 
-    expect(getPlotImage({ itemId, daysOld: 0 })).toBe(
+    expect(getPlotImage({ itemId, daysWatered: 0 })).toBe(
       itemImages['sample-seeds']
     );
-    expect(getPlotImage({ itemId, daysOld: 1 })).toBe(
+    expect(getPlotImage({ itemId, daysWatered: 1 })).toBe(
       itemImages['sample-growing']
     );
-    expect(getPlotImage({ itemId, daysOld: 3 })).toBe(
+    expect(getPlotImage({ itemId, daysWatered: 3 })).toBe(
       itemImages['sample-grown']
-    );
-    expect(getPlotImage({ itemId, daysOld: 6 })).toBe(
-      itemImages['sample-dead']
     );
   });
 });

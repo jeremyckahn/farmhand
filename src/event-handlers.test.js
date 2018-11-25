@@ -6,7 +6,6 @@ import App from './App';
 import { stageFocusType, toolType } from './enums';
 import { shallow } from 'enzyme';
 import { testItem } from './test-utils';
-import { getCropFromItemId } from './utils';
 
 let component;
 
@@ -169,54 +168,38 @@ describe('handlePlotClick', () => {
     });
   });
 
-  describe('item quantity > 1 (general logic)', () => {
-    describe('plot is empty', () => {
-      beforeEach(() => {
-        component.setState({
-          inventory: [testItem({ id: 'sample-item-3', quantity: 2 })],
-        });
-
-        handlers().handlePlotClick(0, 0);
-      });
-
-      it('plants the item', () => {
-        expect(component.state().field[0][0]).toEqual(
-          getCropFromItemId('sample-item-3')
-        );
-      });
-
-      it('decrements item quantity', () => {
-        expect(component.state().inventory[0].quantity).toEqual(1);
+  describe('selectedTool === toolType.NONE', () => {
+    beforeEach(() => {
+      component.setState({
+        selectedTool: toolType.NONE,
+        selectedPlantableItemId: 'sample-item-3',
       });
     });
 
-    describe('plot is not empty', () => {
-      beforeEach(() => {
-        component.setState({
-          field: [[getCropFromItemId('sample-item-3')]],
-          inventory: [testItem({ id: 'sample-item-3', quantity: 2 })],
-        });
+    it('calls plantInPlot', () => {
+      const plantInPlotMock = jest.fn();
+      component.instance().plantInPlot = plantInPlotMock;
+      handlers().handlePlotClick(0, 0);
 
-        handlers().handlePlotClick(0, 0);
-      });
-
-      it('does not decrement item quantity', () => {
-        expect(component.state().inventory[0].quantity).toEqual(2);
-      });
+      expect(plantInPlotMock.mock.calls.length).toBe(1);
+      expect(plantInPlotMock.mock.calls[0]).toEqual([0, 0, 'sample-item-3']);
     });
   });
 
-  describe('item quantity === 1', () => {
+  describe('selectedTool === toolType.WATERING_CAN', () => {
     beforeEach(() => {
       component.setState({
-        inventory: [testItem({ id: 'sample-item-3', quantity: 1 })],
+        selectedTool: toolType.WATERING_CAN,
       });
-
-      handlers().handlePlotClick(0, 0);
     });
 
-    it('resets selectedPlantableItemId state', () => {
-      expect(component.state().selectedPlantableItemId).toEqual('');
+    it('calls waterPlot', () => {
+      const waterPlotMock = jest.fn();
+      component.instance().waterPlot = waterPlotMock;
+      handlers().handlePlotClick(0, 0);
+
+      expect(waterPlotMock.mock.calls.length).toBe(1);
+      expect(waterPlotMock.mock.calls[0]).toEqual([0, 0]);
     });
   });
 });

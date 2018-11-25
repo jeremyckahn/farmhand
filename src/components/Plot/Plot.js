@@ -1,7 +1,11 @@
 import React from 'react';
 import { func, number, object, shape, string } from 'prop-types';
-import { items as itemImages, pixel } from '../../img';
+import { items as itemImages, pixel, wateredPlot } from '../../img';
 import './Plot.sass';
+
+// TODO: The semantics in this component suggest it is dealing with a
+// farmhand.item, but it is actually a farmhand.crop. Update the semantics to
+// be correct.
 
 export const Plot = ({
   handlers: { handlePlotClick },
@@ -11,7 +15,13 @@ export const Plot = ({
   y,
   state,
 }) => (
-  <div className="Plot" onClick={() => handlePlotClick(x, y)}>
+  <div
+    className="Plot"
+    style={{
+      backgroundImage: `url(${item && item.wasWateredToday && wateredPlot})`,
+    }}
+    onClick={() => handlePlotClick(x, y)}
+  >
     <img
       className="square"
       style={{

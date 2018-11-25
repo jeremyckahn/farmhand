@@ -13,7 +13,7 @@
  */
 
 /**
- * Reference object for an item>
+ * Reference object for an item.
  * @typedef farmhand.item
  * @type {Object}
  * @readonly
@@ -29,8 +29,10 @@
  * Represents a crop as it proceeds through the lifecycle.
  * @typedef farmhand.crop
  * @type {object} Object
- * @property {string} itemId
  * @property {number} daysOld
+ * @property {number} daysWatered
+ * @property {string} itemId
+ * @property {boolean} wasWateredToday
  */
 
 import React from 'react';

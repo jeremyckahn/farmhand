@@ -25,7 +25,6 @@
   - [x] 2. Germinating
   - [x] 3. Growing
   - [x] 4. Flowering
-  - [x] 5. Dead
 - [ ] Crop tending
   - [x] Planting
   - [ ] Watering

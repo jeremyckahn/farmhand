@@ -4,6 +4,7 @@ import Plot from '../Plot';
 import { items as itemImages } from '../../img';
 import { itemsMap } from '../../data/maps';
 import { getCropId } from '../../utils';
+import { toolType } from '../../enums';
 import memoize from 'fast-memoize';
 import classNames from 'classnames';
 
@@ -16,32 +17,34 @@ export const getLifestageRange = memoize(cropTimetable =>
   )
 );
 
-export const getCropLifeStage = (item, daysOld) =>
-  getLifestageRange(item.cropTimetable)[daysOld] || 'dead';
+export const getCropLifeStage = (item, daysWatered) =>
+  getLifestageRange(item.cropTimetable)[daysWatered] || 'flower';
 
 const stageToImageNameMap = {
   germinate: 'seeds',
   grow: 'growing',
   flower: 'grown',
-  dead: 'dead',
 };
 
-export const getLifeStageImageId = ({ itemId, daysOld }) =>
-  stageToImageNameMap[getCropLifeStage(itemsMap[itemId], daysOld)];
+export const getLifeStageImageId = ({ itemId, daysWatered }) =>
+  stageToImageNameMap[getCropLifeStage(itemsMap[itemId], daysWatered)];
 
 export const getPlotImage = crop =>
   crop ? itemImages[`${getCropId(crop)}-${getLifeStageImageId(crop)}`] : null;
+
+const { WATERING_CAN } = toolType;
 
 const Field = ({
   handlers,
   columns,
   rows,
   state,
-  state: { field, selectedPlantableItemId },
+  state: { field, selectedPlantableItemId, selectedTool },
 }) => (
   <div
     className={classNames('Field', {
       'is-plantable-item-selected': selectedPlantableItemId,
+      'is-watering-can-selected': selectedTool === WATERING_CAN,
     })}
   >
     {Array(rows)
@@ -75,6 +78,7 @@ Field.propTypes = {
   state: shape({
     field: array.isRequired,
     selectedPlantableItemId: string.isRequired,
+    selectedTool: string.isRequired,
   }).isRequired,
 };
 

@@ -7,6 +7,9 @@ import { cropType } from '../enums';
 const { freeze } = Object;
 const { CARROT, PUMPKIN } = cropType;
 
+// TODO: Remove the concept of the "flowering" stage and just have "seed" and
+// "growing" stages, ultimately ending in an implicit "grown" stage.
+
 /**
  * @property farmhand.module:items.carrotSeeds
  * @type {farmhand.item}

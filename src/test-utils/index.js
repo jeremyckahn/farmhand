@@ -1,6 +1,8 @@
 export const testCrop = (item = {}) => ({
   itemId: '',
   daysOld: 0,
+  daysWatered: 0,
+  wasWateredToday: false,
   ...item,
 });
 

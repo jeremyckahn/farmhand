@@ -6,7 +6,11 @@ import eventHandlers from './event-handlers';
 import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
 import Stage from './components/Stage';
-import { getItemValue } from './utils';
+import {
+  decrementItemFromInventory,
+  getCropFromItemId,
+  getItemValue,
+} from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
 import { stageFocusType, toolType } from './enums';
@@ -45,6 +49,37 @@ export const getPlantableInventory = memoize(inventory =>
     .filter(({ id }) => itemsMap[id].isPlantable)
     .map(({ id }) => itemsMap[id])
 );
+
+/**
+ * @param {?farmhand.crop} crop
+ * @returns {?farmhand.crop} crop
+ */
+export const incrementCropAge = crop =>
+  crop === null
+    ? null
+    : {
+        ...crop,
+        daysOld: crop.daysOld + 1,
+        daysWatered: crop.daysWatered + Number(crop.wasWateredToday),
+      };
+
+/**
+ * @param {Array.<Array.<farmhand.crop|null>>} field
+ * @return {Array.<Array.<farmhand.crop|null>>}
+ */
+export const incrementedFieldAge = field =>
+  field.map(row => row.map(incrementCropAge));
+
+/**
+ * @param {Array.<Array.<farmhand.crop|null>>} field
+ * @return {Array.<Array.<farmhand.crop|null>>}
+ */
+export const resetFieldWasWateredState = field =>
+  field.map(row =>
+    row.map(
+      plot => (plot === null ? null : { ...plot, wasWateredToday: false })
+    )
+  );
 
 /**
  * @typedef farmhand.state
@@ -147,25 +182,13 @@ export default class App extends Component {
   }
 
   incrementDay() {
-    const { dayCount } = this.state;
+    const { dayCount, field } = this.state;
 
     this.setState({
       dayCount: dayCount + 1,
       valueAdjustments: getUpdatedValueAdjustments(),
-      field: this.incrementCropAges(),
+      field: resetFieldWasWateredState(incrementedFieldAge(field)),
     });
-  }
-
-  /**
-   * @param {?farmhand.crop} crop
-   * @returns {?farmhand.crop} crop
-   */
-  incrementCropAge(crop) {
-    return crop === null ? null : { ...crop, daysOld: crop.daysOld + 1 };
-  }
-
-  incrementCropAges() {
-    return this.state.field.map(row => row.map(this.incrementCropAge));
   }
 
   getPlayerInventory() {
@@ -175,6 +198,73 @@ export default class App extends Component {
 
   getPlantableInventory() {
     return getPlantableInventory(this.state.inventory);
+  }
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {string} plantableItemId
+   */
+  plantInPlot(x, y, plantableItemId) {
+    const { field, inventory } = this.state;
+
+    if (plantableItemId) {
+      const row = field[y];
+
+      if (row[x]) {
+        // Something is already planted in field[x][y]
+        return;
+      }
+
+      const newRow = row.slice();
+      const crop = getCropFromItemId(plantableItemId);
+      newRow.splice(x, 1, crop);
+      const newField = field.slice();
+      newField.splice(y, 1, newRow);
+
+      const updatedInventory = decrementItemFromInventory(
+        plantableItemId,
+        inventory
+      );
+
+      plantableItemId = updatedInventory.find(
+        ({ id }) => id === plantableItemId
+      )
+        ? plantableItemId
+        : '';
+
+      this.setState({
+        field: newField,
+        inventory: updatedInventory,
+        selectedPlantableItemId: plantableItemId,
+      });
+    }
+  }
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
+  waterPlot(x, y) {
+    // TODO: Consolidate the similar logic between this method and plantInPlot
+    const { field } = this.state;
+    const row = field[y];
+
+    if (!row[x]) {
+      // Nothing planted in field[x][y]
+      return;
+    }
+
+    const crop = { ...row[x], wasWateredToday: true };
+
+    const newRow = row.slice();
+    newRow.splice(x, 1, crop);
+    const newField = field.slice();
+    newField.splice(y, 1, newRow);
+
+    this.setState({
+      field: newField,
+    });
   }
 
   render() {

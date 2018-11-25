@@ -22,7 +22,9 @@ export const getItemValue = ({ id }, valueAdjustments) =>
  */
 export const getCropFromItemId = itemId => ({
   daysOld: 0,
+  daysWatered: 0,
   itemId,
+  wasWateredToday: false,
 });
 
 /**
@@ -31,3 +33,27 @@ export const getCropFromItemId = itemId => ({
  */
 export const getCropId = ({ itemId }) =>
   cropIdToTypeMap[itemsMap[itemId].cropType];
+
+/**
+ * @param {string} itemId
+ * @param {Array.<farmhand.item>} inventory
+ * @returns {Array.<farmhand.item>}
+ */
+export const decrementItemFromInventory = (itemId, inventory) => {
+  inventory = [...inventory];
+
+  const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId);
+
+  const { quantity } = inventory[itemInventoryIndex];
+
+  if (quantity > 1) {
+    inventory[itemInventoryIndex] = {
+      ...inventory[itemInventoryIndex],
+      quantity: quantity - 1,
+    };
+  } else {
+    inventory.splice(itemInventoryIndex, 1);
+  }
+
+  return inventory;
+};

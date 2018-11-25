@@ -1,24 +1,5 @@
-import { getCropFromItemId } from './utils';
+import { decrementItemFromInventory } from './utils';
 import { toolType } from './enums';
-
-const decrementItemFromInventory = (itemId, inventory) => {
-  inventory = [...inventory];
-
-  const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId);
-
-  const { quantity } = inventory[itemInventoryIndex];
-
-  if (quantity > 1) {
-    inventory[itemInventoryIndex] = {
-      ...inventory[itemInventoryIndex],
-      quantity: quantity - 1,
-    };
-  } else {
-    inventory.splice(itemInventoryIndex, 1);
-  }
-
-  return inventory;
-};
 
 export default {
   /**
@@ -87,39 +68,12 @@ export default {
    * @param {number} y
    */
   handlePlotClick(x, y) {
-    const { field, inventory } = this.state;
-    let { selectedPlantableItemId } = this.state;
+    const { selectedPlantableItemId, selectedTool } = this.state;
 
-    if (selectedPlantableItemId) {
-      const row = field[y];
-
-      if (row[x]) {
-        // Something is already planted in field[x][y]
-        return;
-      }
-
-      const newRow = row.slice();
-      const crop = getCropFromItemId(selectedPlantableItemId);
-      newRow.splice(x, 1, crop);
-      const newField = field.slice();
-      newField.splice(y, 1, newRow);
-
-      const updatedInventory = decrementItemFromInventory(
-        selectedPlantableItemId,
-        inventory
-      );
-
-      selectedPlantableItemId = updatedInventory.find(
-        ({ id }) => id === selectedPlantableItemId
-      )
-        ? selectedPlantableItemId
-        : '';
-
-      this.setState({
-        field: newField,
-        inventory: updatedInventory,
-        selectedPlantableItemId,
-      });
+    if (selectedTool === toolType.NONE) {
+      this.plantInPlot(x, y, selectedPlantableItemId);
+    } else if (selectedTool === toolType.WATERING_CAN) {
+      this.waterPlot(x, y);
     }
   },
 

@@ -5,7 +5,7 @@ import React from 'react';
 import Plot from './Plot';
 import { shallow } from 'enzyme';
 import { testItem } from '../../test-utils';
-import { items as itemImages, pixel } from '../../img';
+import { items as itemImages, pixel, wateredPlot } from '../../img';
 
 let component;
 
@@ -53,5 +53,19 @@ it('renders provided image data', () => {
 
   expect(component.find('img').props().style.backgroundImage).toBe(
     `url(${image})`
+  );
+});
+
+it('renders wateredPlot image appropriately', () => {
+  component = shallow(
+    getPlot({
+      options: {
+        item: testItem({ itemId: 'sample-item-1', wasWateredToday: true }),
+      },
+    })
+  );
+
+  expect(component.find('.Plot').props().style.backgroundImage).toBe(
+    `url(${wateredPlot})`
   );
 });
