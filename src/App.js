@@ -55,8 +55,8 @@ export const getPlantableInventory = memoize(inventory =>
  * @property {number} fieldWidth
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {number} money
- * @property {farmhand.module:enums.toolType} selectedTool
  * @property {string} selectedPlantableItemId
+ * @property {farmhand.module:enums.toolType} selectedTool
  * @property {Array.<farmhand.item>} shopInventory
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Object.<number>} valueAdjustments
@@ -74,8 +74,8 @@ export default class App extends Component {
     fieldWidth: initialFieldWidth,
     inventory: [],
     money: 500,
-    selectedTool: toolType.NONE,
     selectedPlantableItemId: '',
+    selectedTool: toolType.NONE,
     shopInventory: [...shopInventory],
     stageFocus: stageFocusType.FIELD,
     valueAdjustments: {},
