@@ -7,9 +7,8 @@
  * @typedef farmhand.cropTimetable
  * @readonly
  * @type {Object}
- * @property {number} germinate
- * @property {number} grow
- * @property {number} flower
+ * @property {number} seed
+ * @property {number} growing
  */
 
 /**

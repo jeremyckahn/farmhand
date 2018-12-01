@@ -11,23 +11,17 @@ import classNames from 'classnames';
 import './Field.sass';
 
 export const getLifestageRange = memoize(cropTimetable =>
-  ['germinate', 'grow', 'flower'].reduce(
+  ['seed', 'growing'].reduce(
     (acc, stage) => acc.concat(Array(cropTimetable[stage]).fill(stage)),
     []
   )
 );
 
 export const getCropLifeStage = (item, daysWatered) =>
-  getLifestageRange(item.cropTimetable)[daysWatered] || 'flower';
-
-const stageToImageNameMap = {
-  germinate: 'seeds',
-  grow: 'growing',
-  flower: 'grown',
-};
+  getLifestageRange(item.cropTimetable)[daysWatered] || 'grown';
 
 export const getLifeStageImageId = ({ itemId, daysWatered }) =>
-  stageToImageNameMap[getCropLifeStage(itemsMap[itemId], daysWatered)];
+  getCropLifeStage(itemsMap[itemId], daysWatered);
 
 export const getPlotImage = crop =>
   crop ? itemImages[`${getCropId(crop)}-${getLifeStageImageId(crop)}`] : null;

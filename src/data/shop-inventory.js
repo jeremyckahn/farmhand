@@ -1,5 +1,5 @@
-import { carrotSeeds, pumpkinSeeds } from './items';
+import { carrotSeed, pumpkinSeed } from './items';
 
-const shopInventory = [carrotSeeds, pumpkinSeeds];
+const shopInventory = [carrotSeed, pumpkinSeed];
 
 export default shopInventory;

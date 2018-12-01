@@ -3,9 +3,8 @@ import { testItem } from '../../test-utils';
 export const sampleCrop1 = testItem({
   id: 'sample-crop-1',
   cropTimetable: {
-    germinate: 1,
-    grow: 2,
-    flower: 3,
+    seed: 1,
+    growing: 2,
   },
   cropType: 'SAMPLE',
 });
@@ -13,9 +12,8 @@ export const sampleCrop1 = testItem({
 export const sampleCrop2 = testItem({
   id: 'sample-crop-2',
   cropTimetable: {
-    germinate: 2,
-    grow: 3,
-    flower: 4,
+    seed: 2,
+    growing: 3,
   },
   cropType: 'SAMPLE',
 });
@@ -23,9 +21,8 @@ export const sampleCrop2 = testItem({
 export const sampleCrop3 = testItem({
   id: 'sample-crop-2',
   cropTimetable: {
-    germinate: 3,
-    grow: 4,
-    flower: 5,
+    seed: 3,
+    growing: 4,
   },
   cropType: 'SAMPLE',
 });

@@ -5,11 +5,11 @@ export const items = {
   // Crops
   'carrot-growing': require('./crops/carrot-growing.png'),
   'carrot-grown': require('./crops/carrot-grown.png'),
-  'carrot-seeds': require('./crops/carrot-seeds.png'),
+  'carrot-seed': require('./crops/carrot-seed.png'),
 
   'pumpkin-growing': require('./crops/pumpkin-growing.png'),
   'pumpkin-grown': require('./crops/pumpkin-grown.png'),
-  'pumpkin-seeds': require('./crops/pumpkin-seeds.png'),
+  'pumpkin-seed': require('./crops/pumpkin-seed.png'),
 };
 
 export const tools = {

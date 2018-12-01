@@ -7,39 +7,34 @@ import { cropType } from '../enums';
 const { freeze } = Object;
 const { CARROT, PUMPKIN } = cropType;
 
-// TODO: Remove the concept of the "flowering" stage and just have "seed" and
-// "growing" stages, ultimately ending in an implicit "grown" stage.
-
 /**
- * @property farmhand.module:items.carrotSeeds
+ * @property farmhand.module:items.carrotSeed
  * @type {farmhand.item}
  */
-export const carrotSeeds = freeze({
+export const carrotSeed = freeze({
   cropType: CARROT,
   cropTimetable: {
-    germinate: 2,
-    grow: 3,
-    flower: 5,
+    seed: 2,
+    growing: 3,
   },
-  id: 'carrot-seeds',
+  id: 'carrot-seed',
   isPlantable: true,
-  name: 'Carrot Seeds',
+  name: 'Carrot Seed',
   value: 20,
 });
 
 /**
- * @property farmhand.module:items.pumpkinSeeds
+ * @property farmhand.module:items.pumpkinSeed
  * @type {farmhand.item}
  */
-export const pumpkinSeeds = freeze({
+export const pumpkinSeed = freeze({
   cropType: PUMPKIN,
   cropTimetable: {
-    germinate: 3,
-    grow: 5,
-    flower: 6,
+    seed: 3,
+    growing: 5,
   },
-  id: 'pumpkin-seeds',
+  id: 'pumpkin-seed',
   isPlantable: true,
-  name: 'Pumpkin Seeds',
+  name: 'Pumpkin Seed',
   value: 40,
 });

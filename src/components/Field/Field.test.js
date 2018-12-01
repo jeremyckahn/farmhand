@@ -87,26 +87,23 @@ describe('is-watering-can-selected class', () => {
 
 describe('getLifestageRange', () => {
   it('converts a cropTimetable to an array of stages', () => {
-    expect(getLifestageRange({ germinate: 1, grow: 2, flower: 3 })).toEqual([
-      'germinate',
-      'grow',
-      'grow',
-      'flower',
-      'flower',
-      'flower',
+    expect(getLifestageRange({ seed: 1, growing: 2 })).toEqual([
+      'seed',
+      'growing',
+      'growing',
     ]);
   });
 });
 
 describe('getCropLifeStage', () => {
-  const cropTimetable = { germinate: 1, grow: 2, flower: 3 };
+  const cropTimetable = { seed: 1, growing: 2 };
 
   it('gets corrent life stage for index', () => {
-    expect(getCropLifeStage({ cropTimetable }, 2)).toBe('grow');
+    expect(getCropLifeStage({ cropTimetable }, 2)).toBe('growing');
   });
 
-  it('defaults to "flower"', () => {
-    expect(getCropLifeStage({ cropTimetable }, 6)).toBe('flower');
+  it('defaults to "grown"', () => {
+    expect(getCropLifeStage({ cropTimetable }, 6)).toBe('grown');
   });
 });
 
@@ -114,7 +111,7 @@ describe('getLifeStageImageId', () => {
   it('maps a life cycle label to an image name chunk', () => {
     const itemId = 'sample-crop-1';
 
-    expect(getLifeStageImageId({ itemId, daysWatered: 0 })).toBe('seeds');
+    expect(getLifeStageImageId({ itemId, daysWatered: 0 })).toBe('seed');
     expect(getLifeStageImageId({ itemId, daysWatered: 1 })).toBe('growing');
     expect(getLifeStageImageId({ itemId, daysWatered: 3 })).toBe('grown');
   });
@@ -129,7 +126,7 @@ describe('getPlotImage', () => {
     const itemId = 'sample-crop-1';
 
     expect(getPlotImage({ itemId, daysWatered: 0 })).toBe(
-      itemImages['sample-seeds']
+      itemImages['sample-seed']
     );
     expect(getPlotImage({ itemId, daysWatered: 1 })).toBe(
       itemImages['sample-growing']
