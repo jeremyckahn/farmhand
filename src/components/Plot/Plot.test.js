@@ -4,7 +4,7 @@ jest.mock('../../img');
 import React from 'react';
 import Plot from './Plot';
 import { shallow } from 'enzyme';
-import { testItem } from '../../test-utils';
+import { testCrop } from '../../test-utils';
 import { items as itemImages, pixel, wateredPlot } from '../../img';
 
 let component;
@@ -29,9 +29,9 @@ it('defaults to rending a pixel', () => {
   expect(component.find('img').props().src).toBe(pixel);
 });
 
-it('renders provided item', () => {
+it('renders provided crop', () => {
   component = shallow(
-    getPlot({ options: { item: testItem({ itemId: 'sample-item-1' }) } })
+    getPlot({ options: { crop: testCrop({ itemId: 'sample-item-1' }) } })
   );
 
   expect(component.find('img').props().style.backgroundImage).toBe(
@@ -46,7 +46,7 @@ it('renders provided image data', () => {
     getPlot({
       options: {
         image,
-        item: testItem({ id: 'sample-item-1' }),
+        crop: testCrop({ itemId: 'sample-item-1' }),
       },
     })
   );
@@ -60,7 +60,7 @@ it('renders wateredPlot image appropriately', () => {
   component = shallow(
     getPlot({
       options: {
-        item: testItem({ itemId: 'sample-item-1', wasWateredToday: true }),
+        crop: testCrop({ itemId: 'sample-item-1', wasWateredToday: true }),
       },
     })
   );

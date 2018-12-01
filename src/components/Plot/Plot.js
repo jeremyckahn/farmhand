@@ -3,14 +3,10 @@ import { func, number, object, shape, string } from 'prop-types';
 import { items as itemImages, pixel, wateredPlot } from '../../img';
 import './Plot.sass';
 
-// TODO: The semantics in this component suggest it is dealing with a
-// farmhand.item, but it is actually a farmhand.crop. Update the semantics to
-// be correct.
-
 export const Plot = ({
   handlers: { handlePlotClick },
   image,
-  item,
+  crop,
   x,
   y,
   state,
@@ -18,7 +14,7 @@ export const Plot = ({
   <div
     className="Plot"
     style={{
-      backgroundImage: `url(${item && item.wasWateredToday && wateredPlot})`,
+      backgroundImage: `url(${crop && crop.wasWateredToday && wateredPlot})`,
     }}
     onClick={() => handlePlotClick(x, y)}
   >
@@ -26,7 +22,7 @@ export const Plot = ({
       className="square"
       style={{
         backgroundImage: `url(${image ||
-          (item ? itemImages[item.itemId] : pixel)})`,
+          (crop ? itemImages[crop.itemId] : pixel)})`,
       }}
       src={pixel}
       alt="TODO: Place explanatory text here"
@@ -39,7 +35,7 @@ Plot.propTypes = {
     handlePlotClick: func.isRequired,
   }).isRequired,
   image: string,
-  item: object,
+  crop: object,
   x: number.isRequired,
   y: number.isRequired,
   state: object.isRequired,

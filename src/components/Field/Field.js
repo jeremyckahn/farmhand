@@ -59,7 +59,7 @@ const Field = ({
                 {...{
                   handlers,
                   image: getPlotImage(crop),
-                  item: crop,
+                  crop,
                   state,
                   x: j,
                   y: i,
