@@ -64,15 +64,15 @@ export const incrementCropAge = crop =>
       };
 
 /**
- * @param {Array.<Array.<farmhand.crop|null>>} field
- * @return {Array.<Array.<farmhand.crop|null>>}
+ * @param {Array.<Array.<?farmhand.crop>>} field
+ * @return {Array.<Array.<?farmhand.crop>>}
  */
 export const incrementedFieldAge = field =>
   field.map(row => row.map(incrementCropAge));
 
 /**
- * @param {Array.<Array.<farmhand.crop|null>>} field
- * @return {Array.<Array.<farmhand.crop|null>>}
+ * @param {Array.<Array.<?farmhand.crop>>} field
+ * @return {Array.<Array.<?farmhand.crop>>}
  */
 export const resetFieldWasWateredState = field =>
   field.map(row =>
@@ -82,10 +82,26 @@ export const resetFieldWasWateredState = field =>
   );
 
 /**
+ * @param {Array.<Array.<?farmhand.crop>>} field
+ * @param {number} x
+ * @param {number} y
+ * @param {Function(?farmhand.crop)} modifierFn
+ */
+const modifyFieldPlotAt = (field, x, y, modifierFn) => {
+  const row = [...field[y]];
+  const crop = modifierFn(row[x]);
+  row[x] = crop;
+  const modifiedField = [...field];
+  modifiedField[y] = row;
+
+  return modifiedField;
+};
+
+/**
  * @typedef farmhand.state
  * @type {Object}
  * @property {number} dayCount
- * @property {Array.<Array.<farmhand.crop|null>>} field
+ * @property {Array.<Array.<?farmhand.crop>>} field
  * @property {number} fieldHeight
  * @property {number} fieldWidth
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -216,11 +232,9 @@ export default class App extends Component {
         return;
       }
 
-      const newRow = row.slice();
-      const crop = getCropFromItemId(plantableItemId);
-      newRow.splice(x, 1, crop);
-      const newField = field.slice();
-      newField.splice(y, 1, newRow);
+      const newField = modifyFieldPlotAt(field, x, y, () =>
+        getCropFromItemId(plantableItemId)
+      );
 
       const updatedInventory = decrementItemFromInventory(
         plantableItemId,
@@ -255,15 +269,11 @@ export default class App extends Component {
       return;
     }
 
-    const crop = { ...row[x], wasWateredToday: true };
-
-    const newRow = row.slice();
-    newRow.splice(x, 1, crop);
-    const newField = field.slice();
-    newField.splice(y, 1, newRow);
-
     this.setState({
-      field: newField,
+      field: modifyFieldPlotAt(field, x, y, crop => ({
+        ...crop,
+        wasWateredToday: true,
+      })),
     });
   }
 
