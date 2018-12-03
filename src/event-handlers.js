@@ -80,4 +80,8 @@ export default {
   handleEndDayButtonClick() {
     this.incrementDay();
   },
+
+  handleWaterAllPlotsClick() {
+    this.waterAllPlots();
+  },
 };

@@ -41,6 +41,7 @@
     "react-scripts": "^2.1.1"
   },
   "dependencies": {
+    "@material-ui/core": "^3.6.1",
     "classnames": "^2.2.6",
     "compass-mixins": "^0.12.10",
     "dinero.js": "^1.4.0",

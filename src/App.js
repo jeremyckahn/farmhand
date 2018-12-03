@@ -6,6 +6,7 @@ import eventHandlers from './event-handlers';
 import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
 import Stage from './components/Stage';
+import DebugMenu from './components/DebugMenu';
 import {
   decrementItemFromInventory,
   getCropFromItemId,
@@ -76,6 +77,13 @@ export const incrementAge = crop =>
  * @param {?farmhand.crop} crop
  * @returns {?farmhand.crop}
  */
+export const setWasWatered = crop =>
+  crop === null ? null : { ...crop, wasWateredToday: true };
+
+/**
+ * @param {?farmhand.crop} crop
+ * @returns {?farmhand.crop}
+ */
 export const resetWasWatered = crop =>
   crop === null ? null : { ...crop, wasWateredToday: false };
 
@@ -87,6 +95,12 @@ const fieldReducer = (acc, fn) => fn(acc);
  */
 const getUpdatedField = field =>
   updateField(field, crop => fieldUpdaters.reduce(fieldReducer, crop));
+
+/**
+ * @param {Array.<Array.<?farmhand.crop>>} field
+ * @return {Array.<Array.<?farmhand.crop>>}
+ */
+const getWateredField = field => updateField(field, setWasWatered);
 
 /**
  * @param {Array.<Array.<?farmhand.crop>>} field
@@ -267,7 +281,6 @@ export default class App extends Component {
    * @param {number} y
    */
   waterPlot(x, y) {
-    // TODO: Consolidate the similar logic between this method and plantInPlot
     const { field } = this.state;
     const row = field[y];
 
@@ -282,6 +295,10 @@ export default class App extends Component {
         wasWateredToday: true,
       })),
     });
+  }
+
+  waterAllPlots() {
+    this.setState({ field: getWateredField(this.state.field) });
   }
 
   render() {
@@ -299,6 +316,9 @@ export default class App extends Component {
           <div className="sidebar">
             <Navigation {...{ handlers, state }} />
             <ContextPane {...{ handlers, state }} />
+            {process.env.NODE_ENV === 'development' && (
+              <DebugMenu {...{ handlers, state }} />
+            )}
           </div>
           <Stage {...{ handlers, state }} />
         </div>
