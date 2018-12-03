@@ -51,19 +51,6 @@ export const getPlantableInventory = memoize(inventory =>
 );
 
 /**
- * @param {?farmhand.crop} crop
- * @returns {?farmhand.crop} crop
- */
-export const incrementCropAge = crop =>
-  crop === null
-    ? null
-    : {
-        ...crop,
-        daysOld: crop.daysOld + 1,
-        daysWatered: crop.daysWatered + Number(crop.wasWateredToday),
-      };
-
-/**
  * Invokes a function on every plot in a field.
  * @param {Array.<Array.<?farmhand.crop>>} field
  * @param {Function(?farmhand.crop)} modifierFn
@@ -73,21 +60,33 @@ const updateField = (field, modifierFn) =>
   field.map(row => row.map(modifierFn));
 
 /**
- * @param {Array.<Array.<?farmhand.crop>>} field
- * @return {Array.<Array.<?farmhand.crop>>}
+ * @param {?farmhand.crop} crop
+ * @returns {?farmhand.crop}
  */
-export const incrementedFieldAge = field =>
-  updateField(field, incrementCropAge);
+export const incrementAge = crop =>
+  crop === null
+    ? null
+    : {
+        ...crop,
+        daysOld: crop.daysOld + 1,
+        daysWatered: crop.daysWatered + Number(crop.wasWateredToday),
+      };
 
+/**
+ * @param {?farmhand.crop} crop
+ * @returns {?farmhand.crop}
+ */
+export const resetWasWatered = crop =>
+  crop === null ? null : { ...crop, wasWateredToday: false };
+
+const fieldUpdaters = [incrementAge, resetWasWatered];
+const fieldReducer = (acc, fn) => fn(acc);
 /**
  * @param {Array.<Array.<?farmhand.crop>>} field
  * @return {Array.<Array.<?farmhand.crop>>}
  */
-export const resetFieldWasWateredState = field =>
-  updateField(
-    field,
-    plot => (plot === null ? null : { ...plot, wasWateredToday: false })
-  );
+const getUpdatedField = field =>
+  updateField(field, crop => fieldUpdaters.reduce(fieldReducer, crop));
 
 /**
  * @param {Array.<Array.<?farmhand.crop>>} field
@@ -211,7 +210,7 @@ export default class App extends Component {
     this.setState({
       dayCount: dayCount + 1,
       valueAdjustments: getUpdatedValueAdjustments(),
-      field: resetFieldWasWateredState(incrementedFieldAge(field)),
+      field: getUpdatedField(field),
     });
   }
 

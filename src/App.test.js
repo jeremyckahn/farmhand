@@ -13,9 +13,8 @@ import App, {
   computePlayerInventory,
   getPlantableInventory,
   getUpdatedValueAdjustments,
-  incrementCropAge,
-  incrementedFieldAge,
-  resetFieldWasWateredState,
+  incrementAge,
+  resetWasWatered,
 } from './App';
 
 let component;
@@ -150,10 +149,10 @@ describe('instance methods', () => {
     });
   });
 
-  describe('incrementCropAge', () => {
+  describe('incrementAge', () => {
     describe('plant is not watered', () => {
       it('updates daysOld', () => {
-        const { daysOld, daysWatered } = incrementCropAge(
+        const { daysOld, daysWatered } = incrementAge(
           testCrop({ itemId: 'sample-item-1' })
         );
 
@@ -164,7 +163,7 @@ describe('instance methods', () => {
 
     describe('plant is watered', () => {
       it('updates daysOld and daysWatered', () => {
-        const { daysOld, daysWatered } = incrementCropAge(
+        const { daysOld, daysWatered } = incrementAge(
           testCrop({ itemId: 'sample-item-1', wasWateredToday: true })
         );
 
@@ -174,63 +173,19 @@ describe('instance methods', () => {
     });
   });
 
-  describe('incrementedFieldAge', () => {
-    let field;
-
-    beforeEach(() => {
-      field = [
-        [
-          testCrop({ itemId: 'sample-item-1' }),
-          testCrop({ itemId: 'sample-item-2' }),
-          testCrop({ itemId: 'sample-item-3' }),
-        ],
-        [
-          testCrop({ itemId: 'sample-item-1', daysOld: 1 }),
-          testCrop({ itemId: 'sample-item-1', daysOld: 2 }),
-          testCrop({ itemId: 'sample-item-1', daysOld: 3 }),
-        ],
-      ];
-    });
-
-    it('update daysOld across all crops', () => {
-      expect(incrementedFieldAge(field)).toEqual([
-        [
-          testCrop({ itemId: 'sample-item-1', daysOld: 1 }),
-          testCrop({ itemId: 'sample-item-2', daysOld: 1 }),
-          testCrop({ itemId: 'sample-item-3', daysOld: 1 }),
-        ],
-        [
-          testCrop({ itemId: 'sample-item-1', daysOld: 2 }),
-          testCrop({ itemId: 'sample-item-1', daysOld: 3 }),
-          testCrop({ itemId: 'sample-item-1', daysOld: 4 }),
-        ],
-      ]);
-    });
-  });
-
-  describe('resetFieldWasWateredState', () => {
-    let field;
-
-    beforeEach(() => {
-      field = [
-        [
-          testCrop({ itemId: 'sample-item-1' }),
-          null,
-          testCrop({ itemId: 'sample-item-2', wasWateredToday: true }),
-        ],
-      ];
-    });
-
-    it('update wasWateredToday across all crops', () => {
-      const [row] = resetFieldWasWateredState(field);
-
-      expect(row).toEqual(
-        expect.arrayContaining([
-          testCrop({ itemId: 'sample-item-1' }),
-          null,
-          testCrop({ itemId: 'sample-item-2' }),
-        ])
+  describe('resetWasWatered', () => {
+    it('updates wasWateredToday property', () => {
+      expect(resetWasWatered(testCrop({ itemId: 'sample-item-1' }))).toEqual(
+        testCrop({ itemId: 'sample-item-1' })
       );
+
+      expect(
+        resetWasWatered(
+          testCrop({ itemId: 'sample-item-2', wasWateredToday: true })
+        )
+      ).toEqual(testCrop({ itemId: 'sample-item-2' }));
+
+      expect(resetWasWatered(null)).toBe(null);
     });
   });
 
