@@ -64,21 +64,29 @@ export const incrementCropAge = crop =>
       };
 
 /**
+ * Invokes a function on every plot in a field.
+ * @param {Array.<Array.<?farmhand.crop>>} field
+ * @param {Function(?farmhand.crop)} modifierFn
+ * @return {Array.<Array.<?farmhand.crop>>}
+ */
+const updateField = (field, modifierFn) =>
+  field.map(row => row.map(modifierFn));
+
+/**
  * @param {Array.<Array.<?farmhand.crop>>} field
  * @return {Array.<Array.<?farmhand.crop>>}
  */
 export const incrementedFieldAge = field =>
-  field.map(row => row.map(incrementCropAge));
+  updateField(field, incrementCropAge);
 
 /**
  * @param {Array.<Array.<?farmhand.crop>>} field
  * @return {Array.<Array.<?farmhand.crop>>}
  */
 export const resetFieldWasWateredState = field =>
-  field.map(row =>
-    row.map(
-      plot => (plot === null ? null : { ...plot, wasWateredToday: false })
-    )
+  updateField(
+    field,
+    plot => (plot === null ? null : { ...plot, wasWateredToday: false })
   );
 
 /**
