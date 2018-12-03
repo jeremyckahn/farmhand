@@ -2,7 +2,6 @@
   "name": "farmhand",
   "version": "0.0.0",
   "description": "A farming game",
-  "main": "dist/app.js",
   "homepage": "http://jeremyckahn.github.io/farmhand/",
   "scripts": {
     "build": "react-scripts build",
