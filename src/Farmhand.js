@@ -172,6 +172,7 @@ export default class Farmhand extends Component {
       focusField: 'f',
       focusInventory: 'i',
       focusShop: 's',
+      incrementDay: 'c',
     };
 
     this.keyHandlers = {
@@ -179,6 +180,7 @@ export default class Farmhand extends Component {
       focusInventory: () =>
         this.setState({ stageFocus: stageFocusType.INVENTORY }),
       focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
+      incrementDay: () => this.incrementDay(),
     };
 
     if (process.env.NODE_ENV === 'development') {

@@ -12,7 +12,7 @@ const Navigation = ({
   <header className="Navigation">
     <h1>Farmhand</h1>
     <button className="end-day" onClick={handleEndDayButtonClick}>
-      Call it a day
+      Call it a day (c)
     </button>
     <h2>
       You have: $
