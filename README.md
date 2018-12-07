@@ -23,7 +23,7 @@
 - [x] Crop lifecycle
   - [x] 1. Planted
   - [x] 2. Germinating
-  - [x] 3. Growing
+  - [x] 3. Grown
 - [ ] Crop tending
   - [x] Planting
   - [x] Watering
