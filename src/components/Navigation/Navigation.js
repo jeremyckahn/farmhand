@@ -22,9 +22,9 @@ const Navigation = ({
       }).toUnit()}
     </h2>
     <select onChange={handleViewChange} value={stageFocus}>
-      <option value={stageFocusType.FIELD}>Field</option>
-      <option value={stageFocusType.INVENTORY}>Inventory</option>
-      <option value={stageFocusType.SHOP}>Shop</option>
+      <option value={stageFocusType.FIELD}>Field (f)</option>
+      <option value={stageFocusType.INVENTORY}>Inventory (i)</option>
+      <option value={stageFocusType.SHOP}>Shop (s)</option>
     </select>
   </header>
 );
