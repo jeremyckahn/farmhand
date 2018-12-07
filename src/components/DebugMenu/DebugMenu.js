@@ -20,7 +20,7 @@ const DebugMenu = ({ handlers: { handleWaterAllPlotsClick } }) => (
           onClick={handleWaterAllPlotsClick}
           variant="contained"
         >
-          Water all plots
+          Water all plots (w)
         </Button>
       </Typography>
     </ExpansionPanelDetails>

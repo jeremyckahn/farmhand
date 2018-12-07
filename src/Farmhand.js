@@ -181,6 +181,16 @@ export default class Farmhand extends Component {
       focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
     };
 
+    if (process.env.NODE_ENV === 'development') {
+      Object.assign(this.keyMap, {
+        waterAllPlots: 'w',
+      });
+
+      Object.assign(this.keyHandlers, {
+        waterAllPlots: () => this.waterAllPlots(),
+      });
+    }
+
     this.keyHandlers = Object.keys(this.keyHandlers).reduce((acc, key) => {
       const original = this.keyHandlers[key];
       const { activeElement } = document;
