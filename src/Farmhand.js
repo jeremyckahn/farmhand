@@ -17,7 +17,7 @@ import { itemsMap } from './data/maps';
 import { stageFocusType, toolType } from './enums';
 import { initialFieldWidth, initialFieldHeight } from './constants';
 
-import './App.sass';
+import './Farmhand.sass';
 
 /**
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -134,9 +134,9 @@ const modifyFieldPlotAt = (field, x, y, modifierFn) => {
  * @property {Object.<number>} valueAdjustments
  */
 
-export default class App extends Component {
+export default class Farmhand extends Component {
   /**
-   * @member farmhand.App#state
+   * @member farmhand.Farmhand#state
    * @type {farmhand.state}
    */
   state = {
@@ -311,7 +311,7 @@ export default class App extends Component {
 
     return (
       <HotKeys className="hotkeys" keyMap={keyMap} handlers={keyHandlers}>
-        <div className="App fill">
+        <div className="Farmhand fill">
           <NotificationSystem ref={notificationSystemRef} />
           <div className="sidebar">
             <Navigation {...{ handlers, state }} />

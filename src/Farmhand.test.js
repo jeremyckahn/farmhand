@@ -9,19 +9,19 @@ import { testCrop, testItem } from './test-utils';
 import { initialFieldWidth, initialFieldHeight } from './constants';
 import { sampleItem1, sampleItem2, sampleItem3 } from './data/items';
 
-import App, {
+import Farmhand, {
   computePlayerInventory,
   getPlantableInventory,
   getUpdatedValueAdjustments,
   incrementAge,
   resetWasWatered,
-} from './App';
+} from './Farmhand';
 
 let component;
 let mathSpy;
 
 beforeEach(() => {
-  component = shallow(<App />);
+  component = shallow(<Farmhand />);
 });
 
 describe('state', () => {

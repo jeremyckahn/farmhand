@@ -37,9 +37,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.sass';
-import App from './App';
+import Farmhand from './Farmhand';
 import registerServiceWorker from './registerServiceWorker';
 import 'typeface-francois-one';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Farmhand />, document.getElementById('root'));
 registerServiceWorker();

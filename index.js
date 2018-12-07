@@ -2,6 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './src/styles/index.sass';
 
-import { App } from './src';
+import { Farmhand } from './src';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<Farmhand />, document.getElementById('app'));

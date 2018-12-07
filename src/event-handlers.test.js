@@ -2,7 +2,7 @@
 jest.mock('./data/items');
 
 import React from 'react';
-import App from './App';
+import Farmhand from './Farmhand';
 import { stageFocusType, toolType } from './enums';
 import { shallow } from 'enzyme';
 import { testItem } from './test-utils';
@@ -12,7 +12,7 @@ let component;
 const handlers = () => component.instance().handlers;
 
 beforeEach(() => {
-  component = shallow(<App />);
+  component = shallow(<Farmhand />);
 });
 
 describe('handleItemPurchase', () => {
