@@ -31,11 +31,11 @@ it('defaults to rending a pixel', () => {
 
 it('renders provided crop', () => {
   component = shallow(
-    getPlot({ options: { crop: testCrop({ itemId: 'sample-item-1' }) } })
+    getPlot({ options: { crop: testCrop({ itemId: 'sample-crop-1' }) } })
   );
 
   expect(component.find('img').props().style.backgroundImage).toBe(
-    `url(${itemImages['sample-item-1']})`
+    `url(${itemImages['sample-crop-1']})`
   );
 });
 
@@ -46,7 +46,7 @@ it('renders provided image data', () => {
     getPlot({
       options: {
         image,
-        crop: testCrop({ itemId: 'sample-item-1' }),
+        crop: testCrop({ itemId: 'sample-crop-1' }),
       },
     })
   );
@@ -60,7 +60,7 @@ it('renders wateredPlot image appropriately', () => {
   component = shallow(
     getPlot({
       options: {
-        crop: testCrop({ itemId: 'sample-item-1', wasWateredToday: true }),
+        crop: testCrop({ itemId: 'sample-crop-1', wasWateredToday: true }),
       },
     })
   );

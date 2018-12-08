@@ -19,9 +19,10 @@
  * @property {string} id
  * @property {string} name
  * @property {number} value
- * @property {farmhand.module:enums.cropType} [cropType]
  * @property {boolean} [isPlantable]
  * @property {farmhand.cropTimetable} [cropTimetable]
+ * @property {farmhand.module:enums.cropType} [cropType]
+ * @property {string} [growsInto] The id of another farmhand.item.
  */
 
 /**

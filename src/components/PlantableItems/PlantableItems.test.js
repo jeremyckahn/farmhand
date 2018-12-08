@@ -34,8 +34,8 @@ describe('rendering', () => {
     component = shallow(
       getPlantableItems({
         state: {
-          plantableInventory: [{ quantity: 1, id: 'sample-item-3' }],
-          selectedPlantableItemId: 'sample-item-3',
+          plantableInventory: [{ quantity: 1, id: 'sample-crop-3' }],
+          selectedPlantableItemId: 'sample-crop-3',
         },
       })
     );

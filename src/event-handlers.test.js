@@ -16,62 +16,15 @@ beforeEach(() => {
 });
 
 describe('handleItemPurchase', () => {
-  describe('user has enough money', () => {
-    it('creates a new item in the inventory', () => {
-      handlers().handleItemPurchase(testItem({ id: 'sample-item-1' }));
-      expect(component.state().inventory).toEqual([
-        { id: 'sample-item-1', quantity: 1 },
-      ]);
-    });
+  it('calls purchaseItem', () => {
+    const purchaseItemMock = jest.fn();
+    component.instance().purchaseItem = purchaseItemMock;
+    handlers().handleItemPurchase(testItem({ id: 'sample-item-1' }));
 
-    describe('existing items', () => {
-      beforeEach(() => {
-        component.setState({
-          inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
-        });
-      });
-
-      it('increments an existing item in the inventory', () => {
-        handlers().handleItemPurchase(testItem({ id: 'sample-item-1' }));
-
-        expect(component.state().inventory).toEqual([
-          testItem({
-            id: 'sample-item-1',
-            quantity: 2,
-          }),
-        ]);
-      });
-    });
-
-    describe('money state', () => {
-      beforeEach(() => {
-        component.setState({ money: 100 });
-        handlers().handleItemPurchase(
-          testItem({ id: 'sample-item-1', value: 10 })
-        );
-      });
-
-      it('deducts item value from money', () => {
-        expect(component.state('money')).toEqual(90);
-      });
-    });
-  });
-
-  describe('user does not have enough money', () => {
-    beforeEach(() => {
-      component.setState({ money: 5 });
-      handlers().handleItemPurchase(
-        testItem({ id: 'expensive-item', value: 10 })
-      );
-    });
-
-    it('does not add the item to the inventory', () => {
-      expect(component.state('inventory')).toEqual([]);
-    });
-
-    it('does not deduct item value from money', () => {
-      expect(component.state('money')).toEqual(5);
-    });
+    expect(purchaseItemMock.mock.calls.length).toBe(1);
+    expect(purchaseItemMock.mock.calls[0]).toEqual([
+      testItem({ id: 'sample-item-1' }),
+    ]);
   });
 });
 
@@ -131,11 +84,11 @@ describe('handlePlantableItemSelect', () => {
       selectedTool: toolType.WATERING_CAN,
     });
 
-    handlers().handlePlantableItemSelect(testItem({ id: 'sample-item-3' }));
+    handlers().handlePlantableItemSelect(testItem({ id: 'sample-crop-3' }));
   });
 
   it('updates selectedPlantableItemId state', () => {
-    expect(component.state().selectedPlantableItemId).toEqual('sample-item-3');
+    expect(component.state().selectedPlantableItemId).toEqual('sample-crop-3');
   });
 
   it('resets state.selectedTool', () => {
@@ -146,7 +99,7 @@ describe('handlePlantableItemSelect', () => {
 describe('handleToolSelect', () => {
   beforeEach(() => {
     component.setState({
-      selectedPlantableItemId: 'sample-item-3',
+      selectedPlantableItemId: 'sample-crop-3',
     });
 
     handlers().handleToolSelect(toolType.WATERING_CAN);
@@ -164,7 +117,7 @@ describe('handleToolSelect', () => {
 describe('handlePlotClick', () => {
   beforeEach(() => {
     component.setState({
-      selectedPlantableItemId: 'sample-item-3',
+      selectedPlantableItemId: 'sample-crop-3',
     });
   });
 
@@ -172,7 +125,7 @@ describe('handlePlotClick', () => {
     beforeEach(() => {
       component.setState({
         selectedTool: toolType.NONE,
-        selectedPlantableItemId: 'sample-item-3',
+        selectedPlantableItemId: 'sample-crop-3',
       });
     });
 
@@ -182,7 +135,7 @@ describe('handlePlotClick', () => {
       handlers().handlePlotClick(0, 0);
 
       expect(plantInPlotMock.mock.calls.length).toBe(1);
-      expect(plantInPlotMock.mock.calls[0]).toEqual([0, 0, 'sample-item-3']);
+      expect(plantInPlotMock.mock.calls[0]).toEqual([0, 0, 'sample-crop-3']);
     });
   });
 
@@ -200,6 +153,23 @@ describe('handlePlotClick', () => {
 
       expect(waterPlotMock.mock.calls.length).toBe(1);
       expect(waterPlotMock.mock.calls[0]).toEqual([0, 0]);
+    });
+  });
+
+  describe('selectedTool === toolType.SCYTHE', () => {
+    beforeEach(() => {
+      component.setState({
+        selectedTool: toolType.SCYTHE,
+      });
+    });
+
+    it('calls waterPlot', () => {
+      const harvestPlotMock = jest.fn();
+      component.instance().harvestPlot = harvestPlotMock;
+      handlers().handlePlotClick(0, 0);
+
+      expect(harvestPlotMock.mock.calls.length).toBe(1);
+      expect(harvestPlotMock.mock.calls[0]).toEqual([0, 0]);
     });
   });
 });

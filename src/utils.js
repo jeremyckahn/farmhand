@@ -1,5 +1,7 @@
 import { cropIdToTypeMap, itemsMap } from './data/maps';
 import Dinero from 'dinero.js';
+import memoize from 'fast-memoize';
+import { items as itemImages } from './img';
 
 /**
  * @param {farmhand.item} item
@@ -57,3 +59,41 @@ export const decrementItemFromInventory = (itemId, inventory) => {
 
   return inventory;
 };
+
+/**
+ * @param {farmhand.cropTimetable} cropTimetable
+ * @returns {Array.<string>}
+ */
+export const getLifestageRange = memoize(cropTimetable =>
+  ['seed', 'growing'].reduce(
+    (acc, stage) => acc.concat(Array(cropTimetable[stage]).fill(stage)),
+    []
+  )
+);
+
+// TODO: Enum-ify the values this function returns
+/**
+ * @param {farmhand.item} item
+ * @param {number} daysWatered
+ * @returns {string}
+ */
+export const getCropLifeStage = (item, daysWatered) =>
+  getLifestageRange(item.cropTimetable)[daysWatered] || 'grown';
+
+/**
+ * @param {farmhand.crop} crop
+ * @returns {string}
+ */
+export const getLifeStageImageId = ({ itemId, daysWatered }) =>
+  getCropLifeStage(itemsMap[itemId], daysWatered);
+
+/**
+ * @param {farmhand.crop} crop
+ * @returns {?string}
+ */
+export const getPlotImage = crop =>
+  crop
+    ? getCropLifeStage(itemsMap[crop.itemId], crop.daysWatered) === 'grown'
+      ? itemImages[getCropId(crop)]
+      : itemImages[`${getCropId(crop)}-${getLifeStageImageId(crop)}`]
+    : null;

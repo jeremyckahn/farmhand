@@ -1,30 +1,11 @@
 import React from 'react';
 import { array, number, object, shape, string } from 'prop-types';
 import Plot from '../Plot';
-import { items as itemImages } from '../../img';
-import { itemsMap } from '../../data/maps';
-import { getCropId } from '../../utils';
+import { getPlotImage } from '../../utils';
 import { toolType } from '../../enums';
-import memoize from 'fast-memoize';
 import classNames from 'classnames';
 
 import './Field.sass';
-
-export const getLifestageRange = memoize(cropTimetable =>
-  ['seed', 'growing'].reduce(
-    (acc, stage) => acc.concat(Array(cropTimetable[stage]).fill(stage)),
-    []
-  )
-);
-
-export const getCropLifeStage = (item, daysWatered) =>
-  getLifestageRange(item.cropTimetable)[daysWatered] || 'grown';
-
-export const getLifeStageImageId = ({ itemId, daysWatered }) =>
-  getCropLifeStage(itemsMap[itemId], daysWatered);
-
-export const getPlotImage = crop =>
-  crop ? itemImages[`${getCropId(crop)}-${getLifeStageImageId(crop)}`] : null;
 
 const { WATERING_CAN } = toolType;
 

@@ -7,10 +7,12 @@ import { shallow } from 'enzyme';
 import { getCropFromItemId } from './utils';
 import { testCrop, testItem } from './test-utils';
 import { initialFieldWidth, initialFieldHeight } from './constants';
-import { sampleItem1, sampleItem2, sampleItem3 } from './data/items';
+import { sampleItem1, sampleItem2, sampleCropSeedsItem1 } from './data/items';
 
 import Farmhand, {
+  addItemToInventory,
   computePlayerInventory,
+  getFinalCropItemIdFromSeedItemId,
   getPlantableInventory,
   getUpdatedValueAdjustments,
   incrementAge,
@@ -32,6 +34,27 @@ describe('state', () => {
 });
 
 describe('private functions', () => {
+  describe('addItemToInventory', () => {
+    it('creates a new item in the inventory', () => {
+      expect(addItemToInventory(testItem({ id: 'sample-item-1' }), [])).toEqual(
+        [{ id: 'sample-item-1', quantity: 1 }]
+      );
+    });
+
+    it('increments an existing item in the inventory', () => {
+      expect(
+        addItemToInventory(testItem({ id: 'sample-item-1' }), [
+          testItem({ id: 'sample-item-1', quantity: 1 }),
+        ])
+      ).toEqual([
+        testItem({
+          id: 'sample-item-1',
+          quantity: 2,
+        }),
+      ]);
+    });
+  });
+
   describe('computePlayerInventory', () => {
     let playerInventory;
     let inventory;
@@ -60,7 +83,7 @@ describe('private functions', () => {
         [{ quantity: 1, id: 'sample-item-2' }],
         valueAdjustments
       );
-      expect(playerInventory).toEqual([{ quantity: 1, ...sampleItem2 }]);
+      expect(playerInventory).toEqual([{ ...sampleItem2, quantity: 1 }]);
     });
 
     describe('with valueAdjustments', () => {
@@ -74,7 +97,7 @@ describe('private functions', () => {
 
       it('maps inventory state to renderable inventory data', () => {
         expect(playerInventory).toEqual([
-          { quantity: 1, ...testItem({ id: 'sample-item-1', value: 2 }) },
+          { ...sampleItem1, quantity: 1, value: 2 },
         ]);
       });
     });
@@ -93,8 +116,16 @@ describe('private functions', () => {
     });
 
     it('updates valueAdjustments by random factor', () => {
-      expect(valueAdjustments['sample-item-1']).toEqual(1.5);
-      expect(valueAdjustments['sample-item-2']).toEqual(1.5);
+      expect(valueAdjustments['sample-crop-1']).toEqual(1.5);
+      expect(valueAdjustments['sample-crop-2']).toEqual(1.5);
+    });
+  });
+
+  describe('getFinalCropItemIdFromSeedItemId', () => {
+    it('gets "final" crop item id from seed item id', () => {
+      expect(getFinalCropItemIdFromSeedItemId('sample-crop-seeds-1')).toEqual(
+        'sample-crop-1'
+      );
     });
   });
 
@@ -104,14 +135,14 @@ describe('private functions', () => {
 
     beforeEach(() => {
       inventory = [
+        { quantity: 1, id: 'sample-crop-seeds-1' },
         { quantity: 1, id: 'sample-item-1' },
-        { quantity: 1, id: 'sample-item-3' },
       ];
       plantableInventory = getPlantableInventory(inventory);
     });
 
     it('filters out non-plantable items', () => {
-      expect(plantableInventory).toEqual([sampleItem3]);
+      expect(plantableInventory).toEqual([sampleCropSeedsItem1]);
     });
   });
 });
@@ -141,8 +172,8 @@ describe('instance methods', () => {
       } = component.state();
 
       expect(dayCount).toEqual(2);
-      expect(valueAdjustments['sample-item-1']).toEqual(1.25);
-      expect(valueAdjustments['sample-item-2']).toEqual(1.25);
+      expect(valueAdjustments['sample-crop-1']).toEqual(1.25);
+      expect(valueAdjustments['sample-crop-2']).toEqual(1.25);
       expect(firstRow[0].wasWateredToday).toBe(false);
       expect(firstRow[0].daysWatered).toBe(1);
       expect(firstRow[0].daysOld).toBe(1);
@@ -153,7 +184,7 @@ describe('instance methods', () => {
     describe('plant is not watered', () => {
       it('updates daysOld', () => {
         const { daysOld, daysWatered } = incrementAge(
-          testCrop({ itemId: 'sample-item-1' })
+          testCrop({ itemId: 'sample-crop-1' })
         );
 
         expect(daysOld).toBe(1);
@@ -164,7 +195,7 @@ describe('instance methods', () => {
     describe('plant is watered', () => {
       it('updates daysOld and daysWatered', () => {
         const { daysOld, daysWatered } = incrementAge(
-          testCrop({ itemId: 'sample-item-1', wasWateredToday: true })
+          testCrop({ itemId: 'sample-crop-1', wasWateredToday: true })
         );
 
         expect(daysOld).toBe(1);
@@ -175,44 +206,78 @@ describe('instance methods', () => {
 
   describe('resetWasWatered', () => {
     it('updates wasWateredToday property', () => {
-      expect(resetWasWatered(testCrop({ itemId: 'sample-item-1' }))).toEqual(
-        testCrop({ itemId: 'sample-item-1' })
+      expect(resetWasWatered(testCrop({ itemId: 'sample-crop-1' }))).toEqual(
+        testCrop({ itemId: 'sample-crop-1' })
       );
 
       expect(
         resetWasWatered(
-          testCrop({ itemId: 'sample-item-2', wasWateredToday: true })
+          testCrop({ itemId: 'sample-crop-2', wasWateredToday: true })
         )
-      ).toEqual(testCrop({ itemId: 'sample-item-2' }));
+      ).toEqual(testCrop({ itemId: 'sample-crop-2' }));
 
       expect(resetWasWatered(null)).toBe(null);
+    });
+  });
+
+  describe('purchaseItem', () => {
+    describe('user has enough money', () => {
+      describe('money state', () => {
+        beforeEach(() => {
+          component.setState({ money: 100 });
+          component
+            .instance()
+            .purchaseItem(testItem({ id: 'sample-item-1', value: 10 }));
+        });
+
+        it('deducts item value from money', () => {
+          expect(component.state('money')).toEqual(90);
+        });
+      });
+    });
+
+    describe('user does not have enough money', () => {
+      beforeEach(() => {
+        component.setState({ money: 5 });
+        component
+          .instance()
+          .purchaseItem(testItem({ id: 'expensive-item', value: 10 }));
+      });
+
+      it('does not add the item to the inventory', () => {
+        expect(component.state('inventory')).toEqual([]);
+      });
+
+      it('does not deduct item value from money', () => {
+        expect(component.state('money')).toEqual(5);
+      });
     });
   });
 
   describe('plantInPlot', () => {
     beforeEach(() => {
       component.setState({
-        selectedPlantableItemId: 'sample-item-3',
+        selectedPlantableItemId: 'sample-crop-seeds-1',
       });
     });
 
-    describe('item quantity > 1 (general logic)', () => {
+    describe('crop quantity > 1', () => {
       describe('plot is empty', () => {
         beforeEach(() => {
           component.setState({
-            inventory: [testItem({ id: 'sample-item-3', quantity: 2 })],
+            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
           });
 
-          component.instance().plantInPlot(0, 0, 'sample-item-3');
+          component.instance().plantInPlot(0, 0, 'sample-crop-seeds-1');
         });
 
-        it('plants the item', () => {
+        it('plants the crop', () => {
           expect(component.state().field[0][0]).toEqual(
-            getCropFromItemId('sample-item-3')
+            getCropFromItemId('sample-crop-1')
           );
         });
 
-        it('decrements item quantity', () => {
+        it('decrements crop quantity', () => {
           expect(component.state().inventory[0].quantity).toEqual(1);
         });
       });
@@ -220,26 +285,26 @@ describe('instance methods', () => {
       describe('plot is not empty', () => {
         beforeEach(() => {
           component.setState({
-            field: [[getCropFromItemId('sample-item-3')]],
-            inventory: [testItem({ id: 'sample-item-3', quantity: 2 })],
+            field: [[getCropFromItemId('sample-crop-seeds-1')]],
+            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
           });
 
-          component.instance().plantInPlot(0, 0, 'sample-item-3');
+          component.instance().plantInPlot(0, 0, 'sample-crop-seeds-1');
         });
 
-        it('does not decrement item quantity', () => {
+        it('does not decrement crop quantity', () => {
           expect(component.state().inventory[0].quantity).toEqual(2);
         });
       });
     });
 
-    describe('item quantity === 1', () => {
+    describe('crop quantity === 1', () => {
       beforeEach(() => {
         component.setState({
-          inventory: [testItem({ id: 'sample-item-3', quantity: 1 })],
+          inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
         });
 
-        component.instance().plantInPlot(0, 0, 'sample-item-3');
+        component.instance().plantInPlot(0, 0, 'sample-crop-seeds-1');
       });
 
       it('resets selectedPlantableItemId state', () => {
@@ -251,7 +316,7 @@ describe('instance methods', () => {
   describe('waterPlot', () => {
     beforeEach(() => {
       component.setState({
-        field: [[testCrop({ itemId: 'sample-item-1' })]],
+        field: [[testCrop({ itemId: 'sample-crop-1' })]],
       });
 
       component.instance().waterPlot(0, 0);
@@ -267,10 +332,10 @@ describe('instance methods', () => {
       component.setState({
         field: [
           [
-            testCrop({ itemId: 'sample-item-1' }),
-            testCrop({ itemId: 'sample-item-2' }),
+            testCrop({ itemId: 'sample-crop-1' }),
+            testCrop({ itemId: 'sample-crop-2' }),
           ],
-          [testCrop({ itemId: 'sample-item-3' })],
+          [testCrop({ itemId: 'sample-crop-3' })],
         ],
       });
 
@@ -281,6 +346,44 @@ describe('instance methods', () => {
       expect(component.state().field[0][0].wasWateredToday).toBe(true);
       expect(component.state().field[0][1].wasWateredToday).toBe(true);
       expect(component.state().field[1][0].wasWateredToday).toBe(true);
+    });
+  });
+
+  describe('harvestPlot', () => {
+    describe('unripe crops', () => {
+      beforeEach(() => {
+        component.setState({
+          field: [[testCrop({ itemId: 'sample-crop-1' })]],
+        });
+
+        component.instance().harvestPlot(0, 0);
+      });
+
+      it('does nothing', () => {
+        expect(component.state().field[0][0]).toEqual(
+          testCrop({ itemId: 'sample-crop-1' })
+        );
+      });
+    });
+
+    describe('ripe crops', () => {
+      beforeEach(() => {
+        component.setState({
+          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
+        });
+
+        component.instance().harvestPlot(0, 0);
+      });
+
+      it('removes the crop from the plot', () => {
+        expect(component.state().field[0][0]).toBe(null);
+      });
+
+      it('adds crop to the inventory', () => {
+        expect(component.state().inventory).toEqual([
+          { id: 'sample-crop-1', quantity: 1 },
+        ]);
+      });
     });
   });
 });

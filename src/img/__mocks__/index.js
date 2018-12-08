@@ -1,9 +1,10 @@
 export const items = {
-  'sample-growing': 'data:image/png;base64,sample-growing',
-  'sample-grown': 'data:image/png;base64,sample-grown',
-  'sample-seed': 'data:image/png;base64,sample-seed',
+  'sample-type-1': 'data:image/png;base64,sample-type-1',
+  'sample-type-1-growing': 'data:image/png;base64,sample-type-1-growing',
+  'sample-type-1-seed': 'data:image/png;base64,sample-type-1-seed',
 
-  'sample-item-1': 'data:image/png;base64,sample-item-1',
-  'sample-item-2': 'data:image/png;base64,sample-item-2',
-  'sample-item-3': 'data:image/png;base64,sample-item-3',
+  'sample-crop-type-1': 'data:image/png;base64,sample-crop-type-1',
+  'sample-crop-type-1-growing':
+    'data:image/png;base64,sample-crop-type-1-growing',
+  'sample-crop-type-1-seed': 'data:image/png;base64,sample-crop-type-1-seed',
 };

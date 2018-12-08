@@ -11,6 +11,7 @@ import {
   decrementItemFromInventory,
   getCropFromItemId,
   getItemValue,
+  getLifeStageImageId,
 } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
@@ -40,6 +41,13 @@ export const getUpdatedValueAdjustments = () =>
     }),
     {}
   );
+
+/**
+ * @param {string} seedItemId
+ * @returns {string}
+ */
+export const getFinalCropItemIdFromSeedItemId = seedItemId =>
+  itemsMap[seedItemId].growsInto;
 
 /**
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -107,6 +115,7 @@ const getWateredField = field => updateField(field, setWasWatered);
  * @param {number} x
  * @param {number} y
  * @param {Function(?farmhand.crop)} modifierFn
+ * @return {Array.<Array.<?farmhand.crop>>}
  */
 const modifyFieldPlotAt = (field, x, y, modifierFn) => {
   const row = [...field[y]];
@@ -116,6 +125,41 @@ const modifyFieldPlotAt = (field, x, y, modifierFn) => {
   modifiedField[y] = row;
 
   return modifiedField;
+};
+
+/**
+ * @param {Array.<Array.<?farmhand.crop>>} field
+ * @param {number} x
+ * @param {number} y
+ * @return {Array.<Array.<?farmhand.crop>>}
+ */
+const removeFieldPlotAt = (field, x, y) =>
+  modifyFieldPlotAt(field, x, y, () => null);
+
+/**
+ * @param {farmhand.item} item
+ * @returns {Array.<{ item: farmhand.item, quantity: number }>}
+ */
+export const addItemToInventory = (item, inventory) => {
+  const { id } = item;
+  const newInventory = [...inventory];
+
+  const currentItemSlot = inventory.findIndex(
+    ({ id: itemId }) => id === itemId
+  );
+
+  if (~currentItemSlot) {
+    const currentItem = inventory[currentItemSlot];
+
+    newInventory[currentItemSlot] = {
+      ...currentItem,
+      quantity: currentItem.quantity + 1,
+    };
+  } else {
+    newInventory.push({ id, quantity: 1 });
+  }
+
+  return newInventory;
 };
 
 /**
@@ -250,6 +294,23 @@ export default class Farmhand extends Component {
   }
 
   /**
+   * @param {farmhand.item} item
+   */
+  purchaseItem(item) {
+    const { value = 0 } = item;
+    const { inventory, money } = this.state;
+
+    if (value > money) {
+      return;
+    }
+
+    this.setState({
+      inventory: addItemToInventory(item, inventory),
+      money: money - value,
+    });
+  }
+
+  /**
    * @param {number} x
    * @param {number} y
    * @param {string} plantableItemId
@@ -259,6 +320,7 @@ export default class Farmhand extends Component {
 
     if (plantableItemId) {
       const row = field[y];
+      const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId);
 
       if (row[x]) {
         // Something is already planted in field[x][y]
@@ -266,7 +328,7 @@ export default class Farmhand extends Component {
       }
 
       const newField = modifyFieldPlotAt(field, x, y, () =>
-        getCropFromItemId(plantableItemId)
+        getCropFromItemId(finalCropItemId)
       );
 
       const updatedInventory = decrementItemFromInventory(
@@ -311,6 +373,28 @@ export default class Farmhand extends Component {
 
   waterAllPlots() {
     this.setState({ field: getWateredField(this.state.field) });
+  }
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
+  harvestPlot(x, y) {
+    const { inventory, field } = this.state;
+    const row = field[y];
+    const crop = row[x];
+
+    if (!crop) {
+      // Nothing planted in field[x][y]
+      return;
+    }
+
+    if (getLifeStageImageId(crop) === 'grown') {
+      this.setState({
+        field: removeFieldPlotAt(field, x, y),
+        inventory: addItemToInventory(itemsMap[crop.itemId], inventory),
+      });
+    }
   }
 
   render() {

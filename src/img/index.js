@@ -3,12 +3,12 @@ export const wateredPlot = require('./misc/watered-plot.png');
 
 export const items = {
   // Crops
+  carrot: require('./crops/carrot.png'),
   'carrot-growing': require('./crops/carrot-growing.png'),
-  'carrot-grown': require('./crops/carrot-grown.png'),
   'carrot-seed': require('./crops/carrot-seed.png'),
 
+  pumpkin: require('./crops/pumpkin.png'),
   'pumpkin-growing': require('./crops/pumpkin-growing.png'),
-  'pumpkin-grown': require('./crops/pumpkin-grown.png'),
   'pumpkin-seed': require('./crops/pumpkin-seed.png'),
 };
 
