@@ -27,7 +27,7 @@
 - [ ] Crop tending
   - [x] Planting
   - [x] Watering
-  - [ ] Harvesting
+  - [x] Harvesting
   - [ ] Removal
 - [ ] Tools/items
   - [ ] Soil
