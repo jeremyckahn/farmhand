@@ -5,7 +5,6 @@ jest.mock('./img');
 
 import {
   getCropId,
-  getCropLifeStage,
   getLifeStage,
   getLifeStageRange,
   getPlotImage,
@@ -28,18 +27,6 @@ describe('getLifeStageRange', () => {
       GROWING,
       GROWING,
     ]);
-  });
-});
-
-describe('getCropLifeStage', () => {
-  const cropTimetable = { [SEED]: 1, [GROWING]: 2 };
-
-  it('gets corrent life stage for index', () => {
-    expect(getCropLifeStage({ cropTimetable }, 2)).toBe(GROWING);
-  });
-
-  it('defaults to GROWN', () => {
-    expect(getCropLifeStage({ cropTimetable }, 6)).toBe(GROWN);
   });
 });
 
