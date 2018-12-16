@@ -10,8 +10,8 @@ import DebugMenu from './components/DebugMenu';
 import {
   decrementItemFromInventory,
   getCropFromItemId,
+  getCropLifeStage,
   getItemValue,
-  getLifeStage,
 } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
@@ -391,7 +391,7 @@ export default class Farmhand extends Component {
       return;
     }
 
-    if (getLifeStage(crop) === GROWN) {
+    if (getCropLifeStage(crop) === GROWN) {
       this.setState({
         field: removeFieldPlotAt(field, x, y),
         inventory: addItemToInventory(itemsMap[crop.itemId], inventory),

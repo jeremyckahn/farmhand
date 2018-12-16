@@ -78,7 +78,7 @@ export const getLifeStageRange = memoize(cropTimetable =>
  * @param {farmhand.crop} crop
  * @returns {enums.cropLifeStage}
  */
-export const getLifeStage = ({ itemId, daysWatered }) =>
+export const getCropLifeStage = ({ itemId, daysWatered }) =>
   getLifeStageRange(itemsMap[itemId].cropTimetable)[daysWatered] || GROWN;
 
 const cropLifeStageToImageSuffixMap = {
@@ -92,11 +92,11 @@ const cropLifeStageToImageSuffixMap = {
  */
 export const getPlotImage = crop =>
   crop
-    ? getLifeStage(crop) === GROWN
+    ? getCropLifeStage(crop) === GROWN
       ? itemImages[getCropId(crop)]
       : itemImages[
           `${getCropId(crop)}-${
-            cropLifeStageToImageSuffixMap[getLifeStage(crop)]
+            cropLifeStageToImageSuffixMap[getCropLifeStage(crop)]
           }`
         ]
     : null;

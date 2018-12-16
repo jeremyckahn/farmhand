@@ -5,7 +5,7 @@ jest.mock('./img');
 
 import {
   getCropId,
-  getLifeStage,
+  getCropLifeStage,
   getLifeStageRange,
   getPlotImage,
 } from './utils';
@@ -30,13 +30,13 @@ describe('getLifeStageRange', () => {
   });
 });
 
-describe('getLifeStage', () => {
+describe('getCropLifeStage', () => {
   it('maps a life cycle label to an image name chunk', () => {
     const itemId = 'sample-crop-1';
 
-    expect(getLifeStage({ itemId, daysWatered: 0 })).toBe(SEED);
-    expect(getLifeStage({ itemId, daysWatered: 1 })).toBe(GROWING);
-    expect(getLifeStage({ itemId, daysWatered: 3 })).toBe(GROWN);
+    expect(getCropLifeStage({ itemId, daysWatered: 0 })).toBe(SEED);
+    expect(getCropLifeStage({ itemId, daysWatered: 1 })).toBe(GROWING);
+    expect(getCropLifeStage({ itemId, daysWatered: 3 })).toBe(GROWN);
   });
 });
 
