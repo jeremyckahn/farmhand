@@ -25,3 +25,9 @@ export const toolType = enumify(['NONE', 'SCYTHE', 'WATERING_CAN']);
  * @enum {string}
  */
 export const stageFocusType = enumify(['NONE', 'FIELD', 'INVENTORY', 'SHOP']);
+
+/**
+ * @property farmhand.module:enums.cropLifeStage
+ * @enum {string}
+ */
+export const cropLifeStage = enumify(['SEED', 'GROWING', 'GROWN']);

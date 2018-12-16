@@ -6,11 +6,14 @@ jest.mock('./img');
 import {
   getCropId,
   getCropLifeStage,
-  getLifestageRange,
-  getLifeStageImageId,
+  getLifeStage,
+  getLifeStageRange,
   getPlotImage,
 } from './utils';
 import { items as itemImages } from './img';
+import { cropLifeStage } from './enums';
+
+const { SEED, GROWING, GROWN } = cropLifeStage;
 
 describe('getCropId', () => {
   it('returns an ID for a provided crop', () => {
@@ -18,35 +21,35 @@ describe('getCropId', () => {
   });
 });
 
-describe('getLifestageRange', () => {
+describe('getLifeStageRange', () => {
   it('converts a cropTimetable to an array of stages', () => {
-    expect(getLifestageRange({ seed: 1, growing: 2 })).toEqual([
-      'seed',
-      'growing',
-      'growing',
+    expect(getLifeStageRange({ [SEED]: 1, [GROWING]: 2 })).toEqual([
+      SEED,
+      GROWING,
+      GROWING,
     ]);
   });
 });
 
 describe('getCropLifeStage', () => {
-  const cropTimetable = { seed: 1, growing: 2 };
+  const cropTimetable = { [SEED]: 1, [GROWING]: 2 };
 
   it('gets corrent life stage for index', () => {
-    expect(getCropLifeStage({ cropTimetable }, 2)).toBe('growing');
+    expect(getCropLifeStage({ cropTimetable }, 2)).toBe(GROWING);
   });
 
-  it('defaults to "grown"', () => {
-    expect(getCropLifeStage({ cropTimetable }, 6)).toBe('grown');
+  it('defaults to GROWN', () => {
+    expect(getCropLifeStage({ cropTimetable }, 6)).toBe(GROWN);
   });
 });
 
-describe('getLifeStageImageId', () => {
+describe('getLifeStage', () => {
   it('maps a life cycle label to an image name chunk', () => {
     const itemId = 'sample-crop-1';
 
-    expect(getLifeStageImageId({ itemId, daysWatered: 0 })).toBe('seed');
-    expect(getLifeStageImageId({ itemId, daysWatered: 1 })).toBe('growing');
-    expect(getLifeStageImageId({ itemId, daysWatered: 3 })).toBe('grown');
+    expect(getLifeStage({ itemId, daysWatered: 0 })).toBe(SEED);
+    expect(getLifeStage({ itemId, daysWatered: 1 })).toBe(GROWING);
+    expect(getLifeStage({ itemId, daysWatered: 3 })).toBe(GROWN);
   });
 });
 

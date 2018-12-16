@@ -1,4 +1,7 @@
 import { testItem } from '../../test-utils';
+import { cropLifeStage } from '../../enums';
+
+const { SEED, GROWING } = cropLifeStage;
 
 // Non-crop items
 export const sampleItem1 = testItem({
@@ -33,8 +36,8 @@ export const sampleCropItem1 = testItem({
   cropType: 'SAMPLE-CROP-TYPE-1',
   value: 2,
   cropTimetable: {
-    seed: 1,
-    growing: 2,
+    [SEED]: 1,
+    [GROWING]: 2,
   },
 });
 
@@ -51,8 +54,8 @@ export const sampleCropItem2 = testItem({
   cropType: 'SAMPLE-CROP-TYPE-2',
   value: 3,
   cropTimetable: {
-    seed: 2,
-    growing: 3,
+    [SEED]: 2,
+    [GROWING]: 3,
   },
 });
 
@@ -69,7 +72,7 @@ export const sampleCropItem3 = testItem({
   cropType: 'SAMPLE-CROP-TYPE-3',
   value: 4,
   cropTimetable: {
-    seed: 3,
-    growing: 4,
+    [SEED]: 3,
+    [GROWING]: 4,
   },
 });

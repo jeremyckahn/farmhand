@@ -2,6 +2,9 @@ import { cropIdToTypeMap, itemsMap } from './data/maps';
 import Dinero from 'dinero.js';
 import memoize from 'fast-memoize';
 import { items as itemImages } from './img';
+import { cropLifeStage } from './enums';
+
+const { SEED, GROWING, GROWN } = cropLifeStage;
 
 /**
  * @param {farmhand.item} item
@@ -62,30 +65,35 @@ export const decrementItemFromInventory = (itemId, inventory) => {
 
 /**
  * @param {farmhand.cropTimetable} cropTimetable
- * @returns {Array.<string>}
+ * @returns {Array.<enums.cropLifeStage>}
  */
-export const getLifestageRange = memoize(cropTimetable =>
-  ['seed', 'growing'].reduce(
+export const getLifeStageRange = memoize(cropTimetable =>
+  [SEED, GROWING].reduce(
     (acc, stage) => acc.concat(Array(cropTimetable[stage]).fill(stage)),
     []
   )
 );
 
-// TODO: Enum-ify the values this function returns
+// TODO: Refactor out getCropLifeStage
 /**
  * @param {farmhand.item} item
  * @param {number} daysWatered
- * @returns {string}
+ * @returns {enums.cropLifeStage}
  */
 export const getCropLifeStage = (item, daysWatered) =>
-  getLifestageRange(item.cropTimetable)[daysWatered] || 'grown';
+  getLifeStageRange(item.cropTimetable)[daysWatered] || GROWN;
 
 /**
  * @param {farmhand.crop} crop
- * @returns {string}
+ * @returns {enums.cropLifeStage}
  */
-export const getLifeStageImageId = ({ itemId, daysWatered }) =>
+export const getLifeStage = ({ itemId, daysWatered }) =>
   getCropLifeStage(itemsMap[itemId], daysWatered);
+
+const cropLifeStageToImageSuffixMap = {
+  [SEED]: 'seed',
+  [GROWING]: 'growing',
+};
 
 /**
  * @param {farmhand.crop} crop
@@ -93,7 +101,11 @@ export const getLifeStageImageId = ({ itemId, daysWatered }) =>
  */
 export const getPlotImage = crop =>
   crop
-    ? getCropLifeStage(itemsMap[crop.itemId], crop.daysWatered) === 'grown'
+    ? getCropLifeStage(itemsMap[crop.itemId], crop.daysWatered) === GROWN
       ? itemImages[getCropId(crop)]
-      : itemImages[`${getCropId(crop)}-${getLifeStageImageId(crop)}`]
+      : itemImages[
+          `${getCropId(crop)}-${
+            cropLifeStageToImageSuffixMap[getLifeStage(crop)]
+          }`
+        ]
     : null;

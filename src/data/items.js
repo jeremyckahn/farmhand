@@ -2,10 +2,11 @@
  * @module farmhand.items
  */
 
-import { cropType } from '../enums';
+import { cropLifeStage, cropType } from '../enums';
 
 const { freeze } = Object;
 const { CARROT, PUMPKIN } = cropType;
+const { SEED, GROWING } = cropLifeStage;
 
 /**
  * @property farmhand.module:items.carrotSeed
@@ -27,8 +28,8 @@ export const carrotSeed = freeze({
 export const carrot = freeze({
   cropType: CARROT,
   cropTimetable: {
-    seed: 2,
-    growing: 3,
+    [SEED]: 2,
+    [GROWING]: 3,
   },
   id: 'carrot',
   name: 'Carrot',
@@ -55,8 +56,8 @@ export const pumpkinSeed = freeze({
 export const pumpkin = freeze({
   cropType: PUMPKIN,
   cropTimetable: {
-    seed: 3,
-    growing: 5,
+    [SEED]: 3,
+    [GROWING]: 5,
   },
   id: 'pumpkin',
   name: 'Pumpkin',

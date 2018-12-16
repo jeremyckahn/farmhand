@@ -11,14 +11,16 @@ import {
   decrementItemFromInventory,
   getCropFromItemId,
   getItemValue,
-  getLifeStageImageId,
+  getLifeStage,
 } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
-import { stageFocusType, toolType } from './enums';
+import { cropLifeStage, stageFocusType, toolType } from './enums';
 import { initialFieldWidth, initialFieldHeight } from './constants';
 
 import './Farmhand.sass';
+
+const { GROWN } = cropLifeStage;
 
 /**
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -389,7 +391,7 @@ export default class Farmhand extends Component {
       return;
     }
 
-    if (getLifeStageImageId(crop) === 'grown') {
+    if (getLifeStage(crop) === GROWN) {
       this.setState({
         field: removeFieldPlotAt(field, x, y),
         inventory: addItemToInventory(itemsMap[crop.itemId], inventory),
