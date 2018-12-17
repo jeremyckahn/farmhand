@@ -52,10 +52,12 @@ export default {
 
     if (selectedTool === toolType.NONE) {
       this.plantInPlot(x, y, selectedPlantableItemId);
-    } else if (selectedTool === toolType.WATERING_CAN) {
-      this.waterPlot(x, y);
+    } else if (selectedTool === toolType.HOE) {
+      this.clearPlot(x, y);
     } else if (selectedTool === toolType.SCYTHE) {
       this.harvestPlot(x, y);
+    } else if (selectedTool === toolType.WATERING_CAN) {
+      this.waterPlot(x, y);
     }
   },
 

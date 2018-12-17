@@ -313,39 +313,17 @@ describe('instance methods', () => {
     });
   });
 
-  describe('waterPlot', () => {
+  describe('clearPlot', () => {
     beforeEach(() => {
       component.setState({
         field: [[testCrop({ itemId: 'sample-crop-1' })]],
       });
 
-      component.instance().waterPlot(0, 0);
+      component.instance().clearPlot(0, 0);
     });
 
-    it('sets wasWateredToday to true', () => {
-      expect(component.state().field[0][0].wasWateredToday).toBe(true);
-    });
-  });
-
-  describe('waterAllPlots', () => {
-    beforeEach(() => {
-      component.setState({
-        field: [
-          [
-            testCrop({ itemId: 'sample-crop-1' }),
-            testCrop({ itemId: 'sample-crop-2' }),
-          ],
-          [testCrop({ itemId: 'sample-crop-3' })],
-        ],
-      });
-
-      component.instance().waterAllPlots();
-    });
-
-    it('sets wasWateredToday to true for all plots', () => {
-      expect(component.state().field[0][0].wasWateredToday).toBe(true);
-      expect(component.state().field[0][1].wasWateredToday).toBe(true);
-      expect(component.state().field[1][0].wasWateredToday).toBe(true);
+    it('removes the crop from the plot', () => {
+      expect(component.state().field[0][0]).toBe(null);
     });
   });
 
@@ -384,6 +362,42 @@ describe('instance methods', () => {
           { id: 'sample-crop-1', quantity: 1 },
         ]);
       });
+    });
+  });
+
+  describe('waterPlot', () => {
+    beforeEach(() => {
+      component.setState({
+        field: [[testCrop({ itemId: 'sample-crop-1' })]],
+      });
+
+      component.instance().waterPlot(0, 0);
+    });
+
+    it('sets wasWateredToday to true', () => {
+      expect(component.state().field[0][0].wasWateredToday).toBe(true);
+    });
+  });
+
+  describe('waterAllPlots', () => {
+    beforeEach(() => {
+      component.setState({
+        field: [
+          [
+            testCrop({ itemId: 'sample-crop-1' }),
+            testCrop({ itemId: 'sample-crop-2' }),
+          ],
+          [testCrop({ itemId: 'sample-crop-3' })],
+        ],
+      });
+
+      component.instance().waterAllPlots();
+    });
+
+    it('sets wasWateredToday to true for all plots', () => {
+      expect(component.state().field[0][0].wasWateredToday).toBe(true);
+      expect(component.state().field[0][1].wasWateredToday).toBe(true);
+      expect(component.state().field[1][0].wasWateredToday).toBe(true);
     });
   });
 });

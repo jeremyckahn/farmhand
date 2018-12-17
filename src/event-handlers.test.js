@@ -139,20 +139,20 @@ describe('handlePlotClick', () => {
     });
   });
 
-  describe('selectedTool === toolType.WATERING_CAN', () => {
+  describe('selectedTool === toolType.HOE', () => {
     beforeEach(() => {
       component.setState({
-        selectedTool: toolType.WATERING_CAN,
+        selectedTool: toolType.HOE,
       });
     });
 
-    it('calls waterPlot', () => {
-      const waterPlotMock = jest.fn();
-      component.instance().waterPlot = waterPlotMock;
+    it('calls clearPlot', () => {
+      const clearPlotMock = jest.fn();
+      component.instance().clearPlot = clearPlotMock;
       handlers().handlePlotClick(0, 0);
 
-      expect(waterPlotMock.mock.calls.length).toBe(1);
-      expect(waterPlotMock.mock.calls[0]).toEqual([0, 0]);
+      expect(clearPlotMock.mock.calls.length).toBe(1);
+      expect(clearPlotMock.mock.calls[0]).toEqual([0, 0]);
     });
   });
 
@@ -170,6 +170,23 @@ describe('handlePlotClick', () => {
 
       expect(harvestPlotMock.mock.calls.length).toBe(1);
       expect(harvestPlotMock.mock.calls[0]).toEqual([0, 0]);
+    });
+  });
+
+  describe('selectedTool === toolType.WATERING_CAN', () => {
+    beforeEach(() => {
+      component.setState({
+        selectedTool: toolType.WATERING_CAN,
+      });
+    });
+
+    it('calls waterPlot', () => {
+      const waterPlotMock = jest.fn();
+      component.instance().waterPlot = waterPlotMock;
+      handlers().handlePlotClick(0, 0);
+
+      expect(waterPlotMock.mock.calls.length).toBe(1);
+      expect(waterPlotMock.mock.calls[0]).toEqual([0, 0]);
     });
   });
 });

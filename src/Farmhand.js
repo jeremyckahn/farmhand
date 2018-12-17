@@ -356,6 +356,47 @@ export default class Farmhand extends Component {
    * @param {number} x
    * @param {number} y
    */
+  harvestPlot(x, y) {
+    const { inventory, field } = this.state;
+    const row = field[y];
+    const crop = row[x];
+
+    if (!crop) {
+      // Nothing planted in field[x][y]
+      return;
+    }
+
+    if (getCropLifeStage(crop) === GROWN) {
+      this.setState({
+        field: removeFieldPlotAt(field, x, y),
+        inventory: addItemToInventory(itemsMap[crop.itemId], inventory),
+      });
+    }
+  }
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
+  clearPlot(x, y) {
+    const { field } = this.state;
+    const row = field[y];
+    const crop = row[x];
+
+    if (!crop) {
+      // Nothing planted in field[x][y]
+      return;
+    }
+
+    this.setState({
+      field: removeFieldPlotAt(field, x, y),
+    });
+  }
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
   waterPlot(x, y) {
     const { field } = this.state;
     const row = field[y];
@@ -375,28 +416,6 @@ export default class Farmhand extends Component {
 
   waterAllPlots() {
     this.setState({ field: getWateredField(this.state.field) });
-  }
-
-  /**
-   * @param {number} x
-   * @param {number} y
-   */
-  harvestPlot(x, y) {
-    const { inventory, field } = this.state;
-    const row = field[y];
-    const crop = row[x];
-
-    if (!crop) {
-      // Nothing planted in field[x][y]
-      return;
-    }
-
-    if (getCropLifeStage(crop) === GROWN) {
-      this.setState({
-        field: removeFieldPlotAt(field, x, y),
-        inventory: addItemToInventory(itemsMap[crop.itemId], inventory),
-      });
-    }
   }
 
   render() {

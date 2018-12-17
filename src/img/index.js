@@ -13,6 +13,7 @@ export const items = {
 };
 
 export const tools = {
+  hoe: require('./tools/hoe.png'),
   scythe: require('./tools/scythe.png'),
   'watering-can': require('./tools/watering-can.png'),
 };

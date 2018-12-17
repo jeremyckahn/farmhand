@@ -18,7 +18,7 @@ export const cropType = enumify(['CARROT', 'PUMPKIN']);
  * @property farmhand.module:enums.toolType
  * @enum {string}
  */
-export const toolType = enumify(['NONE', 'SCYTHE', 'WATERING_CAN']);
+export const toolType = enumify(['NONE', 'HOE', 'SCYTHE', 'WATERING_CAN']);
 
 /**
  * @property farmhand.module:enums.stageFocusType

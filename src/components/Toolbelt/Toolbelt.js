@@ -6,7 +6,7 @@ import { toolType } from '../../enums';
 
 import { tools, pixel } from '../../img';
 
-const { SCYTHE, WATERING_CAN } = toolType;
+const { HOE, SCYTHE, WATERING_CAN } = toolType;
 
 const Toolbelt = ({
   handlers: { handleToolSelect },
@@ -20,9 +20,14 @@ const Toolbelt = ({
         toolType: WATERING_CAN,
       },
       {
-        alt: 'A scythe for crop harvesting and cleanup',
+        alt: 'A scythe for crop harvesting',
         toolImageId: 'scythe',
         toolType: SCYTHE,
+      },
+      {
+        alt: 'A hoe for removing crops without harvesting them',
+        toolImageId: 'hoe',
+        toolType: HOE,
       },
     ].map(({ alt, className, toolImageId, toolType }) => (
       <button

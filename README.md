@@ -28,7 +28,7 @@
   - [x] Planting
   - [x] Watering
   - [x] Harvesting
-  - [ ] Removal
+  - [x] Removal
 - [ ] Tools/items
   - [ ] Soil
   - [ ] Irrigators
