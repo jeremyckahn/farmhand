@@ -64,9 +64,9 @@ describe('is-plantable-item-selected class', () => {
   });
 });
 
-describe('is-watering-can-selected class', () => {
+describe('watering-can-selected class', () => {
   it('is not present when watering can is not selected', () => {
-    expect(component.hasClass('is-watering-can-selected')).toBeFalsy();
+    expect(component.hasClass('watering-can-selected')).toBeFalsy();
   });
 
   it('is present when watering can is selected', () => {
@@ -74,6 +74,6 @@ describe('is-watering-can-selected class', () => {
       getField({ state: { selectedTool: toolType.WATERING_CAN } })
     );
 
-    expect(component.hasClass('is-watering-can-selected')).toBeTruthy();
+    expect(component.hasClass('watering-can-selected')).toBeTruthy();
   });
 });
