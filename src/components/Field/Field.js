@@ -1,14 +1,15 @@
 import React from 'react';
 import { array, number, object, shape, string } from 'prop-types';
 import Plot from '../Plot';
-import { getPlotImage } from '../../utils';
+import { getCropLifeStage, getPlotImage } from '../../utils';
 import { toolType } from '../../enums';
 import classNames from 'classnames';
 
 import './Field.sass';
 
-const { WATERING_CAN } = toolType;
+const { HOE, SCYTHE, WATERING_CAN } = toolType;
 
+// TODO: Pass lifeStage as null if crop is null
 const Field = ({
   handlers,
   columns,
@@ -19,6 +20,8 @@ const Field = ({
   <div
     className={classNames('Field', {
       'plantable-item-selected': selectedPlantableItemId,
+      'hoe-selected': selectedTool === HOE,
+      'scythe-selected': selectedTool === SCYTHE,
       'watering-can-selected': selectedTool === WATERING_CAN,
     })}
   >
@@ -34,6 +37,7 @@ const Field = ({
                 {...{
                   handlers,
                   image: getPlotImage(crop),
+                  lifeStage: crop ? getCropLifeStage(crop) : '',
                   crop,
                   state,
                   x: j,

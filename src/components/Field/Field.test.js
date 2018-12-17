@@ -64,6 +64,30 @@ describe('plantable-item-selected class', () => {
   });
 });
 
+describe('hoe-selected class', () => {
+  it('is not present when hoe is not selected', () => {
+    expect(component.hasClass('hoe-selected')).toBeFalsy();
+  });
+
+  it('is present when hoe is selected', () => {
+    component = shallow(getField({ state: { selectedTool: toolType.HOE } }));
+
+    expect(component.hasClass('hoe-selected')).toBeTruthy();
+  });
+});
+
+describe('scythe-selected class', () => {
+  it('is not present when scythe is not selected', () => {
+    expect(component.hasClass('scythe-selected')).toBeFalsy();
+  });
+
+  it('is present when scythe is selected', () => {
+    component = shallow(getField({ state: { selectedTool: toolType.SCYTHE } }));
+
+    expect(component.hasClass('scythe-selected')).toBeTruthy();
+  });
+});
+
 describe('watering-can-selected class', () => {
   it('is not present when watering can is not selected', () => {
     expect(component.hasClass('watering-can-selected')).toBeFalsy();
