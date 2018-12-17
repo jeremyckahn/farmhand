@@ -50,9 +50,9 @@ describe('field rendering', () => {
   });
 });
 
-describe('is-plantable-item-selected class', () => {
+describe('plantable-item-selected class', () => {
   it('is not present when item is not selected', () => {
-    expect(component.hasClass('is-plantable-item-selected')).toBeFalsy();
+    expect(component.hasClass('plantable-item-selected')).toBeFalsy();
   });
 
   it('is present when item is selected', () => {
@@ -60,7 +60,7 @@ describe('is-plantable-item-selected class', () => {
       getField({ state: { selectedPlantableItemId: 'stub-item' } })
     );
 
-    expect(component.hasClass('is-plantable-item-selected')).toBeTruthy();
+    expect(component.hasClass('plantable-item-selected')).toBeTruthy();
   });
 });
 

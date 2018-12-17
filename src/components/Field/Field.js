@@ -18,7 +18,7 @@ const Field = ({
 }) => (
   <div
     className={classNames('Field', {
-      'is-plantable-item-selected': selectedPlantableItemId,
+      'plantable-item-selected': selectedPlantableItemId,
       'watering-can-selected': selectedTool === WATERING_CAN,
     })}
   >
