@@ -1,6 +1,6 @@
 import React from 'react';
 import { func, number, object, shape, string } from 'prop-types';
-import { items as itemImages, pixel, wateredPlot } from '../../img';
+import { pixel, wateredPlot } from '../../img';
 import { cropLifeStage } from '../../enums';
 import classNames from 'classnames';
 import './Plot.sass';
@@ -27,11 +27,10 @@ export const Plot = ({
     <img
       className="square"
       style={{
-        backgroundImage: `url(${image ||
-          (crop ? itemImages[crop.itemId] : pixel)})`,
+        backgroundImage: `url(${image || pixel})`,
       }}
       src={pixel}
-      alt="TODO: Place explanatory text here"
+      alt=""
     />
   </div>
 );
