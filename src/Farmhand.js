@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react';
 import NotificationSystem from 'react-notification-system';
 import memoize from 'fast-memoize';
 import { HotKeys } from 'react-hotkeys';
+import localforage from 'localforage';
 import eventHandlers from './event-handlers';
 import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
@@ -211,6 +212,14 @@ export default class Farmhand extends Component {
     );
 
     this.initKeyHandlers();
+
+    this.localforage = localforage.createInstance({
+      name: 'farmhand',
+      // NOTE: This should probably be determined by the package version
+      // instead of being hardcoded.
+      version: 1.0,
+      description: 'Persisted game data for Farmhand',
+    });
   }
 
   initKeyHandlers() {
@@ -231,10 +240,12 @@ export default class Farmhand extends Component {
 
     if (process.env.NODE_ENV === 'development') {
       Object.assign(this.keyMap, {
+        clearPersistedData: 'shift+c',
         waterAllPlots: 'w',
       });
 
       Object.assign(this.keyHandlers, {
+        clearPersistedData: () => this.clearPersistedData(),
         waterAllPlots: () => this.waterAllPlots(),
       });
     }
@@ -254,7 +265,22 @@ export default class Farmhand extends Component {
   }
 
   componentDidMount() {
-    this.incrementDay();
+    this.localforage.getItem('state').then(state => {
+      if (state) {
+        this.setState(state);
+      } else {
+        this.incrementDay();
+      }
+    });
+  }
+
+  clearPersistedData() {
+    this.localforage.clear().then(() =>
+      this.showNotification({
+        message: 'localforage.clear() succeeded!',
+        level: 'success',
+      })
+    );
   }
 
   createNewField() {
@@ -269,8 +295,15 @@ export default class Farmhand extends Component {
    * {@link https://github.com/igorprado/react-notification-system#creating-a-notification}
    * for available options.
    */
-  triggerNotification(options) {
-    this.notificationSystemRef.current.addNotification({
+  showNotification(options) {
+    const { current: notificationSystem } = this.notificationSystemRef;
+
+    // This will be null for the tests, so just return early.
+    if (!notificationSystem) {
+      return;
+    }
+
+    notificationSystem.addNotification({
       level: 'info',
       ...options,
     });
@@ -279,11 +312,26 @@ export default class Farmhand extends Component {
   incrementDay() {
     const { dayCount, field } = this.state;
 
-    this.setState({
-      dayCount: dayCount + 1,
-      valueAdjustments: getUpdatedValueAdjustments(),
-      field: getUpdatedField(field),
-    });
+    this.setState(
+      {
+        dayCount: dayCount + 1,
+        valueAdjustments: getUpdatedValueAdjustments(),
+        field: getUpdatedField(field),
+      },
+      () => {
+        this.localforage
+          .setItem('state', this.state)
+          .then(() => this.showNotification({ message: 'Progress saved!' }))
+          .catch(e => {
+            console.error(e);
+
+            this.showNotification({
+              message: JSON.stringify(e),
+              level: 'error',
+            });
+          });
+      }
+    );
   }
 
   getPlayerInventory() {

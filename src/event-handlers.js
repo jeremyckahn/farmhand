@@ -65,6 +65,10 @@ export default {
     this.incrementDay();
   },
 
+  handleClearPersistedDataClick() {
+    this.clearPersistedData();
+  },
+
   handleWaterAllPlotsClick() {
     this.waterAllPlots();
   },

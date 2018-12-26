@@ -7,7 +7,11 @@ let component;
 const getDebugMenu = (props = {}) => (
   <DebugMenu
     {...{
-      handlers: { handleWaterAllPlotsClick: () => {}, ...props.handlers },
+      handlers: {
+        handleClearPersistedDataClick: () => {},
+        handleWaterAllPlotsClick: () => {},
+        ...props.handlers,
+      },
       items: [],
       state: {
         ...props.state,

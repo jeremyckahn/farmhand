@@ -1,13 +1,12 @@
-/* eslint-disable import/first */
-jest.mock('../../data/maps');
-jest.mock('../../data/items');
-jest.mock('../../img');
-
 import React from 'react';
 import Field from './Field';
 import Plot from '../Plot';
 import { toolType } from '../../enums';
 import { shallow } from 'enzyme';
+
+jest.mock('../../data/maps');
+jest.mock('../../data/items');
+jest.mock('../../img');
 
 let component;
 

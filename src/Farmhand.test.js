@@ -1,9 +1,6 @@
-/* eslint-disable import/first */
-jest.mock('./data/maps');
-jest.mock('./data/items');
-
 import React from 'react';
 import { shallow } from 'enzyme';
+import localforage from 'localforage';
 import { getCropFromItemId } from './utils';
 import { testCrop, testItem } from './test-utils';
 import { initialFieldWidth, initialFieldHeight } from './constants';
@@ -19,10 +16,19 @@ import Farmhand, {
   resetWasWatered,
 } from './Farmhand';
 
+jest.mock('localforage');
+jest.mock('./data/maps');
+jest.mock('./data/items');
+
 let component;
 let mathSpy;
 
 beforeEach(() => {
+  localforage.createInstance = () => ({
+    getItem: () => Promise.resolve(null),
+    setItem: data => Promise.resolve(data),
+  });
+
   component = shallow(<Farmhand />);
 });
 
@@ -148,9 +154,47 @@ describe('private functions', () => {
 });
 
 describe('instance methods', () => {
+  let incrementDaySpy;
+
+  describe('componentDidMount', () => {
+    beforeEach(() => {
+      incrementDaySpy = jest.spyOn(component.instance(), 'incrementDay');
+    });
+
+    describe('fresh boot', () => {
+      beforeEach(() => {
+        component.instance().componentDidMount();
+      });
+
+      it('increments the day by one', () => {
+        expect(incrementDaySpy.mock.calls.length).toBe(1);
+      });
+    });
+
+    describe('boot from persisted state', () => {
+      beforeEach(() => {
+        localforage.createInstance = () => ({
+          getItem: () => Promise.resolve({ foo: 'bar' }),
+          setItem: data => Promise.resolve(data),
+        });
+
+        component = shallow(<Farmhand />);
+        component.instance().componentDidMount();
+      });
+
+      it('rehydrates from persisted state', () => {
+        expect(incrementDaySpy.mock.calls.length).toBe(0);
+        expect(component.state().foo).toBe('bar');
+      });
+    });
+  });
+
   describe('incrementDay', () => {
+    let setItemSpy;
+
     beforeEach(() => {
       mathSpy = jest.spyOn(Math, 'random').mockImplementation(() => 0.75);
+      setItemSpy = jest.spyOn(component.instance().localforage, 'setItem');
       const firstRow = component.state().field[0];
       firstRow[0] = testCrop({
         itemId: 'sample-crop-1',
@@ -165,11 +209,12 @@ describe('instance methods', () => {
     });
 
     it('updates component state', () => {
+      const state = component.state();
       const {
         dayCount,
         field: [firstRow],
         valueAdjustments,
-      } = component.state();
+      } = state;
 
       expect(dayCount).toEqual(2);
       expect(valueAdjustments['sample-crop-1']).toEqual(1.25);
@@ -177,6 +222,8 @@ describe('instance methods', () => {
       expect(firstRow[0].wasWateredToday).toBe(false);
       expect(firstRow[0].daysWatered).toBe(1);
       expect(firstRow[0].daysOld).toBe(1);
+      expect(setItemSpy.mock.calls.length).toBe(1);
+      expect(setItemSpy.mock.calls[0][1]).toEqual(state);
     });
   });
 

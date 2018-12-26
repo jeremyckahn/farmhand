@@ -1,11 +1,10 @@
-/* eslint-disable import/first */
-jest.mock('./data/items');
-
 import React from 'react';
 import Farmhand from './Farmhand';
 import { stageFocusType, toolType } from './enums';
 import { shallow } from 'enzyme';
 import { testItem } from './test-utils';
+
+jest.mock('./data/items');
 
 let component;
 

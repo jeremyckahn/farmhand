@@ -1,8 +1,3 @@
-/* eslint-disable import/first */
-jest.mock('./data/maps');
-jest.mock('./data/items');
-jest.mock('./img');
-
 import {
   getCropId,
   getCropLifeStage,
@@ -11,6 +6,10 @@ import {
 } from './utils';
 import { items as itemImages } from './img';
 import { cropLifeStage } from './enums';
+
+jest.mock('./data/maps');
+jest.mock('./data/items');
+jest.mock('./img');
 
 const { SEED, GROWING, GROWN } = cropLifeStage;
 

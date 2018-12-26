@@ -8,7 +8,9 @@ import Button from '@material-ui/core/Button';
 
 import './DebugMenu.sass';
 
-const DebugMenu = ({ handlers: { handleWaterAllPlotsClick } }) => (
+const DebugMenu = ({
+  handlers: { handleClearPersistedDataClick, handleWaterAllPlotsClick },
+}) => (
   <ExpansionPanel className="DebugMenu" style={{ position: 'absolute' }}>
     <ExpansionPanelSummary>
       <h2>Debug Menu</h2>
@@ -22,6 +24,13 @@ const DebugMenu = ({ handlers: { handleWaterAllPlotsClick } }) => (
         >
           Water all plots (w)
         </Button>
+        <Button
+          color="primary"
+          onClick={handleClearPersistedDataClick}
+          variant="contained"
+        >
+          Clear data (shift + c)
+        </Button>
       </Typography>
     </ExpansionPanelDetails>
   </ExpansionPanel>
@@ -29,6 +38,7 @@ const DebugMenu = ({ handlers: { handleWaterAllPlotsClick } }) => (
 
 DebugMenu.propTypes = {
   handlers: shape({
+    handleClearPersistedDataClick: func.isRequired,
     handleWaterAllPlotsClick: func.isRequired,
   }).isRequired,
 };

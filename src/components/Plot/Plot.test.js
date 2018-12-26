@@ -1,12 +1,11 @@
-/* eslint-disable import/first */
-jest.mock('../../img');
-
 import React from 'react';
 import Plot from './Plot';
 import { shallow } from 'enzyme';
 import { testCrop } from '../../test-utils';
 import { items as itemImages, pixel, wateredPlot } from '../../img';
 import { cropLifeStage } from '../../enums';
+
+jest.mock('../../img');
 
 let component;
 
