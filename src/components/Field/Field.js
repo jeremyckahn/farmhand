@@ -9,7 +9,6 @@ import './Field.sass';
 
 const { HOE, SCYTHE, WATERING_CAN } = toolType;
 
-// TODO: Pass lifeStage as null if crop is null
 const Field = ({
   handlers,
   columns,
@@ -37,7 +36,7 @@ const Field = ({
                 {...{
                   handlers,
                   image: getPlotImage(crop),
-                  lifeStage: crop ? getCropLifeStage(crop) : '',
+                  lifeStage: crop && getCropLifeStage(crop),
                   crop,
                   state,
                   x: j,

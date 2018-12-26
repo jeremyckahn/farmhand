@@ -41,7 +41,7 @@ Plot.propTypes = {
     handlePlotClick: func.isRequired,
   }).isRequired,
   image: string,
-  lifeStage: string.isRequired,
+  lifeStage: string,
   crop: object,
   x: number.isRequired,
   y: number.isRequired,
