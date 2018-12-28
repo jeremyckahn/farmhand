@@ -7,7 +7,7 @@
 - [x] Stand up basic layout
   - [x] Info/detail pane
   - [x] Field grid
-- [ ] [Local](https://github.com/localForage/localForage) saves
+- [x] [Local](https://github.com/localForage/localForage) saves
 - [ ] Day cycle
   - [ ] Weather
     - [ ] Rain
