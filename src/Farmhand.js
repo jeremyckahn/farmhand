@@ -166,6 +166,17 @@ export const addItemToInventory = (item, inventory) => {
 };
 
 /**
+ * @param {farmhand.state} state
+ * @return {Object} A pared-down version of the provided {farmhand.state} with
+ * the changed properties.
+ */
+export const computeStateForNextDay = ({ dayCount, field }) => ({
+  dayCount: dayCount + 1,
+  valueAdjustments: getUpdatedValueAdjustments(),
+  field: getUpdatedField(field),
+});
+
+/**
  * @typedef farmhand.state
  * @type {Object}
  * @property {number} dayCount
@@ -309,18 +320,8 @@ export default class Farmhand extends Component {
     });
   }
 
-  computeStateForNextDay() {
-    const { dayCount, field } = this.state;
-
-    return {
-      dayCount: dayCount + 1,
-      valueAdjustments: getUpdatedValueAdjustments(),
-      field: getUpdatedField(field),
-    };
-  }
-
   incrementDay() {
-    this.setState(this.computeStateForNextDay(), () => {
+    this.setState(computeStateForNextDay(this.state), () => {
       this.localforage
         .setItem('state', this.state)
         .then(() => this.showNotification({ message: 'Progress saved!' }))
