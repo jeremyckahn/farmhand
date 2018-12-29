@@ -193,23 +193,34 @@ describe('instance methods', () => {
     let setItemSpy;
 
     beforeEach(() => {
-      mathSpy = jest.spyOn(Math, 'random').mockImplementation(() => 0.75);
       setItemSpy = jest.spyOn(component.instance().localforage, 'setItem');
+
+      component.instance().incrementDay();
+    });
+
+    it('persists app state', () => {
+      expect(setItemSpy.mock.calls.length).toBe(1);
+      expect(setItemSpy.mock.calls[0][1]).toEqual(component.state());
+    });
+  });
+
+  describe('computeStateForNextDay', () => {
+    beforeEach(() => {
+      mathSpy = jest.spyOn(Math, 'random').mockImplementation(() => 0.75);
+
       const firstRow = component.state().field[0];
       firstRow[0] = testCrop({
         itemId: 'sample-crop-1',
         wasWateredToday: true,
       });
-
-      component.instance().incrementDay();
     });
 
     afterEach(() => {
       mathSpy.mockRestore();
     });
 
-    it('updates component state', () => {
-      const state = component.state();
+    it('computes component state', () => {
+      const state = component.instance().computeStateForNextDay();
       const {
         dayCount,
         field: [firstRow],
@@ -222,8 +233,6 @@ describe('instance methods', () => {
       expect(firstRow[0].wasWateredToday).toBe(false);
       expect(firstRow[0].daysWatered).toBe(1);
       expect(firstRow[0].daysOld).toBe(1);
-      expect(setItemSpy.mock.calls.length).toBe(1);
-      expect(setItemSpy.mock.calls[0][1]).toEqual(state);
     });
   });
 

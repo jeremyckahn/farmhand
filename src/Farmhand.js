@@ -309,29 +309,30 @@ export default class Farmhand extends Component {
     });
   }
 
-  incrementDay() {
+  computeStateForNextDay() {
     const { dayCount, field } = this.state;
 
-    this.setState(
-      {
-        dayCount: dayCount + 1,
-        valueAdjustments: getUpdatedValueAdjustments(),
-        field: getUpdatedField(field),
-      },
-      () => {
-        this.localforage
-          .setItem('state', this.state)
-          .then(() => this.showNotification({ message: 'Progress saved!' }))
-          .catch(e => {
-            console.error(e);
+    return {
+      dayCount: dayCount + 1,
+      valueAdjustments: getUpdatedValueAdjustments(),
+      field: getUpdatedField(field),
+    };
+  }
 
-            this.showNotification({
-              message: JSON.stringify(e),
-              level: 'error',
-            });
+  incrementDay() {
+    this.setState(this.computeStateForNextDay(), () => {
+      this.localforage
+        .setItem('state', this.state)
+        .then(() => this.showNotification({ message: 'Progress saved!' }))
+        .catch(e => {
+          console.error(e);
+
+          this.showNotification({
+            message: JSON.stringify(e),
+            level: 'error',
           });
-      }
-    );
+        });
+    });
   }
 
   getPlayerInventory() {
