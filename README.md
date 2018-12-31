@@ -9,8 +9,8 @@
   - [x] Field grid
 - [x] [Local](https://github.com/localForage/localForage) saves
 - [ ] Day cycle
-  - [ ] Weather
-    - [ ] Rain
+  - [x] Weather
+    - [x] Rain
   - [ ] Buffs
     - [ ] Free seeds
   - [ ] Nerfs
