@@ -36,7 +36,7 @@ describe('field rendering', () => {
   });
 
   it('renders rows', () => {
-    expect(component.find('.row').length).toEqual(3);
+    expect(component.find('.row')).toHaveLength(3);
   });
 
   it('renders columns', () => {
@@ -44,8 +44,8 @@ describe('field rendering', () => {
       component
         .find('.row')
         .at(0)
-        .find(Plot).length
-    ).toEqual(2);
+        .find(Plot)
+    ).toHaveLength(2);
   });
 });
 

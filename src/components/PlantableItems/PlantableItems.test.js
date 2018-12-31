@@ -41,7 +41,7 @@ describe('rendering', () => {
   });
 
   it('renders items for provided inventory', () => {
-    expect(component.find(Item).length).toEqual(1);
+    expect(component.find(Item)).toHaveLength(1);
   });
 
   it('renders selected item state', () => {

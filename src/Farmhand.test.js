@@ -44,8 +44,8 @@ afterEach(() => {
 
 describe('state', () => {
   it('inits field', () => {
-    expect(component.state().field.length).toEqual(initialFieldHeight);
-    expect(component.state().field[0].length).toEqual(initialFieldWidth);
+    expect(component.state().field).toHaveLength(initialFieldHeight);
+    expect(component.state().field[0]).toHaveLength(initialFieldWidth);
   });
 });
 
@@ -242,7 +242,6 @@ describe('static functions', () => {
         });
 
         it('does not call applyRain', () => {
-          // TODO: Convert all length checks to use toHaveLength
           expect(spy.mock.calls).toHaveLength(0);
         });
       });
@@ -276,7 +275,7 @@ describe('instance methods', () => {
       });
 
       it('increments the day by one', () => {
-        expect(incrementDaySpy.mock.calls.length).toBe(1);
+        expect(incrementDaySpy.mock.calls).toHaveLength(1);
       });
     });
 
@@ -301,7 +300,7 @@ describe('instance methods', () => {
       });
 
       it('rehydrates from persisted state', () => {
-        expect(incrementDaySpy.mock.calls.length).toBe(0);
+        expect(incrementDaySpy.mock.calls).toHaveLength(0);
         expect(component.state().foo).toBe('bar');
       });
 
@@ -310,7 +309,7 @@ describe('instance methods', () => {
       });
 
       it('empties newDayNotifications', () => {
-        expect(component.state().newDayNotifications.length).toBe(0);
+        expect(component.state().newDayNotifications).toHaveLength(0);
       });
     });
   });
@@ -331,7 +330,7 @@ describe('instance methods', () => {
     });
 
     it('empties out newDayNotifications', () => {
-      expect(component.state().newDayNotifications.length).toBe(0);
+      expect(component.state().newDayNotifications).toHaveLength(0);
     });
 
     it('persists app state with pending newDayNotifications', () => {
@@ -342,7 +341,7 @@ describe('instance methods', () => {
     });
 
     it('makes pending notification', () => {
-      expect(showNotificationSpy.mock.calls.length).toBe(2);
+      expect(showNotificationSpy.mock.calls).toHaveLength(2);
       expect(showNotificationSpy.mock.calls[0][0].message).toBe(
         PROGRESS_SAVED_MESSAGE
       );

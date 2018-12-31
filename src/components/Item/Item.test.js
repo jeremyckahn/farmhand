@@ -94,7 +94,7 @@ describe('conditional UI', () => {
     });
 
     it('renders sell button when given an event handler', () => {
-      expect(component.find('button.sell').length).toEqual(1);
+      expect(component.find('button.sell')).toHaveLength(1);
     });
   });
 });

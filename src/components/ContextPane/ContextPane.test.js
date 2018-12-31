@@ -39,7 +39,7 @@ describe('conditional UI', () => {
       });
 
       it('renders relevant UI', () => {
-        expect(component.find(PlantableItems).length).toEqual(1);
+        expect(component.find(PlantableItems)).toHaveLength(1);
       });
     });
   });

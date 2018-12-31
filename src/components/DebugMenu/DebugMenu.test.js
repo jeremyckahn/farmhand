@@ -26,5 +26,5 @@ beforeEach(() => {
 });
 
 it('renders Debug', () => {
-  expect(component.length).toEqual(1);
+  expect(component).toHaveLength(1);
 });

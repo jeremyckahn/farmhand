@@ -24,5 +24,5 @@ beforeEach(() => {
 });
 
 it('renders shop inventory', () => {
-  expect(component.find(Inventory).length).toEqual(1);
+  expect(component.find(Inventory)).toHaveLength(1);
 });

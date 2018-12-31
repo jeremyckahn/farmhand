@@ -23,12 +23,12 @@ beforeEach(() => {
 });
 
 it('renders shop inventory', () => {
-  expect(component.length).toEqual(1);
+  expect(component).toHaveLength(1);
 });
 
 describe('tool selection', () => {
   it('selects no tools by default', () => {
-    expect(component.find('.selected').length).toEqual(0);
+    expect(component.find('.selected')).toHaveLength(0);
   });
 
   describe('a tool is selected', () => {
@@ -39,9 +39,7 @@ describe('tool selection', () => {
     });
 
     it('renders selected tool appropriately', () => {
-      expect(component.find('.selected').find('.watering-can').length).toEqual(
-        1
-      );
+      expect(component.find('.selected').find('.watering-can')).toHaveLength(1);
     });
   });
 });

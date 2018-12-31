@@ -32,7 +32,7 @@ describe('rendering items', () => {
 
   it('shows the inventory', () => {
     const li = component.find('li');
-    expect(li.length).toEqual(1);
-    expect(li.find(Item).length).toEqual(1);
+    expect(li).toHaveLength(1);
+    expect(li.find(Item)).toHaveLength(1);
   });
 });
