@@ -28,11 +28,18 @@
 /**
  * Represents a crop as it proceeds through the lifecycle.
  * @typedef farmhand.crop
- * @type {object} Object
+ * @type {Object}
  * @property {number} daysOld
  * @property {number} daysWatered
  * @property {string} itemId
  * @property {boolean} wasWateredToday
+ */
+
+/**
+ * @typedef farmhand.notification
+ * @type {Object}
+ * @see
+ * https://github.com/igorprado/react-notification-system#creating-a-notification
  */
 
 import React from 'react';

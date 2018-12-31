@@ -4,12 +4,14 @@ import localforage from 'localforage';
 import { getCropFromItemId } from './utils';
 import { testCrop, testItem } from './test-utils';
 import { initialFieldWidth, initialFieldHeight } from './constants';
+import { PROGRESS_SAVED_MESSAGE, RAIN_MESSAGE } from './strings';
 import { sampleItem1, sampleItem2, sampleCropSeedsItem1 } from './data/items';
+
+import * as constants from './constants';
 
 import Farmhand, {
   addItemToInventory,
   computePlayerInventory,
-  computeStateForNextDay,
   getFinalCropItemIdFromSeedItemId,
   getPlantableInventory,
   getUpdatedValueAdjustments,
@@ -18,6 +20,7 @@ import Farmhand, {
 } from './Farmhand';
 
 jest.mock('localforage');
+jest.mock('./constants');
 jest.mock('./data/maps');
 jest.mock('./data/items');
 
@@ -31,6 +34,12 @@ beforeEach(() => {
   });
 
   component = shallow(<Farmhand />);
+});
+
+const originalConstants = { ...constants };
+afterEach(() => {
+  jest.restoreAllMocks();
+  Object.assign(constants, originalConstants);
 });
 
 describe('state', () => {
@@ -152,22 +161,27 @@ describe('private functions', () => {
       expect(plantableInventory).toEqual([sampleCropSeedsItem1]);
     });
   });
+});
+
+describe('static functions', () => {
+  let applyBuffsSpy;
 
   describe('computeStateForNextDay', () => {
     beforeEach(() => {
       mathSpy = jest.spyOn(Math, 'random').mockImplementation(() => 0.75);
+      applyBuffsSpy = jest.spyOn(Farmhand, 'applyBuffs');
     });
 
     afterEach(() => {
       mathSpy.mockRestore();
     });
 
-    it('computes component state', () => {
+    it('computes state for next day', () => {
       const {
         dayCount,
         field: [firstRow],
         valueAdjustments,
-      } = computeStateForNextDay({
+      } = Farmhand.computeStateForNextDay({
         dayCount: 1,
         field: [
           [
@@ -185,12 +199,71 @@ describe('private functions', () => {
       expect(firstRow[0].wasWateredToday).toBe(false);
       expect(firstRow[0].daysWatered).toBe(1);
       expect(firstRow[0].daysOld).toBe(1);
+
+      // TODO: Convert all spy expectations to use this form.
+      expect(applyBuffsSpy).toBeCalled();
+    });
+  });
+
+  describe('applyRain', () => {
+    it('waters all plots', () => {
+      const state = Farmhand.applyRain({
+        field: [
+          [
+            testCrop({
+              wasWateredToday: false,
+            }),
+            testCrop({
+              wasWateredToday: false,
+            }),
+          ],
+        ],
+        newDayNotifications: [],
+      });
+
+      expect(state.field[0][0].wasWateredToday).toBe(true);
+      expect(state.field[0][1].wasWateredToday).toBe(true);
+      expect(state.newDayNotifications[0].message).toBe(RAIN_MESSAGE);
+    });
+  });
+
+  describe('applyBuffs', () => {
+    describe('rain', () => {
+      let spy;
+
+      beforeEach(() => {
+        spy = jest.spyOn(Farmhand, 'applyRain');
+      });
+
+      describe('is not rainy day', () => {
+        beforeEach(() => {
+          constants.RAIN_CHANCE = 0;
+          Farmhand.applyBuffs(component.state());
+        });
+
+        it('does not call applyRain', () => {
+          // TODO: Convert all length checks to use toHaveLength
+          expect(spy.mock.calls).toHaveLength(0);
+        });
+      });
+
+      describe('is rainy day', () => {
+        beforeEach(() => {
+          constants.RAIN_CHANCE = 1;
+          Farmhand.applyBuffs(component.state());
+        });
+
+        it('calls applyRain', () => {
+          expect(spy.mock.calls).toHaveLength(1);
+          expect(spy.mock.calls[0][0]).toEqual(component.state());
+        });
+      });
     });
   });
 });
 
 describe('instance methods', () => {
-  let incrementDaySpy;
+  let incrementDaySpy, showNotificationSpy;
 
   describe('componentDidMount', () => {
     beforeEach(() => {
@@ -210,11 +283,20 @@ describe('instance methods', () => {
     describe('boot from persisted state', () => {
       beforeEach(() => {
         localforage.createInstance = () => ({
-          getItem: () => Promise.resolve({ foo: 'bar' }),
+          getItem: () =>
+            Promise.resolve({
+              foo: 'bar',
+              newDayNotifications: [{ message: 'baz' }],
+            }),
           setItem: data => Promise.resolve(data),
         });
 
         component = shallow(<Farmhand />);
+        showNotificationSpy = jest.spyOn(
+          component.instance(),
+          'showNotification'
+        );
+
         component.instance().componentDidMount();
       });
 
@@ -222,21 +304,49 @@ describe('instance methods', () => {
         expect(incrementDaySpy.mock.calls.length).toBe(0);
         expect(component.state().foo).toBe('bar');
       });
+
+      it('shows notifications for pending newDayNotifications', () => {
+        expect(showNotificationSpy.mock.calls[0][0].message).toBe('baz');
+      });
+
+      it('empties newDayNotifications', () => {
+        expect(component.state().newDayNotifications.length).toBe(0);
+      });
     });
   });
 
   describe('incrementDay', () => {
-    let setItemSpy;
+    let setItemSpy, showNotificationSpy;
 
     beforeEach(() => {
       setItemSpy = jest.spyOn(component.instance().localforage, 'setItem');
+      showNotificationSpy = jest.spyOn(
+        component.instance(),
+        'showNotification'
+      );
+
+      component.setState({ newDayNotifications: [{ message: 'foo' }] });
 
       component.instance().incrementDay();
     });
 
-    it('persists app state', () => {
-      expect(setItemSpy.mock.calls.length).toBe(1);
-      expect(setItemSpy.mock.calls[0][1]).toEqual(component.state());
+    it('empties out newDayNotifications', () => {
+      expect(component.state().newDayNotifications.length).toBe(0);
+    });
+
+    it('persists app state with pending newDayNotifications', () => {
+      expect(setItemSpy.mock.calls[0][1]).toEqual({
+        ...component.state(),
+        newDayNotifications: [{ message: 'foo' }],
+      });
+    });
+
+    it('makes pending notification', () => {
+      expect(showNotificationSpy.mock.calls.length).toBe(2);
+      expect(showNotificationSpy.mock.calls[0][0].message).toBe(
+        PROGRESS_SAVED_MESSAGE
+      );
+      expect(showNotificationSpy.mock.calls[1][0].message).toBe('foo');
     });
   });
 

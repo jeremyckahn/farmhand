@@ -17,11 +17,18 @@ import {
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
 import { cropLifeStage, stageFocusType, toolType } from './enums';
-import { initialFieldWidth, initialFieldHeight } from './constants';
+import {
+  initialFieldWidth,
+  initialFieldHeight,
+  RAIN_CHANCE,
+} from './constants';
+import { PROGRESS_SAVED_MESSAGE, RAIN_MESSAGE } from './strings';
 
 import './Farmhand.sass';
 
 const { GROWN } = cropLifeStage;
+
+// TODO: Make these private helpers static.
 
 /**
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -166,17 +173,6 @@ export const addItemToInventory = (item, inventory) => {
 };
 
 /**
- * @param {farmhand.state} state
- * @return {Object} A pared-down version of the provided {farmhand.state} with
- * the changed properties.
- */
-export const computeStateForNextDay = ({ dayCount, field }) => ({
-  dayCount: dayCount + 1,
-  valueAdjustments: getUpdatedValueAdjustments(),
-  field: getUpdatedField(field),
-});
-
-/**
  * @typedef farmhand.state
  * @type {Object}
  * @property {number} dayCount
@@ -185,6 +181,7 @@ export const computeStateForNextDay = ({ dayCount, field }) => ({
  * @property {number} fieldWidth
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {number} money
+ * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {string} selectedPlantableItemId
  * @property {farmhand.module:enums.toolType} selectedTool
  * @property {Array.<farmhand.item>} shopInventory
@@ -204,6 +201,7 @@ export default class Farmhand extends Component {
     fieldWidth: initialFieldWidth,
     inventory: [],
     money: 500,
+    newDayNotifications: [],
     selectedPlantableItemId: '',
     selectedTool: toolType.NONE,
     shopInventory: [...shopInventory],
@@ -278,7 +276,10 @@ export default class Farmhand extends Component {
   componentDidMount() {
     this.localforage.getItem('state').then(state => {
       if (state) {
-        this.setState(state);
+        const { newDayNotifications } = state;
+        this.setState({ ...state, newDayNotifications: [] }, () => {
+          newDayNotifications.forEach(this.showNotification.bind(this));
+        });
       } else {
         this.incrementDay();
       }
@@ -301,10 +302,7 @@ export default class Farmhand extends Component {
   }
 
   /**
-   * @param {Object} options
-   * @see
-   * {@link https://github.com/igorprado/react-notification-system#creating-a-notification}
-   * for available options.
+   * @param {farmhand.notification} options
    */
   showNotification(options) {
     const { current: notificationSystem } = this.notificationSystemRef;
@@ -321,10 +319,24 @@ export default class Farmhand extends Component {
   }
 
   incrementDay() {
-    this.setState(computeStateForNextDay(this.state), () => {
+    const nextDayState = Farmhand.computeStateForNextDay(this.state);
+    const pendingNotifications = [...nextDayState.newDayNotifications];
+
+    this.setState({ ...nextDayState, newDayNotifications: [] }, () => {
       this.localforage
-        .setItem('state', this.state)
-        .then(() => this.showNotification({ message: 'Progress saved!' }))
+        .setItem('state', {
+          ...this.state,
+
+          // newDayNotifications are persisted so that they can be shown to the
+          // player when the app reloads.
+          newDayNotifications: pendingNotifications,
+        })
+        .then(() =>
+          [
+            { message: PROGRESS_SAVED_MESSAGE, level: 'success' },
+            ...pendingNotifications,
+          ].forEach(this.showNotification.bind(this))
+        )
         .catch(e => {
           console.error(e);
 
@@ -335,6 +347,44 @@ export default class Farmhand extends Component {
         });
     });
   }
+
+  /**
+   * @param {farmhand.state} state
+   * @return {farmhand.state}
+   */
+  static applyRain = state => ({
+    ...state,
+    field: getWateredField(state.field),
+    newDayNotifications: [
+      ...state.newDayNotifications,
+      {
+        message: RAIN_MESSAGE,
+      },
+    ],
+  });
+
+  /**
+   * @param {farmhand.state} state
+   * @return {farmhand.state}
+   */
+  static applyBuffs = state =>
+    [[RAIN_CHANCE, Farmhand.applyRain]].reduce(
+      (acc, [chance, fn]) => (Math.random() <= chance ? fn(acc) : acc),
+      state
+    );
+
+  /**
+   * @param {farmhand.state} state
+   * @return {Object} A pared-down version of the provided {farmhand.state} with
+   * the changed properties.
+   */
+  static computeStateForNextDay = state =>
+    [Farmhand.applyBuffs].reduce((acc, fn) => fn({ ...acc }), {
+      ...state,
+      dayCount: state.dayCount + 1,
+      field: getUpdatedField(state.field),
+      valueAdjustments: getUpdatedValueAdjustments(),
+    });
 
   getPlayerInventory() {
     const { inventory, valueAdjustments } = this.state;
