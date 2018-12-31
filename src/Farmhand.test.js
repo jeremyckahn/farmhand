@@ -252,7 +252,7 @@ describe('static functions', () => {
 
         it('calls applyRain', () => {
           expect(spy).toHaveBeenCalled();
-          expect(spy.mock.calls[0][0]).toEqual(component.state());
+          expect(spy).toHaveBeenCalledWith(component.state());
         });
       });
     });

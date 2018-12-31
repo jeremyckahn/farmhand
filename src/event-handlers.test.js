@@ -16,14 +16,14 @@ beforeEach(() => {
 
 describe('handleItemPurchase', () => {
   it('calls purchaseItem', () => {
+    // Use jest.spyOn here and elsewhere
     const purchaseItemMock = jest.fn();
     component.instance().purchaseItem = purchaseItemMock;
     handlers().handleItemPurchase(testItem({ id: 'sample-item-1' }));
 
-    expect(purchaseItemMock).toHaveBeenCalled();
-    expect(purchaseItemMock.mock.calls[0]).toEqual([
-      testItem({ id: 'sample-item-1' }),
-    ]);
+    expect(purchaseItemMock).toHaveBeenCalledWith(
+      testItem({ id: 'sample-item-1' })
+    );
   });
 });
 
@@ -133,8 +133,7 @@ describe('handlePlotClick', () => {
       component.instance().plantInPlot = plantInPlotMock;
       handlers().handlePlotClick(0, 0);
 
-      expect(plantInPlotMock).toHaveBeenCalled();
-      expect(plantInPlotMock.mock.calls[0]).toEqual([0, 0, 'sample-crop-3']);
+      expect(plantInPlotMock).toHaveBeenCalledWith(0, 0, 'sample-crop-3');
     });
   });
 
@@ -150,8 +149,7 @@ describe('handlePlotClick', () => {
       component.instance().clearPlot = clearPlotMock;
       handlers().handlePlotClick(0, 0);
 
-      expect(clearPlotMock).toHaveBeenCalled();
-      expect(clearPlotMock.mock.calls[0]).toEqual([0, 0]);
+      expect(clearPlotMock).toHaveBeenCalledWith(0, 0);
     });
   });
 
@@ -167,8 +165,7 @@ describe('handlePlotClick', () => {
       component.instance().harvestPlot = harvestPlotMock;
       handlers().handlePlotClick(0, 0);
 
-      expect(harvestPlotMock).toHaveBeenCalled();
-      expect(harvestPlotMock.mock.calls[0]).toEqual([0, 0]);
+      expect(harvestPlotMock).toHaveBeenCalledWith(0, 0);
     });
   });
 
@@ -184,8 +181,7 @@ describe('handlePlotClick', () => {
       component.instance().waterPlot = waterPlotMock;
       handlers().handlePlotClick(0, 0);
 
-      expect(waterPlotMock).toHaveBeenCalled();
-      expect(waterPlotMock.mock.calls[0]).toEqual([0, 0]);
+      expect(waterPlotMock).toHaveBeenCalledWith(0, 0);
     });
   });
 });
