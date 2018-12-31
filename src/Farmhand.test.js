@@ -199,8 +199,6 @@ describe('static functions', () => {
       expect(firstRow[0].wasWateredToday).toBe(false);
       expect(firstRow[0].daysWatered).toBe(1);
       expect(firstRow[0].daysOld).toBe(1);
-
-      // TODO: Convert all spy expectations to use this form.
       expect(applyBuffsSpy).toBeCalled();
     });
   });
@@ -242,7 +240,7 @@ describe('static functions', () => {
         });
 
         it('does not call applyRain', () => {
-          expect(spy.mock.calls).toHaveLength(0);
+          expect(spy).not.toHaveBeenCalled();
         });
       });
 
@@ -253,7 +251,7 @@ describe('static functions', () => {
         });
 
         it('calls applyRain', () => {
-          expect(spy.mock.calls).toHaveLength(1);
+          expect(spy).toHaveBeenCalled();
           expect(spy.mock.calls[0][0]).toEqual(component.state());
         });
       });
@@ -275,7 +273,7 @@ describe('instance methods', () => {
       });
 
       it('increments the day by one', () => {
-        expect(incrementDaySpy.mock.calls).toHaveLength(1);
+        expect(incrementDaySpy).toHaveBeenCalled();
       });
     });
 
@@ -300,7 +298,7 @@ describe('instance methods', () => {
       });
 
       it('rehydrates from persisted state', () => {
-        expect(incrementDaySpy.mock.calls).toHaveLength(0);
+        expect(incrementDaySpy).not.toHaveBeenCalled();
         expect(component.state().foo).toBe('bar');
       });
 
@@ -341,7 +339,7 @@ describe('instance methods', () => {
     });
 
     it('makes pending notification', () => {
-      expect(showNotificationSpy.mock.calls).toHaveLength(2);
+      expect(showNotificationSpy).toHaveBeenCalledTimes(2);
       expect(showNotificationSpy.mock.calls[0][0].message).toBe(
         PROGRESS_SAVED_MESSAGE
       );

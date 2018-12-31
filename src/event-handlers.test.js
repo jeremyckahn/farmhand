@@ -20,7 +20,7 @@ describe('handleItemPurchase', () => {
     component.instance().purchaseItem = purchaseItemMock;
     handlers().handleItemPurchase(testItem({ id: 'sample-item-1' }));
 
-    expect(purchaseItemMock.mock.calls).toHaveLength(1);
+    expect(purchaseItemMock).toHaveBeenCalled();
     expect(purchaseItemMock.mock.calls[0]).toEqual([
       testItem({ id: 'sample-item-1' }),
     ]);
@@ -133,7 +133,7 @@ describe('handlePlotClick', () => {
       component.instance().plantInPlot = plantInPlotMock;
       handlers().handlePlotClick(0, 0);
 
-      expect(plantInPlotMock.mock.calls).toHaveLength(1);
+      expect(plantInPlotMock).toHaveBeenCalled();
       expect(plantInPlotMock.mock.calls[0]).toEqual([0, 0, 'sample-crop-3']);
     });
   });
@@ -150,7 +150,7 @@ describe('handlePlotClick', () => {
       component.instance().clearPlot = clearPlotMock;
       handlers().handlePlotClick(0, 0);
 
-      expect(clearPlotMock.mock.calls).toHaveLength(1);
+      expect(clearPlotMock).toHaveBeenCalled();
       expect(clearPlotMock.mock.calls[0]).toEqual([0, 0]);
     });
   });
@@ -167,7 +167,7 @@ describe('handlePlotClick', () => {
       component.instance().harvestPlot = harvestPlotMock;
       handlers().handlePlotClick(0, 0);
 
-      expect(harvestPlotMock.mock.calls).toHaveLength(1);
+      expect(harvestPlotMock).toHaveBeenCalled();
       expect(harvestPlotMock.mock.calls[0]).toEqual([0, 0]);
     });
   });
@@ -184,7 +184,7 @@ describe('handlePlotClick', () => {
       component.instance().waterPlot = waterPlotMock;
       handlers().handlePlotClick(0, 0);
 
-      expect(waterPlotMock.mock.calls).toHaveLength(1);
+      expect(waterPlotMock).toHaveBeenCalled();
       expect(waterPlotMock.mock.calls[0]).toEqual([0, 0]);
     });
   });
@@ -194,6 +194,6 @@ describe('handleEndDayButtonClick', () => {
   it('increments the day', () => {
     const incrementDaySpy = jest.spyOn(component.instance(), 'incrementDay');
     handlers().handleEndDayButtonClick();
-    expect(incrementDaySpy.mock.calls).toHaveLength(1);
+    expect(incrementDaySpy).toHaveBeenCalled();
   });
 });
