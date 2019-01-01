@@ -278,7 +278,9 @@ export default class Farmhand extends Component {
       if (state) {
         const { newDayNotifications } = state;
         this.setState({ ...state, newDayNotifications: [] }, () => {
-          newDayNotifications.forEach(this.showNotification.bind(this));
+          newDayNotifications.forEach(notification =>
+            this.showNotification(notification)
+          );
         });
       } else {
         this.incrementDay();
@@ -335,7 +337,7 @@ export default class Farmhand extends Component {
           [
             { message: PROGRESS_SAVED_MESSAGE, level: 'success' },
             ...pendingNotifications,
-          ].forEach(this.showNotification.bind(this))
+          ].forEach(notification => this.showNotification(notification))
         )
         .catch(e => {
           console.error(e);

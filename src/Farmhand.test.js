@@ -287,9 +287,9 @@ describe('instance methods', () => {
       });
 
       it('shows notifications for pending newDayNotifications', () => {
-        expect(
-          component.instance().showNotification.mock.calls[0][0].message
-        ).toBe('baz');
+        expect(component.instance().showNotification).toHaveBeenCalledWith({
+          message: 'baz',
+        });
       });
 
       it('empties newDayNotifications', () => {
@@ -312,7 +312,8 @@ describe('instance methods', () => {
     });
 
     it('persists app state with pending newDayNotifications', () => {
-      expect(component.instance().localforage.setItem.mock.calls[0][1]).toEqual(
+      expect(component.instance().localforage.setItem).toHaveBeenCalledWith(
+        'state',
         {
           ...component.state(),
           newDayNotifications: [{ message: 'foo' }],
@@ -323,10 +324,13 @@ describe('instance methods', () => {
     it('makes pending notification', () => {
       const { showNotification } = component.instance();
       expect(showNotification).toHaveBeenCalledTimes(2);
-      expect(showNotification.mock.calls[0][0].message).toBe(
-        PROGRESS_SAVED_MESSAGE
-      );
-      expect(showNotification.mock.calls[1][0].message).toBe('foo');
+      expect(showNotification).toHaveBeenNthCalledWith(1, {
+        level: 'success',
+        message: PROGRESS_SAVED_MESSAGE,
+      });
+      expect(showNotification).toHaveBeenNthCalledWith(2, {
+        message: 'foo',
+      });
     });
   });
 
