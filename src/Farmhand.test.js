@@ -122,7 +122,7 @@ describe('private functions', () => {
     let valueAdjustments;
 
     beforeEach(() => {
-      jest.spyOn(Math, 'random').mockImplementation(() => 1);
+      jest.spyOn(Math, 'random').mockReturnValue(1);
       valueAdjustments = getUpdatedValueAdjustments();
     });
 
@@ -161,7 +161,7 @@ describe('private functions', () => {
 describe('static functions', () => {
   describe('computeStateForNextDay', () => {
     beforeEach(() => {
-      jest.spyOn(Math, 'random').mockImplementation(() => 0.75);
+      jest.spyOn(Math, 'random').mockReturnValue(0.75);
       jest.spyOn(Farmhand, 'applyBuffs');
     });
 

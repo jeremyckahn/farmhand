@@ -16,12 +16,10 @@ beforeEach(() => {
 
 describe('handleItemPurchase', () => {
   it('calls purchaseItem', () => {
-    // Use jest.spyOn here and elsewhere
-    const purchaseItemMock = jest.fn();
-    component.instance().purchaseItem = purchaseItemMock;
+    jest.spyOn(component.instance(), 'purchaseItem');
     handlers().handleItemPurchase(testItem({ id: 'sample-item-1' }));
 
-    expect(purchaseItemMock).toHaveBeenCalledWith(
+    expect(component.instance().purchaseItem).toHaveBeenCalledWith(
       testItem({ id: 'sample-item-1' })
     );
   });
@@ -129,11 +127,14 @@ describe('handlePlotClick', () => {
     });
 
     it('calls plantInPlot', () => {
-      const plantInPlotMock = jest.fn();
-      component.instance().plantInPlot = plantInPlotMock;
+      jest.spyOn(component.instance(), 'plantInPlot').mockImplementation();
       handlers().handlePlotClick(0, 0);
 
-      expect(plantInPlotMock).toHaveBeenCalledWith(0, 0, 'sample-crop-3');
+      expect(component.instance().plantInPlot).toHaveBeenCalledWith(
+        0,
+        0,
+        'sample-crop-3'
+      );
     });
   });
 
@@ -145,11 +146,10 @@ describe('handlePlotClick', () => {
     });
 
     it('calls clearPlot', () => {
-      const clearPlotMock = jest.fn();
-      component.instance().clearPlot = clearPlotMock;
+      jest.spyOn(component.instance(), 'clearPlot');
       handlers().handlePlotClick(0, 0);
 
-      expect(clearPlotMock).toHaveBeenCalledWith(0, 0);
+      expect(component.instance().clearPlot).toHaveBeenCalledWith(0, 0);
     });
   });
 
@@ -161,11 +161,10 @@ describe('handlePlotClick', () => {
     });
 
     it('calls waterPlot', () => {
-      const harvestPlotMock = jest.fn();
-      component.instance().harvestPlot = harvestPlotMock;
+      jest.spyOn(component.instance(), 'harvestPlot');
       handlers().handlePlotClick(0, 0);
 
-      expect(harvestPlotMock).toHaveBeenCalledWith(0, 0);
+      expect(component.instance().harvestPlot).toHaveBeenCalledWith(0, 0);
     });
   });
 
@@ -177,11 +176,10 @@ describe('handlePlotClick', () => {
     });
 
     it('calls waterPlot', () => {
-      const waterPlotMock = jest.fn();
-      component.instance().waterPlot = waterPlotMock;
+      jest.spyOn(component.instance(), 'waterPlot');
       handlers().handlePlotClick(0, 0);
 
-      expect(waterPlotMock).toHaveBeenCalledWith(0, 0);
+      expect(component.instance().waterPlot).toHaveBeenCalledWith(0, 0);
     });
   });
 });
