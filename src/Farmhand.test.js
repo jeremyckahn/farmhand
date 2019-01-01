@@ -9,15 +9,7 @@ import { sampleItem1, sampleItem2, sampleCropSeedsItem1 } from './data/items';
 
 import * as constants from './constants';
 
-import Farmhand, {
-  addItemToInventory,
-  computePlayerInventory,
-  getFinalCropItemIdFromSeedItemId,
-  getPlantableInventory,
-  getUpdatedValueAdjustments,
-  incrementAge,
-  resetWasWatered,
-} from './Farmhand';
+import Farmhand from './Farmhand';
 
 jest.mock('localforage');
 jest.mock('./constants');
@@ -45,116 +37,6 @@ describe('state', () => {
   it('inits field', () => {
     expect(component.state().field).toHaveLength(INITIAL_FIELD_HEIGHT);
     expect(component.state().field[0]).toHaveLength(INITIAL_FIELD_WIDTH);
-  });
-});
-
-describe('private functions', () => {
-  describe('addItemToInventory', () => {
-    it('creates a new item in the inventory', () => {
-      expect(addItemToInventory(testItem({ id: 'sample-item-1' }), [])).toEqual(
-        [{ id: 'sample-item-1', quantity: 1 }]
-      );
-    });
-
-    it('increments an existing item in the inventory', () => {
-      expect(
-        addItemToInventory(testItem({ id: 'sample-item-1' }), [
-          testItem({ id: 'sample-item-1', quantity: 1 }),
-        ])
-      ).toEqual([
-        testItem({
-          id: 'sample-item-1',
-          quantity: 2,
-        }),
-      ]);
-    });
-  });
-
-  describe('computePlayerInventory', () => {
-    let playerInventory;
-    let inventory;
-    let valueAdjustments;
-
-    beforeEach(() => {
-      inventory = [{ quantity: 1, id: 'sample-item-1' }];
-      valueAdjustments = {};
-      playerInventory = computePlayerInventory(inventory, valueAdjustments);
-    });
-
-    it('maps inventory state to renderable inventory data', () => {
-      expect(playerInventory).toEqual([{ quantity: 1, ...sampleItem1 }]);
-    });
-
-    it('returns cached result with unchanged input', () => {
-      const newPlayerInventory = computePlayerInventory(
-        inventory,
-        valueAdjustments
-      );
-      expect(playerInventory).toEqual(newPlayerInventory);
-    });
-
-    it('invalidates cache with changed input', () => {
-      playerInventory = computePlayerInventory(
-        [{ quantity: 1, id: 'sample-item-2' }],
-        valueAdjustments
-      );
-      expect(playerInventory).toEqual([{ ...sampleItem2, quantity: 1 }]);
-    });
-
-    describe('with valueAdjustments', () => {
-      beforeEach(() => {
-        valueAdjustments = {
-          'sample-item-1': 2,
-        };
-
-        playerInventory = computePlayerInventory(inventory, valueAdjustments);
-      });
-
-      it('maps inventory state to renderable inventory data', () => {
-        expect(playerInventory).toEqual([
-          { ...sampleItem1, quantity: 1, value: 2 },
-        ]);
-      });
-    });
-  });
-
-  describe('getUpdatedValueAdjustments', () => {
-    let valueAdjustments;
-
-    beforeEach(() => {
-      jest.spyOn(Math, 'random').mockReturnValue(1);
-      valueAdjustments = getUpdatedValueAdjustments();
-    });
-
-    it('updates valueAdjustments by random factor', () => {
-      expect(valueAdjustments['sample-crop-1']).toEqual(1.5);
-      expect(valueAdjustments['sample-crop-2']).toEqual(1.5);
-    });
-  });
-
-  describe('getFinalCropItemIdFromSeedItemId', () => {
-    it('gets "final" crop item id from seed item id', () => {
-      expect(getFinalCropItemIdFromSeedItemId('sample-crop-seeds-1')).toEqual(
-        'sample-crop-1'
-      );
-    });
-  });
-
-  describe('getPlantableInventory', () => {
-    let plantableInventory;
-    let inventory;
-
-    beforeEach(() => {
-      inventory = [
-        { quantity: 1, id: 'sample-crop-seeds-1' },
-        { quantity: 1, id: 'sample-item-1' },
-      ];
-      plantableInventory = getPlantableInventory(inventory);
-    });
-
-    it('filters out non-plantable items', () => {
-      expect(plantableInventory).toEqual([sampleCropSeedsItem1]);
-    });
   });
 });
 
@@ -242,6 +124,120 @@ describe('static functions', () => {
           expect(Farmhand.applyRain).toHaveBeenCalledWith(component.state());
         });
       });
+    });
+  });
+
+  describe('computePlayerInventory', () => {
+    let playerInventory;
+    let inventory;
+    let valueAdjustments;
+
+    beforeEach(() => {
+      inventory = [{ quantity: 1, id: 'sample-item-1' }];
+      valueAdjustments = {};
+      playerInventory = Farmhand.computePlayerInventory(
+        inventory,
+        valueAdjustments
+      );
+    });
+
+    it('maps inventory state to renderable inventory data', () => {
+      expect(playerInventory).toEqual([{ quantity: 1, ...sampleItem1 }]);
+    });
+
+    it('returns cached result with unchanged input', () => {
+      const newPlayerInventory = Farmhand.computePlayerInventory(
+        inventory,
+        valueAdjustments
+      );
+      expect(playerInventory).toEqual(newPlayerInventory);
+    });
+
+    it('invalidates cache with changed input', () => {
+      playerInventory = Farmhand.computePlayerInventory(
+        [{ quantity: 1, id: 'sample-item-2' }],
+        valueAdjustments
+      );
+      expect(playerInventory).toEqual([{ ...sampleItem2, quantity: 1 }]);
+    });
+
+    describe('with valueAdjustments', () => {
+      beforeEach(() => {
+        valueAdjustments = {
+          'sample-item-1': 2,
+        };
+
+        playerInventory = Farmhand.computePlayerInventory(
+          inventory,
+          valueAdjustments
+        );
+      });
+
+      it('maps inventory state to renderable inventory data', () => {
+        expect(playerInventory).toEqual([
+          { ...sampleItem1, quantity: 1, value: 2 },
+        ]);
+      });
+    });
+  });
+
+  describe('getUpdatedValueAdjustments', () => {
+    let valueAdjustments;
+
+    beforeEach(() => {
+      jest.spyOn(Math, 'random').mockReturnValue(1);
+      valueAdjustments = Farmhand.getUpdatedValueAdjustments();
+    });
+
+    it('updates valueAdjustments by random factor', () => {
+      expect(valueAdjustments['sample-crop-1']).toEqual(1.5);
+      expect(valueAdjustments['sample-crop-2']).toEqual(1.5);
+    });
+  });
+
+  describe('addItemToInventory', () => {
+    it('creates a new item in the inventory', () => {
+      expect(
+        Farmhand.addItemToInventory(testItem({ id: 'sample-item-1' }), [])
+      ).toEqual([{ id: 'sample-item-1', quantity: 1 }]);
+    });
+
+    it('increments an existing item in the inventory', () => {
+      expect(
+        Farmhand.addItemToInventory(testItem({ id: 'sample-item-1' }), [
+          testItem({ id: 'sample-item-1', quantity: 1 }),
+        ])
+      ).toEqual([
+        testItem({
+          id: 'sample-item-1',
+          quantity: 2,
+        }),
+      ]);
+    });
+  });
+
+  describe('getFinalCropItemIdFromSeedItemId', () => {
+    it('gets "final" crop item id from seed item id', () => {
+      expect(
+        Farmhand.getFinalCropItemIdFromSeedItemId('sample-crop-seeds-1')
+      ).toEqual('sample-crop-1');
+    });
+  });
+
+  describe('getPlantableInventory', () => {
+    let plantableInventory;
+    let inventory;
+
+    beforeEach(() => {
+      inventory = [
+        { quantity: 1, id: 'sample-crop-seeds-1' },
+        { quantity: 1, id: 'sample-item-1' },
+      ];
+      plantableInventory = Farmhand.getPlantableInventory(inventory);
+    });
+
+    it('filters out non-plantable items', () => {
+      expect(plantableInventory).toEqual([sampleCropSeedsItem1]);
     });
   });
 });
@@ -337,7 +333,7 @@ describe('instance methods', () => {
   describe('incrementAge', () => {
     describe('plant is not watered', () => {
       it('updates daysOld', () => {
-        const { daysOld, daysWatered } = incrementAge(
+        const { daysOld, daysWatered } = Farmhand.incrementAge(
           testCrop({ itemId: 'sample-crop-1' })
         );
 
@@ -348,7 +344,7 @@ describe('instance methods', () => {
 
     describe('plant is watered', () => {
       it('updates daysOld and daysWatered', () => {
-        const { daysOld, daysWatered } = incrementAge(
+        const { daysOld, daysWatered } = Farmhand.incrementAge(
           testCrop({ itemId: 'sample-crop-1', wasWateredToday: true })
         );
 
@@ -360,17 +356,17 @@ describe('instance methods', () => {
 
   describe('resetWasWatered', () => {
     it('updates wasWateredToday property', () => {
-      expect(resetWasWatered(testCrop({ itemId: 'sample-crop-1' }))).toEqual(
-        testCrop({ itemId: 'sample-crop-1' })
-      );
+      expect(
+        Farmhand.resetWasWatered(testCrop({ itemId: 'sample-crop-1' }))
+      ).toEqual(testCrop({ itemId: 'sample-crop-1' }));
 
       expect(
-        resetWasWatered(
+        Farmhand.resetWasWatered(
           testCrop({ itemId: 'sample-crop-2', wasWateredToday: true })
         )
       ).toEqual(testCrop({ itemId: 'sample-crop-2' }));
 
-      expect(resetWasWatered(null)).toBe(null);
+      expect(Farmhand.resetWasWatered(null)).toBe(null);
     });
   });
 
