@@ -46,6 +46,18 @@ const { GROWN } = cropLifeStage;
  */
 
 export default class Farmhand extends Component {
+  handlers = {};
+
+  localforage = localforage.createInstance({
+    name: 'farmhand',
+    // NOTE: This should probably be determined by the package version
+    // instead of being hardcoded.
+    version: 1.0,
+    description: 'Persisted game data for Farmhand',
+  });
+
+  notificationSystemRef = createRef();
+
   /**
    * @member farmhand.Farmhand#state
    * @type {farmhand.state}
@@ -68,23 +80,12 @@ export default class Farmhand extends Component {
   constructor() {
     super(...arguments);
 
-    this.notificationSystemRef = createRef();
-    const handlers = (this.handlers = {});
-
     // Bind event handlers
     Object.keys(eventHandlers).forEach(
-      method => (handlers[method] = eventHandlers[method].bind(this))
+      method => (this.handlers[method] = eventHandlers[method].bind(this))
     );
 
     this.initKeyHandlers();
-
-    this.localforage = localforage.createInstance({
-      name: 'farmhand',
-      // NOTE: This should probably be determined by the package version
-      // instead of being hardcoded.
-      version: 1.0,
-      description: 'Persisted game data for Farmhand',
-    });
   }
 
   /**
