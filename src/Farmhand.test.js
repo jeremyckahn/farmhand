@@ -25,7 +25,6 @@ jest.mock('./data/maps');
 jest.mock('./data/items');
 
 let component;
-let mathSpy;
 
 beforeEach(() => {
   localforage.createInstance = () => ({
@@ -123,12 +122,8 @@ describe('private functions', () => {
     let valueAdjustments;
 
     beforeEach(() => {
-      mathSpy = jest.spyOn(Math, 'random').mockImplementation(() => 1);
+      jest.spyOn(Math, 'random').mockImplementation(() => 1);
       valueAdjustments = getUpdatedValueAdjustments();
-    });
-
-    afterEach(() => {
-      mathSpy.mockRestore();
     });
 
     it('updates valueAdjustments by random factor', () => {
@@ -164,16 +159,10 @@ describe('private functions', () => {
 });
 
 describe('static functions', () => {
-  let applyBuffsSpy;
-
   describe('computeStateForNextDay', () => {
     beforeEach(() => {
-      mathSpy = jest.spyOn(Math, 'random').mockImplementation(() => 0.75);
-      applyBuffsSpy = jest.spyOn(Farmhand, 'applyBuffs');
-    });
-
-    afterEach(() => {
-      mathSpy.mockRestore();
+      jest.spyOn(Math, 'random').mockImplementation(() => 0.75);
+      jest.spyOn(Farmhand, 'applyBuffs');
     });
 
     it('computes state for next day', () => {
@@ -199,7 +188,7 @@ describe('static functions', () => {
       expect(firstRow[0].wasWateredToday).toBe(false);
       expect(firstRow[0].daysWatered).toBe(1);
       expect(firstRow[0].daysOld).toBe(1);
-      expect(applyBuffsSpy).toBeCalled();
+      expect(Farmhand.applyBuffs).toBeCalled();
     });
   });
 
@@ -227,10 +216,8 @@ describe('static functions', () => {
 
   describe('applyBuffs', () => {
     describe('rain', () => {
-      let spy;
-
       beforeEach(() => {
-        spy = jest.spyOn(Farmhand, 'applyRain');
+        jest.spyOn(Farmhand, 'applyRain');
       });
 
       describe('is not rainy day', () => {
@@ -240,7 +227,7 @@ describe('static functions', () => {
         });
 
         it('does not call applyRain', () => {
-          expect(spy).not.toHaveBeenCalled();
+          expect(Farmhand.applyRain).not.toHaveBeenCalled();
         });
       });
 
@@ -251,8 +238,8 @@ describe('static functions', () => {
         });
 
         it('calls applyRain', () => {
-          expect(spy).toHaveBeenCalled();
-          expect(spy).toHaveBeenCalledWith(component.state());
+          expect(Farmhand.applyRain).toHaveBeenCalled();
+          expect(Farmhand.applyRain).toHaveBeenCalledWith(component.state());
         });
       });
     });
@@ -260,11 +247,9 @@ describe('static functions', () => {
 });
 
 describe('instance methods', () => {
-  let incrementDaySpy, showNotificationSpy;
-
   describe('componentDidMount', () => {
     beforeEach(() => {
-      incrementDaySpy = jest.spyOn(component.instance(), 'incrementDay');
+      jest.spyOn(component.instance(), 'incrementDay');
     });
 
     describe('fresh boot', () => {
@@ -273,7 +258,7 @@ describe('instance methods', () => {
       });
 
       it('increments the day by one', () => {
-        expect(incrementDaySpy).toHaveBeenCalled();
+        expect(component.instance().incrementDay).toHaveBeenCalled();
       });
     });
 
@@ -289,21 +274,22 @@ describe('instance methods', () => {
         });
 
         component = shallow(<Farmhand />);
-        showNotificationSpy = jest.spyOn(
-          component.instance(),
-          'showNotification'
-        );
+
+        jest.spyOn(component.instance(), 'incrementDay');
+        jest.spyOn(component.instance(), 'showNotification');
 
         component.instance().componentDidMount();
       });
 
       it('rehydrates from persisted state', () => {
-        expect(incrementDaySpy).not.toHaveBeenCalled();
+        expect(component.instance().incrementDay).not.toHaveBeenCalled();
         expect(component.state().foo).toBe('bar');
       });
 
       it('shows notifications for pending newDayNotifications', () => {
-        expect(showNotificationSpy.mock.calls[0][0].message).toBe('baz');
+        expect(
+          component.instance().showNotification.mock.calls[0][0].message
+        ).toBe('baz');
       });
 
       it('empties newDayNotifications', () => {
@@ -313,17 +299,11 @@ describe('instance methods', () => {
   });
 
   describe('incrementDay', () => {
-    let setItemSpy, showNotificationSpy;
-
     beforeEach(() => {
-      setItemSpy = jest.spyOn(component.instance().localforage, 'setItem');
-      showNotificationSpy = jest.spyOn(
-        component.instance(),
-        'showNotification'
-      );
+      jest.spyOn(component.instance().localforage, 'setItem');
+      jest.spyOn(component.instance(), 'showNotification');
 
       component.setState({ newDayNotifications: [{ message: 'foo' }] });
-
       component.instance().incrementDay();
     });
 
@@ -332,18 +312,21 @@ describe('instance methods', () => {
     });
 
     it('persists app state with pending newDayNotifications', () => {
-      expect(setItemSpy.mock.calls[0][1]).toEqual({
-        ...component.state(),
-        newDayNotifications: [{ message: 'foo' }],
-      });
+      expect(component.instance().localforage.setItem.mock.calls[0][1]).toEqual(
+        {
+          ...component.state(),
+          newDayNotifications: [{ message: 'foo' }],
+        }
+      );
     });
 
     it('makes pending notification', () => {
-      expect(showNotificationSpy).toHaveBeenCalledTimes(2);
-      expect(showNotificationSpy.mock.calls[0][0].message).toBe(
+      const { showNotification } = component.instance();
+      expect(showNotification).toHaveBeenCalledTimes(2);
+      expect(showNotification.mock.calls[0][0].message).toBe(
         PROGRESS_SAVED_MESSAGE
       );
-      expect(showNotificationSpy.mock.calls[1][0].message).toBe('foo');
+      expect(showNotification.mock.calls[1][0].message).toBe('foo');
     });
   });
 

@@ -188,8 +188,8 @@ describe('handlePlotClick', () => {
 
 describe('handleEndDayButtonClick', () => {
   it('increments the day', () => {
-    const incrementDaySpy = jest.spyOn(component.instance(), 'incrementDay');
+    jest.spyOn(component.instance(), 'incrementDay');
     handlers().handleEndDayButtonClick();
-    expect(incrementDaySpy).toHaveBeenCalled();
+    expect(component.instance().incrementDay).toHaveBeenCalled();
   });
 });
