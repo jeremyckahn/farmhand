@@ -87,125 +87,6 @@ export default class Farmhand extends Component {
     });
   }
 
-  initKeyHandlers() {
-    this.keyMap = {
-      focusField: 'f',
-      focusInventory: 'i',
-      focusShop: 's',
-      incrementDay: 'c',
-    };
-
-    this.keyHandlers = {
-      focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
-      focusInventory: () =>
-        this.setState({ stageFocus: stageFocusType.INVENTORY }),
-      focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
-      incrementDay: () => this.incrementDay(),
-    };
-
-    if (process.env.NODE_ENV === 'development') {
-      Object.assign(this.keyMap, {
-        clearPersistedData: 'shift+c',
-        waterAllPlots: 'w',
-      });
-
-      Object.assign(this.keyHandlers, {
-        clearPersistedData: () => this.clearPersistedData(),
-        waterAllPlots: () => this.waterAllPlots(),
-      });
-    }
-
-    this.keyHandlers = Object.keys(this.keyHandlers).reduce((acc, key) => {
-      const original = this.keyHandlers[key];
-      const { activeElement } = document;
-
-      acc[key] = (...args) =>
-        // If user is not focused on an input element
-        (activeElement.nodeName === 'INPUT' &&
-          !activeElement.classList.contains('hotkeys')) ||
-        original(...args);
-
-      return acc;
-    }, {});
-  }
-
-  componentDidMount() {
-    this.localforage.getItem('state').then(state => {
-      if (state) {
-        const { newDayNotifications } = state;
-        this.setState({ ...state, newDayNotifications: [] }, () => {
-          newDayNotifications.forEach(notification =>
-            this.showNotification(notification)
-          );
-        });
-      } else {
-        this.incrementDay();
-      }
-    });
-  }
-
-  clearPersistedData() {
-    this.localforage.clear().then(() =>
-      this.showNotification({
-        message: 'localforage.clear() succeeded!',
-        level: 'success',
-      })
-    );
-  }
-
-  createNewField() {
-    return new Array(INITIAL_FIELD_HEIGHT)
-      .fill(undefined)
-      .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null));
-  }
-
-  /**
-   * @param {farmhand.notification} options
-   */
-  showNotification(options) {
-    const { current: notificationSystem } = this.notificationSystemRef;
-
-    // This will be null for the tests, so just return early.
-    if (!notificationSystem) {
-      return;
-    }
-
-    notificationSystem.addNotification({
-      level: 'info',
-      ...options,
-    });
-  }
-
-  incrementDay() {
-    const nextDayState = Farmhand.computeStateForNextDay(this.state);
-    const pendingNotifications = [...nextDayState.newDayNotifications];
-
-    this.setState({ ...nextDayState, newDayNotifications: [] }, () => {
-      this.localforage
-        .setItem('state', {
-          ...this.state,
-
-          // newDayNotifications are persisted so that they can be shown to the
-          // player when the app reloads.
-          newDayNotifications: pendingNotifications,
-        })
-        .then(() =>
-          [
-            { message: PROGRESS_SAVED_MESSAGE, level: 'success' },
-            ...pendingNotifications,
-          ].forEach(notification => this.showNotification(notification))
-        )
-        .catch(e => {
-          console.error(e);
-
-          this.showNotification({
-            message: JSON.stringify(e),
-            level: 'error',
-          });
-        });
-    });
-  }
-
   /**
    * @param {farmhand.state} state
    * @return {farmhand.state}
@@ -389,6 +270,125 @@ export default class Farmhand extends Component {
    */
   static updateField = (field, modifierFn) =>
     field.map(row => row.map(modifierFn));
+
+  initKeyHandlers() {
+    this.keyMap = {
+      focusField: 'f',
+      focusInventory: 'i',
+      focusShop: 's',
+      incrementDay: 'c',
+    };
+
+    this.keyHandlers = {
+      focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
+      focusInventory: () =>
+        this.setState({ stageFocus: stageFocusType.INVENTORY }),
+      focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
+      incrementDay: () => this.incrementDay(),
+    };
+
+    if (process.env.NODE_ENV === 'development') {
+      Object.assign(this.keyMap, {
+        clearPersistedData: 'shift+c',
+        waterAllPlots: 'w',
+      });
+
+      Object.assign(this.keyHandlers, {
+        clearPersistedData: () => this.clearPersistedData(),
+        waterAllPlots: () => this.waterAllPlots(),
+      });
+    }
+
+    this.keyHandlers = Object.keys(this.keyHandlers).reduce((acc, key) => {
+      const original = this.keyHandlers[key];
+      const { activeElement } = document;
+
+      acc[key] = (...args) =>
+        // If user is not focused on an input element
+        (activeElement.nodeName === 'INPUT' &&
+          !activeElement.classList.contains('hotkeys')) ||
+        original(...args);
+
+      return acc;
+    }, {});
+  }
+
+  componentDidMount() {
+    this.localforage.getItem('state').then(state => {
+      if (state) {
+        const { newDayNotifications } = state;
+        this.setState({ ...state, newDayNotifications: [] }, () => {
+          newDayNotifications.forEach(notification =>
+            this.showNotification(notification)
+          );
+        });
+      } else {
+        this.incrementDay();
+      }
+    });
+  }
+
+  clearPersistedData() {
+    this.localforage.clear().then(() =>
+      this.showNotification({
+        message: 'localforage.clear() succeeded!',
+        level: 'success',
+      })
+    );
+  }
+
+  createNewField() {
+    return new Array(INITIAL_FIELD_HEIGHT)
+      .fill(undefined)
+      .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null));
+  }
+
+  /**
+   * @param {farmhand.notification} options
+   */
+  showNotification(options) {
+    const { current: notificationSystem } = this.notificationSystemRef;
+
+    // This will be null for the tests, so just return early.
+    if (!notificationSystem) {
+      return;
+    }
+
+    notificationSystem.addNotification({
+      level: 'info',
+      ...options,
+    });
+  }
+
+  incrementDay() {
+    const nextDayState = Farmhand.computeStateForNextDay(this.state);
+    const pendingNotifications = [...nextDayState.newDayNotifications];
+
+    this.setState({ ...nextDayState, newDayNotifications: [] }, () => {
+      this.localforage
+        .setItem('state', {
+          ...this.state,
+
+          // newDayNotifications are persisted so that they can be shown to the
+          // player when the app reloads.
+          newDayNotifications: pendingNotifications,
+        })
+        .then(() =>
+          [
+            { message: PROGRESS_SAVED_MESSAGE, level: 'success' },
+            ...pendingNotifications,
+          ].forEach(notification => this.showNotification(notification))
+        )
+        .catch(e => {
+          console.error(e);
+
+          this.showNotification({
+            message: JSON.stringify(e),
+            level: 'error',
+          });
+        });
+    });
+  }
 
   getPlayerInventory() {
     const { inventory, valueAdjustments } = this.state;
