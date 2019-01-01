@@ -46,7 +46,13 @@ const { GROWN } = cropLifeStage;
  */
 
 export default class Farmhand extends Component {
-  handlers = {};
+  // Bind event handlers
+  handlers = {
+    ...Object.keys(eventHandlers).reduce((acc, method) => {
+      acc[method] = eventHandlers[method].bind(this);
+      return acc;
+    }, {}),
+  };
 
   localforage = localforage.createInstance({
     name: 'farmhand',
@@ -79,11 +85,6 @@ export default class Farmhand extends Component {
 
   constructor() {
     super(...arguments);
-
-    // Bind event handlers
-    Object.keys(eventHandlers).forEach(
-      method => (this.handlers[method] = eventHandlers[method].bind(this))
-    );
 
     this.initKeyHandlers();
   }
