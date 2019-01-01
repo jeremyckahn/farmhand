@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import localforage from 'localforage';
 import { getCropFromItemId } from './utils';
 import { testCrop, testItem } from './test-utils';
-import { initialFieldWidth, initialFieldHeight } from './constants';
+import { INITIAL_FIELD_WIDTH, INITIAL_FIELD_HEIGHT } from './constants';
 import { PROGRESS_SAVED_MESSAGE, RAIN_MESSAGE } from './strings';
 import { sampleItem1, sampleItem2, sampleCropSeedsItem1 } from './data/items';
 
@@ -43,8 +43,8 @@ afterEach(() => {
 
 describe('state', () => {
   it('inits field', () => {
-    expect(component.state().field).toHaveLength(initialFieldHeight);
-    expect(component.state().field[0]).toHaveLength(initialFieldWidth);
+    expect(component.state().field).toHaveLength(INITIAL_FIELD_HEIGHT);
+    expect(component.state().field[0]).toHaveLength(INITIAL_FIELD_WIDTH);
   });
 });
 

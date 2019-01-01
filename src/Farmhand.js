@@ -18,8 +18,8 @@ import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
 import { cropLifeStage, stageFocusType, toolType } from './enums';
 import {
-  initialFieldWidth,
-  initialFieldHeight,
+  INITIAL_FIELD_WIDTH,
+  INITIAL_FIELD_HEIGHT,
   RAIN_CHANCE,
 } from './constants';
 import { PROGRESS_SAVED_MESSAGE, RAIN_MESSAGE } from './strings';
@@ -197,8 +197,8 @@ export default class Farmhand extends Component {
   state = {
     dayCount: 0,
     field: this.createNewField(),
-    fieldHeight: initialFieldHeight,
-    fieldWidth: initialFieldWidth,
+    fieldHeight: INITIAL_FIELD_HEIGHT,
+    fieldWidth: INITIAL_FIELD_WIDTH,
     inventory: [],
     money: 500,
     newDayNotifications: [],
@@ -298,9 +298,9 @@ export default class Farmhand extends Component {
   }
 
   createNewField() {
-    return new Array(initialFieldHeight)
+    return new Array(INITIAL_FIELD_HEIGHT)
       .fill(undefined)
-      .map(() => new Array(initialFieldWidth).fill(null));
+      .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null));
   }
 
   /**
