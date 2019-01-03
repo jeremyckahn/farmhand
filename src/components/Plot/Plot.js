@@ -20,7 +20,8 @@ export const Plot = ({
       ripe: lifeStage === cropLifeStage.GROWN,
     })}
     style={{
-      backgroundImage: `url(${crop && crop.wasWateredToday && wateredPlot})`,
+      backgroundImage: `url(${(crop && crop.wasWateredToday && wateredPlot) ||
+        pixel})`,
     }}
     onClick={() => handlePlotClick(x, y)}
   >

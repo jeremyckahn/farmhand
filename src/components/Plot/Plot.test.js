@@ -2,7 +2,7 @@ import React from 'react';
 import Plot from './Plot';
 import { shallow } from 'enzyme';
 import { testCrop } from '../../test-utils';
-import { items as itemImages, pixel, wateredPlot } from '../../img';
+import { pixel, wateredPlot } from '../../img';
 import { cropLifeStage } from '../../enums';
 
 jest.mock('../../img');
@@ -39,18 +39,6 @@ it('renders "ripe" class', () => {
   expect(component.hasClass('ripe')).toBeTruthy();
 });
 
-it('renders provided crop', () => {
-  component = shallow(
-    getPlot({ options: { crop: testCrop({ itemId: 'sample-crop-1' }) } })
-  );
-
-  expect(component.find('img').props().style.backgroundImage).toBe(
-    `url(${itemImages['sample-crop-1']})`
-  );
-
-  expect(component.hasClass('crop')).toBeTruthy();
-});
-
 it('renders provided image data', () => {
   const image = 'data:image/png;base64,some-other-image';
 
@@ -68,16 +56,24 @@ it('renders provided image data', () => {
   );
 });
 
-it('renders wateredPlot image appropriately', () => {
-  component = shallow(
-    getPlot({
-      options: {
-        crop: testCrop({ itemId: 'sample-crop-1', wasWateredToday: true }),
-      },
-    })
-  );
+describe('background image', () => {
+  it('renders pixel', () => {
+    expect(component.find('.Plot').props().style.backgroundImage).toBe(
+      `url(${pixel})`
+    );
+  });
 
-  expect(component.find('.Plot').props().style.backgroundImage).toBe(
-    `url(${wateredPlot})`
-  );
+  it('renders wateredPlot image', () => {
+    component = shallow(
+      getPlot({
+        options: {
+          crop: testCrop({ itemId: 'sample-crop-1', wasWateredToday: true }),
+        },
+      })
+    );
+
+    expect(component.find('.Plot').props().style.backgroundImage).toBe(
+      `url(${wateredPlot})`
+    );
+  });
 });

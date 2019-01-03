@@ -8,3 +8,6 @@ export const items = {
     'data:image/png;base64,sample-crop-type-1-growing',
   'sample-crop-type-1-seed': 'data:image/png;base64,sample-crop-type-1-seed',
 };
+
+export const pixel = 'data:image/png;base64,pixel';
+export const wateredPlot = 'data:image/png;base64,wateredPlot';
