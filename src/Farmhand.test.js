@@ -7,14 +7,17 @@ import { INITIAL_FIELD_WIDTH, INITIAL_FIELD_HEIGHT } from './constants';
 import { PROGRESS_SAVED_MESSAGE, RAIN_MESSAGE } from './strings';
 import { sampleItem1, sampleItem2, sampleCropSeedsItem1 } from './data/items';
 
-import * as constants from './constants';
-
 import Farmhand from './Farmhand';
 
 jest.mock('localforage');
-jest.mock('./constants');
 jest.mock('./data/maps');
 jest.mock('./data/items');
+
+jest.mock('./constants', () => ({
+  INITIAL_FIELD_WIDTH: 4,
+  INITIAL_FIELD_HEIGHT: 4,
+  RAIN_CHANCE: 0,
+}));
 
 let component;
 
@@ -27,10 +30,8 @@ beforeEach(() => {
   component = shallow(<Farmhand />);
 });
 
-const originalConstants = { ...constants };
 afterEach(() => {
   jest.restoreAllMocks();
-  Object.assign(constants, originalConstants);
 });
 
 describe('state', () => {
@@ -104,7 +105,6 @@ describe('static functions', () => {
 
       describe('is not rainy day', () => {
         beforeEach(() => {
-          constants.RAIN_CHANCE = 0;
           Farmhand.applyBuffs(component.state());
         });
 
@@ -114,13 +114,17 @@ describe('static functions', () => {
       });
 
       describe('is rainy day', () => {
-        beforeEach(() => {
-          constants.RAIN_CHANCE = 1;
-          Farmhand.applyBuffs(component.state());
-        });
-
         it('calls applyRain', () => {
-          expect(Farmhand.applyRain).toHaveBeenCalled();
+          jest.resetModules();
+          jest.mock('./constants', () => ({
+            RAIN_CHANCE: 1,
+          }));
+
+          const { default: Farmhand } = jest.requireActual('./Farmhand');
+
+          jest.spyOn(Farmhand, 'applyRain');
+          Farmhand.applyBuffs(component.state());
+
           expect(Farmhand.applyRain).toHaveBeenCalledWith(component.state());
         });
       });
