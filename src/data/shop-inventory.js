@@ -1,5 +1,17 @@
-import { carrotSeed, pumpkinSeed } from './items';
+import {
+  // Plantable crops
+  carrotSeed,
+  pumpkinSeed,
 
-const shopInventory = [carrotSeed, pumpkinSeed];
+  // Field items
+  fertilizer,
+} from './items';
 
-export default shopInventory;
+export default [
+  // Plantable crops
+  carrotSeed,
+  pumpkinSeed,
+
+  // Field items
+  fertilizer,
+];

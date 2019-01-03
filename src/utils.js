@@ -28,6 +28,7 @@ export const getItemValue = ({ id }, valueAdjustments) =>
 export const getCropFromItemId = itemId => ({
   daysOld: 0,
   daysWatered: 0,
+  isFertilized: false,
   itemId,
   wasWateredToday: false,
 });
@@ -55,7 +56,8 @@ export const getLifeStageRange = memoize(cropTimetable =>
  * @returns {enums.cropLifeStage}
  */
 export const getCropLifeStage = ({ itemId, daysWatered }) =>
-  getLifeStageRange(itemsMap[itemId].cropTimetable)[daysWatered] || GROWN;
+  getLifeStageRange(itemsMap[itemId].cropTimetable)[Math.floor(daysWatered)] ||
+  GROWN;
 
 const cropLifeStageToImageSuffixMap = {
   [SEED]: 'seed',

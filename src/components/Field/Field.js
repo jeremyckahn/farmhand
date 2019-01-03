@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 import './Field.sass';
 
-const { CLEANUP, HARVEST, PLANT, WATER } = fieldMode;
+const { CLEANUP, FERTILIZE, HARVEST, PLANT, WATER } = fieldMode;
 
 const Field = ({
   handlers,
@@ -18,8 +18,11 @@ const Field = ({
 }) => (
   <div
     className={classNames('Field', {
-      'plantable-item-selected': fieldMode === PLANT,
+      'fertilize-mode': fieldMode === FERTILIZE,
+      // TODO: Rename these classes to reference modes; e.g. harvest-mode,
+      // field-mode, etc.
       'hoe-selected': fieldMode === HARVEST,
+      'plantable-item-selected': fieldMode === PLANT,
       'scythe-selected': fieldMode === CLEANUP,
       'watering-can-selected': fieldMode === WATER,
     })}

@@ -34,7 +34,7 @@ describe('getCropLifeStage', () => {
     const itemId = 'sample-crop-1';
 
     expect(getCropLifeStage({ itemId, daysWatered: 0 })).toBe(SEED);
-    expect(getCropLifeStage({ itemId, daysWatered: 1 })).toBe(GROWING);
+    expect(getCropLifeStage({ itemId, daysWatered: 1.5 })).toBe(GROWING);
     expect(getCropLifeStage({ itemId, daysWatered: 3 })).toBe(GROWN);
   });
 });

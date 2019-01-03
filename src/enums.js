@@ -20,6 +20,7 @@ export const cropType = enumify(['CARROT', 'PUMPKIN']);
  */
 export const fieldMode = enumify([
   'CLEANUP',
+  'FERTILIZE',
   'HARVEST',
   'OBSERVE',
   'PLANT',

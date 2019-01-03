@@ -3,6 +3,8 @@ import { cropLifeStage } from '../../enums';
 
 const { SEED, GROWING } = cropLifeStage;
 
+// TODO: Make the mock cropType values indicate that they are CROP_TYPES
+
 // Non-crop items
 export const sampleItem1 = testItem({
   id: 'sample-item-1',
@@ -75,4 +77,16 @@ export const sampleCropItem3 = testItem({
     [SEED]: 3,
     [GROWING]: 4,
   },
+});
+
+export const sampleFieldTool1 = testItem({
+  id: 'sample-field-tool-1',
+  enablesFieldMode: 'MOCK_FIELD_MODE_1',
+  value: 5,
+});
+
+export const fertilizer = testItem({
+  id: 'fertilizer',
+  value: 60,
+  enablesFieldMode: 'FERTILIZE',
 });

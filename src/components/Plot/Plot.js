@@ -1,9 +1,27 @@
 import React from 'react';
 import { func, number, object, shape, string } from 'prop-types';
-import { pixel, wateredPlot } from '../../img';
+import { pixel, fertilizedPlot, wateredPlot } from '../../img';
 import { cropLifeStage } from '../../enums';
 import classNames from 'classnames';
 import './Plot.sass';
+
+export const getBackgroundStyles = crop => {
+  if (!crop) {
+    return null;
+  }
+
+  const backgroundImages = [];
+
+  if (crop.isFertilized) {
+    backgroundImages.push(`url(${fertilizedPlot})`);
+  }
+
+  if (crop.wasWateredToday) {
+    backgroundImages.push(`url(${wateredPlot})`);
+  }
+
+  return backgroundImages.join(', ');
+};
 
 export const Plot = ({
   handlers: { handlePlotClick },
@@ -17,11 +35,11 @@ export const Plot = ({
   <div
     className={classNames('Plot', {
       crop: !!crop,
+      'is-fertilized': crop && crop.isFertilized,
       ripe: lifeStage === cropLifeStage.GROWN,
     })}
     style={{
-      backgroundImage: `url(${(crop && crop.wasWateredToday && wateredPlot) ||
-        pixel})`,
+      backgroundImage: getBackgroundStyles(crop),
     }}
     onClick={() => handlePlotClick(x, y)}
   >

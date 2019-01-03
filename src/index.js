@@ -23,6 +23,7 @@
  * @property {farmhand.cropTimetable} [cropTimetable]
  * @property {farmhand.module:enums.cropType} [cropType]
  * @property {string} [growsInto] The id of another farmhand.item.
+ * @property {string} [enablesFieldMode] The fieldMode that this item enables.
  */
 
 /**
@@ -31,6 +32,7 @@
  * @type {Object}
  * @property {number} daysOld
  * @property {number} daysWatered
+ * @property {boolean} isFertilized
  * @property {string} itemId
  * @property {boolean} wasWateredToday
  */

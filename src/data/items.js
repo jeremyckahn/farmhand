@@ -2,11 +2,17 @@
  * @module farmhand.items
  */
 
-import { cropLifeStage, cropType } from '../enums';
+import { cropLifeStage, cropType, fieldMode } from '../enums';
 
 const { freeze } = Object;
 const { CARROT, PUMPKIN } = cropType;
 const { SEED, GROWING } = cropLifeStage;
+
+////////////////////////////////////////
+//
+// CROPS
+//
+////////////////////////////////////////
 
 /**
  * @property farmhand.module:items.carrotSeed
@@ -62,4 +68,22 @@ export const pumpkin = freeze({
   id: 'pumpkin',
   name: 'Pumpkin',
   value: 80,
+});
+
+////////////////////////////////////////
+//
+// FIELD TOOLS
+//
+////////////////////////////////////////
+
+// TODO: Explore making crops above have an enablesFieldMode property
+/**
+ * @property farmhand.module:items.fertilizer
+ * @type {farmhand.item}
+ */
+export const fertilizer = freeze({
+  id: 'fertilizer',
+  name: 'Fertilizer',
+  value: 60,
+  enablesFieldMode: fieldMode.FERTILIZE,
 });

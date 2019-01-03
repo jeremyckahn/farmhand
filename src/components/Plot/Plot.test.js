@@ -1,8 +1,8 @@
 import React from 'react';
-import Plot from './Plot';
+import Plot, { getBackgroundStyles } from './Plot';
 import { shallow } from 'enzyme';
 import { testCrop } from '../../test-utils';
-import { pixel, wateredPlot } from '../../img';
+import { pixel, fertilizedPlot, wateredPlot } from '../../img';
 import { cropLifeStage } from '../../enums';
 
 jest.mock('../../img');
@@ -34,6 +34,11 @@ it('does not render crop class', () => {
   expect(component.hasClass('crop')).toBeFalsy();
 });
 
+it('renders "is-fertilized" class', () => {
+  component = shallow(getPlot({ options: { crop: { isFertilized: true } } }));
+  expect(component.hasClass('is-fertilized')).toBeTruthy();
+});
+
 it('renders "ripe" class', () => {
   component = shallow(getPlot({ options: { lifeStage: cropLifeStage.GROWN } }));
   expect(component.hasClass('ripe')).toBeTruthy();
@@ -58,9 +63,7 @@ it('renders provided image data', () => {
 
 describe('background image', () => {
   it('renders pixel', () => {
-    expect(component.find('.Plot').props().style.backgroundImage).toBe(
-      `url(${pixel})`
-    );
+    expect(component.find('.Plot').props().style.backgroundImage).toBe(null);
   });
 
   it('renders wateredPlot image', () => {
@@ -75,5 +78,31 @@ describe('background image', () => {
     expect(component.find('.Plot').props().style.backgroundImage).toBe(
       `url(${wateredPlot})`
     );
+  });
+});
+
+describe('getBackgroundStyles', () => {
+  test('returns null for !crop', () => {
+    expect(getBackgroundStyles()).toBe(null);
+  });
+
+  test('constructs style for isFertilized', () => {
+    expect(getBackgroundStyles(testCrop({ isFertilized: true }))).toBe(
+      `url(${fertilizedPlot})`
+    );
+  });
+
+  test('constructs style for wasWateredToday', () => {
+    expect(getBackgroundStyles(testCrop({ wasWateredToday: true }))).toBe(
+      `url(${wateredPlot})`
+    );
+  });
+
+  test('constructs style for isFertilized and wasWateredToday', () => {
+    expect(
+      getBackgroundStyles(
+        testCrop({ isFertilized: true, wasWateredToday: true })
+      )
+    ).toBe(`url(${fertilizedPlot}), url(${wateredPlot})`);
   });
 });

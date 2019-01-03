@@ -49,6 +49,20 @@ describe('field rendering', () => {
   });
 });
 
+describe('fertilize-mode class', () => {
+  it('is not present when fieldMode != FERTILIZE', () => {
+    expect(component.hasClass('fertilize-mode')).toBeFalsy();
+  });
+
+  it('is present when fieldMode == FERTILIZE', () => {
+    component = shallow(
+      getField({ state: { fieldMode: fieldMode.FERTILIZE } })
+    );
+
+    expect(component.hasClass('fertilize-mode')).toBeTruthy();
+  });
+});
+
 describe('plantable-item-selected class', () => {
   it('is not present when fieldMode != PLANT', () => {
     expect(component.hasClass('plantable-item-selected')).toBeFalsy();

@@ -13,6 +13,8 @@ import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
 import { cropLifeStage, stageFocusType, fieldMode } from './enums';
 import {
+  FERTILIZER_BONUS,
+  FERTILIZER_ITEM_ID,
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
   RAIN_CHANCE,
@@ -34,6 +36,7 @@ const { GROWN } = cropLifeStage;
  * @property {number} money
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {string} selectedPlantableItemId
+ * @property {string} selectedFieldToolId
  * @property {farmhand.module:enums.fieldMode} fieldMode
  * @property {Array.<farmhand.item>} shopInventory
  * @property {farmhand.module:enums.stageFocusType} stageFocus
@@ -71,7 +74,11 @@ export default class Farmhand extends Component {
     inventory: [],
     money: 500,
     newDayNotifications: [],
+
+    // TODO: Combine these into one state property
     selectedPlantableItemId: '',
+    selectedFieldToolId: '',
+
     fieldMode: fieldMode.OBSERVE,
     shopInventory: [...shopInventory],
     stageFocus: stageFocusType.FIELD,
@@ -152,8 +159,18 @@ export default class Farmhand extends Component {
     itemsMap[seedItemId].growsInto;
 
   /**
-   * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
-   * @returns {Array.<{ item: farmhand.item, quantity: number }>}
+   * @param {Array.<{ item: farmhand.item }>} inventory
+   * @returns {Array.<{ item: farmhand.item }>}
+   */
+  static getFieldToolInventory = memoize(inventory =>
+    inventory
+      .filter(({ id }) => typeof itemsMap[id].enablesFieldMode === 'string')
+      .map(({ id }) => itemsMap[id])
+  );
+
+  /**
+   * @param {Array.<{ item: farmhand.item }>} inventory
+   * @returns {Array.<{ item: farmhand.item }>}
    */
   static getPlantableInventory = memoize(inventory =>
     inventory
@@ -171,7 +188,11 @@ export default class Farmhand extends Component {
       : {
           ...crop,
           daysOld: crop.daysOld + 1,
-          daysWatered: crop.daysWatered + Number(crop.wasWateredToday),
+          daysWatered:
+            crop.daysWatered +
+            (crop.wasWateredToday
+              ? 1 + (crop.isFertilized ? FERTILIZER_BONUS : 0)
+              : 0),
         };
 
   /**
@@ -268,7 +289,6 @@ export default class Farmhand extends Component {
   static updateField = (field, modifierFn) =>
     field.map(row => row.map(modifierFn));
 
-  // TODO: Unit test this function.
   /**
    * @param {string} itemId
    * @param {Array.<farmhand.item>} inventory
@@ -412,6 +432,11 @@ export default class Farmhand extends Component {
     });
   }
 
+  // TODO: Convert this and the methods below into proper getters
+  getFieldToolInventory() {
+    return Farmhand.getFieldToolInventory(this.state.inventory);
+  }
+
   getPlayerInventory() {
     const { inventory, valueAdjustments } = this.state;
     return Farmhand.computePlayerInventory(inventory, valueAdjustments);
@@ -497,6 +522,40 @@ export default class Farmhand extends Component {
    * @param {number} x
    * @param {number} y
    */
+  fertilizePlot(x, y) {
+    const { field, inventory } = this.state;
+    const row = field[y];
+    const crop = row[x];
+
+    if (!crop || crop.isFertilized) {
+      // Nothing planted in field[x][y]
+      return;
+    }
+
+    const updatedInventory = Farmhand.decrementItemFromInventory(
+      FERTILIZER_ITEM_ID,
+      inventory
+    );
+
+    const doFertilizersRemain = !!updatedInventory.find(
+      item => item.id === FERTILIZER_ITEM_ID
+    );
+
+    this.setState({
+      field: Farmhand.modifyFieldPlotAt(field, x, y, crop => ({
+        ...crop,
+        isFertilized: true,
+      })),
+      fieldMode: doFertilizersRemain ? fieldMode.FERTILIZE : fieldMode.OBSERVE,
+      inventory: updatedInventory,
+      selectedFieldToolId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
+    });
+  }
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
   harvestPlot(x, y) {
     const { inventory, field } = this.state;
     const row = field[y];
@@ -566,6 +625,7 @@ export default class Farmhand extends Component {
     const { handlers, keyHandlers, keyMap, notificationSystemRef } = this;
     const state = {
       ...this.state,
+      fieldToolInventory: this.getFieldToolInventory(),
       plantableInventory: this.getPlantableInventory(),
       playerInventory: this.getPlayerInventory(),
     };

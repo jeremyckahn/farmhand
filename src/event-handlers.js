@@ -1,6 +1,7 @@
 import { fieldMode } from './enums';
 
-const { CLEANUP, HARVEST, PLANT, WATER } = fieldMode;
+const { CLEANUP, FERTILIZE, HARVEST, PLANT, WATER } = fieldMode;
+const toolbeltFieldModes = [CLEANUP, HARVEST, WATER];
 
 export default {
   /**
@@ -29,8 +30,9 @@ export default {
    */
   handlePlantableItemSelect({ id }) {
     this.setState({
-      selectedPlantableItemId: id,
       fieldMode: fieldMode.PLANT,
+      selectedFieldToolId: '',
+      selectedPlantableItemId: id,
     });
   },
 
@@ -41,7 +43,22 @@ export default {
     const selectedPlantableItemId =
       fieldMode === PLANT ? this.state.selectedPlantableItemId : '';
 
-    this.setState({ selectedPlantableItemId, fieldMode });
+    const { selectedFieldToolId } = this.state;
+    const isToolbeltFieldMode = toolbeltFieldModes.includes(fieldMode);
+
+    this.setState({
+      selectedFieldToolId: isToolbeltFieldMode ? '' : selectedFieldToolId,
+      selectedPlantableItemId,
+      fieldMode,
+    });
+  },
+
+  handleFieldToolSelect({ id, enablesFieldMode }) {
+    this.setState({
+      fieldMode: enablesFieldMode,
+      selectedFieldToolId: id,
+      selectedPlantableItemId: '',
+    });
   },
 
   /**
@@ -59,6 +76,8 @@ export default {
       this.harvestPlot(x, y);
     } else if (fieldMode === WATER) {
       this.waterPlot(x, y);
+    } else if (fieldMode === FERTILIZE) {
+      this.fertilizePlot(x, y);
     }
   },
 

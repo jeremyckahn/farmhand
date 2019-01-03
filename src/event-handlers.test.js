@@ -52,6 +52,7 @@ describe('handlePlantableItemSelect', () => {
   beforeEach(() => {
     component.setState({
       fieldMode: fieldMode.WATER,
+      selectedFieldToolId: 'field-tool',
     });
 
     handlers().handlePlantableItemSelect(testItem({ id: 'sample-crop-3' }));
@@ -63,6 +64,10 @@ describe('handlePlantableItemSelect', () => {
 
   it('resets state.fieldMode', () => {
     expect(component.state().fieldMode).toEqual(fieldMode.PLANT);
+  });
+
+  it('resets state.selectedFieldToolId', () => {
+    expect(component.state().selectedFieldToolId).toEqual('');
   });
 });
 
@@ -101,6 +106,56 @@ describe('handleFieldModeSelect', () => {
     it('resets state.selectedPlantableItemId', () => {
       expect(component.state().selectedPlantableItemId).toEqual('');
     });
+  });
+
+  describe('updating selectedFieldToolId', () => {
+    beforeEach(() => {
+      component.setState({ selectedFieldToolId: 'some-field-tool' });
+    });
+
+    describe('is toolbelt fieldMode', () => {
+      it('resets selectedFieldToolId', () => {
+        component.setState({ selectedFieldToolId: 'some-field-tool-id' });
+        handlers().handleFieldModeSelect(fieldMode.WATER);
+
+        expect(component.state().selectedFieldToolId).toEqual('');
+      });
+    });
+
+    describe('is not toolbelt fieldMode', () => {
+      it('does not change selectedFieldToolId', () => {
+        component.setState({ selectedFieldToolId: 'some-field-tool-id' });
+        handlers().handleFieldModeSelect(fieldMode.OBSERVE);
+
+        expect(component.state().selectedFieldToolId).toEqual(
+          'some-field-tool-id'
+        );
+      });
+    });
+  });
+});
+
+describe('handleFieldToolSelect', () => {
+  beforeEach(() => {
+    component.setState({
+      selectedPlantableItemId: 'sample-crop-1',
+    });
+
+    handlers().handleFieldToolSelect(
+      testItem({ enablesFieldMode: 'FOO', id: 'field-tool' })
+    );
+  });
+
+  test('sets selectedFieldToolId', () => {
+    expect(component.state().selectedFieldToolId).toEqual('field-tool');
+  });
+
+  test('resets state.selectedPlantableItemId', () => {
+    expect(component.state().selectedPlantableItemId).toEqual('');
+  });
+
+  test('sets state.fieldMode', () => {
+    expect(component.state().fieldMode).toEqual('FOO');
   });
 });
 
@@ -173,6 +228,21 @@ describe('handlePlotClick', () => {
       handlers().handlePlotClick(0, 0);
 
       expect(component.instance().waterPlot).toHaveBeenCalledWith(0, 0);
+    });
+  });
+
+  describe('fieldMode === fieldMode.FERTILIZE', () => {
+    beforeEach(() => {
+      component.setState({
+        fieldMode: fieldMode.FERTILIZE,
+      });
+    });
+
+    it('calls fertilizePlot', () => {
+      jest.spyOn(component.instance(), 'fertilizePlot');
+      handlers().handlePlotClick(0, 0);
+
+      expect(component.instance().fertilizePlot).toHaveBeenCalledWith(0, 0);
     });
   });
 });

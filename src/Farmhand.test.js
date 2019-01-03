@@ -3,9 +3,19 @@ import { shallow } from 'enzyme';
 import localforage from 'localforage';
 import { getCropFromItemId } from './utils';
 import { testCrop, testItem } from './test-utils';
-import { INITIAL_FIELD_WIDTH, INITIAL_FIELD_HEIGHT } from './constants';
+import {
+  FERTILIZER_BONUS,
+  INITIAL_FIELD_WIDTH,
+  INITIAL_FIELD_HEIGHT,
+} from './constants';
 import { PROGRESS_SAVED_MESSAGE, RAIN_MESSAGE } from './strings';
-import { sampleItem1, sampleItem2, sampleCropSeedsItem1 } from './data/items';
+import { fieldMode } from './enums';
+import {
+  sampleItem1,
+  sampleItem2,
+  sampleCropSeedsItem1,
+  sampleFieldTool1,
+} from './data/items';
 
 import Farmhand from './Farmhand';
 
@@ -14,6 +24,8 @@ jest.mock('./data/maps');
 jest.mock('./data/items');
 
 jest.mock('./constants', () => ({
+  FERTILIZER_BONUS: 0.5,
+  FERTILIZER_ITEM_ID: 'fertilizer',
   INITIAL_FIELD_WIDTH: 4,
   INITIAL_FIELD_HEIGHT: 4,
   RAIN_CHANCE: 0,
@@ -220,6 +232,20 @@ describe('static functions', () => {
     });
   });
 
+  describe('getFieldToolInventory', () => {
+    let fieldToolInventory;
+    let inventory;
+
+    beforeEach(() => {
+      inventory = [{ id: 'sample-field-tool-1' }, { id: 'sample-item-1' }];
+      fieldToolInventory = Farmhand.getFieldToolInventory(inventory);
+    });
+
+    it('filters out non-field tool items', () => {
+      expect(fieldToolInventory).toEqual([sampleFieldTool1]);
+    });
+  });
+
   describe('getFinalCropItemIdFromSeedItemId', () => {
     it('gets "final" crop item id from seed item id', () => {
       expect(
@@ -233,10 +259,7 @@ describe('static functions', () => {
     let inventory;
 
     beforeEach(() => {
-      inventory = [
-        { quantity: 1, id: 'sample-crop-seeds-1' },
-        { quantity: 1, id: 'sample-item-1' },
-      ];
+      inventory = [{ id: 'sample-crop-seeds-1' }, { id: 'sample-item-1' }];
       plantableInventory = Farmhand.getPlantableInventory(inventory);
     });
 
@@ -391,6 +414,20 @@ describe('instance methods', () => {
         expect(daysWatered).toBe(1);
       });
     });
+
+    describe('plant is fertilized', () => {
+      it('updates daysOld with bonus', () => {
+        const { daysWatered } = Farmhand.incrementAge(
+          testCrop({
+            itemId: 'sample-crop-1',
+            isFertilized: true,
+            wasWateredToday: true,
+          })
+        );
+
+        expect(daysWatered).toBe(1 + FERTILIZER_BONUS);
+      });
+    });
   });
 
   describe('resetWasWatered', () => {
@@ -539,6 +576,95 @@ describe('instance methods', () => {
 
     it('removes the crop from the plot', () => {
       expect(component.state().field[0][0]).toBe(null);
+    });
+  });
+
+  describe('fertilizePlot', () => {
+    describe('unfertilized crops', () => {
+      describe('happy path', () => {
+        beforeEach(() => {
+          jest.spyOn(Farmhand, 'decrementItemFromInventory');
+
+          component.setState({
+            field: [[testCrop({ itemId: 'sample-crop-1' })]],
+            inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+          });
+
+          component.instance().fertilizePlot(0, 0);
+        });
+
+        it('fertilizes crop', () => {
+          expect(component.state().field[0][0]).toEqual(
+            testCrop({ itemId: 'sample-crop-1', isFertilized: true })
+          );
+        });
+
+        it('decrements fertilizer from inventory', () => {
+          expect(Farmhand.decrementItemFromInventory).toHaveBeenCalledWith(
+            'fertilizer',
+            [testItem({ id: 'fertilizer', quantity: 1 })]
+          );
+        });
+      });
+
+      describe('plot is already fertilized', () => {
+        beforeEach(() => {
+          jest.spyOn(Farmhand, 'decrementItemFromInventory');
+
+          component.setState({
+            field: [
+              [testCrop({ itemId: 'sample-crop-1', isFertilized: true })],
+            ],
+            inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+          });
+
+          component.instance().fertilizePlot(0, 0);
+        });
+
+        it('does not modify inventory', () => {
+          expect(Farmhand.decrementItemFromInventory).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('FERTILIZE field mode updating', () => {
+        describe('multiple fertilizer units remaining', () => {
+          beforeEach(() => {
+            component.setState({
+              field: [[testCrop({ itemId: 'sample-crop-1' })]],
+              inventory: [testItem({ id: 'fertilizer', quantity: 2 })],
+            });
+
+            component.instance().fertilizePlot(0, 0);
+          });
+
+          it('does not change fieldMode', () => {
+            expect(component.state().fieldMode).toBe(fieldMode.FERTILIZE);
+          });
+
+          it('does not change selectedFieldToolId', () => {
+            expect(component.state().selectedFieldToolId).toBe('fertilizer');
+          });
+        });
+
+        describe('one fertilizer unit remaining', () => {
+          beforeEach(() => {
+            component.setState({
+              field: [[testCrop({ itemId: 'sample-crop-1' })]],
+              inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+            });
+
+            component.instance().fertilizePlot(0, 0);
+          });
+
+          it('change fieldMode to OBSERVE', () => {
+            expect(component.state().fieldMode).toBe(fieldMode.OBSERVE);
+          });
+
+          it('reset selectedFieldToolId', () => {
+            expect(component.state().selectedFieldToolId).toBe('');
+          });
+        });
+      });
     });
   });
 
