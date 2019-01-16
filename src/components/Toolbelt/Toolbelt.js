@@ -2,44 +2,44 @@ import React from 'react';
 import { func, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import './Toolbelt.sass';
-import { toolType } from '../../enums';
+import { fieldMode } from '../../enums';
 
 import { tools, pixel } from '../../img';
 
-const { HOE, SCYTHE, WATERING_CAN } = toolType;
+const { CLEANUP, HARVEST, WATER } = fieldMode;
 
 const Toolbelt = ({
-  handlers: { handleToolSelect },
-  state: { selectedTool },
+  handlers: { handleFieldModeSelect },
+  state: { fieldMode: currentFieldMode },
 }) => (
   <div className="Toolbelt">
     {[
       {
         alt: 'A watering can for hydrating plants',
         toolImageId: 'watering-can',
-        toolType: WATERING_CAN,
+        fieldMode: WATER,
       },
       {
         alt: 'A scythe for crop harvesting',
         toolImageId: 'scythe',
-        toolType: SCYTHE,
+        fieldMode: HARVEST,
       },
       {
         alt: 'A hoe for removing crops without harvesting them',
         toolImageId: 'hoe',
-        toolType: HOE,
+        fieldMode: CLEANUP,
       },
-    ].map(({ alt, className, toolImageId, toolType }) => (
+    ].map(({ alt, className, toolImageId, fieldMode }) => (
       <button
         className={classNames({
-          selected: selectedTool === toolType,
+          selected: fieldMode === currentFieldMode,
         })}
-        key={toolType}
+        key={fieldMode}
       >
         <img
           {...{
             className: `square ${toolImageId}`,
-            onClick: () => handleToolSelect(toolType),
+            onClick: () => handleFieldModeSelect(fieldMode),
             src: pixel,
             style: { backgroundImage: `url(${tools[toolImageId]}` },
           }}
@@ -52,10 +52,10 @@ const Toolbelt = ({
 
 Toolbelt.propTypes = {
   handlers: shape({
-    handleToolSelect: func.isRequired,
+    handleFieldModeSelect: func.isRequired,
   }).isRequired,
   state: shape({
-    selectedTool: string.isRequired,
+    fieldMode: string.isRequired,
   }).isRequired,
 };
 

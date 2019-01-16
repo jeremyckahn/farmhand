@@ -1,16 +1,16 @@
 import React from 'react';
 import Toolbelt from './Toolbelt';
 import { shallow } from 'enzyme';
-import { toolType } from '../../enums';
+import { fieldMode } from '../../enums';
 
 let component;
 
 const getToolbelt = (props = {}) => (
   <Toolbelt
     {...{
-      handlers: { handleToolSelect: () => {}, ...props.handlers },
+      handlers: { handleFieldModeSelect: () => {}, ...props.handlers },
       state: {
-        selectedTool: toolType.NONE,
+        fieldMode: fieldMode.OBSERVE,
         ...props.state,
       },
       ...props.options,
@@ -34,7 +34,7 @@ describe('tool selection', () => {
   describe('a tool is selected', () => {
     beforeEach(() => {
       component = shallow(
-        getToolbelt({ state: { selectedTool: toolType.WATERING_CAN } })
+        getToolbelt({ state: { fieldMode: fieldMode.WATER } })
       );
     });
 

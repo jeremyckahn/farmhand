@@ -1,5 +1,7 @@
 import { decrementItemFromInventory } from './utils';
-import { toolType } from './enums';
+import { fieldMode } from './enums';
+
+const { CLEANUP, HARVEST, PLANT, WATER } = fieldMode;
 
 export default {
   /**
@@ -33,14 +35,20 @@ export default {
    * @param {farmhand.item} item
    */
   handlePlantableItemSelect({ id }) {
-    this.setState({ selectedPlantableItemId: id, selectedTool: toolType.NONE });
+    this.setState({
+      selectedPlantableItemId: id,
+      fieldMode: fieldMode.PLANT,
+    });
   },
 
   /**
-   * @param {farmhand.module:enums.toolType} toolType
+   * @param {farmhand.module:enums.fieldMode} fieldMode
    */
-  handleToolSelect(toolType) {
-    this.setState({ selectedPlantableItemId: '', selectedTool: toolType });
+  handleFieldModeSelect(fieldMode) {
+    const selectedPlantableItemId =
+      fieldMode === PLANT ? this.state.selectedPlantableItemId : '';
+
+    this.setState({ selectedPlantableItemId, fieldMode });
   },
 
   /**
@@ -48,15 +56,15 @@ export default {
    * @param {number} y
    */
   handlePlotClick(x, y) {
-    const { selectedPlantableItemId, selectedTool } = this.state;
+    const { selectedPlantableItemId, fieldMode } = this.state;
 
-    if (selectedTool === toolType.NONE) {
+    if (fieldMode === PLANT) {
       this.plantInPlot(x, y, selectedPlantableItemId);
-    } else if (selectedTool === toolType.HOE) {
+    } else if (fieldMode === HARVEST) {
       this.clearPlot(x, y);
-    } else if (selectedTool === toolType.SCYTHE) {
+    } else if (fieldMode === CLEANUP) {
       this.harvestPlot(x, y);
-    } else if (selectedTool === toolType.WATERING_CAN) {
+    } else if (fieldMode === WATER) {
       this.waterPlot(x, y);
     }
   },

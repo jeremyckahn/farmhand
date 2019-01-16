@@ -11,12 +11,12 @@ const getContextPane = (props = {}) => (
     {...{
       handlers: {
         handlePlantableItemSelect: () => {},
-        handleToolSelect: () => {},
+        handleFieldModeSelect: () => {},
         ...props.handlers,
       },
       state: {
         selectedPlantableItemId: '',
-        selectedTool: '',
+        fieldMode: '',
         stageFocus: stageFocusType.NONE,
         plantableInventory: [],
         ...props.state,

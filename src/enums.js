@@ -15,10 +15,16 @@ const enumify = keys => keys.reduce((acc, key) => ({ [key]: key, ...acc }), {});
 export const cropType = enumify(['CARROT', 'PUMPKIN']);
 
 /**
- * @property farmhand.module:enums.toolType
+ * @property farmhand.module:enums.fieldMode
  * @enum {string}
  */
-export const toolType = enumify(['NONE', 'HOE', 'SCYTHE', 'WATERING_CAN']);
+export const fieldMode = enumify([
+  'CLEANUP',
+  'HARVEST',
+  'OBSERVE',
+  'PLANT',
+  'WATER',
+]);
 
 /**
  * @property farmhand.module:enums.stageFocusType

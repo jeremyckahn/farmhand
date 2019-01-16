@@ -16,7 +16,7 @@ import {
 } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
-import { cropLifeStage, stageFocusType, toolType } from './enums';
+import { cropLifeStage, stageFocusType, fieldMode } from './enums';
 import {
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
@@ -39,7 +39,7 @@ const { GROWN } = cropLifeStage;
  * @property {number} money
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {string} selectedPlantableItemId
- * @property {farmhand.module:enums.toolType} selectedTool
+ * @property {farmhand.module:enums.fieldMode} fieldMode
  * @property {Array.<farmhand.item>} shopInventory
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Object.<number>} valueAdjustments
@@ -77,7 +77,7 @@ export default class Farmhand extends Component {
     money: 500,
     newDayNotifications: [],
     selectedPlantableItemId: '',
-    selectedTool: toolType.NONE,
+    fieldMode: fieldMode.OBSERVE,
     shopInventory: [...shopInventory],
     stageFocus: stageFocusType.FIELD,
     valueAdjustments: {},

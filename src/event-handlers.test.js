@@ -1,6 +1,6 @@
 import React from 'react';
 import Farmhand from './Farmhand';
-import { stageFocusType, toolType } from './enums';
+import { stageFocusType, fieldMode } from './enums';
 import { shallow } from 'enzyme';
 import { testItem } from './test-utils';
 
@@ -78,7 +78,7 @@ describe('handleViewChange', () => {
 describe('handlePlantableItemSelect', () => {
   beforeEach(() => {
     component.setState({
-      selectedTool: toolType.WATERING_CAN,
+      fieldMode: fieldMode.WATER,
     });
 
     handlers().handlePlantableItemSelect(testItem({ id: 'sample-crop-3' }));
@@ -88,26 +88,46 @@ describe('handlePlantableItemSelect', () => {
     expect(component.state().selectedPlantableItemId).toEqual('sample-crop-3');
   });
 
-  it('resets state.selectedTool', () => {
-    expect(component.state().selectedTool).toEqual(toolType.NONE);
+  it('resets state.fieldMode', () => {
+    expect(component.state().fieldMode).toEqual(fieldMode.PLANT);
   });
 });
 
-describe('handleToolSelect', () => {
+describe('handleFieldModeSelect', () => {
   beforeEach(() => {
     component.setState({
       selectedPlantableItemId: 'sample-crop-3',
     });
-
-    handlers().handleToolSelect(toolType.WATERING_CAN);
   });
 
-  it('updates selectedTool state', () => {
-    expect(component.state().selectedTool).toEqual(toolType.WATERING_CAN);
+  describe('fieldMode === PLANT', () => {
+    beforeEach(() => {
+      handlers().handleFieldModeSelect(fieldMode.PLANT);
+    });
+
+    it('updates fieldMode state', () => {
+      expect(component.state().fieldMode).toEqual(fieldMode.PLANT);
+    });
+
+    it('does not change state.selectedPlantableItemId', () => {
+      expect(component.state().selectedPlantableItemId).toEqual(
+        'sample-crop-3'
+      );
+    });
   });
 
-  it('resets state.selectedPlantableItemId', () => {
-    expect(component.state().selectedPlantableItemId).toEqual('');
+  describe('fieldMode !== PLANT', () => {
+    beforeEach(() => {
+      handlers().handleFieldModeSelect(fieldMode.WATER);
+    });
+
+    it('updates fieldMode state', () => {
+      expect(component.state().fieldMode).toEqual(fieldMode.WATER);
+    });
+
+    it('resets state.selectedPlantableItemId', () => {
+      expect(component.state().selectedPlantableItemId).toEqual('');
+    });
   });
 });
 
@@ -118,10 +138,10 @@ describe('handlePlotClick', () => {
     });
   });
 
-  describe('selectedTool === toolType.NONE', () => {
+  describe('fieldMode === fieldMode.PLANT', () => {
     beforeEach(() => {
       component.setState({
-        selectedTool: toolType.NONE,
+        fieldMode: fieldMode.PLANT,
         selectedPlantableItemId: 'sample-crop-3',
       });
     });
@@ -138,10 +158,10 @@ describe('handlePlotClick', () => {
     });
   });
 
-  describe('selectedTool === toolType.HOE', () => {
+  describe('fieldMode === fieldMode.HARVEST', () => {
     beforeEach(() => {
       component.setState({
-        selectedTool: toolType.HOE,
+        fieldMode: fieldMode.HARVEST,
       });
     });
 
@@ -153,10 +173,10 @@ describe('handlePlotClick', () => {
     });
   });
 
-  describe('selectedTool === toolType.SCYTHE', () => {
+  describe('fieldMode === fieldMode.CLEANUP', () => {
     beforeEach(() => {
       component.setState({
-        selectedTool: toolType.SCYTHE,
+        fieldMode: fieldMode.CLEANUP,
       });
     });
 
@@ -168,10 +188,10 @@ describe('handlePlotClick', () => {
     });
   });
 
-  describe('selectedTool === toolType.WATERING_CAN', () => {
+  describe('fieldMode === fieldMode.WATER', () => {
     beforeEach(() => {
       component.setState({
-        selectedTool: toolType.WATERING_CAN,
+        fieldMode: fieldMode.WATER,
       });
     });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Field from './Field';
 import Plot from '../Plot';
-import { toolType } from '../../enums';
+import { fieldMode } from '../../enums';
 import { shallow } from 'enzyme';
 
 jest.mock('../../data/maps');
@@ -22,7 +22,7 @@ const getField = (props = {}) => (
       state: {
         field: [[null, null], [null, null], [null, null]],
         selectedPlantableItemId: '',
-        selectedTool: toolType.NONE,
+        fieldMode: fieldMode.OBSERVE,
         ...props.state,
       },
       ...props.options,
@@ -50,52 +50,48 @@ describe('field rendering', () => {
 });
 
 describe('plantable-item-selected class', () => {
-  it('is not present when item is not selected', () => {
+  it('is not present when fieldMode != PLANT', () => {
     expect(component.hasClass('plantable-item-selected')).toBeFalsy();
   });
 
-  it('is present when item is selected', () => {
-    component = shallow(
-      getField({ state: { selectedPlantableItemId: 'stub-item' } })
-    );
+  it('is present when fieldMode == PLANT', () => {
+    component = shallow(getField({ state: { fieldMode: fieldMode.PLANT } }));
 
     expect(component.hasClass('plantable-item-selected')).toBeTruthy();
   });
 });
 
 describe('hoe-selected class', () => {
-  it('is not present when hoe is not selected', () => {
+  it('is not present when fieldMode != HARVEST', () => {
     expect(component.hasClass('hoe-selected')).toBeFalsy();
   });
 
-  it('is present when hoe is selected', () => {
-    component = shallow(getField({ state: { selectedTool: toolType.HOE } }));
+  it('is present when fieldMode == HARVEST', () => {
+    component = shallow(getField({ state: { fieldMode: fieldMode.HARVEST } }));
 
     expect(component.hasClass('hoe-selected')).toBeTruthy();
   });
 });
 
 describe('scythe-selected class', () => {
-  it('is not present when scythe is not selected', () => {
+  it('is not present when fieldMode != CLEANUP', () => {
     expect(component.hasClass('scythe-selected')).toBeFalsy();
   });
 
-  it('is present when scythe is selected', () => {
-    component = shallow(getField({ state: { selectedTool: toolType.SCYTHE } }));
+  it('is present when fieldMode == CLEANUP', () => {
+    component = shallow(getField({ state: { fieldMode: fieldMode.CLEANUP } }));
 
     expect(component.hasClass('scythe-selected')).toBeTruthy();
   });
 });
 
 describe('watering-can-selected class', () => {
-  it('is not present when watering can is not selected', () => {
+  it('is not present when fieldMode != WATER', () => {
     expect(component.hasClass('watering-can-selected')).toBeFalsy();
   });
 
-  it('is present when watering can is selected', () => {
-    component = shallow(
-      getField({ state: { selectedTool: toolType.WATERING_CAN } })
-    );
+  it('is present when fieldMode == WATER', () => {
+    component = shallow(getField({ state: { fieldMode: fieldMode.WATER } }));
 
     expect(component.hasClass('watering-can-selected')).toBeTruthy();
   });

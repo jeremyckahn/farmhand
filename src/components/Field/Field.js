@@ -2,26 +2,26 @@ import React from 'react';
 import { array, number, object, shape, string } from 'prop-types';
 import Plot from '../Plot';
 import { getCropLifeStage, getPlotImage } from '../../utils';
-import { toolType } from '../../enums';
+import { fieldMode } from '../../enums';
 import classNames from 'classnames';
 
 import './Field.sass';
 
-const { HOE, SCYTHE, WATERING_CAN } = toolType;
+const { CLEANUP, HARVEST, PLANT, WATER } = fieldMode;
 
 const Field = ({
   handlers,
   columns,
   rows,
   state,
-  state: { field, selectedPlantableItemId, selectedTool },
+  state: { field, selectedPlantableItemId, fieldMode },
 }) => (
   <div
     className={classNames('Field', {
-      'plantable-item-selected': selectedPlantableItemId,
-      'hoe-selected': selectedTool === HOE,
-      'scythe-selected': selectedTool === SCYTHE,
-      'watering-can-selected': selectedTool === WATERING_CAN,
+      'plantable-item-selected': fieldMode === PLANT,
+      'hoe-selected': fieldMode === HARVEST,
+      'scythe-selected': fieldMode === CLEANUP,
+      'watering-can-selected': fieldMode === WATER,
     })}
   >
     {Array(rows)
@@ -56,7 +56,7 @@ Field.propTypes = {
   state: shape({
     field: array.isRequired,
     selectedPlantableItemId: string.isRequired,
-    selectedTool: string.isRequired,
+    fieldMode: string.isRequired,
   }).isRequired,
 };
 
