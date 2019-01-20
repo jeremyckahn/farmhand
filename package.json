@@ -5,7 +5,7 @@
   "homepage": "http://jeremyckahn.github.io/farmhand/",
   "scripts": {
     "build": "react-scripts build",
-    "ci": "npm run lint && cross-env CI=true react-scripts test --env=jsdom --onlyChanged",
+    "ci": "npm run lint && cross-env CI=true react-scripts test --env=jsdom",
     "deploy": "gh-pages -d build",
     "doc": "jsdoc -c .jsdoc -r src",
     "doc:live": "npm-run-all -p doc:watch doc:view",
