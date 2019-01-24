@@ -419,6 +419,19 @@ export default class Farmhand extends Component {
   }
 
   /**
+   * @param {farmhand.item} item
+   */
+  sellItem(item) {
+    const { id, value = 0 } = item;
+    const { inventory, money } = this.state;
+
+    this.setState({
+      inventory: decrementItemFromInventory(id, inventory),
+      money: money + value,
+    });
+  }
+
+  /**
    * @param {number} x
    * @param {number} y
    * @param {string} plantableItemId

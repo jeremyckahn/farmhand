@@ -16,7 +16,9 @@ beforeEach(() => {
 
 describe('handleItemPurchase', () => {
   it('calls purchaseItem', () => {
-    jest.spyOn(component.instance(), 'purchaseItem');
+    jest
+      .spyOn(component.instance(), 'purchaseItem')
+      .mockImplementation(() => {});
     handlers().handleItemPurchase(testItem({ id: 'sample-item-1' }));
 
     expect(component.instance().purchaseItem).toHaveBeenCalledWith(
@@ -26,42 +28,13 @@ describe('handleItemPurchase', () => {
 });
 
 describe('handleItemSell', () => {
-  describe('single instance of item in inventory', () => {
-    beforeEach(() => {
-      component.setState({
-        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
-        money: 100,
-      });
+  it('calls sellItem', () => {
+    jest.spyOn(component.instance(), 'sellItem').mockImplementation(() => {});
+    handlers().handleItemSell(testItem({ id: 'sample-item-1' }));
 
-      handlers().handleItemSell(testItem({ id: 'sample-item-1', value: 20 }));
-    });
-
-    it('removes item from inventory', () => {
-      expect(component.state().inventory).toEqual([]);
-    });
-
-    it('adds value of item to player money', () => {
-      expect(component.state().money).toEqual(120);
-    });
-  });
-
-  describe('multiple instances of item in inventory', () => {
-    beforeEach(() => {
-      component.setState({
-        inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
-      });
-
-      handlers().handleItemSell(testItem({ id: 'sample-item-1', value: 20 }));
-    });
-
-    it('decrements item', () => {
-      expect(component.state().inventory).toEqual([
-        testItem({
-          id: 'sample-item-1',
-          quantity: 1,
-        }),
-      ]);
-    });
+    expect(component.instance().sellItem).toHaveBeenCalledWith(
+      testItem({ id: 'sample-item-1' })
+    );
   });
 });
 

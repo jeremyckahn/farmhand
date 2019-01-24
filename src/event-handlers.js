@@ -1,4 +1,3 @@
-import { decrementItemFromInventory } from './utils';
 import { fieldMode } from './enums';
 
 const { CLEANUP, HARVEST, PLANT, WATER } = fieldMode;
@@ -15,13 +14,7 @@ export default {
    * @param {farmhand.item} item
    */
   handleItemSell(item) {
-    const { id, value = 0 } = item;
-    const { inventory, money } = this.state;
-
-    this.setState({
-      inventory: decrementItemFromInventory(id, inventory),
-      money: money + value,
-    });
+    this.sellItem(item);
   },
 
   /**

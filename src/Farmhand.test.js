@@ -408,6 +408,50 @@ describe('instance methods', () => {
     });
   });
 
+  describe('sellItem', () => {
+    describe('single instance of item in inventory', () => {
+      beforeEach(() => {
+        component.setState({
+          inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+          money: 100,
+        });
+
+        component
+          .instance()
+          .sellItem(testItem({ id: 'sample-item-1', value: 20 }));
+      });
+
+      it('removes item from inventory', () => {
+        expect(component.state().inventory).toEqual([]);
+      });
+
+      it('adds value of item to player money', () => {
+        expect(component.state().money).toEqual(120);
+      });
+    });
+
+    describe('multiple instances of item in inventory', () => {
+      beforeEach(() => {
+        component.setState({
+          inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
+        });
+
+        component
+          .instance()
+          .sellItem(testItem({ id: 'sample-item-1', value: 20 }));
+      });
+
+      it('decrements item', () => {
+        expect(component.state().inventory).toEqual([
+          testItem({
+            id: 'sample-item-1',
+            quantity: 1,
+          }),
+        ]);
+      });
+    });
+  });
+
   describe('plantInPlot', () => {
     beforeEach(() => {
       component.setState({
