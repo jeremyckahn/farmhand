@@ -8,12 +8,7 @@ import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
 import Stage from './components/Stage';
 import DebugMenu from './components/DebugMenu';
-import {
-  decrementItemFromInventory,
-  getCropFromItemId,
-  getCropLifeStage,
-  getItemValue,
-} from './utils';
+import { getCropFromItemId, getCropLifeStage, getItemValue } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
 import { cropLifeStage, stageFocusType, fieldMode } from './enums';
@@ -273,6 +268,31 @@ export default class Farmhand extends Component {
   static updateField = (field, modifierFn) =>
     field.map(row => row.map(modifierFn));
 
+  // TODO: Unit test this function.
+  /**
+   * @param {string} itemId
+   * @param {Array.<farmhand.item>} inventory
+   * @returns {Array.<farmhand.item>}
+   */
+  static decrementItemFromInventory = (itemId, inventory) => {
+    inventory = [...inventory];
+
+    const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId);
+
+    const { quantity } = inventory[itemInventoryIndex];
+
+    if (quantity > 1) {
+      inventory[itemInventoryIndex] = {
+        ...inventory[itemInventoryIndex],
+        quantity: quantity - 1,
+      };
+    } else {
+      inventory.splice(itemInventoryIndex, 1);
+    }
+
+    return inventory;
+  };
+
   initKeyHandlers() {
     this.keyMap = {
       focusField: 'f',
@@ -426,7 +446,7 @@ export default class Farmhand extends Component {
     const { inventory, money } = this.state;
 
     this.setState({
-      inventory: decrementItemFromInventory(id, inventory),
+      inventory: Farmhand.decrementItemFromInventory(id, inventory),
       money: money + value,
     });
   }
@@ -454,7 +474,7 @@ export default class Farmhand extends Component {
         getCropFromItemId(finalCropItemId)
       );
 
-      const updatedInventory = decrementItemFromInventory(
+      const updatedInventory = Farmhand.decrementItemFromInventory(
         plantableItemId,
         inventory
       );
