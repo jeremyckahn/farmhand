@@ -244,6 +244,41 @@ describe('static functions', () => {
       expect(plantableInventory).toEqual([sampleCropSeedsItem1]);
     });
   });
+
+  describe('decrementItemFromInventory', () => {
+    let updatedInventory;
+
+    describe('single instance of item in inventory', () => {
+      beforeEach(() => {
+        updatedInventory = Farmhand.decrementItemFromInventory(
+          'sample-item-1',
+          [testItem({ id: 'sample-item-1', quantity: 1 })]
+        );
+      });
+
+      it('removes item from inventory', () => {
+        expect(updatedInventory).toEqual([]);
+      });
+    });
+
+    describe('multiple instances of item in inventory', () => {
+      beforeEach(() => {
+        updatedInventory = Farmhand.decrementItemFromInventory(
+          'sample-item-1',
+          [testItem({ id: 'sample-item-1', quantity: 2 })]
+        );
+      });
+
+      it('decrements item', () => {
+        expect(updatedInventory).toEqual([
+          testItem({
+            id: 'sample-item-1',
+            quantity: 1,
+          }),
+        ]);
+      });
+    });
+  });
 });
 
 describe('instance methods', () => {
@@ -409,46 +444,28 @@ describe('instance methods', () => {
   });
 
   describe('sellItem', () => {
-    describe('single instance of item in inventory', () => {
-      beforeEach(() => {
-        component.setState({
-          inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
-          money: 100,
-        });
+    beforeEach(() => {
+      jest.spyOn(Farmhand, 'decrementItemFromInventory');
 
-        component
-          .instance()
-          .sellItem(testItem({ id: 'sample-item-1', value: 20 }));
+      component.setState({
+        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+        money: 100,
       });
 
-      it('removes item from inventory', () => {
-        expect(component.state().inventory).toEqual([]);
-      });
-
-      it('adds value of item to player money', () => {
-        expect(component.state().money).toEqual(120);
-      });
+      component
+        .instance()
+        .sellItem(testItem({ id: 'sample-item-1', value: 20 }));
     });
 
-    describe('multiple instances of item in inventory', () => {
-      beforeEach(() => {
-        component.setState({
-          inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
-        });
+    it('decrements item from inventory', () => {
+      expect(Farmhand.decrementItemFromInventory).toHaveBeenCalledWith(
+        'sample-item-1',
+        [testItem({ id: 'sample-item-1', quantity: 1 })]
+      );
+    });
 
-        component
-          .instance()
-          .sellItem(testItem({ id: 'sample-item-1', value: 20 }));
-      });
-
-      it('decrements item', () => {
-        expect(component.state().inventory).toEqual([
-          testItem({
-            id: 'sample-item-1',
-            quantity: 1,
-          }),
-        ]);
-      });
+    it('adds value of item to player money', () => {
+      expect(component.state().money).toEqual(120);
     });
   });
 
