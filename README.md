@@ -30,7 +30,7 @@
   - [x] Harvesting
   - [x] Removal
 - [ ] Tools/items
-  - [ ] Fertilizer
+  - [x] Fertilizer
   - [ ] Irrigators
   - [ ] Scarecrows
   - [ ] Bigger field
