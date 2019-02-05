@@ -31,8 +31,7 @@ export default {
   handlePlantableItemSelect({ id }) {
     this.setState({
       fieldMode: fieldMode.PLANT,
-      selectedFieldToolId: '',
-      selectedPlantableItemId: id,
+      selectedItemId: id,
     });
   },
 
@@ -40,15 +39,11 @@ export default {
    * @param {farmhand.module:enums.fieldMode} fieldMode
    */
   handleFieldModeSelect(fieldMode) {
-    const selectedPlantableItemId =
-      fieldMode === PLANT ? this.state.selectedPlantableItemId : '';
-
-    const { selectedFieldToolId } = this.state;
+    const selectedItemId = fieldMode === PLANT ? this.state.selectedItemId : '';
     const isToolbeltFieldMode = toolbeltFieldModes.includes(fieldMode);
 
     this.setState({
-      selectedFieldToolId: isToolbeltFieldMode ? '' : selectedFieldToolId,
-      selectedPlantableItemId,
+      selectedItemId: isToolbeltFieldMode ? '' : selectedItemId,
       fieldMode,
     });
   },
@@ -56,8 +51,7 @@ export default {
   handleFieldToolSelect({ id, enablesFieldMode }) {
     this.setState({
       fieldMode: enablesFieldMode,
-      selectedFieldToolId: id,
-      selectedPlantableItemId: '',
+      selectedItemId: id,
     });
   },
 
@@ -66,10 +60,10 @@ export default {
    * @param {number} y
    */
   handlePlotClick(x, y) {
-    const { selectedPlantableItemId, fieldMode } = this.state;
+    const { selectedItemId, fieldMode } = this.state;
 
     if (fieldMode === PLANT) {
-      this.plantInPlot(x, y, selectedPlantableItemId);
+      this.plantInPlot(x, y, selectedItemId);
     } else if (fieldMode === HARVEST) {
       this.clearPlot(x, y);
     } else if (fieldMode === CLEANUP) {

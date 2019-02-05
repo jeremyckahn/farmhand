@@ -17,7 +17,7 @@ const getPlantableItems = (props = {}) => (
       },
       state: {
         plantableInventory: [],
-        selectedPlantableItemId: '',
+        selectedItemId: '',
         ...props.state,
       },
     }}
@@ -34,7 +34,7 @@ describe('rendering', () => {
       getPlantableItems({
         state: {
           plantableInventory: [{ quantity: 1, id: 'sample-crop-3' }],
-          selectedPlantableItemId: 'sample-crop-3',
+          selectedItemId: 'sample-crop-3',
         },
       })
     );

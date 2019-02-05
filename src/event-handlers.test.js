@@ -52,29 +52,25 @@ describe('handlePlantableItemSelect', () => {
   beforeEach(() => {
     component.setState({
       fieldMode: fieldMode.WATER,
-      selectedFieldToolId: 'field-tool',
+      selectedItemId: 'field-tool',
     });
 
     handlers().handlePlantableItemSelect(testItem({ id: 'sample-crop-3' }));
   });
 
-  it('updates selectedPlantableItemId state', () => {
-    expect(component.state().selectedPlantableItemId).toEqual('sample-crop-3');
+  it('updates selectedItemId state', () => {
+    expect(component.state().selectedItemId).toEqual('sample-crop-3');
   });
 
   it('resets state.fieldMode', () => {
     expect(component.state().fieldMode).toEqual(fieldMode.PLANT);
-  });
-
-  it('resets state.selectedFieldToolId', () => {
-    expect(component.state().selectedFieldToolId).toEqual('');
   });
 });
 
 describe('handleFieldModeSelect', () => {
   beforeEach(() => {
     component.setState({
-      selectedPlantableItemId: 'sample-crop-3',
+      selectedItemId: 'sample-crop-3',
     });
   });
 
@@ -87,10 +83,8 @@ describe('handleFieldModeSelect', () => {
       expect(component.state().fieldMode).toEqual(fieldMode.PLANT);
     });
 
-    it('does not change state.selectedPlantableItemId', () => {
-      expect(component.state().selectedPlantableItemId).toEqual(
-        'sample-crop-3'
-      );
+    it('does not change state.selectedItemId', () => {
+      expect(component.state().selectedItemId).toEqual('sample-crop-3');
     });
   });
 
@@ -103,34 +97,8 @@ describe('handleFieldModeSelect', () => {
       expect(component.state().fieldMode).toEqual(fieldMode.WATER);
     });
 
-    it('resets state.selectedPlantableItemId', () => {
-      expect(component.state().selectedPlantableItemId).toEqual('');
-    });
-  });
-
-  describe('updating selectedFieldToolId', () => {
-    beforeEach(() => {
-      component.setState({ selectedFieldToolId: 'some-field-tool' });
-    });
-
-    describe('is toolbelt fieldMode', () => {
-      it('resets selectedFieldToolId', () => {
-        component.setState({ selectedFieldToolId: 'some-field-tool-id' });
-        handlers().handleFieldModeSelect(fieldMode.WATER);
-
-        expect(component.state().selectedFieldToolId).toEqual('');
-      });
-    });
-
-    describe('is not toolbelt fieldMode', () => {
-      it('does not change selectedFieldToolId', () => {
-        component.setState({ selectedFieldToolId: 'some-field-tool-id' });
-        handlers().handleFieldModeSelect(fieldMode.OBSERVE);
-
-        expect(component.state().selectedFieldToolId).toEqual(
-          'some-field-tool-id'
-        );
-      });
+    it('resets state.selectedItemId', () => {
+      expect(component.state().selectedItemId).toEqual('');
     });
   });
 });
@@ -138,7 +106,7 @@ describe('handleFieldModeSelect', () => {
 describe('handleFieldToolSelect', () => {
   beforeEach(() => {
     component.setState({
-      selectedPlantableItemId: 'sample-crop-1',
+      selectedItemId: 'sample-crop-1',
     });
 
     handlers().handleFieldToolSelect(
@@ -146,12 +114,8 @@ describe('handleFieldToolSelect', () => {
     );
   });
 
-  test('sets selectedFieldToolId', () => {
-    expect(component.state().selectedFieldToolId).toEqual('field-tool');
-  });
-
-  test('resets state.selectedPlantableItemId', () => {
-    expect(component.state().selectedPlantableItemId).toEqual('');
+  test('resets state.selectedItemId', () => {
+    expect(component.state().selectedItemId).toEqual('field-tool');
   });
 
   test('sets state.fieldMode', () => {
@@ -162,7 +126,7 @@ describe('handleFieldToolSelect', () => {
 describe('handlePlotClick', () => {
   beforeEach(() => {
     component.setState({
-      selectedPlantableItemId: 'sample-crop-3',
+      selectedItemId: 'sample-crop-3',
     });
   });
 
@@ -170,7 +134,7 @@ describe('handlePlotClick', () => {
     beforeEach(() => {
       component.setState({
         fieldMode: fieldMode.PLANT,
-        selectedPlantableItemId: 'sample-crop-3',
+        selectedItemId: 'sample-crop-3',
       });
     });
 

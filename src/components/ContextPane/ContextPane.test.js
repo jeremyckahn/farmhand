@@ -16,8 +16,7 @@ const getContextPane = (props = {}) => (
         ...props.handlers,
       },
       state: {
-        selectedFieldToolId: '',
-        selectedPlantableItemId: '',
+        selectedItemId: '',
         fieldMode: '',
         fieldToolInventory: [],
         stageFocus: stageFocusType.NONE,

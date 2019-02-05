@@ -6,7 +6,7 @@ import './FieldTools.sass';
 const FieldTools = ({
   handlers: { handleFieldToolSelect },
   state,
-  state: { fieldToolInventory, selectedFieldToolId },
+  state: { fieldToolInventory, selectedItemId },
 }) => (
   <div className="FieldTools">
     <ul>
@@ -15,7 +15,7 @@ const FieldTools = ({
           <Item
             {...{
               item,
-              isSelected: selectedFieldToolId === item.id,
+              isSelected: selectedItemId === item.id,
               state,
             }}
           />
@@ -31,7 +31,7 @@ FieldTools.propTypes = {
   }).isRequired,
   state: shape({
     fieldToolInventory: array.isRequired,
-    selectedFieldToolId: string.isRequired,
+    selectedItemId: string.isRequired,
   }).isRequired,
 };
 

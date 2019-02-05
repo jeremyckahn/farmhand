@@ -14,7 +14,7 @@ const Field = ({
   columns,
   rows,
   state,
-  state: { field, selectedPlantableItemId, fieldMode },
+  state: { field, selectedItemId, fieldMode },
 }) => (
   <div
     className={classNames('Field', {
@@ -56,7 +56,7 @@ Field.propTypes = {
   rows: number.isRequired,
   state: shape({
     field: array.isRequired,
-    selectedPlantableItemId: string.isRequired,
+    selectedItemId: string.isRequired,
     fieldMode: string.isRequired,
   }).isRequired,
 };

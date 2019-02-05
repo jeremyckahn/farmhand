@@ -35,8 +35,7 @@ const { GROWN } = cropLifeStage;
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {number} money
  * @property {Array.<farmhand.notification>} newDayNotifications
- * @property {string} selectedPlantableItemId
- * @property {string} selectedFieldToolId
+ * @property {string} selectedItemId
  * @property {farmhand.module:enums.fieldMode} fieldMode
  * @property {Array.<farmhand.item>} shopInventory
  * @property {farmhand.module:enums.stageFocusType} stageFocus
@@ -74,11 +73,7 @@ export default class Farmhand extends Component {
     inventory: [],
     money: 500,
     newDayNotifications: [],
-
-    // TODO: Combine these into one state property
-    selectedPlantableItemId: '',
-    selectedFieldToolId: '',
-
+    selectedItemId: '',
     fieldMode: fieldMode.OBSERVE,
     shopInventory: [...shopInventory],
     stageFocus: stageFocusType.FIELD,
@@ -513,7 +508,7 @@ export default class Farmhand extends Component {
       this.setState({
         field: newField,
         inventory: updatedInventory,
-        selectedPlantableItemId: plantableItemId,
+        selectedItemId: plantableItemId,
       });
     }
   }
@@ -548,7 +543,7 @@ export default class Farmhand extends Component {
       })),
       fieldMode: doFertilizersRemain ? fieldMode.FERTILIZE : fieldMode.OBSERVE,
       inventory: updatedInventory,
-      selectedFieldToolId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
+      selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
     });
   }
 

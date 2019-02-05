@@ -6,7 +6,7 @@ import './PlantableItems.sass';
 export const PlantableItems = ({
   handlers: { handlePlantableItemSelect },
   state,
-  state: { plantableInventory, selectedPlantableItemId },
+  state: { plantableInventory, selectedItemId },
 }) => (
   <div className="PlantableItems">
     <ul>
@@ -15,7 +15,7 @@ export const PlantableItems = ({
           <Item
             {...{
               item,
-              isSelected: item.id === selectedPlantableItemId,
+              isSelected: item.id === selectedItemId,
               state,
             }}
           />
@@ -31,7 +31,7 @@ PlantableItems.propTypes = {
   }).isRequired,
   state: shape({
     plantableInventory: array.isRequired,
-    selectedPlantableItemId: string.isRequired,
+    selectedItemId: string.isRequired,
   }).isRequired,
 };
 

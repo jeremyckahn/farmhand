@@ -14,7 +14,7 @@ const getFieldTools = (props = {}) => (
       },
       state: {
         fieldToolInventory: [],
-        selectedFieldToolId: '',
+        selectedItemId: '',
         ...props.state,
       },
     }}
@@ -26,7 +26,7 @@ beforeEach(() => {
     getFieldTools({
       state: {
         fieldToolInventory: [{ quantity: 1, id: 'sample-field-tool-1' }],
-        selectedFieldToolId: 'sample-field-tool-1',
+        selectedItemId: 'sample-field-tool-1',
       },
     })
   );

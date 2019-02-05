@@ -19,7 +19,7 @@ const getStage = (props = {}) => (
         fieldHeight: 4,
         fieldWidth: 2,
         playerInventory: [],
-        selectedPlantableItemId: '',
+        selectedItemId: '',
         fieldMode: '',
         shopInventory: [],
         stageFocus: stageFocusType.FIELD,

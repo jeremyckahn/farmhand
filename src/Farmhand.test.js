@@ -509,7 +509,7 @@ describe('instance methods', () => {
   describe('plantInPlot', () => {
     beforeEach(() => {
       component.setState({
-        selectedPlantableItemId: 'sample-crop-seeds-1',
+        selectedItemId: 'sample-crop-seeds-1',
       });
     });
 
@@ -559,8 +559,8 @@ describe('instance methods', () => {
         component.instance().plantInPlot(0, 0, 'sample-crop-seeds-1');
       });
 
-      it('resets selectedPlantableItemId state', () => {
-        expect(component.state().selectedPlantableItemId).toEqual('');
+      it('resets selectedItemId state', () => {
+        expect(component.state().selectedItemId).toEqual('');
       });
     });
   });
@@ -641,8 +641,8 @@ describe('instance methods', () => {
             expect(component.state().fieldMode).toBe(fieldMode.FERTILIZE);
           });
 
-          it('does not change selectedFieldToolId', () => {
-            expect(component.state().selectedFieldToolId).toBe('fertilizer');
+          it('does not change selectedItemId', () => {
+            expect(component.state().selectedItemId).toBe('fertilizer');
           });
         });
 
@@ -660,8 +660,8 @@ describe('instance methods', () => {
             expect(component.state().fieldMode).toBe(fieldMode.OBSERVE);
           });
 
-          it('reset selectedFieldToolId', () => {
-            expect(component.state().selectedFieldToolId).toBe('');
+          it('resets selectedItemId', () => {
+            expect(component.state().selectedItemId).toBe('');
           });
         });
       });
