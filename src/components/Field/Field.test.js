@@ -63,50 +63,50 @@ describe('fertilize-mode class', () => {
   });
 });
 
-describe('plantable-item-selected class', () => {
+describe('plant-mode class', () => {
   it('is not present when fieldMode != PLANT', () => {
-    expect(component.hasClass('plantable-item-selected')).toBeFalsy();
+    expect(component.hasClass('plant-mode')).toBeFalsy();
   });
 
   it('is present when fieldMode == PLANT', () => {
     component = shallow(getField({ state: { fieldMode: fieldMode.PLANT } }));
 
-    expect(component.hasClass('plantable-item-selected')).toBeTruthy();
+    expect(component.hasClass('plant-mode')).toBeTruthy();
   });
 });
 
-describe('hoe-selected class', () => {
+describe('harvest-mode class', () => {
   it('is not present when fieldMode != HARVEST', () => {
-    expect(component.hasClass('hoe-selected')).toBeFalsy();
+    expect(component.hasClass('harvest-mode')).toBeFalsy();
   });
 
   it('is present when fieldMode == HARVEST', () => {
     component = shallow(getField({ state: { fieldMode: fieldMode.HARVEST } }));
 
-    expect(component.hasClass('hoe-selected')).toBeTruthy();
+    expect(component.hasClass('harvest-mode')).toBeTruthy();
   });
 });
 
-describe('scythe-selected class', () => {
+describe('cleanup-mode class', () => {
   it('is not present when fieldMode != CLEANUP', () => {
-    expect(component.hasClass('scythe-selected')).toBeFalsy();
+    expect(component.hasClass('cleanup-mode')).toBeFalsy();
   });
 
   it('is present when fieldMode == CLEANUP', () => {
     component = shallow(getField({ state: { fieldMode: fieldMode.CLEANUP } }));
 
-    expect(component.hasClass('scythe-selected')).toBeTruthy();
+    expect(component.hasClass('cleanup-mode')).toBeTruthy();
   });
 });
 
-describe('watering-can-selected class', () => {
+describe('water-mode class', () => {
   it('is not present when fieldMode != WATER', () => {
-    expect(component.hasClass('watering-can-selected')).toBeFalsy();
+    expect(component.hasClass('water-mode')).toBeFalsy();
   });
 
   it('is present when fieldMode == WATER', () => {
     component = shallow(getField({ state: { fieldMode: fieldMode.WATER } }));
 
-    expect(component.hasClass('watering-can-selected')).toBeTruthy();
+    expect(component.hasClass('water-mode')).toBeTruthy();
   });
 });

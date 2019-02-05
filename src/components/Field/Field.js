@@ -18,13 +18,11 @@ const Field = ({
 }) => (
   <div
     className={classNames('Field', {
+      'cleanup-mode': fieldMode === CLEANUP,
       'fertilize-mode': fieldMode === FERTILIZE,
-      // TODO: Rename these classes to reference modes; e.g. harvest-mode,
-      // field-mode, etc.
-      'hoe-selected': fieldMode === HARVEST,
-      'plantable-item-selected': fieldMode === PLANT,
-      'scythe-selected': fieldMode === CLEANUP,
-      'watering-can-selected': fieldMode === WATER,
+      'harvest-mode': fieldMode === HARVEST,
+      'plant-mode': fieldMode === PLANT,
+      'water-mode': fieldMode === WATER,
     })}
   >
     {Array(rows)
