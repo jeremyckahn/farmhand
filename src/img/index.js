@@ -1,23 +1,22 @@
 export const pixel = require('./pixel.png');
 
 export const plotStates = {
-  'watered-plot': require('./misc/watered-plot.png'),
-  'fertilized-plot': require('./misc/fertilized-plot.png'),
+  'watered-plot': require('./plot-states/watered-plot.png'),
+  'fertilized-plot': require('./plot-states/fertilized-plot.png'),
 };
 
-// TODO: Reorganize image files to correspond to these maps
 export const items = {
   // Crops
-  carrot: require('./crops/carrot.png'),
-  'carrot-growing': require('./crops/carrot-growing.png'),
-  'carrot-seed': require('./crops/carrot-seed.png'),
+  carrot: require('./items/carrot.png'),
+  'carrot-growing': require('./items/carrot-growing.png'),
+  'carrot-seed': require('./items/carrot-seed.png'),
 
-  pumpkin: require('./crops/pumpkin.png'),
-  'pumpkin-growing': require('./crops/pumpkin-growing.png'),
-  'pumpkin-seed': require('./crops/pumpkin-seed.png'),
+  pumpkin: require('./items/pumpkin.png'),
+  'pumpkin-growing': require('./items/pumpkin-growing.png'),
+  'pumpkin-seed': require('./items/pumpkin-seed.png'),
 
   // Field tools
-  fertilizer: require('./misc/fertilizer.png'),
+  fertilizer: require('./items/fertilizer.png'),
 };
 
 export const tools = {
