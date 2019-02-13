@@ -1,6 +1,6 @@
 import React from 'react';
 import { func, number, object, shape, string } from 'prop-types';
-import { pixel, fertilizedPlot, wateredPlot } from '../../img';
+import { pixel, plotStates } from '../../img';
 import { cropLifeStage } from '../../enums';
 import classNames from 'classnames';
 import './Plot.sass';
@@ -13,11 +13,11 @@ export const getBackgroundStyles = crop => {
   const backgroundImages = [];
 
   if (crop.isFertilized) {
-    backgroundImages.push(`url(${fertilizedPlot})`);
+    backgroundImages.push(`url(${plotStates['fertilized-plot']})`);
   }
 
   if (crop.wasWateredToday) {
-    backgroundImages.push(`url(${wateredPlot})`);
+    backgroundImages.push(`url(${plotStates['watered-plot']})`);
   }
 
   return backgroundImages.join(', ');

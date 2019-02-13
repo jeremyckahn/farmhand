@@ -2,7 +2,7 @@ import React from 'react';
 import Plot, { getBackgroundStyles } from './Plot';
 import { shallow } from 'enzyme';
 import { testCrop } from '../../test-utils';
-import { pixel, fertilizedPlot, wateredPlot } from '../../img';
+import { pixel, plotStates } from '../../img';
 import { cropLifeStage } from '../../enums';
 
 jest.mock('../../img');
@@ -76,7 +76,7 @@ describe('background image', () => {
     );
 
     expect(component.find('.Plot').props().style.backgroundImage).toBe(
-      `url(${wateredPlot})`
+      `url(${plotStates['watered-plot']})`
     );
   });
 });
@@ -88,13 +88,13 @@ describe('getBackgroundStyles', () => {
 
   test('constructs style for isFertilized', () => {
     expect(getBackgroundStyles(testCrop({ isFertilized: true }))).toBe(
-      `url(${fertilizedPlot})`
+      `url(${plotStates['fertilized-plot']})`
     );
   });
 
   test('constructs style for wasWateredToday', () => {
     expect(getBackgroundStyles(testCrop({ wasWateredToday: true }))).toBe(
-      `url(${wateredPlot})`
+      `url(${plotStates['watered-plot']})`
     );
   });
 
@@ -103,6 +103,10 @@ describe('getBackgroundStyles', () => {
       getBackgroundStyles(
         testCrop({ isFertilized: true, wasWateredToday: true })
       )
-    ).toBe(`url(${fertilizedPlot}), url(${wateredPlot})`);
+    ).toBe(
+      `url(${plotStates['fertilized-plot']}), url(${
+        plotStates['watered-plot']
+      })`
+    );
   });
 });

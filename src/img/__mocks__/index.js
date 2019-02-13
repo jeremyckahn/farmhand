@@ -10,5 +10,8 @@ export const items = {
 };
 
 export const pixel = 'data:image/png;base64,pixel';
-export const wateredPlot = 'data:image/png;base64,wateredPlot';
-export const fertilizedPlot = 'data:image/png;base64,fertilizedPlot';
+
+export const plotStates = {
+  'watered-plot': 'data:image/png;base64,wateredPlot',
+  'fertilized-plot': 'data:image/png;base64,fertilizedPlot',
+};

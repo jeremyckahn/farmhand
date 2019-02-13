@@ -1,9 +1,11 @@
 export const pixel = require('./pixel.png');
 
-// TODO Group these into an object
-export const wateredPlot = require('./misc/watered-plot.png');
-export const fertilizedPlot = require('./misc/fertilized-plot.png');
+export const plotStates = {
+  'watered-plot': require('./misc/watered-plot.png'),
+  'fertilized-plot': require('./misc/fertilized-plot.png'),
+};
 
+// TODO: Reorganize image files to correspond to these maps
 export const items = {
   // Crops
   carrot: require('./crops/carrot.png'),
