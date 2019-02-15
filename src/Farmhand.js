@@ -42,6 +42,8 @@ const { GROWN } = cropLifeStage;
  * @property {Object.<number>} valueAdjustments
  */
 
+// TODO: Move the static methods in this class to a separate file
+
 export default class Farmhand extends Component {
   // Bind event handlers
   handlers = {
@@ -308,6 +310,19 @@ export default class Farmhand extends Component {
     return inventory;
   };
 
+  get fieldToolInventory() {
+    return Farmhand.getFieldToolInventory(this.state.inventory);
+  }
+
+  get playerInventory() {
+    const { inventory, valueAdjustments } = this.state;
+    return Farmhand.computePlayerInventory(inventory, valueAdjustments);
+  }
+
+  get plantableInventory() {
+    return Farmhand.getPlantableInventory(this.state.inventory);
+  }
+
   initKeyHandlers() {
     this.keyMap = {
       focusField: 'f',
@@ -425,20 +440,6 @@ export default class Farmhand extends Component {
           });
         });
     });
-  }
-
-  // TODO: Convert this and the methods below into proper getters
-  getFieldToolInventory() {
-    return Farmhand.getFieldToolInventory(this.state.inventory);
-  }
-
-  getPlayerInventory() {
-    const { inventory, valueAdjustments } = this.state;
-    return Farmhand.computePlayerInventory(inventory, valueAdjustments);
-  }
-
-  getPlantableInventory() {
-    return Farmhand.getPlantableInventory(this.state.inventory);
   }
 
   /**
@@ -617,12 +618,23 @@ export default class Farmhand extends Component {
   }
 
   render() {
-    const { handlers, keyHandlers, keyMap, notificationSystemRef } = this;
+    const {
+      fieldToolInventory,
+      handlers,
+      keyHandlers,
+      keyMap,
+      notificationSystemRef,
+      plantableInventory,
+      playerInventory,
+    } = this;
+
+    // Bundle up the raw state and the computed state into one object to be
+    // passed down through the component tree.
     const state = {
       ...this.state,
-      fieldToolInventory: this.getFieldToolInventory(),
-      plantableInventory: this.getPlantableInventory(),
-      playerInventory: this.getPlayerInventory(),
+      fieldToolInventory,
+      plantableInventory,
+      playerInventory,
     };
 
     return (
