@@ -3,8 +3,14 @@ import Dinero from 'dinero.js';
 import memoize from 'fast-memoize';
 import { items as itemImages } from './img';
 import { cropLifeStage } from './enums';
+import { INITIAL_FIELD_WIDTH, INITIAL_FIELD_HEIGHT } from './constants';
 
 const { SEED, GROWING, GROWN } = cropLifeStage;
+
+export const createNewField = () =>
+  new Array(INITIAL_FIELD_HEIGHT)
+    .fill(undefined)
+    .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null));
 
 /**
  * @param {farmhand.item} item

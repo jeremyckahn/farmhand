@@ -1,25 +1,34 @@
 import React, { Component, createRef } from 'react';
 import NotificationSystem from 'react-notification-system';
-import memoize from 'fast-memoize';
 import { HotKeys } from 'react-hotkeys';
 import localforage from 'localforage';
 import eventHandlers from './event-handlers';
+import {
+  addItemToInventory,
+  computePlayerInventory,
+  computeStateForNextDay,
+  decrementItemFromInventory,
+  getFieldToolInventory,
+  getFinalCropItemIdFromSeedItemId,
+  getPlantableInventory,
+  getWateredField,
+  modifyFieldPlotAt,
+  removeFieldPlotAt,
+} from './data-transformers';
 import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
 import Stage from './components/Stage';
 import DebugMenu from './components/DebugMenu';
-import { getCropFromItemId, getCropLifeStage, getItemValue } from './utils';
+import { createNewField, getCropFromItemId, getCropLifeStage } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
 import { cropLifeStage, stageFocusType, fieldMode } from './enums';
 import {
-  FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
-  RAIN_CHANCE,
 } from './constants';
-import { PROGRESS_SAVED_MESSAGE, RAIN_MESSAGE } from './strings';
+import { PROGRESS_SAVED_MESSAGE } from './strings';
 
 import './Farmhand.sass';
 
@@ -41,8 +50,6 @@ const { GROWN } = cropLifeStage;
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Object.<number>} valueAdjustments
  */
-
-// TODO: Move the static methods in this class to a separate file
 
 export default class Farmhand extends Component {
   // Bind event handlers
@@ -69,7 +76,7 @@ export default class Farmhand extends Component {
    */
   state = {
     dayCount: 0,
-    field: this.createNewField(),
+    field: createNewField(),
     fieldHeight: INITIAL_FIELD_HEIGHT,
     fieldWidth: INITIAL_FIELD_WIDTH,
     inventory: [],
@@ -88,239 +95,17 @@ export default class Farmhand extends Component {
     this.initKeyHandlers();
   }
 
-  /**
-   * @param {farmhand.state} state
-   * @return {farmhand.state}
-   */
-  static applyRain = state => ({
-    ...state,
-    field: Farmhand.getWateredField(state.field),
-    newDayNotifications: [
-      ...state.newDayNotifications,
-      {
-        message: RAIN_MESSAGE,
-      },
-    ],
-  });
-
-  /**
-   * @param {farmhand.state} state
-   * @return {farmhand.state}
-   */
-  static applyBuffs = state =>
-    [[RAIN_CHANCE, Farmhand.applyRain]].reduce(
-      (acc, [chance, fn]) => (Math.random() <= chance ? fn(acc) : acc),
-      state
-    );
-
-  /**
-   * @param {farmhand.state} state
-   * @return {Object} A pared-down version of the provided {farmhand.state} with
-   * the changed properties.
-   */
-  static computeStateForNextDay = state =>
-    [Farmhand.applyBuffs].reduce((acc, fn) => fn({ ...acc }), {
-      ...state,
-      dayCount: state.dayCount + 1,
-      field: Farmhand.getUpdatedField(state.field),
-      valueAdjustments: Farmhand.getUpdatedValueAdjustments(),
-    });
-
-  /**
-   * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
-   * @param {Object.<number>} valueAdjustments
-   * @returns {Array.<farmhand.item>}
-   */
-  static computePlayerInventory = memoize((inventory, valueAdjustments) =>
-    inventory.map(({ quantity, id }) => ({
-      quantity,
-      ...itemsMap[id],
-      value: getItemValue(itemsMap[id], valueAdjustments),
-    }))
-  );
-
-  static getUpdatedValueAdjustments = () =>
-    Object.keys(itemsMap).reduce(
-      (acc, key) => ({
-        [key]: Math.random() + 0.5,
-        ...acc,
-      }),
-      {}
-    );
-
-  /**
-   * @param {string} seedItemId
-   * @returns {string}
-   */
-  static getFinalCropItemIdFromSeedItemId = seedItemId =>
-    itemsMap[seedItemId].growsInto;
-
-  /**
-   * @param {Array.<{ item: farmhand.item }>} inventory
-   * @returns {Array.<{ item: farmhand.item }>}
-   */
-  static getFieldToolInventory = memoize(inventory =>
-    inventory
-      .filter(({ id }) => typeof itemsMap[id].enablesFieldMode === 'string')
-      .map(({ id }) => itemsMap[id])
-  );
-
-  /**
-   * @param {Array.<{ item: farmhand.item }>} inventory
-   * @returns {Array.<{ item: farmhand.item }>}
-   */
-  static getPlantableInventory = memoize(inventory =>
-    inventory
-      .filter(({ id }) => itemsMap[id].isPlantable)
-      .map(({ id }) => itemsMap[id])
-  );
-
-  /**
-   * @param {?farmhand.crop} crop
-   * @returns {?farmhand.crop}
-   */
-  static incrementAge = crop =>
-    crop === null
-      ? null
-      : {
-          ...crop,
-          daysOld: crop.daysOld + 1,
-          daysWatered:
-            crop.daysWatered +
-            (crop.wasWateredToday
-              ? 1 + (crop.isFertilized ? FERTILIZER_BONUS : 0)
-              : 0),
-        };
-
-  /**
-   * @param {?farmhand.crop} crop
-   * @returns {?farmhand.crop}
-   */
-  static setWasWatered = crop =>
-    crop === null ? null : { ...crop, wasWateredToday: true };
-
-  /**
-   * @param {?farmhand.crop} crop
-   * @returns {?farmhand.crop}
-   */
-  static resetWasWatered = crop =>
-    crop === null ? null : { ...crop, wasWateredToday: false };
-
-  /**
-   * @param {farmhand.item} item
-   * @returns {Array.<{ item: farmhand.item, quantity: number }>}
-   */
-  static addItemToInventory = (item, inventory) => {
-    const { id } = item;
-    const newInventory = [...inventory];
-
-    const currentItemSlot = inventory.findIndex(
-      ({ id: itemId }) => id === itemId
-    );
-
-    if (~currentItemSlot) {
-      const currentItem = inventory[currentItemSlot];
-
-      newInventory[currentItemSlot] = {
-        ...currentItem,
-        quantity: currentItem.quantity + 1,
-      };
-    } else {
-      newInventory.push({ id, quantity: 1 });
-    }
-
-    return newInventory;
-  };
-
-  static fieldUpdaters = [Farmhand.incrementAge, Farmhand.resetWasWatered];
-
-  static fieldReducer = (acc, fn) => fn(acc);
-  /**
-   * @param {Array.<Array.<?farmhand.crop>>} field
-   * @return {Array.<Array.<?farmhand.crop>>}
-   */
-  static getUpdatedField = field =>
-    Farmhand.updateField(field, crop =>
-      Farmhand.fieldUpdaters.reduce(Farmhand.fieldReducer, crop)
-    );
-
-  /**
-   * @param {Array.<Array.<?farmhand.crop>>} field
-   * @return {Array.<Array.<?farmhand.crop>>}
-   */
-  static getWateredField = field =>
-    Farmhand.updateField(field, Farmhand.setWasWatered);
-
-  /**
-   * @param {Array.<Array.<?farmhand.crop>>} field
-   * @param {number} x
-   * @param {number} y
-   * @param {Function(?farmhand.crop)} modifierFn
-   * @return {Array.<Array.<?farmhand.crop>>}
-   */
-  static modifyFieldPlotAt = (field, x, y, modifierFn) => {
-    const row = [...field[y]];
-    const crop = modifierFn(row[x]);
-    row[x] = crop;
-    const modifiedField = [...field];
-    modifiedField[y] = row;
-
-    return modifiedField;
-  };
-
-  /**
-   * @param {Array.<Array.<?farmhand.crop>>} field
-   * @param {number} x
-   * @param {number} y
-   * @return {Array.<Array.<?farmhand.crop>>}
-   */
-  static removeFieldPlotAt = (field, x, y) =>
-    Farmhand.modifyFieldPlotAt(field, x, y, () => null);
-
-  /**
-   * Invokes a function on every plot in a field.
-   * @param {Array.<Array.<?farmhand.crop>>} field
-   * @param {Function(?farmhand.crop)} modifierFn
-   * @return {Array.<Array.<?farmhand.crop>>}
-   */
-  static updateField = (field, modifierFn) =>
-    field.map(row => row.map(modifierFn));
-
-  /**
-   * @param {string} itemId
-   * @param {Array.<farmhand.item>} inventory
-   * @returns {Array.<farmhand.item>}
-   */
-  static decrementItemFromInventory = (itemId, inventory) => {
-    inventory = [...inventory];
-
-    const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId);
-
-    const { quantity } = inventory[itemInventoryIndex];
-
-    if (quantity > 1) {
-      inventory[itemInventoryIndex] = {
-        ...inventory[itemInventoryIndex],
-        quantity: quantity - 1,
-      };
-    } else {
-      inventory.splice(itemInventoryIndex, 1);
-    }
-
-    return inventory;
-  };
-
   get fieldToolInventory() {
-    return Farmhand.getFieldToolInventory(this.state.inventory);
+    return getFieldToolInventory(this.state.inventory);
   }
 
   get playerInventory() {
     const { inventory, valueAdjustments } = this.state;
-    return Farmhand.computePlayerInventory(inventory, valueAdjustments);
+    return computePlayerInventory(inventory, valueAdjustments);
   }
 
   get plantableInventory() {
-    return Farmhand.getPlantableInventory(this.state.inventory);
+    return getPlantableInventory(this.state.inventory);
   }
 
   initKeyHandlers() {
@@ -389,12 +174,6 @@ export default class Farmhand extends Component {
     );
   }
 
-  createNewField() {
-    return new Array(INITIAL_FIELD_HEIGHT)
-      .fill(undefined)
-      .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null));
-  }
-
   /**
    * @param {farmhand.notification} options
    */
@@ -413,7 +192,7 @@ export default class Farmhand extends Component {
   }
 
   incrementDay() {
-    const nextDayState = Farmhand.computeStateForNextDay(this.state);
+    const nextDayState = computeStateForNextDay(this.state);
     const pendingNotifications = [...nextDayState.newDayNotifications];
 
     this.setState({ ...nextDayState, newDayNotifications: [] }, () => {
@@ -454,7 +233,7 @@ export default class Farmhand extends Component {
     }
 
     this.setState({
-      inventory: Farmhand.addItemToInventory(item, inventory),
+      inventory: addItemToInventory(item, inventory),
       money: money - value,
     });
   }
@@ -467,7 +246,7 @@ export default class Farmhand extends Component {
     const { inventory, money } = this.state;
 
     this.setState({
-      inventory: Farmhand.decrementItemFromInventory(id, inventory),
+      inventory: decrementItemFromInventory(id, inventory),
       money: money + value,
     });
   }
@@ -482,20 +261,18 @@ export default class Farmhand extends Component {
 
     if (plantableItemId) {
       const row = field[y];
-      const finalCropItemId = Farmhand.getFinalCropItemIdFromSeedItemId(
-        plantableItemId
-      );
+      const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId);
 
       if (row[x]) {
         // Something is already planted in field[x][y]
         return;
       }
 
-      const newField = Farmhand.modifyFieldPlotAt(field, x, y, () =>
+      const newField = modifyFieldPlotAt(field, x, y, () =>
         getCropFromItemId(finalCropItemId)
       );
 
-      const updatedInventory = Farmhand.decrementItemFromInventory(
+      const updatedInventory = decrementItemFromInventory(
         plantableItemId,
         inventory
       );
@@ -528,7 +305,7 @@ export default class Farmhand extends Component {
       return;
     }
 
-    const updatedInventory = Farmhand.decrementItemFromInventory(
+    const updatedInventory = decrementItemFromInventory(
       FERTILIZER_ITEM_ID,
       inventory
     );
@@ -538,7 +315,7 @@ export default class Farmhand extends Component {
     );
 
     this.setState({
-      field: Farmhand.modifyFieldPlotAt(field, x, y, crop => ({
+      field: modifyFieldPlotAt(field, x, y, crop => ({
         ...crop,
         isFertilized: true,
       })),
@@ -564,11 +341,8 @@ export default class Farmhand extends Component {
 
     if (getCropLifeStage(crop) === GROWN) {
       this.setState({
-        field: Farmhand.removeFieldPlotAt(field, x, y),
-        inventory: Farmhand.addItemToInventory(
-          itemsMap[crop.itemId],
-          inventory
-        ),
+        field: removeFieldPlotAt(field, x, y),
+        inventory: addItemToInventory(itemsMap[crop.itemId], inventory),
       });
     }
   }
@@ -588,7 +362,7 @@ export default class Farmhand extends Component {
     }
 
     this.setState({
-      field: Farmhand.removeFieldPlotAt(field, x, y),
+      field: removeFieldPlotAt(field, x, y),
     });
   }
 
@@ -606,7 +380,7 @@ export default class Farmhand extends Component {
     }
 
     this.setState({
-      field: Farmhand.modifyFieldPlotAt(field, x, y, crop => ({
+      field: modifyFieldPlotAt(field, x, y, crop => ({
         ...crop,
         wasWateredToday: true,
       })),
@@ -614,7 +388,7 @@ export default class Farmhand extends Component {
   }
 
   waterAllPlots() {
-    this.setState({ field: Farmhand.getWateredField(this.state.field) });
+    this.setState({ field: getWateredField(this.state.field) });
   }
 
   render() {
