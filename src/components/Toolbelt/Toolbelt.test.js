@@ -22,12 +22,12 @@ beforeEach(() => {
   component = shallow(getToolbelt());
 });
 
-it('renders shop inventory', () => {
+test('renders shop inventory', () => {
   expect(component).toHaveLength(1);
 });
 
 describe('tool selection', () => {
-  it('selects no tools by default', () => {
+  test('selects no tools by default', () => {
     expect(component.find('.selected')).toHaveLength(0);
   });
 
@@ -38,7 +38,7 @@ describe('tool selection', () => {
       );
     });
 
-    it('renders selected tool appropriately', () => {
+    test('renders selected tool appropriately', () => {
       expect(component.find('.selected').find('.watering-can')).toHaveLength(1);
     });
   });

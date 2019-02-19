@@ -33,7 +33,7 @@ beforeEach(() => {
 });
 
 describe('state', () => {
-  it('inits field', () => {
+  test('inits field', () => {
     expect(component.state().field).toHaveLength(INITIAL_FIELD_HEIGHT);
     expect(component.state().field[0]).toHaveLength(INITIAL_FIELD_WIDTH);
   });
@@ -50,7 +50,7 @@ describe('instance methods', () => {
         component.instance().componentDidMount();
       });
 
-      it('increments the day by one', () => {
+      test('increments the day by one', () => {
         expect(component.instance().incrementDay).toHaveBeenCalled();
       });
     });
@@ -74,18 +74,18 @@ describe('instance methods', () => {
         component.instance().componentDidMount();
       });
 
-      it('rehydrates from persisted state', () => {
+      test('rehydrates from persisted state', () => {
         expect(component.instance().incrementDay).not.toHaveBeenCalled();
         expect(component.state().foo).toBe('bar');
       });
 
-      it('shows notifications for pending newDayNotifications', () => {
+      test('shows notifications for pending newDayNotifications', () => {
         expect(component.instance().showNotification).toHaveBeenCalledWith({
           message: 'baz',
         });
       });
 
-      it('empties newDayNotifications', () => {
+      test('empties newDayNotifications', () => {
         expect(component.state().newDayNotifications).toHaveLength(0);
       });
     });
@@ -100,11 +100,11 @@ describe('instance methods', () => {
       component.instance().incrementDay();
     });
 
-    it('empties out newDayNotifications', () => {
+    test('empties out newDayNotifications', () => {
       expect(component.state().newDayNotifications).toHaveLength(0);
     });
 
-    it('persists app state with pending newDayNotifications', () => {
+    test('persists app state with pending newDayNotifications', () => {
       expect(component.instance().localforage.setItem).toHaveBeenCalledWith(
         'state',
         {
@@ -114,7 +114,7 @@ describe('instance methods', () => {
       );
     });
 
-    it('makes pending notification', () => {
+    test('makes pending notification', () => {
       const { showNotification } = component.instance();
       expect(showNotification).toHaveBeenCalledTimes(2);
       expect(showNotification).toHaveBeenNthCalledWith(1, {
@@ -137,7 +137,7 @@ describe('instance methods', () => {
             .purchaseItem(testItem({ id: 'sample-item-1', value: 10 }));
         });
 
-        it('deducts item value from money', () => {
+        test('deducts item value from money', () => {
           expect(component.state('money')).toEqual(90);
         });
       });
@@ -151,11 +151,11 @@ describe('instance methods', () => {
           .purchaseItem(testItem({ id: 'expensive-item', value: 10 }));
       });
 
-      it('does not add the item to the inventory', () => {
+      test('does not add the item to the inventory', () => {
         expect(component.state('inventory')).toEqual([]);
       });
 
-      it('does not deduct item value from money', () => {
+      test('does not deduct item value from money', () => {
         expect(component.state('money')).toEqual(5);
       });
     });
@@ -173,11 +173,11 @@ describe('instance methods', () => {
         .sellItem(testItem({ id: 'sample-item-1', value: 20 }));
     });
 
-    it('decrements item from inventory', () => {
+    test('decrements item from inventory', () => {
       expect(component.state().inventory).toEqual([]);
     });
 
-    it('adds value of item to player money', () => {
+    test('adds value of item to player money', () => {
       expect(component.state().money).toEqual(120);
     });
   });
@@ -199,13 +199,13 @@ describe('instance methods', () => {
           component.instance().plantInPlot(0, 0, 'sample-crop-seeds-1');
         });
 
-        it('plants the crop', () => {
+        test('plants the crop', () => {
           expect(component.state().field[0][0]).toEqual(
             getCropFromItemId('sample-crop-1')
           );
         });
 
-        it('decrements crop quantity', () => {
+        test('decrements crop quantity', () => {
           expect(component.state().inventory[0].quantity).toEqual(1);
         });
       });
@@ -220,7 +220,7 @@ describe('instance methods', () => {
           component.instance().plantInPlot(0, 0, 'sample-crop-seeds-1');
         });
 
-        it('does not decrement crop quantity', () => {
+        test('does not decrement crop quantity', () => {
           expect(component.state().inventory[0].quantity).toEqual(2);
         });
       });
@@ -235,7 +235,7 @@ describe('instance methods', () => {
         component.instance().plantInPlot(0, 0, 'sample-crop-seeds-1');
       });
 
-      it('resets selectedItemId state', () => {
+      test('resets selectedItemId state', () => {
         expect(component.state().selectedItemId).toEqual('');
       });
     });
@@ -250,7 +250,7 @@ describe('instance methods', () => {
       component.instance().clearPlot(0, 0);
     });
 
-    it('removes the crop from the plot', () => {
+    test('removes the crop from the plot', () => {
       expect(component.state().field[0][0]).toBe(null);
     });
   });
@@ -267,13 +267,13 @@ describe('instance methods', () => {
           component.instance().fertilizePlot(0, 0);
         });
 
-        it('fertilizes crop', () => {
+        test('fertilizes crop', () => {
           expect(component.state().field[0][0]).toEqual(
             testCrop({ itemId: 'sample-crop-1', isFertilized: true })
           );
         });
 
-        it('decrements fertilizer from inventory', () => {
+        test('decrements fertilizer from inventory', () => {
           expect(component.state().inventory).toEqual([]);
         });
       });
@@ -289,11 +289,11 @@ describe('instance methods', () => {
             component.instance().fertilizePlot(0, 0);
           });
 
-          it('does not change fieldMode', () => {
+          test('does not change fieldMode', () => {
             expect(component.state().fieldMode).toBe(fieldMode.FERTILIZE);
           });
 
-          it('does not change selectedItemId', () => {
+          test('does not change selectedItemId', () => {
             expect(component.state().selectedItemId).toBe('fertilizer');
           });
         });
@@ -308,11 +308,11 @@ describe('instance methods', () => {
             component.instance().fertilizePlot(0, 0);
           });
 
-          it('change fieldMode to OBSERVE', () => {
+          test('change fieldMode to OBSERVE', () => {
             expect(component.state().fieldMode).toBe(fieldMode.OBSERVE);
           });
 
-          it('resets selectedItemId', () => {
+          test('resets selectedItemId', () => {
             expect(component.state().selectedItemId).toBe('');
           });
         });
@@ -330,7 +330,7 @@ describe('instance methods', () => {
         component.instance().harvestPlot(0, 0);
       });
 
-      it('does nothing', () => {
+      test('does nothing', () => {
         expect(component.state().field[0][0]).toEqual(
           testCrop({ itemId: 'sample-crop-1' })
         );
@@ -346,11 +346,11 @@ describe('instance methods', () => {
         component.instance().harvestPlot(0, 0);
       });
 
-      it('removes the crop from the plot', () => {
+      test('removes the crop from the plot', () => {
         expect(component.state().field[0][0]).toBe(null);
       });
 
-      it('adds crop to the inventory', () => {
+      test('adds crop to the inventory', () => {
         expect(component.state().inventory).toEqual([
           { id: 'sample-crop-1', quantity: 1 },
         ]);
@@ -367,7 +367,7 @@ describe('instance methods', () => {
       component.instance().waterPlot(0, 0);
     });
 
-    it('sets wasWateredToday to true', () => {
+    test('sets wasWateredToday to true', () => {
       expect(component.state().field[0][0].wasWateredToday).toBe(true);
     });
   });
@@ -387,7 +387,7 @@ describe('instance methods', () => {
       component.instance().waterAllPlots();
     });
 
-    it('sets wasWateredToday to true for all plots', () => {
+    test('sets wasWateredToday to true for all plots', () => {
       expect(component.state().field[0][0].wasWateredToday).toBe(true);
       expect(component.state().field[0][1].wasWateredToday).toBe(true);
       expect(component.state().field[1][0].wasWateredToday).toBe(true);

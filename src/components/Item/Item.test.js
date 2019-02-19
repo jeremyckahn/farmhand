@@ -23,7 +23,7 @@ describe('static UI', () => {
     );
   });
 
-  it('renders the name', () => {
+  test('renders the name', () => {
     expect(component.find('header h2').text()).toEqual('an-item');
   });
 });
@@ -34,7 +34,7 @@ describe('conditional UI', () => {
       component = shallow(getItem({ options: { isSelected: true } }));
     });
 
-    it('supports is-selected', () => {
+    test('supports is-selected', () => {
       expect(component.hasClass('is-selected')).toBeTruthy();
     });
   });
@@ -53,7 +53,7 @@ describe('conditional UI', () => {
         );
       });
 
-      it('enables purchase button', () => {
+      test('enables purchase button', () => {
         expect(component.find('button.purchase').props().disabled).toEqual(
           false
         );
@@ -73,7 +73,7 @@ describe('conditional UI', () => {
         );
       });
 
-      it('disables purchase button', () => {
+      test('disables purchase button', () => {
         expect(component.find('button.purchase').props().disabled).toEqual(
           true
         );
@@ -93,7 +93,7 @@ describe('conditional UI', () => {
       );
     });
 
-    it('renders sell button when given an event handler', () => {
+    test('renders sell button when given an event handler', () => {
       expect(component.find('button.sell')).toHaveLength(1);
     });
   });

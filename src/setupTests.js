@@ -3,8 +3,6 @@ import { configure } from 'enzyme';
 
 configure({ adapter: new Adapter() });
 
-// TODO: Convert "it" to "test"
-
 afterEach(() => {
   jest.restoreAllMocks();
 });

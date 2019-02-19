@@ -22,6 +22,6 @@ beforeEach(() => {
   component = shallow(getNavigation());
 });
 
-it('renders', () => {
+test('renders', () => {
   expect(component.hasClass('Navigation')).toBeTruthy();
 });

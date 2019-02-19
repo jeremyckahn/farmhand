@@ -33,11 +33,11 @@ beforeEach(() => {
 });
 
 describe('rendering', () => {
-  it('renders items for provided inventory', () => {
+  test('renders items for provided inventory', () => {
     expect(component.find(Item)).toHaveLength(1);
   });
 
-  it('renders selected item state', () => {
+  test('renders selected item state', () => {
     expect(component.find(Item).props().isSelected).toBeTruthy();
   });
 });

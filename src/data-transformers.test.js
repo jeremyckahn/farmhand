@@ -27,7 +27,7 @@ describe('computeStateForNextDay', () => {
     jest.spyOn(Math, 'random').mockReturnValue(0.75);
   });
 
-  it('computes state for next day', () => {
+  test('computes state for next day', () => {
     const {
       dayCount,
       field: [firstRow],
@@ -54,7 +54,7 @@ describe('computeStateForNextDay', () => {
 });
 
 describe('applyRain', () => {
-  it('waters all plots', () => {
+  test('waters all plots', () => {
     const state = fn.applyRain({
       field: [
         [
@@ -78,7 +78,7 @@ describe('applyRain', () => {
 describe('applyBuffs', () => {
   describe('rain', () => {
     describe('is not rainy day', () => {
-      it('does not water plants', () => {
+      test('does not water plants', () => {
         const state = fn.applyBuffs({
           field: [[testCrop()]],
           newDayNotifications: [],
@@ -89,7 +89,7 @@ describe('applyBuffs', () => {
     });
 
     describe('is rainy day', () => {
-      it('does water plants', () => {
+      test('does water plants', () => {
         jest.resetModules();
         jest.mock('./constants', () => ({
           RAIN_CHANCE: 1,
@@ -118,11 +118,11 @@ describe('computePlayerInventory', () => {
     playerInventory = fn.computePlayerInventory(inventory, valueAdjustments);
   });
 
-  it('maps inventory state to renderable inventory data', () => {
+  test('maps inventory state to renderable inventory data', () => {
     expect(playerInventory).toEqual([{ quantity: 1, ...sampleItem1 }]);
   });
 
-  it('returns cached result with unchanged input', () => {
+  test('returns cached result with unchanged input', () => {
     const newPlayerInventory = fn.computePlayerInventory(
       inventory,
       valueAdjustments
@@ -130,7 +130,7 @@ describe('computePlayerInventory', () => {
     expect(playerInventory).toEqual(newPlayerInventory);
   });
 
-  it('invalidates cache with changed input', () => {
+  test('invalidates cache with changed input', () => {
     playerInventory = fn.computePlayerInventory(
       [{ quantity: 1, id: 'sample-item-2' }],
       valueAdjustments
@@ -147,7 +147,7 @@ describe('computePlayerInventory', () => {
       playerInventory = fn.computePlayerInventory(inventory, valueAdjustments);
     });
 
-    it('maps inventory state to renderable inventory data', () => {
+    test('maps inventory state to renderable inventory data', () => {
       expect(playerInventory).toEqual([
         { ...sampleItem1, quantity: 1, value: 2 },
       ]);
@@ -163,14 +163,14 @@ describe('getUpdatedValueAdjustments', () => {
     valueAdjustments = fn.getUpdatedValueAdjustments();
   });
 
-  it('updates valueAdjustments by random factor', () => {
+  test('updates valueAdjustments by random factor', () => {
     expect(valueAdjustments['sample-crop-1']).toEqual(1.5);
     expect(valueAdjustments['sample-crop-2']).toEqual(1.5);
   });
 });
 
 describe('resetWasWatered', () => {
-  it('updates wasWateredToday property', () => {
+  test('updates wasWateredToday property', () => {
     expect(fn.resetWasWatered(testCrop({ itemId: 'sample-crop-1' }))).toEqual(
       testCrop({ itemId: 'sample-crop-1' })
     );
@@ -186,13 +186,13 @@ describe('resetWasWatered', () => {
 });
 
 describe('addItemToInventory', () => {
-  it('creates a new item in the inventory', () => {
+  test('creates a new item in the inventory', () => {
     expect(
       fn.addItemToInventory(testItem({ id: 'sample-item-1' }), [])
     ).toEqual([{ id: 'sample-item-1', quantity: 1 }]);
   });
 
-  it('increments an existing item in the inventory', () => {
+  test('increments an existing item in the inventory', () => {
     expect(
       fn.addItemToInventory(testItem({ id: 'sample-item-1' }), [
         testItem({ id: 'sample-item-1', quantity: 1 }),
@@ -215,13 +215,13 @@ describe('getFieldToolInventory', () => {
     fieldToolInventory = fn.getFieldToolInventory(inventory);
   });
 
-  it('filters out non-field tool items', () => {
+  test('filters out non-field tool items', () => {
     expect(fieldToolInventory).toEqual([sampleFieldTool1]);
   });
 });
 
 describe('getFinalCropItemIdFromSeedItemId', () => {
-  it('gets "final" crop item id from seed item id', () => {
+  test('gets "final" crop item id from seed item id', () => {
     expect(fn.getFinalCropItemIdFromSeedItemId('sample-crop-seeds-1')).toEqual(
       'sample-crop-1'
     );
@@ -237,14 +237,14 @@ describe('getPlantableInventory', () => {
     plantableInventory = fn.getPlantableInventory(inventory);
   });
 
-  it('filters out non-plantable items', () => {
+  test('filters out non-plantable items', () => {
     expect(plantableInventory).toEqual([sampleCropSeedsItem1]);
   });
 });
 
 describe('incrementAge', () => {
   describe('plant is not watered', () => {
-    it('updates daysOld', () => {
+    test('updates daysOld', () => {
       const { daysOld, daysWatered } = fn.incrementAge(
         testCrop({ itemId: 'sample-crop-1' })
       );
@@ -255,7 +255,7 @@ describe('incrementAge', () => {
   });
 
   describe('plant is watered', () => {
-    it('updates daysOld and daysWatered', () => {
+    test('updates daysOld and daysWatered', () => {
       const { daysOld, daysWatered } = fn.incrementAge(
         testCrop({ itemId: 'sample-crop-1', wasWateredToday: true })
       );
@@ -266,7 +266,7 @@ describe('incrementAge', () => {
   });
 
   describe('plant is fertilized', () => {
-    it('updates daysOld with bonus', () => {
+    test('updates daysOld with bonus', () => {
       const { daysWatered } = fn.incrementAge(
         testCrop({
           itemId: 'sample-crop-1',
@@ -290,7 +290,7 @@ describe('decrementItemFromInventory', () => {
       ]);
     });
 
-    it('removes item from inventory', () => {
+    test('removes item from inventory', () => {
       expect(updatedInventory).toEqual([]);
     });
   });
@@ -302,7 +302,7 @@ describe('decrementItemFromInventory', () => {
       ]);
     });
 
-    it('decrements item', () => {
+    test('decrements item', () => {
       expect(updatedInventory).toEqual([
         testItem({
           id: 'sample-item-1',

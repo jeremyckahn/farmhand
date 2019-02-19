@@ -40,7 +40,7 @@ describe('conditional UI', () => {
         );
       });
 
-      it('renders relevant UI', () => {
+      test('renders relevant UI', () => {
         expect(component.find(PlantableItems)).toHaveLength(1);
       });
     });

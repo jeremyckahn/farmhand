@@ -30,7 +30,7 @@ describe('rendering items', () => {
     );
   });
 
-  it('shows the inventory', () => {
+  test('shows the inventory', () => {
     const li = component.find('li');
     expect(li).toHaveLength(1);
     expect(li.find(Item)).toHaveLength(1);

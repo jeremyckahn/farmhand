@@ -38,7 +38,7 @@ describe('focus', () => {
       );
     });
 
-    it('shows the field', () => {
+    test('shows the field', () => {
       expect(component.find(Field)).toHaveLength(1);
     });
   });
@@ -50,7 +50,7 @@ describe('focus', () => {
       );
     });
 
-    it('shows the inventory', () => {
+    test('shows the inventory', () => {
       expect(component.find(Inventory)).toHaveLength(1);
     });
   });
@@ -62,7 +62,7 @@ describe('focus', () => {
       );
     });
 
-    it('shows the shop', () => {
+    test('shows the shop', () => {
       expect(component.find(Shop)).toHaveLength(1);
     });
   });

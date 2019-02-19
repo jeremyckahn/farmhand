@@ -23,6 +23,6 @@ beforeEach(() => {
   component = shallow(getShop());
 });
 
-it('renders shop inventory', () => {
+test('renders shop inventory', () => {
   expect(component.find(Inventory)).toHaveLength(1);
 });

@@ -15,7 +15,7 @@ beforeEach(() => {
 });
 
 describe('handleItemPurchase', () => {
-  it('calls purchaseItem', () => {
+  test('calls purchaseItem', () => {
     jest
       .spyOn(component.instance(), 'purchaseItem')
       .mockImplementation(() => {});
@@ -28,7 +28,7 @@ describe('handleItemPurchase', () => {
 });
 
 describe('handleItemSell', () => {
-  it('calls sellItem', () => {
+  test('calls sellItem', () => {
     jest.spyOn(component.instance(), 'sellItem').mockImplementation(() => {});
     handlers().handleItemSell(testItem({ id: 'sample-item-1' }));
 
@@ -43,7 +43,7 @@ describe('handleViewChange', () => {
     handlers().handleViewChange({ target: { value: stageFocusType.SHOP } });
   });
 
-  it('changes the view type', () => {
+  test('changes the view type', () => {
     expect(component.state('stageFocus')).toEqual(stageFocusType.SHOP);
   });
 });
@@ -58,11 +58,11 @@ describe('handlePlantableItemSelect', () => {
     handlers().handlePlantableItemSelect(testItem({ id: 'sample-crop-3' }));
   });
 
-  it('updates selectedItemId state', () => {
+  test('updates selectedItemId state', () => {
     expect(component.state().selectedItemId).toEqual('sample-crop-3');
   });
 
-  it('resets state.fieldMode', () => {
+  test('resets state.fieldMode', () => {
     expect(component.state().fieldMode).toEqual(fieldMode.PLANT);
   });
 });
@@ -79,11 +79,11 @@ describe('handleFieldModeSelect', () => {
       handlers().handleFieldModeSelect(fieldMode.PLANT);
     });
 
-    it('updates fieldMode state', () => {
+    test('updates fieldMode state', () => {
       expect(component.state().fieldMode).toEqual(fieldMode.PLANT);
     });
 
-    it('does not change state.selectedItemId', () => {
+    test('does not change state.selectedItemId', () => {
       expect(component.state().selectedItemId).toEqual('sample-crop-3');
     });
   });
@@ -93,11 +93,11 @@ describe('handleFieldModeSelect', () => {
       handlers().handleFieldModeSelect(fieldMode.WATER);
     });
 
-    it('updates fieldMode state', () => {
+    test('updates fieldMode state', () => {
       expect(component.state().fieldMode).toEqual(fieldMode.WATER);
     });
 
-    it('resets state.selectedItemId', () => {
+    test('resets state.selectedItemId', () => {
       expect(component.state().selectedItemId).toEqual('');
     });
   });
@@ -138,7 +138,7 @@ describe('handlePlotClick', () => {
       });
     });
 
-    it('calls plantInPlot', () => {
+    test('calls plantInPlot', () => {
       jest.spyOn(component.instance(), 'plantInPlot').mockImplementation();
       handlers().handlePlotClick(0, 0);
 
@@ -157,7 +157,7 @@ describe('handlePlotClick', () => {
       });
     });
 
-    it('calls clearPlot', () => {
+    test('calls clearPlot', () => {
       jest.spyOn(component.instance(), 'clearPlot');
       handlers().handlePlotClick(0, 0);
 
@@ -172,7 +172,7 @@ describe('handlePlotClick', () => {
       });
     });
 
-    it('calls waterPlot', () => {
+    test('calls waterPlot', () => {
       jest.spyOn(component.instance(), 'harvestPlot');
       handlers().handlePlotClick(0, 0);
 
@@ -187,7 +187,7 @@ describe('handlePlotClick', () => {
       });
     });
 
-    it('calls waterPlot', () => {
+    test('calls waterPlot', () => {
       jest.spyOn(component.instance(), 'waterPlot');
       handlers().handlePlotClick(0, 0);
 
@@ -202,7 +202,7 @@ describe('handlePlotClick', () => {
       });
     });
 
-    it('calls fertilizePlot', () => {
+    test('calls fertilizePlot', () => {
       jest.spyOn(component.instance(), 'fertilizePlot');
       handlers().handlePlotClick(0, 0);
 
@@ -212,7 +212,7 @@ describe('handlePlotClick', () => {
 });
 
 describe('handleEndDayButtonClick', () => {
-  it('increments the day', () => {
+  test('increments the day', () => {
     jest.spyOn(component.instance(), 'incrementDay');
     handlers().handleEndDayButtonClick();
     expect(component.instance().incrementDay).toHaveBeenCalled();

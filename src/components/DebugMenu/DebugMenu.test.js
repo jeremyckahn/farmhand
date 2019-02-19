@@ -25,6 +25,6 @@ beforeEach(() => {
   component = shallow(getDebugMenu());
 });
 
-it('renders Debug', () => {
+test('renders Debug', () => {
   expect(component).toHaveLength(1);
 });

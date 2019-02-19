@@ -26,25 +26,25 @@ beforeEach(() => {
   component = shallow(getPlot());
 });
 
-it('defaults to rending a pixel', () => {
+test('defaults to rending a pixel', () => {
   expect(component.find('img').props().src).toBe(pixel);
 });
 
-it('does not render crop class', () => {
+test('does not render crop class', () => {
   expect(component.hasClass('crop')).toBeFalsy();
 });
 
-it('renders "is-fertilized" class', () => {
+test('renders "is-fertilized" class', () => {
   component = shallow(getPlot({ options: { crop: { isFertilized: true } } }));
   expect(component.hasClass('is-fertilized')).toBeTruthy();
 });
 
-it('renders "ripe" class', () => {
+test('renders "ripe" class', () => {
   component = shallow(getPlot({ options: { lifeStage: cropLifeStage.GROWN } }));
   expect(component.hasClass('ripe')).toBeTruthy();
 });
 
-it('renders provided image data', () => {
+test('renders provided image data', () => {
   const image = 'data:image/png;base64,some-other-image';
 
   component = shallow(
@@ -62,11 +62,11 @@ it('renders provided image data', () => {
 });
 
 describe('background image', () => {
-  it('renders pixel', () => {
+  test('renders pixel', () => {
     expect(component.find('.Plot').props().style.backgroundImage).toBe(null);
   });
 
-  it('renders wateredPlot image', () => {
+  test('renders wateredPlot image', () => {
     component = shallow(
       getPlot({
         options: {
