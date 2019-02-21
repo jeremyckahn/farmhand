@@ -9,7 +9,7 @@ const getFieldTools = (props = {}) => (
   <FieldTools
     {...{
       handlers: {
-        handleFieldToolSelect: () => {},
+        handleItemSelect: () => {},
         ...props.handlers,
       },
       state: {

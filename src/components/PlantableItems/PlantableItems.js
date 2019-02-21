@@ -4,14 +4,14 @@ import Item from '../Item';
 import './PlantableItems.sass';
 
 export const PlantableItems = ({
-  handlers: { handlePlantableItemSelect },
+  handlers: { handleItemSelect },
   state,
   state: { plantableInventory, selectedItemId },
 }) => (
   <div className="PlantableItems">
     <ul>
       {plantableInventory.map(item => (
-        <li key={item.id} onClick={() => handlePlantableItemSelect(item)}>
+        <li key={item.id} onClick={() => handleItemSelect(item)}>
           <Item
             {...{
               item,
@@ -27,7 +27,7 @@ export const PlantableItems = ({
 
 PlantableItems.propTypes = {
   handlers: shape({
-    handlePlantableItemSelect: func.isRequired,
+    handleItemSelect: func.isRequired,
   }).isRequired,
   state: shape({
     plantableInventory: array.isRequired,

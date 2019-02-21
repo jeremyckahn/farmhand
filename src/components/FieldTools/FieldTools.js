@@ -4,14 +4,14 @@ import Item from '../Item';
 import './FieldTools.sass';
 
 const FieldTools = ({
-  handlers: { handleFieldToolSelect },
+  handlers: { handleItemSelect },
   state,
   state: { fieldToolInventory, selectedItemId },
 }) => (
   <div className="FieldTools">
     <ul>
       {fieldToolInventory.map(item => (
-        <li key={item.id} onClick={() => handleFieldToolSelect(item)}>
+        <li key={item.id} onClick={() => handleItemSelect(item)}>
           <Item
             {...{
               item,
@@ -27,7 +27,7 @@ const FieldTools = ({
 
 FieldTools.propTypes = {
   handlers: shape({
-    handleFieldToolSelect: func.isRequired,
+    handleItemSelect: func.isRequired,
   }).isRequired,
   state: shape({
     fieldToolInventory: array.isRequired,

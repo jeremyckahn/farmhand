@@ -48,25 +48,6 @@ describe('handleViewChange', () => {
   });
 });
 
-describe('handlePlantableItemSelect', () => {
-  beforeEach(() => {
-    component.setState({
-      fieldMode: fieldMode.WATER,
-      selectedItemId: 'field-tool',
-    });
-
-    handlers().handlePlantableItemSelect(testItem({ id: 'sample-crop-3' }));
-  });
-
-  test('updates selectedItemId state', () => {
-    expect(component.state().selectedItemId).toEqual('sample-crop-3');
-  });
-
-  test('resets state.fieldMode', () => {
-    expect(component.state().fieldMode).toEqual(fieldMode.PLANT);
-  });
-});
-
 describe('handleFieldModeSelect', () => {
   beforeEach(() => {
     component.setState({
@@ -103,13 +84,13 @@ describe('handleFieldModeSelect', () => {
   });
 });
 
-describe('handleFieldToolSelect', () => {
+describe('handleItemSelect', () => {
   beforeEach(() => {
     component.setState({
       selectedItemId: 'sample-crop-1',
     });
 
-    handlers().handleFieldToolSelect(
+    handlers().handleItemSelect(
       testItem({ enablesFieldMode: 'FOO', id: 'field-tool' })
     );
   });

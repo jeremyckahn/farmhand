@@ -208,11 +208,12 @@ describe('addItemToInventory', () => {
 
 describe('getFieldToolInventory', () => {
   let fieldToolInventory;
-  let inventory;
 
   beforeEach(() => {
-    inventory = [{ id: 'sample-field-tool-1' }, { id: 'sample-item-1' }];
-    fieldToolInventory = fn.getFieldToolInventory(inventory);
+    fieldToolInventory = fn.getFieldToolInventory([
+      sampleFieldTool1,
+      sampleCropSeedsItem1,
+    ]);
   });
 
   test('filters out non-field tool items', () => {

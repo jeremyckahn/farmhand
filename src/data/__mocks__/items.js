@@ -26,6 +26,7 @@ export const sampleItem3 = testItem({
 
 // Crop items
 export const sampleCropSeedsItem1 = testItem({
+  enablesFieldMode: 'PLANT',
   id: 'sample-crop-seeds-1',
   isPlantable: true,
   cropType: 'SAMPLE-CROP-TYPE-1',
@@ -44,6 +45,7 @@ export const sampleCropItem1 = testItem({
 });
 
 export const sampleCropSeedsItem2 = testItem({
+  enablesFieldMode: 'PLANT',
   id: 'sample-crop-seeds-2',
   isPlantable: true,
   cropType: 'SAMPLE-CROP-TYPE-2',
@@ -62,6 +64,7 @@ export const sampleCropItem2 = testItem({
 });
 
 export const sampleCropSeedsItem3 = testItem({
+  enablesFieldMode: 'PLANT',
   id: 'sample-crop-seeds-3',
   isPlantable: true,
   cropType: 'SAMPLE-CROP-TYPE-3',

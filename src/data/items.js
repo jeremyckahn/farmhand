@@ -20,6 +20,7 @@ const { SEED, GROWING } = cropLifeStage;
  */
 export const carrotSeed = freeze({
   cropType: CARROT,
+  enablesFieldMode: fieldMode.PLANT,
   growsInto: 'carrot',
   id: 'carrot-seed',
   isPlantable: true,
@@ -48,6 +49,7 @@ export const carrot = freeze({
  */
 export const pumpkinSeed = freeze({
   cropType: PUMPKIN,
+  enablesFieldMode: fieldMode.PLANT,
   growsInto: 'pumpkin',
   id: 'pumpkin-seed',
   isPlantable: true,
@@ -76,14 +78,13 @@ export const pumpkin = freeze({
 //
 ////////////////////////////////////////
 
-// TODO: Explore making crops above have an enablesFieldMode property
 /**
  * @property farmhand.module:items.fertilizer
  * @type {farmhand.item}
  */
 export const fertilizer = freeze({
+  enablesFieldMode: fieldMode.FERTILIZE,
   id: 'fertilizer',
   name: 'Fertilizer',
   value: 60,
-  enablesFieldMode: fieldMode.FERTILIZE,
 });

@@ -3,6 +3,7 @@ import { itemsMap } from './data/maps';
 import { getItemValue } from './utils';
 import { FERTILIZER_BONUS, RAIN_CHANCE } from './constants';
 import { RAIN_MESSAGE } from './strings';
+import { fieldMode } from './enums';
 
 /**
  * @param {farmhand.state} state
@@ -54,7 +55,14 @@ export const getFinalCropItemIdFromSeedItemId = seedItemId =>
  */
 export const getFieldToolInventory = memoize(inventory =>
   inventory
-    .filter(({ id }) => typeof itemsMap[id].enablesFieldMode === 'string')
+    .filter(({ id }) => {
+      const { enablesFieldMode } = itemsMap[id];
+
+      return (
+        typeof enablesFieldMode === 'string' &&
+        enablesFieldMode !== fieldMode.PLANT
+      );
+    })
     .map(({ id }) => itemsMap[id])
 );
 

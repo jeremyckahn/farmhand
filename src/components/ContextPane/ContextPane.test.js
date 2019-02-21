@@ -11,8 +11,7 @@ const getContextPane = (props = {}) => (
     {...{
       handlers: {
         handleFieldModeSelect: () => {},
-        handleFieldToolSelect: () => {},
-        handlePlantableItemSelect: () => {},
+        handleItemSelect: () => {},
         ...props.handlers,
       },
       state: {

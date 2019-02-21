@@ -12,7 +12,7 @@ const getPlantableItems = (props = {}) => (
   <PlantableItems
     {...{
       handlers: {
-        handlePlantableItemSelect: () => {},
+        handleItemSelect: () => {},
         ...props.handlers,
       },
       state: {

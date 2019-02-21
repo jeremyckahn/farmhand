@@ -26,16 +26,6 @@ export default {
   },
 
   /**
-   * @param {farmhand.item} item
-   */
-  handlePlantableItemSelect({ id }) {
-    this.setState({
-      fieldMode: fieldMode.PLANT,
-      selectedItemId: id,
-    });
-  },
-
-  /**
    * @param {farmhand.module:enums.fieldMode} fieldMode
    */
   handleFieldModeSelect(fieldMode) {
@@ -48,7 +38,7 @@ export default {
     });
   },
 
-  handleFieldToolSelect({ id, enablesFieldMode }) {
+  handleItemSelect({ id, enablesFieldMode }) {
     this.setState({
       fieldMode: enablesFieldMode,
       selectedItemId: id,
