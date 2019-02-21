@@ -27,6 +27,5 @@ export const itemsMap = {
 };
 
 export const cropIdToTypeMap = {
-  'SAMPLE-ITEM-TYPE-1': 'sample-type-1',
-  'SAMPLE-CROP-TYPE-1': 'sample-crop-type-1',
+  SAMPLE_CROP_TYPE_1: 'sample-crop-type-1',
 };
