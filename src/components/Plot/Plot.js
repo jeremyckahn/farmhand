@@ -1,52 +1,88 @@
 import React from 'react';
-import { func, number, object, shape, string } from 'prop-types';
+import {
+  array,
+  arrayOf,
+  func,
+  number,
+  object,
+  shape,
+  string,
+} from 'prop-types';
+import { getCropLifeStage, getPlotImage } from '../../utils';
 import { pixel, plotStates } from '../../img';
-import { cropLifeStage } from '../../enums';
+import { cropLifeStage, plotContentType } from '../../enums';
 import classNames from 'classnames';
 import './Plot.sass';
 
-export const getBackgroundStyles = crop => {
-  if (!crop) {
+export const getBackgroundStyles = plotContent => {
+  if (!plotContent) {
     return null;
   }
 
   const backgroundImages = [];
 
-  if (crop.isFertilized) {
+  if (plotContent.isFertilized) {
     backgroundImages.push(`url(${plotStates['fertilized-plot']})`);
   }
 
-  if (crop.wasWateredToday) {
+  if (plotContent.wasWateredToday) {
     backgroundImages.push(`url(${plotStates['watered-plot']})`);
   }
 
   return backgroundImages.join(', ');
 };
 
+export const isInRange = (range, testX, testY) => {
+  const rangeHeight = range.length;
+  const rangeWidth = range[0].length;
+  const [topLeft] = range[0];
+  const bottomRight = range[rangeHeight - 1][rangeWidth - 1];
+
+  return (
+    // topLeft will be falsy if the range is empty
+    !!topLeft &&
+    testX >= topLeft.x &&
+    testX <= bottomRight.x &&
+    testY >= topLeft.y &&
+    testY <= bottomRight.y
+  );
+};
+
 export const Plot = ({
-  handlers: { handlePlotClick },
-  image,
-  lifeStage,
-  crop,
+  handlers: { handlePlotClick, handlePlotMouseOver },
+  hoveredPlotRange,
+  plotContent,
   x,
   y,
   state,
+
+  image = getPlotImage(plotContent),
+  lifeStage = plotContent &&
+    plotContent.type === plotContentType.CROP &&
+    getCropLifeStage(plotContent),
 }) => (
   <div
     className={classNames('Plot', {
-      crop: !!crop,
-      'is-fertilized': crop && crop.isFertilized,
-      ripe: lifeStage === cropLifeStage.GROWN,
+      'is-empty': !plotContent,
+      'is-in-hover-range': isInRange(hoveredPlotRange, x, y),
+
+      // For crops
+      crop: plotContent && plotContent.type === plotContentType.CROP,
+      'is-fertilized': plotContent && plotContent.isFertilized,
+      'is-ripe': lifeStage === cropLifeStage.GROWN,
+
+      sprinkler: plotContent && plotContent.type === plotContentType.SPRINKLER,
     })}
     style={{
-      backgroundImage: getBackgroundStyles(crop),
+      backgroundImage: getBackgroundStyles(plotContent),
     }}
     onClick={() => handlePlotClick(x, y)}
+    onMouseOver={() => handlePlotMouseOver(x, y)}
   >
     <img
       className="square"
       style={{
-        backgroundImage: `url(${image || pixel})`,
+        backgroundImage: image ? `url(${image})` : undefined,
       }}
       src={pixel}
       alt=""
@@ -57,13 +93,14 @@ export const Plot = ({
 Plot.propTypes = {
   handlers: shape({
     handlePlotClick: func.isRequired,
+    handlePlotMouseOver: func.isRequired,
   }).isRequired,
-  image: string,
+  hoveredPlotRange: arrayOf(array),
   lifeStage: string,
-  crop: object,
+  plotContent: object,
+  state: object.isRequired,
   x: number.isRequired,
   y: number.isRequired,
-  state: object.isRequired,
 };
 
 export default Plot;

@@ -2,7 +2,7 @@ import { cropIdToTypeMap, itemsMap } from './data/maps';
 import Dinero from 'dinero.js';
 import memoize from 'fast-memoize';
 import { items as itemImages } from './img';
-import { cropLifeStage } from './enums';
+import { cropLifeStage, plotContentType } from './enums';
 import { INITIAL_FIELD_WIDTH, INITIAL_FIELD_HEIGHT } from './constants';
 
 const { SEED, GROWING, GROWN } = cropLifeStage;
@@ -32,11 +32,21 @@ export const getItemValue = ({ id }, valueAdjustments) =>
  * @returns {farmhand.crop}
  */
 export const getCropFromItemId = itemId => ({
+  ...getPlotContentFromItemId(itemId),
   daysOld: 0,
   daysWatered: 0,
   isFertilized: false,
-  itemId,
+  type: plotContentType.CROP,
   wasWateredToday: false,
+});
+
+/**
+ * @param {string} itemId
+ * @returns {farmhand.plotContent}
+ */
+export const getPlotContentFromItemId = itemId => ({
+  itemId,
+  type: itemsMap[itemId].type,
 });
 
 /**
@@ -71,16 +81,38 @@ const cropLifeStageToImageSuffixMap = {
 };
 
 /**
- * @param {farmhand.crop} crop
+ * @param {farmhand.plotContent} plotContent
  * @returns {?string}
  */
-export const getPlotImage = crop =>
-  crop
-    ? getCropLifeStage(crop) === GROWN
-      ? itemImages[getCropId(crop)]
-      : itemImages[
-          `${getCropId(crop)}-${
-            cropLifeStageToImageSuffixMap[getCropLifeStage(crop)]
-          }`
-        ]
+export const getPlotImage = plotContent =>
+  plotContent
+    ? plotContent.type === plotContentType.CROP
+      ? getCropLifeStage(plotContent) === GROWN
+        ? itemImages[getCropId(plotContent)]
+        : itemImages[
+            `${getCropId(plotContent)}-${
+              cropLifeStageToImageSuffixMap[getCropLifeStage(plotContent)]
+            }`
+          ]
+      : itemImages[plotContent.itemId]
     : null;
+
+/**
+ * @param {number} rangeSize
+ * @param {number} centerX
+ * @param {number} centerY
+ * @returns {Array.<Array.<?farmhand.plotContent>>}
+ */
+export const getRangeCoords = (rangeSize, centerX, centerY) => {
+  const squareSize = 2 * rangeSize + 1;
+  const rangeStartX = centerX - rangeSize;
+  const rangeStartY = centerY - rangeSize;
+
+  return new Array(squareSize)
+    .fill()
+    .map((_, y) =>
+      new Array(squareSize)
+        .fill()
+        .map((_, x) => ({ x: rangeStartX + x, y: rangeStartY + y }))
+    );
+};

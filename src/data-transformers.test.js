@@ -7,6 +7,7 @@ import {
   sampleCropSeedsItem1,
   sampleFieldTool1,
 } from './data/items';
+import { getPlotContentFromItemId } from './utils';
 
 import * as fn from './data-transformers';
 
@@ -20,6 +21,7 @@ jest.mock('./constants', () => ({
   INITIAL_FIELD_WIDTH: 4,
   INITIAL_FIELD_HEIGHT: 4,
   RAIN_CHANCE: 0,
+  SPRINKLER_RANGE: 1,
 }));
 
 describe('computeStateForNextDay', () => {
@@ -72,6 +74,33 @@ describe('applyRain', () => {
     expect(state.field[0][0].wasWateredToday).toBe(true);
     expect(state.field[0][1].wasWateredToday).toBe(true);
     expect(state.newDayNotifications[0].message).toBe(RAIN_MESSAGE);
+  });
+});
+
+describe('applySprinklers', () => {
+  let computedState;
+
+  beforeEach(() => {
+    const field = new Array(8).fill().map(() => new Array(8).fill(null));
+    field[0][0] = getPlotContentFromItemId('sprinkler');
+    field[1][1] = getPlotContentFromItemId('sprinkler');
+    field[6][5] = getPlotContentFromItemId('sprinkler');
+    field[1][0] = testCrop();
+    field[2][2] = testCrop();
+    field[3][3] = testCrop();
+
+    computedState = fn.applySprinklers({
+      field,
+    });
+  });
+
+  test('waters crops within range', () => {
+    expect(computedState.field[1][0].wasWateredToday).toBeTruthy();
+    expect(computedState.field[2][2].wasWateredToday).toBeTruthy();
+  });
+
+  test('does not water crops out of range', () => {
+    expect(computedState.field[3][3].wasWateredToday).toBeFalsy();
   });
 });
 

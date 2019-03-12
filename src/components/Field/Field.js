@@ -1,20 +1,19 @@
 import React from 'react';
-import { array, number, object, shape, string } from 'prop-types';
+import { array, arrayOf, number, object, shape, string } from 'prop-types';
 import Plot from '../Plot';
-import { getCropLifeStage, getPlotImage } from '../../utils';
 import { fieldMode } from '../../enums';
 import classNames from 'classnames';
 
 import './Field.sass';
 
-const { CLEANUP, FERTILIZE, HARVEST, PLANT, WATER } = fieldMode;
+const { CLEANUP, FERTILIZE, HARVEST, PLANT, SET_SPRINKLER, WATER } = fieldMode;
 
 const Field = ({
   handlers,
   columns,
   rows,
   state,
-  state: { field, selectedItemId, fieldMode },
+  state: { field, hoveredPlotRange, selectedItemId, fieldMode },
 }) => (
   <div
     className={classNames('Field', {
@@ -22,6 +21,7 @@ const Field = ({
       'fertilize-mode': fieldMode === FERTILIZE,
       'harvest-mode': fieldMode === HARVEST,
       'plant-mode': fieldMode === PLANT,
+      'set-sprinkler-mode': fieldMode === SET_SPRINKLER,
       'water-mode': fieldMode === WATER,
     })}
   >
@@ -31,14 +31,13 @@ const Field = ({
         <div className="row" key={i}>
           {Array(columns)
             .fill(null)
-            .map((_null, j, arr, crop = field[i][j]) => (
+            .map((_null, j, arr, plotContent = field[i][j]) => (
               <Plot
                 key={j}
                 {...{
                   handlers,
-                  image: getPlotImage(crop),
-                  lifeStage: crop && getCropLifeStage(crop),
-                  crop,
+                  hoveredPlotRange,
+                  plotContent,
                   state,
                   x: j,
                   y: i,
@@ -53,6 +52,7 @@ const Field = ({
 Field.propTypes = {
   columns: number.isRequired,
   handlers: object.isRequired,
+  hoveredPlotRange: arrayOf(array),
   rows: number.isRequired,
   state: shape({
     field: array.isRequired,

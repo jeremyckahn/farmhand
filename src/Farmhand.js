@@ -19,28 +19,43 @@ import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
 import Stage from './components/Stage';
 import DebugMenu from './components/DebugMenu';
-import { createNewField, getCropFromItemId, getCropLifeStage } from './utils';
+import {
+  createNewField,
+  getCropFromItemId,
+  getCropLifeStage,
+  getPlotContentFromItemId,
+  getRangeCoords,
+} from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
-import { cropLifeStage, stageFocusType, fieldMode } from './enums';
+import {
+  cropLifeStage,
+  fieldMode,
+  plotContentType,
+  stageFocusType,
+} from './enums';
 import {
   FERTILIZER_ITEM_ID,
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
+  SPRINKLER_ITEM_ID,
 } from './constants';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 
 import './Farmhand.sass';
 
 const { GROWN } = cropLifeStage;
+const { FERTILIZE, OBSERVE, SET_SPRINKLER } = fieldMode;
 
 /**
  * @typedef farmhand.state
  * @type {Object}
  * @property {number} dayCount
- * @property {Array.<Array.<?farmhand.crop>>} field
+ * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {number} fieldHeight
  * @property {number} fieldWidth
+ * @property {{ x: number, y: number }} hoveredPlot
+ * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {number} money
  * @property {Array.<farmhand.notification>} newDayNotifications
@@ -79,11 +94,13 @@ export default class Farmhand extends Component {
     field: createNewField(),
     fieldHeight: INITIAL_FIELD_HEIGHT,
     fieldWidth: INITIAL_FIELD_WIDTH,
+    hoveredPlot: { x: null, y: null },
+    hoveredPlotRangeSize: 0,
     inventory: [],
     money: 500,
     newDayNotifications: [],
     selectedItemId: '',
-    fieldMode: fieldMode.OBSERVE,
+    fieldMode: OBSERVE,
     shopInventory: [...shopInventory],
     stageFocus: stageFocusType.FIELD,
     valueAdjustments: {},
@@ -97,6 +114,28 @@ export default class Farmhand extends Component {
 
   get fieldToolInventory() {
     return getFieldToolInventory(this.state.inventory);
+  }
+
+  get hoveredPlotRange() {
+    const {
+      field,
+      fieldMode,
+      hoveredPlot: { x, y },
+      hoveredPlotRangeSize,
+    } = this.state;
+
+    // If x is null, so is y.
+    if (x === null) {
+      return [[{ x: null, y: null }]];
+    }
+
+    if (fieldMode === SET_SPRINKLER) {
+      return field[y][x]
+        ? [[{ x, y }]]
+        : getRangeCoords(hoveredPlotRangeSize, x, y);
+    }
+
+    return [[{ x, y }]];
   }
 
   get playerInventory() {
@@ -300,8 +339,11 @@ export default class Farmhand extends Component {
     const row = field[y];
     const crop = row[x];
 
-    if (!crop || crop.isFertilized) {
-      // Nothing planted in field[x][y]
+    if (
+      !crop ||
+      crop.type !== plotContentType.CROP ||
+      crop.isFertilized === true
+    ) {
       return;
     }
 
@@ -319,9 +361,44 @@ export default class Farmhand extends Component {
         ...crop,
         isFertilized: true,
       })),
-      fieldMode: doFertilizersRemain ? fieldMode.FERTILIZE : fieldMode.OBSERVE,
+      fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
       inventory: updatedInventory,
       selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
+    });
+  }
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
+  setSprinker(x, y) {
+    const { field, hoveredPlotRangeSize, inventory } = this.state;
+    const plot = field[y][x];
+
+    // Only set sprinklers in empty plots
+    if (plot !== null) {
+      return;
+    }
+
+    const updatedInventory = decrementItemFromInventory(
+      SPRINKLER_ITEM_ID,
+      inventory
+    );
+
+    const doSprinklersRemain = !!updatedInventory.find(
+      item => item.id === SPRINKLER_ITEM_ID
+    );
+
+    const newField = modifyFieldPlotAt(field, x, y, () =>
+      getPlotContentFromItemId(SPRINKLER_ITEM_ID)
+    );
+
+    this.setState({
+      field: newField,
+      hoveredPlotRangeSize: doSprinklersRemain ? hoveredPlotRangeSize : 0,
+      fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
+      inventory: updatedInventory,
+      selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
     });
   }
 
@@ -334,8 +411,7 @@ export default class Farmhand extends Component {
     const row = field[y];
     const crop = row[x];
 
-    if (!crop) {
-      // Nothing planted in field[x][y]
+    if (!crop || crop.type !== plotContentType.CROP) {
       return;
     }
 
@@ -352,17 +428,26 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   clearPlot(x, y) {
-    const { field } = this.state;
+    const { field, inventory } = this.state;
     const row = field[y];
-    const crop = row[x];
+    const plotContent = row[x];
 
-    if (!crop) {
+    if (!plotContent) {
       // Nothing planted in field[x][y]
       return;
     }
 
+    if (plotContent.type === plotContentType.SPRINKLER) {
+    }
+
+    let newInventory =
+      plotContent.type === plotContentType.SPRINKLER
+        ? addItemToInventory(itemsMap[SPRINKLER_ITEM_ID], inventory)
+        : inventory;
+
     this.setState({
       field: removeFieldPlotAt(field, x, y),
+      inventory: newInventory,
     });
   }
 
@@ -372,10 +457,9 @@ export default class Farmhand extends Component {
    */
   waterPlot(x, y) {
     const { field } = this.state;
-    const row = field[y];
+    const plotContent = field[y][x];
 
-    if (!row[x]) {
-      // Nothing planted in field[x][y]
+    if (!plotContent || plotContent.type !== plotContentType.CROP) {
       return;
     }
 
@@ -395,6 +479,7 @@ export default class Farmhand extends Component {
     const {
       fieldToolInventory,
       handlers,
+      hoveredPlotRange,
       keyHandlers,
       keyMap,
       notificationSystemRef,
@@ -407,6 +492,7 @@ export default class Farmhand extends Component {
     const state = {
       ...this.state,
       fieldToolInventory,
+      hoveredPlotRange,
       plantableInventory,
       playerInventory,
     };

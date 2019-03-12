@@ -1,6 +1,6 @@
 import { fieldMode } from './enums';
 
-const { CLEANUP, FERTILIZE, HARVEST, PLANT, WATER } = fieldMode;
+const { CLEANUP, FERTILIZE, HARVEST, PLANT, SET_SPRINKLER, WATER } = fieldMode;
 const toolbeltFieldModes = [CLEANUP, HARVEST, WATER];
 
 export default {
@@ -38,9 +38,10 @@ export default {
     });
   },
 
-  handleItemSelect({ id, enablesFieldMode }) {
+  handleItemSelect({ id, enablesFieldMode, hoveredPlotRangeSize = 0 }) {
     this.setState({
       fieldMode: enablesFieldMode,
+      hoveredPlotRangeSize,
       selectedItemId: id,
     });
   },
@@ -55,14 +56,24 @@ export default {
     if (fieldMode === PLANT) {
       this.plantInPlot(x, y, selectedItemId);
     } else if (fieldMode === HARVEST) {
-      this.clearPlot(x, y);
-    } else if (fieldMode === CLEANUP) {
       this.harvestPlot(x, y);
+    } else if (fieldMode === CLEANUP) {
+      this.clearPlot(x, y);
     } else if (fieldMode === WATER) {
       this.waterPlot(x, y);
     } else if (fieldMode === FERTILIZE) {
       this.fertilizePlot(x, y);
+    } else if (fieldMode === SET_SPRINKLER) {
+      this.setSprinker(x, y);
     }
+  },
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
+  handlePlotMouseOver(x, y) {
+    this.setState({ hoveredPlot: { x, y } });
   },
 
   handleEndDayButtonClick() {

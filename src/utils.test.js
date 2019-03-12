@@ -2,8 +2,11 @@ import {
   getCropId,
   getCropLifeStage,
   getLifeStageRange,
+  getPlotContentFromItemId,
   getPlotImage,
+  getRangeCoords,
 } from './utils';
+import { testCrop } from './test-utils';
 import { items as itemImages } from './img';
 import { cropLifeStage } from './enums';
 
@@ -40,21 +43,49 @@ describe('getCropLifeStage', () => {
 });
 
 describe('getPlotImage', () => {
-  test('returns null when no crop is provided', () => {
+  test('returns null when no plotContent is provided', () => {
     expect(getPlotImage(null)).toBe(null);
   });
 
   test('returns a plot images for a crop', () => {
     const itemId = 'sample-crop-1';
 
-    expect(getPlotImage({ itemId, daysWatered: 0 })).toBe(
+    expect(getPlotImage(testCrop({ itemId, daysWatered: 0 }))).toBe(
       itemImages['sample-crop-type-1-seed']
     );
-    expect(getPlotImage({ itemId, daysWatered: 1 })).toBe(
+    expect(getPlotImage(testCrop({ itemId, daysWatered: 1 }))).toBe(
       itemImages['sample-crop-type-1-growing']
     );
-    expect(getPlotImage({ itemId, daysWatered: 3 })).toBe(
+    expect(getPlotImage(testCrop({ itemId, daysWatered: 3 }))).toBe(
       itemImages['sample-crop-type-1']
     );
+  });
+
+  test('returns item image for non-crop content', () => {
+    expect(getPlotImage(getPlotContentFromItemId('sprinkler'))).toBe(
+      itemImages['sprinkler']
+    );
+  });
+});
+
+describe('getRangeCoords', () => {
+  describe('surrounded by plots', () => {
+    test('computes the plot range', () => {
+      expect(getRangeCoords(1, 1, 1)).toEqual([
+        [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
+        [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
+        [{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }],
+      ]);
+    });
+  });
+
+  describe('edge testing', () => {
+    test('in-range plots below field bounds are negative', () => {
+      expect(getRangeCoords(1, 0, 0)).toEqual([
+        [{ x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 }],
+        [{ x: -1, y: 0 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
+        [{ x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }],
+      ]);
+    });
   });
 });

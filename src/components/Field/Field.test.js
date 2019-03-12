@@ -16,8 +16,10 @@ const getField = (props = {}) => (
       columns: 0,
       handlers: {
         handlePlotClick: () => {},
+        handlePlotMouseOver: () => {},
         ...props.handlers,
       },
+      hoveredPlotRange: [[]],
       rows: 0,
       state: {
         field: [[null, null], [null, null], [null, null]],

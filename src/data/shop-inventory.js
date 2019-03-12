@@ -5,6 +5,7 @@ import {
 
   // Field items
   fertilizer,
+  sprinkler,
 } from './items';
 
 export default [
@@ -14,4 +15,5 @@ export default [
 
   // Field items
   fertilizer,
+  sprinkler,
 ];

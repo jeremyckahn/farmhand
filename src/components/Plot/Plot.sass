@@ -1,3 +1,5 @@
+$not-allowed-color: rgba(255, 0, 0, 0.25)
+
 .Plot
   background-repeat: no-repeat
   background-size: cover
@@ -9,7 +11,7 @@
     background-color: #d7d7d7
     cursor: pointer
 
-  .water-mode &:hover
+  .water-mode &.crop:hover
     background-color: #7df5ff
     cursor: pointer
 
@@ -19,16 +21,35 @@
     &:hover
       cursor: pointer
 
-  .cleanup-mode &.ripe
+  .harvest-mode &.is-ripe
     background-color: rgba(0, 255, 0, 0.25)
 
     &:hover
       cursor: pointer
 
-  .harvest-mode &.crop
+  .cleanup-mode &.crop
     background-color: rgba(255, 255, 0, 0.25)
     cursor: pointer
 
-  .harvest-mode &.ripe
-    background-color: rgba(255, 0, 0, 0.25)
+  .cleanup-mode &.sprinkler
+    background-color: rgba(0, 255, 0, 0.25)
+    cursor: pointer
+
+  .cleanup-mode &.is-ripe
+    background-color: $not-allowed-color
     cursor: auto
+
+  .set-sprinkler-mode:hover &.is-in-hover-range
+    background-color: #ccc
+
+  .set-sprinkler-mode:hover &:hover
+    background-color: #999
+
+    &.is-empty img
+      background-image: url(../../img/items/sprinkler.png)
+      opacity: 0.5
+
+    &.crop
+      background-color: $not-allowed-color
+      background-image: none
+      cursor: not-allowed

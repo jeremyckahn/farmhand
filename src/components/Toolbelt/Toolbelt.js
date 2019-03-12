@@ -36,6 +36,7 @@ const Toolbelt = ({
         })}
         key={fieldMode}
       >
+        {/* alt is in a different format here because of linter weirdness. */}
         <img
           {...{
             className: `square ${toolImageId}`,

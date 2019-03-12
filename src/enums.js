@@ -24,6 +24,7 @@ export const fieldMode = enumify([
   'HARVEST',
   'OBSERVE',
   'PLANT',
+  'SET_SPRINKLER',
   'WATER',
 ]);
 
@@ -38,3 +39,9 @@ export const stageFocusType = enumify(['NONE', 'FIELD', 'INVENTORY', 'SHOP']);
  * @enum {string}
  */
 export const cropLifeStage = enumify(['SEED', 'GROWING', 'GROWN']);
+
+/**
+ * @property farmhand.module:enums.plotContentType
+ * @enum {string}
+ */
+export const plotContentType = enumify(['CROP', 'SPRINKLER']);

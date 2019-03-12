@@ -23,17 +23,25 @@
  * @property {farmhand.cropTimetable} [cropTimetable]
  * @property {farmhand.module:enums.cropType} [cropType]
  * @property {string} [growsInto] The id of another farmhand.item.
+ * @property {number} [hoveredPlotRange] The number to set
+ * farmhand.state.hoveredPlotRange to when the item is active.
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.
+ */
+
+/**
+ * @typedef farmhand.plotContent
+ * @type {Object}
+ * @property {string} itemId
+ * @property {farmhand.module:enums.plotContentType} type
  */
 
 /**
  * Represents a crop as it proceeds through the lifecycle.
  * @typedef farmhand.crop
- * @type {Object}
+ * @type {farmhand.plotContent}
  * @property {number} daysOld
  * @property {number} daysWatered
  * @property {boolean} isFertilized
- * @property {string} itemId
  * @property {boolean} wasWateredToday
  */
 

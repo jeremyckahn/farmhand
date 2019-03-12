@@ -7,6 +7,8 @@ export const items = {
   'sample-crop-type-1-growing':
     'data:image/png;base64,sample-crop-type-1-growing',
   'sample-crop-type-1-seed': 'data:image/png;base64,sample-crop-type-1-seed',
+
+  sprinkler: 'data:image/png;base64,sprinkler',
 };
 
 export const pixel = 'data:image/png;base64,pixel';

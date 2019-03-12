@@ -2,7 +2,8 @@
  * @module farmhand.items
  */
 
-import { cropLifeStage, cropType, fieldMode } from '../enums';
+import { cropLifeStage, cropType, fieldMode, plotContentType } from '../enums';
+import { SPRINKLER_RANGE } from '../constants';
 
 const { freeze } = Object;
 const { CARROT, PUMPKIN } = cropType;
@@ -25,6 +26,7 @@ export const carrotSeed = freeze({
   id: 'carrot-seed',
   isPlantable: true,
   name: 'Carrot Seed',
+  type: plotContentType.CROP,
   value: 20,
 });
 
@@ -40,6 +42,7 @@ export const carrot = freeze({
   },
   id: 'carrot',
   name: 'Carrot',
+  type: plotContentType.CROP,
   value: 40,
 });
 
@@ -54,6 +57,7 @@ export const pumpkinSeed = freeze({
   id: 'pumpkin-seed',
   isPlantable: true,
   name: 'Pumpkin Seed',
+  type: plotContentType.CROP,
   value: 40,
 });
 
@@ -69,6 +73,7 @@ export const pumpkin = freeze({
   },
   id: 'pumpkin',
   name: 'Pumpkin',
+  type: plotContentType.CROP,
   value: 80,
 });
 
@@ -87,4 +92,17 @@ export const fertilizer = freeze({
   id: 'fertilizer',
   name: 'Fertilizer',
   value: 60,
+});
+
+/**
+ * @property farmhand.module:items.sprinkler
+ * @type {farmhand.item}
+ */
+export const sprinkler = freeze({
+  enablesFieldMode: fieldMode.SET_SPRINKLER,
+  hoveredPlotRangeSize: SPRINKLER_RANGE,
+  id: 'sprinkler',
+  name: 'Sprinkler',
+  type: plotContentType.SPRINKLER,
+  value: 120,
 });

@@ -138,11 +138,11 @@ describe('handlePlotClick', () => {
       });
     });
 
-    test('calls clearPlot', () => {
-      jest.spyOn(component.instance(), 'clearPlot');
+    test('calls harvestPlot', () => {
+      jest.spyOn(component.instance(), 'harvestPlot');
       handlers().handlePlotClick(0, 0);
 
-      expect(component.instance().clearPlot).toHaveBeenCalledWith(0, 0);
+      expect(component.instance().harvestPlot).toHaveBeenCalledWith(0, 0);
     });
   });
 
@@ -153,11 +153,11 @@ describe('handlePlotClick', () => {
       });
     });
 
-    test('calls waterPlot', () => {
-      jest.spyOn(component.instance(), 'harvestPlot');
+    test('calls clearPlot', () => {
+      jest.spyOn(component.instance(), 'clearPlot');
       handlers().handlePlotClick(0, 0);
 
-      expect(component.instance().harvestPlot).toHaveBeenCalledWith(0, 0);
+      expect(component.instance().clearPlot).toHaveBeenCalledWith(0, 0);
     });
   });
 
@@ -189,6 +189,33 @@ describe('handlePlotClick', () => {
 
       expect(component.instance().fertilizePlot).toHaveBeenCalledWith(0, 0);
     });
+  });
+
+  describe('fieldMode === fieldMode.SET_SPRINKLER', () => {
+    describe('plot is empty', () => {
+      test('calls setSprinker', () => {
+        jest.spyOn(component.instance(), 'setSprinker').mockImplementation();
+
+        // Needed to prevent an indirectly related NRE
+        jest
+          .spyOn(component.instance(), 'hoveredPlotRange', 'get')
+          .mockImplementation();
+
+        component.setState({
+          fieldMode: fieldMode.SET_SPRINKLER,
+        });
+
+        handlers().handlePlotClick(0, 0);
+        expect(component.instance().setSprinker).toHaveBeenCalledWith(0, 0);
+      });
+    });
+  });
+});
+
+describe('handlePlotMouseOver', () => {
+  test('updates hoveredPlot state', () => {
+    handlers().handlePlotMouseOver(4, 5);
+    expect(component.state().hoveredPlot).toEqual({ x: 4, y: 5 });
   });
 });
 

@@ -1,9 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import localforage from 'localforage';
-import { getCropFromItemId } from './utils';
+import { getCropFromItemId, getPlotContentFromItemId } from './utils';
 import { testCrop, testItem } from './test-utils';
-import { INITIAL_FIELD_WIDTH, INITIAL_FIELD_HEIGHT } from './constants';
+import {
+  FERTILIZER_ITEM_ID,
+  INITIAL_FIELD_WIDTH,
+  INITIAL_FIELD_HEIGHT,
+  SPRINKLER_ITEM_ID,
+} from './constants';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 import { fieldMode } from './enums';
 
@@ -19,6 +24,8 @@ jest.mock('./constants', () => ({
   INITIAL_FIELD_WIDTH: 4,
   INITIAL_FIELD_HEIGHT: 4,
   RAIN_CHANCE: 0,
+  SPRINKLER_ITEM_ID: 'sprinkler',
+  SPRINKLER_RANGE: 1,
 }));
 
 let component;
@@ -36,6 +43,62 @@ describe('state', () => {
   test('inits field', () => {
     expect(component.state().field).toHaveLength(INITIAL_FIELD_HEIGHT);
     expect(component.state().field[0]).toHaveLength(INITIAL_FIELD_WIDTH);
+  });
+});
+
+describe('getters', () => {
+  describe('hoveredPlotRange', () => {
+    beforeEach(() => {
+      component.setState({
+        hoveredPlot: { x: 0, y: 0 },
+      });
+    });
+
+    describe('fieldMode === SET_SPRINKLER', () => {
+      beforeEach(() => {
+        component.setState({
+          fieldMode: fieldMode.SET_SPRINKLER,
+          hoveredPlotRangeSize: 1,
+        });
+      });
+
+      describe('plot is empty', () => {
+        beforeEach(() => {
+          component.setState({
+            field: [[null]],
+          });
+        });
+
+        test('gets hovered crop range', () => {
+          const { hoveredPlotRange } = component.instance();
+          expect(hoveredPlotRange).toEqual([
+            [{ x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 }],
+            [{ x: -1, y: 0 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
+            [{ x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }],
+          ]);
+        });
+      });
+
+      describe('plot is not empty', () => {
+        beforeEach(() => {
+          component.setState({
+            field: [[testCrop()]],
+          });
+        });
+
+        test('gets only the hovered crop', () => {
+          const { hoveredPlotRange } = component.instance();
+          expect(hoveredPlotRange).toEqual([[{ x: 0, y: 0 }]]);
+        });
+      });
+    });
+
+    describe('fieldMode !== SET_SPRINKLER', () => {
+      test('gets only the hovered crop', () => {
+        const { hoveredPlotRange } = component.instance();
+        expect(hoveredPlotRange).toEqual([[{ x: 0, y: 0 }]]);
+      });
+    });
   });
 });
 
@@ -242,26 +305,61 @@ describe('instance methods', () => {
   });
 
   describe('clearPlot', () => {
-    beforeEach(() => {
-      component.setState({
-        field: [[testCrop({ itemId: 'sample-crop-1' })]],
+    describe('plotContent is a crop', () => {
+      beforeEach(() => {
+        component.setState({
+          field: [[testCrop({ itemId: 'sample-crop-1' })]],
+        });
+
+        component.instance().clearPlot(0, 0);
       });
 
-      component.instance().clearPlot(0, 0);
+      test('clears the plot', () => {
+        expect(component.state().field[0][0]).toBe(null);
+      });
     });
 
-    test('removes the crop from the plot', () => {
-      expect(component.state().field[0][0]).toBe(null);
+    describe('plotContent is a sprinkler', () => {
+      beforeEach(() => {
+        component.setState({
+          field: [[getPlotContentFromItemId('sprinkler')]],
+        });
+
+        component.instance().clearPlot(0, 0);
+      });
+
+      test('adds sprinkler to inventory', () => {
+        expect(component.state().inventory).toEqual([
+          { id: 'sprinkler', quantity: 1 },
+        ]);
+      });
+
+      test('clears the plot', () => {
+        expect(component.state().field[0][0]).toBe(null);
+      });
     });
   });
 
   describe('fertilizePlot', () => {
+    describe('non-crop plotContent', () => {
+      test('no-ops', () => {
+        component.setState({
+          field: [[getPlotContentFromItemId('sprinkler')]],
+        });
+        const oldState = component.state();
+        component.instance().fertilizePlot(0, 0);
+        const newState = component.state();
+        expect(newState).toEqual(oldState);
+      });
+    });
+
     describe('unfertilized crops', () => {
       describe('happy path', () => {
         beforeEach(() => {
           component.setState({
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
             inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+            selectedItemId: FERTILIZER_ITEM_ID,
           });
 
           component.instance().fertilizePlot(0, 0);
@@ -308,7 +406,7 @@ describe('instance methods', () => {
             component.instance().fertilizePlot(0, 0);
           });
 
-          test('change fieldMode to OBSERVE', () => {
+          test('changes fieldMode to OBSERVE', () => {
             expect(component.state().fieldMode).toBe(fieldMode.OBSERVE);
           });
 
@@ -320,7 +418,96 @@ describe('instance methods', () => {
     });
   });
 
+  describe('setSprinker', () => {
+    beforeEach(() => {
+      component.setState({
+        field: [[null]],
+        fieldMode: fieldMode.SET_SPRINKLER,
+        hoveredPlot: { x: 0, y: 0 },
+        hoveredPlotRangeSize: 1,
+        inventory: [testItem({ id: 'sprinkler', quantity: 1 })],
+        selectedItemId: SPRINKLER_ITEM_ID,
+      });
+    });
+
+    describe('plot is not empty', () => {
+      test('does nothing', () => {
+        component.setState({ field: [[testCrop()]] });
+        const beforeState = component.state();
+        component.instance().setSprinker(0, 0);
+        const afterState = component.state();
+        expect(afterState).toEqual(beforeState);
+      });
+    });
+
+    describe('plot is empty', () => {
+      test('decrements sprinkler from inventory', () => {
+        component.instance().setSprinker(0, 0);
+        expect(component.state().inventory).toHaveLength(0);
+      });
+
+      test('sets sprinkler', () => {
+        component.instance().setSprinker(0, 0);
+        expect(component.state().field[0][0]).toEqual(
+          getPlotContentFromItemId('sprinkler')
+        );
+      });
+
+      describe('multiple sprinker units remaining', () => {
+        beforeEach(() => {
+          component.setState({
+            inventory: [testItem({ id: 'sprinkler', quantity: 2 })],
+          });
+
+          component.instance().setSprinker(0, 0);
+        });
+
+        test('does not change hoveredPlotRangeSize', () => {
+          expect(component.state().hoveredPlotRangeSize).toBe(1);
+        });
+
+        test('does not change fieldMode', () => {
+          expect(component.state().fieldMode).toBe(fieldMode.SET_SPRINKLER);
+        });
+
+        test('does not change selectedItemId', () => {
+          expect(component.state().selectedItemId).toBe(SPRINKLER_ITEM_ID);
+        });
+      });
+
+      describe('one sprinker unit remaining', () => {
+        beforeEach(() => {
+          component.instance().setSprinker(0, 0);
+        });
+
+        test('resets hoveredPlotRangeSize', () => {
+          expect(component.state().hoveredPlotRangeSize).toBe(0);
+        });
+
+        test('changes fieldMode to OBSERVE', () => {
+          expect(component.state().fieldMode).toBe(fieldMode.OBSERVE);
+        });
+
+        test('resets selectedItemId', () => {
+          expect(component.state().selectedItemId).toBe('');
+        });
+      });
+    });
+  });
+
   describe('harvestPlot', () => {
+    describe('non-crop plotContent', () => {
+      test('no-ops', () => {
+        component.setState({
+          field: [[getPlotContentFromItemId('sprinkler')]],
+        });
+        const oldState = component.state();
+        component.instance().harvestPlot(0, 0);
+        const newState = component.state();
+        expect(newState).toEqual(oldState);
+      });
+    });
+
     describe('unripe crops', () => {
       beforeEach(() => {
         component.setState({
@@ -359,16 +546,27 @@ describe('instance methods', () => {
   });
 
   describe('waterPlot', () => {
-    beforeEach(() => {
-      component.setState({
-        field: [[testCrop({ itemId: 'sample-crop-1' })]],
+    describe('non-crop plotContent', () => {
+      test('no-ops', () => {
+        component.setState({
+          field: [[getPlotContentFromItemId('sprinkler')]],
+        });
+        const oldState = component.state();
+        component.instance().waterPlot(0, 0);
+        const newState = component.state();
+        expect(newState).toEqual(oldState);
       });
-
-      component.instance().waterPlot(0, 0);
     });
 
-    test('sets wasWateredToday to true', () => {
-      expect(component.state().field[0][0].wasWateredToday).toBe(true);
+    describe('crops', () => {
+      test('sets wasWateredToday to true', () => {
+        component.setState({
+          field: [[testCrop({ itemId: 'sample-crop-1' })]],
+        });
+
+        component.instance().waterPlot(0, 0);
+        expect(component.state().field[0][0].wasWateredToday).toBe(true);
+      });
     });
   });
 

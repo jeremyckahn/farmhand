@@ -1,10 +1,13 @@
 import React from 'react';
-import Plot, { getBackgroundStyles } from './Plot';
+import Plot, { isInRange, getBackgroundStyles } from './Plot';
 import { shallow } from 'enzyme';
+import { getPlotContentFromItemId } from '../../utils';
 import { testCrop } from '../../test-utils';
 import { pixel, plotStates } from '../../img';
 import { cropLifeStage } from '../../enums';
 
+jest.mock('../../data/maps');
+jest.mock('../../data/items');
 jest.mock('../../img');
 
 let component;
@@ -12,7 +15,12 @@ let component;
 const getPlot = (props = {}) => (
   <Plot
     {...{
-      handlers: { handlePlotClick: () => {}, ...props.handlers },
+      handlers: {
+        handlePlotClick: () => {},
+        handlePlotMouseOver: () => {},
+        ...props.handlers,
+      },
+      hoveredPlotRange: [[]],
       lifeStage: cropLifeStage.SEED,
       x: 0,
       y: 0,
@@ -30,18 +38,34 @@ test('defaults to rending a pixel', () => {
   expect(component.find('img').props().src).toBe(pixel);
 });
 
-test('does not render crop class', () => {
-  expect(component.hasClass('crop')).toBeFalsy();
+test('renders empty class', () => {
+  expect(component.hasClass('is-empty')).toBeTruthy();
+});
+
+test('renders crop class', () => {
+  component.setProps({ plotContent: testCrop({ itemId: 'sample-crop-1' }) });
+  expect(component.hasClass('crop')).toBeTruthy();
+});
+
+test('renders sprinkler class', () => {
+  component.setProps({ plotContent: getPlotContentFromItemId('sprinkler') });
+  expect(component.hasClass('sprinkler')).toBeTruthy();
 });
 
 test('renders "is-fertilized" class', () => {
-  component = shallow(getPlot({ options: { crop: { isFertilized: true } } }));
+  component = shallow(
+    getPlot({
+      options: {
+        plotContent: testCrop({ itemId: 'sample-crop-1', isFertilized: true }),
+      },
+    })
+  );
   expect(component.hasClass('is-fertilized')).toBeTruthy();
 });
 
-test('renders "ripe" class', () => {
+test('renders "is-ripe" class', () => {
   component = shallow(getPlot({ options: { lifeStage: cropLifeStage.GROWN } }));
-  expect(component.hasClass('ripe')).toBeTruthy();
+  expect(component.hasClass('is-ripe')).toBeTruthy();
 });
 
 test('renders provided image data', () => {
@@ -51,7 +75,7 @@ test('renders provided image data', () => {
     getPlot({
       options: {
         image,
-        crop: testCrop({ itemId: 'sample-crop-1' }),
+        plotContent: testCrop({ itemId: 'sample-crop-1' }),
       },
     })
   );
@@ -70,7 +94,10 @@ describe('background image', () => {
     component = shallow(
       getPlot({
         options: {
-          crop: testCrop({ itemId: 'sample-crop-1', wasWateredToday: true }),
+          plotContent: testCrop({
+            itemId: 'sample-crop-1',
+            wasWateredToday: true,
+          }),
         },
       })
     );
@@ -82,7 +109,7 @@ describe('background image', () => {
 });
 
 describe('getBackgroundStyles', () => {
-  test('returns null for !crop', () => {
+  test('returns null for !plotContent', () => {
     expect(getBackgroundStyles()).toBe(null);
   });
 
@@ -108,5 +135,21 @@ describe('getBackgroundStyles', () => {
         plotStates['watered-plot']
       })`
     );
+  });
+});
+
+describe('isInRange', () => {
+  const range = [
+    [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
+    [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
+    [{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }],
+  ];
+
+  test('provided coordinates are in range', () => {
+    expect(isInRange(range, 1, 1)).toBeTruthy();
+  });
+
+  test('provided coordinates are out of range', () => {
+    expect(isInRange(range, 3, 3)).toBeFalsy();
   });
 });

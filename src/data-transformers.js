@@ -1,9 +1,9 @@
 import memoize from 'fast-memoize';
 import { itemsMap } from './data/maps';
-import { getItemValue } from './utils';
-import { FERTILIZER_BONUS, RAIN_CHANCE } from './constants';
+import { getItemValue, getRangeCoords } from './utils';
+import { FERTILIZER_BONUS, RAIN_CHANCE, SPRINKLER_RANGE } from './constants';
 import { RAIN_MESSAGE } from './strings';
-import { fieldMode } from './enums';
+import { fieldMode, plotContentType } from './enums';
 
 /**
  * @param {farmhand.state} state
@@ -19,6 +19,54 @@ export const applyRain = state => ({
     },
   ],
 });
+
+/**
+ * @param {farmhand.state} state
+ * @return {farmhand.state}
+ */
+export const applySprinklers = state => {
+  const { field } = state;
+  const crops = new Map();
+  let modifiedField = [...field];
+
+  field.forEach((row, fieldY) => {
+    row.forEach((plot, fieldX) => {
+      if (!plot || plot.type !== plotContentType.SPRINKLER) {
+        return;
+      }
+
+      []
+        .concat(
+          // Flatten this 2D array for less iteration below
+          ...getRangeCoords(SPRINKLER_RANGE, fieldX, fieldY)
+        )
+        .forEach(({ x, y }) => {
+          const fieldRow = field[y];
+
+          if (!fieldRow) {
+            return;
+          }
+
+          const plotContent = fieldRow[x];
+
+          if (plotContent && plotContent.type === plotContentType.CROP) {
+            if (!crops.has(plotContent)) {
+              modifiedField = modifyFieldPlotAt(
+                modifiedField,
+                x,
+                y,
+                setWasWatered
+              );
+            }
+
+            crops.set(plotContent, { x, y });
+          }
+        });
+    });
+  });
+
+  return { ...state, field: modifiedField };
+};
 
 /**
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -94,18 +142,33 @@ export const incrementAge = crop =>
       };
 
 /**
- * @param {?farmhand.crop} crop
- * @returns {?farmhand.crop}
+ * @param {?farmhand.plotContent} plotContent
+ * @param {boolean} wasWateredToday
+ * @returns {?farmhand.plotContent}
  */
-export const setWasWatered = crop =>
-  crop === null ? null : { ...crop, wasWateredToday: true };
+const setWasWateredProperty = (plotContent, wasWateredToday) => {
+  if (plotContent === null) {
+    return null;
+  }
+
+  return plotContent.type === plotContentType.CROP
+    ? { ...plotContent, wasWateredToday }
+    : { ...plotContent };
+};
 
 /**
- * @param {?farmhand.crop} crop
- * @returns {?farmhand.crop}
+ * @param {?farmhand.plotContent} plotContent
+ * @returns {?farmhand.plotContent}
  */
-export const resetWasWatered = crop =>
-  crop === null ? null : { ...crop, wasWateredToday: false };
+export const setWasWatered = plotContent =>
+  setWasWateredProperty(plotContent, true);
+
+/**
+ * @param {?farmhand.plotContent} plotContent
+ * @returns {?farmhand.plotContent}
+ */
+export const resetWasWatered = plotContent =>
+  setWasWateredProperty(plotContent, false);
 
 /**
  * @param {farmhand.item} item
@@ -136,29 +199,31 @@ export const addItemToInventory = (item, inventory) => {
 const fieldReducer = (acc, fn) => fn(acc);
 
 /**
- * @param {Array.<Array.<?farmhand.crop>>} field
- * @return {Array.<Array.<?farmhand.crop>>}
+ * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @return {Array.<Array.<?farmhand.plotContent>>}
  */
 export const getUpdatedField = field =>
-  updateField(field, crop => fieldUpdaters.reduce(fieldReducer, crop));
+  updateField(field, plotContent =>
+    fieldUpdaters.reduce(fieldReducer, plotContent)
+  );
 
 /**
- * @param {Array.<Array.<?farmhand.crop>>} field
- * @return {Array.<Array.<?farmhand.crop>>}
+ * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @return {Array.<Array.<?farmhand.plotContent>>}
  */
 export const getWateredField = field => updateField(field, setWasWatered);
 
 /**
- * @param {Array.<Array.<?farmhand.crop>>} field
+ * @param {Array.<Array.<?farmhand.plotContent>>} field
  * @param {number} x
  * @param {number} y
- * @param {Function(?farmhand.crop)} modifierFn
- * @return {Array.<Array.<?farmhand.crop>>}
+ * @param {Function(?farmhand.plotContent)} modifierFn
+ * @return {Array.<Array.<?farmhand.plotContent>>}
  */
 export const modifyFieldPlotAt = (field, x, y, modifierFn) => {
   const row = [...field[y]];
-  const crop = modifierFn(row[x]);
-  row[x] = crop;
+  const plotContent = modifierFn(row[x]);
+  row[x] = plotContent;
   const modifiedField = [...field];
   modifiedField[y] = row;
 
@@ -166,19 +231,19 @@ export const modifyFieldPlotAt = (field, x, y, modifierFn) => {
 };
 
 /**
- * @param {Array.<Array.<?farmhand.crop>>} field
+ * @param {Array.<Array.<?farmhand.plotContent>>} field
  * @param {number} x
  * @param {number} y
- * @return {Array.<Array.<?farmhand.crop>>}
+ * @return {Array.<Array.<?farmhand.plotContent>>}
  */
 export const removeFieldPlotAt = (field, x, y) =>
   modifyFieldPlotAt(field, x, y, () => null);
 
 /**
  * Invokes a function on every plot in a field.
- * @param {Array.<Array.<?farmhand.crop>>} field
- * @param {Function(?farmhand.crop)} modifierFn
- * @return {Array.<Array.<?farmhand.crop>>}
+ * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @param {Function(?farmhand.plotContent)} modifierFn
+ * @return {Array.<Array.<?farmhand.plotContent>>}
  */
 export const updateField = (field, modifierFn) =>
   field.map(row => row.map(modifierFn));
@@ -225,7 +290,7 @@ export const applyBuffs = state =>
  * the changed properties.
  */
 export const computeStateForNextDay = state =>
-  [applyBuffs].reduce((acc, fn) => fn({ ...acc }), {
+  [applyBuffs, applySprinklers].reduce((acc, fn) => fn({ ...acc }), {
     ...state,
     dayCount: state.dayCount + 1,
     field: getUpdatedField(state.field),
