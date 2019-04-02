@@ -31,7 +31,7 @@
   - [x] Removal
 - [ ] Tools/items
   - [x] Fertilizer
-  - [ ] Sprinklers
+  - [x] Sprinklers
   - [ ] Scarecrows
   - [ ] Bigger field
 
