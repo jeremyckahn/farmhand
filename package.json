@@ -19,7 +19,7 @@
     "prettier": "prettier 'src/**/*.js' --write",
     "preversion": "npm test",
     "start": "react-scripts start",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "update-images": "sh update-images.sh"
   },
   "author": "Jeremy Kahn <jeremyckahn@gmail.com>",
