@@ -33,6 +33,7 @@ export const sampleCropSeedsItem1 = testItem({
 export const sampleCropItem1 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_1',
   id: 'sample-crop-1',
+  name: 'Sample Crop Item 1',
   type: plotContentType.CROP,
   value: 2,
   cropTimetable: {
@@ -54,6 +55,7 @@ export const sampleCropSeedsItem2 = testItem({
 export const sampleCropItem2 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_2',
   id: 'sample-crop-2',
+  name: 'Sample Crop Item 2',
   type: plotContentType.CROP,
   value: 3,
   cropTimetable: {
@@ -74,6 +76,7 @@ export const sampleCropSeedsItem3 = testItem({
 export const sampleCropItem3 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_3',
   id: 'sample-crop-3',
+  name: 'Sample Crop Item 3',
   type: plotContentType.CROP,
   value: 4,
   cropTimetable: {

@@ -1,8 +1,14 @@
 import memoize from 'fast-memoize';
 import { itemsMap } from './data/maps';
 import { getItemValue, getRangeCoords } from './utils';
-import { FERTILIZER_BONUS, RAIN_CHANCE, SPRINKLER_RANGE } from './constants';
+import {
+  CROW_CHANCE,
+  FERTILIZER_BONUS,
+  RAIN_CHANCE,
+  SPRINKLER_RANGE,
+} from './constants';
 import { RAIN_MESSAGE } from './strings';
+import { CROW_ATTACKED } from './templates';
 import { fieldMode, plotContentType } from './enums';
 
 /**
@@ -19,6 +25,33 @@ export const applyRain = state => ({
     },
   ],
 });
+
+/**
+ * @param {farmhand.state} state
+ * @return {farmhand.state}
+ */
+export const applyCrows = state => {
+  const { field } = state;
+  const newDayNotifications = [...state.newDayNotifications];
+
+  const updatedField = updateField(field, plotContent => {
+    if (!plotContent || plotContent.type !== plotContentType.CROP) {
+      return plotContent;
+    }
+
+    const destroyCrop = Math.random() <= CROW_CHANCE;
+
+    if (destroyCrop) {
+      newDayNotifications.push({
+        message: CROW_ATTACKED`${itemsMap[plotContent.itemId]}`,
+      });
+    }
+
+    return destroyCrop ? null : plotContent;
+  });
+
+  return { ...state, field: updatedField, newDayNotifications };
+};
 
 /**
  * @param {farmhand.state} state
@@ -274,15 +307,20 @@ export const decrementItemFromInventory = (itemId, inventory) => {
 
 export const fieldUpdaters = [incrementAge, resetWasWatered];
 
+const applyChanceEvent = (chancesAndEvents, state) =>
+  chancesAndEvents.reduce(
+    (acc, [chance, fn]) => (Math.random() <= chance ? fn(acc) : acc),
+    state
+  );
+
 /**
  * @param {farmhand.state} state
  * @return {farmhand.state}
  */
 export const applyBuffs = state =>
-  [[RAIN_CHANCE, applyRain]].reduce(
-    (acc, [chance, fn]) => (Math.random() <= chance ? fn(acc) : acc),
-    state
-  );
+  applyChanceEvent([[RAIN_CHANCE, applyRain]], state);
+
+export const applyNerfs = state => applyChanceEvent([[1, applyCrows]], state);
 
 /**
  * @param {farmhand.state} state
@@ -290,9 +328,12 @@ export const applyBuffs = state =>
  * the changed properties.
  */
 export const computeStateForNextDay = state =>
-  [applyBuffs, applySprinklers].reduce((acc, fn) => fn({ ...acc }), {
-    ...state,
-    dayCount: state.dayCount + 1,
-    field: getUpdatedField(state.field),
-    valueAdjustments: getUpdatedValueAdjustments(),
-  });
+  [applyBuffs, applyNerfs, applySprinklers].reduce(
+    (acc, fn) => fn({ ...acc }),
+    {
+      ...state,
+      dayCount: state.dayCount + 1,
+      field: getUpdatedField(state.field),
+      valueAdjustments: getUpdatedValueAdjustments(),
+    }
+  );

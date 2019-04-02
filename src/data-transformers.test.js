@@ -1,5 +1,6 @@
 import { testCrop, testItem } from './test-utils';
 import { RAIN_MESSAGE } from './strings';
+import { CROW_ATTACKED } from './templates';
 import { FERTILIZER_BONUS } from './constants';
 import {
   sampleItem1,
@@ -7,6 +8,7 @@ import {
   sampleCropSeedsItem1,
   sampleFieldTool1,
 } from './data/items';
+import { itemsMap } from './data/maps';
 import { getPlotContentFromItemId } from './utils';
 
 import * as fn from './data-transformers';
@@ -36,6 +38,7 @@ describe('computeStateForNextDay', () => {
           }),
         ],
       ],
+      newDayNotifications: [],
     });
 
     expect(dayCount).toEqual(2);
@@ -123,6 +126,44 @@ describe('applyBuffs', () => {
         });
 
         expect(state.field[0][0].wasWateredToday).toBe(true);
+      });
+    });
+  });
+});
+
+describe('applyNerfs', () => {
+  describe('crows', () => {
+    describe('crows do not attack', () => {
+      test('crop is safe', () => {
+        const state = fn.applyNerfs({
+          field: [[testCrop({ itemId: 'sample-crop-1' })]],
+          newDayNotifications: [],
+        });
+
+        expect(state.field[0][0]).toEqual(
+          testCrop({ itemId: 'sample-crop-1' })
+        );
+        expect(state.newDayNotifications).toEqual([]);
+      });
+    });
+
+    describe('crows attack', () => {
+      test('crop is destroyed', () => {
+        jest.resetModules();
+        jest.mock('./constants', () => ({
+          CROW_CHANCE: 1,
+        }));
+
+        const { applyNerfs } = jest.requireActual('./data-transformers');
+        const state = applyNerfs({
+          field: [[testCrop({ itemId: 'sample-crop-1' })]],
+          newDayNotifications: [],
+        });
+
+        expect(state.field[0][0]).toBe(null);
+        expect(state.newDayNotifications).toEqual([
+          { message: CROW_ATTACKED`${itemsMap['sample-crop-1']}` },
+        ]);
       });
     });
   });
