@@ -17,16 +17,7 @@ import Farmhand from './Farmhand';
 jest.mock('localforage');
 jest.mock('./data/maps');
 jest.mock('./data/items');
-
-jest.mock('./constants', () => ({
-  FERTILIZER_BONUS: 0.5,
-  FERTILIZER_ITEM_ID: 'fertilizer',
-  INITIAL_FIELD_WIDTH: 4,
-  INITIAL_FIELD_HEIGHT: 4,
-  RAIN_CHANCE: 0,
-  SPRINKLER_ITEM_ID: 'sprinkler',
-  SPRINKLER_RANGE: 1,
-}));
+jest.mock('./constants');
 
 let component;
 
