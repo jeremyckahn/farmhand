@@ -13,8 +13,8 @@
     - [x] Rain
   - [ ] Buffs
     - [ ] Free seeds
-  - [ ] Nerfs
-    - [ ] Crows
+  - [x] Nerfs
+    - [x] Crows
 - [x] Commerce
   - [x] Store
     - [x] Buy
