@@ -8,11 +8,9 @@
   - [x] Info/detail pane
   - [x] Field grid
 - [x] [Local](https://github.com/localForage/localForage) saves
-- [ ] Day cycle
+- [x] Day cycle
   - [x] Weather
     - [x] Rain
-  - [ ] Buffs
-    - [ ] Free seeds
   - [x] Nerfs
     - [x] Crows
 - [x] Commerce
@@ -34,6 +32,7 @@
   - [x] Sprinklers
   - [ ] Scarecrows
   - [ ] Bigger field
+- [ ] Request financial aid
 
 ## Project overview
 
