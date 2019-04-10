@@ -193,8 +193,8 @@ describe('handlePlotClick', () => {
 
   describe('fieldMode === fieldMode.SET_SPRINKLER', () => {
     describe('plot is empty', () => {
-      test('calls setSprinker', () => {
-        jest.spyOn(component.instance(), 'setSprinker').mockImplementation();
+      test('calls setSprinkler', () => {
+        jest.spyOn(component.instance(), 'setSprinkler').mockImplementation();
 
         // Needed to prevent an indirectly related NRE
         jest
@@ -206,7 +206,7 @@ describe('handlePlotClick', () => {
         });
 
         handlers().handlePlotClick(0, 0);
-        expect(component.instance().setSprinker).toHaveBeenCalledWith(0, 0);
+        expect(component.instance().setSprinkler).toHaveBeenCalledWith(0, 0);
       });
     });
   });

@@ -371,7 +371,7 @@ export default class Farmhand extends Component {
    * @param {number} x
    * @param {number} y
    */
-  setSprinker(x, y) {
+  setSprinkler(x, y) {
     const { field, hoveredPlotRangeSize, inventory } = this.state;
     const plot = field[y][x];
 

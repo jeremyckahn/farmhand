@@ -64,7 +64,7 @@ export default {
     } else if (fieldMode === FERTILIZE) {
       this.fertilizePlot(x, y);
     } else if (fieldMode === SET_SPRINKLER) {
-      this.setSprinker(x, y);
+      this.setSprinkler(x, y);
     }
   },
 

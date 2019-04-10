@@ -409,7 +409,7 @@ describe('instance methods', () => {
     });
   });
 
-  describe('setSprinker', () => {
+  describe('setSprinkler', () => {
     beforeEach(() => {
       component.setState({
         field: [[null]],
@@ -425,7 +425,7 @@ describe('instance methods', () => {
       test('does nothing', () => {
         component.setState({ field: [[testCrop()]] });
         const beforeState = component.state();
-        component.instance().setSprinker(0, 0);
+        component.instance().setSprinkler(0, 0);
         const afterState = component.state();
         expect(afterState).toEqual(beforeState);
       });
@@ -433,24 +433,24 @@ describe('instance methods', () => {
 
     describe('plot is empty', () => {
       test('decrements sprinkler from inventory', () => {
-        component.instance().setSprinker(0, 0);
+        component.instance().setSprinkler(0, 0);
         expect(component.state().inventory).toHaveLength(0);
       });
 
       test('sets sprinkler', () => {
-        component.instance().setSprinker(0, 0);
+        component.instance().setSprinkler(0, 0);
         expect(component.state().field[0][0]).toEqual(
           getPlotContentFromItemId('sprinkler')
         );
       });
 
-      describe('multiple sprinker units remaining', () => {
+      describe('multiple sprinkler units remaining', () => {
         beforeEach(() => {
           component.setState({
             inventory: [testItem({ id: 'sprinkler', quantity: 2 })],
           });
 
-          component.instance().setSprinker(0, 0);
+          component.instance().setSprinkler(0, 0);
         });
 
         test('does not change hoveredPlotRangeSize', () => {
@@ -466,9 +466,9 @@ describe('instance methods', () => {
         });
       });
 
-      describe('one sprinker unit remaining', () => {
+      describe('one sprinkler unit remaining', () => {
         beforeEach(() => {
-          component.instance().setSprinker(0, 0);
+          component.instance().setSprinkler(0, 0);
         });
 
         test('resets hoveredPlotRangeSize', () => {
