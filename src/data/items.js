@@ -114,7 +114,7 @@ export const sprinkler = freeze({
 export const scarecrow = freeze({
   enablesFieldMode: fieldMode.SET_SCARECROW,
   id: 'scarecrow',
-  name: 'scarecrow',
+  name: 'Scarecrow',
   type: plotContentType.SCARECROW,
   value: 160,
 });
