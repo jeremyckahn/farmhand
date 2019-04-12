@@ -354,7 +354,7 @@ export default class Farmhand extends Component {
       inventory
     );
 
-    const doFertilizersRemain = !!updatedInventory.find(
+    const doFertilizersRemain = updatedInventory.some(
       item => item.id === FERTILIZER_ITEM_ID
     );
 
@@ -387,7 +387,7 @@ export default class Farmhand extends Component {
       inventory
     );
 
-    const doSprinklersRemain = !!updatedInventory.find(
+    const doSprinklersRemain = updatedInventory.some(
       item => item.id === SPRINKLER_ITEM_ID
     );
 
@@ -422,7 +422,7 @@ export default class Farmhand extends Component {
       inventory
     );
 
-    const doScarecrowsRemain = !!updatedInventory.find(
+    const doScarecrowsRemain = updatedInventory.some(
       item => item.id === SCARECROW_ITEM_ID
     );
 
