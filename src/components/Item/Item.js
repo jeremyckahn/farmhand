@@ -18,7 +18,7 @@ const Item = ({
   <div className={classNames('Item', { 'is-selected': isSelected })}>
     <header>
       <h2>{name}</h2>
-      <h3>{isPurchaseView ? `Price: ${value}` : `Sell price: ${value}`}</h3>
+      <p>{isPurchaseView ? `Price: ${value}` : `Sell price: ${value}`}</p>
     </header>
     <img src={items[id]} alt={name} />
     {isPurchaseView && (
