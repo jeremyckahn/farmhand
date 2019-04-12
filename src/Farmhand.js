@@ -164,17 +164,15 @@ export default class Farmhand extends Component {
       incrementDay: () => this.incrementDay(),
     };
 
-    if (process.env.NODE_ENV === 'development') {
-      Object.assign(this.keyMap, {
-        clearPersistedData: 'shift+c',
-        waterAllPlots: 'w',
-      });
+    Object.assign(this.keyMap, {
+      clearPersistedData: 'shift+c',
+      waterAllPlots: 'w',
+    });
 
-      Object.assign(this.keyHandlers, {
-        clearPersistedData: () => this.clearPersistedData(),
-        waterAllPlots: () => this.waterAllPlots(),
-      });
-    }
+    Object.assign(this.keyHandlers, {
+      clearPersistedData: () => this.clearPersistedData(),
+      waterAllPlots: () => this.waterAllPlots(),
+    });
 
     this.keyHandlers = Object.keys(this.keyHandlers).reduce((acc, key) => {
       const original = this.keyHandlers[key];
@@ -539,9 +537,7 @@ export default class Farmhand extends Component {
           <div className="sidebar">
             <Navigation {...{ handlers, state }} />
             <ContextPane {...{ handlers, state }} />
-            {process.env.NODE_ENV === 'development' && (
-              <DebugMenu {...{ handlers, state }} />
-            )}
+            <DebugMenu {...{ handlers, state }} />
           </div>
           <Stage {...{ handlers, state }} />
         </div>
