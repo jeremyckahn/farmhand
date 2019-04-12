@@ -332,14 +332,14 @@ describe('instance methods', () => {
     });
   });
 
-  describe('fertilizePlot', () => {
+  describe('fertilizeCrop', () => {
     describe('non-crop plotContent', () => {
       test('no-ops', () => {
         component.setState({
           field: [[getPlotContentFromItemId('sprinkler')]],
         });
         const oldState = component.state();
-        component.instance().fertilizePlot(0, 0);
+        component.instance().fertilizeCrop(0, 0);
         const newState = component.state();
         expect(newState).toEqual(oldState);
       });
@@ -354,7 +354,7 @@ describe('instance methods', () => {
             selectedItemId: FERTILIZER_ITEM_ID,
           });
 
-          component.instance().fertilizePlot(0, 0);
+          component.instance().fertilizeCrop(0, 0);
         });
 
         test('fertilizes crop', () => {
@@ -376,7 +376,7 @@ describe('instance methods', () => {
               inventory: [testItem({ id: 'fertilizer', quantity: 2 })],
             });
 
-            component.instance().fertilizePlot(0, 0);
+            component.instance().fertilizeCrop(0, 0);
           });
 
           test('does not change fieldMode', () => {
@@ -395,7 +395,7 @@ describe('instance methods', () => {
               inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
             });
 
-            component.instance().fertilizePlot(0, 0);
+            component.instance().fertilizeCrop(0, 0);
           });
 
           test('changes fieldMode to OBSERVE', () => {

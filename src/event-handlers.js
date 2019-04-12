@@ -71,7 +71,7 @@ export default {
     } else if (fieldMode === WATER) {
       this.waterPlot(x, y);
     } else if (fieldMode === FERTILIZE) {
-      this.fertilizePlot(x, y);
+      this.fertilizeCrop(x, y);
     } else if (fieldMode === SET_SPRINKLER) {
       this.setSprinkler(x, y);
     } else if (fieldMode === SET_SCARECROW) {

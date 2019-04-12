@@ -331,12 +331,11 @@ export default class Farmhand extends Component {
     }
   }
 
-  // TODO: Consider renaming this to fertilizeCrop
   /**
    * @param {number} x
    * @param {number} y
    */
-  fertilizePlot(x, y) {
+  fertilizeCrop(x, y) {
     const { field, inventory } = this.state;
     const row = field[y];
     const crop = row[x];

@@ -183,11 +183,11 @@ describe('handlePlotClick', () => {
       });
     });
 
-    test('calls fertilizePlot', () => {
-      jest.spyOn(component.instance(), 'fertilizePlot');
+    test('calls fertilizeCrop', () => {
+      jest.spyOn(component.instance(), 'fertilizeCrop');
       handlers().handlePlotClick(0, 0);
 
-      expect(component.instance().fertilizePlot).toHaveBeenCalledWith(0, 0);
+      expect(component.instance().fertilizeCrop).toHaveBeenCalledWith(0, 0);
     });
   });
 
