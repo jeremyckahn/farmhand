@@ -30,7 +30,7 @@
 - [ ] Tools/items
   - [x] Fertilizer
   - [x] Sprinklers
-  - [ ] Scarecrows
+  - [x] Scarecrows
   - [ ] Bigger field
 - [ ] Request financial aid
 
