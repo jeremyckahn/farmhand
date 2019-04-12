@@ -47,9 +47,17 @@ $not-allowed-color: rgba(255, 0, 0, 0.25)
 
     &.is-empty img
       background-image: url(../../img/items/sprinkler.png)
+      cursor: pointer
       opacity: 0.5
 
     &.crop
       background-color: $not-allowed-color
       background-image: none
       cursor: not-allowed
+
+  .set-scarecrow-mode:hover &:hover
+
+    &.is-empty img
+      background-image: url(../../img/items/scarecrow.png)
+      cursor: pointer
+      opacity: 0.5

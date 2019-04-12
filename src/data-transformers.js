@@ -5,6 +5,7 @@ import {
   CROW_CHANCE,
   FERTILIZER_BONUS,
   RAIN_CHANCE,
+  SCARECROW_ITEM_ID,
   SPRINKLER_RANGE,
 } from './constants';
 import { RAIN_MESSAGE } from './strings';
@@ -33,22 +34,27 @@ export const applyRain = state => ({
 export const applyCrows = state => {
   const { field } = state;
   const newDayNotifications = [...state.newDayNotifications];
+  const fieldHasScarecrow = field.some(row =>
+    row.some(plot => plot && plot.itemId === SCARECROW_ITEM_ID)
+  );
 
-  const updatedField = updateField(field, plotContent => {
-    if (!plotContent || plotContent.type !== plotContentType.CROP) {
-      return plotContent;
-    }
+  const updatedField = fieldHasScarecrow
+    ? field
+    : updateField(field, plotContent => {
+        if (!plotContent || plotContent.type !== plotContentType.CROP) {
+          return plotContent;
+        }
 
-    const destroyCrop = Math.random() <= CROW_CHANCE;
+        const destroyCrop = Math.random() <= CROW_CHANCE;
 
-    if (destroyCrop) {
-      newDayNotifications.push({
-        message: CROW_ATTACKED`${itemsMap[plotContent.itemId]}`,
+        if (destroyCrop) {
+          newDayNotifications.push({
+            message: CROW_ATTACKED`${itemsMap[plotContent.itemId]}`,
+          });
+        }
+
+        return destroyCrop ? null : plotContent;
       });
-    }
-
-    return destroyCrop ? null : plotContent;
-  });
 
   return { ...state, field: updatedField, newDayNotifications };
 };

@@ -10,6 +10,7 @@ import {
   sampleItem2,
   sampleItem3,
   sampleFieldTool1,
+  scarecrow,
   sprinkler,
 } from './items';
 
@@ -25,6 +26,7 @@ export const itemsMap = {
   'sample-item-2': sampleItem2,
   'sample-item-3': sampleItem3,
   'sample-field-tool-1': sampleFieldTool1,
+  scarecrow,
   sprinkler,
 };
 

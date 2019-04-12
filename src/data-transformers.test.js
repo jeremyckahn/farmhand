@@ -1,7 +1,7 @@
 import { testCrop, testItem } from './test-utils';
 import { RAIN_MESSAGE } from './strings';
 import { CROW_ATTACKED } from './templates';
-import { FERTILIZER_BONUS } from './constants';
+import { FERTILIZER_BONUS, SCARECROW_ITEM_ID } from './constants';
 import {
   sampleItem1,
   sampleItem2,
@@ -164,6 +164,32 @@ describe('applyNerfs', () => {
         expect(state.newDayNotifications).toEqual([
           { message: CROW_ATTACKED`${itemsMap['sample-crop-1']}` },
         ]);
+      });
+
+      describe('there is a scarecrow', () => {
+        test('crow attack is prevented', () => {
+          jest.resetModules();
+          jest.mock('./constants', () => ({
+            CROW_CHANCE: 1,
+            SCARECROW_ITEM_ID: 'scarecrow',
+          }));
+
+          const { applyNerfs } = jest.requireActual('./data-transformers');
+          const state = applyNerfs({
+            field: [
+              [
+                testCrop({ itemId: 'sample-crop-1' }),
+                getPlotContentFromItemId(SCARECROW_ITEM_ID),
+              ],
+            ],
+            newDayNotifications: [],
+          });
+
+          expect(state.field[0][0]).toEqual(
+            testCrop({ itemId: 'sample-crop-1' })
+          );
+          expect(state.newDayNotifications).toEqual([]);
+        });
       });
     });
   });

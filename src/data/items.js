@@ -106,3 +106,15 @@ export const sprinkler = freeze({
   type: plotContentType.SPRINKLER,
   value: 120,
 });
+
+/**
+ * @property farmhand.module:items.scarecrow
+ * @type {farmhand.item}
+ */
+export const scarecrow = freeze({
+  enablesFieldMode: fieldMode.SET_SCARECROW,
+  id: 'scarecrow',
+  name: 'scarecrow',
+  type: plotContentType.SCARECROW,
+  value: 160,
+});

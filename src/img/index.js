@@ -17,6 +17,7 @@ export const items = {
 
   // Field tools
   fertilizer: require('./items/fertilizer.png'),
+  scarecrow: require('./items/scarecrow.png'),
   sprinkler: require('./items/sprinkler.png'),
 };
 

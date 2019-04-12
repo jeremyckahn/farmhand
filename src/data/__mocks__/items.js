@@ -103,3 +103,10 @@ export const sprinkler = testItem({
   type: plotContentType.SPRINKLER,
   value: 120,
 });
+
+export const scarecrow = testItem({
+  enablesFieldMode: 'SET_SCARECROW',
+  id: 'scarecrow',
+  type: plotContentType.SCARECROW,
+  value: 160,
+});

@@ -8,5 +8,6 @@ export const INITIAL_FIELD_HEIGHT = 10;
 export const CROW_CHANCE = 0.1;
 export const RAIN_CHANCE = 0.1;
 
+export const SCARECROW_ITEM_ID = 'scarecrow';
 export const SPRINKLER_ITEM_ID = 'sprinkler';
 export const SPRINKLER_RANGE = 1;

@@ -38,6 +38,7 @@ import {
   FERTILIZER_ITEM_ID,
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
+  SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from './constants';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
@@ -45,7 +46,7 @@ import { PROGRESS_SAVED_MESSAGE } from './strings';
 import './Farmhand.sass';
 
 const { GROWN } = cropLifeStage;
-const { FERTILIZE, OBSERVE, SET_SPRINKLER } = fieldMode;
+const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode;
 
 /**
  * @typedef farmhand.state
@@ -330,6 +331,7 @@ export default class Farmhand extends Component {
     }
   }
 
+  // TODO: Consider renaming this to fertilizeCrop
   /**
    * @param {number} x
    * @param {number} y
@@ -399,6 +401,40 @@ export default class Farmhand extends Component {
       fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
       inventory: updatedInventory,
       selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
+    });
+  }
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
+  setScarecrow(x, y) {
+    const { field, inventory } = this.state;
+    const plot = field[y][x];
+
+    // Only set scarecrows in empty plots
+    if (plot !== null) {
+      return;
+    }
+
+    const updatedInventory = decrementItemFromInventory(
+      SCARECROW_ITEM_ID,
+      inventory
+    );
+
+    const doScarecrowsRemain = !!updatedInventory.find(
+      item => item.id === SCARECROW_ITEM_ID
+    );
+
+    const newField = modifyFieldPlotAt(field, x, y, () =>
+      getPlotContentFromItemId(SCARECROW_ITEM_ID)
+    );
+
+    this.setState({
+      field: newField,
+      inventory: updatedInventory,
+      fieldMode: doScarecrowsRemain ? SET_SCARECROW : OBSERVE,
+      selectedItemId: doScarecrowsRemain ? SCARECROW_ITEM_ID : '',
     });
   }
 

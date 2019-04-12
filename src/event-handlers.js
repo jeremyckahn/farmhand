@@ -1,6 +1,15 @@
 import { fieldMode } from './enums';
 
-const { CLEANUP, FERTILIZE, HARVEST, PLANT, SET_SPRINKLER, WATER } = fieldMode;
+const {
+  CLEANUP,
+  FERTILIZE,
+  HARVEST,
+  PLANT,
+  SET_SCARECROW,
+  SET_SPRINKLER,
+  WATER,
+} = fieldMode;
+
 const toolbeltFieldModes = [CLEANUP, HARVEST, WATER];
 
 export default {
@@ -65,6 +74,8 @@ export default {
       this.fertilizePlot(x, y);
     } else if (fieldMode === SET_SPRINKLER) {
       this.setSprinkler(x, y);
+    } else if (fieldMode === SET_SCARECROW) {
+      this.setScarecrow(x, y);
     }
   },
 

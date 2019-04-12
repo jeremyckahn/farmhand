@@ -210,6 +210,21 @@ describe('handlePlotClick', () => {
       });
     });
   });
+
+  describe('fieldMode === fieldMode.SET_SCARECROW', () => {
+    beforeEach(() => {
+      component.setState({
+        fieldMode: fieldMode.SET_SCARECROW,
+      });
+    });
+
+    test('calls setScarecrow', () => {
+      jest.spyOn(component.instance(), 'setScarecrow').mockImplementation();
+      handlers().handlePlotClick(0, 0);
+
+      expect(component.instance().setScarecrow).toHaveBeenCalledWith(0, 0);
+    });
+  });
 });
 
 describe('handlePlotMouseOver', () => {

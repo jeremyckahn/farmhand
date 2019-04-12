@@ -6,7 +6,15 @@ import classNames from 'classnames';
 
 import './Field.sass';
 
-const { CLEANUP, FERTILIZE, HARVEST, PLANT, SET_SPRINKLER, WATER } = fieldMode;
+const {
+  CLEANUP,
+  FERTILIZE,
+  HARVEST,
+  PLANT,
+  SET_SCARECROW,
+  SET_SPRINKLER,
+  WATER,
+} = fieldMode;
 
 const Field = ({
   handlers,
@@ -21,6 +29,7 @@ const Field = ({
       'fertilize-mode': fieldMode === FERTILIZE,
       'harvest-mode': fieldMode === HARVEST,
       'plant-mode': fieldMode === PLANT,
+      'set-scarecrow-mode': fieldMode === SET_SCARECROW,
       'set-sprinkler-mode': fieldMode === SET_SPRINKLER,
       'water-mode': fieldMode === WATER,
     })}
