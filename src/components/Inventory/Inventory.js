@@ -5,6 +5,9 @@ import { array, bool, object, shape } from 'prop-types';
 
 import './Inventory.sass';
 
+// TODO: Group items by category (seeds, field tools, etc.) and render headers
+// for the groups.
+
 const Inventory = ({
   handlers,
   isPurchaseView,

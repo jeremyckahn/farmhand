@@ -98,4 +98,11 @@ export default {
   handleWaterAllPlotsClick() {
     this.waterAllPlots();
   },
+
+  /**
+   * @param {number} fieldId
+   */
+  handleFieldPurchase(fieldId) {
+    this.purchaseField(fieldId);
+  },
 };

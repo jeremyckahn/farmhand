@@ -8,9 +8,11 @@ let component;
 const getShop = (props = {}) => (
   <Shop
     {...{
-      handlers: { ...props.handlers },
+      handlers: { handleFieldPurchase: () => {}, ...props.handlers },
       items: [],
       state: {
+        purchasedField: 0,
+        money: 0,
         valueAdjustments: {},
         ...props.state,
       },

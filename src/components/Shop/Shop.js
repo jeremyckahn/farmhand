@@ -1,14 +1,22 @@
 import React from 'react';
 import Inventory from '../Inventory';
-import { array, object, shape } from 'prop-types';
+import LandPurchase from '../LandPurchase';
+import { array, number, object, shape } from 'prop-types';
 
-const Shop = ({ handlers, items, state }) => (
+const Shop = ({ handlers, items, state, state: { purchasedField } }) => (
   <div className="Shop">
     <Inventory
       {...{
         handlers,
         isPurchaseView: true,
         items,
+        state,
+      }}
+    />
+    <LandPurchase
+      {...{
+        handlers,
+        purchasedField,
         state,
       }}
     />
@@ -19,6 +27,7 @@ Shop.propTypes = {
   handlers: object.isRequired,
   items: array.isRequired,
   state: shape({
+    purchasedField: number.isRequired,
     valueAdjustments: object.isRequired,
   }).isRequired,
 };

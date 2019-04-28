@@ -36,8 +36,7 @@ import {
 } from './enums';
 import {
   FERTILIZER_ITEM_ID,
-  INITIAL_FIELD_WIDTH,
-  INITIAL_FIELD_HEIGHT,
+  PURCHASEABLE_FIELD_SIZES,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from './constants';
@@ -53,8 +52,6 @@ const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode;
  * @type {Object}
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
- * @property {number} fieldHeight
- * @property {number} fieldWidth
  * @property {{ x: number, y: number }} hoveredPlot
  * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -62,6 +59,7 @@ const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode;
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {string} selectedItemId
  * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {number} purchasedField
  * @property {Array.<farmhand.item>} shopInventory
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Object.<number>} valueAdjustments
@@ -93,8 +91,6 @@ export default class Farmhand extends Component {
   state = {
     dayCount: 0,
     field: createNewField(),
-    fieldHeight: INITIAL_FIELD_HEIGHT,
-    fieldWidth: INITIAL_FIELD_WIDTH,
     hoveredPlot: { x: null, y: null },
     hoveredPlotRangeSize: 0,
     inventory: [],
@@ -102,6 +98,7 @@ export default class Farmhand extends Component {
     newDayNotifications: [],
     selectedItemId: '',
     fieldMode: OBSERVE,
+    purchasedField: 0,
     shopInventory: [...shopInventory],
     stageFocus: stageFocusType.FIELD,
     valueAdjustments: {},
@@ -506,6 +503,31 @@ export default class Farmhand extends Component {
 
   waterAllPlots() {
     this.setState({ field: getWateredField(this.state.field) });
+  }
+
+  /**
+   * @param {number} fieldId
+   */
+  purchaseField(fieldId) {
+    const { field, money, purchasedField } = this.state;
+
+    if (purchasedField >= fieldId) {
+      return;
+    }
+
+    const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId);
+
+    this.setState({
+      purchasedField: fieldId,
+      field: new Array(rows)
+        .fill(null)
+        .map((_, row) =>
+          new Array(columns)
+            .fill(null)
+            .map((_, column) => (field[row] && field[row][column]) || null)
+        ),
+      money: money - price,
+    });
   }
 
   render() {

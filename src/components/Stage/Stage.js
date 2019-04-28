@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, number, object, shape, string } from 'prop-types';
+import { array, arrayOf, object, shape, string } from 'prop-types';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
@@ -16,13 +16,7 @@ const stageTitleMap = {
 const Stage = ({
   handlers,
   state,
-  state: {
-    fieldHeight,
-    fieldWidth,
-    playerInventory,
-    shopInventory,
-    stageFocus,
-  },
+  state: { field, playerInventory, shopInventory, stageFocus },
 }) => (
   <div className="Stage">
     <h2>{stageTitleMap[stageFocus]}</h2>
@@ -30,8 +24,8 @@ const Stage = ({
       <Field
         {...{
           handlers,
-          columns: fieldWidth,
-          rows: fieldHeight,
+          columns: field[0].length,
+          rows: field.length,
           state,
         }}
       />
@@ -61,8 +55,7 @@ const Stage = ({
 Stage.propTypes = {
   handlers: object.isRequired,
   state: shape({
-    fieldHeight: number.isRequired,
-    fieldWidth: number.isRequired,
+    field: arrayOf(array).isRequired,
     playerInventory: array.isRequired,
     shopInventory: array.isRequired,
     stageFocus: string.isRequired,

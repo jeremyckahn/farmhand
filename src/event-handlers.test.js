@@ -241,3 +241,11 @@ describe('handleEndDayButtonClick', () => {
     expect(component.instance().incrementDay).toHaveBeenCalled();
   });
 });
+
+describe('handleFieldPurchase', () => {
+  test('calls purchaseField', () => {
+    jest.spyOn(component.instance(), 'purchaseField').mockImplementation();
+    handlers().handleFieldPurchase();
+    expect(component.instance().purchaseField).toHaveBeenCalled();
+  });
+});
