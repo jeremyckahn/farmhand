@@ -27,11 +27,11 @@
   - [x] Watering
   - [x] Harvesting
   - [x] Removal
-- [ ] Tools/items
+- [x] Tools/items
   - [x] Fertilizer
   - [x] Sprinklers
   - [x] Scarecrows
-  - [ ] Bigger field
+  - [x] Bigger field
 - [ ] Request financial aid
 
 ## Project overview
