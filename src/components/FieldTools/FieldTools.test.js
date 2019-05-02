@@ -12,10 +12,10 @@ const getFieldTools = (props = {}) => (
         handleItemSelect: () => {},
         ...props.handlers,
       },
-      state: {
+      gameState: {
         fieldToolInventory: [],
         selectedItemId: '',
-        ...props.state,
+        ...props.gameState,
       },
     }}
   />
@@ -24,7 +24,7 @@ const getFieldTools = (props = {}) => (
 beforeEach(() => {
   component = shallow(
     getFieldTools({
-      state: {
+      gameState: {
         fieldToolInventory: [{ quantity: 1, id: 'sample-field-tool-1' }],
         selectedItemId: 'sample-field-tool-1',
       },
@@ -37,7 +37,7 @@ describe('rendering', () => {
     expect(component.find(Item)).toHaveLength(1);
   });
 
-  test('renders selected item state', () => {
+  test('renders selected item gameState', () => {
     expect(component.find(Item).props().isSelected).toBeTruthy();
   });
 });

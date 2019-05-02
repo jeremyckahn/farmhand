@@ -23,9 +23,9 @@ const getPlot = (props = {}) => (
       lifeStage: cropLifeStage.SEED,
       x: 0,
       y: 0,
-      state: {
+      gameState: {
         hoveredPlotRange: [[]],
-        ...props.state,
+        ...props.gameState,
       },
       ...props.options,
     }}

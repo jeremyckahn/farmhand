@@ -4,7 +4,7 @@ import Inventory from '../Inventory';
 import LandPurchase from '../LandPurchase';
 import { array, number, object, shape } from 'prop-types';
 
-export const Shop = ({ items, state: { purchasedField } }) => (
+export const Shop = ({ items, gameState: { purchasedField } }) => (
   <div className="Shop">
     <Inventory
       {...{
@@ -22,7 +22,7 @@ export const Shop = ({ items, state: { purchasedField } }) => (
 
 Shop.propTypes = {
   items: array.isRequired,
-  state: shape({
+  gameState: shape({
     purchasedField: number.isRequired,
     valueAdjustments: object.isRequired,
   }).isRequired,

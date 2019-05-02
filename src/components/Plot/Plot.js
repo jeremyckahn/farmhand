@@ -52,7 +52,7 @@ export const isInRange = (range, testX, testY) => {
 export const Plot = ({
   handlers: { handlePlotClick, handlePlotMouseOver },
   plotContent,
-  state: { hoveredPlotRange },
+  gameState: { hoveredPlotRange },
   x,
   y,
 

@@ -14,7 +14,7 @@ beforeEach(() => {
         handlers: {
           handleFieldPurchase: () => {},
         },
-        state: {
+        gameState: {
           purchasedField: 0,
           money: 0,
         },
@@ -43,7 +43,7 @@ describe('option rendering', () => {
     describe('user has enough money for option', () => {
       test('option is not disabled', () => {
         component.setProps({
-          state: {
+          gameState: {
             purchasedField: 0,
             money: PURCHASEABLE_FIELD_SIZES.get(1).price,
           },
@@ -62,7 +62,7 @@ describe('option rendering', () => {
   describe('purchased options', () => {
     test('option is disabled', () => {
       component.setProps({
-        state: {
+        gameState: {
           purchasedField: 1,
           money: Number.MAX_VALUE,
         },
@@ -93,7 +93,7 @@ describe('getters', () => {
     describe('player can buy selected option', () => {
       test('button is enabled', () => {
         component.setProps({
-          state: {
+          gameState: {
             purchasedField: 0,
             money: 100000,
           },
@@ -123,7 +123,7 @@ describe('handleFieldPurchase', () => {
 
   describe('user has enough money', () => {
     test('does call handleFieldPurchase prop', () => {
-      component.setProps({ state: { purchasedField: 0, money: 2000 } });
+      component.setProps({ gameState: { purchasedField: 0, money: 2000 } });
       component.instance().handleFieldPurchase();
       expect(handleFieldPurchase).toHaveBeenCalledWith(2);
     });
@@ -137,7 +137,7 @@ describe('updateSelectedOption', () => {
 
   describe('player does not have enough money for next field option', () => {
     test('does not update selectedOption', () => {
-      component.setProps({ state: { purchasedField: 1, money: 0 } });
+      component.setProps({ gameState: { purchasedField: 1, money: 0 } });
       component.instance().updateSelectedOption();
 
       expect(component.state().selectedOption).toEqual('1');
@@ -146,7 +146,7 @@ describe('updateSelectedOption', () => {
 
   describe('player has enough money for next field option', () => {
     test('updates selectedOption', () => {
-      component.setProps({ state: { purchasedField: 1, money: 2000 } });
+      component.setProps({ gameState: { purchasedField: 1, money: 2000 } });
       component.instance().updateSelectedOption();
 
       expect(component.state().selectedOption).toEqual('2');

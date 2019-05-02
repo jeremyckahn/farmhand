@@ -21,11 +21,11 @@ const getField = (props = {}) => (
       },
       hoveredPlotRange: [[]],
       rows: 0,
-      state: {
+      gameState: {
         field: [[null, null], [null, null], [null, null]],
         selectedItemId: '',
         fieldMode: fieldMode.OBSERVE,
-        ...props.state,
+        ...props.gameState,
       },
       ...props.options,
     }}
@@ -58,7 +58,7 @@ describe('fertilize-mode class', () => {
 
   test('is present when fieldMode == FERTILIZE', () => {
     component = shallow(
-      getField({ state: { fieldMode: fieldMode.FERTILIZE } })
+      getField({ gameState: { fieldMode: fieldMode.FERTILIZE } })
     );
 
     expect(component.hasClass('fertilize-mode')).toBeTruthy();
@@ -71,7 +71,9 @@ describe('plant-mode class', () => {
   });
 
   test('is present when fieldMode == PLANT', () => {
-    component = shallow(getField({ state: { fieldMode: fieldMode.PLANT } }));
+    component = shallow(
+      getField({ gameState: { fieldMode: fieldMode.PLANT } })
+    );
 
     expect(component.hasClass('plant-mode')).toBeTruthy();
   });
@@ -83,7 +85,9 @@ describe('harvest-mode class', () => {
   });
 
   test('is present when fieldMode == HARVEST', () => {
-    component = shallow(getField({ state: { fieldMode: fieldMode.HARVEST } }));
+    component = shallow(
+      getField({ gameState: { fieldMode: fieldMode.HARVEST } })
+    );
 
     expect(component.hasClass('harvest-mode')).toBeTruthy();
   });
@@ -95,7 +99,9 @@ describe('cleanup-mode class', () => {
   });
 
   test('is present when fieldMode == CLEANUP', () => {
-    component = shallow(getField({ state: { fieldMode: fieldMode.CLEANUP } }));
+    component = shallow(
+      getField({ gameState: { fieldMode: fieldMode.CLEANUP } })
+    );
 
     expect(component.hasClass('cleanup-mode')).toBeTruthy();
   });
@@ -107,7 +113,9 @@ describe('water-mode class', () => {
   });
 
   test('is present when fieldMode == WATER', () => {
-    component = shallow(getField({ state: { fieldMode: fieldMode.WATER } }));
+    component = shallow(
+      getField({ gameState: { fieldMode: fieldMode.WATER } })
+    );
 
     expect(component.hasClass('water-mode')).toBeTruthy();
   });

@@ -8,7 +8,7 @@ import './Navigation.sass';
 
 export const Navigation = ({
   handlers: { handleViewChange, handleEndDayButtonClick },
-  state: { money, stageFocus },
+  gameState: { money, stageFocus },
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
@@ -35,7 +35,7 @@ Navigation.propTypes = {
     handleViewChange: func.isRequired,
     handleEndDayButtonClick: func.isRequired,
   }).isRequired,
-  state: shape({
+  gameState: shape({
     money: number.isRequired,
     stageFocus: string.isRequired,
   }).isRequired,

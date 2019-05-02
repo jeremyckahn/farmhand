@@ -10,7 +10,7 @@ const getItem = (props = {}) => (
     {...{
       handlers: { ...props.handlers },
       item: testItem({ name: '' }),
-      state: { money: 0, ...props.state },
+      gameState: { money: 0, ...props.gameState },
       ...props.options,
     }}
   />
@@ -48,7 +48,7 @@ describe('conditional UI', () => {
               isPurchaseView: true,
               item: testItem({ name: 'an-item' }),
             },
-            state: { money: 50 },
+            gameState: { money: 50 },
           })
         );
       });
@@ -68,7 +68,7 @@ describe('conditional UI', () => {
               isPurchaseView: true,
               item: testItem({ name: 'an-item', value: 10 }),
             },
-            state: { money: 5 },
+            gameState: { money: 5 },
           })
         );
       });

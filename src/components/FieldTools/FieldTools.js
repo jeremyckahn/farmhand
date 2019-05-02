@@ -6,7 +6,7 @@ import './FieldTools.sass';
 
 export const FieldTools = ({
   handlers: { handleItemSelect },
-  state: { fieldToolInventory, selectedItemId },
+  gameState: { fieldToolInventory, selectedItemId },
 }) => (
   <div className="FieldTools">
     <ul>
@@ -28,7 +28,7 @@ FieldTools.propTypes = {
   handlers: shape({
     handleItemSelect: func.isRequired,
   }).isRequired,
-  state: shape({
+  gameState: shape({
     fieldToolInventory: array.isRequired,
     selectedItemId: string.isRequired,
   }).isRequired,

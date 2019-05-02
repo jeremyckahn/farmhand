@@ -11,7 +11,7 @@ const { CLEANUP, HARVEST, WATER } = fieldMode;
 
 export const Toolbelt = ({
   handlers: { handleFieldModeSelect },
-  state: { fieldMode: currentFieldMode },
+  gameState: { fieldMode: currentFieldMode },
 }) => (
   <div className="Toolbelt">
     {[
@@ -56,7 +56,7 @@ Toolbelt.propTypes = {
   handlers: shape({
     handleFieldModeSelect: func.isRequired,
   }).isRequired,
-  state: shape({
+  gameState: shape({
     fieldMode: string.isRequired,
   }).isRequired,
 };

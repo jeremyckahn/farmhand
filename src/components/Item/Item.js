@@ -13,7 +13,7 @@ export const Item = ({
   isSellView,
   item,
   item: { id, name, quantity, value },
-  state: { money },
+  gameState: { money },
 }) => (
   <div className={classNames('Item', { 'is-selected': isSelected })}>
     <header>
@@ -52,7 +52,7 @@ Item.propTypes = {
   isSelected: bool,
   isSellView: bool,
   item: object.isRequired,
-  state: shape({
+  gameState: shape({
     money: number,
   }).isRequired,
 };

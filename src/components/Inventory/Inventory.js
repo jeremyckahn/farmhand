@@ -13,7 +13,7 @@ export const Inventory = ({
   isPurchaseView,
   isSellView,
   items,
-  state: { valueAdjustments },
+  gameState: { valueAdjustments },
 }) => (
   <div className="Inventory">
     <ul>
@@ -39,7 +39,7 @@ Inventory.propTypes = {
   items: array.isRequired,
   isPurchaseView: bool,
   isSellView: bool,
-  state: shape({
+  gameState: shape({
     valueAdjustments: object.isRequired,
   }).isRequired,
 };

@@ -13,7 +13,11 @@ const getNavigation = (props = {}) => (
         handleEndDayButtonClick: () => {},
         ...props.handlers,
       },
-      state: { money: 0, stageFocus: stageFocusType.FIELD, ...props.state },
+      gameState: {
+        money: 0,
+        stageFocus: stageFocusType.FIELD,
+        ...props.gameState,
+      },
     }}
   />
 );

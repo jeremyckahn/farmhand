@@ -14,9 +14,9 @@ const getInventory = (props = {}) => (
     {...{
       handlers: { ...props.handlers },
       items: [],
-      state: {
+      gameState: {
         valueAdjustments: {},
-        ...props.state,
+        ...props.gameState,
       },
       ...props.options,
     }}

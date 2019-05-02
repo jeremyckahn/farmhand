@@ -14,7 +14,7 @@ const getStage = (props = {}) => (
       handlers: {
         ...props.handlers,
       },
-      state: {
+      gameState: {
         field: [[]],
         purchasedField: 0,
         playerInventory: [],
@@ -23,7 +23,7 @@ const getStage = (props = {}) => (
         shopInventory: [],
         stageFocus: stageFocusType.FIELD,
         valueAdjustments: {},
-        ...props.state,
+        ...props.gameState,
       },
     }}
   />
@@ -33,7 +33,7 @@ describe('focus', () => {
   describe('field', () => {
     beforeEach(() => {
       component = shallow(
-        getStage({ state: { stageFocus: stageFocusType.FIELD } })
+        getStage({ gameState: { stageFocus: stageFocusType.FIELD } })
       );
     });
 
@@ -45,7 +45,7 @@ describe('focus', () => {
   describe('inventory', () => {
     beforeEach(() => {
       component = shallow(
-        getStage({ state: { stageFocus: stageFocusType.INVENTORY } })
+        getStage({ gameState: { stageFocus: stageFocusType.INVENTORY } })
       );
     });
 
@@ -57,7 +57,7 @@ describe('focus', () => {
   describe('shop', () => {
     beforeEach(() => {
       component = shallow(
-        getStage({ state: { stageFocus: stageFocusType.SHOP } })
+        getStage({ gameState: { stageFocus: stageFocusType.SHOP } })
       );
     });
 

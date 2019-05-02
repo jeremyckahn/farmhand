@@ -10,11 +10,11 @@ const getShop = (props = {}) => (
     {...{
       handlers: { handleFieldPurchase: () => {}, ...props.handlers },
       items: [],
-      state: {
+      gameState: {
         purchasedField: 0,
         money: 0,
         valueAdjustments: {},
-        ...props.state,
+        ...props.gameState,
       },
       ...props.options,
     }}

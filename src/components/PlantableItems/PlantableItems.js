@@ -6,7 +6,7 @@ import './PlantableItems.sass';
 
 export const PlantableItems = ({
   handlers: { handleItemSelect },
-  state: { plantableInventory, selectedItemId },
+  gameState: { plantableInventory, selectedItemId },
 }) => (
   <div className="PlantableItems">
     <ul>
@@ -28,7 +28,7 @@ PlantableItems.propTypes = {
   handlers: shape({
     handleItemSelect: func.isRequired,
   }).isRequired,
-  state: shape({
+  gameState: shape({
     plantableInventory: array.isRequired,
     selectedItemId: string.isRequired,
   }).isRequired,

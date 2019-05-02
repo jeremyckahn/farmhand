@@ -18,7 +18,7 @@ export class LandPurchase extends Component {
   get canPlayerBuySelectedOption() {
     const {
       props: {
-        state: { money },
+        gameState: { money },
       },
     } = this;
 
@@ -32,14 +32,14 @@ export class LandPurchase extends Component {
     );
   }
 
-  hasPurchasedField = fieldId => fieldId <= this.props.state.purchasedField;
+  hasPurchasedField = fieldId => fieldId <= this.props.gameState.purchasedField;
 
   handleFieldPurchase = () => {
     const selectedOptionNumber = this.selectedOption;
     const { price } = PURCHASEABLE_FIELD_SIZES.get(selectedOptionNumber);
     const {
       handlers: { handleFieldPurchase },
-      state: { money },
+      gameState: { money },
     } = this.props;
 
     if (money >= price) {
@@ -54,7 +54,7 @@ export class LandPurchase extends Component {
   updateSelectedOption = () => {
     const {
       props: {
-        state: { money },
+        gameState: { money },
       },
       selectedOption,
     } = this;
@@ -72,7 +72,7 @@ export class LandPurchase extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.state.money !== prevProps.state.money) {
+    if (this.props.gameState.money !== prevProps.gameState.money) {
       this.updateSelectedOption();
     }
   }
@@ -85,7 +85,7 @@ export class LandPurchase extends Component {
       onSelectChange,
       purchaseableFieldSizes,
       props: {
-        state: { money },
+        gameState: { money },
       },
       state: { selectedOption },
     } = this;
@@ -119,7 +119,7 @@ LandPurchase.propTypes = {
   handlers: shape({
     handleFieldPurchase: func.isRequired,
   }).isRequired,
-  state: shape({
+  gameState: shape({
     purchasedField: number.isRequired,
     money: number.isRequired,
   }).isRequired,

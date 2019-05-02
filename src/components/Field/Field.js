@@ -20,7 +20,7 @@ const {
 export const Field = ({
   columns,
   rows,
-  state: { field, selectedItemId, fieldMode },
+  gameState: { field, selectedItemId, fieldMode },
 }) => (
   <div
     className={classNames('Field', {
@@ -57,7 +57,7 @@ export const Field = ({
 Field.propTypes = {
   columns: number.isRequired,
   rows: number.isRequired,
-  state: shape({
+  gameState: shape({
     field: array.isRequired,
     selectedItemId: string.isRequired,
     fieldMode: string.isRequired,

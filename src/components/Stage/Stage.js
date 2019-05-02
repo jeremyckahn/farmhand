@@ -15,7 +15,7 @@ const stageTitleMap = {
 };
 
 export const Stage = ({
-  state: { field, playerInventory, shopInventory, stageFocus },
+  gameState: { field, playerInventory, shopInventory, stageFocus },
 }) => (
   <div className="Stage">
     <h2>{stageTitleMap[stageFocus]}</h2>
@@ -46,7 +46,7 @@ export const Stage = ({
 );
 
 Stage.propTypes = {
-  state: shape({
+  gameState: shape({
     field: arrayOf(array).isRequired,
     playerInventory: array.isRequired,
     shopInventory: array.isRequired,

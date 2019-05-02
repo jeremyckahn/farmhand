@@ -14,13 +14,13 @@ const getContextPane = (props = {}) => (
         handleItemSelect: () => {},
         ...props.handlers,
       },
-      state: {
+      gameState: {
         selectedItemId: '',
         fieldMode: '',
         fieldToolInventory: [],
         stageFocus: stageFocusType.NONE,
         plantableInventory: [],
-        ...props.state,
+        ...props.gameState,
       },
     }}
   />
@@ -35,7 +35,7 @@ describe('conditional UI', () => {
     describe('stageFocus === stageFocusType.FIELD', () => {
       beforeEach(() => {
         component = shallow(
-          getContextPane({ state: { stageFocus: stageFocusType.FIELD } })
+          getContextPane({ gameState: { stageFocus: stageFocusType.FIELD } })
         );
       });
 

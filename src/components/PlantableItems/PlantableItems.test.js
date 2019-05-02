@@ -15,10 +15,10 @@ const getPlantableItems = (props = {}) => (
         handleItemSelect: () => {},
         ...props.handlers,
       },
-      state: {
+      gameState: {
         plantableInventory: [],
         selectedItemId: '',
-        ...props.state,
+        ...props.gameState,
       },
     }}
   />
@@ -32,7 +32,7 @@ describe('rendering', () => {
   beforeEach(() => {
     component = shallow(
       getPlantableItems({
-        state: {
+        gameState: {
           plantableInventory: [{ quantity: 1, id: 'sample-crop-3' }],
           selectedItemId: 'sample-crop-3',
         },
@@ -44,7 +44,7 @@ describe('rendering', () => {
     expect(component.find(Item)).toHaveLength(1);
   });
 
-  test('renders selected item state', () => {
+  test('renders selected item gameState', () => {
     expect(component.find(Item).props().isSelected).toBeTruthy();
   });
 });

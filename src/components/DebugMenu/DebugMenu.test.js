@@ -13,8 +13,8 @@ const getDebugMenu = (props = {}) => (
         ...props.handlers,
       },
       items: [],
-      state: {
-        ...props.state,
+      gameState: {
+        ...props.gameState,
       },
       ...props.options,
     }}

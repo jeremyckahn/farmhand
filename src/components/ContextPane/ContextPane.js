@@ -10,7 +10,7 @@ import './ContextPane.sass';
 
 // TODO: Render player inventory for stageFocus === SHOP.
 
-export const ContextPane = ({ state: { stageFocus } }) => (
+export const ContextPane = ({ gameState: { stageFocus } }) => (
   <div className="ContextPane">
     {stageFocus === stageFocusType.FIELD && (
       <>
@@ -32,7 +32,7 @@ export const ContextPane = ({ state: { stageFocus } }) => (
 );
 
 ContextPane.propTypes = {
-  state: shape({
+  gameState: shape({
     stageFocus: string.isRequired,
   }).isRequired,
 };

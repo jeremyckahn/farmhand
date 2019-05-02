@@ -545,7 +545,7 @@ export default class Farmhand extends Component {
 
     // Bundle up the raw state and the computed state into one object to be
     // passed down through the component tree.
-    const state = {
+    const gameState = {
       ...this.state,
       fieldToolInventory,
       hoveredPlotRange,
@@ -555,7 +555,7 @@ export default class Farmhand extends Component {
 
     return (
       <HotKeys className="hotkeys" keyMap={keyMap} handlers={keyHandlers}>
-        <FarmhandContext.Provider value={{ handlers, state }}>
+        <FarmhandContext.Provider value={{ gameState, handlers }}>
           <div className="Farmhand fill">
             <NotificationSystem ref={notificationSystemRef} />
             <div className="sidebar">

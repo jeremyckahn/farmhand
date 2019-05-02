@@ -9,9 +9,9 @@ const getToolbelt = (props = {}) => (
   <Toolbelt
     {...{
       handlers: { handleFieldModeSelect: () => {}, ...props.handlers },
-      state: {
+      gameState: {
         fieldMode: fieldMode.OBSERVE,
-        ...props.state,
+        ...props.gameState,
       },
       ...props.options,
     }}
@@ -34,7 +34,7 @@ describe('tool selection', () => {
   describe('a tool is selected', () => {
     beforeEach(() => {
       component = shallow(
-        getToolbelt({ state: { fieldMode: fieldMode.WATER } })
+        getToolbelt({ gameState: { fieldMode: fieldMode.WATER } })
       );
     });
 
