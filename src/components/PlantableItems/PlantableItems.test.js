@@ -1,5 +1,5 @@
 import React from 'react';
-import PlantableItems from './PlantableItems';
+import { PlantableItems } from './PlantableItems';
 import Item from '../Item';
 import { shallow } from 'enzyme';
 

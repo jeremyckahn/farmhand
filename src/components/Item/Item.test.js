@@ -1,5 +1,5 @@
 import React from 'react';
-import Item from './';
+import { Item } from './Item';
 import { shallow } from 'enzyme';
 import { testItem } from '../../test-utils';
 

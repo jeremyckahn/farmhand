@@ -1,11 +1,11 @@
 import React from 'react';
+import FarmhandContext from '../../Farmhand.context';
 import { array, func, shape, string } from 'prop-types';
 import Item from '../Item';
 import './FieldTools.sass';
 
-const FieldTools = ({
+export const FieldTools = ({
   handlers: { handleItemSelect },
-  state,
   state: { fieldToolInventory, selectedItemId },
 }) => (
   <div className="FieldTools">
@@ -16,7 +16,6 @@ const FieldTools = ({
             {...{
               item,
               isSelected: selectedItemId === item.id,
-              state,
             }}
           />
         </li>
@@ -35,4 +34,10 @@ FieldTools.propTypes = {
   }).isRequired,
 };
 
-export default FieldTools;
+export default function Consumer() {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <FieldTools {...context} />}
+    </FarmhandContext.Consumer>
+  );
+}

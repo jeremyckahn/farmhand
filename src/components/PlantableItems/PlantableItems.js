@@ -1,11 +1,11 @@
 import React from 'react';
+import FarmhandContext from '../../Farmhand.context';
 import { array, func, shape, string } from 'prop-types';
 import Item from '../Item';
 import './PlantableItems.sass';
 
 export const PlantableItems = ({
   handlers: { handleItemSelect },
-  state,
   state: { plantableInventory, selectedItemId },
 }) => (
   <div className="PlantableItems">
@@ -16,7 +16,6 @@ export const PlantableItems = ({
             {...{
               item,
               isSelected: item.id === selectedItemId,
-              state,
             }}
           />
         </li>
@@ -35,4 +34,10 @@ PlantableItems.propTypes = {
   }).isRequired,
 };
 
-export default PlantableItems;
+export default function Consumer() {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <PlantableItems {...context} />}
+    </FarmhandContext.Consumer>
+  );
+}

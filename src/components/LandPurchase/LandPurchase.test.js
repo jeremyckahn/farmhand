@@ -1,5 +1,5 @@
 import React from 'react';
-import LandPurchase from './LandPurchase';
+import { LandPurchase } from './LandPurchase';
 import { PURCHASEABLE_FIELD_SIZES } from '../../constants';
 import { shallow } from 'enzyme';
 

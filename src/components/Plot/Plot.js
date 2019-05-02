@@ -1,4 +1,5 @@
 import React from 'react';
+import FarmhandContext from '../../Farmhand.context';
 import {
   array,
   arrayOf,
@@ -50,11 +51,10 @@ export const isInRange = (range, testX, testY) => {
 
 export const Plot = ({
   handlers: { handlePlotClick, handlePlotMouseOver },
-  hoveredPlotRange,
   plotContent,
+  state: { hoveredPlotRange },
   x,
   y,
-  state,
 
   image = getPlotImage(plotContent),
   lifeStage = plotContent &&
@@ -98,9 +98,14 @@ Plot.propTypes = {
   hoveredPlotRange: arrayOf(array),
   lifeStage: string,
   plotContent: object,
-  state: object.isRequired,
   x: number.isRequired,
   y: number.isRequired,
 };
 
-export default Plot;
+export default function Consumer(props) {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <Plot {...{ ...context, ...props }} />}
+    </FarmhandContext.Consumer>
+  );
+}

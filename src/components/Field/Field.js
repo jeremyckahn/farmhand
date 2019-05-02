@@ -1,5 +1,6 @@
 import React from 'react';
-import { array, arrayOf, number, object, shape, string } from 'prop-types';
+import FarmhandContext from '../../Farmhand.context';
+import { array, number, shape, string } from 'prop-types';
 import Plot from '../Plot';
 import { fieldMode } from '../../enums';
 import classNames from 'classnames';
@@ -16,12 +17,10 @@ const {
   WATER,
 } = fieldMode;
 
-const Field = ({
-  handlers,
+export const Field = ({
   columns,
   rows,
-  state,
-  state: { field, hoveredPlotRange, selectedItemId, fieldMode },
+  state: { field, selectedItemId, fieldMode },
 }) => (
   <div
     className={classNames('Field', {
@@ -44,10 +43,7 @@ const Field = ({
               <Plot
                 key={j}
                 {...{
-                  handlers,
-                  hoveredPlotRange,
                   plotContent,
-                  state,
                   x: j,
                   y: i,
                 }}
@@ -60,8 +56,6 @@ const Field = ({
 
 Field.propTypes = {
   columns: number.isRequired,
-  handlers: object.isRequired,
-  hoveredPlotRange: arrayOf(array),
   rows: number.isRequired,
   state: shape({
     field: array.isRequired,
@@ -70,4 +64,10 @@ Field.propTypes = {
   }).isRequired,
 };
 
-export default Field;
+export default function Consumer(props) {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <Field {...{ ...context, ...props }} />}
+    </FarmhandContext.Consumer>
+  );
+}

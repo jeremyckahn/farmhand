@@ -1,18 +1,18 @@
 import React from 'react';
+import FarmhandContext from '../../Farmhand.context';
 import { bool, func, number, object, shape } from 'prop-types';
 import classNames from 'classnames';
 import { items } from '../../img';
 
 import './Item.sass';
 
-const Item = ({
+export const Item = ({
   handlers: { handleItemPurchase, handleItemSell } = {},
   isPurchaseView,
   isSelected,
   isSellView,
   item,
   item: { id, name, quantity, value },
-  state,
   state: { money },
 }) => (
   <div className={classNames('Item', { 'is-selected': isSelected })}>
@@ -57,4 +57,10 @@ Item.propTypes = {
   }).isRequired,
 };
 
-export default Item;
+export default function Consumer(props) {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <Item {...{ ...context, ...props }} />}
+    </FarmhandContext.Consumer>
+  );
+}

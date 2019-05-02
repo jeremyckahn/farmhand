@@ -1,5 +1,6 @@
 import React from 'react';
-import { array, arrayOf, object, shape, string } from 'prop-types';
+import FarmhandContext from '../../Farmhand.context';
+import { array, arrayOf, shape, string } from 'prop-types';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
@@ -13,9 +14,7 @@ const stageTitleMap = {
   [stageFocusType.SHOP]: 'Shop',
 };
 
-const Stage = ({
-  handlers,
-  state,
+export const Stage = ({
   state: { field, playerInventory, shopInventory, stageFocus },
 }) => (
   <div className="Stage">
@@ -23,29 +22,23 @@ const Stage = ({
     {stageFocus === stageFocusType.FIELD && (
       <Field
         {...{
-          handlers,
           columns: field[0].length,
           rows: field.length,
-          state,
         }}
       />
     )}
     {stageFocus === stageFocusType.INVENTORY && (
       <Inventory
         {...{
-          handlers,
           isSellView: true,
           items: playerInventory,
-          state,
         }}
       />
     )}
     {stageFocus === stageFocusType.SHOP && (
       <Shop
         {...{
-          handlers,
           items: shopInventory,
-          state,
         }}
       />
     )}
@@ -53,7 +46,6 @@ const Stage = ({
 );
 
 Stage.propTypes = {
-  handlers: object.isRequired,
   state: shape({
     field: arrayOf(array).isRequired,
     playerInventory: array.isRequired,
@@ -62,4 +54,10 @@ Stage.propTypes = {
   }).isRequired,
 };
 
-export default Stage;
+export default function Consumer() {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <Stage {...context} />}
+    </FarmhandContext.Consumer>
+  );
+}

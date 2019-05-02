@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import FarmhandContext from '../../Farmhand.context';
 import { func, number, shape } from 'prop-types';
 import { PURCHASEABLE_FIELD_SIZES } from '../../constants';
 import './LandPurchase.sass';
 
-class LandPurchase extends Component {
+export class LandPurchase extends Component {
   state = {
     selectedOption: '',
   };
@@ -124,4 +125,10 @@ LandPurchase.propTypes = {
   }).isRequired,
 };
 
-export default LandPurchase;
+export default function Consumer() {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <LandPurchase {...context} />}
+    </FarmhandContext.Consumer>
+  );
+}

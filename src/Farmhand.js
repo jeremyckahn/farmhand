@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import FarmhandContext from './Farmhand.context';
 import NotificationSystem from 'react-notification-system';
 import { HotKeys } from 'react-hotkeys';
 import localforage from 'localforage';
@@ -554,15 +555,17 @@ export default class Farmhand extends Component {
 
     return (
       <HotKeys className="hotkeys" keyMap={keyMap} handlers={keyHandlers}>
-        <div className="Farmhand fill">
-          <NotificationSystem ref={notificationSystemRef} />
-          <div className="sidebar">
-            <Navigation {...{ handlers, state }} />
-            <ContextPane {...{ handlers, state }} />
-            <DebugMenu {...{ handlers, state }} />
+        <FarmhandContext.Provider value={{ handlers, state }}>
+          <div className="Farmhand fill">
+            <NotificationSystem ref={notificationSystemRef} />
+            <div className="sidebar">
+              <Navigation />
+              <ContextPane />
+              <DebugMenu />
+            </div>
+            <Stage />
           </div>
-          <Stage {...{ handlers, state }} />
-        </div>
+        </FarmhandContext.Provider>
       </HotKeys>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Field from './Field';
+import { Field } from './Field';
 import Plot from '../Plot';
 import { fieldMode } from '../../enums';
 import { shallow } from 'enzyme';

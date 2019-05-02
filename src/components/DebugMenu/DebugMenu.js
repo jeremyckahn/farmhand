@@ -1,4 +1,5 @@
 import React from 'react';
+import FarmhandContext from '../../Farmhand.context';
 import { func, shape } from 'prop-types';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -8,7 +9,7 @@ import Button from '@material-ui/core/Button';
 
 import './DebugMenu.sass';
 
-const DebugMenu = ({
+export const DebugMenu = ({
   handlers: { handleClearPersistedDataClick, handleWaterAllPlotsClick },
 }) => (
   <ExpansionPanel className="DebugMenu" style={{ position: 'absolute' }}>
@@ -43,4 +44,10 @@ DebugMenu.propTypes = {
   }).isRequired,
 };
 
-export default DebugMenu;
+export default function Consumer() {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <DebugMenu {...context} />}
+    </FarmhandContext.Consumer>
+  );
+}

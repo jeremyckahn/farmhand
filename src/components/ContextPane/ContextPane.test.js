@@ -1,5 +1,5 @@
 import React from 'react';
-import ContextPane from './ContextPane';
+import { ContextPane } from './ContextPane';
 import { stageFocusType } from '../../../src/enums';
 import PlantableItems from '../PlantableItems';
 import { shallow } from 'enzyme';

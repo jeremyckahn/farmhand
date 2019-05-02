@@ -107,6 +107,8 @@ export const sprinkler = freeze({
   value: 120,
 });
 
+// TODO: Implement scarecrow removal.
+
 /**
  * @property farmhand.module:items.scarecrow
  * @type {farmhand.item}

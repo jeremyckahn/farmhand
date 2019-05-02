@@ -1,11 +1,12 @@
 import React from 'react';
+import FarmhandContext from '../../Farmhand.context';
 import Dinero from 'dinero.js';
 import { func, number, shape, string } from 'prop-types';
 import { stageFocusType } from '../../enums';
 
 import './Navigation.sass';
 
-const Navigation = ({
+export const Navigation = ({
   handlers: { handleViewChange, handleEndDayButtonClick },
   state: { money, stageFocus },
 }) => (
@@ -40,4 +41,10 @@ Navigation.propTypes = {
   }).isRequired,
 };
 
-export default Navigation;
+export default function Consumer() {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <Navigation {...context} />}
+    </FarmhandContext.Consumer>
+  );
+}

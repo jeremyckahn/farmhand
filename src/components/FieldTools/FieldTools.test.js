@@ -1,5 +1,5 @@
 import React from 'react';
-import FieldTools from './FieldTools';
+import { FieldTools } from './FieldTools';
 import Item from '../Item';
 import { shallow } from 'enzyme';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Toolbelt from './Toolbelt';
+import { Toolbelt } from './Toolbelt';
 import { shallow } from 'enzyme';
 import { fieldMode } from '../../enums';
 

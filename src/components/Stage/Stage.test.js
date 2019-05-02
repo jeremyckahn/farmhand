@@ -1,5 +1,5 @@
 import React from 'react';
-import Stage from './';
+import { Stage } from './Stage';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';

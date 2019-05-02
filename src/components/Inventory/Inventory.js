@@ -1,4 +1,5 @@
 import React from 'react';
+import FarmhandContext from '../../Farmhand.context';
 import Item from '../Item';
 import { getItemValue } from '../../utils';
 import { array, bool, object, shape } from 'prop-types';
@@ -8,12 +9,10 @@ import './Inventory.sass';
 // TODO: Group items by category (seeds, field tools, etc.) and render headers
 // for the groups.
 
-const Inventory = ({
-  handlers,
+export const Inventory = ({
   isPurchaseView,
   isSellView,
   items,
-  state,
   state: { valueAdjustments },
 }) => (
   <div className="Inventory">
@@ -22,14 +21,12 @@ const Inventory = ({
         <li key={i}>
           <Item
             {...{
-              handlers,
               isPurchaseView,
               isSellView,
               item: {
                 ...item,
                 value: getItemValue(item, valueAdjustments),
               },
-              state,
             }}
           />
         </li>
@@ -39,7 +36,6 @@ const Inventory = ({
 );
 
 Inventory.propTypes = {
-  handlers: object.isRequired,
   items: array.isRequired,
   isPurchaseView: bool,
   isSellView: bool,
@@ -48,4 +44,10 @@ Inventory.propTypes = {
   }).isRequired,
 };
 
-export default Inventory;
+export default function Consumer(props) {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <Inventory {...{ ...context, ...props }} />}
+    </FarmhandContext.Consumer>
+  );
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import DebugMenu from './DebugMenu';
+import { DebugMenu } from './DebugMenu';
 import { shallow } from 'enzyme';
 
 let component;

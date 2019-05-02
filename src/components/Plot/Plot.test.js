@@ -1,5 +1,5 @@
 import React from 'react';
-import Plot, { isInRange, getBackgroundStyles } from './Plot';
+import { Plot, isInRange, getBackgroundStyles } from './Plot';
 import { shallow } from 'enzyme';
 import { getPlotContentFromItemId } from '../../utils';
 import { testCrop } from '../../test-utils';
@@ -20,11 +20,13 @@ const getPlot = (props = {}) => (
         handlePlotMouseOver: () => {},
         ...props.handlers,
       },
-      hoveredPlotRange: [[]],
       lifeStage: cropLifeStage.SEED,
       x: 0,
       y: 0,
-      state: { ...props.state },
+      state: {
+        hoveredPlotRange: [[]],
+        ...props.state,
+      },
       ...props.options,
     }}
   />

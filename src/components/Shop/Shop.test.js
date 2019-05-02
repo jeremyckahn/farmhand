@@ -1,5 +1,5 @@
 import React from 'react';
-import Shop from './';
+import { Shop } from './Shop';
 import Inventory from '../Inventory';
 import { shallow } from 'enzyme';
 

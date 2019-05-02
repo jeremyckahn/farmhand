@@ -1,4 +1,5 @@
 import React from 'react';
+import FarmhandContext from '../../Farmhand.context';
 import { func, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import './Toolbelt.sass';
@@ -8,7 +9,7 @@ import { tools, pixel } from '../../img';
 
 const { CLEANUP, HARVEST, WATER } = fieldMode;
 
-const Toolbelt = ({
+export const Toolbelt = ({
   handlers: { handleFieldModeSelect },
   state: { fieldMode: currentFieldMode },
 }) => (
@@ -60,4 +61,10 @@ Toolbelt.propTypes = {
   }).isRequired,
 };
 
-export default Toolbelt;
+export default function Consumer() {
+  return (
+    <FarmhandContext.Consumer>
+      {context => <Toolbelt {...context} />}
+    </FarmhandContext.Consumer>
+  );
+}
