@@ -10,31 +10,22 @@ jest.mock('../../img');
 
 let component;
 
-const getField = (props = {}) => (
-  <Field
-    {...{
-      columns: 0,
-      handlers: {
-        handlePlotClick: () => {},
-        handlePlotMouseOver: () => {},
-        ...props.handlers,
-      },
-      hoveredPlotRange: [[]],
-      rows: 0,
-      gameState: {
+beforeEach(() => {
+  component = shallow(
+    <Field
+      {...{
+        columns: 0,
+        rows: 0,
         field: [[null, null], [null, null], [null, null]],
-        selectedItemId: '',
         fieldMode: fieldMode.OBSERVE,
-        ...props.gameState,
-      },
-      ...props.options,
-    }}
-  />
-);
+      }}
+    />
+  );
+});
 
 describe('field rendering', () => {
   beforeEach(() => {
-    component = shallow(getField({ options: { columns: 2, rows: 3 } }));
+    component.setProps({ columns: 2, rows: 3 });
   });
 
   test('renders rows', () => {
@@ -57,10 +48,7 @@ describe('fertilize-mode class', () => {
   });
 
   test('is present when fieldMode == FERTILIZE', () => {
-    component = shallow(
-      getField({ gameState: { fieldMode: fieldMode.FERTILIZE } })
-    );
-
+    component.setProps({ fieldMode: fieldMode.FERTILIZE });
     expect(component.hasClass('fertilize-mode')).toBeTruthy();
   });
 });
@@ -71,10 +59,7 @@ describe('plant-mode class', () => {
   });
 
   test('is present when fieldMode == PLANT', () => {
-    component = shallow(
-      getField({ gameState: { fieldMode: fieldMode.PLANT } })
-    );
-
+    component.setProps({ fieldMode: fieldMode.PLANT });
     expect(component.hasClass('plant-mode')).toBeTruthy();
   });
 });
@@ -85,10 +70,7 @@ describe('harvest-mode class', () => {
   });
 
   test('is present when fieldMode == HARVEST', () => {
-    component = shallow(
-      getField({ gameState: { fieldMode: fieldMode.HARVEST } })
-    );
-
+    component.setProps({ fieldMode: fieldMode.HARVEST });
     expect(component.hasClass('harvest-mode')).toBeTruthy();
   });
 });
@@ -99,10 +81,7 @@ describe('cleanup-mode class', () => {
   });
 
   test('is present when fieldMode == CLEANUP', () => {
-    component = shallow(
-      getField({ gameState: { fieldMode: fieldMode.CLEANUP } })
-    );
-
+    component.setProps({ fieldMode: fieldMode.CLEANUP });
     expect(component.hasClass('cleanup-mode')).toBeTruthy();
   });
 });
@@ -113,10 +92,7 @@ describe('water-mode class', () => {
   });
 
   test('is present when fieldMode == WATER', () => {
-    component = shallow(
-      getField({ gameState: { fieldMode: fieldMode.WATER } })
-    );
-
+    component.setProps({ fieldMode: fieldMode.WATER });
     expect(component.hasClass('water-mode')).toBeTruthy();
   });
 });

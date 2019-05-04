@@ -5,21 +5,15 @@ import { fieldMode } from '../../enums';
 
 let component;
 
-const getToolbelt = (props = {}) => (
-  <Toolbelt
-    {...{
-      handlers: { handleFieldModeSelect: () => {}, ...props.handlers },
-      gameState: {
-        fieldMode: fieldMode.OBSERVE,
-        ...props.gameState,
-      },
-      ...props.options,
-    }}
-  />
-);
-
 beforeEach(() => {
-  component = shallow(getToolbelt());
+  component = shallow(
+    <Toolbelt
+      {...{
+        handleFieldModeSelect: () => {},
+        fieldMode: fieldMode.OBSERVE,
+      }}
+    />
+  );
 });
 
 test('renders shop inventory', () => {
@@ -33,9 +27,7 @@ describe('tool selection', () => {
 
   describe('a tool is selected', () => {
     beforeEach(() => {
-      component = shallow(
-        getToolbelt({ gameState: { fieldMode: fieldMode.WATER } })
-      );
+      component.setProps({ fieldMode: fieldMode.WATER });
     });
 
     test('renders selected tool appropriately', () => {

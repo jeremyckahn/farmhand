@@ -5,30 +5,15 @@ import { shallow } from 'enzyme';
 
 let component;
 
-const getFieldTools = (props = {}) => (
-  <FieldTools
-    {...{
-      handlers: {
-        handleItemSelect: () => {},
-        ...props.handlers,
-      },
-      gameState: {
-        fieldToolInventory: [],
-        selectedItemId: '',
-        ...props.gameState,
-      },
-    }}
-  />
-);
-
 beforeEach(() => {
   component = shallow(
-    getFieldTools({
-      gameState: {
+    <FieldTools
+      {...{
+        handleItemSelect: () => {},
         fieldToolInventory: [{ quantity: 1, id: 'sample-field-tool-1' }],
         selectedItemId: 'sample-field-tool-1',
-      },
-    })
+      }}
+    />
   );
 });
 

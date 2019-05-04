@@ -12,28 +12,19 @@ jest.mock('../../img');
 
 let component;
 
-const getPlot = (props = {}) => (
-  <Plot
-    {...{
-      handlers: {
+beforeEach(() => {
+  component = shallow(
+    <Plot
+      {...{
         handlePlotClick: () => {},
         handlePlotMouseOver: () => {},
-        ...props.handlers,
-      },
-      lifeStage: cropLifeStage.SEED,
-      x: 0,
-      y: 0,
-      gameState: {
         hoveredPlotRange: [[]],
-        ...props.gameState,
-      },
-      ...props.options,
-    }}
-  />
-);
-
-beforeEach(() => {
-  component = shallow(getPlot());
+        lifeStage: cropLifeStage.SEED,
+        x: 0,
+        y: 0,
+      }}
+    />
+  );
 });
 
 test('defaults to rending a pixel', () => {
@@ -55,32 +46,24 @@ test('renders sprinkler class', () => {
 });
 
 test('renders "is-fertilized" class', () => {
-  component = shallow(
-    getPlot({
-      options: {
-        plotContent: testCrop({ itemId: 'sample-crop-1', isFertilized: true }),
-      },
-    })
-  );
+  component.setProps({
+    plotContent: testCrop({ itemId: 'sample-crop-1', isFertilized: true }),
+  });
   expect(component.hasClass('is-fertilized')).toBeTruthy();
 });
 
 test('renders "is-ripe" class', () => {
-  component = shallow(getPlot({ options: { lifeStage: cropLifeStage.GROWN } }));
+  component.setProps({ lifeStage: cropLifeStage.GROWN });
   expect(component.hasClass('is-ripe')).toBeTruthy();
 });
 
 test('renders provided image data', () => {
   const image = 'data:image/png;base64,some-other-image';
 
-  component = shallow(
-    getPlot({
-      options: {
-        image,
-        plotContent: testCrop({ itemId: 'sample-crop-1' }),
-      },
-    })
-  );
+  component.setProps({
+    image,
+    plotContent: testCrop({ itemId: 'sample-crop-1' }),
+  });
 
   expect(component.find('img').props().style.backgroundImage).toBe(
     `url(${image})`
@@ -93,16 +76,12 @@ describe('background image', () => {
   });
 
   test('renders wateredPlot image', () => {
-    component = shallow(
-      getPlot({
-        options: {
-          plotContent: testCrop({
-            itemId: 'sample-crop-1',
-            wasWateredToday: true,
-          }),
-        },
-      })
-    );
+    component.setProps({
+      plotContent: testCrop({
+        itemId: 'sample-crop-1',
+        wasWateredToday: true,
+      }),
+    });
 
     expect(component.find('.Plot').props().style.backgroundImage).toBe(
       `url(${plotStates['watered-plot']})`

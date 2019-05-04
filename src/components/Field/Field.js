@@ -1,6 +1,6 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import { array, number, shape, string } from 'prop-types';
+import { array, number, string } from 'prop-types';
 import Plot from '../Plot';
 import { fieldMode } from '../../enums';
 import classNames from 'classnames';
@@ -17,11 +17,7 @@ const {
   WATER,
 } = fieldMode;
 
-export const Field = ({
-  columns,
-  rows,
-  gameState: { field, selectedItemId, fieldMode },
-}) => (
+export const Field = ({ columns, field, fieldMode, rows }) => (
   <div
     className={classNames('Field', {
       'cleanup-mode': fieldMode === CLEANUP,
@@ -56,18 +52,17 @@ export const Field = ({
 
 Field.propTypes = {
   columns: number.isRequired,
+  field: array.isRequired,
+  fieldMode: string.isRequired,
   rows: number.isRequired,
-  gameState: shape({
-    field: array.isRequired,
-    selectedItemId: string.isRequired,
-    fieldMode: string.isRequired,
-  }).isRequired,
 };
 
 export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
-      {context => <Field {...{ ...context, ...props }} />}
+      {({ gameState, handlers }) => (
+        <Field {...{ ...gameState, ...handlers, ...props }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }

@@ -2,36 +2,31 @@ import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
 import Inventory from '../Inventory';
 import LandPurchase from '../LandPurchase';
-import { array, number, object, shape } from 'prop-types';
+import { array, object } from 'prop-types';
 
-export const Shop = ({ items, gameState: { purchasedField } }) => (
+export const Shop = ({ shopInventory }) => (
   <div className="Shop">
     <Inventory
       {...{
         isPurchaseView: true,
-        items,
+        items: shopInventory,
       }}
     />
-    <LandPurchase
-      {...{
-        purchasedField,
-      }}
-    />
+    <LandPurchase />
   </div>
 );
 
 Shop.propTypes = {
-  items: array.isRequired,
-  gameState: shape({
-    purchasedField: number.isRequired,
-    valueAdjustments: object.isRequired,
-  }).isRequired,
+  shopInventory: array.isRequired,
+  valueAdjustments: object.isRequired,
 };
 
 export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
-      {context => <Shop {...{ ...context, ...props }} />}
+      {({ gameState, handlers }) => (
+        <Shop {...{ ...gameState, ...handlers, ...props }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }

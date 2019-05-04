@@ -1,6 +1,6 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import { array, arrayOf, shape, string } from 'prop-types';
+import { array, arrayOf, string } from 'prop-types';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
@@ -14,9 +14,7 @@ const stageTitleMap = {
   [stageFocusType.SHOP]: 'Shop',
 };
 
-export const Stage = ({
-  gameState: { field, playerInventory, shopInventory, stageFocus },
-}) => (
+export const Stage = ({ field, playerInventory, stageFocus }) => (
   <div className="Stage">
     <h2>{stageTitleMap[stageFocus]}</h2>
     {stageFocus === stageFocusType.FIELD && (
@@ -35,29 +33,22 @@ export const Stage = ({
         }}
       />
     )}
-    {stageFocus === stageFocusType.SHOP && (
-      <Shop
-        {...{
-          items: shopInventory,
-        }}
-      />
-    )}
+    {stageFocus === stageFocusType.SHOP && <Shop />}
   </div>
 );
 
 Stage.propTypes = {
-  gameState: shape({
-    field: arrayOf(array).isRequired,
-    playerInventory: array.isRequired,
-    shopInventory: array.isRequired,
-    stageFocus: string.isRequired,
-  }).isRequired,
+  field: arrayOf(array).isRequired,
+  playerInventory: array.isRequired,
+  stageFocus: string.isRequired,
 };
 
-export default function Consumer() {
+export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
-      {context => <Stage {...context} />}
+      {({ gameState, handlers }) => (
+        <Stage {...{ ...gameState, ...handlers, ...props }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }

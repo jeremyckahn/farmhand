@@ -1,14 +1,6 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import {
-  array,
-  arrayOf,
-  func,
-  number,
-  object,
-  shape,
-  string,
-} from 'prop-types';
+import { array, arrayOf, func, number, object, string } from 'prop-types';
 import { getCropLifeStage, getPlotImage } from '../../utils';
 import { pixel, plotStates } from '../../img';
 import { cropLifeStage, plotContentType } from '../../enums';
@@ -50,9 +42,10 @@ export const isInRange = (range, testX, testY) => {
 };
 
 export const Plot = ({
-  handlers: { handlePlotClick, handlePlotMouseOver },
+  handlePlotClick,
+  handlePlotMouseOver,
+  hoveredPlotRange,
   plotContent,
-  gameState: { hoveredPlotRange },
   x,
   y,
 
@@ -91,11 +84,9 @@ export const Plot = ({
 );
 
 Plot.propTypes = {
-  handlers: shape({
-    handlePlotClick: func.isRequired,
-    handlePlotMouseOver: func.isRequired,
-  }).isRequired,
-  hoveredPlotRange: arrayOf(array),
+  handlePlotClick: func.isRequired,
+  handlePlotMouseOver: func.isRequired,
+  hoveredPlotRange: arrayOf(array).isRequired,
   lifeStage: string,
   plotContent: object,
   x: number.isRequired,
@@ -105,7 +96,9 @@ Plot.propTypes = {
 export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
-      {context => <Plot {...{ ...context, ...props }} />}
+      {({ gameState, handlers }) => (
+        <Plot {...{ ...gameState, ...handlers, ...props }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }

@@ -5,22 +5,20 @@ import { testItem } from '../../test-utils';
 
 let component;
 
-const getItem = (props = {}) => (
-  <Item
-    {...{
-      handlers: { ...props.handlers },
-      item: testItem({ name: '' }),
-      gameState: { money: 0, ...props.gameState },
-      ...props.options,
-    }}
-  />
-);
+beforeEach(() => {
+  component = shallow(
+    <Item
+      {...{
+        item: testItem({ name: '' }),
+        money: 0,
+      }}
+    />
+  );
+});
 
 describe('static UI', () => {
   beforeEach(() => {
-    component = shallow(
-      getItem({ options: { item: testItem({ name: 'an-item' }) } })
-    );
+    component.setProps({ item: testItem({ name: 'an-item' }) });
   });
 
   test('renders the name', () => {
@@ -31,7 +29,7 @@ describe('static UI', () => {
 describe('conditional UI', () => {
   describe('class names', () => {
     beforeEach(() => {
-      component = shallow(getItem({ options: { isSelected: true } }));
+      component.setProps({ isSelected: true });
     });
 
     test('supports is-selected', () => {
@@ -42,15 +40,11 @@ describe('conditional UI', () => {
   describe('isPurchaseView', () => {
     describe('user has enough money', () => {
       beforeEach(() => {
-        component = shallow(
-          getItem({
-            options: {
-              isPurchaseView: true,
-              item: testItem({ name: 'an-item' }),
-            },
-            gameState: { money: 50 },
-          })
-        );
+        component.setProps({
+          isPurchaseView: true,
+          item: testItem({ name: 'an-item' }),
+          money: 50,
+        });
       });
 
       test('enables purchase button', () => {
@@ -62,15 +56,11 @@ describe('conditional UI', () => {
 
     describe('user does not have enough money', () => {
       beforeEach(() => {
-        component = shallow(
-          getItem({
-            options: {
-              isPurchaseView: true,
-              item: testItem({ name: 'an-item', value: 10 }),
-            },
-            gameState: { money: 5 },
-          })
-        );
+        component.setProps({
+          isPurchaseView: true,
+          item: testItem({ name: 'an-item', value: 10 }),
+          money: 5,
+        });
       });
 
       test('disables purchase button', () => {
@@ -83,14 +73,10 @@ describe('conditional UI', () => {
 
   describe('isSellView', () => {
     beforeEach(() => {
-      component = shallow(
-        getItem({
-          options: {
-            isSellView: true,
-            item: testItem({ name: 'an-item' }),
-          },
-        })
-      );
+      component.setProps({
+        isSellView: true,
+        item: testItem({ name: 'an-item' }),
+      });
     });
 
     test('renders sell button when given an event handler', () => {

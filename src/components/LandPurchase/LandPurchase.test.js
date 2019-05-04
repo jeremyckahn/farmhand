@@ -11,13 +11,9 @@ beforeEach(() => {
   component = shallow(
     <LandPurchase
       {...{
-        handlers: {
-          handleFieldPurchase: () => {},
-        },
-        gameState: {
-          purchasedField: 0,
-          money: 0,
-        },
+        handleFieldPurchase: () => {},
+        purchasedField: 0,
+        money: 0,
       }}
     />
   );
@@ -43,10 +39,8 @@ describe('option rendering', () => {
     describe('user has enough money for option', () => {
       test('option is not disabled', () => {
         component.setProps({
-          gameState: {
-            purchasedField: 0,
-            money: PURCHASEABLE_FIELD_SIZES.get(1).price,
-          },
+          purchasedField: 0,
+          money: PURCHASEABLE_FIELD_SIZES.get(1).price,
         });
 
         expect(
@@ -62,10 +56,8 @@ describe('option rendering', () => {
   describe('purchased options', () => {
     test('option is disabled', () => {
       component.setProps({
-        gameState: {
-          purchasedField: 1,
-          money: Number.MAX_VALUE,
-        },
+        purchasedField: 1,
+        money: Number.MAX_VALUE,
       });
 
       expect(
@@ -93,10 +85,8 @@ describe('getters', () => {
     describe('player can buy selected option', () => {
       test('button is enabled', () => {
         component.setProps({
-          gameState: {
-            purchasedField: 0,
-            money: 100000,
-          },
+          purchasedField: 0,
+          money: 100000,
         });
 
         expect(component.instance().canPlayerBuySelectedOption).toBeTruthy();
@@ -110,7 +100,7 @@ describe('handleFieldPurchase', () => {
 
   beforeEach(() => {
     handleFieldPurchase = jest.fn();
-    component.setProps({ handlers: { handleFieldPurchase } });
+    component.setProps({ handleFieldPurchase });
     component.setState({ selectedOption: 2 });
   });
 
@@ -123,7 +113,7 @@ describe('handleFieldPurchase', () => {
 
   describe('user has enough money', () => {
     test('does call handleFieldPurchase prop', () => {
-      component.setProps({ gameState: { purchasedField: 0, money: 2000 } });
+      component.setProps({ purchasedField: 0, money: 2000 });
       component.instance().handleFieldPurchase();
       expect(handleFieldPurchase).toHaveBeenCalledWith(2);
     });
@@ -137,7 +127,7 @@ describe('updateSelectedOption', () => {
 
   describe('player does not have enough money for next field option', () => {
     test('does not update selectedOption', () => {
-      component.setProps({ gameState: { purchasedField: 1, money: 0 } });
+      component.setProps({ purchasedField: 1, money: 0 });
       component.instance().updateSelectedOption();
 
       expect(component.state().selectedOption).toEqual('1');
@@ -146,7 +136,7 @@ describe('updateSelectedOption', () => {
 
   describe('player has enough money for next field option', () => {
     test('updates selectedOption', () => {
-      component.setProps({ gameState: { purchasedField: 1, money: 2000 } });
+      component.setProps({ purchasedField: 1, money: 2000 });
       component.instance().updateSelectedOption();
 
       expect(component.state().selectedOption).toEqual('2');

@@ -5,25 +5,17 @@ import { stageFocusType } from '../../enums';
 
 let component;
 
-const getNavigation = (props = {}) => (
-  <Navigation
-    {...{
-      handlers: {
-        handleViewChange: () => {},
+beforeEach(() => {
+  component = shallow(
+    <Navigation
+      {...{
         handleEndDayButtonClick: () => {},
-        ...props.handlers,
-      },
-      gameState: {
+        handleViewChange: () => {},
         money: 0,
         stageFocus: stageFocusType.FIELD,
-        ...props.gameState,
-      },
-    }}
-  />
-);
-
-beforeEach(() => {
-  component = shallow(getNavigation());
+      }}
+    />
+  );
 });
 
 test('renders', () => {

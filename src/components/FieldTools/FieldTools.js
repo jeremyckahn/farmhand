@@ -1,12 +1,13 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import { array, func, shape, string } from 'prop-types';
+import { array, func, string } from 'prop-types';
 import Item from '../Item';
 import './FieldTools.sass';
 
 export const FieldTools = ({
-  handlers: { handleItemSelect },
-  gameState: { fieldToolInventory, selectedItemId },
+  fieldToolInventory,
+  handleItemSelect,
+  selectedItemId,
 }) => (
   <div className="FieldTools">
     <ul>
@@ -25,19 +26,17 @@ export const FieldTools = ({
 );
 
 FieldTools.propTypes = {
-  handlers: shape({
-    handleItemSelect: func.isRequired,
-  }).isRequired,
-  gameState: shape({
-    fieldToolInventory: array.isRequired,
-    selectedItemId: string.isRequired,
-  }).isRequired,
+  fieldToolInventory: array.isRequired,
+  handleItemSelect: func.isRequired,
+  selectedItemId: string.isRequired,
 };
 
 export default function Consumer() {
   return (
     <FarmhandContext.Consumer>
-      {context => <FieldTools {...context} />}
+      {({ gameState, handlers }) => (
+        <FieldTools {...{ ...gameState, ...handlers }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }

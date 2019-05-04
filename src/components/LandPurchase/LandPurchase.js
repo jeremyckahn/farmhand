@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import { func, number, shape } from 'prop-types';
+import { func, number } from 'prop-types';
 import { PURCHASEABLE_FIELD_SIZES } from '../../constants';
 import './LandPurchase.sass';
 
@@ -17,9 +17,7 @@ export class LandPurchase extends Component {
 
   get canPlayerBuySelectedOption() {
     const {
-      props: {
-        gameState: { money },
-      },
+      props: { money },
     } = this;
 
     const selectedOptionNumber = this.selectedOption;
@@ -32,15 +30,12 @@ export class LandPurchase extends Component {
     );
   }
 
-  hasPurchasedField = fieldId => fieldId <= this.props.gameState.purchasedField;
+  hasPurchasedField = fieldId => fieldId <= this.props.purchasedField;
 
   handleFieldPurchase = () => {
     const selectedOptionNumber = this.selectedOption;
     const { price } = PURCHASEABLE_FIELD_SIZES.get(selectedOptionNumber);
-    const {
-      handlers: { handleFieldPurchase },
-      gameState: { money },
-    } = this.props;
+    const { handleFieldPurchase, money } = this.props;
 
     if (money >= price) {
       handleFieldPurchase(selectedOptionNumber);
@@ -53,9 +48,7 @@ export class LandPurchase extends Component {
 
   updateSelectedOption = () => {
     const {
-      props: {
-        gameState: { money },
-      },
+      props: { money },
       selectedOption,
     } = this;
 
@@ -72,7 +65,7 @@ export class LandPurchase extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.gameState.money !== prevProps.gameState.money) {
+    if (this.props.money !== prevProps.money) {
       this.updateSelectedOption();
     }
   }
@@ -83,10 +76,8 @@ export class LandPurchase extends Component {
       handleFieldPurchase,
       hasPurchasedField,
       onSelectChange,
+      props: { money },
       purchaseableFieldSizes,
-      props: {
-        gameState: { money },
-      },
       state: { selectedOption },
     } = this;
 
@@ -116,19 +107,17 @@ export class LandPurchase extends Component {
 }
 
 LandPurchase.propTypes = {
-  handlers: shape({
-    handleFieldPurchase: func.isRequired,
-  }).isRequired,
-  gameState: shape({
-    purchasedField: number.isRequired,
-    money: number.isRequired,
-  }).isRequired,
+  handleFieldPurchase: func.isRequired,
+  money: number.isRequired,
+  purchasedField: number.isRequired,
 };
 
-export default function Consumer() {
+export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
-      {context => <LandPurchase {...context} />}
+      {({ gameState, handlers }) => (
+        <LandPurchase {...{ ...gameState, ...handlers, ...props }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }

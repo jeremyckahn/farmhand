@@ -8,36 +8,24 @@ jest.mock('../../data/items');
 
 let component;
 
-const getPlantableItems = (props = {}) => (
-  <PlantableItems
-    {...{
-      handlers: {
+beforeEach(() => {
+  component = shallow(
+    <PlantableItems
+      {...{
         handleItemSelect: () => {},
-        ...props.handlers,
-      },
-      gameState: {
         plantableInventory: [],
         selectedItemId: '',
-        ...props.gameState,
-      },
-    }}
-  />
-);
-
-beforeEach(() => {
-  component = shallow(getPlantableItems());
+      }}
+    />
+  );
 });
 
 describe('rendering', () => {
   beforeEach(() => {
-    component = shallow(
-      getPlantableItems({
-        gameState: {
-          plantableInventory: [{ quantity: 1, id: 'sample-crop-3' }],
-          selectedItemId: 'sample-crop-3',
-        },
-      })
-    );
+    component.setProps({
+      plantableInventory: [{ quantity: 1, id: 'sample-crop-3' }],
+      selectedItemId: 'sample-crop-3',
+    });
   });
 
   test('renders items for provided inventory', () => {

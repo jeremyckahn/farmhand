@@ -1,6 +1,6 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import { func, shape } from 'prop-types';
+import { func } from 'prop-types';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -10,7 +10,8 @@ import Button from '@material-ui/core/Button';
 import './DebugMenu.sass';
 
 export const DebugMenu = ({
-  handlers: { handleClearPersistedDataClick, handleWaterAllPlotsClick },
+  handleClearPersistedDataClick,
+  handleWaterAllPlotsClick,
 }) => (
   <ExpansionPanel className="DebugMenu" style={{ position: 'absolute' }}>
     <ExpansionPanelSummary>
@@ -38,16 +39,16 @@ export const DebugMenu = ({
 );
 
 DebugMenu.propTypes = {
-  handlers: shape({
-    handleClearPersistedDataClick: func.isRequired,
-    handleWaterAllPlotsClick: func.isRequired,
-  }).isRequired,
+  handleClearPersistedDataClick: func.isRequired,
+  handleWaterAllPlotsClick: func.isRequired,
 };
 
 export default function Consumer() {
   return (
     <FarmhandContext.Consumer>
-      {context => <DebugMenu {...context} />}
+      {({ gameState, handlers }) => (
+        <DebugMenu {...{ ...gameState, ...handlers }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }

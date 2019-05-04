@@ -8,33 +8,22 @@ import { shallow } from 'enzyme';
 
 let component;
 
-const getStage = (props = {}) => (
-  <Stage
-    {...{
-      handlers: {
-        ...props.handlers,
-      },
-      gameState: {
+beforeEach(() => {
+  component = shallow(
+    <Stage
+      {...{
         field: [[]],
-        purchasedField: 0,
         playerInventory: [],
-        selectedItemId: '',
-        fieldMode: '',
-        shopInventory: [],
         stageFocus: stageFocusType.FIELD,
-        valueAdjustments: {},
-        ...props.gameState,
-      },
-    }}
-  />
-);
+      }}
+    />
+  );
+});
 
 describe('focus', () => {
   describe('field', () => {
     beforeEach(() => {
-      component = shallow(
-        getStage({ gameState: { stageFocus: stageFocusType.FIELD } })
-      );
+      component.setProps({ gameState: { stageFocus: stageFocusType.FIELD } });
     });
 
     test('shows the field', () => {
@@ -44,9 +33,7 @@ describe('focus', () => {
 
   describe('inventory', () => {
     beforeEach(() => {
-      component = shallow(
-        getStage({ gameState: { stageFocus: stageFocusType.INVENTORY } })
-      );
+      component.setProps({ stageFocus: stageFocusType.INVENTORY });
     });
 
     test('shows the inventory', () => {
@@ -56,9 +43,7 @@ describe('focus', () => {
 
   describe('shop', () => {
     beforeEach(() => {
-      component = shallow(
-        getStage({ gameState: { stageFocus: stageFocusType.SHOP } })
-      );
+      component.setProps({ stageFocus: stageFocusType.SHOP });
     });
 
     test('shows the shop', () => {

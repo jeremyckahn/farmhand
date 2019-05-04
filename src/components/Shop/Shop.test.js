@@ -5,24 +5,16 @@ import { shallow } from 'enzyme';
 
 let component;
 
-const getShop = (props = {}) => (
-  <Shop
-    {...{
-      handlers: { handleFieldPurchase: () => {}, ...props.handlers },
-      items: [],
-      gameState: {
-        purchasedField: 0,
+beforeEach(() => {
+  component = shallow(
+    <Shop
+      {...{
+        shopInventory: [],
         money: 0,
         valueAdjustments: {},
-        ...props.gameState,
-      },
-      ...props.options,
-    }}
-  />
-);
-
-beforeEach(() => {
-  component = shallow(getShop());
+      }}
+    />
+  );
 });
 
 test('renders shop inventory', () => {

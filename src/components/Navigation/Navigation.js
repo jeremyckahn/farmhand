@@ -1,14 +1,16 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
 import Dinero from 'dinero.js';
-import { func, number, shape, string } from 'prop-types';
+import { func, number, string } from 'prop-types';
 import { stageFocusType } from '../../enums';
 
 import './Navigation.sass';
 
 export const Navigation = ({
-  handlers: { handleViewChange, handleEndDayButtonClick },
-  gameState: { money, stageFocus },
+  handleEndDayButtonClick,
+  handleViewChange,
+  money,
+  stageFocus,
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
@@ -31,20 +33,18 @@ export const Navigation = ({
 );
 
 Navigation.propTypes = {
-  handlers: shape({
-    handleViewChange: func.isRequired,
-    handleEndDayButtonClick: func.isRequired,
-  }).isRequired,
-  gameState: shape({
-    money: number.isRequired,
-    stageFocus: string.isRequired,
-  }).isRequired,
+  handleEndDayButtonClick: func.isRequired,
+  handleViewChange: func.isRequired,
+  money: number.isRequired,
+  stageFocus: string.isRequired,
 };
 
-export default function Consumer() {
+export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
-      {context => <Navigation {...context} />}
+      {({ gameState, handlers }) => (
+        <Navigation {...{ ...gameState, ...handlers, ...props }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }

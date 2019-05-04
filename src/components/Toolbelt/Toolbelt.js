@@ -1,6 +1,6 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import { func, shape, string } from 'prop-types';
+import { func, string } from 'prop-types';
 import classNames from 'classnames';
 import './Toolbelt.sass';
 import { fieldMode } from '../../enums';
@@ -10,8 +10,8 @@ import { tools, pixel } from '../../img';
 const { CLEANUP, HARVEST, WATER } = fieldMode;
 
 export const Toolbelt = ({
-  handlers: { handleFieldModeSelect },
-  gameState: { fieldMode: currentFieldMode },
+  fieldMode: currentFieldMode,
+  handleFieldModeSelect,
 }) => (
   <div className="Toolbelt">
     {[
@@ -53,18 +53,16 @@ export const Toolbelt = ({
 );
 
 Toolbelt.propTypes = {
-  handlers: shape({
-    handleFieldModeSelect: func.isRequired,
-  }).isRequired,
-  gameState: shape({
-    fieldMode: string.isRequired,
-  }).isRequired,
+  fieldMode: string.isRequired,
+  handleFieldModeSelect: func.isRequired,
 };
 
-export default function Consumer() {
+export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
-      {context => <Toolbelt {...context} />}
+      {({ gameState, handlers }) => (
+        <Toolbelt {...{ ...gameState, ...handlers, ...props }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }

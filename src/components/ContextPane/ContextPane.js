@@ -1,6 +1,6 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import { shape, string } from 'prop-types';
+import { string } from 'prop-types';
 import Toolbelt from '../Toolbelt';
 import PlantableItems from '../PlantableItems';
 import FieldTools from '../FieldTools';
@@ -10,7 +10,7 @@ import './ContextPane.sass';
 
 // TODO: Render player inventory for stageFocus === SHOP.
 
-export const ContextPane = ({ gameState: { stageFocus } }) => (
+export const ContextPane = ({ stageFocus }) => (
   <div className="ContextPane">
     {stageFocus === stageFocusType.FIELD && (
       <>
@@ -32,15 +32,15 @@ export const ContextPane = ({ gameState: { stageFocus } }) => (
 );
 
 ContextPane.propTypes = {
-  gameState: shape({
-    stageFocus: string.isRequired,
-  }).isRequired,
+  stageFocus: string.isRequired,
 };
 
 export default function Consumer() {
   return (
     <FarmhandContext.Consumer>
-      {context => <ContextPane {...context} />}
+      {({ gameState, handlers }) => (
+        <ContextPane {...{ ...gameState, ...handlers }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }

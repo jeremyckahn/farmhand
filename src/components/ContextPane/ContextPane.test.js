@@ -6,37 +6,21 @@ import { shallow } from 'enzyme';
 
 let component;
 
-const getContextPane = (props = {}) => (
-  <ContextPane
-    {...{
-      handlers: {
-        handleFieldModeSelect: () => {},
-        handleItemSelect: () => {},
-        ...props.handlers,
-      },
-      gameState: {
-        selectedItemId: '',
-        fieldMode: '',
-        fieldToolInventory: [],
-        stageFocus: stageFocusType.NONE,
-        plantableInventory: [],
-        ...props.gameState,
-      },
-    }}
-  />
-);
-
 beforeEach(() => {
-  component = shallow(getContextPane());
+  component = shallow(
+    <ContextPane
+      {...{
+        stageFocus: stageFocusType.NONE,
+      }}
+    />
+  );
 });
 
 describe('conditional UI', () => {
   describe('stageFocus', () => {
     describe('stageFocus === stageFocusType.FIELD', () => {
       beforeEach(() => {
-        component = shallow(
-          getContextPane({ gameState: { stageFocus: stageFocusType.FIELD } })
-        );
+        component.setProps({ stageFocus: stageFocusType.FIELD });
       });
 
       test('renders relevant UI', () => {

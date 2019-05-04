@@ -9,28 +9,21 @@ jest.mock('../../data/items');
 
 let component;
 
-const getInventory = (props = {}) => (
-  <Inventory
-    {...{
-      handlers: { ...props.handlers },
-      items: [],
-      gameState: {
+beforeEach(() => {
+  component = shallow(
+    <Inventory
+      {...{
+        items: [],
         valueAdjustments: {},
-        ...props.gameState,
-      },
-      ...props.options,
-    }}
-  />
-);
+      }}
+    />
+  );
+});
 
 describe('rendering items', () => {
-  beforeEach(() => {
-    component = shallow(
-      getInventory({ options: { items: [testItem({ id: 'sample-item-1' })] } })
-    );
-  });
-
   test('shows the inventory', () => {
+    component.setProps({ items: [testItem({ id: 'sample-item-1' })] });
+
     const li = component.find('li');
     expect(li).toHaveLength(1);
     expect(li.find(Item)).toHaveLength(1);

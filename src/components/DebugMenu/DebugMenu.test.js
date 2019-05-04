@@ -4,25 +4,15 @@ import { shallow } from 'enzyme';
 
 let component;
 
-const getDebugMenu = (props = {}) => (
-  <DebugMenu
-    {...{
-      handlers: {
+beforeEach(() => {
+  component = shallow(
+    <DebugMenu
+      {...{
         handleClearPersistedDataClick: () => {},
         handleWaterAllPlotsClick: () => {},
-        ...props.handlers,
-      },
-      items: [],
-      gameState: {
-        ...props.gameState,
-      },
-      ...props.options,
-    }}
-  />
-);
-
-beforeEach(() => {
-  component = shallow(getDebugMenu());
+      }}
+    />
+  );
 });
 
 test('renders Debug', () => {

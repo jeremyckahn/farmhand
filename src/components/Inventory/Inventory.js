@@ -2,18 +2,21 @@ import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
 import Item from '../Item';
 import { getItemValue } from '../../utils';
-import { array, bool, object, shape } from 'prop-types';
+import { array, bool, object } from 'prop-types';
 
 import './Inventory.sass';
 
 // TODO: Group items by category (seeds, field tools, etc.) and render headers
 // for the groups.
 
+// TODO: This component should determine its `items` based on isPurchaseView
+// and isSellView, not the props provided to it.
+
 export const Inventory = ({
   isPurchaseView,
   isSellView,
   items,
-  gameState: { valueAdjustments },
+  valueAdjustments,
 }) => (
   <div className="Inventory">
     <ul>
@@ -36,18 +39,18 @@ export const Inventory = ({
 );
 
 Inventory.propTypes = {
-  items: array.isRequired,
   isPurchaseView: bool,
   isSellView: bool,
-  gameState: shape({
-    valueAdjustments: object.isRequired,
-  }).isRequired,
+  items: array.isRequired,
+  valueAdjustments: object.isRequired,
 };
 
 export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
-      {context => <Inventory {...{ ...context, ...props }} />}
+      {({ gameState, handlers }) => (
+        <Inventory {...{ ...gameState, ...handlers, ...props }} />
+      )}
     </FarmhandContext.Consumer>
   );
 }
