@@ -11,7 +11,7 @@ import {
   decrementItemFromInventory,
   getFieldToolInventory,
   getFinalCropItemIdFromSeedItemId,
-  getPlantableInventory,
+  getPlantableCropInventory,
   getWateredField,
   modifyFieldPlotAt,
   removeFieldPlotAt,
@@ -142,8 +142,8 @@ export default class Farmhand extends Component {
     return computePlayerInventory(inventory, valueAdjustments);
   }
 
-  get plantableInventory() {
-    return getPlantableInventory(this.state.inventory);
+  get plantableCropInventory() {
+    return getPlantableCropInventory(this.state.inventory);
   }
 
   initKeyHandlers() {
@@ -539,7 +539,7 @@ export default class Farmhand extends Component {
       keyHandlers,
       keyMap,
       notificationSystemRef,
-      plantableInventory,
+      plantableCropInventory,
       playerInventory,
     } = this;
 
@@ -549,7 +549,7 @@ export default class Farmhand extends Component {
       ...this.state,
       fieldToolInventory,
       hoveredPlotRange,
-      plantableInventory,
+      plantableCropInventory,
       playerInventory,
     };
 

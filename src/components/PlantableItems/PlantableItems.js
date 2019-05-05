@@ -6,12 +6,12 @@ import './PlantableItems.sass';
 
 export const PlantableItems = ({
   handleItemSelect,
-  plantableInventory,
+  plantableCropInventory,
   selectedItemId,
 }) => (
   <div className="PlantableItems">
     <ul>
-      {plantableInventory.map(item => (
+      {plantableCropInventory.map(item => (
         <li key={item.id} onClick={() => handleItemSelect(item)}>
           <Item
             {...{
@@ -27,7 +27,7 @@ export const PlantableItems = ({
 
 PlantableItems.propTypes = {
   handleItemSelect: func.isRequired,
-  plantableInventory: array.isRequired,
+  plantableCropInventory: array.isRequired,
   selectedItemId: string.isRequired,
 };
 

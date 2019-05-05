@@ -317,17 +317,17 @@ describe('getFinalCropItemIdFromSeedItemId', () => {
   });
 });
 
-describe('getPlantableInventory', () => {
-  let plantableInventory;
+describe('getPlantableCropInventory', () => {
+  let plantableCropInventory;
   let inventory;
 
   beforeEach(() => {
     inventory = [{ id: 'sample-crop-seeds-1' }, { id: 'sample-item-1' }];
-    plantableInventory = fn.getPlantableInventory(inventory);
+    plantableCropInventory = fn.getPlantableCropInventory(inventory);
   });
 
   test('filters out non-plantable items', () => {
-    expect(plantableInventory).toEqual([sampleCropSeedsItem1]);
+    expect(plantableCropInventory).toEqual([sampleCropSeedsItem1]);
   });
 });
 

@@ -13,7 +13,7 @@ beforeEach(() => {
     <PlantableItems
       {...{
         handleItemSelect: () => {},
-        plantableInventory: [],
+        plantableCropInventory: [],
         selectedItemId: '',
       }}
     />
@@ -23,7 +23,7 @@ beforeEach(() => {
 describe('rendering', () => {
   beforeEach(() => {
     component.setProps({
-      plantableInventory: [{ quantity: 1, id: 'sample-crop-3' }],
+      plantableCropInventory: [{ quantity: 1, id: 'sample-crop-3' }],
       selectedItemId: 'sample-crop-3',
     });
   });
