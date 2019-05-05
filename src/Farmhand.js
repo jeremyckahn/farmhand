@@ -468,9 +468,6 @@ export default class Farmhand extends Component {
       return;
     }
 
-    if (plotContent.type === plotContentType.SPRINKLER) {
-    }
-
     let newInventory =
       plotContent.type === plotContentType.SPRINKLER
         ? addItemToInventory(itemsMap[SPRINKLER_ITEM_ID], inventory)
