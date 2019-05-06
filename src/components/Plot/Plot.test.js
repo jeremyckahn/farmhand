@@ -40,9 +40,11 @@ test('renders crop class', () => {
   expect(component.hasClass('crop')).toBeTruthy();
 });
 
-test('renders sprinkler class', () => {
-  component.setProps({ plotContent: getPlotContentFromItemId('sprinkler') });
-  expect(component.hasClass('sprinkler')).toBeTruthy();
+test('renders is-replantable class', () => {
+  component.setProps({
+    plotContent: getPlotContentFromItemId('replantable-item'),
+  });
+  expect(component.hasClass('is-replantable')).toBeTruthy();
 });
 
 test('renders "is-fertilized" class', () => {

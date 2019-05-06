@@ -315,18 +315,18 @@ describe('instance methods', () => {
       });
     });
 
-    describe('plotContent is a sprinkler', () => {
+    describe('plotContent is replantable', () => {
       beforeEach(() => {
         component.setState({
-          field: [[getPlotContentFromItemId('sprinkler')]],
+          field: [[getPlotContentFromItemId('replantable-item')]],
         });
 
         component.instance().clearPlot(0, 0);
       });
 
-      test('adds sprinkler to inventory', () => {
+      test('adds replantableItem to inventory', () => {
         expect(component.state().inventory).toEqual([
-          { id: 'sprinkler', quantity: 1 },
+          { id: 'replantable-item', quantity: 1 },
         ]);
       });
 

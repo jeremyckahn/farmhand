@@ -102,12 +102,11 @@ export const sprinkler = freeze({
   enablesFieldMode: fieldMode.SET_SPRINKLER,
   hoveredPlotRangeSize: SPRINKLER_RANGE,
   id: 'sprinkler',
+  isReplantable: true,
   name: 'Sprinkler',
   type: plotContentType.SPRINKLER,
   value: 120,
 });
-
-// TODO: Implement scarecrow removal.
 
 /**
  * @property farmhand.module:items.scarecrow
@@ -116,6 +115,7 @@ export const sprinkler = freeze({
 export const scarecrow = freeze({
   enablesFieldMode: fieldMode.SET_SCARECROW,
   id: 'scarecrow',
+  isReplantable: true,
   name: 'Scarecrow',
   type: plotContentType.SCARECROW,
   value: 160,

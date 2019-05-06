@@ -2,6 +2,7 @@ import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
 import { array, arrayOf, func, number, object, string } from 'prop-types';
 import { getCropLifeStage, getPlotImage } from '../../utils';
+import { itemsMap } from '../../data/maps';
 import { pixel, plotStates } from '../../img';
 import { cropLifeStage, plotContentType } from '../../enums';
 import classNames from 'classnames';
@@ -64,7 +65,8 @@ export const Plot = ({
       'is-fertilized': plotContent && plotContent.isFertilized,
       'is-ripe': lifeStage === cropLifeStage.GROWN,
 
-      sprinkler: plotContent && plotContent.type === plotContentType.SPRINKLER,
+      'is-replantable':
+        plotContent && itemsMap[plotContent.itemId].isReplantable,
     })}
     style={{
       backgroundImage: getBackgroundStyles(plotContent),

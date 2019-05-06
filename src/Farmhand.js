@@ -468,10 +468,11 @@ export default class Farmhand extends Component {
       return;
     }
 
-    let newInventory =
-      plotContent.type === plotContentType.SPRINKLER
-        ? addItemToInventory(itemsMap[SPRINKLER_ITEM_ID], inventory)
-        : inventory;
+    const item = itemsMap[plotContent.itemId];
+
+    let newInventory = item.isReplantable
+      ? addItemToInventory(item, inventory)
+      : inventory;
 
     this.setState({
       field: removeFieldPlotAt(field, x, y),

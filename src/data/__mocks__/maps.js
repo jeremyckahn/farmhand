@@ -1,5 +1,6 @@
 import {
   fertilizer,
+  replantableItem,
   sampleCropItem1,
   sampleCropItem2,
   sampleCropItem3,
@@ -16,6 +17,7 @@ import {
 
 export const itemsMap = {
   fertilizer,
+  'replantable-item': replantableItem,
   'sample-crop-1': sampleCropItem1,
   'sample-crop-2': sampleCropItem2,
   'sample-crop-3': sampleCropItem3,

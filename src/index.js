@@ -26,6 +26,7 @@
  * @property {number} [hoveredPlotRange] The number to set
  * farmhand.state.hoveredPlotRange to when the item is active.
  * @property {boolean} [isPlantableCrop]
+ * @property {boolean} [isReplantable]
  */
 
 /**
