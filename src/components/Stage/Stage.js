@@ -28,7 +28,6 @@ export const Stage = ({ field, playerInventory, stageFocus }) => (
     {stageFocus === stageFocusType.INVENTORY && (
       <Inventory
         {...{
-          isSellView: true,
           items: playerInventory,
         }}
       />

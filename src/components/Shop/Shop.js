@@ -8,7 +8,6 @@ export const Shop = ({ shopInventory }) => (
   <div className="Shop">
     <Inventory
       {...{
-        isPurchaseView: true,
         items: shopInventory,
       }}
     />
