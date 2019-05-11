@@ -32,7 +32,7 @@
   - [x] Sprinklers
   - [x] Scarecrows
   - [x] Bigger field
-- [ ] Request financial aid
+- ~~[ ] Request financial aid~~ This could be obviated by a buff system to come in a later milestone.
 
 ## Project overview
 
