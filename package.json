@@ -29,10 +29,10 @@
     "cross-env": "^5.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
-    "gh-pages": "^1.2.0",
+    "gh-pages": "^2.0.1",
     "husky": "^0.14.3",
     "jsdoc": "^3.5.5",
-    "jsdom": "^11.11.0",
+    "jsdom": "^15.0.0",
     "live-server": "^1.2.0",
     "node-sass": "^4.9.4",
     "nodemon": "^1.17.5",
@@ -40,14 +40,14 @@
     "piskel-cli": "^1.0.41",
     "prettier": "^1.13.7",
     "pretty-quick": "^1.7.0",
-    "react-scripts": "^2.1.1"
+    "react-scripts": "^3.0.1"
   },
   "dependencies": {
     "@material-ui/core": "^3.6.1",
     "classnames": "^2.2.6",
     "compass-mixins": "^0.12.10",
     "dinero.js": "^1.4.0",
-    "eslint-config-react-app": "^3.0.5",
+    "eslint-config-react-app": "^4.0.1",
     "fast-memoize": "^2.5.1",
     "localforage": "^1.7.3",
     "lodash.sortby": "^4.7.0",
@@ -56,7 +56,7 @@
     "react-dom": "^16.4.1",
     "react-hotkeys": "^1.1.4",
     "react-notification-system": "^0.2.17",
-    "typeface-francois-one": "0.0.54"
+    "typeface-francois-one": "0.0.71"
   },
   "craGenerate": {
     "cssExtension": "sass"
