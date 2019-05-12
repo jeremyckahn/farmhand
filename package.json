@@ -13,9 +13,7 @@
     "doc:watch": "nodemon --exec \"npm run doc\" --watch src --watch ./ --ext js,md --ignore dist",
     "lint": "eslint src",
     "postversion": "git push && git push --tags && npm run deploy",
-    "precommit": "pretty-quick --staged && npm run ci",
     "predeploy": "npm run build",
-    "prepush": "npm run ci",
     "prettier": "prettier 'src/**/*.js' --write",
     "preversion": "npm test",
     "start": "react-scripts start",
@@ -30,7 +28,7 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "gh-pages": "^2.0.1",
-    "husky": "^0.14.3",
+    "husky": "^2.2.0",
     "jsdoc": "^3.5.5",
     "jsdom": "^15.0.0",
     "live-server": "^1.2.0",
@@ -57,6 +55,12 @@
     "react-hotkeys": "^1.1.4",
     "react-notification-system": "^0.2.17",
     "typeface-francois-one": "0.0.71"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && npm run ci",
+      "pre-push": "npm run ci"
+    }
   },
   "craGenerate": {
     "cssExtension": "sass"
