@@ -1,7 +1,6 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import Dinero from 'dinero.js';
-import { func, number, string } from 'prop-types';
+import { func, string } from 'prop-types';
 import { stageFocusType } from '../../enums';
 
 import './Navigation.sass';
@@ -9,7 +8,6 @@ import './Navigation.sass';
 export const Navigation = ({
   handleEndDayButtonClick,
   handleViewChange,
-  money,
   stageFocus,
 }) => (
   <header className="Navigation">
@@ -17,14 +15,11 @@ export const Navigation = ({
     <button className="end-day" onClick={handleEndDayButtonClick}>
       Call it a day (c)
     </button>
-    <h2>
-      You have: $
-      {Dinero({
-        amount: Math.round(money * 100),
-        precision: 2,
-      }).toUnit()}
-    </h2>
-    <select onChange={handleViewChange} value={stageFocus}>
+    <select
+      className="view-select"
+      onChange={handleViewChange}
+      value={stageFocus}
+    >
       <option value={stageFocusType.FIELD}>Field (f)</option>
       <option value={stageFocusType.INVENTORY}>Inventory (i)</option>
       <option value={stageFocusType.SHOP}>Shop (s)</option>
@@ -35,7 +30,6 @@ export const Navigation = ({
 Navigation.propTypes = {
   handleEndDayButtonClick: func.isRequired,
   handleViewChange: func.isRequired,
-  money: number.isRequired,
   stageFocus: string.isRequired,
 };
 

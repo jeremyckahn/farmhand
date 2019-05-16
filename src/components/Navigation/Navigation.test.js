@@ -11,7 +11,6 @@ beforeEach(() => {
       {...{
         handleEndDayButtonClick: () => {},
         handleViewChange: () => {},
-        money: 0,
         stageFocus: stageFocusType.FIELD,
       }}
     />

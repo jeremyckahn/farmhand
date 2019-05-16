@@ -1,7 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
+import Dinero from 'dinero.js';
 import FarmhandContext from '../../Farmhand.context';
-import { array, arrayOf, bool, func, string } from 'prop-types';
+import { array, arrayOf, bool, func, number, string } from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -24,12 +25,17 @@ export const Stage = ({
   field,
   handleMenuToggle,
   isMenuOpen,
+  money,
   playerInventory,
   stageFocus,
 }) => (
   <div className={classNames('Stage', { 'menu-closed': !isMenuOpen })}>
     <AppBar position="fixed">
-      <Toolbar>
+      <Toolbar
+        {...{
+          className: 'toolbar',
+        }}
+      >
         <IconButton
           color="inherit"
           aria-label="Open drawer"
@@ -37,8 +43,27 @@ export const Stage = ({
         >
           <MenuIcon />
         </IconButton>
-        <Typography className="stage-header">
+        <Typography
+          {...{
+            className: 'stage-header',
+            variant: 'h2',
+          }}
+        >
           {stageTitleMap[stageFocus]}
+        </Typography>
+        <Typography
+          {...{
+            className: 'money-display',
+            variant: 'h2',
+          }}
+        >
+          $
+          {Dinero({
+            amount: Math.round(money * 100),
+            precision: 2,
+          })
+            .toUnit()
+            .toFixed(2)}
         </Typography>
       </Toolbar>
     </AppBar>
@@ -64,6 +89,7 @@ export const Stage = ({
 Stage.propTypes = {
   field: arrayOf(array).isRequired,
   handleMenuToggle: func.isRequired,
+  money: number.isRequired,
   isMenuOpen: bool.isRequired,
   playerInventory: array.isRequired,
   stageFocus: string.isRequired,
