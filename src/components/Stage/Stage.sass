@@ -1,7 +1,18 @@
+@import ../../styles/variables.sass
+
 .Stage
   flex: 2
+  margin-left: 0px
+  min-width: 300px
   max-width: 1200px
   overflow: auto
+  transition: all $menu-transition
+
+  &.menu-closed
+    margin-left: -$sidebar-width
 
   h2
     font-size: 1.5em
+
+  p.stage-header
+    color: #fff

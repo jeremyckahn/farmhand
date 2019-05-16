@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^3.6.1",
+    "@material-ui/icons": "^3.0.2",
     "classnames": "^2.2.6",
     "compass-mixins": "^0.12.10",
     "dinero.js": "^1.4.0",

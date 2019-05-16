@@ -249,3 +249,11 @@ describe('handleFieldPurchase', () => {
     expect(component.instance().purchaseField).toHaveBeenCalled();
   });
 });
+
+describe('handleMenuToggle', () => {
+  test('toggle menu state', () => {
+    const { isMenuOpen } = component.state();
+    handlers().handleMenuToggle();
+    expect(component.state().isMenuOpen).toEqual(!isMenuOpen);
+  });
+});

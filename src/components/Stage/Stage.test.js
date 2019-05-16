@@ -13,6 +13,8 @@ beforeEach(() => {
     <Stage
       {...{
         field: [[]],
+        handleMenuToggle: () => {},
+        isMenuOpen: true,
         playerInventory: [],
         stageFocus: stageFocusType.FIELD,
       }}

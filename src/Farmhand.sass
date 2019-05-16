@@ -3,7 +3,11 @@
 .Farmhand
   display: flex
   font-family: "Francois One", monospace
+  padding-top: 4em
   position: fixed
+
+  @media screen and (max-width: #{$break-sm})
+    padding-top: 3.5em
 
   button
     border-radius: 0.4em
@@ -12,7 +16,11 @@
   img
     image-rendering: pixelated
 
+  .sidebar-wrapper
+    display: flex
+
   .sidebar
     background: $chrome-background
     position: relative
     width: $sidebar-width
+    transition: transform $menu-transition

@@ -105,4 +105,8 @@ export default {
   handleFieldPurchase(fieldId) {
     this.purchaseField(fieldId);
   },
+
+  handleMenuToggle() {
+    this.setState({ isMenuOpen: !this.state.isMenuOpen });
+  },
 };

@@ -16,10 +16,13 @@ import {
   modifyFieldPlotAt,
   removeFieldPlotAt,
 } from './data-transformers';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
 import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
 import Stage from './components/Stage';
 import DebugMenu from './components/DebugMenu';
+import theme from './mui-theme';
 import {
   createNewField,
   getCropFromItemId,
@@ -56,6 +59,7 @@ const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode;
  * @property {{ x: number, y: number }} hoveredPlot
  * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
+ * @property {boolean} isMenuOpen
  * @property {number} money
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {string} selectedItemId
@@ -95,6 +99,7 @@ export default class Farmhand extends Component {
     hoveredPlot: { x: null, y: null },
     hoveredPlotRangeSize: 0,
     inventory: [],
+    isMenuOpen: true,
     money: 500,
     newDayNotifications: [],
     selectedItemId: '',
@@ -553,17 +558,28 @@ export default class Farmhand extends Component {
 
     return (
       <HotKeys className="hotkeys" keyMap={keyMap} handlers={keyHandlers}>
-        <FarmhandContext.Provider value={{ gameState, handlers }}>
-          <div className="Farmhand fill">
-            <NotificationSystem ref={notificationSystemRef} />
-            <div className="sidebar">
-              <Navigation />
-              <ContextPane />
-              <DebugMenu />
+        <MuiThemeProvider theme={theme}>
+          <FarmhandContext.Provider value={{ gameState, handlers }}>
+            <div className="Farmhand fill">
+              <NotificationSystem ref={notificationSystemRef} />
+              <Drawer
+                {...{
+                  className: 'sidebar-wrapper',
+                  open: gameState.isMenuOpen,
+                  variant: 'persistent',
+                  PaperProps: {
+                    className: 'sidebar',
+                  },
+                }}
+              >
+                <Navigation />
+                <ContextPane />
+                <DebugMenu />
+              </Drawer>
+              <Stage />
             </div>
-            <Stage />
-          </div>
-        </FarmhandContext.Provider>
+          </FarmhandContext.Provider>
+        </MuiThemeProvider>
       </HotKeys>
     );
   }

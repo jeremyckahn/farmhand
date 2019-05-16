@@ -1,6 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 import FarmhandContext from '../../Farmhand.context';
-import { array, arrayOf, string } from 'prop-types';
+import { array, arrayOf, bool, func, string } from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Typography from '@material-ui/core/Typography';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
@@ -14,9 +20,28 @@ const stageTitleMap = {
   [stageFocusType.SHOP]: 'Shop',
 };
 
-export const Stage = ({ field, playerInventory, stageFocus }) => (
-  <div className="Stage">
-    <h2>{stageTitleMap[stageFocus]}</h2>
+export const Stage = ({
+  field,
+  handleMenuToggle,
+  isMenuOpen,
+  playerInventory,
+  stageFocus,
+}) => (
+  <div className={classNames('Stage', { 'menu-closed': !isMenuOpen })}>
+    <AppBar position="fixed">
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="Open drawer"
+          onClick={handleMenuToggle}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography className="stage-header">
+          {stageTitleMap[stageFocus]}
+        </Typography>
+      </Toolbar>
+    </AppBar>
     {stageFocus === stageFocusType.FIELD && (
       <Field
         {...{
@@ -38,6 +63,8 @@ export const Stage = ({ field, playerInventory, stageFocus }) => (
 
 Stage.propTypes = {
   field: arrayOf(array).isRequired,
+  handleMenuToggle: func.isRequired,
+  isMenuOpen: bool.isRequired,
   playerInventory: array.isRequired,
   stageFocus: string.isRequired,
 };
