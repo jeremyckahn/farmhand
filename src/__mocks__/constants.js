@@ -1,3 +1,5 @@
+import { stageFocusType } from '../enums';
+
 const { freeze } = Object;
 
 export const FERTILIZER_BONUS = 0.5;
@@ -21,3 +23,9 @@ export const RAIN_CHANCE = 0;
 export const SCARECROW_ITEM_ID = 'scarecrow';
 export const SPRINKLER_ITEM_ID = 'sprinkler';
 export const SPRINKLER_RANGE = 1;
+
+export const VIEW_LIST = [
+  stageFocusType.FIELD,
+  stageFocusType.INVENTORY,
+  stageFocusType.SHOP,
+];

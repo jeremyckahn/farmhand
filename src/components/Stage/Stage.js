@@ -7,6 +7,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import Typography from '@material-ui/core/Typography';
 import Field from '../Field';
 import Inventory from '../Inventory';
@@ -17,12 +19,14 @@ import './Stage.sass';
 
 const stageTitleMap = {
   [stageFocusType.FIELD]: 'Field',
-  [stageFocusType.INVENTORY]: 'Your inventory',
+  [stageFocusType.INVENTORY]: 'Inventory',
   [stageFocusType.SHOP]: 'Shop',
 };
 
 export const Stage = ({
   field,
+  handleClickNextMenuButton,
+  handleClickPreviousMenuButton,
   handleMenuToggle,
   isMenuOpen,
   money,
@@ -42,6 +46,20 @@ export const Stage = ({
           onClick={handleMenuToggle}
         >
           <MenuIcon />
+        </IconButton>
+        <IconButton
+          color="inherit"
+          aria-label="Previous view"
+          onClick={handleClickPreviousMenuButton}
+        >
+          <KeyboardArrowLeft />
+        </IconButton>
+        <IconButton
+          color="inherit"
+          aria-label="Next view"
+          onClick={handleClickNextMenuButton}
+        >
+          <KeyboardArrowRight />
         </IconButton>
         <Typography
           {...{
@@ -88,6 +106,8 @@ export const Stage = ({
 
 Stage.propTypes = {
   field: arrayOf(array).isRequired,
+  handleClickNextMenuButton: func.isRequired,
+  handleClickPreviousMenuButton: func.isRequired,
   handleMenuToggle: func.isRequired,
   money: number.isRequired,
   isMenuOpen: bool.isRequired,

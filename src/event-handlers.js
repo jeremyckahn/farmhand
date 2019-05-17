@@ -109,4 +109,12 @@ export default {
   handleMenuToggle() {
     this.setState({ isMenuOpen: !this.state.isMenuOpen });
   },
+
+  handleClickNextMenuButton() {
+    this.goToNextView();
+  },
+
+  handleClickPreviousMenuButton() {
+    this.goToPreviousView();
+  },
 };

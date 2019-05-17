@@ -43,6 +43,7 @@ import {
   PURCHASEABLE_FIELD_SIZES,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
+  VIEW_LIST,
 } from './constants';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 
@@ -259,6 +260,27 @@ export default class Farmhand extends Component {
             level: 'error',
           });
         });
+    });
+  }
+
+  goToNextView() {
+    const currentViewIndex = VIEW_LIST.indexOf(this.state.stageFocus);
+
+    this.setState({
+      stageFocus: VIEW_LIST[(currentViewIndex + 1) % VIEW_LIST.length],
+    });
+  }
+
+  goToPreviousView() {
+    const currentViewIndex = VIEW_LIST.indexOf(this.state.stageFocus);
+
+    this.setState({
+      stageFocus:
+        VIEW_LIST[
+          currentViewIndex === 0
+            ? VIEW_LIST.length - 1
+            : (currentViewIndex - 1) % VIEW_LIST.length
+        ],
     });
   }
 

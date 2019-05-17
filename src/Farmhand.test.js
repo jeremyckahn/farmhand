@@ -8,6 +8,7 @@ import {
   INITIAL_FIELD_HEIGHT,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
+  VIEW_LIST,
 } from './constants';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 import { fieldMode } from './enums';
@@ -183,6 +184,36 @@ describe('instance methods', () => {
       expect(showNotification).toHaveBeenNthCalledWith(2, {
         message: 'foo',
       });
+    });
+  });
+
+  describe('goToNextView', () => {
+    test('goes to next view', () => {
+      component.setState({ stageFocus: VIEW_LIST[0] });
+      component.instance().goToNextView();
+      expect(component.state().stageFocus).toEqual(VIEW_LIST[1]);
+    });
+
+    test('cycles to the beginning', () => {
+      component.setState({ stageFocus: VIEW_LIST[VIEW_LIST.length - 1] });
+      component.instance().goToNextView();
+      expect(component.state().stageFocus).toEqual(VIEW_LIST[0]);
+    });
+  });
+
+  describe('goToPreviousView', () => {
+    test('goes to previous view', () => {
+      component.setState({ stageFocus: VIEW_LIST[1] });
+      component.instance().goToPreviousView();
+      expect(component.state().stageFocus).toEqual(VIEW_LIST[0]);
+    });
+
+    test('cycles to the end', () => {
+      component.setState({ stageFocus: VIEW_LIST[0] });
+      component.instance().goToPreviousView();
+      expect(component.state().stageFocus).toEqual(
+        VIEW_LIST[VIEW_LIST.length - 1]
+      );
     });
   });
 

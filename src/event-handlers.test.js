@@ -257,3 +257,19 @@ describe('handleMenuToggle', () => {
     expect(component.state().isMenuOpen).toEqual(!isMenuOpen);
   });
 });
+
+describe('handleClickNextMenuButton', () => {
+  test('calls goToNextView', () => {
+    jest.spyOn(component.instance(), 'goToNextView').mockImplementation();
+    handlers().handleClickNextMenuButton();
+    expect(component.instance().goToNextView).toHaveBeenCalled();
+  });
+});
+
+describe('handleClickPreviousMenuButton', () => {
+  test('calls goToPreviousView', () => {
+    jest.spyOn(component.instance(), 'goToPreviousView').mockImplementation();
+    handlers().handleClickPreviousMenuButton();
+    expect(component.instance().goToPreviousView).toHaveBeenCalled();
+  });
+});

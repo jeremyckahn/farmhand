@@ -13,6 +13,8 @@ beforeEach(() => {
     <Stage
       {...{
         field: [[]],
+        handleClickNextMenuButton: () => {},
+        handleClickPreviousMenuButton: () => {},
         handleMenuToggle: () => {},
         isMenuOpen: true,
         money: 0,
