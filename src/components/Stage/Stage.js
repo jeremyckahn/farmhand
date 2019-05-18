@@ -7,12 +7,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import StepIcon from '@material-ui/core/StepIcon';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import Typography from '@material-ui/core/Typography';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
+import { VIEW_LIST } from '../../constants';
 import { stageFocusType } from '../../enums';
 
 import './Stage.sass';
@@ -61,6 +63,11 @@ export const Stage = ({
         >
           <KeyboardArrowRight />
         </IconButton>
+        <StepIcon
+          {...{
+            icon: VIEW_LIST.indexOf(stageFocus) + 1,
+          }}
+        />
         <Typography
           {...{
             className: 'stage-header',
