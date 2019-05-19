@@ -1,13 +1,18 @@
 @import styles/variables.sass
 
 .Farmhand
+  // padding-left and breakpoints correspond to AppBar dimensions
+  // https://material-ui.com/demos/app-bar/
   display: flex
   font-family: "Francois One", monospace
-  padding-top: 4em
+  padding-top: 3.5em
   position: fixed
 
-  @media screen and (max-width: #{$break-sm})
-    padding-top: 3.5em
+  @media (min-width: #{$break-xs}) and (orientation: landscape)
+    padding-top: 3em
+
+  @media (min-width: #{$break-sm})
+    padding-top: 4em
 
   button
     border-radius: 0.4em
