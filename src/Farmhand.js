@@ -22,6 +22,7 @@ import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
 import Stage from './components/Stage';
 import DebugMenu from './components/DebugMenu';
+import throttle from 'lodash.throttle';
 import theme from './mui-theme';
 import {
   createNewField,
@@ -158,7 +159,11 @@ export default class Farmhand extends Component {
       focusInventory: 'i',
       focusShop: 's',
       incrementDay: 'c',
+      nextView: 'right',
+      previousView: 'left',
     };
+
+    const keyHandlerThrottleTime = 150;
 
     this.keyHandlers = {
       focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
@@ -166,6 +171,11 @@ export default class Farmhand extends Component {
         this.setState({ stageFocus: stageFocusType.INVENTORY }),
       focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
       incrementDay: () => this.incrementDay(),
+      nextView: throttle(this.goToNextView.bind(this), keyHandlerThrottleTime),
+      previousView: throttle(
+        this.goToPreviousView.bind(this),
+        keyHandlerThrottleTime
+      ),
     };
 
     Object.assign(this.keyMap, {
