@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import { Item } from './Item';
 import { shallow } from 'enzyme';
 import { testItem } from '../../test-utils';
@@ -48,9 +49,10 @@ describe('conditional UI', () => {
       });
 
       test('enables purchase button', () => {
-        expect(component.find('button.purchase').props().disabled).toEqual(
-          false
-        );
+        const buttonProps = component.find(Button).props();
+
+        expect(buttonProps.className).toContain('purchase');
+        expect(buttonProps.disabled).toEqual(false);
       });
     });
 
@@ -64,9 +66,10 @@ describe('conditional UI', () => {
       });
 
       test('disables purchase button', () => {
-        expect(component.find('button.purchase').props().disabled).toEqual(
-          true
-        );
+        const buttonProps = component.find(Button).props();
+
+        expect(buttonProps.className).toContain('purchase');
+        expect(buttonProps.disabled).toEqual(true);
       });
     });
   });
@@ -79,8 +82,10 @@ describe('conditional UI', () => {
       });
     });
 
-    test('renders sell button when given an event handler', () => {
-      expect(component.find('button.sell')).toHaveLength(1);
+    test('renders sell button', () => {
+      const buttonProps = component.find(Button).props();
+
+      expect(buttonProps.className).toContain('sell');
     });
   });
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
+import Button from '@material-ui/core/Button';
 import { bool, func, number, object } from 'prop-types';
 import classNames from 'classnames';
 import { items } from '../../img';
@@ -23,18 +24,29 @@ export const Item = ({
     </header>
     <img src={items[id]} alt={name} />
     {isPurchaseView && (
-      <button
-        className="purchase"
-        disabled={value > money}
-        onClick={() => handleItemPurchase(item)}
+      <Button
+        {...{
+          className: 'purchase',
+          color: 'primary',
+          disabled: value > money,
+          onClick: () => handleItemPurchase(item),
+          variant: 'contained',
+        }}
       >
         Buy
-      </button>
+      </Button>
     )}
     {isSellView && (
-      <button className="sell" onClick={() => handleItemSell(item)}>
+      <Button
+        {...{
+          className: 'sell',
+          color: 'secondary',
+          onClick: () => handleItemSell(item),
+          variant: 'contained',
+        }}
+      >
         Sell
-      </button>
+      </Button>
     )}
     {typeof quantity === 'number' && (
       <p>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FarmhandContext from '../../Farmhand.context';
+import Button from '@material-ui/core/Button';
 import { func, number } from 'prop-types';
 import { PURCHASEABLE_FIELD_SIZES } from '../../constants';
 import './LandPurchase.sass';
@@ -95,12 +96,16 @@ export class LandPurchase extends Component {
             </option>
           ))}
         </select>
-        <button
-          onClick={handleFieldPurchase}
-          disabled={!canPlayerBuySelectedOption}
+        <Button
+          {...{
+            color: 'primary',
+            disabled: !canPlayerBuySelectedOption,
+            onClick: handleFieldPurchase,
+            variant: 'contained',
+          }}
         >
           Buy
-        </button>
+        </Button>
       </div>
     );
   }

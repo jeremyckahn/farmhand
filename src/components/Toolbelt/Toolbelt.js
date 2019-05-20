@@ -1,5 +1,6 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
+import Button from '@material-ui/core/Button';
 import { func, string } from 'prop-types';
 import classNames from 'classnames';
 import './Toolbelt.sass';
@@ -30,12 +31,13 @@ export const Toolbelt = ({
         toolImageId: 'hoe',
         fieldMode: CLEANUP,
       },
-    ].map(({ alt, className, toolImageId, fieldMode }) => (
-      <button
+    ].map(({ alt, toolImageId, fieldMode }) => (
+      <Button
         className={classNames({
           selected: fieldMode === currentFieldMode,
         })}
         key={fieldMode}
+        variant="contained"
       >
         {/* alt is in a different format here because of linter weirdness. */}
         <img
@@ -47,7 +49,7 @@ export const Toolbelt = ({
           }}
           alt={alt}
         />
-      </button>
+      </Button>
     ))}
   </div>
 );

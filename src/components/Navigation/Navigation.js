@@ -1,5 +1,6 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
+import Button from '@material-ui/core/Button';
 import { func, string } from 'prop-types';
 import { stageFocusType } from '../../enums';
 
@@ -12,9 +13,15 @@ export const Navigation = ({
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
-    <button className="end-day" onClick={handleEndDayButtonClick}>
+    <Button
+      {...{
+        className: 'end-day',
+        onClick: handleEndDayButtonClick,
+        variant: 'contained',
+      }}
+    >
       Call it a day (c)
-    </button>
+    </Button>
     <select
       className="view-select"
       onChange={handleViewChange}
