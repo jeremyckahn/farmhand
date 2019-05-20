@@ -1,5 +1,6 @@
 import React from 'react';
 import { LandPurchase } from './LandPurchase';
+import MenuItem from '@material-ui/core/MenuItem';
 import { PURCHASEABLE_FIELD_SIZES } from '../../constants';
 import { shallow } from 'enzyme';
 
@@ -20,7 +21,7 @@ beforeEach(() => {
 });
 
 test('renders field options', () => {
-  expect(component.find('option')).toHaveLength(PURCHASEABLE_FIELD_SIZES.size);
+  expect(component.find(MenuItem)).toHaveLength(PURCHASEABLE_FIELD_SIZES.size);
 });
 
 describe('option rendering', () => {
@@ -28,7 +29,7 @@ describe('option rendering', () => {
     test('option is disabled', () => {
       expect(
         component
-          .find('option')
+          .find(MenuItem)
           .first()
           .props().disabled
       ).toBeTruthy();
@@ -45,7 +46,7 @@ describe('option rendering', () => {
 
         expect(
           component
-            .find('option')
+            .find(MenuItem)
             .first()
             .props().disabled
         ).toBeFalsy();
@@ -62,7 +63,7 @@ describe('option rendering', () => {
 
       expect(
         component
-          .find('option')
+          .find(MenuItem)
           .first()
           .props().disabled
       ).toBeTruthy();

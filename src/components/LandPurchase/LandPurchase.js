@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import FarmhandContext from '../../Farmhand.context';
 import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import { func, number } from 'prop-types';
 import { PURCHASEABLE_FIELD_SIZES } from '../../constants';
 import './LandPurchase.sass';
@@ -85,17 +87,22 @@ export class LandPurchase extends Component {
     return (
       <div className="LandPurchase">
         <h2>Expand field</h2>
-        <select onChange={onSelectChange} value={selectedOption}>
+        <Select
+          {...{
+            onChange: onSelectChange,
+            value: selectedOption,
+          }}
+        >
           {purchaseableFieldSizes.map(([id, { price, columns, rows }]) => (
-            <option
+            <MenuItem
               key={id}
               value={id}
               disabled={money < price || hasPurchasedField(id)}
             >
               ${price}: {columns} x {rows}
-            </option>
+            </MenuItem>
           ))}
-        </select>
+        </Select>
         <Button
           {...{
             color: 'primary',
