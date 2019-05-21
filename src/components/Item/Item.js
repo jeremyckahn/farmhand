@@ -3,6 +3,7 @@ import FarmhandContext from '../../Farmhand.context';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import { bool, func, number, object } from 'prop-types';
 import classNames from 'classnames';
 import { items } from '../../img';
@@ -27,10 +28,12 @@ export const Item = ({
       raised: isSelected,
     }}
   >
-    <header>
-      <h2>{name}</h2>
-    </header>
-    <img src={items[id]} alt={name} />
+    <CardContent>
+      <header>
+        <h2>{name}</h2>
+      </header>
+      <img src={items[id]} alt={name} />
+    </CardContent>
     <CardActions>
       {isSelectView && (
         <Button

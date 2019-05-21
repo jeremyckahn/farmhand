@@ -33,17 +33,20 @@ export const Toolbelt = ({
       },
     ].map(({ alt, toolImageId, fieldMode }) => (
       <Button
-        className={classNames({
-          selected: fieldMode === currentFieldMode,
-        })}
-        key={fieldMode}
-        variant="contained"
+        {...{
+          className: classNames({
+            selected: fieldMode === currentFieldMode,
+          }),
+          color: 'primary',
+          key: fieldMode,
+          onClick: () => handleFieldModeSelect(fieldMode),
+          variant: fieldMode === currentFieldMode ? 'contained' : 'outlined',
+        }}
       >
         {/* alt is in a different format here because of linter weirdness. */}
         <img
           {...{
             className: `square ${toolImageId}`,
-            onClick: () => handleFieldModeSelect(fieldMode),
             src: pixel,
             style: { backgroundImage: `url(${tools[toolImageId]}` },
           }}
