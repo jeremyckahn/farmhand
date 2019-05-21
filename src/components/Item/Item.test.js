@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import CardHeader from '@material-ui/core/CardHeader';
 import { Item } from './Item';
 import { shallow } from 'enzyme';
 import { testItem } from '../../test-utils';
@@ -23,7 +24,7 @@ describe('static UI', () => {
   });
 
   test('renders the name', () => {
-    expect(component.find('header h2').text()).toEqual('an-item');
+    expect(component.find(CardHeader).props().title).toEqual('an-item');
   });
 });
 

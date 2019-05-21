@@ -2,8 +2,8 @@ import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import { bool, func, number, object } from 'prop-types';
 import classNames from 'classnames';
 import { items } from '../../img';
@@ -28,19 +28,23 @@ export const Item = ({
       raised: isSelected,
     }}
   >
-    <CardContent>
-      <header>
-        <h2>{name}</h2>
-      </header>
-      <img src={items[id]} alt={name} />
-      {isPurchaseView && <p>{`Price: ${value}`}</p>}
-      {isSellView && <p>{`Sell price: ${value}`}</p>}
-      {typeof quantity === 'number' && (
-        <p>
-          <strong>Quantity:</strong> {quantity}
-        </p>
-      )}
-    </CardContent>
+    <CardHeader
+      {...{
+        avatar: <img {...{ src: items[id] }} alt={name} />,
+        title: name,
+        subheader: (
+          <div>
+            {isPurchaseView && <p>{`Price: $${value.toFixed(2)}`}</p>}
+            {isSellView && <p>{`Sell price: $${value.toFixed(2)}`}</p>}
+            {typeof quantity === 'number' && (
+              <p>
+                <strong>Quantity:</strong> {quantity}
+              </p>
+            )}
+          </div>
+        ),
+      }}
+    />
     <CardActions>
       {isSelectView && (
         <Button
