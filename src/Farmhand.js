@@ -163,6 +163,7 @@ export default class Farmhand extends Component {
       incrementDay: 'c',
       nextView: 'right',
       previousView: 'left',
+      toggleMenu: 'm',
     };
 
     const keyHandlerThrottleTime = 150;
@@ -178,6 +179,7 @@ export default class Farmhand extends Component {
         this.goToPreviousView.bind(this),
         keyHandlerThrottleTime
       ),
+      toggleMenu: () => this.handlers.handleMenuToggle(),
     };
 
     Object.assign(this.keyMap, {
