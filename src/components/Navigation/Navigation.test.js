@@ -9,7 +9,6 @@ beforeEach(() => {
   component = shallow(
     <Navigation
       {...{
-        handleEndDayButtonClick: () => {},
         handleViewChange: () => {},
         stageFocus: stageFocusType.FIELD,
       }}

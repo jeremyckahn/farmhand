@@ -17,6 +17,8 @@ import {
   removeFieldPlotAt,
 } from './data-transformers';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import HotelIcon from '@material-ui/icons/Hotel';
 import Drawer from '@material-ui/core/Drawer';
 import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
@@ -570,6 +572,7 @@ export default class Farmhand extends Component {
     const {
       fieldToolInventory,
       handlers,
+      handlers: { handleEndDayButtonClick },
       hoveredPlotRange,
       keyHandlers,
       keyMap,
@@ -609,6 +612,17 @@ export default class Farmhand extends Component {
                 <DebugMenu />
               </Drawer>
               <Stage />
+              <Fab
+                {...{
+                  'aria-label': 'End day',
+                  className: 'end-day',
+                  color: 'primary',
+                  onClick: handleEndDayButtonClick,
+                  title: 'End day',
+                }}
+              >
+                <HotelIcon />
+              </Fab>
             </div>
           </FarmhandContext.Provider>
         </MuiThemeProvider>
