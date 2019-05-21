@@ -33,6 +33,13 @@ export const Item = ({
         <h2>{name}</h2>
       </header>
       <img src={items[id]} alt={name} />
+      {isPurchaseView && <p>{`Price: ${value}`}</p>}
+      {isSellView && <p>{`Sell price: ${value}`}</p>}
+      {typeof quantity === 'number' && (
+        <p>
+          <strong>Quantity:</strong> {quantity}
+        </p>
+      )}
     </CardContent>
     <CardActions>
       {isSelectView && (
@@ -48,40 +55,29 @@ export const Item = ({
         </Button>
       )}
       {isPurchaseView && (
-        <>
-          <Button
-            {...{
-              className: 'purchase',
-              color: 'primary',
-              disabled: value > money,
-              onClick: () => handleItemPurchase(item),
-              variant: 'contained',
-            }}
-          >
-            Buy
-          </Button>
-          <p>{`Price: ${value}`}</p>
-        </>
+        <Button
+          {...{
+            className: 'purchase',
+            color: 'primary',
+            disabled: value > money,
+            onClick: () => handleItemPurchase(item),
+            variant: 'contained',
+          }}
+        >
+          Buy
+        </Button>
       )}
       {isSellView && (
-        <>
-          <Button
-            {...{
-              className: 'sell',
-              color: 'secondary',
-              onClick: () => handleItemSell(item),
-              variant: 'contained',
-            }}
-          >
-            Sell
-          </Button>
-          <p>{`Sell price: ${value}`}</p>
-        </>
-      )}
-      {typeof quantity === 'number' && (
-        <p>
-          <strong>Quantity:</strong> {quantity}
-        </p>
+        <Button
+          {...{
+            className: 'sell',
+            color: 'secondary',
+            onClick: () => handleItemSell(item),
+            variant: 'contained',
+          }}
+        >
+          Sell
+        </Button>
       )}
     </CardActions>
   </Card>
