@@ -6,7 +6,7 @@
   min-width: 300px
   max-width: 1200px
   overflow: auto
-  padding-bottom: 4em
+  padding: 1.5em 1.5em 5.5em
   transition: all $ease-out
 
   &.menu-closed
@@ -26,7 +26,11 @@
       font-family: "Francois One", monospace
 
     .stage-header
+      display: none
       margin-left: 1em
+
+      @media (min-width: 400px)
+        display: block
 
     .money-display
       position: absolute

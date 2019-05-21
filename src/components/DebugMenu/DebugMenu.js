@@ -13,7 +13,7 @@ export const DebugMenu = ({
   handleClearPersistedDataClick,
   handleWaterAllPlotsClick,
 }) => (
-  <ExpansionPanel className="DebugMenu" style={{ position: 'absolute' }}>
+  <ExpansionPanel className="DebugMenu" square={true}>
     <ExpansionPanelSummary>
       <h2>Debug Menu</h2>
     </ExpansionPanelSummary>
