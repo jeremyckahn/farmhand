@@ -17,6 +17,7 @@ export const FieldTools = ({
             {...{
               item,
               isSelected: selectedItemId === item.id,
+              isSelectView: true,
             }}
           />
         </li>

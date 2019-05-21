@@ -1,22 +1,19 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import { array, func, string } from 'prop-types';
+import { array, string } from 'prop-types';
 import Item from '../Item';
 import './PlantableItems.sass';
 
-export const PlantableItems = ({
-  handleItemSelect,
-  plantableCropInventory,
-  selectedItemId,
-}) => (
+export const PlantableItems = ({ plantableCropInventory, selectedItemId }) => (
   <div className="PlantableItems">
     <ul>
       {plantableCropInventory.map(item => (
-        <li key={item.id} onClick={() => handleItemSelect(item)}>
+        <li key={item.id}>
           <Item
             {...{
               item,
               isSelected: item.id === selectedItemId,
+              isSelectView: true,
             }}
           />
         </li>
@@ -26,7 +23,6 @@ export const PlantableItems = ({
 );
 
 PlantableItems.propTypes = {
-  handleItemSelect: func.isRequired,
   plantableCropInventory: array.isRequired,
   selectedItemId: string.isRequired,
 };
