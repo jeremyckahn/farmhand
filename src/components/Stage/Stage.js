@@ -8,6 +8,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import StepIcon from '@material-ui/core/StepIcon';
+import Fab from '@material-ui/core/Fab';
+import HotelIcon from '@material-ui/icons/Hotel';
+import Tooltip from '@material-ui/core/Tooltip';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import Typography from '@material-ui/core/Typography';
@@ -27,6 +30,7 @@ const stageTitleMap = {
 
 export const Stage = ({
   field,
+  handleClickEndDayButton,
   handleClickNextMenuButton,
   handleClickPreviousMenuButton,
   handleMenuToggle,
@@ -108,11 +112,28 @@ export const Stage = ({
       />
     )}
     {stageFocus === stageFocusType.SHOP && <Shop />}
+    <Tooltip
+      {...{
+        title: 'End the day',
+      }}
+    >
+      <Fab
+        {...{
+          'aria-label': 'End the day',
+          className: 'end-day',
+          color: 'primary',
+          onClick: handleClickEndDayButton,
+        }}
+      >
+        <HotelIcon />
+      </Fab>
+    </Tooltip>
   </div>
 );
 
 Stage.propTypes = {
   field: arrayOf(array).isRequired,
+  handleClickEndDayButton: func.isRequired,
   handleClickNextMenuButton: func.isRequired,
   handleClickPreviousMenuButton: func.isRequired,
   handleMenuToggle: func.isRequired,

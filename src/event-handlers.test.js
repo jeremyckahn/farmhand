@@ -234,10 +234,10 @@ describe('handlePlotMouseOver', () => {
   });
 });
 
-describe('handleEndDayButtonClick', () => {
+describe('handleClickEndDayButton', () => {
   test('increments the day', () => {
     jest.spyOn(component.instance(), 'incrementDay');
-    handlers().handleEndDayButtonClick();
+    handlers().handleClickEndDayButton();
     expect(component.instance().incrementDay).toHaveBeenCalled();
   });
 });

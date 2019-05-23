@@ -87,7 +87,7 @@ export default {
     this.setState({ hoveredPlot: { x, y } });
   },
 
-  handleEndDayButtonClick() {
+  handleClickEndDayButton() {
     this.incrementDay();
   },
 

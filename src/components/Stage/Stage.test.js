@@ -13,6 +13,7 @@ beforeEach(() => {
     <Stage
       {...{
         field: [[]],
+        handleClickEndDayButton: () => {},
         handleClickNextMenuButton: () => {},
         handleClickPreviousMenuButton: () => {},
         handleMenuToggle: () => {},
