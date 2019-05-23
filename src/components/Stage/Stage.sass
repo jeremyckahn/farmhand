@@ -7,10 +7,12 @@
   max-width: 1200px
   overflow: auto
   padding: 1.5em 1.5em 5.5em
-  transition: all $ease-out
+  transition: margin-left $duration-entering-screen $easing-ease-out
+
 
   &.menu-closed
     margin-left: -$sidebar-width
+    transition: margin-left $duration-leaving-screen $easing-sharp
 
   h2
     font-size: 1.2em
