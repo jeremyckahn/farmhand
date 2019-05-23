@@ -55,7 +55,7 @@ export const Inventory = ({
     {[['seeds', 'Seeds'], ['tools', 'Field Tools']].map(
       ([category, headerText]) => (
         <section key={category}>
-          <h3>{headerText}</h3>
+          <h2>{headerText}</h2>
           <ul>
             {itemCategories[category].map((item, i) => (
               <li key={i}>
