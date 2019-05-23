@@ -1,18 +1,14 @@
 import React from 'react';
 import FarmhandContext from '../../Farmhand.context';
-import { array, func, string } from 'prop-types';
+import { array, string } from 'prop-types';
 import Item from '../Item';
 import './FieldTools.sass';
 
-export const FieldTools = ({
-  fieldToolInventory,
-  handleItemSelect,
-  selectedItemId,
-}) => (
+export const FieldTools = ({ fieldToolInventory, selectedItemId }) => (
   <div className="FieldTools">
     <ul>
       {fieldToolInventory.map(item => (
-        <li key={item.id} onClick={() => handleItemSelect(item)}>
+        <li key={item.id}>
           <Item
             {...{
               item,
@@ -28,7 +24,6 @@ export const FieldTools = ({
 
 FieldTools.propTypes = {
   fieldToolInventory: array.isRequired,
-  handleItemSelect: func.isRequired,
   selectedItemId: string.isRequired,
 };
 

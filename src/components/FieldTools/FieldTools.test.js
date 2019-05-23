@@ -9,7 +9,6 @@ beforeEach(() => {
   component = shallow(
     <FieldTools
       {...{
-        handleItemSelect: () => {},
         fieldToolInventory: [{ quantity: 1, id: 'sample-field-tool-1' }],
         selectedItemId: 'sample-field-tool-1',
       }}
