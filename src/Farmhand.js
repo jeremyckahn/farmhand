@@ -1,6 +1,5 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import FarmhandContext from './Farmhand.context';
-import NotificationSystem from 'react-notification-system';
 import { HotKeys } from 'react-hotkeys';
 import localforage from 'localforage';
 import eventHandlers from './event-handlers';
@@ -21,6 +20,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
 import Stage from './components/Stage';
+import NotificationSystem from './components/NotificationSystem';
 import DebugMenu from './components/DebugMenu';
 import throttle from 'lodash.throttle';
 import theme from './mui-theme';
@@ -63,11 +63,13 @@ const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode;
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {boolean} isMenuOpen
  * @property {number} money
- * @property {Array.<farmhand.notification>} newDayNotifications
+ * @property {Array.<string} newDayNotifications
+ * @property {Array.<string>} notifications
  * @property {string} selectedItemId
  * @property {farmhand.module:enums.fieldMode} fieldMode
  * @property {number} purchasedField
  * @property {Array.<farmhand.item>} shopInventory
+ * @property {boolean} doShowNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Object.<number>} valueAdjustments
  */
@@ -89,8 +91,6 @@ export default class Farmhand extends Component {
     description: 'Persisted game data for Farmhand',
   });
 
-  notificationSystemRef = createRef();
-
   /**
    * @member farmhand.Farmhand#state
    * @type {farmhand.state}
@@ -104,10 +104,12 @@ export default class Farmhand extends Component {
     isMenuOpen: true,
     money: 500,
     newDayNotifications: [],
+    notifications: [],
     selectedItemId: '',
     fieldMode: OBSERVE,
     purchasedField: 0,
     shopInventory: [...shopInventory],
+    doShowNotifications: false,
     stageFocus: stageFocusType.FIELD,
     valueAdjustments: {},
   };
@@ -220,28 +222,23 @@ export default class Farmhand extends Component {
   }
 
   clearPersistedData() {
-    this.localforage.clear().then(() =>
-      this.showNotification({
-        message: 'localforage.clear() succeeded!',
-        level: 'success',
-      })
-    );
+    this.localforage
+      .clear()
+      .then(() => this.showNotification('localforage.clear() succeeded!'));
   }
 
   /**
-   * @param {farmhand.notification} options
+   * @param {string} message
    */
-  showNotification(options) {
-    const { current: notificationSystem } = this.notificationSystemRef;
+  showNotification(message) {
+    const { notifications } = this.state;
 
-    // This will be null for the tests, so just return early.
-    if (!notificationSystem) {
-      return;
-    }
-
-    notificationSystem.addNotification({
-      level: 'info',
-      ...options,
+    this.setState({
+      // Don't show redundant notifications
+      notifications: notifications.includes(message)
+        ? notifications
+        : [...notifications, message],
+      doShowNotifications: true,
     });
   }
 
@@ -249,30 +246,29 @@ export default class Farmhand extends Component {
     const nextDayState = computeStateForNextDay(this.state);
     const pendingNotifications = [...nextDayState.newDayNotifications];
 
-    this.setState({ ...nextDayState, newDayNotifications: [] }, () => {
-      this.localforage
-        .setItem('state', {
-          ...this.state,
+    this.setState(
+      { ...nextDayState, newDayNotifications: [], notifications: [] },
+      () => {
+        this.localforage
+          .setItem('state', {
+            ...this.state,
 
-          // newDayNotifications are persisted so that they can be shown to the
-          // player when the app reloads.
-          newDayNotifications: pendingNotifications,
-        })
-        .then(() =>
-          [
-            { message: PROGRESS_SAVED_MESSAGE, level: 'success' },
-            ...pendingNotifications,
-          ].forEach(notification => this.showNotification(notification))
-        )
-        .catch(e => {
-          console.error(e);
+            // newDayNotifications are persisted so that they can be shown to the
+            // player when the app reloads.
+            newDayNotifications: pendingNotifications,
+          })
+          .then(() =>
+            [PROGRESS_SAVED_MESSAGE, ...pendingNotifications].forEach(
+              notification => this.showNotification(notification)
+            )
+          )
+          .catch(e => {
+            console.error(e);
 
-          this.showNotification({
-            message: JSON.stringify(e),
-            level: 'error',
+            this.showNotification(JSON.stringify(e));
           });
-        });
-    });
+      }
+    );
   }
 
   goToNextView() {
@@ -575,7 +571,6 @@ export default class Farmhand extends Component {
       hoveredPlotRange,
       keyHandlers,
       keyMap,
-      notificationSystemRef,
       plantableCropInventory,
       playerInventory,
     } = this;
@@ -595,7 +590,7 @@ export default class Farmhand extends Component {
         <MuiThemeProvider theme={theme}>
           <FarmhandContext.Provider value={{ gameState, handlers }}>
             <div className="Farmhand fill">
-              <NotificationSystem ref={notificationSystemRef} />
+              <NotificationSystem />
               <Drawer
                 {...{
                   className: 'sidebar-wrapper',

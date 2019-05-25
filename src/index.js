@@ -46,13 +46,6 @@
  * @property {boolean} wasWateredToday
  */
 
-/**
- * @typedef farmhand.notification
- * @type {Object}
- * @see
- * https://github.com/igorprado/react-notification-system#creating-a-notification
- */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.sass';

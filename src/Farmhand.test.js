@@ -121,7 +121,7 @@ describe('instance methods', () => {
           getItem: () =>
             Promise.resolve({
               foo: 'bar',
-              newDayNotifications: [{ message: 'baz' }],
+              newDayNotifications: ['baz'],
             }),
           setItem: data => Promise.resolve(data),
         });
@@ -140,9 +140,9 @@ describe('instance methods', () => {
       });
 
       test('shows notifications for pending newDayNotifications', () => {
-        expect(component.instance().showNotification).toHaveBeenCalledWith({
-          message: 'baz',
-        });
+        expect(component.instance().showNotification).toHaveBeenCalledWith(
+          'baz'
+        );
       });
 
       test('empties newDayNotifications', () => {
@@ -151,12 +151,30 @@ describe('instance methods', () => {
     });
   });
 
+  describe('showNotification', () => {
+    test('sets notification state', () => {
+      component.setState({ notifications: [] });
+      component.instance().showNotification('foo');
+      const { notifications, doShowNotifications } = component.state();
+      expect(notifications).toEqual(['foo']);
+      expect(doShowNotifications).toEqual(true);
+    });
+
+    test('does not show redundant notifications', () => {
+      component.setState({ notifications: [] });
+      component.instance().showNotification('foo');
+      component.instance().showNotification('foo');
+      const { notifications } = component.state();
+      expect(notifications).toEqual(['foo']);
+    });
+  });
+
   describe('incrementDay', () => {
     beforeEach(() => {
       jest.spyOn(component.instance().localforage, 'setItem');
       jest.spyOn(component.instance(), 'showNotification');
 
-      component.setState({ newDayNotifications: [{ message: 'foo' }] });
+      component.setState({ newDayNotifications: ['foo'] });
       component.instance().incrementDay();
     });
 
@@ -169,7 +187,8 @@ describe('instance methods', () => {
         'state',
         {
           ...component.state(),
-          newDayNotifications: [{ message: 'foo' }],
+          newDayNotifications: ['foo'],
+          notifications: [],
         }
       );
     });
@@ -177,13 +196,11 @@ describe('instance methods', () => {
     test('makes pending notification', () => {
       const { showNotification } = component.instance();
       expect(showNotification).toHaveBeenCalledTimes(2);
-      expect(showNotification).toHaveBeenNthCalledWith(1, {
-        level: 'success',
-        message: PROGRESS_SAVED_MESSAGE,
-      });
-      expect(showNotification).toHaveBeenNthCalledWith(2, {
-        message: 'foo',
-      });
+      expect(showNotification).toHaveBeenNthCalledWith(
+        1,
+        PROGRESS_SAVED_MESSAGE
+      );
+      expect(showNotification).toHaveBeenNthCalledWith(2, 'foo');
     });
   });
 

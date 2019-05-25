@@ -117,4 +117,12 @@ export default {
   handleClickPreviousMenuButton() {
     this.goToPreviousView();
   },
+
+  handleCloseNotification() {
+    this.setState({ doShowNotifications: false });
+  },
+
+  handleNotificationExited() {
+    this.setState({ notifications: [] });
+  },
 };

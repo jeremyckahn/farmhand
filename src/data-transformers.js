@@ -19,12 +19,7 @@ import { fieldMode, plotContentType } from './enums';
 export const applyRain = state => ({
   ...state,
   field: getWateredField(state.field),
-  newDayNotifications: [
-    ...state.newDayNotifications,
-    {
-      message: RAIN_MESSAGE,
-    },
-  ],
+  newDayNotifications: [...state.newDayNotifications, RAIN_MESSAGE],
 });
 
 /**
@@ -48,9 +43,9 @@ export const applyCrows = state => {
         const destroyCrop = Math.random() <= CROW_CHANCE;
 
         if (destroyCrop) {
-          newDayNotifications.push({
-            message: CROW_ATTACKED`${itemsMap[plotContent.itemId]}`,
-          });
+          newDayNotifications.push(
+            CROW_ATTACKED`${itemsMap[plotContent.itemId]}`
+          );
         }
 
         return destroyCrop ? null : plotContent;

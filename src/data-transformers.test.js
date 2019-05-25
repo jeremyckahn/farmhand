@@ -68,7 +68,7 @@ describe('applyRain', () => {
 
     expect(state.field[0][0].wasWateredToday).toBe(true);
     expect(state.field[0][1].wasWateredToday).toBe(true);
-    expect(state.newDayNotifications[0].message).toBe(RAIN_MESSAGE);
+    expect(state.newDayNotifications[0]).toBe(RAIN_MESSAGE);
   });
 });
 
@@ -162,7 +162,7 @@ describe('applyNerfs', () => {
 
         expect(state.field[0][0]).toBe(null);
         expect(state.newDayNotifications).toEqual([
-          { message: CROW_ATTACKED`${itemsMap['sample-crop-1']}` },
+          CROW_ATTACKED`${itemsMap['sample-crop-1']}`,
         ]);
       });
 
