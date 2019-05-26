@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import FarmhandContext from '../../Farmhand.context';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { func, number } from 'prop-types';
+
+import FarmhandContext from '../../Farmhand.context';
 import { PURCHASEABLE_FIELD_SIZES } from '../../constants';
 import './LandPurchase.sass';
 

@@ -1,7 +1,9 @@
 import React from 'react';
-import { Navigation } from './Navigation';
 import { shallow } from 'enzyme';
+
 import { stageFocusType } from '../../enums';
+
+import { Navigation } from './Navigation';
 
 let component;
 

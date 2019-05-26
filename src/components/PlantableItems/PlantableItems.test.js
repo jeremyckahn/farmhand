@@ -1,7 +1,9 @@
 import React from 'react';
-import { PlantableItems } from './PlantableItems';
-import Item from '../Item';
 import { shallow } from 'enzyme';
+
+import Item from '../Item';
+
+import { PlantableItems } from './PlantableItems';
 
 jest.mock('../../data/maps');
 jest.mock('../../data/items');

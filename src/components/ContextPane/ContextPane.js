@@ -1,6 +1,7 @@
 import React from 'react';
-import FarmhandContext from '../../Farmhand.context';
 import { string } from 'prop-types';
+
+import FarmhandContext from '../../Farmhand.context';
 import Inventory from '../Inventory';
 import Toolbelt from '../Toolbelt';
 import PlantableItems from '../PlantableItems';

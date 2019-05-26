@@ -1,12 +1,13 @@
 import React from 'react';
+import { array, object } from 'prop-types';
+import memoize from 'fast-memoize';
+import sortBy from 'lodash.sortby';
+
 import FarmhandContext from '../../Farmhand.context';
 import Item from '../Item';
 import { itemsMap } from '../../data/maps';
 import { getItemValue } from '../../utils';
 import { plotContentType } from '../../enums';
-import { array, object } from 'prop-types';
-import memoize from 'fast-memoize';
-import sortBy from 'lodash.sortby';
 
 import './Inventory.sass';
 

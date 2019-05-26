@@ -1,9 +1,10 @@
 import React from 'react';
-import FarmhandContext from '../../Farmhand.context';
 import { array, number, string } from 'prop-types';
+import classNames from 'classnames';
+
+import FarmhandContext from '../../Farmhand.context';
 import Plot from '../Plot';
 import { fieldMode } from '../../enums';
-import classNames from 'classnames';
 
 import './Field.sass';
 

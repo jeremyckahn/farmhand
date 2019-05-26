@@ -48,6 +48,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './index.sass';
 import Farmhand from './Farmhand';
 import 'typeface-francois-one';

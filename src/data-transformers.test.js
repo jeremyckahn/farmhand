@@ -10,7 +10,6 @@ import {
 } from './data/items';
 import { itemsMap } from './data/maps';
 import { getPlotContentFromItemId } from './utils';
-
 import * as fn from './data-transformers';
 
 jest.mock('localforage');

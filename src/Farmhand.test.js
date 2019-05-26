@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+
 import { getCropFromItemId, getPlotContentFromItemId } from './utils';
 import { testCrop, testItem } from './test-utils';
 import {
@@ -12,7 +13,6 @@ import {
 } from './constants';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 import { fieldMode } from './enums';
-
 import Farmhand from './Farmhand';
 
 jest.mock('localforage');

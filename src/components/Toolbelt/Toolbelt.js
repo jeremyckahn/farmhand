@@ -1,11 +1,11 @@
 import React from 'react';
-import FarmhandContext from '../../Farmhand.context';
 import Button from '@material-ui/core/Button';
 import { func, string } from 'prop-types';
 import classNames from 'classnames';
+
+import FarmhandContext from '../../Farmhand.context';
 import './Toolbelt.sass';
 import { fieldMode } from '../../enums';
-
 import { tools, pixel } from '../../img';
 
 const { CLEANUP, HARVEST, WATER } = fieldMode;

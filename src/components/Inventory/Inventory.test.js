@@ -1,7 +1,9 @@
 import React from 'react';
-import Item from '../Item';
 import { shallow } from 'enzyme';
+
+import Item from '../Item';
 import { testItem } from '../../test-utils';
+
 import { Inventory, getItemCategories, sort } from './Inventory';
 
 jest.mock('../../data/maps');

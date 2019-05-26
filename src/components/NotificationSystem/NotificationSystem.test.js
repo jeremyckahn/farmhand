@@ -1,6 +1,7 @@
 import React from 'react';
-import { NotificationSystem } from './NotificationSystem';
 import { shallow } from 'enzyme';
+
+import { NotificationSystem } from './NotificationSystem';
 
 let component;
 

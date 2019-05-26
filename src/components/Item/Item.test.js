@@ -1,9 +1,11 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
-import { Item } from './Item';
 import { shallow } from 'enzyme';
+
 import { testItem } from '../../test-utils';
+
+import { Item } from './Item';
 
 let component;
 

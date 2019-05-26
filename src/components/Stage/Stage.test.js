@@ -1,10 +1,12 @@
 import React from 'react';
-import { Stage } from './Stage';
+import { shallow } from 'enzyme';
+
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
 import { stageFocusType } from '../../../src/enums';
-import { shallow } from 'enzyme';
+
+import { Stage } from './Stage';
 
 let component;
 

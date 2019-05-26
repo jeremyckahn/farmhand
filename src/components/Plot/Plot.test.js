@@ -1,10 +1,12 @@
 import React from 'react';
-import { Plot, isInRange, getBackgroundStyles } from './Plot';
 import { shallow } from 'enzyme';
+
 import { getPlotContentFromItemId } from '../../utils';
 import { testCrop } from '../../test-utils';
 import { pixel, plotStates } from '../../img';
 import { cropLifeStage } from '../../enums';
+
+import { Plot, isInRange, getBackgroundStyles } from './Plot';
 
 jest.mock('../../data/maps');
 jest.mock('../../data/items');

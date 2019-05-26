@@ -1,6 +1,7 @@
 import React from 'react';
-import { DebugMenu } from './DebugMenu';
 import { shallow } from 'enzyme';
+
+import { DebugMenu } from './DebugMenu';
 
 let component;
 

@@ -1,9 +1,11 @@
 import React from 'react';
-import { ContextPane } from './ContextPane';
+import { shallow } from 'enzyme';
+
 import { stageFocusType } from '../../../src/enums';
 import Inventory from '../Inventory';
 import PlantableItems from '../PlantableItems';
-import { shallow } from 'enzyme';
+
+import { ContextPane } from './ContextPane';
 
 let component;
 

@@ -1,11 +1,12 @@
 import React from 'react';
-import FarmhandContext from '../../Farmhand.context';
 import { func } from 'prop-types';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+
+import FarmhandContext from '../../Farmhand.context';
 
 import './DebugMenu.sass';
 

@@ -1,11 +1,12 @@
 import React from 'react';
-import FarmhandContext from '../../Farmhand.context';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import { bool, func, number, object } from 'prop-types';
 import classNames from 'classnames';
+
+import FarmhandContext from '../../Farmhand.context';
 import { items } from '../../img';
 
 import './Item.sass';

@@ -1,7 +1,9 @@
 import React from 'react';
-import { Shop } from './Shop';
-import Inventory from '../Inventory';
 import { shallow } from 'enzyme';
+
+import Inventory from '../Inventory';
+
+import { Shop } from './Shop';
 
 let component;
 

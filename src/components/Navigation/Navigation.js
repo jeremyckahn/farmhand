@@ -1,8 +1,9 @@
 import React from 'react';
-import FarmhandContext from '../../Farmhand.context';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { func, string } from 'prop-types';
+
+import FarmhandContext from '../../Farmhand.context';
 import { stageFocusType } from '../../enums';
 
 import './Navigation.sass';

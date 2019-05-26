@@ -1,11 +1,12 @@
 import React from 'react';
-import FarmhandContext from '../../Farmhand.context';
 import { array, arrayOf, func, number, object, string } from 'prop-types';
+import classNames from 'classnames';
+
+import FarmhandContext from '../../Farmhand.context';
 import { getCropLifeStage, getPlotImage } from '../../utils';
 import { itemsMap } from '../../data/maps';
 import { pixel, plotStates } from '../../img';
 import { cropLifeStage, plotContentType } from '../../enums';
-import classNames from 'classnames';
 import './Plot.sass';
 
 export const getBackgroundStyles = plotContent => {

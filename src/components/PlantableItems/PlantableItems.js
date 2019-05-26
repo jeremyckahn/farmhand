@@ -1,6 +1,7 @@
 import React from 'react';
-import FarmhandContext from '../../Farmhand.context';
 import { array, string } from 'prop-types';
+
+import FarmhandContext from '../../Farmhand.context';
 import Item from '../Item';
 import './PlantableItems.sass';
 

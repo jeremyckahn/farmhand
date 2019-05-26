@@ -1,8 +1,9 @@
 import React from 'react';
+import { array, object } from 'prop-types';
+
 import FarmhandContext from '../../Farmhand.context';
 import Inventory from '../Inventory';
 import LandPurchase from '../LandPurchase';
-import { array, object } from 'prop-types';
 
 export const Shop = ({ shopInventory }) => (
   <div className="Shop">

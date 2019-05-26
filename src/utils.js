@@ -1,6 +1,7 @@
-import { cropIdToTypeMap, itemsMap } from './data/maps';
 import Dinero from 'dinero.js';
 import memoize from 'fast-memoize';
+
+import { cropIdToTypeMap, itemsMap } from './data/maps';
 import { items as itemImages } from './img';
 import { cropLifeStage, plotContentType } from './enums';
 import { INITIAL_FIELD_WIDTH, INITIAL_FIELD_HEIGHT } from './constants';

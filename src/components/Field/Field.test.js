@@ -1,8 +1,10 @@
 import React from 'react';
-import { Field } from './Field';
+import { shallow } from 'enzyme';
+
 import Plot from '../Plot';
 import { fieldMode } from '../../enums';
-import { shallow } from 'enzyme';
+
+import { Field } from './Field';
 
 jest.mock('../../data/maps');
 jest.mock('../../data/items');

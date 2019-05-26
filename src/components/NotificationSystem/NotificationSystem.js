@@ -1,7 +1,8 @@
 import React from 'react';
 import { arrayOf, bool, func, string } from 'prop-types';
-import FarmhandContext from '../../Farmhand.context';
 import Snackbar from '@material-ui/core/Snackbar';
+
+import FarmhandContext from '../../Farmhand.context';
 import './NotificationSystem.sass';
 
 export const NotificationSystem = ({

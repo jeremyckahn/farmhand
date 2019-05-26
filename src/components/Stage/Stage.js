@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 import Dinero from 'dinero.js';
-import FarmhandContext from '../../Farmhand.context';
 import { array, arrayOf, bool, func, number, string } from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +13,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import Typography from '@material-ui/core/Typography';
+
+import FarmhandContext from '../../Farmhand.context';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';

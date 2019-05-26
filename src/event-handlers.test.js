@@ -1,7 +1,8 @@
 import React from 'react';
+import { shallow } from 'enzyme';
+
 import Farmhand from './Farmhand';
 import { stageFocusType, fieldMode } from './enums';
-import { shallow } from 'enzyme';
 import { testItem } from './test-utils';
 
 jest.mock('./data/items');

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import FarmhandContext from './Farmhand.context';
 import { HotKeys } from 'react-hotkeys';
 import localforage from 'localforage';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import throttle from 'lodash.throttle';
+
+import FarmhandContext from './Farmhand.context';
 import eventHandlers from './event-handlers';
 import {
   addItemToInventory,
@@ -15,14 +19,11 @@ import {
   modifyFieldPlotAt,
   removeFieldPlotAt,
 } from './data-transformers';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
 import Stage from './components/Stage';
 import NotificationSystem from './components/NotificationSystem';
 import DebugMenu from './components/DebugMenu';
-import throttle from 'lodash.throttle';
 import theme from './mui-theme';
 import {
   createNewField,

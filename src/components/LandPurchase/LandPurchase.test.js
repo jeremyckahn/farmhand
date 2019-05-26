@@ -1,8 +1,10 @@
 import React from 'react';
-import { LandPurchase } from './LandPurchase';
 import MenuItem from '@material-ui/core/MenuItem';
-import { PURCHASEABLE_FIELD_SIZES } from '../../constants';
 import { shallow } from 'enzyme';
+
+import { PURCHASEABLE_FIELD_SIZES } from '../../constants';
+
+import { LandPurchase } from './LandPurchase';
 
 jest.mock('../../constants');
 

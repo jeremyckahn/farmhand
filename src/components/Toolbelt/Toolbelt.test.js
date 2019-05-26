@@ -1,7 +1,9 @@
 import React from 'react';
-import { Toolbelt } from './Toolbelt';
 import { shallow } from 'enzyme';
+
 import { fieldMode } from '../../enums';
+
+import { Toolbelt } from './Toolbelt';
 
 let component;
 
