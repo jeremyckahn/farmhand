@@ -6,8 +6,9 @@
   min-width: 100px
   max-width: 1200px
   overflow: auto
-  padding: 1.5em 1.5em 5.5em
+  padding: 1.5em 1.5em 6em
   transition: margin-left $duration-entering-screen $easing-ease-out
+  -webkit-overflow-scrolling: touch;
 
 
   &.menu-closed
@@ -22,8 +23,3 @@
 
     @media screen and (max-width: #{$break-sm})
       font-size: 1em
-
-  .end-day
-    bottom: 1.5em
-    position: absolute
-    right: 1.5em

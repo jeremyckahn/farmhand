@@ -3,6 +3,9 @@ import { HotKeys } from 'react-hotkeys';
 import localforage from 'localforage';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import Fab from '@material-ui/core/Fab';
+import HotelIcon from '@material-ui/icons/Hotel';
+import Tooltip from '@material-ui/core/Tooltip';
 import throttle from 'lodash.throttle';
 
 import FarmhandContext from './Farmhand.context';
@@ -609,6 +612,27 @@ export default class Farmhand extends Component {
                 <DebugMenu />
               </Drawer>
               <Stage />
+
+              {/*
+              The .end-day button needs to be at this top level instead of the
+              Stage because of scrolling issues in iOS.
+              */}
+              <Tooltip
+                {...{
+                  title: 'End the day',
+                }}
+              >
+                <Fab
+                  {...{
+                    'aria-label': 'End the day',
+                    className: 'end-day',
+                    color: 'primary',
+                    onClick: handlers.handleClickEndDayButton,
+                  }}
+                >
+                  <HotelIcon />
+                </Fab>
+              </Tooltip>
             </div>
           </FarmhandContext.Provider>
         </MuiThemeProvider>

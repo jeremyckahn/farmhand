@@ -1,9 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { array, arrayOf, bool, func, string } from 'prop-types';
-import Fab from '@material-ui/core/Fab';
-import HotelIcon from '@material-ui/icons/Hotel';
-import Tooltip from '@material-ui/core/Tooltip';
+import { array, arrayOf, bool, string } from 'prop-types';
 
 import FarmhandContext from '../../Farmhand.context';
 import Field from '../Field';
@@ -13,13 +10,7 @@ import { stageFocusType } from '../../enums';
 
 import './Stage.sass';
 
-export const Stage = ({
-  field,
-  handleClickEndDayButton,
-  isMenuOpen,
-  playerInventory,
-  stageFocus,
-}) => (
+export const Stage = ({ field, isMenuOpen, playerInventory, stageFocus }) => (
   <div className={classNames('Stage', { 'menu-closed': !isMenuOpen })}>
     {stageFocus === stageFocusType.FIELD && (
       <Field
@@ -37,28 +28,11 @@ export const Stage = ({
       />
     )}
     {stageFocus === stageFocusType.SHOP && <Shop />}
-    <Tooltip
-      {...{
-        title: 'End the day',
-      }}
-    >
-      <Fab
-        {...{
-          'aria-label': 'End the day',
-          className: 'end-day',
-          color: 'primary',
-          onClick: handleClickEndDayButton,
-        }}
-      >
-        <HotelIcon />
-      </Fab>
-    </Tooltip>
   </div>
 );
 
 Stage.propTypes = {
   field: arrayOf(array).isRequired,
-  handleClickEndDayButton: func.isRequired,
   isMenuOpen: bool.isRequired,
   playerInventory: array.isRequired,
   stageFocus: string.isRequired,

@@ -15,7 +15,6 @@ beforeEach(() => {
     <Stage
       {...{
         field: [[]],
-        handleClickEndDayButton: () => {},
         isMenuOpen: true,
         playerInventory: [],
         stageFocus: stageFocusType.FIELD,
