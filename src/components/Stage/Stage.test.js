@@ -16,11 +16,7 @@ beforeEach(() => {
       {...{
         field: [[]],
         handleClickEndDayButton: () => {},
-        handleClickNextMenuButton: () => {},
-        handleClickPreviousMenuButton: () => {},
-        handleMenuToggle: () => {},
         isMenuOpen: true,
-        money: 0,
         playerInventory: [],
         stageFocus: stageFocusType.FIELD,
       }}

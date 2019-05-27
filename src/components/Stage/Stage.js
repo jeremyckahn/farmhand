@@ -1,102 +1,28 @@
 import React from 'react';
 import classNames from 'classnames';
-import Dinero from 'dinero.js';
-import { array, arrayOf, bool, func, number, string } from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import StepIcon from '@material-ui/core/StepIcon';
+import { array, arrayOf, bool, func, string } from 'prop-types';
 import Fab from '@material-ui/core/Fab';
 import HotelIcon from '@material-ui/icons/Hotel';
 import Tooltip from '@material-ui/core/Tooltip';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import Typography from '@material-ui/core/Typography';
 
 import FarmhandContext from '../../Farmhand.context';
+import AppBar from '../AppBar';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
-import { VIEW_LIST } from '../../constants';
 import { stageFocusType } from '../../enums';
 
 import './Stage.sass';
 
-const stageTitleMap = {
-  [stageFocusType.FIELD]: 'Field',
-  [stageFocusType.INVENTORY]: 'Inventory',
-  [stageFocusType.SHOP]: 'Shop',
-};
-
 export const Stage = ({
   field,
   handleClickEndDayButton,
-  handleClickNextMenuButton,
-  handleClickPreviousMenuButton,
-  handleMenuToggle,
   isMenuOpen,
-  money,
   playerInventory,
   stageFocus,
 }) => (
   <div className={classNames('Stage', { 'menu-closed': !isMenuOpen })}>
-    <AppBar position="fixed">
-      <Toolbar
-        {...{
-          className: 'toolbar',
-        }}
-      >
-        <IconButton
-          color="inherit"
-          aria-label="Open drawer"
-          onClick={handleMenuToggle}
-        >
-          <MenuIcon />
-        </IconButton>
-        <IconButton
-          color="inherit"
-          aria-label="Previous view"
-          onClick={handleClickPreviousMenuButton}
-        >
-          <KeyboardArrowLeft />
-        </IconButton>
-        <IconButton
-          color="inherit"
-          aria-label="Next view"
-          onClick={handleClickNextMenuButton}
-        >
-          <KeyboardArrowRight />
-        </IconButton>
-        <StepIcon
-          {...{
-            icon: VIEW_LIST.indexOf(stageFocus) + 1,
-          }}
-        />
-        <Typography
-          {...{
-            className: 'stage-header',
-            variant: 'h2',
-          }}
-        >
-          {stageTitleMap[stageFocus]}
-        </Typography>
-        <Typography
-          {...{
-            className: 'money-display',
-            variant: 'h2',
-          }}
-        >
-          $
-          {Dinero({
-            amount: Math.round(money * 100),
-            precision: 2,
-          })
-            .toUnit()
-            .toFixed(2)}
-        </Typography>
-      </Toolbar>
-    </AppBar>
+    <AppBar />
     {stageFocus === stageFocusType.FIELD && (
       <Field
         {...{
@@ -135,10 +61,6 @@ export const Stage = ({
 Stage.propTypes = {
   field: arrayOf(array).isRequired,
   handleClickEndDayButton: func.isRequired,
-  handleClickNextMenuButton: func.isRequired,
-  handleClickPreviousMenuButton: func.isRequired,
-  handleMenuToggle: func.isRequired,
-  money: number.isRequired,
   isMenuOpen: bool.isRequired,
   playerInventory: array.isRequired,
   stageFocus: string.isRequired,
