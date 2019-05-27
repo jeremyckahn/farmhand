@@ -6,7 +6,6 @@ import HotelIcon from '@material-ui/icons/Hotel';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import FarmhandContext from '../../Farmhand.context';
-import AppBar from '../AppBar';
 import Field from '../Field';
 import Inventory from '../Inventory';
 import Shop from '../Shop';
@@ -22,7 +21,6 @@ export const Stage = ({
   stageFocus,
 }) => (
   <div className={classNames('Stage', { 'menu-closed': !isMenuOpen })}>
-    <AppBar />
     {stageFocus === stageFocusType.FIELD && (
       <Field
         {...{

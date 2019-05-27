@@ -19,6 +19,7 @@ import {
   modifyFieldPlotAt,
   removeFieldPlotAt,
 } from './data-transformers';
+import AppBar from './components/AppBar';
 import Navigation from './components/Navigation';
 import ContextPane from './components/ContextPane';
 import Stage from './components/Stage';
@@ -592,6 +593,7 @@ export default class Farmhand extends Component {
           <FarmhandContext.Provider value={{ gameState, handlers }}>
             <div className="Farmhand fill">
               <NotificationSystem />
+              <AppBar />
               <Drawer
                 {...{
                   className: 'sidebar-wrapper',
