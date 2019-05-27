@@ -11,6 +11,7 @@ beforeEach(() => {
   component = shallow(
     <Navigation
       {...{
+        dayCount: 0,
         handleViewChange: () => {},
         stageFocus: stageFocusType.FIELD,
       }}

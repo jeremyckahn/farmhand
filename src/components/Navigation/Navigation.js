@@ -1,16 +1,17 @@
 import React from 'react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { func, string } from 'prop-types';
+import { number, func, string } from 'prop-types';
 
 import FarmhandContext from '../../Farmhand.context';
 import { stageFocusType } from '../../enums';
 
 import './Navigation.sass';
 
-export const Navigation = ({ handleViewChange, stageFocus }) => (
+export const Navigation = ({ dayCount, handleViewChange, stageFocus }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
+    <h2 className="day-count">Day {dayCount}</h2>
     <Select
       {...{
         className: 'view-select',
@@ -26,6 +27,7 @@ export const Navigation = ({ handleViewChange, stageFocus }) => (
 );
 
 Navigation.propTypes = {
+  dayCount: number.isRequired,
   handleViewChange: func.isRequired,
   stageFocus: string.isRequired,
 };
