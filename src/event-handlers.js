@@ -28,6 +28,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.item} item
+   */
+  handleItemSellAllClick(item) {
+    this.sellAllOfItem(item);
+  },
+
+  /**
    * @param {external:React.SyntheticEvent} e
    */
   handleViewChange({ target: { value } }) {

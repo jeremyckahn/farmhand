@@ -85,10 +85,9 @@ describe('conditional UI', () => {
       });
     });
 
-    test('renders sell button', () => {
-      const buttonProps = component.find(Button).props();
-
-      expect(buttonProps.className).toContain('sell');
+    test('renders sell buttons', () => {
+      expect(component.find('.sell')).toHaveLength(1);
+      expect(component.find('.sell-all')).toHaveLength(1);
     });
   });
 });

@@ -286,19 +286,20 @@ export const updateField = (field, modifierFn) =>
 /**
  * @param {string} itemId
  * @param {Array.<farmhand.item>} inventory
+ * @param {number} [howMany=1]
  * @returns {Array.<farmhand.item>}
  */
-export const decrementItemFromInventory = (itemId, inventory) => {
+export const decrementItemFromInventory = (itemId, inventory, howMany = 1) => {
   inventory = [...inventory];
 
   const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId);
 
   const { quantity } = inventory[itemInventoryIndex];
 
-  if (quantity > 1) {
+  if (quantity > howMany) {
     inventory[itemInventoryIndex] = {
       ...inventory[itemInventoryIndex],
-      quantity: quantity - 1,
+      quantity: quantity - howMany,
     };
   } else {
     inventory.splice(itemInventoryIndex, 1);

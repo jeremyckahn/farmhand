@@ -15,6 +15,7 @@ export const Item = ({
   handleItemPurchaseClick,
   handleItemSelectClick,
   handleItemSellClick,
+  handleItemSellAllClick,
   isPurchaseView,
   isSelected,
   isSelectView,
@@ -73,16 +74,28 @@ export const Item = ({
         </Button>
       )}
       {isSellView && (
-        <Button
-          {...{
-            className: 'sell',
-            color: 'secondary',
-            onClick: () => handleItemSellClick(item),
-            variant: 'contained',
-          }}
-        >
-          Sell
-        </Button>
+        <>
+          <Button
+            {...{
+              className: 'sell',
+              color: 'secondary',
+              onClick: () => handleItemSellClick(item),
+              variant: 'contained',
+            }}
+          >
+            Sell
+          </Button>
+          <Button
+            {...{
+              className: 'sell-all',
+              color: 'secondary',
+              onClick: () => handleItemSellAllClick(item),
+              variant: 'contained',
+            }}
+          >
+            Sell All
+          </Button>
+        </>
       )}
     </CardActions>
   </Card>

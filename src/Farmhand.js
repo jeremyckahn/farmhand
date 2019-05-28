@@ -314,6 +314,10 @@ export default class Farmhand extends Component {
     });
   }
 
+  // TODO: For sellItem and sellAllOfItem, compute the value based on item ID
+  // and valueAdjustments rather than trusting the value attached to the item
+  // argument.
+
   /**
    * @param {farmhand.item} item
    */
@@ -324,6 +328,25 @@ export default class Farmhand extends Component {
     this.setState({
       inventory: decrementItemFromInventory(id, inventory),
       money: money + value,
+    });
+  }
+
+  /**
+   * @param {farmhand.item} item
+   */
+  sellAllOfItem({ id, value }) {
+    const { inventory, money } = this.state;
+    const itemInInventory = inventory.find(item => item.id === id);
+
+    if (!itemInInventory) {
+      return;
+    }
+
+    const { quantity } = itemInInventory;
+
+    this.setState({
+      inventory: decrementItemFromInventory(id, inventory, quantity),
+      money: money + value * quantity,
     });
   }
 

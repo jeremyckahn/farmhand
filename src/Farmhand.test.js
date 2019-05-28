@@ -289,6 +289,27 @@ describe('instance methods', () => {
     });
   });
 
+  describe('sellAllOfItem', () => {
+    beforeEach(() => {
+      component.setState({
+        inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
+        money: 100,
+      });
+
+      component
+        .instance()
+        .sellAllOfItem(testItem({ id: 'sample-item-1', value: 20 }));
+    });
+
+    test('removes items from inventory', () => {
+      expect(component.state().inventory).toEqual([]);
+    });
+
+    test('adds total value of items to player money', () => {
+      expect(component.state().money).toEqual(140);
+    });
+  });
+
   describe('plantInPlot', () => {
     beforeEach(() => {
       component.setState({
