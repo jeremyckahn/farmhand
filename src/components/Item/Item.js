@@ -12,9 +12,9 @@ import { items } from '../../img';
 import './Item.sass';
 
 export const Item = ({
-  handleItemPurchase,
-  handleItemSelect,
-  handleItemSell,
+  handleItemPurchaseClick,
+  handleItemSelectClick,
+  handleItemSellClick,
   isPurchaseView,
   isSelected,
   isSelectView,
@@ -52,7 +52,7 @@ export const Item = ({
           {...{
             className: 'select',
             color: 'primary',
-            onClick: () => handleItemSelect(item),
+            onClick: () => handleItemSelectClick(item),
             variant: isSelected ? 'contained' : 'outlined',
           }}
         >
@@ -65,7 +65,7 @@ export const Item = ({
             className: 'purchase',
             color: 'primary',
             disabled: value > money,
-            onClick: () => handleItemPurchase(item),
+            onClick: () => handleItemPurchaseClick(item),
             variant: 'contained',
           }}
         >
@@ -77,7 +77,7 @@ export const Item = ({
           {...{
             className: 'sell',
             color: 'secondary',
-            onClick: () => handleItemSell(item),
+            onClick: () => handleItemSellClick(item),
             variant: 'contained',
           }}
         >
@@ -89,9 +89,9 @@ export const Item = ({
 );
 
 Item.propTypes = {
-  handleItemPurchase: func,
-  handleItemSelect: func,
-  handleItemSell: func,
+  handleItemPurchaseClick: func,
+  handleItemSelectClick: func,
+  handleItemSellClick: func,
   isPurchaseView: bool,
   isSelected: bool,
   isSelectView: bool,

@@ -14,7 +14,6 @@ beforeEach(() => {
   component = shallow(
     <PlantableItems
       {...{
-        handleItemSelect: () => {},
         plantableCropInventory: [],
         selectedItemId: '',
       }}

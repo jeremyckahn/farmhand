@@ -15,12 +15,12 @@ beforeEach(() => {
   component = shallow(<Farmhand />);
 });
 
-describe('handleItemPurchase', () => {
+describe('handleItemPurchaseClick', () => {
   test('calls purchaseItem', () => {
     jest
       .spyOn(component.instance(), 'purchaseItem')
       .mockImplementation(() => {});
-    handlers().handleItemPurchase(testItem({ id: 'sample-item-1' }));
+    handlers().handleItemPurchaseClick(testItem({ id: 'sample-item-1' }));
 
     expect(component.instance().purchaseItem).toHaveBeenCalledWith(
       testItem({ id: 'sample-item-1' })
@@ -28,10 +28,10 @@ describe('handleItemPurchase', () => {
   });
 });
 
-describe('handleItemSell', () => {
+describe('handleItemSellClick', () => {
   test('calls sellItem', () => {
     jest.spyOn(component.instance(), 'sellItem').mockImplementation(() => {});
-    handlers().handleItemSell(testItem({ id: 'sample-item-1' }));
+    handlers().handleItemSellClick(testItem({ id: 'sample-item-1' }));
 
     expect(component.instance().sellItem).toHaveBeenCalledWith(
       testItem({ id: 'sample-item-1' })
@@ -85,13 +85,13 @@ describe('handleFieldModeSelect', () => {
   });
 });
 
-describe('handleItemSelect', () => {
+describe('handleItemSelectClick', () => {
   beforeEach(() => {
     component.setState({
       selectedItemId: 'sample-crop-1',
     });
 
-    handlers().handleItemSelect(
+    handlers().handleItemSelectClick(
       testItem({ enablesFieldMode: 'FOO', id: 'field-tool' })
     );
   });

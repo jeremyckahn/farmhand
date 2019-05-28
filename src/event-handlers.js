@@ -16,14 +16,14 @@ export default {
   /**
    * @param {farmhand.item} item
    */
-  handleItemPurchase(item) {
+  handleItemPurchaseClick(item) {
     this.purchaseItem(item);
   },
 
   /**
    * @param {farmhand.item} item
    */
-  handleItemSell(item) {
+  handleItemSellClick(item) {
     this.sellItem(item);
   },
 
@@ -47,7 +47,7 @@ export default {
     });
   },
 
-  handleItemSelect({ id, enablesFieldMode, hoveredPlotRangeSize = 0 }) {
+  handleItemSelectClick({ id, enablesFieldMode, hoveredPlotRangeSize = 0 }) {
     this.setState({
       fieldMode: enablesFieldMode,
       hoveredPlotRangeSize,
