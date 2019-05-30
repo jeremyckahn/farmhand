@@ -12,6 +12,7 @@ import { items } from '../../img';
 import './Item.sass';
 
 export const Item = ({
+  handleItemMaxOutClick,
   handleItemPurchaseClick,
   handleItemSelectClick,
   handleItemSellClick,
@@ -61,17 +62,30 @@ export const Item = ({
         </Button>
       )}
       {isPurchaseView && (
-        <Button
-          {...{
-            className: 'purchase',
-            color: 'primary',
-            disabled: value > money,
-            onClick: () => handleItemPurchaseClick(item),
-            variant: 'contained',
-          }}
-        >
-          Buy
-        </Button>
+        <>
+          <Button
+            {...{
+              className: 'purchase',
+              color: 'primary',
+              disabled: value > money,
+              onClick: () => handleItemPurchaseClick(item),
+              variant: 'contained',
+            }}
+          >
+            Buy
+          </Button>
+          <Button
+            {...{
+              className: 'max-out',
+              color: 'primary',
+              disabled: value > money,
+              onClick: () => handleItemMaxOutClick(item),
+              variant: 'contained',
+            }}
+          >
+            Max Out
+          </Button>
+        </>
       )}
       {isSellView && (
         <>
@@ -102,6 +116,7 @@ export const Item = ({
 );
 
 Item.propTypes = {
+  handleItemMaxOutClick: func,
   handleItemPurchaseClick: func,
   handleItemSelectClick: func,
   handleItemSellClick: func,

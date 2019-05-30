@@ -234,6 +234,36 @@ describe('instance methods', () => {
     });
   });
 
+  describe('purchaseItemMax', () => {
+    describe('player does not have enough money for any items', () => {
+      beforeEach(() => {
+        component.setState({ money: 1 });
+        component
+          .instance()
+          .purchaseItemMax(testItem({ id: 'sample-item-1', value: 10 }));
+      });
+
+      test('items are not purchased', () => {
+        expect(component.state('money')).toEqual(1);
+        expect(component.state('inventory')).toEqual([]);
+      });
+    });
+
+    describe('player has enough money for items', () => {
+      beforeEach(() => {
+        component.setState({ money: 25 });
+        component
+          .instance()
+          .purchaseItemMax(testItem({ id: 'sample-item-1', value: 10 }));
+      });
+
+      test('max items are purchased', () => {
+        expect(component.state('money')).toEqual(5);
+        expect(component.state('inventory')[0].quantity).toEqual(2);
+      });
+    });
+  });
+
   describe('purchaseItem', () => {
     describe('user has enough money', () => {
       describe('money state', () => {

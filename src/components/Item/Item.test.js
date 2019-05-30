@@ -51,11 +51,9 @@ describe('conditional UI', () => {
         });
       });
 
-      test('enables purchase button', () => {
-        const buttonProps = component.find(Button).props();
-
-        expect(buttonProps.className).toContain('purchase');
-        expect(buttonProps.disabled).toEqual(false);
+      test('enables purchase buttons', () => {
+        expect(component.find('.purchase').props().disabled).toEqual(false);
+        expect(component.find('.max-out').props().disabled).toEqual(false);
       });
     });
 
@@ -68,11 +66,8 @@ describe('conditional UI', () => {
         });
       });
 
-      test('disables purchase button', () => {
-        const buttonProps = component.find(Button).props();
-
-        expect(buttonProps.className).toContain('purchase');
-        expect(buttonProps.disabled).toEqual(true);
+      test('disables purchase buttons', () => {
+        expect(component.find('.max-out').props().disabled).toEqual(true);
       });
     });
   });

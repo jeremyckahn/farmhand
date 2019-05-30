@@ -297,6 +297,30 @@ export default class Farmhand extends Component {
     });
   }
 
+  // TODO: For purchase and sell functions, compute the value based on item ID
+  // and valueAdjustments rather than trusting the value attached to the item
+  // argument.
+
+  // TODO: Consolidate this and purchaseItem.
+  /**
+   * @param {farmhand.item} item
+   */
+  purchaseItemMax(item) {
+    const { value } = item;
+    const { inventory, money } = this.state;
+
+    if (value > money) {
+      return;
+    }
+
+    const maxAffordableItems = Math.floor(money / value);
+
+    this.setState({
+      inventory: addItemToInventory(item, inventory, maxAffordableItems),
+      money: money - value * maxAffordableItems,
+    });
+  }
+
   /**
    * @param {farmhand.item} item
    */
@@ -314,10 +338,6 @@ export default class Farmhand extends Component {
     });
   }
 
-  // TODO: For sellItem and sellAllOfItem, compute the value based on item ID
-  // and valueAdjustments rather than trusting the value attached to the item
-  // argument.
-
   /**
    * @param {farmhand.item} item
    */
@@ -331,6 +351,7 @@ export default class Farmhand extends Component {
     });
   }
 
+  // TODO: Consolidate this and sellItem.
   /**
    * @param {farmhand.item} item
    */

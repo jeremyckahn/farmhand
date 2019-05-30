@@ -16,6 +16,13 @@ export default {
   /**
    * @param {farmhand.item} item
    */
+  handleItemMaxOutClick(item) {
+    this.purchaseItemMax(item);
+  },
+
+  /**
+   * @param {farmhand.item} item
+   */
   handleItemPurchaseClick(item) {
     this.purchaseItem(item);
   },

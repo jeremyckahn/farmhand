@@ -208,8 +208,9 @@ export const resetWasWatered = plotContent =>
 /**
  * @param {farmhand.item} item
  * @returns {Array.<{ item: farmhand.item, quantity: number }>}
+ * @param {number} [howMany=1]
  */
-export const addItemToInventory = (item, inventory) => {
+export const addItemToInventory = (item, inventory, howMany = 1) => {
   const { id } = item;
   const newInventory = [...inventory];
 
@@ -222,10 +223,10 @@ export const addItemToInventory = (item, inventory) => {
 
     newInventory[currentItemSlot] = {
       ...currentItem,
-      quantity: currentItem.quantity + 1,
+      quantity: currentItem.quantity + howMany,
     };
   } else {
-    newInventory.push({ id, quantity: 1 });
+    newInventory.push({ id, quantity: howMany });
   }
 
   return newInventory;
