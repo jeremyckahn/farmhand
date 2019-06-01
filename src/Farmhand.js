@@ -336,35 +336,32 @@ export default class Farmhand extends Component {
 
   /**
    * @param {farmhand.item} item
+   * @param {number} [howMany=1]
    */
-  sellItem(item) {
-    const { id, value = 0 } = item;
+  sellItem(item, howMany = 1) {
+    const { id, value } = item;
     const { inventory, money } = this.state;
+    const totalValue = value * howMany;
 
     this.setState({
-      inventory: decrementItemFromInventory(id, inventory),
-      money: money + value,
+      inventory: decrementItemFromInventory(id, inventory, howMany),
+      money: money + totalValue,
     });
   }
 
-  // TODO: Consolidate this and sellItem.
   /**
    * @param {farmhand.item} item
    */
-  sellAllOfItem({ id, value }) {
-    const { inventory, money } = this.state;
+  sellAllOfItem(item) {
+    const { id } = item;
+    const { inventory } = this.state;
     const itemInInventory = inventory.find(item => item.id === id);
 
     if (!itemInInventory) {
       return;
     }
 
-    const { quantity } = itemInInventory;
-
-    this.setState({
-      inventory: decrementItemFromInventory(id, inventory, quantity),
-      money: money + value * quantity,
-    });
+    this.sellItem(item, itemInInventory.quantity);
   }
 
   /**
