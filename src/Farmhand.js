@@ -310,6 +310,10 @@ export default class Farmhand extends Component {
    * @param {number} [howMany=1]
    */
   purchaseItem(item, howMany = 1) {
+    if (howMany === 0) {
+      return;
+    }
+
     const value = this.getAdjustedItemValue(item.id);
     const { inventory, money } = this.state;
     const totalValue = value * howMany;
@@ -329,14 +333,8 @@ export default class Farmhand extends Component {
    */
   purchaseItemMax(item) {
     const value = this.getAdjustedItemValue(item.id);
-    const { money } = this.state;
 
-    // TODO: Try to leverage the similar check in purchaseItem.
-    if (value > money) {
-      return;
-    }
-
-    this.purchaseItem(item, Math.floor(money / value));
+    this.purchaseItem(item, Math.floor(this.state.money / value));
   }
 
   /**
@@ -344,6 +342,10 @@ export default class Farmhand extends Component {
    * @param {number} [howMany=1]
    */
   sellItem(item, howMany = 1) {
+    if (howMany === 0) {
+      return;
+    }
+
     const { id } = item;
     const value = this.getAdjustedItemValue(item.id);
     const { inventory, money } = this.state;
