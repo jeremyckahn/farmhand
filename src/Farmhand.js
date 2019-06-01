@@ -303,20 +303,6 @@ export default class Farmhand extends Component {
 
   /**
    * @param {farmhand.item} item
-   */
-  purchaseItemMax(item) {
-    const { value } = item;
-    const { money } = this.state;
-
-    if (value > money) {
-      return;
-    }
-
-    this.purchaseItem(item, Math.floor(money / value));
-  }
-
-  /**
-   * @param {farmhand.item} item
    * @param {number} [howMany=1]
    */
   purchaseItem(item, howMany = 1) {
@@ -332,6 +318,20 @@ export default class Farmhand extends Component {
       inventory: addItemToInventory(item, inventory, howMany),
       money: money - totalValue,
     });
+  }
+
+  /**
+   * @param {farmhand.item} item
+   */
+  purchaseItemMax(item) {
+    const { value } = item;
+    const { money } = this.state;
+
+    if (value > money) {
+      return;
+    }
+
+    this.purchaseItem(item, Math.floor(money / value));
   }
 
   /**
