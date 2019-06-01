@@ -301,40 +301,36 @@ export default class Farmhand extends Component {
   // and valueAdjustments rather than trusting the value attached to the item
   // argument.
 
-  // TODO: Consolidate this and purchaseItem.
   /**
    * @param {farmhand.item} item
    */
   purchaseItemMax(item) {
     const { value } = item;
-    const { inventory, money } = this.state;
+    const { money } = this.state;
 
     if (value > money) {
       return;
     }
 
-    const maxAffordableItems = Math.floor(money / value);
-
-    this.setState({
-      inventory: addItemToInventory(item, inventory, maxAffordableItems),
-      money: money - value * maxAffordableItems,
-    });
+    this.purchaseItem(item, Math.floor(money / value));
   }
 
   /**
    * @param {farmhand.item} item
+   * @param {number} [howMany=1]
    */
-  purchaseItem(item) {
-    const { value = 0 } = item;
+  purchaseItem(item, howMany = 1) {
+    const { value } = item;
     const { inventory, money } = this.state;
+    const totalValue = value * howMany;
 
-    if (value > money) {
+    if (totalValue > money) {
       return;
     }
 
     this.setState({
-      inventory: addItemToInventory(item, inventory),
-      money: money - value,
+      inventory: addItemToInventory(item, inventory, howMany),
+      money: money - totalValue,
     });
   }
 
