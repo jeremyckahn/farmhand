@@ -297,16 +297,20 @@ export default class Farmhand extends Component {
     });
   }
 
-  // TODO: For purchase and sell functions, compute the value based on item ID
-  // and valueAdjustments rather than trusting the value attached to the item
-  // argument.
+  /**
+   * @param {string} itemId
+   * @returns {number}
+   */
+  getAdjustedItemValue(itemId) {
+    return this.state.valueAdjustments[itemId] * itemsMap[itemId].value;
+  }
 
   /**
    * @param {farmhand.item} item
    * @param {number} [howMany=1]
    */
   purchaseItem(item, howMany = 1) {
-    const { value } = item;
+    const value = this.getAdjustedItemValue(item.id);
     const { inventory, money } = this.state;
     const totalValue = value * howMany;
 
@@ -324,9 +328,10 @@ export default class Farmhand extends Component {
    * @param {farmhand.item} item
    */
   purchaseItemMax(item) {
-    const { value } = item;
+    const value = this.getAdjustedItemValue(item.id);
     const { money } = this.state;
 
+    // TODO: Try to leverage the similar check in purchaseItem.
     if (value > money) {
       return;
     }
@@ -339,7 +344,8 @@ export default class Farmhand extends Component {
    * @param {number} [howMany=1]
    */
   sellItem(item, howMany = 1) {
-    const { id, value } = item;
+    const { id } = item;
+    const value = this.getAdjustedItemValue(item.id);
     const { inventory, money } = this.state;
     const totalValue = value * howMany;
 

@@ -237,10 +237,11 @@ describe('instance methods', () => {
   describe('purchaseItemMax', () => {
     describe('player does not have enough money for any items', () => {
       beforeEach(() => {
-        component.setState({ money: 1 });
-        component
-          .instance()
-          .purchaseItemMax(testItem({ id: 'sample-item-1', value: 10 }));
+        component.setState({
+          money: 1,
+          valueAdjustments: { 'sample-item-1': 1e9 },
+        });
+        component.instance().purchaseItemMax(testItem({ id: 'sample-item-1' }));
       });
 
       test('items are not purchased', () => {
@@ -251,14 +252,15 @@ describe('instance methods', () => {
 
     describe('player has enough money for items', () => {
       beforeEach(() => {
-        component.setState({ money: 25 });
-        component
-          .instance()
-          .purchaseItemMax(testItem({ id: 'sample-item-1', value: 10 }));
+        component.setState({
+          money: 2.5,
+          valueAdjustments: { 'sample-item-1': 1 },
+        });
+        component.instance().purchaseItemMax(testItem({ id: 'sample-item-1' }));
       });
 
       test('max items are purchased', () => {
-        expect(component.state('money')).toEqual(5);
+        expect(component.state('money')).toEqual(0.5);
         expect(component.state('inventory')[0].quantity).toEqual(2);
       });
     });
@@ -268,24 +270,26 @@ describe('instance methods', () => {
     describe('user has enough money', () => {
       describe('money state', () => {
         beforeEach(() => {
-          component.setState({ money: 100 });
-          component
-            .instance()
-            .purchaseItem(testItem({ id: 'sample-item-1', value: 10 }));
+          component.setState({
+            money: 10,
+            valueAdjustments: { 'sample-item-1': 1 },
+          });
+          component.instance().purchaseItem(testItem({ id: 'sample-item-1' }));
         });
 
         test('deducts item value from money', () => {
-          expect(component.state('money')).toEqual(90);
+          expect(component.state('money')).toEqual(9);
         });
       });
     });
 
     describe('user does not have enough money', () => {
       beforeEach(() => {
-        component.setState({ money: 5 });
-        component
-          .instance()
-          .purchaseItem(testItem({ id: 'expensive-item', value: 10 }));
+        component.setState({
+          money: 5,
+          valueAdjustments: { 'sample-item-1': 1e9 },
+        });
+        component.instance().purchaseItem(testItem({ id: 'sample-item-1' }));
       });
 
       test('does not add the item to the inventory', () => {
@@ -303,11 +307,10 @@ describe('instance methods', () => {
       component.setState({
         inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
         money: 100,
+        valueAdjustments: { 'sample-item-1': 1 },
       });
 
-      component
-        .instance()
-        .sellItem(testItem({ id: 'sample-item-1', value: 20 }));
+      component.instance().sellItem(testItem({ id: 'sample-item-1' }));
     });
 
     test('decrements item from inventory', () => {
@@ -315,7 +318,7 @@ describe('instance methods', () => {
     });
 
     test('adds value of item to player money', () => {
-      expect(component.state().money).toEqual(120);
+      expect(component.state().money).toEqual(101);
     });
   });
 
@@ -324,11 +327,10 @@ describe('instance methods', () => {
       component.setState({
         inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
         money: 100,
+        valueAdjustments: { 'sample-item-1': 1 },
       });
 
-      component
-        .instance()
-        .sellAllOfItem(testItem({ id: 'sample-item-1', value: 20 }));
+      component.instance().sellAllOfItem(testItem({ id: 'sample-item-1' }));
     });
 
     test('removes items from inventory', () => {
@@ -336,7 +338,7 @@ describe('instance methods', () => {
     });
 
     test('adds total value of items to player money', () => {
-      expect(component.state().money).toEqual(140);
+      expect(component.state().money).toEqual(102);
     });
   });
 
