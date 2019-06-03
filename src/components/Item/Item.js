@@ -11,6 +11,9 @@ import { items } from '../../img';
 
 import './Item.sass';
 
+// TODO: Render indicators to show whether the price is above or below
+// baseline.
+
 export const Item = ({
   handleItemMaxOutClick,
   handleItemPurchaseClick,

@@ -2,6 +2,41 @@
 
 ### A farming game
 
+## Milestone 2: Cows!
+
+### Tasks
+
+- [ ] Purchase cow pen
+- [ ] Purchase cows
+- [ ] Cow status in context pane
+  - [ ] Rename cow
+  - [ ] Show stats
+    - [ ] Age
+    - [ ] Happiness (measured in hearts)
+    - [ ] Weight
+- [ ] Cow pen UI
+  - [ ] Cows walking around
+  - [ ] Click/tap to select cow
+  - [ ] Cycle through cows with arrows
+- [ ] Purchase growable grain seeds
+- [ ] Purchase grown grain for a premium
+- [ ] Cow milking
+  - [ ] Cows can be milked once a day
+  - [ ] Happiness improves milk quality
+  - [ ] Weight improves milk quantity
+  - [ ] Milk quantity and quality decrease after a certain age
+- [ ] Milk items
+  - [ ] Three quality levels
+- [ ] Cow care
+  - [ ] Feeding grain increases weight
+  - [ ] Hugging cows improves happiness (benefits top out after 3 daily hugs)
+- [ ] Selling cows for beef
+  - [ ] Greater weight results in higher sell value
+  - [ ] Older cows are worth less
+- [ ] Negligence
+  - [ ] Not feeding cows causes them to lose weight
+  - [ ] Cows die after becoming too underweight
+
 ## Milestone 1 tasks
 
 - [x] Stand up basic layout
