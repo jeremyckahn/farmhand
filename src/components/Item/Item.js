@@ -1,4 +1,6 @@
 import React from 'react';
+import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -8,11 +10,23 @@ import classNames from 'classnames';
 
 import FarmhandContext from '../../Farmhand.context';
 import { items } from '../../img';
+import { itemsMap } from '../../data/maps';
 
 import './Item.sass';
 
-// TODO: Render indicators to show whether the price is above or below
-// baseline.
+const PurchaseValueIndicator = ({ id, value, valueAdjustments }) =>
+  value > itemsMap[id].value ? (
+    <KeyboardArrowDown color="error" />
+  ) : (
+    <KeyboardArrowUp color="primary" />
+  );
+
+const SellValueIndicator = ({ id, value, valueAdjustments }) =>
+  value < itemsMap[id].value ? (
+    <KeyboardArrowDown color="error" />
+  ) : (
+    <KeyboardArrowUp color="primary" />
+  );
 
 export const Item = ({
   handleItemMaxOutClick,
@@ -26,6 +40,7 @@ export const Item = ({
   isSellView,
   item,
   item: { id, name, quantity, value },
+  valueAdjustments,
   money,
 }) => (
   <Card
@@ -40,8 +55,18 @@ export const Item = ({
         title: name,
         subheader: (
           <div>
-            {isPurchaseView && <p>{`Price: $${value.toFixed(2)}`}</p>}
-            {isSellView && <p>{`Sell price: $${value.toFixed(2)}`}</p>}
+            {isPurchaseView && (
+              <p>
+                {`Price: $${value.toFixed(2)}`}
+                <PurchaseValueIndicator {...{ id, value, valueAdjustments }} />
+              </p>
+            )}
+            {isSellView && (
+              <p>
+                {`Sell price: $${value.toFixed(2)}`}
+                <SellValueIndicator {...{ id, value, valueAdjustments }} />
+              </p>
+            )}
             {typeof quantity === 'number' && (
               <p>
                 <strong>Quantity:</strong> {quantity}
@@ -129,6 +154,7 @@ Item.propTypes = {
   isSellView: bool,
   item: object.isRequired,
   money: number.isRequired,
+  valueAdjustments: object.isRequired,
 };
 
 export default function Consumer(props) {

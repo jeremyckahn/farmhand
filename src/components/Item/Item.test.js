@@ -14,6 +14,7 @@ beforeEach(() => {
       {...{
         item: testItem({ name: '' }),
         money: 0,
+        valueAdjustments: {},
       }}
     />
   );
