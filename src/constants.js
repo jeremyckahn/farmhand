@@ -26,6 +26,6 @@ export const SPRINKLER_RANGE = 1;
 
 export const VIEW_LIST = [
   stageFocusType.FIELD,
-  stageFocusType.INVENTORY,
   stageFocusType.SHOP,
+  stageFocusType.INVENTORY,
 ];

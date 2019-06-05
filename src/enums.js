@@ -33,7 +33,7 @@ export const fieldMode = enumify([
  * @property farmhand.module:enums.stageFocusType
  * @enum {string}
  */
-export const stageFocusType = enumify(['NONE', 'FIELD', 'INVENTORY', 'SHOP']);
+export const stageFocusType = enumify(['NONE', 'FIELD', 'SHOP', 'INVENTORY']);
 
 /**
  * @property farmhand.module:enums.cropLifeStage

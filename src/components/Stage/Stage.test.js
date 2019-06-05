@@ -34,16 +34,6 @@ describe('focus', () => {
     });
   });
 
-  describe('inventory', () => {
-    beforeEach(() => {
-      component.setProps({ stageFocus: stageFocusType.INVENTORY });
-    });
-
-    test('shows the inventory', () => {
-      expect(component.find(Inventory)).toHaveLength(1);
-    });
-  });
-
   describe('shop', () => {
     beforeEach(() => {
       component.setProps({ stageFocus: stageFocusType.SHOP });
@@ -51,6 +41,16 @@ describe('focus', () => {
 
     test('shows the shop', () => {
       expect(component.find(Shop)).toHaveLength(1);
+    });
+  });
+
+  describe('inventory', () => {
+    beforeEach(() => {
+      component.setProps({ stageFocus: stageFocusType.INVENTORY });
+    });
+
+    test('shows the inventory', () => {
+      expect(component.find(Inventory)).toHaveLength(1);
     });
   });
 });

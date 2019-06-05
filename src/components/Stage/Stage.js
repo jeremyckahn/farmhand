@@ -20,6 +20,7 @@ export const Stage = ({ field, isMenuOpen, playerInventory, stageFocus }) => (
         }}
       />
     )}
+    {stageFocus === stageFocusType.SHOP && <Shop />}
     {stageFocus === stageFocusType.INVENTORY && (
       <Inventory
         {...{
@@ -27,7 +28,6 @@ export const Stage = ({ field, isMenuOpen, playerInventory, stageFocus }) => (
         }}
       />
     )}
-    {stageFocus === stageFocusType.SHOP && <Shop />}
   </div>
 );
 

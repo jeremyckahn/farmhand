@@ -20,8 +20,8 @@ export const Navigation = ({ dayCount, handleViewChange, stageFocus }) => (
       }}
     >
       <MenuItem value={stageFocusType.FIELD}>Field (f)</MenuItem>
-      <MenuItem value={stageFocusType.INVENTORY}>Inventory (i)</MenuItem>
       <MenuItem value={stageFocusType.SHOP}>Shop (s)</MenuItem>
+      <MenuItem value={stageFocusType.INVENTORY}>Inventory (i)</MenuItem>
     </Select>
   </header>
 );

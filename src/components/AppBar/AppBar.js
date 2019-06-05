@@ -18,8 +18,8 @@ import './AppBar.sass';
 
 const stageTitleMap = {
   [stageFocusType.FIELD]: 'Field',
-  [stageFocusType.INVENTORY]: 'Inventory',
   [stageFocusType.SHOP]: 'Shop',
+  [stageFocusType.INVENTORY]: 'Inventory',
 };
 
 export const AppBar = ({

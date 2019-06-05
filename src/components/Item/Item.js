@@ -14,6 +14,8 @@ import { itemsMap } from '../../data/maps';
 
 import './Item.sass';
 
+// TODO: Always show item quantity.
+
 const PurchaseValueIndicator = ({ id, value, valueAdjustments }) =>
   value > itemsMap[id].value ? (
     <KeyboardArrowDown color="error" />
