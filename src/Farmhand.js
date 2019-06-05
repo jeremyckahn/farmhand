@@ -58,6 +58,8 @@ import './Farmhand.sass';
 const { GROWN } = cropLifeStage;
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode;
 
+const itemIds = Object.freeze(Object.keys(itemsMap));
+
 /**
  * @typedef farmhand.state
  * @type {Object}
@@ -154,6 +156,17 @@ export default class Farmhand extends Component {
   get playerInventory() {
     const { inventory, valueAdjustments } = this.state;
     return computePlayerInventory(inventory, valueAdjustments);
+  }
+
+  get playerInventoryQuantities() {
+    const { inventory } = this.state;
+
+    return itemIds.reduce((acc, itemId) => {
+      const itemInInventory = inventory.find(({ id }) => id === itemId);
+      acc[itemId] = itemInInventory ? itemInInventory.quantity : 0;
+
+      return acc;
+    }, {});
   }
 
   get plantableCropInventory() {
@@ -623,6 +636,7 @@ export default class Farmhand extends Component {
       keyMap,
       plantableCropInventory,
       playerInventory,
+      playerInventoryQuantities,
     } = this;
 
     // Bundle up the raw state and the computed state into one object to be
@@ -633,6 +647,7 @@ export default class Farmhand extends Component {
       hoveredPlotRange,
       plantableCropInventory,
       playerInventory,
+      playerInventoryQuantities,
     };
 
     return (

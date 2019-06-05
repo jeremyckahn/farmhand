@@ -14,8 +14,6 @@ import { itemsMap } from '../../data/maps';
 
 import './Item.sass';
 
-// TODO: Always show item quantity.
-
 const PurchaseValueIndicator = ({ id, value, valueAdjustments }) =>
   value > itemsMap[id].value ? (
     <KeyboardArrowDown color="error" />
@@ -34,16 +32,17 @@ export const Item = ({
   handleItemMaxOutClick,
   handleItemPurchaseClick,
   handleItemSelectClick,
-  handleItemSellClick,
   handleItemSellAllClick,
+  handleItemSellClick,
   isPurchaseView,
-  isSelected,
   isSelectView,
+  isSelected,
   isSellView,
   item,
-  item: { id, name, quantity, value },
-  valueAdjustments,
+  item: { id, name, value },
   money,
+  playerInventoryQuantities,
+  valueAdjustments,
 }) => (
   <Card
     {...{
@@ -69,11 +68,9 @@ export const Item = ({
                 <SellValueIndicator {...{ id, value, valueAdjustments }} />
               </p>
             )}
-            {typeof quantity === 'number' && (
-              <p>
-                <strong>Quantity:</strong> {quantity}
-              </p>
-            )}
+            <p>
+              <strong>Quantity:</strong> {playerInventoryQuantities[id]}
+            </p>
           </div>
         ),
       }}
@@ -151,11 +148,12 @@ Item.propTypes = {
   handleItemSelectClick: func,
   handleItemSellClick: func,
   isPurchaseView: bool,
-  isSelected: bool,
   isSelectView: bool,
+  isSelected: bool,
   isSellView: bool,
   item: object.isRequired,
   money: number.isRequired,
+  playerInventoryQuantities: object.isRequired,
   valueAdjustments: object.isRequired,
 };
 

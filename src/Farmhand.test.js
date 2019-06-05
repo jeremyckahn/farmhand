@@ -20,6 +20,8 @@ jest.mock('./data/maps');
 jest.mock('./data/items');
 jest.mock('./constants');
 
+const { objectContaining } = expect;
+
 let component;
 
 const stubLocalforage = () => {
@@ -94,6 +96,25 @@ describe('getters', () => {
         const { hoveredPlotRange } = component.instance();
         expect(hoveredPlotRange).toEqual([[{ x: 0, y: 0 }]]);
       });
+    });
+  });
+
+  describe('playerInventoryQuantities', () => {
+    test('computes a map of item IDs to their quantity in the inventory', () => {
+      component.setState({
+        inventory: [
+          testItem({ id: 'sample-item-1', quantity: 1 }),
+          testItem({ id: 'sample-item-2', quantity: 2 }),
+        ],
+      });
+
+      expect(component.instance().playerInventoryQuantities).toEqual(
+        objectContaining({
+          'sample-item-1': 1,
+          'sample-item-2': 2,
+          'sample-item-3': 0,
+        })
+      );
     });
   });
 });
