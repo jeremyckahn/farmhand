@@ -17,7 +17,6 @@ import './Item.sass';
 
 const ValueIndicator = ({
   id,
-  title,
   value,
   valueAdjustments,
 
@@ -26,7 +25,7 @@ const ValueIndicator = ({
   <Tooltip
     {...{
       placement: 'right',
-      title,
+      title: `${poorValue ? 'Poor' : 'Good'} opportunity`,
     }}
   >
     {poorValue ? (
@@ -48,7 +47,6 @@ const PurchaseValueIndicator = ({
     {...{
       id,
       poorValue,
-      title: `${poorValue ? 'Over' : 'Under'} market rate`,
       value,
       valueAdjustments,
     }}
@@ -66,7 +64,6 @@ const SellValueIndicator = ({
     {...{
       id,
       poorValue,
-      title: `${poorValue ? 'Below' : 'Above'} market rate`,
       value,
       valueAdjustments,
     }}
