@@ -15,19 +15,18 @@ import { itemsMap } from '../../data/maps';
 
 import './Item.sass';
 
-// TODO: Consolidate PurchaseValueIndicator and SellValueIndicator.
-
-const PurchaseValueIndicator = ({
+const ValueIndicator = ({
   id,
+  title,
   value,
   valueAdjustments,
 
-  poorValue = value > itemsMap[id].value,
+  poorValue,
 }) => (
   <Tooltip
     {...{
       placement: 'right',
-      title: `${poorValue ? 'Over' : 'Under'} market rate`,
+      title,
     }}
   >
     {poorValue ? (
@@ -38,24 +37,40 @@ const PurchaseValueIndicator = ({
   </Tooltip>
 );
 
+const PurchaseValueIndicator = ({
+  id,
+  value,
+  valueAdjustments,
+
+  poorValue = value > itemsMap[id].value,
+}) => (
+  <ValueIndicator
+    {...{
+      id,
+      poorValue,
+      title: `${poorValue ? 'Over' : 'Under'} market rate`,
+      value,
+      valueAdjustments,
+    }}
+  />
+);
+
 const SellValueIndicator = ({
   id,
   value,
   valueAdjustments,
+
   poorValue = value < itemsMap[id].value,
 }) => (
-  <Tooltip
+  <ValueIndicator
     {...{
-      placement: 'right',
-      title: `${poorValue ? 'Under' : 'Over'} market rate`,
+      id,
+      poorValue,
+      title: `${poorValue ? 'Below' : 'Above'} market rate`,
+      value,
+      valueAdjustments,
     }}
-  >
-    {poorValue ? (
-      <KeyboardArrowDown color="error" />
-    ) : (
-      <KeyboardArrowUp color="primary" />
-    )}
-  </Tooltip>
+  />
 );
 
 export const Item = ({
