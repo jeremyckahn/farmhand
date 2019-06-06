@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
+import Tooltip from '@material-ui/core/Tooltip';
 import { bool, func, number, object } from 'prop-types';
 import classNames from 'classnames';
 
@@ -14,19 +15,48 @@ import { itemsMap } from '../../data/maps';
 
 import './Item.sass';
 
-const PurchaseValueIndicator = ({ id, value, valueAdjustments }) =>
-  value > itemsMap[id].value ? (
-    <KeyboardArrowDown color="error" />
-  ) : (
-    <KeyboardArrowUp color="primary" />
-  );
+// TODO: Consolidate PurchaseValueIndicator and SellValueIndicator.
 
-const SellValueIndicator = ({ id, value, valueAdjustments }) =>
-  value < itemsMap[id].value ? (
-    <KeyboardArrowDown color="error" />
-  ) : (
-    <KeyboardArrowUp color="primary" />
-  );
+const PurchaseValueIndicator = ({
+  id,
+  value,
+  valueAdjustments,
+
+  poorValue = value > itemsMap[id].value,
+}) => (
+  <Tooltip
+    {...{
+      placement: 'right',
+      title: `${poorValue ? 'Over' : 'Under'} market rate`,
+    }}
+  >
+    {poorValue ? (
+      <KeyboardArrowDown color="error" />
+    ) : (
+      <KeyboardArrowUp color="primary" />
+    )}
+  </Tooltip>
+);
+
+const SellValueIndicator = ({
+  id,
+  value,
+  valueAdjustments,
+  poorValue = value < itemsMap[id].value,
+}) => (
+  <Tooltip
+    {...{
+      placement: 'right',
+      title: `${poorValue ? 'Under' : 'Over'} market rate`,
+    }}
+  >
+    {poorValue ? (
+      <KeyboardArrowDown color="error" />
+    ) : (
+      <KeyboardArrowUp color="primary" />
+    )}
+  </Tooltip>
+);
 
 export const Item = ({
   handleItemMaxOutClick,
