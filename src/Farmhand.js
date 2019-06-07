@@ -269,14 +269,14 @@ export default class Farmhand extends Component {
       () => {
         this.localforage
           .setItem('state', {
-            ...this.state,
+            ...this.stateToPersist,
 
             // newDayNotifications are persisted so that they can be shown to the
             // player when the app reloads.
             newDayNotifications: pendingNotifications,
           })
-          .then(() =>
-            [PROGRESS_SAVED_MESSAGE, ...pendingNotifications].forEach(
+          .then(({ newDayNotifications }) =>
+            [PROGRESS_SAVED_MESSAGE, ...newDayNotifications].forEach(
               notification => this.showNotification(notification)
             )
           )
@@ -287,6 +287,22 @@ export default class Farmhand extends Component {
           });
       }
     );
+  }
+
+  get stateToPersist() {
+    return [
+      'dayCount',
+      'field',
+      'inventory',
+      'money',
+      'newDayNotifications',
+      'purchasedField',
+      'valueAdjustments',
+    ].reduce((acc, key) => {
+      acc[key] = this.state[key];
+
+      return acc;
+    }, {});
   }
 
   goToNextView() {

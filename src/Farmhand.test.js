@@ -28,7 +28,7 @@ const stubLocalforage = () => {
   const localforage = jest.requireMock('localforage');
   localforage.createInstance = () => ({
     getItem: () => Promise.resolve(null),
-    setItem: data => Promise.resolve(data),
+    setItem: (key, data) => Promise.resolve(data),
   });
 };
 
@@ -207,9 +207,8 @@ describe('instance methods', () => {
       expect(component.instance().localforage.setItem).toHaveBeenCalledWith(
         'state',
         {
-          ...component.state(),
+          ...component.instance().stateToPersist,
           newDayNotifications: ['foo'],
-          notifications: [],
         }
       );
     });
