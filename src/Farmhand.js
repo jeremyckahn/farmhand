@@ -127,6 +127,22 @@ export default class Farmhand extends Component {
     this.initKeyHandlers();
   }
 
+  static reduceByPersistedKeys(state) {
+    return [
+      'dayCount',
+      'field',
+      'inventory',
+      'money',
+      'newDayNotifications',
+      'purchasedField',
+      'valueAdjustments',
+    ].reduce((acc, key) => {
+      acc[key] = state[key];
+
+      return acc;
+    }, {});
+  }
+
   get fieldToolInventory() {
     return getFieldToolInventory(this.state.inventory);
   }
@@ -264,17 +280,25 @@ export default class Farmhand extends Component {
     const nextDayState = computeStateForNextDay(this.state);
     const pendingNotifications = [...nextDayState.newDayNotifications];
 
+    // This would be cleaner if setState was called after localForage.setItem,
+    // but updating the state first makes for a more responsive user
+    // experience. The persisted state is computed post-update and stored
+    // asynchronously, thus avoiding state changes from being blocked.
+
     this.setState(
       { ...nextDayState, newDayNotifications: [], notifications: [] },
       () => {
         this.localforage
-          .setItem('state', {
-            ...this.stateToPersist,
+          .setItem(
+            'state',
+            Farmhand.reduceByPersistedKeys({
+              ...this.state,
 
-            // newDayNotifications are persisted so that they can be shown to the
-            // player when the app reloads.
-            newDayNotifications: pendingNotifications,
-          })
+              // Old pendingNotifications are persisted so that they can be
+              // shown to the player when the app reloads.
+              newDayNotifications: pendingNotifications,
+            })
+          )
           .then(({ newDayNotifications }) =>
             [PROGRESS_SAVED_MESSAGE, ...newDayNotifications].forEach(
               notification => this.showNotification(notification)
@@ -287,22 +311,6 @@ export default class Farmhand extends Component {
           });
       }
     );
-  }
-
-  get stateToPersist() {
-    return [
-      'dayCount',
-      'field',
-      'inventory',
-      'money',
-      'newDayNotifications',
-      'purchasedField',
-      'valueAdjustments',
-    ].reduce((acc, key) => {
-      acc[key] = this.state[key];
-
-      return acc;
-    }, {});
   }
 
   goToNextView() {

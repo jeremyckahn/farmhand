@@ -206,10 +206,10 @@ describe('instance methods', () => {
     test('persists app state with pending newDayNotifications', () => {
       expect(component.instance().localforage.setItem).toHaveBeenCalledWith(
         'state',
-        {
-          ...component.instance().stateToPersist,
+        Farmhand.reduceByPersistedKeys({
+          ...component.state(),
           newDayNotifications: ['foo'],
-        }
+        })
       );
     });
 
