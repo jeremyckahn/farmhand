@@ -92,9 +92,6 @@ export default class Farmhand extends Component {
 
   localforage = localforage.createInstance({
     name: 'farmhand',
-    // NOTE: This should probably be determined by the package version
-    // instead of being hardcoded.
-    version: 1.0,
     description: 'Persisted game data for Farmhand',
   });
 
