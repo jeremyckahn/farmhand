@@ -2,7 +2,7 @@
 
 ### A farming game
 
-Link: [Current snapshot](https://jeremyckahn.github.io/farmhand/)
+**[Current snapshot](https://jeremyckahn.github.io/farmhand/)**
 
 - `master`: [![Build Status](https://travis-ci.org/jeremyckahn/farmhand.svg?branch=master)](https://travis-ci.org/jeremyckahn/farmhand)
 - `develop`: [![Build Status](https://travis-ci.org/jeremyckahn/farmhand.svg?branch=develop)](https://travis-ci.org/jeremyckahn/farmhand)
@@ -13,7 +13,7 @@ This is an open source farming game built with web technologies. Some basic idea
 
 - Active development takes place in `develop`.
 - `master` is updated when `develop` is stable.
-- `gh-pages` contains the built assets and is generally updated manually when `master` is updated.
+- `gh-pages` contains the built assets and is updated automatically when `master` is updated.
 
 There is no release or versioning system yet.
 
