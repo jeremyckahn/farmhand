@@ -1,8 +1,2 @@
 language: node_js
 node_js: '10'
-deploy:
-  github_token: $GITHUB_TOKEN
-  provider: script
-  script: npm install && npm run deploy
-  on:
-    branch: master
