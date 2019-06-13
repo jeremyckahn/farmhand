@@ -2,17 +2,29 @@ import React from 'react';
 import { array, object } from 'prop-types';
 
 import FarmhandContext from '../../Farmhand.context';
+import { PURCHASEABLE_FIELD_SIZES } from '../../constants';
 import Inventory from '../Inventory';
-import LandPurchase from '../LandPurchase';
+import TierPurchase from '../TierPurchase';
 
-export const Shop = ({ shopInventory }) => (
+export const Shop = ({
+  handleFieldPurchase,
+  purchasedField,
+  shopInventory,
+}) => (
   <div className="Shop">
     <Inventory
       {...{
         items: shopInventory,
       }}
     />
-    <LandPurchase />
+    <TierPurchase
+      {...{
+        handleTierPurchase: handleFieldPurchase,
+        purchasedTier: purchasedField,
+        tiers: PURCHASEABLE_FIELD_SIZES,
+        title: 'Expand field',
+      }}
+    />
   </div>
 );
 
