@@ -62,7 +62,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run lint && cross-env CI=true react-scripts test --env=jsdom --onlyChanged"
+      "pre-commit": "pretty-quick --staged && npm run lint && cross-env CI=true react-scripts test --env=jsdom --lastCommit"
     }
   },
   "craGenerate": {
