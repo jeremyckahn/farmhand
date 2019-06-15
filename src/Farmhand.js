@@ -49,7 +49,6 @@ import {
   PURCHASEABLE_FIELD_SIZES,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
-  VIEW_LIST,
 } from './constants';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 
@@ -187,7 +186,13 @@ export default class Farmhand extends Component {
   }
 
   get viewList() {
-    return VIEW_LIST;
+    const viewList = [
+      stageFocusType.FIELD,
+      stageFocusType.SHOP,
+      stageFocusType.INVENTORY,
+    ];
+
+    return viewList;
   }
 
   initKeyHandlers() {

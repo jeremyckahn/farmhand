@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { VIEW_LIST } from '../../constants';
 import { stageFocusType } from '../../enums';
 
 import AppBar from './AppBar';
@@ -17,7 +16,7 @@ beforeEach(() => {
         handleMenuToggle: () => {},
         money: 0,
         stageFocus: stageFocusType.FIELD,
-        viewList: VIEW_LIST,
+        viewList: [],
       }}
     />
   );
