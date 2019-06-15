@@ -73,6 +73,7 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  * @property {Array.<string>} notifications
  * @property {string} selectedItemId
  * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {number} purchasedCowPen
  * @property {number} purchasedField
  * @property {Array.<farmhand.item>} shopInventory
  * @property {boolean} doShowNotifications
@@ -110,6 +111,7 @@ export default class Farmhand extends Component {
     notifications: [],
     selectedItemId: '',
     fieldMode: OBSERVE,
+    purchasedCowPen: 0,
     purchasedField: 0,
     shopInventory: [...shopInventory],
     doShowNotifications: false,
@@ -130,6 +132,7 @@ export default class Farmhand extends Component {
       'inventory',
       'money',
       'newDayNotifications',
+      'purchasedCowPen',
       'purchasedField',
       'valueAdjustments',
     ].reduce((acc, key) => {
@@ -186,11 +189,13 @@ export default class Farmhand extends Component {
   }
 
   get viewList() {
-    const viewList = [
-      stageFocusType.FIELD,
-      stageFocusType.SHOP,
-      stageFocusType.INVENTORY,
-    ];
+    const viewList = [stageFocusType.FIELD, stageFocusType.SHOP];
+
+    if (this.state.purchasedCowPen) {
+      viewList.push(stageFocusType.COW_PEN);
+    }
+
+    viewList.push(stageFocusType.INVENTORY);
 
     return viewList;
   }
@@ -199,8 +204,9 @@ export default class Farmhand extends Component {
     this.keyMap = {
       focusField: 'f',
       focusInventory: 'i',
+      focusCows: 'c',
       focusShop: 's',
-      incrementDay: 'c',
+      incrementDay: 'shift+c',
       nextView: 'right',
       previousView: 'left',
       toggleMenu: 'm',
@@ -212,6 +218,9 @@ export default class Farmhand extends Component {
       focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
       focusInventory: () =>
         this.setState({ stageFocus: stageFocusType.INVENTORY }),
+      focusCows: () =>
+        this.state.purchasedCowPen &&
+        this.setState({ stageFocus: stageFocusType.COW_PEN }),
       focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
       incrementDay: () => this.incrementDay(),
       nextView: throttle(this.goToNextView.bind(this), keyHandlerThrottleTime),
@@ -223,7 +232,7 @@ export default class Farmhand extends Component {
     };
 
     Object.assign(this.keyMap, {
-      clearPersistedData: 'shift+c',
+      clearPersistedData: 'shift+d',
       waterAllPlots: 'w',
     });
 

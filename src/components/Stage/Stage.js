@@ -5,6 +5,7 @@ import { array, arrayOf, bool, string } from 'prop-types';
 import FarmhandContext from '../../Farmhand.context';
 import Field from '../Field';
 import Inventory from '../Inventory';
+import CowPen from '../CowPen';
 import Shop from '../Shop';
 import { stageFocusType } from '../../enums';
 
@@ -21,6 +22,7 @@ export const Stage = ({ field, isMenuOpen, playerInventory, stageFocus }) => (
       />
     )}
     {stageFocus === stageFocusType.SHOP && <Shop />}
+    {stageFocus === stageFocusType.COW_PEN && <CowPen />}
     {stageFocus === stageFocusType.INVENTORY && (
       <Inventory
         {...{

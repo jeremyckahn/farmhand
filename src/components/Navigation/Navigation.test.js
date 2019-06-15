@@ -13,6 +13,7 @@ beforeEach(() => {
       {...{
         dayCount: 0,
         handleViewChange: () => {},
+        purchasedCowPen: 0,
         stageFocus: stageFocusType.FIELD,
       }}
     />
@@ -22,3 +23,5 @@ beforeEach(() => {
 test('renders', () => {
   expect(component.hasClass('Navigation')).toBeTruthy();
 });
+
+// TODO: Test cow pen rendering

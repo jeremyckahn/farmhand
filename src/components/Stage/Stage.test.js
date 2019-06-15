@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import Field from '../Field';
 import Inventory from '../Inventory';
+import CowPen from '../CowPen';
 import Shop from '../Shop';
 import { stageFocusType } from '../../../src/enums';
 
@@ -41,6 +42,16 @@ describe('focus', () => {
 
     test('shows the shop', () => {
       expect(component.find(Shop)).toHaveLength(1);
+    });
+  });
+
+  describe('cow pen', () => {
+    beforeEach(() => {
+      component.setProps({ stageFocus: stageFocusType.COW_PEN });
+    });
+
+    test('shows the cow pen', () => {
+      expect(component.find(CowPen)).toHaveLength(1);
     });
   });
 
