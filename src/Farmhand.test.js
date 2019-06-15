@@ -9,7 +9,6 @@ import {
   INITIAL_FIELD_HEIGHT,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
-  VIEW_LIST,
 } from './constants';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 import { fieldMode } from './enums';
@@ -226,30 +225,34 @@ describe('instance methods', () => {
 
   describe('goToNextView', () => {
     test('goes to next view', () => {
-      component.setState({ stageFocus: VIEW_LIST[0] });
+      const { viewList } = component.instance();
+      component.setState({ stageFocus: viewList[0] });
       component.instance().goToNextView();
-      expect(component.state().stageFocus).toEqual(VIEW_LIST[1]);
+      expect(component.state().stageFocus).toEqual(viewList[1]);
     });
 
     test('cycles to the beginning', () => {
-      component.setState({ stageFocus: VIEW_LIST[VIEW_LIST.length - 1] });
+      const { viewList } = component.instance();
+      component.setState({ stageFocus: viewList[viewList.length - 1] });
       component.instance().goToNextView();
-      expect(component.state().stageFocus).toEqual(VIEW_LIST[0]);
+      expect(component.state().stageFocus).toEqual(viewList[0]);
     });
   });
 
   describe('goToPreviousView', () => {
     test('goes to previous view', () => {
-      component.setState({ stageFocus: VIEW_LIST[1] });
+      const { viewList } = component.instance();
+      component.setState({ stageFocus: viewList[1] });
       component.instance().goToPreviousView();
-      expect(component.state().stageFocus).toEqual(VIEW_LIST[0]);
+      expect(component.state().stageFocus).toEqual(viewList[0]);
     });
 
     test('cycles to the end', () => {
-      component.setState({ stageFocus: VIEW_LIST[0] });
+      const { viewList } = component.instance();
+      component.setState({ stageFocus: viewList[0] });
       component.instance().goToPreviousView();
       expect(component.state().stageFocus).toEqual(
-        VIEW_LIST[VIEW_LIST.length - 1]
+        viewList[viewList.length - 1]
       );
     });
   });

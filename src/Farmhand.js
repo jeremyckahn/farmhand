@@ -186,6 +186,10 @@ export default class Farmhand extends Component {
     return getPlantableCropInventory(this.state.inventory);
   }
 
+  get viewList() {
+    return VIEW_LIST;
+  }
+
   initKeyHandlers() {
     this.keyMap = {
       focusField: 'f',
@@ -311,22 +315,24 @@ export default class Farmhand extends Component {
   }
 
   goToNextView() {
-    const currentViewIndex = VIEW_LIST.indexOf(this.state.stageFocus);
+    const { viewList } = this;
+    const currentViewIndex = viewList.indexOf(this.state.stageFocus);
 
     this.setState({
-      stageFocus: VIEW_LIST[(currentViewIndex + 1) % VIEW_LIST.length],
+      stageFocus: viewList[(currentViewIndex + 1) % viewList.length],
     });
   }
 
   goToPreviousView() {
-    const currentViewIndex = VIEW_LIST.indexOf(this.state.stageFocus);
+    const { viewList } = this;
+    const currentViewIndex = viewList.indexOf(this.state.stageFocus);
 
     this.setState({
       stageFocus:
-        VIEW_LIST[
+        viewList[
           currentViewIndex === 0
-            ? VIEW_LIST.length - 1
-            : (currentViewIndex - 1) % VIEW_LIST.length
+            ? viewList.length - 1
+            : (currentViewIndex - 1) % viewList.length
         ],
     });
   }
@@ -658,6 +664,7 @@ export default class Farmhand extends Component {
       plantableCropInventory,
       playerInventory,
       playerInventoryQuantities,
+      viewList,
     } = this;
 
     // Bundle up the raw state and the computed state into one object to be
@@ -669,6 +676,7 @@ export default class Farmhand extends Component {
       plantableCropInventory,
       playerInventory,
       playerInventoryQuantities,
+      viewList,
     };
 
     return (
