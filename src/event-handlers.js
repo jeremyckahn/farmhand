@@ -120,6 +120,13 @@ export default {
     this.purchaseField(fieldId);
   },
 
+  /**
+   * @param {number} cowPenId
+   */
+  handleCowPenPurchase(cowPenId) {
+    this.purchaseCowPen(cowPenId);
+  },
+
   handleMenuToggle() {
     this.setState({ isMenuOpen: !this.state.isMenuOpen });
   },

@@ -668,6 +668,10 @@ export default class Farmhand extends Component {
     });
   }
 
+  purchaseCowPen(cowPenId) {
+    console.log('Not implemented yet!');
+  }
+
   render() {
     const {
       fieldToolInventory,
