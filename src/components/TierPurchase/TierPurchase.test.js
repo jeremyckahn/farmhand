@@ -14,6 +14,7 @@ beforeEach(() => {
         handleTierPurchase: () => {},
         money: 0,
         purchasedTier: 0,
+        renderTierLabel: () => {},
         tiers: new Map([
           [1, { value: 'foo', price: 1000 }],
           [2, { value: 'bar', price: 2000 }],

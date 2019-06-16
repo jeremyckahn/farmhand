@@ -21,6 +21,8 @@ export const Shop = ({
       {...{
         handleTierPurchase: handleFieldPurchase,
         purchasedTier: purchasedField,
+        renderTierLabel: ({ columns, price, rows }) =>
+          `${price}: ${columns} x ${rows}`,
         tiers: PURCHASEABLE_FIELD_SIZES,
         title: 'Expand field',
       }}

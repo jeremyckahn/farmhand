@@ -81,7 +81,7 @@ export class TierPurchase extends Component {
       handleTierPurchase,
       hasPurchasedTier,
       onSelectChange,
-      props: { money, title },
+      props: { money, renderTierLabel, title },
       tierValues,
       state: { selectedTier },
     } = this;
@@ -95,13 +95,13 @@ export class TierPurchase extends Component {
             value: selectedTier,
           }}
         >
-          {tierValues.map(([id, { price, columns, rows }]) => (
+          {tierValues.map(([id, tier]) => (
             <MenuItem
               key={id}
               value={id}
-              disabled={money < price || hasPurchasedTier(id)}
+              disabled={money < tier.price || hasPurchasedTier(id)}
             >
-              ${price}: {columns} x {rows}
+              {renderTierLabel(tier)}
             </MenuItem>
           ))}
         </Select>
@@ -124,6 +124,7 @@ TierPurchase.propTypes = {
   handleTierPurchase: func.isRequired,
   money: number.isRequired,
   purchasedTier: number.isRequired,
+  renderTierLabel: func.isRequired,
   tiers: instanceOf(Map),
   title: string.isRequired,
 };
