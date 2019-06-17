@@ -738,7 +738,7 @@ export default class Farmhand extends Component {
               */}
               <Tooltip
                 {...{
-                  title: 'End the day',
+                  title: 'End the day (shift + c)',
                 }}
               >
                 <Fab
