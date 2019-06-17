@@ -277,6 +277,8 @@ export default class Farmhand extends Component {
       .then(() => this.showNotification('localforage.clear() succeeded!'));
   }
 
+  // FIXME: Immediate successive calls to showNotification cause earlier
+  // messages to disappear.
   /**
    * @param {string} message
    */
@@ -676,12 +678,16 @@ export default class Farmhand extends Component {
       return;
     }
 
-    const { price } = PURCHASEABLE_COW_PENS.get(cowPenId);
+    const { cows, price } = PURCHASEABLE_COW_PENS.get(cowPenId);
 
     this.setState({
       purchasedCowPen: cowPenId,
       money: money - price,
     });
+
+    this.showNotification(
+      `Purchased a cow pen with capacity for ${cows} cows!`
+    );
   }
 
   render() {
