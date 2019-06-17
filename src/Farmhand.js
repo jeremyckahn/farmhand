@@ -46,6 +46,7 @@ import {
 } from './enums';
 import {
   FERTILIZER_ITEM_ID,
+  PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
@@ -669,7 +670,18 @@ export default class Farmhand extends Component {
   }
 
   purchaseCowPen(cowPenId) {
-    console.log('Not implemented yet!');
+    const { money, purchasedCowPen } = this.state;
+
+    if (purchasedCowPen >= cowPenId) {
+      return;
+    }
+
+    const { price } = PURCHASEABLE_COW_PENS.get(cowPenId);
+
+    this.setState({
+      purchasedCowPen: cowPenId,
+      money: money - price,
+    });
   }
 
   render() {
