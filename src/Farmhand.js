@@ -277,21 +277,17 @@ export default class Farmhand extends Component {
       .then(() => this.showNotification('localforage.clear() succeeded!'));
   }
 
-  // FIXME: Immediate successive calls to showNotification cause earlier
-  // messages to disappear.
   /**
    * @param {string} message
    */
   showNotification(message) {
-    const { notifications } = this.state;
-
-    this.setState({
+    this.setState(({ notifications }) => ({
       // Don't show redundant notifications
       notifications: notifications.includes(message)
         ? notifications
-        : [...notifications, message],
+        : notifications.concat(message),
       doShowNotifications: true,
-    });
+    }));
   }
 
   incrementDay() {
