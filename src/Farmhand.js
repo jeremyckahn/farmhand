@@ -327,28 +327,30 @@ export default class Farmhand extends Component {
     );
   }
 
-  // FIXME: Change this to use functional setState
   goToNextView() {
     const { viewList } = this;
-    const currentViewIndex = viewList.indexOf(this.state.stageFocus);
 
-    this.setState({
-      stageFocus: viewList[(currentViewIndex + 1) % viewList.length],
+    this.setState(({ stageFocus }) => {
+      const currentViewIndex = viewList.indexOf(stageFocus);
+
+      return { stageFocus: viewList[(currentViewIndex + 1) % viewList.length] };
     });
   }
 
-  // FIXME: Change this to use functional setState
   goToPreviousView() {
     const { viewList } = this;
-    const currentViewIndex = viewList.indexOf(this.state.stageFocus);
 
-    this.setState({
-      stageFocus:
-        viewList[
-          currentViewIndex === 0
-            ? viewList.length - 1
-            : (currentViewIndex - 1) % viewList.length
-        ],
+    this.setState(({ stageFocus }) => {
+      const currentViewIndex = viewList.indexOf(stageFocus);
+
+      return {
+        stageFocus:
+          viewList[
+            currentViewIndex === 0
+              ? viewList.length - 1
+              : (currentViewIndex - 1) % viewList.length
+          ],
+      };
     });
   }
 
