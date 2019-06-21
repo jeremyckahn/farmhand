@@ -327,6 +327,7 @@ export default class Farmhand extends Component {
     );
   }
 
+  // FIXME: Change this to use functional setState
   goToNextView() {
     const { viewList } = this;
     const currentViewIndex = viewList.indexOf(this.state.stageFocus);
@@ -336,6 +337,7 @@ export default class Farmhand extends Component {
     });
   }
 
+  // FIXME: Change this to use functional setState
   goToPreviousView() {
     const { viewList } = this;
     const currentViewIndex = viewList.indexOf(this.state.stageFocus);
@@ -375,6 +377,7 @@ export default class Farmhand extends Component {
       return;
     }
 
+    // FIXME: Change this to use functional setState
     this.setState({
       inventory: addItemToInventory(item, inventory, howMany),
       money: money - totalValue,
@@ -404,6 +407,7 @@ export default class Farmhand extends Component {
     const { inventory, money } = this.state;
     const totalValue = value * howMany;
 
+    // FIXME: Change this to use functional setState
     this.setState({
       inventory: decrementItemFromInventory(id, inventory, howMany),
       money: money + totalValue,
@@ -491,6 +495,7 @@ export default class Farmhand extends Component {
       item => item.id === FERTILIZER_ITEM_ID
     );
 
+    // FIXME: Change this to use functional setState
     this.setState({
       field: modifyFieldPlotAt(field, x, y, crop => ({
         ...crop,
@@ -528,6 +533,7 @@ export default class Farmhand extends Component {
       getPlotContentFromItemId(SPRINKLER_ITEM_ID)
     );
 
+    // FIXME: Change this to use functional setState
     this.setState({
       field: newField,
       hoveredPlotRangeSize: doSprinklersRemain ? hoveredPlotRangeSize : 0,
@@ -563,6 +569,7 @@ export default class Farmhand extends Component {
       getPlotContentFromItemId(SCARECROW_ITEM_ID)
     );
 
+    // FIXME: Change this to use functional setState
     this.setState({
       field: newField,
       inventory: updatedInventory,
@@ -584,6 +591,7 @@ export default class Farmhand extends Component {
       return;
     }
 
+    // FIXME: Change this to use functional setState
     if (getCropLifeStage(crop) === GROWN) {
       this.setState({
         field: removeFieldPlotAt(field, x, y),
@@ -612,6 +620,7 @@ export default class Farmhand extends Component {
       ? addItemToInventory(item, inventory)
       : inventory;
 
+    // FIXME: Change this to use functional setState
     this.setState({
       field: removeFieldPlotAt(field, x, y),
       inventory: newInventory,
@@ -630,6 +639,7 @@ export default class Farmhand extends Component {
       return;
     }
 
+    // FIXME: Change this to use functional setState
     this.setState({
       field: modifyFieldPlotAt(field, x, y, crop => ({
         ...crop,
@@ -654,6 +664,7 @@ export default class Farmhand extends Component {
 
     const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId);
 
+    // FIXME: Change this to use functional setState
     this.setState({
       purchasedField: fieldId,
       field: new Array(rows)
@@ -676,6 +687,7 @@ export default class Farmhand extends Component {
 
     const { cows, price } = PURCHASEABLE_COW_PENS.get(cowPenId);
 
+    // FIXME: Change this to use functional setState
     this.setState({
       purchasedCowPen: cowPenId,
       money: money - price,

@@ -55,6 +55,7 @@ export default {
     const selectedItemId = fieldMode === PLANT ? this.state.selectedItemId : '';
     const isToolbeltFieldMode = toolbeltFieldModes.includes(fieldMode);
 
+    // FIXME: Change this to use functional setState
     this.setState({
       selectedItemId: isToolbeltFieldMode ? '' : selectedItemId,
       fieldMode,
