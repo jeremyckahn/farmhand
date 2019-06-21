@@ -371,48 +371,50 @@ export default class Farmhand extends Component {
       return;
     }
 
-    const value = this.getAdjustedItemValue(item.id);
-    const { inventory, money } = this.state;
-    const totalValue = value * howMany;
+    this.setState(({ inventory, money }) => {
+      const value = this.getAdjustedItemValue(item.id);
+      const totalValue = value * howMany;
 
-    if (totalValue > money) {
-      return;
-    }
+      if (totalValue > money) {
+        return;
+      }
 
-    // FIXME: Change this to use functional setState
-    this.setState({
-      inventory: addItemToInventory(item, inventory, howMany),
-      money: money - totalValue,
+      return {
+        inventory: addItemToInventory(item, inventory, howMany),
+        money: money - totalValue,
+      };
     });
   }
 
+  // FIXME: This is reading potentially stale this.state.money data. Move the
+  // howMany calculation to purchaseItem.
   /**
    * @param {farmhand.item} item
    */
   purchaseItemMax(item) {
-    const value = this.getAdjustedItemValue(item.id);
-
-    this.purchaseItem(item, Math.floor(this.state.money / value));
+    this.purchaseItem(
+      item,
+      Math.floor(this.state.money / this.getAdjustedItemValue(item.id))
+    );
   }
 
   /**
    * @param {farmhand.item} item
    * @param {number} [howMany=1]
    */
-  sellItem(item, howMany = 1) {
+  sellItem({ id }, howMany = 1) {
     if (howMany === 0) {
       return;
     }
 
-    const { id } = item;
-    const value = this.getAdjustedItemValue(item.id);
-    const { inventory, money } = this.state;
-    const totalValue = value * howMany;
+    this.setState(({ inventory, money }) => {
+      const value = this.getAdjustedItemValue(id);
+      const totalValue = value * howMany;
 
-    // FIXME: Change this to use functional setState
-    this.setState({
-      inventory: decrementItemFromInventory(id, inventory, howMany),
-      money: money + totalValue,
+      return {
+        inventory: decrementItemFromInventory(id, inventory, howMany),
+        money: money + totalValue,
+      };
     });
   }
 
