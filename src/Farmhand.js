@@ -666,9 +666,10 @@ export default class Farmhand extends Component {
     });
   }
 
-  // FIXME: Change this to use functional setState
   waterAllPlots() {
-    this.setState({ field: getWateredField(this.state.field) });
+    this.setState(({ field }) => {
+      return { field: getWateredField(field) };
+    });
   }
 
   /**
