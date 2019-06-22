@@ -271,6 +271,21 @@ export default class Farmhand extends Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      state: { purchasedCowPen },
+    } = this;
+
+    // TODO: Test this.
+    if (purchasedCowPen !== prevState.purchasedCowPen) {
+      const { cows } = PURCHASEABLE_COW_PENS.get(purchasedCowPen);
+
+      this.showNotification(
+        `Purchased a cow pen with capacity for ${cows} cows!`
+      );
+    }
+  }
+
   clearPersistedData() {
     this.localforage
       .clear()
@@ -681,24 +696,20 @@ export default class Farmhand extends Component {
     });
   }
 
+  /**
+   * @param {number} cowPenId
+   */
   purchaseCowPen(cowPenId) {
-    const { money, purchasedCowPen } = this.state;
+    this.setState(({ money, purchasedCowPen }) => {
+      if (purchasedCowPen >= cowPenId) {
+        return;
+      }
 
-    if (purchasedCowPen >= cowPenId) {
-      return;
-    }
-
-    const { cows, price } = PURCHASEABLE_COW_PENS.get(cowPenId);
-
-    // FIXME: Change this to use functional setState
-    this.setState({
-      purchasedCowPen: cowPenId,
-      money: money - price,
+      return {
+        purchasedCowPen: cowPenId,
+        money: money - PURCHASEABLE_COW_PENS.get(cowPenId).price,
+      };
     });
-
-    this.showNotification(
-      `Purchased a cow pen with capacity for ${cows} cows!`
-    );
   }
 
   render() {
