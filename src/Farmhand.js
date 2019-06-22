@@ -478,36 +478,36 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   fertilizeCrop(x, y) {
-    const { field, inventory } = this.state;
-    const row = field[y];
-    const crop = row[x];
+    this.setState(({ field, inventory }) => {
+      const row = field[y];
+      const crop = row[x];
 
-    if (
-      !crop ||
-      crop.type !== plotContentType.CROP ||
-      crop.isFertilized === true
-    ) {
-      return;
-    }
+      if (
+        !crop ||
+        crop.type !== plotContentType.CROP ||
+        crop.isFertilized === true
+      ) {
+        return;
+      }
 
-    const updatedInventory = decrementItemFromInventory(
-      FERTILIZER_ITEM_ID,
-      inventory
-    );
+      const updatedInventory = decrementItemFromInventory(
+        FERTILIZER_ITEM_ID,
+        inventory
+      );
 
-    const doFertilizersRemain = updatedInventory.some(
-      item => item.id === FERTILIZER_ITEM_ID
-    );
+      const doFertilizersRemain = updatedInventory.some(
+        item => item.id === FERTILIZER_ITEM_ID
+      );
 
-    // FIXME: Change this to use functional setState
-    this.setState({
-      field: modifyFieldPlotAt(field, x, y, crop => ({
-        ...crop,
-        isFertilized: true,
-      })),
-      fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
-      inventory: updatedInventory,
-      selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
+      return {
+        field: modifyFieldPlotAt(field, x, y, crop => ({
+          ...crop,
+          isFertilized: true,
+        })),
+        fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
+        inventory: updatedInventory,
+        selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
+      };
     });
   }
 
@@ -516,34 +516,34 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   setSprinkler(x, y) {
-    const { field, hoveredPlotRangeSize, inventory } = this.state;
-    const plot = field[y][x];
+    this.setState(({ field, hoveredPlotRangeSize, inventory }) => {
+      const plot = field[y][x];
 
-    // Only set sprinklers in empty plots
-    if (plot !== null) {
-      return;
-    }
+      // Only set sprinklers in empty plots
+      if (plot !== null) {
+        return;
+      }
 
-    const updatedInventory = decrementItemFromInventory(
-      SPRINKLER_ITEM_ID,
-      inventory
-    );
+      const updatedInventory = decrementItemFromInventory(
+        SPRINKLER_ITEM_ID,
+        inventory
+      );
 
-    const doSprinklersRemain = updatedInventory.some(
-      item => item.id === SPRINKLER_ITEM_ID
-    );
+      const doSprinklersRemain = updatedInventory.some(
+        item => item.id === SPRINKLER_ITEM_ID
+      );
 
-    const newField = modifyFieldPlotAt(field, x, y, () =>
-      getPlotContentFromItemId(SPRINKLER_ITEM_ID)
-    );
+      const newField = modifyFieldPlotAt(field, x, y, () =>
+        getPlotContentFromItemId(SPRINKLER_ITEM_ID)
+      );
 
-    // FIXME: Change this to use functional setState
-    this.setState({
-      field: newField,
-      hoveredPlotRangeSize: doSprinklersRemain ? hoveredPlotRangeSize : 0,
-      fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
-      inventory: updatedInventory,
-      selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
+      return {
+        field: newField,
+        hoveredPlotRangeSize: doSprinklersRemain ? hoveredPlotRangeSize : 0,
+        fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
+        inventory: updatedInventory,
+        selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
+      };
     });
   }
 
@@ -552,33 +552,33 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   setScarecrow(x, y) {
-    const { field, inventory } = this.state;
-    const plot = field[y][x];
+    this.setState(({ field, inventory }) => {
+      const plot = field[y][x];
 
-    // Only set scarecrows in empty plots
-    if (plot !== null) {
-      return;
-    }
+      // Only set scarecrows in empty plots
+      if (plot !== null) {
+        return;
+      }
 
-    const updatedInventory = decrementItemFromInventory(
-      SCARECROW_ITEM_ID,
-      inventory
-    );
+      const updatedInventory = decrementItemFromInventory(
+        SCARECROW_ITEM_ID,
+        inventory
+      );
 
-    const doScarecrowsRemain = updatedInventory.some(
-      item => item.id === SCARECROW_ITEM_ID
-    );
+      const doScarecrowsRemain = updatedInventory.some(
+        item => item.id === SCARECROW_ITEM_ID
+      );
 
-    const newField = modifyFieldPlotAt(field, x, y, () =>
-      getPlotContentFromItemId(SCARECROW_ITEM_ID)
-    );
+      const newField = modifyFieldPlotAt(field, x, y, () =>
+        getPlotContentFromItemId(SCARECROW_ITEM_ID)
+      );
 
-    // FIXME: Change this to use functional setState
-    this.setState({
-      field: newField,
-      inventory: updatedInventory,
-      fieldMode: doScarecrowsRemain ? SET_SCARECROW : OBSERVE,
-      selectedItemId: doScarecrowsRemain ? SCARECROW_ITEM_ID : '',
+      return {
+        field: newField,
+        inventory: updatedInventory,
+        fieldMode: doScarecrowsRemain ? SET_SCARECROW : OBSERVE,
+        selectedItemId: doScarecrowsRemain ? SCARECROW_ITEM_ID : '',
+      };
     });
   }
 
@@ -587,21 +587,23 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   harvestPlot(x, y) {
-    const { inventory, field } = this.state;
-    const row = field[y];
-    const crop = row[x];
+    this.setState(({ inventory, field }) => {
+      const row = field[y];
+      const crop = row[x];
 
-    if (!crop || crop.type !== plotContentType.CROP) {
-      return;
-    }
+      if (
+        !crop ||
+        crop.type !== plotContentType.CROP ||
+        getCropLifeStage(crop) !== GROWN
+      ) {
+        return;
+      }
 
-    // FIXME: Change this to use functional setState
-    if (getCropLifeStage(crop) === GROWN) {
-      this.setState({
+      return {
         field: removeFieldPlotAt(field, x, y),
         inventory: addItemToInventory(itemsMap[crop.itemId], inventory),
-      });
-    }
+      };
+    });
   }
 
   /**
@@ -609,25 +611,22 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   clearPlot(x, y) {
-    const { field, inventory } = this.state;
-    const row = field[y];
-    const plotContent = row[x];
+    this.setState(({ field, inventory }) => {
+      const plotContent = field[y][x];
 
-    if (!plotContent) {
-      // Nothing planted in field[x][y]
-      return;
-    }
+      if (!plotContent) {
+        // Nothing planted in field[x][y]
+        return;
+      }
 
-    const item = itemsMap[plotContent.itemId];
+      const item = itemsMap[plotContent.itemId];
 
-    let newInventory = item.isReplantable
-      ? addItemToInventory(item, inventory)
-      : inventory;
-
-    // FIXME: Change this to use functional setState
-    this.setState({
-      field: removeFieldPlotAt(field, x, y),
-      inventory: newInventory,
+      return {
+        field: removeFieldPlotAt(field, x, y),
+        inventory: item.isReplantable
+          ? addItemToInventory(item, inventory)
+          : inventory,
+      };
     });
   }
 
@@ -636,22 +635,23 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   waterPlot(x, y) {
-    const { field } = this.state;
-    const plotContent = field[y][x];
+    this.setState(({ field }) => {
+      const plotContent = field[y][x];
 
-    if (!plotContent || plotContent.type !== plotContentType.CROP) {
-      return;
-    }
+      if (!plotContent || plotContent.type !== plotContentType.CROP) {
+        return;
+      }
 
-    // FIXME: Change this to use functional setState
-    this.setState({
-      field: modifyFieldPlotAt(field, x, y, crop => ({
-        ...crop,
-        wasWateredToday: true,
-      })),
+      return {
+        field: modifyFieldPlotAt(field, x, y, crop => ({
+          ...crop,
+          wasWateredToday: true,
+        })),
+      };
     });
   }
 
+  // FIXME: Change this to use functional setState
   waterAllPlots() {
     this.setState({ field: getWateredField(this.state.field) });
   }
@@ -660,25 +660,24 @@ export default class Farmhand extends Component {
    * @param {number} fieldId
    */
   purchaseField(fieldId) {
-    const { field, money, purchasedField } = this.state;
+    this.setState(({ field, money, purchasedField }) => {
+      if (purchasedField >= fieldId) {
+        return;
+      }
 
-    if (purchasedField >= fieldId) {
-      return;
-    }
+      const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId);
 
-    const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId);
-
-    // FIXME: Change this to use functional setState
-    this.setState({
-      purchasedField: fieldId,
-      field: new Array(rows)
-        .fill(null)
-        .map((_, row) =>
-          new Array(columns)
-            .fill(null)
-            .map((_, column) => (field[row] && field[row][column]) || null)
-        ),
-      money: money - price,
+      return {
+        purchasedField: fieldId,
+        field: new Array(rows)
+          .fill(null)
+          .map((_, row) =>
+            new Array(columns)
+              .fill(null)
+              .map((_, column) => (field[row] && field[row][column]) || null)
+          ),
+        money: money - price,
+      };
     });
   }
 
