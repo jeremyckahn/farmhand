@@ -35,6 +35,7 @@ import {
   getCropLifeStage,
   getPlotContentFromItemId,
   getRangeCoords,
+  getAdjustedItemValue,
 } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
@@ -370,24 +371,16 @@ export default class Farmhand extends Component {
   }
 
   /**
-   * @param {string} itemId
-   * @returns {number}
-   */
-  getAdjustedItemValue(itemId) {
-    return this.state.valueAdjustments[itemId] * itemsMap[itemId].value;
-  }
-
-  /**
    * @param {farmhand.item} item
    * @param {number} [howMany=1]
    */
   purchaseItem(item, howMany = 1) {
-    if (howMany === 0) {
-      return;
-    }
+    this.setState(({ inventory, money, valueAdjustments }) => {
+      if (howMany === 0) {
+        return;
+      }
 
-    this.setState(({ inventory, money }) => {
-      const value = this.getAdjustedItemValue(item.id);
+      const value = getAdjustedItemValue(valueAdjustments, item.id);
       const totalValue = value * howMany;
 
       if (totalValue > money) {
@@ -409,7 +402,10 @@ export default class Farmhand extends Component {
   purchaseItemMax(item) {
     this.purchaseItem(
       item,
-      Math.floor(this.state.money / this.getAdjustedItemValue(item.id))
+      Math.floor(
+        this.state.money /
+          getAdjustedItemValue(this.state.valueAdjustments, item.id)
+      )
     );
   }
 
@@ -422,8 +418,8 @@ export default class Farmhand extends Component {
       return;
     }
 
-    this.setState(({ inventory, money }) => {
-      const value = this.getAdjustedItemValue(id);
+    this.setState(({ inventory, money, valueAdjustments }) => {
+      const value = getAdjustedItemValue(valueAdjustments, id);
       const totalValue = value * howMany;
 
       return {

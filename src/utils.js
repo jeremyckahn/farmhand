@@ -117,3 +117,11 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
         .map((_, x) => ({ x: rangeStartX + x, y: rangeStartY + y }))
     );
 };
+
+/**
+ * @param {Object} valueAdjustments
+ * @param {string} itemId
+ * @returns {number}
+ */
+export const getAdjustedItemValue = (valueAdjustments, itemId) =>
+  valueAdjustments[itemId] * itemsMap[itemId].value;
