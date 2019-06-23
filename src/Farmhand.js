@@ -441,9 +441,11 @@ export default class Farmhand extends Component {
    * @param {string} plantableItemId
    */
   plantInPlot(x, y, plantableItemId) {
-    const { field, inventory } = this.state;
+    if (!plantableItemId) {
+      return;
+    }
 
-    if (plantableItemId) {
+    this.setState(({ field, inventory }) => {
       const row = field[y];
       const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId);
 
@@ -461,18 +463,18 @@ export default class Farmhand extends Component {
         inventory
       );
 
-      plantableItemId = updatedInventory.find(
+      const selectedItemId = updatedInventory.find(
         ({ id }) => id === plantableItemId
       )
         ? plantableItemId
         : '';
 
-      this.setState({
+      return {
         field: newField,
         inventory: updatedInventory,
-        selectedItemId: plantableItemId,
-      });
-    }
+        selectedItemId,
+      };
+    });
   }
 
   /**
