@@ -289,42 +289,6 @@ describe('instance methods', () => {
     });
   });
 
-  describe('purchaseItem', () => {
-    describe('user has enough money', () => {
-      describe('money state', () => {
-        beforeEach(() => {
-          component.setState({
-            money: 10,
-            valueAdjustments: { 'sample-item-1': 1 },
-          });
-          component.instance().purchaseItem(testItem({ id: 'sample-item-1' }));
-        });
-
-        test('deducts item value from money', () => {
-          expect(component.state('money')).toEqual(9);
-        });
-      });
-    });
-
-    describe('user does not have enough money', () => {
-      beforeEach(() => {
-        component.setState({
-          money: 5,
-          valueAdjustments: { 'sample-item-1': 1e9 },
-        });
-        component.instance().purchaseItem(testItem({ id: 'sample-item-1' }));
-      });
-
-      test('does not add the item to the inventory', () => {
-        expect(component.state('inventory')).toEqual([]);
-      });
-
-      test('does not deduct item value from money', () => {
-        expect(component.state('money')).toEqual(5);
-      });
-    });
-  });
-
   describe('sellItem', () => {
     beforeEach(() => {
       component.setState({

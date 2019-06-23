@@ -400,3 +400,44 @@ describe('decrementItemFromInventory', () => {
     });
   });
 });
+
+describe('purchaseItem', () => {
+  describe('howMany === 0', () => {
+    test('no-ops', () => {
+      expect(
+        fn.purchaseItem(testItem({ id: 'sample-item-1' }), 0, {
+          inventory: [],
+          money: 0,
+          valueAdjustments: { 'sample-item-1': 1 },
+        })
+      ).toEqual({});
+    });
+  });
+
+  describe('user does not have enough money', () => {
+    test('no-ops', () => {
+      expect(
+        fn.purchaseItem(testItem({ id: 'sample-item-1' }), 1, {
+          inventory: [],
+          money: 0,
+          valueAdjustments: { 'sample-item-1': 1 },
+        })
+      ).toEqual({});
+    });
+  });
+
+  describe('user has enough money', () => {
+    test('purchases item', () => {
+      expect(
+        fn.purchaseItem(testItem({ id: 'sample-item-1' }), 2, {
+          inventory: [],
+          money: 10,
+          valueAdjustments: { 'sample-item-1': 1 },
+        })
+      ).toEqual({
+        inventory: [{ id: 'sample-item-1', quantity: 2 }],
+        money: 8,
+      });
+    });
+  });
+});

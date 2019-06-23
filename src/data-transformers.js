@@ -342,12 +342,11 @@ export const computeStateForNextDay = state =>
     }
   );
 
-// TODO: Test this.
 /**
  * @param {farmhand.item} item
  * @param {number} [howMany=1]
  * @param {farmhand.state} state
- * @returns {?Object}
+ * @returns {Object}
  */
 export const purchaseItem = (
   item,
@@ -355,14 +354,14 @@ export const purchaseItem = (
   { inventory, money, valueAdjustments }
 ) => {
   if (howMany === 0) {
-    return;
+    return {};
   }
 
   const value = getAdjustedItemValue(valueAdjustments, item.id);
   const totalValue = value * howMany;
 
   if (totalValue > money) {
-    return;
+    return {};
   }
 
   return {
