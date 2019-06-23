@@ -52,14 +52,13 @@ export default {
    * @param {farmhand.module:enums.fieldMode} fieldMode
    */
   handleFieldModeSelect(fieldMode) {
-    const selectedItemId = fieldMode === PLANT ? this.state.selectedItemId : '';
-    const isToolbeltFieldMode = toolbeltFieldModes.includes(fieldMode);
-
-    // FIXME: Change this to use functional setState
-    this.setState({
-      selectedItemId: isToolbeltFieldMode ? '' : selectedItemId,
+    this.setState(({ selectedItemId }) => ({
+      selectedItemId:
+        fieldMode !== PLANT || toolbeltFieldModes.includes(fieldMode)
+          ? ''
+          : selectedItemId,
       fieldMode,
-    });
+    }));
   },
 
   handleItemSelectClick({ id, enablesFieldMode, hoveredPlotRangeSize = 0 }) {
