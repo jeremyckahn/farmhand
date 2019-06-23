@@ -128,7 +128,7 @@ export default {
   },
 
   handleMenuToggle() {
-    this.setState({ isMenuOpen: !this.state.isMenuOpen });
+    this.setState(({ isMenuOpen }) => ({ isMenuOpen: !isMenuOpen }));
   },
 
   handleClickNextMenuButton() {
