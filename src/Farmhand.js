@@ -274,18 +274,7 @@ export default class Farmhand extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {
-      state: { purchasedCowPen },
-    } = this;
-
-    // TODO: Test this.
-    if (purchasedCowPen !== prevState.purchasedCowPen) {
-      const { cows } = PURCHASEABLE_COW_PENS.get(purchasedCowPen);
-
-      this.showNotification(
-        `Purchased a cow pen with capacity for ${cows} cows!`
-      );
-    }
+    this.showStateChangeNotifications(prevState);
   }
 
   clearPersistedData() {
@@ -305,6 +294,23 @@ export default class Farmhand extends Component {
         : notifications.concat(message),
       doShowNotifications: true,
     }));
+  }
+
+  /**
+   * @param {farmhand.state} prevState
+   */
+  showStateChangeNotifications(prevState) {
+    const {
+      state: { purchasedCowPen },
+    } = this;
+
+    if (purchasedCowPen !== prevState.purchasedCowPen) {
+      const { cows } = PURCHASEABLE_COW_PENS.get(purchasedCowPen);
+
+      this.showNotification(
+        `Purchased a cow pen with capacity for ${cows} cows!`
+      );
+    }
   }
 
   incrementDay() {

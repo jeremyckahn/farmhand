@@ -189,6 +189,24 @@ describe('instance methods', () => {
     });
   });
 
+  describe('showStateChangeNotifications', () => {
+    describe('cow pen purchasing', () => {
+      test('shows notification', () => {
+        const showNotification = jest.spyOn(
+          component.instance(),
+          'showNotification'
+        );
+
+        component.setState({ purchasedCowPen: 1 });
+        component
+          .instance()
+          .showStateChangeNotifications({ purchasedCowPen: 0 });
+
+        expect(showNotification).toHaveBeenCalled();
+      });
+    });
+  });
+
   describe('incrementDay', () => {
     beforeEach(() => {
       jest.spyOn(component.instance().localforage, 'setItem');
