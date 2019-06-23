@@ -20,6 +20,7 @@ import {
   getPlantableCropInventory,
   getWateredField,
   modifyFieldPlotAt,
+  purchaseItem,
   removeFieldPlotAt,
 } from './data-transformers';
 import AppBar from './components/AppBar';
@@ -374,39 +375,23 @@ export default class Farmhand extends Component {
    * @param {farmhand.item} item
    * @param {number} [howMany=1]
    */
-  purchaseItem(item, howMany = 1) {
-    this.setState(({ inventory, money, valueAdjustments }) => {
-      if (howMany === 0) {
-        return;
-      }
-
-      const value = getAdjustedItemValue(valueAdjustments, item.id);
-      const totalValue = value * howMany;
-
-      if (totalValue > money) {
-        return;
-      }
-
-      return {
-        inventory: addItemToInventory(item, inventory, howMany),
-        money: money - totalValue,
-      };
-    });
+  purchaseItem(item, howMany) {
+    this.setState(state => purchaseItem(item, howMany, state));
   }
 
-  // FIXME: This is reading potentially stale this.state.money data. Move the
-  // howMany calculation to purchaseItem.
   /**
    * @param {farmhand.item} item
    */
   purchaseItemMax(item) {
-    this.purchaseItem(
-      item,
-      Math.floor(
-        this.state.money /
-          getAdjustedItemValue(this.state.valueAdjustments, item.id)
-      )
-    );
+    this.setState(state => {
+      const { money, valueAdjustments } = state;
+
+      return purchaseItem(
+        item,
+        Math.floor(money / getAdjustedItemValue(valueAdjustments, item.id)),
+        state
+      );
+    });
   }
 
   /**
