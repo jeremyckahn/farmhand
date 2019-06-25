@@ -21,8 +21,8 @@ There is no release or versioning system yet.
 
 ### Tasks
 
-- [ ] Purchase cow pen
-  - [ ] Three sizes
+- [x] Purchase cow pen
+  - [x] Three sizes
 - [ ] Purchase cows
 - [ ] Cow status in context pane
   - [ ] Rename cow
