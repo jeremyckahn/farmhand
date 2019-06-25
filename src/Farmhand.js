@@ -53,6 +53,7 @@ import {
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from './constants';
+import { COW_PEN_PURCHASED } from './templates';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 
 import './Farmhand.sass';
@@ -307,9 +308,7 @@ export default class Farmhand extends Component {
     if (purchasedCowPen !== prevState.purchasedCowPen) {
       const { cows } = PURCHASEABLE_COW_PENS.get(purchasedCowPen);
 
-      this.showNotification(
-        `Purchased a cow pen with capacity for ${cows} cows!`
-      );
+      this.showNotification(COW_PEN_PURCHASED`${cows}`);
     }
   }
 

@@ -7,9 +7,11 @@ import {
   FERTILIZER_ITEM_ID,
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
+  PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from './constants';
+import { COW_PEN_PURCHASED } from './templates';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 import { fieldMode } from './enums';
 import Farmhand from './Farmhand';
@@ -192,17 +194,14 @@ describe('instance methods', () => {
   describe('showStateChangeNotifications', () => {
     describe('cow pen purchasing', () => {
       test('shows notification', () => {
-        const showNotification = jest.spyOn(
-          component.instance(),
-          'showNotification'
-        );
-
         component.setState({ purchasedCowPen: 1 });
         component
           .instance()
           .showStateChangeNotifications({ purchasedCowPen: 0 });
 
-        expect(showNotification).toHaveBeenCalled();
+        expect(component.state().notifications).toContain(
+          COW_PEN_PURCHASED`${PURCHASEABLE_COW_PENS.get(1).cows}`
+        );
       });
     });
   });
