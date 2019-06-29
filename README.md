@@ -24,6 +24,7 @@ There is no release or versioning system yet.
 - [x] Purchase cow pen
   - [x] Three sizes
 - [ ] Purchase cows
+  - [ ] Multiple cow colors
 - [ ] Cow status in context pane
   - [ ] Rename cow
   - [ ] Show stats
@@ -46,7 +47,7 @@ There is no release or versioning system yet.
 - [ ] Cow care
   - [ ] Feeding grain increases weight
   - [ ] Hugging cows improves happiness (benefits top out after 3 daily hugs)
-- [ ] Selling cows for beef
+- [ ] Selling cows
   - [ ] Greater weight results in higher sell value
   - [ ] Older cows are worth less
 - [ ] Negligence
