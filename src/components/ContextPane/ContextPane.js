@@ -6,6 +6,7 @@ import Inventory from '../Inventory';
 import Toolbelt from '../Toolbelt';
 import PlantableItems from '../PlantableItems';
 import FieldTools from '../FieldTools';
+import CowPenContextMenu from '../CowPenContextMenu';
 import { stageFocusType } from '../../enums';
 
 import './ContextPane.sass';
@@ -35,6 +36,7 @@ export const ContextPane = ({ playerInventory, stageFocus }) => (
         }}
       />
     )}
+    {stageFocus === stageFocusType.COW_PEN && <CowPenContextMenu />}
   </div>
 );
 
