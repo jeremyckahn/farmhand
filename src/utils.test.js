@@ -1,4 +1,5 @@
 import {
+  generateCow,
   getCropId,
   getCropLifeStage,
   getLifeStageRange,
@@ -6,15 +7,31 @@ import {
   getPlotImage,
   getRangeCoords,
 } from './utils';
+import fruitNames from './data/fruit-names';
 import { testCrop } from './test-utils';
 import { items as itemImages } from './img';
 import { cropLifeStage } from './enums';
+import { COW_STARTING_WEIGHT_BASE } from './constants';
 
 jest.mock('./data/maps');
 jest.mock('./data/items');
 jest.mock('./img');
 
 const { SEED, GROWING, GROWN } = cropLifeStage;
+
+describe('generateCow', () => {
+  beforeEach(() => {
+    jest.spyOn(Math, 'random').mockReturnValue(0);
+  });
+
+  test('generates a cow', () => {
+    expect(generateCow()).toEqual({
+      name: fruitNames[0],
+      daysOld: 0,
+      weight: COW_STARTING_WEIGHT_BASE,
+    });
+  });
+});
 
 describe('getCropId', () => {
   test('returns an ID for a provided crop', () => {

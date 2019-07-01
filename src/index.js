@@ -47,6 +47,16 @@
  * @property {boolean} wasWateredToday
  */
 
+// Note: At some point farmhand.cow will be abstracted to farmhand.animal, but
+// there's only one animal so far so the abstraction isn't helpful yet.
+/**
+ * @typedef farmhand.cow
+ * @type {Object}
+ * @param {string} name
+ * @property {number} daysOld
+ * @property {number} weight
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 

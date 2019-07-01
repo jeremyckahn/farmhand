@@ -1,12 +1,20 @@
 import Dinero from 'dinero.js';
 import memoize from 'fast-memoize';
 
+import fruitNames from './data/fruit-names';
 import { cropIdToTypeMap, itemsMap } from './data/maps';
 import { items as itemImages } from './img';
 import { cropLifeStage, plotContentType } from './enums';
-import { INITIAL_FIELD_WIDTH, INITIAL_FIELD_HEIGHT } from './constants';
+import {
+  COW_STARTING_WEIGHT_BASE,
+  COW_STARTING_WEIGHT_VARIANCE,
+  INITIAL_FIELD_WIDTH,
+  INITIAL_FIELD_HEIGHT,
+} from './constants';
 
 const { SEED, GROWING, GROWN } = cropLifeStage;
+
+const chooseRandom = list => list[Math.floor(Math.random() * list.length)];
 
 export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
@@ -125,3 +133,15 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
  */
 export const getAdjustedItemValue = (valueAdjustments, itemId) =>
   valueAdjustments[itemId] * itemsMap[itemId].value;
+
+/**
+ * Generates a friendly cow.
+ * @returns {farmhand.cow}
+ */
+export const generateCow = () => ({
+  name: chooseRandom(fruitNames),
+  daysOld: 0,
+  weight:
+    COW_STARTING_WEIGHT_BASE +
+    Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2),
+});
