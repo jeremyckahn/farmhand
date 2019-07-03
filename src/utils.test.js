@@ -10,7 +10,7 @@ import {
 import fruitNames from './data/fruit-names';
 import { testCrop } from './test-utils';
 import { items as itemImages } from './img';
-import { cropLifeStage } from './enums';
+import { cropLifeStage, genders } from './enums';
 import {
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
@@ -32,6 +32,7 @@ describe('generateCow', () => {
       expect(generateCow()).toEqual({
         name: fruitNames[0],
         daysOld: 0,
+        gender: Object.keys(genders)[0],
         weight: COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE,
       });
     });
@@ -46,6 +47,7 @@ describe('generateCow', () => {
       expect(generateCow()).toEqual({
         name: fruitNames[fruitNames.length - 1],
         daysOld: 0,
+        gender: Object.keys(genders).pop(),
         weight: COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE,
       });
     });

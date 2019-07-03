@@ -4,7 +4,7 @@ import memoize from 'fast-memoize';
 import fruitNames from './data/fruit-names';
 import { cropIdToTypeMap, itemsMap } from './data/maps';
 import { items as itemImages } from './img';
-import { cropLifeStage, plotContentType } from './enums';
+import { cropLifeStage, genders, plotContentType } from './enums';
 import {
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
@@ -142,6 +142,7 @@ export const getAdjustedItemValue = (valueAdjustments, itemId) =>
 export const generateCow = () => ({
   name: chooseRandom(fruitNames),
   daysOld: 0,
+  gender: chooseRandom(Object.keys(genders)),
   weight: Math.round(
     COW_STARTING_WEIGHT_BASE -
       COW_STARTING_WEIGHT_VARIANCE +
