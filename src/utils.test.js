@@ -32,7 +32,7 @@ describe('generateCow', () => {
       expect(generateCow()).toEqual({
         name: fruitNames[0],
         daysOld: 0,
-        weight: COW_STARTING_WEIGHT_BASE,
+        weight: COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE,
       });
     });
   });
@@ -46,7 +46,7 @@ describe('generateCow', () => {
       expect(generateCow()).toEqual({
         name: fruitNames[fruitNames.length - 1],
         daysOld: 0,
-        weight: COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE * 2,
+        weight: COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE,
       });
     });
   });

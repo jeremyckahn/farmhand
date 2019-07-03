@@ -143,6 +143,7 @@ export const generateCow = () => ({
   name: chooseRandom(fruitNames),
   daysOld: 0,
   weight:
-    COW_STARTING_WEIGHT_BASE +
+    COW_STARTING_WEIGHT_BASE -
+    COW_STARTING_WEIGHT_VARIANCE +
     Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2),
 });
