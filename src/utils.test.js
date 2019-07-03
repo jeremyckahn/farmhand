@@ -11,7 +11,10 @@ import fruitNames from './data/fruit-names';
 import { testCrop } from './test-utils';
 import { items as itemImages } from './img';
 import { cropLifeStage } from './enums';
-import { COW_STARTING_WEIGHT_BASE } from './constants';
+import {
+  COW_STARTING_WEIGHT_BASE,
+  COW_STARTING_WEIGHT_VARIANCE,
+} from './constants';
 
 jest.mock('./data/maps');
 jest.mock('./data/items');
@@ -20,15 +23,31 @@ jest.mock('./img');
 const { SEED, GROWING, GROWN } = cropLifeStage;
 
 describe('generateCow', () => {
-  beforeEach(() => {
-    jest.spyOn(Math, 'random').mockReturnValue(0);
+  describe('randomizer: lower bound', () => {
+    beforeEach(() => {
+      jest.spyOn(Math, 'random').mockReturnValue(0);
+    });
+
+    test('generates a cow', () => {
+      expect(generateCow()).toEqual({
+        name: fruitNames[0],
+        daysOld: 0,
+        weight: COW_STARTING_WEIGHT_BASE,
+      });
+    });
   });
 
-  test('generates a cow', () => {
-    expect(generateCow()).toEqual({
-      name: fruitNames[0],
-      daysOld: 0,
-      weight: COW_STARTING_WEIGHT_BASE,
+  describe('randomizer: upper bound', () => {
+    beforeEach(() => {
+      jest.spyOn(Math, 'random').mockReturnValue(1);
+    });
+
+    test('generates a cow', () => {
+      expect(generateCow()).toEqual({
+        name: fruitNames[fruitNames.length - 1],
+        daysOld: 0,
+        weight: COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE * 2,
+      });
     });
   });
 });

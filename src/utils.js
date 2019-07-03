@@ -14,7 +14,8 @@ import {
 
 const { SEED, GROWING, GROWN } = cropLifeStage;
 
-const chooseRandom = list => list[Math.floor(Math.random() * list.length)];
+const chooseRandom = list =>
+  list[Math.floor(Math.random() * (list.length - 1))];
 
 export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
