@@ -1,4 +1,4 @@
-import { testCrop, testItem } from './test-utils';
+import { shapeOf, testCrop, testItem } from './test-utils';
 import { RAIN_MESSAGE } from './strings';
 import { CROW_ATTACKED } from './templates';
 import { FERTILIZER_BONUS, SCARECROW_ITEM_ID } from './constants';
@@ -9,7 +9,7 @@ import {
   sampleFieldTool1,
 } from './data/items';
 import { itemsMap } from './data/maps';
-import { getPlotContentFromItemId } from './utils';
+import { generateCow, getPlotContentFromItemId } from './utils';
 import * as fn from './data-transformers';
 
 jest.mock('localforage');
@@ -24,6 +24,7 @@ describe('computeStateForNextDay', () => {
 
   test('computes state for next day', () => {
     const {
+      cowForSale,
       dayCount,
       field: [firstRow],
       valueAdjustments,
@@ -40,6 +41,7 @@ describe('computeStateForNextDay', () => {
       newDayNotifications: [],
     });
 
+    expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()));
     expect(dayCount).toEqual(2);
     expect(valueAdjustments['sample-crop-1']).toEqual(1.25);
     expect(valueAdjustments['sample-crop-2']).toEqual(1.25);

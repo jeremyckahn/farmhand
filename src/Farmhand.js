@@ -66,6 +66,7 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
 /**
  * @typedef farmhand.state
  * @type {Object}
+ * @property {farmhand.cow} cowForSale
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {{ x: number, y: number }} hoveredPlot
@@ -104,6 +105,7 @@ export default class Farmhand extends Component {
    * @type {farmhand.state}
    */
   state = {
+    cowForSale: {},
     dayCount: 0,
     field: createNewField(),
     hoveredPlot: { x: null, y: null },
@@ -131,6 +133,7 @@ export default class Farmhand extends Component {
 
   static reduceByPersistedKeys(state) {
     return [
+      'cowForSale',
       'dayCount',
       'field',
       'inventory',

@@ -142,8 +142,9 @@ export const getAdjustedItemValue = (valueAdjustments, itemId) =>
 export const generateCow = () => ({
   name: chooseRandom(fruitNames),
   daysOld: 0,
-  weight:
+  weight: Math.round(
     COW_STARTING_WEIGHT_BASE -
-    COW_STARTING_WEIGHT_VARIANCE +
-    Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2),
+      COW_STARTING_WEIGHT_VARIANCE +
+      Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
+  ),
 });
