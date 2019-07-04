@@ -26,3 +26,9 @@ export const tools = {
   scythe: require('./tools/scythe.png'),
   'watering-can': require('./tools/watering-can.png'),
 };
+
+export const animals = {
+  cow: {
+    white: require('./animals/white-cow.png'),
+  },
+};

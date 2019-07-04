@@ -6,7 +6,16 @@ import { CowPenContextMenu } from './CowPenContextMenu';
 let component;
 
 beforeEach(() => {
-  component = shallow(<CowPenContextMenu {...{}} />);
+  component = shallow(
+    <CowPenContextMenu
+      {...{
+        cowForSale: {
+          name: '',
+          weight: 0,
+        },
+      }}
+    />
+  );
 });
 
 test('renders', () => {

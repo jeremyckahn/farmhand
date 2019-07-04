@@ -27,7 +27,7 @@ export const Navigation = ({
       <MenuItem value={stageFocusType.FIELD}>Field (f)</MenuItem>
       <MenuItem value={stageFocusType.SHOP}>Shop (s)</MenuItem>
       {purchasedCowPen && (
-        <MenuItem value={stageFocusType.COW_PEN}>Cows</MenuItem>
+        <MenuItem value={stageFocusType.COW_PEN}>Cows (c)</MenuItem>
       )}
       <MenuItem value={stageFocusType.INVENTORY}>Inventory (i)</MenuItem>
     </Select>
