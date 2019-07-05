@@ -5,6 +5,7 @@
   "homepage": "http://jeremyckahn.github.io/farmhand/",
   "scripts": {
     "build": "react-scripts build",
+    "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
     "deploy": "gh-pages -d build",
     "doc": "jsdoc -c .jsdoc -r src",
     "doc:live": "npm-run-all -p doc:watch doc:view",
@@ -61,6 +62,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-hotkeys": "^1.1.4",
+    "source-map-explorer": "^2.0.1",
     "typeface-francois-one": "0.0.71"
   },
   "husky": {
