@@ -3,7 +3,12 @@ import { object } from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
-import Icon from '@material-ui/core/Icon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faGenderless,
+  faMars,
+  faVenus,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { animals } from '../../img';
 import FarmhandContext from '../../Farmhand.context';
@@ -11,9 +16,9 @@ import { genders } from '../../enums';
 import './CowPenContextMenu.sass';
 
 const genderIcons = {
-  [genders.MALE]: <Icon className="fa fa-mars" />,
-  [genders.FEMALE]: <Icon className="fa fa-venus" />,
-  [genders.NONBINARY]: <Icon className="fa fa-genderless" />,
+  [genders.MALE]: <FontAwesomeIcon icon={faMars} />,
+  [genders.FEMALE]: <FontAwesomeIcon icon={faVenus} />,
+  [genders.NONBINARY]: <FontAwesomeIcon icon={faGenderless} />,
 };
 
 export const CowPenContextMenu = ({ cowForSale }) => (
