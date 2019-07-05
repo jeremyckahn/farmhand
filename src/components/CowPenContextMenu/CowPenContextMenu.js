@@ -38,7 +38,12 @@ export const CowPenContextMenu = ({ cowForSale }) => (
               />
             </p>
           ),
-          subheader: <p>{cowForSale.weight} lbs.</p>,
+          subheader: (
+            <>
+              <p>Price: ${cowForSale.value}</p>
+              <p>Weight: {cowForSale.weight} lbs.</p>
+            </>
+          ),
         }}
       />
       <CardActions />

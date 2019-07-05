@@ -139,13 +139,18 @@ export const getAdjustedItemValue = (valueAdjustments, itemId) =>
  * Generates a friendly cow.
  * @returns {farmhand.cow}
  */
-export const generateCow = () => ({
-  name: chooseRandom(fruitNames),
-  daysOld: 0,
-  gender: chooseRandom(Object.keys(genders)),
-  weight: Math.round(
+export const generateCow = () => {
+  const weight = Math.round(
     COW_STARTING_WEIGHT_BASE -
       COW_STARTING_WEIGHT_VARIANCE +
       Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
-  ),
-});
+  );
+
+  return {
+    name: chooseRandom(fruitNames),
+    daysOld: 0,
+    gender: chooseRandom(Object.keys(genders)),
+    value: weight * 1.5,
+    weight,
+  };
+};

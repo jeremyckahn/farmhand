@@ -29,11 +29,13 @@ describe('generateCow', () => {
     });
 
     test('generates a cow', () => {
+      const weight = COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE;
       expect(generateCow()).toEqual({
         name: fruitNames[0],
         daysOld: 0,
         gender: Object.keys(genders)[0],
-        weight: COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE,
+        value: weight * 1.5,
+        weight,
       });
     });
   });
@@ -44,11 +46,14 @@ describe('generateCow', () => {
     });
 
     test('generates a cow', () => {
+      const weight = COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE;
+
       expect(generateCow()).toEqual({
         name: fruitNames[fruitNames.length - 1],
         daysOld: 0,
         gender: Object.keys(genders).pop(),
-        weight: COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE,
+        value: weight * 1.5,
+        weight,
       });
     });
   });
