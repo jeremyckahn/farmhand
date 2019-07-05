@@ -57,4 +57,4 @@ export const plotContentType = enumify(['CROP', 'SPRINKLER', 'SCARECROW']);
  * @property farmhand.module:enums.genders
  * @enum {string}
  */
-export const genders = enumify(['FEMALE', 'MALE', 'NONBINARY']);
+export const genders = enumify(['FEMALE', 'GENDERLESS', 'MALE']);

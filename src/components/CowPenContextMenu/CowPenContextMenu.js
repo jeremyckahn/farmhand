@@ -16,9 +16,9 @@ import { genders } from '../../enums';
 import './CowPenContextMenu.sass';
 
 const genderIcons = {
-  [genders.MALE]: <FontAwesomeIcon icon={faMars} />,
   [genders.FEMALE]: <FontAwesomeIcon icon={faVenus} />,
-  [genders.NONBINARY]: <FontAwesomeIcon icon={faGenderless} />,
+  [genders.GENDERLESS]: <FontAwesomeIcon icon={faGenderless} />,
+  [genders.MALE]: <FontAwesomeIcon icon={faMars} />,
 };
 
 export const CowPenContextMenu = ({ cowForSale }) => (
