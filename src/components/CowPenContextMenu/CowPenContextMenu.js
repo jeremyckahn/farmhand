@@ -16,9 +16,9 @@ import { genders } from '../../enums';
 import './CowPenContextMenu.sass';
 
 const genderIcons = {
-  [genders.FEMALE]: <FontAwesomeIcon icon={faVenus} />,
-  [genders.GENDERLESS]: <FontAwesomeIcon icon={faGenderless} />,
-  [genders.MALE]: <FontAwesomeIcon icon={faMars} />,
+  [genders.FEMALE]: faVenus,
+  [genders.GENDERLESS]: faGenderless,
+  [genders.MALE]: faMars,
 };
 
 export const CowPenContextMenu = ({ cowForSale }) => (
@@ -30,7 +30,12 @@ export const CowPenContextMenu = ({ cowForSale }) => (
           avatar: <img {...{ src: animals.cow.white }} alt="Cow" />,
           title: (
             <p>
-              {cowForSale.name} {genderIcons[cowForSale.gender]}
+              {cowForSale.name}{' '}
+              <FontAwesomeIcon
+                {...{
+                  icon: genderIcons[cowForSale.gender],
+                }}
+              />
             </p>
           ),
           subheader: <p>{cowForSale.weight} lbs.</p>,
