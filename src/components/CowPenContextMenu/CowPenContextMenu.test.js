@@ -13,6 +13,8 @@ beforeEach(() => {
           name: '',
           weight: 0,
         },
+        handleCowPurchaseClick: () => {},
+        money: 0,
       }}
     />
   );

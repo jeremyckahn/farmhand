@@ -28,6 +28,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowPurchaseClick(cow) {
+    this.purchaseCow(cow);
+  },
+
+  /**
    * @param {farmhand.item} item
    */
   handleItemSellClick(item) {

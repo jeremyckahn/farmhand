@@ -388,6 +388,13 @@ export default class Farmhand extends Component {
   }
 
   /**
+   * @param {farmhand.cow} cow
+   */
+  purchaseCow(cow) {
+    console.log(cow);
+  }
+
+  /**
    * @param {farmhand.item} item
    */
   purchaseItemMax(item) {

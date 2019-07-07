@@ -1,5 +1,6 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { func, number, object } from 'prop-types';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
@@ -21,9 +22,13 @@ const genderIcons = {
   [genders.MALE]: faMars,
 };
 
-export const CowPenContextMenu = ({ cowForSale }) => (
+export const CowPenContextMenu = ({
+  cowForSale,
+  handleCowPurchaseClick,
+  money,
+}) => (
   <div className="CowPenContextMenu">
-    <h2>Available for purchase</h2>
+    <h2>For sale</h2>
     <Card>
       <CardHeader
         {...{
@@ -46,13 +51,27 @@ export const CowPenContextMenu = ({ cowForSale }) => (
           ),
         }}
       />
-      <CardActions />
+      <CardActions>
+        <Button
+          {...{
+            className: 'purchase',
+            color: 'primary',
+            disabled: cowForSale.value > money,
+            onClick: () => handleCowPurchaseClick(cowForSale),
+            variant: 'contained',
+          }}
+        >
+          Buy
+        </Button>
+      </CardActions>
     </Card>
   </div>
 );
 
 CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
+  handleCowPurchaseClick: func.isRequired,
+  money: number.isRequired,
 };
 
 export default function Consumer() {
