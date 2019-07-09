@@ -26,6 +26,8 @@ export const CowPenContextMenu = ({
   cowForSale,
   handleCowPurchaseClick,
   money,
+
+  cowValue = cowForSale.weight * 1.5,
 }) => (
   <div className="CowPenContextMenu">
     <h2>For sale</h2>
@@ -45,7 +47,7 @@ export const CowPenContextMenu = ({
           ),
           subheader: (
             <>
-              <p>Price: ${cowForSale.value}</p>
+              <p>Price: ${cowValue}</p>
               <p>Weight: {cowForSale.weight} lbs.</p>
             </>
           ),
@@ -56,7 +58,7 @@ export const CowPenContextMenu = ({
           {...{
             className: 'purchase',
             color: 'primary',
-            disabled: cowForSale.value > money,
+            disabled: cowValue > money,
             onClick: () => handleCowPurchaseClick(cowForSale),
             variant: 'contained',
           }}

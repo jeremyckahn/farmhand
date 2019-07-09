@@ -150,7 +150,6 @@ export const generateCow = () => {
     name: chooseRandom(fruitNames),
     daysOld: 0,
     gender: chooseRandom(Object.keys(genders)),
-    value: weight * 1.5,
     weight,
   };
 };

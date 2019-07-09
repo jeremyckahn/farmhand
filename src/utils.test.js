@@ -34,7 +34,6 @@ describe('generateCow', () => {
         name: fruitNames[0],
         daysOld: 0,
         gender: Object.keys(genders)[0],
-        value: weight * 1.5,
         weight,
       });
     });
@@ -52,7 +51,6 @@ describe('generateCow', () => {
         name: fruitNames[fruitNames.length - 1],
         daysOld: 0,
         gender: Object.keys(genders).pop(),
-        value: weight * 1.5,
         weight,
       });
     });
