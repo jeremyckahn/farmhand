@@ -23,6 +23,18 @@ export const createNewField = () =>
     .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null));
 
 /**
+ * @param {number} number
+ * @returns {string} Does not include dollar sign.
+ */
+export const dollarAmount = number =>
+  Dinero({
+    amount: Math.round(number * 100),
+    precision: 2,
+  })
+    .toUnit()
+    .toFixed(2);
+
+/**
  * @param {farmhand.item} item
  * @param {Object.<number>} valueAdjustments
  * @returns {number}

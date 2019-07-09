@@ -14,6 +14,7 @@ import {
 import { animals } from '../../img';
 import FarmhandContext from '../../Farmhand.context';
 import { genders } from '../../enums';
+import { dollarAmount } from '../../utils';
 import './CowPenContextMenu.sass';
 
 const genderIcons = {
@@ -47,7 +48,7 @@ export const CowPenContextMenu = ({
           ),
           subheader: (
             <>
-              <p>Price: ${cowValue}</p>
+              <p>Price: ${dollarAmount(cowValue)}</p>
               <p>Weight: {cowForSale.weight} lbs.</p>
             </>
           ),

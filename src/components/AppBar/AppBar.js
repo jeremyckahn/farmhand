@@ -1,7 +1,6 @@
 import React from 'react';
 import { arrayOf, func, number, string } from 'prop-types';
 
-import Dinero from 'dinero.js';
 import { default as MuiAppBar } from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -13,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import FarmhandContext from '../../Farmhand.context';
 import { stageFocusType } from '../../enums';
+import { dollarAmount } from '../../utils';
 import './AppBar.sass';
 
 const stageTitleMap = {
@@ -81,13 +81,7 @@ export const AppBar = ({
           variant: 'h2',
         }}
       >
-        $
-        {Dinero({
-          amount: Math.round(money * 100),
-          precision: 2,
-        })
-          .toUnit()
-          .toFixed(2)}
+        ${dollarAmount(money)}
       </Typography>
     </Toolbar>
   </MuiAppBar>
