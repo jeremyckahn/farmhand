@@ -1,6 +1,7 @@
 import {
   dollarAmount,
   generateCow,
+  getCowValue,
   getCropId,
   getCropLifeStage,
   getLifeStageRange,
@@ -61,6 +62,12 @@ describe('generateCow', () => {
         weight,
       });
     });
+  });
+});
+
+describe('getCowValue', () => {
+  test('computes cow value', () => {
+    expect(getCowValue({ weight: 100 })).toEqual(150);
   });
 });
 

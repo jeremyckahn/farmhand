@@ -165,3 +165,8 @@ export const generateCow = () => {
     weight,
   };
 };
+
+/**
+ * @param {farmhand.cow} cow
+ */
+export const getCowValue = ({ weight }) => weight * 1.5;

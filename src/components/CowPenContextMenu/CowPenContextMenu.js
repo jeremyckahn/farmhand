@@ -14,7 +14,7 @@ import {
 import { animals } from '../../img';
 import FarmhandContext from '../../Farmhand.context';
 import { genders } from '../../enums';
-import { dollarAmount } from '../../utils';
+import { dollarAmount, getCowValue } from '../../utils';
 import './CowPenContextMenu.sass';
 
 const genderIcons = {
@@ -28,7 +28,7 @@ export const CowPenContextMenu = ({
   handleCowPurchaseClick,
   money,
 
-  cowValue = cowForSale.weight * 1.5,
+  cowValue = getCowValue(cowForSale),
 }) => (
   <div className="CowPenContextMenu">
     <h2>For sale</h2>
