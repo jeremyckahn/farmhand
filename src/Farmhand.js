@@ -34,9 +34,11 @@ import {
   createNewField,
   getCropFromItemId,
   getCropLifeStage,
+  getCowValue,
   getPlotContentFromItemId,
   getRangeCoords,
   getAdjustedItemValue,
+  generateCow,
 } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
@@ -67,6 +69,7 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  * @typedef farmhand.state
  * @type {Object}
  * @property {farmhand.cow} cowForSale
+ * @property {Array.<farmhand.cow>} cowInventory
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {{ x: number, y: number }} hoveredPlot
@@ -106,6 +109,7 @@ export default class Farmhand extends Component {
    */
   state = {
     cowForSale: {},
+    cowInventory: [],
     dayCount: 0,
     field: createNewField(),
     hoveredPlot: { x: null, y: null },
@@ -134,6 +138,7 @@ export default class Farmhand extends Component {
   static reduceByPersistedKeys(state) {
     return [
       'cowForSale',
+      'cowInventory',
       'dayCount',
       'field',
       'inventory',
@@ -387,11 +392,21 @@ export default class Farmhand extends Component {
     this.setState(state => purchaseItem(item, howMany, state));
   }
 
+  // TODO:
+  //   - Add tests
+  //   - Early return if there is not enough money
+  //   - Early return if there is no room for more cows
   /**
    * @param {farmhand.cow} cow
    */
   purchaseCow(cow) {
-    console.log(cow);
+    this.setState(({ cowInventory, money }) => {
+      return {
+        cowInventory: [...cowInventory, { ...cow }],
+        money: money - getCowValue(cow),
+        cowForSale: generateCow(),
+      };
+    });
   }
 
   /**
