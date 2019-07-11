@@ -1,7 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { getCropFromItemId, getPlotContentFromItemId } from './utils';
+import {
+  getCowValue,
+  getCropFromItemId,
+  getPlotContentFromItemId,
+} from './utils';
 import { testCrop, testItem } from './test-utils';
 import {
   FERTILIZER_ITEM_ID,
@@ -13,7 +17,7 @@ import {
 } from './constants';
 import { COW_PEN_PURCHASED } from './templates';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
-import { fieldMode } from './enums';
+import { fieldMode, genders } from './enums';
 import Farmhand from './Farmhand';
 
 jest.mock('localforage');
@@ -344,6 +348,37 @@ describe('instance methods', () => {
     test('adds total value of items to player money', () => {
       expect(component.state().money).toEqual(102);
     });
+  });
+
+  describe('purchaseCow', () => {
+    const cow = Object.freeze({
+      name: 'cow',
+      weight: 1000,
+      gender: genders.GENDERLESS,
+    });
+
+    describe('happy path', () => {
+      test('cow is purchased', () => {
+        component.setState({
+          money: 5000,
+        });
+
+        const oldCowForSale = component.state().cowForSale;
+
+        component.instance().purchaseCow(cow);
+
+        expect(component.state()).toMatchObject({
+          cowInventory: [cow],
+          money: 5000 - getCowValue(cow),
+        });
+
+        expect(component.state().cowForSale).not.toBe(oldCowForSale);
+      });
+    });
+
+    xdescribe('is not room in cow pen', () => {});
+
+    xdescribe('player does not have enough money', () => {});
   });
 
   describe('plantInPlot', () => {
