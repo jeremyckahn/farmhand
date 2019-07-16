@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import {
+  generateCow,
   getCowValue,
   getCropFromItemId,
   getPlotContentFromItemId,
@@ -357,13 +358,18 @@ describe('instance methods', () => {
       gender: genders.GENDERLESS,
     });
 
+    let oldCowForSale;
+
+    beforeEach(() => {
+      oldCowForSale = component.state().cowForSale;
+    });
+
     describe('happy path', () => {
       test('cow is purchased', () => {
         component.setState({
           money: 5000,
+          purchasedCowPen: 1,
         });
-
-        const oldCowForSale = component.state().cowForSale;
 
         component.instance().purchaseCow(cow);
 
@@ -376,9 +382,44 @@ describe('instance methods', () => {
       });
     });
 
-    xdescribe('is not room in cow pen', () => {});
+    describe('is unsufficient room in cow pen', () => {
+      test('cow is not purchased', () => {
+        const cowCapacity = PURCHASEABLE_COW_PENS.get(1).cows;
+        component.setState({
+          cowInventory: Array(cowCapacity)
+            .fill(null)
+            .map(() => generateCow()),
+          money: 5000,
+          purchasedCowPen: 1,
+        });
 
-    xdescribe('player does not have enough money', () => {});
+        component.instance().purchaseCow(cow);
+
+        const { cowInventory, cowForSale, money } = component.state();
+        expect(cowInventory).toHaveLength(cowCapacity);
+        expect(cowForSale).toBe(oldCowForSale);
+        expect(money).toBe(5000);
+      });
+    });
+
+    describe('player does not have enough money', () => {
+      test('cow is not purchased', () => {
+        component.setState({
+          money: 500,
+          purchasedCowPen: 1,
+        });
+
+        component.instance().purchaseCow(cow);
+
+        expect(component.state()).toMatchObject({
+          cowInventory: [],
+          money: 500,
+        });
+
+        const { cowForSale } = component.state();
+        expect(cowForSale).toBe(oldCowForSale);
+      });
+    });
   });
 
   describe('plantInPlot', () => {

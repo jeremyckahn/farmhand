@@ -442,18 +442,23 @@ export default class Farmhand extends Component {
     this.sellItem(item, itemInInventory.quantity);
   }
 
-  // TODO:
-  //   - Add tests
-  //   - Early return if there is not enough money
-  //   - Early return if there is no room for more cows
   /**
    * @param {farmhand.cow} cow
    */
   purchaseCow(cow) {
-    this.setState(({ cowInventory, money }) => {
+    this.setState(({ cowInventory, money, purchasedCowPen }) => {
+      const cowValue = getCowValue(cow);
+      if (
+        money < cowValue ||
+        purchasedCowPen === 0 ||
+        cowInventory.length >= PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows
+      ) {
+        return;
+      }
+
       return {
         cowInventory: [...cowInventory, { ...cow }],
-        money: money - getCowValue(cow),
+        money: money - cowValue,
         cowForSale: generateCow(),
       };
     });
