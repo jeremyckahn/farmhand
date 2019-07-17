@@ -14,7 +14,7 @@ export default [
   'Cantaloupe',
   'Cherimoya',
   'Cherry',
-  'Chico fruit',
+  'Chico',
   'Clementine',
   'Cloudberry',
   'Coconut',

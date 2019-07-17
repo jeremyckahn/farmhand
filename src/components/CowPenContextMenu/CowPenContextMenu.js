@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, number, object } from 'prop-types';
+import { array, func, number, object } from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -15,6 +15,8 @@ import { animals } from '../../img';
 import FarmhandContext from '../../Farmhand.context';
 import { genders } from '../../enums';
 import { dollarAmount, getCowValue } from '../../utils';
+import { PURCHASEABLE_COW_PENS } from '../../constants';
+
 import './CowPenContextMenu.sass';
 
 const genderIcons = {
@@ -25,8 +27,10 @@ const genderIcons = {
 
 export const CowPenContextMenu = ({
   cowForSale,
+  cowInventory,
   handleCowPurchaseClick,
   money,
+  purchasedCowPen,
 
   cowValue = getCowValue(cowForSale),
 }) => (
@@ -59,7 +63,10 @@ export const CowPenContextMenu = ({
           {...{
             className: 'purchase',
             color: 'primary',
-            disabled: cowValue > money,
+            disabled:
+              cowValue > money ||
+              cowInventory.length >=
+                PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
             onClick: () => handleCowPurchaseClick(cowForSale),
             variant: 'contained',
           }}
@@ -68,13 +75,19 @@ export const CowPenContextMenu = ({
         </Button>
       </CardActions>
     </Card>
+    <h2>
+      Cows ({cowInventory.length} /{' '}
+      {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
+    </h2>
   </div>
 );
 
 CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
+  cowInventory: array.isRequired,
   handleCowPurchaseClick: func.isRequired,
   money: number.isRequired,
+  purchasedCowPen: number.isRequired,
 };
 
 export default function Consumer() {
