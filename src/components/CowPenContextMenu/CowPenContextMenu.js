@@ -29,11 +29,13 @@ export const CowCard = ({
   cow,
   cowInventory,
   handleCowPurchaseClick,
+  handleCowSellClick,
   money,
   purchasedCowPen,
 
   cowValue = getCowValue(cow),
   isPurchaseView = !!handleCowPurchaseClick,
+  isSellView = !!handleCowSellClick,
 }) => (
   <Card>
     <CardHeader
@@ -51,7 +53,9 @@ export const CowCard = ({
         ),
         subheader: (
           <>
-            <p>Price: ${dollarAmount(cowValue)}</p>
+            <p>
+              {isPurchaseView ? 'Price' : 'Value'}: ${dollarAmount(cowValue)}
+            </p>
             <p>Weight: {cow.weight} lbs.</p>
           </>
         ),
@@ -74,6 +78,18 @@ export const CowCard = ({
           Buy
         </Button>
       )}
+      {isSellView && (
+        <Button
+          {...{
+            className: 'sell',
+            color: 'primary',
+            onClick: () => handleCowSellClick(cow),
+            variant: 'contained',
+          }}
+        >
+          Sell
+        </Button>
+      )}
     </CardActions>
   </Card>
 );
@@ -82,6 +98,7 @@ export const CowPenContextMenu = ({
   cowForSale,
   cowInventory,
   handleCowPurchaseClick,
+  handleCowSellClick,
   money,
   purchasedCowPen,
 
@@ -89,17 +106,31 @@ export const CowPenContextMenu = ({
 }) => (
   <div className="CowPenContextMenu">
     <h2>For sale</h2>
-    {CowCard({
-      cow: cowForSale,
-      cowInventory,
-      handleCowPurchaseClick,
-      money,
-      purchasedCowPen,
-    })}
+    <CowCard
+      {...{
+        cow: cowForSale,
+        cowInventory,
+        handleCowPurchaseClick,
+        money,
+        purchasedCowPen,
+      }}
+    />
     <h2>
       Cows ({cowInventory.length} /{' '}
       {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
     </h2>
+    {cowInventory.map((cow, i) => (
+      <CowCard
+        {...{
+          cow,
+          cowInventory,
+          handleCowSellClick,
+          key: i,
+          money,
+          purchasedCowPen,
+        }}
+      />
+    ))}
   </div>
 );
 

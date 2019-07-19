@@ -465,6 +465,13 @@ export default class Farmhand extends Component {
   }
 
   /**
+   * @param {farmhand.cow} cow
+   */
+  sellCow(cow) {
+    console.log(cow);
+  }
+
+  /**
    * @param {number} x
    * @param {number} y
    * @param {string} plantableItemId
