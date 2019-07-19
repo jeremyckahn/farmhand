@@ -25,6 +25,59 @@ const genderIcons = {
   [genders.MALE]: faMars,
 };
 
+export const CowCard = ({
+  cow,
+  cowInventory,
+  handleCowPurchaseClick,
+  money,
+  purchasedCowPen,
+
+  cowValue = getCowValue(cow),
+  isPurchaseView = !!handleCowPurchaseClick,
+}) => (
+  <Card>
+    <CardHeader
+      {...{
+        avatar: <img {...{ src: animals.cow.white }} alt="Cow" />,
+        title: (
+          <p>
+            {cow.name}{' '}
+            <FontAwesomeIcon
+              {...{
+                icon: genderIcons[cow.gender],
+              }}
+            />
+          </p>
+        ),
+        subheader: (
+          <>
+            <p>Price: ${dollarAmount(cowValue)}</p>
+            <p>Weight: {cow.weight} lbs.</p>
+          </>
+        ),
+      }}
+    />
+    <CardActions>
+      {isPurchaseView && (
+        <Button
+          {...{
+            className: 'purchase',
+            color: 'primary',
+            disabled:
+              cowValue > money ||
+              cowInventory.length >=
+                PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
+            onClick: () => handleCowPurchaseClick(cow),
+            variant: 'contained',
+          }}
+        >
+          Buy
+        </Button>
+      )}
+    </CardActions>
+  </Card>
+);
+
 export const CowPenContextMenu = ({
   cowForSale,
   cowInventory,
@@ -36,45 +89,13 @@ export const CowPenContextMenu = ({
 }) => (
   <div className="CowPenContextMenu">
     <h2>For sale</h2>
-    <Card>
-      <CardHeader
-        {...{
-          avatar: <img {...{ src: animals.cow.white }} alt="Cow" />,
-          title: (
-            <p>
-              {cowForSale.name}{' '}
-              <FontAwesomeIcon
-                {...{
-                  icon: genderIcons[cowForSale.gender],
-                }}
-              />
-            </p>
-          ),
-          subheader: (
-            <>
-              <p>Price: ${dollarAmount(cowValue)}</p>
-              <p>Weight: {cowForSale.weight} lbs.</p>
-            </>
-          ),
-        }}
-      />
-      <CardActions>
-        <Button
-          {...{
-            className: 'purchase',
-            color: 'primary',
-            disabled:
-              cowValue > money ||
-              cowInventory.length >=
-                PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
-            onClick: () => handleCowPurchaseClick(cowForSale),
-            variant: 'contained',
-          }}
-        >
-          Buy
-        </Button>
-      </CardActions>
-    </Card>
+    {CowCard({
+      cow: cowForSale,
+      cowInventory,
+      handleCowPurchaseClick,
+      money,
+      purchasedCowPen,
+    })}
     <h2>
       Cows ({cowInventory.length} /{' '}
       {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
