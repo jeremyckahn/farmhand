@@ -119,18 +119,21 @@ export const CowPenContextMenu = ({
       Cows ({cowInventory.length} /{' '}
       {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
     </h2>
-    {cowInventory.map((cow, i) => (
-      <CowCard
-        {...{
-          cow,
-          cowInventory,
-          handleCowSellClick,
-          key: i,
-          money,
-          purchasedCowPen,
-        }}
-      />
-    ))}
+    <ul className="card-list">
+      {cowInventory.map((cow, i) => (
+        <li key={i}>
+          <CowCard
+            {...{
+              cow,
+              cowInventory,
+              handleCowSellClick,
+              money,
+              purchasedCowPen,
+            }}
+          />
+        </li>
+      ))}
+    </ul>
   </div>
 );
 
