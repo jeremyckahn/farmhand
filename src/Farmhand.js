@@ -468,7 +468,17 @@ export default class Farmhand extends Component {
    * @param {farmhand.cow} cow
    */
   sellCow(cow) {
-    console.log(cow);
+    this.setState(({ cowInventory, money }) => {
+      const cowValue = getCowValue(cow);
+
+      const newCowInventory = [...cowInventory];
+      newCowInventory.splice(cowInventory.indexOf(cow), 1);
+
+      return {
+        cowInventory: newCowInventory,
+        money: money + cowValue,
+      };
+    });
   }
 
   /**

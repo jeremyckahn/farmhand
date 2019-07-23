@@ -422,6 +422,31 @@ describe('instance methods', () => {
     });
   });
 
+  describe('sellCow', () => {
+    const cow = Object.freeze({
+      name: 'cow',
+      weight: 1000,
+      gender: genders.GENDERLESS,
+    });
+
+    beforeEach(() => {
+      component.setState({
+        cowInventory: [cow],
+        money: 0,
+      });
+
+      component.instance().sellCow(cow);
+    });
+
+    test('removes cow from inventory', () => {
+      expect(component.state().cowInventory).not.toContain(cow);
+    });
+
+    test('adds value of cow to player money', () => {
+      expect(component.state().money).toEqual(getCowValue(cow));
+    });
+  });
+
   describe('plantInPlot', () => {
     beforeEach(() => {
       component.setState({
