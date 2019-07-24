@@ -29,6 +29,6 @@ export const tools = {
 
 export const animals = {
   cow: {
-    white: require('./animals/white-cow.png'),
+    white: require('./animals/cows/white-cow.png'),
   },
 };
