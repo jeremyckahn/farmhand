@@ -1,5 +1,3 @@
-import { stageFocusType } from './enums';
-
 const { freeze } = Object;
 
 export const FERTILIZER_BONUS = 0.5;
@@ -16,6 +14,14 @@ export const PURCHASEABLE_FIELD_SIZES = freeze(
   ])
 );
 
+export const PURCHASEABLE_COW_PENS = freeze(
+  new Map([
+    [1, { cows: 10, price: 1500 }],
+    [2, { cows: 20, price: 2500 }],
+    [3, { cows: 30, price: 3500 }],
+  ])
+);
+
 // Buff/nerf chances
 export const CROW_CHANCE = 0.1;
 export const RAIN_CHANCE = 0.1;
@@ -24,8 +30,5 @@ export const SCARECROW_ITEM_ID = 'scarecrow';
 export const SPRINKLER_ITEM_ID = 'sprinkler';
 export const SPRINKLER_RANGE = 1;
 
-export const VIEW_LIST = [
-  stageFocusType.FIELD,
-  stageFocusType.SHOP,
-  stageFocusType.INVENTORY,
-];
+export const COW_STARTING_WEIGHT_BASE = 1800;
+export const COW_STARTING_WEIGHT_VARIANCE = 200;

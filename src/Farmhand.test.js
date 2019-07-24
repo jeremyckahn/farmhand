@@ -1,18 +1,24 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { getCropFromItemId, getPlotContentFromItemId } from './utils';
+import {
+  generateCow,
+  getCowValue,
+  getCropFromItemId,
+  getPlotContentFromItemId,
+} from './utils';
 import { testCrop, testItem } from './test-utils';
 import {
   FERTILIZER_ITEM_ID,
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
+  PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
-  VIEW_LIST,
 } from './constants';
+import { COW_PEN_PURCHASED } from './templates';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
-import { fieldMode } from './enums';
+import { fieldMode, genders } from './enums';
 import Farmhand from './Farmhand';
 
 jest.mock('localforage');
@@ -190,6 +196,21 @@ describe('instance methods', () => {
     });
   });
 
+  describe('showStateChangeNotifications', () => {
+    describe('cow pen purchasing', () => {
+      test('shows notification', () => {
+        component.setState({ purchasedCowPen: 1 });
+        component
+          .instance()
+          .showStateChangeNotifications({ purchasedCowPen: 0 });
+
+        expect(component.state().notifications).toContain(
+          COW_PEN_PURCHASED`${PURCHASEABLE_COW_PENS.get(1).cows}`
+        );
+      });
+    });
+  });
+
   describe('incrementDay', () => {
     beforeEach(() => {
       jest.spyOn(component.instance().localforage, 'setItem');
@@ -226,30 +247,34 @@ describe('instance methods', () => {
 
   describe('goToNextView', () => {
     test('goes to next view', () => {
-      component.setState({ stageFocus: VIEW_LIST[0] });
+      const { viewList } = component.instance();
+      component.setState({ stageFocus: viewList[0] });
       component.instance().goToNextView();
-      expect(component.state().stageFocus).toEqual(VIEW_LIST[1]);
+      expect(component.state().stageFocus).toEqual(viewList[1]);
     });
 
     test('cycles to the beginning', () => {
-      component.setState({ stageFocus: VIEW_LIST[VIEW_LIST.length - 1] });
+      const { viewList } = component.instance();
+      component.setState({ stageFocus: viewList[viewList.length - 1] });
       component.instance().goToNextView();
-      expect(component.state().stageFocus).toEqual(VIEW_LIST[0]);
+      expect(component.state().stageFocus).toEqual(viewList[0]);
     });
   });
 
   describe('goToPreviousView', () => {
     test('goes to previous view', () => {
-      component.setState({ stageFocus: VIEW_LIST[1] });
+      const { viewList } = component.instance();
+      component.setState({ stageFocus: viewList[1] });
       component.instance().goToPreviousView();
-      expect(component.state().stageFocus).toEqual(VIEW_LIST[0]);
+      expect(component.state().stageFocus).toEqual(viewList[0]);
     });
 
     test('cycles to the end', () => {
-      component.setState({ stageFocus: VIEW_LIST[0] });
+      const { viewList } = component.instance();
+      component.setState({ stageFocus: viewList[0] });
       component.instance().goToPreviousView();
       expect(component.state().stageFocus).toEqual(
-        VIEW_LIST[VIEW_LIST.length - 1]
+        viewList[viewList.length - 1]
       );
     });
   });
@@ -282,42 +307,6 @@ describe('instance methods', () => {
       test('max items are purchased', () => {
         expect(component.state('money')).toEqual(0.5);
         expect(component.state('inventory')[0].quantity).toEqual(2);
-      });
-    });
-  });
-
-  describe('purchaseItem', () => {
-    describe('user has enough money', () => {
-      describe('money state', () => {
-        beforeEach(() => {
-          component.setState({
-            money: 10,
-            valueAdjustments: { 'sample-item-1': 1 },
-          });
-          component.instance().purchaseItem(testItem({ id: 'sample-item-1' }));
-        });
-
-        test('deducts item value from money', () => {
-          expect(component.state('money')).toEqual(9);
-        });
-      });
-    });
-
-    describe('user does not have enough money', () => {
-      beforeEach(() => {
-        component.setState({
-          money: 5,
-          valueAdjustments: { 'sample-item-1': 1e9 },
-        });
-        component.instance().purchaseItem(testItem({ id: 'sample-item-1' }));
-      });
-
-      test('does not add the item to the inventory', () => {
-        expect(component.state('inventory')).toEqual([]);
-      });
-
-      test('does not deduct item value from money', () => {
-        expect(component.state('money')).toEqual(5);
       });
     });
   });
@@ -359,6 +348,102 @@ describe('instance methods', () => {
 
     test('adds total value of items to player money', () => {
       expect(component.state().money).toEqual(102);
+    });
+  });
+
+  describe('purchaseCow', () => {
+    const cow = Object.freeze({
+      name: 'cow',
+      weight: 1000,
+      gender: genders.GENDERLESS,
+    });
+
+    let oldCowForSale;
+
+    beforeEach(() => {
+      oldCowForSale = component.state().cowForSale;
+    });
+
+    describe('happy path', () => {
+      test('cow is purchased', () => {
+        component.setState({
+          money: 5000,
+          purchasedCowPen: 1,
+        });
+
+        component.instance().purchaseCow(cow);
+
+        expect(component.state()).toMatchObject({
+          cowInventory: [cow],
+          money: 5000 - getCowValue(cow),
+        });
+
+        expect(component.state().cowForSale).not.toBe(oldCowForSale);
+      });
+    });
+
+    describe('is unsufficient room in cow pen', () => {
+      test('cow is not purchased', () => {
+        const cowCapacity = PURCHASEABLE_COW_PENS.get(1).cows;
+        component.setState({
+          cowInventory: Array(cowCapacity)
+            .fill(null)
+            .map(() => generateCow()),
+          money: 5000,
+          purchasedCowPen: 1,
+        });
+
+        component.instance().purchaseCow(cow);
+
+        const { cowInventory, cowForSale, money } = component.state();
+        expect(cowInventory).toHaveLength(cowCapacity);
+        expect(cowForSale).toBe(oldCowForSale);
+        expect(money).toBe(5000);
+      });
+    });
+
+    describe('player does not have enough money', () => {
+      test('cow is not purchased', () => {
+        component.setState({
+          money: 500,
+          purchasedCowPen: 1,
+        });
+
+        component.instance().purchaseCow(cow);
+
+        expect(component.state()).toMatchObject({
+          cowInventory: [],
+          money: 500,
+        });
+
+        const { cowForSale } = component.state();
+        expect(cowForSale).toBe(oldCowForSale);
+      });
+    });
+  });
+
+  describe('sellCow', () => {
+    const cow = Object.freeze({
+      name: 'cow',
+      weight: 1000,
+      gender: genders.GENDERLESS,
+    });
+
+    beforeEach(() => {
+      component.setState({
+        cowInventory: [cow],
+        money: 0,
+      });
+
+      component.instance().sellCow(cow);
+    });
+
+    test('removes cow from inventory', () => {
+      expect(component.state().cowInventory).not.toContain(cow);
+    });
+
+    test('adds value of cow to player money', () => {
+      expect(component.state().money).toEqual(getCowValue(cow));
     });
   });
 
@@ -823,6 +908,25 @@ describe('instance methods', () => {
           [null, null, null],
         ]);
       });
+    });
+  });
+
+  describe('purchaseCowPen', () => {
+    test('updates purchasedCowPen', () => {
+      component.instance().purchaseCowPen(0);
+      expect(component.state().purchasedCowPen).toEqual(0);
+    });
+
+    test('prevents repurchasing options', () => {
+      component.setState({ purchasedCowPen: 2 });
+      component.instance().purchaseCowPen(1);
+      expect(component.state().purchasedCowPen).toEqual(2);
+    });
+
+    test('deducts money', () => {
+      component.setState({ money: 1500 });
+      component.instance().purchaseCowPen(1);
+      expect(component.state().money).toEqual(1000);
     });
   });
 });

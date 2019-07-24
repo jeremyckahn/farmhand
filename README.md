@@ -21,14 +21,17 @@ There is no release or versioning system yet.
 
 ### Tasks
 
-- [ ] Purchase cow pen
-- [ ] Purchase cows
+- [x] Purchase cow pen
+  - [x] Three sizes
+- [ ] Generate and purchase cows
+  - [ ] Multiple cow colors (every color of the rainbow)
+  - [x] Cows can be male, female, or genderless
 - [ ] Cow status in context pane
   - [ ] Rename cow
   - [ ] Show stats
     - [ ] Age
     - [ ] Happiness (measured in hearts)
-    - [ ] Weight
+    - [x] Weight
 - [ ] Cow pen UI
   - [ ] Cows walking around
   - [ ] Click/tap to select cow
@@ -36,7 +39,7 @@ There is no release or versioning system yet.
 - [ ] Purchase growable grain seeds
 - [ ] Purchase grown grain for a premium
 - [ ] Cow milking
-  - [ ] Cows can be milked once a day
+  - [ ] Female cows can be milked once a day
   - [ ] Happiness improves milk quality
   - [ ] Weight improves milk quantity
   - [ ] Milk quantity and quality decrease after a certain age
@@ -45,7 +48,8 @@ There is no release or versioning system yet.
 - [ ] Cow care
   - [ ] Feeding grain increases weight
   - [ ] Hugging cows improves happiness (benefits top out after 3 daily hugs)
-- [ ] Selling cows for beef
+  - [ ] Even gender distribution increases happiness
+- [ ] Selling cows
   - [ ] Greater weight results in higher sell value
   - [ ] Older cows are worth less
 - [ ] Negligence

@@ -1,4 +1,7 @@
 import {
+  dollarAmount,
+  generateCow,
+  getCowValue,
   getCropId,
   getCropLifeStage,
   getLifeStageRange,
@@ -6,15 +9,67 @@ import {
   getPlotImage,
   getRangeCoords,
 } from './utils';
+import fruitNames from './data/fruit-names';
 import { testCrop } from './test-utils';
 import { items as itemImages } from './img';
-import { cropLifeStage } from './enums';
+import { cropLifeStage, genders } from './enums';
+import {
+  COW_STARTING_WEIGHT_BASE,
+  COW_STARTING_WEIGHT_VARIANCE,
+} from './constants';
 
 jest.mock('./data/maps');
 jest.mock('./data/items');
 jest.mock('./img');
 
 const { SEED, GROWING, GROWN } = cropLifeStage;
+
+describe('dollarAmount', () => {
+  test('formats number to dollar amount', () => {
+    expect(dollarAmount(123.4567)).toEqual('123.46');
+  });
+});
+
+describe('generateCow', () => {
+  describe('randomizer: lower bound', () => {
+    beforeEach(() => {
+      jest.spyOn(Math, 'random').mockReturnValue(0);
+    });
+
+    test('generates a cow', () => {
+      const weight = COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE;
+      expect(generateCow()).toEqual({
+        name: fruitNames[0],
+        daysOld: 0,
+        gender: Object.keys(genders)[0],
+        weight,
+      });
+    });
+  });
+
+  describe('randomizer: upper bound', () => {
+    beforeEach(() => {
+      jest.spyOn(Math, 'random').mockReturnValue(1);
+    });
+
+    test('generates a cow', () => {
+      const weight = COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE;
+
+      expect(generateCow()).toEqual({
+        name: fruitNames[fruitNames.length - 1],
+        daysOld: 0,
+        gender: Object.keys(genders).pop(),
+        weight,
+      });
+    });
+  });
+});
+
+describe('getCowValue', () => {
+  test('computes cow value', () => {
+    expect(getCowValue({ weight: 100 })).toEqual(150);
+  });
+});
 
 describe('getCropId', () => {
   test('returns an ID for a provided crop', () => {

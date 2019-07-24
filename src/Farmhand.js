@@ -20,6 +20,7 @@ import {
   getPlantableCropInventory,
   getWateredField,
   modifyFieldPlotAt,
+  purchaseItem,
   removeFieldPlotAt,
 } from './data-transformers';
 import AppBar from './components/AppBar';
@@ -33,8 +34,11 @@ import {
   createNewField,
   getCropFromItemId,
   getCropLifeStage,
+  getCowValue,
   getPlotContentFromItemId,
   getRangeCoords,
+  getAdjustedItemValue,
+  generateCow,
 } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
@@ -46,11 +50,12 @@ import {
 } from './enums';
 import {
   FERTILIZER_ITEM_ID,
+  PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
-  VIEW_LIST,
 } from './constants';
+import { COW_PEN_PURCHASED } from './templates';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 
 import './Farmhand.sass';
@@ -63,6 +68,8 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
 /**
  * @typedef farmhand.state
  * @type {Object}
+ * @property {farmhand.cow} cowForSale
+ * @property {Array.<farmhand.cow>} cowInventory
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {{ x: number, y: number }} hoveredPlot
@@ -74,6 +81,7 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  * @property {Array.<string>} notifications
  * @property {string} selectedItemId
  * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {number} purchasedCowPen
  * @property {number} purchasedField
  * @property {Array.<farmhand.item>} shopInventory
  * @property {boolean} doShowNotifications
@@ -100,6 +108,8 @@ export default class Farmhand extends Component {
    * @type {farmhand.state}
    */
   state = {
+    cowForSale: {},
+    cowInventory: [],
     dayCount: 0,
     field: createNewField(),
     hoveredPlot: { x: null, y: null },
@@ -111,6 +121,7 @@ export default class Farmhand extends Component {
     notifications: [],
     selectedItemId: '',
     fieldMode: OBSERVE,
+    purchasedCowPen: 0,
     purchasedField: 0,
     shopInventory: [...shopInventory],
     doShowNotifications: false,
@@ -126,11 +137,14 @@ export default class Farmhand extends Component {
 
   static reduceByPersistedKeys(state) {
     return [
+      'cowForSale',
+      'cowInventory',
       'dayCount',
       'field',
       'inventory',
       'money',
       'newDayNotifications',
+      'purchasedCowPen',
       'purchasedField',
       'valueAdjustments',
     ].reduce((acc, key) => {
@@ -186,12 +200,25 @@ export default class Farmhand extends Component {
     return getPlantableCropInventory(this.state.inventory);
   }
 
+  get viewList() {
+    const viewList = [stageFocusType.FIELD, stageFocusType.SHOP];
+
+    if (this.state.purchasedCowPen) {
+      viewList.push(stageFocusType.COW_PEN);
+    }
+
+    viewList.push(stageFocusType.INVENTORY);
+
+    return viewList;
+  }
+
   initKeyHandlers() {
     this.keyMap = {
       focusField: 'f',
       focusInventory: 'i',
+      focusCows: 'c',
       focusShop: 's',
-      incrementDay: 'c',
+      incrementDay: 'shift+c',
       nextView: 'right',
       previousView: 'left',
       toggleMenu: 'm',
@@ -203,6 +230,9 @@ export default class Farmhand extends Component {
       focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
       focusInventory: () =>
         this.setState({ stageFocus: stageFocusType.INVENTORY }),
+      focusCows: () =>
+        this.state.purchasedCowPen &&
+        this.setState({ stageFocus: stageFocusType.COW_PEN }),
       focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
       incrementDay: () => this.incrementDay(),
       nextView: throttle(this.goToNextView.bind(this), keyHandlerThrottleTime),
@@ -214,7 +244,7 @@ export default class Farmhand extends Component {
     };
 
     Object.assign(this.keyMap, {
-      clearPersistedData: 'shift+c',
+      clearPersistedData: 'shift+d',
       waterAllPlots: 'w',
     });
 
@@ -252,6 +282,10 @@ export default class Farmhand extends Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    this.showStateChangeNotifications(prevState);
+  }
+
   clearPersistedData() {
     this.localforage
       .clear()
@@ -262,15 +296,28 @@ export default class Farmhand extends Component {
    * @param {string} message
    */
   showNotification(message) {
-    const { notifications } = this.state;
-
-    this.setState({
+    this.setState(({ notifications }) => ({
       // Don't show redundant notifications
       notifications: notifications.includes(message)
         ? notifications
-        : [...notifications, message],
+        : notifications.concat(message),
       doShowNotifications: true,
-    });
+    }));
+  }
+
+  /**
+   * @param {farmhand.state} prevState
+   */
+  showStateChangeNotifications(prevState) {
+    const {
+      state: { purchasedCowPen },
+    } = this;
+
+    if (purchasedCowPen !== prevState.purchasedCowPen) {
+      const { cows } = PURCHASEABLE_COW_PENS.get(purchasedCowPen);
+
+      this.showNotification(COW_PEN_PURCHASED`${cows}`);
+    }
   }
 
   incrementDay() {
@@ -311,83 +358,72 @@ export default class Farmhand extends Component {
   }
 
   goToNextView() {
-    const currentViewIndex = VIEW_LIST.indexOf(this.state.stageFocus);
+    const { viewList } = this;
 
-    this.setState({
-      stageFocus: VIEW_LIST[(currentViewIndex + 1) % VIEW_LIST.length],
+    this.setState(({ stageFocus }) => {
+      const currentViewIndex = viewList.indexOf(stageFocus);
+
+      return { stageFocus: viewList[(currentViewIndex + 1) % viewList.length] };
     });
   }
 
   goToPreviousView() {
-    const currentViewIndex = VIEW_LIST.indexOf(this.state.stageFocus);
+    const { viewList } = this;
 
-    this.setState({
-      stageFocus:
-        VIEW_LIST[
-          currentViewIndex === 0
-            ? VIEW_LIST.length - 1
-            : (currentViewIndex - 1) % VIEW_LIST.length
-        ],
+    this.setState(({ stageFocus }) => {
+      const currentViewIndex = viewList.indexOf(stageFocus);
+
+      return {
+        stageFocus:
+          viewList[
+            currentViewIndex === 0
+              ? viewList.length - 1
+              : (currentViewIndex - 1) % viewList.length
+          ],
+      };
     });
-  }
-
-  /**
-   * @param {string} itemId
-   * @returns {number}
-   */
-  getAdjustedItemValue(itemId) {
-    return this.state.valueAdjustments[itemId] * itemsMap[itemId].value;
   }
 
   /**
    * @param {farmhand.item} item
    * @param {number} [howMany=1]
    */
-  purchaseItem(item, howMany = 1) {
-    if (howMany === 0) {
-      return;
-    }
-
-    const value = this.getAdjustedItemValue(item.id);
-    const { inventory, money } = this.state;
-    const totalValue = value * howMany;
-
-    if (totalValue > money) {
-      return;
-    }
-
-    this.setState({
-      inventory: addItemToInventory(item, inventory, howMany),
-      money: money - totalValue,
-    });
+  purchaseItem(item, howMany) {
+    this.setState(state => purchaseItem(item, howMany, state));
   }
 
   /**
    * @param {farmhand.item} item
    */
   purchaseItemMax(item) {
-    const value = this.getAdjustedItemValue(item.id);
+    this.setState(state => {
+      const { money, valueAdjustments } = state;
 
-    this.purchaseItem(item, Math.floor(this.state.money / value));
+      return purchaseItem(
+        item,
+        Math.floor(money / getAdjustedItemValue(valueAdjustments, item.id)),
+        state
+      );
+    });
   }
 
   /**
    * @param {farmhand.item} item
    * @param {number} [howMany=1]
    */
-  sellItem(item, howMany = 1) {
+  sellItem({ id }, howMany = 1) {
     if (howMany === 0) {
       return;
     }
 
-    const { id } = item;
-    const value = this.getAdjustedItemValue(item.id);
-    const { inventory, money } = this.state;
-    const totalValue = value * howMany;
+    this.setState(({ inventory, money, valueAdjustments }) => {
+      const value = getAdjustedItemValue(valueAdjustments, id);
+      const totalValue = value * howMany;
 
-    this.setState({
-      inventory: decrementItemFromInventory(id, inventory, howMany),
-      money: money + totalValue,
+      return {
+        inventory: decrementItemFromInventory(id, inventory, howMany),
+        money: money + totalValue,
+      };
     });
   }
 
@@ -407,14 +443,55 @@ export default class Farmhand extends Component {
   }
 
   /**
+   * @param {farmhand.cow} cow
+   */
+  purchaseCow(cow) {
+    this.setState(({ cowInventory, money, purchasedCowPen }) => {
+      const cowValue = getCowValue(cow);
+      if (
+        money < cowValue ||
+        purchasedCowPen === 0 ||
+        cowInventory.length >= PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows
+      ) {
+        return;
+      }
+
+      return {
+        cowInventory: [...cowInventory, { ...cow }],
+        money: money - cowValue,
+        cowForSale: generateCow(),
+      };
+    });
+  }
+
+  /**
+   * @param {farmhand.cow} cow
+   */
+  sellCow(cow) {
+    this.setState(({ cowInventory, money }) => {
+      const cowValue = getCowValue(cow);
+
+      const newCowInventory = [...cowInventory];
+      newCowInventory.splice(cowInventory.indexOf(cow), 1);
+
+      return {
+        cowInventory: newCowInventory,
+        money: money + cowValue,
+      };
+    });
+  }
+
+  /**
    * @param {number} x
    * @param {number} y
    * @param {string} plantableItemId
    */
   plantInPlot(x, y, plantableItemId) {
-    const { field, inventory } = this.state;
+    if (!plantableItemId) {
+      return;
+    }
 
-    if (plantableItemId) {
+    this.setState(({ field, inventory }) => {
       const row = field[y];
       const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId);
 
@@ -432,18 +509,18 @@ export default class Farmhand extends Component {
         inventory
       );
 
-      plantableItemId = updatedInventory.find(
+      const selectedItemId = updatedInventory.find(
         ({ id }) => id === plantableItemId
       )
         ? plantableItemId
         : '';
 
-      this.setState({
+      return {
         field: newField,
         inventory: updatedInventory,
-        selectedItemId: plantableItemId,
-      });
-    }
+        selectedItemId,
+      };
+    });
   }
 
   /**
@@ -451,35 +528,36 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   fertilizeCrop(x, y) {
-    const { field, inventory } = this.state;
-    const row = field[y];
-    const crop = row[x];
+    this.setState(({ field, inventory }) => {
+      const row = field[y];
+      const crop = row[x];
 
-    if (
-      !crop ||
-      crop.type !== plotContentType.CROP ||
-      crop.isFertilized === true
-    ) {
-      return;
-    }
+      if (
+        !crop ||
+        crop.type !== plotContentType.CROP ||
+        crop.isFertilized === true
+      ) {
+        return;
+      }
 
-    const updatedInventory = decrementItemFromInventory(
-      FERTILIZER_ITEM_ID,
-      inventory
-    );
+      const updatedInventory = decrementItemFromInventory(
+        FERTILIZER_ITEM_ID,
+        inventory
+      );
 
-    const doFertilizersRemain = updatedInventory.some(
-      item => item.id === FERTILIZER_ITEM_ID
-    );
+      const doFertilizersRemain = updatedInventory.some(
+        item => item.id === FERTILIZER_ITEM_ID
+      );
 
-    this.setState({
-      field: modifyFieldPlotAt(field, x, y, crop => ({
-        ...crop,
-        isFertilized: true,
-      })),
-      fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
-      inventory: updatedInventory,
-      selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
+      return {
+        field: modifyFieldPlotAt(field, x, y, crop => ({
+          ...crop,
+          isFertilized: true,
+        })),
+        fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
+        inventory: updatedInventory,
+        selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
+      };
     });
   }
 
@@ -488,33 +566,34 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   setSprinkler(x, y) {
-    const { field, hoveredPlotRangeSize, inventory } = this.state;
-    const plot = field[y][x];
+    this.setState(({ field, hoveredPlotRangeSize, inventory }) => {
+      const plot = field[y][x];
 
-    // Only set sprinklers in empty plots
-    if (plot !== null) {
-      return;
-    }
+      // Only set sprinklers in empty plots
+      if (plot !== null) {
+        return;
+      }
 
-    const updatedInventory = decrementItemFromInventory(
-      SPRINKLER_ITEM_ID,
-      inventory
-    );
+      const updatedInventory = decrementItemFromInventory(
+        SPRINKLER_ITEM_ID,
+        inventory
+      );
 
-    const doSprinklersRemain = updatedInventory.some(
-      item => item.id === SPRINKLER_ITEM_ID
-    );
+      const doSprinklersRemain = updatedInventory.some(
+        item => item.id === SPRINKLER_ITEM_ID
+      );
 
-    const newField = modifyFieldPlotAt(field, x, y, () =>
-      getPlotContentFromItemId(SPRINKLER_ITEM_ID)
-    );
+      const newField = modifyFieldPlotAt(field, x, y, () =>
+        getPlotContentFromItemId(SPRINKLER_ITEM_ID)
+      );
 
-    this.setState({
-      field: newField,
-      hoveredPlotRangeSize: doSprinklersRemain ? hoveredPlotRangeSize : 0,
-      fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
-      inventory: updatedInventory,
-      selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
+      return {
+        field: newField,
+        hoveredPlotRangeSize: doSprinklersRemain ? hoveredPlotRangeSize : 0,
+        fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
+        inventory: updatedInventory,
+        selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
+      };
     });
   }
 
@@ -523,32 +602,33 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   setScarecrow(x, y) {
-    const { field, inventory } = this.state;
-    const plot = field[y][x];
+    this.setState(({ field, inventory }) => {
+      const plot = field[y][x];
 
-    // Only set scarecrows in empty plots
-    if (plot !== null) {
-      return;
-    }
+      // Only set scarecrows in empty plots
+      if (plot !== null) {
+        return;
+      }
 
-    const updatedInventory = decrementItemFromInventory(
-      SCARECROW_ITEM_ID,
-      inventory
-    );
+      const updatedInventory = decrementItemFromInventory(
+        SCARECROW_ITEM_ID,
+        inventory
+      );
 
-    const doScarecrowsRemain = updatedInventory.some(
-      item => item.id === SCARECROW_ITEM_ID
-    );
+      const doScarecrowsRemain = updatedInventory.some(
+        item => item.id === SCARECROW_ITEM_ID
+      );
 
-    const newField = modifyFieldPlotAt(field, x, y, () =>
-      getPlotContentFromItemId(SCARECROW_ITEM_ID)
-    );
+      const newField = modifyFieldPlotAt(field, x, y, () =>
+        getPlotContentFromItemId(SCARECROW_ITEM_ID)
+      );
 
-    this.setState({
-      field: newField,
-      inventory: updatedInventory,
-      fieldMode: doScarecrowsRemain ? SET_SCARECROW : OBSERVE,
-      selectedItemId: doScarecrowsRemain ? SCARECROW_ITEM_ID : '',
+      return {
+        field: newField,
+        inventory: updatedInventory,
+        fieldMode: doScarecrowsRemain ? SET_SCARECROW : OBSERVE,
+        selectedItemId: doScarecrowsRemain ? SCARECROW_ITEM_ID : '',
+      };
     });
   }
 
@@ -557,20 +637,23 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   harvestPlot(x, y) {
-    const { inventory, field } = this.state;
-    const row = field[y];
-    const crop = row[x];
+    this.setState(({ inventory, field }) => {
+      const row = field[y];
+      const crop = row[x];
 
-    if (!crop || crop.type !== plotContentType.CROP) {
-      return;
-    }
+      if (
+        !crop ||
+        crop.type !== plotContentType.CROP ||
+        getCropLifeStage(crop) !== GROWN
+      ) {
+        return;
+      }
 
-    if (getCropLifeStage(crop) === GROWN) {
-      this.setState({
+      return {
         field: removeFieldPlotAt(field, x, y),
         inventory: addItemToInventory(itemsMap[crop.itemId], inventory),
-      });
-    }
+      };
+    });
   }
 
   /**
@@ -578,24 +661,22 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   clearPlot(x, y) {
-    const { field, inventory } = this.state;
-    const row = field[y];
-    const plotContent = row[x];
+    this.setState(({ field, inventory }) => {
+      const plotContent = field[y][x];
 
-    if (!plotContent) {
-      // Nothing planted in field[x][y]
-      return;
-    }
+      if (!plotContent) {
+        // Nothing planted in field[x][y]
+        return;
+      }
 
-    const item = itemsMap[plotContent.itemId];
+      const item = itemsMap[plotContent.itemId];
 
-    let newInventory = item.isReplantable
-      ? addItemToInventory(item, inventory)
-      : inventory;
-
-    this.setState({
-      field: removeFieldPlotAt(field, x, y),
-      inventory: newInventory,
+      return {
+        field: removeFieldPlotAt(field, x, y),
+        inventory: item.isReplantable
+          ? addItemToInventory(item, inventory)
+          : inventory,
+      };
     });
   }
 
@@ -604,47 +685,66 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   waterPlot(x, y) {
-    const { field } = this.state;
-    const plotContent = field[y][x];
+    this.setState(({ field }) => {
+      const plotContent = field[y][x];
 
-    if (!plotContent || plotContent.type !== plotContentType.CROP) {
-      return;
-    }
+      if (!plotContent || plotContent.type !== plotContentType.CROP) {
+        return;
+      }
 
-    this.setState({
-      field: modifyFieldPlotAt(field, x, y, crop => ({
-        ...crop,
-        wasWateredToday: true,
-      })),
+      return {
+        field: modifyFieldPlotAt(field, x, y, crop => ({
+          ...crop,
+          wasWateredToday: true,
+        })),
+      };
     });
   }
 
   waterAllPlots() {
-    this.setState({ field: getWateredField(this.state.field) });
+    this.setState(({ field }) => {
+      return { field: getWateredField(field) };
+    });
   }
 
   /**
    * @param {number} fieldId
    */
   purchaseField(fieldId) {
-    const { field, money, purchasedField } = this.state;
+    this.setState(({ field, money, purchasedField }) => {
+      if (purchasedField >= fieldId) {
+        return;
+      }
 
-    if (purchasedField >= fieldId) {
-      return;
-    }
+      const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId);
 
-    const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId);
+      return {
+        purchasedField: fieldId,
+        field: new Array(rows)
+          .fill(null)
+          .map((_, row) =>
+            new Array(columns)
+              .fill(null)
+              .map((_, column) => (field[row] && field[row][column]) || null)
+          ),
+        money: money - price,
+      };
+    });
+  }
 
-    this.setState({
-      purchasedField: fieldId,
-      field: new Array(rows)
-        .fill(null)
-        .map((_, row) =>
-          new Array(columns)
-            .fill(null)
-            .map((_, column) => (field[row] && field[row][column]) || null)
-        ),
-      money: money - price,
+  /**
+   * @param {number} cowPenId
+   */
+  purchaseCowPen(cowPenId) {
+    this.setState(({ money, purchasedCowPen }) => {
+      if (purchasedCowPen >= cowPenId) {
+        return;
+      }
+
+      return {
+        purchasedCowPen: cowPenId,
+        money: money - PURCHASEABLE_COW_PENS.get(cowPenId).price,
+      };
     });
   }
 
@@ -658,6 +758,7 @@ export default class Farmhand extends Component {
       plantableCropInventory,
       playerInventory,
       playerInventoryQuantities,
+      viewList,
     } = this;
 
     // Bundle up the raw state and the computed state into one object to be
@@ -669,6 +770,7 @@ export default class Farmhand extends Component {
       plantableCropInventory,
       playerInventory,
       playerInventoryQuantities,
+      viewList,
     };
 
     return (
@@ -700,7 +802,7 @@ export default class Farmhand extends Component {
               */}
               <Tooltip
                 {...{
-                  title: 'End the day',
+                  title: 'End the day (shift + c)',
                 }}
               >
                 <Fab

@@ -16,6 +16,7 @@ beforeEach(() => {
         handleMenuToggle: () => {},
         money: 0,
         stageFocus: stageFocusType.FIELD,
+        viewList: [],
       }}
     />
   );

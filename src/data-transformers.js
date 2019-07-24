@@ -1,7 +1,12 @@
 import memoize from 'fast-memoize';
 
 import { itemsMap } from './data/maps';
-import { getItemValue, getRangeCoords } from './utils';
+import {
+  generateCow,
+  getAdjustedItemValue,
+  getItemValue,
+  getRangeCoords,
+} from './utils';
 import {
   CROW_CHANCE,
   FERTILIZER_BONUS,
@@ -336,8 +341,37 @@ export const computeStateForNextDay = state =>
     (acc, fn) => fn({ ...acc }),
     {
       ...state,
+      cowForSale: generateCow(),
       dayCount: state.dayCount + 1,
       field: getUpdatedField(state.field),
       valueAdjustments: getUpdatedValueAdjustments(),
     }
   );
+
+/**
+ * @param {farmhand.item} item
+ * @param {number} [howMany=1]
+ * @param {farmhand.state} state
+ * @returns {Object}
+ */
+export const purchaseItem = (
+  item,
+  howMany = 1,
+  { inventory, money, valueAdjustments }
+) => {
+  if (howMany === 0) {
+    return {};
+  }
+
+  const value = getAdjustedItemValue(valueAdjustments, item.id);
+  const totalValue = value * howMany;
+
+  if (totalValue > money) {
+    return {};
+  }
+
+  return {
+    inventory: addItemToInventory(item, inventory, howMany),
+    money: money - totalValue,
+  };
+};

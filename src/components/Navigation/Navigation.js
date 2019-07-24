@@ -8,7 +8,12 @@ import { stageFocusType } from '../../enums';
 
 import './Navigation.sass';
 
-export const Navigation = ({ dayCount, handleViewChange, stageFocus }) => (
+export const Navigation = ({
+  dayCount,
+  handleViewChange,
+  purchasedCowPen,
+  stageFocus,
+}) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
     <h2 className="day-count">Day {dayCount}</h2>
@@ -21,6 +26,9 @@ export const Navigation = ({ dayCount, handleViewChange, stageFocus }) => (
     >
       <MenuItem value={stageFocusType.FIELD}>Field (f)</MenuItem>
       <MenuItem value={stageFocusType.SHOP}>Shop (s)</MenuItem>
+      {purchasedCowPen && (
+        <MenuItem value={stageFocusType.COW_PEN}>Cows (c)</MenuItem>
+      )}
       <MenuItem value={stageFocusType.INVENTORY}>Inventory (i)</MenuItem>
     </Select>
   </header>
@@ -29,6 +37,7 @@ export const Navigation = ({ dayCount, handleViewChange, stageFocus }) => (
 Navigation.propTypes = {
   dayCount: number.isRequired,
   handleViewChange: func.isRequired,
+  purchasedCowPen: number.isRequired,
   stageFocus: string.isRequired,
 };
 

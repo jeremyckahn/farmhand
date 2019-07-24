@@ -57,7 +57,7 @@ export const Inventory = ({
       ([category, headerText]) => (
         <section key={category}>
           <h2>{headerText}</h2>
-          <ul>
+          <ul className="card-list">
             {itemCategories[category].map((item, i) => (
               <li key={i}>
                 <Item

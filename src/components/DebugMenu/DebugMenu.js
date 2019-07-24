@@ -32,7 +32,7 @@ export const DebugMenu = ({
           onClick={handleClearPersistedDataClick}
           variant="contained"
         >
-          Clear data (shift + c)
+          Clear data
         </Button>
       </Typography>
     </ExpansionPanelDetails>

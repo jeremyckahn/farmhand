@@ -7,7 +7,7 @@ import './FieldTools.sass';
 
 export const FieldTools = ({ fieldToolInventory, selectedItemId }) => (
   <div className="FieldTools">
-    <ul>
+    <ul className="card-list">
       {fieldToolInventory.map(item => (
         <li key={item.id}>
           <Item

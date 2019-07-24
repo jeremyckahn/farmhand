@@ -33,7 +33,13 @@ export const fieldMode = enumify([
  * @property farmhand.module:enums.stageFocusType
  * @enum {string}
  */
-export const stageFocusType = enumify(['NONE', 'FIELD', 'SHOP', 'INVENTORY']);
+export const stageFocusType = enumify([
+  'NONE',
+  'FIELD',
+  'SHOP',
+  'COW_PEN',
+  'INVENTORY',
+]);
 
 /**
  * @property farmhand.module:enums.cropLifeStage
@@ -46,3 +52,9 @@ export const cropLifeStage = enumify(['SEED', 'GROWING', 'GROWN']);
  * @enum {string}
  */
 export const plotContentType = enumify(['CROP', 'SPRINKLER', 'SCARECROW']);
+
+/**
+ * @property farmhand.module:enums.genders
+ * @enum {string}
+ */
+export const genders = enumify(['FEMALE', 'GENDERLESS', 'MALE']);

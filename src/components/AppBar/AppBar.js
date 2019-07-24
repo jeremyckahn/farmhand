@@ -1,7 +1,6 @@
 import React from 'react';
-import { func, number, string } from 'prop-types';
+import { arrayOf, func, number, string } from 'prop-types';
 
-import Dinero from 'dinero.js';
 import { default as MuiAppBar } from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,13 +11,14 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import Typography from '@material-ui/core/Typography';
 
 import FarmhandContext from '../../Farmhand.context';
-import { VIEW_LIST } from '../../constants';
 import { stageFocusType } from '../../enums';
+import { dollarAmount } from '../../utils';
 import './AppBar.sass';
 
 const stageTitleMap = {
   [stageFocusType.FIELD]: 'Field',
   [stageFocusType.SHOP]: 'Shop',
+  [stageFocusType.COW_PEN]: 'Cows',
   [stageFocusType.INVENTORY]: 'Inventory',
 };
 
@@ -28,6 +28,7 @@ export const AppBar = ({
   handleMenuToggle,
   money,
   stageFocus,
+  viewList,
 }) => (
   <MuiAppBar
     {...{
@@ -63,7 +64,7 @@ export const AppBar = ({
       </IconButton>
       <StepIcon
         {...{
-          icon: VIEW_LIST.indexOf(stageFocus) + 1,
+          icon: viewList.indexOf(stageFocus) + 1,
         }}
       />
       <Typography
@@ -80,13 +81,7 @@ export const AppBar = ({
           variant: 'h2',
         }}
       >
-        $
-        {Dinero({
-          amount: Math.round(money * 100),
-          precision: 2,
-        })
-          .toUnit()
-          .toFixed(2)}
+        ${dollarAmount(money)}
       </Typography>
     </Toolbar>
   </MuiAppBar>
@@ -98,6 +93,7 @@ AppBar.propTypes = {
   handleMenuToggle: func.isRequired,
   money: number.isRequired,
   stageFocus: string.isRequired,
+  viewList: arrayOf(string).isRequired,
 };
 
 export default function Consumer(props) {

@@ -28,6 +28,20 @@ export default {
   },
 
   /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowPurchaseClick(cow) {
+    this.purchaseCow(cow);
+  },
+
+  /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowSellClick(cow) {
+    this.sellCow(cow);
+  },
+
+  /**
    * @param {farmhand.item} item
    */
   handleItemSellClick(item) {
@@ -52,13 +66,13 @@ export default {
    * @param {farmhand.module:enums.fieldMode} fieldMode
    */
   handleFieldModeSelect(fieldMode) {
-    const selectedItemId = fieldMode === PLANT ? this.state.selectedItemId : '';
-    const isToolbeltFieldMode = toolbeltFieldModes.includes(fieldMode);
-
-    this.setState({
-      selectedItemId: isToolbeltFieldMode ? '' : selectedItemId,
+    this.setState(({ selectedItemId }) => ({
+      selectedItemId:
+        fieldMode !== PLANT || toolbeltFieldModes.includes(fieldMode)
+          ? ''
+          : selectedItemId,
       fieldMode,
-    });
+    }));
   },
 
   handleItemSelectClick({ id, enablesFieldMode, hoveredPlotRangeSize = 0 }) {
@@ -120,8 +134,15 @@ export default {
     this.purchaseField(fieldId);
   },
 
+  /**
+   * @param {number} cowPenId
+   */
+  handleCowPenPurchase(cowPenId) {
+    this.purchaseCowPen(cowPenId);
+  },
+
   handleMenuToggle() {
-    this.setState({ isMenuOpen: !this.state.isMenuOpen });
+    this.setState(({ isMenuOpen }) => ({ isMenuOpen: !isMenuOpen }));
   },
 
   handleClickNextMenuButton() {
