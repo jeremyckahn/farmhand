@@ -1,3 +1,5 @@
+import { cowColors } from '../enums';
+
 export const pixel = require('./pixel.png');
 
 export const plotStates = {
@@ -28,7 +30,9 @@ export const tools = {
 };
 
 export const animals = {
-  cow: {
-    white: require('./animals/white-cow.png'),
-  },
+  cow: Object.values(cowColors).reduce((acc, color) => {
+    const lowerCaseColor = color.toLowerCase();
+    acc[lowerCaseColor] = require(`./animals/cows/${lowerCaseColor}-cow.png`);
+    return acc;
+  }, {}),
 };

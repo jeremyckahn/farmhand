@@ -58,3 +58,13 @@ export const plotContentType = enumify(['CROP', 'SPRINKLER', 'SCARECROW']);
  * @enum {string}
  */
 export const genders = enumify(['FEMALE', 'GENDERLESS', 'MALE']);
+
+export const cowColors = enumify([
+  'BLUE',
+  'BROWN',
+  'GREEN',
+  'ORANGE',
+  'PURPLE',
+  'WHITE',
+  'YELLOW',
+]);

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 
 import { generateCow } from '../../utils';
 import { PURCHASEABLE_COW_PENS } from '../../constants';
+import { cowColors } from '../../enums';
 
 import { CowCard } from './CowPenContextMenu';
 
@@ -16,6 +17,7 @@ describe('cow card rendering', () => {
         <CowCard
           {...{
             cow: {
+              color: cowColors.WHITE,
               name: '',
               weight: 100,
             },

@@ -23,8 +23,8 @@ There is no release or versioning system yet.
 
 - [x] Purchase cow pen
   - [x] Three sizes
-- [ ] Generate and purchase cows
-  - [ ] Multiple cow colors (every color of the rainbow)
+- [x] Generate and purchase cows
+  - [x] Multiple cow colors (every color of the rainbow)
   - [x] Cows can be male, female, or genderless
 - [ ] Cow status in context pane
   - [ ] Rename cow
@@ -50,7 +50,7 @@ There is no release or versioning system yet.
   - [ ] Hugging cows improves happiness (benefits top out after 3 daily hugs)
   - [ ] Even gender distribution increases happiness
 - [ ] Selling cows
-  - [ ] Greater weight results in higher sell value
+  - [x] Greater weight results in higher sell value
   - [ ] Older cows are worth less
 - [ ] Negligence
   - [ ] Not feeding cows causes them to lose weight
