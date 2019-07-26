@@ -23,8 +23,8 @@ There is no release or versioning system yet.
 
 - [x] Purchase cow pen
   - [x] Three sizes
-- [ ] Generate and purchase cows
-  - [ ] Multiple cow colors (every color of the rainbow)
+- [x] Generate and purchase cows
+  - [x] Multiple cow colors (every color of the rainbow)
   - [x] Cows can be male, female, or genderless
 - [ ] Cow status in context pane
   - [ ] Rename cow
