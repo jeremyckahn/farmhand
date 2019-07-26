@@ -4,7 +4,7 @@ import memoize from 'fast-memoize';
 import fruitNames from './data/fruit-names';
 import { cropIdToTypeMap, itemsMap } from './data/maps';
 import { items as itemImages } from './img';
-import { cropLifeStage, genders, plotContentType } from './enums';
+import { cowColors, cropLifeStage, genders, plotContentType } from './enums';
 import {
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
@@ -159,9 +159,10 @@ export const generateCow = () => {
   );
 
   return {
-    name: chooseRandom(fruitNames),
+    color: chooseRandom(Object.values(cowColors)),
     daysOld: 0,
     gender: chooseRandom(Object.values(genders)),
+    name: chooseRandom(fruitNames),
     weight,
   };
 };

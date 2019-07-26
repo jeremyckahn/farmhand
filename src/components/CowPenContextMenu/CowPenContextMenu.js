@@ -13,7 +13,7 @@ import {
 
 import { animals } from '../../img';
 import FarmhandContext from '../../Farmhand.context';
-import { genders } from '../../enums';
+import { cowColors, genders } from '../../enums';
 import { dollarAmount, getCowValue } from '../../utils';
 import { PURCHASEABLE_COW_PENS } from '../../constants';
 
@@ -40,7 +40,12 @@ export const CowCard = ({
   <Card>
     <CardHeader
       {...{
-        avatar: <img {...{ src: animals.cow.white }} alt="Cow" />,
+        avatar: (
+          <img
+            {...{ src: animals.cow[cowColors[cow.color].toLowerCase()] }}
+            alt="Cow"
+          />
+        ),
         title: (
           <p>
             {cow.name}{' '}
