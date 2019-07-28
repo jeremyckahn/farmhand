@@ -255,13 +255,9 @@ export default class Farmhand extends Component {
 
     this.keyHandlers = Object.keys(this.keyHandlers).reduce((acc, key) => {
       const original = this.keyHandlers[key];
-      const { activeElement } = document;
 
       acc[key] = (...args) =>
-        // If user is not focused on an input element
-        (activeElement.nodeName === 'INPUT' &&
-          !activeElement.classList.contains('hotkeys')) ||
-        original(...args);
+        document.activeElement.nodeName !== 'INPUT' && original(...args);
 
       return acc;
     }, {});
