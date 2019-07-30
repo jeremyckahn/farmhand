@@ -22,6 +22,7 @@ describe('cow card rendering', () => {
               weight: 100,
             },
             cowInventory: [],
+            handleCowNameInputChange: () => {},
             handleCowPurchaseClick: () => {},
             money: 0,
             purchasedCowPen: 1,

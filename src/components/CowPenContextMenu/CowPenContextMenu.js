@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
+import TextField from '@material-ui/core/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faGenderless,
@@ -28,12 +29,14 @@ const genderIcons = {
 export const CowCard = ({
   cow,
   cowInventory,
+  handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSellClick,
   money,
   purchasedCowPen,
 
   cowValue = getCowValue(cow),
+  isNameEditable = !!handleCowNameInputChange,
   isPurchaseView = !!handleCowPurchaseClick,
   isSellView = !!handleCowSellClick,
 }) => (
@@ -47,14 +50,25 @@ export const CowCard = ({
           />
         ),
         title: (
-          <p>
-            {cow.name}{' '}
+          <>
+            {/* FIXME: Test this. */}
+            {isNameEditable ? (
+              <TextField
+                {...{
+                  label: 'Name',
+                  value: cow.name,
+                  onChange: e => handleCowNameInputChange(e, cow),
+                }}
+              />
+            ) : (
+              cow.name
+            )}{' '}
             <FontAwesomeIcon
               {...{
                 icon: genderIcons[cow.gender],
               }}
             />
-          </p>
+          </>
         ),
         subheader: (
           <>
@@ -102,6 +116,7 @@ export const CowCard = ({
 export const CowPenContextMenu = ({
   cowForSale,
   cowInventory,
+  handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSellClick,
   money,
@@ -131,6 +146,7 @@ export const CowPenContextMenu = ({
             {...{
               cow,
               cowInventory,
+              handleCowNameInputChange,
               handleCowSellClick,
               money,
               purchasedCowPen,
@@ -145,7 +161,9 @@ export const CowPenContextMenu = ({
 CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
   cowInventory: array.isRequired,
+  handleCowNameInputChange: func.isRequired,
   handleCowPurchaseClick: func.isRequired,
+  handleCowSellClick: func.isRequired,
   money: number.isRequired,
   purchasedCowPen: number.isRequired,
 };

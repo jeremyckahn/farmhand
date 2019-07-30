@@ -477,6 +477,25 @@ export default class Farmhand extends Component {
     });
   }
 
+  // FIXME: Test this.
+  /**
+   * @param {farmhand.cow} cow
+   * @param {string} newName
+   */
+  changeCowName(cow, newName) {
+    this.setState(({ cowInventory }) => {
+      // TODO: Give cows unique IDs and look it up that way.
+      const cowIndex = cowInventory.indexOf(cow);
+
+      const newCowInventory = [...cowInventory];
+      newCowInventory[cowIndex] = { ...cow, name: newName };
+
+      return {
+        cowInventory: newCowInventory,
+      };
+    });
+  }
+
   /**
    * @param {number} x
    * @param {number} y
