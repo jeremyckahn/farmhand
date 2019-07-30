@@ -252,15 +252,6 @@ export default class Farmhand extends Component {
       clearPersistedData: () => this.clearPersistedData(),
       waterAllPlots: () => this.waterAllPlots(),
     });
-
-    this.keyHandlers = Object.keys(this.keyHandlers).reduce((acc, key) => {
-      const original = this.keyHandlers[key];
-
-      acc[key] = (...args) =>
-        document.activeElement.nodeName !== 'INPUT' && original(...args);
-
-      return acc;
-    }, {});
   }
 
   componentDidMount() {
