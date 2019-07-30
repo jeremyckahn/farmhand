@@ -55,9 +55,9 @@ export const CowCard = ({
             {isNameEditable ? (
               <TextField
                 {...{
-                  label: 'Name',
-                  value: cow.name,
                   onChange: e => handleCowNameInputChange(e, cow),
+                  placeholder: 'Name',
+                  value: cow.name,
                 }}
               />
             ) : (
