@@ -32,3 +32,5 @@ export const SPRINKLER_RANGE = 1;
 
 export const COW_STARTING_WEIGHT_BASE = 1800;
 export const COW_STARTING_WEIGHT_VARIANCE = 200;
+
+export const MAX_ANIMAL_NAME_LENGTH = 30;

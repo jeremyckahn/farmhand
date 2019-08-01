@@ -50,6 +50,7 @@ import {
 } from './enums';
 import {
   FERTILIZER_ITEM_ID,
+  MAX_ANIMAL_NAME_LENGTH,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   SCARECROW_ITEM_ID,
@@ -478,7 +479,10 @@ export default class Farmhand extends Component {
       const cowIndex = cowInventory.indexOf(cow);
 
       const newCowInventory = [...cowInventory];
-      newCowInventory[cowIndex] = { ...cow, name: newName };
+      newCowInventory[cowIndex] = {
+        ...cow,
+        name: newName.slice(0, MAX_ANIMAL_NAME_LENGTH),
+      };
 
       return {
         cowInventory: newCowInventory,

@@ -1,3 +1,4 @@
+// NOTE: This needs to be manually kept aligned with __mocks__/constants.js.
 const { freeze } = Object;
 
 export const FERTILIZER_BONUS = 0.5;
@@ -32,3 +33,5 @@ export const SPRINKLER_RANGE = 1;
 
 export const COW_STARTING_WEIGHT_BASE = 1800;
 export const COW_STARTING_WEIGHT_VARIANCE = 200;
+
+export const MAX_ANIMAL_NAME_LENGTH = 30;
