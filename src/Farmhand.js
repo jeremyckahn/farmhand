@@ -468,7 +468,6 @@ export default class Farmhand extends Component {
     });
   }
 
-  // FIXME: Test this.
   /**
    * @param {farmhand.cow} cow
    * @param {string} newName

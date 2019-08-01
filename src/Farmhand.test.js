@@ -447,6 +447,23 @@ describe('instance methods', () => {
     });
   });
 
+  describe('changeCowName', () => {
+    test('updates cow name', () => {
+      const cow = generateCow();
+
+      component.setState({
+        cowInventory: [generateCow(), cow],
+      });
+
+      component.instance().changeCowName(cow, 'new name');
+
+      expect(component.state().cowInventory[1]).toEqual({
+        ...cow,
+        name: 'new name',
+      });
+    });
+  });
+
   describe('plantInPlot', () => {
     beforeEach(() => {
       component.setState({

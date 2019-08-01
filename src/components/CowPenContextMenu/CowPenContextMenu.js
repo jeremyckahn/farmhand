@@ -51,7 +51,7 @@ export const CowCard = ({
         ),
         title: (
           <>
-            {/* FIXME: Test this. */}
+            {/* FIXME: Set name restrictions. */}
             {isNameEditable ? (
               <TextField
                 {...{
