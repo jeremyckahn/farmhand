@@ -12,6 +12,7 @@ import {
   FERTILIZER_ITEM_ID,
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
+  MAX_ANIMAL_NAME_LENGTH,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
@@ -444,6 +445,37 @@ describe('instance methods', () => {
 
     test('adds value of cow to player money', () => {
       expect(component.state().money).toEqual(getCowValue(cow));
+    });
+  });
+
+  describe('changeCowName', () => {
+    test('updates cow name', () => {
+      const cow = generateCow();
+
+      component.setState({
+        cowInventory: [generateCow(), cow],
+      });
+
+      component.instance().changeCowName(cow, 'new name');
+
+      expect(component.state().cowInventory[1]).toEqual({
+        ...cow,
+        name: 'new name',
+      });
+    });
+
+    test('restricts name length', () => {
+      const cow = generateCow();
+
+      component.setState({
+        cowInventory: [cow],
+      });
+
+      component.instance().changeCowName(cow, new Array(100).join('.'));
+
+      expect(component.state().cowInventory[0].name).toHaveLength(
+        MAX_ANIMAL_NAME_LENGTH
+      );
     });
   });
 

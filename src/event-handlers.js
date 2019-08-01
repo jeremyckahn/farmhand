@@ -42,6 +42,19 @@ export default {
   },
 
   /**
+   * @param {external:React.SyntheticEvent} e
+   * @param {farmhand.cow} cow
+   */
+  handleCowNameInputChange(
+    {
+      target: { value },
+    },
+    cow
+  ) {
+    this.changeCowName(cow, value);
+  },
+
+  /**
    * @param {farmhand.item} item
    */
   handleItemSellClick(item) {
