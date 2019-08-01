@@ -38,7 +38,7 @@ describe('generateCow', () => {
 
     test('generates a cow', () => {
       const weight = COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE;
-      expect(generateCow()).toEqual({
+      expect(generateCow()).toMatchObject({
         color: Object.keys(cowColors)[0],
         daysOld: 0,
         gender: Object.keys(genders)[0],
@@ -56,7 +56,7 @@ describe('generateCow', () => {
     test('generates a cow', () => {
       const weight = COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE;
 
-      expect(generateCow()).toEqual({
+      expect(generateCow()).toMatchObject({
         color: Object.keys(cowColors).pop(),
         daysOld: 0,
         gender: Object.keys(genders).pop(),
