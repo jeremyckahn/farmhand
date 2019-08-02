@@ -39,6 +39,7 @@ describe('computeStateForNextDay', () => {
         ],
       ],
       newDayNotifications: [],
+      cowInventory: [],
     });
 
     expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()));
@@ -292,6 +293,14 @@ describe('addItemToInventory', () => {
         quantity: 2,
       }),
     ]);
+  });
+});
+
+describe('getIncrementedCowInventory', () => {
+  test('ages cows', () => {
+    expect(
+      fn.getIncrementedCowInventory([{ daysOld: 0 }, { daysOld: 5 }])
+    ).toEqual([{ daysOld: 1 }, { daysOld: 6 }]);
   });
 });
 
