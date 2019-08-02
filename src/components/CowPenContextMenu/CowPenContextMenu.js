@@ -71,6 +71,11 @@ export const CowCard = ({
         ),
         subheader: (
           <>
+            {isSellView && (
+              <p>
+                {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
+              </p>
+            )}
             <p>
               {isPurchaseView ? 'Price' : 'Value'}: ${dollarAmount(cowValue)}
             </p>

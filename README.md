@@ -29,7 +29,7 @@ There is no release or versioning system yet.
 - [ ] Cow status in context pane
   - [x] Rename cow
   - [ ] Show stats
-    - [ ] Age
+    - [x] Age
     - [ ] Happiness (measured in hearts)
     - [x] Weight
 - [ ] Cow pen UI
