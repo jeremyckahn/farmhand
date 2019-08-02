@@ -456,7 +456,7 @@ describe('instance methods', () => {
         cowInventory: [generateCow(), cow],
       });
 
-      component.instance().changeCowName(cow, 'new name');
+      component.instance().changeCowName(cow.id, 'new name');
 
       expect(component.state().cowInventory[1]).toEqual({
         ...cow,
@@ -471,7 +471,7 @@ describe('instance methods', () => {
         cowInventory: [cow],
       });
 
-      component.instance().changeCowName(cow, new Array(100).join('.'));
+      component.instance().changeCowName(cow.id, new Array(100).join('.'));
 
       expect(component.state().cowInventory[0].name).toHaveLength(
         MAX_ANIMAL_NAME_LENGTH

@@ -17,6 +17,11 @@ const { SEED, GROWING, GROWN } = cropLifeStage;
 const chooseRandom = list =>
   list[Math.floor(Math.random() * (list.length - 1))];
 
+/**
+ * @returns {string}
+ */
+const createUniqueId = () => btoa(Math.random() + Date.now());
+
 export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
     .fill(undefined)
@@ -160,8 +165,9 @@ export const generateCow = () => {
 
   return {
     color: chooseRandom(Object.values(cowColors)),
-    daysOld: 0,
+    daysOld: 1,
     gender: chooseRandom(Object.values(genders)),
+    id: createUniqueId(),
     name: chooseRandom(fruitNames),
     weight,
   };

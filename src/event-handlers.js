@@ -51,7 +51,7 @@ export default {
     },
     cow
   ) {
-    this.changeCowName(cow, value);
+    this.changeCowName(cow.id, value);
   },
 
   /**

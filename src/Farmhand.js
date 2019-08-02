@@ -470,12 +470,12 @@ export default class Farmhand extends Component {
   }
 
   /**
-   * @param {farmhand.cow} cow
+   * @param {string} cowId
    * @param {string} newName
    */
-  changeCowName(cow, newName) {
+  changeCowName(cowId, newName) {
     this.setState(({ cowInventory }) => {
-      // TODO: Give cows unique IDs and look it up that way.
+      const cow = cowInventory.find(({ id }) => id === cowId);
       const cowIndex = cowInventory.indexOf(cow);
 
       const newCowInventory = [...cowInventory];

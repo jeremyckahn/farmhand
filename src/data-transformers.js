@@ -164,6 +164,7 @@ export const getPlantableCropInventory = memoize(inventory =>
     .map(({ id }) => itemsMap[id])
 );
 
+// TODO: Rename this to be more specific.
 /**
  * @param {?farmhand.crop} crop
  * @returns {?farmhand.crop}
@@ -247,6 +248,13 @@ export const getUpdatedField = field =>
   updateField(field, plotContent =>
     fieldUpdaters.reduce(fieldReducer, plotContent)
   );
+
+/**
+ * @param {Array.<farmhand.cow>} cowInventory
+ * @returns {Array.<farmhand.cow>}
+ */
+export const getIncrementedCowInventory = cowInventory =>
+  cowInventory.map(cow => ({ ...cow, daysOld: cow.daysOld + 1 }));
 
 /**
  * @param {Array.<Array.<?farmhand.plotContent>>} field
@@ -345,6 +353,7 @@ export const computeStateForNextDay = state =>
       dayCount: state.dayCount + 1,
       field: getUpdatedField(state.field),
       valueAdjustments: getUpdatedValueAdjustments(),
+      cowInventory: getIncrementedCowInventory(state.cowInventory),
     }
   );
 
