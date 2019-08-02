@@ -165,7 +165,7 @@ export const generateCow = () => {
 
   return {
     color: chooseRandom(Object.values(cowColors)),
-    daysOld: 0,
+    daysOld: 1,
     gender: chooseRandom(Object.values(genders)),
     id: createUniqueId(),
     name: chooseRandom(fruitNames),
