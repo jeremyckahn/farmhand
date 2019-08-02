@@ -27,7 +27,7 @@ There is no release or versioning system yet.
   - [x] Multiple cow colors (every color of the rainbow)
   - [x] Cows can be male, female, or genderless
 - [ ] Cow status in context pane
-  - [ ] Rename cow
+  - [x] Rename cow
   - [ ] Show stats
     - [ ] Age
     - [ ] Happiness (measured in hearts)
