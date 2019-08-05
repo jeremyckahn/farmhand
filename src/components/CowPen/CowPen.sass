@@ -1,1 +1,51 @@
 .CowPen
+
+  // This MUST be kept in sync with Cow.animationDuration in CowPen.js.
+  $animation-duration: 3000ms
+
+  .cow
+    position: absolute
+    transition: all $animation-duration linear
+
+    &::before
+      background: rgba(128, 128, 128, 0.5)
+      border-radius: 50%
+      bottom: 5px
+      content: ''
+      filter: blur(2px)
+      height: 20px
+      left: 0
+      position: absolute
+      width: 100px
+      z-index: -20
+
+    img
+      width: 100px
+
+  .is-moving
+
+    img
+      animation-name: is-moving-keyframes
+      animation-duration: 500ms
+      animation-fill-mode: forwards
+      animation-timing-function: linear
+      animation-iteration-count: infinite
+
+  @keyframes is-moving-keyframes
+    0%
+      transform: translate(0px, 0px)
+
+    20%
+      transform: translate(0px, -32px)
+
+    40%
+      transform: translate(0px, -48px)
+
+    60%
+      transform: translate(0px, -48px)
+
+    80%
+      transform: translate(0px, -32px)
+
+    100%
+      transform: translate(0px, 0px)
