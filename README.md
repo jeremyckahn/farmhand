@@ -33,7 +33,7 @@ There is no release or versioning system yet.
     - [ ] Happiness (measured in hearts)
     - [x] Weight
 - [ ] Cow pen UI
-  - [ ] Cows walking around
+  - [x] Cows walking around
   - [ ] Click/tap to select cow
   - [ ] Cycle through cows with arrows
 - [ ] Purchase growable grain seeds
