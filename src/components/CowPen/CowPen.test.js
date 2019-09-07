@@ -11,54 +11,136 @@ let component;
 
 jest.useFakeTimers();
 
-beforeEach(() => {
-  component = shallow(<CowPen {...{ cowInventory: [] }} />);
-});
+describe('CowPen', () => {
+  beforeEach(() => {
+    component = shallow(
+      <CowPen
+        {...{
+          cowInventory: [],
+          handleCowSelect: () => {},
+          selectedCowId: '',
+        }}
+      />
+    );
+  });
 
-test('renders', () => {
-  expect(component).toHaveLength(1);
+  describe('cow selection', () => {
+    describe('cow is not selected', () => {
+      test('provides correct isSelected prop', () => {
+        component.setProps({
+          cowInventory: [generateCow({ id: 'foo' })],
+          selectedCowId: 'bar',
+        });
+
+        expect(component.find(Cow).props().isSelected).toEqual(false);
+      });
+    });
+
+    describe('cow is selected', () => {
+      test('provides correct isSelected prop', () => {
+        component.setProps({
+          cowInventory: [generateCow({ id: 'foo' })],
+          selectedCowId: 'foo',
+        });
+
+        expect(component.find(Cow).props().isSelected).toEqual(true);
+      });
+    });
+  });
 });
 
 describe('Cow', () => {
-  let subcomponent;
-
   beforeEach(() => {
     jest.spyOn(Math, 'random').mockReturnValue(0);
-    subcomponent = shallow(
+    component = shallow(
       <Cow
         {...{
           cow: {
             ...generateCow(),
             color: cowColors.WHITE,
           },
+          handleCowSelect: () => {},
+          isSelected: false,
         }}
       />
     );
   });
 
   test('has correct image', () => {
-    expect(subcomponent.find('img').props().src).toEqual(
+    expect(component.find('img').props().src).toEqual(
       animals.cow[cowColors.WHITE.toLowerCase()]
     );
   });
 
   describe('movement', () => {
     test('schedules a position change at boot', () => {
-      expect(setTimeout).toHaveBeenCalledWith(subcomponent.instance().move, 0);
+      expect(setTimeout).toHaveBeenCalledWith(
+        component.instance().repositionTimeoutHandler,
+        0
+      );
+    });
+
+    describe('cow is selected', () => {
+      test('reposition is not scheduled', () => {
+        setTimeout.mockClear();
+        component.setProps({ isSelected: true });
+        component.instance().scheduleMove();
+
+        expect(setTimeout).not.toHaveBeenCalledWith(
+          component.instance().repositionTimeoutHandler,
+          0
+        );
+      });
+    });
+
+    describe('receiving different isSelected prop', () => {
+      describe('while cow is moving', () => {
+        beforeEach(() => {
+          clearTimeout.mockClear();
+        });
+
+        describe('isSelected false -> true', () => {
+          test('cancels sheduled position change', () => {
+            component.setProps({ isSelected: false });
+            component.instance().scheduleMove();
+            component.setProps({ isSelected: true });
+            expect(clearTimeout).toHaveBeenCalled();
+          });
+        });
+
+        describe('isSelected true -> false', () => {
+          test('no-ops', () => {
+            component.setProps({ isSelected: true });
+            component.instance().scheduleMove();
+            clearTimeout.mockClear();
+            component.setProps({ isSelected: false });
+            expect(clearTimeout).not.toHaveBeenCalled();
+          });
+        });
+      });
+
+      describe('isSelected true -> false', () => {
+        test('schedules a position change', () => {
+          component.setProps({ isSelected: true });
+          const scheduleMove = jest.spyOn(component.instance(), 'scheduleMove');
+          component.setProps({ isSelected: false });
+          expect(scheduleMove).toHaveBeenCalled();
+        });
+      });
     });
 
     describe('move', () => {
       test('updates state', () => {
-        subcomponent.instance().move();
-        expect(subcomponent.state().isMoving).toEqual(true);
+        component.instance().move();
+        expect(component.state().isMoving).toEqual(true);
       });
     });
 
     describe('finishMoving', () => {
       test('updates state', () => {
-        subcomponent.setState({ isMoving: true });
-        subcomponent.instance().finishMoving();
-        expect(subcomponent.state().isMoving).toEqual(false);
+        component.setState({ isMoving: true });
+        component.instance().finishMoving();
+        expect(component.state().isMoving).toEqual(false);
       });
     });
   });

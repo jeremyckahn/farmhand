@@ -32,10 +32,9 @@ There is no release or versioning system yet.
     - [x] Age
     - [ ] Happiness (measured in hearts)
     - [x] Weight
-- [ ] Cow pen UI
+- [x] Cow pen UI
   - [x] Cows walking around
-  - [ ] Click/tap to select cow
-  - [ ] Cycle through cows with arrows
+  - [x] Click/tap to select cow
 - [ ] Purchase growable grain seeds
 - [ ] Purchase grown grain for a premium
 - [ ] Cow milking

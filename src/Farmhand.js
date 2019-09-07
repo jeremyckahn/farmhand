@@ -80,6 +80,7 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  * @property {number} money
  * @property {Array.<string} newDayNotifications
  * @property {Array.<string>} notifications
+ * @property {string} selectedCowId
  * @property {string} selectedItemId
  * @property {farmhand.module:enums.fieldMode} fieldMode
  * @property {number} purchasedCowPen
@@ -120,6 +121,7 @@ export default class Farmhand extends Component {
     money: 500,
     newDayNotifications: [],
     notifications: [],
+    selectedCowId: '',
     selectedItemId: '',
     fieldMode: OBSERVE,
     purchasedCowPen: 0,
@@ -272,6 +274,13 @@ export default class Farmhand extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     this.showStateChangeNotifications(prevState);
+
+    if (
+      this.state.stageFocus === stageFocusType.COW_PEN &&
+      prevState.stageFocus !== stageFocusType.COW_PEN
+    ) {
+      this.setState({ selectedCowId: '' });
+    }
   }
 
   clearPersistedData() {
@@ -755,6 +764,13 @@ export default class Farmhand extends Component {
         money: money - PURCHASEABLE_COW_PENS.get(cowPenId).price,
       };
     });
+  }
+
+  /**
+   * @param {farmhand.cow} cow
+   */
+  selectCow({ id: selectedCowId }) {
+    this.setState({ selectedCowId });
   }
 
   render() {
