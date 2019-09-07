@@ -1,5 +1,8 @@
 .CowPen
 
+  &:hover
+    cursor: pointer
+
   // This MUST be kept in sync with Cow.animationDuration in CowPen.js.
   $animation-duration: 3000ms
 
@@ -17,7 +20,16 @@
       left: 0
       position: absolute
       width: 100px
+      transition: all 150ms linear
       z-index: -20
+
+    &.is-selected
+      &::before
+        background: rgba(128, 128, 128, 1)
+        // This is slightly off center to account for the balance of the cow
+        // image.
+        left: -13px
+        width: 120px
 
     img
       width: 100px
@@ -32,20 +44,14 @@
       animation-iteration-count: infinite
 
   @keyframes is-moving-keyframes
-    0%
+    0%,
+    100%
       transform: translate(0px, 0px)
 
-    20%
-      transform: translate(0px, -32px)
-
-    40%
-      transform: translate(0px, -48px)
-
-    60%
-      transform: translate(0px, -48px)
-
+    20%,
     80%
       transform: translate(0px, -32px)
 
-    100%
-      transform: translate(0px, 0px)
+    40%,
+    60%
+      transform: translate(0px, -48px)

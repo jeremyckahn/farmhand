@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, func, number, object } from 'prop-types';
+import { array, func, number, object, string } from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -32,6 +32,7 @@ export const CowCard = ({
   handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSellClick,
+  isSelected,
   money,
   purchasedCowPen,
 
@@ -40,7 +41,7 @@ export const CowCard = ({
   isPurchaseView = !!handleCowPurchaseClick,
   isSellView = !!handleCowSellClick,
 }) => (
-  <Card>
+  <Card {...{ raised: isSelected }}>
     <CardHeader
       {...{
         avatar: (
@@ -120,13 +121,13 @@ export const CowCard = ({
 export const CowPenContextMenu = ({
   cowForSale,
   cowInventory,
+  handleCowSelect,
   handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSellClick,
   money,
   purchasedCowPen,
-
-  cowValue = getCowValue(cowForSale),
+  selectedCowId,
 }) => (
   <div className="CowPenContextMenu">
     <h2>For sale</h2>
@@ -144,14 +145,21 @@ export const CowPenContextMenu = ({
       {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
     </h2>
     <ul className="card-list">
-      {cowInventory.map((cow, i) => (
-        <li key={i}>
+      {cowInventory.map(cow => (
+        <li
+          {...{
+            key: cow.id,
+            onFocus: () => handleCowSelect(cow),
+            onClick: () => handleCowSelect(cow),
+          }}
+        >
           <CowCard
             {...{
               cow,
               cowInventory,
               handleCowNameInputChange,
               handleCowSellClick,
+              isSelected: cow.id === selectedCowId,
               money,
               purchasedCowPen,
             }}
@@ -167,9 +175,11 @@ CowPenContextMenu.propTypes = {
   cowInventory: array.isRequired,
   handleCowNameInputChange: func.isRequired,
   handleCowPurchaseClick: func.isRequired,
+  handleCowSelect: func.isRequired,
   handleCowSellClick: func.isRequired,
   money: number.isRequired,
   purchasedCowPen: number.isRequired,
+  selectedCowId: string.isRequired,
 };
 
 export default function Consumer() {

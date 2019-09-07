@@ -274,3 +274,11 @@ describe('handleClickPreviousMenuButton', () => {
     expect(component.instance().goToPreviousView).toHaveBeenCalled();
   });
 });
+
+describe('handleCowSelect', () => {
+  test('calls selectCow', () => {
+    jest.spyOn(component.instance(), 'selectCow').mockImplementation();
+    handlers().handleCowSelect({ id: 'abc' });
+    expect(component.instance().selectCow).toHaveBeenCalledWith({ id: 'abc' });
+  });
+});

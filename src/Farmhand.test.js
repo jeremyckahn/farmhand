@@ -19,7 +19,7 @@ import {
 } from './constants';
 import { COW_PEN_PURCHASED } from './templates';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
-import { fieldMode, genders } from './enums';
+import { fieldMode, genders, stageFocusType } from './enums';
 import Farmhand from './Farmhand';
 
 jest.mock('localforage');
@@ -48,6 +48,17 @@ describe('state', () => {
   test('inits field', () => {
     expect(component.state().field).toHaveLength(INITIAL_FIELD_HEIGHT);
     expect(component.state().field[0]).toHaveLength(INITIAL_FIELD_WIDTH);
+  });
+
+  test('changing to state.stageFocus === stageFocusType.COW_PEN resets selectedCowId', () => {
+    component.setState({
+      selectedCowId: 'foo',
+      stageFocus: stageFocusType.FIELD,
+    });
+
+    component.setState({ stageFocus: stageFocusType.COW_PEN });
+
+    expect(component.state().selectedCowId).toEqual('');
   });
 });
 
@@ -959,6 +970,13 @@ describe('instance methods', () => {
       component.setState({ money: 1500 });
       component.instance().purchaseCowPen(1);
       expect(component.state().money).toEqual(1000);
+    });
+  });
+
+  describe('selectCow', () => {
+    test('updates selectedCowId', () => {
+      component.instance().selectCow({ id: 'abc' });
+      expect(component.state().selectedCowId).toEqual('abc');
     });
   });
 });

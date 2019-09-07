@@ -166,6 +166,13 @@ export default {
     this.goToPreviousView();
   },
 
+  /**
+   * @param {farmhand.cow}
+   */
+  handleCowSelect(cow) {
+    this.selectCow(cow);
+  },
+
   handleCloseNotification() {
     this.setState({ doShowNotifications: false });
   },

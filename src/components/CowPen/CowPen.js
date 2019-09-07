@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { array, bool, func, object, string } from 'prop-types';
 import classNames from 'classnames';
 
 import { cowColors } from '../../enums';
@@ -14,8 +15,8 @@ export class Cow extends Component {
     y: Cow.randomPosition(),
   };
 
-  repositionTimeoutHandler = 0;
-  animateTimeoutHandler = 0;
+  repositionTimeoutId = null;
+  animateTimeoutId = null;
 
   // This MUST be kept in sync with $animation-duration in CowPen.sass.
   static animationDuration = 3000;
@@ -24,9 +25,28 @@ export class Cow extends Component {
 
   static randomPosition = () => 10 + Math.random() * 80;
 
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.isSelected &&
+      !prevProps.isSelected &&
+      this.repositionTimeoutId !== null
+    ) {
+      clearTimeout(this.repositionTimeoutId);
+    }
+
+    if (!this.props.isSelected && prevProps.isSelected) {
+      this.scheduleMove();
+    }
+  }
+
+  animateTimeoutHandler = () => {
+    this.animateTimeoutId = null;
+    this.finishMoving();
+  };
+
   move = () => {
-    this.animateTimeoutHandler = setTimeout(
-      this.finishMoving,
+    this.animateTimeoutId = setTimeout(
+      this.animateTimeoutHandler,
       Cow.animationDuration
     );
 
@@ -42,9 +62,18 @@ export class Cow extends Component {
     this.setState({ isMoving: false });
   };
 
+  repositionTimeoutHandler = () => {
+    this.repositionTimeoutId = null;
+    this.move();
+  };
+
   scheduleMove = () => {
-    this.repositionTimeoutHandler = setTimeout(
-      this.move,
+    if (this.props.isSelected) {
+      return;
+    }
+
+    this.repositionTimeoutId = setTimeout(
+      this.repositionTimeoutHandler,
       Math.random() * Cow.waitVariance
     );
   };
@@ -54,20 +83,24 @@ export class Cow extends Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.repositionTimeoutHandler);
-    clearTimeout(this.animateTimeoutHandler);
+    clearTimeout(this.repositionTimeoutId);
+    clearTimeout(this.animateTimeoutId);
   }
 
   render() {
     const {
-      props: { cow },
+      props: { cow, handleCowSelect, isSelected },
       state: { isMoving, x, y },
     } = this;
 
     return (
       <div
         {...{
-          className: classNames('cow', { 'is-moving': isMoving }),
+          className: classNames('cow', {
+            'is-moving': isMoving,
+            'is-selected': isSelected,
+          }),
+          onClick: () => handleCowSelect(cow),
           style: {
             left: `${y}%`,
             top: `${x}%`,
@@ -85,13 +118,32 @@ export class Cow extends Component {
   }
 }
 
-export const CowPen = ({ cowInventory }) => (
+Cow.propTypes = {
+  cow: object.isRequired,
+  handleCowSelect: func.isRequired,
+  isSelected: bool.isRequired,
+};
+
+export const CowPen = ({ cowInventory, handleCowSelect, selectedCowId }) => (
   <div className="CowPen">
-    {cowInventory.map((cow, i) => (
-      <Cow {...{ cow, key: cow.id }} />
+    {cowInventory.map(cow => (
+      <Cow
+        {...{
+          cow,
+          key: cow.id,
+          handleCowSelect,
+          isSelected: selectedCowId === cow.id,
+        }}
+      />
     ))}
   </div>
 );
+
+CowPen.propTypes = {
+  cowInventory: array.isRequired,
+  handleCowSelect: func.isRequired,
+  selectedCowId: string.isRequired,
+};
 
 export default function Consumer(props) {
   return (
