@@ -7,7 +7,7 @@ import './PlantableItems.sass';
 
 export const PlantableItems = ({ plantableCropInventory, selectedItemId }) => (
   <div className="PlantableItems">
-    <ul>
+    <ul className="card-list">
       {plantableCropInventory.map(item => (
         <li key={item.id}>
           <Item
