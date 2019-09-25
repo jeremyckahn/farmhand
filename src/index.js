@@ -55,6 +55,8 @@
  * @param {string} name
  * @property {number} daysOld
  * @property {number} weight
+ * @property {number} happiness 0-1.
+ * @property {number} happinessBoostsToday
  */
 
 import React from 'react';

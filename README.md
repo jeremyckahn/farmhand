@@ -28,13 +28,14 @@ There is no release or versioning system yet.
   - [x] Cows can be male, female, or genderless
 - [ ] Cow status in context pane
   - [x] Rename cow
-  - [ ] Show stats
+  - [x] Show stats
     - [x] Age
-    - [ ] Happiness (measured in hearts)
+    - [x] Happiness (measured in hearts)
     - [x] Weight
-- [x] Cow pen UI
+- [ ] Cow pen UI
   - [x] Cows walking around
   - [x] Click/tap to select cow
+  - [ ] Tooltip info appears over cow when selected
 - [ ] Purchase growable grain seeds
 - [ ] Purchase grown grain for a premium
 - [ ] Cow milking
