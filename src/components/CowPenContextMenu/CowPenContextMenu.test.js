@@ -6,7 +6,11 @@ import { generateCow } from '../../utils';
 import { PURCHASEABLE_COW_PENS } from '../../constants';
 import { cowColors } from '../../enums';
 
-import { CowPenContextMenu, CowCard } from './CowPenContextMenu';
+import {
+  CowPenContextMenu,
+  CowCard,
+  CowCardSubheader,
+} from './CowPenContextMenu';
 
 let component;
 
@@ -133,6 +137,70 @@ describe('CowCard', () => {
 
           expect(component.find(Button).props().disabled).toBe(false);
         });
+      });
+    });
+  });
+});
+
+describe('CowCardSubheader', () => {
+  beforeEach(() => {
+    component = shallow(
+      <CowCardSubheader
+        {...{
+          cow: {
+            color: cowColors.WHITE,
+            happiness: 0,
+            name: '',
+            weight: 100,
+          },
+          cowValue: 1000,
+          isSellView: false,
+          isPurchaseView: false,
+        }}
+      />
+    );
+  });
+
+  describe('happiness display', () => {
+    describe('is purchase view', () => {
+      test('renders no hearts', () => {
+        component.setProps({
+          isPurchaseView: true,
+        });
+
+        expect(component.find('.heart')).toHaveLength(0);
+      });
+    });
+
+    describe('is not purchase view', () => {
+      test('renders hearts', () => {
+        expect(component.find('.heart')).toHaveLength(10);
+      });
+
+      test('renders full hearts that match cow happiness', () => {
+        expect(component.find('.heart.is-full')).toHaveLength(0);
+
+        component.setProps({
+          cow: {
+            color: cowColors.WHITE,
+            happiness: 0.5,
+            name: '',
+            weight: 100,
+          },
+        });
+
+        expect(component.find('.heart.is-full')).toHaveLength(5);
+
+        component.setProps({
+          cow: {
+            color: cowColors.WHITE,
+            happiness: 1,
+            name: '',
+            weight: 100,
+          },
+        });
+
+        expect(component.find('.heart.is-full')).toHaveLength(10);
       });
     });
   });

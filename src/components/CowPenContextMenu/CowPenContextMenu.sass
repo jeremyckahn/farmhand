@@ -1,3 +1,18 @@
+=heartListStyle()
+  .hearts
+    li
+      display: inline
+      margin: 0 .25em 0 0
+
 .CowPenContextMenu
   .fa
     font-size: 1em
+
+  .card-list // This specificity is needed to override a global card style
+    +heartListStyle()
+
+  +heartListStyle()
+
+  .hearts
+    [data-prefix="fas"] // Full heart
+      color: #ff4040

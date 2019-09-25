@@ -6,11 +6,14 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import TextField from '@material-ui/core/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import {
   faGenderless,
   faMars,
   faVenus,
+  faHeart as faFullHeart,
 } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
 
 import { animals } from '../../img';
 import FarmhandContext from '../../Farmhand.context';
@@ -25,6 +28,52 @@ const genderIcons = {
   [genders.GENDERLESS]: faGenderless,
   [genders.MALE]: faMars,
 };
+
+const nullHeartList = new Array(10).fill(null);
+
+// The extra 0.5 is for rounding up to the next full heart. This allows a fully
+// happy cow to have full hearts on the beginning of a new day.
+const isHeartFull = (heartIndex, numberOfFullHearts) =>
+  heartIndex + 0.5 < numberOfFullHearts;
+
+export const CowCardSubheader = ({
+  cow,
+  cowValue,
+  isPurchaseView,
+  isSellView,
+
+  numberOfFullHearts = cow.happiness * 10,
+}) => (
+  <>
+    {isSellView && (
+      <p>
+        {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
+      </p>
+    )}
+    <p>
+      {isPurchaseView ? 'Price' : 'Value'}: ${dollarAmount(cowValue)}
+    </p>
+    <p>Weight: {cow.weight} lbs.</p>
+    {!isPurchaseView && (
+      <ol className="hearts">
+        {nullHeartList.map((_null, i) => (
+          <li key={`${cow.id}_${i}`}>
+            <FontAwesomeIcon
+              {...{
+                icon: isHeartFull(i, numberOfFullHearts)
+                  ? faFullHeart
+                  : faEmptyHeart,
+                className: classNames('heart', {
+                  'is-full': isHeartFull(i, numberOfFullHearts),
+                }),
+              }}
+            />
+          </li>
+        ))}
+      </ol>
+    )}
+  </>
+);
 
 export const CowCard = ({
   cow,
@@ -71,17 +120,14 @@ export const CowCard = ({
           </>
         ),
         subheader: (
-          <>
-            {isSellView && (
-              <p>
-                {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
-              </p>
-            )}
-            <p>
-              {isPurchaseView ? 'Price' : 'Value'}: ${dollarAmount(cowValue)}
-            </p>
-            <p>Weight: {cow.weight} lbs.</p>
-          </>
+          <CowCardSubheader
+            {...{
+              cow,
+              cowValue,
+              isPurchaseView,
+              isSellView,
+            }}
+          />
         ),
       }}
     />
