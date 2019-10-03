@@ -114,6 +114,7 @@ export default class Farmhand extends Component {
     cowInventory: [],
     dayCount: 0,
     field: createNewField(),
+    hasBooted: false,
     hoveredPlot: { x: null, y: null },
     hoveredPlotRangeSize: 0,
     inventory: [],
@@ -269,17 +270,25 @@ export default class Farmhand extends Component {
       } else {
         this.incrementDay();
       }
+
+      this.setState({ hasBooted: true });
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.showStateChangeNotifications(prevState);
+    // The operations in this if block concern transient gameplay state, but
+    // componentDidUpdate runs as part of the rehydration/bootup process. So,
+    // check to see if the app has completed booting before working with this
+    // transient state.
+    if (this.state.hasBooted) {
+      this.showStateChangeNotifications(prevState);
 
-    if (
-      this.state.stageFocus === stageFocusType.COW_PEN &&
-      prevState.stageFocus !== stageFocusType.COW_PEN
-    ) {
-      this.setState({ selectedCowId: '' });
+      if (
+        this.state.stageFocus === stageFocusType.COW_PEN &&
+        prevState.stageFocus !== stageFocusType.COW_PEN
+      ) {
+        this.setState({ selectedCowId: '' });
+      }
     }
   }
 
