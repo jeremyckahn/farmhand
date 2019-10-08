@@ -35,7 +35,7 @@ There is no release or versioning system yet.
 - [ ] Cow pen UI
   - [x] Cows walking around
   - [x] Click/tap to select cow
-  - [ ] Tooltip info appears over cow when selected
+  - [x] Tooltip info appears over cow when selected
 - [ ] Purchase growable grain seeds
 - [ ] Purchase grown grain for a premium
 - [ ] Cow milking

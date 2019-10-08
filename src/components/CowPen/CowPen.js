@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { array, bool, func, object, string } from 'prop-types';
 import classNames from 'classnames';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { cowColors } from '../../enums';
 import FarmhandContext from '../../Farmhand.context';
@@ -107,12 +108,23 @@ export class Cow extends Component {
           },
         }}
       >
-        <img
+        <Tooltip
           {...{
-            src: animals.cow[cowColors[cow.color].toLowerCase()],
+            placement: 'top',
+            title: cow.name,
+            open: isSelected,
+            PopperProps: {
+              disablePortal: true,
+            },
           }}
-          alt="Cow"
-        />
+        >
+          <img
+            {...{
+              src: animals.cow[cowColors[cow.color].toLowerCase()],
+            }}
+            alt="Cow"
+          />
+        </Tooltip>
       </div>
     );
   }
