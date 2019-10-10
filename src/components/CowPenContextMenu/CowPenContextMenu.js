@@ -39,22 +39,21 @@ const isHeartFull = (heartIndex, numberOfFullHearts) =>
 export const CowCardSubheader = ({
   cow,
   cowValue,
-  isPurchaseView,
-  isSellView,
+  isCowPurchased,
 
   numberOfFullHearts = cow.happiness * 10,
 }) => (
   <>
-    {isSellView && (
+    {isCowPurchased && (
       <p>
         {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
       </p>
     )}
     <p>
-      {isPurchaseView ? 'Price' : 'Value'}: ${dollarAmount(cowValue)}
+      {isCowPurchased ? 'Value' : 'Price'}: ${dollarAmount(cowValue)}
     </p>
     <p>Weight: {cow.weight} lbs.</p>
-    {!isPurchaseView && (
+    {isCowPurchased && (
       <ol className="hearts">
         {nullHeartList.map((_null, i) => (
           <li key={`${cow.id}_${i}`}>
@@ -86,9 +85,8 @@ export const CowCard = ({
   purchasedCowPen,
 
   cowValue = getCowValue(cow),
+  isCowPurchased = !!handleCowSellClick,
   isNameEditable = !!handleCowNameInputChange,
-  isPurchaseView = !!handleCowPurchaseClick,
-  isSellView = !!handleCowSellClick,
 }) => (
   <Card {...{ raised: isSelected }}>
     <CardHeader
@@ -124,15 +122,14 @@ export const CowCard = ({
             {...{
               cow,
               cowValue,
-              isPurchaseView,
-              isSellView,
+              isCowPurchased,
             }}
           />
         ),
       }}
     />
     <CardActions>
-      {isPurchaseView && (
+      {!isCowPurchased && (
         <Button
           {...{
             className: 'purchase',
@@ -148,7 +145,7 @@ export const CowCard = ({
           Buy
         </Button>
       )}
-      {isSellView && (
+      {isCowPurchased && (
         <Button
           {...{
             className: 'sell',

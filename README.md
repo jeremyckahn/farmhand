@@ -26,13 +26,13 @@ There is no release or versioning system yet.
 - [x] Generate and purchase cows
   - [x] Multiple cow colors (every color of the rainbow)
   - [x] Cows can be male, female, or genderless
-- [ ] Cow status in context pane
+- [x] Cow status in context pane
   - [x] Rename cow
   - [x] Show stats
     - [x] Age
     - [x] Happiness (measured in hearts)
     - [x] Weight
-- [ ] Cow pen UI
+- [x] Cow pen UI
   - [x] Cows walking around
   - [x] Click/tap to select cow
   - [x] Tooltip info appears over cow when selected
