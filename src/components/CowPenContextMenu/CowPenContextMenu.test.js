@@ -24,6 +24,7 @@ describe('CowPenContextMenu', () => {
           handleCowSelect: () => {},
           handleCowNameInputChange: () => {},
           handleCowPurchaseClick: () => {},
+          handleCowHugClick: () => {},
           handleCowSellClick: () => {},
           money: 0,
           purchasedCowPen: 1,
@@ -154,26 +155,25 @@ describe('CowCardSubheader', () => {
             weight: 100,
           },
           cowValue: 1000,
-          isSellView: false,
-          isPurchaseView: false,
+          isCowPurchased: false,
         }}
       />
     );
   });
 
   describe('happiness display', () => {
-    describe('is purchase view', () => {
+    describe('cow is not purchased', () => {
       test('renders no hearts', () => {
-        component.setProps({
-          isPurchaseView: true,
-        });
-
         expect(component.find('.heart')).toHaveLength(0);
       });
     });
 
-    describe('is not purchase view', () => {
+    describe('cow is purchased', () => {
       test('renders hearts', () => {
+        component.setProps({
+          isCowPurchased: true,
+        });
+
         expect(component.find('.heart')).toHaveLength(10);
       });
 
@@ -187,6 +187,7 @@ describe('CowCardSubheader', () => {
             name: '',
             weight: 100,
           },
+          isCowPurchased: true,
         });
 
         expect(component.find('.heart.is-full')).toHaveLength(5);

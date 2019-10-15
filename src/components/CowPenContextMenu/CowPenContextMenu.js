@@ -39,22 +39,21 @@ const isHeartFull = (heartIndex, numberOfFullHearts) =>
 export const CowCardSubheader = ({
   cow,
   cowValue,
-  isPurchaseView,
-  isSellView,
+  isCowPurchased,
 
   numberOfFullHearts = cow.happiness * 10,
 }) => (
   <>
-    {isSellView && (
+    {isCowPurchased && (
       <p>
         {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
       </p>
     )}
     <p>
-      {isPurchaseView ? 'Price' : 'Value'}: ${dollarAmount(cowValue)}
+      {isCowPurchased ? 'Value' : 'Price'}: ${dollarAmount(cowValue)}
     </p>
     <p>Weight: {cow.weight} lbs.</p>
-    {!isPurchaseView && (
+    {isCowPurchased && (
       <ol className="hearts">
         {nullHeartList.map((_null, i) => (
           <li key={`${cow.id}_${i}`}>
@@ -78,6 +77,7 @@ export const CowCardSubheader = ({
 export const CowCard = ({
   cow,
   cowInventory,
+  handleCowHugClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSellClick,
@@ -86,9 +86,8 @@ export const CowCard = ({
   purchasedCowPen,
 
   cowValue = getCowValue(cow),
+  isCowPurchased = !!handleCowSellClick,
   isNameEditable = !!handleCowNameInputChange,
-  isPurchaseView = !!handleCowPurchaseClick,
-  isSellView = !!handleCowSellClick,
 }) => (
   <Card {...{ raised: isSelected }}>
     <CardHeader
@@ -124,15 +123,14 @@ export const CowCard = ({
             {...{
               cow,
               cowValue,
-              isPurchaseView,
-              isSellView,
+              isCowPurchased,
             }}
           />
         ),
       }}
     />
     <CardActions>
-      {isPurchaseView && (
+      {!isCowPurchased && (
         <Button
           {...{
             className: 'purchase',
@@ -148,17 +146,29 @@ export const CowCard = ({
           Buy
         </Button>
       )}
-      {isSellView && (
-        <Button
-          {...{
-            className: 'sell',
-            color: 'primary',
-            onClick: () => handleCowSellClick(cow),
-            variant: 'contained',
-          }}
-        >
-          Sell
-        </Button>
+      {isCowPurchased && (
+        <>
+          <Button
+            {...{
+              className: 'hug',
+              color: 'primary',
+              onClick: () => handleCowHugClick(cow),
+              variant: 'contained',
+            }}
+          >
+            Hug
+          </Button>
+          <Button
+            {...{
+              className: 'sell',
+              color: 'secondary',
+              onClick: () => handleCowSellClick(cow),
+              variant: 'contained',
+            }}
+          >
+            Sell
+          </Button>
+        </>
       )}
     </CardActions>
   </Card>
@@ -167,9 +177,10 @@ export const CowCard = ({
 export const CowPenContextMenu = ({
   cowForSale,
   cowInventory,
-  handleCowSelect,
+  handleCowHugClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
+  handleCowSelect,
   handleCowSellClick,
   money,
   purchasedCowPen,
@@ -204,6 +215,7 @@ export const CowPenContextMenu = ({
               cow,
               cowInventory,
               handleCowNameInputChange,
+              handleCowHugClick,
               handleCowSellClick,
               isSelected: cow.id === selectedCowId,
               money,
@@ -219,6 +231,7 @@ export const CowPenContextMenu = ({
 CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
   cowInventory: array.isRequired,
+  handleCowHugClick: func.isRequired,
   handleCowNameInputChange: func.isRequired,
   handleCowPurchaseClick: func.isRequired,
   handleCowSelect: func.isRequired,

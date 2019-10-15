@@ -1,7 +1,11 @@
 import { shapeOf, testCrop, testItem } from './test-utils';
 import { RAIN_MESSAGE } from './strings';
 import { CROW_ATTACKED } from './templates';
-import { FERTILIZER_BONUS, SCARECROW_ITEM_ID } from './constants';
+import {
+  COW_HUG_BENEFIT,
+  FERTILIZER_BONUS,
+  SCARECROW_ITEM_ID,
+} from './constants';
 import {
   sampleItem1,
   sampleItem2,
@@ -296,11 +300,17 @@ describe('addItemToInventory', () => {
   });
 });
 
-describe('getIncrementedCowInventory', () => {
+describe('computeCowInventoryForNextDay', () => {
   test('ages cows', () => {
     expect(
-      fn.getIncrementedCowInventory([{ daysOld: 0 }, { daysOld: 5 }])
-    ).toEqual([{ daysOld: 1 }, { daysOld: 6 }]);
+      fn.computeCowInventoryForNextDay([
+        { daysOld: 0 },
+        { daysOld: 5, happiness: 0.5, happinessBoostsToday: 3 },
+      ])
+    ).toMatchObject([
+      { daysOld: 1, happinessBoostsToday: 0 },
+      { daysOld: 6, happiness: 0.5 - COW_HUG_BENEFIT, happinessBoostsToday: 0 },
+    ]);
   });
 });
 
