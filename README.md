@@ -47,7 +47,7 @@ There is no release or versioning system yet.
   - [ ] Three quality levels
 - [ ] Cow care
   - [ ] Feeding grain increases weight
-  - [ ] Hugging cows improves happiness (benefits top out after 3 daily hugs)
+  - [x] Hugging cows improves happiness (benefits top out after 3 daily hugs)
   - [ ] Even gender distribution increases happiness
 - [ ] Selling cows
   - [x] Greater weight results in higher sell value

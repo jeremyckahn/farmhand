@@ -51,6 +51,8 @@ import {
 import {
   FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
+  COW_HUG_BENEFIT,
+  MAX_DAILY_COW_HUG_BENEFITS,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   SCARECROW_ITEM_ID,
@@ -489,23 +491,50 @@ export default class Farmhand extends Component {
 
   /**
    * @param {string} cowId
-   * @param {string} newName
+   * @param {Function(farmhand.cow)} fn Must return the modified cow or
+   * undefined.
    */
-  changeCowName(cowId, newName) {
+  modifyCow(cowId, fn) {
     this.setState(({ cowInventory }) => {
       const cow = cowInventory.find(({ id }) => id === cowId);
       const cowIndex = cowInventory.indexOf(cow);
-
       const newCowInventory = [...cowInventory];
+
       newCowInventory[cowIndex] = {
         ...cow,
-        name: newName.slice(0, MAX_ANIMAL_NAME_LENGTH),
+        ...fn(cow),
       };
 
       return {
         cowInventory: newCowInventory,
       };
     });
+  }
+
+  /**
+   * @param {string} cowId
+   */
+  hugCow(cowId) {
+    this.modifyCow(cowId, cow => {
+      if (cow.happinessBoostsToday >= MAX_DAILY_COW_HUG_BENEFITS) {
+        return;
+      }
+
+      return {
+        happiness: Math.min(1, cow.happiness + COW_HUG_BENEFIT),
+        happinessBoostsToday: cow.happinessBoostsToday + 1,
+      };
+    });
+  }
+
+  /**
+   * @param {string} cowId
+   * @param {string} newName
+   */
+  changeCowName(cowId, newName) {
+    this.modifyCow(cowId, cow => ({
+      name: newName.slice(0, MAX_ANIMAL_NAME_LENGTH),
+    }));
   }
 
   /**

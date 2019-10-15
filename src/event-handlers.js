@@ -42,6 +42,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowHugClick(cow) {
+    this.hugCow(cow.id);
+  },
+
+  /**
    * @param {external:React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */

@@ -35,3 +35,6 @@ export const COW_STARTING_WEIGHT_BASE = 1800;
 export const COW_STARTING_WEIGHT_VARIANCE = 200;
 
 export const MAX_ANIMAL_NAME_LENGTH = 30;
+
+export const COW_HUG_BENEFIT = 0.05;
+export const MAX_DAILY_COW_HUG_BENEFITS = 3;

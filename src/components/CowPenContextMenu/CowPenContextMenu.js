@@ -77,6 +77,7 @@ export const CowCardSubheader = ({
 export const CowCard = ({
   cow,
   cowInventory,
+  handleCowHugClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSellClick,
@@ -146,16 +147,28 @@ export const CowCard = ({
         </Button>
       )}
       {isCowPurchased && (
-        <Button
-          {...{
-            className: 'sell',
-            color: 'primary',
-            onClick: () => handleCowSellClick(cow),
-            variant: 'contained',
-          }}
-        >
-          Sell
-        </Button>
+        <>
+          <Button
+            {...{
+              className: 'hug',
+              color: 'primary',
+              onClick: () => handleCowHugClick(cow),
+              variant: 'contained',
+            }}
+          >
+            Hug
+          </Button>
+          <Button
+            {...{
+              className: 'sell',
+              color: 'secondary',
+              onClick: () => handleCowSellClick(cow),
+              variant: 'contained',
+            }}
+          >
+            Sell
+          </Button>
+        </>
       )}
     </CardActions>
   </Card>
@@ -164,9 +177,10 @@ export const CowCard = ({
 export const CowPenContextMenu = ({
   cowForSale,
   cowInventory,
-  handleCowSelect,
+  handleCowHugClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
+  handleCowSelect,
   handleCowSellClick,
   money,
   purchasedCowPen,
@@ -201,6 +215,7 @@ export const CowPenContextMenu = ({
               cow,
               cowInventory,
               handleCowNameInputChange,
+              handleCowHugClick,
               handleCowSellClick,
               isSelected: cow.id === selectedCowId,
               money,
@@ -216,6 +231,7 @@ export const CowPenContextMenu = ({
 CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
   cowInventory: array.isRequired,
+  handleCowHugClick: func.isRequired,
   handleCowNameInputChange: func.isRequired,
   handleCowPurchaseClick: func.isRequired,
   handleCowSelect: func.isRequired,

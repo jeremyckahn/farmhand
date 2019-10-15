@@ -8,6 +8,7 @@ import {
   getRangeCoords,
 } from './utils';
 import {
+  COW_HUG_BENEFIT,
   CROW_CHANCE,
   FERTILIZER_BONUS,
   RAIN_CHANCE,
@@ -253,8 +254,13 @@ export const getUpdatedField = field =>
  * @param {Array.<farmhand.cow>} cowInventory
  * @returns {Array.<farmhand.cow>}
  */
-export const getIncrementedCowInventory = cowInventory =>
-  cowInventory.map(cow => ({ ...cow, daysOld: cow.daysOld + 1 }));
+export const computeCowInventoryForNextDay = cowInventory =>
+  cowInventory.map(cow => ({
+    ...cow,
+    daysOld: cow.daysOld + 1,
+    happiness: Math.max(0, cow.happiness - COW_HUG_BENEFIT),
+    happinessBoostsToday: 0,
+  }));
 
 /**
  * @param {Array.<Array.<?farmhand.plotContent>>} field
@@ -353,7 +359,7 @@ export const computeStateForNextDay = state =>
       dayCount: state.dayCount + 1,
       field: getUpdatedField(state.field),
       valueAdjustments: getUpdatedValueAdjustments(),
-      cowInventory: getIncrementedCowInventory(state.cowInventory),
+      cowInventory: computeCowInventoryForNextDay(state.cowInventory),
     }
   );
 
