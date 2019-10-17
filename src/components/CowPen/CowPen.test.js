@@ -144,4 +144,36 @@ describe('Cow', () => {
       });
     });
   });
+
+  describe('hug animation', () => {
+    describe('cow.happinessBoostsToday is increased', () => {
+      let cow;
+
+      beforeEach(() => {
+        cow = generateCow();
+        component.setProps({
+          cow,
+        });
+      });
+
+      test('updates showHugAnimation state', () => {
+        expect(component.state().showHugAnimation).toBe(false);
+
+        component.setProps({
+          cow: { ...cow, happinessBoostsToday: 1 },
+        });
+
+        expect(component.state().showHugAnimation).toBe(true);
+      });
+
+      test('showHugAnimation state is reset after animation is scheduled to complete', () => {
+        component.setProps({
+          cow: { ...cow, happinessBoostsToday: 1 },
+        });
+
+        jest.runOnlyPendingTimers();
+        expect(component.state().showHugAnimation).toBe(false);
+      });
+    });
+  });
 });

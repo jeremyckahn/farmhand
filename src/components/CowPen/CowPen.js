@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { array, bool, func, object, string } from 'prop-types';
 import classNames from 'classnames';
 import Tooltip from '@material-ui/core/Tooltip';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 import { cowColors } from '../../enums';
 import FarmhandContext from '../../Farmhand.context';
@@ -12,15 +14,20 @@ import './CowPen.sass';
 export class Cow extends Component {
   state = {
     isMoving: false,
+    showHugAnimation: false,
     x: Cow.randomPosition(),
     y: Cow.randomPosition(),
   };
 
   repositionTimeoutId = null;
-  animateTimeoutId = null;
+  animateMovementTimeoutId = null;
+  animateHugTimeoutId = null;
 
-  // This MUST be kept in sync with $animation-duration in CowPen.sass.
-  static animationDuration = 3000;
+  // This MUST be kept in sync with $movement-animation-duration in CowPen.sass.
+  static movementAnimationDuration = 3000;
+
+  // This MUST be kept in sync with $hug-animation-duration in CowPen.sass.
+  static hugAnimationDuration = 750;
 
   static waitVariance = 12 * 1000;
 
@@ -38,17 +45,30 @@ export class Cow extends Component {
     if (!this.props.isSelected && prevProps.isSelected) {
       this.scheduleMove();
     }
+
+    if (
+      this.props.cow.happinessBoostsToday >
+        prevProps.cow.happinessBoostsToday &&
+      !this.state.showHugAnimation
+    ) {
+      this.setState({ showHugAnimation: true });
+
+      this.animateHugTimeoutId = setTimeout(
+        () => this.setState({ showHugAnimation: false }),
+        Cow.hugAnimationDuration
+      );
+    }
   }
 
   animateTimeoutHandler = () => {
-    this.animateTimeoutId = null;
+    this.animateMovementTimeoutId = null;
     this.finishMoving();
   };
 
   move = () => {
-    this.animateTimeoutId = setTimeout(
+    this.animateMovementTimeoutId = setTimeout(
       this.animateTimeoutHandler,
-      Cow.animationDuration
+      Cow.movementAnimationDuration
     );
 
     this.setState({
@@ -84,14 +104,17 @@ export class Cow extends Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.repositionTimeoutId);
-    clearTimeout(this.animateTimeoutId);
+    [
+      this.repositionTimeoutId,
+      this.animateMovementTimeoutId,
+      this.animateHugTimeoutId,
+    ].forEach(clearTimeout);
   }
 
   render() {
     const {
       props: { cow, handleCowSelect, isSelected },
-      state: { isMoving, x, y },
+      state: { isMoving, showHugAnimation, x, y },
     } = this;
 
     return (
@@ -110,7 +133,7 @@ export class Cow extends Component {
       >
         <Tooltip
           {...{
-            placement: 'top',
+            placement: 'bottom',
             title: cow.name,
             open: isSelected,
             PopperProps: {
@@ -118,12 +141,20 @@ export class Cow extends Component {
             },
           }}
         >
-          <img
-            {...{
-              src: animals.cow[cowColors[cow.color].toLowerCase()],
-            }}
-            alt="Cow"
-          />
+          <div>
+            <img
+              {...{
+                src: animals.cow[cowColors[cow.color].toLowerCase()],
+              }}
+              alt="Cow"
+            />
+            <FontAwesomeIcon
+              {...{
+                className: classNames({ animate: showHugAnimation }),
+                icon: faHeart,
+              }}
+            />
+          </div>
         </Tooltip>
       </div>
     );
