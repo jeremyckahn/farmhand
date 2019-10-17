@@ -1,14 +1,19 @@
+@import ../../styles/variables.sass
+
 .CowPen
 
   &:hover
     cursor: pointer
 
-  // This MUST be kept in sync with Cow.animationDuration in CowPen.js.
-  $animation-duration: 3000ms
+  // This MUST be kept in sync with Cow.movementAnimationDuration in CowPen.js.
+  $movement-animation-duration: 3000ms
+
+  // This MUST be kept in sync with Cow.hugAnimationDuration in CowPen.js.
+  $hug-animation-duration: 750ms
 
   .cow
     position: absolute
-    transition: all $animation-duration linear
+    transition: all $movement-animation-duration linear
 
     &::before
       background: rgba(128, 128, 128, 0.5)
@@ -34,6 +39,22 @@
     img
       width: 100px
 
+    svg
+      color: $heart-color
+      opacity: 0
+      position: absolute
+      right: 20px
+      top: 10px
+      transform: translateY(0px) scale(1)
+
+
+      &.animate
+        animation-name: hug-indicator
+        animation-duration: $hug-animation-duration
+        animation-fill-mode: forwards
+        animation-timing-function: ease-out
+        animation-iteration-count: 1
+
   .is-moving
 
     img
@@ -55,3 +76,16 @@
     40%,
     60%
       transform: translate(0px, -48px)
+
+  @keyframes hug-indicator
+    0%
+      opacity: 0
+      transform: translateY(0px) scale(1)
+
+    50%
+      opacity: 1
+      transform: translateY(-80px) scale(2)
+
+    100%
+      opacity: 0
+      transform: translateY(-80px) scale(2)
