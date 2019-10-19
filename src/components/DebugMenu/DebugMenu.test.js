@@ -9,6 +9,7 @@ beforeEach(() => {
   component = shallow(
     <DebugMenu
       {...{
+        handleAddMoneyClick: () => {},
         handleClearPersistedDataClick: () => {},
         handleWaterAllPlotsClick: () => {},
       }}

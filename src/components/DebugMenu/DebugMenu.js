@@ -11,6 +11,7 @@ import FarmhandContext from '../../Farmhand.context';
 import './DebugMenu.sass';
 
 export const DebugMenu = ({
+  handleAddMoneyClick,
   handleClearPersistedDataClick,
   handleWaterAllPlotsClick,
 }) => (
@@ -20,6 +21,13 @@ export const DebugMenu = ({
     </ExpansionPanelSummary>
     <ExpansionPanelDetails>
       <Typography>
+        <Button
+          color="primary"
+          onClick={() => handleAddMoneyClick(1000)}
+          variant="contained"
+        >
+          Get $1000
+        </Button>
         <Button
           color="primary"
           onClick={handleWaterAllPlotsClick}
@@ -40,6 +48,7 @@ export const DebugMenu = ({
 );
 
 DebugMenu.propTypes = {
+  handleAddMoneyClick: func.isRequired,
   handleClearPersistedDataClick: func.isRequired,
   handleWaterAllPlotsClick: func.isRequired,
 };

@@ -139,6 +139,13 @@ export default {
     this.incrementDay();
   },
 
+  /**
+   * @param {number} amount
+   */
+  handleAddMoneyClick(amount) {
+    this.setState(({ money }) => ({ money: money + amount }));
+  },
+
   handleClearPersistedDataClick() {
     this.clearPersistedData();
   },
