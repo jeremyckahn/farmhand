@@ -36,8 +36,7 @@ There is no release or versioning system yet.
   - [x] Cows walking around
   - [x] Click/tap to select cow
   - [x] Tooltip info appears over cow when selected
-- [ ] Purchase growable grain seeds
-- [ ] Purchase grown grain for a premium
+- [ ] Purchase cow feed (10 units at a time)
 - [ ] Cow milking
   - [ ] Female cows can be milked once a day
   - [ ] Happiness improves milk quality
@@ -46,15 +45,16 @@ There is no release or versioning system yet.
 - [ ] Milk items
   - [ ] Three quality levels
 - [ ] Cow care
-  - [ ] Feeding grain increases weight
+  - [ ] Keeping cow feed stocked increases weight
+  - [ ] Cows automatically eat one unit of feed a day
   - [x] Hugging cows improves happiness (benefits top out after 3 daily hugs)
-  - [ ] Even gender distribution increases happiness
 - [ ] Selling cows
   - [x] Greater weight results in higher sell value
   - [ ] Older cows are worth less
 - [ ] Negligence
-  - [ ] Not feeding cows causes them to lose weight
-  - [ ] Cows die after becoming too underweight
+  - [ ] Not keeping cow feed stocked causes cows to lose weight
+- [ ] Breeding
+  - [ ] Happy male/female cow pairs will randomly produce offspring if there is room in the pen
 
 ## Milestone 1 tasks
 
