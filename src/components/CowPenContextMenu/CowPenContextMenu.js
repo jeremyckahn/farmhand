@@ -15,11 +15,16 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
 
+import Item from '../Item';
 import { animals } from '../../img';
 import FarmhandContext from '../../Farmhand.context';
 import { cowColors, genders } from '../../enums';
 import { dollarAmount, getCowValue } from '../../utils';
-import { PURCHASEABLE_COW_PENS } from '../../constants';
+import {
+  COW_FEED_BULK_PURCHASE_AMOUNT,
+  PURCHASEABLE_COW_PENS,
+} from '../../constants';
+import { cowFeed } from '../../data/items';
 
 import './CowPenContextMenu.sass';
 
@@ -187,6 +192,14 @@ export const CowPenContextMenu = ({
   selectedCowId,
 }) => (
   <div className="CowPenContextMenu">
+    <h2>Supplies</h2>
+    <Item
+      {...{
+        bulkPurchaseSize: COW_FEED_BULK_PURCHASE_AMOUNT,
+        item: cowFeed,
+        isPurchaseView: true,
+      }}
+    />
     <h2>For sale</h2>
     <CowCard
       {...{

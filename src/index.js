@@ -23,6 +23,8 @@
  * @property {farmhand.module:enums.cropType} [cropType]
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.
  * @property {string} [growsInto] The id of another farmhand.item.
+ * @property {boolean} [doesPriceFluctuate] Whether or not this item has a
+ * value that fluctuates from day to day.
  * @property {number} [hoveredPlotRange] The number to set.
  * farmhand.state.hoveredPlotRange to when the item is active.
  * @property {boolean} [isPlantableCrop]
@@ -30,11 +32,12 @@
  * @property {number} [quanitity] How many of the item the player has.
  */
 
+// TODO: farmhand.plotContent.type should be derived data, not stored.
 /**
  * @typedef farmhand.plotContent
  * @type {Object}
  * @property {string} itemId
- * @property {farmhand.module:enums.plotContentType} type
+ * @property {farmhand.module:enums.itemType} type
  */
 
 /**

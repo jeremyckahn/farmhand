@@ -71,6 +71,7 @@ const SellValueIndicator = ({
 );
 
 export const Item = ({
+  bulkPurchaseSize,
   handleItemMaxOutClick,
   handleItemPurchaseClick,
   handleItemSelectClick,
@@ -101,13 +102,19 @@ export const Item = ({
             {isPurchaseView && (
               <p>
                 {`Price: $${value.toFixed(2)}`}
-                <PurchaseValueIndicator {...{ id, value, valueAdjustments }} />
+                {valueAdjustments[id] && (
+                  <PurchaseValueIndicator
+                    {...{ id, value, valueAdjustments }}
+                  />
+                )}
               </p>
             )}
             {isSellView && (
               <p>
                 {`Sell price: $${value.toFixed(2)}`}
-                <SellValueIndicator {...{ id, value, valueAdjustments }} />
+                {valueAdjustments[id] && (
+                  <SellValueIndicator {...{ id, value, valueAdjustments }} />
+                )}
               </p>
             )}
             <p>
@@ -143,6 +150,19 @@ export const Item = ({
           >
             Buy
           </Button>
+          {bulkPurchaseSize && (
+            <Button
+              {...{
+                className: 'bulk purchase',
+                color: 'primary',
+                disabled: value * bulkPurchaseSize > money,
+                onClick: () => handleItemPurchaseClick(item, bulkPurchaseSize),
+                variant: 'contained',
+              }}
+            >
+              Buy {bulkPurchaseSize}
+            </Button>
+          )}
           <Button
             {...{
               className: 'max-out',
@@ -185,6 +205,7 @@ export const Item = ({
 );
 
 Item.propTypes = {
+  bulkPurchaseSize: number,
   handleItemMaxOutClick: func,
   handleItemPurchaseClick: func,
   handleItemSelectClick: func,

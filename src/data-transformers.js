@@ -17,7 +17,7 @@ import {
 } from './constants';
 import { RAIN_MESSAGE } from './strings';
 import { CROW_ATTACKED } from './templates';
-import { fieldMode, plotContentType } from './enums';
+import { fieldMode, itemType } from './enums';
 
 /**
  * @param {farmhand.state} state
@@ -43,7 +43,7 @@ export const applyCrows = state => {
   const updatedField = fieldHasScarecrow
     ? field
     : updateField(field, plotContent => {
-        if (!plotContent || plotContent.type !== plotContentType.CROP) {
+        if (!plotContent || plotContent.type !== itemType.CROP) {
           return plotContent;
         }
 
@@ -72,7 +72,7 @@ export const applySprinklers = state => {
 
   field.forEach((row, fieldY) => {
     row.forEach((plot, fieldX) => {
-      if (!plot || plot.type !== plotContentType.SPRINKLER) {
+      if (!plot || plot.type !== itemType.SPRINKLER) {
         return;
       }
 
@@ -90,7 +90,7 @@ export const applySprinklers = state => {
 
           const plotContent = fieldRow[x];
 
-          if (plotContent && plotContent.type === plotContentType.CROP) {
+          if (plotContent && plotContent.type === itemType.CROP) {
             if (!crops.has(plotContent)) {
               modifiedField = modifyFieldPlotAt(
                 modifiedField,
@@ -122,14 +122,17 @@ export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
   }))
 );
 
+/**
+ * @return {Object}
+ */
 export const getUpdatedValueAdjustments = () =>
-  Object.keys(itemsMap).reduce(
-    (acc, key) => ({
-      [key]: Math.random() + 0.5,
-      ...acc,
-    }),
-    {}
-  );
+  Object.keys(itemsMap).reduce((acc, key) => {
+    if (itemsMap[key].doesPriceFluctuate) {
+      acc[key] = Math.random() + 0.5;
+    }
+
+    return acc;
+  }, {});
 
 /**
  * @param {string} seedItemId
@@ -165,23 +168,20 @@ export const getPlantableCropInventory = memoize(inventory =>
     .map(({ id }) => itemsMap[id])
 );
 
-// TODO: Rename this to be more specific.
 /**
  * @param {?farmhand.crop} crop
  * @returns {?farmhand.crop}
  */
-export const incrementAge = crop =>
-  crop === null
-    ? null
-    : {
-        ...crop,
-        daysOld: crop.daysOld + 1,
-        daysWatered:
-          crop.daysWatered +
-          (crop.wasWateredToday
-            ? 1 + (crop.isFertilized ? FERTILIZER_BONUS : 0)
-            : 0),
-      };
+export const incrementCropAge = crop =>
+  crop && {
+    ...crop,
+    daysOld: crop.daysOld + 1,
+    daysWatered:
+      crop.daysWatered +
+      (crop.wasWateredToday
+        ? 1 + (crop.isFertilized ? FERTILIZER_BONUS : 0)
+        : 0),
+  };
 
 /**
  * @param {?farmhand.plotContent} plotContent
@@ -193,7 +193,7 @@ const setWasWateredProperty = (plotContent, wasWateredToday) => {
     return null;
   }
 
-  return plotContent.type === plotContentType.CROP
+  return plotContent.type === itemType.CROP
     ? { ...plotContent, wasWateredToday }
     : { ...plotContent };
 };
@@ -328,7 +328,7 @@ export const decrementItemFromInventory = (itemId, inventory, howMany = 1) => {
   return inventory;
 };
 
-export const fieldUpdaters = [incrementAge, resetWasWatered];
+export const fieldUpdaters = [incrementCropAge, resetWasWatered];
 
 const applyChanceEvent = (chancesAndEvents, state) =>
   chancesAndEvents.reduce(

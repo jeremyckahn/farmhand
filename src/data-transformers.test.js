@@ -257,9 +257,17 @@ describe('getUpdatedValueAdjustments', () => {
     valueAdjustments = fn.getUpdatedValueAdjustments();
   });
 
-  test('updates valueAdjustments by random factor', () => {
-    expect(valueAdjustments['sample-crop-1']).toEqual(1.5);
-    expect(valueAdjustments['sample-crop-2']).toEqual(1.5);
+  describe('item has a fluctuating price', () => {
+    test('updates valueAdjustments by random factor', () => {
+      expect(valueAdjustments['sample-crop-1']).toEqual(1.5);
+      expect(valueAdjustments['sample-crop-2']).toEqual(1.5);
+    });
+  });
+
+  describe('item does not have a fluctuating price', () => {
+    test('valueAdjustments value is not defined', () => {
+      expect(valueAdjustments['sample-field-tool-1']).toEqual(undefined);
+    });
   });
 });
 
@@ -351,10 +359,10 @@ describe('getPlantableCropInventory', () => {
   });
 });
 
-describe('incrementAge', () => {
+describe('incrementCropAge', () => {
   describe('plant is not watered', () => {
     test('updates daysOld', () => {
-      const { daysOld, daysWatered } = fn.incrementAge(
+      const { daysOld, daysWatered } = fn.incrementCropAge(
         testCrop({ itemId: 'sample-crop-1' })
       );
 
@@ -365,7 +373,7 @@ describe('incrementAge', () => {
 
   describe('plant is watered', () => {
     test('updates daysOld and daysWatered', () => {
-      const { daysOld, daysWatered } = fn.incrementAge(
+      const { daysOld, daysWatered } = fn.incrementCropAge(
         testCrop({ itemId: 'sample-crop-1', wasWateredToday: true })
       );
 
@@ -376,7 +384,7 @@ describe('incrementAge', () => {
 
   describe('plant is fertilized', () => {
     test('updates daysOld with bonus', () => {
-      const { daysWatered } = fn.incrementAge(
+      const { daysWatered } = fn.incrementCropAge(
         testCrop({
           itemId: 'sample-crop-1',
           isFertilized: true,

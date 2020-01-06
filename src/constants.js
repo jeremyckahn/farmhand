@@ -38,3 +38,5 @@ export const MAX_ANIMAL_NAME_LENGTH = 30;
 
 export const COW_HUG_BENEFIT = 0.05;
 export const MAX_DAILY_COW_HUG_BENEFITS = 3;
+
+export const COW_FEED_BULK_PURCHASE_AMOUNT = 10;
