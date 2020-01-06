@@ -7,13 +7,15 @@ import FarmhandContext from '../../Farmhand.context';
 import Item from '../Item';
 import { itemsMap } from '../../data/maps';
 import { getItemValue } from '../../utils';
-import { plotContentType } from '../../enums';
+import { enumify, itemType } from '../../enums';
 
 import './Inventory.sass';
 
+const { COW_FEED, CROP, FERTILIZER, SCARECROW, SPRINKLER } = itemType;
+
 const sortItemIdsByTypeAndValue = memoize(itemIds =>
   sortBy(itemIds, [
-    id => Number(itemsMap[id].type !== plotContentType.CROP),
+    id => Number(itemsMap[id].type !== CROP),
     id => itemsMap[id].value,
   ])
 );
@@ -27,17 +29,29 @@ export const sort = items => {
   );
 };
 
-export const getItemCategories = items =>
-  sort(items).reduce(
-    (acc, item) => {
-      acc[
-        itemsMap[item.id].type === plotContentType.CROP ? 'seeds' : 'tools'
-      ].push(item);
+export const categoryIds = enumify(['ANIMAL_SUPPLIES', 'FIELD_TOOLS', 'SEEDS']);
+const categoryIdKeys = Object.keys(categoryIds);
+const { ANIMAL_SUPPLIES, FIELD_TOOLS, SEEDS } = categoryIds;
 
-      return acc;
-    },
-    { seeds: [], tools: [] }
-  );
+const itemTypeCategoryMap = Object.freeze({
+  [COW_FEED]: ANIMAL_SUPPLIES,
+  [CROP]: SEEDS,
+  [FERTILIZER]: FIELD_TOOLS,
+  [SCARECROW]: FIELD_TOOLS,
+  [SPRINKLER]: FIELD_TOOLS,
+});
+
+const getItemCategories = () =>
+  categoryIdKeys.reduce((acc, key) => {
+    acc[key] = [];
+    return acc;
+  }, {});
+
+export const separateItemsIntoCategories = items =>
+  sort(items).reduce((acc, item) => {
+    acc[itemTypeCategoryMap[itemsMap[item.id].type]].push(item);
+    return acc;
+  }, getItemCategories());
 
 export const Inventory = ({
   items,
@@ -50,11 +64,15 @@ export const Inventory = ({
   isPurchaseView = items === shopInventory,
   isSellView = items === playerInventory,
 
-  itemCategories = getItemCategories(items),
+  itemCategories = separateItemsIntoCategories(items),
 }) => (
   <div className="Inventory">
-    {[['seeds', 'Seeds'], ['tools', 'Field Tools']].map(
-      ([category, headerText]) => (
+    {[
+      [SEEDS, 'Seeds'],
+      [FIELD_TOOLS, 'Field Tools'],
+      [ANIMAL_SUPPLIES, 'Animal Supplies'],
+    ].map(([category, headerText]) =>
+      itemCategories[category].length ? (
         <section key={category}>
           <h2>{headerText}</h2>
           <ul className="card-list">
@@ -74,7 +92,7 @@ export const Inventory = ({
             ))}
           </ul>
         </section>
-      )
+      ) : null
     )}
   </div>
 );

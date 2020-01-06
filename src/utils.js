@@ -4,7 +4,7 @@ import memoize from 'fast-memoize';
 import fruitNames from './data/fruit-names';
 import { cropIdToTypeMap, itemsMap } from './data/maps';
 import { items as itemImages } from './img';
-import { cowColors, cropLifeStage, genders, plotContentType } from './enums';
+import { cowColors, cropLifeStage, genders, itemType } from './enums';
 import {
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
@@ -48,7 +48,8 @@ export const getItemValue = ({ id }, valueAdjustments) =>
   Dinero({
     amount: Math.round(
       (valueAdjustments[id]
-        ? itemsMap[id].value * valueAdjustments[id]
+        ? itemsMap[id].value *
+          (itemsMap[id].doesPriceFluctuate ? valueAdjustments[id] : 1)
         : itemsMap[id].value) * 100
     ),
     precision: 2,
@@ -63,7 +64,7 @@ export const getCropFromItemId = itemId => ({
   daysOld: 0,
   daysWatered: 0,
   isFertilized: false,
-  type: plotContentType.CROP,
+  type: itemType.CROP,
   wasWateredToday: false,
 });
 
@@ -113,7 +114,7 @@ const cropLifeStageToImageSuffixMap = {
  */
 export const getPlotImage = plotContent =>
   plotContent
-    ? plotContent.type === plotContentType.CROP
+    ? plotContent.type === itemType.CROP
       ? getCropLifeStage(plotContent) === GROWN
         ? itemImages[getCropId(plotContent)]
         : itemImages[
@@ -150,7 +151,7 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
  * @returns {number}
  */
 export const getAdjustedItemValue = (valueAdjustments, itemId) =>
-  valueAdjustments[itemId] * itemsMap[itemId].value;
+  (valueAdjustments[itemId] || 1) * itemsMap[itemId].value;
 
 /**
  * Generates a friendly cow.

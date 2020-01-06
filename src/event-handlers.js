@@ -22,9 +22,10 @@ export default {
 
   /**
    * @param {farmhand.item} item
+   * @param {number} [howMany=1]
    */
-  handleItemPurchaseClick(item) {
-    this.purchaseItem(item);
+  handleItemPurchaseClick(item, howMany = 1) {
+    this.purchaseItem(item, howMany);
   },
 
   /**
@@ -52,12 +53,7 @@ export default {
    * @param {external:React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
-  handleCowNameInputChange(
-    {
-      target: { value },
-    },
-    cow
-  ) {
+  handleCowNameInputChange({ target: { value } }, cow) {
     this.changeCowName(cow.id, value);
   },
 

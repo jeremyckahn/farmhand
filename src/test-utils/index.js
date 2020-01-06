@@ -1,4 +1,4 @@
-import { plotContentType } from '../enums';
+import { itemType } from '../enums';
 
 export const shapeOf = object =>
   Object.keys(object).reduce((acc, key) => {
@@ -10,7 +10,7 @@ export const testCrop = (item = {}) => ({
   daysOld: 0,
   daysWatered: 0,
   itemId: '',
-  type: plotContentType.CROP,
+  type: itemType.CROP,
   wasWateredToday: false,
   ...item,
 });

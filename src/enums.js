@@ -6,7 +6,8 @@
  * @param {Array.<string>} keys
  * @returns {Object.<string>}
  */
-const enumify = keys => keys.reduce((acc, key) => ({ [key]: key, ...acc }), {});
+export const enumify = keys =>
+  keys.reduce((acc, key) => ({ [key]: key, ...acc }), {});
 
 /**
  * @property farmhand.module:enums.cropType
@@ -48,10 +49,16 @@ export const stageFocusType = enumify([
 export const cropLifeStage = enumify(['SEED', 'GROWING', 'GROWN']);
 
 /**
- * @property farmhand.module:enums.plotContentType
+ * @property farmhand.module:enums.itemType
  * @enum {string}
  */
-export const plotContentType = enumify(['CROP', 'SPRINKLER', 'SCARECROW']);
+export const itemType = enumify([
+  'COW_FEED',
+  'CROP',
+  'FERTILIZER',
+  'SCARECROW',
+  'SPRINKLER',
+]);
 
 /**
  * @property farmhand.module:enums.genders

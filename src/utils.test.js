@@ -1,5 +1,6 @@
 import {
   dollarAmount,
+  getItemValue,
   generateCow,
   getCowValue,
   getCropId,
@@ -13,6 +14,7 @@ import fruitNames from './data/fruit-names';
 import { testCrop } from './test-utils';
 import { items as itemImages } from './img';
 import { cowColors, cropLifeStage, genders } from './enums';
+import { sampleItem1, sampleFieldTool1 } from './data/items';
 import {
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
@@ -27,6 +29,33 @@ const { SEED, GROWING, GROWN } = cropLifeStage;
 describe('dollarAmount', () => {
   test('formats number to dollar amount', () => {
     expect(dollarAmount(123.4567)).toEqual('123.46');
+  });
+});
+
+describe('getItemValue', () => {
+  let valueAdjustments;
+
+  beforeEach(() => {
+    valueAdjustments = {
+      'sample-item-1': 1.5,
+      'sample-field-tool-1': 1.5,
+    };
+  });
+
+  describe('stable value item', () => {
+    test('computes value', () => {
+      expect(getItemValue({ id: 'sample-item-1' }, valueAdjustments)).toEqual(
+        sampleItem1.value * 1.5
+      );
+    });
+  });
+
+  describe('fluctuating value item', () => {
+    test('computes value', () => {
+      expect(
+        getItemValue({ id: 'sample-field-tool-1' }, valueAdjustments)
+      ).toEqual(sampleFieldTool1.value);
+    });
   });
 });
 
@@ -129,9 +158,21 @@ describe('getRangeCoords', () => {
   describe('surrounded by plots', () => {
     test('computes the plot range', () => {
       expect(getRangeCoords(1, 1, 1)).toEqual([
-        [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
-        [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
-        [{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }],
+        [
+          { x: 0, y: 0 },
+          { x: 1, y: 0 },
+          { x: 2, y: 0 },
+        ],
+        [
+          { x: 0, y: 1 },
+          { x: 1, y: 1 },
+          { x: 2, y: 1 },
+        ],
+        [
+          { x: 0, y: 2 },
+          { x: 1, y: 2 },
+          { x: 2, y: 2 },
+        ],
       ]);
     });
   });
@@ -139,9 +180,21 @@ describe('getRangeCoords', () => {
   describe('edge testing', () => {
     test('in-range plots below field bounds are negative', () => {
       expect(getRangeCoords(1, 0, 0)).toEqual([
-        [{ x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 }],
-        [{ x: -1, y: 0 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
-        [{ x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }],
+        [
+          { x: -1, y: -1 },
+          { x: 0, y: -1 },
+          { x: 1, y: -1 },
+        ],
+        [
+          { x: -1, y: 0 },
+          { x: 0, y: 0 },
+          { x: 1, y: 0 },
+        ],
+        [
+          { x: -1, y: 1 },
+          { x: 0, y: 1 },
+          { x: 1, y: 1 },
+        ],
       ]);
     });
   });

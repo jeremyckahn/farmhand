@@ -36,7 +36,7 @@ There is no release or versioning system yet.
   - [x] Cows walking around
   - [x] Click/tap to select cow
   - [x] Tooltip info appears over cow when selected
-- [ ] Purchase cow feed (10 units at a time)
+- [x] Purchase cow feed (10 units at a time)
 - [ ] Cow milking
   - [ ] Female cows can be milked once a day
   - [ ] Happiness improves milk quality

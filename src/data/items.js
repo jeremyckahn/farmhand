@@ -2,12 +2,13 @@
  * @module farmhand.items
  */
 
-import { cropLifeStage, cropType, fieldMode, plotContentType } from '../enums';
+import { cropLifeStage, cropType, fieldMode, itemType } from '../enums';
 import { SPRINKLER_RANGE } from '../constants';
 
 const { freeze } = Object;
 const { CARROT, PUMPKIN } = cropType;
 const { SEED, GROWING } = cropLifeStage;
+const { COW_FEED, CROP, FERTILIZER, SCARECROW, SPRINKLER } = itemType;
 
 ////////////////////////////////////////
 //
@@ -21,12 +22,13 @@ const { SEED, GROWING } = cropLifeStage;
  */
 export const carrotSeed = freeze({
   cropType: CARROT,
+  doesPriceFluctuate: true,
   enablesFieldMode: fieldMode.PLANT,
   growsInto: 'carrot',
   id: 'carrot-seed',
   isPlantableCrop: true,
   name: 'Carrot Seed',
-  type: plotContentType.CROP,
+  type: CROP,
   value: 20,
 });
 
@@ -40,9 +42,10 @@ export const carrot = freeze({
     [SEED]: 2,
     [GROWING]: 3,
   },
+  doesPriceFluctuate: true,
   id: 'carrot',
   name: 'Carrot',
-  type: plotContentType.CROP,
+  type: CROP,
   value: 40,
 });
 
@@ -52,12 +55,13 @@ export const carrot = freeze({
  */
 export const pumpkinSeed = freeze({
   cropType: PUMPKIN,
+  doesPriceFluctuate: true,
   enablesFieldMode: fieldMode.PLANT,
   growsInto: 'pumpkin',
   id: 'pumpkin-seed',
   isPlantableCrop: true,
   name: 'Pumpkin Seed',
-  type: plotContentType.CROP,
+  type: CROP,
   value: 40,
 });
 
@@ -71,9 +75,10 @@ export const pumpkin = freeze({
     [SEED]: 3,
     [GROWING]: 5,
   },
+  doesPriceFluctuate: true,
   id: 'pumpkin',
   name: 'Pumpkin',
-  type: plotContentType.CROP,
+  type: CROP,
   value: 80,
 });
 
@@ -91,6 +96,7 @@ export const fertilizer = freeze({
   enablesFieldMode: fieldMode.FERTILIZE,
   id: 'fertilizer',
   name: 'Fertilizer',
+  type: FERTILIZER,
   value: 60,
 });
 
@@ -104,7 +110,7 @@ export const sprinkler = freeze({
   id: 'sprinkler',
   isReplantable: true,
   name: 'Sprinkler',
-  type: plotContentType.SPRINKLER,
+  type: SPRINKLER,
   value: 120,
 });
 
@@ -117,6 +123,23 @@ export const scarecrow = freeze({
   id: 'scarecrow',
   isReplantable: true,
   name: 'Scarecrow',
-  type: plotContentType.SCARECROW,
+  type: SCARECROW,
   value: 160,
+});
+
+////////////////////////////////////////
+//
+// COW ITEMS
+//
+////////////////////////////////////////
+
+/**
+ * @property farmhand.module:items.cowFeed
+ * @type {farmhand.item}
+ */
+export const cowFeed = freeze({
+  id: 'cow-feed',
+  name: 'Cow Feed',
+  type: COW_FEED,
+  value: 5,
 });

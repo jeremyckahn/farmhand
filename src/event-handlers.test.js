@@ -20,10 +20,11 @@ describe('handleItemPurchaseClick', () => {
     jest
       .spyOn(component.instance(), 'purchaseItem')
       .mockImplementation(() => {});
-    handlers().handleItemPurchaseClick(testItem({ id: 'sample-item-1' }));
+    handlers().handleItemPurchaseClick(testItem({ id: 'sample-item-1' }), 3);
 
     expect(component.instance().purchaseItem).toHaveBeenCalledWith(
-      testItem({ id: 'sample-item-1' })
+      testItem({ id: 'sample-item-1' }),
+      3
     );
   });
 });

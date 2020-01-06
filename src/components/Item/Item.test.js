@@ -43,12 +43,17 @@ describe('conditional UI', () => {
   });
 
   describe('isPurchaseView', () => {
+    beforeEach(() => {
+      component.setProps({
+        isPurchaseView: true,
+        item: testItem({ name: 'an-item', value: 10 }),
+      });
+    });
+
     describe('user has enough money', () => {
       beforeEach(() => {
         component.setProps({
-          isPurchaseView: true,
-          item: testItem({ name: 'an-item' }),
-          money: 50,
+          money: 20,
         });
       });
 
@@ -56,19 +61,46 @@ describe('conditional UI', () => {
         expect(component.find('.purchase').props().disabled).toEqual(false);
         expect(component.find('.max-out').props().disabled).toEqual(false);
       });
+
+      describe('bulkPurchaseSize is defined', () => {
+        beforeEach(() => {
+          component.setProps({
+            bulkPurchaseSize: 2,
+          });
+        });
+
+        test('enables bulk purchase buttons', () => {
+          expect(component.find('.bulk.purchase').props().disabled).toEqual(
+            false
+          );
+        });
+      });
     });
 
     describe('user does not have enough money', () => {
       beforeEach(() => {
         component.setProps({
-          isPurchaseView: true,
-          item: testItem({ name: 'an-item', value: 10 }),
           money: 5,
         });
       });
 
       test('disables purchase buttons', () => {
+        expect(component.find('.purchase').props().disabled).toEqual(true);
         expect(component.find('.max-out').props().disabled).toEqual(true);
+      });
+
+      describe('bulkPurchaseSize is defined', () => {
+        beforeEach(() => {
+          component.setProps({
+            bulkPurchaseSize: 2,
+          });
+        });
+
+        test('enables bulk purchase buttons', () => {
+          expect(component.find('.bulk.purchase').props().disabled).toEqual(
+            true
+          );
+        });
       });
     });
   });

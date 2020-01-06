@@ -21,6 +21,9 @@ export const items = {
   fertilizer: require('./items/fertilizer.png'),
   scarecrow: require('./items/scarecrow.png'),
   sprinkler: require('./items/sprinkler.png'),
+
+  // Cow items
+  'cow-feed': require('./items/cow-feed.png'),
 };
 
 export const tools = {

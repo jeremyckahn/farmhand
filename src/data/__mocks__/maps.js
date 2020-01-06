@@ -1,4 +1,5 @@
 import {
+  cowFeed,
   fertilizer,
   replantableItem,
   sampleCropItem1,
@@ -16,6 +17,7 @@ import {
 } from './items';
 
 export const itemsMap = {
+  'cow-feed': cowFeed,
   fertilizer,
   'replantable-item': replantableItem,
   'sample-crop-1': sampleCropItem1,

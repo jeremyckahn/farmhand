@@ -6,7 +6,7 @@ import FarmhandContext from '../../Farmhand.context';
 import { getCropLifeStage, getPlotImage } from '../../utils';
 import { itemsMap } from '../../data/maps';
 import { pixel, plotStates } from '../../img';
-import { cropLifeStage, plotContentType } from '../../enums';
+import { cropLifeStage, itemType } from '../../enums';
 import './Plot.sass';
 
 export const getBackgroundStyles = plotContent => {
@@ -53,7 +53,7 @@ export const Plot = ({
 
   image = getPlotImage(plotContent),
   lifeStage = plotContent &&
-    plotContent.type === plotContentType.CROP &&
+    plotContent.type === itemType.CROP &&
     getCropLifeStage(plotContent),
 }) => (
   <div
@@ -62,7 +62,7 @@ export const Plot = ({
       'is-in-hover-range': isInRange(hoveredPlotRange, x, y),
 
       // For crops
-      crop: plotContent && plotContent.type === plotContentType.CROP,
+      crop: plotContent && plotContent.type === itemType.CROP,
       'is-fertilized': plotContent && plotContent.isFertilized,
       'is-ripe': lifeStage === cropLifeStage.GROWN,
 

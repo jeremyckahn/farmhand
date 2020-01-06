@@ -42,12 +42,7 @@ import {
 } from './utils';
 import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
-import {
-  cropLifeStage,
-  fieldMode,
-  plotContentType,
-  stageFocusType,
-} from './enums';
+import { cropLifeStage, fieldMode, itemType, stageFocusType } from './enums';
 import {
   FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
@@ -352,9 +347,10 @@ export default class Farmhand extends Component {
             })
           )
           .then(({ newDayNotifications }) =>
-            [PROGRESS_SAVED_MESSAGE, ...newDayNotifications].forEach(
-              notification => this.showNotification(notification)
-            )
+            [
+              PROGRESS_SAVED_MESSAGE,
+              ...newDayNotifications,
+            ].forEach(notification => this.showNotification(notification))
           )
           .catch(e => {
             console.error(e);
@@ -396,7 +392,7 @@ export default class Farmhand extends Component {
    * @param {farmhand.item} item
    * @param {number} [howMany=1]
    */
-  purchaseItem(item, howMany) {
+  purchaseItem(item, howMany = 1) {
     this.setState(state => purchaseItem(item, howMany, state));
   }
 
@@ -588,11 +584,7 @@ export default class Farmhand extends Component {
       const row = field[y];
       const crop = row[x];
 
-      if (
-        !crop ||
-        crop.type !== plotContentType.CROP ||
-        crop.isFertilized === true
-      ) {
+      if (!crop || crop.type !== itemType.CROP || crop.isFertilized === true) {
         return;
       }
 
@@ -699,7 +691,7 @@ export default class Farmhand extends Component {
 
       if (
         !crop ||
-        crop.type !== plotContentType.CROP ||
+        crop.type !== itemType.CROP ||
         getCropLifeStage(crop) !== GROWN
       ) {
         return;
@@ -744,7 +736,7 @@ export default class Farmhand extends Component {
     this.setState(({ field }) => {
       const plotContent = field[y][x];
 
-      if (!plotContent || plotContent.type !== plotContentType.CROP) {
+      if (!plotContent || plotContent.type !== itemType.CROP) {
         return;
       }
 

@@ -4,7 +4,12 @@ import { shallow } from 'enzyme';
 import Item from '../Item';
 import { testItem } from '../../test-utils';
 
-import { Inventory, getItemCategories, sort } from './Inventory';
+import {
+  Inventory,
+  categoryIds,
+  separateItemsIntoCategories,
+  sort,
+} from './Inventory';
 
 jest.mock('../../data/maps');
 jest.mock('../../data/items');
@@ -51,18 +56,23 @@ describe('item sorting', () => {
 
   test('divides into type categories', () => {
     expect(
-      getItemCategories([
+      separateItemsIntoCategories([
         testItem({ id: 'sample-crop-seeds-2' }),
         testItem({ id: 'scarecrow' }),
         testItem({ id: 'sprinkler' }),
         testItem({ id: 'sample-crop-seeds-1' }),
+        testItem({ id: 'cow-feed' }),
       ])
     ).toEqual({
-      seeds: [
+      [categoryIds.SEEDS]: [
         testItem({ id: 'sample-crop-seeds-1' }),
         testItem({ id: 'sample-crop-seeds-2' }),
       ],
-      tools: [testItem({ id: 'sprinkler' }), testItem({ id: 'scarecrow' })],
+      [categoryIds.FIELD_TOOLS]: [
+        testItem({ id: 'sprinkler' }),
+        testItem({ id: 'scarecrow' }),
+      ],
+      [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
     });
   });
 });
