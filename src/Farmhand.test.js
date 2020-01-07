@@ -89,9 +89,21 @@ describe('getters', () => {
         test('gets hovered crop range', () => {
           const { hoveredPlotRange } = component.instance();
           expect(hoveredPlotRange).toEqual([
-            [{ x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 }],
-            [{ x: -1, y: 0 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
-            [{ x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }],
+            [
+              { x: -1, y: -1 },
+              { x: 0, y: -1 },
+              { x: 1, y: -1 },
+            ],
+            [
+              { x: -1, y: 0 },
+              { x: 0, y: 0 },
+              { x: 1, y: 0 },
+            ],
+            [
+              { x: -1, y: 1 },
+              { x: 0, y: 1 },
+              { x: 1, y: 1 },
+            ],
           ]);
         });
       });
@@ -365,11 +377,13 @@ describe('instance methods', () => {
   });
 
   describe('purchaseCow', () => {
-    const cow = Object.freeze({
-      name: 'cow',
-      weight: 1000,
-      gender: genders.GENDERLESS,
-    });
+    const cow = Object.freeze(
+      generateCow({
+        baseWeight: 1000,
+        gender: genders.GENDERLESS,
+        name: 'cow',
+      })
+    );
 
     let oldCowForSale;
 
@@ -437,9 +451,9 @@ describe('instance methods', () => {
 
   describe('sellCow', () => {
     const cow = Object.freeze({
-      name: 'cow',
-      weight: 1000,
+      baseWeight: 1000,
       gender: genders.GENDERLESS,
+      name: 'cow',
     });
 
     beforeEach(() => {
@@ -992,7 +1006,10 @@ describe('instance methods', () => {
 
       test('field expands without destroying existing data', () => {
         component.setState({
-          field: [[testCrop(), null], [null, testCrop()]],
+          field: [
+            [testCrop(), null],
+            [null, testCrop()],
+          ],
         });
 
         component.instance().purchaseField(1);

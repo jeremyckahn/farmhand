@@ -166,6 +166,7 @@ export const generateCow = options => {
   );
 
   return {
+    baseWeight: weight,
     color: chooseRandom(Object.values(cowColors)),
     daysOld: 1,
     gender: chooseRandom(Object.values(genders)),
@@ -173,7 +174,7 @@ export const generateCow = options => {
     happinessBoostsToday: 0,
     id: createUniqueId(),
     name: chooseRandom(fruitNames),
-    weight,
+    weightMultiplier: 1,
     ...options,
   };
 };
@@ -181,4 +182,10 @@ export const generateCow = options => {
 /**
  * @param {farmhand.cow} cow
  */
-export const getCowValue = ({ weight }) => weight * 1.5;
+export const getCowWeight = ({ baseWeight, weightMultiplier }) =>
+  baseWeight * weightMultiplier;
+
+/**
+ * @param {farmhand.cow} cow
+ */
+export const getCowValue = cow => getCowWeight(cow) * 1.5;

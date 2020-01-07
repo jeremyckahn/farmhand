@@ -74,11 +74,11 @@ describe('CowCard', () => {
     component = shallow(
       <CowCard
         {...{
-          cow: {
+          cow: generateCow({
             color: cowColors.WHITE,
             name: '',
-            weight: 100,
-          },
+            baseWeight: 100,
+          }),
           cowInventory: [],
           handleCowSelect: () => {},
           handleCowNameInputChange: () => {},
@@ -148,12 +148,12 @@ describe('CowCardSubheader', () => {
     component = shallow(
       <CowCardSubheader
         {...{
-          cow: {
+          cow: generateCow({
             color: cowColors.WHITE,
             happiness: 0,
             name: '',
-            weight: 100,
-          },
+            baseWeight: 100,
+          }),
           cowValue: 1000,
           isCowPurchased: false,
         }}
@@ -181,24 +181,24 @@ describe('CowCardSubheader', () => {
         expect(component.find('.heart.is-full')).toHaveLength(0);
 
         component.setProps({
-          cow: {
+          cow: generateCow({
             color: cowColors.WHITE,
             happiness: 0.5,
             name: '',
-            weight: 100,
-          },
+            baseWeight: 100,
+          }),
           isCowPurchased: true,
         });
 
         expect(component.find('.heart.is-full')).toHaveLength(5);
 
         component.setProps({
-          cow: {
+          cow: generateCow({
             color: cowColors.WHITE,
             happiness: 1,
             name: '',
-            weight: 100,
-          },
+            baseWeight: 100,
+          }),
         });
 
         expect(component.find('.heart.is-full')).toHaveLength(10);

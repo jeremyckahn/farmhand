@@ -55,11 +55,12 @@
 /**
  * @typedef farmhand.cow
  * @type {Object}
- * @param {string} name
+ * @property {number} baseWeight
  * @property {number} daysOld
- * @property {number} weight
  * @property {number} happiness 0-1.
  * @property {number} happinessBoostsToday
+ * @property {string} name
+ * @property {number} weightMultiplier
  */
 
 import React from 'react';
