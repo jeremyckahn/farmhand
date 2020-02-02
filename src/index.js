@@ -60,7 +60,7 @@
  * @property {number} happiness 0-1.
  * @property {number} happinessBoostsToday
  * @property {string} name
- * @property {number} weightMultiplier
+ * @property {number} weightMultiplier Clamped between 0.5 and 1.5.
  */
 
 import React from 'react';

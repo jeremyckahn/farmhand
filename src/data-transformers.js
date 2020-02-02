@@ -2,6 +2,7 @@ import memoize from 'fast-memoize';
 
 import { itemsMap } from './data/maps';
 import {
+  clampNumber,
   generateCow,
   getAdjustedItemValue,
   getItemValue,
@@ -260,6 +261,7 @@ export const computeCowInventoryForNextDay = cowInventory =>
     daysOld: cow.daysOld + 1,
     happiness: Math.max(0, cow.happiness - COW_HUG_BENEFIT),
     happinessBoostsToday: 0,
+    weightMultiplier: clampNumber(cow.weightMultiplier, 0.5, 1.5),
   }));
 
 /**

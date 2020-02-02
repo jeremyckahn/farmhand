@@ -22,6 +22,14 @@ const chooseRandom = list =>
  */
 const createUniqueId = () => btoa(Math.random() + Date.now());
 
+/**
+ * @param {number} num
+ * @param {number} min
+ * @param {number} max
+ */
+export const clampNumber = (num, min, max) =>
+  num <= min ? min : num >= max ? max : num;
+
 export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
     .fill(undefined)
