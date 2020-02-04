@@ -44,6 +44,7 @@ describe('computeStateForNextDay', () => {
       ],
       newDayNotifications: [],
       cowInventory: [],
+      inventory: [],
     });
 
     expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()));
@@ -311,10 +312,12 @@ describe('addItemToInventory', () => {
 describe('computeCowInventoryForNextDay', () => {
   test('ages cows', () => {
     expect(
-      fn.computeCowInventoryForNextDay([
-        { daysOld: 0 },
-        { daysOld: 5, happiness: 0.5, happinessBoostsToday: 3 },
-      ])
+      fn.computeCowInventoryForNextDay({
+        cowInventory: [
+          { daysOld: 0 },
+          { daysOld: 5, happiness: 0.5, happinessBoostsToday: 3 },
+        ],
+      })
     ).toMatchObject([
       { daysOld: 1, happinessBoostsToday: 0 },
       { daysOld: 6, happiness: 0.5 - COW_HUG_BENEFIT, happinessBoostsToday: 0 },

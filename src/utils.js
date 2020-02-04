@@ -191,7 +191,7 @@ export const generateCow = options => {
  * @param {farmhand.cow} cow
  */
 export const getCowWeight = ({ baseWeight, weightMultiplier }) =>
-  baseWeight * weightMultiplier;
+  Math.round(baseWeight * weightMultiplier);
 
 /**
  * @param {farmhand.cow} cow

@@ -3,7 +3,11 @@
  */
 
 import { cropLifeStage, cropType, fieldMode, itemType } from '../enums';
-import { SPRINKLER_RANGE } from '../constants';
+import {
+  COW_FEED_ITEM_ID,
+  FERTILIZER_ITEM_ID,
+  SPRINKLER_RANGE,
+} from '../constants';
 
 const { freeze } = Object;
 const { CARROT, PUMPKIN } = cropType;
@@ -94,7 +98,7 @@ export const pumpkin = freeze({
  */
 export const fertilizer = freeze({
   enablesFieldMode: fieldMode.FERTILIZE,
-  id: 'fertilizer',
+  id: FERTILIZER_ITEM_ID,
   name: 'Fertilizer',
   type: FERTILIZER,
   value: 60,
@@ -138,7 +142,7 @@ export const scarecrow = freeze({
  * @type {farmhand.item}
  */
 export const cowFeed = freeze({
-  id: 'cow-feed',
+  id: COW_FEED_ITEM_ID,
   name: 'Cow Feed',
   type: COW_FEED,
   value: 5,

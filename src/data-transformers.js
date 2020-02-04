@@ -9,6 +9,7 @@ import {
   getRangeCoords,
 } from './utils';
 import {
+  COW_FEED_ITEM_ID,
   COW_HUG_BENEFIT,
   CROW_CHANCE,
   FERTILIZER_BONUS,
@@ -108,6 +109,39 @@ export const applySprinklers = state => {
   });
 
   return { ...state, field: modifiedField };
+};
+
+// FIXME: Test this function
+export const applyCowFeed = state => {
+  const cowInventory = [...state.cowInventory];
+  let inventory = [...state.inventory];
+
+  const cowFeedInventoryPosition = inventory.findIndex(
+    ({ id }) => id === COW_FEED_ITEM_ID
+  );
+
+  if (~cowFeedInventoryPosition) {
+    const cowFeed = inventory[cowFeedInventoryPosition];
+    const unitsToSpend = Math.min(cowFeed.quantity, cowInventory.length);
+
+    for (let i = 0; i < unitsToSpend; i++) {
+      const cow = cowInventory[i];
+
+      cowInventory[i] = {
+        ...cow,
+        // FIXME: Make these numbers constants
+        weightMultiplier: clampNumber(cow.weightMultiplier + 0.1, 0.5, 1.5),
+      };
+    }
+
+    inventory = decrementItemFromInventory(
+      COW_FEED_ITEM_ID,
+      inventory,
+      unitsToSpend
+    );
+  }
+
+  return { ...state, cowInventory, inventory };
 };
 
 /**
@@ -255,13 +289,12 @@ export const getUpdatedField = field =>
  * @param {Array.<farmhand.cow>} cowInventory
  * @returns {Array.<farmhand.cow>}
  */
-export const computeCowInventoryForNextDay = cowInventory =>
+export const computeCowInventoryForNextDay = ({ cowInventory }) =>
   cowInventory.map(cow => ({
     ...cow,
     daysOld: cow.daysOld + 1,
     happiness: Math.max(0, cow.happiness - COW_HUG_BENEFIT),
     happinessBoostsToday: 0,
-    weightMultiplier: clampNumber(cow.weightMultiplier, 0.5, 1.5),
   }));
 
 /**
@@ -353,15 +386,15 @@ export const applyNerfs = state => applyChanceEvent([[1, applyCrows]], state);
  * the changed properties.
  */
 export const computeStateForNextDay = state =>
-  [applyBuffs, applyNerfs, applySprinklers].reduce(
+  [applyBuffs, applyNerfs, applySprinklers, applyCowFeed].reduce(
     (acc, fn) => fn({ ...acc }),
     {
       ...state,
       cowForSale: generateCow(),
+      cowInventory: computeCowInventoryForNextDay(state),
       dayCount: state.dayCount + 1,
       field: getUpdatedField(state.field),
       valueAdjustments: getUpdatedValueAdjustments(),
-      cowInventory: computeCowInventoryForNextDay(state.cowInventory),
     }
   );
 
