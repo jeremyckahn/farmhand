@@ -26,7 +26,16 @@ import Farmhand from './Farmhand';
 jest.mock('localforage');
 jest.mock('./data/maps');
 jest.mock('./data/items');
-jest.mock('./constants');
+
+jest.mock('./constants', () => ({
+  __esModule: true,
+  ...jest.requireActual('./constants'),
+  COW_HUG_BENEFIT: 0.5,
+  CROW_CHANCE: 0,
+  INITIAL_FIELD_HEIGHT: 4,
+  INITIAL_FIELD_WIDTH: 4,
+  RAIN_CHANCE: 0,
+}));
 
 const { objectContaining } = expect;
 
@@ -1038,7 +1047,9 @@ describe('instance methods', () => {
     test('deducts money', () => {
       component.setState({ money: 1500 });
       component.instance().purchaseCowPen(1);
-      expect(component.state().money).toEqual(1000);
+      expect(component.state().money).toEqual(
+        PURCHASEABLE_COW_PENS.get(1).price - 1500
+      );
     });
   });
 

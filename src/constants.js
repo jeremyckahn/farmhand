@@ -1,4 +1,3 @@
-// NOTE: This needs to be manually kept aligned with __mocks__/constants.js.
 const { freeze } = Object;
 
 export const FERTILIZER_BONUS = 0.5;

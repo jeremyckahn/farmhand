@@ -19,7 +19,14 @@ import * as fn from './data-transformers';
 jest.mock('localforage');
 jest.mock('./data/maps');
 jest.mock('./data/items');
-jest.mock('./constants');
+
+jest.mock('./constants', () => ({
+  __esModule: true,
+  ...jest.requireActual('./constants'),
+  COW_HUG_BENEFIT: 0.5,
+  CROW_CHANCE: 0,
+  RAIN_CHANCE: 0,
+}));
 
 describe('computeStateForNextDay', () => {
   beforeEach(() => {
