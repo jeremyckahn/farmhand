@@ -11,6 +11,9 @@ import {
 import {
   COW_FEED_ITEM_ID,
   COW_HUG_BENEFIT,
+  COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
+  COW_WEIGHT_MULTIPLIER_MAXIMUM,
+  COW_WEIGHT_MULTIPLIER_MINIMUM,
   CROW_CHANCE,
   FERTILIZER_BONUS,
   RAIN_CHANCE,
@@ -129,8 +132,11 @@ export const applyCowFeed = state => {
 
       cowInventory[i] = {
         ...cow,
-        // FIXME: Make these numbers constants
-        weightMultiplier: clampNumber(cow.weightMultiplier + 0.1, 0.5, 1.5),
+        weightMultiplier: clampNumber(
+          cow.weightMultiplier + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
+          COW_WEIGHT_MULTIPLIER_MINIMUM,
+          COW_WEIGHT_MULTIPLIER_MAXIMUM
+        ),
       };
     }
 
