@@ -2,7 +2,9 @@ import { shapeOf, testCrop, testItem } from './test-utils';
 import { RAIN_MESSAGE } from './strings';
 import { CROW_ATTACKED } from './templates';
 import {
+  COW_FEED_ITEM_ID,
   COW_HUG_BENEFIT,
+  COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   FERTILIZER_BONUS,
   SCARECROW_ITEM_ID,
 } from './constants';
@@ -110,6 +112,71 @@ describe('applySprinklers', () => {
 
   test('does not water crops out of range', () => {
     expect(computedState.field[3][3].wasWateredToday).toBeFalsy();
+  });
+});
+
+describe('applyCowFeed', () => {
+  let state;
+
+  beforeEach(() => {
+    state = {
+      cowInventory: [],
+      inventory: [],
+    };
+  });
+
+  describe('player has no cow feed', () => {
+    beforeEach(() => {
+      state.cowInventory = [generateCow({ weightMultiplier: 1 })];
+    });
+
+    test('cows weight does not change', () => {
+      const {
+        cowInventory: [{ weightMultiplier }],
+      } = fn.applyCowFeed(state);
+
+      expect(weightMultiplier).toEqual(1);
+    });
+  });
+
+  describe('player has cow feed', () => {
+    beforeEach(() => {
+      state.cowInventory = [
+        generateCow({ weightMultiplier: 1 }),
+        generateCow({ weightMultiplier: 1 }),
+      ];
+    });
+
+    describe('there are more feed units than cows', () => {
+      test('units are distributed to cows', () => {
+        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 4 }];
+        const {
+          cowInventory,
+          inventory: [{ quantity }],
+        } = fn.applyCowFeed(state);
+
+        expect(cowInventory[0].weightMultiplier).toEqual(
+          1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+        );
+        expect(cowInventory[1].weightMultiplier).toEqual(
+          1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+        );
+        expect(quantity).toEqual(2);
+      });
+    });
+
+    describe('there are more cows than feed units', () => {
+      test('units are distributed to cows', () => {
+        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }];
+        const { cowInventory, inventory } = fn.applyCowFeed(state);
+
+        expect(cowInventory[0].weightMultiplier).toEqual(
+          1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+        );
+        expect(cowInventory[1].weightMultiplier).toEqual(1);
+        expect(inventory).toHaveLength(0);
+      });
+    });
   });
 });
 

@@ -114,7 +114,10 @@ export const applySprinklers = state => {
   return { ...state, field: modifiedField };
 };
 
-// FIXME: Test this function
+/**
+ * @param {farmhand.state} state
+ * @return {farmhand.state}
+ */
 export const applyCowFeed = state => {
   const cowInventory = [...state.cowInventory];
   let inventory = [...state.inventory];
