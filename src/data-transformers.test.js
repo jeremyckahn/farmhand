@@ -4,6 +4,7 @@ import { CROW_ATTACKED } from './templates';
 import {
   COW_FEED_ITEM_ID,
   COW_HUG_BENEFIT,
+  COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   FERTILIZER_BONUS,
   SCARECROW_ITEM_ID,
@@ -147,7 +148,7 @@ describe('applyCowFeed', () => {
       ];
     });
 
-    describe('there are more feed units than cows', () => {
+    describe('there are more feed units than cows to feed', () => {
       test('units are distributed to cows', () => {
         state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 4 }];
         const {
@@ -165,7 +166,7 @@ describe('applyCowFeed', () => {
       });
     });
 
-    describe('there are more cows than feed units', () => {
+    describe('there are more cows to feed than feed units', () => {
       test('units are distributed to cows', () => {
         state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }];
         const { cowInventory, inventory } = fn.applyCowFeed(state);
@@ -174,6 +175,33 @@ describe('applyCowFeed', () => {
           1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
         );
         expect(cowInventory[1].weightMultiplier).toEqual(1);
+        expect(inventory).toHaveLength(0);
+      });
+    });
+
+    describe('some cows cannot be fed any more', () => {
+      test('units are distributed to cows', () => {
+        state.cowInventory = [
+          generateCow({ weightMultiplier: COW_WEIGHT_MULTIPLIER_MAXIMUM }),
+          generateCow({ weightMultiplier: COW_WEIGHT_MULTIPLIER_MAXIMUM }),
+          generateCow({ weightMultiplier: 1 }),
+          generateCow({ weightMultiplier: 1 }),
+        ];
+
+        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }];
+
+        const { cowInventory, inventory } = fn.applyCowFeed(state);
+
+        expect(cowInventory[0].weightMultiplier).toEqual(
+          COW_WEIGHT_MULTIPLIER_MAXIMUM
+        );
+        expect(cowInventory[1].weightMultiplier).toEqual(
+          COW_WEIGHT_MULTIPLIER_MAXIMUM
+        );
+        expect(cowInventory[2].weightMultiplier).toEqual(
+          1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+        );
+        expect(cowInventory[3].weightMultiplier).toEqual(1);
         expect(inventory).toHaveLength(0);
       });
     });

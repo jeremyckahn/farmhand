@@ -128,25 +128,34 @@ export const applyCowFeed = state => {
 
   if (~cowFeedInventoryPosition) {
     const cowFeed = inventory[cowFeedInventoryPosition];
-    const unitsToSpend = Math.min(cowFeed.quantity, cowInventory.length);
 
-    for (let i = 0; i < unitsToSpend; i++) {
+    let unitsSpent = 0;
+    let i = 0;
+    while (cowInventory[i] && unitsSpent < cowFeed.quantity) {
       const cow = cowInventory[i];
+      const { weightMultiplier } = cow;
 
-      cowInventory[i] = {
-        ...cow,
-        weightMultiplier: clampNumber(
-          cow.weightMultiplier + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
-          COW_WEIGHT_MULTIPLIER_MINIMUM,
-          COW_WEIGHT_MULTIPLIER_MAXIMUM
-        ),
-      };
+      // Only distribute a feed unit to a cow if they can be fed
+      if (weightMultiplier < COW_WEIGHT_MULTIPLIER_MAXIMUM) {
+        cowInventory[i] = {
+          ...cow,
+          weightMultiplier: clampNumber(
+            weightMultiplier + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
+            COW_WEIGHT_MULTIPLIER_MINIMUM,
+            COW_WEIGHT_MULTIPLIER_MAXIMUM
+          ),
+        };
+
+        unitsSpent++;
+      }
+
+      i++;
     }
 
     inventory = decrementItemFromInventory(
       COW_FEED_ITEM_ID,
       inventory,
-      unitsToSpend
+      unitsSpent
     );
   }
 
