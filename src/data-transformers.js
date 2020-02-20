@@ -2,13 +2,18 @@ import memoize from 'fast-memoize';
 
 import { itemsMap } from './data/maps';
 import {
+  clampNumber,
   generateCow,
   getAdjustedItemValue,
   getItemValue,
   getRangeCoords,
 } from './utils';
 import {
+  COW_FEED_ITEM_ID,
   COW_HUG_BENEFIT,
+  COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
+  COW_WEIGHT_MULTIPLIER_MAXIMUM,
+  COW_WEIGHT_MULTIPLIER_MINIMUM,
   CROW_CHANCE,
   FERTILIZER_BONUS,
   RAIN_CHANCE,
@@ -107,6 +112,54 @@ export const applySprinklers = state => {
   });
 
   return { ...state, field: modifiedField };
+};
+
+/**
+ * @param {farmhand.state} state
+ * @return {farmhand.state}
+ */
+export const applyCowFeed = state => {
+  const cowInventory = [...state.cowInventory];
+  let inventory = [...state.inventory];
+
+  const cowFeedInventoryPosition = inventory.findIndex(
+    ({ id }) => id === COW_FEED_ITEM_ID
+  );
+
+  if (~cowFeedInventoryPosition) {
+    const cowFeed = inventory[cowFeedInventoryPosition];
+
+    let unitsSpent = 0;
+    let i = 0;
+    while (cowInventory[i] && unitsSpent < cowFeed.quantity) {
+      const cow = cowInventory[i];
+      const { weightMultiplier } = cow;
+
+      // Only distribute a feed unit to a cow if they can be fed
+      if (weightMultiplier < COW_WEIGHT_MULTIPLIER_MAXIMUM) {
+        cowInventory[i] = {
+          ...cow,
+          weightMultiplier: clampNumber(
+            weightMultiplier + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
+            COW_WEIGHT_MULTIPLIER_MINIMUM,
+            COW_WEIGHT_MULTIPLIER_MAXIMUM
+          ),
+        };
+
+        unitsSpent++;
+      }
+
+      i++;
+    }
+
+    inventory = decrementItemFromInventory(
+      COW_FEED_ITEM_ID,
+      inventory,
+      unitsSpent
+    );
+  }
+
+  return { ...state, cowInventory, inventory };
 };
 
 /**
@@ -254,7 +307,7 @@ export const getUpdatedField = field =>
  * @param {Array.<farmhand.cow>} cowInventory
  * @returns {Array.<farmhand.cow>}
  */
-export const computeCowInventoryForNextDay = cowInventory =>
+export const computeCowInventoryForNextDay = ({ cowInventory }) =>
   cowInventory.map(cow => ({
     ...cow,
     daysOld: cow.daysOld + 1,
@@ -351,15 +404,15 @@ export const applyNerfs = state => applyChanceEvent([[1, applyCrows]], state);
  * the changed properties.
  */
 export const computeStateForNextDay = state =>
-  [applyBuffs, applyNerfs, applySprinklers].reduce(
+  [applyBuffs, applyNerfs, applySprinklers, applyCowFeed].reduce(
     (acc, fn) => fn({ ...acc }),
     {
       ...state,
       cowForSale: generateCow(),
+      cowInventory: computeCowInventoryForNextDay(state),
       dayCount: state.dayCount + 1,
       field: getUpdatedField(state.field),
       valueAdjustments: getUpdatedValueAdjustments(),
-      cowInventory: computeCowInventoryForNextDay(state.cowInventory),
     }
   );
 

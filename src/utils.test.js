@@ -3,6 +3,7 @@ import {
   getItemValue,
   generateCow,
   getCowValue,
+  getCowWeight,
   getCropId,
   getCropLifeStage,
   getLifeStageRange,
@@ -66,13 +67,14 @@ describe('generateCow', () => {
     });
 
     test('generates a cow', () => {
-      const weight = COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE;
+      const baseWeight =
+        COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE;
       expect(generateCow()).toMatchObject({
         color: Object.keys(cowColors)[0],
         daysOld: 1,
         gender: Object.keys(genders)[0],
         name: fruitNames[0],
-        weight,
+        baseWeight,
       });
     });
   });
@@ -83,22 +85,31 @@ describe('generateCow', () => {
     });
 
     test('generates a cow', () => {
-      const weight = COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE;
+      const baseWeight =
+        COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE;
 
       expect(generateCow()).toMatchObject({
         color: Object.keys(cowColors).pop(),
         daysOld: 1,
         gender: Object.keys(genders).pop(),
         name: fruitNames[fruitNames.length - 1],
-        weight,
+        baseWeight,
       });
     });
   });
 });
 
+describe('getCowWeight', () => {
+  test('computes cow value', () => {
+    expect(
+      getCowWeight(generateCow({ baseWeight: 100, weightMultiplier: 2 }))
+    ).toEqual(200);
+  });
+});
+
 describe('getCowValue', () => {
   test('computes cow value', () => {
-    expect(getCowValue({ weight: 100 })).toEqual(150);
+    expect(getCowValue(generateCow({ baseWeight: 100 }))).toEqual(150);
   });
 });
 

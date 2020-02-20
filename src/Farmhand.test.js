@@ -26,7 +26,16 @@ import Farmhand from './Farmhand';
 jest.mock('localforage');
 jest.mock('./data/maps');
 jest.mock('./data/items');
-jest.mock('./constants');
+
+jest.mock('./constants', () => ({
+  __esModule: true,
+  ...jest.requireActual('./constants'),
+  COW_HUG_BENEFIT: 0.5,
+  CROW_CHANCE: 0,
+  INITIAL_FIELD_HEIGHT: 4,
+  INITIAL_FIELD_WIDTH: 4,
+  RAIN_CHANCE: 0,
+}));
 
 const { objectContaining } = expect;
 
@@ -89,9 +98,21 @@ describe('getters', () => {
         test('gets hovered crop range', () => {
           const { hoveredPlotRange } = component.instance();
           expect(hoveredPlotRange).toEqual([
-            [{ x: -1, y: -1 }, { x: 0, y: -1 }, { x: 1, y: -1 }],
-            [{ x: -1, y: 0 }, { x: 0, y: 0 }, { x: 1, y: 0 }],
-            [{ x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }],
+            [
+              { x: -1, y: -1 },
+              { x: 0, y: -1 },
+              { x: 1, y: -1 },
+            ],
+            [
+              { x: -1, y: 0 },
+              { x: 0, y: 0 },
+              { x: 1, y: 0 },
+            ],
+            [
+              { x: -1, y: 1 },
+              { x: 0, y: 1 },
+              { x: 1, y: 1 },
+            ],
           ]);
         });
       });
@@ -365,11 +386,13 @@ describe('instance methods', () => {
   });
 
   describe('purchaseCow', () => {
-    const cow = Object.freeze({
-      name: 'cow',
-      weight: 1000,
-      gender: genders.GENDERLESS,
-    });
+    const cow = Object.freeze(
+      generateCow({
+        baseWeight: 1000,
+        gender: genders.GENDERLESS,
+        name: 'cow',
+      })
+    );
 
     let oldCowForSale;
 
@@ -437,9 +460,9 @@ describe('instance methods', () => {
 
   describe('sellCow', () => {
     const cow = Object.freeze({
-      name: 'cow',
-      weight: 1000,
+      baseWeight: 1000,
       gender: genders.GENDERLESS,
+      name: 'cow',
     });
 
     beforeEach(() => {
@@ -992,7 +1015,10 @@ describe('instance methods', () => {
 
       test('field expands without destroying existing data', () => {
         component.setState({
-          field: [[testCrop(), null], [null, testCrop()]],
+          field: [
+            [testCrop(), null],
+            [null, testCrop()],
+          ],
         });
 
         component.instance().purchaseField(1);
@@ -1021,7 +1047,9 @@ describe('instance methods', () => {
     test('deducts money', () => {
       component.setState({ money: 1500 });
       component.instance().purchaseCowPen(1);
-      expect(component.state().money).toEqual(1000);
+      expect(component.state().money).toEqual(
+        PURCHASEABLE_COW_PENS.get(1).price - 1500
+      );
     });
   });
 

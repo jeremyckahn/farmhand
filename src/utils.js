@@ -22,6 +22,14 @@ const chooseRandom = list =>
  */
 const createUniqueId = () => btoa(Math.random() + Date.now());
 
+/**
+ * @param {number} num
+ * @param {number} min
+ * @param {number} max
+ */
+export const clampNumber = (num, min, max) =>
+  num <= min ? min : num >= max ? max : num;
+
 export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
     .fill(undefined)
@@ -166,6 +174,7 @@ export const generateCow = options => {
   );
 
   return {
+    baseWeight: weight,
     color: chooseRandom(Object.values(cowColors)),
     daysOld: 1,
     gender: chooseRandom(Object.values(genders)),
@@ -173,7 +182,7 @@ export const generateCow = options => {
     happinessBoostsToday: 0,
     id: createUniqueId(),
     name: chooseRandom(fruitNames),
-    weight,
+    weightMultiplier: 1,
     ...options,
   };
 };
@@ -181,4 +190,10 @@ export const generateCow = options => {
 /**
  * @param {farmhand.cow} cow
  */
-export const getCowValue = ({ weight }) => weight * 1.5;
+export const getCowWeight = ({ baseWeight, weightMultiplier }) =>
+  Math.round(baseWeight * weightMultiplier);
+
+/**
+ * @param {farmhand.cow} cow
+ */
+export const getCowValue = cow => getCowWeight(cow) * 1.5;

@@ -2,7 +2,10 @@ import { shapeOf, testCrop, testItem } from './test-utils';
 import { RAIN_MESSAGE } from './strings';
 import { CROW_ATTACKED } from './templates';
 import {
+  COW_FEED_ITEM_ID,
   COW_HUG_BENEFIT,
+  COW_WEIGHT_MULTIPLIER_MAXIMUM,
+  COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   FERTILIZER_BONUS,
   SCARECROW_ITEM_ID,
 } from './constants';
@@ -19,7 +22,14 @@ import * as fn from './data-transformers';
 jest.mock('localforage');
 jest.mock('./data/maps');
 jest.mock('./data/items');
-jest.mock('./constants');
+
+jest.mock('./constants', () => ({
+  __esModule: true,
+  ...jest.requireActual('./constants'),
+  COW_HUG_BENEFIT: 0.5,
+  CROW_CHANCE: 0,
+  RAIN_CHANCE: 0,
+}));
 
 describe('computeStateForNextDay', () => {
   beforeEach(() => {
@@ -44,6 +54,7 @@ describe('computeStateForNextDay', () => {
       ],
       newDayNotifications: [],
       cowInventory: [],
+      inventory: [],
     });
 
     expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()));
@@ -102,6 +113,98 @@ describe('applySprinklers', () => {
 
   test('does not water crops out of range', () => {
     expect(computedState.field[3][3].wasWateredToday).toBeFalsy();
+  });
+});
+
+describe('applyCowFeed', () => {
+  let state;
+
+  beforeEach(() => {
+    state = {
+      cowInventory: [],
+      inventory: [],
+    };
+  });
+
+  describe('player has no cow feed', () => {
+    beforeEach(() => {
+      state.cowInventory = [generateCow({ weightMultiplier: 1 })];
+    });
+
+    test('cows weight does not change', () => {
+      const {
+        cowInventory: [{ weightMultiplier }],
+      } = fn.applyCowFeed(state);
+
+      expect(weightMultiplier).toEqual(1);
+    });
+  });
+
+  describe('player has cow feed', () => {
+    beforeEach(() => {
+      state.cowInventory = [
+        generateCow({ weightMultiplier: 1 }),
+        generateCow({ weightMultiplier: 1 }),
+      ];
+    });
+
+    describe('there are more feed units than cows to feed', () => {
+      test('units are distributed to cows', () => {
+        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 4 }];
+        const {
+          cowInventory,
+          inventory: [{ quantity }],
+        } = fn.applyCowFeed(state);
+
+        expect(cowInventory[0].weightMultiplier).toEqual(
+          1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+        );
+        expect(cowInventory[1].weightMultiplier).toEqual(
+          1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+        );
+        expect(quantity).toEqual(2);
+      });
+    });
+
+    describe('there are more cows to feed than feed units', () => {
+      test('units are distributed to cows', () => {
+        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }];
+        const { cowInventory, inventory } = fn.applyCowFeed(state);
+
+        expect(cowInventory[0].weightMultiplier).toEqual(
+          1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+        );
+        expect(cowInventory[1].weightMultiplier).toEqual(1);
+        expect(inventory).toHaveLength(0);
+      });
+    });
+
+    describe('some cows cannot be fed any more', () => {
+      test('units are distributed to cows', () => {
+        state.cowInventory = [
+          generateCow({ weightMultiplier: COW_WEIGHT_MULTIPLIER_MAXIMUM }),
+          generateCow({ weightMultiplier: COW_WEIGHT_MULTIPLIER_MAXIMUM }),
+          generateCow({ weightMultiplier: 1 }),
+          generateCow({ weightMultiplier: 1 }),
+        ];
+
+        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }];
+
+        const { cowInventory, inventory } = fn.applyCowFeed(state);
+
+        expect(cowInventory[0].weightMultiplier).toEqual(
+          COW_WEIGHT_MULTIPLIER_MAXIMUM
+        );
+        expect(cowInventory[1].weightMultiplier).toEqual(
+          COW_WEIGHT_MULTIPLIER_MAXIMUM
+        );
+        expect(cowInventory[2].weightMultiplier).toEqual(
+          1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+        );
+        expect(cowInventory[3].weightMultiplier).toEqual(1);
+        expect(inventory).toHaveLength(0);
+      });
+    });
   });
 });
 
@@ -311,10 +414,12 @@ describe('addItemToInventory', () => {
 describe('computeCowInventoryForNextDay', () => {
   test('ages cows', () => {
     expect(
-      fn.computeCowInventoryForNextDay([
-        { daysOld: 0 },
-        { daysOld: 5, happiness: 0.5, happinessBoostsToday: 3 },
-      ])
+      fn.computeCowInventoryForNextDay({
+        cowInventory: [
+          { daysOld: 0 },
+          { daysOld: 5, happiness: 0.5, happinessBoostsToday: 3 },
+        ],
+      })
     ).toMatchObject([
       { daysOld: 1, happinessBoostsToday: 0 },
       { daysOld: 6, happiness: 0.5 - COW_HUG_BENEFIT, happinessBoostsToday: 0 },

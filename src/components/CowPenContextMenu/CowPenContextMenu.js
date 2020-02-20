@@ -19,7 +19,7 @@ import Item from '../Item';
 import { animals } from '../../img';
 import FarmhandContext from '../../Farmhand.context';
 import { cowColors, genders } from '../../enums';
-import { dollarAmount, getCowValue } from '../../utils';
+import { dollarAmount, getCowValue, getCowWeight } from '../../utils';
 import {
   COW_FEED_BULK_PURCHASE_AMOUNT,
   PURCHASEABLE_COW_PENS,
@@ -57,7 +57,7 @@ export const CowCardSubheader = ({
     <p>
       {isCowPurchased ? 'Value' : 'Price'}: ${dollarAmount(cowValue)}
     </p>
-    <p>Weight: {cow.weight} lbs.</p>
+    <p>Weight: {getCowWeight(cow)} lbs.</p>
     {isCowPurchased && (
       <ol className="hearts">
         {nullHeartList.map((_null, i) => (
