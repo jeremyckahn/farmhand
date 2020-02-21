@@ -126,32 +126,33 @@ export const processFeedingCows = state => {
     ({ id }) => id === COW_FEED_ITEM_ID
   );
 
-  if (~cowFeedInventoryPosition) {
-    const cowFeed = inventory[cowFeedInventoryPosition];
+  const cowFeed = inventory[cowFeedInventoryPosition];
+  const quantity = cowFeed ? cowFeed.quantity : 0;
 
-    let unitsSpent = 0;
-    let i = 0;
-    while (cowInventory[i] && unitsSpent < cowFeed.quantity) {
-      const cow = cowInventory[i];
-      const { weightMultiplier } = cow;
+  let unitsSpent = 0;
 
-      // Only distribute a feed unit to a cow if they can be fed
-      if (weightMultiplier < COW_WEIGHT_MULTIPLIER_MAXIMUM) {
-        cowInventory[i] = {
-          ...cow,
-          weightMultiplier: clampNumber(
-            weightMultiplier + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
-            COW_WEIGHT_MULTIPLIER_MINIMUM,
-            COW_WEIGHT_MULTIPLIER_MAXIMUM
-          ),
-        };
+  for (let i = 0; i < cowInventory.length; i++) {
+    const cow = cowInventory[i];
+    const anyUnitsRemain = unitsSpent < quantity;
 
-        unitsSpent++;
-      }
+    cowInventory[i] = {
+      ...cow,
+      weightMultiplier: clampNumber(
+        anyUnitsRemain
+          ? cow.weightMultiplier + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+          : cow.weightMultiplier - COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
+        COW_WEIGHT_MULTIPLIER_MINIMUM,
+        COW_WEIGHT_MULTIPLIER_MAXIMUM
+      ),
+    };
 
-      i++;
+    if (anyUnitsRemain) {
+      unitsSpent++;
     }
+  }
 
+  // TODO: Obviate this null checking in decrementItemFromInventory
+  if (~cowFeedInventoryPosition) {
     inventory = decrementItemFromInventory(
       COW_FEED_ITEM_ID,
       inventory,

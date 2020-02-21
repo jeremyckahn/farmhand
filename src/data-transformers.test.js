@@ -131,12 +131,12 @@ describe('processFeedingCows', () => {
       state.cowInventory = [generateCow({ weightMultiplier: 1 })];
     });
 
-    test('cows weight does not change', () => {
+    test('cows weight goes down', () => {
       const {
         cowInventory: [{ weightMultiplier }],
       } = fn.processFeedingCows(state);
 
-      expect(weightMultiplier).toEqual(1);
+      expect(weightMultiplier).toEqual(1 - COW_WEIGHT_MULTIPLIER_FEED_BENEFIT);
     });
   });
 
@@ -167,20 +167,22 @@ describe('processFeedingCows', () => {
     });
 
     describe('there are more cows to feed than feed units', () => {
-      test('units are distributed to cows', () => {
+      test('units are distributed to cows and remainder goes hungry', () => {
         state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }];
         const { cowInventory, inventory } = fn.processFeedingCows(state);
 
         expect(cowInventory[0].weightMultiplier).toEqual(
           1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
         );
-        expect(cowInventory[1].weightMultiplier).toEqual(1);
+        expect(cowInventory[1].weightMultiplier).toEqual(
+          1 - COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+        );
         expect(inventory).toHaveLength(0);
       });
     });
 
-    describe('some cows cannot be fed any more', () => {
-      test('units are distributed to cows', () => {
+    describe('mixed set of weightMultipliers with unsufficient cow feed units', () => {
+      test('units are distributed to cows and remainder goes hungry', () => {
         state.cowInventory = [
           generateCow({ weightMultiplier: COW_WEIGHT_MULTIPLIER_MAXIMUM }),
           generateCow({ weightMultiplier: COW_WEIGHT_MULTIPLIER_MAXIMUM }),
@@ -188,7 +190,7 @@ describe('processFeedingCows', () => {
           generateCow({ weightMultiplier: 1 }),
         ];
 
-        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }];
+        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 3 }];
 
         const { cowInventory, inventory } = fn.processFeedingCows(state);
 
@@ -201,7 +203,9 @@ describe('processFeedingCows', () => {
         expect(cowInventory[2].weightMultiplier).toEqual(
           1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
         );
-        expect(cowInventory[3].weightMultiplier).toEqual(1);
+        expect(cowInventory[3].weightMultiplier).toEqual(
+          1 - COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+        );
         expect(inventory).toHaveLength(0);
       });
     });

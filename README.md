@@ -51,8 +51,8 @@ There is no release or versioning system yet.
 - [ ] Selling cows
   - [x] Greater weight results in higher sell value
   - [ ] Older cows are worth less
-- [ ] Negligence
-  - [ ] Not keeping cow feed stocked causes cows to lose weight
+- [x] Negligence
+  - [x] Not keeping cow feed stocked causes cows to lose weight
 - [ ] Breeding
   - [ ] Happy male/female cow pairs will randomly produce offspring if there is room in the pen
 
