@@ -70,7 +70,7 @@ export const applyCrows = state => {
  * @param {farmhand.state} state
  * @return {farmhand.state}
  */
-export const applySprinklers = state => {
+export const processSprinklers = state => {
   const { field } = state;
   const crops = new Map();
   let modifiedField = [...field];
@@ -118,7 +118,7 @@ export const applySprinklers = state => {
  * @param {farmhand.state} state
  * @return {farmhand.state}
  */
-export const applyCowFeed = state => {
+export const processFeedingCows = state => {
   const cowInventory = [...state.cowInventory];
   let inventory = [...state.inventory];
 
@@ -393,10 +393,10 @@ const applyChanceEvent = (chancesAndEvents, state) =>
  * @param {farmhand.state} state
  * @return {farmhand.state}
  */
-export const applyBuffs = state =>
+export const processBuffs = state =>
   applyChanceEvent([[RAIN_CHANCE, applyRain]], state);
 
-export const applyNerfs = state => applyChanceEvent([[1, applyCrows]], state);
+export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state);
 
 /**
  * @param {farmhand.state} state
@@ -404,7 +404,7 @@ export const applyNerfs = state => applyChanceEvent([[1, applyCrows]], state);
  * the changed properties.
  */
 export const computeStateForNextDay = state =>
-  [applyBuffs, applyNerfs, applySprinklers, applyCowFeed].reduce(
+  [processBuffs, processNerfs, processSprinklers, processFeedingCows].reduce(
     (acc, fn) => fn({ ...acc }),
     {
       ...state,

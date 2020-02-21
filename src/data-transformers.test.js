@@ -89,7 +89,7 @@ describe('applyRain', () => {
   });
 });
 
-describe('applySprinklers', () => {
+describe('processSprinklers', () => {
   let computedState;
 
   beforeEach(() => {
@@ -101,7 +101,7 @@ describe('applySprinklers', () => {
     field[2][2] = testCrop();
     field[3][3] = testCrop();
 
-    computedState = fn.applySprinklers({
+    computedState = fn.processSprinklers({
       field,
     });
   });
@@ -116,7 +116,7 @@ describe('applySprinklers', () => {
   });
 });
 
-describe('applyCowFeed', () => {
+describe('processFeedingCows', () => {
   let state;
 
   beforeEach(() => {
@@ -134,7 +134,7 @@ describe('applyCowFeed', () => {
     test('cows weight does not change', () => {
       const {
         cowInventory: [{ weightMultiplier }],
-      } = fn.applyCowFeed(state);
+      } = fn.processFeedingCows(state);
 
       expect(weightMultiplier).toEqual(1);
     });
@@ -154,7 +154,7 @@ describe('applyCowFeed', () => {
         const {
           cowInventory,
           inventory: [{ quantity }],
-        } = fn.applyCowFeed(state);
+        } = fn.processFeedingCows(state);
 
         expect(cowInventory[0].weightMultiplier).toEqual(
           1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
@@ -169,7 +169,7 @@ describe('applyCowFeed', () => {
     describe('there are more cows to feed than feed units', () => {
       test('units are distributed to cows', () => {
         state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }];
-        const { cowInventory, inventory } = fn.applyCowFeed(state);
+        const { cowInventory, inventory } = fn.processFeedingCows(state);
 
         expect(cowInventory[0].weightMultiplier).toEqual(
           1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
@@ -190,7 +190,7 @@ describe('applyCowFeed', () => {
 
         state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }];
 
-        const { cowInventory, inventory } = fn.applyCowFeed(state);
+        const { cowInventory, inventory } = fn.processFeedingCows(state);
 
         expect(cowInventory[0].weightMultiplier).toEqual(
           COW_WEIGHT_MULTIPLIER_MAXIMUM
@@ -208,11 +208,11 @@ describe('applyCowFeed', () => {
   });
 });
 
-describe('applyBuffs', () => {
+describe('processBuffs', () => {
   describe('rain', () => {
     describe('is not rainy day', () => {
       test('does not water plants', () => {
-        const state = fn.applyBuffs({
+        const state = fn.processBuffs({
           field: [[testCrop()]],
           newDayNotifications: [],
         });
@@ -228,8 +228,8 @@ describe('applyBuffs', () => {
           RAIN_CHANCE: 1,
         }));
 
-        const { applyBuffs } = jest.requireActual('./data-transformers');
-        const state = applyBuffs({
+        const { processBuffs } = jest.requireActual('./data-transformers');
+        const state = processBuffs({
           field: [[testCrop()]],
           newDayNotifications: [],
         });
@@ -240,11 +240,11 @@ describe('applyBuffs', () => {
   });
 });
 
-describe('applyNerfs', () => {
+describe('processNerfs', () => {
   describe('crows', () => {
     describe('crows do not attack', () => {
       test('crop is safe', () => {
-        const state = fn.applyNerfs({
+        const state = fn.processNerfs({
           field: [[testCrop({ itemId: 'sample-crop-1' })]],
           newDayNotifications: [],
         });
@@ -263,8 +263,8 @@ describe('applyNerfs', () => {
           CROW_CHANCE: 1,
         }));
 
-        const { applyNerfs } = jest.requireActual('./data-transformers');
-        const state = applyNerfs({
+        const { processNerfs } = jest.requireActual('./data-transformers');
+        const state = processNerfs({
           field: [[testCrop({ itemId: 'sample-crop-1' })]],
           newDayNotifications: [],
         });
@@ -283,8 +283,8 @@ describe('applyNerfs', () => {
             SCARECROW_ITEM_ID: 'scarecrow',
           }));
 
-          const { applyNerfs } = jest.requireActual('./data-transformers');
-          const state = applyNerfs({
+          const { processNerfs } = jest.requireActual('./data-transformers');
+          const state = processNerfs({
             field: [
               [
                 testCrop({ itemId: 'sample-crop-1' }),
