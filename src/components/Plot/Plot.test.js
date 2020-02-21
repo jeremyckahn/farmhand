@@ -116,18 +116,28 @@ describe('getBackgroundStyles', () => {
         testCrop({ isFertilized: true, wasWateredToday: true })
       )
     ).toBe(
-      `url(${plotStates['fertilized-plot']}), url(${
-        plotStates['watered-plot']
-      })`
+      `url(${plotStates['fertilized-plot']}), url(${plotStates['watered-plot']})`
     );
   });
 });
 
 describe('isInRange', () => {
   const range = [
-    [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }],
-    [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }],
-    [{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }],
+    [
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 2, y: 0 },
+    ],
+    [
+      { x: 0, y: 1 },
+      { x: 1, y: 1 },
+      { x: 2, y: 1 },
+    ],
+    [
+      { x: 0, y: 2 },
+      { x: 1, y: 2 },
+      { x: 2, y: 2 },
+    ],
   ];
 
   test('provided coordinates are in range', () => {
