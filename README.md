@@ -44,15 +44,15 @@ There is no release or versioning system yet.
   - [ ] Milk quantity and quality decrease after a certain age
 - [ ] Milk items
   - [ ] Three quality levels
-- [ ] Cow care
-  - [ ] Keeping cow feed stocked increases weight
-  - [ ] Cows automatically eat one unit of feed a day
+- [x] Cow care
+  - [x] Keeping cow feed stocked increases weight
+  - [x] Cows automatically eat one unit of feed a day
   - [x] Hugging cows improves happiness (benefits top out after 3 daily hugs)
 - [ ] Selling cows
   - [x] Greater weight results in higher sell value
   - [ ] Older cows are worth less
-- [ ] Negligence
-  - [ ] Not keeping cow feed stocked causes cows to lose weight
+- [x] Negligence
+  - [x] Not keeping cow feed stocked causes cows to lose weight
 - [ ] Breeding
   - [ ] Happy male/female cow pairs will randomly produce offspring if there is room in the pen
 

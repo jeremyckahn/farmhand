@@ -18,7 +18,11 @@ beforeEach(() => {
       {...{
         columns: 0,
         rows: 0,
-        field: [[null, null], [null, null], [null, null]],
+        field: [
+          [null, null],
+          [null, null],
+          [null, null],
+        ],
         fieldMode: fieldMode.OBSERVE,
       }}
     />

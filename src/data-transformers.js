@@ -70,7 +70,7 @@ export const applyCrows = state => {
  * @param {farmhand.state} state
  * @return {farmhand.state}
  */
-export const applySprinklers = state => {
+export const processSprinklers = state => {
   const { field } = state;
   const crops = new Map();
   let modifiedField = [...field];
@@ -118,7 +118,7 @@ export const applySprinklers = state => {
  * @param {farmhand.state} state
  * @return {farmhand.state}
  */
-export const applyCowFeed = state => {
+export const processFeedingCows = state => {
   const cowInventory = [...state.cowInventory];
   let inventory = [...state.inventory];
 
@@ -126,32 +126,33 @@ export const applyCowFeed = state => {
     ({ id }) => id === COW_FEED_ITEM_ID
   );
 
-  if (~cowFeedInventoryPosition) {
-    const cowFeed = inventory[cowFeedInventoryPosition];
+  const cowFeed = inventory[cowFeedInventoryPosition];
+  const quantity = cowFeed ? cowFeed.quantity : 0;
 
-    let unitsSpent = 0;
-    let i = 0;
-    while (cowInventory[i] && unitsSpent < cowFeed.quantity) {
-      const cow = cowInventory[i];
-      const { weightMultiplier } = cow;
+  let unitsSpent = 0;
 
-      // Only distribute a feed unit to a cow if they can be fed
-      if (weightMultiplier < COW_WEIGHT_MULTIPLIER_MAXIMUM) {
-        cowInventory[i] = {
-          ...cow,
-          weightMultiplier: clampNumber(
-            weightMultiplier + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
-            COW_WEIGHT_MULTIPLIER_MINIMUM,
-            COW_WEIGHT_MULTIPLIER_MAXIMUM
-          ),
-        };
+  for (let i = 0; i < cowInventory.length; i++) {
+    const cow = cowInventory[i];
+    const anyUnitsRemain = unitsSpent < quantity;
 
-        unitsSpent++;
-      }
+    cowInventory[i] = {
+      ...cow,
+      weightMultiplier: clampNumber(
+        anyUnitsRemain
+          ? cow.weightMultiplier + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
+          : cow.weightMultiplier - COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
+        COW_WEIGHT_MULTIPLIER_MINIMUM,
+        COW_WEIGHT_MULTIPLIER_MAXIMUM
+      ),
+    };
 
-      i++;
+    if (anyUnitsRemain) {
+      unitsSpent++;
     }
+  }
 
+  // TODO: Obviate this null checking in decrementItemFromInventory
+  if (~cowFeedInventoryPosition) {
     inventory = decrementItemFromInventory(
       COW_FEED_ITEM_ID,
       inventory,
@@ -393,10 +394,10 @@ const applyChanceEvent = (chancesAndEvents, state) =>
  * @param {farmhand.state} state
  * @return {farmhand.state}
  */
-export const applyBuffs = state =>
+export const processBuffs = state =>
   applyChanceEvent([[RAIN_CHANCE, applyRain]], state);
 
-export const applyNerfs = state => applyChanceEvent([[1, applyCrows]], state);
+export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state);
 
 /**
  * @param {farmhand.state} state
@@ -404,7 +405,7 @@ export const applyNerfs = state => applyChanceEvent([[1, applyCrows]], state);
  * the changed properties.
  */
 export const computeStateForNextDay = state =>
-  [applyBuffs, applyNerfs, applySprinklers, applyCowFeed].reduce(
+  [processBuffs, processNerfs, processSprinklers, processFeedingCows].reduce(
     (acc, fn) => fn({ ...acc }),
     {
       ...state,
