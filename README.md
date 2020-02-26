@@ -38,10 +38,10 @@ There is no release or versioning system yet.
   - [x] Tooltip info appears over cow when selected
 - [x] Purchase cow feed (10 units at a time)
 - [ ] Cow milking
-  - [ ] Female cows can be milked once a day
+  - [ ] Female cows can be milked every several days
   - [ ] Happiness improves milk quality
-  - [ ] Weight improves milk quantity
-  - [ ] Milk quantity and quality decrease after a certain age
+  - [ ] Weight improves milk production day frequency
+  - ~~[ ] Milk quantity and quality decrease after a certain age~~
 - [ ] Milk items
   - [ ] Three quality levels
 - [x] Cow care
@@ -53,8 +53,8 @@ There is no release or versioning system yet.
   - [ ] Older cows are worth less
 - [x] Negligence
   - [x] Not keeping cow feed stocked causes cows to lose weight
-- [ ] Breeding
-  - [ ] Happy male/female cow pairs will randomly produce offspring if there is room in the pen
+- ~~[ ] Breeding~~ This should be considered for a later milestone.
+  - ~~[ ] Happy male/female cow pairs will randomly produce offspring if there is room in the pen~~
 
 ## Milestone 1 tasks
 
