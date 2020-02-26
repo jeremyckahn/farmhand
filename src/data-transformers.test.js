@@ -509,32 +509,48 @@ describe('incrementCropAge', () => {
 describe('decrementItemFromInventory', () => {
   let updatedInventory;
 
-  describe('single instance of item in inventory', () => {
+  describe('item is not in inventory', () => {
     beforeEach(() => {
-      updatedInventory = fn.decrementItemFromInventory('sample-item-1', [
+      updatedInventory = fn.decrementItemFromInventory('nonexistent-item', [
         testItem({ id: 'sample-item-1', quantity: 1 }),
       ]);
     });
 
-    test('removes item from inventory', () => {
-      expect(updatedInventory).toEqual([]);
+    test('no-ops', () => {
+      expect(updatedInventory).toEqual([
+        testItem({ id: 'sample-item-1', quantity: 1 }),
+      ]);
     });
   });
 
-  describe('multiple instances of item in inventory', () => {
-    beforeEach(() => {
-      updatedInventory = fn.decrementItemFromInventory('sample-item-1', [
-        testItem({ id: 'sample-item-1', quantity: 2 }),
-      ]);
+  describe('item is in inventory', () => {
+    describe('single instance of item in inventory', () => {
+      beforeEach(() => {
+        updatedInventory = fn.decrementItemFromInventory('sample-item-1', [
+          testItem({ id: 'sample-item-1', quantity: 1 }),
+        ]);
+      });
+
+      test('removes item from inventory', () => {
+        expect(updatedInventory).toEqual([]);
+      });
     });
 
-    test('decrements item', () => {
-      expect(updatedInventory).toEqual([
-        testItem({
-          id: 'sample-item-1',
-          quantity: 1,
-        }),
-      ]);
+    describe('multiple instances of item in inventory', () => {
+      beforeEach(() => {
+        updatedInventory = fn.decrementItemFromInventory('sample-item-1', [
+          testItem({ id: 'sample-item-1', quantity: 2 }),
+        ]);
+      });
+
+      test('decrements item', () => {
+        expect(updatedInventory).toEqual([
+          testItem({
+            id: 'sample-item-1',
+            quantity: 1,
+          }),
+        ]);
+      });
     });
   });
 });

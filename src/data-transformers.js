@@ -151,14 +151,11 @@ export const processFeedingCows = state => {
     }
   }
 
-  // TODO: Obviate this null checking in decrementItemFromInventory
-  if (~cowFeedInventoryPosition) {
-    inventory = decrementItemFromInventory(
-      COW_FEED_ITEM_ID,
-      inventory,
-      unitsSpent
-    );
-  }
+  inventory = decrementItemFromInventory(
+    COW_FEED_ITEM_ID,
+    inventory,
+    unitsSpent
+  );
 
   return { ...state, cowInventory, inventory };
 };
@@ -367,6 +364,10 @@ export const decrementItemFromInventory = (itemId, inventory, howMany = 1) => {
   inventory = [...inventory];
 
   const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId);
+
+  if (itemInventoryIndex === -1) {
+    return inventory;
+  }
 
   const { quantity } = inventory[itemInventoryIndex];
 
