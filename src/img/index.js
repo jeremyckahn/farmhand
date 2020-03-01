@@ -24,6 +24,9 @@ export const items = {
 
   // Cow items
   'cow-feed': require('./items/cow-feed.png'),
+  'milk-1': require('./items/milk-1.png'),
+  'milk-2': require('./items/milk-2.png'),
+  'milk-3': require('./items/milk-3.png'),
 };
 
 export const tools = {

@@ -56,6 +56,7 @@ export const itemType = enumify([
   'COW_FEED',
   'CROP',
   'FERTILIZER',
+  'MILK',
   'SCARECROW',
   'SPRINKLER',
 ]);

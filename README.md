@@ -42,8 +42,8 @@ There is no release or versioning system yet.
   - [ ] Happiness improves milk quality
   - [ ] Weight improves milk production day frequency
   - ~~[ ] Milk quantity and quality decrease after a certain age~~
-- [ ] Milk items
-  - [ ] Three quality levels
+- [x] Milk items
+  - [x] Three quality levels
 - [x] Cow care
   - [x] Keeping cow feed stocked increases weight
   - [x] Cows automatically eat one unit of feed a day

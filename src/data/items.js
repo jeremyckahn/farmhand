@@ -12,7 +12,7 @@ import {
 const { freeze } = Object;
 const { CARROT, PUMPKIN } = cropType;
 const { SEED, GROWING } = cropLifeStage;
-const { COW_FEED, CROP, FERTILIZER, SCARECROW, SPRINKLER } = itemType;
+const { COW_FEED, CROP, FERTILIZER, MILK, SCARECROW, SPRINKLER } = itemType;
 
 ////////////////////////////////////////
 //
@@ -146,4 +146,37 @@ export const cowFeed = freeze({
   name: 'Cow Feed',
   type: COW_FEED,
   value: 5,
+});
+
+/**
+ * @property farmhand.module:items.milk1
+ * @type {farmhand.item}
+ */
+export const milk1 = freeze({
+  id: 'milk-1',
+  name: 'Milk (Grade C)',
+  type: MILK,
+  value: 40,
+});
+
+/**
+ * @property farmhand.module:items.milk2
+ * @type {farmhand.item}
+ */
+export const milk2 = freeze({
+  id: 'milk-2',
+  name: 'Milk (Grade B)',
+  type: MILK,
+  value: 80,
+});
+
+/**
+ * @property farmhand.module:items.milk3
+ * @type {farmhand.item}
+ */
+export const milk3 = freeze({
+  id: 'milk-3',
+  name: 'Milk (Grade A)',
+  type: MILK,
+  value: 120,
 });
