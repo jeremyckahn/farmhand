@@ -125,6 +125,27 @@ export const scarecrow = testItem({
   value: 160,
 });
 
+export const milk1 = testItem({
+  id: 'milk-1',
+  name: 'Milk 1',
+  type: itemType.MILK,
+  value: 5,
+});
+
+export const milk2 = testItem({
+  id: 'milk-2',
+  name: 'Milk 2',
+  type: itemType.MILK,
+  value: 10,
+});
+
+export const milk3 = testItem({
+  id: 'milk-3',
+  name: 'Milk 3',
+  type: itemType.MILK,
+  value: 15,
+});
+
 export const cowFeed = testItem({
   id: 'cow-feed',
   name: 'Cow Feed',

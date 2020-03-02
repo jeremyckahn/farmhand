@@ -11,12 +11,17 @@ import { enumify, itemType } from '../../enums';
 
 import './Inventory.sass';
 
-const { COW_FEED, CROP, FERTILIZER, SCARECROW, SPRINKLER } = itemType;
+const { COW_FEED, CROP, FERTILIZER, MILK, SCARECROW, SPRINKLER } = itemType;
+
+const itemTypesToShowInReverse = new Set([itemType.MILK]);
 
 const sortItemIdsByTypeAndValue = memoize(itemIds =>
   sortBy(itemIds, [
     id => Number(itemsMap[id].type !== CROP),
-    id => itemsMap[id].value,
+    id => {
+      const { type, value } = itemsMap[id];
+      return itemTypesToShowInReverse.has(type) ? -value : value;
+    },
   ])
 );
 
@@ -29,14 +34,20 @@ export const sort = items => {
   );
 };
 
-export const categoryIds = enumify(['ANIMAL_SUPPLIES', 'FIELD_TOOLS', 'SEEDS']);
+export const categoryIds = enumify([
+  'ANIMAL_PRODUCTS',
+  'ANIMAL_SUPPLIES',
+  'FIELD_TOOLS',
+  'SEEDS',
+]);
 const categoryIdKeys = Object.keys(categoryIds);
-const { ANIMAL_SUPPLIES, FIELD_TOOLS, SEEDS } = categoryIds;
+const { ANIMAL_PRODUCTS, ANIMAL_SUPPLIES, FIELD_TOOLS, SEEDS } = categoryIds;
 
 const itemTypeCategoryMap = Object.freeze({
   [COW_FEED]: ANIMAL_SUPPLIES,
   [CROP]: SEEDS,
   [FERTILIZER]: FIELD_TOOLS,
+  [MILK]: ANIMAL_PRODUCTS,
   [SCARECROW]: FIELD_TOOLS,
   [SPRINKLER]: FIELD_TOOLS,
 });
@@ -70,6 +81,7 @@ export const Inventory = ({
     {[
       [SEEDS, 'Seeds'],
       [FIELD_TOOLS, 'Field Tools'],
+      [ANIMAL_PRODUCTS, 'Animal Products'],
       [ANIMAL_SUPPLIES, 'Animal Supplies'],
     ].map(([category, headerText]) =>
       itemCategories[category].length ? (

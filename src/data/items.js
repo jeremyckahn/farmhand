@@ -154,7 +154,7 @@ export const cowFeed = freeze({
  */
 export const milk1 = freeze({
   id: 'milk-1',
-  name: 'Milk (Grade C)',
+  name: 'Grade C Milk',
   type: MILK,
   value: 40,
 });
@@ -165,7 +165,7 @@ export const milk1 = freeze({
  */
 export const milk2 = freeze({
   id: 'milk-2',
-  name: 'Milk (Grade B)',
+  name: 'Grade B Milk',
   type: MILK,
   value: 80,
 });
@@ -176,7 +176,7 @@ export const milk2 = freeze({
  */
 export const milk3 = freeze({
   id: 'milk-3',
-  name: 'Milk (Grade A)',
+  name: 'Grade A Milk',
   type: MILK,
   value: 120,
 });

@@ -62,6 +62,7 @@ describe('item sorting', () => {
         testItem({ id: 'sprinkler' }),
         testItem({ id: 'sample-crop-seeds-1' }),
         testItem({ id: 'cow-feed' }),
+        testItem({ id: 'milk-1' }),
       ])
     ).toEqual({
       [categoryIds.SEEDS]: [
@@ -72,6 +73,7 @@ describe('item sorting', () => {
         testItem({ id: 'sprinkler' }),
         testItem({ id: 'scarecrow' }),
       ],
+      [categoryIds.ANIMAL_PRODUCTS]: [testItem({ id: 'milk-1' })],
       [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
     });
   });

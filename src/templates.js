@@ -10,3 +10,11 @@ export const CROW_ATTACKED = (_, crop) => `Oh no a crow ate your ${crop.name}!`;
  */
 export const COW_PEN_PURCHASED = (_, cows) =>
   `Purchased a cow pen with capacity for ${cows} cows!`;
+
+/**
+ * @param {farmhand.cow} cow
+ * @param {farmhand.item} milk
+ * @returns {string}
+ */
+export const MILK_PRODUCED = (_, cow, milk) =>
+  `${cow.name} produced a ${milk.name} for you!`;
