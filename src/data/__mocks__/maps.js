@@ -1,6 +1,9 @@
 import {
   cowFeed,
   fertilizer,
+  milk1,
+  milk2,
+  milk3,
   replantableItem,
   sampleCropItem1,
   sampleCropItem2,
@@ -18,6 +21,9 @@ import {
 
 export const itemsMap = {
   'cow-feed': cowFeed,
+  'milk-1': milk1,
+  'milk-2': milk2,
+  'milk-3': milk3,
   fertilizer,
   'replantable-item': replantableItem,
   'sample-crop-1': sampleCropItem1,

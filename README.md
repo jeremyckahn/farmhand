@@ -25,7 +25,7 @@ There is no release or versioning system yet.
   - [x] Three sizes
 - [x] Generate and purchase cows
   - [x] Multiple cow colors (every color of the rainbow)
-  - [x] Cows can be male, female, or genderless
+  - [x] Cows can be male or female
 - [x] Cow status in context pane
   - [x] Rename cow
   - [x] Show stats
@@ -37,13 +37,13 @@ There is no release or versioning system yet.
   - [x] Click/tap to select cow
   - [x] Tooltip info appears over cow when selected
 - [x] Purchase cow feed (10 units at a time)
-- [ ] Cow milking
-  - [ ] Female cows can be milked once a day
-  - [ ] Happiness improves milk quality
-  - [ ] Weight improves milk quantity
-  - [ ] Milk quantity and quality decrease after a certain age
-- [ ] Milk items
-  - [ ] Three quality levels
+- [x] Cow milking
+  - [x] Female cows can be milked every several days
+  - [x] Happiness improves milk quality
+  - [x] Weight improves milk production day frequency
+  - ~~[ ] Milk quantity and quality decrease after a certain age~~
+- [x] Milk items
+  - [x] Three quality levels
 - [x] Cow care
   - [x] Keeping cow feed stocked increases weight
   - [x] Cows automatically eat one unit of feed a day
@@ -53,8 +53,8 @@ There is no release or versioning system yet.
   - [ ] Older cows are worth less
 - [x] Negligence
   - [x] Not keeping cow feed stocked causes cows to lose weight
-- [ ] Breeding
-  - [ ] Happy male/female cow pairs will randomly produce offspring if there is room in the pen
+- ~~[ ] Breeding~~ This should be considered for a later milestone.
+  - ~~[ ] Happy male/female cow pairs will randomly produce offspring if there is room in the pen~~
 
 ## Milestone 1 tasks
 

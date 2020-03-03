@@ -389,7 +389,7 @@ describe('instance methods', () => {
     const cow = Object.freeze(
       generateCow({
         baseWeight: 1000,
-        gender: genders.GENDERLESS,
+        gender: genders.FEMALE,
         name: 'cow',
       })
     );
@@ -461,7 +461,7 @@ describe('instance methods', () => {
   describe('sellCow', () => {
     const cow = Object.freeze({
       baseWeight: 1000,
-      gender: genders.GENDERLESS,
+      gender: genders.FEMALE,
       name: 'cow',
     });
 

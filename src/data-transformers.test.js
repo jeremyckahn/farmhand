@@ -1,9 +1,10 @@
 import { shapeOf, testCrop, testItem } from './test-utils';
 import { RAIN_MESSAGE } from './strings';
-import { CROW_ATTACKED } from './templates';
+import { MILK_PRODUCED, CROW_ATTACKED } from './templates';
 import {
   COW_FEED_ITEM_ID,
   COW_HUG_BENEFIT,
+  COW_MILK_RATE_SLOWEST,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   FERTILIZER_BONUS,
@@ -16,7 +17,8 @@ import {
   sampleFieldTool1,
 } from './data/items';
 import { itemsMap } from './data/maps';
-import { generateCow, getPlotContentFromItemId } from './utils';
+import { genders } from './enums';
+import { generateCow, getCowMilkItem, getPlotContentFromItemId } from './utils';
 import * as fn from './data-transformers';
 
 jest.mock('localforage');
@@ -208,6 +210,66 @@ describe('processFeedingCows', () => {
         );
         expect(inventory).toHaveLength(0);
       });
+    });
+  });
+});
+
+describe('processMilkingCows', () => {
+  let state;
+
+  beforeEach(() => {
+    state = {
+      cowInventory: [],
+      inventory: [],
+      newDayNotifications: [],
+    };
+  });
+
+  describe('cow should not be milked', () => {
+    test('cow is not milked', () => {
+      const baseDaysSinceMilking = 2;
+
+      state.cowInventory = [
+        generateCow({
+          daysSinceMilking: baseDaysSinceMilking,
+          gender: genders.FEMALE,
+        }),
+      ];
+
+      const {
+        cowInventory: [{ daysSinceMilking }],
+        inventory,
+        newDayNotifications,
+      } = fn.processMilkingCows(state);
+
+      expect(daysSinceMilking).toEqual(baseDaysSinceMilking);
+      expect(inventory).toEqual([]);
+      expect(newDayNotifications).toEqual([]);
+    });
+  });
+
+  describe('cow should be milked', () => {
+    test('cow is milked', () => {
+      state.cowInventory = [
+        generateCow({
+          daysSinceMilking: Math.ceil(COW_MILK_RATE_SLOWEST / 2),
+          gender: genders.FEMALE,
+        }),
+      ];
+
+      const {
+        cowInventory: [cow],
+        inventory,
+        newDayNotifications,
+      } = fn.processMilkingCows(state);
+
+      const { daysSinceMilking } = cow;
+
+      expect(daysSinceMilking).toEqual(0);
+      expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }]);
+      expect(newDayNotifications).toEqual([
+        MILK_PRODUCED`${cow}${getCowMilkItem(cow)}`,
+      ]);
     });
   });
 });
@@ -509,32 +571,48 @@ describe('incrementCropAge', () => {
 describe('decrementItemFromInventory', () => {
   let updatedInventory;
 
-  describe('single instance of item in inventory', () => {
+  describe('item is not in inventory', () => {
     beforeEach(() => {
-      updatedInventory = fn.decrementItemFromInventory('sample-item-1', [
+      updatedInventory = fn.decrementItemFromInventory('nonexistent-item', [
         testItem({ id: 'sample-item-1', quantity: 1 }),
       ]);
     });
 
-    test('removes item from inventory', () => {
-      expect(updatedInventory).toEqual([]);
+    test('no-ops', () => {
+      expect(updatedInventory).toEqual([
+        testItem({ id: 'sample-item-1', quantity: 1 }),
+      ]);
     });
   });
 
-  describe('multiple instances of item in inventory', () => {
-    beforeEach(() => {
-      updatedInventory = fn.decrementItemFromInventory('sample-item-1', [
-        testItem({ id: 'sample-item-1', quantity: 2 }),
-      ]);
+  describe('item is in inventory', () => {
+    describe('single instance of item in inventory', () => {
+      beforeEach(() => {
+        updatedInventory = fn.decrementItemFromInventory('sample-item-1', [
+          testItem({ id: 'sample-item-1', quantity: 1 }),
+        ]);
+      });
+
+      test('removes item from inventory', () => {
+        expect(updatedInventory).toEqual([]);
+      });
     });
 
-    test('decrements item', () => {
-      expect(updatedInventory).toEqual([
-        testItem({
-          id: 'sample-item-1',
-          quantity: 1,
-        }),
-      ]);
+    describe('multiple instances of item in inventory', () => {
+      beforeEach(() => {
+        updatedInventory = fn.decrementItemFromInventory('sample-item-1', [
+          testItem({ id: 'sample-item-1', quantity: 2 }),
+        ]);
+      });
+
+      test('decrements item', () => {
+        expect(updatedInventory).toEqual([
+          testItem({
+            id: 'sample-item-1',
+            quantity: 1,
+          }),
+        ]);
+      });
     });
   });
 });

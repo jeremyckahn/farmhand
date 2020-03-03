@@ -3,19 +3,24 @@ import memoize from 'fast-memoize';
 
 import fruitNames from './data/fruit-names';
 import { cropIdToTypeMap, itemsMap } from './data/maps';
+import { milk1, milk2, milk3 } from './data/items';
 import { items as itemImages } from './img';
 import { cowColors, cropLifeStage, genders, itemType } from './enums';
 import {
+  COW_MILK_RATE_FASTEST,
+  COW_MILK_RATE_SLOWEST,
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
-  INITIAL_FIELD_WIDTH,
+  COW_WEIGHT_MULTIPLIER_MAXIMUM,
+  COW_WEIGHT_MULTIPLIER_MINIMUM,
   INITIAL_FIELD_HEIGHT,
+  INITIAL_FIELD_WIDTH,
 } from './constants';
 
 const { SEED, GROWING, GROWN } = cropLifeStage;
 
 const chooseRandom = list =>
-  list[Math.floor(Math.random() * (list.length - 1))];
+  list[Math.round(Math.random() * (list.length - 1))];
 
 /**
  * @returns {string}
@@ -29,6 +34,18 @@ const createUniqueId = () => btoa(Math.random() + Date.now());
  */
 export const clampNumber = (num, min, max) =>
   num <= min ? min : num >= max ? max : num;
+
+/**
+ * Based on https://stackoverflow.com/a/14224813/470685
+ * @param {number} value Number to scale
+ * @param {number} min Non-standard minimum
+ * @param {number} max Non-standard maximum
+ * @param {number} baseMin Standard minimum
+ * @param {number} baseMax Standard maximum
+ * @return {number}
+ */
+const scaleNumber = (value, min, max, baseMin, baseMax) =>
+  ((value - min) * (baseMax - baseMin)) / (max - min) + baseMin;
 
 export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
@@ -177,6 +194,7 @@ export const generateCow = options => {
     baseWeight: weight,
     color: chooseRandom(Object.values(cowColors)),
     daysOld: 1,
+    daysSinceMilking: 0,
     gender: chooseRandom(Object.values(genders)),
     happiness: 0,
     happinessBoostsToday: 0,
@@ -189,11 +207,42 @@ export const generateCow = options => {
 
 /**
  * @param {farmhand.cow} cow
+ * @returns {farmhand.item}
+ */
+export const getCowMilkItem = ({ happiness }) => {
+  if (happiness < 1 / 3) {
+    return milk1;
+  } else if (happiness < 2 / 3) {
+    return milk2;
+  }
+
+  return milk3;
+};
+
+/**
+ * @param {farmhand.cow} cow
+ * @returns {number}
+ */
+export const getCowMilkRate = cow =>
+  cow.gender === genders.FEMALE
+    ? scaleNumber(
+        cow.weightMultiplier,
+        COW_WEIGHT_MULTIPLIER_MINIMUM,
+        COW_WEIGHT_MULTIPLIER_MAXIMUM,
+        COW_MILK_RATE_SLOWEST,
+        COW_MILK_RATE_FASTEST
+      )
+    : Infinity;
+
+/**
+ * @param {farmhand.cow} cow
+ * @returns {number}
  */
 export const getCowWeight = ({ baseWeight, weightMultiplier }) =>
   Math.round(baseWeight * weightMultiplier);
 
 /**
  * @param {farmhand.cow} cow
+ * @returns {number}
  */
 export const getCowValue = cow => getCowWeight(cow) * 1.5;

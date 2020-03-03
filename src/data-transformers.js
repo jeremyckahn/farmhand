@@ -4,6 +4,8 @@ import { itemsMap } from './data/maps';
 import {
   clampNumber,
   generateCow,
+  getCowMilkItem,
+  getCowMilkRate,
   getAdjustedItemValue,
   getItemValue,
   getRangeCoords,
@@ -21,7 +23,7 @@ import {
   SPRINKLER_RANGE,
 } from './constants';
 import { RAIN_MESSAGE } from './strings';
-import { CROW_ATTACKED } from './templates';
+import { MILK_PRODUCED, CROW_ATTACKED } from './templates';
 import { fieldMode, itemType } from './enums';
 
 /**
@@ -120,6 +122,7 @@ export const processSprinklers = state => {
  */
 export const processFeedingCows = state => {
   const cowInventory = [...state.cowInventory];
+  const { length: cowInventoryLength } = cowInventory;
   let inventory = [...state.inventory];
 
   const cowFeedInventoryPosition = inventory.findIndex(
@@ -131,7 +134,7 @@ export const processFeedingCows = state => {
 
   let unitsSpent = 0;
 
-  for (let i = 0; i < cowInventory.length; i++) {
+  for (let i = 0; i < cowInventoryLength; i++) {
     const cow = cowInventory[i];
     const anyUnitsRemain = unitsSpent < quantity;
 
@@ -151,16 +154,38 @@ export const processFeedingCows = state => {
     }
   }
 
-  // TODO: Obviate this null checking in decrementItemFromInventory
-  if (~cowFeedInventoryPosition) {
-    inventory = decrementItemFromInventory(
-      COW_FEED_ITEM_ID,
-      inventory,
-      unitsSpent
-    );
-  }
+  inventory = decrementItemFromInventory(
+    COW_FEED_ITEM_ID,
+    inventory,
+    unitsSpent
+  );
 
   return { ...state, cowInventory, inventory };
+};
+
+/**
+ * @param {farmhand.state} state
+ * @return {farmhand.state}
+ */
+export const processMilkingCows = state => {
+  const cowInventory = [...state.cowInventory];
+  const newDayNotifications = [...state.newDayNotifications];
+  const { length: cowInventoryLength } = cowInventory;
+  let inventory = [...state.inventory];
+
+  for (let i = 0; i < cowInventoryLength; i++) {
+    const cow = cowInventory[i];
+
+    if (cow.daysSinceMilking > getCowMilkRate(cow)) {
+      cowInventory[i] = { ...cow, daysSinceMilking: 0 };
+
+      const milk = getCowMilkItem(cow);
+      inventory = addItemToInventory(milk, inventory);
+      newDayNotifications.push(MILK_PRODUCED`${cow}${milk}`);
+    }
+  }
+
+  return { ...state, cowInventory, inventory, newDayNotifications };
 };
 
 /**
@@ -312,6 +337,7 @@ export const computeCowInventoryForNextDay = ({ cowInventory }) =>
   cowInventory.map(cow => ({
     ...cow,
     daysOld: cow.daysOld + 1,
+    daysSinceMilking: cow.daysSinceMilking + 1,
     happiness: Math.max(0, cow.happiness - COW_HUG_BENEFIT),
     happinessBoostsToday: 0,
   }));
@@ -368,6 +394,10 @@ export const decrementItemFromInventory = (itemId, inventory, howMany = 1) => {
 
   const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId);
 
+  if (itemInventoryIndex === -1) {
+    return inventory;
+  }
+
   const { quantity } = inventory[itemInventoryIndex];
 
   if (quantity > howMany) {
@@ -405,17 +435,20 @@ export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state);
  * the changed properties.
  */
 export const computeStateForNextDay = state =>
-  [processBuffs, processNerfs, processSprinklers, processFeedingCows].reduce(
-    (acc, fn) => fn({ ...acc }),
-    {
-      ...state,
-      cowForSale: generateCow(),
-      cowInventory: computeCowInventoryForNextDay(state),
-      dayCount: state.dayCount + 1,
-      field: getUpdatedField(state.field),
-      valueAdjustments: getUpdatedValueAdjustments(),
-    }
-  );
+  [
+    processBuffs,
+    processNerfs,
+    processSprinklers,
+    processFeedingCows,
+    processMilkingCows,
+  ].reduce((acc, fn) => fn({ ...acc }), {
+    ...state,
+    cowForSale: generateCow(),
+    cowInventory: computeCowInventoryForNextDay(state),
+    dayCount: state.dayCount + 1,
+    field: getUpdatedField(state.field),
+    valueAdjustments: getUpdatedValueAdjustments(),
+  });
 
 /**
  * @param {farmhand.item} item

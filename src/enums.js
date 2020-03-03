@@ -56,6 +56,7 @@ export const itemType = enumify([
   'COW_FEED',
   'CROP',
   'FERTILIZER',
+  'MILK',
   'SCARECROW',
   'SPRINKLER',
 ]);
@@ -64,7 +65,7 @@ export const itemType = enumify([
  * @property farmhand.module:enums.genders
  * @enum {string}
  */
-export const genders = enumify(['FEMALE', 'GENDERLESS', 'MALE']);
+export const genders = enumify(['FEMALE', 'MALE']);
 
 export const cowColors = enumify([
   'BLUE',

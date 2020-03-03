@@ -2,6 +2,7 @@ import {
   dollarAmount,
   getItemValue,
   generateCow,
+  getCowMilkRate,
   getCowValue,
   getCowWeight,
   getCropId,
@@ -17,8 +18,12 @@ import { items as itemImages } from './img';
 import { cowColors, cropLifeStage, genders } from './enums';
 import { sampleItem1, sampleFieldTool1 } from './data/items';
 import {
+  COW_MILK_RATE_FASTEST,
+  COW_MILK_RATE_SLOWEST,
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
+  COW_WEIGHT_MULTIPLIER_MINIMUM,
+  COW_WEIGHT_MULTIPLIER_MAXIMUM,
 } from './constants';
 
 jest.mock('./data/maps');
@@ -99,17 +104,65 @@ describe('generateCow', () => {
   });
 });
 
-describe('getCowWeight', () => {
-  test('computes cow value', () => {
-    expect(
-      getCowWeight(generateCow({ baseWeight: 100, weightMultiplier: 2 }))
-    ).toEqual(200);
+describe('getCowMilkRate', () => {
+  describe('non-female cows', () => {
+    test('computes correct milk rate', () => {
+      expect(
+        getCowMilkRate(
+          generateCow({
+            gender: genders.MALE,
+          })
+        )
+      ).toEqual(Infinity);
+    });
+  });
+
+  describe('female cows', () => {
+    const baseCow = generateCow({ gender: genders.FEMALE });
+
+    describe('minimal weightMultiplier', () => {
+      test('computes correct milk rate', () => {
+        expect(
+          getCowMilkRate({
+            ...baseCow,
+            weightMultiplier: COW_WEIGHT_MULTIPLIER_MINIMUM,
+          })
+        ).toEqual(COW_MILK_RATE_SLOWEST);
+      });
+    });
+
+    describe('median weightMultiplier', () => {
+      test('computes correct milk rate', () => {
+        expect(getCowMilkRate({ ...baseCow, weightMultiplier: 1 })).toEqual(
+          (COW_MILK_RATE_SLOWEST + COW_MILK_RATE_FASTEST) / 2
+        );
+      });
+    });
+
+    describe('maximum weightMultiplier', () => {
+      test('computes correct milk rate', () => {
+        expect(
+          getCowMilkRate({
+            ...baseCow,
+            weightMultiplier: COW_WEIGHT_MULTIPLIER_MAXIMUM,
+          })
+        ).toEqual(COW_MILK_RATE_FASTEST);
+      });
+    });
   });
 });
 
 describe('getCowValue', () => {
   test('computes cow value', () => {
     expect(getCowValue(generateCow({ baseWeight: 100 }))).toEqual(150);
+  });
+});
+
+describe('getCowWeight', () => {
+  test('computes cow value', () => {
+    expect(
+      getCowWeight(generateCow({ baseWeight: 100, weightMultiplier: 2 }))
+    ).toEqual(200);
   });
 });
 
