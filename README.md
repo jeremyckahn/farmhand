@@ -25,7 +25,7 @@ There is no release or versioning system yet.
   - [x] Three sizes
 - [x] Generate and purchase cows
   - [x] Multiple cow colors (every color of the rainbow)
-  - [x] Cows can be male, female, or genderless
+  - [x] Cows can be male or female
 - [x] Cow status in context pane
   - [x] Rename cow
   - [x] Show stats

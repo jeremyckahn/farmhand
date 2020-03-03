@@ -8,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import {
-  faGenderless,
   faMars,
   faVenus,
   faHeart as faFullHeart,
@@ -30,7 +29,6 @@ import './CowPenContextMenu.sass';
 
 const genderIcons = {
   [genders.FEMALE]: faVenus,
-  [genders.GENDERLESS]: faGenderless,
   [genders.MALE]: faMars,
 };
 
