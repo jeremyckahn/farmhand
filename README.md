@@ -37,10 +37,10 @@ There is no release or versioning system yet.
   - [x] Click/tap to select cow
   - [x] Tooltip info appears over cow when selected
 - [x] Purchase cow feed (10 units at a time)
-- [ ] Cow milking
-  - [ ] Female cows can be milked every several days
-  - [ ] Happiness improves milk quality
-  - [ ] Weight improves milk production day frequency
+- [x] Cow milking
+  - [x] Female cows can be milked every several days
+  - [x] Happiness improves milk quality
+  - [x] Weight improves milk production day frequency
   - ~~[ ] Milk quantity and quality decrease after a certain age~~
 - [x] Milk items
   - [x] Three quality levels
