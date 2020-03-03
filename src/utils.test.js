@@ -24,6 +24,7 @@ import {
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
+  MALE_COW_WEIGHT_MULTIPLIER,
 } from './constants';
 
 jest.mock('./data/maps');
@@ -71,15 +72,38 @@ describe('generateCow', () => {
       jest.spyOn(Math, 'random').mockReturnValue(0);
     });
 
-    test('generates a cow', () => {
-      const baseWeight =
-        COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE;
-      expect(generateCow()).toMatchObject({
-        color: Object.keys(cowColors)[0],
-        daysOld: 1,
-        gender: Object.keys(genders)[0],
-        name: fruitNames[0],
-        baseWeight,
+    const baseCowProperties = {
+      color: Object.keys(cowColors)[0],
+      daysOld: 1,
+      name: fruitNames[0],
+    };
+
+    describe('female cows', () => {
+      test('generates a cow', () => {
+        const baseWeight = Math.round(
+          COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE
+        );
+
+        expect(generateCow({ gender: genders.FEMALE })).toMatchObject({
+          ...baseCowProperties,
+          gender: genders.FEMALE,
+          baseWeight,
+        });
+      });
+    });
+
+    describe('male cows', () => {
+      test('generates a cow', () => {
+        const baseWeight = Math.round(
+          COW_STARTING_WEIGHT_BASE * MALE_COW_WEIGHT_MULTIPLIER -
+            COW_STARTING_WEIGHT_VARIANCE
+        );
+
+        expect(generateCow({ gender: genders.MALE })).toMatchObject({
+          ...baseCowProperties,
+          gender: genders.MALE,
+          baseWeight,
+        });
       });
     });
   });

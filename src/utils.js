@@ -15,6 +15,7 @@ import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
+  MALE_COW_WEIGHT_MULTIPLIER,
 } from './constants';
 
 const { SEED, GROWING, GROWN } = cropLifeStage;
@@ -183,19 +184,22 @@ export const getAdjustedItemValue = (valueAdjustments, itemId) =>
  * @param {Object} [options]
  * @returns {farmhand.cow}
  */
-export const generateCow = options => {
-  const weight = Math.round(
-    COW_STARTING_WEIGHT_BASE -
+export const generateCow = (options = {}) => {
+  const gender = options.gender || chooseRandom(Object.values(genders));
+
+  const baseWeight = Math.round(
+    COW_STARTING_WEIGHT_BASE *
+      (gender === genders.MALE ? MALE_COW_WEIGHT_MULTIPLIER : 1) -
       COW_STARTING_WEIGHT_VARIANCE +
       Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
   );
 
   return {
-    baseWeight: weight,
+    baseWeight,
     color: chooseRandom(Object.values(cowColors)),
     daysOld: 1,
     daysSinceMilking: 0,
-    gender: chooseRandom(Object.values(genders)),
+    gender,
     happiness: 0,
     happinessBoostsToday: 0,
     id: createUniqueId(),
