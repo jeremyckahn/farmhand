@@ -49,9 +49,9 @@ There is no release or versioning system yet.
   - [x] Keeping cow feed stocked increases weight
   - [x] Cows automatically eat one unit of feed a day
   - [x] Hugging cows improves happiness (benefits top out after 3 daily hugs)
-- [ ] Selling cows
+- [x] Selling cows
   - [x] Greater weight results in higher sell value
-  - [ ] Older cows are worth less
+  - [x] Older cows are worth less
 - [x] Negligence
   - [x] Not keeping cow feed stocked causes cows to lose weight
 - ~~[ ] Breeding~~ This should be considered for a later milestone.

@@ -7,8 +7,11 @@ import { milk1, milk2, milk3 } from './data/items';
 import { items as itemImages } from './img';
 import { cowColors, cropLifeStage, genders, itemType } from './enums';
 import {
+  COW_MAXIMUM_AGE_VALUE_DROPOFF,
+  COW_MAXIMUM_VALUE_MULTIPLIER,
   COW_MILK_RATE_FASTEST,
   COW_MILK_RATE_SLOWEST,
+  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
@@ -249,4 +252,16 @@ export const getCowWeight = ({ baseWeight, weightMultiplier }) =>
  * @param {farmhand.cow} cow
  * @returns {number}
  */
-export const getCowValue = cow => getCowWeight(cow) * 1.5;
+export const getCowValue = cow =>
+  getCowWeight(cow) *
+  clampNumber(
+    scaleNumber(
+      cow.daysOld,
+      1,
+      COW_MAXIMUM_AGE_VALUE_DROPOFF,
+      COW_MAXIMUM_VALUE_MULTIPLIER,
+      COW_MINIMUM_VALUE_MULTIPLIER
+    ),
+    COW_MINIMUM_VALUE_MULTIPLIER,
+    COW_MAXIMUM_VALUE_MULTIPLIER
+  );
