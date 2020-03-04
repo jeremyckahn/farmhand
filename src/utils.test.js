@@ -18,12 +18,15 @@ import { items as itemImages } from './img';
 import { cowColors, cropLifeStage, genders } from './enums';
 import { sampleItem1, sampleFieldTool1 } from './data/items';
 import {
+  COW_MAXIMUM_AGE_VALUE_DROPOFF,
+  COW_MAXIMUM_VALUE_MULTIPLIER,
   COW_MILK_RATE_FASTEST,
   COW_MILK_RATE_SLOWEST,
+  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
-  COW_WEIGHT_MULTIPLIER_MINIMUM,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
+  COW_WEIGHT_MULTIPLIER_MINIMUM,
   MALE_COW_WEIGHT_MULTIPLIER,
 } from './constants';
 
@@ -177,8 +180,32 @@ describe('getCowMilkRate', () => {
 });
 
 describe('getCowValue', () => {
-  test('computes cow value', () => {
-    expect(getCowValue(generateCow({ baseWeight: 100 }))).toEqual(150);
+  const baseWeight = 100;
+
+  describe('young cow (best value)', () => {
+    test('computes cow value', () => {
+      expect(getCowValue(generateCow({ baseWeight, daysOld: 1 }))).toEqual(
+        baseWeight * COW_MAXIMUM_VALUE_MULTIPLIER
+      );
+    });
+  });
+
+  describe('old cow (worst value)', () => {
+    test('computes cow value', () => {
+      expect(
+        getCowValue(
+          generateCow({ baseWeight, daysOld: COW_MAXIMUM_AGE_VALUE_DROPOFF })
+        )
+      ).toEqual(baseWeight * COW_MINIMUM_VALUE_MULTIPLIER);
+    });
+  });
+
+  describe('very old cow (worst value)', () => {
+    test('computes cow value', () => {
+      expect(
+        getCowValue(generateCow({ baseWeight, daysOld: Number.MAX_VALUE }))
+      ).toEqual(baseWeight * COW_MINIMUM_VALUE_MULTIPLIER);
+    });
   });
 });
 

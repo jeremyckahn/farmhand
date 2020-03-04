@@ -49,3 +49,7 @@ export const COW_MILK_RATE_FASTEST = 0;
 
 export const COW_FEED_ITEM_ID = 'cow-feed';
 export const COW_FEED_BULK_PURCHASE_AMOUNT = 10;
+
+export const COW_MAXIMUM_AGE_VALUE_DROPOFF = 100;
+export const COW_MINIMUM_VALUE_MULTIPLIER = 0.5;
+export const COW_MAXIMUM_VALUE_MULTIPLIER = 1.5;
