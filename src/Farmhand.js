@@ -7,6 +7,7 @@ import Fab from '@material-ui/core/Fab';
 import HotelIcon from '@material-ui/icons/Hotel';
 import Tooltip from '@material-ui/core/Tooltip';
 import throttle from 'lodash.throttle';
+import debounce from 'lodash.debounce';
 
 import FarmhandContext from './Farmhand.context';
 import eventHandlers from './event-handlers';
@@ -44,9 +45,9 @@ import shopInventory from './data/shop-inventory';
 import { itemsMap } from './data/maps';
 import { cropLifeStage, fieldMode, itemType, stageFocusType } from './enums';
 import {
+  COW_HUG_BENEFIT,
   FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
-  COW_HUG_BENEFIT,
   MAX_DAILY_COW_HUG_BENEFITS,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
@@ -90,12 +91,6 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
 
 export default class Farmhand extends Component {
   // Bind event handlers
-  handlers = {
-    ...Object.keys(eventHandlers).reduce((acc, method) => {
-      acc[method] = eventHandlers[method].bind(this);
-      return acc;
-    }, {}),
-  };
 
   localforage = localforage.createInstance({
     name: 'farmhand',
@@ -133,7 +128,7 @@ export default class Farmhand extends Component {
   constructor() {
     super(...arguments);
 
-    this.initKeyHandlers();
+    this.initInputHandlers();
   }
 
   static reduceByPersistedKeys(state) {
@@ -213,7 +208,21 @@ export default class Farmhand extends Component {
     return viewList;
   }
 
-  initKeyHandlers() {
+  initInputHandlers() {
+    const keyHandlerThrottleTime = 150;
+    const debouncedInputRate = 50;
+
+    this.handlers = { debounced: {} };
+
+    Object.keys(eventHandlers).forEach(method => {
+      this.handlers[method] = eventHandlers[method].bind(this);
+
+      this.handlers.debounced[method] = debounce(
+        this.handlers[method],
+        debouncedInputRate
+      );
+    });
+
     this.keyMap = {
       focusField: 'f',
       focusInventory: 'i',
@@ -224,8 +233,6 @@ export default class Farmhand extends Component {
       previousView: 'left',
       toggleMenu: 'm',
     };
-
-    const keyHandlerThrottleTime = 150;
 
     this.keyHandlers = {
       focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
