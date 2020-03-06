@@ -183,6 +183,14 @@ export default {
     this.selectCow(cow);
   },
 
+  /**
+   * @param {farmhand.cow}
+   */
+  handleCowClick(cow) {
+    this.selectCow(cow);
+    this.hugCow(cow.id);
+  },
+
   handleCloseNotification() {
     this.setState({ doShowNotifications: false });
   },

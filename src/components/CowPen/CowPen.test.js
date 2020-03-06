@@ -17,7 +17,7 @@ describe('CowPen', () => {
       <CowPen
         {...{
           cowInventory: [],
-          handleCowSelect: () => {},
+          handleCowClick: () => {},
           selectedCowId: '',
         }}
       />
@@ -59,7 +59,7 @@ describe('Cow', () => {
             ...generateCow(),
             color: cowColors.WHITE,
           },
-          handleCowSelect: () => {},
+          handleCowClick: () => {},
           isSelected: false,
         }}
       />

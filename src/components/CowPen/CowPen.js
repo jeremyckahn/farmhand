@@ -113,7 +113,7 @@ export class Cow extends Component {
 
   render() {
     const {
-      props: { cow, handleCowSelect, isSelected },
+      props: { cow, handleCowClick, isSelected },
       state: { isMoving, showHugAnimation, x, y },
     } = this;
 
@@ -124,7 +124,7 @@ export class Cow extends Component {
             'is-moving': isMoving,
             'is-selected': isSelected,
           }),
-          onClick: () => handleCowSelect(cow),
+          onClick: () => handleCowClick(cow),
           style: {
             left: `${y}%`,
             top: `${x}%`,
@@ -163,18 +163,18 @@ export class Cow extends Component {
 
 Cow.propTypes = {
   cow: object.isRequired,
-  handleCowSelect: func.isRequired,
+  handleCowClick: func.isRequired,
   isSelected: bool.isRequired,
 };
 
-export const CowPen = ({ cowInventory, handleCowSelect, selectedCowId }) => (
+export const CowPen = ({ cowInventory, handleCowClick, selectedCowId }) => (
   <div className="CowPen">
     {cowInventory.map(cow => (
       <Cow
         {...{
           cow,
           key: cow.id,
-          handleCowSelect,
+          handleCowClick,
           isSelected: selectedCowId === cow.id,
         }}
       />
@@ -184,7 +184,7 @@ export const CowPen = ({ cowInventory, handleCowSelect, selectedCowId }) => (
 
 CowPen.propTypes = {
   cowInventory: array.isRequired,
-  handleCowSelect: func.isRequired,
+  handleCowClick: func.isRequired,
   selectedCowId: string.isRequired,
 };
 
