@@ -23,10 +23,10 @@ export const DebugMenu = ({
       <Typography>
         <Button
           color="primary"
-          onClick={() => handleAddMoneyClick(1000)}
+          onClick={() => handleAddMoneyClick(10000)}
           variant="contained"
         >
-          Get $1000
+          Get $10,000
         </Button>
         <Button
           color="primary"
