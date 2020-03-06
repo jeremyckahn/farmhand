@@ -21,6 +21,7 @@ describe('CowPenContextMenu', () => {
         {...{
           cowForSale: generateCow(),
           cowInventory: [],
+          debounced: {},
           handleCowSelect: () => {},
           handleCowNameInputChange: () => {},
           handleCowPurchaseClick: () => {},

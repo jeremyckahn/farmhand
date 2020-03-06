@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { array, func, number, object, string } from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -80,6 +80,7 @@ export const CowCardSubheader = ({
 export const CowCard = ({
   cow,
   cowInventory,
+  debounced,
   handleCowHugClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
@@ -91,95 +92,103 @@ export const CowCard = ({
   cowValue = getCowValue(cow),
   isCowPurchased = !!handleCowSellClick,
   isNameEditable = !!handleCowNameInputChange,
-}) => (
-  <Card {...{ raised: isSelected }}>
-    <CardHeader
-      {...{
-        avatar: (
-          <img
-            {...{ src: animals.cow[cowColors[cow.color].toLowerCase()] }}
-            alt="Cow"
-          />
-        ),
-        title: (
-          <>
-            {isNameEditable ? (
-              <TextField
+}) => {
+  const [name, setName] = useState(cow.name);
+
+  return (
+    <Card {...{ raised: isSelected }}>
+      <CardHeader
+        {...{
+          avatar: (
+            <img
+              {...{ src: animals.cow[cowColors[cow.color].toLowerCase()] }}
+              alt="Cow"
+            />
+          ),
+          title: (
+            <>
+              {isNameEditable ? (
+                <TextField
+                  {...{
+                    onChange: e => {
+                      setName(e.target.value);
+                      debounced.handleCowNameInputChange({ ...e }, cow);
+                    },
+                    placeholder: 'Name',
+                    value: name,
+                  }}
+                />
+              ) : (
+                cow.name
+              )}{' '}
+              <FontAwesomeIcon
                 {...{
-                  onChange: e => handleCowNameInputChange(e, cow),
-                  placeholder: 'Name',
-                  value: cow.name,
+                  icon: genderIcons[cow.gender],
                 }}
               />
-            ) : (
-              cow.name
-            )}{' '}
-            <FontAwesomeIcon
+            </>
+          ),
+          subheader: (
+            <CowCardSubheader
               {...{
-                icon: genderIcons[cow.gender],
+                cow,
+                cowValue,
+                isCowPurchased,
               }}
             />
-          </>
-        ),
-        subheader: (
-          <CowCardSubheader
-            {...{
-              cow,
-              cowValue,
-              isCowPurchased,
-            }}
-          />
-        ),
-      }}
-    />
-    <CardActions>
-      {!isCowPurchased && (
-        <Button
-          {...{
-            className: 'purchase',
-            color: 'primary',
-            disabled:
-              cowValue > money ||
-              cowInventory.length >=
-                PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
-            onClick: () => handleCowPurchaseClick(cow),
-            variant: 'contained',
-          }}
-        >
-          Buy
-        </Button>
-      )}
-      {isCowPurchased && (
-        <>
+          ),
+        }}
+      />
+      <CardActions>
+        {!isCowPurchased && (
           <Button
             {...{
-              className: 'hug',
+              className: 'purchase',
               color: 'primary',
-              onClick: () => handleCowHugClick(cow),
+              disabled:
+                cowValue > money ||
+                cowInventory.length >=
+                  PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
+              onClick: () => handleCowPurchaseClick(cow),
               variant: 'contained',
             }}
           >
-            Hug
+            Buy
           </Button>
-          <Button
-            {...{
-              className: 'sell',
-              color: 'secondary',
-              onClick: () => handleCowSellClick(cow),
-              variant: 'contained',
-            }}
-          >
-            Sell
-          </Button>
-        </>
-      )}
-    </CardActions>
-  </Card>
-);
+        )}
+        {isCowPurchased && (
+          <>
+            <Button
+              {...{
+                className: 'hug',
+                color: 'primary',
+                onClick: () => handleCowHugClick(cow),
+                variant: 'contained',
+              }}
+            >
+              Hug
+            </Button>
+            <Button
+              {...{
+                className: 'sell',
+                color: 'secondary',
+                onClick: () => handleCowSellClick(cow),
+                variant: 'contained',
+              }}
+            >
+              Sell
+            </Button>
+          </>
+        )}
+      </CardActions>
+    </Card>
+  );
+};
 
 export const CowPenContextMenu = ({
   cowForSale,
   cowInventory,
+  debounced,
   handleCowHugClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
@@ -225,8 +234,9 @@ export const CowPenContextMenu = ({
             {...{
               cow,
               cowInventory,
-              handleCowNameInputChange,
+              debounced,
               handleCowHugClick,
+              handleCowNameInputChange,
               handleCowSellClick,
               isSelected: cow.id === selectedCowId,
               money,
@@ -242,6 +252,7 @@ export const CowPenContextMenu = ({
 CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
   cowInventory: array.isRequired,
+  debounced: object.isRequired,
   handleCowHugClick: func.isRequired,
   handleCowNameInputChange: func.isRequired,
   handleCowPurchaseClick: func.isRequired,
