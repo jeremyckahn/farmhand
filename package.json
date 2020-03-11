@@ -50,15 +50,15 @@
     "piskel-cli": "^1.0.41",
     "prettier": "^1.13.7",
     "pretty-quick": "^1.7.0",
-    "react-scripts": "^3.0.1"
+    "react-scripts": "^3.4.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-regular-svg-icons": "^5.10.2",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@material-ui/core": "^4.0.2",
-    "@material-ui/icons": "^4.0.1",
+    "@material-ui/core": "^4.9.5",
+    "@material-ui/icons": "^4.9.1",
     "classnames": "^2.2.6",
     "compass-mixins": "^0.12.10",
     "dinero.js": "^1.4.0",
@@ -68,8 +68,8 @@
     "lodash.sortby": "^4.7.0",
     "lodash.throttle": "^4.1.1",
     "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "react-hotkeys": "^2.0.0",
     "source-map-explorer": "^2.0.1",
     "typeface-francois-one": "0.0.71"
