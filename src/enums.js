@@ -39,6 +39,7 @@ export const stageFocusType = enumify([
   'FIELD',
   'SHOP',
   'COW_PEN',
+  'KITCHEN',
   'INVENTORY',
 ]);
 

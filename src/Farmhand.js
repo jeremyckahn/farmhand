@@ -197,13 +197,15 @@ export default class Farmhand extends Component {
   }
 
   get viewList() {
-    const viewList = [stageFocusType.FIELD, stageFocusType.SHOP];
+    const { COW_PEN, FIELD, INVENTORY, KITCHEN, SHOP } = stageFocusType;
+
+    const viewList = [FIELD, SHOP];
 
     if (this.state.purchasedCowPen) {
-      viewList.push(stageFocusType.COW_PEN);
+      viewList.push(COW_PEN);
     }
 
-    viewList.push(stageFocusType.INVENTORY);
+    viewList.push(KITCHEN, INVENTORY);
 
     return viewList;
   }
@@ -228,6 +230,7 @@ export default class Farmhand extends Component {
       focusInventory: 'i',
       focusCows: 'c',
       focusShop: 's',
+      focusKitchen: 'k',
       incrementDay: 'shift+c',
       nextView: 'right',
       previousView: 'left',
@@ -242,6 +245,7 @@ export default class Farmhand extends Component {
         this.state.purchasedCowPen &&
         this.setState({ stageFocus: stageFocusType.COW_PEN }),
       focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
+      focusKitchen: () => this.setState({ stageFocus: stageFocusType.KITCHEN }),
       incrementDay: () => this.incrementDay(),
       nextView: throttle(this.goToNextView.bind(this), keyHandlerThrottleTime),
       previousView: throttle(
