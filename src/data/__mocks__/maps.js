@@ -19,6 +19,8 @@ import {
   sprinkler,
 } from './items';
 
+import * as recipes from './recipes';
+
 export const itemsMap = {
   'cow-feed': cowFeed,
   'milk-1': milk1,
@@ -39,6 +41,12 @@ export const itemsMap = {
   scarecrow,
   sprinkler,
 };
+
+export const recipesMap = Object.keys(recipes).reduce((acc, recipeName) => {
+  const recipe = recipes[recipeName];
+  acc[recipe.id] = recipe;
+  return acc;
+}, {});
 
 export const cropIdToTypeMap = {
   SAMPLE_CROP_TYPE_1: 'sample-crop-type-1',
