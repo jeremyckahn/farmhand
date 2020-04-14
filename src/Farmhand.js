@@ -81,6 +81,8 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  * @property {Array.<string>} notifications
  * @property {string} selectedCowId
  * @property {string} selectedItemId
+ * @property {Object} itemsSold Keys are items IDs, values are the number of
+ * that item sold.
  * @property {number} purchasedCowPen
  * @property {number} purchasedField
  * @property {Array.<farmhand.item>} shopInventory
@@ -116,6 +118,7 @@ export default class Farmhand extends Component {
     notifications: [],
     selectedCowId: '',
     selectedItemId: '',
+    itemsSold: {},
     fieldMode: OBSERVE,
     purchasedCowPen: 0,
     purchasedField: 0,
@@ -431,12 +434,14 @@ export default class Farmhand extends Component {
       return;
     }
 
-    this.setState(({ inventory, money, valueAdjustments }) => {
+    this.setState(({ inventory, itemsSold, money, valueAdjustments }) => {
       const value = getAdjustedItemValue(valueAdjustments, id);
       const totalValue = value * howMany;
+      itemsSold = { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany };
 
       return {
         inventory: decrementItemFromInventory(id, inventory, howMany),
+        itemsSold,
         money: money + totalValue,
       };
     });

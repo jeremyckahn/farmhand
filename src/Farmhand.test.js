@@ -363,6 +363,10 @@ describe('instance methods', () => {
     test('adds value of item to player money', () => {
       expect(component.state().money).toEqual(101);
     });
+
+    test('updates itemsSold', () => {
+      expect(component.state().itemsSold).toEqual({ 'sample-item-1': 1 });
+    });
   });
 
   describe('sellAllOfItem', () => {
