@@ -17,4 +17,5 @@ export const carrotSoup = freeze({
   ingredients: {
     [items.carrot.id]: 4,
   },
+  condition: state => (state.itemsSold[items.carrot.id] || 0) > 3,
 });
