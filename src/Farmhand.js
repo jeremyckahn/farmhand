@@ -71,6 +71,7 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  * @property {Array.<farmhand.cow>} cowInventory
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
+ * @property {farmhand.module:enums.fieldMode} fieldMode
  * @property {{ x: number, y: number }} hoveredPlot
  * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -80,7 +81,6 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  * @property {Array.<string>} notifications
  * @property {string} selectedCowId
  * @property {string} selectedItemId
- * @property {farmhand.module:enums.fieldMode} fieldMode
  * @property {number} purchasedCowPen
  * @property {number} purchasedField
  * @property {Array.<farmhand.item>} shopInventory

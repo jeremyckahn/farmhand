@@ -6,6 +6,8 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import { carrot } from '../../data/items';
+
 import FarmhandContext from '../../Farmhand.context';
 
 import './DebugMenu.sass';
@@ -13,6 +15,7 @@ import './DebugMenu.sass';
 export const DebugMenu = ({
   handleAddMoneyClick,
   handleClearPersistedDataClick,
+  handleItemPurchaseClick,
   handleWaterAllPlotsClick,
 }) => (
   <ExpansionPanel className="DebugMenu" square={true}>
@@ -34,6 +37,13 @@ export const DebugMenu = ({
           variant="contained"
         >
           Water all plots (w)
+        </Button>
+        <Button
+          color="primary"
+          onClick={() => handleItemPurchaseClick(carrot, 10)}
+          variant="contained"
+        >
+          Buy 10 carrots
         </Button>
         <Button
           color="primary"
