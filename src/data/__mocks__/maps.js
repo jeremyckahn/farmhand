@@ -1,46 +1,11 @@
-import {
-  cowFeed,
-  fertilizer,
-  milk1,
-  milk2,
-  milk3,
-  replantableItem,
-  sampleCropItem1,
-  sampleCropItem2,
-  sampleCropItem3,
-  sampleCropSeedsItem1,
-  sampleCropSeedsItem2,
-  sampleCropSeedsItem3,
-  sampleItem1,
-  sampleItem2,
-  sampleItem3,
-  sampleFieldTool1,
-  scarecrow,
-  sprinkler,
-} from './items';
-
+import * as items from './items';
 import * as recipes from './recipes';
 
-export const itemsMap = {
-  'cow-feed': cowFeed,
-  'milk-1': milk1,
-  'milk-2': milk2,
-  'milk-3': milk3,
-  fertilizer,
-  'replantable-item': replantableItem,
-  'sample-crop-1': sampleCropItem1,
-  'sample-crop-2': sampleCropItem2,
-  'sample-crop-3': sampleCropItem3,
-  'sample-crop-seeds-1': sampleCropSeedsItem1,
-  'sample-crop-seeds-2': sampleCropSeedsItem2,
-  'sample-crop-seeds-3': sampleCropSeedsItem3,
-  'sample-item-1': sampleItem1,
-  'sample-item-2': sampleItem2,
-  'sample-item-3': sampleItem3,
-  'sample-field-tool-1': sampleFieldTool1,
-  scarecrow,
-  sprinkler,
-};
+export const itemsMap = Object.keys(items).reduce((acc, itemName) => {
+  const item = items[itemName];
+  acc[item.id] = item;
+  return acc;
+}, {});
 
 export const recipesMap = Object.keys(recipes).reduce((acc, recipeName) => {
   const recipe = recipes[recipeName];
