@@ -63,6 +63,17 @@
  * @property {number} weightMultiplier Clamped between 0.5 and 1.5.
  */
 
+/**
+ * @typedef farmhand.recipe
+ * @readonly
+ * @type {Object}
+ * @property {string} id
+ * @property {string} name
+ * @property {number} value
+ * @property {{[farmhand.item.id]: number}} ingredients An object where each
+ * key is the id of a farmhand.item and the value is the quantity of that item.
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
