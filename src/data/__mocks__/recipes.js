@@ -7,4 +7,5 @@ export const sampleRecipe1 = {
   ingredients: {
     [items.sampleItem1.id]: 2,
   },
+  condition: state => (state.itemsSold[items.sampleItem1.id] || 0) > 2,
 };

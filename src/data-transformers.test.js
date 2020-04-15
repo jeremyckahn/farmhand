@@ -24,6 +24,7 @@ import * as fn from './data-transformers';
 jest.mock('localforage');
 jest.mock('./data/maps');
 jest.mock('./data/items');
+jest.mock('./data/recipes');
 
 jest.mock('./constants', () => ({
   __esModule: true,
@@ -653,6 +654,60 @@ describe('purchaseItem', () => {
       ).toEqual({
         inventory: [{ id: 'sample-item-1', quantity: 2 }],
         money: 8,
+      });
+    });
+  });
+});
+
+describe('computeNewlyUnlockedRecipes', () => {
+  describe('player does not already know the recipe', () => {
+    const learnedRecipes = Object.freeze({});
+
+    describe('recipe condition is not met', () => {
+      test('recipe is not in the returned map', () => {
+        const newlyUnlockedRecipes = fn.computeNewlyUnlockedRecipes({
+          learnedRecipes,
+          itemsSold: {},
+        });
+
+        expect(newlyUnlockedRecipes['sample-recipe-1']).toBe(undefined);
+      });
+    });
+
+    describe('recipe condition is met', () => {
+      test('recipe is in the returned map', () => {
+        const newlyUnlockedRecipes = fn.computeNewlyUnlockedRecipes({
+          learnedRecipes,
+          itemsSold: { 'sample-item-1': 3 },
+        });
+
+        expect(newlyUnlockedRecipes['sample-recipe-1']).toEqual(true);
+      });
+    });
+  });
+
+  describe('player does already know the recipe', () => {
+    const learnedRecipes = Object.freeze({ 'sample-recipe-1': true });
+
+    describe('recipe condition is not met', () => {
+      test('recipe is not in the returned map', () => {
+        const newlyUnlockedRecipes = fn.computeNewlyUnlockedRecipes({
+          learnedRecipes,
+          itemsSold: {},
+        });
+
+        expect(newlyUnlockedRecipes['sample-recipe-1']).toBe(undefined);
+      });
+    });
+
+    describe('recipe condition is met', () => {
+      test('recipe is not in the returned map', () => {
+        const newlyUnlockedRecipes = fn.computeNewlyUnlockedRecipes({
+          learnedRecipes,
+          itemsSold: { 'sample-item-1': 3 },
+        });
+
+        expect(newlyUnlockedRecipes['sample-recipe-1']).toEqual(undefined);
       });
     });
   });

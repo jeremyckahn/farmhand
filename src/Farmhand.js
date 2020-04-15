@@ -76,7 +76,7 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {boolean} isMenuOpen
- * @property {Array.<string>} learnedRecipes
+ * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
  * @property {number} money
  * @property {Array.<string} newDayNotifications
  * @property {Array.<string>} notifications

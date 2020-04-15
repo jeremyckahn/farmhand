@@ -1,6 +1,6 @@
 import memoize from 'fast-memoize';
 
-import { itemsMap } from './data/maps';
+import { itemsMap, recipesMap } from './data/maps';
 import {
   clampNumber,
   generateCow,
@@ -476,4 +476,22 @@ export const purchaseItem = (
     inventory: addItemToInventory(item, inventory, howMany),
     money: money - totalValue,
   };
+};
+
+/**
+ * @param {farmhand.state} state
+ * @returns {Object}
+ */
+export const computeNewlyUnlockedRecipes = state => {
+  const { learnedRecipes } = state;
+
+  return Object.keys(recipesMap).reduce((acc, recipeId) => {
+    const { condition } = recipesMap[recipeId];
+
+    if (!learnedRecipes.hasOwnProperty(recipeId) && condition(state)) {
+      acc[recipeId] = true;
+    }
+
+    return acc;
+  }, {});
 };
