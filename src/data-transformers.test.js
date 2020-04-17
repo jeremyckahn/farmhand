@@ -659,56 +659,24 @@ describe('purchaseItem', () => {
   });
 });
 
-describe('computeNewlyUnlockedRecipes', () => {
-  describe('player does not already know the recipe', () => {
-    const learnedRecipes = Object.freeze({});
-
-    describe('recipe condition is not met', () => {
-      test('recipe is not in the returned map', () => {
-        const newlyUnlockedRecipes = fn.computeNewlyUnlockedRecipes({
-          learnedRecipes,
-          itemsSold: {},
-        });
-
-        expect(newlyUnlockedRecipes['sample-recipe-1']).toBe(undefined);
+describe('computeLearnedRecipes', () => {
+  describe('recipe condition is not met', () => {
+    test('recipe is not in the returned map', () => {
+      const newlyUnlockedRecipes = fn.computeLearnedRecipes({
+        itemsSold: {},
       });
-    });
 
-    describe('recipe condition is met', () => {
-      test('recipe is in the returned map', () => {
-        const newlyUnlockedRecipes = fn.computeNewlyUnlockedRecipes({
-          learnedRecipes,
-          itemsSold: { 'sample-item-1': 3 },
-        });
-
-        expect(newlyUnlockedRecipes['sample-recipe-1']).toEqual(true);
-      });
+      expect(newlyUnlockedRecipes['sample-recipe-1']).toBe(undefined);
     });
   });
 
-  describe('player does already know the recipe', () => {
-    const learnedRecipes = Object.freeze({ 'sample-recipe-1': true });
-
-    describe('recipe condition is not met', () => {
-      test('recipe is not in the returned map', () => {
-        const newlyUnlockedRecipes = fn.computeNewlyUnlockedRecipes({
-          learnedRecipes,
-          itemsSold: {},
-        });
-
-        expect(newlyUnlockedRecipes['sample-recipe-1']).toBe(undefined);
+  describe('recipe condition is met', () => {
+    test('recipe is in the returned map', () => {
+      const newlyUnlockedRecipes = fn.computeLearnedRecipes({
+        itemsSold: { 'sample-item-1': 3 },
       });
-    });
 
-    describe('recipe condition is met', () => {
-      test('recipe is not in the returned map', () => {
-        const newlyUnlockedRecipes = fn.computeNewlyUnlockedRecipes({
-          learnedRecipes,
-          itemsSold: { 'sample-item-1': 3 },
-        });
-
-        expect(newlyUnlockedRecipes['sample-recipe-1']).toEqual(undefined);
-      });
+      expect(newlyUnlockedRecipes['sample-recipe-1']).toEqual(true);
     });
   });
 });

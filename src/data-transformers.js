@@ -482,16 +482,13 @@ export const purchaseItem = (
  * @param {farmhand.state} state
  * @returns {Object}
  */
-export const computeNewlyUnlockedRecipes = state => {
-  const { learnedRecipes } = state;
-
-  return Object.keys(recipesMap).reduce((acc, recipeId) => {
+export const computeLearnedRecipes = state =>
+  Object.keys(recipesMap).reduce((acc, recipeId) => {
     const { condition } = recipesMap[recipeId];
 
-    if (!learnedRecipes.hasOwnProperty(recipeId) && condition(state)) {
+    if (condition(state)) {
       acc[recipeId] = true;
     }
 
     return acc;
   }, {});
-};

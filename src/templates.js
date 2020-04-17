@@ -18,3 +18,10 @@ export const COW_PEN_PURCHASED = (_, cows) =>
  */
 export const MILK_PRODUCED = (_, cow, milk) =>
   `${cow.name} produced a ${milk.name} for you!`;
+
+/**
+ * @param {farmhand.recipe} recipe
+ * @returns {string}
+ */
+export const RECIPE_LEARNED = (_, recipe) =>
+  `You learned how to make ${recipe.name}!`;

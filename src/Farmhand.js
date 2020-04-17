@@ -14,6 +14,7 @@ import eventHandlers from './event-handlers';
 import {
   addItemToInventory,
   computePlayerInventory,
+  computeLearnedRecipes,
   computeStateForNextDay,
   decrementItemFromInventory,
   getFieldToolInventory,
@@ -42,7 +43,7 @@ import {
   generateCow,
 } from './utils';
 import shopInventory from './data/shop-inventory';
-import { itemsMap } from './data/maps';
+import { itemsMap, recipesMap } from './data/maps';
 import { cropLifeStage, fieldMode, itemType, stageFocusType } from './enums';
 import {
   COW_HUG_BENEFIT,
@@ -54,7 +55,7 @@ import {
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from './constants';
-import { COW_PEN_PURCHASED } from './templates';
+import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 
 import './Farmhand.sass';
@@ -114,6 +115,7 @@ export default class Farmhand extends Component {
     hoveredPlotRangeSize: 0,
     inventory: [],
     isMenuOpen: true,
+    learnedRecipes: {},
     money: 500,
     newDayNotifications: [],
     notifications: [],
@@ -142,6 +144,7 @@ export default class Farmhand extends Component {
       'dayCount',
       'field',
       'inventory',
+      'learnedRecipes',
       'money',
       'newDayNotifications',
       'purchasedCowPen',
@@ -293,7 +296,10 @@ export default class Farmhand extends Component {
     // check to see if the app has completed booting before working with this
     // transient state.
     if (this.state.hasBooted) {
-      this.showStateChangeNotifications(prevState);
+      [
+        'showCowPenPurchasedNotifications',
+        'showRecipeLearnedNotifications',
+      ].forEach(fn => this[fn](prevState));
 
       if (
         this.state.stageFocus === stageFocusType.COW_PEN &&
@@ -323,10 +329,7 @@ export default class Farmhand extends Component {
     }));
   }
 
-  /**
-   * @param {farmhand.state} prevState
-   */
-  showStateChangeNotifications(prevState) {
+  showCowPenPurchasedNotifications(prevState) {
     const {
       state: { purchasedCowPen },
     } = this;
@@ -336,6 +339,14 @@ export default class Farmhand extends Component {
 
       this.showNotification(COW_PEN_PURCHASED`${cows}`);
     }
+  }
+
+  showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
+    Object.keys(this.state.learnedRecipes).forEach(recipeId => {
+      if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
+        this.showNotification(RECIPE_LEARNED`${recipesMap[recipeId]}`);
+      }
+    });
   }
 
   incrementDay() {
@@ -435,16 +446,25 @@ export default class Farmhand extends Component {
       return;
     }
 
-    this.setState(({ inventory, itemsSold, money, valueAdjustments }) => {
+    this.setState(state => {
+      let { inventory, itemsSold, money, valueAdjustments } = state;
       const value = getAdjustedItemValue(valueAdjustments, id);
       const totalValue = value * howMany;
       itemsSold = { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany };
 
-      return {
+      const snapshot = {
         inventory: decrementItemFromInventory(id, inventory, howMany),
         itemsSold,
         money: money + totalValue,
       };
+
+      // FIXME: Test learnedRecipes logic
+      snapshot.learnedRecipes = computeLearnedRecipes({
+        ...state,
+        ...snapshot,
+      });
+
+      return snapshot;
     });
   }
 
