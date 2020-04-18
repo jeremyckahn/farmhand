@@ -27,7 +27,7 @@ import { MILK_PRODUCED, CROW_ATTACKED } from './templates';
 import { fieldMode, itemType } from './enums';
 
 // TODO: Most of the functions in this file should return a farmhand.state
-// object.
+// object, and this file should be renamed to reducers.js.
 
 /**
  * @param {farmhand.state} state
