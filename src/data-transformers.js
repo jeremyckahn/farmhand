@@ -26,6 +26,9 @@ import { RAIN_MESSAGE } from './strings';
 import { MILK_PRODUCED, CROW_ATTACKED } from './templates';
 import { fieldMode, itemType } from './enums';
 
+// TODO: Most of the functions in this file should return a farmhand.state
+// object.
+
 /**
  * @param {farmhand.state} state
  * @return {farmhand.state}
@@ -480,10 +483,11 @@ export const purchaseItem = (
 
 /**
  * @param {farmhand.state} state
- * @returns {Object}
+ * @returns {farmhand.state} state
  */
-export const computeLearnedRecipes = state =>
-  Object.keys(recipesMap).reduce((acc, recipeId) => {
+export const updateLearnedRecipes = state => ({
+  ...state,
+  learnedRecipes: Object.keys(recipesMap).reduce((acc, recipeId) => {
     const { condition } = recipesMap[recipeId];
 
     if (condition(state)) {
@@ -491,4 +495,5 @@ export const computeLearnedRecipes = state =>
     }
 
     return acc;
-  }, {});
+  }, {}),
+});

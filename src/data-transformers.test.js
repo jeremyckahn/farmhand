@@ -659,24 +659,24 @@ describe('purchaseItem', () => {
   });
 });
 
-describe('computeLearnedRecipes', () => {
+describe('updateLearnedRecipes', () => {
   describe('recipe condition is not met', () => {
     test('recipe is not in the returned map', () => {
-      const newlyUnlockedRecipes = fn.computeLearnedRecipes({
+      const { learnedRecipes } = fn.updateLearnedRecipes({
         itemsSold: {},
       });
 
-      expect(newlyUnlockedRecipes['sample-recipe-1']).toBe(undefined);
+      expect(learnedRecipes['sample-recipe-1']).toBe(undefined);
     });
   });
 
   describe('recipe condition is met', () => {
     test('recipe is in the returned map', () => {
-      const newlyUnlockedRecipes = fn.computeLearnedRecipes({
+      const { learnedRecipes } = fn.updateLearnedRecipes({
         itemsSold: { 'sample-item-1': 3 },
       });
 
-      expect(newlyUnlockedRecipes['sample-recipe-1']).toEqual(true);
+      expect(learnedRecipes['sample-recipe-1']).toEqual(true);
     });
   });
 });

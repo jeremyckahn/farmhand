@@ -14,7 +14,7 @@ import eventHandlers from './event-handlers';
 import {
   addItemToInventory,
   computePlayerInventory,
-  computeLearnedRecipes,
+  updateLearnedRecipes,
   computeStateForNextDay,
   decrementItemFromInventory,
   getFieldToolInventory,
@@ -449,24 +449,14 @@ export default class Farmhand extends Component {
       return;
     }
 
-    this.setState(state => {
-      const { inventory, itemsSold, money, valueAdjustments } = state;
-      const value = getAdjustedItemValue(valueAdjustments, id);
-      const totalValue = value * howMany;
-
-      const snapshot = {
+    this.setState(({ inventory, itemsSold, money, valueAdjustments }) =>
+      updateLearnedRecipes({
+        ...this.state,
         inventory: decrementItemFromInventory(id, inventory, howMany),
         itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
-        money: money + totalValue,
-      };
-
-      snapshot.learnedRecipes = computeLearnedRecipes({
-        ...state,
-        ...snapshot,
-      });
-
-      return snapshot;
-    });
+        money: money + getAdjustedItemValue(valueAdjustments, id) * howMany,
+      })
+    );
   }
 
   /**
