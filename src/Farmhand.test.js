@@ -396,6 +396,18 @@ describe('instance methods', () => {
     test('updates itemsSold', () => {
       expect(component.state().itemsSold).toEqual({ 'sample-item-1': 1 });
     });
+
+    test('updates learnedRecipes', () => {
+      component.setState({
+        inventory: [testItem({ id: 'sample-item-1', quantity: 3 })],
+        valueAdjustments: { 'sample-item-1': 1 },
+        itemsSold: {},
+      });
+
+      component.instance().sellItem(testItem({ id: 'sample-item-1' }), 3);
+
+      expect(component.state().learnedRecipes['sample-recipe-1']).toBeTruthy();
+    });
   });
 
   describe('sellAllOfItem', () => {

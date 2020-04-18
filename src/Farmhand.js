@@ -94,6 +94,9 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  */
 
 export default class Farmhand extends Component {
+  // TODO: Move as much of the logic in this class to ./data-transformers.js as
+  // possible.
+
   // Bind event handlers
 
   localforage = localforage.createInstance({
@@ -447,18 +450,16 @@ export default class Farmhand extends Component {
     }
 
     this.setState(state => {
-      let { inventory, itemsSold, money, valueAdjustments } = state;
+      const { inventory, itemsSold, money, valueAdjustments } = state;
       const value = getAdjustedItemValue(valueAdjustments, id);
       const totalValue = value * howMany;
-      itemsSold = { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany };
 
       const snapshot = {
         inventory: decrementItemFromInventory(id, inventory, howMany),
-        itemsSold,
+        itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
         money: money + totalValue,
       };
 
-      // FIXME: Test learnedRecipes logic
       snapshot.learnedRecipes = computeLearnedRecipes({
         ...state,
         ...snapshot,
