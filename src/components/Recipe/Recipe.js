@@ -1,12 +1,30 @@
 import React from 'react';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardActions from '@material-ui/core/CardActions';
+import { object } from 'prop-types';
+
+import { pixel } from '../../img';
 
 import FarmhandContext from '../../Farmhand.context';
 
 import './Recipe.sass';
 
-const Recipe = () => <div className="Recipe"></div>;
+const Recipe = ({ recipe: { name } }) => (
+  <Card {...{ className: 'Recipe' }}>
+    <CardHeader
+      {...{
+        avatar: <img {...{ src: pixel, alt: name }} />,
+        title: name,
+      }}
+    />
+    <CardActions></CardActions>
+  </Card>
+);
 
-Recipe.propTypes = {};
+Recipe.propTypes = {
+  recipe: object.isRequired,
+};
 
 // export default Recipe;
 export default function Consumer(props) {

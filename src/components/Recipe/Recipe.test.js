@@ -6,7 +6,13 @@ import Recipe from './Recipe';
 let component;
 
 beforeEach(() => {
-  component = shallow(<Recipe {...{}} />);
+  component = shallow(
+    <Recipe
+      {...{
+        recipe: {},
+      }}
+    />
+  );
 });
 
 test('renders', () => {

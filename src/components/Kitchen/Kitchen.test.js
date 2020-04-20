@@ -6,7 +6,13 @@ import Kitchen from './Kitchen';
 let component;
 
 beforeEach(() => {
-  component = shallow(<Kitchen {...{}} />);
+  component = shallow(
+    <Kitchen
+      {...{
+        learnedRecipes: {},
+      }}
+    />
+  );
 });
 
 test('renders', () => {
