@@ -29,6 +29,10 @@ export const items = {
   'milk-3': require('./items/milk-3.png'),
 };
 
+export const dishes = {
+  'carrot-soup': require('./dishes/carrot-soup.png'),
+};
+
 export const tools = {
   hoe: require('./tools/hoe.png'),
   scythe: require('./tools/scythe.png'),

@@ -4,17 +4,17 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import { object } from 'prop-types';
 
-import { pixel } from '../../img';
+import { dishes } from '../../img';
 
 import FarmhandContext from '../../Farmhand.context';
 
 import './Recipe.sass';
 
-const Recipe = ({ recipe: { name } }) => (
+const Recipe = ({ recipe: { id, name } }) => (
   <Card {...{ className: 'Recipe' }}>
     <CardHeader
       {...{
-        avatar: <img {...{ src: pixel, alt: name }} />,
+        avatar: <img {...{ src: dishes[id], alt: name }} />,
         title: name,
       }}
     />
