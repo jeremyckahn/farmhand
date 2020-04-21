@@ -4,18 +4,30 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import { object } from 'prop-types';
 
+import { itemsMap } from '../../data/maps';
 import { dishes } from '../../img';
 
 import FarmhandContext from '../../Farmhand.context';
 
 import './Recipe.sass';
 
-const Recipe = ({ recipe: { id, name } }) => (
+const IngredientsList = ({ recipe: { ingredients, name } }) => (
+  <ul {...{ title: `Ingredients for ${name}` }}>
+    {Object.keys(ingredients).map(itemId => (
+      <li {...{ key: itemId }}>
+        {ingredients[itemId]} x {itemsMap[itemId].name}
+      </li>
+    ))}
+  </ul>
+);
+
+const Recipe = ({ recipe, recipe: { id, name } }) => (
   <Card {...{ className: 'Recipe' }}>
     <CardHeader
       {...{
         avatar: <img {...{ src: dishes[id], alt: name }} />,
         title: name,
+        subheader: <IngredientsList {...{ recipe }} />,
       }}
     />
     <CardActions></CardActions>
