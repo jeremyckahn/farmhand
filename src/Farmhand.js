@@ -147,6 +147,7 @@ export default class Farmhand extends Component {
       'dayCount',
       'field',
       'inventory',
+      'itemsSold',
       'learnedRecipes',
       'money',
       'newDayNotifications',

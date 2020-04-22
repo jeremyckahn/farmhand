@@ -1,8 +1,9 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
-import { object } from 'prop-types';
+import { array, object } from 'prop-types';
 
 import { itemsMap } from '../../data/maps';
 import { dishes } from '../../img';
@@ -10,6 +11,23 @@ import { dishes } from '../../img';
 import FarmhandContext from '../../Farmhand.context';
 
 import './Recipe.sass';
+
+// FIXME: Test this.
+/**
+ * @param {farmhand.recipe} recipe
+ * @param {Array.<farmhand.item>} inventory
+ * @returns {boolean}
+ */
+const canMakeRecipe = ({ ingredients }, inventory) => {
+  const inventoryLookup = inventory.reduce((acc, { id, quantity }) => {
+    acc[id] = quantity;
+    return acc;
+  }, {});
+
+  return Object.keys(ingredients).every(
+    itemId => (inventoryLookup[itemId] || 0) >= ingredients[itemId]
+  );
+};
 
 const IngredientsList = ({ recipe: { ingredients, name } }) => (
   <ul {...{ title: `Ingredients for ${name}` }}>
@@ -21,7 +39,7 @@ const IngredientsList = ({ recipe: { ingredients, name } }) => (
   </ul>
 );
 
-const Recipe = ({ recipe, recipe: { id, name } }) => (
+const Recipe = ({ inventory, recipe, recipe: { id, name } }) => (
   <Card {...{ className: 'Recipe' }}>
     <CardHeader
       {...{
@@ -30,11 +48,23 @@ const Recipe = ({ recipe, recipe: { id, name } }) => (
         subheader: <IngredientsList {...{ recipe }} />,
       }}
     />
-    <CardActions></CardActions>
+    <CardActions>
+      <Button
+        {...{
+          className: 'make-recipe',
+          color: 'primary',
+          disabled: !canMakeRecipe(recipe, inventory),
+          variant: 'contained',
+        }}
+      >
+        Make
+      </Button>
+    </CardActions>
   </Card>
 );
 
 Recipe.propTypes = {
+  inventory: array.isRequired,
   recipe: object.isRequired,
 };
 

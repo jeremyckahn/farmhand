@@ -10,6 +10,7 @@ beforeEach(() => {
     <Recipe
       {...{
         recipe: {},
+        inventory: [],
       }}
     />
   );
