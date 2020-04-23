@@ -8,4 +8,5 @@ export const sampleRecipe1 = {
     [items.sampleItem1.id]: 2,
   },
   condition: state => (state.itemsSold[items.sampleItem1.id] || 0) > 2,
+  value: items.sampleItem1.value * 2 + 10,
 };
