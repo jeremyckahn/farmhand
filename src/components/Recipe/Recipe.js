@@ -12,13 +12,12 @@ import FarmhandContext from '../../Farmhand.context';
 
 import './Recipe.sass';
 
-// FIXME: Test this.
 /**
  * @param {farmhand.recipe} recipe
  * @param {Array.<farmhand.item>} inventory
  * @returns {boolean}
  */
-const canMakeRecipe = ({ ingredients }, inventory) => {
+export const canMakeRecipe = ({ ingredients }, inventory) => {
   const inventoryLookup = inventory.reduce((acc, { id, quantity }) => {
     acc[id] = quantity;
     return acc;
