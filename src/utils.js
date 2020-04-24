@@ -265,3 +265,19 @@ export const getCowValue = cow =>
     COW_MINIMUM_VALUE_MULTIPLIER,
     COW_MAXIMUM_VALUE_MULTIPLIER
   );
+
+/**
+ * @param {farmhand.recipe} recipe
+ * @param {Array.<farmhand.item>} inventory
+ * @returns {boolean}
+ */
+export const canMakeRecipe = ({ ingredients }, inventory) => {
+  const inventoryQuantityMap = inventory.reduce((acc, { id, quantity }) => {
+    acc[id] = quantity;
+    return acc;
+  }, {});
+
+  return Object.keys(ingredients).every(
+    itemId => inventoryQuantityMap[itemId] >= ingredients[itemId]
+  );
+};

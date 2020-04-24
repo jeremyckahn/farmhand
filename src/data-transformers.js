@@ -2,6 +2,7 @@ import memoize from 'fast-memoize';
 
 import { itemsMap, recipesMap } from './data/maps';
 import {
+  canMakeRecipe,
   clampNumber,
   generateCow,
   getCowMilkItem,
@@ -504,27 +505,11 @@ export const updateLearnedRecipes = state => ({
  * @returns {farmhand.state} state
  */
 export const makeRecipe = (state, recipe) => {
-  const ingredientIds = Object.keys(recipe.ingredients);
-
-  const inventoryQuantityMap = state.inventory.reduce(
-    (acc, { id, quantity }) => {
-      acc[id] = quantity;
-      return acc;
-    },
-    {}
-  );
-
-  // FIXME: Reuse the canMakeRecipe function from Recipe.js.
-  if (
-    !ingredientIds.every(
-      itemId => inventoryQuantityMap[itemId] >= recipe.ingredients[itemId]
-    )
-  ) {
-    // There are insufficient ingredients to make the recipe.
+  if (!canMakeRecipe(recipe, state.inventory)) {
     return state;
   }
 
-  const newInventory = ingredientIds.reduce(
+  const newInventory = Object.keys(recipe.ingredients).reduce(
     (inventory, ingredientId) =>
       decrementItemFromInventory(
         ingredientId,
