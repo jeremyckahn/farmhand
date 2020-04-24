@@ -29,6 +29,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.recipe} recipe
+   */
+  handleMakeRecipeClick(recipe) {
+    this.makeRecipe(recipe);
+  },
+
+  /**
    * @param {farmhand.cow} cow
    */
   handleCowPurchaseClick(cow) {

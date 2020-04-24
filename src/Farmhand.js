@@ -21,6 +21,7 @@ import {
   getFinalCropItemIdFromSeedItemId,
   getPlantableCropInventory,
   getWateredField,
+  makeRecipe,
   modifyFieldPlotAt,
   purchaseItem,
   removeFieldPlotAt,
@@ -473,6 +474,13 @@ export default class Farmhand extends Component {
     }
 
     this.sellItem(item, itemInInventory.quantity);
+  }
+
+  /**
+   * @param {farmhand.recipe} recipe
+   */
+  makeRecipe(recipe) {
+    this.setState(state => makeRecipe(state, recipe));
   }
 
   /**

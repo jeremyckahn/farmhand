@@ -497,3 +497,10 @@ export const updateLearnedRecipes = state => ({
     return acc;
   }, {}),
 });
+
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.recipe} recipe
+ * @returns {farmhand.state} state
+ */
+export const makeRecipe = (state, recipe) => state;

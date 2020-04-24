@@ -3,7 +3,7 @@ import memoize from 'fast-memoize';
 
 import fruitNames from './data/fruit-names';
 import { cropIdToTypeMap, itemsMap } from './data/maps';
-import * as items from './data/items';
+import { milk1, milk2, milk3 } from './data/items';
 import { items as itemImages } from './img';
 import { cowColors, cropLifeStage, genders, itemType } from './enums';
 import {
@@ -20,8 +20,6 @@ import {
   INITIAL_FIELD_WIDTH,
   MALE_COW_WEIGHT_MULTIPLIER,
 } from './constants';
-
-const { milk1, milk2, milk3 } = items;
 
 const { SEED, GROWING, GROWN } = cropLifeStage;
 

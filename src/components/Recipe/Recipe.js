@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
-import { array, object } from 'prop-types';
+import { array, func, object } from 'prop-types';
 
 import { itemsMap } from '../../data/maps';
 import { dishes } from '../../img';
@@ -38,7 +38,12 @@ const IngredientsList = ({ recipe: { ingredients, name } }) => (
   </ul>
 );
 
-const Recipe = ({ inventory, recipe, recipe: { id, name } }) => (
+const Recipe = ({
+  handleMakeRecipeClick,
+  inventory,
+  recipe,
+  recipe: { id, name },
+}) => (
   <Card {...{ className: 'Recipe' }}>
     <CardHeader
       {...{
@@ -53,6 +58,7 @@ const Recipe = ({ inventory, recipe, recipe: { id, name } }) => (
           className: 'make-recipe',
           color: 'primary',
           disabled: !canMakeRecipe(recipe, inventory),
+          onClick: () => handleMakeRecipeClick(recipe),
           variant: 'contained',
         }}
       >
@@ -63,6 +69,7 @@ const Recipe = ({ inventory, recipe, recipe: { id, name } }) => (
 );
 
 Recipe.propTypes = {
+  handleMakeRecipeClick: func.isRequired,
   inventory: array.isRequired,
   recipe: object.isRequired,
 };
