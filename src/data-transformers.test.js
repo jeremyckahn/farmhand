@@ -684,7 +684,16 @@ describe('updateLearnedRecipes', () => {
 
 describe('makeRecipe', () => {
   describe('there are insufficient ingredients for recipe', () => {
-    test('inventory is not changed', () => {});
+    test('inventory is not changed', () => {
+      const { inventory } = fn.makeRecipe(
+        {
+          inventory: [{ id: 'sample-item-1', quantity: 1 }],
+        },
+        sampleRecipe1
+      );
+
+      expect(inventory).toEqual([{ id: 'sample-item-1', quantity: 1 }]);
+    });
   });
 
   describe('there are sufficient ingredients for recipe', () => {

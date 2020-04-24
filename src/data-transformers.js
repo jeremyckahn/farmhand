@@ -504,17 +504,34 @@ export const updateLearnedRecipes = state => ({
  * @returns {farmhand.state} state
  */
 export const makeRecipe = (state, recipe) => {
-  // FIXME: Verify that there are sufficient ingredients.
+  const ingredientIds = Object.keys(recipe.ingredients);
 
-  const inventory = Object.keys(recipe.ingredients).reduce(
-    (inventory, recipeId) =>
+  const inventoryQuantityMap = state.inventory.reduce(
+    (acc, { id, quantity }) => {
+      acc[id] = quantity;
+      return acc;
+    },
+    {}
+  );
+
+  if (
+    !ingredientIds.every(
+      itemId => inventoryQuantityMap[itemId] >= recipe.ingredients[itemId]
+    )
+  ) {
+    // There are insufficient ingredients to make the recipe.
+    return state;
+  }
+
+  const newInventory = ingredientIds.reduce(
+    (inventory, ingredientId) =>
       decrementItemFromInventory(
-        recipeId,
+        ingredientId,
         inventory,
-        recipe.ingredients[recipeId]
+        recipe.ingredients[ingredientId]
       ),
     state.inventory
   );
 
-  return { ...state, inventory: addItemToInventory(recipe, inventory) };
+  return { ...state, inventory: addItemToInventory(recipe, newInventory) };
 };
