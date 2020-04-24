@@ -504,8 +504,6 @@ export const updateLearnedRecipes = state => ({
  * @returns {farmhand.state} state
  */
 export const makeRecipe = (state, recipe) => {
-  // FIXME: Test this.
-
   // FIXME: Verify that there are sufficient ingredients.
 
   const inventory = Object.keys(recipe.ingredients).reduce(

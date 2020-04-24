@@ -16,6 +16,7 @@ import {
   sampleCropSeedsItem1,
   sampleFieldTool1,
 } from './data/items';
+import { sampleRecipe1 } from './data/recipes';
 import { itemsMap } from './data/maps';
 import { genders } from './enums';
 import { generateCow, getCowMilkItem, getPlotContentFromItemId } from './utils';
@@ -682,5 +683,23 @@ describe('updateLearnedRecipes', () => {
 });
 
 describe('makeRecipe', () => {
-  test('consumes ingredients and adds recipe item to inventory', () => {});
+  describe('there are insufficient ingredients for recipe', () => {
+    test('inventory is not changed', () => {});
+  });
+
+  describe('there are sufficient ingredients for recipe', () => {
+    test('consumes ingredients and adds recipe item to inventory', () => {
+      const { inventory } = fn.makeRecipe(
+        {
+          inventory: [{ id: 'sample-item-1', quantity: 3 }],
+        },
+        sampleRecipe1
+      );
+
+      expect(inventory).toEqual([
+        { id: 'sample-item-1', quantity: 1 },
+        { id: 'sample-recipe-1', quantity: 1 },
+      ]);
+    });
+  });
 });

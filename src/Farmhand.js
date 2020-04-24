@@ -117,6 +117,7 @@ export default class Farmhand extends Component {
     hasBooted: false,
     hoveredPlot: { x: null, y: null },
     hoveredPlotRangeSize: 0,
+    // TODO: Consider changing inventory to be an Object
     inventory: [],
     isMenuOpen: true,
     learnedRecipes: {},
