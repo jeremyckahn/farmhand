@@ -681,4 +681,6 @@ describe('updateLearnedRecipes', () => {
   });
 });
 
-describe('makeRecipe', () => {});
+describe('makeRecipe', () => {
+  test('consumes ingredients and adds recipe item to inventory', () => {});
+});

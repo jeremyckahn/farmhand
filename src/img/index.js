@@ -7,6 +7,10 @@ export const plotStates = {
   'fertilized-plot': require('./plot-states/fertilized-plot.png'),
 };
 
+export const dishes = {
+  'carrot-soup': require('./dishes/carrot-soup.png'),
+};
+
 export const items = {
   // Crops
   carrot: require('./items/carrot.png'),
@@ -27,10 +31,8 @@ export const items = {
   'milk-1': require('./items/milk-1.png'),
   'milk-2': require('./items/milk-2.png'),
   'milk-3': require('./items/milk-3.png'),
-};
 
-export const dishes = {
-  'carrot-soup': require('./dishes/carrot-soup.png'),
+  ...dishes,
 };
 
 export const tools = {

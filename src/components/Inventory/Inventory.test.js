@@ -75,6 +75,9 @@ describe('item sorting', () => {
       ],
       [categoryIds.ANIMAL_PRODUCTS]: [testItem({ id: 'milk-1' })],
       [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
+
+      // FIXME: Put something meaningful here
+      [categoryIds.DISHES]: [],
     });
   });
 });

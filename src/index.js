@@ -19,6 +19,7 @@
  * @property {string} id
  * @property {string} name
  * @property {number} value
+ * @property {string} type
  * @property {farmhand.cropTimetable} [cropTimetable]
  * @property {farmhand.module:enums.cropType} [cropType]
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.

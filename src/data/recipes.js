@@ -1,11 +1,14 @@
 /**
  * @module farmhand.recipes
  */
+import { itemType } from '../enums';
+
 import * as items from './items';
 
 const itemify = recipe =>
   Object.freeze({
     ...recipe,
+    type: itemType.DISH,
     value:
       recipe.markup +
       Object.keys(recipe.ingredients).reduce(

@@ -296,8 +296,8 @@ export const resetWasWatered = plotContent =>
 
 /**
  * @param {farmhand.item} item
- * @returns {Array.<{ item: farmhand.item, quantity: number }>}
  * @param {number} [howMany=1]
+ * @returns {Array.<{ item: farmhand.item, quantity: number }>}
  */
 export const addItemToInventory = (item, inventory, howMany = 1) => {
   const { id } = item;
@@ -503,4 +503,20 @@ export const updateLearnedRecipes = state => ({
  * @param {farmhand.recipe} recipe
  * @returns {farmhand.state} state
  */
-export const makeRecipe = (state, recipe) => state;
+export const makeRecipe = (state, recipe) => {
+  // FIXME: Test this.
+
+  // FIXME: Verify that there are sufficient ingredients.
+
+  const inventory = Object.keys(recipe.ingredients).reduce(
+    (inventory, recipeId) =>
+      decrementItemFromInventory(
+        recipeId,
+        inventory,
+        recipe.ingredients[recipeId]
+      ),
+    state.inventory
+  );
+
+  return { ...state, inventory: addItemToInventory(recipe, inventory) };
+};
