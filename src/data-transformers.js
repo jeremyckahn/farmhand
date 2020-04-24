@@ -514,6 +514,7 @@ export const makeRecipe = (state, recipe) => {
     {}
   );
 
+  // FIXME: Reuse the canMakeRecipe function from Recipe.js.
   if (
     !ingredientIds.every(
       itemId => inventoryQuantityMap[itemId] >= recipe.ingredients[itemId]

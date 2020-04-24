@@ -10,14 +10,20 @@ import './Kitchen.sass';
 
 const Kitchen = ({ learnedRecipes }) => (
   <div className="Kitchen">
-    {Object.keys(learnedRecipes).map(recipeId => (
-      <Recipe
-        {...{
-          key: recipeId,
-          recipe: recipesMap[recipeId],
-        }}
-      />
-    ))}
+    <h2>Learned Recipes</h2>
+    <section>
+      <ul className="card-list">
+        {Object.keys(learnedRecipes).map(recipeId => (
+          <li key={recipeId}>
+            <Recipe
+              {...{
+                recipe: recipesMap[recipeId],
+              }}
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
   </div>
 );
 
