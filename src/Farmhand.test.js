@@ -18,9 +18,10 @@ import {
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from './constants';
-import { COW_PEN_PURCHASED } from './templates';
+import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 import { fieldMode, genders, stageFocusType } from './enums';
+import { recipesMap } from './data/maps';
 import Farmhand from './Farmhand';
 
 jest.mock('localforage');
@@ -230,16 +231,44 @@ describe('instance methods', () => {
     });
   });
 
-  describe('showStateChangeNotifications', () => {
+  describe('showCowPenPurchasedNotifications', () => {
     describe('cow pen purchasing', () => {
-      test('shows notification', () => {
+      test('does show notification', () => {
         component.setState({ purchasedCowPen: 1 });
         component
           .instance()
-          .showStateChangeNotifications({ purchasedCowPen: 0 });
+          .showCowPenPurchasedNotifications({ purchasedCowPen: 0 });
 
         expect(component.state().notifications).toContain(
           COW_PEN_PURCHASED`${PURCHASEABLE_COW_PENS.get(1).cows}`
+        );
+      });
+    });
+  });
+
+  describe('showRecipeLearnedNotifications', () => {
+    describe('no new recipes were learned', () => {
+      test('does not show notification', () => {
+        component.setState({ learnedRecipes: {} });
+        component
+          .instance()
+          .showRecipeLearnedNotifications({ learnedRecipes: {} });
+
+        expect(component.state().notifications).not.toContain(
+          RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`
+        );
+      });
+    });
+
+    describe('new recipe was learned', () => {
+      test('does show notification', () => {
+        component.setState({ learnedRecipes: { 'sample-recipe-1': true } });
+        component
+          .instance()
+          .showRecipeLearnedNotifications({ learnedRecipes: {} });
+
+        expect(component.state().notifications).toContain(
+          RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`
         );
       });
     });
@@ -362,6 +391,22 @@ describe('instance methods', () => {
 
     test('adds value of item to player money', () => {
       expect(component.state().money).toEqual(101);
+    });
+
+    test('updates itemsSold', () => {
+      expect(component.state().itemsSold).toEqual({ 'sample-item-1': 1 });
+    });
+
+    test('updates learnedRecipes', () => {
+      component.setState({
+        inventory: [testItem({ id: 'sample-item-1', quantity: 3 })],
+        valueAdjustments: { 'sample-item-1': 1 },
+        itemsSold: {},
+      });
+
+      component.instance().sellItem(testItem({ id: 'sample-item-1' }), 3);
+
+      expect(component.state().learnedRecipes['sample-recipe-1']).toBeTruthy();
     });
   });
 

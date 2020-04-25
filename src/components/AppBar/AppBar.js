@@ -19,6 +19,7 @@ const stageTitleMap = {
   [stageFocusType.FIELD]: 'Field',
   [stageFocusType.SHOP]: 'Shop',
   [stageFocusType.COW_PEN]: 'Cows',
+  [stageFocusType.KITCHEN]: 'Kitchen',
   [stageFocusType.INVENTORY]: 'Inventory',
 };
 

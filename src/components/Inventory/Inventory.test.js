@@ -61,6 +61,7 @@ describe('item sorting', () => {
         testItem({ id: 'scarecrow' }),
         testItem({ id: 'sprinkler' }),
         testItem({ id: 'sample-crop-seeds-1' }),
+        testItem({ id: 'sample-recipe-1' }),
         testItem({ id: 'cow-feed' }),
         testItem({ id: 'milk-1' }),
       ])
@@ -75,6 +76,7 @@ describe('item sorting', () => {
       ],
       [categoryIds.ANIMAL_PRODUCTS]: [testItem({ id: 'milk-1' })],
       [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
+      [categoryIds.DISHES]: [testItem({ id: 'sample-recipe-1' })],
     });
   });
 });

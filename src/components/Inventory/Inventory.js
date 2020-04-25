@@ -11,7 +11,15 @@ import { enumify, itemType } from '../../enums';
 
 import './Inventory.sass';
 
-const { COW_FEED, CROP, FERTILIZER, MILK, SCARECROW, SPRINKLER } = itemType;
+const {
+  COW_FEED,
+  CROP,
+  DISH,
+  FERTILIZER,
+  MILK,
+  SCARECROW,
+  SPRINKLER,
+} = itemType;
 
 const itemTypesToShowInReverse = new Set([itemType.MILK]);
 
@@ -37,15 +45,23 @@ export const sort = items => {
 export const categoryIds = enumify([
   'ANIMAL_PRODUCTS',
   'ANIMAL_SUPPLIES',
+  'DISHES',
   'FIELD_TOOLS',
   'SEEDS',
 ]);
 const categoryIdKeys = Object.keys(categoryIds);
-const { ANIMAL_PRODUCTS, ANIMAL_SUPPLIES, FIELD_TOOLS, SEEDS } = categoryIds;
+const {
+  ANIMAL_PRODUCTS,
+  ANIMAL_SUPPLIES,
+  DISHES,
+  FIELD_TOOLS,
+  SEEDS,
+} = categoryIds;
 
 const itemTypeCategoryMap = Object.freeze({
   [COW_FEED]: ANIMAL_SUPPLIES,
   [CROP]: SEEDS,
+  [DISH]: DISHES,
   [FERTILIZER]: FIELD_TOOLS,
   [MILK]: ANIMAL_PRODUCTS,
   [SCARECROW]: FIELD_TOOLS,
@@ -83,6 +99,7 @@ export const Inventory = ({
       [FIELD_TOOLS, 'Field Tools'],
       [ANIMAL_PRODUCTS, 'Animal Products'],
       [ANIMAL_SUPPLIES, 'Animal Supplies'],
+      [DISHES, 'Dishes'],
     ].map(([category, headerText]) =>
       itemCategories[category].length ? (
         <section key={category}>

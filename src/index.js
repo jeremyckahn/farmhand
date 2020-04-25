@@ -19,6 +19,7 @@
  * @property {string} id
  * @property {string} name
  * @property {number} value
+ * @property {string} type
  * @property {farmhand.cropTimetable} [cropTimetable]
  * @property {farmhand.module:enums.cropType} [cropType]
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.
@@ -61,6 +62,24 @@
  * @property {number} happinessBoostsToday
  * @property {string} name
  * @property {number} weightMultiplier Clamped between 0.5 and 1.5.
+ */
+
+/**
+ * @callback farmhand.recipeCondition
+ * @param {farmhand.state} state
+ * @returns {boolean}
+ */
+
+/**
+ * @typedef farmhand.recipe
+ * @readonly
+ * @type {farmhand.item}
+ * @property {number} markup The additional value on top of the sum total of
+ * the standardized ingredient cost.
+ * @property {{[farmhand.item.id]: number}} ingredients An object where each
+ * key is the id of a farmhand.item and the value is the quantity of that item.
+ * @property {farmhand.recipeCondition} condition This must return `true` for
+ * the recipe to be made available to the player.
  */
 
 import React from 'react';

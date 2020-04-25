@@ -16,6 +16,7 @@ import {
   sampleCropSeedsItem1,
   sampleFieldTool1,
 } from './data/items';
+import { sampleRecipe1 } from './data/recipes';
 import { itemsMap } from './data/maps';
 import { genders } from './enums';
 import { generateCow, getCowMilkItem, getPlotContentFromItemId } from './utils';
@@ -24,6 +25,7 @@ import * as fn from './data-transformers';
 jest.mock('localforage');
 jest.mock('./data/maps');
 jest.mock('./data/items');
+jest.mock('./data/recipes');
 
 jest.mock('./constants', () => ({
   __esModule: true,
@@ -654,6 +656,59 @@ describe('purchaseItem', () => {
         inventory: [{ id: 'sample-item-1', quantity: 2 }],
         money: 8,
       });
+    });
+  });
+});
+
+describe('updateLearnedRecipes', () => {
+  describe('recipe condition is not met', () => {
+    test('recipe is not in the returned map', () => {
+      const { learnedRecipes } = fn.updateLearnedRecipes({
+        itemsSold: {},
+      });
+
+      expect(learnedRecipes['sample-recipe-1']).toBe(undefined);
+    });
+  });
+
+  describe('recipe condition is met', () => {
+    test('recipe is in the returned map', () => {
+      const { learnedRecipes } = fn.updateLearnedRecipes({
+        itemsSold: { 'sample-item-1': 3 },
+      });
+
+      expect(learnedRecipes['sample-recipe-1']).toEqual(true);
+    });
+  });
+});
+
+describe('makeRecipe', () => {
+  describe('there are insufficient ingredients for recipe', () => {
+    test('inventory is not changed', () => {
+      const { inventory } = fn.makeRecipe(
+        {
+          inventory: [{ id: 'sample-item-1', quantity: 1 }],
+        },
+        sampleRecipe1
+      );
+
+      expect(inventory).toEqual([{ id: 'sample-item-1', quantity: 1 }]);
+    });
+  });
+
+  describe('there are sufficient ingredients for recipe', () => {
+    test('consumes ingredients and adds recipe item to inventory', () => {
+      const { inventory } = fn.makeRecipe(
+        {
+          inventory: [{ id: 'sample-item-1', quantity: 3 }],
+        },
+        sampleRecipe1
+      );
+
+      expect(inventory).toEqual([
+        { id: 'sample-item-1', quantity: 1 },
+        { id: 'sample-recipe-1', quantity: 1 },
+      ]);
     });
   });
 });

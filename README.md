@@ -17,6 +17,14 @@ This is an open source farming game built with web technologies. Some basic idea
 
 There is no release or versioning system yet.
 
+## Milestone 3: Cooking 🥘
+
+- [x] Stand up basic cooking pane UI
+- [x] Cook recipes
+  - [x] Cooked dishes are added to inventory to be sold for flat price
+- [x] Learn new recipes
+  - [x] Recipes are learned when certain farming goals are met (such as growing enough carrots)
+
 ## Milestone 2: Cows!
 
 ### Tasks

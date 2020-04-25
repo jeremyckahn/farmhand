@@ -1,7 +1,8 @@
 import memoize from 'fast-memoize';
 
-import { itemsMap } from './data/maps';
+import { itemsMap, recipesMap } from './data/maps';
 import {
+  canMakeRecipe,
   clampNumber,
   generateCow,
   getCowMilkItem,
@@ -25,6 +26,9 @@ import {
 import { RAIN_MESSAGE } from './strings';
 import { MILK_PRODUCED, CROW_ATTACKED } from './templates';
 import { fieldMode, itemType } from './enums';
+
+// TODO: Most of the functions in this file should return a farmhand.state
+// object, and this file should be renamed to reducers.js.
 
 /**
  * @param {farmhand.state} state
@@ -293,8 +297,8 @@ export const resetWasWatered = plotContent =>
 
 /**
  * @param {farmhand.item} item
- * @returns {Array.<{ item: farmhand.item, quantity: number }>}
  * @param {number} [howMany=1]
+ * @returns {Array.<{ item: farmhand.item, quantity: number }>}
  */
 export const addItemToInventory = (item, inventory, howMany = 1) => {
   const { id } = item;
@@ -476,4 +480,42 @@ export const purchaseItem = (
     inventory: addItemToInventory(item, inventory, howMany),
     money: money - totalValue,
   };
+};
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state} state
+ */
+export const updateLearnedRecipes = state => ({
+  ...state,
+  learnedRecipes: Object.keys(recipesMap).reduce((acc, recipeId) => {
+    if (recipesMap[recipeId].condition(state)) {
+      acc[recipeId] = true;
+    }
+
+    return acc;
+  }, {}),
+});
+
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.recipe} recipe
+ * @returns {farmhand.state} state
+ */
+export const makeRecipe = (state, recipe) => {
+  if (!canMakeRecipe(recipe, state.inventory)) {
+    return state;
+  }
+
+  const newInventory = Object.keys(recipe.ingredients).reduce(
+    (inventory, ingredientId) =>
+      decrementItemFromInventory(
+        ingredientId,
+        inventory,
+        recipe.ingredients[ingredientId]
+      ),
+    state.inventory
+  );
+
+  return { ...state, inventory: addItemToInventory(recipe, newInventory) };
 };

@@ -7,6 +7,7 @@ import Field from '../Field';
 import Inventory from '../Inventory';
 import CowPen from '../CowPen';
 import Shop from '../Shop';
+import Kitchen from '../Kitchen';
 import { stageFocusType } from '../../enums';
 
 import './Stage.sass';
@@ -23,6 +24,7 @@ export const Stage = ({ field, isMenuOpen, playerInventory, stageFocus }) => (
     )}
     {stageFocus === stageFocusType.SHOP && <Shop />}
     {stageFocus === stageFocusType.COW_PEN && <CowPen />}
+    {stageFocus === stageFocusType.KITCHEN && <Kitchen />}
     {stageFocus === stageFocusType.INVENTORY && (
       <Inventory
         {...{

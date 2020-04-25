@@ -14,12 +14,14 @@ import eventHandlers from './event-handlers';
 import {
   addItemToInventory,
   computePlayerInventory,
+  updateLearnedRecipes,
   computeStateForNextDay,
   decrementItemFromInventory,
   getFieldToolInventory,
   getFinalCropItemIdFromSeedItemId,
   getPlantableCropInventory,
   getWateredField,
+  makeRecipe,
   modifyFieldPlotAt,
   purchaseItem,
   removeFieldPlotAt,
@@ -42,7 +44,7 @@ import {
   generateCow,
 } from './utils';
 import shopInventory from './data/shop-inventory';
-import { itemsMap } from './data/maps';
+import { itemsMap, recipesMap } from './data/maps';
 import { cropLifeStage, fieldMode, itemType, stageFocusType } from './enums';
 import {
   COW_HUG_BENEFIT,
@@ -54,7 +56,7 @@ import {
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from './constants';
-import { COW_PEN_PURCHASED } from './templates';
+import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates';
 import { PROGRESS_SAVED_MESSAGE } from './strings';
 
 import './Farmhand.sass';
@@ -71,16 +73,19 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  * @property {Array.<farmhand.cow>} cowInventory
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
+ * @property {farmhand.module:enums.fieldMode} fieldMode
  * @property {{ x: number, y: number }} hoveredPlot
  * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {boolean} isMenuOpen
+ * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
  * @property {number} money
  * @property {Array.<string} newDayNotifications
  * @property {Array.<string>} notifications
  * @property {string} selectedCowId
  * @property {string} selectedItemId
- * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {Object} itemsSold Keys are items IDs, values are the number of
+ * that item sold.
  * @property {number} purchasedCowPen
  * @property {number} purchasedField
  * @property {Array.<farmhand.item>} shopInventory
@@ -90,6 +95,9 @@ const itemIds = Object.freeze(Object.keys(itemsMap));
  */
 
 export default class Farmhand extends Component {
+  // TODO: Move as much of the logic in this class to ./data-transformers.js as
+  // possible.
+
   // Bind event handlers
 
   localforage = localforage.createInstance({
@@ -109,8 +117,11 @@ export default class Farmhand extends Component {
     hasBooted: false,
     hoveredPlot: { x: null, y: null },
     hoveredPlotRangeSize: 0,
+    // TODO: Consider changing inventory to be an Object
     inventory: [],
     isMenuOpen: true,
+    itemsSold: {},
+    learnedRecipes: {},
     money: 500,
     newDayNotifications: [],
     notifications: [],
@@ -138,6 +149,8 @@ export default class Farmhand extends Component {
       'dayCount',
       'field',
       'inventory',
+      'itemsSold',
+      'learnedRecipes',
       'money',
       'newDayNotifications',
       'purchasedCowPen',
@@ -197,13 +210,15 @@ export default class Farmhand extends Component {
   }
 
   get viewList() {
-    const viewList = [stageFocusType.FIELD, stageFocusType.SHOP];
+    const { COW_PEN, FIELD, INVENTORY, KITCHEN, SHOP } = stageFocusType;
+
+    const viewList = [FIELD, SHOP];
 
     if (this.state.purchasedCowPen) {
-      viewList.push(stageFocusType.COW_PEN);
+      viewList.push(COW_PEN);
     }
 
-    viewList.push(stageFocusType.INVENTORY);
+    viewList.push(KITCHEN, INVENTORY);
 
     return viewList;
   }
@@ -228,6 +243,7 @@ export default class Farmhand extends Component {
       focusInventory: 'i',
       focusCows: 'c',
       focusShop: 's',
+      focusKitchen: 'k',
       incrementDay: 'shift+c',
       nextView: 'right',
       previousView: 'left',
@@ -242,6 +258,7 @@ export default class Farmhand extends Component {
         this.state.purchasedCowPen &&
         this.setState({ stageFocus: stageFocusType.COW_PEN }),
       focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
+      focusKitchen: () => this.setState({ stageFocus: stageFocusType.KITCHEN }),
       incrementDay: () => this.incrementDay(),
       nextView: throttle(this.goToNextView.bind(this), keyHandlerThrottleTime),
       previousView: throttle(
@@ -285,7 +302,10 @@ export default class Farmhand extends Component {
     // check to see if the app has completed booting before working with this
     // transient state.
     if (this.state.hasBooted) {
-      this.showStateChangeNotifications(prevState);
+      [
+        'showCowPenPurchasedNotifications',
+        'showRecipeLearnedNotifications',
+      ].forEach(fn => this[fn](prevState));
 
       if (
         this.state.stageFocus === stageFocusType.COW_PEN &&
@@ -318,7 +338,7 @@ export default class Farmhand extends Component {
   /**
    * @param {farmhand.state} prevState
    */
-  showStateChangeNotifications(prevState) {
+  showCowPenPurchasedNotifications(prevState) {
     const {
       state: { purchasedCowPen },
     } = this;
@@ -328,6 +348,17 @@ export default class Farmhand extends Component {
 
       this.showNotification(COW_PEN_PURCHASED`${cows}`);
     }
+  }
+
+  /**
+   * @param {farmhand.state} prevState
+   */
+  showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
+    Object.keys(this.state.learnedRecipes).forEach(recipeId => {
+      if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
+        this.showNotification(RECIPE_LEARNED`${recipesMap[recipeId]}`);
+      }
+    });
   }
 
   incrementDay() {
@@ -427,15 +458,14 @@ export default class Farmhand extends Component {
       return;
     }
 
-    this.setState(({ inventory, money, valueAdjustments }) => {
-      const value = getAdjustedItemValue(valueAdjustments, id);
-      const totalValue = value * howMany;
-
-      return {
+    this.setState(({ inventory, itemsSold, money, valueAdjustments }) =>
+      updateLearnedRecipes({
+        ...this.state,
         inventory: decrementItemFromInventory(id, inventory, howMany),
-        money: money + totalValue,
-      };
-    });
+        itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
+        money: money + getAdjustedItemValue(valueAdjustments, id) * howMany,
+      })
+    );
   }
 
   /**
@@ -451,6 +481,13 @@ export default class Farmhand extends Component {
     }
 
     this.sellItem(item, itemInInventory.quantity);
+  }
+
+  /**
+   * @param {farmhand.recipe} recipe
+   */
+  makeRecipe(recipe) {
+    this.setState(state => makeRecipe(state, recipe));
   }
 
   /**
