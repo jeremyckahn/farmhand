@@ -19,11 +19,11 @@ There is no release or versioning system yet.
 
 ## Milestone 3: Cooking 🥘
 
-- [ ] Stand up basic cooking pane UI
-- [ ] Cook recipes
-  - [ ] Cooked dishes are added to inventory to be sold for flat price
-- [ ] Learn new recipes
-  - [ ] Recipes are learned when certain farming goals are met (such as growing enough carrots)
+- [x] Stand up basic cooking pane UI
+- [x] Cook recipes
+  - [x] Cooked dishes are added to inventory to be sold for flat price
+- [x] Learn new recipes
+  - [x] Recipes are learned when certain farming goals are met (such as growing enough carrots)
 
 ## Milestone 2: Cows!
 
