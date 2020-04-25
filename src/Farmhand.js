@@ -120,13 +120,13 @@ export default class Farmhand extends Component {
     // TODO: Consider changing inventory to be an Object
     inventory: [],
     isMenuOpen: true,
+    itemsSold: {},
     learnedRecipes: {},
     money: 500,
     newDayNotifications: [],
     notifications: [],
     selectedCowId: '',
     selectedItemId: '',
-    itemsSold: {},
     fieldMode: OBSERVE,
     purchasedCowPen: 0,
     purchasedField: 0,
@@ -335,6 +335,9 @@ export default class Farmhand extends Component {
     }));
   }
 
+  /**
+   * @param {farmhand.state} prevState
+   */
   showCowPenPurchasedNotifications(prevState) {
     const {
       state: { purchasedCowPen },
@@ -347,6 +350,9 @@ export default class Farmhand extends Component {
     }
   }
 
+  /**
+   * @param {farmhand.state} prevState
+   */
   showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
     Object.keys(this.state.learnedRecipes).forEach(recipeId => {
       if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {

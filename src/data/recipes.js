@@ -12,7 +12,7 @@ const itemify = recipe =>
     value:
       recipe.markup +
       Object.keys(recipe.ingredients).reduce(
-        (acc, itemId) => acc + items[itemId].value * recipe.ingredients[itemId],
+        (sum, itemId) => sum + items[itemId].value * recipe.ingredients[itemId],
         0
       ),
   });

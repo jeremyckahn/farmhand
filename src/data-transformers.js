@@ -489,9 +489,7 @@ export const purchaseItem = (
 export const updateLearnedRecipes = state => ({
   ...state,
   learnedRecipes: Object.keys(recipesMap).reduce((acc, recipeId) => {
-    const { condition } = recipesMap[recipeId];
-
-    if (condition(state)) {
+    if (recipesMap[recipeId].condition(state)) {
       acc[recipeId] = true;
     }
 
