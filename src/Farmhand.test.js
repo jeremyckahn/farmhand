@@ -7,6 +7,7 @@ import {
   getCropFromItemId,
   getPlotContentFromItemId,
 } from './utils'
+import { sampleItem1, sampleItem2 } from './data/items'
 import { testCrop, testItem } from './test-utils'
 import {
   FERTILIZER_ITEM_ID,
@@ -22,7 +23,7 @@ import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 import { fieldMode, genders, stageFocusType } from './enums'
 import { recipesMap } from './data/maps'
-import Farmhand from './Farmhand'
+import Farmhand, { computePlayerInventory } from './Farmhand'
 
 jest.mock('localforage')
 jest.mock('./data/maps')
@@ -53,6 +54,56 @@ const stubLocalforage = () => {
 beforeEach(() => {
   stubLocalforage()
   component = shallow(<Farmhand />)
+})
+
+describe('private helpers', () => {
+  describe('computePlayerInventory', () => {
+    let playerInventory
+    let inventory
+    let valueAdjustments
+
+    beforeEach(() => {
+      inventory = [{ quantity: 1, id: 'sample-item-1' }]
+      valueAdjustments = {}
+      playerInventory = computePlayerInventory(inventory, valueAdjustments)
+    })
+
+    test('maps inventory state to renderable inventory data', () => {
+      expect(playerInventory).toEqual([{ quantity: 1, ...sampleItem1 }])
+    })
+
+    test('returns cached result with unchanged input', () => {
+      const newPlayerInventory = computePlayerInventory(
+        inventory,
+        valueAdjustments
+      )
+      expect(playerInventory).toEqual(newPlayerInventory)
+    })
+
+    test('invalidates cache with changed input', () => {
+      playerInventory = computePlayerInventory(
+        [{ quantity: 1, id: 'sample-item-2' }],
+        valueAdjustments
+      )
+      expect(playerInventory).toEqual([{ ...sampleItem2, quantity: 1 }])
+    })
+
+    describe('with valueAdjustments', () => {
+      beforeEach(() => {
+        valueAdjustments = {
+          'sample-item-1': 2,
+        }
+
+        playerInventory = computePlayerInventory(inventory, valueAdjustments)
+      })
+
+      test('maps inventory state to renderable inventory data', () => {
+        expect(playerInventory).toEqual([
+          { ...sampleItem1, quantity: 1, value: 2 },
+        ])
+      })
+    })
+  })
 })
 
 describe('state', () => {

@@ -10,12 +10,7 @@ import {
   FERTILIZER_BONUS,
   SCARECROW_ITEM_ID,
 } from './constants'
-import {
-  sampleItem1,
-  sampleItem2,
-  sampleCropSeedsItem1,
-  sampleFieldTool1,
-} from './data/items'
+import { sampleCropSeedsItem1, sampleFieldTool1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
 import { genders } from './enums'
@@ -366,54 +361,6 @@ describe('processNerfs', () => {
           expect(state.newDayNotifications).toEqual([])
         })
       })
-    })
-  })
-})
-
-describe('computePlayerInventory', () => {
-  let playerInventory
-  let inventory
-  let valueAdjustments
-
-  beforeEach(() => {
-    inventory = [{ quantity: 1, id: 'sample-item-1' }]
-    valueAdjustments = {}
-    playerInventory = fn.computePlayerInventory(inventory, valueAdjustments)
-  })
-
-  test('maps inventory state to renderable inventory data', () => {
-    expect(playerInventory).toEqual([{ quantity: 1, ...sampleItem1 }])
-  })
-
-  test('returns cached result with unchanged input', () => {
-    const newPlayerInventory = fn.computePlayerInventory(
-      inventory,
-      valueAdjustments
-    )
-    expect(playerInventory).toEqual(newPlayerInventory)
-  })
-
-  test('invalidates cache with changed input', () => {
-    playerInventory = fn.computePlayerInventory(
-      [{ quantity: 1, id: 'sample-item-2' }],
-      valueAdjustments
-    )
-    expect(playerInventory).toEqual([{ ...sampleItem2, quantity: 1 }])
-  })
-
-  describe('with valueAdjustments', () => {
-    beforeEach(() => {
-      valueAdjustments = {
-        'sample-item-1': 2,
-      }
-
-      playerInventory = fn.computePlayerInventory(inventory, valueAdjustments)
-    })
-
-    test('maps inventory state to renderable inventory data', () => {
-      expect(playerInventory).toEqual([
-        { ...sampleItem1, quantity: 1, value: 2 },
-      ])
     })
   })
 })

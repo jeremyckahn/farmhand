@@ -8,7 +8,6 @@ import {
   getCowMilkItem,
   getCowMilkRate,
   getAdjustedItemValue,
-  getItemValue,
   getRangeCoords,
 } from './utils'
 import {
@@ -191,19 +190,6 @@ export const processMilkingCows = state => {
 
   return { ...state, cowInventory, inventory, newDayNotifications }
 }
-
-/**
- * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
- * @param {Object.<number>} valueAdjustments
- * @returns {Array.<farmhand.item>}
- */
-export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
-  inventory.map(({ quantity, id }) => ({
-    quantity,
-    ...itemsMap[id],
-    value: getItemValue(itemsMap[id], valueAdjustments),
-  }))
-)
 
 /**
  * @return {Object}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { HotKeys } from 'react-hotkeys'
+import memoize from 'fast-memoize'
 import localforage from 'localforage'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -13,7 +14,6 @@ import FarmhandContext from './Farmhand.context'
 import eventHandlers from './event-handlers'
 import {
   addItemToInventory,
-  computePlayerInventory,
   updateLearnedRecipes,
   computeStateForNextDay,
   decrementItemFromInventory,
@@ -38,6 +38,7 @@ import {
   getCropFromItemId,
   getCropLifeStage,
   getCowValue,
+  getItemValue,
   getPlotContentFromItemId,
   getRangeCoords,
   getAdjustedItemValue,
@@ -65,6 +66,19 @@ const { GROWN } = cropLifeStage
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
+
+/**
+ * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
+ * @param {Object.<number>} valueAdjustments
+ * @returns {Array.<farmhand.item>}
+ */
+export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
+  inventory.map(({ quantity, id }) => ({
+    quantity,
+    ...itemsMap[id],
+    value: getItemValue(itemsMap[id], valueAdjustments),
+  }))
+)
 
 /**
  * @typedef farmhand.state
