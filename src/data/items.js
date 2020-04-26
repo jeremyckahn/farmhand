@@ -2,17 +2,17 @@
  * @module farmhand.items
  */
 
-import { cropLifeStage, cropType, fieldMode, itemType } from '../enums';
+import { cropLifeStage, cropType, fieldMode, itemType } from '../enums'
 import {
   COW_FEED_ITEM_ID,
   FERTILIZER_ITEM_ID,
   SPRINKLER_RANGE,
-} from '../constants';
+} from '../constants'
 
-const { freeze } = Object;
-const { CARROT, PUMPKIN } = cropType;
-const { SEED, GROWING } = cropLifeStage;
-const { COW_FEED, CROP, FERTILIZER, MILK, SCARECROW, SPRINKLER } = itemType;
+const { freeze } = Object
+const { CARROT, PUMPKIN } = cropType
+const { SEED, GROWING } = cropLifeStage
+const { COW_FEED, CROP, FERTILIZER, MILK, SCARECROW, SPRINKLER } = itemType
 
 ////////////////////////////////////////
 //
@@ -34,7 +34,7 @@ export const carrotSeed = freeze({
   name: 'Carrot Seed',
   type: CROP,
   value: 20,
-});
+})
 
 /**
  * @property farmhand.module:items.carrot
@@ -51,7 +51,7 @@ export const carrot = freeze({
   name: 'Carrot',
   type: CROP,
   value: 40,
-});
+})
 
 /**
  * @property farmhand.module:items.pumpkinSeed
@@ -67,7 +67,7 @@ export const pumpkinSeed = freeze({
   name: 'Pumpkin Seed',
   type: CROP,
   value: 40,
-});
+})
 
 /**
  * @property farmhand.module:items.pumpkin
@@ -84,7 +84,7 @@ export const pumpkin = freeze({
   name: 'Pumpkin',
   type: CROP,
   value: 80,
-});
+})
 
 ////////////////////////////////////////
 //
@@ -102,7 +102,7 @@ export const fertilizer = freeze({
   name: 'Fertilizer',
   type: FERTILIZER,
   value: 60,
-});
+})
 
 /**
  * @property farmhand.module:items.sprinkler
@@ -116,7 +116,7 @@ export const sprinkler = freeze({
   name: 'Sprinkler',
   type: SPRINKLER,
   value: 120,
-});
+})
 
 /**
  * @property farmhand.module:items.scarecrow
@@ -129,7 +129,7 @@ export const scarecrow = freeze({
   name: 'Scarecrow',
   type: SCARECROW,
   value: 160,
-});
+})
 
 ////////////////////////////////////////
 //
@@ -146,7 +146,7 @@ export const cowFeed = freeze({
   name: 'Cow Feed',
   type: COW_FEED,
   value: 5,
-});
+})
 
 /**
  * @property farmhand.module:items.milk1
@@ -157,7 +157,7 @@ export const milk1 = freeze({
   name: 'Grade C Milk',
   type: MILK,
   value: 40,
-});
+})
 
 /**
  * @property farmhand.module:items.milk2
@@ -168,7 +168,7 @@ export const milk2 = freeze({
   name: 'Grade B Milk',
   type: MILK,
   value: 80,
-});
+})
 
 /**
  * @property farmhand.module:items.milk3
@@ -179,4 +179,4 @@ export const milk3 = freeze({
   name: 'Grade A Milk',
   type: MILK,
   value: 120,
-});
+})

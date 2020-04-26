@@ -1,12 +1,12 @@
-import React from 'react';
-import { array, number, string } from 'prop-types';
-import classNames from 'classnames';
+import React from 'react'
+import { array, number, string } from 'prop-types'
+import classNames from 'classnames'
 
-import FarmhandContext from '../../Farmhand.context';
-import Plot from '../Plot';
-import { fieldMode } from '../../enums';
+import FarmhandContext from '../../Farmhand.context'
+import Plot from '../Plot'
+import { fieldMode } from '../../enums'
 
-import './Field.sass';
+import './Field.sass'
 
 const {
   CLEANUP,
@@ -16,7 +16,7 @@ const {
   SET_SCARECROW,
   SET_SPRINKLER,
   WATER,
-} = fieldMode;
+} = fieldMode
 
 export const Field = ({ columns, field, fieldMode, rows }) => (
   <div
@@ -49,14 +49,14 @@ export const Field = ({ columns, field, fieldMode, rows }) => (
         </div>
       ))}
   </div>
-);
+)
 
 Field.propTypes = {
   columns: number.isRequired,
   field: array.isRequired,
   fieldMode: string.isRequired,
   rows: number.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -65,5 +65,5 @@ export default function Consumer(props) {
         <Field {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

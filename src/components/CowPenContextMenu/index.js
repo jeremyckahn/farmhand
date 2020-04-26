@@ -1,1 +1,1 @@
-export { default } from './CowPenContextMenu';
+export { default } from './CowPenContextMenu'

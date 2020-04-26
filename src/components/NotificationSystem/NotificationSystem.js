@@ -1,9 +1,9 @@
-import React from 'react';
-import { arrayOf, bool, func, string } from 'prop-types';
-import Snackbar from '@material-ui/core/Snackbar';
+import React from 'react'
+import { arrayOf, bool, func, string } from 'prop-types'
+import Snackbar from '@material-ui/core/Snackbar'
 
-import FarmhandContext from '../../Farmhand.context';
-import './NotificationSystem.sass';
+import FarmhandContext from '../../Farmhand.context'
+import './NotificationSystem.sass'
 
 export const NotificationSystem = ({
   handleCloseNotification,
@@ -33,14 +33,14 @@ export const NotificationSystem = ({
       }}
     />
   </div>
-);
+)
 
 NotificationSystem.propTypes = {
   handleCloseNotification: func.isRequired,
   handleNotificationExited: func.isRequired,
   notifications: arrayOf(string).isRequired,
   doShowNotifications: bool.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -49,5 +49,5 @@ export default function Consumer(props) {
         <NotificationSystem {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

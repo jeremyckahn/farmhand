@@ -1,7 +1,7 @@
-import { testItem } from '../../test-utils';
-import { cropLifeStage, itemType } from '../../enums';
+import { testItem } from '../../test-utils'
+import { cropLifeStage, itemType } from '../../enums'
 
-const { SEED, GROWING } = cropLifeStage;
+const { SEED, GROWING } = cropLifeStage
 
 // Non-crop items
 export const sampleItem1 = testItem({
@@ -9,21 +9,21 @@ export const sampleItem1 = testItem({
   doesPriceFluctuate: true,
   type: itemType.CROP,
   value: 1,
-});
+})
 
 export const sampleItem2 = testItem({
   id: 'sample-item-2',
   doesPriceFluctuate: true,
   type: itemType.CROP,
   value: 2,
-});
+})
 
 export const sampleItem3 = testItem({
   id: 'sample-item-3',
   doesPriceFluctuate: true,
   type: itemType.CROP,
   value: 3,
-});
+})
 
 // Crop items
 export const sampleCropSeedsItem1 = testItem({
@@ -35,7 +35,7 @@ export const sampleCropSeedsItem1 = testItem({
   isPlantableCrop: true,
   type: itemType.CROP,
   value: 1,
-});
+})
 
 export const sampleCropItem1 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_1',
@@ -48,7 +48,7 @@ export const sampleCropItem1 = testItem({
     [SEED]: 1,
     [GROWING]: 2,
   },
-});
+})
 
 export const sampleCropSeedsItem2 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_2',
@@ -59,7 +59,7 @@ export const sampleCropSeedsItem2 = testItem({
   isPlantableCrop: true,
   type: itemType.CROP,
   value: 2,
-});
+})
 
 export const sampleCropItem2 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_2',
@@ -72,7 +72,7 @@ export const sampleCropItem2 = testItem({
     [SEED]: 2,
     [GROWING]: 3,
   },
-});
+})
 
 export const sampleCropSeedsItem3 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_3',
@@ -82,7 +82,7 @@ export const sampleCropSeedsItem3 = testItem({
   id: 'sample-crop-seeds-3',
   isPlantableCrop: true,
   value: 3,
-});
+})
 
 export const sampleCropItem3 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_3',
@@ -95,19 +95,19 @@ export const sampleCropItem3 = testItem({
     [SEED]: 3,
     [GROWING]: 4,
   },
-});
+})
 
 export const sampleFieldTool1 = testItem({
   id: 'sample-field-tool-1',
   enablesFieldMode: 'MOCK_FIELD_MODE_1',
   value: 5,
-});
+})
 
 export const fertilizer = testItem({
   id: 'fertilizer',
   value: 60,
   enablesFieldMode: 'FERTILIZE',
-});
+})
 
 export const sprinkler = testItem({
   enablesFieldMode: 'SET_SPRINKLER',
@@ -115,7 +115,7 @@ export const sprinkler = testItem({
   isReplantable: true,
   type: itemType.SPRINKLER,
   value: 120,
-});
+})
 
 export const scarecrow = testItem({
   enablesFieldMode: 'SET_SCARECROW',
@@ -123,38 +123,38 @@ export const scarecrow = testItem({
   isReplantable: true,
   type: itemType.SCARECROW,
   value: 160,
-});
+})
 
 export const milk1 = testItem({
   id: 'milk-1',
   name: 'Milk 1',
   type: itemType.MILK,
   value: 5,
-});
+})
 
 export const milk2 = testItem({
   id: 'milk-2',
   name: 'Milk 2',
   type: itemType.MILK,
   value: 10,
-});
+})
 
 export const milk3 = testItem({
   id: 'milk-3',
   name: 'Milk 3',
   type: itemType.MILK,
   value: 15,
-});
+})
 
 export const cowFeed = testItem({
   id: 'cow-feed',
   name: 'Cow Feed',
   type: itemType.COW_FEED,
   value: 5,
-});
+})
 
 export const replantableItem = testItem({
   id: 'replantable-item',
   isReplantable: true,
   type: 'MOCK_TYPE',
-});
+})

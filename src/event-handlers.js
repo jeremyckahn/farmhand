@@ -1,4 +1,4 @@
-import { fieldMode } from './enums';
+import { fieldMode } from './enums'
 
 const {
   CLEANUP,
@@ -8,16 +8,16 @@ const {
   SET_SCARECROW,
   SET_SPRINKLER,
   WATER,
-} = fieldMode;
+} = fieldMode
 
-const toolbeltFieldModes = [CLEANUP, HARVEST, WATER];
+const toolbeltFieldModes = [CLEANUP, HARVEST, WATER]
 
 export default {
   /**
    * @param {farmhand.item} item
    */
   handleItemMaxOutClick(item) {
-    this.purchaseItemMax(item);
+    this.purchaseItemMax(item)
   },
 
   /**
@@ -25,35 +25,35 @@ export default {
    * @param {number} [howMany=1]
    */
   handleItemPurchaseClick(item, howMany = 1) {
-    this.purchaseItem(item, howMany);
+    this.purchaseItem(item, howMany)
   },
 
   /**
    * @param {farmhand.recipe} recipe
    */
   handleMakeRecipeClick(recipe) {
-    this.makeRecipe(recipe);
+    this.makeRecipe(recipe)
   },
 
   /**
    * @param {farmhand.cow} cow
    */
   handleCowPurchaseClick(cow) {
-    this.purchaseCow(cow);
+    this.purchaseCow(cow)
   },
 
   /**
    * @param {farmhand.cow} cow
    */
   handleCowSellClick(cow) {
-    this.sellCow(cow);
+    this.sellCow(cow)
   },
 
   /**
    * @param {farmhand.cow} cow
    */
   handleCowHugClick(cow) {
-    this.hugCow(cow.id);
+    this.hugCow(cow.id)
   },
 
   /**
@@ -61,28 +61,28 @@ export default {
    * @param {farmhand.cow} cow
    */
   handleCowNameInputChange({ target: { value } }, cow) {
-    this.changeCowName(cow.id, value);
+    this.changeCowName(cow.id, value)
   },
 
   /**
    * @param {farmhand.item} item
    */
   handleItemSellClick(item) {
-    this.sellItem(item);
+    this.sellItem(item)
   },
 
   /**
    * @param {farmhand.item} item
    */
   handleItemSellAllClick(item) {
-    this.sellAllOfItem(item);
+    this.sellAllOfItem(item)
   },
 
   /**
    * @param {external:React.SyntheticEvent} e
    */
   handleViewChange({ target: { value } }) {
-    this.setState({ stageFocus: value });
+    this.setState({ stageFocus: value })
   },
 
   /**
@@ -95,7 +95,7 @@ export default {
           ? ''
           : selectedItemId,
       fieldMode,
-    }));
+    }))
   },
 
   handleItemSelectClick({ id, enablesFieldMode, hoveredPlotRangeSize = 0 }) {
@@ -103,7 +103,7 @@ export default {
       fieldMode: enablesFieldMode,
       hoveredPlotRangeSize,
       selectedItemId: id,
-    });
+    })
   },
 
   /**
@@ -111,22 +111,22 @@ export default {
    * @param {number} y
    */
   handlePlotClick(x, y) {
-    const { selectedItemId, fieldMode } = this.state;
+    const { selectedItemId, fieldMode } = this.state
 
     if (fieldMode === PLANT) {
-      this.plantInPlot(x, y, selectedItemId);
+      this.plantInPlot(x, y, selectedItemId)
     } else if (fieldMode === HARVEST) {
-      this.harvestPlot(x, y);
+      this.harvestPlot(x, y)
     } else if (fieldMode === CLEANUP) {
-      this.clearPlot(x, y);
+      this.clearPlot(x, y)
     } else if (fieldMode === WATER) {
-      this.waterPlot(x, y);
+      this.waterPlot(x, y)
     } else if (fieldMode === FERTILIZE) {
-      this.fertilizeCrop(x, y);
+      this.fertilizeCrop(x, y)
     } else if (fieldMode === SET_SPRINKLER) {
-      this.setSprinkler(x, y);
+      this.setSprinkler(x, y)
     } else if (fieldMode === SET_SCARECROW) {
-      this.setScarecrow(x, y);
+      this.setScarecrow(x, y)
     }
   },
 
@@ -135,74 +135,74 @@ export default {
    * @param {number} y
    */
   handlePlotMouseOver(x, y) {
-    this.setState({ hoveredPlot: { x, y } });
+    this.setState({ hoveredPlot: { x, y } })
   },
 
   handleClickEndDayButton() {
-    this.incrementDay();
+    this.incrementDay()
   },
 
   /**
    * @param {number} amount
    */
   handleAddMoneyClick(amount) {
-    this.setState(({ money }) => ({ money: money + amount }));
+    this.setState(({ money }) => ({ money: money + amount }))
   },
 
   handleClearPersistedDataClick() {
-    this.clearPersistedData();
+    this.clearPersistedData()
   },
 
   handleWaterAllPlotsClick() {
-    this.waterAllPlots();
+    this.waterAllPlots()
   },
 
   /**
    * @param {number} fieldId
    */
   handleFieldPurchase(fieldId) {
-    this.purchaseField(fieldId);
+    this.purchaseField(fieldId)
   },
 
   /**
    * @param {number} cowPenId
    */
   handleCowPenPurchase(cowPenId) {
-    this.purchaseCowPen(cowPenId);
+    this.purchaseCowPen(cowPenId)
   },
 
   handleMenuToggle() {
-    this.setState(({ isMenuOpen }) => ({ isMenuOpen: !isMenuOpen }));
+    this.setState(({ isMenuOpen }) => ({ isMenuOpen: !isMenuOpen }))
   },
 
   handleClickNextMenuButton() {
-    this.goToNextView();
+    this.goToNextView()
   },
 
   handleClickPreviousMenuButton() {
-    this.goToPreviousView();
+    this.goToPreviousView()
   },
 
   /**
    * @param {farmhand.cow}
    */
   handleCowSelect(cow) {
-    this.selectCow(cow);
+    this.selectCow(cow)
   },
 
   /**
    * @param {farmhand.cow}
    */
   handleCowClick(cow) {
-    this.selectCow(cow);
-    this.hugCow(cow.id);
+    this.selectCow(cow)
+    this.hugCow(cow.id)
   },
 
   handleCloseNotification() {
-    this.setState({ doShowNotifications: false });
+    this.setState({ doShowNotifications: false })
   },
 
   handleNotificationExited() {
-    this.setState({ notifications: [] });
+    this.setState({ notifications: [] })
   },
-};
+}

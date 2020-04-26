@@ -7,7 +7,7 @@ import {
   fertilizer,
   scarecrow,
   sprinkler,
-} from './items';
+} from './items'
 
 export default [
   // Plantable crops
@@ -18,4 +18,4 @@ export default [
   fertilizer,
   scarecrow,
   sprinkler,
-];
+]

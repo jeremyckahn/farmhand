@@ -1,77 +1,77 @@
-import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import { func, instanceOf, number, string } from 'prop-types';
+import React, { Component } from 'react'
+import Button from '@material-ui/core/Button'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import { func, instanceOf, number, string } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context';
-import './TierPurchase.sass';
+import FarmhandContext from '../../Farmhand.context'
+import './TierPurchase.sass'
 
 export class TierPurchase extends Component {
   state = {
     selectedTier: '',
-  };
+  }
 
-  tierValues = [...this.props.tiers.entries()];
+  tierValues = [...this.props.tiers.entries()]
 
   get selectedTierNumber() {
-    return Number(this.state.selectedTier);
+    return Number(this.state.selectedTier)
   }
 
   get canPlayerBuySelectedTier() {
     const {
       props: { money },
       selectedTierNumber,
-    } = this;
+    } = this
 
-    const selectedTier = this.props.tiers.get(selectedTierNumber);
+    const selectedTier = this.props.tiers.get(selectedTierNumber)
 
     return (
       !!selectedTier &&
       !this.hasPurchasedTier(selectedTierNumber) &&
       money >= selectedTier.price
-    );
+    )
   }
 
-  hasPurchasedTier = tierLevel => tierLevel <= this.props.purchasedTier;
+  hasPurchasedTier = tierLevel => tierLevel <= this.props.purchasedTier
 
   handleTierPurchase = () => {
     const {
       props: { handleTierPurchase, money },
       selectedTierNumber,
-    } = this;
-    const { price } = this.props.tiers.get(selectedTierNumber);
+    } = this
+    const { price } = this.props.tiers.get(selectedTierNumber)
 
     if (money >= price) {
-      handleTierPurchase(selectedTierNumber);
+      handleTierPurchase(selectedTierNumber)
     }
-  };
+  }
 
   onSelectChange = ({ target: { value } }) => {
-    this.setState({ selectedTier: value });
-  };
+    this.setState({ selectedTier: value })
+  }
 
   updateSelectedTier = () => {
     const {
       props: { money },
       selectedTierNumber,
-    } = this;
+    } = this
 
-    const nextTierNumber = selectedTierNumber + 1;
-    const nextTierToPurchase = this.props.tiers.get(nextTierNumber);
+    const nextTierNumber = selectedTierNumber + 1
+    const nextTierToPurchase = this.props.tiers.get(nextTierNumber)
 
     if (nextTierToPurchase && money >= nextTierToPurchase.price) {
-      this.setState({ selectedTier: String(nextTierNumber) });
+      this.setState({ selectedTier: String(nextTierNumber) })
     }
-  };
+  }
 
   componentDidMount() {
-    this.updateSelectedTier();
+    this.updateSelectedTier()
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.money !== prevProps.money) {
-      this.updateSelectedTier();
+      this.updateSelectedTier()
     }
   }
 
@@ -84,7 +84,7 @@ export class TierPurchase extends Component {
       props: { money, renderTierLabel, title },
       tierValues,
       state: { selectedTier },
-    } = this;
+    } = this
 
     return (
       <div className="TierPurchase">
@@ -116,7 +116,7 @@ export class TierPurchase extends Component {
           Buy
         </Button>
       </div>
-    );
+    )
   }
 }
 
@@ -127,7 +127,7 @@ TierPurchase.propTypes = {
   renderTierLabel: func.isRequired,
   tiers: instanceOf(Map),
   title: string.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -136,5 +136,5 @@ export default function Consumer(props) {
         <TierPurchase {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

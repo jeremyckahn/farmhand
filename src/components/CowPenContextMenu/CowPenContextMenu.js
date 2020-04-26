@@ -1,43 +1,43 @@
-import React, { useState } from 'react';
-import { array, func, number, object, string } from 'prop-types';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
-import TextField from '@material-ui/core/TextField';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
+import React, { useState } from 'react'
+import { array, func, number, object, string } from 'prop-types'
+import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
+import TextField from '@material-ui/core/TextField'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
 import {
   faMars,
   faVenus,
   faHeart as faFullHeart,
-} from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons';
+} from '@fortawesome/free-solid-svg-icons'
+import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons'
 
-import Item from '../Item';
-import { animals } from '../../img';
-import FarmhandContext from '../../Farmhand.context';
-import { cowColors, genders } from '../../enums';
-import { dollarAmount, getCowValue, getCowWeight } from '../../utils';
+import Item from '../Item'
+import { animals } from '../../img'
+import FarmhandContext from '../../Farmhand.context'
+import { cowColors, genders } from '../../enums'
+import { dollarAmount, getCowValue, getCowWeight } from '../../utils'
 import {
   COW_FEED_BULK_PURCHASE_AMOUNT,
   PURCHASEABLE_COW_PENS,
-} from '../../constants';
-import { cowFeed } from '../../data/items';
+} from '../../constants'
+import { cowFeed } from '../../data/items'
 
-import './CowPenContextMenu.sass';
+import './CowPenContextMenu.sass'
 
 const genderIcons = {
   [genders.FEMALE]: faVenus,
   [genders.MALE]: faMars,
-};
+}
 
-const nullHeartList = new Array(10).fill(null);
+const nullHeartList = new Array(10).fill(null)
 
 // The extra 0.5 is for rounding up to the next full heart. This allows a fully
 // happy cow to have full hearts on the beginning of a new day.
 const isHeartFull = (heartIndex, numberOfFullHearts) =>
-  heartIndex + 0.5 < numberOfFullHearts;
+  heartIndex + 0.5 < numberOfFullHearts
 
 export const CowCardSubheader = ({
   cow,
@@ -75,7 +75,7 @@ export const CowCardSubheader = ({
       </ol>
     )}
   </>
-);
+)
 
 export const CowCard = ({
   cow,
@@ -93,7 +93,7 @@ export const CowCard = ({
   isCowPurchased = !!handleCowSellClick,
   isNameEditable = !!handleCowNameInputChange,
 }) => {
-  const [name, setName] = useState(cow.name);
+  const [name, setName] = useState(cow.name)
 
   return (
     <Card {...{ raised: isSelected }}>
@@ -111,8 +111,8 @@ export const CowCard = ({
                 <TextField
                   {...{
                     onChange: e => {
-                      setName(e.target.value);
-                      debounced.handleCowNameInputChange({ ...e }, cow);
+                      setName(e.target.value)
+                      debounced.handleCowNameInputChange({ ...e }, cow)
                     },
                     placeholder: 'Name',
                     value: name,
@@ -182,8 +182,8 @@ export const CowCard = ({
         )}
       </CardActions>
     </Card>
-  );
-};
+  )
+}
 
 export const CowPenContextMenu = ({
   cowForSale,
@@ -247,7 +247,7 @@ export const CowPenContextMenu = ({
       ))}
     </ul>
   </div>
-);
+)
 
 CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
@@ -261,7 +261,7 @@ CowPenContextMenu.propTypes = {
   money: number.isRequired,
   purchasedCowPen: number.isRequired,
   selectedCowId: string.isRequired,
-};
+}
 
 export default function Consumer() {
   return (
@@ -270,5 +270,5 @@ export default function Consumer() {
         <CowPenContextMenu {...{ ...gameState, ...handlers }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

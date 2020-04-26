@@ -1,15 +1,15 @@
-import { cowColors } from '../enums';
+import { cowColors } from '../enums'
 
-export const pixel = require('./pixel.png');
+export const pixel = require('./pixel.png')
 
 export const plotStates = {
   'watered-plot': require('./plot-states/watered-plot.png'),
   'fertilized-plot': require('./plot-states/fertilized-plot.png'),
-};
+}
 
 export const dishes = {
   'carrot-soup': require('./dishes/carrot-soup.png'),
-};
+}
 
 export const items = {
   // Crops
@@ -33,18 +33,18 @@ export const items = {
   'milk-3': require('./items/milk-3.png'),
 
   ...dishes,
-};
+}
 
 export const tools = {
   hoe: require('./tools/hoe.png'),
   scythe: require('./tools/scythe.png'),
   'watering-can': require('./tools/watering-can.png'),
-};
+}
 
 export const animals = {
   cow: Object.values(cowColors).reduce((acc, color) => {
-    const lowerCaseColor = color.toLowerCase();
-    acc[lowerCaseColor] = require(`./animals/cows/${lowerCaseColor}-cow.png`);
-    return acc;
+    const lowerCaseColor = color.toLowerCase()
+    acc[lowerCaseColor] = require(`./animals/cows/${lowerCaseColor}-cow.png`)
+    return acc
   }, {}),
-};
+}

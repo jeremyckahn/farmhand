@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { HotKeys } from 'react-hotkeys';
-import localforage from 'localforage';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import Fab from '@material-ui/core/Fab';
-import HotelIcon from '@material-ui/icons/Hotel';
-import Tooltip from '@material-ui/core/Tooltip';
-import throttle from 'lodash.throttle';
-import debounce from 'lodash.debounce';
+import React, { Component } from 'react'
+import { HotKeys } from 'react-hotkeys'
+import localforage from 'localforage'
+import { MuiThemeProvider } from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
+import Fab from '@material-ui/core/Fab'
+import HotelIcon from '@material-ui/icons/Hotel'
+import Tooltip from '@material-ui/core/Tooltip'
+import throttle from 'lodash.throttle'
+import debounce from 'lodash.debounce'
 
-import FarmhandContext from './Farmhand.context';
-import eventHandlers from './event-handlers';
+import FarmhandContext from './Farmhand.context'
+import eventHandlers from './event-handlers'
 import {
   addItemToInventory,
   computePlayerInventory,
@@ -25,14 +25,14 @@ import {
   modifyFieldPlotAt,
   purchaseItem,
   removeFieldPlotAt,
-} from './data-transformers';
-import AppBar from './components/AppBar';
-import Navigation from './components/Navigation';
-import ContextPane from './components/ContextPane';
-import Stage from './components/Stage';
-import NotificationSystem from './components/NotificationSystem';
-import DebugMenu from './components/DebugMenu';
-import theme from './mui-theme';
+} from './data-transformers'
+import AppBar from './components/AppBar'
+import Navigation from './components/Navigation'
+import ContextPane from './components/ContextPane'
+import Stage from './components/Stage'
+import NotificationSystem from './components/NotificationSystem'
+import DebugMenu from './components/DebugMenu'
+import theme from './mui-theme'
 import {
   createNewField,
   getCropFromItemId,
@@ -42,10 +42,10 @@ import {
   getRangeCoords,
   getAdjustedItemValue,
   generateCow,
-} from './utils';
-import shopInventory from './data/shop-inventory';
-import { itemsMap, recipesMap } from './data/maps';
-import { cropLifeStage, fieldMode, itemType, stageFocusType } from './enums';
+} from './utils'
+import shopInventory from './data/shop-inventory'
+import { itemsMap, recipesMap } from './data/maps'
+import { cropLifeStage, fieldMode, itemType, stageFocusType } from './enums'
 import {
   COW_HUG_BENEFIT,
   FERTILIZER_ITEM_ID,
@@ -55,16 +55,16 @@ import {
   PURCHASEABLE_FIELD_SIZES,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
-} from './constants';
-import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates';
-import { PROGRESS_SAVED_MESSAGE } from './strings';
+} from './constants'
+import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
+import { PROGRESS_SAVED_MESSAGE } from './strings'
 
-import './Farmhand.sass';
+import './Farmhand.sass'
 
-const { GROWN } = cropLifeStage;
-const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode;
+const { GROWN } = cropLifeStage
+const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 
-const itemIds = Object.freeze(Object.keys(itemsMap));
+const itemIds = Object.freeze(Object.keys(itemsMap))
 
 /**
  * @typedef farmhand.state
@@ -103,7 +103,7 @@ export default class Farmhand extends Component {
   localforage = localforage.createInstance({
     name: 'farmhand',
     description: 'Persisted game data for Farmhand',
-  });
+  })
 
   /**
    * @member farmhand.Farmhand#state
@@ -117,7 +117,6 @@ export default class Farmhand extends Component {
     hasBooted: false,
     hoveredPlot: { x: null, y: null },
     hoveredPlotRangeSize: 0,
-    // TODO: Consider changing inventory to be an Object
     inventory: [],
     isMenuOpen: true,
     itemsSold: {},
@@ -134,12 +133,12 @@ export default class Farmhand extends Component {
     doShowNotifications: false,
     stageFocus: stageFocusType.FIELD,
     valueAdjustments: {},
-  };
+  }
 
   constructor() {
-    super(...arguments);
+    super(...arguments)
 
-    this.initInputHandlers();
+    this.initInputHandlers()
   }
 
   static reduceByPersistedKeys(state) {
@@ -157,14 +156,14 @@ export default class Farmhand extends Component {
       'purchasedField',
       'valueAdjustments',
     ].reduce((acc, key) => {
-      acc[key] = state[key];
+      acc[key] = state[key]
 
-      return acc;
-    }, {});
+      return acc
+    }, {})
   }
 
   get fieldToolInventory() {
-    return getFieldToolInventory(this.state.inventory);
+    return getFieldToolInventory(this.state.inventory)
   }
 
   get hoveredPlotRange() {
@@ -173,70 +172,70 @@ export default class Farmhand extends Component {
       fieldMode,
       hoveredPlot: { x, y },
       hoveredPlotRangeSize,
-    } = this.state;
+    } = this.state
 
     // If x is null, so is y.
     if (x === null) {
-      return [[{ x: null, y: null }]];
+      return [[{ x: null, y: null }]]
     }
 
     if (fieldMode === SET_SPRINKLER) {
       return field[y][x]
         ? [[{ x, y }]]
-        : getRangeCoords(hoveredPlotRangeSize, x, y);
+        : getRangeCoords(hoveredPlotRangeSize, x, y)
     }
 
-    return [[{ x, y }]];
+    return [[{ x, y }]]
   }
 
   get playerInventory() {
-    const { inventory, valueAdjustments } = this.state;
-    return computePlayerInventory(inventory, valueAdjustments);
+    const { inventory, valueAdjustments } = this.state
+    return computePlayerInventory(inventory, valueAdjustments)
   }
 
   get playerInventoryQuantities() {
-    const { inventory } = this.state;
+    const { inventory } = this.state
 
     return itemIds.reduce((acc, itemId) => {
-      const itemInInventory = inventory.find(({ id }) => id === itemId);
-      acc[itemId] = itemInInventory ? itemInInventory.quantity : 0;
+      const itemInInventory = inventory.find(({ id }) => id === itemId)
+      acc[itemId] = itemInInventory ? itemInInventory.quantity : 0
 
-      return acc;
-    }, {});
+      return acc
+    }, {})
   }
 
   get plantableCropInventory() {
-    return getPlantableCropInventory(this.state.inventory);
+    return getPlantableCropInventory(this.state.inventory)
   }
 
   get viewList() {
-    const { COW_PEN, FIELD, INVENTORY, KITCHEN, SHOP } = stageFocusType;
+    const { COW_PEN, FIELD, INVENTORY, KITCHEN, SHOP } = stageFocusType
 
-    const viewList = [FIELD, SHOP];
+    const viewList = [FIELD, SHOP]
 
     if (this.state.purchasedCowPen) {
-      viewList.push(COW_PEN);
+      viewList.push(COW_PEN)
     }
 
-    viewList.push(KITCHEN, INVENTORY);
+    viewList.push(KITCHEN, INVENTORY)
 
-    return viewList;
+    return viewList
   }
 
   initInputHandlers() {
-    const keyHandlerThrottleTime = 150;
-    const debouncedInputRate = 50;
+    const keyHandlerThrottleTime = 150
+    const debouncedInputRate = 50
 
-    this.handlers = { debounced: {} };
+    this.handlers = { debounced: {} }
 
     Object.keys(eventHandlers).forEach(method => {
-      this.handlers[method] = eventHandlers[method].bind(this);
+      this.handlers[method] = eventHandlers[method].bind(this)
 
       this.handlers.debounced[method] = debounce(
         this.handlers[method],
         debouncedInputRate
-      );
-    });
+      )
+    })
 
     this.keyMap = {
       focusField: 'f',
@@ -248,7 +247,7 @@ export default class Farmhand extends Component {
       nextView: 'right',
       previousView: 'left',
       toggleMenu: 'm',
-    };
+    }
 
     this.keyHandlers = {
       focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
@@ -266,34 +265,34 @@ export default class Farmhand extends Component {
         keyHandlerThrottleTime
       ),
       toggleMenu: () => this.handlers.handleMenuToggle(),
-    };
+    }
 
     Object.assign(this.keyMap, {
       clearPersistedData: 'shift+d',
       waterAllPlots: 'w',
-    });
+    })
 
     Object.assign(this.keyHandlers, {
       clearPersistedData: () => this.clearPersistedData(),
       waterAllPlots: () => this.waterAllPlots(),
-    });
+    })
   }
 
   componentDidMount() {
     this.localforage.getItem('state').then(state => {
       if (state) {
-        const { newDayNotifications } = state;
+        const { newDayNotifications } = state
         this.setState({ ...state, newDayNotifications: [] }, () => {
           newDayNotifications.forEach(notification =>
             this.showNotification(notification)
-          );
-        });
+          )
+        })
       } else {
-        this.incrementDay();
+        this.incrementDay()
       }
 
-      this.setState({ hasBooted: true });
-    });
+      this.setState({ hasBooted: true })
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -302,16 +301,16 @@ export default class Farmhand extends Component {
     // check to see if the app has completed booting before working with this
     // transient state.
     if (this.state.hasBooted) {
-      [
+      ;[
         'showCowPenPurchasedNotifications',
         'showRecipeLearnedNotifications',
-      ].forEach(fn => this[fn](prevState));
+      ].forEach(fn => this[fn](prevState))
 
       if (
         this.state.stageFocus === stageFocusType.COW_PEN &&
         prevState.stageFocus !== stageFocusType.COW_PEN
       ) {
-        this.setState({ selectedCowId: '' });
+        this.setState({ selectedCowId: '' })
       }
     }
   }
@@ -319,7 +318,7 @@ export default class Farmhand extends Component {
   clearPersistedData() {
     this.localforage
       .clear()
-      .then(() => this.showNotification('localforage.clear() succeeded!'));
+      .then(() => this.showNotification('localforage.clear() succeeded!'))
   }
 
   /**
@@ -332,7 +331,7 @@ export default class Farmhand extends Component {
         ? notifications
         : notifications.concat(message),
       doShowNotifications: true,
-    }));
+    }))
   }
 
   /**
@@ -341,12 +340,12 @@ export default class Farmhand extends Component {
   showCowPenPurchasedNotifications(prevState) {
     const {
       state: { purchasedCowPen },
-    } = this;
+    } = this
 
     if (purchasedCowPen !== prevState.purchasedCowPen) {
-      const { cows } = PURCHASEABLE_COW_PENS.get(purchasedCowPen);
+      const { cows } = PURCHASEABLE_COW_PENS.get(purchasedCowPen)
 
-      this.showNotification(COW_PEN_PURCHASED`${cows}`);
+      this.showNotification(COW_PEN_PURCHASED`${cows}`)
     }
   }
 
@@ -356,14 +355,14 @@ export default class Farmhand extends Component {
   showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
     Object.keys(this.state.learnedRecipes).forEach(recipeId => {
       if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
-        this.showNotification(RECIPE_LEARNED`${recipesMap[recipeId]}`);
+        this.showNotification(RECIPE_LEARNED`${recipesMap[recipeId]}`)
       }
-    });
+    })
   }
 
   incrementDay() {
-    const nextDayState = computeStateForNextDay(this.state);
-    const pendingNotifications = [...nextDayState.newDayNotifications];
+    const nextDayState = computeStateForNextDay(this.state)
+    const pendingNotifications = [...nextDayState.newDayNotifications]
 
     // This would be cleaner if setState was called after localForage.setItem,
     // but updating the state first makes for a more responsive user
@@ -391,29 +390,29 @@ export default class Farmhand extends Component {
             ].forEach(notification => this.showNotification(notification))
           )
           .catch(e => {
-            console.error(e);
+            console.error(e)
 
-            this.showNotification(JSON.stringify(e));
-          });
+            this.showNotification(JSON.stringify(e))
+          })
       }
-    );
+    )
   }
 
   goToNextView() {
-    const { viewList } = this;
+    const { viewList } = this
 
     this.setState(({ stageFocus }) => {
-      const currentViewIndex = viewList.indexOf(stageFocus);
+      const currentViewIndex = viewList.indexOf(stageFocus)
 
-      return { stageFocus: viewList[(currentViewIndex + 1) % viewList.length] };
-    });
+      return { stageFocus: viewList[(currentViewIndex + 1) % viewList.length] }
+    })
   }
 
   goToPreviousView() {
-    const { viewList } = this;
+    const { viewList } = this
 
     this.setState(({ stageFocus }) => {
-      const currentViewIndex = viewList.indexOf(stageFocus);
+      const currentViewIndex = viewList.indexOf(stageFocus)
 
       return {
         stageFocus:
@@ -422,8 +421,8 @@ export default class Farmhand extends Component {
               ? viewList.length - 1
               : (currentViewIndex - 1) % viewList.length
           ],
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -431,7 +430,7 @@ export default class Farmhand extends Component {
    * @param {number} [howMany=1]
    */
   purchaseItem(item, howMany = 1) {
-    this.setState(state => purchaseItem(item, howMany, state));
+    this.setState(state => purchaseItem(item, howMany, state))
   }
 
   /**
@@ -439,14 +438,14 @@ export default class Farmhand extends Component {
    */
   purchaseItemMax(item) {
     this.setState(state => {
-      const { money, valueAdjustments } = state;
+      const { money, valueAdjustments } = state
 
       return purchaseItem(
         item,
         Math.floor(money / getAdjustedItemValue(valueAdjustments, item.id)),
         state
-      );
-    });
+      )
+    })
   }
 
   /**
@@ -455,7 +454,7 @@ export default class Farmhand extends Component {
    */
   sellItem({ id }, howMany = 1) {
     if (howMany === 0) {
-      return;
+      return
     }
 
     this.setState(({ inventory, itemsSold, money, valueAdjustments }) =>
@@ -465,29 +464,29 @@ export default class Farmhand extends Component {
         itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
         money: money + getAdjustedItemValue(valueAdjustments, id) * howMany,
       })
-    );
+    )
   }
 
   /**
    * @param {farmhand.item} item
    */
   sellAllOfItem(item) {
-    const { id } = item;
-    const { inventory } = this.state;
-    const itemInInventory = inventory.find(item => item.id === id);
+    const { id } = item
+    const { inventory } = this.state
+    const itemInInventory = inventory.find(item => item.id === id)
 
     if (!itemInInventory) {
-      return;
+      return
     }
 
-    this.sellItem(item, itemInInventory.quantity);
+    this.sellItem(item, itemInInventory.quantity)
   }
 
   /**
    * @param {farmhand.recipe} recipe
    */
   makeRecipe(recipe) {
-    this.setState(state => makeRecipe(state, recipe));
+    this.setState(state => makeRecipe(state, recipe))
   }
 
   /**
@@ -495,21 +494,21 @@ export default class Farmhand extends Component {
    */
   purchaseCow(cow) {
     this.setState(({ cowInventory, money, purchasedCowPen }) => {
-      const cowValue = getCowValue(cow);
+      const cowValue = getCowValue(cow)
       if (
         money < cowValue ||
         purchasedCowPen === 0 ||
         cowInventory.length >= PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows
       ) {
-        return;
+        return
       }
 
       return {
         cowInventory: [...cowInventory, { ...cow }],
         money: money - cowValue,
         cowForSale: generateCow(),
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -517,16 +516,16 @@ export default class Farmhand extends Component {
    */
   sellCow(cow) {
     this.setState(({ cowInventory, money }) => {
-      const cowValue = getCowValue(cow);
+      const cowValue = getCowValue(cow)
 
-      const newCowInventory = [...cowInventory];
-      newCowInventory.splice(cowInventory.indexOf(cow), 1);
+      const newCowInventory = [...cowInventory]
+      newCowInventory.splice(cowInventory.indexOf(cow), 1)
 
       return {
         cowInventory: newCowInventory,
         money: money + cowValue,
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -536,19 +535,19 @@ export default class Farmhand extends Component {
    */
   modifyCow(cowId, fn) {
     this.setState(({ cowInventory }) => {
-      const cow = cowInventory.find(({ id }) => id === cowId);
-      const cowIndex = cowInventory.indexOf(cow);
-      const newCowInventory = [...cowInventory];
+      const cow = cowInventory.find(({ id }) => id === cowId)
+      const cowIndex = cowInventory.indexOf(cow)
+      const newCowInventory = [...cowInventory]
 
       newCowInventory[cowIndex] = {
         ...cow,
         ...fn(cow),
-      };
+      }
 
       return {
         cowInventory: newCowInventory,
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -557,14 +556,14 @@ export default class Farmhand extends Component {
   hugCow(cowId) {
     this.modifyCow(cowId, cow => {
       if (cow.happinessBoostsToday >= MAX_DAILY_COW_HUG_BENEFITS) {
-        return;
+        return
       }
 
       return {
         happiness: Math.min(1, cow.happiness + COW_HUG_BENEFIT),
         happinessBoostsToday: cow.happinessBoostsToday + 1,
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -574,7 +573,7 @@ export default class Farmhand extends Component {
   changeCowName(cowId, newName) {
     this.modifyCow(cowId, cow => ({
       name: newName.slice(0, MAX_ANIMAL_NAME_LENGTH),
-    }));
+    }))
   }
 
   /**
@@ -584,39 +583,39 @@ export default class Farmhand extends Component {
    */
   plantInPlot(x, y, plantableItemId) {
     if (!plantableItemId) {
-      return;
+      return
     }
 
     this.setState(({ field, inventory }) => {
-      const row = field[y];
-      const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId);
+      const row = field[y]
+      const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId)
 
       if (row[x]) {
         // Something is already planted in field[x][y]
-        return;
+        return
       }
 
       const newField = modifyFieldPlotAt(field, x, y, () =>
         getCropFromItemId(finalCropItemId)
-      );
+      )
 
       const updatedInventory = decrementItemFromInventory(
         plantableItemId,
         inventory
-      );
+      )
 
       const selectedItemId = updatedInventory.find(
         ({ id }) => id === plantableItemId
       )
         ? plantableItemId
-        : '';
+        : ''
 
       return {
         field: newField,
         inventory: updatedInventory,
         selectedItemId,
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -625,21 +624,21 @@ export default class Farmhand extends Component {
    */
   fertilizeCrop(x, y) {
     this.setState(({ field, inventory }) => {
-      const row = field[y];
-      const crop = row[x];
+      const row = field[y]
+      const crop = row[x]
 
       if (!crop || crop.type !== itemType.CROP || crop.isFertilized === true) {
-        return;
+        return
       }
 
       const updatedInventory = decrementItemFromInventory(
         FERTILIZER_ITEM_ID,
         inventory
-      );
+      )
 
       const doFertilizersRemain = updatedInventory.some(
         item => item.id === FERTILIZER_ITEM_ID
-      );
+      )
 
       return {
         field: modifyFieldPlotAt(field, x, y, crop => ({
@@ -649,8 +648,8 @@ export default class Farmhand extends Component {
         fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
         inventory: updatedInventory,
         selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -659,25 +658,25 @@ export default class Farmhand extends Component {
    */
   setSprinkler(x, y) {
     this.setState(({ field, hoveredPlotRangeSize, inventory }) => {
-      const plot = field[y][x];
+      const plot = field[y][x]
 
       // Only set sprinklers in empty plots
       if (plot !== null) {
-        return;
+        return
       }
 
       const updatedInventory = decrementItemFromInventory(
         SPRINKLER_ITEM_ID,
         inventory
-      );
+      )
 
       const doSprinklersRemain = updatedInventory.some(
         item => item.id === SPRINKLER_ITEM_ID
-      );
+      )
 
       const newField = modifyFieldPlotAt(field, x, y, () =>
         getPlotContentFromItemId(SPRINKLER_ITEM_ID)
-      );
+      )
 
       return {
         field: newField,
@@ -685,8 +684,8 @@ export default class Farmhand extends Component {
         fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
         inventory: updatedInventory,
         selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -695,33 +694,33 @@ export default class Farmhand extends Component {
    */
   setScarecrow(x, y) {
     this.setState(({ field, inventory }) => {
-      const plot = field[y][x];
+      const plot = field[y][x]
 
       // Only set scarecrows in empty plots
       if (plot !== null) {
-        return;
+        return
       }
 
       const updatedInventory = decrementItemFromInventory(
         SCARECROW_ITEM_ID,
         inventory
-      );
+      )
 
       const doScarecrowsRemain = updatedInventory.some(
         item => item.id === SCARECROW_ITEM_ID
-      );
+      )
 
       const newField = modifyFieldPlotAt(field, x, y, () =>
         getPlotContentFromItemId(SCARECROW_ITEM_ID)
-      );
+      )
 
       return {
         field: newField,
         inventory: updatedInventory,
         fieldMode: doScarecrowsRemain ? SET_SCARECROW : OBSERVE,
         selectedItemId: doScarecrowsRemain ? SCARECROW_ITEM_ID : '',
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -730,22 +729,22 @@ export default class Farmhand extends Component {
    */
   harvestPlot(x, y) {
     this.setState(({ inventory, field }) => {
-      const row = field[y];
-      const crop = row[x];
+      const row = field[y]
+      const crop = row[x]
 
       if (
         !crop ||
         crop.type !== itemType.CROP ||
         getCropLifeStage(crop) !== GROWN
       ) {
-        return;
+        return
       }
 
       return {
         field: removeFieldPlotAt(field, x, y),
         inventory: addItemToInventory(itemsMap[crop.itemId], inventory),
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -754,22 +753,22 @@ export default class Farmhand extends Component {
    */
   clearPlot(x, y) {
     this.setState(({ field, inventory }) => {
-      const plotContent = field[y][x];
+      const plotContent = field[y][x]
 
       if (!plotContent) {
         // Nothing planted in field[x][y]
-        return;
+        return
       }
 
-      const item = itemsMap[plotContent.itemId];
+      const item = itemsMap[plotContent.itemId]
 
       return {
         field: removeFieldPlotAt(field, x, y),
         inventory: item.isReplantable
           ? addItemToInventory(item, inventory)
           : inventory,
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -778,10 +777,10 @@ export default class Farmhand extends Component {
    */
   waterPlot(x, y) {
     this.setState(({ field }) => {
-      const plotContent = field[y][x];
+      const plotContent = field[y][x]
 
       if (!plotContent || plotContent.type !== itemType.CROP) {
-        return;
+        return
       }
 
       return {
@@ -789,14 +788,14 @@ export default class Farmhand extends Component {
           ...crop,
           wasWateredToday: true,
         })),
-      };
-    });
+      }
+    })
   }
 
   waterAllPlots() {
     this.setState(({ field }) => {
-      return { field: getWateredField(field) };
-    });
+      return { field: getWateredField(field) }
+    })
   }
 
   /**
@@ -805,10 +804,10 @@ export default class Farmhand extends Component {
   purchaseField(fieldId) {
     this.setState(({ field, money, purchasedField }) => {
       if (purchasedField >= fieldId) {
-        return;
+        return
       }
 
-      const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId);
+      const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId)
 
       return {
         purchasedField: fieldId,
@@ -820,8 +819,8 @@ export default class Farmhand extends Component {
               .map((_, column) => (field[row] && field[row][column]) || null)
           ),
         money: money - price,
-      };
-    });
+      }
+    })
   }
 
   /**
@@ -830,21 +829,21 @@ export default class Farmhand extends Component {
   purchaseCowPen(cowPenId) {
     this.setState(({ money, purchasedCowPen }) => {
       if (purchasedCowPen >= cowPenId) {
-        return;
+        return
       }
 
       return {
         purchasedCowPen: cowPenId,
         money: money - PURCHASEABLE_COW_PENS.get(cowPenId).price,
-      };
-    });
+      }
+    })
   }
 
   /**
    * @param {farmhand.cow} cow
    */
   selectCow({ id: selectedCowId }) {
-    this.setState({ selectedCowId });
+    this.setState({ selectedCowId })
   }
 
   render() {
@@ -858,7 +857,7 @@ export default class Farmhand extends Component {
       playerInventory,
       playerInventoryQuantities,
       viewList,
-    } = this;
+    } = this
 
     // Bundle up the raw state and the computed state into one object to be
     // passed down through the component tree.
@@ -870,7 +869,7 @@ export default class Farmhand extends Component {
       playerInventory,
       playerInventoryQuantities,
       viewList,
-    };
+    }
 
     return (
       <HotKeys className="hotkeys" keyMap={keyMap} handlers={keyHandlers}>
@@ -919,6 +918,6 @@ export default class Farmhand extends Component {
           </FarmhandContext.Provider>
         </MuiThemeProvider>
       </HotKeys>
-    );
+    )
   }
 }

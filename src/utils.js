@@ -1,11 +1,11 @@
-import Dinero from 'dinero.js';
-import memoize from 'fast-memoize';
+import Dinero from 'dinero.js'
+import memoize from 'fast-memoize'
 
-import fruitNames from './data/fruit-names';
-import { cropIdToTypeMap, itemsMap } from './data/maps';
-import { milk1, milk2, milk3 } from './data/items';
-import { items as itemImages } from './img';
-import { cowColors, cropLifeStage, genders, itemType } from './enums';
+import fruitNames from './data/fruit-names'
+import { cropIdToTypeMap, itemsMap } from './data/maps'
+import { milk1, milk2, milk3 } from './data/items'
+import { items as itemImages } from './img'
+import { cowColors, cropLifeStage, genders, itemType } from './enums'
 import {
   COW_MAXIMUM_AGE_VALUE_DROPOFF,
   COW_MAXIMUM_VALUE_MULTIPLIER,
@@ -19,17 +19,16 @@ import {
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   MALE_COW_WEIGHT_MULTIPLIER,
-} from './constants';
+} from './constants'
 
-const { SEED, GROWING, GROWN } = cropLifeStage;
+const { SEED, GROWING, GROWN } = cropLifeStage
 
-const chooseRandom = list =>
-  list[Math.round(Math.random() * (list.length - 1))];
+const chooseRandom = list => list[Math.round(Math.random() * (list.length - 1))]
 
 /**
  * @returns {string}
  */
-const createUniqueId = () => btoa(Math.random() + Date.now());
+const createUniqueId = () => btoa(Math.random() + Date.now())
 
 /**
  * @param {number} num
@@ -37,7 +36,7 @@ const createUniqueId = () => btoa(Math.random() + Date.now());
  * @param {number} max
  */
 export const clampNumber = (num, min, max) =>
-  num <= min ? min : num >= max ? max : num;
+  num <= min ? min : num >= max ? max : num
 
 /**
  * Based on https://stackoverflow.com/a/14224813/470685
@@ -49,12 +48,12 @@ export const clampNumber = (num, min, max) =>
  * @return {number}
  */
 const scaleNumber = (value, min, max, baseMin, baseMax) =>
-  ((value - min) * (baseMax - baseMin)) / (max - min) + baseMin;
+  ((value - min) * (baseMax - baseMin)) / (max - min) + baseMin
 
 export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
     .fill(undefined)
-    .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null));
+    .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null))
 
 /**
  * @param {number} number
@@ -66,7 +65,7 @@ export const dollarAmount = number =>
     precision: 2,
   })
     .toUnit()
-    .toFixed(2);
+    .toFixed(2)
 
 /**
  * @param {farmhand.item} item
@@ -82,7 +81,7 @@ export const getItemValue = ({ id }, valueAdjustments) =>
         : itemsMap[id].value) * 100
     ),
     precision: 2,
-  }).toUnit();
+  }).toUnit()
 
 /**
  * @param {string} itemId
@@ -95,7 +94,7 @@ export const getCropFromItemId = itemId => ({
   isFertilized: false,
   type: itemType.CROP,
   wasWateredToday: false,
-});
+})
 
 /**
  * @param {string} itemId
@@ -104,14 +103,14 @@ export const getCropFromItemId = itemId => ({
 export const getPlotContentFromItemId = itemId => ({
   itemId,
   type: itemsMap[itemId].type,
-});
+})
 
 /**
  * @param {farmhand.crop} crop
  * @return {string}
  */
 export const getCropId = ({ itemId }) =>
-  cropIdToTypeMap[itemsMap[itemId].cropType];
+  cropIdToTypeMap[itemsMap[itemId].cropType]
 
 /**
  * @param {farmhand.cropTimetable} cropTimetable
@@ -122,7 +121,7 @@ export const getLifeStageRange = memoize(cropTimetable =>
     (acc, stage) => acc.concat(Array(cropTimetable[stage]).fill(stage)),
     []
   )
-);
+)
 
 /**
  * @param {farmhand.crop} crop
@@ -130,12 +129,12 @@ export const getLifeStageRange = memoize(cropTimetable =>
  */
 export const getCropLifeStage = ({ itemId, daysWatered }) =>
   getLifeStageRange(itemsMap[itemId].cropTimetable)[Math.floor(daysWatered)] ||
-  GROWN;
+  GROWN
 
 const cropLifeStageToImageSuffixMap = {
   [SEED]: 'seed',
   [GROWING]: 'growing',
-};
+}
 
 /**
  * @param {farmhand.plotContent} plotContent
@@ -152,7 +151,7 @@ export const getPlotImage = plotContent =>
             }`
           ]
       : itemImages[plotContent.itemId]
-    : null;
+    : null
 
 /**
  * @param {number} rangeSize
@@ -161,9 +160,9 @@ export const getPlotImage = plotContent =>
  * @returns {Array.<Array.<?farmhand.plotContent>>}
  */
 export const getRangeCoords = (rangeSize, centerX, centerY) => {
-  const squareSize = 2 * rangeSize + 1;
-  const rangeStartX = centerX - rangeSize;
-  const rangeStartY = centerY - rangeSize;
+  const squareSize = 2 * rangeSize + 1
+  const rangeStartX = centerX - rangeSize
+  const rangeStartY = centerY - rangeSize
 
   return new Array(squareSize)
     .fill()
@@ -171,8 +170,8 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
       new Array(squareSize)
         .fill()
         .map((_, x) => ({ x: rangeStartX + x, y: rangeStartY + y }))
-    );
-};
+    )
+}
 
 /**
  * @param {Object} valueAdjustments
@@ -180,7 +179,7 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
  * @returns {number}
  */
 export const getAdjustedItemValue = (valueAdjustments, itemId) =>
-  (valueAdjustments[itemId] || 1) * itemsMap[itemId].value;
+  (valueAdjustments[itemId] || 1) * itemsMap[itemId].value
 
 /**
  * Generates a friendly cow.
@@ -188,14 +187,14 @@ export const getAdjustedItemValue = (valueAdjustments, itemId) =>
  * @returns {farmhand.cow}
  */
 export const generateCow = (options = {}) => {
-  const gender = options.gender || chooseRandom(Object.values(genders));
+  const gender = options.gender || chooseRandom(Object.values(genders))
 
   const baseWeight = Math.round(
     COW_STARTING_WEIGHT_BASE *
       (gender === genders.MALE ? MALE_COW_WEIGHT_MULTIPLIER : 1) -
       COW_STARTING_WEIGHT_VARIANCE +
       Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
-  );
+  )
 
   return {
     baseWeight,
@@ -209,8 +208,8 @@ export const generateCow = (options = {}) => {
     name: chooseRandom(fruitNames),
     weightMultiplier: 1,
     ...options,
-  };
-};
+  }
+}
 
 /**
  * @param {farmhand.cow} cow
@@ -218,13 +217,13 @@ export const generateCow = (options = {}) => {
  */
 export const getCowMilkItem = ({ happiness }) => {
   if (happiness < 1 / 3) {
-    return milk1;
+    return milk1
   } else if (happiness < 2 / 3) {
-    return milk2;
+    return milk2
   }
 
-  return milk3;
-};
+  return milk3
+}
 
 /**
  * @param {farmhand.cow} cow
@@ -239,14 +238,14 @@ export const getCowMilkRate = cow =>
         COW_MILK_RATE_SLOWEST,
         COW_MILK_RATE_FASTEST
       )
-    : Infinity;
+    : Infinity
 
 /**
  * @param {farmhand.cow} cow
  * @returns {number}
  */
 export const getCowWeight = ({ baseWeight, weightMultiplier }) =>
-  Math.round(baseWeight * weightMultiplier);
+  Math.round(baseWeight * weightMultiplier)
 
 /**
  * @param {farmhand.cow} cow
@@ -264,7 +263,7 @@ export const getCowValue = cow =>
     ),
     COW_MINIMUM_VALUE_MULTIPLIER,
     COW_MAXIMUM_VALUE_MULTIPLIER
-  );
+  )
 
 /**
  * @param {farmhand.recipe} recipe
@@ -273,11 +272,11 @@ export const getCowValue = cow =>
  */
 export const canMakeRecipe = ({ ingredients }, inventory) => {
   const inventoryQuantityMap = inventory.reduce((acc, { id, quantity }) => {
-    acc[id] = quantity;
-    return acc;
-  }, {});
+    acc[id] = quantity
+    return acc
+  }, {})
 
   return Object.keys(ingredients).every(
     itemId => inventoryQuantityMap[itemId] >= ingredients[itemId]
-  );
-};
+  )
+}

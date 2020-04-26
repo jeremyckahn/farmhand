@@ -1,17 +1,17 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
-import { array, func, object } from 'prop-types';
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
+import { array, func, object } from 'prop-types'
 
-import { canMakeRecipe } from '../../utils';
-import { itemsMap } from '../../data/maps';
-import { dishes } from '../../img';
+import { canMakeRecipe } from '../../utils'
+import { itemsMap } from '../../data/maps'
+import { dishes } from '../../img'
 
-import FarmhandContext from '../../Farmhand.context';
+import FarmhandContext from '../../Farmhand.context'
 
-import './Recipe.sass';
+import './Recipe.sass'
 
 const IngredientsList = ({ recipe: { ingredients, name } }) => (
   <ul {...{ title: `Ingredients for ${name}` }}>
@@ -21,7 +21,7 @@ const IngredientsList = ({ recipe: { ingredients, name } }) => (
       </li>
     ))}
   </ul>
-);
+)
 
 const Recipe = ({
   handleMakeRecipeClick,
@@ -51,13 +51,13 @@ const Recipe = ({
       </Button>
     </CardActions>
   </Card>
-);
+)
 
 Recipe.propTypes = {
   handleMakeRecipeClick: func.isRequired,
   inventory: array.isRequired,
   recipe: object.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -66,5 +66,5 @@ export default function Consumer(props) {
         <Recipe {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

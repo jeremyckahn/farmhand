@@ -7,13 +7,13 @@
  * @returns {Object.<string>}
  */
 export const enumify = keys =>
-  keys.reduce((acc, key) => ({ [key]: key, ...acc }), {});
+  keys.reduce((acc, key) => ({ [key]: key, ...acc }), {})
 
 /**
  * @property farmhand.module:enums.cropType
  * @enum {string}
  */
-export const cropType = enumify(['CARROT', 'PUMPKIN']);
+export const cropType = enumify(['CARROT', 'PUMPKIN'])
 
 /**
  * @property farmhand.module:enums.fieldMode
@@ -28,7 +28,7 @@ export const fieldMode = enumify([
   'SET_SPRINKLER',
   'SET_SCARECROW',
   'WATER',
-]);
+])
 
 /**
  * @property farmhand.module:enums.stageFocusType
@@ -41,13 +41,13 @@ export const stageFocusType = enumify([
   'COW_PEN',
   'KITCHEN',
   'INVENTORY',
-]);
+])
 
 /**
  * @property farmhand.module:enums.cropLifeStage
  * @enum {string}
  */
-export const cropLifeStage = enumify(['SEED', 'GROWING', 'GROWN']);
+export const cropLifeStage = enumify(['SEED', 'GROWING', 'GROWN'])
 
 /**
  * @property farmhand.module:enums.itemType
@@ -61,13 +61,13 @@ export const itemType = enumify([
   'MILK',
   'SCARECROW',
   'SPRINKLER',
-]);
+])
 
 /**
  * @property farmhand.module:enums.genders
  * @enum {string}
  */
-export const genders = enumify(['FEMALE', 'MALE']);
+export const genders = enumify(['FEMALE', 'MALE'])
 
 export const cowColors = enumify([
   'BLUE',
@@ -77,4 +77,4 @@ export const cowColors = enumify([
   'PURPLE',
   'WHITE',
   'YELLOW',
-]);
+])

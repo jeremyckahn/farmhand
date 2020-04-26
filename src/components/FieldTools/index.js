@@ -1,1 +1,1 @@
-export { default } from './FieldTools';
+export { default } from './FieldTools'

@@ -1,11 +1,11 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React from 'react'
+import { shallow } from 'enzyme'
 
-import { stageFocusType } from '../../enums';
+import { stageFocusType } from '../../enums'
 
-import AppBar from './AppBar';
+import AppBar from './AppBar'
 
-let component;
+let component
 
 beforeEach(() => {
   component = shallow(
@@ -19,9 +19,9 @@ beforeEach(() => {
         viewList: [],
       }}
     />
-  );
-});
+  )
+})
 
 it('renders', () => {
-  expect(component).toHaveLength(1);
-});
+  expect(component).toHaveLength(1)
+})

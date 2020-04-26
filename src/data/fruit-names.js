@@ -92,4 +92,4 @@ export default [
   'Watermelon',
   'Yuzu',
   'Zucchini',
-];
+]

@@ -82,11 +82,11 @@
  * the recipe to be made available to the player.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import './index.sass';
-import Farmhand from './Farmhand';
-import 'typeface-francois-one';
+import './index.sass'
+import Farmhand from './Farmhand'
+import 'typeface-francois-one'
 
-ReactDOM.render(<Farmhand />, document.getElementById('root'));
+ReactDOM.render(<Farmhand />, document.getElementById('root'))

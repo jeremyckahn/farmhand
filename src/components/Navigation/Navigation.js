@@ -1,12 +1,12 @@
-import React from 'react';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import { number, func, string } from 'prop-types';
+import React from 'react'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import { number, func, string } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context';
-import { stageFocusType } from '../../enums';
+import FarmhandContext from '../../Farmhand.context'
+import { stageFocusType } from '../../enums'
 
-import './Navigation.sass';
+import './Navigation.sass'
 
 export const Navigation = ({
   dayCount,
@@ -33,14 +33,14 @@ export const Navigation = ({
       <MenuItem value={stageFocusType.INVENTORY}>Inventory (i)</MenuItem>
     </Select>
   </header>
-);
+)
 
 Navigation.propTypes = {
   dayCount: number.isRequired,
   handleViewChange: func.isRequired,
   purchasedCowPen: number.isRequired,
   stageFocus: string.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -49,5 +49,5 @@ export default function Consumer(props) {
         <Navigation {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

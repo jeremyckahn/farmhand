@@ -1,12 +1,12 @@
-import React from 'react';
-import { object } from 'prop-types';
+import React from 'react'
+import { object } from 'prop-types'
 
-import { recipesMap } from '../../data/maps';
-import Recipe from '../Recipe';
+import { recipesMap } from '../../data/maps'
+import Recipe from '../Recipe'
 
-import FarmhandContext from '../../Farmhand.context';
+import FarmhandContext from '../../Farmhand.context'
 
-import './Kitchen.sass';
+import './Kitchen.sass'
 
 const Kitchen = ({ learnedRecipes }) => (
   <div className="Kitchen">
@@ -25,11 +25,11 @@ const Kitchen = ({ learnedRecipes }) => (
       </ul>
     </section>
   </div>
-);
+)
 
 Kitchen.propTypes = {
   learnedRecipes: object.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -38,5 +38,5 @@ export default function Consumer(props) {
         <Kitchen {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

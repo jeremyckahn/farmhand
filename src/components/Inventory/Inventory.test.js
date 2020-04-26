@@ -1,20 +1,20 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React from 'react'
+import { shallow } from 'enzyme'
 
-import Item from '../Item';
-import { testItem } from '../../test-utils';
+import Item from '../Item'
+import { testItem } from '../../test-utils'
 
 import {
   Inventory,
   categoryIds,
   separateItemsIntoCategories,
   sort,
-} from './Inventory';
+} from './Inventory'
 
-jest.mock('../../data/maps');
-jest.mock('../../data/items');
+jest.mock('../../data/maps')
+jest.mock('../../data/items')
 
-let component;
+let component
 
 beforeEach(() => {
   component = shallow(
@@ -24,18 +24,18 @@ beforeEach(() => {
         valueAdjustments: {},
       }}
     />
-  );
-});
+  )
+})
 
 describe('rendering items', () => {
   test('shows the inventory', () => {
-    component.setProps({ items: [testItem({ id: 'sample-item-1' })] });
+    component.setProps({ items: [testItem({ id: 'sample-item-1' })] })
 
-    const li = component.find('li');
-    expect(li).toHaveLength(1);
-    expect(li.find(Item)).toHaveLength(1);
-  });
-});
+    const li = component.find('li')
+    expect(li).toHaveLength(1)
+    expect(li.find(Item)).toHaveLength(1)
+  })
+})
 
 describe('item sorting', () => {
   test('sorts by type and base value', () => {
@@ -51,8 +51,8 @@ describe('item sorting', () => {
       testItem({ id: 'sample-crop-seeds-2', value: 0.5 }),
       testItem({ id: 'sprinkler' }),
       testItem({ id: 'scarecrow' }),
-    ]);
-  });
+    ])
+  })
 
   test('divides into type categories', () => {
     expect(
@@ -77,6 +77,6 @@ describe('item sorting', () => {
       [categoryIds.ANIMAL_PRODUCTS]: [testItem({ id: 'milk-1' })],
       [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
       [categoryIds.DISHES]: [testItem({ id: 'sample-recipe-1' })],
-    });
-  });
-});
+    })
+  })
+})
