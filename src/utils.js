@@ -182,6 +182,13 @@ export const getAdjustedItemValue = (valueAdjustments, itemId) =>
   (valueAdjustments[itemId] || 1) * itemsMap[itemId].value
 
 /**
+ * @param {string} seedItemId
+ * @returns {string}
+ */
+export const getFinalCropItemIdFromSeedItemId = seedItemId =>
+  itemsMap[seedItemId].growsInto
+
+/**
  * @returns {Object}
  */
 export const generateValueAdjustments = () =>

@@ -433,14 +433,6 @@ describe('getFieldToolInventory', () => {
   })
 })
 
-describe('getFinalCropItemIdFromSeedItemId', () => {
-  test('gets "final" crop item id from seed item id', () => {
-    expect(fn.getFinalCropItemIdFromSeedItemId('sample-crop-seeds-1')).toEqual(
-      'sample-crop-1'
-    )
-  })
-})
-
 describe('getPlantableCropInventory', () => {
   let plantableCropInventory
   let inventory

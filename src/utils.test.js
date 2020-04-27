@@ -13,6 +13,7 @@ import {
   getPlotContentFromItemId,
   getPlotImage,
   getRangeCoords,
+  getFinalCropItemIdFromSeedItemId,
 } from './utils'
 import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
@@ -335,6 +336,14 @@ describe('getRangeCoords', () => {
         ],
       ])
     })
+  })
+})
+
+describe('getFinalCropItemIdFromSeedItemId', () => {
+  test('gets "final" crop item id from seed item id', () => {
+    expect(getFinalCropItemIdFromSeedItemId('sample-crop-seeds-1')).toEqual(
+      'sample-crop-1'
+    )
   })
 })
 

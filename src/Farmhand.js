@@ -18,7 +18,6 @@ import {
   computeStateForNextDay,
   decrementItemFromInventory,
   getFieldToolInventory,
-  getFinalCropItemIdFromSeedItemId,
   getPlantableCropInventory,
   getWateredField,
   makeRecipe,
@@ -42,6 +41,7 @@ import {
   getPlotContentFromItemId,
   getRangeCoords,
   getAdjustedItemValue,
+  getFinalCropItemIdFromSeedItemId,
   generateCow,
 } from './utils'
 import shopInventory from './data/shop-inventory'

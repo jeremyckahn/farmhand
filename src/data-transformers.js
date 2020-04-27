@@ -194,13 +194,6 @@ export const processMilkingCows = state => {
 }
 
 /**
- * @param {string} seedItemId
- * @returns {string}
- */
-export const getFinalCropItemIdFromSeedItemId = seedItemId =>
-  itemsMap[seedItemId].growsInto
-
-/**
  * @param {Array.<{ item: farmhand.item }>} inventory
  * @returns {Array.<{ item: farmhand.item }>}
  */
