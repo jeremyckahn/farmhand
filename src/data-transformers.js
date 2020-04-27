@@ -5,6 +5,7 @@ import {
   canMakeRecipe,
   clampNumber,
   generateCow,
+  generateValueAdjustments,
   getCowMilkItem,
   getCowMilkRate,
   getAdjustedItemValue,
@@ -26,8 +27,9 @@ import { RAIN_MESSAGE } from './strings'
 import { MILK_PRODUCED, CROW_ATTACKED } from './templates'
 import { fieldMode, itemType } from './enums'
 
-// TODO: Most of the functions in this file should return a farmhand.state
-// object, and this file should be renamed to reducers.js.
+// TODO: Most or all of the functions in this file that are used externally
+// should return a farmhand.state object, and this file should be renamed to
+// reducers.js.
 
 /**
  * @param {farmhand.state} state
@@ -190,18 +192,6 @@ export const processMilkingCows = state => {
 
   return { ...state, cowInventory, inventory, newDayNotifications }
 }
-
-/**
- * @returns {Object}
- */
-export const getUpdatedValueAdjustments = () =>
-  Object.keys(itemsMap).reduce((acc, key) => {
-    if (itemsMap[key].doesPriceFluctuate) {
-      acc[key] = Math.random() + 0.5
-    }
-
-    return acc
-  }, {})
 
 /**
  * @param {string} seedItemId
@@ -435,7 +425,7 @@ export const computeStateForNextDay = state =>
     cowInventory: computeCowInventoryForNextDay(state),
     dayCount: state.dayCount + 1,
     field: getUpdatedField(state.field),
-    valueAdjustments: getUpdatedValueAdjustments(),
+    valueAdjustments: generateValueAdjustments(),
   })
 
 /**

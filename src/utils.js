@@ -182,6 +182,18 @@ export const getAdjustedItemValue = (valueAdjustments, itemId) =>
   (valueAdjustments[itemId] || 1) * itemsMap[itemId].value
 
 /**
+ * @returns {Object}
+ */
+export const generateValueAdjustments = () =>
+  Object.keys(itemsMap).reduce((acc, key) => {
+    if (itemsMap[key].doesPriceFluctuate) {
+      acc[key] = Math.random() + 0.5
+    }
+
+    return acc
+  }, {})
+
+/**
  * Generates a friendly cow.
  * @param {Object} [options]
  * @returns {farmhand.cow}
