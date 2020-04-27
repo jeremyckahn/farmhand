@@ -29,6 +29,62 @@ import { itemType } from './enums'
 // should return a farmhand.state object, and this file should be renamed to
 // reducers.js.
 
+///////////////////////////////////////////////////////////
+//
+// Local helper functions
+//
+///////////////////////////////////////////////////////////
+
+/**
+ * @param {?farmhand.crop} crop
+ * @returns {?farmhand.crop}
+ */
+export const incrementCropAge = crop =>
+  crop && {
+    ...crop,
+    daysOld: crop.daysOld + 1,
+    daysWatered:
+      crop.daysWatered +
+      (crop.wasWateredToday
+        ? 1 + (crop.isFertilized ? FERTILIZER_BONUS : 0)
+        : 0),
+  }
+
+/**
+ * @param {?farmhand.plotContent} plotContent
+ * @param {boolean} wasWateredToday
+ * @returns {?farmhand.plotContent}
+ */
+const setWasWateredProperty = (plotContent, wasWateredToday) => {
+  if (plotContent === null) {
+    return null
+  }
+
+  return plotContent.type === itemType.CROP
+    ? { ...plotContent, wasWateredToday }
+    : { ...plotContent }
+}
+
+/**
+ * @param {?farmhand.plotContent} plotContent
+ * @returns {?farmhand.plotContent}
+ */
+export const setWasWatered = plotContent =>
+  setWasWateredProperty(plotContent, true)
+
+/**
+ * @param {?farmhand.plotContent} plotContent
+ * @returns {?farmhand.plotContent}
+ */
+export const resetWasWatered = plotContent =>
+  setWasWateredProperty(plotContent, false)
+
+///////////////////////////////////////////////////////////
+//
+// Exported reducers
+//
+///////////////////////////////////////////////////////////
+
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
@@ -190,50 +246,6 @@ export const processMilkingCows = state => {
 
   return { ...state, cowInventory, inventory, newDayNotifications }
 }
-
-/**
- * @param {?farmhand.crop} crop
- * @returns {?farmhand.crop}
- */
-export const incrementCropAge = crop =>
-  crop && {
-    ...crop,
-    daysOld: crop.daysOld + 1,
-    daysWatered:
-      crop.daysWatered +
-      (crop.wasWateredToday
-        ? 1 + (crop.isFertilized ? FERTILIZER_BONUS : 0)
-        : 0),
-  }
-
-/**
- * @param {?farmhand.plotContent} plotContent
- * @param {boolean} wasWateredToday
- * @returns {?farmhand.plotContent}
- */
-const setWasWateredProperty = (plotContent, wasWateredToday) => {
-  if (plotContent === null) {
-    return null
-  }
-
-  return plotContent.type === itemType.CROP
-    ? { ...plotContent, wasWateredToday }
-    : { ...plotContent }
-}
-
-/**
- * @param {?farmhand.plotContent} plotContent
- * @returns {?farmhand.plotContent}
- */
-export const setWasWatered = plotContent =>
-  setWasWateredProperty(plotContent, true)
-
-/**
- * @param {?farmhand.plotContent} plotContent
- * @returns {?farmhand.plotContent}
- */
-export const resetWasWatered = plotContent =>
-  setWasWateredProperty(plotContent, false)
 
 /**
  * @param {farmhand.item} item
