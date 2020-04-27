@@ -17,7 +17,6 @@ import {
   updateLearnedRecipes,
   computeStateForNextDay,
   decrementItemFromInventory,
-  getPlantableCropInventory,
   getWateredField,
   makeRecipe,
   modifyFieldPlotAt,
@@ -93,6 +92,16 @@ export const getFieldToolInventory = memoize(inventory =>
         enablesFieldMode !== fieldMode.PLANT
       )
     })
+    .map(({ id }) => itemsMap[id])
+)
+
+/**
+ * @param {Array.<{ item: farmhand.item }>} inventory
+ * @returns {Array.<{ item: farmhand.item }>}
+ */
+export const getPlantableCropInventory = memoize(inventory =>
+  inventory
+    .filter(({ id }) => itemsMap[id].isPlantableCrop)
     .map(({ id }) => itemsMap[id])
 )
 

@@ -10,7 +10,6 @@ import {
   FERTILIZER_BONUS,
   SCARECROW_ITEM_ID,
 } from './constants'
-import { sampleCropSeedsItem1, sampleFieldTool1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
 import { genders } from './enums'
@@ -415,20 +414,6 @@ describe('computeCowInventoryForNextDay', () => {
       { daysOld: 1, happinessBoostsToday: 0 },
       { daysOld: 6, happiness: 0.5 - COW_HUG_BENEFIT, happinessBoostsToday: 0 },
     ])
-  })
-})
-
-describe('getPlantableCropInventory', () => {
-  let plantableCropInventory
-  let inventory
-
-  beforeEach(() => {
-    inventory = [{ id: 'sample-crop-seeds-1' }, { id: 'sample-item-1' }]
-    plantableCropInventory = fn.getPlantableCropInventory(inventory)
-  })
-
-  test('filters out non-plantable items', () => {
-    expect(plantableCropInventory).toEqual([sampleCropSeedsItem1])
   })
 })
 

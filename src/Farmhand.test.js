@@ -31,6 +31,7 @@ import { recipesMap } from './data/maps'
 import Farmhand, {
   computePlayerInventory,
   getFieldToolInventory,
+  getPlantableCropInventory,
 } from './Farmhand'
 
 jest.mock('localforage')
@@ -125,6 +126,20 @@ describe('private helpers', () => {
 
     test('filters out non-field tool items', () => {
       expect(fieldToolInventory).toEqual([sampleFieldTool1])
+    })
+  })
+
+  describe('getPlantableCropInventory', () => {
+    let plantableCropInventory
+    let inventory
+
+    beforeEach(() => {
+      inventory = [{ id: 'sample-crop-seeds-1' }, { id: 'sample-item-1' }]
+      plantableCropInventory = getPlantableCropInventory(inventory)
+    })
+
+    test('filters out non-plantable items', () => {
+      expect(plantableCropInventory).toEqual([sampleCropSeedsItem1])
     })
   })
 })

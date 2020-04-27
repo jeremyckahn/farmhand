@@ -211,16 +211,6 @@ export const getFieldToolInventory = memoize(inventory =>
 )
 
 /**
- * @param {Array.<{ item: farmhand.item }>} inventory
- * @returns {Array.<{ item: farmhand.item }>}
- */
-export const getPlantableCropInventory = memoize(inventory =>
-  inventory
-    .filter(({ id }) => itemsMap[id].isPlantableCrop)
-    .map(({ id }) => itemsMap[id])
-)
-
-/**
  * @param {?farmhand.crop} crop
  * @returns {?farmhand.crop}
  */
