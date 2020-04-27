@@ -31,7 +31,7 @@ import { fieldMode, itemType } from './enums'
 
 /**
  * @param {farmhand.state} state
- * @return {farmhand.state}
+ * @returns {farmhand.state}
  */
 export const applyRain = state => ({
   ...state,
@@ -41,7 +41,7 @@ export const applyRain = state => ({
 
 /**
  * @param {farmhand.state} state
- * @return {farmhand.state}
+ * @returns {farmhand.state}
  */
 export const applyCrows = state => {
   const { field } = state
@@ -73,7 +73,7 @@ export const applyCrows = state => {
 
 /**
  * @param {farmhand.state} state
- * @return {farmhand.state}
+ * @returns {farmhand.state}
  */
 export const processSprinklers = state => {
   const { field } = state
@@ -121,7 +121,7 @@ export const processSprinklers = state => {
 
 /**
  * @param {farmhand.state} state
- * @return {farmhand.state}
+ * @returns {farmhand.state}
  */
 export const processFeedingCows = state => {
   const cowInventory = [...state.cowInventory]
@@ -168,7 +168,7 @@ export const processFeedingCows = state => {
 
 /**
  * @param {farmhand.state} state
- * @return {farmhand.state}
+ * @returns {farmhand.state}
  */
 export const processMilkingCows = state => {
   const cowInventory = [...state.cowInventory]
@@ -192,7 +192,7 @@ export const processMilkingCows = state => {
 }
 
 /**
- * @return {Object}
+ * @returns {Object}
  */
 export const getUpdatedValueAdjustments = () =>
   Object.keys(itemsMap).reduce((acc, key) => {
@@ -310,7 +310,7 @@ const fieldReducer = (acc, fn) => fn(acc)
 
 /**
  * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @return {Array.<Array.<?farmhand.plotContent>>}
+ * @returns {Array.<Array.<?farmhand.plotContent>>}
  */
 export const getUpdatedField = field =>
   updateField(field, plotContent =>
@@ -332,7 +332,7 @@ export const computeCowInventoryForNextDay = ({ cowInventory }) =>
 
 /**
  * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @return {Array.<Array.<?farmhand.plotContent>>}
+ * @returns {Array.<Array.<?farmhand.plotContent>>}
  */
 export const getWateredField = field => updateField(field, setWasWatered)
 
@@ -341,7 +341,7 @@ export const getWateredField = field => updateField(field, setWasWatered)
  * @param {number} x
  * @param {number} y
  * @param {Function(?farmhand.plotContent)} modifierFn
- * @return {Array.<Array.<?farmhand.plotContent>>}
+ * @returns {Array.<Array.<?farmhand.plotContent>>}
  */
 export const modifyFieldPlotAt = (field, x, y, modifierFn) => {
   const row = [...field[y]]
@@ -357,7 +357,7 @@ export const modifyFieldPlotAt = (field, x, y, modifierFn) => {
  * @param {Array.<Array.<?farmhand.plotContent>>} field
  * @param {number} x
  * @param {number} y
- * @return {Array.<Array.<?farmhand.plotContent>>}
+ * @returns {Array.<Array.<?farmhand.plotContent>>}
  */
 export const removeFieldPlotAt = (field, x, y) =>
   modifyFieldPlotAt(field, x, y, () => null)
@@ -366,7 +366,7 @@ export const removeFieldPlotAt = (field, x, y) =>
  * Invokes a function on every plot in a field.
  * @param {Array.<Array.<?farmhand.plotContent>>} field
  * @param {Function(?farmhand.plotContent)} modifierFn
- * @return {Array.<Array.<?farmhand.plotContent>>}
+ * @returns {Array.<Array.<?farmhand.plotContent>>}
  */
 export const updateField = (field, modifierFn) =>
   field.map(row => row.map(modifierFn))
@@ -410,7 +410,7 @@ const applyChanceEvent = (chancesAndEvents, state) =>
 
 /**
  * @param {farmhand.state} state
- * @return {farmhand.state}
+ * @returns {farmhand.state}
  */
 export const processBuffs = state =>
   applyChanceEvent([[RAIN_CHANCE, applyRain]], state)
@@ -419,7 +419,7 @@ export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state)
 
 /**
  * @param {farmhand.state} state
- * @return {Object} A pared-down version of the provided {farmhand.state} with
+ * @returns {Object} A pared-down version of the provided {farmhand.state} with
  * the changed properties.
  */
 export const computeStateForNextDay = state =>

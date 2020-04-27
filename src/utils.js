@@ -45,7 +45,7 @@ export const clampNumber = (num, min, max) =>
  * @param {number} max Non-standard maximum
  * @param {number} baseMin Standard minimum
  * @param {number} baseMax Standard maximum
- * @return {number}
+ * @returns {number}
  */
 const scaleNumber = (value, min, max, baseMin, baseMax) =>
   ((value - min) * (baseMax - baseMin)) / (max - min) + baseMin
@@ -107,7 +107,7 @@ export const getPlotContentFromItemId = itemId => ({
 
 /**
  * @param {farmhand.crop} crop
- * @return {string}
+ * @returns {string}
  */
 export const getCropId = ({ itemId }) =>
   cropIdToTypeMap[itemsMap[itemId].cropType]
