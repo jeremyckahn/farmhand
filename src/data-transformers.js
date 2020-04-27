@@ -1,5 +1,3 @@
-import memoize from 'fast-memoize'
-
 import { itemsMap, recipesMap } from './data/maps'
 import {
   canMakeRecipe,
@@ -25,7 +23,7 @@ import {
 } from './constants'
 import { RAIN_MESSAGE } from './strings'
 import { MILK_PRODUCED, CROW_ATTACKED } from './templates'
-import { fieldMode, itemType } from './enums'
+import { itemType } from './enums'
 
 // TODO: Most or all of the functions in this file that are used externally
 // should return a farmhand.state object, and this file should be renamed to
