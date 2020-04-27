@@ -7,7 +7,12 @@ import {
   getCropFromItemId,
   getPlotContentFromItemId,
 } from './utils'
-import { sampleItem1, sampleItem2 } from './data/items'
+import {
+  sampleItem1,
+  sampleItem2,
+  sampleFieldTool1,
+  sampleCropSeedsItem1,
+} from './data/items'
 import { testCrop, testItem } from './test-utils'
 import {
   FERTILIZER_ITEM_ID,
@@ -23,7 +28,10 @@ import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 import { fieldMode, genders, stageFocusType } from './enums'
 import { recipesMap } from './data/maps'
-import Farmhand, { computePlayerInventory } from './Farmhand'
+import Farmhand, {
+  computePlayerInventory,
+  getFieldToolInventory,
+} from './Farmhand'
 
 jest.mock('localforage')
 jest.mock('./data/maps')
@@ -102,6 +110,21 @@ describe('private helpers', () => {
           { ...sampleItem1, quantity: 1, value: 2 },
         ])
       })
+    })
+  })
+
+  describe('getFieldToolInventory', () => {
+    let fieldToolInventory
+
+    beforeEach(() => {
+      fieldToolInventory = getFieldToolInventory([
+        sampleFieldTool1,
+        sampleCropSeedsItem1,
+      ])
+    })
+
+    test('filters out non-field tool items', () => {
+      expect(fieldToolInventory).toEqual([sampleFieldTool1])
     })
   })
 })

@@ -418,21 +418,6 @@ describe('computeCowInventoryForNextDay', () => {
   })
 })
 
-describe('getFieldToolInventory', () => {
-  let fieldToolInventory
-
-  beforeEach(() => {
-    fieldToolInventory = fn.getFieldToolInventory([
-      sampleFieldTool1,
-      sampleCropSeedsItem1,
-    ])
-  })
-
-  test('filters out non-field tool items', () => {
-    expect(fieldToolInventory).toEqual([sampleFieldTool1])
-  })
-})
-
 describe('getPlantableCropInventory', () => {
   let plantableCropInventory
   let inventory
