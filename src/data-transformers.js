@@ -230,7 +230,6 @@ export const processMilkingCows = state => {
   const cowInventory = [...state.cowInventory]
   const newDayNotifications = [...state.newDayNotifications]
   const { length: cowInventoryLength } = cowInventory
-  let { inventory } = state
 
   for (let i = 0; i < cowInventoryLength; i++) {
     const cow = cowInventory[i]
@@ -239,12 +238,12 @@ export const processMilkingCows = state => {
       cowInventory[i] = { ...cow, daysSinceMilking: 0 }
 
       const milk = getCowMilkItem(cow)
-      inventory = addItemToInventory({ ...state }, milk).inventory
+      state = addItemToInventory(state, milk)
       newDayNotifications.push(MILK_PRODUCED`${cow}${milk}`)
     }
   }
 
-  return { ...state, cowInventory, inventory, newDayNotifications }
+  return { ...state, cowInventory, newDayNotifications }
 }
 
 /**
