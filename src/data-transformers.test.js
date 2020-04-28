@@ -386,8 +386,8 @@ describe('addItemToInventory', () => {
       fn.addItemToInventory(
         { inventory: [] },
         testItem({ id: 'sample-item-1' })
-      ).inventory
-    ).toEqual([{ id: 'sample-item-1', quantity: 1 }])
+      )
+    ).toMatchObject({ inventory: [{ id: 'sample-item-1', quantity: 1 }] })
   })
 
   test('increments an existing item in the inventory', () => {
@@ -395,13 +395,15 @@ describe('addItemToInventory', () => {
       fn.addItemToInventory(
         { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
         testItem({ id: 'sample-item-1' })
-      ).inventory
-    ).toEqual([
-      testItem({
-        id: 'sample-item-1',
-        quantity: 2,
-      }),
-    ])
+      )
+    ).toMatchObject({
+      inventory: [
+        testItem({
+          id: 'sample-item-1',
+          quantity: 2,
+        }),
+      ],
+    })
   })
 })
 

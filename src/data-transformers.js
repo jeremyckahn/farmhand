@@ -247,9 +247,10 @@ export const processMilkingCows = state => {
 }
 
 /**
+ * @param {farmhand.state} state
  * @param {farmhand.item} item
  * @param {number} [howMany=1]
- * @returns {Array.<{ item: farmhand.item, quantity: number }>}
+ * @returns {farmhand.state}
  */
 export const addItemToInventory = (state, item, howMany = 1) => {
   const { inventory } = state
@@ -284,7 +285,7 @@ export const getUpdatedField = field =>
   )
 
 /**
- * @param {Array.<farmhand.cow>} cowInventory
+ * @param {farmhand.state} state
  * @returns {Array.<farmhand.cow>}
  */
 export const computeCowInventoryForNextDay = ({ cowInventory }) =>
@@ -405,10 +406,10 @@ export const computeStateForNextDay = state =>
   })
 
 /**
+ * @param {farmhand.state} state
  * @param {farmhand.item} item
  * @param {number} [howMany=1]
- * @param {farmhand.state} state
- * @returns {Object}
+ * @returns {farmhand.state}
  */
 export const purchaseItem = (state, item, howMany = 1) => {
   const { money, valueAdjustments } = state
@@ -451,7 +452,7 @@ export const updateLearnedRecipes = state => ({
 /**
  * @param {farmhand.state} state
  * @param {farmhand.recipe} recipe
- * @returns {farmhand.state} state
+ * @returns {farmhand.state}
  */
 export const makeRecipe = (state, recipe) => {
   if (!canMakeRecipe(recipe, state.inventory)) {
