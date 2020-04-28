@@ -288,16 +288,18 @@ const processField = state => ({
 
 /**
  * @param {farmhand.state} state
- * @returns {Array.<farmhand.cow>}
+ * @returns {farmhand.state}
  */
-export const computeCowInventoryForNextDay = ({ cowInventory }) =>
-  cowInventory.map(cow => ({
+export const computeCowInventoryForNextDay = state => ({
+  ...state,
+  cowInventory: state.cowInventory.map(cow => ({
     ...cow,
     daysOld: cow.daysOld + 1,
     daysSinceMilking: cow.daysSinceMilking + 1,
     happiness: Math.max(0, cow.happiness - COW_HUG_BENEFIT),
     happinessBoostsToday: 0,
-  }))
+  })),
+})
 
 /**
  * @param {Array.<Array.<?farmhand.plotContent>>} field
@@ -400,14 +402,14 @@ export const computeStateForNextDay = state =>
     processMilkingCows,
   ].reduce(
     (acc, fn) => fn({ ...acc }),
-    processField({
-      ...state,
-      cowForSale: generateCow(),
-      cowInventory: computeCowInventoryForNextDay(state),
-      dayCount: state.dayCount + 1,
-      // field: processField(state),
-      valueAdjustments: generateValueAdjustments(),
-    })
+    processField(
+      computeCowInventoryForNextDay({
+        ...state,
+        cowForSale: generateCow(),
+        dayCount: state.dayCount + 1,
+        valueAdjustments: generateValueAdjustments(),
+      })
+    )
   )
 
 /**

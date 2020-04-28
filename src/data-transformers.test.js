@@ -416,10 +416,16 @@ describe('computeCowInventoryForNextDay', () => {
           { daysOld: 5, happiness: 0.5, happinessBoostsToday: 3 },
         ],
       })
-    ).toMatchObject([
-      { daysOld: 1, happinessBoostsToday: 0 },
-      { daysOld: 6, happiness: 0.5 - COW_HUG_BENEFIT, happinessBoostsToday: 0 },
-    ])
+    ).toMatchObject({
+      cowInventory: [
+        { daysOld: 1, happinessBoostsToday: 0 },
+        {
+          daysOld: 6,
+          happiness: 0.5 - COW_HUG_BENEFIT,
+          happinessBoostsToday: 0,
+        },
+      ],
+    })
   })
 })
 
