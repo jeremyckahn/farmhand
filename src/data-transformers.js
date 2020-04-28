@@ -230,7 +230,7 @@ export const processMilkingCows = state => {
   const cowInventory = [...state.cowInventory]
   const newDayNotifications = [...state.newDayNotifications]
   const { length: cowInventoryLength } = cowInventory
-  let inventory = [...state.inventory]
+  let { inventory } = state
 
   for (let i = 0; i < cowInventoryLength; i++) {
     const cow = cowInventory[i]
@@ -239,7 +239,7 @@ export const processMilkingCows = state => {
       cowInventory[i] = { ...cow, daysSinceMilking: 0 }
 
       const milk = getCowMilkItem(cow)
-      inventory = addItemToInventory(milk, inventory)
+      inventory = addItemToInventory({ ...state }, milk).inventory
       newDayNotifications.push(MILK_PRODUCED`${cow}${milk}`)
     }
   }
@@ -252,7 +252,8 @@ export const processMilkingCows = state => {
  * @param {number} [howMany=1]
  * @returns {Array.<{ item: farmhand.item, quantity: number }>}
  */
-export const addItemToInventory = (item, inventory, howMany = 1) => {
+export const addItemToInventory = (state, item, howMany = 1) => {
+  const { inventory } = state
   const { id } = item
   const newInventory = [...inventory]
 
@@ -269,7 +270,7 @@ export const addItemToInventory = (item, inventory, howMany = 1) => {
     newInventory.push({ id, quantity: howMany })
   }
 
-  return newInventory
+  return { ...state, inventory: newInventory }
 }
 
 const fieldReducer = (acc, fn) => fn(acc)
@@ -410,26 +411,27 @@ export const computeStateForNextDay = state =>
  * @param {farmhand.state} state
  * @returns {Object}
  */
-export const purchaseItem = (
-  item,
-  howMany = 1,
-  { inventory, money, valueAdjustments }
-) => {
+export const purchaseItem = (state, item, howMany = 1) => {
+  const { money, valueAdjustments } = state
   if (howMany === 0) {
-    return {}
+    return state
   }
 
   const value = getAdjustedItemValue(valueAdjustments, item.id)
   const totalValue = value * howMany
 
   if (totalValue > money) {
-    return {}
+    return state
   }
 
-  return {
-    inventory: addItemToInventory(item, inventory, howMany),
-    money: money - totalValue,
-  }
+  return addItemToInventory(
+    {
+      ...state,
+      money: money - totalValue,
+    },
+    item,
+    howMany
+  )
 }
 
 /**
@@ -467,5 +469,5 @@ export const makeRecipe = (state, recipe) => {
     state.inventory
   )
 
-  return { ...state, inventory: addItemToInventory(recipe, newInventory) }
+  return addItemToInventory({ ...state, inventory: newInventory }, recipe)
 }

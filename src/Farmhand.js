@@ -469,7 +469,7 @@ export default class Farmhand extends Component {
    * @param {number} [howMany=1]
    */
   purchaseItem(item, howMany = 1) {
-    this.setState(state => purchaseItem(item, howMany, state))
+    this.setState(state => purchaseItem(state, item, howMany))
   }
 
   /**
@@ -480,9 +480,9 @@ export default class Farmhand extends Component {
       const { money, valueAdjustments } = state
 
       return purchaseItem(
+        state,
         item,
-        Math.floor(money / getAdjustedItemValue(valueAdjustments, item.id)),
-        state
+        Math.floor(money / getAdjustedItemValue(valueAdjustments, item.id))
       )
     })
   }
@@ -767,7 +767,8 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   harvestPlot(x, y) {
-    this.setState(({ inventory, field }) => {
+    this.setState(state => {
+      const { field } = state
       const row = field[y]
       const crop = row[x]
 
@@ -779,10 +780,13 @@ export default class Farmhand extends Component {
         return
       }
 
-      return {
-        field: removeFieldPlotAt(field, x, y),
-        inventory: addItemToInventory(itemsMap[crop.itemId], inventory),
-      }
+      return addItemToInventory(
+        {
+          ...state,
+          field: removeFieldPlotAt(field, x, y),
+        },
+        itemsMap[crop.itemId]
+      )
     })
   }
 
@@ -791,7 +795,8 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   clearPlot(x, y) {
-    this.setState(({ field, inventory }) => {
+    this.setState(state => {
+      const { field } = state
       const plotContent = field[y][x]
 
       if (!plotContent) {
@@ -801,12 +806,13 @@ export default class Farmhand extends Component {
 
       const item = itemsMap[plotContent.itemId]
 
-      return {
-        field: removeFieldPlotAt(field, x, y),
-        inventory: item.isReplantable
-          ? addItemToInventory(item, inventory)
-          : inventory,
-      }
+      return addItemToInventory(
+        {
+          ...state,
+          field: removeFieldPlotAt(field, x, y),
+        },
+        item
+      )
     })
   }
 

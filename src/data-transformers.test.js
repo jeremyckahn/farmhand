@@ -383,15 +383,19 @@ describe('resetWasWatered', () => {
 describe('addItemToInventory', () => {
   test('creates a new item in the inventory', () => {
     expect(
-      fn.addItemToInventory(testItem({ id: 'sample-item-1' }), [])
+      fn.addItemToInventory(
+        { inventory: [] },
+        testItem({ id: 'sample-item-1' })
+      ).inventory
     ).toEqual([{ id: 'sample-item-1', quantity: 1 }])
   })
 
   test('increments an existing item in the inventory', () => {
     expect(
-      fn.addItemToInventory(testItem({ id: 'sample-item-1' }), [
-        testItem({ id: 'sample-item-1', quantity: 1 }),
-      ])
+      fn.addItemToInventory(
+        { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
+        testItem({ id: 'sample-item-1' })
+      ).inventory
     ).toEqual([
       testItem({
         id: 'sample-item-1',
@@ -508,36 +512,48 @@ describe('purchaseItem', () => {
   describe('howMany === 0', () => {
     test('no-ops', () => {
       expect(
-        fn.purchaseItem(testItem({ id: 'sample-item-1' }), 0, {
-          inventory: [],
-          money: 0,
-          valueAdjustments: { 'sample-item-1': 1 },
-        })
-      ).toEqual({})
+        fn.purchaseItem(
+          {
+            inventory: [],
+            money: 0,
+            valueAdjustments: { 'sample-item-1': 1 },
+          },
+          testItem({ id: 'sample-item-1' }),
+          0
+        )
+      ).toMatchObject({ inventory: [] })
     })
   })
 
   describe('user does not have enough money', () => {
     test('no-ops', () => {
       expect(
-        fn.purchaseItem(testItem({ id: 'sample-item-1' }), 1, {
-          inventory: [],
-          money: 0,
-          valueAdjustments: { 'sample-item-1': 1 },
-        })
-      ).toEqual({})
+        fn.purchaseItem(
+          {
+            inventory: [],
+            money: 0,
+            valueAdjustments: { 'sample-item-1': 1 },
+          },
+          testItem({ id: 'sample-item-1' }),
+          1
+        )
+      ).toMatchObject({ inventory: [] })
     })
   })
 
   describe('user has enough money', () => {
     test('purchases item', () => {
       expect(
-        fn.purchaseItem(testItem({ id: 'sample-item-1' }), 2, {
-          inventory: [],
-          money: 10,
-          valueAdjustments: { 'sample-item-1': 1 },
-        })
-      ).toEqual({
+        fn.purchaseItem(
+          {
+            inventory: [],
+            money: 10,
+            valueAdjustments: { 'sample-item-1': 1 },
+          },
+          testItem({ id: 'sample-item-1' }),
+          2
+        )
+      ).toMatchObject({
         inventory: [{ id: 'sample-item-1', quantity: 2 }],
         money: 8,
       })
