@@ -276,13 +276,15 @@ export const addItemToInventory = (state, item, howMany = 1) => {
 const fieldReducer = (acc, fn) => fn(acc)
 
 /**
- * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @returns {Array.<Array.<?farmhand.plotContent>>}
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
  */
-export const getUpdatedField = field =>
-  updateField(field, plotContent =>
+const processField = state => ({
+  ...state,
+  field: updateField(state.field, plotContent =>
     fieldUpdaters.reduce(fieldReducer, plotContent)
-  )
+  ),
+})
 
 /**
  * @param {farmhand.state} state
@@ -396,14 +398,17 @@ export const computeStateForNextDay = state =>
     processSprinklers,
     processFeedingCows,
     processMilkingCows,
-  ].reduce((acc, fn) => fn({ ...acc }), {
-    ...state,
-    cowForSale: generateCow(),
-    cowInventory: computeCowInventoryForNextDay(state),
-    dayCount: state.dayCount + 1,
-    field: getUpdatedField(state.field),
-    valueAdjustments: generateValueAdjustments(),
-  })
+  ].reduce(
+    (acc, fn) => fn({ ...acc }),
+    processField({
+      ...state,
+      cowForSale: generateCow(),
+      cowInventory: computeCowInventoryForNextDay(state),
+      dayCount: state.dayCount + 1,
+      // field: processField(state),
+      valueAdjustments: generateValueAdjustments(),
+    })
+  )
 
 /**
  * @param {farmhand.state} state
