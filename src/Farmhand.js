@@ -805,14 +805,12 @@ export default class Farmhand extends Component {
       }
 
       const item = itemsMap[plotContent.itemId]
+      const snapshot = {
+        ...state,
+        field: removeFieldPlotAt(field, x, y),
+      }
 
-      return addItemToInventory(
-        {
-          ...state,
-          field: removeFieldPlotAt(field, x, y),
-        },
-        item
-      )
+      return item.isReplantable ? addItemToInventory(snapshot, item) : snapshot
     })
   }
 
