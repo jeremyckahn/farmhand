@@ -79,6 +79,40 @@ export const setWasWatered = plotContent =>
 export const resetWasWatered = plotContent =>
   setWasWateredProperty(plotContent, false)
 
+/**
+ * Invokes a function on every plot in a field.
+ * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @param {Function(?farmhand.plotContent)} modifierFn
+ * @returns {Array.<Array.<?farmhand.plotContent>>}
+ */
+export const updateField = (field, modifierFn) =>
+  field.map(row => row.map(modifierFn))
+
+/**
+ * @param {Array} chancesAndEvents An array of arrays in which the first
+ * element is a number and the second number is a function.
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+const applyChanceEvent = (chancesAndEvents, state) =>
+  chancesAndEvents.reduce(
+    (acc, [chance, fn]) => (Math.random() <= chance ? fn(acc) : acc),
+    state
+  )
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const processBuffs = state =>
+  applyChanceEvent([[RAIN_CHANCE, applyRain]], state)
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state)
+
 ///////////////////////////////////////////////////////////
 //
 // Exported reducers
@@ -272,6 +306,7 @@ export const addItemToInventory = (state, item, howMany = 1) => {
 }
 
 const fieldReducer = (acc, fn) => fn(acc)
+const fieldUpdaters = [incrementCropAge, resetWasWatered]
 
 /**
  * @param {farmhand.state} state
@@ -332,23 +367,13 @@ export const removeFieldPlotAt = (field, x, y) =>
   modifyFieldPlotAt(field, x, y, () => null)
 
 /**
- * Invokes a function on every plot in a field.
- * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @param {Function(?farmhand.plotContent)} modifierFn
- * @returns {Array.<Array.<?farmhand.plotContent>>}
- */
-export const updateField = (field, modifierFn) =>
-  field.map(row => row.map(modifierFn))
-
-/**
+ * @param {farmhand.state} state
  * @param {string} itemId
- * @param {Array.<farmhand.item>} inventory
  * @param {number} [howMany=1]
- * @returns {Array.<farmhand.item>}
+ * @returns {farmhand.state}
  */
 export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
   const inventory = [...state.inventory]
-
   const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId)
 
   if (itemInventoryIndex === -1) {
@@ -368,23 +393,6 @@ export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
 
   return { ...state, inventory }
 }
-
-export const fieldUpdaters = [incrementCropAge, resetWasWatered]
-
-const applyChanceEvent = (chancesAndEvents, state) =>
-  chancesAndEvents.reduce(
-    (acc, [chance, fn]) => (Math.random() <= chance ? fn(acc) : acc),
-    state
-  )
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processBuffs = state =>
-  applyChanceEvent([[RAIN_CHANCE, applyRain]], state)
-
-export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state)
 
 /**
  * @param {farmhand.state} state
