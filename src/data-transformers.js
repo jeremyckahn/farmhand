@@ -123,11 +123,11 @@ export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state)
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-export const applyRain = state => ({
-  ...state,
-  field: getWateredField(state.field),
-  newDayNotifications: [...state.newDayNotifications, RAIN_MESSAGE],
-})
+export const applyRain = state =>
+  waterField({
+    ...state,
+    newDayNotifications: [...state.newDayNotifications, RAIN_MESSAGE],
+  })
 
 /**
  * @param {farmhand.state} state
@@ -335,10 +335,13 @@ export const computeCowInventoryForNextDay = state => ({
 })
 
 /**
- * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @returns {Array.<Array.<?farmhand.plotContent>>}
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
  */
-export const getWateredField = field => updateField(field, setWasWatered)
+export const waterField = state => ({
+  ...state,
+  field: updateField(state.field, setWasWatered),
+})
 
 /**
  * @param {farmhand.state} state

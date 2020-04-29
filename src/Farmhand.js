@@ -17,7 +17,7 @@ import {
   updateLearnedRecipes,
   computeStateForNextDay,
   decrementItemFromInventory,
-  getWateredField,
+  waterField,
   makeRecipe,
   modifyFieldPlotAt,
   purchaseItem,
@@ -839,9 +839,7 @@ export default class Farmhand extends Component {
   }
 
   waterAllPlots() {
-    this.setState(({ field }) => {
-      return { field: getWateredField(field) }
-    })
+    this.setState(state => waterField(state))
   }
 
   /**
