@@ -452,7 +452,7 @@ export const purchaseItem = (state, item, howMany = 1) => {
 
 /**
  * @param {farmhand.state} state
- * @returns {farmhand.state} state
+ * @returns {farmhand.state}
  */
 export const updateLearnedRecipes = state => ({
   ...state,
