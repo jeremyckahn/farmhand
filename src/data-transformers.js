@@ -213,13 +213,11 @@ export const processFeedingCows = state => {
     }
   }
 
-  inventory = decrementItemFromInventory(
+  return decrementItemFromInventory(
+    { ...state, cowInventory, inventory },
     COW_FEED_ITEM_ID,
-    inventory,
     unitsSpent
   )
-
-  return { ...state, cowInventory, inventory }
 }
 
 /**
@@ -348,13 +346,13 @@ export const updateField = (field, modifierFn) =>
  * @param {number} [howMany=1]
  * @returns {Array.<farmhand.item>}
  */
-export const decrementItemFromInventory = (itemId, inventory, howMany = 1) => {
-  inventory = [...inventory]
+export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
+  const inventory = [...state.inventory]
 
   const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId)
 
   if (itemInventoryIndex === -1) {
-    return inventory
+    return state
   }
 
   const { quantity } = inventory[itemInventoryIndex]
@@ -368,7 +366,7 @@ export const decrementItemFromInventory = (itemId, inventory, howMany = 1) => {
     inventory.splice(itemInventoryIndex, 1)
   }
 
-  return inventory
+  return { ...state, inventory }
 }
 
 export const fieldUpdaters = [incrementCropAge, resetWasWatered]
@@ -390,8 +388,7 @@ export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state)
 
 /**
  * @param {farmhand.state} state
- * @returns {Object} A pared-down version of the provided {farmhand.state} with
- * the changed properties.
+ * @returns {farmhand.state}
  */
 export const computeStateForNextDay = state =>
   [
@@ -466,15 +463,16 @@ export const makeRecipe = (state, recipe) => {
     return state
   }
 
-  const newInventory = Object.keys(recipe.ingredients).reduce(
-    (inventory, ingredientId) =>
-      decrementItemFromInventory(
-        ingredientId,
-        inventory,
-        recipe.ingredients[ingredientId]
-      ),
-    state.inventory
+  return addItemToInventory(
+    Object.keys(recipe.ingredients).reduce(
+      (state, ingredientId) =>
+        decrementItemFromInventory(
+          state,
+          ingredientId,
+          recipe.ingredients[ingredientId]
+        ),
+      state
+    ),
+    recipe
   )
-
-  return addItemToInventory({ ...state, inventory: newInventory }, recipe)
 }

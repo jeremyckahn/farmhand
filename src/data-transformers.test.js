@@ -468,49 +468,54 @@ describe('incrementCropAge', () => {
 })
 
 describe('decrementItemFromInventory', () => {
-  let updatedInventory
+  let updatedState
 
   describe('item is not in inventory', () => {
     beforeEach(() => {
-      updatedInventory = fn.decrementItemFromInventory('nonexistent-item', [
-        testItem({ id: 'sample-item-1', quantity: 1 }),
-      ])
+      updatedState = fn.decrementItemFromInventory(
+        { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
+        'nonexistent-item'
+      )
     })
 
     test('no-ops', () => {
-      expect(updatedInventory).toEqual([
-        testItem({ id: 'sample-item-1', quantity: 1 }),
-      ])
+      expect(updatedState).toMatchObject({
+        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+      })
     })
   })
 
   describe('item is in inventory', () => {
     describe('single instance of item in inventory', () => {
       beforeEach(() => {
-        updatedInventory = fn.decrementItemFromInventory('sample-item-1', [
-          testItem({ id: 'sample-item-1', quantity: 1 }),
-        ])
+        updatedState = fn.decrementItemFromInventory(
+          { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
+          'sample-item-1'
+        )
       })
 
       test('removes item from inventory', () => {
-        expect(updatedInventory).toEqual([])
+        expect(updatedState).toMatchObject({ inventory: [] })
       })
     })
 
     describe('multiple instances of item in inventory', () => {
       beforeEach(() => {
-        updatedInventory = fn.decrementItemFromInventory('sample-item-1', [
-          testItem({ id: 'sample-item-1', quantity: 2 }),
-        ])
+        updatedState = fn.decrementItemFromInventory(
+          { inventory: [testItem({ id: 'sample-item-1', quantity: 2 })] },
+          'sample-item-1'
+        )
       })
 
       test('decrements item', () => {
-        expect(updatedInventory).toEqual([
-          testItem({
-            id: 'sample-item-1',
-            quantity: 1,
-          }),
-        ])
+        expect(updatedState).toMatchObject({
+          inventory: [
+            testItem({
+              id: 'sample-item-1',
+              quantity: 1,
+            }),
+          ],
+        })
       })
     })
   })

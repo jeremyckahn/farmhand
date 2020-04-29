@@ -496,14 +496,20 @@ export default class Farmhand extends Component {
       return
     }
 
-    this.setState(({ inventory, itemsSold, money, valueAdjustments }) =>
-      updateLearnedRecipes({
-        ...this.state,
-        inventory: decrementItemFromInventory(id, inventory, howMany),
-        itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
-        money: money + getAdjustedItemValue(valueAdjustments, id) * howMany,
-      })
-    )
+    this.setState(state => {
+      const { itemsSold, money, valueAdjustments } = state
+      return updateLearnedRecipes(
+        decrementItemFromInventory(
+          {
+            ...this.state,
+            itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
+            money: money + getAdjustedItemValue(valueAdjustments, id) * howMany,
+          },
+          id,
+          howMany
+        )
+      )
+    })
   }
 
   /**
@@ -625,7 +631,8 @@ export default class Farmhand extends Component {
       return
     }
 
-    this.setState(({ field, inventory }) => {
+    this.setState(state => {
+      const { field } = state
       const row = field[y]
       const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId)
 
@@ -638,9 +645,9 @@ export default class Farmhand extends Component {
         getCropFromItemId(finalCropItemId)
       )
 
-      const updatedInventory = decrementItemFromInventory(
-        plantableItemId,
-        inventory
+      const { inventory: updatedInventory } = decrementItemFromInventory(
+        state,
+        plantableItemId
       )
 
       const selectedItemId = updatedInventory.find(
@@ -662,7 +669,8 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   fertilizeCrop(x, y) {
-    this.setState(({ field, inventory }) => {
+    this.setState(state => {
+      const { field } = state
       const row = field[y]
       const crop = row[x]
 
@@ -670,9 +678,9 @@ export default class Farmhand extends Component {
         return
       }
 
-      const updatedInventory = decrementItemFromInventory(
-        FERTILIZER_ITEM_ID,
-        inventory
+      const { inventory: updatedInventory } = decrementItemFromInventory(
+        state,
+        FERTILIZER_ITEM_ID
       )
 
       const doFertilizersRemain = updatedInventory.some(
@@ -696,7 +704,8 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   setSprinkler(x, y) {
-    this.setState(({ field, hoveredPlotRangeSize, inventory }) => {
+    this.setState(state => {
+      const { field, hoveredPlotRangeSize } = state
       const plot = field[y][x]
 
       // Only set sprinklers in empty plots
@@ -704,9 +713,9 @@ export default class Farmhand extends Component {
         return
       }
 
-      const updatedInventory = decrementItemFromInventory(
-        SPRINKLER_ITEM_ID,
-        inventory
+      const { inventory: updatedInventory } = decrementItemFromInventory(
+        state,
+        SPRINKLER_ITEM_ID
       )
 
       const doSprinklersRemain = updatedInventory.some(
@@ -732,7 +741,8 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   setScarecrow(x, y) {
-    this.setState(({ field, inventory }) => {
+    this.setState(state => {
+      const { field } = state
       const plot = field[y][x]
 
       // Only set scarecrows in empty plots
@@ -740,9 +750,9 @@ export default class Farmhand extends Component {
         return
       }
 
-      const updatedInventory = decrementItemFromInventory(
-        SCARECROW_ITEM_ID,
-        inventory
+      const { inventory: updatedInventory } = decrementItemFromInventory(
+        state,
+        SCARECROW_ITEM_ID
       )
 
       const doScarecrowsRemain = updatedInventory.some(
