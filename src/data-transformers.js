@@ -358,13 +358,15 @@ export const modifyFieldPlotAt = (field, x, y, modifierFn) => {
 }
 
 /**
- * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @param {farmhand.state} state
  * @param {number} x
  * @param {number} y
- * @returns {Array.<Array.<?farmhand.plotContent>>}
+ * @returns {farmhand.state}
  */
-export const removeFieldPlotAt = (field, x, y) =>
-  modifyFieldPlotAt(field, x, y, () => null)
+export const removeFieldPlotAt = (state, x, y) => ({
+  ...state,
+  field: modifyFieldPlotAt(state.field, x, y, () => null),
+})
 
 /**
  * @param {farmhand.state} state

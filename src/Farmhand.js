@@ -790,13 +790,8 @@ export default class Farmhand extends Component {
         return
       }
 
-      return addItemToInventory(
-        {
-          ...state,
-          field: removeFieldPlotAt(field, x, y),
-        },
-        itemsMap[crop.itemId]
-      )
+      state = removeFieldPlotAt(state, x, y)
+      return addItemToInventory(state, itemsMap[crop.itemId])
     })
   }
 
@@ -815,10 +810,7 @@ export default class Farmhand extends Component {
       }
 
       const item = itemsMap[plotContent.itemId]
-      state = {
-        ...state,
-        field: removeFieldPlotAt(field, x, y),
-      }
+      state = removeFieldPlotAt(state, x, y)
 
       return item.isReplantable ? addItemToInventory(state, item) : state
     })
