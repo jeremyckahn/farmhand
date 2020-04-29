@@ -193,11 +193,11 @@ export const processSprinklers = state => {
           if (plotContent && plotContent.type === itemType.CROP) {
             if (!crops.has(plotContent)) {
               modifiedField = modifyFieldPlotAt(
-                modifiedField,
+                { ...state, field: modifiedField },
                 x,
                 y,
                 setWasWatered
-              )
+              ).field
             }
 
             crops.set(plotContent, { x, y })
@@ -341,20 +341,21 @@ export const computeCowInventoryForNextDay = state => ({
 export const getWateredField = field => updateField(field, setWasWatered)
 
 /**
- * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @param {farmhand.state} state
  * @param {number} x
  * @param {number} y
  * @param {Function(?farmhand.plotContent)} modifierFn
- * @returns {Array.<Array.<?farmhand.plotContent>>}
+ * @returns {farmhand.state}
  */
-export const modifyFieldPlotAt = (field, x, y, modifierFn) => {
+export const modifyFieldPlotAt = (state, x, y, modifierFn) => {
+  const { field } = state
   const row = [...field[y]]
   const plotContent = modifierFn(row[x])
   row[x] = plotContent
   const modifiedField = [...field]
   modifiedField[y] = row
 
-  return modifiedField
+  return { ...state, field: modifiedField }
 }
 
 /**
@@ -363,10 +364,8 @@ export const modifyFieldPlotAt = (field, x, y, modifierFn) => {
  * @param {number} y
  * @returns {farmhand.state}
  */
-export const removeFieldPlotAt = (state, x, y) => ({
-  ...state,
-  field: modifyFieldPlotAt(state.field, x, y, () => null),
-})
+export const removeFieldPlotAt = (state, x, y) =>
+  modifyFieldPlotAt(state, x, y, () => null)
 
 /**
  * @param {farmhand.state} state

@@ -641,7 +641,7 @@ export default class Farmhand extends Component {
         return
       }
 
-      const newField = modifyFieldPlotAt(field, x, y, () =>
+      const { field: newField } = modifyFieldPlotAt(state, x, y, () =>
         getCropFromItemId(finalCropItemId)
       )
 
@@ -687,11 +687,13 @@ export default class Farmhand extends Component {
         item => item.id === FERTILIZER_ITEM_ID
       )
 
+      state = modifyFieldPlotAt(state, x, y, crop => ({
+        ...crop,
+        isFertilized: true,
+      }))
+
       return {
-        field: modifyFieldPlotAt(field, x, y, crop => ({
-          ...crop,
-          isFertilized: true,
-        })),
+        ...state,
         fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
         inventory: updatedInventory,
         selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
@@ -722,12 +724,12 @@ export default class Farmhand extends Component {
         item => item.id === SPRINKLER_ITEM_ID
       )
 
-      const newField = modifyFieldPlotAt(field, x, y, () =>
+      state = modifyFieldPlotAt(state, x, y, () =>
         getPlotContentFromItemId(SPRINKLER_ITEM_ID)
       )
 
       return {
-        field: newField,
+        ...state,
         hoveredPlotRangeSize: doSprinklersRemain ? hoveredPlotRangeSize : 0,
         fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
         inventory: updatedInventory,
@@ -759,12 +761,12 @@ export default class Farmhand extends Component {
         item => item.id === SCARECROW_ITEM_ID
       )
 
-      const newField = modifyFieldPlotAt(field, x, y, () =>
+      state = modifyFieldPlotAt(state, x, y, () =>
         getPlotContentFromItemId(SCARECROW_ITEM_ID)
       )
 
       return {
-        field: newField,
+        ...state,
         inventory: updatedInventory,
         fieldMode: doScarecrowsRemain ? SET_SCARECROW : OBSERVE,
         selectedItemId: doScarecrowsRemain ? SCARECROW_ITEM_ID : '',
@@ -821,19 +823,18 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   waterPlot(x, y) {
-    this.setState(({ field }) => {
+    this.setState(state => {
+      const { field } = state
       const plotContent = field[y][x]
 
       if (!plotContent || plotContent.type !== itemType.CROP) {
         return
       }
 
-      return {
-        field: modifyFieldPlotAt(field, x, y, crop => ({
-          ...crop,
-          wasWateredToday: true,
-        })),
-      }
+      return modifyFieldPlotAt(state, x, y, crop => ({
+        ...crop,
+        wasWateredToday: true,
+      }))
     })
   }
 
