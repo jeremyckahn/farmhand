@@ -474,16 +474,15 @@ export const makeRecipe = (state, recipe) => {
     return state
   }
 
-  return addItemToInventory(
-    Object.keys(recipe.ingredients).reduce(
-      (state, ingredientId) =>
-        decrementItemFromInventory(
-          state,
-          ingredientId,
-          recipe.ingredients[ingredientId]
-        ),
-      state
-    ),
-    recipe
+  state = Object.keys(recipe.ingredients).reduce(
+    (state, ingredientId) =>
+      decrementItemFromInventory(
+        state,
+        ingredientId,
+        recipe.ingredients[ingredientId]
+      ),
+    state
   )
+
+  return addItemToInventory(state, recipe)
 }
