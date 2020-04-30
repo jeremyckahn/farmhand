@@ -648,15 +648,11 @@ export default class Farmhand extends Component {
 
       state = decrementItemFromInventory(state, plantableItemId)
 
-      const selectedItemId = state.inventory.find(
-        ({ id }) => id === plantableItemId
-      )
-        ? plantableItemId
-        : ''
-
       return {
         ...state,
-        selectedItemId,
+        selectedItemId: state.inventory.find(({ id }) => id === plantableItemId)
+          ? plantableItemId
+          : '',
       }
     })
   }
@@ -733,8 +729,7 @@ export default class Farmhand extends Component {
    */
   setScarecrow(x, y) {
     this.setState(state => {
-      const { field } = state
-      const plot = field[y][x]
+      const plot = state.field[y][x]
 
       // Only set scarecrows in empty plots
       if (plot !== null) {
@@ -765,8 +760,7 @@ export default class Farmhand extends Component {
    */
   harvestPlot(x, y) {
     this.setState(state => {
-      const { field } = state
-      const row = field[y]
+      const row = state.field[y]
       const crop = row[x]
 
       if (
@@ -788,11 +782,10 @@ export default class Farmhand extends Component {
    */
   clearPlot(x, y) {
     this.setState(state => {
-      const { field } = state
-      const plotContent = field[y][x]
+      const plotContent = state.field[y][x]
 
       if (!plotContent) {
-        // Nothing planted in field[x][y]
+        // Nothing planted in state.field[x][y]
         return
       }
 
@@ -809,8 +802,7 @@ export default class Farmhand extends Component {
    */
   waterPlot(x, y) {
     this.setState(state => {
-      const { field } = state
-      const plotContent = field[y][x]
+      const plotContent = state.field[y][x]
 
       if (!plotContent || plotContent.type !== itemType.CROP) {
         return
