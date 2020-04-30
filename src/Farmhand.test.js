@@ -302,24 +302,6 @@ describe('instance methods', () => {
     })
   })
 
-  describe('showNotification', () => {
-    test('sets notification state', () => {
-      component.setState({ notifications: [] })
-      component.instance().showNotification('foo')
-      const { notifications, doShowNotifications } = component.state()
-      expect(notifications).toEqual(['foo'])
-      expect(doShowNotifications).toEqual(true)
-    })
-
-    test('does not show redundant notifications', () => {
-      component.setState({ notifications: [] })
-      component.instance().showNotification('foo')
-      component.instance().showNotification('foo')
-      const { notifications } = component.state()
-      expect(notifications).toEqual(['foo'])
-    })
-  })
-
   describe('showCowPenPurchasedNotifications', () => {
     describe('cow pen purchasing', () => {
       test('does show notification', () => {

@@ -20,6 +20,7 @@ import {
   modifyFieldPlotAt,
   purchaseItem,
   removeFieldPlotAt,
+  showNotification,
   updateLearnedRecipes,
   waterField,
 } from './reducers'
@@ -364,13 +365,7 @@ export default class Farmhand extends Component {
    * @param {string} message
    */
   showNotification(message) {
-    this.setState(({ notifications }) => ({
-      // Don't show redundant notifications
-      notifications: notifications.includes(message)
-        ? notifications
-        : notifications.concat(message),
-      doShowNotifications: true,
-    }))
+    this.setState(state => showNotification(state, message))
   }
 
   /**

@@ -626,3 +626,21 @@ describe('makeRecipe', () => {
     })
   })
 })
+
+describe('showNotification', () => {
+  test('sets notification state', () => {
+    const { notifications, doShowNotifications } = fn.showNotification(
+      { notifications: [] },
+      'foo'
+    )
+    expect(notifications).toEqual(['foo'])
+    expect(doShowNotifications).toEqual(true)
+  })
+
+  test('does not show redundant notifications', () => {
+    const state = fn.showNotification({ notifications: [] }, 'foo')
+
+    const { notifications } = fn.showNotification(state, 'foo')
+    expect(notifications).toEqual(['foo'])
+  })
+})

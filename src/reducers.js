@@ -481,3 +481,16 @@ export const makeRecipe = (state, recipe) => {
 
   return addItemToInventory(state, recipe)
 }
+
+export const showNotification = (state, message) => {
+  const { notifications } = state
+
+  return {
+    ...state,
+    // Don't show redundant notifications
+    notifications: notifications.includes(message)
+      ? notifications
+      : notifications.concat(message),
+    doShowNotifications: true,
+  }
+}
