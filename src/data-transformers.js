@@ -285,24 +285,23 @@ export const processMilkingCows = state => {
  * @returns {farmhand.state}
  */
 export const addItemToInventory = (state, item, howMany = 1) => {
-  const { inventory } = state
   const { id } = item
-  const newInventory = [...inventory]
+  const inventory = [...state.inventory]
 
   const currentItemSlot = inventory.findIndex(({ id: itemId }) => id === itemId)
 
   if (~currentItemSlot) {
     const currentItem = inventory[currentItemSlot]
 
-    newInventory[currentItemSlot] = {
+    inventory[currentItemSlot] = {
       ...currentItem,
       quantity: currentItem.quantity + howMany,
     }
   } else {
-    newInventory.push({ id, quantity: howMany })
+    inventory.push({ id, quantity: howMany })
   }
 
-  return { ...state, inventory: newInventory }
+  return { ...state, inventory }
 }
 
 const fieldReducer = (acc, fn) => fn(acc)
