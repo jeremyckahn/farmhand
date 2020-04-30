@@ -446,6 +446,28 @@ export const purchaseItem = (state, item, howMany = 1) => {
 
 /**
  * @param {farmhand.state} state
+ * @param {farmhand.item} item
+ * @param {number} [howMany=1]
+ * @returns {farmhand.state}
+ */
+export const sellItem = (state, { id }, howMany = 1) => {
+  const { itemsSold, money, valueAdjustments } = state
+
+  state = decrementItemFromInventory(
+    {
+      ...state,
+      itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
+      money: money + getAdjustedItemValue(valueAdjustments, id) * howMany,
+    },
+    id,
+    howMany
+  )
+
+  return updateLearnedRecipes(state)
+}
+
+/**
+ * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
 export const updateLearnedRecipes = state => ({

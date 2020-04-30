@@ -20,8 +20,8 @@ import {
   modifyFieldPlotAt,
   purchaseItem,
   removeFieldPlotAt,
+  sellItem,
   showNotification,
-  updateLearnedRecipes,
   waterField,
 } from './reducers'
 import AppBar from './components/AppBar'
@@ -486,26 +486,12 @@ export default class Farmhand extends Component {
    * @param {farmhand.item} item
    * @param {number} [howMany=1]
    */
-  sellItem({ id }, howMany = 1) {
+  sellItem(item, howMany = 1) {
     if (howMany === 0) {
       return
     }
 
-    this.setState(state => {
-      const { itemsSold, money, valueAdjustments } = state
-
-      state = decrementItemFromInventory(
-        {
-          ...this.state,
-          itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
-          money: money + getAdjustedItemValue(valueAdjustments, id) * howMany,
-        },
-        id,
-        howMany
-      )
-
-      return updateLearnedRecipes(state)
-    })
+    this.setState(state => sellItem(state, item, howMany))
   }
 
   /**

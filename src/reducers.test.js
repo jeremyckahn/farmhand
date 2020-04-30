@@ -644,3 +644,36 @@ describe('showNotification', () => {
     expect(notifications).toEqual(['foo'])
   })
 })
+
+describe('sellItem', () => {
+  test('sells item', () => {
+    const state = fn.sellItem(
+      {
+        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+        itemsSold: {},
+        money: 100,
+        valueAdjustments: { 'sample-item-1': 1 },
+      },
+      testItem({ id: 'sample-item-1' })
+    )
+
+    expect(state.inventory).toEqual([])
+    expect(state.money).toEqual(101)
+    expect(state.itemsSold).toEqual({ 'sample-item-1': 1 })
+  })
+
+  test('updates learnedRecipes', () => {
+    const { learnedRecipes } = fn.sellItem(
+      {
+        inventory: [testItem({ id: 'sample-item-1', quantity: 3 })],
+        itemsSold: {},
+        money: 100,
+        valueAdjustments: { 'sample-item-1': 1 },
+      },
+      testItem({ id: 'sample-item-1' }),
+      3
+    )
+
+    expect(learnedRecipes['sample-recipe-1']).toBeTruthy()
+  })
+})
