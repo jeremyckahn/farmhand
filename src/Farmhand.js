@@ -14,15 +14,15 @@ import FarmhandContext from './Farmhand.context'
 import eventHandlers from './event-handlers'
 import {
   addItemToInventory,
-  updateLearnedRecipes,
   computeStateForNextDay,
   decrementItemFromInventory,
-  waterField,
   makeRecipe,
   modifyFieldPlotAt,
   purchaseItem,
   removeFieldPlotAt,
-} from './data-transformers'
+  updateLearnedRecipes,
+  waterField,
+} from './reducers'
 import AppBar from './components/AppBar'
 import Navigation from './components/Navigation'
 import ContextPane from './components/ContextPane'
@@ -134,7 +134,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  */
 
 export default class Farmhand extends Component {
-  // TODO: Move as much of the logic in this class to ./data-transformers.js as
+  // TODO: Move as much of the logic in this class to ./reducers.js as
   // possible.
 
   // Bind event handlers

@@ -14,7 +14,7 @@ import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
 import { genders } from './enums'
 import { generateCow, getCowMilkItem, getPlotContentFromItemId } from './utils'
-import * as fn from './data-transformers'
+import * as fn from './reducers'
 
 jest.mock('localforage')
 jest.mock('./data/maps')
@@ -290,7 +290,7 @@ describe('processBuffs', () => {
           RAIN_CHANCE: 1,
         }))
 
-        const { processBuffs } = jest.requireActual('./data-transformers')
+        const { processBuffs } = jest.requireActual('./reducers')
         const state = processBuffs({
           field: [[testCrop()]],
           newDayNotifications: [],
@@ -323,7 +323,7 @@ describe('processNerfs', () => {
           CROW_CHANCE: 1,
         }))
 
-        const { processNerfs } = jest.requireActual('./data-transformers')
+        const { processNerfs } = jest.requireActual('./reducers')
         const state = processNerfs({
           field: [[testCrop({ itemId: 'sample-crop-1' })]],
           newDayNotifications: [],
@@ -343,7 +343,7 @@ describe('processNerfs', () => {
             SCARECROW_ITEM_ID: 'scarecrow',
           }))
 
-          const { processNerfs } = jest.requireActual('./data-transformers')
+          const { processNerfs } = jest.requireActual('./reducers')
           const state = processNerfs({
             field: [
               [

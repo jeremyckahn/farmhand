@@ -25,10 +25,6 @@ import { RAIN_MESSAGE } from './strings'
 import { MILK_PRODUCED, CROW_ATTACKED } from './templates'
 import { itemType } from './enums'
 
-// TODO: Most or all of the functions in this file that are used externally
-// should return a farmhand.state object, and this file should be renamed to
-// reducers.js.
-
 ///////////////////////////////////////////////////////////
 //
 // Local helper functions
