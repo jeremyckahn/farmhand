@@ -11,6 +11,8 @@ import { enumify, itemType } from '../../enums'
 
 import './Inventory.sass'
 
+// TODO: There needs to be an inventory section for grown crops.
+
 const {
   COW_FEED,
   CROP,
