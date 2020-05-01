@@ -16,6 +16,7 @@ import {
   addItemToInventory,
   computeStateForNextDay,
   decrementItemFromInventory,
+  fertilizeCrop,
   makeRecipe,
   modifyCow,
   modifyFieldPlotAt,
@@ -48,7 +49,6 @@ import { itemsMap, recipesMap } from './data/maps'
 import { cropLifeStage, fieldMode, itemType, stageFocusType } from './enums'
 import {
   COW_HUG_BENEFIT,
-  FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   PURCHASEABLE_COW_PENS,
@@ -62,7 +62,7 @@ import { PROGRESS_SAVED_MESSAGE } from './strings'
 import './Farmhand.sass'
 
 const { GROWN } = cropLifeStage
-const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
+const { OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
 
@@ -583,32 +583,7 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   fertilizeCrop(x, y) {
-    this.setState(state => {
-      const { field } = state
-      const row = field[y]
-      const crop = row[x]
-
-      if (!crop || crop.type !== itemType.CROP || crop.isFertilized === true) {
-        return
-      }
-
-      state = decrementItemFromInventory(state, FERTILIZER_ITEM_ID)
-
-      const doFertilizersRemain = state.inventory.some(
-        item => item.id === FERTILIZER_ITEM_ID
-      )
-
-      state = modifyFieldPlotAt(state, x, y, crop => ({
-        ...crop,
-        isFertilized: true,
-      }))
-
-      return {
-        ...state,
-        fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
-        selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
-      }
-    })
+    this.setState(state => fertilizeCrop(state, x, y))
   }
 
   /**

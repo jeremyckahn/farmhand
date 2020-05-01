@@ -20,6 +20,7 @@ import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   CROW_CHANCE,
   FERTILIZER_BONUS,
+  FERTILIZER_ITEM_ID,
   PURCHASEABLE_COW_PENS,
   RAIN_CHANCE,
   SCARECROW_ITEM_ID,
@@ -27,7 +28,9 @@ import {
 } from './constants'
 import { RAIN_MESSAGE } from './strings'
 import { MILK_PRODUCED, CROW_ATTACKED } from './templates'
-import { itemType } from './enums'
+import { fieldMode, itemType } from './enums'
+
+const { FERTILIZE, OBSERVE } = fieldMode
 
 ///////////////////////////////////////////////////////////
 //
@@ -621,5 +624,38 @@ export const plantInPlot = (state, x, y, plantableItemId) => {
     selectedItemId: state.inventory.find(({ id }) => id === plantableItemId)
       ? plantableItemId
       : '',
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} x
+ * @param {number} y
+ * @returns {farmhand.state}
+ */
+export const fertilizeCrop = (state, x, y) => {
+  const { field } = state
+  const row = field[y]
+  const crop = row[x]
+
+  if (!crop || crop.type !== itemType.CROP || crop.isFertilized === true) {
+    return state
+  }
+
+  state = decrementItemFromInventory(state, FERTILIZER_ITEM_ID)
+
+  const doFertilizersRemain = state.inventory.some(
+    item => item.id === FERTILIZER_ITEM_ID
+  )
+
+  state = modifyFieldPlotAt(state, x, y, crop => ({
+    ...crop,
+    isFertilized: true,
+  }))
+
+  return {
+    ...state,
+    fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
+    selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
   }
 }

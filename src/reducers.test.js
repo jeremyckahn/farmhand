@@ -8,12 +8,13 @@ import {
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   FERTILIZER_BONUS,
+  FERTILIZER_ITEM_ID,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
 } from './constants'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
-import { genders } from './enums'
+import { fieldMode, genders } from './enums'
 import {
   generateCow,
   getCowMilkItem,
@@ -838,6 +839,75 @@ describe('plantInPlot', () => {
       )
 
       expect(state.selectedItemId).toEqual('')
+    })
+  })
+})
+
+describe('fertilizeCrop', () => {
+  describe('non-crop plotContent', () => {
+    test('no-ops', () => {
+      const oldState = {
+        field: [[getPlotContentFromItemId('sprinkler')]],
+      }
+      const state = fn.fertilizeCrop(oldState, 0, 0)
+      expect(state).toBe(oldState)
+    })
+  })
+
+  describe('unfertilized crops', () => {
+    describe('happy path', () => {
+      test('fertilizes crop', () => {
+        const state = fn.fertilizeCrop(
+          {
+            field: [[testCrop({ itemId: 'sample-crop-1' })]],
+            inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+            selectedItemId: FERTILIZER_ITEM_ID,
+          },
+          0,
+          0
+        )
+
+        expect(state.field[0][0]).toEqual(
+          testCrop({ itemId: 'sample-crop-1', isFertilized: true })
+        )
+        expect(state.inventory).toEqual([])
+      })
+    })
+
+    describe('FERTILIZE field mode updating', () => {
+      describe('multiple fertilizer units remaining', () => {
+        beforeEach(() => {})
+
+        test('does not change fieldMode', () => {
+          const state = fn.fertilizeCrop(
+            {
+              field: [[testCrop({ itemId: 'sample-crop-1' })]],
+              inventory: [testItem({ id: 'fertilizer', quantity: 2 })],
+            },
+            0,
+            0
+          )
+
+          expect(state.fieldMode).toBe(fieldMode.FERTILIZE)
+          expect(state.selectedItemId).toBe('fertilizer')
+        })
+      })
+
+      describe('one fertilizer unit remaining', () => {
+        test('changes fieldMode to OBSERVE', () => {
+          const state = fn.fertilizeCrop(
+            {
+              field: [[testCrop({ itemId: 'sample-crop-1' })]],
+              inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+            },
+            0,
+            0
+          )
+
+          expect(state.fieldMode).toBe(fieldMode.OBSERVE)
+          expect(state.selectedItemId).toBe('')
+        })
+      })
     })
   })
 })

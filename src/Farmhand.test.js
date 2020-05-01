@@ -10,7 +10,6 @@ import {
 } from './data/items'
 import { testCrop, testItem } from './test-utils'
 import {
-  FERTILIZER_ITEM_ID,
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
   MAX_ANIMAL_NAME_LENGTH,
@@ -574,84 +573,6 @@ describe('instance methods', () => {
 
       test('clears the plot', () => {
         expect(component.state().field[0][0]).toBe(null)
-      })
-    })
-  })
-
-  describe('fertilizeCrop', () => {
-    describe('non-crop plotContent', () => {
-      test('no-ops', () => {
-        component.setState({
-          field: [[getPlotContentFromItemId('sprinkler')]],
-        })
-        const oldState = component.state()
-        component.instance().fertilizeCrop(0, 0)
-        const newState = component.state()
-        expect(newState).toEqual(oldState)
-      })
-    })
-
-    describe('unfertilized crops', () => {
-      describe('happy path', () => {
-        beforeEach(() => {
-          component.setState({
-            field: [[testCrop({ itemId: 'sample-crop-1' })]],
-            inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
-            selectedItemId: FERTILIZER_ITEM_ID,
-          })
-
-          component.instance().fertilizeCrop(0, 0)
-        })
-
-        test('fertilizes crop', () => {
-          expect(component.state().field[0][0]).toEqual(
-            testCrop({ itemId: 'sample-crop-1', isFertilized: true })
-          )
-        })
-
-        test('decrements fertilizer from inventory', () => {
-          expect(component.state().inventory).toEqual([])
-        })
-      })
-
-      describe('FERTILIZE field mode updating', () => {
-        describe('multiple fertilizer units remaining', () => {
-          beforeEach(() => {
-            component.setState({
-              field: [[testCrop({ itemId: 'sample-crop-1' })]],
-              inventory: [testItem({ id: 'fertilizer', quantity: 2 })],
-            })
-
-            component.instance().fertilizeCrop(0, 0)
-          })
-
-          test('does not change fieldMode', () => {
-            expect(component.state().fieldMode).toBe(fieldMode.FERTILIZE)
-          })
-
-          test('does not change selectedItemId', () => {
-            expect(component.state().selectedItemId).toBe('fertilizer')
-          })
-        })
-
-        describe('one fertilizer unit remaining', () => {
-          beforeEach(() => {
-            component.setState({
-              field: [[testCrop({ itemId: 'sample-crop-1' })]],
-              inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
-            })
-
-            component.instance().fertilizeCrop(0, 0)
-          })
-
-          test('changes fieldMode to OBSERVE', () => {
-            expect(component.state().fieldMode).toBe(fieldMode.OBSERVE)
-          })
-
-          test('resets selectedItemId', () => {
-            expect(component.state().selectedItemId).toBe('')
-          })
-        })
       })
     })
   })
