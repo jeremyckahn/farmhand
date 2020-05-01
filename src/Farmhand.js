@@ -37,7 +37,6 @@ import {
   createNewField,
   getCropFromItemId,
   getCropLifeStage,
-  getCowValue,
   getItemValue,
   getPlotContentFromItemId,
   getRangeCoords,

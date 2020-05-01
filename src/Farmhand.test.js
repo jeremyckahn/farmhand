@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 
 import {
   generateCow,
-  getCowValue,
   getCropFromItemId,
   getPlotContentFromItemId,
 } from './utils'
@@ -26,7 +25,7 @@ import {
 } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
-import { fieldMode, genders, stageFocusType } from './enums'
+import { fieldMode, stageFocusType } from './enums'
 import { recipesMap } from './data/maps'
 import Farmhand, {
   computePlayerInventory,
