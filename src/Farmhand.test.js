@@ -465,31 +465,6 @@ describe('instance methods', () => {
     })
   })
 
-  describe('sellCow', () => {
-    const cow = Object.freeze({
-      baseWeight: 1000,
-      gender: genders.FEMALE,
-      name: 'cow',
-    })
-
-    beforeEach(() => {
-      component.setState({
-        cowInventory: [cow],
-        money: 0,
-      })
-
-      component.instance().sellCow(cow)
-    })
-
-    test('removes cow from inventory', () => {
-      expect(component.state().cowInventory).not.toContain(cow)
-    })
-
-    test('adds value of cow to player money', () => {
-      expect(component.state().money).toEqual(getCowValue(cow))
-    })
-  })
-
   describe('changeCowName', () => {
     test('updates cow name', () => {
       const cow = generateCow()

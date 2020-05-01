@@ -762,3 +762,24 @@ describe('purchaseCow', () => {
     })
   })
 })
+
+describe('sellCow', () => {
+  const cow = Object.freeze({
+    baseWeight: 1000,
+    gender: genders.FEMALE,
+    name: 'cow',
+  })
+
+  test('sells cow', () => {
+    const { cowInventory, money } = fn.sellCow(
+      {
+        cowInventory: [cow],
+        money: 0,
+      },
+      cow
+    )
+
+    expect(cowInventory).not.toContain(cow)
+    expect(money).toEqual(getCowValue(cow))
+  })
+})

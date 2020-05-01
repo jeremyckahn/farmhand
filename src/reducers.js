@@ -506,6 +506,11 @@ export const makeRecipe = (state, recipe) => {
   return addItemToInventory(state, recipe)
 }
 
+/**
+ * @param {farmhand.state} state
+ * @param {string} message
+ * @returns {farmhand.state}
+ */
 export const showNotification = (state, message) => {
   const { notifications } = state
 
@@ -519,6 +524,11 @@ export const showNotification = (state, message) => {
   }
 }
 
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.cow} cow
+ * @returns {farmhand.state}
+ */
 export const purchaseCow = (state, cow) => {
   const { cowInventory, money, purchasedCowPen } = state
 
@@ -532,8 +542,28 @@ export const purchaseCow = (state, cow) => {
   }
 
   return {
+    ...state,
     cowInventory: [...cowInventory, { ...cow }],
     money: money - cowValue,
     cowForSale: generateCow(),
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.cow} cow
+ * @returns {farmhand.state}
+ */
+export const sellCow = (state, cow) => {
+  const { cowInventory, money } = state
+  const cowValue = getCowValue(cow)
+
+  const newCowInventory = [...cowInventory]
+  newCowInventory.splice(cowInventory.indexOf(cow), 1)
+
+  return {
+    ...state,
+    cowInventory: newCowInventory,
+    money: money + cowValue,
   }
 }
