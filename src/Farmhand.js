@@ -18,6 +18,7 @@ import {
   decrementItemFromInventory,
   makeRecipe,
   modifyFieldPlotAt,
+  purchaseCow,
   purchaseItem,
   removeFieldPlotAt,
   sellItem,
@@ -41,7 +42,6 @@ import {
   getRangeCoords,
   getAdjustedItemValue,
   getFinalCropItemIdFromSeedItemId,
-  generateCow,
 } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
@@ -520,22 +520,7 @@ export default class Farmhand extends Component {
    * @param {farmhand.cow} cow
    */
   purchaseCow(cow) {
-    this.setState(({ cowInventory, money, purchasedCowPen }) => {
-      const cowValue = getCowValue(cow)
-      if (
-        money < cowValue ||
-        purchasedCowPen === 0 ||
-        cowInventory.length >= PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows
-      ) {
-        return
-      }
-
-      return {
-        cowInventory: [...cowInventory, { ...cow }],
-        money: money - cowValue,
-        cowForSale: generateCow(),
-      }
-    })
+    this.setState(state => purchaseCow(state, cow))
   }
 
   /**

@@ -4,6 +4,7 @@ import {
   clampNumber,
   generateCow,
   generateValueAdjustments,
+  getCowValue,
   getCowMilkItem,
   getCowMilkRate,
   getAdjustedItemValue,
@@ -17,6 +18,7 @@ import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   CROW_CHANCE,
   FERTILIZER_BONUS,
+  PURCHASEABLE_COW_PENS,
   RAIN_CHANCE,
   SCARECROW_ITEM_ID,
   SPRINKLER_RANGE,
@@ -514,5 +516,24 @@ export const showNotification = (state, message) => {
       ? notifications
       : notifications.concat(message),
     doShowNotifications: true,
+  }
+}
+
+export const purchaseCow = (state, cow) => {
+  const { cowInventory, money, purchasedCowPen } = state
+
+  const cowValue = getCowValue(cow)
+  if (
+    money < cowValue ||
+    purchasedCowPen === 0 ||
+    cowInventory.length >= PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows
+  ) {
+    return state
+  }
+
+  return {
+    cowInventory: [...cowInventory, { ...cow }],
+    money: money - cowValue,
+    cowForSale: generateCow(),
   }
 }

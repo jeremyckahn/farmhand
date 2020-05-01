@@ -8,12 +8,18 @@ import {
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   FERTILIZER_BONUS,
+  PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
 } from './constants'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
 import { genders } from './enums'
-import { generateCow, getCowMilkItem, getPlotContentFromItemId } from './utils'
+import {
+  generateCow,
+  getCowMilkItem,
+  getCowValue,
+  getPlotContentFromItemId,
+} from './utils'
 import * as fn from './reducers'
 
 jest.mock('localforage')
@@ -675,5 +681,84 @@ describe('sellItem', () => {
     )
 
     expect(learnedRecipes['sample-recipe-1']).toBeTruthy()
+  })
+})
+
+describe('purchaseCow', () => {
+  const cow = Object.freeze(
+    generateCow({
+      baseWeight: 1000,
+      gender: genders.FEMALE,
+      name: 'cow',
+    })
+  )
+
+  describe('happy path', () => {
+    test('cow is purchased', () => {
+      const oldCowForSale = generateCow()
+
+      const state = fn.purchaseCow(
+        {
+          cowForSale: oldCowForSale,
+          cowInventory: [],
+          money: 5000,
+          purchasedCowPen: 1,
+        },
+        cow
+      )
+
+      expect(state).toMatchObject({
+        cowInventory: [cow],
+        money: 5000 - getCowValue(cow),
+      })
+
+      expect(state.cowForSale).not.toBe(oldCowForSale)
+    })
+  })
+
+  describe('is unsufficient room in cow pen', () => {
+    test('cow is not purchased', () => {
+      const oldCowForSale = generateCow()
+      const cowCapacity = PURCHASEABLE_COW_PENS.get(1).cows
+
+      const { cowInventory, cowForSale, money } = fn.purchaseCow(
+        {
+          cowForSale: oldCowForSale,
+          cowInventory: Array(cowCapacity)
+            .fill(null)
+            .map(() => generateCow()),
+          money: 5000,
+          purchasedCowPen: 1,
+        },
+        cow
+      )
+
+      expect(cowInventory).toHaveLength(cowCapacity)
+      expect(cowForSale).toBe(oldCowForSale)
+      expect(money).toBe(5000)
+    })
+  })
+
+  describe('player does not have enough money', () => {
+    const oldCowForSale = generateCow()
+
+    test('cow is not purchased', () => {
+      const state = fn.purchaseCow(
+        {
+          cowForSale: oldCowForSale,
+          cowInventory: [],
+          money: 500,
+          purchasedCowPen: 1,
+        },
+        cow
+      )
+
+      expect(state).toMatchObject({
+        cowInventory: [],
+        money: 500,
+      })
+
+      expect(state.cowForSale).toBe(oldCowForSale)
+    })
   })
 })
