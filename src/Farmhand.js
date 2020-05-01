@@ -17,6 +17,7 @@ import {
   computeStateForNextDay,
   decrementItemFromInventory,
   makeRecipe,
+  modifyCow,
   modifyFieldPlotAt,
   purchaseCow,
   purchaseItem,
@@ -536,20 +537,7 @@ export default class Farmhand extends Component {
    * undefined.
    */
   modifyCow(cowId, fn) {
-    this.setState(({ cowInventory }) => {
-      const cow = cowInventory.find(({ id }) => id === cowId)
-      const cowIndex = cowInventory.indexOf(cow)
-      const newCowInventory = [...cowInventory]
-
-      newCowInventory[cowIndex] = {
-        ...cow,
-        ...fn(cow),
-      }
-
-      return {
-        cowInventory: newCowInventory,
-      }
-    })
+    this.setState(state => modifyCow(state, cowId, fn))
   }
 
   /**
