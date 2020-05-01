@@ -1,11 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import {
-  generateCow,
-  getCropFromItemId,
-  getPlotContentFromItemId,
-} from './utils'
+import { generateCow, getPlotContentFromItemId } from './utils'
 import {
   sampleItem1,
   sampleItem2,
@@ -542,65 +538,6 @@ describe('instance methods', () => {
         ] = component.state().cowInventory
         expect(happiness).toBe(0.5)
         expect(happinessBoostsToday).toBe(3)
-      })
-    })
-  })
-
-  describe('plantInPlot', () => {
-    beforeEach(() => {
-      component.setState({
-        selectedItemId: 'sample-crop-seeds-1',
-      })
-    })
-
-    describe('crop quantity > 1', () => {
-      describe('plot is empty', () => {
-        beforeEach(() => {
-          component.setState({
-            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
-          })
-
-          component.instance().plantInPlot(0, 0, 'sample-crop-seeds-1')
-        })
-
-        test('plants the crop', () => {
-          expect(component.state().field[0][0]).toEqual(
-            getCropFromItemId('sample-crop-1')
-          )
-        })
-
-        test('decrements crop quantity', () => {
-          expect(component.state().inventory[0].quantity).toEqual(1)
-        })
-      })
-
-      describe('plot is not empty', () => {
-        beforeEach(() => {
-          component.setState({
-            field: [[getCropFromItemId('sample-crop-seeds-1')]],
-            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
-          })
-
-          component.instance().plantInPlot(0, 0, 'sample-crop-seeds-1')
-        })
-
-        test('does not decrement crop quantity', () => {
-          expect(component.state().inventory[0].quantity).toEqual(2)
-        })
-      })
-    })
-
-    describe('crop quantity === 1', () => {
-      beforeEach(() => {
-        component.setState({
-          inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
-        })
-
-        component.instance().plantInPlot(0, 0, 'sample-crop-seeds-1')
-      })
-
-      test('resets selectedItemId state', () => {
-        expect(component.state().selectedItemId).toEqual('')
       })
     })
   })

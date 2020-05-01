@@ -21,6 +21,7 @@ import {
   modifyFieldPlotAt,
   purchaseCow,
   purchaseItem,
+  plantInPlot,
   removeFieldPlotAt,
   sellItem,
   sellCow,
@@ -36,13 +37,11 @@ import DebugMenu from './components/DebugMenu'
 import theme from './mui-theme'
 import {
   createNewField,
-  getCropFromItemId,
   getCropLifeStage,
   getItemValue,
   getPlotContentFromItemId,
   getRangeCoords,
   getAdjustedItemValue,
-  getFinalCropItemIdFromSeedItemId,
 } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
@@ -576,29 +575,7 @@ export default class Farmhand extends Component {
       return
     }
 
-    this.setState(state => {
-      const { field } = state
-      const row = field[y]
-      const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId)
-
-      if (row[x]) {
-        // Something is already planted in field[x][y]
-        return
-      }
-
-      state = modifyFieldPlotAt(state, x, y, () =>
-        getCropFromItemId(finalCropItemId)
-      )
-
-      state = decrementItemFromInventory(state, plantableItemId)
-
-      return {
-        ...state,
-        selectedItemId: state.inventory.find(({ id }) => id === plantableItemId)
-          ? plantableItemId
-          : '',
-      }
-    })
+    this.setState(state => plantInPlot(state, x, y, plantableItemId))
   }
 
   /**

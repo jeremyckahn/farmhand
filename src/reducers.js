@@ -4,10 +4,12 @@ import {
   clampNumber,
   generateCow,
   generateValueAdjustments,
-  getCowValue,
+  getAdjustedItemValue,
   getCowMilkItem,
   getCowMilkRate,
-  getAdjustedItemValue,
+  getCowValue,
+  getCropFromItemId,
+  getFinalCropItemIdFromSeedItemId,
   getRangeCoords,
 } from './utils'
 import {
@@ -588,5 +590,36 @@ export const modifyCow = (state, cowId, fn) => {
   return {
     ...state,
     cowInventory,
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} x
+ * @param {number} y
+ * @param {string} plantableItemId
+ * @returns {farmhand.state}
+ */
+export const plantInPlot = (state, x, y, plantableItemId) => {
+  const { field } = state
+  const row = field[y]
+  const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId)
+
+  if (row[x]) {
+    // Something is already planted in field[x][y]
+    return state
+  }
+
+  state = modifyFieldPlotAt(state, x, y, () =>
+    getCropFromItemId(finalCropItemId)
+  )
+
+  state = decrementItemFromInventory(state, plantableItemId)
+
+  return {
+    ...state,
+    selectedItemId: state.inventory.find(({ id }) => id === plantableItemId)
+      ? plantableItemId
+      : '',
   }
 }
