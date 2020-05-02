@@ -15,7 +15,6 @@ import eventHandlers from './event-handlers'
 import {
   addItemToInventory,
   computeStateForNextDay,
-  decrementItemFromInventory,
   fertilizeCrop,
   makeRecipe,
   modifyCow,
@@ -26,6 +25,7 @@ import {
   removeFieldPlotAt,
   sellItem,
   sellCow,
+  setScarecrow,
   setSprinkler,
   showNotification,
   waterField,
@@ -41,7 +41,6 @@ import {
   createNewField,
   getCropLifeStage,
   getItemValue,
-  getPlotContentFromItemId,
   getRangeCoords,
   getAdjustedItemValue,
 } from './utils'
@@ -54,7 +53,6 @@ import {
   MAX_DAILY_COW_HUG_BENEFITS,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
-  SCARECROW_ITEM_ID,
 } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
@@ -62,7 +60,7 @@ import { PROGRESS_SAVED_MESSAGE } from './strings'
 import './Farmhand.sass'
 
 const { GROWN } = cropLifeStage
-const { OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
+const { OBSERVE, SET_SPRINKLER } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
 
@@ -599,30 +597,7 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   setScarecrow(x, y) {
-    this.setState(state => {
-      const plot = state.field[y][x]
-
-      // Only set scarecrows in empty plots
-      if (plot !== null) {
-        return
-      }
-
-      state = decrementItemFromInventory(state, SCARECROW_ITEM_ID)
-
-      const doScarecrowsRemain = state.inventory.some(
-        item => item.id === SCARECROW_ITEM_ID
-      )
-
-      state = modifyFieldPlotAt(state, x, y, () =>
-        getPlotContentFromItemId(SCARECROW_ITEM_ID)
-      )
-
-      return {
-        ...state,
-        fieldMode: doScarecrowsRemain ? SET_SCARECROW : OBSERVE,
-        selectedItemId: doScarecrowsRemain ? SCARECROW_ITEM_ID : '',
-      }
-    })
+    this.setState(state => setScarecrow(state, x, y))
   }
 
   /**
