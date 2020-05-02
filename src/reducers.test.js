@@ -1031,3 +1031,41 @@ describe('setScarecrow', () => {
     })
   })
 })
+
+describe('harvestPlot', () => {
+  describe('non-crop plotContent', () => {
+    test('no-ops', () => {
+      const inputState = {
+        field: [[getPlotContentFromItemId('sprinkler')]],
+      }
+      const state = fn.harvestPlot(inputState, 0, 0)
+      expect(state).toEqual(inputState)
+    })
+  })
+
+  describe('unripe crops', () => {
+    test('no-ops', () => {
+      const inputState = {
+        field: [[testCrop({ itemId: 'sample-crop-1' })]],
+      }
+      const state = fn.harvestPlot(inputState, 0, 0)
+      expect(state).toEqual(inputState)
+    })
+  })
+
+  describe('ripe crops', () => {
+    test('harvests the plot', () => {
+      const { field, inventory } = fn.harvestPlot(
+        {
+          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
+          inventory: [],
+        },
+        0,
+        0
+      )
+
+      expect(field[0][0]).toBe(null)
+      expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 1 }])
+    })
+  })
+})

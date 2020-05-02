@@ -9,6 +9,7 @@ import {
   getCowMilkRate,
   getCowValue,
   getCropFromItemId,
+  getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
   getPlotContentFromItemId,
   getRangeCoords,
@@ -30,9 +31,10 @@ import {
 } from './constants'
 import { RAIN_MESSAGE } from './strings'
 import { MILK_PRODUCED, CROW_ATTACKED } from './templates'
-import { fieldMode, itemType } from './enums'
+import { cropLifeStage, fieldMode, itemType } from './enums'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
+const { GROWN } = cropLifeStage
 
 ///////////////////////////////////////////////////////////
 //
@@ -724,4 +726,26 @@ export const setScarecrow = (state, x, y) => {
     fieldMode: doScarecrowsRemain ? SET_SCARECROW : OBSERVE,
     selectedItemId: doScarecrowsRemain ? SCARECROW_ITEM_ID : '',
   }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} x
+ * @param {number} y
+ * @returns {farmhand.state}
+ */
+export const harvestPlot = (state, x, y) => {
+  const row = state.field[y]
+  const crop = row[x]
+
+  if (
+    !crop ||
+    crop.type !== itemType.CROP ||
+    getCropLifeStage(crop) !== GROWN
+  ) {
+    return state
+  }
+
+  state = removeFieldPlotAt(state, x, y)
+  return addItemToInventory(state, itemsMap[crop.itemId])
 }

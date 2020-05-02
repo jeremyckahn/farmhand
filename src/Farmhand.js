@@ -16,6 +16,7 @@ import {
   addItemToInventory,
   computeStateForNextDay,
   fertilizeCrop,
+  harvestPlot,
   makeRecipe,
   modifyCow,
   modifyFieldPlotAt,
@@ -39,14 +40,13 @@ import DebugMenu from './components/DebugMenu'
 import theme from './mui-theme'
 import {
   createNewField,
-  getCropLifeStage,
   getItemValue,
   getRangeCoords,
   getAdjustedItemValue,
 } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
-import { cropLifeStage, fieldMode, itemType, stageFocusType } from './enums'
+import { fieldMode, itemType, stageFocusType } from './enums'
 import {
   COW_HUG_BENEFIT,
   MAX_ANIMAL_NAME_LENGTH,
@@ -59,7 +59,6 @@ import { PROGRESS_SAVED_MESSAGE } from './strings'
 
 import './Farmhand.sass'
 
-const { GROWN } = cropLifeStage
 const { OBSERVE, SET_SPRINKLER } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
@@ -605,21 +604,7 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   harvestPlot(x, y) {
-    this.setState(state => {
-      const row = state.field[y]
-      const crop = row[x]
-
-      if (
-        !crop ||
-        crop.type !== itemType.CROP ||
-        getCropLifeStage(crop) !== GROWN
-      ) {
-        return
-      }
-
-      state = removeFieldPlotAt(state, x, y)
-      return addItemToInventory(state, itemsMap[crop.itemId])
-    })
+    this.setState(state => harvestPlot(state, x, y))
   }
 
   /**
