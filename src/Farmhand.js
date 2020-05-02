@@ -26,6 +26,7 @@ import {
   removeFieldPlotAt,
   sellItem,
   sellCow,
+  setSprinkler,
   showNotification,
   waterField,
 } from './reducers'
@@ -54,7 +55,6 @@ import {
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   SCARECROW_ITEM_ID,
-  SPRINKLER_ITEM_ID,
 } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
@@ -591,32 +591,7 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   setSprinkler(x, y) {
-    this.setState(state => {
-      const { field, hoveredPlotRangeSize } = state
-      const plot = field[y][x]
-
-      // Only set sprinklers in empty plots
-      if (plot !== null) {
-        return
-      }
-
-      state = decrementItemFromInventory(state, SPRINKLER_ITEM_ID)
-
-      const doSprinklersRemain = state.inventory.some(
-        item => item.id === SPRINKLER_ITEM_ID
-      )
-
-      state = modifyFieldPlotAt(state, x, y, () =>
-        getPlotContentFromItemId(SPRINKLER_ITEM_ID)
-      )
-
-      return {
-        ...state,
-        hoveredPlotRangeSize: doSprinklersRemain ? hoveredPlotRangeSize : 0,
-        fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
-        selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
-      }
-    })
+    this.setState(state => setSprinkler(state, x, y))
   }
 
   /**

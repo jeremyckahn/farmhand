@@ -10,6 +10,7 @@ import {
   getCowValue,
   getCropFromItemId,
   getFinalCropItemIdFromSeedItemId,
+  getPlotContentFromItemId,
   getRangeCoords,
 } from './utils'
 import {
@@ -24,13 +25,14 @@ import {
   PURCHASEABLE_COW_PENS,
   RAIN_CHANCE,
   SCARECROW_ITEM_ID,
+  SPRINKLER_ITEM_ID,
   SPRINKLER_RANGE,
 } from './constants'
 import { RAIN_MESSAGE } from './strings'
 import { MILK_PRODUCED, CROW_ATTACKED } from './templates'
 import { fieldMode, itemType } from './enums'
 
-const { FERTILIZE, OBSERVE } = fieldMode
+const { FERTILIZE, OBSERVE, SET_SPRINKLER } = fieldMode
 
 ///////////////////////////////////////////////////////////
 //
@@ -657,5 +659,38 @@ export const fertilizeCrop = (state, x, y) => {
     ...state,
     fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
     selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} x
+ * @param {number} y
+ * @returns {farmhand.state}
+ */
+export const setSprinkler = (state, x, y) => {
+  const { field, hoveredPlotRangeSize } = state
+  const plot = field[y][x]
+
+  // Only set sprinklers in empty plots
+  if (plot !== null) {
+    return state
+  }
+
+  state = decrementItemFromInventory(state, SPRINKLER_ITEM_ID)
+
+  const doSprinklersRemain = state.inventory.some(
+    item => item.id === SPRINKLER_ITEM_ID
+  )
+
+  state = modifyFieldPlotAt(state, x, y, () =>
+    getPlotContentFromItemId(SPRINKLER_ITEM_ID)
+  )
+
+  return {
+    ...state,
+    hoveredPlotRangeSize: doSprinklersRemain ? hoveredPlotRangeSize : 0,
+    fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
+    selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
   }
 }

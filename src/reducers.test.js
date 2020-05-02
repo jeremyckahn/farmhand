@@ -11,6 +11,7 @@ import {
   FERTILIZER_ITEM_ID,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
+  SPRINKLER_ITEM_ID,
 } from './constants'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
@@ -907,6 +908,69 @@ describe('fertilizeCrop', () => {
           expect(state.fieldMode).toBe(fieldMode.OBSERVE)
           expect(state.selectedItemId).toBe('')
         })
+      })
+    })
+  })
+})
+
+describe('setSprinkler', () => {
+  let state
+
+  beforeEach(() => {
+    state = {
+      field: [[null]],
+      fieldMode: fieldMode.SET_SPRINKLER,
+      hoveredPlot: { x: 0, y: 0 },
+      hoveredPlotRangeSize: 1,
+      inventory: [testItem({ id: 'sprinkler', quantity: 1 })],
+      selectedItemId: SPRINKLER_ITEM_ID,
+    }
+  })
+
+  describe('plot is not empty', () => {
+    test('does nothing', () => {
+      const inputState = { ...state, field: [[testCrop()]] }
+      state = fn.setSprinkler(inputState, 0, 0)
+      expect(state).toEqual(inputState)
+    })
+  })
+
+  describe('plot is empty', () => {
+    test('sets sprinkler', () => {
+      const { field, inventory } = fn.setSprinkler(state, 0, 0)
+
+      expect(field[0][0]).toEqual(getPlotContentFromItemId('sprinkler'))
+      expect(inventory).toHaveLength(0)
+    })
+
+    describe('multiple sprinkler units remaining', () => {
+      test('updates state', () => {
+        const {
+          hoveredPlotRangeSize,
+          fieldMode: newFieldMode,
+          selectedItemId,
+        } = fn.setSprinkler(
+          { ...state, inventory: [testItem({ id: 'sprinkler', quantity: 2 })] },
+          0,
+          0
+        )
+        expect(hoveredPlotRangeSize).toBe(1)
+        expect(newFieldMode).toBe(fieldMode.SET_SPRINKLER)
+        expect(selectedItemId).toBe(SPRINKLER_ITEM_ID)
+      })
+    })
+
+    describe('one sprinkler unit remaining', () => {
+      test('updates state', () => {
+        const {
+          hoveredPlotRangeSize,
+          fieldMode: newFieldMode,
+          selectedItemId,
+        } = fn.setSprinkler(state, 0, 0)
+
+        expect(hoveredPlotRangeSize).toBe(0)
+        expect(newFieldMode).toBe(fieldMode.OBSERVE)
+        expect(selectedItemId).toBe('')
       })
     })
   })

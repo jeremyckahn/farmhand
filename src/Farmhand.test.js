@@ -16,7 +16,6 @@ import {
   COW_HUG_BENEFIT,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
-  SPRINKLER_ITEM_ID,
 } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
@@ -573,83 +572,6 @@ describe('instance methods', () => {
 
       test('clears the plot', () => {
         expect(component.state().field[0][0]).toBe(null)
-      })
-    })
-  })
-
-  describe('setSprinkler', () => {
-    beforeEach(() => {
-      component.setState({
-        field: [[null]],
-        fieldMode: fieldMode.SET_SPRINKLER,
-        hoveredPlot: { x: 0, y: 0 },
-        hoveredPlotRangeSize: 1,
-        inventory: [testItem({ id: 'sprinkler', quantity: 1 })],
-        selectedItemId: SPRINKLER_ITEM_ID,
-      })
-    })
-
-    describe('plot is not empty', () => {
-      test('does nothing', () => {
-        component.setState({ field: [[testCrop()]] })
-        const beforeState = component.state()
-        component.instance().setSprinkler(0, 0)
-        const afterState = component.state()
-        expect(afterState).toEqual(beforeState)
-      })
-    })
-
-    describe('plot is empty', () => {
-      test('decrements sprinkler from inventory', () => {
-        component.instance().setSprinkler(0, 0)
-        expect(component.state().inventory).toHaveLength(0)
-      })
-
-      test('sets sprinkler', () => {
-        component.instance().setSprinkler(0, 0)
-        expect(component.state().field[0][0]).toEqual(
-          getPlotContentFromItemId('sprinkler')
-        )
-      })
-
-      describe('multiple sprinkler units remaining', () => {
-        beforeEach(() => {
-          component.setState({
-            inventory: [testItem({ id: 'sprinkler', quantity: 2 })],
-          })
-
-          component.instance().setSprinkler(0, 0)
-        })
-
-        test('does not change hoveredPlotRangeSize', () => {
-          expect(component.state().hoveredPlotRangeSize).toBe(1)
-        })
-
-        test('does not change fieldMode', () => {
-          expect(component.state().fieldMode).toBe(fieldMode.SET_SPRINKLER)
-        })
-
-        test('does not change selectedItemId', () => {
-          expect(component.state().selectedItemId).toBe(SPRINKLER_ITEM_ID)
-        })
-      })
-
-      describe('one sprinkler unit remaining', () => {
-        beforeEach(() => {
-          component.instance().setSprinkler(0, 0)
-        })
-
-        test('resets hoveredPlotRangeSize', () => {
-          expect(component.state().hoveredPlotRangeSize).toBe(0)
-        })
-
-        test('changes fieldMode to OBSERVE', () => {
-          expect(component.state().fieldMode).toBe(fieldMode.OBSERVE)
-        })
-
-        test('resets selectedItemId', () => {
-          expect(component.state().selectedItemId).toBe('')
-        })
       })
     })
   })
