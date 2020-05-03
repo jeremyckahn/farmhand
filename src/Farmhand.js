@@ -21,6 +21,7 @@ import {
   modifyCow,
   modifyFieldPlotAt,
   purchaseCow,
+  purchaseField,
   purchaseItem,
   plantInPlot,
   sellItem,
@@ -51,7 +52,6 @@ import {
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   PURCHASEABLE_COW_PENS,
-  PURCHASEABLE_FIELD_SIZES,
 } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
@@ -641,25 +641,7 @@ export default class Farmhand extends Component {
    * @param {number} fieldId
    */
   purchaseField(fieldId) {
-    this.setState(({ field, money, purchasedField }) => {
-      if (purchasedField >= fieldId) {
-        return
-      }
-
-      const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId)
-
-      return {
-        purchasedField: fieldId,
-        field: new Array(rows)
-          .fill(null)
-          .map((_, row) =>
-            new Array(columns)
-              .fill(null)
-              .map((_, column) => (field[row] && field[row][column]) || null)
-          ),
-        money: money - price,
-      }
-    })
+    this.setState(state => purchaseField(state, fieldId))
   }
 
   /**

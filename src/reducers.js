@@ -24,6 +24,7 @@ import {
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   PURCHASEABLE_COW_PENS,
+  PURCHASEABLE_FIELD_SIZES,
   RAIN_CHANCE,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
@@ -762,4 +763,25 @@ export const clearPlot = (state, x, y) => {
   state = removeFieldPlotAt(state, x, y)
 
   return item.isReplantable ? addItemToInventory(state, item) : state
+}
+
+export const purchaseField = (state, fieldId) => {
+  const { field, money, purchasedField } = state
+  if (purchasedField >= fieldId) {
+    return state
+  }
+
+  const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId)
+
+  return {
+    purchasedField: fieldId,
+    field: new Array(rows)
+      .fill(null)
+      .map((_, row) =>
+        new Array(columns)
+          .fill(null)
+          .map((_, column) => (field[row] && field[row][column]) || null)
+      ),
+    money: money - price,
+  }
 }

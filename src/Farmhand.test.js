@@ -586,58 +586,6 @@ describe('instance methods', () => {
     })
   })
 
-  describe('purchaseField', () => {
-    test('updates purchasedField', () => {
-      component.instance().purchaseField(0)
-      expect(component.state().purchasedField).toEqual(0)
-    })
-
-    test('prevents repurchasing options', () => {
-      component.setState({ purchasedField: 2 })
-      component.instance().purchaseField(1)
-      expect(component.state().purchasedField).toEqual(2)
-    })
-
-    test('deducts money', () => {
-      component.setState({ money: 1500 })
-      component.instance().purchaseField(1)
-      expect(component.state().money).toEqual(500)
-    })
-
-    describe('field expansion', () => {
-      beforeEach(() => {
-        jest.resetModules()
-        jest.mock('./constants', () => ({
-          PURCHASEABLE_FIELD_SIZES: new Map([
-            [1, { columns: 3, rows: 4, price: 1000 }],
-          ]),
-        }))
-
-        stubLocalforage()
-        const { default: Farmhand } = jest.requireActual('./Farmhand')
-
-        component = shallow(<Farmhand />)
-      })
-
-      test('field expands without destroying existing data', () => {
-        component.setState({
-          field: [
-            [testCrop(), null],
-            [null, testCrop()],
-          ],
-        })
-
-        component.instance().purchaseField(1)
-        expect(component.state().field).toEqual([
-          [testCrop(), null, null],
-          [null, testCrop(), null],
-          [null, null, null],
-          [null, null, null],
-        ])
-      })
-    })
-  })
-
   describe('purchaseCowPen', () => {
     test('updates purchasedCowPen', () => {
       component.instance().purchaseCowPen(0)
