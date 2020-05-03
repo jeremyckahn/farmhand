@@ -278,9 +278,9 @@ export default class Farmhand extends Component {
       focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
       focusKitchen: () => this.setState({ stageFocus: stageFocusType.KITCHEN }),
       incrementDay: () => this.incrementDay(),
-      nextView: throttle(this.goToNextView.bind(this), keyHandlerThrottleTime),
+      nextView: throttle(this.focusNextView.bind(this), keyHandlerThrottleTime),
       previousView: throttle(
-        this.goToPreviousView.bind(this),
+        this.focusPreviousView.bind(this),
         keyHandlerThrottleTime
       ),
       toggleMenu: () => this.handlers.handleMenuToggle(),
@@ -433,7 +433,7 @@ export default class Farmhand extends Component {
     )
   }
 
-  goToNextView() {
+  focusNextView() {
     const { viewList } = this
 
     this.setState(({ stageFocus }) => {
@@ -443,7 +443,7 @@ export default class Farmhand extends Component {
     })
   }
 
-  goToPreviousView() {
+  focusPreviousView() {
     const { viewList } = this
 
     this.setState(({ stageFocus }) => {

@@ -262,18 +262,18 @@ describe('handleMenuToggle', () => {
 })
 
 describe('handleClickNextMenuButton', () => {
-  test('calls goToNextView', () => {
-    jest.spyOn(component.instance(), 'goToNextView').mockImplementation()
+  test('calls focusNextView', () => {
+    jest.spyOn(component.instance(), 'focusNextView').mockImplementation()
     handlers().handleClickNextMenuButton()
-    expect(component.instance().goToNextView).toHaveBeenCalled()
+    expect(component.instance().focusNextView).toHaveBeenCalled()
   })
 })
 
 describe('handleClickPreviousMenuButton', () => {
-  test('calls goToPreviousView', () => {
-    jest.spyOn(component.instance(), 'goToPreviousView').mockImplementation()
+  test('calls focusPreviousView', () => {
+    jest.spyOn(component.instance(), 'focusPreviousView').mockImplementation()
     handlers().handleClickPreviousMenuButton()
-    expect(component.instance().goToPreviousView).toHaveBeenCalled()
+    expect(component.instance().focusPreviousView).toHaveBeenCalled()
   })
 })
 

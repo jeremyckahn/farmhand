@@ -176,11 +176,11 @@ export default {
   },
 
   handleClickNextMenuButton() {
-    this.goToNextView()
+    this.focusNextView()
   },
 
   handleClickPreviousMenuButton() {
-    this.goToPreviousView()
+    this.focusPreviousView()
   },
 
   /**
