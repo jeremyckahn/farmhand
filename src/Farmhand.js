@@ -20,12 +20,7 @@ import Stage from './components/Stage'
 import NotificationSystem from './components/NotificationSystem'
 import DebugMenu from './components/DebugMenu'
 import theme from './mui-theme'
-import {
-  createNewField,
-  getItemValue,
-  getRangeCoords,
-  getAdjustedItemValue,
-} from './utils'
+import { createNewField, getItemValue, getRangeCoords } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { fieldMode, stageFocusType } from './enums'
@@ -309,6 +304,7 @@ export default class Farmhand extends Component {
       'purchaseCowPen',
       'purchaseField',
       'purchaseItem',
+      'purchaseItemMax',
       'plantInPlot',
       'sellItem',
       'sellCow',
@@ -457,21 +453,6 @@ export default class Farmhand extends Component {
               : (currentViewIndex - 1) % viewList.length
           ],
       }
-    })
-  }
-
-  /**
-   * @param {farmhand.item} item
-   */
-  purchaseItemMax(item) {
-    this.setState(state => {
-      const { money, valueAdjustments } = state
-
-      return reducers.purchaseItem(
-        state,
-        item,
-        Math.floor(money / getAdjustedItemValue(valueAdjustments, item.id))
-      )
     })
   }
 

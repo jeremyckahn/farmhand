@@ -459,6 +459,21 @@ export const purchaseItem = (state, item, howMany = 1) => {
 /**
  * @param {farmhand.state} state
  * @param {farmhand.item} item
+ * @returns {farmhand.state}
+ */
+export const purchaseItemMax = (state, item) => {
+  const { money, valueAdjustments } = state
+
+  return purchaseItem(
+    state,
+    item,
+    Math.floor(money / getAdjustedItemValue(valueAdjustments, item.id))
+  )
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.item} item
  * @param {number} [howMany=1]
  * @returns {farmhand.state}
  */
