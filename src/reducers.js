@@ -751,6 +751,12 @@ export const harvestPlot = (state, x, y) => {
   return addItemToInventory(state, itemsMap[crop.itemId])
 }
 
+/**
+ * @param {farmhand.state} state
+ * @param {number} x
+ * @param {number} y
+ * @returns {farmhand.state}
+ */
 export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
 
