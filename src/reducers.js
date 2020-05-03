@@ -499,6 +499,23 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
 /**
  * @param {farmhand.state} state
+ * @param {farmhand.item} item
+ * @returns {farmhand.state}
+ */
+export const sellAllOfItem = (state, item) => {
+  const { id } = item
+  const { inventory } = state
+  const itemInInventory = inventory.find(item => item.id === id)
+
+  if (!itemInInventory) {
+    return state
+  }
+
+  return sellItem(state, item, itemInInventory.quantity)
+}
+
+/**
+ * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
 export const updateLearnedRecipes = state => ({

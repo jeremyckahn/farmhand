@@ -307,6 +307,7 @@ export default class Farmhand extends Component {
       'purchaseItemMax',
       'plantInPlot',
       'sellItem',
+      'sellAllOfItem',
       'sellCow',
       'setScarecrow',
       'setSprinkler',
@@ -454,21 +455,6 @@ export default class Farmhand extends Component {
           ],
       }
     })
-  }
-
-  /**
-   * @param {farmhand.item} item
-   */
-  sellAllOfItem(item) {
-    const { id } = item
-    const { inventory } = this.state
-    const itemInInventory = inventory.find(item => item.id === id)
-
-    if (!itemInInventory) {
-      return
-    }
-
-    this.sellItem(item, itemInInventory.quantity)
   }
 
   /**

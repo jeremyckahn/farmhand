@@ -405,26 +405,6 @@ describe('instance methods', () => {
     })
   })
 
-  describe('sellAllOfItem', () => {
-    beforeEach(() => {
-      component.setState({
-        inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
-        money: 100,
-        valueAdjustments: { 'sample-item-1': 1 },
-      })
-
-      component.instance().sellAllOfItem(testItem({ id: 'sample-item-1' }))
-    })
-
-    test('removes items from inventory', () => {
-      expect(component.state().inventory).toEqual([])
-    })
-
-    test('adds total value of items to player money', () => {
-      expect(component.state().money).toEqual(102)
-    })
-  })
-
   describe('changeCowName', () => {
     test('updates cow name', () => {
       const cow = generateCow()
