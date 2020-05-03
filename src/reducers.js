@@ -463,6 +463,10 @@ export const purchaseItem = (state, item, howMany = 1) => {
  * @returns {farmhand.state}
  */
 export const sellItem = (state, { id }, howMany = 1) => {
+  if (howMany === 0) {
+    return state
+  }
+
   const { itemsSold, money, valueAdjustments } = state
 
   state = decrementItemFromInventory(
@@ -609,6 +613,10 @@ export const modifyCow = (state, cowId, fn) => {
  * @returns {farmhand.state}
  */
 export const plantInPlot = (state, x, y, plantableItemId) => {
+  if (!plantableItemId) {
+    return state
+  }
+
   const { field } = state
   const row = field[y]
   const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId)

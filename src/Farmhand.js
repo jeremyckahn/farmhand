@@ -12,26 +12,7 @@ import debounce from 'lodash.debounce'
 
 import FarmhandContext from './Farmhand.context'
 import eventHandlers from './event-handlers'
-import {
-  computeStateForNextDay,
-  clearPlot,
-  fertilizeCrop,
-  harvestPlot,
-  makeRecipe,
-  modifyCow,
-  purchaseCow,
-  purchaseCowPen,
-  purchaseField,
-  purchaseItem,
-  plantInPlot,
-  sellItem,
-  sellCow,
-  setScarecrow,
-  setSprinkler,
-  showNotification,
-  waterField,
-  waterPlot,
-} from './reducers'
+import * as reducers from './reducers'
 import AppBar from './components/AppBar'
 import Navigation from './components/Navigation'
 import ContextPane from './components/ContextPane'
@@ -176,6 +157,7 @@ export default class Farmhand extends Component {
     super(...arguments)
 
     this.initInputHandlers()
+    this.initReducers()
   }
 
   static reduceByPersistedKeys(state) {
@@ -315,6 +297,35 @@ export default class Farmhand extends Component {
     })
   }
 
+  initReducers() {
+    ;[
+      'computeStateForNextDay',
+      'clearPlot',
+      'fertilizeCrop',
+      'harvestPlot',
+      'makeRecipe',
+      'modifyCow',
+      'purchaseCow',
+      'purchaseCowPen',
+      'purchaseField',
+      'purchaseItem',
+      'plantInPlot',
+      'sellItem',
+      'sellCow',
+      'setScarecrow',
+      'setSprinkler',
+      'showNotification',
+      'waterField',
+      'waterPlot',
+    ].forEach(reducerName => {
+      const reducer = reducers[reducerName]
+
+      this[reducerName] = (...args) => {
+        this.setState(state => reducer(state, ...args))
+      }
+    })
+  }
+
   componentDidMount() {
     this.localforage.getItem('state').then(state => {
       if (state) {
@@ -359,13 +370,6 @@ export default class Farmhand extends Component {
   }
 
   /**
-   * @param {string} message
-   */
-  showNotification(message) {
-    this.setState(state => showNotification(state, message))
-  }
-
-  /**
    * @param {farmhand.state} prevState
    */
   showCowPenPurchasedNotifications(prevState) {
@@ -392,7 +396,7 @@ export default class Farmhand extends Component {
   }
 
   incrementDay() {
-    const nextDayState = computeStateForNextDay(this.state)
+    const nextDayState = reducers.computeStateForNextDay(this.state)
     const pendingNotifications = [...nextDayState.newDayNotifications]
 
     // This would be cleaner if setState was called after localForage.setItem,
@@ -458,37 +462,17 @@ export default class Farmhand extends Component {
 
   /**
    * @param {farmhand.item} item
-   * @param {number} [howMany=1]
-   */
-  purchaseItem(item, howMany = 1) {
-    this.setState(state => purchaseItem(state, item, howMany))
-  }
-
-  /**
-   * @param {farmhand.item} item
    */
   purchaseItemMax(item) {
     this.setState(state => {
       const { money, valueAdjustments } = state
 
-      return purchaseItem(
+      return reducers.purchaseItem(
         state,
         item,
         Math.floor(money / getAdjustedItemValue(valueAdjustments, item.id))
       )
     })
-  }
-
-  /**
-   * @param {farmhand.item} item
-   * @param {number} [howMany=1]
-   */
-  sellItem(item, howMany = 1) {
-    if (howMany === 0) {
-      return
-    }
-
-    this.setState(state => sellItem(state, item, howMany))
   }
 
   /**
@@ -504,36 +488,6 @@ export default class Farmhand extends Component {
     }
 
     this.sellItem(item, itemInInventory.quantity)
-  }
-
-  /**
-   * @param {farmhand.recipe} recipe
-   */
-  makeRecipe(recipe) {
-    this.setState(state => makeRecipe(state, recipe))
-  }
-
-  /**
-   * @param {farmhand.cow} cow
-   */
-  purchaseCow(cow) {
-    this.setState(state => purchaseCow(state, cow))
-  }
-
-  /**
-   * @param {farmhand.cow} cow
-   */
-  sellCow(cow) {
-    this.setState(state => sellCow(state, cow))
-  }
-
-  /**
-   * @param {string} cowId
-   * @param {Function(farmhand.cow)} fn Must return the modified cow or
-   * undefined.
-   */
-  modifyCow(cowId, fn) {
-    this.setState(state => modifyCow(state, cowId, fn))
   }
 
   /**
@@ -562,83 +516,8 @@ export default class Farmhand extends Component {
     }))
   }
 
-  /**
-   * @param {number} x
-   * @param {number} y
-   * @param {string} plantableItemId
-   */
-  plantInPlot(x, y, plantableItemId) {
-    if (!plantableItemId) {
-      return
-    }
-
-    this.setState(state => plantInPlot(state, x, y, plantableItemId))
-  }
-
-  /**
-   * @param {number} x
-   * @param {number} y
-   */
-  fertilizeCrop(x, y) {
-    this.setState(state => fertilizeCrop(state, x, y))
-  }
-
-  /**
-   * @param {number} x
-   * @param {number} y
-   */
-  setSprinkler(x, y) {
-    this.setState(state => setSprinkler(state, x, y))
-  }
-
-  /**
-   * @param {number} x
-   * @param {number} y
-   */
-  setScarecrow(x, y) {
-    this.setState(state => setScarecrow(state, x, y))
-  }
-
-  /**
-   * @param {number} x
-   * @param {number} y
-   */
-  harvestPlot(x, y) {
-    this.setState(state => harvestPlot(state, x, y))
-  }
-
-  /**
-   * @param {number} x
-   * @param {number} y
-   */
-  clearPlot(x, y) {
-    this.setState(state => clearPlot(state, x, y))
-  }
-
-  /**
-   * @param {number} x
-   * @param {number} y
-   */
-  waterPlot(x, y) {
-    this.setState(state => waterPlot(state, x, y))
-  }
-
   waterAllPlots() {
-    this.setState(state => waterField(state))
-  }
-
-  /**
-   * @param {number} fieldId
-   */
-  purchaseField(fieldId) {
-    this.setState(state => purchaseField(state, fieldId))
-  }
-
-  /**
-   * @param {number} cowPenId
-   */
-  purchaseCowPen(cowPenId) {
-    this.setState(state => purchaseCowPen(state, cowPenId))
+    this.setState(state => reducers.waterField(state))
   }
 
   /**
