@@ -20,6 +20,7 @@ import {
   makeRecipe,
   modifyCow,
   purchaseCow,
+  purchaseCowPen,
   purchaseField,
   purchaseItem,
   plantInPlot,
@@ -637,16 +638,7 @@ export default class Farmhand extends Component {
    * @param {number} cowPenId
    */
   purchaseCowPen(cowPenId) {
-    this.setState(({ money, purchasedCowPen }) => {
-      if (purchasedCowPen >= cowPenId) {
-        return
-      }
-
-      return {
-        purchasedCowPen: cowPenId,
-        money: money - PURCHASEABLE_COW_PENS.get(cowPenId).price,
-      }
-    })
+    this.setState(state => purchaseCowPen(state, cowPenId))
   }
 
   /**

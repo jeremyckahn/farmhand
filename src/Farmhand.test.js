@@ -561,27 +561,6 @@ describe('instance methods', () => {
     })
   })
 
-  describe('purchaseCowPen', () => {
-    test('updates purchasedCowPen', () => {
-      component.instance().purchaseCowPen(0)
-      expect(component.state().purchasedCowPen).toEqual(0)
-    })
-
-    test('prevents repurchasing options', () => {
-      component.setState({ purchasedCowPen: 2 })
-      component.instance().purchaseCowPen(1)
-      expect(component.state().purchasedCowPen).toEqual(2)
-    })
-
-    test('deducts money', () => {
-      component.setState({ money: 1500 })
-      component.instance().purchaseCowPen(1)
-      expect(component.state().money).toEqual(
-        PURCHASEABLE_COW_PENS.get(1).price - 1500
-      )
-    })
-  })
-
   describe('selectCow', () => {
     test('updates selectedCowId', () => {
       component.instance().selectCow({ id: 'abc' })

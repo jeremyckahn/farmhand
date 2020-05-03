@@ -809,3 +809,21 @@ export const waterPlot = (state, x, y) => {
     wasWateredToday: true,
   }))
 }
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} cowPenId
+ * @returns {farmhand.state}
+ */
+export const purchaseCowPen = (state, cowPenId) => {
+  const { money, purchasedCowPen } = state
+
+  if (purchasedCowPen >= cowPenId) {
+    return state
+  }
+
+  return {
+    purchasedCowPen: cowPenId,
+    money: money - PURCHASEABLE_COW_PENS.get(cowPenId).price,
+  }
+}
