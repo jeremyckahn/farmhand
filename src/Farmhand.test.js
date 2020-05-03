@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { generateCow, getPlotContentFromItemId } from './utils'
+import { generateCow } from './utils'
 import {
   sampleItem1,
   sampleItem2,
@@ -535,31 +535,6 @@ describe('instance methods', () => {
         ] = component.state().cowInventory
         expect(happiness).toBe(0.5)
         expect(happinessBoostsToday).toBe(3)
-      })
-    })
-  })
-
-  describe('waterPlot', () => {
-    describe('non-crop plotContent', () => {
-      test('no-ops', () => {
-        component.setState({
-          field: [[getPlotContentFromItemId('sprinkler')]],
-        })
-        const oldState = component.state()
-        component.instance().waterPlot(0, 0)
-        const newState = component.state()
-        expect(newState).toEqual(oldState)
-      })
-    })
-
-    describe('crops', () => {
-      test('sets wasWateredToday to true', () => {
-        component.setState({
-          field: [[testCrop({ itemId: 'sample-crop-1' })]],
-        })
-
-        component.instance().waterPlot(0, 0)
-        expect(component.state().field[0][0].wasWateredToday).toBe(true)
       })
     })
   })

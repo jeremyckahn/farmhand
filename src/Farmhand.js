@@ -19,7 +19,6 @@ import {
   harvestPlot,
   makeRecipe,
   modifyCow,
-  modifyFieldPlotAt,
   purchaseCow,
   purchaseField,
   purchaseItem,
@@ -30,6 +29,7 @@ import {
   setSprinkler,
   showNotification,
   waterField,
+  waterPlot,
 } from './reducers'
 import AppBar from './components/AppBar'
 import Navigation from './components/Navigation'
@@ -46,7 +46,7 @@ import {
 } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
-import { fieldMode, itemType, stageFocusType } from './enums'
+import { fieldMode, stageFocusType } from './enums'
 import {
   COW_HUG_BENEFIT,
   MAX_ANIMAL_NAME_LENGTH,
@@ -619,18 +619,7 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   waterPlot(x, y) {
-    this.setState(state => {
-      const plotContent = state.field[y][x]
-
-      if (!plotContent || plotContent.type !== itemType.CROP) {
-        return
-      }
-
-      return modifyFieldPlotAt(state, x, y, crop => ({
-        ...crop,
-        wasWateredToday: true,
-      }))
-    })
+    this.setState(state => waterPlot(state, x, y))
   }
 
   waterAllPlots() {

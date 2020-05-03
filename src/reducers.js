@@ -765,6 +765,11 @@ export const clearPlot = (state, x, y) => {
   return item.isReplantable ? addItemToInventory(state, item) : state
 }
 
+/**
+ * @param {farmhand.state} state
+ * @param {number} fieldId
+ * @returns {farmhand.state}
+ */
 export const purchaseField = (state, fieldId) => {
   const { field, money, purchasedField } = state
   if (purchasedField >= fieldId) {
@@ -784,4 +789,23 @@ export const purchaseField = (state, fieldId) => {
       ),
     money: money - price,
   }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} x
+ * @param {number} y
+ * @returns {farmhand.state}
+ */
+export const waterPlot = (state, x, y) => {
+  const plotContent = state.field[y][x]
+
+  if (!plotContent || plotContent.type !== itemType.CROP) {
+    return state
+  }
+
+  return modifyFieldPlotAt(state, x, y, crop => ({
+    ...crop,
+    wasWateredToday: true,
+  }))
 }
