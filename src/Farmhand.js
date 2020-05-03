@@ -13,8 +13,8 @@ import debounce from 'lodash.debounce'
 import FarmhandContext from './Farmhand.context'
 import eventHandlers from './event-handlers'
 import {
-  addItemToInventory,
   computeStateForNextDay,
+  clearPlot,
   fertilizeCrop,
   harvestPlot,
   makeRecipe,
@@ -23,7 +23,6 @@ import {
   purchaseCow,
   purchaseItem,
   plantInPlot,
-  removeFieldPlotAt,
   sellItem,
   sellCow,
   setScarecrow,
@@ -612,19 +611,7 @@ export default class Farmhand extends Component {
    * @param {number} y
    */
   clearPlot(x, y) {
-    this.setState(state => {
-      const plotContent = state.field[y][x]
-
-      if (!plotContent) {
-        // Nothing planted in state.field[x][y]
-        return
-      }
-
-      const item = itemsMap[plotContent.itemId]
-      state = removeFieldPlotAt(state, x, y)
-
-      return item.isReplantable ? addItemToInventory(state, item) : state
-    })
+    this.setState(state => clearPlot(state, x, y))
   }
 
   /**

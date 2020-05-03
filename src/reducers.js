@@ -749,3 +749,17 @@ export const harvestPlot = (state, x, y) => {
   state = removeFieldPlotAt(state, x, y)
   return addItemToInventory(state, itemsMap[crop.itemId])
 }
+
+export const clearPlot = (state, x, y) => {
+  const plotContent = state.field[y][x]
+
+  if (!plotContent) {
+    // Nothing planted in state.field[x][y]
+    return state
+  }
+
+  const item = itemsMap[plotContent.itemId]
+  state = removeFieldPlotAt(state, x, y)
+
+  return item.isReplantable ? addItemToInventory(state, item) : state
+}

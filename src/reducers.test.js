@@ -1069,3 +1069,33 @@ describe('harvestPlot', () => {
     })
   })
 })
+
+describe('clearPlot', () => {
+  describe('plotContent is a crop', () => {
+    test('clears the plot', () => {
+      const { field } = fn.clearPlot(
+        { field: [[testCrop({ itemId: 'sample-crop-1' })]], inventory: [] },
+        0,
+        0
+      )
+
+      expect(field[0][0]).toBe(null)
+    })
+  })
+
+  describe('plotContent is replantable', () => {
+    test('updates state', () => {
+      const { field, inventory } = fn.clearPlot(
+        {
+          field: [[getPlotContentFromItemId('replantable-item')]],
+          inventory: [],
+        },
+        0,
+        0
+      )
+
+      expect(inventory).toEqual([{ id: 'replantable-item', quantity: 1 }])
+      expect(field[0][0]).toBe(null)
+    })
+  })
+})
