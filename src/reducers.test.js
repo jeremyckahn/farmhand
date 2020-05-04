@@ -818,6 +818,13 @@ describe('purchaseCow', () => {
   })
 })
 
+describe('selectCow', () => {
+  test('updates selectedCowId', () => {
+    const { selectedCowId } = fn.selectCow({}, { id: 'abc' })
+    expect(selectedCowId).toEqual('abc')
+  })
+})
+
 describe('sellCow', () => {
   const cow = Object.freeze({
     baseWeight: 1000,

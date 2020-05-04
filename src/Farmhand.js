@@ -103,9 +103,6 @@ export const getPlantableCropInventory = memoize(inventory =>
  */
 
 export default class Farmhand extends Component {
-  // TODO: Move as much of the logic in this class to ./reducers.js as
-  // possible.
-
   // Bind event handlers
 
   localforage = localforage.createInstance({
@@ -306,6 +303,7 @@ export default class Farmhand extends Component {
       'sellItem',
       'sellAllOfItem',
       'sellCow',
+      'selectCow',
       'setScarecrow',
       'setSprinkler',
       'showNotification',
@@ -453,13 +451,6 @@ export default class Farmhand extends Component {
           ],
       }
     })
-  }
-
-  /**
-   * @param {farmhand.cow} cow
-   */
-  selectCow({ id: selectedCowId }) {
-    this.setState({ selectedCowId })
   }
 
   render() {

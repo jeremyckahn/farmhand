@@ -907,3 +907,10 @@ export const changeCowName = (state, cowId, newName) =>
   modifyCow(state, cowId, cow => ({
     name: newName.slice(0, MAX_ANIMAL_NAME_LENGTH),
   }))
+
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.cow} cow
+ * @returns {farmhand.state}
+ */
+export const selectCow = (state, { id }) => ({ ...state, selectedCowId: id })
