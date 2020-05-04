@@ -401,11 +401,4 @@ describe('instance methods', () => {
       )
     })
   })
-
-  describe('selectCow', () => {
-    test('updates selectedCowId', () => {
-      component.instance().selectCow({ id: 'abc' })
-      expect(component.state().selectedCowId).toEqual('abc')
-    })
-  })
 })
