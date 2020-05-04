@@ -23,6 +23,7 @@ import {
   CROW_CHANCE,
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
+  MAX_DAILY_COW_HUG_BENEFITS,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   RAIN_CHANCE,
@@ -873,3 +874,18 @@ export const purchaseCowPen = (state, cowPenId) => {
     money: money - PURCHASEABLE_COW_PENS.get(cowPenId).price,
   }
 }
+
+/**
+ * @param {farmhand.state} state
+ * @param {string} cowId
+ * @returns {farmhand.state}
+ */
+export const hugCow = (state, cowId) =>
+  modifyCow(state, cowId, cow =>
+    cow.happinessBoostsToday >= MAX_DAILY_COW_HUG_BENEFITS
+      ? cow
+      : {
+          happiness: Math.min(1, cow.happiness + COW_HUG_BENEFIT),
+          happinessBoostsToday: cow.happinessBoostsToday + 1,
+        }
+  )

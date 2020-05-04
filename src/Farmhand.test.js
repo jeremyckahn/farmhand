@@ -13,7 +13,6 @@ import {
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
   MAX_ANIMAL_NAME_LENGTH,
-  COW_HUG_BENEFIT,
   PURCHASEABLE_COW_PENS,
 } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
@@ -433,57 +432,6 @@ describe('instance methods', () => {
       expect(component.state().cowInventory[0].name).toHaveLength(
         MAX_ANIMAL_NAME_LENGTH
       )
-    })
-  })
-
-  describe('hugCow', () => {
-    describe('cow has not hit daily hug benefit limit', () => {
-      test('increases cow happiness', () => {
-        const cow = generateCow()
-
-        component.setState({
-          cowInventory: [cow],
-        })
-
-        component.instance().hugCow(cow.id)
-
-        const [
-          { happiness, happinessBoostsToday },
-        ] = component.state().cowInventory
-        expect(happiness).toBe(COW_HUG_BENEFIT)
-        expect(happinessBoostsToday).toBe(1)
-      })
-
-      describe('cow is at max happiness', () => {
-        test('does not increase cow happiness', () => {
-          const cow = generateCow({ happiness: 1 })
-
-          component.setState({
-            cowInventory: [cow],
-          })
-
-          component.instance().hugCow(cow.id)
-          expect(component.state().cowInventory[0].happiness).toBe(1)
-        })
-      })
-    })
-
-    describe('cow has hit daily hug benefit limit', () => {
-      test('does not increase cow happiness', () => {
-        const cow = generateCow({ happiness: 0.5, happinessBoostsToday: 3 })
-
-        component.setState({
-          cowInventory: [cow],
-        })
-
-        component.instance().hugCow(cow.id)
-
-        const [
-          { happiness, happinessBoostsToday },
-        ] = component.state().cowInventory
-        expect(happiness).toBe(0.5)
-        expect(happinessBoostsToday).toBe(3)
-      })
     })
   })
 

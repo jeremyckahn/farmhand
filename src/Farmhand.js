@@ -24,12 +24,7 @@ import { createNewField, getItemValue, getRangeCoords } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { fieldMode, stageFocusType } from './enums'
-import {
-  COW_HUG_BENEFIT,
-  MAX_ANIMAL_NAME_LENGTH,
-  MAX_DAILY_COW_HUG_BENEFITS,
-  PURCHASEABLE_COW_PENS,
-} from './constants'
+import { MAX_ANIMAL_NAME_LENGTH, PURCHASEABLE_COW_PENS } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 
@@ -298,6 +293,7 @@ export default class Farmhand extends Component {
       'clearPlot',
       'fertilizeCrop',
       'harvestPlot',
+      'hugCow',
       'makeRecipe',
       'modifyCow',
       'purchaseCow',
@@ -453,22 +449,6 @@ export default class Farmhand extends Component {
               ? viewList.length - 1
               : (currentViewIndex - 1) % viewList.length
           ],
-      }
-    })
-  }
-
-  /**
-   * @param {string} cowId
-   */
-  hugCow(cowId) {
-    this.modifyCow(cowId, cow => {
-      if (cow.happinessBoostsToday >= MAX_DAILY_COW_HUG_BENEFITS) {
-        return
-      }
-
-      return {
-        happiness: Math.min(1, cow.happiness + COW_HUG_BENEFIT),
-        happinessBoostsToday: cow.happinessBoostsToday + 1,
       }
     })
   }
