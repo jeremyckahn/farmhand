@@ -310,6 +310,7 @@ export default class Farmhand extends Component {
       'setSprinkler',
       'showNotification',
       'waterField',
+      'waterAllPlots',
       'waterPlot',
     ].forEach(reducerName => {
       const reducer = reducers[reducerName]
@@ -452,10 +453,6 @@ export default class Farmhand extends Component {
           ],
       }
     })
-  }
-
-  waterAllPlots() {
-    this.setState(state => reducers.waterField(state))
   }
 
   /**

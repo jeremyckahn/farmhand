@@ -402,28 +402,6 @@ describe('instance methods', () => {
     })
   })
 
-  describe('waterAllPlots', () => {
-    beforeEach(() => {
-      component.setState({
-        field: [
-          [
-            testCrop({ itemId: 'sample-crop-1' }),
-            testCrop({ itemId: 'sample-crop-2' }),
-          ],
-          [testCrop({ itemId: 'sample-crop-3' })],
-        ],
-      })
-
-      component.instance().waterAllPlots()
-    })
-
-    test('sets wasWateredToday to true for all plots', () => {
-      expect(component.state().field[0][0].wasWateredToday).toBe(true)
-      expect(component.state().field[0][1].wasWateredToday).toBe(true)
-      expect(component.state().field[1][0].wasWateredToday).toBe(true)
-    })
-  })
-
   describe('selectCow', () => {
     test('updates selectedCowId', () => {
       component.instance().selectCow({ id: 'abc' })

@@ -860,6 +860,12 @@ export const waterPlot = (state, x, y) => {
 
 /**
  * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const waterAllPlots = state => waterField(state)
+
+/**
+ * @param {farmhand.state} state
  * @param {number} cowPenId
  * @returns {farmhand.state}
  */
