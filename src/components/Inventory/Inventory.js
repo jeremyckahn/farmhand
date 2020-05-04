@@ -11,8 +11,6 @@ import { enumify, itemType } from '../../enums'
 
 import './Inventory.sass'
 
-// TODO: There needs to be an inventory section for grown crops.
-
 const {
   COW_FEED,
   CROP,
@@ -47,6 +45,7 @@ export const sort = items => {
 export const categoryIds = enumify([
   'ANIMAL_PRODUCTS',
   'ANIMAL_SUPPLIES',
+  'CROPS',
   'DISHES',
   'FIELD_TOOLS',
   'SEEDS',
@@ -55,6 +54,7 @@ const categoryIdKeys = Object.keys(categoryIds)
 const {
   ANIMAL_PRODUCTS,
   ANIMAL_SUPPLIES,
+  CROPS,
   DISHES,
   FIELD_TOOLS,
   SEEDS,
@@ -62,7 +62,8 @@ const {
 
 const itemTypeCategoryMap = Object.freeze({
   [COW_FEED]: ANIMAL_SUPPLIES,
-  [CROP]: SEEDS,
+  SEEDS,
+  [CROP]: CROPS,
   [DISH]: DISHES,
   [FERTILIZER]: FIELD_TOOLS,
   [MILK]: ANIMAL_PRODUCTS,
@@ -78,7 +79,15 @@ const getItemCategories = () =>
 
 export const separateItemsIntoCategories = items =>
   sort(items).reduce((acc, item) => {
-    acc[itemTypeCategoryMap[itemsMap[item.id].type]].push(item)
+    const { type } = itemsMap[item.id]
+    const category = itemTypeCategoryMap[type]
+
+    if (category === CROPS) {
+      acc[item.isPlantableCrop ? SEEDS : CROPS].push(item)
+    } else {
+      acc[category].push(item)
+    }
+
     return acc
   }, getItemCategories())
 
@@ -97,6 +106,7 @@ export const Inventory = ({
 }) => (
   <div className="Inventory">
     {[
+      [CROPS, 'Crops'],
       [SEEDS, 'Seeds'],
       [FIELD_TOOLS, 'Field Tools'],
       [ANIMAL_PRODUCTS, 'Animal Products'],
