@@ -23,6 +23,7 @@ import {
   CROW_CHANCE,
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
+  MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
@@ -889,3 +890,14 @@ export const hugCow = (state, cowId) =>
           happinessBoostsToday: cow.happinessBoostsToday + 1,
         }
   )
+
+/**
+ * @param {farmhand.state} state
+ * @param {string} newName
+ * @param {string} cowId
+ * @returns {farmhand.state}
+ */
+export const changeCowName = (state, cowId, newName) =>
+  modifyCow(state, cowId, cow => ({
+    name: newName.slice(0, MAX_ANIMAL_NAME_LENGTH),
+  }))

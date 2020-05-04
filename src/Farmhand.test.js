@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { generateCow } from './utils'
 import {
   sampleItem1,
   sampleItem2,
@@ -12,7 +11,6 @@ import { testCrop, testItem } from './test-utils'
 import {
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
-  MAX_ANIMAL_NAME_LENGTH,
   PURCHASEABLE_COW_PENS,
 } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
@@ -400,37 +398,6 @@ describe('instance methods', () => {
       component.instance().focusPreviousView()
       expect(component.state().stageFocus).toEqual(
         viewList[viewList.length - 1]
-      )
-    })
-  })
-
-  describe('changeCowName', () => {
-    test('updates cow name', () => {
-      const cow = generateCow()
-
-      component.setState({
-        cowInventory: [generateCow(), cow],
-      })
-
-      component.instance().changeCowName(cow.id, 'new name')
-
-      expect(component.state().cowInventory[1]).toEqual({
-        ...cow,
-        name: 'new name',
-      })
-    })
-
-    test('restricts name length', () => {
-      const cow = generateCow()
-
-      component.setState({
-        cowInventory: [cow],
-      })
-
-      component.instance().changeCowName(cow.id, new Array(100).join('.'))
-
-      expect(component.state().cowInventory[0].name).toHaveLength(
-        MAX_ANIMAL_NAME_LENGTH
       )
     })
   })

@@ -24,7 +24,7 @@ import { createNewField, getItemValue, getRangeCoords } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { fieldMode, stageFocusType } from './enums'
-import { MAX_ANIMAL_NAME_LENGTH, PURCHASEABLE_COW_PENS } from './constants'
+import { PURCHASEABLE_COW_PENS } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 
@@ -290,6 +290,7 @@ export default class Farmhand extends Component {
   initReducers() {
     ;[
       'computeStateForNextDay',
+      'changeCowName',
       'clearPlot',
       'fertilizeCrop',
       'harvestPlot',
@@ -451,16 +452,6 @@ export default class Farmhand extends Component {
           ],
       }
     })
-  }
-
-  /**
-   * @param {string} cowId
-   * @param {string} newName
-   */
-  changeCowName(cowId, newName) {
-    this.modifyCow(cowId, cow => ({
-      name: newName.slice(0, MAX_ANIMAL_NAME_LENGTH),
-    }))
   }
 
   waterAllPlots() {

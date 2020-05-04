@@ -9,6 +9,7 @@ import {
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
+  MAX_ANIMAL_NAME_LENGTH,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
@@ -1285,5 +1286,36 @@ describe('hugCow', () => {
       expect(happiness).toBe(0.5)
       expect(happinessBoostsToday).toBe(3)
     })
+  })
+})
+
+describe('changeCowName', () => {
+  test('updates cow name', () => {
+    const cow = generateCow()
+    const { cowInventory } = fn.changeCowName(
+      {
+        cowInventory: [generateCow(), cow],
+      },
+      cow.id,
+      'new name'
+    )
+
+    expect(cowInventory[1]).toEqual({
+      ...cow,
+      name: 'new name',
+    })
+  })
+
+  test('restricts name length', () => {
+    const cow = generateCow()
+    const { cowInventory } = fn.changeCowName(
+      {
+        cowInventory: [cow],
+      },
+      cow.id,
+      new Array(100).join('.')
+    )
+
+    expect(cowInventory[0].name).toHaveLength(MAX_ANIMAL_NAME_LENGTH)
   })
 })
