@@ -1,16 +1,16 @@
-import React from 'react';
-import classNames from 'classnames';
-import { array, arrayOf, bool, string } from 'prop-types';
+import React from 'react'
+import classNames from 'classnames'
+import { array, arrayOf, bool, string } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context';
-import Field from '../Field';
-import Inventory from '../Inventory';
-import CowPen from '../CowPen';
-import Shop from '../Shop';
-import Kitchen from '../Kitchen';
-import { stageFocusType } from '../../enums';
+import FarmhandContext from '../../Farmhand.context'
+import Field from '../Field'
+import Inventory from '../Inventory'
+import CowPen from '../CowPen'
+import Shop from '../Shop'
+import Kitchen from '../Kitchen'
+import { stageFocusType } from '../../enums'
 
-import './Stage.sass';
+import './Stage.sass'
 
 export const Stage = ({ field, isMenuOpen, playerInventory, stageFocus }) => (
   <div className={classNames('Stage', { 'menu-closed': !isMenuOpen })}>
@@ -33,14 +33,14 @@ export const Stage = ({ field, isMenuOpen, playerInventory, stageFocus }) => (
       />
     )}
   </div>
-);
+)
 
 Stage.propTypes = {
   field: arrayOf(array).isRequired,
   isMenuOpen: bool.isRequired,
   playerInventory: array.isRequired,
   stageFocus: string.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -49,5 +49,5 @@ export default function Consumer(props) {
         <Stage {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

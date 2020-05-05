@@ -1,14 +1,14 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import { func, string } from 'prop-types';
-import classNames from 'classnames';
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import { func, string } from 'prop-types'
+import classNames from 'classnames'
 
-import FarmhandContext from '../../Farmhand.context';
-import './Toolbelt.sass';
-import { fieldMode } from '../../enums';
-import { tools, pixel } from '../../img';
+import FarmhandContext from '../../Farmhand.context'
+import './Toolbelt.sass'
+import { fieldMode } from '../../enums'
+import { tools, pixel } from '../../img'
 
-const { CLEANUP, HARVEST, WATER } = fieldMode;
+const { CLEANUP, HARVEST, WATER } = fieldMode
 
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
@@ -55,12 +55,12 @@ export const Toolbelt = ({
       </Button>
     ))}
   </div>
-);
+)
 
 Toolbelt.propTypes = {
   fieldMode: string.isRequired,
   handleFieldModeSelect: func.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -69,5 +69,5 @@ export default function Consumer(props) {
         <Toolbelt {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

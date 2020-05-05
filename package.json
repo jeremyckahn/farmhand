@@ -11,7 +11,7 @@
     "doc:live": "npm-run-all -p doc:watch doc:view",
     "doc:view": "live-server dist/doc --port=9124",
     "doc:watch": "nodemon --exec \"npm run doc\" --watch src --watch ./ --ext js,md --ignore dist",
-    "lint": "eslint src",
+    "lint": "eslint src --max-warnings=0",
     "postversion": "git push && git push --tags && npm run deploy",
     "predeploy": "npm run build",
     "prettier": "prettier 'src/**/*.js' --write",

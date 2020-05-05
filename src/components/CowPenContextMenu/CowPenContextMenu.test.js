@@ -1,18 +1,18 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import Button from '@material-ui/core/Button';
+import React from 'react'
+import { shallow } from 'enzyme'
+import Button from '@material-ui/core/Button'
 
-import { generateCow } from '../../utils';
-import { PURCHASEABLE_COW_PENS } from '../../constants';
-import { cowColors } from '../../enums';
+import { generateCow } from '../../utils'
+import { PURCHASEABLE_COW_PENS } from '../../constants'
+import { cowColors } from '../../enums'
 
 import {
   CowPenContextMenu,
   CowCard,
   CowCardSubheader,
-} from './CowPenContextMenu';
+} from './CowPenContextMenu'
 
-let component;
+let component
 
 describe('CowPenContextMenu', () => {
   beforeEach(() => {
@@ -32,8 +32,8 @@ describe('CowPenContextMenu', () => {
           selectedCowId: '',
         }}
       />
-    );
-  });
+    )
+  })
 
   describe('cow selection', () => {
     describe('cow is not selected', () => {
@@ -41,34 +41,34 @@ describe('CowPenContextMenu', () => {
         component.setProps({
           cowInventory: [generateCow({ id: 'foo' })],
           selectedCowId: 'bar',
-        });
+        })
 
         expect(
           component
             .find('.card-list')
             .find(CowCard)
             .props().isSelected
-        ).toEqual(false);
-      });
-    });
+        ).toEqual(false)
+      })
+    })
 
     describe('cow is selected', () => {
       test('provides correct isSelected prop', () => {
         component.setProps({
           cowInventory: [generateCow({ id: 'foo' })],
           selectedCowId: 'foo',
-        });
+        })
 
         expect(
           component
             .find('.card-list')
             .find(CowCard)
             .props().isSelected
-        ).toEqual(true);
-      });
-    });
-  });
-});
+        ).toEqual(true)
+      })
+    })
+  })
+})
 
 describe('CowCard', () => {
   beforeEach(() => {
@@ -90,8 +90,8 @@ describe('CowCard', () => {
           selectedCowId: '',
         }}
       />
-    );
-  });
+    )
+  })
 
   describe('cow purchase button', () => {
     describe('player does not have enough money', () => {
@@ -99,50 +99,50 @@ describe('CowCard', () => {
         test('button is disabled', () => {
           component.setProps({
             money: 100,
-          });
+          })
 
-          expect(component.find(Button).props().disabled).toBe(true);
-        });
-      });
+          expect(component.find(Button).props().disabled).toBe(true)
+        })
+      })
 
       describe('cow pen has space', () => {
         test('button is disabled', () => {
           component.setProps({
             money: 100,
-          });
+          })
 
-          expect(component.find(Button).props().disabled).toBe(true);
-        });
-      });
-    });
+          expect(component.find(Button).props().disabled).toBe(true)
+        })
+      })
+    })
 
     describe('player has enough money', () => {
       describe('cow pen has no space', () => {
         test('button is disabled', () => {
-          const cowCapacity = PURCHASEABLE_COW_PENS.get(1).cows;
+          const cowCapacity = PURCHASEABLE_COW_PENS.get(1).cows
           component.setProps({
             money: 150,
             cowInventory: Array(cowCapacity)
               .fill(null)
               .map(() => generateCow()),
-          });
+          })
 
-          expect(component.find(Button).props().disabled).toBe(true);
-        });
-      });
+          expect(component.find(Button).props().disabled).toBe(true)
+        })
+      })
 
       describe('cow pen has space', () => {
         test('button is not disabled', () => {
           component.setProps({
             money: 150,
-          });
+          })
 
-          expect(component.find(Button).props().disabled).toBe(false);
-        });
-      });
-    });
-  });
-});
+          expect(component.find(Button).props().disabled).toBe(false)
+        })
+      })
+    })
+  })
+})
 
 describe('CowCardSubheader', () => {
   beforeEach(() => {
@@ -159,27 +159,27 @@ describe('CowCardSubheader', () => {
           isCowPurchased: false,
         }}
       />
-    );
-  });
+    )
+  })
 
   describe('happiness display', () => {
     describe('cow is not purchased', () => {
       test('renders no hearts', () => {
-        expect(component.find('.heart')).toHaveLength(0);
-      });
-    });
+        expect(component.find('.heart')).toHaveLength(0)
+      })
+    })
 
     describe('cow is purchased', () => {
       test('renders hearts', () => {
         component.setProps({
           isCowPurchased: true,
-        });
+        })
 
-        expect(component.find('.heart')).toHaveLength(10);
-      });
+        expect(component.find('.heart')).toHaveLength(10)
+      })
 
       test('renders full hearts that match cow happiness', () => {
-        expect(component.find('.heart.is-full')).toHaveLength(0);
+        expect(component.find('.heart.is-full')).toHaveLength(0)
 
         component.setProps({
           cow: generateCow({
@@ -189,9 +189,9 @@ describe('CowCardSubheader', () => {
             baseWeight: 100,
           }),
           isCowPurchased: true,
-        });
+        })
 
-        expect(component.find('.heart.is-full')).toHaveLength(5);
+        expect(component.find('.heart.is-full')).toHaveLength(5)
 
         component.setProps({
           cow: generateCow({
@@ -200,10 +200,10 @@ describe('CowCardSubheader', () => {
             name: '',
             baseWeight: 100,
           }),
-        });
+        })
 
-        expect(component.find('.heart.is-full')).toHaveLength(10);
-      });
-    });
-  });
-});
+        expect(component.find('.heart.is-full')).toHaveLength(10)
+      })
+    })
+  })
+})

@@ -1,12 +1,12 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import MenuItem from '@material-ui/core/MenuItem';
+import React from 'react'
+import { shallow } from 'enzyme'
+import MenuItem from '@material-ui/core/MenuItem'
 
-import { stageFocusType } from '../../enums';
+import { stageFocusType } from '../../enums'
 
-import { Navigation } from './Navigation';
+import { Navigation } from './Navigation'
 
-let component;
+let component
 
 beforeEach(() => {
   component = shallow(
@@ -18,12 +18,12 @@ beforeEach(() => {
         stageFocus: stageFocusType.FIELD,
       }}
     />
-  );
-});
+  )
+})
 
 test('renders', () => {
-  expect(component.hasClass('Navigation')).toBeTruthy();
-});
+  expect(component.hasClass('Navigation')).toBeTruthy()
+})
 
 describe('cow pen option', () => {
   test('does not show if player has not bought a cow pen', () => {
@@ -33,17 +33,17 @@ describe('cow pen option', () => {
         .filterWhere(
           menuItem => menuItem.props().value === stageFocusType.COW_PEN
         )
-    ).toHaveLength(0);
-  });
+    ).toHaveLength(0)
+  })
 
   test('does show if player has bought a cow pen', () => {
-    component.setProps({ purchasedCowPen: 1 });
+    component.setProps({ purchasedCowPen: 1 })
     expect(
       component
         .find(MenuItem)
         .filterWhere(
           menuItem => menuItem.props().value === stageFocusType.COW_PEN
         )
-    ).toHaveLength(1);
-  });
-});
+    ).toHaveLength(1)
+  })
+})

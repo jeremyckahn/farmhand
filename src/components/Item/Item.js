@@ -1,19 +1,19 @@
-import React from 'react';
-import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
-import Tooltip from '@material-ui/core/Tooltip';
-import { bool, func, number, object } from 'prop-types';
-import classNames from 'classnames';
+import React from 'react'
+import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
+import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
+import Tooltip from '@material-ui/core/Tooltip'
+import { bool, func, number, object } from 'prop-types'
+import classNames from 'classnames'
 
-import FarmhandContext from '../../Farmhand.context';
-import { items } from '../../img';
-import { itemsMap } from '../../data/maps';
+import FarmhandContext from '../../Farmhand.context'
+import { items } from '../../img'
+import { itemsMap } from '../../data/maps'
 
-import './Item.sass';
+import './Item.sass'
 
 const ValueIndicator = ({
   id,
@@ -34,7 +34,7 @@ const ValueIndicator = ({
       <KeyboardArrowUp color="primary" />
     )}
   </Tooltip>
-);
+)
 
 const PurchaseValueIndicator = ({
   id,
@@ -51,7 +51,7 @@ const PurchaseValueIndicator = ({
       valueAdjustments,
     }}
   />
-);
+)
 
 const SellValueIndicator = ({
   id,
@@ -68,7 +68,7 @@ const SellValueIndicator = ({
       valueAdjustments,
     }}
   />
-);
+)
 
 export const Item = ({
   bulkPurchaseSize,
@@ -202,7 +202,7 @@ export const Item = ({
       )}
     </CardActions>
   </Card>
-);
+)
 
 Item.propTypes = {
   bulkPurchaseSize: number,
@@ -218,7 +218,7 @@ Item.propTypes = {
   money: number.isRequired,
   playerInventoryQuantities: object.isRequired,
   valueAdjustments: object.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -227,5 +227,5 @@ export default function Consumer(props) {
         <Item {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

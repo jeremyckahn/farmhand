@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { array, bool, func, object, string } from 'prop-types';
-import classNames from 'classnames';
-import Tooltip from '@material-ui/core/Tooltip';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import React, { Component } from 'react'
+import { array, bool, func, object, string } from 'prop-types'
+import classNames from 'classnames'
+import Tooltip from '@material-ui/core/Tooltip'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
-import { cowColors } from '../../enums';
-import FarmhandContext from '../../Farmhand.context';
-import { animals } from '../../img';
+import { cowColors } from '../../enums'
+import FarmhandContext from '../../Farmhand.context'
+import { animals } from '../../img'
 
-import './CowPen.sass';
+import './CowPen.sass'
 
 export class Cow extends Component {
   state = {
@@ -17,21 +17,21 @@ export class Cow extends Component {
     showHugAnimation: false,
     x: Cow.randomPosition(),
     y: Cow.randomPosition(),
-  };
+  }
 
-  repositionTimeoutId = null;
-  animateMovementTimeoutId = null;
-  animateHugTimeoutId = null;
+  repositionTimeoutId = null
+  animateMovementTimeoutId = null
+  animateHugTimeoutId = null
 
   // This MUST be kept in sync with $movement-animation-duration in CowPen.sass.
-  static movementAnimationDuration = 3000;
+  static movementAnimationDuration = 3000
 
   // This MUST be kept in sync with $hug-animation-duration in CowPen.sass.
-  static hugAnimationDuration = 750;
+  static hugAnimationDuration = 750
 
-  static waitVariance = 12 * 1000;
+  static waitVariance = 12 * 1000
 
-  static randomPosition = () => 10 + Math.random() * 80;
+  static randomPosition = () => 10 + Math.random() * 80
 
   componentDidUpdate(prevProps) {
     if (
@@ -39,11 +39,11 @@ export class Cow extends Component {
       !prevProps.isSelected &&
       this.repositionTimeoutId !== null
     ) {
-      clearTimeout(this.repositionTimeoutId);
+      clearTimeout(this.repositionTimeoutId)
     }
 
     if (!this.props.isSelected && prevProps.isSelected) {
-      this.scheduleMove();
+      this.scheduleMove()
     }
 
     if (
@@ -51,71 +51,71 @@ export class Cow extends Component {
         prevProps.cow.happinessBoostsToday &&
       !this.state.showHugAnimation
     ) {
-      this.setState({ showHugAnimation: true });
+      this.setState({ showHugAnimation: true })
 
       this.animateHugTimeoutId = setTimeout(
         () => this.setState({ showHugAnimation: false }),
         Cow.hugAnimationDuration
-      );
+      )
     }
   }
 
   animateTimeoutHandler = () => {
-    this.animateMovementTimeoutId = null;
-    this.finishMoving();
-  };
+    this.animateMovementTimeoutId = null
+    this.finishMoving()
+  }
 
   move = () => {
     this.animateMovementTimeoutId = setTimeout(
       this.animateTimeoutHandler,
       Cow.movementAnimationDuration
-    );
+    )
 
     this.setState({
       isMoving: true,
       x: Cow.randomPosition(),
       y: Cow.randomPosition(),
-    });
-  };
+    })
+  }
 
   finishMoving = () => {
-    this.scheduleMove();
-    this.setState({ isMoving: false });
-  };
+    this.scheduleMove()
+    this.setState({ isMoving: false })
+  }
 
   repositionTimeoutHandler = () => {
-    this.repositionTimeoutId = null;
-    this.move();
-  };
+    this.repositionTimeoutId = null
+    this.move()
+  }
 
   scheduleMove = () => {
     if (this.props.isSelected) {
-      return;
+      return
     }
 
     this.repositionTimeoutId = setTimeout(
       this.repositionTimeoutHandler,
       Math.random() * Cow.waitVariance
-    );
-  };
+    )
+  }
 
   componentDidMount() {
-    this.scheduleMove();
+    this.scheduleMove()
   }
 
   componentWillUnmount() {
-    [
+    ;[
       this.repositionTimeoutId,
       this.animateMovementTimeoutId,
       this.animateHugTimeoutId,
-    ].forEach(clearTimeout);
+    ].forEach(clearTimeout)
   }
 
   render() {
     const {
       props: { cow, handleCowClick, isSelected },
       state: { isMoving, showHugAnimation, x, y },
-    } = this;
+    } = this
 
     return (
       <div
@@ -157,7 +157,7 @@ export class Cow extends Component {
           </div>
         </Tooltip>
       </div>
-    );
+    )
   }
 }
 
@@ -165,7 +165,7 @@ Cow.propTypes = {
   cow: object.isRequired,
   handleCowClick: func.isRequired,
   isSelected: bool.isRequired,
-};
+}
 
 export const CowPen = ({ cowInventory, handleCowClick, selectedCowId }) => (
   <div className="CowPen">
@@ -180,13 +180,13 @@ export const CowPen = ({ cowInventory, handleCowClick, selectedCowId }) => (
       />
     ))}
   </div>
-);
+)
 
 CowPen.propTypes = {
   cowInventory: array.isRequired,
   handleCowClick: func.isRequired,
   selectedCowId: string.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -195,5 +195,5 @@ export default function Consumer(props) {
         <CowPen {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

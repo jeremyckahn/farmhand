@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core'
 
 export default createMuiTheme({
   typography: {
@@ -6,4 +6,4 @@ export default createMuiTheme({
     // https://material-ui.com/style/typography/#migration-to-typography-v2
     useNextVariants: true,
   },
-});
+})

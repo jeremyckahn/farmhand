@@ -1,11 +1,11 @@
-import React from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
+import React from 'react'
+import MenuItem from '@material-ui/core/MenuItem'
 
-import { shallow } from 'enzyme';
+import { shallow } from 'enzyme'
 
-import { TierPurchase } from './TierPurchase';
+import { TierPurchase } from './TierPurchase'
 
-let component;
+let component
 
 beforeEach(() => {
   component = shallow(
@@ -23,16 +23,16 @@ beforeEach(() => {
         title: '',
       }}
     />
-  );
-});
+  )
+})
 
 test('renders', () => {
-  expect(component).toHaveLength(1);
-});
+  expect(component).toHaveLength(1)
+})
 
 test('renders tiers', () => {
-  expect(component.find(MenuItem)).toHaveLength(3);
-});
+  expect(component.find(MenuItem)).toHaveLength(3)
+})
 
 describe('option rendering', () => {
   describe('user does not have enough money for tier', () => {
@@ -42,9 +42,9 @@ describe('option rendering', () => {
           .find(MenuItem)
           .first()
           .props().disabled
-      ).toBeTruthy();
-    });
-  });
+      ).toBeTruthy()
+    })
+  })
 
   describe('unpurchased tiers', () => {
     describe('user has enough money for tier', () => {
@@ -52,105 +52,105 @@ describe('option rendering', () => {
         component.setProps({
           purchasedTier: 0,
           money: 1000,
-        });
+        })
 
         expect(
           component
             .find(MenuItem)
             .first()
             .props().disabled
-        ).toBeFalsy();
-      });
-    });
-  });
+        ).toBeFalsy()
+      })
+    })
+  })
 
   describe('purchased tiers', () => {
     test('tier is disabled', () => {
       component.setProps({
         purchasedTier: 1,
         money: Number.MAX_VALUE,
-      });
+      })
 
       expect(
         component
           .find(MenuItem)
           .first()
           .props().disabled
-      ).toBeTruthy();
-    });
-  });
-});
+      ).toBeTruthy()
+    })
+  })
+})
 
 describe('getters', () => {
   describe('canPlayerBuySelectedTier', () => {
     beforeEach(() => {
-      component.setState({ selectedTier: '1' });
-    });
+      component.setState({ selectedTier: '1' })
+    })
 
     describe('player can not buy selected tier', () => {
       test('button is enabled', () => {
-        expect(component.instance().canPlayerBuySelectedTier).toBeFalsy();
-      });
-    });
+        expect(component.instance().canPlayerBuySelectedTier).toBeFalsy()
+      })
+    })
 
     describe('player can buy selected tier', () => {
       test('button is enabled', () => {
         component.setProps({
           purchasedTier: 0,
           money: 100000,
-        });
+        })
 
-        expect(component.instance().canPlayerBuySelectedTier).toBeTruthy();
-      });
-    });
-  });
-});
+        expect(component.instance().canPlayerBuySelectedTier).toBeTruthy()
+      })
+    })
+  })
+})
 
 describe('handleTierPurchase', () => {
-  let handleTierPurchase;
+  let handleTierPurchase
 
   beforeEach(() => {
-    handleTierPurchase = jest.fn();
-    component.setProps({ handleTierPurchase });
-    component.setState({ selectedTier: 2 });
-  });
+    handleTierPurchase = jest.fn()
+    component.setProps({ handleTierPurchase })
+    component.setState({ selectedTier: 2 })
+  })
 
   describe('user does not have enough money', () => {
     test('does not call handleTierPurchase prop', () => {
-      component.instance().handleTierPurchase();
-      expect(handleTierPurchase).not.toHaveBeenCalled();
-    });
-  });
+      component.instance().handleTierPurchase()
+      expect(handleTierPurchase).not.toHaveBeenCalled()
+    })
+  })
 
   describe('user has enough money', () => {
     test('does call handleTierPurchase prop', () => {
-      component.setProps({ purchasedTier: 0, money: 2000 });
-      component.instance().handleTierPurchase();
-      expect(handleTierPurchase).toHaveBeenCalledWith(2);
-    });
-  });
-});
+      component.setProps({ purchasedTier: 0, money: 2000 })
+      component.instance().handleTierPurchase()
+      expect(handleTierPurchase).toHaveBeenCalledWith(2)
+    })
+  })
+})
 
 describe('updateSelectedTier', () => {
   beforeEach(() => {
-    component.setState({ selectedTier: '1' });
-  });
+    component.setState({ selectedTier: '1' })
+  })
 
   describe('player does not have enough money for next tier', () => {
     test('does not update selectedTier', () => {
-      component.setProps({ purchasedTier: 1, money: 0 });
-      component.instance().updateSelectedTier();
+      component.setProps({ purchasedTier: 1, money: 0 })
+      component.instance().updateSelectedTier()
 
-      expect(component.state().selectedTier).toEqual('1');
-    });
-  });
+      expect(component.state().selectedTier).toEqual('1')
+    })
+  })
 
   describe('player has enough money for next tier', () => {
     test('updates selectedTier', () => {
-      component.setProps({ purchasedTier: 1, money: 2000 });
-      component.instance().updateSelectedTier();
+      component.setProps({ purchasedTier: 1, money: 2000 })
+      component.instance().updateSelectedTier()
 
-      expect(component.state().selectedTier).toEqual('2');
-    });
-  });
-});
+      expect(component.state().selectedTier).toEqual('2')
+    })
+  })
+})

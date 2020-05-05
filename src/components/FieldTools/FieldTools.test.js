@@ -1,11 +1,11 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React from 'react'
+import { shallow } from 'enzyme'
 
-import Item from '../Item';
+import Item from '../Item'
 
-import { FieldTools } from './FieldTools';
+import { FieldTools } from './FieldTools'
 
-let component;
+let component
 
 beforeEach(() => {
   component = shallow(
@@ -15,15 +15,15 @@ beforeEach(() => {
         selectedItemId: 'sample-field-tool-1',
       }}
     />
-  );
-});
+  )
+})
 
 describe('rendering', () => {
   test('renders items for provided inventory', () => {
-    expect(component.find(Item)).toHaveLength(1);
-  });
+    expect(component.find(Item)).toHaveLength(1)
+  })
 
   test('renders selected item gameState', () => {
-    expect(component.find(Item).props().isSelected).toBeTruthy();
-  });
-});
+    expect(component.find(Item).props().isSelected).toBeTruthy()
+  })
+})

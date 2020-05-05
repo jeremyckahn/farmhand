@@ -1,15 +1,15 @@
-import React from 'react';
-import { string } from 'prop-types';
+import React from 'react'
+import { string } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context';
-import Inventory from '../Inventory';
-import Toolbelt from '../Toolbelt';
-import PlantableItems from '../PlantableItems';
-import FieldTools from '../FieldTools';
-import CowPenContextMenu from '../CowPenContextMenu';
-import { stageFocusType } from '../../enums';
+import FarmhandContext from '../../Farmhand.context'
+import Inventory from '../Inventory'
+import Toolbelt from '../Toolbelt'
+import PlantableItems from '../PlantableItems'
+import FieldTools from '../FieldTools'
+import CowPenContextMenu from '../CowPenContextMenu'
+import { stageFocusType } from '../../enums'
 
-import './ContextPane.sass';
+import './ContextPane.sass'
 
 export const ContextPane = ({ playerInventory, stageFocus }) => (
   <div className="ContextPane">
@@ -38,11 +38,11 @@ export const ContextPane = ({ playerInventory, stageFocus }) => (
     )}
     {stageFocus === stageFocusType.COW_PEN && <CowPenContextMenu />}
   </div>
-);
+)
 
 ContextPane.propTypes = {
   stageFocus: string.isRequired,
-};
+}
 
 export default function Consumer() {
   return (
@@ -51,5 +51,5 @@ export default function Consumer() {
         <ContextPane {...{ ...gameState, ...handlers }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

@@ -1,37 +1,37 @@
-import React from 'react';
-import { array, arrayOf, func, number, object, string } from 'prop-types';
-import classNames from 'classnames';
+import React from 'react'
+import { array, arrayOf, func, number, object, string } from 'prop-types'
+import classNames from 'classnames'
 
-import FarmhandContext from '../../Farmhand.context';
-import { getCropLifeStage, getPlotImage } from '../../utils';
-import { itemsMap } from '../../data/maps';
-import { pixel, plotStates } from '../../img';
-import { cropLifeStage, itemType } from '../../enums';
-import './Plot.sass';
+import FarmhandContext from '../../Farmhand.context'
+import { getCropLifeStage, getPlotImage } from '../../utils'
+import { itemsMap } from '../../data/maps'
+import { pixel, plotStates } from '../../img'
+import { cropLifeStage, itemType } from '../../enums'
+import './Plot.sass'
 
 export const getBackgroundStyles = plotContent => {
   if (!plotContent) {
-    return null;
+    return null
   }
 
-  const backgroundImages = [];
+  const backgroundImages = []
 
   if (plotContent.isFertilized) {
-    backgroundImages.push(`url(${plotStates['fertilized-plot']})`);
+    backgroundImages.push(`url(${plotStates['fertilized-plot']})`)
   }
 
   if (plotContent.wasWateredToday) {
-    backgroundImages.push(`url(${plotStates['watered-plot']})`);
+    backgroundImages.push(`url(${plotStates['watered-plot']})`)
   }
 
-  return backgroundImages.join(', ');
-};
+  return backgroundImages.join(', ')
+}
 
 export const isInRange = (range, testX, testY) => {
-  const rangeHeight = range.length;
-  const rangeWidth = range[0].length;
-  const [topLeft] = range[0];
-  const bottomRight = range[rangeHeight - 1][rangeWidth - 1];
+  const rangeHeight = range.length
+  const rangeWidth = range[0].length
+  const [topLeft] = range[0]
+  const bottomRight = range[rangeHeight - 1][rangeWidth - 1]
 
   return (
     // topLeft will be falsy if the range is empty
@@ -40,8 +40,8 @@ export const isInRange = (range, testX, testY) => {
     testX <= bottomRight.x &&
     testY >= topLeft.y &&
     testY <= bottomRight.y
-  );
-};
+  )
+}
 
 export const Plot = ({
   handlePlotClick,
@@ -84,7 +84,7 @@ export const Plot = ({
       alt=""
     />
   </div>
-);
+)
 
 Plot.propTypes = {
   handlePlotClick: func.isRequired,
@@ -94,7 +94,7 @@ Plot.propTypes = {
   plotContent: object,
   x: number.isRequired,
   y: number.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -103,5 +103,5 @@ export default function Consumer(props) {
         <Plot {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

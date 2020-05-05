@@ -1,1 +1,1 @@
-export { default } from './ContextPane';
+export { default } from './ContextPane'

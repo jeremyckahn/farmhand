@@ -1,9 +1,9 @@
 /**
  * @module farmhand.recipes
  */
-import { itemType } from '../enums';
+import { itemType } from '../enums'
 
-import * as items from './items';
+import * as items from './items'
 
 const itemify = recipe =>
   Object.freeze({
@@ -15,7 +15,7 @@ const itemify = recipe =>
         (sum, itemId) => sum + items[itemId].value * recipe.ingredients[itemId],
         0
       ),
-  });
+  })
 
 /**
  * @property farmhand.module:recipes.carrotSoup
@@ -29,4 +29,4 @@ export const carrotSoup = itemify({
     [items.carrot.id]: 4,
   },
   condition: state => (state.itemsSold[items.carrot.id] || 0) > 3,
-});
+})

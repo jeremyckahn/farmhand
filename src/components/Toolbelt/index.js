@@ -1,1 +1,1 @@
-export { default } from './Toolbelt';
+export { default } from './Toolbelt'

@@ -1,1 +1,1 @@
-export { default } from './PlantableItems';
+export { default } from './PlantableItems'

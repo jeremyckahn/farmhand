@@ -1,16 +1,16 @@
-import React from 'react';
-import { func } from 'prop-types';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import React from 'react'
+import { func } from 'prop-types'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 
-import { carrot } from '../../data/items';
+import { carrot } from '../../data/items'
 
-import FarmhandContext from '../../Farmhand.context';
+import FarmhandContext from '../../Farmhand.context'
 
-import './DebugMenu.sass';
+import './DebugMenu.sass'
 
 export const DebugMenu = ({
   handleAddMoneyClick,
@@ -55,13 +55,13 @@ export const DebugMenu = ({
       </Typography>
     </ExpansionPanelDetails>
   </ExpansionPanel>
-);
+)
 
 DebugMenu.propTypes = {
   handleAddMoneyClick: func.isRequired,
   handleClearPersistedDataClick: func.isRequired,
   handleWaterAllPlotsClick: func.isRequired,
-};
+}
 
 export default function Consumer() {
   return (
@@ -70,5 +70,5 @@ export default function Consumer() {
         <DebugMenu {...{ ...gameState, ...handlers }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

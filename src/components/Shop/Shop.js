@@ -1,13 +1,13 @@
-import React from 'react';
-import { array, number, object } from 'prop-types';
+import React from 'react'
+import { array, number, object } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context';
+import FarmhandContext from '../../Farmhand.context'
 import {
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
-} from '../../constants';
-import Inventory from '../Inventory';
-import TierPurchase from '../TierPurchase';
+} from '../../constants'
+import Inventory from '../Inventory'
+import TierPurchase from '../TierPurchase'
 
 export const Shop = ({
   handleCowPenPurchase,
@@ -43,14 +43,14 @@ export const Shop = ({
       }}
     />
   </div>
-);
+)
 
 Shop.propTypes = {
   purchasedCowPen: number.isRequired,
   purchasedField: number.isRequired,
   shopInventory: array.isRequired,
   valueAdjustments: object.isRequired,
-};
+}
 
 export default function Consumer(props) {
   return (
@@ -59,5 +59,5 @@ export default function Consumer(props) {
         <Shop {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

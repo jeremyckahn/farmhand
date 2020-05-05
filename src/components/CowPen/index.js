@@ -1,1 +1,1 @@
-export { default } from './CowPen';
+export { default } from './CowPen'

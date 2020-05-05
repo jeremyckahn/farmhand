@@ -1,9 +1,9 @@
-import React from 'react';
-import { array, string } from 'prop-types';
+import React from 'react'
+import { array, string } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context';
-import Item from '../Item';
-import './FieldTools.sass';
+import FarmhandContext from '../../Farmhand.context'
+import Item from '../Item'
+import './FieldTools.sass'
 
 export const FieldTools = ({ fieldToolInventory, selectedItemId }) => (
   <div className="FieldTools">
@@ -21,12 +21,12 @@ export const FieldTools = ({ fieldToolInventory, selectedItemId }) => (
       ))}
     </ul>
   </div>
-);
+)
 
 FieldTools.propTypes = {
   fieldToolInventory: array.isRequired,
   selectedItemId: string.isRequired,
-};
+}
 
 export default function Consumer() {
   return (
@@ -35,5 +35,5 @@ export default function Consumer() {
         <FieldTools {...{ ...gameState, ...handlers }} />
       )}
     </FarmhandContext.Consumer>
-  );
+  )
 }

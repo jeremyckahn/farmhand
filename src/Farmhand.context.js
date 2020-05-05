@@ -1,5 +1,5 @@
-import { createContext } from 'react';
+import { createContext } from 'react'
 
-const FarmhandContext = createContext();
+const FarmhandContext = createContext()
 
-export default FarmhandContext;
+export default FarmhandContext

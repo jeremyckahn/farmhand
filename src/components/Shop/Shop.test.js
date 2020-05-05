@@ -1,11 +1,11 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React from 'react'
+import { shallow } from 'enzyme'
 
-import Inventory from '../Inventory';
+import Inventory from '../Inventory'
 
-import { Shop } from './Shop';
+import { Shop } from './Shop'
 
-let component;
+let component
 
 beforeEach(() => {
   component = shallow(
@@ -18,9 +18,9 @@ beforeEach(() => {
         valueAdjustments: {},
       }}
     />
-  );
-});
+  )
+})
 
 test('renders shop inventory', () => {
-  expect(component.find(Inventory)).toHaveLength(1);
-});
+  expect(component.find(Inventory)).toHaveLength(1)
+})
