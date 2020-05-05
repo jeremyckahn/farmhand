@@ -4,7 +4,11 @@ import FarmhandContext from '../../Farmhand.context'
 
 import './Home.sass'
 
-const Home = () => <div className="Home"></div>
+const Home = () => (
+  <div className="Home">
+    <h1>Welcome!</h1>
+  </div>
+)
 
 Home.propTypes = {}
 

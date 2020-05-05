@@ -16,6 +16,7 @@ import { dollarAmount } from '../../utils'
 import './AppBar.sass'
 
 const stageTitleMap = {
+  [stageFocusType.HOME]: 'Home',
   [stageFocusType.FIELD]: 'Field',
   [stageFocusType.SHOP]: 'Shop',
   [stageFocusType.COW_PEN]: 'Cows',

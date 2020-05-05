@@ -136,7 +136,7 @@ export default class Farmhand extends Component {
     purchasedField: 0,
     shopInventory: [...shopInventory],
     doShowNotifications: false,
-    stageFocus: stageFocusType.FIELD,
+    stageFocus: stageFocusType.HOME,
     valueAdjustments: {},
   }
 
@@ -215,9 +215,9 @@ export default class Farmhand extends Component {
   }
 
   get viewList() {
-    const { COW_PEN, FIELD, INVENTORY, KITCHEN, SHOP } = stageFocusType
+    const { COW_PEN, FIELD, HOME, INVENTORY, KITCHEN, SHOP } = stageFocusType
 
-    const viewList = [FIELD, SHOP]
+    const viewList = [HOME, FIELD, SHOP]
 
     if (this.state.purchasedCowPen) {
       viewList.push(COW_PEN)
@@ -244,6 +244,7 @@ export default class Farmhand extends Component {
     })
 
     this.keyMap = {
+      focusHome: 'h',
       focusField: 'f',
       focusInventory: 'i',
       focusCows: 'c',
@@ -256,6 +257,7 @@ export default class Farmhand extends Component {
     }
 
     this.keyHandlers = {
+      focusHome: () => this.setState({ stageFocus: stageFocusType.HOME }),
       focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
       focusInventory: () =>
         this.setState({ stageFocus: stageFocusType.INVENTORY }),
@@ -273,6 +275,7 @@ export default class Farmhand extends Component {
       toggleMenu: () => this.handlers.handleMenuToggle(),
     }
 
+    // TODO: Disable this is non-dev environments.
     Object.assign(this.keyMap, {
       clearPersistedData: 'shift+d',
       waterAllPlots: 'w',
