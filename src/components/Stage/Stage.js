@@ -13,8 +13,15 @@ import { stageFocusType } from '../../enums'
 
 import './Stage.sass'
 
-export const Stage = ({ field, isMenuOpen, playerInventory, stageFocus }) => (
+export const Stage = ({
+  field,
+  isMenuOpen,
+  playerInventory,
+  stageFocus,
+  viewTitle,
+}) => (
   <div className={classNames('Stage', { 'menu-closed': !isMenuOpen })}>
+    <h2 className="view-title">{viewTitle}</h2>
     {stageFocus === stageFocusType.HOME && <Home />}
     {stageFocus === stageFocusType.FIELD && (
       <Field
@@ -42,6 +49,7 @@ Stage.propTypes = {
   isMenuOpen: bool.isRequired,
   playerInventory: array.isRequired,
   stageFocus: string.isRequired,
+  viewTitle: string.isRequired,
 }
 
 export default function Consumer(props) {

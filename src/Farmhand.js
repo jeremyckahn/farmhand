@@ -34,6 +34,15 @@ const { OBSERVE, SET_SPRINKLER } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
 
+const stageTitleMap = {
+  [stageFocusType.HOME]: 'Home',
+  [stageFocusType.FIELD]: 'Field',
+  [stageFocusType.SHOP]: 'Shop',
+  [stageFocusType.COW_PEN]: 'Cows',
+  [stageFocusType.KITCHEN]: 'Kitchen',
+  [stageFocusType.INVENTORY]: 'Inventory',
+}
+
 /**
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @param {Object.<number>} valueAdjustments
@@ -166,6 +175,10 @@ export default class Farmhand extends Component {
 
       return acc
     }, {})
+  }
+
+  get viewTitle() {
+    return stageTitleMap[this.state.stageFocus]
   }
 
   get fieldToolInventory() {
@@ -467,6 +480,7 @@ export default class Farmhand extends Component {
       playerInventory,
       playerInventoryQuantities,
       viewList,
+      viewTitle,
     } = this
 
     // Bundle up the raw state and the computed state into one object to be
@@ -479,6 +493,7 @@ export default class Farmhand extends Component {
       playerInventory,
       playerInventoryQuantities,
       viewList,
+      viewTitle,
     }
 
     return (

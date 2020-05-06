@@ -1,3 +1,5 @@
+@import ../../styles/variables.sass
+
 .AppBar
 
   .toolbar
@@ -12,7 +14,7 @@
       display: none
       margin-left: 1em
 
-      @media (min-width: 400px)
+      @media (min-width: #{$break-narrow-phone})
         display: block
 
     .money-display
