@@ -24,6 +24,7 @@ export const Navigation = ({
         value: stageFocus,
       }}
     >
+      <MenuItem value={stageFocusType.HOME}>Home (h)</MenuItem>
       <MenuItem value={stageFocusType.FIELD}>Field (f)</MenuItem>
       <MenuItem value={stageFocusType.SHOP}>Shop (s)</MenuItem>
       {purchasedCowPen && (

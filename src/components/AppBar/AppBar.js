@@ -11,17 +11,8 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../../Farmhand.context'
-import { stageFocusType } from '../../enums'
 import { dollarAmount } from '../../utils'
 import './AppBar.sass'
-
-const stageTitleMap = {
-  [stageFocusType.FIELD]: 'Field',
-  [stageFocusType.SHOP]: 'Shop',
-  [stageFocusType.COW_PEN]: 'Cows',
-  [stageFocusType.KITCHEN]: 'Kitchen',
-  [stageFocusType.INVENTORY]: 'Inventory',
-}
 
 export const AppBar = ({
   handleClickNextMenuButton,
@@ -30,6 +21,7 @@ export const AppBar = ({
   money,
   stageFocus,
   viewList,
+  viewTitle,
 }) => (
   <MuiAppBar
     {...{
@@ -74,7 +66,7 @@ export const AppBar = ({
           variant: 'h2',
         }}
       >
-        {stageTitleMap[stageFocus]}
+        {viewTitle}
       </Typography>
       <Typography
         {...{
@@ -95,6 +87,7 @@ AppBar.propTypes = {
   money: number.isRequired,
   stageFocus: string.isRequired,
   viewList: arrayOf(string).isRequired,
+  viewTitle: string.isRequired,
 }
 
 export default function Consumer(props) {

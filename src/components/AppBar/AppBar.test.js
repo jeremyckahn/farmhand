@@ -17,6 +17,7 @@ beforeEach(() => {
         money: 0,
         stageFocus: stageFocusType.FIELD,
         viewList: [],
+        viewTitle: '',
       }}
     />
   )
