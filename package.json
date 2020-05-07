@@ -18,6 +18,7 @@
     "preversion": "npm test",
     "start": "react-scripts start",
     "test": "react-scripts test",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "update-images": "sh update-images.sh"
   },
   "author": "Jeremy Kahn <jeremyckahn@gmail.com>",

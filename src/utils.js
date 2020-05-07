@@ -92,7 +92,6 @@ export const getCropFromItemId = itemId => ({
   daysOld: 0,
   daysWatered: 0,
   isFertilized: false,
-  type: itemType.CROP,
   wasWateredToday: false,
 })
 
@@ -102,8 +101,13 @@ export const getCropFromItemId = itemId => ({
  */
 export const getPlotContentFromItemId = itemId => ({
   itemId,
-  type: itemsMap[itemId].type,
 })
+
+/**
+ * @param {farmhand.plotContent} plotContent
+ * @returns {string}
+ */
+export const getPlotContentType = ({ itemId }) => itemsMap[itemId].type
 
 /**
  * @param {farmhand.crop} crop
@@ -142,7 +146,7 @@ const cropLifeStageToImageSuffixMap = {
  */
 export const getPlotImage = plotContent =>
   plotContent
-    ? plotContent.type === itemType.CROP
+    ? getPlotContentType(plotContent) === itemType.CROP
       ? getCropLifeStage(plotContent) === GROWN
         ? itemImages[getCropId(plotContent)]
         : itemImages[

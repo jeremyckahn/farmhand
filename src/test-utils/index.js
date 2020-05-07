@@ -1,5 +1,3 @@
-import { itemType } from '../enums'
-
 export const shapeOf = object =>
   Object.keys(object).reduce((acc, key) => {
     acc[key] = typeof object[key]
@@ -9,8 +7,7 @@ export const shapeOf = object =>
 export const testCrop = (item = {}) => ({
   daysOld: 0,
   daysWatered: 0,
-  itemId: '',
-  type: itemType.CROP,
+  itemId: 'sample-item-1',
   wasWateredToday: false,
   ...item,
 })
