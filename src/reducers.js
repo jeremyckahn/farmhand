@@ -26,6 +26,7 @@ import {
   FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
+  NOTIFICATION_LOG_SIZE,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   RAIN_CHANCE,
@@ -411,6 +412,25 @@ export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
   return { ...state, inventory }
 }
 
+// FIXME: Test this.
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const rotateNotificationLogs = state => {
+  const notificationLog = [...state.notificationLog]
+
+  const { newDayNotifications } = state
+  newDayNotifications.length && notificationLog.unshift(newDayNotifications)
+
+  notificationLog.length = Math.min(
+    notificationLog.length,
+    NOTIFICATION_LOG_SIZE
+  )
+
+  return { ...state, notificationLog }
+}
+
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
@@ -424,13 +444,17 @@ export const computeStateForNextDay = state => {
   })
   state = processField(state)
 
-  return [
+  state = [
     processBuffs,
     processNerfs,
     processSprinklers,
     processFeedingCows,
     processMilkingCows,
   ].reduce((acc, fn) => fn({ ...acc }), state)
+
+  state = rotateNotificationLogs(state)
+
+  return state
 }
 
 /**

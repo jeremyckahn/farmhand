@@ -63,6 +63,7 @@ describe('computeStateForNextDay', () => {
       newDayNotifications: [],
       cowInventory: [],
       inventory: [],
+      notificationLog: [],
     })
 
     expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()))

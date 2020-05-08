@@ -97,8 +97,9 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {boolean} isMenuOpen
  * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
  * @property {number} money
- * @property {Array.<string} newDayNotifications
+ * @property {Array.<string>} newDayNotifications
  * @property {Array.<string>} notifications
+ * @property {Array.<string} notificationLog
  * @property {string} selectedCowId
  * @property {string} selectedItemId
  * @property {Object} itemsSold Keys are items IDs, values are the number of
@@ -138,6 +139,7 @@ export default class Farmhand extends Component {
     money: 500,
     newDayNotifications: [],
     notifications: [],
+    notificationLog: [],
     selectedCowId: '',
     selectedItemId: '',
     fieldMode: OBSERVE,
@@ -167,6 +169,7 @@ export default class Farmhand extends Component {
       'learnedRecipes',
       'money',
       'newDayNotifications',
+      'notificationLog',
       'purchasedCowPen',
       'purchasedField',
       'valueAdjustments',
