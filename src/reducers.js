@@ -419,8 +419,12 @@ export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
 export const rotateNotificationLogs = state => {
   const notificationLog = [...state.notificationLog]
 
-  const { newDayNotifications } = state
-  newDayNotifications.length && notificationLog.unshift(newDayNotifications)
+  const { dayCount, newDayNotifications } = state
+  newDayNotifications.length &&
+    notificationLog.unshift({
+      day: dayCount,
+      notifications: newDayNotifications,
+    })
 
   notificationLog.length = Math.min(
     notificationLog.length,

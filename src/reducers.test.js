@@ -43,30 +43,38 @@ jest.mock('./constants', () => ({
 describe('rotateNotificationLogs', () => {
   test('rotates logs', () => {
     const { notificationLog } = fn.rotateNotificationLogs({
+      dayCount: 1,
       newDayNotifications: ['b'],
-      notificationLog: [['a']],
+      notificationLog: [{ day: 0, notifications: ['a'] }],
     })
 
-    expect(notificationLog).toEqual([['b'], ['a']])
+    expect(notificationLog).toEqual([
+      { day: 1, notifications: ['b'] },
+      { day: 0, notifications: ['a'] },
+    ])
   })
 
   test('limits log size', () => {
     const { notificationLog } = fn.rotateNotificationLogs({
+      dayCount: 50,
       newDayNotifications: ['new log'],
-      notificationLog: new Array(NOTIFICATION_LOG_SIZE).fill(['a']),
+      notificationLog: new Array(NOTIFICATION_LOG_SIZE).fill({
+        day: 1,
+        notifications: ['a'],
+      }),
     })
 
     expect(notificationLog).toHaveLength(NOTIFICATION_LOG_SIZE)
-    expect(notificationLog[0]).toEqual(['new log'])
+    expect(notificationLog[0]).toEqual({ day: 50, notifications: ['new log'] })
   })
 
   test('ignores empty logs', () => {
     const { notificationLog } = fn.rotateNotificationLogs({
       newDayNotifications: [],
-      notificationLog: [['a']],
+      notificationLog: [{ day: 0, notifications: ['a'] }],
     })
 
-    expect(notificationLog).toEqual([['a']])
+    expect(notificationLog).toEqual([{ day: 0, notifications: ['a'] }])
   })
 })
 
