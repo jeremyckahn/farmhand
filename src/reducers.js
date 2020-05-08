@@ -412,7 +412,6 @@ export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
   return { ...state, inventory }
 }
 
-// FIXME: Test this.
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}

@@ -10,6 +10,7 @@ import {
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
+  NOTIFICATION_LOG_SIZE,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
@@ -38,6 +39,36 @@ jest.mock('./constants', () => ({
   CROW_CHANCE: 0,
   RAIN_CHANCE: 0,
 }))
+
+describe('rotateNotificationLogs', () => {
+  test('rotates logs', () => {
+    const { notificationLog } = fn.rotateNotificationLogs({
+      newDayNotifications: ['b'],
+      notificationLog: [['a']],
+    })
+
+    expect(notificationLog).toEqual([['b'], ['a']])
+  })
+
+  test('limits log size', () => {
+    const { notificationLog } = fn.rotateNotificationLogs({
+      newDayNotifications: ['new log'],
+      notificationLog: new Array(NOTIFICATION_LOG_SIZE).fill(['a']),
+    })
+
+    expect(notificationLog).toHaveLength(NOTIFICATION_LOG_SIZE)
+    expect(notificationLog[0]).toEqual(['new log'])
+  })
+
+  test('ignores empty logs', () => {
+    const { notificationLog } = fn.rotateNotificationLogs({
+      newDayNotifications: [],
+      notificationLog: [['a']],
+    })
+
+    expect(notificationLog).toEqual([['a']])
+  })
+})
 
 describe('computeStateForNextDay', () => {
   beforeEach(() => {
