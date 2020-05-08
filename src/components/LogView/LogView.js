@@ -1,11 +1,26 @@
 import React from 'react'
 import { array } from 'prop-types'
+import SnackbarContent from '@material-ui/core/SnackbarContent'
 
 import FarmhandContext from '../../Farmhand.context'
 
 import './LogView.sass'
 
-const LogView = () => <div className="LogView"></div>
+const LogView = ({ notificationLog }) => (
+  <ul className="LogView">
+    {notificationLog.map((notifications, i) => (
+      <li key={`${i}_${notifications.join()}`}>
+        <SnackbarContent
+          {...{
+            message: notifications.map((notification, i) => (
+              <p key={`${i}_${notification}`}>{notification}</p>
+            )),
+          }}
+        />
+      </li>
+    ))}
+  </ul>
+)
 
 LogView.propTypes = {
   notificationLog: array.isRequired,
