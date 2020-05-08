@@ -8,8 +8,9 @@ import './LogView.sass'
 
 const LogView = ({ notificationLog }) => (
   <ul className="LogView">
-    {notificationLog.map(({ notifications }, i) => (
+    {notificationLog.map(({ day, notifications }, i) => (
       <li key={`${i}_${notifications.join()}`}>
+        <h3>Day {day}</h3>
         <SnackbarContent
           {...{
             message: notifications.map((notification, i) => (
