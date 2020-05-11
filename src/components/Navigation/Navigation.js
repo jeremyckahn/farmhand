@@ -1,6 +1,9 @@
 import React from 'react'
+import Fab from '@material-ui/core/Fab'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import HistoryIcon from '@material-ui/icons/History'
+import Tooltip from '@material-ui/core/Tooltip'
 import { number, func, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -17,6 +20,25 @@ export const Navigation = ({
   <header className="Navigation">
     <h1>Farmhand</h1>
     <h2 className="day-count">Day {dayCount}</h2>
+    <div className="button-array">
+      <Tooltip
+        {...{
+          placement: 'bottom',
+          title: "Open Farmer's Log",
+        }}
+      >
+        <Fab
+          {...{
+            'aria-label': "Open Farmer's Log",
+            className: 'view-log',
+            color: 'primary',
+            onClick: () => console.log('Implement me!'),
+          }}
+        >
+          <HistoryIcon />
+        </Fab>
+      </Tooltip>
+    </div>
     <Select
       {...{
         className: 'view-select',
