@@ -205,4 +205,11 @@ export default {
   handleNotificationExited() {
     this.setState({ notifications: [] })
   },
+
+  /**
+   * @param {farmhand.module:enums.dialogView} dialogView
+   */
+  handleClickDialogViewButton(dialogView) {
+    this.setState({ currentDialogView: dialogView })
+  },
 }

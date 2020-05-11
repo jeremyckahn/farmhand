@@ -7,12 +7,13 @@ import Tooltip from '@material-ui/core/Tooltip'
 import { number, func, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
-import { stageFocusType } from '../../enums'
+import { dialogView, stageFocusType } from '../../enums'
 
 import './Navigation.sass'
 
 export const Navigation = ({
   dayCount,
+  handleClickDialogViewButton,
   handleViewChange,
   purchasedCowPen,
   stageFocus,
@@ -32,7 +33,7 @@ export const Navigation = ({
             'aria-label': "Open Farmer's Log",
             className: 'view-log',
             color: 'primary',
-            onClick: () => console.log('Implement me!'),
+            onClick: () => handleClickDialogViewButton(dialogView.FARMERS_LOG),
           }}
         >
           <HistoryIcon />
