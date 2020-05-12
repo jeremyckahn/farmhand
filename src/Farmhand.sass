@@ -4,9 +4,17 @@
   // padding-left and breakpoints correspond to AppBar dimensions
   // https://material-ui.com/demos/app-bar/
   display: flex
-  font-family: "Francois One", sans-serif
   padding-top: 3.5em
   position: fixed
+
+  // The Dialog root component also gets an explicit Farmhand class and needs
+  // some styles tweaked just for it.
+  &.MuiDialog-root
+    display: block
+
+  &,
+  .MuiTypography-root
+    font-family: "Francois One", sans-serif
 
   @media (min-width: #{$break-xs}) and (orientation: landscape)
     padding-top: 3em

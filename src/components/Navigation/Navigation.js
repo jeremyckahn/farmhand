@@ -57,7 +57,12 @@ export const Navigation = ({
         </Fab>
       </Tooltip>
     </div>
+    {/*
+    This Dialog gets the Farmhand class because it renders outside of the root
+    Farmhand component. This explicit class maintains style consistency.
+    */}
     <Dialog
+      className="Farmhand"
       open={currentDialogView !== dialogView.NONE}
       onClose={handleCloseDialogView}
     >
