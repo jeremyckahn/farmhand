@@ -2,7 +2,6 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import FarmhandContext from '../../Farmhand.context'
-import LogView from '../LogView'
 
 import './Home.sass'
 
@@ -22,7 +21,6 @@ If you'd like to follow this project's development, please check it out on [GitH
     `,
       }}
     />
-    <LogView />
   </div>
 )
 
