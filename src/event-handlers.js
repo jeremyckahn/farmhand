@@ -1,4 +1,4 @@
-import { fieldMode } from './enums'
+import { dialogView, fieldMode } from './enums'
 
 const {
   CLEANUP,
@@ -211,5 +211,9 @@ export default {
    */
   handleClickDialogViewButton(dialogView) {
     this.setState({ currentDialogView: dialogView })
+  },
+
+  handleCloseDialogView() {
+    this.setState({ currentDialogView: dialogView.NONE })
   },
 }

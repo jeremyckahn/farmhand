@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import MenuItem from '@material-ui/core/MenuItem'
 
-import { stageFocusType } from '../../enums'
+import { dialogView, stageFocusType } from '../../enums'
 
 import { Navigation } from './Navigation'
 
@@ -12,7 +12,10 @@ beforeEach(() => {
   component = shallow(
     <Navigation
       {...{
+        currentDialogView: dialogView.NONE,
         dayCount: 0,
+        handleClickDialogViewButton: () => {},
+        handleCloseDialogView: () => {},
         handleViewChange: () => {},
         purchasedCowPen: 0,
         stageFocus: stageFocusType.FIELD,

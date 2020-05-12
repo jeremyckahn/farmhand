@@ -1,4 +1,7 @@
 import React from 'react'
+import Dialog from '@material-ui/core/Dialog'
+import MuiDialogTitle from '@material-ui/core/DialogTitle'
+import MuiDialogContent from '@material-ui/core/DialogContent'
 import Fab from '@material-ui/core/Fab'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -9,11 +12,15 @@ import { number, func, string } from 'prop-types'
 import FarmhandContext from '../../Farmhand.context'
 import { dialogView, stageFocusType } from '../../enums'
 
+import LogView from '../LogView'
+
 import './Navigation.sass'
 
 export const Navigation = ({
+  currentDialogView,
   dayCount,
   handleClickDialogViewButton,
+  handleCloseDialogView,
   handleViewChange,
   purchasedCowPen,
   stageFocus,
@@ -40,6 +47,17 @@ export const Navigation = ({
         </Fab>
       </Tooltip>
     </div>
+    <Dialog
+      open={currentDialogView !== dialogView.NONE}
+      onClose={handleCloseDialogView}
+    >
+      <MuiDialogTitle>
+        {currentDialogView === dialogView.FARMERS_LOG && "Farmer's Log"}
+      </MuiDialogTitle>
+      <MuiDialogContent>
+        {currentDialogView === dialogView.FARMERS_LOG && <LogView />}
+      </MuiDialogContent>
+    </Dialog>
     <Select
       {...{
         className: 'view-select',
@@ -61,6 +79,8 @@ export const Navigation = ({
 
 Navigation.propTypes = {
   dayCount: number.isRequired,
+  handleClickDialogViewButton: func.isRequired,
+  handleCloseDialogView: func.isRequired,
   handleViewChange: func.isRequired,
   purchasedCowPen: number.isRequired,
   stageFocus: string.isRequired,

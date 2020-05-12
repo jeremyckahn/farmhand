@@ -3,9 +3,6 @@ import { HotKeys } from 'react-hotkeys'
 import memoize from 'fast-memoize'
 import localforage from 'localforage'
 import { MuiThemeProvider } from '@material-ui/core/styles'
-import Dialog from '@material-ui/core/Dialog'
-import MuiDialogTitle from '@material-ui/core/DialogTitle'
-import MuiDialogContent from '@material-ui/core/DialogContent'
 import Drawer from '@material-ui/core/Drawer'
 import Fab from '@material-ui/core/Fab'
 import HotelIcon from '@material-ui/icons/Hotel'
@@ -22,7 +19,6 @@ import ContextPane from './components/ContextPane'
 import Stage from './components/Stage'
 import NotificationSystem from './components/NotificationSystem'
 import DebugMenu from './components/DebugMenu'
-import LogView from './components/LogView'
 import theme from './mui-theme'
 import { createNewField, getItemValue, getRangeCoords } from './utils'
 import shopInventory from './data/shop-inventory'
@@ -490,7 +486,6 @@ export default class Farmhand extends Component {
       playerInventoryQuantities,
       viewList,
       viewTitle,
-      state: { currentDialogView },
     } = this
 
     // Bundle up the raw state and the computed state into one object to be
@@ -513,21 +508,6 @@ export default class Farmhand extends Component {
             <div className="Farmhand fill">
               <NotificationSystem />
               <AppBar />
-              {/* FIXME: Clean this up. */}
-              <Dialog
-                open={currentDialogView !== dialogView.NONE}
-                onClose={() =>
-                  this.setState({ currentDialogView: dialogView.NONE })
-                }
-              >
-                <MuiDialogTitle>
-                  {currentDialogView === dialogView.FARMERS_LOG &&
-                    "Farmer's Log"}
-                </MuiDialogTitle>
-                <MuiDialogContent>
-                  {currentDialogView === dialogView.FARMERS_LOG && <LogView />}
-                </MuiDialogContent>
-              </Dialog>
               <Drawer
                 {...{
                   className: 'sidebar-wrapper',
