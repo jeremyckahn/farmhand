@@ -10,6 +10,7 @@ import {
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
+  NOTIFICATION_LOG_SIZE,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
@@ -39,6 +40,44 @@ jest.mock('./constants', () => ({
   RAIN_CHANCE: 0,
 }))
 
+describe('rotateNotificationLogs', () => {
+  test('rotates logs', () => {
+    const { notificationLog } = fn.rotateNotificationLogs({
+      dayCount: 1,
+      newDayNotifications: ['b'],
+      notificationLog: [{ day: 0, notifications: ['a'] }],
+    })
+
+    expect(notificationLog).toEqual([
+      { day: 1, notifications: ['b'] },
+      { day: 0, notifications: ['a'] },
+    ])
+  })
+
+  test('limits log size', () => {
+    const { notificationLog } = fn.rotateNotificationLogs({
+      dayCount: 50,
+      newDayNotifications: ['new log'],
+      notificationLog: new Array(NOTIFICATION_LOG_SIZE).fill({
+        day: 1,
+        notifications: ['a'],
+      }),
+    })
+
+    expect(notificationLog).toHaveLength(NOTIFICATION_LOG_SIZE)
+    expect(notificationLog[0]).toEqual({ day: 50, notifications: ['new log'] })
+  })
+
+  test('ignores empty logs', () => {
+    const { notificationLog } = fn.rotateNotificationLogs({
+      newDayNotifications: [],
+      notificationLog: [{ day: 0, notifications: ['a'] }],
+    })
+
+    expect(notificationLog).toEqual([{ day: 0, notifications: ['a'] }])
+  })
+})
+
 describe('computeStateForNextDay', () => {
   beforeEach(() => {
     jest.spyOn(Math, 'random').mockReturnValue(0.75)
@@ -63,6 +102,7 @@ describe('computeStateForNextDay', () => {
       newDayNotifications: [],
       cowInventory: [],
       inventory: [],
+      notificationLog: [],
     })
 
     expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()))

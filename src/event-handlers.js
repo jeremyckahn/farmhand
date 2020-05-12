@@ -1,4 +1,4 @@
-import { fieldMode } from './enums'
+import { dialogView, fieldMode } from './enums'
 
 const {
   CLEANUP,
@@ -204,5 +204,16 @@ export default {
 
   handleNotificationExited() {
     this.setState({ notifications: [] })
+  },
+
+  /**
+   * @param {farmhand.module:enums.dialogView} dialogView
+   */
+  handleClickDialogViewButton(dialogView) {
+    this.setState({ currentDialogView: dialogView })
+  },
+
+  handleCloseDialogView() {
+    this.setState({ currentDialogView: dialogView.NONE })
   },
 }

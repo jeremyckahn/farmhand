@@ -70,6 +70,10 @@ export const itemType = enumify([
  */
 export const genders = enumify(['FEMALE', 'MALE'])
 
+/**
+ * @property farmhand.module:enums.cowColors
+ * @enum {string}
+ */
 export const cowColors = enumify([
   'BLUE',
   'BROWN',
@@ -79,3 +83,9 @@ export const cowColors = enumify([
   'WHITE',
   'YELLOW',
 ])
+
+/**
+ * @property farmhand.module:enums.dialogView
+ * @enum {string}
+ */
+export const dialogView = enumify(['NONE', 'FARMERS_LOG'])

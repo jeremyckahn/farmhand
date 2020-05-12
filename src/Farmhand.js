@@ -23,7 +23,7 @@ import theme from './mui-theme'
 import { createNewField, getItemValue, getRangeCoords } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
-import { fieldMode, stageFocusType } from './enums'
+import { dialogView, fieldMode, stageFocusType } from './enums'
 import { PURCHASEABLE_COW_PENS } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
@@ -86,6 +86,7 @@ export const getPlantableCropInventory = memoize(inventory =>
 /**
  * @typedef farmhand.state
  * @type {Object}
+ * @property {farmhand.module:enums.dialogView} currentDialogView
  * @property {farmhand.cow} cowForSale
  * @property {Array.<farmhand.cow>} cowInventory
  * @property {number} dayCount
@@ -97,8 +98,9 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {boolean} isMenuOpen
  * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
  * @property {number} money
- * @property {Array.<string} newDayNotifications
+ * @property {Array.<string>} newDayNotifications
  * @property {Array.<string>} notifications
+ * @property {Array.<string} notificationLog
  * @property {string} selectedCowId
  * @property {string} selectedItemId
  * @property {Object} itemsSold Keys are items IDs, values are the number of
@@ -124,6 +126,7 @@ export default class Farmhand extends Component {
    * @type {farmhand.state}
    */
   state = {
+    currentDialogView: dialogView.NONE,
     cowForSale: {},
     cowInventory: [],
     dayCount: 0,
@@ -138,6 +141,7 @@ export default class Farmhand extends Component {
     money: 500,
     newDayNotifications: [],
     notifications: [],
+    notificationLog: [],
     selectedCowId: '',
     selectedItemId: '',
     fieldMode: OBSERVE,
@@ -167,6 +171,7 @@ export default class Farmhand extends Component {
       'learnedRecipes',
       'money',
       'newDayNotifications',
+      'notificationLog',
       'purchasedCowPen',
       'purchasedField',
       'valueAdjustments',

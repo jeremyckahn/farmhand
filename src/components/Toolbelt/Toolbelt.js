@@ -14,7 +14,7 @@ export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
 }) => (
-  <div className="Toolbelt">
+  <div className="Toolbelt button-array">
     {[
       {
         alt: 'A watering can for hydrating plants',

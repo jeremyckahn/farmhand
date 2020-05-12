@@ -3,7 +3,7 @@ import { array, arrayOf, func, number, object, string } from 'prop-types'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
-import { getCropLifeStage, getPlotImage } from '../../utils'
+import { getCropLifeStage, getPlotContentType, getPlotImage } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, itemType } from '../../enums'
@@ -53,7 +53,7 @@ export const Plot = ({
 
   image = getPlotImage(plotContent),
   lifeStage = plotContent &&
-    plotContent.type === itemType.CROP &&
+    getPlotContentType(plotContent) === itemType.CROP &&
     getCropLifeStage(plotContent),
 }) => (
   <div
@@ -62,7 +62,7 @@ export const Plot = ({
       'is-in-hover-range': isInRange(hoveredPlotRange, x, y),
 
       // For crops
-      crop: plotContent && plotContent.type === itemType.CROP,
+      crop: plotContent && getPlotContentType(plotContent) === itemType.CROP,
       'is-fertilized': plotContent && plotContent.isFertilized,
       'is-ripe': lifeStage === cropLifeStage.GROWN,
 

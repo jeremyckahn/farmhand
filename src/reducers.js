@@ -12,6 +12,7 @@ import {
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
   getPlotContentFromItemId,
+  getPlotContentType,
   getRangeCoords,
 } from './utils'
 import {
@@ -25,6 +26,7 @@ import {
   FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
+  NOTIFICATION_LOG_SIZE,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   RAIN_CHANCE,
@@ -70,7 +72,7 @@ const setWasWateredProperty = (plotContent, wasWateredToday) => {
     return null
   }
 
-  return plotContent.type === itemType.CROP
+  return getPlotContentType(plotContent) === itemType.CROP
     ? { ...plotContent, wasWateredToday }
     : { ...plotContent }
 }
@@ -153,7 +155,7 @@ export const applyCrows = state => {
   const updatedField = fieldHasScarecrow
     ? field
     : updateField(field, plotContent => {
-        if (!plotContent || plotContent.type !== itemType.CROP) {
+        if (!plotContent || getPlotContentType(plotContent) !== itemType.CROP) {
           return plotContent
         }
 
@@ -182,7 +184,7 @@ export const processSprinklers = state => {
 
   field.forEach((row, fieldY) => {
     row.forEach((plot, fieldX) => {
-      if (!plot || plot.type !== itemType.SPRINKLER) {
+      if (!plot || getPlotContentType(plot) !== itemType.SPRINKLER) {
         return
       }
 
@@ -200,7 +202,10 @@ export const processSprinklers = state => {
 
           const plotContent = fieldRow[x]
 
-          if (plotContent && plotContent.type === itemType.CROP) {
+          if (
+            plotContent &&
+            getPlotContentType(plotContent) === itemType.CROP
+          ) {
             if (!crops.has(plotContent)) {
               modifiedField = modifyFieldPlotAt(
                 { ...state, field: modifiedField },
@@ -411,6 +416,28 @@ export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
+export const rotateNotificationLogs = state => {
+  const notificationLog = [...state.notificationLog]
+
+  const { dayCount, newDayNotifications } = state
+  newDayNotifications.length &&
+    notificationLog.unshift({
+      day: dayCount,
+      notifications: newDayNotifications,
+    })
+
+  notificationLog.length = Math.min(
+    notificationLog.length,
+    NOTIFICATION_LOG_SIZE
+  )
+
+  return { ...state, notificationLog }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
 export const computeStateForNextDay = state => {
   state = computeCowInventoryForNextDay({
     ...state,
@@ -420,13 +447,17 @@ export const computeStateForNextDay = state => {
   })
   state = processField(state)
 
-  return [
+  state = [
     processBuffs,
     processNerfs,
     processSprinklers,
     processFeedingCows,
     processMilkingCows,
   ].reduce((acc, fn) => fn({ ...acc }), state)
+
+  state = rotateNotificationLogs(state)
+
+  return state
 }
 
 /**
@@ -685,7 +716,11 @@ export const fertilizeCrop = (state, x, y) => {
   const row = field[y]
   const crop = row[x]
 
-  if (!crop || crop.type !== itemType.CROP || crop.isFertilized === true) {
+  if (
+    !crop ||
+    getPlotContentType(crop) !== itemType.CROP ||
+    crop.isFertilized === true
+  ) {
     return state
   }
 
@@ -783,7 +818,7 @@ export const harvestPlot = (state, x, y) => {
 
   if (
     !crop ||
-    crop.type !== itemType.CROP ||
+    getPlotContentType(crop) !== itemType.CROP ||
     getCropLifeStage(crop) !== GROWN
   ) {
     return state
@@ -848,7 +883,7 @@ export const purchaseField = (state, fieldId) => {
 export const waterPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
 
-  if (!plotContent || plotContent.type !== itemType.CROP) {
+  if (!plotContent || getPlotContentType(plotContent) !== itemType.CROP) {
     return state
   }
 

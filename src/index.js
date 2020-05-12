@@ -33,12 +33,13 @@
  * @property {number} [quanitity] How many of the item the player has.
  */
 
-// TODO: farmhand.plotContent.type should be derived data, not stored.
 /**
+ * This is a minimalist base type to be inherited and expanded on by types like
+ * farmhand.crop. This also represents non-crop plot content like scarecrows
+ * and sprinklers.
  * @typedef farmhand.plotContent
  * @type {Object}
  * @property {string} itemId
- * @property {farmhand.module:enums.itemType} type
  */
 
 /**
