@@ -18,6 +18,10 @@ import LogView from '../LogView'
 
 import './Navigation.sass'
 
+const dialogTriggerTextMap = {
+  [dialogView.FARMERS_LOG]: "Open Farmer's Log",
+}
+
 const dialogTitleMap = {
   [dialogView.FARMERS_LOG]: "Farmer's Log",
 }
@@ -42,12 +46,12 @@ export const Navigation = ({
       <Tooltip
         {...{
           placement: 'bottom',
-          title: "Open Farmer's Log",
+          title: dialogTriggerTextMap[dialogView.FARMERS_LOG],
         }}
       >
         <Fab
           {...{
-            'aria-label': "Open Farmer's Log",
+            'aria-label': dialogTriggerTextMap[dialogView.FARMERS_LOG],
             className: 'view-log',
             color: 'primary',
             onClick: () => handleClickDialogViewButton(dialogView.FARMERS_LOG),
