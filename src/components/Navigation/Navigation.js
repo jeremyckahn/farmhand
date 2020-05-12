@@ -1,7 +1,9 @@
 import React from 'react'
+import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
-import MuiDialogTitle from '@material-ui/core/DialogTitle'
-import MuiDialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import Fab from '@material-ui/core/Fab'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -59,8 +61,13 @@ export const Navigation = ({
       open={currentDialogView !== dialogView.NONE}
       onClose={handleCloseDialogView}
     >
-      <MuiDialogTitle>{dialogTitleMap[currentDialogView]}</MuiDialogTitle>
-      <MuiDialogContent>{dialogContentMap[currentDialogView]}</MuiDialogContent>
+      <DialogTitle>{dialogTitleMap[currentDialogView]}</DialogTitle>
+      <DialogContent>{dialogContentMap[currentDialogView]}</DialogContent>
+      <DialogActions>
+        <Button onClick={handleCloseDialogView} color="primary" autoFocus>
+          Close
+        </Button>
+      </DialogActions>
     </Dialog>
     <Select
       {...{
