@@ -62,9 +62,13 @@ export const Navigation = ({
     Farmhand component. This explicit class maintains style consistency.
     */}
     <Dialog
-      className="Farmhand"
-      open={currentDialogView !== dialogView.NONE}
-      onClose={handleCloseDialogView}
+      {...{
+        className: 'Farmhand',
+        fullWidth: true,
+        maxWidth: 'md',
+        onClose: handleCloseDialogView,
+        open: currentDialogView !== dialogView.NONE,
+      }}
     >
       <DialogTitle>{dialogTitleMap[currentDialogView]}</DialogTitle>
       <DialogContent>{dialogContentMap[currentDialogView]}</DialogContent>
