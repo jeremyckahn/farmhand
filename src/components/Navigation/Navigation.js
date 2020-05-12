@@ -16,6 +16,14 @@ import LogView from '../LogView'
 
 import './Navigation.sass'
 
+const dialogTitleMap = {
+  [dialogView.FARMERS_LOG]: "Farmer's Log",
+}
+
+const dialogContentMap = {
+  [dialogView.FARMERS_LOG]: <LogView />,
+}
+
 export const Navigation = ({
   currentDialogView,
   dayCount,
@@ -51,12 +59,8 @@ export const Navigation = ({
       open={currentDialogView !== dialogView.NONE}
       onClose={handleCloseDialogView}
     >
-      <MuiDialogTitle>
-        {currentDialogView === dialogView.FARMERS_LOG && "Farmer's Log"}
-      </MuiDialogTitle>
-      <MuiDialogContent>
-        {currentDialogView === dialogView.FARMERS_LOG && <LogView />}
-      </MuiDialogContent>
+      <MuiDialogTitle>{dialogTitleMap[currentDialogView]}</MuiDialogTitle>
+      <MuiDialogContent>{dialogContentMap[currentDialogView]}</MuiDialogContent>
     </Dialog>
     <Select
       {...{
