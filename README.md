@@ -19,8 +19,8 @@ There is no release or versioning system yet.
 
 ## Milestone 4: Events 🗓
 
-- [ ] Stand up Home view
-  - [ ] Past daily notifications are accessible from the last 10 days
+- [x] Stand up Home view
+  - [x] Past daily notifications are accessible from the last 14 days
 - [ ] Crop value events (particular crops are worth a modified value for a period of time)
   - [ ] Surges
   - [ ] Crashes
