@@ -20,3 +20,10 @@
     .money-display
       position: absolute
       right: 1em
+
+  .menu-button
+    transition: transform $duration-shorter
+    transform: rotate(-90deg)
+
+    &.is-open
+      transform: rotate(0deg)

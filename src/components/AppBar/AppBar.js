@@ -1,5 +1,6 @@
 import React from 'react'
 import { arrayOf, func, number, string } from 'prop-types'
+import classNames from 'classnames'
 
 import { default as MuiAppBar } from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -19,6 +20,7 @@ export const AppBar = ({
   handleClickPreviousMenuButton,
   handleMenuToggle,
   money,
+  isMenuOpen,
   stageFocus,
   viewList,
   viewTitle,
@@ -35,6 +37,7 @@ export const AppBar = ({
       }}
     >
       <IconButton
+        className={classNames('menu-button', { 'is-open': isMenuOpen })}
         color="inherit"
         aria-label="Open drawer"
         onClick={handleMenuToggle}
