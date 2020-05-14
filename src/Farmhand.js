@@ -96,6 +96,8 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {boolean} isMenuOpen
+ * @property {Object} itemsSold Keys are items IDs, values are the number of
+ * that item sold.
  * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
  * @property {number} money
  * @property {Array.<string>} newDayNotifications
@@ -103,8 +105,10 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {Array.<string} notificationLog
  * @property {string} selectedCowId
  * @property {string} selectedItemId
- * @property {Object} itemsSold Keys are items IDs, values are the number of
- * that item sold.
+ * @property {Object.<string, farmhand.priceEvent>} priceCrashes Keys are
+ * itemIds.
+ * @property {Object.<string, farmhand.priceEvent>} priceSurges Keys are
+ * itemIds.
  * @property {number} purchasedCowPen
  * @property {number} purchasedField
  * @property {Array.<farmhand.item>} shopInventory
@@ -145,6 +149,8 @@ export default class Farmhand extends Component {
     selectedCowId: '',
     selectedItemId: '',
     fieldMode: OBSERVE,
+    priceCrashes: {},
+    priceSurges: {},
     purchasedCowPen: 0,
     purchasedField: 0,
     shopInventory: [...shopInventory],
@@ -174,6 +180,8 @@ export default class Farmhand extends Component {
       'notificationLog',
       'purchasedCowPen',
       'purchasedField',
+      'priceCrashes',
+      'priceSurges',
       'valueAdjustments',
     ].reduce((acc, key) => {
       acc[key] = state[key]
