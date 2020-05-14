@@ -454,27 +454,22 @@ export const updatePriceEvents = state => {
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-export const computeStateForNextDay = state => {
-  state = computeCowInventoryForNextDay({
-    ...state,
-    cowForSale: generateCow(),
-    dayCount: state.dayCount + 1,
-    valueAdjustments: generateValueAdjustments(),
-  })
-  state = processField(state)
-
-  state = [
+export const computeStateForNextDay = state =>
+  [
+    computeCowInventoryForNextDay,
+    processField,
     processBuffs,
     processNerfs,
     processSprinklers,
     processFeedingCows,
     processMilkingCows,
-  ].reduce((acc, fn) => fn({ ...acc }), state)
-
-  state = rotateNotificationLogs(state)
-
-  return state
-}
+    rotateNotificationLogs,
+  ].reduce((acc, fn) => fn({ ...acc }), {
+    ...state,
+    cowForSale: generateCow(),
+    dayCount: state.dayCount + 1,
+    valueAdjustments: generateValueAdjustments(),
+  })
 
 /**
  * @param {farmhand.state} state
