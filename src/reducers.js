@@ -438,6 +438,22 @@ export const rotateNotificationLogs = state => {
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
+export const generatePriceEvents = state => {
+  return state
+}
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const updatePriceEvents = state => {
+  return state
+}
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
 export const computeStateForNextDay = state => {
   state = computeCowInventoryForNextDay({
     ...state,

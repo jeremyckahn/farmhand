@@ -78,6 +78,22 @@ describe('rotateNotificationLogs', () => {
   })
 })
 
+describe('generatePriceEvents', () => {
+  describe('price event already exists', () => {
+    test.todo('no-ops')
+  })
+
+  describe('price event does not already exist', () => {
+    test.todo('generates a price crash')
+
+    test.todo('generates a price surge')
+  })
+})
+
+describe('updatePriceEvents', () => {
+  test.todo('updates existing price events')
+})
+
 describe('computeStateForNextDay', () => {
   beforeEach(() => {
     jest.spyOn(Math, 'random').mockReturnValue(0.75)
