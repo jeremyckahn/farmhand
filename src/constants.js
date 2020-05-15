@@ -55,3 +55,5 @@ export const COW_MINIMUM_VALUE_MULTIPLIER = 0.5
 export const COW_MAXIMUM_VALUE_MULTIPLIER = 1.5
 
 export const NOTIFICATION_LOG_SIZE = 14
+
+export const PRICE_EVENT_CHANCE = 0.2

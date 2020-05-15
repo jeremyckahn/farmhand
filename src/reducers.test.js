@@ -15,6 +15,7 @@ import {
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from './constants'
+import { sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
 import { fieldMode, genders } from './enums'
@@ -80,7 +81,22 @@ describe('rotateNotificationLogs', () => {
 
 describe('generatePriceEvents', () => {
   describe('price event already exists', () => {
-    test.todo('no-ops')
+    test('no-ops', () => {
+      jest.spyOn(Math, 'random').mockReturnValue(0)
+      const inputState = {
+        priceCrashes: {
+          [sampleCropItem1.id]: {
+            itemId: sampleCropItem1.id,
+            daysRemaining: 1,
+          },
+        },
+        priceSurges: {},
+      }
+      const { priceCrashes, priceSurges } = fn.generatePriceEvents(inputState)
+
+      expect(priceCrashes).toEqual(inputState.priceCrashes)
+      expect(priceSurges).toEqual(inputState.priceSurges)
+    })
   })
 
   describe('price event does not already exist', () => {

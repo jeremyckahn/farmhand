@@ -13,6 +13,7 @@ import {
   getFinalCropItemIdFromSeedItemId,
   getPlotContentFromItemId,
   getPlotContentType,
+  getRandomCropItem,
   getRangeCoords,
 } from './utils'
 import {
@@ -27,6 +28,7 @@ import {
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   NOTIFICATION_LOG_SIZE,
+  PRICE_EVENT_CHANCE,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   RAIN_CHANCE,
@@ -439,7 +441,31 @@ export const rotateNotificationLogs = state => {
  * @returns {farmhand.state}
  */
 export const generatePriceEvents = state => {
-  return state
+  const priceCrashes = { ...state.priceCrashes }
+  const priceSurges = { ...state.priceSurges }
+
+  if (Math.random() < PRICE_EVENT_CHANCE) {
+    const randomCropItem = getRandomCropItem()
+    const { id } = randomCropItem
+
+    // Only create a priceEvent if one does not already exist
+    if (!priceCrashes[id] && !priceSurges[id]) {
+      const priceEvent = {
+        itemId: id,
+        daysRemaining: 1,
+      }
+
+      // TODO: Show a newDayNotification to the user that there is a new price
+      // event.
+      if (Math.random() < 0.5) {
+        priceCrashes[id] = priceEvent
+      } else {
+        priceSurges[id] = priceEvent
+      }
+    }
+  }
+
+  return { ...state, priceCrashes, priceSurges }
 }
 
 /**
