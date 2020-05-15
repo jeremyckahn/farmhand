@@ -303,3 +303,25 @@ export const canMakeRecipe = ({ ingredients }, inventory) => {
     itemId => inventoryQuantityMap[itemId] >= ingredients[itemId]
   )
 }
+
+/**
+ * @type {Array.<farmhand.item>}
+ */
+const finalStageCropItemList = Object.keys(itemsMap).reduce((acc, itemId) => {
+  const item = itemsMap[itemId]
+
+  // Duck type to see if item is a final stage crop
+  if (item.cropTimetable) {
+    acc.push(item)
+  }
+
+  return acc
+}, [])
+
+/**
+ * @returns {farmhand.item} A final stage, non-seed item.
+ */
+export const getRandomCropItem = () =>
+  finalStageCropItemList[
+    Math.floor(Math.random() * finalStageCropItemList.length)
+  ]

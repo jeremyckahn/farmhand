@@ -12,6 +12,7 @@ import {
   getLifeStageRange,
   getPlotContentFromItemId,
   getPlotImage,
+  getRandomCropItem,
   getRangeCoords,
   getFinalCropItemIdFromSeedItemId,
 } from './utils'
@@ -19,7 +20,7 @@ import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
 import { items as itemImages } from './img'
 import { cowColors, cropLifeStage, genders } from './enums'
-import { sampleItem1, sampleFieldTool1 } from './data/items'
+import { sampleCropItem1, sampleItem1, sampleFieldTool1 } from './data/items'
 import {
   COW_MAXIMUM_AGE_VALUE_DROPOFF,
   COW_MAXIMUM_VALUE_MULTIPLIER,
@@ -366,5 +367,15 @@ describe('canMakeRecipe', () => {
         ])
       ).toBe(true)
     })
+  })
+})
+
+describe('getRandomCropItem', () => {
+  beforeEach(() => {
+    jest.spyOn(Math, 'random').mockReturnValue(0)
+  })
+
+  test('returns a crop item', () => {
+    expect(getRandomCropItem()).toEqual(sampleCropItem1)
   })
 })
