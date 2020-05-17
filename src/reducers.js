@@ -127,6 +127,19 @@ export const processBuffs = state =>
  */
 export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state)
 
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.priceEvent} priceEvent
+ * @param {string} priceEventKey Either 'priceCrashes' or 'priceSurges'
+ * @returns {farmhand.state}
+ */
+export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
+  [priceEventKey]: {
+    ...state[priceEventKey],
+    [priceEvent.itemId]: priceEvent,
+  },
+})
+
 ///////////////////////////////////////////////////////////
 //
 // Exported reducers
@@ -443,29 +456,28 @@ export const rotateNotificationLogs = state => {
 export const generatePriceEvents = state => {
   const priceCrashes = { ...state.priceCrashes }
   const priceSurges = { ...state.priceSurges }
+  let priceEvent
 
   if (Math.random() < PRICE_EVENT_CHANCE) {
-    const randomCropItem = getRandomCropItem()
-    const { id } = randomCropItem
+    const { id: itemId } = getRandomCropItem()
 
     // Only create a priceEvent if one does not already exist
-    if (!priceCrashes[id] && !priceSurges[id]) {
-      const priceEvent = {
-        itemId: id,
-        daysRemaining: 1,
-      }
-
+    if (!priceCrashes[itemId] && !priceSurges[itemId]) {
       // TODO: Show a newDayNotification to the user that there is a new price
       // event.
-      if (Math.random() < 0.5) {
-        priceCrashes[id] = priceEvent
-      } else {
-        priceSurges[id] = priceEvent
-      }
+      priceEvent = createPriceEvent(
+        state,
+        {
+          itemId,
+          // FIXME: Compute this value as a function of the crop's lifecycle.
+          daysRemaining: 1,
+        },
+        Math.random() < 0.5 ? 'priceCrashes' : 'priceSurges'
+      )
     }
   }
 
-  return { ...state, priceCrashes, priceSurges }
+  return { ...state, ...priceEvent }
 }
 
 /**
