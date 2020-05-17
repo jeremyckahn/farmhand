@@ -42,6 +42,7 @@
     "eslint-plugin-react-hooks": "^2.5.0",
     "gh-pages": "^2.2.0",
     "husky": "^4.2.3",
+    "jest-extended": "^0.11.5",
     "jsdoc": "^3.5.5",
     "jsdom": "^16.2.1",
     "live-server": "^1.2.0",

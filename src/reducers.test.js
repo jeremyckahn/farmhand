@@ -118,7 +118,7 @@ describe('createPriceEvent', () => {
 describe('generatePriceEvents', () => {
   describe('price event already exists', () => {
     test('no-ops', () => {
-      jest.spyOn(Math, 'random').mockReturnValue(0)
+      jest.spyOn(Math, 'random').mockReturnValue(1)
       const inputState = {
         priceCrashes: {
           [sampleCropItem1.id]: {
@@ -136,9 +136,24 @@ describe('generatePriceEvents', () => {
   })
 
   describe('price event does not already exist', () => {
-    test.todo('generates a price crash')
+    test('generates a price event', () => {
+      jest.spyOn(Math, 'random').mockReturnValue(0)
 
-    test.todo('generates a price surge')
+      const { generatePriceEvents } = jest.requireActual('./reducers')
+      const state = generatePriceEvents({ priceCrashes: {}, priceSurges: {} })
+      const priceEvent = {
+        'sample-crop-1': {
+          itemId: 'sample-crop-1',
+          // FIXME: This will need to reflect the total crop lifecycle.
+          daysRemaining: 1,
+        },
+      }
+
+      expect(state).toContainAnyEntries([
+        ['priceCrashes', priceEvent],
+        ['priceSurges', priceEvent],
+      ])
+    })
   })
 })
 
