@@ -144,8 +144,7 @@ describe('generatePriceEvents', () => {
       const priceEvent = {
         'sample-crop-1': {
           itemId: 'sample-crop-1',
-          // FIXME: This will need to reflect the total crop lifecycle.
-          daysRemaining: 1,
+          daysRemaining: 4,
         },
       }
 
