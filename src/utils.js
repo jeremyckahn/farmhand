@@ -19,6 +19,7 @@ import {
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   MALE_COW_WEIGHT_MULTIPLIER,
+  PRICE_EVENT_DURATION_BUFFER,
 } from './constants'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
@@ -333,3 +334,13 @@ export const getRandomCropItem = () =>
   finalStageCropItemList[
     Math.floor(Math.random() * finalStageCropItemList.length)
   ]
+
+/**
+ * @param {farmhand.item} cropItem
+ * @returns {farmhand.priceEvent}
+ */
+export const getPriceEventForCrop = cropItem => ({
+  itemId: cropItem.id,
+  daysRemaining:
+    getCropLifecycleDuration(cropItem) + PRICE_EVENT_DURATION_BUFFER,
+})

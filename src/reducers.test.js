@@ -25,6 +25,7 @@ import {
   getCowValue,
   getCropFromItemId,
   getPlotContentFromItemId,
+  getPriceEventForCrop,
 } from './utils'
 import * as fn from './reducers'
 
@@ -140,17 +141,14 @@ describe('generatePriceEvents', () => {
       jest.spyOn(Math, 'random').mockReturnValue(0)
 
       const { generatePriceEvents } = jest.requireActual('./reducers')
+      const { getRandomCropItem } = jest.requireActual('./utils')
+      const cropItem = getRandomCropItem()
       const state = generatePriceEvents({ priceCrashes: {}, priceSurges: {} })
-      const priceEvent = {
-        'sample-crop-1': {
-          itemId: 'sample-crop-1',
-          daysRemaining: 4,
-        },
-      }
+      const priceEvents = { [cropItem.id]: getPriceEventForCrop(cropItem) }
 
       expect(state).toContainAnyEntries([
-        ['priceCrashes', priceEvent],
-        ['priceSurges', priceEvent],
+        ['priceCrashes', priceEvents],
+        ['priceSurges', priceEvents],
       ])
     })
   })

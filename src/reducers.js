@@ -9,11 +9,11 @@ import {
   getCowMilkRate,
   getCowValue,
   getCropFromItemId,
-  getCropLifecycleDuration,
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
   getPlotContentFromItemId,
   getPlotContentType,
+  getPriceEventForCrop,
   getRandomCropItem,
   getRangeCoords,
 } from './utils'
@@ -30,7 +30,6 @@ import {
   MAX_DAILY_COW_HUG_BENEFITS,
   NOTIFICATION_LOG_SIZE,
   PRICE_EVENT_CHANCE,
-  PRICE_EVENT_DURATION_BUFFER,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   RAIN_CHANCE,
@@ -462,19 +461,15 @@ export const generatePriceEvents = state => {
 
   if (Math.random() < PRICE_EVENT_CHANCE) {
     const cropItem = getRandomCropItem()
-    const { id: itemId } = cropItem
+    const { id } = cropItem
 
     // Only create a priceEvent if one does not already exist
-    if (!priceCrashes[itemId] && !priceSurges[itemId]) {
+    if (!priceCrashes[id] && !priceSurges[id]) {
       // TODO: Show a newDayNotification to the user that there is a new price
       // event.
       priceEvent = createPriceEvent(
         state,
-        {
-          itemId,
-          daysRemaining:
-            getCropLifecycleDuration(cropItem) + PRICE_EVENT_DURATION_BUFFER,
-        },
+        getPriceEventForCrop(cropItem),
         Math.random() < 0.5 ? 'priceCrashes' : 'priceSurges'
       )
     }

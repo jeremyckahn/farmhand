@@ -13,6 +13,7 @@ import {
   getLifeStageRange,
   getPlotContentFromItemId,
   getPlotImage,
+  getPriceEventForCrop,
   getRandomCropItem,
   getRangeCoords,
   getFinalCropItemIdFromSeedItemId,
@@ -373,6 +374,15 @@ describe('canMakeRecipe', () => {
           { id: 'sample-item-1', quantity: 2 },
         ])
       ).toBe(true)
+    })
+  })
+})
+
+describe('getPriceEventForCrop', () => {
+  test('returns price event', () => {
+    expect(getPriceEventForCrop(sampleCropItem1)).toEqual({
+      itemId: sampleCropItem1.id,
+      daysRemaining: 4,
     })
   })
 })
