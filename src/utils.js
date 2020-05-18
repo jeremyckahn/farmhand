@@ -117,6 +117,14 @@ export const getCropId = ({ itemId }) =>
   cropIdToTypeMap[itemsMap[itemId].cropType]
 
 /**
+ * @param {farmhand.crop} crop
+ * @returns {number}
+ */
+export const getCropLifecycleDuration = memoize(({ cropTimetable }) =>
+  Object.values(cropTimetable).reduce((acc, value) => acc + value, 0)
+)
+
+/**
  * @param {farmhand.cropTimetable} cropTimetable
  * @returns {Array.<enums.cropLifeStage>}
  */

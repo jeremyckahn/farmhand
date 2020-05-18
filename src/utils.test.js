@@ -8,6 +8,7 @@ import {
   getCowValue,
   getCowWeight,
   getCropId,
+  getCropLifecycleDuration,
   getCropLifeStage,
   getLifeStageRange,
   getPlotContentFromItemId,
@@ -255,6 +256,12 @@ describe('getLifeStageRange', () => {
       GROWING,
       GROWING,
     ])
+  })
+})
+
+describe('getCropLifecycleDuration', () => {
+  test('computes lifecycle duration', () => {
+    expect(getCropLifecycleDuration(sampleCropItem1)).toEqual(3)
   })
 })
 
