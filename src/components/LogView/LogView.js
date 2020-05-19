@@ -1,6 +1,6 @@
 import React from 'react'
 import { array } from 'prop-types'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
+import Alert from '@material-ui/lab/Alert'
 
 import FarmhandContext from '../../Farmhand.context'
 
@@ -11,13 +11,16 @@ const LogView = ({ notificationLog }) => (
     {notificationLog.map(({ day, notifications }, i) => (
       <li key={`${i}_${notifications.join()}`}>
         <h3>Day {day}</h3>
-        <SnackbarContent
+        <Alert
           {...{
-            message: notifications.map((notification, i) => (
-              <p key={`${i}_${notification}`}>{notification}</p>
-            )),
+            elevation: 3,
+            severity: 'info',
           }}
-        />
+        >
+          {notifications.map((notification, i) => (
+            <p key={`${i}_${notification}`}>{notification}</p>
+          ))}
+        </Alert>
       </li>
     ))}
   </ul>

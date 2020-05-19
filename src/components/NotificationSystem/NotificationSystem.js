@@ -1,6 +1,7 @@
 import React from 'react'
 import { arrayOf, bool, func, string } from 'prop-types'
 import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 
 import { NOTIFICATION_DURATION } from '../../constants'
 import FarmhandContext from '../../Farmhand.context'
@@ -21,18 +22,19 @@ export const NotificationSystem = ({
         ContentProps: {
           'aria-describedby': 'farmhand-notification',
         },
-        message: (
-          <span id="farmhand-notification">
-            {notifications.map((notification, i) => (
-              <p key={i}>{notification}</p>
-            ))}
-          </span>
-        ),
         onClose: handleCloseNotification,
         onExited: handleNotificationExited,
         open: doShowNotifications,
       }}
-    />
+    >
+      <Alert
+        {...{ elevation: 6, id: 'farmhand-notification', severity: 'info' }}
+      >
+        {notifications.map((notification, i) => (
+          <p key={i}>{notification}</p>
+        ))}
+      </Alert>
+    </Snackbar>
   </div>
 )
 
