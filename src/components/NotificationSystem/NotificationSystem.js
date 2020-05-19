@@ -1,5 +1,5 @@
 import React from 'react'
-import { arrayOf, bool, func, string } from 'prop-types'
+import { arrayOf, bool, func, shape, string } from 'prop-types'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 
@@ -31,7 +31,7 @@ export const NotificationSystem = ({
         {...{ elevation: 6, id: 'farmhand-notification', severity: 'info' }}
       >
         {notifications.map((notification, i) => (
-          <p key={i}>{notification}</p>
+          <p key={i}>{notification.message}</p>
         ))}
       </Alert>
     </Snackbar>
@@ -41,7 +41,12 @@ export const NotificationSystem = ({
 NotificationSystem.propTypes = {
   handleCloseNotification: func.isRequired,
   handleNotificationExited: func.isRequired,
-  notifications: arrayOf(string).isRequired,
+  notifications: arrayOf(
+    shape({
+      message: string.isRequired,
+      severity: string.isRequired,
+    })
+  ).isRequired,
   doShowNotifications: bool.isRequired,
 }
 

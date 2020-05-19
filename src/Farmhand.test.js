@@ -299,9 +299,10 @@ describe('instance methods', () => {
           .instance()
           .showCowPenPurchasedNotifications({ purchasedCowPen: 0 })
 
-        expect(component.state().notifications).toContain(
-          COW_PEN_PURCHASED`${PURCHASEABLE_COW_PENS.get(1).cows}`
-        )
+        expect(component.state().notifications).toContainEqual({
+          message: COW_PEN_PURCHASED`${PURCHASEABLE_COW_PENS.get(1).cows}`,
+          severity: 'info',
+        })
       })
     })
   })
@@ -314,9 +315,10 @@ describe('instance methods', () => {
           .instance()
           .showRecipeLearnedNotifications({ learnedRecipes: {} })
 
-        expect(component.state().notifications).not.toContain(
-          RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`
-        )
+        expect(component.state().notifications).not.toContainEqual({
+          message: RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`,
+          severity: 'info',
+        })
       })
     })
 
@@ -327,9 +329,10 @@ describe('instance methods', () => {
           .instance()
           .showRecipeLearnedNotifications({ learnedRecipes: {} })
 
-        expect(component.state().notifications).toContain(
-          RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`
-        )
+        expect(component.state().notifications).toContainEqual({
+          message: RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`,
+          severity: 'info',
+        })
       })
     })
   })

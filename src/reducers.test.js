@@ -797,7 +797,7 @@ describe('showNotification', () => {
       { notifications: [] },
       'foo'
     )
-    expect(notifications).toEqual(['foo'])
+    expect(notifications).toEqual([{ message: 'foo', severity: 'info' }])
     expect(doShowNotifications).toEqual(true)
   })
 
@@ -805,7 +805,7 @@ describe('showNotification', () => {
     const state = fn.showNotification({ notifications: [] }, 'foo')
 
     const { notifications } = fn.showNotification(state, 'foo')
-    expect(notifications).toEqual(['foo'])
+    expect(notifications).toEqual([{ message: 'foo', severity: 'info' }])
   })
 })
 

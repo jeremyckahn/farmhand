@@ -635,17 +635,21 @@ export const makeRecipe = (state, recipe) => {
 /**
  * @param {farmhand.state} state
  * @param {string} message
+ * @param {string} [severity] Corresponds to the `severity` prop here:
+ * https://material-ui.com/api/alert/
  * @returns {farmhand.state}
  */
-export const showNotification = (state, message) => {
+export const showNotification = (state, message, severity = 'info') => {
   const { notifications } = state
 
   return {
     ...state,
     // Don't show redundant notifications
-    notifications: notifications.includes(message)
+    notifications: notifications.find(
+      notification => notification.message === message
+    )
       ? notifications
-      : notifications.concat(message),
+      : notifications.concat({ message, severity }),
     doShowNotifications: true,
   }
 }
