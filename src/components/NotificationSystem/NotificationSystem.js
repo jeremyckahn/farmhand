@@ -2,6 +2,7 @@ import React from 'react'
 import { arrayOf, bool, func, string } from 'prop-types'
 import Snackbar from '@material-ui/core/Snackbar'
 
+import { NOTIFICATION_DURATION } from '../../constants'
 import FarmhandContext from '../../Farmhand.context'
 import './NotificationSystem.sass'
 
@@ -15,7 +16,7 @@ export const NotificationSystem = ({
     <Snackbar
       {...{
         anchorOrigin: { vertical: 'top', horizontal: 'right' },
-        autoHideDuration: 6000,
+        autoHideDuration: NOTIFICATION_DURATION,
         className: 'notification',
         ContentProps: {
           'aria-describedby': 'farmhand-notification',
