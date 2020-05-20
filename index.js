@@ -1,7 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './src/styles/index.sass';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './src/styles/index.sass'
 
-import { Farmhand } from './src';
+import { Farmhand } from './src'
 
-ReactDOM.render(<Farmhand />, document.getElementById('app'));
+// FIXME: Look into cows not producting milk
+
+ReactDOM.render(<Farmhand />, document.getElementById('app'))

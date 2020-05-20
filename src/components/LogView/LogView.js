@@ -6,10 +6,12 @@ import FarmhandContext from '../../Farmhand.context'
 
 import './LogView.sass'
 
+// FIXME: This needs to display all severity types.
+
 const LogView = ({ notificationLog }) => (
   <ul className="LogView">
     {notificationLog.map(({ day, notifications }, i) => (
-      <li key={`${i}_${notifications.join()}`}>
+      <li key={`${i}_${notifications.info.join()}`}>
         <h3>Day {day}</h3>
         <Alert
           {...{
@@ -17,7 +19,7 @@ const LogView = ({ notificationLog }) => (
             severity: 'info',
           }}
         >
-          {notifications.map(({ message }, i) => (
+          {notifications.info.map((message, i) => (
             <p key={`${i}_${message}`}>{message}</p>
           ))}
         </Alert>

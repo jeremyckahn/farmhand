@@ -443,10 +443,22 @@ export const rotateNotificationLogs = state => {
   const notificationLog = [...state.notificationLog]
 
   const { dayCount, newDayNotifications } = state
+
+  const notifications = {
+    error: [],
+    info: [],
+    success: [],
+    warning: [],
+  }
+
+  newDayNotifications.forEach(({ message, severity }) =>
+    notifications[severity].push(message)
+  )
+
   newDayNotifications.length &&
     notificationLog.unshift({
       day: dayCount,
-      notifications: newDayNotifications,
+      notifications,
     })
 
   notificationLog.length = Math.min(

@@ -46,37 +46,100 @@ describe('rotateNotificationLogs', () => {
   test('rotates logs', () => {
     const { notificationLog } = fn.rotateNotificationLogs({
       dayCount: 1,
-      newDayNotifications: ['b'],
-      notificationLog: [{ day: 0, notifications: ['a'] }],
+      newDayNotifications: [{ message: 'b', severity: 'info' }],
+      notificationLog: [
+        {
+          day: 0,
+          notifications: {
+            error: [],
+            info: ['a'],
+            success: [],
+            warning: [],
+          },
+        },
+      ],
     })
 
     expect(notificationLog).toEqual([
-      { day: 1, notifications: ['b'] },
-      { day: 0, notifications: ['a'] },
+      {
+        day: 1,
+        notifications: {
+          error: [],
+          info: ['b'],
+          success: [],
+          warning: [],
+        },
+      },
+      {
+        day: 0,
+        notifications: {
+          error: [],
+          info: ['a'],
+          success: [],
+          warning: [],
+        },
+      },
     ])
   })
 
   test('limits log size', () => {
     const { notificationLog } = fn.rotateNotificationLogs({
       dayCount: 50,
-      newDayNotifications: ['new log'],
+      newDayNotifications: [{ message: 'new log', severity: 'info' }],
       notificationLog: new Array(NOTIFICATION_LOG_SIZE).fill({
         day: 1,
-        notifications: ['a'],
+        notifications: {
+          error: [],
+          info: ['a'],
+          success: [],
+          warning: [],
+        },
       }),
     })
 
     expect(notificationLog).toHaveLength(NOTIFICATION_LOG_SIZE)
-    expect(notificationLog[0]).toEqual({ day: 50, notifications: ['new log'] })
+    expect(notificationLog[0]).toEqual({
+      day: 50,
+      notifications: {
+        error: [],
+        info: ['new log'],
+        success: [],
+        warning: [],
+      },
+    })
   })
 
   test('ignores empty logs', () => {
     const { notificationLog } = fn.rotateNotificationLogs({
       newDayNotifications: [],
-      notificationLog: [{ day: 0, notifications: ['a'] }],
+      notificationLog: [
+        {
+          day: 0,
+          notifications: [
+            {
+              error: [],
+              info: ['a'],
+              success: [],
+              warning: [],
+            },
+          ],
+        },
+      ],
     })
 
-    expect(notificationLog).toEqual([{ day: 0, notifications: ['a'] }])
+    expect(notificationLog).toEqual([
+      {
+        day: 0,
+        notifications: [
+          {
+            error: [],
+            info: ['a'],
+            success: [],
+            warning: [],
+          },
+        ],
+      },
+    ])
   })
 })
 
