@@ -17,8 +17,8 @@ const LogView = ({ notificationLog }) => (
             severity: 'info',
           }}
         >
-          {notifications.map((notification, i) => (
-            <p key={`${i}_${notification}`}>{notification}</p>
+          {notifications.map(({ message }, i) => (
+            <p key={`${i}_${message}`}>{message}</p>
           ))}
         </Alert>
       </li>

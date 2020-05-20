@@ -154,7 +154,10 @@ export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
 export const applyRain = state =>
   waterField({
     ...state,
-    newDayNotifications: [...state.newDayNotifications, RAIN_MESSAGE],
+    newDayNotifications: [
+      ...state.newDayNotifications,
+      { message: RAIN_MESSAGE, severity: 'info' },
+    ],
   })
 
 /**
@@ -178,9 +181,10 @@ export const applyCrows = state => {
         const destroyCrop = Math.random() <= CROW_CHANCE
 
         if (destroyCrop) {
-          newDayNotifications.push(
-            CROW_ATTACKED`${itemsMap[plotContent.itemId]}`
-          )
+          newDayNotifications.push({
+            message: CROW_ATTACKED`${itemsMap[plotContent.itemId]}`,
+            severity: 'info',
+          })
         }
 
         return destroyCrop ? null : plotContent
@@ -302,7 +306,10 @@ export const processMilkingCows = state => {
 
       const milk = getCowMilkItem(cow)
       state = addItemToInventory(state, milk)
-      newDayNotifications.push(MILK_PRODUCED`${cow}${milk}`)
+      newDayNotifications.push({
+        message: MILK_PRODUCED`${cow}${milk}`,
+        severity: 'info',
+      })
     }
   }
 

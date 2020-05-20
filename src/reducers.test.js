@@ -213,7 +213,10 @@ describe('applyRain', () => {
 
     expect(state.field[0][0].wasWateredToday).toBe(true)
     expect(state.field[0][1].wasWateredToday).toBe(true)
-    expect(state.newDayNotifications[0]).toBe(RAIN_MESSAGE)
+    expect(state.newDayNotifications[0]).toEqual({
+      message: RAIN_MESSAGE,
+      severity: 'info',
+    })
   })
 })
 
@@ -394,7 +397,10 @@ describe('processMilkingCows', () => {
       expect(daysSinceMilking).toEqual(0)
       expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
       expect(newDayNotifications).toEqual([
-        MILK_PRODUCED`${cow}${getCowMilkItem(cow)}`,
+        {
+          message: MILK_PRODUCED`${cow}${getCowMilkItem(cow)}`,
+          severity: 'info',
+        },
       ])
     })
   })
@@ -461,7 +467,10 @@ describe('processNerfs', () => {
 
         expect(state.field[0][0]).toBe(null)
         expect(state.newDayNotifications).toEqual([
-          CROW_ATTACKED`${itemsMap['sample-crop-1']}`,
+          {
+            message: CROW_ATTACKED`${itemsMap['sample-crop-1']}`,
+            severity: 'info',
+          },
         ])
       })
 
