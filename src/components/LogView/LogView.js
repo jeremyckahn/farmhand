@@ -6,7 +6,7 @@ import FarmhandContext from '../../Farmhand.context'
 
 import './LogView.sass'
 
-const LogView = ({ notificationLog }) => (
+export const LogView = ({ notificationLog }) => (
   <ul className="LogView">
     {notificationLog.map(({ day, notifications }, i) => (
       <li key={`${i}_${notifications.info.join()}`}>
