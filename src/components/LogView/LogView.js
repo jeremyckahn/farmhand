@@ -11,7 +11,6 @@ const LogView = ({ notificationLog }) => (
     {notificationLog.map(({ day, notifications }, i) => (
       <li key={`${i}_${notifications.info.join()}`}>
         <h3>Day {day}</h3>
-
         {['success', 'info', 'warning', 'error'].map((severity, i) =>
           notifications[severity].length ? (
             <Alert {...{ elevation: 3, key: `${severity}_${i}`, severity }}>

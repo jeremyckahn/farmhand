@@ -183,7 +183,7 @@ export const applyCrows = state => {
         if (destroyCrop) {
           newDayNotifications.push({
             message: CROW_ATTACKED`${itemsMap[plotContent.itemId]}`,
-            severity: 'info',
+            severity: 'error',
           })
         }
 

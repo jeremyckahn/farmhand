@@ -19,21 +19,18 @@ export const NotificationSystem = ({
         anchorOrigin: { vertical: 'top', horizontal: 'right' },
         autoHideDuration: NOTIFICATION_DURATION,
         className: 'notification',
-        ContentProps: {
-          'aria-describedby': 'farmhand-notification',
-        },
         onClose: handleCloseNotification,
         onExited: handleNotificationExited,
         open: doShowNotifications,
       }}
     >
-      <Alert
-        {...{ elevation: 6, id: 'farmhand-notification', severity: 'info' }}
-      >
-        {notifications.map((notification, i) => (
-          <p key={i}>{notification.message}</p>
+      <>
+        {notifications.map(({ message, severity }) => (
+          <Alert {...{ elevation: 3, key: `${severity}_${message}`, severity }}>
+            <p>{message}</p>
+          </Alert>
         ))}
-      </Alert>
+      </>
     </Snackbar>
   </div>
 )

@@ -3,7 +3,13 @@
 .NotificationSystem
 
   .notification
+    align-items: stretch
+    display: flex
+    flex-direction: column-reverse
     top: 4em
+
+    .MuiAlert-root
+      margin-bottom: 1em
 
     @media (min-width: #{$break-xs}) and (orientation: landscape)
       top: 3.5em

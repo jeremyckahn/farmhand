@@ -532,7 +532,7 @@ describe('processNerfs', () => {
         expect(state.newDayNotifications).toEqual([
           {
             message: CROW_ATTACKED`${itemsMap['sample-crop-1']}`,
-            severity: 'info',
+            severity: 'error',
           },
         ])
       })
