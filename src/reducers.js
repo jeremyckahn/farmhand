@@ -38,7 +38,12 @@ import {
   SPRINKLER_RANGE,
 } from './constants'
 import { RAIN_MESSAGE } from './strings'
-import { MILK_PRODUCED, CROW_ATTACKED } from './templates'
+import {
+  MILK_PRODUCED,
+  CROW_ATTACKED,
+  PRICE_CRASH_NOTIFICATION,
+  PRICE_SURGE_NOTIFICATION,
+} from './templates'
 import { cropLifeStage, fieldMode, itemType } from './enums'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
@@ -476,6 +481,7 @@ export const rotateNotificationLogs = state => {
 export const generatePriceEvents = state => {
   const priceCrashes = { ...state.priceCrashes }
   const priceSurges = { ...state.priceSurges }
+  let newDayNotifications = [...state.newDayNotifications]
   let priceEvent
 
   if (Math.random() < PRICE_EVENT_CHANCE) {
@@ -484,17 +490,30 @@ export const generatePriceEvents = state => {
 
     // Only create a priceEvent if one does not already exist
     if (!priceCrashes[id] && !priceSurges[id]) {
-      // TODO: Show a newDayNotification to the user that there is a new price
-      // event.
+      const priceEventType =
+        Math.random() < 0.5 ? 'priceCrashes' : 'priceSurges'
+
       priceEvent = createPriceEvent(
         state,
         getPriceEventForCrop(cropItem),
-        Math.random() < 0.5 ? 'priceCrashes' : 'priceSurges'
+        priceEventType
+      )
+
+      newDayNotifications.push(
+        priceEventType === 'priceCrashes'
+          ? {
+              message: PRICE_CRASH_NOTIFICATION`${cropItem}`,
+              severity: 'warning',
+            }
+          : {
+              message: PRICE_SURGE_NOTIFICATION`${cropItem}`,
+              severity: 'success',
+            }
       )
     }
   }
 
-  return { ...state, ...priceEvent }
+  return { ...state, ...priceEvent, newDayNotifications }
 }
 
 /**

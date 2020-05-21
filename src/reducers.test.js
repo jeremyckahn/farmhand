@@ -1,6 +1,11 @@
 import { shapeOf, testCrop, testItem } from './test-utils'
 import { RAIN_MESSAGE } from './strings'
-import { MILK_PRODUCED, CROW_ATTACKED } from './templates'
+import {
+  MILK_PRODUCED,
+  CROW_ATTACKED,
+  PRICE_CRASH_NOTIFICATION,
+  PRICE_SURGE_NOTIFICATION,
+} from './templates'
 import {
   COW_FEED_ITEM_ID,
   COW_HUG_BENEFIT,
@@ -184,6 +189,7 @@ describe('generatePriceEvents', () => {
     test('no-ops', () => {
       jest.spyOn(Math, 'random').mockReturnValue(1)
       const inputState = {
+        newDayNotifications: [],
         priceCrashes: {
           [sampleCropItem1.id]: {
             itemId: sampleCropItem1.id,
@@ -200,18 +206,40 @@ describe('generatePriceEvents', () => {
   })
 
   describe('price event does not already exist', () => {
-    test('generates a price event', () => {
+    let cropItem, state
+
+    beforeEach(() => {
       jest.spyOn(Math, 'random').mockReturnValue(0)
 
       const { generatePriceEvents } = jest.requireActual('./reducers')
       const { getRandomCropItem } = jest.requireActual('./utils')
-      const cropItem = getRandomCropItem()
-      const state = generatePriceEvents({ priceCrashes: {}, priceSurges: {} })
+      cropItem = getRandomCropItem()
+      state = generatePriceEvents({
+        newDayNotifications: [],
+        priceCrashes: {},
+        priceSurges: {},
+      })
+    })
+
+    test('generates a price event', () => {
       const priceEvents = { [cropItem.id]: getPriceEventForCrop(cropItem) }
 
       expect(state).toContainAnyEntries([
         ['priceCrashes', priceEvents],
         ['priceSurges', priceEvents],
+      ])
+    })
+
+    test('shows notification', () => {
+      expect(state.newDayNotifications).toIncludeAnyMembers([
+        {
+          message: PRICE_CRASH_NOTIFICATION`${cropItem}`,
+          severity: 'warning',
+        },
+        {
+          message: PRICE_SURGE_NOTIFICATION`${cropItem}`,
+          severity: 'success',
+        },
       ])
     })
   })
