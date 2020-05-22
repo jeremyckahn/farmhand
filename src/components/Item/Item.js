@@ -99,9 +99,14 @@ export const Item = ({
         title: name,
         subheader: (
           <div>
+            {/*
+            FIXME: Clean up the value computation repetition.
+            */}
             {isPurchaseView && (
               <p>
-                {`Price: $${value.toFixed(2)}`}
+                {`Price: $${(
+                  (valueAdjustments[id] ? valueAdjustments[id] : 1) * value
+                ).toFixed(2)}`}
                 {valueAdjustments[id] && (
                   <PurchaseValueIndicator
                     {...{ id, value, valueAdjustments }}
@@ -111,7 +116,9 @@ export const Item = ({
             )}
             {isSellView && (
               <p>
-                {`Sell price: $${value.toFixed(2)}`}
+                {`Sell price: $${(
+                  (valueAdjustments[id] ? valueAdjustments[id] : 1) * value
+                ).toFixed(2)}`}
                 {valueAdjustments[id] && (
                   <SellValueIndicator {...{ id, value, valueAdjustments }} />
                 )}
