@@ -313,7 +313,7 @@ export const processMilkingCows = state => {
       state = addItemToInventory(state, milk)
       newDayNotifications.push({
         message: MILK_PRODUCED`${cow}${milk}`,
-        severity: 'info',
+        severity: 'success',
       })
     }
   }

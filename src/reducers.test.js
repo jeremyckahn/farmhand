@@ -513,7 +513,7 @@ describe('processMilkingCows', () => {
       expect(newDayNotifications).toEqual([
         {
           message: MILK_PRODUCED`${cow}${getCowMilkItem(cow)}`,
-          severity: 'info',
+          severity: 'success',
         },
       ])
     })
