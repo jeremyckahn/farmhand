@@ -246,7 +246,28 @@ describe('generatePriceEvents', () => {
 })
 
 describe('updatePriceEvents', () => {
-  test.todo('updates existing price events')
+  test('updates existing price events', () => {
+    const { priceCrashes, priceSurges } = fn.updatePriceEvents({
+      priceCrashes: {
+        'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 2 },
+        'sample-crop-2': { itemId: 'sample-crop-2', daysRemaining: 3 },
+      },
+      priceSurges: {
+        'sample-crop-3': { itemId: 'sample-crop-3', daysRemaining: 5 },
+      },
+    })
+
+    expect(priceCrashes).toEqual({
+      'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 },
+      'sample-crop-2': { itemId: 'sample-crop-2', daysRemaining: 2 },
+    })
+
+    expect(priceSurges).toEqual({
+      'sample-crop-3': { itemId: 'sample-crop-3', daysRemaining: 4 },
+    })
+  })
+
+  test.todo('removes price events with no days left')
 })
 
 describe('computeStateForNextDay', () => {
@@ -270,10 +291,12 @@ describe('computeStateForNextDay', () => {
           }),
         ],
       ],
-      newDayNotifications: [],
       cowInventory: [],
       inventory: [],
+      newDayNotifications: [],
       notificationLog: [],
+      priceCrashes: {},
+      priceSurges: {},
     })
 
     expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()))

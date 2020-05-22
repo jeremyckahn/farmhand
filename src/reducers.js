@@ -517,11 +517,29 @@ export const generatePriceEvents = state => {
 }
 
 /**
+ * @param {Object.<farmhand.priceEvent>} priceEvents
+ * @returns {Object.<farmhand.priceEvent>}
+ */
+const decrementPriceEventDays = priceEvents =>
+  Object.keys(priceEvents).reduce((acc, key) => {
+    const { itemId, daysRemaining } = priceEvents[key]
+    acc[key] = { itemId, daysRemaining: daysRemaining - 1 }
+
+    return acc
+  }, {})
+
+/**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
 export const updatePriceEvents = state => {
-  return state
+  const { priceCrashes, priceSurges } = state
+
+  return {
+    ...state,
+    priceCrashes: decrementPriceEventDays(priceCrashes),
+    priceSurges: decrementPriceEventDays(priceSurges),
+  }
 }
 
 /**
@@ -537,6 +555,7 @@ export const computeStateForNextDay = state =>
     processSprinklers,
     processFeedingCows,
     processMilkingCows,
+    updatePriceEvents,
     rotateNotificationLogs,
   ].reduce((acc, fn) => fn({ ...acc }), {
     ...state,
