@@ -176,6 +176,9 @@ export const Item = ({
           </Button>
         </>
       )}
+      {/*
+        FIXME: Disable the sell buttons if quantity === 0.
+      */}
       {isSellView && (
         <>
           <Button

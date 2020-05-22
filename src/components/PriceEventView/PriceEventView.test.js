@@ -6,7 +6,14 @@ import PriceEventView from './PriceEventView'
 let component
 
 beforeEach(() => {
-  component = shallow(<PriceEventView {...{}} />)
+  component = shallow(
+    <PriceEventView
+      {...{
+        priceCrashes: {},
+        priceSurges: {},
+      }}
+    />
+  )
 })
 
 test('renders', () => {

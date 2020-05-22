@@ -1,12 +1,49 @@
 import React from 'react'
+import { object } from 'prop-types'
+import Divider from '@material-ui/core/Divider'
 
+import { itemsMap } from '../../data/maps'
 import FarmhandContext from '../../Farmhand.context'
+import Item from '../Item'
 
 import './PriceEventView.sass'
 
-const PriceEventView = () => <div className="PriceEventView"></div>
+const PriceEventView = ({ priceCrashes, priceSurges }) => (
+  <div className="PriceEventView">
+    <h3>Price Surges</h3>
+    <ul className="card-list">
+      {Object.keys(priceSurges).map(itemId => (
+        <li {...{ key: itemId }}>
+          <Item
+            {...{
+              isSellView: true,
+              item: itemsMap[itemId],
+            }}
+          />
+        </li>
+      ))}
+    </ul>
+    <Divider />
+    <h3>Price Crashes</h3>
+    <ul className="card-list">
+      {Object.keys(priceCrashes).map(itemId => (
+        <li {...{ key: itemId }}>
+          <Item
+            {...{
+              isPurchaseView: true,
+              item: itemsMap[itemId],
+            }}
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+)
 
-PriceEventView.propTypes = {}
+PriceEventView.propTypes = {
+  priceCrashes: object.isRequired,
+  priceSurges: object.isRequired,
+}
 
 export default function Consumer(props) {
   return (
