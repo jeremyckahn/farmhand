@@ -559,6 +559,7 @@ export const computeStateForNextDay = state =>
     processFeedingCows,
     processMilkingCows,
     updatePriceEvents,
+    generatePriceEvents,
     rotateNotificationLogs,
   ].reduce((acc, fn) => fn({ ...acc }), {
     ...state,
