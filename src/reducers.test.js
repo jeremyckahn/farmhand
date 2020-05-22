@@ -246,10 +246,10 @@ describe('generatePriceEvents', () => {
 })
 
 describe('updatePriceEvents', () => {
-  test('updates existing price events', () => {
+  test('updates price events', () => {
     const { priceCrashes, priceSurges } = fn.updatePriceEvents({
       priceCrashes: {
-        'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 2 },
+        'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 },
         'sample-crop-2': { itemId: 'sample-crop-2', daysRemaining: 3 },
       },
       priceSurges: {
@@ -258,7 +258,6 @@ describe('updatePriceEvents', () => {
     })
 
     expect(priceCrashes).toEqual({
-      'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 },
       'sample-crop-2': { itemId: 'sample-crop-2', daysRemaining: 2 },
     })
 
@@ -266,8 +265,6 @@ describe('updatePriceEvents', () => {
       'sample-crop-3': { itemId: 'sample-crop-3', daysRemaining: 4 },
     })
   })
-
-  test.todo('removes price events with no days left')
 })
 
 describe('computeStateForNextDay', () => {

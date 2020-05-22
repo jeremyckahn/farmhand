@@ -523,7 +523,10 @@ export const generatePriceEvents = state => {
 const decrementPriceEventDays = priceEvents =>
   Object.keys(priceEvents).reduce((acc, key) => {
     const { itemId, daysRemaining } = priceEvents[key]
-    acc[key] = { itemId, daysRemaining: daysRemaining - 1 }
+
+    if (daysRemaining > 1) {
+      acc[key] = { itemId, daysRemaining: daysRemaining - 1 }
+    }
 
     return acc
   }, {})
