@@ -146,6 +146,18 @@ export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
   },
 })
 
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+const adjustItemValues = state => ({
+  ...state,
+  valueAdjustments: generateValueAdjustments(
+    state.priceCrashes,
+    state.priceSurges
+  ),
+})
+
 ///////////////////////////////////////////////////////////
 //
 // Exported reducers
@@ -550,8 +562,6 @@ export const updatePriceEvents = state => {
  * @returns {farmhand.state}
  */
 export const computeStateForNextDay = state =>
-  // FIXME: Value adjustments must be generated after price events are
-  // generated.
   [
     computeCowInventoryForNextDay,
     processField,
@@ -562,15 +572,12 @@ export const computeStateForNextDay = state =>
     processMilkingCows,
     updatePriceEvents,
     generatePriceEvents,
+    adjustItemValues,
     rotateNotificationLogs,
   ].reduce((acc, fn) => fn({ ...acc }), {
     ...state,
     cowForSale: generateCow(),
     dayCount: state.dayCount + 1,
-    valueAdjustments: generateValueAdjustments(
-      state.priceCrashes,
-      state.priceSurges
-    ),
   })
 
 /**
