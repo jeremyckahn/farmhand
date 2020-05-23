@@ -342,6 +342,7 @@ describe('instance methods', () => {
     beforeEach(() => {
       jest.spyOn(component.instance().localforage, 'setItem')
       jest.spyOn(component.instance(), 'showNotification')
+      jest.spyOn(Math, 'random').mockReturnValue(1)
 
       component.setState({
         newDayNotifications: [{ message: 'foo', severity: 'info' }],
