@@ -6,7 +6,6 @@ import sortBy from 'lodash.sortby'
 import FarmhandContext from '../../Farmhand.context'
 import Item from '../Item'
 import { itemsMap } from '../../data/maps'
-import { getItemValue } from '../../utils'
 import { enumify, itemType } from '../../enums'
 
 import './Inventory.sass'
@@ -123,10 +122,7 @@ export const Inventory = ({
                   {...{
                     isPurchaseView,
                     isSellView,
-                    item: {
-                      ...item,
-                      value: getItemValue(item, valueAdjustments),
-                    },
+                    item,
                   }}
                 />
               </li>

@@ -16,6 +16,7 @@ beforeEach(() => {
         money: 0,
         playerInventoryQuantities: {},
         valueAdjustments: {},
+        adjustedValue: 0,
       }}
     />
   )
@@ -46,7 +47,8 @@ describe('conditional UI', () => {
     beforeEach(() => {
       component.setProps({
         isPurchaseView: true,
-        item: testItem({ name: 'an-item', value: 10 }),
+        item: testItem({ name: 'an-item' }),
+        adjustedValue: 10,
       })
     })
 
