@@ -13,6 +13,8 @@ import {
   getFinalCropItemIdFromSeedItemId,
   getPlotContentFromItemId,
   getPlotContentType,
+  getPriceEventForCrop,
+  getRandomCropItem,
   getRangeCoords,
 } from './utils'
 import {
@@ -27,6 +29,7 @@ import {
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   NOTIFICATION_LOG_SIZE,
+  PRICE_EVENT_CHANCE,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   RAIN_CHANCE,
@@ -35,7 +38,12 @@ import {
   SPRINKLER_RANGE,
 } from './constants'
 import { RAIN_MESSAGE } from './strings'
-import { MILK_PRODUCED, CROW_ATTACKED } from './templates'
+import {
+  MILK_PRODUCED,
+  CROW_ATTACKED,
+  PRICE_CRASH_NOTIFICATION,
+  PRICE_SURGE_NOTIFICATION,
+} from './templates'
 import { cropLifeStage, fieldMode, itemType } from './enums'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
@@ -125,6 +133,31 @@ export const processBuffs = state =>
  */
 export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state)
 
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.priceEvent} priceEvent
+ * @param {string} priceEventKey Either 'priceCrashes' or 'priceSurges'
+ * @returns {farmhand.state}
+ */
+export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
+  [priceEventKey]: {
+    ...state[priceEventKey],
+    [priceEvent.itemId]: priceEvent,
+  },
+})
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+const adjustItemValues = state => ({
+  ...state,
+  valueAdjustments: generateValueAdjustments(
+    state.priceCrashes,
+    state.priceSurges
+  ),
+})
+
 ///////////////////////////////////////////////////////////
 //
 // Exported reducers
@@ -138,7 +171,10 @@ export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state)
 export const applyRain = state =>
   waterField({
     ...state,
-    newDayNotifications: [...state.newDayNotifications, RAIN_MESSAGE],
+    newDayNotifications: [
+      ...state.newDayNotifications,
+      { message: RAIN_MESSAGE, severity: 'info' },
+    ],
   })
 
 /**
@@ -162,9 +198,10 @@ export const applyCrows = state => {
         const destroyCrop = Math.random() <= CROW_CHANCE
 
         if (destroyCrop) {
-          newDayNotifications.push(
-            CROW_ATTACKED`${itemsMap[plotContent.itemId]}`
-          )
+          newDayNotifications.push({
+            message: CROW_ATTACKED`${itemsMap[plotContent.itemId]}`,
+            severity: 'error',
+          })
         }
 
         return destroyCrop ? null : plotContent
@@ -286,7 +323,10 @@ export const processMilkingCows = state => {
 
       const milk = getCowMilkItem(cow)
       state = addItemToInventory(state, milk)
-      newDayNotifications.push(MILK_PRODUCED`${cow}${milk}`)
+      newDayNotifications.push({
+        message: MILK_PRODUCED`${cow}${milk}`,
+        severity: 'success',
+      })
     }
   }
 
@@ -420,10 +460,22 @@ export const rotateNotificationLogs = state => {
   const notificationLog = [...state.notificationLog]
 
   const { dayCount, newDayNotifications } = state
+
+  const notifications = {
+    error: [],
+    info: [],
+    success: [],
+    warning: [],
+  }
+
+  newDayNotifications.forEach(({ message, severity }) =>
+    notifications[severity].push(message)
+  )
+
   newDayNotifications.length &&
     notificationLog.unshift({
       day: dayCount,
-      notifications: newDayNotifications,
+      notifications,
     })
 
   notificationLog.length = Math.min(
@@ -438,27 +490,95 @@ export const rotateNotificationLogs = state => {
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-export const computeStateForNextDay = state => {
-  state = computeCowInventoryForNextDay({
-    ...state,
-    cowForSale: generateCow(),
-    dayCount: state.dayCount + 1,
-    valueAdjustments: generateValueAdjustments(),
-  })
-  state = processField(state)
+export const generatePriceEvents = state => {
+  const priceCrashes = { ...state.priceCrashes }
+  const priceSurges = { ...state.priceSurges }
+  let newDayNotifications = [...state.newDayNotifications]
+  let priceEvent
 
-  state = [
+  if (Math.random() < PRICE_EVENT_CHANCE) {
+    const cropItem = getRandomCropItem()
+    const { id } = cropItem
+
+    // Only create a priceEvent if one does not already exist
+    if (!priceCrashes[id] && !priceSurges[id]) {
+      const priceEventType =
+        Math.random() < 0.5 ? 'priceCrashes' : 'priceSurges'
+
+      priceEvent = createPriceEvent(
+        state,
+        getPriceEventForCrop(cropItem),
+        priceEventType
+      )
+
+      newDayNotifications.push(
+        priceEventType === 'priceCrashes'
+          ? {
+              message: PRICE_CRASH_NOTIFICATION`${cropItem}`,
+              severity: 'warning',
+            }
+          : {
+              message: PRICE_SURGE_NOTIFICATION`${cropItem}`,
+              severity: 'success',
+            }
+      )
+    }
+  }
+
+  return { ...state, ...priceEvent, newDayNotifications }
+}
+
+/**
+ * @param {Object.<farmhand.priceEvent>} priceEvents
+ * @returns {Object.<farmhand.priceEvent>}
+ */
+const decrementPriceEventDays = priceEvents =>
+  Object.keys(priceEvents).reduce((acc, key) => {
+    const { itemId, daysRemaining } = priceEvents[key]
+
+    if (daysRemaining > 1) {
+      acc[key] = { itemId, daysRemaining: daysRemaining - 1 }
+    }
+
+    return acc
+  }, {})
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const updatePriceEvents = state => {
+  const { priceCrashes, priceSurges } = state
+
+  return {
+    ...state,
+    priceCrashes: decrementPriceEventDays(priceCrashes),
+    priceSurges: decrementPriceEventDays(priceSurges),
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const computeStateForNextDay = state =>
+  [
+    computeCowInventoryForNextDay,
+    processField,
     processBuffs,
     processNerfs,
     processSprinklers,
     processFeedingCows,
     processMilkingCows,
-  ].reduce((acc, fn) => fn({ ...acc }), state)
-
-  state = rotateNotificationLogs(state)
-
-  return state
-}
+    updatePriceEvents,
+    generatePriceEvents,
+    adjustItemValues,
+    rotateNotificationLogs,
+  ].reduce((acc, fn) => fn({ ...acc }), {
+    ...state,
+    cowForSale: generateCow(),
+    dayCount: state.dayCount + 1,
+  })
 
 /**
  * @param {farmhand.state} state
@@ -588,17 +708,21 @@ export const makeRecipe = (state, recipe) => {
 /**
  * @param {farmhand.state} state
  * @param {string} message
+ * @param {string} [severity] Corresponds to the `severity` prop here:
+ * https://material-ui.com/api/alert/
  * @returns {farmhand.state}
  */
-export const showNotification = (state, message) => {
+export const showNotification = (state, message, severity = 'info') => {
   const { notifications } = state
 
   return {
     ...state,
     // Don't show redundant notifications
-    notifications: notifications.includes(message)
+    notifications: notifications.find(
+      notification => notification.message === message
+    )
       ? notifications
-      : notifications.concat(message),
+      : notifications.concat({ message, severity }),
     doShowNotifications: true,
   }
 }

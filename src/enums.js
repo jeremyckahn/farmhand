@@ -88,4 +88,4 @@ export const cowColors = enumify([
  * @property farmhand.module:enums.dialogView
  * @enum {string}
  */
-export const dialogView = enumify(['NONE', 'FARMERS_LOG'])
+export const dialogView = enumify(['NONE', 'FARMERS_LOG', 'PRICE_EVENTS'])

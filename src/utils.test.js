@@ -8,10 +8,13 @@ import {
   getCowValue,
   getCowWeight,
   getCropId,
+  getCropLifecycleDuration,
   getCropLifeStage,
   getLifeStageRange,
   getPlotContentFromItemId,
   getPlotImage,
+  getPriceEventForCrop,
+  getRandomCropItem,
   getRangeCoords,
   getFinalCropItemIdFromSeedItemId,
 } from './utils'
@@ -19,7 +22,7 @@ import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
 import { items as itemImages } from './img'
 import { cowColors, cropLifeStage, genders } from './enums'
-import { sampleItem1, sampleFieldTool1 } from './data/items'
+import { sampleCropItem1, sampleItem1, sampleFieldTool1 } from './data/items'
 import {
   COW_MAXIMUM_AGE_VALUE_DROPOFF,
   COW_MAXIMUM_VALUE_MULTIPLIER,
@@ -77,7 +80,7 @@ describe('generateValueAdjustments', () => {
 
   beforeEach(() => {
     jest.spyOn(Math, 'random').mockReturnValue(1)
-    valueAdjustments = generateValueAdjustments()
+    valueAdjustments = generateValueAdjustments({}, {})
   })
 
   describe('item has a fluctuating price', () => {
@@ -91,6 +94,24 @@ describe('generateValueAdjustments', () => {
     test('valueAdjustments value is not defined', () => {
       expect(valueAdjustments['sample-field-tool-1']).toEqual(undefined)
     })
+  })
+
+  describe('factors in price crashes', () => {
+    valueAdjustments = generateValueAdjustments(
+      { 'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 } },
+      {}
+    )
+
+    expect(valueAdjustments['sample-crop-1']).toEqual(0.5)
+  })
+
+  describe('factors in price surges', () => {
+    valueAdjustments = generateValueAdjustments(
+      {},
+      { 'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 } }
+    )
+
+    expect(valueAdjustments['sample-crop-1']).toEqual(1.5)
   })
 })
 
@@ -257,6 +278,12 @@ describe('getLifeStageRange', () => {
   })
 })
 
+describe('getCropLifecycleDuration', () => {
+  test('computes lifecycle duration', () => {
+    expect(getCropLifecycleDuration(sampleCropItem1)).toEqual(3)
+  })
+})
+
 describe('getCropLifeStage', () => {
   test('maps a life cycle label to an image name chunk', () => {
     const itemId = 'sample-crop-1'
@@ -366,5 +393,24 @@ describe('canMakeRecipe', () => {
         ])
       ).toBe(true)
     })
+  })
+})
+
+describe('getPriceEventForCrop', () => {
+  test('returns price event', () => {
+    expect(getPriceEventForCrop(sampleCropItem1)).toEqual({
+      itemId: sampleCropItem1.id,
+      daysRemaining: 2,
+    })
+  })
+})
+
+describe('getRandomCropItem', () => {
+  beforeEach(() => {
+    jest.spyOn(Math, 'random').mockReturnValue(0)
+  })
+
+  test('returns a crop item', () => {
+    expect(getRandomCropItem()).toEqual(sampleCropItem1)
   })
 })

@@ -1,7 +1,9 @@
 import React from 'react'
-import { arrayOf, bool, func, string } from 'prop-types'
+import { arrayOf, bool, func, shape, string } from 'prop-types'
 import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 
+import { NOTIFICATION_DURATION } from '../../constants'
 import FarmhandContext from '../../Farmhand.context'
 import './NotificationSystem.sass'
 
@@ -15,30 +17,33 @@ export const NotificationSystem = ({
     <Snackbar
       {...{
         anchorOrigin: { vertical: 'top', horizontal: 'right' },
-        autoHideDuration: 6000,
+        autoHideDuration: NOTIFICATION_DURATION,
         className: 'notification',
-        ContentProps: {
-          'aria-describedby': 'farmhand-notification',
-        },
-        message: (
-          <span id="farmhand-notification">
-            {notifications.map((notification, i) => (
-              <p key={i}>{notification}</p>
-            ))}
-          </span>
-        ),
         onClose: handleCloseNotification,
         onExited: handleNotificationExited,
         open: doShowNotifications,
       }}
-    />
+    >
+      <>
+        {notifications.map(({ message, severity }) => (
+          <Alert {...{ elevation: 3, key: `${severity}_${message}`, severity }}>
+            <p>{message}</p>
+          </Alert>
+        ))}
+      </>
+    </Snackbar>
   </div>
 )
 
 NotificationSystem.propTypes = {
   handleCloseNotification: func.isRequired,
   handleNotificationExited: func.isRequired,
-  notifications: arrayOf(string).isRequired,
+  notifications: arrayOf(
+    shape({
+      message: string.isRequired,
+      severity: string.isRequired,
+    })
+  ).isRequired,
   doShowNotifications: bool.isRequired,
 }
 

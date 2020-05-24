@@ -261,7 +261,7 @@ describe('instance methods', () => {
           getItem: () =>
             Promise.resolve({
               foo: 'bar',
-              newDayNotifications: ['baz'],
+              newDayNotifications: [{ message: 'baz', severity: 'info' }],
             }),
           setItem: data => Promise.resolve(data),
         })
@@ -281,7 +281,8 @@ describe('instance methods', () => {
 
       test('shows notifications for pending newDayNotifications', () => {
         expect(component.instance().showNotification).toHaveBeenCalledWith(
-          'baz'
+          'baz',
+          'info'
         )
       })
 
@@ -299,9 +300,10 @@ describe('instance methods', () => {
           .instance()
           .showCowPenPurchasedNotifications({ purchasedCowPen: 0 })
 
-        expect(component.state().notifications).toContain(
-          COW_PEN_PURCHASED`${PURCHASEABLE_COW_PENS.get(1).cows}`
-        )
+        expect(component.state().notifications).toContainEqual({
+          message: COW_PEN_PURCHASED`${PURCHASEABLE_COW_PENS.get(1).cows}`,
+          severity: 'info',
+        })
       })
     })
   })
@@ -314,9 +316,10 @@ describe('instance methods', () => {
           .instance()
           .showRecipeLearnedNotifications({ learnedRecipes: {} })
 
-        expect(component.state().notifications).not.toContain(
-          RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`
-        )
+        expect(component.state().notifications).not.toContainEqual({
+          message: RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`,
+          severity: 'info',
+        })
       })
     })
 
@@ -327,9 +330,10 @@ describe('instance methods', () => {
           .instance()
           .showRecipeLearnedNotifications({ learnedRecipes: {} })
 
-        expect(component.state().notifications).toContain(
-          RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`
-        )
+        expect(component.state().notifications).toContainEqual({
+          message: RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`,
+          severity: 'info',
+        })
       })
     })
   })
@@ -338,8 +342,11 @@ describe('instance methods', () => {
     beforeEach(() => {
       jest.spyOn(component.instance().localforage, 'setItem')
       jest.spyOn(component.instance(), 'showNotification')
+      jest.spyOn(Math, 'random').mockReturnValue(1)
 
-      component.setState({ newDayNotifications: ['foo'] })
+      component.setState({
+        newDayNotifications: [{ message: 'foo', severity: 'info' }],
+      })
       component.instance().incrementDay()
     })
 
@@ -352,7 +359,7 @@ describe('instance methods', () => {
         'state',
         Farmhand.reduceByPersistedKeys({
           ...component.state(),
-          newDayNotifications: ['foo'],
+          newDayNotifications: [{ message: 'foo', severity: 'info' }],
         })
       )
     })
@@ -362,9 +369,10 @@ describe('instance methods', () => {
       expect(showNotification).toHaveBeenCalledTimes(2)
       expect(showNotification).toHaveBeenNthCalledWith(
         1,
-        PROGRESS_SAVED_MESSAGE
+        PROGRESS_SAVED_MESSAGE,
+        'info'
       )
-      expect(showNotification).toHaveBeenNthCalledWith(2, 'foo')
+      expect(showNotification).toHaveBeenNthCalledWith(2, 'foo', 'info')
     })
   })
 

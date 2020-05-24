@@ -1,6 +1,11 @@
 import { shapeOf, testCrop, testItem } from './test-utils'
 import { RAIN_MESSAGE } from './strings'
-import { MILK_PRODUCED, CROW_ATTACKED } from './templates'
+import {
+  MILK_PRODUCED,
+  CROW_ATTACKED,
+  PRICE_CRASH_NOTIFICATION,
+  PRICE_SURGE_NOTIFICATION,
+} from './templates'
 import {
   COW_FEED_ITEM_ID,
   COW_HUG_BENEFIT,
@@ -15,6 +20,7 @@ import {
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from './constants'
+import { sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
 import { fieldMode, genders } from './enums'
@@ -24,6 +30,7 @@ import {
   getCowValue,
   getCropFromItemId,
   getPlotContentFromItemId,
+  getPriceEventForCrop,
 } from './utils'
 import * as fn from './reducers'
 
@@ -44,37 +51,219 @@ describe('rotateNotificationLogs', () => {
   test('rotates logs', () => {
     const { notificationLog } = fn.rotateNotificationLogs({
       dayCount: 1,
-      newDayNotifications: ['b'],
-      notificationLog: [{ day: 0, notifications: ['a'] }],
+      newDayNotifications: [{ message: 'b', severity: 'info' }],
+      notificationLog: [
+        {
+          day: 0,
+          notifications: {
+            error: [],
+            info: ['a'],
+            success: [],
+            warning: [],
+          },
+        },
+      ],
     })
 
     expect(notificationLog).toEqual([
-      { day: 1, notifications: ['b'] },
-      { day: 0, notifications: ['a'] },
+      {
+        day: 1,
+        notifications: {
+          error: [],
+          info: ['b'],
+          success: [],
+          warning: [],
+        },
+      },
+      {
+        day: 0,
+        notifications: {
+          error: [],
+          info: ['a'],
+          success: [],
+          warning: [],
+        },
+      },
     ])
   })
 
   test('limits log size', () => {
     const { notificationLog } = fn.rotateNotificationLogs({
       dayCount: 50,
-      newDayNotifications: ['new log'],
+      newDayNotifications: [{ message: 'new log', severity: 'info' }],
       notificationLog: new Array(NOTIFICATION_LOG_SIZE).fill({
         day: 1,
-        notifications: ['a'],
+        notifications: {
+          error: [],
+          info: ['a'],
+          success: [],
+          warning: [],
+        },
       }),
     })
 
     expect(notificationLog).toHaveLength(NOTIFICATION_LOG_SIZE)
-    expect(notificationLog[0]).toEqual({ day: 50, notifications: ['new log'] })
+    expect(notificationLog[0]).toEqual({
+      day: 50,
+      notifications: {
+        error: [],
+        info: ['new log'],
+        success: [],
+        warning: [],
+      },
+    })
   })
 
   test('ignores empty logs', () => {
     const { notificationLog } = fn.rotateNotificationLogs({
       newDayNotifications: [],
-      notificationLog: [{ day: 0, notifications: ['a'] }],
+      notificationLog: [
+        {
+          day: 0,
+          notifications: [
+            {
+              error: [],
+              info: ['a'],
+              success: [],
+              warning: [],
+            },
+          ],
+        },
+      ],
     })
 
-    expect(notificationLog).toEqual([{ day: 0, notifications: ['a'] }])
+    expect(notificationLog).toEqual([
+      {
+        day: 0,
+        notifications: [
+          {
+            error: [],
+            info: ['a'],
+            success: [],
+            warning: [],
+          },
+        ],
+      },
+    ])
+  })
+})
+
+describe('createPriceEvent', () => {
+  test('creates priceCrashes data', () => {
+    const priceEvent = {
+      itemId: sampleCropItem1.id,
+      daysRemaining: 1,
+    }
+
+    const { priceCrashes } = fn.createPriceEvent(
+      { priceCrashes: {} },
+      priceEvent,
+      'priceCrashes'
+    )
+
+    expect(priceCrashes).toMatchObject({
+      [sampleCropItem1.id]: priceEvent,
+    })
+  })
+
+  test('creates priceSurges data', () => {
+    const priceEvent = {
+      itemId: sampleCropItem1.id,
+      daysRemaining: 1,
+    }
+
+    const { priceSurges } = fn.createPriceEvent(
+      { priceSurges: {} },
+      priceEvent,
+      'priceSurges'
+    )
+
+    expect(priceSurges).toMatchObject({
+      [sampleCropItem1.id]: priceEvent,
+    })
+  })
+})
+
+describe('generatePriceEvents', () => {
+  describe('price event already exists', () => {
+    test('no-ops', () => {
+      jest.spyOn(Math, 'random').mockReturnValue(1)
+      const inputState = {
+        newDayNotifications: [],
+        priceCrashes: {
+          [sampleCropItem1.id]: {
+            itemId: sampleCropItem1.id,
+            daysRemaining: 1,
+          },
+        },
+        priceSurges: {},
+      }
+      const { priceCrashes, priceSurges } = fn.generatePriceEvents(inputState)
+
+      expect(priceCrashes).toEqual(inputState.priceCrashes)
+      expect(priceSurges).toEqual(inputState.priceSurges)
+    })
+  })
+
+  describe('price event does not already exist', () => {
+    let cropItem, state
+
+    beforeEach(() => {
+      jest.spyOn(Math, 'random').mockReturnValue(0)
+
+      const { generatePriceEvents } = jest.requireActual('./reducers')
+      const { getRandomCropItem } = jest.requireActual('./utils')
+      cropItem = getRandomCropItem()
+      state = generatePriceEvents({
+        newDayNotifications: [],
+        priceCrashes: {},
+        priceSurges: {},
+      })
+    })
+
+    test('generates a price event', () => {
+      const priceEvents = { [cropItem.id]: getPriceEventForCrop(cropItem) }
+
+      expect(state).toContainAnyEntries([
+        ['priceCrashes', priceEvents],
+        ['priceSurges', priceEvents],
+      ])
+    })
+
+    test('shows notification', () => {
+      expect(state.newDayNotifications).toIncludeAnyMembers([
+        {
+          message: PRICE_CRASH_NOTIFICATION`${cropItem}`,
+          severity: 'warning',
+        },
+        {
+          message: PRICE_SURGE_NOTIFICATION`${cropItem}`,
+          severity: 'success',
+        },
+      ])
+    })
+  })
+})
+
+describe('updatePriceEvents', () => {
+  test('updates price events', () => {
+    const { priceCrashes, priceSurges } = fn.updatePriceEvents({
+      priceCrashes: {
+        'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 },
+        'sample-crop-2': { itemId: 'sample-crop-2', daysRemaining: 3 },
+      },
+      priceSurges: {
+        'sample-crop-3': { itemId: 'sample-crop-3', daysRemaining: 5 },
+      },
+    })
+
+    expect(priceCrashes).toEqual({
+      'sample-crop-2': { itemId: 'sample-crop-2', daysRemaining: 2 },
+    })
+
+    expect(priceSurges).toEqual({
+      'sample-crop-3': { itemId: 'sample-crop-3', daysRemaining: 4 },
+    })
   })
 })
 
@@ -99,10 +288,12 @@ describe('computeStateForNextDay', () => {
           }),
         ],
       ],
-      newDayNotifications: [],
       cowInventory: [],
       inventory: [],
+      newDayNotifications: [],
       notificationLog: [],
+      priceCrashes: {},
+      priceSurges: {},
     })
 
     expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()))
@@ -133,7 +324,10 @@ describe('applyRain', () => {
 
     expect(state.field[0][0].wasWateredToday).toBe(true)
     expect(state.field[0][1].wasWateredToday).toBe(true)
-    expect(state.newDayNotifications[0]).toBe(RAIN_MESSAGE)
+    expect(state.newDayNotifications[0]).toEqual({
+      message: RAIN_MESSAGE,
+      severity: 'info',
+    })
   })
 })
 
@@ -314,7 +508,10 @@ describe('processMilkingCows', () => {
       expect(daysSinceMilking).toEqual(0)
       expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
       expect(newDayNotifications).toEqual([
-        MILK_PRODUCED`${cow}${getCowMilkItem(cow)}`,
+        {
+          message: MILK_PRODUCED`${cow}${getCowMilkItem(cow)}`,
+          severity: 'success',
+        },
       ])
     })
   })
@@ -381,7 +578,10 @@ describe('processNerfs', () => {
 
         expect(state.field[0][0]).toBe(null)
         expect(state.newDayNotifications).toEqual([
-          CROW_ATTACKED`${itemsMap['sample-crop-1']}`,
+          {
+            message: CROW_ATTACKED`${itemsMap['sample-crop-1']}`,
+            severity: 'error',
+          },
         ])
       })
 
@@ -717,7 +917,7 @@ describe('showNotification', () => {
       { notifications: [] },
       'foo'
     )
-    expect(notifications).toEqual(['foo'])
+    expect(notifications).toEqual([{ message: 'foo', severity: 'info' }])
     expect(doShowNotifications).toEqual(true)
   })
 
@@ -725,7 +925,7 @@ describe('showNotification', () => {
     const state = fn.showNotification({ notifications: [] }, 'foo')
 
     const { notifications } = fn.showNotification(state, 'foo')
-    expect(notifications).toEqual(['foo'])
+    expect(notifications).toEqual([{ message: 'foo', severity: 'info' }])
   })
 })
 

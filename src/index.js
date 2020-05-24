@@ -83,6 +83,13 @@
  * the recipe to be made available to the player.
  */
 
+/**
+ * @typedef farmhand.priceEvent
+ * @type {Object}
+ * @property {string} itemId
+ * @property {number} daysRemaining
+ */
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 

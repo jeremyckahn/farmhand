@@ -15,6 +15,7 @@ export const FieldTools = ({ fieldToolInventory, selectedItemId }) => (
               item,
               isSelected: selectedItemId === item.id,
               isSelectView: true,
+              showQuantity: true,
             }}
           />
         </li>

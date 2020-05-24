@@ -25,3 +25,17 @@ export const MILK_PRODUCED = (_, cow, milk) =>
  */
 export const RECIPE_LEARNED = (_, recipe) =>
   `You learned how to make ${recipe.name}!`
+
+/**
+ * @param {farmhand.item} cropItem
+ * @returns {string}
+ */
+export const PRICE_CRASH_NOTIFICATION = (_, { name }) =>
+  `${name} prices have bottomed out! Avoid selling them until prices return to normal.`
+
+/**
+ * @param {farmhand.item} cropItem
+ * @returns {string}
+ */
+export const PRICE_SURGE_NOTIFICATION = (_, { name }) =>
+  `${name} prices are at their peak! Now is the time to sell!`

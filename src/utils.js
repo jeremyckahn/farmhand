@@ -19,6 +19,7 @@ import {
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   MALE_COW_WEIGHT_MULTIPLIER,
+  PRICE_EVENT_STANDARD_DURATION_DECREASE,
 } from './constants'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
@@ -117,6 +118,14 @@ export const getCropId = ({ itemId }) =>
   cropIdToTypeMap[itemsMap[itemId].cropType]
 
 /**
+ * @param {farmhand.crop} crop
+ * @returns {number}
+ */
+export const getCropLifecycleDuration = memoize(({ cropTimetable }) =>
+  Object.values(cropTimetable).reduce((acc, value) => acc + value, 0)
+)
+
+/**
  * @param {farmhand.cropTimetable} cropTimetable
  * @returns {Array.<enums.cropLifeStage>}
  */
@@ -193,12 +202,20 @@ export const getFinalCropItemIdFromSeedItemId = seedItemId =>
   itemsMap[seedItemId].growsInto
 
 /**
+ * @param {farmhand.priceEvent} priceCrashes
+ * @param {farmhand.priceEvent} priceSurges
  * @returns {Object}
  */
-export const generateValueAdjustments = () =>
+export const generateValueAdjustments = (priceCrashes, priceSurges) =>
   Object.keys(itemsMap).reduce((acc, key) => {
     if (itemsMap[key].doesPriceFluctuate) {
-      acc[key] = Math.random() + 0.5
+      if (priceCrashes[key]) {
+        acc[key] = 0.5
+      } else if (priceSurges[key]) {
+        acc[key] = 1.5
+      } else {
+        acc[key] = Math.random() + 0.5
+      }
     }
 
     return acc
@@ -303,3 +320,35 @@ export const canMakeRecipe = ({ ingredients }, inventory) => {
     itemId => inventoryQuantityMap[itemId] >= ingredients[itemId]
   )
 }
+
+/**
+ * @type {Array.<farmhand.item>}
+ */
+const finalStageCropItemList = Object.keys(itemsMap).reduce((acc, itemId) => {
+  const item = itemsMap[itemId]
+
+  // Duck type to see if item is a final stage crop
+  if (item.cropTimetable) {
+    acc.push(item)
+  }
+
+  return acc
+}, [])
+
+/**
+ * @returns {farmhand.item} A final stage, non-seed item.
+ */
+export const getRandomCropItem = () =>
+  finalStageCropItemList[
+    Math.floor(Math.random() * finalStageCropItemList.length)
+  ]
+
+/**
+ * @param {farmhand.item} cropItem
+ * @returns {farmhand.priceEvent}
+ */
+export const getPriceEventForCrop = cropItem => ({
+  itemId: cropItem.id,
+  daysRemaining:
+    getCropLifecycleDuration(cropItem) - PRICE_EVENT_STANDARD_DURATION_DECREASE,
+})

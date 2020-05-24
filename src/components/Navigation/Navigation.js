@@ -8,6 +8,7 @@ import Fab from '@material-ui/core/Fab'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import HistoryIcon from '@material-ui/icons/History'
+import FlashOnIcon from '@material-ui/icons/FlashOn'
 import Tooltip from '@material-ui/core/Tooltip'
 import { number, func, string } from 'prop-types'
 
@@ -15,19 +16,23 @@ import FarmhandContext from '../../Farmhand.context'
 import { dialogView, stageFocusType } from '../../enums'
 
 import LogView from '../LogView'
+import PriceEventView from '../PriceEventView'
 
 import './Navigation.sass'
 
 const dialogTriggerTextMap = {
   [dialogView.FARMERS_LOG]: "Open Farmer's Log",
+  [dialogView.PRICE_EVENTS]: 'See Price Events',
 }
 
 const dialogTitleMap = {
   [dialogView.FARMERS_LOG]: "Farmer's Log",
+  [dialogView.PRICE_EVENTS]: 'Price Events',
 }
 
 const dialogContentMap = {
   [dialogView.FARMERS_LOG]: <LogView />,
+  [dialogView.PRICE_EVENTS]: <PriceEventView />,
 }
 
 export const Navigation = ({
@@ -43,6 +48,29 @@ export const Navigation = ({
     <h1>Farmhand</h1>
     <h2 className="day-count">Day {dayCount}</h2>
     <div className="button-array">
+      {[
+        { dialogView: dialogView.FARMERS_LOG, Icon: HistoryIcon },
+        { dialogView: dialogView.PRICE_EVENTS, Icon: FlashOnIcon },
+      ].map(({ dialogView, Icon }) => (
+        <Tooltip
+          {...{
+            key: dialogView,
+            placement: 'bottom',
+            title: dialogTriggerTextMap[dialogView],
+          }}
+        >
+          <Fab
+            {...{
+              'aria-label': dialogTriggerTextMap[dialogView],
+              color: 'primary',
+              onClick: () => handleClickDialogViewButton(dialogView),
+            }}
+          >
+            <Icon />
+          </Fab>
+        </Tooltip>
+      ))}
+      {/*
       <Tooltip
         {...{
           placement: 'bottom',
@@ -52,7 +80,6 @@ export const Navigation = ({
         <Fab
           {...{
             'aria-label': dialogTriggerTextMap[dialogView.FARMERS_LOG],
-            className: 'view-log',
             color: 'primary',
             onClick: () => handleClickDialogViewButton(dialogView.FARMERS_LOG),
           }}
@@ -60,6 +87,7 @@ export const Navigation = ({
           <HistoryIcon />
         </Fab>
       </Tooltip>
+      */}
     </div>
     {/*
     This Dialog gets the Farmhand class because it renders outside of the root

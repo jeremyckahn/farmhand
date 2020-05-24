@@ -205,6 +205,7 @@ export const CowPenContextMenu = ({
         bulkPurchaseSize: COW_FEED_BULK_PURCHASE_AMOUNT,
         item: cowFeed,
         isPurchaseView: true,
+        showQuantity: true,
       }}
     />
     <h2>For sale</h2>

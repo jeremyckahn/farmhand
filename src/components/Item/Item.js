@@ -12,6 +12,7 @@ import classNames from 'classnames'
 import FarmhandContext from '../../Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
+import { getItemValue } from '../../utils'
 
 import './Item.sass'
 
@@ -82,10 +83,14 @@ export const Item = ({
   isSelected,
   isSellView,
   item,
-  item: { id, name, value },
+  item: { id, name },
   money,
   playerInventoryQuantities,
+  showQuantity,
   valueAdjustments,
+
+  adjustedValue = getItemValue(item, valueAdjustments),
+  disableSellButtons = playerInventoryQuantities[id] === 0,
 }) => (
   <Card
     {...{
@@ -101,25 +106,29 @@ export const Item = ({
           <div>
             {isPurchaseView && (
               <p>
-                {`Price: $${value.toFixed(2)}`}
+                {`Price: $${adjustedValue}`}
                 {valueAdjustments[id] && (
                   <PurchaseValueIndicator
-                    {...{ id, value, valueAdjustments }}
+                    {...{ id, value: adjustedValue, valueAdjustments }}
                   />
                 )}
               </p>
             )}
             {isSellView && (
               <p>
-                {`Sell price: $${value.toFixed(2)}`}
+                {`Sell price: $${adjustedValue}`}
                 {valueAdjustments[id] && (
-                  <SellValueIndicator {...{ id, value, valueAdjustments }} />
+                  <SellValueIndicator
+                    {...{ id, value: adjustedValue, valueAdjustments }}
+                  />
                 )}
               </p>
             )}
-            <p>
-              <strong>Quantity:</strong> {playerInventoryQuantities[id]}
-            </p>
+            {showQuantity && (
+              <p>
+                <strong>In Inventory:</strong> {playerInventoryQuantities[id]}
+              </p>
+            )}
           </div>
         ),
       }}
@@ -143,7 +152,7 @@ export const Item = ({
             {...{
               className: 'purchase',
               color: 'primary',
-              disabled: value > money,
+              disabled: adjustedValue > money,
               onClick: () => handleItemPurchaseClick(item),
               variant: 'contained',
             }}
@@ -155,7 +164,7 @@ export const Item = ({
               {...{
                 className: 'bulk purchase',
                 color: 'primary',
-                disabled: value * bulkPurchaseSize > money,
+                disabled: adjustedValue * bulkPurchaseSize > money,
                 onClick: () => handleItemPurchaseClick(item, bulkPurchaseSize),
                 variant: 'contained',
               }}
@@ -167,7 +176,7 @@ export const Item = ({
             {...{
               className: 'max-out',
               color: 'primary',
-              disabled: value > money,
+              disabled: adjustedValue > money,
               onClick: () => handleItemMaxOutClick(item),
               variant: 'contained',
             }}
@@ -182,6 +191,7 @@ export const Item = ({
             {...{
               className: 'sell',
               color: 'secondary',
+              disabled: disableSellButtons,
               onClick: () => handleItemSellClick(item),
               variant: 'contained',
             }}
@@ -192,6 +202,7 @@ export const Item = ({
             {...{
               className: 'sell-all',
               color: 'secondary',
+              disabled: disableSellButtons,
               onClick: () => handleItemSellAllClick(item),
               variant: 'contained',
             }}
@@ -205,7 +216,9 @@ export const Item = ({
 )
 
 Item.propTypes = {
+  adjustedValue: number,
   bulkPurchaseSize: number,
+  disableSellButtons: bool,
   handleItemMaxOutClick: func,
   handleItemPurchaseClick: func,
   handleItemSelectClick: func,
@@ -217,6 +230,7 @@ Item.propTypes = {
   item: object.isRequired,
   money: number.isRequired,
   playerInventoryQuantities: object.isRequired,
+  showQuantity: bool,
   valueAdjustments: object.isRequired,
 }
 
