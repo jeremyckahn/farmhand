@@ -19,7 +19,7 @@ import {
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   MALE_COW_WEIGHT_MULTIPLIER,
-  PRICE_EVENT_DURATION_BUFFER,
+  PRICE_EVENT_STANDARD_DURATION_DECREASE,
 } from './constants'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
@@ -350,5 +350,5 @@ export const getRandomCropItem = () =>
 export const getPriceEventForCrop = cropItem => ({
   itemId: cropItem.id,
   daysRemaining:
-    getCropLifecycleDuration(cropItem) + PRICE_EVENT_DURATION_BUFFER,
+    getCropLifecycleDuration(cropItem) - PRICE_EVENT_STANDARD_DURATION_DECREASE,
 })
