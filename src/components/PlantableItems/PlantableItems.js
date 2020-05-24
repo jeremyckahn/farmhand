@@ -15,6 +15,7 @@ export const PlantableItems = ({ plantableCropInventory, selectedItemId }) => (
               item,
               isSelected: item.id === selectedItemId,
               isSelectView: true,
+              showQuantity: true,
             }}
           />
         </li>

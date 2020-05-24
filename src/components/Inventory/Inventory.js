@@ -123,6 +123,7 @@ export const Inventory = ({
                     isPurchaseView,
                     isSellView,
                     item,
+                    showQuantity: true,
                   }}
                 />
               </li>

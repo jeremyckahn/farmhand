@@ -86,6 +86,7 @@ export const Item = ({
   item: { id, name },
   money,
   playerInventoryQuantities,
+  showQuantity,
   valueAdjustments,
 
   adjustedValue = getItemValue(item, valueAdjustments),
@@ -122,9 +123,11 @@ export const Item = ({
                 )}
               </p>
             )}
-            <p>
-              <strong>Quantity:</strong> {playerInventoryQuantities[id]}
-            </p>
+            {showQuantity && (
+              <p>
+                <strong>In Inventory:</strong> {playerInventoryQuantities[id]}
+              </p>
+            )}
           </div>
         ),
       }}
@@ -226,6 +229,7 @@ Item.propTypes = {
   item: object.isRequired,
   money: number.isRequired,
   playerInventoryQuantities: object.isRequired,
+  showQuantity: bool,
   valueAdjustments: object.isRequired,
 }
 

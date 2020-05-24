@@ -18,6 +18,7 @@ const PriceEventView = ({ priceCrashes, priceSurges }) => (
             {...{
               isSellView: true,
               item: itemsMap[itemId],
+              showQuantity: true,
             }}
           />
         </li>
@@ -30,7 +31,6 @@ const PriceEventView = ({ priceCrashes, priceSurges }) => (
         <li {...{ key: itemId }}>
           <Item
             {...{
-              isPurchaseView: true,
               item: itemsMap[itemId],
             }}
           />
