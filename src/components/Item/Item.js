@@ -90,6 +90,7 @@ export const Item = ({
   valueAdjustments,
 
   adjustedValue = getItemValue(item, valueAdjustments),
+  disableSellButtons = playerInventoryQuantities[id] === 0,
 }) => (
   <Card
     {...{
@@ -184,15 +185,13 @@ export const Item = ({
           </Button>
         </>
       )}
-      {/*
-        FIXME: Disable the sell buttons if quantity === 0.
-      */}
       {isSellView && (
         <>
           <Button
             {...{
               className: 'sell',
               color: 'secondary',
+              disabled: disableSellButtons,
               onClick: () => handleItemSellClick(item),
               variant: 'contained',
             }}
@@ -203,6 +202,7 @@ export const Item = ({
             {...{
               className: 'sell-all',
               color: 'secondary',
+              disabled: disableSellButtons,
               onClick: () => handleItemSellAllClick(item),
               variant: 'contained',
             }}
@@ -218,6 +218,7 @@ export const Item = ({
 Item.propTypes = {
   adjustedValue: number,
   bulkPurchaseSize: number,
+  disableSellButtons: bool,
   handleItemMaxOutClick: func,
   handleItemPurchaseClick: func,
   handleItemSelectClick: func,
