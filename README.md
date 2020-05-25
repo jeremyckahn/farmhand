@@ -2,6 +2,8 @@
 
 ### A farming game
 
+![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)
+
 **[Current snapshot](https://jeremyckahn.github.io/farmhand/)**
 
 - `master`: [![Build Status](https://travis-ci.org/jeremyckahn/farmhand.svg?branch=master)](https://travis-ci.org/jeremyckahn/farmhand)
