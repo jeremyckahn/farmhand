@@ -2,7 +2,7 @@
 
 ### A farming game
 
-![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)
+Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
 
 **[Current snapshot](https://jeremyckahn.github.io/farmhand/)**
 
