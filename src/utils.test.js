@@ -1,6 +1,7 @@
 import {
   canMakeRecipe,
   dollarAmount,
+  moneyString,
   getItemValue,
   generateValueAdjustments,
   generateCow,
@@ -45,6 +46,12 @@ const { SEED, GROWING, GROWN } = cropLifeStage
 describe('dollarAmount', () => {
   test('formats number to dollar amount', () => {
     expect(dollarAmount(123.4567)).toEqual('123.46')
+  })
+})
+
+describe('moneyString', () => {
+  test('formats number to dollar string', () => {
+    expect(moneyString(1234.567)).toEqual('$1,234.57')
   })
 })
 

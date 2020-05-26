@@ -12,7 +12,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../../Farmhand.context'
-import { dollarAmount } from '../../utils'
+import { moneyString } from '../../utils'
 import './AppBar.sass'
 
 export const AppBar = ({
@@ -77,7 +77,7 @@ export const AppBar = ({
           variant: 'h2',
         }}
       >
-        ${dollarAmount(money)}
+        {moneyString(money)}
       </Typography>
     </Toolbar>
   </MuiAppBar>

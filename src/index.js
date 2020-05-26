@@ -109,6 +109,7 @@
  * @property {string} id
  * @property {string} name
  * @property {string} description
+ * @property {string} rewardDescription
  * @property {farmhand.achievementCondition} condition
  * @property {farmhand.achievementReward} reward
  */

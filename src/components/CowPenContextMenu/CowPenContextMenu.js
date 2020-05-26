@@ -18,7 +18,7 @@ import Item from '../Item'
 import { animals } from '../../img'
 import FarmhandContext from '../../Farmhand.context'
 import { cowColors, genders } from '../../enums'
-import { dollarAmount, getCowValue, getCowWeight } from '../../utils'
+import { moneyString, getCowValue, getCowWeight } from '../../utils'
 import {
   COW_FEED_BULK_PURCHASE_AMOUNT,
   PURCHASEABLE_COW_PENS,
@@ -53,7 +53,7 @@ export const CowCardSubheader = ({
       </p>
     )}
     <p>
-      {isCowPurchased ? 'Value' : 'Price'}: ${dollarAmount(cowValue)}
+      {isCowPurchased ? 'Value' : 'Price'}: {moneyString(cowValue)}
     </p>
     <p>Weight: {getCowWeight(cow)} lbs.</p>
     {isCowPurchased && (
