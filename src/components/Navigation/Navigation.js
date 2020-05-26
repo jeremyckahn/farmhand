@@ -7,6 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Fab from '@material-ui/core/Fab'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import HistoryIcon from '@material-ui/icons/History'
 import FlashOnIcon from '@material-ui/icons/FlashOn'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -17,22 +18,26 @@ import { dialogView, stageFocusType } from '../../enums'
 
 import LogView from '../LogView'
 import PriceEventView from '../PriceEventView'
+import AchievementsView from '../AchievementsView'
 
 import './Navigation.sass'
 
 const dialogTriggerTextMap = {
   [dialogView.FARMERS_LOG]: "Open Farmer's Log",
   [dialogView.PRICE_EVENTS]: 'See Price Events',
+  [dialogView.ACHIEVEMENTS]: 'View Achievements',
 }
 
 const dialogTitleMap = {
   [dialogView.FARMERS_LOG]: "Farmer's Log",
   [dialogView.PRICE_EVENTS]: 'Price Events',
+  [dialogView.ACHIEVEMENTS]: 'Achievements',
 }
 
 const dialogContentMap = {
   [dialogView.FARMERS_LOG]: <LogView />,
   [dialogView.PRICE_EVENTS]: <PriceEventView />,
+  [dialogView.ACHIEVEMENTS]: <AchievementsView />,
 }
 
 export const Navigation = ({
@@ -51,6 +56,7 @@ export const Navigation = ({
       {[
         { dialogView: dialogView.FARMERS_LOG, Icon: HistoryIcon },
         { dialogView: dialogView.PRICE_EVENTS, Icon: FlashOnIcon },
+        { dialogView: dialogView.ACHIEVEMENTS, Icon: AssignmentTurnedInIcon },
       ].map(({ dialogView, Icon }) => (
         <Tooltip
           {...{
