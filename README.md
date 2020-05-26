@@ -29,9 +29,9 @@ There is no release or versioning system yet.
   - [ ] Conditions
   - [ ] Reward
 - [ ] Initial achievements
-  - [ ] Every step of the harvest cycle (plant, harvest, sell)
-  - [ ] Enable value indicators by making \$10,000
-  - [ ] Buy every color of cow
+  - [ ] Every step of the harvest cycle (plant, harvest, sell) and get \$1,000
+  - [ ] Unlock crop price guide by making \$10,000
+  - [ ] Buy every color of cow (get cow feed as a reward)
 
 ## Milestone 4: Events 🗓
 

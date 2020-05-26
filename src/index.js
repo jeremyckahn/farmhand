@@ -90,6 +90,29 @@
  * @property {number} daysRemaining
  */
 
+/**
+ * @callback farmhand.achievementCondition
+ * @param {farmhand.state} state
+ * @returns {boolean}
+ */
+
+/**
+ * @callback farmhand.achievementReward
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+
+/**
+ * @typedef farmhand.achievement
+ * @readonly
+ * @type {Object}
+ * @property {string} id
+ * @property {string} name
+ * @property {string} description
+ * @property {farmhand.achievementCondition} condition
+ * @property {farmhand.achievementReward} reward
+ */
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 
