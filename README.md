@@ -19,6 +19,20 @@ This is an open source farming game built with web technologies. Some basic idea
 
 There is no release or versioning system yet.
 
+## Milestone 5: Achievements 🏅
+
+- [ ] Achievements modal + trigger
+- [ ] Achievements card
+  - [ ] Name/description
+  - [ ] Reward
+- [ ] Achievements
+  - [ ] Conditions
+  - [ ] Reward
+- [ ] Initial achievements
+  - [ ] Every step of the harvest cycle (plant, harvest, sell)
+  - [ ] Enable value indicators by making \$10,000
+  - [ ] Buy every color of cow
+
 ## Milestone 4: Events 🗓
 
 - [x] Stand up Home view
