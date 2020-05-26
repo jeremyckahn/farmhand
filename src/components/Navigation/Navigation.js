@@ -23,9 +23,9 @@ import AchievementsView from '../AchievementsView'
 import './Navigation.sass'
 
 const dialogTriggerTextMap = {
-  [dialogView.FARMERS_LOG]: "Open Farmer's Log",
-  [dialogView.PRICE_EVENTS]: 'See Price Events',
-  [dialogView.ACHIEVEMENTS]: 'View Achievements',
+  [dialogView.FARMERS_LOG]: "Open Farmer's Log (l)",
+  [dialogView.PRICE_EVENTS]: 'See Price Events (p)',
+  [dialogView.ACHIEVEMENTS]: 'View Achievements (a)',
 }
 
 const dialogTitleMap = {

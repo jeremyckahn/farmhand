@@ -276,6 +276,9 @@ export default class Farmhand extends Component {
       focusCows: 'c',
       focusShop: 's',
       focusKitchen: 'k',
+      openLog: 'l',
+      openPriceEvents: 'p',
+      openAchievements: 'a',
       incrementDay: 'shift+c',
       nextView: 'right',
       previousView: 'left',
@@ -294,6 +297,13 @@ export default class Farmhand extends Component {
       focusKitchen: () => this.setState({ stageFocus: stageFocusType.KITCHEN }),
       incrementDay: () => this.incrementDay(),
       nextView: throttle(this.focusNextView.bind(this), keyHandlerThrottleTime),
+      openLog: () =>
+        this.setState({ currentDialogView: dialogView.FARMERS_LOG }),
+      openPriceEvents: () =>
+        this.setState({ currentDialogView: dialogView.PRICE_EVENTS }),
+      openAchievements: () =>
+        this.setState({ currentDialogView: dialogView.ACHIEVEMENTS }),
+
       previousView: throttle(
         this.focusPreviousView.bind(this),
         keyHandlerThrottleTime

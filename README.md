@@ -21,7 +21,7 @@ There is no release or versioning system yet.
 
 ## Milestone 5: Achievements 🏅
 
-- [ ] Achievements modal + trigger
+- [x] Achievements modal + trigger
 - [ ] Achievements card
   - [ ] Name/description
   - [ ] Reward
