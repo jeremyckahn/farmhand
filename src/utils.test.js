@@ -1,6 +1,5 @@
 import {
   canMakeRecipe,
-  dollarAmount,
   moneyString,
   getItemValue,
   generateValueAdjustments,
@@ -42,12 +41,6 @@ jest.mock('./data/items')
 jest.mock('./img')
 
 const { SEED, GROWING, GROWN } = cropLifeStage
-
-describe('dollarAmount', () => {
-  test('formats number to dollar amount', () => {
-    expect(dollarAmount(123.4567)).toEqual('123.46')
-  })
-})
 
 describe('moneyString', () => {
   test('formats number to dollar string', () => {
