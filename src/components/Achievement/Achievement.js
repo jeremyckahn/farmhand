@@ -2,6 +2,7 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
+import AssignmentIcon from '@material-ui/icons/Assignment'
 import { object } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -13,9 +14,15 @@ const Achievement = ({
 }) => (
   <Card className="Achievement">
     <CardHeader
-      {...{ title: name, subheader: `Reward: ${rewardDescription}` }}
+      {...{
+        avatar: <AssignmentIcon />,
+        title: name,
+        subheader: <p>Reward: {rewardDescription}</p>,
+      }}
     />
-    <CardContent>{description}</CardContent>
+    <CardContent>
+      <p>{description}</p>
+    </CardContent>
   </Card>
 )
 
