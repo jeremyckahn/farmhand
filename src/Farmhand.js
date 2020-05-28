@@ -376,22 +376,24 @@ export default class Farmhand extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // The operations in this if block concern transient gameplay state, but
+    // The operations after this if block concern transient gameplay state, but
     // componentDidUpdate runs as part of the rehydration/bootup process. So,
-    // check to see if the app has completed booting before working with this
-    // transient state.
-    if (this.state.hasBooted) {
-      ;[
-        'showCowPenPurchasedNotifications',
-        'showRecipeLearnedNotifications',
-      ].forEach(fn => this[fn](prevState))
+    // check to see if the app has completed booting before doing anything with
+    // this transient state.
+    if (!this.state.hasBooted) {
+      return
+    }
 
-      if (
-        this.state.stageFocus === stageFocusType.COW_PEN &&
-        prevState.stageFocus !== stageFocusType.COW_PEN
-      ) {
-        this.setState({ selectedCowId: '' })
-      }
+    ;[
+      'showCowPenPurchasedNotifications',
+      'showRecipeLearnedNotifications',
+    ].forEach(fn => this[fn](prevState))
+
+    if (
+      this.state.stageFocus === stageFocusType.COW_PEN &&
+      prevState.stageFocus !== stageFocusType.COW_PEN
+    ) {
+      this.setState({ selectedCowId: '' })
     }
   }
 
