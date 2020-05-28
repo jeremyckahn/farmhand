@@ -35,6 +35,7 @@ import {
 import * as fn from './reducers'
 
 jest.mock('localforage')
+jest.mock('./data/achievements')
 jest.mock('./data/maps')
 jest.mock('./data/items')
 jest.mock('./data/recipes')
@@ -1582,5 +1583,84 @@ describe('changeCowName', () => {
     )
 
     expect(cowInventory[0].name).toHaveLength(MAX_ANIMAL_NAME_LENGTH)
+  })
+})
+
+describe('updateAchievements', () => {
+  let updateAchievements
+
+  beforeAll(() => {
+    jest.resetModules()
+    jest.mock('./data/achievements', () => [
+      {
+        id: 'test-achievement',
+        name: '',
+        description: '',
+        rewardDescription: '',
+        condition: state => !state.conditionSatisfied,
+        reward: state => ({ ...state, conditionSatisfied: true }),
+      },
+    ])
+
+    updateAchievements = jest.requireActual('./reducers').updateAchievements
+  })
+
+  describe('achievement was not previously met', () => {
+    describe('condition is not met', () => {
+      test('does not update state', () => {
+        const inputState = {
+          completedAchievements: {},
+          conditionSatisfied: true,
+        }
+
+        const state = updateAchievements(inputState)
+
+        expect(state).toBe(inputState)
+      })
+    })
+
+    describe('condition is met', () => {
+      test('updates state', () => {
+        const inputState = {
+          completedAchievements: {},
+          conditionSatisfied: false,
+        }
+
+        const state = updateAchievements(inputState)
+
+        expect(state).toEqual({
+          completedAchievements: { 'test-achievement': true },
+          conditionSatisfied: true,
+        })
+      })
+    })
+  })
+
+  describe('achievement was previously met', () => {
+    describe('condition is not met', () => {
+      test('does not update state', () => {
+        const inputState = {
+          completedAchievements: { 'test-achievement': true },
+          conditionSatisfied: true,
+        }
+
+        const state = updateAchievements(inputState)
+
+        expect(state).toBe(inputState)
+      })
+    })
+
+    describe('condition is met', () => {
+      test('does not update state', () => {
+        const inputState = {
+          completedAchievements: { 'test-achievement': true },
+          conditionSatisfied: false,
+        }
+
+        const state = updateAchievements(inputState)
+
+        expect(state).toBe(inputState)
+      })
+    })
   })
 })
