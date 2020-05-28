@@ -87,6 +87,8 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @typedef farmhand.state
  * @type {Object}
  * @property {farmhand.module:enums.dialogView} currentDialogView
+ * @property {Object.<string, boolean>} completedAchievements Keys are
+ * achievement ids.
  * @property {farmhand.cow} cowForSale
  * @property {Array.<farmhand.cow>} cowInventory
  * @property {number} dayCount
@@ -131,6 +133,7 @@ export default class Farmhand extends Component {
    */
   state = {
     currentDialogView: dialogView.NONE,
+    completedAchievements: {},
     cowForSale: {},
     cowInventory: [],
     dayCount: 0,
@@ -169,6 +172,7 @@ export default class Farmhand extends Component {
   static reduceByPersistedKeys(state) {
     return [
       'cowForSale',
+      'completedAchievements',
       'cowInventory',
       'dayCount',
       'field',
@@ -394,6 +398,12 @@ export default class Farmhand extends Component {
       prevState.stageFocus !== stageFocusType.COW_PEN
     ) {
       this.setState({ selectedCowId: '' })
+    }
+
+    const updatedAchievementsState = reducers.updateAchievements(this.state)
+
+    if (updatedAchievementsState !== this.state) {
+      this.setState(updatedAchievementsState)
     }
   }
 

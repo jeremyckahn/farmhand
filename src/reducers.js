@@ -1,4 +1,5 @@
 import { itemsMap, recipesMap } from './data/maps'
+import achievements from './data/achievements'
 import {
   canMakeRecipe,
   clampNumber,
@@ -1073,3 +1074,27 @@ export const changeCowName = (state, cowId, newName) =>
  * @returns {farmhand.state}
  */
 export const selectCow = (state, { id }) => ({ ...state, selectedCowId: id })
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const updateAchievements = state =>
+  achievements.reduce((state, achievement) => {
+    if (
+      !state.completedAchievements[achievement.id] &&
+      achievement.condition(state)
+    ) {
+      state = {
+        ...achievement.reward(state),
+        completedAchievements: {
+          ...state.completedAchievements,
+          [achievement.id]: true,
+        },
+      }
+
+      // FIXME: Show a notification here.
+    }
+
+    return state
+  }, state)

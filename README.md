@@ -22,12 +22,13 @@ There is no release or versioning system yet.
 ## Milestone 5: Achievements 🏅
 
 - [x] Achievements modal + trigger
-- [ ] Achievements card
-  - [ ] Name/description
-  - [ ] Reward
+- [x] Achievements card
+  - [x] Name/description
+  - [x] Reward
 - [ ] Achievements
   - [ ] Conditions
   - [ ] Reward
+  - [ ] Show a notification upon completion
 - [ ] Initial achievements
   - [ ] Every step of the harvest cycle (plant, harvest, sell) and get \$1,000
   - [ ] Unlock crop price guide by making \$10,000
