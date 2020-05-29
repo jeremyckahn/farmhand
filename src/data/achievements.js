@@ -6,13 +6,18 @@ const { SEED } = cropLifeStage
 
 export default [
   {
-    id: 'plant-crop',
-    name: 'Plant a crop',
-    description: 'Purchase a seed and plant it in the field.',
-    rewardDescription: moneyString(150),
-    condition: state =>
-      findInField(state.field, plot => plot && getCropLifeStage(plot) === SEED),
-    reward: state => ({ ...state, money: state.money + 150 }),
+    ...((reward = 150) => ({
+      id: 'plant-crop',
+      name: 'Plant a crop',
+      description: 'Purchase a seed and plant it in the field.',
+      rewardDescription: moneyString(reward),
+      condition: state =>
+        findInField(
+          state.field,
+          plot => plot && getCropLifeStage(plot) === SEED
+        ),
+      reward: state => ({ ...state, money: state.money + reward }),
+    }))(),
   },
   {
     id: 'water-crop',
