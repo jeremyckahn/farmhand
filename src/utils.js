@@ -26,6 +26,16 @@ const { SEED, GROWING, GROWN } = cropLifeStage
 
 const chooseRandom = list => list[Math.round(Math.random() * (list.length - 1))]
 
+// Ensures that the condition argument to memoize() is not ignored, per
+// https://github.com/caiogondim/fast-memoize.js#function-arguments
+//
+// Pass this is the `serializer` option to any memoize()-ed functions that
+// accept function arguments.
+const memoizationSerializer = args =>
+  JSON.stringify(
+    [...args].map(arg => (typeof arg === 'function' ? arg.toString() : arg))
+  )
+
 /**
  * @returns {string}
  */
@@ -354,5 +364,8 @@ export const getPriceEventForCrop = cropItem => ({
  * @returns {?farmhand.plotContent}
  */
 export const findInField = memoize(
-  (field, condition) => field.find(row => row.find(condition)) || null
+  (field, condition) => field.find(row => row.find(condition)) || null,
+  {
+    serializer: memoizationSerializer,
+  }
 )
