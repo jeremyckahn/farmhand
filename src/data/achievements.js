@@ -1,4 +1,8 @@
-import { moneyString } from '../utils'
+import { findInField, getCropLifeStage, moneyString } from '../utils'
+
+import { cropLifeStage } from '../enums'
+
+const { SEED } = cropLifeStage
 
 export default [
   {
@@ -6,8 +10,9 @@ export default [
     name: 'Plant a crop',
     description: 'Purchase a seed and plant it in the field.',
     rewardDescription: moneyString(150),
-    condition: () => false,
-    reward: state => state,
+    condition: state =>
+      findInField(state.field, plot => plot && getCropLifeStage(plot) === SEED),
+    reward: state => ({ ...state, money: state.money + 150 }),
   },
   {
     id: 'water-crop',
