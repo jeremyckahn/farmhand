@@ -1,6 +1,7 @@
 import { shapeOf, testCrop, testItem } from './test-utils'
 import { RAIN_MESSAGE } from './strings'
 import {
+  ACHIEVEMENT_COMPLETED,
   MILK_PRODUCED,
   CROW_ATTACKED,
   PRICE_CRASH_NOTIFICATION,
@@ -1594,7 +1595,7 @@ describe('updateAchievements', () => {
     jest.mock('./data/achievements', () => [
       {
         id: 'test-achievement',
-        name: '',
+        name: 'Test Achievement',
         description: '',
         rewardDescription: '',
         condition: state => !state.conditionSatisfied,
@@ -1611,6 +1612,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: {},
           conditionSatisfied: true,
+          notifications: [],
         }
 
         const state = updateAchievements(inputState)
@@ -1624,13 +1626,20 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: {},
           conditionSatisfied: false,
+          notifications: [],
         }
 
         const state = updateAchievements(inputState)
 
-        expect(state).toEqual({
+        expect(state).toMatchObject({
           completedAchievements: { 'test-achievement': true },
           conditionSatisfied: true,
+          notifications: [
+            {
+              message: ACHIEVEMENT_COMPLETED`${{ name: 'Test Achievement' }}`,
+              severity: 'success',
+            },
+          ],
         })
       })
     })
@@ -1642,6 +1651,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: { 'test-achievement': true },
           conditionSatisfied: true,
+          notifications: [],
         }
 
         const state = updateAchievements(inputState)
@@ -1655,6 +1665,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: { 'test-achievement': true },
           conditionSatisfied: false,
+          notifications: [],
         }
 
         const state = updateAchievements(inputState)

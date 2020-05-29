@@ -40,6 +40,7 @@ import {
 } from './constants'
 import { RAIN_MESSAGE } from './strings'
 import {
+  ACHIEVEMENT_COMPLETED,
   MILK_PRODUCED,
   CROW_ATTACKED,
   PRICE_CRASH_NOTIFICATION,
@@ -1093,7 +1094,11 @@ export const updateAchievements = state =>
         },
       }
 
-      // FIXME: Show a notification here.
+      state = showNotification(
+        state,
+        ACHIEVEMENT_COMPLETED`${achievement}`,
+        'success'
+      )
     }
 
     return state

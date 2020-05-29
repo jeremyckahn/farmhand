@@ -39,3 +39,10 @@ export const PRICE_CRASH_NOTIFICATION = (_, { name }) =>
  */
 export const PRICE_SURGE_NOTIFICATION = (_, { name }) =>
   `${name} prices are at their peak! Now is the time to sell!`
+
+/**
+ * @param {farmhand.achievement} achievement
+ * @returns {string}
+ */
+export const ACHIEVEMENT_COMPLETED = (_, { name }) =>
+  `You achieved "${name}!" Way to go!`
