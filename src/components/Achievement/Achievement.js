@@ -1,21 +1,28 @@
 import React from 'react'
+import classNames from 'classnames'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import AssignmentIcon from '@material-ui/icons/Assignment'
-import { object } from 'prop-types'
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
+import { bool, object } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
 
 import './Achievement.sass'
 
 const Achievement = ({
-  achievement: { name, description, rewardDescription },
+  achievement: { description, id, name, rewardDescription },
+  completedAchievements,
+
+  isComplete = Boolean(completedAchievements[id]),
 }) => (
-  <Card className="Achievement">
+  <Card
+    {...{ className: classNames('Achievement', { 'is-complete': isComplete }) }}
+  >
     <CardHeader
       {...{
-        avatar: <AssignmentIcon />,
+        avatar: isComplete ? <AssignmentTurnedInIcon /> : <AssignmentIcon />,
         title: name,
         subheader: <p>Reward: {rewardDescription}</p>,
       }}
@@ -28,6 +35,8 @@ const Achievement = ({
 
 Achievement.propTypes = {
   achievement: object.isRequired,
+  completedAchievements: object.isRequired,
+  isComplete: bool,
 }
 
 export default function Consumer(props) {

@@ -6,7 +6,9 @@ import Achievement from './Achievement'
 let component
 
 beforeEach(() => {
-  component = shallow(<Achievement {...{ achievement: {} }} />)
+  component = shallow(
+    <Achievement {...{ achievement: {}, completedAchievements: {} }} />
+  )
 })
 
 test('renders', () => {
