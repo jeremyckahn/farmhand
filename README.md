@@ -25,10 +25,10 @@ There is no release or versioning system yet.
 - [x] Achievements card
   - [x] Name/description
   - [x] Reward
-- [ ] Achievements
-  - [ ] Conditions
-  - [ ] Reward
-  - [ ] Show a notification upon completion
+- [x] Achievements
+  - [x] Conditions
+  - [x] Reward
+  - [x] Show a notification upon completion
 - [ ] Initial achievements
   - [ ] Every step of the harvest cycle (plant, harvest, sell) and get \$1,000
   - [ ] Unlock crop price guide by making \$10,000
