@@ -28,7 +28,7 @@ export default [
   {
     id: 'harvest-crop',
     name: 'Harvest a crop',
-    description: 'Harvest a crop that you planted',
+    description: 'Harvest a crop that you planted.',
     rewardDescription: moneyString(300),
     condition: () => false,
     reward: state => state,
