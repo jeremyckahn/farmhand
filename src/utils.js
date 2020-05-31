@@ -116,6 +116,13 @@ export const getPlotContentFromItemId = itemId => ({
 export const getPlotContentType = ({ itemId }) => itemsMap[itemId].type
 
 /**
+ * @param {?farmhand.plotContent} plot
+ * @returns {boolean}
+ */
+export const doesPlotContainCrop = plot =>
+  plot && getPlotContentType(plot) === itemType.CROP
+
+/**
  * @param {farmhand.crop} crop
  * @returns {string}
  */
@@ -386,14 +393,3 @@ export const getCrops = memoize(
     serializer: memoizationSerializer,
   }
 )
-
-/**
- * @param {?farmhand.plotContent} plot
- * @returns {boolean}
- */
-export const doesPlotContainCrop = plot =>
-  plot &&
-  typeof plot.daysOld === 'number' &&
-  typeof plot.daysWatered === 'number' &&
-  typeof plot.isFertilized === 'boolean' &&
-  typeof plot.wasWateredToday === 'boolean'
