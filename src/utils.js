@@ -369,3 +369,31 @@ export const findInField = memoize(
     serializer: memoizationSerializer,
   }
 )
+
+/**
+ * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @param {function(?farmhand.plotContent)} filterCondition
+ * @returns {Array.<Array.<?farmhand.plotContent>>}
+ */
+export const getCrops = memoize(
+  (field, filterCondition) =>
+    field.reduce((acc, row) => {
+      acc.push(...row.filter(filterCondition))
+
+      return acc
+    }, []),
+  {
+    serializer: memoizationSerializer,
+  }
+)
+
+/**
+ * @param {?farmhand.plotContent} plot
+ * @returns {boolean}
+ */
+export const doesPlotContainCrop = plot =>
+  plot &&
+  typeof plot.daysOld === 'number' &&
+  typeof plot.daysWatered === 'number' &&
+  typeof plot.isFertilized === 'boolean' &&
+  typeof plot.wasWateredToday === 'boolean'

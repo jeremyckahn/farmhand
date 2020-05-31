@@ -1078,13 +1078,14 @@ export const selectCow = (state, { id }) => ({ ...state, selectedCowId: id })
 
 /**
  * @param {farmhand.state} state
+ * @param {farmhand.state} prevState
  * @returns {farmhand.state}
  */
-export const updateAchievements = state =>
+export const updateAchievements = (state, prevState) =>
   achievements.reduce((state, achievement) => {
     if (
       !state.completedAchievements[achievement.id] &&
-      achievement.condition(state)
+      achievement.condition(state, prevState)
     ) {
       state = {
         ...achievement.reward(state),

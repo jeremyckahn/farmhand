@@ -400,7 +400,10 @@ export default class Farmhand extends Component {
       this.setState({ selectedCowId: '' })
     }
 
-    const updatedAchievementsState = reducers.updateAchievements(this.state)
+    const updatedAchievementsState = reducers.updateAchievements(
+      this.state,
+      prevState
+    )
 
     if (updatedAchievementsState !== this.state) {
       this.setState(updatedAchievementsState)

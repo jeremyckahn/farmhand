@@ -93,6 +93,7 @@
 /**
  * @callback farmhand.achievementCondition
  * @param {farmhand.state} state
+ * @param {farmhand.state} prevState
  * @returns {boolean}
  */
 
