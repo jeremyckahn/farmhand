@@ -23,7 +23,10 @@ export default [
     description: 'Purchase a seed and plant it in the field.',
     rewardDescription: moneyString(reward),
     condition: state =>
-      findInField(state.field, plot => plot && getCropLifeStage(plot) === SEED),
+      findInField(
+        state.field,
+        plot => doesPlotContainCrop(plot) && getCropLifeStage(plot) === SEED
+      ),
     reward: state => addMoney(state, reward),
   }))(),
 
@@ -33,7 +36,10 @@ export default [
     description: 'Water a crop that you planted.',
     rewardDescription: moneyString(reward),
     condition: state =>
-      findInField(state.field, plot => plot && plot.wasWateredToday),
+      findInField(
+        state.field,
+        plot => doesPlotContainCrop(plot) && plot.wasWateredToday
+      ),
     reward: state => addMoney(state, reward),
   }))(),
 
