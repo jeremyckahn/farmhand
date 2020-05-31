@@ -154,7 +154,7 @@ export default {
   },
 
   handleWaterAllPlotsClick() {
-    this.waterAllPlots()
+    this.waterAllPlots(this.state)
   },
 
   /**

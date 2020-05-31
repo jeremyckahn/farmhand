@@ -323,7 +323,7 @@ export default class Farmhand extends Component {
 
     Object.assign(this.keyHandlers, {
       clearPersistedData: () => this.clearPersistedData(),
-      waterAllPlots: () => this.waterAllPlots(),
+      waterAllPlots: () => this.waterAllPlots(this.state),
     })
   }
 
