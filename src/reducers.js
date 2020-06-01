@@ -1,4 +1,5 @@
 import { itemsMap, recipesMap } from './data/maps'
+import achievements from './data/achievements'
 import {
   canMakeRecipe,
   clampNumber,
@@ -39,6 +40,7 @@ import {
 } from './constants'
 import { RAIN_MESSAGE } from './strings'
 import {
+  ACHIEVEMENT_COMPLETED,
   MILK_PRODUCED,
   CROW_ATTACKED,
   PRICE_CRASH_NOTIFICATION,
@@ -1073,3 +1075,32 @@ export const changeCowName = (state, cowId, newName) =>
  * @returns {farmhand.state}
  */
 export const selectCow = (state, { id }) => ({ ...state, selectedCowId: id })
+
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.state} prevState
+ * @returns {farmhand.state}
+ */
+export const updateAchievements = (state, prevState) =>
+  achievements.reduce((state, achievement) => {
+    if (
+      !state.completedAchievements[achievement.id] &&
+      achievement.condition(state, prevState)
+    ) {
+      state = {
+        ...achievement.reward(state),
+        completedAchievements: {
+          ...state.completedAchievements,
+          [achievement.id]: true,
+        },
+      }
+
+      state = showNotification(
+        state,
+        ACHIEVEMENT_COMPLETED`${achievement}`,
+        'success'
+      )
+    }
+
+    return state
+  }, state)

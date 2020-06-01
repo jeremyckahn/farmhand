@@ -26,6 +26,16 @@ const { SEED, GROWING, GROWN } = cropLifeStage
 
 const chooseRandom = list => list[Math.round(Math.random() * (list.length - 1))]
 
+// Ensures that the condition argument to memoize() is not ignored, per
+// https://github.com/caiogondim/fast-memoize.js#function-arguments
+//
+// Pass this is the `serializer` option to any memoize()-ed functions that
+// accept function arguments.
+const memoizationSerializer = args =>
+  JSON.stringify(
+    [...args].map(arg => (typeof arg === 'function' ? arg.toString() : arg))
+  )
+
 /**
  * @returns {string}
  */
@@ -58,15 +68,10 @@ export const createNewField = () =>
 
 /**
  * @param {number} number
- * @returns {string} Does not include dollar sign.
+ * @returns {string} Include dollar sign and other formatting.
  */
-export const dollarAmount = number =>
-  Dinero({
-    amount: Math.round(number * 100),
-    precision: 2,
-  })
-    .toUnit()
-    .toFixed(2)
+export const moneyString = number =>
+  Dinero({ amount: Math.round(number * 100) }).toFormat()
 
 /**
  * @param {farmhand.item} item
@@ -109,6 +114,13 @@ export const getPlotContentFromItemId = itemId => ({
  * @returns {string}
  */
 export const getPlotContentType = ({ itemId }) => itemsMap[itemId].type
+
+/**
+ * @param {?farmhand.plotContent} plot
+ * @returns {boolean}
+ */
+export const doesPlotContainCrop = plot =>
+  plot && getPlotContentType(plot) === itemType.CROP
 
 /**
  * @param {farmhand.crop} crop
@@ -352,3 +364,32 @@ export const getPriceEventForCrop = cropItem => ({
   daysRemaining:
     getCropLifecycleDuration(cropItem) - PRICE_EVENT_STANDARD_DURATION_DECREASE,
 })
+
+/**
+ * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @param {function(?farmhand.plotContent)} condition
+ * @returns {?farmhand.plotContent}
+ */
+export const findInField = memoize(
+  (field, condition) => field.find(row => row.find(condition)) || null,
+  {
+    serializer: memoizationSerializer,
+  }
+)
+
+/**
+ * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @param {function(?farmhand.plotContent)} filterCondition
+ * @returns {Array.<Array.<?farmhand.plotContent>>}
+ */
+export const getCrops = memoize(
+  (field, filterCondition) =>
+    field.reduce((acc, row) => {
+      acc.push(...row.filter(filterCondition))
+
+      return acc
+    }, []),
+  {
+    serializer: memoizationSerializer,
+  }
+)

@@ -17,7 +17,9 @@ const IngredientsList = ({ recipe: { ingredients, name } }) => (
   <ul {...{ title: `Ingredients for ${name}` }}>
     {Object.keys(ingredients).map(itemId => (
       <li {...{ key: itemId }}>
-        {ingredients[itemId]} x {itemsMap[itemId].name}
+        <p>
+          {ingredients[itemId]} x {itemsMap[itemId].name}
+        </p>
       </li>
     ))}
   </ul>

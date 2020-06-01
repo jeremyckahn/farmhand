@@ -87,6 +87,8 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @typedef farmhand.state
  * @type {Object}
  * @property {farmhand.module:enums.dialogView} currentDialogView
+ * @property {Object.<string, boolean>} completedAchievements Keys are
+ * achievement ids.
  * @property {farmhand.cow} cowForSale
  * @property {Array.<farmhand.cow>} cowInventory
  * @property {number} dayCount
@@ -131,6 +133,7 @@ export default class Farmhand extends Component {
    */
   state = {
     currentDialogView: dialogView.NONE,
+    completedAchievements: {},
     cowForSale: {},
     cowInventory: [],
     dayCount: 0,
@@ -169,6 +172,7 @@ export default class Farmhand extends Component {
   static reduceByPersistedKeys(state) {
     return [
       'cowForSale',
+      'completedAchievements',
       'cowInventory',
       'dayCount',
       'field',
@@ -276,6 +280,9 @@ export default class Farmhand extends Component {
       focusCows: 'c',
       focusShop: 's',
       focusKitchen: 'k',
+      openLog: 'l',
+      openPriceEvents: 'p',
+      openAchievements: 'a',
       incrementDay: 'shift+c',
       nextView: 'right',
       previousView: 'left',
@@ -294,6 +301,13 @@ export default class Farmhand extends Component {
       focusKitchen: () => this.setState({ stageFocus: stageFocusType.KITCHEN }),
       incrementDay: () => this.incrementDay(),
       nextView: throttle(this.focusNextView.bind(this), keyHandlerThrottleTime),
+      openLog: () =>
+        this.setState({ currentDialogView: dialogView.FARMERS_LOG }),
+      openPriceEvents: () =>
+        this.setState({ currentDialogView: dialogView.PRICE_EVENTS }),
+      openAchievements: () =>
+        this.setState({ currentDialogView: dialogView.ACHIEVEMENTS }),
+
       previousView: throttle(
         this.focusPreviousView.bind(this),
         keyHandlerThrottleTime
@@ -309,7 +323,7 @@ export default class Farmhand extends Component {
 
     Object.assign(this.keyHandlers, {
       clearPersistedData: () => this.clearPersistedData(),
-      waterAllPlots: () => this.waterAllPlots(),
+      waterAllPlots: () => this.waterAllPlots(this.state),
     })
   }
 
@@ -366,22 +380,33 @@ export default class Farmhand extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // The operations in this if block concern transient gameplay state, but
+    // The operations after this if block concern transient gameplay state, but
     // componentDidUpdate runs as part of the rehydration/bootup process. So,
-    // check to see if the app has completed booting before working with this
-    // transient state.
-    if (this.state.hasBooted) {
-      ;[
-        'showCowPenPurchasedNotifications',
-        'showRecipeLearnedNotifications',
-      ].forEach(fn => this[fn](prevState))
+    // check to see if the app has completed booting before doing anything with
+    // this transient state.
+    if (!this.state.hasBooted) {
+      return
+    }
 
-      if (
-        this.state.stageFocus === stageFocusType.COW_PEN &&
-        prevState.stageFocus !== stageFocusType.COW_PEN
-      ) {
-        this.setState({ selectedCowId: '' })
-      }
+    ;[
+      'showCowPenPurchasedNotifications',
+      'showRecipeLearnedNotifications',
+    ].forEach(fn => this[fn](prevState))
+
+    if (
+      this.state.stageFocus === stageFocusType.COW_PEN &&
+      prevState.stageFocus !== stageFocusType.COW_PEN
+    ) {
+      this.setState({ selectedCowId: '' })
+    }
+
+    const updatedAchievementsState = reducers.updateAchievements(
+      this.state,
+      prevState
+    )
+
+    if (updatedAchievementsState !== this.state) {
+      this.setState(updatedAchievementsState)
     }
   }
 

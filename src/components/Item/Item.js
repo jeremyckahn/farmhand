@@ -12,7 +12,7 @@ import classNames from 'classnames'
 import FarmhandContext from '../../Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
-import { getItemValue } from '../../utils'
+import { getItemValue, moneyString } from '../../utils'
 
 import './Item.sass'
 
@@ -106,7 +106,7 @@ export const Item = ({
           <div>
             {isPurchaseView && (
               <p>
-                {`Price: $${adjustedValue}`}
+                {`Price: ${moneyString(adjustedValue)}`}
                 {valueAdjustments[id] && (
                   <PurchaseValueIndicator
                     {...{ id, value: adjustedValue, valueAdjustments }}
@@ -116,7 +116,7 @@ export const Item = ({
             )}
             {isSellView && (
               <p>
-                {`Sell price: $${adjustedValue}`}
+                {`Sell price: ${moneyString(adjustedValue)}`}
                 {valueAdjustments[id] && (
                   <SellValueIndicator
                     {...{ id, value: adjustedValue, valueAdjustments }}
