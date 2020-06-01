@@ -16,7 +16,7 @@ const { GROWN, SEED } = cropLifeStage
 
 const addMoney = (state, reward) => ({ ...state, money: state.money + reward })
 
-export default [
+const achievements = [
   ((reward = 100) => ({
     id: 'plant-crop',
     name: 'Plant a crop',
@@ -62,7 +62,6 @@ export default [
       name: 'Harvest a crop',
       description: 'Harvest a crop that you planted.',
       rewardDescription: moneyString(reward),
-      // FIXME: Test this.
       condition: (state, prevState) => {
         const grownCrops = getGrownCrops(state.field)
         const oldGrownCrops = getGrownCrops(prevState.field)
@@ -86,3 +85,11 @@ export default [
     }
   })(),
 ]
+
+export default achievements
+
+export const achievementsMap = achievements.reduce((acc, achievement) => {
+  acc[achievement.id] = achievement
+
+  return acc
+}, {})
