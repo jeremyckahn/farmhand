@@ -130,14 +130,6 @@ export default {
     }
   },
 
-  /**
-   * @param {number} x
-   * @param {number} y
-   */
-  handlePlotMouseOver(x, y) {
-    this.setState({ hoveredPlot: { x, y } })
-  },
-
   handleClickEndDayButton() {
     this.incrementDay()
   },

@@ -20,7 +20,7 @@ import Stage from './components/Stage'
 import NotificationSystem from './components/NotificationSystem'
 import DebugMenu from './components/DebugMenu'
 import theme from './mui-theme'
-import { createNewField, getItemValue, getRangeCoords } from './utils'
+import { createNewField, getItemValue } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
@@ -30,7 +30,7 @@ import { PROGRESS_SAVED_MESSAGE } from './strings'
 
 import './Farmhand.sass'
 
-const { OBSERVE, SET_SPRINKLER } = fieldMode
+const { OBSERVE } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
 
@@ -94,7 +94,6 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {farmhand.module:enums.fieldMode} fieldMode
- * @property {{ x: number, y: number }} hoveredPlot
  * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {boolean} isMenuOpen
@@ -139,7 +138,6 @@ export default class Farmhand extends Component {
     dayCount: 0,
     field: createNewField(),
     hasBooted: false,
-    hoveredPlot: { x: null, y: null },
     hoveredPlotRangeSize: 0,
     inventory: [],
     isMenuOpen: true,
@@ -200,28 +198,6 @@ export default class Farmhand extends Component {
 
   get fieldToolInventory() {
     return getFieldToolInventory(this.state.inventory)
-  }
-
-  get hoveredPlotRange() {
-    const {
-      field,
-      fieldMode,
-      hoveredPlot: { x, y },
-      hoveredPlotRangeSize,
-    } = this.state
-
-    // If x is null, so is y.
-    if (x === null) {
-      return [[{ x: null, y: null }]]
-    }
-
-    if (fieldMode === SET_SPRINKLER) {
-      return field[y][x]
-        ? [[{ x, y }]]
-        : getRangeCoords(hoveredPlotRangeSize, x, y)
-    }
-
-    return [[{ x, y }]]
   }
 
   get playerInventory() {
@@ -513,7 +489,6 @@ export default class Farmhand extends Component {
     const {
       fieldToolInventory,
       handlers,
-      hoveredPlotRange,
       keyHandlers,
       keyMap,
       plantableCropInventory,
@@ -528,7 +503,6 @@ export default class Farmhand extends Component {
     const gameState = {
       ...this.state,
       fieldToolInventory,
-      hoveredPlotRange,
       plantableCropInventory,
       playerInventory,
       playerInventoryQuantities,

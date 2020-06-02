@@ -6,7 +6,7 @@ import { testCrop } from '../../test-utils'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage } from '../../enums'
 
-import { Plot, isInRange, getBackgroundStyles } from './Plot'
+import { Plot, getBackgroundStyles, isInHoverRange } from './Plot'
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
@@ -19,9 +19,10 @@ beforeEach(() => {
     <Plot
       {...{
         handlePlotClick: () => {},
-        handlePlotMouseOver: () => {},
-        hoveredPlotRange: [[]],
+        hoveredPlot: {},
+        hoveredPlotRangeSize: 0,
         lifeStage: cropLifeStage.SEED,
+        setHoveredPlot: () => {},
         x: 0,
         y: 0,
       }}
@@ -121,30 +122,16 @@ describe('getBackgroundStyles', () => {
   })
 })
 
-describe('isInRange', () => {
-  const range = [
-    [
-      { x: 0, y: 0 },
-      { x: 1, y: 0 },
-      { x: 2, y: 0 },
-    ],
-    [
-      { x: 0, y: 1 },
-      { x: 1, y: 1 },
-      { x: 2, y: 1 },
-    ],
-    [
-      { x: 0, y: 2 },
-      { x: 1, y: 2 },
-      { x: 2, y: 2 },
-    ],
-  ]
-
-  test('provided coordinates are in range', () => {
-    expect(isInRange(range, 1, 1)).toBeTruthy()
+describe('isInHoverRange', () => {
+  describe('plot is not in hover range', () => {
+    test('returns false', () => {
+      expect(isInHoverRange(2, { x: 1, y: 1 }, 4, 4)).toBe(false)
+    })
   })
 
-  test('provided coordinates are out of range', () => {
-    expect(isInRange(range, 3, 3)).toBeFalsy()
+  describe('plot is in hover range', () => {
+    test('returns true', () => {
+      expect(isInHoverRange(2, { x: 1, y: 1 }, 0, 0)).toBe(true)
+    })
   })
 })

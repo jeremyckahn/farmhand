@@ -875,7 +875,7 @@ export const fertilizeCrop = (state, x, y) => {
  * @returns {farmhand.state}
  */
 export const setSprinkler = (state, x, y) => {
-  const { field, hoveredPlotRangeSize } = state
+  const { field } = state
   const plot = field[y][x]
 
   // Only set sprinklers in empty plots
@@ -895,7 +895,6 @@ export const setSprinkler = (state, x, y) => {
 
   return {
     ...state,
-    hoveredPlotRangeSize: doSprinklersRemain ? hoveredPlotRangeSize : 0,
     fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
     selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
   }

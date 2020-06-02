@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, arrayOf, func, number, object, string } from 'prop-types'
+import { func, number, object, string } from 'prop-types'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -27,27 +27,32 @@ export const getBackgroundStyles = plotContent => {
   return backgroundImages.join(', ')
 }
 
-export const isInRange = (range, testX, testY) => {
-  const rangeHeight = range.length
-  const rangeWidth = range[0].length
-  const [topLeft] = range[0]
-  const bottomRight = range[rangeHeight - 1][rangeWidth - 1]
+export const isInHoverRange = (
+  hoveredPlotRangeSize,
+  { x: hoveredPlotX, y: hoveredPlotY },
+  plotX,
+  plotY
+) => {
+  const squareSize = 2 * hoveredPlotRangeSize
+  const rangeFloorX = hoveredPlotX - hoveredPlotRangeSize
+  const rangeFloorY = hoveredPlotY - hoveredPlotRangeSize
+  const rangeCeilingX = rangeFloorX + squareSize
+  const rangeCeilingY = rangeFloorY + squareSize
 
   return (
-    // topLeft will be falsy if the range is empty
-    !!topLeft &&
-    testX >= topLeft.x &&
-    testX <= bottomRight.x &&
-    testY >= topLeft.y &&
-    testY <= bottomRight.y
+    plotX >= rangeFloorX &&
+    plotX <= rangeCeilingX &&
+    plotY >= rangeFloorY &&
+    plotY <= rangeCeilingY
   )
 }
 
 export const Plot = ({
   handlePlotClick,
-  handlePlotMouseOver,
-  hoveredPlotRange,
+  hoveredPlot,
+  hoveredPlotRangeSize,
   plotContent,
+  setHoveredPlot,
   x,
   y,
 
@@ -55,43 +60,51 @@ export const Plot = ({
   lifeStage = plotContent &&
     getPlotContentType(plotContent) === itemType.CROP &&
     getCropLifeStage(plotContent),
-}) => (
-  <div
-    className={classNames('Plot', {
-      'is-empty': !plotContent,
-      'is-in-hover-range': isInRange(hoveredPlotRange, x, y),
+}) => {
+  return (
+    <div
+      className={classNames('Plot', {
+        'is-empty': !plotContent,
+        'is-in-hover-range': isInHoverRange(
+          hoveredPlotRangeSize,
+          hoveredPlot,
+          x,
+          y
+        ),
 
-      // For crops
-      crop: plotContent && getPlotContentType(plotContent) === itemType.CROP,
-      'is-fertilized': plotContent && plotContent.isFertilized,
-      'is-ripe': lifeStage === cropLifeStage.GROWN,
+        // For crops
+        crop: plotContent && getPlotContentType(plotContent) === itemType.CROP,
+        'is-fertilized': plotContent && plotContent.isFertilized,
+        'is-ripe': lifeStage === cropLifeStage.GROWN,
 
-      'is-replantable':
-        plotContent && itemsMap[plotContent.itemId].isReplantable,
-    })}
-    style={{
-      backgroundImage: getBackgroundStyles(plotContent),
-    }}
-    onClick={() => handlePlotClick(x, y)}
-    onMouseOver={() => handlePlotMouseOver(x, y)}
-  >
-    <img
-      className="square"
+        'is-replantable':
+          plotContent && itemsMap[plotContent.itemId].isReplantable,
+      })}
       style={{
-        backgroundImage: image ? `url(${image})` : undefined,
+        backgroundImage: getBackgroundStyles(plotContent),
       }}
-      src={pixel}
-      alt=""
-    />
-  </div>
-)
+      onClick={() => handlePlotClick(x, y)}
+      onMouseOver={() => setHoveredPlot({ x, y })}
+    >
+      <img
+        className="square"
+        style={{
+          backgroundImage: image ? `url(${image})` : undefined,
+        }}
+        src={pixel}
+        alt=""
+      />
+    </div>
+  )
+}
 
 Plot.propTypes = {
   handlePlotClick: func.isRequired,
-  handlePlotMouseOver: func.isRequired,
-  hoveredPlotRange: arrayOf(array).isRequired,
+  hoveredPlot: object.isRequired,
+  hoveredPlotRangeSize: number.isRequired,
   lifeStage: string,
   plotContent: object,
+  setHoveredPlot: func.isRequired,
   x: number.isRequired,
   y: number.isRequired,
 }
