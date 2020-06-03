@@ -199,11 +199,6 @@ describe('handlePlotClick', () => {
       test('calls setSprinkler', () => {
         jest.spyOn(component.instance(), 'setSprinkler').mockImplementation()
 
-        // Needed to prevent an indirectly related NRE
-        jest
-          .spyOn(component.instance(), 'hoveredPlotRange', 'get')
-          .mockImplementation()
-
         component.setState({
           fieldMode: fieldMode.SET_SPRINKLER,
         })
@@ -227,13 +222,6 @@ describe('handlePlotClick', () => {
 
       expect(component.instance().setScarecrow).toHaveBeenCalledWith(0, 0)
     })
-  })
-})
-
-describe('handlePlotMouseOver', () => {
-  test('updates hoveredPlot state', () => {
-    handlers().handlePlotMouseOver(4, 5)
-    expect(component.state().hoveredPlot).toEqual({ x: 4, y: 5 })
   })
 })
 

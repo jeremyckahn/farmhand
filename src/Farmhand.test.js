@@ -7,7 +7,7 @@ import {
   sampleFieldTool1,
   sampleCropSeedsItem1,
 } from './data/items'
-import { testCrop, testItem } from './test-utils'
+import { testItem } from './test-utils'
 import {
   INITIAL_FIELD_WIDTH,
   INITIAL_FIELD_HEIGHT,
@@ -15,7 +15,7 @@ import {
 } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
-import { fieldMode, stageFocusType } from './enums'
+import { stageFocusType } from './enums'
 import { recipesMap } from './data/maps'
 import Farmhand, {
   computePlayerInventory,
@@ -154,72 +154,6 @@ describe('state', () => {
 })
 
 describe('getters', () => {
-  describe('hoveredPlotRange', () => {
-    beforeEach(() => {
-      component.setState({
-        hoveredPlot: { x: 0, y: 0 },
-      })
-    })
-
-    describe('fieldMode === SET_SPRINKLER', () => {
-      beforeEach(() => {
-        component.setState({
-          fieldMode: fieldMode.SET_SPRINKLER,
-          hoveredPlotRangeSize: 1,
-        })
-      })
-
-      describe('plot is empty', () => {
-        beforeEach(() => {
-          component.setState({
-            field: [[null]],
-          })
-        })
-
-        test('gets hovered crop range', () => {
-          const { hoveredPlotRange } = component.instance()
-          expect(hoveredPlotRange).toEqual([
-            [
-              { x: -1, y: -1 },
-              { x: 0, y: -1 },
-              { x: 1, y: -1 },
-            ],
-            [
-              { x: -1, y: 0 },
-              { x: 0, y: 0 },
-              { x: 1, y: 0 },
-            ],
-            [
-              { x: -1, y: 1 },
-              { x: 0, y: 1 },
-              { x: 1, y: 1 },
-            ],
-          ])
-        })
-      })
-
-      describe('plot is not empty', () => {
-        beforeEach(() => {
-          component.setState({
-            field: [[testCrop()]],
-          })
-        })
-
-        test('gets only the hovered crop', () => {
-          const { hoveredPlotRange } = component.instance()
-          expect(hoveredPlotRange).toEqual([[{ x: 0, y: 0 }]])
-        })
-      })
-    })
-
-    describe('fieldMode !== SET_SPRINKLER', () => {
-      test('gets only the hovered crop', () => {
-        const { hoveredPlotRange } = component.instance()
-        expect(hoveredPlotRange).toEqual([[{ x: 0, y: 0 }]])
-      })
-    })
-  })
-
   describe('playerInventoryQuantities', () => {
     test('computes a map of item IDs to their quantity in the inventory', () => {
       component.setState({

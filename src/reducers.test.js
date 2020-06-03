@@ -1221,8 +1221,6 @@ describe('setSprinkler', () => {
     state = {
       field: [[null]],
       fieldMode: fieldMode.SET_SPRINKLER,
-      hoveredPlot: { x: 0, y: 0 },
-      hoveredPlotRangeSize: 1,
       inventory: [testItem({ id: 'sprinkler', quantity: 1 })],
       selectedItemId: SPRINKLER_ITEM_ID,
     }
@@ -1246,16 +1244,11 @@ describe('setSprinkler', () => {
 
     describe('multiple sprinkler units remaining', () => {
       test('updates state', () => {
-        const {
-          hoveredPlotRangeSize,
-          fieldMode: newFieldMode,
-          selectedItemId,
-        } = fn.setSprinkler(
+        const { fieldMode: newFieldMode, selectedItemId } = fn.setSprinkler(
           { ...state, inventory: [testItem({ id: 'sprinkler', quantity: 2 })] },
           0,
           0
         )
-        expect(hoveredPlotRangeSize).toBe(1)
         expect(newFieldMode).toBe(fieldMode.SET_SPRINKLER)
         expect(selectedItemId).toBe(SPRINKLER_ITEM_ID)
       })
@@ -1263,13 +1256,12 @@ describe('setSprinkler', () => {
 
     describe('one sprinkler unit remaining', () => {
       test('updates state', () => {
-        const {
-          hoveredPlotRangeSize,
-          fieldMode: newFieldMode,
-          selectedItemId,
-        } = fn.setSprinkler(state, 0, 0)
+        const { fieldMode: newFieldMode, selectedItemId } = fn.setSprinkler(
+          state,
+          0,
+          0
+        )
 
-        expect(hoveredPlotRangeSize).toBe(0)
         expect(newFieldMode).toBe(fieldMode.OBSERVE)
         expect(selectedItemId).toBe('')
       })
@@ -1284,7 +1276,6 @@ describe('setScarecrow', () => {
     state = {
       field: [[null]],
       fieldMode: fieldMode.SET_SCARECROW,
-      hoveredPlot: { x: 0, y: 0 },
       inventory: [testItem({ id: 'scarecrow', quantity: 1 })],
       selectedItemId: SCARECROW_ITEM_ID,
     }

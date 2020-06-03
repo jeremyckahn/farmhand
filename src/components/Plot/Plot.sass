@@ -50,7 +50,7 @@ $not-allowed-color: rgba(255, 0, 0, 0.25)
       cursor: pointer
       opacity: 0.5
 
-    &.crop
+    &:not(.is-empty)
       background-color: $not-allowed-color
       background-image: none
       cursor: not-allowed
@@ -61,3 +61,8 @@ $not-allowed-color: rgba(255, 0, 0, 0.25)
       background-image: url(../../img/items/scarecrow.png)
       cursor: pointer
       opacity: 0.5
+
+    &:not(.is-empty)
+      background-color: $not-allowed-color
+      background-image: none
+      cursor: not-allowed
