@@ -68,10 +68,20 @@ export const createNewField = () =>
 
 /**
  * @param {number} number
- * @returns {string} Include dollar sign and other formatting.
+ * @returns {string} Include dollar sign and other formatting, as well as cents.
  */
 export const moneyString = number =>
   Dinero({ amount: Math.round(number * 100) }).toFormat()
+
+/**
+ * @param {number} number
+ * @returns {string} Include dollar sign and other formatting. Cents are
+ * rounded off.
+ */
+export const dollarString = number =>
+  Dinero({ amount: Math.round(number * 100), precision: 2 })
+    .convertPrecision(0)
+    .toFormat('$0,0')
 
 /**
  * @param {farmhand.item} item

@@ -5,7 +5,7 @@ import {
   getCropLifeStage,
   getCrops,
   doesPlotContainCrop,
-  moneyString,
+  dollarString,
 } from '../utils'
 
 import { cropLifeStage } from '../enums'
@@ -21,7 +21,7 @@ const achievements = [
     id: 'plant-crop',
     name: 'Plant a Crop',
     description: 'Purchase a seed and plant it in the field.',
-    rewardDescription: moneyString(reward),
+    rewardDescription: dollarString(reward),
     condition: state =>
       findInField(
         state.field,
@@ -34,7 +34,7 @@ const achievements = [
     id: 'water-crop',
     name: 'Water a Crop',
     description: 'Water a crop that you planted.',
-    rewardDescription: moneyString(reward),
+    rewardDescription: dollarString(reward),
     condition: state =>
       findInField(
         state.field,
@@ -61,7 +61,7 @@ const achievements = [
       id: 'harvest-crop',
       name: 'Harvest a Crop',
       description: 'Harvest a crop that you planted.',
-      rewardDescription: moneyString(reward),
+      rewardDescription: dollarString(reward),
       condition: (state, prevState) => {
         const grownCrops = getGrownCrops(state.field)
         const oldGrownCrops = getGrownCrops(prevState.field)
@@ -85,13 +85,14 @@ const achievements = [
     }
   })(),
 
-  (() => ({
+  ((goal = 10000) => ({
     id: 'unlock-crop-price-guide',
     name: 'Prove Yourself as a Farmer',
-    description:
-      'Show that you can run a farm by earning at least $10,000. Proven farmers get access to the Crop Price Guide, an invaluable tool for making better buying and selling decisions!',
+    description: `Show that you can run a farm by earning at least ${dollarString(
+      goal
+    )}. Proven farmers get access to the Crop Price Guide, an invaluable tool for making better buying and selling decisions!`,
     rewardDescription: 'Crop Price Guide',
-    condition: state => state.money >= 10000,
+    condition: state => state.money >= goal,
     // Reward is a no-op for this achievement. The value of
     // state.completedAchievements['unlock-crop-price-guide'] (which is
     // automatically set to `true` in the achievement processing logic) is used
