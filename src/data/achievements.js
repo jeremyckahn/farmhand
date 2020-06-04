@@ -19,7 +19,7 @@ const addMoney = (state, reward) => ({ ...state, money: state.money + reward })
 const achievements = [
   ((reward = 100) => ({
     id: 'plant-crop',
-    name: 'Plant a crop',
+    name: 'Plant a Crop',
     description: 'Purchase a seed and plant it in the field.',
     rewardDescription: moneyString(reward),
     condition: state =>
@@ -32,7 +32,7 @@ const achievements = [
 
   ((reward = 150) => ({
     id: 'water-crop',
-    name: 'Water a crop',
+    name: 'Water a Crop',
     description: 'Water a crop that you planted.',
     rewardDescription: moneyString(reward),
     condition: state =>
@@ -59,7 +59,7 @@ const achievements = [
 
     return {
       id: 'harvest-crop',
-      name: 'Harvest a crop',
+      name: 'Harvest a Crop',
       description: 'Harvest a crop that you planted.',
       rewardDescription: moneyString(reward),
       condition: (state, prevState) => {
@@ -84,6 +84,20 @@ const achievements = [
       reward: state => addMoney(state, reward),
     }
   })(),
+
+  (() => ({
+    id: 'unlock-crop-price-guide',
+    name: 'Prove Yourself as a Farmer',
+    description:
+      'Show that you can run a farm by earning at least $10,000. Proven farmers get access to the Crop Price Guide, an invaluable tool for making better buying and selling decisions!',
+    rewardDescription: 'Crop Price Guide',
+    condition: state => state.money >= 10000,
+    // Reward is a no-op for this achievement. The value of
+    // state.completedAchievements['unlock-crop-price-guide'] (which is
+    // automatically set to `true` in the achievement processing logic) is used
+    // to gate the price guides.
+    reward: state => state,
+  }))(),
 ]
 
 export default achievements
