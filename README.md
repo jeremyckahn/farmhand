@@ -31,7 +31,7 @@ There is no release or versioning system yet.
   - [x] Show a notification upon completion
 - [ ] Initial achievements
   - [x] Every step of the harvest cycle (plant, harvest, sell)
-  - [ ] Unlock crop price guide by making \$10,000
+  - [x] Unlock crop price guide by making \$10,000
   - [ ] Buy every color of cow (get cow feed as a reward)
 
 ## Milestone 4: Events 🗓

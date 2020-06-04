@@ -12,6 +12,7 @@ beforeEach(() => {
   component = shallow(
     <Item
       {...{
+        completedAchievements: {},
         item: testItem({ name: '' }),
         money: 0,
         playerInventoryQuantities: {},

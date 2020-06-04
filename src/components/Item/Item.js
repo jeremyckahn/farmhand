@@ -73,6 +73,7 @@ const SellValueIndicator = ({
 
 export const Item = ({
   bulkPurchaseSize,
+  completedAchievements,
   handleItemMaxOutClick,
   handleItemPurchaseClick,
   handleItemSelectClick,
@@ -104,24 +105,26 @@ export const Item = ({
         title: name,
         subheader: (
           <div>
-            {isPurchaseView && (
-              <p>
-                {`Price: ${moneyString(adjustedValue)}`}
-                {valueAdjustments[id] && (
-                  <PurchaseValueIndicator
-                    {...{ id, value: adjustedValue, valueAdjustments }}
-                  />
-                )}
-              </p>
-            )}
+            {isPurchaseView &&
+              completedAchievements['unlock-crop-price-guide'] && (
+                <p>
+                  {`Price: ${moneyString(adjustedValue)}`}
+                  {valueAdjustments[id] && (
+                    <PurchaseValueIndicator
+                      {...{ id, value: adjustedValue, valueAdjustments }}
+                    />
+                  )}
+                </p>
+              )}
             {isSellView && (
               <p>
                 {`Sell price: ${moneyString(adjustedValue)}`}
-                {valueAdjustments[id] && (
-                  <SellValueIndicator
-                    {...{ id, value: adjustedValue, valueAdjustments }}
-                  />
-                )}
+                {valueAdjustments[id] &&
+                  completedAchievements['unlock-crop-price-guide'] && (
+                    <SellValueIndicator
+                      {...{ id, value: adjustedValue, valueAdjustments }}
+                    />
+                  )}
               </p>
             )}
             {showQuantity && (
@@ -218,6 +221,7 @@ export const Item = ({
 Item.propTypes = {
   adjustedValue: number,
   bulkPurchaseSize: number,
+  completedAchievements: object.isRequired,
   disableSellButtons: bool,
   handleItemMaxOutClick: func,
   handleItemPurchaseClick: func,
