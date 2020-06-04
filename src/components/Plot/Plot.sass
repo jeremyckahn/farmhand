@@ -42,11 +42,10 @@ $not-allowed-color: rgba(255, 0, 0, 0.25)
   .set-sprinkler-mode:hover &.is-in-hover-range
     background-color: #ccc
 
-  .set-sprinkler-mode:hover &:hover
-    background-color: #999
+  .set-sprinkler-mode:hover &:hover,
+  .set-scarecrow-mode:hover &:hover
 
     &.is-empty img
-      background-image: url(../../img/items/sprinkler.png)
       cursor: pointer
       opacity: 0.5
 
@@ -54,15 +53,13 @@ $not-allowed-color: rgba(255, 0, 0, 0.25)
       background-color: $not-allowed-color
       background-image: none
       cursor: not-allowed
+
+  .set-sprinkler-mode:hover &:hover
+
+    &.is-empty img
+      background-image: url(../../img/items/sprinkler.png)
 
   .set-scarecrow-mode:hover &:hover
 
     &.is-empty img
       background-image: url(../../img/items/scarecrow.png)
-      cursor: pointer
-      opacity: 0.5
-
-    &:not(.is-empty)
-      background-color: $not-allowed-color
-      background-image: none
-      cursor: not-allowed
