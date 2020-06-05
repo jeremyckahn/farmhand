@@ -24,7 +24,7 @@ import {
 import { sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
-import { fieldMode, genders } from './enums'
+import { cowColors, fieldMode, genders } from './enums'
 import {
   generateCow,
   getCowMilkItem,
@@ -985,32 +985,33 @@ describe('purchaseCow', () => {
   const cow = Object.freeze(
     generateCow({
       baseWeight: 1000,
+      color: cowColors.WHITE,
       gender: genders.FEMALE,
       name: 'cow',
     })
   )
 
-  describe('happy path', () => {
-    test('cow is purchased', () => {
-      const oldCowForSale = generateCow()
+  test('purchases a cow', () => {
+    const oldCowForSale = generateCow()
 
-      const state = fn.purchaseCow(
-        {
-          cowForSale: oldCowForSale,
-          cowInventory: [],
-          money: 5000,
-          purchasedCowPen: 1,
-        },
-        cow
-      )
+    const state = fn.purchaseCow(
+      {
+        cowForSale: oldCowForSale,
+        cowInventory: [],
+        cowsColorsPurchased: {},
+        money: 5000,
+        purchasedCowPen: 1,
+      },
+      cow
+    )
 
-      expect(state).toMatchObject({
-        cowInventory: [cow],
-        money: 5000 - getCowValue(cow),
-      })
-
-      expect(state.cowForSale).not.toBe(oldCowForSale)
+    expect(state).toMatchObject({
+      cowInventory: [cow],
+      money: 5000 - getCowValue(cow),
     })
+
+    expect(state.cowForSale).not.toBe(oldCowForSale)
+    expect(state.cowsColorsPurchased.WHITE).toEqual(1)
   })
 
   describe('is unsufficient room in cow pen', () => {
@@ -1024,6 +1025,7 @@ describe('purchaseCow', () => {
           cowInventory: Array(cowCapacity)
             .fill(null)
             .map(() => generateCow()),
+          cowsColorsPurchased: {},
           money: 5000,
           purchasedCowPen: 1,
         },
@@ -1044,6 +1046,7 @@ describe('purchaseCow', () => {
         {
           cowForSale: oldCowForSale,
           cowInventory: [],
+          cowsColorsPurchased: {},
           money: 500,
           purchasedCowPen: 1,
         },

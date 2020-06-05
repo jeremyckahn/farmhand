@@ -91,6 +91,9 @@ export const getPlantableCropInventory = memoize(inventory =>
  * achievement ids.
  * @property {farmhand.cow} cowForSale
  * @property {Array.<farmhand.cow>} cowInventory
+ * @property {Object.<farmhand.module:enums.cowColors, number>}
+ * cowsColorsPurchased Keys are color enums, values are the number of that
+ * color of cow purchased.
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {farmhand.module:enums.fieldMode} fieldMode
@@ -135,6 +138,7 @@ export default class Farmhand extends Component {
     completedAchievements: {},
     cowForSale: {},
     cowInventory: [],
+    cowsColorsPurchased: {},
     dayCount: 0,
     field: createNewField(),
     hasBooted: false,
@@ -172,6 +176,7 @@ export default class Farmhand extends Component {
       'cowForSale',
       'completedAchievements',
       'cowInventory',
+      'cowsColorsPurchased',
       'dayCount',
       'field',
       'inventory',
