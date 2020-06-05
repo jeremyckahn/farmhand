@@ -191,7 +191,7 @@ export default {
   },
 
   handleCloseNotification() {
-    this.setState({ doShowNotifications: false })
+    this.setState(() => ({ doShowNotifications: false }))
   },
 
   handleNotificationExited() {
