@@ -735,7 +735,7 @@ export const showNotification = (state, message, severity = 'info') => {
  * @returns {farmhand.state}
  */
 export const purchaseCow = (state, cow) => {
-  const { cowInventory, cowsColorsPurchased, money, purchasedCowPen } = state
+  const { cowInventory, cowColorsPurchased, money, purchasedCowPen } = state
   const { color } = cow
 
   const cowValue = getCowValue(cow)
@@ -750,9 +750,9 @@ export const purchaseCow = (state, cow) => {
   return {
     ...state,
     cowInventory: [...cowInventory, { ...cow }],
-    cowsColorsPurchased: {
-      ...cowsColorsPurchased,
-      [color]: (cowsColorsPurchased[color] || 0) + 1,
+    cowColorsPurchased: {
+      ...cowColorsPurchased,
+      [color]: (cowColorsPurchased[color] || 0) + 1,
     },
     money: money - cowValue,
     cowForSale: generateCow(),

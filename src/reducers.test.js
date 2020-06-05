@@ -998,7 +998,7 @@ describe('purchaseCow', () => {
       {
         cowForSale: oldCowForSale,
         cowInventory: [],
-        cowsColorsPurchased: {},
+        cowColorsPurchased: {},
         money: 5000,
         purchasedCowPen: 1,
       },
@@ -1011,7 +1011,7 @@ describe('purchaseCow', () => {
     })
 
     expect(state.cowForSale).not.toBe(oldCowForSale)
-    expect(state.cowsColorsPurchased.WHITE).toEqual(1)
+    expect(state.cowColorsPurchased.WHITE).toEqual(1)
   })
 
   describe('is unsufficient room in cow pen', () => {
@@ -1025,7 +1025,7 @@ describe('purchaseCow', () => {
           cowInventory: Array(cowCapacity)
             .fill(null)
             .map(() => generateCow()),
-          cowsColorsPurchased: {},
+          cowColorsPurchased: {},
           money: 5000,
           purchasedCowPen: 1,
         },
@@ -1046,7 +1046,7 @@ describe('purchaseCow', () => {
         {
           cowForSale: oldCowForSale,
           cowInventory: [],
-          cowsColorsPurchased: {},
+          cowColorsPurchased: {},
           money: 500,
           purchasedCowPen: 1,
         },
