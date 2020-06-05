@@ -7,14 +7,17 @@ import {
   doesPlotContainCrop,
   dollarString,
 } from '../utils'
-
-import { cropLifeStage } from '../enums'
+import { cowColors, cropLifeStage } from '../enums'
+import { COW_FEED_ITEM_ID } from '../constants'
+import { addItemToInventory } from '../reducers'
 
 import { itemsMap } from './maps'
 
 const { GROWN, SEED } = cropLifeStage
 
 const addMoney = (state, reward) => ({ ...state, money: state.money + reward })
+
+const cowFeed = itemsMap[COW_FEED_ITEM_ID]
 
 const achievements = [
   ((reward = 100) => ({
@@ -98,6 +101,18 @@ const achievements = [
     // automatically set to `true` in the achievement processing logic) is used
     // to gate the price guides.
     reward: state => state,
+  }))(),
+
+  ((reward = 100) => ({
+    id: 'purchase-all-cow-colors',
+    name: 'Cows of Many Colors',
+    description: 'Show that you love all cows and purchase one of every color.',
+    rewardDescription: `${reward} units of ${cowFeed.name}`,
+    condition: state =>
+      Object.values(cowColors).every(
+        color => state.cowColorsPurchased[color] > 0
+      ),
+    reward: state => addItemToInventory(state, cowFeed, reward),
   }))(),
 ]
 
