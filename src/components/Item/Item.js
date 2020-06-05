@@ -105,22 +105,22 @@ export const Item = ({
         title: name,
         subheader: (
           <div>
-            {isPurchaseView &&
-              completedAchievements['unlock-crop-price-guide'] && (
-                <p>
-                  {`Price: ${moneyString(adjustedValue)}`}
-                  {valueAdjustments[id] && (
+            {isPurchaseView && (
+              <p>
+                {`Price: ${moneyString(adjustedValue)}`}
+                {completedAchievements['unlock-crop-price-guide'] &&
+                  valueAdjustments[id] && (
                     <PurchaseValueIndicator
                       {...{ id, value: adjustedValue, valueAdjustments }}
                     />
                   )}
-                </p>
-              )}
+              </p>
+            )}
             {isSellView && (
               <p>
                 {`Sell price: ${moneyString(adjustedValue)}`}
-                {valueAdjustments[id] &&
-                  completedAchievements['unlock-crop-price-guide'] && (
+                {completedAchievements['unlock-crop-price-guide'] &&
+                  valueAdjustments[id] && (
                     <SellValueIndicator
                       {...{ id, value: adjustedValue, valueAdjustments }}
                     />
