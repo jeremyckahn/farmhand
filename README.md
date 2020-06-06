@@ -19,6 +19,16 @@ This is an open source farming game built with web technologies. Some basic idea
 
 There is no release or versioning system yet.
 
+## Milestone 6: Bank Loans 🏦
+
+- [ ] Accounting modal + trigger
+- [ ] Loan section
+  - [ ] Outstanding balance display
+  - [ ] Button to take out \$500 loan
+  - [ ] Explanation of loan terms
+- [ ] All crop sales are reduced by 10% until loan is paid off
+- [ ] Game starts off with \$500 loan
+
 ## Milestone 5: Achievements 🏅
 
 - [x] Achievements modal + trigger
