@@ -26,7 +26,8 @@ There is no release or versioning system yet.
   - [ ] Outstanding balance display
   - [ ] Button to take out \$500 loan
   - [ ] Explanation of loan terms
-- [ ] All crop sales are reduced by 10% until loan is paid off
+- [ ] 5% of all crop sales automatically go into loan paydown
+- [ ] Money owed on loan increases by 2% every day
 - [ ] Game starts off with \$500 loan
 
 ## Milestone 5: Achievements 🏅
