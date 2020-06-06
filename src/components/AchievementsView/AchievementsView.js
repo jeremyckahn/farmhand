@@ -1,4 +1,7 @@
 import React from 'react'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import { object } from 'prop-types'
 import memoize from 'fast-memoize'
 import Divider from '@material-ui/core/Divider'
@@ -23,13 +26,15 @@ const partitionAchievements = memoize(completedAchievements =>
 )
 
 const AchievementsList = ({ achievements }) => (
-  <ul className="card-list">
-    {achievements.map(achievement => (
-      <li {...{ key: achievement.id }}>
-        <Achievement {...{ achievement }} />
-      </li>
-    ))}
-  </ul>
+  <ExpansionPanelDetails>
+    <ul className="card-list">
+      {achievements.map(achievement => (
+        <li {...{ key: achievement.id }}>
+          <Achievement {...{ achievement }} />
+        </li>
+      ))}
+    </ul>
+  </ExpansionPanelDetails>
 )
 
 const AchievementsView = ({
@@ -41,13 +46,21 @@ const AchievementsView = ({
   <div className="AchievementsView">
     {complete.length ? (
       <>
-        <h3>Completed</h3>
-        <AchievementsList {...{ achievements: complete }} />
+        <ExpansionPanel {...{ defaultExpanded: true }}>
+          <ExpansionPanelSummary>
+            <h3>Completed</h3>
+          </ExpansionPanelSummary>
+          <AchievementsList {...{ achievements: complete }} />
+        </ExpansionPanel>
         <Divider />
       </>
     ) : null}
-    <h3>Not Completed</h3>
-    <AchievementsList {...{ achievements: incomplete }} />
+    <ExpansionPanel {...{ defaultExpanded: true }}>
+      <ExpansionPanelSummary>
+        <h3>Not Completed</h3>
+      </ExpansionPanelSummary>
+      <AchievementsList {...{ achievements: incomplete }} />
+    </ExpansionPanel>
   </div>
 )
 
