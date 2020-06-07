@@ -25,7 +25,8 @@ const AccountingView = ({ loanBalance }) => (
                 type: 'number',
                 min: 0,
                 max: loanBalance,
-                pattern: '[0-9]',
+                // https://css-tricks.com/finger-friendly-numerical-inputs-with-inputmode/#:~:text=iOS%20Solution%3A%20Use%20the%20%60pattern,t%20allow%20any%20extra%20characters.
+                pattern: '[0-9]*',
               },
             }}
           />
