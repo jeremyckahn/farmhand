@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
-import FormControl from '@material-ui/core/FormControl'
+import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import NumberFormat from 'react-number-format'
 import { number } from 'prop-types'
@@ -24,7 +24,7 @@ const AccountingView = ({ loanBalance, money }) => {
           {...{ title: `Loan Balance: ${moneyString(loanBalance)}` }}
         />
         <CardContent>
-          <FormControl>
+          <div className="loan-container">
             <TextField
               {...{
                 value: String(loanInputValue),
@@ -53,13 +53,16 @@ const AccountingView = ({ loanBalance, money }) => {
                 },
               }}
             />
-          </FormControl>
-          <p>
-            You may take out a loan at any time. So long as you have a loan
-            balance, all farm product sales are garnished by{' '}
-            {LOAN_GARNISHMENT_RATE * 100}% until the loan is repaid. The loan
-            interest rate is {LOAN_INTEREST_RATE * 100}% and compounds daily.
-          </p>
+            <Button {...{ color: 'primary', variant: 'contained' }}>
+              Pay into loan
+            </Button>
+            <p>
+              You may take out a loan at any time. So long as you have a loan
+              balance, all farm product sales are garnished by{' '}
+              {LOAN_GARNISHMENT_RATE * 100}% until the loan is repaid. The loan
+              interest rate is {LOAN_INTEREST_RATE * 100}% and compounds daily.
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>
