@@ -28,7 +28,8 @@ const AccountingView = ({
         <CardHeader
           {...{
             avatar: <AccountBalanceIcon />,
-            title: `Loan Balance: ${moneyString(loanBalance)}`,
+            title: 'Loan Balance',
+            subheader: <p>{moneyString(loanBalance)}</p>,
           }}
         />
         <CardContent>
