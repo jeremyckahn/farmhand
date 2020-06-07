@@ -4,6 +4,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
 import NumberFormat from 'react-number-format'
 import { func, number } from 'prop-types'
 
@@ -25,7 +26,10 @@ const AccountingView = ({
     <div className="AccountingView">
       <Card>
         <CardHeader
-          {...{ title: `Loan Balance: ${moneyString(loanBalance)}` }}
+          {...{
+            avatar: <AccountBalanceIcon />,
+            title: `Loan Balance: ${moneyString(loanBalance)}`,
+          }}
         />
         <CardContent>
           <div className="loan-container">
