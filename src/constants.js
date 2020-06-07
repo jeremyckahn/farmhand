@@ -1,5 +1,7 @@
 const { freeze } = Object
 
+export const INITIAL_LOAN_BALANCE = 500
+
 export const FERTILIZER_BONUS = 0.5
 export const FERTILIZER_ITEM_ID = 'fertilizer'
 

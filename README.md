@@ -25,6 +25,7 @@ There is no release or versioning system yet.
 - [ ] Loan section
   - [ ] Outstanding balance display
   - [ ] Button to take out \$500 loan
+  - [ ] UI to pay down loan
   - [ ] Explanation of loan terms
 - [ ] 5% of all crop sales automatically go into loan paydown
 - [ ] Money owed on loan increases by 2% every day

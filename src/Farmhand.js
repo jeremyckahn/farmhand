@@ -24,7 +24,7 @@ import { createNewField, getItemValue } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
-import { PURCHASEABLE_COW_PENS } from './constants'
+import { INITIAL_LOAN_BALANCE, PURCHASEABLE_COW_PENS } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 
@@ -103,6 +103,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {Object} itemsSold Keys are items IDs, values are the number of
  * that item sold.
  * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
+ * @property {number} loanBalance
  * @property {number} money
  * @property {Array.<string>} newDayNotifications
  * @property {Array.<string>} notifications
@@ -147,7 +148,8 @@ export default class Farmhand extends Component {
     isMenuOpen: true,
     itemsSold: {},
     learnedRecipes: {},
-    money: 500,
+    loanBalance: INITIAL_LOAN_BALANCE,
+    money: INITIAL_LOAN_BALANCE,
     newDayNotifications: [],
     notifications: [],
     notificationLog: [],
@@ -182,6 +184,7 @@ export default class Farmhand extends Component {
       'inventory',
       'itemsSold',
       'learnedRecipes',
+      'loanBalance',
       'money',
       'newDayNotifications',
       'notificationLog',
