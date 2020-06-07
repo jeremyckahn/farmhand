@@ -13,7 +13,7 @@ import { LOAN_INTEREST_RATE, LOAN_GARNISHMENT_RATE } from '../../constants'
 
 import './AccountingView.sass'
 
-const AccountingView = ({ loanBalance }) => (
+const AccountingView = ({ loanBalance, money }) => (
   <div className="AccountingView">
     <Card>
       <CardHeader {...{ title: `Loan Balance: ${moneyString(loanBalance)}` }} />
@@ -21,7 +21,7 @@ const AccountingView = ({ loanBalance }) => (
         <FormControl>
           <TextField
             {...{
-              defaultValue: String(loanBalance),
+              value: String(Math.min(loanBalance, money)),
               inputProps: {
                 // https://css-tricks.com/finger-friendly-numerical-inputs-with-inputmode/
                 pattern: '[0-9]*',
@@ -57,6 +57,7 @@ const AccountingView = ({ loanBalance }) => (
 
 AccountingView.propTypes = {
   loanBalance: number.isRequired,
+  money: number.isRequired,
 }
 
 export default function Consumer(props) {

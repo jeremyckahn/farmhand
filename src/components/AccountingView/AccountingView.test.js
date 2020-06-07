@@ -6,7 +6,14 @@ import AccountingView from './AccountingView'
 let component
 
 beforeEach(() => {
-  component = shallow(<AccountingView {...{}} />)
+  component = shallow(
+    <AccountingView
+      {...{
+        loanBalance: 0,
+        money: 0,
+      }}
+    />
+  )
 })
 
 test('renders', () => {
