@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
@@ -13,47 +13,58 @@ import { LOAN_INTEREST_RATE, LOAN_GARNISHMENT_RATE } from '../../constants'
 
 import './AccountingView.sass'
 
-const AccountingView = ({ loanBalance, money }) => (
-  <div className="AccountingView">
-    <Card>
-      <CardHeader {...{ title: `Loan Balance: ${moneyString(loanBalance)}` }} />
-      <CardContent>
-        <FormControl>
-          <TextField
-            {...{
-              value: String(Math.min(loanBalance, money)),
-              inputProps: {
-                // https://css-tricks.com/finger-friendly-numerical-inputs-with-inputmode/
-                pattern: '[0-9]*',
-              },
-              InputProps: {
-                inputComponent: ({ inputRef, ...rest }) => (
-                  <NumberFormat
-                    fixedDecimalScale
-                    thousandSeparator
-                    isNumericString
-                    {...{
-                      ...rest,
-                      allowNegative: false,
-                      decimalScale: 2,
-                      prefix: '$',
-                    }}
-                  />
-                ),
-              },
-            }}
-          />
-        </FormControl>
-        <p>
-          You may take out a loan at any time. So long as you have a loan
-          balance, all farm product sales are garnished by{' '}
-          {LOAN_GARNISHMENT_RATE * 100}% until the loan is repaid. The loan
-          interest rate is {LOAN_INTEREST_RATE * 100}% and compounds daily.
-        </p>
-      </CardContent>
-    </Card>
-  </div>
-)
+const AccountingView = ({ loanBalance, money }) => {
+  const maxInputValue = Math.min(loanBalance, money)
+  const [loanInputValue, setLoanInputValue] = useState(maxInputValue)
+
+  return (
+    <div className="AccountingView">
+      <Card>
+        <CardHeader
+          {...{ title: `Loan Balance: ${moneyString(loanBalance)}` }}
+        />
+        <CardContent>
+          <FormControl>
+            <TextField
+              {...{
+                value: String(loanInputValue),
+                inputProps: {
+                  // https://css-tricks.com/finger-friendly-numerical-inputs-with-inputmode/
+                  pattern: '[0-9]*',
+                },
+                InputProps: {
+                  inputComponent: ({ inputRef, ...rest }) => (
+                    <NumberFormat
+                      fixedDecimalScale
+                      thousandSeparator
+                      isNumericString
+                      {...{
+                        ...rest,
+                        allowNegative: false,
+                        decimalScale: 2,
+                        prefix: '$',
+                        isAllowed: ({ floatValue }) =>
+                          floatValue >= 0 && floatValue <= maxInputValue,
+                        onBlur: ({ target: { value } }) =>
+                          setLoanInputValue(Number(value.replace(/[$,]/g, ''))),
+                      }}
+                    />
+                  ),
+                },
+              }}
+            />
+          </FormControl>
+          <p>
+            You may take out a loan at any time. So long as you have a loan
+            balance, all farm product sales are garnished by{' '}
+            {LOAN_GARNISHMENT_RATE * 100}% until the loan is repaid. The loan
+            interest rate is {LOAN_INTEREST_RATE * 100}% and compounds daily.
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
 
 AccountingView.propTypes = {
   loanBalance: number.isRequired,
