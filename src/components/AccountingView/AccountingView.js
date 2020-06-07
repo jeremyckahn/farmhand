@@ -43,7 +43,7 @@ const AccountingView = ({ loanBalance, money }) => {
                         allowNegative: false,
                         decimalScale: 2,
                         prefix: '$',
-                        isAllowed: ({ floatValue }) =>
+                        isAllowed: ({ floatValue = 0 }) =>
                           floatValue >= 0 && floatValue <= maxInputValue,
                         onBlur: ({ target: { value } }) =>
                           setLoanInputValue(Number(value.replace(/[$,]/g, ''))),
