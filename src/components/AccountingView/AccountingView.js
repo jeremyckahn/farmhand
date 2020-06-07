@@ -4,6 +4,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import FormControl from '@material-ui/core/FormControl'
 import TextField from '@material-ui/core/TextField'
+import NumberFormat from 'react-number-format'
 import { number } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -20,13 +21,25 @@ const AccountingView = ({ loanBalance }) => (
         <FormControl>
           <TextField
             {...{
-              defaultValue: 0,
+              defaultValue: String(loanBalance),
               inputProps: {
-                type: 'number',
-                min: 0,
-                max: loanBalance,
-                // https://css-tricks.com/finger-friendly-numerical-inputs-with-inputmode/#:~:text=iOS%20Solution%3A%20Use%20the%20%60pattern,t%20allow%20any%20extra%20characters.
+                // https://css-tricks.com/finger-friendly-numerical-inputs-with-inputmode/
                 pattern: '[0-9]*',
+              },
+              InputProps: {
+                inputComponent: ({ inputRef, ...rest }) => (
+                  <NumberFormat
+                    fixedDecimalScale
+                    thousandSeparator
+                    isNumericString
+                    {...{
+                      ...rest,
+                      allowNegative: false,
+                      decimalScale: 2,
+                      prefix: '$',
+                    }}
+                  />
+                ),
               },
             }}
           />

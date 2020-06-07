@@ -75,6 +75,7 @@
     "react-dom": "^16.13.0",
     "react-hotkeys": "^2.0.0",
     "react-markdown": "^4.3.1",
+    "react-number-format": "^4.4.1",
     "source-map-explorer": "^2.3.1",
     "typeface-francois-one": "0.0.71",
     "typeface-public-sans": "^1.1.4"
