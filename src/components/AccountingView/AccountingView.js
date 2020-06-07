@@ -2,6 +2,8 @@ import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
+import FormControl from '@material-ui/core/FormControl'
+import TextField from '@material-ui/core/TextField'
 import { number } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -15,6 +17,19 @@ const AccountingView = ({ loanBalance }) => (
     <Card>
       <CardHeader {...{ title: `Loan Balance: ${moneyString(loanBalance)}` }} />
       <CardContent>
+        <FormControl>
+          <TextField
+            {...{
+              defaultValue: 0,
+              inputProps: {
+                type: 'number',
+                min: 0,
+                max: loanBalance,
+                pattern: '[0-9]',
+              },
+            }}
+          />
+        </FormControl>
         <p>
           You may take out a loan at any time. So long as you have a loan
           balance, all farm product sales are garnished by{' '}
