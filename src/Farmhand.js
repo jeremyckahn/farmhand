@@ -324,6 +324,7 @@ export default class Farmhand extends Component {
       'hugCow',
       'makeRecipe',
       'modifyCow',
+      'payIntoLoan',
       'purchaseCow',
       'purchaseCowPen',
       'purchaseField',

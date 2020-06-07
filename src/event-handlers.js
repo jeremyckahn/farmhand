@@ -214,4 +214,11 @@ export default {
   handleCloseDialogView() {
     this.setState({ currentDialogView: dialogView.NONE })
   },
+
+  /**
+   * @param {number} paydownAmount
+   */
+  handleClickLoanPaydownButton(paydownAmount) {
+    this.payIntoLoan(paydownAmount)
+  },
 }

@@ -1108,3 +1108,15 @@ export const updateAchievements = (state, prevState) =>
 
     return state
   }, state)
+
+// FIXME: Test this.
+/**
+ * @param {farmhand.state} state
+ * @param {number} paydownAmount
+ * @returns {farmhand.state}
+ */
+export const payIntoLoan = (state, paydownAmount) => ({
+  ...state,
+  loanBalance: state.loanBalance - paydownAmount,
+  money: state.money - paydownAmount,
+})

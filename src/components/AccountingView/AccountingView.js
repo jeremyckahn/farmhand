@@ -5,7 +5,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import NumberFormat from 'react-number-format'
-import { number } from 'prop-types'
+import { func, number } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
 import { moneyString } from '../../utils'
@@ -13,7 +13,11 @@ import { LOAN_INTEREST_RATE, LOAN_GARNISHMENT_RATE } from '../../constants'
 
 import './AccountingView.sass'
 
-const AccountingView = ({ loanBalance, money }) => {
+const AccountingView = ({
+  handleClickLoanPaydownButton,
+  loanBalance,
+  money,
+}) => {
   const maxInputValue = Math.min(loanBalance, money)
   const [loanInputValue, setLoanInputValue] = useState(maxInputValue)
 
@@ -29,6 +33,7 @@ const AccountingView = ({ loanBalance, money }) => {
               {...{
                 value: String(loanInputValue),
                 inputProps: {
+                  // Enable a helpful number input for iOS.
                   // https://css-tricks.com/finger-friendly-numerical-inputs-with-inputmode/
                   pattern: '[0-9]*',
                 },
@@ -53,7 +58,17 @@ const AccountingView = ({ loanBalance, money }) => {
                 },
               }}
             />
-            <Button {...{ color: 'primary', variant: 'contained' }}>
+            <Button
+              {...{
+                color: 'primary',
+                disabled: loanBalance === 0,
+                variant: 'contained',
+                onClick: () => {
+                  handleClickLoanPaydownButton(loanInputValue)
+                  setLoanInputValue(loanBalance - loanInputValue)
+                },
+              }}
+            >
               Pay into loan
             </Button>
             <p>
@@ -70,6 +85,7 @@ const AccountingView = ({ loanBalance, money }) => {
 }
 
 AccountingView.propTypes = {
+  handleClickLoanPaydownButton: func.isRequired,
   loanBalance: number.isRequired,
   money: number.isRequired,
 }

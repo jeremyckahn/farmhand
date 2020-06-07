@@ -9,6 +9,7 @@ beforeEach(() => {
   component = shallow(
     <AccountingView
       {...{
+        handleClickLoanPaydownButton: () => {},
         loanBalance: 0,
         money: 0,
       }}
