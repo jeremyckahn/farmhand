@@ -264,6 +264,7 @@ export default class Farmhand extends Component {
       openLog: 'l',
       openPriceEvents: 'p',
       openAchievements: 'a',
+      openAccounting: 'b',
       incrementDay: 'shift+c',
       nextView: 'right',
       previousView: 'left',
@@ -288,6 +289,8 @@ export default class Farmhand extends Component {
         this.setState({ currentDialogView: dialogView.PRICE_EVENTS }),
       openAchievements: () =>
         this.setState({ currentDialogView: dialogView.ACHIEVEMENTS }),
+      openAccounting: () =>
+        this.setState({ currentDialogView: dialogView.ACCOUNTING }),
 
       previousView: throttle(
         this.focusPreviousView.bind(this),
