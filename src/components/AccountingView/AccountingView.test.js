@@ -10,6 +10,7 @@ beforeEach(() => {
     <AccountingView
       {...{
         handleClickLoanPaydownButton: () => {},
+        handleClickTakeOutLoanButton: () => {},
         loanBalance: 0,
         money: 0,
       }}

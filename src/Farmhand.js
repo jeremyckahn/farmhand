@@ -24,7 +24,7 @@ import { createNewField, getItemValue } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
-import { INITIAL_LOAN_BALANCE, PURCHASEABLE_COW_PENS } from './constants'
+import { STANDARD_LOAN_AMOUNT, PURCHASEABLE_COW_PENS } from './constants'
 import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 
@@ -148,8 +148,8 @@ export default class Farmhand extends Component {
     isMenuOpen: true,
     itemsSold: {},
     learnedRecipes: {},
-    loanBalance: INITIAL_LOAN_BALANCE,
-    money: INITIAL_LOAN_BALANCE,
+    loanBalance: STANDARD_LOAN_AMOUNT,
+    money: STANDARD_LOAN_AMOUNT,
     newDayNotifications: [],
     notifications: [],
     notificationLog: [],

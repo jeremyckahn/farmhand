@@ -24,7 +24,7 @@ There is no release or versioning system yet.
 - [x] Accounting modal + trigger
 - [ ] Loan section
   - [x] Outstanding balance display
-  - [ ] Button to take out \$500 loan
+  - [x] Button to take out \$500 loan
   - [ ] UI to pay down loan
   - [x] Explanation of loan terms
 - [ ] 5% of all crop and milk sales automatically go into loan paydown

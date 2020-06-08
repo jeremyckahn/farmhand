@@ -9,13 +9,18 @@ import NumberFormat from 'react-number-format'
 import { func, number } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
-import { moneyString } from '../../utils'
-import { LOAN_INTEREST_RATE, LOAN_GARNISHMENT_RATE } from '../../constants'
+import { dollarString, moneyString } from '../../utils'
+import {
+  STANDARD_LOAN_AMOUNT,
+  LOAN_INTEREST_RATE,
+  LOAN_GARNISHMENT_RATE,
+} from '../../constants'
 
 import './AccountingView.sass'
 
 const AccountingView = ({
   handleClickLoanPaydownButton,
+  handleClickTakeOutLoanButton,
   loanBalance,
   money,
 }) => {
@@ -83,6 +88,23 @@ const AccountingView = ({
               interest rate is {LOAN_INTEREST_RATE * 100}% and compounds daily.
             </p>
           </div>
+          <Button
+            {...{
+              color: 'secondary',
+              variant: 'contained',
+              onClick: () => {
+                handleClickTakeOutLoanButton(STANDARD_LOAN_AMOUNT)
+                setLoanInputValue(
+                  Math.min(
+                    loanInputValue + STANDARD_LOAN_AMOUNT,
+                    money + STANDARD_LOAN_AMOUNT
+                  )
+                )
+              },
+            }}
+          >
+            Take out a {dollarString(STANDARD_LOAN_AMOUNT)} loan
+          </Button>
         </CardContent>
       </Card>
     </div>
@@ -90,6 +112,7 @@ const AccountingView = ({
 }
 
 AccountingView.propTypes = {
+  handleClickTakeOutLoanButton: func.isRequired,
   handleClickLoanPaydownButton: func.isRequired,
   loanBalance: number.isRequired,
   money: number.isRequired,

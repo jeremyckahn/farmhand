@@ -1,6 +1,6 @@
 const { freeze } = Object
 
-export const INITIAL_LOAN_BALANCE = 500
+export const STANDARD_LOAN_AMOUNT = 500
 
 export const LOAN_GARNISHMENT_RATE = 0.05
 export const LOAN_INTEREST_RATE = 0.02
