@@ -219,6 +219,6 @@ export default {
    * @param {number} paydownAmount
    */
   handleClickLoanPaydownButton(paydownAmount) {
-    this.payIntoLoan(paydownAmount)
+    this.adjustLoan(-paydownAmount)
   },
 }

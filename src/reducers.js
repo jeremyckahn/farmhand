@@ -1109,14 +1109,14 @@ export const updateAchievements = (state, prevState) =>
     return state
   }, state)
 
-// FIXME: Test this.
 /**
  * @param {farmhand.state} state
- * @param {number} paydownAmount
+ * @param {number} adjustmentAmount This should be a negative number if the
+ * loan is being paid down, positive if a loan is being taken out.
  * @returns {farmhand.state}
  */
-export const payIntoLoan = (state, paydownAmount) => ({
+export const adjustLoan = (state, adjustmentAmount) => ({
   ...state,
-  loanBalance: state.loanBalance - paydownAmount,
-  money: state.money - paydownAmount,
+  loanBalance: state.loanBalance + adjustmentAmount,
+  money: state.money + adjustmentAmount,
 })

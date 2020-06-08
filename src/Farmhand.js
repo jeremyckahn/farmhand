@@ -316,6 +316,7 @@ export default class Farmhand extends Component {
 
   initReducers() {
     ;[
+      'adjustLoan',
       'computeStateForNextDay',
       'changeCowName',
       'clearPlot',
@@ -324,7 +325,6 @@ export default class Farmhand extends Component {
       'hugCow',
       'makeRecipe',
       'modifyCow',
-      'payIntoLoan',
       'purchaseCow',
       'purchaseCowPen',
       'purchaseField',

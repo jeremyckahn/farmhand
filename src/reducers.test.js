@@ -1669,3 +1669,12 @@ describe('updateAchievements', () => {
     })
   })
 })
+
+describe('adjustLoan', () => {
+  test('updates state', () => {
+    expect(fn.adjustLoan({ money: 100, loanBalance: 50 }, -25)).toEqual({
+      money: 75,
+      loanBalance: 25,
+    })
+  })
+})
