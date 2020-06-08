@@ -527,7 +527,6 @@ export default class Farmhand extends Component {
         <MuiThemeProvider theme={theme}>
           <FarmhandContext.Provider value={{ gameState, handlers }}>
             <div className="Farmhand fill">
-              <NotificationSystem />
               <AppBar />
               <Drawer
                 {...{
@@ -566,6 +565,7 @@ export default class Farmhand extends Component {
                 </Fab>
               </Tooltip>
             </div>
+            <NotificationSystem />
           </FarmhandContext.Provider>
         </MuiThemeProvider>
       </HotKeys>
