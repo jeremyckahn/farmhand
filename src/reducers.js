@@ -45,8 +45,8 @@ import {
   LOAN_INCREASED,
   LOAN_PAYOFF,
   MILK_PRODUCED,
-  PRICE_CRASH_NOTIFICATION,
-  PRICE_SURGE_NOTIFICATION,
+  PRICE_CRASH,
+  PRICE_SURGE,
 } from './templates'
 import { cropLifeStage, fieldMode, itemType } from './enums'
 
@@ -518,11 +518,11 @@ export const generatePriceEvents = state => {
       newDayNotifications.push(
         priceEventType === 'priceCrashes'
           ? {
-              message: PRICE_CRASH_NOTIFICATION`${cropItem}`,
+              message: PRICE_CRASH`${cropItem}`,
               severity: 'warning',
             }
           : {
-              message: PRICE_SURGE_NOTIFICATION`${cropItem}`,
+              message: PRICE_SURGE`${cropItem}`,
               severity: 'success',
             }
       )

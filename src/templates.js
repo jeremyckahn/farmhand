@@ -32,14 +32,14 @@ export const RECIPE_LEARNED = (_, recipe) =>
  * @param {farmhand.item} cropItem
  * @returns {string}
  */
-export const PRICE_CRASH_NOTIFICATION = (_, { name }) =>
+export const PRICE_CRASH = (_, { name }) =>
   `${name} prices have bottomed out! Avoid selling them until prices return to normal.`
 
 /**
  * @param {farmhand.item} cropItem
  * @returns {string}
  */
-export const PRICE_SURGE_NOTIFICATION = (_, { name }) =>
+export const PRICE_SURGE = (_, { name }) =>
   `${name} prices are at their peak! Now is the time to sell!`
 
 /**
