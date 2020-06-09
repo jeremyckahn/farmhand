@@ -41,8 +41,10 @@ import {
 import { RAIN_MESSAGE } from './strings'
 import {
   ACHIEVEMENT_COMPLETED,
-  MILK_PRODUCED,
   CROW_ATTACKED,
+  LOAN_INCREASED,
+  LOAN_PAYOFF,
+  MILK_PRODUCED,
   PRICE_CRASH_NOTIFICATION,
   PRICE_SURGE_NOTIFICATION,
 } from './templates'
@@ -1115,8 +1117,19 @@ export const updateAchievements = (state, prevState) =>
  * loan is being paid down, positive if a loan is being taken out.
  * @returns {farmhand.state}
  */
-export const adjustLoan = (state, adjustmentAmount) => ({
-  ...state,
-  loanBalance: state.loanBalance + adjustmentAmount,
-  money: state.money + adjustmentAmount,
-})
+export const adjustLoan = (state, adjustmentAmount) => {
+  const loanBalance = state.loanBalance + adjustmentAmount
+  const money = state.money + adjustmentAmount
+
+  if (loanBalance === 0 && adjustmentAmount < 0) {
+    state = showNotification(state, LOAN_PAYOFF``, 'success')
+  } else if (adjustmentAmount > 0) {
+    state = showNotification(state, LOAN_INCREASED`${loanBalance}`, 'info')
+  }
+
+  return {
+    ...state,
+    loanBalance,
+    money,
+  }
+}

@@ -1,3 +1,5 @@
+import { moneyString } from './utils'
+
 /**
  * @param {farmhand.crop} crop
  * @returns {string}
@@ -46,3 +48,17 @@ export const PRICE_SURGE_NOTIFICATION = (_, { name }) =>
  */
 export const ACHIEVEMENT_COMPLETED = (_, { name }) =>
   `You achieved "${name}!" Way to go!`
+
+/**
+ * @returns {string}
+ */
+export const LOAN_PAYOFF = () =>
+  `You paid off your loan to the bank! You're finally free!`
+
+/**
+ * @returns {string}
+ */
+export const LOAN_INCREASED = (_, loanBalance) =>
+  `You took out a new loan. Your current balance is ${moneyString(
+    loanBalance
+  )}.`

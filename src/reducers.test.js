@@ -2,8 +2,10 @@ import { shapeOf, testCrop, testItem } from './test-utils'
 import { RAIN_MESSAGE } from './strings'
 import {
   ACHIEVEMENT_COMPLETED,
-  MILK_PRODUCED,
   CROW_ATTACKED,
+  LOAN_INCREASED,
+  LOAN_PAYOFF,
+  MILK_PRODUCED,
   PRICE_CRASH_NOTIFICATION,
   PRICE_SURGE_NOTIFICATION,
 } from './templates'
@@ -1672,9 +1674,30 @@ describe('updateAchievements', () => {
 
 describe('adjustLoan', () => {
   test('updates state', () => {
-    expect(fn.adjustLoan({ money: 100, loanBalance: 50 }, -25)).toEqual({
+    expect(
+      fn.adjustLoan({ money: 100, loanBalance: 50, notifications: [] }, -25)
+    ).toEqual({
       money: 75,
       loanBalance: 25,
+      notifications: [],
+    })
+  })
+
+  describe('loan payoff', () => {
+    test('shows appropriate notification', () => {
+      expect(
+        fn.adjustLoan({ money: 100, loanBalance: 50, notifications: [] }, -50)
+          .notifications
+      ).toEqual([{ message: LOAN_PAYOFF``, severity: 'success' }])
+    })
+  })
+
+  describe('loan increase', () => {
+    test('shows appropriate notification', () => {
+      expect(
+        fn.adjustLoan({ money: 100, loanBalance: 50, notifications: [] }, 50)
+          .notifications
+      ).toEqual([{ message: LOAN_INCREASED`${100}`, severity: 'info' }])
     })
   })
 })
