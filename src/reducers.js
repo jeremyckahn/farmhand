@@ -27,6 +27,7 @@ import {
   CROW_CHANCE,
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
+  LOAN_GARNISHMENT_RATE,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   NOTIFICATION_LOG_SIZE,
@@ -640,16 +641,30 @@ export const sellItem = (state, { id }, howMany = 1) => {
   }
 
   const { itemsSold, money, valueAdjustments } = state
+  let { loanBalance } = state
 
-  state = decrementItemFromInventory(
-    {
-      ...state,
-      itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
-      money: money + getAdjustedItemValue(valueAdjustments, id) * howMany,
-    },
-    id,
-    howMany
-  )
+  const adjustedItemValue = getAdjustedItemValue(valueAdjustments, id)
+  let profit = 0
+
+  // FIXME: Garnishments should only apply to crops and milk.
+  for (let i = 0; i < howMany; i++) {
+    const loanGarnishment = Math.min(
+      loanBalance,
+      adjustedItemValue * LOAN_GARNISHMENT_RATE
+    )
+    const garnishedProfit = adjustedItemValue - loanGarnishment
+    loanBalance -= loanGarnishment
+    profit += garnishedProfit
+  }
+
+  state = adjustLoan(state, loanBalance - state.loanBalance)
+  state = {
+    ...state,
+    itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
+    money: money + profit,
+  }
+
+  state = decrementItemFromInventory(state, id, howMany)
 
   return updateLearnedRecipes(state)
 }

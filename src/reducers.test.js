@@ -939,7 +939,9 @@ describe('sellItem', () => {
       {
         inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
         itemsSold: {},
+        loanBalance: 0,
         money: 100,
+        notifications: [],
         valueAdjustments: { 'sample-item-1': 1 },
       },
       testItem({ id: 'sample-item-1' })
@@ -955,7 +957,9 @@ describe('sellItem', () => {
       {
         inventory: [testItem({ id: 'sample-item-1', quantity: 3 })],
         itemsSold: {},
+        loanBalance: 0,
         money: 100,
+        notifications: [],
         valueAdjustments: { 'sample-item-1': 1 },
       },
       testItem({ id: 'sample-item-1' }),
@@ -963,6 +967,40 @@ describe('sellItem', () => {
     )
 
     expect(learnedRecipes['sample-recipe-1']).toBeTruthy()
+  })
+
+  describe('there is an outstanding loan', () => {
+    let state
+    describe('loan is greater than garnishment', () => {
+      beforeEach(() => {
+        state = fn.sellItem(
+          {
+            inventory: [testItem({ id: 'sample-item-1', quantity: 3 })],
+            itemsSold: {},
+            loanBalance: 100,
+            money: 100,
+            notifications: [],
+            valueAdjustments: { 'sample-item-1': 10 },
+          },
+          testItem({ id: 'sample-item-1' }),
+          3
+        )
+      })
+
+      test('loan is payed down', () => {
+        expect(state.loanBalance).toEqual(98.5)
+      })
+
+      test('sale profit is reduced', () => {
+        expect(state.money).toEqual(128.5)
+      })
+    })
+
+    describe('loan is less than garnishment', () => {
+      test.todo('loan is payed off')
+
+      test.todo('sale profit is reduced less than standard amount')
+    })
   })
 })
 
@@ -972,7 +1010,9 @@ describe('sellAllOfItem', () => {
       {
         inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
         itemsSold: {},
+        loanBalance: 0,
         money: 100,
+        notifications: [],
         valueAdjustments: { 'sample-item-1': 1 },
       },
       testItem({ id: 'sample-item-1' })

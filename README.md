@@ -22,10 +22,10 @@ There is no release or versioning system yet.
 ## Milestone 6: Bank Loans 🏦
 
 - [x] Accounting modal + trigger
-- [ ] Loan section
+- [x] Loan section
   - [x] Outstanding balance display
   - [x] Button to take out \$500 loan
-  - [ ] UI to pay down loan
+  - [x] UI to pay down loan
   - [x] Explanation of loan terms
 - [ ] 5% of all crop and milk sales automatically go into loan paydown
 - [ ] Money owed on loan increases by 2% every day
