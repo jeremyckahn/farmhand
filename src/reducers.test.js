@@ -1014,9 +1014,34 @@ describe('sellItem', () => {
       })
 
       describe('loan is less than garnishment', () => {
-        test.todo('loan is payed off')
+        beforeEach(() => {
+          state = fn.sellItem(
+            {
+              inventory: [testItem({ id: 'sample-crop-1', quantity: 3 })],
+              itemsSold: {},
+              loanBalance: 1.5,
+              money: 100,
+              notifications: [],
+              valueAdjustments: { 'sample-crop-1': 10 },
+            },
+            testItem({ id: 'sample-crop-1' }),
+            3
+          )
+        })
 
-        test.todo('sale profit is reduced less than standard amount')
+        test('loan is payed off', () => {
+          expect(state.loanBalance).toEqual(0)
+        })
+
+        test('sale profit is reduced based on remaining loan balance', () => {
+          expect(state.money).toEqual(158.5)
+        })
+
+        test('payoff notification is shown', () => {
+          expect(state.notifications).toEqual([
+            { message: LOAN_PAYOFF``, severity: 'success' },
+          ])
+        })
       })
     })
   })
