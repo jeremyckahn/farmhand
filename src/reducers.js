@@ -17,6 +17,7 @@ import {
   getPriceEventForCrop,
   getRandomCropItem,
   getRangeCoords,
+  isItemAFarmProduct,
 } from './utils'
 import {
   COW_FEED_ITEM_ID,
@@ -640,24 +641,27 @@ export const sellItem = (state, { id }, howMany = 1) => {
     return state
   }
 
+  const item = itemsMap[id]
   const { itemsSold, money, valueAdjustments } = state
   let { loanBalance } = state
 
   const adjustedItemValue = getAdjustedItemValue(valueAdjustments, id)
+  const saleIsGarnished = isItemAFarmProduct(item)
   let profit = 0
 
-  // FIXME: Garnishments should only apply to crops and milk.
   for (let i = 0; i < howMany; i++) {
-    const loanGarnishment = Math.min(
-      loanBalance,
-      adjustedItemValue * LOAN_GARNISHMENT_RATE
-    )
+    const loanGarnishment = saleIsGarnished
+      ? Math.min(loanBalance, adjustedItemValue * LOAN_GARNISHMENT_RATE)
+      : 0
     const garnishedProfit = adjustedItemValue - loanGarnishment
     loanBalance -= loanGarnishment
     profit += garnishedProfit
   }
 
-  state = adjustLoan(state, loanBalance - state.loanBalance)
+  if (saleIsGarnished) {
+    state = adjustLoan(state, loanBalance - state.loanBalance)
+  }
+
   state = {
     ...state,
     itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },

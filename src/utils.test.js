@@ -2,6 +2,7 @@ import {
   canMakeRecipe,
   dollarString,
   moneyString,
+  isItemAFarmProduct,
   getItemValue,
   generateValueAdjustments,
   generateCow,
@@ -23,7 +24,13 @@ import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
 import { items as itemImages } from './img'
 import { cowColors, cropLifeStage, genders } from './enums'
-import { sampleCropItem1, sampleItem1, sampleFieldTool1 } from './data/items'
+import {
+  sampleCropItem1,
+  sampleCropSeedsItem1,
+  sampleItem1,
+  sampleFieldTool1,
+  milk1,
+} from './data/items'
 import {
   COW_MAXIMUM_AGE_VALUE_DROPOFF,
   COW_MAXIMUM_VALUE_MULTIPLIER,
@@ -52,6 +59,26 @@ describe('moneyString', () => {
 describe('dollarString', () => {
   test('formats number to dollar string', () => {
     expect(dollarString(1234.567)).toEqual('$1,235')
+  })
+})
+
+describe('isItemAFarmProduct', () => {
+  describe('item is a seed', () => {
+    test('returns correct result', () => {
+      expect(isItemAFarmProduct(sampleCropSeedsItem1)).toBe(false)
+    })
+  })
+
+  describe('item is grown crop', () => {
+    test('returns correct result', () => {
+      expect(isItemAFarmProduct(sampleCropItem1)).toBe(true)
+    })
+  })
+
+  describe('item is milk', () => {
+    test('returns correct result', () => {
+      expect(isItemAFarmProduct(milk1)).toBe(true)
+    })
   })
 })
 

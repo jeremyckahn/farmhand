@@ -971,8 +971,9 @@ describe('sellItem', () => {
 
   describe('there is an outstanding loan', () => {
     let state
-    describe('loan is greater than garnishment', () => {
-      beforeEach(() => {
+
+    describe('item is not a farm product', () => {
+      test('sale is not garnished', () => {
         state = fn.sellItem(
           {
             inventory: [testItem({ id: 'sample-item-1', quantity: 3 })],
@@ -985,21 +986,38 @@ describe('sellItem', () => {
           testItem({ id: 'sample-item-1' }),
           3
         )
-      })
 
-      test('loan is payed down', () => {
-        expect(state.loanBalance).toEqual(98.5)
-      })
-
-      test('sale profit is reduced', () => {
-        expect(state.money).toEqual(128.5)
+        expect(state.loanBalance).toEqual(100)
+        expect(state.money).toEqual(130)
       })
     })
 
-    describe('loan is less than garnishment', () => {
-      test.todo('loan is payed off')
+    describe('item is a farm product', () => {
+      describe('loan is greater than garnishment', () => {
+        test('sale is garnished', () => {
+          state = fn.sellItem(
+            {
+              inventory: [testItem({ id: 'sample-crop-1', quantity: 3 })],
+              itemsSold: {},
+              loanBalance: 100,
+              money: 100,
+              notifications: [],
+              valueAdjustments: { 'sample-crop-1': 10 },
+            },
+            testItem({ id: 'sample-crop-1' }),
+            3
+          )
 
-      test.todo('sale profit is reduced less than standard amount')
+          expect(state.loanBalance).toEqual(97)
+          expect(state.money).toEqual(157)
+        })
+      })
+
+      describe('loan is less than garnishment', () => {
+        test.todo('loan is payed off')
+
+        test.todo('sale profit is reduced less than standard amount')
+      })
     })
   })
 })
