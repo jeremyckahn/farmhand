@@ -190,7 +190,13 @@ export default {
     this.hugCow(cow.id)
   },
 
-  handleCloseNotification() {
+  handleCloseNotification(event, reason) {
+    // This necessary to prevent NREs from within MUI.
+    // https://codesandbox.io/s/bbo9w?file=/demo.js
+    if (reason === 'clickaway') {
+      return
+    }
+
     this.setState(() => ({ doShowNotifications: false }))
   },
 
