@@ -191,7 +191,7 @@ export default {
   },
 
   handleCloseNotification(event, reason) {
-    // This necessary to prevent NREs from within MUI.
+    // This is necessary to prevent NREs from within MUI.
     // https://codesandbox.io/s/bbo9w?file=/demo.js
     if (reason === 'clickaway') {
       return
