@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import HistoryIcon from '@material-ui/icons/History'
 import FlashOnIcon from '@material-ui/icons/FlashOn'
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import Tooltip from '@material-ui/core/Tooltip'
 import { number, func, string } from 'prop-types'
 
@@ -19,25 +20,31 @@ import { dialogView, stageFocusType } from '../../enums'
 import LogView from '../LogView'
 import PriceEventView from '../PriceEventView'
 import AchievementsView from '../AchievementsView'
+import AccountingView from '../AccountingView'
 
 import './Navigation.sass'
 
+const { FARMERS_LOG, PRICE_EVENTS, ACHIEVEMENTS, ACCOUNTING } = dialogView
+
 const dialogTriggerTextMap = {
-  [dialogView.FARMERS_LOG]: "Open Farmer's Log (l)",
-  [dialogView.PRICE_EVENTS]: 'See Price Events (p)',
-  [dialogView.ACHIEVEMENTS]: 'View Achievements (a)',
+  [FARMERS_LOG]: "Open Farmer's Log (l)",
+  [PRICE_EVENTS]: 'See Price Events (p)',
+  [ACHIEVEMENTS]: 'View Achievements (a)',
+  [ACCOUNTING]: 'View Bank Account (b)',
 }
 
 const dialogTitleMap = {
-  [dialogView.FARMERS_LOG]: "Farmer's Log",
-  [dialogView.PRICE_EVENTS]: 'Price Events',
-  [dialogView.ACHIEVEMENTS]: 'Achievements',
+  [FARMERS_LOG]: "Farmer's Log",
+  [PRICE_EVENTS]: 'Price Events',
+  [ACHIEVEMENTS]: 'Achievements',
+  [ACCOUNTING]: 'Bank Account',
 }
 
 const dialogContentMap = {
-  [dialogView.FARMERS_LOG]: <LogView />,
-  [dialogView.PRICE_EVENTS]: <PriceEventView />,
-  [dialogView.ACHIEVEMENTS]: <AchievementsView />,
+  [FARMERS_LOG]: <LogView />,
+  [PRICE_EVENTS]: <PriceEventView />,
+  [ACHIEVEMENTS]: <AchievementsView />,
+  [ACCOUNTING]: <AccountingView />,
 }
 
 export const Navigation = ({
@@ -54,9 +61,10 @@ export const Navigation = ({
     <h2 className="day-count">Day {dayCount}</h2>
     <div className="button-array">
       {[
-        { dialogView: dialogView.FARMERS_LOG, Icon: HistoryIcon },
-        { dialogView: dialogView.PRICE_EVENTS, Icon: FlashOnIcon },
-        { dialogView: dialogView.ACHIEVEMENTS, Icon: AssignmentTurnedInIcon },
+        { dialogView: FARMERS_LOG, Icon: HistoryIcon },
+        { dialogView: PRICE_EVENTS, Icon: FlashOnIcon },
+        { dialogView: ACHIEVEMENTS, Icon: AssignmentTurnedInIcon },
+        { dialogView: ACCOUNTING, Icon: AttachMoneyIcon },
       ].map(({ dialogView, Icon }) => (
         <Tooltip
           {...{
@@ -76,24 +84,6 @@ export const Navigation = ({
           </Fab>
         </Tooltip>
       ))}
-      {/*
-      <Tooltip
-        {...{
-          placement: 'bottom',
-          title: dialogTriggerTextMap[dialogView.FARMERS_LOG],
-        }}
-      >
-        <Fab
-          {...{
-            'aria-label': dialogTriggerTextMap[dialogView.FARMERS_LOG],
-            color: 'primary',
-            onClick: () => handleClickDialogViewButton(dialogView.FARMERS_LOG),
-          }}
-        >
-          <HistoryIcon />
-        </Fab>
-      </Tooltip>
-      */}
     </div>
     {/*
     This Dialog gets the Farmhand class because it renders outside of the root

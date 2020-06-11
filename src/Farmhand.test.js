@@ -303,12 +303,12 @@ describe('instance methods', () => {
     test('makes pending notification', () => {
       const { showNotification } = component.instance()
       expect(showNotification).toHaveBeenCalledTimes(2)
+      expect(showNotification).toHaveBeenNthCalledWith(1, 'foo', 'info')
       expect(showNotification).toHaveBeenNthCalledWith(
-        1,
+        2,
         PROGRESS_SAVED_MESSAGE,
         'info'
       )
-      expect(showNotification).toHaveBeenNthCalledWith(2, 'foo', 'info')
     })
   })
 

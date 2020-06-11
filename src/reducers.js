@@ -17,6 +17,7 @@ import {
   getPriceEventForCrop,
   getRandomCropItem,
   getRangeCoords,
+  isItemAFarmProduct,
 } from './utils'
 import {
   COW_FEED_ITEM_ID,
@@ -27,6 +28,8 @@ import {
   CROW_CHANCE,
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
+  LOAN_GARNISHMENT_RATE,
+  LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   NOTIFICATION_LOG_SIZE,
@@ -41,10 +44,12 @@ import {
 import { RAIN_MESSAGE } from './strings'
 import {
   ACHIEVEMENT_COMPLETED,
-  MILK_PRODUCED,
   CROW_ATTACKED,
-  PRICE_CRASH_NOTIFICATION,
-  PRICE_SURGE_NOTIFICATION,
+  LOAN_INCREASED,
+  LOAN_PAYOFF,
+  MILK_PRODUCED,
+  PRICE_CRASH,
+  PRICE_SURGE,
 } from './templates'
 import { cropLifeStage, fieldMode, itemType } from './enums'
 
@@ -516,11 +521,11 @@ export const generatePriceEvents = state => {
       newDayNotifications.push(
         priceEventType === 'priceCrashes'
           ? {
-              message: PRICE_CRASH_NOTIFICATION`${cropItem}`,
+              message: PRICE_CRASH`${cropItem}`,
               severity: 'warning',
             }
           : {
-              message: PRICE_SURGE_NOTIFICATION`${cropItem}`,
+              message: PRICE_SURGE`${cropItem}`,
               severity: 'success',
             }
       )
@@ -559,28 +564,38 @@ export const updatePriceEvents = state => {
   }
 }
 
+export const applyLoanInterest = state => ({
+  ...state,
+  loanBalance: state.loanBalance + state.loanBalance * LOAN_INTEREST_RATE,
+})
+
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-export const computeStateForNextDay = state =>
-  [
-    computeCowInventoryForNextDay,
-    processField,
-    processBuffs,
-    processNerfs,
-    processSprinklers,
-    processFeedingCows,
-    processMilkingCows,
-    updatePriceEvents,
-    generatePriceEvents,
-    adjustItemValues,
-    rotateNotificationLogs,
-  ].reduce((acc, fn) => fn({ ...acc }), {
-    ...state,
-    cowForSale: generateCow(),
-    dayCount: state.dayCount + 1,
-  })
+export const computeStateForNextDay = (state, isFirstDay = false) =>
+  (isFirstDay
+    ? []
+    : [
+        computeCowInventoryForNextDay,
+        processField,
+        processBuffs,
+        processNerfs,
+        processSprinklers,
+        processFeedingCows,
+        processMilkingCows,
+        updatePriceEvents,
+        generatePriceEvents,
+        applyLoanInterest,
+        rotateNotificationLogs,
+      ]
+  )
+    .concat([adjustItemValues])
+    .reduce((acc, fn) => fn({ ...acc }), {
+      ...state,
+      cowForSale: generateCow(),
+      dayCount: state.dayCount + 1,
+    })
 
 /**
  * @param {farmhand.state} state
@@ -637,17 +652,34 @@ export const sellItem = (state, { id }, howMany = 1) => {
     return state
   }
 
+  const item = itemsMap[id]
   const { itemsSold, money, valueAdjustments } = state
+  let { loanBalance } = state
 
-  state = decrementItemFromInventory(
-    {
-      ...state,
-      itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
-      money: money + getAdjustedItemValue(valueAdjustments, id) * howMany,
-    },
-    id,
-    howMany
-  )
+  const adjustedItemValue = getAdjustedItemValue(valueAdjustments, id)
+  const saleIsGarnished = isItemAFarmProduct(item)
+  let profit = 0
+
+  for (let i = 0; i < howMany; i++) {
+    const loanGarnishment = saleIsGarnished
+      ? Math.min(loanBalance, adjustedItemValue * LOAN_GARNISHMENT_RATE)
+      : 0
+    const garnishedProfit = adjustedItemValue - loanGarnishment
+    loanBalance -= loanGarnishment
+    profit += garnishedProfit
+  }
+
+  if (saleIsGarnished) {
+    state = adjustLoan(state, loanBalance - state.loanBalance)
+  }
+
+  state = {
+    ...state,
+    itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
+    money: money + profit,
+  }
+
+  state = decrementItemFromInventory(state, id, howMany)
 
   return updateLearnedRecipes(state)
 }
@@ -1108,3 +1140,26 @@ export const updateAchievements = (state, prevState) =>
 
     return state
   }, state)
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} adjustmentAmount This should be a negative number if the
+ * loan is being paid down, positive if a loan is being taken out.
+ * @returns {farmhand.state}
+ */
+export const adjustLoan = (state, adjustmentAmount) => {
+  const loanBalance = state.loanBalance + adjustmentAmount
+  const money = state.money + adjustmentAmount
+
+  if (loanBalance === 0 && adjustmentAmount < 0) {
+    state = showNotification(state, LOAN_PAYOFF``, 'success')
+  } else if (adjustmentAmount > 0) {
+    state = showNotification(state, LOAN_INCREASED`${loanBalance}`, 'info')
+  }
+
+  return {
+    ...state,
+    loanBalance,
+    money,
+  }
+}

@@ -24,8 +24,8 @@ import { createNewField, getItemValue } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
-import { PURCHASEABLE_COW_PENS } from './constants'
-import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
+import { STANDARD_LOAN_AMOUNT, PURCHASEABLE_COW_PENS } from './constants'
+import { COW_PEN_PURCHASED, LOAN_INCREASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 
 import './Farmhand.sass'
@@ -103,6 +103,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {Object} itemsSold Keys are items IDs, values are the number of
  * that item sold.
  * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
+ * @property {number} loanBalance
  * @property {number} money
  * @property {Array.<string>} newDayNotifications
  * @property {Array.<string>} notifications
@@ -147,7 +148,8 @@ export default class Farmhand extends Component {
     isMenuOpen: true,
     itemsSold: {},
     learnedRecipes: {},
-    money: 500,
+    loanBalance: STANDARD_LOAN_AMOUNT,
+    money: STANDARD_LOAN_AMOUNT,
     newDayNotifications: [],
     notifications: [],
     notificationLog: [],
@@ -182,6 +184,7 @@ export default class Farmhand extends Component {
       'inventory',
       'itemsSold',
       'learnedRecipes',
+      'loanBalance',
       'money',
       'newDayNotifications',
       'notificationLog',
@@ -264,6 +267,7 @@ export default class Farmhand extends Component {
       openLog: 'l',
       openPriceEvents: 'p',
       openAchievements: 'a',
+      openAccounting: 'b',
       incrementDay: 'shift+c',
       nextView: 'right',
       previousView: 'left',
@@ -288,6 +292,8 @@ export default class Farmhand extends Component {
         this.setState({ currentDialogView: dialogView.PRICE_EVENTS }),
       openAchievements: () =>
         this.setState({ currentDialogView: dialogView.ACHIEVEMENTS }),
+      openAccounting: () =>
+        this.setState({ currentDialogView: dialogView.ACCOUNTING }),
 
       previousView: throttle(
         this.focusPreviousView.bind(this),
@@ -310,6 +316,7 @@ export default class Farmhand extends Component {
 
   initReducers() {
     ;[
+      'adjustLoan',
       'computeStateForNextDay',
       'changeCowName',
       'clearPlot',
@@ -353,7 +360,9 @@ export default class Farmhand extends Component {
           )
         })
       } else {
-        this.incrementDay()
+        // Initialize new game
+        this.incrementDay(true)
+        this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
       }
 
       this.setState({ hasBooted: true })
@@ -423,8 +432,11 @@ export default class Farmhand extends Component {
     })
   }
 
-  incrementDay() {
-    const nextDayState = reducers.computeStateForNextDay(this.state)
+  /**
+   * @param {boolean} [isFirstDay=false]
+   */
+  incrementDay(isFirstDay = false) {
+    const nextDayState = reducers.computeStateForNextDay(this.state, isFirstDay)
     const pendingNotifications = [...nextDayState.newDayNotifications]
 
     // This would be cleaner if setState was called after localForage.setItem,
@@ -447,12 +459,16 @@ export default class Farmhand extends Component {
             })
           )
           .then(({ newDayNotifications }) =>
-            [
-              { message: PROGRESS_SAVED_MESSAGE, severity: 'info' },
-              ...newDayNotifications,
-            ].forEach(({ message, severity }) =>
-              this.showNotification(message, severity)
-            )
+            []
+              .concat(newDayNotifications)
+              .concat(
+                isFirstDay
+                  ? []
+                  : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
+              )
+              .forEach(({ message, severity }) =>
+                this.showNotification(message, severity)
+              )
           )
           .catch(e => {
             console.error(e)
@@ -520,7 +536,6 @@ export default class Farmhand extends Component {
         <MuiThemeProvider theme={theme}>
           <FarmhandContext.Provider value={{ gameState, handlers }}>
             <div className="Farmhand fill">
-              <NotificationSystem />
               <AppBar />
               <Drawer
                 {...{
@@ -559,6 +574,7 @@ export default class Farmhand extends Component {
                 </Fab>
               </Tooltip>
             </div>
+            <NotificationSystem />
           </FarmhandContext.Provider>
         </MuiThemeProvider>
       </HotKeys>

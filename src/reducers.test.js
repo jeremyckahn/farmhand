@@ -2,10 +2,12 @@ import { shapeOf, testCrop, testItem } from './test-utils'
 import { RAIN_MESSAGE } from './strings'
 import {
   ACHIEVEMENT_COMPLETED,
-  MILK_PRODUCED,
   CROW_ATTACKED,
-  PRICE_CRASH_NOTIFICATION,
-  PRICE_SURGE_NOTIFICATION,
+  LOAN_INCREASED,
+  LOAN_PAYOFF,
+  MILK_PRODUCED,
+  PRICE_CRASH,
+  PRICE_SURGE,
 } from './templates'
 import {
   COW_FEED_ITEM_ID,
@@ -235,11 +237,11 @@ describe('generatePriceEvents', () => {
     test('shows notification', () => {
       expect(state.newDayNotifications).toIncludeAnyMembers([
         {
-          message: PRICE_CRASH_NOTIFICATION`${cropItem}`,
+          message: PRICE_CRASH`${cropItem}`,
           severity: 'warning',
         },
         {
-          message: PRICE_SURGE_NOTIFICATION`${cropItem}`,
+          message: PRICE_SURGE`${cropItem}`,
           severity: 'success',
         },
       ])
@@ -266,6 +268,12 @@ describe('updatePriceEvents', () => {
     expect(priceSurges).toEqual({
       'sample-crop-3': { itemId: 'sample-crop-3', daysRemaining: 4 },
     })
+  })
+})
+
+describe('applyLoanInterest', () => {
+  test('applies loan interest', () => {
+    expect(fn.applyLoanInterest({ loanBalance: 100 }).loanBalance).toEqual(102)
   })
 })
 
@@ -937,7 +945,9 @@ describe('sellItem', () => {
       {
         inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
         itemsSold: {},
+        loanBalance: 0,
         money: 100,
+        notifications: [],
         valueAdjustments: { 'sample-item-1': 1 },
       },
       testItem({ id: 'sample-item-1' })
@@ -953,7 +963,9 @@ describe('sellItem', () => {
       {
         inventory: [testItem({ id: 'sample-item-1', quantity: 3 })],
         itemsSold: {},
+        loanBalance: 0,
         money: 100,
+        notifications: [],
         valueAdjustments: { 'sample-item-1': 1 },
       },
       testItem({ id: 'sample-item-1' }),
@@ -961,6 +973,83 @@ describe('sellItem', () => {
     )
 
     expect(learnedRecipes['sample-recipe-1']).toBeTruthy()
+  })
+
+  describe('there is an outstanding loan', () => {
+    let state
+
+    describe('item is not a farm product', () => {
+      test('sale is not garnished', () => {
+        state = fn.sellItem(
+          {
+            inventory: [testItem({ id: 'sample-item-1', quantity: 3 })],
+            itemsSold: {},
+            loanBalance: 100,
+            money: 100,
+            notifications: [],
+            valueAdjustments: { 'sample-item-1': 10 },
+          },
+          testItem({ id: 'sample-item-1' }),
+          3
+        )
+
+        expect(state.loanBalance).toEqual(100)
+        expect(state.money).toEqual(130)
+      })
+    })
+
+    describe('item is a farm product', () => {
+      describe('loan is greater than garnishment', () => {
+        test('sale is garnished', () => {
+          state = fn.sellItem(
+            {
+              inventory: [testItem({ id: 'sample-crop-1', quantity: 3 })],
+              itemsSold: {},
+              loanBalance: 100,
+              money: 100,
+              notifications: [],
+              valueAdjustments: { 'sample-crop-1': 10 },
+            },
+            testItem({ id: 'sample-crop-1' }),
+            3
+          )
+
+          expect(state.loanBalance).toEqual(97)
+          expect(state.money).toEqual(157)
+        })
+      })
+
+      describe('loan is less than garnishment', () => {
+        beforeEach(() => {
+          state = fn.sellItem(
+            {
+              inventory: [testItem({ id: 'sample-crop-1', quantity: 3 })],
+              itemsSold: {},
+              loanBalance: 1.5,
+              money: 100,
+              notifications: [],
+              valueAdjustments: { 'sample-crop-1': 10 },
+            },
+            testItem({ id: 'sample-crop-1' }),
+            3
+          )
+        })
+
+        test('loan is payed off', () => {
+          expect(state.loanBalance).toEqual(0)
+        })
+
+        test('sale profit is reduced based on remaining loan balance', () => {
+          expect(state.money).toEqual(158.5)
+        })
+
+        test('payoff notification is shown', () => {
+          expect(state.notifications).toEqual([
+            { message: LOAN_PAYOFF``, severity: 'success' },
+          ])
+        })
+      })
+    })
   })
 })
 
@@ -970,7 +1059,9 @@ describe('sellAllOfItem', () => {
       {
         inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
         itemsSold: {},
+        loanBalance: 0,
         money: 100,
+        notifications: [],
         valueAdjustments: { 'sample-item-1': 1 },
       },
       testItem({ id: 'sample-item-1' })
@@ -1666,6 +1757,36 @@ describe('updateAchievements', () => {
 
         expect(state).toBe(inputState)
       })
+    })
+  })
+})
+
+describe('adjustLoan', () => {
+  test('updates state', () => {
+    expect(
+      fn.adjustLoan({ money: 100, loanBalance: 50, notifications: [] }, -25)
+    ).toEqual({
+      money: 75,
+      loanBalance: 25,
+      notifications: [],
+    })
+  })
+
+  describe('loan payoff', () => {
+    test('shows appropriate notification', () => {
+      expect(
+        fn.adjustLoan({ money: 100, loanBalance: 50, notifications: [] }, -50)
+          .notifications
+      ).toEqual([{ message: LOAN_PAYOFF``, severity: 'success' }])
+    })
+  })
+
+  describe('loan increase', () => {
+    test('shows appropriate notification', () => {
+      expect(
+        fn.adjustLoan({ money: 100, loanBalance: 50, notifications: [] }, 50)
+          .notifications
+      ).toEqual([{ message: LOAN_INCREASED`${100}`, severity: 'info' }])
     })
   })
 })

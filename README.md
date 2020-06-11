@@ -21,14 +21,15 @@ There is no release or versioning system yet.
 
 ## Milestone 6: Bank Loans 🏦
 
-- [ ] Accounting modal + trigger
-- [ ] Loan section
-  - [ ] Outstanding balance display
-  - [ ] Button to take out \$500 loan
-  - [ ] Explanation of loan terms
-- [ ] 5% of all crop sales automatically go into loan paydown
-- [ ] Money owed on loan increases by 2% every day
-- [ ] Game starts off with \$500 loan
+- [x] Accounting modal + trigger
+- [x] Loan section
+  - [x] Outstanding balance display
+  - [x] Button to take out \$500 loan
+  - [x] UI to pay down loan
+  - [x] Explanation of loan terms
+- [x] 5% of all crop and milk sales automatically go into loan paydown
+- [x] Money owed on loan increases by 2% every day
+- [x] Game starts off with \$500 loan
 
 ## Milestone 5: Achievements 🏅
 

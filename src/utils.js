@@ -133,6 +133,20 @@ export const doesPlotContainCrop = plot =>
   plot && getPlotContentType(plot) === itemType.CROP
 
 /**
+ * @param {farmhand.item} item
+ * @returns {boolean}
+ */
+export const isItemAGrownCrop = item =>
+  Boolean(item.type === itemType.CROP && item.cropTimetable)
+
+/**
+ * @param {farmhand.item} item
+ * @returns {boolean}
+ */
+export const isItemAFarmProduct = item =>
+  Boolean(isItemAGrownCrop(item) || item.type === itemType.MILK)
+
+/**
  * @param {farmhand.crop} crop
  * @returns {string}
  */
@@ -349,8 +363,7 @@ export const canMakeRecipe = ({ ingredients }, inventory) => {
 const finalStageCropItemList = Object.keys(itemsMap).reduce((acc, itemId) => {
   const item = itemsMap[itemId]
 
-  // Duck type to see if item is a final stage crop
-  if (item.cropTimetable) {
+  if (isItemAGrownCrop(item)) {
     acc.push(item)
   }
 
