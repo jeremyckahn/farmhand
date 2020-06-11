@@ -27,8 +27,8 @@ There is no release or versioning system yet.
   - [x] Button to take out \$500 loan
   - [x] UI to pay down loan
   - [x] Explanation of loan terms
-- [ ] 5% of all crop and milk sales automatically go into loan paydown
-- [ ] Money owed on loan increases by 2% every day
+- [x] 5% of all crop and milk sales automatically go into loan paydown
+- [x] Money owed on loan increases by 2% every day
 - [ ] Game starts off with \$500 loan
 
 ## Milestone 5: Achievements 🏅

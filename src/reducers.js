@@ -29,6 +29,7 @@ import {
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
+  LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   NOTIFICATION_LOG_SIZE,
@@ -563,6 +564,11 @@ export const updatePriceEvents = state => {
   }
 }
 
+export const applyLoanInterest = state => ({
+  ...state,
+  loanBalance: state.loanBalance + state.loanBalance * LOAN_INTEREST_RATE,
+})
+
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
@@ -579,6 +585,7 @@ export const computeStateForNextDay = state =>
     updatePriceEvents,
     generatePriceEvents,
     adjustItemValues,
+    applyLoanInterest,
     rotateNotificationLogs,
   ].reduce((acc, fn) => fn({ ...acc }), {
     ...state,
