@@ -25,7 +25,7 @@ import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
 import { STANDARD_LOAN_AMOUNT, PURCHASEABLE_COW_PENS } from './constants'
-import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
+import { COW_PEN_PURCHASED, LOAN_INCREASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 
 import './Farmhand.sass'
@@ -360,7 +360,9 @@ export default class Farmhand extends Component {
           )
         })
       } else {
-        this.incrementDay()
+        // Initialize new game
+        this.incrementDay(true)
+        this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
       }
 
       this.setState({ hasBooted: true })
@@ -430,8 +432,11 @@ export default class Farmhand extends Component {
     })
   }
 
-  incrementDay() {
-    const nextDayState = reducers.computeStateForNextDay(this.state)
+  /**
+   * @param {boolean} [isFirstDay=false]
+   */
+  incrementDay(isFirstDay = false) {
+    const nextDayState = reducers.computeStateForNextDay(this.state, isFirstDay)
     const pendingNotifications = [...nextDayState.newDayNotifications]
 
     // This would be cleaner if setState was called after localForage.setItem,
@@ -454,12 +459,16 @@ export default class Farmhand extends Component {
             })
           )
           .then(({ newDayNotifications }) =>
-            [
-              { message: PROGRESS_SAVED_MESSAGE, severity: 'info' },
-              ...newDayNotifications,
-            ].forEach(({ message, severity }) =>
-              this.showNotification(message, severity)
-            )
+            []
+              .concat(newDayNotifications)
+              .concat(
+                isFirstDay
+                  ? []
+                  : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
+              )
+              .forEach(({ message, severity }) =>
+                this.showNotification(message, severity)
+              )
           )
           .catch(e => {
             console.error(e)

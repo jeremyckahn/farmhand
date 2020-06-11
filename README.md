@@ -29,7 +29,7 @@ There is no release or versioning system yet.
   - [x] Explanation of loan terms
 - [x] 5% of all crop and milk sales automatically go into loan paydown
 - [x] Money owed on loan increases by 2% every day
-- [ ] Game starts off with \$500 loan
+- [x] Game starts off with \$500 loan
 
 ## Milestone 5: Achievements 🏅
 

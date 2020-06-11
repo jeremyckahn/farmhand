@@ -573,7 +573,7 @@ export const applyLoanInterest = state => ({
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-export const computeStateForNextDay = state =>
+export const computeStateForNextDay = (state, isFirstDay = false) =>
   [
     computeCowInventoryForNextDay,
     processField,
@@ -585,13 +585,14 @@ export const computeStateForNextDay = state =>
     updatePriceEvents,
     generatePriceEvents,
     adjustItemValues,
-    applyLoanInterest,
-    rotateNotificationLogs,
-  ].reduce((acc, fn) => fn({ ...acc }), {
-    ...state,
-    cowForSale: generateCow(),
-    dayCount: state.dayCount + 1,
-  })
+  ]
+    .concat(isFirstDay ? [] : [applyLoanInterest])
+    .concat([rotateNotificationLogs])
+    .reduce((acc, fn) => fn({ ...acc }), {
+      ...state,
+      cowForSale: generateCow(),
+      dayCount: state.dayCount + 1,
+    })
 
 /**
  * @param {farmhand.state} state
