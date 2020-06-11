@@ -574,20 +574,23 @@ export const applyLoanInterest = state => ({
  * @returns {farmhand.state}
  */
 export const computeStateForNextDay = (state, isFirstDay = false) =>
-  [
-    computeCowInventoryForNextDay,
-    processField,
-    processBuffs,
-    processNerfs,
-    processSprinklers,
-    processFeedingCows,
-    processMilkingCows,
-    updatePriceEvents,
-    generatePriceEvents,
-    adjustItemValues,
-  ]
-    .concat(isFirstDay ? [] : [applyLoanInterest])
-    .concat([rotateNotificationLogs])
+  (isFirstDay
+    ? []
+    : [
+        computeCowInventoryForNextDay,
+        processField,
+        processBuffs,
+        processNerfs,
+        processSprinklers,
+        processFeedingCows,
+        processMilkingCows,
+        updatePriceEvents,
+        generatePriceEvents,
+        applyLoanInterest,
+        rotateNotificationLogs,
+      ]
+  )
+    .concat([adjustItemValues])
     .reduce((acc, fn) => fn({ ...acc }), {
       ...state,
       cowForSale: generateCow(),
