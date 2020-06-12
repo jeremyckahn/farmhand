@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
@@ -24,8 +24,14 @@ const AccountingView = ({
   loanBalance,
   money,
 }) => {
-  const maxInputValue = Math.min(loanBalance, money)
-  const [loanInputValue, setLoanInputValue] = useState(maxInputValue)
+  const [loanInputValue, setLoanInputValue] = useState(
+    Math.min(loanBalance, money)
+  )
+
+  useEffect(() => setLoanInputValue(Math.min(loanBalance, money)), [
+    loanBalance,
+    money,
+  ])
 
   return (
     <div className="AccountingView">
@@ -59,7 +65,7 @@ const AccountingView = ({
                         decimalScale: 2,
                         prefix: '$',
                         isAllowed: ({ floatValue = 0 }) =>
-                          floatValue >= 0 && floatValue <= maxInputValue,
+                          floatValue >= 0 && floatValue <= loanInputValue,
                         onBlur: ({ target: { value } }) =>
                           setLoanInputValue(Number(value.replace(/[$,]/g, ''))),
                       }}

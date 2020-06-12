@@ -1,24 +1,25 @@
 import {
   canMakeRecipe,
   dollarString,
-  moneyString,
-  isItemAFarmProduct,
-  getItemValue,
-  generateValueAdjustments,
   generateCow,
+  generateValueAdjustments,
   getCowMilkRate,
   getCowValue,
   getCowWeight,
   getCropId,
-  getCropLifecycleDuration,
   getCropLifeStage,
+  getCropLifecycleDuration,
+  getFinalCropItemIdFromSeedItemId,
+  getItemValue,
   getLifeStageRange,
   getPlotContentFromItemId,
   getPlotImage,
   getPriceEventForCrop,
   getRandomCropItem,
   getRangeCoords,
-  getFinalCropItemIdFromSeedItemId,
+  isItemAFarmProduct,
+  moneyString,
+  sumMoneyNumbers,
 } from './utils'
 import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
@@ -49,6 +50,16 @@ jest.mock('./data/items')
 jest.mock('./img')
 
 const { SEED, GROWING, GROWN } = cropLifeStage
+
+describe('sumMoneyNumbers', () => {
+  test('adds numbers', () => {
+    expect(sumMoneyNumbers(0.1, 0.2)).toEqual(0.3)
+  })
+
+  test('subtracts numbers', () => {
+    expect(sumMoneyNumbers(1000, -999.99)).toEqual(0.01)
+  })
+})
 
 describe('moneyString', () => {
   test('formats number to dollar string', () => {
