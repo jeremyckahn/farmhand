@@ -50,6 +50,14 @@ export const clampNumber = (num, min, max) =>
   num <= min ? min : num >= max ? max : num
 
 /**
+ * Safely adds two dollar figures to avoid IEEE 754 rounding errors.
+ * @param {number} num1
+ * @param {number} num2
+ * @see http://adripofjavascript.com/blog/drips/avoiding-problems-with-decimal-math-in-javascript.html
+ */
+export const sumMoneyNumbers = (num1, num2) => (num1 * 100 + num2 * 100) / 100
+
+/**
  * Based on https://stackoverflow.com/a/14224813/470685
  * @param {number} value Number to scale
  * @param {number} min Non-standard minimum
