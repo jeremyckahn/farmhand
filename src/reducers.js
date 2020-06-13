@@ -2,6 +2,7 @@ import { itemsMap, recipesMap } from './data/maps'
 import achievements from './data/achievements'
 import {
   canMakeRecipe,
+  castToMoney,
   clampNumber,
   generateCow,
   generateValueAdjustments,
@@ -567,7 +568,10 @@ export const updatePriceEvents = state => {
 
 export const applyLoanInterest = state => ({
   ...state,
-  loanBalance: state.loanBalance + state.loanBalance * LOAN_INTEREST_RATE,
+  loanBalance: moneyTotal(
+    state.loanBalance,
+    castToMoney(state.loanBalance * LOAN_INTEREST_RATE)
+  ),
 })
 
 /**
@@ -663,15 +667,18 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
   for (let i = 0; i < howMany; i++) {
     const loanGarnishment = saleIsGarnished
-      ? Math.min(loanBalance, adjustedItemValue * LOAN_GARNISHMENT_RATE)
+      ? Math.min(
+          loanBalance,
+          castToMoney(adjustedItemValue * LOAN_GARNISHMENT_RATE)
+        )
       : 0
     const garnishedProfit = adjustedItemValue - loanGarnishment
-    loanBalance -= loanGarnishment
-    profit += garnishedProfit
+    loanBalance = moneyTotal(loanBalance, -loanGarnishment)
+    profit = moneyTotal(profit, garnishedProfit)
   }
 
   if (saleIsGarnished) {
-    state = adjustLoan(state, loanBalance - state.loanBalance)
+    state = adjustLoan(state, moneyTotal(loanBalance, -state.loanBalance))
   }
 
   state = {
@@ -1149,7 +1156,7 @@ export const updateAchievements = (state, prevState) =>
  * @returns {farmhand.state}
  */
 export const adjustLoan = (state, adjustmentAmount) => {
-  const loanBalance = state.loanBalance + adjustmentAmount
+  const loanBalance = moneyTotal(state.loanBalance, adjustmentAmount)
   const money = moneyTotal(state.money, adjustmentAmount)
 
   if (loanBalance === 0 && adjustmentAmount < 0) {

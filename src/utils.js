@@ -49,6 +49,8 @@ const createUniqueId = () => btoa(Math.random() + Date.now())
 export const clampNumber = (num, min, max) =>
   num <= min ? min : num >= max ? max : num
 
+export const castToMoney = num => Math.round(num * 100) / 100
+
 /**
  * Safely adds dollar figures to avoid IEEE 754 rounding errors.
  * @param {...number} num Numbers that represent money values.
