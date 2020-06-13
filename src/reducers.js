@@ -18,7 +18,7 @@ import {
   getRandomCropItem,
   getRangeCoords,
   isItemAFarmProduct,
-  sumMoneyNumbers,
+  moneyTotal,
 } from './utils'
 import {
   COW_FEED_ITEM_ID,
@@ -1150,7 +1150,7 @@ export const updateAchievements = (state, prevState) =>
  */
 export const adjustLoan = (state, adjustmentAmount) => {
   const loanBalance = state.loanBalance + adjustmentAmount
-  const money = sumMoneyNumbers(state.money, adjustmentAmount)
+  const money = moneyTotal(state.money, adjustmentAmount)
 
   if (loanBalance === 0 && adjustmentAmount < 0) {
     state = showNotification(state, LOAN_PAYOFF``, 'success')

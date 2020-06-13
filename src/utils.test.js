@@ -19,7 +19,7 @@ import {
   getRangeCoords,
   isItemAFarmProduct,
   moneyString,
-  sumMoneyNumbers,
+  moneyTotal,
 } from './utils'
 import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
@@ -51,13 +51,13 @@ jest.mock('./img')
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
-describe('sumMoneyNumbers', () => {
+describe('moneyTotal', () => {
   test('adds numbers', () => {
-    expect(sumMoneyNumbers(0.1, 0.2)).toEqual(0.3)
+    expect(moneyTotal(0.1, 0.2)).toEqual(0.3)
   })
 
   test('subtracts numbers', () => {
-    expect(sumMoneyNumbers(1000, -999.99)).toEqual(0.01)
+    expect(moneyTotal(1000, -999.99)).toEqual(0.01)
   })
 })
 
