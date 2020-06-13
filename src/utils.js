@@ -7,6 +7,7 @@ import { milk1, milk2, milk3 } from './data/items'
 import { items as itemImages } from './img'
 import { cowColors, cropLifeStage, genders, itemType } from './enums'
 import {
+  BREAKPOINTS,
   COW_MAXIMUM_AGE_VALUE_DROPOFF,
   COW_MAXIMUM_VALUE_MULTIPLIER,
   COW_MILK_RATE_FASTEST,
@@ -427,3 +428,8 @@ export const getCrops = memoize(
     serializer: memoizationSerializer,
   }
 )
+
+/**
+ * @returns {boolean}
+ */
+export const doesMenuObstructStage = () => window.screen.width < BREAKPOINTS.SM

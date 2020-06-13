@@ -20,7 +20,7 @@ import Stage from './components/Stage'
 import NotificationSystem from './components/NotificationSystem'
 import DebugMenu from './components/DebugMenu'
 import theme from './mui-theme'
-import { createNewField, getItemValue } from './utils'
+import { createNewField, doesMenuObstructStage, getItemValue } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
@@ -145,7 +145,7 @@ export default class Farmhand extends Component {
     hasBooted: false,
     hoveredPlotRangeSize: 0,
     inventory: [],
-    isMenuOpen: true,
+    isMenuOpen: !doesMenuObstructStage(),
     itemsSold: {},
     learnedRecipes: {},
     loanBalance: STANDARD_LOAN_AMOUNT,
@@ -370,11 +370,13 @@ export default class Farmhand extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { hasBooted, stageFocus, isMenuOpen } = this.state
+
     // The operations after this if block concern transient gameplay state, but
     // componentDidUpdate runs as part of the rehydration/bootup process. So,
     // check to see if the app has completed booting before doing anything with
     // this transient state.
-    if (!this.state.hasBooted) {
+    if (!hasBooted) {
       return
     }
 
@@ -397,6 +399,10 @@ export default class Farmhand extends Component {
 
     if (updatedAchievementsState !== this.state) {
       this.setState(updatedAchievementsState)
+    }
+
+    if (stageFocus !== prevState.stageFocus && isMenuOpen) {
+      this.setState({ isMenuOpen: !doesMenuObstructStage() })
     }
   }
 
