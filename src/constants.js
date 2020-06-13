@@ -1,5 +1,14 @@
 const { freeze } = Object
 
+// This MUST be kept in sync with the $break- variables in variables.sass.
+export const BREAKPOINTS = {
+  XS: 0,
+  SM: 600,
+  MD: 960,
+  LG: 1280,
+  XL: 1920,
+}
+
 export const STANDARD_LOAN_AMOUNT = 500
 
 export const LOAN_GARNISHMENT_RATE = 0.05
