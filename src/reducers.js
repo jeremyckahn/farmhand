@@ -620,7 +620,7 @@ export const purchaseItem = (state, item, howMany = 1) => {
   return addItemToInventory(
     {
       ...state,
-      money: money - totalValue,
+      money: moneyTotal(money, -totalValue),
     },
     item,
     howMany
@@ -677,7 +677,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
   state = {
     ...state,
     itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
-    money: money + profit,
+    money: moneyTotal(money, profit),
   }
 
   state = decrementItemFromInventory(state, id, howMany)
@@ -787,7 +787,7 @@ export const purchaseCow = (state, cow) => {
       ...cowColorsPurchased,
       [color]: (cowColorsPurchased[color] || 0) + 1,
     },
-    money: money - cowValue,
+    money: moneyTotal(money, -cowValue),
     cowForSale: generateCow(),
   }
 }
@@ -807,7 +807,7 @@ export const sellCow = (state, cow) => {
   return {
     ...state,
     cowInventory: newCowInventory,
-    money: money + cowValue,
+    money: moneyTotal(money, cowValue),
   }
 }
 
@@ -1033,7 +1033,7 @@ export const purchaseField = (state, fieldId) => {
           .fill(null)
           .map((_, column) => (field[row] && field[row][column]) || null)
       ),
-    money: money - price,
+    money: moneyTotal(money, -price),
   }
 }
 
@@ -1076,7 +1076,7 @@ export const purchaseCowPen = (state, cowPenId) => {
 
   return {
     purchasedCowPen: cowPenId,
-    money: money - PURCHASEABLE_COW_PENS.get(cowPenId).price,
+    money: moneyTotal(money, -PURCHASEABLE_COW_PENS.get(cowPenId).price),
   }
 }
 

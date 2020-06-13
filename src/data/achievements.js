@@ -6,6 +6,7 @@ import {
   getCrops,
   doesPlotContainCrop,
   dollarString,
+  moneyTotal,
 } from '../utils'
 import { cowColors, cropLifeStage } from '../enums'
 import { COW_FEED_ITEM_ID } from '../constants'
@@ -15,7 +16,10 @@ import { itemsMap } from './maps'
 
 const { GROWN, SEED } = cropLifeStage
 
-const addMoney = (state, reward) => ({ ...state, money: state.money + reward })
+const addMoney = (state, reward) => ({
+  ...state,
+  money: moneyTotal(state.money, reward),
+})
 
 const cowFeed = itemsMap[COW_FEED_ITEM_ID]
 

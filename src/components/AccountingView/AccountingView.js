@@ -9,7 +9,7 @@ import NumberFormat from 'react-number-format'
 import { func, number } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
-import { dollarString, moneyString } from '../../utils'
+import { dollarString, moneyString, moneyTotal } from '../../utils'
 import {
   STANDARD_LOAN_AMOUNT,
   LOAN_INTEREST_RATE,
@@ -102,8 +102,8 @@ const AccountingView = ({
                 handleClickTakeOutLoanButton(STANDARD_LOAN_AMOUNT)
                 setLoanInputValue(
                   Math.min(
-                    loanInputValue + STANDARD_LOAN_AMOUNT,
-                    money + STANDARD_LOAN_AMOUNT
+                    moneyTotal(loanInputValue, STANDARD_LOAN_AMOUNT),
+                    moneyTotal(money, STANDARD_LOAN_AMOUNT)
                   )
                 )
               },

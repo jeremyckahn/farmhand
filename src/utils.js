@@ -56,7 +56,7 @@ export const clampNumber = (num, min, max) =>
  * @see http://adripofjavascript.com/blog/drips/avoiding-problems-with-decimal-math-in-javascript.html
  */
 export const moneyTotal = (...args) =>
-  args.reduce((sum, num) => (sum += num * 100), 0) / 100
+  args.reduce((sum, num) => (sum += Math.round(num * 100)), 0) / 100
 
 /**
  * Based on https://stackoverflow.com/a/14224813/470685
