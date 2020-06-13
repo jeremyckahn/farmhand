@@ -50,12 +50,13 @@ export const clampNumber = (num, min, max) =>
   num <= min ? min : num >= max ? max : num
 
 /**
- * Safely adds two dollar figures to avoid IEEE 754 rounding errors.
- * @param {number} num1
- * @param {number} num2
+ * Safely adds dollar figures to avoid IEEE 754 rounding errors.
+ * @param {...number} num Numbers that represent money values.
+ * @returns {number}
  * @see http://adripofjavascript.com/blog/drips/avoiding-problems-with-decimal-math-in-javascript.html
  */
-export const sumMoneyNumbers = (num1, num2) => (num1 * 100 + num2 * 100) / 100
+export const moneyTotal = (...args) =>
+  args.reduce((sum, num) => (sum += Math.round(num * 100)), 0) / 100
 
 /**
  * Based on https://stackoverflow.com/a/14224813/470685

@@ -1,3 +1,4 @@
+import { moneyTotal } from './utils'
 import { dialogView, fieldMode } from './enums'
 
 const {
@@ -138,7 +139,7 @@ export default {
    * @param {number} amount
    */
   handleAddMoneyClick(amount) {
-    this.setState(({ money }) => ({ money: money + amount }))
+    this.setState(({ money }) => ({ money: moneyTotal(money, amount) }))
   },
 
   handleClearPersistedDataClick() {
