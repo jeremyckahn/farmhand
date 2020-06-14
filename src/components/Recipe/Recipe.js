@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -13,12 +14,27 @@ import FarmhandContext from '../../Farmhand.context'
 
 import './Recipe.sass'
 
-const IngredientsList = ({ recipe: { ingredients, name } }) => (
-  <ul {...{ title: `Ingredients for ${name}` }}>
+const IngredientsList = ({
+  playerInventoryQuantities,
+  recipe: { ingredients, name },
+}) => (
+  <ul {...{ className: 'card-list', title: `Ingredients for ${name}` }}>
+    <li>
+      <h3>Ingredients required:</h3>
+    </li>
     {Object.keys(ingredients).map(itemId => (
       <li {...{ key: itemId }}>
-        <p>
-          {ingredients[itemId]} x {itemsMap[itemId].name}
+        <p
+          {...{
+            className: classNames(
+              playerInventoryQuantities[itemId] >= ingredients[itemId]
+                ? 'in-stock'
+                : 'out-of-stock'
+            ),
+          }}
+        >
+          {ingredients[itemId]} x {itemsMap[itemId].name} (On hand:{' '}
+          {playerInventoryQuantities[itemId]})
         </p>
       </li>
     ))}
@@ -28,6 +44,7 @@ const IngredientsList = ({ recipe: { ingredients, name } }) => (
 const Recipe = ({
   handleMakeRecipeClick,
   inventory,
+  playerInventoryQuantities,
   recipe,
   recipe: { id, name },
 }) => (
@@ -36,7 +53,12 @@ const Recipe = ({
       {...{
         avatar: <img {...{ src: dishes[id], alt: name }} />,
         title: name,
-        subheader: <IngredientsList {...{ recipe }} />,
+        subheader: (
+          <>
+            <p>In inventory: {playerInventoryQuantities[id]}</p>
+            <IngredientsList {...{ playerInventoryQuantities, recipe }} />
+          </>
+        ),
       }}
     />
     <CardActions>
@@ -58,6 +80,7 @@ const Recipe = ({
 Recipe.propTypes = {
   handleMakeRecipeClick: func.isRequired,
   inventory: array.isRequired,
+  playerInventoryQuantities: object.isRequired,
   recipe: object.isRequired,
 }
 

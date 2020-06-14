@@ -12,6 +12,9 @@ import debounce from 'lodash.debounce'
 import FarmhandContext from './Farmhand.context'
 import eventHandlers from './event-handlers'
 import * as reducers from './reducers'
+// This must be imported here so that it can be overridden by component styles.
+import './Farmhand.sass'
+
 import AppBar from './components/AppBar'
 import Navigation from './components/Navigation'
 import ContextPane from './components/ContextPane'
@@ -26,8 +29,6 @@ import { dialogView, fieldMode, stageFocusType } from './enums'
 import { STANDARD_LOAN_AMOUNT, PURCHASEABLE_COW_PENS } from './constants'
 import { COW_PEN_PURCHASED, LOAN_INCREASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
-
-import './Farmhand.sass'
 
 const { OBSERVE } = fieldMode
 

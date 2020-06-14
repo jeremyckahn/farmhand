@@ -11,6 +11,7 @@ beforeEach(() => {
       {...{
         recipe: {},
         inventory: [],
+        playerInventoryQuantities: {},
       }}
     />
   )
