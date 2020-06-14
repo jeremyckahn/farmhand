@@ -55,7 +55,7 @@ const Recipe = ({
         title: name,
         subheader: (
           <>
-            <p>In inventory: {playerInventoryQuantities[id]}</p>
+            <p>In Inventory: {playerInventoryQuantities[id]}</p>
             <IngredientsList {...{ playerInventoryQuantities, recipe }} />
           </>
         ),
