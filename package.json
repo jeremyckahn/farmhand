@@ -69,7 +69,6 @@
     "localforage": "^1.7.3",
     "lodash.debounce": "^4.0.8",
     "lodash.sortby": "^4.7.0",
-    "lodash.throttle": "^4.1.1",
     "prop-types": "^15.6.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

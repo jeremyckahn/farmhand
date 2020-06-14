@@ -7,7 +7,6 @@ import Drawer from '@material-ui/core/Drawer'
 import Fab from '@material-ui/core/Fab'
 import HotelIcon from '@material-ui/icons/Hotel'
 import Tooltip from '@material-ui/core/Tooltip'
-import throttle from 'lodash.throttle'
 import debounce from 'lodash.debounce'
 
 import FarmhandContext from './Farmhand.context'
@@ -243,7 +242,6 @@ export default class Farmhand extends Component {
   }
 
   initInputHandlers() {
-    const keyHandlerThrottleTime = 150
     const debouncedInputRate = 50
 
     this.handlers = { debounced: {} }
@@ -285,7 +283,7 @@ export default class Farmhand extends Component {
       focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
       focusKitchen: () => this.setState({ stageFocus: stageFocusType.KITCHEN }),
       incrementDay: () => this.incrementDay(),
-      nextView: throttle(this.focusNextView.bind(this), keyHandlerThrottleTime),
+      nextView: this.focusNextView.bind(this),
       openLog: () =>
         this.setState({ currentDialogView: dialogView.FARMERS_LOG }),
       openPriceEvents: () =>
@@ -295,10 +293,7 @@ export default class Farmhand extends Component {
       openAccounting: () =>
         this.setState({ currentDialogView: dialogView.ACCOUNTING }),
 
-      previousView: throttle(
-        this.focusPreviousView.bind(this),
-        keyHandlerThrottleTime
-      ),
+      previousView: this.focusPreviousView.bind(this),
       toggleMenu: () => this.handlers.handleMenuToggle(),
     }
 
