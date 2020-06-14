@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { HotKeys } from 'react-hotkeys'
+import { GlobalHotKeys } from 'react-hotkeys'
 import memoize from 'fast-memoize'
 import localforage from 'localforage'
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -533,7 +533,7 @@ export default class Farmhand extends Component {
     }
 
     return (
-      <HotKeys className="hotkeys" keyMap={keyMap} handlers={keyHandlers}>
+      <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
         <MuiThemeProvider theme={theme}>
           <FarmhandContext.Provider value={{ gameState, handlers }}>
             <div className="Farmhand fill">
@@ -578,7 +578,7 @@ export default class Farmhand extends Component {
             <NotificationSystem />
           </FarmhandContext.Provider>
         </MuiThemeProvider>
-      </HotKeys>
+      </GlobalHotKeys>
     )
   }
 }
