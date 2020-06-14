@@ -14,7 +14,10 @@ import FarmhandContext from '../../Farmhand.context'
 import './Recipe.sass'
 
 const IngredientsList = ({ recipe: { ingredients, name } }) => (
-  <ul {...{ title: `Ingredients for ${name}` }}>
+  <ul {...{ className: 'card-list', title: `Ingredients for ${name}` }}>
+    <li>
+      <h3>Ingredients required:</h3>
+    </li>
     {Object.keys(ingredients).map(itemId => (
       <li {...{ key: itemId }}>
         <p>
@@ -28,6 +31,7 @@ const IngredientsList = ({ recipe: { ingredients, name } }) => (
 const Recipe = ({
   handleMakeRecipeClick,
   inventory,
+  playerInventoryQuantities,
   recipe,
   recipe: { id, name },
 }) => (
@@ -36,7 +40,12 @@ const Recipe = ({
       {...{
         avatar: <img {...{ src: dishes[id], alt: name }} />,
         title: name,
-        subheader: <IngredientsList {...{ recipe }} />,
+        subheader: (
+          <>
+            <p>In inventory: {playerInventoryQuantities[id]}</p>
+            <IngredientsList {...{ recipe }} />
+          </>
+        ),
       }}
     />
     <CardActions>
@@ -58,6 +67,7 @@ const Recipe = ({
 Recipe.propTypes = {
   handleMakeRecipeClick: func.isRequired,
   inventory: array.isRequired,
+  playerInventoryQuantities: object.isRequired,
   recipe: object.isRequired,
 }
 
