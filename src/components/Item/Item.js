@@ -21,6 +21,8 @@ import {
 
 import './Item.sass'
 
+const noop = () => {}
+
 const ValueIndicator = ({
   id,
   value,
@@ -100,7 +102,11 @@ export const Item = ({
 }) => (
   <Card
     {...{
-      className: classNames('Item', { 'is-selected': isSelected }),
+      className: classNames('Item', {
+        'is-selectable': isSelectView,
+        'is-selected': isSelected,
+      }),
+      onClick: isSelectView ? () => handleItemSelectClick(item) : noop,
       raised: isSelected,
     }}
   >
@@ -153,9 +159,10 @@ export const Item = ({
       {isSelectView && (
         <Button
           {...{
+            // The onClick handler for this is bound on the parent Card for
+            // better select-ability.
             className: 'select',
             color: 'primary',
-            onClick: () => handleItemSelectClick(item),
             variant: isSelected ? 'contained' : 'outlined',
           }}
         >
