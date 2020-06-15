@@ -100,7 +100,10 @@ export const Item = ({
 }) => (
   <Card
     {...{
-      className: classNames('Item', { 'is-selected': isSelected }),
+      className: classNames('Item', {
+        'is-selectable': isSelectView,
+        'is-selected': isSelected,
+      }),
       onClick: isSelectView && (() => handleItemSelectClick(item)),
       raised: isSelected,
     }}
