@@ -250,6 +250,13 @@ export const getFinalCropItemIdFromSeedItemId = seedItemId =>
   itemsMap[seedItemId].growsInto
 
 /**
+ * @param {farmhand.item} seedItem
+ * @returns {farmhand.item}
+ */
+export const getFinalCropItemFromSeedItem = ({ id }) =>
+  itemsMap[getFinalCropItemIdFromSeedItemId(id)]
+
+/**
  * @param {farmhand.priceEvent} priceCrashes
  * @param {farmhand.priceEvent} priceSurges
  * @returns {Object}

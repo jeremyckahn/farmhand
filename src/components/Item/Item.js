@@ -12,7 +12,12 @@ import classNames from 'classnames'
 import FarmhandContext from '../../Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
-import { getItemValue, moneyString } from '../../utils'
+import {
+  getCropLifecycleDuration,
+  getFinalCropItemFromSeedItem,
+  getItemValue,
+  moneyString,
+} from '../../utils'
 
 import './Item.sass'
 
@@ -106,15 +111,17 @@ export const Item = ({
         subheader: (
           <div>
             {isPurchaseView && (
-              <p>
-                {`Price: ${moneyString(adjustedValue)}`}
-                {completedAchievements['unlock-crop-price-guide'] &&
-                  valueAdjustments[id] && (
-                    <PurchaseValueIndicator
-                      {...{ id, value: adjustedValue, valueAdjustments }}
-                    />
-                  )}
-              </p>
+              <>
+                <p>
+                  {`Price: ${moneyString(adjustedValue)}`}
+                  {completedAchievements['unlock-crop-price-guide'] &&
+                    valueAdjustments[id] && (
+                      <PurchaseValueIndicator
+                        {...{ id, value: adjustedValue, valueAdjustments }}
+                      />
+                    )}
+                </p>
+              </>
             )}
             {isSellView && (
               <p>
@@ -130,6 +137,12 @@ export const Item = ({
             {showQuantity && (
               <p>
                 <strong>In Inventory:</strong> {playerInventoryQuantities[id]}
+              </p>
+            )}
+            {isPurchaseView && item.growsInto && (
+              <p>
+                Days to mature:{' '}
+                {getCropLifecycleDuration(getFinalCropItemFromSeedItem(item))}
               </p>
             )}
           </div>
