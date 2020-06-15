@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
-import { array, func, object } from 'prop-types'
+import { array, bool, func, object } from 'prop-types'
 
 import { canMakeRecipe } from '../../utils'
 import { itemsMap } from '../../data/maps'
@@ -13,6 +13,8 @@ import { dishes } from '../../img'
 import FarmhandContext from '../../Farmhand.context'
 
 import './Recipe.sass'
+
+const noop = () => {}
 
 const IngredientsList = ({
   playerInventoryQuantities,
@@ -47,8 +49,15 @@ const Recipe = ({
   playerInventoryQuantities,
   recipe,
   recipe: { id, name },
+
+  canBeMade = canMakeRecipe(recipe, inventory),
 }) => (
-  <Card {...{ className: 'Recipe' }}>
+  <Card
+    {...{
+      className: classNames('Recipe', { 'can-be-made': canBeMade }),
+      onClick: canBeMade ? () => handleMakeRecipeClick(recipe) : noop,
+    }}
+  >
     <CardHeader
       {...{
         avatar: <img {...{ src: dishes[id], alt: name }} />,
@@ -64,10 +73,11 @@ const Recipe = ({
     <CardActions>
       <Button
         {...{
+          // The onClick handler for this is bound on the parent Card for
+          // better click-ability.
           className: 'make-recipe',
           color: 'primary',
-          disabled: !canMakeRecipe(recipe, inventory),
-          onClick: () => handleMakeRecipeClick(recipe),
+          disabled: !canBeMade,
           variant: 'contained',
         }}
       >
@@ -78,6 +88,7 @@ const Recipe = ({
 )
 
 Recipe.propTypes = {
+  canBeMade: bool,
   handleMakeRecipeClick: func.isRequired,
   inventory: array.isRequired,
   playerInventoryQuantities: object.isRequired,

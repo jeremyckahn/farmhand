@@ -21,6 +21,8 @@ import {
 
 import './Item.sass'
 
+const noop = () => {}
+
 const ValueIndicator = ({
   id,
   value,
@@ -104,7 +106,7 @@ export const Item = ({
         'is-selectable': isSelectView,
         'is-selected': isSelected,
       }),
-      onClick: isSelectView && (() => handleItemSelectClick(item)),
+      onClick: isSelectView ? () => handleItemSelectClick(item) : noop,
       raised: isSelected,
     }}
   >

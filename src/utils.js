@@ -365,7 +365,7 @@ export const getCowValue = cow =>
  * @param {Array.<farmhand.item>} inventory
  * @returns {boolean}
  */
-export const canMakeRecipe = ({ ingredients }, inventory) => {
+export const canMakeRecipe = memoize(({ ingredients }, inventory) => {
   const inventoryQuantityMap = inventory.reduce((acc, { id, quantity }) => {
     acc[id] = quantity
     return acc
@@ -374,7 +374,7 @@ export const canMakeRecipe = ({ ingredients }, inventory) => {
   return Object.keys(ingredients).every(
     itemId => inventoryQuantityMap[itemId] >= ingredients[itemId]
   )
-}
+})
 
 /**
  * @type {Array.<farmhand.item>}
