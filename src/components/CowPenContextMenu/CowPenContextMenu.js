@@ -199,7 +199,7 @@ export const CowPenContextMenu = ({
   selectedCowId,
 }) => (
   <div className="CowPenContextMenu">
-    <h2>Supplies</h2>
+    <h3>Supplies</h3>
     <Item
       {...{
         bulkPurchaseSize: COW_FEED_BULK_PURCHASE_AMOUNT,
@@ -208,7 +208,7 @@ export const CowPenContextMenu = ({
         showQuantity: true,
       }}
     />
-    <h2>For sale</h2>
+    <h3>For sale</h3>
     <CowCard
       {...{
         cow: cowForSale,
@@ -218,10 +218,10 @@ export const CowPenContextMenu = ({
         purchasedCowPen,
       }}
     />
-    <h2>
+    <h3>
       Cows ({cowInventory.length} /{' '}
       {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
-    </h2>
+    </h3>
     <ul className="card-list">
       {cowInventory.map(cow => (
         <li

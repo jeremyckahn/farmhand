@@ -5,7 +5,6 @@ import { array, arrayOf, bool, string } from 'prop-types'
 import FarmhandContext from '../../Farmhand.context'
 import Field from '../Field'
 import Home from '../Home'
-import Inventory from '../Inventory'
 import CowPen from '../CowPen'
 import Shop from '../Shop'
 import Kitchen from '../Kitchen'
@@ -34,13 +33,6 @@ export const Stage = ({
     {stageFocus === stageFocusType.SHOP && <Shop />}
     {stageFocus === stageFocusType.COW_PEN && <CowPen />}
     {stageFocus === stageFocusType.KITCHEN && <Kitchen />}
-    {stageFocus === stageFocusType.INVENTORY && (
-      <Inventory
-        {...{
-          items: playerInventory,
-        }}
-      />
-    )}
   </div>
 )
 

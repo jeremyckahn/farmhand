@@ -16,25 +16,28 @@ export const ContextPane = ({ playerInventory, stageFocus }) => (
     {stageFocus === stageFocusType.FIELD && (
       <>
         <header>
-          <h2>Toolbelt</h2>
+          <h3>Toolbelt</h3>
         </header>
         <Toolbelt />
         <header>
-          <h2>Seeds</h2>
+          <h3>Seeds</h3>
         </header>
         <PlantableItems />
         <header>
-          <h2>Field Tools</h2>
+          <h3>Field Tools</h3>
         </header>
         <FieldTools />
       </>
     )}
     {stageFocus === stageFocusType.SHOP && (
-      <Inventory
-        {...{
-          items: playerInventory,
-        }}
-      />
+      <>
+        <h2>Inventory</h2>
+        <Inventory
+          {...{
+            items: playerInventory,
+          }}
+        />
+      </>
     )}
     {stageFocus === stageFocusType.COW_PEN && <CowPenContextMenu />}
   </div>
