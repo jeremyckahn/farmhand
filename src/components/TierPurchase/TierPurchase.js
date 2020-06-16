@@ -88,7 +88,7 @@ export class TierPurchase extends Component {
 
     return (
       <div className="TierPurchase">
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <Select
           {...{
             onChange: onSelectChange,

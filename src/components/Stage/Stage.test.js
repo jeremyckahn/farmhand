@@ -2,7 +2,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Field from '../Field'
-import Inventory from '../Inventory'
 import CowPen from '../CowPen'
 import Shop from '../Shop'
 import { stageFocusType } from '../../../src/enums'
@@ -53,16 +52,6 @@ describe('focus', () => {
 
     test('shows the cow pen', () => {
       expect(component.find(CowPen)).toHaveLength(1)
-    })
-  })
-
-  describe('inventory', () => {
-    beforeEach(() => {
-      component.setProps({ stageFocus: stageFocusType.INVENTORY })
-    })
-
-    test('shows the inventory', () => {
-      expect(component.find(Inventory)).toHaveLength(1)
     })
   })
 })

@@ -40,7 +40,6 @@ const stageTitleMap = {
   [stageFocusType.SHOP]: 'Shop',
   [stageFocusType.COW_PEN]: 'Cows',
   [stageFocusType.KITCHEN]: 'Kitchen',
-  [stageFocusType.INVENTORY]: 'Inventory',
 }
 
 /**
@@ -229,7 +228,7 @@ export default class Farmhand extends Component {
   }
 
   get viewList() {
-    const { COW_PEN, FIELD, HOME, INVENTORY, KITCHEN, SHOP } = stageFocusType
+    const { COW_PEN, FIELD, HOME, KITCHEN, SHOP } = stageFocusType
 
     const viewList = [HOME, FIELD, SHOP]
 
@@ -237,7 +236,7 @@ export default class Farmhand extends Component {
       viewList.push(COW_PEN)
     }
 
-    viewList.push(KITCHEN, INVENTORY)
+    viewList.push(KITCHEN)
 
     return viewList
   }
@@ -259,7 +258,6 @@ export default class Farmhand extends Component {
     this.keyMap = {
       focusHome: 'h',
       focusField: 'f',
-      focusInventory: 'i',
       focusCows: 'c',
       focusShop: 's',
       focusKitchen: 'k',
@@ -276,8 +274,6 @@ export default class Farmhand extends Component {
     this.keyHandlers = {
       focusHome: () => this.setState({ stageFocus: stageFocusType.HOME }),
       focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
-      focusInventory: () =>
-        this.setState({ stageFocus: stageFocusType.INVENTORY }),
       focusCows: () =>
         this.state.purchasedCowPen &&
         this.setState({ stageFocus: stageFocusType.COW_PEN }),

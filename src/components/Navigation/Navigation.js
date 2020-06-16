@@ -120,7 +120,6 @@ export const Navigation = ({
         <MenuItem value={stageFocusType.COW_PEN}>Cows (c)</MenuItem>
       )}
       <MenuItem value={stageFocusType.KITCHEN}>Kitchen (k)</MenuItem>
-      <MenuItem value={stageFocusType.INVENTORY}>Inventory (i)</MenuItem>
     </Select>
   </header>
 )
