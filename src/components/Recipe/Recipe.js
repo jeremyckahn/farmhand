@@ -6,7 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
 import { array, bool, func, object } from 'prop-types'
 
-import { canMakeRecipe } from '../../utils'
+import { canMakeRecipe, dollarString } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { dishes } from '../../img'
 
@@ -64,6 +64,7 @@ const Recipe = ({
         title: name,
         subheader: (
           <>
+            <p>Sell price: {dollarString(itemsMap[id].value)}</p>
             <p>In Inventory: {playerInventoryQuantities[id]}</p>
             <IngredientsList {...{ playerInventoryQuantities, recipe }} />
           </>
