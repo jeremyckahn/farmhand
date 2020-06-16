@@ -2,7 +2,8 @@
 
 ### A farming game
 
-Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
+- Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
+- Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
 
 **[Current snapshot](https://jeremyckahn.github.io/farmhand/)**
 
@@ -18,6 +19,10 @@ This is an open source farming game built with web technologies. Some basic idea
 - `gh-pages` contains the built assets and is updated automatically when `master` is updated.
 
 There is no release or versioning system yet.
+
+## Current Progress
+
+The first six milestones were tracked via this README (see below), but I've since switched to using [this Github project](https://github.com/jeremyckahn/farmhand/projects/1) for organzing tasks for the v1.0 release. If you'd like to suggest a feature, please either leave a message in the `#suggestions` channel in [the Discord](https://discord.gg/6cHEZ9H) or make a post on [the subreddit](https://www.reddit.com/r/FarmhandGame/).
 
 ## Milestone 6: Bank Loans 🏦
 
