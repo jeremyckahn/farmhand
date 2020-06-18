@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
 import { func, instanceOf, number, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -87,35 +90,37 @@ export class TierPurchase extends Component {
     } = this
 
     return (
-      <div className="TierPurchase">
-        <h3>{title}</h3>
-        <Select
-          {...{
-            onChange: onSelectChange,
-            value: selectedTier,
-          }}
-        >
-          {tierValues.map(([id, tier]) => (
-            <MenuItem
-              key={id}
-              value={id}
-              disabled={money < tier.price || hasPurchasedTier(id)}
-            >
-              {renderTierLabel(tier)}
-            </MenuItem>
-          ))}
-        </Select>
-        <Button
-          {...{
-            color: 'primary',
-            disabled: !canPlayerBuySelectedTier,
-            onClick: handleTierPurchase,
-            variant: 'contained',
-          }}
-        >
-          Buy
-        </Button>
-      </div>
+      <Card className="TierPurchase">
+        <CardHeader {...{ title }} />
+        <CardActions>
+          <Select
+            {...{
+              onChange: onSelectChange,
+              value: selectedTier,
+            }}
+          >
+            {tierValues.map(([id, tier]) => (
+              <MenuItem
+                key={id}
+                value={id}
+                disabled={money < tier.price || hasPurchasedTier(id)}
+              >
+                {renderTierLabel(tier)}
+              </MenuItem>
+            ))}
+          </Select>
+          <Button
+            {...{
+              color: 'primary',
+              disabled: !canPlayerBuySelectedTier,
+              onClick: handleTierPurchase,
+              variant: 'contained',
+            }}
+          >
+            Buy
+          </Button>
+        </CardActions>
+      </Card>
     )
   }
 }
