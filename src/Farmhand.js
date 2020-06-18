@@ -372,30 +372,30 @@ export default class Farmhand extends Component {
       return
     }
 
-    ;[
-      'showCowPenPurchasedNotifications',
-      'showRecipeLearnedNotifications',
-    ].forEach(fn => this[fn](prevState))
-
-    if (
-      this.state.stageFocus === stageFocusType.COW_PEN &&
-      prevState.stageFocus !== stageFocusType.COW_PEN
-    ) {
-      this.setState({ selectedCowId: '' })
-    }
-
     const updatedAchievementsState = reducers.updateAchievements(
       this.state,
       prevState
     )
 
     if (updatedAchievementsState !== this.state) {
-      this.setState(updatedAchievementsState)
+      this.setState(() => updatedAchievementsState)
+    }
+
+    if (
+      this.state.stageFocus === stageFocusType.COW_PEN &&
+      prevState.stageFocus !== stageFocusType.COW_PEN
+    ) {
+      this.setState(() => ({ selectedCowId: '' }))
     }
 
     if (stageFocus !== prevState.stageFocus && isMenuOpen) {
-      this.setState({ isMenuOpen: !doesMenuObstructStage() })
+      this.setState(() => ({ isMenuOpen: !doesMenuObstructStage() }))
     }
+
+    ;[
+      'showCowPenPurchasedNotifications',
+      'showRecipeLearnedNotifications',
+    ].forEach(fn => this[fn](prevState))
   }
 
   clearPersistedData() {
