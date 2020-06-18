@@ -22,26 +22,32 @@ export const Shop = ({
         items: shopInventory,
       }}
     />
-    <TierPurchase
-      {...{
-        handleTierPurchase: handleFieldPurchase,
-        purchasedTier: purchasedField,
-        renderTierLabel: ({ columns, price, rows }) =>
-          `$${price}: ${columns} x ${rows}`,
-        tiers: PURCHASEABLE_FIELD_SIZES,
-        title: 'Expand field',
-      }}
-    />
-    <TierPurchase
-      {...{
-        handleTierPurchase: handleCowPenPurchase,
-        purchasedTier: purchasedCowPen,
-        renderTierLabel: ({ cows, price }) =>
-          `$${price}: Capacity for ${cows} cows`,
-        tiers: PURCHASEABLE_COW_PENS,
-        title: 'Buy cow pen',
-      }}
-    />
+    <ul className="card-list">
+      <li>
+        <TierPurchase
+          {...{
+            handleTierPurchase: handleFieldPurchase,
+            purchasedTier: purchasedField,
+            renderTierLabel: ({ columns, price, rows }) =>
+              `$${price}: ${columns} x ${rows}`,
+            tiers: PURCHASEABLE_FIELD_SIZES,
+            title: 'Expand field',
+          }}
+        />
+      </li>
+      <li>
+        <TierPurchase
+          {...{
+            handleTierPurchase: handleCowPenPurchase,
+            purchasedTier: purchasedCowPen,
+            renderTierLabel: ({ cows, price }) =>
+              `$${price}: Capacity for ${cows} cows`,
+            tiers: PURCHASEABLE_COW_PENS,
+            title: 'Buy cow pen',
+          }}
+        />
+      </li>
+    </ul>
   </div>
 )
 

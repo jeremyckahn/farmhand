@@ -107,6 +107,16 @@ const achievements = [
     reward: state => state,
   }))(),
 
+  ((reward = 15) => ({
+    id: 'purchase-cow-pen',
+    name: 'Purchase a Cow Pen',
+    description:
+      'Construct any size cow pen to let your bovine buddies moo-ve on in!',
+    rewardDescription: `${reward} units of ${cowFeed.name}`,
+    condition: state => state.purchasedCowPen > 0,
+    reward: state => addItemToInventory(state, cowFeed, reward),
+  }))(),
+
   ((reward = 100) => ({
     id: 'purchase-all-cow-colors',
     name: 'Cows of Many Colors',
