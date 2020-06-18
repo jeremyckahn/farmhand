@@ -1,5 +1,23 @@
+@import ../../styles/variables.sass
+
 .Field
   border: solid 1px #000
+  margin: 0 auto
+
+  $appBarOffset: 135px
+
+  @media (orientation: landscape) and (min-width: #{$break-md})
+    &[data-purchased-field="0"]
+      max-width: calc(100vh * (6/10) - #{$appBarOffset});
+
+    &[data-purchased-field="1"]
+      max-width: calc(100vh * (8/12) - #{$appBarOffset});
+
+    &[data-purchased-field="2"]
+      max-width: calc(100vh * (10/16) - #{$appBarOffset});
+
+    &[data-purchased-field="3"]
+      max-width: calc(100vh * (12/18) - #{$appBarOffset});
 
   .row
     display: flex

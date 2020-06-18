@@ -24,6 +24,7 @@ beforeEach(() => {
           [null, null],
         ],
         fieldMode: fieldMode.OBSERVE,
+        purchasedField: 0,
       }}
     />
   )
