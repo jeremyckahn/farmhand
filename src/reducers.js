@@ -228,8 +228,8 @@ export const processSprinklers = state => {
   const crops = new Map()
   let modifiedField = [...field]
 
-  field.forEach((row, fieldY) => {
-    row.forEach((plot, fieldX) => {
+  field.forEach((row, plotY) => {
+    row.forEach((plot, plotX) => {
       if (!plot || getPlotContentType(plot) !== itemType.SPRINKLER) {
         return
       }
@@ -237,7 +237,7 @@ export const processSprinklers = state => {
       ;[]
         .concat(
           // Flatten this 2D array for less iteration below
-          ...getRangeCoords(SPRINKLER_RANGE, fieldX, fieldY)
+          ...getRangeCoords(SPRINKLER_RANGE, plotX, plotY)
         )
         .forEach(({ x, y }) => {
           const fieldRow = field[y]
@@ -937,6 +937,8 @@ export const setSprinkler = (state, x, y) => {
   state = modifyFieldPlotAt(state, x, y, () =>
     getPlotContentFromItemId(SPRINKLER_ITEM_ID)
   )
+
+  state = processSprinklers(state)
 
   return {
     ...state,

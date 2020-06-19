@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
+import Tooltip from '@material-ui/core/Tooltip'
 import { func, string } from 'prop-types'
 import classNames from 'classnames'
 
@@ -17,42 +18,57 @@ export const Toolbelt = ({
   <div className="Toolbelt button-array">
     {[
       {
-        alt: 'A watering can for hydrating plants',
-        toolImageId: 'watering-can',
+        alt: 'A watering can for hydrating plants.',
         fieldMode: WATER,
+        keybinding: 'shift + w',
+        toolImageId: 'watering-can',
       },
       {
         alt: 'A scythe for crop harvesting',
-        toolImageId: 'scythe',
         fieldMode: HARVEST,
+        keybinding: 'shift + s',
+        toolImageId: 'scythe',
       },
       {
         alt: 'A hoe for removing crops without harvesting them',
-        toolImageId: 'hoe',
         fieldMode: CLEANUP,
+        keybinding: 'shift + h',
+        toolImageId: 'hoe',
       },
-    ].map(({ alt, toolImageId, fieldMode }) => (
-      <Button
+    ].map(({ alt, fieldMode, keybinding, toolImageId }) => (
+      <Tooltip
         {...{
-          className: classNames({
-            selected: fieldMode === currentFieldMode,
-          }),
-          color: 'primary',
           key: fieldMode,
-          onClick: () => handleFieldModeSelect(fieldMode),
-          variant: fieldMode === currentFieldMode ? 'contained' : 'outlined',
+          placement: 'bottom',
+          title: (
+            <>
+              <p>{alt}</p>
+              <p>({keybinding})</p>
+            </>
+          ),
         }}
       >
-        {/* alt is in a different format here because of linter weirdness. */}
-        <img
+        <Button
           {...{
-            className: `square ${toolImageId}`,
-            src: pixel,
-            style: { backgroundImage: `url(${tools[toolImageId]}` },
+            className: classNames({
+              selected: fieldMode === currentFieldMode,
+            }),
+            color: 'primary',
+            onClick: () => handleFieldModeSelect(fieldMode),
+            variant: fieldMode === currentFieldMode ? 'contained' : 'outlined',
           }}
-          alt={alt}
-        />
-      </Button>
+        >
+          {/* alt is in a different format here because of linter weirdness. */}
+          <img
+            {...{
+              className: `square ${toolImageId}`,
+              src: pixel,
+              style: { backgroundImage: `url(${tools[toolImageId]}` },
+            }}
+            alt={alt}
+          />
+        </Button>
+      </Tooltip>
     ))}
   </div>
 )
