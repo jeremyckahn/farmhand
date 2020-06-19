@@ -557,12 +557,21 @@ export default class Farmhand extends Component {
               */}
               <Tooltip
                 {...{
-                  title: 'End the day (shift + c)',
+                  placement: 'left',
+                  title: (
+                    <>
+                      <p>
+                        End the day to save your progress and advance the game.
+                      </p>
+                      <p>(shift + c)</p>
+                    </>
+                  ),
                 }}
               >
                 <Fab
                   {...{
-                    'aria-label': 'End the day',
+                    'aria-label':
+                      'End the day to save your progress and advance the game.',
                     className: 'end-day',
                     color: 'primary',
                     onClick: handlers.handleClickEndDayButton,
