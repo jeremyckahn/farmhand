@@ -30,7 +30,7 @@ import { STANDARD_LOAN_AMOUNT, PURCHASEABLE_COW_PENS } from './constants'
 import { COW_PEN_PURCHASED, LOAN_INCREASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 
-const { OBSERVE } = fieldMode
+const { CLEANUP, HARVEST, OBSERVE, WATER } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
 
@@ -256,41 +256,46 @@ export default class Farmhand extends Component {
     })
 
     this.keyMap = {
-      focusHome: 'h',
-      focusField: 'f',
       focusCows: 'c',
-      focusShop: 's',
+      focusField: 'f',
+      focusHome: 'h',
       focusKitchen: 'k',
-      openLog: 'l',
-      openPriceEvents: 'p',
-      openAchievements: 'a',
-      openAccounting: 'b',
+      focusShop: 's',
       incrementDay: 'shift+c',
       nextView: 'right',
+      openAccounting: 'b',
+      openAchievements: 'a',
+      openLog: 'l',
+      openPriceEvents: 'p',
       previousView: 'left',
+      selectHoe: 'shift+h',
+      selectScythe: 'shift+s',
+      selectWateringCan: 'shift+w',
       toggleMenu: 'm',
     }
 
     this.keyHandlers = {
-      focusHome: () => this.setState({ stageFocus: stageFocusType.HOME }),
-      focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
       focusCows: () =>
         this.state.purchasedCowPen &&
         this.setState({ stageFocus: stageFocusType.COW_PEN }),
-      focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
+      focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
+      focusHome: () => this.setState({ stageFocus: stageFocusType.HOME }),
       focusKitchen: () => this.setState({ stageFocus: stageFocusType.KITCHEN }),
+      focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
       incrementDay: () => this.incrementDay(),
       nextView: this.focusNextView.bind(this),
+      openAccounting: () =>
+        this.setState({ currentDialogView: dialogView.ACCOUNTING }),
+      openAchievements: () =>
+        this.setState({ currentDialogView: dialogView.ACHIEVEMENTS }),
       openLog: () =>
         this.setState({ currentDialogView: dialogView.FARMERS_LOG }),
       openPriceEvents: () =>
         this.setState({ currentDialogView: dialogView.PRICE_EVENTS }),
-      openAchievements: () =>
-        this.setState({ currentDialogView: dialogView.ACHIEVEMENTS }),
-      openAccounting: () =>
-        this.setState({ currentDialogView: dialogView.ACCOUNTING }),
-
       previousView: this.focusPreviousView.bind(this),
+      selectHoe: () => this.handlers.handleFieldModeSelect(CLEANUP),
+      selectScythe: () => this.handlers.handleFieldModeSelect(HARVEST),
+      selectWateringCan: () => this.handlers.handleFieldModeSelect(WATER),
       toggleMenu: () => this.handlers.handleMenuToggle(),
     }
 
