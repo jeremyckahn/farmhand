@@ -7,6 +7,7 @@ import memoize from 'fast-memoize'
 import Divider from '@material-ui/core/Divider'
 
 import FarmhandContext from '../../Farmhand.context'
+import ProgressBar from '../ProgressBar'
 import Achievement from '../Achievement'
 import achievements from '../../data/achievements'
 
@@ -44,6 +45,9 @@ const AchievementsView = ({
   ),
 }) => (
   <div className="AchievementsView">
+    <ProgressBar
+      {...{ percent: (complete.length / achievements.length) * 100 }}
+    />
     {complete.length ? (
       <>
         <ExpansionPanel {...{ defaultExpanded: true }}>
