@@ -6,7 +6,7 @@ import ProgressBar from './ProgressBar'
 let component
 
 beforeEach(() => {
-  component = shallow(<ProgressBar {...{}} />)
+  component = shallow(<ProgressBar {...{ percent: 0 }} />)
 })
 
 test('renders', () => {
