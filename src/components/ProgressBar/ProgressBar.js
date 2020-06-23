@@ -1,7 +1,11 @@
 import React from 'react'
 import { number } from 'prop-types'
+import { interpolate } from 'shifty'
 
 import './ProgressBar.sass'
+
+const incompleteColor = '#ff9f00'
+const completeColor = '#00e500'
 
 const ProgressBar = ({
   percent,
@@ -12,7 +16,14 @@ const ProgressBar = ({
       <div
         {...{
           className: 'progress',
-          style: { width: `${fixedPercent}%` },
+          style: {
+            background: interpolate(
+              { color: incompleteColor },
+              { color: completeColor },
+              percent / 100
+            ).color,
+            width: `${fixedPercent}%`,
+          },
         }}
       ></div>
     </div>
