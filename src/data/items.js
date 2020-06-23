@@ -97,6 +97,7 @@ export const pumpkin = freeze({
  * @type {farmhand.item}
  */
 export const fertilizer = freeze({
+  description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,
   id: FERTILIZER_ITEM_ID,
   name: 'Fertilizer',
@@ -109,6 +110,7 @@ export const fertilizer = freeze({
  * @type {farmhand.item}
  */
 export const sprinkler = freeze({
+  description: 'Automatically waters adjacent plants every day.',
   enablesFieldMode: fieldMode.SET_SPRINKLER,
   hoveredPlotRangeSize: SPRINKLER_RANGE,
   id: 'sprinkler',
@@ -123,6 +125,8 @@ export const sprinkler = freeze({
  * @type {farmhand.item}
  */
 export const scarecrow = freeze({
+  description:
+    'Prevents crows from eating your crops. One scarecrow covers an entire field.',
   enablesFieldMode: fieldMode.SET_SCARECROW,
   id: 'scarecrow',
   isReplantable: true,

@@ -867,6 +867,7 @@ export const plantInPlot = (state, x, y, plantableItemId) => {
   )
 
   state = decrementItemFromInventory(state, plantableItemId)
+  state = processSprinklers(state)
 
   return {
     ...state,
