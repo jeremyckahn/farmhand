@@ -4,8 +4,10 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Tooltip from '@material-ui/core/Tooltip'
+import Typography from '@material-ui/core/Typography'
 import { bool, func, number, object } from 'prop-types'
 import classNames from 'classnames'
 
@@ -91,7 +93,7 @@ export const Item = ({
   isSelected,
   isSellView,
   item,
-  item: { id, name },
+  item: { id, isReplantable, description, name },
   money,
   playerInventoryQuantities,
   showQuantity,
@@ -155,6 +157,17 @@ export const Item = ({
         ),
       }}
     />
+    {isPurchaseView && (
+      <CardContent>
+        {description && <Typography>{description}</Typography>}
+        {isReplantable && (
+          <Typography {...{ color: 'textSecondary' }}>
+            Once planted in the field, this item can be returned to your
+            inventory with the hoe and then replanted elsewhere.
+          </Typography>
+        )}
+      </CardContent>
+    )}
     <CardActions>
       {isSelectView && (
         <Button

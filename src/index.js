@@ -22,6 +22,7 @@
  * @property {string} type
  * @property {farmhand.cropTimetable} [cropTimetable]
  * @property {farmhand.module:enums.cropType} [cropType]
+ * @property {string} [description] A user-friendly description of the item.
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.
  * @property {string} [growsInto] The id of another farmhand.item.
  * @property {boolean} [doesPriceFluctuate] Whether or not this item has a
