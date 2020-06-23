@@ -24,13 +24,14 @@ export const Toolbelt = ({
         toolImageId: 'watering-can',
       },
       {
-        alt: 'A scythe for crop harvesting',
+        alt: 'A scythe for crop harvesting.',
         fieldMode: HARVEST,
         keybinding: 'shift + s',
         toolImageId: 'scythe',
       },
       {
-        alt: 'A hoe for removing crops without harvesting them',
+        alt:
+          'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.',
         fieldMode: CLEANUP,
         keybinding: 'shift + h',
         toolImageId: 'hoe',
