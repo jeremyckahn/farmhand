@@ -196,36 +196,30 @@ const fieldHasScarecrow = field => findInField(field, plotContainsScarecrow)
  * @returns {farmhand.state}
  */
 export const applyPrecipitation = state => {
-  const { field } = state
+  let { field } = state
+  let notification
+
   if (Math.random() < STORM_CHANCE) {
     if (fieldHasScarecrow(field)) {
-      state = {
-        ...state,
-        field: updateField(field, plot =>
-          plotContainsScarecrow(plot) ? null : plot
-        ),
-        newDayNotifications: [
-          ...state.newDayNotifications,
-          { message: STORM_DESTROYS_SCARECROWS_MESSAGE, severity: 'error' },
-        ],
+      notification = {
+        message: STORM_DESTROYS_SCARECROWS_MESSAGE,
+        severity: 'error',
       }
+
+      field = updateField(field, plot =>
+        plotContainsScarecrow(plot) ? null : plot
+      )
     } else {
-      state = {
-        ...state,
-        newDayNotifications: [
-          ...state.newDayNotifications,
-          { message: STORM_MESSAGE, severity: 'info' },
-        ],
-      }
+      notification = { message: STORM_MESSAGE, severity: 'info' }
     }
   } else {
-    state = {
-      ...state,
-      newDayNotifications: [
-        ...state.newDayNotifications,
-        { message: RAIN_MESSAGE, severity: 'info' },
-      ],
-    }
+    notification = { message: RAIN_MESSAGE, severity: 'info' }
+  }
+
+  state = {
+    ...state,
+    field,
+    newDayNotifications: [...state.newDayNotifications, notification],
   }
 
   state = waterField(state)
