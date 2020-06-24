@@ -4,6 +4,7 @@ import {
   canMakeRecipe,
   castToMoney,
   clampNumber,
+  findInField,
   generateCow,
   generateValueAdjustments,
   getAdjustedItemValue,
@@ -38,12 +39,17 @@ import {
   PRICE_EVENT_CHANCE,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
-  RAIN_CHANCE,
+  PRECIPITATION_CHANCE,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
   SPRINKLER_RANGE,
+  STORM_CHANCE,
 } from './constants'
-import { RAIN_MESSAGE } from './strings'
+import {
+  RAIN_MESSAGE,
+  STORM_MESSAGE,
+  STORM_DESTROYS_SCARECROWS_MESSAGE,
+} from './strings'
 import {
   ACHIEVEMENT_COMPLETED,
   CROW_ATTACKED,
@@ -133,8 +139,8 @@ const applyChanceEvent = (chancesAndEvents, state) =>
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-export const processBuffs = state =>
-  applyChanceEvent([[RAIN_CHANCE, applyRain]], state)
+export const processWeather = state =>
+  applyChanceEvent([[PRECIPITATION_CHANCE, applyPrecipitation]], state)
 
 /**
  * @param {farmhand.state} state
@@ -167,6 +173,18 @@ const adjustItemValues = state => ({
   ),
 })
 
+/**
+ * @param {?farmhand.plotContent} plot
+ * @returns {boolean}
+ */
+const plotContainsScarecrow = plot => plot && plot.itemId === SCARECROW_ITEM_ID
+
+/**
+ * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @returns {boolean}
+ */
+const fieldHasScarecrow = field => findInField(field, plotContainsScarecrow)
+
 ///////////////////////////////////////////////////////////
 //
 // Exported reducers
@@ -177,14 +195,43 @@ const adjustItemValues = state => ({
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-export const applyRain = state =>
-  waterField({
-    ...state,
-    newDayNotifications: [
-      ...state.newDayNotifications,
-      { message: RAIN_MESSAGE, severity: 'info' },
-    ],
-  })
+export const applyPrecipitation = state => {
+  const { field } = state
+  if (Math.random() < STORM_CHANCE) {
+    if (fieldHasScarecrow(field)) {
+      state = {
+        ...state,
+        field: updateField(field, plot =>
+          plotContainsScarecrow(plot) ? null : plot
+        ),
+        newDayNotifications: [
+          ...state.newDayNotifications,
+          { message: STORM_DESTROYS_SCARECROWS_MESSAGE, severity: 'error' },
+        ],
+      }
+    } else {
+      state = {
+        ...state,
+        newDayNotifications: [
+          ...state.newDayNotifications,
+          { message: STORM_MESSAGE, severity: 'info' },
+        ],
+      }
+    }
+  } else {
+    state = {
+      ...state,
+      newDayNotifications: [
+        ...state.newDayNotifications,
+        { message: RAIN_MESSAGE, severity: 'info' },
+      ],
+    }
+  }
+
+  state = waterField(state)
+
+  return state
+}
 
 /**
  * @param {farmhand.state} state
@@ -193,11 +240,8 @@ export const applyRain = state =>
 export const applyCrows = state => {
   const { field } = state
   const newDayNotifications = [...state.newDayNotifications]
-  const fieldHasScarecrow = field.some(row =>
-    row.some(plot => plot && plot.itemId === SCARECROW_ITEM_ID)
-  )
 
-  const updatedField = fieldHasScarecrow
+  const updatedField = fieldHasScarecrow(field)
     ? field
     : updateField(field, plotContent => {
         if (!plotContent || getPlotContentType(plotContent) !== itemType.CROP) {
@@ -584,7 +628,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
     : [
         computeCowInventoryForNextDay,
         processField,
-        processBuffs,
+        processWeather,
         processNerfs,
         processSprinklers,
         processFeedingCows,
