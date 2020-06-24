@@ -628,8 +628,8 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
     : [
         computeCowInventoryForNextDay,
         processField,
-        processWeather,
         processNerfs,
+        processWeather,
         processSprinklers,
         processFeedingCows,
         processMilkingCows,
