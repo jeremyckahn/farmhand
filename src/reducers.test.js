@@ -1,5 +1,9 @@
 import { shapeOf, testCrop, testItem } from './test-utils'
-import { RAIN_MESSAGE } from './strings'
+import {
+  RAIN_MESSAGE,
+  STORM_MESSAGE,
+  STORM_DESTROYS_SCARECROWS_MESSAGE,
+} from './strings'
 import {
   ACHIEVEMENT_COMPLETED,
   CROW_ATTACKED,
@@ -48,7 +52,7 @@ jest.mock('./constants', () => ({
   ...jest.requireActual('./constants'),
   COW_HUG_BENEFIT: 0.5,
   CROW_CHANCE: 0,
-  RAIN_CHANCE: 0,
+  PRECIPITATION_CHANCE: 0,
 }))
 
 describe('rotateNotificationLogs', () => {
@@ -316,9 +320,9 @@ describe('computeStateForNextDay', () => {
   })
 })
 
-describe('applyRain', () => {
+describe('applyPrecipitation', () => {
   test('waters all plots', () => {
-    const state = fn.applyRain({
+    const state = fn.applyPrecipitation({
       field: [
         [
           testCrop({
@@ -334,9 +338,55 @@ describe('applyRain', () => {
 
     expect(state.field[0][0].wasWateredToday).toBe(true)
     expect(state.field[0][1].wasWateredToday).toBe(true)
-    expect(state.newDayNotifications[0]).toEqual({
-      message: RAIN_MESSAGE,
-      severity: 'info',
+  })
+
+  describe('rain shower', () => {
+    test('waters all plots', () => {
+      jest.spyOn(Math, 'random').mockReturnValue(1)
+      const state = fn.applyPrecipitation({
+        field: [[]],
+        newDayNotifications: [],
+      })
+
+      expect(state.newDayNotifications[0]).toEqual({
+        message: RAIN_MESSAGE,
+        severity: 'info',
+      })
+    })
+  })
+
+  describe('storm', () => {
+    beforeEach(() => {
+      jest.spyOn(Math, 'random').mockReturnValue(0)
+    })
+
+    describe('scarecrows are planted', () => {
+      test('scarecrows are destroyed', () => {
+        const state = fn.applyPrecipitation({
+          field: [[getPlotContentFromItemId(SCARECROW_ITEM_ID)]],
+          newDayNotifications: [],
+        })
+
+        expect(state.field[0][0]).toBe(null)
+        expect(state.newDayNotifications[0]).toEqual({
+          message: STORM_DESTROYS_SCARECROWS_MESSAGE,
+          severity: 'error',
+        })
+      })
+    })
+
+    describe('scarecrows are not planted', () => {
+      test('shows appropriate message', () => {
+        const state = fn.applyPrecipitation({
+          field: [[]],
+          newDayNotifications: [],
+        })
+
+        expect(state.newDayNotifications[0]).toEqual({
+          message: STORM_MESSAGE,
+          severity: 'info',
+        })
+      })
     })
   })
 })
@@ -527,11 +577,11 @@ describe('processMilkingCows', () => {
   })
 })
 
-describe('processBuffs', () => {
+describe('processWeather', () => {
   describe('rain', () => {
     describe('is not rainy day', () => {
       test('does not water plants', () => {
-        const state = fn.processBuffs({
+        const state = fn.processWeather({
           field: [[testCrop()]],
           newDayNotifications: [],
         })
@@ -544,11 +594,11 @@ describe('processBuffs', () => {
       test('does water plants', () => {
         jest.resetModules()
         jest.mock('./constants', () => ({
-          RAIN_CHANCE: 1,
+          PRECIPITATION_CHANCE: 1,
         }))
 
-        const { processBuffs } = jest.requireActual('./reducers')
-        const state = processBuffs({
+        const { processWeather } = jest.requireActual('./reducers')
+        const state = processWeather({
           field: [[testCrop()]],
           newDayNotifications: [],
         })

@@ -38,7 +38,8 @@ export const PURCHASEABLE_COW_PENS = freeze(
 
 // Buff/nerf chances
 export const CROW_CHANCE = 0.1
-export const RAIN_CHANCE = 0.1
+export const PRECIPITATION_CHANCE = 0.1
+export const STORM_CHANCE = 0.5
 
 export const SCARECROW_ITEM_ID = 'scarecrow'
 export const SPRINKLER_ITEM_ID = 'sprinkler'

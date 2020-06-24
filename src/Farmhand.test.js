@@ -36,7 +36,7 @@ jest.mock('./constants', () => ({
   CROW_CHANCE: 0,
   INITIAL_FIELD_HEIGHT: 4,
   INITIAL_FIELD_WIDTH: 4,
-  RAIN_CHANCE: 0,
+  PRECIPITATION_CHANCE: 0,
 }))
 
 const { objectContaining } = expect
