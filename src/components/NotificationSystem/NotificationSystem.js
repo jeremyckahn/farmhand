@@ -24,13 +24,19 @@ export const NotificationSystem = ({
         open: doShowNotifications,
       }}
     >
-      <>
+      {/*
+      Notifications *must* be wrapped in a div, even though it would be a bit
+      cleaner to use a Fragment. Without a wrapping div, the
+      handleCloseNotification function tends to throw null reference errors
+      that crash the game.
+      */}
+      <div className="wrapper">
         {notifications.map(({ message, severity }) => (
           <Alert {...{ elevation: 3, key: `${severity}_${message}`, severity }}>
             <p>{message}</p>
           </Alert>
         ))}
-      </>
+      </div>
     </Snackbar>
   </div>
 )

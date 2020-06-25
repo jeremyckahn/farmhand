@@ -2,6 +2,9 @@
 
 .NotificationSystem
 
+  .wrapper
+    max-width: $break-sm
+
   .notification
     align-items: stretch
     display: flex
@@ -10,7 +13,6 @@
 
     .MuiAlert-root
       margin-bottom: 1em
-      max-width: $break-sm
 
     @media (min-width: #{$break-xs}) and (orientation: landscape)
       top: 3.5em
