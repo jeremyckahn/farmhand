@@ -91,7 +91,8 @@ const AccountingView = ({
               You may take out a loan at any time. So long as you have a loan
               balance, all farm product sales are garnished by{' '}
               {LOAN_GARNISHMENT_RATE * 100}% until the loan is repaid. The loan
-              interest rate is {LOAN_INTEREST_RATE * 100}% and compounds daily.
+              interest rate is {LOAN_INTEREST_RATE * 100}% per day, compounded
+              daily.
             </p>
           </div>
           <Button
