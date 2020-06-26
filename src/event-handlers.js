@@ -99,6 +99,10 @@ export default {
     }))
   },
 
+  handleHarvestAllClick() {
+    this.harvestAll()
+  },
+
   handleItemSelectClick({ id, enablesFieldMode, hoveredPlotRangeSize = 0 }) {
     this.setState({
       fieldMode: enablesFieldMode,

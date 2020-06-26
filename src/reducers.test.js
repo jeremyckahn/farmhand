@@ -1771,7 +1771,10 @@ describe('updateAchievements', () => {
           conditionSatisfied: true,
           notifications: [
             {
-              message: ACHIEVEMENT_COMPLETED`${{ name: 'Test Achievement' }}`,
+              message: ACHIEVEMENT_COMPLETED`${{
+                name: 'Test Achievement',
+                rewardDescription: '',
+              }}`,
               severity: 'success',
             },
           ],

@@ -46,8 +46,10 @@ export const PRICE_SURGE = (_, { name }) =>
  * @param {farmhand.achievement} achievement
  * @returns {string}
  */
-export const ACHIEVEMENT_COMPLETED = (_, { name }) =>
-  `You achieved "${name}!" Way to go!`
+export const ACHIEVEMENT_COMPLETED = (_, { name, rewardDescription }) =>
+  `You achieved "${name}!" Way to go!
+
+You earned: ${rewardDescription}`
 
 /**
  * @returns {string}

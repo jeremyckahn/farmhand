@@ -120,8 +120,8 @@ export const resetWasWatered = plotContent =>
  * @param {Function(?farmhand.plotContent)} modifierFn
  * @returns {Array.<Array.<?farmhand.plotContent>>}
  */
-export const updateField = (field, modifierFn) =>
-  field.map(row => row.map(modifierFn))
+const updateField = (field, modifierFn) =>
+  field.map((row, y) => row.map((plot, x) => modifierFn(plot, x, y)))
 
 /**
  * @param {Array} chancesAndEvents An array of arrays in which the first
@@ -1037,6 +1037,19 @@ export const harvestPlot = (state, x, y) => {
 
   state = removeFieldPlotAt(state, x, y)
   return addItemToInventory(state, itemsMap[crop.itemId])
+}
+
+// FIXME: Test this.
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const harvestAll = state => {
+  updateField(state.field, (plot, x, y) => {
+    state = harvestPlot(state, x, y)
+  })
+
+  return state
 }
 
 /**
