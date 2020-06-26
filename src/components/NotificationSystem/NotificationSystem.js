@@ -2,6 +2,7 @@ import React from 'react'
 import { arrayOf, bool, func, shape, string } from 'prop-types'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
+import ReactMarkdown from 'react-markdown'
 
 import { NOTIFICATION_DURATION } from '../../constants'
 import FarmhandContext from '../../Farmhand.context'
@@ -33,7 +34,7 @@ export const NotificationSystem = ({
       <div className="wrapper">
         {notifications.map(({ message, severity }) => (
           <Alert {...{ elevation: 3, key: `${severity}_${message}`, severity }}>
-            <p>{message}</p>
+            <ReactMarkdown {...{ source: message }} />
           </Alert>
         ))}
       </div>
