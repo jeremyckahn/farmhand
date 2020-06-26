@@ -14,69 +14,85 @@ const { CLEANUP, HARVEST, WATER } = fieldMode
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
+  handleHarvestAllClick,
 }) => (
-  <div className="Toolbelt button-array">
-    {[
-      {
-        alt: 'A watering can for hydrating plants.',
-        fieldMode: WATER,
-        keybinding: 'shift + w',
-        toolImageId: 'watering-can',
-      },
-      {
-        alt: 'A scythe for crop harvesting.',
-        fieldMode: HARVEST,
-        keybinding: 'shift + s',
-        toolImageId: 'scythe',
-      },
-      {
-        alt:
-          'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.',
-        fieldMode: CLEANUP,
-        keybinding: 'shift + h',
-        toolImageId: 'hoe',
-      },
-    ].map(({ alt, fieldMode, keybinding, toolImageId }) => (
-      <Tooltip
-        {...{
-          key: fieldMode,
-          placement: 'bottom',
-          title: (
-            <>
-              <p>{alt}</p>
-              <p>({keybinding})</p>
-            </>
-          ),
-        }}
-      >
-        <Button
+  <div className="Toolbelt">
+    <div className="button-array">
+      {[
+        {
+          alt: 'A watering can for hydrating plants.',
+          fieldMode: WATER,
+          keybinding: 'shift + w',
+          toolImageId: 'watering-can',
+        },
+        {
+          alt: 'A scythe for crop harvesting.',
+          fieldMode: HARVEST,
+          keybinding: 'shift + s',
+          toolImageId: 'scythe',
+        },
+        {
+          alt:
+            'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.',
+          fieldMode: CLEANUP,
+          keybinding: 'shift + h',
+          toolImageId: 'hoe',
+        },
+      ].map(({ alt, fieldMode, keybinding, toolImageId }) => (
+        <Tooltip
           {...{
-            className: classNames({
-              selected: fieldMode === currentFieldMode,
-            }),
-            color: 'primary',
-            onClick: () => handleFieldModeSelect(fieldMode),
-            variant: fieldMode === currentFieldMode ? 'contained' : 'outlined',
+            key: fieldMode,
+            placement: 'bottom',
+            title: (
+              <>
+                <p>{alt}</p>
+                <p>({keybinding})</p>
+              </>
+            ),
           }}
         >
-          {/* alt is in a different format here because of linter weirdness. */}
-          <img
+          <Button
             {...{
-              className: `square ${toolImageId}`,
-              src: pixel,
-              style: { backgroundImage: `url(${tools[toolImageId]}` },
+              className: classNames({
+                selected: fieldMode === currentFieldMode,
+              }),
+              color: 'primary',
+              onClick: () => handleFieldModeSelect(fieldMode),
+              variant:
+                fieldMode === currentFieldMode ? 'contained' : 'outlined',
             }}
-            alt={alt}
-          />
-        </Button>
-      </Tooltip>
-    ))}
+          >
+            {/* alt is in a different format here because of linter weirdness. */}
+            <img
+              {...{
+                className: `square ${toolImageId}`,
+                src: pixel,
+                style: { backgroundImage: `url(${tools[toolImageId]}` },
+              }}
+              alt={alt}
+            />
+          </Button>
+        </Tooltip>
+      ))}
+    </div>
+    <div className="bulk-operations">
+      <Button
+        {...{
+          color: 'primary',
+          onClick: handleHarvestAllClick,
+          variant: 'contained',
+        }}
+      >
+        Harvest All
+      </Button>
+    </div>
   </div>
 )
 
 Toolbelt.propTypes = {
   fieldMode: string.isRequired,
   handleFieldModeSelect: func.isRequired,
+  handleHarvestAllClick: func.isRequired,
 }
 
 export default function Consumer(props) {

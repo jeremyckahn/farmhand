@@ -12,6 +12,7 @@ beforeEach(() => {
     <Toolbelt
       {...{
         handleFieldModeSelect: () => {},
+        handleHarvestAllClick: () => {},
         fieldMode: fieldMode.OBSERVE,
       }}
     />
