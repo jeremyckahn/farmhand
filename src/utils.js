@@ -419,6 +419,7 @@ export const findInField = memoize(
   }
 )
 
+// This is currently unused, but it could be useful later.
 /**
  * @param {Array.<Array.<?farmhand.plotContent>>} field
  * @param {function(?farmhand.plotContent)} filterCondition
