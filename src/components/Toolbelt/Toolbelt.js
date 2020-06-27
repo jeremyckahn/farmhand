@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
-import { func, string } from 'prop-types'
+import { func, object, string } from 'prop-types'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -12,6 +12,7 @@ import { tools, pixel } from '../../img'
 const { CLEANUP, HARVEST, WATER } = fieldMode
 
 export const Toolbelt = ({
+  completedAchievements,
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
   handleHarvestAllClick,
@@ -75,21 +76,25 @@ export const Toolbelt = ({
         </Tooltip>
       ))}
     </div>
+
     <div className="bulk-operations">
-      <Button
-        {...{
-          color: 'primary',
-          onClick: handleHarvestAllClick,
-          variant: 'contained',
-        }}
-      >
-        Harvest All
-      </Button>
+      {completedAchievements['master-harvester'] && (
+        <Button
+          {...{
+            color: 'primary',
+            onClick: handleHarvestAllClick,
+            variant: 'contained',
+          }}
+        >
+          Harvest All
+        </Button>
+      )}
     </div>
   </div>
 )
 
 Toolbelt.propTypes = {
+  completedAchievements: object.isRequired,
   fieldMode: string.isRequired,
   handleFieldModeSelect: func.isRequired,
   handleHarvestAllClick: func.isRequired,

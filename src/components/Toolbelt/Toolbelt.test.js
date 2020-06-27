@@ -11,9 +11,10 @@ beforeEach(() => {
   component = shallow(
     <Toolbelt
       {...{
+        completedAchievements: {},
+        fieldMode: fieldMode.OBSERVE,
         handleFieldModeSelect: () => {},
         handleHarvestAllClick: () => {},
-        fieldMode: fieldMode.OBSERVE,
       }}
     />
   )
