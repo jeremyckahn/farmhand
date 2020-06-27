@@ -1,3 +1,5 @@
+import memoize from 'fast-memoize'
+
 import {
   findInField,
   getCropLifeStage,
@@ -18,11 +20,12 @@ const addMoney = (state, reward) => ({
   money: moneyTotal(state.money, reward),
 })
 
-const sumOfCropsHarvested = cropsHarvested =>
+const sumOfCropsHarvested = memoize(cropsHarvested =>
   Object.values(cropsHarvested).reduce(
     (sum, cropHarvested) => sum + cropHarvested,
     0
   )
+)
 
 const cowFeed = itemsMap[COW_FEED_ITEM_ID]
 
