@@ -1039,7 +1039,6 @@ export const harvestPlot = (state, x, y) => {
   return addItemToInventory(state, itemsMap[crop.itemId])
 }
 
-// FIXME: Test this.
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}

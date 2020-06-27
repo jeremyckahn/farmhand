@@ -1506,6 +1506,35 @@ describe('harvestPlot', () => {
   })
 })
 
+describe('harvestAll', () => {
+  test('harvest all mature plots in field', () => {
+    const inputState = {
+      field: [
+        [testCrop({ itemId: 'sample-crop-1', daysWatered: 4 }), null],
+        [
+          getPlotContentFromItemId(SPRINKLER_ITEM_ID),
+          testCrop({ itemId: 'sample-crop-1', daysWatered: 1 }),
+        ],
+        [
+          testCrop({ itemId: 'sample-crop-1', daysWatered: 4 }),
+          getPlotContentFromItemId(SCARECROW_ITEM_ID),
+        ],
+      ],
+      inventory: [],
+    }
+    const { field, inventory } = fn.harvestAll(inputState)
+    expect(field).toEqual([
+      [null, null],
+      [
+        getPlotContentFromItemId(SPRINKLER_ITEM_ID),
+        testCrop({ itemId: 'sample-crop-1', daysWatered: 1 }),
+      ],
+      [null, getPlotContentFromItemId(SCARECROW_ITEM_ID)],
+    ])
+    expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 2 }])
+  })
+})
+
 describe('clearPlot', () => {
   describe('plotContent is a crop', () => {
     test('clears the plot', () => {
