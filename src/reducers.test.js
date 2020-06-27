@@ -1472,6 +1472,7 @@ describe('harvestPlot', () => {
   describe('non-crop plotContent', () => {
     test('no-ops', () => {
       const inputState = {
+        cropsHarvested: {},
         field: [[getPlotContentFromItemId('sprinkler')]],
       }
       const state = fn.harvestPlot(inputState, 0, 0)
@@ -1482,6 +1483,7 @@ describe('harvestPlot', () => {
   describe('unripe crops', () => {
     test('no-ops', () => {
       const inputState = {
+        cropsHarvested: {},
         field: [[testCrop({ itemId: 'sample-crop-1' })]],
       }
       const state = fn.harvestPlot(inputState, 0, 0)
@@ -1491,8 +1493,9 @@ describe('harvestPlot', () => {
 
   describe('ripe crops', () => {
     test('harvests the plot', () => {
-      const { field, inventory } = fn.harvestPlot(
+      const { cropsHarvested, field, inventory } = fn.harvestPlot(
         {
+          cropsHarvested: {},
           field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
           inventory: [],
         },
@@ -1502,6 +1505,7 @@ describe('harvestPlot', () => {
 
       expect(field[0][0]).toBe(null)
       expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 1 }])
+      expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 1 })
     })
   })
 })
@@ -1509,6 +1513,7 @@ describe('harvestPlot', () => {
 describe('harvestAll', () => {
   test('harvest all mature plots in field', () => {
     const inputState = {
+      cropsHarvested: {},
       field: [
         [testCrop({ itemId: 'sample-crop-1', daysWatered: 4 }), null],
         [
@@ -1522,7 +1527,7 @@ describe('harvestAll', () => {
       ],
       inventory: [],
     }
-    const { field, inventory } = fn.harvestAll(inputState)
+    const { cropsHarvested, field, inventory } = fn.harvestAll(inputState)
     expect(field).toEqual([
       [null, null],
       [
@@ -1532,6 +1537,7 @@ describe('harvestAll', () => {
       [null, getPlotContentFromItemId(SCARECROW_ITEM_ID)],
     ])
     expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 2 }])
+    expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 2 })
   })
 })
 

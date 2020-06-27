@@ -12,6 +12,7 @@ describe('harvest-crop', () => {
 
     beforeEach(() => {
       inputState = {
+        cropsHarvested: {},
         field: [
           [null, null, testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })],
         ],

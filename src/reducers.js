@@ -1035,8 +1035,20 @@ export const harvestPlot = (state, x, y) => {
     return state
   }
 
+  const item = itemsMap[crop.itemId]
   state = removeFieldPlotAt(state, x, y)
-  return addItemToInventory(state, itemsMap[crop.itemId])
+  state = addItemToInventory(state, item)
+  const { cropType } = item
+
+  const { cropsHarvested } = state
+
+  return {
+    ...state,
+    cropsHarvested: {
+      ...cropsHarvested,
+      [cropType]: (cropsHarvested[cropType] || 0) + 1,
+    },
+  }
 }
 
 /**
