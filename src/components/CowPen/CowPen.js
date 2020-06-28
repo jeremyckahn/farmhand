@@ -150,12 +150,25 @@ export class Cow extends Component {
             />
             <FontAwesomeIcon
               {...{
-                className: classNames({ animate: showHugAnimation }),
+                className: classNames('animation', {
+                  'is-animating': showHugAnimation,
+                }),
                 icon: faHeart,
               }}
             />
           </div>
         </Tooltip>
+        <ol {...{ className: 'happiness-boosts-today' }}>
+          {new Array(this.props.cow.happinessBoostsToday).fill().map((_, i) => (
+            <li {...{ key: i }}>
+              <FontAwesomeIcon
+                {...{
+                  icon: faHeart,
+                }}
+              />
+            </li>
+          ))}
+        </ol>
       </div>
     )
   }

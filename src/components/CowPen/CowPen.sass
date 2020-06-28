@@ -39,21 +39,23 @@
     img
       width: 100px
 
-    svg
+    .fa-heart
       color: $heart-color
-      opacity: 0
-      position: absolute
-      right: 20px
-      top: 10px
-      transform: translateY(0px) scale(1)
+
+      &.animation
+        opacity: 0
+        position: absolute
+        right: 20px
+        top: 10px
+        transform: translateY(0px) scale(1)
 
 
-      &.animate
-        animation-name: hug-indicator
-        animation-duration: $hug-animation-duration
-        animation-fill-mode: forwards
-        animation-timing-function: ease-out
-        animation-iteration-count: 1
+        &.is-animating
+          animation-name: hug-indicator
+          animation-duration: $hug-animation-duration
+          animation-fill-mode: forwards
+          animation-timing-function: ease-out
+          animation-iteration-count: 1
 
   .is-moving
 
@@ -63,6 +65,15 @@
       animation-fill-mode: forwards
       animation-timing-function: linear
       animation-iteration-count: infinite
+
+  .happiness-boosts-today
+    bottom: -12px
+    display: flex
+    justify-content: space-evenly
+    left: 10%
+    position: absolute
+    width: 80%
+    z-index: -1
 
   @keyframes is-moving-keyframes
     0%,
