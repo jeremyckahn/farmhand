@@ -696,12 +696,12 @@ export const sellItem = (state, { id }, howMany = 1) => {
   }
 
   const item = itemsMap[id]
-  const { itemsSold, money, valueAdjustments } = state
+  const { itemsSold, money, revenue, valueAdjustments } = state
   let { loanBalance } = state
 
   const adjustedItemValue = getAdjustedItemValue(valueAdjustments, id)
   const saleIsGarnished = isItemAFarmProduct(item)
-  let profit = 0
+  let saleValue = 0
 
   for (let i = 0; i < howMany; i++) {
     const loanGarnishment = saleIsGarnished
@@ -712,7 +712,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
       : 0
     const garnishedProfit = adjustedItemValue - loanGarnishment
     loanBalance = moneyTotal(loanBalance, -loanGarnishment)
-    profit = moneyTotal(profit, garnishedProfit)
+    saleValue = moneyTotal(saleValue, garnishedProfit)
   }
 
   if (saleIsGarnished) {
@@ -722,7 +722,8 @@ export const sellItem = (state, { id }, howMany = 1) => {
   state = {
     ...state,
     itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
-    money: moneyTotal(money, profit),
+    money: moneyTotal(money, saleValue),
+    revenue: moneyTotal(revenue, saleValue),
   }
 
   state = decrementItemFromInventory(state, id, howMany)

@@ -118,6 +118,8 @@ export const getPlantableCropInventory = memoize(inventory =>
  * itemIds.
  * @property {number} purchasedCowPen
  * @property {number} purchasedField
+ * @property {number} revenue The amount of money the player has generated in
+ * revenue.
  * @property {Array.<farmhand.item>} shopInventory
  * @property {boolean} doShowNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
@@ -161,6 +163,7 @@ export default class Farmhand extends Component {
     fieldMode: OBSERVE,
     priceCrashes: {},
     priceSurges: {},
+    revenue: 0,
     purchasedCowPen: 0,
     purchasedField: 0,
     shopInventory: [...shopInventory],
@@ -196,6 +199,7 @@ export default class Farmhand extends Component {
       'purchasedField',
       'priceCrashes',
       'priceSurges',
+      'revenue',
       'valueAdjustments',
     ].reduce((acc, key) => {
       acc[key] = state[key]
