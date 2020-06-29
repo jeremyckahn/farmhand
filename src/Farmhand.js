@@ -276,6 +276,7 @@ export default class Farmhand extends Component {
       openAchievements: 'a',
       openLog: 'l',
       openPriceEvents: 'p',
+      openStats: 'd',
       previousView: 'left',
       selectHoe: 'shift+h',
       selectScythe: 'shift+s',
@@ -301,6 +302,7 @@ export default class Farmhand extends Component {
         this.setState({ currentDialogView: dialogView.FARMERS_LOG }),
       openPriceEvents: () =>
         this.setState({ currentDialogView: dialogView.PRICE_EVENTS }),
+      openStats: () => this.setState({ currentDialogView: dialogView.STATS }),
       previousView: this.focusPreviousView.bind(this),
       selectHoe: () => this.handlers.handleFieldModeSelect(CLEANUP),
       selectScythe: () => this.handlers.handleFieldModeSelect(HARVEST),
