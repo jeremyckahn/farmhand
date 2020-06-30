@@ -81,7 +81,7 @@ const achievements = [
       goal
     )}. Proven farmers get access to the Crop Price Guide, an invaluable tool for making better buying and selling decisions!`,
     rewardDescription: 'Crop Price Guide',
-    condition: state => state.money >= goal,
+    condition: state => state.revenue >= goal,
     // Reward is a no-op for this achievement. The value of
     // state.completedAchievements['unlock-crop-price-guide'] (which is
     // automatically set to `true` in the achievement processing logic) is used
