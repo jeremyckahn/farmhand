@@ -84,6 +84,7 @@ export const Plot = ({
         backgroundImage: getBackgroundStyles(plotContent),
       }}
       onClick={() => handlePlotClick(x, y)}
+      onDragEnter={() => handlePlotClick(x, y)}
       onMouseOver={() => setHoveredPlot({ x, y })}
     >
       <img
