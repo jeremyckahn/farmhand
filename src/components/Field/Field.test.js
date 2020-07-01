@@ -8,6 +8,7 @@ import { Field } from './Field'
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
+jest.mock('../../data/shop-inventory')
 jest.mock('../../img')
 
 let component

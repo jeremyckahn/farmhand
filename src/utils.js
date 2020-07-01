@@ -1,6 +1,7 @@
 import Dinero from 'dinero.js'
 import memoize from 'fast-memoize'
 
+import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
 import { cropIdToTypeMap, itemsMap } from './data/maps'
 import { milk1, milk2, milk3 } from './data/items'
@@ -24,6 +25,11 @@ import {
 } from './constants'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
+
+const shopInventoryMap = shopInventory.reduce((acc, item) => {
+  acc[item.id] = item
+  return acc
+}, {})
 
 const chooseRandom = list => list[Math.round(Math.random() * (list.length - 1))]
 
@@ -110,6 +116,26 @@ export const getItemValue = ({ id }, valueAdjustments) =>
     ),
     precision: 2,
   }).toUnit()
+
+/**
+ * @param {Object} valueAdjustments
+ * @param {string} itemId
+ * @returns {number}
+ */
+export const getAdjustedItemValue = (valueAdjustments, itemId) =>
+  (valueAdjustments[itemId] || 1) * itemsMap[itemId].value
+
+/**
+ * @param {farmhand.item} item
+ * @returns {boolean}
+ */
+export const isItemSoldInShop = ({ id }) => Boolean(shopInventoryMap[id])
+
+/**
+ * @param {farmhand.item} item
+ * @returns {number}
+ */
+export const getResaleValue = ({ id }) => itemsMap[id].value / 2
 
 /**
  * @param {string} itemId
@@ -233,14 +259,6 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
         .map((_, x) => ({ x: rangeStartX + x, y: rangeStartY + y }))
     )
 }
-
-/**
- * @param {Object} valueAdjustments
- * @param {string} itemId
- * @returns {number}
- */
-export const getAdjustedItemValue = (valueAdjustments, itemId) =>
-  (valueAdjustments[itemId] || 1) * itemsMap[itemId].value
 
 /**
  * @param {string} seedItemId

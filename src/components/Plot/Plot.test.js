@@ -10,6 +10,7 @@ import { Plot, getBackgroundStyles, isInHoverRange } from './Plot'
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
+jest.mock('../../data/shop-inventory')
 jest.mock('../../img')
 
 let component

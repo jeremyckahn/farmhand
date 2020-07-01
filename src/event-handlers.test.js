@@ -7,6 +7,7 @@ import { testItem } from './test-utils'
 
 jest.mock('./data/items')
 jest.mock('./data/recipes')
+jest.mock('./data/shop-inventory')
 
 let component
 

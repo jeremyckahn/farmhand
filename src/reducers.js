@@ -8,6 +8,7 @@ import {
   generateCow,
   generateValueAdjustments,
   getAdjustedItemValue,
+  getResaleValue,
   getCowMilkItem,
   getCowMilkRate,
   getCowValue,
@@ -20,6 +21,7 @@ import {
   getRandomCropItem,
   getRangeCoords,
   isItemAFarmProduct,
+  isItemSoldInShop,
   moneyTotal,
 } from './utils'
 import {
@@ -699,7 +701,9 @@ export const sellItem = (state, { id }, howMany = 1) => {
   const { itemsSold, money, revenue, valueAdjustments } = state
   let { loanBalance } = state
 
-  const adjustedItemValue = getAdjustedItemValue(valueAdjustments, id)
+  const adjustedItemValue = isItemSoldInShop(item)
+    ? getResaleValue(item)
+    : getAdjustedItemValue(valueAdjustments, id)
   const saleIsGarnished = isItemAFarmProduct(item)
   let saleValue = 0
 

@@ -5,6 +5,7 @@ import { achievementsMap } from './achievements'
 
 jest.mock('./items')
 jest.mock('./recipes')
+jest.mock('./shop-inventory')
 
 describe('harvest-crop', () => {
   describe('condition', () => {

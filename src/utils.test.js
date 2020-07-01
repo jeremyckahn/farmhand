@@ -48,6 +48,7 @@ import {
 
 jest.mock('./data/maps')
 jest.mock('./data/items')
+jest.mock('./data/shop-inventory')
 jest.mock('./img')
 
 const { SEED, GROWING, GROWN } = cropLifeStage

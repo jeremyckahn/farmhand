@@ -15,9 +15,11 @@ import FarmhandContext from '../../Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
 import {
+  isItemSoldInShop,
   getCropLifecycleDuration,
   getFinalCropItemFromSeedItem,
   getItemValue,
+  getResaleValue,
   moneyString,
 } from '../../utils'
 
@@ -99,7 +101,11 @@ export const Item = ({
   showQuantity,
   valueAdjustments,
 
-  adjustedValue = getItemValue(item, valueAdjustments),
+  // Note: This prop is defaulted to 0 in the tests.
+  adjustedValue = isSellView && isItemSoldInShop(item)
+    ? getResaleValue(item)
+    : getItemValue(item, valueAdjustments),
+
   disableSellButtons = playerInventoryQuantities[id] === 0,
 }) => (
   <Card

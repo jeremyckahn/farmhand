@@ -6,6 +6,9 @@ import { testItem } from '../../test-utils'
 
 import { Item } from './Item'
 
+jest.mock('../../data/maps')
+jest.mock('../../data/shop-inventory')
+
 let component
 
 beforeEach(() => {
