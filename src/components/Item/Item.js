@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
+import TextField from '@material-ui/core/TextField'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import { bool, func, number, object } from 'prop-types'
@@ -81,6 +82,22 @@ const SellValueIndicator = ({
     }}
   />
 )
+
+const CustomQuantityPurchaseInput = () => {
+  return (
+    <div {...{ className: 'custom-quantity' }}>
+      <TextField
+        {...{
+          inputProps: {
+            type: 'number',
+            pattern: '[0-9]*',
+            min: 0,
+          },
+        }}
+      />
+    </div>
+  )
+}
 
 export const Item = ({
   bulkPurchaseSize,
@@ -214,6 +231,7 @@ export const Item = ({
               Buy {bulkPurchaseSize}
             </Button>
           )}
+          <CustomQuantityPurchaseInput />
           <Button
             {...{
               className: 'max-out',

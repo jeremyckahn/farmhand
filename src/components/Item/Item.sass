@@ -1,7 +1,10 @@
 @import ../../styles/variables.sass
 
+// FIXME: The overall layout of Item needs to be improved for smaller screens.
+
 .Item
   border-radius: 1em
+  max-width: 800px
 
   img
     width: 3em
@@ -20,3 +23,11 @@
 
       &.detail
         color: #888
+
+  .MuiCardActions-root
+    flex-wrap: wrap
+
+  // The element.class specificity of this selector is necessary to override
+  // MUI styles.
+  button.max-out
+    margin-left: auto
