@@ -117,9 +117,7 @@ const CustomQuantityPurchaseInput = ({
           min: 1,
           max: maxQuantityPlayerCanAfford,
         },
-        onChange: ({ target: value }) => {
-          handleUpdateNumber(Number(value))
-        },
+        onChange: ({ target: { value } }) => handleUpdateNumber(Number(value)),
         InputProps: {
           inputComponent: QuantityPurchaseNumberFormat,
         },
