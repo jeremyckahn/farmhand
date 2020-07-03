@@ -180,7 +180,7 @@ export const Item = ({
         ),
       }}
     />
-    {isPurchaseView && (
+    {isPurchaseView && description && isReplantable && (
       <CardContent>
         {description && <Typography>{description}</Typography>}
         {isReplantable && (

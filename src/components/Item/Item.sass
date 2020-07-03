@@ -2,15 +2,16 @@
 
 // FIXME: The overall layout of Item needs to be improved for smaller screens.
 
+$button-margin: 0.25em
+
 .Item
   border-radius: 1em
-  max-width: 800px
 
   img
     width: 3em
 
   button
-    margin: .25em
+    margin: 1em $button-margin $button-margin
 
   svg
     margin-bottom: -0.25em
@@ -26,8 +27,22 @@
 
   .MuiCardActions-root
     flex-wrap: wrap
+    padding-top: 0
 
   // The element.class specificity of this selector is necessary to override
   // MUI styles.
   button.max-out
     margin-left: auto
+
+    @media (max-width: #{$break-sm})
+      margin-left: $button-margin
+
+  .MuiInput-root
+    margin-right: 3em
+    max-width: 100px
+
+    input
+      margin-top: 1em
+
+      &[type="number"]
+        min-width: auto

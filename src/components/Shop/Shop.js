@@ -9,6 +9,8 @@ import {
 import Inventory from '../Inventory'
 import TierPurchase from '../TierPurchase'
 
+import './Shop.sass'
+
 export const Shop = ({
   handleCowPenPurchase,
   handleFieldPurchase,
