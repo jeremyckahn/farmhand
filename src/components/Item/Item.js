@@ -85,42 +85,37 @@ const SellValueIndicator = ({
 )
 
 const CustomQuantityPurchaseInput = ({
+  value,
   handleUpdateNumber,
   maxQuantityPlayerCanAfford,
-}) => {
-  const [inputValue, setInputValue] = useState(1)
-
-  return (
-    <div {...{ className: 'custom-quantity' }}>
-      <TextField
-        {...{
-          value: inputValue,
-          inputProps: {
-            pattern: '[0-9]*',
-          },
-          InputProps: {
-            inputComponent: ({ inputRef, ...rest }) => (
-              <NumberFormat
-                {...{
-                  ...rest,
-                  allowNegative: false,
-                  decimalScale: 0,
-                  isAllowed: ({ floatValue = 0 }) =>
-                    floatValue > 0 && floatValue <= maxQuantityPlayerCanAfford,
-                  onBlur: ({ target: { value } }) => {
-                    const number = Number(value)
-                    setInputValue(number)
-                    handleUpdateNumber(number)
-                  },
-                }}
-              />
-            ),
-          },
-        }}
-      />
-    </div>
-  )
-}
+}) => (
+  <div {...{ className: 'custom-quantity' }}>
+    <TextField
+      {...{
+        value,
+        inputProps: {
+          pattern: '[0-9]*',
+        },
+        InputProps: {
+          inputComponent: ({ inputRef, ...rest }) => (
+            <NumberFormat
+              {...{
+                ...rest,
+                allowNegative: false,
+                decimalScale: 0,
+                isAllowed: ({ floatValue = 0 }) =>
+                  floatValue > 0 && floatValue <= maxQuantityPlayerCanAfford,
+                onBlur: ({ target: { value } }) => {
+                  handleUpdateNumber(Number(value))
+                },
+              }}
+            />
+          ),
+        },
+      }}
+    />
+  </div>
+)
 
 export const Item = ({
   bulkPurchaseSize,
@@ -262,6 +257,7 @@ export const Item = ({
             )}
             <CustomQuantityPurchaseInput
               {...{
+                value: purchaseQuantity,
                 handleUpdateNumber: setPurchaseQuantity,
                 maxQuantityPlayerCanAfford,
               }}
