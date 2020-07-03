@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import NumberFormat from 'react-number-format'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 import Button from '@material-ui/core/Button'
@@ -83,15 +84,32 @@ const SellValueIndicator = ({
   />
 )
 
-const CustomQuantityPurchaseInput = () => {
+const CustomQuantityPurchaseInput = ({ maxQuantityPlayerCanAfford }) => {
+  const [inputValue, setInputValue] = useState(1)
+
   return (
     <div {...{ className: 'custom-quantity' }}>
       <TextField
         {...{
+          value: inputValue,
           inputProps: {
-            type: 'number',
             pattern: '[0-9]*',
-            min: 0,
+          },
+          InputProps: {
+            inputComponent: ({ inputRef, ...rest }) => (
+              <NumberFormat
+                {...{
+                  ...rest,
+                  allowNegative: false,
+                  decimalScale: 0,
+                  isAllowed: ({ floatValue = 0 }) =>
+                    floatValue > 0 && floatValue <= maxQuantityPlayerCanAfford,
+                  onBlur: ({ target: { value } }) => {
+                    setInputValue(Number(value))
+                  },
+                }}
+              />
+            ),
           },
         }}
       />
@@ -122,6 +140,8 @@ export const Item = ({
   adjustedValue = isSellView && isItemSoldInShop(item)
     ? getResaleValue(item)
     : getItemValue(item, valueAdjustments),
+
+  maxQuantityPlayerCanAfford = Math.floor(money / adjustedValue),
 
   disableSellButtons = playerInventoryQuantities[id] === 0,
 }) => (
@@ -231,7 +251,7 @@ export const Item = ({
               Buy {bulkPurchaseSize}
             </Button>
           )}
-          <CustomQuantityPurchaseInput />
+          <CustomQuantityPurchaseInput {...{ maxQuantityPlayerCanAfford }} />
           <Button
             {...{
               className: 'max-out',
