@@ -84,6 +84,25 @@ const SellValueIndicator = ({
   />
 )
 
+const QuantityPurchaseNumberFormat = ({
+  inputRef,
+  maxQuantityPlayerCanAfford,
+  min,
+  max,
+  onChange,
+  ...rest
+}) => (
+  <NumberFormat
+    {...{
+      ...rest,
+      allowNegative: false,
+      decimalScale: 0,
+      isAllowed: ({ floatValue = 0 }) => floatValue >= min && floatValue <= max,
+      onChange,
+    }}
+  />
+)
+
 const CustomQuantityPurchaseInput = ({
   value,
   handleUpdateNumber,
@@ -95,22 +114,14 @@ const CustomQuantityPurchaseInput = ({
         value,
         inputProps: {
           pattern: '[0-9]*',
+          min: 1,
+          max: maxQuantityPlayerCanAfford,
+        },
+        onChange: ({ target: value }) => {
+          handleUpdateNumber(Number(value))
         },
         InputProps: {
-          inputComponent: ({ inputRef, ...rest }) => (
-            <NumberFormat
-              {...{
-                ...rest,
-                allowNegative: false,
-                decimalScale: 0,
-                isAllowed: ({ floatValue = 0 }) =>
-                  floatValue > 0 && floatValue <= maxQuantityPlayerCanAfford,
-                onBlur: ({ target: { value } }) => {
-                  handleUpdateNumber(Number(value))
-                },
-              }}
-            />
-          ),
+          inputComponent: QuantityPurchaseNumberFormat,
         },
       }}
     />
