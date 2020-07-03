@@ -84,7 +84,10 @@ const SellValueIndicator = ({
   />
 )
 
-const CustomQuantityPurchaseInput = ({ maxQuantityPlayerCanAfford }) => {
+const CustomQuantityPurchaseInput = ({
+  handleUpdateNumber,
+  maxQuantityPlayerCanAfford,
+}) => {
   const [inputValue, setInputValue] = useState(1)
 
   return (
@@ -105,7 +108,9 @@ const CustomQuantityPurchaseInput = ({ maxQuantityPlayerCanAfford }) => {
                   isAllowed: ({ floatValue = 0 }) =>
                     floatValue > 0 && floatValue <= maxQuantityPlayerCanAfford,
                   onBlur: ({ target: { value } }) => {
-                    setInputValue(Number(value))
+                    const number = Number(value)
+                    setInputValue(number)
+                    handleUpdateNumber(number)
                   },
                 }}
               />
@@ -144,156 +149,166 @@ export const Item = ({
   maxQuantityPlayerCanAfford = Math.floor(money / adjustedValue),
 
   disableSellButtons = playerInventoryQuantities[id] === 0,
-}) => (
-  <Card
-    {...{
-      className: classNames('Item', {
-        'is-selectable': isSelectView,
-        'is-selected': isSelected,
-      }),
-      onClick: isSelectView ? () => handleItemSelectClick(item) : noop,
-      raised: isSelected,
-    }}
-  >
-    <CardHeader
+}) => {
+  const [purchaseQuantity, setPurchaseQuantity] = useState(1)
+
+  return (
+    <Card
       {...{
-        avatar: <img {...{ src: items[id] }} alt={name} />,
-        title: name,
-        subheader: (
-          <div>
-            {isPurchaseView && (
-              <>
+        className: classNames('Item', {
+          'is-selectable': isSelectView,
+          'is-selected': isSelected,
+        }),
+        onClick: isSelectView ? () => handleItemSelectClick(item) : noop,
+        raised: isSelected,
+      }}
+    >
+      <CardHeader
+        {...{
+          avatar: <img {...{ src: items[id] }} alt={name} />,
+          title: name,
+          subheader: (
+            <div>
+              {isPurchaseView && (
+                <>
+                  <p>
+                    {`Price: ${moneyString(adjustedValue)}`}
+                    {completedAchievements['unlock-crop-price-guide'] &&
+                      valueAdjustments[id] && (
+                        <PurchaseValueIndicator
+                          {...{ id, value: adjustedValue, valueAdjustments }}
+                        />
+                      )}
+                  </p>
+                </>
+              )}
+              {isSellView && (
                 <p>
-                  {`Price: ${moneyString(adjustedValue)}`}
+                  {`Sell price: ${moneyString(adjustedValue)}`}
                   {completedAchievements['unlock-crop-price-guide'] &&
                     valueAdjustments[id] && (
-                      <PurchaseValueIndicator
+                      <SellValueIndicator
                         {...{ id, value: adjustedValue, valueAdjustments }}
                       />
                     )}
                 </p>
-              </>
-            )}
-            {isSellView && (
-              <p>
-                {`Sell price: ${moneyString(adjustedValue)}`}
-                {completedAchievements['unlock-crop-price-guide'] &&
-                  valueAdjustments[id] && (
-                    <SellValueIndicator
-                      {...{ id, value: adjustedValue, valueAdjustments }}
-                    />
-                  )}
-              </p>
-            )}
-            {showQuantity && (
-              <p>
-                <strong>In Inventory:</strong> {playerInventoryQuantities[id]}
-              </p>
-            )}
-            {isPurchaseView && item.growsInto && (
-              <p>
-                Days to mature:{' '}
-                {getCropLifecycleDuration(getFinalCropItemFromSeedItem(item))}
-              </p>
-            )}
-          </div>
-        ),
-      }}
-    />
-    {isPurchaseView && description && isReplantable && (
-      <CardContent>
-        {description && <Typography>{description}</Typography>}
-        {isReplantable && (
-          <Typography {...{ color: 'textSecondary' }}>
-            Once planted in the field, this item can be returned to your
-            inventory with the hoe and then replanted elsewhere.
-          </Typography>
-        )}
-      </CardContent>
-    )}
-    <CardActions>
-      {isSelectView && (
-        <Button
-          {...{
-            // The onClick handler for this is bound on the parent Card for
-            // better select-ability.
-            className: 'select',
-            color: 'primary',
-            variant: isSelected ? 'contained' : 'outlined',
-          }}
-        >
-          Select
-        </Button>
+              )}
+              {showQuantity && (
+                <p>
+                  <strong>In Inventory:</strong> {playerInventoryQuantities[id]}
+                </p>
+              )}
+              {isPurchaseView && item.growsInto && (
+                <p>
+                  Days to mature:{' '}
+                  {getCropLifecycleDuration(getFinalCropItemFromSeedItem(item))}
+                </p>
+              )}
+            </div>
+          ),
+        }}
+      />
+      {isPurchaseView && description && isReplantable && (
+        <CardContent>
+          {description && <Typography>{description}</Typography>}
+          {isReplantable && (
+            <Typography {...{ color: 'textSecondary' }}>
+              Once planted in the field, this item can be returned to your
+              inventory with the hoe and then replanted elsewhere.
+            </Typography>
+          )}
+        </CardContent>
       )}
-      {isPurchaseView && (
-        <>
+      <CardActions>
+        {isSelectView && (
           <Button
             {...{
-              className: 'purchase',
+              // The onClick handler for this is bound on the parent Card for
+              // better select-ability.
+              className: 'select',
               color: 'primary',
-              disabled: adjustedValue > money,
-              onClick: () => handleItemPurchaseClick(item),
-              variant: 'contained',
+              variant: isSelected ? 'contained' : 'outlined',
             }}
           >
-            Buy
+            Select
           </Button>
-          {bulkPurchaseSize && (
+        )}
+        {isPurchaseView && (
+          <>
             <Button
               {...{
-                className: 'bulk purchase',
+                className: 'purchase',
                 color: 'primary',
-                disabled: adjustedValue * bulkPurchaseSize > money,
-                onClick: () => handleItemPurchaseClick(item, bulkPurchaseSize),
+                disabled: adjustedValue * purchaseQuantity > money,
+                onClick: () => handleItemPurchaseClick(item, purchaseQuantity),
                 variant: 'contained',
               }}
             >
-              Buy {bulkPurchaseSize}
+              Buy
             </Button>
-          )}
-          <CustomQuantityPurchaseInput {...{ maxQuantityPlayerCanAfford }} />
-          <Button
-            {...{
-              className: 'max-out',
-              color: 'primary',
-              disabled: adjustedValue > money,
-              onClick: () => handleItemMaxOutClick(item),
-              variant: 'contained',
-            }}
-          >
-            Max Out
-          </Button>
-        </>
-      )}
-      {isSellView && (
-        <>
-          <Button
-            {...{
-              className: 'sell',
-              color: 'secondary',
-              disabled: disableSellButtons,
-              onClick: () => handleItemSellClick(item),
-              variant: 'contained',
-            }}
-          >
-            Sell
-          </Button>
-          <Button
-            {...{
-              className: 'sell-all',
-              color: 'secondary',
-              disabled: disableSellButtons,
-              onClick: () => handleItemSellAllClick(item),
-              variant: 'contained',
-            }}
-          >
-            Sell All
-          </Button>
-        </>
-      )}
-    </CardActions>
-  </Card>
-)
+            {bulkPurchaseSize && (
+              <Button
+                {...{
+                  className: 'bulk purchase',
+                  color: 'primary',
+                  disabled: adjustedValue * bulkPurchaseSize > money,
+                  onClick: () =>
+                    handleItemPurchaseClick(item, bulkPurchaseSize),
+                  variant: 'contained',
+                }}
+              >
+                Buy {bulkPurchaseSize}
+              </Button>
+            )}
+            <CustomQuantityPurchaseInput
+              {...{
+                handleUpdateNumber: setPurchaseQuantity,
+                maxQuantityPlayerCanAfford,
+              }}
+            />
+            <Button
+              {...{
+                className: 'max-out',
+                color: 'primary',
+                disabled: adjustedValue > money,
+                onClick: () => handleItemMaxOutClick(item),
+                variant: 'contained',
+              }}
+            >
+              Max Out
+            </Button>
+          </>
+        )}
+        {isSellView && (
+          <>
+            <Button
+              {...{
+                className: 'sell',
+                color: 'secondary',
+                disabled: disableSellButtons,
+                onClick: () => handleItemSellClick(item),
+                variant: 'contained',
+              }}
+            >
+              Sell
+            </Button>
+            <Button
+              {...{
+                className: 'sell-all',
+                color: 'secondary',
+                disabled: disableSellButtons,
+                onClick: () => handleItemSellAllClick(item),
+                variant: 'contained',
+              }}
+            >
+              Sell All
+            </Button>
+          </>
+        )}
+      </CardActions>
+    </Card>
+  )
+}
 
 Item.propTypes = {
   adjustedValue: number,
