@@ -120,10 +120,10 @@ export const getItemValue = ({ id }, valueAdjustments) =>
 /**
  * @param {Object} valueAdjustments
  * @param {string} itemId
- * @returns {number}
+ * @returns {number} Rounded to a money value.
  */
 export const getAdjustedItemValue = (valueAdjustments, itemId) =>
-  (valueAdjustments[itemId] || 1) * itemsMap[itemId].value
+  Number(((valueAdjustments[itemId] || 1) * itemsMap[itemId].value).toFixed(2))
 
 /**
  * @param {farmhand.item} item
