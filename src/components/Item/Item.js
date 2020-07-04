@@ -179,17 +179,15 @@ export const Item = ({
           subheader: (
             <div>
               {isPurchaseView && (
-                <>
-                  <p>
-                    {`Price: ${moneyString(adjustedValue)}`}
-                    {completedAchievements['unlock-crop-price-guide'] &&
-                      valueAdjustments[id] && (
-                        <PurchaseValueIndicator
-                          {...{ id, value: adjustedValue, valueAdjustments }}
-                        />
-                      )}
-                  </p>
-                </>
+                <p>
+                  {`Price: ${moneyString(adjustedValue)}`}
+                  {completedAchievements['unlock-crop-price-guide'] &&
+                    valueAdjustments[id] && (
+                      <PurchaseValueIndicator
+                        {...{ id, value: adjustedValue, valueAdjustments }}
+                      />
+                    )}
+                </p>
               )}
               {isSellView && (
                 <p>
@@ -217,7 +215,7 @@ export const Item = ({
           ),
         }}
       />
-      {isPurchaseView && description && isReplantable && (
+      {isPurchaseView && (description || isReplantable) && (
         <CardContent>
           {description && <Typography>{description}</Typography>}
           {isReplantable && (
