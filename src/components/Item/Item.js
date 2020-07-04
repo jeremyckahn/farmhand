@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NumberFormat from 'react-number-format'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
@@ -114,7 +114,7 @@ const CustomQuantityPurchaseInput = ({
         value,
         inputProps: {
           pattern: '[0-9]*',
-          min: 1,
+          min: 0,
           max: maxQuantityPlayerCanAfford,
         },
         onChange: ({ target: { value } }) => handleUpdateNumber(Number(value)),
@@ -155,6 +155,10 @@ export const Item = ({
   disableSellButtons = playerInventoryQuantities[id] === 0,
 }) => {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1)
+
+  useEffect(() => {
+    setPurchaseQuantity(Math.min(maxQuantityPlayerCanAfford, purchaseQuantity))
+  }, [maxQuantityPlayerCanAfford, purchaseQuantity])
 
   return (
     <Card
