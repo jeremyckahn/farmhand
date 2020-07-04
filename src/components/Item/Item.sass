@@ -1,8 +1,7 @@
 @import ../../styles/variables.sass
 
-// FIXME: The overall layout of Item needs to be improved for smaller screens.
-
 $button-margin: 0.25em
+$non-interactive-color: #888
 
 .Item
   border-radius: 1em
@@ -23,7 +22,7 @@ $button-margin: 0.25em
       padding-top: 1em
 
       &.detail
-        color: #888
+        color: $non-interactive-color
 
   .MuiCardActions-root
     flex-wrap: wrap
@@ -42,11 +41,12 @@ $button-margin: 0.25em
     display: flex
 
     p
+      color: $non-interactive-color
       margin-right: 3em
       padding-bottom: 0.75em
 
   .MuiInput-root
-    margin-right: 0
+    margin-right: 0.25em
     max-width: 75px
 
     input

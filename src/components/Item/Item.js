@@ -94,12 +94,14 @@ const QuantityPurchaseNumberFormat = ({
   ...rest
 }) => (
   <NumberFormat
+    isNumericString
+    thousandSeparator
     {...{
       ...rest,
       allowNegative: false,
       decimalScale: 0,
       isAllowed: ({ floatValue = 0 }) => floatValue >= min && floatValue <= max,
-      onChange,
+      onValueChange: ({ floatValue }) => onChange(floatValue),
     }}
   />
 )
@@ -118,7 +120,7 @@ const QuantityPurchaseInput = ({
           min: 0,
           max: maxQuantityPlayerCanAfford,
         },
-        onChange: ({ target: { value } }) => handleUpdateNumber(Number(value)),
+        onChange: handleUpdateNumber,
         InputProps: {
           inputComponent: QuantityPurchaseNumberFormat,
         },
