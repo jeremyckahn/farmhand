@@ -60,6 +60,7 @@ describe('conditional UI', () => {
       beforeEach(() => {
         component.setProps({
           money: 20,
+          showMaxOutButton: true,
         })
       })
 
@@ -67,46 +68,19 @@ describe('conditional UI', () => {
         expect(component.find('.purchase').props().disabled).toEqual(false)
         expect(component.find('.max-out').props().disabled).toEqual(false)
       })
-
-      describe('bulkPurchaseSize is defined', () => {
-        beforeEach(() => {
-          component.setProps({
-            bulkPurchaseSize: 2,
-          })
-        })
-
-        test('enables bulk purchase buttons', () => {
-          expect(component.find('.bulk.purchase').props().disabled).toEqual(
-            false
-          )
-        })
-      })
     })
 
     describe('user does not have enough money', () => {
       beforeEach(() => {
         component.setProps({
           money: 5,
+          showMaxOutButton: true,
         })
       })
 
       test('disables purchase buttons', () => {
         expect(component.find('.purchase').props().disabled).toEqual(true)
         expect(component.find('.max-out').props().disabled).toEqual(true)
-      })
-
-      describe('bulkPurchaseSize is defined', () => {
-        beforeEach(() => {
-          component.setProps({
-            bulkPurchaseSize: 2,
-          })
-        })
-
-        test('enables bulk purchase buttons', () => {
-          expect(component.find('.bulk.purchase').props().disabled).toEqual(
-            true
-          )
-        })
       })
     })
   })

@@ -127,7 +127,6 @@ const CustomQuantityPurchaseInput = ({
 )
 
 export const Item = ({
-  bulkPurchaseSize,
   completedAchievements,
   handleItemPurchaseClick,
   handleItemSelectClick,
@@ -141,6 +140,7 @@ export const Item = ({
   item: { id, isReplantable, description, name },
   money,
   playerInventoryQuantities,
+  showMaxOutButton,
   showQuantity,
   valueAdjustments,
 
@@ -255,20 +255,6 @@ export const Item = ({
             >
               Buy
             </Button>
-            {bulkPurchaseSize && (
-              <Button
-                {...{
-                  className: 'bulk purchase',
-                  color: 'primary',
-                  disabled: adjustedValue * bulkPurchaseSize > money,
-                  onClick: () =>
-                    handleItemPurchaseClick(item, bulkPurchaseSize),
-                  variant: 'contained',
-                }}
-              >
-                Buy {bulkPurchaseSize}
-              </Button>
-            )}
             <CustomQuantityPurchaseInput
               {...{
                 value: purchaseQuantity,
@@ -276,17 +262,20 @@ export const Item = ({
                 maxQuantityPlayerCanAfford,
               }}
             />
-            <Button
-              {...{
-                className: 'max-out',
-                color: 'primary',
-                disabled: adjustedValue > money,
-                onClick: () => setPurchaseQuantity(maxQuantityPlayerCanAfford),
-                variant: 'contained',
-              }}
-            >
-              Max Out
-            </Button>
+            {showMaxOutButton && (
+              <Button
+                {...{
+                  className: 'max-out',
+                  color: 'primary',
+                  disabled: adjustedValue > money,
+                  onClick: () =>
+                    setPurchaseQuantity(maxQuantityPlayerCanAfford),
+                  variant: 'contained',
+                }}
+              >
+                Max Out
+              </Button>
+            )}
           </>
         )}
         {isSellView && (
@@ -322,7 +311,6 @@ export const Item = ({
 
 Item.propTypes = {
   adjustedValue: number,
-  bulkPurchaseSize: number,
   completedAchievements: object.isRequired,
   disableSellButtons: bool,
   handleItemPurchaseClick: func,
@@ -335,6 +323,7 @@ Item.propTypes = {
   item: object.isRequired,
   money: number.isRequired,
   playerInventoryQuantities: object.isRequired,
+  showMaxOutButton: bool,
   showQuantity: bool,
   valueAdjustments: object.isRequired,
 }

@@ -19,10 +19,7 @@ import { animals } from '../../img'
 import FarmhandContext from '../../Farmhand.context'
 import { cowColors, genders } from '../../enums'
 import { moneyString, getCowValue, getCowWeight } from '../../utils'
-import {
-  COW_FEED_BULK_PURCHASE_AMOUNT,
-  PURCHASEABLE_COW_PENS,
-} from '../../constants'
+import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { cowFeed } from '../../data/items'
 
 import './CowPenContextMenu.sass'
@@ -202,7 +199,6 @@ export const CowPenContextMenu = ({
     <h3>Supplies</h3>
     <Item
       {...{
-        bulkPurchaseSize: COW_FEED_BULK_PURCHASE_AMOUNT,
         item: cowFeed,
         isPurchaseView: true,
         showQuantity: true,

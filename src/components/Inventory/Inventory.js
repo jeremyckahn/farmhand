@@ -123,6 +123,7 @@ export const Inventory = ({
                     isPurchaseView,
                     isSellView,
                     item,
+                    showMaxOutButton: true,
                     showQuantity: true,
                   }}
                 />
