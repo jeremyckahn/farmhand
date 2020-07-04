@@ -28,22 +28,15 @@ $non-interactive-color: #888
     flex-wrap: wrap
     padding-top: 0
 
-  // The element.class specificity of this selector is necessary to override
-  // MUI styles.
-  button.max-out
-    margin-left: auto
-
-    @media (max-width: #{$break-sm})
-      margin-left: $button-margin
-
   .quantity
     align-items: flex-end
     display: flex
 
-    p
-      color: $non-interactive-color
-      margin-right: 3em
-      padding-bottom: 0.75em
+    button
+      cursor: pointer
+      font-size: 16px
+      font-weight: normal
+      margin-left: 0
 
   .MuiInput-root
     margin-right: 0.25em

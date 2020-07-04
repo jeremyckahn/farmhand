@@ -143,7 +143,6 @@ export const Item = ({
   item: { id, isReplantable, description, name },
   money,
   playerInventoryQuantities,
-  showMaxOutButton,
   showQuantity,
   valueAdjustments,
 
@@ -266,24 +265,15 @@ export const Item = ({
                   maxQuantityPlayerCanAfford,
                 }}
               />
-              <Typography>
-                / {integerString(maxQuantityPlayerCanAfford)}
-              </Typography>
-            </div>
-            {showMaxOutButton && (
               <Button
                 {...{
-                  className: 'max-out',
-                  color: 'primary',
-                  disabled: adjustedValue > money,
                   onClick: () =>
                     setPurchaseQuantity(maxQuantityPlayerCanAfford),
-                  variant: 'contained',
                 }}
               >
-                Max Out
+                / {integerString(maxQuantityPlayerCanAfford)}
               </Button>
-            )}
+            </div>
           </>
         )}
         {isSellView && (
@@ -331,7 +321,6 @@ Item.propTypes = {
   item: object.isRequired,
   money: number.isRequired,
   playerInventoryQuantities: object.isRequired,
-  showMaxOutButton: bool,
   showQuantity: bool,
   valueAdjustments: object.isRequired,
 }

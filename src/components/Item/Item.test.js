@@ -60,13 +60,11 @@ describe('conditional UI', () => {
       beforeEach(() => {
         component.setProps({
           money: 20,
-          showMaxOutButton: true,
         })
       })
 
       test('enables purchase buttons', () => {
         expect(component.find('.purchase').props().disabled).toEqual(false)
-        expect(component.find('.max-out').props().disabled).toEqual(false)
       })
     })
 
@@ -74,13 +72,11 @@ describe('conditional UI', () => {
       beforeEach(() => {
         component.setProps({
           money: 5,
-          showMaxOutButton: true,
         })
       })
 
       test('disables purchase buttons', () => {
         expect(component.find('.purchase').props().disabled).toEqual(true)
-        expect(component.find('.max-out').props().disabled).toEqual(true)
       })
     })
   })
