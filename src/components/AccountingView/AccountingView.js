@@ -54,6 +54,7 @@ const AccountingView = ({
                   pattern: '[0-9]*',
                 },
                 InputProps: {
+                  // TODO: Define this outside of the AccountingView component.
                   inputComponent: ({ inputRef, ...rest }) => (
                     <NumberFormat
                       fixedDecimalScale

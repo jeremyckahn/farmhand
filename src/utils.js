@@ -93,13 +93,27 @@ export const moneyString = number =>
 
 /**
  * @param {number} number
+ * @param {string} format
+ * @see https://dinerojs.com/module-dinero#~toFormat
+ * @returns {string}
+ */
+const formatNumber = (number, format) =>
+  Dinero({ amount: Math.round(number * 100), precision: 2 })
+    .convertPrecision(0)
+    .toFormat(format)
+
+/**
+ * @param {number} number
  * @returns {string} Include dollar sign and other formatting. Cents are
  * rounded off.
  */
-export const dollarString = number =>
-  Dinero({ amount: Math.round(number * 100), precision: 2 })
-    .convertPrecision(0)
-    .toFormat('$0,0')
+export const dollarString = number => formatNumber(number, '$0,0')
+
+/**
+ * @param {number} number
+ * @returns {string} Number string with commas.
+ */
+export const integerString = number => formatNumber(number, '0,0')
 
 /**
  * @param {farmhand.item} item

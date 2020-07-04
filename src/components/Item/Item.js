@@ -23,6 +23,7 @@ import {
   getItemValue,
   getResaleValue,
   moneyString,
+  integerString,
 } from '../../utils'
 
 import './Item.sass'
@@ -263,7 +264,9 @@ export const Item = ({
                   maxQuantityPlayerCanAfford,
                 }}
               />
-              <Typography>/ {maxQuantityPlayerCanAfford}</Typography>
+              <Typography>
+                / {integerString(maxQuantityPlayerCanAfford)}
+              </Typography>
             </div>
             {showMaxOutButton && (
               <Button

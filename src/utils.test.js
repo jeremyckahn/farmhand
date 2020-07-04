@@ -2,6 +2,7 @@ import {
   canMakeRecipe,
   castToMoney,
   dollarString,
+  integerString,
   generateCow,
   generateValueAdjustments,
   getCowMilkRate,
@@ -86,6 +87,12 @@ describe('moneyString', () => {
 describe('dollarString', () => {
   test('formats number to dollar string', () => {
     expect(dollarString(1234.567)).toEqual('$1,235')
+  })
+})
+
+describe('integerString', () => {
+  test('formats number to integer string string', () => {
+    expect(integerString(1234.567)).toEqual('1,235')
   })
 })
 
