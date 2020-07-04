@@ -885,40 +885,6 @@ describe('purchaseItem', () => {
   })
 })
 
-describe('purchaseItemMax', () => {
-  describe('player does not have enough money for any items', () => {
-    test('items are not purchased', () => {
-      const { inventory, money } = fn.purchaseItemMax(
-        {
-          inventory: [],
-          money: 1,
-          valueAdjustments: { 'sample-item-1': 1e9 },
-        },
-        testItem({ id: 'sample-item-1' })
-      )
-
-      expect(money).toEqual(1)
-      expect(inventory).toEqual([])
-    })
-  })
-
-  describe('player has enough money for items', () => {
-    test('max items are purchased', () => {
-      const { inventory, money } = fn.purchaseItemMax(
-        {
-          inventory: [],
-          money: 2.5,
-          valueAdjustments: { 'sample-item-1': 1 },
-        },
-        testItem({ id: 'sample-item-1' })
-      )
-
-      expect(money).toEqual(0.5)
-      expect(inventory[0].quantity).toEqual(2)
-    })
-  })
-})
-
 describe('updateLearnedRecipes', () => {
   describe('recipe condition is not met', () => {
     test('recipe is not in the returned map', () => {

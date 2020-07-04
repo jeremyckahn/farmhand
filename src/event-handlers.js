@@ -16,13 +16,6 @@ const toolbeltFieldModes = [CLEANUP, HARVEST, WATER]
 export default {
   /**
    * @param {farmhand.item} item
-   */
-  handleItemMaxOutClick(item) {
-    this.purchaseItemMax(item)
-  },
-
-  /**
-   * @param {farmhand.item} item
    * @param {number} [howMany=1]
    */
   handleItemPurchaseClick(item, howMany = 1) {

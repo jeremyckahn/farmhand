@@ -129,7 +129,6 @@ const CustomQuantityPurchaseInput = ({
 export const Item = ({
   bulkPurchaseSize,
   completedAchievements,
-  handleItemMaxOutClick,
   handleItemPurchaseClick,
   handleItemSelectClick,
   handleItemSellAllClick,
@@ -280,7 +279,7 @@ export const Item = ({
                 className: 'max-out',
                 color: 'primary',
                 disabled: adjustedValue > money,
-                onClick: () => handleItemMaxOutClick(item),
+                onClick: () => setPurchaseQuantity(maxQuantityPlayerCanAfford),
                 variant: 'contained',
               }}
             >
@@ -324,7 +323,6 @@ Item.propTypes = {
   bulkPurchaseSize: number,
   completedAchievements: object.isRequired,
   disableSellButtons: bool,
-  handleItemMaxOutClick: func,
   handleItemPurchaseClick: func,
   handleItemSelectClick: func,
   handleItemSellClick: func,

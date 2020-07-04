@@ -338,7 +338,6 @@ export default class Farmhand extends Component {
       'purchaseCowPen',
       'purchaseField',
       'purchaseItem',
-      'purchaseItemMax',
       'plantInPlot',
       'sellItem',
       'sellAllOfItem',
