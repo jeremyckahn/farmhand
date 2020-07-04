@@ -246,7 +246,9 @@ export const Item = ({
               {...{
                 className: 'purchase',
                 color: 'primary',
-                disabled: adjustedValue * purchaseQuantity > money,
+                disabled:
+                  purchaseQuantity === 0 ||
+                  adjustedValue * purchaseQuantity > money,
                 onClick: () => handleItemPurchaseClick(item, purchaseQuantity),
                 variant: 'contained',
               }}
