@@ -37,9 +37,18 @@ $button-margin: 0.25em
     @media (max-width: #{$break-sm})
       margin-left: $button-margin
 
+  .quantity
+    align-items: flex-end
+    display: flex
+
+    p
+      margin-right: 3em
+      padding-bottom: 0.75em
+
   .MuiInput-root
-    margin-right: 3em
-    max-width: 100px
+    margin-right: 0
+    max-width: 75px
 
     input
       margin-top: 1em
+      text-align: right

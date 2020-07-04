@@ -103,12 +103,12 @@ const QuantityPurchaseNumberFormat = ({
   />
 )
 
-const CustomQuantityPurchaseInput = ({
+const QuantityPurchaseInput = ({
   value,
   handleUpdateNumber,
   maxQuantityPlayerCanAfford,
 }) => (
-  <div {...{ className: 'custom-quantity' }}>
+  <div>
     <TextField
       {...{
         value,
@@ -255,13 +255,16 @@ export const Item = ({
             >
               Buy
             </Button>
-            <CustomQuantityPurchaseInput
-              {...{
-                value: purchaseQuantity,
-                handleUpdateNumber: setPurchaseQuantity,
-                maxQuantityPlayerCanAfford,
-              }}
-            />
+            <div className="quantity">
+              <QuantityPurchaseInput
+                {...{
+                  value: purchaseQuantity,
+                  handleUpdateNumber: setPurchaseQuantity,
+                  maxQuantityPlayerCanAfford,
+                }}
+              />
+              <Typography>/ {maxQuantityPlayerCanAfford}</Typography>
+            </div>
             {showMaxOutButton && (
               <Button
                 {...{
