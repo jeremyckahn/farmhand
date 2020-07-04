@@ -101,7 +101,7 @@ const QuantityPurchaseNumberFormat = ({
       allowNegative: false,
       decimalScale: 0,
       isAllowed: ({ floatValue = 0 }) => floatValue >= min && floatValue <= max,
-      onValueChange: ({ floatValue }) => onChange(floatValue),
+      onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
     }}
   />
 )
