@@ -202,7 +202,8 @@ export const Item = ({
               )}
               {showQuantity && (
                 <p>
-                  <strong>In Inventory:</strong> {playerInventoryQuantities[id]}
+                  <strong>In Inventory:</strong>{' '}
+                  {integerString(playerInventoryQuantities[id])}
                 </p>
               )}
               {isPurchaseView && item.growsInto && (
