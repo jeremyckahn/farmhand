@@ -37,7 +37,8 @@ describe('handleItemSellClick', () => {
     handlers().handleItemSellClick(testItem({ id: 'sample-item-1' }))
 
     expect(component.instance().sellItem).toHaveBeenCalledWith(
-      testItem({ id: 'sample-item-1' })
+      testItem({ id: 'sample-item-1' }),
+      1
     )
   })
 })

@@ -120,7 +120,6 @@ export const Item = ({
   completedAchievements,
   handleItemPurchaseClick,
   handleItemSelectClick,
-  handleItemSellAllClick,
   handleItemSellClick,
   isPurchaseView,
   isSelectView,
@@ -139,14 +138,17 @@ export const Item = ({
     : getItemValue(item, valueAdjustments),
 
   maxQuantityPlayerCanAfford = Math.floor(money / adjustedValue),
-
-  disableSellButtons = playerInventoryQuantities[id] === 0,
 }) => {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1)
+  const [sellQuantity, setSellQuantity] = useState(1)
 
   useEffect(() => {
     setPurchaseQuantity(Math.min(maxQuantityPlayerCanAfford, purchaseQuantity))
   }, [maxQuantityPlayerCanAfford, purchaseQuantity])
+
+  useEffect(() => {
+    setSellQuantity(Math.min(playerInventoryQuantities[id], sellQuantity))
+  }, [id, playerInventoryQuantities, sellQuantity])
 
   return (
     <Card
@@ -268,24 +270,29 @@ export const Item = ({
               {...{
                 className: 'sell',
                 color: 'secondary',
-                disabled: disableSellButtons,
-                onClick: () => handleItemSellClick(item),
+                disabled: sellQuantity === 0,
+                onClick: () => handleItemSellClick(item, sellQuantity),
                 variant: 'contained',
               }}
             >
               Sell
             </Button>
-            <Button
-              {...{
-                className: 'sell-all',
-                color: 'secondary',
-                disabled: disableSellButtons,
-                onClick: () => handleItemSellAllClick(item),
-                variant: 'contained',
-              }}
-            >
-              Sell All
-            </Button>
+            <div className="quantity">
+              <QuantityInput
+                {...{
+                  handleUpdateNumber: setSellQuantity,
+                  max: playerInventoryQuantities[id],
+                  value: sellQuantity,
+                }}
+              />
+              <Button
+                {...{
+                  onClick: () => setSellQuantity(playerInventoryQuantities[id]),
+                }}
+              >
+                / {integerString(playerInventoryQuantities[id])}
+              </Button>
+            </div>
           </>
         )}
       </CardActions>
@@ -296,7 +303,6 @@ export const Item = ({
 Item.propTypes = {
   adjustedValue: number,
   completedAchievements: object.isRequired,
-  disableSellButtons: bool,
   handleItemPurchaseClick: func,
   handleItemSelectClick: func,
   handleItemSellClick: func,

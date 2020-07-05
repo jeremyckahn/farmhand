@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, object } from 'prop-types'
+import { array } from 'prop-types'
 import memoize from 'fast-memoize'
 import sortBy from 'lodash.sortby'
 
@@ -94,7 +94,6 @@ export const Inventory = ({
   items,
   playerInventory,
   shopInventory,
-  valueAdjustments,
 
   // Infer the type of view this is by doing an identity check against
   // gameState arrays.
@@ -116,14 +115,14 @@ export const Inventory = ({
         <section key={category}>
           <h3>{headerText}</h3>
           <ul className="card-list">
-            {itemCategories[category].map((item, i) => (
-              <li key={i}>
+            {itemCategories[category].map(item => (
+              <li key={item.id}>
                 <Item
                   {...{
                     isPurchaseView,
                     isSellView,
                     item,
-                    showQuantity: true,
+                    showQuantity: isPurchaseView,
                   }}
                 />
               </li>
@@ -139,7 +138,6 @@ Inventory.propTypes = {
   items: array.isRequired,
   playerInventory: array,
   shopInventory: array,
-  valueAdjustments: object.isRequired,
 }
 
 export default function Consumer(props) {

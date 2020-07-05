@@ -60,16 +60,10 @@ export default {
 
   /**
    * @param {farmhand.item} item
+   * @param {number} [howMany=1]
    */
-  handleItemSellClick(item) {
-    this.sellItem(item)
-  },
-
-  /**
-   * @param {farmhand.item} item
-   */
-  handleItemSellAllClick(item) {
-    this.sellAllOfItem(item)
+  handleItemSellClick(item, howMany = 1) {
+    this.sellItem(item, howMany)
   },
 
   /**

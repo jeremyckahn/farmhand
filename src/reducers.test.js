@@ -1079,25 +1079,6 @@ describe('sellItem', () => {
   })
 })
 
-describe('sellAllOfItem', () => {
-  test('removes items from inventory', () => {
-    const { inventory, money } = fn.sellAllOfItem(
-      {
-        inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
-        itemsSold: {},
-        loanBalance: 0,
-        money: 100,
-        notifications: [],
-        valueAdjustments: { 'sample-item-1': 1 },
-      },
-      testItem({ id: 'sample-item-1' })
-    )
-
-    expect(inventory).toEqual([])
-    expect(money).toEqual(102)
-  })
-})
-
 describe('purchaseCow', () => {
   const cow = Object.freeze(
     generateCow({

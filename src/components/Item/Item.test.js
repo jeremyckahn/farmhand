@@ -86,30 +86,14 @@ describe('conditional UI', () => {
       component.setProps({
         isSellView: true,
         item: testItem({ id: 'an-item' }),
+        playerInventoryQuantities: {
+          'an-item': 1,
+        },
       })
     })
 
     test('renders sell buttons', () => {
       expect(component.find('.sell')).toHaveLength(1)
-      expect(component.find('.sell-all')).toHaveLength(1)
-    })
-
-    describe('inventory quantity', () => {
-      describe('is 0', () => {
-        test('buttons are disabled', () => {
-          component.setProps({ playerInventoryQuantities: { 'an-item': 0 } })
-          expect(component.find('.sell').props().disabled).toEqual(true)
-          expect(component.find('.sell-all').props().disabled).toEqual(true)
-        })
-      })
-
-      describe('is greater than 0', () => {
-        test('buttons are enabled', () => {
-          component.setProps({ playerInventoryQuantities: { 'an-item': 1 } })
-          expect(component.find('.sell').props().disabled).toEqual(false)
-          expect(component.find('.sell-all').props().disabled).toEqual(false)
-        })
-      })
     })
   })
 })

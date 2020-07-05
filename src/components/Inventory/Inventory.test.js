@@ -22,7 +22,6 @@ beforeEach(() => {
     <Inventory
       {...{
         items: [],
-        valueAdjustments: {},
       }}
     />
   )
