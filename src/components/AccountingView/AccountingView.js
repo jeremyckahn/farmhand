@@ -18,6 +18,28 @@ import {
 
 import './AccountingView.sass'
 
+const MoneyNumberFormat = ({
+  inputRef,
+  max,
+  min,
+  onChange,
+  setLoanInputValue,
+  ...rest
+}) => (
+  <NumberFormat
+    fixedDecimalScale
+    thousandSeparator
+    {...{
+      ...rest,
+      allowNegative: false,
+      decimalScale: 2,
+      prefix: '$',
+      isAllowed: ({ floatValue = 0 }) => min >= 0 && floatValue <= max,
+      onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
+    }}
+  />
+)
+
 const AccountingView = ({
   handleClickLoanPaydownButton,
   handleClickTakeOutLoanButton,
@@ -47,31 +69,19 @@ const AccountingView = ({
           <div className="loan-container">
             <TextField
               {...{
-                value: String(loanInputValue),
+                value: loanInputValue,
                 inputProps: {
+                  max: loanBalance,
+                  min: 0,
+
                   // Enable a helpful number input for iOS.
                   // https://css-tricks.com/finger-friendly-numerical-inputs-with-inputmode/
                   pattern: '[0-9]*',
                 },
+
+                onChange: setLoanInputValue,
                 InputProps: {
-                  // TODO: Define this outside of the AccountingView component.
-                  inputComponent: ({ inputRef, ...rest }) => (
-                    <NumberFormat
-                      fixedDecimalScale
-                      thousandSeparator
-                      isNumericString
-                      {...{
-                        ...rest,
-                        allowNegative: false,
-                        decimalScale: 2,
-                        prefix: '$',
-                        isAllowed: ({ floatValue = 0 }) =>
-                          floatValue >= 0 && floatValue <= loanInputValue,
-                        onBlur: ({ target: { value } }) =>
-                          setLoanInputValue(Number(value.replace(/[$,]/g, ''))),
-                      }}
-                    />
-                  ),
+                  inputComponent: MoneyNumberFormat,
                 },
               }}
             />
