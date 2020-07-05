@@ -85,14 +85,7 @@ const SellValueIndicator = ({
   />
 )
 
-const QuantityPurchaseNumberFormat = ({
-  inputRef,
-  maxQuantityPlayerCanAfford,
-  min,
-  max,
-  onChange,
-  ...rest
-}) => (
+const QuantityNumberFormat = ({ inputRef, min, max, onChange, ...rest }) => (
   <NumberFormat
     isNumericString
     thousandSeparator
@@ -106,27 +99,21 @@ const QuantityPurchaseNumberFormat = ({
   />
 )
 
-const QuantityPurchaseInput = ({
-  value,
-  handleUpdateNumber,
-  maxQuantityPlayerCanAfford,
-}) => (
-  <div>
-    <TextField
-      {...{
-        value,
-        inputProps: {
-          pattern: '[0-9]*',
-          min: 0,
-          max: maxQuantityPlayerCanAfford,
-        },
-        onChange: handleUpdateNumber,
-        InputProps: {
-          inputComponent: QuantityPurchaseNumberFormat,
-        },
-      }}
-    />
-  </div>
+const QuantityInput = ({ handleUpdateNumber, max, value }) => (
+  <TextField
+    {...{
+      value,
+      inputProps: {
+        pattern: '[0-9]*',
+        min: 0,
+        max,
+      },
+      onChange: handleUpdateNumber,
+      InputProps: {
+        inputComponent: QuantityNumberFormat,
+      },
+    }}
+  />
 )
 
 export const Item = ({
@@ -257,11 +244,11 @@ export const Item = ({
               Buy
             </Button>
             <div className="quantity">
-              <QuantityPurchaseInput
+              <QuantityInput
                 {...{
-                  value: purchaseQuantity,
                   handleUpdateNumber: setPurchaseQuantity,
-                  maxQuantityPlayerCanAfford,
+                  max: maxQuantityPlayerCanAfford,
+                  value: purchaseQuantity,
                 }}
               />
               <Button
