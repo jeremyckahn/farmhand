@@ -36,7 +36,7 @@
     background: $chrome-background
     box-sizing: border-box
     overflow: auto
-    padding: 1em
+    padding: 1em 1em 6em
     position: relative
     width: $sidebar-width
     z-index: 20
@@ -47,10 +47,21 @@
       justify-content: center
       margin: .5em 0
 
-  .end-day
-    bottom: 1.5em
-    position: absolute
-    right: 1.5em
+  .bottom-controls
+    bottom: 0
+    display: flex
+    justify-content: center
+    height: 0
+    left: 0
+    opacity: 0.85
+    position: fixed
+    right: 0
+    z-index: 20
+
+    button
+      margin: 0 0.5em
+      position: relative
+      top: -5em
 
   h4,
   h5,

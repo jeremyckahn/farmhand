@@ -11,8 +11,6 @@ beforeEach(() => {
   component = shallow(
     <AppBar
       {...{
-        handleClickNextMenuButton: () => {},
-        handleClickPreviousMenuButton: () => {},
         handleMenuToggle: () => {},
         money: 0,
         stageFocus: stageFocusType.FIELD,

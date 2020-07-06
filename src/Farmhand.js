@@ -6,6 +6,8 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import Fab from '@material-ui/core/Fab'
 import HotelIcon from '@material-ui/icons/Hotel'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
 import debounce from 'lodash.debounce'
 
@@ -570,31 +572,51 @@ export default class Farmhand extends Component {
               The .end-day button needs to be at this top level instead of the
               Stage because of scrolling issues in iOS.
               */}
-              <Tooltip
-                {...{
-                  placement: 'left',
-                  title: (
-                    <>
-                      <p>
-                        End the day to save your progress and advance the game.
-                      </p>
-                      <p>(shift + c)</p>
-                    </>
-                  ),
-                }}
-              >
+              <div className="bottom-controls">
                 <Fab
                   {...{
-                    'aria-label':
-                      'End the day to save your progress and advance the game.',
-                    className: 'end-day',
+                    'aria-label': 'Previous view',
                     color: 'primary',
-                    onClick: handlers.handleClickEndDayButton,
+                    onClick: () => this.focusPreviousView(),
                   }}
                 >
-                  <HotelIcon />
+                  <KeyboardArrowLeft />
                 </Fab>
-              </Tooltip>
+                <Tooltip
+                  {...{
+                    placement: 'top',
+                    title: (
+                      <>
+                        <p>
+                          End the day to save your progress and advance the
+                          game.
+                        </p>
+                        <p>(shift + c)</p>
+                      </>
+                    ),
+                  }}
+                >
+                  <Fab
+                    {...{
+                      'aria-label':
+                        'End the day to save your progress and advance the game.',
+                      color: 'secondary',
+                      onClick: handlers.handleClickEndDayButton,
+                    }}
+                  >
+                    <HotelIcon />
+                  </Fab>
+                </Tooltip>
+                <Fab
+                  {...{
+                    'aria-label': 'Next view',
+                    color: 'primary',
+                    onClick: () => this.focusNextView(),
+                  }}
+                >
+                  <KeyboardArrowRight />
+                </Fab>
+              </div>
             </div>
             <NotificationSystem />
           </FarmhandContext.Provider>
