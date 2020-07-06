@@ -99,7 +99,7 @@ const QuantityNumberFormat = ({ inputRef, min, max, onChange, ...rest }) => (
   />
 )
 
-const QuantityInput = ({ handleUpdateNumber, max, value }) => (
+const QuantityInput = ({ handleSubmit, handleUpdateNumber, max, value }) => (
   <TextField
     {...{
       value,
@@ -109,6 +109,14 @@ const QuantityInput = ({ handleUpdateNumber, max, value }) => (
         max,
       },
       onChange: handleUpdateNumber,
+      // Bind to keyup to prevent spamming the event handler.
+      onKeyUp: ({ which }) => {
+        // Enter
+        if (which === 13) {
+          handleSubmit()
+        }
+      },
+
       InputProps: {
         inputComponent: QuantityNumberFormat,
       },
@@ -149,6 +157,15 @@ export const Item = ({
   useEffect(() => {
     setSellQuantity(Math.min(playerInventoryQuantities[id], sellQuantity))
   }, [id, playerInventoryQuantities, sellQuantity])
+
+  const handleItemPurchase = () => {
+    handleItemPurchaseClick(item, purchaseQuantity)
+    setPurchaseQuantity(Math.min(1, maxQuantityPlayerCanAfford))
+  }
+  const handleItemSell = () => {
+    handleItemSellClick(item, sellQuantity)
+    setSellQuantity(Math.min(1, playerInventoryQuantities[id]))
+  }
 
   return (
     <Card
@@ -239,7 +256,7 @@ export const Item = ({
                 disabled:
                   purchaseQuantity === 0 ||
                   adjustedValue * purchaseQuantity > money,
-                onClick: () => handleItemPurchaseClick(item, purchaseQuantity),
+                onClick: handleItemPurchase,
                 variant: 'contained',
               }}
             >
@@ -248,6 +265,7 @@ export const Item = ({
             <div className="quantity">
               <QuantityInput
                 {...{
+                  handleSubmit: handleItemPurchase,
                   handleUpdateNumber: setPurchaseQuantity,
                   max: maxQuantityPlayerCanAfford,
                   value: purchaseQuantity,
@@ -271,7 +289,7 @@ export const Item = ({
                 className: 'sell',
                 color: 'secondary',
                 disabled: sellQuantity === 0,
-                onClick: () => handleItemSellClick(item, sellQuantity),
+                onClick: handleItemSell,
                 variant: 'contained',
               }}
             >
@@ -280,6 +298,7 @@ export const Item = ({
             <div className="quantity">
               <QuantityInput
                 {...{
+                  handleSubmit: handleItemSell,
                   handleUpdateNumber: setSellQuantity,
                   max: playerInventoryQuantities[id],
                   value: sellQuantity,
