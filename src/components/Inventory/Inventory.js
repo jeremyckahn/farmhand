@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { array } from 'prop-types'
 import memoize from 'fast-memoize'
 import sortBy from 'lodash.sortby'
+import Divider from '@material-ui/core/Divider'
 
 import FarmhandContext from '../../Farmhand.context'
 import Item from '../Item'
@@ -112,23 +113,26 @@ export const Inventory = ({
       [DISHES, 'Dishes'],
     ].map(([category, headerText]) =>
       itemCategories[category].length ? (
-        <section key={category}>
-          <h3>{headerText}</h3>
-          <ul className="card-list">
-            {itemCategories[category].map(item => (
-              <li key={item.id}>
-                <Item
-                  {...{
-                    isPurchaseView,
-                    isSellView,
-                    item,
-                    showQuantity: isPurchaseView,
-                  }}
-                />
-              </li>
-            ))}
-          </ul>
-        </section>
+        <Fragment key={category}>
+          <section>
+            <h3>{headerText}</h3>
+            <ul className="card-list">
+              {itemCategories[category].map(item => (
+                <li key={item.id}>
+                  <Item
+                    {...{
+                      isPurchaseView,
+                      isSellView,
+                      item,
+                      showQuantity: isPurchaseView,
+                    }}
+                  />
+                </li>
+              ))}
+            </ul>
+          </section>
+          <Divider />
+        </Fragment>
       ) : null
     )}
   </div>
