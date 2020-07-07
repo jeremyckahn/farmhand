@@ -155,8 +155,13 @@ export default {
     this.purchaseCowPen(cowPenId)
   },
 
-  handleMenuToggle() {
-    this.setState(({ isMenuOpen }) => ({ isMenuOpen: !isMenuOpen }))
+  /**
+   * @param {boolean} [setOpen]
+   */
+  handleMenuToggle(setOpen = null) {
+    this.setState(({ isMenuOpen }) => ({
+      isMenuOpen: setOpen === null ? !isMenuOpen : setOpen,
+    }))
   },
 
   handleClickNextMenuButton() {

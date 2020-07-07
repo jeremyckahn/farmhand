@@ -28,7 +28,7 @@ export const AppBar = ({ handleMenuToggle, money, isMenuOpen, viewTitle }) => (
         className={classNames('menu-button', { 'is-open': isMenuOpen })}
         color="inherit"
         aria-label="Open drawer"
-        onClick={handleMenuToggle}
+        onClick={() => handleMenuToggle()}
       >
         <MenuIcon />
       </IconButton>
