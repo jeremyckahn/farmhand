@@ -36,7 +36,7 @@
     background: $chrome-background
     box-sizing: border-box
     overflow: auto
-    padding: 1em 1em 8em
+    padding: 1em 1em 0
     position: relative
     width: $sidebar-width
     z-index: 20
@@ -120,6 +120,12 @@
     h5,
     h6,
       font-family: "Francois One", sans-serif
+
+  // This is needed as a workaround for Safari layout rendering issues wherein
+  // bottom padding for the stage and sidebar are not respected after
+  // interacting with the elements within them.
+  .spacer
+    min-height: 6.5em
 
 .MuiTooltip-popper
   p

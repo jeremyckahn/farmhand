@@ -573,6 +573,7 @@ export default class Farmhand extends Component {
                   <Navigation />
                   <ContextPane />
                   <DebugMenu />
+                  <div {...{ className: 'spacer' }} />
                 </Drawer>
                 <Stage />
 

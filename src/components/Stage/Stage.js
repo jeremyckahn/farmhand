@@ -33,6 +33,7 @@ export const Stage = ({
     {stageFocus === stageFocusType.SHOP && <Shop />}
     {stageFocus === stageFocusType.COW_PEN && <CowPen />}
     {stageFocus === stageFocusType.KITCHEN && <Kitchen />}
+    <div {...{ className: 'spacer' }} />
   </div>
 )
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import { array, number, object } from 'prop-types'
-import Divider from '@material-ui/core/Divider'
 
 import FarmhandContext from '../../Farmhand.context'
 import {
@@ -51,7 +50,6 @@ export const Shop = ({
         />
       </li>
     </ul>
-    <Divider />
   </div>
 )
 
