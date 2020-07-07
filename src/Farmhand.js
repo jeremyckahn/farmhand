@@ -9,6 +9,7 @@ import HotelIcon from '@material-ui/icons/Hotel'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
+import MobileStepper from '@material-ui/core/MobileStepper'
 import debounce from 'lodash.debounce'
 
 import FarmhandContext from './Farmhand.context'
@@ -569,53 +570,62 @@ export default class Farmhand extends Component {
               <Stage />
 
               {/*
-              The .end-day button needs to be at this top level instead of the
-              Stage because of scrolling issues in iOS.
+              These controls need to be at this top level instead of the Stage
+              because of scrolling issues in iOS.
               */}
               <div className="bottom-controls">
-                <Fab
-                  {...{
-                    'aria-label': 'Previous view',
-                    color: 'primary',
-                    onClick: () => this.focusPreviousView(),
-                  }}
-                >
-                  <KeyboardArrowLeft />
-                </Fab>
-                <Tooltip
-                  {...{
-                    placement: 'top',
-                    title: (
-                      <>
-                        <p>
-                          End the day to save your progress and advance the
-                          game.
-                        </p>
-                        <p>(shift + c)</p>
-                      </>
-                    ),
-                  }}
-                >
+                <MobileStepper
+                  variant="dots"
+                  steps={viewList.length}
+                  position="static"
+                  activeStep={viewList.indexOf(this.state.stageFocus)}
+                  className=""
+                />
+                <div className="buttons">
                   <Fab
                     {...{
-                      'aria-label':
-                        'End the day to save your progress and advance the game.',
-                      color: 'secondary',
-                      onClick: handlers.handleClickEndDayButton,
+                      'aria-label': 'Previous view',
+                      color: 'primary',
+                      onClick: () => this.focusPreviousView(),
                     }}
                   >
-                    <HotelIcon />
+                    <KeyboardArrowLeft />
                   </Fab>
-                </Tooltip>
-                <Fab
-                  {...{
-                    'aria-label': 'Next view',
-                    color: 'primary',
-                    onClick: () => this.focusNextView(),
-                  }}
-                >
-                  <KeyboardArrowRight />
-                </Fab>
+                  <Tooltip
+                    {...{
+                      placement: 'top',
+                      title: (
+                        <>
+                          <p>
+                            End the day to save your progress and advance the
+                            game.
+                          </p>
+                          <p>(shift + c)</p>
+                        </>
+                      ),
+                    }}
+                  >
+                    <Fab
+                      {...{
+                        'aria-label':
+                          'End the day to save your progress and advance the game.',
+                        color: 'secondary',
+                        onClick: handlers.handleClickEndDayButton,
+                      }}
+                    >
+                      <HotelIcon />
+                    </Fab>
+                  </Tooltip>
+                  <Fab
+                    {...{
+                      'aria-label': 'Next view',
+                      color: 'primary',
+                      onClick: () => this.focusNextView(),
+                    }}
+                  >
+                    <KeyboardArrowRight />
+                  </Fab>
+                </div>
               </div>
             </div>
             <NotificationSystem />

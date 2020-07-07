@@ -49,20 +49,29 @@
       margin: .5em 0
 
   .bottom-controls
-    bottom: 0
+    align-items: center
+    bottom: 70px
     display: flex
-    justify-content: center
+    flex-flow: column
     height: 0
+    justify-content: center
     left: 0
     opacity: 0.85
     position: fixed
     right: 0
     z-index: 20
 
-    button
-      margin: 0 0.5em
-      position: relative
-      top: -5em
+    .MuiMobileStepper-root
+      background: none
+      border-radius: 12px
+
+    .buttons
+      display: flex
+      flex-flow: row
+
+      button
+        margin: 0 0.5em
+        position: relative
 
   h4,
   h5,

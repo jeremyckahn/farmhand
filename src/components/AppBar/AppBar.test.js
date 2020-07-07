@@ -1,8 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { stageFocusType } from '../../enums'
-
 import AppBar from './AppBar'
 
 let component
@@ -13,8 +11,6 @@ beforeEach(() => {
       {...{
         handleMenuToggle: () => {},
         money: 0,
-        stageFocus: stageFocusType.FIELD,
-        viewList: [],
         viewTitle: '',
       }}
     />

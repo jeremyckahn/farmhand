@@ -1,26 +1,18 @@
 import React from 'react'
-import { arrayOf, func, number, string } from 'prop-types'
+import { func, number, string } from 'prop-types'
 import classNames from 'classnames'
 
 import { default as MuiAppBar } from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import StepIcon from '@material-ui/core/StepIcon'
 import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../../Farmhand.context'
 import { moneyString } from '../../utils'
 import './AppBar.sass'
 
-export const AppBar = ({
-  handleMenuToggle,
-  money,
-  isMenuOpen,
-  stageFocus,
-  viewList,
-  viewTitle,
-}) => (
+export const AppBar = ({ handleMenuToggle, money, isMenuOpen, viewTitle }) => (
   <MuiAppBar
     {...{
       className: 'AppBar',
@@ -40,11 +32,6 @@ export const AppBar = ({
       >
         <MenuIcon />
       </IconButton>
-      <StepIcon
-        {...{
-          icon: viewList.indexOf(stageFocus) + 1,
-        }}
-      />
       <Typography
         {...{
           className: 'stage-header',
@@ -68,8 +55,6 @@ export const AppBar = ({
 AppBar.propTypes = {
   handleMenuToggle: func.isRequired,
   money: number.isRequired,
-  stageFocus: string.isRequired,
-  viewList: arrayOf(string).isRequired,
   viewTitle: string.isRequired,
 }
 
