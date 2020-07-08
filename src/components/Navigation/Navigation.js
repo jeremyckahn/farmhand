@@ -13,10 +13,11 @@ import FlashOnIcon from '@material-ui/icons/FlashOn'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import Tooltip from '@material-ui/core/Tooltip'
-import { number, func, string } from 'prop-types'
+import { array, number, func, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
-import { dialogView, stageFocusType } from '../../enums'
+import { dialogView } from '../../enums'
+import { STAGE_TITLE_MAP } from '../../constants'
 
 import LogView from '../LogView'
 import PriceEventView from '../PriceEventView'
@@ -66,6 +67,7 @@ export const Navigation = ({
   handleViewChange,
   purchasedCowPen,
   stageFocus,
+  viewList,
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
@@ -125,13 +127,11 @@ export const Navigation = ({
         value: stageFocus,
       }}
     >
-      <MenuItem value={stageFocusType.HOME}>Home (h)</MenuItem>
-      <MenuItem value={stageFocusType.FIELD}>Field (f)</MenuItem>
-      <MenuItem value={stageFocusType.SHOP}>Shop (s)</MenuItem>
-      {purchasedCowPen && (
-        <MenuItem value={stageFocusType.COW_PEN}>Cows (c)</MenuItem>
-      )}
-      <MenuItem value={stageFocusType.KITCHEN}>Kitchen (k)</MenuItem>
+      {viewList.map((view, i) => (
+        <MenuItem {...{ key: view, value: view }}>
+          {i + 1}: {STAGE_TITLE_MAP[view]}
+        </MenuItem>
+      ))}
     </Select>
   </header>
 )
@@ -143,6 +143,7 @@ Navigation.propTypes = {
   handleViewChange: func.isRequired,
   purchasedCowPen: number.isRequired,
   stageFocus: string.isRequired,
+  viewList: array.isRequired,
 }
 
 export default function Consumer(props) {

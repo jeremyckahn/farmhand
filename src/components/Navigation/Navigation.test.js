@@ -19,6 +19,7 @@ beforeEach(() => {
         handleViewChange: () => {},
         purchasedCowPen: 0,
         stageFocus: stageFocusType.FIELD,
+        viewList: ['HOME', 'FIELD', 'SHOP', 'KITCHEN'],
       }}
     />
   )
@@ -40,7 +41,10 @@ describe('cow pen option', () => {
   })
 
   test('does show if player has bought a cow pen', () => {
-    component.setProps({ purchasedCowPen: 1 })
+    component.setProps({
+      purchasedCowPen: 1,
+      viewList: ['HOME', 'FIELD', 'SHOP', 'COW_PEN', 'KITCHEN'],
+    })
     expect(
       component
         .find(MenuItem)

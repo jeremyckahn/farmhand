@@ -1,3 +1,5 @@
+import { stageFocusType } from './enums'
+
 const { freeze } = Object
 
 // This MUST be kept in sync with the $break- variables in variables.sass.
@@ -73,3 +75,11 @@ export const NOTIFICATION_LOG_SIZE = 14
 
 export const PRICE_EVENT_CHANCE = 0.2
 export const PRICE_EVENT_STANDARD_DURATION_DECREASE = 1
+
+export const STAGE_TITLE_MAP = {
+  [stageFocusType.HOME]: 'Home',
+  [stageFocusType.FIELD]: 'Field',
+  [stageFocusType.SHOP]: 'Shop',
+  [stageFocusType.COW_PEN]: 'Cows',
+  [stageFocusType.KITCHEN]: 'Kitchen',
+}

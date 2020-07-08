@@ -30,21 +30,17 @@ import { createNewField, doesMenuObstructStage, getItemValue } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
-import { STANDARD_LOAN_AMOUNT, PURCHASEABLE_COW_PENS } from './constants'
+import {
+  PURCHASEABLE_COW_PENS,
+  STAGE_TITLE_MAP,
+  STANDARD_LOAN_AMOUNT,
+} from './constants'
 import { COW_PEN_PURCHASED, LOAN_INCREASED, RECIPE_LEARNED } from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 
 const { CLEANUP, HARVEST, OBSERVE, WATER } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
-
-const stageTitleMap = {
-  [stageFocusType.HOME]: 'Home',
-  [stageFocusType.FIELD]: 'Field',
-  [stageFocusType.SHOP]: 'Shop',
-  [stageFocusType.COW_PEN]: 'Cows',
-  [stageFocusType.KITCHEN]: 'Kitchen',
-}
 
 /**
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
@@ -213,7 +209,7 @@ export default class Farmhand extends Component {
   }
 
   get viewTitle() {
-    return stageTitleMap[this.state.stageFocus]
+    return STAGE_TITLE_MAP[this.state.stageFocus]
   }
 
   get fieldToolInventory() {
