@@ -19,7 +19,7 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
-    "update-images": "sh update-images.sh"
+    "update-images": "bash update-images.sh"
   },
   "author": "Jeremy Kahn <jeremyckahn@gmail.com>",
   "license": "CC BY-NC-SA 4.0",
