@@ -218,7 +218,7 @@ export const CowPenContextMenu = ({
       Cows ({cowInventory.length} /{' '}
       {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
     </h3>
-    <ul className="card-list">
+    <ul className="card-list purchased-cows">
       {cowInventory.map(cow => (
         <li
           {...{
