@@ -13,7 +13,7 @@ export const enumify = keys =>
  * @property farmhand.module:enums.cropType
  * @enum {string}
  */
-export const cropType = enumify(['CARROT', 'PUMPKIN'])
+export const cropType = enumify(['CARROT', 'PUMPKIN', 'SPINACH'])
 
 /**
  * @property farmhand.module:enums.fieldMode

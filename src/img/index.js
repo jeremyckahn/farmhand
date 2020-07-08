@@ -21,6 +21,10 @@ export const items = {
   'pumpkin-growing': require('./items/pumpkin-growing.png'),
   'pumpkin-seed': require('./items/pumpkin-seed.png'),
 
+  spinach: require('./items/spinach.png'),
+  'spinach-growing': require('./items/spinach-growing.png'),
+  'spinach-seed': require('./items/spinach-seed.png'),
+
   // Field tools
   fertilizer: require('./items/fertilizer.png'),
   scarecrow: require('./items/scarecrow.png'),

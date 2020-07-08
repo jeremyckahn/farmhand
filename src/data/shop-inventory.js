@@ -1,6 +1,7 @@
 import {
   // Plantable crops
   carrotSeed,
+  spinachSeed,
   pumpkinSeed,
 
   // Field items
@@ -12,6 +13,7 @@ import {
 export default [
   // Plantable crops
   carrotSeed,
+  spinachSeed,
   pumpkinSeed,
 
   // Field items
