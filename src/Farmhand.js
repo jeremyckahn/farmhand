@@ -269,11 +269,6 @@ export default class Farmhand extends Component {
     })
 
     this.keyMap = {
-      focusCows: 'c',
-      focusField: 'f',
-      focusHome: 'h',
-      focusKitchen: 'k',
-      focusShop: 's',
       incrementDay: 'shift+c',
       nextView: 'right',
       openAccounting: 'b',
@@ -289,13 +284,6 @@ export default class Farmhand extends Component {
     }
 
     this.keyHandlers = {
-      focusCows: () =>
-        this.state.purchasedCowPen &&
-        this.setState({ stageFocus: stageFocusType.COW_PEN }),
-      focusField: () => this.setState({ stageFocus: stageFocusType.FIELD }),
-      focusHome: () => this.setState({ stageFocus: stageFocusType.HOME }),
-      focusKitchen: () => this.setState({ stageFocus: stageFocusType.KITCHEN }),
-      focusShop: () => this.setState({ stageFocus: stageFocusType.SHOP }),
       incrementDay: () => this.incrementDay(),
       nextView: this.focusNextView.bind(this),
       openAccounting: () =>
@@ -313,6 +301,19 @@ export default class Farmhand extends Component {
       selectWateringCan: () => this.handlers.handleFieldModeSelect(WATER),
       toggleMenu: () => this.handlers.handleMenuToggle(),
     }
+
+    new Array(9).fill(null).forEach((_, i) => {
+      const index = i + 1
+      const key = `numberKey${index}`
+      this.keyMap[key] = String(index)
+      this.keyHandlers[key] = () => {
+        const viewName = this.viewList[i]
+
+        if (typeof viewName === 'string') {
+          this.setState({ stageFocus: stageFocusType[viewName] })
+        }
+      }
+    })
 
     // TODO: Disable this is non-dev environments.
     Object.assign(this.keyMap, {
