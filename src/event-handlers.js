@@ -219,4 +219,26 @@ export default {
   handleClickTakeOutLoanButton(loanAmount) {
     this.adjustLoan(loanAmount)
   },
+
+  /**
+   * @param {Object} event
+   * @see https://github.com/FormidableLabs/react-swipeable#event-data
+   */
+  handleSwipe({ event, initial: [startX], dir }) {
+    if (dir === 'Left') {
+      if (this.state.isMenuOpen) {
+        this.handlers.handleMenuToggle(false)
+      } else {
+        this.focusNextView()
+      }
+    } else if (dir === 'Right') {
+      if (!this.state.isMenuOpen) {
+        if (startX < window.screen.width * 0.15) {
+          this.handlers.handleMenuToggle(true)
+        } else {
+          this.focusPreviousView()
+        }
+      }
+    }
+  },
 }

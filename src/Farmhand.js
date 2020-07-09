@@ -547,8 +547,7 @@ export default class Farmhand extends Component {
         <MuiThemeProvider theme={theme}>
           <Swipeable
             {...{
-              onSwipedLeft: () => handlers.handleMenuToggle(false),
-              onSwipedRight: () => handlers.handleMenuToggle(true),
+              onSwiped: handlers.handleSwipe,
             }}
           >
             <FarmhandContext.Provider value={{ gameState, handlers }}>
