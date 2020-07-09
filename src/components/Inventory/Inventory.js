@@ -1,13 +1,12 @@
 import React, { Fragment } from 'react'
 import { array } from 'prop-types'
-import memoize from 'fast-memoize'
-import sortBy from 'lodash.sortby'
 import Divider from '@material-ui/core/Divider'
 
 import FarmhandContext from '../../Farmhand.context'
 import Item from '../Item'
 import { itemsMap } from '../../data/maps'
 import { enumify, itemType } from '../../enums'
+import { sortItems } from '../../utils'
 
 import './Inventory.sass'
 
@@ -20,27 +19,6 @@ const {
   SCARECROW,
   SPRINKLER,
 } = itemType
-
-const itemTypesToShowInReverse = new Set([itemType.MILK])
-
-const sortItemIdsByTypeAndValue = memoize(itemIds =>
-  sortBy(itemIds, [
-    id => Number(itemsMap[id].type !== CROP),
-    id => {
-      const { type, value } = itemsMap[id]
-      return itemTypesToShowInReverse.has(type) ? -value : value
-    },
-  ])
-)
-
-export const sort = items => {
-  const itemsMap = {}
-  items.forEach(item => (itemsMap[item.id] = item))
-
-  return sortItemIdsByTypeAndValue(items.map(({ id }) => id)).map(
-    id => itemsMap[id]
-  )
-}
 
 export const categoryIds = enumify([
   'ANIMAL_PRODUCTS',
@@ -78,7 +56,7 @@ const getItemCategories = () =>
   }, {})
 
 export const separateItemsIntoCategories = items =>
-  sort(items).reduce((acc, item) => {
+  sortItems(items).reduce((acc, item) => {
     const { type } = itemsMap[item.id]
     const category = itemTypeCategoryMap[type]
 

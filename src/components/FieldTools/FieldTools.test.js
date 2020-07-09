@@ -5,6 +5,10 @@ import Item from '../Item'
 
 import { FieldTools } from './FieldTools'
 
+jest.mock('../../data/maps')
+jest.mock('../../data/items')
+jest.mock('../../data/shop-inventory')
+
 let component
 
 beforeEach(() => {

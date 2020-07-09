@@ -1,6 +1,7 @@
 import React from 'react'
 import { array, string } from 'prop-types'
 
+import { sortItems } from '../../utils'
 import FarmhandContext from '../../Farmhand.context'
 import Item from '../Item'
 import './FieldTools.sass'
@@ -8,7 +9,7 @@ import './FieldTools.sass'
 export const FieldTools = ({ fieldToolInventory, selectedItemId }) => (
   <div className="FieldTools">
     <ul className="card-list">
-      {fieldToolInventory.map(item => (
+      {sortItems(fieldToolInventory).map(item => (
         <li key={item.id}>
           <Item
             {...{

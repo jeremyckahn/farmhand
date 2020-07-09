@@ -1,5 +1,6 @@
 import Dinero from 'dinero.js'
 import memoize from 'fast-memoize'
+import sortBy from 'lodash.sortby'
 
 import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
@@ -473,3 +474,26 @@ export const getCrops = memoize(
  * @returns {boolean}
  */
 export const doesMenuObstructStage = () => window.screen.width < BREAKPOINTS.SM
+
+const itemTypesToShowInReverse = new Set([itemType.MILK])
+
+const sortItemIdsByTypeAndValue = memoize(itemIds =>
+  sortBy(itemIds, [
+    id => Number(itemsMap[id].type !== itemType.CROP),
+    id => {
+      const { type, value } = itemsMap[id]
+      return itemTypesToShowInReverse.has(type) ? -value : value
+    },
+  ])
+)
+
+/**
+ * @param {Array.<farmhand.item>} items
+ * @return {Array.<farmhand.item>}
+ */
+export const sortItems = items => {
+  const map = {}
+  items.forEach(item => (map[item.id] = item))
+
+  return sortItemIdsByTypeAndValue(items.map(({ id }) => id)).map(id => map[id])
+}

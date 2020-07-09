@@ -3,12 +3,12 @@ import { shallow } from 'enzyme'
 
 import Item from '../Item'
 import { testItem } from '../../test-utils'
+import { sortItems } from '../../utils'
 
 import {
   Inventory,
   categoryIds,
   separateItemsIntoCategories,
-  sort,
 } from './Inventory'
 
 jest.mock('../../data/maps')
@@ -40,7 +40,7 @@ describe('rendering items', () => {
 describe('item sorting', () => {
   test('sorts by type and base value', () => {
     expect(
-      sort([
+      sortItems([
         testItem({ id: 'sample-crop-seeds-2', value: 0.5 }),
         testItem({ id: 'scarecrow' }),
         testItem({ id: 'sprinkler' }),
