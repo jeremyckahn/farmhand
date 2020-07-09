@@ -10,6 +10,7 @@ import './NotificationSystem.sass'
 
 export const NotificationSystem = ({
   handleCloseNotification,
+  handleNotificationClick,
   handleNotificationExited,
   notifications,
   doShowNotifications,
@@ -20,6 +21,7 @@ export const NotificationSystem = ({
         anchorOrigin: { vertical: 'top', horizontal: 'right' },
         autoHideDuration: NOTIFICATION_DURATION,
         className: 'notification',
+        onClick: handleNotificationClick,
         onClose: handleCloseNotification,
         onExited: handleNotificationExited,
         open: doShowNotifications,
@@ -44,6 +46,7 @@ export const NotificationSystem = ({
 
 NotificationSystem.propTypes = {
   handleCloseNotification: func.isRequired,
+  handleNotificationClick: func.isRequired,
   handleNotificationExited: func.isRequired,
   notifications: arrayOf(
     shape({

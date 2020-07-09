@@ -10,6 +10,7 @@ beforeEach(() => {
     <NotificationSystem
       {...{
         handleCloseNotification: () => {},
+        handleNotificationClick: () => {},
         handleNotificationExited: () => {},
         notifications: [],
         doShowNotifications: false,

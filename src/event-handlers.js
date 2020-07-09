@@ -188,6 +188,14 @@ export default {
   },
 
   handleCloseNotification(event, reason) {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    this.setState(() => ({ doShowNotifications: false }))
+  },
+
+  handleNotificationClick() {
     this.setState(() => ({ doShowNotifications: false }))
   },
 
