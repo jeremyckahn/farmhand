@@ -55,6 +55,7 @@ import {
 import {
   ACHIEVEMENT_COMPLETED,
   CROW_ATTACKED,
+  LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
   MILK_PRODUCED,
@@ -606,13 +607,24 @@ export const updatePriceEvents = state => {
   }
 }
 
-export const applyLoanInterest = state => ({
-  ...state,
-  loanBalance: moneyTotal(
+export const applyLoanInterest = state => {
+  const loanBalance = moneyTotal(
     state.loanBalance,
     castToMoney(state.loanBalance * LOAN_INTEREST_RATE)
-  ),
-})
+  )
+
+  return {
+    ...state,
+    loanBalance,
+    newDayNotifications: [
+      ...state.newDayNotifications,
+      {
+        severity: 'warning',
+        message: LOAN_BALANCE_NOTIFICATION`${loanBalance}`,
+      },
+    ],
+  }
+}
 
 /**
  * @param {farmhand.state} state

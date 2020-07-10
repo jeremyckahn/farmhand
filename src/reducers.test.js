@@ -278,7 +278,10 @@ describe('updatePriceEvents', () => {
 
 describe('applyLoanInterest', () => {
   test('applies loan interest', () => {
-    expect(fn.applyLoanInterest({ loanBalance: 100 }).loanBalance).toEqual(102)
+    expect(
+      fn.applyLoanInterest({ loanBalance: 100, newDayNotifications: [] })
+        .loanBalance
+    ).toEqual(102)
   })
 })
 
@@ -305,6 +308,7 @@ describe('computeStateForNextDay', () => {
       ],
       cowInventory: [],
       inventory: [],
+      loanBalance: 0,
       newDayNotifications: [],
       notificationLog: [],
       priceCrashes: {},

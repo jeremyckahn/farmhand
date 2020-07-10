@@ -13,7 +13,11 @@ import {
   INITIAL_FIELD_HEIGHT,
   PURCHASEABLE_COW_PENS,
 } from './constants'
-import { COW_PEN_PURCHASED, RECIPE_LEARNED } from './templates'
+import {
+  COW_PEN_PURCHASED,
+  LOAN_BALANCE_NOTIFICATION,
+  RECIPE_LEARNED,
+} from './templates'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 import { stageFocusType } from './enums'
 import { recipesMap } from './data/maps'
@@ -296,17 +300,30 @@ describe('instance methods', () => {
         'state',
         Farmhand.reduceByPersistedKeys({
           ...component.state(),
-          newDayNotifications: [{ message: 'foo', severity: 'info' }],
+          newDayNotifications: [
+            { message: 'foo', severity: 'info' },
+            {
+              message: LOAN_BALANCE_NOTIFICATION`${
+                component.state().loanBalance
+              }`,
+              severity: 'warning',
+            },
+          ],
         })
       )
     })
 
     test('makes pending notification', () => {
       const { showNotification } = component.instance()
-      expect(showNotification).toHaveBeenCalledTimes(2)
+      expect(showNotification).toHaveBeenCalledTimes(3)
       expect(showNotification).toHaveBeenNthCalledWith(1, 'foo', 'info')
       expect(showNotification).toHaveBeenNthCalledWith(
         2,
+        LOAN_BALANCE_NOTIFICATION`${component.state().loanBalance}`,
+        'warning'
+      )
+      expect(showNotification).toHaveBeenNthCalledWith(
+        3,
         PROGRESS_SAVED_MESSAGE,
         'info'
       )
