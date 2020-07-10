@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { array, number, string } from 'prop-types'
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -20,6 +21,7 @@ const {
 
 export const Field = ({ columns, field, fieldMode, purchasedField, rows }) => {
   const [hoveredPlot, setHoveredPlot] = useState({ x: null, y: null })
+  const [currentScale, setCurrentScale] = useState(1)
 
   return (
     <div
@@ -36,26 +38,47 @@ export const Field = ({ columns, field, fieldMode, purchasedField, rows }) => {
         'data-purchased-field': purchasedField,
       }}
     >
-      {Array(rows)
-        .fill(null)
-        .map((_null, i) => (
-          <div className="row" key={i}>
-            {Array(columns)
-              .fill(null)
-              .map((_null, j, arr, plotContent = field[i][j]) => (
-                <Plot
-                  key={j}
-                  {...{
-                    hoveredPlot,
-                    plotContent,
-                    setHoveredPlot,
-                    x: j,
-                    y: i,
-                  }}
-                />
-              ))}
-          </div>
-        ))}
+      <TransformWrapper
+        {...{
+          limitToWrapper: true,
+          pan: {
+            // The number here is somewhat arbitrary and tuned to the UX and
+            // rounding behavior of react-zoom-pan-pinch.
+            disabled: currentScale < 1.2,
+          },
+          onZoomChange: ({ scale }) => {
+            // If setCurrentScale with scale < 1 is called here, it causes a
+            // reference error within react-zoom-pan-pinch.
+            if (scale >= 1) {
+              setCurrentScale(scale)
+            }
+          },
+          doubleClick: { disabled: true },
+        }}
+      >
+        <TransformComponent>
+          {Array(rows)
+            .fill(null)
+            .map((_null, i) => (
+              <div className="row" key={i}>
+                {Array(columns)
+                  .fill(null)
+                  .map((_null, j, arr, plotContent = field[i][j]) => (
+                    <Plot
+                      key={j}
+                      {...{
+                        hoveredPlot,
+                        plotContent,
+                        setHoveredPlot,
+                        x: j,
+                        y: i,
+                      }}
+                    />
+                  ))}
+              </div>
+            ))}
+        </TransformComponent>
+      </TransformWrapper>
     </div>
   )
 }
