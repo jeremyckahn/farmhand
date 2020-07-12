@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { array, number, string } from 'prop-types'
+import React, { useEffect, useState } from 'react'
+import { array, func, number, string } from 'prop-types'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import classNames from 'classnames'
 
@@ -20,9 +20,20 @@ const {
   WATER,
 } = fieldMode
 
-export const Field = ({ columns, field, fieldMode, purchasedField, rows }) => {
+export const Field = ({
+  columns,
+  field,
+  fieldMode,
+  handleFieldZoom,
+  purchasedField,
+  rows,
+}) => {
   const [hoveredPlot, setHoveredPlot] = useState({ x: null, y: null })
   const [currentScale, setCurrentScale] = useState(1)
+
+  useEffect(() => {
+    handleFieldZoom(currentScale)
+  }, [currentScale, handleFieldZoom])
 
   return (
     <div
@@ -89,6 +100,7 @@ Field.propTypes = {
   columns: number.isRequired,
   field: array.isRequired,
   fieldMode: string.isRequired,
+  handleFieldZoom: func.isRequired,
   purchasedField: number.isRequired,
   rows: number.isRequired,
 }

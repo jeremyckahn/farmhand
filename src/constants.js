@@ -86,4 +86,4 @@ export const STAGE_TITLE_MAP = {
 
 // The number here is somewhat arbitrary and tuned to the UX and rounding
 // behavior of react-zoom-pan-pinch.
-export const FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD = 1.05
+export const FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD = 1.1

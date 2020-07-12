@@ -18,6 +18,7 @@ beforeEach(() => {
     <Field
       {...{
         columns: 0,
+        handleFieldZoom: () => {},
         rows: 0,
         field: [
           [null, null],
