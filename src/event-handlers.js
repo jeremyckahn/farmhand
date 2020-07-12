@@ -1,4 +1,5 @@
 import { moneyTotal } from './utils'
+import { FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD } from './constants'
 import { dialogView, fieldMode } from './enums'
 
 const {
@@ -237,16 +238,26 @@ export default {
       if (this.state.isMenuOpen) {
         this.handlers.handleMenuToggle(false)
       } else {
-        this.focusNextView()
+        if (!this.state.blockSwipeNavigation) {
+          this.focusNextView()
+        }
       }
     } else if (dir === 'Right') {
       if (!this.state.isMenuOpen) {
         if (startX < window.screen.width * 0.15) {
           this.handlers.handleMenuToggle(true)
         } else {
-          this.focusPreviousView()
+          if (!this.state.blockSwipeNavigation) {
+            this.focusPreviousView()
+          }
         }
       }
+    }
+  },
+
+  handleFieldZoom: newScale => {
+    if (newScale < FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD) {
+      this.setState(() => ({ blockSwipeNavigation: true }))
     }
   },
 }

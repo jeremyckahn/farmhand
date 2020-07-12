@@ -83,3 +83,5 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.COW_PEN]: 'Cows',
   [stageFocusType.KITCHEN]: 'Kitchen',
 }
+
+export const FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD = 1.2

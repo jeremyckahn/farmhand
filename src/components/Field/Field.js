@@ -5,6 +5,7 @@ import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
 import Plot from '../Plot'
+import { FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD } from '../../constants'
 import { fieldMode } from '../../enums'
 
 import './Field.sass'
@@ -44,7 +45,7 @@ export const Field = ({ columns, field, fieldMode, purchasedField, rows }) => {
           pan: {
             // The number here is somewhat arbitrary and tuned to the UX and
             // rounding behavior of react-zoom-pan-pinch.
-            disabled: currentScale < 1.2,
+            disabled: currentScale < FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
           },
           onZoomChange: ({ scale }) => {
             // If setCurrentScale with scale < 1 is called here, it causes a

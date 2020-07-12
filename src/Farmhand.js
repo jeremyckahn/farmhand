@@ -85,6 +85,7 @@ export const getPlantableCropInventory = memoize(inventory =>
 /**
  * @typedef farmhand.state
  * @type {Object}
+ * @property {boolean} blockSwipeNavigation
  * @property {farmhand.module:enums.dialogView} currentDialogView
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
@@ -139,6 +140,7 @@ export default class Farmhand extends Component {
    * @type {farmhand.state}
    */
   state = {
+    blockSwipeNavigation: false,
     currentDialogView: dialogView.NONE,
     completedAchievements: {},
     cowForSale: {},
@@ -401,8 +403,12 @@ export default class Farmhand extends Component {
       this.setState(() => ({ selectedCowId: '' }))
     }
 
-    if (stageFocus !== prevState.stageFocus && isMenuOpen) {
-      this.setState(() => ({ isMenuOpen: !doesMenuObstructStage() }))
+    if (stageFocus !== prevState.stageFocus) {
+      this.setState(() => ({ blockSwipeNavigation: false }))
+
+      if (isMenuOpen) {
+        this.setState(() => ({ isMenuOpen: !doesMenuObstructStage() }))
+      }
     }
 
     ;[
@@ -547,6 +553,7 @@ export default class Farmhand extends Component {
         <MuiThemeProvider theme={theme}>
           <Swipeable
             {...{
+              className: 'swipeable-wrapper',
               onSwiped: handlers.handleSwipe,
             }}
           >
