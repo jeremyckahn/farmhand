@@ -255,6 +255,9 @@ export default {
     }
   },
 
+  /**
+   * @param {number} newScale
+   */
   handleFieldZoom: newScale => {
     this.setState(() => ({
       blockSwipeNavigation:
