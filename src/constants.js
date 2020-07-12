@@ -84,4 +84,6 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.KITCHEN]: 'Kitchen',
 }
 
-export const FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD = 1.4
+// The number here is somewhat arbitrary and tuned to the UX and rounding
+// behavior of react-zoom-pan-pinch.
+export const FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD = 1.05

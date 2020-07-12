@@ -43,8 +43,6 @@ export const Field = ({ columns, field, fieldMode, purchasedField, rows }) => {
         {...{
           limitToWrapper: true,
           pan: {
-            // The number here is somewhat arbitrary and tuned to the UX and
-            // rounding behavior of react-zoom-pan-pinch.
             disabled: currentScale < FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
           },
           onZoomChange: ({ scale }) => {
