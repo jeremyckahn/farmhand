@@ -84,4 +84,4 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.KITCHEN]: 'Kitchen',
 }
 
-export const FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD = 1.2
+export const FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD = 1.4

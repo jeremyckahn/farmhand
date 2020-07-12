@@ -256,8 +256,9 @@ export default {
   },
 
   handleFieldZoom: newScale => {
-    if (newScale < FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD) {
-      this.setState(() => ({ blockSwipeNavigation: true }))
-    }
+    this.setState(() => ({
+      blockSwipeNavigation:
+        newScale >= FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
+    }))
   },
 }
