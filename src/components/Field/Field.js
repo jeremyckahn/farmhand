@@ -54,6 +54,9 @@ export const Field = ({ columns, field, fieldMode, purchasedField, rows }) => {
               setCurrentScale(scale)
             }
           },
+          wheel: {
+            disabled: true,
+          },
           doubleClick: { disabled: true },
         }}
       >
