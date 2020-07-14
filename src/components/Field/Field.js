@@ -6,6 +6,7 @@ import RemoveIcon from '@material-ui/icons/Remove'
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap'
 import Tooltip from '@material-ui/core/Tooltip'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
+import { GlobalHotKeys } from 'react-hotkeys'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -24,6 +25,11 @@ const {
   SET_SPRINKLER,
   WATER,
 } = fieldMode
+
+const keyMap = {
+  zoomIn: ['=', 'plus'],
+  zoomOut: '-',
+}
 
 export const FieldContent = ({
   columns,
@@ -63,8 +69,19 @@ export const FieldContent = ({
     ),
     [rows, columns, field, hoveredPlot, setHoveredPlot]
   )
+
+  const toggleFitToScreen = () => setFitToScreen(!fitToScreen)
+
   return (
-    <>
+    <GlobalHotKeys
+      {...{
+        keyMap,
+        handlers: {
+          zoomIn,
+          zoomOut,
+        },
+      }}
+    >
       {fieldContent}
       <div className="fab-buttons zoom-controls">
         <Tooltip
@@ -78,7 +95,7 @@ export const FieldContent = ({
               'aria-label': 'Fit to screen',
               color: 'primary',
               className: 'fit-to-screen-button',
-              onClick: () => setFitToScreen(!fitToScreen),
+              onClick: toggleFitToScreen,
             }}
           >
             <ZoomOutMapIcon />
@@ -117,7 +134,7 @@ export const FieldContent = ({
           </Fab>
         </Tooltip>
       </div>
-    </>
+    </GlobalHotKeys>
   )
 }
 
