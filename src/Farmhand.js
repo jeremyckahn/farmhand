@@ -589,7 +589,7 @@ export default class Farmhand extends Component {
                     activeStep={viewList.indexOf(this.state.stageFocus)}
                     className=""
                   />
-                  <div className="buttons">
+                  <div className="fab-buttons buttons">
                     <Fab
                       {...{
                         'aria-label': 'Previous view',

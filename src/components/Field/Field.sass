@@ -18,6 +18,9 @@ $appBarOffset: 135px
     &[data-purchased-field="3"]
       max-width: calc(100vh * (12/18) - #{$appBarOffset})
 
+  .spacer
+    min-height: 3em
+
   .row
     display: flex
 
@@ -28,3 +31,18 @@ $appBarOffset: 135px
     border: solid 1px #000
     display: block
     width: auto
+
+  .zoom-controls
+    position: fixed
+    display: flex
+    flex-direction: column
+    bottom: 0.5em
+    right: 0.5em
+
+    @media (max-width: #{$break-narrow-phone})
+      bottom: 0.25em
+      right: 0.25em
+
+    button
+      margin: 0.5em
+

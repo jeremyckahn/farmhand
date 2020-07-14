@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { array, func, number, string } from 'prop-types'
+import Fab from '@material-ui/core/Fab'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import classNames from 'classnames'
 
@@ -20,14 +23,65 @@ const {
   WATER,
 } = fieldMode
 
-export const Field = ({
+export const FieldContent = ({
   columns,
   field,
-  fieldMode,
-  handleFieldZoom,
-  purchasedField,
   rows,
-}) => {
+
+  hoveredPlot,
+  setHoveredPlot,
+  zoomIn,
+  zoomOut,
+}) => (
+  <>
+    <TransformComponent>
+      {Array(rows)
+        .fill(null)
+        .map((_null, i) => (
+          <div className="row" key={i}>
+            {Array(columns)
+              .fill(null)
+              .map((_null, j, arr, plotContent = field[i][j]) => (
+                <Plot
+                  key={j}
+                  {...{
+                    hoveredPlot,
+                    plotContent,
+                    setHoveredPlot,
+                    x: j,
+                    y: i,
+                  }}
+                />
+              ))}
+          </div>
+        ))}
+    </TransformComponent>
+    <div className="fab-buttons zoom-controls">
+      <Fab
+        {...{
+          'aria-label': 'Zoom In',
+          color: 'primary',
+          onClick: zoomIn,
+        }}
+      >
+        <AddIcon />
+      </Fab>
+      <Fab
+        {...{
+          'aria-label': 'Zoom Out',
+          color: 'primary',
+          onClick: zoomOut,
+        }}
+      >
+        <RemoveIcon />
+      </Fab>
+    </div>
+  </>
+)
+
+export const Field = props => {
+  const { fieldMode, handleFieldZoom, purchasedField } = props
+
   const [hoveredPlot, setHoveredPlot] = useState({ x: null, y: null })
   const [currentScale, setCurrentScale] = useState(1)
 
@@ -56,6 +110,14 @@ export const Field = ({
           pan: {
             disabled: currentScale < FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
           },
+          // These -1s prevent NREs within react-zoom-pan-pinch, but also
+          // disable zoom animations.
+          zoomIn: {
+            animationTime: -1,
+          },
+          zoomOut: {
+            animationTime: -1,
+          },
           onZoomChange: ({ scale }) => {
             // If setCurrentScale with scale < 1 is called here, it causes a
             // reference error within react-zoom-pan-pinch.
@@ -69,29 +131,13 @@ export const Field = ({
           doubleClick: { disabled: true },
         }}
       >
-        <TransformComponent>
-          {Array(rows)
-            .fill(null)
-            .map((_null, i) => (
-              <div className="row" key={i}>
-                {Array(columns)
-                  .fill(null)
-                  .map((_null, j, arr, plotContent = field[i][j]) => (
-                    <Plot
-                      key={j}
-                      {...{
-                        hoveredPlot,
-                        plotContent,
-                        setHoveredPlot,
-                        x: j,
-                        y: i,
-                      }}
-                    />
-                  ))}
-              </div>
-            ))}
-        </TransformComponent>
+        {transformProps => (
+          <FieldContent
+            {...{ ...props, ...transformProps, hoveredPlot, setHoveredPlot }}
+          />
+        )}
       </TransformWrapper>
+      <div {...{ className: 'spacer' }} />
     </div>
   )
 }

@@ -60,16 +60,22 @@
     width: 0
     z-index: 20
 
+    @media (max-width: #{$break-narrow-phone})
+      bottom: 0.5em
+
     .MuiMobileStepper-root
       background: none
 
-    .buttons
+    .fab-buttons
       display: flex
       flex-flow: row
 
       button
-        margin: 0 0.5em
+        margin: 0.5em
         position: relative
+
+        @media (max-width: #{$break-narrow-phone})
+          margin: 0.25em
 
   h4,
   h5,

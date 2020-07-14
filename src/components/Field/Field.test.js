@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import Plot from '../Plot'
 import { fieldMode } from '../../enums'
 
-import { Field } from './Field'
+import { Field, FieldContent } from './Field'
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
@@ -34,6 +34,22 @@ beforeEach(() => {
 
 describe('field rendering', () => {
   beforeEach(() => {
+    component = shallow(
+      <FieldContent
+        {...{
+          columns: 0,
+          handleFieldZoom: () => {},
+          rows: 0,
+          field: [
+            [null, null],
+            [null, null],
+            [null, null],
+          ],
+          fieldMode: fieldMode.OBSERVE,
+          purchasedField: 0,
+        }}
+      />
+    )
     component.setProps({ columns: 2, rows: 3 })
   })
 
