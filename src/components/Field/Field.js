@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { array, bool, func, number, object, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
-import AddIcon from '@material-ui/icons/Add'
-import RemoveIcon from '@material-ui/icons/Remove'
+import ZoomInIcon from '@material-ui/icons/ZoomIn'
+import ZoomOutIcon from '@material-ui/icons/ZoomOut'
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap'
 import Tooltip from '@material-ui/core/Tooltip'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
@@ -115,7 +115,7 @@ export const FieldContent = ({
               onClick: zoomIn,
             }}
           >
-            <AddIcon />
+            <ZoomInIcon />
           </Fab>
         </Tooltip>
         <Tooltip
@@ -131,7 +131,7 @@ export const FieldContent = ({
               onClick: zoomOut,
             }}
           >
-            <RemoveIcon />
+            <ZoomOutIcon />
           </Fab>
         </Tooltip>
       </div>
