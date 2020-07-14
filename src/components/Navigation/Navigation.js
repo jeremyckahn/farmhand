@@ -72,6 +72,19 @@ export const Navigation = ({
   <header className="Navigation">
     <h1>Farmhand</h1>
     <h2 className="day-count">Day {dayCount}</h2>
+    <Select
+      {...{
+        className: 'view-select',
+        onChange: handleViewChange,
+        value: stageFocus,
+      }}
+    >
+      {viewList.map((view, i) => (
+        <MenuItem {...{ key: view, value: view }}>
+          {i + 1}: {STAGE_TITLE_MAP[view]}
+        </MenuItem>
+      ))}
+    </Select>
     <div className="button-array">
       {[
         { dialogView: FARMERS_LOG, Icon: HistoryIcon },
@@ -120,19 +133,6 @@ export const Navigation = ({
         </Button>
       </DialogActions>
     </Dialog>
-    <Select
-      {...{
-        className: 'view-select',
-        onChange: handleViewChange,
-        value: stageFocus,
-      }}
-    >
-      {viewList.map((view, i) => (
-        <MenuItem {...{ key: view, value: view }}>
-          {i + 1}: {STAGE_TITLE_MAP[view]}
-        </MenuItem>
-      ))}
-    </Select>
   </header>
 )
 
