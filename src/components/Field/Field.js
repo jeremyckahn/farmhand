@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { array, func, number, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
@@ -32,52 +32,60 @@ export const FieldContent = ({
   setHoveredPlot,
   zoomIn,
   zoomOut,
-}) => (
-  <>
-    <TransformComponent>
-      {Array(rows)
-        .fill(null)
-        .map((_null, i) => (
-          <div className="row" key={i}>
-            {Array(columns)
-              .fill(null)
-              .map((_null, j, arr, plotContent = field[i][j]) => (
-                <Plot
-                  key={j}
-                  {...{
-                    hoveredPlot,
-                    plotContent,
-                    setHoveredPlot,
-                    x: j,
-                    y: i,
-                  }}
-                />
-              ))}
-          </div>
-        ))}
-    </TransformComponent>
-    <div className="fab-buttons zoom-controls">
-      <Fab
-        {...{
-          'aria-label': 'Zoom In',
-          color: 'primary',
-          onClick: zoomIn,
-        }}
-      >
-        <AddIcon />
-      </Fab>
-      <Fab
-        {...{
-          'aria-label': 'Zoom Out',
-          color: 'primary',
-          onClick: zoomOut,
-        }}
-      >
-        <RemoveIcon />
-      </Fab>
-    </div>
-  </>
-)
+}) => {
+  const fieldContent = useMemo(
+    () => (
+      <TransformComponent>
+        {Array(rows)
+          .fill(null)
+          .map((_null, i) => (
+            <div className="row" key={i}>
+              {Array(columns)
+                .fill(null)
+                .map((_null, j, arr, plotContent = field[i][j]) => (
+                  <Plot
+                    key={j}
+                    {...{
+                      hoveredPlot,
+                      plotContent,
+                      setHoveredPlot,
+                      x: j,
+                      y: i,
+                    }}
+                  />
+                ))}
+            </div>
+          ))}
+      </TransformComponent>
+    ),
+    [rows, columns, field, hoveredPlot, setHoveredPlot]
+  )
+  return (
+    <>
+      {fieldContent}
+      <div className="fab-buttons zoom-controls">
+        <Fab
+          {...{
+            'aria-label': 'Zoom In',
+            color: 'primary',
+            onClick: zoomIn,
+          }}
+        >
+          <AddIcon />
+        </Fab>
+        <Fab
+          {...{
+            'aria-label': 'Zoom Out',
+            color: 'primary',
+            onClick: zoomOut,
+          }}
+        >
+          <RemoveIcon />
+        </Fab>
+      </div>
+    </>
+  )
+}
 
 export const Field = props => {
   const { fieldMode, handleFieldZoom, purchasedField } = props
