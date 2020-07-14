@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { array, func, number, string } from 'prop-types'
+import { array, func, number, object, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
@@ -26,9 +26,8 @@ const {
 export const FieldContent = ({
   columns,
   field,
-  rows,
-
   hoveredPlot,
+  rows,
   setHoveredPlot,
   zoomIn,
   zoomOut,
@@ -85,6 +84,16 @@ export const FieldContent = ({
       </div>
     </>
   )
+}
+
+FieldContent.propTypes = {
+  columns: number.isRequired,
+  field: array.isRequired,
+  hoveredPlot: object.isRequired,
+  rows: number.isRequired,
+  setHoveredPlot: func.isRequired,
+  zoomIn: func.isRequired,
+  zoomOut: func.isRequired,
 }
 
 export const Field = props => {

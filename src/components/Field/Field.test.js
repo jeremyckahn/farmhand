@@ -47,6 +47,10 @@ describe('field rendering', () => {
           ],
           fieldMode: fieldMode.OBSERVE,
           purchasedField: 0,
+          hoveredPlot: {},
+          setHoveredPlot: () => {},
+          zoomIn: () => {},
+          zoomOut: () => {},
         }}
       />
     )
