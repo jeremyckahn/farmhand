@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { array, func, number, object, string } from 'prop-types'
+import { array, bool, func, number, object, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
+import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import classNames from 'classnames'
 
@@ -26,8 +27,10 @@ const {
 export const FieldContent = ({
   columns,
   field,
+  fitToScreen,
   hoveredPlot,
   rows,
+  setFitToScreen,
   setHoveredPlot,
   zoomIn,
   zoomOut,
@@ -65,6 +68,16 @@ export const FieldContent = ({
       <div className="fab-buttons zoom-controls">
         <Fab
           {...{
+            'aria-label': 'Fit to screen',
+            color: 'primary',
+            className: 'fit-to-screen-button',
+            onClick: () => setFitToScreen(!fitToScreen),
+          }}
+        >
+          <ZoomOutMapIcon />
+        </Fab>
+        <Fab
+          {...{
             'aria-label': 'Zoom In',
             color: 'primary',
             onClick: zoomIn,
@@ -89,9 +102,11 @@ export const FieldContent = ({
 FieldContent.propTypes = {
   columns: number.isRequired,
   field: array.isRequired,
+  fitToScreen: bool.isRequired,
   hoveredPlot: object.isRequired,
   rows: number.isRequired,
   setHoveredPlot: func.isRequired,
+  setFitToScreen: func.isRequired,
   zoomIn: func.isRequired,
   zoomOut: func.isRequired,
 }
@@ -101,6 +116,7 @@ export const Field = props => {
 
   const [hoveredPlot, setHoveredPlot] = useState({ x: null, y: null })
   const [currentScale, setCurrentScale] = useState(1)
+  const [fitToScreen, setFitToScreen] = useState(true)
 
   useEffect(() => {
     handleFieldZoom(currentScale)
@@ -112,6 +128,7 @@ export const Field = props => {
         className: classNames('Field', {
           'cleanup-mode': fieldMode === CLEANUP,
           'fertilize-mode': fieldMode === FERTILIZE,
+          'fit-to-screen': fitToScreen,
           'harvest-mode': fieldMode === HARVEST,
           'plant-mode': fieldMode === PLANT,
           'set-scarecrow-mode': fieldMode === SET_SCARECROW,
@@ -150,7 +167,14 @@ export const Field = props => {
       >
         {transformProps => (
           <FieldContent
-            {...{ ...props, ...transformProps, hoveredPlot, setHoveredPlot }}
+            {...{
+              ...props,
+              ...transformProps,
+              fitToScreen,
+              hoveredPlot,
+              setFitToScreen,
+              setHoveredPlot,
+            }}
           />
         )}
       </TransformWrapper>

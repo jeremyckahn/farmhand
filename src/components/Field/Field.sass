@@ -5,17 +5,23 @@ $appBarOffset: 135px
 .Field
   margin: 0 auto
 
+  .fit-to-screen-button
+    display: none
+
   @media (orientation: landscape) and (min-width: #{$break-md})
-    &[data-purchased-field="0"]
+    .fit-to-screen-button
+      display: flex
+
+    &[data-purchased-field="0"].fit-to-screen
       max-width: calc(100vh * (6/10) - #{$appBarOffset})
 
-    &[data-purchased-field="1"]
+    &[data-purchased-field="1"].fit-to-screen
       max-width: calc(100vh * (8/12) - #{$appBarOffset})
 
-    &[data-purchased-field="2"]
+    &[data-purchased-field="2"].fit-to-screen
       max-width: calc(100vh * (10/16) - #{$appBarOffset})
 
-    &[data-purchased-field="3"]
+    &[data-purchased-field="3"].fit-to-screen
       max-width: calc(100vh * (12/18) - #{$appBarOffset})
 
   .spacer
