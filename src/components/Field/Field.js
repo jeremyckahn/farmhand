@@ -4,6 +4,7 @@ import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap'
+import Tooltip from '@material-ui/core/Tooltip'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import classNames from 'classnames'
 
@@ -66,34 +67,55 @@ export const FieldContent = ({
     <>
       {fieldContent}
       <div className="fab-buttons zoom-controls">
-        <Fab
+        <Tooltip
           {...{
-            'aria-label': 'Fit to screen',
-            color: 'primary',
-            className: 'fit-to-screen-button',
-            onClick: () => setFitToScreen(!fitToScreen),
+            placement: 'left',
+            title: 'Fit to screen',
           }}
         >
-          <ZoomOutMapIcon />
-        </Fab>
-        <Fab
+          <Fab
+            {...{
+              'aria-label': 'Fit to screen',
+              color: 'primary',
+              className: 'fit-to-screen-button',
+              onClick: () => setFitToScreen(!fitToScreen),
+            }}
+          >
+            <ZoomOutMapIcon />
+          </Fab>
+        </Tooltip>
+        <Tooltip
           {...{
-            'aria-label': 'Zoom In',
-            color: 'primary',
-            onClick: zoomIn,
+            placement: 'left',
+            title: 'Zoom In',
           }}
         >
-          <AddIcon />
-        </Fab>
-        <Fab
+          <Fab
+            {...{
+              'aria-label': 'Zoom In',
+              color: 'primary',
+              onClick: zoomIn,
+            }}
+          >
+            <AddIcon />
+          </Fab>
+        </Tooltip>
+        <Tooltip
           {...{
-            'aria-label': 'Zoom Out',
-            color: 'primary',
-            onClick: zoomOut,
+            placement: 'left',
+            title: 'Zoom Out',
           }}
         >
-          <RemoveIcon />
-        </Fab>
+          <Fab
+            {...{
+              'aria-label': 'Zoom Out',
+              color: 'primary',
+              onClick: zoomOut,
+            }}
+          >
+            <RemoveIcon />
+          </Fab>
+        </Tooltip>
       </div>
     </>
   )
