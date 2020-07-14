@@ -11,6 +11,7 @@ import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
 import Plot from '../Plot'
+import QuickSelect from '../QuickSelect'
 import { FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD } from '../../constants'
 import { fieldMode } from '../../enums'
 
@@ -217,6 +218,7 @@ export const Field = props => {
           />
         )}
       </TransformWrapper>
+      <QuickSelect />
       <div {...{ className: 'spacer' }} />
     </div>
   )
