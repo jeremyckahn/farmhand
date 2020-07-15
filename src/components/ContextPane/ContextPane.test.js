@@ -13,6 +13,8 @@ beforeEach(() => {
   component = shallow(
     <ContextPane
       {...{
+        completedAchievements: {},
+        handleHarvestAllClick: () => {},
         playerInventory: [],
         stageFocus: stageFocusType.NONE,
       }}

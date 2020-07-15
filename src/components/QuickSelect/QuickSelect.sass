@@ -1,1 +1,18 @@
+@import ../../styles/variables.sass
+
 .QuickSelect
+  position: fixed
+  bottom: 8em
+  left: 50%
+
+  @media (max-width: #{$break-narrow-phone})
+    bottom: 6.5em
+
+  .wrapper
+    position: relative
+    left: -50%
+
+  .Toolbelt
+    display: flex
+    flex-flow: column
+    justify-content: center

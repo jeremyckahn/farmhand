@@ -1,5 +1,6 @@
 import React from 'react'
-import { string } from 'prop-types'
+import { array, func, object, string } from 'prop-types'
+import Button from '@material-ui/core/Button'
 
 import FarmhandContext from '../../Farmhand.context'
 import Inventory from '../Inventory'
@@ -11,7 +12,12 @@ import { stageFocusType } from '../../enums'
 
 import './ContextPane.sass'
 
-export const ContextPane = ({ playerInventory, stageFocus }) => (
+export const ContextPane = ({
+  completedAchievements,
+  handleHarvestAllClick,
+  playerInventory,
+  stageFocus,
+}) => (
   <div className="ContextPane">
     {stageFocus === stageFocusType.FIELD && (
       <>
@@ -19,6 +25,19 @@ export const ContextPane = ({ playerInventory, stageFocus }) => (
           <h3>Toolbelt</h3>
         </header>
         <Toolbelt />
+        <div className="bulk-operations">
+          {completedAchievements['master-harvester'] && (
+            <Button
+              {...{
+                color: 'primary',
+                onClick: handleHarvestAllClick,
+                variant: 'contained',
+              }}
+            >
+              Harvest All
+            </Button>
+          )}
+        </div>
         <header>
           <h3>Seeds</h3>
         </header>
@@ -44,6 +63,9 @@ export const ContextPane = ({ playerInventory, stageFocus }) => (
 )
 
 ContextPane.propTypes = {
+  completedAchievements: object.isRequired,
+  handleHarvestAllClick: func.isRequired,
+  playerInventory: array.isRequired,
   stageFocus: string.isRequired,
 }
 
