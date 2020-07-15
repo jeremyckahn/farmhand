@@ -13,17 +13,23 @@
     bottom: 6.5em
 
   .wrapper
+    background: #ffe9a8
+    border-radius: 0.25em
+    border: solid 2px #5a3801
     display: flex
     left: -50%
     max-width: 30em
     overflow: scroll
+    padding: .5em
     position: relative
 
-    @media (max-width: #{$break-md})
-      max-width: 14em
+    @media (max-width: #{$break-sm})
+      max-width: 16em
+      left: calc(-50% - 2em)
 
-    @media (max-width: #{$break-narrow-phone})
-      max-width: 10em
+    @media (max-width: 350px)
+      max-width: 14em
+      left: calc(-50% - 2em)
 
   .Toolbelt
     display: flex
