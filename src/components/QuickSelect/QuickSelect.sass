@@ -1,9 +1,9 @@
 @import ../../styles/variables.sass
 
 .QuickSelect
-  position: fixed
   bottom: 8em
   left: 50%
+  position: fixed
 
   .button-array
     display: flex
@@ -12,23 +12,26 @@
   @media (max-width: #{$break-narrow-phone})
     bottom: 6.5em
 
+  @media (max-width: #{$break-sm})
+    left: 1.5em
+    right: 5.25em
+
   .MuiGrid-root
     background: #ffe9a8
     border-radius: 0.25em
     border: solid 2px #5a3801
     left: -50%
-    max-width: 30em
+    max-width: 34em
     overflow: scroll
     padding: .5em
     position: relative
 
     @media (max-width: #{$break-sm})
-      max-width: 16em
-      left: calc(-50% - 2em)
+      left: 0
+      max-width: 20em
 
-    @media (max-width: 350px)
-      max-width: 14em
-      left: calc(-50% - 2em)
+    @media (max-width: #{$break-md})
+      max-width: 28em
 
   .Toolbelt
     display: flex
@@ -45,3 +48,15 @@
 
   .MuiDivider-vertical
     width: 2px
+
+  .MuiButton-containedPrimary
+    background-color: rgba(0, 0, 0, 0.2)
+
+    &:hover
+      background-color: rgba(0, 0, 0, 0.4)
+
+  .MuiButton-outlinedPrimary
+    border-color: #bbb
+
+    &:hover
+      border-color: #666
