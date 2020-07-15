@@ -234,6 +234,21 @@ export default {
    * @see https://github.com/FormidableLabs/react-swipeable#event-data
    */
   handleSwipe({ event, initial: [startX], dir }) {
+    let { target } = event
+
+    while (target.parentElement) {
+      let { parentElement } = target
+      const { overflow, width } = window.getComputedStyle(target)
+
+      if (overflow === 'scroll' && target.scrollWidth > parseInt(width, 10)) {
+        // The user is scrolling a horizontally overflowing element, so bail
+        // out of this event handler.
+        return
+      }
+
+      target = parentElement
+    }
+
     if (dir === 'Left') {
       if (this.state.isMenuOpen) {
         this.handlers.handleMenuToggle(false)
