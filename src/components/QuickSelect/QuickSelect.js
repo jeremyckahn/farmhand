@@ -1,14 +1,46 @@
 import React from 'react'
 import { array, func, string } from 'prop-types'
 import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
+import Grid from '@material-ui/core/Grid'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
-import { items, pixel } from '../../img'
+import { items as itemImages, pixel } from '../../img'
 import { sortItems } from '../../utils'
 import Toolbelt from '../Toolbelt'
 
 import './QuickSelect.sass'
+
+const ItemList = ({ handleItemSelectClick, items, selectedItemId }) =>
+  sortItems(items).map(item => (
+    <Button
+      {...{
+        className: classNames({
+          'is-selected': item.id === selectedItemId,
+        }),
+        key: item.id,
+        color: 'primary',
+        onClick: () => handleItemSelectClick(item),
+        variant: item.id === selectedItemId ? 'contained' : 'outlined',
+      }}
+    >
+      <img
+        alt={item.name}
+        {...{
+          className: 'square',
+          src: pixel,
+          style: { backgroundImage: `url(${itemImages[item.id]}` },
+        }}
+      />
+    </Button>
+  ))
+
+ItemList.propTypes = {
+  handleItemSelectClick: func,
+  items: array.isRequired,
+  selectedItemId: string.isRequired,
+}
 
 const QuickSelect = ({
   fieldToolInventory,
@@ -17,36 +49,29 @@ const QuickSelect = ({
   selectedItemId,
 }) => (
   <div className="QuickSelect">
-    <div {...{ className: 'wrapper' }}>
+    <Grid {...{ container: true, alignItems: 'center', wrap: 'nowrap' }}>
       <Toolbelt />
+      <Divider orientation="vertical" flexItem />
       <div {...{ className: 'button-array' }}>
-        {[
-          ...sortItems(plantableCropInventory),
-          ...sortItems(fieldToolInventory),
-        ].map(item => (
-          <Button
-            {...{
-              className: classNames({
-                'is-selected': item.id === selectedItemId,
-              }),
-              key: item.id,
-              color: 'primary',
-              onClick: () => handleItemSelectClick(item),
-              variant: item.id === selectedItemId ? 'contained' : 'outlined',
-            }}
-          >
-            <img
-              alt={item.name}
-              {...{
-                className: 'square',
-                src: pixel,
-                style: { backgroundImage: `url(${items[item.id]}` },
-              }}
-            />
-          </Button>
-        ))}
+        <ItemList
+          {...{
+            items: plantableCropInventory,
+            selectedItemId,
+            handleItemSelectClick,
+          }}
+        />
       </div>
-    </div>
+      <Divider orientation="vertical" flexItem />
+      <div {...{ className: 'button-array' }}>
+        <ItemList
+          {...{
+            items: fieldToolInventory,
+            selectedItemId,
+            handleItemSelectClick,
+          }}
+        />
+      </div>
+    </Grid>
   </div>
 )
 
