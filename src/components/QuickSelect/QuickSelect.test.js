@@ -6,7 +6,16 @@ import QuickSelect from './QuickSelect'
 let component
 
 beforeEach(() => {
-  component = shallow(<QuickSelect {...{}} />)
+  component = shallow(
+    <QuickSelect
+      {...{
+        fieldToolInventory: [],
+        handleItemSelectClick: () => {},
+        plantableCropInventory: [],
+        selectedItemId: '',
+      }}
+    />
+  )
 })
 
 test('renders', () => {

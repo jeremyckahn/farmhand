@@ -5,12 +5,25 @@
   bottom: 8em
   left: 50%
 
+  .button-array
+    display: flex
+    flex-flow: row
+
   @media (max-width: #{$break-narrow-phone})
     bottom: 6.5em
 
   .wrapper
-    position: relative
+    display: flex
     left: -50%
+    max-width: 30em
+    overflow: scroll
+    position: relative
+
+    @media (max-width: #{$break-md})
+      max-width: 14em
+
+    @media (max-width: #{$break-narrow-phone})
+      max-width: 10em
 
   .Toolbelt
     display: flex
