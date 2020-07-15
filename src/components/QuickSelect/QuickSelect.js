@@ -22,7 +22,7 @@ const ItemList = ({ handleItemSelectClick, items, selectedItemId }) =>
         key: item.id,
         color: 'primary',
         onClick: () => handleItemSelectClick(item),
-        variant: item.id === selectedItemId ? 'contained' : 'outlined',
+        variant: item.id === selectedItemId ? 'contained' : 'text',
       }}
     >
       <img

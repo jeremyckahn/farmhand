@@ -57,8 +57,7 @@ export const Toolbelt = ({
               }),
               color: 'primary',
               onClick: () => handleFieldModeSelect(fieldMode),
-              variant:
-                fieldMode === currentFieldMode ? 'contained' : 'outlined',
+              variant: fieldMode === currentFieldMode ? 'contained' : 'text',
             }}
           >
             {/* alt is in a different format here because of linter weirdness. */}
