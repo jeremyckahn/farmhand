@@ -473,7 +473,7 @@ export const getCrops = memoize(
 /**
  * @returns {boolean}
  */
-export const doesMenuObstructStage = () => window.screen.width < BREAKPOINTS.SM
+export const doesMenuObstructStage = () => window.innerWidth < BREAKPOINTS.MD
 
 const itemTypesToShowInReverse = new Set([itemType.MILK])
 
