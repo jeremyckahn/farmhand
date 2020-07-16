@@ -1,2 +1,10 @@
 @import ~compass-mixins/lib/compass/reset
+
+// This is a non-standard, selective way of loading animate.css. As more
+// animations are needed, list their file paths here. This approach also
+// results in the animations' classes not having a prefix.
+@import ~animate.css/source/_vars
+@import ~animate.css/source/_base
+@import ~animate.css/source/attention_seekers/heartBeat
+
 @import styles/utils.sass

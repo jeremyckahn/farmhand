@@ -60,6 +60,7 @@ export const Plot = ({
   lifeStage = plotContent &&
     getPlotContentType(plotContent) === itemType.CROP &&
     getCropLifeStage(plotContent),
+  isRipe = lifeStage === cropLifeStage.GROWN,
 }) => {
   return (
     <div
@@ -75,7 +76,7 @@ export const Plot = ({
         // For crops
         crop: plotContent && getPlotContentType(plotContent) === itemType.CROP,
         'is-fertilized': plotContent && plotContent.isFertilized,
-        'is-ripe': lifeStage === cropLifeStage.GROWN,
+        'is-ripe': isRipe,
 
         'is-replantable':
           plotContent && itemsMap[plotContent.itemId].isReplantable,
@@ -87,7 +88,10 @@ export const Plot = ({
       onMouseOver={() => setHoveredPlot({ x, y })}
     >
       <img
-        className="square"
+        className={classNames('square', {
+          animate__animated: isRipe,
+          heartBeat: isRipe,
+        })}
         style={{
           backgroundImage: image ? `url(${image})` : undefined,
         }}
