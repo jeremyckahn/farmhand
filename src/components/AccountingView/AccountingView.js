@@ -99,8 +99,9 @@ const AccountingView = ({
               Pay into loan
             </Button>
             <p>
-              You may take out a loan at any time. So long as you have a loan
-              balance, all farm product sales are garnished by{' '}
+              You may take out a Hardship Assistance Loan if your funds fall
+              below {dollarString(STANDARD_LOAN_AMOUNT)}. So long as you have an
+              outstanding loan balance, all farm product sales are garnished by{' '}
               {LOAN_GARNISHMENT_RATE * 100}% until the loan is repaid. The loan
               interest rate is {LOAN_INTEREST_RATE * 100}% per day, compounded
               daily.
@@ -109,7 +110,7 @@ const AccountingView = ({
           <Button
             {...{
               color: 'secondary',
-              variant: 'contained',
+              disabled: money >= STANDARD_LOAN_AMOUNT,
               onClick: () => {
                 handleClickTakeOutLoanButton(STANDARD_LOAN_AMOUNT)
                 setLoanInputValue(
@@ -119,6 +120,7 @@ const AccountingView = ({
                   )
                 )
               },
+              variant: 'contained',
             }}
           >
             Take out a {dollarString(STANDARD_LOAN_AMOUNT)} loan
