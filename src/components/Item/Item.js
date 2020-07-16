@@ -93,8 +93,8 @@ const QuantityNumberFormat = ({ inputRef, min, max, onChange, ...rest }) => (
       ...rest,
       allowNegative: false,
       decimalScale: 0,
-      isAllowed: ({ floatValue = 0 }) => floatValue >= min && floatValue <= max,
-      onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
+      onValueChange: ({ floatValue = 0 }) =>
+        onChange(Math.min(floatValue, max)),
     }}
   />
 )
