@@ -19,39 +19,42 @@ const ItemList = ({
   items,
   playerInventoryQuantities,
   selectedItemId,
-}) =>
-  sortItems(items).map(item => (
-    <Tooltip
-      {...{
-        key: item.id,
-        placement: 'top',
-        title: item.name,
-      }}
-    >
-      <Button
+}) => (
+  <div {...{ className: 'button-array' }}>
+    {sortItems(items).map(item => (
+      <Tooltip
         {...{
-          className: classNames({
-            'is-selected': item.id === selectedItemId,
-          }),
-          color: 'primary',
-          onClick: () => handleItemSelectClick(item),
-          variant: item.id === selectedItemId ? 'contained' : 'text',
+          key: item.id,
+          placement: 'top',
+          title: item.name,
         }}
       >
-        <img
-          alt={item.name}
+        <Button
           {...{
-            className: 'square',
-            src: pixel,
-            style: { backgroundImage: `url(${itemImages[item.id]}` },
+            className: classNames({
+              'is-selected': item.id === selectedItemId,
+            }),
+            color: 'primary',
+            onClick: () => handleItemSelectClick(item),
+            variant: item.id === selectedItemId ? 'contained' : 'text',
           }}
-        />
-        <p {...{ className: 'quantity' }}>
-          {integerString(playerInventoryQuantities[item.id])}
-        </p>
-      </Button>
-    </Tooltip>
-  ))
+        >
+          <img
+            alt={item.name}
+            {...{
+              className: 'square',
+              src: pixel,
+              style: { backgroundImage: `url(${itemImages[item.id]}` },
+            }}
+          />
+          <p {...{ className: 'quantity' }}>
+            {integerString(playerInventoryQuantities[item.id])}
+          </p>
+        </Button>
+      </Tooltip>
+    ))}
+  </div>
+)
 
 ItemList.propTypes = {
   handleItemSelectClick: func,
@@ -70,28 +73,33 @@ const QuickSelect = ({
   <Paper {...{ className: 'QuickSelect', elevation: 10 }}>
     <Grid {...{ container: true, alignItems: 'center', wrap: 'nowrap' }}>
       <Toolbelt />
-      <Divider orientation="vertical" flexItem />
-      <div {...{ className: 'button-array' }}>
-        <ItemList
-          {...{
-            handleItemSelectClick,
-            items: plantableCropInventory,
-            playerInventoryQuantities,
-            selectedItemId,
-          }}
-        />
-      </div>
-      <Divider orientation="vertical" flexItem />
-      <div {...{ className: 'button-array' }}>
-        <ItemList
-          {...{
-            handleItemSelectClick,
-            items: fieldToolInventory,
-            playerInventoryQuantities,
-            selectedItemId,
-          }}
-        />
-      </div>
+      {plantableCropInventory.length > 0 && (
+        <>
+          <Divider orientation="vertical" flexItem />
+          <ItemList
+            {...{
+              handleItemSelectClick,
+              items: plantableCropInventory,
+              playerInventoryQuantities,
+              selectedItemId,
+            }}
+          />
+        </>
+      )}
+
+      {fieldToolInventory.length > 0 && (
+        <>
+          <Divider orientation="vertical" flexItem />
+          <ItemList
+            {...{
+              handleItemSelectClick,
+              items: fieldToolInventory,
+              playerInventoryQuantities,
+              selectedItemId,
+            }}
+          />
+        </>
+      )}
     </Grid>
   </Paper>
 )
