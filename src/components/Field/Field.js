@@ -87,7 +87,7 @@ export const FieldContent = ({
       <div className="fab-buttons zoom-controls right">
         <Tooltip
           {...{
-            placement: 'left',
+            placement: 'top',
             title: 'Fit to screen',
           }}
         >
@@ -104,7 +104,7 @@ export const FieldContent = ({
         </Tooltip>
         <Tooltip
           {...{
-            placement: 'left',
+            placement: 'top',
             title: 'Zoom In',
           }}
         >
@@ -122,7 +122,7 @@ export const FieldContent = ({
       <div className="fab-buttons zoom-controls left">
         <Tooltip
           {...{
-            placement: 'right',
+            placement: 'top',
             title: 'Zoom Out',
           }}
         >

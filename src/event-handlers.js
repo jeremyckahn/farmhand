@@ -237,12 +237,16 @@ export default {
     let { target } = event
 
     while (target.parentElement) {
-      let { parentElement } = target
-      const { overflow, width } = window.getComputedStyle(target)
+      let { classList, parentElement, scrollWidth } = target
+      const { overflow, position, width } = window.getComputedStyle(target)
 
-      if (overflow === 'scroll' && target.scrollWidth > parseInt(width, 10)) {
-        // The user is scrolling a horizontally overflowing element, so bail
-        // out of this event handler.
+      // If the user is scrolling a horizontally overflowing element, or is
+      // swiping on a `position: fixed` element, bail out of this event
+      // handler.
+      if (
+        (overflow === 'scroll' && scrollWidth > parseInt(width, 10)) ||
+        (position === 'fixed' && !classList.contains('Farmhand'))
+      ) {
         return
       }
 
