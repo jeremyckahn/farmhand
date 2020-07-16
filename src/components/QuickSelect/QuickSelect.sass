@@ -2,12 +2,17 @@
 
 .QuickSelect
   bottom: 8em
+  left: 50%
+  max-width: calc(100% - 2em)
   position: fixed
-  transition: left $duration-entering-screen $easing-ease-out
+  transform: translateX(-50%)
 
-  @media (min-width: #{$break-md})
-    left: 50%
-    transform: translateX(-50%)
+  // This specificity is needed to overwrite MUI Paper transition styles.
+  &.MuiPaper-root
+    transition: left $duration-entering-screen $easing-ease-out
+
+  .menu-open &
+    left: calc(25% + #{$sidebar-width})
 
   .button-array
     display: flex
@@ -23,18 +28,10 @@
     .menu-open &
       display: none
 
-  @media (max-width: #{$break-md})
-    left: calc(#{$sidebar-width} + 1.5em)
-    max-width: calc(100% - 2em)
-
-    .menu-closed &
-      left: 1em
-
   .MuiGrid-root
     background: #ffe3a1
     border-radius: 0.25em
     border: solid 2px #b68000
-    max-width: 20em
     overflow: scroll
     padding: .5em
     position: relative
