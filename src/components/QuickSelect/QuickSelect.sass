@@ -2,33 +2,45 @@
 
 .QuickSelect
   bottom: 8em
-  left: 50%
   position: fixed
+  transition: left $duration-entering-screen $easing-ease-out
+
+  @media (min-width: #{$break-md})
+    left: 50%
+    transform: translateX(-50%)
 
   .button-array
     display: flex
     flex-flow: row
 
+  @media (max-height: 500px)
+    display: none
+
   @media (max-width: #{$break-narrow-phone})
     bottom: 6.5em
 
   @media (max-width: #{$break-sm})
-    left: 1.5em
-    right: 5.25em
+    .menu-open &
+      display: none
+
+  @media (max-width: #{$break-md})
+    left: calc(#{$sidebar-width} + 1.5em)
+    max-width: calc(100% - 6.5em)
+
+    .menu-closed &
+      left: 1.5em
 
   .MuiGrid-root
     background: #bbb
     border-radius: 0.25em
     border: solid 2px #666
-    left: -50%
-    max-width: 34em
+    max-width: 20em
     overflow: scroll
     padding: .5em
     position: relative
 
-    @media (max-width: #{$break-sm})
-      left: 0
-      max-width: 20em
+    @media (min-width: #{$break-lg})
+      max-width: 30em
 
     @media (max-width: #{$break-md})
       max-width: 28em

@@ -37,7 +37,10 @@ export const Stage = ({
   return (
     <div
       {...{
-        className: classNames('Stage', { 'menu-closed': !isMenuOpen }),
+        className: classNames(
+          'Stage',
+          isMenuOpen ? 'menu-open' : 'menu-closed'
+        ),
         ref,
       }}
     >

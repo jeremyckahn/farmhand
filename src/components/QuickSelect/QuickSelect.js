@@ -3,6 +3,7 @@ import { array, func, object, string } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -58,7 +59,7 @@ const QuickSelect = ({
   plantableCropInventory,
   selectedItemId,
 }) => (
-  <div className="QuickSelect">
+  <Paper {...{ className: 'QuickSelect', elevation: 10 }}>
     <Grid {...{ container: true, alignItems: 'center', wrap: 'nowrap' }}>
       <Toolbelt />
       <Divider orientation="vertical" flexItem />
@@ -84,7 +85,7 @@ const QuickSelect = ({
         />
       </div>
     </Grid>
-  </div>
+  </Paper>
 )
 
 QuickSelect.propTypes = {
