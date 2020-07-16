@@ -11,6 +11,7 @@ beforeEach(() => {
       {...{
         fieldToolInventory: [],
         handleItemSelectClick: () => {},
+        playerInventoryQuantities: {},
         plantableCropInventory: [],
         selectedItemId: '',
       }}

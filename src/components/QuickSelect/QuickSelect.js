@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, func, string } from 'prop-types'
+import { array, func, object, string } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
@@ -7,12 +7,17 @@ import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
 import { items as itemImages, pixel } from '../../img'
-import { sortItems } from '../../utils'
+import { integerString, sortItems } from '../../utils'
 import Toolbelt from '../Toolbelt'
 
 import './QuickSelect.sass'
 
-const ItemList = ({ handleItemSelectClick, items, selectedItemId }) =>
+const ItemList = ({
+  handleItemSelectClick,
+  items,
+  playerInventoryQuantities,
+  selectedItemId,
+}) =>
   sortItems(items).map(item => (
     <Button
       {...{
@@ -33,18 +38,23 @@ const ItemList = ({ handleItemSelectClick, items, selectedItemId }) =>
           style: { backgroundImage: `url(${itemImages[item.id]}` },
         }}
       />
+      <p {...{ className: 'quantity' }}>
+        {integerString(playerInventoryQuantities[item.id])}
+      </p>
     </Button>
   ))
 
 ItemList.propTypes = {
   handleItemSelectClick: func,
   items: array.isRequired,
+  playerInventoryQuantities: object.isRequired,
   selectedItemId: string.isRequired,
 }
 
 const QuickSelect = ({
   fieldToolInventory,
   handleItemSelectClick,
+  playerInventoryQuantities,
   plantableCropInventory,
   selectedItemId,
 }) => (
@@ -55,9 +65,10 @@ const QuickSelect = ({
       <div {...{ className: 'button-array' }}>
         <ItemList
           {...{
-            items: plantableCropInventory,
-            selectedItemId,
             handleItemSelectClick,
+            items: plantableCropInventory,
+            playerInventoryQuantities,
+            selectedItemId,
           }}
         />
       </div>
@@ -65,9 +76,10 @@ const QuickSelect = ({
       <div {...{ className: 'button-array' }}>
         <ItemList
           {...{
-            items: fieldToolInventory,
-            selectedItemId,
             handleItemSelectClick,
+            items: fieldToolInventory,
+            playerInventoryQuantities,
+            selectedItemId,
           }}
         />
       </div>
@@ -79,6 +91,7 @@ QuickSelect.propTypes = {
   fieldToolInventory: array.isRequired,
   handleItemSelectClick: func,
   plantableCropInventory: array.isRequired,
+  playerInventoryQuantities: object.isRequired,
   selectedItemId: string.isRequired,
 }
 
