@@ -180,6 +180,8 @@ export const scarecrow = freeze({
  */
 export const cowFeed = freeze({
   id: COW_FEED_ITEM_ID,
+  description:
+    'Each cow automatically consumes one unit of Cow Feed per day. Fed cows gain and maintain weight.',
   name: 'Cow Feed',
   type: COW_FEED,
   value: 5,
