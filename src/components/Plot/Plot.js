@@ -89,7 +89,7 @@ export const Plot = ({
     >
       <img
         className={classNames('square', {
-          animate__animated: isRipe,
+          animated: isRipe,
           heartBeat: isRipe,
         })}
         style={{

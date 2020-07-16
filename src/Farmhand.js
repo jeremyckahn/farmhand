@@ -272,9 +272,9 @@ export default class Farmhand extends Component {
       openPriceEvents: 'p',
       openStats: 'd',
       previousView: 'left',
-      selectHoe: 'shift+h',
-      selectScythe: 'shift+s',
-      selectWateringCan: 'shift+w',
+      selectHoe: 'h',
+      selectScythe: 's',
+      selectWateringCan: 'w',
       toggleMenu: 'm',
     }
 
