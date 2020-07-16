@@ -46,12 +46,29 @@ $appBarOffset: 135px
     position: fixed
     display: flex
     flex-direction: column
-    bottom: 0.5em
-    right: 0.5em
+    bottom: 1em
+
+    &.right
+      right: 0.5em
+
+      @media (max-width: #{$break-narrow-phone})
+        right: 0.25em
+
+      @media (min-width: #{$break-sm})
+        bottom: 5.5em
+
+    &.left
+      left: 0.5em
+
+      @media (max-width: #{$break-narrow-phone})
+        left: 0.25em
+
+      @media (min-width: #{$break-sm})
+        left: auto
+        right: 0.5em
 
     @media (max-width: #{$break-narrow-phone})
       bottom: 0.25em
-      right: 0.25em
 
     button
       margin: 0.5em

@@ -84,7 +84,7 @@ export const FieldContent = ({
       }}
     >
       {fieldContent}
-      <div className="fab-buttons zoom-controls">
+      <div className="fab-buttons zoom-controls right">
         <Tooltip
           {...{
             placement: 'left',
@@ -118,9 +118,11 @@ export const FieldContent = ({
             <ZoomInIcon />
           </Fab>
         </Tooltip>
+      </div>
+      <div className="fab-buttons zoom-controls left">
         <Tooltip
           {...{
-            placement: 'left',
+            placement: 'right',
             title: 'Zoom Out',
           }}
         >
