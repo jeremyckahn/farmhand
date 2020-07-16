@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import Tooltip from '@material-ui/core/Tooltip'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -20,29 +21,36 @@ const ItemList = ({
   selectedItemId,
 }) =>
   sortItems(items).map(item => (
-    <Button
+    <Tooltip
       {...{
-        className: classNames({
-          'is-selected': item.id === selectedItemId,
-        }),
         key: item.id,
-        color: 'primary',
-        onClick: () => handleItemSelectClick(item),
-        variant: item.id === selectedItemId ? 'contained' : 'text',
+        placement: 'top',
+        title: item.name,
       }}
     >
-      <img
-        alt={item.name}
+      <Button
         {...{
-          className: 'square',
-          src: pixel,
-          style: { backgroundImage: `url(${itemImages[item.id]}` },
+          className: classNames({
+            'is-selected': item.id === selectedItemId,
+          }),
+          color: 'primary',
+          onClick: () => handleItemSelectClick(item),
+          variant: item.id === selectedItemId ? 'contained' : 'text',
         }}
-      />
-      <p {...{ className: 'quantity' }}>
-        {integerString(playerInventoryQuantities[item.id])}
-      </p>
-    </Button>
+      >
+        <img
+          alt={item.name}
+          {...{
+            className: 'square',
+            src: pixel,
+            style: { backgroundImage: `url(${itemImages[item.id]}` },
+          }}
+        />
+        <p {...{ className: 'quantity' }}>
+          {integerString(playerInventoryQuantities[item.id])}
+        </p>
+      </Button>
+    </Tooltip>
   ))
 
 ItemList.propTypes = {

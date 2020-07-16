@@ -41,7 +41,7 @@ export const Toolbelt = ({
         <Tooltip
           {...{
             key: fieldMode,
-            placement: 'bottom',
+            placement: 'top',
             title: (
               <>
                 <p>{alt}</p>
