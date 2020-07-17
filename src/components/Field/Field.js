@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { array, bool, func, number, object, string } from 'prop-types'
+import { array, func, number, object, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
 import ZoomInIcon from '@material-ui/icons/ZoomIn'
 import ZoomOutIcon from '@material-ui/icons/ZoomOut'
-import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap'
 import Tooltip from '@material-ui/core/Tooltip'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import { GlobalHotKeys } from 'react-hotkeys'
@@ -35,120 +34,106 @@ const keyMap = {
 export const FieldContent = ({
   columns,
   field,
-  fitToScreen,
   hoveredPlot,
   rows,
-  setFitToScreen,
   setHoveredPlot,
   zoomIn,
   zoomOut,
+
+  currentScale,
+  previousScale,
+  resetTransform,
 }) => {
   const fieldContent = useMemo(
-    () => (
-      <TransformComponent>
-        {Array(rows)
-          .fill(null)
-          .map((_null, i) => (
-            <div className="row" key={i}>
-              {Array(columns)
-                .fill(null)
-                .map((_null, j, arr, plotContent = field[i][j]) => (
-                  <Plot
-                    key={j}
-                    {...{
-                      hoveredPlot,
-                      plotContent,
-                      setHoveredPlot,
-                      x: j,
-                      y: i,
-                    }}
-                  />
-                ))}
-            </div>
-          ))}
-      </TransformComponent>
-    ),
+    () =>
+      Array(rows)
+        .fill(null)
+        .map((_null, i) => (
+          <div className="row" key={i}>
+            {Array(columns)
+              .fill(null)
+              .map((_null, j, arr, plotContent = field[i][j]) => (
+                <Plot
+                  key={j}
+                  {...{
+                    hoveredPlot,
+                    plotContent,
+                    setHoveredPlot,
+                    x: j,
+                    y: i,
+                  }}
+                />
+              ))}
+          </div>
+        )),
     [rows, columns, field, hoveredPlot, setHoveredPlot]
   )
 
-  const toggleFitToScreen = () => setFitToScreen(!fitToScreen)
+  useEffect(() => {
+    if (currentScale === 1 && previousScale !== 1) {
+      resetTransform()
+    }
+  }, [currentScale, previousScale, resetTransform])
 
   return (
-    <GlobalHotKeys
-      {...{
-        keyMap,
-        handlers: {
-          zoomIn,
-          zoomOut,
-        },
-      }}
-    >
-      {fieldContent}
-      <div className="fab-buttons zoom-controls right">
-        <Tooltip
-          {...{
-            placement: 'top',
-            title: 'Fit to screen',
-          }}
-        >
-          <Fab
+    <>
+      <TransformComponent>{fieldContent}</TransformComponent>
+      <GlobalHotKeys
+        {...{
+          keyMap,
+          handlers: {
+            zoomIn,
+            zoomOut,
+          },
+        }}
+      >
+        <div className="fab-buttons zoom-controls right">
+          <Tooltip
             {...{
-              'aria-label': 'Fit to screen',
-              color: 'primary',
-              className: 'fit-to-screen-button',
-              onClick: toggleFitToScreen,
+              placement: 'top',
+              title: 'Zoom In',
             }}
           >
-            <ZoomOutMapIcon />
-          </Fab>
-        </Tooltip>
-        <Tooltip
-          {...{
-            placement: 'top',
-            title: 'Zoom In',
-          }}
-        >
-          <Fab
+            <Fab
+              {...{
+                'aria-label': 'Zoom In',
+                color: 'primary',
+                onClick: zoomIn,
+              }}
+            >
+              <ZoomInIcon />
+            </Fab>
+          </Tooltip>
+        </div>
+        <div className="fab-buttons zoom-controls left">
+          <Tooltip
             {...{
-              'aria-label': 'Zoom In',
-              color: 'primary',
-              onClick: zoomIn,
+              placement: 'top',
+              title: 'Zoom Out',
             }}
           >
-            <ZoomInIcon />
-          </Fab>
-        </Tooltip>
-      </div>
-      <div className="fab-buttons zoom-controls left">
-        <Tooltip
-          {...{
-            placement: 'top',
-            title: 'Zoom Out',
-          }}
-        >
-          <Fab
-            {...{
-              'aria-label': 'Zoom Out',
-              color: 'primary',
-              onClick: zoomOut,
-            }}
-          >
-            <ZoomOutIcon />
-          </Fab>
-        </Tooltip>
-      </div>
-    </GlobalHotKeys>
+            <Fab
+              {...{
+                'aria-label': 'Zoom Out',
+                color: 'primary',
+                onClick: zoomOut,
+              }}
+            >
+              <ZoomOutIcon />
+            </Fab>
+          </Tooltip>
+        </div>
+      </GlobalHotKeys>
+    </>
   )
 }
 
 FieldContent.propTypes = {
   columns: number.isRequired,
   field: array.isRequired,
-  fitToScreen: bool.isRequired,
   hoveredPlot: object.isRequired,
   rows: number.isRequired,
   setHoveredPlot: func.isRequired,
-  setFitToScreen: func.isRequired,
   zoomIn: func.isRequired,
   zoomOut: func.isRequired,
 }
@@ -158,7 +143,6 @@ export const Field = props => {
 
   const [hoveredPlot, setHoveredPlot] = useState({ x: null, y: null })
   const [currentScale, setCurrentScale] = useState(1)
-  const [fitToScreen, setFitToScreen] = useState(true)
 
   useEffect(() => {
     handleFieldZoom(currentScale)
@@ -170,7 +154,6 @@ export const Field = props => {
         className: classNames('Field', {
           'cleanup-mode': fieldMode === CLEANUP,
           'fertilize-mode': fieldMode === FERTILIZE,
-          'fit-to-screen': fitToScreen,
           'harvest-mode': fieldMode === HARVEST,
           'plant-mode': fieldMode === PLANT,
           'set-scarecrow-mode': fieldMode === SET_SCARECROW,
@@ -182,17 +165,22 @@ export const Field = props => {
     >
       <TransformWrapper
         {...{
-          limitToWrapper: true,
+          options: {
+            limitToBounds: false,
+          },
+          reset: {
+            animationTime: 0,
+          },
           pan: {
             disabled: currentScale < FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
           },
-          // These -1s prevent NREs within react-zoom-pan-pinch, but also
+          // These 0s prevent NREs within react-zoom-pan-pinch, but also
           // disable zoom animations.
           zoomIn: {
-            animationTime: -1,
+            animationTime: 0,
           },
           zoomOut: {
-            animationTime: -1,
+            animationTime: 0,
           },
           onZoomChange: ({ scale }) => {
             // If setCurrentScale with scale < 1 is called here, it causes a
@@ -212,9 +200,8 @@ export const Field = props => {
             {...{
               ...props,
               ...transformProps,
-              fitToScreen,
+              currentScale,
               hoveredPlot,
-              setFitToScreen,
               setHoveredPlot,
             }}
           />
