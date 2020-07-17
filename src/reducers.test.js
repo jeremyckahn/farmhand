@@ -9,7 +9,7 @@ import {
   CROW_ATTACKED,
   LOAN_INCREASED,
   LOAN_PAYOFF,
-  MILK_PRODUCED,
+  MILKS_PRODUCED,
   PRICE_CRASH,
   PRICE_SURGE,
 } from './templates'
@@ -574,7 +574,7 @@ describe('processMilkingCows', () => {
       expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
       expect(newDayNotifications).toEqual([
         {
-          message: MILK_PRODUCED`${cow}${getCowMilkItem(cow)}`,
+          message: MILKS_PRODUCED`${{ [getCowMilkItem(cow).name]: 1 }}`,
           severity: 'success',
         },
       ])

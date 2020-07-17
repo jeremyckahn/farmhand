@@ -14,12 +14,25 @@ export const COW_PEN_PURCHASED = (_, cows) =>
   `Purchased a cow pen with capacity for ${cows} cows! You can visit your cow pen by going to the "Cows" page.`
 
 /**
- * @param {farmhand.cow} cow
- * @param {farmhand.item} milk
+ * @param {Object.<string, number>} milksProduced
  * @returns {string}
  */
-export const MILK_PRODUCED = (_, cow, milk) =>
-  `${cow.name} produced a ${milk.name} for you!`
+export const MILKS_PRODUCED = (_, milksProduced) => {
+  let message = `Your cows produced milks:
+`
+
+  Object.keys(milksProduced)
+    .sort()
+    .forEach(
+      milkName =>
+        (message += `  - ${milksProduced[milkName]} ${milkName}${
+          milksProduced[milkName] > 1 ? 's' : ''
+        }
+`)
+    )
+
+  return message
+}
 
 /**
  * @param {farmhand.recipe} recipe

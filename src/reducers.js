@@ -58,7 +58,7 @@ import {
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
-  MILK_PRODUCED,
+  MILKS_PRODUCED,
   PRICE_CRASH,
   PRICE_SURGE,
 } from './templates'
@@ -364,6 +364,7 @@ export const processMilkingCows = state => {
   const cowInventory = [...state.cowInventory]
   const newDayNotifications = [...state.newDayNotifications]
   const { length: cowInventoryLength } = cowInventory
+  const milksProduced = {}
 
   for (let i = 0; i < cowInventoryLength; i++) {
     const cow = cowInventory[i]
@@ -372,12 +373,18 @@ export const processMilkingCows = state => {
       cowInventory[i] = { ...cow, daysSinceMilking: 0 }
 
       const milk = getCowMilkItem(cow)
+      const { name } = milk
+
+      milksProduced[name] = (milksProduced[name] || 0) + 1
       state = addItemToInventory(state, milk)
-      newDayNotifications.push({
-        message: MILK_PRODUCED`${cow}${milk}`,
-        severity: 'success',
-      })
     }
+  }
+
+  if (Object.keys(milksProduced).length) {
+    newDayNotifications.push({
+      message: MILKS_PRODUCED`${milksProduced}`,
+      severity: 'success',
+    })
   }
 
   return { ...state, cowInventory, newDayNotifications }
