@@ -7,6 +7,9 @@
       margin: 0 .25em 0 0
 
 .CowPenContextMenu
+  display: flex
+  flex-flow: column
+
   .fa
     font-size: 1em
 
@@ -22,3 +25,14 @@
   .purchased-cows
     .MuiCardHeader-title
       display: flex
+
+  .sort-wrapper
+    align-items: center
+    display: flex
+    justify-content: flex-end
+
+    .MuiFab-root
+      margin: 0 1em
+
+    .sort-select
+      flex-grow: 1

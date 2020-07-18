@@ -4,8 +4,14 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
 import TextField from '@material-ui/core/TextField'
+import Fab from '@material-ui/core/Fab'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import sortBy from 'lodash.sortby'
 import classNames from 'classnames'
 import {
   faMars,
@@ -17,7 +23,7 @@ import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons'
 import Item from '../Item'
 import { animals } from '../../img'
 import FarmhandContext from '../../Farmhand.context'
-import { cowColors, genders } from '../../enums'
+import { cowColors, enumify, genders } from '../../enums'
 import { moneyString, getCowValue, getCowWeight } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { cowFeed } from '../../data/items'
@@ -182,6 +188,37 @@ export const CowCard = ({
   )
 }
 
+const { AGE, COLOR, GENDER, HAPPINESS, VALUE, WEIGHT } = enumify([
+  'AGE',
+  'COLOR',
+  'GENDER',
+  'HAPPINESS',
+  'VALUE',
+  'WEIGHT',
+])
+
+const sortCows = (cows, sortType, isAscending) => {
+  let sorter = _ => _
+
+  if (sortType === VALUE) {
+    sorter = getCowValue
+  } else if (sortType === WEIGHT) {
+    sorter = getCowWeight
+  } else if (sortType === AGE) {
+    sorter = ({ daysOld }) => daysOld
+  } else if (sortType === COLOR) {
+    sorter = ({ color }) => color
+  } else if (sortType === GENDER) {
+    sorter = ({ gender }) => gender
+  } else if (sortType === HAPPINESS) {
+    sorter = ({ happiness }) => happiness
+  }
+
+  const sortedCows = sortBy(cows, sorter)
+
+  return isAscending ? sortedCows : sortedCows.reverse()
+}
+
 export const CowPenContextMenu = ({
   cowForSale,
   cowInventory,
@@ -194,57 +231,91 @@ export const CowPenContextMenu = ({
   money,
   purchasedCowPen,
   selectedCowId,
-}) => (
-  <div className="CowPenContextMenu">
-    <h3>Supplies</h3>
-    <Item
-      {...{
-        item: cowFeed,
-        isPurchaseView: true,
-        showQuantity: true,
-      }}
-    />
-    <h3>For sale</h3>
-    <CowCard
-      {...{
-        cow: cowForSale,
-        cowInventory,
-        handleCowPurchaseClick,
-        money,
-        purchasedCowPen,
-      }}
-    />
-    <h3>
-      Cows ({cowInventory.length} /{' '}
-      {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
-    </h3>
-    <ul className="card-list purchased-cows">
-      {cowInventory.map(cow => (
-        <li
-          {...{
-            key: cow.id,
-            onFocus: () => handleCowSelect(cow),
-            onClick: () => handleCowSelect(cow),
-          }}
-        >
-          <CowCard
+}) => {
+  const [sortType, setSortType] = useState(VALUE)
+  const [isAscending, setIsAscending] = useState(false)
+
+  return (
+    <div className="CowPenContextMenu">
+      <h3>Supplies</h3>
+      <Item
+        {...{
+          item: cowFeed,
+          isPurchaseView: true,
+          showQuantity: true,
+        }}
+      />
+      <h3>For sale</h3>
+      <CowCard
+        {...{
+          cow: cowForSale,
+          cowInventory,
+          handleCowPurchaseClick,
+          money,
+          purchasedCowPen,
+        }}
+      />
+      <h3>
+        Cows ({cowInventory.length} /{' '}
+        {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
+      </h3>
+      {cowInventory.length > 1 && (
+        <div {...{ className: 'sort-wrapper' }}>
+          <Fab
             {...{
-              cow,
-              cowInventory,
-              debounced,
-              handleCowHugClick,
-              handleCowNameInputChange,
-              handleCowSellClick,
-              isSelected: cow.id === selectedCowId,
-              money,
-              purchasedCowPen,
+              'aria-label': 'Toggle sorting order',
+              onClick: () => setIsAscending(!isAscending),
+              color: 'primary',
             }}
-          />
-        </li>
-      ))}
-    </ul>
-  </div>
-)
+          >
+            {isAscending ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+          </Fab>
+          <Select
+            {...{
+              className: 'sort-select',
+              displayEmpty: true,
+              value: sortType,
+              onChange: ({ target: { value } }) => setSortType(value),
+            }}
+          >
+            <MenuItem {...{ value: VALUE }}>Sort by Value</MenuItem>
+            <MenuItem {...{ value: AGE }}>Sort by Age</MenuItem>
+            <MenuItem {...{ value: HAPPINESS }}>Sort by Happiness</MenuItem>
+            <MenuItem {...{ value: WEIGHT }}>Sort by Weight</MenuItem>
+            <MenuItem {...{ value: GENDER }}>Sort by Gender</MenuItem>
+            <MenuItem {...{ value: COLOR }}>Sort by Color</MenuItem>
+          </Select>
+        </div>
+      )}
+
+      <ul className="card-list purchased-cows">
+        {sortCows(cowInventory, sortType, isAscending).map(cow => (
+          <li
+            {...{
+              key: cow.id,
+              onFocus: () => handleCowSelect(cow),
+              onClick: () => handleCowSelect(cow),
+            }}
+          >
+            <CowCard
+              {...{
+                cow,
+                cowInventory,
+                debounced,
+                handleCowHugClick,
+                handleCowNameInputChange,
+                handleCowSellClick,
+                isSelected: cow.id === selectedCowId,
+                money,
+                purchasedCowPen,
+              }}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 
 CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
