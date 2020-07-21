@@ -16,6 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import { array, number, func, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
+import { inventorySpaceConsumed } from '../../utils'
 import { dialogView } from '../../enums'
 import { STAGE_TITLE_MAP } from '../../constants'
 
@@ -65,6 +66,8 @@ export const Navigation = ({
   handleClickDialogViewButton,
   handleCloseDialogView,
   handleViewChange,
+  inventory,
+  inventoryLimit,
   purchasedCowPen,
   stageFocus,
   viewList,
@@ -72,6 +75,12 @@ export const Navigation = ({
   <header className="Navigation">
     <h1>Farmhand</h1>
     <h2 className="day-count">Day {dayCount}</h2>
+    {inventoryLimit > -1 && (
+      <h3 className="inventory-info">
+        Inventory: {inventorySpaceConsumed(inventory)} / {inventoryLimit}
+      </h3>
+    )}
+
     <Select
       {...{
         className: 'view-select',
@@ -141,6 +150,8 @@ Navigation.propTypes = {
   handleClickDialogViewButton: func.isRequired,
   handleCloseDialogView: func.isRequired,
   handleViewChange: func.isRequired,
+  inventory: array.isRequired,
+  inventoryLimit: number.isRequired,
   purchasedCowPen: number.isRequired,
   stageFocus: string.isRequired,
   viewList: array.isRequired,

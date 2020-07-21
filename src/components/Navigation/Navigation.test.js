@@ -17,6 +17,8 @@ beforeEach(() => {
         handleClickDialogViewButton: () => {},
         handleCloseDialogView: () => {},
         handleViewChange: () => {},
+        inventory: [],
+        inventoryLimit: -1,
         purchasedCowPen: 0,
         stageFocus: stageFocusType.FIELD,
         viewList: ['HOME', 'FIELD', 'SHOP', 'KITCHEN'],

@@ -526,7 +526,11 @@ export const sortItems = items => {
   return sortItemIdsByTypeAndValue(items.map(({ id }) => id)).map(id => map[id])
 }
 
-const computeInventorySize = memoize(inventory =>
+/**
+ * @param {Array.<farmhand.item>} inventory
+ * @returns {number}
+ */
+export const inventorySpaceConsumed = memoize(inventory =>
   inventory.reduce((sum, { quantity }) => sum + quantity, 0)
 )
 
@@ -537,7 +541,7 @@ const computeInventorySize = memoize(inventory =>
 export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
   inventoryLimit === -1
     ? Infinity
-    : inventoryLimit - computeInventorySize(inventory)
+    : inventoryLimit - inventorySpaceConsumed(inventory)
 
 /**
  * @param {{ inventory: Array.<farmhand.item>, inventoryLimit: number}} state
