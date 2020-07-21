@@ -16,6 +16,8 @@ beforeEach(() => {
     <Item
       {...{
         completedAchievements: {},
+        inventory: [],
+        inventoryLimit: -1,
         item: testItem({ name: '' }),
         money: 0,
         playerInventoryQuantities: {},

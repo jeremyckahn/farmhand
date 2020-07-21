@@ -10,13 +10,14 @@ import CardActions from '@material-ui/core/CardActions'
 import TextField from '@material-ui/core/TextField'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
-import { bool, func, number, object } from 'prop-types'
+import { array, bool, func, number, object } from 'prop-types'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
 import {
+  inventorySpaceRemaining,
   isItemSoldInShop,
   getCropLifecycleDuration,
   getFinalCropItemFromSeedItem,
@@ -129,6 +130,8 @@ export const Item = ({
   handleItemPurchaseClick,
   handleItemSelectClick,
   handleItemSellClick,
+  inventory,
+  inventoryLimit,
   isPurchaseView,
   isSelectView,
   isSelected,
@@ -145,14 +148,22 @@ export const Item = ({
     ? getResaleValue(item)
     : getItemValue(item, valueAdjustments),
 
-  maxQuantityPlayerCanAfford = Math.floor(money / adjustedValue),
+  maxQuantityPlayerCanPurchase = Math.max(
+    0,
+    Math.min(
+      Math.floor(money / adjustedValue),
+      inventorySpaceRemaining({ inventory, inventoryLimit })
+    )
+  ),
 }) => {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1)
   const [sellQuantity, setSellQuantity] = useState(1)
 
   useEffect(() => {
-    setPurchaseQuantity(Math.min(maxQuantityPlayerCanAfford, purchaseQuantity))
-  }, [maxQuantityPlayerCanAfford, purchaseQuantity])
+    setPurchaseQuantity(
+      Math.min(maxQuantityPlayerCanPurchase, purchaseQuantity)
+    )
+  }, [maxQuantityPlayerCanPurchase, purchaseQuantity])
 
   useEffect(() => {
     setSellQuantity(Math.min(playerInventoryQuantities[id], sellQuantity))
@@ -160,7 +171,7 @@ export const Item = ({
 
   const handleItemPurchase = () => {
     handleItemPurchaseClick(item, purchaseQuantity)
-    setPurchaseQuantity(Math.min(1, maxQuantityPlayerCanAfford))
+    setPurchaseQuantity(Math.min(1, maxQuantityPlayerCanPurchase))
   }
   const handleItemSell = () => {
     handleItemSellClick(item, sellQuantity)
@@ -267,17 +278,17 @@ export const Item = ({
                 {...{
                   handleSubmit: handleItemPurchase,
                   handleUpdateNumber: setPurchaseQuantity,
-                  max: maxQuantityPlayerCanAfford,
+                  max: maxQuantityPlayerCanPurchase,
                   value: purchaseQuantity,
                 }}
               />
               <Button
                 {...{
                   onClick: () =>
-                    setPurchaseQuantity(maxQuantityPlayerCanAfford),
+                    setPurchaseQuantity(maxQuantityPlayerCanPurchase),
                 }}
               >
-                / {integerString(maxQuantityPlayerCanAfford)}
+                / {integerString(maxQuantityPlayerCanPurchase)}
               </Button>
             </div>
           </>
@@ -325,6 +336,8 @@ Item.propTypes = {
   handleItemPurchaseClick: func,
   handleItemSelectClick: func,
   handleItemSellClick: func,
+  inventory: array.isRequired,
+  inventoryLimit: number.isRequired,
   isPurchaseView: bool,
   isSelectView: bool,
   isSelected: bool,

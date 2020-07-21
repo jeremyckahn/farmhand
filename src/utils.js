@@ -497,3 +497,23 @@ export const sortItems = items => {
 
   return sortItemIdsByTypeAndValue(items.map(({ id }) => id)).map(id => map[id])
 }
+
+// TODO: Memoize this.
+const computeInventorySize = inventory =>
+  inventory.reduce((sum, { quantity }) => sum + quantity, 0)
+
+/**
+ * @param {{ inventory: Array.<farmhand.item>, inventoryLimit: number}} state
+ * @returns {number}
+ */
+export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
+  inventoryLimit === -1
+    ? Infinity
+    : inventoryLimit - computeInventorySize(inventory)
+
+/**
+ * @param {{ inventory: Array.<farmhand.item>, inventoryLimit: number}} state
+ * @returns {boolean}
+ */
+export const doesInventorySpaceRemain = ({ inventory, inventoryLimit }) =>
+  inventorySpaceRemaining({ inventory, inventoryLimit }) > 0
