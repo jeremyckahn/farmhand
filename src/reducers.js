@@ -356,6 +356,7 @@ export const processFeedingCows = state => {
   )
 }
 
+// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
@@ -390,6 +391,7 @@ export const processMilkingCows = state => {
   return { ...state, cowInventory, newDayNotifications }
 }
 
+// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @param {farmhand.item} item
@@ -666,6 +668,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
       dayCount: state.dayCount + 1,
     })
 
+// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @param {farmhand.item} item
@@ -759,6 +762,7 @@ export const updateLearnedRecipes = state => ({
   }, {}),
 })
 
+// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @param {farmhand.recipe} recipe
@@ -1014,6 +1018,7 @@ export const setScarecrow = (state, x, y) => {
   }
 }
 
+// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @param {number} x
@@ -1048,6 +1053,7 @@ export const harvestPlot = (state, x, y) => {
   }
 }
 
+// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
@@ -1060,6 +1066,7 @@ export const harvestAll = state => {
   return state
 }
 
+// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @param {number} x
