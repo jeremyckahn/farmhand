@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 
 import Plot from '../Plot'
 import { fieldMode } from '../../enums'
+import { testItem } from '../../test-utils'
 
 import { Field, FieldContent } from './Field'
 
@@ -26,6 +27,8 @@ beforeEach(() => {
           [null, null],
         ],
         fieldMode: fieldMode.OBSERVE,
+        inventory: [],
+        inventoryLimit: -1,
         purchasedField: 0,
       }}
     />
@@ -103,6 +106,26 @@ describe('harvest-mode class', () => {
   test('is present when fieldMode == HARVEST', () => {
     component.setProps({ fieldMode: fieldMode.HARVEST })
     expect(component.hasClass('harvest-mode')).toBeTruthy()
+  })
+})
+
+describe('is-inventory-full class', () => {
+  beforeEach(() => {
+    component.setProps({
+      inventoryLimit: 2,
+    })
+  })
+
+  test('is not present when inventory space remains', () => {
+    expect(component.hasClass('is-inventory-full')).toBeFalsy()
+  })
+
+  test('is present when inventory space does not remain', () => {
+    component.setProps({ fieldMode: fieldMode.HARVEST })
+    component.setProps({
+      inventory: [testItem({ quantity: 2 })],
+    })
+    expect(component.hasClass('is-inventory-full')).toBeTruthy()
   })
 })
 

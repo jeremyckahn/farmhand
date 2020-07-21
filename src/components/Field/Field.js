@@ -13,6 +13,7 @@ import Plot from '../Plot'
 import QuickSelect from '../QuickSelect'
 import { FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD } from '../../constants'
 import { fieldMode } from '../../enums'
+import { doesInventorySpaceRemain } from '../../utils'
 
 import './Field.sass'
 
@@ -139,7 +140,13 @@ FieldContent.propTypes = {
 }
 
 export const Field = props => {
-  const { fieldMode, handleFieldZoom, purchasedField } = props
+  const {
+    fieldMode,
+    handleFieldZoom,
+    inventory,
+    inventoryLimit,
+    purchasedField,
+  } = props
 
   const [hoveredPlot, setHoveredPlot] = useState({ x: null, y: null })
   const [currentScale, setCurrentScale] = useState(1)
@@ -155,6 +162,10 @@ export const Field = props => {
           'cleanup-mode': fieldMode === CLEANUP,
           'fertilize-mode': fieldMode === FERTILIZE,
           'harvest-mode': fieldMode === HARVEST,
+          'is-inventory-full': !doesInventorySpaceRemain({
+            inventory,
+            inventoryLimit,
+          }),
           'plant-mode': fieldMode === PLANT,
           'set-scarecrow-mode': fieldMode === SET_SCARECROW,
           'set-sprinkler-mode': fieldMode === SET_SPRINKLER,
@@ -218,6 +229,8 @@ Field.propTypes = {
   field: array.isRequired,
   fieldMode: string.isRequired,
   handleFieldZoom: func.isRequired,
+  inventory: array.isRequired,
+  inventoryLimit: number.isRequired,
   purchasedField: number.isRequired,
   rows: number.isRequired,
 }
