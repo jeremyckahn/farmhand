@@ -31,6 +31,7 @@ import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
 import {
+  INITIAL_INVENTORY_LIMIT,
   PURCHASEABLE_COW_PENS,
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
@@ -102,6 +103,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {farmhand.module:enums.fieldMode} fieldMode
  * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
+ * @property {number} inventoryLimit Is -1 if inventory is unlimited.
  * @property {boolean} isMenuOpen
  * @property {Object} itemsSold Keys are items IDs, values are the number of
  * that item sold.
@@ -152,6 +154,7 @@ export default class Farmhand extends Component {
     hasBooted: false,
     hoveredPlotRangeSize: 0,
     inventory: [],
+    inventoryLimit: INITIAL_INVENTORY_LIMIT,
     isMenuOpen: !doesMenuObstructStage(),
     itemsSold: {},
     learnedRecipes: {},
@@ -191,6 +194,7 @@ export default class Farmhand extends Component {
       'dayCount',
       'field',
       'inventory',
+      'inventoryLimit',
       'itemsSold',
       'learnedRecipes',
       'loanBalance',
