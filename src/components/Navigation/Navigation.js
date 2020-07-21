@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -16,7 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import { array, number, func, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
-import { inventorySpaceConsumed } from '../../utils'
+import { doesInventorySpaceRemain, inventorySpaceConsumed } from '../../utils'
 import { dialogView } from '../../enums'
 import { STAGE_TITLE_MAP } from '../../constants'
 
@@ -76,7 +77,16 @@ export const Navigation = ({
     <h1>Farmhand</h1>
     <h2 className="day-count">Day {dayCount}</h2>
     {inventoryLimit > -1 && (
-      <h3 className="inventory-info">
+      <h3
+        {...{
+          className: classNames('inventory-info', {
+            'is-inventory-full': !doesInventorySpaceRemain({
+              inventory,
+              inventoryLimit,
+            }),
+          }),
+        }}
+      >
         Inventory: {inventorySpaceConsumed(inventory)} / {inventoryLimit}
       </h3>
     )}
