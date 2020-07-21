@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { GlobalHotKeys } from 'react-hotkeys'
-import memoize from 'fast-memoize'
 import localforage from 'localforage'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -26,7 +25,12 @@ import Stage from './components/Stage'
 import NotificationSystem from './components/NotificationSystem'
 import DebugMenu from './components/DebugMenu'
 import theme from './mui-theme'
-import { createNewField, doesMenuObstructStage, getItemValue } from './utils'
+import {
+  createNewField,
+  doesMenuObstructStage,
+  getItemValue,
+  memoize,
+} from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'

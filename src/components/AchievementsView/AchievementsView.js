@@ -3,13 +3,13 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import { object } from 'prop-types'
-import memoize from 'fast-memoize'
 import Divider from '@material-ui/core/Divider'
 
 import FarmhandContext from '../../Farmhand.context'
 import ProgressBar from '../ProgressBar'
 import Achievement from '../Achievement'
 import achievements from '../../data/achievements'
+import { memoize } from '../../utils'
 
 import './AchievementsView.sass'
 

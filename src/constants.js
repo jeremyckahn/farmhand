@@ -2,6 +2,8 @@ import { stageFocusType } from './enums'
 
 const { freeze } = Object
 
+export const MEMOIZE_CACHE_CLEAR_THRESHOLD = 10
+
 // This MUST be kept in sync with the $break- variables in variables.sass.
 export const BREAKPOINTS = {
   XS: 0,

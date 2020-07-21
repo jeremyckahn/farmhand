@@ -1,10 +1,9 @@
-import memoize from 'fast-memoize'
-
 import {
   findInField,
   getCropLifeStage,
   doesPlotContainCrop,
   dollarString,
+  memoize,
   moneyTotal,
 } from '../utils'
 import { cowColors, cropLifeStage } from '../enums'

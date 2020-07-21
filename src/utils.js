@@ -1,5 +1,5 @@
 import Dinero from 'dinero.js'
-import memoize from 'fast-memoize'
+import fastMemoize from 'fast-memoize'
 import sortBy from 'lodash.sortby'
 
 import shopInventory from './data/shop-inventory'
@@ -22,6 +22,7 @@ import {
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   MALE_COW_WEIGHT_MULTIPLIER,
+  MEMOIZE_CACHE_CLEAR_THRESHOLD,
   PRICE_EVENT_STANDARD_DURATION_DECREASE,
 } from './constants'
 
@@ -48,6 +49,33 @@ const memoizationSerializer = args =>
  * @returns {string}
  */
 const createUniqueId = () => btoa(Math.random() + Date.now())
+
+// This is basically the same as fast-memoize's default cache, except that it
+// clears the cache once the size exceeds MEMOIZE_CACHE_CLEAR_THRESHOLD to
+// prevent memory bloat.
+// https://github.com/caiogondim/fast-memoize.js/blob/5cdfc8dde23d86b16e0104bae1b04cd447b98c63/src/index.js#L114-L128
+class MemoizeCache {
+  cache = {}
+
+  has(key) {
+    return key in this.cache
+  }
+
+  get(key) {
+    return this.cache[key]
+  }
+
+  set(key, value) {
+    if (Object.keys(this.cache).length > MEMOIZE_CACHE_CLEAR_THRESHOLD) {
+      this.cache = {}
+    }
+
+    this.cache[key] = value
+  }
+}
+
+export const memoize = (fn, config) =>
+  fastMemoize(fn, { cache: { create: () => new MemoizeCache() }, ...config })
 
 /**
  * @param {number} num
@@ -498,9 +526,9 @@ export const sortItems = items => {
   return sortItemIdsByTypeAndValue(items.map(({ id }) => id)).map(id => map[id])
 }
 
-// TODO: Memoize this.
-const computeInventorySize = inventory =>
+const computeInventorySize = memoize(inventory =>
   inventory.reduce((sum, { quantity }) => sum + quantity, 0)
+)
 
 /**
  * @param {{ inventory: Array.<farmhand.item>, inventoryLimit: number}} state
