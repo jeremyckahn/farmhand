@@ -4,9 +4,13 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
-import { array, bool, func, object } from 'prop-types'
+import { array, bool, func, number, object } from 'prop-types'
 
-import { canMakeRecipe, dollarString } from '../../utils'
+import {
+  canMakeRecipe,
+  doesInventorySpaceRemain,
+  dollarString,
+} from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { dishes } from '../../img'
 
@@ -46,11 +50,13 @@ const IngredientsList = ({
 const Recipe = ({
   handleMakeRecipeClick,
   inventory,
+  inventoryLimit,
   playerInventoryQuantities,
   recipe,
   recipe: { id, name },
 
-  canBeMade = canMakeRecipe(recipe, inventory),
+  canBeMade = canMakeRecipe(recipe, inventory) &&
+    doesInventorySpaceRemain({ inventory, inventoryLimit }),
 }) => (
   <Card
     {...{
@@ -92,6 +98,7 @@ Recipe.propTypes = {
   canBeMade: bool,
   handleMakeRecipeClick: func.isRequired,
   inventory: array.isRequired,
+  inventoryLimit: number.isRequired,
   playerInventoryQuantities: object.isRequired,
   recipe: object.isRequired,
 }
