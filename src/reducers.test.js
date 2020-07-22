@@ -526,6 +526,7 @@ describe('processMilkingCows', () => {
     state = {
       cowInventory: [],
       inventory: [],
+      inventoryLimit: -1,
       newDayNotifications: [],
     }
   })
@@ -554,30 +555,65 @@ describe('processMilkingCows', () => {
   })
 
   describe('cow should be milked', () => {
-    test('cow is milked', () => {
-      state.cowInventory = [
-        generateCow({
-          daysSinceMilking: Math.ceil(COW_MILK_RATE_SLOWEST / 2),
-          gender: genders.FEMALE,
-        }),
-      ]
+    describe('inventory space is available', () => {
+      test('cow is milked and milk is added to inventory', () => {
+        state.cowInventory = [
+          generateCow({
+            daysSinceMilking: Math.ceil(COW_MILK_RATE_SLOWEST / 2),
+            gender: genders.FEMALE,
+          }),
+        ]
 
-      const {
-        cowInventory: [cow],
-        inventory,
-        newDayNotifications,
-      } = fn.processMilkingCows(state)
+        const {
+          cowInventory: [cow],
+          inventory,
+          newDayNotifications,
+        } = fn.processMilkingCows(state)
 
-      const { daysSinceMilking } = cow
+        const { daysSinceMilking } = cow
 
-      expect(daysSinceMilking).toEqual(0)
-      expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
-      expect(newDayNotifications).toEqual([
-        {
-          message: MILKS_PRODUCED`${{ [getCowMilkItem(cow).name]: 1 }}`,
-          severity: 'success',
-        },
-      ])
+        expect(daysSinceMilking).toEqual(0)
+        expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
+        expect(newDayNotifications).toEqual([
+          {
+            message: MILKS_PRODUCED`${{ [getCowMilkItem(cow).name]: 1 }}`,
+            severity: 'success',
+          },
+        ])
+      })
+    })
+
+    describe('inventory space is not available', () => {
+      test('cow is milked and milk is added to inventory', () => {
+        state.inventoryLimit = 1
+        state.cowInventory = [
+          generateCow({
+            daysSinceMilking: Math.ceil(COW_MILK_RATE_SLOWEST / 2),
+            gender: genders.FEMALE,
+          }),
+          generateCow({
+            daysSinceMilking: Math.ceil(COW_MILK_RATE_SLOWEST / 2),
+            gender: genders.FEMALE,
+          }),
+        ]
+
+        const {
+          cowInventory: [cow],
+          inventory,
+          newDayNotifications,
+        } = fn.processMilkingCows(state)
+
+        const { daysSinceMilking } = cow
+
+        expect(daysSinceMilking).toEqual(0)
+        expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
+        expect(newDayNotifications).toEqual([
+          {
+            message: MILKS_PRODUCED`${{ [getCowMilkItem(cow).name]: 1 }}`,
+            severity: 'success',
+          },
+        ])
+      })
     })
   })
 })

@@ -4,6 +4,7 @@ import {
   canMakeRecipe,
   castToMoney,
   clampNumber,
+  doesInventorySpaceRemain,
   findInField,
   generateCow,
   generateValueAdjustments,
@@ -375,6 +376,10 @@ export const processMilkingCows = state => {
 
       const milk = getCowMilkItem(cow)
       const { name } = milk
+
+      if (!doesInventorySpaceRemain(state)) {
+        break
+      }
 
       milksProduced[name] = (milksProduced[name] || 0) + 1
       state = addItemToInventory(state, milk)
