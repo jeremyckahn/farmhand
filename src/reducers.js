@@ -773,7 +773,6 @@ export const updateLearnedRecipes = state => ({
   }, {}),
 })
 
-// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @param {farmhand.recipe} recipe
