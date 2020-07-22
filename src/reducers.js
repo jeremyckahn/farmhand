@@ -21,6 +21,7 @@ import {
   getPriceEventForCrop,
   getRandomCropItem,
   getRangeCoords,
+  inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
   moneyTotal,
@@ -357,7 +358,6 @@ export const processFeedingCows = state => {
   )
 }
 
-// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
@@ -396,7 +396,6 @@ export const processMilkingCows = state => {
   return { ...state, cowInventory, newDayNotifications }
 }
 
-// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @param {farmhand.item} item
@@ -407,6 +406,12 @@ export const addItemToInventory = (state, item, howMany = 1) => {
   const { id } = item
   const inventory = [...state.inventory]
 
+  const numberOfItemsToAdd = Math.min(howMany, inventorySpaceRemaining(state))
+
+  if (numberOfItemsToAdd === 0) {
+    return state
+  }
+
   const currentItemSlot = inventory.findIndex(({ id: itemId }) => id === itemId)
 
   if (~currentItemSlot) {
@@ -414,10 +419,10 @@ export const addItemToInventory = (state, item, howMany = 1) => {
 
     inventory[currentItemSlot] = {
       ...currentItem,
-      quantity: currentItem.quantity + howMany,
+      quantity: currentItem.quantity + numberOfItemsToAdd,
     }
   } else {
-    inventory.push({ id, quantity: howMany })
+    inventory.push({ id, quantity: numberOfItemsToAdd })
   }
 
   return { ...state, inventory }

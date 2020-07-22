@@ -735,8 +735,8 @@ describe('addItemToInventory', () => {
   test('creates a new item in the inventory', () => {
     expect(
       fn.addItemToInventory(
-        { inventory: [] },
-        testItem({ id: 'sample-item-1' })
+        { inventory: [], inventoryLimit: -1 },
+        { id: 'sample-item-1' }
       )
     ).toMatchObject({ inventory: [{ id: 'sample-item-1', quantity: 1 }] })
   })
@@ -744,16 +744,68 @@ describe('addItemToInventory', () => {
   test('increments an existing item in the inventory', () => {
     expect(
       fn.addItemToInventory(
-        { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
-        testItem({ id: 'sample-item-1' })
+        {
+          inventory: [{ id: 'sample-item-1', quantity: 1 }],
+          inventoryLimit: -1,
+        },
+        { id: 'sample-item-1' }
       )
     ).toMatchObject({
       inventory: [
-        testItem({
+        {
           id: 'sample-item-1',
           quantity: 2,
-        }),
+        },
       ],
+    })
+  })
+
+  describe('there is not enough room in the inventory', () => {
+    describe('there is no room for any of the items being added', () => {
+      test('no items are added', () => {
+        expect(
+          fn.addItemToInventory(
+            {
+              inventory: [{ id: 'sample-item-1', quantity: 3 }],
+              inventoryLimit: 3,
+            },
+            { id: 'sample-item-2' }
+          )
+        ).toMatchObject({
+          inventory: [
+            {
+              id: 'sample-item-1',
+              quantity: 3,
+            },
+          ],
+        })
+      })
+    })
+
+    describe('there is only room for some of the items being added', () => {
+      test('a reduced amount of items are added', () => {
+        expect(
+          fn.addItemToInventory(
+            {
+              inventory: [{ id: 'sample-item-1', quantity: 2 }],
+              inventoryLimit: 3,
+            },
+            { id: 'sample-item-2' },
+            10
+          )
+        ).toMatchObject({
+          inventory: [
+            {
+              id: 'sample-item-1',
+              quantity: 2,
+            },
+            {
+              id: 'sample-item-2',
+              quantity: 1,
+            },
+          ],
+        })
+      })
     })
   })
 })
@@ -911,6 +963,7 @@ describe('purchaseItem', () => {
         fn.purchaseItem(
           {
             inventory: [],
+            inventoryLimit: -1,
             money: 10,
             valueAdjustments: { 'sample-item-1': 1 },
           },
@@ -953,6 +1006,7 @@ describe('makeRecipe', () => {
       const { inventory } = fn.makeRecipe(
         {
           inventory: [{ id: 'sample-item-1', quantity: 1 }],
+          inventoryLimit: -1,
         },
         sampleRecipe1
       )
@@ -966,6 +1020,7 @@ describe('makeRecipe', () => {
       const { inventory } = fn.makeRecipe(
         {
           inventory: [{ id: 'sample-item-1', quantity: 3 }],
+          inventoryLimit: -1,
         },
         sampleRecipe1
       )
@@ -1495,6 +1550,7 @@ describe('harvestPlot', () => {
           cropsHarvested: {},
           field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
           inventory: [],
+          inventoryLimit: -1,
         },
         0,
         0
@@ -1523,6 +1579,7 @@ describe('harvestAll', () => {
         ],
       ],
       inventory: [],
+      inventoryLimit: -1,
     }
     const { cropsHarvested, field, inventory } = fn.harvestAll(inputState)
     expect(field).toEqual([
@@ -1557,6 +1614,7 @@ describe('clearPlot', () => {
         {
           field: [[getPlotContentFromItemId('replantable-item')]],
           inventory: [],
+          inventoryLimit: -1,
         },
         0,
         0
