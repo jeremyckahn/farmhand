@@ -1028,7 +1028,6 @@ export const setScarecrow = (state, x, y) => {
   }
 }
 
-// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @param {number} x
@@ -1042,7 +1041,8 @@ export const harvestPlot = (state, x, y) => {
   if (
     !crop ||
     getPlotContentType(crop) !== itemType.CROP ||
-    getCropLifeStage(crop) !== GROWN
+    getCropLifeStage(crop) !== GROWN ||
+    !doesInventorySpaceRemain(state)
   ) {
     return state
   }
@@ -1063,7 +1063,6 @@ export const harvestPlot = (state, x, y) => {
   }
 }
 
-// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}

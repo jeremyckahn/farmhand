@@ -1602,6 +1602,20 @@ describe('harvestPlot', () => {
       expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 1 }])
       expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 1 })
     })
+
+    describe('there is insufficient inventory space', () => {
+      test('no-ops', () => {
+        const inputState = {
+          cropsHarvested: {},
+          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
+          inventory: [{ id: 'sample-crop-1', quantity: 5 }],
+          inventoryLimit: 5,
+        }
+        const state = fn.harvestPlot(inputState, 0, 0)
+
+        expect(state).toEqual(inputState)
+      })
+    })
   })
 })
 

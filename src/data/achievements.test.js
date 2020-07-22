@@ -18,6 +18,7 @@ describe('harvest-crop', () => {
           [null, null, testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })],
         ],
         inventory: [],
+        inventoryLimit: -1,
       }
     })
 
