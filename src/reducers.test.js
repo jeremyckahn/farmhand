@@ -931,10 +931,11 @@ describe('purchaseItem', () => {
         fn.purchaseItem(
           {
             inventory: [],
+            inventoryLimit: -1,
             money: 0,
             valueAdjustments: { 'sample-item-1': 1 },
           },
-          testItem({ id: 'sample-item-1' }),
+          { id: 'sample-item-1' },
           0
         )
       ).toMatchObject({ inventory: [] })
@@ -947,10 +948,11 @@ describe('purchaseItem', () => {
         fn.purchaseItem(
           {
             inventory: [],
+            inventoryLimit: -1,
             money: 0,
             valueAdjustments: { 'sample-item-1': 1 },
           },
-          testItem({ id: 'sample-item-1' }),
+          { id: 'sample-item-1' },
           1
         )
       ).toMatchObject({ inventory: [] })
@@ -967,12 +969,52 @@ describe('purchaseItem', () => {
             money: 10,
             valueAdjustments: { 'sample-item-1': 1 },
           },
-          testItem({ id: 'sample-item-1' }),
+          { id: 'sample-item-1' },
           2
         )
       ).toMatchObject({
         inventory: [{ id: 'sample-item-1', quantity: 2 }],
         money: 8,
+      })
+    })
+
+    describe('there is no room for any of the items being purchased', () => {
+      test('no items are purchased', () => {
+        expect(
+          fn.purchaseItem(
+            {
+              inventory: [{ id: 'sample-item-1', quantity: 3 }],
+              inventoryLimit: 3,
+              money: 10,
+              valueAdjustments: { 'sample-item-1': 1 },
+            },
+            { id: 'sample-item-1' },
+            1
+          )
+        ).toMatchObject({
+          inventory: [{ id: 'sample-item-1', quantity: 3 }],
+          money: 10,
+        })
+      })
+    })
+
+    describe('there is only room for some of the items being purchased', () => {
+      test('a reduced amount of items are purchased', () => {
+        expect(
+          fn.purchaseItem(
+            {
+              inventory: [{ id: 'sample-item-1', quantity: 2 }],
+              inventoryLimit: 3,
+              money: 10,
+              valueAdjustments: { 'sample-item-1': 1 },
+            },
+            { id: 'sample-item-1' },
+            10
+          )
+        ).toMatchObject({
+          inventory: [{ id: 'sample-item-1', quantity: 3 }],
+          money: 9,
+        })
       })
     })
   })

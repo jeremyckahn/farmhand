@@ -678,7 +678,6 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
       dayCount: state.dayCount + 1,
     })
 
-// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @param {farmhand.item} item
@@ -687,12 +686,14 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
  */
 export const purchaseItem = (state, item, howMany = 1) => {
   const { money, valueAdjustments } = state
-  if (howMany === 0) {
+  const numberOfItemsToAdd = Math.min(howMany, inventorySpaceRemaining(state))
+
+  if (numberOfItemsToAdd === 0) {
     return state
   }
 
   const value = getAdjustedItemValue(valueAdjustments, item.id)
-  const totalValue = value * howMany
+  const totalValue = value * numberOfItemsToAdd
 
   if (totalValue > money) {
     return state
@@ -704,7 +705,7 @@ export const purchaseItem = (state, item, howMany = 1) => {
       money: moneyTotal(money, -totalValue),
     },
     item,
-    howMany
+    numberOfItemsToAdd
   )
 }
 
