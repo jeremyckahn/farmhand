@@ -1655,12 +1655,33 @@ describe('clearPlot', () => {
   describe('plotContent is a crop', () => {
     test('clears the plot', () => {
       const { field } = fn.clearPlot(
-        { field: [[testCrop({ itemId: 'sample-crop-1' })]], inventory: [] },
+        {
+          field: [[testCrop({ itemId: 'sample-crop-1' })]],
+          inventory: [],
+          inventoryLimit: -1,
+        },
         0,
         0
       )
 
       expect(field[0][0]).toBe(null)
+    })
+
+    describe('there is no room in the inventory', () => {
+      test('clears the plot', () => {
+        const { field, inventory } = fn.clearPlot(
+          {
+            field: [[testCrop({ itemId: 'sample-crop-1' })]],
+            inventory: [{ id: 'sample-item-1', quantity: 5 }],
+            inventoryLimit: 5,
+          },
+          0,
+          0
+        )
+
+        expect(field[0][0]).toBe(null)
+        expect(inventory).toEqual([{ id: 'sample-item-1', quantity: 5 }])
+      })
     })
   })
 
@@ -1678,6 +1699,19 @@ describe('clearPlot', () => {
 
       expect(inventory).toEqual([{ id: 'replantable-item', quantity: 1 }])
       expect(field[0][0]).toBe(null)
+    })
+
+    describe('there is no room in the inventory', () => {
+      test('no-ops', () => {
+        const inputState = {
+          field: [[getPlotContentFromItemId('replantable-item')]],
+          inventory: [{ id: 'sample-item-1', quantity: 5 }],
+          inventoryLimit: 5,
+        }
+        const state = fn.clearPlot(inputState, 0, 0)
+
+        expect(state).toEqual(inputState)
+      })
     })
   })
 })

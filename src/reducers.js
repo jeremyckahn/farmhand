@@ -1075,7 +1075,6 @@ export const harvestAll = state => {
   return state
 }
 
-// FIXME: Needs to verify there is available inventory space.
 /**
  * @param {farmhand.state} state
  * @param {number} x
@@ -1086,11 +1085,15 @@ export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
 
   if (!plotContent) {
-    // Nothing planted in state.field[x][y]
     return state
   }
 
   const item = itemsMap[plotContent.itemId]
+
+  if (item.isReplantable && !doesInventorySpaceRemain(state)) {
+    return state
+  }
+
   state = removeFieldPlotAt(state, x, y)
 
   return item.isReplantable ? addItemToInventory(state, item) : state
