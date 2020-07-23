@@ -47,6 +47,8 @@ import {
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
   SPRINKLER_RANGE,
+  STORAGE_EXPANSION_AMOUNT,
+  STORAGE_EXPANSION_PRICE,
   STORM_CHANCE,
 } from './constants'
 import {
@@ -1165,6 +1167,24 @@ export const purchaseCowPen = (state, cowPenId) => {
   return {
     purchasedCowPen: cowPenId,
     money: moneyTotal(money, -PURCHASEABLE_COW_PENS.get(cowPenId).price),
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const purchaseStorageExpansion = state => {
+  const { money, inventoryLimit } = state
+
+  if (money < STORAGE_EXPANSION_PRICE || inventoryLimit === -1) {
+    return state
+  }
+
+  return {
+    ...state,
+    inventoryLimit: inventoryLimit + STORAGE_EXPANSION_AMOUNT,
+    money: moneyTotal(money, -STORAGE_EXPANSION_PRICE),
   }
 }
 

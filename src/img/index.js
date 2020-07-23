@@ -36,6 +36,8 @@ export const items = {
   'milk-2': require('./items/milk-2.png'),
   'milk-3': require('./items/milk-3.png'),
 
+  'inventory-box': require('./items/inventory-box.png'),
+
   ...dishes,
 }
 

@@ -156,6 +156,10 @@ export default {
     this.purchaseCowPen(cowPenId)
   },
 
+  handleStorageExpansionPurchase() {
+    this.purchaseStorageExpansion()
+  },
+
   /**
    * @param {boolean} [setOpen]
    */

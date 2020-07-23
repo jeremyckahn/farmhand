@@ -219,7 +219,7 @@ export const Item = ({
               )}
               {showQuantity && (
                 <p>
-                  <strong>In Inventory:</strong>{' '}
+                  <strong>In inventory:</strong>{' '}
                   {integerString(playerInventoryQuantities[id])}
                 </p>
               )}

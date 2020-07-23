@@ -26,6 +26,8 @@ import {
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
+  STORAGE_EXPANSION_AMOUNT,
+  STORAGE_EXPANSION_PRICE,
 } from './constants'
 import { sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
@@ -1818,6 +1820,32 @@ describe('purchaseCowPen', () => {
   test('deducts money', () => {
     const { money } = fn.purchaseCowPen({ money: 1500 }, 1)
     expect(money).toEqual(PURCHASEABLE_COW_PENS.get(1).price - 1500)
+  })
+})
+
+describe('purchaseStorageExpansion', () => {
+  describe('player does not have enough money', () => {
+    test('no-ops', () => {
+      const inputState = {
+        money: STORAGE_EXPANSION_PRICE - 1,
+        inventoryLimit: 100,
+      }
+
+      const state = fn.purchaseStorageExpansion(inputState)
+      expect(state).toEqual(inputState)
+    })
+  })
+
+  describe('player has enough money', () => {
+    test('increase storage is purchased', () => {
+      const { inventoryLimit, money } = fn.purchaseStorageExpansion({
+        inventoryLimit: 100,
+        money: STORAGE_EXPANSION_PRICE,
+      })
+
+      expect(inventoryLimit).toEqual(100 + STORAGE_EXPANSION_AMOUNT)
+      expect(money).toEqual(0)
+    })
   })
 })
 
