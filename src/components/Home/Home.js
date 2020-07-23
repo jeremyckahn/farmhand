@@ -17,7 +17,7 @@ You're playing Farmhand, an open source game being developed by [Jeremy Kahn](ht
 
 This is a resource management game that puts a farm in your hand. It is designed to be mobile-friendly and fun for 30 seconds or 30 minutes at a time. Give it a try!
 
-If you'd like to follow this project's development, please [join the Discord channel](https://discord.gg/6cHEZ9H) or check it out on [GitHub](https://github.com/jeremyckahn/farmhand)! 🐮
+If you'd like to follow this project's development, please [join the Discord channel](https://discord.gg/6cHEZ9H), [the subreddit](https://www.reddit.com/r/FarmhandGame/), or check it out on [GitHub](https://github.com/jeremyckahn/farmhand)! You can even [watch the game being developed live on Twitch](https://www.twitch.tv/jeremyckahn)! 🐮
     `,
       }}
     />
