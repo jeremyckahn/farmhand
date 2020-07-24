@@ -161,7 +161,7 @@ export const Item = ({
 
   useEffect(() => {
     setPurchaseQuantity(
-      Math.min(maxQuantityPlayerCanPurchase, purchaseQuantity)
+      Math.min(maxQuantityPlayerCanPurchase, Math.max(1, purchaseQuantity))
     )
   }, [maxQuantityPlayerCanPurchase, purchaseQuantity])
 
