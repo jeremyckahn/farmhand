@@ -7,6 +7,7 @@ import { getCropLifeStage, getPlotContentType, getPlotImage } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, itemType } from '../../enums'
+import { isMouseHeldDown } from '../../utils'
 import './Plot.sass'
 
 export const getBackgroundStyles = plotContent => {
@@ -85,6 +86,11 @@ export const Plot = ({
         backgroundImage: getBackgroundStyles(plotContent),
       }}
       onClick={() => handlePlotClick(x, y)}
+      onMouseEnter={() => {
+        if (isMouseHeldDown()) {
+          handlePlotClick(x, y)
+        }
+      }}
       onMouseOver={() => setHoveredPlot({ x, y })}
     >
       <img
