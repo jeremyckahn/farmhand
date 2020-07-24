@@ -65,44 +65,49 @@ export const Plot = ({
 }) => {
   return (
     <div
-      className={classNames('Plot', {
-        'is-empty': !plotContent,
-        'is-in-hover-range': isInHoverRange(
-          hoveredPlotRangeSize,
-          hoveredPlot,
-          x,
-          y
-        ),
+      {...{
+        className: classNames('Plot', {
+          'is-empty': !plotContent,
+          'is-in-hover-range': isInHoverRange(
+            hoveredPlotRangeSize,
+            hoveredPlot,
+            x,
+            y
+          ),
 
-        // For crops
-        crop: plotContent && getPlotContentType(plotContent) === itemType.CROP,
-        'is-fertilized': plotContent && plotContent.isFertilized,
-        'is-ripe': isRipe,
+          // For crops
+          crop:
+            plotContent && getPlotContentType(plotContent) === itemType.CROP,
+          'is-fertilized': plotContent && plotContent.isFertilized,
+          'is-ripe': isRipe,
 
-        'is-replantable':
-          plotContent && itemsMap[plotContent.itemId].isReplantable,
-      })}
-      style={{
-        backgroundImage: getBackgroundStyles(plotContent),
+          'is-replantable':
+            plotContent && itemsMap[plotContent.itemId].isReplantable,
+        }),
+        style: {
+          backgroundImage: getBackgroundStyles(plotContent),
+        },
+        onClick: () => handlePlotClick(x, y),
+        onMouseEnter: () => {
+          if (isMouseHeldDown()) {
+            handlePlotClick(x, y)
+          }
+        },
+        onMouseOver: () => setHoveredPlot({ x, y }),
       }}
-      onClick={() => handlePlotClick(x, y)}
-      onMouseEnter={() => {
-        if (isMouseHeldDown()) {
-          handlePlotClick(x, y)
-        }
-      }}
-      onMouseOver={() => setHoveredPlot({ x, y })}
     >
       <img
-        className={classNames('square', {
-          animated: isRipe,
-          heartBeat: isRipe,
-        })}
-        style={{
-          backgroundImage: image ? `url(${image})` : undefined,
+        {...{
+          className: classNames('square', {
+            animated: isRipe,
+            heartBeat: isRipe,
+          }),
+          style: {
+            backgroundImage: image ? `url(${image})` : undefined,
+          },
+          src: pixel,
+          alt: '',
         }}
-        src={pixel}
-        alt=""
       />
     </div>
   )
