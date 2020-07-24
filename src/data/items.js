@@ -10,7 +10,7 @@ import {
 } from '../constants'
 
 const { freeze } = Object
-const { CARROT, PUMPKIN, SPINACH } = cropType
+const { CARROT, CORN, PUMPKIN, SPINACH } = cropType
 const { SEED, GROWING } = cropLifeStage
 const { COW_FEED, CROP, FERTILIZER, MILK, SCARECROW, SPRINKLER } = itemType
 
@@ -117,6 +117,39 @@ export const spinach = freeze({
   name: 'Spinach',
   type: CROP,
   value: 50,
+})
+
+/**
+ * @property farmhand.module:items.cornSeed
+ * @type {farmhand.item}
+ */
+export const cornSeed = freeze({
+  cropType: CORN,
+  doesPriceFluctuate: true,
+  enablesFieldMode: fieldMode.PLANT,
+  growsInto: 'corn',
+  id: 'corn-seed',
+  isPlantableCrop: true,
+  name: 'Corn Kernels',
+  type: CROP,
+  value: 50,
+})
+
+/**
+ * @property farmhand.module:items.pumpkin
+ * @type {farmhand.item}
+ */
+export const corn = freeze({
+  cropType: CORN,
+  cropTimetable: {
+    [SEED]: 3,
+    [GROWING]: 7,
+  },
+  doesPriceFluctuate: true,
+  id: 'corn',
+  name: 'Corn',
+  type: CROP,
+  value: 120,
 })
 
 ////////////////////////////////////////

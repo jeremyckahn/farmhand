@@ -3,6 +3,7 @@ import {
   carrotSeed,
   spinachSeed,
   pumpkinSeed,
+  cornSeed,
 
   // Field items
   fertilizer,
@@ -15,6 +16,7 @@ export default [
   carrotSeed,
   spinachSeed,
   pumpkinSeed,
+  cornSeed,
 
   // Field items
   fertilizer,
