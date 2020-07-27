@@ -1,11 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Plot from '../Plot'
 import { fieldMode } from '../../enums'
 import { testItem } from '../../test-utils'
 
-import { Field, FieldContent } from './Field'
+import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field'
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
@@ -19,6 +18,7 @@ beforeEach(() => {
     <Field
       {...{
         columns: 0,
+        hoveredPlotRangeSize: 0,
         handleFieldZoom: () => {},
         rows: 0,
         field: [
@@ -52,6 +52,7 @@ describe('field rendering', () => {
           fitToScreen: true,
           purchasedField: 0,
           hoveredPlot: {},
+          hoveredPlotRangeSize: 0,
           setFitToScreen: () => {},
           setHoveredPlot: () => {},
           zoomIn: () => {},
@@ -71,7 +72,7 @@ describe('field rendering', () => {
       component
         .find('.row')
         .at(0)
-        .find(Plot)
+        .find(MemoPlot)
     ).toHaveLength(2)
   })
 })
@@ -148,5 +149,33 @@ describe('water-mode class', () => {
   test('is present when fieldMode == WATER', () => {
     component.setProps({ fieldMode: fieldMode.WATER })
     expect(component.hasClass('water-mode')).toBeTruthy()
+  })
+})
+
+describe('isInHoverRange', () => {
+  describe('plot is not in hover range', () => {
+    test('returns false', () => {
+      expect(
+        isInHoverRange({
+          hoveredPlotRangeSize: 2,
+          hoveredPlot: { x: 1, y: 1 },
+          x: 4,
+          y: 4,
+        })
+      ).toBe(false)
+    })
+  })
+
+  describe('plot is in hover range', () => {
+    test('returns true', () => {
+      expect(
+        isInHoverRange({
+          hoveredPlotRangeSize: 2,
+          hoveredPlot: { x: 1, y: 1 },
+          x: 0,
+          y: 0,
+        })
+      ).toBe(true)
+    })
   })
 })

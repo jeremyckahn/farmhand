@@ -6,7 +6,7 @@ import { testCrop } from '../../test-utils'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage } from '../../enums'
 
-import { Plot, getBackgroundStyles, isInHoverRange } from './Plot'
+import { Plot, getBackgroundStyles } from './Plot'
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
@@ -22,6 +22,7 @@ beforeEach(() => {
         handlePlotClick: () => {},
         hoveredPlot: {},
         hoveredPlotRangeSize: 0,
+        isInHoverRange: false,
         lifeStage: cropLifeStage.SEED,
         setHoveredPlot: () => {},
         x: 0,
@@ -120,19 +121,5 @@ describe('getBackgroundStyles', () => {
     ).toBe(
       `url(${plotStates['fertilized-plot']}), url(${plotStates['watered-plot']})`
     )
-  })
-})
-
-describe('isInHoverRange', () => {
-  describe('plot is not in hover range', () => {
-    test('returns false', () => {
-      expect(isInHoverRange(2, { x: 1, y: 1 }, 4, 4)).toBe(false)
-    })
-  })
-
-  describe('plot is in hover range', () => {
-    test('returns true', () => {
-      expect(isInHoverRange(2, { x: 1, y: 1 }, 0, 0)).toBe(true)
-    })
   })
 })

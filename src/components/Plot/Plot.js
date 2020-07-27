@@ -1,5 +1,5 @@
 import React from 'react'
-import { func, number, object, string } from 'prop-types'
+import { bool, func, number, object, string } from 'prop-types'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -28,30 +28,11 @@ export const getBackgroundStyles = plotContent => {
   return backgroundImages.join(', ')
 }
 
-export const isInHoverRange = (
-  hoveredPlotRangeSize,
-  { x: hoveredPlotX, y: hoveredPlotY },
-  plotX,
-  plotY
-) => {
-  const squareSize = 2 * hoveredPlotRangeSize
-  const rangeFloorX = hoveredPlotX - hoveredPlotRangeSize
-  const rangeFloorY = hoveredPlotY - hoveredPlotRangeSize
-  const rangeCeilingX = rangeFloorX + squareSize
-  const rangeCeilingY = rangeFloorY + squareSize
-
-  return (
-    plotX >= rangeFloorX &&
-    plotX <= rangeCeilingX &&
-    plotY >= rangeFloorY &&
-    plotY <= rangeCeilingY
-  )
-}
-
 export const Plot = ({
   handlePlotClick,
   hoveredPlot,
   hoveredPlotRangeSize,
+  isInHoverRange,
   plotContent,
   setHoveredPlot,
   x,
@@ -68,12 +49,7 @@ export const Plot = ({
       {...{
         className: classNames('Plot', {
           'is-empty': !plotContent,
-          'is-in-hover-range': isInHoverRange(
-            hoveredPlotRangeSize,
-            hoveredPlot,
-            x,
-            y
-          ),
+          'is-in-hover-range': isInHoverRange,
 
           // For crops
           crop:
@@ -117,6 +93,7 @@ Plot.propTypes = {
   handlePlotClick: func.isRequired,
   hoveredPlot: object.isRequired,
   hoveredPlotRangeSize: number.isRequired,
+  isInHoverRange: bool.isRequired,
   lifeStage: string,
   plotContent: object,
   setHoveredPlot: func.isRequired,

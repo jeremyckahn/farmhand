@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { memo, useEffect, useMemo, useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
 import ZoomInIcon from '@material-ui/icons/ZoomIn'
@@ -32,10 +32,74 @@ const keyMap = {
   zoomOut: '-',
 }
 
+export const isInHoverRange = ({
+  hoveredPlotRangeSize,
+  hoveredPlot: { x: hoveredPlotX, y: hoveredPlotY },
+  x,
+  y,
+}) => {
+  // If hoveredPlotX is null, assume that hoveredPlotY is as well.
+  if (hoveredPlotX == null) {
+    return false
+  }
+
+  const squareSize = 2 * hoveredPlotRangeSize
+  const rangeFloorX = hoveredPlotX - hoveredPlotRangeSize
+  const rangeFloorY = hoveredPlotY - hoveredPlotRangeSize
+  const rangeCeilingX = rangeFloorX + squareSize
+  const rangeCeilingY = rangeFloorY + squareSize
+
+  return (
+    x >= rangeFloorX &&
+    x <= rangeCeilingX &&
+    y >= rangeFloorY &&
+    y <= rangeCeilingY
+  )
+}
+
+export const MemoPlot = memo(
+  props => {
+    const { hoveredPlot, plotContent, setHoveredPlot, x, y } = props
+
+    return (
+      <Plot
+        {...{
+          hoveredPlot,
+          isInHoverRange: isInHoverRange(props),
+          plotContent,
+          setHoveredPlot,
+          x,
+          y,
+        }}
+      />
+    )
+  },
+  (prev, next) => {
+    if (isInHoverRange(prev) !== isInHoverRange(next)) {
+      return false
+    }
+
+    return (
+      prev.plotContent === next.plotContent &&
+      prev.hoveredPlotRangeSize === next.hoveredPlotRangeSize
+    )
+  }
+)
+
+MemoPlot.propTypes = {
+  hoveredPlot: object.isRequired,
+  hoveredPlotRangeSize: number.isRequired,
+  plotContent: object,
+  setHoveredPlot: func.isRequired,
+  x: number.isRequired,
+  y: number.isRequired,
+}
+
 export const FieldContent = ({
   columns,
   field,
   hoveredPlot,
+  hoveredPlotRangeSize,
   rows,
   setHoveredPlot,
   zoomIn,
@@ -54,10 +118,11 @@ export const FieldContent = ({
             {Array(columns)
               .fill(null)
               .map((_null, j, arr, plotContent = field[i][j]) => (
-                <Plot
+                <MemoPlot
                   key={j}
                   {...{
                     hoveredPlot,
+                    hoveredPlotRangeSize,
                     plotContent,
                     setHoveredPlot,
                     x: j,
@@ -67,7 +132,7 @@ export const FieldContent = ({
               ))}
           </div>
         )),
-    [rows, columns, field, hoveredPlot, setHoveredPlot]
+    [rows, columns, field, hoveredPlot, hoveredPlotRangeSize, setHoveredPlot]
   )
 
   useEffect(() => {
@@ -229,6 +294,7 @@ Field.propTypes = {
   field: array.isRequired,
   fieldMode: string.isRequired,
   handleFieldZoom: func.isRequired,
+  hoveredPlotRangeSize: number.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
   purchasedField: number.isRequired,
