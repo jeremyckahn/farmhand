@@ -13,7 +13,7 @@ import Plot from '../Plot'
 import QuickSelect from '../QuickSelect'
 import { FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD } from '../../constants'
 import { fieldMode } from '../../enums'
-import { doesInventorySpaceRemain } from '../../utils'
+import { doesInventorySpaceRemain, memoize } from '../../utils'
 
 import './Field.sass'
 
@@ -167,6 +167,8 @@ FieldContentWrapper.propTypes = {
   fieldContent: element.isRequired,
 }
 
+const mapArray = memoize(size => Array(size).fill(null))
+
 export const FieldContent = ({
   columns,
   field,
@@ -176,27 +178,23 @@ export const FieldContent = ({
   setHoveredPlot,
 }) => (
   <>
-    {Array(rows)
-      .fill(null)
-      .map((_null, i) => (
-        <div className="row" key={i}>
-          {Array(columns)
-            .fill(null)
-            .map((_null, j, arr, plotContent = field[i][j]) => (
-              <MemoPlot
-                key={j}
-                {...{
-                  hoveredPlot,
-                  hoveredPlotRangeSize,
-                  plotContent,
-                  setHoveredPlot,
-                  x: j,
-                  y: i,
-                }}
-              />
-            ))}
-        </div>
-      ))}
+    {mapArray(rows).map((_null, y) => (
+      <div className="row" key={y}>
+        {mapArray(columns).map((_null, x, arr, plotContent = field[y][x]) => (
+          <MemoPlot
+            key={x}
+            {...{
+              hoveredPlot,
+              hoveredPlotRangeSize,
+              plotContent,
+              setHoveredPlot,
+              x,
+              y,
+            }}
+          />
+        ))}
+      </div>
+    ))}
   </>
 )
 
@@ -279,14 +277,10 @@ export const Field = props => {
         {transformProps => (
           <FieldContentWrapper
             {...{
-              ...props,
               ...transformProps,
-              currentScale,
               fieldContent: (
                 <FieldContent {...{ ...props, hoveredPlot, setHoveredPlot }} />
               ),
-              hoveredPlot,
-              setHoveredPlot,
             }}
           />
         )}
