@@ -1283,10 +1283,10 @@ export const adjustLoan = (state, adjustmentAmount) => {
  * @returns {farmhand.state}
  */
 export const forRange = (state, fieldFn, rangeRadius, x, y, ...args) => {
-  const startX = x - rangeRadius
-  const endX = x + rangeRadius
-  const startY = y - rangeRadius
-  const endY = y + rangeRadius
+  const startX = Math.max(x - rangeRadius, 0)
+  const endX = Math.min(x + rangeRadius, state.field[0].length)
+  const startY = Math.max(y - rangeRadius, 0)
+  const endY = Math.min(y + rangeRadius, state.field.length - 1)
 
   for (let i = startX; i <= endX; i++) {
     for (let j = startY; j <= endY; j++) {
