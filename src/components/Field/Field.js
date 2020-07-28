@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import { array, element, func, number, object, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
+import Slider from '@material-ui/core/Slider'
 import ZoomInIcon from '@material-ui/icons/ZoomIn'
 import ZoomOutIcon from '@material-ui/icons/ZoomOut'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -285,6 +286,19 @@ export const Field = props => {
           />
         )}
       </TransformWrapper>
+      <div className="slider-wrapper">
+        <Slider
+          {...{
+            defaultValue: 0,
+            valueLabelDisplay: 'auto',
+            valueLabelFormat: value => `${value * 2 + 1}`,
+            marks: true,
+            step: 1,
+            min: 0,
+            max: 3,
+          }}
+        />
+      </div>
       <QuickSelect />
       <div {...{ className: 'spacer' }} />
     </div>

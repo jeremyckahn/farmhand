@@ -19,7 +19,7 @@ $appBarOffset: 135px
       max-width: calc(100vh * (12/18) - #{$appBarOffset})
 
   .spacer
-    min-height: 5em
+    min-height: 6.5em
 
     @media (min-width: #{$break-sm})
       min-height: 6em
@@ -37,6 +37,16 @@ $appBarOffset: 135px
     display: block
     height: auto
     width: auto
+
+  .slider-wrapper
+    bottom: 12.5em
+    left: 50%
+    position: fixed
+    transform: translateX(-50%)
+    width: 250px
+
+    @media (max-width: #{$break-narrow-phone})
+      bottom: 10em
 
   .zoom-controls
     position: fixed
