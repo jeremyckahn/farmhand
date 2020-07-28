@@ -1272,3 +1272,27 @@ export const adjustLoan = (state, adjustmentAmount) => {
     money,
   }
 }
+
+/**
+ * @param {farmhand.state} state
+ * @param {function(farmhand.state, number, number)} fieldFn
+ * @param {number} rangeRadius
+ * @param {number} x
+ * @param {number} y
+ * @param {...any} args Passed to fieldFn.
+ * @returns {farmhand.state}
+ */
+export const forRange = (state, fieldFn, rangeRadius, x, y, ...args) => {
+  const startX = x - rangeRadius
+  const endX = x + rangeRadius
+  const startY = y - rangeRadius
+  const endY = y + rangeRadius
+
+  for (let i = startX; i <= endX; i++) {
+    for (let j = startY; j <= endY; j++) {
+      state = fieldFn(state, i, j, ...args)
+    }
+  }
+
+  return state
+}
