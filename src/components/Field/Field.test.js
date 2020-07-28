@@ -41,22 +41,15 @@ describe('field rendering', () => {
       <FieldContent
         {...{
           columns: 0,
-          handleFieldZoom: () => {},
           rows: 0,
           field: [
             [null, null],
             [null, null],
             [null, null],
           ],
-          fieldMode: fieldMode.OBSERVE,
-          fitToScreen: true,
-          purchasedField: 0,
           hoveredPlot: {},
           hoveredPlotRangeSize: 0,
-          setFitToScreen: () => {},
           setHoveredPlot: () => {},
-          zoomIn: () => {},
-          zoomOut: () => {},
         }}
       />
     )

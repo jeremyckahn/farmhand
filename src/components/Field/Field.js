@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useMemo, useState } from 'react'
-import { array, func, number, object, string } from 'prop-types'
+import React, { memo, useEffect, useState } from 'react'
+import { array, element, func, number, object, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
 import ZoomInIcon from '@material-ui/icons/ZoomIn'
 import ZoomOutIcon from '@material-ui/icons/ZoomOut'
@@ -95,46 +95,15 @@ MemoPlot.propTypes = {
   y: number.isRequired,
 }
 
-export const FieldContent = ({
-  columns,
-  field,
-  hoveredPlot,
-  hoveredPlotRangeSize,
-  rows,
-  setHoveredPlot,
+export const FieldContentWrapper = ({
+  fieldContent,
+
   zoomIn,
   zoomOut,
-
   currentScale,
   previousScale,
   resetTransform,
 }) => {
-  const fieldContent = useMemo(
-    () =>
-      Array(rows)
-        .fill(null)
-        .map((_null, i) => (
-          <div className="row" key={i}>
-            {Array(columns)
-              .fill(null)
-              .map((_null, j, arr, plotContent = field[i][j]) => (
-                <MemoPlot
-                  key={j}
-                  {...{
-                    hoveredPlot,
-                    hoveredPlotRangeSize,
-                    plotContent,
-                    setHoveredPlot,
-                    x: j,
-                    y: i,
-                  }}
-                />
-              ))}
-          </div>
-        )),
-    [rows, columns, field, hoveredPlot, hoveredPlotRangeSize, setHoveredPlot]
-  )
-
   useEffect(() => {
     if (currentScale === 1 && previousScale !== 1) {
       resetTransform()
@@ -194,14 +163,50 @@ export const FieldContent = ({
   )
 }
 
+FieldContentWrapper.propTypes = {
+  fieldContent: element.isRequired,
+}
+
+export const FieldContent = ({
+  columns,
+  field,
+  hoveredPlot,
+  hoveredPlotRangeSize,
+  rows,
+  setHoveredPlot,
+}) => (
+  <>
+    {Array(rows)
+      .fill(null)
+      .map((_null, i) => (
+        <div className="row" key={i}>
+          {Array(columns)
+            .fill(null)
+            .map((_null, j, arr, plotContent = field[i][j]) => (
+              <MemoPlot
+                key={j}
+                {...{
+                  hoveredPlot,
+                  hoveredPlotRangeSize,
+                  plotContent,
+                  setHoveredPlot,
+                  x: j,
+                  y: i,
+                }}
+              />
+            ))}
+        </div>
+      ))}
+  </>
+)
+
 FieldContent.propTypes = {
   columns: number.isRequired,
   field: array.isRequired,
   hoveredPlot: object.isRequired,
+  hoveredPlotRangeSize: number.isRequired,
   rows: number.isRequired,
   setHoveredPlot: func.isRequired,
-  zoomIn: func.isRequired,
-  zoomOut: func.isRequired,
 }
 
 export const Field = props => {
@@ -272,11 +277,14 @@ export const Field = props => {
         }}
       >
         {transformProps => (
-          <FieldContent
+          <FieldContentWrapper
             {...{
               ...props,
               ...transformProps,
               currentScale,
+              fieldContent: (
+                <FieldContent {...{ ...props, hoveredPlot, setHoveredPlot }} />
+              ),
               hoveredPlot,
               setHoveredPlot,
             }}
