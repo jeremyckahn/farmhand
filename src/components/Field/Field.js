@@ -208,10 +208,20 @@ FieldContent.propTypes = {
   setHoveredPlot: func.isRequired,
 }
 
+const adjustableRangeFieldModes = new Set([
+  CLEANUP,
+  FERTILIZE,
+  HARVEST,
+  PLANT,
+  WATER,
+])
+
 export const Field = props => {
   const {
     fieldMode,
+    handleFieldActionRangeChange,
     handleFieldZoom,
+    hoveredPlotRangeSize,
     inventory,
     inventoryLimit,
     purchasedField,
@@ -219,10 +229,20 @@ export const Field = props => {
 
   const [hoveredPlot, setHoveredPlot] = useState({ x: null, y: null })
   const [currentScale, setCurrentScale] = useState(1)
+  const [fieldActionRange, setFieldActionRange] = useState(hoveredPlotRangeSize)
+
+  useEffect(() => {
+    setFieldActionRange(hoveredPlotRangeSize)
+  }, [hoveredPlotRangeSize])
 
   useEffect(() => {
     handleFieldZoom(currentScale)
   }, [currentScale, handleFieldZoom])
+
+  const handleFieldActionRangeSliderChange = value => {
+    setFieldActionRange(value)
+    handleFieldActionRangeChange(value)
+  }
 
   return (
     <div
@@ -289,13 +309,15 @@ export const Field = props => {
       <div className="slider-wrapper">
         <Slider
           {...{
-            defaultValue: 0,
+            disabled: !adjustableRangeFieldModes.has(fieldMode),
+            marks: true,
+            max: 3,
+            min: 0,
+            onChange: (e, value) => handleFieldActionRangeSliderChange(value),
+            step: 1,
+            value: fieldActionRange,
             valueLabelDisplay: 'auto',
             valueLabelFormat: value => `${value * 2 + 1}`,
-            marks: true,
-            step: 1,
-            min: 0,
-            max: 3,
           }}
         />
       </div>
@@ -309,6 +331,7 @@ Field.propTypes = {
   columns: number.isRequired,
   field: array.isRequired,
   fieldMode: string.isRequired,
+  handleFieldActionRangeChange: func.isRequired,
   handleFieldZoom: func.isRequired,
   hoveredPlotRangeSize: number.isRequired,
   inventory: array.isRequired,

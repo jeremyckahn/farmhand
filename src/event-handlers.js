@@ -91,6 +91,7 @@ export default {
     this.harvestAll()
   },
 
+  // FIXME: Fix how this resets hoveredPlotRangeSize when crops are selected.
   handleItemSelectClick({ id, enablesFieldMode, hoveredPlotRangeSize = 0 }) {
     this.setState({
       fieldMode: enablesFieldMode,
@@ -121,6 +122,13 @@ export default {
     } else if (fieldMode === SET_SCARECROW) {
       this.setScarecrow(x, y)
     }
+  },
+
+  /**
+   * @param {number} range
+   */
+  handleFieldActionRangeChange(range) {
+    this.setState(() => ({ hoveredPlotRangeSize: range }))
   },
 
   handleClickEndDayButton() {

@@ -19,6 +19,7 @@ beforeEach(() => {
       {...{
         columns: 0,
         hoveredPlotRangeSize: 0,
+        handleFieldActionRangeChange: () => {},
         handleFieldZoom: () => {},
         rows: 0,
         field: [

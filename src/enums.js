@@ -35,7 +35,7 @@ export const fieldMode = enumify([
  * @enum {string}
  */
 export const stageFocusType = enumify([
-  'NONE', // Useed for testing
+  'NONE', // Used for testing
   'HOME',
   'FIELD',
   'SHOP',
