@@ -1383,6 +1383,19 @@ describe('plantInPlot', () => {
       expect(state.selectedItemId).toEqual('')
     })
   })
+
+  describe('crop is not in inventory', () => {
+    test('no-ops', () => {
+      const inputState = {
+        field: [[]],
+        inventory: [],
+        selectedItemId: 'sample-crop-seeds-1',
+      }
+      const state = fn.plantInPlot(inputState, 0, 0, 'sample-crop-seeds-1')
+
+      expect(inputState).toEqual(state)
+    })
+  })
 })
 
 describe('fertilizeCrop', () => {

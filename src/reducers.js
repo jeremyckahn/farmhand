@@ -900,7 +900,10 @@ export const modifyCow = (state, cowId, fn) => {
  * @returns {farmhand.state}
  */
 export const plantInPlot = (state, x, y, plantableItemId) => {
-  if (!plantableItemId) {
+  if (
+    !plantableItemId ||
+    !state.inventory.some(({ id }) => id === plantableItemId)
+  ) {
     return state
   }
 
