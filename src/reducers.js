@@ -1297,7 +1297,7 @@ export const forRange = (
   ...args
 ) => {
   const startX = Math.max(plotX - rangeRadius, 0)
-  const endX = Math.min(plotX + rangeRadius, state.field[0].length)
+  const endX = Math.min(plotX + rangeRadius, state.field[0].length - 1)
   const startY = Math.max(plotY - rangeRadius, 0)
   const endY = Math.min(plotY + rangeRadius, state.field.length - 1)
 
