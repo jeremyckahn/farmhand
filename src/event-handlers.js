@@ -1,3 +1,10 @@
+import {
+  clearPlot,
+  fertilizeCrop,
+  harvestPlot,
+  plantInPlot,
+  waterPlot,
+} from './reducers'
 import { moneyTotal } from './utils'
 import { FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD } from './constants'
 import { dialogView, fieldMode } from './enums'
@@ -115,18 +122,22 @@ export default {
    * @param {number} y
    */
   handlePlotClick(x, y) {
-    const { selectedItemId, fieldMode } = this.state
+    const {
+      fieldMode,
+      hoveredPlotRangeSize: rangeRadius,
+      selectedItemId,
+    } = this.state
 
     if (fieldMode === PLANT) {
-      this.plantInPlot(x, y, selectedItemId)
+      this.forRange(plantInPlot, rangeRadius, x, y, selectedItemId)
     } else if (fieldMode === HARVEST) {
-      this.harvestPlot(x, y)
+      this.forRange(harvestPlot, rangeRadius, x, y)
     } else if (fieldMode === CLEANUP) {
-      this.clearPlot(x, y)
+      this.forRange(clearPlot, rangeRadius, x, y)
     } else if (fieldMode === WATER) {
-      this.waterPlot(x, y)
+      this.forRange(waterPlot, rangeRadius, x, y)
     } else if (fieldMode === FERTILIZE) {
-      this.fertilizeCrop(x, y)
+      this.forRange(fertilizeCrop, rangeRadius, x, y)
     } else if (fieldMode === SET_SPRINKLER) {
       this.setSprinkler(x, y)
     } else if (fieldMode === SET_SCARECROW) {
