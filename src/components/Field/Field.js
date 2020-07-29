@@ -218,6 +218,7 @@ const adjustableRangeFieldModes = new Set([
 
 export const Field = props => {
   const {
+    field,
     fieldMode,
     handleFieldActionRangeChange,
     handleFieldZoom,
@@ -311,7 +312,7 @@ export const Field = props => {
           {...{
             disabled: !adjustableRangeFieldModes.has(fieldMode),
             marks: true,
-            max: 3,
+            max: Math.floor(field[0].length / 2),
             min: 0,
             onChange: (e, value) => handleFieldActionRangeSliderChange(value),
             step: 1,
