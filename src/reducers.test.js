@@ -1386,10 +1386,23 @@ describe('plantInPlot', () => {
 })
 
 describe('fertilizeCrop', () => {
+  describe('no fertilizer in inventory', () => {
+    test('no-ops', () => {
+      const oldState = {
+        field: [[testCrop({ itemId: 'sample-crop-1' })]],
+        inventory: [],
+        selectedItemId: FERTILIZER_ITEM_ID,
+      }
+      const state = fn.fertilizeCrop(oldState, 0, 0)
+      expect(state).toBe(oldState)
+    })
+  })
+
   describe('non-crop plotContent', () => {
     test('no-ops', () => {
       const oldState = {
         field: [[getPlotContentFromItemId('sprinkler')]],
+        inventory: [],
       }
       const state = fn.fertilizeCrop(oldState, 0, 0)
       expect(state).toBe(oldState)

@@ -939,19 +939,22 @@ export const fertilizeCrop = (state, x, y) => {
   const row = field[y]
   const crop = row[x]
 
+  const fertilizerInventory = state.inventory.find(
+    item => item.id === FERTILIZER_ITEM_ID
+  )
+
   if (
     !crop ||
+    !fertilizerInventory ||
     getPlotContentType(crop) !== itemType.CROP ||
     crop.isFertilized === true
   ) {
     return state
   }
 
+  const { quantity: initialFertilizerQuantity } = fertilizerInventory
   state = decrementItemFromInventory(state, FERTILIZER_ITEM_ID)
-
-  const doFertilizersRemain = state.inventory.some(
-    item => item.id === FERTILIZER_ITEM_ID
-  )
+  const doFertilizersRemain = initialFertilizerQuantity > 1
 
   state = modifyFieldPlotAt(state, x, y, crop => ({
     ...crop,
@@ -1282,15 +1285,22 @@ export const adjustLoan = (state, adjustmentAmount) => {
  * @param {...any} args Passed to fieldFn.
  * @returns {farmhand.state}
  */
-export const forRange = (state, fieldFn, rangeRadius, x, y, ...args) => {
-  const startX = Math.max(x - rangeRadius, 0)
-  const endX = Math.min(x + rangeRadius, state.field[0].length)
-  const startY = Math.max(y - rangeRadius, 0)
-  const endY = Math.min(y + rangeRadius, state.field.length - 1)
+export const forRange = (
+  state,
+  fieldFn,
+  rangeRadius,
+  plotX,
+  plotY,
+  ...args
+) => {
+  const startX = Math.max(plotX - rangeRadius, 0)
+  const endX = Math.min(plotX + rangeRadius, state.field[0].length)
+  const startY = Math.max(plotY - rangeRadius, 0)
+  const endY = Math.min(plotY + rangeRadius, state.field.length - 1)
 
-  for (let i = startX; i <= endX; i++) {
-    for (let j = startY; j <= endY; j++) {
-      state = fieldFn(state, i, j, ...args)
+  for (let y = startY; y <= endY; y++) {
+    for (let x = startX; x <= endX; x++) {
+      state = fieldFn(state, x, y, ...args)
     }
   }
 
