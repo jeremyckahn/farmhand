@@ -312,7 +312,7 @@ export const Field = props => {
           {...{
             disabled: !adjustableRangeFieldModes.has(fieldMode),
             marks: true,
-            max: Math.floor(field[0].length / 2),
+            max: field.length - 1,
             min: 0,
             onChange: (e, value) => handleFieldActionRangeSliderChange(value),
             step: 1,
