@@ -313,22 +313,23 @@ export const Field = props => {
           />
         )}
       </TransformWrapper>
-      <div className="slider-wrapper">
-        <Slider
-          {...{
-            disabled: !adjustableRangeFieldModes.has(fieldMode),
-            marks: true,
-            max: field.length - 1,
-            min: 0,
-            onChange: (e, value) => handleFieldActionRangeSliderChange(value),
-            step: 1,
-            value: fieldActionRange,
-            valueLabelDisplay: 'auto',
-            valueLabelFormat: value => `${value * 2 + 1}`,
-            ValueLabelComponent: RangeSliderValueLabelComponent,
-          }}
-        />
-      </div>
+      {adjustableRangeFieldModes.has(fieldMode) && (
+        <div className="slider-wrapper">
+          <Slider
+            {...{
+              marks: true,
+              max: field.length - 1,
+              min: 0,
+              onChange: (e, value) => handleFieldActionRangeSliderChange(value),
+              step: 1,
+              value: fieldActionRange,
+              valueLabelDisplay: 'auto',
+              valueLabelFormat: value => `${value * 2 + 1}`,
+              ValueLabelComponent: RangeSliderValueLabelComponent,
+            }}
+          />
+        </div>
+      )}
       <QuickSelect />
       <div {...{ className: 'spacer' }} />
     </div>
