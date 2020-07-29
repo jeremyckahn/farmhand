@@ -7,10 +7,6 @@ $not-allowed-color: rgba(255, 0, 0, 0.25)
   flex-grow: 1
   image-rendering: pixelated
 
-  .plant-mode &:hover
-    background-color: #d7d7d7
-    cursor: pointer
-
   .water-mode &.crop:hover
     background-color: #7df5ff
     cursor: pointer
@@ -46,6 +42,10 @@ $not-allowed-color: rgba(255, 0, 0, 0.25)
 
   &.is-in-hover-range
     background-color: #ccc
+
+  &:hover
+    background-color: #ababab
+    cursor: pointer
 
   .set-sprinkler-mode:hover &:hover,
   .set-scarecrow-mode:hover &:hover
