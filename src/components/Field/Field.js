@@ -216,6 +216,12 @@ const adjustableRangeFieldModes = new Set([
   WATER,
 ])
 
+const RangeSliderValueLabelComponent = ({ children, open, value }) => (
+  <Tooltip {...{ open, placement: 'top', title: `Range: ${value} x ${value}` }}>
+    {children}
+  </Tooltip>
+)
+
 export const Field = props => {
   const {
     field,
@@ -319,6 +325,7 @@ export const Field = props => {
             value: fieldActionRange,
             valueLabelDisplay: 'auto',
             valueLabelFormat: value => `${value * 2 + 1}`,
+            ValueLabelComponent: RangeSliderValueLabelComponent,
           }}
         />
       </div>
