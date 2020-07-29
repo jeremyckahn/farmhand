@@ -194,6 +194,7 @@ export const scarecrow = freeze({
   description:
     'Prevents crows from eating your crops. One scarecrow covers an entire field, but they are afraid of storms.',
   enablesFieldMode: fieldMode.SET_SCARECROW,
+  hoveredPlotRangeSize: Infinity,
   id: 'scarecrow',
   isReplantable: true,
   name: 'Scarecrow',

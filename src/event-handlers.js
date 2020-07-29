@@ -91,13 +91,23 @@ export default {
     this.harvestAll()
   },
 
-  // FIXME: Fix how this resets hoveredPlotRangeSize when crops are selected.
-  handleItemSelectClick({ id, enablesFieldMode, hoveredPlotRangeSize = 0 }) {
-    this.setState({
+  /**
+   * @param {farmhand.item} item
+   */
+  handleItemSelectClick({
+    id,
+    enablesFieldMode,
+    hoveredPlotRangeSize: newHoveredPlotRangeSize,
+  }) {
+    this.setState(({ hoveredPlotRangeSize }) => ({
       fieldMode: enablesFieldMode,
-      hoveredPlotRangeSize,
+      hoveredPlotRangeSize:
+        // newHoveredPlotRangeSize is either a number or undefined.
+        typeof newHoveredPlotRangeSize === 'number'
+          ? newHoveredPlotRangeSize
+          : hoveredPlotRangeSize,
       selectedItemId: id,
-    })
+    }))
   },
 
   /**
