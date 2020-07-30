@@ -99,17 +99,17 @@ MemoPlot.propTypes = {
 export const FieldContentWrapper = ({
   fieldContent,
 
-  zoomIn,
-  zoomOut,
-  currentScale,
   previousScale,
   resetTransform,
+  scale,
+  zoomIn,
+  zoomOut,
 }) => {
   useEffect(() => {
-    if (currentScale === 1 && previousScale !== 1) {
+    if (scale === 1 && previousScale !== 1) {
       resetTransform()
     }
-  }, [currentScale, previousScale, resetTransform])
+  }, [scale, previousScale, resetTransform])
 
   return (
     <>
