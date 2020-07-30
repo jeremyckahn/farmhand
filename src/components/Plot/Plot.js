@@ -1,6 +1,7 @@
 import React from 'react'
 import { bool, func, number, object, string } from 'prop-types'
 import Tooltip from '@material-ui/core/Tooltip'
+import Typography from '@material-ui/core/Typography'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -8,7 +9,7 @@ import { getCropLifeStage, getPlotContentType, getPlotImage } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, itemType } from '../../enums'
-import { isMouseHeldDown } from '../../utils'
+import { getCropLifecycleDuration, isMouseHeldDown } from '../../utils'
 import './Plot.sass'
 
 export const getBackgroundStyles = plotContent => {
@@ -45,6 +46,14 @@ export const Plot = ({
     getCropLifeStage(plotContent),
   isRipe = lifeStage === cropLifeStage.GROWN,
 }) => {
+  const item = plotContent ? itemsMap[plotContent.itemId] : null
+  const daysLeftToMature =
+    // Need to check that daysWatered is > -1 here because it may be NaN,
+    // otherwise increments up from 0.
+    plotContent && plotContent.daysWatered > -1
+      ? Math.max(0, getCropLifecycleDuration(item) - plotContent.daysWatered)
+      : null
+
   const plot = (
     <div
       {...{
@@ -58,8 +67,7 @@ export const Plot = ({
           'is-fertilized': plotContent && plotContent.isFertilized,
           'is-ripe': isRipe,
 
-          'is-replantable':
-            plotContent && itemsMap[plotContent.itemId].isReplantable,
+          'is-replantable': plotContent && item.isReplantable,
         }),
         style: {
           backgroundImage: getBackgroundStyles(plotContent),
@@ -92,8 +100,20 @@ export const Plot = ({
   return plotContent ? (
     <Tooltip
       {...{
+        arrow: true,
         placement: 'top',
-        title: itemsMap[plotContent.itemId].name,
+        title: (
+          <>
+            <Typography>{item.name}</Typography>
+            {getPlotContentType(plotContent) === itemType.CROP && (
+              <Typography>
+                {daysLeftToMature
+                  ? `Days left to mature: ${daysLeftToMature}`
+                  : 'Ready to harvest!'}
+              </Typography>
+            )}
+          </>
+        ),
       }}
     >
       {plot}
