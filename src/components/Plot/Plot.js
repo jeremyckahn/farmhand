@@ -108,7 +108,7 @@ export const Plot = ({
             {getPlotContentType(plotContent) === itemType.CROP && (
               <Typography>
                 {daysLeftToMature
-                  ? `Days left to mature: ${daysLeftToMature}`
+                  ? `Days of watering to mature: ${daysLeftToMature}`
                   : 'Ready to harvest!'}
               </Typography>
             )}
