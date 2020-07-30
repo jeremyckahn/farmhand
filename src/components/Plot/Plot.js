@@ -1,5 +1,6 @@
 import React from 'react'
 import { bool, func, number, object, string } from 'prop-types'
+import Tooltip from '@material-ui/core/Tooltip'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -44,7 +45,7 @@ export const Plot = ({
     getCropLifeStage(plotContent),
   isRipe = lifeStage === cropLifeStage.GROWN,
 }) => {
-  return (
+  const plot = (
     <div
       {...{
         className: classNames('Plot', {
@@ -86,6 +87,19 @@ export const Plot = ({
         }}
       />
     </div>
+  )
+
+  return plotContent ? (
+    <Tooltip
+      {...{
+        placement: 'top',
+        title: itemsMap[plotContent.itemId].name,
+      }}
+    >
+      {plot}
+    </Tooltip>
+  ) : (
+    plot
   )
 }
 

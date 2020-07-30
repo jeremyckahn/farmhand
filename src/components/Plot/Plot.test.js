@@ -37,31 +37,31 @@ test('defaults to rending a pixel', () => {
 })
 
 test('renders empty class', () => {
-  expect(component.hasClass('is-empty')).toBeTruthy()
+  expect(component.find('.Plot').hasClass('is-empty')).toBeTruthy()
 })
 
 test('renders crop class', () => {
   component.setProps({ plotContent: testCrop({ itemId: 'sample-crop-1' }) })
-  expect(component.hasClass('crop')).toBeTruthy()
+  expect(component.find('.Plot').hasClass('crop')).toBeTruthy()
 })
 
 test('renders is-replantable class', () => {
   component.setProps({
     plotContent: getPlotContentFromItemId('replantable-item'),
   })
-  expect(component.hasClass('is-replantable')).toBeTruthy()
+  expect(component.find('.Plot').hasClass('is-replantable')).toBeTruthy()
 })
 
 test('renders "is-fertilized" class', () => {
   component.setProps({
     plotContent: testCrop({ itemId: 'sample-crop-1', isFertilized: true }),
   })
-  expect(component.hasClass('is-fertilized')).toBeTruthy()
+  expect(component.find('.Plot').hasClass('is-fertilized')).toBeTruthy()
 })
 
 test('renders "is-ripe" class', () => {
   component.setProps({ lifeStage: cropLifeStage.GROWN })
-  expect(component.hasClass('is-ripe')).toBeTruthy()
+  expect(component.find('.Plot').hasClass('is-ripe')).toBeTruthy()
 })
 
 test('renders provided image data', () => {
