@@ -58,6 +58,7 @@ import {
 } from './strings'
 import {
   ACHIEVEMENT_COMPLETED,
+  COW_ATTRITION_MESSAGE,
   CROW_ATTACKED,
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
@@ -358,6 +359,29 @@ export const processFeedingCows = state => {
     COW_FEED_ITEM_ID,
     unitsSpent
   )
+}
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const processCowAttrition = state => {
+  const newDayNotifications = [...state.newDayNotifications]
+
+  const cowInventory = state.cowInventory.reduce((cowInventory, cow) => {
+    if (cow.weightMultiplier === COW_WEIGHT_MULTIPLIER_MINIMUM) {
+      newDayNotifications.push({
+        message: COW_ATTRITION_MESSAGE`${cow}`,
+        severity: 'error',
+      })
+    } else {
+      cowInventory.push(cow)
+    }
+
+    return cowInventory
+  }, [])
+
+  return { ...state, cowInventory, newDayNotifications }
 }
 
 /**
@@ -666,6 +690,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
         processWeather,
         processSprinklers,
         processFeedingCows,
+        processCowAttrition,
         processMilkingCows,
         updatePriceEvents,
         generatePriceEvents,

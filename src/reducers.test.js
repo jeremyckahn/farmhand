@@ -6,6 +6,7 @@ import {
 } from './strings'
 import {
   ACHIEVEMENT_COMPLETED,
+  COW_ATTRITION_MESSAGE,
   CROW_ATTACKED,
   LOAN_INCREASED,
   LOAN_PAYOFF,
@@ -18,6 +19,7 @@ import {
   COW_HUG_BENEFIT,
   COW_MILK_RATE_SLOWEST,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
+  COW_WEIGHT_MULTIPLIER_MINIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
@@ -518,6 +520,26 @@ describe('processFeedingCows', () => {
         expect(inventory).toHaveLength(0)
       })
     })
+  })
+})
+
+describe('processCowAttrition', () => {
+  test('unfed cows leave', () => {
+    const unfedCow = generateCow({
+      name: 'unfed cow',
+      weightMultiplier: COW_WEIGHT_MULTIPLIER_MINIMUM,
+    })
+    const fedCow = generateCow({ name: 'fed cow', weightMultiplier: 1 })
+
+    const { cowInventory, newDayNotifications } = fn.processCowAttrition({
+      cowInventory: [unfedCow, fedCow],
+      newDayNotifications: [],
+    })
+
+    expect(cowInventory).toEqual([fedCow])
+    expect(newDayNotifications).toEqual([
+      { message: COW_ATTRITION_MESSAGE`${unfedCow}`, severity: 'error' },
+    ])
   })
 })
 

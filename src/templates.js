@@ -35,6 +35,13 @@ export const MILKS_PRODUCED = (_, milksProduced) => {
 }
 
 /**
+ * @param {farmhand.cow} cow
+ * @returns {string}
+ */
+export const COW_ATTRITION_MESSAGE = (_, { name }) =>
+  `${name} got hungry from being underfed and ran away!`
+
+/**
  * @param {farmhand.recipe} recipe
  * @returns {string}
  */
