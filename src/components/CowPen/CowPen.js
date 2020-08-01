@@ -133,7 +133,8 @@ export class Cow extends Component {
       >
         <Tooltip
           {...{
-            placement: 'bottom',
+            arrow: true,
+            placement: 'top',
             title: cow.name,
             open: isSelected,
             PopperProps: {

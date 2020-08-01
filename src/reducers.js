@@ -1,6 +1,7 @@
 import { itemsMap, recipesMap } from './data/maps'
 import achievements from './data/achievements'
 import {
+  areHuggingMachinesInInventory,
   canMakeRecipe,
   castToMoney,
   clampNumber,
@@ -35,6 +36,7 @@ import {
   CROW_CHANCE,
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
+  HUGGING_MACHINE_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
@@ -367,9 +369,17 @@ export const processFeedingCows = state => {
  */
 export const processCowAttrition = state => {
   const newDayNotifications = [...state.newDayNotifications]
+  let huggingMachinesToReturnToInventory = 0
 
   const cowInventory = state.cowInventory.reduce((cowInventory, cow) => {
-    if (cow.weightMultiplier === COW_WEIGHT_MULTIPLIER_MINIMUM) {
+    if (
+      // Cast toFixed(2) to prevent IEEE 754 rounding errors.
+      Number(cow.weightMultiplier.toFixed(2)) === COW_WEIGHT_MULTIPLIER_MINIMUM
+    ) {
+      if (cow.isUsingHuggingMachine) {
+        huggingMachinesToReturnToInventory++
+      }
+
       newDayNotifications.push({
         message: COW_ATTRITION_MESSAGE`${cow}`,
         severity: 'error',
@@ -380,6 +390,15 @@ export const processCowAttrition = state => {
 
     return cowInventory
   }, [])
+
+  // FIXME: Test this.
+  if (huggingMachinesToReturnToInventory) {
+    state = addItemToInventory(
+      state,
+      itemsMap[HUGGING_MACHINE_ITEM_ID],
+      huggingMachinesToReturnToInventory
+    )
+  }
 
   return { ...state, cowInventory, newDayNotifications }
 }
@@ -478,8 +497,23 @@ export const computeCowInventoryForNextDay = state => ({
     ...cow,
     daysOld: cow.daysOld + 1,
     daysSinceMilking: cow.daysSinceMilking + 1,
-    happiness: Math.max(0, cow.happiness - COW_HUG_BENEFIT),
-    happinessBoostsToday: 0,
+    // FIXME: Test this.
+    happiness: Math.max(
+      0,
+      cow.isUsingHuggingMachine
+        ? Math.min(
+            1,
+            cow.happiness + (MAX_DAILY_COW_HUG_BENEFITS - 1) * COW_HUG_BENEFIT
+          )
+        : cow.happiness - COW_HUG_BENEFIT
+    ),
+    happinessBoostsToday: cow.isUsingHuggingMachine
+      ? MAX_DAILY_COW_HUG_BENEFITS
+      : 0,
+
+    // TODO: This line is for backwards compatibility and can be removed after
+    // 10/1/2020.
+    isUsingHuggingMachine: Boolean(cow.isUsingHuggingMachine),
   })),
 })
 
@@ -881,11 +915,17 @@ export const purchaseCow = (state, cow) => {
  * @returns {farmhand.state}
  */
 export const sellCow = (state, cow) => {
+  const { isUsingHuggingMachine } = cow
   const { cowInventory, money } = state
   const cowValue = getCowValue(cow)
 
   const newCowInventory = [...cowInventory]
   newCowInventory.splice(cowInventory.indexOf(cow), 1)
+
+  // FIXME: Test this.
+  if (isUsingHuggingMachine) {
+    state = addItemToInventory(state, itemsMap[HUGGING_MACHINE_ITEM_ID])
+  }
 
   return {
     ...state,
@@ -915,6 +955,35 @@ export const modifyCow = (state, cowId, fn) => {
     ...state,
     cowInventory,
   }
+}
+
+// FIXME: Test this.
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.cow} cow
+ * @param {boolean} doAutomaticallyHug
+ * @returns {farmhand.state}
+ */
+export const changeCowAutomaticHugState = (state, cow, doAutomaticallyHug) => {
+  if (
+    (doAutomaticallyHug && !areHuggingMachinesInInventory(state.inventory)) ||
+    // TODO: This Boolean cast is needed for backwards compatibility. Remove it
+    // after 10/1/2020.
+    Boolean(cow.isUsingHuggingMachine) === doAutomaticallyHug
+  ) {
+    return state
+  }
+
+  state = modifyCow(state, cow.id, cow => ({
+    ...cow,
+    isUsingHuggingMachine: doAutomaticallyHug,
+  }))
+
+  state = doAutomaticallyHug
+    ? decrementItemFromInventory(state, HUGGING_MACHINE_ITEM_ID)
+    : addItemToInventory(state, itemsMap[HUGGING_MACHINE_ITEM_ID])
+
+  return state
 }
 
 /**

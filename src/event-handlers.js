@@ -52,6 +52,14 @@ export default {
   },
 
   /**
+   * @param {external:React.SyntheticEvent} e
+   * @param {farmhand.cow} cow
+   */
+  handleCowAutomaticHugChange({ target: { checked } }, cow) {
+    this.changeCowAutomaticHugState(cow, checked)
+  },
+
+  /**
    * @param {farmhand.cow} cow
    */
   handleCowHugClick(cow) {

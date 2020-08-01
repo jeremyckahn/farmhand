@@ -153,6 +153,13 @@ export const cowFeed = testItem({
   value: 5,
 })
 
+export const huggingMachine = testItem({
+  id: 'hugging-machine',
+  name: 'Hugging Machine',
+  type: itemType.HUGGING_MACHINE,
+  value: 500,
+})
+
 export const replantableItem = testItem({
   id: 'replantable-item',
   isReplantable: true,

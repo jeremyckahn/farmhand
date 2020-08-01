@@ -69,6 +69,7 @@ export const COW_MILK_RATE_SLOWEST = 5
 export const COW_MILK_RATE_FASTEST = 0
 
 export const COW_FEED_ITEM_ID = 'cow-feed'
+export const HUGGING_MACHINE_ITEM_ID = 'hugging-machine'
 
 export const COW_MAXIMUM_AGE_VALUE_DROPOFF = 100
 export const COW_MINIMUM_VALUE_MULTIPLIER = 0.5

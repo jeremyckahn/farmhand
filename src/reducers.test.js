@@ -533,6 +533,7 @@ describe('processCowAttrition', () => {
 
     const { cowInventory, newDayNotifications } = fn.processCowAttrition({
       cowInventory: [unfedCow, fedCow],
+      inventory: [],
       newDayNotifications: [],
     })
 

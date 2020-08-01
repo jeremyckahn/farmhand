@@ -59,9 +59,14 @@
  * @typedef farmhand.cow
  * @type {Object}
  * @property {number} baseWeight
+ * @property {string} color
  * @property {number} daysOld
+ * @property {number} daysSinceMilking
+ * @property {string} gender
  * @property {number} happiness 0-1.
  * @property {number} happinessBoostsToday
+ * @property {string} id
+ * @property {boolean} isUsingHuggingMachine
  * @property {string} name
  * @property {number} weightMultiplier Clamped between 0.5 and 1.5.
  */

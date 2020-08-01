@@ -4,10 +4,13 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
+import Checkbox from '@material-ui/core/Checkbox'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import TextField from '@material-ui/core/TextField'
 import Fab from '@material-ui/core/Fab'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Tooltip from '@material-ui/core/Tooltip'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -24,9 +27,14 @@ import Item from '../Item'
 import { animals } from '../../img'
 import FarmhandContext from '../../Farmhand.context'
 import { cowColors, enumify, genders } from '../../enums'
-import { moneyString, getCowValue, getCowWeight } from '../../utils'
+import {
+  areHuggingMachinesInInventory,
+  moneyString,
+  getCowValue,
+  getCowWeight,
+} from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
-import { cowFeed } from '../../data/items'
+import { cowFeed, huggingMachine } from '../../data/items'
 
 import './CowPenContextMenu.sass'
 
@@ -45,6 +53,8 @@ const isHeartFull = (heartIndex, numberOfFullHearts) =>
 export const CowCardSubheader = ({
   cow,
   cowValue,
+  handleCowAutomaticHugChange,
+  huggingMachinesRemain,
   isCowPurchased,
 
   numberOfFullHearts = cow.happiness * 10,
@@ -60,22 +70,49 @@ export const CowCardSubheader = ({
     </p>
     <p>Weight: {getCowWeight(cow)} lbs.</p>
     {isCowPurchased && (
-      <ol className="hearts">
-        {nullHeartList.map((_null, i) => (
-          <li key={`${cow.id}_${i}`}>
-            <FontAwesomeIcon
-              {...{
-                icon: isHeartFull(i, numberOfFullHearts)
-                  ? faFullHeart
-                  : faEmptyHeart,
-                className: classNames('heart', {
-                  'is-full': isHeartFull(i, numberOfFullHearts),
-                }),
-              }}
-            />
-          </li>
-        ))}
-      </ol>
+      <>
+        <ol className="hearts">
+          {nullHeartList.map((_null, i) => (
+            <li key={`${cow.id}_${i}`}>
+              <FontAwesomeIcon
+                {...{
+                  icon: isHeartFull(i, numberOfFullHearts)
+                    ? faFullHeart
+                    : faEmptyHeart,
+                  className: classNames('heart', {
+                    'is-full': isHeartFull(i, numberOfFullHearts),
+                  }),
+                }}
+              />
+            </li>
+          ))}
+        </ol>
+        <Tooltip
+          {...{
+            arrow: true,
+            placement: 'top',
+            title: `Check this box to put ${cow.name} into a Hugging Machine and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory.`,
+          }}
+        >
+          <FormControlLabel
+            {...{
+              control: (
+                <Checkbox
+                  {...{
+                    color: 'primary',
+                    // TODO: This Boolean cast is needed for backwards
+                    // compatibility. Remove it after 10/1/2020.
+                    checked: Boolean(cow.isUsingHuggingMachine),
+                    onChange: e => handleCowAutomaticHugChange(e, cow),
+                  }}
+                />
+              ),
+              disabled: !cow.isUsingHuggingMachine && !huggingMachinesRemain,
+              label: 'Hug automatically',
+            }}
+          />
+        </Tooltip>
+      </>
     )}
   </>
 )
@@ -84,15 +121,18 @@ export const CowCard = ({
   cow,
   cowInventory,
   debounced,
+  handleCowAutomaticHugChange,
   handleCowHugClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSellClick,
+  inventory,
   isSelected,
   money,
   purchasedCowPen,
 
   cowValue = getCowValue(cow),
+  huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
   isCowPurchased = !!handleCowSellClick,
   isNameEditable = !!handleCowNameInputChange,
 }) => {
@@ -136,6 +176,8 @@ export const CowCard = ({
               {...{
                 cow,
                 cowValue,
+                handleCowAutomaticHugChange,
+                huggingMachinesRemain,
                 isCowPurchased,
               }}
             />
@@ -223,11 +265,13 @@ export const CowPenContextMenu = ({
   cowForSale,
   cowInventory,
   debounced,
+  handleCowAutomaticHugChange,
   handleCowHugClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSelect,
   handleCowSellClick,
+  inventory,
   money,
   purchasedCowPen,
   selectedCowId,
@@ -238,19 +282,33 @@ export const CowPenContextMenu = ({
   return (
     <div className="CowPenContextMenu">
       <h3>Supplies</h3>
-      <Item
-        {...{
-          item: cowFeed,
-          isPurchaseView: true,
-          showQuantity: true,
-        }}
-      />
+      <ul className="card-list">
+        <li>
+          <Item
+            {...{
+              item: cowFeed,
+              isPurchaseView: true,
+              showQuantity: true,
+            }}
+          />
+        </li>
+        <li>
+          <Item
+            {...{
+              item: huggingMachine,
+              isPurchaseView: true,
+              showQuantity: true,
+            }}
+          />
+        </li>
+      </ul>
       <h3>For sale</h3>
       <CowCard
         {...{
           cow: cowForSale,
           cowInventory,
           handleCowPurchaseClick,
+          inventory,
           money,
           purchasedCowPen,
         }}
@@ -302,9 +360,11 @@ export const CowPenContextMenu = ({
                 cow,
                 cowInventory,
                 debounced,
+                handleCowAutomaticHugChange,
                 handleCowHugClick,
                 handleCowNameInputChange,
                 handleCowSellClick,
+                inventory,
                 isSelected: cow.id === selectedCowId,
                 money,
                 purchasedCowPen,
@@ -321,11 +381,13 @@ CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
   cowInventory: array.isRequired,
   debounced: object.isRequired,
+  handleCowAutomaticHugChange: func.isRequired,
   handleCowHugClick: func.isRequired,
   handleCowNameInputChange: func.isRequired,
   handleCowPurchaseClick: func.isRequired,
   handleCowSelect: func.isRequired,
   handleCowSellClick: func.isRequired,
+  inventory: array.isRequired,
   money: number.isRequired,
   purchasedCowPen: number.isRequired,
   selectedCowId: string.isRequired,

@@ -19,6 +19,7 @@ import {
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
+  HUGGING_MACHINE_ITEM_ID,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   MALE_COW_WEIGHT_MULTIPLIER,
@@ -361,6 +362,7 @@ export const generateCow = (options = {}) => {
     happiness: 0,
     happinessBoostsToday: 0,
     id: createUniqueId(),
+    isUsingHuggingMachine: false,
     name: chooseRandom(fruitNames),
     weightMultiplier: 1,
     ...options,
@@ -559,3 +561,11 @@ document.addEventListener('mouseleave', () => (isMouseDown = false))
  * @return {boolean}
  */
 export const isMouseHeldDown = () => isMouseDown
+
+/**
+ * @param {Array.<farmhand.item>} inventory
+ * @return {boolean}
+ */
+export const areHuggingMachinesInInventory = memoize(inventory =>
+  inventory.some(({ id }) => id === HUGGING_MACHINE_ITEM_ID)
+)

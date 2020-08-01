@@ -6,13 +6,22 @@ import { cropLifeStage, cropType, fieldMode, itemType } from '../enums'
 import {
   COW_FEED_ITEM_ID,
   FERTILIZER_ITEM_ID,
+  HUGGING_MACHINE_ITEM_ID,
   SPRINKLER_RANGE,
 } from '../constants'
 
 const { freeze } = Object
 const { CARROT, CORN, PUMPKIN, SPINACH } = cropType
 const { SEED, GROWING } = cropLifeStage
-const { COW_FEED, CROP, FERTILIZER, MILK, SCARECROW, SPRINKLER } = itemType
+const {
+  COW_FEED,
+  CROP,
+  FERTILIZER,
+  HUGGING_MACHINE,
+  MILK,
+  SCARECROW,
+  SPRINKLER,
+} = itemType
 
 ////////////////////////////////////////
 //
@@ -219,6 +228,18 @@ export const cowFeed = freeze({
   name: 'Cow Feed',
   type: COW_FEED,
   value: 5,
+})
+
+/**
+ * @property farmhand.module:items.huggingMachine
+ * @type {farmhand.item}
+ */
+export const huggingMachine = freeze({
+  id: HUGGING_MACHINE_ITEM_ID,
+  description: 'Automatically hugs one cow three times every day.',
+  name: 'Hugging Machine',
+  type: HUGGING_MACHINE,
+  value: 500,
 })
 
 /**

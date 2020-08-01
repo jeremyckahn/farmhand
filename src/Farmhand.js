@@ -334,6 +334,7 @@ export default class Farmhand extends Component {
     ;[
       'adjustLoan',
       'computeStateForNextDay',
+      'changeCowAutomaticHugState',
       'changeCowName',
       'clearPlot',
       'fertilizeCrop',
