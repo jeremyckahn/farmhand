@@ -565,7 +565,7 @@ export default class Farmhand extends Component {
           <Swipeable
             {...{
               className: 'swipeable-wrapper',
-              delta: 75,
+              delta: 125,
               onSwiped: handlers.handleSwipe,
             }}
           >
