@@ -16,6 +16,7 @@ beforeEach(() => {
     <Item
       {...{
         completedAchievements: {},
+        historicalValueAdjustments: [],
         inventory: [],
         inventoryLimit: -1,
         item: testItem({ name: '' }),
@@ -23,6 +24,7 @@ beforeEach(() => {
         playerInventoryQuantities: {},
         valueAdjustments: {},
         adjustedValue: 0,
+        previousDayAdjustedValue: 0,
       }}
     />
   )

@@ -177,6 +177,7 @@ export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
  */
 const adjustItemValues = state => ({
   ...state,
+  historicalValueAdjustments: [state.valueAdjustments],
   valueAdjustments: generateValueAdjustments(
     state.priceCrashes,
     state.priceSurges

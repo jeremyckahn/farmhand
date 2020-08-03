@@ -105,6 +105,10 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {Array.<Object.<number>>} historicalValueAdjustments Currently
+ * there is only one element in this array, but it will be used for more
+ * historical price data analysis in the future. It is an array for
+ * future-facing flexibility.
  * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
@@ -156,6 +160,7 @@ export default class Farmhand extends Component {
     dayCount: 0,
     field: createNewField(),
     hasBooted: false,
+    historicalValueAdjustments: [],
     hoveredPlotRangeSize: 0,
     inventory: [],
     inventoryLimit: INITIAL_INVENTORY_LIMIT,
@@ -197,6 +202,7 @@ export default class Farmhand extends Component {
       'cropsHarvested',
       'dayCount',
       'field',
+      'historicalValueAdjustments',
       'inventory',
       'inventoryLimit',
       'itemsSold',
@@ -382,6 +388,7 @@ export default class Farmhand extends Component {
       } else {
         // Initialize new game
         this.incrementDay(true)
+        this.setState(() => ({ historicalValueAdjustments: [] }))
         this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
       }
 

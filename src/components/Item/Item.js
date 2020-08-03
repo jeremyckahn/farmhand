@@ -130,6 +130,7 @@ export const Item = ({
   handleItemPurchaseClick,
   handleItemSelectClick,
   handleItemSellClick,
+  historicalValueAdjustments,
   inventory,
   inventoryLimit,
   isPurchaseView,
@@ -137,16 +138,21 @@ export const Item = ({
   isSelected,
   isSellView,
   item,
-  item: { id, isReplantable, description, name },
+  item: { description, doesPriceFluctuate, id, isReplantable, name },
   money,
   playerInventoryQuantities,
   showQuantity,
   valueAdjustments,
 
-  // Note: This prop is defaulted to 0 in the tests.
+  // Note: These props are defaulted to 0 in the tests.
   adjustedValue = isSellView && isItemSoldInShop(item)
     ? getResaleValue(item)
     : getItemValue(item, valueAdjustments),
+  previousDayAdjustedValue = (isSellView && isItemSoldInShop(item)) ||
+  historicalValueAdjustments.length === 0 ||
+  !doesPriceFluctuate
+    ? null
+    : getItemValue(item, historicalValueAdjustments[0]),
 
   maxQuantityPlayerCanPurchase = Math.max(
     0,
@@ -197,7 +203,20 @@ export const Item = ({
             <div>
               {isPurchaseView && (
                 <p>
-                  {`Price: ${moneyString(adjustedValue)}`}
+                  <Tooltip
+                    {...{
+                      arrow: true,
+                      placement: 'right',
+                      title:
+                        previousDayAdjustedValue === null
+                          ? ''
+                          : `Yesterday's price: ${moneyString(
+                              previousDayAdjustedValue
+                            )}`,
+                    }}
+                  >
+                    <span>Price: {moneyString(adjustedValue)}</span>
+                  </Tooltip>
                   {completedAchievements['unlock-crop-price-guide'] &&
                     valueAdjustments[id] && (
                       <PurchaseValueIndicator
@@ -208,7 +227,20 @@ export const Item = ({
               )}
               {isSellView && (
                 <p>
-                  {`Sell price: ${moneyString(adjustedValue)}`}
+                  <Tooltip
+                    {...{
+                      arrow: true,
+                      placement: 'top',
+                      title:
+                        previousDayAdjustedValue === null
+                          ? ''
+                          : `Yesterday's sell price: ${moneyString(
+                              previousDayAdjustedValue
+                            )}`,
+                    }}
+                  >
+                    <span>Sell price: {moneyString(adjustedValue)}</span>
+                  </Tooltip>
                   {completedAchievements['unlock-crop-price-guide'] &&
                     valueAdjustments[id] && (
                       <SellValueIndicator
@@ -336,6 +368,7 @@ Item.propTypes = {
   handleItemPurchaseClick: func,
   handleItemSelectClick: func,
   handleItemSellClick: func,
+  historicalValueAdjustments: array.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
   isPurchaseView: bool,
