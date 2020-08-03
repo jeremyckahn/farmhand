@@ -24,6 +24,7 @@ import {
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
+  MAX_DAILY_COW_HUG_BENEFITS,
   NOTIFICATION_LOG_SIZE,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
@@ -31,7 +32,7 @@ import {
   STORAGE_EXPANSION_AMOUNT,
   STORAGE_EXPANSION_PRICE,
 } from './constants'
-import { sampleCropItem1 } from './data/items'
+import { huggingMachine, sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
 import { cowColors, fieldMode, genders } from './enums'
@@ -542,6 +543,28 @@ describe('processCowAttrition', () => {
       { message: COW_ATTRITION_MESSAGE`${unfedCow}`, severity: 'error' },
     ])
   })
+
+  test('used hugging machines are returned to inventory', () => {
+    const unfedCow = generateCow({
+      name: 'unfed cow',
+      weightMultiplier: COW_WEIGHT_MULTIPLIER_MINIMUM,
+    })
+    const unfedCowWithHuggingMachine = generateCow({
+      name: 'unfed cow',
+      weightMultiplier: COW_WEIGHT_MULTIPLIER_MINIMUM,
+      isUsingHuggingMachine: true,
+    })
+
+    const { cowInventory, inventory } = fn.processCowAttrition({
+      cowInventory: [unfedCow, unfedCowWithHuggingMachine],
+      inventory: [],
+      inventoryLimit: -1,
+      newDayNotifications: [],
+    })
+
+    expect(cowInventory).toEqual([])
+    expect(inventory).toEqual([{ id: huggingMachine.id, quantity: 1 }])
+  })
 })
 
 describe('processMilkingCows', () => {
@@ -853,6 +876,34 @@ describe('computeCowInventoryForNextDay', () => {
           happinessBoostsToday: 0,
         },
       ],
+    })
+  })
+
+  describe('happiness', () => {
+    describe('has a hugging machine', () => {
+      test('happiness is pre-maxed for the day', () => {
+        expect(
+          fn.computeCowInventoryForNextDay({
+            cowInventory: [
+              {
+                daysOld: 5,
+                happiness: 0,
+                happinessBoostsToday: 0,
+                isUsingHuggingMachine: true,
+              },
+            ],
+          })
+        ).toMatchObject({
+          cowInventory: [
+            {
+              daysOld: 6,
+              happiness: COW_HUG_BENEFIT * (MAX_DAILY_COW_HUG_BENEFITS - 1),
+              happinessBoostsToday: MAX_DAILY_COW_HUG_BENEFITS,
+              isUsingHuggingMachine: true,
+            },
+          ],
+        })
+      })
     })
   })
 })
@@ -1348,6 +1399,94 @@ describe('sellCow', () => {
 
     expect(cowInventory).not.toContain(cow)
     expect(money).toEqual(getCowValue(cow))
+  })
+
+  describe('cow has hugging machine', () => {
+    test('returns hugging machine to inventory', () => {
+      const cow = Object.freeze({
+        baseWeight: 1000,
+        gender: genders.FEMALE,
+        isUsingHuggingMachine: true,
+        name: 'cow',
+      })
+      const { inventory } = fn.sellCow(
+        {
+          cowInventory: [cow],
+          inventory: [],
+          inventoryLimit: -1,
+          money: 0,
+        },
+        cow
+      )
+
+      expect(inventory).toEqual([{ id: huggingMachine.id, quantity: 1 }])
+    })
+  })
+})
+
+describe('changeCowAutomaticHugState', () => {
+  describe('setting isUsingHuggingMachine to true', () => {
+    test('sets isUsingHuggingMachine to true', () => {
+      const cow = generateCow()
+      const inputState = {
+        cowInventory: [cow],
+        inventory: [{ id: huggingMachine.id, quantity: 1 }],
+        inventoryLimit: -1,
+      }
+      const {
+        cowInventory: [{ isUsingHuggingMachine }],
+        inventory,
+      } = fn.changeCowAutomaticHugState(inputState, cow, true)
+
+      expect(isUsingHuggingMachine).toEqual(true)
+      expect(inventory).toEqual([])
+    })
+
+    describe('there are no hugging machines in inventory', () => {
+      test('no-ops', () => {
+        const cow = generateCow()
+        const inputState = {
+          cowInventory: [cow],
+          inventory: [],
+          inventoryLimit: -1,
+        }
+        const state = fn.changeCowAutomaticHugState(inputState, cow, true)
+
+        expect(state).toBe(inputState)
+      })
+    })
+
+    describe('isUsingHuggingMachine is already true', () => {
+      test('no-ops', () => {
+        const cow = generateCow({ isUsingHuggingMachine: true })
+        const inputState = {
+          cowInventory: [cow],
+          inventory: [{ id: huggingMachine.id, quantity: 1 }],
+          inventoryLimit: -1,
+        }
+        const state = fn.changeCowAutomaticHugState(inputState, cow, true)
+
+        expect(state).toBe(inputState)
+      })
+    })
+  })
+
+  describe('setting isUsingHuggingMachine to false', () => {
+    test('sets isUsingHuggingMachine to false', () => {
+      const cow = generateCow({ isUsingHuggingMachine: true })
+      const inputState = {
+        cowInventory: [cow],
+        inventory: [],
+        inventoryLimit: -1,
+      }
+      const {
+        cowInventory: [{ isUsingHuggingMachine }],
+        inventory,
+      } = fn.changeCowAutomaticHugState(inputState, cow, false)
+
+      expect(isUsingHuggingMachine).toEqual(false)
+      expect(inventory).toEqual([{ id: huggingMachine.id, quantity: 1 }])
+    })
   })
 })
 

@@ -391,7 +391,6 @@ export const processCowAttrition = state => {
     return cowInventory
   }, [])
 
-  // FIXME: Test this.
   if (huggingMachinesToReturnToInventory) {
     state = addItemToInventory(
       state,
@@ -497,7 +496,6 @@ export const computeCowInventoryForNextDay = state => ({
     ...cow,
     daysOld: cow.daysOld + 1,
     daysSinceMilking: cow.daysSinceMilking + 1,
-    // FIXME: Test this.
     happiness: Math.max(
       0,
       cow.isUsingHuggingMachine
@@ -922,7 +920,6 @@ export const sellCow = (state, cow) => {
   const newCowInventory = [...cowInventory]
   newCowInventory.splice(cowInventory.indexOf(cow), 1)
 
-  // FIXME: Test this.
   if (isUsingHuggingMachine) {
     state = addItemToInventory(state, itemsMap[HUGGING_MACHINE_ITEM_ID])
   }
@@ -957,7 +954,6 @@ export const modifyCow = (state, cowId, fn) => {
   }
 }
 
-// FIXME: Test this.
 /**
  * @param {farmhand.state} state
  * @param {farmhand.cow} cow
