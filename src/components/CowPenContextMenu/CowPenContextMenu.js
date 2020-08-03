@@ -91,7 +91,7 @@ export const CowCardSubheader = ({
           {...{
             arrow: true,
             placement: 'top',
-            title: `Check this box to put ${cow.name} into a Hugging Machine and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory.`,
+            title: `Check this box to put ${cow.name} into a ${huggingMachine.name} and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory.`,
           }}
         >
           <FormControlLabel
