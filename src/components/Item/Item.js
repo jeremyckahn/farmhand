@@ -40,7 +40,8 @@ const ValueIndicator = ({
 }) => (
   <Tooltip
     {...{
-      placement: 'right',
+      arrow: true,
+      placement: 'top',
       title: `${poorValue ? 'Poor' : 'Good'} opportunity`,
     }}
   >
@@ -206,7 +207,7 @@ export const Item = ({
                   <Tooltip
                     {...{
                       arrow: true,
-                      placement: 'right',
+                      placement: 'top',
                       title:
                         previousDayAdjustedValue === null
                           ? ''
