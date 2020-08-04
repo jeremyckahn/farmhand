@@ -177,7 +177,7 @@ export const fertilizer = freeze({
   id: FERTILIZER_ITEM_ID,
   name: 'Fertilizer',
   type: FERTILIZER,
-  value: 60,
+  value: 10,
 })
 
 /**
