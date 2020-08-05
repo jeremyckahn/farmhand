@@ -5,11 +5,17 @@ import Typography from '@material-ui/core/Typography'
 import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
-import { getCropLifeStage, getPlotContentType, getPlotImage } from '../../utils'
+import {
+  getCropLifeStage,
+  getCropLifecycleDuration,
+  getPlotContentType,
+  getPlotImage,
+  isMouseHeldDown,
+} from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, itemType } from '../../enums'
-import { getCropLifecycleDuration, isMouseHeldDown } from '../../utils'
+import { FERTILIZER_BONUS } from '../../constants'
 import './Plot.sass'
 
 export const getBackgroundStyles = plotContent => {
@@ -30,6 +36,29 @@ export const getBackgroundStyles = plotContent => {
   return backgroundImages.join(', ')
 }
 
+export const getDaysLeftToMature = plotContent => {
+  const item = plotContent ? itemsMap[plotContent.itemId] : null
+
+  // Need to check that daysWatered is > -1 here because it may be NaN (in the
+  // case of non-crop items).
+  if (!(plotContent && plotContent.daysWatered > -1)) {
+    return null
+  }
+
+  const daysUntilLifecycleDuration =
+    getCropLifecycleDuration(item) - plotContent.daysWatered
+
+  return Math.max(
+    0,
+    daysUntilLifecycleDuration > 0 && daysUntilLifecycleDuration < 1
+      ? 1
+      : Math.ceil(
+          daysUntilLifecycleDuration /
+            (plotContent.isFertilized ? 1 + FERTILIZER_BONUS : 1)
+        )
+  )
+}
+
 export const Plot = ({
   handlePlotClick,
   hoveredPlot,
@@ -47,12 +76,7 @@ export const Plot = ({
   isRipe = lifeStage === cropLifeStage.GROWN,
 }) => {
   const item = plotContent ? itemsMap[plotContent.itemId] : null
-  const daysLeftToMature =
-    // Need to check that daysWatered is > -1 here because it may be NaN,
-    // otherwise increments up from 0.
-    plotContent && plotContent.daysWatered > -1
-      ? Math.max(0, getCropLifecycleDuration(item) - plotContent.daysWatered)
-      : null
+  const daysLeftToMature = getDaysLeftToMature(plotContent)
 
   const plot = (
     <div
