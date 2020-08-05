@@ -6,7 +6,7 @@ import { testCrop } from '../../test-utils'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage } from '../../enums'
 
-import { Plot, getBackgroundStyles } from './Plot'
+import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot'
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
@@ -121,5 +121,59 @@ describe('getBackgroundStyles', () => {
     ).toBe(
       `url(${plotStates['fertilized-plot']}), url(${plotStates['watered-plot']})`
     )
+  })
+})
+
+describe('getDaysLeftToMature', () => {
+  describe('plot does not contain a crop', () => {
+    describe('plot is empty', () => {
+      test('returns null', () => {
+        expect(getDaysLeftToMature(null)).toEqual(null)
+      })
+    })
+
+    describe('plot contains non-crop content', () => {
+      expect(
+        getDaysLeftToMature(getPlotContentFromItemId('replantable-item'))
+      ).toEqual(null)
+    })
+  })
+
+  describe('crop is newly planted', () => {
+    test('computes full lifecycle duration', () => {
+      expect(
+        getDaysLeftToMature({
+          itemId: 'sample-crop-1',
+          daysWatered: 0,
+          isFertilized: false,
+        })
+      ).toEqual(3)
+    })
+  })
+
+  describe('crop is fertilized', () => {
+    describe('crop is newly planted', () => {
+      test('computes projected lifecycle duration', () => {
+        expect(
+          getDaysLeftToMature({
+            itemId: 'sample-crop-1',
+            daysWatered: 0,
+            isFertilized: true,
+          })
+        ).toEqual(2)
+      })
+    })
+
+    describe('crop has less than a full day to mature', () => {
+      test('projection is corrected up to 1 day', () => {
+        expect(
+          getDaysLeftToMature({
+            itemId: 'sample-crop-1',
+            daysWatered: 2.9,
+            isFertilized: true,
+          })
+        ).toEqual(1)
+      })
+    })
   })
 })
