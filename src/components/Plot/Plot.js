@@ -36,28 +36,25 @@ export const getBackgroundStyles = plotContent => {
   return backgroundImages.join(', ')
 }
 
-export const getDaysLeftToMature = plotContent => {
-  const item = plotContent ? itemsMap[plotContent.itemId] : null
-
+/**
+ * @param {(farmhand.plotContent|farmhand.crop)?} plotContent
+ * @returns {number?}
+ */
+export const getDaysLeftToMature = plotContent =>
   // Need to check that daysWatered is > -1 here because it may be NaN (in the
   // case of non-crop items).
-  if (!(plotContent && plotContent.daysWatered > -1)) {
-    return null
-  }
-
-  const daysUntilLifecycleDuration =
-    getCropLifecycleDuration(item) - plotContent.daysWatered
-
-  return Math.max(
-    0,
-    daysUntilLifecycleDuration > 0 && daysUntilLifecycleDuration < 1
-      ? 1
-      : Math.ceil(
-          daysUntilLifecycleDuration /
-            (plotContent.isFertilized ? 1 + FERTILIZER_BONUS : 1)
+  plotContent && plotContent.daysWatered > -1
+    ? Math.max(
+        0,
+        Math.ceil(
+          (getCropLifecycleDuration(
+            plotContent ? itemsMap[plotContent.itemId] : null
+          ) -
+            plotContent.daysWatered) /
+            (1 + (plotContent.isFertilized ? FERTILIZER_BONUS : 0))
         )
-  )
-}
+      )
+    : null
 
 export const Plot = ({
   handlePlotClick,
