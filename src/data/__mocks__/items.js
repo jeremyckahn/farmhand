@@ -92,8 +92,8 @@ export const sampleCropItem3 = testItem({
   type: itemType.CROP,
   value: 4,
   cropTimetable: {
-    [SEED]: 3,
-    [GROWING]: 4,
+    [SEED]: 5,
+    [GROWING]: 5,
   },
 })
 
