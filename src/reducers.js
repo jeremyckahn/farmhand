@@ -370,37 +370,25 @@ export const processFeedingCows = state => {
  */
 export const processCowAttrition = state => {
   const newDayNotifications = [...state.newDayNotifications]
-  let huggingMachinesToReturnToInventory = 0
+  const oldCowInventory = [...state.cowInventory]
 
-  const cowInventory = state.cowInventory.reduce((cowInventory, cow) => {
+  for (let i = 0; i < oldCowInventory.length; i++) {
+    const cow = oldCowInventory[i]
+
     if (
       // Cast toFixed(2) to prevent IEEE 754 rounding errors.
       Number(cow.weightMultiplier.toFixed(2)) === COW_WEIGHT_MULTIPLIER_MINIMUM
     ) {
-      if (cow.isUsingHuggingMachine) {
-        huggingMachinesToReturnToInventory++
-      }
+      state = removeCowFromInventory(state, cow)
 
       newDayNotifications.push({
         message: COW_ATTRITION_MESSAGE`${cow}`,
         severity: 'error',
       })
-    } else {
-      cowInventory.push(cow)
     }
-
-    return cowInventory
-  }, [])
-
-  if (huggingMachinesToReturnToInventory) {
-    state = addItemToInventory(
-      state,
-      itemsMap[HUGGING_MACHINE_ITEM_ID],
-      huggingMachinesToReturnToInventory
-    )
   }
 
-  return { ...state, cowInventory, newDayNotifications }
+  return { ...state, newDayNotifications }
 }
 
 /**
@@ -914,22 +902,33 @@ export const purchaseCow = (state, cow) => {
  * @returns {farmhand.state}
  */
 export const sellCow = (state, cow) => {
-  const { isUsingHuggingMachine } = cow
-  const { cowInventory, money } = state
+  const { money } = state
   const cowValue = getCowValue(cow)
 
-  const newCowInventory = [...cowInventory]
-  newCowInventory.splice(cowInventory.indexOf(cow), 1)
+  state = removeCowFromInventory(state, cow)
+
+  return {
+    ...state,
+    money: moneyTotal(money, cowValue),
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.cow} cow
+ * @returns {farmhand.state}
+ */
+export const removeCowFromInventory = (state, cow) => {
+  const cowInventory = [...state.cowInventory]
+  const { isUsingHuggingMachine } = cow
+
+  cowInventory.splice(cowInventory.indexOf(cow), 1)
 
   if (isUsingHuggingMachine) {
     state = addItemToInventory(state, itemsMap[HUGGING_MACHINE_ITEM_ID])
   }
 
-  return {
-    ...state,
-    cowInventory: newCowInventory,
-    money: moneyTotal(money, cowValue),
-  }
+  return { ...state, cowInventory }
 }
 
 /**
