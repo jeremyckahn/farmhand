@@ -6,8 +6,10 @@ import {
   castToMoney,
   clampNumber,
   doesInventorySpaceRemain,
+  findCowById,
   findInField,
   generateCow,
+  generateOffspringCow,
   generateValueAdjustments,
   getAdjustedItemValue,
   getResaleValue,
@@ -29,7 +31,9 @@ import {
 } from './utils'
 import {
   COW_FEED_ITEM_ID,
+  COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
+  COW_MINIMUM_HAPPINESS_TO_BREED,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
@@ -61,6 +65,7 @@ import {
 import {
   ACHIEVEMENT_COMPLETED,
   COW_ATTRITION_MESSAGE,
+  COW_BORN_MESSAGE,
   CROW_ATTACKED,
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
@@ -479,6 +484,67 @@ const processField = state => ({
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
+export const processCowBreeding = state => {
+  const {
+    cowBreedingPen,
+    cowInventory,
+    newDayNotifications,
+    purchasedCowPen,
+  } = state
+  const { cowId1, cowId2 } = cowBreedingPen
+
+  if (!cowId2) {
+    return state
+  }
+
+  const cow1 = findCowById(cowInventory, cowId1)
+  const cow2 = findCowById(cowInventory, cowId2)
+
+  // Same-sex couples are as valid and wonderful as any, but in this game they
+  // cannot naturally produce offspring.
+  if (cow1.gender === cow2.gender) {
+    return state
+  }
+
+  const daysUntilBirth =
+    cow1.happiness >= COW_MINIMUM_HAPPINESS_TO_BREED &&
+    cow2.happiness >= COW_MINIMUM_HAPPINESS_TO_BREED
+      ? cowBreedingPen.daysUntilBirth - 1
+      : COW_GESTATION_PERIOD_DAYS
+
+  const shouldGenerateOffspring =
+    cowInventory.length < PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows &&
+    daysUntilBirth === 0
+
+  let offspringCow = shouldGenerateOffspring && generateOffspringCow(cow1, cow2)
+
+  return {
+    ...state,
+    cowInventory: shouldGenerateOffspring
+      ? [...cowInventory, offspringCow]
+      : cowInventory,
+    cowBreedingPen: {
+      ...cowBreedingPen,
+      daysUntilBirth: shouldGenerateOffspring
+        ? COW_GESTATION_PERIOD_DAYS
+        : daysUntilBirth,
+    },
+    newDayNotifications: offspringCow
+      ? [
+          ...newDayNotifications,
+          {
+            message: COW_BORN_MESSAGE`${cow1}${cow2}${offspringCow}`,
+            severity: 'success',
+          },
+        ]
+      : newDayNotifications,
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
 export const computeCowInventoryForNextDay = state => ({
   ...state,
   cowInventory: state.cowInventory.map(cow => ({
@@ -706,6 +772,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
     ? []
     : [
         computeCowInventoryForNextDay,
+        processCowBreeding,
         processField,
         processNerfs,
         processWeather,
@@ -928,6 +995,8 @@ export const removeCowFromInventory = (state, cow) => {
     state = addItemToInventory(state, itemsMap[HUGGING_MACHINE_ITEM_ID])
   }
 
+  state = changeCowBreedingPenResident(state, cow, false)
+
   return { ...state, cowInventory }
 }
 
@@ -980,6 +1049,51 @@ export const changeCowAutomaticHugState = (state, cow, doAutomaticallyHug) => {
     : addItemToInventory(state, itemsMap[HUGGING_MACHINE_ITEM_ID])
 
   return state
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.cow} cow
+ * @param {boolean} doAdd If true, cow will be added to the breeding pen. If
+ * false, they will be removed.
+ * @returns {farmhand.state}
+ */
+export const changeCowBreedingPenResident = (state, cow, doAdd) => {
+  const { cowBreedingPen } = state
+  const { cowId1, cowId2 } = cowBreedingPen
+  const isPenFull = cowId1 !== null && cowId2 !== null
+  const isCowInPen = cowId1 === cow.id || cowId2 === cow.id
+  let newCowBreedingPen = { ...cowBreedingPen }
+
+  if (doAdd) {
+    if (isPenFull || isCowInPen) {
+      return state
+    }
+
+    const cowId = cowId1 === null ? 'cowId1' : 'cowId2'
+    newCowBreedingPen = { ...newCowBreedingPen, [cowId]: cow.id }
+  } else {
+    if (!isCowInPen) {
+      return state
+    }
+
+    if (cowId1 === cow.id) {
+      newCowBreedingPen = {
+        ...newCowBreedingPen,
+        cowId1: newCowBreedingPen.cowId2,
+      }
+    }
+
+    newCowBreedingPen = { ...newCowBreedingPen, cowId2: null }
+  }
+
+  return {
+    ...state,
+    cowBreedingPen: {
+      ...newCowBreedingPen,
+      daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+    },
+  }
 }
 
 /**

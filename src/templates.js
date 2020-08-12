@@ -42,6 +42,15 @@ export const COW_ATTRITION_MESSAGE = (_, { name }) =>
   `${name} got hungry from being underfed and ran away!`
 
 /**
+ * @param {farmhand.cow} parentCow1
+ * @param {farmhand.cow} parentCow2
+ * @param {farmhand.cow} offspringCow
+ * @returns {string}
+ */
+export const COW_BORN_MESSAGE = (_, parentCow1, parentCow2, offspringCow) =>
+  `${parentCow1.name} and ${parentCow2.name} had a baby: ${offspringCow.name}! Welcome to the world, ${offspringCow.name}!`
+
+/**
  * @param {farmhand.recipe} recipe
  * @returns {string}
  */

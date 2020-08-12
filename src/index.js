@@ -60,6 +60,7 @@
  * @type {Object}
  * @property {number} baseWeight
  * @property {string} color
+ * @property {Object.<farmhand.module:enums.cowColors, boolean>} colorsInBloodline
  * @property {number} daysOld
  * @property {number} daysSinceMilking
  * @property {string} gender
@@ -69,6 +70,14 @@
  * @property {boolean} isUsingHuggingMachine
  * @property {string} name
  * @property {number} weightMultiplier Clamped between 0.5 and 1.5.
+ */
+
+/**
+ * @typedef farmhand.cowBreedingPen
+ * @type {Object}
+ * @property {string?} cowId1
+ * @property {string?} cowId2
+ * @property {number} daysUntilBirth
  */
 
 /**

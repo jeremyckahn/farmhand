@@ -60,6 +60,14 @@ export default {
   },
 
   /**
+   * @param {external:React.SyntheticEvent} e
+   * @param {farmhand.cow} cow
+   */
+  handleCowBreedChange({ target: { checked } }, cow) {
+    this.changeCowBreedingPenResident(cow, checked)
+  },
+
+  /**
    * @param {farmhand.cow} cow
    */
   handleCowHugClick(cow) {

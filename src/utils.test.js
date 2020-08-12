@@ -4,6 +4,7 @@ import {
   dollarString,
   integerString,
   generateCow,
+  generateOffspringCow,
   generateValueAdjustments,
   getCowMilkRate,
   getCowValue,
@@ -241,6 +242,58 @@ describe('generateCow', () => {
         baseWeight,
       })
     })
+  })
+})
+
+describe('generateOffspringCow', () => {
+  let maleCow, femaleCow
+
+  beforeEach(() => {
+    jest.spyOn(Math, 'random').mockReturnValue(1)
+
+    maleCow = generateCow({
+      baseWeight: 2200,
+      color: cowColors.ORANGE,
+      colorsInBloodline: {
+        [cowColors.ORANGE]: true,
+        [cowColors.YELLOW]: true,
+      },
+      gender: genders.MALE,
+    })
+
+    femaleCow = generateCow({
+      baseWeight: 2000,
+      color: cowColors.GREEN,
+      colorsInBloodline: {
+        [cowColors.GREEN]: true,
+        [cowColors.WHITE]: true,
+      },
+      gender: genders.FEMALE,
+    })
+  })
+
+  test('generates offspring', () => {
+    expect(generateOffspringCow(maleCow, femaleCow)).toMatchObject({
+      color: maleCow.color,
+      colorsInBloodline: {
+        [cowColors.GREEN]: true,
+        [cowColors.ORANGE]: true,
+        [cowColors.WHITE]: true,
+        [cowColors.YELLOW]: true,
+      },
+      baseWeight: 2100,
+    })
+  })
+
+  test('order of parents does not matter', () => {
+    const { id: id1, ...offspring1 } = generateOffspringCow(maleCow, femaleCow)
+    const { id: id2, ...offspring2 } = generateOffspringCow(femaleCow, maleCow)
+
+    expect(offspring1).toEqual(offspring2)
+  })
+
+  test('two cows of the same gender throw an error', () => {
+    expect(() => generateOffspringCow(femaleCow, femaleCow)).toThrow()
   })
 })
 

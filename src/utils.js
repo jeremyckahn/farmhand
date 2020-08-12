@@ -353,9 +353,12 @@ export const generateCow = (options = {}) => {
       Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
   )
 
+  const color = options.color || chooseRandom(Object.values(cowColors))
+
   return {
     baseWeight,
-    color: chooseRandom(Object.values(cowColors)),
+    color,
+    colorsInBloodline: { [color]: true },
     daysOld: 1,
     daysSinceMilking: 0,
     gender,
@@ -367,6 +370,38 @@ export const generateCow = (options = {}) => {
     weightMultiplier: 1,
     ...options,
   }
+}
+
+/**
+ * Generates a cow based on two parents.
+ * @param {farmhand.cow} cow1
+ * @param {farmhand.cow} cow2
+ * @returns {farmhand.cow}
+ */
+export const generateOffspringCow = (cow1, cow2) => {
+  if (cow1.gender === cow2.gender) {
+    throw new Error(
+      `${JSON.stringify(cow1)} ${JSON.stringify(
+        cow2
+      )} cannot produce offspring because they have the same gender`
+    )
+  }
+
+  const maleCow = cow1.gender === genders.MALE ? cow1 : cow2
+  const femaleCow = cow1.gender === genders.MALE ? cow2 : cow1
+
+  return generateCow({
+    color: maleCow.color,
+    colorsInBloodline: {
+      // These lines are for backwards compatibility and can be removed on 11/1/2020
+      [maleCow.color]: true,
+      [femaleCow.color]: true,
+      // End backwards compatibility lines to remove
+      ...maleCow.colorsInBloodline,
+      ...femaleCow.colorsInBloodline,
+    },
+    baseWeight: (maleCow.baseWeight + femaleCow.baseWeight) / 2,
+  })
 }
 
 /**
@@ -568,4 +603,22 @@ export const isMouseHeldDown = () => isMouseDown
  */
 export const areHuggingMachinesInInventory = memoize(inventory =>
   inventory.some(({ id }) => id === HUGGING_MACHINE_ITEM_ID)
+)
+
+// TODO: Use this function everywhere the null array pattern is used.
+/**
+ * @param {number} arraySize
+ * @returns {Array.<null>}
+ */
+export const nullArray = memoize(arraySize =>
+  Object.freeze(new Array(arraySize).fill(null))
+)
+
+/**
+ * @param {Array.<farmhand.cow>} cowInventory
+ * @param {string} id
+ * @returns {farmhand.cow|undefined}
+ */
+export const findCowById = memoize((cowInventory, id) =>
+  cowInventory.find(cow => id === cow.id)
 )
