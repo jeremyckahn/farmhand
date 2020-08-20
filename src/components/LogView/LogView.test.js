@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Alert from '@material-ui/lab/Alert'
+import ReactMarkdown from 'react-markdown'
 
 import { LogView } from './LogView'
 
@@ -42,8 +43,8 @@ describe('severity grouping', () => {
     const successAlert = alerts.at(0)
     const errorAlert = alerts.at(1)
     expect(successAlert.props().severity).toEqual('success')
-    expect(successAlert.text()).toEqual('yay')
+    expect(successAlert.find(ReactMarkdown).props().source).toEqual('yay')
     expect(errorAlert.props().severity).toEqual('error')
-    expect(errorAlert.text()).toEqual('oh no')
+    expect(errorAlert.find(ReactMarkdown).props().source).toEqual('oh no')
   })
 })

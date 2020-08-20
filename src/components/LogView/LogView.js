@@ -1,6 +1,7 @@
 import React from 'react'
 import { array } from 'prop-types'
 import Alert from '@material-ui/lab/Alert'
+import ReactMarkdown from 'react-markdown'
 
 import FarmhandContext from '../../Farmhand.context'
 
@@ -15,7 +16,9 @@ export const LogView = ({ notificationLog }) => (
           notifications[severity].length ? (
             <Alert {...{ elevation: 3, key: `${severity}_${i}`, severity }}>
               {notifications[severity].map((message, j) => (
-                <p key={`${j}_${message}`}>{message}</p>
+                <ReactMarkdown
+                  {...{ key: `${j}_${message}`, source: message }}
+                />
               ))}
             </Alert>
           ) : null

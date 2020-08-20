@@ -148,6 +148,35 @@
   .MuiSelect-select.MuiSelect-select
     padding: 1em
 
+  .MuiAlert-root
+    margin-bottom: 1em
+
+    @media (min-width: #{$break-xs}) and (orientation: landscape)
+      top: 3.5em
+
+    @media (min-width: #{$break-sm})
+      top: 4.5em
+
+    p
+      margin: 1em 0
+
+      &:first-child
+        margin-top: 0
+
+      &:last-child
+        margin-bottom: 0
+
+    li
+      margin-left: 1em
+
+    ul
+      li
+        list-style: disc
+
+    ol
+      li
+        list-style: decimal
+
 .MuiTooltip-popper
   p
     text-align: center
