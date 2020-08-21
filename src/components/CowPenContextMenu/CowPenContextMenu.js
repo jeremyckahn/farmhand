@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
 import Checkbox from '@material-ui/core/Checkbox'
+import Divider from '@material-ui/core/Divider'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import TextField from '@material-ui/core/TextField'
@@ -29,9 +30,11 @@ import FarmhandContext from '../../Farmhand.context'
 import { cowColors, enumify, genders } from '../../enums'
 import {
   areHuggingMachinesInInventory,
-  moneyString,
   getCowValue,
   getCowWeight,
+  findCowById,
+  moneyString,
+  nullArray,
 } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { cowFeed, huggingMachine } from '../../data/items'
@@ -50,14 +53,22 @@ const nullHeartList = new Array(10).fill(null)
 const isHeartFull = (heartIndex, numberOfFullHearts) =>
   heartIndex + 0.5 < numberOfFullHearts
 
+const isCowInBreedingPen = (cow, cowBreedingPen) =>
+  cowBreedingPen.cowId1 === cow.id || cowBreedingPen.cowId2 === cow.id
+
 export const CowCardSubheader = ({
   cow,
+  cowBreedingPen,
   cowValue,
   handleCowAutomaticHugChange,
+  handleCowBreedChange,
   huggingMachinesRemain,
   isCowPurchased,
 
   numberOfFullHearts = cow.happiness * 10,
+  isInBreedingPen = isCowInBreedingPen(cow, cowBreedingPen),
+  isBreedingPenFull = cowBreedingPen.cowId1 !== null &&
+    cowBreedingPen.cowId2 !== null,
 }) => (
   <>
     {isCowPurchased && (
@@ -112,6 +123,35 @@ export const CowCardSubheader = ({
             }}
           />
         </Tooltip>
+        <Tooltip
+          {...{
+            arrow: true,
+            placement: 'top',
+            title: isInBreedingPen
+              ? `Uncheck this box to return ${cow.name} to the regular pen.`
+              : `Check this box to move ${
+                  cow.name
+                } to the breeding pen to mate with a ${
+                  cow.gender === genders.MALE ? 'female' : 'male'
+                } cow.`,
+          }}
+        >
+          <FormControlLabel
+            {...{
+              control: (
+                <Checkbox
+                  {...{
+                    color: 'primary',
+                    checked: isInBreedingPen,
+                    onChange: e => handleCowBreedChange(e, cow),
+                  }}
+                />
+              ),
+              disabled: !isInBreedingPen && isBreedingPenFull,
+              label: 'Breed',
+            }}
+          />
+        </Tooltip>
       </>
     )}
   </>
@@ -119,9 +159,11 @@ export const CowCardSubheader = ({
 
 export const CowCard = ({
   cow,
+  cowBreedingPen,
   cowInventory,
   debounced,
   handleCowAutomaticHugChange,
+  handleCowBreedChange,
   handleCowHugClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
@@ -175,7 +217,9 @@ export const CowCard = ({
             <CowCardSubheader
               {...{
                 cow,
+                cowBreedingPen,
                 cowValue,
+                handleCowBreedChange,
                 handleCowAutomaticHugChange,
                 huggingMachinesRemain,
                 isCowPurchased,
@@ -261,11 +305,20 @@ const sortCows = (cows, sortType, isAscending) => {
   return isAscending ? sortedCows : sortedCows.reverse()
 }
 
+/**
+ * @param {farmhand.cowBreedingPen} cowBreedingPen
+ * @returns {number}
+ */
+const numberOfCowsBreeding = ({ cowId1, cowId2 }) =>
+  cowId1 ? (cowId2 ? 2 : 1) : 0
+
 export const CowPenContextMenu = ({
+  cowBreedingPen,
   cowForSale,
   cowInventory,
   debounced,
   handleCowAutomaticHugChange,
+  handleCowBreedChange,
   handleCowHugClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
@@ -302,10 +355,12 @@ export const CowPenContextMenu = ({
           />
         </li>
       </ul>
+      <Divider />
       <h3>For sale</h3>
       <CowCard
         {...{
           cow: cowForSale,
+          cowBreedingPen,
           cowInventory,
           handleCowPurchaseClick,
           inventory,
@@ -313,6 +368,36 @@ export const CowPenContextMenu = ({
           purchasedCowPen,
         }}
       />
+      <Divider />
+      <h3>Breeding pen ({numberOfCowsBreeding(cowBreedingPen)} / 2)</h3>
+      <ul className="card-list purchased-cows breeding-cows">
+        {nullArray(numberOfCowsBreeding(cowBreedingPen)).map((_null, i) => {
+          const cowId = cowBreedingPen[`cowId${i + 1}`]
+          const cow = findCowById(cowInventory, cowId)
+          return (
+            <li {...{ key: cowId }}>
+              <CowCard
+                {...{
+                  cow,
+                  cowBreedingPen,
+                  cowInventory,
+                  debounced,
+                  handleCowAutomaticHugChange,
+                  handleCowBreedChange,
+                  handleCowHugClick,
+                  handleCowNameInputChange,
+                  handleCowSellClick,
+                  inventory,
+                  isSelected: cow.id === selectedCowId,
+                  money,
+                  purchasedCowPen,
+                }}
+              />
+            </li>
+          )
+        })}
+      </ul>
+      <Divider />
       <h3>
         Cows ({cowInventory.length} /{' '}
         {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
@@ -347,31 +432,35 @@ export const CowPenContextMenu = ({
       )}
 
       <ul className="card-list purchased-cows">
-        {sortCows(cowInventory, sortType, isAscending).map(cow => (
-          <li
-            {...{
-              key: cow.id,
-              onFocus: () => handleCowSelect(cow),
-              onClick: () => handleCowSelect(cow),
-            }}
-          >
-            <CowCard
+        {sortCows(cowInventory, sortType, isAscending).map(cow =>
+          isCowInBreedingPen(cow, cowBreedingPen) ? null : (
+            <li
               {...{
-                cow,
-                cowInventory,
-                debounced,
-                handleCowAutomaticHugChange,
-                handleCowHugClick,
-                handleCowNameInputChange,
-                handleCowSellClick,
-                inventory,
-                isSelected: cow.id === selectedCowId,
-                money,
-                purchasedCowPen,
+                key: cow.id,
+                onFocus: () => handleCowSelect(cow),
+                onClick: () => handleCowSelect(cow),
               }}
-            />
-          </li>
-        ))}
+            >
+              <CowCard
+                {...{
+                  cow,
+                  cowBreedingPen,
+                  cowInventory,
+                  debounced,
+                  handleCowAutomaticHugChange,
+                  handleCowBreedChange,
+                  handleCowHugClick,
+                  handleCowNameInputChange,
+                  handleCowSellClick,
+                  inventory,
+                  isSelected: cow.id === selectedCowId,
+                  money,
+                  purchasedCowPen,
+                }}
+              />
+            </li>
+          )
+        )}
       </ul>
     </div>
   )
@@ -382,6 +471,7 @@ CowPenContextMenu.propTypes = {
   cowInventory: array.isRequired,
   debounced: object.isRequired,
   handleCowAutomaticHugChange: func.isRequired,
+  handleCowBreedChange: func.isRequired,
   handleCowHugClick: func.isRequired,
   handleCowNameInputChange: func.isRequired,
   handleCowPurchaseClick: func.isRequired,

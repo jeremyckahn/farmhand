@@ -19,10 +19,12 @@ describe('CowPenContextMenu', () => {
     component = shallow(
       <CowPenContextMenu
         {...{
+          cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
           cowForSale: generateCow(),
           cowInventory: [],
           debounced: {},
           handleCowAutomaticHugChange: () => {},
+          handleCowBreedChange: () => {},
           handleCowHugClick: () => {},
           handleCowNameInputChange: () => {},
           handleCowPurchaseClick: () => {},
@@ -158,6 +160,7 @@ describe('CowCardSubheader', () => {
             name: '',
             baseWeight: 100,
           }),
+          cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
           cowValue: 1000,
           isCowPurchased: false,
         }}

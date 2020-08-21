@@ -95,6 +95,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
  * @property {farmhand.cow} cowForSale
+ * @property {Array.<farmhand.cowBreedingPen>} cowBreedingPen
  * @property {Array.<farmhand.cow>} cowInventory
  * @property {Object.<farmhand.module:enums.cowColors, number>}
  * cowColorsPurchased Keys are color enums, values are the number of that color
@@ -154,6 +155,11 @@ export default class Farmhand extends Component {
     currentDialogView: dialogView.NONE,
     completedAchievements: {},
     cowForSale: {},
+    cowBreedingPen: {
+      cowId1: null,
+      cowId2: null,
+      daysUntilBirth: -1,
+    },
     cowInventory: [],
     cowColorsPurchased: {},
     cropsHarvested: {},
@@ -197,6 +203,7 @@ export default class Farmhand extends Component {
     return [
       'cowForSale',
       'completedAchievements',
+      'cowBreedingPen',
       'cowInventory',
       'cowColorsPurchased',
       'cropsHarvested',
@@ -343,6 +350,7 @@ export default class Farmhand extends Component {
       'adjustLoan',
       'computeStateForNextDay',
       'changeCowAutomaticHugState',
+      'changeCowBreedingPenResident',
       'changeCowName',
       'clearPlot',
       'fertilizeCrop',

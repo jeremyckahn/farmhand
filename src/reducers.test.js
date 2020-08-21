@@ -16,6 +16,7 @@ import {
 } from './templates'
 import {
   COW_FEED_ITEM_ID,
+  COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
   COW_MILK_RATE_SLOWEST,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
@@ -302,6 +303,7 @@ describe('computeStateForNextDay', () => {
       field: [firstRow],
       valueAdjustments,
     } = fn.computeStateForNextDay({
+      cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       dayCount: 1,
       field: [
         [
@@ -533,6 +535,7 @@ describe('processCowAttrition', () => {
     const fedCow = generateCow({ name: 'fed cow', weightMultiplier: 1 })
 
     const { cowInventory, newDayNotifications } = fn.processCowAttrition({
+      cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       cowInventory: [unfedCow, fedCow],
       inventory: [],
       newDayNotifications: [],
@@ -556,6 +559,7 @@ describe('processCowAttrition', () => {
     })
 
     const { cowInventory, inventory } = fn.processCowAttrition({
+      cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       cowInventory: [unfedCow, unfedCowWithHuggingMachine],
       inventory: [],
       inventoryLimit: -1,
@@ -852,6 +856,158 @@ describe('addItemToInventory', () => {
               quantity: 1,
             },
           ],
+        })
+      })
+    })
+  })
+})
+
+describe('processCowBreeding', () => {
+  const maleCow1 = generateCow({ gender: genders.MALE, happiness: 1 })
+  const maleCow2 = generateCow({ gender: genders.MALE, happiness: 1 })
+  const femaleCow = generateCow({ gender: genders.FEMALE, happiness: 1 })
+
+  describe('there are less than two cows in breeding pen', () => {
+    test('no-ops', () => {
+      const inputState = {
+        cowBreedingPen: {
+          cowId1: maleCow1.id,
+          cowId2: null,
+          daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+        },
+        cowInventory: [maleCow1],
+        newDayNotifications: [],
+        purchasedCowPen: 1,
+      }
+
+      const state = fn.processCowBreeding(inputState)
+
+      expect(state).toBe(inputState)
+    })
+  })
+
+  describe('there are two cows in breeding pen', () => {
+    describe('cows are same gender', () => {
+      test('no-ops', () => {
+        const inputState = {
+          cowBreedingPen: {
+            cowId1: maleCow1.id,
+            cowId2: maleCow2.id,
+            daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+          },
+          cowInventory: [maleCow1, maleCow2],
+          newDayNotifications: [],
+          purchasedCowPen: 1,
+        }
+
+        const state = fn.processCowBreeding(inputState)
+
+        expect(state).toBe(inputState)
+      })
+    })
+
+    describe('cows are opposite gender', () => {
+      describe('at least one cow does not meet happiness requirement', () => {
+        test('resets daysUntilBirth', () => {
+          const {
+            cowBreedingPen: { daysUntilBirth },
+          } = fn.processCowBreeding({
+            cowBreedingPen: {
+              cowId1: maleCow1.id,
+              cowId2: femaleCow.id,
+              daysUntilBirth: COW_GESTATION_PERIOD_DAYS - 1,
+            },
+            cowInventory: [
+              generateCow({ ...maleCow1, happiness: 0 }),
+              femaleCow,
+            ],
+            newDayNotifications: [],
+            purchasedCowPen: 1,
+          })
+
+          expect(daysUntilBirth).toEqual(COW_GESTATION_PERIOD_DAYS)
+        })
+      })
+
+      describe('both cows meet happiness requirement', () => {
+        describe('daysUntilBirth > 1', () => {
+          test('decrements daysUntilBirth', () => {
+            const {
+              cowBreedingPen: { daysUntilBirth },
+            } = fn.processCowBreeding({
+              cowBreedingPen: {
+                cowId1: maleCow1.id,
+                cowId2: femaleCow.id,
+                daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+              },
+              cowInventory: [maleCow1, femaleCow],
+              newDayNotifications: [],
+              purchasedCowPen: 1,
+            })
+
+            expect(daysUntilBirth).toEqual(COW_GESTATION_PERIOD_DAYS - 1)
+          })
+        })
+
+        describe('daysUntilBirth === 1', () => {
+          describe('there is space in cowInventory', () => {
+            test('adds offspring cow to cowInventory', () => {
+              const { cowInventory } = fn.processCowBreeding({
+                cowBreedingPen: {
+                  cowId1: maleCow1.id,
+                  cowId2: femaleCow.id,
+                  daysUntilBirth: 1,
+                },
+                cowInventory: [maleCow1, femaleCow],
+                newDayNotifications: [],
+                purchasedCowPen: 1,
+              })
+
+              expect(cowInventory).toHaveLength(3)
+            })
+          })
+
+          describe('there is no space in cowInventory', () => {
+            test('offspring cow is not added to cowInventory', () => {
+              const { cowInventory } = fn.processCowBreeding({
+                cowBreedingPen: {
+                  cowId1: maleCow1.id,
+                  cowId2: femaleCow.id,
+                  daysUntilBirth: 1,
+                },
+                cowInventory: [
+                  maleCow1,
+                  femaleCow,
+                  ...new Array(PURCHASEABLE_COW_PENS.get(1).cows - 2)
+                    .fill(null)
+                    .map(() => generateCow()),
+                ],
+                newDayNotifications: [],
+                purchasedCowPen: 1,
+              })
+
+              expect(cowInventory).toHaveLength(
+                PURCHASEABLE_COW_PENS.get(1).cows
+              )
+            })
+          })
+
+          test('resets daysUntilBirth', () => {
+            const {
+              cowBreedingPen: { daysUntilBirth },
+            } = fn.processCowBreeding({
+              cowBreedingPen: {
+                cowId1: maleCow1.id,
+                cowId2: femaleCow.id,
+                daysUntilBirth: 1,
+              },
+              cowInventory: [maleCow1, femaleCow],
+              newDayNotifications: [],
+              purchasedCowPen: 1,
+            })
+
+            expect(daysUntilBirth).toEqual(COW_GESTATION_PERIOD_DAYS)
+          })
         })
       })
     })
@@ -1391,6 +1547,7 @@ describe('sellCow', () => {
   test('sells cow', () => {
     const { cowInventory, money } = fn.sellCow(
       {
+        cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
         cowInventory: [cow],
         money: 0,
       },
@@ -1411,6 +1568,7 @@ describe('sellCow', () => {
       })
       const { inventory } = fn.sellCow(
         {
+          cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
           cowInventory: [cow],
           inventory: [],
           inventoryLimit: -1,
@@ -1486,6 +1644,168 @@ describe('changeCowAutomaticHugState', () => {
 
       expect(isUsingHuggingMachine).toEqual(false)
       expect(inventory).toEqual([{ id: huggingMachine.id, quantity: 1 }])
+    })
+  })
+})
+
+describe('changeCowBreedingPenResident', () => {
+  describe('doAdd === false', () => {
+    describe('cow is not in breeding pen', () => {
+      test('no-ops', () => {
+        const inputState = {
+          cowBreedingPen: {
+            cowId1: 'cow-a',
+            cowId2: 'cow-b',
+            daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+          },
+        }
+
+        const state = fn.changeCowBreedingPenResident(
+          inputState,
+          generateCow({ id: 'cow-c' }),
+          false
+        )
+
+        expect(state).toBe(inputState)
+      })
+    })
+
+    describe('cow is in position 1', () => {
+      test('cow is removed', () => {
+        const state = fn.changeCowBreedingPenResident(
+          {
+            cowBreedingPen: {
+              cowId1: 'cow-a',
+              cowId2: 'cow-b',
+              daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+            },
+          },
+          generateCow({ id: 'cow-a' }),
+          false
+        )
+
+        expect(state).toEqual({
+          cowBreedingPen: {
+            cowId1: 'cow-b',
+            cowId2: null,
+            daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+          },
+        })
+      })
+    })
+
+    describe('cow is in position 2', () => {
+      test('cow is removed', () => {
+        const state = fn.changeCowBreedingPenResident(
+          {
+            cowBreedingPen: {
+              cowId1: 'cow-a',
+              cowId2: 'cow-b',
+              daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+            },
+          },
+          generateCow({ id: 'cow-b' }),
+          false
+        )
+
+        expect(state).toEqual({
+          cowBreedingPen: {
+            cowId1: 'cow-a',
+            cowId2: null,
+            daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+          },
+        })
+      })
+    })
+  })
+
+  describe('doAdd === true', () => {
+    describe('cow is in breeding pen', () => {
+      test('no-ops', () => {
+        const inputState = {
+          cowBreedingPen: {
+            cowId1: 'cow-a',
+            cowId2: 'cow-b',
+            daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+          },
+        }
+
+        const state = fn.changeCowBreedingPenResident(
+          inputState,
+          generateCow({ id: 'cow-a' }),
+          true
+        )
+
+        expect(state).toBe(inputState)
+      })
+    })
+
+    describe('breeding pen is full', () => {
+      test('no-ops', () => {
+        const inputState = {
+          cowBreedingPen: {
+            cowId1: 'cow-a',
+            cowId2: 'cow-b',
+            daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+          },
+        }
+
+        const state = fn.changeCowBreedingPenResident(
+          inputState,
+          generateCow({ id: 'cow-c' }),
+          true
+        )
+
+        expect(state).toBe(inputState)
+      })
+    })
+
+    describe('there are no cows in breeding pen', () => {
+      test('cow is added to first slot', () => {
+        const state = fn.changeCowBreedingPenResident(
+          {
+            cowBreedingPen: {
+              cowId1: null,
+              cowId2: null,
+              daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+            },
+          },
+          generateCow({ id: 'cow-a' }),
+          true
+        )
+
+        expect(state).toEqual({
+          cowBreedingPen: {
+            cowId1: 'cow-a',
+            cowId2: null,
+            daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+          },
+        })
+      })
+    })
+
+    describe('there is one cow in breeding pen', () => {
+      test('cow is added to second slot', () => {
+        const state = fn.changeCowBreedingPenResident(
+          {
+            cowBreedingPen: {
+              cowId1: 'cow-a',
+              cowId2: null,
+              daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+            },
+          },
+          generateCow({ id: 'cow-b' }),
+          true
+        )
+
+        expect(state).toEqual({
+          cowBreedingPen: {
+            cowId1: 'cow-a',
+            cowId2: 'cow-b',
+            daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+          },
+        })
+      })
     })
   })
 })

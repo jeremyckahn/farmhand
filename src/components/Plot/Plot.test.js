@@ -5,6 +5,7 @@ import { getPlotContentFromItemId } from '../../utils'
 import { testCrop } from '../../test-utils'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage } from '../../enums'
+import { FERTILIZER_BONUS } from '../../constants'
 
 import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot'
 
@@ -143,11 +144,11 @@ describe('getDaysLeftToMature', () => {
     test('computes full lifecycle duration', () => {
       expect(
         getDaysLeftToMature({
-          itemId: 'sample-crop-1',
+          itemId: 'sample-crop-3',
           daysWatered: 0,
           isFertilized: false,
         })
-      ).toEqual(3)
+      ).toEqual(10)
     })
   })
 
@@ -156,11 +157,11 @@ describe('getDaysLeftToMature', () => {
       test('computes projected lifecycle duration', () => {
         expect(
           getDaysLeftToMature({
-            itemId: 'sample-crop-1',
+            itemId: 'sample-crop-3',
             daysWatered: 0,
             isFertilized: true,
           })
-        ).toEqual(2)
+        ).toEqual(7)
       })
     })
 
@@ -168,12 +169,30 @@ describe('getDaysLeftToMature', () => {
       test('projection is corrected up to 1 day', () => {
         expect(
           getDaysLeftToMature({
-            itemId: 'sample-crop-1',
-            daysWatered: 2.9,
+            itemId: 'sample-crop-3',
+            daysWatered: 9.9,
             isFertilized: true,
           })
         ).toEqual(1)
       })
+    })
+
+    test('handles day rounding correctly', () => {
+      expect(
+        getDaysLeftToMature({
+          itemId: 'sample-crop-3',
+          daysWatered: 5.6,
+          isFertilized: true,
+        })
+      ).toEqual(3)
+
+      expect(
+        getDaysLeftToMature({
+          itemId: 'sample-crop-3',
+          daysWatered: 5.6 + 1 + FERTILIZER_BONUS,
+          isFertilized: true,
+        })
+      ).toEqual(2)
     })
   })
 })
