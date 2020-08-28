@@ -41,6 +41,9 @@
     width: $sidebar-width
     z-index: 20
 
+    @media (max-width: #{$break-small-phone})
+      width: $narrow-sidebar-width
+
     .button-array
       display: flex
       flex-wrap: wrap
@@ -59,7 +62,7 @@
     width: 0
     z-index: 20
 
-    @media (max-width: #{$break-narrow-phone})
+    @media (max-width: #{$break-medium-phone})
       bottom: 0.5em
 
     .MuiMobileStepper-root
@@ -73,7 +76,7 @@
         margin: 0.5em
         position: relative
 
-        @media (max-width: #{$break-narrow-phone})
+        @media (max-width: #{$break-medium-phone})
           margin: 0.25em
 
         @media (max-width: 320px)
