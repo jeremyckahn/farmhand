@@ -13,6 +13,9 @@
     margin-left: -$sidebar-width
     transition: margin-left $duration-leaving-screen $easing-sharp
 
+    @media (max-width: #{$break-small-phone})
+      margin-left: -$narrow-sidebar-width
+
   h2
     font-size: 1.2em
 
@@ -21,7 +24,7 @@
     margin-bottom: 0.6em
     text-align: center
 
-    @media (min-width: #{$break-narrow-phone})
+    @media (min-width: #{$break-medium-phone})
       display: none
 
   section

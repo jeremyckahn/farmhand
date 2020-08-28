@@ -5,13 +5,22 @@
   flex-shrink: 0
   display: flex
 
+  .sidebar &
+    .button-array
+      margin-left: 3em
+      margin-right: 3em
+
+      @media (max-width: #{$break-small-phone})
+        margin-left: 2em
+        margin-right: 2em
+
   h1
     font-size: 3em
     font-weight: bold
 
   button
     font-size: 1.3em
-    margin: 0.2em 0.4em
+    margin: 0.3em
     min-width: 56px
 
 
