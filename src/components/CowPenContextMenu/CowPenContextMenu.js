@@ -71,6 +71,15 @@ export const CowCardSubheader = ({
     cowBreedingPen.cowId2 !== null,
 }) => (
   <>
+    {/* TODO: Memoize this. */}
+    {/* TODO: Remove the `|| {}` after 1/11/2020. */}
+    <ul {...{ className: 'bloodline' }}>
+      {Object.keys(cow.colorsInBloodline || {})
+        .sort()
+        .map(color => (
+          <li {...{ key: color, className: color.toLowerCase() }} />
+        ))}
+    </ul>
     {isCowPurchased && (
       <p>
         {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
