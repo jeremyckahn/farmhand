@@ -28,6 +28,7 @@ import {
   isItemAFarmProduct,
   isItemSoldInShop,
   moneyTotal,
+  nullArray,
 } from './utils'
 import {
   COW_FEED_ITEM_ID,
@@ -1326,13 +1327,11 @@ export const purchaseField = (state, fieldId) => {
 
   return {
     purchasedField: fieldId,
-    field: new Array(rows)
-      .fill(null)
-      .map((_, row) =>
-        new Array(columns)
-          .fill(null)
-          .map((_, column) => (field[row] && field[row][column]) || null)
-      ),
+    field: nullArray(rows).map((_, row) =>
+      nullArray(columns).map(
+        (_, column) => (field[row] && field[row][column]) || null
+      )
+    ),
     money: moneyTotal(money, -price),
   }
 }

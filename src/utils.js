@@ -58,6 +58,16 @@ const createUniqueId = () => btoa(Math.random() + Date.now())
 class MemoizeCache {
   cache = {}
 
+  /**
+   * @param {Object} [config] Can also contain the config options used to
+   * configure fast-memoize.
+   * @param {number} [config.cacheSize]
+   * @see https://github.com/caiogondim/fast-memoize.js
+   */
+  constructor({ cacheSize = MEMOIZE_CACHE_CLEAR_THRESHOLD } = {}) {
+    this.cacheSize = cacheSize
+  }
+
   has(key) {
     return key in this.cache
   }
@@ -67,7 +77,7 @@ class MemoizeCache {
   }
 
   set(key, value) {
-    if (Object.keys(this.cache).length > MEMOIZE_CACHE_CLEAR_THRESHOLD) {
+    if (Object.keys(this.cache).length > this.cacheSize) {
       this.cache = {}
     }
 
@@ -76,7 +86,10 @@ class MemoizeCache {
 }
 
 export const memoize = (fn, config) =>
-  fastMemoize(fn, { cache: { create: () => new MemoizeCache() }, ...config })
+  fastMemoize(fn, {
+    cache: { create: () => new MemoizeCache(config) },
+    ...config,
+  })
 
 /**
  * @param {number} num
@@ -605,13 +618,15 @@ export const areHuggingMachinesInInventory = memoize(inventory =>
   inventory.some(({ id }) => id === HUGGING_MACHINE_ITEM_ID)
 )
 
-// TODO: Use this function everywhere the null array pattern is used.
 /**
  * @param {number} arraySize
  * @returns {Array.<null>}
  */
-export const nullArray = memoize(arraySize =>
-  Object.freeze(new Array(arraySize).fill(null))
+export const nullArray = memoize(
+  arraySize => Object.freeze(new Array(arraySize).fill(null)),
+  {
+    cacheSize: 30,
+  }
 )
 
 /**
