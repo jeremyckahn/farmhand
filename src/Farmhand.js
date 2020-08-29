@@ -30,6 +30,7 @@ import {
   doesMenuObstructStage,
   getItemValue,
   memoize,
+  nullArray,
 } from './utils'
 import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
@@ -320,7 +321,7 @@ export default class Farmhand extends Component {
       toggleMenu: () => this.handlers.handleMenuToggle(),
     }
 
-    new Array(9).fill(null).forEach((_, i) => {
+    nullArray(9).forEach((_, i) => {
       const index = i + 1
       const key = `numberKey${index}`
       this.keyMap[key] = String(index)

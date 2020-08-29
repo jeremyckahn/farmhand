@@ -14,7 +14,7 @@ import Plot from '../Plot'
 import QuickSelect from '../QuickSelect'
 import { FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD } from '../../constants'
 import { fieldMode } from '../../enums'
-import { doesInventorySpaceRemain, memoize } from '../../utils'
+import { doesInventorySpaceRemain, nullArray } from '../../utils'
 
 import './Field.sass'
 
@@ -168,8 +168,6 @@ FieldContentWrapper.propTypes = {
   fieldContent: element.isRequired,
 }
 
-const mapArray = memoize(size => Array(size).fill(null))
-
 export const FieldContent = ({
   columns,
   field,
@@ -179,9 +177,9 @@ export const FieldContent = ({
   setHoveredPlot,
 }) => (
   <>
-    {mapArray(rows).map((_null, y) => (
+    {nullArray(rows).map((_null, y) => (
       <div className="row" key={y}>
-        {mapArray(columns).map((_null, x, arr, plotContent = field[y][x]) => (
+        {nullArray(columns).map((_null, x, arr, plotContent = field[y][x]) => (
           <MemoPlot
             key={x}
             {...{

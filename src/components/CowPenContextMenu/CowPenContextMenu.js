@@ -46,8 +46,6 @@ const genderIcons = {
   [genders.MALE]: faMars,
 }
 
-const nullHeartList = new Array(10).fill(null)
-
 // The extra 0.5 is for rounding up to the next full heart. This allows a fully
 // happy cow to have full hearts on the beginning of a new day.
 const isHeartFull = (heartIndex, numberOfFullHearts) =>
@@ -95,7 +93,7 @@ export const CowCardSubheader = ({
     {isCowPurchased && (
       <>
         <ol className="hearts">
-          {nullHeartList.map((_null, i) => (
+          {nullArray(10).map((_null, i) => (
             <li key={`${cow.id}_${i}`}>
               <FontAwesomeIcon
                 {...{
