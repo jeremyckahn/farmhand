@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -56,6 +56,17 @@ const isHeartFull = (heartIndex, numberOfFullHearts) =>
 const isCowInBreedingPen = (cow, cowBreedingPen) =>
   cowBreedingPen.cowId1 === cow.id || cowBreedingPen.cowId2 === cow.id
 
+const CowBloodline = memo(({ colorsInBloodline }) => (
+  <ul {...{ className: 'bloodline' }}>
+    {/* TODO: Remove the `|| {}` after 1/11/2020. */}
+    {Object.keys(colorsInBloodline || {})
+      .sort()
+      .map(color => (
+        <li {...{ key: color, className: color.toLowerCase() }} />
+      ))}
+  </ul>
+))
+
 export const CowCardSubheader = ({
   cow,
   cowBreedingPen,
@@ -71,15 +82,7 @@ export const CowCardSubheader = ({
     cowBreedingPen.cowId2 !== null,
 }) => (
   <>
-    {/* TODO: Memoize this. */}
-    {/* TODO: Remove the `|| {}` after 1/11/2020. */}
-    <ul {...{ className: 'bloodline' }}>
-      {Object.keys(cow.colorsInBloodline || {})
-        .sort()
-        .map(color => (
-          <li {...{ key: color, className: color.toLowerCase() }} />
-        ))}
-    </ul>
+    <CowBloodline {...{ colorsInBloodline: cow.colorsInBloodline }} />
     {isCowPurchased && (
       <p>
         {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
