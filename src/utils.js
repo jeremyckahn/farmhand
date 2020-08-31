@@ -7,7 +7,13 @@ import fruitNames from './data/fruit-names'
 import { cropIdToTypeMap, itemsMap } from './data/maps'
 import { milk1, milk2, milk3 } from './data/items'
 import { items as itemImages } from './img'
-import { cropLifeStage, genders, itemType, standardCowColors } from './enums'
+import {
+  cowColors,
+  cropLifeStage,
+  genders,
+  itemType,
+  standardCowColors,
+} from './enums'
 import {
   BREAKPOINTS,
   COW_MAXIMUM_AGE_VALUE_DROPOFF,
@@ -402,18 +408,24 @@ export const generateOffspringCow = (cow1, cow2) => {
 
   const maleCow = cow1.gender === genders.MALE ? cow1 : cow2
   const femaleCow = cow1.gender === genders.MALE ? cow2 : cow1
+  const colorsInBloodline = {
+    // These lines are for backwards compatibility and can be removed on 11/1/2020
+    [maleCow.color]: true,
+    [femaleCow.color]: true,
+    // End backwards compatibility lines to remove
+    ...maleCow.colorsInBloodline,
+    ...femaleCow.colorsInBloodline,
+  }
+
+  const isRainbowCow =
+    Object.keys(colorsInBloodline).length ===
+    Object.keys(standardCowColors).length
 
   return generateCow({
-    color: maleCow.color,
-    colorsInBloodline: {
-      // These lines are for backwards compatibility and can be removed on 11/1/2020
-      [maleCow.color]: true,
-      [femaleCow.color]: true,
-      // End backwards compatibility lines to remove
-      ...maleCow.colorsInBloodline,
-      ...femaleCow.colorsInBloodline,
-    },
+    color: isRainbowCow ? cowColors.RAINBOW : maleCow.color,
+    colorsInBloodline,
     baseWeight: (maleCow.baseWeight + femaleCow.baseWeight) / 2,
+    ...(isRainbowCow && { gender: genders.FEMALE }),
   })
 }
 

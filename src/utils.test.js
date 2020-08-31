@@ -27,7 +27,7 @@ import {
 import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
 import { items as itemImages } from './img'
-import { standardCowColors, cropLifeStage, genders } from './enums'
+import { cowColors, cropLifeStage, genders, standardCowColors } from './enums'
 import {
   sampleCropItem1,
   sampleCropSeedsItem1,
@@ -294,6 +294,49 @@ describe('generateOffspringCow', () => {
 
   test('two cows of the same gender throw an error', () => {
     expect(() => generateOffspringCow(femaleCow, femaleCow)).toThrow()
+  })
+
+  describe('rainbow cows', () => {
+    test('cows with all of the colors in their bloodline are rainbow cows', () => {
+      jest.spyOn(Math, 'random').mockReturnValue(1)
+
+      maleCow = generateCow({
+        baseWeight: 2200,
+        color: standardCowColors.ORANGE,
+        colorsInBloodline: {
+          [standardCowColors.BLUE]: true,
+          [standardCowColors.BROWN]: true,
+          [standardCowColors.GREEN]: true,
+          [standardCowColors.ORANGE]: true,
+          [standardCowColors.PURPLE]: true,
+          [standardCowColors.WHITE]: true,
+        },
+        gender: genders.MALE,
+      })
+
+      femaleCow = generateCow({
+        baseWeight: 2000,
+        color: standardCowColors.GREEN,
+        colorsInBloodline: {
+          [standardCowColors.YELLOW]: true,
+        },
+        gender: genders.FEMALE,
+      })
+
+      expect(generateOffspringCow(maleCow, femaleCow)).toMatchObject({
+        color: cowColors.RAINBOW,
+        colorsInBloodline: {
+          [standardCowColors.BLUE]: true,
+          [standardCowColors.BROWN]: true,
+          [standardCowColors.GREEN]: true,
+          [standardCowColors.ORANGE]: true,
+          [standardCowColors.PURPLE]: true,
+          [standardCowColors.WHITE]: true,
+          [standardCowColors.YELLOW]: true,
+        },
+        baseWeight: 2100,
+      })
+    })
   })
 })
 
