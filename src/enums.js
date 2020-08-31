@@ -81,9 +81,13 @@ export const cowColors = enumify([
   'GREEN',
   'ORANGE',
   'PURPLE',
+  'RAINBOW',
   'WHITE',
   'YELLOW',
 ])
+
+const { RAINBOW, ...standardCowColors } = cowColors
+export { standardCowColors }
 
 /**
  * @property farmhand.module:enums.dialogView

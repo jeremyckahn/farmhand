@@ -7,7 +7,7 @@ import fruitNames from './data/fruit-names'
 import { cropIdToTypeMap, itemsMap } from './data/maps'
 import { milk1, milk2, milk3 } from './data/items'
 import { items as itemImages } from './img'
-import { cowColors, cropLifeStage, genders, itemType } from './enums'
+import { cropLifeStage, genders, itemType, standardCowColors } from './enums'
 import {
   BREAKPOINTS,
   COW_MAXIMUM_AGE_VALUE_DROPOFF,
@@ -366,7 +366,7 @@ export const generateCow = (options = {}) => {
       Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
   )
 
-  const color = options.color || chooseRandom(Object.values(cowColors))
+  const color = options.color || chooseRandom(Object.values(standardCowColors))
 
   return {
     baseWeight,

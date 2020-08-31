@@ -36,7 +36,7 @@ import {
 import { huggingMachine, sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
-import { cowColors, fieldMode, genders } from './enums'
+import { fieldMode, genders, standardCowColors } from './enums'
 import {
   generateCow,
   getCowMilkItem,
@@ -1452,7 +1452,7 @@ describe('purchaseCow', () => {
   const cow = Object.freeze(
     generateCow({
       baseWeight: 1000,
-      color: cowColors.WHITE,
+      color: standardCowColors.WHITE,
       gender: genders.FEMALE,
       name: 'cow',
     })
