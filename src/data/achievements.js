@@ -6,7 +6,7 @@ import {
   memoize,
   moneyTotal,
 } from '../utils'
-import { cowColors, cropLifeStage } from '../enums'
+import { cropLifeStage, standardCowColors } from '../enums'
 import { COW_FEED_ITEM_ID } from '../constants'
 import { addItemToInventory } from '../reducers'
 
@@ -104,7 +104,7 @@ const achievements = [
     description: 'Show that you love all cows and purchase one of every color.',
     rewardDescription: `${reward} units of ${cowFeed.name}`,
     condition: state =>
-      Object.values(cowColors).every(
+      Object.values(standardCowColors).every(
         color => state.cowColorsPurchased[color] > 0
       ),
     reward: state => addItemToInventory(state, cowFeed, reward),
