@@ -59,6 +59,7 @@ describe('Cow', () => {
             ...generateCow(),
             color: cowColors.WHITE,
           },
+          cowInventory: [],
           handleCowClick: () => {},
           isSelected: false,
         }}
