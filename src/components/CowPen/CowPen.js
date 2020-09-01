@@ -29,9 +29,11 @@ export class Cow extends Component {
   // This MUST be kept in sync with $hug-animation-duration in CowPen.sass.
   static hugAnimationDuration = 750
 
-  static waitVariance = 12 * 1000
-
   static randomPosition = () => 10 + Math.random() * 80
+
+  get waitVariance() {
+    return 2000 * this.props.cowInventory.length
+  }
 
   componentDidUpdate(prevProps) {
     if (
@@ -95,7 +97,7 @@ export class Cow extends Component {
 
     this.repositionTimeoutId = setTimeout(
       this.repositionTimeoutHandler,
-      Math.random() * Cow.waitVariance
+      Math.random() * this.waitVariance
     )
   }
 
@@ -177,6 +179,7 @@ export class Cow extends Component {
 
 Cow.propTypes = {
   cow: object.isRequired,
+  cowInventory: array.isRequired,
   handleCowClick: func.isRequired,
   isSelected: bool.isRequired,
 }
@@ -187,6 +190,7 @@ export const CowPen = ({ cowInventory, handleCowClick, selectedCowId }) => (
       <Cow
         {...{
           cow,
+          cowInventory,
           key: cow.id,
           handleCowClick,
           isSelected: selectedCowId === cow.id,
