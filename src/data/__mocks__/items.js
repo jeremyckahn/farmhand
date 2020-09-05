@@ -186,3 +186,10 @@ export const replantableItem = testItem({
   isReplantable: true,
   type: 'MOCK_TYPE',
 })
+
+export const chocolateMilk = testItem({
+  id: 'chocolate-milk',
+  name: 'Chocolate Milk',
+  type: itemType.MILK,
+  value: 10,
+})

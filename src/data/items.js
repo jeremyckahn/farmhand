@@ -307,3 +307,14 @@ export const rainbowMilk3 = freeze({
   type: MILK,
   value: 180,
 })
+
+/**
+ * @property farmhand.module:items.chocolateMilk
+ * @type {farmhand.item}
+ */
+export const chocolateMilk = freeze({
+  id: 'chocolate-milk',
+  name: 'Chocolate Milk',
+  type: MILK,
+  value: 80,
+})
