@@ -311,14 +311,8 @@ export default {
         }
       }
     } else if (dir === 'Right') {
-      if (!this.state.isMenuOpen) {
-        if (startX < window.screen.width * 0.15) {
-          this.handlers.handleMenuToggle(true)
-        } else {
-          if (!this.state.blockSwipeNavigation) {
-            this.focusPreviousView()
-          }
-        }
+      if (!this.state.isMenuOpen && !this.state.blockSwipeNavigation) {
+        this.focusPreviousView()
       }
     }
   },
