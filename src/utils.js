@@ -5,7 +5,14 @@ import sortBy from 'lodash.sortby'
 import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
 import { cropIdToTypeMap, itemsMap } from './data/maps'
-import { milk1, milk2, milk3 } from './data/items'
+import {
+  milk1,
+  milk2,
+  milk3,
+  rainbowMilk1,
+  rainbowMilk2,
+  rainbowMilk3,
+} from './data/items'
 import { items as itemImages } from './img'
 import {
   cowColors,
@@ -433,14 +440,16 @@ export const generateOffspringCow = (cow1, cow2) => {
  * @param {farmhand.cow} cow
  * @returns {farmhand.item}
  */
-export const getCowMilkItem = ({ happiness }) => {
+export const getCowMilkItem = ({ color, happiness }) => {
+  const isRainbowCow = color === cowColors.RAINBOW
+
   if (happiness < 1 / 3) {
-    return milk1
+    return isRainbowCow ? rainbowMilk1 : milk1
   } else if (happiness < 2 / 3) {
-    return milk2
+    return isRainbowCow ? rainbowMilk2 : milk2
   }
 
-  return milk3
+  return isRainbowCow ? rainbowMilk3 : milk3
 }
 
 /**
