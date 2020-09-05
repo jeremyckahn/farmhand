@@ -6,6 +6,7 @@ import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
 import { cropIdToTypeMap, itemsMap } from './data/maps'
 import {
+  chocolateMilk,
   milk1,
   milk2,
   milk3,
@@ -441,6 +442,10 @@ export const generateOffspringCow = (cow1, cow2) => {
  * @returns {farmhand.item}
  */
 export const getCowMilkItem = ({ color, happiness }) => {
+  if (color === cowColors.BROWN) {
+    return chocolateMilk
+  }
+
   const isRainbowCow = color === cowColors.RAINBOW
 
   if (happiness < 1 / 3) {
