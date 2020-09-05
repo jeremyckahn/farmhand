@@ -274,3 +274,36 @@ export const milk3 = freeze({
   type: MILK,
   value: 120,
 })
+
+/**
+ * @property farmhand.module:items.rainbowMilk1
+ * @type {farmhand.item}
+ */
+export const rainbowMilk1 = freeze({
+  id: 'rainbow-milk-1',
+  name: 'Grade C Rainbow Milk',
+  type: MILK,
+  value: 60,
+})
+
+/**
+ * @property farmhand.module:items.rainbowMilk2
+ * @type {farmhand.item}
+ */
+export const rainbowMilk2 = freeze({
+  id: 'rainbow-milk-2',
+  name: 'Grade B Rainbow Milk',
+  type: MILK,
+  value: 120,
+})
+
+/**
+ * @property farmhand.module:items.rainbowMilk3
+ * @type {farmhand.item}
+ */
+export const rainbowMilk3 = freeze({
+  id: 'rainbow-milk-3',
+  name: 'Grade A Rainbow Milk',
+  type: MILK,
+  value: 180,
+})

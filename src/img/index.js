@@ -40,6 +40,9 @@ export const items = {
   'milk-1': require('./items/milk-1.png'),
   'milk-2': require('./items/milk-2.png'),
   'milk-3': require('./items/milk-3.png'),
+  'rainbow-milk-1': require('./items/rainbow-milk-1.png'),
+  'rainbow-milk-2': require('./items/rainbow-milk-2.png'),
+  'rainbow-milk-3': require('./items/rainbow-milk-3.png'),
 
   'inventory-box': require('./items/inventory-box.png'),
 

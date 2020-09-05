@@ -146,6 +146,27 @@ export const milk3 = testItem({
   value: 15,
 })
 
+export const rainbowMilk1 = {
+  id: 'rainbow-milk-1',
+  name: 'Grade C Rainbow Milk',
+  type: itemType.MILK,
+  value: 60,
+}
+
+export const rainbowMilk2 = {
+  id: 'rainbow-milk-2',
+  name: 'Grade B Rainbow Milk',
+  type: itemType.MILK,
+  value: 120,
+}
+
+export const rainbowMilk3 = {
+  id: 'rainbow-milk-3',
+  name: 'Grade A Rainbow Milk',
+  type: itemType.MILK,
+  value: 180,
+}
+
 export const cowFeed = testItem({
   id: 'cow-feed',
   name: 'Cow Feed',
