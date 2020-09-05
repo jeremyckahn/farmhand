@@ -9,9 +9,23 @@
   position: relative
   transition: margin-left $duration-entering-screen $easing-ease-out
 
+  .menu-button
+    left: 100%
+    position: fixed
+    top: 50%
+    transform: translateX(-50%)
+    transition: left $duration-leaving-screen $easing-sharp
+    z-index: 20
+
+    @media (min-width: #{$break-sm})
+      display: none
+
   &.menu-closed
     margin-left: -$sidebar-width
     transition: margin-left $duration-leaving-screen $easing-sharp
+
+    .menu-button
+      left: 0%
 
     @media (max-width: #{$break-small-phone})
       margin-left: -$narrow-sidebar-width
@@ -30,5 +44,5 @@
   section
     padding: .5em 0
 
-    @media screen and (max-width: #{$break-sm})
+    @media (max-width: #{$break-sm})
       font-size: 1em
