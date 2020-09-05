@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import { Swipeable } from 'react-swipeable'
 import classNames from 'classnames'
 import { array, arrayOf, bool, func, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
@@ -16,6 +17,7 @@ import './Stage.sass'
 
 export const Stage = ({
   field,
+  handleMenuButtonSwipe,
   handleMenuToggle,
   isMenuOpen,
   playerInventory,
@@ -61,24 +63,32 @@ export const Stage = ({
       {stageFocus === stageFocusType.COW_PEN && <CowPen />}
       {stageFocus === stageFocusType.KITCHEN && <Kitchen />}
       <div {...{ className: 'spacer' }} />
-      <Fab
+      <Swipeable
         {...{
-          className: classNames('menu-button', {
-            'is-open': isMenuOpen,
-          }),
-          color: 'primary',
-          'aria-label': 'Open drawer',
-          onClick: () => handleMenuToggle(),
+          delta: 75,
+          onSwiped: handleMenuButtonSwipe,
         }}
       >
-        <MenuIcon />
-      </Fab>
+        <Fab
+          {...{
+            className: classNames('menu-button', {
+              'is-open': isMenuOpen,
+            }),
+            color: 'primary',
+            'aria-label': 'Open drawer',
+            onClick: () => handleMenuToggle(),
+          }}
+        >
+          <MenuIcon />
+        </Fab>
+      </Swipeable>
     </div>
   )
 }
 
 Stage.propTypes = {
   field: arrayOf(array).isRequired,
+  handleMenuButtonSwipe: func.isRequired,
   handleMenuToggle: func.isRequired,
   isMenuOpen: bool.isRequired,
   playerInventory: array.isRequired,
