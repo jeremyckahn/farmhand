@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { tween } from 'shifty'
 import { func, number, string } from 'prop-types'
 import classNames from 'classnames'
 
@@ -11,6 +12,41 @@ import Typography from '@material-ui/core/Typography'
 import FarmhandContext from '../../Farmhand.context'
 import { moneyString } from '../../utils'
 import './AppBar.sass'
+
+const MoneyDisplay = ({ money }) => {
+  const [displayedMoney, setDisplayedMoney] = useState(money)
+  const [previousMoney, setPreviousMoney] = useState(money)
+  const [currentTweenable, setCurrentTweenable] = useState()
+
+  useEffect(() => {
+    setPreviousMoney(money)
+  }, [money, setPreviousMoney])
+
+  useEffect(() => {
+    if (money !== previousMoney) {
+      if (currentTweenable) {
+        currentTweenable.cancel()
+      }
+
+      const { tweenable } = tween({
+        duration: 750,
+        render: ({ money }) => setDisplayedMoney(money),
+        from: { money: previousMoney },
+        to: { money },
+      })
+
+      setCurrentTweenable(tweenable)
+    }
+
+    return () => {
+      if (currentTweenable) {
+        currentTweenable.cancel()
+      }
+    }
+  }, [currentTweenable, money, previousMoney])
+
+  return moneyString(displayedMoney)
+}
 
 export const AppBar = ({ handleMenuToggle, money, isMenuOpen, viewTitle }) => (
   <MuiAppBar
@@ -46,7 +82,7 @@ export const AppBar = ({ handleMenuToggle, money, isMenuOpen, viewTitle }) => (
           variant: 'h2',
         }}
       >
-        {moneyString(money)}
+        <MoneyDisplay {...{ money }} />
       </Typography>
     </Toolbar>
   </MuiAppBar>
