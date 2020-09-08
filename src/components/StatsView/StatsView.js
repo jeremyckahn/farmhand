@@ -8,28 +8,46 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 
 import FarmhandContext from '../../Farmhand.context'
-import { farmProductsSold, integerString, moneyString } from '../../utils'
+import {
+  farmProductsSold,
+  integerString,
+  levelAchieved,
+  moneyString,
+} from '../../utils'
 
 import './StatsView.sass'
 
-const StatsView = ({ itemsSold, revenue }) => (
+const StatsView = ({
+  itemsSold,
+  revenue,
+
+  totalFarmProductsSold = farmProductsSold(itemsSold),
+}) => (
   <div className="StatsView">
     <TableContainer {...{ component: Paper }}>
       <Table aria-label="Financial Stats">
         <TableBody>
           <TableRow>
             <TableCell {...{ component: 'th', scope: 'row' }}>
-              Revenue
+              Farmer Level
             </TableCell>
-            <TableCell align="right">{moneyString(revenue)}</TableCell>
+            <TableCell align="right">
+              {integerString(levelAchieved(totalFarmProductsSold))}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell {...{ component: 'th', scope: 'row' }}>
               Farm Products Sold
             </TableCell>
             <TableCell align="right">
-              {integerString(farmProductsSold(itemsSold))}
+              {integerString(totalFarmProductsSold)}
             </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
+              Revenue
+            </TableCell>
+            <TableCell align="right">{moneyString(revenue)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

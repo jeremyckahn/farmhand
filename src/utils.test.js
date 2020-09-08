@@ -2,6 +2,7 @@ import {
   canMakeRecipe,
   castToMoney,
   dollarString,
+  farmProductSalesVolumeNeededForLevel,
   farmProductsSold,
   generateCow,
   generateOffspringCow,
@@ -22,6 +23,7 @@ import {
   getRangeCoords,
   integerString,
   isItemAFarmProduct,
+  levelAchieved,
   moneyString,
   moneyTotal,
 } from './utils'
@@ -587,4 +589,19 @@ describe('farmProductsSold', () => {
       [sampleCropSeedsItem1.id]: 2,
     })
   ).toEqual(3)
+})
+
+describe('levelAchieved', () => {
+  expect(levelAchieved(0)).toEqual(1)
+  expect(levelAchieved(100)).toEqual(2)
+  expect(levelAchieved(150)).toEqual(2)
+  expect(levelAchieved(400)).toEqual(3)
+  expect(levelAchieved(980100)).toEqual(100)
+})
+
+describe('farmProductSalesVolumeNeededForLevel', () => {
+  expect(farmProductSalesVolumeNeededForLevel(1)).toEqual(0)
+  expect(farmProductSalesVolumeNeededForLevel(2)).toEqual(100)
+  expect(farmProductSalesVolumeNeededForLevel(3)).toEqual(400)
+  expect(farmProductSalesVolumeNeededForLevel(100)).toEqual(980100)
 })

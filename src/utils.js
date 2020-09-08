@@ -675,3 +675,17 @@ export const farmProductsSold = memoize(itemsSold =>
     0
   )
 )
+
+/**
+ * @param {number} farmProductsSold
+ * @returns {number}
+ */
+export const levelAchieved = farmProductsSold =>
+  Math.floor(Math.sqrt(farmProductsSold) / 10) + 1
+
+/**
+ * @param {number} targetLevel
+ * @returns {number}
+ */
+export const farmProductSalesVolumeNeededForLevel = targetLevel =>
+  ((targetLevel - 1) * 10) ** 2
