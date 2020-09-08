@@ -6,7 +6,7 @@ import StatsView from './StatsView'
 let component
 
 beforeEach(() => {
-  component = shallow(<StatsView {...{ revenue: 0 }} />)
+  component = shallow(<StatsView {...{ itemsSold: {}, revenue: 0 }} />)
 })
 
 test('renders', () => {

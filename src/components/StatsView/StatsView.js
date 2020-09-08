@@ -1,5 +1,5 @@
 import React from 'react'
-import { number } from 'prop-types'
+import { object, number } from 'prop-types'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -8,11 +8,11 @@ import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 
 import FarmhandContext from '../../Farmhand.context'
-import { moneyString } from '../../utils'
+import { farmProductsSold, integerString, moneyString } from '../../utils'
 
 import './StatsView.sass'
 
-const StatsView = ({ revenue }) => (
+const StatsView = ({ itemsSold, revenue }) => (
   <div className="StatsView">
     <TableContainer {...{ component: Paper }}>
       <Table aria-label="Financial Stats">
@@ -23,6 +23,14 @@ const StatsView = ({ revenue }) => (
             </TableCell>
             <TableCell align="right">{moneyString(revenue)}</TableCell>
           </TableRow>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
+              Farm Products Sold
+            </TableCell>
+            <TableCell align="right">
+              {integerString(farmProductsSold(itemsSold))}
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
@@ -30,6 +38,7 @@ const StatsView = ({ revenue }) => (
 )
 
 StatsView.propTypes = {
+  itemsSold: object.isRequired,
   revenue: number.isRequired,
 }
 

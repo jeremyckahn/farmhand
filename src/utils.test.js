@@ -2,7 +2,7 @@ import {
   canMakeRecipe,
   castToMoney,
   dollarString,
-  integerString,
+  farmProductsSold,
   generateCow,
   generateOffspringCow,
   generateValueAdjustments,
@@ -20,6 +20,7 @@ import {
   getPriceEventForCrop,
   getRandomCropItem,
   getRangeCoords,
+  integerString,
   isItemAFarmProduct,
   moneyString,
   moneyTotal,
@@ -577,4 +578,13 @@ describe('getRandomCropItem', () => {
   test('returns a crop item', () => {
     expect(getRandomCropItem()).toEqual(sampleCropItem1)
   })
+})
+
+describe('farmProductsSold', () => {
+  expect(
+    farmProductsSold({
+      [sampleCropItem1.id]: 3,
+      [sampleCropSeedsItem1.id]: 2,
+    })
+  ).toEqual(3)
 })

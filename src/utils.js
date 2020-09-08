@@ -663,3 +663,15 @@ export const nullArray = memoize(
 export const findCowById = memoize((cowInventory, id) =>
   cowInventory.find(cow => id === cow.id)
 )
+
+/**
+ * @param {Object.<number>} itemsSold
+ * @returns {number}
+ */
+export const farmProductsSold = memoize(itemsSold =>
+  Object.entries(itemsSold).reduce(
+    (sum, [itemId, numberSold]) =>
+      sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold : 0),
+    0
+  )
+)
