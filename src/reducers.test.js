@@ -641,10 +641,12 @@ describe('processMilkingCows', () => {
         state.inventoryLimit = 1
         state.cowInventory = [
           generateCow({
+            color: standardCowColors.WHITE,
             daysSinceMilking: Math.ceil(COW_MILK_RATE_SLOWEST / 2),
             gender: genders.FEMALE,
           }),
           generateCow({
+            color: standardCowColors.WHITE,
             daysSinceMilking: Math.ceil(COW_MILK_RATE_SLOWEST / 2),
             gender: genders.FEMALE,
           }),

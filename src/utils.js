@@ -663,3 +663,29 @@ export const nullArray = memoize(
 export const findCowById = memoize((cowInventory, id) =>
   cowInventory.find(cow => id === cow.id)
 )
+
+/**
+ * @param {Object.<number>} itemsSold
+ * @returns {number}
+ */
+export const farmProductsSold = memoize(itemsSold =>
+  Object.entries(itemsSold).reduce(
+    (sum, [itemId, numberSold]) =>
+      sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold : 0),
+    0
+  )
+)
+
+/**
+ * @param {number} farmProductsSold
+ * @returns {number}
+ */
+export const levelAchieved = farmProductsSold =>
+  Math.floor(Math.sqrt(farmProductsSold) / 10) + 1
+
+/**
+ * @param {number} targetLevel
+ * @returns {number}
+ */
+export const farmProductSalesVolumeNeededForLevel = targetLevel =>
+  ((targetLevel - 1) * 10) ** 2
