@@ -42,18 +42,18 @@ import {
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
+  INITIAL_SPRINKLER_RANGE,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   NOTIFICATION_LOG_SIZE,
+  PRECIPITATION_CHANCE,
   PRICE_EVENT_CHANCE,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
-  PRECIPITATION_CHANCE,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
-  SPRINKLER_RANGE,
   STORAGE_EXPANSION_AMOUNT,
   STORAGE_EXPANSION_PRICE,
   STORM_CHANCE,
@@ -292,7 +292,7 @@ export const processSprinklers = state => {
       ;[]
         .concat(
           // Flatten this 2D array for less iteration below
-          ...getRangeCoords(SPRINKLER_RANGE, plotX, plotY)
+          ...getRangeCoords(INITIAL_SPRINKLER_RANGE, plotX, plotY)
         )
         .forEach(({ x, y }) => {
           const fieldRow = field[y]

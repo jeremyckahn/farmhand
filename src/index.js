@@ -130,6 +130,15 @@
  * @property {farmhand.achievementReward} reward
  */
 
+/**
+ * @typedef farmhand.level
+ * @readonly
+ * @type {Object}
+ * @property {number} id
+ * @property {boolean} [increasesSprinklerRange]
+ * @property {string} [unlocksShopItem] Must reference a farmhand.item id.
+ */
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 

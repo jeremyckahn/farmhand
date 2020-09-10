@@ -6,6 +6,7 @@ import { stageFocusType, fieldMode } from './enums'
 import { testItem } from './test-utils'
 
 jest.mock('./data/items')
+jest.mock('./data/levels', () => [])
 jest.mock('./data/recipes')
 jest.mock('./data/shop-inventory')
 
