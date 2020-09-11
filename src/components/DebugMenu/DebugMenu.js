@@ -15,9 +15,9 @@ import './DebugMenu.sass'
 export const DebugMenu = ({
   handleAddMoneyClick,
   handleClearPersistedDataClick,
+  handleExportDataClick,
+  handleImportDataClick,
   handleItemPurchaseClick,
-  handleLoadDataClick,
-  handleSaveDataClick,
 }) => (
   <ExpansionPanel className="DebugMenu" square={true}>
     <ExpansionPanelSummary>
@@ -38,19 +38,23 @@ export const DebugMenu = ({
       >
         Buy 10 carrots
       </Button>
-      <Button color="primary" onClick={handleSaveDataClick} variant="contained">
-        Save data
+      <Button
+        color="primary"
+        onClick={handleExportDataClick}
+        variant="contained"
+      >
+        Export data
       </Button>
       <FileReaderInput
         {...{
           as: 'text',
           onChange: (e, results) => {
-            handleLoadDataClick(results)
+            handleImportDataClick(results)
           },
         }}
       >
         <Button color="primary" variant="contained">
-          Load data
+          Import data
         </Button>
       </FileReaderInput>
       <Button
@@ -67,9 +71,9 @@ export const DebugMenu = ({
 DebugMenu.propTypes = {
   handleAddMoneyClick: func.isRequired,
   handleClearPersistedDataClick: func.isRequired,
+  handleExportDataClick: func.isRequired,
+  handleImportDataClick: func.isRequired,
   handleItemPurchaseClick: func.isRequired,
-  handleLoadDataClick: func.isRequired,
-  handleSaveDataClick: func.isRequired,
 }
 
 export default function Consumer() {
