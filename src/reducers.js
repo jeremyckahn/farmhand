@@ -6,6 +6,7 @@ import {
   castToMoney,
   clampNumber,
   doesInventorySpaceRemain,
+  farmProductsSold,
   findCowById,
   findInField,
   generateCow,
@@ -27,6 +28,7 @@ import {
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
+  levelAchieved,
   moneyTotal,
   nullArray,
 } from './utils'
@@ -68,6 +70,7 @@ import {
   COW_ATTRITION_MESSAGE,
   COW_BORN_MESSAGE,
   CROW_ATTACKED,
+  LEVEL_GAINED_NOTIFICATION,
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
@@ -838,6 +841,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
   const item = itemsMap[id]
   const { itemsSold, money, revenue, valueAdjustments } = state
+  const oldLevel = levelAchieved(farmProductsSold(itemsSold))
   let { loanBalance } = state
 
   const adjustedItemValue = isItemSoldInShop(item)
@@ -862,11 +866,20 @@ export const sellItem = (state, { id }, howMany = 1) => {
     state = adjustLoan(state, moneyTotal(loanBalance, -state.loanBalance))
   }
 
+  const newItemsSold = { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany }
+
   state = {
     ...state,
-    itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
+    itemsSold: newItemsSold,
     money: moneyTotal(money, saleValue),
     revenue: moneyTotal(revenue, saleValue),
+  }
+
+  const newLevel = levelAchieved(farmProductsSold(newItemsSold))
+
+  // Loop backwards so that the notifications appear in descending order.
+  for (let i = newLevel; i > oldLevel; i--) {
+    state = showNotification(state, LEVEL_GAINED_NOTIFICATION`${i}`, 'success')
   }
 
   state = decrementItemFromInventory(state, id, howMany)

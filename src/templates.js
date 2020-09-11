@@ -101,3 +101,10 @@ export const LOAN_INCREASED = (_, loanBalance) =>
  */
 export const LOAN_BALANCE_NOTIFICATION = (_, loanBalance) =>
   `Your loan balance has grown to ${moneyString(loanBalance)}.`
+
+/**
+ * @param {number} newLevel
+ * @returns {string}
+ */
+export const LEVEL_GAINED_NOTIFICATION = (_, newLevel) =>
+  `You reached level ${newLevel}! Way to go!`
