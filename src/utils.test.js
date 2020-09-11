@@ -53,6 +53,7 @@ import {
 
 jest.mock('./data/maps')
 jest.mock('./data/items')
+jest.mock('./data/levels', () => [])
 jest.mock('./data/shop-inventory')
 jest.mock('./img')
 
@@ -583,25 +584,50 @@ describe('getRandomCropItem', () => {
 })
 
 describe('farmProductsSold', () => {
-  expect(
-    farmProductsSold({
-      [sampleCropItem1.id]: 3,
-      [sampleCropSeedsItem1.id]: 2,
-    })
-  ).toEqual(3)
+  test('sums products sold', () => {
+    expect(
+      farmProductsSold({
+        [sampleCropItem1.id]: 3,
+        [sampleCropSeedsItem1.id]: 2,
+      })
+    ).toEqual(3)
+  })
 })
 
 describe('levelAchieved', () => {
-  expect(levelAchieved(0)).toEqual(1)
-  expect(levelAchieved(100)).toEqual(2)
-  expect(levelAchieved(150)).toEqual(2)
-  expect(levelAchieved(400)).toEqual(3)
-  expect(levelAchieved(980100)).toEqual(100)
+  test('calculates achieved level', () => {
+    expect(levelAchieved(0)).toEqual(1)
+    expect(levelAchieved(100)).toEqual(2)
+    expect(levelAchieved(150)).toEqual(2)
+    expect(levelAchieved(400)).toEqual(3)
+    expect(levelAchieved(980100)).toEqual(100)
+  })
 })
 
 describe('farmProductSalesVolumeNeededForLevel', () => {
-  expect(farmProductSalesVolumeNeededForLevel(1)).toEqual(0)
-  expect(farmProductSalesVolumeNeededForLevel(2)).toEqual(100)
-  expect(farmProductSalesVolumeNeededForLevel(3)).toEqual(400)
-  expect(farmProductSalesVolumeNeededForLevel(100)).toEqual(980100)
+  test('calculates farm sales volume that will meet level requirements', () => {
+    expect(farmProductSalesVolumeNeededForLevel(1)).toEqual(0)
+    expect(farmProductSalesVolumeNeededForLevel(2)).toEqual(100)
+    expect(farmProductSalesVolumeNeededForLevel(3)).toEqual(400)
+    expect(farmProductSalesVolumeNeededForLevel(100)).toEqual(980100)
+  })
+})
+
+describe('getLevelEntitlements', () => {
+  test('calculates level entitlements', () => {
+    jest.resetModules()
+    jest.mock('./data/levels', () => [
+      { id: 2, unlocksShopItem: 'sample-item-1' },
+      { id: 3, increasesSprinklerRange: true },
+      { id: 4, unlocksShopItem: 'sample-item-2' },
+      { id: 5, increasesSprinklerRange: true },
+      { id: 6, unlocksShopItem: 'sample-item-3' },
+    ])
+
+    expect(jest.requireActual('./utils').getLevelEntitlements(4)).toEqual({
+      'sample-item-1': true,
+      'sample-item-2': true,
+      sprinklerRange: 2,
+    })
+  })
 })

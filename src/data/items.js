@@ -7,7 +7,7 @@ import {
   COW_FEED_ITEM_ID,
   FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
-  SPRINKLER_RANGE,
+  INITIAL_SPRINKLER_RANGE,
 } from '../constants'
 
 const { freeze } = Object
@@ -187,7 +187,7 @@ export const fertilizer = freeze({
 export const sprinkler = freeze({
   description: 'Automatically waters adjacent plants every day.',
   enablesFieldMode: fieldMode.SET_SPRINKLER,
-  hoveredPlotRangeSize: SPRINKLER_RANGE,
+  hoveredPlotRangeSize: INITIAL_SPRINKLER_RANGE,
   id: 'sprinkler',
   isReplantable: true,
   name: 'Sprinkler',

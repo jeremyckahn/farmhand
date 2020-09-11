@@ -8,6 +8,7 @@ import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field'
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
+jest.mock('../../data/levels', () => [])
 jest.mock('../../data/shop-inventory')
 jest.mock('../../img')
 

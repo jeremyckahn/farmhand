@@ -67,6 +67,7 @@
     "compass-mixins": "^0.12.10",
     "dinero.js": "^1.7.0",
     "fast-memoize": "^2.5.2",
+    "global": "^4.4.0",
     "localforage": "^1.7.3",
     "lodash.debounce": "^4.0.8",
     "lodash.sortby": "^4.7.0",

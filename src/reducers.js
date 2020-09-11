@@ -6,6 +6,7 @@ import {
   castToMoney,
   clampNumber,
   doesInventorySpaceRemain,
+  farmProductsSold,
   findCowById,
   findInField,
   generateCow,
@@ -27,6 +28,7 @@ import {
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
+  levelAchieved,
   moneyTotal,
   nullArray,
 } from './utils'
@@ -42,18 +44,18 @@ import {
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
+  INITIAL_SPRINKLER_RANGE,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   NOTIFICATION_LOG_SIZE,
+  PRECIPITATION_CHANCE,
   PRICE_EVENT_CHANCE,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
-  PRECIPITATION_CHANCE,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
-  SPRINKLER_RANGE,
   STORAGE_EXPANSION_AMOUNT,
   STORAGE_EXPANSION_PRICE,
   STORM_CHANCE,
@@ -68,6 +70,7 @@ import {
   COW_ATTRITION_MESSAGE,
   COW_BORN_MESSAGE,
   CROW_ATTACKED,
+  LEVEL_GAINED_NOTIFICATION,
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
@@ -292,7 +295,7 @@ export const processSprinklers = state => {
       ;[]
         .concat(
           // Flatten this 2D array for less iteration below
-          ...getRangeCoords(SPRINKLER_RANGE, plotX, plotY)
+          ...getRangeCoords(INITIAL_SPRINKLER_RANGE, plotX, plotY)
         )
         .forEach(({ x, y }) => {
           const fieldRow = field[y]
@@ -838,6 +841,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
   const item = itemsMap[id]
   const { itemsSold, money, revenue, valueAdjustments } = state
+  const oldLevel = levelAchieved(farmProductsSold(itemsSold))
   let { loanBalance } = state
 
   const adjustedItemValue = isItemSoldInShop(item)
@@ -862,11 +866,20 @@ export const sellItem = (state, { id }, howMany = 1) => {
     state = adjustLoan(state, moneyTotal(loanBalance, -state.loanBalance))
   }
 
+  const newItemsSold = { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany }
+
   state = {
     ...state,
-    itemsSold: { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany },
+    itemsSold: newItemsSold,
     money: moneyTotal(money, saleValue),
     revenue: moneyTotal(revenue, saleValue),
+  }
+
+  const newLevel = levelAchieved(farmProductsSold(newItemsSold))
+
+  // Loop backwards so that the notifications appear in descending order.
+  for (let i = newLevel; i > oldLevel; i--) {
+    state = showNotification(state, LEVEL_GAINED_NOTIFICATION`${i}`, 'success')
   }
 
   state = decrementItemFromInventory(state, id, howMany)

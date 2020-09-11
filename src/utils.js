@@ -14,6 +14,7 @@ import {
   rainbowMilk2,
   rainbowMilk3,
 } from './data/items'
+import levels from './data/levels'
 import { items as itemImages } from './img'
 import {
   cowColors,
@@ -36,6 +37,7 @@ import {
   HUGGING_MACHINE_ITEM_ID,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
+  INITIAL_SPRINKLER_RANGE,
   MALE_COW_WEIGHT_MULTIPLIER,
   MEMOIZE_CACHE_CLEAR_THRESHOLD,
   PRICE_EVENT_STANDARD_DURATION_DECREASE,
@@ -689,3 +691,29 @@ export const levelAchieved = farmProductsSold =>
  */
 export const farmProductSalesVolumeNeededForLevel = targetLevel =>
   ((targetLevel - 1) * 10) ** 2
+
+/**
+ * @param {number} levelNumber
+ * @returns {Object} Contains `sprinklerRange` and keys that correspond to
+ * unlocked items.
+ */
+export const getLevelEntitlements = memoize(levelNumber => {
+  const acc = {
+    sprinklerRange: INITIAL_SPRINKLER_RANGE,
+  }
+
+  // Assumes that levels is sorted by id.
+  levels.find(({ unlocksShopItem, id, increasesSprinklerRange }) => {
+    if (increasesSprinklerRange) {
+      acc.sprinklerRange++
+    }
+
+    if (unlocksShopItem) {
+      acc[unlocksShopItem] = true
+    }
+
+    return id === levelNumber
+  })
+
+  return acc
+})

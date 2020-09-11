@@ -8,6 +8,7 @@ import {
   ACHIEVEMENT_COMPLETED,
   COW_ATTRITION_MESSAGE,
   CROW_ATTACKED,
+  LEVEL_GAINED_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
   MILKS_PRODUCED,
@@ -38,6 +39,7 @@ import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
 import { fieldMode, genders, standardCowColors } from './enums'
 import {
+  farmProductSalesVolumeNeededForLevel,
   generateCow,
   getCowMilkItem,
   getCowValue,
@@ -51,6 +53,7 @@ jest.mock('localforage')
 jest.mock('./data/achievements')
 jest.mock('./data/maps')
 jest.mock('./data/items')
+jest.mock('./data/levels', () => [])
 jest.mock('./data/recipes')
 jest.mock('./data/shop-inventory')
 
@@ -1447,6 +1450,34 @@ describe('sellItem', () => {
           ])
         })
       })
+    })
+  })
+
+  describe('gaining levels', () => {
+    test('shows notifications for each level gained in the sale', () => {
+      const { notifications } = fn.sellItem(
+        {
+          inventory: [
+            testItem({
+              id: 'sample-item-1',
+              quantity: farmProductSalesVolumeNeededForLevel(3),
+            }),
+          ],
+          itemsSold: {},
+          loanBalance: 0,
+          money: 100,
+          notifications: [],
+          revenue: 0,
+          valueAdjustments: { 'sample-item-1': 1 },
+        },
+        testItem({ id: 'sample-crop-1' }),
+        farmProductSalesVolumeNeededForLevel(3)
+      )
+
+      expect(notifications).toEqual([
+        { message: LEVEL_GAINED_NOTIFICATION`${3}`, severity: 'success' },
+        { message: LEVEL_GAINED_NOTIFICATION`${2}`, severity: 'success' },
+      ])
     })
   })
 })
