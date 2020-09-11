@@ -341,7 +341,7 @@ export default {
     }))
   },
 
-  handleSaveDataClick() {
+  handleExportDataClick() {
     const blob = new Blob([JSON.stringify(this.state, null, 2)], {
       type: 'application/json;charset=utf-8',
     })
@@ -352,7 +352,7 @@ export default {
   /**
    *
    */
-  handleLoadDataClick([data]) {
+  handleImportDataClick([data]) {
     const [, file] = data
     const fileReader = new FileReader()
 
