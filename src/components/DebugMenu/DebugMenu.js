@@ -15,8 +15,8 @@ import './DebugMenu.sass'
 export const DebugMenu = ({
   handleAddMoneyClick,
   handleClearPersistedDataClick,
+  handleDownloadDataClick,
   handleItemPurchaseClick,
-  handleWaterAllPlotsClick,
 }) => (
   <ExpansionPanel className="DebugMenu" square={true}>
     <ExpansionPanelSummary>
@@ -33,17 +33,17 @@ export const DebugMenu = ({
         </Button>
         <Button
           color="primary"
-          onClick={handleWaterAllPlotsClick}
-          variant="contained"
-        >
-          Water all plots (w)
-        </Button>
-        <Button
-          color="primary"
           onClick={() => handleItemPurchaseClick(carrot, 10)}
           variant="contained"
         >
           Buy 10 carrots
+        </Button>
+        <Button
+          color="primary"
+          onClick={handleDownloadDataClick}
+          variant="contained"
+        >
+          Download data
         </Button>
         <Button
           color="primary"
@@ -60,7 +60,8 @@ export const DebugMenu = ({
 DebugMenu.propTypes = {
   handleAddMoneyClick: func.isRequired,
   handleClearPersistedDataClick: func.isRequired,
-  handleWaterAllPlotsClick: func.isRequired,
+  handleDownloadDataClick: func.isRequired,
+  handleItemPurchaseClick: func.isRequired,
 }
 
 export default function Consumer() {

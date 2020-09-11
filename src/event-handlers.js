@@ -1,3 +1,5 @@
+import { saveAs } from 'file-saver'
+
 import {
   clearPlot,
   fertilizeCrop,
@@ -337,5 +339,13 @@ export default {
       blockSwipeNavigation:
         newScale >= FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
     }))
+  },
+
+  handleDownloadDataClick() {
+    const blob = new Blob([JSON.stringify(this.state, null, 2)], {
+      type: 'application/json;charset=utf-8',
+    })
+
+    saveAs(blob, 'farmhand.json')
   },
 }
