@@ -141,10 +141,11 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import window from 'global/window'
 
 import './index.sass'
 import Farmhand from './Farmhand'
 import 'typeface-francois-one'
 import 'typeface-public-sans'
 
-ReactDOM.render(<Farmhand />, document.getElementById('root'))
+window.farmhand = ReactDOM.render(<Farmhand />, document.getElementById('root'))
