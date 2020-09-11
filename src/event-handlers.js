@@ -1,3 +1,5 @@
+import { saveAs } from 'file-saver'
+
 import {
   clearPlot,
   fertilizeCrop,
@@ -337,5 +339,36 @@ export default {
       blockSwipeNavigation:
         newScale >= FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
     }))
+  },
+
+  handleSaveDataClick() {
+    const blob = new Blob([JSON.stringify(this.state, null, 2)], {
+      type: 'application/json;charset=utf-8',
+    })
+
+    saveAs(blob, 'farmhand.json')
+  },
+
+  /**
+   *
+   */
+  handleLoadDataClick([data]) {
+    const [, file] = data
+    const fileReader = new FileReader()
+
+    fileReader.addEventListener('loadend', e => {
+      try {
+        const { result: json } = e.srcElement
+        const state = JSON.parse(json)
+
+        this.setState(state)
+        this.showNotification('Data loaded!', 'success')
+      } catch (e) {
+        console.error(e)
+        this.showNotification(e.message, 'error')
+      }
+    })
+
+    fileReader.readAsText(file.slice())
   },
 }
