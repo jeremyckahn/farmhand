@@ -28,7 +28,10 @@ import theme from './mui-theme'
 import {
   createNewField,
   doesMenuObstructStage,
+  farmProductsSold,
   getItemValue,
+  getLevelEntitlements,
+  levelAchieved,
   memoize,
   nullArray,
 } from './utils'
@@ -271,6 +274,12 @@ export default class Farmhand extends Component {
     viewList.push(KITCHEN)
 
     return viewList
+  }
+
+  get levelEntitlements() {
+    return getLevelEntitlements(
+      levelAchieved(farmProductsSold(this.state.itemsSold))
+    )
   }
 
   initInputHandlers() {
@@ -558,6 +567,7 @@ export default class Farmhand extends Component {
       handlers,
       keyHandlers,
       keyMap,
+      levelEntitlements,
       plantableCropInventory,
       playerInventory,
       playerInventoryQuantities,
@@ -570,6 +580,7 @@ export default class Farmhand extends Component {
     const gameState = {
       ...this.state,
       fieldToolInventory,
+      levelEntitlements,
       plantableCropInventory,
       playerInventory,
       playerInventoryQuantities,

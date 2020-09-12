@@ -618,6 +618,7 @@ describe('getLevelEntitlements', () => {
     jest.resetModules()
     jest.mock('./data/levels', () => ({
       levels: [
+        { id: 1 },
         { id: 2, unlocksShopItem: 'sample-item-1' },
         { id: 3, increasesSprinklerRange: true },
         { id: 4, unlocksShopItem: 'sample-item-2' },

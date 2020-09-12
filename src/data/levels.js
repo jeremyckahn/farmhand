@@ -1,13 +1,17 @@
 import * as items from './items'
 
 export const levels = [
+  {},
   {
-    unlocksShopItem: items.spinach.id,
+    unlocksShopItem: items.spinachSeed.id,
   },
   {
     increasesSprinklerRange: true,
   },
-].map((level, i) => ({ ...level, id: i + 2 }))
+  {
+    unlocksShopItem: items.cornSeed.id,
+  },
+].map((level, i) => ({ ...level, id: i + 1 }))
 
 export const unlockableItems = levels.reduce((acc, { id, unlocksShopItem }) => {
   if (unlocksShopItem) {
