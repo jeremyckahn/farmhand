@@ -53,7 +53,7 @@ import {
 
 jest.mock('./data/maps')
 jest.mock('./data/items')
-jest.mock('./data/levels', () => [])
+jest.mock('./data/levels', () => ({ levels: [] }))
 jest.mock('./data/shop-inventory')
 jest.mock('./img')
 
@@ -616,13 +616,15 @@ describe('farmProductSalesVolumeNeededForLevel', () => {
 describe('getLevelEntitlements', () => {
   test('calculates level entitlements', () => {
     jest.resetModules()
-    jest.mock('./data/levels', () => [
-      { id: 2, unlocksShopItem: 'sample-item-1' },
-      { id: 3, increasesSprinklerRange: true },
-      { id: 4, unlocksShopItem: 'sample-item-2' },
-      { id: 5, increasesSprinklerRange: true },
-      { id: 6, unlocksShopItem: 'sample-item-3' },
-    ])
+    jest.mock('./data/levels', () => ({
+      levels: [
+        { id: 2, unlocksShopItem: 'sample-item-1' },
+        { id: 3, increasesSprinklerRange: true },
+        { id: 4, unlocksShopItem: 'sample-item-2' },
+        { id: 5, increasesSprinklerRange: true },
+        { id: 6, unlocksShopItem: 'sample-item-3' },
+      ],
+    }))
 
     expect(jest.requireActual('./utils').getLevelEntitlements(4)).toEqual({
       'sample-item-1': true,

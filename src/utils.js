@@ -14,7 +14,7 @@ import {
   rainbowMilk2,
   rainbowMilk3,
 } from './data/items'
-import levels from './data/levels'
+import { levels } from './data/levels'
 import { items as itemImages } from './img'
 import {
   cowColors,
