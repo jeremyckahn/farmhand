@@ -29,13 +29,13 @@ import {
   createNewField,
   doesMenuObstructStage,
   farmProductsSold,
+  getAvailbleShopInventory,
   getItemValue,
   getLevelEntitlements,
   levelAchieved,
   memoize,
   nullArray,
 } from './utils'
-import shopInventory from './data/shop-inventory'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
 import {
@@ -136,7 +136,6 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} purchasedField
  * @property {number} revenue The amount of money the player has generated in
  * revenue.
- * @property {Array.<farmhand.item>} shopInventory
  * @property {boolean} doShowNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Object.<number>} valueAdjustments
@@ -190,7 +189,6 @@ export default class Farmhand extends Component {
     revenue: 0,
     purchasedCowPen: 0,
     purchasedField: 0,
-    shopInventory: [...shopInventory],
     doShowNotifications: false,
     stageFocus: stageFocusType.HOME,
     valueAdjustments: {},
@@ -280,6 +278,10 @@ export default class Farmhand extends Component {
     return getLevelEntitlements(
       levelAchieved(farmProductsSold(this.state.itemsSold))
     )
+  }
+
+  get shopInventory() {
+    return getAvailbleShopInventory(this.levelEntitlements)
   }
 
   initInputHandlers() {
@@ -571,6 +573,7 @@ export default class Farmhand extends Component {
       plantableCropInventory,
       playerInventory,
       playerInventoryQuantities,
+      shopInventory,
       viewList,
       viewTitle,
     } = this
@@ -584,6 +587,7 @@ export default class Farmhand extends Component {
       plantableCropInventory,
       playerInventory,
       playerInventoryQuantities,
+      shopInventory,
       viewList,
       viewTitle,
     }

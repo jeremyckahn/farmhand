@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react'
-import { array, object } from 'prop-types'
+import { array } from 'prop-types'
 import Divider from '@material-ui/core/Divider'
 
 import FarmhandContext from '../../Farmhand.context'
 import Item from '../Item'
 import { itemsMap } from '../../data/maps'
-import { unlockableItems } from '../../data/levels'
 import { enumify, itemType } from '../../enums'
 import { sortItems } from '../../utils'
 
@@ -58,18 +57,10 @@ const getItemCategories = () =>
     return acc
   }, {})
 
-export const separateItemsIntoCategories = (items, levelEntitlements) =>
+export const separateItemsIntoCategories = items =>
   sortItems(items).reduce((acc, item) => {
     const { type } = itemsMap[item.id]
     const category = itemTypeCategoryMap[type]
-
-    // FIXME: Test this.
-    if (
-      unlockableItems.hasOwnProperty(item.id) &&
-      !levelEntitlements.hasOwnProperty(item.id)
-    ) {
-      return acc
-    }
 
     if (category === CROPS) {
       acc[item.isPlantableCrop ? SEEDS : CROPS].push(item)
@@ -82,7 +73,6 @@ export const separateItemsIntoCategories = (items, levelEntitlements) =>
 
 export const Inventory = ({
   items,
-  levelEntitlements,
   playerInventory,
   shopInventory,
 
@@ -91,7 +81,7 @@ export const Inventory = ({
   isPurchaseView = items === shopInventory,
   isSellView = items === playerInventory,
 
-  itemCategories = separateItemsIntoCategories(items, levelEntitlements),
+  itemCategories = separateItemsIntoCategories(items),
 }) => (
   <div className="Inventory">
     {[
@@ -130,7 +120,6 @@ export const Inventory = ({
 
 Inventory.propTypes = {
   items: array.isRequired,
-  levelEntitlements: object.isRequired,
   playerInventory: array,
   shopInventory: array,
 }

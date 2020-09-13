@@ -15,6 +15,7 @@ import {
   rainbowMilk3,
 } from './data/items'
 import { levels } from './data/levels'
+import { unlockableItems } from './data/levels'
 import { items as itemImages } from './img'
 import {
   cowColors,
@@ -717,3 +718,17 @@ export const getLevelEntitlements = memoize(levelNumber => {
 
   return acc
 })
+
+/**
+ * @param {Object} levelEntitlements
+ * @returns {Array.<{ item: farmhand.item }>}
+ */
+export const getAvailbleShopInventory = memoize(levelEntitlements =>
+  shopInventory.filter(
+    ({ id }) =>
+      !(
+        unlockableItems.hasOwnProperty(id) &&
+        !levelEntitlements.hasOwnProperty(id)
+      )
+  )
+)

@@ -23,7 +23,6 @@ beforeEach(() => {
     <Inventory
       {...{
         items: [],
-        levelEntitlements: {},
       }}
     />
   )
