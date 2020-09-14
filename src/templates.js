@@ -1,5 +1,8 @@
 import { moneyString } from './utils'
 
+import { itemUnlockLevels } from './data/levels'
+import { itemsMap } from './data/maps'
+
 /**
  * @param {farmhand.crop} crop
  * @returns {string}
@@ -106,5 +109,18 @@ export const LOAN_BALANCE_NOTIFICATION = (_, loanBalance) =>
  * @param {number} newLevel
  * @returns {string}
  */
-export const LEVEL_GAINED_NOTIFICATION = (_, newLevel) =>
-  `You reached level ${newLevel}! Way to go!`
+export const LEVEL_GAINED_NOTIFICATION = (_, newLevel) => {
+  let chunks = [`You reached **level ${newLevel}!**`]
+
+  if (itemUnlockLevels[newLevel]) {
+    chunks.push(
+      `You can now buy **${
+        itemsMap[itemUnlockLevels[newLevel]].name
+      }** in the shop.`
+    )
+  }
+
+  chunks.push('Way to go!')
+
+  return chunks.join(' ')
+}

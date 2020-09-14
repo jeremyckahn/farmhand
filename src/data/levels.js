@@ -20,3 +20,11 @@ export const unlockableItems = levels.reduce((acc, { id, unlocksShopItem }) => {
 
   return acc
 }, {})
+
+export const itemUnlockLevels = Object.entries(unlockableItems).reduce(
+  (acc, [itemId, level]) => {
+    acc[level] = itemId
+    return acc
+  },
+  {}
+)
