@@ -1,6 +1,6 @@
 import { moneyString } from './utils'
 
-import { itemUnlockLevels } from './data/levels'
+import { itemUnlockLevels, levels } from './data/levels'
 import { itemsMap } from './data/maps'
 
 /**
@@ -118,6 +118,11 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel) => {
         itemsMap[itemUnlockLevels[newLevel]].name
       }** in the shop.`
     )
+  }
+
+  const levelObject = levels[newLevel - 1]
+  if (levelObject && levelObject.increasesSprinklerRange) {
+    chunks.push(`Sprinkler range has increased.`)
   }
 
   chunks.push('Way to go!')

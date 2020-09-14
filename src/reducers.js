@@ -1,4 +1,5 @@
 import { itemsMap, recipesMap } from './data/maps'
+import { levels } from './data/levels'
 import achievements from './data/achievements'
 import {
   areHuggingMachinesInInventory,
@@ -20,6 +21,7 @@ import {
   getCropFromItemId,
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
+  getLevelEntitlements,
   getPlotContentFromItemId,
   getPlotContentType,
   getPriceEventForCrop,
@@ -44,7 +46,6 @@ import {
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
-  INITIAL_SPRINKLER_RANGE,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
@@ -282,9 +283,13 @@ export const applyCrows = state => {
  * @returns {farmhand.state}
  */
 export const processSprinklers = state => {
-  const { field } = state
+  const { field, itemsSold } = state
   const crops = new Map()
   let modifiedField = [...field]
+
+  const { sprinklerRange } = getLevelEntitlements(
+    levelAchieved(farmProductsSold(itemsSold))
+  )
 
   field.forEach((row, plotY) => {
     row.forEach((plot, plotX) => {
@@ -295,7 +300,7 @@ export const processSprinklers = state => {
       ;[]
         .concat(
           // Flatten this 2D array for less iteration below
-          ...getRangeCoords(INITIAL_SPRINKLER_RANGE, plotX, plotY)
+          ...getRangeCoords(sprinklerRange, plotX, plotY)
         )
         .forEach(({ x, y }) => {
           const fieldRow = field[y]
@@ -840,7 +845,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
   }
 
   const item = itemsMap[id]
-  const { itemsSold, money, revenue, valueAdjustments } = state
+  const { itemsSold, money, revenue, selectedItemId, valueAdjustments } = state
   const oldLevel = levelAchieved(farmProductsSold(itemsSold))
   let { loanBalance } = state
 
@@ -880,6 +885,25 @@ export const sellItem = (state, { id }, howMany = 1) => {
   // Loop backwards so that the notifications appear in descending order.
   for (let i = newLevel; i > oldLevel; i--) {
     state = showNotification(state, LEVEL_GAINED_NOTIFICATION`${i}`, 'success')
+  }
+
+  const levelObject = levels[newLevel - 1]
+
+  // FIXME: Test this.
+  if (
+    levelObject &&
+    levelObject.increasesSprinklerRange &&
+    selectedItemId === SPRINKLER_ITEM_ID
+  ) {
+    // This handles an edge case where the player levels up to level that
+    // unlocks greater sprinkler range, but the sprinkler item is already
+    // selected. In that case, update the hoveredPlotRangeSize state.
+    state = {
+      ...state,
+      hoveredPlotRangeSize: getLevelEntitlements(
+        levelAchieved(farmProductsSold(newItemsSold))
+      ).sprinklerRange,
+    }
   }
 
   state = decrementItemFromInventory(state, id, howMany)

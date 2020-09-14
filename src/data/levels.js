@@ -11,6 +11,9 @@ export const levels = [
   {
     unlocksShopItem: items.cornSeed.id,
   },
+  {
+    increasesSprinklerRange: true,
+  },
 ].map((level, i) => ({ ...level, id: i + 1 }))
 
 export const unlockableItems = levels.reduce((acc, { id, unlocksShopItem }) => {
