@@ -183,6 +183,40 @@ export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
 
 /**
  * @param {farmhand.state} state
+ * @param {number} oldLevel
+ * @returns {farmhand.state}
+ */
+export const processLevelUp = (state, oldLevel) => {
+  const { itemsSold, selectedItemId } = state
+  const newLevel = levelAchieved(farmProductsSold(itemsSold))
+  const levelObject = levels[newLevel]
+
+  // Loop backwards so that the notifications appear in descending order.
+  for (let i = newLevel; i > oldLevel; i--) {
+    state = showNotification(state, LEVEL_GAINED_NOTIFICATION`${i}`, 'success')
+  }
+
+  if (
+    levelObject &&
+    levelObject.increasesSprinklerRange &&
+    selectedItemId === SPRINKLER_ITEM_ID
+  ) {
+    // This handles an edge case where the player levels up to level that
+    // unlocks greater sprinkler range, but the sprinkler item is already
+    // selected. In that case, update the hoveredPlotRangeSize state.
+    state = {
+      ...state,
+      hoveredPlotRangeSize: getLevelEntitlements(
+        levelAchieved(farmProductsSold(itemsSold))
+      ).sprinklerRange,
+    }
+  }
+
+  return state
+}
+
+/**
+ * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
 const adjustItemValues = state => ({
@@ -845,7 +879,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
   }
 
   const item = itemsMap[id]
-  const { itemsSold, money, revenue, selectedItemId, valueAdjustments } = state
+  const { itemsSold, money, revenue, valueAdjustments } = state
   const oldLevel = levelAchieved(farmProductsSold(itemsSold))
   let { loanBalance } = state
 
@@ -880,32 +914,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
     revenue: moneyTotal(revenue, saleValue),
   }
 
-  const newLevel = levelAchieved(farmProductsSold(newItemsSold))
-
-  // Loop backwards so that the notifications appear in descending order.
-  for (let i = newLevel; i > oldLevel; i--) {
-    state = showNotification(state, LEVEL_GAINED_NOTIFICATION`${i}`, 'success')
-  }
-
-  const levelObject = levels[newLevel]
-
-  // FIXME: Test this.
-  if (
-    levelObject &&
-    levelObject.increasesSprinklerRange &&
-    selectedItemId === SPRINKLER_ITEM_ID
-  ) {
-    // This handles an edge case where the player levels up to level that
-    // unlocks greater sprinkler range, but the sprinkler item is already
-    // selected. In that case, update the hoveredPlotRangeSize state.
-    state = {
-      ...state,
-      hoveredPlotRangeSize: getLevelEntitlements(
-        levelAchieved(farmProductsSold(newItemsSold))
-      ).sprinklerRange,
-    }
-  }
-
+  state = processLevelUp(state, oldLevel)
   state = decrementItemFromInventory(state, id, howMany)
 
   return updateLearnedRecipes(state)

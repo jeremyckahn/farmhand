@@ -1454,33 +1454,61 @@ describe('sellItem', () => {
       })
     })
   })
+})
 
-  describe('gaining levels', () => {
-    test('shows notifications for each level gained in the sale', () => {
-      const { notifications } = fn.sellItem(
+describe('processLevelUp', () => {
+  test('shows notifications for each level gained in the sale', () => {
+    const { notifications } = fn.processLevelUp(
+      {
+        itemsSold: { 'sample-crop-1': farmProductSalesVolumeNeededForLevel(3) },
+        notifications: [],
+      },
+      1
+    )
+
+    expect(notifications).toEqual([
+      { message: LEVEL_GAINED_NOTIFICATION`${3}`, severity: 'success' },
+      { message: LEVEL_GAINED_NOTIFICATION`${2}`, severity: 'success' },
+    ])
+  })
+
+  test('sprinkler is selected when it gets a level up boost', () => {
+    jest.resetModules()
+    jest.mock('./data/levels', () => ({
+      levels: [
         {
-          inventory: [
-            testItem({
-              id: 'sample-item-1',
-              quantity: farmProductSalesVolumeNeededForLevel(3),
-            }),
-          ],
-          itemsSold: {},
-          loanBalance: 0,
-          money: 100,
-          notifications: [],
-          revenue: 0,
-          valueAdjustments: { 'sample-item-1': 1 },
+          id: 0,
         },
-        testItem({ id: 'sample-crop-1' }),
-        farmProductSalesVolumeNeededForLevel(3)
+        {
+          id: 1,
+        },
+        {
+          id: 2,
+          increasesSprinklerRange: true,
+        },
+      ],
+      itemUnlockLevels: {},
+    }))
+    jest.mock('./constants', () => ({
+      INITIAL_SPRINKLER_RANGE: 1,
+      SPRINKLER_ITEM_ID: 'sprinkler',
+    }))
+
+    const { hoveredPlotRangeSize } = jest
+      .requireActual('./reducers')
+      .processLevelUp(
+        {
+          hoveredPlotRangeSize: 1,
+          itemsSold: {
+            'sample-crop-1': farmProductSalesVolumeNeededForLevel(2),
+          },
+          selectedItemId: 'sprinkler',
+          notifications: [],
+        },
+        1
       )
 
-      expect(notifications).toEqual([
-        { message: LEVEL_GAINED_NOTIFICATION`${3}`, severity: 'success' },
-        { message: LEVEL_GAINED_NOTIFICATION`${2}`, severity: 'success' },
-      ])
-    })
+    expect(hoveredPlotRangeSize).toEqual(2)
   })
 })
 
