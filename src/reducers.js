@@ -887,7 +887,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
     state = showNotification(state, LEVEL_GAINED_NOTIFICATION`${i}`, 'success')
   }
 
-  const levelObject = levels[newLevel - 1]
+  const levelObject = levels[newLevel]
 
   // FIXME: Test this.
   if (

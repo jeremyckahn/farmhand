@@ -120,7 +120,7 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel) => {
     )
   }
 
-  const levelObject = levels[newLevel - 1]
+  const levelObject = levels[newLevel]
   if (levelObject && levelObject.increasesSprinklerRange) {
     chunks.push(`Sprinkler range has increased.`)
   }
