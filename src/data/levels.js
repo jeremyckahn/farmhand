@@ -7,14 +7,26 @@ levels[2] = {
 }
 
 levels[4] = {
-  increasesSprinklerRange: true,
+  unlocksShopItem: items.fertilizer.id,
 }
 
 levels[6] = {
-  unlocksShopItem: items.cornSeed.id,
+  unlocksShopItem: items.pumpkinSeed.id,
 }
 
 levels[8] = {
+  unlocksShopItem: items.sprinkler.id,
+}
+
+levels[10] = {
+  increasesSprinklerRange: true,
+}
+
+levels[12] = {
+  unlocksShopItem: items.cornSeed.id,
+}
+
+levels[14] = {
   increasesSprinklerRange: true,
 }
 
