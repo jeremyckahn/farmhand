@@ -224,23 +224,37 @@ describe('generatePriceEvents', () => {
   })
 
   describe('price event does not already exist', () => {
-    let cropItem, state
+    let state
 
     beforeEach(() => {
       jest.spyOn(Math, 'random').mockReturnValue(0)
 
+      jest.resetModules()
+      jest.mock('./data/levels', () => ({
+        levels: [
+          {
+            id: 0,
+          },
+          {
+            id: 1,
+            unlocksShopItem: 'sample-crop-seeds-1',
+          },
+        ],
+        itemUnlockLevels: {},
+      }))
       const { generatePriceEvents } = jest.requireActual('./reducers')
-      const { getRandomCropItem } = jest.requireActual('./utils')
-      cropItem = getRandomCropItem()
       state = generatePriceEvents({
         newDayNotifications: [],
         priceCrashes: {},
         priceSurges: {},
+        itemsSold: { 'sample-crop-1': Infinity },
       })
     })
 
     test('generates a price event', () => {
-      const priceEvents = { [cropItem.id]: getPriceEventForCrop(cropItem) }
+      const priceEvents = {
+        [sampleCropItem1.id]: getPriceEventForCrop(sampleCropItem1),
+      }
 
       expect(state).toContainAnyEntries([
         ['priceCrashes', priceEvents],
@@ -251,11 +265,11 @@ describe('generatePriceEvents', () => {
     test('shows notification', () => {
       expect(state.newDayNotifications).toIncludeAnyMembers([
         {
-          message: PRICE_CRASH`${cropItem}`,
+          message: PRICE_CRASH`${sampleCropItem1}`,
           severity: 'warning',
         },
         {
-          message: PRICE_SURGE`${cropItem}`,
+          message: PRICE_SURGE`${sampleCropItem1}`,
           severity: 'success',
         },
       ])

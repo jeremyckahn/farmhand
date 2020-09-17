@@ -8,6 +8,7 @@ import {
   clampNumber,
   doesInventorySpaceRemain,
   farmProductsSold,
+  filterItemIdsToSeeds,
   findCowById,
   findInField,
   generateCow,
@@ -25,7 +26,7 @@ import {
   getPlotContentFromItemId,
   getPlotContentType,
   getPriceEventForCrop,
-  getRandomCropItem,
+  getRandomUnlockedCrop,
   getRangeCoords,
   inventorySpaceRemaining,
   isItemAFarmProduct,
@@ -722,7 +723,13 @@ export const generatePriceEvents = state => {
   let priceEvent
 
   if (Math.random() < PRICE_EVENT_CHANCE) {
-    const cropItem = getRandomCropItem()
+    const { items: unlockedItems } = getLevelEntitlements(
+      levelAchieved(farmProductsSold(state.itemsSold))
+    )
+
+    const cropItem = getRandomUnlockedCrop(
+      filterItemIdsToSeeds(Object.keys(unlockedItems))
+    )
     const { id } = cropItem
 
     // Only create a priceEvent if one does not already exist

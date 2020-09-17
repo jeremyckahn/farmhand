@@ -517,25 +517,18 @@ export const canMakeRecipe = memoize(({ ingredients }, inventory) => {
 })
 
 /**
- * @type {Array.<farmhand.item>}
+ * @param {Array.<string>} itemIds
+ * @returns {Array.<string>}
  */
-const finalStageCropItemList = Object.keys(itemsMap).reduce((acc, itemId) => {
-  const item = itemsMap[itemId]
-
-  if (isItemAGrownCrop(item)) {
-    acc.push(item)
-  }
-
-  return acc
-}, [])
+export const filterItemIdsToSeeds = itemsIds =>
+  itemsIds.filter(id => itemsMap[id].type === itemType.CROP)
 
 /**
- * @returns {farmhand.item} A final stage, non-seed item.
+ * @param {Array.<string>} unlockedSeedItemIds
+ * @returns {farmhand.item}
  */
-export const getRandomCropItem = () =>
-  finalStageCropItemList[
-    Math.floor(Math.random() * finalStageCropItemList.length)
-  ]
+export const getRandomUnlockedCrop = unlockedSeedItemIds =>
+  itemsMap[getFinalCropItemIdFromSeedItemId(chooseRandom(unlockedSeedItemIds))]
 
 /**
  * @param {farmhand.item} cropItem

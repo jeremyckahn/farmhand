@@ -19,7 +19,6 @@ import {
   getPlotContentFromItemId,
   getPlotImage,
   getPriceEventForCrop,
-  getRandomCropItem,
   getRangeCoords,
   integerString,
   isItemAFarmProduct,
@@ -570,16 +569,6 @@ describe('getPriceEventForCrop', () => {
       itemId: sampleCropItem1.id,
       daysRemaining: 2,
     })
-  })
-})
-
-describe('getRandomCropItem', () => {
-  beforeEach(() => {
-    jest.spyOn(Math, 'random').mockReturnValue(0)
-  })
-
-  test('returns a crop item', () => {
-    expect(getRandomCropItem()).toEqual(sampleCropItem1)
   })
 })
 
