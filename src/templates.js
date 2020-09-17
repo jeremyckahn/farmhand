@@ -110,13 +110,17 @@ export const LOAN_BALANCE_NOTIFICATION = (_, loanBalance) =>
  * @returns {string}
  */
 export const LEVEL_GAINED_NOTIFICATION = (_, newLevel) => {
-  let chunks = [`You reached **level ${newLevel}!**`]
+  let chunks = [
+    `You reached **level ${newLevel}!** Way to go!
+
+`,
+  ]
 
   if (itemUnlockLevels[newLevel]) {
     chunks.push(
-      `You can now buy **${
+      `Now available in the shop: **${
         itemsMap[itemUnlockLevels[newLevel]].name
-      }** in the shop.`
+      }**.`
     )
   }
 
@@ -124,8 +128,6 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel) => {
   if (levelObject && levelObject.increasesSprinklerRange) {
     chunks.push(`Sprinkler range has increased.`)
   }
-
-  chunks.push('Way to go!')
 
   return chunks.join(' ')
 }
