@@ -629,8 +629,10 @@ describe('getLevelEntitlements', () => {
     }))
 
     expect(jest.requireActual('./utils').getLevelEntitlements(4)).toEqual({
-      'sample-item-1': true,
-      'sample-item-2': true,
+      items: {
+        'sample-item-1': true,
+        'sample-item-2': true,
+      },
       sprinklerRange: 2,
     })
   })
@@ -654,8 +656,8 @@ describe('getAvailbleShopInventory', () => {
 
     const { getAvailbleShopInventory } = jest.requireActual('./utils')
 
-    expect(getAvailbleShopInventory({ 'sample-item-1': true })).toEqual([
-      { id: 'sample-item-1' },
-    ])
+    expect(
+      getAvailbleShopInventory({ items: { 'sample-item-1': true } })
+    ).toEqual([{ id: 'sample-item-1' }])
   })
 })

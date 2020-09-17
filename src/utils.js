@@ -701,6 +701,7 @@ export const farmProductSalesVolumeNeededForLevel = targetLevel =>
 export const getLevelEntitlements = memoize(levelNumber => {
   const acc = {
     sprinklerRange: INITIAL_SPRINKLER_RANGE,
+    items: {},
   }
 
   // Assumes that levels is sorted by id.
@@ -710,7 +711,7 @@ export const getLevelEntitlements = memoize(levelNumber => {
     }
 
     if (unlocksShopItem) {
-      acc[unlocksShopItem] = true
+      acc.items[unlocksShopItem] = true
     }
 
     return id === levelNumber
@@ -728,7 +729,7 @@ export const getAvailbleShopInventory = memoize(levelEntitlements =>
     ({ id }) =>
       !(
         unlockableItems.hasOwnProperty(id) &&
-        !levelEntitlements.hasOwnProperty(id)
+        !levelEntitlements.items.hasOwnProperty(id)
       )
   )
 )

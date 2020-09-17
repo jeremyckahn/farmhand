@@ -2,6 +2,10 @@ import * as items from './items'
 
 export const levels = []
 
+levels[1] = {
+  unlocksShopItem: items.carrotSeed.id,
+}
+
 levels[2] = {
   unlocksShopItem: items.spinachSeed.id,
 }
