@@ -207,11 +207,10 @@ export const processLevelUp = (state, oldLevel) => {
         getRandomLevelUpRewardQuantity(i)
       )
     }
-
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already
     // selected. In that case, update the hoveredPlotRangeSize state.
-    if (
+    else if (
       levelObject &&
       levelObject.increasesSprinklerRange &&
       selectedItemId === SPRINKLER_ITEM_ID
