@@ -190,27 +190,32 @@ export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
 export const processLevelUp = (state, oldLevel) => {
   const { itemsSold, selectedItemId } = state
   const newLevel = levelAchieved(farmProductsSold(itemsSold))
-  const levelObject = levels[newLevel]
 
   // Loop backwards so that the notifications appear in descending order.
   for (let i = newLevel; i > oldLevel; i--) {
-    state = showNotification(state, LEVEL_GAINED_NOTIFICATION`${i}`, 'success')
-  }
+    const levelObject = levels[i]
 
-  if (
-    levelObject &&
-    levelObject.increasesSprinklerRange &&
-    selectedItemId === SPRINKLER_ITEM_ID
-  ) {
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already
     // selected. In that case, update the hoveredPlotRangeSize state.
-    state = {
-      ...state,
-      hoveredPlotRangeSize: getLevelEntitlements(
+    if (
+      levelObject &&
+      levelObject.increasesSprinklerRange &&
+      selectedItemId === SPRINKLER_ITEM_ID
+    ) {
+      const { sprinklerRange } = getLevelEntitlements(
         levelAchieved(farmProductsSold(itemsSold))
-      ).sprinklerRange,
+      )
+
+      if (sprinklerRange > state.hoveredPlotRangeSize) {
+        state = {
+          ...state,
+          hoveredPlotRangeSize: sprinklerRange,
+        }
+      }
     }
+
+    state = showNotification(state, LEVEL_GAINED_NOTIFICATION`${i}`, 'success')
   }
 
   return state
