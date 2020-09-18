@@ -19,7 +19,6 @@ import {
   getPlotContentFromItemId,
   getPlotImage,
   getPriceEventForCrop,
-  getRandomCropItem,
   getRangeCoords,
   integerString,
   isItemAFarmProduct,
@@ -53,7 +52,7 @@ import {
 
 jest.mock('./data/maps')
 jest.mock('./data/items')
-jest.mock('./data/levels', () => [])
+jest.mock('./data/levels', () => ({ levels: [] }))
 jest.mock('./data/shop-inventory')
 jest.mock('./img')
 
@@ -573,16 +572,6 @@ describe('getPriceEventForCrop', () => {
   })
 })
 
-describe('getRandomCropItem', () => {
-  beforeEach(() => {
-    jest.spyOn(Math, 'random').mockReturnValue(0)
-  })
-
-  test('returns a crop item', () => {
-    expect(getRandomCropItem()).toEqual(sampleCropItem1)
-  })
-})
-
 describe('farmProductsSold', () => {
   test('sums products sold', () => {
     expect(
@@ -616,18 +605,77 @@ describe('farmProductSalesVolumeNeededForLevel', () => {
 describe('getLevelEntitlements', () => {
   test('calculates level entitlements', () => {
     jest.resetModules()
-    jest.mock('./data/levels', () => [
-      { id: 2, unlocksShopItem: 'sample-item-1' },
-      { id: 3, increasesSprinklerRange: true },
-      { id: 4, unlocksShopItem: 'sample-item-2' },
-      { id: 5, increasesSprinklerRange: true },
-      { id: 6, unlocksShopItem: 'sample-item-3' },
-    ])
+    jest.mock('./data/levels', () => ({
+      levels: [
+        { id: 0 },
+        { id: 1 },
+        { id: 2, unlocksShopItem: 'sample-item-1' },
+        { id: 3, increasesSprinklerRange: true },
+        { id: 4, unlocksShopItem: 'sample-item-2' },
+        { id: 5, increasesSprinklerRange: true },
+        { id: 6, unlocksShopItem: 'sample-item-3' },
+      ],
+    }))
 
     expect(jest.requireActual('./utils').getLevelEntitlements(4)).toEqual({
-      'sample-item-1': true,
-      'sample-item-2': true,
+      items: {
+        'sample-item-1': true,
+        'sample-item-2': true,
+      },
       sprinklerRange: 2,
+    })
+  })
+})
+
+describe('getAvailbleShopInventory', () => {
+  test('computes shop inventory that has been unlocked', () => {
+    jest.resetModules()
+    jest.mock('./data/shop-inventory', () => [
+      { id: 'sample-item-1' },
+      { id: 'sample-item-2' },
+    ])
+
+    jest.mock('./data/levels', () => ({
+      levels: [],
+      unlockableItems: {
+        'sample-item-1': true,
+        'sample-item-2': true,
+      },
+    }))
+
+    const { getAvailbleShopInventory } = jest.requireActual('./utils')
+
+    expect(
+      getAvailbleShopInventory({ items: { 'sample-item-1': true } })
+    ).toEqual([{ id: 'sample-item-1' }])
+  })
+})
+
+describe('getRandomLevelUpReward', () => {
+  test('returns a crop item', () => {
+    jest.resetModules()
+    jest.mock('./data/levels', () => ({
+      levels: [{ id: 0, unlocksShopItem: 'sample-crop-item-1' }],
+      unlockableItems: {
+        'sample-crop-item-1': true,
+        'sample-crop-item-2': true,
+      },
+    }))
+    jest.mock('./data/maps', () => ({
+      itemsMap: {
+        'sample-crop-item-1': {
+          id: 'sample-crop-item-1',
+          name: 'crop 1',
+          type: 'CROP',
+        },
+      },
+    }))
+    jest.spyOn(Math, 'random').mockReturnValue(0)
+
+    expect(jest.requireActual('./utils').getRandomLevelUpReward(2)).toEqual({
+      id: 'sample-crop-item-1',
+      name: 'crop 1',
+      type: 'CROP',
     })
   })
 })

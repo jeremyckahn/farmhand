@@ -187,6 +187,8 @@ export const fertilizer = freeze({
 export const sprinkler = freeze({
   description: 'Automatically waters adjacent plants every day.',
   enablesFieldMode: fieldMode.SET_SPRINKLER,
+  // Note: The actual hoveredPlotRangeSize of sprinklers grows with the
+  // player's level.
   hoveredPlotRangeSize: INITIAL_SPRINKLER_RANGE,
   id: 'sprinkler',
   isReplantable: true,

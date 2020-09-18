@@ -11,7 +11,7 @@ import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot'
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
-jest.mock('../../data/levels', () => [])
+jest.mock('../../data/levels', () => ({ levels: [] }))
 jest.mock('../../data/shop-inventory')
 jest.mock('../../img')
 

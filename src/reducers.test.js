@@ -53,7 +53,7 @@ jest.mock('localforage')
 jest.mock('./data/achievements')
 jest.mock('./data/maps')
 jest.mock('./data/items')
-jest.mock('./data/levels', () => [])
+jest.mock('./data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
 jest.mock('./data/recipes')
 jest.mock('./data/shop-inventory')
 
@@ -224,23 +224,37 @@ describe('generatePriceEvents', () => {
   })
 
   describe('price event does not already exist', () => {
-    let cropItem, state
+    let state
 
     beforeEach(() => {
       jest.spyOn(Math, 'random').mockReturnValue(0)
 
+      jest.resetModules()
+      jest.mock('./data/levels', () => ({
+        levels: [
+          {
+            id: 0,
+          },
+          {
+            id: 1,
+            unlocksShopItem: 'sample-crop-seeds-1',
+          },
+        ],
+        itemUnlockLevels: {},
+      }))
       const { generatePriceEvents } = jest.requireActual('./reducers')
-      const { getRandomCropItem } = jest.requireActual('./utils')
-      cropItem = getRandomCropItem()
       state = generatePriceEvents({
         newDayNotifications: [],
         priceCrashes: {},
         priceSurges: {},
+        itemsSold: { 'sample-crop-1': Infinity },
       })
     })
 
     test('generates a price event', () => {
-      const priceEvents = { [cropItem.id]: getPriceEventForCrop(cropItem) }
+      const priceEvents = {
+        [sampleCropItem1.id]: getPriceEventForCrop(sampleCropItem1),
+      }
 
       expect(state).toContainAnyEntries([
         ['priceCrashes', priceEvents],
@@ -251,11 +265,11 @@ describe('generatePriceEvents', () => {
     test('shows notification', () => {
       expect(state.newDayNotifications).toIncludeAnyMembers([
         {
-          message: PRICE_CRASH`${cropItem}`,
+          message: PRICE_CRASH`${sampleCropItem1}`,
           severity: 'warning',
         },
         {
-          message: PRICE_SURGE`${cropItem}`,
+          message: PRICE_SURGE`${sampleCropItem1}`,
           severity: 'success',
         },
       ])
@@ -318,6 +332,7 @@ describe('computeStateForNextDay', () => {
       ],
       cowInventory: [],
       inventory: [],
+      itemsSold: {},
       loanBalance: 0,
       newDayNotifications: [],
       notificationLog: [],
@@ -420,6 +435,7 @@ describe('processSprinklers', () => {
 
     computedState = fn.processSprinklers({
       field,
+      itemsSold: {},
     })
   })
 
@@ -1452,33 +1468,78 @@ describe('sellItem', () => {
       })
     })
   })
+})
 
-  describe('gaining levels', () => {
-    test('shows notifications for each level gained in the sale', () => {
-      const { notifications } = fn.sellItem(
+describe('processLevelUp', () => {
+  test('shows notifications for each level gained in the sale', () => {
+    jest.resetModules()
+    jest.mock('./data/levels', () => ({
+      levels: [
         {
-          inventory: [
-            testItem({
-              id: 'sample-item-1',
-              quantity: farmProductSalesVolumeNeededForLevel(3),
-            }),
-          ],
-          itemsSold: {},
-          loanBalance: 0,
-          money: 100,
-          notifications: [],
-          revenue: 0,
-          valueAdjustments: { 'sample-item-1': 1 },
+          id: 1,
+          unlocksShopItem: 'sample-crop-seeds-1',
         },
-        testItem({ id: 'sample-crop-1' }),
-        farmProductSalesVolumeNeededForLevel(3)
+      ],
+      itemUnlockLevels: {},
+    }))
+    const { notifications } = jest.requireActual('./reducers').processLevelUp(
+      {
+        inventory: [],
+        itemsSold: { 'sample-crop-1': farmProductSalesVolumeNeededForLevel(3) },
+        notifications: [],
+      },
+      1
+    )
+
+    expect(notifications).toEqual([
+      {
+        message: LEVEL_GAINED_NOTIFICATION`${3}${{ name: '' }}`,
+        severity: 'success',
+      },
+      {
+        message: LEVEL_GAINED_NOTIFICATION`${2}${{ name: '' }}`,
+        severity: 'success',
+      },
+    ])
+  })
+
+  test('when sprinkler is selected when it gets a level up boost, hoveredPlotRangeSize increase', () => {
+    jest.resetModules()
+    jest.mock('./data/levels', () => ({
+      levels: [
+        {
+          id: 0,
+        },
+        {
+          id: 1,
+        },
+        {
+          id: 2,
+          increasesSprinklerRange: true,
+        },
+      ],
+      itemUnlockLevels: {},
+    }))
+    jest.mock('./constants', () => ({
+      INITIAL_SPRINKLER_RANGE: 1,
+      SPRINKLER_ITEM_ID: 'sprinkler',
+    }))
+
+    const { hoveredPlotRangeSize } = jest
+      .requireActual('./reducers')
+      .processLevelUp(
+        {
+          hoveredPlotRangeSize: 1,
+          itemsSold: {
+            'sample-crop-1': farmProductSalesVolumeNeededForLevel(2),
+          },
+          selectedItemId: 'sprinkler',
+          notifications: [],
+        },
+        1
       )
 
-      expect(notifications).toEqual([
-        { message: LEVEL_GAINED_NOTIFICATION`${3}`, severity: 'success' },
-        { message: LEVEL_GAINED_NOTIFICATION`${2}`, severity: 'success' },
-      ])
-    })
+    expect(hoveredPlotRangeSize).toEqual(2)
   })
 })
 
@@ -1852,6 +1913,7 @@ describe('plantInPlot', () => {
           {
             field: [[]],
             inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
+            itemsSold: {},
             selectedItemId: 'sample-crop-seeds-1',
           },
           0,
@@ -1889,6 +1951,7 @@ describe('plantInPlot', () => {
         {
           field: [[]],
           inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
+          itemsSold: {},
           selectedItemId: 'sample-crop-seeds-1',
         },
         0,
@@ -2004,6 +2067,7 @@ describe('setSprinkler', () => {
       field: [[null]],
       fieldMode: fieldMode.SET_SPRINKLER,
       inventory: [testItem({ id: 'sprinkler', quantity: 1 })],
+      itemsSold: {},
       selectedItemId: SPRINKLER_ITEM_ID,
     }
   })

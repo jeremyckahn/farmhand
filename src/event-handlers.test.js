@@ -6,7 +6,18 @@ import { stageFocusType, fieldMode } from './enums'
 import { testItem } from './test-utils'
 
 jest.mock('./data/items')
-jest.mock('./data/levels', () => [])
+jest.mock('./data/levels', () => ({
+  levels: [
+    {
+      id: 0,
+    },
+    {
+      id: 1,
+      unlocksShopItem: 'sample-crop-seeds-1',
+    },
+  ],
+  itemUnlockLevels: {},
+}))
 jest.mock('./data/recipes')
 jest.mock('./data/shop-inventory')
 

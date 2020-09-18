@@ -14,7 +14,8 @@ import {
   rainbowMilk2,
   rainbowMilk3,
 } from './data/items'
-import levels from './data/levels'
+import { levels } from './data/levels'
+import { unlockableItems } from './data/levels'
 import { items as itemImages } from './img'
 import {
   cowColors,
@@ -516,25 +517,18 @@ export const canMakeRecipe = memoize(({ ingredients }, inventory) => {
 })
 
 /**
- * @type {Array.<farmhand.item>}
+ * @param {Array.<string>} itemIds
+ * @returns {Array.<string>}
  */
-const finalStageCropItemList = Object.keys(itemsMap).reduce((acc, itemId) => {
-  const item = itemsMap[itemId]
-
-  if (isItemAGrownCrop(item)) {
-    acc.push(item)
-  }
-
-  return acc
-}, [])
+export const filterItemIdsToSeeds = itemsIds =>
+  itemsIds.filter(id => itemsMap[id].type === itemType.CROP)
 
 /**
- * @returns {farmhand.item} A final stage, non-seed item.
+ * @param {Array.<string>} unlockedSeedItemIds
+ * @returns {farmhand.item}
  */
-export const getRandomCropItem = () =>
-  finalStageCropItemList[
-    Math.floor(Math.random() * finalStageCropItemList.length)
-  ]
+export const getRandomUnlockedCrop = unlockedSeedItemIds =>
+  itemsMap[getFinalCropItemIdFromSeedItemId(chooseRandom(unlockedSeedItemIds))]
 
 /**
  * @param {farmhand.item} cropItem
@@ -700,6 +694,7 @@ export const farmProductSalesVolumeNeededForLevel = targetLevel =>
 export const getLevelEntitlements = memoize(levelNumber => {
   const acc = {
     sprinklerRange: INITIAL_SPRINKLER_RANGE,
+    items: {},
   }
 
   // Assumes that levels is sorted by id.
@@ -709,7 +704,7 @@ export const getLevelEntitlements = memoize(levelNumber => {
     }
 
     if (unlocksShopItem) {
-      acc[unlocksShopItem] = true
+      acc.items[unlocksShopItem] = true
     }
 
     return id === levelNumber
@@ -717,3 +712,34 @@ export const getLevelEntitlements = memoize(levelNumber => {
 
   return acc
 })
+
+/**
+ * @param {Object} levelEntitlements
+ * @returns {Array.<{ item: farmhand.item }>}
+ */
+export const getAvailbleShopInventory = memoize(levelEntitlements =>
+  shopInventory.filter(
+    ({ id }) =>
+      !(
+        unlockableItems.hasOwnProperty(id) &&
+        !levelEntitlements.items.hasOwnProperty(id)
+      )
+  )
+)
+
+/**
+ * @param {number} level
+ * @returns {farmhand.item} Will always be a crop seed item.
+ */
+export const getRandomLevelUpReward = level =>
+  itemsMap[
+    chooseRandom(
+      filterItemIdsToSeeds(Object.keys(getLevelEntitlements(level).items))
+    )
+  ]
+
+/**
+ * @param {number} level
+ * @returns {number}
+ */
+export const getRandomLevelUpRewardQuantity = level => level * 10

@@ -1,4 +1,5 @@
 import { itemsMap, recipesMap } from './data/maps'
+import { levels } from './data/levels'
 import achievements from './data/achievements'
 import {
   areHuggingMachinesInInventory,
@@ -7,6 +8,7 @@ import {
   clampNumber,
   doesInventorySpaceRemain,
   farmProductsSold,
+  filterItemIdsToSeeds,
   findCowById,
   findInField,
   generateCow,
@@ -20,10 +22,13 @@ import {
   getCropFromItemId,
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
+  getLevelEntitlements,
   getPlotContentFromItemId,
   getPlotContentType,
   getPriceEventForCrop,
-  getRandomCropItem,
+  getRandomLevelUpReward,
+  getRandomLevelUpRewardQuantity,
+  getRandomUnlockedCrop,
   getRangeCoords,
   inventorySpaceRemaining,
   isItemAFarmProduct,
@@ -44,7 +49,6 @@ import {
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
-  INITIAL_SPRINKLER_RANGE,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
@@ -182,6 +186,59 @@ export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
 
 /**
  * @param {farmhand.state} state
+ * @param {number} oldLevel
+ * @returns {farmhand.state}
+ */
+export const processLevelUp = (state, oldLevel) => {
+  const { itemsSold, selectedItemId } = state
+  const newLevel = levelAchieved(farmProductsSold(itemsSold))
+
+  // Loop backwards so that the notifications appear in descending order.
+  for (let i = newLevel; i > oldLevel; i--) {
+    const levelObject = levels[i] || {}
+
+    let randomCropSeed
+    // There is no predefined reward for this level up.
+    if (Object.keys(levelObject).length < 2) {
+      randomCropSeed = getRandomLevelUpReward(i)
+      state = addItemToInventory(
+        state,
+        randomCropSeed,
+        getRandomLevelUpRewardQuantity(i)
+      )
+    }
+    // This handles an edge case where the player levels up to level that
+    // unlocks greater sprinkler range, but the sprinkler item is already
+    // selected. In that case, update the hoveredPlotRangeSize state.
+    else if (
+      levelObject &&
+      levelObject.increasesSprinklerRange &&
+      selectedItemId === SPRINKLER_ITEM_ID
+    ) {
+      const { sprinklerRange } = getLevelEntitlements(
+        levelAchieved(farmProductsSold(itemsSold))
+      )
+
+      if (sprinklerRange > state.hoveredPlotRangeSize) {
+        state = {
+          ...state,
+          hoveredPlotRangeSize: sprinklerRange,
+        }
+      }
+    }
+
+    state = showNotification(
+      state,
+      LEVEL_GAINED_NOTIFICATION`${i}${randomCropSeed}`,
+      'success'
+    )
+  }
+
+  return state
+}
+
+/**
+ * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
 const adjustItemValues = state => ({
@@ -282,9 +339,13 @@ export const applyCrows = state => {
  * @returns {farmhand.state}
  */
 export const processSprinklers = state => {
-  const { field } = state
+  const { field, itemsSold } = state
   const crops = new Map()
   let modifiedField = [...field]
+
+  const { sprinklerRange } = getLevelEntitlements(
+    levelAchieved(farmProductsSold(itemsSold))
+  )
 
   field.forEach((row, plotY) => {
     row.forEach((plot, plotX) => {
@@ -295,7 +356,7 @@ export const processSprinklers = state => {
       ;[]
         .concat(
           // Flatten this 2D array for less iteration below
-          ...getRangeCoords(INITIAL_SPRINKLER_RANGE, plotX, plotY)
+          ...getRangeCoords(sprinklerRange, plotX, plotY)
         )
         .forEach(({ x, y }) => {
           const fieldRow = field[y]
@@ -683,7 +744,13 @@ export const generatePriceEvents = state => {
   let priceEvent
 
   if (Math.random() < PRICE_EVENT_CHANCE) {
-    const cropItem = getRandomCropItem()
+    const { items: unlockedItems } = getLevelEntitlements(
+      levelAchieved(farmProductsSold(state.itemsSold))
+    )
+
+    const cropItem = getRandomUnlockedCrop(
+      filterItemIdsToSeeds(Object.keys(unlockedItems))
+    )
     const { id } = cropItem
 
     // Only create a priceEvent if one does not already exist
@@ -875,13 +942,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
     revenue: moneyTotal(revenue, saleValue),
   }
 
-  const newLevel = levelAchieved(farmProductsSold(newItemsSold))
-
-  // Loop backwards so that the notifications appear in descending order.
-  for (let i = newLevel; i > oldLevel; i--) {
-    state = showNotification(state, LEVEL_GAINED_NOTIFICATION`${i}`, 'success')
-  }
-
+  state = processLevelUp(state, oldLevel)
   state = decrementItemFromInventory(state, id, howMany)
 
   return updateLearnedRecipes(state)

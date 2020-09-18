@@ -13,7 +13,7 @@ import {
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
-jest.mock('../../data/levels', () => [])
+jest.mock('../../data/levels', () => ({ levels: [], unlockableItems: {} }))
 jest.mock('../../data/shop-inventory')
 
 let component
@@ -57,16 +57,19 @@ describe('item sorting', () => {
 
   test('divides into type categories', () => {
     expect(
-      separateItemsIntoCategories([
-        testItem({ id: 'sample-crop-seeds-2', isPlantableCrop: true }),
-        testItem({ id: 'scarecrow' }),
-        testItem({ id: 'sprinkler' }),
-        testItem({ id: 'sample-crop-seeds-1', isPlantableCrop: true }),
-        testItem({ id: 'sample-recipe-1' }),
-        testItem({ id: 'cow-feed' }),
-        testItem({ id: 'sample-crop-1' }),
-        testItem({ id: 'milk-1' }),
-      ])
+      separateItemsIntoCategories(
+        [
+          testItem({ id: 'sample-crop-seeds-2', isPlantableCrop: true }),
+          testItem({ id: 'scarecrow' }),
+          testItem({ id: 'sprinkler' }),
+          testItem({ id: 'sample-crop-seeds-1', isPlantableCrop: true }),
+          testItem({ id: 'sample-recipe-1' }),
+          testItem({ id: 'cow-feed' }),
+          testItem({ id: 'sample-crop-1' }),
+          testItem({ id: 'milk-1' }),
+        ],
+        {}
+      )
     ).toEqual({
       [categoryIds.CROPS]: [testItem({ id: 'sample-crop-1' })],
       [categoryIds.SEEDS]: [

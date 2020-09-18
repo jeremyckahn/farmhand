@@ -7,8 +7,16 @@ import {
   plantInPlot,
   waterPlot,
 } from './reducers'
-import { moneyTotal } from './utils'
-import { FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD } from './constants'
+import {
+  farmProductsSold,
+  getLevelEntitlements,
+  levelAchieved,
+  moneyTotal,
+} from './utils'
+import {
+  FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
+  SPRINKLER_ITEM_ID,
+} from './constants'
 import { dialogView, fieldMode } from './enums'
 
 const {
@@ -124,15 +132,25 @@ export default {
     enablesFieldMode,
     hoveredPlotRangeSize: newHoveredPlotRangeSize,
   }) {
-    this.setState(({ hoveredPlotRangeSize }) => ({
-      fieldMode: enablesFieldMode,
-      hoveredPlotRangeSize:
+    this.setState(({ hoveredPlotRangeSize, itemsSold }) => {
+      if (id === SPRINKLER_ITEM_ID) {
+        hoveredPlotRangeSize = getLevelEntitlements(
+          levelAchieved(farmProductsSold(itemsSold))
+        ).sprinklerRange
+      } else {
         // newHoveredPlotRangeSize is either a number or undefined.
-        typeof newHoveredPlotRangeSize === 'number'
-          ? newHoveredPlotRangeSize
-          : hoveredPlotRangeSize,
-      selectedItemId: id,
-    }))
+        hoveredPlotRangeSize =
+          typeof newHoveredPlotRangeSize === 'number'
+            ? newHoveredPlotRangeSize
+            : hoveredPlotRangeSize
+      }
+
+      return {
+        fieldMode: enablesFieldMode,
+        hoveredPlotRangeSize,
+        selectedItemId: id,
+      }
+    })
   },
 
   /**
