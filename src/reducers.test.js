@@ -1503,7 +1503,7 @@ describe('processLevelUp', () => {
     ])
   })
 
-  test('sprinkler is selected when it gets a level up boost', () => {
+  test('when sprinkler is selected when it gets a level up boost, hoveredPlotRangeSize increase', () => {
     jest.resetModules()
     jest.mock('./data/levels', () => ({
       levels: [

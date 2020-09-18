@@ -117,20 +117,17 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
 `,
   ]
 
+  const levelObject = levels[newLevel]
+
   if (itemUnlockLevels[newLevel]) {
     chunks.push(
       `Now available in the shop: **${
         itemsMap[itemUnlockLevels[newLevel]].name
       }**.`
     )
-  }
-
-  const levelObject = levels[newLevel]
-  if (levelObject && levelObject.increasesSprinklerRange) {
+  } else if (levelObject && levelObject.increasesSprinklerRange) {
     chunks.push(`Sprinkler range has increased.`)
-  }
-
-  if (randomCropSeed) {
+  } else if (randomCropSeed) {
     chunks.push(
       `You got **${getRandomLevelUpRewardQuantity(newLevel)} units of ${
         randomCropSeed.name
