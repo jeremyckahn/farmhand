@@ -650,3 +650,32 @@ describe('getAvailbleShopInventory', () => {
     ).toEqual([{ id: 'sample-item-1' }])
   })
 })
+
+describe('getRandomLevelUpReward', () => {
+  test('returns a crop item', () => {
+    jest.resetModules()
+    jest.mock('./data/levels', () => ({
+      levels: [{ id: 0, unlocksShopItem: 'sample-crop-item-1' }],
+      unlockableItems: {
+        'sample-crop-item-1': true,
+        'sample-crop-item-2': true,
+      },
+    }))
+    jest.mock('./data/maps', () => ({
+      itemsMap: {
+        'sample-crop-item-1': {
+          id: 'sample-crop-item-1',
+          name: 'crop 1',
+          type: 'CROP',
+        },
+      },
+    }))
+    jest.spyOn(Math, 'random').mockReturnValue(0)
+
+    expect(jest.requireActual('./utils').getRandomLevelUpReward(2)).toEqual({
+      id: 'sample-crop-item-1',
+      name: 'crop 1',
+      type: 'CROP',
+    })
+  })
+})

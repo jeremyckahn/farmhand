@@ -1,4 +1,4 @@
-import { moneyString } from './utils'
+import { getRandomLevelUpRewardQuantity, moneyString } from './utils'
 
 import { itemUnlockLevels, levels } from './data/levels'
 import { itemsMap } from './data/maps'
@@ -107,9 +107,10 @@ export const LOAN_BALANCE_NOTIFICATION = (_, loanBalance) =>
 
 /**
  * @param {number} newLevel
+ * @param {farmhand.item} [randomCropSeed]
  * @returns {string}
  */
-export const LEVEL_GAINED_NOTIFICATION = (_, newLevel) => {
+export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
   let chunks = [
     `You reached **level ${newLevel}!** Way to go!
 
@@ -127,6 +128,14 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel) => {
   const levelObject = levels[newLevel]
   if (levelObject && levelObject.increasesSprinklerRange) {
     chunks.push(`Sprinkler range has increased.`)
+  }
+
+  if (randomCropSeed) {
+    chunks.push(
+      `You got **${getRandomLevelUpRewardQuantity(newLevel)} units of ${
+        randomCropSeed.name
+      }** as a reward!`
+    )
   }
 
   return chunks.join(' ')

@@ -26,6 +26,8 @@ import {
   getPlotContentFromItemId,
   getPlotContentType,
   getPriceEventForCrop,
+  getRandomLevelUpReward,
+  getRandomLevelUpRewardQuantity,
   getRandomUnlockedCrop,
   getRangeCoords,
   inventorySpaceRemaining,
@@ -193,7 +195,18 @@ export const processLevelUp = (state, oldLevel) => {
 
   // Loop backwards so that the notifications appear in descending order.
   for (let i = newLevel; i > oldLevel; i--) {
-    const levelObject = levels[i]
+    const levelObject = levels[i] || {}
+
+    let randomCropSeed
+    // There is no predefined reward for this level up.
+    if (Object.keys(levelObject).length < 2) {
+      randomCropSeed = getRandomLevelUpReward(i)
+      state = addItemToInventory(
+        state,
+        randomCropSeed,
+        getRandomLevelUpRewardQuantity(i)
+      )
+    }
 
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already
@@ -215,7 +228,11 @@ export const processLevelUp = (state, oldLevel) => {
       }
     }
 
-    state = showNotification(state, LEVEL_GAINED_NOTIFICATION`${i}`, 'success')
+    state = showNotification(
+      state,
+      LEVEL_GAINED_NOTIFICATION`${i}${randomCropSeed}`,
+      'success'
+    )
   }
 
   return state

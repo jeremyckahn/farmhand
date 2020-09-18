@@ -1472,8 +1472,19 @@ describe('sellItem', () => {
 
 describe('processLevelUp', () => {
   test('shows notifications for each level gained in the sale', () => {
-    const { notifications } = fn.processLevelUp(
+    jest.resetModules()
+    jest.mock('./data/levels', () => ({
+      levels: [
+        {
+          id: 1,
+          unlocksShopItem: 'sample-crop-seeds-1',
+        },
+      ],
+      itemUnlockLevels: {},
+    }))
+    const { notifications } = jest.requireActual('./reducers').processLevelUp(
       {
+        inventory: [],
         itemsSold: { 'sample-crop-1': farmProductSalesVolumeNeededForLevel(3) },
         notifications: [],
       },
@@ -1481,8 +1492,14 @@ describe('processLevelUp', () => {
     )
 
     expect(notifications).toEqual([
-      { message: LEVEL_GAINED_NOTIFICATION`${3}`, severity: 'success' },
-      { message: LEVEL_GAINED_NOTIFICATION`${2}`, severity: 'success' },
+      {
+        message: LEVEL_GAINED_NOTIFICATION`${3}${{ name: '' }}`,
+        severity: 'success',
+      },
+      {
+        message: LEVEL_GAINED_NOTIFICATION`${2}${{ name: '' }}`,
+        severity: 'success',
+      },
     ])
   })
 

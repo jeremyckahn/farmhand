@@ -726,3 +726,20 @@ export const getAvailbleShopInventory = memoize(levelEntitlements =>
       )
   )
 )
+
+/**
+ * @param {number} level
+ * @returns {farmhand.item} Will always be a crop seed item.
+ */
+export const getRandomLevelUpReward = level =>
+  itemsMap[
+    chooseRandom(
+      filterItemIdsToSeeds(Object.keys(getLevelEntitlements(level).items))
+    )
+  ]
+
+/**
+ * @param {number} level
+ * @returns {number}
+ */
+export const getRandomLevelUpRewardQuantity = level => level * 10
