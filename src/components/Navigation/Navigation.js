@@ -14,7 +14,7 @@ import FlashOnIcon from '@material-ui/icons/FlashOn'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import Tooltip from '@material-ui/core/Tooltip'
-import { array, func, number, object, string } from 'prop-types'
+import { array, bool, func, number, object, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
 import {
@@ -72,10 +72,12 @@ export const Navigation = ({
   dayCount,
   handleClickDialogViewButton,
   handleCloseDialogView,
+  handleDialogViewExited,
   handleViewChange,
   inventory,
   inventoryLimit,
   itemsSold,
+  isDialogViewOpen,
   purchasedCowPen,
   stageFocus,
   viewList,
@@ -153,7 +155,8 @@ export const Navigation = ({
         fullWidth: true,
         maxWidth: 'md',
         onClose: handleCloseDialogView,
-        open: currentDialogView !== dialogView.NONE,
+        open: isDialogViewOpen,
+        onExited: handleDialogViewExited,
       }}
     >
       <DialogTitle>{dialogTitleMap[currentDialogView]}</DialogTitle>
@@ -171,10 +174,12 @@ Navigation.propTypes = {
   dayCount: number.isRequired,
   handleClickDialogViewButton: func.isRequired,
   handleCloseDialogView: func.isRequired,
+  handleDialogViewExited: func.isRequired,
   handleViewChange: func.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
   itemsSold: object.isRequired,
+  isDialogViewOpen: bool.isRequired,
   purchasedCowPen: number.isRequired,
   stageFocus: string.isRequired,
   viewList: array.isRequired,

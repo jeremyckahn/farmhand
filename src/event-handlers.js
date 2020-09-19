@@ -277,10 +277,14 @@ export default {
    * @param {farmhand.module:enums.dialogView} dialogView
    */
   handleClickDialogViewButton(dialogView) {
-    this.setState({ currentDialogView: dialogView })
+    this.openDialogView(dialogView)
   },
 
   handleCloseDialogView() {
+    this.closeDialogView()
+  },
+
+  handleDialogViewExited() {
     this.setState({ currentDialogView: dialogView.NONE })
   },
 
