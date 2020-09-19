@@ -97,16 +97,18 @@ const { GROWN } = cropLifeStage
  * @param {?farmhand.crop} crop
  * @returns {?farmhand.crop}
  */
-export const incrementCropAge = crop =>
-  crop && {
-    ...crop,
-    daysOld: crop.daysOld + 1,
-    daysWatered:
-      crop.daysWatered +
-      (crop.wasWateredToday
-        ? 1 + (crop.isFertilized ? FERTILIZER_BONUS : 0)
-        : 0),
-  }
+export const incrementPlotContentAge = crop =>
+  crop && getPlotContentType(crop) === itemType.CROP
+    ? {
+        ...crop,
+        daysOld: crop.daysOld + 1,
+        daysWatered:
+          crop.daysWatered +
+          (crop.wasWateredToday
+            ? 1 + (crop.isFertilized ? FERTILIZER_BONUS : 0)
+            : 0),
+      }
+    : crop
 
 /**
  * @param {?farmhand.plotContent} plotContent
@@ -532,7 +534,7 @@ export const addItemToInventory = (state, item, howMany = 1) => {
 }
 
 const fieldReducer = (acc, fn) => fn(acc)
-const fieldUpdaters = [incrementCropAge, resetWasWatered]
+const fieldUpdaters = [incrementPlotContentAge, resetWasWatered]
 
 /**
  * @param {farmhand.state} state
