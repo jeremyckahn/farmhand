@@ -1086,40 +1086,50 @@ describe('computeCowInventoryForNextDay', () => {
   })
 })
 
-describe('incrementCropAge', () => {
-  describe('plant is not watered', () => {
-    test('updates daysOld', () => {
-      const { daysOld, daysWatered } = fn.incrementCropAge(
-        testCrop({ itemId: 'sample-crop-1' })
-      )
+describe('incrementPlotContentAge', () => {
+  describe('plot contains a crop', () => {
+    describe('crop is not watered', () => {
+      test('updates daysOld', () => {
+        const { daysOld, daysWatered } = fn.incrementPlotContentAge(
+          testCrop({ itemId: 'sample-crop-1' })
+        )
 
-      expect(daysOld).toBe(1)
-      expect(daysWatered).toBe(0)
+        expect(daysOld).toBe(1)
+        expect(daysWatered).toBe(0)
+      })
+    })
+
+    describe('crop is watered', () => {
+      test('updates daysOld and daysWatered', () => {
+        const { daysOld, daysWatered } = fn.incrementPlotContentAge(
+          testCrop({ itemId: 'sample-crop-1', wasWateredToday: true })
+        )
+
+        expect(daysOld).toBe(1)
+        expect(daysWatered).toBe(1)
+      })
+    })
+
+    describe('crop is fertilized', () => {
+      test('updates daysOld with bonus', () => {
+        const { daysWatered } = fn.incrementPlotContentAge(
+          testCrop({
+            itemId: 'sample-crop-1',
+            isFertilized: true,
+            wasWateredToday: true,
+          })
+        )
+
+        expect(daysWatered).toBe(1 + FERTILIZER_BONUS)
+      })
     })
   })
 
-  describe('plant is watered', () => {
-    test('updates daysOld and daysWatered', () => {
-      const { daysOld, daysWatered } = fn.incrementCropAge(
-        testCrop({ itemId: 'sample-crop-1', wasWateredToday: true })
-      )
+  describe('plot contains a non-crop item', () => {
+    test('plot content is not changed', () => {
+      const plotContent = testCrop({ itemId: 'scarecrow' })
 
-      expect(daysOld).toBe(1)
-      expect(daysWatered).toBe(1)
-    })
-  })
-
-  describe('plant is fertilized', () => {
-    test('updates daysOld with bonus', () => {
-      const { daysWatered } = fn.incrementCropAge(
-        testCrop({
-          itemId: 'sample-crop-1',
-          isFertilized: true,
-          wasWateredToday: true,
-        })
-      )
-
-      expect(daysWatered).toBe(1 + FERTILIZER_BONUS)
+      expect(fn.incrementPlotContentAge(plotContent)).toBe(plotContent)
     })
   })
 })
