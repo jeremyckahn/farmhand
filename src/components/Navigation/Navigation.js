@@ -14,10 +14,16 @@ import FlashOnIcon from '@material-ui/icons/FlashOn'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import Tooltip from '@material-ui/core/Tooltip'
-import { array, number, func, string } from 'prop-types'
+import { array, func, number, object, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
-import { doesInventorySpaceRemain, inventorySpaceConsumed } from '../../utils'
+import {
+  doesInventorySpaceRemain,
+  farmProductsSold,
+  integerString,
+  inventorySpaceConsumed,
+  levelAchieved,
+} from '../../utils'
 import { dialogView } from '../../enums'
 import { STAGE_TITLE_MAP } from '../../constants'
 
@@ -69,13 +75,19 @@ export const Navigation = ({
   handleViewChange,
   inventory,
   inventoryLimit,
+  itemsSold,
   purchasedCowPen,
   stageFocus,
   viewList,
+
+  totalFarmProductsSold = farmProductsSold(itemsSold),
+  currentLevel = levelAchieved(totalFarmProductsSold),
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
-    <h2 className="day-count">Day {dayCount}</h2>
+    <h2 className="day-count">
+      Day {dayCount}, level {integerString(currentLevel)}
+    </h2>
     {inventoryLimit > -1 && (
       <h3
         {...{
@@ -162,6 +174,7 @@ Navigation.propTypes = {
   handleViewChange: func.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
+  itemsSold: object.isRequired,
   purchasedCowPen: number.isRequired,
   stageFocus: string.isRequired,
   viewList: array.isRequired,

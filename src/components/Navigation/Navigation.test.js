@@ -19,6 +19,7 @@ beforeEach(() => {
         handleViewChange: () => {},
         inventory: [],
         inventoryLimit: -1,
+        itemsSold: {},
         purchasedCowPen: 0,
         stageFocus: stageFocusType.FIELD,
         viewList: ['HOME', 'FIELD', 'SHOP', 'KITCHEN'],
