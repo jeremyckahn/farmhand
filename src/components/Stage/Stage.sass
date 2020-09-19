@@ -18,6 +18,9 @@
     transition: left $duration-leaving-screen $easing-sharp
     z-index: 20
 
+    svg
+      transform: translateX(-10px)
+
     @media (min-width: #{$break-sm})
       display: none
 
@@ -27,6 +30,9 @@
 
     .menu-button
       left: 0%
+
+      svg
+        transform: translateX(10px)
 
     @media (max-width: #{$break-small-phone})
       margin-left: -$narrow-sidebar-width

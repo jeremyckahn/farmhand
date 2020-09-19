@@ -3,7 +3,8 @@ import { Swipeable } from 'react-swipeable'
 import classNames from 'classnames'
 import { array, arrayOf, bool, func, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
-import MenuIcon from '@material-ui/icons/Menu'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 
 import FarmhandContext from '../../Farmhand.context'
 import Field from '../Field'
@@ -79,7 +80,7 @@ export const Stage = ({
             onClick: () => handleMenuToggle(),
           }}
         >
-          <MenuIcon />
+          {isMenuOpen ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
         </Fab>
       </Swipeable>
     </div>
