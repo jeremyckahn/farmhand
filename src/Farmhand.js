@@ -120,6 +120,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {boolean} isMenuOpen
  * @property {Object} itemsSold Keys are items IDs, values are the number of
  * that item sold.
+ * @property {boolean} isDialogViewOpen
  * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
  * @property {number} loanBalance
  * @property {number} money
@@ -175,6 +176,7 @@ export default class Farmhand extends Component {
     inventoryLimit: INITIAL_INVENTORY_LIMIT,
     isMenuOpen: !doesMenuObstructStage(),
     itemsSold: {},
+    isDialogViewOpen: false,
     learnedRecipes: {},
     loanBalance: STANDARD_LOAN_AMOUNT,
     money: STANDARD_LOAN_AMOUNT,
@@ -305,7 +307,7 @@ export default class Farmhand extends Component {
       openAchievements: 'a',
       openLog: 'l',
       openPriceEvents: 'p',
-      openStats: 's',
+      openStats: 'd',
       previousView: 'left',
       selectHoe: 'h',
       selectScythe: 's',
@@ -316,15 +318,11 @@ export default class Farmhand extends Component {
     this.keyHandlers = {
       incrementDay: () => this.incrementDay(),
       nextView: this.focusNextView.bind(this),
-      openAccounting: () =>
-        this.setState({ currentDialogView: dialogView.ACCOUNTING }),
-      openAchievements: () =>
-        this.setState({ currentDialogView: dialogView.ACHIEVEMENTS }),
-      openLog: () =>
-        this.setState({ currentDialogView: dialogView.FARMERS_LOG }),
-      openPriceEvents: () =>
-        this.setState({ currentDialogView: dialogView.PRICE_EVENTS }),
-      openStats: () => this.setState({ currentDialogView: dialogView.STATS }),
+      openAccounting: () => this.openDialogView(dialogView.ACCOUNTING),
+      openAchievements: () => this.openDialogView(dialogView.ACHIEVEMENTS),
+      openLog: () => this.openDialogView(dialogView.FARMERS_LOG),
+      openPriceEvents: () => this.openDialogView(dialogView.PRICE_EVENTS),
+      openStats: () => this.openDialogView(dialogView.STATS),
       previousView: this.focusPreviousView.bind(this),
       selectHoe: () => this.handlers.handleFieldModeSelect(CLEANUP),
       selectScythe: () => this.handlers.handleFieldModeSelect(HARVEST),
@@ -534,6 +532,17 @@ export default class Farmhand extends Component {
           })
       }
     )
+  }
+
+  /**
+   * @param {farmhand.module:enums.dialogView} dialogView
+   */
+  openDialogView(dialogView) {
+    this.setState({ currentDialogView: dialogView, isDialogViewOpen: true })
+  }
+
+  closeDialogView() {
+    this.setState({ isDialogViewOpen: false })
   }
 
   focusNextView() {
