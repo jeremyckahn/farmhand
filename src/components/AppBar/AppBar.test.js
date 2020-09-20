@@ -9,7 +9,6 @@ beforeEach(() => {
   component = shallow(
     <AppBar
       {...{
-        handleMenuToggle: () => {},
         money: 0,
         viewTitle: '',
       }}

@@ -342,18 +342,6 @@ export default {
   },
 
   /**
-   * @param {Object} event
-   * @see https://github.com/FormidableLabs/react-swipeable#event-data
-   */
-  handleMenuButtonSwipe({ dir }) {
-    if (dir === 'Left') {
-      this.handlers.handleMenuToggle(false)
-    } else if (dir === 'Right') {
-      this.handlers.handleMenuToggle(true)
-    }
-  },
-
-  /**
    * @param {number} newScale
    */
   handleFieldZoom(newScale) {

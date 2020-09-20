@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { tween } from 'shifty'
-import { func, number, string } from 'prop-types'
-import classNames from 'classnames'
+import { number, string } from 'prop-types'
 
 import { default as MuiAppBar } from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
 import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -67,7 +64,7 @@ const MoneyDisplay = ({ money }) => {
   )
 }
 
-export const AppBar = ({ handleMenuToggle, money, isMenuOpen, viewTitle }) => (
+export const AppBar = ({ money, viewTitle }) => (
   <MuiAppBar
     {...{
       className: 'AppBar',
@@ -79,14 +76,6 @@ export const AppBar = ({ handleMenuToggle, money, isMenuOpen, viewTitle }) => (
         className: 'toolbar',
       }}
     >
-      <IconButton
-        className={classNames('menu-button', { 'is-open': isMenuOpen })}
-        color="inherit"
-        aria-label="Open drawer"
-        onClick={() => handleMenuToggle()}
-      >
-        <MenuIcon />
-      </IconButton>
       <Typography
         {...{
           className: 'stage-header',
@@ -108,7 +97,6 @@ export const AppBar = ({ handleMenuToggle, money, isMenuOpen, viewTitle }) => (
 )
 
 AppBar.propTypes = {
-  handleMenuToggle: func.isRequired,
   money: number.isRequired,
   viewTitle: string.isRequired,
 }

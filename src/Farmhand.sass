@@ -76,10 +76,28 @@
         position: relative
 
         @media (max-width: #{$break-medium-phone})
-          margin: 0.25em
+          margin: 0.25em 0.5em
 
         @media (max-width: 320px)
           margin: 0.25em 0.1em
+
+  .end-day
+    position: fixed
+    top: 5em
+    right: 1em
+    z-index: 20
+
+    @media (min-width: #{$break-sm})
+      right: 1.25em
+      top: 5.5em
+
+  .menu-button
+    transition: transform $duration-shorter
+    transform: rotate(-90deg)
+
+    &.is-open
+      transform: rotate(0deg)
+
 
   h4,
   h5,

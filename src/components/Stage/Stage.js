@@ -1,10 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import { Swipeable } from 'react-swipeable'
 import classNames from 'classnames'
-import { array, arrayOf, bool, func, string } from 'prop-types'
-import Fab from '@material-ui/core/Fab'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import { array, arrayOf, bool, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
 import Field from '../Field'
@@ -18,8 +14,6 @@ import './Stage.sass'
 
 export const Stage = ({
   field,
-  handleMenuButtonSwipe,
-  handleMenuToggle,
   isMenuOpen,
   playerInventory,
   stageFocus,
@@ -64,33 +58,12 @@ export const Stage = ({
       {stageFocus === stageFocusType.COW_PEN && <CowPen />}
       {stageFocus === stageFocusType.KITCHEN && <Kitchen />}
       <div {...{ className: 'spacer' }} />
-      <Swipeable
-        {...{
-          delta: 75,
-          onSwiped: handleMenuButtonSwipe,
-        }}
-      >
-        <Fab
-          {...{
-            className: classNames('menu-button', {
-              'is-open': isMenuOpen,
-            }),
-            color: 'primary',
-            'aria-label': 'Open drawer',
-            onClick: () => handleMenuToggle(),
-          }}
-        >
-          {isMenuOpen ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-        </Fab>
-      </Swipeable>
     </div>
   )
 }
 
 Stage.propTypes = {
   field: arrayOf(array).isRequired,
-  handleMenuButtonSwipe: func.isRequired,
-  handleMenuToggle: func.isRequired,
   isMenuOpen: bool.isRequired,
   playerInventory: array.isRequired,
   stageFocus: string.isRequired,
