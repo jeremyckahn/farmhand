@@ -14,7 +14,9 @@ import { moneyString } from '../../utils'
 import './AppBar.sass'
 
 const MoneyDisplay = ({ money }) => {
+  const idleColor = 'rgb(255, 255, 255)'
   const [displayedMoney, setDisplayedMoney] = useState(money)
+  const [textColor, setTextColor] = useState(idleColor)
   const [previousMoney, setPreviousMoney] = useState(money)
   const [currentTweenable, setCurrentTweenable] = useState()
 
@@ -29,10 +31,17 @@ const MoneyDisplay = ({ money }) => {
       }
 
       const { tweenable } = tween({
+        easing: 'easeOutQuad',
         duration: 750,
-        render: ({ money }) => setDisplayedMoney(money),
-        from: { money: previousMoney },
-        to: { money },
+        render: ({ color, money }) => {
+          setTextColor(color)
+          setDisplayedMoney(money)
+        },
+        from: {
+          color: money > previousMoney ? 'rgb(0, 255, 0)' : 'rgb(255, 0, 0)',
+          money: previousMoney,
+        },
+        to: { color: idleColor, money },
       })
 
       setCurrentTweenable(tweenable)
@@ -45,7 +54,17 @@ const MoneyDisplay = ({ money }) => {
     }
   }, [currentTweenable, money, previousMoney])
 
-  return moneyString(displayedMoney)
+  return (
+    <span
+      {...{
+        style: {
+          color: textColor,
+        },
+      }}
+    >
+      {moneyString(displayedMoney)}
+    </span>
+  )
 }
 
 export const AppBar = ({ handleMenuToggle, money, isMenuOpen, viewTitle }) => (
