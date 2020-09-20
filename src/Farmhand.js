@@ -4,6 +4,7 @@ import localforage from 'localforage'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import Fab from '@material-ui/core/Fab'
+import MenuIcon from '@material-ui/icons/Menu'
 import HotelIcon from '@material-ui/icons/Hotel'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
@@ -11,6 +12,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import { Swipeable } from 'react-swipeable'
 import debounce from 'lodash.debounce'
+import classNames from 'classnames'
 
 import FarmhandContext from './Farmhand.context'
 import eventHandlers from './event-handlers'
@@ -653,31 +655,18 @@ export default class Farmhand extends Component {
                     >
                       <KeyboardArrowLeft />
                     </Fab>
-                    <Tooltip
+                    <Fab
                       {...{
-                        placement: 'top',
-                        title: (
-                          <>
-                            <p>
-                              End the day to save your progress and advance the
-                              game.
-                            </p>
-                            <p>(shift + c)</p>
-                          </>
-                        ),
+                        className: classNames('menu-button', {
+                          'is-open': this.state.isMenuOpen,
+                        }),
+                        color: 'primary',
+                        'aria-label': 'Open drawer',
+                        onClick: () => handlers.handleMenuToggle(),
                       }}
                     >
-                      <Fab
-                        {...{
-                          'aria-label':
-                            'End the day to save your progress and advance the game.',
-                          color: 'secondary',
-                          onClick: handlers.handleClickEndDayButton,
-                        }}
-                      >
-                        <HotelIcon />
-                      </Fab>
-                    </Tooltip>
+                      <MenuIcon />
+                    </Fab>
                     <Fab
                       {...{
                         'aria-label': 'Next view',
@@ -689,6 +678,32 @@ export default class Farmhand extends Component {
                     </Fab>
                   </div>
                 </div>
+                <Tooltip
+                  {...{
+                    placement: 'left',
+                    title: (
+                      <>
+                        <p>
+                          End the day to save your progress and advance the
+                          game.
+                        </p>
+                        <p>(shift + c)</p>
+                      </>
+                    ),
+                  }}
+                >
+                  <Fab
+                    {...{
+                      'aria-label':
+                        'End the day to save your progress and advance the game.',
+                      className: 'end-day',
+                      color: 'secondary',
+                      onClick: handlers.handleClickEndDayButton,
+                    }}
+                  >
+                    <HotelIcon />
+                  </Fab>
+                </Tooltip>
               </div>
               <NotificationSystem />
             </FarmhandContext.Provider>
