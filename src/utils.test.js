@@ -14,7 +14,7 @@ import {
   getCropLifeStage,
   getCropLifecycleDuration,
   getFinalCropItemIdFromSeedItemId,
-  getItemValue,
+  getItemCurrentValue,
   getLifeStageRange,
   getPlotContentFromItemId,
   getPlotImage,
@@ -120,7 +120,7 @@ describe('isItemAFarmProduct', () => {
   })
 })
 
-describe('getItemValue', () => {
+describe('getItemCurrentValue', () => {
   let valueAdjustments
 
   beforeEach(() => {
@@ -132,16 +132,16 @@ describe('getItemValue', () => {
 
   describe('stable value item', () => {
     test('computes value', () => {
-      expect(getItemValue({ id: 'sample-item-1' }, valueAdjustments)).toEqual(
-        sampleItem1.value * 1.5
-      )
+      expect(
+        getItemCurrentValue({ id: 'sample-item-1' }, valueAdjustments)
+      ).toEqual(sampleItem1.value * 1.5)
     })
   })
 
   describe('fluctuating value item', () => {
     test('computes value', () => {
       expect(
-        getItemValue({ id: 'sample-field-tool-1' }, valueAdjustments)
+        getItemCurrentValue({ id: 'sample-field-tool-1' }, valueAdjustments)
       ).toEqual(sampleFieldTool1.value)
     })
   })
