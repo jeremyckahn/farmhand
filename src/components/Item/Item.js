@@ -21,7 +21,7 @@ import {
   isItemSoldInShop,
   getCropLifecycleDuration,
   getFinalCropItemFromSeedItem,
-  getItemValue,
+  getItemCurrentValue,
   getResaleValue,
   moneyString,
   integerString,
@@ -148,12 +148,12 @@ export const Item = ({
   // Note: These props are defaulted to 0 in the tests.
   adjustedValue = isSellView && isItemSoldInShop(item)
     ? getResaleValue(item)
-    : getItemValue(item, valueAdjustments),
+    : getItemCurrentValue(item, valueAdjustments),
   previousDayAdjustedValue = (isSellView && isItemSoldInShop(item)) ||
   historicalValueAdjustments.length === 0 ||
   !doesPriceFluctuate
     ? null
-    : getItemValue(item, historicalValueAdjustments[0]),
+    : getItemCurrentValue(item, historicalValueAdjustments[0]),
 
   maxQuantityPlayerCanPurchase = Math.max(
     0,

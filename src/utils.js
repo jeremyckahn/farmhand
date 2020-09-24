@@ -176,17 +176,23 @@ export const dollarString = number => formatNumber(number, '$0,0')
 export const integerString = number => formatNumber(number, '0,0')
 
 /**
+ * @param {string} itemId
+ * @returns {number}
+ */
+const getItemBaseValue = itemId => itemsMap[itemId].value
+
+/**
  * @param {farmhand.item} item
  * @param {Object.<number>} valueAdjustments
  * @returns {number}
  */
-export const getItemValue = ({ id }, valueAdjustments) =>
+export const getItemCurrentValue = ({ id }, valueAdjustments) =>
   Dinero({
     amount: Math.round(
       (valueAdjustments[id]
-        ? itemsMap[id].value *
+        ? getItemBaseValue(id) *
           (itemsMap[id].doesPriceFluctuate ? valueAdjustments[id] : 1)
-        : itemsMap[id].value) * 100
+        : getItemBaseValue(id)) * 100
     ),
     precision: 2,
   }).toUnit()

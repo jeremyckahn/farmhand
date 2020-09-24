@@ -18,7 +18,6 @@
  * @readonly
  * @property {string} id
  * @property {string} name
- * @property {number} value
  * @property {string} type
  * @property {farmhand.cropTimetable} [cropTimetable]
  * @property {farmhand.module:enums.cropType} [cropType]
@@ -32,6 +31,7 @@
  * @property {boolean} [isPlantableCrop]
  * @property {boolean} [isReplantable]
  * @property {number} [quanitity] How many of the item the player has.
+ * @property {number} [tier] The value tier that the item belongs to.
  */
 
 /**

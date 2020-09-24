@@ -9,30 +9,9 @@
   position: relative
   transition: margin-left $duration-entering-screen $easing-ease-out
 
-  .menu-button
-    left: 100%
-    opacity: 0.85
-    position: fixed
-    top: 50%
-    transform: translateX(-50%)
-    transition: left $duration-leaving-screen $easing-sharp
-    z-index: 20
-
-    svg
-      transform: translateX(-10px)
-
-    @media (min-width: #{$break-sm})
-      display: none
-
   &.menu-closed
     margin-left: -$sidebar-width
     transition: margin-left $duration-leaving-screen $easing-sharp
-
-    .menu-button
-      left: 0%
-
-      svg
-        transform: translateX(10px)
 
     @media (max-width: #{$break-small-phone})
       margin-left: -$narrow-sidebar-width

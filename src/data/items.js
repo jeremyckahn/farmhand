@@ -29,136 +29,140 @@ const {
 //
 ////////////////////////////////////////
 
+const crop = ({
+  cropTimetable,
+  growsInto,
+  tier,
+
+  isSeed = Boolean(growsInto),
+  cropLifecycleDuration = Object.values(cropTimetable).reduce(
+    (acc, value) => acc + value,
+    0
+  ),
+
+  ...rest
+}) =>
+  freeze({
+    cropTimetable,
+    doesPriceFluctuate: true,
+    tier,
+    type: CROP,
+    value: 10 + cropLifecycleDuration * tier * (isSeed ? 1 : 3),
+    ...(isSeed && {
+      enablesFieldMode: fieldMode.PLANT,
+      growsInto,
+      isPlantableCrop: true,
+    }),
+    ...rest,
+  })
+
+const fromSeed = ({ cropTimetable, cropType, growsInto, tier }) => ({
+  cropTimetable,
+  cropType,
+  doesPriceFluctuate: true,
+  id: growsInto,
+  tier,
+  type: CROP,
+})
+
 /**
  * @property farmhand.module:items.carrotSeed
  * @type {farmhand.item}
  */
-export const carrotSeed = freeze({
+export const carrotSeed = crop({
   cropType: CARROT,
-  doesPriceFluctuate: true,
-  enablesFieldMode: fieldMode.PLANT,
+  cropTimetable: {
+    [SEED]: 2,
+    [GROWING]: 3,
+  },
   growsInto: 'carrot',
   id: 'carrot-seed',
-  isPlantableCrop: true,
   name: 'Carrot Seed',
-  type: CROP,
-  value: 20,
+  tier: 1,
 })
 
 /**
  * @property farmhand.module:items.carrot
  * @type {farmhand.item}
  */
-export const carrot = freeze({
-  cropType: CARROT,
-  cropTimetable: {
-    [SEED]: 2,
-    [GROWING]: 3,
-  },
-  doesPriceFluctuate: true,
-  id: 'carrot',
+export const carrot = crop({
+  ...fromSeed(carrotSeed),
   name: 'Carrot',
-  type: CROP,
-  value: 40,
 })
 
 /**
  * @property farmhand.module:items.pumpkinSeed
  * @type {farmhand.item}
  */
-export const pumpkinSeed = freeze({
+export const pumpkinSeed = crop({
   cropType: PUMPKIN,
-  doesPriceFluctuate: true,
-  enablesFieldMode: fieldMode.PLANT,
+  cropTimetable: {
+    [SEED]: 3,
+    [GROWING]: 5,
+  },
   growsInto: 'pumpkin',
   id: 'pumpkin-seed',
-  isPlantableCrop: true,
   name: 'Pumpkin Seed',
-  type: CROP,
-  value: 40,
+  tier: 1,
 })
 
 /**
  * @property farmhand.module:items.pumpkin
  * @type {farmhand.item}
  */
-export const pumpkin = freeze({
-  cropType: PUMPKIN,
-  cropTimetable: {
-    [SEED]: 3,
-    [GROWING]: 5,
-  },
-  doesPriceFluctuate: true,
-  id: 'pumpkin',
+export const pumpkin = crop({
+  ...fromSeed(pumpkinSeed),
   name: 'Pumpkin',
-  type: CROP,
-  value: 80,
 })
 
 /**
  * @property farmhand.module:items.spinachSeed
  * @type {farmhand.item}
  */
-export const spinachSeed = freeze({
+export const spinachSeed = crop({
   cropType: SPINACH,
-  doesPriceFluctuate: true,
-  enablesFieldMode: fieldMode.PLANT,
+  cropTimetable: {
+    [SEED]: 2,
+    [GROWING]: 4,
+  },
   growsInto: 'spinach',
   id: 'spinach-seed',
-  isPlantableCrop: true,
   name: 'Spinach Seed',
-  type: CROP,
-  value: 30,
+  tier: 1,
 })
 
 /**
  * @property farmhand.module:items.spinach
  * @type {farmhand.item}
  */
-export const spinach = freeze({
-  cropType: SPINACH,
-  cropTimetable: {
-    [SEED]: 2,
-    [GROWING]: 4,
-  },
-  doesPriceFluctuate: true,
-  id: 'spinach',
+export const spinach = crop({
+  ...fromSeed(spinachSeed),
   name: 'Spinach',
-  type: CROP,
-  value: 50,
 })
 
 /**
  * @property farmhand.module:items.cornSeed
  * @type {farmhand.item}
  */
-export const cornSeed = freeze({
-  cropType: CORN,
-  doesPriceFluctuate: true,
-  enablesFieldMode: fieldMode.PLANT,
-  growsInto: 'corn',
-  id: 'corn-seed',
-  isPlantableCrop: true,
-  name: 'Corn Kernels',
-  type: CROP,
-  value: 50,
-})
-
-/**
- * @property farmhand.module:items.pumpkin
- * @type {farmhand.item}
- */
-export const corn = freeze({
+export const cornSeed = crop({
   cropType: CORN,
   cropTimetable: {
     [SEED]: 3,
     [GROWING]: 7,
   },
-  doesPriceFluctuate: true,
-  id: 'corn',
+  growsInto: 'corn',
+  id: 'corn-seed',
+  name: 'Corn Kernels',
+  tier: 2,
+})
+
+/**
+ * @property farmhand.module:items.corn
+ * @type {farmhand.item}
+ */
+export const corn = crop({
+  ...fromSeed(cornSeed),
   name: 'Corn',
-  type: CROP,
-  value: 120,
 })
 
 ////////////////////////////////////////

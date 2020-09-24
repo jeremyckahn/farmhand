@@ -32,7 +32,7 @@ import {
   doesMenuObstructStage,
   farmProductsSold,
   getAvailbleShopInventory,
-  getItemValue,
+  getItemCurrentValue,
   getLevelEntitlements,
   levelAchieved,
   memoize,
@@ -62,7 +62,7 @@ export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
   inventory.map(({ quantity, id }) => ({
     quantity,
     ...itemsMap[id],
-    value: getItemValue(itemsMap[id], valueAdjustments),
+    value: getItemCurrentValue(itemsMap[id], valueAdjustments),
   }))
 )
 
