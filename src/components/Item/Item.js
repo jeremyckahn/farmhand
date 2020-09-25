@@ -306,24 +306,24 @@ export const Item = ({
             >
               Buy
             </Button>
-            <div className="quantity">
-              <QuantityInput
-                {...{
-                  handleSubmit: handleItemPurchase,
-                  handleUpdateNumber: setPurchaseQuantity,
-                  max: maxQuantityPlayerCanPurchase,
-                  value: purchaseQuantity,
-                }}
-              />
-              <Button
-                {...{
-                  onClick: () =>
-                    setPurchaseQuantity(maxQuantityPlayerCanPurchase),
-                }}
-              >
-                / {integerString(maxQuantityPlayerCanPurchase)}
-              </Button>
-            </div>
+            <QuantityInput
+              {...{
+                handleSubmit: handleItemPurchase,
+                handleUpdateNumber: setPurchaseQuantity,
+                max: maxQuantityPlayerCanPurchase,
+                value: purchaseQuantity,
+              }}
+            />
+            <Button
+              {...{
+                className: 'quantity',
+                onClick: () =>
+                  setPurchaseQuantity(maxQuantityPlayerCanPurchase),
+                variant: 'contained',
+              }}
+            >
+              / {integerString(maxQuantityPlayerCanPurchase)}
+            </Button>
           </>
         )}
         {isSellView && (
@@ -339,23 +339,23 @@ export const Item = ({
             >
               Sell
             </Button>
-            <div className="quantity">
-              <QuantityInput
-                {...{
-                  handleSubmit: handleItemSell,
-                  handleUpdateNumber: setSellQuantity,
-                  max: playerInventoryQuantities[id],
-                  value: sellQuantity,
-                }}
-              />
-              <Button
-                {...{
-                  onClick: () => setSellQuantity(playerInventoryQuantities[id]),
-                }}
-              >
-                / {integerString(playerInventoryQuantities[id])}
-              </Button>
-            </div>
+            <QuantityInput
+              {...{
+                handleSubmit: handleItemSell,
+                handleUpdateNumber: setSellQuantity,
+                max: playerInventoryQuantities[id],
+                value: sellQuantity,
+              }}
+            />
+            <Button
+              {...{
+                className: 'quantity',
+                onClick: () => setSellQuantity(playerInventoryQuantities[id]),
+                variant: 'contained',
+              }}
+            >
+              / {integerString(playerInventoryQuantities[id])}
+            </Button>
           </>
         )}
       </CardActions>

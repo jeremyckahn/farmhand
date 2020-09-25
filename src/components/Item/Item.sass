@@ -31,18 +31,26 @@ $non-interactive-color: #888
     padding-top: 0
 
   .quantity
-    align-items: baseline
-    display: flex
+    min-width: 0
+    padding-left: 1em
+    padding-right: 1em
 
-    button
-      font-size: 16px
-      font-weight: normal
-      margin-left: 0
+    @media (max-width: #{$break-medium-phone})
+      font-size: 0.75em
+      margin-top: 1.25em
+
+    .MuiButton-label
+      text-overflow: ellipsis
 
   .MuiInput-root
+    margin-left: 1em
     margin-right: 0.25em
     max-width: 75px
 
+    @media (max-width: #{$break-small-phone})
+      margin-left: 0.5em
+      max-width: 50px
+
     input
-      margin-top: 1em
+      margin-top: 0.7em
       text-align: right
