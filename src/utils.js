@@ -434,6 +434,8 @@ export const generateOffspringCow = (cow1, cow2) => {
     ...femaleCow.colorsInBloodline,
   }
 
+  delete colorsInBloodline[cowColors.RAINBOW]
+
   const isRainbowCow =
     Object.keys(colorsInBloodline).length ===
     Object.keys(standardCowColors).length

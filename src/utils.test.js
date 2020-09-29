@@ -340,6 +340,46 @@ describe('generateOffspringCow', () => {
         baseWeight: 2100,
       })
     })
+
+    test('rainbow color is not stored in bloodline', () => {
+      jest.spyOn(Math, 'random').mockReturnValue(1)
+
+      maleCow = generateCow({
+        baseWeight: 2200,
+        color: cowColors.RAINBOW,
+        colorsInBloodline: {
+          [standardCowColors.BLUE]: true,
+          [standardCowColors.BROWN]: true,
+          [standardCowColors.GREEN]: true,
+          [standardCowColors.ORANGE]: true,
+          [standardCowColors.PURPLE]: true,
+          [standardCowColors.WHITE]: true,
+          [standardCowColors.YELLOW]: true,
+        },
+        gender: genders.FEMALE,
+      })
+
+      femaleCow = generateCow({
+        baseWeight: 2000,
+        color: standardCowColors.WHITE,
+        colorsInBloodline: {
+          [standardCowColors.WHITE]: true,
+        },
+        gender: genders.MALE,
+      })
+
+      const { colorsInBloodline } = generateOffspringCow(maleCow, femaleCow)
+
+      expect(colorsInBloodline).toEqual({
+        [standardCowColors.BLUE]: true,
+        [standardCowColors.BROWN]: true,
+        [standardCowColors.GREEN]: true,
+        [standardCowColors.ORANGE]: true,
+        [standardCowColors.PURPLE]: true,
+        [standardCowColors.WHITE]: true,
+        [standardCowColors.YELLOW]: true,
+      })
+    })
   })
 })
 
