@@ -255,7 +255,7 @@ export const doesPlotContainCrop = plot =>
  * @returns {boolean}
  */
 export const isItemAGrownCrop = item =>
-  Boolean(item.type === itemType.CROP && item.cropTimetable)
+  Boolean(item.type === itemType.CROP && !item.growsInto)
 
 /**
  * @param {farmhand.item} item

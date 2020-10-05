@@ -1403,15 +1403,15 @@ describe('sellItem', () => {
       test('sale is not garnished', () => {
         state = fn.sellItem(
           {
-            inventory: [testItem({ id: 'sample-item-1', quantity: 3 })],
+            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 3 })],
             itemsSold: {},
             loanBalance: 100,
             money: 100,
             notifications: [],
             revenue: 0,
-            valueAdjustments: { 'sample-item-1': 10 },
+            valueAdjustments: { 'sample-crop-seeds-1': 10 },
           },
-          testItem({ id: 'sample-item-1' }),
+          testItem({ id: 'sample-crop-seeds-1' }),
           3
         )
 
