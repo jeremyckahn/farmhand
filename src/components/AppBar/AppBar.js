@@ -39,7 +39,7 @@ const MoneyDisplay = ({ money }) => {
           money: previousMoney,
         },
         to: { color: idleColor, money },
-      })
+      }).catch(() => {})
 
       setCurrentTweenable(tweenable)
     }
