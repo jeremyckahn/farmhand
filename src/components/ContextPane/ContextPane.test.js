@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 
 import { stageFocusType } from '../../../src/enums'
 import Inventory from '../Inventory'
-import PlantableItems from '../PlantableItems'
 
 import { ContextPane } from './ContextPane'
 
@@ -24,16 +23,6 @@ beforeEach(() => {
 
 describe('conditional UI', () => {
   describe('stageFocus', () => {
-    describe('stageFocus === stageFocusType.FIELD', () => {
-      beforeEach(() => {
-        component.setProps({ stageFocus: stageFocusType.FIELD })
-      })
-
-      test('renders relevant UI', () => {
-        expect(component.find(PlantableItems)).toHaveLength(1)
-      })
-    })
-
     describe('stageFocus === stageFocusType.SHOP', () => {
       beforeEach(() => {
         component.setProps({ stageFocus: stageFocusType.SHOP })
