@@ -1354,18 +1354,6 @@ export const harvestPlot = (state, x, y) => {
 
 /**
  * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const harvestAll = state => {
-  updateField(state.field, (plot, x, y) => {
-    state = harvestPlot(state, x, y)
-  })
-
-  return state
-}
-
-/**
- * @param {farmhand.state} state
  * @param {number} x
  * @param {number} y
  * @returns {farmhand.state}

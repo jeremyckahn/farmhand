@@ -64,15 +64,6 @@ const achievements = [
     reward: state => addMoney(state, reward),
   }))(),
 
-  ((goal = 15) => ({
-    id: 'master-harvester',
-    name: 'Master Harvester',
-    description: `Harvest ${goal} crops to prove you've mastered the art of the harvest.`,
-    rewardDescription: 'The "Harvest All" skill',
-    condition: state => sumOfCropsHarvested(state.cropsHarvested) >= goal,
-    reward: state => state,
-  }))(),
-
   ((goal = 10000) => ({
     id: 'unlock-crop-price-guide',
     name: 'Prove Yourself as a Farmer',
