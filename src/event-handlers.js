@@ -108,6 +108,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.module:enums.stageFocusType} stageFocus
+   */
+  handleViewChangeButtonClick(stageFocus) {
+    this.setState({ stageFocus })
+  },
+
+  /**
    * @param {farmhand.module:enums.fieldMode} fieldMode
    */
   handleFieldModeSelect(fieldMode) {
