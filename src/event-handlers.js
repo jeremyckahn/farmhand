@@ -127,10 +127,6 @@ export default {
     }))
   },
 
-  handleHarvestAllClick() {
-    this.harvestAll()
-  },
-
   /**
    * @param {farmhand.item} item
    */
