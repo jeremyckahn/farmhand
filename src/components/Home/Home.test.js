@@ -6,7 +6,13 @@ import Home from './Home'
 let component
 
 beforeEach(() => {
-  component = shallow(<Home {...{}} />)
+  component = shallow(
+    <Home
+      {...{
+        handleViewChangeButtonClick: () => {},
+      }}
+    />
+  )
 })
 
 test('renders', () => {
