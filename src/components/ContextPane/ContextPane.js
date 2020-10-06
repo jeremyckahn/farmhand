@@ -19,7 +19,7 @@ export const ContextPane = ({
   stageFocus,
 }) => (
   <div className="ContextPane">
-    {stageFocus === stageFocusType.FIELD && (
+    {stageFocus === stageFocusType.FIELD ? (
       <>
         <header>
           <h3>Toolbelt</h3>
@@ -47,8 +47,9 @@ export const ContextPane = ({
         </header>
         <FieldTools />
       </>
-    )}
-    {stageFocus === stageFocusType.SHOP && (
+    ) : stageFocus === stageFocusType.COW_PEN ? (
+      <CowPenContextMenu />
+    ) : (
       <>
         <h2>Inventory</h2>
         <Inventory
@@ -58,7 +59,6 @@ export const ContextPane = ({
         />
       </>
     )}
-    {stageFocus === stageFocusType.COW_PEN && <CowPenContextMenu />}
   </div>
 )
 
