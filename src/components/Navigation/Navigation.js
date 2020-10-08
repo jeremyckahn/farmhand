@@ -78,7 +78,6 @@ export const Navigation = ({
   inventoryLimit,
   itemsSold,
   isDialogViewOpen,
-  purchasedCowPen,
   stageFocus,
   viewList,
 
@@ -180,7 +179,6 @@ Navigation.propTypes = {
   inventoryLimit: number.isRequired,
   itemsSold: object.isRequired,
   isDialogViewOpen: bool.isRequired,
-  purchasedCowPen: number.isRequired,
   stageFocus: string.isRequired,
   viewList: array.isRequired,
 }
