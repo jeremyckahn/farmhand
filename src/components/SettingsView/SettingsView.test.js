@@ -6,7 +6,14 @@ import SettingsView from './SettingsView'
 let component
 
 beforeEach(() => {
-  component = shallow(<SettingsView {...{}} />)
+  component = shallow(
+    <SettingsView
+      {...{
+        handleExportDataClick: () => {},
+        handleImportDataClick: () => {},
+      }}
+    />
+  )
 })
 
 test('renders', () => {

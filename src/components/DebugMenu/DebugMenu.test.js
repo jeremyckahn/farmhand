@@ -11,8 +11,6 @@ beforeEach(() => {
       {...{
         handleAddMoneyClick: () => {},
         handleClearPersistedDataClick: () => {},
-        handleExportDataClick: () => {},
-        handleImportDataClick: () => {},
         handleItemPurchaseClick: () => {},
       }}
     />

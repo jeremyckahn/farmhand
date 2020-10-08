@@ -1,5 +1,4 @@
 import React from 'react'
-import FileReaderInput from 'react-file-reader-input'
 import { func } from 'prop-types'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
@@ -15,8 +14,6 @@ import './DebugMenu.sass'
 export const DebugMenu = ({
   handleAddMoneyClick,
   handleClearPersistedDataClick,
-  handleExportDataClick,
-  handleImportDataClick,
   handleItemPurchaseClick,
 }) => (
   <ExpansionPanel className="DebugMenu" square={true}>
@@ -40,25 +37,6 @@ export const DebugMenu = ({
       </Button>
       <Button
         color="primary"
-        onClick={handleExportDataClick}
-        variant="contained"
-      >
-        Export data
-      </Button>
-      <FileReaderInput
-        {...{
-          as: 'text',
-          onChange: (e, results) => {
-            handleImportDataClick(results)
-          },
-        }}
-      >
-        <Button color="primary" variant="contained">
-          Import data
-        </Button>
-      </FileReaderInput>
-      <Button
-        color="primary"
         onClick={handleClearPersistedDataClick}
         variant="contained"
       >
@@ -71,8 +49,6 @@ export const DebugMenu = ({
 DebugMenu.propTypes = {
   handleAddMoneyClick: func.isRequired,
   handleClearPersistedDataClick: func.isRequired,
-  handleExportDataClick: func.isRequired,
-  handleImportDataClick: func.isRequired,
   handleItemPurchaseClick: func.isRequired,
 }
 
