@@ -13,6 +13,7 @@ import HistoryIcon from '@material-ui/icons/History'
 import FlashOnIcon from '@material-ui/icons/FlashOn'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import SettingsIcon from '@material-ui/icons/Settings'
 import Tooltip from '@material-ui/core/Tooltip'
 import { array, bool, func, number, object, string } from 'prop-types'
 
@@ -32,6 +33,7 @@ import PriceEventView from '../PriceEventView'
 import AchievementsView from '../AchievementsView'
 import StatsView from '../StatsView'
 import AccountingView from '../AccountingView'
+import SettingsView from '../SettingsView'
 
 import './Navigation.sass'
 
@@ -41,6 +43,7 @@ const {
   ACHIEVEMENTS,
   STATS,
   ACCOUNTING,
+  SETTINGS,
 } = dialogView
 
 const dialogTriggerTextMap = {
@@ -49,6 +52,7 @@ const dialogTriggerTextMap = {
   [ACHIEVEMENTS]: 'View Achievements (a)',
   [STATS]: 'View your stats (d)',
   [ACCOUNTING]: 'View Bank Account (b)',
+  [SETTINGS]: 'View Settings',
 }
 
 const dialogTitleMap = {
@@ -57,6 +61,7 @@ const dialogTitleMap = {
   [ACHIEVEMENTS]: 'Achievements',
   [STATS]: 'Farm Stats',
   [ACCOUNTING]: 'Bank Account',
+  [SETTINGS]: 'Settings',
 }
 
 const dialogContentMap = {
@@ -65,6 +70,7 @@ const dialogContentMap = {
   [ACHIEVEMENTS]: <AchievementsView />,
   [STATS]: <StatsView />,
   [ACCOUNTING]: <AccountingView />,
+  [SETTINGS]: <SettingsView />,
 }
 
 export const Navigation = ({
@@ -124,6 +130,7 @@ export const Navigation = ({
         { dialogView: ACHIEVEMENTS, Icon: AssignmentTurnedInIcon },
         { dialogView: STATS, Icon: TrendingUpIcon },
         { dialogView: ACCOUNTING, Icon: AttachMoneyIcon },
+        { dialogView: SETTINGS, Icon: SettingsIcon },
       ].map(({ dialogView, Icon }) => (
         <Tooltip
           {...{
