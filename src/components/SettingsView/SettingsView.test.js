@@ -9,6 +9,7 @@ beforeEach(() => {
   component = shallow(
     <SettingsView
       {...{
+        handleClearPersistedDataClick: () => {},
         handleExportDataClick: () => {},
         handleImportDataClick: () => {},
       }}

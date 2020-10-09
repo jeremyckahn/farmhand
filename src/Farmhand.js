@@ -47,7 +47,7 @@ import {
   STANDARD_LOAN_AMOUNT,
 } from './constants'
 import { COW_PEN_PURCHASED, LOAN_INCREASED, RECIPE_LEARNED } from './templates'
-import { PROGRESS_SAVED_MESSAGE } from './strings'
+import { DATA_DELETED, PROGRESS_SAVED_MESSAGE } from './strings'
 
 const { CLEANUP, HARVEST, OBSERVE, WATER } = fieldMode
 
@@ -457,9 +457,7 @@ export default class Farmhand extends Component {
   }
 
   clearPersistedData() {
-    this.localforage
-      .clear()
-      .then(() => this.showNotification('localforage.clear() succeeded!'))
+    this.localforage.clear().then(() => this.showNotification(DATA_DELETED))
   }
 
   /**

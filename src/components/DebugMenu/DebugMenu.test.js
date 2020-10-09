@@ -10,7 +10,6 @@ beforeEach(() => {
     <DebugMenu
       {...{
         handleAddMoneyClick: () => {},
-        handleClearPersistedDataClick: () => {},
         handleItemPurchaseClick: () => {},
       }}
     />
