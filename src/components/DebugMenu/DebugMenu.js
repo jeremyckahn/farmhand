@@ -11,11 +11,7 @@ import FarmhandContext from '../../Farmhand.context'
 
 import './DebugMenu.sass'
 
-export const DebugMenu = ({
-  handleAddMoneyClick,
-  handleClearPersistedDataClick,
-  handleItemPurchaseClick,
-}) => (
+export const DebugMenu = ({ handleAddMoneyClick, handleItemPurchaseClick }) => (
   <ExpansionPanel className="DebugMenu" square={true}>
     <ExpansionPanelSummary>
       <h2>Debug Menu</h2>
@@ -35,20 +31,12 @@ export const DebugMenu = ({
       >
         Buy 10 carrots
       </Button>
-      <Button
-        color="primary"
-        onClick={handleClearPersistedDataClick}
-        variant="contained"
-      >
-        Clear data
-      </Button>
     </ExpansionPanelDetails>
   </ExpansionPanel>
 )
 
 DebugMenu.propTypes = {
   handleAddMoneyClick: func.isRequired,
-  handleClearPersistedDataClick: func.isRequired,
   handleItemPurchaseClick: func.isRequired,
 }
 
