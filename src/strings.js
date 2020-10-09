@@ -6,3 +6,4 @@ export const STORM_DESTROYS_SCARECROWS_MESSAGE =
 export const FARM_PRODUCTS_TOOLTIP_TEXT =
   'This figure only includes sales of grown crops and animal products.'
 export const DATA_DELETED = 'Your local game data has been deleted.'
+export const INVALID_DATA_PROVIDED = 'Invalid Farmhand data provided.'

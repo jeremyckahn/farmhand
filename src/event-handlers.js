@@ -18,6 +18,7 @@ import {
   SPRINKLER_ITEM_ID,
 } from './constants'
 import { dialogView, fieldMode } from './enums'
+import { INVALID_DATA_PROVIDED } from './strings'
 
 const {
   CLEANUP,
@@ -373,6 +374,16 @@ export default {
       try {
         const { result: json } = e.srcElement
         const state = JSON.parse(json)
+
+        if (
+          !Object.keys(state).every(
+            key =>
+              Boolean(this.state.hasOwnProperty(key)) &&
+              typeof this.state[key] === typeof state[key]
+          )
+        ) {
+          throw new Error(INVALID_DATA_PROVIDED)
+        }
 
         this.setState(state)
         this.showNotification('Data loaded!', 'success')
