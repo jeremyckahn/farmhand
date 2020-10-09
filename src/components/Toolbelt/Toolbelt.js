@@ -21,23 +21,20 @@ export const Toolbelt = ({
         {
           alt: 'A watering can for hydrating plants.',
           fieldMode: WATER,
-          keybinding: 'w',
           toolImageId: 'watering-can',
         },
         {
           alt: 'A scythe for crop harvesting.',
           fieldMode: HARVEST,
-          keybinding: 's',
           toolImageId: 'scythe',
         },
         {
           alt:
             'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.',
           fieldMode: CLEANUP,
-          keybinding: 'h',
           toolImageId: 'hoe',
         },
-      ].map(({ alt, fieldMode, keybinding, toolImageId }) => (
+      ].map(({ alt, fieldMode, toolImageId }, i) => (
         <Tooltip
           {...{
             key: fieldMode,
@@ -45,7 +42,7 @@ export const Toolbelt = ({
             title: (
               <>
                 <p>{alt}</p>
-                <p>({keybinding})</p>
+                <p>(shift + {i + 1})</p>
               </>
             ),
           }}
