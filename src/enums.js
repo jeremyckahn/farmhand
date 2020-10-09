@@ -95,9 +95,10 @@ export { standardCowColors }
  */
 export const dialogView = enumify([
   'NONE',
+  'ACCOUNTING',
+  'ACHIEVEMENTS',
   'FARMERS_LOG',
   'PRICE_EVENTS',
-  'ACHIEVEMENTS',
+  'SETTINGS',
   'STATS',
-  'ACCOUNTING',
 ])
