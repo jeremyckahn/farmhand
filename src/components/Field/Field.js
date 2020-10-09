@@ -28,9 +28,15 @@ const {
   WATER,
 } = fieldMode
 
-const keyMap = {
+const zoomKeyMap = {
   zoomIn: ['=', 'plus'],
   zoomOut: '-',
+}
+
+const fieldKeyMap = {
+  selectWateringCan: 'shift+1',
+  selectScythe: 'shift+2',
+  selectHoe: 'shift+3',
 }
 
 export const isInHoverRange = ({
@@ -113,53 +119,52 @@ export const FieldContentWrapper = ({
 
   return (
     <>
-      <TransformComponent>{fieldContent}</TransformComponent>
       <GlobalHotKeys
         {...{
-          keyMap,
+          keyMap: zoomKeyMap,
           handlers: {
             zoomIn,
             zoomOut,
           },
         }}
-      >
-        <div className="fab-buttons zoom-controls right">
-          <Tooltip
+      />
+      <TransformComponent>{fieldContent}</TransformComponent>
+      <div className="fab-buttons zoom-controls right">
+        <Tooltip
+          {...{
+            placement: 'top',
+            title: 'Zoom In',
+          }}
+        >
+          <Fab
             {...{
-              placement: 'top',
-              title: 'Zoom In',
+              'aria-label': 'Zoom In',
+              color: 'primary',
+              onClick: zoomIn,
             }}
           >
-            <Fab
-              {...{
-                'aria-label': 'Zoom In',
-                color: 'primary',
-                onClick: zoomIn,
-              }}
-            >
-              <ZoomInIcon />
-            </Fab>
-          </Tooltip>
-        </div>
-        <div className="fab-buttons zoom-controls left">
-          <Tooltip
+            <ZoomInIcon />
+          </Fab>
+        </Tooltip>
+      </div>
+      <div className="fab-buttons zoom-controls left">
+        <Tooltip
+          {...{
+            placement: 'top',
+            title: 'Zoom Out',
+          }}
+        >
+          <Fab
             {...{
-              placement: 'top',
-              title: 'Zoom Out',
+              'aria-label': 'Zoom Out',
+              color: 'primary',
+              onClick: zoomOut,
             }}
           >
-            <Fab
-              {...{
-                'aria-label': 'Zoom Out',
-                color: 'primary',
-                onClick: zoomOut,
-              }}
-            >
-              <ZoomOutIcon />
-            </Fab>
-          </Tooltip>
-        </div>
-      </GlobalHotKeys>
+            <ZoomOutIcon />
+          </Fab>
+        </Tooltip>
+      </div>
     </>
   )
 }
@@ -250,87 +255,98 @@ export const Field = props => {
   }
 
   return (
-    <div
-      {...{
-        className: classNames('Field', {
-          'cleanup-mode': fieldMode === CLEANUP,
-          'fertilize-mode': fieldMode === FERTILIZE,
-          'harvest-mode': fieldMode === HARVEST,
-          'is-inventory-full': !doesInventorySpaceRemain({
-            inventory,
-            inventoryLimit,
-          }),
-          'plant-mode': fieldMode === PLANT,
-          'set-scarecrow-mode': fieldMode === SET_SCARECROW,
-          'set-sprinkler-mode': fieldMode === SET_SPRINKLER,
-          'water-mode': fieldMode === WATER,
-        }),
-        'data-purchased-field': purchasedField,
-      }}
-    >
-      <TransformWrapper
+    <>
+      <GlobalHotKeys
         {...{
-          options: {
-            limitToBounds: false,
-          },
-          reset: {
-            animationTime: 0,
-          },
-          pan: {
-            disabled: currentScale < FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
-          },
-          // These 0s prevent NREs within react-zoom-pan-pinch, but also
-          // disable zoom animations.
-          zoomIn: {
-            animationTime: 0,
-          },
-          zoomOut: {
-            animationTime: 0,
-          },
-          onZoomChange: ({ scale }) => {
-            // If setCurrentScale with scale < 1 is called here, it causes a
-            // reference error within react-zoom-pan-pinch.
-            if (scale >= 1) {
-              setCurrentScale(scale)
-            }
-          },
-          wheel: {
-            disabled: true,
-          },
-          doubleClick: { disabled: true },
+          keyMap: fieldKeyMap,
+          // Handlers are defined in Farmhand.js's initInputHandlers.
+        }}
+      />
+      <div
+        {...{
+          className: classNames('Field', {
+            'cleanup-mode': fieldMode === CLEANUP,
+            'fertilize-mode': fieldMode === FERTILIZE,
+            'harvest-mode': fieldMode === HARVEST,
+            'is-inventory-full': !doesInventorySpaceRemain({
+              inventory,
+              inventoryLimit,
+            }),
+            'plant-mode': fieldMode === PLANT,
+            'set-scarecrow-mode': fieldMode === SET_SCARECROW,
+            'set-sprinkler-mode': fieldMode === SET_SPRINKLER,
+            'water-mode': fieldMode === WATER,
+          }),
+          'data-purchased-field': purchasedField,
         }}
       >
-        {transformProps => (
-          <FieldContentWrapper
-            {...{
-              ...transformProps,
-              fieldContent: (
-                <FieldContent {...{ ...props, hoveredPlot, setHoveredPlot }} />
-              ),
-            }}
-          />
+        <TransformWrapper
+          {...{
+            options: {
+              limitToBounds: false,
+            },
+            reset: {
+              animationTime: 0,
+            },
+            pan: {
+              disabled: currentScale < FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
+            },
+            // These 0s prevent NREs within react-zoom-pan-pinch, but also
+            // disable zoom animations.
+            zoomIn: {
+              animationTime: 0,
+            },
+            zoomOut: {
+              animationTime: 0,
+            },
+            onZoomChange: ({ scale }) => {
+              // If setCurrentScale with scale < 1 is called here, it causes a
+              // reference error within react-zoom-pan-pinch.
+              if (scale >= 1) {
+                setCurrentScale(scale)
+              }
+            },
+            wheel: {
+              disabled: true,
+            },
+            doubleClick: { disabled: true },
+          }}
+        >
+          {transformProps => (
+            <FieldContentWrapper
+              {...{
+                ...transformProps,
+                fieldContent: (
+                  <FieldContent
+                    {...{ ...props, hoveredPlot, setHoveredPlot }}
+                  />
+                ),
+              }}
+            />
+          )}
+        </TransformWrapper>
+        {adjustableRangeFieldModes.has(fieldMode) && (
+          <div className="slider-wrapper">
+            <Slider
+              {...{
+                marks: true,
+                max: field.length - 1,
+                min: 0,
+                onChange: (e, value) =>
+                  handleFieldActionRangeSliderChange(value),
+                step: 1,
+                value: fieldActionRange,
+                valueLabelDisplay: 'auto',
+                valueLabelFormat: value => `${value * 2 + 1}`,
+                ValueLabelComponent: RangeSliderValueLabelComponent,
+              }}
+            />
+          </div>
         )}
-      </TransformWrapper>
-      {adjustableRangeFieldModes.has(fieldMode) && (
-        <div className="slider-wrapper">
-          <Slider
-            {...{
-              marks: true,
-              max: field.length - 1,
-              min: 0,
-              onChange: (e, value) => handleFieldActionRangeSliderChange(value),
-              step: 1,
-              value: fieldActionRange,
-              valueLabelDisplay: 'auto',
-              valueLabelFormat: value => `${value * 2 + 1}`,
-              ValueLabelComponent: RangeSliderValueLabelComponent,
-            }}
-          />
-        </div>
-      )}
-      <QuickSelect />
-      <div {...{ className: 'spacer' }} />
-    </div>
+        <QuickSelect />
+        <div {...{ className: 'spacer' }} />
+      </div>
+    </>
   )
 }
 

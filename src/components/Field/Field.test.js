@@ -74,34 +74,34 @@ describe('field rendering', () => {
 
 describe('fertilize-mode class', () => {
   test('is not present when fieldMode != FERTILIZE', () => {
-    expect(component.hasClass('fertilize-mode')).toBeFalsy()
+    expect(component.find('.Field').hasClass('fertilize-mode')).toBeFalsy()
   })
 
   test('is present when fieldMode == FERTILIZE', () => {
     component.setProps({ fieldMode: fieldMode.FERTILIZE })
-    expect(component.hasClass('fertilize-mode')).toBeTruthy()
+    expect(component.find('.Field').hasClass('fertilize-mode')).toBeTruthy()
   })
 })
 
 describe('plant-mode class', () => {
   test('is not present when fieldMode != PLANT', () => {
-    expect(component.hasClass('plant-mode')).toBeFalsy()
+    expect(component.find('.Field').hasClass('plant-mode')).toBeFalsy()
   })
 
   test('is present when fieldMode == PLANT', () => {
     component.setProps({ fieldMode: fieldMode.PLANT })
-    expect(component.hasClass('plant-mode')).toBeTruthy()
+    expect(component.find('.Field').hasClass('plant-mode')).toBeTruthy()
   })
 })
 
 describe('harvest-mode class', () => {
   test('is not present when fieldMode != HARVEST', () => {
-    expect(component.hasClass('harvest-mode')).toBeFalsy()
+    expect(component.find('.Field').hasClass('harvest-mode')).toBeFalsy()
   })
 
   test('is present when fieldMode == HARVEST', () => {
     component.setProps({ fieldMode: fieldMode.HARVEST })
-    expect(component.hasClass('harvest-mode')).toBeTruthy()
+    expect(component.find('.Field').hasClass('harvest-mode')).toBeTruthy()
   })
 })
 
@@ -113,7 +113,7 @@ describe('is-inventory-full class', () => {
   })
 
   test('is not present when inventory space remains', () => {
-    expect(component.hasClass('is-inventory-full')).toBeFalsy()
+    expect(component.find('.Field').hasClass('is-inventory-full')).toBeFalsy()
   })
 
   test('is present when inventory space does not remain', () => {
@@ -121,29 +121,29 @@ describe('is-inventory-full class', () => {
     component.setProps({
       inventory: [testItem({ quantity: 2 })],
     })
-    expect(component.hasClass('is-inventory-full')).toBeTruthy()
+    expect(component.find('.Field').hasClass('is-inventory-full')).toBeTruthy()
   })
 })
 
 describe('cleanup-mode class', () => {
   test('is not present when fieldMode != CLEANUP', () => {
-    expect(component.hasClass('cleanup-mode')).toBeFalsy()
+    expect(component.find('.Field').hasClass('cleanup-mode')).toBeFalsy()
   })
 
   test('is present when fieldMode == CLEANUP', () => {
     component.setProps({ fieldMode: fieldMode.CLEANUP })
-    expect(component.hasClass('cleanup-mode')).toBeTruthy()
+    expect(component.find('.Field').hasClass('cleanup-mode')).toBeTruthy()
   })
 })
 
 describe('water-mode class', () => {
   test('is not present when fieldMode != WATER', () => {
-    expect(component.hasClass('water-mode')).toBeFalsy()
+    expect(component.find('.Field').hasClass('water-mode')).toBeFalsy()
   })
 
   test('is present when fieldMode == WATER', () => {
     component.setProps({ fieldMode: fieldMode.WATER })
-    expect(component.hasClass('water-mode')).toBeTruthy()
+    expect(component.find('.Field').hasClass('water-mode')).toBeTruthy()
   })
 })
 
