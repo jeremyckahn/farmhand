@@ -1,4 +1,13 @@
+@import ../../styles/variables.sass
+
 .SettingsView
   button
-    clear: left
     margin: 0.5em
+
+  .button-row
+    display: flex
+    justify-content: center
+
+    @media (max-width: #{$break-sm})
+      align-items: center
+      flex-direction: column
