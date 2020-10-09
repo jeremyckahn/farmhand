@@ -751,3 +751,40 @@ export const getRandomLevelUpReward = level =>
  * @returns {number}
  */
 export const getRandomLevelUpRewardQuantity = level => level * 10
+
+/**
+ * @param {Object} state
+ * @returns {Object} A version of `state` that only contains keys of
+ * farmhand.state data that should be persisted.
+ */
+export const reduceByPersistedKeys = state => {
+  return [
+    'cowForSale',
+    'completedAchievements',
+    'cowBreedingPen',
+    'cowInventory',
+    'cowColorsPurchased',
+    'cropsHarvested',
+    'dayCount',
+    'field',
+    'historicalValueAdjustments',
+    'inventory',
+    'inventoryLimit',
+    'itemsSold',
+    'learnedRecipes',
+    'loanBalance',
+    'money',
+    'newDayNotifications',
+    'notificationLog',
+    'purchasedCowPen',
+    'purchasedField',
+    'priceCrashes',
+    'priceSurges',
+    'revenue',
+    'valueAdjustments',
+  ].reduce((acc, key) => {
+    acc[key] = state[key]
+
+    return acc
+  }, {})
+}
