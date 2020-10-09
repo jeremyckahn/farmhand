@@ -37,6 +37,7 @@ import {
   levelAchieved,
   memoize,
   nullArray,
+  reduceByPersistedKeys,
 } from './utils'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
@@ -203,38 +204,6 @@ export default class Farmhand extends Component {
 
     this.initInputHandlers()
     this.initReducers()
-  }
-
-  static reduceByPersistedKeys(state) {
-    return [
-      'cowForSale',
-      'completedAchievements',
-      'cowBreedingPen',
-      'cowInventory',
-      'cowColorsPurchased',
-      'cropsHarvested',
-      'dayCount',
-      'field',
-      'historicalValueAdjustments',
-      'inventory',
-      'inventoryLimit',
-      'itemsSold',
-      'learnedRecipes',
-      'loanBalance',
-      'money',
-      'newDayNotifications',
-      'notificationLog',
-      'purchasedCowPen',
-      'purchasedField',
-      'priceCrashes',
-      'priceSurges',
-      'revenue',
-      'valueAdjustments',
-    ].reduce((acc, key) => {
-      acc[key] = state[key]
-
-      return acc
-    }, {})
   }
 
   get viewTitle() {
@@ -504,7 +473,7 @@ export default class Farmhand extends Component {
         this.localforage
           .setItem(
             'state',
-            Farmhand.reduceByPersistedKeys({
+            reduceByPersistedKeys({
               ...this.state,
 
               // Old pendingNotifications are persisted so that they can be

@@ -12,12 +12,14 @@ import {
   getLevelEntitlements,
   levelAchieved,
   moneyTotal,
+  reduceByPersistedKeys,
 } from './utils'
 import {
   FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
   SPRINKLER_ITEM_ID,
 } from './constants'
 import { dialogView, fieldMode } from './enums'
+import { INVALID_DATA_PROVIDED } from './strings'
 
 const {
   CLEANUP,
@@ -355,9 +357,12 @@ export default {
   },
 
   handleExportDataClick() {
-    const blob = new Blob([JSON.stringify(this.state, null, 2)], {
-      type: 'application/json;charset=utf-8',
-    })
+    const blob = new Blob(
+      [JSON.stringify(reduceByPersistedKeys(this.state), null, 2)],
+      {
+        type: 'application/json;charset=utf-8',
+      }
+    )
 
     saveAs(blob, 'farmhand.json')
   },
@@ -372,7 +377,15 @@ export default {
     fileReader.addEventListener('loadend', e => {
       try {
         const { result: json } = e.srcElement
-        const state = JSON.parse(json)
+        const state = reduceByPersistedKeys(JSON.parse(json))
+
+        if (
+          Object.keys(state).some(
+            key => typeof this.state[key] !== typeof state[key]
+          )
+        ) {
+          throw new Error(INVALID_DATA_PROVIDED)
+        }
 
         this.setState(state)
         this.showNotification('Data loaded!', 'success')

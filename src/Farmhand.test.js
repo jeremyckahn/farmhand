@@ -18,6 +18,7 @@ import {
   LOAN_BALANCE_NOTIFICATION,
   RECIPE_LEARNED,
 } from './templates'
+import { reduceByPersistedKeys } from './utils'
 import { PROGRESS_SAVED_MESSAGE } from './strings'
 import { stageFocusType } from './enums'
 import { recipesMap } from './data/maps'
@@ -299,7 +300,7 @@ describe('instance methods', () => {
     test('persists app state with pending newDayNotifications', () => {
       expect(component.instance().localforage.setItem).toHaveBeenCalledWith(
         'state',
-        Farmhand.reduceByPersistedKeys({
+        reduceByPersistedKeys({
           ...component.state(),
           newDayNotifications: [
             { message: 'foo', severity: 'info' },
