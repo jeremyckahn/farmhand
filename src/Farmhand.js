@@ -385,7 +385,7 @@ export default class Farmhand extends Component {
     })
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     const { hasBooted, stageFocus, isMenuOpen } = this.state
 
     // The operations after this if block concern transient gameplay state, but
@@ -457,6 +457,20 @@ export default class Farmhand extends Component {
   }
 
   /**
+   * @param {Object} [overrides] Data to patch into this.state when persisting.
+   * @return {Promise}
+   */
+  persistState(overrides = {}) {
+    return this.localforage.setItem(
+      'state',
+      reduceByPersistedKeys({
+        ...this.state,
+        ...overrides,
+      })
+    )
+  }
+
+  /**
    * @param {boolean} [isFirstDay=false]
    */
   incrementDay(isFirstDay = false) {
@@ -471,17 +485,11 @@ export default class Farmhand extends Component {
     this.setState(
       { ...nextDayState, newDayNotifications: [], notifications: [] },
       () => {
-        this.localforage
-          .setItem(
-            'state',
-            reduceByPersistedKeys({
-              ...this.state,
-
-              // Old pendingNotifications are persisted so that they can be
-              // shown to the player when the app reloads.
-              newDayNotifications: pendingNotifications,
-            })
-          )
+        this.persistState({
+          // Old pendingNotifications are persisted so that they can be
+          // shown to the player when the app reloads.
+          newDayNotifications: pendingNotifications,
+        })
           .then(({ newDayNotifications }) =>
             []
               .concat(newDayNotifications)
