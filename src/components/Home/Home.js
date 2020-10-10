@@ -57,7 +57,7 @@ The goal of Farmhand is to make money by buying, growing, harvesting, and then s
 
 If you can master the art of the harvest, there's no limit to how profitable you can become! Every farmer starts with a $${STANDARD_LOAN_AMOUNT} loan from the bank. If you run out of money, you can always take out another loan. Be careful though, because the bank takes a portion of your sales until the debt is repaid. You can access your bank account in the menu.
 
-A few other tips:
+### A few other tips:
 
 * Press the bed button in the corner of the screen to end the day and advance the game. This also saves your progress.
 
