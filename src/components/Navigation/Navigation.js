@@ -46,13 +46,15 @@ const {
   SETTINGS,
 } = dialogView
 
+// The labels here must be kept in sync with mappings in initInputHandlers in
+// Farmhand.js.
 const dialogTriggerTextMap = {
   [FARMERS_LOG]: "Open Farmer's Log (l)",
-  [PRICE_EVENTS]: 'See Price Events (p)',
+  [PRICE_EVENTS]: 'See Price Events (e)',
   [ACHIEVEMENTS]: 'View Achievements (a)',
-  [STATS]: 'View your stats (d)',
+  [STATS]: 'View your stats (s)',
   [ACCOUNTING]: 'View Bank Account (b)',
-  [SETTINGS]: 'View Settings',
+  [SETTINGS]: 'View Settings (comma)',
 }
 
 const dialogTitleMap = {
