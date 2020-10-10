@@ -22,8 +22,6 @@ beforeEach(() => {
     <Plot
       {...{
         handlePlotClick: () => {},
-        hoveredPlot: {},
-        hoveredPlotRangeSize: 0,
         isInHoverRange: false,
         lifeStage: cropLifeStage.SEED,
         setHoveredPlot: () => {},

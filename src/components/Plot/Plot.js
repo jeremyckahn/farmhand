@@ -58,8 +58,6 @@ export const getDaysLeftToMature = plotContent =>
 
 export const Plot = ({
   handlePlotClick,
-  hoveredPlot,
-  hoveredPlotRangeSize,
   isInHoverRange,
   plotContent,
   setHoveredPlot,
@@ -146,8 +144,6 @@ export const Plot = ({
 
 Plot.propTypes = {
   handlePlotClick: func.isRequired,
-  hoveredPlot: object.isRequired,
-  hoveredPlotRangeSize: number.isRequired,
   isInHoverRange: bool.isRequired,
   lifeStage: string,
   plotContent: object,
