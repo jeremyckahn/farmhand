@@ -8,7 +8,7 @@ import { stageFocusType } from '../../enums'
 
 import './ContextPane.sass'
 
-const PlayerInventory = memo(
+export const PlayerInventory = memo(
   ({ playerInventory }) => (
     <Inventory
       {...{

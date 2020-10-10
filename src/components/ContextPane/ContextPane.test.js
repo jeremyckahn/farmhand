@@ -2,9 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { stageFocusType } from '../../../src/enums'
-import Inventory from '../Inventory'
 
-import { ContextPane } from './ContextPane'
+import { ContextPane, PlayerInventory } from './ContextPane'
 
 let component
 
@@ -27,7 +26,7 @@ describe('conditional UI', () => {
       })
 
       test('renders relevant UI', () => {
-        expect(component.find(Inventory)).toHaveLength(1)
+        expect(component.find(PlayerInventory)).toHaveLength(1)
       })
     })
   })
