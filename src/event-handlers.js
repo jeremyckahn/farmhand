@@ -19,7 +19,7 @@ import {
   SPRINKLER_ITEM_ID,
 } from './constants'
 import { dialogView, fieldMode } from './enums'
-import { INVALID_DATA_PROVIDED } from './strings'
+import { INVALID_DATA_PROVIDED, PROGRESS_SAVED_MESSAGE } from './strings'
 
 const {
   CLEANUP,
@@ -396,5 +396,10 @@ export default {
     })
 
     fileReader.readAsText(file.slice())
+  },
+
+  async handleSaveButtonClick() {
+    await this.persistState()
+    this.showNotification(PROGRESS_SAVED_MESSAGE, 'info')
   },
 }

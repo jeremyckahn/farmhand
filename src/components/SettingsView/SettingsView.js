@@ -17,11 +17,24 @@ const SettingsView = ({
   handleClearPersistedDataClick,
   handleExportDataClick,
   handleImportDataClick,
+  handleSaveButtonClick,
 }) => {
   const [isClearDataDialogOpen, setIsClearDataDialogOpen] = useState(false)
 
   return (
     <div className="SettingsView">
+      <div className="button-row">
+        <Button
+          {...{
+            color: 'primary',
+            onClick: handleSaveButtonClick,
+            variant: 'contained',
+          }}
+        >
+          Save Game
+        </Button>
+      </div>
+      <Divider />
       <div className="button-row">
         <Tooltip
           {...{
@@ -120,6 +133,7 @@ SettingsView.propTypes = {
   handleClearPersistedDataClick: func.isRequired,
   handleExportDataClick: func.isRequired,
   handleImportDataClick: func.isRequired,
+  handleSaveButtonClick: func.isRequired,
 }
 
 export default function Consumer(props) {
