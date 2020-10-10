@@ -185,7 +185,7 @@ Cow.propTypes = {
 }
 
 export const CowPen = ({ cowInventory, handleCowClick, selectedCowId }) => (
-  <div className="CowPen">
+  <div className="CowPen fill">
     {cowInventory.map(cow => (
       <Cow
         {...{

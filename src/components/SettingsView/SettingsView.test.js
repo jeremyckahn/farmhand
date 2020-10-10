@@ -12,6 +12,7 @@ beforeEach(() => {
         handleClearPersistedDataClick: () => {},
         handleExportDataClick: () => {},
         handleImportDataClick: () => {},
+        handleSaveButtonClick: () => {},
       }}
     />
   )
