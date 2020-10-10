@@ -484,29 +484,28 @@ export default class Farmhand extends Component {
 
     this.setState(
       { ...nextDayState, newDayNotifications: [], notifications: [] },
-      () => {
-        this.persistState({
-          // Old pendingNotifications are persisted so that they can be
-          // shown to the player when the app reloads.
-          newDayNotifications: pendingNotifications,
-        })
-          .then(({ newDayNotifications }) =>
-            []
-              .concat(newDayNotifications)
-              .concat(
-                isFirstDay
-                  ? []
-                  : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
-              )
-              .forEach(({ message, severity }) =>
-                this.showNotification(message, severity)
-              )
-          )
-          .catch(e => {
-            console.error(e)
-
-            this.showNotification(JSON.stringify(e))
+      async () => {
+        try {
+          await this.persistState({
+            // Old pendingNotifications are persisted so that they can be
+            // shown to the player when the app reloads.
+            newDayNotifications: pendingNotifications,
           })
+          ;[]
+            .concat(pendingNotifications)
+            .concat(
+              isFirstDay
+                ? []
+                : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
+            )
+            .forEach(({ message, severity }) =>
+              this.showNotification(message, severity)
+            )
+        } catch (e) {
+          console.error(e)
+
+          this.showNotification(JSON.stringify(e), 'error')
+        }
       }
     )
   }
