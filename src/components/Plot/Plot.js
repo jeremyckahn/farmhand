@@ -10,7 +10,6 @@ import {
   getCropLifecycleDuration,
   getPlotContentType,
   getPlotImage,
-  isMouseHeldDown,
 } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
@@ -92,11 +91,6 @@ export const Plot = ({
           backgroundImage: getBackgroundStyles(plotContent),
         },
         onClick: () => handlePlotClick(x, y),
-        onMouseEnter: () => {
-          if (isMouseHeldDown()) {
-            handlePlotClick(x, y)
-          }
-        },
         onMouseOver: () => setHoveredPlot({ x, y }),
       }}
     >
