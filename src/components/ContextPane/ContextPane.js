@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { array, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -8,6 +8,17 @@ import { stageFocusType } from '../../enums'
 
 import './ContextPane.sass'
 
+export const PlayerInventory = memo(
+  ({ playerInventory }) => (
+    <Inventory
+      {...{
+        items: playerInventory,
+      }}
+    />
+  ),
+  (prev, next) => prev.playerInventory === next.playerInventory
+)
+
 export const ContextPane = ({ playerInventory, stageFocus }) => (
   <div className="ContextPane">
     {stageFocus === stageFocusType.COW_PEN ? (
@@ -15,9 +26,9 @@ export const ContextPane = ({ playerInventory, stageFocus }) => (
     ) : (
       <>
         <h2>Inventory</h2>
-        <Inventory
+        <PlayerInventory
           {...{
-            items: playerInventory,
+            playerInventory,
           }}
         />
       </>

@@ -10,7 +10,6 @@ import {
   getCropLifecycleDuration,
   getPlotContentType,
   getPlotImage,
-  isMouseHeldDown,
 } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
@@ -58,8 +57,6 @@ export const getDaysLeftToMature = plotContent =>
 
 export const Plot = ({
   handlePlotClick,
-  hoveredPlot,
-  hoveredPlotRangeSize,
   isInHoverRange,
   plotContent,
   setHoveredPlot,
@@ -94,11 +91,6 @@ export const Plot = ({
           backgroundImage: getBackgroundStyles(plotContent),
         },
         onClick: () => handlePlotClick(x, y),
-        onMouseEnter: () => {
-          if (isMouseHeldDown()) {
-            handlePlotClick(x, y)
-          }
-        },
         onMouseOver: () => setHoveredPlot({ x, y }),
       }}
     >
@@ -146,8 +138,6 @@ export const Plot = ({
 
 Plot.propTypes = {
   handlePlotClick: func.isRequired,
-  hoveredPlot: object.isRequired,
-  hoveredPlotRangeSize: number.isRequired,
   isInHoverRange: bool.isRequired,
   lifeStage: string,
   plotContent: object,

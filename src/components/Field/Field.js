@@ -181,7 +181,11 @@ export const FieldContent = ({
   rows,
   setHoveredPlot,
 }) => (
-  <>
+  <div
+    {...{
+      onMouseLeave: () => setHoveredPlot({ x: null, y: null }),
+    }}
+  >
     {nullArray(rows).map((_null, y) => (
       <div className="row" key={y}>
         {nullArray(columns).map((_null, x, arr, plotContent = field[y][x]) => (
@@ -199,7 +203,7 @@ export const FieldContent = ({
         ))}
       </div>
     ))}
-  </>
+  </div>
 )
 
 FieldContent.propTypes = {

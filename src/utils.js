@@ -630,16 +630,6 @@ export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
 export const doesInventorySpaceRemain = ({ inventory, inventoryLimit }) =>
   inventorySpaceRemaining({ inventory, inventoryLimit }) > 0
 
-let isMouseDown = false
-document.addEventListener('mousedown', () => (isMouseDown = true))
-document.addEventListener('mouseup', () => (isMouseDown = false))
-document.addEventListener('mouseleave', () => (isMouseDown = false))
-
-/**
- * @return {boolean}
- */
-export const isMouseHeldDown = () => isMouseDown
-
 /**
  * @param {Array.<farmhand.item>} inventory
  * @return {boolean}
