@@ -93,6 +93,16 @@ export class TierPurchase extends Component {
       <Card className="TierPurchase">
         <CardHeader {...{ title }} />
         <CardActions>
+          <Button
+            {...{
+              color: 'primary',
+              disabled: !canPlayerBuySelectedTier,
+              onClick: handleTierPurchase,
+              variant: 'contained',
+            }}
+          >
+            Buy
+          </Button>
           <Select
             {...{
               onChange: onSelectChange,
@@ -109,16 +119,6 @@ export class TierPurchase extends Component {
               </MenuItem>
             ))}
           </Select>
-          <Button
-            {...{
-              color: 'primary',
-              disabled: !canPlayerBuySelectedTier,
-              onClick: handleTierPurchase,
-              variant: 'contained',
-            }}
-          >
-            Buy
-          </Button>
         </CardActions>
       </Card>
     )

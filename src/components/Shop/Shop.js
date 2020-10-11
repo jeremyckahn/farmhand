@@ -97,8 +97,7 @@ export const Shop = ({
           {...{
             handleTierPurchase: handleCowPenPurchase,
             purchasedTier: purchasedCowPen,
-            renderTierLabel: ({ cows, price }) =>
-              `$${price}: Capacity for ${cows} cows`,
+            renderTierLabel: ({ cows, price }) => `$${price}: ${cows} cow pen`,
             tiers: PURCHASEABLE_COW_PENS,
             title: 'Buy cow pen',
           }}
