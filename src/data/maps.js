@@ -2,7 +2,7 @@ import * as items from '../data/items'
 import * as recipes from '../data/recipes'
 import { cropType } from '../enums'
 
-const { CARROT, CORN, PUMPKIN, SPINACH } = cropType
+const { CARROT, CORN, ONION, POTATO, PUMPKIN, SOYBEAN, SPINACH } = cropType
 
 export const recipesMap = Object.keys(recipes).reduce((acc, recipeName) => {
   const recipe = recipes[recipeName]
@@ -22,6 +22,9 @@ export const itemsMap = {
 export const cropIdToTypeMap = {
   [CARROT]: 'carrot',
   [CORN]: 'corn',
+  [ONION]: 'onion',
+  [POTATO]: 'potato',
   [PUMPKIN]: 'pumpkin',
+  [SOYBEAN]: 'soybean',
   [SPINACH]: 'spinach',
 }

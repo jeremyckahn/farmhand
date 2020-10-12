@@ -29,6 +29,18 @@ export const items = {
   'corn-growing': require('./items/corn-growing.png'),
   'corn-seed': require('./items/corn-seed.png'),
 
+  potato: require('./items/potato.png'),
+  'potato-growing': require('./items/potato-growing.png'),
+  'potato-seed': require('./items/potato-seed.png'),
+
+  onion: require('./items/onion.png'),
+  'onion-growing': require('./items/onion-growing.png'),
+  'onion-seed': require('./items/onion-seed.png'),
+
+  soybean: require('./items/soybean.png'),
+  'soybean-growing': require('./items/soybean-growing.png'),
+  'soybean-seed': require('./items/soybean-seed.png'),
+
   // Field tools
   fertilizer: require('./items/fertilizer.png'),
   scarecrow: require('./items/scarecrow.png'),
