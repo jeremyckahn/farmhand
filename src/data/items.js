@@ -11,7 +11,7 @@ import {
 } from '../constants'
 
 const { freeze } = Object
-const { CARROT, CORN, PUMPKIN, SPINACH } = cropType
+const { CARROT, CORN, ONION, POTATO, PUMPKIN, SOYBEAN, SPINACH } = cropType
 const { SEED, GROWING } = cropLifeStage
 const {
   COW_FEED,
@@ -163,6 +163,81 @@ export const cornSeed = crop({
 export const corn = crop({
   ...fromSeed(cornSeed),
   name: 'Corn',
+})
+
+/**
+ * @property farmhand.module:items.potatoSeed
+ * @type {farmhand.item}
+ */
+export const potatoSeed = crop({
+  cropType: POTATO,
+  cropTimetable: {
+    [SEED]: 2,
+    [GROWING]: 3,
+  },
+  growsInto: 'potato',
+  id: 'potato-seed',
+  name: 'Potato Seeds',
+  tier: 2,
+})
+
+/**
+ * @property farmhand.module:items.potato
+ * @type {farmhand.item}
+ */
+export const potato = crop({
+  ...fromSeed(potatoSeed),
+  name: 'Potato',
+})
+
+/**
+ * @property farmhand.module:items.onionSeed
+ * @type {farmhand.item}
+ */
+export const onionSeed = crop({
+  cropType: ONION,
+  cropTimetable: {
+    [SEED]: 3,
+    [GROWING]: 4,
+  },
+  growsInto: 'onion',
+  id: 'onion-seed',
+  name: 'Onion Seeds',
+  tier: 2,
+})
+
+/**
+ * @property farmhand.module:items.onion
+ * @type {farmhand.item}
+ */
+export const onion = crop({
+  ...fromSeed(onionSeed),
+  name: 'Onion',
+})
+
+/**
+ * @property farmhand.module:items.soybeanSeed
+ * @type {farmhand.item}
+ */
+export const soybeanSeed = crop({
+  cropType: SOYBEAN,
+  cropTimetable: {
+    [SEED]: 2,
+    [GROWING]: 2,
+  },
+  growsInto: 'soybean',
+  id: 'soybean-seed',
+  name: 'Soybean Seeds',
+  tier: 3,
+})
+
+/**
+ * @property farmhand.module:items.soybean
+ * @type {farmhand.item}
+ */
+export const soybean = crop({
+  ...fromSeed(soybeanSeed),
+  name: 'Soybean',
 })
 
 ////////////////////////////////////////

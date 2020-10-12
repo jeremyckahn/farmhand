@@ -34,6 +34,18 @@ levels[12] = {
   increasesSprinklerRange: true,
 }
 
+levels[14] = {
+  unlocksShopItem: items.potatoSeed.id,
+}
+
+levels[16] = {
+  unlocksShopItem: items.onionSeed.id,
+}
+
+levels[18] = {
+  unlocksShopItem: items.soybeanSeed.id,
+}
+
 for (let i = 0; i < levels.length; i++) {
   levels[i] = { id: i, ...levels[i] }
 }

@@ -4,6 +4,9 @@ import {
   spinachSeed,
   pumpkinSeed,
   cornSeed,
+  potatoSeed,
+  onionSeed,
+  soybeanSeed,
 
   // Field items
   fertilizer,
@@ -17,6 +20,9 @@ export default [
   spinachSeed,
   pumpkinSeed,
   cornSeed,
+  potatoSeed,
+  onionSeed,
+  soybeanSeed,
 
   // Field items
   fertilizer,
