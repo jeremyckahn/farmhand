@@ -142,6 +142,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * revenue.
  * @property {boolean} doShowNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
+ * @property {Array.<farmhand.notification>} todaysPastNotifications
  * @property {Object.<number>} valueAdjustments
  */
 
@@ -196,6 +197,7 @@ export default class Farmhand extends Component {
     purchasedField: 0,
     doShowNotifications: false,
     stageFocus: stageFocusType.HOME,
+    todaysPastNotifications: [],
     valueAdjustments: {},
   }
 

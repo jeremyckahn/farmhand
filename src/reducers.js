@@ -864,6 +864,8 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
       ...state,
       cowForSale: generateCow(),
       dayCount: state.dayCount + 1,
+      notifications: [],
+      todaysPastNotifications: [],
     })
 
 /**
