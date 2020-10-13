@@ -12,6 +12,7 @@ beforeEach(() => {
     <LogView
       {...{
         notificationLog: [],
+        todaysPastNotifications: [],
       }}
     />
   )

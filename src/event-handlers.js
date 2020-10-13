@@ -262,7 +262,7 @@ export default {
     this.hugCow(cow.id)
   },
 
-  handleCloseNotification(event, reason) {
+  handleCloseNotification(_event, reason) {
     if (reason === 'clickaway') {
       return
     }
@@ -274,8 +274,13 @@ export default {
     this.setState(() => ({ doShowNotifications: false }))
   },
 
+  // TODO: Test this.
   handleNotificationExited() {
-    this.setState({ notifications: [] })
+    const { notifications, todaysPastNotifications } = this.state
+    this.setState({
+      notifications: [],
+      todaysPastNotifications: [...notifications, ...todaysPastNotifications],
+    })
   },
 
   /**
@@ -311,7 +316,7 @@ export default {
    * @param {Object} event
    * @see https://github.com/FormidableLabs/react-swipeable#event-data
    */
-  handleSwipe({ event, initial: [startX], dir }) {
+  handleSwipe({ event, dir }) {
     let { target } = event
 
     while (target.parentElement) {
