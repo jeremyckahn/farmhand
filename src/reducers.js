@@ -994,6 +994,7 @@ export const makeRecipe = (state, recipe) => {
  * @param {string} [severity] Corresponds to the `severity` prop here:
  * https://material-ui.com/api/alert/
  * @returns {farmhand.state}
+ * @see https://material-ui.com/api/alert/
  */
 export const showNotification = (state, message, severity = 'info') => {
   const { notifications } = state

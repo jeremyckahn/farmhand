@@ -139,6 +139,13 @@
  * @property {string} [unlocksShopItem] Must reference a farmhand.item id.
  */
 
+/**
+ * @typedef farmhand.notification
+ * @type {Object}
+ * @property {string} message
+ * @property {'error'|'info'|'success'|'warning'} severity
+ */
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import window from 'global/window'
