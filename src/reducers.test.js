@@ -319,6 +319,7 @@ describe('computeStateForNextDay', () => {
       dayCount,
       field: [firstRow],
       valueAdjustments,
+      todaysPastNotifications,
     } = fn.computeStateForNextDay({
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       dayCount: 1,
@@ -338,6 +339,7 @@ describe('computeStateForNextDay', () => {
       notificationLog: [],
       priceCrashes: {},
       priceSurges: {},
+      todaysPastNotifications: [{ message: 'some message', severity: 'info' }],
     })
 
     expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()))
@@ -347,6 +349,7 @@ describe('computeStateForNextDay', () => {
     expect(firstRow[0].wasWateredToday).toBe(false)
     expect(firstRow[0].daysWatered).toBe(1)
     expect(firstRow[0].daysOld).toBe(1)
+    expect(todaysPastNotifications).toBeEmpty()
   })
 })
 

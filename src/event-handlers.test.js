@@ -168,3 +168,26 @@ describe('handleCowSelect', () => {
     expect(component.instance().selectCow).toHaveBeenCalledWith({ id: 'abc' })
   })
 })
+
+describe('handleNotificationExited', () => {
+  test('moves current notifications to todaysPastNotifications', () => {
+    const oldMessage1 = { message: 'old message 1', severity: 'info' }
+    const oldMessage2 = { message: 'old message 2', severity: 'info' }
+    const newMessage1 = { message: 'new message 1', severity: 'info' }
+    const newMessage2 = { message: 'new message 2', severity: 'info' }
+
+    component.setState({
+      notifications: [newMessage1, newMessage2],
+      todaysPastNotifications: [oldMessage1, oldMessage2],
+    })
+
+    handlers().handleNotificationExited()
+
+    expect(component.state().todaysPastNotifications).toEqual([
+      newMessage1,
+      newMessage2,
+      oldMessage1,
+      oldMessage2,
+    ])
+  })
+})
