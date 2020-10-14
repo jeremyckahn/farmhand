@@ -1,6 +1,7 @@
 import {
   canMakeRecipe,
   castToMoney,
+  chooseRandom,
   dollarString,
   farmProductSalesVolumeNeededForLevel,
   farmProductsSold,
@@ -277,7 +278,7 @@ describe('generateOffspringCow', () => {
 
   test('generates offspring', () => {
     expect(generateOffspringCow(maleCow, femaleCow)).toMatchObject({
-      color: maleCow.color,
+      color: chooseRandom([femaleCow.color, maleCow.color]),
       colorsInBloodline: {
         [standardCowColors.GREEN]: true,
         [standardCowColors.ORANGE]: true,

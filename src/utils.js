@@ -51,7 +51,8 @@ const shopInventoryMap = shopInventory.reduce((acc, item) => {
   return acc
 }, {})
 
-const chooseRandom = list => list[Math.round(Math.random() * (list.length - 1))]
+export const chooseRandom = list =>
+  list[Math.round(Math.random() * (list.length - 1))]
 
 // Ensures that the condition argument to memoize() is not ignored, per
 // https://github.com/caiogondim/fast-memoize.js#function-arguments
@@ -441,7 +442,9 @@ export const generateOffspringCow = (cow1, cow2) => {
     Object.keys(standardCowColors).length
 
   return generateCow({
-    color: isRainbowCow ? cowColors.RAINBOW : maleCow.color,
+    color: isRainbowCow
+      ? cowColors.RAINBOW
+      : chooseRandom([femaleCow.color, maleCow.color]),
     colorsInBloodline,
     baseWeight: (maleCow.baseWeight + femaleCow.baseWeight) / 2,
     ...(isRainbowCow && { gender: genders.FEMALE }),
