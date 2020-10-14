@@ -812,6 +812,14 @@ export const updatePriceEvents = state => {
   }
 }
 
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const updateRevenueRecords = state => {
+  return { ...state, todaysRevenue: 0 }
+}
+
 export const applyLoanInterest = state => {
   const loanBalance = moneyTotal(
     state.loanBalance,
@@ -854,6 +862,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
         processCowAttrition,
         processMilkingCows,
         updatePriceEvents,
+        updateRevenueRecords,
         generatePriceEvents,
         applyLoanInterest,
         rotateNotificationLogs,
@@ -911,7 +920,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
   }
 
   const item = itemsMap[id]
-  const { itemsSold, money, revenue, valueAdjustments } = state
+  const { itemsSold, money, revenue, todaysRevenue, valueAdjustments } = state
   const oldLevel = levelAchieved(farmProductsSold(itemsSold))
   let { loanBalance } = state
 
@@ -944,6 +953,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
     itemsSold: newItemsSold,
     money: moneyTotal(money, saleValue),
     revenue: moneyTotal(revenue, saleValue),
+    todaysRevenue: moneyTotal(todaysRevenue, saleValue),
   }
 
   state = processLevelUp(state, oldLevel)
