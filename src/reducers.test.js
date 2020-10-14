@@ -1370,6 +1370,7 @@ describe('sellItem', () => {
         money: 100,
         notifications: [],
         revenue: 0,
+        todaysRevenue: 0,
         valueAdjustments: { 'sample-item-1': 1 },
       },
       testItem({ id: 'sample-item-1' })
@@ -1378,6 +1379,7 @@ describe('sellItem', () => {
     expect(state.inventory).toEqual([])
     expect(state.money).toEqual(101)
     expect(state.revenue).toEqual(1)
+    expect(state.todaysRevenue).toEqual(1)
     expect(state.itemsSold).toEqual({ 'sample-item-1': 1 })
   })
 
@@ -1390,6 +1392,7 @@ describe('sellItem', () => {
         money: 100,
         notifications: [],
         revenue: 0,
+        todaysRevenue: 0,
         valueAdjustments: { 'sample-item-1': 1 },
       },
       testItem({ id: 'sample-item-1' }),
@@ -1412,6 +1415,7 @@ describe('sellItem', () => {
             money: 100,
             notifications: [],
             revenue: 0,
+            todaysRevenue: 0,
             valueAdjustments: { 'sample-crop-seeds-1': 10 },
           },
           testItem({ id: 'sample-crop-seeds-1' }),
@@ -1421,6 +1425,7 @@ describe('sellItem', () => {
         expect(state.loanBalance).toEqual(100)
         expect(state.money).toEqual(130)
         expect(state.revenue).toEqual(30)
+        expect(state.todaysRevenue).toEqual(30)
       })
     })
 
@@ -1435,6 +1440,7 @@ describe('sellItem', () => {
               money: 100,
               notifications: [],
               revenue: 0,
+              todaysRevenue: 0,
               valueAdjustments: { 'sample-crop-1': 10 },
             },
             testItem({ id: 'sample-crop-1' }),
@@ -1444,6 +1450,7 @@ describe('sellItem', () => {
           expect(state.loanBalance).toEqual(97)
           expect(state.money).toEqual(157)
           expect(state.revenue).toEqual(57)
+          expect(state.todaysRevenue).toEqual(57)
         })
       })
 
@@ -1457,6 +1464,7 @@ describe('sellItem', () => {
               money: 100,
               notifications: [],
               revenue: 0,
+              todaysRevenue: 0,
               valueAdjustments: { 'sample-crop-1': 10 },
             },
             testItem({ id: 'sample-crop-1' }),
@@ -1470,7 +1478,7 @@ describe('sellItem', () => {
 
         test('sale is reduced based on remaining loan balance', () => {
           expect(state.money).toEqual(158.5)
-          expect(state.revenue).toEqual(58.5)
+          expect(state.todaysRevenue).toEqual(58.5)
         })
 
         test('payoff notification is shown', () => {

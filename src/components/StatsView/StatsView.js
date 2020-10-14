@@ -23,6 +23,7 @@ import './StatsView.sass'
 const StatsView = ({
   itemsSold,
   revenue,
+  todaysRevenue,
 
   totalFarmProductsSold = farmProductsSold(itemsSold),
   currentLevel = levelAchieved(totalFarmProductsSold),
@@ -74,7 +75,13 @@ const StatsView = ({
           </Tooltip>
           <TableRow>
             <TableCell {...{ component: 'th', scope: 'row' }}>
-              Revenue
+              Today's Revenue
+            </TableCell>
+            <TableCell align="right">{moneyString(todaysRevenue)}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
+              All-time Revenue
             </TableCell>
             <TableCell align="right">{moneyString(revenue)}</TableCell>
           </TableRow>
@@ -87,6 +94,7 @@ const StatsView = ({
 StatsView.propTypes = {
   itemsSold: object.isRequired,
   revenue: number.isRequired,
+  todaysRevenue: number.isRequired,
 }
 
 export default function Consumer(props) {
