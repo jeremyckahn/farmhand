@@ -274,7 +274,6 @@ export default {
     this.setState(() => ({ doShowNotifications: false }))
   },
 
-  // TODO: Test this.
   handleNotificationExited() {
     const { notifications, todaysPastNotifications } = this.state
     this.setState({
