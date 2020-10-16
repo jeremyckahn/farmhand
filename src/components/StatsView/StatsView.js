@@ -12,15 +12,18 @@ import FarmhandContext from '../../Farmhand.context'
 import {
   farmProductSalesVolumeNeededForLevel,
   farmProductsSold,
+  get7DayRevenueAverage,
   integerString,
   levelAchieved,
   moneyString,
 } from '../../utils'
 import { FARM_PRODUCTS_TOOLTIP_TEXT } from '../../strings'
+import { DAILY_REVENUE_HISTORY_RECORD_LENGTH } from '../../constants'
 
 import './StatsView.sass'
 
 const StatsView = ({
+  historicalDailyRevenue,
   itemsSold,
   revenue,
   todaysRevenue,
@@ -78,6 +81,14 @@ const StatsView = ({
               Today's Revenue
             </TableCell>
             <TableCell align="right">{moneyString(todaysRevenue)}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
+              {DAILY_REVENUE_HISTORY_RECORD_LENGTH}-day Revenue Average
+            </TableCell>
+            <TableCell align="right">
+              {moneyString(get7DayRevenueAverage(historicalDailyRevenue))}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell {...{ component: 'th', scope: 'row' }}>
