@@ -8,6 +8,7 @@ import {
   generateCow,
   generateOffspringCow,
   generateValueAdjustments,
+  get7DayRevenueAverage,
   getCowMilkRate,
   getCowValue,
   getCowWeight,
@@ -718,5 +719,13 @@ describe('getRandomLevelUpReward', () => {
       name: 'crop 1',
       type: 'CROP',
     })
+  })
+})
+
+describe('get7DayRevenueAverage', () => {
+  test('calculates 7 day revenue average', () => {
+    expect(get7DayRevenueAverage([])).toBe(0)
+    expect(get7DayRevenueAverage([1, 1, 1, 1, 1, 1, 1])).toBe(1)
+    expect(get7DayRevenueAverage([1, 2, 3, 4, 5, 6, 7])).toBe(4)
   })
 })

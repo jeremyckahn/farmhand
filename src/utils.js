@@ -35,6 +35,7 @@ import {
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
+  DAILY_REVENUE_HISTORY_RECORD_LENGTH,
   HUGGING_MACHINE_ITEM_ID,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
@@ -760,6 +761,7 @@ export const reduceByPersistedKeys = state => {
     'cropsHarvested',
     'dayCount',
     'field',
+    'historicalDailyRevenue',
     'historicalValueAdjustments',
     'inventory',
     'inventoryLimit',
@@ -777,8 +779,16 @@ export const reduceByPersistedKeys = state => {
     'todaysRevenue',
     'valueAdjustments',
   ].reduce((acc, key) => {
-    acc[key] = state[key]
+    // This check prevents old exports from corrupting game state when
+    // imported.
+    if (typeof state[key] !== 'undefined') {
+      acc[key] = state[key]
+    }
 
     return acc
   }, {})
 }
+
+export const get7DayRevenueAverage = historicalDailyRevenue =>
+  historicalDailyRevenue.reduce((sum, revenue) => moneyTotal(sum, revenue), 0) /
+  DAILY_REVENUE_HISTORY_RECORD_LENGTH

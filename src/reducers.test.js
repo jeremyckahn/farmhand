@@ -299,6 +299,27 @@ describe('updatePriceEvents', () => {
   })
 })
 
+describe('updateRevenueRecords', () => {
+  test('appends to the log', () => {
+    const { historicalDailyRevenue, todaysRevenue } = fn.updateRevenueRecords({
+      historicalDailyRevenue: [],
+      todaysRevenue: 5,
+    })
+
+    expect(historicalDailyRevenue).toEqual([5])
+    expect(todaysRevenue).toEqual(0)
+  })
+
+  test('truncates the log', () => {
+    const { historicalDailyRevenue } = fn.updateRevenueRecords({
+      historicalDailyRevenue: [1, 2, 3, 4, 5, 6, 7],
+      todaysRevenue: 10,
+    })
+
+    expect(historicalDailyRevenue).toEqual([10, 1, 2, 3, 4, 5, 6])
+  })
+})
+
 describe('applyLoanInterest', () => {
   test('applies loan interest', () => {
     expect(
@@ -332,6 +353,7 @@ describe('computeStateForNextDay', () => {
         ],
       ],
       cowInventory: [],
+      historicalDailyRevenue: [],
       inventory: [],
       itemsSold: {},
       loanBalance: 0,

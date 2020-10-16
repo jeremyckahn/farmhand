@@ -113,6 +113,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {Array.<number>} historicalDailyRevenue
  * @property {Array.<Object.<number>>} historicalValueAdjustments Currently
  * there is only one element in this array, but it will be used for more
  * historical price data analysis in the future. It is an array for
@@ -175,6 +176,7 @@ export default class Farmhand extends Component {
     dayCount: 0,
     field: createNewField(),
     hasBooted: false,
+    historicalDailyRevenue: [],
     historicalValueAdjustments: [],
     hoveredPlotRangeSize: 0,
     inventory: [],
