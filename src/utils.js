@@ -778,7 +778,11 @@ export const reduceByPersistedKeys = state => {
     'todaysRevenue',
     'valueAdjustments',
   ].reduce((acc, key) => {
-    acc[key] = state[key]
+    // This check prevents old exports from corrupting game state when
+    // imported.
+    if (typeof state[key] !== 'undefined') {
+      acc[key] = state[key]
+    }
 
     return acc
   }, {})
