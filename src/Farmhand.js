@@ -110,6 +110,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {Object.<farmhand.module:enums.cropType, number>} cropsHarvested A
  * map of totals of crops harvested. Keys are crop type IDs, values are the
  * number of that crop harvested.
+ * @property {Array.<number>} dailyRevenueHistory
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {farmhand.module:enums.fieldMode} fieldMode
@@ -173,6 +174,7 @@ export default class Farmhand extends Component {
     cowColorsPurchased: {},
     cropsHarvested: {},
     dayCount: 0,
+    dailyRevenueHistory: [],
     field: createNewField(),
     hasBooted: false,
     historicalValueAdjustments: [],
