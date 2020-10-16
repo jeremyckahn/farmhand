@@ -818,14 +818,14 @@ export const updatePriceEvents = state => {
  * @returns {farmhand.state}
  */
 export const updateRevenueRecords = state => {
-  let { dailyRevenueHistory } = state
+  let { historicalDailyRevenue } = state
 
-  dailyRevenueHistory = [state.todaysRevenue, ...dailyRevenueHistory].slice(
-    0,
-    DAILY_REVENUE_HISTORY_RECORD_LENGTH
-  )
+  historicalDailyRevenue = [
+    state.todaysRevenue,
+    ...historicalDailyRevenue,
+  ].slice(0, DAILY_REVENUE_HISTORY_RECORD_LENGTH)
 
-  return { ...state, dailyRevenueHistory, todaysRevenue: 0 }
+  return { ...state, historicalDailyRevenue, todaysRevenue: 0 }
 }
 
 export const applyLoanInterest = state => {

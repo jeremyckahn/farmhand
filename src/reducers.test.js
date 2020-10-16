@@ -301,22 +301,22 @@ describe('updatePriceEvents', () => {
 
 describe('updateRevenueRecords', () => {
   test('appends to the log', () => {
-    const { dailyRevenueHistory, todaysRevenue } = fn.updateRevenueRecords({
-      dailyRevenueHistory: [],
+    const { historicalDailyRevenue, todaysRevenue } = fn.updateRevenueRecords({
+      historicalDailyRevenue: [],
       todaysRevenue: 5,
     })
 
-    expect(dailyRevenueHistory).toEqual([5])
+    expect(historicalDailyRevenue).toEqual([5])
     expect(todaysRevenue).toEqual(0)
   })
 
   test('truncates the log', () => {
-    const { dailyRevenueHistory } = fn.updateRevenueRecords({
-      dailyRevenueHistory: [1, 2, 3, 4, 5, 6, 7],
+    const { historicalDailyRevenue } = fn.updateRevenueRecords({
+      historicalDailyRevenue: [1, 2, 3, 4, 5, 6, 7],
       todaysRevenue: 10,
     })
 
-    expect(dailyRevenueHistory).toEqual([10, 1, 2, 3, 4, 5, 6])
+    expect(historicalDailyRevenue).toEqual([10, 1, 2, 3, 4, 5, 6])
   })
 })
 
@@ -353,7 +353,7 @@ describe('computeStateForNextDay', () => {
         ],
       ],
       cowInventory: [],
-      dailyRevenueHistory: [],
+      historicalDailyRevenue: [],
       inventory: [],
       itemsSold: {},
       loanBalance: 0,

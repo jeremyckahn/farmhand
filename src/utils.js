@@ -760,6 +760,7 @@ export const reduceByPersistedKeys = state => {
     'cropsHarvested',
     'dayCount',
     'field',
+    'historicalDailyRevenue',
     'historicalValueAdjustments',
     'inventory',
     'inventoryLimit',
