@@ -26,6 +26,7 @@ const StatsView = ({
   historicalDailyRevenue,
   itemsSold,
   revenue,
+  todaysLosses,
   todaysRevenue,
 
   totalFarmProductsSold = farmProductsSold(itemsSold),
@@ -81,6 +82,12 @@ const StatsView = ({
               Today's Revenue
             </TableCell>
             <TableCell align="right">{moneyString(todaysRevenue)}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
+              Today's Losses
+            </TableCell>
+            <TableCell align="right">{moneyString(todaysLosses)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell {...{ component: 'th', scope: 'row' }}>

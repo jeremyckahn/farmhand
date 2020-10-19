@@ -776,6 +776,7 @@ export const reduceByPersistedKeys = state => {
     'priceCrashes',
     'priceSurges',
     'revenue',
+    'todaysLosses',
     'todaysRevenue',
     'valueAdjustments',
   ].reduce((acc, key) => {

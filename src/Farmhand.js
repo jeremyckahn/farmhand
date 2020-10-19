@@ -36,6 +36,7 @@ import {
   getLevelEntitlements,
   levelAchieved,
   memoize,
+  moneyTotal,
   nullArray,
   reduceByPersistedKeys,
 } from './utils'
@@ -144,6 +145,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {boolean} doShowNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Array.<farmhand.notification>} todaysPastNotifications
+ * @property {number} todaysLosses
  * @property {number} todaysRevenue
  * @property {Object.<number>} valueAdjustments
  */
@@ -201,6 +203,7 @@ export default class Farmhand extends Component {
     doShowNotifications: false,
     stageFocus: stageFocusType.HOME,
     todaysPastNotifications: [],
+    todaysLosses: 0,
     todaysRevenue: 0,
     valueAdjustments: {},
   }
@@ -392,7 +395,7 @@ export default class Farmhand extends Component {
   }
 
   componentDidUpdate(_prevProps, prevState) {
-    const { hasBooted, stageFocus, isMenuOpen } = this.state
+    const { hasBooted, money, stageFocus, isMenuOpen } = this.state
 
     // The operations after this if block concern transient gameplay state, but
     // componentDidUpdate runs as part of the rehydration/bootup process. So,
@@ -424,6 +427,12 @@ export default class Farmhand extends Component {
       if (isMenuOpen) {
         this.setState(() => ({ isMenuOpen: !doesMenuObstructStage() }))
       }
+    }
+
+    if (money < prevState.money) {
+      this.setState(({ todaysLosses }) => ({
+        todaysLosses: moneyTotal(todaysLosses, money - prevState.money),
+      }))
     }
 
     ;[
