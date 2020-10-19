@@ -684,8 +684,8 @@ export default class Farmhand extends Component {
                     <HotelIcon />
                   </Fab>
                 </Tooltip>
-                <NotificationSystem />
               </div>
+              <NotificationSystem />
             </FarmhandContext.Provider>
           </Swipeable>
         </MuiThemeProvider>
