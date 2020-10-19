@@ -93,7 +93,9 @@
     position: fixed
     top: 5em
     right: 1em
-    z-index: 20
+
+    // Specifically set to override the z-index of .MuiSnackbar-root
+    z-index: 1450
 
     @media (min-width: #{$break-sm})
       right: 1.25em
