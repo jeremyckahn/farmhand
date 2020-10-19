@@ -825,7 +825,7 @@ export const updateRevenueRecords = state => {
     ...historicalDailyRevenue,
   ].slice(0, DAILY_REVENUE_HISTORY_RECORD_LENGTH)
 
-  return { ...state, historicalDailyRevenue, todaysRevenue: 0 }
+  return { ...state, historicalDailyRevenue, todaysLosses: 0, todaysRevenue: 0 }
 }
 
 export const applyLoanInterest = state => {

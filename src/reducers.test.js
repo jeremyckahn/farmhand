@@ -301,12 +301,18 @@ describe('updatePriceEvents', () => {
 
 describe('updateRevenueRecords', () => {
   test('appends to the log', () => {
-    const { historicalDailyRevenue, todaysRevenue } = fn.updateRevenueRecords({
+    const {
+      historicalDailyRevenue,
+      todaysLosses,
+      todaysRevenue,
+    } = fn.updateRevenueRecords({
       historicalDailyRevenue: [],
+      todaysLosses: 10,
       todaysRevenue: 5,
     })
 
     expect(historicalDailyRevenue).toEqual([5])
+    expect(todaysLosses).toEqual(0)
     expect(todaysRevenue).toEqual(0)
   })
 
