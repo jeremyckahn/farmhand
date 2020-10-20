@@ -54,7 +54,7 @@ const stubLocalforage = () => {
   const localforage = jest.requireMock('localforage')
   localforage.createInstance = () => ({
     getItem: () => Promise.resolve(null),
-    setItem: (key, data) => Promise.resolve(data),
+    setItem: (_key, data) => Promise.resolve(data),
   })
 }
 

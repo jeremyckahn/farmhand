@@ -45,7 +45,7 @@ import {
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
-  DAILY_REVENUE_HISTORY_RECORD_LENGTH,
+  DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   CROW_CHANCE,
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
@@ -818,14 +818,25 @@ export const updatePriceEvents = state => {
  * @returns {farmhand.state}
  */
 export const updateRevenueRecords = state => {
-  let { historicalDailyRevenue } = state
+  let { historicalDailyLosses, historicalDailyRevenue } = state
+
+  historicalDailyLosses = [state.todaysLosses, ...historicalDailyLosses].slice(
+    0,
+    DAILY_FINANCIAL_HISTORY_RECORD_LENGTH
+  )
 
   historicalDailyRevenue = [
     state.todaysRevenue,
     ...historicalDailyRevenue,
-  ].slice(0, DAILY_REVENUE_HISTORY_RECORD_LENGTH)
+  ].slice(0, DAILY_FINANCIAL_HISTORY_RECORD_LENGTH)
 
-  return { ...state, historicalDailyRevenue, todaysLosses: 0, todaysRevenue: 0 }
+  return {
+    ...state,
+    historicalDailyLosses,
+    historicalDailyRevenue,
+    todaysLosses: 0,
+    todaysRevenue: 0,
+  }
 }
 
 export const applyLoanInterest = state => {

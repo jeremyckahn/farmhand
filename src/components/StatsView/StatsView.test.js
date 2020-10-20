@@ -7,7 +7,16 @@ let component
 
 beforeEach(() => {
   component = shallow(
-    <StatsView {...{ itemsSold: {}, revenue: 0, todaysRevenue: 0 }} />
+    <StatsView
+      {...{
+        historicalDailyLosses: [],
+        historicalDailyRevenue: [],
+        itemsSold: {},
+        revenue: 0,
+        todaysLosses: 0,
+        todaysRevenue: 0,
+      }}
+    />
   )
 })
 
