@@ -1,5 +1,6 @@
 import React from 'react'
 import { array, object, number } from 'prop-types'
+import classNames from 'classnames'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -105,7 +106,14 @@ const StatsView = ({
             <TableCell {...{ component: 'th', scope: 'row' }}>
               Today's Profit
             </TableCell>
-            <TableCell align="right">
+            <TableCell
+              {...{
+                align: 'right',
+                className: classNames({
+                  'danger-text': Math.abs(todaysLosses) > todaysRevenue,
+                }),
+              }}
+            >
               {moneyString(moneyTotal(todaysRevenue, todaysLosses))}
             </TableCell>
           </TableRow>
