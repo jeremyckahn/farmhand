@@ -302,26 +302,35 @@ describe('updatePriceEvents', () => {
 describe('updateRevenueRecords', () => {
   test('appends to the log', () => {
     const {
+      historicalDailyLosses,
       historicalDailyRevenue,
       todaysLosses,
       todaysRevenue,
     } = fn.updateRevenueRecords({
+      historicalDailyLosses: [],
       historicalDailyRevenue: [],
-      todaysLosses: 10,
+      todaysLosses: -10,
       todaysRevenue: 5,
     })
 
+    expect(historicalDailyLosses).toEqual([-10])
     expect(historicalDailyRevenue).toEqual([5])
     expect(todaysLosses).toEqual(0)
     expect(todaysRevenue).toEqual(0)
   })
 
   test('truncates the log', () => {
-    const { historicalDailyRevenue } = fn.updateRevenueRecords({
+    const {
+      historicalDailyLosses,
+      historicalDailyRevenue,
+    } = fn.updateRevenueRecords({
+      historicalDailyLosses: [-1, -2, -3, -4, -5, -6, -7],
       historicalDailyRevenue: [1, 2, 3, 4, 5, 6, 7],
+      todaysLosses: -5,
       todaysRevenue: 10,
     })
 
+    expect(historicalDailyLosses).toEqual([-5, -1, -2, -3, -4, -5, -6])
     expect(historicalDailyRevenue).toEqual([10, 1, 2, 3, 4, 5, 6])
   })
 })
@@ -359,6 +368,7 @@ describe('computeStateForNextDay', () => {
         ],
       ],
       cowInventory: [],
+      historicalDailyLosses: [],
       historicalDailyRevenue: [],
       inventory: [],
       itemsSold: {},

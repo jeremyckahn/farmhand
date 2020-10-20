@@ -1,5 +1,5 @@
 import React from 'react'
-import { object, number } from 'prop-types'
+import { array, object, number } from 'prop-types'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -12,17 +12,23 @@ import FarmhandContext from '../../Farmhand.context'
 import {
   farmProductSalesVolumeNeededForLevel,
   farmProductsSold,
-  get7DayRevenueAverage,
+  get7DayAverage,
   integerString,
   levelAchieved,
   moneyString,
+  moneyTotal,
 } from '../../utils'
 import { FARM_PRODUCTS_TOOLTIP_TEXT } from '../../strings'
-import { DAILY_REVENUE_HISTORY_RECORD_LENGTH } from '../../constants'
+import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants'
 
 import './StatsView.sass'
 
+const ElevatedPaper = props => (
+  <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
+)
+
 const StatsView = ({
+  historicalDailyLosses,
   historicalDailyRevenue,
   itemsSold,
   revenue,
@@ -33,7 +39,7 @@ const StatsView = ({
   currentLevel = levelAchieved(totalFarmProductsSold),
 }) => (
   <div className="StatsView">
-    <TableContainer {...{ component: Paper }}>
+    <TableContainer {...{ component: ElevatedPaper }}>
       <Table aria-label="Financial Stats">
         <TableBody>
           <TableRow>
@@ -77,6 +83,12 @@ const StatsView = ({
               </TableCell>
             </TableRow>
           </Tooltip>
+        </TableBody>
+      </Table>
+    </TableContainer>
+    <TableContainer {...{ component: ElevatedPaper }}>
+      <Table aria-label="Profit and Loss Stats">
+        <TableBody>
           <TableRow>
             <TableCell {...{ component: 'th', scope: 'row' }}>
               Today's Revenue
@@ -91,10 +103,24 @@ const StatsView = ({
           </TableRow>
           <TableRow>
             <TableCell {...{ component: 'th', scope: 'row' }}>
-              {DAILY_REVENUE_HISTORY_RECORD_LENGTH}-day Revenue Average
+              Today's Profit
             </TableCell>
             <TableCell align="right">
-              {moneyString(get7DayRevenueAverage(historicalDailyRevenue))}
+              {moneyString(moneyTotal(todaysRevenue, todaysLosses))}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
+              {DAILY_FINANCIAL_HISTORY_RECORD_LENGTH}-day Profit Average
+            </TableCell>
+            <TableCell align="right">
+              {moneyString(
+                get7DayAverage(
+                  historicalDailyLosses.map((loss, i) =>
+                    moneyTotal(historicalDailyRevenue[i], loss)
+                  )
+                )
+              )}
             </TableCell>
           </TableRow>
           <TableRow>
@@ -110,8 +136,11 @@ const StatsView = ({
 )
 
 StatsView.propTypes = {
+  historicalDailyLosses: array.isRequired,
+  historicalDailyRevenue: array.isRequired,
   itemsSold: object.isRequired,
   revenue: number.isRequired,
+  todaysLosses: number.isRequired,
   todaysRevenue: number.isRequired,
 }
 

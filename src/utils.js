@@ -35,7 +35,7 @@ import {
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
-  DAILY_REVENUE_HISTORY_RECORD_LENGTH,
+  DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   HUGGING_MACHINE_ITEM_ID,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
@@ -761,6 +761,7 @@ export const reduceByPersistedKeys = state => {
     'cropsHarvested',
     'dayCount',
     'field',
+    'historicalDailyLosses',
     'historicalDailyRevenue',
     'historicalValueAdjustments',
     'inventory',
@@ -790,6 +791,10 @@ export const reduceByPersistedKeys = state => {
   }, {})
 }
 
-export const get7DayRevenueAverage = historicalDailyRevenue =>
-  historicalDailyRevenue.reduce((sum, revenue) => moneyTotal(sum, revenue), 0) /
-  DAILY_REVENUE_HISTORY_RECORD_LENGTH
+/**
+ * @param {Array.<number>} historicalData Must be no longer than 7 numbers long.
+ * @return {number}
+ */
+export const get7DayAverage = historicalData =>
+  historicalData.reduce((sum, revenue) => moneyTotal(sum, revenue), 0) /
+  DAILY_FINANCIAL_HISTORY_RECORD_LENGTH
