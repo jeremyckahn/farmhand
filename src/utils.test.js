@@ -35,6 +35,7 @@ import { cowColors, cropLifeStage, genders, standardCowColors } from './enums'
 import {
   sampleCropItem1,
   sampleCropSeedsItem1,
+  sampleDish1,
   sampleItem1,
   sampleFieldTool1,
   milk1,
@@ -118,6 +119,12 @@ describe('isItemAFarmProduct', () => {
   describe('item is milk', () => {
     test('returns correct result', () => {
       expect(isItemAFarmProduct(milk1)).toBe(true)
+    })
+  })
+
+  describe('item is a recipe dish', () => {
+    test('returns correct result', () => {
+      expect(isItemAFarmProduct(sampleDish1)).toBe(true)
     })
   })
 })
