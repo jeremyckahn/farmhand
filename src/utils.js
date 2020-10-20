@@ -264,7 +264,11 @@ export const isItemAGrownCrop = item =>
  * @returns {boolean}
  */
 export const isItemAFarmProduct = item =>
-  Boolean(isItemAGrownCrop(item) || item.type === itemType.MILK)
+  Boolean(
+    isItemAGrownCrop(item) ||
+      item.type === itemType.MILK ||
+      item.type === itemType.DISH
+  )
 
 /**
  * @param {farmhand.crop} crop

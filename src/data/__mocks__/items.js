@@ -25,6 +25,13 @@ export const sampleItem3 = testItem({
   value: 3,
 })
 
+export const sampleDish1 = testItem({
+  id: 'sample-dish-1',
+  name: 'Sample Dish 1',
+  type: itemType.DISH,
+  value: 100,
+})
+
 // Crop items
 export const sampleCropSeedsItem1 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_1',
