@@ -781,6 +781,7 @@ export const reduceByPersistedKeys = state => {
     'purchasedField',
     'priceCrashes',
     'priceSurges',
+    'profitabilityStreak',
     'record7dayProfitAverage',
     'revenue',
     'todaysLosses',

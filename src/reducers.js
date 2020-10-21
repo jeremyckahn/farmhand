@@ -818,8 +818,13 @@ export const updatePriceEvents = state => {
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-export const updateRevenueRecords = state => {
-  const { todaysLosses, todaysRevenue, record7dayProfitAverage } = state
+export const updateFinancialRecords = state => {
+  const {
+    profitabilityStreak,
+    todaysLosses,
+    todaysRevenue,
+    record7dayProfitAverage,
+  } = state
   let { historicalDailyLosses, historicalDailyRevenue } = state
 
   historicalDailyLosses = [todaysLosses, ...historicalDailyLosses].slice(
@@ -838,10 +843,13 @@ export const updateRevenueRecords = state => {
     )
   )
 
+  const wasTodayProfitable = todaysRevenue + todaysLosses > 0
+
   return {
     ...state,
     historicalDailyLosses,
     historicalDailyRevenue,
+    profitabilityStreak: wasTodayProfitable ? profitabilityStreak + 1 : 0,
     record7dayProfitAverage: Math.max(record7dayProfitAverage, profitAverage),
     todaysLosses: 0,
     todaysRevenue: 0,
@@ -890,7 +898,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
         processCowAttrition,
         processMilkingCows,
         updatePriceEvents,
-        updateRevenueRecords,
+        updateFinancialRecords,
         generatePriceEvents,
         applyLoanInterest,
         rotateNotificationLogs,

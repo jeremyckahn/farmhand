@@ -141,14 +141,15 @@ export const getPlantableCropInventory = memoize(inventory =>
  * itemIds.
  * @property {number} purchasedCowPen
  * @property {number} purchasedField
+ * @property {number} profitabilityStreak
  * @property {number} record7dayProfitAverage
  * @property {number} revenue The amount of money the player has generated in
  * revenue.
  * @property {boolean} doShowNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Array.<farmhand.notification>} todaysPastNotifications
- * @property {number} todaysLosses
- * @property {number} todaysRevenue
+ * @property {number} todaysLosses Should always be a negative number.
+ * @property {number} todaysRevenue Should always be a positive number.
  * @property {Object.<number>} valueAdjustments
  */
 
@@ -201,6 +202,7 @@ export default class Farmhand extends Component {
     fieldMode: OBSERVE,
     priceCrashes: {},
     priceSurges: {},
+    profitabilityStreak: 0,
     record7dayProfitAverage: 0,
     revenue: 0,
     purchasedCowPen: 0,

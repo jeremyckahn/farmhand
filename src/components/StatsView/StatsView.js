@@ -33,6 +33,7 @@ const StatsView = ({
   historicalDailyRevenue,
   farmName,
   itemsSold,
+  profitabilityStreak,
   record7dayProfitAverage,
   revenue,
   todaysLosses,
@@ -127,6 +128,14 @@ const StatsView = ({
           </TableRow>
           <TableRow>
             <TableCell {...{ component: 'th', scope: 'row' }}>
+              Current Profitability Streak
+            </TableCell>
+            <TableCell align="right">
+              {profitabilityStreak} {profitabilityStreak === 1 ? 'day' : 'days'}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
               {DAILY_FINANCIAL_HISTORY_RECORD_LENGTH}-day Profit Average
             </TableCell>
             <TableCell align="right">
@@ -164,6 +173,7 @@ StatsView.propTypes = {
   historicalDailyLosses: array.isRequired,
   historicalDailyRevenue: array.isRequired,
   itemsSold: object.isRequired,
+  profitabilityStreak: number.isRequired,
   record7dayProfitAverage: number.isRequired,
   revenue: number.isRequired,
   todaysLosses: number.isRequired,
