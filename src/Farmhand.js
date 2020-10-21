@@ -178,6 +178,7 @@ export default class Farmhand extends Component {
     cowColorsPurchased: {},
     cropsHarvested: {},
     dayCount: 0,
+    farmName: 'Unnamed',
     field: createNewField(),
     hasBooted: false,
     historicalDailyLosses: [],

@@ -406,4 +406,11 @@ export default {
     await this.persistState()
     this.showNotification(PROGRESS_SAVED_MESSAGE, 'info')
   },
+
+  /**
+   * @param {string} farmName
+   */
+  handleFarmNameUpdate(farmName) {
+    this.setState({ farmName })
+  },
 }

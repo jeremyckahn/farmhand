@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, object, number } from 'prop-types'
+import { array, object, number, string } from 'prop-types'
 import classNames from 'classnames'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -31,6 +31,7 @@ const ElevatedPaper = props => (
 const StatsView = ({
   historicalDailyLosses,
   historicalDailyRevenue,
+  farmName,
   itemsSold,
   record7dayProfitAverage,
   revenue,
@@ -44,6 +45,12 @@ const StatsView = ({
     <TableContainer {...{ component: ElevatedPaper }}>
       <Table aria-label="Financial Stats">
         <TableBody>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
+              Farm Name
+            </TableCell>
+            <TableCell align="right">{farmName} Farm</TableCell>
+          </TableRow>
           <TableRow>
             <TableCell {...{ component: 'th', scope: 'row' }}>
               Farmer Level
@@ -153,6 +160,7 @@ const StatsView = ({
 )
 
 StatsView.propTypes = {
+  farmName: string.isRequired,
   historicalDailyLosses: array.isRequired,
   historicalDailyRevenue: array.isRequired,
   itemsSold: object.isRequired,
