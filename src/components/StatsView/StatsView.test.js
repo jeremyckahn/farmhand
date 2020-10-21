@@ -12,6 +12,7 @@ beforeEach(() => {
         historicalDailyLosses: [],
         historicalDailyRevenue: [],
         itemsSold: {},
+        record7dayProfitAverage: 0,
         revenue: 0,
         todaysLosses: 0,
         todaysRevenue: 0,
