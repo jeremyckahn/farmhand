@@ -14,9 +14,11 @@ beforeEach(() => {
       {...{
         currentDialogView: dialogView.NONE,
         dayCount: 0,
+        farmName: '',
         handleClickDialogViewButton: () => {},
         handleCloseDialogView: () => {},
         handleDialogViewExited: () => {},
+        handleFarmNameUpdate: () => {},
         handleViewChange: () => {},
         inventory: [],
         inventoryLimit: -1,

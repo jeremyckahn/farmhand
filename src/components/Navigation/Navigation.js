@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -15,6 +15,7 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import SettingsIcon from '@material-ui/icons/Settings'
 import Tooltip from '@material-ui/core/Tooltip'
+import TextField from '@material-ui/core/TextField'
 import { array, bool, func, number, object, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -36,6 +37,35 @@ import AccountingView from '../AccountingView'
 import SettingsView from '../SettingsView'
 
 import './Navigation.sass'
+
+const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
+  const [displayedFarmName, setDisplayedFarmName] = useState(farmName)
+
+  useEffect(() => {
+    setDisplayedFarmName(farmName)
+  }, [farmName, setDisplayedFarmName])
+
+  return (
+    <h2 className="farm-name">
+      <TextField
+        {...{
+          inputProps: {
+            maxLength: 12,
+          },
+          onChange: ({ target: { value } }) => {
+            setDisplayedFarmName(value)
+          },
+          onBlur: ({ target: { value } }) => {
+            handleFarmNameUpdate(value)
+          },
+          placeholder: 'Farm Name',
+          value: displayedFarmName,
+        }}
+      />{' '}
+      Farm
+    </h2>
+  )
+}
 
 const {
   FARMERS_LOG,
@@ -78,9 +108,11 @@ const dialogContentMap = {
 export const Navigation = ({
   currentDialogView,
   dayCount,
+  farmName,
   handleClickDialogViewButton,
   handleCloseDialogView,
   handleDialogViewExited,
+  handleFarmNameUpdate,
   handleViewChange,
   inventory,
   inventoryLimit,
@@ -94,6 +126,7 @@ export const Navigation = ({
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
+    <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
     <h2 className="day-count">
       Day {dayCount}, level {integerString(currentLevel)}
     </h2>
@@ -180,9 +213,11 @@ export const Navigation = ({
 
 Navigation.propTypes = {
   dayCount: number.isRequired,
+  farmName: string.isRequired,
   handleClickDialogViewButton: func.isRequired,
   handleCloseDialogView: func.isRequired,
   handleDialogViewExited: func.isRequired,
+  handleFarmNameUpdate: func.isRequired,
   handleViewChange: func.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
