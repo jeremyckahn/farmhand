@@ -143,6 +143,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} purchasedField
  * @property {number} profitabilityStreak
  * @property {number} record7dayProfitAverage
+ * @property {number} recordProfitabilityStreak
  * @property {number} revenue The amount of money the player has generated in
  * revenue.
  * @property {boolean} doShowNotifications
@@ -204,6 +205,7 @@ export default class Farmhand extends Component {
     priceSurges: {},
     profitabilityStreak: 0,
     record7dayProfitAverage: 0,
+    recordProfitabilityStreak: 0,
     revenue: 0,
     purchasedCowPen: 0,
     purchasedField: 0,

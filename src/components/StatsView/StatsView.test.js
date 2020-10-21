@@ -15,6 +15,7 @@ beforeEach(() => {
         itemsSold: {},
         profitabilityStreak: 0,
         record7dayProfitAverage: 0,
+        recordProfitabilityStreak: 0,
         revenue: 0,
         todaysLosses: 0,
         todaysRevenue: 0,

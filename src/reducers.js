@@ -824,6 +824,7 @@ export const updateFinancialRecords = state => {
     todaysLosses,
     todaysRevenue,
     record7dayProfitAverage,
+    recordProfitabilityStreak,
   } = state
   let { historicalDailyLosses, historicalDailyRevenue } = state
 
@@ -844,13 +845,20 @@ export const updateFinancialRecords = state => {
   )
 
   const wasTodayProfitable = todaysRevenue + todaysLosses > 0
+  const currentProfitabilityStreak = wasTodayProfitable
+    ? profitabilityStreak + 1
+    : 0
 
   return {
     ...state,
     historicalDailyLosses,
     historicalDailyRevenue,
-    profitabilityStreak: wasTodayProfitable ? profitabilityStreak + 1 : 0,
+    profitabilityStreak: currentProfitabilityStreak,
     record7dayProfitAverage: Math.max(record7dayProfitAverage, profitAverage),
+    recordProfitabilityStreak: Math.max(
+      recordProfitabilityStreak,
+      currentProfitabilityStreak
+    ),
     todaysLosses: 0,
     todaysRevenue: 0,
   }

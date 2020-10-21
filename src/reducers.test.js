@@ -306,6 +306,7 @@ describe('updateFinancialRecords', () => {
       historicalDailyRevenue,
       profitabilityStreak,
       record7dayProfitAverage,
+      recordProfitabilityStreak,
       todaysLosses,
       todaysRevenue,
     } = fn.updateFinancialRecords({
@@ -313,6 +314,7 @@ describe('updateFinancialRecords', () => {
       historicalDailyRevenue: [],
       profitabilityStreak: 0,
       record7dayProfitAverage: 0,
+      recordProfitabilityStreak: 0,
       todaysLosses: -10,
       todaysRevenue: 15,
     })
@@ -321,6 +323,7 @@ describe('updateFinancialRecords', () => {
     expect(historicalDailyRevenue).toEqual([15])
     expect(record7dayProfitAverage).toEqual(5 / 7)
     expect(profitabilityStreak).toEqual(1)
+    expect(recordProfitabilityStreak).toEqual(1)
     expect(todaysLosses).toEqual(0)
     expect(todaysRevenue).toEqual(0)
   })
@@ -342,16 +345,21 @@ describe('updateFinancialRecords', () => {
 
   describe('profitabilityStreak', () => {
     test('unprofitable day resets streak', () => {
-      const { profitabilityStreak } = fn.updateFinancialRecords({
+      const {
+        profitabilityStreak,
+        recordProfitabilityStreak,
+      } = fn.updateFinancialRecords({
         historicalDailyLosses: [],
         historicalDailyRevenue: [],
         profitabilityStreak: 10,
         record7dayProfitAverage: 0,
+        recordProfitabilityStreak: 10,
         todaysLosses: -10,
         todaysRevenue: 10,
       })
 
       expect(profitabilityStreak).toEqual(0)
+      expect(recordProfitabilityStreak).toEqual(10)
     })
   })
 })
@@ -400,6 +408,7 @@ describe('computeStateForNextDay', () => {
       priceSurges: {},
       profitabilityStreak: 0,
       record7dayProfitAverage: 0,
+      recordProfitabilityStreak: 0,
       todaysPastNotifications: [{ message: 'some message', severity: 'info' }],
     })
 
