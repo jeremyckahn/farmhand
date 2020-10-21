@@ -304,17 +304,20 @@ describe('updateRevenueRecords', () => {
     const {
       historicalDailyLosses,
       historicalDailyRevenue,
+      record7dayProfitAverage,
       todaysLosses,
       todaysRevenue,
     } = fn.updateRevenueRecords({
       historicalDailyLosses: [],
       historicalDailyRevenue: [],
+      record7dayProfitAverage: 0,
       todaysLosses: -10,
-      todaysRevenue: 5,
+      todaysRevenue: 15,
     })
 
     expect(historicalDailyLosses).toEqual([-10])
-    expect(historicalDailyRevenue).toEqual([5])
+    expect(historicalDailyRevenue).toEqual([15])
+    expect(record7dayProfitAverage).toEqual(5 / 7)
     expect(todaysLosses).toEqual(0)
     expect(todaysRevenue).toEqual(0)
   })
@@ -377,6 +380,7 @@ describe('computeStateForNextDay', () => {
       notificationLog: [],
       priceCrashes: {},
       priceSurges: {},
+      record7dayProfitAverage: 0,
       todaysPastNotifications: [{ message: 'some message', severity: 'info' }],
     })
 

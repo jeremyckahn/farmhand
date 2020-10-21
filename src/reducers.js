@@ -14,6 +14,7 @@ import {
   generateCow,
   generateOffspringCow,
   generateValueAdjustments,
+  get7DayAverage,
   getAdjustedItemValue,
   getResaleValue,
   getCowMilkItem,
@@ -818,22 +819,30 @@ export const updatePriceEvents = state => {
  * @returns {farmhand.state}
  */
 export const updateRevenueRecords = state => {
+  const { todaysLosses, todaysRevenue, record7dayProfitAverage } = state
   let { historicalDailyLosses, historicalDailyRevenue } = state
 
-  historicalDailyLosses = [state.todaysLosses, ...historicalDailyLosses].slice(
+  historicalDailyLosses = [todaysLosses, ...historicalDailyLosses].slice(
     0,
     DAILY_FINANCIAL_HISTORY_RECORD_LENGTH
   )
 
-  historicalDailyRevenue = [
-    state.todaysRevenue,
-    ...historicalDailyRevenue,
-  ].slice(0, DAILY_FINANCIAL_HISTORY_RECORD_LENGTH)
+  historicalDailyRevenue = [todaysRevenue, ...historicalDailyRevenue].slice(
+    0,
+    DAILY_FINANCIAL_HISTORY_RECORD_LENGTH
+  )
+
+  const profitAverage = get7DayAverage(
+    historicalDailyLosses.map((loss, i) =>
+      moneyTotal(historicalDailyRevenue[i], loss)
+    )
+  )
 
   return {
     ...state,
     historicalDailyLosses,
     historicalDailyRevenue,
+    record7dayProfitAverage: Math.max(record7dayProfitAverage, profitAverage),
     todaysLosses: 0,
     todaysRevenue: 0,
   }
