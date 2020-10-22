@@ -10,6 +10,7 @@ import {
   canMakeRecipe,
   doesInventorySpaceRemain,
   dollarString,
+  integerString,
 } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { dishes } from '../../img'
@@ -40,7 +41,7 @@ const IngredientsList = ({
           }}
         >
           {ingredients[itemId]} x {itemsMap[itemId].name} (On hand:{' '}
-          {playerInventoryQuantities[itemId]})
+          {integerString(playerInventoryQuantities[itemId])})
         </p>
       </li>
     ))}
@@ -71,7 +72,7 @@ const Recipe = ({
         subheader: (
           <>
             <p>Sell price: {dollarString(itemsMap[id].value)}</p>
-            <p>In Inventory: {playerInventoryQuantities[id]}</p>
+            <p>In Inventory: {integerString(playerInventoryQuantities[id])}</p>
             <IngredientsList {...{ playerInventoryQuantities, recipe }} />
           </>
         ),
