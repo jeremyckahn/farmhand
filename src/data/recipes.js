@@ -2,6 +2,7 @@
  * @module farmhand.recipes
  */
 import { itemType } from '../enums'
+import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
 
 import * as items from './items'
 
@@ -9,12 +10,14 @@ const itemify = recipe =>
   Object.freeze({
     ...recipe,
     type: itemType.DISH,
-    value:
-      recipe.markup +
-      Object.keys(recipe.ingredients).reduce(
-        (sum, itemId) => sum + items[itemId].value * recipe.ingredients[itemId],
-        0
-      ),
+    value: Object.keys(recipe.ingredients).reduce(
+      (sum, itemId) =>
+        sum +
+        RECIPE_INGREDIENT_VALUE_MULTIPLIER *
+          items[itemId].value *
+          recipe.ingredients[itemId],
+      0
+    ),
   })
 
 /**
@@ -24,7 +27,6 @@ const itemify = recipe =>
 export const carrotSoup = itemify({
   id: 'carrot-soup',
   name: 'Carrot Soup',
-  markup: 15,
   ingredients: {
     [items.carrot.id]: 4,
   },

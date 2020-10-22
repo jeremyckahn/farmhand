@@ -90,8 +90,6 @@
  * @typedef farmhand.recipe
  * @readonly
  * @type {farmhand.item}
- * @property {number} markup The additional value on top of the sum total of
- * the standardized ingredient cost.
  * @property {{[farmhand.item.id]: number}} ingredients An object where each
  * key is the id of a farmhand.item and the value is the quantity of that item.
  * @property {farmhand.recipeCondition} condition This must return `true` for
