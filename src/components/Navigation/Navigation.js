@@ -70,8 +70,8 @@ const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
 const {
   FARMERS_LOG,
   PRICE_EVENTS,
-  ACHIEVEMENTS,
   STATS,
+  ACHIEVEMENTS,
   ACCOUNTING,
   SETTINGS,
 } = dialogView
@@ -81,8 +81,8 @@ const {
 const dialogTriggerTextMap = {
   [FARMERS_LOG]: "Open Farmer's Log (l)",
   [PRICE_EVENTS]: 'See Price Events (e)',
-  [ACHIEVEMENTS]: 'View Achievements (a)',
   [STATS]: 'View your stats (s)',
+  [ACHIEVEMENTS]: 'View Achievements (a)',
   [ACCOUNTING]: 'View Bank Account (b)',
   [SETTINGS]: 'View Settings (comma)',
 }
@@ -90,8 +90,8 @@ const dialogTriggerTextMap = {
 const dialogTitleMap = {
   [FARMERS_LOG]: "Farmer's Log",
   [PRICE_EVENTS]: 'Price Events',
-  [ACHIEVEMENTS]: 'Achievements',
   [STATS]: 'Farm Stats',
+  [ACHIEVEMENTS]: 'Achievements',
   [ACCOUNTING]: 'Bank Account',
   [SETTINGS]: 'Settings',
 }
@@ -99,8 +99,8 @@ const dialogTitleMap = {
 const dialogContentMap = {
   [FARMERS_LOG]: <LogView />,
   [PRICE_EVENTS]: <PriceEventView />,
-  [ACHIEVEMENTS]: <AchievementsView />,
   [STATS]: <StatsView />,
+  [ACHIEVEMENTS]: <AchievementsView />,
   [ACCOUNTING]: <AccountingView />,
   [SETTINGS]: <SettingsView />,
 }
@@ -162,15 +162,16 @@ export const Navigation = ({
       {[
         { dialogView: FARMERS_LOG, Icon: HistoryIcon },
         { dialogView: PRICE_EVENTS, Icon: FlashOnIcon },
-        { dialogView: ACHIEVEMENTS, Icon: AssignmentTurnedInIcon },
         { dialogView: STATS, Icon: TrendingUpIcon },
+        { dialogView: ACHIEVEMENTS, Icon: AssignmentTurnedInIcon },
         { dialogView: ACCOUNTING, Icon: AttachMoneyIcon },
         { dialogView: SETTINGS, Icon: SettingsIcon },
       ].map(({ dialogView, Icon }) => (
         <Tooltip
           {...{
+            arrow: true,
             key: dialogView,
-            placement: 'bottom',
+            placement: 'top',
             title: dialogTriggerTextMap[dialogView],
           }}
         >
