@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -10,16 +10,16 @@ import {
   canMakeRecipe,
   doesInventorySpaceRemain,
   dollarString,
+  maxYieldOfRecipe,
   integerString,
 } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { dishes } from '../../img'
+import QuantityInput from '../QuantityInput'
 
 import FarmhandContext from '../../Farmhand.context'
 
 import './Recipe.sass'
-
-const noop = () => {}
 
 const IngredientsList = ({
   playerInventoryQuantities,
@@ -58,42 +58,64 @@ const Recipe = ({
 
   canBeMade = canMakeRecipe(recipe, inventory) &&
     doesInventorySpaceRemain({ inventory, inventoryLimit }),
-}) => (
-  <Card
-    {...{
-      className: classNames('Recipe', { 'can-be-made': canBeMade }),
-      onClick: canBeMade ? () => handleMakeRecipeClick(recipe) : noop,
-    }}
-  >
-    <CardHeader
+}) => {
+  const handleMakeRecipe = () => {
+    if (canBeMade) {
+      // FIXME: Pass quantity here.
+      handleMakeRecipeClick(recipe)
+
+      // FIXME: Update quantity with setQuantity here.
+    }
+  }
+
+  const [quantity, setQuantity] = useState(1)
+
+  return (
+    <Card
       {...{
-        avatar: <img {...{ src: dishes[id], alt: name }} />,
-        title: name,
-        subheader: (
-          <>
-            <p>Sell price: {dollarString(itemsMap[id].value)}</p>
-            <p>In Inventory: {integerString(playerInventoryQuantities[id])}</p>
-            <IngredientsList {...{ playerInventoryQuantities, recipe }} />
-          </>
-        ),
+        className: classNames('Recipe', { 'can-be-made': canBeMade }),
       }}
-    />
-    <CardActions>
-      <Button
+    >
+      <CardHeader
         {...{
-          // The onClick handler for this is bound on the parent Card for
-          // better click-ability.
-          className: 'make-recipe',
-          color: 'primary',
-          disabled: !canBeMade,
-          variant: 'contained',
+          avatar: <img {...{ src: dishes[id], alt: name }} />,
+          title: name,
+          subheader: (
+            <>
+              <p>Sell price: {dollarString(itemsMap[id].value)}</p>
+              <p>
+                In Inventory: {integerString(playerInventoryQuantities[id])}
+              </p>
+              <IngredientsList {...{ playerInventoryQuantities, recipe }} />
+            </>
+          ),
         }}
-      >
-        Make
-      </Button>
-    </CardActions>
-  </Card>
-)
+      />
+      <CardActions>
+        <Button
+          {...{
+            className: 'make-recipe',
+            color: 'primary',
+            disabled: !canBeMade,
+            onClick: handleMakeRecipe,
+            variant: 'contained',
+          }}
+        >
+          Make
+        </Button>
+        <QuantityInput
+          {...{
+            handleSubmit: handleMakeRecipe,
+            handleUpdateNumber: setQuantity,
+            maxQuantity: maxYieldOfRecipe(recipe, inventory),
+            setQuantity: setQuantity,
+            value: quantity,
+          }}
+        />
+      </CardActions>
+    </Card>
+  )
+}
 
 Recipe.propTypes = {
   canBeMade: bool,

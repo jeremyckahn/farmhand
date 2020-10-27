@@ -103,6 +103,7 @@ export const Item = ({
   adjustedValue = isSellView && isItemSoldInShop(item)
     ? getResaleValue(item)
     : getItemCurrentValue(item, valueAdjustments),
+
   previousDayAdjustedValue = (isSellView && isItemSoldInShop(item)) ||
   historicalValueAdjustments.length === 0 ||
   !doesPriceFluctuate

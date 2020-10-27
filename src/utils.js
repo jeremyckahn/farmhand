@@ -517,20 +517,39 @@ export const getCowValue = cow =>
   )
 
 /**
+ * @param {Array.<farmhand.item>} inventory
+ * @returns {Object}
+ */
+const getInventoryQuantityMap = memoize(inventory =>
+  inventory.reduce((acc, { id, quantity }) => {
+    acc[id] = quantity
+    return acc
+  }, {})
+)
+
+// FIXME: Test this.
+/**
+ * @param {farmhand.recipe} recipe
+ * @param {Array.<farmhand.item>} inventory
+ * @returns {number}
+ */
+export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
+  const inventoryQuantityMap = getInventoryQuantityMap(inventory)
+
+  return Math.min(
+    ...Object.keys(ingredients).map(itemId =>
+      Math.floor(inventoryQuantityMap[itemId] / ingredients[itemId])
+    )
+  )
+})
+
+/**
  * @param {farmhand.recipe} recipe
  * @param {Array.<farmhand.item>} inventory
  * @returns {boolean}
  */
-export const canMakeRecipe = memoize(({ ingredients }, inventory) => {
-  const inventoryQuantityMap = inventory.reduce((acc, { id, quantity }) => {
-    acc[id] = quantity
-    return acc
-  }, {})
-
-  return Object.keys(ingredients).every(
-    itemId => inventoryQuantityMap[itemId] >= ingredients[itemId]
-  )
-})
+export const canMakeRecipe = (recipe, inventory) =>
+  maxYieldOfRecipe(recipe, inventory) > 0
 
 /**
  * @param {Array.<string>} itemIds
