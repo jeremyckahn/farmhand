@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
-import { array, bool, func, number, object } from 'prop-types'
+import { array, func, number, object } from 'prop-types'
 
 import {
   canMakeRecipe,
@@ -56,11 +56,15 @@ const Recipe = ({
   recipe,
   recipe: { id, name },
 }) => {
-  const canBeMade =
-    canMakeRecipe(recipe, inventory) &&
-    doesInventorySpaceRemain({ inventory, inventoryLimit })
+  const [quantity, setQuantity] = useState(1)
 
-  const maxQuantity = maxYieldOfRecipe(recipe, inventory)
+  useEffect(() => {
+    setQuantity(Math.min(maxYieldOfRecipe(recipe, inventory), 1))
+  }, [inventory, recipe])
+
+  const canBeMade =
+    canMakeRecipe(recipe, inventory, quantity) &&
+    doesInventorySpaceRemain({ inventory, inventoryLimit })
 
   const handleMakeRecipe = () => {
     if (canBeMade) {
@@ -68,11 +72,7 @@ const Recipe = ({
     }
   }
 
-  const [quantity, setQuantity] = useState(1)
-
-  useEffect(() => {
-    setQuantity(Math.min(maxYieldOfRecipe(recipe, inventory), 1))
-  }, [inventory, recipe])
+  const maxQuantity = maxYieldOfRecipe(recipe, inventory)
 
   return (
     <Card
@@ -122,7 +122,6 @@ const Recipe = ({
 }
 
 Recipe.propTypes = {
-  canBeMade: bool,
   handleMakeRecipeClick: func.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
