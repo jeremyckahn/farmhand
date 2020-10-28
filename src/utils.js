@@ -545,14 +545,14 @@ export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
   )
 })
 
-// FIXME: This needs to accept and process a howMany argument.
 /**
  * @param {farmhand.recipe} recipe
  * @param {Array.<farmhand.item>} inventory
+ * @param {number} howMany
  * @returns {boolean}
  */
-export const canMakeRecipe = (recipe, inventory) =>
-  maxYieldOfRecipe(recipe, inventory) > 0
+export const canMakeRecipe = (recipe, inventory, howMany) =>
+  maxYieldOfRecipe(recipe, inventory) >= howMany
 
 /**
  * @param {Array.<string>} itemIds

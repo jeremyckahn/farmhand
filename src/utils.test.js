@@ -594,9 +594,11 @@ describe('canMakeRecipe', () => {
   describe('player does not have sufficient ingredients', () => {
     test('evaluates inventory correctly', () => {
       expect(
-        canMakeRecipe({ ingredients: { 'sample-item-1': 2 } }, [
-          { id: 'sample-item-1', quantity: 1 },
-        ])
+        canMakeRecipe(
+          { ingredients: { 'sample-item-1': 2 } },
+          [{ id: 'sample-item-1', quantity: 1 }],
+          1
+        )
       ).toBe(false)
     })
   })
@@ -604,9 +606,11 @@ describe('canMakeRecipe', () => {
   describe('player does have sufficient ingredients', () => {
     test('evaluates inventory correctly', () => {
       expect(
-        canMakeRecipe({ ingredients: { 'sample-item-1': 2 } }, [
-          { id: 'sample-item-1', quantity: 2 },
-        ])
+        canMakeRecipe(
+          { ingredients: { 'sample-item-1': 2 } },
+          [{ id: 'sample-item-1', quantity: 2 }],
+          1
+        )
       ).toBe(true)
     })
   })
