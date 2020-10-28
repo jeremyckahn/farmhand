@@ -63,6 +63,7 @@ const Recipe = ({
   }, [inventory, recipe])
 
   const canBeMade =
+    quantity > 0 &&
     canMakeRecipe(recipe, inventory, quantity) &&
     doesInventorySpaceRemain({ inventory, inventoryLimit })
 
