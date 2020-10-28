@@ -30,7 +30,7 @@
  * farmhand.state.hoveredPlotRange to when the item is active.
  * @property {boolean} [isPlantableCrop]
  * @property {boolean} [isReplantable]
- * @property {number} [quanitity] How many of the item the player has.
+ * @property {number} [quantity] How many of the item the player has.
  * @property {number} [tier] The value tier that the item belongs to.
  */
 

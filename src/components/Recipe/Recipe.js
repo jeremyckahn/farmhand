@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -55,20 +55,24 @@ const Recipe = ({
   playerInventoryQuantities,
   recipe,
   recipe: { id, name },
-
-  canBeMade = canMakeRecipe(recipe, inventory) &&
-    doesInventorySpaceRemain({ inventory, inventoryLimit }),
 }) => {
+  const canBeMade =
+    canMakeRecipe(recipe, inventory) &&
+    doesInventorySpaceRemain({ inventory, inventoryLimit })
+
+  const maxQuantity = maxYieldOfRecipe(recipe, inventory)
+
   const handleMakeRecipe = () => {
     if (canBeMade) {
-      // FIXME: Pass quantity here.
-      handleMakeRecipeClick(recipe)
-
-      // FIXME: Update quantity with setQuantity here.
+      handleMakeRecipeClick(recipe, quantity)
     }
   }
 
   const [quantity, setQuantity] = useState(1)
+
+  useEffect(() => {
+    setQuantity(Math.min(maxYieldOfRecipe(recipe, inventory), 1))
+  }, [inventory, recipe])
 
   return (
     <Card
@@ -107,8 +111,8 @@ const Recipe = ({
           {...{
             handleSubmit: handleMakeRecipe,
             handleUpdateNumber: setQuantity,
-            maxQuantity: maxYieldOfRecipe(recipe, inventory),
-            setQuantity: setQuantity,
+            maxQuantity,
+            setQuantity,
             value: quantity,
           }}
         />

@@ -536,13 +536,16 @@ const getInventoryQuantityMap = memoize(inventory =>
 export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
   const inventoryQuantityMap = getInventoryQuantityMap(inventory)
 
-  return Math.min(
-    ...Object.keys(ingredients).map(itemId =>
-      Math.floor(inventoryQuantityMap[itemId] / ingredients[itemId])
-    )
+  return (
+    Math.min(
+      ...Object.keys(ingredients).map(itemId =>
+        Math.floor(inventoryQuantityMap[itemId] / ingredients[itemId])
+      )
+    ) || 0
   )
 })
 
+// FIXME: This needs to accept and process a howMany argument.
 /**
  * @param {farmhand.recipe} recipe
  * @param {Array.<farmhand.item>} inventory

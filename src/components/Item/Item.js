@@ -122,6 +122,8 @@ export const Item = ({
   const [sellQuantity, setSellQuantity] = useState(1)
 
   useEffect(() => {
+    // TODO: Determine if this logic can be simplified to be more like the
+    // useEffect function below.
     setPurchaseQuantity(
       Math.min(maxQuantityPlayerCanPurchase, Math.max(1, purchaseQuantity))
     )
