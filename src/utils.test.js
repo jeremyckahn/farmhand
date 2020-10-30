@@ -25,6 +25,7 @@ import {
   integerString,
   isItemAFarmProduct,
   levelAchieved,
+  maxYieldOfRecipe,
   moneyString,
   moneyTotal,
 } from './utils'
@@ -590,13 +591,74 @@ describe('getFinalCropItemIdFromSeedItemId', () => {
   })
 })
 
+describe('maxYieldOfRecipe', () => {
+  test('returns yield for no ingredients', () => {
+    expect(
+      maxYieldOfRecipe({ ingredients: { 'sample-item-1': 2 } }, [])
+    ).toEqual(0)
+  })
+
+  test('returns yield for some ingredients', () => {
+    expect(
+      maxYieldOfRecipe(
+        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
+        [{ id: 'sample-item-1', quantity: 2 }]
+      )
+    ).toEqual(0)
+
+    expect(
+      maxYieldOfRecipe(
+        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
+        [
+          { id: 'sample-item-1', quantity: 1 },
+          { id: 'sample-item-2', quantity: 2 },
+        ]
+      )
+    ).toEqual(0)
+
+    expect(
+      maxYieldOfRecipe(
+        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
+        [
+          { id: 'sample-item-1', quantity: 4 },
+          { id: 'sample-item-2', quantity: 3 },
+        ]
+      )
+    ).toEqual(1)
+  })
+
+  test('returns yield for all ingredients', () => {
+    expect(
+      maxYieldOfRecipe(
+        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
+        [
+          { id: 'sample-item-1', quantity: 2 },
+          { id: 'sample-item-2', quantity: 2 },
+        ]
+      )
+    ).toEqual(1)
+
+    expect(
+      maxYieldOfRecipe(
+        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
+        [
+          { id: 'sample-item-1', quantity: 4 },
+          { id: 'sample-item-2', quantity: 4 },
+        ]
+      )
+    ).toEqual(2)
+  })
+})
+
 describe('canMakeRecipe', () => {
   describe('player does not have sufficient ingredients', () => {
     test('evaluates inventory correctly', () => {
       expect(
-        canMakeRecipe({ ingredients: { 'sample-item-1': 2 } }, [
-          { id: 'sample-item-1', quantity: 1 },
-        ])
+        canMakeRecipe(
+          { ingredients: { 'sample-item-1': 2 } },
+          [{ id: 'sample-item-1', quantity: 1 }],
+          1
+        )
       ).toBe(false)
     })
   })
@@ -604,9 +666,11 @@ describe('canMakeRecipe', () => {
   describe('player does have sufficient ingredients', () => {
     test('evaluates inventory correctly', () => {
       expect(
-        canMakeRecipe({ ingredients: { 'sample-item-1': 2 } }, [
-          { id: 'sample-item-1', quantity: 2 },
-        ])
+        canMakeRecipe(
+          { ingredients: { 'sample-item-1': 2 } },
+          [{ id: 'sample-item-1', quantity: 2 }],
+          1
+        )
       ).toBe(true)
     })
   })

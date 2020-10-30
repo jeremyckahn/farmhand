@@ -1024,10 +1024,11 @@ export const updateLearnedRecipes = state => ({
 /**
  * @param {farmhand.state} state
  * @param {farmhand.recipe} recipe
+ * @param {number} [howMany=1]
  * @returns {farmhand.state}
  */
-export const makeRecipe = (state, recipe) => {
-  if (!canMakeRecipe(recipe, state.inventory)) {
+export const makeRecipe = (state, recipe, howMany = 1) => {
+  if (!canMakeRecipe(recipe, state.inventory, howMany)) {
     return state
   }
 
@@ -1036,12 +1037,12 @@ export const makeRecipe = (state, recipe) => {
       decrementItemFromInventory(
         state,
         ingredientId,
-        recipe.ingredients[ingredientId]
+        recipe.ingredients[ingredientId] * howMany
       ),
     state
   )
 
-  return addItemToInventory(state, recipe)
+  return addItemToInventory(state, recipe, howMany)
 }
 
 /**

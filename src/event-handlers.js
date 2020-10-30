@@ -44,9 +44,10 @@ export default {
 
   /**
    * @param {farmhand.recipe} recipe
+   * @param {number} [howMany=1]
    */
-  handleMakeRecipeClick(recipe) {
-    this.makeRecipe(recipe)
+  handleMakeRecipeClick(recipe, howMany = 1) {
+    this.makeRecipe(recipe, howMany)
   },
 
   /**

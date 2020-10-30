@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import NumberFormat from 'react-number-format'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 import Button from '@material-ui/core/Button'
@@ -7,7 +6,6 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
-import TextField from '@material-ui/core/TextField'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import { array, bool, func, number, object } from 'prop-types'
@@ -26,18 +24,13 @@ import {
   moneyString,
   integerString,
 } from '../../utils'
+import QuantityInput from '../QuantityInput'
 
 import './Item.sass'
 
 const noop = () => {}
 
-const ValueIndicator = ({
-  id,
-  value,
-  valueAdjustments,
-
-  poorValue,
-}) => (
+const ValueIndicator = ({ poorValue }) => (
   <Tooltip
     {...{
       arrow: true,
@@ -87,45 +80,6 @@ const SellValueIndicator = ({
   />
 )
 
-const QuantityNumberFormat = ({ inputRef, min, max, onChange, ...rest }) => (
-  <NumberFormat
-    isNumericString
-    thousandSeparator
-    {...{
-      ...rest,
-      allowNegative: false,
-      decimalScale: 0,
-      onValueChange: ({ floatValue = 0 }) =>
-        onChange(Math.min(floatValue, max)),
-    }}
-  />
-)
-
-const QuantityInput = ({ handleSubmit, handleUpdateNumber, max, value }) => (
-  <TextField
-    {...{
-      value,
-      inputProps: {
-        pattern: '[0-9]*',
-        min: 0,
-        max,
-      },
-      onChange: handleUpdateNumber,
-      // Bind to keyup to prevent spamming the event handler.
-      onKeyUp: ({ which }) => {
-        // Enter
-        if (which === 13) {
-          handleSubmit()
-        }
-      },
-
-      InputProps: {
-        inputComponent: QuantityNumberFormat,
-      },
-    }}
-  />
-)
-
 export const Item = ({
   completedAchievements,
   handleItemPurchaseClick,
@@ -149,6 +103,7 @@ export const Item = ({
   adjustedValue = isSellView && isItemSoldInShop(item)
     ? getResaleValue(item)
     : getItemCurrentValue(item, valueAdjustments),
+
   previousDayAdjustedValue = (isSellView && isItemSoldInShop(item)) ||
   historicalValueAdjustments.length === 0 ||
   !doesPriceFluctuate
@@ -167,6 +122,8 @@ export const Item = ({
   const [sellQuantity, setSellQuantity] = useState(1)
 
   useEffect(() => {
+    // TODO: Determine if this logic can be simplified to be more like the
+    // useEffect function below.
     setPurchaseQuantity(
       Math.min(maxQuantityPlayerCanPurchase, Math.max(1, purchaseQuantity))
     )
@@ -310,20 +267,11 @@ export const Item = ({
               {...{
                 handleSubmit: handleItemPurchase,
                 handleUpdateNumber: setPurchaseQuantity,
-                max: maxQuantityPlayerCanPurchase,
+                maxQuantity: maxQuantityPlayerCanPurchase,
+                setQuantity: setPurchaseQuantity,
                 value: purchaseQuantity,
               }}
             />
-            <Button
-              {...{
-                className: 'quantity',
-                onClick: () =>
-                  setPurchaseQuantity(maxQuantityPlayerCanPurchase),
-                variant: 'contained',
-              }}
-            >
-              / {integerString(maxQuantityPlayerCanPurchase)}
-            </Button>
           </>
         )}
         {isSellView && (
@@ -343,19 +291,11 @@ export const Item = ({
               {...{
                 handleSubmit: handleItemSell,
                 handleUpdateNumber: setSellQuantity,
-                max: playerInventoryQuantities[id],
+                maxQuantity: playerInventoryQuantities[id],
+                setQuantity: setSellQuantity,
                 value: sellQuantity,
               }}
             />
-            <Button
-              {...{
-                className: 'quantity',
-                onClick: () => setSellQuantity(playerInventoryQuantities[id]),
-                variant: 'contained',
-              }}
-            >
-              / {integerString(playerInventoryQuantities[id])}
-            </Button>
           </>
         )}
       </CardActions>
