@@ -527,7 +527,6 @@ const getInventoryQuantityMap = memoize(inventory =>
   }, {})
 )
 
-// FIXME: Test this.
 /**
  * @param {farmhand.recipe} recipe
  * @param {Array.<farmhand.item>} inventory
