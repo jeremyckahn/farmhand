@@ -206,6 +206,7 @@ describe('generateCow', () => {
     const baseCowProperties = {
       color: Object.keys(standardCowColors)[0],
       daysOld: 1,
+      isBred: false,
       name: fruitNames[0],
     }
 
@@ -248,11 +249,12 @@ describe('generateCow', () => {
       const baseWeight = COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE
 
       expect(generateCow()).toMatchObject({
+        baseWeight,
         color: Object.keys(standardCowColors).pop(),
         daysOld: 1,
         gender: Object.keys(genders).pop(),
+        isBred: false,
         name: fruitNames[fruitNames.length - 1],
-        baseWeight,
       })
     })
   })
@@ -295,6 +297,7 @@ describe('generateOffspringCow', () => {
         [standardCowColors.YELLOW]: true,
       },
       baseWeight: 2100,
+      isBred: true,
     })
   })
 
@@ -348,6 +351,7 @@ describe('generateOffspringCow', () => {
           [standardCowColors.YELLOW]: true,
         },
         baseWeight: 2100,
+        isBred: true,
       })
     })
 

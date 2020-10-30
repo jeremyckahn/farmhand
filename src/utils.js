@@ -407,6 +407,7 @@ export const generateCow = (options = {}) => {
     happiness: 0,
     happinessBoostsToday: 0,
     id: createUniqueId(),
+    isBred: false,
     isUsingHuggingMachine: false,
     name: chooseRandom(fruitNames),
     weightMultiplier: 1,
@@ -452,6 +453,7 @@ export const generateOffspringCow = (cow1, cow2) => {
       : chooseRandom([femaleCow.color, maleCow.color]),
     colorsInBloodline,
     baseWeight: (maleCow.baseWeight + femaleCow.baseWeight) / 2,
+    isBred: true,
     ...(isRainbowCow && { gender: genders.FEMALE }),
   })
 }
