@@ -960,14 +960,12 @@ export const purchaseItem = (state, item, howMany = 1) => {
 const addRevenue = (state, revenueToAdd) => {
   const { money, revenue, todaysRevenue } = state
 
-  state = {
+  return {
     ...state,
     money: moneyTotal(money, revenueToAdd),
     revenue: moneyTotal(revenue, revenueToAdd),
     todaysRevenue: moneyTotal(todaysRevenue, revenueToAdd),
   }
-
-  return state
 }
 
 /**
@@ -1128,10 +1126,16 @@ export const sellCow = (state, cow) => {
 
   state = removeCowFromInventory(state, cow)
 
-  return {
-    ...state,
-    money: moneyTotal(money, cowValue),
+  if (cow.isBred) {
+    state = addRevenue(state, cowValue)
+  } else {
+    state = {
+      ...state,
+      money: moneyTotal(money, cowValue),
+    }
   }
+
+  return state
 }
 
 /**
