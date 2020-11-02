@@ -69,7 +69,7 @@ If you can master the art of the harvest, there's no limit to how profitable you
 
 * Watch your inventory space as you obtain items. You can purchase additional storage space in the shop.
 
-* You'll be able to unlock new crops and items as you level up. Sell crops, milk, and dishes made from recipes to gain experience!
+* You'll be able to unlock new crops and items as you level up. Sell crops, milk, and crafted items to gain experience!
 
 * Bank loans accrue interest daily, so pay off your balance as soon as you can.
 

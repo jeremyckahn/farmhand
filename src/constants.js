@@ -89,7 +89,7 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.FIELD]: 'Field',
   [stageFocusType.SHOP]: 'Shop',
   [stageFocusType.COW_PEN]: 'Cows',
-  [stageFocusType.KITCHEN]: 'Kitchen',
+  [stageFocusType.WORKSHOP]: 'Workshop',
 }
 
 // The number here is somewhat arbitrary and tuned to the UX and rounding

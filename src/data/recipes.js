@@ -9,7 +9,7 @@ import * as items from './items'
 const itemify = recipe =>
   Object.freeze({
     ...recipe,
-    type: itemType.DISH,
+    type: itemType.CRAFTED_ITEM,
     value: Object.keys(recipe.ingredients).reduce(
       (sum, itemId) =>
         sum +

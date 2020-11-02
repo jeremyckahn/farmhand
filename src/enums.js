@@ -48,8 +48,8 @@ export const stageFocusType = enumify([
   'FIELD',
   'SHOP',
   'COW_PEN',
-  'KITCHEN',
   'INVENTORY',
+  'WORKSHOP',
 ])
 
 /**
@@ -64,8 +64,8 @@ export const cropLifeStage = enumify(['SEED', 'GROWING', 'GROWN'])
  */
 export const itemType = enumify([
   'COW_FEED',
+  'CRAFTED_ITEM',
   'CROP',
-  'DISH',
   'FERTILIZER',
   'HUGGING_MACHINE',
   'MILK',

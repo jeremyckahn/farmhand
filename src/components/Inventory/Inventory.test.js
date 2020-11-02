@@ -82,7 +82,7 @@ describe('item sorting', () => {
       ],
       [categoryIds.ANIMAL_PRODUCTS]: [testItem({ id: 'milk-1' })],
       [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
-      [categoryIds.DISHES]: [testItem({ id: 'sample-recipe-1' })],
+      [categoryIds.CRAFTED_ITEMS]: [testItem({ id: 'sample-recipe-1' })],
     })
   })
 })

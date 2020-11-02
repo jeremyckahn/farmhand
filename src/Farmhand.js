@@ -256,14 +256,14 @@ export default class Farmhand extends Component {
   }
 
   get viewList() {
-    const { COW_PEN, FIELD, HOME, KITCHEN, SHOP } = stageFocusType
+    const { COW_PEN, FIELD, HOME, WORKSHOP, SHOP } = stageFocusType
     const viewList = [HOME, SHOP, FIELD]
 
     if (this.state.purchasedCowPen) {
       viewList.push(COW_PEN)
     }
 
-    viewList.push(KITCHEN)
+    viewList.push(WORKSHOP)
 
     return viewList
   }
