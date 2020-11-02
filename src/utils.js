@@ -407,6 +407,7 @@ export const generateCow = (options = {}) => {
     happiness: 0,
     happinessBoostsToday: 0,
     id: createUniqueId(),
+    isBred: false,
     isUsingHuggingMachine: false,
     name: chooseRandom(fruitNames),
     weightMultiplier: 1,
@@ -452,6 +453,7 @@ export const generateOffspringCow = (cow1, cow2) => {
       : chooseRandom([femaleCow.color, maleCow.color]),
     colorsInBloodline,
     baseWeight: (maleCow.baseWeight + femaleCow.baseWeight) / 2,
+    isBred: true,
     ...(isRainbowCow && { gender: genders.FEMALE }),
   })
 }
@@ -783,6 +785,7 @@ export const reduceByPersistedKeys = state => {
     'cowBreedingPen',
     'cowInventory',
     'cowColorsPurchased',
+    'cowsSold',
     'cropsHarvested',
     'dayCount',
     'farmName',
@@ -827,3 +830,16 @@ export const reduceByPersistedKeys = state => {
 export const get7DayAverage = historicalData =>
   historicalData.reduce((sum, revenue) => moneyTotal(sum, revenue), 0) /
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH
+
+const cowColorToIdMap = {
+  [cowColors.BLUE]: 'blue',
+  [cowColors.BROWN]: 'brown',
+  [cowColors.GREEN]: 'green',
+  [cowColors.ORANGE]: 'orange',
+  [cowColors.PURPLE]: 'purple',
+  [cowColors.RAINBOW]: 'rainbow',
+  [cowColors.WHITE]: 'white',
+  [cowColors.YELLOW]: 'yellow',
+}
+
+export const getCowColorId = ({ color }) => `${cowColorToIdMap[color]}-cow`

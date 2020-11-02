@@ -67,6 +67,7 @@
  * @property {number} happiness 0-1.
  * @property {number} happinessBoostsToday
  * @property {string} id
+ * @property {boolean} isBred
  * @property {boolean} isUsingHuggingMachine
  * @property {string} name
  * @property {number} weightMultiplier Clamped between 0.5 and 1.5.

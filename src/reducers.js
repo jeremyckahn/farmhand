@@ -17,6 +17,7 @@ import {
   get7DayAverage,
   getAdjustedItemValue,
   getResaleValue,
+  getCowColorId,
   getCowMilkItem,
   getCowMilkRate,
   getCowValue,
@@ -954,6 +955,22 @@ export const purchaseItem = (state, item, howMany = 1) => {
 
 /**
  * @param {farmhand.state} state
+ * @param {number} revenue
+ * @returns {farmhand.state}
+ */
+const addRevenue = (state, revenueToAdd) => {
+  const { money, revenue, todaysRevenue } = state
+
+  return {
+    ...state,
+    money: moneyTotal(money, revenueToAdd),
+    revenue: moneyTotal(revenue, revenueToAdd),
+    todaysRevenue: moneyTotal(todaysRevenue, revenueToAdd),
+  }
+}
+
+/**
+ * @param {farmhand.state} state
  * @param {farmhand.item} item
  * @param {number} [howMany=1]
  * @returns {farmhand.state}
@@ -964,7 +981,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
   }
 
   const item = itemsMap[id]
-  const { itemsSold, money, revenue, todaysRevenue, valueAdjustments } = state
+  const { itemsSold, money: initialMoney, valueAdjustments } = state
   const oldLevel = levelAchieved(farmProductsSold(itemsSold))
   let { loanBalance } = state
 
@@ -992,12 +1009,13 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
   const newItemsSold = { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany }
 
+  // money needs to be passed in explicitly here because state.money gets
+  // mutated above and addRevenue needs its initial value.
+  state = addRevenue({ ...state, money: initialMoney }, saleValue)
+
   state = {
     ...state,
     itemsSold: newItemsSold,
-    money: moneyTotal(money, saleValue),
-    revenue: moneyTotal(revenue, saleValue),
-    todaysRevenue: moneyTotal(todaysRevenue, saleValue),
   }
 
   state = processLevelUp(state, oldLevel)
@@ -1104,15 +1122,30 @@ export const purchaseCow = (state, cow) => {
  * @returns {farmhand.state}
  */
 export const sellCow = (state, cow) => {
-  const { money } = state
+  const { cowsSold, money } = state
   const cowValue = getCowValue(cow)
 
   state = removeCowFromInventory(state, cow)
 
-  return {
-    ...state,
-    money: moneyTotal(money, cowValue),
+  const cowColorId = getCowColorId(cow)
+
+  if (cow.isBred) {
+    state = addRevenue(state, cowValue)
+  } else {
+    state = {
+      ...state,
+      money: moneyTotal(money, cowValue),
+    }
   }
+
+  const newCowsSold = {
+    ...cowsSold,
+    [cowColorId]: (cowsSold[cowColorId] || 0) + 1,
+  }
+
+  state = { ...state, cowsSold: newCowsSold }
+
+  return state
 }
 
 /**
