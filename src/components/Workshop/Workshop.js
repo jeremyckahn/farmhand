@@ -6,10 +6,10 @@ import Recipe from '../Recipe'
 
 import FarmhandContext from '../../Farmhand.context'
 
-import './Kitchen.sass'
+import './Workshop.sass'
 
-const Kitchen = ({ learnedRecipes }) => (
-  <div className="Kitchen">
+const Workshop = ({ learnedRecipes }) => (
+  <div className="Workshop">
     <h2>Learned Recipes</h2>
     <section>
       <ul className="card-list">
@@ -27,7 +27,7 @@ const Kitchen = ({ learnedRecipes }) => (
   </div>
 )
 
-Kitchen.propTypes = {
+Workshop.propTypes = {
   learnedRecipes: object.isRequired,
 }
 
@@ -35,7 +35,7 @@ export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Kitchen {...{ ...gameState, ...handlers, ...props }} />
+        <Workshop {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
   )
