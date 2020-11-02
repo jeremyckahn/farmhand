@@ -1729,6 +1729,7 @@ describe('sellCow', () => {
   beforeEach(() => {
     cow = Object.freeze({
       baseWeight: 1000,
+      color: standardCowColors.BLUE,
       gender: genders.FEMALE,
       name: 'cow',
       isBred: false,
@@ -1739,15 +1740,17 @@ describe('sellCow', () => {
     test('cow is sold as revenue', () => {
       cow = Object.freeze({
         baseWeight: 1000,
+        color: standardCowColors.BLUE,
         gender: genders.FEMALE,
         name: 'cow',
         isBred: true,
       })
 
-      const { cowInventory, money, revenue } = fn.sellCow(
+      const { cowInventory, cowsSold, money, revenue } = fn.sellCow(
         {
           cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
           cowInventory: [cow],
+          cowsSold: {},
           money: 0,
           revenue: 0,
         },
@@ -1755,6 +1758,7 @@ describe('sellCow', () => {
       )
 
       expect(cowInventory).not.toContain(cow)
+      expect(cowsSold).toEqual({ 'blue-cow': 1 })
       expect(money).toEqual(getCowValue(cow))
       expect(revenue).toEqual(getCowValue(cow))
     })
@@ -1762,10 +1766,11 @@ describe('sellCow', () => {
 
   describe('cow is not bred', () => {
     test('cow is sold', () => {
-      const { cowInventory, money, revenue } = fn.sellCow(
+      const { cowInventory, cowsSold, money, revenue } = fn.sellCow(
         {
           cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
           cowInventory: [cow],
+          cowsSold: { 'blue-cow': 1 },
           money: 0,
           revenue: 0,
         },
@@ -1773,6 +1778,7 @@ describe('sellCow', () => {
       )
 
       expect(cowInventory).not.toContain(cow)
+      expect(cowsSold).toEqual({ 'blue-cow': 2 })
       expect(money).toEqual(getCowValue(cow))
       expect(revenue).toEqual(0)
     })
@@ -1790,6 +1796,7 @@ describe('sellCow', () => {
         {
           cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
           cowInventory: [cow],
+          cowsSold: {},
           inventory: [],
           inventoryLimit: -1,
           money: 0,

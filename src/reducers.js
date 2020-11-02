@@ -17,6 +17,7 @@ import {
   get7DayAverage,
   getAdjustedItemValue,
   getResaleValue,
+  getCowColorId,
   getCowMilkItem,
   getCowMilkRate,
   getCowValue,
@@ -1121,10 +1122,12 @@ export const purchaseCow = (state, cow) => {
  * @returns {farmhand.state}
  */
 export const sellCow = (state, cow) => {
-  const { money } = state
+  const { cowsSold, money } = state
   const cowValue = getCowValue(cow)
 
   state = removeCowFromInventory(state, cow)
+
+  const cowColorId = getCowColorId(cow)
 
   if (cow.isBred) {
     state = addRevenue(state, cowValue)
@@ -1134,6 +1137,13 @@ export const sellCow = (state, cow) => {
       money: moneyTotal(money, cowValue),
     }
   }
+
+  const newCowsSold = {
+    ...cowsSold,
+    [cowColorId]: (cowsSold[cowColorId] || 0) + 1,
+  }
+
+  state = { ...state, cowsSold: newCowsSold }
 
   return state
 }
