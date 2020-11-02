@@ -58,7 +58,7 @@ export const COW_BORN_MESSAGE = (_, parentCow1, parentCow2, offspringCow) =>
  * @returns {string}
  */
 export const RECIPE_LEARNED = (_, recipe) =>
-  `You learned how to make ${recipe.name}!`
+  `You learned a new recipe: **${recipe.name}**!`
 
 /**
  * @param {farmhand.item} cropItem
