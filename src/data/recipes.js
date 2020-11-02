@@ -32,3 +32,16 @@ export const carrotSoup = itemify({
   },
   condition: state => (state.itemsSold[items.carrot.id] || 0) > 3,
 })
+
+/**
+ * @property farmhand.module:recipes.jackolantern
+ * @type {farmhand.recipe}
+ */
+export const jackolantern = itemify({
+  id: 'jackolantern',
+  name: 'Jack-o\'-lantern',
+  ingredients: {
+    [items.pumpkin.id]: 1,
+  },
+  condition: state => (state.itemsSold[items.pumpkin.id] || 0) >= 50,
+})

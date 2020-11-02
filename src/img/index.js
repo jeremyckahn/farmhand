@@ -9,6 +9,7 @@ export const plotStates = {
 
 export const dishes = {
   'carrot-soup': require('./dishes/carrot-soup.png'),
+  jackolantern: require('./items/jackolantern.png'),
 }
 
 export const items = {
