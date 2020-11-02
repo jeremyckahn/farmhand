@@ -9,7 +9,7 @@ import * as items from './items'
 const itemify = recipe =>
   Object.freeze({
     ...recipe,
-    type: itemType.DISH,
+    type: itemType.CRAFTED_ITEM,
     value: Object.keys(recipe.ingredients).reduce(
       (sum, itemId) =>
         sum +
@@ -30,5 +30,18 @@ export const carrotSoup = itemify({
   ingredients: {
     [items.carrot.id]: 4,
   },
-  condition: state => (state.itemsSold[items.carrot.id] || 0) > 3,
+  condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
+})
+
+/**
+ * @property farmhand.module:recipes.jackolantern
+ * @type {farmhand.recipe}
+ */
+export const jackolantern = itemify({
+  id: 'jackolantern',
+  name: "Jack-o'-lantern",
+  ingredients: {
+    [items.pumpkin.id]: 1,
+  },
+  condition: state => (state.itemsSold[items.pumpkin.id] || 0) >= 50,
 })

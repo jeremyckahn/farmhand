@@ -25,7 +25,7 @@ beforeEach(() => {
         itemsSold: {},
         isDialogViewOpen: false,
         stageFocus: stageFocusType.FIELD,
-        viewList: ['HOME', 'FIELD', 'SHOP', 'KITCHEN'],
+        viewList: ['HOME', 'FIELD', 'SHOP', 'WORKSHOP'],
       }}
     />
   )
@@ -48,7 +48,7 @@ describe('cow pen option', () => {
 
   test('does show if player has bought a cow pen', () => {
     component.setProps({
-      viewList: ['HOME', 'FIELD', 'SHOP', 'COW_PEN', 'KITCHEN'],
+      viewList: ['HOME', 'FIELD', 'SHOP', 'COW_PEN', 'WORKSHOP'],
     })
     expect(
       component

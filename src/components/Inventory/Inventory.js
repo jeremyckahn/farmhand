@@ -12,8 +12,8 @@ import './Inventory.sass'
 
 const {
   COW_FEED,
+  CRAFTED_ITEM,
   CROP,
-  DISH,
   FERTILIZER,
   HUGGING_MACHINE,
   MILK,
@@ -24,8 +24,8 @@ const {
 export const categoryIds = enumify([
   'ANIMAL_PRODUCTS',
   'ANIMAL_SUPPLIES',
+  'CRAFTED_ITEMS',
   'CROPS',
-  'DISHES',
   'FIELD_TOOLS',
   'SEEDS',
 ])
@@ -33,8 +33,8 @@ const categoryIdKeys = Object.keys(categoryIds)
 const {
   ANIMAL_PRODUCTS,
   ANIMAL_SUPPLIES,
+  CRAFTED_ITEMS,
   CROPS,
-  DISHES,
   FIELD_TOOLS,
   SEEDS,
 } = categoryIds
@@ -42,8 +42,8 @@ const {
 const itemTypeCategoryMap = Object.freeze({
   [COW_FEED]: ANIMAL_SUPPLIES,
   SEEDS,
+  [CRAFTED_ITEM]: CRAFTED_ITEMS,
   [CROP]: CROPS,
-  [DISH]: DISHES,
   [FERTILIZER]: FIELD_TOOLS,
   [HUGGING_MACHINE]: ANIMAL_SUPPLIES,
   [MILK]: ANIMAL_PRODUCTS,
@@ -90,7 +90,7 @@ export const Inventory = ({
       [FIELD_TOOLS, 'Field Tools'],
       [ANIMAL_PRODUCTS, 'Animal Products'],
       [ANIMAL_SUPPLIES, 'Animal Supplies'],
-      [DISHES, 'Dishes'],
+      [CRAFTED_ITEMS, 'Crafted Items'],
     ].map(([category, headerText]) =>
       itemCategories[category].length ? (
         <Fragment key={category}>

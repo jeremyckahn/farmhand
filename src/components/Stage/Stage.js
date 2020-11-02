@@ -7,7 +7,7 @@ import Field from '../Field'
 import Home from '../Home'
 import CowPen from '../CowPen'
 import Shop from '../Shop'
-import Kitchen from '../Kitchen'
+import Workshop from '../Workshop'
 import { stageFocusType } from '../../enums'
 
 import './Stage.sass'
@@ -56,7 +56,7 @@ export const Stage = ({
       )}
       {stageFocus === stageFocusType.SHOP && <Shop />}
       {stageFocus === stageFocusType.COW_PEN && <CowPen />}
-      {stageFocus === stageFocusType.KITCHEN && <Kitchen />}
+      {stageFocus === stageFocusType.WORKSHOP && <Workshop />}
       <div {...{ className: 'spacer' }} />
     </div>
   )

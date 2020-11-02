@@ -267,7 +267,7 @@ export const isItemAFarmProduct = item =>
   Boolean(
     isItemAGrownCrop(item) ||
       item.type === itemType.MILK ||
-      item.type === itemType.DISH
+      item.type === itemType.CRAFTED_ITEM
   )
 
 /**

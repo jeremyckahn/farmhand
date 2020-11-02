@@ -14,7 +14,7 @@ import {
   integerString,
 } from '../../utils'
 import { itemsMap } from '../../data/maps'
-import { dishes } from '../../img'
+import { craftedItems } from '../../img'
 import QuantityInput from '../QuantityInput'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -83,7 +83,7 @@ const Recipe = ({
     >
       <CardHeader
         {...{
-          avatar: <img {...{ src: dishes[id], alt: name }} />,
+          avatar: <img {...{ src: craftedItems[id], alt: name }} />,
           title: name,
           subheader: (
             <>

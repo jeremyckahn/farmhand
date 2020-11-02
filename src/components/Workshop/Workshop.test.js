@@ -1,13 +1,13 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Kitchen from './Kitchen'
+import Workshop from './Workshop'
 
 let component
 
 beforeEach(() => {
   component = shallow(
-    <Kitchen
+    <Workshop
       {...{
         learnedRecipes: {},
       }}

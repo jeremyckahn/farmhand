@@ -7,8 +7,9 @@ export const plotStates = {
   'fertilized-plot': require('./plot-states/fertilized-plot.png'),
 }
 
-export const dishes = {
+export const craftedItems = {
   'carrot-soup': require('./dishes/carrot-soup.png'),
+  jackolantern: require('./items/jackolantern.png'),
 }
 
 export const items = {
@@ -59,7 +60,7 @@ export const items = {
 
   'inventory-box': require('./items/inventory-box.png'),
 
-  ...dishes,
+  ...craftedItems,
 }
 
 export const tools = {

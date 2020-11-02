@@ -11,7 +11,7 @@ export const items = {
   sprinkler: 'data:image/png;base64,sprinkler',
 }
 
-export const dishes = {
+export const craftedItems = {
   'sample-recipe-1': 'data:image/png;base64,sample-recipe-1',
 }
 

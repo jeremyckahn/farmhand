@@ -25,10 +25,10 @@ export const sampleItem3 = testItem({
   value: 3,
 })
 
-export const sampleDish1 = testItem({
-  id: 'sample-dish-1',
-  name: 'Sample Dish 1',
-  type: itemType.DISH,
+export const craftedItem1 = testItem({
+  id: 'sample-crafted-item-1',
+  name: 'Sample Crafted Item 1',
+  type: itemType.CRAFTED_ITEM,
   value: 100,
 })
 
