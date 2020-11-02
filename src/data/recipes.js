@@ -30,7 +30,7 @@ export const carrotSoup = itemify({
   ingredients: {
     [items.carrot.id]: 4,
   },
-  condition: state => (state.itemsSold[items.carrot.id] || 0) > 3,
+  condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
 })
 
 /**
@@ -39,7 +39,7 @@ export const carrotSoup = itemify({
  */
 export const jackolantern = itemify({
   id: 'jackolantern',
-  name: 'Jack-o\'-lantern',
+  name: "Jack-o'-lantern",
   ingredients: {
     [items.pumpkin.id]: 1,
   },
