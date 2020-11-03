@@ -3,16 +3,16 @@
 .QuickSelect
   bottom: 8em
   left: 50%
-  max-width: calc(100% - 2em)
+  max-width: calc(100% - 1em)
   position: fixed
   transform: translateX(-50%)
 
   // This specificity is needed to overwrite MUI Paper transition styles.
   &.MuiPaper-root
-    transition: left $duration-entering-screen $easing-ease-out
+    transition: max-width $duration-entering-screen $easing-ease-out
 
   .menu-open &
-    left: calc(25% + #{$sidebar-width})
+    max-width: calc(100% - 1em - #{2 * $sidebar-width})
 
   .button-array
     display: flex
@@ -33,12 +33,6 @@
     overflow-y: hidden
     padding: .5em
     position: relative
-
-    @media (min-width: #{$break-lg})
-      max-width: 30em
-
-    @media (max-width: #{$break-md})
-      max-width: 28em
 
   .Toolbelt
     display: flex
