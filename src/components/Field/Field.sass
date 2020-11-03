@@ -32,14 +32,29 @@ $appBarOffset: 135px
     width: auto
 
   .react-transform-element
-    background-color: #fff
+    background-image: url('../../img/ui/dirt.png')
+    background-repeat: repeat
+    background-size: 288px
     border: solid 1px #000
     display: block
     height: auto
+    image-rendering: pixelated
     width: auto
 
+  &[data-purchased-field="1"]
+    .react-transform-element
+      background-size: 216px
+
+  &[data-purchased-field="2"]
+    .react-transform-element
+      background-size: 144px
+
+  &[data-purchased-field="3"]
+    .react-transform-element
+      background-size: 72px
+
   .slider-wrapper
-    background: rgba(128, 128, 128, 0.5)
+    background: rgba(128, 128, 128, 0.75)
     border-radius: 2em
     bottom: 13.5em
     left: 50%
