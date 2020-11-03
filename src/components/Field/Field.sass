@@ -31,10 +31,13 @@ $appBarOffset: 135px
     overflow: visible
     width: auto
 
+  // backgronud-size controls scaling of the dirt background image. The formula
+  // for each step:
+  // 100% * (1 / number of field columns) * (proportion of dirt image size to crop image size)
   .react-transform-element
     background-image: url('../../img/ui/dirt.png')
     background-repeat: repeat
-    background-size: 288px
+    background-size: calc(100% * (1 / 6) * 1.5)
     border: solid 1px #000
     display: block
     height: auto
@@ -43,15 +46,15 @@ $appBarOffset: 135px
 
   &[data-purchased-field="1"]
     .react-transform-element
-      background-size: 216px
+      background-size: calc(100% * (1 / 8) * 1.5)
 
   &[data-purchased-field="2"]
     .react-transform-element
-      background-size: 144px
+      background-size: calc(100% * (1 / 10) * 1.5)
 
   &[data-purchased-field="3"]
     .react-transform-element
-      background-size: 72px
+      background-size: calc(100% * (1 / 12) * 1.5)
 
   .slider-wrapper
     background: rgba(128, 128, 128, 0.75)
