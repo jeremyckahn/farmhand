@@ -41,6 +41,7 @@ export const Stage = ({
           'Stage',
           isMenuOpen ? 'menu-open' : 'menu-closed'
         ),
+        'data-stage-focus': stageFocus,
         ref,
       }}
     >
