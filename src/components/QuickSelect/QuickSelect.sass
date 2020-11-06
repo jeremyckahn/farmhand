@@ -1,4 +1,5 @@
 @import ../../styles/variables.sass
+@import ../../styles/utils.sass
 
 .QuickSelect
   bottom: 8em
@@ -26,9 +27,8 @@
       display: none
 
   .MuiGrid-root
-    background: #ffe3a1
+    @include card-style
     border-radius: 0.25em
-    border: solid 2px #b68000
     overflow-x: scroll
     overflow-y: hidden
     padding: .5em

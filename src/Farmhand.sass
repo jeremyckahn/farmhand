@@ -1,4 +1,5 @@
 @import styles/variables.sass
+@import styles/utils.sass
 
 .Farmhand
   // padding-left and breakpoints correspond to AppBar dimensions
@@ -36,6 +37,9 @@
 
   .MuiDivider-root
     margin: 1.5em 0
+
+  .MuiCard-root
+    @include card-style
 
   .sidebar-wrapper
     display: flex
