@@ -1,7 +1,9 @@
 @import ../../styles/variables.sass
 
 .Stage
+  background-size: 96px
   flex: 2
+  image-rendering: pixelated
   margin-left: 0px
   min-width: 100px
   overflow: auto
@@ -16,11 +18,19 @@
     @media (max-width: #{$break-small-phone})
       margin-left: -$narrow-sidebar-width
 
+  &[data-stage-focus=HOME]
+    background-image: url('../../img/ui/green-dot-bg.png')
+
+  &[data-stage-focus=SHOP]
+    background-image: url('../../img/ui/yellow-dot-bg.png')
+
+  &[data-stage-focus=WORKSHOP]
+    background-image: url('../../img/ui/lavender-dot-bg.png')
+
   &[data-stage-focus=FIELD],
   &[data-stage-focus=COW_PEN]
     background-image: url('../../img/ui/grass.png')
     background-size: 30%
-    image-rendering: pixelated
 
     @media (min-width: #{$break-md})
       background-size: 10%
