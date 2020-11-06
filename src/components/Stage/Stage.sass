@@ -1,7 +1,7 @@
 @import ../../styles/variables.sass
 
 .Stage
-  background-size: 30%
+  background-size: 96px
   flex: 2
   image-rendering: pixelated
   margin-left: 0px
@@ -11,9 +11,6 @@
   position: relative
   transition: margin-left $duration-entering-screen $easing-ease-out
 
-  @media (min-width: #{$break-md})
-    background-size: 10%
-
   &.menu-closed
     margin-left: -$sidebar-width
     transition: margin-left $duration-leaving-screen $easing-sharp
@@ -22,7 +19,7 @@
       margin-left: -$narrow-sidebar-width
 
   &[data-stage-focus=HOME]
-    background-image: url('../../img/ui/blue-stripe-bg.png')
+    background-image: url('../../img/ui/green-dot-bg.png')
 
   &[data-stage-focus=SHOP]
     background-image: url('../../img/ui/yellow-dot-bg.png')
@@ -33,6 +30,10 @@
   &[data-stage-focus=FIELD],
   &[data-stage-focus=COW_PEN]
     background-image: url('../../img/ui/grass.png')
+    background-size: 30%
+
+    @media (min-width: #{$break-md})
+      background-size: 10%
 
   h2
     font-size: 1.2em
