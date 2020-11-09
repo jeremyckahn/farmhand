@@ -1,6 +1,7 @@
-import * as items from '../data/items'
 import * as recipes from '../data/recipes'
 import { cropType } from '../enums'
+
+import baseItemsMap from './items-map'
 
 const { CARROT, CORN, ONION, POTATO, PUMPKIN, SOYBEAN, SPINACH } = cropType
 
@@ -11,11 +12,7 @@ export const recipesMap = Object.keys(recipes).reduce((acc, recipeName) => {
 }, {})
 
 export const itemsMap = {
-  ...Object.keys(items).reduce((acc, itemName) => {
-    const item = items[itemName]
-    acc[item.id] = item
-    return acc
-  }, {}),
+  ...baseItemsMap,
   ...recipesMap,
 }
 
