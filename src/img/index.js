@@ -9,6 +9,7 @@ export const plotStates = {
 
 export const craftedItems = {
   'carrot-soup': require('./dishes/carrot-soup.png'),
+  cheese: require('./dishes/cheese.png'),
   jackolantern: require('./items/jackolantern.png'),
 }
 

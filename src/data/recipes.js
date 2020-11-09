@@ -5,6 +5,7 @@ import { itemType } from '../enums'
 import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
 
 import * as items from './items'
+import baseItemsMap from './items-map'
 
 const itemify = recipe =>
   Object.freeze({
@@ -14,7 +15,7 @@ const itemify = recipe =>
       (sum, itemId) =>
         sum +
         RECIPE_INGREDIENT_VALUE_MULTIPLIER *
-          items[itemId].value *
+          baseItemsMap[itemId].value *
           recipe.ingredients[itemId],
       0
     ),
@@ -31,6 +32,19 @@ export const carrotSoup = itemify({
     [items.carrot.id]: 4,
   },
   condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
+})
+
+/**
+ * @property farmhand.module:recipes.cheese
+ * @type {farmhand.recipe}
+ */
+export const cheese = itemify({
+  id: 'cheese',
+  name: 'Cheese',
+  ingredients: {
+    [items.milk3.id]: 8,
+  },
+  condition: state => (state.itemsSold[items.milk3.id] || 0) >= 20,
 })
 
 /**
