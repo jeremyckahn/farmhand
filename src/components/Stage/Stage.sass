@@ -5,11 +5,23 @@
   flex: 2
   image-rendering: pixelated
   margin-left: 0px
-  min-width: 100px
   overflow: auto
   padding: 1.5em 1.5em 0
   position: relative
   transition: margin-left $duration-entering-screen $easing-ease-out
+
+  &.menu-open
+    transition-properties: padding, margin-left
+
+    @media (max-width: #{$break-sm})
+      padding: 0
+
+    > *
+      opacity: 1
+      transition: opacity $duration-entering-screen $easing-ease-out
+
+      @media (max-width: #{$break-sm})
+        opacity: 0
 
   &.menu-closed
     margin-left: -$sidebar-width
