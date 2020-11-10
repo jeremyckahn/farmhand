@@ -10,7 +10,6 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
 import MobileStepper from '@material-ui/core/MobileStepper'
-import { Swipeable } from 'react-swipeable'
 import debounce from 'lodash.debounce'
 import classNames from 'classnames'
 
@@ -98,7 +97,6 @@ export const getPlantableCropInventory = memoize(inventory =>
 /**
  * @typedef farmhand.state
  * @type {Object}
- * @property {boolean} blockSwipeNavigation
  * @property {farmhand.module:enums.dialogView} currentDialogView
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
@@ -169,7 +167,6 @@ export default class Farmhand extends Component {
    * @type {farmhand.state}
    */
   state = {
-    blockSwipeNavigation: false,
     currentDialogView: dialogView.NONE,
     completedAchievements: {},
     cowForSale: {},
@@ -434,8 +431,6 @@ export default class Farmhand extends Component {
     }
 
     if (stageFocus !== prevState.stageFocus) {
-      this.setState(() => ({ blockSwipeNavigation: false }))
-
       if (isMenuOpen) {
         this.setState(() => ({ isMenuOpen: !doesMenuObstructStage() }))
       }
@@ -607,108 +602,99 @@ export default class Farmhand extends Component {
     return (
       <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
         <MuiThemeProvider theme={theme}>
-          <Swipeable
-            {...{
-              className: 'swipeable-wrapper',
-              delta: 125,
-              onSwiped: handlers.handleSwipe,
-            }}
-          >
-            <FarmhandContext.Provider value={{ gameState, handlers }}>
-              <div className="Farmhand fill">
-                <AppBar />
-                <Drawer
-                  {...{
-                    className: 'sidebar-wrapper',
-                    open: gameState.isMenuOpen,
-                    variant: 'persistent',
-                    PaperProps: {
-                      className: 'sidebar',
-                    },
-                  }}
-                >
-                  <Navigation />
-                  <ContextPane />
-                  <DebugMenu />
-                  <div {...{ className: 'spacer' }} />
-                </Drawer>
-                <Stage />
+          <FarmhandContext.Provider value={{ gameState, handlers }}>
+            <div className="Farmhand fill">
+              <AppBar />
+              <Drawer
+                {...{
+                  className: 'sidebar-wrapper',
+                  open: gameState.isMenuOpen,
+                  variant: 'persistent',
+                  PaperProps: {
+                    className: 'sidebar',
+                  },
+                }}
+              >
+                <Navigation />
+                <ContextPane />
+                <DebugMenu />
+                <div {...{ className: 'spacer' }} />
+              </Drawer>
+              <Stage />
 
-                {/*
+              {/*
               These controls need to be at this top level instead of the Stage
               because of scrolling issues in iOS.
               */}
-                <div className="bottom-controls">
-                  <MobileStepper
-                    variant="dots"
-                    steps={viewList.length}
-                    position="static"
-                    activeStep={viewList.indexOf(this.state.stageFocus)}
-                    className=""
-                  />
-                  <div className="fab-buttons buttons">
-                    <Fab
-                      {...{
-                        'aria-label': 'Previous view',
-                        color: 'primary',
-                        onClick: () => this.focusPreviousView(),
-                      }}
-                    >
-                      <KeyboardArrowLeft />
-                    </Fab>
-                    <Fab
-                      {...{
-                        className: classNames('menu-button', {
-                          'is-open': this.state.isMenuOpen,
-                        }),
-                        color: 'primary',
-                        'aria-label': 'Open drawer',
-                        onClick: () => handlers.handleMenuToggle(),
-                      }}
-                    >
-                      <MenuIcon />
-                    </Fab>
-                    <Fab
-                      {...{
-                        'aria-label': 'Next view',
-                        color: 'primary',
-                        onClick: () => this.focusNextView(),
-                      }}
-                    >
-                      <KeyboardArrowRight />
-                    </Fab>
-                  </div>
-                </div>
-                <Tooltip
-                  {...{
-                    placement: 'left',
-                    title: (
-                      <>
-                        <p>
-                          End the day to save your progress and advance the
-                          game.
-                        </p>
-                        <p>(shift + c)</p>
-                      </>
-                    ),
-                  }}
-                >
+              <div className="bottom-controls">
+                <MobileStepper
+                  variant="dots"
+                  steps={viewList.length}
+                  position="static"
+                  activeStep={viewList.indexOf(this.state.stageFocus)}
+                  className=""
+                />
+                <div className="fab-buttons buttons">
                   <Fab
                     {...{
-                      'aria-label':
-                        'End the day to save your progress and advance the game.',
-                      className: 'end-day',
-                      color: 'secondary',
-                      onClick: handlers.handleClickEndDayButton,
+                      'aria-label': 'Previous view',
+                      color: 'primary',
+                      onClick: () => this.focusPreviousView(),
                     }}
                   >
-                    <HotelIcon />
+                    <KeyboardArrowLeft />
                   </Fab>
-                </Tooltip>
+                  <Fab
+                    {...{
+                      className: classNames('menu-button', {
+                        'is-open': this.state.isMenuOpen,
+                      }),
+                      color: 'primary',
+                      'aria-label': 'Open drawer',
+                      onClick: () => handlers.handleMenuToggle(),
+                    }}
+                  >
+                    <MenuIcon />
+                  </Fab>
+                  <Fab
+                    {...{
+                      'aria-label': 'Next view',
+                      color: 'primary',
+                      onClick: () => this.focusNextView(),
+                    }}
+                  >
+                    <KeyboardArrowRight />
+                  </Fab>
+                </div>
               </div>
-              <NotificationSystem />
-            </FarmhandContext.Provider>
-          </Swipeable>
+              <Tooltip
+                {...{
+                  placement: 'left',
+                  title: (
+                    <>
+                      <p>
+                        End the day to save your progress and advance the game.
+                      </p>
+                      <p>(shift + c)</p>
+                    </>
+                  ),
+                }}
+              >
+                <Fab
+                  {...{
+                    'aria-label':
+                      'End the day to save your progress and advance the game.',
+                    className: 'end-day',
+                    color: 'secondary',
+                    onClick: handlers.handleClickEndDayButton,
+                  }}
+                >
+                  <HotelIcon />
+                </Fab>
+              </Tooltip>
+            </div>
+            <NotificationSystem />
+          </FarmhandContext.Provider>
         </MuiThemeProvider>
       </GlobalHotKeys>
     )

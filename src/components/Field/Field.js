@@ -12,7 +12,6 @@ import classNames from 'classnames'
 import FarmhandContext from '../../Farmhand.context'
 import Plot from '../Plot'
 import QuickSelect from '../QuickSelect'
-import { FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD } from '../../constants'
 import { fieldMode } from '../../enums'
 import { doesInventorySpaceRemain, nullArray } from '../../utils'
 
@@ -234,7 +233,6 @@ export const Field = props => {
     field,
     fieldMode,
     handleFieldActionRangeChange,
-    handleFieldZoom,
     hoveredPlotRangeSize,
     inventory,
     inventoryLimit,
@@ -248,10 +246,6 @@ export const Field = props => {
   useEffect(() => {
     setFieldActionRange(hoveredPlotRangeSize)
   }, [hoveredPlotRangeSize])
-
-  useEffect(() => {
-    handleFieldZoom(currentScale)
-  }, [currentScale, handleFieldZoom])
 
   const handleFieldActionRangeSliderChange = value => {
     setFieldActionRange(value)
@@ -293,7 +287,7 @@ export const Field = props => {
               animationTime: 0,
             },
             pan: {
-              disabled: currentScale < FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
+              disabled: currentScale <= 1,
             },
             // These 0s prevent NREs within react-zoom-pan-pinch, but also
             // disable zoom animations.
@@ -359,7 +353,6 @@ Field.propTypes = {
   field: array.isRequired,
   fieldMode: string.isRequired,
   handleFieldActionRangeChange: func.isRequired,
-  handleFieldZoom: func.isRequired,
   hoveredPlotRangeSize: number.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
