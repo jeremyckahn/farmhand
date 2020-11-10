@@ -14,10 +14,7 @@ import {
   moneyTotal,
   reduceByPersistedKeys,
 } from './utils'
-import {
-  FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
-  SPRINKLER_ITEM_ID,
-} from './constants'
+import { SPRINKLER_ITEM_ID } from './constants'
 import { dialogView, fieldMode } from './enums'
 import { INVALID_DATA_PROVIDED, PROGRESS_SAVED_MESSAGE } from './strings'
 
@@ -310,55 +307,6 @@ export default {
    */
   handleClickTakeOutLoanButton(loanAmount) {
     this.adjustLoan(loanAmount)
-  },
-
-  /**
-   * @param {Object} event
-   * @see https://github.com/FormidableLabs/react-swipeable#event-data
-   */
-  handleSwipe({ event, dir }) {
-    let { target } = event
-
-    while (target.parentElement) {
-      let { classList, parentElement, scrollWidth } = target
-      const { overflow, position, width } = window.getComputedStyle(target)
-
-      // If the user is scrolling a horizontally overflowing element, or is
-      // swiping on a `position: fixed` element, bail out of this event
-      // handler.
-      if (
-        (overflow === 'scroll' && scrollWidth > parseInt(width, 10)) ||
-        (position === 'fixed' && !classList.contains('Farmhand'))
-      ) {
-        return
-      }
-
-      target = parentElement
-    }
-
-    if (dir === 'Left') {
-      if (this.state.isMenuOpen) {
-        this.handlers.handleMenuToggle(false)
-      } else {
-        if (!this.state.blockSwipeNavigation) {
-          this.focusNextView()
-        }
-      }
-    } else if (dir === 'Right') {
-      if (!this.state.isMenuOpen && !this.state.blockSwipeNavigation) {
-        this.focusPreviousView()
-      }
-    }
-  },
-
-  /**
-   * @param {number} newScale
-   */
-  handleFieldZoom(newScale) {
-    this.setState(() => ({
-      blockSwipeNavigation:
-        newScale >= FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD,
-    }))
   },
 
   handleExportDataClick() {

@@ -92,10 +92,6 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.WORKSHOP]: 'Workshop',
 }
 
-// The number here is somewhat arbitrary and tuned to the UX and rounding
-// behavior of react-zoom-pan-pinch.
-export const FIELD_ZOOM_SCALE_DISABLE_SWIPE_THRESHOLD = 1.1
-
 export const STORAGE_EXPANSION_AMOUNT = 100
 export const STORAGE_EXPANSION_PRICE = 500
 
