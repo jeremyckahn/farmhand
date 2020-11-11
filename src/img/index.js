@@ -44,6 +44,10 @@ export const items = {
   'soybean-growing': require('./items/soybean-growing.png'),
   'soybean-seed': require('./items/soybean-seed.png'),
 
+  wheat: require('./items/wheat.png'),
+  'wheat-growing': require('./items/wheat-growing.png'),
+  'wheat-seed': require('./items/wheat-seed.png'),
+
   // Field tools
   fertilizer: require('./items/fertilizer.png'),
   scarecrow: require('./items/scarecrow.png'),

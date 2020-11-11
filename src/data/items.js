@@ -11,7 +11,16 @@ import {
 } from '../constants'
 
 const { freeze } = Object
-const { CARROT, CORN, ONION, POTATO, PUMPKIN, SOYBEAN, SPINACH } = cropType
+const {
+  CARROT,
+  CORN,
+  ONION,
+  POTATO,
+  PUMPKIN,
+  SOYBEAN,
+  SPINACH,
+  WHEAT,
+} = cropType
 const { SEED, GROWING } = cropLifeStage
 const {
   COW_FEED,
@@ -238,6 +247,31 @@ export const soybeanSeed = crop({
 export const soybean = crop({
   ...fromSeed(soybeanSeed),
   name: 'Soybean',
+})
+
+/**
+ * @property farmhand.module:items.wheatSeed
+ * @type {farmhand.item}
+ */
+export const wheatSeed = crop({
+  cropType: WHEAT,
+  cropTimetable: {
+    [SEED]: 1,
+    [GROWING]: 1,
+  },
+  growsInto: 'wheat',
+  id: 'wheat-seed',
+  name: 'Wheat Seeds',
+  tier: 3,
+})
+
+/**
+ * @property farmhand.module:items.wheat
+ * @type {farmhand.item}
+ */
+export const wheat = crop({
+  ...fromSeed(wheatSeed),
+  name: 'Wheat',
 })
 
 ////////////////////////////////////////
