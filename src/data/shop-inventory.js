@@ -7,6 +7,7 @@ import {
   potatoSeed,
   onionSeed,
   soybeanSeed,
+  wheatSeed,
 
   // Field items
   fertilizer,
@@ -23,6 +24,7 @@ export default [
   potatoSeed,
   onionSeed,
   soybeanSeed,
+  wheatSeed,
 
   // Field items
   fertilizer,
