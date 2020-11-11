@@ -333,11 +333,12 @@ export default class Farmhand extends Component {
       }
     })
 
-    // TODO: Disable this is non-dev environments.
-    Object.assign(this.keyMap, {
-      clearPersistedData: 'shift+d',
-      waterAllPlots: 'w',
-    })
+    if (process.env.NODE_ENV === 'development') {
+      Object.assign(this.keyMap, {
+        clearPersistedData: 'shift+d',
+        waterAllPlots: 'w',
+      })
+    }
 
     Object.assign(this.keyHandlers, {
       clearPersistedData: () => this.clearPersistedData(),
@@ -617,7 +618,7 @@ export default class Farmhand extends Component {
               >
                 <Navigation />
                 <ContextPane />
-                <DebugMenu />
+                {process.env.NODE_ENV === 'development' && <DebugMenu />}
                 <div {...{ className: 'spacer' }} />
               </Drawer>
               <Stage />
