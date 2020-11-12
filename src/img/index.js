@@ -1,81 +1,123 @@
 import { cowColors } from '../enums'
 
+import wateredPlot from './plot-states/watered-plot.png'
+import fertilizedPlot from './plot-states/fertilized-plot.png'
+
+import carrotSoup from './dishes/carrot-soup.png'
+import cheese from './dishes/cheese.png'
+import chocolate from './dishes/chocolate.png'
+import jackolantern from './items/jackolantern.png'
+
+import carrot from './items/carrot.png'
+import carrotGrowing from './items/carrot-growing.png'
+import carrotSeed from './items/carrot-seed.png'
+import pumpkin from './items/pumpkin.png'
+import pumpkinGrowing from './items/pumpkin-growing.png'
+import pumpkinSeed from './items/pumpkin-seed.png'
+import spinach from './items/spinach.png'
+import spinachGrowing from './items/spinach-growing.png'
+import spinachSeed from './items/spinach-seed.png'
+import corn from './items/corn.png'
+import cornGrowing from './items/corn-growing.png'
+import cornSeed from './items/corn-seed.png'
+import potato from './items/potato.png'
+import potatoGrowing from './items/potato-growing.png'
+import potatoSeed from './items/potato-seed.png'
+import onion from './items/onion.png'
+import onionGrowing from './items/onion-growing.png'
+import onionSeed from './items/onion-seed.png'
+import soybean from './items/soybean.png'
+import soybeanGrowing from './items/soybean-growing.png'
+import soybeanSeed from './items/soybean-seed.png'
+import wheat from './items/wheat.png'
+import wheatGrowing from './items/wheat-growing.png'
+import wheatSeed from './items/wheat-seed.png'
+import fertilizer from './items/fertilizer.png'
+import scarecrow from './items/scarecrow.png'
+import sprinkler from './items/sprinkler.png'
+import cowFeed from './items/cow-feed.png'
+import huggingMachine from './items/hugging-machine.png'
+import milk1 from './items/milk-1.png'
+import milk2 from './items/milk-2.png'
+import milk3 from './items/milk-3.png'
+import rainbowMilk1 from './items/rainbow-milk-1.png'
+import rainbowMilk2 from './items/rainbow-milk-2.png'
+import rainbowMilk3 from './items/rainbow-milk-3.png'
+import chocolateMilk from './items/chocolate-milk.png'
+import inventoryBox from './items/inventory-box.png'
+import hoe from './tools/hoe.png'
+import scythe from './tools/scythe.png'
+import wateringCan from './tools/watering-can.png'
+
 // TODO: Load the images with `import`
 // https://create-react-app.dev/docs/adding-images-fonts-and-files/
 
 export { default as pixel } from './pixel.png'
 
 export const plotStates = {
-  'watered-plot': require('./plot-states/watered-plot.png').default,
-  'fertilized-plot': require('./plot-states/fertilized-plot.png').default,
+  'watered-plot': wateredPlot,
+  'fertilized-plot': fertilizedPlot,
 }
 
 export const craftedItems = {
-  'carrot-soup': require('./dishes/carrot-soup.png').default,
-  cheese: require('./dishes/cheese.png').default,
-  chocolate: require('./dishes/chocolate.png').default,
-  jackolantern: require('./items/jackolantern.png').default,
+  'carrot-soup': carrotSoup,
+  cheese,
+  chocolate,
+  jackolantern,
 }
 
 export const items = {
   // Crops
-  carrot: require('./items/carrot.png').default,
-  'carrot-growing': require('./items/carrot-growing.png').default,
-  'carrot-seed': require('./items/carrot-seed.png').default,
-
-  pumpkin: require('./items/pumpkin.png').default,
-  'pumpkin-growing': require('./items/pumpkin-growing.png').default,
-  'pumpkin-seed': require('./items/pumpkin-seed.png').default,
-
-  spinach: require('./items/spinach.png').default,
-  'spinach-growing': require('./items/spinach-growing.png').default,
-  'spinach-seed': require('./items/spinach-seed.png').default,
-
-  corn: require('./items/corn.png').default,
-  'corn-growing': require('./items/corn-growing.png').default,
-  'corn-seed': require('./items/corn-seed.png').default,
-
-  potato: require('./items/potato.png').default,
-  'potato-growing': require('./items/potato-growing.png').default,
-  'potato-seed': require('./items/potato-seed.png').default,
-
-  onion: require('./items/onion.png').default,
-  'onion-growing': require('./items/onion-growing.png').default,
-  'onion-seed': require('./items/onion-seed.png').default,
-
-  soybean: require('./items/soybean.png').default,
-  'soybean-growing': require('./items/soybean-growing.png').default,
-  'soybean-seed': require('./items/soybean-seed.png').default,
-
-  wheat: require('./items/wheat.png').default,
-  'wheat-growing': require('./items/wheat-growing.png').default,
-  'wheat-seed': require('./items/wheat-seed.png').default,
+  carrot,
+  'carrot-growing': carrotGrowing,
+  'carrot-seed': carrotSeed,
+  pumpkin,
+  'pumpkin-growing': pumpkinGrowing,
+  'pumpkin-seed': pumpkinSeed,
+  spinach,
+  'spinach-growing': spinachGrowing,
+  'spinach-seed': spinachSeed,
+  corn,
+  'corn-growing': cornGrowing,
+  'corn-seed': cornSeed,
+  potato,
+  'potato-growing': potatoGrowing,
+  'potato-seed': potatoSeed,
+  onion,
+  'onion-growing': onionGrowing,
+  'onion-seed': onionSeed,
+  soybean,
+  'soybean-growing': soybeanGrowing,
+  'soybean-seed': soybeanSeed,
+  wheat,
+  'wheat-growing': wheatGrowing,
+  'wheat-seed': wheatSeed,
 
   // Field tools
-  fertilizer: require('./items/fertilizer.png').default,
-  scarecrow: require('./items/scarecrow.png').default,
-  sprinkler: require('./items/sprinkler.png').default,
+  fertilizer,
+  scarecrow,
+  sprinkler,
 
   // Cow items
-  'cow-feed': require('./items/cow-feed.png').default,
-  'hugging-machine': require('./items/hugging-machine.png').default,
-  'milk-1': require('./items/milk-1.png').default,
-  'milk-2': require('./items/milk-2.png').default,
-  'milk-3': require('./items/milk-3.png').default,
-  'rainbow-milk-1': require('./items/rainbow-milk-1.png').default,
-  'rainbow-milk-2': require('./items/rainbow-milk-2.png').default,
-  'rainbow-milk-3': require('./items/rainbow-milk-3.png').default,
-  'chocolate-milk': require('./items/chocolate-milk.png').default,
+  'cow-feed': cowFeed,
+  'hugging-machine': huggingMachine,
+  'milk-1': milk1,
+  'milk-2': milk2,
+  'milk-3': milk3,
+  'rainbow-milk-1': rainbowMilk1,
+  'rainbow-milk-2': rainbowMilk2,
+  'rainbow-milk-3': rainbowMilk3,
+  'chocolate-milk': chocolateMilk,
 
-  'inventory-box': require('./items/inventory-box.png').default,
+  'inventory-box': inventoryBox,
 
   ...craftedItems,
 }
 
 export const tools = {
-  hoe: require('./tools/hoe.png').default,
-  scythe: require('./tools/scythe.png').default,
-  'watering-can': require('./tools/watering-can.png').default,
+  hoe,
+  scythe,
+  'watering-can': wateringCan,
 }
 
 export const animals = {
