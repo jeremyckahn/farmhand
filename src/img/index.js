@@ -30,6 +30,9 @@ import soybeanSeed from './items/soybean-seed.png'
 import wheat from './items/wheat.png'
 import wheatGrowing from './items/wheat-growing.png'
 import wheatSeed from './items/wheat-seed.png'
+import tomato from './items/tomato.png'
+import tomatoGrowing from './items/tomato-growing.png'
+import tomatoSeed from './items/tomato-seed.png'
 import fertilizer from './items/fertilizer.png'
 import scarecrow from './items/scarecrow.png'
 import sprinkler from './items/sprinkler.png'
@@ -96,6 +99,9 @@ export const items = {
   wheat,
   'wheat-growing': wheatGrowing,
   'wheat-seed': wheatSeed,
+  tomato,
+  'tomato-growing': tomatoGrowing,
+  'tomato-seed': tomatoSeed,
 
   // Field tools
   fertilizer,

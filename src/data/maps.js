@@ -11,6 +11,7 @@ const {
   PUMPKIN,
   SOYBEAN,
   SPINACH,
+  TOMATO,
   WHEAT,
 } = cropType
 
@@ -33,5 +34,6 @@ export const cropIdToTypeMap = {
   [PUMPKIN]: 'pumpkin',
   [SOYBEAN]: 'soybean',
   [SPINACH]: 'spinach',
+  [TOMATO]: 'tomato',
   [WHEAT]: 'wheat',
 }

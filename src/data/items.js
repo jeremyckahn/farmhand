@@ -19,6 +19,7 @@ const {
   PUMPKIN,
   SOYBEAN,
   SPINACH,
+  TOMATO,
   WHEAT,
 } = cropType
 const { SEED, GROWING } = cropLifeStage
@@ -272,6 +273,31 @@ export const wheatSeed = crop({
 export const wheat = crop({
   ...fromSeed(wheatSeed),
   name: 'Wheat',
+})
+
+/**
+ * @property farmhand.module:items.tomatoSeed
+ * @type {farmhand.item}
+ */
+export const tomatoSeed = crop({
+  cropType: TOMATO,
+  cropTimetable: {
+    [SEED]: 5,
+    [GROWING]: 6,
+  },
+  growsInto: 'tomato',
+  id: 'tomato-seed',
+  name: 'Tomato Seeds',
+  tier: 3,
+})
+
+/**
+ * @property farmhand.module:items.tomato
+ * @type {farmhand.item}
+ */
+export const tomato = crop({
+  ...fromSeed(tomatoSeed),
+  name: 'Tomato',
 })
 
 ////////////////////////////////////////
