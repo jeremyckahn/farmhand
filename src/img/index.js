@@ -1,5 +1,3 @@
-import { cowColors } from '../enums'
-
 import wateredPlot from './plot-states/watered-plot.png'
 import fertilizedPlot from './plot-states/fertilized-plot.png'
 
@@ -49,8 +47,14 @@ import hoe from './tools/hoe.png'
 import scythe from './tools/scythe.png'
 import wateringCan from './tools/watering-can.png'
 
-// TODO: Load the images with `import`
-// https://create-react-app.dev/docs/adding-images-fonts-and-files/
+import blueCow from './animals/cows/blue-cow.png'
+import brownCow from './animals/cows/brown-cow.png'
+import greenCow from './animals/cows/green-cow.png'
+import orangeCow from './animals/cows/orange-cow.png'
+import purpleCow from './animals/cows/purple-cow.png'
+import rainbowCow from './animals/cows/rainbow-cow.png'
+import whiteCow from './animals/cows/white-cow.png'
+import yellowCow from './animals/cows/yellow-cow.png'
 
 export { default as pixel } from './pixel.png'
 
@@ -121,11 +125,14 @@ export const tools = {
 }
 
 export const animals = {
-  cow: Object.values(cowColors).reduce((acc, color) => {
-    const lowerCaseColor = color.toLowerCase()
-    acc[
-      lowerCaseColor
-    ] = require(`./animals/cows/${lowerCaseColor}-cow.png`).default
-    return acc
-  }, {}),
+  cow: {
+    blue: blueCow,
+    brown: brownCow,
+    green: greenCow,
+    orange: orangeCow,
+    purple: purpleCow,
+    rainbow: rainbowCow,
+    white: whiteCow,
+    yellow: yellowCow,
+  },
 }
