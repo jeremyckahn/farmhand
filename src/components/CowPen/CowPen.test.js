@@ -9,7 +9,9 @@ import { Cow, CowPen } from './CowPen'
 
 let component
 
-jest.useFakeTimers()
+beforeEach(() => {
+  jest.useFakeTimers()
+})
 
 describe('CowPen', () => {
   beforeEach(() => {
