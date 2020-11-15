@@ -6,6 +6,8 @@ import Divider from '@material-ui/core/Divider'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 
 import FarmhandContext from '../../Farmhand.context'
 import { STANDARD_LOAN_AMOUNT } from '../../constants'
@@ -37,20 +39,22 @@ If you'd like to follow this project's development, please [join the Discord cha
       </ExpansionPanelDetails>
     </ExpansionPanel>
     <Divider />
-    <Button
-      {...{
-        color: 'primary',
-        onClick: () => handleViewChangeButtonClick(stageFocusType.SHOP),
-        variant: 'contained',
-      }}
-    >
-      Go to the shop
-    </Button>
-    <ReactMarkdown
-      {...{
-        className: 'markdown',
-        linkTarget: '_blank',
-        source: `
+    <Card>
+      <CardContent>
+        <Button
+          {...{
+            color: 'primary',
+            onClick: () => handleViewChangeButtonClick(stageFocusType.SHOP),
+            variant: 'contained',
+          }}
+        >
+          Go to the shop
+        </Button>
+        <ReactMarkdown
+          {...{
+            className: 'markdown',
+            linkTarget: '_blank',
+            source: `
 ### How to play:
 
 The goal of Farmhand is to make money by buying, growing, harvesting, and then selling crops. Keep an eye on prices though, because they go up and down every day! The best farmers buy seeds for a low price and sell them for a high price.
@@ -74,8 +78,10 @@ If you can master the art of the harvest, there's no limit to how profitable you
 * Bank loans accrue interest daily, so pay off your balance as soon as you can.
 
     `,
-      }}
-    />
+          }}
+        />
+      </CardContent>
+    </Card>
   </div>
 )
 
