@@ -1,5 +1,6 @@
 import React from 'react'
 import { object } from 'prop-types'
+import ReactMarkdown from 'react-markdown'
 
 import { recipesMap } from '../../data/maps'
 import Recipe from '../Recipe'
@@ -23,6 +24,15 @@ const Workshop = ({ learnedRecipes }) => (
           </li>
         ))}
       </ul>
+    </section>
+    <section>
+      <ReactMarkdown
+        {...{
+          linkTarget: '_blank',
+          className: 'markdown',
+          source: `Recipes are learned by selling crops and animal products. Sell as much as you can of a wide variety of items!`,
+        }}
+      />
     </section>
   </div>
 )
