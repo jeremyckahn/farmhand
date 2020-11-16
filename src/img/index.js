@@ -4,6 +4,7 @@ import fertilizedPlot from './plot-states/fertilized-plot.png'
 import carrotSoup from './dishes/carrot-soup.png'
 import cheese from './dishes/cheese.png'
 import chocolate from './dishes/chocolate.png'
+import frenchOnionSoup from './dishes/french-onion-soup.png'
 import jackolantern from './items/jackolantern.png'
 import spaghetti from './dishes/spaghetti.png'
 
@@ -71,6 +72,7 @@ export const craftedItems = {
   'carrot-soup': carrotSoup,
   cheese,
   chocolate,
+  'french-onion-soup': frenchOnionSoup,
   jackolantern,
   spaghetti,
 }
