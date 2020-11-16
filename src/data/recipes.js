@@ -7,19 +7,26 @@ import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
 import * as items from './items'
 import baseItemsMap from './items-map'
 
-const itemify = recipe =>
-  Object.freeze({
+const itemsMap = { ...baseItemsMap }
+
+const itemify = recipe => {
+  const item = Object.freeze({
     ...recipe,
     type: itemType.CRAFTED_ITEM,
     value: Object.keys(recipe.ingredients).reduce(
       (sum, itemId) =>
         sum +
         RECIPE_INGREDIENT_VALUE_MULTIPLIER *
-          baseItemsMap[itemId].value *
+          itemsMap[itemId].value *
           recipe.ingredients[itemId],
       0
     ),
   })
+
+  itemsMap[recipe.id] = item
+
+  return item
+}
 
 /**
  * @property farmhand.module:recipes.carrotSoup
@@ -74,7 +81,7 @@ export const jackolantern = itemify({
 })
 
 /**
- * @property farmhand.module:recipes.jackolantern
+ * @property farmhand.module:recipes.spaghetti
  * @type {farmhand.recipe}
  */
 export const spaghetti = itemify({
@@ -87,4 +94,19 @@ export const spaghetti = itemify({
   condition: state =>
     state.itemsSold[items.wheat.id] >= 20 &&
     state.itemsSold[items.tomato.id] >= 5,
+})
+
+/**
+ * @property farmhand.module:recipes.frenchOnionSoup
+ * @type {farmhand.recipe}
+ */
+export const frenchOnionSoup = itemify({
+  id: 'french-onion-soup',
+  name: 'French Onion Soup',
+  ingredients: {
+    [items.onion.id]: 5,
+    [cheese.id]: 2,
+  },
+  condition: state =>
+    state.itemsSold[items.onion.id] >= 15 && state.itemsSold[cheese.id] >= 10,
 })
