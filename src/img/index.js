@@ -5,6 +5,7 @@ import carrotSoup from './dishes/carrot-soup.png'
 import cheese from './dishes/cheese.png'
 import chocolate from './dishes/chocolate.png'
 import bread from './dishes/bread.png'
+import burger from './dishes/burger.png'
 import frenchOnionSoup from './dishes/french-onion-soup.png'
 import jackolantern from './items/jackolantern.png'
 import spaghetti from './dishes/spaghetti.png'
@@ -74,6 +75,7 @@ export const craftedItems = {
   cheese,
   chocolate,
   bread,
+  burger,
   'french-onion-soup': frenchOnionSoup,
   jackolantern,
   spaghetti,

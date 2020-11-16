@@ -29,16 +29,16 @@ const itemify = recipe => {
 }
 
 /**
- * @property farmhand.module:recipes.carrotSoup
+ * @property farmhand.module:recipes.bread
  * @type {farmhand.recipe}
  */
-export const carrotSoup = itemify({
-  id: 'carrot-soup',
-  name: 'Carrot Soup',
+export const bread = itemify({
+  id: 'bread',
+  name: 'Bread',
   ingredients: {
-    [items.carrot.id]: 4,
+    [items.wheat.id]: 15,
   },
-  condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
+  condition: state => state.itemsSold[items.wheat.id] >= 30,
 })
 
 /**
@@ -68,6 +68,19 @@ export const chocolate = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.carrotSoup
+ * @type {farmhand.recipe}
+ */
+export const carrotSoup = itemify({
+  id: 'carrot-soup',
+  name: 'Carrot Soup',
+  ingredients: {
+    [items.carrot.id]: 4,
+  },
+  condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
+})
+
+/**
  * @property farmhand.module:recipes.jackolantern
  * @type {farmhand.recipe}
  */
@@ -78,19 +91,6 @@ export const jackolantern = itemify({
     [items.pumpkin.id]: 1,
   },
   condition: state => (state.itemsSold[items.pumpkin.id] || 0) >= 50,
-})
-
-/**
- * @property farmhand.module:recipes.bread
- * @type {farmhand.recipe}
- */
-export const bread = itemify({
-  id: 'bread',
-  name: 'Bread',
-  ingredients: {
-    [items.wheat.id]: 15,
-  },
-  condition: state => state.itemsSold[items.wheat.id] >= 30,
 })
 
 /**
@@ -122,4 +122,28 @@ export const frenchOnionSoup = itemify({
   },
   condition: state =>
     state.itemsSold[items.onion.id] >= 15 && state.itemsSold[cheese.id] >= 10,
+})
+
+/**
+ * @property farmhand.module:recipes.burger
+ * @type {farmhand.recipe}
+ */
+export const burger = itemify({
+  id: 'burger',
+  name: 'Burger',
+  ingredients: {
+    [bread.id]: 1,
+    [cheese.id]: 1,
+    [items.onion.id]: 1,
+    [items.soybean.id]: 12,
+    [items.spinach.id]: 1,
+    [items.tomato.id]: 1,
+  },
+  condition: state =>
+    state.itemsSold[bread.id] >= 5 &&
+    state.itemsSold[cheese.id] >= 5 &&
+    state.itemsSold[items.onion.id] >= 5 &&
+    state.itemsSold[items.soybean.id] >= 25 &&
+    state.itemsSold[items.spinach.id] >= 5 &&
+    state.itemsSold[items.tomato.id] >= 5,
 })
