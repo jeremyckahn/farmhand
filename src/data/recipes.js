@@ -81,6 +81,19 @@ export const jackolantern = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.bread
+ * @type {farmhand.recipe}
+ */
+export const bread = itemify({
+  id: 'bread',
+  name: 'Bread',
+  ingredients: {
+    [items.wheat.id]: 15,
+  },
+  condition: state => state.itemsSold[items.wheat.id] >= 30,
+})
+
+/**
  * @property farmhand.module:recipes.spaghetti
  * @type {farmhand.recipe}
  */
