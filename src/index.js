@@ -149,9 +149,20 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import window from 'global/window'
 
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import './index.sass'
 import Farmhand from './Farmhand'
 import 'typeface-francois-one'
 import 'typeface-public-sans'
 
 window.farmhand = ReactDOM.render(<Farmhand />, document.getElementById('root'))
+
+// https://stackoverflow.com/a/41749865/470685
+const isInstalledApp = window.matchMedia('(display-mode: standalone)').matches
+
+// Learn more about service workers: https://cra.link/PWA
+if (isInstalledApp) {
+  serviceWorkerRegistration.register()
+} else {
+  serviceWorkerRegistration.unregister()
+}

@@ -7,3 +7,5 @@ export const FARM_PRODUCTS_TOOLTIP_TEXT =
   'This figure only includes sales of grown crops, crafted items, and animal products.'
 export const DATA_DELETED = 'Your local game data has been deleted.'
 export const INVALID_DATA_PROVIDED = 'Invalid Farmhand data provided.'
+export const UPDATE_AVAILABLE =
+  "A game update is available! Close the game completely and reload it to see what's new."

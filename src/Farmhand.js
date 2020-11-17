@@ -48,7 +48,11 @@ import {
   STANDARD_LOAN_AMOUNT,
 } from './constants'
 import { COW_PEN_PURCHASED, LOAN_INCREASED, RECIPE_LEARNED } from './templates'
-import { DATA_DELETED, PROGRESS_SAVED_MESSAGE } from './strings'
+import {
+  DATA_DELETED,
+  PROGRESS_SAVED_MESSAGE,
+  UPDATE_AVAILABLE,
+} from './strings'
 
 const { CLEANUP, HARVEST, OBSERVE, WATER } = fieldMode
 
@@ -569,6 +573,10 @@ export default class Farmhand extends Component {
           ],
       }
     })
+  }
+
+  showUpdateNotification() {
+    this.showNotification(UPDATE_AVAILABLE, 'success')
   }
 
   render() {
