@@ -30,9 +30,9 @@ const Home = ({ handleViewChangeButtonClick }) => (
             source: `
 Hi! You're playing **Farmhand**, an open source game being developed by [Jeremy Kahn](https://github.com/jeremyckahn).
 
-Farmhand is a resource management game that puts a farm in your hand. It is designed to be mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
+Farmhand is a resource management game that puts a farm in your hand. It is designed to be both desktop and mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
 
-This project has been in development since 2018. **Farmhand will always remain completely free to play**. My intention is to add features and iterate on this game for years to come!
+This project has been in development since 2018. **Farmhand will always remain completely free to play**. My intention is to add features and iterate on this game for years to come as I can. If you'd like to support further development, [donations are gratefully accepted](https://github.com/jeremyckahn#please-help-support-my-work)!
 
 If you'd like to follow this project's development, please [join the Discord channel](https://discord.gg/6cHEZ9H), [the subreddit](https://www.reddit.com/r/FarmhandGame/), or check it out on [GitHub](https://github.com/jeremyckahn/farmhand). Happy farming! 🐮
     `,
@@ -63,6 +63,10 @@ The goal of Farmhand is to make money by buying, growing, harvesting, and then s
 
 If you can master the art of the harvest, there's no limit to how profitable you can become! Every farmer starts with a $${STANDARD_LOAN_AMOUNT} loan from the bank. If you run out of money, you can always take out another loan. Be careful though, because the bank takes a portion of your sales until the debt is repaid. You can access your bank account in the menu.
 
+### Installation:
+
+If you're playing Farmhand on a mobile device, you can install it as an app right from this website and play it offline! All you need to do is [add it to your home screen](https://www.howtogeek.com/196087/how-to-add-websites-to-the-home-screen-on-any-smartphone-or-tablet/). If you are playing it on desktop Chrome, you can [install it as app there as well](https://twitter.com/jeremyckahn/status/1329266318785253377?s=20).
+
 ### A few other tips:
 
 * Press the bed button in the top-right of the screen to end the day and advance the game. This also saves your progress.
@@ -80,8 +84,6 @@ If you can master the art of the harvest, there's no limit to how profitable you
 * You'll be able to unlock new crops and items as you level up. Sell crops, milk, and crafted items to gain experience!
 
 * Bank loans accrue interest daily, so pay off your balance as soon as you can.
-
-* If you're playing Farmhand on a mobile device, you can install it as an app right from this website and play it offline! All you need to do is [add it to your home screen](https://www.howtogeek.com/196087/how-to-add-websites-to-the-home-screen-on-any-smartphone-or-tablet/).
 
     `,
           }}
