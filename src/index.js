@@ -157,12 +157,4 @@ import 'typeface-public-sans'
 
 window.farmhand = ReactDOM.render(<Farmhand />, document.getElementById('root'))
 
-// https://stackoverflow.com/a/41749865/470685
-const isInstalledApp = window.matchMedia('(display-mode: standalone)').matches
-
-// Learn more about service workers: https://cra.link/PWA
-if (isInstalledApp) {
-  serviceWorkerRegistration.register()
-} else {
-  serviceWorkerRegistration.unregister()
-}
+serviceWorkerRegistration.register()
