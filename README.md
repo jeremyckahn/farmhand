@@ -6,12 +6,16 @@
 - Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
 - Watch the game being live: [![Twitch](https://img.shields.io/twitch/status/jeremyckahn?color=blueviolet)](https://www.twitch.tv/jeremyckahn)
 
-**[Current snapshot](https://jeremyckahn.github.io/farmhand/)**
+**[Play Farmhand in your browser!](https://jeremyckahn.github.io/farmhand/)**
 
 - `master`: [![Build Status](https://travis-ci.org/jeremyckahn/farmhand.svg?branch=master)](https://travis-ci.org/jeremyckahn/farmhand)
 - `develop`: [![Build Status](https://travis-ci.org/jeremyckahn/farmhand.svg?branch=develop)](https://travis-ci.org/jeremyckahn/farmhand)
 
-This is an open source farming game built with web technologies. Some basic ideas are implemented and stable, but currently this is far from being a "game." It's in a proof-of-concept state and will likely be there for some time. I am working on this entirely solo in my free time and am challenging myself to build it with strictly open development tools (aside from hardware and operating systems). I am designing this game such that it would be fun for anyone that is into resource management and farming games, but ultimately my goal to make the game that I wish existed. And I want to have fun doing it! 🙂
+Farmhand is a resource management game that puts a farm in your hand. It is designed to be both desktop and mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
+
+This is an open source project built with web technologies. It is implemented as a [Progressive Web App](https://web.dev/what-are-pwas/), which means it can be played in your web browser or installed onto your device for offline play.
+
+I am working on this entirely solo in my free time and am building it strictly with open source development tools (aside from hardware and operating systems). Farmhand is designed such that it would be fun for anyone that is into resource management and farming games, but ultimately my goal to make the game that I wish existed, the way I wish it existed. And I want to have fun doing it! 🙂
 
 ## Branch structure
 
