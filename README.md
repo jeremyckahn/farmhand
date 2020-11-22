@@ -31,17 +31,7 @@ Progress was initially tracked via [`docs/milestones.md`](docs/milestones.md), b
 
 ## Project overview
 
-This project is built with [Create React App](https://facebook.github.io/create-react-app/)), so please refer to the documentation of that project to learn the development toolchain.
-
-## Versioned releases
-
-npm makes it super easy to make versioned releases! This project is set up to run tests before making a release, which helps prevent you from releasing new versions with bugs. This happens automatically thanks to the [npm version scripts](https://docs.npmjs.com/cli/version).
-
-```
-npm version patch # Or "minor," or "major"
-```
-
-This will also use the [gh-pages](https://github.com/tschaub/gh-pages) utility to deploy your versioned project with [GitHub Pages](https://pages.github.com/).
+This project is built with [Create React App](https://create-react-app.dev/), so please refer to the documentation of that project to learn the development toolchain.
 
 ## License
 
