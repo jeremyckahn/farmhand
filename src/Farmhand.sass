@@ -1,6 +1,11 @@
 @import styles/variables.sass
 @import styles/utils.sass
 
+// Needed to prevent pull-to-refresh on Android
+// https://stackoverflow.com/a/47709903/470685
+body
+  overscroll-behavior: contain
+
 .Farmhand
   // padding-left and breakpoints correspond to AppBar dimensions
   // https://material-ui.com/demos/app-bar/
