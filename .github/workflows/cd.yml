@@ -17,6 +17,10 @@ jobs:
         with:
           persist-credentials: false
 
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+
       - uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
