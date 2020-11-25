@@ -2,14 +2,14 @@
 
 ### A farming game by [Jeremy Kahn](https://github.com/jeremyckahn)
 
+**[Play Farmhand in your browser!](https://jeremyckahn.github.io/farmhand/)**
+
 - Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
 - Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
 - Watch the game being live: [![Twitch](https://img.shields.io/twitch/status/jeremyckahn?color=blueviolet)](https://www.twitch.tv/jeremyckahn)
 
-**[Play Farmhand in your browser!](https://jeremyckahn.github.io/farmhand/)**
-
-- `master`: [![Build Status](https://travis-ci.org/jeremyckahn/farmhand.svg?branch=master)](https://travis-ci.org/github/jeremyckahn/farmhand/branches)
-- `develop`: [![Build Status](https://travis-ci.org/jeremyckahn/farmhand.svg?branch=develop)](https://travis-ci.org/github/jeremyckahn/farmhand/branches)
+- `master`: ![Deploy](https://github.com/jeremyckahn/farmhand/workflows/Deploy/badge.svg?branch=master)
+- `develop`: ![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)
 
 Farmhand is a resource management game that puts a farm in your hand. It is designed to be both desktop and mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
 
@@ -38,6 +38,10 @@ This project is built with [Create React App](https://create-react-app.dev/), so
 Farmhand requires [Node.js](https://nodejs.org/). At present it **does not support development with a major version higher than 14** due to some unresolved dependency incompatibilities.
 
 Farmhand uses [Piskel](https://www.piskelapp.com/) for the art assets.
+
+### CI/CD
+
+Automation is done with [GitHub Actions](.github/workflows). All changes are tested and built upon Git push. Merges to `master` automatically deploy to Production (the `gh-pages` branch) upon a successful test run and build.
 
 ## License
 
