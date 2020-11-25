@@ -158,3 +158,5 @@ import 'typeface-public-sans'
 window.farmhand = ReactDOM.render(<Farmhand />, document.getElementById('root'))
 
 serviceWorkerRegistration.register()
+
+console.log('test message, please ignore!')
