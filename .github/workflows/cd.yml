@@ -27,3 +27,4 @@ jobs:
           BRANCH: gh-pages
           FOLDER: build
           CLEAN: true
+          SINGLE_COMMIT: true
