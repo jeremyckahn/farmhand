@@ -6,8 +6,6 @@
 
 - Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
 - Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
-- Watch the game being live: [![Twitch](https://img.shields.io/twitch/status/jeremyckahn?color=blueviolet)](https://www.twitch.tv/jeremyckahn)
-
 - `master`: ![Deploy](https://github.com/jeremyckahn/farmhand/workflows/Deploy/badge.svg?branch=master)
 - `develop`: ![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)
 
