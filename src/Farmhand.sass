@@ -43,8 +43,15 @@ body
   .MuiDivider-root
     margin: 1.5em 0
 
-  .MuiCard-root
+  .MuiPaper-rounded
+    background-color: #fff7e7
+
+  .MuiCard-root,
+  .MuiTableContainer-root
     @include card-style
+
+  .MuiTableCell-root
+    border-color: #e9c777
 
   .sidebar-wrapper
     display: flex
@@ -194,7 +201,6 @@ body
     min-height: 6.5em
 
   .MuiInput-root
-    background: #fff
     margin: 1em 0
 
   .MuiAlert-root
