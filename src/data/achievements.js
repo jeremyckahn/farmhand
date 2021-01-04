@@ -113,6 +113,18 @@ const achievements = [
       getProfit(state.todaysRevenue, state.todaysLosses) >= goal,
     reward: state => addItemToInventory(state, itemsMap.fertilizer, reward),
   }))(),
+
+  ((goal = 15000, reward = 50) => ({
+    id: 'daily-profit-2',
+    name: `Daily profit: ${dollarString(goal)}`,
+    description: `Earn ${dollarString(goal)} of profit in a single day.`,
+    rewardDescription: `${reward} units of ${itemsMap['onion-seed'].name}`,
+
+    // TODO: Change this to use the daily profit record stat once it exists.
+    condition: state =>
+      getProfit(state.todaysRevenue, state.todaysLosses) >= goal,
+    reward: state => addItemToInventory(state, itemsMap['onion-seed'], reward),
+  }))(),
 ]
 
 export default achievements
