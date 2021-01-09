@@ -37,6 +37,7 @@ const StatsView = ({
   profitabilityStreak,
   record7dayProfitAverage,
   recordProfitabilityStreak,
+  recordSingleDayProfit,
   revenue,
   todaysLosses,
   todaysRevenue,
@@ -126,6 +127,18 @@ const StatsView = ({
               }}
             >
               {moneyString(getTodaysProfit(todaysRevenue, todaysLosses))}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
+              Record Single Day Profit
+            </TableCell>
+            <TableCell
+              {...{
+                align: 'right',
+              }}
+            >
+              {moneyString(recordSingleDayProfit)}
             </TableCell>
           </TableRow>
           <TableRow>

@@ -808,6 +808,7 @@ export const reduceByPersistedKeys = state => {
     'profitabilityStreak',
     'record7dayProfitAverage',
     'recordProfitabilityStreak',
+    'recordSingleDayProfit',
     'revenue',
     'todaysLosses',
     'todaysRevenue',

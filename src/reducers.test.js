@@ -307,6 +307,7 @@ describe('updateFinancialRecords', () => {
       profitabilityStreak,
       record7dayProfitAverage,
       recordProfitabilityStreak,
+      recordSingleDayProfit,
       todaysLosses,
       todaysRevenue,
     } = fn.updateFinancialRecords({
@@ -315,6 +316,7 @@ describe('updateFinancialRecords', () => {
       profitabilityStreak: 0,
       record7dayProfitAverage: 0,
       recordProfitabilityStreak: 0,
+      recordSingleDayProfit: 0,
       todaysLosses: -10,
       todaysRevenue: 15,
     })
@@ -322,6 +324,7 @@ describe('updateFinancialRecords', () => {
     expect(historicalDailyLosses).toEqual([-10])
     expect(historicalDailyRevenue).toEqual([15])
     expect(record7dayProfitAverage).toEqual(5 / 7)
+    expect(recordSingleDayProfit).toEqual(5)
     expect(profitabilityStreak).toEqual(1)
     expect(recordProfitabilityStreak).toEqual(1)
     expect(todaysLosses).toEqual(0)

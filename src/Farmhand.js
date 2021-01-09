@@ -210,6 +210,7 @@ export default class Farmhand extends Component {
     profitabilityStreak: 0,
     record7dayProfitAverage: 0,
     recordProfitabilityStreak: 0,
+    recordSingleDayProfit: 0,
     revenue: 0,
     purchasedCowPen: 0,
     purchasedField: 0,
