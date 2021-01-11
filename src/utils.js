@@ -851,3 +851,15 @@ export const getCowColorId = ({ color }) => `${cowColorToIdMap[color]}-cow`
  * @return {number}
  */
 export const getProfit = (revenue, losses) => moneyTotal(revenue, losses)
+
+/**
+ * @param {number} recordSingleDayProfit
+ * @param {number} todaysRevenue
+ * @param {number} todaysLosses
+ * @returns {number}
+ */
+export const getProfitRecord = (
+  recordSingleDayProfit,
+  todaysRevenue,
+  todaysLosses
+) => Math.max(recordSingleDayProfit, getProfit(todaysRevenue, todaysLosses))
