@@ -506,6 +506,7 @@ export const processMilkingCows = state => {
 }
 
 /**
+ * Only adds as many items as there is room in the inventory for.
  * @param {farmhand.state} state
  * @param {farmhand.item} item
  * @param {number} [howMany=1]
