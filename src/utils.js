@@ -846,9 +846,8 @@ const cowColorToIdMap = {
 export const getCowColorId = ({ color }) => `${cowColorToIdMap[color]}-cow`
 
 /**
- * @param {number} todaysRevenue
- * @param {number} todaysLosses
+ * @param {number} revenue
+ * @param {number} losses
  * @return {number}
  */
-export const getTodaysProfit = (todaysRevenue, todaysLosses) =>
-  moneyTotal(todaysRevenue, todaysLosses)
+export const getProfit = (revenue, losses) => moneyTotal(revenue, losses)

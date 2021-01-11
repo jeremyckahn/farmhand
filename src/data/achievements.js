@@ -3,7 +3,7 @@ import {
   dollarString,
   findInField,
   getCropLifeStage,
-  getTodaysProfit,
+  getProfit,
   memoize,
   moneyTotal,
 } from '../utils'
@@ -110,7 +110,7 @@ const achievements = [
 
     // TODO: Change this to use the daily profit record stat once it exists.
     condition: state =>
-      getTodaysProfit(state.todaysRevenue, state.todaysLosses) >= goal,
+      getProfit(state.todaysRevenue, state.todaysLosses) >= goal,
     reward: state => addItemToInventory(state, itemsMap.fertilizer, reward),
   }))(),
 ]

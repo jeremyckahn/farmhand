@@ -16,8 +16,6 @@ import {
   generateValueAdjustments,
   get7DayAverage,
   getAdjustedItemValue,
-  getTodaysProfit,
-  getResaleValue,
   getCowColorId,
   getCowMilkItem,
   getCowMilkRate,
@@ -29,10 +27,12 @@ import {
   getPlotContentFromItemId,
   getPlotContentType,
   getPriceEventForCrop,
+  getProfit,
   getRandomLevelUpReward,
   getRandomLevelUpRewardQuantity,
   getRandomUnlockedCrop,
   getRangeCoords,
+  getResaleValue,
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
@@ -867,7 +867,7 @@ export const updateFinancialRecords = state => {
     ),
     recordSingleDayProfit: Math.max(
       recordSingleDayProfit,
-      getTodaysProfit(todaysRevenue, todaysLosses)
+      getProfit(todaysRevenue, todaysLosses)
     ),
     todaysLosses: 0,
     todaysRevenue: 0,

@@ -14,7 +14,7 @@ import {
   farmProductSalesVolumeNeededForLevel,
   farmProductsSold,
   get7DayAverage,
-  getTodaysProfit,
+  getProfit,
   integerString,
   levelAchieved,
   moneyString,
@@ -126,7 +126,7 @@ const StatsView = ({
                 }),
               }}
             >
-              {moneyString(getTodaysProfit(todaysRevenue, todaysLosses))}
+              {moneyString(getProfit(todaysRevenue, todaysLosses))}
             </TableCell>
           </TableRow>
           <TableRow>
