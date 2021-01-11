@@ -3,7 +3,7 @@ import {
   dollarString,
   findInField,
   getCropLifeStage,
-  getTodaysProfit,
+  getProfitRecord,
   memoize,
   moneyTotal,
 } from '../utils'
@@ -107,11 +107,27 @@ const achievements = [
     name: `Daily profit: ${dollarString(goal)}`,
     description: `Earn ${dollarString(goal)} of profit in a single day.`,
     rewardDescription: `${reward} units of ${itemsMap.fertilizer.name}`,
-
-    // TODO: Change this to use the daily profit record stat once it exists.
     condition: state =>
-      getTodaysProfit(state.todaysRevenue, state.todaysLosses) >= goal,
+      getProfitRecord(
+        state.recordSingleDayProfit,
+        state.todaysRevenue,
+        state.todaysLosses
+      ) >= goal,
     reward: state => addItemToInventory(state, itemsMap.fertilizer, reward),
+  }))(),
+
+  ((goal = 15000, reward = 50) => ({
+    id: 'daily-profit-2',
+    name: `Daily profit: ${dollarString(goal)}`,
+    description: `Earn ${dollarString(goal)} of profit in a single day.`,
+    rewardDescription: `${reward} units of ${itemsMap['onion-seed'].name}`,
+    condition: state =>
+      getProfitRecord(
+        state.recordSingleDayProfit,
+        state.todaysRevenue,
+        state.todaysLosses
+      ) >= goal,
+    reward: state => addItemToInventory(state, itemsMap['onion-seed'], reward),
   }))(),
 ]
 

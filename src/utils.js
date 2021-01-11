@@ -808,6 +808,7 @@ export const reduceByPersistedKeys = state => {
     'profitabilityStreak',
     'record7dayProfitAverage',
     'recordProfitabilityStreak',
+    'recordSingleDayProfit',
     'revenue',
     'todaysLosses',
     'todaysRevenue',
@@ -845,9 +846,20 @@ const cowColorToIdMap = {
 export const getCowColorId = ({ color }) => `${cowColorToIdMap[color]}-cow`
 
 /**
- * @param {number} todaysRevenue
- * @param {number} todaysLosses
+ * @param {number} revenue
+ * @param {number} losses
  * @return {number}
  */
-export const getTodaysProfit = (todaysRevenue, todaysLosses) =>
-  moneyTotal(todaysRevenue, todaysLosses)
+export const getProfit = (revenue, losses) => moneyTotal(revenue, losses)
+
+/**
+ * @param {number} recordSingleDayProfit
+ * @param {number} todaysRevenue
+ * @param {number} todaysLosses
+ * @returns {number}
+ */
+export const getProfitRecord = (
+  recordSingleDayProfit,
+  todaysRevenue,
+  todaysLosses
+) => Math.max(recordSingleDayProfit, getProfit(todaysRevenue, todaysLosses))

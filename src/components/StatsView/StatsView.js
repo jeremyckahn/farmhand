@@ -14,7 +14,8 @@ import {
   farmProductSalesVolumeNeededForLevel,
   farmProductsSold,
   get7DayAverage,
-  getTodaysProfit,
+  getProfit,
+  getProfitRecord,
   integerString,
   levelAchieved,
   moneyString,
@@ -37,6 +38,7 @@ const StatsView = ({
   profitabilityStreak,
   record7dayProfitAverage,
   recordProfitabilityStreak,
+  recordSingleDayProfit,
   revenue,
   todaysLosses,
   todaysRevenue,
@@ -125,7 +127,25 @@ const StatsView = ({
                 }),
               }}
             >
-              {moneyString(getTodaysProfit(todaysRevenue, todaysLosses))}
+              {moneyString(getProfit(todaysRevenue, todaysLosses))}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
+              Record Single Day Profit
+            </TableCell>
+            <TableCell
+              {...{
+                align: 'right',
+              }}
+            >
+              {moneyString(
+                getProfitRecord(
+                  recordSingleDayProfit,
+                  todaysRevenue,
+                  todaysLosses
+                )
+              )}
             </TableCell>
           </TableRow>
           <TableRow>

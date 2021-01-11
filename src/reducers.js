@@ -16,7 +16,6 @@ import {
   generateValueAdjustments,
   get7DayAverage,
   getAdjustedItemValue,
-  getResaleValue,
   getCowColorId,
   getCowMilkItem,
   getCowMilkRate,
@@ -28,10 +27,12 @@ import {
   getPlotContentFromItemId,
   getPlotContentType,
   getPriceEventForCrop,
+  getProfit,
   getRandomLevelUpReward,
   getRandomLevelUpRewardQuantity,
   getRandomUnlockedCrop,
   getRangeCoords,
+  getResaleValue,
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
@@ -827,7 +828,11 @@ export const updateFinancialRecords = state => {
     record7dayProfitAverage,
     recordProfitabilityStreak,
   } = state
-  let { historicalDailyLosses, historicalDailyRevenue } = state
+  let {
+    historicalDailyLosses,
+    historicalDailyRevenue,
+    recordSingleDayProfit,
+  } = state
 
   historicalDailyLosses = [todaysLosses, ...historicalDailyLosses].slice(
     0,
@@ -859,6 +864,10 @@ export const updateFinancialRecords = state => {
     recordProfitabilityStreak: Math.max(
       recordProfitabilityStreak,
       currentProfitabilityStreak
+    ),
+    recordSingleDayProfit: Math.max(
+      recordSingleDayProfit,
+      getProfit(todaysRevenue, todaysLosses)
     ),
     todaysLosses: 0,
     todaysRevenue: 0,
