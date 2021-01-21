@@ -27,7 +27,7 @@ const MoneyDisplay = ({ money }) => {
         currentTweenable.cancel()
       }
 
-      const { tweenable } = tween({
+      const tweenable = tween({
         easing: 'easeOutQuad',
         duration: 750,
         render: ({ color, money }) => {
@@ -39,7 +39,7 @@ const MoneyDisplay = ({ money }) => {
           money: previousMoney,
         },
         to: { color: idleColor, money },
-      }).catch(() => {})
+      })
 
       setCurrentTweenable(tweenable)
     }
