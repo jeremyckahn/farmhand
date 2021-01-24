@@ -16,6 +16,7 @@ import {
 import { itemsMap } from '../../data/maps'
 import { craftedItems } from '../../img'
 import QuantityInput from '../QuantityInput'
+import AnimatedNumber from '../AnimatedNumber'
 
 import FarmhandContext from '../../Farmhand.context'
 
@@ -41,7 +42,13 @@ const IngredientsList = ({
           }}
         >
           {ingredients[itemId]} x {itemsMap[itemId].name} (On hand:{' '}
-          {integerString(playerInventoryQuantities[itemId])})
+          <AnimatedNumber
+            {...{
+              number: playerInventoryQuantities[itemId],
+              formatter: integerString,
+            }}
+          />
+          )
         </p>
       </li>
     ))}

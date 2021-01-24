@@ -25,6 +25,7 @@ import {
   integerString,
 } from '../../utils'
 import QuantityInput from '../QuantityInput'
+import AnimatedNumber from '../AnimatedNumber'
 
 import './Item.sass'
 
@@ -173,7 +174,12 @@ export const Item = ({
                             )}`,
                     }}
                   >
-                    <span>Price: {moneyString(adjustedValue)}</span>
+                    <span>
+                      Price:{' '}
+                      <AnimatedNumber
+                        {...{ number: adjustedValue, formatter: moneyString }}
+                      />
+                    </span>
                   </Tooltip>
                   {completedAchievements['unlock-crop-price-guide'] &&
                     valueAdjustments[id] && (
@@ -197,7 +203,12 @@ export const Item = ({
                             )}`,
                     }}
                   >
-                    <span>Sell price: {moneyString(adjustedValue)}</span>
+                    <span>
+                      Sell price:{' '}
+                      <AnimatedNumber
+                        {...{ number: adjustedValue, formatter: moneyString }}
+                      />
+                    </span>
                   </Tooltip>
                   {completedAchievements['unlock-crop-price-guide'] &&
                     valueAdjustments[id] && (
@@ -210,7 +221,12 @@ export const Item = ({
               {showQuantity && (
                 <p>
                   <strong>In inventory:</strong>{' '}
-                  {integerString(playerInventoryQuantities[id])}
+                  <AnimatedNumber
+                    {...{
+                      number: playerInventoryQuantities[id],
+                      formatter: integerString,
+                    }}
+                  />
                 </p>
               )}
               {isPurchaseView && item.growsInto && (
