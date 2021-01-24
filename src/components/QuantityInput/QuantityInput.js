@@ -4,6 +4,8 @@ import NumberFormat from 'react-number-format'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
+import AnimatedNumber from '../AnimatedNumber'
+
 import { integerString } from '../../utils'
 
 import './QuantityInput.sass'
@@ -70,7 +72,8 @@ const QuantityInput = ({
         variant: 'contained',
       }}
     >
-      / {integerString(maxQuantity)}
+      /&nbsp;
+      <AnimatedNumber {...{ number: maxQuantity, formatter: integerString }} />
     </Button>
   </div>
 )
