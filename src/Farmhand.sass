@@ -122,7 +122,7 @@ body
 
       &.use-alternate-end-day-button-position
         right: auto
-        left: 1.25em
+        left: 1em
 
   .menu-button
     transition: transform $duration-shorter
@@ -195,13 +195,20 @@ body
   h4,
   h5,
   h6,
+  legend,
+  td,
+  th,
   .MuiTypography-h1,
   .MuiTypography-h2,
   .MuiTypography-h3,
   .MuiTypography-h4,
   .MuiTypography-h5,
   .MuiTypography-h6,
+  .MuiButtonBase-root,
     font-family: "Francois One", sans-serif
+
+  .MuiButtonBase-root
+    text-transform: none
 
   // This is needed as a workaround for Safari layout rendering issues wherein
   // bottom padding for the stage and sidebar are not respected after
