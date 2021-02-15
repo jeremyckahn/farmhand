@@ -34,8 +34,15 @@ export const NotificationSystem = ({
       that crash the game.
       */}
       <div className="wrapper">
-        {notifications.map(({ message, severity }) => (
-          <Alert {...{ elevation: 3, key: `${severity}_${message}`, severity }}>
+        {notifications.map(({ message, onClick, severity }) => (
+          <Alert
+            {...{
+              elevation: 3,
+              key: `${severity}_${message}`,
+              onClick,
+              severity,
+            }}
+          >
             <ReactMarkdown {...{ source: message }} />
           </Alert>
         ))}

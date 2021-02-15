@@ -74,7 +74,7 @@ function registerValidSW(swUrl, config) {
                   'tabs for this page are closed. See https://cra.link/PWA.'
               )
 
-              window.farmhand.showUpdateNotification()
+              window.farmhand.showUpdateNotification(registration)
 
               // Execute callback
               if (config && config.onUpdate) {

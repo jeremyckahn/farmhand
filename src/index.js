@@ -141,8 +141,9 @@
 /**
  * @typedef farmhand.notification
  * @type {Object}
- * @property {string} message
  * @property {'error'|'info'|'success'|'warning'} severity
+ * @property {Function?} onClick
+ * @property {string} message
  */
 
 import React from 'react'
