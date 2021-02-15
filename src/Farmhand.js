@@ -576,8 +576,17 @@ export default class Farmhand extends Component {
     })
   }
 
-  showUpdateNotification() {
-    this.showNotification(UPDATE_AVAILABLE, 'success')
+  /**
+   * @param {ServiceWorkerRegistration} registration
+   */
+  showUpdateNotification(registration) {
+    // @see https://github.com/jeremyckahn/farmhand/blob/dd1dd502b079be39f50c7d62a54a2027ba83360c/src/service-worker.js#L65-L71
+    // @see https://github.com/pwa-builder/pwa-update/blob/1b709e339e1bde6b13cc71eb4812618d2d28fd54/src/pwa-update.ts#L169-L171
+    registration.waiting.postMessage({ type: 'SKIP_WAITING' })
+
+    this.showNotification(UPDATE_AVAILABLE, 'success', () => {
+      window.location.reload()
+    })
   }
 
   render() {

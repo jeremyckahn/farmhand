@@ -12,9 +12,9 @@ export const LogView = ({ notificationLog, todaysPastNotifications }) => (
   <div className="LogView">
     <h3>Today</h3>
     <ul>
-      {todaysPastNotifications.map(({ message, severity }) => (
+      {todaysPastNotifications.map(({ message, onClick, severity }) => (
         <li {...{ key: message }}>
-          <Alert {...{ elevation: 3, severity }}>
+          <Alert {...{ elevation: 3, onClick, severity }}>
             <ReactMarkdown {...{ source: message }} />
           </Alert>
         </li>

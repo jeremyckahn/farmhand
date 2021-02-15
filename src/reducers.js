@@ -1073,6 +1073,8 @@ export const makeRecipe = (state, recipe, howMany = 1) => {
   return addItemToInventory(state, recipe, howMany)
 }
 
+// TODO: Change showNotification to accept a configuration object instead of so
+// many formal parameters.
 /**
  * @param {farmhand.state} state
  * @param {string} message
@@ -1081,7 +1083,12 @@ export const makeRecipe = (state, recipe, howMany = 1) => {
  * @returns {farmhand.state}
  * @see https://material-ui.com/api/alert/
  */
-export const showNotification = (state, message, severity = 'info') => {
+export const showNotification = (
+  state,
+  message,
+  severity = 'info',
+  onClick = undefined
+) => {
   const { notifications } = state
 
   return {
@@ -1091,7 +1098,7 @@ export const showNotification = (state, message, severity = 'info') => {
       notification => notification.message === message
     )
       ? notifications
-      : notifications.concat({ message, severity }),
+      : notifications.concat({ message, onClick, severity }),
     doShowNotifications: true,
   }
 }
