@@ -111,9 +111,18 @@ body
     right: 1em
     z-index: 20
 
+    &.use-alternate-end-day-button-position
+      right: auto
+      left: 1em
+
+
     @media (min-width: #{$break-sm})
       right: 1.25em
       top: 5.5em
+
+      &.use-alternate-end-day-button-position
+        right: auto
+        left: 1.25em
 
   .menu-button
     transition: transform $duration-shorter

@@ -219,6 +219,7 @@ export default class Farmhand extends Component {
     todaysPastNotifications: [],
     todaysLosses: 0,
     todaysRevenue: 0,
+    useAlternateEndDayButtonPosition: false,
     valueAdjustments: {},
   }
 
@@ -703,7 +704,10 @@ export default class Farmhand extends Component {
                   {...{
                     'aria-label':
                       'End the day to save your progress and advance the game.',
-                    className: 'end-day',
+                    className: classNames('end-day', {
+                      'use-alternate-end-day-button-position': this.state
+                        .useAlternateEndDayButtonPosition,
+                    }),
                     color: 'secondary',
                     onClick: handlers.handleClickEndDayButton,
                   }}

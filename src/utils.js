@@ -812,6 +812,7 @@ export const reduceByPersistedKeys = state => {
     'revenue',
     'todaysLosses',
     'todaysRevenue',
+    'useAlternateEndDayButtonPosition',
     'valueAdjustments',
   ].reduce((acc, key) => {
     // This check prevents old exports from corrupting game state when

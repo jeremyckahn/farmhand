@@ -366,4 +366,11 @@ export default {
   handleFarmNameUpdate(farmName) {
     this.setState({ farmName })
   },
+
+  handleUseAlternateEndDayButtonPositionChange(
+    _e,
+    useAlternateEndDayButtonPosition
+  ) {
+    this.setState({ useAlternateEndDayButtonPosition })
+  },
 }

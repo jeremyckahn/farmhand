@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import { func } from 'prop-types'
 import Button from '@material-ui/core/Button'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogActions from '@material-ui/core/DialogActions'
 import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import Divider from '@material-ui/core/Divider'
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormLabel from '@material-ui/core/FormLabel'
+import Switch from '@material-ui/core/Switch'
 import Tooltip from '@material-ui/core/Tooltip'
 import FileReaderInput from 'react-file-reader-input'
 
@@ -18,6 +23,8 @@ const SettingsView = ({
   handleExportDataClick,
   handleImportDataClick,
   handleSaveButtonClick,
+  handleUseAlternateEndDayButtonPositionChange,
+  useAlternateEndDayButtonPosition,
 }) => {
   const [isClearDataDialogOpen, setIsClearDataDialogOpen] = useState(false)
 
@@ -34,6 +41,25 @@ const SettingsView = ({
           Save Game
         </Button>
       </div>
+      <Divider />
+
+      <FormControl component="fieldset">
+        <FormLabel component="legend">Options</FormLabel>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                color="primary"
+                checked={useAlternateEndDayButtonPosition}
+                onChange={handleUseAlternateEndDayButtonPositionChange}
+                name="use-alternate-end-day-button-position"
+              />
+            }
+            label="Use alternate position for Bed button"
+          />
+        </FormGroup>
+      </FormControl>
+
       <Divider />
       <div className="button-row">
         <Tooltip
