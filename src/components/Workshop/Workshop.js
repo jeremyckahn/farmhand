@@ -30,17 +30,25 @@ const Workshop = ({ learnedRecipes }) => (
     </section>
     <Divider />
     <section>
-      <Card>
-        <CardContent>
-          <ReactMarkdown
-            {...{
-              linkTarget: '_blank',
-              className: 'markdown',
-              source: `Recipes are learned by selling crops and animal products. Sell as much as you can of a wide variety of items!`,
-            }}
-          />
-        </CardContent>
-      </Card>
+      <ul className="card-list">
+        {/*
+          This really isn't a list, but it makes it easy to keep the UI
+          consistent.
+        */}
+        <li>
+          <Card>
+            <CardContent>
+              <ReactMarkdown
+                {...{
+                  linkTarget: '_blank',
+                  className: 'markdown',
+                  source: `Recipes are learned by selling crops and animal products. Sell as much as you can of a wide variety of items!`,
+                }}
+              />
+            </CardContent>
+          </Card>
+        </li>
+      </ul>
     </section>
   </div>
 )
