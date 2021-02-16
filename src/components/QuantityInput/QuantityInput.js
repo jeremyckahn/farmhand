@@ -1,5 +1,8 @@
 import React from 'react'
 import { func, number } from 'prop-types'
+import Fab from '@material-ui/core/Fab'
+import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 import NumberFormat from 'react-number-format'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -75,6 +78,29 @@ const QuantityInput = ({
       /&nbsp;
       <AnimatedNumber {...{ number: maxQuantity, formatter: integerString }} />
     </Button>
+
+    <div className="number-nudger-container">
+      <Fab
+        {...{
+          'aria-label': 'Increment',
+          color: 'primary',
+          onClick: () => setQuantity(value + 1),
+          size: 'small',
+        }}
+      >
+        <KeyboardArrowUp />
+      </Fab>
+      <Fab
+        {...{
+          'aria-label': 'Decrement',
+          color: 'primary',
+          onClick: () => setQuantity(value - 1),
+          size: 'small',
+        }}
+      >
+        <KeyboardArrowDown />
+      </Fab>
+    </div>
   </div>
 )
 

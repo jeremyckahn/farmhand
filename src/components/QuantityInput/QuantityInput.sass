@@ -28,3 +28,23 @@
 
     input
       text-align: right
+
+  .number-nudger-container
+    display: flex
+    flex-direction: column
+    position: absolute
+    top: 0
+    right: 0
+
+    @media (min-width: #{$break-large-phone})
+      // TODO: Constrain the width of the item and recipe containers (or
+      // perhaps .card-list) to something reasonable and get rid of this.
+      display: none
+
+    button
+      margin: 0.25em
+
+      svg
+        // Needed to override
+        // https://github.com/jeremyckahn/farmhand/blob/b357cbafa5b93ef0c56cbfc56042554bad0decca/src/components/Item/Item.sass#L11-L12
+        margin-bottom: 0
