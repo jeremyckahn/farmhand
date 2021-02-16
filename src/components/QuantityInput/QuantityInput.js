@@ -84,7 +84,7 @@ const QuantityInput = ({
         {...{
           'aria-label': 'Increment',
           color: 'primary',
-          onClick: () => setQuantity(value + 1),
+          onClick: () => setQuantity(++value > maxQuantity ? 1 : value),
           size: 'small',
         }}
       >
@@ -94,7 +94,7 @@ const QuantityInput = ({
         {...{
           'aria-label': 'Decrement',
           color: 'primary',
-          onClick: () => setQuantity(value - 1),
+          onClick: () => setQuantity(--value === 0 ? maxQuantity : value),
           size: 'small',
         }}
       >
