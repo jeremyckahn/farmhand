@@ -623,7 +623,14 @@ export default class Farmhand extends Component {
       <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
         <MuiThemeProvider theme={theme}>
           <FarmhandContext.Provider value={{ gameState, handlers }}>
-            <div className="Farmhand fill">
+            <div
+              {...{
+                className: classNames('Farmhand fill', {
+                  'use-alternate-end-day-button-position': this.state
+                    .useAlternateEndDayButtonPosition,
+                }),
+              }}
+            >
               <AppBar />
               <Drawer
                 {...{
@@ -704,10 +711,7 @@ export default class Farmhand extends Component {
                   {...{
                     'aria-label':
                       'End the day to save your progress and advance the game.',
-                    className: classNames('end-day', {
-                      'use-alternate-end-day-button-position': this.state
-                        .useAlternateEndDayButtonPosition,
-                    }),
+                    className: 'end-day',
                     color: 'secondary',
                     onClick: handlers.handleClickEndDayButton,
                   }}
