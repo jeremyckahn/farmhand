@@ -4,7 +4,6 @@ import Fab from '@material-ui/core/Fab'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 import NumberFormat from 'react-number-format'
-import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
 import AnimatedNumber from '../AnimatedNumber'
@@ -68,17 +67,10 @@ const QuantityInput = ({
     <QuantityTextInput
       {...{ handleSubmit, handleUpdateNumber, maxQuantity, value }}
     />
-    <Button
-      {...{
-        className: 'quantity',
-        onClick: () => setQuantity(maxQuantity),
-        variant: 'contained',
-      }}
-    >
-      /&nbsp;
+    <span className="quantity">
+      /{' '}
       <AnimatedNumber {...{ number: maxQuantity, formatter: integerString }} />
-    </Button>
-
+    </span>
     <div className="number-nudger-container">
       <Fab
         {...{
