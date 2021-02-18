@@ -31,10 +31,11 @@ const ElevatedPaper = props => (
 )
 
 const StatsView = ({
+  farmName,
   historicalDailyLosses,
   historicalDailyRevenue,
-  farmName,
   itemsSold,
+  loansTakenOut,
   profitabilityStreak,
   record7dayProfitAverage,
   recordProfitabilityStreak,
@@ -48,7 +49,7 @@ const StatsView = ({
 }) => (
   <div className="StatsView">
     <TableContainer {...{ component: ElevatedPaper }}>
-      <Table aria-label="Financial Stats">
+      <Table aria-label="Farmer Stats">
         <TableBody>
           <TableRow>
             <TableCell {...{ component: 'th', scope: 'row' }}>
@@ -97,6 +98,12 @@ const StatsView = ({
               </TableCell>
             </TableRow>
           </Tooltip>
+          <TableRow>
+            <TableCell {...{ component: 'th', scope: 'row' }}>
+              Loans Taken Out
+            </TableCell>
+            <TableCell align="right">{integerString(loansTakenOut)}</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

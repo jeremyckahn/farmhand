@@ -798,6 +798,7 @@ export const reduceByPersistedKeys = state => {
     'itemsSold',
     'learnedRecipes',
     'loanBalance',
+    'loansTakenOut',
     'money',
     'newDayNotifications',
     'notificationLog',

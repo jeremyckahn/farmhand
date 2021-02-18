@@ -2744,19 +2744,31 @@ describe('adjustLoan', () => {
 
   describe('loan payoff', () => {
     test('shows appropriate notification', () => {
-      expect(
-        fn.adjustLoan({ money: 100, loanBalance: 50, notifications: [] }, -50)
-          .notifications
-      ).toEqual([{ message: LOAN_PAYOFF``, severity: 'success' }])
+      const { loansTakenOut, notifications } = fn.adjustLoan(
+        { money: 100, loanBalance: 50, loansTakenOut: 1, notifications: [] },
+        -50
+      )
+
+      expect(notifications).toEqual([
+        { message: LOAN_PAYOFF``, severity: 'success' },
+      ])
+
+      expect(loansTakenOut).toEqual(1)
     })
   })
 
   describe('loan increase', () => {
-    test('shows appropriate notification', () => {
-      expect(
-        fn.adjustLoan({ money: 100, loanBalance: 50, notifications: [] }, 50)
-          .notifications
-      ).toEqual([{ message: LOAN_INCREASED`${100}`, severity: 'info' }])
+    test('shows appropriate notification, updates state', () => {
+      const { loansTakenOut, notifications } = fn.adjustLoan(
+        { money: 100, loanBalance: 50, notifications: [], loansTakenOut: 1 },
+        50
+      )
+
+      expect(notifications).toEqual([
+        { message: LOAN_INCREASED`${100}`, severity: 'info' },
+      ])
+
+      expect(loansTakenOut).toEqual(2)
     })
   })
 })

@@ -1644,7 +1644,11 @@ export const adjustLoan = (state, adjustmentAmount) => {
   if (loanBalance === 0 && adjustmentAmount < 0) {
     state = showNotification(state, LOAN_PAYOFF``, 'success')
   } else if (adjustmentAmount > 0) {
-    state = showNotification(state, LOAN_INCREASED`${loanBalance}`, 'info')
+    // Player is taking out a new loan
+    state = {
+      ...showNotification(state, LOAN_INCREASED`${loanBalance}`, 'info'),
+      loansTakenOut: state.loansTakenOut + 1,
+    }
   }
 
   return {

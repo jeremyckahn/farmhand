@@ -133,6 +133,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {boolean} isDialogViewOpen
  * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
  * @property {number} loanBalance
+ * @property {number} loansTakenOut
  * @property {number} money
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {Array.<farmhand.notification>} notifications
@@ -201,6 +202,7 @@ export default class Farmhand extends Component {
     isDialogViewOpen: false,
     learnedRecipes: {},
     loanBalance: STANDARD_LOAN_AMOUNT,
+    loansTakenOut: 1,
     money: STANDARD_LOAN_AMOUNT,
     newDayNotifications: [],
     notifications: [],
