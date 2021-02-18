@@ -42,6 +42,7 @@ import {
   INITIAL_SPRINKLER_RANGE,
   MALE_COW_WEIGHT_MULTIPLIER,
   MEMOIZE_CACHE_CLEAR_THRESHOLD,
+  PERSISTED_STATE_KEYS,
   PRICE_EVENT_STANDARD_DURATION_DECREASE,
 } from './constants'
 
@@ -778,44 +779,8 @@ export const getRandomLevelUpRewardQuantity = level => level * 10
  * @returns {Object} A version of `state` that only contains keys of
  * farmhand.state data that should be persisted.
  */
-export const reduceByPersistedKeys = state => {
-  return [
-    'cowForSale',
-    'completedAchievements',
-    'cowBreedingPen',
-    'cowInventory',
-    'cowColorsPurchased',
-    'cowsSold',
-    'cropsHarvested',
-    'dayCount',
-    'farmName',
-    'field',
-    'historicalDailyLosses',
-    'historicalDailyRevenue',
-    'historicalValueAdjustments',
-    'inventory',
-    'inventoryLimit',
-    'itemsSold',
-    'learnedRecipes',
-    'loanBalance',
-    'loansTakenOut',
-    'money',
-    'newDayNotifications',
-    'notificationLog',
-    'purchasedCowPen',
-    'purchasedField',
-    'priceCrashes',
-    'priceSurges',
-    'profitabilityStreak',
-    'record7dayProfitAverage',
-    'recordProfitabilityStreak',
-    'recordSingleDayProfit',
-    'revenue',
-    'todaysLosses',
-    'todaysRevenue',
-    'useAlternateEndDayButtonPosition',
-    'valueAdjustments',
-  ].reduce((acc, key) => {
+export const reduceByPersistedKeys = state =>
+  PERSISTED_STATE_KEYS.reduce((acc, key) => {
     // This check prevents old exports from corrupting game state when
     // imported.
     if (typeof state[key] !== 'undefined') {
@@ -824,7 +789,6 @@ export const reduceByPersistedKeys = state => {
 
     return acc
   }, {})
-}
 
 /**
  * @param {Array.<number>} historicalData Must be no longer than 7 numbers long.
