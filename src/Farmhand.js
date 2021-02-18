@@ -148,6 +148,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} profitabilityStreak
  * @property {number} record7dayProfitAverage
  * @property {number} recordProfitabilityStreak
+ * @property {number} recordSingleDayProfit
  * @property {number} revenue The amount of money the player has generated in
  * revenue.
  * @property {boolean} doShowNotifications
@@ -155,6 +156,8 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {Array.<farmhand.notification>} todaysPastNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {number} todaysRevenue Should always be a positive number.
+ * @property {boolean} useAlternateEndDayButtonPosition Option to display the
+ * Bed button on the left side of the screen.
  * @property {Object.<number>} valueAdjustments
  */
 
