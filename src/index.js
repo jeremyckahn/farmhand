@@ -91,7 +91,7 @@
  * @typedef farmhand.recipe
  * @readonly
  * @type {farmhand.item}
- * @property {{[farmhand.item.id]: number}} ingredients An object where each
+ * @property {{string: number}} ingredients An object where each
  * key is the id of a farmhand.item and the value is the quantity of that item.
  * @property {farmhand.recipeCondition} condition This must return `true` for
  * the recipe to be made available to the player.

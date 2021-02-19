@@ -137,7 +137,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} money
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {Array.<farmhand.notification>} notifications
- * @property {Array.<farmhand.notification} notificationLog
+ * @property {Array.<farmhand.notification>} notificationLog
  * @property {string} selectedCowId
  * @property {string} selectedItemId
  * @property {Object.<string, farmhand.priceEvent>} priceCrashes Keys are
