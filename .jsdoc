@@ -1,7 +1,7 @@
 {
   "plugins": ["plugins/markdown"],
   "opts": {
-    "destination": "dist/doc",
+    "destination": "build/docs",
     "template": "node_modules/@jeremyckahn/minami",
     "readme": "README.md"
   },
