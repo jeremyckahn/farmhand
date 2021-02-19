@@ -315,7 +315,7 @@ const sortCows = (cows, sortType, isAscending) => {
   return isAscending ? sortedCows : sortedCows.reverse()
 }
 
-/**
+/*!
  * @param {farmhand.cowBreedingPen} cowBreedingPen
  * @returns {number}
  */

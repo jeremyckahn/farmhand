@@ -58,7 +58,7 @@ const { CLEANUP, HARVEST, OBSERVE, WATER } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
 
-/**
+/*!
  * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
  * @param {Object.<number>} valueAdjustments
  * @returns {Array.<farmhand.item>}
@@ -71,7 +71,7 @@ export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
   }))
 )
 
-/**
+/*!
  * @param {Array.<{ item: farmhand.item }>} inventory
  * @returns {Array.<{ item: farmhand.item }>}
  */
@@ -88,7 +88,7 @@ export const getFieldToolInventory = memoize(inventory =>
     .map(({ id }) => itemsMap[id])
 )
 
-/**
+/*!
  * @param {Array.<{ item: farmhand.item }>} inventory
  * @returns {Array.<{ item: farmhand.item }>}
  */
@@ -170,7 +170,7 @@ export default class Farmhand extends Component {
     description: 'Persisted game data for Farmhand',
   })
 
-  /**
+  /*!
    * @member farmhand.Farmhand#state
    * @type {farmhand.state}
    */
@@ -464,7 +464,7 @@ export default class Farmhand extends Component {
     this.localforage.clear().then(() => this.showNotification(DATA_DELETED))
   }
 
-  /**
+  /*!
    * @param {farmhand.state} prevState
    */
   showCowPenPurchasedNotifications(prevState) {
@@ -479,7 +479,7 @@ export default class Farmhand extends Component {
     }
   }
 
-  /**
+  /*!
    * @param {farmhand.state} prevState
    */
   showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
@@ -490,7 +490,7 @@ export default class Farmhand extends Component {
     })
   }
 
-  /**
+  /*!
    * @param {Object} [overrides] Data to patch into this.state when persisting.
    * @return {Promise}
    */
@@ -504,7 +504,7 @@ export default class Farmhand extends Component {
     )
   }
 
-  /**
+  /*!
    * @param {boolean} [isFirstDay=false]
    */
   incrementDay(isFirstDay = false) {
@@ -544,7 +544,7 @@ export default class Farmhand extends Component {
     )
   }
 
-  /**
+  /*!
    * @param {farmhand.module:enums.dialogView} dialogView
    */
   openDialogView(dialogView) {
@@ -582,7 +582,7 @@ export default class Farmhand extends Component {
     })
   }
 
-  /**
+  /*!
    * @param {ServiceWorkerRegistration} registration
    */
   showUpdateNotification(registration) {

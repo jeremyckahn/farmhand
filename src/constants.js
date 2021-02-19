@@ -1,3 +1,8 @@
+/**
+ * @module farmhand.constants
+ * @ignore
+ */
+
 import { stageFocusType } from './enums'
 
 const { freeze } = Object

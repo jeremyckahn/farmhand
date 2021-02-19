@@ -1,3 +1,8 @@
+/**
+ * @module farmhand.utils
+ * @ignore
+ */
+
 import Dinero from 'dinero.js'
 import fastMemoize from 'fast-memoize'
 import sortBy from 'lodash.sortby'
@@ -75,6 +80,9 @@ const createUniqueId = () => btoa(Math.random() + Date.now())
 // clears the cache once the size exceeds MEMOIZE_CACHE_CLEAR_THRESHOLD to
 // prevent memory bloat.
 // https://github.com/caiogondim/fast-memoize.js/blob/5cdfc8dde23d86b16e0104bae1b04cd447b98c63/src/index.js#L114-L128
+/**
+ * @ignore
+ */
 class MemoizeCache {
   cache = {}
 

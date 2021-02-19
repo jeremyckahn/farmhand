@@ -1,3 +1,8 @@
+/**
+ * @module farmhand.reducers
+ * @ignore
+ */
+
 import { itemsMap, recipesMap } from './data/maps'
 import { levels } from './data/levels'
 import achievements from './data/achievements'

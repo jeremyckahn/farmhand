@@ -35,7 +35,7 @@ export const getBackgroundStyles = plotContent => {
   return backgroundImages.join(', ')
 }
 
-/**
+/*!
  * @param {(farmhand.plotContent|farmhand.crop)?} plotContent
  * @returns {number?}
  */

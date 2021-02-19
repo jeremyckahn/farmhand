@@ -1,5 +1,6 @@
 /**
  * @module farmhand.enums
+ * @ignore
  */
 
 /**

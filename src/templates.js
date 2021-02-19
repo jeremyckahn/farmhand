@@ -1,3 +1,8 @@
+/**
+ * @module farmhand.templates
+ * @ignore
+ */
+
 import { getRandomLevelUpRewardQuantity, moneyString } from './utils'
 
 import { itemUnlockLevels, levels } from './data/levels'
