@@ -2,6 +2,7 @@
   "name": "farmhand",
   "version": "0.0.0",
   "description": "A farming game",
+  "main": "build/index.html",
   "homepage": "http://jeremyckahn.github.io/farmhand/",
   "scripts": {
     "build": "react-scripts build",
@@ -11,10 +12,10 @@
     "doc:view": "serve -S dist/doc",
     "doc:watch": "nodemon --exec \"npm run doc\" --watch src --watch ./ --ext js,md --ignore dist",
     "lint": "eslint src --max-warnings=0",
-    "postversion": "git push && git push --tags && npm run deploy",
     "predeploy": "npm run build",
     "prettier": "prettier 'src/**/*.js' --write",
-    "preversion": "npm test",
+    "preversion": "npm run test",
+    "postversion": "git push && git push --tags",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
@@ -101,6 +102,11 @@
       "pre-commit": "pretty-quick --staged && npm run lint && cross-env CI=true react-scripts test --env=jsdom --lastCommit"
     }
   },
+  "files": [
+    "src",
+    "build",
+    "public"
+  ],
   "craGenerate": {
     "cssExtension": "sass",
     "type": "functional"
