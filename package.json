@@ -1,5 +1,5 @@
 {
-  "name": "farmhand",
+  "name": "@jeremyckahn/farmhand",
   "version": "1.0.0",
   "description": "A farming game",
   "main": "build/index.html",
