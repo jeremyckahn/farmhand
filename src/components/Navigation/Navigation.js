@@ -126,6 +126,7 @@ export const Navigation = ({
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
+    <p className="version">v{process.env.REACT_APP_VERSION}</p>
     <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
     <h2 className="day-count">
       Day {dayCount}, level {integerString(currentLevel)}
