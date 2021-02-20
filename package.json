@@ -1,6 +1,6 @@
 {
   "name": "farmhand",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A farming game",
   "main": "build/index.html",
   "homepage": "http://jeremyckahn.github.io/farmhand/",
