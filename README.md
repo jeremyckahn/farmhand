@@ -1,5 +1,7 @@
 # Farmhand
 
+![Current Farmhand version](https://badgen.net/npm/v/@jeremyckahn/farmhand)
+
 ### A farming game by [Jeremy Kahn](https://github.com/jeremyckahn)
 
 **[Play Farmhand in your browser!](https://jeremyckahn.github.io/farmhand/)**
@@ -8,6 +10,7 @@
 - Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
 - `master`: [![Deploy](https://github.com/jeremyckahn/farmhand/workflows/Deploy/badge.svg?branch=master)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ADeploy)
 - `develop`: [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI)
+- All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
 - [Data model documentation](https://jeremyckahn.github.io/farmhand/docs/index.html)
 
 Farmhand is a resource management game that puts a farm in your hand. It is designed to be both desktop and mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
@@ -18,9 +21,19 @@ I am working on this entirely solo in my free time and am building it strictly w
 
 ## Current Progress
 
-At this point, the game is completely playable and stable (and worth playing, I think!). However, I would not consider the game at all finished. I don't really plan to "complete" this game, as I intend to develop and add to it for years to come. This is a fun hobby and creative outlet for me, and I don't feel a need to hold myself to inflexible goals for it at this point. It's an open source project that grows and improves organically over time. All that said, it's my goal as a designer and developer to ensure that this game is always stable and playable. It'll only ever get better and have more content over time!
+At this point, the game is completely playable and stable (and worth playing, I think!). However, I would not consider the game "finished," inasmuch as it will never be finished. I plan to work Farmhand as I can for many years to come. Being an open source project, I hope that it will grow and improve organically over time. All that said, it's my goal as a designer and developer to ensure that this game is always stable and playable. It'll only ever get better and have more content over time!
 
-Progress was initially tracked via [`docs/milestones.md`](docs/milestones.md), but I've since switched to using [this GitHub project](https://github.com/jeremyckahn/farmhand/projects/1) for organizing tasks. If you'd like to suggest a feature or ask a question, please [open a GitHub issue](https://github.com/jeremyckahn/farmhand/issues).
+[This GitHub project](https://github.com/jeremyckahn/farmhand/projects/1) is used for tracking and organizing work. If you'd like to suggest a feature or ask a question, please [open a GitHub issue](https://github.com/jeremyckahn/farmhand/issues).
+
+## Versioning system
+
+Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs from SemVer because Farmhand is a game and doesn't expose a public API. Rather than the game version being based on an API, it reflects the internal data structure, [`farmhand.state`](https://jeremyckahn.github.io/farmhand/docs/farmhand.html#.state).
+
+- `major`: Is incremented when `farmhand.state` has been changed in a backwards-incompatible way.
+  - When these releases are made, automatic migration functionality will keep this transparent to the player.
+- `minor`: Is incremented when `farmhand.state` has been changed in a backwards-compatible way.
+- `patch`: Is incremented when `farmhand.state` has been not been changed. This also includes gameplay features and bug fixes that do not result in changes to `farmhand.state`.
+  - This implies that significant game changes may only result in `patch`-level releases.
 
 ## Branch structure
 
@@ -28,15 +41,10 @@ Progress was initially tracked via [`docs/milestones.md`](docs/milestones.md), b
 - `master` is updated when `develop` is stable.
 - `gh-pages` contains the built assets and is updated automatically when `master` is updated.
 
-There is no versioning system yet.
-
 ## Project overview
 
-This project is built with [Create React App](https://create-react-app.dev/), so please refer to the documentation of that project to learn about the development toolchain.
-
-Farmhand requires [Node.js](https://nodejs.org/). At present it **does not support development with a major version higher than 14** due to some unresolved dependency incompatibilities.
-
-Farmhand uses [Piskel](https://www.piskelapp.com/) for the art assets.
+- This project is built with [Create React App](https://create-react-app.dev/), so please refer to the documentation of that project to learn about the development toolchain.
+- Farmhand uses [Piskel](https://www.piskelapp.com/) for the art assets.
 
 ### CI/CD
 
