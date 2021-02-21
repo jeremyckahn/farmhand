@@ -1,6 +1,9 @@
 {
   "name": "@jeremyckahn/farmhand",
   "version": "1.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "A farming game",
   "main": "build/index.html",
   "homepage": "http://jeremyckahn.github.io/farmhand/",
