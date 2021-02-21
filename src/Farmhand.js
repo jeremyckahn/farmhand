@@ -160,6 +160,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {boolean} useAlternateEndDayButtonPosition Option to display the
  * Bed button on the left side of the screen.
  * @property {Object.<number>} valueAdjustments
+ * @property {string} version Comes from the `version` property in package.json.
  */
 
 export default class Farmhand extends Component {
@@ -226,6 +227,7 @@ export default class Farmhand extends Component {
     todaysRevenue: 0,
     useAlternateEndDayButtonPosition: false,
     valueAdjustments: {},
+    version: process.env.REACT_APP_VERSION,
   }
 
   constructor() {

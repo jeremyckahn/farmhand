@@ -140,4 +140,5 @@ export const PERSISTED_STATE_KEYS = [
   'todaysRevenue',
   'useAlternateEndDayButtonPosition',
   'valueAdjustments',
+  'version',
 ]
