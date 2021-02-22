@@ -3,3 +3,5 @@ node_modules
 build
 Session.vim
 .DS_Store
+
+.vercel

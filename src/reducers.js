@@ -18,7 +18,6 @@ import {
   findInField,
   generateCow,
   generateOffspringCow,
-  generateValueAdjustments,
   get7DayAverage,
   getAdjustedItemValue,
   getCowColorId,
@@ -45,6 +44,7 @@ import {
   moneyTotal,
   nullArray,
 } from './utils'
+import { generateValueAdjustments } from './common/utils'
 import {
   COW_FEED_ITEM_ID,
   COW_GESTATION_PERIOD_DAYS,

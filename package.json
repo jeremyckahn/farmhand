@@ -20,6 +20,7 @@
     "preversion": "CI=true npm run test",
     "postversion": "git push && git push --tags",
     "start": "react-scripts start",
+    "start:with-api": "vercel dev",
     "test": "react-scripts test",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "update-images": "bash update-images.sh"
@@ -56,6 +57,7 @@
     "pretty-quick": "^2.0.1",
     "react-scripts": "^4.0.0",
     "serve": "^11.3.2",
+    "vercel": "^21.2.3",
     "workbox-background-sync": "^5.1.3",
     "workbox-broadcast-update": "^5.1.3",
     "workbox-cacheable-response": "^5.1.3",
@@ -95,6 +97,7 @@
     "react-markdown": "^4.3.1",
     "react-number-format": "^4.4.1",
     "react-zoom-pan-pinch": "^1.6.1",
+    "redis": "^3.0.2",
     "shifty": "^2.15.2",
     "source-map-explorer": "^2.3.1",
     "typeface-francois-one": "0.0.71",
