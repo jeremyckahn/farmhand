@@ -12,14 +12,21 @@ client.on('error', function(error) {
   console.error(error)
 })
 
-module.exports = async (req, res) => {
-  const roomKey = `room-${req.query.room || 'global'}`
+const getRoomMarketData = async roomKey => {
   let valueAdjustments = JSON.parse(await get(roomKey))
 
   if (valueAdjustments === null) {
-    valueAdjustments = generateValueAdjustments({}, {})
+    valueAdjustments = generateValueAdjustments()
     set(roomKey, JSON.stringify(valueAdjustments))
   }
 
-  res.status(200).json({ valueAdjustments: valueAdjustments })
+  return valueAdjustments
+}
+
+module.exports = async (req, res) => {
+  const valueAdjustments = await getRoomMarketData(
+    `room-${req.query.room || 'global'}`
+  )
+
+  res.status(200).json({ valueAdjustments })
 }

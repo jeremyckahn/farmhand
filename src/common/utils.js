@@ -1,11 +1,11 @@
 import { itemsMap } from '../data/maps'
 
 /**
- * @param {farmhand.priceEvent} priceCrashes
- * @param {farmhand.priceEvent} priceSurges
+ * @param {farmhand.priceEvent} [priceCrashes]
+ * @param {farmhand.priceEvent} [priceSurges]
  * @returns {Object}
  */
-export const generateValueAdjustments = (priceCrashes, priceSurges) =>
+export const generateValueAdjustments = (priceCrashes = {}, priceSurges = {}) =>
   Object.keys(itemsMap).reduce((acc, key) => {
     if (itemsMap[key].doesPriceFluctuate) {
       if (priceCrashes[key]) {
