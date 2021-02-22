@@ -1,10 +1,9 @@
 import { promisify } from 'util'
 
-import redis from 'redis'
+import { getRedisClient, getRoomMarketData, getRoomName } from './utils'
 
-import { getRoomMarketData, getRoomName } from './utils'
+const client = getRedisClient()
 
-const client = redis.createClient()
 const get = promisify(client.get).bind(client)
 const set = promisify(client.set).bind(client)
 
@@ -20,7 +19,6 @@ const applyPositionsToMarket = (valueAdjustments, positions) => {
       const variance = Math.random() * 0.2
 
       if (itemPositionChange > 0) {
-        console.log({ itemName }, acc[itemName])
         acc[itemName] = Math.min(1.5, acc[itemName] + variance)
       } else if (itemPositionChange < 0) {
         acc[itemName] = Math.max(0.5, acc[itemName] - variance)

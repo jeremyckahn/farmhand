@@ -1,6 +1,15 @@
+import redis from 'redis'
+
 import { generateValueAdjustments } from '../src/common/utils'
 
 import { GLOBAL_ROOM_KEY } from './constants'
+
+export const getRedisClient = () =>
+  redis.createClient({
+    host: process.env.REDIS_LABS_ENDPOINT,
+    port: process.env.REDIS_LABS_PORT,
+    password: process.env.REDIS_LABS_PASSWORD,
+  })
 
 export const getRoomMarketData = async (roomKey, get, set) => {
   let valueAdjustments = JSON.parse(await get(roomKey))

@@ -1,10 +1,9 @@
 import { promisify } from 'util'
 
-import redis from 'redis'
+import { getRedisClient, getRoomMarketData, getRoomName } from './utils'
 
-import { getRoomMarketData, getRoomName } from './utils'
+const client = getRedisClient()
 
-const client = redis.createClient()
 const get = promisify(client.get).bind(client)
 const set = promisify(client.set).bind(client)
 
