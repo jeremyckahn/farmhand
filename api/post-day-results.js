@@ -1,5 +1,6 @@
 require('redis')
 require('../src/common/utils')
+require('./constants')
 const { promisify } = require('util')
 
 const { getRedisClient, getRoomMarketData, getRoomName } = require('./utils')
