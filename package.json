@@ -79,6 +79,7 @@
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.53",
+    "@vercel/node": "^1.9.0",
     "animate.css": "^4.1.0",
     "classnames": "^2.2.6",
     "compass-mixins": "^0.12.10",
