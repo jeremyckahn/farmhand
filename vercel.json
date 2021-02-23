@@ -1,4 +1,9 @@
 {
+  "version": 2,
+  "builds": [
+    { "src": "/api/get-market-data", "use": "@vercel/node" },
+    { "src": "/api/post-day-results", "use": "@vercel/node" }
+  ],
   "routes": [
     {
       "src": "/api/get-market-data",
