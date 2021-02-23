@@ -1,3 +1,4 @@
+require('redis')
 const { promisify } = require('util')
 
 const { getRedisClient, getRoomMarketData, getRoomName } = require('./utils')
