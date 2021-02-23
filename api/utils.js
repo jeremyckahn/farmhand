@@ -1,10 +1,10 @@
-import redis from 'redis'
+const redis = require('redis')
 
-import { generateValueAdjustments } from '../src/common/utils'
+const { generateValueAdjustments } = require('../src/common/utils')
 
-import { GLOBAL_ROOM_KEY } from './constants'
+const { GLOBAL_ROOM_KEY } = require('./constants')
 
-export const getRedisClient = () => {
+module.exports.getRedisClient = () => {
   const client = redis.createClient({
     host: process.env.REDIS_ENDPOINT,
     port: process.env.REDIS_PORT,
@@ -25,7 +25,7 @@ export const getRedisClient = () => {
   return client
 }
 
-export const getRoomMarketData = async (roomKey, get, set) => {
+module.exports.getRoomMarketData = async (roomKey, get, set) => {
   let valueAdjustments = JSON.parse(await get(roomKey))
 
   if (valueAdjustments === null) {
@@ -36,5 +36,5 @@ export const getRoomMarketData = async (roomKey, get, set) => {
   return valueAdjustments
 }
 
-export const getRoomName = req =>
+module.exports.getRoomName = req =>
   `room-${req.query?.room || req.body?.room || GLOBAL_ROOM_KEY}`

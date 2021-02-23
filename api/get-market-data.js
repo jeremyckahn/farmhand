@@ -1,6 +1,6 @@
-import { promisify } from 'util'
+const { promisify } = require('util')
 
-import { getRedisClient, getRoomMarketData, getRoomName } from './utils'
+const { getRedisClient, getRoomMarketData, getRoomName } = require('./utils')
 
 const client = getRedisClient()
 
