@@ -5,7 +5,7 @@
     "access": "public"
   },
   "description": "A farming game",
-  "main": "build/index.html",
+  "unpkg": "build/index.html",
   "homepage": "http://jeremyckahn.github.io/farmhand/",
   "scripts": {
     "build": "react-scripts build",
