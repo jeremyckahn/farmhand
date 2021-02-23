@@ -6,9 +6,9 @@ import { GLOBAL_ROOM_KEY } from './constants'
 
 export const getRedisClient = () =>
   redis.createClient({
-    host: process.env.REDIS_LABS_ENDPOINT,
-    port: process.env.REDIS_LABS_PORT,
-    password: process.env.REDIS_LABS_PASSWORD,
+    host: process.env.REDIS_ENDPOINT,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASSWORD,
   })
 
 export const getRoomMarketData = async (roomKey, get, set) => {
