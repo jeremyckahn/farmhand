@@ -1,6 +1,11 @@
+// Dependencies required by ./utils (see below) need to be explicitly required
+// here to ensure that that they are included in serverless builds. Do NOT
+// remove them unless they are not needed by any upstream modules.
 require('redis')
 require('../src/common/utils')
 require('./constants')
+// End explicit requires for serverless builds
+
 const { promisify } = require('util')
 
 const { getRedisClient, getRoomMarketData, getRoomName } = require('./utils')
