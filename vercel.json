@@ -1,14 +1,4 @@
 {
-  "routes": [
-    {
-      "src": "/api/get-market-data",
-      "methods": ["GET"],
-      "dest": "/api/get-market-data.js"
-    },
-    {
-      "src": "/api/post-day-results",
-      "methods": ["POST"],
-      "dest": "/api/post-day-results.js"
-    }
-  ]
+  "name": "farmhand",
+  "version": 2
 }
