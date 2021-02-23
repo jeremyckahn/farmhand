@@ -39,6 +39,7 @@ import {
   nullArray,
   reduceByPersistedKeys,
 } from './utils'
+import { getData, postData } from './fetch-utils'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
 import {
@@ -236,6 +237,9 @@ export default class Farmhand extends Component {
     this.initInputHandlers()
     this.initReducers()
   }
+
+  getData = getData
+  postData = postData
 
   get viewTitle() {
     return STAGE_TITLE_MAP[this.state.stageFocus]

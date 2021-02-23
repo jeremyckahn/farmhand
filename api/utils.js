@@ -36,4 +36,5 @@ export const getRoomMarketData = async (roomKey, get, set) => {
   return valueAdjustments
 }
 
-export const getRoomName = req => `room-${req.query.room || GLOBAL_ROOM_KEY}`
+export const getRoomName = req =>
+  `room-${req.query?.room || req.body?.room || GLOBAL_ROOM_KEY}`
