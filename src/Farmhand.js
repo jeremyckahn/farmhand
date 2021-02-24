@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
 import localforage from 'localforage'
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -601,12 +602,10 @@ export default class Farmhand extends Component {
     })
   }
 
-  render() {
+  renderCore({ match }) {
     const {
       fieldToolInventory,
       handlers,
-      keyHandlers,
-      keyMap,
       levelEntitlements,
       plantableCropInventory,
       playerInventory,
@@ -631,110 +630,161 @@ export default class Farmhand extends Component {
     }
 
     return (
-      <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
-        <MuiThemeProvider theme={theme}>
-          <FarmhandContext.Provider value={{ gameState, handlers }}>
-            <div
-              {...{
-                className: classNames('Farmhand fill', {
-                  'use-alternate-end-day-button-position': this.state
-                    .useAlternateEndDayButtonPosition,
-                }),
-              }}
-            >
-              <AppBar />
-              <Drawer
-                {...{
-                  className: 'sidebar-wrapper',
-                  open: gameState.isMenuOpen,
-                  variant: 'persistent',
-                  PaperProps: {
-                    className: 'sidebar',
-                  },
-                }}
-              >
-                <Navigation />
-                <ContextPane />
-                {process.env.NODE_ENV === 'development' && <DebugMenu />}
-                <div {...{ className: 'spacer' }} />
-              </Drawer>
-              <Stage />
+      <div
+        {...{
+          className: classNames('Farmhand fill', {
+            'use-alternate-end-day-button-position': this.state
+              .useAlternateEndDayButtonPosition,
+          }),
+        }}
+      >
+        <AppBar />
+        <Drawer
+          {...{
+            className: 'sidebar-wrapper',
+            open: gameState.isMenuOpen,
+            variant: 'persistent',
+            PaperProps: {
+              className: 'sidebar',
+            },
+          }}
+        >
+          <Navigation />
+          <ContextPane />
+          {process.env.NODE_ENV === 'development' && <DebugMenu />}
+          <div {...{ className: 'spacer' }} />
+        </Drawer>
+        <Stage />
 
-              {/*
+        {/*
               These controls need to be at this top level instead of the Stage
               because of scrolling issues in iOS.
               */}
-              <div className="bottom-controls">
-                <MobileStepper
-                  variant="dots"
-                  steps={viewList.length}
-                  position="static"
-                  activeStep={viewList.indexOf(this.state.stageFocus)}
-                  className=""
-                />
-                <div className="fab-buttons buttons">
-                  <Fab
-                    {...{
-                      'aria-label': 'Previous view',
-                      color: 'primary',
-                      onClick: () => this.focusPreviousView(),
-                    }}
-                  >
-                    <KeyboardArrowLeft />
-                  </Fab>
-                  <Fab
-                    {...{
-                      className: classNames('menu-button', {
-                        'is-open': this.state.isMenuOpen,
-                      }),
-                      color: 'primary',
-                      'aria-label': 'Open drawer',
-                      onClick: () => handlers.handleMenuToggle(),
-                    }}
-                  >
-                    <MenuIcon />
-                  </Fab>
-                  <Fab
-                    {...{
-                      'aria-label': 'Next view',
-                      color: 'primary',
-                      onClick: () => this.focusNextView(),
-                    }}
-                  >
-                    <KeyboardArrowRight />
-                  </Fab>
-                </div>
-              </div>
-              <Tooltip
-                {...{
-                  placement: 'left',
-                  title: (
-                    <>
-                      <p>
-                        End the day to save your progress and advance the game.
-                      </p>
-                      <p>(shift + c)</p>
-                    </>
-                  ),
-                }}
-              >
-                <Fab
+        <div className="bottom-controls">
+          <MobileStepper
+            variant="dots"
+            steps={viewList.length}
+            position="static"
+            activeStep={viewList.indexOf(this.state.stageFocus)}
+            className=""
+          />
+          <div className="fab-buttons buttons">
+            <Fab
+              {...{
+                'aria-label': 'Previous view',
+                color: 'primary',
+                onClick: () => this.focusPreviousView(),
+              }}
+            >
+              <KeyboardArrowLeft />
+            </Fab>
+            <Fab
+              {...{
+                className: classNames('menu-button', {
+                  'is-open': this.state.isMenuOpen,
+                }),
+                color: 'primary',
+                'aria-label': 'Open drawer',
+                onClick: () => handlers.handleMenuToggle(),
+              }}
+            >
+              <MenuIcon />
+            </Fab>
+            <Fab
+              {...{
+                'aria-label': 'Next view',
+                color: 'primary',
+                onClick: () => this.focusNextView(),
+              }}
+            >
+              <KeyboardArrowRight />
+            </Fab>
+          </div>
+        </div>
+        <Tooltip
+          {...{
+            placement: 'left',
+            title: (
+              <>
+                <p>End the day to save your progress and advance the game.</p>
+                <p>(shift + c)</p>
+              </>
+            ),
+          }}
+        >
+          <Fab
+            {...{
+              'aria-label':
+                'End the day to save your progress and advance the game.',
+              className: 'end-day',
+              color: 'secondary',
+              onClick: handlers.handleClickEndDayButton,
+            }}
+          >
+            <HotelIcon />
+          </Fab>
+        </Tooltip>
+      </div>
+    )
+  }
+
+  render() {
+    const {
+      fieldToolInventory,
+      handlers,
+      keyHandlers,
+      keyMap,
+      levelEntitlements,
+      plantableCropInventory,
+      playerInventory,
+      playerInventoryQuantities,
+      shopInventory,
+      viewList,
+      viewTitle,
+    } = this
+
+    const gameState = {
+      ...this.state,
+      fieldToolInventory,
+      levelEntitlements,
+      plantableCropInventory,
+      playerInventory,
+      playerInventoryQuantities,
+      shopInventory,
+      viewList,
+      viewTitle,
+    }
+
+    return (
+      <Router>
+        <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
+          <MuiThemeProvider theme={theme}>
+            <FarmhandContext.Provider value={{ gameState, handlers }}>
+              <Switch>
+                <Route
                   {...{
-                    'aria-label':
-                      'End the day to save your progress and advance the game.',
-                    className: 'end-day',
-                    color: 'secondary',
-                    onClick: handlers.handleClickEndDayButton,
+                    path: '/online/:room',
+                    render: routeProps => this.renderCore({ ...routeProps }),
                   }}
-                >
-                  <HotelIcon />
-                </Fab>
-              </Tooltip>
-            </div>
-            <NotificationSystem />
-          </FarmhandContext.Provider>
-        </MuiThemeProvider>
-      </GlobalHotKeys>
+                />
+                <Route
+                  {...{
+                    path: '/online',
+                    render: routeProps => this.renderCore({ ...routeProps }),
+                  }}
+                />
+                <Route
+                  {...{
+                    path: '/',
+                    render: routeProps => this.renderCore({ ...routeProps }),
+                  }}
+                />
+              </Switch>
+              <NotificationSystem />
+            </FarmhandContext.Provider>
+          </MuiThemeProvider>
+        </GlobalHotKeys>
+      </Router>
     )
   }
 }
