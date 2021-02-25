@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
 import localforage from 'localforage'
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -133,6 +132,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {Object} itemsSold Keys are items IDs, values are the number of
  * that item sold.
  * @property {boolean} isDialogViewOpen
+ * @property {boolean} isOnline Whether the player is playing online.
  * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
  * @property {number} loanBalance
  * @property {number} loansTakenOut
@@ -154,6 +154,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} recordSingleDayProfit
  * @property {number} revenue The amount of money the player has generated in
  * revenue.
+ * @property {string} room What online room the player is in.
  * @property {boolean} doShowNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Array.<farmhand.notification>} todaysPastNotifications
@@ -203,6 +204,7 @@ export default class Farmhand extends Component {
     isMenuOpen: !doesMenuObstructStage(),
     itemsSold: {},
     isDialogViewOpen: false,
+    isOnline: this.props.match.path.startsWith('/online'),
     learnedRecipes: {},
     loanBalance: STANDARD_LOAN_AMOUNT,
     loansTakenOut: 1,
@@ -220,6 +222,7 @@ export default class Farmhand extends Component {
     recordProfitabilityStreak: 0,
     recordSingleDayProfit: 0,
     revenue: 0,
+    room: this.props.match.params.room || '',
     purchasedCowPen: 0,
     purchasedField: 0,
     doShowNotifications: false,
@@ -634,133 +637,110 @@ export default class Farmhand extends Component {
     }
 
     return (
-      <Router>
-        <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
-          <MuiThemeProvider theme={theme}>
-            <FarmhandContext.Provider value={{ gameState, handlers }}>
-              <div
+      <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
+        <MuiThemeProvider theme={theme}>
+          <FarmhandContext.Provider value={{ gameState, handlers }}>
+            <div
+              {...{
+                className: classNames('Farmhand fill', {
+                  'use-alternate-end-day-button-position': this.state
+                    .useAlternateEndDayButtonPosition,
+                }),
+              }}
+            >
+              <AppBar />
+              <Drawer
                 {...{
-                  className: classNames('Farmhand fill', {
-                    'use-alternate-end-day-button-position': this.state
-                      .useAlternateEndDayButtonPosition,
-                  }),
+                  className: 'sidebar-wrapper',
+                  open: gameState.isMenuOpen,
+                  variant: 'persistent',
+                  PaperProps: {
+                    className: 'sidebar',
+                  },
                 }}
               >
-                <AppBar />
-                <Drawer
-                  {...{
-                    className: 'sidebar-wrapper',
-                    open: gameState.isMenuOpen,
-                    variant: 'persistent',
-                    PaperProps: {
-                      className: 'sidebar',
-                    },
-                  }}
-                >
-                  <Navigation />
-                  <ContextPane />
-                  {process.env.NODE_ENV === 'development' && <DebugMenu />}
-                  <div {...{ className: 'spacer' }} />
-                </Drawer>
-                <Stage />
+                <Navigation />
+                <ContextPane />
+                {process.env.NODE_ENV === 'development' && <DebugMenu />}
+                <div {...{ className: 'spacer' }} />
+              </Drawer>
+              <Stage />
 
-                {/*
+              {/*
               These controls need to be at this top level instead of the Stage
               because of scrolling issues in iOS.
               */}
-                <div className="bottom-controls">
-                  <MobileStepper
-                    variant="dots"
-                    steps={viewList.length}
-                    position="static"
-                    activeStep={viewList.indexOf(this.state.stageFocus)}
-                    className=""
-                  />
-                  <div className="fab-buttons buttons">
-                    <Fab
-                      {...{
-                        'aria-label': 'Previous view',
-                        color: 'primary',
-                        onClick: () => this.focusPreviousView(),
-                      }}
-                    >
-                      <KeyboardArrowLeft />
-                    </Fab>
-                    <Fab
-                      {...{
-                        className: classNames('menu-button', {
-                          'is-open': this.state.isMenuOpen,
-                        }),
-                        color: 'primary',
-                        'aria-label': 'Open drawer',
-                        onClick: () => handlers.handleMenuToggle(),
-                      }}
-                    >
-                      <MenuIcon />
-                    </Fab>
-                    <Fab
-                      {...{
-                        'aria-label': 'Next view',
-                        color: 'primary',
-                        onClick: () => this.focusNextView(),
-                      }}
-                    >
-                      <KeyboardArrowRight />
-                    </Fab>
-                  </div>
-                </div>
-                <Tooltip
-                  {...{
-                    placement: 'left',
-                    title: (
-                      <>
-                        <p>
-                          End the day to save your progress and advance the
-                          game.
-                        </p>
-                        <p>(shift + c)</p>
-                      </>
-                    ),
-                  }}
-                >
+              <div className="bottom-controls">
+                <MobileStepper
+                  variant="dots"
+                  steps={viewList.length}
+                  position="static"
+                  activeStep={viewList.indexOf(this.state.stageFocus)}
+                  className=""
+                />
+                <div className="fab-buttons buttons">
                   <Fab
                     {...{
-                      'aria-label':
-                        'End the day to save your progress and advance the game.',
-                      className: 'end-day',
-                      color: 'secondary',
-                      onClick: handlers.handleClickEndDayButton,
+                      'aria-label': 'Previous view',
+                      color: 'primary',
+                      onClick: () => this.focusPreviousView(),
                     }}
                   >
-                    <HotelIcon />
+                    <KeyboardArrowLeft />
                   </Fab>
-                </Tooltip>
+                  <Fab
+                    {...{
+                      className: classNames('menu-button', {
+                        'is-open': this.state.isMenuOpen,
+                      }),
+                      color: 'primary',
+                      'aria-label': 'Open drawer',
+                      onClick: () => handlers.handleMenuToggle(),
+                    }}
+                  >
+                    <MenuIcon />
+                  </Fab>
+                  <Fab
+                    {...{
+                      'aria-label': 'Next view',
+                      color: 'primary',
+                      onClick: () => this.focusNextView(),
+                    }}
+                  >
+                    <KeyboardArrowRight />
+                  </Fab>
+                </div>
               </div>
-              <Switch>
-                <Route
+              <Tooltip
+                {...{
+                  placement: 'left',
+                  title: (
+                    <>
+                      <p>
+                        End the day to save your progress and advance the game.
+                      </p>
+                      <p>(shift + c)</p>
+                    </>
+                  ),
+                }}
+              >
+                <Fab
                   {...{
-                    path: '/online/:room',
-                    render: routeProps => this.setRouteState({ ...routeProps }),
+                    'aria-label':
+                      'End the day to save your progress and advance the game.',
+                    className: 'end-day',
+                    color: 'secondary',
+                    onClick: handlers.handleClickEndDayButton,
                   }}
-                />
-                <Route
-                  {...{
-                    path: '/online',
-                    render: routeProps => this.setRouteState({ ...routeProps }),
-                  }}
-                />
-                <Route
-                  {...{
-                    path: '/',
-                    render: routeProps => this.setRouteState({ ...routeProps }),
-                  }}
-                />
-              </Switch>
-              <NotificationSystem />
-            </FarmhandContext.Provider>
-          </MuiThemeProvider>
-        </GlobalHotKeys>
-      </Router>
+                >
+                  <HotelIcon />
+                </Fab>
+              </Tooltip>
+            </div>
+            <NotificationSystem />
+          </FarmhandContext.Provider>
+        </MuiThemeProvider>
+      </GlobalHotKeys>
     )
   }
 }

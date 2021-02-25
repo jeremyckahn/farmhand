@@ -149,6 +149,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import window from 'global/window'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import './index.sass'
@@ -156,6 +157,13 @@ import Farmhand from './Farmhand'
 import 'typeface-francois-one'
 import 'typeface-public-sans'
 
-window.farmhand = ReactDOM.render(<Farmhand />, document.getElementById('root'))
+window.farmhand = ReactDOM.render(
+  <Router>
+    <Route
+      {...{ path: ['/online/:room', '/online', '/'], component: Farmhand }}
+    />
+  </Router>,
+  document.getElementById('root')
+)
 
 serviceWorkerRegistration.register()
