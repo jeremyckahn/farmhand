@@ -60,7 +60,7 @@ const stubLocalforage = () => {
 
 beforeEach(() => {
   stubLocalforage()
-  component = shallow(<Farmhand />)
+  component = shallow(<Farmhand {...{ match: { path: '', params: {} } }} />)
 })
 
 describe('private helpers', () => {
@@ -209,7 +209,9 @@ describe('instance methods', () => {
           setItem: data => Promise.resolve(data),
         })
 
-        component = shallow(<Farmhand />)
+        component = shallow(
+          <Farmhand {...{ match: { path: '', params: {} } }} />
+        )
 
         jest.spyOn(component.instance(), 'incrementDay')
         jest.spyOn(component.instance(), 'showNotification')

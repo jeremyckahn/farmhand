@@ -52,8 +52,10 @@ import { COW_PEN_PURCHASED, LOAN_INCREASED, RECIPE_LEARNED } from './templates'
 import {
   DATA_DELETED,
   PROGRESS_SAVED_MESSAGE,
+  SERVER_ERROR,
   UPDATE_AVAILABLE,
 } from './strings'
+import { endpoints } from './config'
 
 const { CLEANUP, HARVEST, OBSERVE, WATER } = fieldMode
 
@@ -222,7 +224,7 @@ export default class Farmhand extends Component {
     recordProfitabilityStreak: 0,
     recordSingleDayProfit: 0,
     revenue: 0,
-    room: this.props.match.params.room || '',
+    room: this.props.match.params.room || 'global',
     purchasedCowPen: 0,
     purchasedField: 0,
     doShowNotifications: false,
@@ -519,9 +521,32 @@ export default class Farmhand extends Component {
   /*!
    * @param {boolean} [isFirstDay=false]
    */
-  incrementDay(isFirstDay = false) {
+  async incrementDay(isFirstDay = false) {
+    const { isOnline, room } = this.state
     const nextDayState = reducers.computeStateForNextDay(this.state, isFirstDay)
-    const pendingNotifications = [...nextDayState.newDayNotifications]
+    const serverMessages = []
+
+    if (isOnline) {
+      try {
+        const { valueAdjustments } = await getData(endpoints.getMarketData, {
+          room,
+        })
+
+        nextDayState.valueAdjustments = valueAdjustments
+      } catch (e) {
+        serverMessages.push({
+          message: SERVER_ERROR,
+          severity: 'error',
+        })
+
+        console.error(e)
+      }
+    }
+
+    const pendingNotifications = [
+      ...serverMessages,
+      ...nextDayState.newDayNotifications,
+    ]
 
     // This would be cleaner if setState was called after localForage.setItem,
     // but updating the state first makes for a more responsive user
