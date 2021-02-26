@@ -367,6 +367,22 @@ describe('updateFinancialRecords', () => {
   })
 })
 
+describe('updateInventoryRecordsForNextDay', () => {
+  test('records inventory records for next day', () => {
+    const { todaysStartingInventory } = fn.updateInventoryRecordsForNextDay({
+      inventory: [
+        { id: 'sample-item-1', quantity: 2 },
+        { id: 'sample-item-2', quantity: 5 },
+      ],
+    })
+
+    expect(todaysStartingInventory).toEqual({
+      'sample-item-1': 2,
+      'sample-item-2': 5,
+    })
+  })
+})
+
 describe('applyLoanInterest', () => {
   test('applies loan interest', () => {
     expect(

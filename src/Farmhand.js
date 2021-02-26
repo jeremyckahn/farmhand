@@ -162,10 +162,13 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {Array.<farmhand.notification>} todaysPastNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {number} todaysRevenue Should always be a positive number.
+ * @property {Object} todaysStartingInventory Keys are item names, values are
+ * their respective quantities.
  * @property {boolean} useAlternateEndDayButtonPosition Option to display the
  * Bed button on the left side of the screen.
  * @property {Object.<number>} valueAdjustments
- * @property {string} version Comes from the `version` property in package.json.
+ * @property {string} version Comes from the `version` property in
+ * package.json.
  */
 
 export default class Farmhand extends Component {
@@ -232,6 +235,7 @@ export default class Farmhand extends Component {
     todaysPastNotifications: [],
     todaysLosses: 0,
     todaysRevenue: 0,
+    todaysStartingInventory: {},
     useAlternateEndDayButtonPosition: false,
     valueAdjustments: {},
     version: process.env.REACT_APP_VERSION,

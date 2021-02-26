@@ -880,6 +880,18 @@ export const updateFinancialRecords = state => {
   }
 }
 
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const updateInventoryRecordsForNextDay = state => ({
+  ...state,
+  todaysStartingInventory: state.inventory.reduce((acc, { id, quantity }) => {
+    acc[id] = quantity
+    return acc
+  }, {}),
+})
+
 export const applyLoanInterest = state => {
   const loanBalance = moneyTotal(
     state.loanBalance,
@@ -923,6 +935,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
         processMilkingCows,
         updatePriceEvents,
         updateFinancialRecords,
+        updateInventoryRecordsForNextDay,
         generatePriceEvents,
         applyLoanInterest,
         rotateNotificationLogs,
