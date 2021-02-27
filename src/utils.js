@@ -817,3 +817,26 @@ export const getProfitRecord = (
   todaysRevenue,
   todaysLosses
 ) => Math.max(recordSingleDayProfit, getProfit(todaysRevenue, todaysLosses))
+
+/**
+ * @param {Object} todaysStartingInventory
+ * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
+ * @return {Object} Keys are item IDs, values are either 1 or -1.
+ */
+export const computeMarketPositions = (todaysStartingInventory, inventory) =>
+  inventory.reduce((acc, { id, quantity }) => {
+    const startingInventoryForItem = todaysStartingInventory[id]
+    const hadStartingInventory = typeof startingInventoryForItem === 'number'
+
+    if (hadStartingInventory) {
+      if (startingInventoryForItem !== quantity) {
+        acc[id] = startingInventoryForItem > quantity ? -1 : 1
+      }
+    } else {
+      if (quantity > 0) {
+        acc[id] = 1
+      }
+    }
+
+    return acc
+  }, {})

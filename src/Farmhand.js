@@ -27,6 +27,7 @@ import NotificationSystem from './components/NotificationSystem'
 import DebugMenu from './components/DebugMenu'
 import theme from './mui-theme'
 import {
+  computeMarketPositions,
   createNewField,
   doesMenuObstructStage,
   farmProductsSold,
@@ -62,7 +63,7 @@ const { CLEANUP, HARVEST, OBSERVE, WATER } = fieldMode
 const itemIds = Object.freeze(Object.keys(itemsMap))
 
 /*!
- * @param {Array.<{ item: farmhand.item, quantity: number }>} inventory
+ * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
  * @param {Object.<number>} valueAdjustments
  * @returns {Array.<farmhand.item>}
  */
@@ -75,8 +76,8 @@ export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
 )
 
 /*!
- * @param {Array.<{ item: farmhand.item }>} inventory
- * @returns {Array.<{ item: farmhand.item }>}
+ * @param {Array.<{ id: farmhand.item }>} inventory
+ * @returns {Array.<{ id: farmhand.item }>}
  */
 export const getFieldToolInventory = memoize(inventory =>
   inventory
@@ -92,8 +93,8 @@ export const getFieldToolInventory = memoize(inventory =>
 )
 
 /*!
- * @param {Array.<{ item: farmhand.item }>} inventory
- * @returns {Array.<{ item: farmhand.item }>}
+ * @param {Array.<{ id: farmhand.item }>} inventory
+ * @returns {Array.<{ id: farmhand.item }>}
  */
 export const getPlantableCropInventory = memoize(inventory =>
   inventory
@@ -128,7 +129,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * historical price data analysis in the future. It is an array for
  * future-facing flexibility.
  * @property {number} hoveredPlotRangeSize
- * @property {Array.<{ item: farmhand.item, quantity: number }>} inventory
+ * @property {Array.<{ id: farmhand.item, quantity: number }>} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
  * @property {boolean} isMenuOpen
  * @property {Object} itemsSold Keys are items IDs, values are the number of
@@ -542,13 +543,14 @@ export default class Farmhand extends Component {
    * @param {boolean} [isFirstDay=false]
    */
   async incrementDay(isFirstDay = false) {
-    const { isOnline, room } = this.state
+    const { inventory, isOnline, room, todaysStartingInventory } = this.state
     const nextDayState = reducers.computeStateForNextDay(this.state, isFirstDay)
     const serverMessages = []
 
     if (isOnline) {
       try {
-        const { valueAdjustments } = await getData(endpoints.getMarketData, {
+        const { valueAdjustments } = await postData(endpoints.postDayResults, {
+          positions: computeMarketPositions(todaysStartingInventory, inventory),
           room,
         })
 

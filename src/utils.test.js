@@ -1,6 +1,7 @@
 import {
   canMakeRecipe,
   castToMoney,
+  computeMarketPositions,
   chooseRandom,
   dollarString,
   farmProductSalesVolumeNeededForLevel,
@@ -762,5 +763,25 @@ describe('get7DayAverage', () => {
     expect(get7DayAverage([-1, -1, -1, -1, -1, -1, -1])).toBe(-1)
     expect(get7DayAverage([1, 1, 1, 1, 1, 1, 1])).toBe(1)
     expect(get7DayAverage([1, 2, 3, 4, 5, 6, 7])).toBe(4)
+  })
+})
+
+describe('computeMarketPositions', () => {
+  test('computes day positions', () => {
+    expect(
+      computeMarketPositions(
+        { 'sample-item-1': 10, 'sample-item-2': 5, 'sample-item-3': 0 },
+        [
+          { id: 'sample-item-1', quantity: 5 },
+          { id: 'sample-item-2', quantity: 10 },
+          { id: 'sample-item-3', quantity: 0 },
+          { id: 'sample-item-4', quantity: 10 },
+        ]
+      )
+    ).toEqual({
+      'sample-item-1': -1,
+      'sample-item-2': 1,
+      'sample-item-4': 1,
+    })
   })
 })
