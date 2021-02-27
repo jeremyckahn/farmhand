@@ -49,7 +49,12 @@ import {
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
 } from './constants'
-import { COW_PEN_PURCHASED, LOAN_INCREASED, RECIPE_LEARNED } from './templates'
+import {
+  CONNECTED_TO_ROOM,
+  COW_PEN_PURCHASED,
+  LOAN_INCREASED,
+  RECIPE_LEARNED,
+} from './templates'
 import {
   DATA_DELETED,
   PROGRESS_SAVED_MESSAGE,
@@ -428,12 +433,14 @@ export default class Farmhand extends Component {
         this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
       }
 
+      this.syncToRoom()
+
       this.setState({ hasBooted: true })
     })
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { hasBooted, money, stageFocus, isMenuOpen } = this.state
+    const { hasBooted, isMenuOpen, money, room, stageFocus } = this.state
 
     // The operations after this if block concern transient gameplay state, but
     // componentDidUpdate runs as part of the rehydration/bootup process. So,
@@ -447,16 +454,20 @@ export default class Farmhand extends Component {
     const {
       match: {
         path,
-        params: { room },
+        params: { room: newRoom },
       },
     } = prevProps
     const isOnline = path.startsWith('/online')
 
-    if (isOnline !== this.state.isOnline || room !== this.state.room) {
+    if (isOnline !== this.state.isOnline || newRoom !== room) {
       this.setState({
         isOnline,
-        room,
+        room: newRoom,
       })
+    }
+
+    if (room !== prevState.room) {
+      this.syncToRoom()
     }
 
     const updatedAchievementsState = reducers.updateAchievements(
@@ -495,6 +506,32 @@ export default class Farmhand extends Component {
 
   clearPersistedData() {
     this.localforage.clear().then(() => this.showNotification(DATA_DELETED))
+  }
+
+  async syncToRoom() {
+    const { isOnline, room } = this.state
+
+    if (!isOnline || !room) {
+      return
+    }
+
+    try {
+      const { valueAdjustments } = await getData(endpoints.getMarketData, {
+        room: room,
+      })
+
+      this.setState({ valueAdjustments })
+
+      this.showNotification(CONNECTED_TO_ROOM`${room}`, 'success')
+    } catch (e) {
+      // TODO: Add some reasonable fallback behavior in case the server request
+      // fails. Possibility: Regenerate valueAdjustments and notify the user
+      // they are offline.
+
+      this.showNotification(SERVER_ERROR, 'error')
+
+      console.error(e)
+    }
   }
 
   setRouteState({ match }) {}

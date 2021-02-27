@@ -142,3 +142,9 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
 
   return chunks.join(' ')
 }
+
+/**
+ * @param {string} room
+ * @returns {string}
+ */
+export const CONNECTED_TO_ROOM = (_, room) => `Connected to room **${room}**!`
