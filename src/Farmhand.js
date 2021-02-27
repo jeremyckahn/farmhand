@@ -431,7 +431,7 @@ export default class Farmhand extends Component {
     })
   }
 
-  componentDidUpdate(_prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     const { hasBooted, money, stageFocus, isMenuOpen } = this.state
 
     // The operations after this if block concern transient gameplay state, but
@@ -440,6 +440,22 @@ export default class Farmhand extends Component {
     // this transient state.
     if (!hasBooted) {
       return
+    }
+
+    // FIXME: Needs to be properly tested.
+    const {
+      match: {
+        path,
+        params: { room },
+      },
+    } = prevProps
+    const isOnline = path.startsWith('/online')
+
+    if (isOnline !== this.state.isOnline || room !== this.state.room) {
+      this.setState({
+        isOnline,
+        room,
+      })
     }
 
     const updatedAchievementsState = reducers.updateAchievements(
