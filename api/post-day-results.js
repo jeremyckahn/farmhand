@@ -8,7 +8,12 @@ require('./constants')
 
 const { promisify } = require('util')
 
-const { getRedisClient, getRoomMarketData, getRoomName } = require('./utils')
+const {
+  allowCors,
+  getRedisClient,
+  getRoomMarketData,
+  getRoomName,
+} = require('./utils')
 
 const client = getRedisClient()
 
@@ -40,7 +45,7 @@ const applyPositionsToMarket = (valueAdjustments, positions) => {
   )
 }
 
-module.exports = async (req, res) => {
+module.exports = allowCors(async (req, res) => {
   const {
     body: { positions = {} },
   } = req
@@ -55,4 +60,4 @@ module.exports = async (req, res) => {
   set(roomKey, JSON.stringify(updatedValueAdjustments))
 
   res.status(200).json({ valueAdjustments: updatedValueAdjustments })
-}
+})

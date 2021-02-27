@@ -1,4 +1,4 @@
 export const endpoints = {
-  getMarketData: `${process.env.PUBLIC_URL}/api/get-market-data`,
-  postDayResults: `${process.env.PUBLIC_URL}/api/post-day-results`,
+  getMarketData: `${process.env.REACT_APP_API_ROOT}api/get-market-data`,
+  postDayResults: `${process.env.REACT_APP_API_ROOT}api/post-day-results`,
 }
