@@ -158,7 +158,7 @@ import 'typeface-francois-one'
 import 'typeface-public-sans'
 
 window.farmhand = ReactDOM.render(
-  <Router>
+  <Router {...{ basename: process.env.PUBLIC_URL }}>
     <Route
       {...{ path: ['/online/:room', '/online', '/'], component: Farmhand }}
     />
