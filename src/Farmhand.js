@@ -59,6 +59,7 @@ import {
 } from './templates'
 import {
   DATA_DELETED,
+  CONNECTING_TO_SERVER,
   DISCONNECTED_FROM_SERVER,
   PROGRESS_SAVED_MESSAGE,
   SERVER_ERROR,
@@ -469,14 +470,15 @@ export default class Farmhand extends Component {
         params: { room: newRoom = DEFAULT_ROOM },
       },
     } = prevProps
+
     const newIsOnline = path.startsWith('/online')
 
     if (newIsOnline !== this.state.isOnline || newRoom !== room) {
-      this.setState({
+      this.setState(() => ({
         isOnline: newIsOnline,
         redirect: '',
         room: newRoom,
-      })
+      }))
     }
 
     if (isOnline !== prevState.isOnline || room !== prevState.room) {
@@ -532,6 +534,8 @@ export default class Farmhand extends Component {
       return
     }
 
+    this.showNotification(CONNECTING_TO_SERVER, 'info')
+
     try {
       this.setState({ isAwaitingNetworkRequest: true })
 
@@ -554,8 +558,6 @@ export default class Farmhand extends Component {
 
     this.setState({ isAwaitingNetworkRequest: false })
   }
-
-  setRouteState({ match }) {}
 
   /*!
    * @param {farmhand.state} prevState

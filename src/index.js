@@ -162,6 +162,7 @@ window.farmhand = ReactDOM.render(
     {...{
       basename:
         process.env.NODE_ENV === 'development' ? '/' : process.env.PUBLIC_URL,
+      hashType: 'noslash',
     }}
   >
     <Route

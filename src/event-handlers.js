@@ -16,7 +16,11 @@ import {
 } from './utils'
 import { SPRINKLER_ITEM_ID } from './constants'
 import { dialogView, fieldMode } from './enums'
-import { INVALID_DATA_PROVIDED, PROGRESS_SAVED_MESSAGE } from './strings'
+import {
+  DISCONNECTING_FROM_SERVER,
+  INVALID_DATA_PROVIDED,
+  PROGRESS_SAVED_MESSAGE,
+} from './strings'
 
 const {
   CLEANUP,
@@ -375,6 +379,10 @@ export default {
   },
 
   handleOnlineToggleChange(_e, goOnline) {
-    this.setState({ redirect: goOnline ? '/online' : '/' })
+    if (!goOnline) {
+      this.showNotification(DISCONNECTING_FROM_SERVER, 'info')
+    }
+
+    this.setState(() => ({ redirect: goOnline ? '/online' : '/' }))
   },
 }
