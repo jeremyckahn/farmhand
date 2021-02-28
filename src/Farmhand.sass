@@ -14,6 +14,12 @@ body
   position: fixed
   touch-action: manipulation
 
+  &.block-input
+    button,
+    input
+      filter: contrast(65%)
+      pointer-events: none
+
   // The Dialog root component also gets an explicit Farmhand class and needs
   // some styles tweaked just for it.
   &.MuiDialog-root

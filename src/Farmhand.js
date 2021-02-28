@@ -137,6 +137,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} hoveredPlotRangeSize
  * @property {Array.<{ id: farmhand.item, quantity: number }>} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
+ * @property {boolean} isAwaitingNetworkRequest
  * @property {boolean} isMenuOpen
  * @property {Object} itemsSold Keys are items IDs, values are the number of
  * that item sold.
@@ -213,6 +214,7 @@ export default class Farmhand extends Component {
     hoveredPlotRangeSize: 0,
     inventory: [],
     inventoryLimit: INITIAL_INVENTORY_LIMIT,
+    isAwaitingNetworkRequest: false,
     isMenuOpen: !doesMenuObstructStage(),
     itemsSold: {},
     isDialogViewOpen: false,
@@ -516,6 +518,8 @@ export default class Farmhand extends Component {
     }
 
     try {
+      this.setState({ isAwaitingNetworkRequest: true })
+
       const { valueAdjustments } = await getData(endpoints.getMarketData, {
         room: room,
       })
@@ -532,6 +536,8 @@ export default class Farmhand extends Component {
 
       console.error(e)
     }
+
+    this.setState({ isAwaitingNetworkRequest: false })
   }
 
   setRouteState({ match }) {}
@@ -586,6 +592,8 @@ export default class Farmhand extends Component {
 
     if (isOnline) {
       try {
+        this.setState({ isAwaitingNetworkRequest: true })
+
         const { valueAdjustments } = await postData(endpoints.postDayResults, {
           positions: computeMarketPositions(todaysStartingInventory, inventory),
           room,
@@ -600,6 +608,8 @@ export default class Farmhand extends Component {
 
         console.error(e)
       }
+
+      this.setState({ isAwaitingNetworkRequest: false })
     }
 
     const pendingNotifications = [
@@ -729,6 +739,7 @@ export default class Farmhand extends Component {
                 className: classNames('Farmhand fill', {
                   'use-alternate-end-day-button-position': this.state
                     .useAlternateEndDayButtonPosition,
+                  'block-input': this.state.isAwaitingNetworkRequest,
                 }),
               }}
             >
