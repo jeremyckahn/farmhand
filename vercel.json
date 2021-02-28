@@ -1,7 +1,5 @@
 {
   "rewrites": [
-    { "source": "/online", "destination": "/" },
-    { "source": "/online/:room", "destination": "/" },
     {
       "source": "/api/get-market-data",
       "destination": "/api/get-market-data.js"

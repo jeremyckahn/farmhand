@@ -149,7 +149,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import window from 'global/window'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import './index.sass'
