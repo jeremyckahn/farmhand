@@ -373,4 +373,8 @@ export default {
   ) {
     this.setState({ useAlternateEndDayButtonPosition })
   },
+
+  handleOnlineToggleChange(_e, goOnline) {
+    this.setState({ redirect: goOnline ? '/online' : '/' })
+  },
 }

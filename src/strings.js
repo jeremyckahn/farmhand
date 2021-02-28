@@ -11,3 +11,4 @@ export const UPDATE_AVAILABLE =
   "A game update is available! Click this message to reload and see what's new."
 export const SERVER_ERROR =
   "There was an issue communicating with the server. You can keep playing offline, and you'll be reconnected as soon as things improve."
+export const DISCONNECTED_FROM_SERVER = 'You are now playing offline.'

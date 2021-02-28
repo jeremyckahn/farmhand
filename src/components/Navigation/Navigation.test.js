@@ -19,11 +19,13 @@ beforeEach(() => {
         handleCloseDialogView: () => {},
         handleDialogViewExited: () => {},
         handleFarmNameUpdate: () => {},
+        handleOnlineToggleChange: () => {},
         handleViewChange: () => {},
         inventory: [],
         inventoryLimit: -1,
         itemsSold: {},
         isDialogViewOpen: false,
+        isOnline: false,
         stageFocus: stageFocusType.FIELD,
         viewList: ['HOME', 'FIELD', 'SHOP', 'WORKSHOP'],
       }}

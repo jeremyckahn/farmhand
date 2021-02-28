@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
 import localforage from 'localforage'
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -58,6 +59,7 @@ import {
 } from './templates'
 import {
   DATA_DELETED,
+  DISCONNECTED_FROM_SERVER,
   PROGRESS_SAVED_MESSAGE,
   SERVER_ERROR,
   UPDATE_AVAILABLE,
@@ -163,7 +165,7 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {number} recordProfitabilityStreak
  * @property {number} recordSingleDayProfit
  * @property {number} revenue The amount of money the player has generated in
- * revenue.
+ * @property {string} redirect Transient value used to drive router redirection.
  * @property {string} room What online room the player is in.
  * @property {boolean} doShowNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
@@ -236,6 +238,7 @@ export default class Farmhand extends Component {
     recordProfitabilityStreak: 0,
     recordSingleDayProfit: 0,
     revenue: 0,
+    redirect: '',
     room: this.props.match.params.room || DEFAULT_ROOM,
     purchasedCowPen: 0,
     purchasedField: 0,
@@ -443,7 +446,14 @@ export default class Farmhand extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { hasBooted, isMenuOpen, money, room, stageFocus } = this.state
+    const {
+      hasBooted,
+      isMenuOpen,
+      isOnline,
+      money,
+      room,
+      stageFocus,
+    } = this.state
 
     // The operations after this if block concern transient gameplay state, but
     // componentDidUpdate runs as part of the rehydration/bootup process. So,
@@ -459,17 +469,22 @@ export default class Farmhand extends Component {
         params: { room: newRoom = DEFAULT_ROOM },
       },
     } = prevProps
-    const isOnline = path.startsWith('/online')
+    const newIsOnline = path.startsWith('/online')
 
-    if (isOnline !== this.state.isOnline || newRoom !== room) {
+    if (newIsOnline !== this.state.isOnline || newRoom !== room) {
       this.setState({
-        isOnline,
+        isOnline: newIsOnline,
+        redirect: '',
         room: newRoom,
       })
     }
 
-    if (room !== prevState.room) {
+    if (isOnline !== prevState.isOnline || room !== prevState.room) {
       this.syncToRoom()
+    }
+
+    if (isOnline === false && prevState.isOnline === true) {
+      this.showNotification(DISCONNECTED_FROM_SERVER, 'info')
     }
 
     const updatedAchievementsState = reducers.updateAchievements(
@@ -513,7 +528,7 @@ export default class Farmhand extends Component {
   async syncToRoom() {
     const { isOnline, room } = this.state
 
-    if (!isOnline || !room) {
+    if (!isOnline) {
       return
     }
 
@@ -703,6 +718,7 @@ export default class Farmhand extends Component {
 
   render() {
     const {
+      state: { redirect },
       fieldToolInventory,
       handlers,
       keyHandlers,
@@ -733,6 +749,7 @@ export default class Farmhand extends Component {
     return (
       <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
         <MuiThemeProvider theme={theme}>
+          {redirect && <Redirect {...{ to: redirect }} />}
           <FarmhandContext.Provider value={{ gameState, handlers }}>
             <div
               {...{

@@ -13,6 +13,10 @@ import HistoryIcon from '@material-ui/icons/History'
 import FlashOnIcon from '@material-ui/icons/FlashOn'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormGroup from '@material-ui/core/FormGroup'
+import Switch from '@material-ui/core/Switch'
 import SettingsIcon from '@material-ui/icons/Settings'
 import Tooltip from '@material-ui/core/Tooltip'
 import TextField from '@material-ui/core/TextField'
@@ -113,11 +117,13 @@ export const Navigation = ({
   handleCloseDialogView,
   handleDialogViewExited,
   handleFarmNameUpdate,
+  handleOnlineToggleChange,
   handleViewChange,
   inventory,
   inventoryLimit,
   itemsSold,
   isDialogViewOpen,
+  isOnline,
   stageFocus,
   viewList,
 
@@ -131,6 +137,21 @@ export const Navigation = ({
     <h2 className="day-count">
       Day {dayCount}, level {integerString(currentLevel)}
     </h2>
+    <FormControl component="fieldset">
+      <FormGroup>
+        <FormControlLabel
+          control={
+            <Switch
+              color="primary"
+              checked={isOnline}
+              onChange={handleOnlineToggleChange}
+              name="use-alternate-end-day-button-position"
+            />
+          }
+          label="Play online"
+        />
+      </FormGroup>
+    </FormControl>
     {inventoryLimit > -1 && (
       <h3
         {...{
@@ -220,11 +241,13 @@ Navigation.propTypes = {
   handleCloseDialogView: func.isRequired,
   handleDialogViewExited: func.isRequired,
   handleFarmNameUpdate: func.isRequired,
+  handleOnlineToggleChange: func.isRequired,
   handleViewChange: func.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
   itemsSold: object.isRequired,
   isDialogViewOpen: bool.isRequired,
+  isOnline: bool.isRequired,
   stageFocus: string.isRequired,
   viewList: array.isRequired,
 }
