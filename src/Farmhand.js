@@ -44,6 +44,7 @@ import { getData, postData } from './fetch-utils'
 import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
 import {
+  DEFAULT_ROOM,
   INITIAL_INVENTORY_LIMIT,
   PURCHASEABLE_COW_PENS,
   STAGE_TITLE_MAP,
@@ -233,7 +234,7 @@ export default class Farmhand extends Component {
     recordProfitabilityStreak: 0,
     recordSingleDayProfit: 0,
     revenue: 0,
-    room: this.props.match.params.room || 'global',
+    room: this.props.match.params.room || DEFAULT_ROOM,
     purchasedCowPen: 0,
     purchasedField: 0,
     doShowNotifications: false,
@@ -450,11 +451,10 @@ export default class Farmhand extends Component {
       return
     }
 
-    // FIXME: Needs to be properly tested.
     const {
       match: {
         path,
-        params: { room: newRoom },
+        params: { room: newRoom = DEFAULT_ROOM },
       },
     } = prevProps
     const isOnline = path.startsWith('/online')

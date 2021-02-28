@@ -143,3 +143,5 @@ export const PERSISTED_STATE_KEYS = [
   'valueAdjustments',
   'version',
 ]
+
+export const DEFAULT_ROOM = 'global'
