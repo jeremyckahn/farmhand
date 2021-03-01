@@ -20,6 +20,7 @@ beforeEach(() => {
         handleDialogViewExited: () => {},
         handleFarmNameUpdate: () => {},
         handleOnlineToggleChange: () => {},
+        handleRoomChange: () => {},
         handleViewChange: () => {},
         inventory: [],
         inventoryLimit: -1,
