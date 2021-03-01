@@ -240,7 +240,7 @@ export default class Farmhand extends Component {
     recordSingleDayProfit: 0,
     revenue: 0,
     redirect: '',
-    room: this.props.match.params.room || DEFAULT_ROOM,
+    room: decodeURIComponent(this.props.match.params.room || DEFAULT_ROOM),
     purchasedCowPen: 0,
     purchasedField: 0,
     doShowNotifications: false,
@@ -471,13 +471,15 @@ export default class Farmhand extends Component {
       },
     } = this.props
 
+    const decodedRoom = decodeURIComponent(newRoom)
+
     const newIsOnline = path.startsWith('/online')
 
-    if (newIsOnline !== this.state.isOnline || newRoom !== room) {
+    if (newIsOnline !== this.state.isOnline || decodedRoom !== room) {
       this.setState(() => ({
         isOnline: newIsOnline,
         redirect: '',
-        room: newRoom,
+        room: decodedRoom,
       }))
     }
 
