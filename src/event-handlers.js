@@ -14,7 +14,7 @@ import {
   moneyTotal,
   reduceByPersistedKeys,
 } from './utils'
-import { SPRINKLER_ITEM_ID } from './constants'
+import { DEFAULT_ROOM, SPRINKLER_ITEM_ID } from './constants'
 import { dialogView, fieldMode } from './enums'
 import {
   DISCONNECTING_FROM_SERVER,
@@ -391,6 +391,8 @@ export default {
   },
 
   handleRoomChange(room) {
-    this.setState(() => ({ redirect: `/online/${encodeURIComponent(room)}` }))
+    this.setState(() => ({
+      redirect: `/online/${encodeURIComponent(room.trim() || DEFAULT_ROOM)}`,
+    }))
   },
 }

@@ -106,6 +106,7 @@ const OnlineControls = ({
           inputProps: {
             maxLength: 25,
           },
+          label: 'Room name',
           onChange: ({ target: { value } }) => {
             setDisplayedRoom(value)
           },
@@ -118,8 +119,8 @@ const OnlineControls = ({
               handleRoomChange(value)
             }
           },
-          placeholder: 'Room name',
           value: displayedRoom,
+          variant: 'outlined',
         }}
       />
     </FormControl>
