@@ -469,7 +469,7 @@ export default class Farmhand extends Component {
         path,
         params: { room: newRoom = room },
       },
-    } = prevProps
+    } = this.props
 
     const newIsOnline = path.startsWith('/online')
 
