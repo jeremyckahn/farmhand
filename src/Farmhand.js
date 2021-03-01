@@ -172,6 +172,8 @@ export const getPlantableCropInventory = memoize(inventory =>
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Array.<farmhand.notification>} todaysPastNotifications
  * @property {number} todaysLosses Should always be a negative number.
+ * @property {Object} todaysPurchases Keys are item names, values are their
+ * respective quantities.
  * @property {number} todaysRevenue Should always be a positive number.
  * @property {Object} todaysStartingInventory Keys are item names, values are
  * their respective quantities.
@@ -247,6 +249,7 @@ export default class Farmhand extends Component {
     stageFocus: stageFocusType.HOME,
     todaysPastNotifications: [],
     todaysLosses: 0,
+    todaysPurchases: {},
     todaysRevenue: 0,
     todaysStartingInventory: {},
     useAlternateEndDayButtonPosition: false,

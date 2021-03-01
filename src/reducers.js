@@ -957,7 +957,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
  * @returns {farmhand.state}
  */
 export const purchaseItem = (state, item, howMany = 1) => {
-  const { money, valueAdjustments } = state
+  const { money, todaysPurchases, valueAdjustments } = state
   const numberOfItemsToAdd = Math.min(howMany, inventorySpaceRemaining(state))
 
   if (numberOfItemsToAdd === 0) {
@@ -975,6 +975,10 @@ export const purchaseItem = (state, item, howMany = 1) => {
     {
       ...state,
       money: moneyTotal(money, -totalValue),
+      todaysPurchases: {
+        ...todaysPurchases,
+        [item.id]: (todaysPurchases[item.id] || 0) + numberOfItemsToAdd,
+      },
     },
     item,
     numberOfItemsToAdd

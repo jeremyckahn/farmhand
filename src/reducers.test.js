@@ -1289,6 +1289,7 @@ describe('purchaseItem', () => {
             inventory: [],
             inventoryLimit: -1,
             money: 0,
+            todaysPurchases: {},
             valueAdjustments: { 'sample-item-1': 1 },
           },
           { id: 'sample-item-1' },
@@ -1306,6 +1307,7 @@ describe('purchaseItem', () => {
             inventory: [],
             inventoryLimit: -1,
             money: 0,
+            todaysPurchases: {},
             valueAdjustments: { 'sample-item-1': 1 },
           },
           { id: 'sample-item-1' },
@@ -1323,6 +1325,7 @@ describe('purchaseItem', () => {
             inventory: [],
             inventoryLimit: -1,
             money: 10,
+            todaysPurchases: {},
             valueAdjustments: { 'sample-item-1': 1 },
           },
           { id: 'sample-item-1' },
@@ -1330,6 +1333,7 @@ describe('purchaseItem', () => {
         )
       ).toMatchObject({
         inventory: [{ id: 'sample-item-1', quantity: 2 }],
+        todaysPurchases: { 'sample-item-1': 2 },
         money: 8,
       })
     })
@@ -1342,6 +1346,7 @@ describe('purchaseItem', () => {
               inventory: [{ id: 'sample-item-1', quantity: 3 }],
               inventoryLimit: 3,
               money: 10,
+              todaysPurchases: {},
               valueAdjustments: { 'sample-item-1': 1 },
             },
             { id: 'sample-item-1' },
@@ -1349,6 +1354,7 @@ describe('purchaseItem', () => {
           )
         ).toMatchObject({
           inventory: [{ id: 'sample-item-1', quantity: 3 }],
+          todaysPurchases: {},
           money: 10,
         })
       })
@@ -1362,6 +1368,7 @@ describe('purchaseItem', () => {
               inventory: [{ id: 'sample-item-1', quantity: 2 }],
               inventoryLimit: 3,
               money: 10,
+              todaysPurchases: {},
               valueAdjustments: { 'sample-item-1': 1 },
             },
             { id: 'sample-item-1' },
@@ -1369,6 +1376,7 @@ describe('purchaseItem', () => {
           )
         ).toMatchObject({
           inventory: [{ id: 'sample-item-1', quantity: 3 }],
+          todaysPurchases: { 'sample-item-1': 1 },
           money: 9,
         })
       })
