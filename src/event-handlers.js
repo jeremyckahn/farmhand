@@ -383,6 +383,14 @@ export default {
       this.showNotification(DISCONNECTING_FROM_SERVER, 'info')
     }
 
-    this.setState(() => ({ redirect: goOnline ? '/online' : '/' }))
+    const { room } = this.state
+
+    this.setState(() => ({
+      redirect: goOnline ? `/online/${encodeURIComponent(room)}` : '/',
+    }))
+  },
+
+  handleRoomChange(room) {
+    this.setState(() => ({ redirect: `/online/${encodeURIComponent(room)}` }))
   },
 }

@@ -71,6 +71,61 @@ const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
   )
 }
 
+const OnlineControls = ({
+  handleOnlineToggleChange,
+  handleRoomChange,
+  isOnline,
+  room,
+}) => {
+  const [displayedRoom, setDisplayedRoom] = useState(room)
+
+  useEffect(() => {
+    setDisplayedRoom(room)
+  }, [room, setDisplayedRoom])
+
+  return (
+    <FormControl
+      {...{ className: 'online-control-container', component: 'fieldset' }}
+    >
+      <FormGroup {...{ className: 'toggle-container' }}>
+        <FormControlLabel
+          control={
+            <Switch
+              color="primary"
+              checked={isOnline}
+              onChange={handleOnlineToggleChange}
+              name="use-alternate-end-day-button-position"
+            />
+          }
+          label="Play online"
+        />
+      </FormGroup>
+      <TextField
+        {...{
+          className: 'room-name',
+          inputProps: {
+            maxLength: 25,
+          },
+          onChange: ({ target: { value } }) => {
+            setDisplayedRoom(value)
+          },
+          onBlur: ({ target: { value } }) => {
+            handleRoomChange(value)
+          },
+          onKeyUp: ({ target: { value }, which }) => {
+            // Enter
+            if (which === 13) {
+              handleRoomChange(value)
+            }
+          },
+          placeholder: 'Room name',
+          value: displayedRoom,
+        }}
+      />
+    </FormControl>
+  )
+}
+
 const {
   FARMERS_LOG,
   PRICE_EVENTS,
@@ -118,12 +173,14 @@ export const Navigation = ({
   handleDialogViewExited,
   handleFarmNameUpdate,
   handleOnlineToggleChange,
+  handleRoomChange,
   handleViewChange,
   inventory,
   inventoryLimit,
   itemsSold,
   isDialogViewOpen,
   isOnline,
+  room,
   stageFocus,
   viewList,
 
@@ -137,21 +194,9 @@ export const Navigation = ({
     <h2 className="day-count">
       Day {dayCount}, level {integerString(currentLevel)}
     </h2>
-    <FormControl component="fieldset">
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              color="primary"
-              checked={isOnline}
-              onChange={handleOnlineToggleChange}
-              name="use-alternate-end-day-button-position"
-            />
-          }
-          label="Play online"
-        />
-      </FormGroup>
-    </FormControl>
+    <OnlineControls
+      {...{ handleOnlineToggleChange, handleRoomChange, isOnline, room }}
+    />
     {inventoryLimit > -1 && (
       <h3
         {...{
@@ -242,6 +287,7 @@ Navigation.propTypes = {
   handleDialogViewExited: func.isRequired,
   handleFarmNameUpdate: func.isRequired,
   handleOnlineToggleChange: func.isRequired,
+  handleRoomChange: func.isRequired,
   handleViewChange: func.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,

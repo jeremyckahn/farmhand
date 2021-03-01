@@ -467,7 +467,7 @@ export default class Farmhand extends Component {
     const {
       match: {
         path,
-        params: { room: newRoom = DEFAULT_ROOM },
+        params: { room: newRoom = room },
       },
     } = prevProps
 
