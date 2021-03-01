@@ -118,6 +118,7 @@ export const PERSISTED_STATE_KEYS = [
   'historicalDailyLosses',
   'historicalDailyRevenue',
   'historicalValueAdjustments',
+  'hoveredPlotRangeSize',
   'inventory',
   'inventoryLimit',
   'itemsSold',
