@@ -608,7 +608,13 @@ export default class Farmhand extends Component {
    * @param {boolean} [isFirstDay=false]
    */
   async incrementDay(isFirstDay = false) {
-    const { inventory, isOnline, room, todaysStartingInventory } = this.state
+    const {
+      inventory,
+      isOnline,
+      room,
+      todaysPurchases,
+      todaysStartingInventory,
+    } = this.state
     const nextDayState = reducers.computeStateForNextDay(this.state, isFirstDay)
     const serverMessages = []
 
@@ -617,7 +623,11 @@ export default class Farmhand extends Component {
         this.setState({ isAwaitingNetworkRequest: true })
 
         const { valueAdjustments } = await postData(endpoints.postDayResults, {
-          positions: computeMarketPositions(todaysStartingInventory, inventory),
+          positions: computeMarketPositions(
+            todaysStartingInventory,
+            todaysPurchases,
+            inventory
+          ),
           room,
         })
 

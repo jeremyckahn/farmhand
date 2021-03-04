@@ -771,6 +771,7 @@ describe('computeMarketPositions', () => {
     expect(
       computeMarketPositions(
         { 'sample-item-1': 10, 'sample-item-2': 5, 'sample-item-3': 0 },
+        {},
         [
           { id: 'sample-item-1', quantity: 5 },
           { id: 'sample-item-2', quantity: 10 },
@@ -782,6 +783,55 @@ describe('computeMarketPositions', () => {
       'sample-item-1': -1,
       'sample-item-2': 1,
       'sample-item-4': 1,
+    })
+
+    expect(
+      computeMarketPositions(
+        {},
+        { 'sample-item-1': 10, 'sample-item-2': 5, 'sample-item-3': 0 },
+        [
+          { id: 'sample-item-1', quantity: 5 },
+          { id: 'sample-item-2', quantity: 10 },
+          { id: 'sample-item-3', quantity: 0 },
+          { id: 'sample-item-4', quantity: 10 },
+        ]
+      )
+    ).toEqual({
+      'sample-item-1': -1,
+      'sample-item-2': 1,
+      'sample-item-4': 1,
+    })
+
+    expect(
+      computeMarketPositions(
+        {
+          'sample-item-1': 5,
+          'sample-item-2': 5,
+          'sample-item-3': 5,
+          'sample-item-4': 0,
+          'sample-item-5': 10,
+        },
+        {
+          'sample-item-1': 10,
+          'sample-item-2': 5,
+          'sample-item-3': 0,
+          'sample-item-4': 5,
+          'sample-item-6': 10,
+        },
+        [
+          { id: 'sample-item-1', quantity: 5 },
+          { id: 'sample-item-2', quantity: 10 },
+          { id: 'sample-item-3', quantity: 0 },
+          { id: 'sample-item-4', quantity: 0 },
+          { id: 'sample-item-5', quantity: 5 },
+          { id: 'sample-item-6', quantity: 5 },
+        ]
+      )
+    ).toEqual({
+      'sample-item-2': 1,
+      'sample-item-3': -1,
+      'sample-item-5': -1,
+      'sample-item-6': -1,
     })
   })
 })

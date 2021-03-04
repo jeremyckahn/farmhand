@@ -820,20 +820,29 @@ export const getProfitRecord = (
 
 /**
  * @param {Object} todaysStartingInventory
+ * @param {Object} todaysPurchases
  * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
  * @return {Object} Keys are item IDs, values are either 1 or -1.
  */
-export const computeMarketPositions = (todaysStartingInventory, inventory) =>
-  inventory.reduce((acc, { id, quantity }) => {
-    const startingInventoryForItem = todaysStartingInventory[id]
-    const hadStartingInventory = typeof startingInventoryForItem === 'number'
+export const computeMarketPositions = (
+  todaysStartingInventory,
+  todaysPurchases,
+  inventory
+) =>
+  inventory.reduce((acc, { id, quantity: endingPosition }) => {
+    const startingInventory = todaysStartingInventory[id] || 0
+    const purchaseQuantity = todaysPurchases[id] || 0
 
-    if (hadStartingInventory) {
-      if (startingInventoryForItem !== quantity) {
-        acc[id] = startingInventoryForItem > quantity ? -1 : 1
-      }
-    } else {
-      if (quantity > 0) {
+    if (startingInventory !== endingPosition) {
+      if (
+        endingPosition < startingInventory ||
+        endingPosition < purchaseQuantity
+      ) {
+        acc[id] = -1
+      } else if (
+        endingPosition > startingInventory ||
+        endingPosition > purchaseQuantity
+      ) {
         acc[id] = 1
       }
     }
