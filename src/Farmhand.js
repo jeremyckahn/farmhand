@@ -636,8 +636,6 @@ export default class Farmhand extends Component {
     const {
       inventory,
       isOnline,
-      priceCrashes,
-      priceSurges,
       room,
       todaysPurchases,
       todaysStartingInventory,
@@ -660,8 +658,8 @@ export default class Farmhand extends Component {
 
         nextDayState.valueAdjustments = applyPriceEvents(
           valueAdjustments,
-          priceCrashes,
-          priceSurges
+          nextDayState.priceCrashes,
+          nextDayState.priceSurges
         )
       } catch (e) {
         serverMessages.push({
