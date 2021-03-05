@@ -112,6 +112,25 @@ export const getPlantableCropInventory = memoize(inventory =>
 )
 
 /**
+ * @param {Object.<number>} valueAdjustments
+ * @param {farmhand.priceEvent} priceCrashes
+ * @param {farmhand.priceEvent} priceSurges
+ * @returns {Object.<number>}
+ */
+const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
+  const patchedValueAdjustments = { ...valueAdjustments }
+
+  Object.keys(priceCrashes).forEach(itemId => {
+    patchedValueAdjustments[itemId] = 0.5
+  })
+  Object.keys(priceSurges).forEach(itemId => {
+    patchedValueAdjustments[itemId] = 1.5
+  })
+
+  return patchedValueAdjustments
+}
+
+/**
  * @typedef farmhand.state
  * @type {Object}
  * @property {farmhand.module:enums.dialogView} currentDialogView
@@ -533,7 +552,7 @@ export default class Farmhand extends Component {
   }
 
   async syncToRoom() {
-    const { isOnline, room } = this.state
+    const { isOnline, priceCrashes, priceSurges, room } = this.state
 
     if (!isOnline) {
       return
@@ -548,7 +567,13 @@ export default class Farmhand extends Component {
         room: room,
       })
 
-      this.setState({ valueAdjustments })
+      this.setState({
+        valueAdjustments: applyPriceEvents(
+          valueAdjustments,
+          priceCrashes,
+          priceSurges
+        ),
+      })
 
       this.showNotification(CONNECTED_TO_ROOM`${room}`, 'success')
     } catch (e) {
@@ -611,6 +636,8 @@ export default class Farmhand extends Component {
     const {
       inventory,
       isOnline,
+      priceCrashes,
+      priceSurges,
       room,
       todaysPurchases,
       todaysStartingInventory,
@@ -631,7 +658,11 @@ export default class Farmhand extends Component {
           room,
         })
 
-        nextDayState.valueAdjustments = valueAdjustments
+        nextDayState.valueAdjustments = applyPriceEvents(
+          valueAdjustments,
+          priceCrashes,
+          priceSurges
+        )
       } catch (e) {
         serverMessages.push({
           message: SERVER_ERROR,
