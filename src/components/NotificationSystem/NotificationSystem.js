@@ -15,7 +15,7 @@ export const NotificationSystem = ({
   notifications,
   doShowNotifications,
 }) => (
-  <div className="NotificationSystem">
+  <div className="NotificationSystem notification-container">
     <Snackbar
       {...{
         anchorOrigin: { vertical: 'top', horizontal: 'right' },

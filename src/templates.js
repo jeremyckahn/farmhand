@@ -148,3 +148,38 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
  * @returns {string}
  */
 export const CONNECTED_TO_ROOM = (_, room) => `Connected to room **${room}**!`
+
+/**
+ * @param {Object} positions
+ * @returns {string}
+ */
+export const POSITIONS_POSTED_NOTIFICATION = (_, positions) => {
+  const positivePositions = []
+  const negativePositions = []
+
+  Object.keys(positions).forEach(itemId =>
+    (positions[itemId] > 0 ? positivePositions : negativePositions).push(itemId)
+  )
+
+  const chunks = []
+
+  if (positivePositions.length) {
+    chunks.push(`You raised the value of:`)
+    positivePositions.forEach(itemId =>
+      chunks.push(`  - ${itemsMap[itemId].name}`)
+    )
+  }
+
+  if (negativePositions.length) {
+    if (positivePositions.length) {
+      chunks.push('') // Adds a necessary linebreak
+    }
+
+    chunks.push(`You lowered the value of:`)
+    negativePositions.forEach(itemId =>
+      chunks.push(`  - ${itemsMap[itemId].name}`)
+    )
+  }
+
+  return chunks.join('\n')
+}

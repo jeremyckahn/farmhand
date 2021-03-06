@@ -230,6 +230,23 @@ body
   .MuiAlert-root
     margin-bottom: 1em
 
+
+  .danger-text
+    color: $error-color
+
+  .MuiTooltip-popper
+    p
+      text-align: center
+
+  .MuiDialog-paper
+    background-image: url('./img/ui/light-blue-stripe-bg.png')
+
+// This needs to be sibling to .Farmhand hand because notifications are
+// rendered both inside and outside of the .Farmhand root.
+.notification-container
+  .MuiAlert-root
+    margin-bottom: 1em
+
     @media (min-width: #{$break-xs}) and (orientation: landscape)
       top: 3.5em
 
@@ -245,6 +262,9 @@ body
       &:last-child
         margin-bottom: 0
 
+    strong
+      font-weight: bold
+
     li
       margin-left: 1em
 
@@ -255,13 +275,3 @@ body
     ol
       li
         list-style: decimal
-
-  .danger-text
-    color: $error-color
-
-  .MuiTooltip-popper
-    p
-      text-align: center
-
-  .MuiDialog-paper
-    background-image: url('./img/ui/light-blue-stripe-bg.png')

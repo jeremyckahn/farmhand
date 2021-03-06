@@ -9,7 +9,7 @@ import FarmhandContext from '../../Farmhand.context'
 import './LogView.sass'
 
 export const LogView = ({ notificationLog, todaysPastNotifications }) => (
-  <div className="LogView">
+  <div className="LogView notification-container">
     <h3>Today</h3>
     <ul>
       {todaysPastNotifications.map(({ message, onClick, severity }) => (

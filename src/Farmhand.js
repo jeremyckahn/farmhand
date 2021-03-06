@@ -55,6 +55,7 @@ import {
   CONNECTED_TO_ROOM,
   COW_PEN_PURCHASED,
   LOAN_INCREASED,
+  POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
 } from './templates'
 import {
@@ -647,12 +648,21 @@ export default class Farmhand extends Component {
       try {
         this.setState({ isAwaitingNetworkRequest: true })
 
+        const positions = computeMarketPositions(
+          todaysStartingInventory,
+          todaysPurchases,
+          inventory
+        )
+
+        if (Object.keys(positions).length) {
+          serverMessages.push({
+            message: POSITIONS_POSTED_NOTIFICATION`${positions}`,
+            severity: 'info',
+          })
+        }
+
         const { valueAdjustments } = await postData(endpoints.postDayResults, {
-          positions: computeMarketPositions(
-            todaysStartingInventory,
-            todaysPurchases,
-            inventory
-          ),
+          positions,
           room,
         })
 
