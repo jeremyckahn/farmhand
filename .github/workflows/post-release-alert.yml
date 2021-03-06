@@ -1,4 +1,4 @@
-name: Post develop commit notification to Discord
+name: Post deployment notification to Discord
 
 # https://github.com/marketplace/actions/actions-for-discord
 # https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#push
@@ -6,7 +6,7 @@ name: Post develop commit notification to Discord
 on:
   push:
     branches:
-      - develop
+      - gh-pages
 
 jobs:
   build:
@@ -18,4 +18,5 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.0
         with:
-          args: 'A new commit has been pushed: {{ EVENT_PAYLOAD.compare }}'
+          args: 'A game update is available! Give it a try: https://jeremyckahn.github.io/farmhand/'
+          # args: 'A new commit has been pushed: {{ EVENT_PAYLOAD.compare }}'
