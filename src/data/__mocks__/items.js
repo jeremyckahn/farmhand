@@ -30,6 +30,27 @@ export const sampleItem3 = testItem({
   value: 3,
 })
 
+export const sampleItem4 = testItem({
+  id: 'sample-item-4',
+  doesPriceFluctuate: true,
+  type: itemType.CROP,
+  value: 4,
+})
+
+export const sampleItem5 = testItem({
+  id: 'sample-item-5',
+  doesPriceFluctuate: true,
+  type: itemType.CROP,
+  value: 5,
+})
+
+export const sampleItem6 = testItem({
+  id: 'sample-item-6',
+  doesPriceFluctuate: true,
+  type: itemType.CROP,
+  value: 6,
+})
+
 export const craftedItem1 = testItem({
   id: 'sample-crafted-item-1',
   name: 'Sample Crafted Item 1',

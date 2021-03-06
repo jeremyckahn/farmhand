@@ -833,6 +833,10 @@ export const computeMarketPositions = (
     const startingInventory = todaysStartingInventory[id] || 0
     const purchaseQuantity = todaysPurchases[id] || 0
 
+    if (!itemsMap[id].doesPriceFluctuate) {
+      return acc
+    }
+
     if (startingInventory !== endingPosition) {
       if (
         endingPosition < startingInventory ||
