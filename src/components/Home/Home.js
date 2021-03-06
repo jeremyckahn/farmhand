@@ -34,6 +34,8 @@ Farmhand is a resource management game that puts a farm in your hand. It is desi
 
 This project has been in development since 2018. **Farmhand will always remain completely free to play**. My intention is to add features and iterate on this game for years to come as I can. If you'd like to support further development, [donations are gratefully accepted](https://github.com/jeremyckahn#please-help-support-my-work)!
 
+Farmhand is developed in a fully transparent way. As much of its development and operation is as publicly accessible as possible, including [API deployment logs](https://farmhand.vercel.app/_logs), [build job logs](https://github.com/jeremyckahn/farmhand/actions), and [deployed static assets](https://github.com/jeremyckahn/farmhand/tree/gh-pages). Your privacy is important, so none of your personal information is collected or transmitted. You're welcome to audit the code, logs, and network requests to verify it for yourself.
+
 If you'd like to follow this project's development, please [join the Discord channel](https://discord.gg/6cHEZ9H), [the subreddit](https://www.reddit.com/r/FarmhandGame/), or check it out on [GitHub](https://github.com/jeremyckahn/farmhand). Happy farming! 🐮
     `,
           }}
