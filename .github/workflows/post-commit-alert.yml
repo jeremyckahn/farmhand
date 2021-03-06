@@ -1,0 +1,21 @@
+name: Post develop commit notification to Discord
+
+# https://github.com/marketplace/actions/actions-for-discord
+# https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#push
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.0
+        with:
+          args: 'A new commit has been pushed: ${{ EVENT_PAYLOAD.compare }}'
