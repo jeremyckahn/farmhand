@@ -48,7 +48,7 @@ If you'd like to follow this project's development, please [join the Discord cha
             className: 'markdown',
             linkTarget: '_blank',
             source: `
-### How to play:
+### How to play
 
 The goal of Farmhand is to make money by buying, growing, harvesting, and then selling crops. Keep an eye on prices though, because they go up and down every day! The best farmers buy seeds for a low price and sell them for a high price.
 
@@ -75,7 +75,33 @@ If you can master the art of the harvest, there's no limit to how profitable you
             className: 'markdown',
             linkTarget: '_blank',
             source: `
-### Installation:
+### Online multiplayer
+
+You can play Farmhand online with others! Online play is totally free, untracked, and anonymous.
+
+To play online, flip the "Play online" toggle in the menu. You'll be connected to the **global** room by default, but you can select another room to play in if you'd like. If you select a room that doesn't exist, it will automatically be created for you. You can then tell others to meet you in that room.
+
+Online play works just like offline play, except that the fluctuating market values are shared among everyone playing in the room with you. Additionally, market values are affected by your choices when you end a farm day:
+
+* Buying seeds or harvesting crops raises their respective values
+
+* Selling items (seeds or harvested crops) or harvest seeds lowers their respective values
+
+You'll see a notification explaining how you affected the market when you end the farm day. Because room market values are shared, **your buy/sell/harvest decisions affect others** when they join the room or end their farm day. Time your actions right to take advantage of market trends and gain the competitive edge over other online farmers!
+    `,
+          }}
+        />
+      </CardContent>
+    </Card>
+    <Divider />
+    <Card>
+      <CardContent>
+        <ReactMarkdown
+          {...{
+            className: 'markdown',
+            linkTarget: '_blank',
+            source: `
+### Installation
 
 If you're playing Farmhand on a mobile device, you can install it as an app right from this website and play it offline! All you need to do is [add it to your home screen](https://www.howtogeek.com/196087/how-to-add-websites-to-the-home-screen-on-any-smartphone-or-tablet/). If you are playing it on desktop Chrome, you can [install it as app there as well](https://twitter.com/jeremyckahn/status/1329266318785253377?s=20).
     `,
@@ -91,9 +117,9 @@ If you're playing Farmhand on a mobile device, you can install it as an app righ
             className: 'markdown',
             linkTarget: '_blank',
             source: `
-### A few other tips:
+### A few other tips
 
-* Press the bed button in the top-right of the screen to end the day and advance the game. This also saves your progress.
+* Press the bed button in the top-right of the screen to end the farm day and advance the game. This also saves your progress.
 
 * Crops need to be watered daily to grow.
 
