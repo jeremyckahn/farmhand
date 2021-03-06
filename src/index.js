@@ -160,8 +160,6 @@ import 'typeface-public-sans'
 window.farmhand = ReactDOM.render(
   <Router
     {...{
-      basename:
-        process.env.NODE_ENV === 'development' ? '/' : process.env.PUBLIC_URL,
       hashType: 'noslash',
     }}
   >
