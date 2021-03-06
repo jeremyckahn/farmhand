@@ -43,15 +43,6 @@ If you'd like to follow this project's development, please [join the Discord cha
     <Divider />
     <Card>
       <CardContent>
-        <Button
-          {...{
-            color: 'primary',
-            onClick: () => handleViewChangeButtonClick(stageFocusType.SHOP),
-            variant: 'contained',
-          }}
-        >
-          Go to the shop
-        </Button>
         <ReactMarkdown
           {...{
             className: 'markdown',
@@ -62,11 +53,44 @@ If you'd like to follow this project's development, please [join the Discord cha
 The goal of Farmhand is to make money by buying, growing, harvesting, and then selling crops. Keep an eye on prices though, because they go up and down every day! The best farmers buy seeds for a low price and sell them for a high price.
 
 If you can master the art of the harvest, there's no limit to how profitable you can become! Every farmer starts with a $${STANDARD_LOAN_AMOUNT} loan from the bank. If you run out of money, you can always take out another loan. Be careful though, because the bank takes a portion of your sales until the debt is repaid. You can access your bank account in the menu.
-
+    `,
+          }}
+        />
+        <Button
+          {...{
+            color: 'primary',
+            onClick: () => handleViewChangeButtonClick(stageFocusType.SHOP),
+            variant: 'contained',
+          }}
+        >
+          Go to the shop
+        </Button>
+      </CardContent>
+    </Card>
+    <Divider />
+    <Card>
+      <CardContent>
+        <ReactMarkdown
+          {...{
+            className: 'markdown',
+            linkTarget: '_blank',
+            source: `
 ### Installation:
 
 If you're playing Farmhand on a mobile device, you can install it as an app right from this website and play it offline! All you need to do is [add it to your home screen](https://www.howtogeek.com/196087/how-to-add-websites-to-the-home-screen-on-any-smartphone-or-tablet/). If you are playing it on desktop Chrome, you can [install it as app there as well](https://twitter.com/jeremyckahn/status/1329266318785253377?s=20).
-
+    `,
+          }}
+        />
+      </CardContent>
+    </Card>
+    <Divider />
+    <Card>
+      <CardContent>
+        <ReactMarkdown
+          {...{
+            className: 'markdown',
+            linkTarget: '_blank',
+            source: `
 ### A few other tips:
 
 * Press the bed button in the top-right of the screen to end the day and advance the game. This also saves your progress.
