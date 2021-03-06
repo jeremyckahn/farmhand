@@ -6,7 +6,7 @@ name: Post deployment notification to Discord
 on:
   push:
     branches:
-      - gh-pages
+      - master
 
 jobs:
   build:
@@ -18,5 +18,5 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.0
         with:
-          args: 'A game update is available! Give it a try: https://jeremyckahn.github.io/farmhand/'
+          args: 'A game update is shipping now! It will be available in a few minutes at: https://jeremyckahn.github.io/farmhand/'
           # args: 'A new commit has been pushed: {{ EVENT_PAYLOAD.compare }}'
