@@ -2,7 +2,7 @@ const redis = require('redis')
 
 const { generateValueAdjustments } = require('../src/common/utils')
 
-const { GLOBAL_ROOM_KEY, WHITELISTED_ORIGINS } = require('./constants')
+const { GLOBAL_ROOM_KEY, ACCEPTED_ORIGINS } = require('./constants')
 
 module.exports.getRedisClient = () => {
   const client = redis.createClient({
@@ -43,9 +43,15 @@ module.exports.getRoomName = req =>
 module.exports.allowCors = fn => async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true)
 
-  const { origin } = req.headers
+  // origin is not defined when the request is from the same domain as the
+  // server (as it is in the local development environment).
+  // https://stackoverflow.com/a/63684532
+  const { origin = '' } = req.headers
 
-  if (WHITELISTED_ORIGINS.has(origin)) {
+  if (
+    ACCEPTED_ORIGINS.has(origin) ||
+    origin.match(/https:\/\/farmhand-.*-jeremyckahn.vercel.app/)
+  ) {
     res.setHeader('Access-Control-Allow-Origin', origin)
   }
 
