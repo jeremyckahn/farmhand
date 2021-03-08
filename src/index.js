@@ -148,7 +148,6 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import window from 'global/window'
 import { HashRouter as Router, Route } from 'react-router-dom'
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
@@ -157,7 +156,7 @@ import Farmhand from './Farmhand'
 import 'typeface-francois-one'
 import 'typeface-public-sans'
 
-window.farmhand = ReactDOM.render(
+ReactDOM.render(
   <Router
     {...{
       hashType: 'noslash',

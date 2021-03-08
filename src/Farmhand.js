@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import window from 'global/window'
 import { Redirect } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
 import localforage from 'localforage'
@@ -282,6 +283,10 @@ export default class Farmhand extends Component {
 
     this.initInputHandlers()
     this.initReducers()
+
+    // This is antipattern, but it's useful for debugging. The Farmhand
+    // component assumes that it is a singleton.
+    window.farmhand = this
   }
 
   getData = getData
