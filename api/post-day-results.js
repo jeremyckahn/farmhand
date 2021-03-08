@@ -35,6 +35,13 @@ const applyPositionsToMarket = (valueAdjustments, positions) => {
         acc[itemName] = Math.min(1.5, acc[itemName] + variance)
       } else if (itemPositionChange < 0) {
         acc[itemName] = Math.max(0.5, acc[itemName] - variance)
+      } else {
+        // itemPositionChange == 0
+        // If item value is maxxed out but was not changed in this operation,
+        // randomize it to introduce some variability to the market.
+        if (acc[itemName] === 1.5) {
+          acc[itemName] = Math.random() + 0.5
+        }
       }
 
       return acc
