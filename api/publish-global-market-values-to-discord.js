@@ -19,9 +19,8 @@ const get = promisify(client.get).bind(client)
 const set = promisify(client.set).bind(client)
 
 module.exports = allowCors(async (req, res) => {
-  const room = 'global'
-  const valueAdjustments = await getRoomMarketData(room, get, set)
-  const content = MARKET_SUMMARY_FOR_DISCORD`${room}${valueAdjustments}`
+  const valueAdjustments = await getRoomMarketData('room-global', get, set)
+  const content = MARKET_SUMMARY_FOR_DISCORD`${'global'}${valueAdjustments}`
   const { status } = await axios.post(
     process.env.DISCORD_GLOBAL_MARKET_VALUES_WEBHOOK,
     { content }
