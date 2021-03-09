@@ -31,16 +31,18 @@ const applyPositionsToMarket = (valueAdjustments, positions) => {
 
       const variance = Math.random() * 0.2
 
+      const MAX = 1.5
+      const MIN = 0.5
+
       if (itemPositionChange > 0) {
-        acc[itemName] = Math.min(1.5, acc[itemName] + variance)
+        acc[itemName] = Math.min(MAX, acc[itemName] + variance)
       } else if (itemPositionChange < 0) {
-        acc[itemName] = Math.max(0.5, acc[itemName] - variance)
-      } else {
-        // itemPositionChange == 0
-        // If item value is maxxed out but was not changed in this operation,
-        // randomize it to introduce some variability to the market.
-        if (acc[itemName] === 1.5) {
-          acc[itemName] = Math.random() + 0.5
+        acc[itemName] = Math.max(MIN, acc[itemName] - variance)
+      } /* itemPositionChange == 0 */ else {
+        // If item value is at a range boundary but was not changed in this
+        // operation, randomize it to introduce some variability to the market.
+        if (acc[itemName] === MAX || acc[itemName] === MIN) {
+          acc[itemName] = Math.random() + MIN
         }
       }
 
