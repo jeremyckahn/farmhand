@@ -8,6 +8,18 @@
   position: fixed
   transform: translateX(-50%)
 
+  @media (min-width: #{$break-sm})
+    &.MuiPaper-root // Specificity is needed for card-style overrides
+      @include card-style
+      bottom: auto
+      left: auto
+      max-width: calc(4em)
+      right: 0.75em
+      top: 9em
+      transform: none
+      max-height: calc(100vh - 20em)
+      overflow: auto
+
   // This specificity is needed to overwrite MUI Paper transition styles.
   &.MuiPaper-root
     transition: max-width $duration-entering-screen $easing-ease-out
@@ -19,6 +31,9 @@
     display: flex
     flex-flow: row
 
+    @media (min-width: #{$break-sm})
+      flex-flow: column
+
   @media (max-width: #{$break-medium-phone})
     bottom: 6em
 
@@ -27,12 +42,17 @@
       display: none
 
   .MuiGrid-root
-    @include card-style
     border-radius: 0.25em
     overflow-x: scroll
     overflow-y: hidden
     padding: .5em
     position: relative
+
+    @media (max-width: #{$break-sm})
+      @include card-style
+
+    @media (min-width: #{$break-sm})
+      flex-direction: column
 
   .Toolbelt
     display: flex
@@ -46,6 +66,11 @@
 
   .MuiDivider-root
     margin: 0 0.5em
+
+    @media (min-width: #{$break-sm})
+      margin: 0 0 1em 0
+      height: 1px
+      width: 100%
 
   .MuiButton-containedPrimary
     background-color: #ffb913
