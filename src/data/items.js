@@ -344,7 +344,10 @@ export const scarecrow = freeze({
   description:
     'Prevents crows from eating your crops. One scarecrow covers an entire field, but they are afraid of storms.',
   enablesFieldMode: fieldMode.SET_SCARECROW,
-  hoveredPlotRangeSize: Infinity,
+  // Note: This needs to be a safe number (rather than Infinity) because it
+  // potentially gets JSON.stringify-ed during data export. Non-safe numbers
+  // get stringify-ed to "null", which breaks reimporting.
+  hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
   id: 'scarecrow',
   isReplantable: true,
   name: 'Scarecrow',
