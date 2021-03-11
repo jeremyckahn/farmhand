@@ -41,6 +41,7 @@ import {
   moneyTotal,
   nullArray,
   reduceByPersistedKeys,
+  sanitizeStateForImport,
 } from './utils'
 import { getData, postData } from './fetch-utils'
 import { itemsMap, recipesMap } from './data/maps'
@@ -455,8 +456,10 @@ export default class Farmhand extends Component {
   componentDidMount() {
     this.localforage.getItem('state').then(state => {
       if (state) {
-        const { newDayNotifications } = state
-        this.setState({ ...state, newDayNotifications: [] }, () => {
+        const sanitizedState = sanitizeStateForImport(state)
+        const { newDayNotifications } = sanitizedState
+
+        this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {
           newDayNotifications.forEach(({ message, severity }) =>
             this.showNotification(message, severity)
           )

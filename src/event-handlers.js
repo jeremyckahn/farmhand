@@ -13,6 +13,7 @@ import {
   levelAchieved,
   moneyTotal,
   reduceByPersistedKeys,
+  sanitizeStateForImport,
 } from './utils'
 import { DEFAULT_ROOM, SPRINKLER_ITEM_ID } from './constants'
 import { dialogView, fieldMode } from './enums'
@@ -348,7 +349,7 @@ export default {
           throw new Error(INVALID_DATA_PROVIDED)
         }
 
-        this.setState(state)
+        this.setState(sanitizeStateForImport(state))
         this.showNotification('Data loaded!', 'success')
       } catch (e) {
         console.error(e)

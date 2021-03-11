@@ -853,3 +853,14 @@ export const computeMarketPositions = (
 
     return acc
   }, {})
+
+/**
+ * @param {Farmhand.state} state
+ * @return {Object}
+ */
+export const sanitizeStateForImport = state => {
+  const sanitizedState = { ...state }
+  ;['version'].forEach(rejectedKey => delete sanitizedState[rejectedKey])
+
+  return sanitizedState
+}
