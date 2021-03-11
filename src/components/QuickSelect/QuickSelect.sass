@@ -14,13 +14,11 @@
       bottom: auto
       left: auto
       max-height: calc(100vh - 20em)
-      max-width: auto
       min-width: 4em
       overflow: auto
       right: 0.75em
       top: 9em
       transform: none
-      width: 4em
 
   // This specificity is needed to overwrite MUI Paper transition styles.
   &.MuiPaper-root
@@ -49,6 +47,14 @@
     overflow-y: hidden
     padding: .5em
     position: relative
+
+    @media (min-width: #{$break-sm})
+      overflow-x: hidden
+
+    > *
+      @media (min-width: #{$break-sm})
+        align-items: center
+        width: 3em
 
     @media (max-width: #{$break-sm})
       @include card-style
