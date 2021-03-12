@@ -3,7 +3,7 @@
 // remove them unless they are not needed by any upstream modules.
 require('redis')
 require('../src/common/utils')
-require('./constants')
+require('../api-etc/constants')
 // End explicit requires for serverless builds
 
 const { promisify } = require('util')
@@ -13,7 +13,7 @@ const {
   getRedisClient,
   getRoomMarketData,
   getRoomName,
-} = require('./utils')
+} = require('../api-etc/utils')
 
 const client = getRedisClient()
 

@@ -3,15 +3,19 @@
 // remove them unless they are not needed by any upstream modules.
 require('redis')
 require('../src/common/utils')
-require('./constants')
+require('../api-etc/constants')
 // End explicit requires for serverless builds
 
 const { promisify } = require('util')
 
 const axios = require('axios')
 
-const { MARKET_SUMMARY_FOR_DISCORD } = require('./templates')
-const { allowCors, getRedisClient, getRoomMarketData } = require('./utils')
+const { MARKET_SUMMARY_FOR_DISCORD } = require('../api-etc/templates')
+const {
+  allowCors,
+  getRedisClient,
+  getRoomMarketData,
+} = require('../api-etc/utils')
 
 const client = getRedisClient()
 
