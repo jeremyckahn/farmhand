@@ -5,6 +5,9 @@ $appBarOffset: 135px
 .Field
   margin: 0 auto
 
+  @media (min-width: #{$break-sm})
+    padding-right: 5em
+
   @media (min-width: #{$break-md})
     &[data-purchased-field="0"]
       max-width: calc(100vh * (6/10) - #{$appBarOffset})
