@@ -108,7 +108,8 @@
     "shifty": "^2.15.2",
     "source-map-explorer": "^2.3.1",
     "typeface-francois-one": "0.0.71",
-    "typeface-public-sans": "^1.1.4"
+    "typeface-public-sans": "^1.1.4",
+    "uuid": "^3.4.0"
   },
   "husky": {
     "hooks": {

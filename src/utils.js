@@ -6,6 +6,7 @@
 import Dinero from 'dinero.js'
 import fastMemoize from 'fast-memoize'
 import sortBy from 'lodash.sortby'
+import { v4 as uuid } from 'uuid'
 
 import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
@@ -70,11 +71,6 @@ const memoizationSerializer = args =>
   JSON.stringify(
     [...args].map(arg => (typeof arg === 'function' ? arg.toString() : arg))
   )
-
-/**
- * @returns {string}
- */
-const createUniqueId = () => btoa(Math.random() + Date.now())
 
 // This is basically the same as fast-memoize's default cache, except that it
 // clears the cache once the size exceeds MEMOIZE_CACHE_CLEAR_THRESHOLD to
@@ -395,7 +391,7 @@ export const generateCow = (options = {}) => {
     gender,
     happiness: 0,
     happinessBoostsToday: 0,
-    id: createUniqueId(),
+    id: uuid(),
     isBred: false,
     isUsingHuggingMachine: false,
     name: chooseRandom(fruitNames),

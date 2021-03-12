@@ -3,6 +3,7 @@ import window from 'global/window'
 import { Redirect } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
 import localforage from 'localforage'
+import { v4 as uuid } from 'uuid'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import Fab from '@material-ui/core/Fab'
@@ -160,6 +161,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * historical price data analysis in the future. It is an array for
  * future-facing flexibility.
  * @property {number} hoveredPlotRangeSize
+ * @property {string} id
  * @property {Array.<{ id: farmhand.item, quantity: number }>} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
  * @property {boolean} isAwaitingNetworkRequest
@@ -239,6 +241,7 @@ export default class Farmhand extends Component {
     historicalDailyRevenue: [],
     historicalValueAdjustments: [],
     hoveredPlotRangeSize: 0,
+    id: uuid(),
     inventory: [],
     inventoryLimit: INITIAL_INVENTORY_LIMIT,
     isAwaitingNetworkRequest: false,
