@@ -26,15 +26,17 @@ module.exports.getRedisClient = () => {
   return client
 }
 
-module.exports.getRoomMarketData = async (roomKey, get, set) => {
-  let valueAdjustments = JSON.parse(await get(roomKey))
+module.exports.getRoomData = async (roomKey, get, set) => {
+  let roomData = JSON.parse(await get(roomKey)) || {}
+  let { valueAdjustments } = roomData
 
-  if (valueAdjustments === null) {
+  if (!valueAdjustments) {
     valueAdjustments = generateValueAdjustments()
-    set(roomKey, JSON.stringify(valueAdjustments))
+    roomData = { activePlayers: {}, valueAdjustments }
+    set(roomKey, JSON.stringify(roomData))
   }
 
-  return valueAdjustments
+  return roomData
 }
 
 module.exports.getRoomName = req =>

@@ -11,7 +11,7 @@ const { promisify } = require('util')
 const {
   allowCors,
   getRedisClient,
-  getRoomMarketData,
+  getRoomData,
   getRoomName,
 } = require('../api-etc/utils')
 
@@ -60,7 +60,7 @@ module.exports = allowCors(async (req, res) => {
   } = req
 
   const roomKey = getRoomName(req)
-  const valueAdjustments = await getRoomMarketData(roomKey, get, set)
+  const { valueAdjustments } = await getRoomData(roomKey, get, set)
   const updatedValueAdjustments = applyPositionsToMarket(
     valueAdjustments,
     positions

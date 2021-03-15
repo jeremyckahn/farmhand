@@ -11,11 +11,7 @@ const { promisify } = require('util')
 const axios = require('axios')
 
 const { MARKET_SUMMARY_FOR_DISCORD } = require('../api-etc/templates')
-const {
-  allowCors,
-  getRedisClient,
-  getRoomMarketData,
-} = require('../api-etc/utils')
+const { allowCors, getRedisClient, getRoomData } = require('../api-etc/utils')
 
 const client = getRedisClient()
 
@@ -23,7 +19,7 @@ const get = promisify(client.get).bind(client)
 const set = promisify(client.set).bind(client)
 
 module.exports = allowCors(async (req, res) => {
-  const valueAdjustments = await getRoomMarketData('room-global', get, set)
+  const { valueAdjustments } = await getRoomData('room-global', get, set)
   const content = MARKET_SUMMARY_FOR_DISCORD`${'global'}${valueAdjustments}`
   const { status } = await axios.post(
     process.env.DISCORD_GLOBAL_MARKET_VALUES_WEBHOOK,
