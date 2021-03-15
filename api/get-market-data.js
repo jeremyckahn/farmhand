@@ -15,6 +15,7 @@ const {
   getRoomData,
   getRoomName,
 } = require('../api-etc/utils')
+const { HEARTBEAT_INTERVAL_PERIOD } = require('../src/common/constants')
 
 const client = getRedisClient()
 
@@ -22,7 +23,35 @@ const get = promisify(client.get).bind(client)
 const set = promisify(client.set).bind(client)
 
 module.exports = allowCors(async (req, res) => {
-  const { valueAdjustments } = await getRoomData(getRoomName(req), get, set)
+  const { farmId = null } = req.query
+  const roomKey = getRoomName(req)
 
-  res.status(200).json({ valueAdjustments })
+  const roomData = await getRoomData(roomKey, get, set)
+  const { activePlayers, valueAdjustments } = roomData
+
+  const now = Date.now()
+
+  if (farmId) {
+    activePlayers[farmId] = now
+  }
+
+  let numberOfActivePlayers = 0
+
+  // Clean up stale activePlayers data
+  Object.keys(activePlayers).forEach(activeFarmId => {
+    const timestamp = activePlayers[activeFarmId]
+    const delta = now - timestamp
+
+    if (delta > HEARTBEAT_INTERVAL_PERIOD) {
+      delete activePlayers[activeFarmId]
+    } else {
+      numberOfActivePlayers++
+    }
+  })
+
+  set(roomKey, JSON.stringify({ ...roomData, activePlayers }))
+
+  res
+    .status(200)
+    .json({ activePlayers: numberOfActivePlayers, valueAdjustments })
 })

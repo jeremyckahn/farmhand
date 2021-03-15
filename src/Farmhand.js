@@ -576,6 +576,7 @@ export default class Farmhand extends Component {
       this.setState({ isAwaitingNetworkRequest: true })
 
       const { valueAdjustments } = await getData(endpoints.getMarketData, {
+        farmId: this.state.id,
         room: room,
       })
 
