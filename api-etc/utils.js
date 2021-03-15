@@ -1,6 +1,7 @@
 const redis = require('redis')
 
 const { generateValueAdjustments } = require('../src/common/utils')
+const { MAX_ROOM_NAME_LENGTH } = require('../src/common/constants')
 
 const { GLOBAL_ROOM_KEY, ACCEPTED_ORIGINS } = require('./constants')
 
@@ -37,7 +38,10 @@ module.exports.getRoomMarketData = async (roomKey, get, set) => {
 }
 
 module.exports.getRoomName = req =>
-  `room-${req.query?.room || req.body?.room || GLOBAL_ROOM_KEY}`
+  `room-${(req.query?.room || req.body?.room || GLOBAL_ROOM_KEY).slice(
+    0,
+    MAX_ROOM_NAME_LENGTH
+  )}`
 
 // https://vercel.com/support/articles/how-to-enable-cors
 module.exports.allowCors = fn => async (req, res) => {

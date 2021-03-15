@@ -32,6 +32,7 @@ import {
 } from '../../utils'
 import { dialogView } from '../../enums'
 import { STAGE_TITLE_MAP } from '../../constants'
+import { MAX_ROOM_NAME_LENGTH } from '../../common/constants'
 
 import LogView from '../LogView'
 import PriceEventView from '../PriceEventView'
@@ -104,7 +105,7 @@ const OnlineControls = ({
         {...{
           className: 'room-name',
           inputProps: {
-            maxLength: 25,
+            maxLength: MAX_ROOM_NAME_LENGTH,
           },
           label: 'Room name',
           onChange: ({ target: { value } }) => {
