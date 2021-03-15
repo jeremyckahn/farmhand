@@ -1,5 +1,6 @@
 import { shapeOf, testCrop, testItem } from './test-utils'
 import {
+  OUT_OF_COW_FEED_NOTIFICATION,
   RAIN_MESSAGE,
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
@@ -561,14 +562,22 @@ describe('processFeedingCows', () => {
   describe('player has no cow feed', () => {
     beforeEach(() => {
       state.cowInventory = [generateCow({ weightMultiplier: 1 })]
+      state.newDayNotifications = []
     })
 
     test('cows weight goes down', () => {
       const {
         cowInventory: [{ weightMultiplier }],
+        newDayNotifications,
       } = fn.processFeedingCows(state)
 
       expect(weightMultiplier).toEqual(1 - COW_WEIGHT_MULTIPLIER_FEED_BENEFIT)
+      expect(newDayNotifications).toEqual([
+        {
+          message: OUT_OF_COW_FEED_NOTIFICATION,
+          severity: 'error',
+        },
+      ])
     })
   })
 
@@ -578,6 +587,7 @@ describe('processFeedingCows', () => {
         generateCow({ weightMultiplier: 1 }),
         generateCow({ weightMultiplier: 1 }),
       ]
+      state.newDayNotifications = []
     })
 
     describe('there are more feed units than cows to feed', () => {
@@ -586,6 +596,7 @@ describe('processFeedingCows', () => {
         const {
           cowInventory,
           inventory: [{ quantity }],
+          newDayNotifications,
         } = fn.processFeedingCows(state)
 
         expect(cowInventory[0].weightMultiplier).toEqual(
@@ -595,13 +606,18 @@ describe('processFeedingCows', () => {
           1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
         )
         expect(quantity).toEqual(2)
+        expect(newDayNotifications).toEqual([])
       })
     })
 
     describe('there are more cows to feed than feed units', () => {
       test('units are distributed to cows and remainder goes hungry', () => {
         state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }]
-        const { cowInventory, inventory } = fn.processFeedingCows(state)
+        const {
+          cowInventory,
+          inventory,
+          newDayNotifications,
+        } = fn.processFeedingCows(state)
 
         expect(cowInventory[0].weightMultiplier).toEqual(
           1 + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
@@ -610,6 +626,12 @@ describe('processFeedingCows', () => {
           1 - COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
         )
         expect(inventory).toHaveLength(0)
+        expect(newDayNotifications).toEqual([
+          {
+            message: OUT_OF_COW_FEED_NOTIFICATION,
+            severity: 'error',
+          },
+        ])
       })
     })
 
@@ -621,7 +643,6 @@ describe('processFeedingCows', () => {
           generateCow({ weightMultiplier: 1 }),
           generateCow({ weightMultiplier: 1 }),
         ]
-
         state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 3 }]
 
         const { cowInventory, inventory } = fn.processFeedingCows(state)

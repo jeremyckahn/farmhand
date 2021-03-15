@@ -19,7 +19,7 @@ import {
   RECIPE_LEARNED,
 } from './templates'
 import { reduceByPersistedKeys } from './utils'
-import { PROGRESS_SAVED_MESSAGE } from './strings'
+import { OUT_OF_COW_FEED_NOTIFICATION } from './strings'
 import { stageFocusType } from './enums'
 import { recipesMap } from './data/maps'
 import Farmhand, {
@@ -306,6 +306,7 @@ describe('instance methods', () => {
           ...component.state(),
           newDayNotifications: [
             { message: 'foo', severity: 'info' },
+            { message: OUT_OF_COW_FEED_NOTIFICATION, severity: 'error' },
             {
               message: LOAN_BALANCE_NOTIFICATION`${
                 component.state().loanBalance
@@ -319,18 +320,8 @@ describe('instance methods', () => {
 
     test('makes pending notification', () => {
       const { showNotification } = component.instance()
-      expect(showNotification).toHaveBeenCalledTimes(3)
+      expect(showNotification).toHaveBeenCalledTimes(4)
       expect(showNotification).toHaveBeenNthCalledWith(1, 'foo', 'info')
-      expect(showNotification).toHaveBeenNthCalledWith(
-        2,
-        LOAN_BALANCE_NOTIFICATION`${component.state().loanBalance}`,
-        'warning'
-      )
-      expect(showNotification).toHaveBeenNthCalledWith(
-        3,
-        PROGRESS_SAVED_MESSAGE,
-        'info'
-      )
     })
   })
 

@@ -74,6 +74,7 @@ import {
   STORM_CHANCE,
 } from './constants'
 import {
+  OUT_OF_COW_FEED_NOTIFICATION,
   RAIN_MESSAGE,
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
@@ -407,6 +408,7 @@ export const processSprinklers = state => {
 export const processFeedingCows = state => {
   const cowInventory = [...state.cowInventory]
   const { length: cowInventoryLength } = cowInventory
+  const newDayNotifications = [...state.newDayNotifications]
   let inventory = [...state.inventory]
 
   const cowFeedInventoryPosition = inventory.findIndex(
@@ -438,8 +440,15 @@ export const processFeedingCows = state => {
     }
   }
 
+  if (quantity <= cowInventory.length) {
+    newDayNotifications.push({
+      message: OUT_OF_COW_FEED_NOTIFICATION,
+      severity: 'error',
+    })
+  }
+
   return decrementItemFromInventory(
-    { ...state, cowInventory, inventory },
+    { ...state, cowInventory, inventory, newDayNotifications },
     COW_FEED_ITEM_ID,
     unitsSpent
   )
