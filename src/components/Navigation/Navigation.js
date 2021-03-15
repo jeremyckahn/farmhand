@@ -127,7 +127,7 @@ const OnlineControls = ({
           }}
         />
       </FormControl>
-      {activePlayers && <h2>Active players: {activePlayers}</h2>}
+      {activePlayers && <h2>Active players: {integerString(activePlayers)}</h2>}
     </>
   )
 }
