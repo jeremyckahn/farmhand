@@ -12,6 +12,7 @@ beforeEach(() => {
   component = shallow(
     <Navigation
       {...{
+        activePlayers: null,
         currentDialogView: dialogView.NONE,
         dayCount: 0,
         farmName: '',

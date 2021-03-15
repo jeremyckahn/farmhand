@@ -73,6 +73,7 @@ const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
 }
 
 const OnlineControls = ({
+  activePlayers,
   handleOnlineToggleChange,
   handleRoomChange,
   isOnline,
@@ -85,46 +86,49 @@ const OnlineControls = ({
   }, [room, setDisplayedRoom])
 
   return (
-    <FormControl
-      {...{ className: 'online-control-container', component: 'fieldset' }}
-    >
-      <FormGroup {...{ className: 'toggle-container' }}>
-        <FormControlLabel
-          control={
-            <Switch
-              color="primary"
-              checked={isOnline}
-              onChange={handleOnlineToggleChange}
-              name="use-alternate-end-day-button-position"
-            />
-          }
-          label="Play online"
-        />
-      </FormGroup>
-      <TextField
-        {...{
-          className: 'room-name',
-          inputProps: {
-            maxLength: MAX_ROOM_NAME_LENGTH,
-          },
-          label: 'Room name',
-          onChange: ({ target: { value } }) => {
-            setDisplayedRoom(value)
-          },
-          onBlur: ({ target: { value } }) => {
-            handleRoomChange(value)
-          },
-          onKeyUp: ({ target: { value }, which }) => {
-            // Enter
-            if (which === 13) {
-              handleRoomChange(value)
+    <>
+      <FormControl
+        {...{ className: 'online-control-container', component: 'fieldset' }}
+      >
+        <FormGroup {...{ className: 'toggle-container' }}>
+          <FormControlLabel
+            control={
+              <Switch
+                color="primary"
+                checked={isOnline}
+                onChange={handleOnlineToggleChange}
+                name="use-alternate-end-day-button-position"
+              />
             }
-          },
-          value: displayedRoom,
-          variant: 'outlined',
-        }}
-      />
-    </FormControl>
+            label="Play online"
+          />
+        </FormGroup>
+        <TextField
+          {...{
+            className: 'room-name',
+            inputProps: {
+              maxLength: MAX_ROOM_NAME_LENGTH,
+            },
+            label: 'Room name',
+            onChange: ({ target: { value } }) => {
+              setDisplayedRoom(value)
+            },
+            onBlur: ({ target: { value } }) => {
+              handleRoomChange(value)
+            },
+            onKeyUp: ({ target: { value }, which }) => {
+              // Enter
+              if (which === 13) {
+                handleRoomChange(value)
+              }
+            },
+            value: displayedRoom,
+            variant: 'outlined',
+          }}
+        />
+      </FormControl>
+      {activePlayers && <h2>Active players: {activePlayers}</h2>}
+    </>
   )
 }
 
@@ -167,6 +171,7 @@ const dialogContentMap = {
 }
 
 export const Navigation = ({
+  activePlayers,
   currentDialogView,
   dayCount,
   farmName,
@@ -197,7 +202,13 @@ export const Navigation = ({
       Day {dayCount}, level {integerString(currentLevel)}
     </h2>
     <OnlineControls
-      {...{ handleOnlineToggleChange, handleRoomChange, isOnline, room }}
+      {...{
+        activePlayers,
+        handleOnlineToggleChange,
+        handleRoomChange,
+        isOnline,
+        room,
+      }}
     />
     {inventoryLimit > -1 && (
       <h3
@@ -282,6 +293,7 @@ export const Navigation = ({
 )
 
 Navigation.propTypes = {
+  activePlayers: number,
   dayCount: number.isRequired,
   farmName: string.isRequired,
   handleClickDialogViewButton: func.isRequired,

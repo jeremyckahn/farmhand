@@ -54,6 +54,7 @@ import {
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
 } from './constants'
+import { HEARTBEAT_INTERVAL_PERIOD } from './common/constants'
 import {
   CONNECTED_TO_ROOM,
   COW_PEN_PURCHASED,
@@ -137,6 +138,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
 /**
  * @typedef farmhand.state
  * @type {Object}
+ * @property {number?} activePlayers
  * @property {farmhand.module:enums.dialogView} currentDialogView
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
@@ -154,6 +156,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {number?} heartbeatIntervalId
  * @property {Array.<number>} historicalDailyLosses
  * @property {Array.<number>} historicalDailyRevenue
  * @property {Array.<Object.<number>>} historicalValueAdjustments Currently
@@ -221,6 +224,7 @@ export default class Farmhand extends Component {
    * @type {farmhand.state}
    */
   state = {
+    activePlayers: null,
     currentDialogView: dialogView.NONE,
     completedAchievements: {},
     cowForSale: {},
@@ -237,6 +241,7 @@ export default class Farmhand extends Component {
     farmName: 'Unnamed',
     field: createNewField(),
     hasBooted: false,
+    heartbeatIntervalId: null,
     historicalDailyLosses: [],
     historicalDailyRevenue: [],
     historicalValueAdjustments: [],
@@ -483,6 +488,7 @@ export default class Farmhand extends Component {
   componentDidUpdate(prevProps, prevState) {
     const {
       hasBooted,
+      heartbeatIntervalId,
       isMenuOpen,
       isOnline,
       money,
@@ -519,6 +525,11 @@ export default class Farmhand extends Component {
 
     if (isOnline !== prevState.isOnline || room !== prevState.room) {
       this.syncToRoom()
+
+      if (!isOnline) {
+        clearInterval(heartbeatIntervalId)
+        this.setState({ activePlayers: null, heartbeatIntervalId: null })
+      }
     }
 
     if (isOnline === false && prevState.isOnline === true) {
@@ -575,12 +586,18 @@ export default class Farmhand extends Component {
     try {
       this.setState({ isAwaitingNetworkRequest: true })
 
-      const { valueAdjustments } = await getData(endpoints.getMarketData, {
-        farmId: this.state.id,
-        room: room,
-      })
+      const { activePlayers, valueAdjustments } = await getData(
+        endpoints.getMarketData,
+        {
+          farmId: this.state.id,
+          room: room,
+        }
+      )
+
+      this.startHeartbeat()
 
       this.setState({
+        activePlayers,
         valueAdjustments: applyPriceEvents(
           valueAdjustments,
           priceCrashes,
@@ -600,6 +617,22 @@ export default class Farmhand extends Component {
     }
 
     this.setState({ isAwaitingNetworkRequest: false })
+  }
+
+  startHeartbeat() {
+    const { heartbeatIntervalId: oldHeartbeatIntervalId, id, room } = this.state
+    clearInterval(oldHeartbeatIntervalId)
+
+    const heartbeatIntervalId = setInterval(async () => {
+      const { activePlayers } = await getData(endpoints.getMarketData, {
+        farmId: id,
+        room,
+      })
+
+      this.setState({ activePlayers })
+    }, HEARTBEAT_INTERVAL_PERIOD)
+
+    this.setState(() => ({ heartbeatIntervalId }))
   }
 
   /*!
