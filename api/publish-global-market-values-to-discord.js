@@ -3,6 +3,7 @@
 // remove them unless they are not needed by any upstream modules.
 require('redis')
 require('../src/common/utils')
+require('../src/common/constants')
 require('../api-etc/constants')
 // End explicit requires for serverless builds
 
