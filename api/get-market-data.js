@@ -44,7 +44,7 @@ module.exports = allowCors(async (req, res) => {
 
     // Multiply HEARTBEAT_INTERVAL_PERIOD by some amount to account for network
     // latency and other transient heartbeat delays
-    const evictionTimeout = HEARTBEAT_INTERVAL_PERIOD * 2
+    const evictionTimeout = HEARTBEAT_INTERVAL_PERIOD * 2.5
 
     if (delta > evictionTimeout) {
       delete activePlayers[activeFarmId]

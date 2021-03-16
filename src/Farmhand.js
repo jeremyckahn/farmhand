@@ -156,7 +156,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {farmhand.module:enums.fieldMode} fieldMode
- * @property {number?} heartbeatIntervalId
+ * @property {number?} heartbeatTimeoutId
  * @property {Array.<number>} historicalDailyLosses
  * @property {Array.<number>} historicalDailyRevenue
  * @property {Array.<Object.<number>>} historicalValueAdjustments Currently
@@ -241,7 +241,7 @@ export default class Farmhand extends Component {
     farmName: 'Unnamed',
     field: createNewField(),
     hasBooted: false,
-    heartbeatIntervalId: null,
+    heartbeatTimeoutId: null,
     historicalDailyLosses: [],
     historicalDailyRevenue: [],
     historicalValueAdjustments: [],
@@ -488,7 +488,7 @@ export default class Farmhand extends Component {
   componentDidUpdate(prevProps, prevState) {
     const {
       hasBooted,
-      heartbeatIntervalId,
+      heartbeatTimeoutId,
       isMenuOpen,
       isOnline,
       money,
@@ -527,8 +527,8 @@ export default class Farmhand extends Component {
       this.syncToRoom()
 
       if (!isOnline) {
-        clearInterval(heartbeatIntervalId)
-        this.setState({ activePlayers: null, heartbeatIntervalId: null })
+        clearTimeout(heartbeatTimeoutId)
+        this.setState({ activePlayers: null, heartbeatTimeoutId: null })
       }
     }
 
@@ -594,7 +594,7 @@ export default class Farmhand extends Component {
         }
       )
 
-      this.startHeartbeat()
+      this.scheduleHeartbeat()
 
       this.setState({
         activePlayers,
@@ -619,20 +619,28 @@ export default class Farmhand extends Component {
     this.setState({ isAwaitingNetworkRequest: false })
   }
 
-  startHeartbeat() {
-    const { heartbeatIntervalId: oldHeartbeatIntervalId, id, room } = this.state
-    clearInterval(oldHeartbeatIntervalId)
+  scheduleHeartbeat() {
+    const { heartbeatTimeoutId, id, room } = this.state
+    clearTimeout(heartbeatTimeoutId)
 
-    const heartbeatIntervalId = setInterval(async () => {
-      const { activePlayers } = await getData(endpoints.getMarketData, {
-        farmId: id,
-        room,
-      })
+    this.setState(() => ({
+      heartbeatTimeoutId: setTimeout(async () => {
+        try {
+          const { activePlayers } = await getData(endpoints.getMarketData, {
+            farmId: id,
+            room,
+          })
 
-      this.setState({ activePlayers })
-    }, HEARTBEAT_INTERVAL_PERIOD)
+          this.setState({ activePlayers })
+        } catch (e) {
+          this.showNotification(SERVER_ERROR, 'error')
 
-    this.setState(() => ({ heartbeatIntervalId }))
+          console.error(e)
+        }
+
+        this.scheduleHeartbeat()
+      }, HEARTBEAT_INTERVAL_PERIOD),
+    }))
   }
 
   /*!
