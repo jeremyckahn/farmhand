@@ -69,10 +69,21 @@ const Recipe = ({
     setQuantity(Math.min(maxYieldOfRecipe(recipe, inventory), 1))
   }, [inventory, recipe])
 
+  // Fixes https://github.com/jeremyckahn/farmhand/issues/25
+  const spaceFreedByIngredientsConsumed =
+    quantity *
+    Object.values(recipe.ingredients).reduce(
+      (acc, quantity) => acc + quantity,
+      0
+    )
+
   const canBeMade =
     quantity > 0 &&
     canMakeRecipe(recipe, inventory, quantity) &&
-    doesInventorySpaceRemain({ inventory, inventoryLimit })
+    doesInventorySpaceRemain({
+      inventory,
+      inventoryLimit: inventoryLimit + spaceFreedByIngredientsConsumed,
+    })
 
   const handleMakeRecipe = () => {
     if (canBeMade) {
