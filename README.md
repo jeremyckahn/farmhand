@@ -1,6 +1,6 @@
 # Farmhand
 
-![Current Farmhand version](https://badgen.net/npm/v/@jeremyckahn/farmhand)
+![Current Farmhand version](https://badgen.net/npm/v/@jeremyckahn/farmhand) [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/jeremyckahn/farmhand)
 
 ### A farming game by [Jeremy Kahn](https://github.com/jeremyckahn)
 
