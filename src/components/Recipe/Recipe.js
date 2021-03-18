@@ -82,7 +82,11 @@ const Recipe = ({
     canMakeRecipe(recipe, inventory, quantity) &&
     doesInventorySpaceRemain({
       inventory,
-      inventoryLimit: inventoryLimit + spaceFreedByIngredientsConsumed,
+      // Without the Infinity coercion, this would break recipes for unlimited
+      // inventoryLimits.
+      inventoryLimit:
+        (inventoryLimit === -1 ? Infinity : inventoryLimit) +
+        spaceFreedByIngredientsConsumed,
     })
 
   const handleMakeRecipe = () => {
