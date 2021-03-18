@@ -55,6 +55,19 @@ export const cheese = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.rainbowCheese
+ * @type {farmhand.recipe}
+ */
+export const rainbowCheese = itemify({
+  id: 'rainbowCheese',
+  name: 'Rainbow Cheese',
+  ingredients: {
+    [items.rainbowMilk3.id]: 10,
+  },
+  condition: state => (state.itemsSold[items.rainbowMilk3.id] || 0) >= 30,
+})
+
+/**
  * @property farmhand.module:recipes.chocolate
  * @type {farmhand.recipe}
  */

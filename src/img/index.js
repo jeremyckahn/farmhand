@@ -1,13 +1,14 @@
 import wateredPlot from './plot-states/watered-plot.png'
 import fertilizedPlot from './plot-states/fertilized-plot.png'
 
+import bread from './dishes/bread.png'
+import burger from './dishes/burger.png'
 import carrotSoup from './dishes/carrot-soup.png'
 import cheese from './dishes/cheese.png'
 import chocolate from './dishes/chocolate.png'
-import bread from './dishes/bread.png'
-import burger from './dishes/burger.png'
 import frenchOnionSoup from './dishes/french-onion-soup.png'
 import jackolantern from './items/jackolantern.png'
+import rainbowCheese from './dishes/rainbow-cheese.png'
 import spaghetti from './dishes/spaghetti.png'
 
 import carrot from './items/carrot.png'
@@ -78,6 +79,7 @@ export const craftedItems = {
   burger,
   'french-onion-soup': frenchOnionSoup,
   jackolantern,
+  rainbowCheese,
   spaghetti,
 }
 
