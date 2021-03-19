@@ -31,6 +31,7 @@ import { cowColors, enumify, genders } from '../../enums'
 import {
   areHuggingMachinesInInventory,
   getCowValue,
+  getCowSellValue,
   getCowWeight,
   findCowById,
   moneyString,
@@ -183,9 +184,9 @@ export const CowCard = ({
   money,
   purchasedCowPen,
 
-  cowValue = getCowValue(cow),
-  huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
   isCowPurchased = !!handleCowSellClick,
+  cowValue = getCowValue(cow, isCowPurchased),
+  huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
   isNameEditable = !!handleCowNameInputChange,
 }) => {
   const [name, setName] = useState(cow.name)
@@ -297,7 +298,7 @@ const sortCows = (cows, sortType, isAscending) => {
   let sorter = _ => _
 
   if (sortType === VALUE) {
-    sorter = getCowValue
+    sorter = getCowSellValue
   } else if (sortType === WEIGHT) {
     sorter = getCowWeight
   } else if (sortType === AGE) {

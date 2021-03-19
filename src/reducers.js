@@ -1143,8 +1143,8 @@ export const showNotification = (
 export const purchaseCow = (state, cow) => {
   const { cowInventory, cowColorsPurchased, money, purchasedCowPen } = state
   const { color } = cow
+  const cowValue = getCowValue(cow, false)
 
-  const cowValue = getCowValue(cow)
   if (
     money < cowValue ||
     purchasedCowPen === 0 ||
@@ -1172,7 +1172,7 @@ export const purchaseCow = (state, cow) => {
  */
 export const sellCow = (state, cow) => {
   const { cowsSold, money } = state
-  const cowValue = getCowValue(cow)
+  const cowValue = getCowValue(cow, true)
 
   state = removeCowFromInventory(state, cow)
 

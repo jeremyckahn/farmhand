@@ -42,11 +42,11 @@ import {
   milk1,
 } from './data/items'
 import {
-  COW_MAXIMUM_AGE_VALUE_DROPOFF,
+  COW_MAXIMUM_VALUE_MATURITY_AGE,
+  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_MAXIMUM_VALUE_MULTIPLIER,
   COW_MILK_RATE_FASTEST,
   COW_MILK_RATE_SLOWEST,
-  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
@@ -408,29 +408,33 @@ describe('getCowMilkRate', () => {
 describe('getCowValue', () => {
   const baseWeight = 100
 
-  describe('young cow (best value)', () => {
-    test('computes cow value', () => {
-      expect(getCowValue(generateCow({ baseWeight, daysOld: 1 }))).toEqual(
-        baseWeight * COW_MAXIMUM_VALUE_MULTIPLIER
-      )
-    })
+  test('computes value of cow for sale', () => {
+    expect(getCowValue(generateCow({ baseWeight, daysOld: 1 }))).toEqual(
+      baseWeight * 1.5
+    )
   })
 
-  describe('old cow (worst value)', () => {
-    test('computes cow value', () => {
-      expect(
-        getCowValue(
-          generateCow({ baseWeight, daysOld: COW_MAXIMUM_AGE_VALUE_DROPOFF })
-        )
-      ).toEqual(baseWeight * COW_MINIMUM_VALUE_MULTIPLIER)
+  describe('computing sale value', () => {
+    describe('young cow (worst value)', () => {
+      test('computes cow value', () => {
+        expect(
+          getCowValue(generateCow({ baseWeight, daysOld: 1 }), true)
+        ).toEqual(baseWeight * COW_MINIMUM_VALUE_MULTIPLIER)
+      })
     })
-  })
 
-  describe('very old cow (worst value)', () => {
-    test('computes cow value', () => {
-      expect(
-        getCowValue(generateCow({ baseWeight, daysOld: Number.MAX_VALUE }))
-      ).toEqual(baseWeight * COW_MINIMUM_VALUE_MULTIPLIER)
+    describe('old cow (best value)', () => {
+      test('computes cow value', () => {
+        expect(
+          getCowValue(
+            generateCow({
+              baseWeight,
+              daysOld: COW_MAXIMUM_VALUE_MATURITY_AGE,
+            }),
+            true
+          )
+        ).toEqual(baseWeight * COW_MAXIMUM_VALUE_MULTIPLIER)
+      })
     })
   })
 })

@@ -32,11 +32,11 @@ import {
 } from './enums'
 import {
   BREAKPOINTS,
-  COW_MAXIMUM_AGE_VALUE_DROPOFF,
+  COW_MAXIMUM_VALUE_MATURITY_AGE,
+  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_MAXIMUM_VALUE_MULTIPLIER,
   COW_MILK_RATE_FASTEST,
   COW_MILK_RATE_SLOWEST,
-  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
@@ -487,21 +487,26 @@ export const getCowWeight = ({ baseWeight, weightMultiplier }) =>
 
 /**
  * @param {farmhand.cow} cow
+ * @param {boolean} [computeSaleValue=false]
  * @returns {number}
  */
-export const getCowValue = cow =>
-  getCowWeight(cow) *
-  clampNumber(
-    scaleNumber(
-      cow.daysOld,
-      1,
-      COW_MAXIMUM_AGE_VALUE_DROPOFF,
-      COW_MAXIMUM_VALUE_MULTIPLIER,
-      COW_MINIMUM_VALUE_MULTIPLIER
-    ),
-    COW_MINIMUM_VALUE_MULTIPLIER,
-    COW_MAXIMUM_VALUE_MULTIPLIER
-  )
+export const getCowValue = (cow, computeSaleValue = false) =>
+  computeSaleValue
+    ? getCowWeight(cow) *
+      clampNumber(
+        scaleNumber(
+          cow.daysOld,
+          1,
+          COW_MAXIMUM_VALUE_MATURITY_AGE,
+          COW_MINIMUM_VALUE_MULTIPLIER,
+          COW_MAXIMUM_VALUE_MULTIPLIER
+        ),
+        COW_MINIMUM_VALUE_MULTIPLIER,
+        COW_MAXIMUM_VALUE_MULTIPLIER
+      )
+    : getCowWeight(cow) * 1.5
+
+export const getCowSellValue = cow => getCowValue(cow, true)
 
 /**
  * @param {Array.<farmhand.item>} inventory

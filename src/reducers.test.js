@@ -1694,8 +1694,10 @@ describe('purchaseCow', () => {
     generateCow({
       baseWeight: 1000,
       color: standardCowColors.WHITE,
+      daysOld: 1,
       gender: genders.FEMALE,
       name: 'cow',
+      weightMultiplier: 1,
     })
   )
 
@@ -1715,7 +1717,7 @@ describe('purchaseCow', () => {
 
     expect(state).toMatchObject({
       cowInventory: [cow],
-      money: 5000 - getCowValue(cow),
+      money: 5000 - getCowValue(cow, false),
     })
 
     expect(state.cowForSale).not.toBe(oldCowForSale)
@@ -1785,9 +1787,11 @@ describe('sellCow', () => {
     cow = Object.freeze({
       baseWeight: 1000,
       color: standardCowColors.BLUE,
+      daysOld: 1,
       gender: genders.FEMALE,
       name: 'cow',
       isBred: false,
+      weightMultiplier: 1,
     })
   })
 
@@ -1796,9 +1800,11 @@ describe('sellCow', () => {
       cow = Object.freeze({
         baseWeight: 1000,
         color: standardCowColors.BLUE,
+        daysOld: 1,
         gender: genders.FEMALE,
         name: 'cow',
         isBred: true,
+        weightMultiplier: 1,
       })
 
       const { cowInventory, cowsSold, money, revenue } = fn.sellCow(
@@ -1814,8 +1820,8 @@ describe('sellCow', () => {
 
       expect(cowInventory).not.toContain(cow)
       expect(cowsSold).toEqual({ 'blue-cow': 1 })
-      expect(money).toEqual(getCowValue(cow))
-      expect(revenue).toEqual(getCowValue(cow))
+      expect(money).toEqual(getCowValue(cow, true))
+      expect(revenue).toEqual(getCowValue(cow, true))
     })
   })
 
@@ -1834,7 +1840,7 @@ describe('sellCow', () => {
 
       expect(cowInventory).not.toContain(cow)
       expect(cowsSold).toEqual({ 'blue-cow': 2 })
-      expect(money).toEqual(getCowValue(cow))
+      expect(money).toEqual(getCowValue(cow, true))
       expect(revenue).toEqual(0)
     })
   })
@@ -1843,9 +1849,11 @@ describe('sellCow', () => {
     test('returns hugging machine to inventory', () => {
       const cow = Object.freeze({
         baseWeight: 1000,
+        daysOld: 1,
         gender: genders.FEMALE,
         isUsingHuggingMachine: true,
         name: 'cow',
+        weightMultiplier: 1,
       })
       const { inventory } = fn.sellCow(
         {
