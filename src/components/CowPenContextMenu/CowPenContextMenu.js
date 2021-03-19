@@ -313,7 +313,7 @@ const sortCows = (cows, sortType, isAscending) => {
 
   const sortedCows = sortBy(cows, sorter)
 
-  return isAscending ? sortedCows : sortedCows.reverse()
+  return isAscending ? sortedCows.reverse() : sortedCows
 }
 
 /*!
@@ -340,7 +340,7 @@ export const CowPenContextMenu = ({
   purchasedCowPen,
   selectedCowId,
 }) => {
-  const [sortType, setSortType] = useState(VALUE)
+  const [sortType, setSortType] = useState(AGE)
   const [isAscending, setIsAscending] = useState(false)
 
   return (
