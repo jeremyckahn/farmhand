@@ -143,6 +143,60 @@ const achievements = [
       ) >= goal,
     reward: state => addItemToInventory(state, itemsMap['tomato-seed'], reward),
   }))(),
+
+  ((goal = 2500, reward = 35, rewardItem = itemsMap['pumpkin-seed']) => ({
+    id: 'profit-average-1',
+    name: `7-day profit average: ${dollarString(goal)}`,
+    description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
+    rewardDescription: `${reward} units of ${rewardItem.name}`,
+    condition: state => state.record7dayProfitAverage >= goal,
+    reward: state => addItemToInventory(state, rewardItem, reward),
+  }))(),
+
+  ((goal = 10000, reward = 100, rewardItem = itemsMap['potato-seed']) => ({
+    id: 'profit-average-2',
+    name: `7-day profit average: ${dollarString(goal)}`,
+    description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
+    rewardDescription: `${reward} units of ${rewardItem.name}`,
+    condition: state => state.record7dayProfitAverage >= goal,
+    reward: state => addItemToInventory(state, rewardItem, reward),
+  }))(),
+
+  ((goal = 25000, reward = 250, rewardItem = itemsMap['soybean-seed']) => ({
+    id: 'profit-average-3',
+    name: `7-day profit average: ${dollarString(goal)}`,
+    description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
+    rewardDescription: `${reward} units of ${rewardItem.name}`,
+    condition: state => state.record7dayProfitAverage >= goal,
+    reward: state => addItemToInventory(state, rewardItem, reward),
+  }))(),
+
+  ((goal = 50000, reward = 300, rewardItem = itemsMap['chocolate-milk']) => ({
+    id: 'profit-average-4',
+    name: `7-day profit average: ${dollarString(goal)}`,
+    description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
+    rewardDescription: `${reward} units of ${rewardItem.name}`,
+    condition: state => state.record7dayProfitAverage >= goal,
+    reward: state => addItemToInventory(state, rewardItem, reward),
+  }))(),
+
+  ((goal = 150000, reward = 500, rewardItem = itemsMap['rainbow-milk-3']) => ({
+    id: 'profit-average-5',
+    name: `7-day profit average: ${dollarString(goal)}`,
+    description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
+    rewardDescription: `${reward} units of ${rewardItem.name}`,
+    condition: state => state.record7dayProfitAverage >= goal,
+    reward: state => addItemToInventory(state, rewardItem, reward),
+  }))(),
+
+  ((goal = 1000000, reward = 1000, rewardItem = itemsMap['rainbowCheese']) => ({
+    id: 'profit-average-6',
+    name: `7-day profit average: ${dollarString(goal)}`,
+    description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
+    rewardDescription: `${reward} units of ${rewardItem.name}`,
+    condition: state => state.record7dayProfitAverage >= goal,
+    reward: state => addItemToInventory(state, rewardItem, reward),
+  }))(),
 ]
 
 export default achievements
