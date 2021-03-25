@@ -4,6 +4,7 @@ import {
   findInField,
   getCropLifeStage,
   getProfitRecord,
+  integerString,
   memoize,
   moneyTotal,
 } from '../utils'
@@ -196,6 +197,46 @@ const achievements = [
     rewardDescription: `${reward} units of ${rewardItem.name}`,
     condition: state => state.record7dayProfitAverage >= goal,
     reward: state => addItemToInventory(state, rewardItem, reward),
+  }))(),
+
+  ((
+    goal = 10000,
+    goalItem = itemsMap['milk-3'],
+    reward = 5000,
+    rewardItem = itemsMap['fertilizer']
+  ) => ({
+    id: 'sale-goal-1',
+    name: `Dairy Master`,
+    description: `Sell ${integerString(goal)} units of ${goalItem.name}.`,
+    rewardDescription: `${integerString(reward)} ${rewardItem.name} units`,
+    condition: state => state.itemsSold[goalItem.id] >= goal,
+    reward: state => addItemToInventory(state, rewardItem, reward),
+  }))(),
+
+  ((
+    goal = 10000,
+    goalItem = itemsMap['rainbow-milk-2'],
+    reward = 500,
+    rewardItem = itemsMap['scarecrow']
+  ) => ({
+    id: 'sale-goal-2',
+    name: `A Big Average Rainbow`,
+    description: `Sell ${integerString(goal)} units of ${goalItem.name}.`,
+    rewardDescription: `${integerString(reward)} ${rewardItem.name} units`,
+    condition: state => state.itemsSold[goalItem.id] >= goal,
+    reward: state => addItemToInventory(state, rewardItem, reward),
+  }))(),
+
+  ((goal = 10000, goalItem = itemsMap['burger'], reward = 5000) => ({
+    id: 'sale-goal-3',
+    name: `Burger Master`,
+    description: `Sell ${integerString(goal)} ${goalItem.name} units.`,
+    rewardDescription: `${integerString(reward)} additional inventory spaces`,
+    condition: state => state.itemsSold[goalItem.id] >= goal,
+    reward: state => ({
+      ...state,
+      inventoryLimit: state.inventoryLimit + reward,
+    }),
   }))(),
 ]
 
