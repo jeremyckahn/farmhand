@@ -1,0 +1,22 @@
+# https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/
+on:
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        description: 'Release type'
+        required: true
+        default: 'patch'
+
+jobs:
+  triggerRelease:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - run: npm ci
+      - run: npm run release:${{ github.event.inputs.releaseType }}
