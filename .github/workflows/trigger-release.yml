@@ -25,3 +25,11 @@ jobs:
 
       - run: npm ci
       - run: npm run release:${{ github.event.inputs.releaseType }}
+
+      # Trigger downstream workflows
+      # https://github.community/t/push-from-action-does-not-trigger-subsequent-action/16854/2
+      - name: Trigger deployment
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.PAT }}
+          tags: true
