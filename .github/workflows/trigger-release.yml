@@ -11,20 +11,16 @@ jobs:
   triggerRelease:
     runs-on: ubuntu-latest
     steps:
-      # This needs to explicitly check out both develop and master branches for
-      # the release:* scripts to work.
       - uses: actions/checkout@v2.3.1
-        with:
-          ref: master
-
-      - uses: actions/checkout@v2.3.1
-        with:
-          ref: develop
-
       - uses: fregante/setup-git-user@v1
       - uses: actions/setup-node@v1
         with:
           node-version: 14
+
+      # Make both branches available for the release:* scripts
+      - run: git checkout -b master --track origin/master
+      - run: git pull --depth=1
+      - run: git checkout develop
 
       - run: npm ci
       - run: npm run release:${{ github.event.inputs.releaseType }}
