@@ -214,7 +214,7 @@ const achievements = [
   }))(),
 
   ((
-    goal = 10000,
+    goal = 1000,
     goalItem = itemsMap['rainbow-milk-2'],
     reward = 500,
     rewardItem = itemsMap['scarecrow']
