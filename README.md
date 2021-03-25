@@ -15,6 +15,10 @@
 - [Data model documentation](https://jeremyckahn.github.io/farmhand/docs/index.html)
 - [API deployment logs](https://farmhand.vercel.app/_logs)
 
+Storefront links:
+
+- https://plaza.dsolver.ca/games/farmhand
+
 Farmhand is a resource management game that puts a farm in your hand. It is designed to be both desktop and mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
 
 This is an open source project built with web technologies. It is implemented as a [Progressive Web App](https://web.dev/what-are-pwas/), which means it can be played in your web browser or installed onto your device for offline play.
