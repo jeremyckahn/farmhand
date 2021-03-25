@@ -326,7 +326,9 @@ export default {
       }
     )
 
-    saveAs(blob, 'farmhand.json')
+    const [date] = new Date().toISOString().split('T')
+
+    saveAs(blob, `farmhand-${date}.json`)
   },
 
   /**
