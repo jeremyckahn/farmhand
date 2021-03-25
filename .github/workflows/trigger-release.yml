@@ -11,7 +11,16 @@ jobs:
   triggerRelease:
     runs-on: ubuntu-latest
     steps:
+      # This needs to explicitly check out both develop and master branches for
+      # the release:* scripts to work.
       - uses: actions/checkout@v2.3.1
+        with:
+          ref: master
+
+      - uses: actions/checkout@v2.3.1
+        with:
+          ref: develop
+
       - uses: fregante/setup-git-user@v1
       - uses: actions/setup-node@v1
         with:
