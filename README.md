@@ -8,6 +8,7 @@
 
 - **[Support this project on Patreon!](https://www.patreon.com/jeremyckahn)**
 - Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
+- Twitter link: [![@farmhandgame](https://badgen.net/twitter/follow/farmhandgame)](https://twitter.com/farmhandgame)
 - Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
 - `master`: [![Deploy](https://github.com/jeremyckahn/farmhand/workflows/Deploy/badge.svg?branch=master)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ADeploy)
 - `develop`: [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI)
