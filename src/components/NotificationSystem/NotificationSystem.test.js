@@ -6,19 +6,9 @@ import { NotificationSystem } from './NotificationSystem'
 let component
 
 beforeEach(() => {
-  component = shallow(
-    <NotificationSystem
-      {...{
-        handleCloseNotification: () => {},
-        handleNotificationClick: () => {},
-        handleNotificationExited: () => {},
-        notifications: [],
-        doShowNotifications: false,
-      }}
-    />
-  )
+  component = shallow(<NotificationSystem {...{}} />)
 })
 
 test('renders', () => {
-  expect(component.hasClass('NotificationSystem')).toBeTruthy()
+  expect(component).toHaveLength(1)
 })

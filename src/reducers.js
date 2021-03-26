@@ -1125,6 +1125,11 @@ export const showNotification = (
 
   return {
     ...state,
+    latestNotification: {
+      message,
+      onClick,
+      severity,
+    },
     // Don't show redundant notifications
     notifications: notifications.find(
       notification => notification.message === message
