@@ -1,24 +1,43 @@
 import React, { useEffect } from 'react'
 import { func, shape, string } from 'prop-types'
+import Alert from '@material-ui/lab/Alert'
+import ReactMarkdown from 'react-markdown'
 import { withSnackbar } from 'notistack'
 
 import { NOTIFICATION_DURATION } from '../../constants'
 import FarmhandContext from '../../Farmhand.context'
 import './NotificationSystem.sass'
 
-// FIXME: When notification is clicked, dismiss all notifications.
+export const snackbarProviderContentCallback = (
+  key,
+  { message, onClick, severity }
+) => (
+  <Alert
+    {...{
+      elevation: 3,
+      key,
+      onClick,
+      severity,
+    }}
+  >
+    <ReactMarkdown {...{ source: message }} />
+  </Alert>
+)
+
 export const NotificationSystem = ({
-  latestNotification,
   closeSnackbar,
   enqueueSnackbar,
+  latestNotification,
 }) => {
   useEffect(() => {
     if (latestNotification) {
       enqueueSnackbar(latestNotification, {
         autoHideDuration: NOTIFICATION_DURATION,
+        onClose: () => closeSnackbar(),
+        preventDuplicate: true,
       })
     }
-  }, [enqueueSnackbar, latestNotification])
+  }, [closeSnackbar, enqueueSnackbar, latestNotification])
 
   return null
 }

@@ -12,8 +12,6 @@ import HotelIcon from '@material-ui/icons/Hotel'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
-import Alert from '@material-ui/lab/Alert'
-import ReactMarkdown from 'react-markdown'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
@@ -29,7 +27,9 @@ import AppBar from './components/AppBar'
 import Navigation from './components/Navigation'
 import ContextPane from './components/ContextPane'
 import Stage from './components/Stage'
-import NotificationSystem from './components/NotificationSystem'
+import NotificationSystem, {
+  snackbarProviderContentCallback,
+} from './components/NotificationSystem'
 import DebugMenu from './components/DebugMenu'
 import theme from './mui-theme'
 import {
@@ -199,7 +199,6 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} revenue The amount of money the player has generated in
  * @property {string} redirect Transient value used to drive router redirection.
  * @property {string} room What online room the player is in.
- * @property {boolean} doShowNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Array.<farmhand.notification>} todaysPastNotifications
  * @property {number} todaysLosses Should always be a negative number.
@@ -280,7 +279,6 @@ export default class Farmhand extends Component {
     room: decodeURIComponent(this.props.match.params.room || DEFAULT_ROOM),
     purchasedCowPen: 0,
     purchasedField: 0,
-    doShowNotifications: false,
     stageFocus: stageFocusType.HOME,
     todaysPastNotifications: [],
     todaysLosses: 0,
@@ -869,18 +867,7 @@ export default class Farmhand extends Component {
               classes: {
                 containerRoot: 'Farmhand notification-container',
               },
-              content: (key, { message, onClick, severity }) => (
-                <Alert
-                  {...{
-                    elevation: 3,
-                    key,
-                    onClick,
-                    severity,
-                  }}
-                >
-                  <ReactMarkdown {...{ source: message }} />
-                </Alert>
-              ),
+              content: snackbarProviderContentCallback,
               maxSnack: 3,
             }}
           >

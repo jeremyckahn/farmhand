@@ -1136,7 +1136,6 @@ export const showNotification = (
     )
       ? notifications
       : notifications.concat({ message, onClick, severity }),
-    doShowNotifications: true,
   }
 }
 

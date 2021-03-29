@@ -269,26 +269,6 @@ export default {
     this.hugCow(cow.id)
   },
 
-  handleCloseNotification(_event, reason) {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    this.setState(() => ({ doShowNotifications: false }))
-  },
-
-  handleNotificationClick() {
-    this.setState(() => ({ doShowNotifications: false }))
-  },
-
-  handleNotificationExited() {
-    const { notifications, todaysPastNotifications } = this.state
-    this.setState({
-      notifications: [],
-      todaysPastNotifications: [...notifications, ...todaysPastNotifications],
-    })
-  },
-
   /**
    * @param {farmhand.module:enums.dialogView} dialogView
    */
