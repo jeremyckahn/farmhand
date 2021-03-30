@@ -32,14 +32,13 @@ jobs:
           SINGLE_COMMIT: true
 
       - name: Publish to itch.io
-        steps:
-          - uses: josephbmanley/butler-publish-itchio-action@master
-            env:
-              BUTLER_CREDENTIALS: ${{ secrets.ITCH_TOKEN }}
-              CHANNEL: html5
-              ITCH_GAME: Farmhand
-              ITCH_USER: jeremyckahn
-              PACKAGE: build
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.ITCH_TOKEN }}
+          CHANNEL: html5
+          ITCH_GAME: Farmhand
+          ITCH_USER: jeremyckahn
+          PACKAGE: build
 
       # https://github.com/marketplace/actions/actions-for-discord
       # https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#push
