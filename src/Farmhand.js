@@ -13,6 +13,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
 import MobileStepper from '@material-ui/core/MobileStepper'
+import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
 import classNames from 'classnames'
 
@@ -26,7 +27,9 @@ import AppBar from './components/AppBar'
 import Navigation from './components/Navigation'
 import ContextPane from './components/ContextPane'
 import Stage from './components/Stage'
-import NotificationSystem from './components/NotificationSystem'
+import NotificationSystem, {
+  snackbarProviderContentCallback,
+} from './components/NotificationSystem'
 import DebugMenu from './components/DebugMenu'
 import theme from './mui-theme'
 import {
@@ -177,8 +180,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} loanBalance
  * @property {number} loansTakenOut
  * @property {number} money
+ * @property {farmhand.notification} latestNotification
  * @property {Array.<farmhand.notification>} newDayNotifications
- * @property {Array.<farmhand.notification>} notifications
  * @property {Array.<farmhand.notification>} notificationLog
  * @property {string} selectedCowId
  * @property {string} selectedItemId
@@ -195,9 +198,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} revenue The amount of money the player has generated in
  * @property {string} redirect Transient value used to drive router redirection.
  * @property {string} room What online room the player is in.
- * @property {boolean} doShowNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
- * @property {Array.<farmhand.notification>} todaysPastNotifications
+ * @property {Array.<farmhand.notification>} todaysNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {Object} todaysPurchases Keys are item names, values are their
  * respective quantities.
@@ -258,8 +260,8 @@ export default class Farmhand extends Component {
     loanBalance: STANDARD_LOAN_AMOUNT,
     loansTakenOut: 1,
     money: STANDARD_LOAN_AMOUNT,
+    latestNotification: null,
     newDayNotifications: [],
-    notifications: [],
     notificationLog: [],
     selectedCowId: '',
     selectedItemId: '',
@@ -275,9 +277,8 @@ export default class Farmhand extends Component {
     room: decodeURIComponent(this.props.match.params.room || DEFAULT_ROOM),
     purchasedCowPen: 0,
     purchasedField: 0,
-    doShowNotifications: false,
     stageFocus: stageFocusType.HOME,
-    todaysPastNotifications: [],
+    todaysNotifications: [],
     todaysLosses: 0,
     todaysPurchases: {},
     todaysRevenue: 0,
@@ -747,7 +748,7 @@ export default class Farmhand extends Component {
     // asynchronously, thus avoiding state changes from being blocked.
 
     this.setState(
-      { ...nextDayState, newDayNotifications: [], notifications: [] },
+      { ...nextDayState, newDayNotifications: [], todaysNotifications: [] },
       async () => {
         try {
           await this.persistState({
@@ -858,108 +859,120 @@ export default class Farmhand extends Component {
     return (
       <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
         <MuiThemeProvider theme={theme}>
-          {redirect && <Redirect {...{ to: redirect }} />}
-          <FarmhandContext.Provider value={{ gameState, handlers }}>
-            <div
-              {...{
-                className: classNames('Farmhand fill', {
-                  'use-alternate-end-day-button-position': this.state
-                    .useAlternateEndDayButtonPosition,
-                  'block-input': this.state.isAwaitingNetworkRequest,
-                }),
-              }}
-            >
-              <AppBar />
-              <Drawer
+          <SnackbarProvider
+            {...{
+              anchorOrigin: { vertical: 'top', horizontal: 'right' },
+              classes: {
+                containerRoot: 'Farmhand notification-container',
+              },
+              content: snackbarProviderContentCallback,
+              maxSnack: 3,
+            }}
+          >
+            {redirect && <Redirect {...{ to: redirect }} />}
+            <FarmhandContext.Provider value={{ gameState, handlers }}>
+              <div
                 {...{
-                  className: 'sidebar-wrapper',
-                  open: gameState.isMenuOpen,
-                  variant: 'persistent',
-                  PaperProps: {
-                    className: 'sidebar',
-                  },
+                  className: classNames('Farmhand fill', {
+                    'use-alternate-end-day-button-position': this.state
+                      .useAlternateEndDayButtonPosition,
+                    'block-input': this.state.isAwaitingNetworkRequest,
+                  }),
                 }}
               >
-                <Navigation />
-                <ContextPane />
-                {process.env.NODE_ENV === 'development' && <DebugMenu />}
-                <div {...{ className: 'spacer' }} />
-              </Drawer>
-              <Stage />
+                <AppBar />
+                <Drawer
+                  {...{
+                    className: 'sidebar-wrapper',
+                    open: gameState.isMenuOpen,
+                    variant: 'persistent',
+                    PaperProps: {
+                      className: 'sidebar',
+                    },
+                  }}
+                >
+                  <Navigation />
+                  <ContextPane />
+                  {process.env.NODE_ENV === 'development' && <DebugMenu />}
+                  <div {...{ className: 'spacer' }} />
+                </Drawer>
+                <Stage />
 
-              {/*
+                {/*
               These controls need to be at this top level instead of the Stage
               because of scrolling issues in iOS.
               */}
-              <div className="bottom-controls">
-                <MobileStepper
-                  variant="dots"
-                  steps={viewList.length}
-                  position="static"
-                  activeStep={viewList.indexOf(this.state.stageFocus)}
-                  className=""
-                />
-                <div className="fab-buttons buttons">
-                  <Fab
-                    {...{
-                      'aria-label': 'Previous view',
-                      color: 'primary',
-                      onClick: () => this.focusPreviousView(),
-                    }}
-                  >
-                    <KeyboardArrowLeft />
-                  </Fab>
-                  <Fab
-                    {...{
-                      className: classNames('menu-button', {
-                        'is-open': this.state.isMenuOpen,
-                      }),
-                      color: 'primary',
-                      'aria-label': 'Open drawer',
-                      onClick: () => handlers.handleMenuToggle(),
-                    }}
-                  >
-                    <MenuIcon />
-                  </Fab>
-                  <Fab
-                    {...{
-                      'aria-label': 'Next view',
-                      color: 'primary',
-                      onClick: () => this.focusNextView(),
-                    }}
-                  >
-                    <KeyboardArrowRight />
-                  </Fab>
+                <div className="bottom-controls">
+                  <MobileStepper
+                    variant="dots"
+                    steps={viewList.length}
+                    position="static"
+                    activeStep={viewList.indexOf(this.state.stageFocus)}
+                    className=""
+                  />
+                  <div className="fab-buttons buttons">
+                    <Fab
+                      {...{
+                        'aria-label': 'Previous view',
+                        color: 'primary',
+                        onClick: () => this.focusPreviousView(),
+                      }}
+                    >
+                      <KeyboardArrowLeft />
+                    </Fab>
+                    <Fab
+                      {...{
+                        className: classNames('menu-button', {
+                          'is-open': this.state.isMenuOpen,
+                        }),
+                        color: 'primary',
+                        'aria-label': 'Open drawer',
+                        onClick: () => handlers.handleMenuToggle(),
+                      }}
+                    >
+                      <MenuIcon />
+                    </Fab>
+                    <Fab
+                      {...{
+                        'aria-label': 'Next view',
+                        color: 'primary',
+                        onClick: () => this.focusNextView(),
+                      }}
+                    >
+                      <KeyboardArrowRight />
+                    </Fab>
+                  </div>
                 </div>
-              </div>
-              <Tooltip
-                {...{
-                  placement: 'left',
-                  title: (
-                    <>
-                      <p>
-                        End the day to save your progress and advance the game.
-                      </p>
-                      <p>(shift + c)</p>
-                    </>
-                  ),
-                }}
-              >
-                <Fab
+                <Tooltip
                   {...{
-                    'aria-label':
-                      'End the day to save your progress and advance the game.',
-                    className: 'end-day',
-                    color: 'secondary',
-                    onClick: handlers.handleClickEndDayButton,
+                    placement: 'left',
+                    title: (
+                      <>
+                        <p>
+                          End the day to save your progress and advance the
+                          game.
+                        </p>
+                        <p>(shift + c)</p>
+                      </>
+                    ),
                   }}
                 >
-                  <HotelIcon />
-                </Fab>
-              </Tooltip>
-            </div>
-            <NotificationSystem />
-          </FarmhandContext.Provider>
+                  <Fab
+                    {...{
+                      'aria-label':
+                        'End the day to save your progress and advance the game.',
+                      className: 'end-day',
+                      color: 'secondary',
+                      onClick: handlers.handleClickEndDayButton,
+                    }}
+                  >
+                    <HotelIcon />
+                  </Fab>
+                </Tooltip>
+              </div>
+              <NotificationSystem />
+            </FarmhandContext.Provider>
+          </SnackbarProvider>
         </MuiThemeProvider>
       </GlobalHotKeys>
     )

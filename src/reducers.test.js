@@ -411,7 +411,7 @@ describe('computeStateForNextDay', () => {
       dayCount,
       field: [firstRow],
       valueAdjustments,
-      todaysPastNotifications,
+      todaysNotifications,
     } = fn.computeStateForNextDay({
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       dayCount: 1,
@@ -436,7 +436,7 @@ describe('computeStateForNextDay', () => {
       profitabilityStreak: 0,
       record7dayProfitAverage: 0,
       recordProfitabilityStreak: 0,
-      todaysPastNotifications: [{ message: 'some message', severity: 'info' }],
+      todaysNotifications: [{ message: 'some message', severity: 'info' }],
     })
 
     expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()))
@@ -446,7 +446,7 @@ describe('computeStateForNextDay', () => {
     expect(firstRow[0].wasWateredToday).toBe(false)
     expect(firstRow[0].daysWatered).toBe(1)
     expect(firstRow[0].daysOld).toBe(1)
-    expect(todaysPastNotifications).toBeEmpty()
+    expect(todaysNotifications).toBeEmpty()
   })
 })
 
@@ -1469,19 +1469,20 @@ describe('makeRecipe', () => {
 
 describe('showNotification', () => {
   test('sets notification state', () => {
-    const { notifications, doShowNotifications } = fn.showNotification(
-      { notifications: [] },
+    const { latestNotification, todaysNotifications } = fn.showNotification(
+      { todaysNotifications: [] },
       'foo'
     )
-    expect(notifications).toEqual([{ message: 'foo', severity: 'info' }])
-    expect(doShowNotifications).toEqual(true)
+    const notificationObject = { message: 'foo', severity: 'info' }
+    expect(latestNotification).toEqual(notificationObject)
+    expect(todaysNotifications).toEqual([{ ...notificationObject }])
   })
 
   test('does not show redundant notifications', () => {
-    const state = fn.showNotification({ notifications: [] }, 'foo')
+    const state = fn.showNotification({ todaysNotifications: [] }, 'foo')
 
-    const { notifications } = fn.showNotification(state, 'foo')
-    expect(notifications).toEqual([{ message: 'foo', severity: 'info' }])
+    const { todaysNotifications } = fn.showNotification(state, 'foo')
+    expect(todaysNotifications).toEqual([{ message: 'foo', severity: 'info' }])
   })
 })
 
@@ -1493,7 +1494,7 @@ describe('sellItem', () => {
         itemsSold: {},
         loanBalance: 0,
         money: 100,
-        notifications: [],
+        todaysNotifications: [],
         revenue: 0,
         todaysRevenue: 0,
         valueAdjustments: { 'sample-item-1': 1 },
@@ -1515,7 +1516,7 @@ describe('sellItem', () => {
         itemsSold: {},
         loanBalance: 0,
         money: 100,
-        notifications: [],
+        todaysNotifications: [],
         revenue: 0,
         todaysRevenue: 0,
         valueAdjustments: { 'sample-item-1': 1 },
@@ -1538,7 +1539,7 @@ describe('sellItem', () => {
             itemsSold: {},
             loanBalance: 100,
             money: 100,
-            notifications: [],
+            todaysNotifications: [],
             revenue: 0,
             todaysRevenue: 0,
             valueAdjustments: { 'sample-crop-seeds-1': 10 },
@@ -1563,7 +1564,7 @@ describe('sellItem', () => {
               itemsSold: {},
               loanBalance: 100,
               money: 100,
-              notifications: [],
+              todaysNotifications: [],
               revenue: 0,
               todaysRevenue: 0,
               valueAdjustments: { 'sample-crop-1': 10 },
@@ -1587,7 +1588,7 @@ describe('sellItem', () => {
               itemsSold: {},
               loanBalance: 1.5,
               money: 100,
-              notifications: [],
+              todaysNotifications: [],
               revenue: 0,
               todaysRevenue: 0,
               valueAdjustments: { 'sample-crop-1': 10 },
@@ -1607,7 +1608,7 @@ describe('sellItem', () => {
         })
 
         test('payoff notification is shown', () => {
-          expect(state.notifications).toEqual([
+          expect(state.todaysNotifications).toEqual([
             { message: LOAN_PAYOFF``, severity: 'success' },
           ])
         })
@@ -1628,16 +1629,20 @@ describe('processLevelUp', () => {
       ],
       itemUnlockLevels: {},
     }))
-    const { notifications } = jest.requireActual('./reducers').processLevelUp(
-      {
-        inventory: [],
-        itemsSold: { 'sample-crop-1': farmProductSalesVolumeNeededForLevel(3) },
-        notifications: [],
-      },
-      1
-    )
+    const { todaysNotifications } = jest
+      .requireActual('./reducers')
+      .processLevelUp(
+        {
+          inventory: [],
+          itemsSold: {
+            'sample-crop-1': farmProductSalesVolumeNeededForLevel(3),
+          },
+          todaysNotifications: [],
+        },
+        1
+      )
 
-    expect(notifications).toEqual([
+    expect(todaysNotifications).toEqual([
       {
         message: LEVEL_GAINED_NOTIFICATION`${3}${{ name: '' }}`,
         severity: 'success',
@@ -1680,7 +1685,7 @@ describe('processLevelUp', () => {
             'sample-crop-1': farmProductSalesVolumeNeededForLevel(2),
           },
           selectedItemId: 'sprinkler',
-          notifications: [],
+          todaysNotifications: [],
         },
         1
       )
@@ -2724,7 +2729,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: {},
           conditionSatisfied: true,
-          notifications: [],
+          todaysNotifications: [],
         }
 
         const state = updateAchievements(inputState)
@@ -2738,7 +2743,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: {},
           conditionSatisfied: false,
-          notifications: [],
+          todaysNotifications: [],
         }
 
         const state = updateAchievements(inputState)
@@ -2746,7 +2751,7 @@ describe('updateAchievements', () => {
         expect(state).toMatchObject({
           completedAchievements: { 'test-achievement': true },
           conditionSatisfied: true,
-          notifications: [
+          todaysNotifications: [
             {
               message: ACHIEVEMENT_COMPLETED`${{
                 name: 'Test Achievement',
@@ -2766,7 +2771,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: { 'test-achievement': true },
           conditionSatisfied: true,
-          notifications: [],
+          todaysNotifications: [],
         }
 
         const state = updateAchievements(inputState)
@@ -2780,7 +2785,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: { 'test-achievement': true },
           conditionSatisfied: false,
-          notifications: [],
+          todaysNotifications: [],
         }
 
         const state = updateAchievements(inputState)
@@ -2794,22 +2799,30 @@ describe('updateAchievements', () => {
 describe('adjustLoan', () => {
   test('updates state', () => {
     expect(
-      fn.adjustLoan({ money: 100, loanBalance: 50, notifications: [] }, -25)
+      fn.adjustLoan(
+        { money: 100, loanBalance: 50, todaysNotifications: [] },
+        -25
+      )
     ).toEqual({
       money: 75,
       loanBalance: 25,
-      notifications: [],
+      todaysNotifications: [],
     })
   })
 
   describe('loan payoff', () => {
     test('shows appropriate notification', () => {
-      const { loansTakenOut, notifications } = fn.adjustLoan(
-        { money: 100, loanBalance: 50, loansTakenOut: 1, notifications: [] },
+      const { loansTakenOut, todaysNotifications } = fn.adjustLoan(
+        {
+          money: 100,
+          loanBalance: 50,
+          loansTakenOut: 1,
+          todaysNotifications: [],
+        },
         -50
       )
 
-      expect(notifications).toEqual([
+      expect(todaysNotifications).toEqual([
         { message: LOAN_PAYOFF``, severity: 'success' },
       ])
 
@@ -2819,12 +2832,17 @@ describe('adjustLoan', () => {
 
   describe('loan increase', () => {
     test('shows appropriate notification, updates state', () => {
-      const { loansTakenOut, notifications } = fn.adjustLoan(
-        { money: 100, loanBalance: 50, notifications: [], loansTakenOut: 1 },
+      const { loansTakenOut, todaysNotifications } = fn.adjustLoan(
+        {
+          money: 100,
+          loanBalance: 50,
+          todaysNotifications: [],
+          loansTakenOut: 1,
+        },
         50
       )
 
-      expect(notifications).toEqual([
+      expect(todaysNotifications).toEqual([
         { message: LOAN_INCREASED`${100}`, severity: 'info' },
       ])
 

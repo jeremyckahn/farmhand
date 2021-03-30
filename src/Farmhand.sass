@@ -243,7 +243,16 @@ body
 
 // This needs to be sibling to .Farmhand hand because notifications are
 // rendered both inside and outside of the .Farmhand root.
-.notification-container
+.Farmhand.notification-container
+  margin-top: 8em
+  padding-top: 0
+
+  .MuiCollapse-wrapperInner
+    width: 100%
+
+  .MuiCollapse-wrapper
+    margin-bottom: 0
+
   .MuiAlert-root
     margin-bottom: 1em
 

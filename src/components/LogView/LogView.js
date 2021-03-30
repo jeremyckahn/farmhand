@@ -8,11 +8,11 @@ import FarmhandContext from '../../Farmhand.context'
 
 import './LogView.sass'
 
-export const LogView = ({ notificationLog, todaysPastNotifications }) => (
+export const LogView = ({ notificationLog, todaysNotifications }) => (
   <div className="LogView notification-container">
     <h3>Today</h3>
     <ul>
-      {todaysPastNotifications.map(({ message, onClick, severity }) => (
+      {todaysNotifications.map(({ message, onClick, severity }) => (
         <li {...{ key: message }}>
           <Alert {...{ elevation: 3, onClick, severity }}>
             <ReactMarkdown {...{ source: message }} />
@@ -44,7 +44,7 @@ export const LogView = ({ notificationLog, todaysPastNotifications }) => (
 
 LogView.propTypes = {
   notificationLog: array.isRequired,
-  todaysPastNotifications: array.isRequired,
+  todaysNotifications: array.isRequired,
 }
 
 export default function Consumer(props) {
