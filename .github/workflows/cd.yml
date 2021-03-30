@@ -21,15 +21,6 @@ jobs:
       - run: npm run build
       - run: npm run doc
 
-      - name: Publish to itch.io
-        uses: josephbmanley/butler-publish-itchio-action@master
-        env:
-          BUTLER_CREDENTIALS: ${{ secrets.ITCH_TOKEN }}
-          CHANNEL: html5
-          ITCH_GAME: Farmhand
-          ITCH_USER: jeremyckahn
-          PACKAGE: build
-
       # https://github.com/marketplace/actions/deploy-to-github-pages
       - name: Deploy to Production
         uses: JamesIves/github-pages-deploy-action@3.7.1
