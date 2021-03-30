@@ -1469,15 +1469,22 @@ describe('makeRecipe', () => {
 
 describe('showNotification', () => {
   test('sets notification state', () => {
-    const { notifications } = fn.showNotification({ notifications: [] }, 'foo')
-    expect(notifications).toEqual([{ message: 'foo', severity: 'info' }])
+    const { latestNotification, todaysPastNotifications } = fn.showNotification(
+      { todaysPastNotifications: [] },
+      'foo'
+    )
+    const notificationObject = { message: 'foo', severity: 'info' }
+    expect(latestNotification).toEqual(notificationObject)
+    expect(todaysPastNotifications).toEqual([{ ...notificationObject }])
   })
 
   test('does not show redundant notifications', () => {
-    const state = fn.showNotification({ notifications: [] }, 'foo')
+    const state = fn.showNotification({ todaysPastNotifications: [] }, 'foo')
 
-    const { notifications } = fn.showNotification(state, 'foo')
-    expect(notifications).toEqual([{ message: 'foo', severity: 'info' }])
+    const { todaysPastNotifications } = fn.showNotification(state, 'foo')
+    expect(todaysPastNotifications).toEqual([
+      { message: 'foo', severity: 'info' },
+    ])
   })
 })
 
@@ -1489,7 +1496,7 @@ describe('sellItem', () => {
         itemsSold: {},
         loanBalance: 0,
         money: 100,
-        notifications: [],
+        todaysPastNotifications: [],
         revenue: 0,
         todaysRevenue: 0,
         valueAdjustments: { 'sample-item-1': 1 },
@@ -1511,7 +1518,7 @@ describe('sellItem', () => {
         itemsSold: {},
         loanBalance: 0,
         money: 100,
-        notifications: [],
+        todaysPastNotifications: [],
         revenue: 0,
         todaysRevenue: 0,
         valueAdjustments: { 'sample-item-1': 1 },
@@ -1534,7 +1541,7 @@ describe('sellItem', () => {
             itemsSold: {},
             loanBalance: 100,
             money: 100,
-            notifications: [],
+            todaysPastNotifications: [],
             revenue: 0,
             todaysRevenue: 0,
             valueAdjustments: { 'sample-crop-seeds-1': 10 },
@@ -1559,7 +1566,7 @@ describe('sellItem', () => {
               itemsSold: {},
               loanBalance: 100,
               money: 100,
-              notifications: [],
+              todaysPastNotifications: [],
               revenue: 0,
               todaysRevenue: 0,
               valueAdjustments: { 'sample-crop-1': 10 },
@@ -1583,7 +1590,7 @@ describe('sellItem', () => {
               itemsSold: {},
               loanBalance: 1.5,
               money: 100,
-              notifications: [],
+              todaysPastNotifications: [],
               revenue: 0,
               todaysRevenue: 0,
               valueAdjustments: { 'sample-crop-1': 10 },
@@ -1603,7 +1610,7 @@ describe('sellItem', () => {
         })
 
         test('payoff notification is shown', () => {
-          expect(state.notifications).toEqual([
+          expect(state.todaysPastNotifications).toEqual([
             { message: LOAN_PAYOFF``, severity: 'success' },
           ])
         })
@@ -1624,16 +1631,20 @@ describe('processLevelUp', () => {
       ],
       itemUnlockLevels: {},
     }))
-    const { notifications } = jest.requireActual('./reducers').processLevelUp(
-      {
-        inventory: [],
-        itemsSold: { 'sample-crop-1': farmProductSalesVolumeNeededForLevel(3) },
-        notifications: [],
-      },
-      1
-    )
+    const { todaysPastNotifications } = jest
+      .requireActual('./reducers')
+      .processLevelUp(
+        {
+          inventory: [],
+          itemsSold: {
+            'sample-crop-1': farmProductSalesVolumeNeededForLevel(3),
+          },
+          todaysPastNotifications: [],
+        },
+        1
+      )
 
-    expect(notifications).toEqual([
+    expect(todaysPastNotifications).toEqual([
       {
         message: LEVEL_GAINED_NOTIFICATION`${3}${{ name: '' }}`,
         severity: 'success',
@@ -1676,7 +1687,7 @@ describe('processLevelUp', () => {
             'sample-crop-1': farmProductSalesVolumeNeededForLevel(2),
           },
           selectedItemId: 'sprinkler',
-          notifications: [],
+          todaysPastNotifications: [],
         },
         1
       )
@@ -2720,7 +2731,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: {},
           conditionSatisfied: true,
-          notifications: [],
+          todaysPastNotifications: [],
         }
 
         const state = updateAchievements(inputState)
@@ -2734,7 +2745,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: {},
           conditionSatisfied: false,
-          notifications: [],
+          todaysPastNotifications: [],
         }
 
         const state = updateAchievements(inputState)
@@ -2742,7 +2753,7 @@ describe('updateAchievements', () => {
         expect(state).toMatchObject({
           completedAchievements: { 'test-achievement': true },
           conditionSatisfied: true,
-          notifications: [
+          todaysPastNotifications: [
             {
               message: ACHIEVEMENT_COMPLETED`${{
                 name: 'Test Achievement',
@@ -2762,7 +2773,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: { 'test-achievement': true },
           conditionSatisfied: true,
-          notifications: [],
+          todaysPastNotifications: [],
         }
 
         const state = updateAchievements(inputState)
@@ -2776,7 +2787,7 @@ describe('updateAchievements', () => {
         const inputState = {
           completedAchievements: { 'test-achievement': true },
           conditionSatisfied: false,
-          notifications: [],
+          todaysPastNotifications: [],
         }
 
         const state = updateAchievements(inputState)
@@ -2790,22 +2801,30 @@ describe('updateAchievements', () => {
 describe('adjustLoan', () => {
   test('updates state', () => {
     expect(
-      fn.adjustLoan({ money: 100, loanBalance: 50, notifications: [] }, -25)
+      fn.adjustLoan(
+        { money: 100, loanBalance: 50, todaysPastNotifications: [] },
+        -25
+      )
     ).toEqual({
       money: 75,
       loanBalance: 25,
-      notifications: [],
+      todaysPastNotifications: [],
     })
   })
 
   describe('loan payoff', () => {
     test('shows appropriate notification', () => {
-      const { loansTakenOut, notifications } = fn.adjustLoan(
-        { money: 100, loanBalance: 50, loansTakenOut: 1, notifications: [] },
+      const { loansTakenOut, todaysPastNotifications } = fn.adjustLoan(
+        {
+          money: 100,
+          loanBalance: 50,
+          loansTakenOut: 1,
+          todaysPastNotifications: [],
+        },
         -50
       )
 
-      expect(notifications).toEqual([
+      expect(todaysPastNotifications).toEqual([
         { message: LOAN_PAYOFF``, severity: 'success' },
       ])
 
@@ -2815,12 +2834,17 @@ describe('adjustLoan', () => {
 
   describe('loan increase', () => {
     test('shows appropriate notification, updates state', () => {
-      const { loansTakenOut, notifications } = fn.adjustLoan(
-        { money: 100, loanBalance: 50, notifications: [], loansTakenOut: 1 },
+      const { loansTakenOut, todaysPastNotifications } = fn.adjustLoan(
+        {
+          money: 100,
+          loanBalance: 50,
+          todaysPastNotifications: [],
+          loansTakenOut: 1,
+        },
         50
       )
 
-      expect(notifications).toEqual([
+      expect(todaysPastNotifications).toEqual([
         { message: LOAN_INCREASED`${100}`, severity: 'info' },
       ])
 

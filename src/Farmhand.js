@@ -182,7 +182,6 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} money
  * @property {farmhand.notification} latestNotification
  * @property {Array.<farmhand.notification>} newDayNotifications
- * @property {Array.<farmhand.notification>} notifications
  * @property {Array.<farmhand.notification>} notificationLog
  * @property {string} selectedCowId
  * @property {string} selectedItemId
@@ -263,7 +262,6 @@ export default class Farmhand extends Component {
     money: STANDARD_LOAN_AMOUNT,
     latestNotification: null,
     newDayNotifications: [],
-    notifications: [],
     notificationLog: [],
     selectedCowId: '',
     selectedItemId: '',
@@ -750,7 +748,7 @@ export default class Farmhand extends Component {
     // asynchronously, thus avoiding state changes from being blocked.
 
     this.setState(
-      { ...nextDayState, newDayNotifications: [], notifications: [] },
+      { ...nextDayState, newDayNotifications: [], todaysPastNotifications: [] },
       async () => {
         try {
           await this.persistState({

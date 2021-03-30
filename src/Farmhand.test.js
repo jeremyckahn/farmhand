@@ -223,7 +223,7 @@ describe('instance methods', () => {
         expect(component.state().foo).toBe('bar')
       })
 
-      test('shows notifications for pending newDayNotifications', () => {
+      test('shows todaysPastNotifications for pending newDayNotifications', () => {
         expect(component.instance().showNotification).toHaveBeenCalledWith(
           'baz',
           'info'
@@ -244,7 +244,7 @@ describe('instance methods', () => {
           .instance()
           .showCowPenPurchasedNotifications({ purchasedCowPen: 0 })
 
-        expect(component.state().notifications).toContainEqual({
+        expect(component.state().todaysPastNotifications).toContainEqual({
           message: COW_PEN_PURCHASED`${PURCHASEABLE_COW_PENS.get(1).cows}`,
           severity: 'info',
         })
@@ -260,7 +260,7 @@ describe('instance methods', () => {
           .instance()
           .showRecipeLearnedNotifications({ learnedRecipes: {} })
 
-        expect(component.state().notifications).not.toContainEqual({
+        expect(component.state().todaysPastNotifications).not.toContainEqual({
           message: RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`,
           severity: 'info',
         })
@@ -274,7 +274,7 @@ describe('instance methods', () => {
           .instance()
           .showRecipeLearnedNotifications({ learnedRecipes: {} })
 
-        expect(component.state().notifications).toContainEqual({
+        expect(component.state().todaysPastNotifications).toContainEqual({
           message: RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`,
           severity: 'info',
         })
