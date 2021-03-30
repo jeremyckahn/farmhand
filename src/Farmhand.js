@@ -199,7 +199,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {string} redirect Transient value used to drive router redirection.
  * @property {string} room What online room the player is in.
  * @property {farmhand.module:enums.stageFocusType} stageFocus
- * @property {Array.<farmhand.notification>} todaysPastNotifications
+ * @property {Array.<farmhand.notification>} todaysNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {Object} todaysPurchases Keys are item names, values are their
  * respective quantities.
@@ -278,7 +278,7 @@ export default class Farmhand extends Component {
     purchasedCowPen: 0,
     purchasedField: 0,
     stageFocus: stageFocusType.HOME,
-    todaysPastNotifications: [],
+    todaysNotifications: [],
     todaysLosses: 0,
     todaysPurchases: {},
     todaysRevenue: 0,
@@ -748,7 +748,7 @@ export default class Farmhand extends Component {
     // asynchronously, thus avoiding state changes from being blocked.
 
     this.setState(
-      { ...nextDayState, newDayNotifications: [], todaysPastNotifications: [] },
+      { ...nextDayState, newDayNotifications: [], todaysNotifications: [] },
       async () => {
         try {
           await this.persistState({

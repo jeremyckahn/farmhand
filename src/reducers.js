@@ -956,7 +956,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
       ...state,
       cowForSale: generateCow(),
       dayCount: state.dayCount + 1,
-      todaysPastNotifications: [],
+      todaysNotifications: [],
     })
 
 /**
@@ -1120,7 +1120,7 @@ export const showNotification = (
   severity = 'info',
   onClick = undefined
 ) => {
-  const { todaysPastNotifications } = state
+  const { todaysNotifications } = state
 
   return {
     ...state,
@@ -1130,11 +1130,11 @@ export const showNotification = (
       severity,
     },
     // Don't show redundant notifications
-    todaysPastNotifications: todaysPastNotifications.find(
+    todaysNotifications: todaysNotifications.find(
       notification => notification.message === message
     )
-      ? todaysPastNotifications
-      : todaysPastNotifications.concat({ message, onClick, severity }),
+      ? todaysNotifications
+      : todaysNotifications.concat({ message, onClick, severity }),
   }
 }
 
