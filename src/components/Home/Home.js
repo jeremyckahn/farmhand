@@ -1,6 +1,7 @@
 import React from 'react'
 import { func } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
+import window from 'global/window'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
@@ -17,7 +18,11 @@ import { stageFocusType } from '../../enums'
 
 import './Home.sass'
 
+// https://stackoverflow.com/questions/41742390/javascript-to-check-if-pwa-or-mobile-web/41749865#41749865
 const isInstallable =
+  // process.env checks are needed to make tests not fail
+  (process.env.NODE_ENV === 'production' ||
+    process.env.NODE_ENV === 'development') &&
   !window.matchMedia('(display-mode: standalone)').matches &&
   (window.location.origin === 'https://jeremyckahn.github.io' ||
     window.location.origin === 'http://localhost:3000') // For debugging
