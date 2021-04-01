@@ -23,6 +23,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - run: node -e "console.log(require('./package.json').version)" > build/version.txt
       - name: Publish to itch.io
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
@@ -31,3 +32,4 @@ jobs:
           ITCH_GAME: Farmhand
           ITCH_USER: jeremyckahn
           PACKAGE: build
+          VERSION_FILE: build/version.txt
