@@ -17,6 +17,11 @@ import { stageFocusType } from '../../enums'
 
 import './Home.sass'
 
+const isInstallable =
+  !window.matchMedia('(display-mode: standalone)').matches &&
+  (window.location.origin === 'https://jeremyckahn.github.io' ||
+    window.location.origin === 'http://localhost:3000') // For debugging
+
 const Home = ({ handleViewChangeButtonClick }) => (
   <div className="Home">
     <h1>Welcome!</h1>
@@ -100,22 +105,28 @@ You'll see a notification explaining how you affected the market when you end th
       </CardContent>
     </Card>
     <Divider />
-    <Card>
-      <CardContent>
-        <ReactMarkdown
-          {...{
-            className: 'markdown',
-            linkTarget: '_blank',
-            source: `
+    {isInstallable && (
+      <>
+        <Card>
+          <CardContent>
+            <ReactMarkdown
+              {...{
+                className: 'markdown',
+                linkTarget: '_blank',
+                source: `
 ### Installation
 
-If you're playing Farmhand on a mobile device, you can install it as an app right from this website and play it offline! All you need to do is [add it to your home screen](https://www.howtogeek.com/196087/how-to-add-websites-to-the-home-screen-on-any-smartphone-or-tablet/). If you are playing it on desktop Chrome, you can [install it as app there as well](https://twitter.com/jeremyckahn/status/1329266318785253377?s=20).
+Farmhand can be installed to your device right from this web page! Once installed, the game can be played with or without an internet connection.
+
+If you're playing on a mobile device, all you need to do is [add it to your home screen](https://www.howtogeek.com/196087/how-to-add-websites-to-the-home-screen-on-any-smartphone-or-tablet/). If you're playing it on desktop Chrome or Microsoft Edge, you can [install it as an app there as well](https://twitter.com/jeremyckahn/status/1329266318785253377?s=20).
     `,
-          }}
-        />
-      </CardContent>
-    </Card>
-    <Divider />
+              }}
+            />
+          </CardContent>
+        </Card>
+        <Divider />
+      </>
+    )}
     <Card>
       <CardContent>
         <ReactMarkdown
