@@ -4,5 +4,5 @@ export const ACCEPTED_ORIGINS = new Set([
   'http://localhost:3000',
   'https://farmhand.vercel.app',
   'https://jeremyckahn.github.io',
-  'https://jeremyckahn.itch.io',
+  'https://v6p9d9t4.ssl.hwcdn.net', // itch.io's CDN that the game is served from
 ])
