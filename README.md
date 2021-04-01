@@ -18,6 +18,7 @@
 
 Storefront links:
 
+- https://jeremyckahn.itch.io/farmhand
 - https://plaza.dsolver.ca/games/farmhand
 
 Farmhand is a resource management game that puts a farm in your hand. It is designed to be both desktop and mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
