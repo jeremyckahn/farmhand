@@ -9,7 +9,10 @@ beforeEach(() => {
   component = shallow(
     <AppBar
       {...{
+        handleClickNotificationIndicator: () => {},
         money: 0,
+        showNotifications: false,
+        todaysNotifications: [],
         viewTitle: '',
       }}
     />

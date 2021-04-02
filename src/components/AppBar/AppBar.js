@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { tween } from 'shifty'
-import { func, number, string } from 'prop-types'
+import { array, bool, func, number, string } from 'prop-types'
 
 import { default as MuiAppBar } from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -133,6 +133,8 @@ export const AppBar = ({
 AppBar.propTypes = {
   handleClickNotificationIndicator: func.isRequired,
   money: number.isRequired,
+  showNotifications: bool.isRequired,
+  todaysNotifications: array.isRequired,
   viewTitle: string.isRequired,
 }
 
