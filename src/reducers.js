@@ -1120,15 +1120,17 @@ export const showNotification = (
   severity = 'info',
   onClick = undefined
 ) => {
-  const { todaysNotifications } = state
+  const { showNotifications, todaysNotifications } = state
 
   return {
     ...state,
-    latestNotification: {
-      message,
-      onClick,
-      severity,
-    },
+    ...(showNotifications && {
+      latestNotification: {
+        message,
+        onClick,
+        severity,
+      },
+    }),
     // Don't show redundant notifications
     todaysNotifications: todaysNotifications.find(
       notification => notification.message === message

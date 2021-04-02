@@ -13,6 +13,10 @@ beforeEach(() => {
         handleExportDataClick: () => {},
         handleImportDataClick: () => {},
         handleSaveButtonClick: () => {},
+        handleShowNotificationsChange: () => {},
+        handleUseAlternateEndDayButtonPositionChange: () => {},
+        showNotifications: true,
+        useAlternateEndDayButtonPosition: false,
       }}
     />
   )

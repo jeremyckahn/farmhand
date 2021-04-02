@@ -198,6 +198,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} revenue The amount of money the player has generated in
  * @property {string} redirect Transient value used to drive router redirection.
  * @property {string} room What online room the player is in.
+ * @property {boolean} showNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Array.<farmhand.notification>} todaysNotifications
  * @property {number} todaysLosses Should always be a negative number.
@@ -277,6 +278,7 @@ export default class Farmhand extends Component {
     room: decodeURIComponent(this.props.match.params.room || DEFAULT_ROOM),
     purchasedCowPen: 0,
     purchasedField: 0,
+    showNotifications: true,
     stageFocus: stageFocusType.HOME,
     todaysNotifications: [],
     todaysLosses: 0,

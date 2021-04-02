@@ -361,6 +361,10 @@ export default {
     this.setState({ useAlternateEndDayButtonPosition })
   },
 
+  handleShowNotificationsChange({ target: { checked } }) {
+    this.setState({ showNotifications: checked })
+  },
+
   handleOnlineToggleChange(_e, goOnline) {
     if (!goOnline) {
       this.showNotification(DISCONNECTING_FROM_SERVER, 'info')

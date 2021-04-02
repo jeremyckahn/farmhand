@@ -1470,7 +1470,7 @@ describe('makeRecipe', () => {
 describe('showNotification', () => {
   test('sets notification state', () => {
     const { latestNotification, todaysNotifications } = fn.showNotification(
-      { todaysNotifications: [] },
+      { showNotifications: true, todaysNotifications: [] },
       'foo'
     )
     const notificationObject = { message: 'foo', severity: 'info' }
