@@ -70,6 +70,10 @@ export const AppBar = ({
   showNotifications,
   todaysNotifications,
   viewTitle,
+
+  areAnyNotificationsErrors = todaysNotifications.some(
+    ({ severity }) => severity === 'error'
+  ),
 }) => (
   <MuiAppBar
     {...{
@@ -82,11 +86,18 @@ export const AppBar = ({
         className: 'toolbar',
       }}
     >
-      <Typography>
-        {!showNotifications && (
-          <StepIcon {...{ icon: todaysNotifications.length }} />
-        )}
-      </Typography>
+      {!showNotifications && (
+        <>
+          <Typography>
+            <StepIcon {...{ icon: todaysNotifications.length }} />
+          </Typography>
+          {areAnyNotificationsErrors && (
+            <Typography {...{ className: 'error-indicator' }}>
+              <StepIcon {...{ error: true, icon: '' }} />
+            </Typography>
+          )}
+        </>
+      )}
       <Typography
         {...{
           className: 'stage-header',
