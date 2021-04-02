@@ -68,7 +68,7 @@ const SettingsView = ({
                 name="show-notifications"
               />
             }
-            label="Show all new notifications"
+            label="Show new notifications"
           />
         </FormGroup>
       </FormControl>
