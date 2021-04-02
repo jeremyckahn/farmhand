@@ -866,7 +866,7 @@ export default class Farmhand extends Component {
                 containerRoot: 'Farmhand notification-container',
               },
               content: snackbarProviderContentCallback,
-              maxSnack: 3,
+              maxSnack: 4,
             }}
           >
             {redirect && <Redirect {...{ to: redirect }} />}
