@@ -5,6 +5,7 @@ import { number, string } from 'prop-types'
 import { default as MuiAppBar } from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
+import StepIcon from '@material-ui/core/StepIcon'
 
 import FarmhandContext from '../../Farmhand.context'
 import { moneyString } from '../../utils'
@@ -64,7 +65,12 @@ const MoneyDisplay = ({ money }) => {
   )
 }
 
-export const AppBar = ({ money, viewTitle }) => (
+export const AppBar = ({
+  money,
+  showNotifications,
+  todaysNotifications,
+  viewTitle,
+}) => (
   <MuiAppBar
     {...{
       className: 'AppBar',
@@ -76,6 +82,11 @@ export const AppBar = ({ money, viewTitle }) => (
         className: 'toolbar',
       }}
     >
+      <Typography>
+        {!showNotifications && (
+          <StepIcon {...{ icon: todaysNotifications.length }} />
+        )}
+      </Typography>
       <Typography
         {...{
           className: 'stage-header',
