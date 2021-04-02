@@ -365,6 +365,10 @@ export default {
     this.setState({ showNotifications: checked })
   },
 
+  handleClickNotificationIndicator() {
+    this.openDialogView(dialogView.FARMERS_LOG)
+  },
+
   handleOnlineToggleChange(_e, goOnline) {
     if (!goOnline) {
       this.showNotification(DISCONNECTING_FROM_SERVER, 'info')
