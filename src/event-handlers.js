@@ -361,6 +361,14 @@ export default {
     this.setState({ useAlternateEndDayButtonPosition })
   },
 
+  handleShowNotificationsChange({ target: { checked } }) {
+    this.setState({ showNotifications: checked })
+  },
+
+  handleClickNotificationIndicator() {
+    this.openDialogView(dialogView.FARMERS_LOG)
+  },
+
   handleOnlineToggleChange(_e, goOnline) {
     if (!goOnline) {
       this.showNotification(DISCONNECTING_FROM_SERVER, 'info')

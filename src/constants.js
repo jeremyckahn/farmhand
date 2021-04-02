@@ -138,6 +138,7 @@ export const PERSISTED_STATE_KEYS = [
   'recordProfitabilityStreak',
   'recordSingleDayProfit',
   'revenue',
+  'showNotifications',
   'todaysLosses',
   'todaysPurchases',
   'todaysRevenue',

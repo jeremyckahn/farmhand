@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { func } from 'prop-types'
+import { bool, func } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -23,7 +23,9 @@ const SettingsView = ({
   handleExportDataClick,
   handleImportDataClick,
   handleSaveButtonClick,
+  handleShowNotificationsChange,
   handleUseAlternateEndDayButtonPositionChange,
+  showNotifications,
   useAlternateEndDayButtonPosition,
 }) => {
   const [isClearDataDialogOpen, setIsClearDataDialogOpen] = useState(false)
@@ -56,6 +58,17 @@ const SettingsView = ({
               />
             }
             label="Use alternate position for Bed button"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                color="primary"
+                checked={showNotifications}
+                onChange={handleShowNotificationsChange}
+                name="show-notifications"
+              />
+            }
+            label="Show new notifications"
           />
         </FormGroup>
       </FormControl>
@@ -160,6 +173,10 @@ SettingsView.propTypes = {
   handleExportDataClick: func.isRequired,
   handleImportDataClick: func.isRequired,
   handleSaveButtonClick: func.isRequired,
+  handleShowNotificationsChange: func.isRequired,
+  handleUseAlternateEndDayButtonPositionChange: func.isRequired,
+  showNotifications: bool.isRequired,
+  useAlternateEndDayButtonPosition: bool.isRequired,
 }
 
 export default function Consumer(props) {

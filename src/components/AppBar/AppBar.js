@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { tween } from 'shifty'
-import { number, string } from 'prop-types'
+import { array, bool, func, number, string } from 'prop-types'
 
 import { default as MuiAppBar } from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
+import StepIcon from '@material-ui/core/StepIcon'
 
 import FarmhandContext from '../../Farmhand.context'
 import { moneyString } from '../../utils'
@@ -64,7 +65,17 @@ const MoneyDisplay = ({ money }) => {
   )
 }
 
-export const AppBar = ({ money, viewTitle }) => (
+export const AppBar = ({
+  handleClickNotificationIndicator,
+  money,
+  showNotifications,
+  todaysNotifications,
+  viewTitle,
+
+  areAnyNotificationsErrors = todaysNotifications.some(
+    ({ severity }) => severity === 'error'
+  ),
+}) => (
   <MuiAppBar
     {...{
       className: 'AppBar',
@@ -76,6 +87,29 @@ export const AppBar = ({ money, viewTitle }) => (
         className: 'toolbar',
       }}
     >
+      {!showNotifications && (
+        <div
+          {...{
+            className: 'notification-indicator-container',
+            onClick: handleClickNotificationIndicator,
+          }}
+        >
+          <Typography>
+            <StepIcon
+              {...{ icon: Math.max(0, todaysNotifications.length - 1) }}
+            />
+          </Typography>
+          {areAnyNotificationsErrors && (
+            <Typography
+              {...{
+                className: 'error-indicator',
+              }}
+            >
+              <StepIcon {...{ error: true, icon: '' }} />
+            </Typography>
+          )}
+        </div>
+      )}
       <Typography
         {...{
           className: 'stage-header',
@@ -97,7 +131,10 @@ export const AppBar = ({ money, viewTitle }) => (
 )
 
 AppBar.propTypes = {
+  handleClickNotificationIndicator: func.isRequired,
   money: number.isRequired,
+  showNotifications: bool.isRequired,
+  todaysNotifications: array.isRequired,
   viewTitle: string.isRequired,
 }
 
