@@ -19,12 +19,10 @@
     "predeploy": "npm run build",
     "prettier": "prettier 'src/**/*.js' --write",
     "preversion": "CI=true npm run test",
-    "-postversion": "git push && git push --tags",
     "release:patch": "npm version patch && npm run sync-stable-branches",
     "release:minor": "npm version minor && npm run sync-stable-branches",
     "start": "react-scripts start",
     "start:api": "vercel dev --listen 0.0.0.0:3001",
-    "-sync-stable-branches": "git checkout master && git merge develop && git push origin master && git checkout develop",
     "test": "react-scripts test",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "update-images": "bash update-images.sh"
