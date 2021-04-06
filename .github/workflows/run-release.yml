@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup
-        uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2.3.1
         with:
           ref: master
       - uses: actions/checkout@v2.3.1
@@ -36,7 +36,7 @@ jobs:
       # Push merge commit back to master and trigger downstream workflows
       # https://github.community/t/push-from-action-does-not-trigger-subsequent-action/16854/2
       - name: Trigger deployment
-        run: git checkout master
-        uses: ad-m/github-push-action@v0.6.0
+      - run: git checkout master
+      - uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
