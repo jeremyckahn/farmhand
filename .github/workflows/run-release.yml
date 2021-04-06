@@ -36,6 +36,8 @@ jobs:
 
       - name: Tag release
         run: npm version ${{ github.event.inputs.releaseType }}
+
+      - name: Push tag commit back to develop
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
