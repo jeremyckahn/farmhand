@@ -24,6 +24,14 @@ jobs:
       - name: Setup Git user
         uses: fregante/setup-git-user@v1
 
+      - name: Setup Node
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Tag release
         run: npm version ${{ github.event.inputs.releaseType }}
 
