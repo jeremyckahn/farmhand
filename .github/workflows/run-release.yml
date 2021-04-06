@@ -14,8 +14,9 @@ jobs:
       - name: Check out develop
         uses: actions/checkout@v2.3.1
         with:
-          ref: develop
           fetch-depth: 0
+          persist-credentials: false
+          ref: develop
 
       - name: Setup Git user
         uses: fregante/setup-git-user@v1
@@ -34,15 +35,16 @@ jobs:
       - name: Push tag commit back to develop
         uses: ad-m/github-push-action@v0.6.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           branch: develop
           tags: true
 
       - name: Check out master
         uses: actions/checkout@v2.3.1
         with:
-          ref: master
           fetch-depth: 0
+          persist-credentials: false
+          ref: master
 
       - name: Sync branches
         run: git merge origin/develop
@@ -52,5 +54,5 @@ jobs:
       - name: Trigger deployment
         uses: ad-m/github-push-action@v0.6.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           branch: master
