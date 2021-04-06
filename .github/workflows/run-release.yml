@@ -11,12 +11,6 @@ jobs:
   triggerRelease:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out master
-        uses: actions/checkout@v2.3.1
-        with:
-          ref: master
-          fetch-depth: 0
-
       - name: Check out develop
         uses: actions/checkout@v2.3.1
         with:
@@ -37,17 +31,21 @@ jobs:
       - name: Tag release
         run: npm version ${{ github.event.inputs.releaseType }}
 
-      - name: Sync branches
-        run: git checkout master && git merge develop && git checkout develop
-
       - name: Push tag commit back to develop
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          branch: develop
           tags: true
 
-      - name: Switch back to master
-        run: git checkout master
+      - name: Check out master
+        uses: actions/checkout@v2.3.1
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Sync branches
+        run: git merge origin/develop
 
       # Push merge commit back to master and trigger downstream workflows
       # https://github.community/t/push-from-action-does-not-trigger-subsequent-action/16854/2
@@ -55,3 +53,4 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          branch: master
