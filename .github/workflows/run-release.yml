@@ -11,7 +11,6 @@ jobs:
   triggerRelease:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup
       - uses: actions/checkout@v2.3.1
         with:
           ref: master
