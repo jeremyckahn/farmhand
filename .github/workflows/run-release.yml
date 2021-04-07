@@ -27,8 +27,7 @@ jobs:
           node-version: 14
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
       - name: Tag release
         run: npm version ${{ github.event.inputs.releaseType }}
@@ -48,7 +47,7 @@ jobs:
           ref: master
 
       - name: Sync branches
-        run: git merge -m "Merge ${{ github.event.inputs.releaseType }}" origin/develop
+        run: git merge -m "Merge ${{ github.event.inputs.releaseType }} commit" origin/develop
 
       # Push merge commit back to master and trigger downstream workflows
       # https://github.community/t/push-from-action-does-not-trigger-subsequent-action/16854/2
@@ -59,7 +58,8 @@ jobs:
           branch: master
 
       - name: Publish NPM package
-        run: PUBLIC_URL='./' npm run build
+      - run: npm ci
+      - run: PUBLIC_URL='./' npm run build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
