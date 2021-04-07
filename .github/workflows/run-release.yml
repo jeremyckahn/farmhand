@@ -59,6 +59,30 @@ jobs:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           branch: master
 
+      - name: Deploy to jeremyckahn.github.io/farmhand
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run doc
+
+      # https://github.com/marketplace/actions/deploy-to-github-pages
+      - uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
+          CLEAN: true
+          SINGLE_COMMIT: true
+
+      # https://github.com/marketplace/actions/actions-for-discord
+      # https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#push
+      - name: Notify Discord Channel
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.0
+        with:
+          args: 'A game update is available on https://jeremyckahn.github.io/farmhand/!\nTake a look at what changed: {{ EVENT_PAYLOAD.compare }}'
+
       - run: npm ci
       - name: Publish NPM package
         run: PUBLIC_URL='./' npm run build
