@@ -35,6 +35,7 @@ jobs:
       - name: Check out master
         uses: actions/checkout@v2.3.1
         with:
+          clean: false
           fetch-depth: 0
           persist-credentials: false
           ref: master
