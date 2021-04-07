@@ -8,7 +8,7 @@ on:
         default: 'patch'
 
 jobs:
-  triggerRelease:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Check out develop
@@ -50,27 +50,6 @@ jobs:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           tags: true
 
-      - run: npm run build
-      - run: npm run doc
-
-      # https://github.com/marketplace/actions/deploy-to-github-pages
-      - name: Deploy to jeremyckahn.github.io/farmhand
-        uses: JamesIves/github-pages-deploy-action@3.7.1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: build
-          CLEAN: true
-          SINGLE_COMMIT: true
-
-      # Re-pull the latest master branch
-      - name: Check out master
-        uses: actions/checkout@v2.3.1
-        with:
-          clean: false
-          persist-credentials: false
-          ref: master
-
       - run: PUBLIC_URL='./' npm run build
       - run: npm publish
         env:
@@ -86,3 +65,17 @@ jobs:
           ITCH_USER: jeremyckahn
           PACKAGE: build
           VERSION_FILE: build/version.txt
+
+      - run: |
+          npm run build
+          npm run doc
+
+      # https://github.com/marketplace/actions/deploy-to-github-pages
+      - name: Deploy to jeremyckahn.github.io/farmhand
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
+          CLEAN: true
+          SINGLE_COMMIT: true
