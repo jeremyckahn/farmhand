@@ -59,14 +59,14 @@ jobs:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           branch: master
 
-      - name: Deploy to jeremyckahn.github.io/farmhand
       - run: npm ci
       - run: npm test
       - run: npm run build
       - run: npm run doc
 
       # https://github.com/marketplace/actions/deploy-to-github-pages
-      - uses: JamesIves/github-pages-deploy-action@3.7.1
+      - name: Deploy to jeremyckahn.github.io/farmhand
+        uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
