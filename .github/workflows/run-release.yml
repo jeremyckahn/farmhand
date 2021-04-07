@@ -47,7 +47,7 @@ jobs:
           ref: master
 
       - name: Sync branches
-        run: git merge origin/develop
+        run: git merge -m "Merge ${{ github.event.inputs.releaseType }}" origin/develop
 
       # Push merge commit back to master and trigger downstream workflows
       # https://github.community/t/push-from-action-does-not-trigger-subsequent-action/16854/2
