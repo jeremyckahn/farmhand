@@ -63,9 +63,15 @@ jobs:
           CLEAN: true
           SINGLE_COMMIT: true
 
+      # Re-pull the latest master branch
+      - name: Check out master
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+          ref: master
+
       - run: npm ci
-      - name: Publish NPM package
-        run: PUBLIC_URL='./' npm run build
+      - run: PUBLIC_URL='./' npm run build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
