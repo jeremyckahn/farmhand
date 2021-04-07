@@ -74,15 +74,6 @@ jobs:
           CLEAN: true
           SINGLE_COMMIT: true
 
-      # https://github.com/marketplace/actions/actions-for-discord
-      # https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#push
-      - name: Notify Discord Channel
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@0.3.0
-        with:
-          args: 'A game update is available on https://jeremyckahn.github.io/farmhand/!\nTake a look at what changed: {{ EVENT_PAYLOAD.compare }}'
-
       - run: npm ci
       - name: Publish NPM package
         run: PUBLIC_URL='./' npm run build
@@ -100,3 +91,12 @@ jobs:
           ITCH_USER: jeremyckahn
           PACKAGE: build
           VERSION_FILE: build/version.txt
+
+      # https://github.com/marketplace/actions/actions-for-discord
+      # https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#push
+      - name: Notify Discord Channel
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.0
+        with:
+          args: 'A game update is available on https://jeremyckahn.github.io/farmhand/!\nTake a look at what changed: {{ EVENT_PAYLOAD.compare }}'
