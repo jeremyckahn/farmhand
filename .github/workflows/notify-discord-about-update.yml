@@ -1,0 +1,23 @@
+name: Notify Discord About Game Update
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+
+      # https://github.com/marketplace/actions/actions-for-discord
+      # https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads#push
+      - name: Notify Discord Channel
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.0
+        with:
+          args: 'A game update is available on https://jeremyckahn.github.io/farmhand/! Take a look at what changed: {{ EVENT_PAYLOAD.compare }}'
