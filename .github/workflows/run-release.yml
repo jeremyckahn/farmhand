@@ -67,6 +67,7 @@ jobs:
       - name: Check out master
         uses: actions/checkout@v2.3.1
         with:
+          clean: false
           persist-credentials: false
           ref: master
 
@@ -76,7 +77,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: node -e "console.log(require('./package.json').version)" > build/version.txt
-      - run: cat build/version.txt
       - name: Publish itch.io build
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
