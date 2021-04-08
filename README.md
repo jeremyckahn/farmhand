@@ -58,6 +58,19 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 
 Automation is done with [GitHub Actions](.github/workflows). All changes are tested and built upon Git push. Merges to `master` automatically deploy to Production (the `gh-pages` branch) upon a successful test run and build.
 
+### Releasing updates
+
+This GitHub Action will deploy a new version of Farmhand: [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
+
+As an authenticated repo owner, click "Run workflow" and enter the argument to be passed to [`npm version`](https://docs.npmjs.com/cli/v7/commands/npm-version) and submit your selection. This will deploy Farmhand to:
+
+- https://jeremyckahn.github.io/farmhand/
+- https://jeremyckahn.itch.io/farmhand
+- https://www.npmjs.com/package/@jeremyckahn/farmhand
+  - Playable from https://unpkg.com/browse/@jeremyckahn/farmhand/build/
+
+It will also notify the Discord server about the update.
+
 ## License
 
 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
