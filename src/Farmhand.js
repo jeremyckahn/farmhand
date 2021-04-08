@@ -634,7 +634,10 @@ export default class Farmhand extends Component {
             room,
           })
 
-          this.setState({ activePlayers })
+          this.setState(({ money }) => ({
+            activePlayers,
+            money: moneyTotal(money, activePlayers),
+          }))
         } catch (e) {
           this.showNotification(SERVER_ERROR, 'error')
 
