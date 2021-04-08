@@ -104,6 +104,8 @@ Online play works just like offline play, except that the fluctuating market val
 * Selling items (seeds or harvested crops) or harvesting seeds lowers their respective values
 
 You'll see a notification explaining how you affected the market when you end the farm day. Because room market values are shared, **your buy/sell/harvest decisions affect others** when they join the room or end their farm day. Time your actions right to take advantage of market trends and gain the competitive edge over other online farmers!
+
+As an added bonus for playing online, **you'll get free money** a few times every minute while connected to a room. The more people that are connected, the more you'll get. Invite your friends to the room and to increase the bonus for everyone!
     `,
           }}
         />
