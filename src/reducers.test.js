@@ -1001,6 +1001,33 @@ describe('addItemToInventory', () => {
         })
       })
     })
+
+    describe('allowInventoryOverage is true', () => {
+      test('all items are added to inventory', () => {
+        expect(
+          fn.addItemToInventory(
+            {
+              inventory: [{ id: 'sample-item-1', quantity: 3 }],
+              inventoryLimit: 3,
+            },
+            { id: 'sample-item-2' },
+            5,
+            true
+          )
+        ).toMatchObject({
+          inventory: [
+            {
+              id: 'sample-item-1',
+              quantity: 3,
+            },
+            {
+              id: 'sample-item-2',
+              quantity: 5,
+            },
+          ],
+        })
+      })
+    })
   })
 })
 
