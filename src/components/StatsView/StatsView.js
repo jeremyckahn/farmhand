@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableRow from '@material-ui/core/TableRow'
 import Tooltip from '@material-ui/core/Tooltip'
 import Paper from '@material-ui/core/Paper'
+import sortBy from 'lodash.sortby'
 
 import { itemsMap } from '../../data/maps'
 import FarmhandContext from '../../Farmhand.context'
@@ -208,15 +209,16 @@ const StatsView = ({
     <TableContainer {...{ component: ElevatedPaper }}>
       <Table aria-label="Profit and Loss Stats">
         <TableBody>
-          {/* FIXME: Sort by item name */}
-          {Object.entries(itemsSold).map(([itemId, quantity]) => (
-            <TableRow {...{ key: itemId }}>
-              <TableCell {...{ component: 'th', scope: 'row' }}>
-                {itemsMap[itemId].name}
-              </TableCell>
-              <TableCell align="right">{integerString(quantity)}</TableCell>
-            </TableRow>
-          ))}
+          {sortBy(Object.entries(itemsSold), ([itemId]) => itemId).map(
+            ([itemId, quantity]) => (
+              <TableRow {...{ key: itemId }}>
+                <TableCell {...{ component: 'th', scope: 'row' }}>
+                  {itemsMap[itemId].name}
+                </TableCell>
+                <TableCell align="right">{integerString(quantity)}</TableCell>
+              </TableRow>
+            )
+          )}
         </TableBody>
       </Table>
     </TableContainer>
