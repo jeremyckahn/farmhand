@@ -40,6 +40,7 @@ import {
   getAvailbleShopInventory,
   getItemCurrentValue,
   getLevelEntitlements,
+  inventorySpaceRemaining,
   levelAchieved,
   memoize,
   moneyTotal,
@@ -66,9 +67,10 @@ import {
   RECIPE_LEARNED,
 } from './templates'
 import {
-  DATA_DELETED,
   CONNECTING_TO_SERVER,
+  DATA_DELETED,
   DISCONNECTED_FROM_SERVER,
+  INVENTORY_FULL_NOTIFICATION,
   PROGRESS_SAVED_MESSAGE,
   SERVER_ERROR,
   UPDATE_AVAILABLE,
@@ -569,6 +571,7 @@ export default class Farmhand extends Component {
 
     ;[
       'showCowPenPurchasedNotifications',
+      'showInventoryFullNotifications',
       'showRecipeLearnedNotifications',
     ].forEach(fn => this[fn](prevState))
   }
@@ -661,6 +664,18 @@ export default class Farmhand extends Component {
       const { cows } = PURCHASEABLE_COW_PENS.get(purchasedCowPen)
 
       this.showNotification(COW_PEN_PURCHASED`${cows}`)
+    }
+  }
+
+  /*!
+   * @param {farmhand.state} prevState
+   */
+  showInventoryFullNotifications(prevState) {
+    if (
+      inventorySpaceRemaining(prevState) > 0 &&
+      inventorySpaceRemaining(this.state) <= 0
+    ) {
+      this.showNotification(INVENTORY_FULL_NOTIFICATION, 'warning')
     }
   }
 

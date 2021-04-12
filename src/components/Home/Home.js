@@ -153,7 +153,7 @@ If you're playing on a mobile device, all you need to do is [add it to your home
 
 * Put up a scarecrow to protect your field!
 
-* Watch your inventory space as you obtain items. You can purchase additional storage space in the shop.
+* Watch your inventory space as you obtain items. You can purchase additional Storage Units in the shop.
 
 * You'll be able to unlock new crops and items as you level up. Sell crops, milk, and crafted items to gain experience!
 
