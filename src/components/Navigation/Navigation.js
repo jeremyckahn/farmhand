@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -25,21 +26,23 @@ import { array, bool, func, number, object, string } from 'prop-types'
 import FarmhandContext from '../../Farmhand.context'
 import {
   doesInventorySpaceRemain,
+  farmProductSalesVolumeNeededForLevel,
   farmProductsSold,
   integerString,
   inventorySpaceConsumed,
   levelAchieved,
+  scaleNumber,
 } from '../../utils'
 import { dialogView } from '../../enums'
 import { STAGE_TITLE_MAP } from '../../constants'
 import { MAX_ROOM_NAME_LENGTH } from '../../common/constants'
 
+import AccountingView from '../AccountingView'
+import AchievementsView from '../AchievementsView'
 import LogView from '../LogView'
 import PriceEventView from '../PriceEventView'
-import AchievementsView from '../AchievementsView'
-import StatsView from '../StatsView'
-import AccountingView from '../AccountingView'
 import SettingsView from '../SettingsView'
+import StatsView from '../StatsView'
 
 import './Navigation.sass'
 
@@ -193,13 +196,39 @@ export const Navigation = ({
 
   totalFarmProductsSold = farmProductsSold(itemsSold),
   currentLevel = levelAchieved(totalFarmProductsSold),
+  levelPercent = scaleNumber(
+    totalFarmProductsSold,
+    farmProductSalesVolumeNeededForLevel(currentLevel),
+    farmProductSalesVolumeNeededForLevel(currentLevel + 1),
+    0,
+    100
+  ),
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
     <p className="version">v{process.env.REACT_APP_VERSION}</p>
     <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
-    <h2 className="day-count">
-      Day {dayCount}, level {integerString(currentLevel)}
+    <h2 className="day-and-progress-container">
+      <span>
+        Day {dayCount}, level {integerString(currentLevel)}
+      </span>
+      <Tooltip
+        {...{
+          arrow: true,
+          placement: 'top',
+          title: `${integerString(
+            farmProductSalesVolumeNeededForLevel(currentLevel + 1) -
+              totalFarmProductsSold
+          )} sales needed for next level`,
+        }}
+      >
+        <CircularProgress
+          {...{
+            value: levelPercent,
+            variant: 'static',
+          }}
+        />
+      </Tooltip>
     </h2>
     <OnlineControls
       {...{
