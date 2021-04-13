@@ -275,7 +275,7 @@ export const Navigation = ({
       {...{
         className: 'Farmhand',
         fullWidth: true,
-        maxWidth: 'md',
+        maxWidth: 'xs',
         onClose: handleCloseDialogView,
         open: isDialogViewOpen,
         onExited: handleDialogViewExited,
