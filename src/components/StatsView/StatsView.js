@@ -109,6 +109,7 @@ const StatsView = ({
         </TableBody>
       </Table>
     </TableContainer>
+    <h3>Financial Records</h3>
     <TableContainer {...{ component: ElevatedPaper }}>
       <Table aria-label="Profit and Loss Stats">
         <TableBody>
@@ -205,23 +206,29 @@ const StatsView = ({
         </TableBody>
       </Table>
     </TableContainer>
-    <h3>Items Sold</h3>
-    <TableContainer {...{ component: ElevatedPaper }}>
-      <Table aria-label="Profit and Loss Stats">
-        <TableBody>
-          {sortBy(Object.entries(itemsSold), ([itemId]) => itemId).map(
-            ([itemId, quantity]) => (
-              <TableRow {...{ key: itemId }}>
-                <TableCell {...{ component: 'th', scope: 'row' }}>
-                  {itemsMap[itemId].name}
-                </TableCell>
-                <TableCell align="right">{integerString(quantity)}</TableCell>
-              </TableRow>
-            )
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    {Object.keys(itemsSold).length > 0 && (
+      <>
+        <h3>Items Sold</h3>
+        <TableContainer {...{ component: ElevatedPaper }}>
+          <Table aria-label="Profit and Loss Stats">
+            <TableBody>
+              {sortBy(Object.entries(itemsSold), ([itemId]) => itemId).map(
+                ([itemId, quantity]) => (
+                  <TableRow {...{ key: itemId }}>
+                    <TableCell {...{ component: 'th', scope: 'row' }}>
+                      {itemsMap[itemId].name}
+                    </TableCell>
+                    <TableCell align="right">
+                      {integerString(quantity)}
+                    </TableCell>
+                  </TableRow>
+                )
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
+    )}
   </div>
 )
 
