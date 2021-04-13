@@ -143,7 +143,7 @@ export const moneyTotal = (...args) =>
  * @param {number} baseMax Standard maximum
  * @returns {number}
  */
-const scaleNumber = (value, min, max, baseMin, baseMax) =>
+export const scaleNumber = (value, min, max, baseMin, baseMax) =>
   ((value - min) * (baseMax - baseMin)) / (max - min) + baseMin
 
 export const createNewField = () =>

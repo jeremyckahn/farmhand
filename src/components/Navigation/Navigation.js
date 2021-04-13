@@ -1,45 +1,49 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Fab from '@material-ui/core/Fab'
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem'
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
-import HistoryIcon from '@material-ui/icons/History'
 import FlashOnIcon from '@material-ui/icons/FlashOn'
-import TrendingUpIcon from '@material-ui/icons/TrendingUp'
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import FormControl from '@material-ui/core/FormControl'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormGroup from '@material-ui/core/FormGroup'
-import Switch from '@material-ui/core/Switch'
+import HistoryIcon from '@material-ui/icons/History'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
 import SettingsIcon from '@material-ui/icons/Settings'
-import Tooltip from '@material-ui/core/Tooltip'
+import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
+import Tooltip from '@material-ui/core/Tooltip'
+import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import { array, bool, func, number, object, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
 import {
   doesInventorySpaceRemain,
+  farmProductSalesVolumeNeededForLevel,
   farmProductsSold,
   integerString,
   inventorySpaceConsumed,
   levelAchieved,
+  scaleNumber,
 } from '../../utils'
 import { dialogView } from '../../enums'
 import { STAGE_TITLE_MAP } from '../../constants'
 import { MAX_ROOM_NAME_LENGTH } from '../../common/constants'
 
+import AccountingView from '../AccountingView'
+import AchievementsView from '../AchievementsView'
 import LogView from '../LogView'
 import PriceEventView from '../PriceEventView'
-import AchievementsView from '../AchievementsView'
-import StatsView from '../StatsView'
-import AccountingView from '../AccountingView'
 import SettingsView from '../SettingsView'
+import StatsView from '../StatsView'
 
 import './Navigation.sass'
 
@@ -193,13 +197,42 @@ export const Navigation = ({
 
   totalFarmProductsSold = farmProductsSold(itemsSold),
   currentLevel = levelAchieved(totalFarmProductsSold),
+  levelPercent = scaleNumber(
+    totalFarmProductsSold,
+    farmProductSalesVolumeNeededForLevel(currentLevel),
+    farmProductSalesVolumeNeededForLevel(currentLevel + 1),
+    0,
+    100
+  ),
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
     <p className="version">v{process.env.REACT_APP_VERSION}</p>
     <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
-    <h2 className="day-count">
-      Day {dayCount}, level {integerString(currentLevel)}
+    <h2 className="day-and-progress-container">
+      <span>Day {dayCount}, level:</span>
+      <Tooltip
+        {...{
+          arrow: true,
+          placement: 'top',
+          title: `${integerString(
+            farmProductSalesVolumeNeededForLevel(currentLevel + 1) -
+              totalFarmProductsSold
+          )} more sales needed for level ${integerString(currentLevel + 1)}`,
+        }}
+      >
+        <Box>
+          <CircularProgress
+            {...{
+              value: levelPercent,
+              variant: 'static',
+            }}
+          />
+          <span {...{ className: 'current-level' }}>
+            {integerString(currentLevel)}
+          </span>
+        </Box>
+      </Tooltip>
     </h2>
     <OnlineControls
       {...{
