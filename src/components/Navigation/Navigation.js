@@ -225,7 +225,7 @@ export const Navigation = ({
           <CircularProgress
             {...{
               value: levelPercent,
-              variant: 'static',
+              variant: 'determinate',
             }}
           />
           <span {...{ className: 'current-level' }}>

@@ -1,6 +1,6 @@
 {
   "name": "@jeremyckahn/farmhand",
-  "version": "1.5.31",
+  "version": "1.5.32",
   "publishConfig": {
     "access": "public"
   },
@@ -49,6 +49,7 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "gh-pages": "^2.2.0",
+    "git-branch-is": "^4.0.0",
     "husky": "^4.2.3",
     "jest-extended": "^0.11.5",
     "jsdoc": "^3.5.5",
@@ -80,7 +81,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/react-fontawesome": "^0.1.9",
-    "@material-ui/core": "^4.10.2",
+    "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.53",
     "animate.css": "^4.1.0",
@@ -113,7 +114,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run lint && cross-env CI=true react-scripts test --env=jsdom --lastCommit"
+      "pre-commit": "if git-branch-is develop; then pretty-quick --staged && npm run lint && cross-env CI=true react-scripts test --env=jsdom; fi"
     }
   },
   "files": [

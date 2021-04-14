@@ -1,8 +1,8 @@
 import React from 'react'
 import { func } from 'prop-types'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
 import Button from '@material-ui/core/Button'
 
 import { carrot } from '../../data/items'
@@ -12,11 +12,11 @@ import FarmhandContext from '../../Farmhand.context'
 import './DebugMenu.sass'
 
 export const DebugMenu = ({ handleAddMoneyClick, handleItemPurchaseClick }) => (
-  <ExpansionPanel className="DebugMenu" square={true}>
-    <ExpansionPanelSummary>
+  <Accordion className="DebugMenu" square={true}>
+    <AccordionSummary>
       <h2>Debug Menu</h2>
-    </ExpansionPanelSummary>
-    <ExpansionPanelDetails>
+    </AccordionSummary>
+    <AccordionDetails>
       <Button
         color="primary"
         onClick={() => handleAddMoneyClick(10000)}
@@ -31,8 +31,8 @@ export const DebugMenu = ({ handleAddMoneyClick, handleItemPurchaseClick }) => (
       >
         Buy 10 carrots
       </Button>
-    </ExpansionPanelDetails>
-  </ExpansionPanel>
+    </AccordionDetails>
+  </Accordion>
 )
 
 DebugMenu.propTypes = {
