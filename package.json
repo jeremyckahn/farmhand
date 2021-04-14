@@ -90,6 +90,7 @@
     "dinero.js": "^1.7.0",
     "fast-memoize": "^2.5.2",
     "file-saver": "^2.0.2",
+    "git-branch-is": "^4.0.0",
     "global": "^4.4.0",
     "localforage": "^1.7.3",
     "lodash.debounce": "^4.0.8",
@@ -113,7 +114,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run lint && cross-env CI=true react-scripts test --env=jsdom --lastCommit"
+      "pre-commit": "if git-branch-is develop; then pretty-quick --staged && npm run lint && cross-env CI=true react-scripts test --env=jsdom; fi"
     }
   },
   "files": [
