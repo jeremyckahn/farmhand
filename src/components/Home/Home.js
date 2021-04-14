@@ -4,9 +4,9 @@ import ReactMarkdown from 'react-markdown'
 import window from 'global/window'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import Card from '@material-ui/core/Card'
@@ -30,11 +30,11 @@ const isInstallable =
 const Home = ({ handleViewChangeButtonClick }) => (
   <div className="Home">
     <h1>Welcome!</h1>
-    <ExpansionPanel>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+    <Accordion>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Click to read a note from the developer</h2>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <ReactMarkdown
           {...{
             linkTarget: '_blank',
@@ -54,8 +54,8 @@ Happy farming! 🐮
     `,
           }}
         />
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
     <Divider />
     <Card>
       <CardContent>

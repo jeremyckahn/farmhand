@@ -1,7 +1,7 @@
 import React from 'react'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
 import { object } from 'prop-types'
 import Divider from '@material-ui/core/Divider'
 
@@ -27,7 +27,7 @@ const partitionAchievements = memoize(completedAchievements =>
 )
 
 const AchievementsList = ({ achievements }) => (
-  <ExpansionPanelDetails>
+  <AccordionDetails>
     <ul className="card-list">
       {achievements.map(achievement => (
         <li {...{ key: achievement.id }}>
@@ -35,7 +35,7 @@ const AchievementsList = ({ achievements }) => (
         </li>
       ))}
     </ul>
-  </ExpansionPanelDetails>
+  </AccordionDetails>
 )
 
 const AchievementsView = ({
@@ -50,21 +50,21 @@ const AchievementsView = ({
     />
     {complete.length ? (
       <>
-        <ExpansionPanel {...{ defaultExpanded: true }}>
-          <ExpansionPanelSummary>
+        <Accordion {...{ defaultExpanded: true }}>
+          <AccordionSummary>
             <h3>Completed</h3>
-          </ExpansionPanelSummary>
+          </AccordionSummary>
           <AchievementsList {...{ achievements: complete }} />
-        </ExpansionPanel>
+        </Accordion>
         <Divider />
       </>
     ) : null}
-    <ExpansionPanel {...{ defaultExpanded: true }}>
-      <ExpansionPanelSummary>
+    <Accordion {...{ defaultExpanded: true }}>
+      <AccordionSummary>
         <h3>Not Completed</h3>
-      </ExpansionPanelSummary>
+      </AccordionSummary>
       <AchievementsList {...{ achievements: incomplete }} />
-    </ExpansionPanel>
+    </Accordion>
   </div>
 )
 
