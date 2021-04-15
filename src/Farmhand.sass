@@ -88,6 +88,7 @@ body
     left: 50%
     opacity: 0.85
     position: fixed
+    transition: left $duration-entering-screen $easing-ease-out
     width: 0
     z-index: 20
 
@@ -110,6 +111,10 @@ body
 
         @media (max-width: 320px)
           margin: 0.25em 0.1em
+
+  @media (min-width: #{$break-md})
+    &.menu-open .bottom-controls
+      left: calc(50vw + #{$sidebar-width / 2})
 
   .end-day
     position: fixed

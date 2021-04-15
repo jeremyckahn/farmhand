@@ -19,8 +19,8 @@
     @media (max-width: #{$break-small-phone})
       padding-top: 4.5em
 
-  &.menu-open
-    transition-properties: padding, margin-left
+  .menu-open &
+    transition-property: padding, margin-left
 
     @media (max-width: #{$break-sm})
       padding: 0
@@ -32,7 +32,7 @@
       @media (max-width: #{$break-sm})
         opacity: 0
 
-  &.menu-closed
+  .menu-closed &
     margin-left: -$sidebar-width
     transition: margin-left $duration-leaving-screen $easing-sharp
 
