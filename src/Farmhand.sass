@@ -155,7 +155,8 @@ body
   h2
     font-size: 1.4em
 
-  h3
+  h3,
+  h4
     margin: 1em 0
 
   p,
@@ -166,10 +167,13 @@ body
 
     &.card-list
       flex-grow: 1
-      max-width: $card-max-width
 
       li
-        margin: 1em 0em
+        margin: 1em 0
+
+      > li
+        margin: 1em auto
+        max-width: $card-max-width
 
   input
 

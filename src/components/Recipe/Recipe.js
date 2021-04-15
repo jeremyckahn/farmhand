@@ -28,7 +28,7 @@ const IngredientsList = ({
 }) => (
   <ul {...{ className: 'card-list', title: `Ingredients for ${name}` }}>
     <li>
-      <h3>Ingredients required:</h3>
+      <h4>Ingredients required:</h4>
     </li>
     {Object.keys(ingredients).map(itemId => (
       <li {...{ key: itemId }}>
