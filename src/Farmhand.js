@@ -893,11 +893,15 @@ export default class Farmhand extends Component {
             <FarmhandContext.Provider value={{ gameState, handlers }}>
               <div
                 {...{
-                  className: classNames('Farmhand fill', {
-                    'use-alternate-end-day-button-position': this.state
-                      .useAlternateEndDayButtonPosition,
-                    'block-input': this.state.isAwaitingNetworkRequest,
-                  }),
+                  className: classNames(
+                    'Farmhand fill',
+                    this.state.isMenuOpen ? 'menu-open' : 'menu-closed',
+                    {
+                      'use-alternate-end-day-button-position': this.state
+                        .useAlternateEndDayButtonPosition,
+                      'block-input': this.state.isAwaitingNetworkRequest,
+                    }
+                  ),
                 }}
               >
                 <AppBar />

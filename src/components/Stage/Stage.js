@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react'
-import classNames from 'classnames'
 import { array, arrayOf, bool, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -37,10 +36,7 @@ export const Stage = ({
   return (
     <div
       {...{
-        className: classNames(
-          'Stage',
-          isMenuOpen ? 'menu-open' : 'menu-closed'
-        ),
+        className: 'Stage',
         'data-stage-focus': stageFocus,
         ref,
       }}
