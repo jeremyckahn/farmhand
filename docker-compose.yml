@@ -1,0 +1,19 @@
+version: '3'
+services:
+  # https://github.com/voocel/docker-lnmp/blob/1441be394b880e36c2e1b675fb50a8067229c38a/docker-compose.yml#L58-L69
+  redis:
+    build: ./redis
+    image: redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - ./redis/redis.conf/:/usr/local/etc/redis.conf
+      - ./redis/data:/usr/local/redis/data
+      - ./redis/redis.log:/usr/local/redis/redis.log
+    networks:
+      - backend
+    restart: always
+    container_name: redis
+
+networks:
+  backend:
