@@ -68,12 +68,6 @@ npm ci
 npm run dev
 ```
 
-And in another shell, run:
-
-```sh
-docker-compose up
-```
-
 Farmhand will be accessible from http://localhost:3000/.
 
 ### CI/CD
