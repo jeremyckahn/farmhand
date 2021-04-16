@@ -1,6 +1,6 @@
 {
   "name": "@jeremyckahn/farmhand",
-  "version": "1.5.33",
+  "version": "1.5.34",
   "publishConfig": {
     "access": "public"
   },
@@ -24,6 +24,7 @@
     "release:minor": "npm version minor && npm run sync-stable-branches",
     "start": "react-scripts start",
     "start:api": "vercel dev --listen 0.0.0.0:3001",
+    "start:backend": "docker-compose up",
     "test": "react-scripts test",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "update-images": "bash update-images.sh"
@@ -60,7 +61,7 @@
     "piskel-cli": "^1.0.41",
     "prettier": "^1.13.7",
     "pretty-quick": "^2.0.1",
-    "react-scripts": "^4.0.0",
+    "react-scripts": "^4.0.3",
     "serve": "^11.3.2",
     "vercel": "^21.3.3",
     "workbox-background-sync": "^5.1.3",

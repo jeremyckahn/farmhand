@@ -54,6 +54,22 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 - This project is built with [Create React App](https://create-react-app.dev/), so please refer to the documentation of that project to learn about the development toolchain.
 - Farmhand uses [Piskel](https://www.piskelapp.com/) for the art assets.
 
+## Running locally
+
+Requires Node/NPM and Docker.
+
+In one shell run:
+
+```sh
+npm ci
+```
+
+```sh
+npm run dev
+```
+
+Farmhand will be accessible from http://localhost:3000/.
+
 ### CI/CD
 
 Automation is done with [GitHub Actions](.github/workflows). All changes are tested and built upon Git push. Merges to `master` automatically deploy to Production (the `gh-pages` branch) upon a successful test run and build.

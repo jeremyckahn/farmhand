@@ -84,6 +84,9 @@ export const Shop = ({
         <TierPurchase
           {...{
             handleTierPurchase: handleFieldPurchase,
+            maxedOutPlaceholder: (
+              <p>You've purchased the largest field available!</p>
+            ),
             purchasedTier: purchasedField,
             renderTierLabel: ({ columns, price, rows }) =>
               `$${price}: ${columns} x ${rows}`,
@@ -96,6 +99,9 @@ export const Shop = ({
         <TierPurchase
           {...{
             handleTierPurchase: handleCowPenPurchase,
+            maxedOutPlaceholder: (
+              <p>You've purchased the largest cow pen available!</p>
+            ),
             purchasedTier: purchasedCowPen,
             renderTierLabel: ({ cows, price }) => `$${price}: ${cows} cow pen`,
             tiers: PURCHASEABLE_COW_PENS,
