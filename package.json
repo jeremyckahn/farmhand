@@ -24,7 +24,7 @@
     "release:minor": "npm version minor && npm run sync-stable-branches",
     "start": "react-scripts start",
     "start:api": "vercel dev --listen 0.0.0.0:3001",
-    "start:redis": "docker-compose up",
+    "start:backend": "docker-compose up",
     "test": "react-scripts test",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "update-images": "bash update-images.sh"
