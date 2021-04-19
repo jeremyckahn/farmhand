@@ -11,6 +11,8 @@ import { v4 as uuid } from 'uuid'
 import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
 import { cropIdToTypeMap, itemsMap } from './data/maps'
+import adjectives from './data/adjectives'
+import animalNames from './data/animal-names'
 import {
   chocolateMilk,
   milk1,
@@ -865,3 +867,23 @@ export const sanitizeStateForImport = state => {
 
   return sanitizedState
 }
+
+/**
+ * @param {string} playerId
+ * @returns {string}
+ */
+export const getPlayerName = memoize(playerId => {
+  const playerIdNumber = playerId
+    .split('')
+    .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
+
+  const adjective = adjectives[playerIdNumber % adjectives.length]
+  const adjectiveNumberValue = adjective
+    .split('')
+    .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
+
+  const animal =
+    animalNames[(playerIdNumber + adjectiveNumberValue) % animalNames.length]
+
+  return `${adjective} ${animal}`
+})
