@@ -67,7 +67,15 @@ $appBarOffset: 135px
     padding: 0 1em
     position: fixed
     transform: translateX(-50%)
+    transition: left $duration-entering-screen $easing-ease-out
     width: 250px
+
+    @media (min-width: #{$break-sm})
+      bottom: 7.5em
+
+    @media (min-width: #{$break-md})
+      .menu-open &
+        left: calc(50vw + #{$sidebar-width / 2})
 
     @media (max-width: #{$break-medium-phone})
       bottom: 11em
