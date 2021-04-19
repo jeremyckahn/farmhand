@@ -58,7 +58,7 @@ import {
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
 } from './constants'
-import { HEARTBEAT_INTERVAL_PERIOD } from './common/constants'
+import { HEARTBEAT_INTERVAL_PERIOD, SERVER_ERRORS } from './common/constants'
 import {
   CONNECTED_TO_ROOM,
   COW_PEN_PURCHASED,
@@ -592,13 +592,17 @@ export default class Farmhand extends Component {
     try {
       this.setState({ isAwaitingNetworkRequest: true })
 
-      const { activePlayers, valueAdjustments } = await getData(
+      const { activePlayers, errorCode, valueAdjustments } = await getData(
         endpoints.getMarketData,
         {
           farmId: this.state.id,
           room: room,
         }
       )
+
+      if (errorCode) {
+        throw new Error(errorCode)
+      }
 
       this.scheduleHeartbeat()
 
@@ -617,6 +621,11 @@ export default class Farmhand extends Component {
       // fails. Possibility: Regenerate valueAdjustments and notify the user
       // they are offline.
 
+      if (SERVER_ERRORS[e.message]) {
+        // Bubble up the errorCode to be handled by game logic
+        throw e.message
+      }
+
       this.showNotification(SERVER_ERROR, 'error')
 
       console.error(e)
@@ -632,16 +641,25 @@ export default class Farmhand extends Component {
     this.setState(() => ({
       heartbeatTimeoutId: setTimeout(async () => {
         try {
-          const { activePlayers } = await getData(endpoints.getMarketData, {
+          const { activePlayers, errorCode } = await getData(endpoints.getMarketData, {
             farmId: id,
             room,
           })
+
+          if (errorCode) {
+            throw new Error(errorCode)
+          }
 
           this.setState(({ money }) => ({
             activePlayers,
             money: moneyTotal(money, activePlayers),
           }))
         } catch (e) {
+          if (SERVER_ERRORS[e.message]) {
+            // Bubble up the errorCode to be handled by game logic
+            throw e.message
+          }
+
           this.showNotification(SERVER_ERROR, 'error')
 
           console.error(e)
