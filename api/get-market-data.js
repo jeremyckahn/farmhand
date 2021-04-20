@@ -39,18 +39,18 @@ module.exports = allowCors(async (req, res) => {
 
   const activePlayerIds = Object.keys(activePlayers)
 
-  if (activePlayerIds.length >= MAX_ROOM_SIZE) {
+  if (farmId && activePlayerIds.length >= MAX_ROOM_SIZE) {
     return res.status(403).json({ errorCode: SERVER_ERRORS.ROOM_FULL })
   }
+
+  // Multiply HEARTBEAT_INTERVAL_PERIOD by some amount to account for network
+  // latency and other transient heartbeat delays
+  const evictionTimeout = HEARTBEAT_INTERVAL_PERIOD * 2.5
 
   // Clean up stale activePlayers data
   activePlayerIds.forEach(activePlayerId => {
     const timestamp = activePlayers[activePlayerId]
     const delta = now - timestamp
-
-    // Multiply HEARTBEAT_INTERVAL_PERIOD by some amount to account for network
-    // latency and other transient heartbeat delays
-    const evictionTimeout = HEARTBEAT_INTERVAL_PERIOD * 2.5
 
     if (delta > evictionTimeout) {
       delete activePlayers[activePlayerId]

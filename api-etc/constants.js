@@ -7,4 +7,4 @@ export const ACCEPTED_ORIGINS = new Set([
   'https://v6p9d9t4.ssl.hwcdn.net', // itch.io's CDN that the game is served from
 ])
 
-export const MAX_ROOM_SIZE = 2 // FIXME: Change this to 50 or some other reasonable value
+export const MAX_ROOM_SIZE = 25

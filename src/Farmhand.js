@@ -484,7 +484,7 @@ export default class Farmhand extends Component {
         this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
       }
 
-      this.syncToRoom()
+      this.syncToRoom().catch(errorCode => this.handleSyncError(errorCode))
 
       this.setState({ hasBooted: true })
     })
@@ -529,7 +529,7 @@ export default class Farmhand extends Component {
     }
 
     if (isOnline !== prevState.isOnline || room !== prevState.room) {
-      this.syncToRoom()
+      this.syncToRoom().catch(errorCode => this.handleSyncError(errorCode))
 
       if (!isOnline) {
         clearTimeout(heartbeatTimeoutId)
@@ -634,6 +634,34 @@ export default class Farmhand extends Component {
     this.setState({ isAwaitingNetworkRequest: false })
   }
 
+  handleSyncError(errorCode) {
+    const { room } = this.state
+
+    switch (errorCode) {
+      case SERVER_ERRORS.ROOM_FULL:
+        const roomNameChunks = room.split('-')
+        const roomNumber = parseInt(roomNameChunks.slice(-1)) // May be NaN
+        const nextRoomNumber = roomNumber ? roomNumber + 1 : 2
+        const nextRoom = `${roomNameChunks.slice(
+          0,
+          roomNumber ? -1 : undefined
+        )}-${nextRoomNumber}`
+
+        this.showNotification(
+          `Room **${room}** is full! Trying room **${nextRoom}**...`,
+          'warning'
+        )
+
+        this.setState(() => ({
+          redirect: `/online/${nextRoom}`, // FIXME: Determine if this needs encodeURIComponent
+        }))
+
+        break
+
+      default:
+    }
+  }
+
   scheduleHeartbeat() {
     const { heartbeatTimeoutId, id, room } = this.state
     clearTimeout(heartbeatTimeoutId)
@@ -641,10 +669,13 @@ export default class Farmhand extends Component {
     this.setState(() => ({
       heartbeatTimeoutId: setTimeout(async () => {
         try {
-          const { activePlayers, errorCode } = await getData(endpoints.getMarketData, {
-            farmId: id,
-            room,
-          })
+          const { activePlayers, errorCode } = await getData(
+            endpoints.getMarketData,
+            {
+              farmId: id,
+              room,
+            }
+          )
 
           if (errorCode) {
             throw new Error(errorCode)
