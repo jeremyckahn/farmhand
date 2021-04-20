@@ -236,9 +236,6 @@ body
   .MuiInput-root
     margin: 1em 0
 
-  .MuiAlert-root
-    margin-bottom: 1em
-
 
   .danger-text
     color: $error-color
@@ -249,22 +246,6 @@ body
 
   .MuiDialog-paper
     background-image: url('./img/ui/light-blue-stripe-bg.png')
-
-// This needs to be sibling to .Farmhand hand because notifications are
-// rendered both inside and outside of the .Farmhand root.
-.Farmhand.notification-container
-  margin-top: 8em
-  padding-top: 0
-
-  @media (min-width: #{$break-md})
-    margin-top: 4em
-    margin-right: 4em
-
-  .MuiCollapse-wrapperInner
-    width: 100%
-
-  .MuiCollapse-wrapper
-    margin-bottom: 0
 
   .MuiAlert-root
     margin-bottom: 1em
@@ -297,3 +278,17 @@ body
     ol
       li
         list-style: decimal
+
+.Farmhand.notification-container
+  margin-top: 8em
+  padding-top: 0
+
+  @media (min-width: #{$break-md})
+    margin-top: 4em
+    margin-right: 4em
+
+  .MuiCollapse-wrapperInner
+    width: 100%
+
+  .MuiCollapse-wrapper
+    margin-bottom: 0
