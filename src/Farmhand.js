@@ -484,7 +484,7 @@ export default class Farmhand extends Component {
         this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
       }
 
-      this.syncToRoom().catch(errorCode => this.handleSyncError(errorCode))
+      this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
       this.setState({ hasBooted: true })
     })
@@ -529,7 +529,7 @@ export default class Farmhand extends Component {
     }
 
     if (isOnline !== prevState.isOnline || room !== prevState.room) {
-      this.syncToRoom().catch(errorCode => this.handleSyncError(errorCode))
+      this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
       if (!isOnline) {
         clearTimeout(heartbeatTimeoutId)
@@ -601,6 +601,7 @@ export default class Farmhand extends Component {
       )
 
       if (errorCode) {
+        // Bail out and move control to this try's catch
         throw new Error(errorCode)
       }
 
@@ -634,18 +635,18 @@ export default class Farmhand extends Component {
     this.setState({ isAwaitingNetworkRequest: false })
   }
 
-  handleSyncError(errorCode) {
+  handleRoomSyncError(errorCode) {
     const { room } = this.state
 
     switch (errorCode) {
       case SERVER_ERRORS.ROOM_FULL:
         const roomNameChunks = room.split('-')
         const roomNumber = parseInt(roomNameChunks.slice(-1)) // May be NaN
-        const nextRoomNumber = roomNumber ? roomNumber + 1 : 2
-        const nextRoom = `${roomNameChunks.slice(
-          0,
-          roomNumber ? -1 : undefined
-        )}-${nextRoomNumber}`
+        const nextRoomNumber = isNaN(roomNumber) ? 2 : roomNumber + 1
+        const roomBaseName = roomNameChunks
+          .slice(0, isNaN(roomNumber) ? undefined : -1)
+          .join('-')
+        const nextRoom = `${roomBaseName}-${nextRoomNumber}`
 
         this.showNotification(
           `Room **${room}** is full! Trying room **${nextRoom}**...`,
@@ -653,7 +654,7 @@ export default class Farmhand extends Component {
         )
 
         this.setState(() => ({
-          redirect: `/online/${nextRoom}`, // FIXME: Determine if this needs encodeURIComponent
+          redirect: `/online/${encodeURIComponent(nextRoom)}`,
         }))
 
         break
@@ -678,6 +679,7 @@ export default class Farmhand extends Component {
           )
 
           if (errorCode) {
+            // Bail out and move control to this try's catch
             throw new Error(errorCode)
           }
 

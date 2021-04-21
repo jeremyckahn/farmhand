@@ -39,10 +39,6 @@ module.exports = allowCors(async (req, res) => {
 
   const activePlayerIds = Object.keys(activePlayers)
 
-  if (farmId && activePlayerIds.length >= MAX_ROOM_SIZE) {
-    return res.status(403).json({ errorCode: SERVER_ERRORS.ROOM_FULL })
-  }
-
   // Multiply HEARTBEAT_INTERVAL_PERIOD by some amount to account for network
   // latency and other transient heartbeat delays
   const evictionTimeout = HEARTBEAT_INTERVAL_PERIOD * 2.5
@@ -58,6 +54,12 @@ module.exports = allowCors(async (req, res) => {
       numberOfActivePlayers++
     }
   })
+
+  // Note: Eviction logic (above) must happen before potentially bailing out
+  // here to ensure that rooms can drain appropriately.
+  if (farmId && numberOfActivePlayers > MAX_ROOM_SIZE) {
+    return res.status(403).json({ errorCode: SERVER_ERRORS.ROOM_FULL })
+  }
 
   set(roomKey, JSON.stringify({ ...roomData, activePlayers }))
 
