@@ -183,3 +183,11 @@ export const POSITIONS_POSTED_NOTIFICATION = (_, positions) => {
 
   return chunks.join('\n')
 }
+
+/**
+ * @param {string} room
+ * @param {string} nextRoom
+ * @returns {string}
+ */
+export const ROOM_FULL_NOTIFICATION = (_, room, nextRoom) =>
+  `Room **${room}** is full! Trying room **${nextRoom}**...`

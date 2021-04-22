@@ -58,13 +58,14 @@ import {
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
 } from './constants'
-import { HEARTBEAT_INTERVAL_PERIOD } from './common/constants'
+import { HEARTBEAT_INTERVAL_PERIOD, SERVER_ERRORS } from './common/constants'
 import {
   CONNECTED_TO_ROOM,
   COW_PEN_PURCHASED,
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
+  ROOM_FULL_NOTIFICATION,
 } from './templates'
 import {
   CONNECTING_TO_SERVER,
@@ -484,7 +485,7 @@ export default class Farmhand extends Component {
         this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
       }
 
-      this.syncToRoom()
+      this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
       this.setState({ hasBooted: true })
     })
@@ -529,7 +530,7 @@ export default class Farmhand extends Component {
     }
 
     if (isOnline !== prevState.isOnline || room !== prevState.room) {
-      this.syncToRoom()
+      this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
       if (!isOnline) {
         clearTimeout(heartbeatTimeoutId)
@@ -592,13 +593,18 @@ export default class Farmhand extends Component {
     try {
       this.setState({ isAwaitingNetworkRequest: true })
 
-      const { activePlayers, valueAdjustments } = await getData(
+      const { activePlayers, errorCode, valueAdjustments } = await getData(
         endpoints.getMarketData,
         {
           farmId: this.state.id,
           room: room,
         }
       )
+
+      if (errorCode) {
+        // Bail out and move control to this try's catch
+        throw new Error(errorCode)
+      }
 
       this.scheduleHeartbeat()
 
@@ -617,12 +623,45 @@ export default class Farmhand extends Component {
       // fails. Possibility: Regenerate valueAdjustments and notify the user
       // they are offline.
 
+      if (SERVER_ERRORS[e.message]) {
+        // Bubble up the errorCode to be handled by game logic
+        throw e.message
+      }
+
       this.showNotification(SERVER_ERROR, 'error')
 
       console.error(e)
     }
 
     this.setState({ isAwaitingNetworkRequest: false })
+  }
+
+  handleRoomSyncError(errorCode) {
+    const { room } = this.state
+
+    switch (errorCode) {
+      case SERVER_ERRORS.ROOM_FULL:
+        const roomNameChunks = room.split('-')
+        const roomNumber = parseInt(roomNameChunks.slice(-1)) // May be NaN
+        const nextRoomNumber = isNaN(roomNumber) ? 2 : roomNumber + 1
+        const roomBaseName = roomNameChunks
+          .slice(0, isNaN(roomNumber) ? undefined : -1)
+          .join('-')
+        const nextRoom = `${roomBaseName}-${nextRoomNumber}`
+
+        this.showNotification(
+          ROOM_FULL_NOTIFICATION`${room}${nextRoom}`,
+          'warning'
+        )
+
+        this.setState(() => ({
+          redirect: `/online/${encodeURIComponent(nextRoom)}`,
+        }))
+
+        break
+
+      default:
+    }
   }
 
   scheduleHeartbeat() {
@@ -632,16 +671,29 @@ export default class Farmhand extends Component {
     this.setState(() => ({
       heartbeatTimeoutId: setTimeout(async () => {
         try {
-          const { activePlayers } = await getData(endpoints.getMarketData, {
-            farmId: id,
-            room,
-          })
+          const { activePlayers, errorCode } = await getData(
+            endpoints.getMarketData,
+            {
+              farmId: id,
+              room,
+            }
+          )
+
+          if (errorCode) {
+            // Bail out and move control to this try's catch
+            throw new Error(errorCode)
+          }
 
           this.setState(({ money }) => ({
             activePlayers,
             money: moneyTotal(money, activePlayers),
           }))
         } catch (e) {
+          if (SERVER_ERRORS[e.message]) {
+            // Bubble up the errorCode to be handled by game logic
+            throw e.message
+          }
+
           this.showNotification(SERVER_ERROR, 'error')
 
           console.error(e)
