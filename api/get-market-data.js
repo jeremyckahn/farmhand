@@ -1,13 +1,13 @@
 // Dependencies required by ./utils (see below) need to be explicitly required
 // here to ensure that that they are included in serverless builds. Do NOT
 // remove them unless they are not needed by any upstream modules.
+const { promisify } = require('util')
+
 require('redis')
 require('../src/common/utils')
-require('../src/common/constants')
-require('../api-etc/constants')
+const { SERVER_ERRORS } = require('../src/common/constants')
+const { MAX_ROOM_SIZE } = require('../api-etc/constants')
 // End explicit requires for serverless builds
-
-const { promisify } = require('util')
 
 const {
   allowCors,
@@ -37,21 +37,29 @@ module.exports = allowCors(async (req, res) => {
 
   let numberOfActivePlayers = 0
 
+  const activePlayerIds = Object.keys(activePlayers)
+
+  // Multiply HEARTBEAT_INTERVAL_PERIOD by some amount to account for network
+  // latency and other transient heartbeat delays
+  const evictionTimeout = HEARTBEAT_INTERVAL_PERIOD * 2.5
+
   // Clean up stale activePlayers data
-  Object.keys(activePlayers).forEach(activeFarmId => {
-    const timestamp = activePlayers[activeFarmId]
+  activePlayerIds.forEach(activePlayerId => {
+    const timestamp = activePlayers[activePlayerId]
     const delta = now - timestamp
 
-    // Multiply HEARTBEAT_INTERVAL_PERIOD by some amount to account for network
-    // latency and other transient heartbeat delays
-    const evictionTimeout = HEARTBEAT_INTERVAL_PERIOD * 2.5
-
     if (delta > evictionTimeout) {
-      delete activePlayers[activeFarmId]
+      delete activePlayers[activePlayerId]
     } else {
       numberOfActivePlayers++
     }
   })
+
+  // Note: Eviction logic (above) must happen before potentially bailing out
+  // here to ensure that rooms can drain appropriately.
+  if (farmId && numberOfActivePlayers > MAX_ROOM_SIZE) {
+    return res.status(403).json({ errorCode: SERVER_ERRORS.ROOM_FULL })
+  }
 
   set(roomKey, JSON.stringify({ ...roomData, activePlayers }))
 

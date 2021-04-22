@@ -376,9 +376,18 @@ export default {
 
     const { room } = this.state
 
-    this.setState(() => ({
-      redirect: goOnline ? `/online/${encodeURIComponent(room)}` : '/',
-    }))
+    // Defer this operation to the next thread to prevent this warning:
+    //
+    // "An update (setState, replaceState, or forceUpdate) was scheduled from
+    // inside an update function. Update functions should be pure, with zero
+    // side-effects. Consider using componentDidUpdate or a callback."
+    setTimeout(
+      () =>
+        this.setState(() => ({
+          redirect: goOnline ? `/online/${encodeURIComponent(room)}` : '/',
+        })),
+      1
+    )
   },
 
   handleRoomChange(room) {
