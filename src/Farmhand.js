@@ -65,6 +65,7 @@ import {
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
+  ROOM_FULL_NOTIFICATION,
 } from './templates'
 import {
   CONNECTING_TO_SERVER,
@@ -649,7 +650,7 @@ export default class Farmhand extends Component {
         const nextRoom = `${roomBaseName}-${nextRoomNumber}`
 
         this.showNotification(
-          `Room **${room}** is full! Trying room **${nextRoom}**...`,
+          ROOM_FULL_NOTIFICATION`${room}${nextRoom}`,
           'warning'
         )
 
