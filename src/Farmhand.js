@@ -13,6 +13,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
 import MobileStepper from '@material-ui/core/MobileStepper'
+import { joinRoom } from 'trystero'
 import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
 import classNames from 'classnames'
@@ -186,6 +187,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {farmhand.notification} latestNotification
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {Array.<farmhand.notification>} notificationLog
+ * @property {Object?} peerRoom See https://github.com/dmotz/trystero
  * @property {string} selectedCowId
  * @property {string} selectedItemId
  * @property {Object.<string, farmhand.priceEvent>} priceCrashes Keys are
@@ -267,6 +269,7 @@ export default class Farmhand extends Component {
     latestNotification: null,
     newDayNotifications: [],
     notificationLog: [],
+    peerRoom: null,
     selectedCowId: '',
     selectedItemId: '',
     fieldMode: OBSERVE,
@@ -498,6 +501,7 @@ export default class Farmhand extends Component {
       isMenuOpen,
       isOnline,
       money,
+      peerRoom,
       room,
       stageFocus,
     } = this.state
@@ -534,7 +538,11 @@ export default class Farmhand extends Component {
 
       if (!isOnline) {
         clearTimeout(heartbeatTimeoutId)
-        this.setState({ activePlayers: null, heartbeatTimeoutId: null })
+        this.setState({
+          activePlayers: null,
+          heartbeatTimeoutId: null,
+          peerRoom: null,
+        })
       }
     }
 
@@ -568,6 +576,23 @@ export default class Farmhand extends Component {
       this.setState(({ todaysLosses }) => ({
         todaysLosses: moneyTotal(todaysLosses, money - prevState.money),
       }))
+    }
+
+    if (peerRoom !== prevState.peerRoom) {
+      if (peerRoom) {
+        prevState.peerRoom?.leave()
+
+        peerRoom.onPeerJoin(id => {
+          console.log(`${id} joined`)
+        })
+
+        peerRoom.onPeerLeave(id => {
+          console.log(`${id} left`)
+        })
+      } else {
+        // This player has gone offline.
+        prevState.peerRoom.leave()
+      }
     }
 
     ;[
@@ -610,6 +635,7 @@ export default class Farmhand extends Component {
 
       this.setState({
         activePlayers,
+        peerRoom: joinRoom({ appId: process.env.REACT_APP_NAME }, room),
         valueAdjustments: applyPriceEvents(
           valueAdjustments,
           priceCrashes,
