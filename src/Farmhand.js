@@ -16,6 +16,7 @@ import MobileStepper from '@material-ui/core/MobileStepper'
 import { joinRoom } from 'trystero'
 import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
+import throttle from 'lodash.throttle'
 import classNames from 'classnames'
 
 import FarmhandContext from './Farmhand.context'
@@ -188,6 +189,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {Array.<farmhand.notification>} notificationLog
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
+ * @property {function?} sendPeerMetadata See https://github.com/dmotz/trystero
  * @property {string} selectedCowId
  * @property {string} selectedItemId
  * @property {Object.<string, farmhand.priceEvent>} priceCrashes Keys are
@@ -270,6 +272,7 @@ export default class Farmhand extends Component {
     newDayNotifications: [],
     notificationLog: [],
     peerRoom: null,
+    sendPeerMetadata: null,
     selectedCowId: '',
     selectedItemId: '',
     fieldMode: OBSERVE,
@@ -359,6 +362,12 @@ export default class Farmhand extends Component {
 
   get shopInventory() {
     return getAvailbleShopInventory(this.levelEntitlements)
+  }
+
+  get peerMetadata() {
+    const { id, money } = this.state
+
+    return { id, money }
   }
 
   initInputHandlers() {
@@ -589,17 +598,37 @@ export default class Farmhand extends Component {
         peerRoom.onPeerLeave(id => {
           console.log(`${id} left`)
         })
+
+        const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
+          'peerMetadata'
+        )
+
+        getPeerMetadata(this.onGetPeerMetadata.bind(this))
+
+        this.setState({
+          getPeerMetadata,
+          sendPeerMetadata: throttle(sendPeerMetadata, 5000, {
+            trailing: true,
+          }),
+        })
+
+        sendPeerMetadata(this.peerMetadata)
       } else {
         // This player has gone offline.
         prevState.peerRoom.leave()
       }
     }
-
     ;[
       'showCowPenPurchasedNotifications',
       'showInventoryFullNotifications',
       'showRecipeLearnedNotifications',
     ].forEach(fn => this[fn](prevState))
+
+    this.state.sendPeerMetadata?.(this.peerMetadata)
+  }
+
+  onGetPeerMetadata({ id, money }) {
+    console.log(`Player ${id} has ${money}`)
   }
 
   clearPersistedData() {
