@@ -188,6 +188,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {farmhand.notification} latestNotification
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {Array.<farmhand.notification>} notificationLog
+ * @property {Object} peers Keys are (Trystero) peer ids, values are their respective metadata or null.
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
  * @property {function?} sendPeerMetadata See https://github.com/dmotz/trystero
  * @property {string} selectedCowId
@@ -271,6 +272,7 @@ export default class Farmhand extends Component {
     latestNotification: null,
     newDayNotifications: [],
     notificationLog: [],
+    peers: {},
     peerRoom: null,
     sendPeerMetadata: null,
     selectedCowId: '',
@@ -444,6 +446,7 @@ export default class Farmhand extends Component {
   initReducers() {
     ;[
       'adjustLoan',
+      'addPeer',
       'computeStateForNextDay',
       'changeCowAutomaticHugState',
       'changeCowBreedingPenResident',
@@ -461,12 +464,14 @@ export default class Farmhand extends Component {
       'purchaseItem',
       'purchaseStorageExpansion',
       'plantInPlot',
+      'removePeer',
       'sellItem',
       'sellCow',
       'selectCow',
       'setScarecrow',
       'setSprinkler',
       'showNotification',
+      'updatePeer',
       'waterField',
       'waterAllPlots',
       'waterPlot',
@@ -592,11 +597,11 @@ export default class Farmhand extends Component {
         prevState.peerRoom?.leave()
 
         peerRoom.onPeerJoin(id => {
-          console.log(`${id} joined`)
+          this.addPeer(id)
         })
 
         peerRoom.onPeerLeave(id => {
-          console.log(`${id} left`)
+          this.removePeer(id)
         })
 
         const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
@@ -616,6 +621,7 @@ export default class Farmhand extends Component {
       } else {
         // This player has gone offline.
         prevState.peerRoom.leave()
+        this.setState({ peers: null, sendPeerMetadata: null })
       }
     }
     ;[
@@ -627,8 +633,8 @@ export default class Farmhand extends Component {
     this.state.sendPeerMetadata?.(this.peerMetadata)
   }
 
-  onGetPeerMetadata({ id, money }) {
-    console.log(`Player ${id} has ${money}`)
+  onGetPeerMetadata(peerState, peerId) {
+    this.updatePeer(peerId, peerState)
   }
 
   clearPersistedData() {
