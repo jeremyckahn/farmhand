@@ -47,6 +47,7 @@ import {
   memoize,
   moneyTotal,
   nullArray,
+  reduceByPeerMetadataKeys,
   reduceByPersistedKeys,
   sanitizeStateForImport,
 } from './utils'
@@ -367,9 +368,7 @@ export default class Farmhand extends Component {
   }
 
   get peerMetadata() {
-    const { id, money } = this.state
-
-    return { id, money }
+    return reduceByPeerMetadataKeys(this.state)
   }
 
   initInputHandlers() {
