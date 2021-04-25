@@ -41,6 +41,7 @@ import { MAX_ROOM_NAME_LENGTH } from '../../common/constants'
 import AccountingView from '../AccountingView'
 import AchievementsView from '../AchievementsView'
 import LogView from '../LogView'
+import OnlinePeersView from '../OnlinePeersView'
 import PriceEventView from '../PriceEventView'
 import SettingsView from '../SettingsView'
 import StatsView from '../StatsView'
@@ -78,6 +79,7 @@ const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
 
 const OnlineControls = ({
   activePlayers,
+  handleActivePlayerButtonClick,
   handleOnlineToggleChange,
   handleRoomChange,
   isOnline,
@@ -131,7 +133,17 @@ const OnlineControls = ({
           }}
         />
       </FormControl>
-      {activePlayers && <h2>Active players: {integerString(activePlayers)}</h2>}
+      {activePlayers && (
+        <Button
+          {...{
+            color: 'primary',
+            onClick: handleActivePlayerButtonClick,
+            variant: 'contained',
+          }}
+        >
+          Active players: {integerString(activePlayers)}
+        </Button>
+      )}
     </>
   )
 }
@@ -143,6 +155,7 @@ const {
   ACHIEVEMENTS,
   ACCOUNTING,
   SETTINGS,
+  ONLINE_PEERS,
 } = dialogView
 
 // The labels here must be kept in sync with mappings in initInputHandlers in
@@ -172,6 +185,7 @@ const dialogContentMap = {
   [ACHIEVEMENTS]: <AchievementsView />,
   [ACCOUNTING]: <AccountingView />,
   [SETTINGS]: <SettingsView />,
+  [ONLINE_PEERS]: <OnlinePeersView />,
 }
 
 export const Navigation = ({
@@ -179,6 +193,7 @@ export const Navigation = ({
   currentDialogView,
   dayCount,
   farmName,
+  handleActivePlayerButtonClick,
   handleClickDialogViewButton,
   handleCloseDialogView,
   handleDialogViewExited,
@@ -237,6 +252,7 @@ export const Navigation = ({
     <OnlineControls
       {...{
         activePlayers,
+        handleActivePlayerButtonClick,
         handleOnlineToggleChange,
         handleRoomChange,
         isOnline,
@@ -330,6 +346,7 @@ Navigation.propTypes = {
   dayCount: number.isRequired,
   farmName: string.isRequired,
   handleClickDialogViewButton: func.isRequired,
+  handleActivePlayerButtonClick: func.isRequired,
   handleCloseDialogView: func.isRequired,
   handleDialogViewExited: func.isRequired,
   handleFarmNameUpdate: func.isRequired,

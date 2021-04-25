@@ -16,6 +16,7 @@ beforeEach(() => {
         currentDialogView: dialogView.NONE,
         dayCount: 0,
         farmName: '',
+        handleActivePlayerButtonClick: () => {},
         handleClickDialogViewButton: () => {},
         handleCloseDialogView: () => {},
         handleDialogViewExited: () => {},
