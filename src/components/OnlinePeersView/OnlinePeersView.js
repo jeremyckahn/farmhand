@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
-import { object, string } from 'prop-types'
+import { number, object, string } from 'prop-types'
 
 import {
   getPlayerName,
@@ -14,54 +14,61 @@ import FarmhandContext from '../../Farmhand.context'
 
 import './OnlinePeersView.sass'
 
-const OnlinePeersView = ({ id, peers }) => (
-  <div {...{ className: 'OnlinePeersView' }}>
-    <p>
-      Your player name: <strong>{getPlayerName(id)}</strong>
-    </p>
-    <ul className="card-list">
-      {/* FIXME: Sort peers by some stat, like money */}
-      {Object.keys(peers).map(peerId => {
-        const peerData = peers[peerId]
+const OnlinePeersView = ({ activePlayers, id, peers }) => {
+  const peerKeys = Object.keys(peers)
+  const populatedPeers = peerKeys.filter(peerId => peers[peerId])
 
-        // Peer may have connected but not sent data yet. Bail out in that case.
-        if (peerData === null) {
-          return null
-        }
+  return (
+    <div {...{ className: 'OnlinePeersView' }}>
+      <p>
+        Your player name: <strong>{getPlayerName(id)}</strong>
+      </p>
+      {activePlayers - 1 > populatedPeers.length && <p>Waiting for peers...</p>}
+      <ul className="card-list">
+        {/* FIXME: Sort peers by some stat, like money */}
+        {peerKeys.map(peerId => {
+          const peerData = peers[peerId]
 
-        const { dayCount, id, itemsSold, money } = peerData
+          // Peer may have connected but not sent data yet. Bail out in that case.
+          if (peerData === null) {
+            return null
+          }
 
-        return (
-          <li {...{ key: peerId }}>
-            <Card>
-              <CardHeader
-                {...{
-                  title: getPlayerName(id),
-                  subheader: (
-                    <div>
-                      <p>Day: {integerString(dayCount)}</p>
-                      <p>
-                        Level:{' '}
-                        {integerString(
-                          levelAchieved(farmProductsSold(itemsSold))
-                        )}
-                      </p>
-                      <p>Money: {moneyString(money)}</p>
-                    </div>
-                  ),
-                }}
-              />
-            </Card>
-          </li>
-        )
-      })}
-    </ul>
-  </div>
-)
+          const { dayCount, id, itemsSold, money } = peerData
+
+          return (
+            <li {...{ key: peerId }}>
+              <Card>
+                <CardHeader
+                  {...{
+                    title: getPlayerName(id),
+                    subheader: (
+                      <div>
+                        <p>Day: {integerString(dayCount)}</p>
+                        <p>
+                          Level:{' '}
+                          {integerString(
+                            levelAchieved(farmProductsSold(itemsSold))
+                          )}
+                        </p>
+                        <p>Money: {moneyString(money)}</p>
+                      </div>
+                    ),
+                  }}
+                />
+              </Card>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
 
 OnlinePeersView.propTypes = {}
 
 OnlinePeersView.propTypes = {
+  activePlayers: number.isRequired,
   id: string.isRequired,
   peers: object.isRequired,
 }
