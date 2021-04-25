@@ -1,6 +1,7 @@
 import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
+import sortBy from 'lodash.sortby'
 import { number, object, string } from 'prop-types'
 
 import {
@@ -16,6 +17,8 @@ import './OnlinePeersView.sass'
 
 const OnlinePeersView = ({ activePlayers, id, peers }) => {
   const peerKeys = Object.keys(peers)
+
+  // Filter out peers that may have connected but not sent data yet.
   const populatedPeers = peerKeys.filter(peerId => peers[peerId])
 
   return (
@@ -25,16 +28,11 @@ const OnlinePeersView = ({ activePlayers, id, peers }) => {
       </p>
       {activePlayers - 1 > populatedPeers.length && <p>Waiting for peers...</p>}
       <ul className="card-list">
-        {/* FIXME: Sort peers by some stat, like money */}
-        {peerKeys.map(peerId => {
-          const peerData = peers[peerId]
-
-          // Peer may have connected but not sent data yet. Bail out in that case.
-          if (peerData === null) {
-            return null
-          }
-
-          const { dayCount, id, itemsSold, money } = peerData
+        {sortBy(populatedPeers, [
+          // Use negative value to reverse sort order
+          peerId => -levelAchieved(farmProductsSold(peers[peerId].itemsSold)),
+        ]).map(peerId => {
+          const { dayCount, id, itemsSold, money } = peers[peerId]
 
           return (
             <li {...{ key: peerId }}>
