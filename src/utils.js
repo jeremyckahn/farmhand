@@ -50,6 +50,7 @@ import {
   INITIAL_SPRINKLER_RANGE,
   MALE_COW_WEIGHT_MULTIPLIER,
   MEMOIZE_CACHE_CLEAR_THRESHOLD,
+  PEER_METADATA_STATE_KEYS,
   PERSISTED_STATE_KEYS,
   PRICE_EVENT_STANDARD_DURATION_DECREASE,
 } from './constants'
@@ -764,6 +765,18 @@ export const getRandomLevelUpReward = level =>
  * @returns {number}
  */
 export const getRandomLevelUpRewardQuantity = level => level * 10
+
+/**
+ * @param {Object} state
+ * @returns {Object} A version of `state` that only contains keys of
+ * farmhand.state data that should be shared with Trystero peers.
+ */
+export const reduceByPeerMetadataKeys = state =>
+  PEER_METADATA_STATE_KEYS.reduce((acc, key) => {
+    acc[key] = state[key]
+
+    return acc
+  }, {})
 
 /**
  * @param {Object} state

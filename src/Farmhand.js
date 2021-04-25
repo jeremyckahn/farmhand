@@ -13,8 +13,10 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
 import MobileStepper from '@material-ui/core/MobileStepper'
+import { joinRoom } from 'trystero'
 import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
+import throttle from 'lodash.throttle'
 import classNames from 'classnames'
 
 import FarmhandContext from './Farmhand.context'
@@ -45,6 +47,7 @@ import {
   memoize,
   moneyTotal,
   nullArray,
+  reduceByPeerMetadataKeys,
   reduceByPersistedKeys,
   sanitizeStateForImport,
 } from './utils'
@@ -186,6 +189,9 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {farmhand.notification} latestNotification
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {Array.<farmhand.notification>} notificationLog
+ * @property {Object} peers Keys are (Trystero) peer ids, values are their respective metadata or null.
+ * @property {Object?} peerRoom See https://github.com/dmotz/trystero
+ * @property {function?} sendPeerMetadata See https://github.com/dmotz/trystero
  * @property {string} selectedCowId
  * @property {string} selectedItemId
  * @property {Object.<string, farmhand.priceEvent>} priceCrashes Keys are
@@ -267,6 +273,9 @@ export default class Farmhand extends Component {
     latestNotification: null,
     newDayNotifications: [],
     notificationLog: [],
+    peers: {},
+    peerRoom: null,
+    sendPeerMetadata: null,
     selectedCowId: '',
     selectedItemId: '',
     fieldMode: OBSERVE,
@@ -358,6 +367,10 @@ export default class Farmhand extends Component {
     return getAvailbleShopInventory(this.levelEntitlements)
   }
 
+  get peerMetadata() {
+    return reduceByPeerMetadataKeys(this.state)
+  }
+
   initInputHandlers() {
     const debouncedInputRate = 50
 
@@ -432,6 +445,7 @@ export default class Farmhand extends Component {
   initReducers() {
     ;[
       'adjustLoan',
+      'addPeer',
       'computeStateForNextDay',
       'changeCowAutomaticHugState',
       'changeCowBreedingPenResident',
@@ -449,12 +463,14 @@ export default class Farmhand extends Component {
       'purchaseItem',
       'purchaseStorageExpansion',
       'plantInPlot',
+      'removePeer',
       'sellItem',
       'sellCow',
       'selectCow',
       'setScarecrow',
       'setSprinkler',
       'showNotification',
+      'updatePeer',
       'waterField',
       'waterAllPlots',
       'waterPlot',
@@ -498,6 +514,7 @@ export default class Farmhand extends Component {
       isMenuOpen,
       isOnline,
       money,
+      peerRoom,
       room,
       stageFocus,
     } = this.state
@@ -534,7 +551,11 @@ export default class Farmhand extends Component {
 
       if (!isOnline) {
         clearTimeout(heartbeatTimeoutId)
-        this.setState({ activePlayers: null, heartbeatTimeoutId: null })
+        this.setState({
+          activePlayers: null,
+          heartbeatTimeoutId: null,
+          peerRoom: null,
+        })
       }
     }
 
@@ -570,11 +591,49 @@ export default class Farmhand extends Component {
       }))
     }
 
+    if (peerRoom !== prevState.peerRoom) {
+      if (peerRoom) {
+        prevState.peerRoom?.leave()
+
+        peerRoom.onPeerJoin(id => {
+          this.addPeer(id)
+        })
+
+        peerRoom.onPeerLeave(id => {
+          this.removePeer(id)
+        })
+
+        const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
+          'peerMetadata'
+        )
+
+        getPeerMetadata(this.onGetPeerMetadata.bind(this))
+
+        this.setState({
+          getPeerMetadata,
+          sendPeerMetadata: throttle(sendPeerMetadata, 5000, {
+            trailing: true,
+          }),
+        })
+
+        sendPeerMetadata(this.peerMetadata)
+      } else {
+        // This player has gone offline.
+        prevState.peerRoom.leave()
+        this.setState({ peers: null, sendPeerMetadata: null })
+      }
+    }
     ;[
       'showCowPenPurchasedNotifications',
       'showInventoryFullNotifications',
       'showRecipeLearnedNotifications',
     ].forEach(fn => this[fn](prevState))
+
+    this.state.sendPeerMetadata?.(this.peerMetadata)
+  }
+
+  onGetPeerMetadata(peerState, peerId) {
+    this.updatePeer(peerId, peerState)
   }
 
   clearPersistedData() {
@@ -610,6 +669,7 @@ export default class Farmhand extends Component {
 
       this.setState({
         activePlayers,
+        peerRoom: joinRoom({ appId: process.env.REACT_APP_NAME }, room),
         valueAdjustments: applyPriceEvents(
           valueAdjustments,
           priceCrashes,

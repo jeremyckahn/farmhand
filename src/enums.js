@@ -109,6 +109,7 @@ export const dialogView = enumify([
   'ACCOUNTING',
   'ACHIEVEMENTS',
   'FARMERS_LOG',
+  'ONLINE_PEERS',
   'PRICE_EVENTS',
   'SETTINGS',
   'STATS',
