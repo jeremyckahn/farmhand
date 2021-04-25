@@ -96,6 +96,7 @@
     "localforage": "^1.7.3",
     "lodash.debounce": "^4.0.8",
     "lodash.sortby": "^4.7.0",
+    "lodash.throttle": "^4.1.1",
     "notistack": "^1.0.5",
     "prop-types": "^15.6.2",
     "react": "^17.0.2",
@@ -109,6 +110,7 @@
     "redis": "^3.0.2",
     "shifty": "^2.15.2",
     "source-map-explorer": "^2.3.1",
+    "trystero": "^0.7.10",
     "typeface-francois-one": "0.0.71",
     "typeface-public-sans": "^1.1.4",
     "uuid": "^3.4.0"
@@ -118,19 +120,13 @@
       "pre-commit": "if git-branch-is develop; then pretty-quick --staged && npm run lint && cross-env CI=true react-scripts test --env=jsdom; fi"
     }
   },
-  "files": [
-    "src",
-    "build",
-    "public"
-  ],
+  "files": ["src", "build", "public"],
   "craGenerate": {
     "cssExtension": "sass",
     "type": "functional"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
+  "jest": {
+    "transformIgnorePatterns": ["node_modules/(?!trystero)/"]
+  }
 }

@@ -148,4 +148,14 @@ export const PERSISTED_STATE_KEYS = [
   'version',
 ]
 
+export const PEER_METADATA_STATE_KEYS = [
+  'cowsSold',
+  'cropsHarvested',
+  'dayCount',
+  'id',
+  'itemsSold',
+  'money',
+  'version',
+]
+
 export const DEFAULT_ROOM = 'global'

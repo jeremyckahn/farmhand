@@ -1735,3 +1735,40 @@ export const forRange = (
 
   return state
 }
+
+/**
+ * @param {farmhand.state} state
+ * @param {string} peerId The peer to add
+ * @returns {farmhand.state}
+ */
+export const addPeer = (state, peerId) => {
+  const peers = { ...state.peers }
+  peers[peerId] = null
+
+  return { ...state, peers }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {string} peerId The peer to remove
+ * @returns {farmhand.state}
+ */
+export const removePeer = (state, peerId) => {
+  const peers = { ...state.peers }
+  delete peers[peerId]
+
+  return { ...state, peers }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {string} peerId The peer to update
+ * @param {Object} state
+ * @returns {farmhand.state}
+ */
+export const updatePeer = (state, peerId, peerState) => {
+  const peers = { ...state.peers }
+  peers[peerId] = peerState
+
+  return { ...state, peers }
+}

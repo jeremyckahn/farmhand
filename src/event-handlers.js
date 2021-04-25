@@ -395,4 +395,8 @@ export default {
       redirect: `/online/${encodeURIComponent(room.trim() || DEFAULT_ROOM)}`,
     }))
   },
+
+  handleActivePlayerButtonClick() {
+    this.openDialogView(dialogView.ONLINE_PEERS)
+  }
 }
