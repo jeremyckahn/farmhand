@@ -620,7 +620,7 @@ export default class Farmhand extends Component {
       } else {
         // This player has gone offline.
         prevState.peerRoom.leave()
-        this.setState({ peers: null, sendPeerMetadata: null })
+        this.setState({ peers: {}, sendPeerMetadata: null })
       }
     }
     ;[
