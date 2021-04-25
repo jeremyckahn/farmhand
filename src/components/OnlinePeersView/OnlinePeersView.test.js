@@ -7,7 +7,10 @@ let component;
 
 beforeEach(() => {
   component = shallow(
-    <OnlinePeersView {...{}} />
+    <OnlinePeersView {...{
+      id: '',
+      peers: {},
+    }} />
   );
 });
 

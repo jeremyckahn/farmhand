@@ -176,6 +176,7 @@ const dialogTitleMap = {
   [ACHIEVEMENTS]: 'Achievements',
   [ACCOUNTING]: 'Bank Account',
   [SETTINGS]: 'Settings',
+  [ONLINE_PEERS]: 'Active Players',
 }
 
 const dialogContentMap = {
