@@ -1,6 +1,6 @@
 {
   "name": "@jeremyckahn/farmhand",
-  "version": "1.5.39",
+  "version": "1.6.0",
   "publishConfig": {
     "access": "public"
   },
@@ -120,13 +120,24 @@
       "pre-commit": "if git-branch-is develop; then pretty-quick --staged && npm run lint && cross-env CI=true react-scripts test --env=jsdom; fi"
     }
   },
-  "files": ["src", "build", "public"],
+  "files": [
+    "src",
+    "build",
+    "public"
+  ],
   "craGenerate": {
     "cssExtension": "sass",
     "type": "functional"
   },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "jest": {
-    "transformIgnorePatterns": ["node_modules/(?!trystero)/"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!trystero)/"
+    ]
   }
 }
