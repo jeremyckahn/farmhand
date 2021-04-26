@@ -14,7 +14,10 @@ import './Workshop.sass'
 
 const Workshop = ({ learnedRecipes }) => (
   <div className="Workshop">
-    <h3>Learned Recipes</h3>
+    <h3>
+      Learned Recipes ({Object.keys(learnedRecipes).length} /{' '}
+      {Object.keys(recipesMap).length})
+    </h3>
     <section>
       <ul className="card-list">
         {Object.keys(learnedRecipes).map(recipeId => (
