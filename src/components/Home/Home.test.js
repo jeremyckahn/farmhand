@@ -9,6 +9,7 @@ beforeEach(() => {
   component = shallow(
     <Home
       {...{
+        completedAchievements: {},
         handleViewChangeButtonClick: () => {},
       }}
     />
