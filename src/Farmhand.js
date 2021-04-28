@@ -593,8 +593,6 @@ export default class Farmhand extends Component {
 
     if (peerRoom !== prevState.peerRoom) {
       if (peerRoom) {
-        prevState.peerRoom?.leave()
-
         peerRoom.onPeerJoin(id => {
           this.addPeer(id)
         })
@@ -651,6 +649,8 @@ export default class Farmhand extends Component {
 
     try {
       this.setState({ isAwaitingNetworkRequest: true })
+
+      this.state.peerRoom?.leave()
 
       const { activePlayers, errorCode, valueAdjustments } = await getData(
         endpoints.getMarketData,

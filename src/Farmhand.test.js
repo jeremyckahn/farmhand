@@ -33,7 +33,11 @@ jest.mock('./data/items')
 jest.mock('./data/levels', () => ({ levels: [] }))
 jest.mock('./data/shop-inventory')
 
-jest.mock('./data/achievements', () => [])
+jest.mock('./data/achievements', () => ({
+  __esModule: true,
+  ...jest.requireActual('./data/achievements'),
+  achievementsMap: {},
+}))
 
 jest.mock('./constants', () => ({
   __esModule: true,

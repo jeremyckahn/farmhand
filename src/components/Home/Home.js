@@ -1,5 +1,5 @@
 import React from 'react'
-import { func } from 'prop-types'
+import { func, object } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import window from 'global/window'
 import Button from '@material-ui/core/Button'
@@ -8,15 +8,28 @@ import Accordion from '@material-ui/core/Accordion'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
+import { achievementsMap } from '../../data/achievements'
 import FarmhandContext from '../../Farmhand.context'
 import { STANDARD_LOAN_AMOUNT } from '../../constants'
 import { stageFocusType } from '../../enums'
+import { memoize } from '../../utils'
+import Achievement from '../Achievement'
 
 import './Home.sass'
+
+const onboardingAchievements = [
+  achievementsMap['plant-crop'],
+  achievementsMap['water-crop'],
+  achievementsMap['harvest-crop'],
+  achievementsMap['purchase-cow-pen'],
+]
+
+const getRemainingOnboardingAchievements = memoize(completedAchievements =>
+  onboardingAchievements.filter(({ id }) => !completedAchievements[id])
+)
 
 // https://stackoverflow.com/questions/41742390/javascript-to-check-if-pwa-or-mobile-web/41749865#41749865
 const isInstallable =
@@ -27,7 +40,14 @@ const isInstallable =
   (window.location.origin === 'https://jeremyckahn.github.io' ||
     window.location.origin === 'http://localhost:3000') // For debugging
 
-const Home = ({ handleViewChangeButtonClick }) => (
+const Home = ({
+  completedAchievements,
+  handleViewChangeButtonClick,
+
+  remainingOnboardingAchievements = getRemainingOnboardingAchievements(
+    completedAchievements
+  ),
+}) => (
   <div className="Home">
     <h1>Welcome!</h1>
     <Accordion>
@@ -72,6 +92,28 @@ If you can master the art of the harvest, there's no limit to how profitable you
     `,
           }}
         />
+        {remainingOnboardingAchievements.length ? (
+          <>
+            <ReactMarkdown
+              {...{
+                className: 'markdown',
+                linkTarget: '_blank',
+                source: `
+### Getting started
+
+It looks like you're new here. Thanks for stopping by! Here are some goals to help you get familiar with the game.
+    `,
+              }}
+            />
+            <ul className="card-list">
+              {remainingOnboardingAchievements.map(achievement => (
+                <li {...{ key: achievement.id }}>
+                  <Achievement {...{ achievement }} />
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : null}
         <Button
           {...{
             color: 'primary',
@@ -168,6 +210,7 @@ If you're playing on a mobile device, all you need to do is [add it to your home
 )
 
 Home.propTypes = {
+  completedAchievements: object.isRequired,
   handleViewChangeButtonClick: func.isRequired,
 }
 
