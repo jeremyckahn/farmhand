@@ -648,7 +648,10 @@ export default class Farmhand extends Component {
     this.showNotification(CONNECTING_TO_SERVER, 'info')
 
     try {
-      this.setState({ isAwaitingNetworkRequest: true })
+      this.setState({
+        isAwaitingNetworkRequest: true,
+        peers: {},
+      })
 
       this.state.peerRoom?.leave()
 
