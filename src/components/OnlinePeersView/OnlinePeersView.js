@@ -4,6 +4,8 @@ import CardHeader from '@material-ui/core/CardHeader'
 import sortBy from 'lodash.sortby'
 import { number, object, string } from 'prop-types'
 
+import BailOutErrorBoundary from '../BailOutErrorBoundary'
+
 import {
   getPlayerName,
   farmProductsSold,
@@ -14,6 +16,28 @@ import {
 import FarmhandContext from '../../Farmhand.context'
 
 import './OnlinePeersView.sass'
+
+const OnlinePeer = ({ peer: { dayCount, id, itemsSold, money } }) => (
+  <li>
+    <Card>
+      <CardHeader
+        {...{
+          title: getPlayerName(id),
+          subheader: (
+            <div>
+              <p>Day: {integerString(dayCount)}</p>
+              <p>
+                Level:{' '}
+                {integerString(levelAchieved(farmProductsSold(itemsSold)))}
+              </p>
+              <p>Money: {moneyString(money)}</p>
+            </div>
+          ),
+        }}
+      />
+    </Card>
+  </li>
+)
 
 const OnlinePeersView = ({ activePlayers, id, peers }) => {
   const peerKeys = Object.keys(peers)
@@ -29,35 +53,14 @@ const OnlinePeersView = ({ activePlayers, id, peers }) => {
       {activePlayers - 1 > populatedPeers.length && <p>Waiting for peers...</p>}
       <ul className="card-list">
         {sortBy(populatedPeers, [
-          // Use negative value to reverse sort order
-          peerId => -levelAchieved(farmProductsSold(peers[peerId].itemsSold)),
-        ]).map(peerId => {
-          const { dayCount, id, itemsSold, money } = peers[peerId]
-
-          return (
-            <li {...{ key: peerId }}>
-              <Card>
-                <CardHeader
-                  {...{
-                    title: getPlayerName(id),
-                    subheader: (
-                      <div>
-                        <p>Day: {integerString(dayCount)}</p>
-                        <p>
-                          Level:{' '}
-                          {integerString(
-                            levelAchieved(farmProductsSold(itemsSold))
-                          )}
-                        </p>
-                        <p>Money: {moneyString(money)}</p>
-                      </div>
-                    ),
-                  }}
-                />
-              </Card>
-            </li>
-          )
-        })}
+          peerId =>
+            // Use negative value to reverse sort order
+            -levelAchieved(farmProductsSold(peers[peerId].itemsSold || 0)),
+        ]).map(peerId => (
+          <BailOutErrorBoundary {...{ key: peerId }}>
+            <OnlinePeer {...{ peer: peers[peerId] }} />
+          </BailOutErrorBoundary>
+        ))}
       </ul>
     </div>
   )
