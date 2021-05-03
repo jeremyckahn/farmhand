@@ -226,7 +226,7 @@ export const Navigation = ({
     <p className="version">v{process.env.REACT_APP_VERSION}</p>
     <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
     <h2 className="day-and-progress-container">
-      <span>Day {dayCount}, level:</span>
+      <span>Day {integerString(dayCount)}, level:</span>
       <Tooltip
         {...{
           arrow: true,
