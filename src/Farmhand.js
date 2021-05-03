@@ -747,9 +747,17 @@ export default class Farmhand extends Component {
             throw new Error(errorCode)
           }
 
+          // If the player has been previously disconnected due to network
+          // flakiness (see the catch block below), attempt to rejoin the peer
+          // room.
+          const peerRoom =
+            this.state.peerRoom ||
+            joinRoom({ appId: process.env.REACT_APP_NAME }, room)
+
           this.setState(({ money }) => ({
             activePlayers,
             money: moneyTotal(money, activePlayers),
+            peerRoom,
           }))
         } catch (e) {
           if (SERVER_ERRORS[e.message]) {
@@ -758,6 +766,8 @@ export default class Farmhand extends Component {
           }
 
           this.showNotification(SERVER_ERROR, 'error')
+
+          this.setState({ peerRoom: null })
 
           console.error(e)
         }
