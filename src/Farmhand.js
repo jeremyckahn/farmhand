@@ -609,9 +609,7 @@ export default class Farmhand extends Component {
 
         this.setState({
           getPeerMetadata,
-          sendPeerMetadata: throttle(sendPeerMetadata, 5000, {
-            trailing: true,
-          }),
+          sendPeerMetadata: this.wrapSendPeerMetadata(sendPeerMetadata),
         })
 
         sendPeerMetadata(this.peerMetadata)
@@ -628,6 +626,23 @@ export default class Farmhand extends Component {
     ].forEach(fn => this[fn](prevState))
 
     this.state.sendPeerMetadata?.(this.peerMetadata)
+  }
+
+  /**
+   * @param {Function} sendPeerMetadata Raw send action callback created by
+   * Trystero's makeAction function.
+   * @return {Function}
+   */
+  wrapSendPeerMetadata(sendPeerMetadata) {
+    return throttle(
+      (...args) => {
+        sendPeerMetadata(...args)
+      },
+      5000,
+      {
+        trailing: true,
+      }
+    )
   }
 
   onGetPeerMetadata(peerState, peerId) {
