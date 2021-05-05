@@ -62,6 +62,7 @@ import {
   LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
+  MAX_PENDING_PEER_MESSAGES,
   NOTIFICATION_LOG_SIZE,
   PRECIPITATION_CHANCE,
   PRICE_EVENT_CHANCE,
@@ -990,6 +991,12 @@ export const purchaseItem = (state, item, howMany = 1) => {
     return state
   }
 
+  // FIXME: Move this string to src/templates.js
+  state = appendPendingPeerMessage(
+    state,
+    `Purchased ${howMany} unit${howMany > 1 ? 's' : ''} of ${item.name}.`
+  )
+
   return addItemToInventory(
     {
       ...state,
@@ -1071,6 +1078,12 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
   state = processLevelUp(state, oldLevel)
   state = decrementItemFromInventory(state, id, howMany)
+
+  // FIXME: Move this string to src/templates.js
+  state = appendPendingPeerMessage(
+    state,
+    `Sold ${howMany} unit${howMany > 1 ? 's' : ''} of ${item.name}.`
+  )
 
   return updateLearnedRecipes(state)
 }
@@ -1771,4 +1784,20 @@ export const updatePeer = (state, peerId, peerState) => {
   peers[peerId] = peerState
 
   return { ...state, peers }
+}
+
+// FIXME: Test this.
+/**
+ * @param {farmhand.state} state
+ * @param {string} peerMessage
+ * @returns {farmhand.state}
+ */
+export const appendPendingPeerMessage = (state, peerMessage) => {
+  return {
+    ...state,
+    pendingPeerMessages: [peerMessage, ...state.pendingPeerMessages].slice(
+      0,
+      MAX_PENDING_PEER_MESSAGES
+    ),
+  }
 }

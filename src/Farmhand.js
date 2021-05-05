@@ -191,6 +191,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Array.<farmhand.notification>} notificationLog
  * @property {Object} peers Keys are (Trystero) peer ids, values are their respective metadata or null.
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
+ * @property {Array.<farmhand.peerMessage>} pendingPeerMessages An array of
+ * messages to be sent to the Trystero peer room upon the next broadcast.
  * @property {function?} sendPeerMetadata See https://github.com/dmotz/trystero
  * @property {string} selectedCowId
  * @property {string} selectedItemId
@@ -275,6 +277,7 @@ export default class Farmhand extends Component {
     notificationLog: [],
     peers: {},
     peerRoom: null,
+    pendingPeerMessages: [],
     sendPeerMetadata: null,
     selectedCowId: '',
     selectedItemId: '',

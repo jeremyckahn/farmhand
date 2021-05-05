@@ -159,3 +159,5 @@ export const PEER_METADATA_STATE_KEYS = [
 ]
 
 export const DEFAULT_ROOM = 'global'
+
+export const MAX_PENDING_PEER_MESSAGES = 5
