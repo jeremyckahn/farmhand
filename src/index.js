@@ -149,6 +149,7 @@
 /**
  * @typedef farmhand.peerMessage
  * @type {Object}
+ * @property {string} id The farmhand.state.id of the peer.
  * @property {'error'|'info'|'success'|'warning'?} severity
  * @property {string} message
  */

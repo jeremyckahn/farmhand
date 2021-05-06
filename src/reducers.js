@@ -1800,14 +1800,15 @@ export const updatePeer = (state, peerId, peerState) => {
 /**
  * @param {farmhand.state} state
  * @param {string} peerMessage
+ * @param {string?} [severity='info']
  * @returns {farmhand.state}
  */
-export const appendPendingPeerMessage = (state, peerMessage) => {
+export const appendPendingPeerMessage = (state, message, severity = 'info') => {
   return {
     ...state,
-    pendingPeerMessages: [peerMessage, ...state.pendingPeerMessages].slice(
-      0,
-      MAX_PENDING_PEER_MESSAGES
-    ),
+    pendingPeerMessages: [
+      { id: state.id, message, severity },
+      ...state.pendingPeerMessages,
+    ].slice(0, MAX_PENDING_PEER_MESSAGES),
   }
 }
