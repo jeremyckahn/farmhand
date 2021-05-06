@@ -1784,7 +1784,7 @@ export const removePeer = (state, peerId) => {
 export const updatePeer = (state, peerId, peerState) => {
   const peers = { ...state.peers }
   peers[peerId] = peerState
-  const { pendingPeerMessages } = peerState
+  const { pendingPeerMessages = [] } = peerState
 
   return {
     ...state,
