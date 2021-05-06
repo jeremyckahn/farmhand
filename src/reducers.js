@@ -53,8 +53,8 @@ import {
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
-  DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   CROW_CHANCE,
+  DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
@@ -62,6 +62,7 @@ import {
   LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
+  MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
   NOTIFICATION_LOG_SIZE,
   PRECIPITATION_CHANCE,
@@ -1773,6 +1774,7 @@ export const removePeer = (state, peerId) => {
   return { ...state, peers }
 }
 
+// FIXME: Test this.
 /**
  * @param {farmhand.state} state
  * @param {string} peerId The peer to update
@@ -1782,8 +1784,16 @@ export const removePeer = (state, peerId) => {
 export const updatePeer = (state, peerId, peerState) => {
   const peers = { ...state.peers }
   peers[peerId] = peerState
+  const { pendingPeerMessages } = peerState
 
-  return { ...state, peers }
+  return {
+    ...state,
+    peers,
+    latestPeerMessages: [
+      ...pendingPeerMessages,
+      ...state.latestPeerMessages,
+    ].slice(0, MAX_LATEST_PEER_MESSAGES),
+  }
 }
 
 // FIXME: Test this.

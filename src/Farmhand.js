@@ -193,6 +193,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
  * @property {Array.<farmhand.peerMessage>} pendingPeerMessages An array of
  * messages to be sent to the Trystero peer room upon the next broadcast.
+ * @property {Array.<farmhand.peerMessage>} latestPeerMessages An array of
+ * messages that have been received from peers.
  * @property {function?} sendPeerMetadata See https://github.com/dmotz/trystero
  * @property {string} selectedCowId
  * @property {string} selectedItemId
@@ -278,6 +280,7 @@ export default class Farmhand extends Component {
     peers: {},
     peerRoom: null,
     pendingPeerMessages: [],
+    latestPeerMessages: [],
     sendPeerMetadata: null,
     selectedCowId: '',
     selectedItemId: '',
@@ -612,6 +615,7 @@ export default class Farmhand extends Component {
 
         this.setState({
           getPeerMetadata,
+          pendingPeerMessages: [],
           sendPeerMetadata: this.wrapSendPeerMetadata(sendPeerMetadata),
         })
 
@@ -640,6 +644,10 @@ export default class Farmhand extends Component {
     return throttle(
       (...args) => {
         sendPeerMetadata(...args)
+
+        this.setState(() => ({
+          pendingPeerMessages: [],
+        }))
       },
       5000,
       {

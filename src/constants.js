@@ -155,9 +155,11 @@ export const PEER_METADATA_STATE_KEYS = [
   'id',
   'itemsSold',
   'money',
+  'pendingPeerMessages',
   'version',
 ]
 
 export const DEFAULT_ROOM = 'global'
 
 export const MAX_PENDING_PEER_MESSAGES = 5
+export const MAX_LATEST_PEER_MESSAGES = 30
