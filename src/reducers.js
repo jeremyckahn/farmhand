@@ -1083,7 +1083,8 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
   state = prependPendingPeerMessage(
     state,
-    SOLD_ITEM_PEER_NOTIFICATION`${howMany}${item}`
+    SOLD_ITEM_PEER_NOTIFICATION`${howMany}${item}`,
+    'warning'
   )
 
   return updateLearnedRecipes(state)
@@ -1804,7 +1805,11 @@ export const updatePeer = (state, peerId, peerState) => {
  * @param {string?} [severity='info']
  * @returns {farmhand.state}
  */
-export const prependPendingPeerMessage = (state, message, severity = 'info') => {
+export const prependPendingPeerMessage = (
+  state,
+  message,
+  severity = 'info'
+) => {
   return {
     ...state,
     pendingPeerMessages: [
