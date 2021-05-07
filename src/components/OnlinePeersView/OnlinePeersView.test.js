@@ -10,6 +10,7 @@ beforeEach(() => {
     <OnlinePeersView {...{
       activePlayers: 0,
       id: '',
+      latestPeerMessages: [],
       peers: {},
     }} />
   );

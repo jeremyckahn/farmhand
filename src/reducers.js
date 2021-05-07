@@ -53,8 +53,8 @@ import {
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
-  DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   CROW_CHANCE,
+  DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   FERTILIZER_BONUS,
   FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
@@ -62,6 +62,8 @@ import {
   LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
+  MAX_LATEST_PEER_MESSAGES,
+  MAX_PENDING_PEER_MESSAGES,
   NOTIFICATION_LOG_SIZE,
   PRECIPITATION_CHANCE,
   PRICE_EVENT_CHANCE,
@@ -91,6 +93,8 @@ import {
   MILKS_PRODUCED,
   PRICE_CRASH,
   PRICE_SURGE,
+  PURCHASED_ITEM_PEER_NOTIFICATION,
+  SOLD_ITEM_PEER_NOTIFICATION,
 } from './templates'
 import { cropLifeStage, fieldMode, itemType } from './enums'
 
@@ -990,6 +994,11 @@ export const purchaseItem = (state, item, howMany = 1) => {
     return state
   }
 
+  state = prependPendingPeerMessage(
+    state,
+    PURCHASED_ITEM_PEER_NOTIFICATION`${howMany}${item}`
+  )
+
   return addItemToInventory(
     {
       ...state,
@@ -1071,6 +1080,12 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
   state = processLevelUp(state, oldLevel)
   state = decrementItemFromInventory(state, id, howMany)
+
+  state = prependPendingPeerMessage(
+    state,
+    SOLD_ITEM_PEER_NOTIFICATION`${howMany}${item}`,
+    'warning'
+  )
 
   return updateLearnedRecipes(state)
 }
@@ -1770,5 +1785,36 @@ export const updatePeer = (state, peerId, peerState) => {
   const peers = { ...state.peers }
   peers[peerId] = peerState
 
-  return { ...state, peers }
+  // Out of date peer clients may not provide pendingPeerMessages, so default
+  // it here.
+  const { pendingPeerMessages = [] } = peerState
+
+  return {
+    ...state,
+    peers,
+    latestPeerMessages: [
+      ...pendingPeerMessages,
+      ...state.latestPeerMessages,
+    ].slice(0, MAX_LATEST_PEER_MESSAGES),
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {string} peerMessage
+ * @param {string?} [severity='info']
+ * @returns {farmhand.state}
+ */
+export const prependPendingPeerMessage = (
+  state,
+  message,
+  severity = 'info'
+) => {
+  return {
+    ...state,
+    pendingPeerMessages: [
+      { id: state.id, message, severity },
+      ...state.pendingPeerMessages,
+    ].slice(0, MAX_PENDING_PEER_MESSAGES),
+  }
 }
