@@ -93,6 +93,8 @@ import {
   MILKS_PRODUCED,
   PRICE_CRASH,
   PRICE_SURGE,
+  PURCHASED_ITEM_PEER_NOTIFICATION,
+  SOLD_ITEM_PEER_NOTIFICATION,
 } from './templates'
 import { cropLifeStage, fieldMode, itemType } from './enums'
 
@@ -992,10 +994,9 @@ export const purchaseItem = (state, item, howMany = 1) => {
     return state
   }
 
-  // FIXME: Move this string to src/templates.js
   state = appendPendingPeerMessage(
     state,
-    `Purchased ${howMany} unit${howMany > 1 ? 's' : ''} of ${item.name}.`
+    PURCHASED_ITEM_PEER_NOTIFICATION`${howMany}${item}`
   )
 
   return addItemToInventory(
@@ -1080,10 +1081,9 @@ export const sellItem = (state, { id }, howMany = 1) => {
   state = processLevelUp(state, oldLevel)
   state = decrementItemFromInventory(state, id, howMany)
 
-  // FIXME: Move this string to src/templates.js
   state = appendPendingPeerMessage(
     state,
-    `Sold ${howMany} unit${howMany > 1 ? 's' : ''} of ${item.name}.`
+    SOLD_ITEM_PEER_NOTIFICATION`${howMany}${item}`
   )
 
   return updateLearnedRecipes(state)

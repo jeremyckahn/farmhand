@@ -191,3 +191,19 @@ export const POSITIONS_POSTED_NOTIFICATION = (_, positions) => {
  */
 export const ROOM_FULL_NOTIFICATION = (_, room, nextRoom) =>
   `Room **${room}** is full! Trying room **${nextRoom}**...`
+
+/**
+ * @param {number} quantity
+ * @param {farmhand.item} item
+ * @returns {string}
+ */
+export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
+  `Purchased ${quantity} unit${quantity > 1 ? 's' : ''} of ${name}.`
+
+/**
+ * @param {number} quantity
+ * @param {farmhand.item} item
+ * @returns {string}
+ */
+export const SOLD_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
+  `Sold ${quantity} unit${quantity > 1 ? 's' : ''} of ${name}.`
