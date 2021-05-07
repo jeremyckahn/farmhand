@@ -994,7 +994,7 @@ export const purchaseItem = (state, item, howMany = 1) => {
     return state
   }
 
-  state = appendPendingPeerMessage(
+  state = prependPendingPeerMessage(
     state,
     PURCHASED_ITEM_PEER_NOTIFICATION`${howMany}${item}`
   )
@@ -1081,7 +1081,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
   state = processLevelUp(state, oldLevel)
   state = decrementItemFromInventory(state, id, howMany)
 
-  state = appendPendingPeerMessage(
+  state = prependPendingPeerMessage(
     state,
     SOLD_ITEM_PEER_NOTIFICATION`${howMany}${item}`
   )
@@ -1774,7 +1774,6 @@ export const removePeer = (state, peerId) => {
   return { ...state, peers }
 }
 
-// FIXME: Test this.
 /**
  * @param {farmhand.state} state
  * @param {string} peerId The peer to update
@@ -1784,6 +1783,9 @@ export const removePeer = (state, peerId) => {
 export const updatePeer = (state, peerId, peerState) => {
   const peers = { ...state.peers }
   peers[peerId] = peerState
+
+  // Out of date peer clients may not provide pendingPeerMessages, so default
+  // it here.
   const { pendingPeerMessages = [] } = peerState
 
   return {
@@ -1796,14 +1798,13 @@ export const updatePeer = (state, peerId, peerState) => {
   }
 }
 
-// FIXME: Test this.
 /**
  * @param {farmhand.state} state
  * @param {string} peerMessage
  * @param {string?} [severity='info']
  * @returns {farmhand.state}
  */
-export const appendPendingPeerMessage = (state, message, severity = 'info') => {
+export const prependPendingPeerMessage = (state, message, severity = 'info') => {
   return {
     ...state,
     pendingPeerMessages: [

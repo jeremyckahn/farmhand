@@ -15,8 +15,6 @@ import {
   MILKS_PRODUCED,
   PRICE_CRASH,
   PRICE_SURGE,
-  PURCHASED_ITEM_PEER_NOTIFICATION,
-  SOLD_ITEM_PEER_NOTIFICATION,
 } from './templates'
 import {
   COW_FEED_ITEM_ID,
@@ -30,6 +28,8 @@ import {
   FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
+  MAX_LATEST_PEER_MESSAGES,
+  MAX_PENDING_PEER_MESSAGES,
   NOTIFICATION_LOG_SIZE,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
@@ -2913,5 +2913,69 @@ describe('forRange', () => {
     expect(field[0][1].wasWateredToday).toBe(true)
     expect(field[1][0].wasWateredToday).toBe(true)
     expect(field[4][0].wasWateredToday).toBe(false)
+  })
+})
+
+describe('updatePeer', () => {
+  test('updates peer data', () => {
+    const { latestPeerMessages, peers } = fn.updatePeer(
+      {
+        latestPeerMessages: [],
+        peers: { abc123: { foo: true } },
+      },
+      'abc123',
+      { foo: false }
+    )
+
+    expect(latestPeerMessages).toEqual([])
+    expect(peers).toEqual({ abc123: { foo: false } })
+  })
+
+  test('limits pendingPeerMessages', () => {
+    const { latestPeerMessages } = fn.updatePeer(
+      {
+        latestPeerMessages: new Array(50).fill('message'),
+        peers: { abc123: { foo: true } },
+      },
+      'abc123',
+      { foo: false }
+    )
+
+    expect(latestPeerMessages).toHaveLength(MAX_LATEST_PEER_MESSAGES)
+  })
+})
+
+describe('prependPendingPeerMessage', () => {
+  test('prepends a message', () => {
+    const { pendingPeerMessages } = fn.prependPendingPeerMessage(
+      { id: 'abc123', pendingPeerMessages: [] },
+      'hello world'
+    )
+
+    expect(pendingPeerMessages).toEqual([
+      { id: 'abc123', message: 'hello world', severity: 'info' },
+    ])
+  })
+
+  test('limits the amount of stored messages', () => {
+    const { pendingPeerMessages } = fn.prependPendingPeerMessage(
+      {
+        id: 'abc123',
+        pendingPeerMessages: new Array(50).fill({
+          id: 'abc123',
+          message: 'some other message',
+          severity: 'info',
+        }),
+      },
+      'hello world'
+    )
+
+    expect(pendingPeerMessages[0]).toEqual({
+      id: 'abc123',
+      message: 'hello world',
+      severity: 'info',
+    })
+
+    expect(pendingPeerMessages).toHaveLength(MAX_PENDING_PEER_MESSAGES)
   })
 })
