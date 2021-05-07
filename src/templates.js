@@ -3,7 +3,11 @@
  * @ignore
  */
 
-import { getRandomLevelUpRewardQuantity, moneyString } from './utils'
+import {
+  getRandomLevelUpRewardQuantity,
+  integerString,
+  moneyString,
+} from './utils'
 
 import { itemUnlockLevels, levels } from './data/levels'
 import { itemsMap } from './data/maps'
@@ -198,7 +202,9 @@ export const ROOM_FULL_NOTIFICATION = (_, room, nextRoom) =>
  * @returns {string}
  */
 export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
-  `Purchased ${quantity} unit${quantity > 1 ? 's' : ''} of ${name}.`
+  `Purchased ${integerString(quantity)} unit${
+    quantity > 1 ? 's' : ''
+  } of ${name}.`
 
 /**
  * @param {number} quantity
@@ -206,4 +212,4 @@ export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
  * @returns {string}
  */
 export const SOLD_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
-  `Sold ${quantity} unit${quantity > 1 ? 's' : ''} of ${name}.`
+  `Sold ${integerString(quantity)} unit${quantity > 1 ? 's' : ''} of ${name}.`
