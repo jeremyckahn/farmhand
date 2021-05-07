@@ -1,8 +1,11 @@
 import React from 'react'
+import ReactMarkdown from 'react-markdown'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
+import Divider from '@material-ui/core/Divider'
+import Alert from '@material-ui/lab/Alert'
 import sortBy from 'lodash.sortby'
-import { number, object, string } from 'prop-types'
+import { array, number, object, string } from 'prop-types'
 
 import BailOutErrorBoundary from '../BailOutErrorBoundary'
 
@@ -39,7 +42,7 @@ const OnlinePeer = ({ peer: { dayCount, id, itemsSold, money } }) => (
   </li>
 )
 
-const OnlinePeersView = ({ activePlayers, id, peers }) => {
+const OnlinePeersView = ({ activePlayers, id, latestPeerMessages, peers }) => {
   const peerKeys = Object.keys(peers)
 
   // Filter out peers that may have connected but not sent data yet.
@@ -62,15 +65,26 @@ const OnlinePeersView = ({ activePlayers, id, peers }) => {
           </BailOutErrorBoundary>
         ))}
       </ul>
+      <Divider />
+      <ul>
+        {latestPeerMessages.map(({ id, message, severity = 'info' }, i) => (
+          <li {...{ key: i }}>
+            <Alert {...{ elevation: 3, severity }}>
+              <ReactMarkdown
+                {...{ source: `**${getPlayerName(id)}** ${message}` }}
+              />
+            </Alert>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
 
-OnlinePeersView.propTypes = {}
-
 OnlinePeersView.propTypes = {
   activePlayers: number.isRequired,
   id: string.isRequired,
+  latestPeerMessages: array.isRequired,
   peers: object.isRequired,
 }
 

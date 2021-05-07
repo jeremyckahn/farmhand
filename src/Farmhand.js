@@ -191,6 +191,10 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Array.<farmhand.notification>} notificationLog
  * @property {Object} peers Keys are (Trystero) peer ids, values are their respective metadata or null.
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
+ * @property {Array.<farmhand.peerMessage>} pendingPeerMessages An array of
+ * messages to be sent to the Trystero peer room upon the next broadcast.
+ * @property {Array.<farmhand.peerMessage>} latestPeerMessages An array of
+ * messages that have been received from peers.
  * @property {function?} sendPeerMetadata See https://github.com/dmotz/trystero
  * @property {string} selectedCowId
  * @property {string} selectedItemId
@@ -275,6 +279,8 @@ export default class Farmhand extends Component {
     notificationLog: [],
     peers: {},
     peerRoom: null,
+    pendingPeerMessages: [],
+    latestPeerMessages: [],
     sendPeerMetadata: null,
     selectedCowId: '',
     selectedItemId: '',
@@ -609,9 +615,8 @@ export default class Farmhand extends Component {
 
         this.setState({
           getPeerMetadata,
-          sendPeerMetadata: throttle(sendPeerMetadata, 5000, {
-            trailing: true,
-          }),
+          pendingPeerMessages: [],
+          sendPeerMetadata: this.wrapSendPeerMetadata(sendPeerMetadata),
         })
 
         sendPeerMetadata(this.peerMetadata)
@@ -628,6 +633,27 @@ export default class Farmhand extends Component {
     ].forEach(fn => this[fn](prevState))
 
     this.state.sendPeerMetadata?.(this.peerMetadata)
+  }
+
+  /**
+   * @param {Function} sendPeerMetadata Raw send action callback created by
+   * Trystero's makeAction function.
+   * @return {Function}
+   */
+  wrapSendPeerMetadata(sendPeerMetadata) {
+    return throttle(
+      (...args) => {
+        sendPeerMetadata(...args)
+
+        this.setState(() => ({
+          pendingPeerMessages: [],
+        }))
+      },
+      5000,
+      {
+        trailing: true,
+      }
+    )
   }
 
   onGetPeerMetadata(peerState, peerId) {

@@ -146,6 +146,14 @@
  * @property {string} message
  */
 
+/**
+ * @typedef farmhand.peerMessage
+ * @type {Object}
+ * @property {string} id The farmhand.state.id of the peer.
+ * @property {'error'|'info'|'success'|'warning'?} severity
+ * @property {string} message
+ */
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route } from 'react-router-dom'
