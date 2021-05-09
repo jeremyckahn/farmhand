@@ -331,7 +331,12 @@ export default {
           throw new Error(INVALID_DATA_PROVIDED)
         }
 
-        this.setState(sanitizeStateForImport(state))
+        this.setState({
+          ...this.createInitialState(),
+          ...sanitizeStateForImport(state),
+          hasBooted: true,
+        })
+
         this.showNotification('Data loaded!', 'success')
       } catch (e) {
         console.error(e)
@@ -398,5 +403,5 @@ export default {
 
   handleActivePlayerButtonClick() {
     this.openDialogView(dialogView.ONLINE_PEERS)
-  }
+  },
 }
