@@ -1054,12 +1054,13 @@ export default class Farmhand extends Component {
               <div
                 {...{
                   className: classNames(
-                    'Farmhand fill',
+                    'Farmhand farmhand-root fill',
                     this.state.isMenuOpen ? 'menu-open' : 'menu-closed',
                     {
                       'use-alternate-end-day-button-position': this.state
                         .useAlternateEndDayButtonPosition,
                       'block-input': this.state.isAwaitingNetworkRequest,
+                      'has-booted': this.state.hasBooted,
                     }
                   ),
                 }}
