@@ -10,13 +10,11 @@
   "scripts": {
     "build": "react-scripts build",
     "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
-    "deploy": "gh-pages -d build",
     "dev": "concurrently --kill-others npm:start*",
     "doc": "jsdoc -c .jsdoc -r src",
     "doc:view": "serve -S dist/doc",
     "doc:watch": "nodemon --exec \"npm run doc\" --watch src --watch ./ --ext js,md --ignore dist",
     "lint": "eslint src --max-warnings=0",
-    "predeploy": "npm run build",
     "prettier": "prettier 'src/**/*.js' --write",
     "preversion": "CI=true npm run test",
     "postversion": "git push && git push --tags",
