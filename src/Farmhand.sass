@@ -1,3 +1,4 @@
+@import '~compass-mixins/lib/compass/css3/transform'
 @import styles/variables.sass
 @import styles/utils.sass
 
@@ -13,6 +14,18 @@ body
   padding-top: 3.5em
   position: fixed
   touch-action: manipulation
+
+  // .farmhand-root is needed because some sibling top-level elements also have
+  // the .Farmhand class, but do not have the bootup animation that the main
+  // .Farmhand element does.
+  &.farmhand-root
+    opacity: 0
+    transition: opacity, transform 200ms
+    +transform(scale(0))
+
+    &.has-booted
+      +transform(scale(1))
+      opacity: 1
 
   &.block-input
     button,

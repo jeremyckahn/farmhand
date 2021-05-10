@@ -496,28 +496,28 @@ export default class Farmhand extends Component {
     })
   }
 
-  componentDidMount() {
-    this.localforage.getItem('state').then(state => {
-      if (state) {
-        const sanitizedState = sanitizeStateForImport(state)
-        const { newDayNotifications } = sanitizedState
+  async componentDidMount() {
+    const state = await this.localforage.getItem('state')
 
-        this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {
-          newDayNotifications.forEach(({ message, severity }) =>
-            this.showNotification(message, severity)
-          )
-        })
-      } else {
-        // Initialize new game
-        this.incrementDay(true)
-        this.setState(() => ({ historicalValueAdjustments: [] }))
-        this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
-      }
+    if (state) {
+      const sanitizedState = sanitizeStateForImport(state)
+      const { newDayNotifications } = sanitizedState
 
-      this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
+      this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {
+        newDayNotifications.forEach(({ message, severity }) =>
+          this.showNotification(message, severity)
+        )
+      })
+    } else {
+      // Initialize new game
+      this.incrementDay(true)
+      this.setState(() => ({ historicalValueAdjustments: [] }))
+      this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
+    }
 
-      this.setState({ hasBooted: true })
-    })
+    this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
+
+    this.setState({ hasBooted: true })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -667,8 +667,10 @@ export default class Farmhand extends Component {
     this.updatePeer(peerId, peerState)
   }
 
-  clearPersistedData() {
-    this.localforage.clear().then(() => this.showNotification(DATA_DELETED))
+  async clearPersistedData() {
+    await this.localforage.clear()
+
+    this.showNotification(DATA_DELETED)
   }
 
   async syncToRoom() {
@@ -1052,12 +1054,13 @@ export default class Farmhand extends Component {
               <div
                 {...{
                   className: classNames(
-                    'Farmhand fill',
+                    'Farmhand farmhand-root fill',
                     this.state.isMenuOpen ? 'menu-open' : 'menu-closed',
                     {
                       'use-alternate-end-day-button-position': this.state
                         .useAlternateEndDayButtonPosition,
                       'block-input': this.state.isAwaitingNetworkRequest,
+                      'has-booted': this.state.hasBooted,
                     }
                   ),
                 }}
