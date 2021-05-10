@@ -1,6 +1,6 @@
 {
   "name": "@jeremyckahn/farmhand",
-  "version": "1.7.5",
+  "version": "1.7.6",
   "publishConfig": {
     "access": "public"
   },
@@ -10,13 +10,11 @@
   "scripts": {
     "build": "react-scripts build",
     "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
-    "deploy": "gh-pages -d build",
     "dev": "concurrently --kill-others npm:start*",
     "doc": "jsdoc -c .jsdoc -r src",
     "doc:view": "serve -S dist/doc",
     "doc:watch": "nodemon --exec \"npm run doc\" --watch src --watch ./ --ext js,md --ignore dist",
     "lint": "eslint src --max-warnings=0",
-    "predeploy": "npm run build",
     "prettier": "prettier 'src/**/*.js' --write",
     "preversion": "CI=true npm run test",
     "postversion": "git push && git push --tags",
@@ -47,7 +45,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
-    "gh-pages": "^2.2.0",
     "git-branch-is": "^4.0.0",
     "husky": "^4.2.3",
     "jest-extended": "^0.11.5",
@@ -61,19 +58,7 @@
     "pretty-quick": "^2.0.1",
     "react-scripts": "^4.0.3",
     "serve": "^11.3.2",
-    "vercel": "^21.3.3",
-    "workbox-background-sync": "^5.1.3",
-    "workbox-broadcast-update": "^5.1.3",
-    "workbox-cacheable-response": "^5.1.3",
-    "workbox-core": "^5.1.3",
-    "workbox-expiration": "^5.1.3",
-    "workbox-google-analytics": "^5.1.3",
-    "workbox-navigation-preload": "^5.1.3",
-    "workbox-precaching": "^5.1.3",
-    "workbox-range-requests": "^5.1.3",
-    "workbox-routing": "^5.1.3",
-    "workbox-strategies": "^5.1.3",
-    "workbox-streams": "^5.1.3"
+    "vercel": "^21.3.3"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
@@ -111,7 +96,19 @@
     "trystero": "^0.7.10",
     "typeface-francois-one": "0.0.71",
     "typeface-public-sans": "^1.1.4",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "workbox-background-sync": "^6.1.5",
+    "workbox-broadcast-update": "^6.1.5",
+    "workbox-cacheable-response": "^6.1.5",
+    "workbox-core": "^6.1.5",
+    "workbox-expiration": "^6.1.5",
+    "workbox-google-analytics": "^6.1.5",
+    "workbox-navigation-preload": "^6.1.5",
+    "workbox-precaching": "^6.1.5",
+    "workbox-range-requests": "^6.1.5",
+    "workbox-routing": "^6.1.5",
+    "workbox-strategies": "^6.1.5",
+    "workbox-streams": "^6.1.5"
   },
   "husky": {
     "hooks": {
