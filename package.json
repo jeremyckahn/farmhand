@@ -45,7 +45,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
-    "gh-pages": "^2.2.0",
     "git-branch-is": "^4.0.0",
     "husky": "^4.2.3",
     "jest-extended": "^0.11.5",
