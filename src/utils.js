@@ -34,11 +34,13 @@ import {
 } from './enums'
 import {
   BREAKPOINTS,
+  COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
+  COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
   COW_MAXIMUM_VALUE_MATURITY_AGE,
-  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_MAXIMUM_VALUE_MULTIPLIER,
   COW_MILK_RATE_FASTEST,
   COW_MILK_RATE_SLOWEST,
+  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
@@ -391,6 +393,7 @@ export const generateCow = (options = {}) => {
     colorsInBloodline: { [color]: true },
     daysOld: 1,
     daysSinceMilking: 0,
+    daysSinceProducingFertilizer: 0,
     gender,
     happiness: 0,
     happinessBoostsToday: 0,
@@ -478,6 +481,21 @@ export const getCowMilkRate = cow =>
         COW_WEIGHT_MULTIPLIER_MAXIMUM,
         COW_MILK_RATE_SLOWEST,
         COW_MILK_RATE_FASTEST
+      )
+    : Infinity
+
+/**
+ * @param {farmhand.cow} cow
+ * @returns {number}
+ */
+export const getCowFertilizerProductionRate = cow =>
+  cow.gender === genders.MALE
+    ? scaleNumber(
+        cow.weightMultiplier,
+        COW_WEIGHT_MULTIPLIER_MINIMUM,
+        COW_WEIGHT_MULTIPLIER_MAXIMUM,
+        COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+        COW_FERTILIZER_PRODUCTION_RATE_FASTEST
       )
     : Infinity
 

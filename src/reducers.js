@@ -525,6 +525,16 @@ export const processMilkingCows = state => {
 }
 
 /**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+export const processCowFertilizerProduction = state => {
+  // FIXME: Implement this.
+  // NOTE: Handle case where daysSinceProducingFertilizer is undefined.
+  return state
+}
+
+/**
  * Only adds as many items as there is room in the inventory for unless
  * allowInventoryOverage is true.
  * @param {farmhand.state} state
@@ -957,6 +967,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
         processFeedingCows,
         processCowAttrition,
         processMilkingCows,
+        processCowFertilizerProduction,
         updatePriceEvents,
         updateFinancialRecords,
         updateInventoryRecordsForNextDay,
