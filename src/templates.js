@@ -47,6 +47,27 @@ export const MILKS_PRODUCED = (_, milksProduced) => {
 }
 
 /**
+ * @param {Object.<string, number>} fertilizersProduced
+ * @returns {string}
+ */
+export const FERTILIZERS_PRODUCED = (_, fertilizersProduced) => {
+  let message = `Your cows produced fertilizers:
+`
+
+  Object.keys(fertilizersProduced)
+    .sort()
+    .forEach(
+      fertilizerName =>
+        (message += `  - ${
+          fertilizersProduced[fertilizerName]
+        } ${fertilizerName}${fertilizersProduced[fertilizerName] > 1 ? 's' : ''}
+`)
+    )
+
+  return message
+}
+
+/**
  * @param {farmhand.cow} cow
  * @returns {string}
  */

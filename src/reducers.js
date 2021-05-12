@@ -21,6 +21,8 @@ import {
   get7DayAverage,
   getAdjustedItemValue,
   getCowColorId,
+  getCowFertilizerItem,
+  getCowFertilizerProductionRate,
   getCowMilkItem,
   getCowMilkRate,
   getCowValue,
@@ -86,6 +88,7 @@ import {
   COW_ATTRITION_MESSAGE,
   COW_BORN_MESSAGE,
   CROW_ATTACKED,
+  FERTILIZERS_PRODUCED,
   LEVEL_GAINED_NOTIFICATION,
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
@@ -529,8 +532,41 @@ export const processMilkingCows = state => {
  * @returns {farmhand.state}
  */
 export const processCowFertilizerProduction = state => {
-  // FIXME: Implement this.
-  // NOTE: Handle case where daysSinceProducingFertilizer is undefined.
+  // FIXME: This is producing fertilizers for female cows.
+  // FIXME: Test this.
+  const cowInventory = [...state.cowInventory]
+  const newDayNotifications = [...state.newDayNotifications]
+  const { length: cowInventoryLength } = cowInventory
+  const fertilizersProduced = {}
+
+  for (let i = 0; i < cowInventoryLength; i++) {
+    const cow = cowInventory[i]
+
+    // `cow.daysSinceProducingFertilizer || 0` is needed because legacy cows
+    // did not define daysSinceProducingFertilizer.
+    if (cow.daysSinceProducingFertilizer || 0 > getCowFertilizerProductionRate(cow)) {
+      cowInventory[i] = { ...cow, daysSinceProducingFertilizer: 0 }
+
+      const fertilizer = getCowFertilizerItem(cow)
+      const { name } = fertilizer
+
+      if (!doesInventorySpaceRemain(state)) {
+        break
+      }
+
+      fertilizersProduced[name] = (fertilizersProduced[name] || 0) + 1
+      state = addItemToInventory(state, fertilizer)
+    }
+  }
+
+  // FIXME: This isn't showing.
+  if (Object.keys(fertilizersProduced).length) {
+    newDayNotifications.push({
+      message: FERTILIZERS_PRODUCED`${fertilizersProduced}`,
+      severity: 'success',
+    })
+  }
+
   return state
 }
 
@@ -661,6 +697,9 @@ export const computeCowInventoryForNextDay = state => ({
     ...cow,
     daysOld: cow.daysOld + 1,
     daysSinceMilking: cow.daysSinceMilking + 1,
+    // `cow.daysSinceProducingFertilizer || 0` is needed because legacy cows
+    // did not define daysSinceProducingFertilizer.
+    daysSinceProducingFertilizer: (cow.daysSinceProducingFertilizer || 0) + 1,
     happiness: Math.max(
       0,
       cow.isUsingHuggingMachine
