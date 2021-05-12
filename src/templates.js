@@ -202,7 +202,7 @@ export const ROOM_FULL_NOTIFICATION = (_, room, nextRoom) =>
  * @returns {string}
  */
 export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
-  `Purchased ${integerString(quantity)} unit${
+  `purchased ${integerString(quantity)} unit${
     quantity > 1 ? 's' : ''
   } of ${name}.`
 
@@ -212,4 +212,4 @@ export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
  * @returns {string}
  */
 export const SOLD_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
-  `Sold ${integerString(quantity)} unit${quantity > 1 ? 's' : ''} of ${name}.`
+  `sold ${integerString(quantity)} unit${quantity > 1 ? 's' : ''} of ${name}.`
