@@ -30,7 +30,7 @@ export const COW_PEN_PURCHASED = (_, cows) =>
  * @returns {string}
  */
 export const MILKS_PRODUCED = (_, milksProduced) => {
-  let message = `Your cows produced milks:
+  let message = `Your cows produced milk:
 `
 
   Object.keys(milksProduced)
@@ -51,7 +51,7 @@ export const MILKS_PRODUCED = (_, milksProduced) => {
  * @returns {string}
  */
 export const FERTILIZERS_PRODUCED = (_, fertilizersProduced) => {
-  let message = `Your cows produced fertilizers:
+  let message = `Your cows produced fertilizer:
 `
 
   Object.keys(fertilizersProduced)

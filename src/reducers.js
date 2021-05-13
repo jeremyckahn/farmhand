@@ -532,7 +532,6 @@ export const processMilkingCows = state => {
  * @returns {farmhand.state}
  */
 export const processCowFertilizerProduction = state => {
-  // FIXME: Test this.
   const cowInventory = [...state.cowInventory]
   const newDayNotifications = [...state.newDayNotifications]
   const { length: cowInventoryLength } = cowInventory
@@ -561,7 +560,6 @@ export const processCowFertilizerProduction = state => {
     }
   }
 
-  // FIXME: This isn't showing.
   if (Object.keys(fertilizersProduced).length) {
     newDayNotifications.push({
       message: FERTILIZERS_PRODUCED`${fertilizersProduced}`,
@@ -569,7 +567,7 @@ export const processCowFertilizerProduction = state => {
     })
   }
 
-  return state
+  return { ...state, cowInventory, newDayNotifications }
 }
 
 /**
