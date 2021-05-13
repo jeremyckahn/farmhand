@@ -532,7 +532,6 @@ export const processMilkingCows = state => {
  * @returns {farmhand.state}
  */
 export const processCowFertilizerProduction = state => {
-  // FIXME: This is producing fertilizers for female cows.
   // FIXME: Test this.
   const cowInventory = [...state.cowInventory]
   const newDayNotifications = [...state.newDayNotifications]
@@ -542,9 +541,12 @@ export const processCowFertilizerProduction = state => {
   for (let i = 0; i < cowInventoryLength; i++) {
     const cow = cowInventory[i]
 
-    // `cow.daysSinceProducingFertilizer || 0` is needed because legacy cows
-    // did not define daysSinceProducingFertilizer.
-    if (cow.daysSinceProducingFertilizer || 0 > getCowFertilizerProductionRate(cow)) {
+    if (
+      // `cow.daysSinceProducingFertilizer || 0` is needed because legacy cows
+      // did not define daysSinceProducingFertilizer.
+      (cow.daysSinceProducingFertilizer || 0) >
+      getCowFertilizerProductionRate(cow)
+    ) {
       cowInventory[i] = { ...cow, daysSinceProducingFertilizer: 0 }
 
       const fertilizer = getCowFertilizerItem(cow)
