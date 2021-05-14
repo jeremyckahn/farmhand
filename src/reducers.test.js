@@ -9,6 +9,7 @@ import {
   ACHIEVEMENT_COMPLETED,
   COW_ATTRITION_MESSAGE,
   CROW_ATTACKED,
+  FERTILIZERS_PRODUCED,
   LEVEL_GAINED_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
@@ -21,6 +22,7 @@ import {
   COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
   COW_MILK_RATE_SLOWEST,
+  COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
@@ -44,6 +46,7 @@ import { fieldMode, genders, standardCowColors } from './enums'
 import {
   farmProductSalesVolumeNeededForLevel,
   generateCow,
+  getCowFertilizerItem,
   getCowMilkItem,
   getCowValue,
   getCropFromItemId,
@@ -753,7 +756,7 @@ describe('processMilkingCows', () => {
         state.cowInventory = [
           generateCow({
             color: standardCowColors.WHITE,
-            daysSinceMilking: Math.ceil(COW_MILK_RATE_SLOWEST / 2),
+            daysSinceMilking: COW_MILK_RATE_SLOWEST,
             gender: genders.FEMALE,
           }),
         ]
@@ -778,17 +781,17 @@ describe('processMilkingCows', () => {
     })
 
     describe('inventory space is not available', () => {
-      test('cow is milked and milk is added to inventory', () => {
+      test('cow is milked but milk is not added to inventory', () => {
         state.inventoryLimit = 1
         state.cowInventory = [
           generateCow({
             color: standardCowColors.WHITE,
-            daysSinceMilking: Math.ceil(COW_MILK_RATE_SLOWEST / 2),
+            daysSinceMilking: COW_MILK_RATE_SLOWEST,
             gender: genders.FEMALE,
           }),
           generateCow({
             color: standardCowColors.WHITE,
-            daysSinceMilking: Math.ceil(COW_MILK_RATE_SLOWEST / 2),
+            daysSinceMilking: COW_MILK_RATE_SLOWEST,
             gender: genders.FEMALE,
           }),
         ]
@@ -806,6 +809,108 @@ describe('processMilkingCows', () => {
         expect(newDayNotifications).toEqual([
           {
             message: MILKS_PRODUCED`${{ [getCowMilkItem(cow).name]: 1 }}`,
+            severity: 'success',
+          },
+        ])
+      })
+    })
+  })
+})
+
+describe('processCowFertilizerProduction', () => {
+  let state
+
+  beforeEach(() => {
+    state = {
+      cowInventory: [],
+      inventory: [],
+      inventoryLimit: -1,
+      newDayNotifications: [],
+    }
+  })
+
+  describe('cow should not produce fertilizer', () => {
+    test('cow does not produce fertilizer', () => {
+      const baseDaysSinceProducingFertilizer = 2
+
+      state.cowInventory = [
+        generateCow({
+          daysSinceProducingFertilizer: baseDaysSinceProducingFertilizer,
+          gender: genders.MALE,
+        }),
+      ]
+
+      const {
+        cowInventory: [{ daysSinceProducingFertilizer }],
+        inventory,
+        newDayNotifications,
+      } = fn.processCowFertilizerProduction(state)
+
+      expect(daysSinceProducingFertilizer).toEqual(baseDaysSinceProducingFertilizer)
+      expect(inventory).toEqual([])
+      expect(newDayNotifications).toEqual([])
+    })
+  })
+
+  describe('cow should produce fertilizer', () => {
+    describe('inventory space is available', () => {
+      test('cow produces fertilizer and fertilizer is added to inventory', () => {
+        state.cowInventory = [
+          generateCow({
+            color: standardCowColors.WHITE,
+            daysSinceProducingFertilizer: COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+            gender: genders.MALE,
+          }),
+        ]
+
+        const {
+          cowInventory: [cow],
+          inventory,
+          newDayNotifications,
+        } = fn.processCowFertilizerProduction(state)
+
+        const { daysSinceProducingFertilizer } = cow
+
+        expect(daysSinceProducingFertilizer).toEqual(0)
+        expect(inventory).toEqual([{ id: 'fertilizer', quantity: 1 }])
+        expect(newDayNotifications).toEqual([
+          {
+            message: FERTILIZERS_PRODUCED`${{ [getCowFertilizerItem(cow).name]: 1 }}`,
+            severity: 'success',
+          },
+        ])
+      })
+    })
+
+    describe('inventory space is not available', () => {
+      test('cow produces fertilizer but fertilizer is not added to inventory', () => {
+        state.inventoryLimit = 1
+        state.cowInventory = [
+          generateCow({
+            color: standardCowColors.WHITE,
+            daysSinceProducingFertilizer: COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+            gender: genders.MALE,
+          }),
+          generateCow({
+            color: standardCowColors.WHITE,
+            daysSinceProducingFertilizer: COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+            gender: genders.MALE,
+          }),
+        ]
+
+        const {
+          cowInventory: [cow],
+          inventory,
+          newDayNotifications,
+        } = fn.processCowFertilizerProduction(state)
+
+        const { daysSinceProducingFertilizer } = cow
+
+        expect(daysSinceProducingFertilizer).toEqual(0)
+        expect(inventory).toEqual([{ id: 'fertilizer', quantity: 1 }])
+        expect(newDayNotifications).toEqual([
+          {
+            message: FERTILIZERS_PRODUCED`${{ [getCowFertilizerItem(cow).name]: 1 }}`,
             severity: 'success',
           },
         ])

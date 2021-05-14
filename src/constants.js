@@ -73,6 +73,9 @@ export const COW_WEIGHT_MULTIPLIER_MAXIMUM = 1.5
 export const COW_MILK_RATE_SLOWEST = 5
 export const COW_MILK_RATE_FASTEST = 0
 
+export const COW_FERTILIZER_PRODUCTION_RATE_SLOWEST = 6
+export const COW_FERTILIZER_PRODUCTION_RATE_FASTEST = 0
+
 export const COW_FEED_ITEM_ID = 'cow-feed'
 export const HUGGING_MACHINE_ITEM_ID = 'hugging-machine'
 

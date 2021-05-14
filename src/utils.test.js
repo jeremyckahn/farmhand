@@ -10,6 +10,7 @@ import {
   generateOffspringCow,
   get7DayAverage,
   getCowMilkRate,
+  getCowFertilizerProductionRate,
   getCowValue,
   getCowWeight,
   getCropId,
@@ -42,11 +43,13 @@ import {
   milk1,
 } from './data/items'
 import {
+  COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
+  COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
   COW_MAXIMUM_VALUE_MATURITY_AGE,
-  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_MAXIMUM_VALUE_MULTIPLIER,
   COW_MILK_RATE_FASTEST,
   COW_MILK_RATE_SLOWEST,
+  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
@@ -400,6 +403,58 @@ describe('getCowMilkRate', () => {
             weightMultiplier: COW_WEIGHT_MULTIPLIER_MAXIMUM,
           })
         ).toEqual(COW_MILK_RATE_FASTEST)
+      })
+    })
+  })
+})
+
+describe('getCowFertilizerProductionRate', () => {
+  describe('non-male cows', () => {
+    test('computes correct fertilizer production rate', () => {
+      expect(
+        getCowFertilizerProductionRate(
+          generateCow({
+            gender: genders.FEMALE,
+          })
+        )
+      ).toEqual(Infinity)
+    })
+  })
+
+  describe('male cows', () => {
+    const baseCow = generateCow({ gender: genders.MALE })
+
+    describe('minimal weightMultiplier', () => {
+      test('computes correct fertilizer production rate', () => {
+        expect(
+          getCowFertilizerProductionRate({
+            ...baseCow,
+            weightMultiplier: COW_WEIGHT_MULTIPLIER_MINIMUM,
+          })
+        ).toEqual(COW_FERTILIZER_PRODUCTION_RATE_SLOWEST)
+      })
+    })
+
+    describe('median weightMultiplier', () => {
+      test('computes correct fertilizer production rate', () => {
+        expect(
+          getCowFertilizerProductionRate({ ...baseCow, weightMultiplier: 1 })
+        ).toEqual(
+          (COW_FERTILIZER_PRODUCTION_RATE_SLOWEST +
+            COW_FERTILIZER_PRODUCTION_RATE_FASTEST) /
+            2
+        )
+      })
+    })
+
+    describe('maximum weightMultiplier', () => {
+      test('computes correct fertilizer production rate', () => {
+        expect(
+          getCowFertilizerProductionRate({
+            ...baseCow,
+            weightMultiplier: COW_WEIGHT_MULTIPLIER_MAXIMUM,
+          })
+        ).toEqual(COW_FERTILIZER_PRODUCTION_RATE_FASTEST)
       })
     })
   })
