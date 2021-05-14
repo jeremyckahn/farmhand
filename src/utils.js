@@ -34,16 +34,19 @@ import {
 } from './enums'
 import {
   BREAKPOINTS,
+  COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
+  COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
   COW_MAXIMUM_VALUE_MATURITY_AGE,
-  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_MAXIMUM_VALUE_MULTIPLIER,
   COW_MILK_RATE_FASTEST,
   COW_MILK_RATE_SLOWEST,
+  COW_MINIMUM_VALUE_MULTIPLIER,
   COW_STARTING_WEIGHT_BASE,
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
+  FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
@@ -391,6 +394,7 @@ export const generateCow = (options = {}) => {
     colorsInBloodline: { [color]: true },
     daysOld: 1,
     daysSinceMilking: 0,
+    daysSinceProducingFertilizer: 0,
     gender,
     happiness: 0,
     happinessBoostsToday: 0,
@@ -467,6 +471,15 @@ export const getCowMilkItem = ({ color, happiness }) => {
 }
 
 /**
+ * TODO: Should be updated to return Rainbow Fertilizer for Rainbow Cows.
+ * @param {farmhand.cow} _
+ * @returns {farmhand.item}
+ */
+export const getCowFertilizerItem = (_) => {
+  return itemsMap[FERTILIZER_ITEM_ID]
+}
+
+/**
  * @param {farmhand.cow} cow
  * @returns {number}
  */
@@ -478,6 +491,21 @@ export const getCowMilkRate = cow =>
         COW_WEIGHT_MULTIPLIER_MAXIMUM,
         COW_MILK_RATE_SLOWEST,
         COW_MILK_RATE_FASTEST
+      )
+    : Infinity
+
+/**
+ * @param {farmhand.cow} cow
+ * @returns {number}
+ */
+export const getCowFertilizerProductionRate = cow =>
+  cow.gender === genders.MALE
+    ? scaleNumber(
+        cow.weightMultiplier,
+        COW_WEIGHT_MULTIPLIER_MINIMUM,
+        COW_WEIGHT_MULTIPLIER_MAXIMUM,
+        COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+        COW_FERTILIZER_PRODUCTION_RATE_FASTEST
       )
     : Infinity
 

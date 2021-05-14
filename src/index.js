@@ -62,7 +62,8 @@
  * @property {string} color
  * @property {Object.<farmhand.module:enums.cowColors, boolean>} colorsInBloodline
  * @property {number} daysOld
- * @property {number} daysSinceMilking
+ * @property {number} daysSinceMilking Only applies to female cows.
+ * @property {number} daysSinceProducingFertilizer Only applies to male cows.
  * @property {string} gender
  * @property {number} happiness 0-1.
  * @property {number} happinessBoostsToday
