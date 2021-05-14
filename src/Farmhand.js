@@ -505,7 +505,9 @@ export default class Farmhand extends Component {
 
       this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {
         newDayNotifications.forEach(({ message, severity }) =>
-          this.showNotification(message, severity)
+          // Defer these notifications so that notistack doesn't swallow all
+          // but the last one.
+          setTimeout(() => this.showNotification(message, severity), 0)
         )
       })
     } else {
