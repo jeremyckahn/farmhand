@@ -63,6 +63,7 @@ const stubLocalforage = () => {
 
 beforeEach(() => {
   stubLocalforage()
+  jest.useFakeTimers()
   component = shallow(<Farmhand {...{ match: { path: '', params: {} } }} />)
 })
 
@@ -228,6 +229,7 @@ describe('instance methods', () => {
       })
 
       test('shows todaysNotifications for pending newDayNotifications', () => {
+        jest.runOnlyPendingTimers()
         expect(component.instance().showNotification).toHaveBeenCalledWith(
           'baz',
           'info'
