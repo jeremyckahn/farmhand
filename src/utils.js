@@ -471,7 +471,7 @@ export const getCowMilkItem = ({ color, happiness }) => {
 }
 
 /**
- * TODO: Should be updated to return Rainbow Fertilizer from Rainbow Cows.
+ * TODO: Should be updated to return Rainbow Fertilizer for Rainbow Cows.
  * @param {farmhand.cow} _
  * @returns {farmhand.item}
  */

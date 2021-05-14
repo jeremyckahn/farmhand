@@ -410,7 +410,7 @@ describe('getCowMilkRate', () => {
 
 describe('getCowFertilizerProductionRate', () => {
   describe('non-male cows', () => {
-    test('computes correct milk rate', () => {
+    test('computes correct fertilizer production rate', () => {
       expect(
         getCowFertilizerProductionRate(
           generateCow({
