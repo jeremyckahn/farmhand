@@ -5,7 +5,6 @@
 import { cropLifeStage, cropType, fieldMode, itemType } from '../enums'
 import {
   COW_FEED_ITEM_ID,
-  FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
   INITIAL_SPRINKLER_RANGE,
 } from '../constants'
@@ -313,7 +312,7 @@ export const tomato = crop({
 export const fertilizer = freeze({
   description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,
-  id: FERTILIZER_ITEM_ID,
+  id: 'fertilizer',
   name: 'Fertilizer',
   type: FERTILIZER,
   value: 25,

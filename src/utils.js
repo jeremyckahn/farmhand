@@ -46,7 +46,6 @@ import {
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
-  FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
@@ -476,7 +475,7 @@ export const getCowMilkItem = ({ color, happiness }) => {
  * @returns {farmhand.item}
  */
 export const getCowFertilizerItem = (_) => {
-  return itemsMap[FERTILIZER_ITEM_ID]
+  return itemsMap['fertilizer']
 }
 
 /**

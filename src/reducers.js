@@ -58,7 +58,6 @@ import {
   CROW_CHANCE,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   FERTILIZER_BONUS,
-  FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
@@ -1444,7 +1443,7 @@ export const fertilizeCrop = (state, x, y) => {
   const crop = row[x]
 
   const fertilizerInventory = state.inventory.find(
-    item => item.id === FERTILIZER_ITEM_ID
+    item => item.id === 'fertilizer'
   )
 
   if (
@@ -1457,7 +1456,7 @@ export const fertilizeCrop = (state, x, y) => {
   }
 
   const { quantity: initialFertilizerQuantity } = fertilizerInventory
-  state = decrementItemFromInventory(state, FERTILIZER_ITEM_ID)
+  state = decrementItemFromInventory(state, 'fertilizer')
   const doFertilizersRemain = initialFertilizerQuantity > 1
 
   state = modifyFieldPlotAt(state, x, y, crop => ({
@@ -1468,7 +1467,7 @@ export const fertilizeCrop = (state, x, y) => {
   return {
     ...state,
     fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
-    selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
+    selectedItemId: doFertilizersRemain ? 'fertilizer' : '',
   }
 }
 

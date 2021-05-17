@@ -27,7 +27,6 @@ import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   FERTILIZER_BONUS,
-  FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
@@ -2325,7 +2324,7 @@ describe('fertilizeCrop', () => {
       const oldState = {
         field: [[testCrop({ itemId: 'sample-crop-1' })]],
         inventory: [],
-        selectedItemId: FERTILIZER_ITEM_ID,
+        selectedItemId: 'fertilizer',
       }
       const state = fn.fertilizeCrop(oldState, 0, 0)
       expect(state).toBe(oldState)
@@ -2350,7 +2349,7 @@ describe('fertilizeCrop', () => {
           {
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
             inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
-            selectedItemId: FERTILIZER_ITEM_ID,
+            selectedItemId: 'fertilizer',
           },
           0,
           0
