@@ -319,6 +319,23 @@ export const fertilizer = freeze({
 })
 
 /**
+ * @property farmhand.module:items.rainbowFertilizer
+ * @type {farmhand.item}
+ */
+export const rainbowFertilizer = freeze({
+  description: 'Helps crops grow a little faster and automatically replants them upon harvesting. Consumes seeds upon replanting and disappears if none are available. Also works for Scarecrows.',
+  enablesFieldMode: fieldMode.FERTILIZE,
+  id: 'rainbow-fertilizer',
+  name: 'Rainbow Fertilizer',
+  type: FERTILIZER,
+  // Rainbow Fertilizer is worth less than regular Fertilizer because it is not
+  // sold in the shop. Items that are sold in the shop have automatically
+  // reduced resale value, but since that would not apply to Rainbow
+  // Fertilizer, it is pre-reduced via this hardcoded value.
+  value: 15,
+})
+
+/**
  * @property farmhand.module:items.sprinkler
  * @type {farmhand.item}
  */

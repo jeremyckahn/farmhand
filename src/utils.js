@@ -445,7 +445,6 @@ export const generateOffspringCow = (cow1, cow2) => {
     colorsInBloodline,
     baseWeight: (maleCow.baseWeight + femaleCow.baseWeight) / 2,
     isBred: true,
-    ...(isRainbowCow && { gender: genders.FEMALE }),
   })
 }
 
@@ -471,12 +470,11 @@ export const getCowMilkItem = ({ color, happiness }) => {
 
 /**
  * TODO: Should be updated to return Rainbow Fertilizer for Rainbow Cows.
- * @param {farmhand.cow} _
+ * @param {farmhand.cow} cow
  * @returns {farmhand.item}
  */
-export const getCowFertilizerItem = (_) => {
-  return itemsMap['fertilizer']
-}
+export const getCowFertilizerItem = ({ color }) =>
+  itemsMap[color === cowColors.RAINBOW ? 'rainbow-fertilizer' : 'fertilizer']
 
 /**
  * @param {farmhand.cow} cow
