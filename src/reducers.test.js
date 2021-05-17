@@ -41,7 +41,7 @@ import {
 import { huggingMachine, sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
-import { fieldMode, genders, standardCowColors } from './enums'
+import { fertilizerType, fieldMode, genders, standardCowColors } from './enums'
 import {
   farmProductSalesVolumeNeededForLevel,
   generateCow,
@@ -845,7 +845,9 @@ describe('processCowFertilizerProduction', () => {
         newDayNotifications,
       } = fn.processCowFertilizerProduction(state)
 
-      expect(daysSinceProducingFertilizer).toEqual(baseDaysSinceProducingFertilizer)
+      expect(daysSinceProducingFertilizer).toEqual(
+        baseDaysSinceProducingFertilizer
+      )
       expect(inventory).toEqual([])
       expect(newDayNotifications).toEqual([])
     })
@@ -874,7 +876,9 @@ describe('processCowFertilizerProduction', () => {
         expect(inventory).toEqual([{ id: 'fertilizer', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
-            message: FERTILIZERS_PRODUCED`${{ [getCowFertilizerItem(cow).name]: 1 }}`,
+            message: FERTILIZERS_PRODUCED`${{
+              [getCowFertilizerItem(cow).name]: 1,
+            }}`,
             severity: 'success',
           },
         ])
@@ -909,7 +913,9 @@ describe('processCowFertilizerProduction', () => {
         expect(inventory).toEqual([{ id: 'fertilizer', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
-            message: FERTILIZERS_PRODUCED`${{ [getCowFertilizerItem(cow).name]: 1 }}`,
+            message: FERTILIZERS_PRODUCED`${{
+              [getCowFertilizerItem(cow).name]: 1,
+            }}`,
             severity: 'success',
           },
         ])
@@ -1368,7 +1374,7 @@ describe('incrementPlotContentAge', () => {
         const { daysWatered } = fn.incrementPlotContentAge(
           testCrop({
             itemId: 'sample-crop-1',
-            isFertilized: true,
+            fertilizerType: fertilizerType.STANDARD,
             wasWateredToday: true,
           })
         )
@@ -2356,7 +2362,10 @@ describe('fertilizeCrop', () => {
         )
 
         expect(state.field[0][0]).toEqual(
-          testCrop({ itemId: 'sample-crop-1', isFertilized: true })
+          testCrop({
+            itemId: 'sample-crop-1',
+            fertilizerType: fertilizerType.STANDARD,
+          })
         )
         expect(state.inventory).toEqual([])
       })

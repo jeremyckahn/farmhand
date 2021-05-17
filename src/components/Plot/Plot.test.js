@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import { getPlotContentFromItemId } from '../../utils'
 import { testCrop } from '../../test-utils'
 import { pixel, plotStates } from '../../img'
-import { cropLifeStage } from '../../enums'
+import { cropLifeStage, fertilizerType } from '../../enums'
 import { FERTILIZER_BONUS } from '../../constants'
 
 import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot'
@@ -54,7 +54,10 @@ test('renders is-replantable class', () => {
 
 test('renders "is-fertilized" class', () => {
   component.setProps({
-    plotContent: testCrop({ itemId: 'sample-crop-1', isFertilized: true }),
+    plotContent: testCrop({
+      itemId: 'sample-crop-1',
+      fertilizerType: fertilizerType.STANDARD,
+    }),
   })
   expect(component.find('.Plot').hasClass('is-fertilized')).toBeTruthy()
 })
@@ -101,10 +104,16 @@ describe('getBackgroundStyles', () => {
     expect(getBackgroundStyles()).toBe(null)
   })
 
-  test('constructs style for isFertilized', () => {
-    expect(getBackgroundStyles(testCrop({ isFertilized: true }))).toBe(
-      `url(${plotStates['fertilized-plot']})`
-    )
+  test('constructs style for fertilizerType === fertilizerType.STANDARD', () => {
+    expect(
+      getBackgroundStyles(testCrop({ fertilizerType: fertilizerType.STANDARD }))
+    ).toBe(`url(${plotStates['fertilized-plot']})`)
+  })
+
+  test('constructs style for fertilizerType === fertilizerType.RAINBOW', () => {
+    expect(
+      getBackgroundStyles(testCrop({ fertilizerType: fertilizerType.RAINBOW }))
+    ).toBe(`url(${plotStates['rianbow-fertilized-plot']})`)
   })
 
   test('constructs style for wasWateredToday', () => {
@@ -113,10 +122,13 @@ describe('getBackgroundStyles', () => {
     )
   })
 
-  test('constructs style for isFertilized and wasWateredToday', () => {
+  test('constructs style for fertilizerType === fertilizerType.STANDARD and wasWateredToday', () => {
     expect(
       getBackgroundStyles(
-        testCrop({ isFertilized: true, wasWateredToday: true })
+        testCrop({
+          fertilizerType: fertilizerType.STANDARD,
+          wasWateredToday: true,
+        })
       )
     ).toBe(
       `url(${plotStates['fertilized-plot']}), url(${plotStates['watered-plot']})`
@@ -145,7 +157,7 @@ describe('getDaysLeftToMature', () => {
         getDaysLeftToMature({
           itemId: 'sample-crop-3',
           daysWatered: 0,
-          isFertilized: false,
+          fertilizerType: fertilizerType.NONE,
         })
       ).toEqual(10)
     })
@@ -158,7 +170,7 @@ describe('getDaysLeftToMature', () => {
           getDaysLeftToMature({
             itemId: 'sample-crop-3',
             daysWatered: 0,
-            isFertilized: true,
+            fertilizerType: fertilizerType.STANDARD,
           })
         ).toEqual(7)
       })
@@ -170,7 +182,7 @@ describe('getDaysLeftToMature', () => {
           getDaysLeftToMature({
             itemId: 'sample-crop-3',
             daysWatered: 9.9,
-            isFertilized: true,
+            fertilizerType: fertilizerType.STANDARD,
           })
         ).toEqual(1)
       })
@@ -181,7 +193,7 @@ describe('getDaysLeftToMature', () => {
         getDaysLeftToMature({
           itemId: 'sample-crop-3',
           daysWatered: 5.6,
-          isFertilized: true,
+          fertilizerType: fertilizerType.STANDARD,
         })
       ).toEqual(3)
 
@@ -189,7 +201,7 @@ describe('getDaysLeftToMature', () => {
         getDaysLeftToMature({
           itemId: 'sample-crop-3',
           daysWatered: 5.6 + 1 + FERTILIZER_BONUS,
-          isFertilized: true,
+          fertilizerType: fertilizerType.STANDARD,
         })
       ).toEqual(2)
     })

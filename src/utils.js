@@ -28,6 +28,7 @@ import { items as itemImages } from './img'
 import {
   cowColors,
   cropLifeStage,
+  fertilizerType,
   genders,
   itemType,
   standardCowColors,
@@ -237,7 +238,7 @@ export const getCropFromItemId = itemId => ({
   ...getPlotContentFromItemId(itemId),
   daysOld: 0,
   daysWatered: 0,
-  isFertilized: false,
+  fertilizerType: fertilizerType.NONE,
   wasWateredToday: false,
 })
 
@@ -902,6 +903,30 @@ export const computeMarketPositions = (
 export const sanitizeStateForImport = state => {
   const sanitizedState = { ...state }
   ;['version'].forEach(rejectedKey => delete sanitizedState[rejectedKey])
+
+  // Update old data models
+
+  if (sanitizedState.field) {
+    // Update plot data
+    sanitizedState.field = sanitizedState.field.map(row =>
+      row.map(plot => {
+        if (plot === null) {
+          return null
+        }
+
+        const { isFertilized, ...rest } = plot
+
+        return {
+          ...rest,
+
+          // Convert from isFertilized (boolean) to fertilizerType (enum)
+          fertilizerType:
+            rest.fertilizerType ||
+            (isFertilized ? fertilizerType.STANDARD : fertilizerType.NONE),
+        }
+      })
+    )
+  }
 
   return sanitizedState
 }

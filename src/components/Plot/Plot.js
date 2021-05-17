@@ -13,7 +13,7 @@ import {
 } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
-import { cropLifeStage, itemType } from '../../enums'
+import { cropLifeStage, fertilizerType, itemType } from '../../enums'
 import { FERTILIZER_BONUS } from '../../constants'
 import './Plot.sass'
 
@@ -24,8 +24,10 @@ export const getBackgroundStyles = plotContent => {
 
   const backgroundImages = []
 
-  if (plotContent.isFertilized) {
+  if (plotContent.fertilizerType === fertilizerType.STANDARD) {
     backgroundImages.push(`url(${plotStates['fertilized-plot']})`)
+  } else if (plotContent.fertilizerType === fertilizerType.RAINBOW) {
+    backgroundImages.push(`url(${plotStates['rainbow-fertilized-plot']})`)
   }
 
   if (plotContent.wasWateredToday) {
@@ -50,7 +52,10 @@ export const getDaysLeftToMature = plotContent =>
             plotContent ? itemsMap[plotContent.itemId] : null
           ) -
             plotContent.daysWatered) /
-            (1 + (plotContent.isFertilized ? FERTILIZER_BONUS : 0))
+            (1 +
+              (plotContent.fertilizerType === fertilizerType.NONE
+                ? 0
+                : FERTILIZER_BONUS))
         )
       )
     : null
@@ -82,7 +87,12 @@ export const Plot = ({
           // For crops
           crop:
             plotContent && getPlotContentType(plotContent) === itemType.CROP,
-          'is-fertilized': plotContent && plotContent.isFertilized,
+          'is-fertilized':
+            plotContent &&
+            plotContent.fertilizerType === fertilizerType.STANDARD,
+          'is-rainbow-fertilized':
+            plotContent &&
+            plotContent.fertilizerType === fertilizerType.RAINBOW,
           'is-ripe': isRipe,
 
           'is-replantable': plotContent && item.isReplantable,

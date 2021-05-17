@@ -98,7 +98,7 @@ import {
   PURCHASED_ITEM_PEER_NOTIFICATION,
   SOLD_ITEM_PEER_NOTIFICATION,
 } from './templates'
-import { cropLifeStage, fieldMode, itemType } from './enums'
+import { cropLifeStage, fertilizerType, fieldMode, itemType } from './enums'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
@@ -121,7 +121,7 @@ export const incrementPlotContentAge = crop =>
         daysWatered:
           crop.daysWatered +
           (crop.wasWateredToday
-            ? 1 + (crop.isFertilized ? FERTILIZER_BONUS : 0)
+            ? 1 + (crop.fertilizerType !== fertilizerType.NONE ? FERTILIZER_BONUS : 0)
             : 0),
       }
     : crop
@@ -1450,7 +1450,7 @@ export const fertilizeCrop = (state, x, y) => {
     !crop ||
     !fertilizerInventory ||
     getPlotContentType(crop) !== itemType.CROP ||
-    crop.isFertilized === true
+    crop.fertilizerType !== fertilizerType.NONE
   ) {
     return state
   }
@@ -1461,7 +1461,7 @@ export const fertilizeCrop = (state, x, y) => {
 
   state = modifyFieldPlotAt(state, x, y, crop => ({
     ...crop,
-    isFertilized: true,
+    fertilizerType: fertilizerType.STANDARD,
   }))
 
   return {

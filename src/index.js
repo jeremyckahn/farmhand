@@ -49,7 +49,8 @@
  * @type {farmhand.plotContent}
  * @property {number} daysOld
  * @property {number} daysWatered
- * @property {boolean} isFertilized
+ * @property {boolean?} isFertilized Deprecated by fertilizerType.
+ * @property {farmhand.module:enums.fertilizerType} fertilizerType
  * @property {boolean} wasWateredToday
  */
 
