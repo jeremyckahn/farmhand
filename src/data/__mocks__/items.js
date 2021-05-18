@@ -140,6 +140,7 @@ export const fertilizer = testItem({
   id: 'fertilizer',
   value: 60,
   enablesFieldMode: 'FERTILIZE',
+  type: itemType.FERTILIZER,
 })
 
 export const sprinkler = testItem({

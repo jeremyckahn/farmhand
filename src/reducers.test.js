@@ -2342,6 +2342,7 @@ describe('fertilizeCrop', () => {
       const oldState = {
         field: [[getPlotContentFromItemId('sprinkler')]],
         inventory: [],
+        selectedItemId: 'fertilizer',
       }
       const state = fn.fertilizeCrop(oldState, 0, 0)
       expect(state).toBe(oldState)
@@ -2380,6 +2381,7 @@ describe('fertilizeCrop', () => {
             {
               field: [[testCrop({ itemId: 'sample-crop-1' })]],
               inventory: [testItem({ id: 'fertilizer', quantity: 2 })],
+              selectedItemId: 'fertilizer',
             },
             0,
             0
@@ -2396,6 +2398,7 @@ describe('fertilizeCrop', () => {
             {
               field: [[testCrop({ itemId: 'sample-crop-1' })]],
               inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+              selectedItemId: 'fertilizer',
             },
             0,
             0

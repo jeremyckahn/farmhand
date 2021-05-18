@@ -121,7 +121,10 @@ export const incrementPlotContentAge = crop =>
         daysWatered:
           crop.daysWatered +
           (crop.wasWateredToday
-            ? 1 + (crop.fertilizerType !== fertilizerType.NONE ? FERTILIZER_BONUS : 0)
+            ? 1 +
+              (crop.fertilizerType !== fertilizerType.NONE
+                ? FERTILIZER_BONUS
+                : 0)
             : 0),
       }
     : crop
@@ -1432,18 +1435,28 @@ export const plantInPlot = (state, x, y, plantableItemId) => {
 }
 
 /**
+ * Assumes that state.selectedItemId references an item with type ===
+ * itemType.FERTILIZER.
  * @param {farmhand.state} state
  * @param {number} x
  * @param {number} y
  * @returns {farmhand.state}
  */
 export const fertilizeCrop = (state, x, y) => {
-  const { field } = state
+  const { field, selectedItemId } = state
   const row = field[y]
   const crop = row[x]
 
+  if (itemsMap[selectedItemId].type !== itemType.FERTILIZER) {
+    throw new Error(
+      `fertilizeCrop failed because ${itemsMap[selectedItemId].id} was selected`
+    )
+  }
+
+  const { id: fertilizerItemId } = itemsMap[selectedItemId]
+
   const fertilizerInventory = state.inventory.find(
-    item => item.id === 'fertilizer'
+    item => item.id === fertilizerItemId
   )
 
   if (
@@ -1456,7 +1469,7 @@ export const fertilizeCrop = (state, x, y) => {
   }
 
   const { quantity: initialFertilizerQuantity } = fertilizerInventory
-  state = decrementItemFromInventory(state, 'fertilizer')
+  state = decrementItemFromInventory(state, fertilizerItemId)
   const doFertilizersRemain = initialFertilizerQuantity > 1
 
   state = modifyFieldPlotAt(state, x, y, crop => ({
@@ -1467,7 +1480,7 @@ export const fertilizeCrop = (state, x, y) => {
   return {
     ...state,
     fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
-    selectedItemId: doFertilizersRemain ? 'fertilizer' : '',
+    selectedItemId: doFertilizersRemain ? fertilizerItemId : '',
   }
 }
 
