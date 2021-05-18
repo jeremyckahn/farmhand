@@ -297,7 +297,9 @@ const fieldHasScarecrow = field => findInField(field, plotContainsScarecrow)
  * @returns {farmhand.state}
  */
 export const applyPrecipitation = state => {
+  // FIXME: Test scarecrow replanting.
   let { field } = state
+  let scarecrowsConsumedByReplanting = 0
   let notification
 
   if (Math.random() < STORM_CHANCE) {
@@ -307,16 +309,39 @@ export const applyPrecipitation = state => {
         severity: 'error',
       }
 
-      // FIXME: Handle scenario where Scarecrow has Rainbow Fertilizer
-      field = updateField(field, plot =>
-        plotContainsScarecrow(plot) ? null : plot
+      let { scarecrow: scarecrowsInInventory = 0 } = getInventoryQuantityMap(
+        state.inventory
       )
+
+      field = updateField(field, plot => {
+        if (!plotContainsScarecrow(plot)) {
+          return plot
+        }
+
+        if (
+          scarecrowsInInventory &&
+          plot.fertilizerType === fertilizerType.RAINBOW
+        ) {
+          scarecrowsInInventory--
+          scarecrowsConsumedByReplanting++
+
+          return plot
+        }
+
+        return null
+      })
     } else {
       notification = { message: STORM_MESSAGE, severity: 'info' }
     }
   } else {
     notification = { message: RAIN_MESSAGE, severity: 'info' }
   }
+
+  state = decrementItemFromInventory(
+    { ...state, field },
+    'scarecrow',
+    scarecrowsConsumedByReplanting
+  )
 
   state = {
     ...state,
@@ -1450,15 +1475,13 @@ const fertilizerItemIdToTypeMap = {
  * @param {number} y
  * @returns {farmhand.state}
  */
-export const fertilizeCrop = (state, x, y) => {
+export const fertilizePlot = (state, x, y) => {
   const { field, selectedItemId } = state
   const row = field[y]
-  const crop = row[x]
+  const plotContent = row[x]
 
-  if (itemsMap[selectedItemId].type !== itemType.FERTILIZER) {
-    throw new Error(
-      `fertilizeCrop failed because ${itemsMap[selectedItemId].id} was selected`
-    )
+  if (itemsMap[selectedItemId]?.type !== itemType.FERTILIZER) {
+    return state
   }
 
   const { id: fertilizerItemId } = itemsMap[selectedItemId]
@@ -1467,11 +1490,13 @@ export const fertilizeCrop = (state, x, y) => {
     item => item.id === fertilizerItemId
   )
 
+  // FIXME: Test the scarecrow/rainbow fertilizer logic.
   if (
-    !crop ||
+    !plotContent ||
     !fertilizerInventory ||
-    getPlotContentType(crop) !== itemType.CROP ||
-    crop.fertilizerType !== fertilizerType.NONE
+    plotContent.fertilizerType !== fertilizerType.NONE ||
+    (selectedItemId === 'fertilizer' &&
+      getPlotContentType(plotContent) !== itemType.CROP)
   ) {
     return state
   }

@@ -467,6 +467,7 @@ describe('applyPrecipitation', () => {
           }),
         ],
       ],
+      inventory: [],
       newDayNotifications: [],
     })
 
@@ -479,6 +480,7 @@ describe('applyPrecipitation', () => {
       jest.spyOn(Math, 'random').mockReturnValue(1)
       const state = fn.applyPrecipitation({
         field: [[]],
+        inventory: [],
         newDayNotifications: [],
       })
 
@@ -498,6 +500,7 @@ describe('applyPrecipitation', () => {
       test('scarecrows are destroyed', () => {
         const state = fn.applyPrecipitation({
           field: [[getPlotContentFromItemId(SCARECROW_ITEM_ID)]],
+          inventory: [],
           newDayNotifications: [],
         })
 
@@ -513,6 +516,7 @@ describe('applyPrecipitation', () => {
       test('shows appropriate message', () => {
         const state = fn.applyPrecipitation({
           field: [[]],
+          inventory: [],
           newDayNotifications: [],
         })
 
@@ -947,6 +951,7 @@ describe('processWeather', () => {
         const { processWeather } = jest.requireActual('./reducers')
         const state = processWeather({
           field: [[testCrop()]],
+          inventory: [],
           newDayNotifications: [],
         })
 
@@ -2324,7 +2329,7 @@ describe('plantInPlot', () => {
   })
 })
 
-describe('fertilizeCrop', () => {
+describe('fertilizePlot', () => {
   describe('no fertilizer in inventory', () => {
     test('no-ops', () => {
       const oldState = {
@@ -2332,7 +2337,7 @@ describe('fertilizeCrop', () => {
         inventory: [],
         selectedItemId: 'fertilizer',
       }
-      const state = fn.fertilizeCrop(oldState, 0, 0)
+      const state = fn.fertilizePlot(oldState, 0, 0)
       expect(state).toBe(oldState)
     })
   })
@@ -2344,7 +2349,7 @@ describe('fertilizeCrop', () => {
         inventory: [],
         selectedItemId: 'fertilizer',
       }
-      const state = fn.fertilizeCrop(oldState, 0, 0)
+      const state = fn.fertilizePlot(oldState, 0, 0)
       expect(state).toBe(oldState)
     })
   })
@@ -2352,7 +2357,7 @@ describe('fertilizeCrop', () => {
   describe('unfertilized crops', () => {
     describe('happy path', () => {
       test('fertilizes crop with standard fertilizer', () => {
-        const state = fn.fertilizeCrop(
+        const state = fn.fertilizePlot(
           {
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
             inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
@@ -2372,7 +2377,7 @@ describe('fertilizeCrop', () => {
       })
 
       test('fertilizes crop with rainbow fertilizer', () => {
-        const state = fn.fertilizeCrop(
+        const state = fn.fertilizePlot(
           {
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
             inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
@@ -2397,7 +2402,7 @@ describe('fertilizeCrop', () => {
         beforeEach(() => {})
 
         test('does not change fieldMode', () => {
-          const state = fn.fertilizeCrop(
+          const state = fn.fertilizePlot(
             {
               field: [[testCrop({ itemId: 'sample-crop-1' })]],
               inventory: [testItem({ id: 'fertilizer', quantity: 2 })],
@@ -2414,7 +2419,7 @@ describe('fertilizeCrop', () => {
 
       describe('one fertilizer unit remaining', () => {
         test('changes fieldMode to OBSERVE', () => {
-          const state = fn.fertilizeCrop(
+          const state = fn.fertilizePlot(
             {
               field: [[testCrop({ itemId: 'sample-crop-1' })]],
               inventory: [testItem({ id: 'fertilizer', quantity: 1 })],

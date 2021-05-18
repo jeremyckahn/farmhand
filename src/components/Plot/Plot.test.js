@@ -24,6 +24,7 @@ beforeEach(() => {
         handlePlotClick: () => {},
         isInHoverRange: false,
         lifeStage: cropLifeStage.SEED,
+        selectedItemId: '',
         setHoveredPlot: () => {},
         x: 0,
         y: 0,
@@ -50,16 +51,6 @@ test('renders is-replantable class', () => {
     plotContent: getPlotContentFromItemId('replantable-item'),
   })
   expect(component.find('.Plot').hasClass('is-replantable')).toBeTruthy()
-})
-
-test('renders "is-fertilized" class', () => {
-  component.setProps({
-    plotContent: testCrop({
-      itemId: 'sample-crop-1',
-      fertilizerType: fertilizerType.STANDARD,
-    }),
-  })
-  expect(component.find('.Plot').hasClass('is-fertilized')).toBeTruthy()
 })
 
 test('renders "is-ripe" class', () => {

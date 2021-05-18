@@ -64,6 +64,7 @@ export const Plot = ({
   handlePlotClick,
   isInHoverRange,
   plotContent,
+  selectedItemId,
   setHoveredPlot,
   x,
   y,
@@ -76,6 +77,9 @@ export const Plot = ({
 }) => {
   const item = plotContent ? itemsMap[plotContent.itemId] : null
   const daysLeftToMature = getDaysLeftToMature(plotContent)
+  const isCrop =
+    plotContent && getPlotContentType(plotContent) === itemType.CROP
+  const isScarecow = itemsMap[plotContent?.itemId]?.type === itemType.SCARECROW
 
   const plot = (
     <div
@@ -85,14 +89,13 @@ export const Plot = ({
           'is-in-hover-range': isInHoverRange,
 
           // For crops
-          crop:
-            plotContent && getPlotContentType(plotContent) === itemType.CROP,
-          'is-fertilized':
-            plotContent &&
-            plotContent.fertilizerType === fertilizerType.STANDARD,
-          'is-rainbow-fertilized':
-            plotContent &&
-            plotContent.fertilizerType === fertilizerType.RAINBOW,
+          crop: isCrop,
+          // FIXME: Test this.
+          'can-be-fertilized':
+            (isCrop && plotContent.fertilizerType === fertilizerType.NONE) ||
+            (isScarecow &&
+              plotContent.fertilizerType === fertilizerType.NONE &&
+              selectedItemId === 'rainbow-fertilizer'),
           'is-ripe': isRipe,
 
           'is-replantable': plotContent && item.isReplantable,
@@ -151,6 +154,7 @@ Plot.propTypes = {
   isInHoverRange: bool.isRequired,
   lifeStage: string,
   plotContent: object,
+  selectedItemId: string.isRequired,
   setHoveredPlot: func.isRequired,
   x: number.isRequired,
   y: number.isRequired,

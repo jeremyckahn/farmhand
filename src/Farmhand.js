@@ -464,7 +464,7 @@ export default class Farmhand extends Component {
       'changeCowBreedingPenResident',
       'changeCowName',
       'clearPlot',
-      'fertilizeCrop',
+      'fertilizePlot',
       'forRange',
       'harvestPlot',
       'hugCow',

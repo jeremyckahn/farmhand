@@ -248,6 +248,7 @@ export const getCropFromItemId = itemId => ({
  */
 export const getPlotContentFromItemId = itemId => ({
   itemId,
+  fertilizerType: fertilizerType.NONE,
 })
 
 /**

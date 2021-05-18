@@ -2,7 +2,7 @@ import { saveAs } from 'file-saver'
 
 import {
   clearPlot,
-  fertilizeCrop,
+  fertilizePlot,
   harvestPlot,
   plantInPlot,
   waterPlot,
@@ -181,7 +181,7 @@ export default {
     } else if (fieldMode === WATER) {
       this.forRange(waterPlot, rangeRadius, x, y)
     } else if (fieldMode === FERTILIZE) {
-      this.forRange(fertilizeCrop, rangeRadius, x, y)
+      this.forRange(fertilizePlot, rangeRadius, x, y)
     } else if (fieldMode === SET_SPRINKLER) {
       this.setSprinkler(x, y)
     } else if (fieldMode === SET_SCARECROW) {
