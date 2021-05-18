@@ -900,9 +900,11 @@ export const computeMarketPositions = (
  * @param {Farmhand.state} state
  * @return {Object}
  */
-export const sanitizeStateForImport = state => {
+export const transformStateDataForImport = state => {
   const sanitizedState = { ...state }
-  ;['version'].forEach(rejectedKey => delete sanitizedState[rejectedKey])
+
+  const rejectedKeys = ['version']
+  rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
 
   // Update old data models
 

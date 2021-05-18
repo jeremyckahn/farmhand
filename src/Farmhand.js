@@ -49,7 +49,7 @@ import {
   nullArray,
   reduceByPeerMetadataKeys,
   reduceByPersistedKeys,
-  sanitizeStateForImport,
+  transformStateDataForImport,
 } from './utils'
 import { getData, postData } from './fetch-utils'
 import { itemsMap, recipesMap } from './data/maps'
@@ -500,7 +500,7 @@ export default class Farmhand extends Component {
     const state = await this.localforage.getItem('state')
 
     if (state) {
-      const sanitizedState = sanitizeStateForImport(state)
+      const sanitizedState = transformStateDataForImport(state)
       const { newDayNotifications } = sanitizedState
 
       this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {

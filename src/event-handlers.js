@@ -13,7 +13,7 @@ import {
   levelAchieved,
   moneyTotal,
   reduceByPersistedKeys,
-  sanitizeStateForImport,
+  transformStateDataForImport,
 } from './utils'
 import { DEFAULT_ROOM, SPRINKLER_ITEM_ID } from './constants'
 import { dialogView, fieldMode } from './enums'
@@ -333,7 +333,7 @@ export default {
 
         this.setState({
           ...this.createInitialState(),
-          ...sanitizeStateForImport(state),
+          ...transformStateDataForImport(state),
           hasBooted: true,
         })
 
