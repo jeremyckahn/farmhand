@@ -2351,7 +2351,7 @@ describe('fertilizeCrop', () => {
 
   describe('unfertilized crops', () => {
     describe('happy path', () => {
-      test('fertilizes crop', () => {
+      test('fertilizes crop with standard fertilizer', () => {
         const state = fn.fertilizeCrop(
           {
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
@@ -2366,6 +2366,26 @@ describe('fertilizeCrop', () => {
           testCrop({
             itemId: 'sample-crop-1',
             fertilizerType: fertilizerType.STANDARD,
+          })
+        )
+        expect(state.inventory).toEqual([])
+      })
+
+      test('fertilizes crop with rainbow fertilizer', () => {
+        const state = fn.fertilizeCrop(
+          {
+            field: [[testCrop({ itemId: 'sample-crop-1' })]],
+            inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
+            selectedItemId: 'rainbow-fertilizer',
+          },
+          0,
+          0
+        )
+
+        expect(state.field[0][0]).toEqual(
+          testCrop({
+            itemId: 'sample-crop-1',
+            fertilizerType: fertilizerType.RAINBOW,
           })
         )
         expect(state.inventory).toEqual([])

@@ -1434,6 +1434,11 @@ export const plantInPlot = (state, x, y, plantableItemId) => {
   }
 }
 
+const fertilizerItemIdToTypeMap = {
+  [itemsMap['fertilizer'].id]: fertilizerType.STANDARD,
+  [itemsMap['rainbow-fertilizer'].id]: fertilizerType.RAINBOW,
+}
+
 /**
  * Assumes that state.selectedItemId references an item with type ===
  * itemType.FERTILIZER.
@@ -1474,7 +1479,7 @@ export const fertilizeCrop = (state, x, y) => {
 
   state = modifyFieldPlotAt(state, x, y, crop => ({
     ...crop,
-    fertilizerType: fertilizerType.STANDARD,
+    fertilizerType: fertilizerItemIdToTypeMap[fertilizerItemId],
   }))
 
   return {
