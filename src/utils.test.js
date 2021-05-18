@@ -17,6 +17,7 @@ import {
   getCropLifeStage,
   getCropLifecycleDuration,
   getFinalCropItemIdFromSeedItemId,
+  getSeedItemIdFromFinalStageCropItemId,
   getItemCurrentValue,
   getLifeStageRange,
   getPlotContentFromItemId,
@@ -610,6 +611,20 @@ describe('getFinalCropItemIdFromSeedItemId', () => {
   test('gets "final" crop item id from seed item id', () => {
     expect(getFinalCropItemIdFromSeedItemId('sample-crop-seeds-1')).toEqual(
       'sample-crop-1'
+    )
+  })
+})
+
+describe('getSeedItemIdFromFinalStageCropItemId', () => {
+  test('gets seed item from crop item', () => {
+    expect(getSeedItemIdFromFinalStageCropItemId('sample-crop-1')).toEqual(
+      'sample-crop-seeds-1'
+    )
+  })
+
+  test('handles invalid crop id input', () => {
+    expect(getSeedItemIdFromFinalStageCropItemId('nonexistent-crop')).toEqual(
+      undefined
     )
   })
 })

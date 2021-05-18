@@ -29,6 +29,7 @@ import {
   getCropFromItemId,
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
+  getInventoryQuantityMap,
   getLevelEntitlements,
   getPlotContentFromItemId,
   getPlotContentType,
@@ -39,6 +40,7 @@ import {
   getRandomUnlockedCrop,
   getRangeCoords,
   getResaleValue,
+  getSeedItemIdFromFinalStageCropItemId,
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
@@ -305,6 +307,7 @@ export const applyPrecipitation = state => {
         severity: 'error',
       }
 
+      // FIXME: Handle scenario where Scarecrow has Rainbow Fertilizer
       field = updateField(field, plot =>
         plotContainsScarecrow(plot) ? null : plot
       )
@@ -1574,9 +1577,26 @@ export const harvestPlot = (state, x, y) => {
   }
 
   const item = itemsMap[crop.itemId]
+  const seedItemIdForCrop = getSeedItemIdFromFinalStageCropItemId(item.id)
+  const plotIsRainbowFertilized = crop.fertilizerType === fertilizerType.RAINBOW
+
   state = removeFieldPlotAt(state, x, y)
   state = addItemToInventory(state, item)
   const { cropType } = item
+
+  // FIXME: Test this.
+  if (plotIsRainbowFertilized) {
+    const seedsForHarvestedCropAreAvailable =
+      getInventoryQuantityMap(state.inventory)[seedItemIdForCrop] > 0
+
+    if (seedsForHarvestedCropAreAvailable) {
+      state = plantInPlot(state, x, y, seedItemIdForCrop)
+      state = modifyFieldPlotAt(state, x, y, crop => ({
+        ...crop,
+        fertilizerType: fertilizerType.RAINBOW,
+      }))
+    }
+  }
 
   const { cropsHarvested } = state
 

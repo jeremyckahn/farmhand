@@ -365,11 +365,21 @@ export const getFinalCropItemIdFromSeedItemId = seedItemId =>
   itemsMap[seedItemId].growsInto
 
 /**
- * @param {farmhand.item} seedItem
+ * @param {farmhand.item} item
  * @returns {farmhand.item}
  */
 export const getFinalCropItemFromSeedItem = ({ id }) =>
   itemsMap[getFinalCropItemIdFromSeedItemId(id)]
+
+/**
+ * @param {farmhand.item} cropItemId
+ * @returns {string}
+ */
+export const getSeedItemIdFromFinalStageCropItemId = memoize(
+  cropItemId =>
+    Object.values(itemsMap).find(({ growsInto }) => growsInto === cropItemId)
+      ?.id
+)
 
 /**
  * Generates a friendly cow.
@@ -541,7 +551,7 @@ export const getCowSellValue = cow => getCowValue(cow, true)
  * @param {Array.<farmhand.item>} inventory
  * @returns {Object}
  */
-const getInventoryQuantityMap = memoize(inventory =>
+export const getInventoryQuantityMap = memoize(inventory =>
   inventory.reduce((acc, { id, quantity }) => {
     acc[id] = quantity
     return acc
