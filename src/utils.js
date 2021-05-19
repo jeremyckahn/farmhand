@@ -379,7 +379,10 @@ export const getFinalCropItemFromSeedItem = ({ id }) =>
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
   cropItemId =>
     Object.values(itemsMap).find(({ growsInto }) => growsInto === cropItemId)
-      ?.id
+      ?.id,
+  {
+    cacheSize: 30,
+  }
 )
 
 /**
