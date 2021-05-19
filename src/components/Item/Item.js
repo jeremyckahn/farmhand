@@ -143,6 +143,8 @@ export const Item = ({
     setSellQuantity(Math.min(1, playerInventoryQuantities[id]))
   }
 
+  const avatar = <img {...{ src: items[id] }} alt={name} />
+
   return (
     <Card
       {...{
@@ -156,7 +158,20 @@ export const Item = ({
     >
       <CardHeader
         {...{
-          avatar: <img {...{ src: items[id] }} alt={name} />,
+          avatar:
+            !isPurchaseView && description ? (
+              <Tooltip
+                {...{
+                  arrow: true,
+                  placement: 'top',
+                  title: <Typography>{description}</Typography>,
+                }}
+              >
+                {avatar}
+              </Tooltip>
+            ) : (
+              avatar
+            ),
           title: name,
           subheader: (
             <div>
