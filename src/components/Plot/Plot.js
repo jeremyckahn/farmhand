@@ -90,14 +90,16 @@ export const Plot = ({
 
           // For crops
           crop: isCrop,
-          // FIXME: Test this.
+          'is-ripe': isRipe,
+
+          // For crops and scarecrows
           'can-be-fertilized':
             (isCrop && plotContent.fertilizerType === fertilizerType.NONE) ||
             (isScarecow &&
               plotContent.fertilizerType === fertilizerType.NONE &&
               selectedItemId === 'rainbow-fertilizer'),
-          'is-ripe': isRipe,
 
+          // For scarecrows and sprinklers
           'is-replantable': plotContent && item.isReplantable,
         }),
         style: {

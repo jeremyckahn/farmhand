@@ -58,6 +58,115 @@ test('renders "is-ripe" class', () => {
   expect(component.find('.Plot').hasClass('is-ripe')).toBeTruthy()
 })
 
+describe('"can-be-fertilized" class', () => {
+  describe('plot is empty', () => {
+    test('renders class', () => {
+      component.setProps({
+        plotContent: null,
+      })
+
+      expect(component.find('.Plot').hasClass('can-be-fertilized')).toBeFalsy()
+    })
+  })
+
+  describe('plot contains unfertilized crop', () => {
+    describe('crop is fertilized', () => {
+      test('renders class', () => {
+        component.setProps({
+          plotContent: testCrop({
+            itemId: 'sample-crop-1',
+            fertilizerType: fertilizerType.NONE,
+          }),
+        })
+
+        expect(
+          component.find('.Plot').hasClass('can-be-fertilized')
+        ).toBeTruthy()
+      })
+    })
+  })
+
+  describe('plot contains fertilized crop', () => {
+    describe('crop is fertilized', () => {
+      test('does not render class', () => {
+        component.setProps({
+          plotContent: testCrop({
+            itemId: 'sample-crop-1',
+            fertilizerType: fertilizerType.STANDARD,
+          }),
+        })
+
+        expect(
+          component.find('.Plot').hasClass('can-be-fertilized')
+        ).toBeFalsy()
+      })
+    })
+  })
+
+  describe('plot contains scarecrow', () => {
+    beforeEach(() => {
+      component.setProps({
+        plotContent: {
+          ...getPlotContentFromItemId('scarecrow'),
+          fertilizerType: fertilizerType.NONE,
+        },
+      })
+    })
+
+    describe('selectedItemId === fertilizer', () => {
+      beforeEach(() => {
+        component.setProps({
+          selectedItemId: 'fertilizer',
+        })
+      })
+
+      test('does not render class', () => {
+        component.setProps({
+          plotContent: {
+            ...getPlotContentFromItemId('scarecrow'),
+            fertilizerType: fertilizerType.NONE,
+          },
+        })
+
+        expect(
+          component.find('.Plot').hasClass('can-be-fertilized')
+        ).toBeFalsy()
+      })
+    })
+
+    describe('selectedItemId === rainbow-fertilizer', () => {
+      beforeEach(() => {
+        component.setProps({
+          selectedItemId: 'rainbow-fertilizer',
+        })
+      })
+
+      describe('plot is not rainbow-fertilized', () => {
+        test('renders class', () => {
+          expect(
+            component.find('.Plot').hasClass('can-be-fertilized')
+          ).toBeTruthy()
+        })
+      })
+
+      describe('plot is rainbow-fertilized', () => {
+        test('does not render class', () => {
+          component.setProps({
+            plotContent: {
+              ...getPlotContentFromItemId('scarecrow'),
+              fertilizerType: fertilizerType.RAINBOW,
+            },
+          })
+
+          expect(
+            component.find('.Plot').hasClass('can-be-fertilized')
+          ).toBeFalsy()
+        })
+      })
+    })
+  })
+})
+
 test('renders provided image data', () => {
   const image = 'data:image/png;base64,some-other-image'
 
