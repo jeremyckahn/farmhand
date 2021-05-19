@@ -2603,6 +2603,74 @@ describe('harvestPlot', () => {
       })
     })
   })
+
+  describe('plot is rainbow fertilized', () => {
+    describe('more seeds remain in inventory', () => {
+      test('seed is consumed to replant plot', () => {
+        const {
+          field: [[plotContent]],
+          inventory: [{ quantity }],
+        } = fn.harvestPlot(
+          {
+            cropsHarvested: {},
+            field: [
+              [
+                testCrop({
+                  daysOld: 10,
+                  itemId: 'sample-crop-1',
+                  daysWatered: 4,
+                  fertilizerType: fertilizerType.RAINBOW,
+                }),
+              ],
+            ],
+            inventory: [{ id: 'sample-crop-seeds-1', quantity: 2 }],
+            inventoryLimit: -1,
+            itemsSold: {},
+          },
+          0,
+          0
+        )
+
+        expect(plotContent).toEqual(
+          testCrop({
+            itemId: 'sample-crop-1',
+            daysOld: 0,
+            fertilizerType: fertilizerType.RAINBOW,
+          })
+        )
+        expect(quantity).toEqual(1)
+      })
+    })
+
+    describe('no more seeds remain in inventory', () => {
+      test('plot is cleared', () => {
+        const {
+          field: [[plotContent]],
+        } = fn.harvestPlot(
+          {
+            cropsHarvested: {},
+            field: [
+              [
+                testCrop({
+                  daysOld: 10,
+                  itemId: 'sample-crop-1',
+                  daysWatered: 4,
+                  fertilizerType: fertilizerType.RAINBOW,
+                }),
+              ],
+            ],
+            inventory: [],
+            inventoryLimit: -1,
+            itemsSold: {},
+          },
+          0,
+          0
+        )
+
+        expect(plotContent).toEqual(null)
+      })
+    })
+  })
 })
 
 describe('clearPlot', () => {

@@ -1609,8 +1609,8 @@ export const harvestPlot = (state, x, y) => {
   state = addItemToInventory(state, item)
   const { cropType } = item
 
-  // FIXME: Test this.
   if (plotIsRainbowFertilized) {
+
     const seedsForHarvestedCropAreAvailable =
       getInventoryQuantityMap(state.inventory)[seedItemIdForCrop] > 0
 
