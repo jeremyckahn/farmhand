@@ -28,6 +28,7 @@ import { items as itemImages } from './img'
 import {
   cowColors,
   cropLifeStage,
+  fertilizerType,
   genders,
   itemType,
   standardCowColors,
@@ -46,7 +47,6 @@ import {
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
-  FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
@@ -238,7 +238,7 @@ export const getCropFromItemId = itemId => ({
   ...getPlotContentFromItemId(itemId),
   daysOld: 0,
   daysWatered: 0,
-  isFertilized: false,
+  fertilizerType: fertilizerType.NONE,
   wasWateredToday: false,
 })
 
@@ -248,6 +248,7 @@ export const getCropFromItemId = itemId => ({
  */
 export const getPlotContentFromItemId = itemId => ({
   itemId,
+  fertilizerType: fertilizerType.NONE,
 })
 
 /**
@@ -365,11 +366,24 @@ export const getFinalCropItemIdFromSeedItemId = seedItemId =>
   itemsMap[seedItemId].growsInto
 
 /**
- * @param {farmhand.item} seedItem
+ * @param {farmhand.item} item
  * @returns {farmhand.item}
  */
 export const getFinalCropItemFromSeedItem = ({ id }) =>
   itemsMap[getFinalCropItemIdFromSeedItemId(id)]
+
+/**
+ * @param {farmhand.item} cropItemId
+ * @returns {string}
+ */
+export const getSeedItemIdFromFinalStageCropItemId = memoize(
+  cropItemId =>
+    Object.values(itemsMap).find(({ growsInto }) => growsInto === cropItemId)
+      ?.id,
+  {
+    cacheSize: 30,
+  }
+)
 
 /**
  * Generates a friendly cow.
@@ -446,7 +460,6 @@ export const generateOffspringCow = (cow1, cow2) => {
     colorsInBloodline,
     baseWeight: (maleCow.baseWeight + femaleCow.baseWeight) / 2,
     isBred: true,
-    ...(isRainbowCow && { gender: genders.FEMALE }),
   })
 }
 
@@ -471,13 +484,11 @@ export const getCowMilkItem = ({ color, happiness }) => {
 }
 
 /**
- * TODO: Should be updated to return Rainbow Fertilizer for Rainbow Cows.
- * @param {farmhand.cow} _
+ * @param {farmhand.cow} cow
  * @returns {farmhand.item}
  */
-export const getCowFertilizerItem = (_) => {
-  return itemsMap[FERTILIZER_ITEM_ID]
-}
+export const getCowFertilizerItem = ({ color }) =>
+  itemsMap[color === cowColors.RAINBOW ? 'rainbow-fertilizer' : 'fertilizer']
 
 /**
  * @param {farmhand.cow} cow
@@ -543,7 +554,7 @@ export const getCowSellValue = cow => getCowValue(cow, true)
  * @param {Array.<farmhand.item>} inventory
  * @returns {Object}
  */
-const getInventoryQuantityMap = memoize(inventory =>
+export const getInventoryQuantityMap = memoize(inventory =>
   inventory.reduce((acc, { id, quantity }) => {
     acc[id] = quantity
     return acc
@@ -902,9 +913,35 @@ export const computeMarketPositions = (
  * @param {Farmhand.state} state
  * @return {Object}
  */
-export const sanitizeStateForImport = state => {
+export const transformStateDataForImport = state => {
   const sanitizedState = { ...state }
-  ;['version'].forEach(rejectedKey => delete sanitizedState[rejectedKey])
+
+  const rejectedKeys = ['version']
+  rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
+
+  // Update old data models
+
+  if (sanitizedState.field) {
+    // Update plot data
+    sanitizedState.field = sanitizedState.field.map(row =>
+      row.map(plot => {
+        if (plot === null) {
+          return null
+        }
+
+        const { isFertilized, ...rest } = plot
+
+        return {
+          ...rest,
+
+          // Convert from isFertilized (boolean) to fertilizerType (enum)
+          fertilizerType:
+            rest.fertilizerType ||
+            (isFertilized ? fertilizerType.STANDARD : fertilizerType.NONE),
+        }
+      })
+    )
+  }
 
   return sanitizedState
 }

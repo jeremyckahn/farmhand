@@ -13,7 +13,7 @@ import {
 } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
-import { cropLifeStage, itemType } from '../../enums'
+import { cropLifeStage, fertilizerType, itemType } from '../../enums'
 import { FERTILIZER_BONUS } from '../../constants'
 import './Plot.sass'
 
@@ -24,8 +24,10 @@ export const getBackgroundStyles = plotContent => {
 
   const backgroundImages = []
 
-  if (plotContent.isFertilized) {
+  if (plotContent.fertilizerType === fertilizerType.STANDARD) {
     backgroundImages.push(`url(${plotStates['fertilized-plot']})`)
+  } else if (plotContent.fertilizerType === fertilizerType.RAINBOW) {
+    backgroundImages.push(`url(${plotStates['rainbow-fertilized-plot']})`)
   }
 
   if (plotContent.wasWateredToday) {
@@ -50,7 +52,10 @@ export const getDaysLeftToMature = plotContent =>
             plotContent ? itemsMap[plotContent.itemId] : null
           ) -
             plotContent.daysWatered) /
-            (1 + (plotContent.isFertilized ? FERTILIZER_BONUS : 0))
+            (1 +
+              (plotContent.fertilizerType === fertilizerType.NONE
+                ? 0
+                : FERTILIZER_BONUS))
         )
       )
     : null
@@ -59,6 +64,7 @@ export const Plot = ({
   handlePlotClick,
   isInHoverRange,
   plotContent,
+  selectedItemId,
   setHoveredPlot,
   x,
   y,
@@ -71,6 +77,9 @@ export const Plot = ({
 }) => {
   const item = plotContent ? itemsMap[plotContent.itemId] : null
   const daysLeftToMature = getDaysLeftToMature(plotContent)
+  const isCrop =
+    plotContent && getPlotContentType(plotContent) === itemType.CROP
+  const isScarecow = itemsMap[plotContent?.itemId]?.type === itemType.SCARECROW
 
   const plot = (
     <div
@@ -80,11 +89,17 @@ export const Plot = ({
           'is-in-hover-range': isInHoverRange,
 
           // For crops
-          crop:
-            plotContent && getPlotContentType(plotContent) === itemType.CROP,
-          'is-fertilized': plotContent && plotContent.isFertilized,
+          crop: isCrop,
           'is-ripe': isRipe,
 
+          // For crops and scarecrows
+          'can-be-fertilized':
+            (isCrop && plotContent.fertilizerType === fertilizerType.NONE) ||
+            (isScarecow &&
+              plotContent.fertilizerType === fertilizerType.NONE &&
+              selectedItemId === 'rainbow-fertilizer'),
+
+          // For scarecrows and sprinklers
           'is-replantable': plotContent && item.isReplantable,
         }),
         style: {
@@ -141,6 +156,7 @@ Plot.propTypes = {
   isInHoverRange: bool.isRequired,
   lifeStage: string,
   plotContent: object,
+  selectedItemId: string.isRequired,
   setHoveredPlot: func.isRequired,
   x: number.isRequired,
   y: number.isRequired,

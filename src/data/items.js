@@ -5,7 +5,6 @@
 import { cropLifeStage, cropType, fieldMode, itemType } from '../enums'
 import {
   COW_FEED_ITEM_ID,
-  FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
   INITIAL_SPRINKLER_RANGE,
 } from '../constants'
@@ -313,10 +312,27 @@ export const tomato = crop({
 export const fertilizer = freeze({
   description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,
-  id: FERTILIZER_ITEM_ID,
+  id: 'fertilizer',
   name: 'Fertilizer',
   type: FERTILIZER,
   value: 25,
+})
+
+/**
+ * @property farmhand.module:items.rainbowFertilizer
+ * @type {farmhand.item}
+ */
+export const rainbowFertilizer = freeze({
+  description: 'Helps crops grow a little faster and automatically replants them upon harvesting. Consumes seeds upon replanting and disappears if none are available. Also works for Scarecrows.',
+  enablesFieldMode: fieldMode.FERTILIZE,
+  id: 'rainbow-fertilizer',
+  name: 'Rainbow Fertilizer',
+  type: FERTILIZER,
+  // Rainbow Fertilizer is worth less than regular Fertilizer because it is not
+  // sold in the shop. Items that are sold in the shop have automatically
+  // reduced resale value, but since that would not apply to Rainbow
+  // Fertilizer, it is pre-reduced via this hardcoded value.
+  value: 15,
 })
 
 /**
