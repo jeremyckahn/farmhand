@@ -297,7 +297,6 @@ const fieldHasScarecrow = field => findInField(field, plotContainsScarecrow)
  * @returns {farmhand.state}
  */
 export const applyPrecipitation = state => {
-  // FIXME: Test scarecrow replanting.
   let { field } = state
   let scarecrowsConsumedByReplanting = 0
   let notification

@@ -510,6 +510,39 @@ describe('applyPrecipitation', () => {
           severity: 'error',
         })
       })
+
+      describe('scarecows are rainbow fertilized', () => {
+        test('scarecrows are replaced based on available inventory', () => {
+          const { field, inventory } = fn.applyPrecipitation({
+            field: [
+              [
+                {
+                  ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
+                  fertilizerType: fertilizerType.RAINBOW,
+                },
+                {
+                  ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
+                  fertilizerType: fertilizerType.RAINBOW,
+                },
+              ],
+            ],
+            inventory: [{ id: 'scarecrow', quantity: 1 }],
+            newDayNotifications: [],
+          })
+
+          // Scarecrow is replanted from inventory
+          expect(field[0][0]).toEqual({
+            ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
+            fertilizerType: fertilizerType.RAINBOW,
+          })
+
+          // Scarecrow replacement was not available
+          expect(field[0][1]).toBe(null)
+
+          // Scarecrow inventory is consumed
+          expect(inventory).toEqual([])
+        })
+      })
     })
 
     describe('scarecrows are not planted', () => {
