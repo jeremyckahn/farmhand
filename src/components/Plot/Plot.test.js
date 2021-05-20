@@ -108,7 +108,6 @@ describe('"can-be-fertilized" class', () => {
       component.setProps({
         plotContent: {
           ...getPlotContentFromItemId('scarecrow'),
-          fertilizerType: fertilizerType.NONE,
         },
       })
     })
@@ -121,13 +120,6 @@ describe('"can-be-fertilized" class', () => {
       })
 
       test('does not render class', () => {
-        component.setProps({
-          plotContent: {
-            ...getPlotContentFromItemId('scarecrow'),
-            fertilizerType: fertilizerType.NONE,
-          },
-        })
-
         expect(
           component.find('.Plot').hasClass('can-be-fertilized')
         ).toBeFalsy()
