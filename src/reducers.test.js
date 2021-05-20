@@ -2376,14 +2376,56 @@ describe('fertilizePlot', () => {
   })
 
   describe('non-crop plotContent', () => {
-    test('no-ops', () => {
-      const oldState = {
-        field: [[getPlotContentFromItemId('sprinkler')]],
-        inventory: [],
-        selectedItemId: 'fertilizer',
-      }
-      const state = fn.fertilizePlot(oldState, 0, 0)
-      expect(state).toBe(oldState)
+    describe('plotContent is a sprinkler', () => {
+      test('no-ops with standard fertilizer', () => {
+        const oldState = {
+          field: [[getPlotContentFromItemId('sprinkler')]],
+          inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+          selectedItemId: 'fertilizer',
+        }
+        const state = fn.fertilizePlot(oldState, 0, 0)
+        expect(state).toBe(oldState)
+      })
+
+      test('no-ops with rainbow fertilizer', () => {
+        const oldState = {
+          field: [[getPlotContentFromItemId('sprinkler')]],
+          inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
+          selectedItemId: 'rainbow-fertilizer',
+        }
+        const state = fn.fertilizePlot(oldState, 0, 0)
+        expect(state).toBe(oldState)
+      })
+    })
+
+    describe('plotContent is a scarecrow', () => {
+      test('no-ops with standard fertilizer', () => {
+        const oldState = {
+          field: [[getPlotContentFromItemId('scarecrow')]],
+          inventory: [],
+          selectedItemId: 'fertilizer',
+        }
+        const state = fn.fertilizePlot(oldState, 0, 0)
+        expect(state).toBe(oldState)
+      })
+
+      test('fertilizes with rainbow fertilizer', () => {
+        const state = fn.fertilizePlot(
+          {
+            field: [[getPlotContentFromItemId('scarecrow')]],
+            inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
+            selectedItemId: 'rainbow-fertilizer',
+          },
+          0,
+          0
+        )
+
+        expect(state.field[0][0]).toEqual({
+          ...getPlotContentFromItemId('scarecrow'),
+          fertilizerType: fertilizerType.RAINBOW,
+        })
+        expect(state.inventory).toEqual([])
+      })
     })
   })
 

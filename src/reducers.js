@@ -1489,13 +1489,16 @@ export const fertilizePlot = (state, x, y) => {
     item => item.id === fertilizerItemId
   )
 
-  // FIXME: Test the scarecrow/rainbow fertilizer logic.
+  const plotContentType = getPlotContentType(plotContent)
+
   if (
     !plotContent ||
     !fertilizerInventory ||
     plotContent.fertilizerType !== fertilizerType.NONE ||
-    (selectedItemId === 'fertilizer' &&
-      getPlotContentType(plotContent) !== itemType.CROP)
+    (selectedItemId === 'fertilizer' && plotContentType !== itemType.CROP) ||
+    (selectedItemId === 'rainbow-fertilizer' &&
+      plotContentType !== itemType.CROP &&
+      plotContentType !== itemType.SCARECROW)
   ) {
     return state
   }
@@ -1609,7 +1612,6 @@ export const harvestPlot = (state, x, y) => {
   const { cropType } = item
 
   if (plotIsRainbowFertilized) {
-
     const seedsForHarvestedCropAreAvailable =
       getInventoryQuantityMap(state.inventory)[seedItemIdForCrop] > 0
 
