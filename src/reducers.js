@@ -29,6 +29,7 @@ import {
   getCropFromItemId,
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
+  getInventoryQuantityMap,
   getLevelEntitlements,
   getPlotContentFromItemId,
   getPlotContentType,
@@ -39,6 +40,7 @@ import {
   getRandomUnlockedCrop,
   getRangeCoords,
   getResaleValue,
+  getSeedItemIdFromFinalStageCropItemId,
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
@@ -58,7 +60,6 @@ import {
   CROW_CHANCE,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   FERTILIZER_BONUS,
-  FERTILIZER_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
@@ -99,7 +100,7 @@ import {
   PURCHASED_ITEM_PEER_NOTIFICATION,
   SOLD_ITEM_PEER_NOTIFICATION,
 } from './templates'
-import { cropLifeStage, fieldMode, itemType } from './enums'
+import { cropLifeStage, fertilizerType, fieldMode, itemType } from './enums'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
@@ -122,7 +123,10 @@ export const incrementPlotContentAge = crop =>
         daysWatered:
           crop.daysWatered +
           (crop.wasWateredToday
-            ? 1 + (crop.isFertilized ? FERTILIZER_BONUS : 0)
+            ? 1 +
+              (crop.fertilizerType === fertilizerType.NONE
+                ? 0
+                : FERTILIZER_BONUS)
             : 0),
       }
     : crop
@@ -294,6 +298,7 @@ const fieldHasScarecrow = field => findInField(field, plotContainsScarecrow)
  */
 export const applyPrecipitation = state => {
   let { field } = state
+  let scarecrowsConsumedByReplanting = 0
   let notification
 
   if (Math.random() < STORM_CHANCE) {
@@ -303,9 +308,27 @@ export const applyPrecipitation = state => {
         severity: 'error',
       }
 
-      field = updateField(field, plot =>
-        plotContainsScarecrow(plot) ? null : plot
+      let { scarecrow: scarecrowsInInventory = 0 } = getInventoryQuantityMap(
+        state.inventory
       )
+
+      field = updateField(field, plot => {
+        if (!plotContainsScarecrow(plot)) {
+          return plot
+        }
+
+        if (
+          scarecrowsInInventory &&
+          plot.fertilizerType === fertilizerType.RAINBOW
+        ) {
+          scarecrowsInInventory--
+          scarecrowsConsumedByReplanting++
+
+          return plot
+        }
+
+        return null
+      })
     } else {
       notification = { message: STORM_MESSAGE, severity: 'info' }
     }
@@ -313,9 +336,14 @@ export const applyPrecipitation = state => {
     notification = { message: RAIN_MESSAGE, severity: 'info' }
   }
 
+  state = decrementItemFromInventory(
+    { ...state, field },
+    'scarecrow',
+    scarecrowsConsumedByReplanting
+  )
+
   state = {
     ...state,
-    field,
     newDayNotifications: [...state.newDayNotifications, notification],
   }
 
@@ -1432,43 +1460,61 @@ export const plantInPlot = (state, x, y, plantableItemId) => {
   }
 }
 
+const fertilizerItemIdToTypeMap = {
+  [itemsMap['fertilizer'].id]: fertilizerType.STANDARD,
+  [itemsMap['rainbow-fertilizer'].id]: fertilizerType.RAINBOW,
+}
+
 /**
+ * Assumes that state.selectedItemId references an item with type ===
+ * itemType.FERTILIZER.
  * @param {farmhand.state} state
  * @param {number} x
  * @param {number} y
  * @returns {farmhand.state}
  */
-export const fertilizeCrop = (state, x, y) => {
-  const { field } = state
+export const fertilizePlot = (state, x, y) => {
+  const { field, selectedItemId } = state
   const row = field[y]
-  const crop = row[x]
+  const plotContent = row[x]
+
+  if (itemsMap[selectedItemId]?.type !== itemType.FERTILIZER) {
+    return state
+  }
+
+  const { id: fertilizerItemId } = itemsMap[selectedItemId]
 
   const fertilizerInventory = state.inventory.find(
-    item => item.id === FERTILIZER_ITEM_ID
+    item => item.id === fertilizerItemId
   )
 
+  const plotContentType = getPlotContentType(plotContent)
+
   if (
-    !crop ||
+    !plotContent ||
     !fertilizerInventory ||
-    getPlotContentType(crop) !== itemType.CROP ||
-    crop.isFertilized === true
+    plotContent.fertilizerType !== fertilizerType.NONE ||
+    (selectedItemId === 'fertilizer' && plotContentType !== itemType.CROP) ||
+    (selectedItemId === 'rainbow-fertilizer' &&
+      plotContentType !== itemType.CROP &&
+      plotContentType !== itemType.SCARECROW)
   ) {
     return state
   }
 
   const { quantity: initialFertilizerQuantity } = fertilizerInventory
-  state = decrementItemFromInventory(state, FERTILIZER_ITEM_ID)
+  state = decrementItemFromInventory(state, fertilizerItemId)
   const doFertilizersRemain = initialFertilizerQuantity > 1
 
   state = modifyFieldPlotAt(state, x, y, crop => ({
     ...crop,
-    isFertilized: true,
+    fertilizerType: fertilizerItemIdToTypeMap[fertilizerItemId],
   }))
 
   return {
     ...state,
     fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
-    selectedItemId: doFertilizersRemain ? FERTILIZER_ITEM_ID : '',
+    selectedItemId: doFertilizersRemain ? fertilizerItemId : '',
   }
 }
 
@@ -1557,9 +1603,25 @@ export const harvestPlot = (state, x, y) => {
   }
 
   const item = itemsMap[crop.itemId]
+  const seedItemIdForCrop = getSeedItemIdFromFinalStageCropItemId(item.id)
+  const plotWasRainbowFertilized = crop.fertilizerType === fertilizerType.RAINBOW
+
   state = removeFieldPlotAt(state, x, y)
   state = addItemToInventory(state, item)
   const { cropType } = item
+
+  if (plotWasRainbowFertilized) {
+    const seedsForHarvestedCropAreAvailable =
+      getInventoryQuantityMap(state.inventory)[seedItemIdForCrop] > 0
+
+    if (seedsForHarvestedCropAreAvailable) {
+      state = plantInPlot(state, x, y, seedItemIdForCrop)
+      state = modifyFieldPlotAt(state, x, y, crop => ({
+        ...crop,
+        fertilizerType: fertilizerType.RAINBOW,
+      }))
+    }
+  }
 
   const { cropsHarvested } = state
 

@@ -24,7 +24,6 @@ export const LOAN_GARNISHMENT_RATE = 0.05
 export const LOAN_INTEREST_RATE = 0.02
 
 export const FERTILIZER_BONUS = 0.5
-export const FERTILIZER_ITEM_ID = 'fertilizer'
 
 export const INITIAL_INVENTORY_LIMIT = 100
 

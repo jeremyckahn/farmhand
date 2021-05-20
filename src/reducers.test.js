@@ -27,7 +27,6 @@ import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   FERTILIZER_BONUS,
-  FERTILIZER_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
@@ -42,7 +41,7 @@ import {
 import { huggingMachine, sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
-import { fieldMode, genders, standardCowColors } from './enums'
+import { fertilizerType, fieldMode, genders, standardCowColors } from './enums'
 import {
   farmProductSalesVolumeNeededForLevel,
   generateCow,
@@ -468,6 +467,7 @@ describe('applyPrecipitation', () => {
           }),
         ],
       ],
+      inventory: [],
       newDayNotifications: [],
     })
 
@@ -480,6 +480,7 @@ describe('applyPrecipitation', () => {
       jest.spyOn(Math, 'random').mockReturnValue(1)
       const state = fn.applyPrecipitation({
         field: [[]],
+        inventory: [],
         newDayNotifications: [],
       })
 
@@ -499,6 +500,7 @@ describe('applyPrecipitation', () => {
       test('scarecrows are destroyed', () => {
         const state = fn.applyPrecipitation({
           field: [[getPlotContentFromItemId(SCARECROW_ITEM_ID)]],
+          inventory: [],
           newDayNotifications: [],
         })
 
@@ -508,12 +510,46 @@ describe('applyPrecipitation', () => {
           severity: 'error',
         })
       })
+
+      describe('scarecows are rainbow fertilized', () => {
+        test('scarecrows are replaced based on available inventory', () => {
+          const { field, inventory } = fn.applyPrecipitation({
+            field: [
+              [
+                {
+                  ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
+                  fertilizerType: fertilizerType.RAINBOW,
+                },
+                {
+                  ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
+                  fertilizerType: fertilizerType.RAINBOW,
+                },
+              ],
+            ],
+            inventory: [{ id: 'scarecrow', quantity: 1 }],
+            newDayNotifications: [],
+          })
+
+          // Scarecrow is replanted from inventory
+          expect(field[0][0]).toEqual({
+            ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
+            fertilizerType: fertilizerType.RAINBOW,
+          })
+
+          // Scarecrow replacement was not available
+          expect(field[0][1]).toBe(null)
+
+          // Scarecrow inventory is consumed
+          expect(inventory).toEqual([])
+        })
+      })
     })
 
     describe('scarecrows are not planted', () => {
       test('shows appropriate message', () => {
         const state = fn.applyPrecipitation({
           field: [[]],
+          inventory: [],
           newDayNotifications: [],
         })
 
@@ -846,7 +882,9 @@ describe('processCowFertilizerProduction', () => {
         newDayNotifications,
       } = fn.processCowFertilizerProduction(state)
 
-      expect(daysSinceProducingFertilizer).toEqual(baseDaysSinceProducingFertilizer)
+      expect(daysSinceProducingFertilizer).toEqual(
+        baseDaysSinceProducingFertilizer
+      )
       expect(inventory).toEqual([])
       expect(newDayNotifications).toEqual([])
     })
@@ -875,7 +913,9 @@ describe('processCowFertilizerProduction', () => {
         expect(inventory).toEqual([{ id: 'fertilizer', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
-            message: FERTILIZERS_PRODUCED`${{ [getCowFertilizerItem(cow).name]: 1 }}`,
+            message: FERTILIZERS_PRODUCED`${{
+              [getCowFertilizerItem(cow).name]: 1,
+            }}`,
             severity: 'success',
           },
         ])
@@ -910,7 +950,9 @@ describe('processCowFertilizerProduction', () => {
         expect(inventory).toEqual([{ id: 'fertilizer', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
-            message: FERTILIZERS_PRODUCED`${{ [getCowFertilizerItem(cow).name]: 1 }}`,
+            message: FERTILIZERS_PRODUCED`${{
+              [getCowFertilizerItem(cow).name]: 1,
+            }}`,
             severity: 'success',
           },
         ])
@@ -942,6 +984,7 @@ describe('processWeather', () => {
         const { processWeather } = jest.requireActual('./reducers')
         const state = processWeather({
           field: [[testCrop()]],
+          inventory: [],
           newDayNotifications: [],
         })
 
@@ -1369,7 +1412,7 @@ describe('incrementPlotContentAge', () => {
         const { daysWatered } = fn.incrementPlotContentAge(
           testCrop({
             itemId: 'sample-crop-1',
-            isFertilized: true,
+            fertilizerType: fertilizerType.STANDARD,
             wasWateredToday: true,
           })
         )
@@ -2319,45 +2362,111 @@ describe('plantInPlot', () => {
   })
 })
 
-describe('fertilizeCrop', () => {
+describe('fertilizePlot', () => {
   describe('no fertilizer in inventory', () => {
     test('no-ops', () => {
       const oldState = {
         field: [[testCrop({ itemId: 'sample-crop-1' })]],
         inventory: [],
-        selectedItemId: FERTILIZER_ITEM_ID,
+        selectedItemId: 'fertilizer',
       }
-      const state = fn.fertilizeCrop(oldState, 0, 0)
+      const state = fn.fertilizePlot(oldState, 0, 0)
       expect(state).toBe(oldState)
     })
   })
 
   describe('non-crop plotContent', () => {
-    test('no-ops', () => {
-      const oldState = {
-        field: [[getPlotContentFromItemId('sprinkler')]],
-        inventory: [],
-      }
-      const state = fn.fertilizeCrop(oldState, 0, 0)
-      expect(state).toBe(oldState)
+    describe('plotContent is a sprinkler', () => {
+      test('no-ops with standard fertilizer', () => {
+        const oldState = {
+          field: [[getPlotContentFromItemId('sprinkler')]],
+          inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+          selectedItemId: 'fertilizer',
+        }
+        const state = fn.fertilizePlot(oldState, 0, 0)
+        expect(state).toBe(oldState)
+      })
+
+      test('no-ops with rainbow fertilizer', () => {
+        const oldState = {
+          field: [[getPlotContentFromItemId('sprinkler')]],
+          inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
+          selectedItemId: 'rainbow-fertilizer',
+        }
+        const state = fn.fertilizePlot(oldState, 0, 0)
+        expect(state).toBe(oldState)
+      })
+    })
+
+    describe('plotContent is a scarecrow', () => {
+      test('no-ops with standard fertilizer', () => {
+        const oldState = {
+          field: [[getPlotContentFromItemId('scarecrow')]],
+          inventory: [],
+          selectedItemId: 'fertilizer',
+        }
+        const state = fn.fertilizePlot(oldState, 0, 0)
+        expect(state).toBe(oldState)
+      })
+
+      test('fertilizes with rainbow fertilizer', () => {
+        const state = fn.fertilizePlot(
+          {
+            field: [[getPlotContentFromItemId('scarecrow')]],
+            inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
+            selectedItemId: 'rainbow-fertilizer',
+          },
+          0,
+          0
+        )
+
+        expect(state.field[0][0]).toEqual({
+          ...getPlotContentFromItemId('scarecrow'),
+          fertilizerType: fertilizerType.RAINBOW,
+        })
+        expect(state.inventory).toEqual([])
+      })
     })
   })
 
   describe('unfertilized crops', () => {
     describe('happy path', () => {
-      test('fertilizes crop', () => {
-        const state = fn.fertilizeCrop(
+      test('fertilizes crop with standard fertilizer', () => {
+        const state = fn.fertilizePlot(
           {
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
             inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
-            selectedItemId: FERTILIZER_ITEM_ID,
+            selectedItemId: 'fertilizer',
           },
           0,
           0
         )
 
         expect(state.field[0][0]).toEqual(
-          testCrop({ itemId: 'sample-crop-1', isFertilized: true })
+          testCrop({
+            itemId: 'sample-crop-1',
+            fertilizerType: fertilizerType.STANDARD,
+          })
+        )
+        expect(state.inventory).toEqual([])
+      })
+
+      test('fertilizes crop with rainbow fertilizer', () => {
+        const state = fn.fertilizePlot(
+          {
+            field: [[testCrop({ itemId: 'sample-crop-1' })]],
+            inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
+            selectedItemId: 'rainbow-fertilizer',
+          },
+          0,
+          0
+        )
+
+        expect(state.field[0][0]).toEqual(
+          testCrop({
+            itemId: 'sample-crop-1',
+            fertilizerType: fertilizerType.RAINBOW,
+          })
         )
         expect(state.inventory).toEqual([])
       })
@@ -2368,10 +2477,11 @@ describe('fertilizeCrop', () => {
         beforeEach(() => {})
 
         test('does not change fieldMode', () => {
-          const state = fn.fertilizeCrop(
+          const state = fn.fertilizePlot(
             {
               field: [[testCrop({ itemId: 'sample-crop-1' })]],
               inventory: [testItem({ id: 'fertilizer', quantity: 2 })],
+              selectedItemId: 'fertilizer',
             },
             0,
             0
@@ -2384,10 +2494,11 @@ describe('fertilizeCrop', () => {
 
       describe('one fertilizer unit remaining', () => {
         test('changes fieldMode to OBSERVE', () => {
-          const state = fn.fertilizeCrop(
+          const state = fn.fertilizePlot(
             {
               field: [[testCrop({ itemId: 'sample-crop-1' })]],
               inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+              selectedItemId: 'fertilizer',
             },
             0,
             0
@@ -2564,6 +2675,74 @@ describe('harvestPlot', () => {
         const state = fn.harvestPlot(inputState, 0, 0)
 
         expect(state).toEqual(inputState)
+      })
+    })
+  })
+
+  describe('plot is rainbow fertilized', () => {
+    describe('more seeds remain in inventory', () => {
+      test('seed is consumed to replant plot', () => {
+        const {
+          field: [[plotContent]],
+          inventory: [{ quantity }],
+        } = fn.harvestPlot(
+          {
+            cropsHarvested: {},
+            field: [
+              [
+                testCrop({
+                  daysOld: 10,
+                  itemId: 'sample-crop-1',
+                  daysWatered: 4,
+                  fertilizerType: fertilizerType.RAINBOW,
+                }),
+              ],
+            ],
+            inventory: [{ id: 'sample-crop-seeds-1', quantity: 2 }],
+            inventoryLimit: -1,
+            itemsSold: {},
+          },
+          0,
+          0
+        )
+
+        expect(plotContent).toEqual(
+          testCrop({
+            itemId: 'sample-crop-1',
+            daysOld: 0,
+            fertilizerType: fertilizerType.RAINBOW,
+          })
+        )
+        expect(quantity).toEqual(1)
+      })
+    })
+
+    describe('no more seeds remain in inventory', () => {
+      test('plot is cleared', () => {
+        const {
+          field: [[plotContent]],
+        } = fn.harvestPlot(
+          {
+            cropsHarvested: {},
+            field: [
+              [
+                testCrop({
+                  daysOld: 10,
+                  itemId: 'sample-crop-1',
+                  daysWatered: 4,
+                  fertilizerType: fertilizerType.RAINBOW,
+                }),
+              ],
+            ],
+            inventory: [],
+            inventoryLimit: -1,
+            itemsSold: {},
+          },
+          0,
+          0
+        )
+
+        expect(plotContent).toEqual(null)
       })
     })
   })

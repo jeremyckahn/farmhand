@@ -1,5 +1,6 @@
 import wateredPlot from './plot-states/watered-plot.png'
 import fertilizedPlot from './plot-states/fertilized-plot.png'
+import rainbowFertilizedPlot from './plot-states/rainbow-fertilized-plot.png'
 
 import bread from './dishes/bread.png'
 import burger from './dishes/burger.png'
@@ -39,6 +40,7 @@ import tomato from './items/tomato.png'
 import tomatoGrowing from './items/tomato-growing.png'
 import tomatoSeed from './items/tomato-seed.png'
 import fertilizer from './items/fertilizer.png'
+import rainbowFertilizer from './items/rainbow-fertilizer.png'
 import scarecrow from './items/scarecrow.png'
 import sprinkler from './items/sprinkler.png'
 import cowFeed from './items/cow-feed.png'
@@ -69,6 +71,7 @@ export { default as pixel } from './pixel.png'
 export const plotStates = {
   'watered-plot': wateredPlot,
   'fertilized-plot': fertilizedPlot,
+  'rainbow-fertilized-plot': rainbowFertilizedPlot,
 }
 
 export const craftedItems = {
@@ -115,6 +118,7 @@ export const items = {
 
   // Field tools
   fertilizer,
+  'rainbow-fertilizer': rainbowFertilizer,
   scarecrow,
   sprinkler,
 
