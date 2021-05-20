@@ -124,9 +124,9 @@ export const incrementPlotContentAge = crop =>
           crop.daysWatered +
           (crop.wasWateredToday
             ? 1 +
-              (crop.fertilizerType !== fertilizerType.NONE
-                ? FERTILIZER_BONUS
-                : 0)
+              (crop.fertilizerType === fertilizerType.NONE
+                ? 0
+                : FERTILIZER_BONUS)
             : 0),
       }
     : crop
@@ -344,7 +344,6 @@ export const applyPrecipitation = state => {
 
   state = {
     ...state,
-    field,
     newDayNotifications: [...state.newDayNotifications, notification],
   }
 
@@ -1605,13 +1604,13 @@ export const harvestPlot = (state, x, y) => {
 
   const item = itemsMap[crop.itemId]
   const seedItemIdForCrop = getSeedItemIdFromFinalStageCropItemId(item.id)
-  const plotIsRainbowFertilized = crop.fertilizerType === fertilizerType.RAINBOW
+  const plotWasRainbowFertilized = crop.fertilizerType === fertilizerType.RAINBOW
 
   state = removeFieldPlotAt(state, x, y)
   state = addItemToInventory(state, item)
   const { cropType } = item
 
-  if (plotIsRainbowFertilized) {
+  if (plotWasRainbowFertilized) {
     const seedsForHarvestedCropAreAvailable =
       getInventoryQuantityMap(state.inventory)[seedItemIdForCrop] > 0
 
