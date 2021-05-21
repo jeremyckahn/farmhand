@@ -41,6 +41,10 @@ export const PURCHASEABLE_FIELD_SIZES = freeze(
   ])
 )
 
+export const PURCHASEABLE_COMBINES = freeze(
+  new Map([[1, { type: 'Basic', price: 500000 }]])
+)
+
 export const PURCHASEABLE_COW_PENS = freeze(
   new Map([
     [1, { cows: 10, price: 1500 }],
@@ -124,6 +128,7 @@ export const PERSISTED_STATE_KEYS = [
   'id',
   'inventory',
   'inventoryLimit',
+  'isCombineEnabled',
   'itemsSold',
   'learnedRecipes',
   'loanBalance',
@@ -134,6 +139,7 @@ export const PERSISTED_STATE_KEYS = [
   'priceCrashes',
   'priceSurges',
   'profitabilityStreak',
+  'purchasedCombine',
   'purchasedCowPen',
   'purchasedField',
   'record7dayProfitAverage',

@@ -9,12 +9,14 @@ import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../../Farmhand.context'
 import {
+  dollarString,
   getCostOfNextStorageExpansion,
   integerString,
   moneyString,
 } from '../../utils'
 import { items } from '../../img'
 import {
+  PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   STORAGE_EXPANSION_AMOUNT,
@@ -25,11 +27,13 @@ import TierPurchase from '../TierPurchase'
 import './Shop.sass'
 
 export const Shop = ({
+  handleCombinePurchase,
   handleCowPenPurchase,
   handleFieldPurchase,
   handleStorageExpansionPurchase,
   inventoryLimit,
   money,
+  purchasedCombine,
   purchasedCowPen,
   purchasedField,
   shopInventory,
@@ -91,12 +95,11 @@ export const Shop = ({
         <TierPurchase
           {...{
             handleTierPurchase: handleFieldPurchase,
-            maxedOutPlaceholder: (
-              <p>You've purchased the largest field available!</p>
-            ),
+            maxedOutPlaceholder:
+              "You've purchased the largest field available!",
             purchasedTier: purchasedField,
             renderTierLabel: ({ columns, price, rows }) =>
-              `$${price}: ${columns} x ${rows}`,
+              `${dollarString(price)}: ${columns} x ${rows}`,
             tiers: PURCHASEABLE_FIELD_SIZES,
             title: 'Expand field',
           }}
@@ -106,13 +109,29 @@ export const Shop = ({
         <TierPurchase
           {...{
             handleTierPurchase: handleCowPenPurchase,
-            maxedOutPlaceholder: (
-              <p>You've purchased the largest cow pen available!</p>
-            ),
+            maxedOutPlaceholder:
+              "You've purchased the largest cow pen available!",
             purchasedTier: purchasedCowPen,
-            renderTierLabel: ({ cows, price }) => `$${price}: ${cows} cow pen`,
+            renderTierLabel: ({ cows, price }) =>
+              `${dollarString(price)}: ${cows} cow pen`,
             tiers: PURCHASEABLE_COW_PENS,
             title: 'Buy cow pen',
+          }}
+        />
+      </li>
+      <li>
+        <TierPurchase
+          {...{
+            description:
+              'You can purchase a combine to automatically harvest your mature crops at the start of every day.',
+            handleTierPurchase: handleCombinePurchase,
+            maxedOutPlaceholder:
+              "You've purchased the best combine harvester available!",
+            purchasedTier: purchasedCombine,
+            renderTierLabel: ({ type, price }) =>
+              `${dollarString(price)}: ${type} combine harvester`,
+            tiers: PURCHASEABLE_COMBINES,
+            title: 'Buy combine harvester',
           }}
         />
       </li>
@@ -121,6 +140,7 @@ export const Shop = ({
 )
 
 Shop.propTypes = {
+  handleCombinePurchase: func.isRequired,
   handleCowPenPurchase: func.isRequired,
   handleFieldPurchase: func.isRequired,
   handleStorageExpansionPurchase: func.isRequired,

@@ -11,11 +11,13 @@ beforeEach(() => {
   component = shallow(
     <Shop
       {...{
+        handleCombinePurchase: () => {},
         handleCowPenPurchase: () => {},
         handleFieldPurchase: () => {},
         handleStorageExpansionPurchase: () => {},
         inventoryLimit: -1,
         money: 0,
+        purchasedCombine: 0,
         purchasedCowPen: 0,
         purchasedField: 0,
         shopInventory: [],

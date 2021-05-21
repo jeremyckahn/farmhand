@@ -227,6 +227,13 @@ export default {
   },
 
   /**
+   * @param {number} combineId
+   */
+  handleCombinePurchase(combineId) {
+    this.purchaseCombine(combineId)
+  },
+
+  /**
    * @param {number} cowPenId
    */
   handleCowPenPurchase(cowPenId) {
@@ -357,6 +364,10 @@ export default {
    */
   handleFarmNameUpdate(farmName) {
     this.setState({ farmName })
+  },
+
+  handleCombineEnabledChange(_e, enableCombine) {
+    this.setState({ isCombineEnabled: enableCombine })
   },
 
   handleUseAlternateEndDayButtonPositionChange(

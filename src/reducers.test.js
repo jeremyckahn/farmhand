@@ -32,6 +32,7 @@ import {
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
   NOTIFICATION_LOG_SIZE,
+  PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
@@ -2898,6 +2899,23 @@ describe('waterAllPlots', () => {
     expect(field[0][0].wasWateredToday).toBe(true)
     expect(field[0][1].wasWateredToday).toBe(true)
     expect(field[1][0].wasWateredToday).toBe(true)
+  })
+})
+
+describe('purchaseCombine', () => {
+  test('updates purchasedCombine', () => {
+    const { purchasedCombine } = fn.purchaseCombine({}, 1)
+    expect(purchasedCombine).toEqual(1)
+  })
+
+  test('prevents repurchasing options', () => {
+    const { purchasedCombine } = fn.purchaseCombine({ purchasedCombine: 2 }, 1)
+    expect(purchasedCombine).toEqual(2)
+  })
+
+  test('deducts money', () => {
+    const { money } = fn.purchaseCombine({ money: 500000 }, 1)
+    expect(money).toEqual(PURCHASEABLE_COMBINES.get(1).price - 500000)
   })
 })
 

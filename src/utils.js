@@ -983,3 +983,9 @@ export const getCostOfNextStorageExpansion = currentInventoryLimit => {
     upgradesPurchased * STORAGE_EXPANSION_SCALE_PREMIUM
   )
 }
+
+/**
+ * Create a no-op Promise that resolves in a specified amount of time.
+ * @returns {Promise}
+ */
+export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
