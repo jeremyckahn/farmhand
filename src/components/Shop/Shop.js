@@ -8,13 +8,16 @@ import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../../Farmhand.context'
-import { moneyString } from '../../utils'
+import {
+  getCostOfNextStorageExpansion,
+  integerString,
+  moneyString,
+} from '../../utils'
 import { items } from '../../img'
 import {
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   STORAGE_EXPANSION_AMOUNT,
-  STORAGE_EXPANSION_PRICE,
 } from '../../constants'
 import Inventory from '../Inventory'
 import TierPurchase from '../TierPurchase'
@@ -30,6 +33,8 @@ export const Shop = ({
   purchasedCowPen,
   purchasedField,
   shopInventory,
+
+  storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit),
 }) => (
   <div className="Shop">
     <Inventory
@@ -52,8 +57,10 @@ export const Shop = ({
                 title: 'Storage Unit',
                 subheader: (
                   <div>
-                    <p>Price: {moneyString(STORAGE_EXPANSION_PRICE)}</p>
-                    <p>Current inventory space: {inventoryLimit}</p>
+                    <p>Price: {moneyString(storageUpgradeCost)}</p>
+                    <p>
+                      Current inventory space: {integerString(inventoryLimit)}
+                    </p>
                   </div>
                 ),
               }}
@@ -67,7 +74,7 @@ export const Shop = ({
             <CardActions>
               <Button
                 {...{
-                  disabled: money < STORAGE_EXPANSION_PRICE,
+                  disabled: money < storageUpgradeCost,
                   color: 'primary',
                   onClick: handleStorageExpansionPurchase,
                   variant: 'contained',

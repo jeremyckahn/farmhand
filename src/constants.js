@@ -25,7 +25,10 @@ export const LOAN_INTEREST_RATE = 0.02
 
 export const FERTILIZER_BONUS = 0.5
 
-export const INITIAL_INVENTORY_LIMIT = 100
+export const INITIAL_STORAGE_LIMIT = 100
+export const STORAGE_EXPANSION_AMOUNT = 100
+export const STORAGE_EXPANSION_BASE_PRICE = 500
+export const STORAGE_EXPANSION_SCALE_PREMIUM = 50
 
 export const INITIAL_FIELD_WIDTH = 6
 export const INITIAL_FIELD_HEIGHT = 10
@@ -69,11 +72,11 @@ export const COW_WEIGHT_MULTIPLIER_FEED_BENEFIT = 0.1
 export const COW_WEIGHT_MULTIPLIER_MINIMUM = 0.5
 export const COW_WEIGHT_MULTIPLIER_MAXIMUM = 1.5
 
-export const COW_MILK_RATE_SLOWEST = 5
-export const COW_MILK_RATE_FASTEST = 0
+export const COW_MILK_RATE_SLOWEST = 7
+export const COW_MILK_RATE_FASTEST = 2
 
-export const COW_FERTILIZER_PRODUCTION_RATE_SLOWEST = 6
-export const COW_FERTILIZER_PRODUCTION_RATE_FASTEST = 0
+export const COW_FERTILIZER_PRODUCTION_RATE_SLOWEST = 7
+export const COW_FERTILIZER_PRODUCTION_RATE_FASTEST = 1
 
 export const COW_FEED_ITEM_ID = 'cow-feed'
 export const HUGGING_MACHINE_ITEM_ID = 'hugging-machine'
@@ -98,9 +101,6 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.COW_PEN]: 'Cows',
   [stageFocusType.WORKSHOP]: 'Workshop',
 }
-
-export const STORAGE_EXPANSION_AMOUNT = 100
-export const STORAGE_EXPANSION_PRICE = 500
 
 export const DAILY_FINANCIAL_HISTORY_RECORD_LENGTH = 7
 

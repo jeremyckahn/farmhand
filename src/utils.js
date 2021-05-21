@@ -51,11 +51,15 @@ import {
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   INITIAL_SPRINKLER_RANGE,
+  INITIAL_STORAGE_LIMIT,
   MALE_COW_WEIGHT_MULTIPLIER,
   MEMOIZE_CACHE_CLEAR_THRESHOLD,
   PEER_METADATA_STATE_KEYS,
   PERSISTED_STATE_KEYS,
   PRICE_EVENT_STANDARD_DURATION_DECREASE,
+  STORAGE_EXPANSION_AMOUNT,
+  STORAGE_EXPANSION_BASE_PRICE,
+  STORAGE_EXPANSION_SCALE_PREMIUM,
 } from './constants'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
@@ -965,3 +969,17 @@ export const getPlayerName = memoize(playerId => {
 
   return `${adjective} ${animal}`
 })
+
+/**
+ * @param {number} currentInventoryLimit
+ * @returns {number}
+ */
+export const getCostOfNextStorageExpansion = currentInventoryLimit => {
+  const upgradesPurchased =
+    (currentInventoryLimit - INITIAL_STORAGE_LIMIT) / STORAGE_EXPANSION_AMOUNT
+
+  return (
+    STORAGE_EXPANSION_BASE_PRICE +
+    upgradesPurchased * STORAGE_EXPANSION_SCALE_PREMIUM
+  )
+}

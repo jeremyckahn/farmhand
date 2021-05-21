@@ -36,7 +36,6 @@ import {
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
   STORAGE_EXPANSION_AMOUNT,
-  STORAGE_EXPANSION_PRICE,
 } from './constants'
 import { huggingMachine, sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
@@ -45,6 +44,7 @@ import { fertilizerType, fieldMode, genders, standardCowColors } from './enums'
 import {
   farmProductSalesVolumeNeededForLevel,
   generateCow,
+  getCostOfNextStorageExpansion,
   getCowFertilizerItem,
   getCowMilkItem,
   getCowValue,
@@ -2922,7 +2922,7 @@ describe('purchaseStorageExpansion', () => {
   describe('player does not have enough money', () => {
     test('no-ops', () => {
       const inputState = {
-        money: STORAGE_EXPANSION_PRICE - 1,
+        money: getCostOfNextStorageExpansion(100) - 1,
         inventoryLimit: 100,
       }
 
@@ -2935,7 +2935,7 @@ describe('purchaseStorageExpansion', () => {
     test('increase storage is purchased', () => {
       const { inventoryLimit, money } = fn.purchaseStorageExpansion({
         inventoryLimit: 100,
-        money: STORAGE_EXPANSION_PRICE,
+        money: getCostOfNextStorageExpansion(100),
       })
 
       expect(inventoryLimit).toEqual(100 + STORAGE_EXPANSION_AMOUNT)

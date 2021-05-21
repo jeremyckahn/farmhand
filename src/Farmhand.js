@@ -56,7 +56,7 @@ import { itemsMap, recipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
 import {
   DEFAULT_ROOM,
-  INITIAL_INVENTORY_LIMIT,
+  INITIAL_STORAGE_LIMIT,
   PURCHASEABLE_COW_PENS,
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
@@ -339,7 +339,7 @@ export default class Farmhand extends Component {
       hoveredPlotRangeSize: 0,
       id: uuid(),
       inventory: [],
-      inventoryLimit: INITIAL_INVENTORY_LIMIT,
+      inventoryLimit: INITIAL_STORAGE_LIMIT,
       isAwaitingNetworkRequest: false,
       isMenuOpen: !doesMenuObstructStage(),
       itemsSold: {},

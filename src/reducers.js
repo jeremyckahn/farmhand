@@ -20,6 +20,7 @@ import {
   generateOffspringCow,
   get7DayAverage,
   getAdjustedItemValue,
+  getCostOfNextStorageExpansion,
   getCowColorId,
   getCowFertilizerItem,
   getCowFertilizerProductionRate,
@@ -75,7 +76,6 @@ import {
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
   STORAGE_EXPANSION_AMOUNT,
-  STORAGE_EXPANSION_PRICE,
   STORM_CHANCE,
 } from './constants'
 import {
@@ -1604,7 +1604,8 @@ export const harvestPlot = (state, x, y) => {
 
   const item = itemsMap[crop.itemId]
   const seedItemIdForCrop = getSeedItemIdFromFinalStageCropItemId(item.id)
-  const plotWasRainbowFertilized = crop.fertilizerType === fertilizerType.RAINBOW
+  const plotWasRainbowFertilized =
+    crop.fertilizerType === fertilizerType.RAINBOW
 
   state = removeFieldPlotAt(state, x, y)
   state = addItemToInventory(state, item)
@@ -1731,15 +1732,16 @@ export const purchaseCowPen = (state, cowPenId) => {
  */
 export const purchaseStorageExpansion = state => {
   const { money, inventoryLimit } = state
+  const storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit)
 
-  if (money < STORAGE_EXPANSION_PRICE || inventoryLimit === -1) {
+  if (money < storageUpgradeCost || inventoryLimit === -1) {
     return state
   }
 
   return {
     ...state,
     inventoryLimit: inventoryLimit + STORAGE_EXPANSION_AMOUNT,
-    money: moneyTotal(money, -STORAGE_EXPANSION_PRICE),
+    money: moneyTotal(money, -storageUpgradeCost),
   }
 }
 
