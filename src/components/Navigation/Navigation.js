@@ -271,7 +271,8 @@ export const Navigation = ({
           }),
         }}
       >
-        Inventory: {inventorySpaceConsumed(inventory)} / {inventoryLimit}
+        Inventory: {integerString(inventorySpaceConsumed(inventory))} /{' '}
+        {integerString(inventoryLimit)}
       </h3>
     )}
 
