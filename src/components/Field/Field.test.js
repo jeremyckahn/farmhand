@@ -20,6 +20,7 @@ beforeEach(() => {
       {...{
         columns: 0,
         hoveredPlotRangeSize: 0,
+        handleCombineEnabledChange: () => {},
         handleFieldActionRangeChange: () => {},
         rows: 0,
         field: [
@@ -30,6 +31,8 @@ beforeEach(() => {
         fieldMode: fieldMode.OBSERVE,
         inventory: [],
         inventoryLimit: -1,
+        isCombineEnabled: false,
+        purchasedCombine: 0,
         purchasedField: 0,
       }}
     />
@@ -42,7 +45,7 @@ describe('field rendering', () => {
       <FieldContent
         {...{
           columns: 0,
-          rows: 0,
+          handleCombineEnabledChange: () => {},
           field: [
             [null, null],
             [null, null],
@@ -50,6 +53,9 @@ describe('field rendering', () => {
           ],
           hoveredPlot: {},
           hoveredPlotRangeSize: 0,
+          isCombineEnabled: false,
+          purchasedCombine: 0,
+          rows: 0,
           setHoveredPlot: () => {},
         }}
       />

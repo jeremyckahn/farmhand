@@ -1,6 +1,10 @@
 import React, { memo, useEffect, useState } from 'react'
-import { array, element, func, number, object, string } from 'prop-types'
+import { array, bool, element, func, number, object, string } from 'prop-types'
 import Fab from '@material-ui/core/Fab'
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormGroup from '@material-ui/core/FormGroup'
+import Switch from '@material-ui/core/Switch'
 import Slider from '@material-ui/core/Slider'
 import ZoomInIcon from '@material-ui/icons/ZoomIn'
 import ZoomOutIcon from '@material-ui/icons/ZoomOut'
@@ -175,41 +179,69 @@ FieldContentWrapper.propTypes = {
 export const FieldContent = ({
   columns,
   field,
+  handleCombineEnabledChange,
   hoveredPlot,
   hoveredPlotRangeSize,
+  isCombineEnabled,
+  purchasedCombine,
   rows,
   setHoveredPlot,
 }) => (
-  <div
-    {...{
-      onMouseLeave: () => setHoveredPlot({ x: null, y: null }),
-    }}
-  >
-    {nullArray(rows).map((_null, y) => (
-      <div className="row" key={y}>
-        {nullArray(columns).map((_null, x, arr, plotContent = field[y][x]) => (
-          <MemoPlot
-            key={x}
-            {...{
-              hoveredPlot,
-              hoveredPlotRangeSize,
-              plotContent,
-              setHoveredPlot,
-              x,
-              y,
-            }}
+  <>
+    <div
+      {...{
+        className: 'row-wrapper',
+        onMouseLeave: () => setHoveredPlot({ x: null, y: null }),
+      }}
+    >
+      {nullArray(rows).map((_null, y) => (
+        <div className="row" key={y}>
+          {nullArray(columns).map(
+            (_null, x, arr, plotContent = field[y][x]) => (
+              <MemoPlot
+                key={x}
+                {...{
+                  hoveredPlot,
+                  hoveredPlotRangeSize,
+                  plotContent,
+                  setHoveredPlot,
+                  x,
+                  y,
+                }}
+              />
+            )
+          )}
+        </div>
+      ))}
+    </div>
+    {purchasedCombine ? (
+      <FormControl component="fieldset">
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                color="primary"
+                checked={isCombineEnabled}
+                onChange={handleCombineEnabledChange}
+                name="is-combine-enabled"
+              />
+            }
+            label="Automatically harvest crops at the start of every day"
           />
-        ))}
-      </div>
-    ))}
-  </div>
+        </FormGroup>
+      </FormControl>
+    ) : null}
+  </>
 )
 
 FieldContent.propTypes = {
   columns: number.isRequired,
   field: array.isRequired,
+  handleCombineEnabledChange: func.isRequired,
   hoveredPlot: object.isRequired,
   hoveredPlotRangeSize: number.isRequired,
+  isCombineEnabled: bool.isRequired,
+  purchasedCombine: number.isRequired,
   rows: number.isRequired,
   setHoveredPlot: func.isRequired,
 }
@@ -352,10 +384,13 @@ Field.propTypes = {
   columns: number.isRequired,
   field: array.isRequired,
   fieldMode: string.isRequired,
+  handleCombineEnabledChange: func.isRequired,
   handleFieldActionRangeChange: func.isRequired,
   hoveredPlotRangeSize: number.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
+  isCombineEnabled: bool.isRequired,
+  purchasedCombine: number.isRequired,
   purchasedField: number.isRequired,
   rows: number.isRequired,
 }

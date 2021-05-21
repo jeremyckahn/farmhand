@@ -71,6 +71,7 @@ import {
   NOTIFICATION_LOG_SIZE,
   PRECIPITATION_CHANCE,
   PRICE_EVENT_CHANCE,
+  PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   SCARECROW_ITEM_ID,
@@ -1707,6 +1708,24 @@ export const waterPlot = (state, x, y) => {
  * @returns {farmhand.state}
  */
 export const waterAllPlots = state => waterField(state)
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} combineId
+ * @returns {farmhand.state}
+ */
+export const purchaseCombine = (state, combineId) => {
+  const { money, purchasedCombine } = state
+
+  if (purchasedCombine >= combineId) {
+    return state
+  }
+
+  return {
+    purchasedCombine: combineId,
+    money: moneyTotal(money, -PURCHASEABLE_COMBINES.get(combineId).price),
+  }
+}
 
 /**
  * @param {farmhand.state} state

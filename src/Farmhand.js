@@ -49,6 +49,7 @@ import {
   nullArray,
   reduceByPeerMetadataKeys,
   reduceByPersistedKeys,
+  sleep,
   transformStateDataForImport,
 } from './utils'
 import { getData, postData } from './fetch-utils'
@@ -177,11 +178,13 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Array.<{ id: farmhand.item, quantity: number }>} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
  * @property {boolean} isAwaitingNetworkRequest
+ * @property {boolean} isCombineEnabled
  * @property {boolean} isMenuOpen
  * @property {Object} itemsSold Keys are items IDs, values are the number of
  * that item sold.
  * @property {boolean} isDialogViewOpen
  * @property {boolean} isOnline Whether the player is playing online.
+ * @property {boolean} isWaitingForDayToCompleteIncrementing
  * @property {Object} learnedRecipes Keys are recipe IDs, values are `true`.
  * @property {number} loanBalance
  * @property {number} loansTakenOut
@@ -202,6 +205,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * itemIds.
  * @property {Object.<string, farmhand.priceEvent>} priceSurges Keys are
  * itemIds.
+ * @property {number} purchasedCombine
  * @property {number} purchasedCowPen
  * @property {number} purchasedField
  * @property {number} profitabilityStreak
@@ -341,10 +345,12 @@ export default class Farmhand extends Component {
       inventory: [],
       inventoryLimit: INITIAL_STORAGE_LIMIT,
       isAwaitingNetworkRequest: false,
+      isCombineEnabled: false,
       isMenuOpen: !doesMenuObstructStage(),
       itemsSold: {},
       isDialogViewOpen: false,
       isOnline: this.props.match.path.startsWith('/online'),
+      isWaitingForDayToCompleteIncrementing: false,
       learnedRecipes: {},
       loanBalance: STANDARD_LOAN_AMOUNT,
       loansTakenOut: 1,
@@ -369,6 +375,7 @@ export default class Farmhand extends Component {
       revenue: 0,
       redirect: '',
       room: decodeURIComponent(this.props.match.params.room || DEFAULT_ROOM),
+      purchasedCombine: 0,
       purchasedCowPen: 0,
       purchasedField: 0,
       showNotifications: true,
@@ -471,6 +478,7 @@ export default class Farmhand extends Component {
       'makeRecipe',
       'modifyCow',
       'purchaseCow',
+      'purchaseCombine',
       'purchaseCowPen',
       'purchaseField',
       'purchaseItem',
@@ -501,14 +509,18 @@ export default class Farmhand extends Component {
 
     if (state) {
       const sanitizedState = transformStateDataForImport(state)
-      const { newDayNotifications } = sanitizedState
+      const { isCombineEnabled, newDayNotifications } = sanitizedState
 
       this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {
-        newDayNotifications.forEach(({ message, severity }) =>
+        newDayNotifications.forEach(({ message, severity }) => {
           // Defer these notifications so that notistack doesn't swallow all
           // but the last one.
           setTimeout(() => this.showNotification(message, severity), 0)
-        )
+
+          if (isCombineEnabled) {
+            this.forRange(reducers.harvestPlot, Infinity, 0, 0)
+          }
+        })
       })
     } else {
       // Initialize new game
@@ -872,8 +884,10 @@ export default class Farmhand extends Component {
   async incrementDay(isFirstDay = false) {
     const {
       inventory,
+      isCombineEnabled,
       isOnline,
       room,
+      stageFocus,
       todaysPurchases,
       todaysStartingInventory,
     } = this.state
@@ -930,7 +944,12 @@ export default class Farmhand extends Component {
     // asynchronously, thus avoiding state changes from being blocked.
 
     this.setState(
-      { ...nextDayState, newDayNotifications: [], todaysNotifications: [] },
+      {
+        ...nextDayState,
+        isWaitingForDayToCompleteIncrementing: true,
+        newDayNotifications: [],
+        todaysNotifications: [],
+      },
       async () => {
         try {
           await this.persistState({
@@ -948,10 +967,23 @@ export default class Farmhand extends Component {
             .forEach(({ message, severity }) =>
               this.showNotification(message, severity)
             )
+
+          if (isCombineEnabled) {
+            if (stageFocus === stageFocusType.FIELD) {
+              // Allow the mature crops' animation to complete.
+              await sleep(1000)
+            }
+
+            this.forRange(reducers.harvestPlot, Infinity, 0, 0)
+          }
         } catch (e) {
           console.error(e)
 
           this.showNotification(JSON.stringify(e), 'error')
+        } finally {
+          this.setState(() => ({
+            isWaitingForDayToCompleteIncrementing: false,
+          }))
         }
       }
     )
@@ -1061,7 +1093,9 @@ export default class Farmhand extends Component {
                     {
                       'use-alternate-end-day-button-position': this.state
                         .useAlternateEndDayButtonPosition,
-                      'block-input': this.state.isAwaitingNetworkRequest,
+                      'block-input':
+                        this.state.isAwaitingNetworkRequest ||
+                        this.state.isWaitingForDayToCompleteIncrementing,
                       'has-booted': this.state.hasBooted,
                     }
                   ),

@@ -38,14 +38,16 @@ $appBarOffset: 135px
   // for each step:
   // 100% * (1 / number of field columns) * (proportion of dirt image size to crop image size)
   .react-transform-element
-    background-image: url('../../img/ui/dirt.png')
-    background-repeat: repeat
-    background-size: calc(100% * (1 / 6) * 1.5)
-    border: solid 1px #000
     display: block
     height: auto
-    image-rendering: pixelated
     width: auto
+
+    .row-wrapper
+      background-image: url('../../img/ui/dirt.png')
+      border: solid 1px #000
+      background-repeat: repeat
+      background-size: calc(100% * (1 / 6) * 1.5)
+      image-rendering: pixelated
 
   &[data-purchased-field="1"]
     .react-transform-element
@@ -111,3 +113,7 @@ $appBarOffset: 135px
     button
       margin: 0.5em
 
+  .MuiFormControl-root
+    align-items: center
+    display: flex
+    padding: 1em 0 0
