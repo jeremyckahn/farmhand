@@ -1479,7 +1479,7 @@ export const fertilizePlot = (state, x, y) => {
   const row = field[y]
   const plotContent = row[x]
 
-  if (itemsMap[selectedItemId]?.type !== itemType.FERTILIZER) {
+  if (!plotContent || itemsMap[selectedItemId]?.type !== itemType.FERTILIZER) {
     return state
   }
 
