@@ -86,6 +86,9 @@ const { CLEANUP, HARVEST, OBSERVE, WATER } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
 
+// Utility object for reuse in no-ops to save on memory
+const emptyObject = Object.freeze({})
+
 /*!
  * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
  * @param {Object.<number>} valueAdjustments
@@ -1070,8 +1073,18 @@ export default class Farmhand extends Component {
       viewTitle,
     }
 
+    const blockInput =
+      this.state.isAwaitingNetworkRequest ||
+      this.state.isWaitingForDayToCompleteIncrementing
+
     return (
-      <GlobalHotKeys keyMap={keyMap} handlers={keyHandlers}>
+      <GlobalHotKeys
+        {...{
+          allowChanges: true,
+          keyMap: blockInput ? emptyObject : keyMap,
+          handlers: blockInput ? emptyObject : keyHandlers,
+        }}
+      >
         <MuiThemeProvider theme={theme}>
           <SnackbarProvider
             {...{
@@ -1093,9 +1106,7 @@ export default class Farmhand extends Component {
                     {
                       'use-alternate-end-day-button-position': this.state
                         .useAlternateEndDayButtonPosition,
-                      'block-input':
-                        this.state.isAwaitingNetworkRequest ||
-                        this.state.isWaitingForDayToCompleteIncrementing,
+                      'block-input': blockInput,
                       'has-booted': this.state.hasBooted,
                     }
                   ),
