@@ -56,11 +56,15 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 
 ## Running locally
 
-Requires Node/NPM and Docker.
+Requires: 
+  - Node/NPM
+  - Docker
+  - [nvm](https://github.com/nvm-sh/nvm) (or alternatively [asdf](https://asdf-vm.com))
 
-In your shell, run this to install all of the dependencies:
+In your shell, run this to ensure you're using the correct Node version and install all of the dependencies:
 
 ```sh
+nvm i
 npm ci
 ```
 
