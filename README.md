@@ -71,7 +71,7 @@ To run the game locally with the API and Redis database, run:
 npm run dev
 ```
 
-Note that you will need a Vercel account and be logged into locally for this to work (at least until [Vercel fixes this](https://github.com/vercel/vercel/discussions/4925 is resolved)). Alternatively, if you just want to run the front end with no API or backend, you can run:
+Note that you will need a Vercel account and be logged into locally for this to work (at least until [Vercel fixes this](https://github.com/vercel/vercel/discussions/4925)). Alternatively, if you just want to run the front end with no API or backend, you can run:
 
 ```sh
 npm start
