@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import AssessmentIcon from '@material-ui/icons/Assessment'
+import BeenhereIcon from '@material-ui/icons/Beenhere.js'
+import BookIcon from '@material-ui/icons/Book'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -14,14 +17,12 @@ import FlashOnIcon from '@material-ui/icons/FlashOn'
 import FormControl from '@material-ui/core/FormControl'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormGroup from '@material-ui/core/FormGroup'
-import HistoryIcon from '@material-ui/icons/History'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import SettingsIcon from '@material-ui/icons/Settings'
 import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
 import Tooltip from '@material-ui/core/Tooltip'
-import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import { array, bool, func, number, object, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -291,11 +292,11 @@ export const Navigation = ({
     </Select>
     <div className="button-array">
       {[
-        { dialogView: FARMERS_LOG, Icon: HistoryIcon },
+        { dialogView: FARMERS_LOG, Icon: BookIcon },
         { dialogView: PRICE_EVENTS, Icon: FlashOnIcon },
-        { dialogView: STATS, Icon: TrendingUpIcon },
-        { dialogView: ACHIEVEMENTS, Icon: AssignmentTurnedInIcon },
-        { dialogView: ACCOUNTING, Icon: AttachMoneyIcon },
+        { dialogView: STATS, Icon: AssessmentIcon },
+        { dialogView: ACHIEVEMENTS, Icon: BeenhereIcon },
+        { dialogView: ACCOUNTING, Icon: AccountBalanceIcon },
         { dialogView: SETTINGS, Icon: SettingsIcon },
       ].map(({ dialogView, Icon }) => (
         <Tooltip
