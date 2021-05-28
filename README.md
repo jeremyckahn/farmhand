@@ -56,19 +56,32 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 
 ## Running locally
 
-Requires Node/NPM and Docker.
+Requires: 
+  - Node/NPM
+  - Docker
+  - [nvm](https://github.com/nvm-sh/nvm) (or alternatively [asdf](https://asdf-vm.com))
 
-In one shell run:
+In your shell, run this to ensure you're using the correct Node version and install all of the dependencies:
 
 ```sh
+nvm i
 npm ci
 ```
+
+To run the game locally with the API and Redis database, run:
+
 
 ```sh
 npm run dev
 ```
 
-Farmhand will be accessible from http://localhost:3000/.
+Note that you will need a Vercel account and be logged into locally for this to work (at least until [Vercel fixes this](https://github.com/vercel/vercel/discussions/4925)). Alternatively, if you just want to run the front end with no API or backend, you can run:
+
+```sh
+npm start
+```
+
+In this case, the local app will be using the Production API and database. However you boot, Farmhand will be accessible from http://localhost:3000/.
 
 ### CI/CD
 
