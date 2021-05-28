@@ -3,8 +3,7 @@ import classNames from 'classnames'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
-import AssignmentIcon from '@material-ui/icons/Assignment'
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
+import BeenhereIcon from '@material-ui/icons/Beenhere'
 import { bool, object } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -22,7 +21,9 @@ const Achievement = ({
   >
     <CardHeader
       {...{
-        avatar: isComplete ? <AssignmentTurnedInIcon /> : <AssignmentIcon />,
+        avatar: (
+          <BeenhereIcon className={classNames({ completed: isComplete })} />
+        ),
         title: name,
         subheader: <p>Reward: {rewardDescription}</p>,
       }}
