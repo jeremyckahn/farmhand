@@ -1,5 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
+
+import AssignmentLateIcon from '@material-ui/icons/AssignmentLate'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
@@ -21,9 +23,7 @@ const Achievement = ({
   >
     <CardHeader
       {...{
-        avatar: (
-          <BeenhereIcon className={classNames({ completed: isComplete })} />
-        ),
+        avatar: isComplete ? <BeenhereIcon /> : <AssignmentLateIcon />,
         title: name,
         subheader: <p>Reward: {rewardDescription}</p>,
       }}
