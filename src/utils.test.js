@@ -24,12 +24,14 @@ import {
   getPlotImage,
   getPriceEventForCrop,
   getRangeCoords,
+  getSalePriceMultiplier,
   integerString,
   isItemAFarmProduct,
   levelAchieved,
   maxYieldOfRecipe,
   moneyString,
   moneyTotal,
+  percentageString,
 } from './utils'
 import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
@@ -55,6 +57,7 @@ import {
   COW_STARTING_WEIGHT_VARIANCE,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
+  I_AM_RICH_BONUSES,
   MALE_COW_WEIGHT_MULTIPLIER,
 } from './constants'
 
@@ -908,4 +911,57 @@ describe('computeMarketPositions', () => {
       'sample-item-6': -1,
     })
   })
+})
+
+const percentageStringTests = [
+  [0.5, '50%'],
+  [0.05, '5%'],
+  [1, '100%'],
+  [10, '1000%'],
+  [-0.3, '-30%'],
+]
+
+describe.each(percentageStringTests)(
+  'percentageString',
+  (percent, expectedString) => {
+    test(`it converts ${percent} to a ${expectedString}`, () => {
+      expect(percentageString(percent)).toEqual(expectedString)
+    })
+  }
+)
+
+describe('getSalePriceMultiplier', () => {
+  test('it returns 1 when there are no completedAchievements', () => {
+    expect(getSalePriceMultiplier({})).toEqual(1)
+  })
+
+  test('it returns 1 when there are no relevant completedAchievements', () => {
+    const completedAchievements = {
+      irrelevant: true,
+      'also-irrelevant': true,
+    }
+
+    expect(getSalePriceMultiplier(completedAchievements)).toEqual(1)
+  })
+
+  const iAmRichAchievements = [
+    ['i-am-rich-1', 1 + I_AM_RICH_BONUSES[0]],
+    ['i-am-rich-2', 1 + I_AM_RICH_BONUSES[1]],
+    ['i-am-rich-3', 1 + I_AM_RICH_BONUSES[2]],
+  ]
+
+  describe.each(iAmRichAchievements)(
+    'with I am Rich achievements completed',
+    (achievementId, expectedMultiplier) => {
+      test(`${achievementId} returns ${expectedMultiplier}`, () => {
+        const completedAchievements = {
+          [achievementId]: true,
+        }
+
+        expect(getSalePriceMultiplier(completedAchievements)).toEqual(
+          expectedMultiplier
+        )
+      })
+    }
+  )
 })
