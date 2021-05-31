@@ -7,9 +7,10 @@ import {
   integerString,
   memoize,
   moneyTotal,
+  percentageString,
 } from '../utils'
 import { cropLifeStage, standardCowColors } from '../enums'
-import { COW_FEED_ITEM_ID } from '../constants'
+import { COW_FEED_ITEM_ID, I_AM_RICH_BONUSES } from '../constants'
 import { addItemToInventory } from '../reducers'
 
 import { itemsMap } from './maps'
@@ -240,6 +241,39 @@ const achievements = [
       ...state,
       inventoryLimit: state.inventoryLimit + reward,
     }),
+  }))(),
+
+  ((goal = 500000) => ({
+    id: 'i-am-rich-1',
+    name: 'I am Rich!',
+    description: `Earn ${dollarString(goal)}.`,
+    rewardDescription: `All sales receive a ${percentageString(
+      I_AM_RICH_BONUSES[0]
+    )} bonus`,
+    condition: state => state.revenue >= goal,
+    reward: state => state,
+  }))(),
+
+  ((goal = 1000000) => ({
+    id: 'i-am-rich-2',
+    name: 'Millionaire',
+    description: `Earn ${dollarString(goal)}.`,
+    rewardDescription: `All sales receive a ${percentageString(
+      I_AM_RICH_BONUSES[1]
+    )} bonus`,
+    condition: state => state.revenue >= goal,
+    reward: state => state,
+  }))(),
+
+  ((goal = 1000000000) => ({
+    id: 'i-am-rich-3',
+    name: 'Billionaire',
+    description: `Earn ${dollarString(goal)}.`,
+    rewardDescription: `All sales receive a ${percentageString(
+      I_AM_RICH_BONUSES[2]
+    )} bonus`,
+    condition: state => state.revenue >= goal,
+    reward: state => state,
   }))(),
 ]
 
