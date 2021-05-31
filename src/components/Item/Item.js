@@ -21,6 +21,7 @@ import {
   getFinalCropItemFromSeedItem,
   getItemCurrentValue,
   getResaleValue,
+  getSalePriceMultiplier,
   moneyString,
   integerString,
 } from '../../utils'
@@ -145,6 +146,9 @@ export const Item = ({
 
   const avatar = <img {...{ src: items[id] }} alt={name} />
 
+  const sellPrice =
+    adjustedValue * getSalePriceMultiplier(completedAchievements)
+
   return (
     <Card
       {...{
@@ -221,7 +225,7 @@ export const Item = ({
                     <span>
                       Sell price:{' '}
                       <AnimatedNumber
-                        {...{ number: adjustedValue, formatter: moneyString }}
+                        {...{ number: sellPrice, formatter: moneyString }}
                       />
                     </span>
                   </Tooltip>

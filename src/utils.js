@@ -48,6 +48,7 @@ import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   HUGGING_MACHINE_ITEM_ID,
+  I_AM_RICH_BONUSES,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   INITIAL_SPRINKLER_RANGE,
@@ -191,6 +192,12 @@ export const dollarString = number => formatNumber(number, '$0,0')
  * @returns {string} Number string with commas.
  */
 export const integerString = number => formatNumber(number, '0,0')
+
+/**
+ * @param {number} number A float
+ * @returns {string} the float converted to a full number with a % added
+ */
+export const percentageString = number => `${Math.round(number * 100)}%`
 
 /**
  * @param {string} itemId
@@ -989,3 +996,21 @@ export const getCostOfNextStorageExpansion = currentInventoryLimit => {
  * @returns {Promise}
  */
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+/**
+ * @param {object} completedAchievements from game state
+ * @returns {number} multiplier to be used for sales price adjustments based on completedAchievements
+ */
+export const getSalePriceMultiplier = (completedAchievements = {}) => {
+  let salePriceMultiplier = 1
+
+  if (completedAchievements['i-am-rich-3']) {
+    salePriceMultiplier += I_AM_RICH_BONUSES[2]
+  } else if (completedAchievements['i-am-rich-2']) {
+    salePriceMultiplier += I_AM_RICH_BONUSES[1]
+  } else if (completedAchievements['i-am-rich-1']) {
+    salePriceMultiplier += I_AM_RICH_BONUSES[0]
+  }
+
+  return salePriceMultiplier
+}

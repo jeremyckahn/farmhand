@@ -41,6 +41,7 @@ import {
   getRandomUnlockedCrop,
   getRangeCoords,
   getResaleValue,
+  getSalePriceMultiplier,
   getSeedItemIdFromFinalStageCropItemId,
   inventorySpaceRemaining,
   isItemAFarmProduct,
@@ -1120,7 +1121,12 @@ export const sellItem = (state, { id }, howMany = 1) => {
   }
 
   const item = itemsMap[id]
-  const { itemsSold, money: initialMoney, valueAdjustments } = state
+  const {
+    completedAchievements,
+    itemsSold,
+    money: initialMoney,
+    valueAdjustments,
+  } = state
   const oldLevel = levelAchieved(farmProductsSold(itemsSold))
   let { loanBalance } = state
 
@@ -1129,7 +1135,6 @@ export const sellItem = (state, { id }, howMany = 1) => {
     : getAdjustedItemValue(valueAdjustments, id)
   const saleIsGarnished = isItemAFarmProduct(item)
   let saleValue = 0
-
   for (let i = 0; i < howMany; i++) {
     const loanGarnishment = saleIsGarnished
       ? Math.min(
@@ -1137,7 +1142,9 @@ export const sellItem = (state, { id }, howMany = 1) => {
           castToMoney(adjustedItemValue * LOAN_GARNISHMENT_RATE)
         )
       : 0
-    const garnishedProfit = adjustedItemValue - loanGarnishment
+    const garnishedProfit =
+      adjustedItemValue * getSalePriceMultiplier(completedAchievements) -
+      loanGarnishment
     loanBalance = moneyTotal(loanBalance, -loanGarnishment)
     saleValue = moneyTotal(saleValue, garnishedProfit)
   }
