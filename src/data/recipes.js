@@ -160,3 +160,21 @@ export const burger = itemify({
     state.itemsSold[items.spinach.id] >= 5 &&
     state.itemsSold[items.tomato.id] >= 5,
 })
+
+/**
+ * @property farmhand.module:recipes.summerSalad
+ * @type {farmhand.recipe}
+ */
+export const summerSalad = itemify({
+  id: 'summer-salad',
+  name: 'Summer Salad',
+  ingredients: {
+    [items.spinach.id]: 6,
+    [items.corn.id]: 1,
+    [items.carrot.id]: 1,
+  },
+  condition: state =>
+    state.itemsSold[items.spinach.id] >= 30 &&
+    state.itemsSold[items.corn.id] > 5 &&
+    state.itemsSold[items.carrot.id] > 5,
+})
