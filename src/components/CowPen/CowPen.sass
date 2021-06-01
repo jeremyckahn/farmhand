@@ -58,13 +58,19 @@
           animation-iteration-count: 1
 
   .is-moving
-
     img
       animation-name: is-moving-keyframes
       animation-duration: 500ms
       animation-fill-mode: forwards
       animation-timing-function: linear
       animation-iteration-count: infinite
+
+  .faceLeft
+    transform: scaleX(-1)
+
+  .faceRight
+    transform: scaleX(1)
+
 
   .happiness-boosts-today
     bottom: -12px

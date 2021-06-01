@@ -173,3 +173,6 @@ export const DEFAULT_ROOM = 'global'
 
 export const MAX_PENDING_PEER_MESSAGES = 5
 export const MAX_LATEST_PEER_MESSAGES = 30
+
+export const LEFT = 'left'
+export const RIGHT = 'right'

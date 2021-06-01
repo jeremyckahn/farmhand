@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 import { cowColors } from '../../enums'
+import { LEFT, RIGHT } from '../../constants'
 import FarmhandContext from '../../Farmhand.context'
 import { animals } from '../../img'
 
@@ -14,6 +15,7 @@ import './CowPen.sass'
 export class Cow extends Component {
   state = {
     isMoving: false,
+    moveDirection: RIGHT,
     showHugAnimation: false,
     x: Cow.randomPosition(),
     y: Cow.randomPosition(),
@@ -68,6 +70,8 @@ export class Cow extends Component {
   }
 
   move = () => {
+    const newX = Cow.randomPosition()
+
     this.animateMovementTimeoutId = setTimeout(
       this.animateTimeoutHandler,
       Cow.movementAnimationDuration
@@ -75,7 +79,8 @@ export class Cow extends Component {
 
     this.setState({
       isMoving: true,
-      x: Cow.randomPosition(),
+      moveDirection: newX < this.state.x ? LEFT : RIGHT,
+      x: newX,
       y: Cow.randomPosition(),
     })
   }
@@ -125,11 +130,13 @@ export class Cow extends Component {
           className: classNames('cow', {
             'is-moving': isMoving,
             'is-selected': isSelected,
+            faceLeft: this.state.moveDirection === LEFT,
+            faceRight: this.state.moveDirection === RIGHT,
           }),
           onClick: () => handleCowClick(cow),
           style: {
-            left: `${y}%`,
-            top: `${x}%`,
+            left: `${x}%`,
+            top: `${y}%`,
           },
         }}
       >
