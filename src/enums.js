@@ -15,6 +15,7 @@ export const enumify = keys =>
  * @enum {string}
  */
 export const cropType = enumify([
+  'ASPARAGUS',
   'CARROT',
   'CORN',
   'ONION',
@@ -80,11 +81,7 @@ export const itemType = enumify([
  * @property farmhand.module:enums.fertilizerType
  * @enum {string}
  */
-export const fertilizerType = enumify([
-  'NONE',
-  'STANDARD',
-  'RAINBOW',
-])
+export const fertilizerType = enumify(['NONE', 'STANDARD', 'RAINBOW'])
 
 /**
  * @property farmhand.module:enums.genders

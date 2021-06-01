@@ -1,5 +1,6 @@
 import {
   // Plantable crops
+  asparagusSeed,
   carrotSeed,
   spinachSeed,
   pumpkinSeed,
@@ -18,6 +19,7 @@ import {
 
 export default [
   // Plantable crops
+  asparagusSeed,
   carrotSeed,
   spinachSeed,
   pumpkinSeed,
