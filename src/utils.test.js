@@ -781,7 +781,7 @@ describe('getLevelEntitlements', () => {
   })
 })
 
-describe('getAvailbleShopInventory', () => {
+describe('getAvailableShopInventory', () => {
   test('computes shop inventory that has been unlocked', () => {
     jest.resetModules()
     jest.mock('./data/shop-inventory', () => [
@@ -797,10 +797,10 @@ describe('getAvailbleShopInventory', () => {
       },
     }))
 
-    const { getAvailbleShopInventory } = jest.requireActual('./utils')
+    const { getAvailableShopInventory } = jest.requireActual('./utils')
 
     expect(
-      getAvailbleShopInventory({ items: { 'sample-item-1': true } })
+      getAvailableShopInventory({ items: { 'sample-item-1': true } })
     ).toEqual([{ id: 'sample-item-1' }])
   })
 })
