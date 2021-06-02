@@ -39,7 +39,7 @@ import {
   createNewField,
   doesMenuObstructStage,
   farmProductsSold,
-  getAvailbleShopInventory,
+  getAvailableShopInventory,
   getItemCurrentValue,
   getLevelEntitlements,
   inventorySpaceRemaining,
@@ -310,7 +310,7 @@ export default class Farmhand extends Component {
   }
 
   get shopInventory() {
-    return getAvailbleShopInventory(this.levelEntitlements)
+    return getAvailableShopInventory(this.levelEntitlements)
   }
 
   get peerMetadata() {
