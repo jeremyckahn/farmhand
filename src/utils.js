@@ -789,7 +789,7 @@ export const getLevelEntitlements = memoize(levelNumber => {
  * @param {Object} levelEntitlements
  * @returns {Array.<{ item: farmhand.item }>}
  */
-export const getAvailbleShopInventory = memoize(levelEntitlements =>
+export const getAvailableShopInventory = memoize(levelEntitlements =>
   shopInventory.filter(
     ({ id }) =>
       !(

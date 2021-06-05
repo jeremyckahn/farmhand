@@ -10,6 +10,7 @@ import chocolate from './dishes/chocolate.png'
 import frenchOnionSoup from './dishes/french-onion-soup.png'
 import jackolantern from './items/jackolantern.png'
 import rainbowCheese from './dishes/rainbow-cheese.png'
+import summerSalad from './dishes/summer-salad.png'
 import spaghetti from './dishes/spaghetti.png'
 
 import carrot from './items/carrot.png'
@@ -84,6 +85,7 @@ export const craftedItems = {
   jackolantern,
   rainbowCheese,
   spaghetti,
+  'summer-salad': summerSalad,
 }
 
 export const items = {
