@@ -71,7 +71,7 @@ const shopInventoryMap = shopInventory.reduce((acc, item) => {
 }, {})
 
 export const chooseRandom = list =>
-  list[Math.floor(Math.random() * list.length)]
+  list[Math.floor(Math.random() * (list.length - 1))]
 
 // Ensures that the condition argument to memoize() is not ignored, per
 // https://github.com/caiogondim/fast-memoize.js#function-arguments
