@@ -13,6 +13,9 @@ import rainbowCheese from './dishes/rainbow-cheese.png'
 import summerSalad from './dishes/summer-salad.png'
 import spaghetti from './dishes/spaghetti.png'
 
+import asparagus from './items/asparagus.png'
+import asparagusGrowing from './items/asparagus-growing.png'
+import asparagusSeed from './items/asparagus-seed.png'
 import carrot from './items/carrot.png'
 import carrotGrowing from './items/carrot-growing.png'
 import carrotSeed from './items/carrot-seed.png'
@@ -90,6 +93,9 @@ export const craftedItems = {
 
 export const items = {
   // Crops
+  asparagus,
+  'asparagus-growing': asparagusGrowing,
+  'asparagus-seed': asparagusSeed,
   carrot,
   'carrot-growing': carrotGrowing,
   'carrot-seed': carrotSeed,

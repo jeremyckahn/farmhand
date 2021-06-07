@@ -11,6 +11,7 @@ import {
 
 const { freeze } = Object
 const {
+  ASPARAGUS,
   CARROT,
   CORN,
   ONION,
@@ -97,6 +98,31 @@ export const carrotSeed = crop({
 export const carrot = crop({
   ...fromSeed(carrotSeed),
   name: 'Carrot',
+})
+
+/**
+ * @property farmhand.module:items.asparagusSeed
+ * @type {farmhand.item}
+ */
+export const asparagusSeed = crop({
+  cropType: ASPARAGUS,
+  cropTimetable: {
+    [SEED]: 4,
+    [GROWING]: 5,
+  },
+  growsInto: 'asparagus',
+  id: 'asparagus-seed',
+  name: 'Asparagus Seed',
+  tier: 4,
+})
+
+/**
+ * @property farmhand.module:items.asparagus
+ * @type {farmhand.item}
+ */
+export const asparagus = crop({
+  ...fromSeed(asparagusSeed),
+  name: 'Asparagus',
 })
 
 /**
@@ -323,7 +349,8 @@ export const fertilizer = freeze({
  * @type {farmhand.item}
  */
 export const rainbowFertilizer = freeze({
-  description: 'Helps crops grow a little faster and automatically replants them upon harvesting. Consumes seeds upon replanting and disappears if none are available. Also works for Scarecrows.',
+  description:
+    'Helps crops grow a little faster and automatically replants them upon harvesting. Consumes seeds upon replanting and disappears if none are available. Also works for Scarecrows.',
   enablesFieldMode: fieldMode.FERTILIZE,
   id: 'rainbow-fertilizer',
   name: 'Rainbow Fertilizer',
