@@ -4,6 +4,7 @@ import { cropType } from '../enums'
 import baseItemsMap from './items-map'
 
 const {
+  ASPARAGUS,
   CARROT,
   CORN,
   ONION,
@@ -27,6 +28,7 @@ export const itemsMap = {
 }
 
 export const cropIdToTypeMap = {
+  [ASPARAGUS]: 'asparagus',
   [CARROT]: 'carrot',
   [CORN]: 'corn',
   [ONION]: 'onion',
