@@ -4,6 +4,7 @@ import rainbowFertilizedPlot from './plot-states/rainbow-fertilized-plot.png'
 
 import bread from './dishes/bread.png'
 import burger from './dishes/burger.png'
+import butter from './dishes/butter.png'
 import carrotSoup from './dishes/carrot-soup.png'
 import cheese from './dishes/cheese.png'
 import chocolate from './dishes/chocolate.png'
@@ -81,6 +82,7 @@ export const craftedItems = {
   chocolate,
   bread,
   burger,
+  butter,
   'french-onion-soup': frenchOnionSoup,
   jackolantern,
   rainbowCheese,
