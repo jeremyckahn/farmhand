@@ -1,6 +1,6 @@
 {
   "name": "@jeremyckahn/farmhand",
-  "version": "1.10.8",
+  "version": "1.10.9",
   "publishConfig": {
     "access": "public"
   },
