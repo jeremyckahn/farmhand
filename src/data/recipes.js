@@ -42,6 +42,19 @@ export const bread = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.butter
+ * @type {farmhand.recipe}
+ */
+export const butter = itemify({
+  id: 'butter',
+  name: 'Butter',
+  ingredients: {
+    [items.milk3.id]: 5,
+  },
+  condition: state => state.itemsSold[items.milk3.id] >= 30,
+})
+
+/**
  * @property farmhand.module:recipes.cheese
  * @type {farmhand.recipe}
  */
