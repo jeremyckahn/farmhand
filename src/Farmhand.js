@@ -303,6 +303,43 @@ export default class Farmhand extends Component {
     return viewList
   }
 
+  get viewListMap() {
+    const { COW_PEN, FIELD, HOME, WORKSHOP, SHOP } = stageFocusType
+
+    return {
+      [HOME]: {
+        view: HOME,
+        order: 1,
+        enabled: true,
+        icon: '🏠',
+      },
+      [SHOP]: {
+        view: SHOP,
+        order: 2,
+        enabled: true,
+        icon: '🛒',
+      },
+      [FIELD]: {
+        view: FIELD,
+        order: 3,
+        enabled: true,
+        icon: '🥕',
+      },
+      [COW_PEN]: {
+        view: COW_PEN,
+        order: 4,
+        enabled: this.state.purchasedCowPen,
+        icon: '🐮',
+      },
+      [WORKSHOP]: {
+        view: WORKSHOP,
+        order: 5,
+        enabled: true,
+        icon: '⚒',
+      },
+    }
+  }
+
   get levelEntitlements() {
     return getLevelEntitlements(
       levelAchieved(farmProductsSold(this.state.itemsSold))
@@ -1030,6 +1067,16 @@ export default class Farmhand extends Component {
     })
   }
 
+  focusView(viewToFocus) {
+    const { viewListMap } = this
+
+    if (!viewListMap[viewToFocus] || !viewListMap[viewToFocus].enabled) return
+
+    this.setState(({ stageFocus }) => {
+      return { stageFocus: viewListMap[viewToFocus].view }
+    })
+  }
+
   /*!
    * @param {ServiceWorkerRegistration} registration
    */
@@ -1144,15 +1191,7 @@ export default class Farmhand extends Component {
                   />
                   <div className="fab-buttons buttons">
                     <Fab
-                      {...{
-                        'aria-label': 'Previous view',
-                        color: 'primary',
-                        onClick: () => this.focusPreviousView(),
-                      }}
-                    >
-                      <KeyboardArrowLeft />
-                    </Fab>
-                    <Fab
+                      key={'hamburger'}
                       {...{
                         className: classNames('menu-button', {
                           'is-open': this.state.isMenuOpen,
@@ -1164,15 +1203,22 @@ export default class Farmhand extends Component {
                     >
                       <MenuIcon />
                     </Fab>
-                    <Fab
-                      {...{
-                        'aria-label': 'Next view',
-                        color: 'primary',
-                        onClick: () => this.focusNextView(),
-                      }}
-                    >
-                      <KeyboardArrowRight />
-                    </Fab>
+                    {Object.keys(this.viewListMap).map(key => {
+                      const view = this.viewListMap[key]
+
+                      return (
+                        <Fab
+                          key={view.view}
+                          {...{
+                            'aria-label': `Navigate to ${view.view}`,
+                            color: 'primary',
+                            onClick: () => this.focusView(view.view),
+                          }}
+                        >
+                          {view.icon}
+                        </Fab>
+                      )
+                    })}
                   </div>
                 </div>
                 <Tooltip
