@@ -11,8 +11,11 @@ import chocolate from './dishes/chocolate.png'
 import frenchOnionSoup from './dishes/french-onion-soup.png'
 import jackolantern from './items/jackolantern.png'
 import rainbowCheese from './dishes/rainbow-cheese.png'
+import soyMilk from './dishes/soy-milk.png'
+import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
 import summerSalad from './dishes/summer-salad.png'
 import spaghetti from './dishes/spaghetti.png'
+import tofu from './dishes/tofu.png'
 
 import asparagus from './items/asparagus.png'
 import asparagusGrowing from './items/asparagus-growing.png'
@@ -83,14 +86,17 @@ export const craftedItems = {
   'carrot-soup': carrotSoup,
   cheese,
   chocolate,
+  'chocolate-soy-milk': chocolateSoyMilk,
   bread,
   burger,
   butter,
   'french-onion-soup': frenchOnionSoup,
   jackolantern,
   rainbowCheese,
+  'soy-milk': soyMilk,
   spaghetti,
   'summer-salad': summerSalad,
+  tofu,
 }
 
 export const items = {
