@@ -191,3 +191,45 @@ export const summerSalad = itemify({
     state.itemsSold[items.corn.id] > 5 &&
     state.itemsSold[items.carrot.id] > 5,
 })
+
+/**
+ * @property farmhand.module:recipes.soyMilk
+ * @type {farmhand.recipe}
+ */
+export const soyMilk = itemify({
+  id: 'soy-milk',
+  name: 'Soy Milk',
+  ingredients: {
+    [items.soybean.id]: 20,
+  },
+  condition: state => state.itemsSold[items.soybean.id] >= 100,
+})
+
+/**
+ * @property farmhand.module:recipes.chocolateSoyMilk
+ * @type {farmhand.recipe}
+ */
+export const chocolateSoyMilk = itemify({
+  id: 'chocolate-soy-milk',
+  name: 'Chocolate Soy Milk',
+  ingredients: {
+    [items.soyMilk.id]: 1,
+    [items.chocolate.id]: 1,
+  },
+  condition: state =>
+    state.itemsSold[items.soyMilk.id] >= 5 &&
+    state.itemsSold[items.chocolate.id] >= 5,
+})
+
+/**
+ * @property farmhand.module:recipes.tofu
+ * @type {farmhand.recipe}
+ */
+export const tofu = itemify({
+  id: 'tofu',
+  name: 'Tofu',
+  ingredients: {
+    [items.soyMilk.id]: 4,
+  },
+  condition: state => state.itemsSold[items.soyMilk.id] >= 20,
+})

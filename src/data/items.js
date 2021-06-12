@@ -24,12 +24,14 @@ const {
 } = cropType
 const { SEED, GROWING } = cropLifeStage
 const {
+  CHOCOLATE,
   COW_FEED,
   CROP,
   FERTILIZER,
   HUGGING_MACHINE,
   MILK,
   SCARECROW,
+  SOY_MILK,
   SPRINKLER,
 } = itemType
 
@@ -504,4 +506,26 @@ export const chocolateMilk = freeze({
   name: 'Chocolate Milk',
   type: MILK,
   value: 80,
+})
+
+/**
+ * @property farmhand.module:items.chocolate
+ * @type {farmhand.item}
+ */
+export const chocolate = freeze({
+  id: 'chocolate',
+  name: 'Chocolate',
+  type: CHOCOLATE,
+  value: 500, // what's a good value?
+})
+
+/**
+ * @property farmhand.module:items.soyMilk
+ * @type {farmhand.item}
+ */
+export const soyMilk = freeze({
+  id: 'soy-milk',
+  name: 'Soy Milk',
+  type: SOY_MILK,
+  value: 100, // what's a good value?
 })
