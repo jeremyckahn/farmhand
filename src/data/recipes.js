@@ -213,12 +213,11 @@ export const chocolateSoyMilk = itemify({
   id: 'chocolate-soy-milk',
   name: 'Chocolate Soy Milk',
   ingredients: {
-    [items.soyMilk.id]: 1,
-    [items.chocolate.id]: 1,
+    [soyMilk.id]: 1,
+    [chocolate.id]: 1,
   },
   condition: state =>
-    state.itemsSold[items.soyMilk.id] >= 5 &&
-    state.itemsSold[items.chocolate.id] >= 5,
+    state.itemsSold[soyMilk.id] >= 5 && state.itemsSold[chocolate.id] >= 5,
 })
 
 /**
@@ -229,7 +228,7 @@ export const tofu = itemify({
   id: 'tofu',
   name: 'Tofu',
   ingredients: {
-    [items.soyMilk.id]: 4,
+    [soyMilk.id]: 4,
   },
-  condition: state => state.itemsSold[items.soyMilk.id] >= 20,
+  condition: state => state.itemsSold[soyMilk.id] >= 20,
 })

@@ -67,7 +67,6 @@ export const cropLifeStage = enumify(['SEED', 'GROWING', 'GROWN'])
  * @enum {string}
  */
 export const itemType = enumify([
-  'CHOCOLATE',
   'COW_FEED',
   'CRAFTED_ITEM',
   'CROP',
@@ -75,7 +74,6 @@ export const itemType = enumify([
   'HUGGING_MACHINE',
   'MILK',
   'SCARECROW',
-  'SOY_MILK',
   'SPRINKLER',
 ])
 
