@@ -60,7 +60,7 @@ const Home = ({
             linkTarget: '_blank',
             className: 'markdown',
             source: `
-Hi! You're playing **Farmhand**, an open source game being developed by [Jeremy Kahn](https://github.com/jeremyckahn).
+Hi! You're playing **Farmhand**, an open source game being developed by [Jeremy Kahn](https://github.com/jeremyckahn) and [a community of contributors](https://github.com/jeremyckahn/farmhand/blob/develop/CONTRIBUTORS.md).
 
 [![Source code](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/jeremyckahn/farmhand) [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand+discord)](https://discord.gg/6cHEZ9H) [![@farmhandgame](https://badgen.net/twitter/follow/farmhandgame)](https://twitter.com/farmhandgame) [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
 
