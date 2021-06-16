@@ -343,7 +343,7 @@ export const jalapenoSeed = crop({
 })
 
 /**
- * @property farmhand.module:items.carrot
+ * @property farmhand.module:items.jalapeno
  * @type {farmhand.item}
  */
 export const jalapeno = crop({
