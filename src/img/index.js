@@ -23,6 +23,9 @@ import asparagusSeed from './items/asparagus-seed.png'
 import carrot from './items/carrot.png'
 import carrotGrowing from './items/carrot-growing.png'
 import carrotSeed from './items/carrot-seed.png'
+import jalapeno from './items/jalapeno.png'
+import jalapenoGrowing from './items/jalapeno-growing.png'
+import jalapenoSeed from './items/jalapeno-seed.png'
 import pumpkin from './items/pumpkin.png'
 import pumpkinGrowing from './items/pumpkin-growing.png'
 import pumpkinSeed from './items/pumpkin-seed.png'
@@ -107,6 +110,9 @@ export const items = {
   carrot,
   'carrot-growing': carrotGrowing,
   'carrot-seed': carrotSeed,
+  jalapeno,
+  'jalapeno-growing': jalapenoGrowing,
+  'jalapeno-seed': jalapenoSeed,
   pumpkin,
   'pumpkin-growing': pumpkinGrowing,
   'pumpkin-seed': pumpkinSeed,
