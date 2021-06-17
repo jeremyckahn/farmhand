@@ -41,6 +41,10 @@ const QuantityTextInput = ({
         max: maxQuantity,
       },
       onChange: handleUpdateNumber,
+      onFocus: () => {
+        // clear the input when input is first selected so we don't have to fight with clearing out default values
+        handleUpdateNumber(undefined)
+      },
       // Bind to keyup to prevent spamming the event handler.
       onKeyUp: ({ which }) => {
         // Enter
@@ -101,7 +105,11 @@ QuantityInput.propTypes = {
   handleUpdateNumber: func.isRequired,
   maxQuantity: number.isRequired,
   setQuantity: func.isRequired,
-  value: number.isRequired,
+  value: number,
+}
+
+QuantityInput.defaultProps = {
+  value: 1,
 }
 
 export default QuantityInput

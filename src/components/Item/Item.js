@@ -291,7 +291,8 @@ export const Item = ({
                 color: 'primary',
                 disabled:
                   purchaseQuantity === 0 ||
-                  adjustedValue * purchaseQuantity > money,
+                  adjustedValue * purchaseQuantity > money ||
+                  !purchaseQuantity,
                 onClick: handleItemPurchase,
                 variant: 'contained',
               }}
@@ -315,7 +316,7 @@ export const Item = ({
               {...{
                 className: 'sell',
                 color: 'secondary',
-                disabled: sellQuantity === 0,
+                disabled: sellQuantity === 0 || !sellQuantity,
                 onClick: handleItemSell,
                 variant: 'contained',
               }}
