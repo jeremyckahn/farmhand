@@ -42,7 +42,7 @@ const QuantityTextInput = ({
       },
       onChange: handleUpdateNumber,
       onFocus: () => {
-        // clear the input when input is first selected so we don't have to fight with clearing out default values
+        // clear the input when input is first selected so the user doesn't have to fight with clearing out default values
         handleUpdateNumber(undefined)
       },
       // Bind to keyup to prevent spamming the event handler.
