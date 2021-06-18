@@ -23,7 +23,6 @@ export class Cow extends Component {
   }
 
   repositionTimeoutId = null
-  animateMovementTimeoutId = null
   animateHugTimeoutId = null
   tweenable = new Tweenable()
   rotate = 0
@@ -67,16 +66,15 @@ export class Cow extends Component {
     }
   }
 
-  animateTimeoutHandler = () => {
-    this.animateMovementTimeoutId = null
-    this.finishMoving()
-  }
-
   move = async () => {
     const newX = Cow.randomPosition()
 
     const { moveDirection: oldDirection } = this.state
     const newDirection = newX < this.state.x ? LEFT : RIGHT
+
+    this.setState({
+      moveDirection: newDirection,
+    })
 
     if (oldDirection !== newDirection) {
       const render = ({ rotate }) => {
@@ -115,17 +113,23 @@ export class Cow extends Component {
       } catch (e) {}
     }
 
-    this.animateMovementTimeoutId = setTimeout(
-      this.animateTimeoutHandler,
-      Cow.movementAnimationDuration
-    )
-
     this.setState({
       isMoving: true,
-      moveDirection: newDirection,
-      x: newX,
-      y: Cow.randomPosition(),
     })
+
+    const { x, y } = this.state
+
+    await this.tweenable.tween({
+      from: { x, y },
+      to: { x: newX, y: Cow.randomPosition() },
+      duration: 3000,
+      render: ({ x, y }) => {
+        this.setState({ x, y })
+      },
+      easing: 'linear',
+    })
+
+    this.finishMoving()
   }
 
   finishMoving = () => {
@@ -175,8 +179,6 @@ export class Cow extends Component {
           className: classNames('cow', {
             'is-moving': isMoving,
             'is-selected': isSelected,
-            faceLeft: this.state.moveDirection === LEFT,
-            faceRight: this.state.moveDirection === RIGHT,
           }),
           onClick: () => handleCowClick(cow),
           style: {

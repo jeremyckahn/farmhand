@@ -6,15 +6,11 @@
   &:hover
     cursor: pointer
 
-  // This MUST be kept in sync with Cow.movementAnimationDuration in CowPen.js.
-  $movement-animation-duration: 3000ms
-
   // This MUST be kept in sync with Cow.hugAnimationDuration in CowPen.js.
   $hug-animation-duration: 750ms
 
   .cow
     position: absolute
-    transition: all $movement-animation-duration linear
     z-index: 20
 
     &::before
