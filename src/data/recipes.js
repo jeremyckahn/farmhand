@@ -232,3 +232,52 @@ export const tofu = itemify({
   },
   condition: state => state.itemsSold[soyMilk.id] >= 20,
 })
+
+/**
+ * @property farmhand.module:recipes.hotSauce
+ * @type {farmhand.recipe}
+ */
+export const hotSauce = itemify({
+  id: 'hot-sauce',
+  name: 'Hot Sauce',
+  ingredients: {
+    [items.jalapeno.id]: 10,
+  },
+  condition: state => state.itemsSold[items.jalapeno.id] >= 50,
+})
+
+/**
+ * @property farmhand.module:recipes.salsa
+ * @type {farmhand.recipe}
+ */
+export const salsa = itemify({
+  id: 'salsa',
+  name: 'Salsa',
+  ingredients: {
+    [items.jalapeno.id]: 1,
+    [items.onion.id]: 1,
+    [items.tomato.id]: 1,
+    [items.corn.id]: 1,
+  },
+  condition: state =>
+    state.itemsSold[items.jalapeno.id] >= 5 &&
+    state.itemsSold[items.onion.id] >= 5 &&
+    state.itemsSold[items.tomato.id] >= 5 &&
+    state.itemsSold[items.corn.id] >= 5,
+})
+
+/**
+ * @property farmhand.module:recipes.spicyCheese
+ * @type {farmhand.recipe}
+ */
+export const spicyCheese = itemify({
+  id: 'spicy-cheese',
+  name: 'Spicy Cheese',
+  ingredients: {
+    [items.jalapeno.id]: 4,
+    [cheese.id]: 1,
+  },
+  condition: state =>
+    state.itemsSold[items.jalapeno.id] >= 20 &&
+    state.itemsSold[cheese.id] >= 5 &&
+})
