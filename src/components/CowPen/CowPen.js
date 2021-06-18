@@ -33,7 +33,7 @@ export class Cow extends Component {
   // This MUST be kept in sync with $hug-animation-duration in CowPen.sass.
   static hugAnimationDuration = 750
 
-  // Only moves the cow withing the middle 80% of the pen
+  // Only moves the cow within the middle 80% of the pen
   static randomPosition = () => 10 + Math.random() * 80
 
   get waitVariance() {
@@ -163,7 +163,6 @@ export class Cow extends Component {
   componentWillUnmount() {
     ;[
       this.repositionTimeoutId,
-      this.animateMovementTimeoutId,
       this.animateHugTimeoutId,
     ].forEach(clearTimeout)
 
