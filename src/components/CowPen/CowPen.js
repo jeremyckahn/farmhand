@@ -27,8 +27,8 @@ export class Cow extends Component {
   animateHugTimeoutId = null
   tweenable = new Tweenable()
 
-  static movementAnimationDuration = 3000
   static flipAnimationDuration = 1000
+  static transitionAnimationDuration = 3000
 
   // This MUST be kept in sync with $hug-animation-duration in CowPen.sass.
   static hugAnimationDuration = 750
@@ -125,7 +125,7 @@ export class Cow extends Component {
       await this.tweenable.tween({
         from: { x, y },
         to: { x: newX, y: Cow.randomPosition() },
-        duration: Cow.movementAnimationDuration,
+        duration: Cow.transitionAnimationDuration,
         render: ({ x, y }) => {
           this.setState({ x, y })
         },
