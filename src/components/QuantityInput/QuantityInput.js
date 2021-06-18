@@ -77,6 +77,7 @@ const QuantityInput = ({
     </span>
     <div className="number-nudger-container">
       <Fab
+        disabled={!value}
         {...{
           'aria-label': 'Increment',
           color: 'primary',
@@ -87,6 +88,7 @@ const QuantityInput = ({
         <KeyboardArrowUp />
       </Fab>
       <Fab
+        disabled={!value}
         {...{
           'aria-label': 'Decrement',
           color: 'primary',
