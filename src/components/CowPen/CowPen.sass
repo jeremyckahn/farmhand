@@ -3,15 +3,15 @@
 .CowPen
   overflow: hidden
 
-  &:hover
-    cursor: pointer
-
   // This MUST be kept in sync with Cow.hugAnimationDuration in CowPen.js.
   $hug-animation-duration: 750ms
 
   .cow
     position: absolute
     z-index: 20
+
+    &:hover
+      cursor: pointer
 
     &::before
       background: rgba(128, 128, 128, 0.5)
@@ -25,6 +25,9 @@
       z-index: -20
 
     &.is-selected
+      // Render the selected cow on top of all others
+      z-index: 40
+
       &::before
         background: rgba(128, 128, 128, 1)
         // This is slightly off center to account for the balance of the cow
@@ -53,9 +56,9 @@
           animation-timing-function: ease-out
           animation-iteration-count: 1
 
-  .is-moving
+  .is-transitioning
     img
-      animation-name: is-moving-keyframes
+      animation-name: is-transitioning-keyframes
       animation-duration: 500ms
       animation-fill-mode: forwards
       animation-timing-function: linear
@@ -70,7 +73,7 @@
     width: 80%
     z-index: -1
 
-  @keyframes is-moving-keyframes
+  @keyframes is-transitioning-keyframes
     0%,
     100%
       transform: translate(0px, 0px)

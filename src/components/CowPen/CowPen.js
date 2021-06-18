@@ -15,8 +15,9 @@ import './CowPen.sass'
 
 export class Cow extends Component {
   state = {
-    isMoving: false,
+    isTransitioning: false,
     moveDirection: RIGHT,
+    rotate: 0,
     showHugAnimation: false,
     x: Cow.randomPosition(),
     y: Cow.randomPosition(),
@@ -25,14 +26,14 @@ export class Cow extends Component {
   repositionTimeoutId = null
   animateHugTimeoutId = null
   tweenable = new Tweenable()
-  rotate = 0
 
-  // This MUST be kept in sync with $movement-animation-duration in CowPen.sass.
   static movementAnimationDuration = 3000
+  static flipAnimationDuration = 1000
 
   // This MUST be kept in sync with $hug-animation-duration in CowPen.sass.
   static hugAnimationDuration = 750
 
+  // Only moves the cow withing the middle 80% of the pen
   static randomPosition = () => 10 + Math.random() * 80
 
   get waitVariance() {
@@ -69,7 +70,7 @@ export class Cow extends Component {
   move = async () => {
     const newX = Cow.randomPosition()
 
-    const { moveDirection: oldDirection } = this.state
+    const { moveDirection: oldDirection, x, y } = this.state
     const newDirection = newX < this.state.x ? LEFT : RIGHT
 
     this.setState({
@@ -82,7 +83,7 @@ export class Cow extends Component {
       }
 
       try {
-        const duration = 1000
+        const duration = Cow.flipAnimationDuration
         const easing = 'swingTo'
 
         if (newDirection === LEFT) {
@@ -110,31 +111,33 @@ export class Cow extends Component {
             render,
           })
         }
-      } catch (e) {}
+      } catch (e) {
+        // The tween was cancelled by the component unmounting
+        return
+      }
     }
 
     this.setState({
-      isMoving: true,
+      isTransitioning: true,
     })
 
-    const { x, y } = this.state
+    try {
+      await this.tweenable.tween({
+        from: { x, y },
+        to: { x: newX, y: Cow.randomPosition() },
+        duration: Cow.movementAnimationDuration,
+        render: ({ x, y }) => {
+          this.setState({ x, y })
+        },
+        easing: 'linear',
+      })
+    } catch (e) {
+      // The tween was cancelled by the component unmounting
+      return
+    }
 
-    await this.tweenable.tween({
-      from: { x, y },
-      to: { x: newX, y: Cow.randomPosition() },
-      duration: 3000,
-      render: ({ x, y }) => {
-        this.setState({ x, y })
-      },
-      easing: 'linear',
-    })
-
-    this.finishMoving()
-  }
-
-  finishMoving = () => {
+    this.setState({ isTransitioning: false })
     this.scheduleMove()
-    this.setState({ isMoving: false })
   }
 
   repositionTimeoutHandler = () => {
@@ -170,14 +173,14 @@ export class Cow extends Component {
   render() {
     const {
       props: { cow, handleCowClick, isSelected },
-      state: { isMoving, rotate, showHugAnimation, x, y },
+      state: { isTransitioning, rotate, showHugAnimation, x, y },
     } = this
 
     return (
       <div
         {...{
           className: classNames('cow', {
-            'is-moving': isMoving,
+            'is-transitioning': isTransitioning,
             'is-selected': isSelected,
           }),
           onClick: () => handleCowClick(cow),
