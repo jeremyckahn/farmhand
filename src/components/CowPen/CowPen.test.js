@@ -135,15 +135,7 @@ describe('Cow', () => {
     describe('move', () => {
       test('updates state', () => {
         component.instance().move()
-        expect(component.state().isMoving).toEqual(true)
-      })
-    })
-
-    describe('finishMoving', () => {
-      test('updates state', () => {
-        component.setState({ isMoving: true })
-        component.instance().finishMoving()
-        expect(component.state().isMoving).toEqual(false)
+        expect(component.state().isTransitioning).toEqual(true)
       })
     })
   })

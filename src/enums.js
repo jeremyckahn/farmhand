@@ -121,3 +121,4 @@ export const dialogView = enumify([
   'SETTINGS',
   'STATS',
 ])
+
