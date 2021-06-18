@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { array, bool, func, object, string } from 'prop-types'
 import classNames from 'classnames'
+import { Tweenable } from 'shifty'
 import Tooltip from '@material-ui/core/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
@@ -24,6 +25,8 @@ export class Cow extends Component {
   repositionTimeoutId = null
   animateMovementTimeoutId = null
   animateHugTimeoutId = null
+  tweenable = new Tweenable()
+  rotate = 0
 
   // This MUST be kept in sync with $movement-animation-duration in CowPen.sass.
   static movementAnimationDuration = 3000
@@ -69,8 +72,48 @@ export class Cow extends Component {
     this.finishMoving()
   }
 
-  move = () => {
+  move = async () => {
     const newX = Cow.randomPosition()
+
+    const { moveDirection: oldDirection } = this.state
+    const newDirection = newX < this.state.x ? LEFT : RIGHT
+
+    if (oldDirection !== newDirection) {
+      const render = ({ rotate }) => {
+        this.setState({ rotate })
+      }
+
+      try {
+        const duration = 1000
+        const easing = 'swingTo'
+
+        if (newDirection === LEFT) {
+          await this.tweenable.tween({
+            from: {
+              rotate: 0,
+            },
+            to: {
+              rotate: 180,
+            },
+            easing,
+            duration,
+            render,
+          })
+        } else {
+          await this.tweenable.tween({
+            from: {
+              rotate: 180,
+            },
+            to: {
+              rotate: 0,
+            },
+            easing,
+            duration,
+            render,
+          })
+        }
+      } catch (e) {}
+    }
 
     this.animateMovementTimeoutId = setTimeout(
       this.animateTimeoutHandler,
@@ -79,7 +122,7 @@ export class Cow extends Component {
 
     this.setState({
       isMoving: true,
-      moveDirection: newX < this.state.x ? LEFT : RIGHT,
+      moveDirection: newDirection,
       x: newX,
       y: Cow.randomPosition(),
     })
@@ -116,12 +159,14 @@ export class Cow extends Component {
       this.animateMovementTimeoutId,
       this.animateHugTimeoutId,
     ].forEach(clearTimeout)
+
+    this.tweenable.cancel()
   }
 
   render() {
     const {
       props: { cow, handleCowClick, isSelected },
-      state: { isMoving, showHugAnimation, x, y },
+      state: { isMoving, rotate, showHugAnimation, x, y },
     } = this
 
     return (
@@ -151,7 +196,7 @@ export class Cow extends Component {
             },
           }}
         >
-          <div>
+          <div {...{ style: { transform: `rotateY(${rotate}deg)` } }}>
             <img
               {...{
                 src: animals.cow[cowColors[cow.color].toLowerCase()],
