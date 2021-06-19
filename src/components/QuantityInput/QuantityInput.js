@@ -41,6 +41,10 @@ const QuantityTextInput = ({
         max: maxQuantity,
       },
       onChange: handleUpdateNumber,
+      onFocus: () => {
+        // clear the input when input is first selected so the user doesn't have to fight with clearing out default values
+        handleUpdateNumber(undefined)
+      },
       // Bind to keyup to prevent spamming the event handler.
       onKeyUp: ({ which }) => {
         // Enter
@@ -73,6 +77,7 @@ const QuantityInput = ({
     </span>
     <div className="number-nudger-container">
       <Fab
+        disabled={!value}
         {...{
           'aria-label': 'Increment',
           color: 'primary',
@@ -83,6 +88,7 @@ const QuantityInput = ({
         <KeyboardArrowUp />
       </Fab>
       <Fab
+        disabled={!value}
         {...{
           'aria-label': 'Decrement',
           color: 'primary',
@@ -101,7 +107,11 @@ QuantityInput.propTypes = {
   handleUpdateNumber: func.isRequired,
   maxQuantity: number.isRequired,
   setQuantity: func.isRequired,
-  value: number.isRequired,
+  value: number,
+}
+
+QuantityInput.defaultProps = {
+  value: 1,
 }
 
 export default QuantityInput
