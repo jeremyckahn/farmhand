@@ -3,7 +3,7 @@ name: Notify Discord About Game Update
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
 
 jobs:
   notify:
