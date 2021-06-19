@@ -34,18 +34,18 @@ jobs:
       - name: Tag release
         run: npm version ${{ github.event.inputs.releaseType }}
 
-      - name: Check out master
+      - name: Check out main
         uses: actions/checkout@v2.3.1
         with:
           clean: false
           fetch-depth: 0
           persist-credentials: false
-          ref: master
+          ref: main
 
       - name: Sync branches
         run: git merge -m "Merge ${{ github.event.inputs.releaseType }} commit" origin/develop
 
-      # Push merge commit back to master and trigger downstream workflows
+      # Push merge commit back to main and trigger downstream workflows
       # https://github.community/t/push-from-action-does-not-trigger-subsequent-action/16854/2
       - uses: ad-m/github-push-action@v0.6.0
         with:
