@@ -362,6 +362,8 @@ export const applyCrows = state => {
   const { field } = state
   const newDayNotifications = [...state.newDayNotifications]
 
+  let notificationMessages = []
+
   const updatedField = fieldHasScarecrow(field)
     ? field
     : updateField(field, plotContent => {
@@ -372,14 +374,20 @@ export const applyCrows = state => {
         const destroyCrop = Math.random() <= CROW_CHANCE
 
         if (destroyCrop) {
-          newDayNotifications.push({
-            message: CROW_ATTACKED`${itemsMap[plotContent.itemId]}`,
-            severity: 'error',
-          })
+          notificationMessages.push(
+            CROW_ATTACKED`${itemsMap[plotContent.itemId]}`
+          )
         }
 
         return destroyCrop ? null : plotContent
       })
+
+  if (notificationMessages.length) {
+    newDayNotifications.push({
+      message: notificationMessages.join('\n\n'),
+      severity: 'error',
+    })
+  }
 
   return { ...state, field: updatedField, newDayNotifications }
 }
