@@ -10,7 +10,7 @@
 - Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
 - Twitter link: [![@farmhandgame](https://badgen.net/twitter/follow/farmhandgame)](https://twitter.com/farmhandgame)
 - Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
-- `master`: [![Deploy](https://github.com/jeremyckahn/farmhand/workflows/Deploy/badge.svg?branch=master)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ADeploy)
+- `main`: [![Deploy](https://github.com/jeremyckahn/farmhand/workflows/Deploy/badge.svg?branch=main)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ADeploy)
 - `develop`: [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI)
 - All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
 - [Data model documentation](https://jeremyckahn.github.io/farmhand/docs/index.html)
@@ -46,8 +46,8 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 ## Branch structure
 
 - Active development takes place in `develop`.
-- `master` is updated when `develop` is stable.
-- `gh-pages` contains the built assets and is updated automatically when `master` is updated.
+- `main` is updated when `develop` is stable.
+- `gh-pages` contains the built assets and is updated automatically when `main` is updated.
 
 ## Project overview
 
@@ -85,7 +85,7 @@ In this case, the local app will be using the Production API and database. Howev
 
 ### CI/CD
 
-Automation is done with [GitHub Actions](.github/workflows). All changes are tested and built upon Git push. Merges to `master` automatically deploy to Production (the `gh-pages` branch) upon a successful test run and build.
+Automation is done with [GitHub Actions](.github/workflows). All changes are tested and built upon Git push. Merges to `main` automatically deploy to Production (the `gh-pages` branch) upon a successful test run and build.
 
 ### Releasing updates
 

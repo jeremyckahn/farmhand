@@ -1031,6 +1031,35 @@ describe('processNerfs', () => {
         ])
       })
 
+      test('multiple messages are grouped', () => {
+        jest.resetModules()
+        jest.mock('./constants', () => ({
+          CROW_CHANCE: 1,
+        }))
+
+        const { processNerfs } = jest.requireActual('./reducers')
+        const state = processNerfs({
+          field: [
+            [
+              testCrop({ itemId: 'sample-crop-1' }),
+              testCrop({ itemId: 'sample-crop-2' }),
+            ],
+          ],
+          newDayNotifications: [],
+        })
+
+        expect(state.field[0][0]).toBe(null)
+        expect(state.newDayNotifications).toEqual([
+          {
+            message: [
+              CROW_ATTACKED`${itemsMap['sample-crop-1']}`,
+              CROW_ATTACKED`${itemsMap['sample-crop-2']}`,
+            ].join('\n\n'),
+            severity: 'error',
+          },
+        ])
+      })
+
       describe('there is a scarecrow', () => {
         test('crow attack is prevented', () => {
           jest.resetModules()

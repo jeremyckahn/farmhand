@@ -66,8 +66,10 @@ const Recipe = ({
   const [quantity, setQuantity] = useState(1)
 
   useEffect(() => {
-    setQuantity(Math.min(maxYieldOfRecipe(recipe, inventory), 1))
-  }, [inventory, recipe])
+    setQuantity(
+      Math.min(maxYieldOfRecipe(recipe, inventory), Math.max(1, quantity))
+    )
+  }, [inventory, recipe, quantity])
 
   // Fixes https://github.com/jeremyckahn/farmhand/issues/25
   const spaceFreedByIngredientsConsumed =
@@ -123,7 +125,7 @@ const Recipe = ({
           {...{
             className: 'make-recipe',
             color: 'primary',
-            disabled: !canBeMade,
+            disabled: !canBeMade || !quantity,
             onClick: handleMakeRecipe,
             variant: 'contained',
           }}
