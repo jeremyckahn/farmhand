@@ -10,8 +10,11 @@ import cheese from './dishes/cheese.png'
 import chocolate from './dishes/chocolate.png'
 import frenchOnionSoup from './dishes/french-onion-soup.png'
 import jackolantern from './items/jackolantern.png'
+import hotSauce from './dishes/hot-sauce.png'
 import rainbowCheese from './dishes/rainbow-cheese.png'
+import salsa from './dishes/salsa.png'
 import soyMilk from './dishes/soy-milk.png'
+import spicyCheese from './dishes/spicy-cheese.png'
 import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
 import summerSalad from './dishes/summer-salad.png'
 import spaghetti from './dishes/spaghetti.png'
@@ -23,6 +26,9 @@ import asparagusSeed from './items/asparagus-seed.png'
 import carrot from './items/carrot.png'
 import carrotGrowing from './items/carrot-growing.png'
 import carrotSeed from './items/carrot-seed.png'
+import jalapeno from './items/jalapeno.png'
+import jalapenoGrowing from './items/jalapeno-growing.png'
+import jalapenoSeed from './items/jalapeno-seed.png'
 import pumpkin from './items/pumpkin.png'
 import pumpkinGrowing from './items/pumpkin-growing.png'
 import pumpkinSeed from './items/pumpkin-seed.png'
@@ -92,8 +98,11 @@ export const craftedItems = {
   butter,
   'french-onion-soup': frenchOnionSoup,
   jackolantern,
+  'hot-sauce': hotSauce,
   rainbowCheese,
+  salsa,
   'soy-milk': soyMilk,
+  'spicy-cheese': spicyCheese,
   spaghetti,
   'summer-salad': summerSalad,
   tofu,
@@ -107,6 +116,9 @@ export const items = {
   carrot,
   'carrot-growing': carrotGrowing,
   'carrot-seed': carrotSeed,
+  jalapeno,
+  'jalapeno-growing': jalapenoGrowing,
+  'jalapeno-seed': jalapenoSeed,
   pumpkin,
   'pumpkin-growing': pumpkinGrowing,
   'pumpkin-seed': pumpkinSeed,
