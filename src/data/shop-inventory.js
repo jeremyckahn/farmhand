@@ -2,12 +2,13 @@ import {
   // Plantable crops
   asparagusSeed,
   carrotSeed,
-  spinachSeed,
-  pumpkinSeed,
   cornSeed,
-  potatoSeed,
+  jalapenoSeed,
   onionSeed,
+  potatoSeed,
+  pumpkinSeed,
   soybeanSeed,
+  spinachSeed,
   tomatoSeed,
   wheatSeed,
 
@@ -21,12 +22,13 @@ export default [
   // Plantable crops
   asparagusSeed,
   carrotSeed,
-  spinachSeed,
-  pumpkinSeed,
   cornSeed,
-  potatoSeed,
+  jalapenoSeed,
   onionSeed,
+  potatoSeed,
+  pumpkinSeed,
   soybeanSeed,
+  spinachSeed,
   tomatoSeed,
   wheatSeed,
 

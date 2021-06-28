@@ -89,16 +89,32 @@ Automation is done with [GitHub Actions](.github/workflows). All changes are tes
 
 ### Releasing updates
 
-This GitHub Action will deploy a new version of Farmhand: [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
+Use this GitHub Action to deploy a new version of Farmhand: [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
 
-As an authenticated repo owner, click "Run workflow" and enter the argument to be passed to [`npm version`](https://docs.npmjs.com/cli/v7/commands/npm-version) and submit your selection. This will deploy Farmhand to:
+As an authenticated repo owner or collaborator, click "Run workflow" and enter the argument to be passed to [`npm version`](https://docs.npmjs.com/cli/v7/commands/npm-version) and press the green "Run workflow". For updates that do not change [`farmhand.state`](https://jeremyckahn.github.io/farmhand/docs/farmhand.html#.state) (which is most of them), use the default `patch` version. This workflow will deploy Farmhand to:
 
 - https://jeremyckahn.github.io/farmhand/
 - https://jeremyckahn.itch.io/farmhand
 - https://www.npmjs.com/package/@jeremyckahn/farmhand
   - Playable from https://unpkg.com/browse/@jeremyckahn/farmhand/build/
 
-It will also notify the Discord server about the update.
+The process will take about 3-4 minutes to complete and it will notify the Discord server's `#updates` channel. It is customary to explain what you just shipped in the `#updates` channel as well.
+
+## Feature flags
+
+Farmhand supports feature flags for code that should only be enabled in specific environments. To create a feature flag, add a line that looks like this in the relevant `.env` file:
+
+```
+REACT_APP_ENABLE_[FEATURE_NAME]=true
+```
+
+Where `[FEATURE_NAME]` is replaced with the name of your feature. So, adding this to `.env.development.local`:
+
+```
+REACT_APP_ENABLE_MINING=true
+```
+
+Would enable the `MINING` feature only for the local development environment. You can access the enabled feature flags at runtime by `import`ing the `features` Object from [`config.js`](https://github.com/jeremyckahn/farmhand/blob/develop/src/config.js). See [Adding Custom Environment Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/) for more information on how to use environment variables.
 
 ## License
 
