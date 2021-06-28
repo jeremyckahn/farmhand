@@ -275,8 +275,9 @@ export const spicyCheese = itemify({
   name: 'Spicy Cheese',
   ingredients: {
     [items.jalapeno.id]: 4,
-    [cheese.id]: 1,
+    [items.milk3.id]: 10,
   },
   condition: state =>
-    state.itemsSold[items.jalapeno.id] >= 20 && state.itemsSold[cheese.id] >= 5,
+    state.itemsSold[items.jalapeno.id] >= 20 &&
+    state.itemsSold[items.milk3.id] >= 50,
 })
