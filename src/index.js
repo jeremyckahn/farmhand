@@ -163,8 +163,11 @@ import { HashRouter as Router, Route } from 'react-router-dom'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import './index.sass'
 import Farmhand from './Farmhand'
+import { features } from './config'
 import 'typeface-francois-one'
 import 'typeface-public-sans'
+
+const FarmhandRoute = props => <Farmhand {...{ ...props, features }} />
 
 ReactDOM.render(
   <Router
@@ -173,7 +176,10 @@ ReactDOM.render(
     }}
   >
     <Route
-      {...{ path: ['/online/:room', '/online', '/'], component: Farmhand }}
+      {...{
+        path: ['/online/:room', '/online', '/'],
+        component: FarmhandRoute,
+      }}
     />
   </Router>,
   document.getElementById('root')

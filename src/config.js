@@ -1,3 +1,5 @@
+import window from 'global/window'
+
 export const endpoints = {
   getMarketData: `${process.env.REACT_APP_API_ROOT}api/get-market-data`,
   postDayResults: `${process.env.REACT_APP_API_ROOT}api/post-day-results`,
@@ -11,6 +13,12 @@ export const endpoints = {
 // environment.
 //
 // See: https://create-react-app.dev/docs/adding-custom-environment-variables/
+//
+// In addition to enabling features via envars, end users can manually enable
+// them via URL query parameters. This can be done by constructing a query
+// parameter that looks like:
+//
+//   ?enable_MINING=true
 export const features = Object.keys(process.env).reduce((acc, key) => {
   const matches = key.match(/REACT_APP_ENABLE_(.*)/)
 
@@ -20,3 +28,13 @@ export const features = Object.keys(process.env).reduce((acc, key) => {
 
   return acc
 }, {})
+
+const searchParams = new URLSearchParams(window.location.search)
+
+for (const key of searchParams.keys()) {
+  const matches = key.match(/enable_(.*)/)
+
+  if (matches) {
+    features[matches[1]] = true
+  }
+}
