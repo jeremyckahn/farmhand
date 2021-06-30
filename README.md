@@ -8,15 +8,17 @@
 
 **[Play Farmhand in your browser!](https://jeremyckahn.github.io/farmhand/)**
 
-- **[Support this project on Patreon!](https://www.patreon.com/jeremyckahn)**
+- `develop`: [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI) [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
+- All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
+- [Wiki](https://github.com/jeremyckahn/farmhand/wiki)
+- [Data model documentation](https://jeremyckahn.github.io/farmhand/docs/index.html)
+- [API deployment logs](https://farmhand.vercel.app/_logs)
+
+Community links:
+
 - Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
 - Twitter link: [![@farmhandgame](https://badgen.net/twitter/follow/farmhandgame)](https://twitter.com/farmhandgame)
 - Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
-- `main`: [![Deploy](https://github.com/jeremyckahn/farmhand/workflows/Deploy/badge.svg?branch=main)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ADeploy)
-- `develop`: [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI)
-- All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
-- [Data model documentation](https://jeremyckahn.github.io/farmhand/docs/index.html)
-- [API deployment logs](https://farmhand.vercel.app/_logs)
 
 Storefront links:
 
