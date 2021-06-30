@@ -1,4 +1,6 @@
-# Farmhand
+[![Farmhand](public/farmhand-logo-kairi-large.png)](https://jeremyckahn.github.io/farmhand/)
+
+<sub>_Logo art by [Kairi](https://discord.com/channels/714539345050075176/714539345637408793/859622159176302625)_</sub>
 
 [![Current Farmhand version](https://badgen.net/npm/v/@jeremyckahn/farmhand)](https://www.npmjs.com/package/@jeremyckahn/farmhand) [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/jeremyckahn/farmhand)
 
@@ -56,10 +58,11 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 
 ## Running locally
 
-Requires: 
-  - Node/NPM
-  - Docker
-  - [nvm](https://github.com/nvm-sh/nvm) (or alternatively [asdf](https://asdf-vm.com))
+Requires:
+
+- Node/NPM
+- Docker
+- [nvm](https://github.com/nvm-sh/nvm) (or alternatively [asdf](https://asdf-vm.com))
 
 In your shell, run this to ensure you're using the correct Node version and install all of the dependencies:
 
@@ -69,7 +72,6 @@ npm ci
 ```
 
 To run the game locally with the API and Redis database, run:
-
 
 ```sh
 npm run dev
