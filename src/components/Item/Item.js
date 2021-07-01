@@ -14,6 +14,7 @@ import classNames from 'classnames'
 import FarmhandContext from '../../Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
+import shopInventory from '../../data/shop-inventory'
 import {
   inventorySpaceRemaining,
   isItemSoldInShop,
@@ -31,6 +32,8 @@ import AnimatedNumber from '../AnimatedNumber'
 import './Item.sass'
 
 const noop = () => {}
+
+const shopItemIds = shopInventory.map(item => item.id)
 
 const ValueIndicator = ({ poorValue }) => (
   <Tooltip
@@ -146,8 +149,13 @@ export const Item = ({
 
   const avatar = <img {...{ src: items[id] }} alt={name} />
 
-  const sellPrice =
-    adjustedValue * getSalePriceMultiplier(completedAchievements)
+  let sellPrice = adjustedValue
+
+  // #140 - never increase the value of items the shop sells otherwise they
+  // can be bought and instantly resold for a profit to game the.. game
+  if (!shopItemIds.includes(id)) {
+    sellPrice *= getSalePriceMultiplier(completedAchievements)
+  }
 
   return (
     <Card
