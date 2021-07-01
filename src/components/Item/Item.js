@@ -14,7 +14,7 @@ import classNames from 'classnames'
 import FarmhandContext from '../../Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
-import shopInventory from '../../data/shop-inventory'
+import { shopItemIds } from '../../data/shop-inventory'
 import {
   inventorySpaceRemaining,
   isItemSoldInShop,
@@ -32,8 +32,6 @@ import AnimatedNumber from '../AnimatedNumber'
 import './Item.sass'
 
 const noop = () => {}
-
-const shopItemIds = new Set(shopInventory.map(item => item.id))
 
 const ValueIndicator = ({ poorValue }) => (
   <Tooltip
