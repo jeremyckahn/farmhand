@@ -14,7 +14,7 @@ import classNames from 'classnames'
 import FarmhandContext from '../../Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
-import { shopItemIds } from '../../data/shop-inventory'
+import { itemIds as shopItemIds } from '../../data/shop-inventory'
 import {
   inventorySpaceRemaining,
   isItemSoldInShop,

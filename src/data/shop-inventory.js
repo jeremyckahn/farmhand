@@ -18,7 +18,7 @@ import {
   sprinkler,
 } from './items'
 
-const shopInventory = [
+const inventory = [
   // Plantable crops
   asparagusSeed,
   carrotSeed,
@@ -38,6 +38,6 @@ const shopInventory = [
   sprinkler,
 ]
 
-export default shopInventory
+export default inventory
 
-export const shopItemIds = new Set(shopInventory.map(item => item.id))
+export const itemIds = new Set(inventory.map(item => item.id))
