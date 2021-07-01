@@ -1045,6 +1045,7 @@ export default class Farmhand extends Component {
 
   render() {
     const {
+      props: { features },
       state: { redirect },
       fieldToolInventory,
       handlers,
@@ -1063,6 +1064,7 @@ export default class Farmhand extends Component {
     // passed down through the component tree.
     const gameState = {
       ...this.state,
+      features,
       fieldToolInventory,
       levelEntitlements,
       plantableCropInventory,

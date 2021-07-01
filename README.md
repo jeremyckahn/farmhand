@@ -120,6 +120,8 @@ REACT_APP_ENABLE_MINING=true
 
 Would enable the `MINING` feature only for the local development environment. You can access the enabled feature flags at runtime by `import`ing the `features` Object from [`config.js`](https://github.com/jeremyckahn/farmhand/blob/develop/src/config.js). See [Adding Custom Environment Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/) for more information on how to use environment variables.
 
+In addition to enabling features via environment variables, players can manually enable them in the browser (such as for beta testing). This can be done by manually constructing a URL query parameter that looks like `?enable_[FEATURE_NAME]=true`. For example, to enable the `MINING` feature, players could use the URL https://jeremyckahn.github.io/farmhand/?enable_MINING=true.
+
 ## License
 
 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
