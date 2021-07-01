@@ -18,7 +18,7 @@ import {
   sprinkler,
 } from './items'
 
-export default [
+const inventory = [
   // Plantable crops
   asparagusSeed,
   carrotSeed,
@@ -37,3 +37,7 @@ export default [
   scarecrow,
   sprinkler,
 ]
+
+export default inventory
+
+export const itemIds = new Set(inventory.map(item => item.id))
