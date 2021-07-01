@@ -2,7 +2,7 @@ import { fieldMode, itemType } from '../enums'
 
 const { freeze } = Object
 
-export default function crop({
+export const crop = ({
   cropTimetable,
   growsInto,
   tier,
@@ -14,8 +14,8 @@ export default function crop({
   ),
 
   ...rest
-}) {
-  return freeze({
+}) =>
+  freeze({
     cropTimetable,
     doesPriceFluctuate: true,
     tier,
@@ -28,7 +28,6 @@ export default function crop({
     }),
     ...rest,
   })
-}
 
 export const fromSeed = ({ cropTimetable, cropType, growsInto, tier }) => ({
   cropTimetable,
