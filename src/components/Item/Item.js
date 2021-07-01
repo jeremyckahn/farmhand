@@ -33,7 +33,7 @@ import './Item.sass'
 
 const noop = () => {}
 
-const shopItemIds = shopInventory.map(item => item.id)
+const shopItemIds = new Set(shopInventory.map(item => item.id))
 
 const ValueIndicator = ({ poorValue }) => (
   <Tooltip
@@ -153,7 +153,7 @@ export const Item = ({
 
   // #140 - never increase the value of items the shop sells otherwise they
   // can be bought and instantly resold for a profit to game the.. game
-  if (!shopItemIds.includes(id)) {
+  if (!shopItemIds.has(id)) {
     sellPrice *= getSalePriceMultiplier(completedAchievements)
   }
 
