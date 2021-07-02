@@ -17,6 +17,7 @@ import FarmhandContext from '../../Farmhand.context'
 import Plot from '../Plot'
 import QuickSelect from '../QuickSelect'
 import { fieldMode } from '../../enums'
+import tools from '../../data/tools'
 import { doesInventorySpaceRemain, nullArray } from '../../utils'
 
 import './Field.sass'
@@ -37,9 +38,10 @@ const zoomKeyMap = {
 }
 
 const fieldKeyMap = {
-  selectWateringCan: 'shift+1',
-  selectScythe: 'shift+2',
-  selectHoe: 'shift+3',
+  selectWateringCan: tools.wateringCan.fieldKey,
+  selectScythe: tools.scythe.fieldKey,
+  selectHoe: tools.hoe.fieldKey,
+  selectShovel: tools.shovel.fieldKey,
 }
 
 export const isInHoverRange = ({
