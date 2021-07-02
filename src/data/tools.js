@@ -1,6 +1,6 @@
 import { fieldMode } from '../enums'
 
-const { CLEANUP, HARVEST, WATER } = fieldMode
+const { CLEANUP, HARVEST, MINE, WATER } = fieldMode
 
 export default {
   'watering-can': {
@@ -15,5 +15,9 @@ export default {
     alt:
       'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.',
     fieldMode: CLEANUP,
+  },
+  shovel: {
+    alt: 'A shovel for digging for rocks.',
+    fieldMode: MINE,
   },
 }

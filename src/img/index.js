@@ -69,6 +69,7 @@ import chocolateMilk from './items/chocolate-milk.png'
 import inventoryBox from './items/inventory-box.png'
 import hoe from './tools/hoe.png'
 import scythe from './tools/scythe.png'
+import shovel from './tools/shovel.png'
 import wateringCan from './tools/watering-can.png'
 
 import blueCow from './animals/cows/blue-cow.png'
@@ -169,6 +170,7 @@ export const items = {
 export const tools = {
   hoe,
   scythe,
+  shovel,
   'watering-can': wateringCan,
 }
 

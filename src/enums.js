@@ -36,6 +36,7 @@ export const fieldMode = enumify([
   'CLEANUP',
   'FERTILIZE',
   'HARVEST',
+  'MINE',
   'OBSERVE',
   'PLANT',
   'SET_SPRINKLER',
@@ -122,4 +123,3 @@ export const dialogView = enumify([
   'SETTINGS',
   'STATS',
 ])
-
