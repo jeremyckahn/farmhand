@@ -1,4 +1,6 @@
-# Farmhand
+[![Farmhand](public/farmhand-logo-kairi-large.png)](https://jeremyckahn.github.io/farmhand/)
+
+<sub>_Logo art by [Kairi](https://discord.com/channels/714539345050075176/714539345637408793/859622159176302625)_</sub>
 
 [![Current Farmhand version](https://badgen.net/npm/v/@jeremyckahn/farmhand)](https://www.npmjs.com/package/@jeremyckahn/farmhand) [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/jeremyckahn/farmhand)
 
@@ -6,15 +8,17 @@
 
 **[Play Farmhand in your browser!](https://jeremyckahn.github.io/farmhand/)**
 
-- **[Support this project on Patreon!](https://www.patreon.com/jeremyckahn)**
+- `develop`: [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI) [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
+- All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
+- [Wiki](https://github.com/jeremyckahn/farmhand/wiki)
+- [Data model documentation](https://jeremyckahn.github.io/farmhand/docs/index.html)
+- [API deployment logs](https://farmhand.vercel.app/_logs)
+
+Community links:
+
 - Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
 - Twitter link: [![@farmhandgame](https://badgen.net/twitter/follow/farmhandgame)](https://twitter.com/farmhandgame)
 - Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
-- `main`: [![Deploy](https://github.com/jeremyckahn/farmhand/workflows/Deploy/badge.svg?branch=main)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ADeploy)
-- `develop`: [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI)
-- All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
-- [Data model documentation](https://jeremyckahn.github.io/farmhand/docs/index.html)
-- [API deployment logs](https://farmhand.vercel.app/_logs)
 
 Storefront links:
 
@@ -56,10 +60,11 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 
 ## Running locally
 
-Requires: 
-  - Node/NPM
-  - Docker
-  - [nvm](https://github.com/nvm-sh/nvm) (or alternatively [asdf](https://asdf-vm.com))
+Requires:
+
+- Node/NPM
+- Docker
+- [nvm](https://github.com/nvm-sh/nvm) (or alternatively [asdf](https://asdf-vm.com))
 
 In your shell, run this to ensure you're using the correct Node version and install all of the dependencies:
 
@@ -69,7 +74,6 @@ npm ci
 ```
 
 To run the game locally with the API and Redis database, run:
-
 
 ```sh
 npm run dev
@@ -115,6 +119,8 @@ REACT_APP_ENABLE_MINING=true
 ```
 
 Would enable the `MINING` feature only for the local development environment. You can access the enabled feature flags at runtime by `import`ing the `features` Object from [`config.js`](https://github.com/jeremyckahn/farmhand/blob/develop/src/config.js). See [Adding Custom Environment Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/) for more information on how to use environment variables.
+
+In addition to enabling features via environment variables, players can manually enable them in the browser (such as for beta testing). This can be done by manually constructing a URL query parameter that looks like `?enable_[FEATURE_NAME]=true`. For example, to enable the `MINING` feature, players could use the URL https://jeremyckahn.github.io/farmhand/?enable_MINING=true.
 
 ## License
 

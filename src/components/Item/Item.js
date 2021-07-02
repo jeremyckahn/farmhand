@@ -14,6 +14,7 @@ import classNames from 'classnames'
 import FarmhandContext from '../../Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
+import { itemIds as shopItemIds } from '../../data/shop-inventory'
 import {
   inventorySpaceRemaining,
   isItemSoldInShop,
@@ -146,8 +147,13 @@ export const Item = ({
 
   const avatar = <img {...{ src: items[id] }} alt={name} />
 
-  const sellPrice =
-    adjustedValue * getSalePriceMultiplier(completedAchievements)
+  let sellPrice = adjustedValue
+
+  // #140 - never increase the value of items the shop sells otherwise they
+  // can be bought and instantly resold for a profit to game the.. game
+  if (!shopItemIds.has(id)) {
+    sellPrice *= getSalePriceMultiplier(completedAchievements)
+  }
 
   return (
     <Card
