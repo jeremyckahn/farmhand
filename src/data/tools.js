@@ -1,8 +1,10 @@
 import { fieldMode } from '../enums'
 
+import { features } from '../config'
+
 const { CLEANUP, HARVEST, MINE, WATER } = fieldMode
 
-export default {
+const tools = {
   'watering-can': {
     alt: 'A watering can for hydrating plants.',
     fieldMode: WATER,
@@ -16,8 +18,13 @@ export default {
       'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.',
     fieldMode: CLEANUP,
   },
-  shovel: {
-    alt: 'A shovel for digging for rocks.',
-    fieldMode: MINE,
-  },
 }
+
+if (features.MINING) {
+  tools.shovel = {
+    alt: 'A shovel for digging up rocks.',
+    fieldMode: MINE,
+  }
+}
+
+export default tools
