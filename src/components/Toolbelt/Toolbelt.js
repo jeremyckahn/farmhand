@@ -6,72 +6,63 @@ import classNames from 'classnames'
 
 import FarmhandContext from '../../Farmhand.context'
 import './Toolbelt.sass'
-import { fieldMode } from '../../enums'
-import { tools, pixel } from '../../img'
-
-const { CLEANUP, HARVEST, WATER } = fieldMode
+import { tools as toolImages, pixel } from '../../img'
+import tools from '../../data/tools'
 
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
-}) => (
-  <div className="Toolbelt">
-    <div className="button-array">
-      {[
-        {
-          alt: 'A watering can for hydrating plants.',
-          fieldMode: WATER,
-          toolImageId: 'watering-can',
-        },
-        {
-          alt: 'A scythe for crop harvesting.',
-          fieldMode: HARVEST,
-          toolImageId: 'scythe',
-        },
-        {
-          alt:
-            'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.',
-          fieldMode: CLEANUP,
-          toolImageId: 'hoe',
-        },
-      ].map(({ alt, fieldMode, toolImageId }, i) => (
-        <Tooltip
+}) => {
+  let i = 0
+  let toolbeltIcons = []
+
+  for (const [toolId, tool] of Object.entries(tools)) {
+    const { alt, fieldMode } = tool
+    i += 1
+
+    toolbeltIcons.push(
+      <Tooltip
+        {...{
+          key: fieldMode,
+          placement: 'top',
+          title: (
+            <>
+              <p>{alt}</p>
+              <p>(shift + {i})</p>
+            </>
+          ),
+        }}
+      >
+        <Button
           {...{
-            key: fieldMode,
-            placement: 'top',
-            title: (
-              <>
-                <p>{alt}</p>
-                <p>(shift + {i + 1})</p>
-              </>
-            ),
+            className: classNames({
+              selected: fieldMode === currentFieldMode,
+            }),
+            color: 'primary',
+            onClick: () => handleFieldModeSelect(fieldMode),
+            variant: fieldMode === currentFieldMode ? 'contained' : 'text',
           }}
         >
-          <Button
+          {/* alt is in a different format here because of linter weirdness. */}
+          <img
             {...{
-              className: classNames({
-                selected: fieldMode === currentFieldMode,
-              }),
-              color: 'primary',
-              onClick: () => handleFieldModeSelect(fieldMode),
-              variant: fieldMode === currentFieldMode ? 'contained' : 'text',
+              className: `square ${toolId}`,
+              src: pixel,
+              style: { backgroundImage: `url(${toolImages[toolId]}` },
             }}
-          >
-            {/* alt is in a different format here because of linter weirdness. */}
-            <img
-              {...{
-                className: `square ${toolImageId}`,
-                src: pixel,
-                style: { backgroundImage: `url(${tools[toolImageId]}` },
-              }}
-              alt={alt}
-            />
-          </Button>
-        </Tooltip>
-      ))}
+            alt={alt}
+          />
+        </Button>
+      </Tooltip>
+    )
+  }
+
+  return (
+    <div className="Toolbelt">
+      <div className="button-array">{toolbeltIcons}</div>
     </div>
-  </div>
-)
+  )
+}
 
 Toolbelt.propTypes = {
   fieldMode: string.isRequired,
