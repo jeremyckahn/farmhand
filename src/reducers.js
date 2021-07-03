@@ -1657,6 +1657,28 @@ export const harvestPlot = (state, x, y) => {
  * @param {number} y
  * @returns {farmhand.state}
  */
+export const minePlot = (state, x, y) => {
+  const { field } = state
+  const row = field[y]
+
+  if (row[x]) {
+    // Something is already planted in field[x][y]
+    return state
+  }
+
+  state = modifyFieldPlotAt(state, x, y, () => ({ mined: true }))
+
+  return {
+    ...state,
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} x
+ * @param {number} y
+ * @returns {farmhand.state}
+ */
 export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
 

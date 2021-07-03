@@ -41,7 +41,10 @@ const fieldKeyMap = {
   selectWateringCan: tools.wateringCan.fieldKey,
   selectScythe: tools.scythe.fieldKey,
   selectHoe: tools.hoe.fieldKey,
-  selectShovel: tools.shovel.fieldKey,
+}
+
+if (tools.shovel) {
+  fieldKeyMap.selectShovel = tools.shovel.fieldKey
 }
 
 export const isInHoverRange = ({
