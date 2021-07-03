@@ -9,11 +9,14 @@ const {
   CORN,
   JALAPENO,
   ONION,
+  PEA,
   POTATO,
   PUMPKIN,
   SOYBEAN,
   SPINACH,
+  STRAWBERRY,
   TOMATO,
+  WATERMELON,
   WHEAT,
 } = cropType
 
@@ -34,10 +37,13 @@ export const cropIdToTypeMap = {
   [CORN]: 'corn',
   [JALAPENO]: 'jalapeno',
   [ONION]: 'onion',
+  [PEA]: 'pea',
   [POTATO]: 'potato',
   [PUMPKIN]: 'pumpkin',
   [SOYBEAN]: 'soybean',
   [SPINACH]: 'spinach',
+  [STRAWBERRY]: 'strawberry',
   [TOMATO]: 'tomato',
+  [WATERMELON]: 'watermelon',
   [WHEAT]: 'wheat',
 }
