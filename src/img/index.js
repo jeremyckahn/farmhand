@@ -18,6 +18,7 @@ import spicyCheese from './dishes/spicy-cheese.png'
 import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
 import summerSalad from './dishes/summer-salad.png'
 import spaghetti from './dishes/spaghetti.png'
+import strawberryJam from './dishes/strawberry-jam.png'
 import tofu from './dishes/tofu.png'
 
 import asparagus from './items/asparagus.png'
@@ -113,6 +114,7 @@ export const craftedItems = {
   'soy-milk': soyMilk,
   'spicy-cheese': spicyCheese,
   spaghetti,
+  'strawberry-jam': strawberryJam,
   'summer-salad': summerSalad,
   tofu,
 }

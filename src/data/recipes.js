@@ -281,3 +281,16 @@ export const spicyCheese = itemify({
     state.itemsSold[items.jalapeno.id] >= 20 &&
     state.itemsSold[items.milk3.id] >= 50,
 })
+
+/**
+ * @property farmhand.module:recipes.strawberryJam
+ * @type {farmhand.recipe}
+ */
+export const strawberryJam = itemify({
+  id: 'strawberry-jam',
+  name: 'Strawberry Jam',
+  ingredients: {
+    [items.strawberry.id]: 10,
+  },
+  condition: state => state.itemsSold[items.strawberry.id] >= 60,
+})
