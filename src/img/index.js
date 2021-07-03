@@ -29,12 +29,18 @@ import carrotSeed from './items/carrot-seed.png'
 import jalapeno from './items/jalapeno.png'
 import jalapenoGrowing from './items/jalapeno-growing.png'
 import jalapenoSeed from './items/jalapeno-seed.png'
+import pea from './items/pea.png'
+import peaGrowing from './items/pea-growing.png'
+import peaSeed from './items/pea-seed.png'
 import pumpkin from './items/pumpkin.png'
 import pumpkinGrowing from './items/pumpkin-growing.png'
 import pumpkinSeed from './items/pumpkin-seed.png'
 import spinach from './items/spinach.png'
 import spinachGrowing from './items/spinach-growing.png'
 import spinachSeed from './items/spinach-seed.png'
+import strawberry from './items/strawberry.png'
+import strawberryGrowing from './items/strawberry-growing.png'
+import strawberrySeed from './items/strawberry-seed.png'
 import corn from './items/corn.png'
 import cornGrowing from './items/corn-growing.png'
 import cornSeed from './items/corn-seed.png'
@@ -47,6 +53,9 @@ import onionSeed from './items/onion-seed.png'
 import soybean from './items/soybean.png'
 import soybeanGrowing from './items/soybean-growing.png'
 import soybeanSeed from './items/soybean-seed.png'
+import watermelon from './items/watermelon.png'
+import watermelonGrowing from './items/watermelon-growing.png'
+import watermelonSeed from './items/watermelon-seed.png'
 import wheat from './items/wheat.png'
 import wheatGrowing from './items/wheat-growing.png'
 import wheatSeed from './items/wheat-seed.png'
@@ -122,6 +131,9 @@ export const items = {
   pumpkin,
   'pumpkin-growing': pumpkinGrowing,
   'pumpkin-seed': pumpkinSeed,
+  pea,
+  'pea-growing': peaGrowing,
+  'pea-seed': peaSeed,
   spinach,
   'spinach-growing': spinachGrowing,
   'spinach-seed': spinachSeed,
@@ -143,6 +155,12 @@ export const items = {
   tomato,
   'tomato-growing': tomatoGrowing,
   'tomato-seed': tomatoSeed,
+  strawberry,
+  'strawberry-growing': strawberryGrowing,
+  'strawberry-seed': strawberrySeed,
+  watermelon,
+  'watermelon-growing': watermelonGrowing,
+  'watermelon-seed': watermelonSeed,
 
   // Field tools
   fertilizer,

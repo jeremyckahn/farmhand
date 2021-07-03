@@ -20,11 +20,14 @@ export const cropType = enumify([
   'CORN',
   'JALAPENO',
   'ONION',
+  'PEA',
   'POTATO',
   'PUMPKIN',
   'SOYBEAN',
   'SPINACH',
+  'STRAWBERRY',
   'TOMATO',
+  'WATERMELON',
   'WHEAT',
 ])
 
@@ -122,4 +125,3 @@ export const dialogView = enumify([
   'SETTINGS',
   'STATS',
 ])
-
