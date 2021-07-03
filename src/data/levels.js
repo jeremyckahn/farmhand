@@ -62,6 +62,18 @@ levels[26] = {
   unlocksShopItem: items.jalapenoSeed.id,
 }
 
+levels[28] = {
+  unlocksShopItem: items.watermelonSeed.id,
+}
+
+levels[30] = {
+  unlocksShopItem: items.peaSeed.id,
+}
+
+levels[32] = {
+  unlocksShopItem: items.strawberrySeed.id,
+}
+
 for (let i = 0; i < levels.length; i++) {
   levels[i] = { id: i, ...levels[i] }
 }
