@@ -99,6 +99,8 @@ export const Plot = ({
               plotContent.fertilizerType === fertilizerType.NONE &&
               selectedItemId === 'rainbow-fertilizer'),
 
+          'can-be-mined': !plotContent,
+
           // For scarecrows and sprinklers
           'is-replantable': plotContent && item.isReplantable,
         }),

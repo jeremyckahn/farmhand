@@ -60,6 +60,7 @@ export const STORM_CHANCE = 0.5
 
 export const SCARECROW_ITEM_ID = 'scarecrow'
 export const SPRINKLER_ITEM_ID = 'sprinkler'
+export const MINED_ITEM_ID = 'mined'
 export const INITIAL_SPRINKLER_RANGE = 1
 
 export const COW_STARTING_WEIGHT_BASE = 1800

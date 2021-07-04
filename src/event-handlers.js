@@ -28,13 +28,14 @@ const {
   CLEANUP,
   FERTILIZE,
   HARVEST,
+  MINE,
   PLANT,
   SET_SCARECROW,
   SET_SPRINKLER,
   WATER,
 } = fieldMode
 
-const toolbeltFieldModes = [CLEANUP, HARVEST, WATER]
+const toolbeltFieldModes = [CLEANUP, HARVEST, WATER, MINE] // todo: where can this data come from that is more dynamic? data/tools.js?
 
 export default {
   /**

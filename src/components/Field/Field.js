@@ -26,6 +26,7 @@ const {
   CLEANUP,
   FERTILIZE,
   HARVEST,
+  MINE,
   PLANT,
   SET_SCARECROW,
   SET_SPRINKLER,
@@ -303,6 +304,7 @@ export const Field = props => {
             'cleanup-mode': fieldMode === CLEANUP,
             'fertilize-mode': fieldMode === FERTILIZE,
             'harvest-mode': fieldMode === HARVEST,
+            'mine-mode': fieldMode === MINE,
             'is-inventory-full': !doesInventorySpaceRemain({
               inventory,
               inventoryLimit,
