@@ -118,17 +118,6 @@ export const scarecrow = freeze({
   value: 160,
 })
 
-// TODO: move this, name it something better.
-export const mined = freeze({
-  description: 'a plot that has been mined. will be restored tomorrow',
-  hoveredPlotRangeSize: 1,
-  id: 'mined',
-  isReplantable: false,
-  name: 'Rubble',
-  type: MINED,
-  value: 0,
-})
-
 ////////////////////////////////////////
 //
 // COW ITEMS

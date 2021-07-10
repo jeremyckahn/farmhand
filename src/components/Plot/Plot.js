@@ -102,7 +102,7 @@ export const Plot = ({
           'can-be-mined': !plotContent,
 
           // For scarecrows and sprinklers
-          'is-replantable': plotContent && item.isReplantable,
+          'is-replantable': plotContent && item && item.isReplantable,
         }),
         style: {
           backgroundImage: getBackgroundStyles(plotContent),
@@ -134,7 +134,7 @@ export const Plot = ({
         placement: 'top',
         title: (
           <>
-            <Typography>{item.name}</Typography>
+            <Typography>{item ? item.name : 'shoveled'}</Typography>
             {getPlotContentType(plotContent) === itemType.CROP && (
               <Typography>
                 {daysLeftToMature

@@ -266,7 +266,8 @@ export const getPlotContentFromItemId = itemId => ({
  * @param {farmhand.plotContent} plotContent
  * @returns {string}
  */
-export const getPlotContentType = ({ itemId }) => itemsMap[itemId].type
+export const getPlotContentType = ({ itemId }) =>
+  itemId ? itemsMap[itemId].type : null
 
 /**
  * @param {?farmhand.plotContent} plot

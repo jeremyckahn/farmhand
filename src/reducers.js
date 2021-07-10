@@ -69,7 +69,6 @@ import {
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
-  MINED_ITEM_ID,
   NOTIFICATION_LOG_SIZE,
   PRECIPITATION_CHANCE,
   PRICE_EVENT_CHANCE,
@@ -168,7 +167,7 @@ export const resetWasWatered = plotContent =>
  * @returns {?farmhand.plotContent}
  */
 export const resetWasMined = plotContent =>
-  plotContent && plotContent.itemId === MINED_ITEM_ID ? null : plotContent
+  plotContent && !plotContent.itemId ? null : plotContent
 
 /**
  * Invokes a function on every plot in a field.
@@ -1676,9 +1675,9 @@ export const minePlot = (state, x, y) => {
 
   console.log('mine it', x, y)
 
-  state = modifyFieldPlotAt(state, x, y, () =>
-    getPlotContentFromItemId(MINED_ITEM_ID)
-  )
+  state = modifyFieldPlotAt(state, x, y, () => {
+    return {}
+  })
 
   return {
     ...state,
