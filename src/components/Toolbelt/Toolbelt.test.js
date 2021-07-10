@@ -1,39 +1,61 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { fieldMode } from '../../enums'
 
 import { Toolbelt } from './Toolbelt'
 
-let component
+let buttons = []
 
-beforeEach(() => {
-  component = shallow(
-    <Toolbelt
-      {...{
-        fieldMode: fieldMode.OBSERVE,
-        handleFieldModeSelect: () => {},
-      }}
-    />
-  )
-})
+class ToolbeltTest extends React.Component {
+  constructor(props) {
+    super(props)
 
-test('renders shop inventory', () => {
-  expect(component).toHaveLength(1)
-})
+    this.state = {
+      fieldMode: fieldMode.OBSERVE,
+    }
+  }
 
-describe('tool selection', () => {
-  test('selects no tools by default', () => {
-    expect(component.find('.selected')).toHaveLength(0)
+  handleFieldModeSelect = fieldMode => {
+    this.setState({ fieldMode })
+  }
+
+  render() {
+    return (
+      <Toolbelt
+        fieldMode={this.state.fieldMode}
+        handleFieldModeSelect={this.handleFieldModeSelect}
+      />
+    )
+  }
+}
+
+describe('<ToolBelt />', () => {
+  const getSelectedButton = () => {
+    return screen
+      .getAllByRole('button')
+      .find(b => b.classList.contains('selected'))
+  }
+
+  test('renders a button for each tool', () => {
+    render(<ToolbeltTest />)
+    expect(screen.getAllByRole('button')).toHaveLength(3)
   })
 
-  describe('a tool is selected', () => {
-    beforeEach(() => {
-      component.setProps({ fieldMode: fieldMode.WATER })
+  describe('tool selection', () => {
+    test('there are no selected tools by default', () => {
+      render(<ToolbeltTest />)
+      expect(getSelectedButton()).toBeUndefined()
     })
 
-    test('renders selected tool appropriately', () => {
-      expect(component.find('.selected').find('.watering-can')).toHaveLength(1)
+    test('marks the clicked button as selected', async () => {
+      render(<ToolbeltTest />)
+      buttons = screen.getAllByRole('button')
+
+      await userEvent.click(buttons[0])
+
+      expect(buttons[0].classList.contains('selected')).toEqual(true)
     })
   })
 })
