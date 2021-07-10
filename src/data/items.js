@@ -15,7 +15,6 @@ const {
   FERTILIZER,
   HUGGING_MACHINE,
   MILK,
-  MINED,
   SCARECROW,
   SPRINKLER,
 } = itemType
