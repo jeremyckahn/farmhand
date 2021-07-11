@@ -11,6 +11,8 @@ import { tools, pixel } from '../../img'
 
 const { CLEANUP, HARVEST, WATER } = fieldMode
 
+const noop = () => {}
+
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
@@ -22,19 +24,22 @@ export const Toolbelt = ({
           alt: 'A watering can for hydrating plants.',
           fieldMode: WATER,
           toolImageId: 'watering-can',
+          hiddenText: 'select watering can',
         },
         {
           alt: 'A scythe for crop harvesting.',
           fieldMode: HARVEST,
           toolImageId: 'scythe',
+          hiddenText: 'select scythe',
         },
         {
           alt:
             'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.',
           fieldMode: CLEANUP,
           toolImageId: 'hoe',
+          hiddenText: 'select hoe',
         },
-      ].map(({ alt, fieldMode, toolImageId }, i) => (
+      ].map(({ alt, fieldMode, hiddenText, toolImageId }, i) => (
         <Tooltip
           {...{
             key: fieldMode,
@@ -66,6 +71,7 @@ export const Toolbelt = ({
               }}
               alt={alt}
             />
+            <span className="visually_hidden">{hiddenText}</span>
           </Button>
         </Tooltip>
       ))}
@@ -75,7 +81,11 @@ export const Toolbelt = ({
 
 Toolbelt.propTypes = {
   fieldMode: string.isRequired,
-  handleFieldModeSelect: func.isRequired,
+  handleFieldModeSelect: func,
+}
+
+Toolbelt.defaultProps = {
+  handleFieldModeSelect: noop,
 }
 
 export default function Consumer(props) {

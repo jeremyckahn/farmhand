@@ -6,30 +6,9 @@ import { fieldMode } from '../../enums'
 
 import { Toolbelt } from './Toolbelt'
 
+const noop = () => {}
+
 let buttons = []
-
-class ToolbeltTest extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      fieldMode: fieldMode.OBSERVE,
-    }
-  }
-
-  handleFieldModeSelect = fieldMode => {
-    this.setState({ fieldMode })
-  }
-
-  render() {
-    return (
-      <Toolbelt
-        fieldMode={this.state.fieldMode}
-        handleFieldModeSelect={this.handleFieldModeSelect}
-      />
-    )
-  }
-}
 
 describe('<ToolBelt />', () => {
   const getSelectedButton = () => {
@@ -39,23 +18,41 @@ describe('<ToolBelt />', () => {
   }
 
   test('renders a button for each tool', () => {
-    render(<ToolbeltTest />)
+    render(<Toolbelt fieldMode={fieldMode.OBSERVE} />)
     expect(screen.getAllByRole('button')).toHaveLength(3)
   })
 
   describe('tool selection', () => {
     test('there are no selected tools by default', () => {
-      render(<ToolbeltTest />)
+      render(<Toolbelt fieldMode={fieldMode.OBSERVE} />)
       expect(getSelectedButton()).toBeUndefined()
     })
 
-    test('marks the clicked button as selected', async () => {
-      render(<ToolbeltTest />)
-      buttons = screen.getAllByRole('button')
+    test('marks the watering can selected for field mode WATER', async () => {
+      render(<Toolbelt fieldMode={fieldMode.WATER} />)
+      const button = screen.getByText('select watering can')
 
-      await userEvent.click(buttons[0])
+      expect(button.closest('button').classList.contains('selected')).toEqual(
+        true
+      )
+    })
 
-      expect(buttons[0].classList.contains('selected')).toEqual(true)
+    test('marks the scythe selected for field mode HARVEST', async () => {
+      render(<Toolbelt fieldMode={fieldMode.HARVEST} />)
+      const button = screen.getByText('select scythe')
+
+      expect(button.closest('button').classList.contains('selected')).toEqual(
+        true
+      )
+    })
+
+    test('marks the hoe selected for field mode CLEANUP', async () => {
+      render(<Toolbelt fieldMode={fieldMode.CLEANUP} />)
+      const button = screen.getByText('select hoe')
+
+      expect(button.closest('button').classList.contains('selected')).toEqual(
+        true
+      )
     })
   })
 })
