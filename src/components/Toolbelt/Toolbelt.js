@@ -11,6 +11,8 @@ import toolsData from '../../data/tools'
 
 const tools = Object.values(toolsData).sort(t => t.order)
 
+const noop = () => {}
+
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
@@ -55,13 +57,23 @@ export const Toolbelt = ({
           </Tooltip>
         ))}
       </div>
+              alt={alt}
+            />
+            <span className="visually_hidden">{hiddenText}</span>
+          </Button>
+        </Tooltip>
+      ))}
     </div>
   )
 }
 
 Toolbelt.propTypes = {
   fieldMode: string.isRequired,
-  handleFieldModeSelect: func.isRequired,
+  handleFieldModeSelect: func,
+}
+
+Toolbelt.defaultProps = {
+  handleFieldModeSelect: noop,
 }
 
 export default function Consumer(props) {

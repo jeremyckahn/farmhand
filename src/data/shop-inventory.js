@@ -5,11 +5,14 @@ import {
   cornSeed,
   jalapenoSeed,
   onionSeed,
+  peaSeed,
   potatoSeed,
   pumpkinSeed,
   soybeanSeed,
   spinachSeed,
+  strawberrySeed,
   tomatoSeed,
+  watermelonSeed,
   wheatSeed,
 
   // Field items
@@ -25,11 +28,14 @@ const inventory = [
   cornSeed,
   jalapenoSeed,
   onionSeed,
+  peaSeed,
   potatoSeed,
   pumpkinSeed,
   soybeanSeed,
   spinachSeed,
+  strawberrySeed,
   tomatoSeed,
+  watermelonSeed,
   wheatSeed,
 
   // Field items
