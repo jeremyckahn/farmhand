@@ -24,20 +24,21 @@ export const Toolbelt = ({
           alt: 'A watering can for hydrating plants.',
           fieldMode: WATER,
           toolImageId: 'watering-can',
-          hiddenText: 'select watering can',
+          hiddenText: 'Select the watering can to water your crops',
         },
         {
           alt: 'A scythe for crop harvesting.',
           fieldMode: HARVEST,
           toolImageId: 'scythe',
-          hiddenText: 'select scythe',
+          hiddenText: 'Select the scythe to harvest ripened crops',
         },
         {
           alt:
             'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.',
           fieldMode: CLEANUP,
           toolImageId: 'hoe',
-          hiddenText: 'select hoe',
+          hiddenText:
+            'Select the hoe to clear crops, or replantable field items',
         },
       ].map(({ alt, fieldMode, hiddenText, toolImageId }, i) => (
         <Tooltip
