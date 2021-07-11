@@ -15,6 +15,9 @@ import { itemsMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, fertilizerType, itemType } from '../../enums'
 import { FERTILIZER_BONUS } from '../../constants'
+
+import { SHOVELED } from '../../strings'
+
 import './Plot.sass'
 
 export const getBackgroundStyles = plotContent => {
@@ -32,6 +35,8 @@ export const getBackgroundStyles = plotContent => {
 
   if (plotContent.wasWateredToday) {
     backgroundImages.push(`url(${plotStates['watered-plot']})`)
+  } else if (plotContent.wasShoveledToday) {
+    backgroundImages.push(`url(${plotStates['shoveled-plot']})`)
   }
 
   return backgroundImages.join(', ')
@@ -127,15 +132,28 @@ export const Plot = ({
     </div>
   )
 
-  return plotContent ? (
+  let tooltipContents = null
+  if (item) {
+    tooltipContents = item.name
+  } else if (plotContent && plotContent.wasShoveledToday) {
+    tooltipContents = SHOVELED
+  }
+
+  if (!plotContent) {
+    return plot
+  }
+
+  return (
     <Tooltip
       {...{
         arrow: true,
         placement: 'top',
         title: (
           <>
-            <Typography>{item ? item.name : 'shoveled'}</Typography>
-            {getPlotContentType(plotContent) === itemType.CROP && (
+            {tooltipContents ? (
+              <Typography>{tooltipContents}</Typography>
+            ) : null}
+            {isCrop && (
               <Typography>
                 {daysLeftToMature
                   ? `Days of watering to mature: ${daysLeftToMature}`
@@ -148,8 +166,6 @@ export const Plot = ({
     >
       {plot}
     </Tooltip>
-  ) : (
-    plot
   )
 }
 

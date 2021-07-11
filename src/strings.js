@@ -19,3 +19,15 @@ export const OUT_OF_COW_FEED_NOTIFICATION =
 export const INVENTORY_FULL_NOTIFICATION = 'Your inventory is full!'
 
 export const SHOVELED = 'Shoveled'
+
+export const WATERING_CAN_ALT_TEXT = 'A watering can for hydrating plants.'
+export const WATERING_CAN_HIDDEN_TEXT =
+  'Select the watering can to water your crops'
+export const SCYTHE_ALT_TEXT = 'A scythe for crop harvesting.'
+export const SCYTHE_HIDDEN_TEXT = 'Select the scythe to harvest ripened crops'
+export const HOE_ALT_TEXT =
+  'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.'
+export const HOE_HIDDEN_TEXT =
+  'Select the hoe to clear crops, or replantable field items'
+export const SHOVEL_ALT_TEXT = 'A shovel for digging up rocks.'
+export const SHOVEL_HIDDEN_TEXT = 'Select the shovel to dig for ore'
