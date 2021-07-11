@@ -167,7 +167,7 @@ export const resetWasWatered = plotContent =>
  * @returns {?farmhand.plotContent}
  */
 export const resetWasMined = plotContent =>
-  plotContent && !plotContent.itemId ? null : plotContent
+  plotContent && plotContent.wasShoveledToday ? null : plotContent
 
 /**
  * Invokes a function on every plot in a field.
@@ -1676,7 +1676,7 @@ export const minePlot = (state, x, y) => {
   console.log('mine it', x, y)
 
   state = modifyFieldPlotAt(state, x, y, () => {
-    return {}
+    return { wasShoveledToday: true }
   })
 
   return {
@@ -1693,7 +1693,7 @@ export const minePlot = (state, x, y) => {
 export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
 
-  if (!plotContent) {
+  if (!plotContent || plotContent.wasShoveledToday) {
     return state
   }
 

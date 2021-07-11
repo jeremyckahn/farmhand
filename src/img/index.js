@@ -1,6 +1,7 @@
 import wateredPlot from './plot-states/watered-plot.png'
 import fertilizedPlot from './plot-states/fertilized-plot.png'
 import rainbowFertilizedPlot from './plot-states/rainbow-fertilized-plot.png'
+import shoveledPlot from './plot-states/shoveled-plot.png'
 
 import bread from './dishes/bread.png'
 import burger from './dishes/burger.png'
@@ -97,6 +98,7 @@ export const plotStates = {
   'watered-plot': wateredPlot,
   'fertilized-plot': fertilizedPlot,
   'rainbow-fertilized-plot': rainbowFertilizedPlot,
+  'shoveled-plot': shoveledPlot,
 }
 
 export const craftedItems = {

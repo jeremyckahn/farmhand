@@ -20,7 +20,7 @@ export const Toolbelt = ({
   return (
     <div className="Toolbelt">
       <div className="button-array">
-        {tools.map(({ alt, fieldMode, fieldKey, id }) => (
+        {tools.map(({ alt, fieldMode, fieldKey, hiddenText, id }) => (
           <Tooltip
             {...{
               key: fieldMode,
@@ -53,16 +53,11 @@ export const Toolbelt = ({
                 }}
                 alt={alt}
               />
+              <span className="visually_hidden">{hiddenText}</span>
             </Button>
           </Tooltip>
         ))}
       </div>
-              alt={alt}
-            />
-            <span className="visually_hidden">{hiddenText}</span>
-          </Button>
-        </Tooltip>
-      ))}
     </div>
   )
 }

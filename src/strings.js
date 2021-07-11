@@ -17,3 +17,5 @@ export const DISCONNECTED_FROM_SERVER = 'You are now playing offline.'
 export const OUT_OF_COW_FEED_NOTIFICATION =
   "You're out of cow feed! Buy some more before your cows get hungry and run away!"
 export const INVENTORY_FULL_NOTIFICATION = 'Your inventory is full!'
+
+export const SHOVELED = 'Shoveled'
