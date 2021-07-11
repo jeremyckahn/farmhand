@@ -25,27 +25,27 @@ describe('<ToolBelt />', () => {
 
     test('marks the watering can selected for field mode WATER', async () => {
       render(<Toolbelt fieldMode={fieldMode.WATER} />)
-      const span = screen.getByText(/Select the watering can/)
+      const label = screen.getByText(/Select the watering can/)
 
-      expect(span.closest('button').classList.contains('selected')).toEqual(
+      expect(label.closest('button').classList.contains('selected')).toEqual(
         true
       )
     })
 
     test('marks the scythe selected for field mode HARVEST', async () => {
       render(<Toolbelt fieldMode={fieldMode.HARVEST} />)
-      const span = screen.getByText(/Select the scythe/)
+      const label = screen.getByText(/Select the scythe/)
 
-      expect(span.closest('button').classList.contains('selected')).toEqual(
+      expect(label.closest('button').classList.contains('selected')).toEqual(
         true
       )
     })
 
     test('marks the hoe selected for field mode CLEANUP', async () => {
       render(<Toolbelt fieldMode={fieldMode.CLEANUP} />)
-      const span = screen.getByText(/Select the hoe/)
+      const label = screen.getByText(/Select the hoe/)
 
-      expect(span.closest('button').classList.contains('selected')).toEqual(
+      expect(label.closest('button').classList.contains('selected')).toEqual(
         true
       )
     })
