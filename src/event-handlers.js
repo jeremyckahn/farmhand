@@ -16,7 +16,11 @@ import {
   reduceByPersistedKeys,
   transformStateDataForImport,
 } from './utils'
-import { DEFAULT_ROOM, SPRINKLER_ITEM_ID } from './constants'
+import {
+  DEFAULT_ROOM,
+  SPRINKLER_ITEM_ID,
+  TOOLBELT_FIELD_MODES,
+} from './constants'
 import { dialogView, fieldMode } from './enums'
 import {
   DISCONNECTING_FROM_SERVER,
@@ -34,8 +38,6 @@ const {
   SET_SPRINKLER,
   WATER,
 } = fieldMode
-
-const toolbeltFieldModes = [CLEANUP, HARVEST, WATER, MINE]
 
 export default {
   /**
@@ -127,7 +129,7 @@ export default {
   handleFieldModeSelect(fieldMode) {
     this.setState(({ selectedItemId }) => ({
       selectedItemId:
-        fieldMode !== PLANT || toolbeltFieldModes.includes(fieldMode)
+        fieldMode !== PLANT || TOOLBELT_FIELD_MODES.has(fieldMode)
           ? ''
           : selectedItemId,
       fieldMode,
