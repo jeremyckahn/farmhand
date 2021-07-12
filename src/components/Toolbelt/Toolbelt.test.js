@@ -30,7 +30,7 @@ describe('<ToolBelt />', () => {
       expect(getSelectedButton()).toBeUndefined()
     })
 
-    test('marks the watering can selected for field mode WATER', async () => {
+    test('marks the watering can selected for field mode WATER', () => {
       render(<Toolbelt fieldMode={fieldMode.WATER} />)
       const label = screen.getByText(/Select the watering can/)
 
@@ -39,7 +39,7 @@ describe('<ToolBelt />', () => {
       )
     })
 
-    test('marks the scythe selected for field mode HARVEST', async () => {
+    test('marks the scythe selected for field mode HARVEST', () => {
       render(<Toolbelt fieldMode={fieldMode.HARVEST} />)
       const label = screen.getByText(/Select the scythe/)
 
@@ -48,7 +48,7 @@ describe('<ToolBelt />', () => {
       )
     })
 
-    test('marks the hoe selected for field mode CLEANUP', async () => {
+    test('marks the hoe selected for field mode CLEANUP', () => {
       render(<Toolbelt fieldMode={fieldMode.CLEANUP} />)
       const label = screen.getByText(/Select the hoe/)
 
@@ -57,7 +57,7 @@ describe('<ToolBelt />', () => {
       )
     })
 
-    test('marks the shovel selected for field mode MINE', async () => {
+    test('marks the shovel selected for field mode MINE', () => {
       render(<Toolbelt fieldMode={fieldMode.MINE} />)
       const label = screen.getByText(/Select the shovel/)
 
