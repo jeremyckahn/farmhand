@@ -256,6 +256,7 @@ const adjustableRangeFieldModes = new Set([
   CLEANUP,
   FERTILIZE,
   HARVEST,
+  MINE,
   PLANT,
   WATER,
 ])

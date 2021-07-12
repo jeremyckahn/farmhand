@@ -181,7 +181,7 @@ export default {
     } else if (fieldMode === HARVEST) {
       this.forRange(harvestPlot, rangeRadius, x, y)
     } else if (fieldMode === MINE) {
-      this.forRange(minePlot, 0, x, y)
+      this.forRange(minePlot, rangeRadius, x, y)
     } else if (fieldMode === CLEANUP) {
       this.forRange(clearPlot, rangeRadius, x, y)
     } else if (fieldMode === WATER) {
