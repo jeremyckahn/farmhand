@@ -166,7 +166,7 @@ export const resetWasWatered = plotContent =>
  * @param {?farmhand.plotContent} plotContent
  * @returns {?farmhand.plotContent}
  */
-export const resetWasMined = plotContent =>
+export const resetWasShoveled = plotContent =>
   plotContent && plotContent.wasShoveledToday ? null : plotContent
 
 /**
@@ -658,7 +658,11 @@ export const addItemToInventory = (
 }
 
 const fieldReducer = (acc, fn) => fn(acc)
-const fieldUpdaters = [incrementPlotContentAge, resetWasWatered, resetWasMined]
+const fieldUpdaters = [
+  incrementPlotContentAge,
+  resetWasWatered,
+  resetWasShoveled,
+]
 
 /**
  * @param {farmhand.state} state
@@ -1672,8 +1676,6 @@ export const minePlot = (state, x, y) => {
     // Something is already planted in field[x][y]
     return state
   }
-
-  console.log('mine it', x, y)
 
   state = modifyFieldPlotAt(state, x, y, () => {
     return { wasShoveledToday: true }
