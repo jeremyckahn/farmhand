@@ -1,0 +1,16 @@
+import { itemType } from '../../enums'
+
+const { freeze } = Object
+
+/**
+ * @property farmhand.module:items.silverOre
+ * @type {farmhand.item}
+ */
+export const silverOre = freeze({
+  description: 'A piece of silver ore you dug up in the field.',
+  doesPriceFluctuate: true,
+  id: 'silver-ore',
+  name: 'Silver Ore',
+  type: itemType.SILVER_ORE,
+  value: 50,
+})
