@@ -149,6 +149,7 @@ export const PERSISTED_STATE_KEYS = [
   'recordSingleDayProfit',
   'revenue',
   'showNotifications',
+  'shovelUnlocked',
   'todaysLosses',
   'todaysPurchases',
   'todaysRevenue',

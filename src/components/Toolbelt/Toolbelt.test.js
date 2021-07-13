@@ -19,8 +19,13 @@ describe('<ToolBelt />', () => {
       .find(b => b.classList.contains('selected'))
   }
 
-  test('renders a button for each tool', () => {
+  test('renders a button for each of the default tools', () => {
     render(<Toolbelt fieldMode={fieldMode.OBSERVE} />)
+    expect(screen.getAllByRole('button')).toHaveLength(3)
+  })
+
+  test('renders the shovel tool once unlocked', () => {
+    render(<Toolbelt fieldMode={fieldMode.OBSERVE} shovelUnlocked={true} />)
     expect(screen.getAllByRole('button')).toHaveLength(4)
   })
 
@@ -58,7 +63,7 @@ describe('<ToolBelt />', () => {
     })
 
     test('marks the shovel selected for field mode MINE', () => {
-      render(<Toolbelt fieldMode={fieldMode.MINE} />)
+      render(<Toolbelt fieldMode={fieldMode.MINE} shovelUnlocked={true} />)
       const label = screen.getByText(/Select the shovel/)
 
       expect(label.closest('button').classList.contains('selected')).toEqual(

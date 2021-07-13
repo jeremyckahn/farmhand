@@ -275,6 +275,18 @@ const achievements = [
     condition: state => state.revenue >= goal,
     reward: state => state,
   }))(),
+
+  (() => ({
+    id: 'gold-digger',
+    name: 'Gold Digger',
+    description: `Pay Off Your Loan.`,
+    rewardDescription: `A Shovel to use to dig for ores in your field`,
+    condition: state => state.loanBalance === 0,
+    reward: state => ({
+      ...state,
+      shovelUnlocked: true,
+    }),
+  }))(),
 ]
 
 export default achievements
