@@ -1,4 +1,5 @@
 export { asparagus, asparagusSeed } from './asparagus'
+export { avocado, avocadoSeed } from './avocado'
 export { carrot, carrotSeed } from './carrot'
 export { corn, cornSeed } from './corn'
 export { jalapeno, jalapenoSeed } from './jalapeno'
