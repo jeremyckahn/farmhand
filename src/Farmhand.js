@@ -82,7 +82,7 @@ import {
 } from './strings'
 import { endpoints } from './config'
 
-const { CLEANUP, HARVEST, OBSERVE, WATER } = fieldMode
+const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
 
 const itemIds = Object.freeze(Object.keys(itemsMap))
 
@@ -436,6 +436,7 @@ export default class Farmhand extends Component {
       selectHoe: () => this.handlers.handleFieldModeSelect(CLEANUP),
       selectScythe: () => this.handlers.handleFieldModeSelect(HARVEST),
       selectWateringCan: () => this.handlers.handleFieldModeSelect(WATER),
+      selectShovel: () => this.handlers.handleFieldModeSelect(MINE),
       toggleMenu: () => this.handlers.handleMenuToggle(),
     }
 

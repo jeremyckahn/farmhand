@@ -163,6 +163,13 @@ export const resetWasWatered = plotContent =>
   setWasWateredProperty(plotContent, false)
 
 /**
+ * @param {?farmhand.plotContent} plotContent
+ * @returns {?farmhand.plotContent}
+ */
+export const resetWasShoveled = plotContent =>
+  plotContent && plotContent.wasShoveledToday ? null : plotContent
+
+/**
  * Invokes a function on every plot in a field.
  * @param {Array.<Array.<?farmhand.plotContent>>} field
  * @param {Function(?farmhand.plotContent)} modifierFn
@@ -651,7 +658,11 @@ export const addItemToInventory = (
 }
 
 const fieldReducer = (acc, fn) => fn(acc)
-const fieldUpdaters = [incrementPlotContentAge, resetWasWatered]
+const fieldUpdaters = [
+  incrementPlotContentAge,
+  resetWasWatered,
+  resetWasShoveled,
+]
 
 /**
  * @param {farmhand.state} state
@@ -1657,10 +1668,34 @@ export const harvestPlot = (state, x, y) => {
  * @param {number} y
  * @returns {farmhand.state}
  */
+export const minePlot = (state, x, y) => {
+  const { field } = state
+  const row = field[y]
+
+  if (row[x]) {
+    // Something is already planted in field[x][y]
+    return state
+  }
+
+  state = modifyFieldPlotAt(state, x, y, () => {
+    return { wasShoveledToday: true }
+  })
+
+  return {
+    ...state,
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} x
+ * @param {number} y
+ * @returns {farmhand.state}
+ */
 export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
 
-  if (!plotContent) {
+  if (!plotContent || plotContent.wasShoveledToday) {
     return state
   }
 

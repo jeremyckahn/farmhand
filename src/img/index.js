@@ -1,6 +1,7 @@
 import wateredPlot from './plot-states/watered-plot.png'
 import fertilizedPlot from './plot-states/fertilized-plot.png'
 import rainbowFertilizedPlot from './plot-states/rainbow-fertilized-plot.png'
+import shoveledPlot from './plot-states/shoveled-plot.png'
 
 import bread from './dishes/bread.png'
 import burger from './dishes/burger.png'
@@ -79,6 +80,7 @@ import chocolateMilk from './items/chocolate-milk.png'
 import inventoryBox from './items/inventory-box.png'
 import hoe from './tools/hoe.png'
 import scythe from './tools/scythe.png'
+import shovel from './tools/shovel.png'
 import wateringCan from './tools/watering-can.png'
 
 import blueCow from './animals/cows/blue-cow.png'
@@ -96,6 +98,7 @@ export const plotStates = {
   'watered-plot': wateredPlot,
   'fertilized-plot': fertilizedPlot,
   'rainbow-fertilized-plot': rainbowFertilizedPlot,
+  'shoveled-plot': shoveledPlot,
 }
 
 export const craftedItems = {
@@ -189,6 +192,7 @@ export const items = {
 export const tools = {
   hoe,
   scythe,
+  shovel,
   'watering-can': wateringCan,
 }
 

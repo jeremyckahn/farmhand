@@ -17,6 +17,7 @@ import FarmhandContext from '../../Farmhand.context'
 import Plot from '../Plot'
 import QuickSelect from '../QuickSelect'
 import { fieldMode } from '../../enums'
+import tools from '../../data/tools'
 import { doesInventorySpaceRemain, nullArray } from '../../utils'
 
 import './Field.sass'
@@ -25,6 +26,7 @@ const {
   CLEANUP,
   FERTILIZE,
   HARVEST,
+  MINE,
   PLANT,
   SET_SCARECROW,
   SET_SPRINKLER,
@@ -37,9 +39,13 @@ const zoomKeyMap = {
 }
 
 const fieldKeyMap = {
-  selectWateringCan: 'shift+1',
-  selectScythe: 'shift+2',
-  selectHoe: 'shift+3',
+  selectWateringCan: tools.wateringCan.fieldKey,
+  selectScythe: tools.scythe.fieldKey,
+  selectHoe: tools.hoe.fieldKey,
+}
+
+if (tools.shovel) {
+  fieldKeyMap.selectShovel = tools.shovel.fieldKey
 }
 
 export const isInHoverRange = ({
@@ -250,6 +256,7 @@ const adjustableRangeFieldModes = new Set([
   CLEANUP,
   FERTILIZE,
   HARVEST,
+  MINE,
   PLANT,
   WATER,
 ])
@@ -298,6 +305,7 @@ export const Field = props => {
             'cleanup-mode': fieldMode === CLEANUP,
             'fertilize-mode': fieldMode === FERTILIZE,
             'harvest-mode': fieldMode === HARVEST,
+            'mine-mode': fieldMode === MINE,
             'is-inventory-full': !doesInventorySpaceRemain({
               inventory,
               inventoryLimit,

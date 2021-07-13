@@ -3310,3 +3310,36 @@ describe('prependPendingPeerMessage', () => {
     expect(pendingPeerMessages).toHaveLength(MAX_PENDING_PEER_MESSAGES)
   })
 })
+
+describe('minePlot', () => {
+  let gameState
+
+  beforeAll(() => {
+    gameState = {
+      field: [[null, 'crop']],
+    }
+    gameState = fn.minePlot(gameState, 0, 0)
+  })
+
+  test('updates the plot to be shoveled if the plot is empty', () => {
+    expect(gameState.field[0][0].wasShoveledToday).toEqual(true)
+  })
+
+  test('does not alter the plot if something is already there', () => {
+    expect(gameState.field[0][1]).toEqual('crop')
+  })
+})
+
+describe('resetWasShoveled', () => {
+  test('it will return null if the plot was shoveled today', () => {
+    const plotContents = fn.resetWasShoveled({ wasShoveledToday: true })
+
+    expect(plotContents).toEqual(null)
+  })
+
+  test('will return the plot contents if it is anything else', () => {
+    const plotContents = fn.resetWasShoveled('sprinkler')
+
+    expect(plotContents).toEqual('sprinkler')
+  })
+})

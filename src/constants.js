@@ -3,7 +3,7 @@
  * @ignore
  */
 
-import { stageFocusType } from './enums'
+import { fieldMode, stageFocusType } from './enums'
 
 const { freeze } = Object
 
@@ -176,3 +176,10 @@ export const MAX_LATEST_PEER_MESSAGES = 30
 
 export const LEFT = 'left'
 export const RIGHT = 'right'
+
+export const TOOLBELT_FIELD_MODES = new Set([
+  fieldMode.CLEANUP,
+  fieldMode.HARVEST,
+  fieldMode.WATER,
+  fieldMode.MINE,
+])

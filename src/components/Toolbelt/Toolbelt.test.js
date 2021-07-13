@@ -5,6 +5,13 @@ import { fieldMode } from '../../enums'
 
 import { Toolbelt } from './Toolbelt'
 
+jest.mock('../../config', () => ({
+  ...jest.requireActual('../../config'),
+  features: {
+    MINING: true,
+  },
+}))
+
 describe('<ToolBelt />', () => {
   const getSelectedButton = () => {
     return screen
@@ -14,7 +21,7 @@ describe('<ToolBelt />', () => {
 
   test('renders a button for each tool', () => {
     render(<Toolbelt fieldMode={fieldMode.OBSERVE} />)
-    expect(screen.getAllByRole('button')).toHaveLength(3)
+    expect(screen.getAllByRole('button')).toHaveLength(4)
   })
 
   describe('tool selection', () => {
@@ -23,7 +30,7 @@ describe('<ToolBelt />', () => {
       expect(getSelectedButton()).toBeUndefined()
     })
 
-    test('marks the watering can selected for field mode WATER', async () => {
+    test('marks the watering can selected for field mode WATER', () => {
       render(<Toolbelt fieldMode={fieldMode.WATER} />)
       const label = screen.getByText(/Select the watering can/)
 
@@ -32,7 +39,7 @@ describe('<ToolBelt />', () => {
       )
     })
 
-    test('marks the scythe selected for field mode HARVEST', async () => {
+    test('marks the scythe selected for field mode HARVEST', () => {
       render(<Toolbelt fieldMode={fieldMode.HARVEST} />)
       const label = screen.getByText(/Select the scythe/)
 
@@ -41,9 +48,18 @@ describe('<ToolBelt />', () => {
       )
     })
 
-    test('marks the hoe selected for field mode CLEANUP', async () => {
+    test('marks the hoe selected for field mode CLEANUP', () => {
       render(<Toolbelt fieldMode={fieldMode.CLEANUP} />)
       const label = screen.getByText(/Select the hoe/)
+
+      expect(label.closest('button').classList.contains('selected')).toEqual(
+        true
+      )
+    })
+
+    test('marks the shovel selected for field mode MINE', () => {
+      render(<Toolbelt fieldMode={fieldMode.MINE} />)
+      const label = screen.getByText(/Select the shovel/)
 
       expect(label.closest('button').classList.contains('selected')).toEqual(
         true
