@@ -16,6 +16,7 @@ export const enumify = keys =>
  */
 export const cropType = enumify([
   'ASPARAGUS',
+  'AVOCADO',
   'CARROT',
   'CORN',
   'JALAPENO',

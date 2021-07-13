@@ -22,6 +22,8 @@ const {
 export {
   asparagus,
   asparagusSeed,
+  avocado,
+  avocadoSeed,
   carrot,
   carrotSeed,
   corn,

@@ -7,6 +7,10 @@ levels[1] = {
 }
 
 levels[2] = {
+  unlocksShopItem: items.avocadoSeed.id,
+}
+
+levels[3] = {
   unlocksShopItem: items.spinachSeed.id,
 }
 

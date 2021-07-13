@@ -5,6 +5,7 @@ import baseItemsMap from './items-map'
 
 const {
   ASPARAGUS,
+  AVOCADO,
   CARROT,
   CORN,
   JALAPENO,
@@ -33,6 +34,7 @@ export const itemsMap = {
 
 export const cropIdToTypeMap = {
   [ASPARAGUS]: 'asparagus',
+  [AVOCADO]: 'avocado',
   [CARROT]: 'carrot',
   [CORN]: 'corn',
   [JALAPENO]: 'jalapeno',
