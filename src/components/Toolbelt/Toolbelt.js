@@ -24,9 +24,9 @@ const getTools = memoize(shovelUnlocked => {
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
-  shovelUnlocked,
+  completedAchievements,
 }) => {
-  const tools = getTools(shovelUnlocked)
+  const tools = getTools(completedAchievements['gold-digger'])
 
   return (
     <div className="Toolbelt">
@@ -75,11 +75,12 @@ export const Toolbelt = ({
 Toolbelt.propTypes = {
   fieldMode: PropTypes.string.isRequired,
   handleFieldModeSelect: PropTypes.func,
-  shovelUnlocked: PropTypes.bool,
+  completedAchievements: PropTypes.object,
 }
 
 Toolbelt.defaultProps = {
   handleFieldModeSelect: noop,
+  completedAchievements: {},
 }
 
 export default function Consumer(props) {
