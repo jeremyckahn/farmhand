@@ -1,24 +1,32 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
-import Tooltip from '@material-ui/core/Tooltip'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
+import Button from '@material-ui/core/Button'
+import Tooltip from '@material-ui/core/Tooltip'
+
+import { memoize } from '../../utils'
+
 import FarmhandContext from '../../Farmhand.context'
-import './Toolbelt.sass'
-import { tools as toolImages, pixel } from '../../img'
 import toolsData from '../../data/tools'
 
+import { tools as toolImages, pixel } from '../../img'
+
+import './Toolbelt.sass'
+
 const noop = () => {}
+const getTools = memoize(shovelUnlocked => {
+  return Object.values(toolsData)
+    .filter(t => shovelUnlocked || t.id !== 'shovel')
+    .sort(t => t.order)
+})
 
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
   shovelUnlocked,
 }) => {
-  const tools = Object.values(toolsData)
-    .filter(t => shovelUnlocked || t.id !== 'shovel')
-    .sort(t => t.order)
+  const tools = getTools(shovelUnlocked)
 
   return (
     <div className="Toolbelt">
@@ -78,12 +86,7 @@ export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Toolbelt
-          fieldMode={gameState.fieldMode}
-          shovelUnlocked={gameState.shovelUnlocked}
-          handleFieldModeSelect={handlers.handleFieldModeSelect}
-          {...props}
-        />
+        <Toolbelt {...{ ...gameState, ...handlers, ...props }} />
       )}
     </FarmhandContext.Consumer>
   )

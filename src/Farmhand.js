@@ -368,7 +368,6 @@ export default class Farmhand extends Component {
       sendPeerMetadata: null,
       selectedCowId: '',
       selectedItemId: '',
-      shovelUnlocked: false,
       fieldMode: OBSERVE,
       priceCrashes: {},
       priceSurges: {},

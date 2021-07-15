@@ -279,8 +279,8 @@ const achievements = [
   (() => ({
     id: 'gold-digger',
     name: 'Gold Digger',
-    description: `Pay Off Your Loan.`,
-    rewardDescription: `A Shovel to use to dig for ores in your field`,
+    description: `Pay off your loan from the bank.`,
+    rewardDescription: `The Shovel`,
     condition: state => state.loanBalance === 0,
     reward: state => ({
       ...state,
