@@ -7,10 +7,10 @@ const { freeze } = Object
  * @type {farmhand.item}
  */
 export const bronzeOre = freeze({
-  description: 'A piece of bronze ore you dug up in the field.',
+  description: 'A piece of bronze ore.',
   doesPriceFluctuate: true,
   id: 'bronze-ore',
   name: 'Bronze Ore',
-  type: itemType.BRONZE_ORE,
+  type: itemType.ORE,
   value: 25,
 })
