@@ -87,3 +87,34 @@ describe.each(iAmRichVariants)(
     })
   }
 )
+
+describe('gold-digger', () => {
+  const achievement = achievementsMap['gold-digger']
+
+  test('is not achieved when the player has an outstanding loanBalance', () => {
+    const state = {
+      loanBalance: 1,
+    }
+
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
+  test('is achieved when the loanBalance is 0', () => {
+    const state = {
+      loanBalance: 0,
+    }
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('it rewards the player the shovel unlock', () => {
+    let state = {
+      loanBalance: 0,
+      shovelUnlocked: false,
+    }
+
+    state = achievement.reward(state)
+
+    expect(state.shovelUnlocked).toEqual(true)
+  })
+})
