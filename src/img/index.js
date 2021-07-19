@@ -83,6 +83,10 @@ import scythe from './tools/scythe.png'
 import shovel from './tools/shovel.png'
 import wateringCan from './tools/watering-can.png'
 
+import bronzeOre from './ores/bronze-ore.png'
+import silverOre from './ores/silver-ore.png'
+import goldOre from './ores/gold-ore.png'
+
 import blueCow from './animals/cows/blue-cow.png'
 import brownCow from './animals/cows/brown-cow.png'
 import greenCow from './animals/cows/green-cow.png'
@@ -166,6 +170,11 @@ export const items = {
   watermelon,
   'watermelon-growing': watermelonGrowing,
   'watermelon-seed': watermelonSeed,
+
+  // Ores
+  'bronze-ore': bronzeOre,
+  'silver-ore': silverOre,
+  'gold-ore': goldOre,
 
   // Field tools
   fertilizer,
