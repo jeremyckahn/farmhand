@@ -17,6 +17,7 @@ import salsa from './dishes/salsa.png'
 import soyMilk from './dishes/soy-milk.png'
 import spicyCheese from './dishes/spicy-cheese.png'
 import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
+import popcorn from './dishes/popcorn.png'
 import summerSalad from './dishes/summer-salad.png'
 import spaghetti from './dishes/spaghetti.png'
 import strawberryJam from './dishes/strawberry-jam.png'
@@ -112,6 +113,7 @@ export const craftedItems = {
   'french-onion-soup': frenchOnionSoup,
   jackolantern,
   'hot-sauce': hotSauce,
+  popcorn,
   rainbowCheese,
   salsa,
   'soy-milk': soyMilk,
