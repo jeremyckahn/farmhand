@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/farmhand/static/css/main.b29ce02a.chunk.css",
+    "main.js": "/farmhand/static/js/main.36797a12.chunk.js",
+    "main.js.map": "/farmhand/static/js/main.36797a12.chunk.js.map",
+    "runtime-main.js": "/farmhand/static/js/runtime-main.704ddba4.js",
+    "runtime-main.js.map": "/farmhand/static/js/runtime-main.704ddba4.js.map",
+    "static/css/2.711bd397.chunk.css": "/farmhand/static/css/2.711bd397.chunk.css",
+    "static/js/2.fca0ba59.chunk.js": "/farmhand/static/js/2.fca0ba59.chunk.js",
+    "static/js/2.fca0ba59.chunk.js.map": "/farmhand/static/js/2.fca0ba59.chunk.js.map",
+    "index.html": "/farmhand/index.html",
+    "service-worker.js": "/farmhand/service-worker.js",
+    "service-worker.js.map": "/farmhand/service-worker.js.map",
+    "static/css/2.711bd397.chunk.css.map": "/farmhand/static/css/2.711bd397.chunk.css.map",
+    "static/css/main.b29ce02a.chunk.css.map": "/farmhand/static/css/main.b29ce02a.chunk.css.map",
+    "static/js/2.fca0ba59.chunk.js.LICENSE.txt": "/farmhand/static/js/2.fca0ba59.chunk.js.LICENSE.txt",
+    "static/js/main.36797a12.chunk.js.LICENSE.txt": "/farmhand/static/js/main.36797a12.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/farmhand/static/media/public-sans-latin-900italic.cf33a699.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.704ddba4.js",
+    "static/css/2.711bd397.chunk.css",
+    "static/js/2.fca0ba59.chunk.js",
+    "static/css/main.b29ce02a.chunk.css",
+    "static/js/main.36797a12.chunk.js"
+  ]
+}

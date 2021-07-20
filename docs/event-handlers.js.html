@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>event-handlers.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="farmhand.module_items.html">items</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.chocolateMilk">chocolateMilk</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.cowFeed">cowFeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.fertilizer">fertilizer</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.huggingMachine">huggingMachine</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.milk1">milk1</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.milk2">milk2</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.milk3">milk3</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.rainbowFertilizer">rainbowFertilizer</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.rainbowMilk1">rainbowMilk1</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.rainbowMilk2">rainbowMilk2</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.rainbowMilk3">rainbowMilk3</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.scarecrow">scarecrow</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_items.html#.sprinkler">sprinkler</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html">recipes</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.bread">bread</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.burger">burger</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.butter">butter</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.carrotSoup">carrotSoup</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.cheese">cheese</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.chocolate">chocolate</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.chocolateSoyMilk">chocolateSoyMilk</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.frenchOnionSoup">frenchOnionSoup</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.hotSauce">hotSauce</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.jackolantern">jackolantern</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.popcorn">popcorn</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.rainbowCheese">rainbowCheese</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.salsa">salsa</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.soyMilk">soyMilk</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.spaghetti">spaghetti</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.spicyCheese">spicyCheese</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.strawberryJam">strawberryJam</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.summerSalad">summerSalad</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="farmhand.module_recipes.html#.tofu">tofu</a></span></li><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="farmhand.html">farmhand</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#applyPriceEvents">applyPriceEvents</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#asparagus">asparagus</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#asparagusSeed">asparagusSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#carrot">carrot</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#carrotSeed">carrotSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#corn">corn</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#cornSeed">cornSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#createInitialState">createInitialState</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#generateValueAdjustments">generateValueAdjustments</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#jalapeno">jalapeno</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#jalapenoSeed">jalapenoSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#onion">onion</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#onionSeed">onionSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#pea">pea</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#peaSeed">peaSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#potato">potato</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#potatoSeed">potatoSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#pumpkin">pumpkin</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#pumpkinSeed">pumpkinSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#soybean">soybean</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#soybeanSeed">soybeanSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#spinach">spinach</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#spinachSeed">spinachSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#strawberry">strawberry</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#strawberrySeed">strawberrySeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#tomato">tomato</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#tomatoSeed">tomatoSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#watermelon">watermelon</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#watermelonSeed">watermelonSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#wheat">wheat</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#wheatSeed">wheatSeed</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#wrapSendPeerMetadata">wrapSendPeerMetadata</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">event-handlers.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { saveAs } from 'file-saver'
+
+import {
+  clearPlot,
+  fertilizePlot,
+  harvestPlot,
+  minePlot,
+  plantInPlot,
+  waterPlot,
+} from './reducers'
+import {
+  farmProductsSold,
+  getLevelEntitlements,
+  levelAchieved,
+  moneyTotal,
+  reduceByPersistedKeys,
+  transformStateDataForImport,
+} from './utils'
+import {
+  DEFAULT_ROOM,
+  SPRINKLER_ITEM_ID,
+  TOOLBELT_FIELD_MODES,
+} from './constants'
+import { dialogView, fieldMode } from './enums'
+import {
+  DISCONNECTING_FROM_SERVER,
+  INVALID_DATA_PROVIDED,
+  PROGRESS_SAVED_MESSAGE,
+} from './strings'
+
+const {
+  CLEANUP,
+  FERTILIZE,
+  HARVEST,
+  MINE,
+  PLANT,
+  SET_SCARECROW,
+  SET_SPRINKLER,
+  WATER,
+} = fieldMode
+
+export default {
+  /**
+   * @param {farmhand.item} item
+   * @param {number} [howMany=1]
+   */
+  handleItemPurchaseClick(item, howMany = 1) {
+    this.purchaseItem(item, howMany)
+  },
+
+  /**
+   * @param {farmhand.recipe} recipe
+   * @param {number} [howMany=1]
+   */
+  handleMakeRecipeClick(recipe, howMany = 1) {
+    this.makeRecipe(recipe, howMany)
+  },
+
+  /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowPurchaseClick(cow) {
+    this.purchaseCow(cow)
+  },
+
+  /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowSellClick(cow) {
+    this.sellCow(cow)
+  },
+
+  /**
+   * @param {external:React.SyntheticEvent} e
+   * @param {farmhand.cow} cow
+   */
+  handleCowAutomaticHugChange({ target: { checked } }, cow) {
+    this.changeCowAutomaticHugState(cow, checked)
+  },
+
+  /**
+   * @param {external:React.SyntheticEvent} e
+   * @param {farmhand.cow} cow
+   */
+  handleCowBreedChange({ target: { checked } }, cow) {
+    this.changeCowBreedingPenResident(cow, checked)
+  },
+
+  /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowHugClick(cow) {
+    this.hugCow(cow.id)
+  },
+
+  /**
+   * @param {external:React.SyntheticEvent} e
+   * @param {farmhand.cow} cow
+   */
+  handleCowNameInputChange({ target: { value } }, cow) {
+    this.changeCowName(cow.id, value)
+  },
+
+  /**
+   * @param {farmhand.item} item
+   * @param {number} [howMany=1]
+   */
+  handleItemSellClick(item, howMany = 1) {
+    this.sellItem(item, howMany)
+  },
+
+  /**
+   * @param {external:React.SyntheticEvent} e
+   */
+  handleViewChange({ target: { value } }) {
+    this.setState({ stageFocus: value })
+  },
+
+  /**
+   * @param {farmhand.module:enums.stageFocusType} stageFocus
+   */
+  handleViewChangeButtonClick(stageFocus) {
+    this.setState({ stageFocus })
+  },
+
+  /**
+   * @param {farmhand.module:enums.fieldMode} fieldMode
+   */
+  handleFieldModeSelect(fieldMode) {
+    this.setState(({ selectedItemId }) => ({
+      selectedItemId:
+        fieldMode !== PLANT || TOOLBELT_FIELD_MODES.has(fieldMode)
+          ? ''
+          : selectedItemId,
+      fieldMode,
+    }))
+  },
+
+  /**
+   * @param {farmhand.item} item
+   */
+  handleItemSelectClick({
+    id,
+    enablesFieldMode,
+    hoveredPlotRangeSize: newHoveredPlotRangeSize,
+  }) {
+    this.setState(({ hoveredPlotRangeSize, itemsSold }) => {
+      if (id === SPRINKLER_ITEM_ID) {
+        hoveredPlotRangeSize = getLevelEntitlements(
+          levelAchieved(farmProductsSold(itemsSold))
+        ).sprinklerRange
+      } else {
+        // newHoveredPlotRangeSize is either a number or undefined.
+        hoveredPlotRangeSize =
+          typeof newHoveredPlotRangeSize === 'number'
+            ? newHoveredPlotRangeSize
+            : hoveredPlotRangeSize
+      }
+
+      return {
+        fieldMode: enablesFieldMode,
+        hoveredPlotRangeSize,
+        selectedItemId: id,
+      }
+    })
+  },
+
+  /**
+   * @param {number} x
+   * @param {number} y
+   */
+  handlePlotClick(x, y) {
+    const {
+      fieldMode,
+      hoveredPlotRangeSize: rangeRadius,
+      selectedItemId,
+    } = this.state
+
+    if (fieldMode === PLANT) {
+      this.forRange(plantInPlot, rangeRadius, x, y, selectedItemId)
+    } else if (fieldMode === HARVEST) {
+      this.forRange(harvestPlot, rangeRadius, x, y)
+    } else if (fieldMode === MINE) {
+      this.forRange(minePlot, rangeRadius, x, y)
+    } else if (fieldMode === CLEANUP) {
+      this.forRange(clearPlot, rangeRadius, x, y)
+    } else if (fieldMode === WATER) {
+      this.forRange(waterPlot, rangeRadius, x, y)
+    } else if (fieldMode === FERTILIZE) {
+      this.forRange(fertilizePlot, rangeRadius, x, y)
+    } else if (fieldMode === SET_SPRINKLER) {
+      this.setSprinkler(x, y)
+    } else if (fieldMode === SET_SCARECROW) {
+      this.setScarecrow(x, y)
+    }
+  },
+
+  /**
+   * @param {number} range
+   */
+  handleFieldActionRangeChange(range) {
+    this.setState(() => ({ hoveredPlotRangeSize: range }))
+  },
+
+  handleClickEndDayButton() {
+    this.incrementDay()
+
+    // Prevent the player from spamming the End Day button
+    // https://www.reddit.com/r/incremental_games/comments/jusn9i/farmhand_updates_for_november_2020/gcmi6x6/?context=3
+    document.activeElement.blur()
+  },
+
+  /**
+   * @param {number} amount
+   */
+  handleAddMoneyClick(amount) {
+    this.setState(({ money }) => ({ money: moneyTotal(money, amount) }))
+  },
+
+  handleClearPersistedDataClick() {
+    this.clearPersistedData()
+  },
+
+  handleWaterAllPlotsClick() {
+    this.waterAllPlots(this.state)
+  },
+
+  /**
+   * @param {number} fieldId
+   */
+  handleFieldPurchase(fieldId) {
+    this.purchaseField(fieldId)
+  },
+
+  /**
+   * @param {number} combineId
+   */
+  handleCombinePurchase(combineId) {
+    this.purchaseCombine(combineId)
+  },
+
+  /**
+   * @param {number} cowPenId
+   */
+  handleCowPenPurchase(cowPenId) {
+    this.purchaseCowPen(cowPenId)
+  },
+
+  handleStorageExpansionPurchase() {
+    this.purchaseStorageExpansion()
+  },
+
+  /**
+   * @param {boolean} [setOpen]
+   */
+  handleMenuToggle(setOpen = null) {
+    this.setState(({ isMenuOpen }) => ({
+      isMenuOpen: setOpen === null ? !isMenuOpen : setOpen,
+    }))
+  },
+
+  handleClickNextMenuButton() {
+    this.focusNextView()
+  },
+
+  handleClickPreviousMenuButton() {
+    this.focusPreviousView()
+  },
+
+  /**
+   * @param {farmhand.cow}
+   */
+  handleCowSelect(cow) {
+    this.selectCow(cow)
+  },
+
+  /**
+   * @param {farmhand.cow}
+   */
+  handleCowClick(cow) {
+    this.selectCow(cow)
+    this.hugCow(cow.id)
+  },
+
+  /**
+   * @param {farmhand.module:enums.dialogView} dialogView
+   */
+  handleClickDialogViewButton(dialogView) {
+    this.openDialogView(dialogView)
+  },
+
+  handleCloseDialogView() {
+    this.closeDialogView()
+  },
+
+  handleDialogViewExited() {
+    this.setState({ currentDialogView: dialogView.NONE })
+  },
+
+  /**
+   * @param {number} paydownAmount
+   */
+  handleClickLoanPaydownButton(paydownAmount) {
+    this.adjustLoan(-paydownAmount)
+  },
+
+  /**
+   * @param {number} loanAmount
+   */
+  handleClickTakeOutLoanButton(loanAmount) {
+    this.adjustLoan(loanAmount)
+  },
+
+  handleExportDataClick() {
+    const blob = new Blob(
+      [JSON.stringify(reduceByPersistedKeys(this.state), null, 2)],
+      {
+        type: 'application/json;charset=utf-8',
+      }
+    )
+
+    const [date] = new Date().toISOString().split('T')
+
+    saveAs(blob, `farmhand-${date}.json`)
+  },
+
+  /**
+   *
+   */
+  handleImportDataClick([data]) {
+    const [, file] = data
+    const fileReader = new FileReader()
+
+    fileReader.addEventListener('loadend', e => {
+      try {
+        const { result: json } = e.srcElement
+        const state = reduceByPersistedKeys(JSON.parse(json))
+
+        if (
+          Object.keys(state).some(
+            key => typeof this.state[key] !== typeof state[key]
+          )
+        ) {
+          throw new Error(INVALID_DATA_PROVIDED)
+        }
+
+        this.setState({
+          ...this.createInitialState(),
+          ...transformStateDataForImport(state),
+          hasBooted: true,
+        })
+
+        this.showNotification('Data loaded!', 'success')
+      } catch (e) {
+        console.error(e)
+        this.showNotification(e.message, 'error')
+      }
+    })
+
+    fileReader.readAsText(file.slice())
+  },
+
+  async handleSaveButtonClick() {
+    await this.persistState()
+    this.showNotification(PROGRESS_SAVED_MESSAGE, 'info')
+  },
+
+  /**
+   * @param {string} farmName
+   */
+  handleFarmNameUpdate(farmName) {
+    this.setState({ farmName })
+  },
+
+  handleCombineEnabledChange(_e, enableCombine) {
+    this.setState({ isCombineEnabled: enableCombine })
+  },
+
+  handleUseAlternateEndDayButtonPositionChange(
+    _e,
+    useAlternateEndDayButtonPosition
+  ) {
+    this.setState({ useAlternateEndDayButtonPosition })
+  },
+
+  handleShowNotificationsChange({ target: { checked } }) {
+    this.setState({ showNotifications: checked })
+  },
+
+  handleClickNotificationIndicator() {
+    this.openDialogView(dialogView.FARMERS_LOG)
+  },
+
+  handleOnlineToggleChange(_e, goOnline) {
+    if (!goOnline) {
+      this.showNotification(DISCONNECTING_FROM_SERVER, 'info')
+    }
+
+    const { room } = this.state
+
+    // Defer this operation to the next thread to prevent this warning:
+    //
+    // "An update (setState, replaceState, or forceUpdate) was scheduled from
+    // inside an update function. Update functions should be pure, with zero
+    // side-effects. Consider using componentDidUpdate or a callback."
+    setTimeout(
+      () =>
+        this.setState(() => ({
+          redirect: goOnline ? `/online/${encodeURIComponent(room)}` : '/',
+        })),
+      1
+    )
+  },
+
+  handleRoomChange(room) {
+    this.setState(() => ({
+      redirect: `/online/${encodeURIComponent(room.trim() || DEFAULT_ROOM)}`,
+    }))
+  },
+
+  handleActivePlayerButtonClick() {
+    this.openDialogView(dialogView.ONLINE_PEERS)
+  },
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Tue Jul 20 2021 10:56:38 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

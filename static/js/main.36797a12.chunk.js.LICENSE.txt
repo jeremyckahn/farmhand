@@ -1,0 +1,25 @@
+/*!
+   * @member farmhand.Farmhand#state
+   * @type {farmhand.state}
+   */
+
+/*!
+   * @param {Object} [overrides] Data to patch into this.state when persisting.
+   * @return {Promise}
+   */
+
+/*!
+   * @param {ServiceWorkerRegistration} registration
+   */
+
+/*!
+   * @param {boolean} [isFirstDay=false]
+   */
+
+/*!
+   * @param {farmhand.module:enums.dialogView} dialogView
+   */
+
+/*!
+   * @param {farmhand.state} prevState
+   */
