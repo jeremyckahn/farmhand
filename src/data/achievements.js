@@ -12,6 +12,7 @@ import {
 import { cropLifeStage, standardCowColors } from '../enums'
 import { COW_FEED_ITEM_ID, I_AM_RICH_BONUSES } from '../constants'
 import { addItemToInventory } from '../reducers'
+import { features } from '../config'
 
 import { itemsMap } from './maps'
 
@@ -275,19 +276,26 @@ const achievements = [
     condition: state => state.revenue >= goal,
     reward: state => state,
   }))(),
-
-  (() => ({
-    id: 'gold-digger',
-    name: 'Gold Digger',
-    description: `Pay off your loan from the bank.`,
-    rewardDescription: `The Shovel`,
-    condition: state => state.loanBalance === 0,
-    reward: state => ({
-      ...state,
-      shovelUnlocked: true,
-    }),
-  }))(),
 ]
+
+if (features.MINING) {
+  achievements.push(
+    Object.assign(
+      {},
+      {
+        id: 'gold-digger',
+        name: 'Gold Digger',
+        description: `Pay off your loan from the bank.`,
+        rewardDescription: `The Shovel`,
+        condition: state => state.loanBalance === 0,
+        reward: state => ({
+          ...state,
+          shovelUnlocked: true,
+        }),
+      }
+    )
+  )
+}
 
 export default achievements
 
