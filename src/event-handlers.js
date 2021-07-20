@@ -4,6 +4,7 @@ import {
   clearPlot,
   fertilizePlot,
   harvestPlot,
+  minePlot,
   plantInPlot,
   waterPlot,
 } from './reducers'
@@ -15,7 +16,11 @@ import {
   reduceByPersistedKeys,
   transformStateDataForImport,
 } from './utils'
-import { DEFAULT_ROOM, SPRINKLER_ITEM_ID } from './constants'
+import {
+  DEFAULT_ROOM,
+  SPRINKLER_ITEM_ID,
+  TOOLBELT_FIELD_MODES,
+} from './constants'
 import { dialogView, fieldMode } from './enums'
 import {
   DISCONNECTING_FROM_SERVER,
@@ -27,13 +32,12 @@ const {
   CLEANUP,
   FERTILIZE,
   HARVEST,
+  MINE,
   PLANT,
   SET_SCARECROW,
   SET_SPRINKLER,
   WATER,
 } = fieldMode
-
-const toolbeltFieldModes = [CLEANUP, HARVEST, WATER]
 
 export default {
   /**
@@ -125,7 +129,7 @@ export default {
   handleFieldModeSelect(fieldMode) {
     this.setState(({ selectedItemId }) => ({
       selectedItemId:
-        fieldMode !== PLANT || toolbeltFieldModes.includes(fieldMode)
+        fieldMode !== PLANT || TOOLBELT_FIELD_MODES.has(fieldMode)
           ? ''
           : selectedItemId,
       fieldMode,
@@ -176,6 +180,8 @@ export default {
       this.forRange(plantInPlot, rangeRadius, x, y, selectedItemId)
     } else if (fieldMode === HARVEST) {
       this.forRange(harvestPlot, rangeRadius, x, y)
+    } else if (fieldMode === MINE) {
+      this.forRange(minePlot, rangeRadius, x, y)
     } else if (fieldMode === CLEANUP) {
       this.forRange(clearPlot, rangeRadius, x, y)
     } else if (fieldMode === WATER) {

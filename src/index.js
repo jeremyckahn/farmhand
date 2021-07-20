@@ -54,6 +54,13 @@
  * @property {boolean} wasWateredToday
  */
 
+/**
+ * Represents a shoveled plot
+ * @typedef farmhand.shoveledPlot
+ * @type {Object}
+ * @property {boolean} wasShoveledToday
+ */
+
 // Note: At some point farmhand.cow will be abstracted to farmhand.animal, but
 // there's only one animal so far so the abstraction isn't helpful yet.
 /**

@@ -1,6 +1,12 @@
 $not-allowed-color: rgba(255, 0, 0, 0.5)
 
 .Plot
+  --color-red-danger: rgba(255, 0, 0, 0.5)
+  --color-blue-water: rgba(125, 245, 255, 0.75)
+  --color-brown-fertilize: rgba(125, 56, 0, .75)
+  --color-green-ok: rgba(0, 255, 0, 0.5)
+  --color-yellow: #ff0
+
   background-repeat: no-repeat
   background-size: cover
   border: solid 1px #000
@@ -8,20 +14,27 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
   image-rendering: pixelated
 
   .water-mode &.crop:hover
-    background-color: rgba(125, 245, 255, 0.75)
+    background-color: var(--color-blue-hover)
     cursor: pointer
 
   .fertilize-mode &.can-be-fertilized
-    background-color: rgba(125, 56, 0, .75)
+    background-color: var(--color-brown-fertilize)
 
     &:hover
       cursor: pointer
 
   .harvest-mode &.is-ripe
-    background-color: rgba(0, 255, 0, 0.5)
+    background-color: var(--color-green-ok)
 
     &:hover
       cursor: pointer
+
+  .mine-mode &.can-be-mined
+    background-color: var(--color-green-ok)
+
+    &:hover
+      cursor: pointer
+      border-color: var(--color-yellow)
 
   .cleanup-mode &.crop,
     background-color: rgba(255, 255, 0, 0.5)
@@ -29,15 +42,15 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
 
   .harvest-mode.is-inventory-full &.crop.is-ripe,
   .cleanup-mode.is-inventory-full &.is-replantable
-    background-color: $not-allowed-color
+    background-color: var(--color-red-danger)
     cursor: not-allowed
 
   .cleanup-mode &.is-replantable
-    background-color: rgba(0, 255, 0, 0.5)
+    background-color: var(--color-green-ok)
     cursor: pointer
 
   .cleanup-mode &.is-ripe
-    background-color: $not-allowed-color
+    background-color: var(--color-red-danger)
     cursor: auto
 
   &.is-in-hover-range
@@ -55,7 +68,7 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
       opacity: 0.5
 
     &:not(.is-empty)
-      background-color: $not-allowed-color
+      background-color: var(--color-red-danger)
       background-image: none
       cursor: not-allowed
 
@@ -68,3 +81,4 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
 
     &.is-empty img
       background-image: url(../../img/items/scarecrow.png)
+

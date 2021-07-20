@@ -1,39 +1,84 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, screen } from '@testing-library/react'
 
 import { fieldMode } from '../../enums'
 
 import { Toolbelt } from './Toolbelt'
 
-let component
+jest.mock('../../config', () => ({
+  ...jest.requireActual('../../config'),
+  features: {
+    MINING: true,
+  },
+}))
 
-beforeEach(() => {
-  component = shallow(
-    <Toolbelt
-      {...{
-        fieldMode: fieldMode.OBSERVE,
-        handleFieldModeSelect: () => {},
-      }}
-    />
-  )
-})
+describe('<ToolBelt />', () => {
+  const getSelectedButton = () => {
+    return screen
+      .getAllByRole('button')
+      .find(b => b.classList.contains('selected'))
+  }
 
-test('renders shop inventory', () => {
-  expect(component).toHaveLength(1)
-})
-
-describe('tool selection', () => {
-  test('selects no tools by default', () => {
-    expect(component.find('.selected')).toHaveLength(0)
+  test('renders a button for each of the default tools', () => {
+    render(<Toolbelt fieldMode={fieldMode.OBSERVE} />)
+    expect(screen.getAllByRole('button')).toHaveLength(3)
   })
 
-  describe('a tool is selected', () => {
-    beforeEach(() => {
-      component.setProps({ fieldMode: fieldMode.WATER })
+  test('renders the shovel tool once gold digger achievement is completed', () => {
+    render(
+      <Toolbelt
+        fieldMode={fieldMode.OBSERVE}
+        completedAchievements={{ 'gold-digger': true }}
+      />
+    )
+    expect(screen.getAllByRole('button')).toHaveLength(4)
+  })
+
+  describe('tool selection', () => {
+    test('there are no selected tools by default', () => {
+      render(<Toolbelt fieldMode={fieldMode.OBSERVE} />)
+      expect(getSelectedButton()).toBeUndefined()
     })
 
-    test('renders selected tool appropriately', () => {
-      expect(component.find('.selected').find('.watering-can')).toHaveLength(1)
+    test('marks the watering can selected for field mode WATER', () => {
+      render(<Toolbelt fieldMode={fieldMode.WATER} />)
+      const label = screen.getByText(/Select the watering can/)
+
+      expect(label.closest('button').classList.contains('selected')).toEqual(
+        true
+      )
+    })
+
+    test('marks the scythe selected for field mode HARVEST', () => {
+      render(<Toolbelt fieldMode={fieldMode.HARVEST} />)
+      const label = screen.getByText(/Select the scythe/)
+
+      expect(label.closest('button').classList.contains('selected')).toEqual(
+        true
+      )
+    })
+
+    test('marks the hoe selected for field mode CLEANUP', () => {
+      render(<Toolbelt fieldMode={fieldMode.CLEANUP} />)
+      const label = screen.getByText(/Select the hoe/)
+
+      expect(label.closest('button').classList.contains('selected')).toEqual(
+        true
+      )
+    })
+
+    test('marks the shovel selected for field mode MINE', () => {
+      render(
+        <Toolbelt
+          fieldMode={fieldMode.MINE}
+          completedAchievements={{ 'gold-digger': true }}
+        />
+      )
+      const label = screen.getByText(/Select the shovel/)
+
+      expect(label.closest('button').classList.contains('selected')).toEqual(
+        true
+      )
     })
   })
 })

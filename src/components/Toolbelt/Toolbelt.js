@@ -1,81 +1,86 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
-import Tooltip from '@material-ui/core/Tooltip'
-import { func, string } from 'prop-types'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import FarmhandContext from '../../Farmhand.context'
-import './Toolbelt.sass'
-import { fieldMode } from '../../enums'
-import { tools, pixel } from '../../img'
+import Button from '@material-ui/core/Button'
+import Tooltip from '@material-ui/core/Tooltip'
 
-const { CLEANUP, HARVEST, WATER } = fieldMode
+import { memoize } from '../../utils'
+
+import FarmhandContext from '../../Farmhand.context'
+import toolsData from '../../data/tools'
+
+import { tools as toolImages, pixel } from '../../img'
+
+import './Toolbelt.sass'
+
+const noop = () => {}
+const getTools = memoize(shovelUnlocked => {
+  return Object.values(toolsData)
+    .filter(t => shovelUnlocked || t.id !== 'shovel')
+    .sort(t => t.order)
+})
 
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
-}) => (
-  <div className="Toolbelt">
-    <div className="button-array">
-      {[
-        {
-          alt: 'A watering can for hydrating plants.',
-          fieldMode: WATER,
-          toolImageId: 'watering-can',
-        },
-        {
-          alt: 'A scythe for crop harvesting.',
-          fieldMode: HARVEST,
-          toolImageId: 'scythe',
-        },
-        {
-          alt:
-            'A hoe for removing crops and disposing of them. Also returns replantable items to your inventory.',
-          fieldMode: CLEANUP,
-          toolImageId: 'hoe',
-        },
-      ].map(({ alt, fieldMode, toolImageId }, i) => (
-        <Tooltip
-          {...{
-            key: fieldMode,
-            placement: 'top',
-            title: (
-              <>
-                <p>{alt}</p>
-                <p>(shift + {i + 1})</p>
-              </>
-            ),
-          }}
-        >
-          <Button
+  completedAchievements,
+}) => {
+  const tools = getTools(completedAchievements['gold-digger'])
+
+  return (
+    <div className="Toolbelt">
+      <div className="button-array">
+        {tools.map(({ alt, fieldMode, fieldKey, hiddenText, id }) => (
+          <Tooltip
             {...{
-              className: classNames({
-                selected: fieldMode === currentFieldMode,
-              }),
-              color: 'primary',
-              onClick: () => handleFieldModeSelect(fieldMode),
-              variant: fieldMode === currentFieldMode ? 'contained' : 'text',
+              key: fieldMode,
+              placement: 'top',
+              title: (
+                <>
+                  <p>{alt}</p>
+                  <p>({fieldKey})</p>
+                </>
+              ),
             }}
           >
-            {/* alt is in a different format here because of linter weirdness. */}
-            <img
+            <Button
               {...{
-                className: `square ${toolImageId}`,
-                src: pixel,
-                style: { backgroundImage: `url(${tools[toolImageId]}` },
+                className: classNames({
+                  selected: fieldMode === currentFieldMode,
+                }),
+                color: 'primary',
+                onClick: () => handleFieldModeSelect(fieldMode),
+                variant: fieldMode === currentFieldMode ? 'contained' : 'text',
               }}
-              alt={alt}
-            />
-          </Button>
-        </Tooltip>
-      ))}
+            >
+              {/* alt is in a different format here because of linter weirdness. */}
+              <img
+                {...{
+                  className: `square ${id}`,
+                  src: pixel,
+                  style: { backgroundImage: `url(${toolImages[id]}` },
+                }}
+                alt={alt}
+              />
+              <span className="visually_hidden">{hiddenText}</span>
+            </Button>
+          </Tooltip>
+        ))}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 Toolbelt.propTypes = {
-  fieldMode: string.isRequired,
-  handleFieldModeSelect: func.isRequired,
+  fieldMode: PropTypes.string.isRequired,
+  handleFieldModeSelect: PropTypes.func,
+  completedAchievements: PropTypes.object,
+}
+
+Toolbelt.defaultProps = {
+  handleFieldModeSelect: noop,
+  completedAchievements: {},
 }
 
 export default function Consumer(props) {

@@ -39,6 +39,7 @@ export const fieldMode = enumify([
   'CLEANUP',
   'FERTILIZE',
   'HARVEST',
+  'MINE',
   'OBSERVE',
   'PLANT',
   'SET_SPRINKLER',
