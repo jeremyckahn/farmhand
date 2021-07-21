@@ -83,6 +83,7 @@ import scythe from './tools/scythe.png'
 import shovel from './tools/shovel.png'
 import wateringCan from './tools/watering-can.png'
 
+import stone from './ores/stone.png'
 import bronzeOre from './ores/bronze-ore.png'
 import silverOre from './ores/silver-ore.png'
 import goldOre from './ores/gold-ore.png'
@@ -172,6 +173,7 @@ export const items = {
   'watermelon-seed': watermelonSeed,
 
   // Ores
+  stone,
   'bronze-ore': bronzeOre,
   'silver-ore': silverOre,
   'gold-ore': goldOre,
