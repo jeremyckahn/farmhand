@@ -1,6 +1,6 @@
 {
   "name": "@jeremyckahn/farmhand",
-  "version": "1.10.18",
+  "version": "1.10.19",
   "publishConfig": {
     "access": "public"
   },
@@ -19,7 +19,7 @@
     "preversion": "CI=true npm run test",
     "postversion": "git push && git push --tags",
     "start": "react-scripts start",
-    "start:api": "vercel dev --listen 0.0.0.0:3001",
+    "start:api": "vercel dev --listen localhost:3001",
     "start:backend": "docker-compose up",
     "test": "react-scripts test",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
