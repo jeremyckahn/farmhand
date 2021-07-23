@@ -35,14 +35,18 @@ export const INITIAL_FIELD_HEIGHT = 10
 
 export const PURCHASEABLE_FIELD_SIZES = freeze(
   new Map([
-    [1, { columns: 8, rows: 12, price: 1000 }],
-    [2, { columns: 10, rows: 16, price: 2000 }],
-    [3, { columns: 12, rows: 18, price: 3000 }],
+    [1, { columns: 8, rows: 12, price: 1_000 }],
+    [2, { columns: 10, rows: 16, price: 2_000 }],
+    [3, { columns: 12, rows: 18, price: 3_000 }],
   ])
 )
 
 export const PURCHASEABLE_COMBINES = freeze(
-  new Map([[1, { type: 'Basic', price: 500000 }]])
+  new Map([[1, { type: 'Basic', price: 500_000 }]])
+)
+
+export const PURCHASEABLE_SMELTERS = freeze(
+  new Map([[1, { type: 'Basic', price: 15_000 }]])
 )
 
 export const PURCHASEABLE_COW_PENS = freeze(

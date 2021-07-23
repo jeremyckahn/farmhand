@@ -240,6 +240,13 @@ export default {
   },
 
   /**
+   * @param {number} smelterId
+   */
+  handleSmelterPurchase(smelterId) {
+    this.purchaseSmelter(smelterId)
+  },
+
+  /**
    * @param {number} cowPenId
    */
   handleCowPenPurchase(cowPenId) {
