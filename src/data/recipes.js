@@ -309,3 +309,42 @@ export const popcorn = itemify({
   condition: state =>
     state.itemsSold[items.corn.id] >= 12 && state.itemsSold[butter.id] >= 6,
 })
+
+/**
+ * @property farmhand.module:recipes.bronzeIngot
+ * @type {farmhand.recipe}
+ */
+export const bronzeIngot = itemify({
+  id: 'bronze-ingot',
+  name: 'Bronze Ingot',
+  ingredients: {
+    [items.bronzeOre.id]: 5,
+  },
+  condition: state => state.purchasedSmelter,
+})
+
+/**
+ * @property farmhand.module:recipes.silverIngot
+ * @type {farmhand.recipe}
+ */
+export const silverIngot = itemify({
+  id: 'silver-ingot',
+  name: 'Silver Ingot',
+  ingredients: {
+    [items.silverOre.id]: 5,
+  },
+  condition: state => state.purchasedSmelter,
+})
+
+/**
+ * @property farmhand.module:recipes.goldIngot
+ * @type {farmhand.recipe}
+ */
+export const goldIngot = itemify({
+  id: 'gold-ingot',
+  name: 'Gold Ingot',
+  ingredients: {
+    [items.goldOre.id]: 5,
+  },
+  condition: state => state.purchasedSmelter,
+})

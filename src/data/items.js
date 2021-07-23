@@ -50,7 +50,7 @@ export {
   wheatSeed,
 } from './crops'
 
-export { bronzeOre, silverOre, stone } from './ores'
+export { bronzeOre, goldOre, silverOre, stone } from './ores'
 
 ////////////////////////////////////////
 //
