@@ -1,16 +1,22 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { prettyDOM, render, screen } from '@testing-library/react'
 import Button from '@material-ui/core/Button'
 
 import { generateCow } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
-import { cowColors } from '../../enums'
+import { cowColors, genders } from '../../enums'
 
 import {
   CowPenContextMenu,
   CowCard,
   CowCardSubheader,
 } from './CowPenContextMenu'
+
+jest.mock('../Item', () => ({
+  __esModule: true,
+  default: () => <></>,
+}))
 
 let component
 
@@ -36,11 +42,15 @@ describe('CowPenContextMenu', () => {
   describe('cow selection', () => {
     describe('cow is not selected', () => {
       test('provides correct isSelected prop', () => {
-        component = shallow(<CowPenContextMenu {...baseProps} />)
-        component.setProps({
-          cowInventory: [generateCow({ id: 'foo' })],
-          selectedCowId: 'bar',
-        })
+        component = shallow(
+          <CowPenContextMenu
+            {...{
+              ...baseProps,
+              cowInventory: [generateCow({ id: 'foo' })],
+              selectedCowId: 'bar',
+            }}
+          />
+        )
 
         expect(
           component
@@ -82,6 +92,11 @@ describe('CowCard', () => {
       baseWeight: 100,
     }),
     cowInventory: [],
+    cowBreedingPen: {
+      cowId1: null,
+      cowId2: null,
+      daysUntilBirth: -1,
+    },
     handleCowSelect: () => {},
     handleCowNameInputChange: () => {},
     handleCowPurchaseClick: () => {},
@@ -96,17 +111,53 @@ describe('CowCard', () => {
     describe('player does not have enough money', () => {
       describe('cow pen has no space', () => {
         test('button is disabled', () => {
-          component = shallow(<CowCard {...{ ...baseProps, money: 100 }} />)
+          const cowCapacity = PURCHASEABLE_COW_PENS.get(1).cows
+          const testCow = generateCow({
+            color: cowColors.WHITE,
+            name: '',
+            baseWeight: 100,
+          })
 
-          expect(component.find(Button).props().disabled).toBe(true)
+          render(
+            <CowCard
+              {...{
+                ...baseProps,
+                cow: testCow,
+                money: 0,
+                cowInventory: Array(cowCapacity)
+                  .fill(null)
+                  .map(() => generateCow()),
+              }}
+            />
+          )
+
+          const button = screen.getByText('Buy').closest('button')
+
+          expect(button).toHaveAttribute('disabled')
         })
       })
 
       describe('cow pen has space', () => {
         test('button is disabled', () => {
-          component = shallow(<CowCard {...{ ...baseProps, money: 100 }} />)
+          const testCow = generateCow({
+            color: cowColors.WHITE,
+            name: '',
+            baseWeight: 100,
+          })
 
-          expect(component.find(Button).props().disabled).toBe(true)
+          render(
+            <CowCard
+              {...{
+                ...baseProps,
+                cow: testCow,
+                money: 0,
+              }}
+            />
+          )
+
+          const button = screen.getByText('Buy').closest('button')
+
+          expect(button).toHaveAttribute('disabled')
         })
       })
     })
