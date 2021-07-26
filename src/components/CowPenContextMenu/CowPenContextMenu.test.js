@@ -1,11 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { prettyDOM, render, screen } from '@testing-library/react'
-import Button from '@material-ui/core/Button'
+import { render, screen } from '@testing-library/react'
 
 import { generateCow } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
-import { cowColors, genders } from '../../enums'
+import { cowColors } from '../../enums'
 
 import {
   CowPenContextMenu,
@@ -166,7 +165,8 @@ describe('CowCard', () => {
       describe('cow pen has no space', () => {
         test('button is disabled', () => {
           const cowCapacity = PURCHASEABLE_COW_PENS.get(1).cows
-          component = shallow(
+
+          render(
             <CowCard
               {...{
                 ...baseProps,
@@ -178,15 +178,19 @@ describe('CowCard', () => {
             />
           )
 
-          expect(component.find(Button).props().disabled).toBe(true)
+          const button = screen.getByText('Buy').closest('button')
+
+          expect(button).toHaveAttribute('disabled')
         })
       })
 
       describe('cow pen has space', () => {
         test('button is not disabled', () => {
-          component = shallow(<CowCard {...{ ...baseProps, money: 150 }} />)
+          render(<CowCard {...{ ...baseProps, money: 150 }} />)
 
-          expect(component.find(Button).props().disabled).toBe(false)
+          const button = screen.getByText('Buy').closest('button')
+
+          expect(button).not.toHaveAttribute('disabled')
         })
       })
     })
@@ -209,8 +213,9 @@ describe('CowCardSubheader', () => {
   describe('happiness display', () => {
     describe('cow is not purchased', () => {
       test('renders no hearts', () => {
-        component = shallow(<CowCardSubheader {...baseProps} />)
-        expect(component.find('.heart')).toHaveLength(0)
+        const { container } = render(<CowCardSubheader {...baseProps} />)
+
+        expect(container.querySelector('.heart')).toBeNull()
       })
     })
 
@@ -224,11 +229,7 @@ describe('CowCardSubheader', () => {
       })
 
       test('renders full hearts that match cow happiness', () => {
-        component = shallow(<CowCardSubheader {...baseProps} />)
-
-        expect(component.find('.heart.is-full')).toHaveLength(0)
-
-        component = shallow(
+        let { container } = render(
           <CowCardSubheader
             {...{
               ...baseProps,
@@ -243,9 +244,10 @@ describe('CowCardSubheader', () => {
           />
         )
 
-        expect(component.find('.heart.is-full')).toHaveLength(5)
+        expect(container.querySelectorAll('.heart')).toHaveLength(10)
+        expect(container.querySelectorAll('.heart.is-full')).toHaveLength(5)
 
-        component = shallow(
+        container = render(
           <CowCardSubheader
             {...{
               ...baseProps,
@@ -258,9 +260,10 @@ describe('CowCardSubheader', () => {
               isCowPurchased: true,
             }}
           />
-        )
+        ).container
 
-        expect(component.find('.heart.is-full')).toHaveLength(10)
+        expect(container.querySelectorAll('.heart')).toHaveLength(10)
+        expect(container.querySelectorAll('.heart.is-full')).toHaveLength(10)
       })
     })
   })
