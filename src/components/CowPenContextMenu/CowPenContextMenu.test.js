@@ -1,5 +1,4 @@
 import React from 'react'
-import { shallow } from 'enzyme'
 import { render, screen } from '@testing-library/react'
 
 import { generateCow } from '../../utils'
@@ -17,67 +16,64 @@ jest.mock('../Item', () => ({
   default: () => <></>,
 }))
 
-let component
-
 describe('CowPenContextMenu', () => {
-  const baseProps = {
-    cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
-    cowForSale: generateCow(),
-    cowInventory: [],
-    debounced: {},
-    handleCowAutomaticHugChange: () => {},
-    handleCowBreedChange: () => {},
-    handleCowHugClick: () => {},
-    handleCowNameInputChange: () => {},
-    handleCowPurchaseClick: () => {},
-    handleCowSelect: () => {},
-    handleCowSellClick: () => {},
-    inventory: [],
-    money: 0,
-    purchasedCowPen: 1,
-    selectedCowId: '',
-  }
+  let baseProps
 
   describe('cow selection', () => {
+    let testCow
+
+    beforeEach(() => {
+      jest.spyOn(Math, 'random').mockReturnValue(0)
+
+      baseProps = {
+        cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
+        cowForSale: generateCow(),
+        cowInventory: [],
+        debounced: {},
+        handleCowAutomaticHugChange: () => {},
+        handleCowBreedChange: () => {},
+        handleCowHugClick: () => {},
+        handleCowNameInputChange: () => {},
+        handleCowPurchaseClick: () => {},
+        handleCowSelect: () => {},
+        handleCowSellClick: () => {},
+        inventory: [],
+        money: 0,
+        purchasedCowPen: 1,
+        selectedCowId: '',
+      }
+      testCow = generateCow({ id: 'foo' })
+    })
+
     describe('cow is not selected', () => {
       test('provides correct isSelected prop', () => {
-        component = shallow(
+        const { container } = render(
           <CowPenContextMenu
             {...{
               ...baseProps,
-              cowInventory: [generateCow({ id: 'foo' })],
+              cowInventory: [testCow],
               selectedCowId: 'bar',
             }}
           />
         )
 
-        expect(
-          component
-            .find('.card-list')
-            .find(CowCard)
-            .props().isSelected
-        ).toEqual(false)
+        expect(container).toMatchSnapshot()
       })
     })
 
     describe('cow is selected', () => {
       test('provides correct isSelected prop', () => {
-        component = shallow(
+        const { container } = render(
           <CowPenContextMenu
             {...{
               ...baseProps,
-              cowInventory: [generateCow({ id: 'foo' })],
+              cowInventory: [testCow],
               selectedCowId: 'foo',
             }}
           />
         )
 
-        expect(
-          component
-            .find('.card-list')
-            .find(CowCard)
-            .props().isSelected
-        ).toEqual(true)
+        expect(container).toMatchSnapshot()
       })
     })
   })
@@ -198,17 +194,22 @@ describe('CowCard', () => {
 })
 
 describe('CowCardSubheader', () => {
-  const baseProps = {
-    cow: generateCow({
-      color: cowColors.WHITE,
-      happiness: 0,
-      name: '',
-      baseWeight: 100,
-    }),
-    cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
-    cowValue: 1000,
-    isCowPurchased: false,
-  }
+  let baseProps
+
+  beforeEach(() => {
+    jest.spyOn(Math, 'random').mockReturnValue(0)
+    baseProps = {
+      cow: generateCow({
+        color: cowColors.WHITE,
+        happiness: 0,
+        name: '',
+        baseWeight: 100,
+      }),
+      cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
+      cowValue: 1000,
+      isCowPurchased: false,
+    }
+  })
 
   describe('happiness display', () => {
     describe('cow is not purchased', () => {
@@ -221,11 +222,11 @@ describe('CowCardSubheader', () => {
 
     describe('cow is purchased', () => {
       test('renders hearts', () => {
-        component = shallow(
+        const { container } = render(
           <CowCardSubheader {...{ ...baseProps, isCowPurchased: true }} />
         )
 
-        expect(component.find('.heart')).toHaveLength(10)
+        expect(container.querySelectorAll('.heart')).toHaveLength(10)
       })
 
       test('renders full hearts that match cow happiness', () => {
