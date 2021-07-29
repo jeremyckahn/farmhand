@@ -79,6 +79,7 @@ export const CowCardSubheader = ({
   isInBreedingPen = isCowInBreedingPen(cow, cowBreedingPen),
   isBreedingPenFull = cowBreedingPen.cowId1 !== null &&
     cowBreedingPen.cowId2 !== null,
+  canBePutInBreedingPen = !isInBreedingPen && !isBreedingPenFull,
 }) => (
   <>
     <CowBloodline {...{ colorsInBloodline: cow.colorsInBloodline }} />
@@ -158,7 +159,7 @@ export const CowCardSubheader = ({
                   }}
                 />
               ),
-              disabled: !isInBreedingPen && isBreedingPenFull,
+              disabled: !canBePutInBreedingPen,
               label: 'Breed',
             }}
           />
