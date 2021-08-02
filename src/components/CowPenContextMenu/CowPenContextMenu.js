@@ -90,16 +90,15 @@ export const CowCardSubheader = ({
   let canBeMovedToBreedingPen = !isBreedingPenFull
 
   if (canBeMovedToBreedingPen) {
-    const potentialMateId =
-      cowBreedingPen.cowId1 === null
-        ? cowBreedingPen.cowId2
-        : cowBreedingPen.cowId1
+    const potentialMateId = cowBreedingPen.cowId2 ?? cowBreedingPen.cowId1
 
     if (potentialMateId !== null) {
       canBeMovedToBreedingPen =
         cow.gender !== getCowMapById(cowInventory)[potentialMateId].gender
     }
   }
+
+  const disableBreedingControlTooltip = !canBeMovedToBreedingPen && !isInBreedingPen
 
   return (
     <>
@@ -160,6 +159,9 @@ export const CowCardSubheader = ({
             {...{
               arrow: true,
               placement: 'top',
+              disableFocusListener: disableBreedingControlTooltip,
+              disableHoverListener: disableBreedingControlTooltip,
+              disableTouchListener: disableBreedingControlTooltip,
               title: isInBreedingPen
                 ? `Uncheck this box to return ${cow.name} to the regular pen.`
                 : `Check this box to move ${
