@@ -34,6 +34,7 @@ import {
   getCowSellValue,
   getCowWeight,
   findCowById,
+  memoize,
   moneyString,
   nullArray,
 } from '../../utils'
@@ -66,11 +67,12 @@ const CowBloodline = memo(({ colorsInBloodline }) => (
   </ul>
 ))
 
-const getCowMapById = cowInventory =>
+const getCowMapById = memoize(cowInventory =>
   cowInventory.reduce((acc, cow) => {
     acc[cow.id] = cow
     return acc
   }, {})
+)
 
 export const CowCardSubheader = ({
   cow,
@@ -98,7 +100,8 @@ export const CowCardSubheader = ({
     }
   }
 
-  const disableBreedingControlTooltip = !canBeMovedToBreedingPen && !isInBreedingPen
+  const disableBreedingControlTooltip =
+    !canBeMovedToBreedingPen && !isInBreedingPen
 
   return (
     <>
