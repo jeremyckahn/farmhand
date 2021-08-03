@@ -12,6 +12,7 @@ Thank you to everyone who has contributed to Farmhand's development!
 ## Artists
 
 - Kairi (numerous art contributions via discord)
+- [@fgggg-a](https://github.com/fgggg-a) (numerous art contributions via discord)
 - [@maggiminer](https://github.com/maggiminer) ([Rainbow Cheese art](https://discord.com/channels/714539345050075176/714539345637408793/821744183999332352))
 
 Take a look at the GitHub repo's [Contributors page](https://github.com/jeremyckahn/farmhand/graphs/contributors) to see who's committed what.

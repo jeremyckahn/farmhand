@@ -78,8 +78,10 @@ export const itemType = enumify([
   'FERTILIZER',
   'HUGGING_MACHINE',
   'MILK',
+  'ORE',
   'SCARECROW',
   'SPRINKLER',
+  'STONE',
 ])
 
 /**
