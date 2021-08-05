@@ -146,9 +146,7 @@ export const CowCardSubheader = ({
                   <Checkbox
                     {...{
                       color: 'primary',
-                      // TODO: This Boolean cast is needed for backwards
-                      // compatibility. Remove it after 10/1/2020.
-                      checked: Boolean(cow.isUsingHuggingMachine),
+                      checked: cow.isUsingHuggingMachine,
                       onChange: e => handleCowAutomaticHugChange(e, cow),
                     }}
                   />
