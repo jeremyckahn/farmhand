@@ -57,7 +57,7 @@ describe('CowPenContextMenu', () => {
           />
         )
 
-        expect(container).toMatchSnapshot()
+        expect(container.querySelectorAll('.cow-card')[1]).toMatchSnapshot()
       })
     })
 
@@ -73,7 +73,7 @@ describe('CowPenContextMenu', () => {
           />
         )
 
-        expect(container).toMatchSnapshot()
+        expect(container.querySelectorAll('.cow-card')[1]).toMatchSnapshot()
       })
     })
   })

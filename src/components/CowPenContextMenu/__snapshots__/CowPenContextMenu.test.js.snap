@@ -1,987 +1,733 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CowPenContextMenu cow selection cow is not selected provides correct isSelected prop 1`] = `
-<div>
+<div
+  class="MuiPaper-root MuiCard-root cow-card MuiPaper-elevation1 MuiPaper-rounded"
+>
   <div
-    class="CowPenContextMenu"
+    class="MuiCardHeader-root"
   >
-    <h3>
-      Supplies
-    </h3>
-    <ul
-      class="card-list"
-    >
-      <li />
-      <li />
-    </ul>
-    <hr
-      class="MuiDivider-root"
-    />
-    <h3>
-      For sale
-    </h3>
     <div
-      class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
+      class="MuiCardHeader-avatar"
     >
-      <div
-        class="MuiCardHeader-root"
+      <img
+        alt="Cow"
+        src="yellow-cow.png"
+      />
+    </div>
+    <div
+      class="MuiCardHeader-content"
+    >
+      <span
+        class="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
       >
         <div
-          class="MuiCardHeader-avatar"
+          class="MuiFormControl-root MuiTextField-root"
         >
-          <img
-            alt="Cow"
-            src="yellow-cow.png"
-          />
-        </div>
-        <div
-          class="MuiCardHeader-content"
-        >
-          <span
-            class="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
+          <div
+            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
           >
-            Akee
-             
+            <input
+              aria-invalid="false"
+              class="MuiInputBase-input MuiInput-input"
+              placeholder="Name"
+              type="text"
+              value="Akee"
+            />
+          </div>
+        </div>
+         
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-mars fa-w-12 "
+          data-icon="mars"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 384 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M372 64h-79c-10.7 0-16 12.9-8.5 20.5l16.9 16.9-80.7 80.7c-22.2-14-48.5-22.1-76.7-22.1C64.5 160 0 224.5 0 304s64.5 144 144 144 144-64.5 144-144c0-28.2-8.1-54.5-22.1-76.7l80.7-80.7 16.9 16.9c7.6 7.6 20.5 2.2 20.5-8.5V76c0-6.6-5.4-12-12-12zM144 384c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+            fill="currentColor"
+          />
+        </svg>
+      </span>
+      <span
+        class="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+      >
+        <ul
+          class="bloodline"
+        >
+          <li
+            class="yellow"
+          />
+        </ul>
+        <p>
+          1
+           
+          day
+           old
+        </p>
+        <p>
+          Value
+          : 
+          $0.00
+        </p>
+        <p>
+          Weight: 
+          1780
+           lbs.
+        </p>
+        <ol
+          class="hearts"
+        >
+          <li>
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-mars fa-w-12 "
-              data-icon="mars"
-              data-prefix="fas"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
               focusable="false"
               role="img"
-              viewBox="0 0 384 512"
+              viewBox="0 0 512 512"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M372 64h-79c-10.7 0-16 12.9-8.5 20.5l16.9 16.9-80.7 80.7c-22.2-14-48.5-22.1-76.7-22.1C64.5 160 0 224.5 0 304s64.5 144 144 144 144-64.5 144-144c0-28.2-8.1-54.5-22.1-76.7l80.7-80.7 16.9 16.9c7.6 7.6 20.5 2.2 20.5-8.5V76c0-6.6-5.4-12-12-12zM144 384c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
                 fill="currentColor"
               />
             </svg>
-          </span>
-          <span
-            class="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-          >
-            <ul
-              class="bloodline"
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <li
-                class="yellow"
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
               />
-            </ul>
-            <p>
-              Price
-              : 
-              $2,670.00
-            </p>
-            <p>
-              Weight: 
-              1780
-               lbs.
-            </p>
-          </span>
-        </div>
-      </div>
-      <div
-        class="MuiCardActions-root MuiCardActions-spacing"
-      >
-        <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained purchase MuiButton-containedPrimary Mui-disabled Mui-disabled"
-          disabled=""
-          tabindex="-1"
-          type="button"
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+        </ol>
+        <label
+          class="MuiFormControlLabel-root Mui-disabled"
+          title="Check this box to put Akee into a Hugging Machine and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory."
         >
           <span
-            class="MuiButton-label"
+            aria-disabled="true"
+            class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-disabled-3 Mui-disabled MuiIconButton-colorPrimary Mui-disabled Mui-disabled"
+            tabindex="-1"
           >
-            Buy
+            <span
+              class="MuiIconButton-label"
+            >
+              <input
+                class="PrivateSwitchBase-input-4"
+                data-indeterminate="false"
+                disabled=""
+                type="checkbox"
+                value=""
+              />
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                />
+              </svg>
+            </span>
           </span>
-        </button>
-      </div>
+          <span
+            class="MuiTypography-root MuiFormControlLabel-label Mui-disabled MuiTypography-body1"
+          >
+            Hug automatically
+          </span>
+        </label>
+        <label
+          class="MuiFormControlLabel-root"
+          title="Check this box to move Akee to the breeding pen to mate with a female cow."
+        >
+          <span
+            aria-disabled="false"
+            class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <input
+                class="PrivateSwitchBase-input-4"
+                data-indeterminate="false"
+                type="checkbox"
+                value=""
+              />
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </span>
+          <span
+            class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+          >
+            Breed
+          </span>
+        </label>
+      </span>
     </div>
-    <hr
-      class="MuiDivider-root"
-    />
-    <h3>
-      Breeding pen (
-      0
-       / 2)
-    </h3>
-    <ul
-      class="card-list purchased-cows breeding-cows"
-    />
-    <hr
-      class="MuiDivider-root"
-    />
-    <h3>
-      Cows (
-      1
-       /
-       
-      10
-      )
-    </h3>
-    <ul
-      class="card-list purchased-cows"
+  </div>
+  <div
+    class="MuiCardActions-root MuiCardActions-spacing"
+  >
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained hug MuiButton-containedPrimary"
+      tabindex="0"
+      type="button"
     >
-      <li>
-        <div
-          class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
-        >
-          <div
-            class="MuiCardHeader-root"
-          >
-            <div
-              class="MuiCardHeader-avatar"
-            >
-              <img
-                alt="Cow"
-                src="yellow-cow.png"
-              />
-            </div>
-            <div
-              class="MuiCardHeader-content"
-            >
-              <span
-                class="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
-              >
-                <div
-                  class="MuiFormControl-root MuiTextField-root"
-                >
-                  <div
-                    class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiInput-input"
-                      placeholder="Name"
-                      type="text"
-                      value="Akee"
-                    />
-                  </div>
-                </div>
-                 
-                <svg
-                  aria-hidden="true"
-                  class="svg-inline--fa fa-mars fa-w-12 "
-                  data-icon="mars"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  viewBox="0 0 384 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M372 64h-79c-10.7 0-16 12.9-8.5 20.5l16.9 16.9-80.7 80.7c-22.2-14-48.5-22.1-76.7-22.1C64.5 160 0 224.5 0 304s64.5 144 144 144 144-64.5 144-144c0-28.2-8.1-54.5-22.1-76.7l80.7-80.7 16.9 16.9c7.6 7.6 20.5 2.2 20.5-8.5V76c0-6.6-5.4-12-12-12zM144 384c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
-                class="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-              >
-                <ul
-                  class="bloodline"
-                >
-                  <li
-                    class="yellow"
-                  />
-                </ul>
-                <p>
-                  1
-                   
-                  day
-                   old
-                </p>
-                <p>
-                  Value
-                  : 
-                  $0.00
-                </p>
-                <p>
-                  Weight: 
-                  1780
-                   lbs.
-                </p>
-                <ol
-                  class="hearts"
-                >
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                </ol>
-                <label
-                  class="MuiFormControlLabel-root Mui-disabled"
-                  title="Check this box to put Akee into a Hugging Machine and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory."
-                >
-                  <span
-                    aria-disabled="true"
-                    class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-disabled-3 Mui-disabled MuiIconButton-colorPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1"
-                  >
-                    <span
-                      class="MuiIconButton-label"
-                    >
-                      <input
-                        class="PrivateSwitchBase-input-4"
-                        data-indeterminate="false"
-                        disabled=""
-                        type="checkbox"
-                        value=""
-                      />
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  <span
-                    class="MuiTypography-root MuiFormControlLabel-label Mui-disabled MuiTypography-body1"
-                  >
-                    Hug automatically
-                  </span>
-                </label>
-                <label
-                  class="MuiFormControlLabel-root"
-                  title="Check this box to move Akee to the breeding pen to mate with a female cow."
-                >
-                  <span
-                    aria-disabled="false"
-                    class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
-                  >
-                    <span
-                      class="MuiIconButton-label"
-                    >
-                      <input
-                        class="PrivateSwitchBase-input-4"
-                        data-indeterminate="false"
-                        type="checkbox"
-                        value=""
-                      />
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                        />
-                      </svg>
-                    </span>
-                    <span
-                      class="MuiTouchRipple-root"
-                    />
-                  </span>
-                  <span
-                    class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
-                  >
-                    Breed
-                  </span>
-                </label>
-              </span>
-            </div>
-          </div>
-          <div
-            class="MuiCardActions-root MuiCardActions-spacing"
-          >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained hug MuiButton-containedPrimary"
-              tabindex="0"
-              type="button"
-            >
-              <span
-                class="MuiButton-label"
-              >
-                Hug
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained sell MuiButton-containedSecondary"
-              tabindex="0"
-              type="button"
-            >
-              <span
-                class="MuiButton-label"
-              >
-                Sell
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-          </div>
-        </div>
-      </li>
-    </ul>
+      <span
+        class="MuiButton-label"
+      >
+        Hug
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained sell MuiButton-containedSecondary"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Sell
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
   </div>
 </div>
 `;
 
 exports[`CowPenContextMenu cow selection cow is selected provides correct isSelected prop 1`] = `
-<div>
+<div
+  class="MuiPaper-root MuiCard-root cow-card MuiPaper-elevation8 MuiPaper-rounded"
+>
   <div
-    class="CowPenContextMenu"
+    class="MuiCardHeader-root"
   >
-    <h3>
-      Supplies
-    </h3>
-    <ul
-      class="card-list"
-    >
-      <li />
-      <li />
-    </ul>
-    <hr
-      class="MuiDivider-root"
-    />
-    <h3>
-      For sale
-    </h3>
     <div
-      class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
+      class="MuiCardHeader-avatar"
     >
-      <div
-        class="MuiCardHeader-root"
+      <img
+        alt="Cow"
+        src="yellow-cow.png"
+      />
+    </div>
+    <div
+      class="MuiCardHeader-content"
+    >
+      <span
+        class="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
       >
         <div
-          class="MuiCardHeader-avatar"
+          class="MuiFormControl-root MuiTextField-root"
         >
-          <img
-            alt="Cow"
-            src="yellow-cow.png"
-          />
-        </div>
-        <div
-          class="MuiCardHeader-content"
-        >
-          <span
-            class="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
+          <div
+            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
           >
-            Akee
-             
+            <input
+              aria-invalid="false"
+              class="MuiInputBase-input MuiInput-input"
+              placeholder="Name"
+              type="text"
+              value="Akee"
+            />
+          </div>
+        </div>
+         
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-mars fa-w-12 "
+          data-icon="mars"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 384 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M372 64h-79c-10.7 0-16 12.9-8.5 20.5l16.9 16.9-80.7 80.7c-22.2-14-48.5-22.1-76.7-22.1C64.5 160 0 224.5 0 304s64.5 144 144 144 144-64.5 144-144c0-28.2-8.1-54.5-22.1-76.7l80.7-80.7 16.9 16.9c7.6 7.6 20.5 2.2 20.5-8.5V76c0-6.6-5.4-12-12-12zM144 384c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+            fill="currentColor"
+          />
+        </svg>
+      </span>
+      <span
+        class="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+      >
+        <ul
+          class="bloodline"
+        >
+          <li
+            class="yellow"
+          />
+        </ul>
+        <p>
+          1
+           
+          day
+           old
+        </p>
+        <p>
+          Value
+          : 
+          $0.00
+        </p>
+        <p>
+          Weight: 
+          1780
+           lbs.
+        </p>
+        <ol
+          class="hearts"
+        >
+          <li>
             <svg
               aria-hidden="true"
-              class="svg-inline--fa fa-mars fa-w-12 "
-              data-icon="mars"
-              data-prefix="fas"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
               focusable="false"
               role="img"
-              viewBox="0 0 384 512"
+              viewBox="0 0 512 512"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M372 64h-79c-10.7 0-16 12.9-8.5 20.5l16.9 16.9-80.7 80.7c-22.2-14-48.5-22.1-76.7-22.1C64.5 160 0 224.5 0 304s64.5 144 144 144 144-64.5 144-144c0-28.2-8.1-54.5-22.1-76.7l80.7-80.7 16.9 16.9c7.6 7.6 20.5 2.2 20.5-8.5V76c0-6.6-5.4-12-12-12zM144 384c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
                 fill="currentColor"
               />
             </svg>
-          </span>
-          <span
-            class="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-          >
-            <ul
-              class="bloodline"
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <li
-                class="yellow"
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
               />
-            </ul>
-            <p>
-              Price
-              : 
-              $2,670.00
-            </p>
-            <p>
-              Weight: 
-              1780
-               lbs.
-            </p>
-          </span>
-        </div>
-      </div>
-      <div
-        class="MuiCardActions-root MuiCardActions-spacing"
-      >
-        <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained purchase MuiButton-containedPrimary Mui-disabled Mui-disabled"
-          disabled=""
-          tabindex="-1"
-          type="button"
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+          <li>
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-heart fa-w-16 heart"
+              data-icon="heart"
+              data-prefix="far"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
+                fill="currentColor"
+              />
+            </svg>
+          </li>
+        </ol>
+        <label
+          class="MuiFormControlLabel-root Mui-disabled"
+          title="Check this box to put Akee into a Hugging Machine and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory."
         >
           <span
-            class="MuiButton-label"
+            aria-disabled="true"
+            class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-5 MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-disabled-7 Mui-disabled MuiIconButton-colorPrimary Mui-disabled Mui-disabled"
+            tabindex="-1"
           >
-            Buy
+            <span
+              class="MuiIconButton-label"
+            >
+              <input
+                class="PrivateSwitchBase-input-8"
+                data-indeterminate="false"
+                disabled=""
+                type="checkbox"
+                value=""
+              />
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                />
+              </svg>
+            </span>
           </span>
-        </button>
-      </div>
+          <span
+            class="MuiTypography-root MuiFormControlLabel-label Mui-disabled MuiTypography-body1"
+          >
+            Hug automatically
+          </span>
+        </label>
+        <label
+          class="MuiFormControlLabel-root"
+          title="Check this box to move Akee to the breeding pen to mate with a female cow."
+        >
+          <span
+            aria-disabled="false"
+            class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-5 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <input
+                class="PrivateSwitchBase-input-8"
+                data-indeterminate="false"
+                type="checkbox"
+                value=""
+              />
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </span>
+          <span
+            class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+          >
+            Breed
+          </span>
+        </label>
+      </span>
     </div>
-    <hr
-      class="MuiDivider-root"
-    />
-    <h3>
-      Breeding pen (
-      0
-       / 2)
-    </h3>
-    <ul
-      class="card-list purchased-cows breeding-cows"
-    />
-    <hr
-      class="MuiDivider-root"
-    />
-    <h3>
-      Cows (
-      1
-       /
-       
-      10
-      )
-    </h3>
-    <ul
-      class="card-list purchased-cows"
+  </div>
+  <div
+    class="MuiCardActions-root MuiCardActions-spacing"
+  >
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained hug MuiButton-containedPrimary"
+      tabindex="0"
+      type="button"
     >
-      <li>
-        <div
-          class="MuiPaper-root MuiCard-root MuiPaper-elevation8 MuiPaper-rounded"
-        >
-          <div
-            class="MuiCardHeader-root"
-          >
-            <div
-              class="MuiCardHeader-avatar"
-            >
-              <img
-                alt="Cow"
-                src="yellow-cow.png"
-              />
-            </div>
-            <div
-              class="MuiCardHeader-content"
-            >
-              <span
-                class="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
-              >
-                <div
-                  class="MuiFormControl-root MuiTextField-root"
-                >
-                  <div
-                    class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiInput-input"
-                      placeholder="Name"
-                      type="text"
-                      value="Akee"
-                    />
-                  </div>
-                </div>
-                 
-                <svg
-                  aria-hidden="true"
-                  class="svg-inline--fa fa-mars fa-w-12 "
-                  data-icon="mars"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  viewBox="0 0 384 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M372 64h-79c-10.7 0-16 12.9-8.5 20.5l16.9 16.9-80.7 80.7c-22.2-14-48.5-22.1-76.7-22.1C64.5 160 0 224.5 0 304s64.5 144 144 144 144-64.5 144-144c0-28.2-8.1-54.5-22.1-76.7l80.7-80.7 16.9 16.9c7.6 7.6 20.5 2.2 20.5-8.5V76c0-6.6-5.4-12-12-12zM144 384c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-              <span
-                class="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-              >
-                <ul
-                  class="bloodline"
-                >
-                  <li
-                    class="yellow"
-                  />
-                </ul>
-                <p>
-                  1
-                   
-                  day
-                   old
-                </p>
-                <p>
-                  Value
-                  : 
-                  $0.00
-                </p>
-                <p>
-                  Weight: 
-                  1780
-                   lbs.
-                </p>
-                <ol
-                  class="hearts"
-                >
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                  <li>
-                    <svg
-                      aria-hidden="true"
-                      class="svg-inline--fa fa-heart fa-w-16 heart"
-                      data-icon="heart"
-                      data-prefix="far"
-                      focusable="false"
-                      role="img"
-                      viewBox="0 0 512 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </li>
-                </ol>
-                <label
-                  class="MuiFormControlLabel-root Mui-disabled"
-                  title="Check this box to put Akee into a Hugging Machine and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory."
-                >
-                  <span
-                    aria-disabled="true"
-                    class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-5 MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-disabled-7 Mui-disabled MuiIconButton-colorPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1"
-                  >
-                    <span
-                      class="MuiIconButton-label"
-                    >
-                      <input
-                        class="PrivateSwitchBase-input-8"
-                        data-indeterminate="false"
-                        disabled=""
-                        type="checkbox"
-                        value=""
-                      />
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  <span
-                    class="MuiTypography-root MuiFormControlLabel-label Mui-disabled MuiTypography-body1"
-                  >
-                    Hug automatically
-                  </span>
-                </label>
-                <label
-                  class="MuiFormControlLabel-root"
-                  title="Check this box to move Akee to the breeding pen to mate with a female cow."
-                >
-                  <span
-                    aria-disabled="false"
-                    class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-5 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
-                  >
-                    <span
-                      class="MuiIconButton-label"
-                    >
-                      <input
-                        class="PrivateSwitchBase-input-8"
-                        data-indeterminate="false"
-                        type="checkbox"
-                        value=""
-                      />
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                        />
-                      </svg>
-                    </span>
-                    <span
-                      class="MuiTouchRipple-root"
-                    />
-                  </span>
-                  <span
-                    class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
-                  >
-                    Breed
-                  </span>
-                </label>
-              </span>
-            </div>
-          </div>
-          <div
-            class="MuiCardActions-root MuiCardActions-spacing"
-          >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained hug MuiButton-containedPrimary"
-              tabindex="0"
-              type="button"
-            >
-              <span
-                class="MuiButton-label"
-              >
-                Hug
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained sell MuiButton-containedSecondary"
-              tabindex="0"
-              type="button"
-            >
-              <span
-                class="MuiButton-label"
-              >
-                Sell
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-          </div>
-        </div>
-      </li>
-    </ul>
+      <span
+        class="MuiButton-label"
+      >
+        Hug
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained sell MuiButton-containedSecondary"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Sell
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
   </div>
 </div>
 `;

@@ -218,7 +218,7 @@ export const CowCard = ({
   const [name, setName] = useState(cow.name)
 
   return (
-    <Card {...{ raised: isSelected }}>
+    <Card {...{ className: 'cow-card', raised: isSelected }}>
       <CardHeader
         {...{
           avatar: (
