@@ -408,8 +408,9 @@ export default class Farmhand extends Component {
       )
     })
 
-    // The dialog view mappings here must be kept in sync with the
-    // dialogTriggerTextMap map in Navigation.js.
+    // NOTE: The dialog view mappings here MUST be kept in sync with the
+    // dialogTriggerTextMap map in Navigation.js. They MUST also be kept in
+    // sync with the player-facing documentation in KeybindingsView.js
     this.keyMap = {
       incrementDay: 'shift+c',
       nextView: 'right',

@@ -17,12 +17,26 @@ const KeybindingsView = () => (
     <TableContainer {...{ component: ElevatedPaper }}>
       <Table aria-label="Keyboard Shortcuts">
         <TableBody>
-          <TableRow>
-            <TableCell {...{ component: 'th', scope: 'row' }}>
-              Show Keyboard Shortcuts
-            </TableCell>
-            <TableCell align="right">?</TableCell>
-          </TableRow>
+          {[
+            { label: 'Show Keyboard Shortcuts (this screen)', keybinding: '?' },
+            { label: 'Toggle menu', keybinding: 'M' },
+            { label: 'End the day', keybinding: 'Shift + C' },
+            { label: 'Go to next screen', keybinding: 'Right arrow key' },
+            { label: 'Go to previous screen', keybinding: 'Left arrow key' },
+            { label: 'Go to Bank Account', keybinding: 'B' },
+            { label: 'Go to Achievements', keybinding: 'A' },
+            { label: "Go to Farmer's Log", keybinding: 'L' },
+            { label: 'Go to Price Events', keybinding: 'E' },
+            { label: 'Go to Farm Stats', keybinding: 'S' },
+            { label: 'Go to Settings', keybinding: ',' },
+          ].map(({ label, keybinding }) => (
+            <TableRow {...{ key: label }}>
+              <TableCell {...{ component: 'th', scope: 'row' }}>
+                {label}
+              </TableCell>
+              <TableCell align="right">{keybinding}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
