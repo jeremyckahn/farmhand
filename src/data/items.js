@@ -50,6 +50,8 @@ export {
   wheatSeed,
 } from './crops'
 
+export { bronzeOre, silverOre, stone } from './ores'
+
 ////////////////////////////////////////
 //
 // FIELD TOOLS

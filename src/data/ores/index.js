@@ -1,0 +1,5 @@
+export { bronzeOre } from './bronzeOre'
+export { goldOre } from './goldOre'
+export { ironOre } from './ironOre'
+export { silverOre } from './silverOre'
+export { stone } from './stone'
