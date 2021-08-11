@@ -3,7 +3,8 @@
  * @ignore
  */
 
-import Dinero from 'dinero.js'
+import { dinero, toUnit, toFormat } from 'dinero.js'
+import { USD } from '@dinero.js/currencies'
 import fastMemoize from 'fast-memoize'
 import sortBy from 'lodash.sortby'
 import { v4 as uuid } from 'uuid'
@@ -167,7 +168,14 @@ export const createNewField = () =>
  * @returns {string} Include dollar sign and other formatting, as well as cents.
  */
 export const moneyString = number =>
-  Dinero({ amount: Math.round(number * 100) }).toFormat()
+  toFormat(
+    dinero({ amount: Math.round(number * 100), scale: 2, currency: USD }),
+    ({ amount, currency }) =>
+      amount.toLocaleString('en-US', {
+        style: 'currency',
+        currency: currency.code,
+      })
+  )
 
 /**
  * @param {number} number
@@ -175,23 +183,33 @@ export const moneyString = number =>
  * @see https://dinerojs.com/module-dinero#~toFormat
  * @returns {string}
  */
-const formatNumber = (number, format) =>
-  Dinero({ amount: Math.round(number * 100), precision: 2 })
-    .convertPrecision(0)
-    .toFormat(format)
+const formatNumber = (number, options = {}) =>
+  toFormat(
+    dinero({ amount: Math.round(number * 100), currency: USD }),
+    ({ amount, currency }) =>
+      amount.toLocaleString('en-US', {
+        style: 'currency',
+        currency: currency.code,
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+        ...options,
+      })
+  )
 
 /**
  * @param {number} number
  * @returns {string} Include dollar sign and other formatting. Cents are
  * rounded off.
  */
-export const dollarString = number => formatNumber(number, '$0,0')
+export const dollarString = number =>
+  formatNumber(number, { maximumFractionDigits: 0 })
 
 /**
  * @param {number} number
  * @returns {string} Number string with commas.
  */
-export const integerString = number => formatNumber(number, '0,0')
+export const integerString = number =>
+  formatNumber(number, { maximumFractionDigits: 0, style: undefined })
 
 /**
  * @param {number} number A float
@@ -210,16 +228,18 @@ const getItemBaseValue = itemId => itemsMap[itemId].value
  * @param {Object.<number>} valueAdjustments
  * @returns {number}
  */
-export const getItemCurrentValue = ({ id }, valueAdjustments) =>
-  Dinero({
-    amount: Math.round(
-      (valueAdjustments[id]
-        ? getItemBaseValue(id) *
-          (itemsMap[id].doesPriceFluctuate ? valueAdjustments[id] : 1)
-        : getItemBaseValue(id)) * 100
-    ),
-    precision: 2,
-  }).toUnit()
+export const getItemCurrentValue = ({ id }, valueAdjustments) => {
+  const amount = Math.round(
+    (valueAdjustments[id]
+      ? getItemBaseValue(id) *
+        (itemsMap[id].doesPriceFluctuate ? valueAdjustments[id] : 1)
+      : getItemBaseValue(id)) * 100
+  )
+
+  const d = dinero({ amount, currency: USD })
+
+  return toUnit(d)
+}
 
 /**
  * @param {Object} valueAdjustments
