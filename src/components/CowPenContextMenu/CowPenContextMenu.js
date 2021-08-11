@@ -219,6 +219,11 @@ export const CowCard = ({
 
   return (
     <Card {...{ className: 'cow-card', raised: isSelected }}>
+      {isSelected && (
+        <span className="visually_hidden">
+          {cow.name} is currently selected
+        </span>
+      )}
       <CardHeader
         {...{
           avatar: (

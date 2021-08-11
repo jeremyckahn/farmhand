@@ -47,7 +47,7 @@ describe('CowPenContextMenu', () => {
 
     describe('cow is not selected', () => {
       test('provides correct isSelected prop', () => {
-        const { container } = render(
+        render(
           <CowPenContextMenu
             {...{
               ...baseProps,
@@ -57,13 +57,14 @@ describe('CowPenContextMenu', () => {
           />
         )
 
-        expect(container.querySelectorAll('.cow-card')[1]).toMatchSnapshot()
+        const selectedText = screen.queryByText(/is currently selected/)
+        expect(selectedText).toBeNull()
       })
     })
 
     describe('cow is selected', () => {
       test('provides correct isSelected prop', () => {
-        const { container } = render(
+        render(
           <CowPenContextMenu
             {...{
               ...baseProps,
@@ -73,7 +74,8 @@ describe('CowPenContextMenu', () => {
           />
         )
 
-        expect(container.querySelectorAll('.cow-card')[1]).toMatchSnapshot()
+        const selectedText = screen.queryByText(/is currently selected/)
+        expect(selectedText).not.toBeNull()
       })
     })
   })
