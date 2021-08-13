@@ -46,6 +46,7 @@ import OnlinePeersView from '../OnlinePeersView'
 import PriceEventView from '../PriceEventView'
 import SettingsView from '../SettingsView'
 import StatsView from '../StatsView'
+import KeybindingsView from '../KeybindingsView'
 
 import './Navigation.sass'
 
@@ -157,6 +158,9 @@ const {
   ACCOUNTING,
   SETTINGS,
   ONLINE_PEERS,
+
+  // Has no UI trigger
+  KEYBINDINGS,
 } = dialogView
 
 // The labels here must be kept in sync with mappings in initInputHandlers in
@@ -178,6 +182,9 @@ const dialogTitleMap = {
   [ACCOUNTING]: 'Bank Account',
   [SETTINGS]: 'Settings',
   [ONLINE_PEERS]: 'Active Players',
+
+  // Has no UI trigger
+  [KEYBINDINGS]: 'Keyboard Shortcuts',
 }
 
 const dialogContentMap = {
@@ -188,6 +195,9 @@ const dialogContentMap = {
   [ACCOUNTING]: <AccountingView />,
   [SETTINGS]: <SettingsView />,
   [ONLINE_PEERS]: <OnlinePeersView />,
+
+  // Has no UI trigger
+  [KEYBINDINGS]: <KeybindingsView />,
 }
 
 export const Navigation = ({
