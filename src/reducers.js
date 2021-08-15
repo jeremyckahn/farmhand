@@ -1788,10 +1788,13 @@ export const purchaseSmelter = (state, smelterId) => {
 
   if (purchasedSmelter >= smelterId) return state
 
-  return {
+  state = {
+    ...state,
     purchasedSmelter: smelterId,
     money: moneyTotal(money, -PURCHASEABLE_SMELTERS.get(smelterId).price),
   }
+
+  return updateLearnedRecipes(state)
 }
 
 /**
