@@ -201,6 +201,8 @@ If you're playing on a mobile device, all you need to do is [add it to your home
 
 * Bank loans accrue interest daily, so pay off your balance as soon as you can.
 
+* Press "Shift + ?" to see all of the keyboard shortcuts available to you.
+
     `,
           }}
         />

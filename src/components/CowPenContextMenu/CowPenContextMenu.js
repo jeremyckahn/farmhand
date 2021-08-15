@@ -34,6 +34,7 @@ import {
   getCowSellValue,
   getCowWeight,
   findCowById,
+  memoize,
   moneyString,
   nullArray,
 } from '../../utils'
@@ -66,107 +67,132 @@ const CowBloodline = memo(({ colorsInBloodline }) => (
   </ul>
 ))
 
+const getCowMapById = memoize(cowInventory =>
+  cowInventory.reduce((acc, cow) => {
+    acc[cow.id] = cow
+    return acc
+  }, {})
+)
+
 export const CowCardSubheader = ({
   cow,
   cowBreedingPen,
+  cowInventory,
   cowValue,
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   huggingMachinesRemain,
   isCowPurchased,
+}) => {
+  const numberOfFullHearts = cow.happiness * 10
+  const isInBreedingPen = isCowInBreedingPen(cow, cowBreedingPen)
+  const isBreedingPenFull =
+    cowBreedingPen.cowId1 !== null && cowBreedingPen.cowId2 !== null
 
-  numberOfFullHearts = cow.happiness * 10,
-  isInBreedingPen = isCowInBreedingPen(cow, cowBreedingPen),
-  isBreedingPenFull = cowBreedingPen.cowId1 !== null &&
-    cowBreedingPen.cowId2 !== null,
-}) => (
-  <>
-    <CowBloodline {...{ colorsInBloodline: cow.colorsInBloodline }} />
-    {isCowPurchased && (
+  let canBeMovedToBreedingPen = !isBreedingPenFull
+
+  if (canBeMovedToBreedingPen) {
+    const potentialMateId = cowBreedingPen.cowId2 ?? cowBreedingPen.cowId1
+
+    if (potentialMateId !== null) {
+      canBeMovedToBreedingPen =
+        cow.gender !== getCowMapById(cowInventory)[potentialMateId].gender
+    }
+  }
+
+  const disableBreedingControlTooltip =
+    !canBeMovedToBreedingPen && !isInBreedingPen
+
+  return (
+    <>
+      <CowBloodline {...{ colorsInBloodline: cow.colorsInBloodline }} />
+      {isCowPurchased && (
+        <p>
+          {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
+        </p>
+      )}
       <p>
-        {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
+        {isCowPurchased ? 'Value' : 'Price'}: {moneyString(cowValue)}
       </p>
-    )}
-    <p>
-      {isCowPurchased ? 'Value' : 'Price'}: {moneyString(cowValue)}
-    </p>
-    <p>Weight: {getCowWeight(cow)} lbs.</p>
-    {isCowPurchased && (
-      <>
-        <ol className="hearts">
-          {nullArray(10).map((_null, i) => (
-            <li key={`${cow.id}_${i}`}>
-              <FontAwesomeIcon
-                {...{
-                  icon: isHeartFull(i, numberOfFullHearts)
-                    ? faFullHeart
-                    : faEmptyHeart,
-                  className: classNames('heart', {
-                    'is-full': isHeartFull(i, numberOfFullHearts),
-                  }),
-                }}
-              />
-            </li>
-          ))}
-        </ol>
-        <Tooltip
-          {...{
-            arrow: true,
-            placement: 'top',
-            title: `Check this box to put ${cow.name} into a ${huggingMachine.name} and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory.`,
-          }}
-        >
-          <FormControlLabel
-            {...{
-              control: (
-                <Checkbox
+      <p>Weight: {getCowWeight(cow)} lbs.</p>
+      {isCowPurchased && (
+        <>
+          <ol className="hearts">
+            {nullArray(10).map((_null, i) => (
+              <li key={`${cow.id}_${i}`}>
+                <FontAwesomeIcon
                   {...{
-                    color: 'primary',
-                    // TODO: This Boolean cast is needed for backwards
-                    // compatibility. Remove it after 10/1/2020.
-                    checked: Boolean(cow.isUsingHuggingMachine),
-                    onChange: e => handleCowAutomaticHugChange(e, cow),
+                    icon: isHeartFull(i, numberOfFullHearts)
+                      ? faFullHeart
+                      : faEmptyHeart,
+                    className: classNames('heart', {
+                      'is-full': isHeartFull(i, numberOfFullHearts),
+                    }),
                   }}
                 />
-              ),
-              disabled: !cow.isUsingHuggingMachine && !huggingMachinesRemain,
-              label: 'Hug automatically',
-            }}
-          />
-        </Tooltip>
-        <Tooltip
-          {...{
-            arrow: true,
-            placement: 'top',
-            title: isInBreedingPen
-              ? `Uncheck this box to return ${cow.name} to the regular pen.`
-              : `Check this box to move ${
-                  cow.name
-                } to the breeding pen to mate with a ${
-                  cow.gender === genders.MALE ? 'female' : 'male'
-                } cow.`,
-          }}
-        >
-          <FormControlLabel
+              </li>
+            ))}
+          </ol>
+          <Tooltip
             {...{
-              control: (
-                <Checkbox
-                  {...{
-                    color: 'primary',
-                    checked: isInBreedingPen,
-                    onChange: e => handleCowBreedChange(e, cow),
-                  }}
-                />
-              ),
-              disabled: !isInBreedingPen && isBreedingPenFull,
-              label: 'Breed',
+              arrow: true,
+              placement: 'top',
+              title: `Check this box to put ${cow.name} into a ${huggingMachine.name} and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory.`,
             }}
-          />
-        </Tooltip>
-      </>
-    )}
-  </>
-)
+          >
+            <FormControlLabel
+              {...{
+                control: (
+                  <Checkbox
+                    {...{
+                      color: 'primary',
+                      checked: cow.isUsingHuggingMachine,
+                      onChange: e => handleCowAutomaticHugChange(e, cow),
+                    }}
+                  />
+                ),
+                disabled: !cow.isUsingHuggingMachine && !huggingMachinesRemain,
+                label: 'Hug automatically',
+              }}
+            />
+          </Tooltip>
+          <Tooltip
+            {...{
+              arrow: true,
+              placement: 'top',
+              disableFocusListener: disableBreedingControlTooltip,
+              disableHoverListener: disableBreedingControlTooltip,
+              disableTouchListener: disableBreedingControlTooltip,
+              title: isInBreedingPen
+                ? `Uncheck this box to return ${cow.name} to the regular pen.`
+                : `Check this box to move ${
+                    cow.name
+                  } to the breeding pen to mate with a ${
+                    cow.gender === genders.MALE ? 'female' : 'male'
+                  } cow.`,
+            }}
+          >
+            <FormControlLabel
+              {...{
+                control: (
+                  <Checkbox
+                    {...{
+                      color: 'primary',
+                      checked: isInBreedingPen,
+                      onChange: e => handleCowBreedChange(e, cow),
+                    }}
+                  />
+                ),
+                disabled: isInBreedingPen ? false : !canBeMovedToBreedingPen,
+                label: 'Breed',
+              }}
+            />
+          </Tooltip>
+        </>
+      )}
+    </>
+  )
+}
 
 export const CowCard = ({
   cow,
@@ -192,7 +218,12 @@ export const CowCard = ({
   const [name, setName] = useState(cow.name)
 
   return (
-    <Card {...{ raised: isSelected }}>
+    <Card {...{ className: 'cow-card', raised: isSelected }}>
+      {isSelected && (
+        <span className="visually_hidden">
+          {cow.name} is currently selected
+        </span>
+      )}
       <CardHeader
         {...{
           avatar: (
@@ -229,6 +260,7 @@ export const CowCard = ({
               {...{
                 cow,
                 cowBreedingPen,
+                cowInventory,
                 cowValue,
                 handleCowBreedChange,
                 handleCowAutomaticHugChange,
