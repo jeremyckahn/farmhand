@@ -324,6 +324,19 @@ export const bronzeIngot = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.ironIngot
+ * @type {farmhand.recipe}
+ */
+export const ironIngot = itemify({
+  id: 'iron-ingot',
+  name: 'Iron Ingot',
+  ingredients: {
+    [items.ironOre.id]: 5,
+  },
+  condition: state => state.purchasedSmelter,
+})
+
+/**
  * @property farmhand.module:recipes.silverIngot
  * @type {farmhand.recipe}
  */
