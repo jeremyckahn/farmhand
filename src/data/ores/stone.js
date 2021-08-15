@@ -8,7 +8,7 @@ const { freeze } = Object
  */
 export const stone = freeze({
   description: 'A piece of rock.',
-  doesPriceFluctuate: true,
+  doesPriceFluctuate: false,
   id: 'stone',
   name: 'Stone',
   type: itemType.STONE,

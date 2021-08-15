@@ -75,6 +75,7 @@ import {
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
+  PURCHASEABLE_SMELTERS,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
   STORAGE_EXPANSION_AMOUNT,
@@ -1775,6 +1776,25 @@ export const purchaseCombine = (state, combineId) => {
     purchasedCombine: combineId,
     money: moneyTotal(money, -PURCHASEABLE_COMBINES.get(combineId).price),
   }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {number} smelterId
+ * @returns {farmhand.state}
+ */
+export const purchaseSmelter = (state, smelterId) => {
+  const { money, purchasedSmelter } = state
+
+  if (purchasedSmelter >= smelterId) return state
+
+  state = {
+    ...state,
+    purchasedSmelter: smelterId,
+    money: moneyTotal(money, -PURCHASEABLE_SMELTERS.get(smelterId).price),
+  }
+
+  return updateLearnedRecipes(state)
 }
 
 /**
