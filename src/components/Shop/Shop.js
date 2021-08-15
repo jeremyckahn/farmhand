@@ -144,9 +144,9 @@ export const Shop = ({
           <TierPurchase
             {...{
               description:
-                'You can purchase a Smelter to convert ore into ingots, and other useful items.',
+                'You can purchase a Smelter to convert ore into ingots and other useful items.',
               handleTierPurchase: handleSmelterPurchase,
-              maxedOutPlaceholder: "You've already purchased the smelter.",
+              maxedOutPlaceholder: "You've already purchased the smelter!",
               purchasedTier: purchasedSmelter,
               renderTierLabel: ({ type, price }) =>
                 `${dollarString(price)}: ${type} Smelter`,
