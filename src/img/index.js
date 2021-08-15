@@ -86,8 +86,13 @@ import wateringCan from './tools/watering-can.png'
 
 import stone from './ores/stone.png'
 import bronzeOre from './ores/bronze-ore.png'
+import bronzeIngot from './ores/bronze-ingot.png'
+import ironOre from './ores/iron-ore.png'
+import ironIngot from './ores/iron-ingot.png'
 import silverOre from './ores/silver-ore.png'
+import silverIngot from './ores/silver-ingot.png'
 import goldOre from './ores/gold-ore.png'
+import goldIngot from './ores/gold-ingot.png'
 
 import blueCow from './animals/cows/blue-cow.png'
 import brownCow from './animals/cows/brown-cow.png'
@@ -105,6 +110,13 @@ export const plotStates = {
   'fertilized-plot': fertilizedPlot,
   'rainbow-fertilized-plot': rainbowFertilizedPlot,
   'shoveled-plot': shoveledPlot,
+}
+
+const smeltedItems = {
+  'bronze-ingot': bronzeIngot,
+  'iron-ingot': ironIngot,
+  'silver-ingot': silverIngot,
+  'gold-ingot': goldIngot,
 }
 
 export const craftedItems = {
@@ -127,6 +139,7 @@ export const craftedItems = {
   'strawberry-jam': strawberryJam,
   'summer-salad': summerSalad,
   tofu,
+  ...smeltedItems,
 }
 
 export const items = {
@@ -177,6 +190,7 @@ export const items = {
   // Ores
   stone,
   'bronze-ore': bronzeOre,
+  'iron-ore': ironOre,
   'silver-ore': silverOre,
   'gold-ore': goldOre,
 
