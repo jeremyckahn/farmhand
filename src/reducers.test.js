@@ -3322,7 +3322,7 @@ describe('minePlot', () => {
   })
 
   test('updates the plot to be shoveled if the plot is empty', () => {
-    expect(gameState.field[0][0].wasShoveledToday).toEqual(true)
+    expect(gameState.field[0][0].wasShoveled).toEqual(true)
   })
 
   test('does not alter the plot if something is already there', () => {
@@ -3332,7 +3332,10 @@ describe('minePlot', () => {
 
 describe('resetWasShoveled', () => {
   test('it will return null if the plot was shoveled today', () => {
-    const plotContents = fn.resetWasShoveled({ wasShoveledToday: true })
+    const plotContents = fn.resetWasShoveled({
+      wasShoveled: true,
+      daysUntilClear: 0,
+    })
 
     expect(plotContents).toEqual(null)
   })

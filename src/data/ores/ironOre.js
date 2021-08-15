@@ -13,4 +13,5 @@ export const ironOre = freeze({
   name: 'Iron Ore',
   type: itemType.ORE,
   value: 40,
+  spawnChance: 0.05,
 })

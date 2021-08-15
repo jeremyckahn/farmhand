@@ -58,7 +58,9 @@
  * Represents a shoveled plot
  * @typedef farmhand.shoveledPlot
  * @type {Object}
- * @property {boolean} wasShoveledToday
+ * @property {boolean} wasShoveled
+ * @property {number}  daysUntilClear
+ * @property {string?} oreId Only exists if ore was spawned
  */
 
 // Note: At some point farmhand.cow will be abstracted to farmhand.animal, but

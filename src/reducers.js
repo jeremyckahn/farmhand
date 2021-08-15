@@ -5,6 +5,7 @@
 
 import { itemsMap, recipesMap } from './data/maps'
 import { levels } from './data/levels'
+import { oreSpawner } from './data/ores'
 import achievements from './data/achievements'
 import {
   areHuggingMachinesInInventory,
@@ -167,8 +168,20 @@ export const resetWasWatered = plotContent =>
  * @param {?farmhand.plotContent} plotContent
  * @returns {?farmhand.plotContent}
  */
-export const resetWasShoveled = plotContent =>
-  plotContent && plotContent.wasShoveledToday ? null : plotContent
+export const resetWasShoveled = plotContent => {
+  if (
+    plotContent &&
+    plotContent.wasShoveled &&
+    plotContent.daysUntilClear > 0
+  ) {
+    return {
+      ...plotContent,
+      daysUntilClear: plotContent.daysUntilClear - 1,
+    }
+  }
+
+  return plotContent && !plotContent.wasShoveled ? plotContent : null
+}
 
 /**
  * Invokes a function on every plot in a field.
@@ -1678,8 +1691,16 @@ export const minePlot = (state, x, y) => {
     return state
   }
 
+  const spawnOre = oreSpawner(Math.random())
+  const daysUntilClear = Math.floor(Math.random() * 2)
+  console.log(spawnOre)
+
+  // dice roll for some ore
+  //    gift player any resulting ore produced
+  // dice roll amount of days plot stays damaged
+
   state = modifyFieldPlotAt(state, x, y, () => {
-    return { wasShoveledToday: true }
+    return { wasShoveled: true, daysUntilClear }
   })
 
   return {
@@ -1696,7 +1717,7 @@ export const minePlot = (state, x, y) => {
 export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
 
-  if (!plotContent || plotContent.wasShoveledToday) {
+  if (!plotContent || plotContent.wasShoveled) {
     return state
   }
 
