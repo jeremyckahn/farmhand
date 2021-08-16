@@ -23,6 +23,7 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
 import Tooltip from '@material-ui/core/Tooltip'
+import Typography from '@material-ui/core/Typography'
 import { array, bool, func, number, object, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -231,6 +232,9 @@ export const Navigation = ({
     0,
     100
   ),
+  currentDialogViewLowerCase = currentDialogView.toLowerCase(),
+  modalTitleId = `${currentDialogViewLowerCase}-modal-title`,
+  modalContentId = `${currentDialogViewLowerCase}-modal-content`,
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
@@ -342,9 +346,17 @@ export const Navigation = ({
         open: isDialogViewOpen,
         onExited: handleDialogViewExited,
       }}
+      aria-describedby={modalTitleId}
+      aria-labelledby={modalContentId}
     >
-      <DialogTitle>{dialogTitleMap[currentDialogView]}</DialogTitle>
-      <DialogContent>{dialogContentMap[currentDialogView]}</DialogContent>
+      <DialogTitle {...{ disableTypography: true }}>
+        <Typography {...{ id: modalTitleId, component: 'h2', variant: 'h6' }}>
+          {dialogTitleMap[currentDialogView]}
+        </Typography>
+      </DialogTitle>
+      <DialogContent {...{ id: modalContentId }}>
+        {dialogContentMap[currentDialogView]}
+      </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseDialogView} color="primary" autoFocus>
           Close
