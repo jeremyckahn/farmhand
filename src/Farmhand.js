@@ -867,7 +867,6 @@ export default class Farmhand extends Component {
    */
   showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
     let learnedRecipes = []
-    let learnedRecipesString = ''
 
     Object.keys(this.state.learnedRecipes).forEach(recipeId => {
       if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
@@ -875,23 +874,10 @@ export default class Farmhand extends Component {
       }
     })
 
-    if (learnedRecipes.length) {
-      const learnedRecipeNames = learnedRecipes.map(({ name }) => name)
-
-      if (learnedRecipes.length === 2) {
-        learnedRecipesString = learnedRecipeNames.join(' and ')
-      } else if (learnedRecipes.length > 2) {
-        learnedRecipesString =
-          learnedRecipeNames.slice(0, -1).join(', ') +
-          ' and ' +
-          learnedRecipeNames.slice(-1)
-      }
-
-      if (learnedRecipes.length === 1) {
-        this.showNotification(RECIPE_LEARNED`${learnedRecipes[0]}`)
-      } else {
-        this.showNotification(RECIPES_LEARNED`${learnedRecipesString}`)
-      }
+    if (learnedRecipes.length > 1) {
+      this.showNotification(RECIPES_LEARNED`${learnedRecipes}`)
+    } else if (learnedRecipes.length === 1) {
+      this.showNotification(RECIPE_LEARNED`${learnedRecipes[0]}`)
     }
   }
 
