@@ -871,22 +871,24 @@ export default class Farmhand extends Component {
 
     Object.keys(this.state.learnedRecipes).forEach(recipeId => {
       if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
-        learnedRecipes.push(recipesMap[recipeId].name)
+        learnedRecipes.push(recipesMap[recipeId])
       }
     })
 
     if (learnedRecipes.length) {
+      const learnedRecipeNames = learnedRecipes.map(({ name }) => name)
+
       if (learnedRecipes.length === 2) {
-        learnedRecipesString = learnedRecipes.join(' and ')
+        learnedRecipesString = learnedRecipeNames.join(' and ')
       } else if (learnedRecipes.length > 2) {
         learnedRecipesString =
-          learnedRecipes.slice(0, -1).join(', ') +
+          learnedRecipeNames.slice(0, -1).join(', ') +
           ' and ' +
-          learnedRecipes.slice(-1)
+          learnedRecipeNames.slice(-1)
       }
 
       if (learnedRecipes.length === 1) {
-        this.showNotification(RECIPE_LEARNED`${learnedRecipes[0].name}`)
+        this.showNotification(RECIPE_LEARNED`${learnedRecipes[0]}`)
       } else {
         this.showNotification(RECIPES_LEARNED`${learnedRecipesString}`)
       }
