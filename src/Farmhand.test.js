@@ -284,7 +284,7 @@ describe('instance methods', () => {
       })
     })
 
-    fdescribe('two new recipes were learned', () => {
+    describe('two new recipes were learned', () => {
       test('does show notification', () => {
         const learnedRecipes = ['sample-recipe-1', 'sample-recipe-2'].map(
           id => recipesMap[id]
