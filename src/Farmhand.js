@@ -69,6 +69,7 @@ import {
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
+  RECIPES_LEARNED,
   ROOM_FULL_NOTIFICATION,
 } from './templates'
 import {
@@ -865,11 +866,19 @@ export default class Farmhand extends Component {
    * @param {farmhand.state} prevState
    */
   showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
+    let learnedRecipes = []
+
     Object.keys(this.state.learnedRecipes).forEach(recipeId => {
       if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
-        this.showNotification(RECIPE_LEARNED`${recipesMap[recipeId]}`)
+        learnedRecipes.push(recipesMap[recipeId])
       }
     })
+
+    if (learnedRecipes.length > 1) {
+      this.showNotification(RECIPES_LEARNED`${learnedRecipes}`)
+    } else if (learnedRecipes.length === 1) {
+      this.showNotification(RECIPE_LEARNED`${learnedRecipes[0]}`)
+    }
   }
 
   /*!

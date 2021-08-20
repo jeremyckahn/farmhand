@@ -90,6 +90,21 @@ export const COW_BORN_MESSAGE = (_, parentCow1, parentCow2, offspringCow) =>
 export const RECIPE_LEARNED = (_, recipe) =>
   `You learned a new recipe: **${recipe.name}**!`
 
+export const RECIPES_LEARNED = (_, learnedRecipes) => {
+  let recipesString = ''
+  const learnedRecipeNames = learnedRecipes.map(({ name }) => name)
+
+  if (learnedRecipes.length === 2) {
+    recipesString = `**${learnedRecipeNames[0]}** and **${learnedRecipeNames[1]}**`
+  } else if (learnedRecipes.length > 2) {
+    recipesString = `**${learnedRecipeNames
+      .slice(0, -1)
+      .join(', ')},** and **${learnedRecipeNames.slice(-1)}**`
+  }
+
+  return `You learned the recipes for ${recipesString}!`
+}
+
 /**
  * @param {farmhand.item} cropItem
  * @returns {string}
