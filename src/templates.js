@@ -95,15 +95,14 @@ export const RECIPES_LEARNED = (_, learnedRecipes) => {
   const learnedRecipeNames = learnedRecipes.map(({ name }) => name)
 
   if (learnedRecipes.length === 2) {
-    recipesString = learnedRecipeNames.join(' and ')
+    recipesString = `**${learnedRecipeNames[0]}** and **${learnedRecipes[1]}**`
   } else if (learnedRecipes.length > 2) {
-    recipesString =
-      learnedRecipeNames.slice(0, -1).join(', ') +
-      ' and ' +
-      learnedRecipeNames.slice(-1)
+    recipesString = `**${learnedRecipeNames
+      .slice(0, -1)
+      .join(', ')},** and **${learnedRecipeNames.slice(-1)}**`
   }
 
-  return `You learned the recipes for **${recipesString}**!`
+  return `You learned the recipes for ${recipesString}!`
 }
 
 /**
