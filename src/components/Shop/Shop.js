@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, bool, func, number, object } from 'prop-types'
+import { array, func, number, object } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -169,8 +169,8 @@ Shop.propTypes = {
   money: number.isRequired,
   purchasedCowPen: number.isRequired,
   purchasedField: number.isRequired,
-  purchasedSmelter: bool.isRequired,
-  purchasedCombine: bool.isRequired,
+  purchasedSmelter: number.isRequired,
+  purchasedCombine: number.isRequired,
   shopInventory: array.isRequired,
   valueAdjustments: object.isRequired,
 }

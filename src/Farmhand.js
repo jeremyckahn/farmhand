@@ -382,6 +382,7 @@ export default class Farmhand extends Component {
       purchasedCombine: 0,
       purchasedCowPen: 0,
       purchasedField: 0,
+      purchasedSmelter: 0,
       showNotifications: true,
       stageFocus: stageFocusType.HOME,
       todaysNotifications: [],
