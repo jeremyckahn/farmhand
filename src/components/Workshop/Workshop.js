@@ -8,6 +8,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 
+import { features } from '../../config'
 import { recipesMap } from '../../data/maps'
 import Recipe from '../Recipe'
 
@@ -47,10 +48,6 @@ const Workshop = ({ learnedRecipes }) => {
 
   return (
     <div className="Workshop">
-      <h3>
-        Learned Recipes ({Object.keys(learnedRecipes).length} /{' '}
-        {Object.keys(recipesMap).length})
-      </h3>
       <AppBar position="static" color="primary">
         <Tabs
           value={currentTab}
@@ -58,9 +55,14 @@ const Workshop = ({ learnedRecipes }) => {
           aria-label="Workshop tabs"
         >
           <Tab label="Recipes" {...a11yProps(0)} />
+          {features.MINING && <Tab label="Forge" {...a11yProps(0)} />}
         </Tabs>
       </AppBar>
       <TabPanel value={currentTab} index={0}>
+        <h3>
+          Learned Recipes ({Object.keys(learnedRecipes).length} /{' '}
+          {Object.keys(recipesMap).length})
+        </h3>
         <ul className="card-list">
           {Object.keys(learnedRecipes).map(recipeId => (
             <li key={recipeId}>
@@ -72,9 +74,7 @@ const Workshop = ({ learnedRecipes }) => {
             </li>
           ))}
         </ul>
-      </TabPanel>
-      <Divider />
-      <section>
+        <Divider />
         <ul className="card-list">
           {/*
           This really isn't a list, but it makes it easy to keep the UI
@@ -94,7 +94,10 @@ const Workshop = ({ learnedRecipes }) => {
             </Card>
           </li>
         </ul>
-      </section>
+      </TabPanel>
+      <TabPanel value={currentTab} index={1}>
+        <h3>Welcome to the Forge!</h3>
+      </TabPanel>
     </div>
   )
 }
