@@ -54,7 +54,7 @@ const Workshop = ({ learnedRecipes }) => {
           onChange={(e, newTab) => setCurrentTab(newTab)}
           aria-label="Workshop tabs"
         >
-          <Tab label="Recipes" {...a11yProps(0)} />
+          <Tab label="Kitchen" {...a11yProps(0)} />
           {features.MINING && <Tab label="Forge" {...a11yProps(0)} />}
         </Tabs>
       </AppBar>
