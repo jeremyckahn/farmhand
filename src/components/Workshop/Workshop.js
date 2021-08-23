@@ -61,7 +61,7 @@ const Workshop = ({ learnedRecipes }) => {
           aria-label="Workshop tabs"
         >
           <Tab label="Kitchen" {...a11yProps(0)} />
-          {features.MINING && <Tab label="Forge" {...a11yProps(0)} />}
+          {features.MINING && <Tab label="Forge" {...a11yProps(1)} />}
         </Tabs>
       </AppBar>
       <TabPanel value={currentTab} index={0}>
