@@ -53,7 +53,7 @@ import {
   transformStateDataForImport,
 } from './utils'
 import { getData, postData } from './fetch-utils'
-import { itemsMap, recipesMap } from './data/maps'
+import { itemsMap, kitchenRecipesMap } from './data/maps'
 import { dialogView, fieldMode, stageFocusType } from './enums'
 import {
   DEFAULT_ROOM,
@@ -871,7 +871,7 @@ export default class Farmhand extends Component {
 
     Object.keys(this.state.learnedRecipes).forEach(recipeId => {
       if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
-        learnedRecipes.push(recipesMap[recipeId])
+        learnedRecipes.push(kitchenRecipesMap[recipeId])
       }
     })
 

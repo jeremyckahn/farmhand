@@ -21,7 +21,7 @@ import {
 } from './templates'
 import { reduceByPersistedKeys } from './utils'
 import { stageFocusType } from './enums'
-import { recipesMap } from './data/maps'
+import { kitchenRecipesMap } from './data/maps'
 import Farmhand, {
   computePlayerInventory,
   getFieldToolInventory,
@@ -266,7 +266,7 @@ describe('instance methods', () => {
         component.update()
 
         expect(component.state().todaysNotifications).not.toContainEqual({
-          message: RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`,
+          message: RECIPE_LEARNED`${kitchenRecipesMap['sample-recipe-1']}`,
           severity: 'info',
         })
       })
@@ -278,7 +278,7 @@ describe('instance methods', () => {
         component.update()
 
         expect(component.state().todaysNotifications).toContainEqual({
-          message: RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`,
+          message: RECIPE_LEARNED`${kitchenRecipesMap['sample-recipe-1']}`,
           severity: 'info',
         })
       })
@@ -287,7 +287,7 @@ describe('instance methods', () => {
     describe('two new recipes were learned', () => {
       test('does show notification', () => {
         const learnedRecipes = ['sample-recipe-1', 'sample-recipe-2'].map(
-          id => recipesMap[id]
+          id => kitchenRecipesMap[id]
         )
 
         component.setState({
@@ -308,7 +308,7 @@ describe('instance methods', () => {
           'sample-recipe-1',
           'sample-recipe-2',
           'sample-recipe-3',
-        ].map(id => recipesMap[id])
+        ].map(id => kitchenRecipesMap[id])
 
         component.setState({
           learnedRecipes: {

@@ -3,7 +3,7 @@
  * @ignore
  */
 
-import { itemsMap, recipesMap } from './data/maps'
+import { itemsMap, kitchenRecipesMap } from './data/maps'
 import { levels } from './data/levels'
 import achievements from './data/achievements'
 import {
@@ -1202,8 +1202,8 @@ export const sellItem = (state, { id }, howMany = 1) => {
  */
 export const updateLearnedRecipes = state => ({
   ...state,
-  learnedRecipes: Object.keys(recipesMap).reduce((acc, recipeId) => {
-    if (recipesMap[recipeId].condition(state)) {
+  learnedRecipes: Object.keys(kitchenRecipesMap).reduce((acc, recipeId) => {
+    if (kitchenRecipesMap[recipeId].condition(state)) {
       acc[recipeId] = true
     }
 

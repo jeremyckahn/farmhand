@@ -100,6 +100,8 @@
  * @typedef farmhand.recipe
  * @readonly
  * @type {farmhand.item}
+ * @property {farmhand.module:enums.recipeType} recipeType The type of recipe
+ * this is.
  * @property {{string: number}} ingredients An object where each
  * key is the id of a farmhand.item and the value is the quantity of that item.
  * @property {farmhand.recipeCondition} condition This must return `true` for
