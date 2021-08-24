@@ -1019,6 +1019,8 @@ export default class Farmhand extends Component {
   }
 
   focusNextView() {
+    if (document.activeElement.getAttribute('role') === 'tab') return
+
     const { viewList } = this
 
     this.setState(({ stageFocus }) => {
@@ -1029,6 +1031,8 @@ export default class Farmhand extends Component {
   }
 
   focusPreviousView() {
+    if (document.activeElement.getAttribute('role') === 'tab') return
+
     const { viewList } = this
 
     this.setState(({ stageFocus }) => {
