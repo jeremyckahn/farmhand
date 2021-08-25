@@ -38,10 +38,14 @@ export const forgeRecipesMap = Object.keys(recipes).reduce(
   {}
 )
 
-export const itemsMap = {
-  ...baseItemsMap,
+export const recipesMap = {
   ...kitchenRecipesMap,
   ...forgeRecipesMap,
+}
+
+export const itemsMap = {
+  ...baseItemsMap,
+  ...recipesMap,
 }
 
 export const cropIdToTypeMap = {

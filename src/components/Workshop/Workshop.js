@@ -9,7 +9,7 @@ import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 
 import { features } from '../../config'
-import { forgeRecipesMap, kitchenRecipesMap } from '../../data/maps'
+import { forgeRecipesMap, kitchenRecipesMap, recipesMap } from '../../data/maps'
 import Recipe from '../Recipe'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -45,12 +45,14 @@ const a11yProps = index => ({
 
 const Workshop = ({ learnedRecipes }) => {
   const [currentTab, setCurrentTab] = useState(0)
-  const learnedForgeRecipes = Object.keys(learnedRecipes).filter(
-    recipe => recipe in forgeRecipesMap
-  ).length
-  const learnedKitchenRecipes = Object.keys(learnedRecipes).filter(
-    recipe => recipe in kitchenRecipesMap
-  ).length
+
+  const learnedKitchenRecipes = Object.keys(learnedRecipes)
+    .filter(recipe => recipe in kitchenRecipesMap)
+    .map(recipe => recipesMap[recipe])
+
+  const learnedForgeRecipes = Object.keys(learnedRecipes)
+    .filter(recipe => recipe in forgeRecipesMap)
+    .map(recipe => recipesMap[recipe])
 
   return (
     <div className="Workshop">
@@ -60,17 +62,17 @@ const Workshop = ({ learnedRecipes }) => {
           onChange={(e, newTab) => setCurrentTab(newTab)}
           aria-label="Workshop tabs"
         >
-          <Tab label="Kitchen" {...a11yProps(0)} />
-          {features.MINING && <Tab label="Forge" {...a11yProps(1)} />}
+          <Tab {...{ label: 'Kitchen', ...a11yProps(0) }} />
+          {features.MINING && <Tab {...{ label: 'Forge', ...a11yProps(1) }} />}
         </Tabs>
       </AppBar>
       <TabPanel value={currentTab} index={0}>
         <h3>
-          Learned Recipes ({learnedKitchenRecipes} /{' '}
+          Learned Recipes ({learnedKitchenRecipes.length} /{' '}
           {Object.keys(kitchenRecipesMap).length})
         </h3>
         <ul className="card-list">
-          {Object.keys(learnedRecipes).map(recipeId => (
+          {learnedKitchenRecipes.map(({ id: recipeId }) => (
             <li key={recipeId}>
               <Recipe
                 {...{
@@ -103,9 +105,20 @@ const Workshop = ({ learnedRecipes }) => {
       </TabPanel>
       <TabPanel value={currentTab} index={1}>
         <h3>
-          Learned Recipes ({learnedForgeRecipes} /{' '}
+          Learned Recipes ({learnedForgeRecipes.length} /{' '}
           {Object.keys(forgeRecipesMap).length})
         </h3>
+        <ul className="card-list">
+          {learnedForgeRecipes.map(({ id: recipeId }) => (
+            <li key={recipeId}>
+              <Recipe
+                {...{
+                  recipe: forgeRecipesMap[recipeId],
+                }}
+              />
+            </li>
+          ))}
+        </ul>
       </TabPanel>
     </div>
   )
