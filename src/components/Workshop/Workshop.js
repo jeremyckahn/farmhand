@@ -9,6 +9,7 @@ import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 
 import { features } from '../../config'
+import { recipeType } from '../../enums'
 import { forgeRecipesMap, kitchenRecipesMap, recipesMap } from '../../data/maps'
 import Recipe from '../Recipe'
 
@@ -46,13 +47,23 @@ const a11yProps = index => ({
 const Workshop = ({ learnedRecipes }) => {
   const [currentTab, setCurrentTab] = useState(0)
 
-  const learnedKitchenRecipes = Object.keys(learnedRecipes)
-    .filter(recipe => recipe in kitchenRecipesMap)
-    .map(recipe => recipesMap[recipe])
+  const learnedKitchenRecipes = []
+  const learnedForgeRecipes = []
 
-  const learnedForgeRecipes = Object.keys(learnedRecipes)
-    .filter(recipe => recipe in forgeRecipesMap)
-    .map(recipe => recipesMap[recipe])
+  for (const learnedRecipeId of Object.keys(learnedRecipes)) {
+    const learnedRecipe = recipesMap[learnedRecipeId]
+
+    switch (learnedRecipe.recipeType) {
+      case recipeType.KITCHEN:
+        learnedKitchenRecipes.push(learnedRecipe)
+        break
+      case recipeType.FORGE:
+        learnedForgeRecipes.push(learnedRecipe)
+        break
+      default:
+        throw new Error(`Received invalid recipe ID: ${learnedRecipeId}`)
+    }
+  }
 
   return (
     <div className="Workshop">
