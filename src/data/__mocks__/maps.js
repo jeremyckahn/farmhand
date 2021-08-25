@@ -3,23 +3,25 @@ import { recipeType } from '../../enums'
 import * as items from './items'
 import * as recipes from './recipes'
 
-export const kitchenRecipesMap = Object.keys(recipes).reduce(
-  (acc, recipeName) => {
-    const recipe = recipes[recipeName]
-    if (recipe.recipeType === recipeType.KITCHEN) acc[recipe.id] = recipe
-    return acc
-  },
-  {}
-)
+export const kitchenRecipesMap = []
+export const forgeRecipesMap = []
 
-export const forgeRecipesMap = Object.keys(recipes).reduce(
-  (acc, recipeName) => {
-    const recipe = recipes[recipeName]
-    if (recipe.recipeType === recipeType.FORGE) acc[recipe.id] = recipe
-    return acc
-  },
-  {}
-)
+for (const recipeId of Object.keys(recipes)) {
+  const recipe = recipes[recipeId]
+
+  switch (recipe.recipeType) {
+    case recipeType.KITCHEN:
+      kitchenRecipesMap[recipe.id] = recipe
+      break
+
+    case recipeType.FORGE:
+      forgeRecipesMap[recipe.id] = recipe
+      break
+
+    default:
+      throw new Error(`Received invalid recipe ID: ${recipe.id}`)
+  }
+}
 
 export const recipesMap = {
   ...kitchenRecipesMap,
