@@ -19,9 +19,11 @@ import { TabPanel, a11yProps } from './TabPanel'
 
 import './Workshop.sass'
 
-const Workshop = ({ learnedRecipes }) => {
-  const [currentTab, setCurrentTab] = useState(0)
-
+/**
+ * @param {Array.<Object.<string, true>>} learnedRecipes
+ * @returns {{ learnedKitchenRecipes: Array.<farmhand.recipe>, learnedForgeRecipes: Array.<farmhand.recipe>}}
+ */
+const getLearnedRecipeCategories = learnedRecipes => {
   const learnedKitchenRecipes = []
   const learnedForgeRecipes = []
 
@@ -39,6 +41,17 @@ const Workshop = ({ learnedRecipes }) => {
         throw new Error(`Received invalid recipe ID: ${learnedRecipeId}`)
     }
   }
+
+  return { learnedKitchenRecipes, learnedForgeRecipes }
+}
+
+const Workshop = ({ learnedRecipes }) => {
+  const [currentTab, setCurrentTab] = useState(0)
+
+  const {
+    learnedKitchenRecipes,
+    learnedForgeRecipes,
+  } = getLearnedRecipeCategories(learnedRecipes)
 
   return (
     <div className="Workshop">
