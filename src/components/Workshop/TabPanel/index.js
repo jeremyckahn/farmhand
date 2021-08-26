@@ -12,7 +12,7 @@ export const TabPanel = props => {
       aria-labelledby={`workshop-tab-${index}`}
       {...other}
     >
-      {value === index && children}
+      {value === index ? children : null}
     </section>
   )
 }
