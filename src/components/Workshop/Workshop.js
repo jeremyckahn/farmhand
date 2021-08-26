@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { object, node, number } from 'prop-types'
+import { object } from 'prop-types'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Divider from '@material-ui/core/Divider'
@@ -15,34 +15,9 @@ import Recipe from '../Recipe'
 
 import FarmhandContext from '../../Farmhand.context'
 
+import { TabPanel, a11yProps } from './TabPanel'
+
 import './Workshop.sass'
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props
-
-  return (
-    <section
-      role="tabpanel"
-      hidden={value !== index}
-      id={`workshop-tabpanel-${index}`}
-      aria-labelledby={`workshop-tab-${index}`}
-      {...other}
-    >
-      {value === index && children}
-    </section>
-  )
-}
-
-TabPanel.propTypes = {
-  children: node,
-  index: number.isRequired,
-  value: number.isRequired,
-}
-
-const a11yProps = index => ({
-  id: `workshop-tab-${index}`,
-  'aria-controls': `workshop-tabpanel-${index}`,
-})
 
 const Workshop = ({ learnedRecipes }) => {
   const [currentTab, setCurrentTab] = useState(0)
