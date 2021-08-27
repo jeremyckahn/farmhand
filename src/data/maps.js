@@ -20,29 +20,17 @@ const {
   WHEAT,
 } = cropType
 
-export const kitchenRecipesMap = []
-export const forgeRecipesMap = []
+export const recipeCategories = {
+  [recipeType.KITCHEN]: {},
+  [recipeType.FORGE]: {},
+}
+
+export const recipesMap = {}
 
 for (const recipeId of Object.keys(recipes)) {
   const recipe = recipes[recipeId]
-
-  switch (recipe.recipeType) {
-    case recipeType.KITCHEN:
-      kitchenRecipesMap[recipe.id] = recipe
-      break
-
-    case recipeType.FORGE:
-      forgeRecipesMap[recipe.id] = recipe
-      break
-
-    default:
-      throw new Error(`Received invalid recipe ID: ${recipe.id}`)
-  }
-}
-
-export const recipesMap = {
-  ...kitchenRecipesMap,
-  ...forgeRecipesMap,
+  recipeCategories[recipe.recipeType][recipe.id] = recipe
+  recipesMap[recipe.id] = recipe
 }
 
 export const itemsMap = {

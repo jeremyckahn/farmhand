@@ -10,7 +10,7 @@ import Tabs from '@material-ui/core/Tabs'
 
 import { features } from '../../config'
 import { recipeType } from '../../enums'
-import { forgeRecipesMap, kitchenRecipesMap, recipesMap } from '../../data/maps'
+import { recipeCategories, recipesMap } from '../../data/maps'
 import Recipe from '../Recipe'
 
 import FarmhandContext from '../../Farmhand.context'
@@ -68,14 +68,14 @@ const Workshop = ({ learnedRecipes }) => {
       <TabPanel value={currentTab} index={0}>
         <h3>
           Learned Recipes ({learnedKitchenRecipes.length} /{' '}
-          {Object.keys(kitchenRecipesMap).length})
+          {Object.keys(recipeCategories[recipeType.KITCHEN]).length})
         </h3>
         <ul className="card-list">
           {learnedKitchenRecipes.map(({ id: recipeId }) => (
             <li key={recipeId}>
               <Recipe
                 {...{
-                  recipe: kitchenRecipesMap[recipeId],
+                  recipe: recipeCategories[recipeType.KITCHEN][recipeId],
                 }}
               />
             </li>
@@ -105,14 +105,14 @@ const Workshop = ({ learnedRecipes }) => {
       <TabPanel value={currentTab} index={1}>
         <h3>
           Learned Recipes ({learnedForgeRecipes.length} /{' '}
-          {Object.keys(forgeRecipesMap).length})
+          {Object.keys(recipeCategories[recipeType.FORGE]).length})
         </h3>
         <ul className="card-list">
           {learnedForgeRecipes.map(({ id: recipeId }) => (
             <li key={recipeId}>
               <Recipe
                 {...{
-                  recipe: forgeRecipesMap[recipeId],
+                  recipe: recipeCategories[recipeType.FORGE][recipeId],
                 }}
               />
             </li>
