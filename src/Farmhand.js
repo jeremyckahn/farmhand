@@ -69,6 +69,7 @@ import {
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
+  RECIPES_LEARNED,
   ROOM_FULL_NOTIFICATION,
 } from './templates'
 import {
@@ -381,6 +382,7 @@ export default class Farmhand extends Component {
       purchasedCombine: 0,
       purchasedCowPen: 0,
       purchasedField: 0,
+      purchasedSmelter: 0,
       showNotifications: true,
       stageFocus: stageFocusType.HOME,
       todaysNotifications: [],
@@ -488,9 +490,11 @@ export default class Farmhand extends Component {
       'purchaseCombine',
       'purchaseCowPen',
       'purchaseField',
+      'purchaseSmelter',
       'purchaseItem',
       'purchaseStorageExpansion',
       'plantInPlot',
+      'prependPendingPeerMessage',
       'removePeer',
       'sellItem',
       'sellCow',
@@ -864,11 +868,19 @@ export default class Farmhand extends Component {
    * @param {farmhand.state} prevState
    */
   showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
+    let learnedRecipes = []
+
     Object.keys(this.state.learnedRecipes).forEach(recipeId => {
       if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
-        this.showNotification(RECIPE_LEARNED`${recipesMap[recipeId]}`)
+        learnedRecipes.push(recipesMap[recipeId])
       }
     })
+
+    if (learnedRecipes.length > 1) {
+      this.showNotification(RECIPES_LEARNED`${learnedRecipes}`)
+    } else if (learnedRecipes.length === 1) {
+      this.showNotification(RECIPE_LEARNED`${learnedRecipes[0]}`)
+    }
   }
 
   /*!
@@ -900,6 +912,7 @@ export default class Farmhand extends Component {
     } = this.state
     const nextDayState = reducers.computeStateForNextDay(this.state, isFirstDay)
     const serverMessages = []
+    let broadcastedPositionMessage
 
     if (isOnline) {
       try {
@@ -913,9 +926,11 @@ export default class Farmhand extends Component {
 
         if (Object.keys(positions).length) {
           serverMessages.push({
-            message: POSITIONS_POSTED_NOTIFICATION`${positions}`,
+            message: POSITIONS_POSTED_NOTIFICATION`${'You'}${positions}`,
             severity: 'info',
           })
+
+          broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION`${''}${positions}`
         }
 
         const { valueAdjustments } = await postData(endpoints.postDayResults, {
@@ -991,6 +1006,10 @@ export default class Farmhand extends Component {
           this.setState(() => ({
             isWaitingForDayToCompleteIncrementing: false,
           }))
+
+          if (broadcastedPositionMessage) {
+            this.messagePeers(broadcastedPositionMessage)
+          }
         }
       }
     )
@@ -1032,6 +1051,14 @@ export default class Farmhand extends Component {
           ],
       }
     })
+  }
+
+  /**
+   * @param {string} message
+   * @param {string?} [severity]
+   */
+  messagePeers(message, severity) {
+    this.prependPendingPeerMessage(message, severity)
   }
 
   /*!

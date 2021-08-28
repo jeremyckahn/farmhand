@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 
+import { features } from '../../config'
 import FarmhandContext from '../../Farmhand.context'
 import {
   dollarString,
@@ -19,6 +20,7 @@ import {
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
+  PURCHASEABLE_SMELTERS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
 import Inventory from '../Inventory'
@@ -30,12 +32,14 @@ export const Shop = ({
   handleCombinePurchase,
   handleCowPenPurchase,
   handleFieldPurchase,
+  handleSmelterPurchase,
   handleStorageExpansionPurchase,
   inventoryLimit,
   money,
   purchasedCombine,
   purchasedCowPen,
   purchasedField,
+  purchasedSmelter,
   shopInventory,
 
   storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit),
@@ -135,6 +139,23 @@ export const Shop = ({
           }}
         />
       </li>
+      {features.MINING ? (
+        <li>
+          <TierPurchase
+            {...{
+              description:
+                'You can purchase a Smelter to convert ore into ingots and other useful items.',
+              handleTierPurchase: handleSmelterPurchase,
+              maxedOutPlaceholder: "You've already purchased the smelter!",
+              purchasedTier: purchasedSmelter,
+              renderTierLabel: ({ type, price }) =>
+                `${dollarString(price)}: ${type} Smelter`,
+              tiers: PURCHASEABLE_SMELTERS,
+              title: 'Buy smelter',
+            }}
+          />
+        </li>
+      ) : null}
     </ul>
   </div>
 )
@@ -148,6 +169,8 @@ Shop.propTypes = {
   money: number.isRequired,
   purchasedCowPen: number.isRequired,
   purchasedField: number.isRequired,
+  purchasedSmelter: number.isRequired,
+  purchasedCombine: number.isRequired,
   shopInventory: array.isRequired,
   valueAdjustments: object.isRequired,
 }
