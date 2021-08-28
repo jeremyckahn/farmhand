@@ -76,10 +76,8 @@ export const Inventory = ({
   playerInventory,
   shopInventory,
 
-  // Infer the type of view this is by doing an identity check against
-  // gameState arrays.
-  isPurchaseView = items === shopInventory,
-  isSellView = items === playerInventory,
+  isPurchaseView = false,
+  isSellView = false,
 
   itemCategories = separateItemsIntoCategories(items),
 }) => (
@@ -111,7 +109,7 @@ export const Inventory = ({
               ))}
             </ul>
           </section>
-          <Divider />
+          {isPurchaseView ? null : <Divider />}
         </Fragment>
       ) : null
     )}

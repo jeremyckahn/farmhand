@@ -16,9 +16,11 @@ import {
   dollarString,
   getCostOfNextStorageExpansion,
   integerString,
+  memoize,
   moneyString,
 } from '../../utils'
 import { items } from '../../img'
+import { itemType } from '../../enums'
 import {
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
@@ -32,6 +34,14 @@ import TierPurchase from '../TierPurchase'
 import { TabPanel, a11yProps } from './TabPanel'
 
 import './Shop.sass'
+
+const categorizeShopInventory = memoize(shopInventory =>
+  shopInventory.reduce((acc, inventoryItem) => {
+    acc[inventoryItem.type === itemType.CROP ? 'seeds' : 'fieldTools'].push(inventoryItem)
+
+    return acc
+  }, {seeds: [], fieldTools: []})
+)
 
 export const Shop = ({
   handleCombinePurchase,
@@ -51,6 +61,8 @@ export const Shop = ({
 }) => {
   const [currentTab, setCurrentTab] = useState(0)
 
+  const { seeds, fieldTools } = categorizeShopInventory(shopInventory)
+
   return (
     <div className="Shop">
       <AppBar position="static" color="primary">
@@ -59,18 +71,28 @@ export const Shop = ({
           onChange={(e, newTab) => setCurrentTab(newTab)}
           aria-label="Shop tabs"
         >
-          <Tab {...{ label: 'Seeds and Field Tools', ...a11yProps(0) }} />
-          <Tab {...{ label: 'Upgrades', ...a11yProps(1) }} />
+          <Tab {...{ label: 'Seeds', ...a11yProps(0) }} />
+          <Tab {...{ label: 'Field Tools', ...a11yProps(1) }} />
+          <Tab {...{ label: 'Upgrades', ...a11yProps(2) }} />
         </Tabs>
       </AppBar>
       <TabPanel value={currentTab} index={0}>
         <Inventory
           {...{
-            items: shopInventory,
+            items: seeds,
+            isPurchaseView: true,
           }}
         />
       </TabPanel>
       <TabPanel value={currentTab} index={1}>
+        <Inventory
+          {...{
+            items: fieldTools,
+            isPurchaseView: true,
+          }}
+        />
+      </TabPanel>
+      <TabPanel value={currentTab} index={2}>
         <ul className="card-list">
           {inventoryLimit > -1 && (
             <li>
