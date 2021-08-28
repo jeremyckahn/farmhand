@@ -190,10 +190,11 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
 export const CONNECTED_TO_ROOM = (_, room) => `Connected to room **${room}**!`
 
 /**
+ * @param {string} who
  * @param {Object} positions
  * @returns {string}
  */
-export const POSITIONS_POSTED_NOTIFICATION = (_, positions) => {
+export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
   const positivePositions = []
   const negativePositions = []
 
@@ -204,7 +205,7 @@ export const POSITIONS_POSTED_NOTIFICATION = (_, positions) => {
   const chunks = []
 
   if (positivePositions.length) {
-    chunks.push(`You raised the value of:`)
+    chunks.push(`${who} raised the value of:`)
     positivePositions.forEach(itemId =>
       chunks.push(`  - ${itemsMap[itemId].name}`)
     )
@@ -215,7 +216,7 @@ export const POSITIONS_POSTED_NOTIFICATION = (_, positions) => {
       chunks.push('') // Adds a necessary linebreak
     }
 
-    chunks.push(`You lowered the value of:`)
+    chunks.push(`${who} lowered the value of:`)
     negativePositions.forEach(itemId =>
       chunks.push(`  - ${itemsMap[itemId].name}`)
     )

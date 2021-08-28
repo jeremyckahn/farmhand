@@ -494,6 +494,7 @@ export default class Farmhand extends Component {
       'purchaseItem',
       'purchaseStorageExpansion',
       'plantInPlot',
+      'prependPendingPeerMessage',
       'removePeer',
       'sellItem',
       'sellCow',
@@ -911,6 +912,7 @@ export default class Farmhand extends Component {
     } = this.state
     const nextDayState = reducers.computeStateForNextDay(this.state, isFirstDay)
     const serverMessages = []
+    let broadcastedPositionMessage
 
     if (isOnline) {
       try {
@@ -924,9 +926,11 @@ export default class Farmhand extends Component {
 
         if (Object.keys(positions).length) {
           serverMessages.push({
-            message: POSITIONS_POSTED_NOTIFICATION`${positions}`,
+            message: POSITIONS_POSTED_NOTIFICATION`${'You'}${positions}`,
             severity: 'info',
           })
+
+          broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION`${''}${positions}`
         }
 
         const { valueAdjustments } = await postData(endpoints.postDayResults, {
@@ -1002,6 +1006,10 @@ export default class Farmhand extends Component {
           this.setState(() => ({
             isWaitingForDayToCompleteIncrementing: false,
           }))
+
+          if (broadcastedPositionMessage) {
+            this.messagePeers(broadcastedPositionMessage)
+          }
         }
       }
     )
@@ -1043,6 +1051,14 @@ export default class Farmhand extends Component {
           ],
       }
     })
+  }
+
+  /**
+   * @param {string} message
+   * @param {string?} [severity]
+   */
+  messagePeers(message, severity) {
+    this.prependPendingPeerMessage(message, severity)
   }
 
   /*!
