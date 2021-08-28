@@ -93,7 +93,7 @@ export const Inventory = ({
       itemCategories[category].length ? (
         <Fragment key={category}>
           <section>
-            <h3>{headerText}</h3>
+            {isPurchaseView ? null : <h3>{headerText}</h3>}
             <ul className="card-list">
               {itemCategories[category].map(item => (
                 <li key={item.id}>
