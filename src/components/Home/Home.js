@@ -68,7 +68,7 @@ Farmhand is a resource management game that puts a farm in your hand. It is desi
 
 This project has been in development since 2018. **Farmhand will always remain completely free to play**. The game is continually being developed and new features are released as soon as they are ready. All are welcomed to participate in the game's development, so [join the Discord channel](https://discord.gg/6cHEZ9H) and say hi if you'd like to get involved!
 
-Farmhand is developed in a fully transparent way. As much of its development and operation is as publicly accessible as possible, including [API deployment logs](https://farmhand.vercel.app/_logs), [build job logs](https://github.com/jeremyckahn/farmhand/actions), and [deployed static assets](https://github.com/jeremyckahn/farmhand/tree/gh-pages). Your privacy is important, so none of your personal information is collected or transmitted. You're welcome to audit the code, logs, and network requests to verify it for yourself.
+Farmhand is developed in a fully transparent way. As much of its development and operation is as publicly accessible as possible, including [API deployment logs](https://farmhand.vercel.app/_logs), [build job logs](https://github.com/jeremyckahn/farmhand/actions), and [deployed static assets](https://github.com/jeremyckahn/farmhand/tree/gh-pages). Your privacy is important, so none of your personal information is collected or transmitted aside from basic Google Analytics data tracking. You're welcome to audit the code, logs, and network requests to verify it for yourself.
 
 Happy farming! 🐮
     `,
@@ -135,7 +135,7 @@ It looks like you're new here. Thanks for stopping by! Here are some goals to he
             source: `
 ### Online multiplayer
 
-You can play Farmhand online with others! Online play is totally free, untracked, and anonymous.
+You can play Farmhand online with others! Online play is totally free and anonymous.
 
 To play online, flip the "Play online" toggle in the menu. You'll be connected to the **global** room by default, but you can select another room to play in if you'd like. If you select a room that doesn't exist, it will automatically be created for you. You can then tell others to meet you in that room.
 
