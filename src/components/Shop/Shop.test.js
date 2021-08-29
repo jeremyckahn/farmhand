@@ -29,5 +29,5 @@ beforeEach(() => {
 })
 
 test('renders shop inventory', () => {
-  expect(component.find(Inventory)).toHaveLength(1)
+  expect(component.find(Inventory)).toHaveLength(2)
 })
