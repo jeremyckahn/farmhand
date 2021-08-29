@@ -1,7 +1,7 @@
 /**
  * @module farmhand.recipes
  */
-import { itemType } from '../enums'
+import { itemType, recipeType } from '../enums'
 import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
 
 import * as items from './items'
@@ -39,6 +39,7 @@ export const bread = itemify({
     [items.wheat.id]: 15,
   },
   condition: state => state.itemsSold[items.wheat.id] >= 30,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -52,6 +53,7 @@ export const butter = itemify({
     [items.milk3.id]: 5,
   },
   condition: state => state.itemsSold[items.milk3.id] >= 30,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -65,6 +67,7 @@ export const cheese = itemify({
     [items.milk3.id]: 8,
   },
   condition: state => (state.itemsSold[items.milk3.id] || 0) >= 20,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -78,6 +81,7 @@ export const rainbowCheese = itemify({
     [items.rainbowMilk3.id]: 10,
   },
   condition: state => (state.itemsSold[items.rainbowMilk3.id] || 0) >= 30,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -91,6 +95,7 @@ export const chocolate = itemify({
     [items.chocolateMilk.id]: 10,
   },
   condition: state => (state.itemsSold[items.chocolateMilk.id] || 0) >= 25,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -104,6 +109,7 @@ export const carrotSoup = itemify({
     [items.carrot.id]: 4,
   },
   condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -117,6 +123,7 @@ export const jackolantern = itemify({
     [items.pumpkin.id]: 1,
   },
   condition: state => (state.itemsSold[items.pumpkin.id] || 0) >= 50,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -133,6 +140,7 @@ export const spaghetti = itemify({
   condition: state =>
     state.itemsSold[items.wheat.id] >= 20 &&
     state.itemsSold[items.tomato.id] >= 5,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -148,6 +156,7 @@ export const frenchOnionSoup = itemify({
   },
   condition: state =>
     state.itemsSold[items.onion.id] >= 15 && state.itemsSold[cheese.id] >= 10,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -172,6 +181,7 @@ export const burger = itemify({
     state.itemsSold[items.soybean.id] >= 25 &&
     state.itemsSold[items.spinach.id] >= 5 &&
     state.itemsSold[items.tomato.id] >= 5,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -190,6 +200,7 @@ export const summerSalad = itemify({
     state.itemsSold[items.spinach.id] >= 30 &&
     state.itemsSold[items.corn.id] > 5 &&
     state.itemsSold[items.carrot.id] > 5,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -203,6 +214,7 @@ export const soyMilk = itemify({
     [items.soybean.id]: 20,
   },
   condition: state => state.itemsSold[items.soybean.id] >= 100,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -218,6 +230,7 @@ export const chocolateSoyMilk = itemify({
   },
   condition: state =>
     state.itemsSold[soyMilk.id] >= 5 && state.itemsSold[chocolate.id] >= 5,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -231,6 +244,7 @@ export const tofu = itemify({
     [soyMilk.id]: 4,
   },
   condition: state => state.itemsSold[soyMilk.id] >= 20,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -244,6 +258,7 @@ export const hotSauce = itemify({
     [items.jalapeno.id]: 10,
   },
   condition: state => state.itemsSold[items.jalapeno.id] >= 50,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -264,6 +279,7 @@ export const salsa = itemify({
     state.itemsSold[items.onion.id] >= 5 &&
     state.itemsSold[items.tomato.id] >= 5 &&
     state.itemsSold[items.corn.id] >= 5,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -280,6 +296,7 @@ export const spicyCheese = itemify({
   condition: state =>
     state.itemsSold[items.jalapeno.id] >= 20 &&
     state.itemsSold[items.milk3.id] >= 50,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -293,6 +310,7 @@ export const strawberryJam = itemify({
     [items.strawberry.id]: 10,
   },
   condition: state => state.itemsSold[items.strawberry.id] >= 60,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -308,6 +326,7 @@ export const popcorn = itemify({
   },
   condition: state =>
     state.itemsSold[items.corn.id] >= 12 && state.itemsSold[butter.id] >= 6,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
@@ -322,6 +341,7 @@ export const bronzeIngot = itemify({
   },
   condition: state =>
     state.purchasedSmelter && state.itemsSold[items.bronzeOre.id] >= 50,
+  recipeType: recipeType.FORGE,
 })
 
 /**
@@ -336,6 +356,7 @@ export const ironIngot = itemify({
   },
   condition: state =>
     state.purchasedSmelter && state.itemsSold[items.ironOre.id] >= 50,
+  recipeType: recipeType.FORGE,
 })
 
 /**
@@ -350,6 +371,7 @@ export const silverIngot = itemify({
   },
   condition: state =>
     state.purchasedSmelter && state.itemsSold[items.silverOre.id] >= 50,
+  recipeType: recipeType.FORGE,
 })
 
 /**
@@ -364,4 +386,5 @@ export const goldIngot = itemify({
   },
   condition: state =>
     state.purchasedSmelter && state.itemsSold[items.goldOre.id] >= 50,
+  recipeType: recipeType.FORGE,
 })
