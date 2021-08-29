@@ -13,6 +13,7 @@ export const PlayerInventory = memo(
     <Inventory
       {...{
         items: playerInventory,
+        isSellView: true,
       }}
     />
   ),
