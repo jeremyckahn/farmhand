@@ -76,7 +76,7 @@ export const Shop = ({
           aria-label="Shop tabs"
         >
           <Tab {...{ label: 'Seeds', ...a11yProps(0) }} />
-          <Tab {...{ label: 'Field Tools', ...a11yProps(1) }} />
+          <Tab {...{ label: 'Supplies', ...a11yProps(1) }} />
           <Tab {...{ label: 'Upgrades', ...a11yProps(2) }} />
         </Tabs>
       </AppBar>
