@@ -123,7 +123,7 @@ export const Shop = ({
                 />
                 <CardContent>
                   <Typography>
-                    Purchase a Storge Unit to increase your inventory capacity
+                    Purchase a Storage Unit to increase your inventory capacity
                     for {STORAGE_EXPANSION_AMOUNT} more items.
                   </Typography>
                 </CardContent>
