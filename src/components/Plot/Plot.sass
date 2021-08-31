@@ -1,3 +1,5 @@
+@import ../../styles/utils.sass
+
 $not-allowed-color: rgba(255, 0, 0, 0.5)
 
 .Plot
@@ -12,6 +14,9 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
   border: solid 1px #000
   flex-grow: 1
   image-rendering: pixelated
+
+  img
+    @include sprite-shadow
 
   .water-mode &.crop:hover
     background-color: var(--color-blue-hover)
