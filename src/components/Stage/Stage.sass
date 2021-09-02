@@ -67,8 +67,20 @@
     @media (min-width: #{$break-medium-phone})
       display: none
 
+  .MuiAppBar-root
+    border-radius: .5em .5em 0 0
+    margin-top: 4em
+
   section
     padding: .5em 0
+
+    &[role=tabpanel]
+      background: rgba(255, 255, 255, 0.5)
+      border-radius: 0 0 .5em .5em
+      padding: .5em 0.5em 0.5em
+
+      .card-list > li:last-child
+        margin-bottom: 0
 
     @media (max-width: #{$break-sm})
       font-size: 1em

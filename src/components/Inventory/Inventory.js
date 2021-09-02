@@ -76,10 +76,8 @@ export const Inventory = ({
   playerInventory,
   shopInventory,
 
-  // Infer the type of view this is by doing an identity check against
-  // gameState arrays.
-  isPurchaseView = items === shopInventory,
-  isSellView = items === playerInventory,
+  isPurchaseView = false,
+  isSellView = false,
 
   itemCategories = separateItemsIntoCategories(items),
 }) => (
@@ -95,7 +93,7 @@ export const Inventory = ({
       itemCategories[category].length ? (
         <Fragment key={category}>
           <section>
-            <h3>{headerText}</h3>
+            {isPurchaseView ? null : <h3>{headerText}</h3>}
             <ul className="card-list">
               {itemCategories[category].map(item => (
                 <li key={item.id}>
@@ -111,7 +109,7 @@ export const Inventory = ({
               ))}
             </ul>
           </section>
-          <Divider />
+          {isPurchaseView ? null : <Divider />}
         </Fragment>
       ) : null
     )}
