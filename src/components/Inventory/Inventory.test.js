@@ -67,11 +67,17 @@ describe('item sorting', () => {
           testItem({ id: 'cow-feed' }),
           testItem({ id: 'sample-crop-1' }),
           testItem({ id: 'milk-1' }),
+          testItem({ id: 'stone' }),
+          testItem({ id: 'iron-ore' }),
         ],
         {}
       )
     ).toEqual({
       [categoryIds.CROPS]: [testItem({ id: 'sample-crop-1' })],
+      [categoryIds.MINED_RESOURCES]: [
+        testItem({ id: 'stone' }),
+        testItem({ id: 'iron-ore' }),
+      ],
       [categoryIds.SEEDS]: [
         testItem({ id: 'sample-crop-seeds-1', isPlantableCrop: true }),
         testItem({ id: 'sample-crop-seeds-2', isPlantableCrop: true }),
