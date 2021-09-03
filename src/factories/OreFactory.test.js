@@ -26,7 +26,7 @@ describe('OreFactory', () => {
 
     const ore = OreFactory.spawn()
 
-    expect(ore.type).toEqual(itemType.ORE)
+    expect([itemType.STONE, itemType.ORE].includes(ore.type)).toEqual(true)
   })
 
   it('returns null when no ore is spawned', () => {

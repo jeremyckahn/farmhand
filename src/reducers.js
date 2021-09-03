@@ -5,7 +5,7 @@
 
 import { itemsMap, recipesMap } from './data/maps'
 import { levels } from './data/levels'
-import { oreSpawner } from './data/ores'
+import { OreFactory } from './factories'
 import achievements from './data/achievements'
 import {
   areHuggingMachinesInInventory,
@@ -1691,16 +1691,16 @@ export const minePlot = (state, x, y) => {
     return state
   }
 
-  const spawnOre = oreSpawner(Math.random())
+  const spawnedOre = OreFactory.spawn()
   const daysUntilClear = Math.floor(Math.random() * 2)
-  console.log(spawnOre)
+  console.log(spawnedOre)
 
   // dice roll for some ore
   //    gift player any resulting ore produced
   // dice roll amount of days plot stays damaged
 
   state = modifyFieldPlotAt(state, x, y, () => {
-    return { wasShoveled: true, daysUntilClear }
+    return { wasShoveled: true, daysUntilClear, spawnedOre }
   })
 
   return {
