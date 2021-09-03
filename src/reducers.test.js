@@ -41,6 +41,8 @@ import {
 import { huggingMachine, sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
+import { goldOre } from './data/ores'
+import { OreFactory } from './factories'
 import { fertilizerType, fieldMode, genders, standardCowColors } from './enums'
 import {
   farmProductSalesVolumeNeededForLevel,
@@ -62,6 +64,7 @@ jest.mock('./data/items')
 jest.mock('./data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
 jest.mock('./data/recipes')
 jest.mock('./data/shop-inventory')
+jest.mock('./factories/OreFactory')
 
 jest.mock('./constants', () => ({
   __esModule: true,
@@ -3317,12 +3320,32 @@ describe('minePlot', () => {
   beforeAll(() => {
     gameState = {
       field: [[null, 'crop']],
+      inventory: [],
     }
+
+    OreFactory.spawn.mockReturnValue(goldOre)
     gameState = fn.minePlot(gameState, 0, 0)
   })
 
   test('updates the plot to be shoveled if the plot is empty', () => {
     expect(gameState.field[0][0].wasShoveled).toEqual(true)
+  })
+
+  test('sets the oreId on the plot if ore was spawned', () => {
+    expect(gameState.field[0][0].oreId).toEqual(goldOre.id)
+  })
+
+  test('adds the spawned ore to the inventory', () => {
+    let itemIsInInventory = false
+
+    for (let item of gameState.inventory) {
+      if (item.id === goldOre.id) {
+        itemIsInInventory = true
+        return
+      }
+    }
+
+    expect(itemIsInInventory).toEqual(true)
   })
 
   test('does not alter the plot if something is already there', () => {
