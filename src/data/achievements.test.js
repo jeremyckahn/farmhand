@@ -105,9 +105,19 @@ describe('gold-digger', () => {
     expect(achievement.condition(state)).toEqual(false)
   })
 
+  test('can not be achieved on day 1', () => {
+    const state = {
+      loanBalance: 1,
+      dayCount: 1,
+    }
+
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
   test('is achieved when the loanBalance is 0', () => {
     const state = {
       loanBalance: 0,
+      dayCount: 2,
     }
 
     expect(achievement.condition(state)).toEqual(true)
