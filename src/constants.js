@@ -188,9 +188,9 @@ export const TOOLBELT_FIELD_MODES = new Set([
   fieldMode.MINE,
 ])
 
-export const ORE_SPAWN_CHANCE = 0.75
+export const ORE_SPAWN_CHANCE = 0.3
 export const BRONZE_SPAWN_CHANCE = 0.6
 export const GOLD_SPAWN_CHANCE = 0.1
-export const IRON_SPAWN_CHANCE = 0.5
+export const IRON_SPAWN_CHANCE = 0.4
 export const SILVER_SPAWN_CHANCE = 0.2
 export const STONE_SPAWN_CHANCE = 0.9

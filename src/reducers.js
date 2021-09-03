@@ -1692,12 +1692,18 @@ export const minePlot = (state, x, y) => {
   }
 
   const spawnedOre = OreFactory.spawn()
-  const daysUntilClear = Math.floor(Math.random() * 2)
-  console.log(spawnedOre)
+  let daysUntilClear = Math.round(Math.random() * 3)
 
-  // dice roll for some ore
-  //    gift player any resulting ore produced
-  // dice roll amount of days plot stays damaged
+  if (spawnedOre !== null) {
+    // if ore was spawned, add up to 10 days to the time to clear
+    // at random, + a minimum based on the spawnChance meant to make
+    // rarer ores take longer to cooldown
+    daysUntilClear += Math.round(
+      Math.random() * 10 + (1 - spawnedOre.spawnChance) * 10
+    )
+
+    state = addItemToInventory(state, spawnedOre)
+  }
 
   state = modifyFieldPlotAt(state, x, y, () => {
     return { wasShoveled: true, daysUntilClear, spawnedOre }

@@ -17,8 +17,10 @@ const {
   FERTILIZER,
   HUGGING_MACHINE,
   MILK,
+  ORE,
   SCARECROW,
   SPRINKLER,
+  STONE,
 } = itemType
 
 export const categoryIds = enumify([
@@ -27,6 +29,7 @@ export const categoryIds = enumify([
   'CRAFTED_ITEMS',
   'CROPS',
   'FIELD_TOOLS',
+  'MINED_RESOURCES',
   'SEEDS',
 ])
 const categoryIdKeys = Object.keys(categoryIds)
@@ -36,6 +39,7 @@ const {
   CRAFTED_ITEMS,
   CROPS,
   FIELD_TOOLS,
+  MINED_RESOURCES,
   SEEDS,
 } = categoryIds
 
@@ -47,8 +51,10 @@ const itemTypeCategoryMap = Object.freeze({
   [FERTILIZER]: FIELD_TOOLS,
   [HUGGING_MACHINE]: ANIMAL_SUPPLIES,
   [MILK]: ANIMAL_PRODUCTS,
+  [ORE]: MINED_RESOURCES,
   [SCARECROW]: FIELD_TOOLS,
   [SPRINKLER]: FIELD_TOOLS,
+  [STONE]: MINED_RESOURCES,
 })
 
 const getItemCategories = () =>
@@ -89,6 +95,7 @@ export const Inventory = ({
       [ANIMAL_PRODUCTS, 'Animal Products'],
       [ANIMAL_SUPPLIES, 'Animal Supplies'],
       [CRAFTED_ITEMS, 'Crafted Items'],
+      [MINED_RESOURCES, 'Mined Resources'],
     ].map(([category, headerText]) =>
       itemCategories[category].length ? (
         <Fragment key={category}>
