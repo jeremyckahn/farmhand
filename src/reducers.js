@@ -172,7 +172,7 @@ export const resetWasShoveled = plotContent => {
   if (
     plotContent &&
     plotContent.wasShoveled &&
-    plotContent.daysUntilClear > 0
+    plotContent.daysUntilClear > 1
   ) {
     return {
       ...plotContent,
@@ -1692,14 +1692,14 @@ export const minePlot = (state, x, y) => {
   }
 
   const spawnedOre = OreFactory.spawn()
-  let daysUntilClear = Math.round(Math.random() * 3)
+  let daysUntilClear = Math.round(Math.random() * 2) + 1
 
   if (spawnedOre !== null) {
-    // if ore was spawned, add up to 10 days to the time to clear
+    // if ore was spawned, add up to 5 days to the time to clear
     // at random, + a minimum based on the spawnChance meant to make
     // rarer ores take longer to cooldown
     daysUntilClear += Math.round(
-      Math.random() * 10 + (1 - spawnedOre.spawnChance) * 10
+      Math.random() * 5 + (1 - spawnedOre.spawnChance) * 10
     )
 
     state = addItemToInventory(state, spawnedOre)
