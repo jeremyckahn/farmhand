@@ -7,12 +7,22 @@ describe('OreFactory', () => {
     jest.spyOn(global.Math, 'random')
   })
 
-  afterAll(() => {
+  afterEach(() => {
     jest.restoreAllMocks()
   })
 
+  it('does not spawn anything when dice roll is higher than spawn chance', () => {
+    global.Math.random.mockImplementationOnce(() => 1)
+
+    const ore = OreFactory.spawn()
+
+    expect(ore).toEqual(null)
+  })
+
   it('spawns a random ore', () => {
-    global.Math.random.mockReturnValueOnce(0.001)
+    global.Math.random
+      .mockImplementationOnce(() => 0)
+      .mockImplementationOnce(() => 0.001)
 
     const ore = OreFactory.spawn()
 
@@ -20,7 +30,9 @@ describe('OreFactory', () => {
   })
 
   it('returns null when no ore is spawned', () => {
-    global.Math.random.mockReturnValueOnce(1)
+    global.Math.random
+      .mockImplementationOnce(() => 0)
+      .mockImplementationOnce(() => 1)
 
     const ore = OreFactory.spawn()
 

@@ -1,4 +1,5 @@
 import { itemType } from '../../enums'
+import { GOLD_SPAWN_CHANCE } from '../../constants'
 
 const { freeze } = Object
 
@@ -13,5 +14,5 @@ export const goldOre = freeze({
   name: 'Gold Ore',
   type: itemType.ORE,
   value: 100,
-  spawnChance: 0.01,
+  spawnChance: GOLD_SPAWN_CHANCE,
 })

@@ -1,4 +1,5 @@
 import * as ores from '../data/ores'
+import { ORE_SPAWN_CHANCE } from '../constants'
 
 export default class OreFactory {
   /*
@@ -8,8 +9,12 @@ export default class OreFactory {
    * @static
    **/
   static spawn() {
-    var diceRoll = Math.random()
-    var potentialOres = []
+    let shouldSpawnOre = Math.random() < ORE_SPAWN_CHANCE
+
+    if (!shouldSpawnOre) return null
+
+    let diceRoll = Math.random()
+    let potentialOres = []
     let ore
 
     for (let key in ores) {
