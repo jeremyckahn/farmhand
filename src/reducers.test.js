@@ -3354,10 +3354,19 @@ describe('minePlot', () => {
 })
 
 describe('resetWasShoveled', () => {
-  test('it will return null if the plot was shoveled today', () => {
+  test('it decrements daysUntilClear if value is above 1', () => {
     const plotContents = fn.resetWasShoveled({
       wasShoveled: true,
-      daysUntilClear: 0,
+      daysUntilClear: 2,
+    })
+
+    expect(plotContents).toEqual({ wasShoveled: true, daysUntilClear: 1 })
+  })
+
+  test('it resets the plotContents when daysUntilClear is 1', () => {
+    const plotContents = fn.resetWasShoveled({
+      wasShoveled: true,
+      daysUntilClear: 1,
     })
 
     expect(plotContents).toEqual(null)
