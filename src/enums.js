@@ -82,6 +82,7 @@ export const itemType = enumify([
   'CRAFTED_ITEM',
   'CROP',
   'FERTILIZER',
+  'FUEL',
   'HUGGING_MACHINE',
   'MILK',
   'ORE',

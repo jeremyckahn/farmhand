@@ -12,6 +12,7 @@ export const stone = freeze({
   doesPriceFluctuate: false,
   id: 'stone',
   name: 'Stone',
+  spawnChance: STONE_SPAWN_CHANCE,
   type: itemType.STONE,
   value: 10,
   spawnChance: STONE_SPAWN_CHANCE,
