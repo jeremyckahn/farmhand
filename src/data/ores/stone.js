@@ -15,5 +15,4 @@ export const stone = freeze({
   spawnChance: STONE_SPAWN_CHANCE,
   type: itemType.STONE,
   value: 10,
-  spawnChance: STONE_SPAWN_CHANCE,
 })

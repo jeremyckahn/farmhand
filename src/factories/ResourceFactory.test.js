@@ -26,6 +26,12 @@ describe('ResourceFactory', () => {
     const item = ResourceFactory.spawn(itemType.FUEL)
     expect(item).toEqual(coal)
   })
+
+  it('can spawn ore', () => {
+    global.Math.random.mockReturnValueOnce(0)
+    const item = ResourceFactory.spawn(itemType.ORE)
+    expect(item.type).toEqual(itemType.ORE)
+  })
 })
 
 describe('StoneFactory', () => {
@@ -90,7 +96,6 @@ describe('CoalFactory', () => {
         }
       }
 
-      console.log(spawns)
       expect(numCoalSpawned).toEqual(1)
     })
 

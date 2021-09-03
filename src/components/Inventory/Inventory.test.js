@@ -69,12 +69,14 @@ describe('item sorting', () => {
           testItem({ id: 'milk-1' }),
           testItem({ id: 'stone' }),
           testItem({ id: 'iron-ore' }),
+          testItem({ id: 'coal' }),
         ],
         {}
       )
     ).toEqual({
       [categoryIds.CROPS]: [testItem({ id: 'sample-crop-1' })],
       [categoryIds.MINED_RESOURCES]: [
+        testItem({ id: 'coal' }),
         testItem({ id: 'stone' }),
         testItem({ id: 'iron-ore' }),
       ],

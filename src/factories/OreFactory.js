@@ -1,5 +1,7 @@
-import * as ores from '../data/ores'
+import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores'
 import { ORE_SPAWN_CHANCE } from '../constants'
+
+const SPAWNABLE_ORES = [goldOre, ironOre, bronzeOre, silverOre]
 
 export default class OreFactory {
   /*
@@ -9,16 +11,10 @@ export default class OreFactory {
    * @static
    **/
   static spawn() {
-    let shouldSpawnOre = Math.random() < ORE_SPAWN_CHANCE
-
-    if (!shouldSpawnOre) return null
-
     let diceRoll = Math.random()
     let potentialOres = []
-    let ore
 
-    for (let key in ores) {
-      ore = ores[key]
+    for (let ore of SPAWNABLE_ORES) {
       if (diceRoll <= ore.spawnChance) {
         potentialOres.push(ore)
       }
@@ -26,6 +22,26 @@ export default class OreFactory {
 
     if (potentialOres.length === 0) return null
 
-    return potentialOres[Math.floor(Math.random() * potentialOres.length)]
+    const chosenOre =
+      potentialOres[Math.floor(Math.random() * potentialOres.length)]
+
+    return chosenOre
+  }
+
+  /*
+   * @function generate
+   * @memberof OreFactory
+   * @yields {array} an array containing 0 or 1 ores
+   * @static
+   **/
+  static generate() {
+    const shouldSpawnOre = Math.random() < ORE_SPAWN_CHANCE
+    if (!shouldSpawnOre) return null
+
+    const spawnedOre = OreFactory.spawn()
+
+    if (!spawnedOre) return []
+
+    return [spawnedOre]
   }
 }

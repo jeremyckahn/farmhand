@@ -42,7 +42,7 @@ import { huggingMachine, sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
 import { goldOre } from './data/ores'
-import { OreFactory } from './factories'
+import { ResourceFactory } from './factories'
 import { fertilizerType, fieldMode, genders, standardCowColors } from './enums'
 import {
   farmProductSalesVolumeNeededForLevel,
@@ -64,7 +64,7 @@ jest.mock('./data/items')
 jest.mock('./data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
 jest.mock('./data/recipes')
 jest.mock('./data/shop-inventory')
-jest.mock('./factories/OreFactory')
+jest.mock('./factories/ResourceFactory')
 
 jest.mock('./constants', () => ({
   __esModule: true,
@@ -3323,7 +3323,7 @@ describe('minePlot', () => {
       inventory: [],
     }
 
-    OreFactory.spawn.mockReturnValue(goldOre)
+    ResourceFactory.generate.mockReturnValue([goldOre])
     gameState = fn.minePlot(gameState, 0, 0)
   })
 

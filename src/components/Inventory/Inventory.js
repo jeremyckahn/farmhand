@@ -21,6 +21,7 @@ const {
   SCARECROW,
   SPRINKLER,
   STONE,
+  FUEL,
 } = itemType
 
 export const categoryIds = enumify([
@@ -44,11 +45,12 @@ const {
 } = categoryIds
 
 const itemTypeCategoryMap = Object.freeze({
-  [COW_FEED]: ANIMAL_SUPPLIES,
   SEEDS,
+  [COW_FEED]: ANIMAL_SUPPLIES,
   [CRAFTED_ITEM]: CRAFTED_ITEMS,
   [CROP]: CROPS,
   [FERTILIZER]: FIELD_TOOLS,
+  [FUEL]: MINED_RESOURCES,
   [HUGGING_MACHINE]: ANIMAL_SUPPLIES,
   [MILK]: ANIMAL_PRODUCTS,
   [ORE]: MINED_RESOURCES,

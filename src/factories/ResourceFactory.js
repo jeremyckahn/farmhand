@@ -1,38 +1,60 @@
 import { coal, stone } from '../data/ores'
 import { itemType } from '../enums'
+import {
+  COAL_WITH_STONE_SPAWN_CHANCE,
+  RESOURCE_SPAWN_CHANCE,
+  ORE_SPAWN_CHANCE,
+  COAL_SPAWN_CHANCE,
+  STONE_SPAWN_CHANCE,
+} from '../constants'
+
+import OreFactory from './OreFactory'
+
+/*
+ * TODO: break this file up or bring OreFactory in (probably break up...)
+ **/
+
+const factoryForItemType = type => {
+  switch (type) {
+    case itemType.STONE:
+      return StoneFactory
+
+    case itemType.FUEL:
+      return CoalFactory
+
+    case itemType.ORE:
+      return OreFactory
+
+    default:
+      return null
+  }
+}
 
 export class ResourceFactory {
   static generate() {
-    const diceRoll = Math.round(Math.random() * 100) % 6
+    let diceRoll = Math.random()
 
-    if (diceRoll % 2 === 0) {
-      return CoalFactory.generate()
-    }
+    if (diceRoll <= RESOURCE_SPAWN_CHANCE) {
+      diceRoll = Math.random()
 
-    return StoneFactory.generate()
-  }
-
-  static spawn(typeToSpawn) {
-    let factory = null
-
-    switch (typeToSpawn) {
-      case itemType.STONE:
-        factory = StoneFactory
-        break
-
-      case itemType.FUEL:
-        factory = CoalFactory
-        break
-
-      default:
-        break
-    }
-
-    if (factory) {
-      return factory.spawn()
+      if (diceRoll <= ORE_SPAWN_CHANCE) {
+        return OreFactory.generate()
+      } else if (diceRoll <= COAL_SPAWN_CHANCE) {
+        return CoalFactory.generate()
+      } else if (diceRoll <= STONE_SPAWN_CHANCE) {
+        return StoneFactory.generate()
+      }
     }
 
     return null
+  }
+
+  static spawn(typeToSpawn) {
+    let factory = factoryForItemType(typeToSpawn)
+
+    if (!factory) return null
+
+    return factory.spawn()
   }
 }
 
@@ -60,12 +82,17 @@ export class CoalFactory {
 export class StoneFactory {
   static generate() {
     const diceRoll = Math.random()
+    let resources = []
 
     if (diceRoll <= stone.spawnChance) {
-      return [StoneFactory.spawn()]
+      resources.push(StoneFactory.spawn())
+
+      if (diceRoll <= COAL_WITH_STONE_SPAWN_CHANCE) {
+        resources.push(CoalFactory.spawn())
+      }
     }
 
-    return []
+    return resources
   }
 
   static spawn() {

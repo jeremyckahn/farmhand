@@ -5,7 +5,7 @@
 
 import { itemsMap, recipesMap } from './data/maps'
 import { levels } from './data/levels'
-import { OreFactory } from './factories'
+import { ResourceFactory } from './factories'
 import achievements from './data/achievements'
 import {
   areHuggingMachinesInInventory,
@@ -1691,10 +1691,15 @@ export const minePlot = (state, x, y) => {
     return state
   }
 
-  const spawnedOre = OreFactory.spawn()
+  const spawnedResources = ResourceFactory.generate()
+  let spawnedOre = null
   let daysUntilClear = Math.round(Math.random() * 2) + 1
 
-  if (spawnedOre !== null) {
+  if (spawnedResources && spawnedResources.length) {
+    // even when multiple resources are spawned, the first one is ok to use
+    // for all subsequent logic
+    spawnedOre = spawnedResources[0]
+
     // if ore was spawned, add up to 5 days to the time to clear
     // at random, + a minimum based on the spawnChance meant to make
     // rarer ores take longer to cooldown
@@ -1702,7 +1707,9 @@ export const minePlot = (state, x, y) => {
       Math.random() * 5 + (1 - spawnedOre.spawnChance) * 10
     )
 
-    state = addItemToInventory(state, spawnedOre)
+    for (let resource of spawnedResources) {
+      state = addItemToInventory(state, resource)
+    }
   }
 
   state = modifyFieldPlotAt(state, x, y, () => {

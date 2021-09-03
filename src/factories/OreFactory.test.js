@@ -26,6 +26,6 @@ describe('OreFactory', () => {
 
     const ore = OreFactory.spawn()
 
-    expect([itemType.STONE, itemType.ORE].includes(ore.type)).toEqual(true)
+    expect(ore.type).toEqual(itemType.ORE)
   })
 })
