@@ -4,10 +4,6 @@ import { COAL_SPAWN_CHANCE, STONE_SPAWN_CHANCE } from '../constants'
 
 import { ResourceFactory, CoalFactory, StoneFactory } from './ResourceFactory'
 
-jest.mock('./ResourceFactory', () => ({
-  ...jest.requireActual('./ResourceFactory'),
-}))
-
 describe('ResourceFactory', () => {
   beforeEach(() => {
     jest.spyOn(global.Math, 'random')
