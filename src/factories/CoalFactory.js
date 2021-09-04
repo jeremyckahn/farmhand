@@ -1,22 +1,23 @@
-import { coal } from '../data/ores'
+import { coal, stone } from '../data/ores'
 
 export default class CoalFactory {
-  static generate(stoneFactory) {
-    const diceRoll = Math.random()
+  generate() {
     let spawns = []
 
-    if (diceRoll <= coal.spawnChance) {
-      const amount = Math.round(Math.random() * 3) + 1
+    const amount = Math.floor(Math.random() * 3) + 1
 
-      for (let i = 0; i < amount; i++) {
-        spawns.push(CoalFactory.spawn(), stoneFactory.spawn())
-      }
+    for (let i = 0; i < amount; i++) {
+      spawns.push(this.spawnCoal(), this.spawnStone())
     }
 
     return spawns
   }
 
-  static spawn() {
+  spawnCoal() {
     return coal
+  }
+
+  spawnStone() {
+    return stone
   }
 }

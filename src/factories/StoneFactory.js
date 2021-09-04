@@ -1,24 +1,25 @@
-import { stone } from '../data/ores'
-import { COAL_WITH_STONE_SPAWN_CHANCE } from '../constants'
+import { coal, stone } from '../data/ores'
+import { COAL_SPAWN_CHANCE } from '../constants'
 
 export default class StoneFactory {
-  static generate(coalFactory) {
+  generate() {
     let diceRoll = Math.random()
     let resources = []
 
-    if (diceRoll <= stone.spawnChance) {
-      resources.push(StoneFactory.spawn())
+    resources.push(this.spawnStone())
 
-      diceRoll = Math.random()
-      if (diceRoll <= COAL_WITH_STONE_SPAWN_CHANCE) {
-        resources.push(coalFactory.spawn())
-      }
+    if (diceRoll <= COAL_SPAWN_CHANCE) {
+      resources.push(this.spawnCoal())
     }
 
     return resources
   }
 
-  static spawn() {
+  spawnStone() {
     return stone
+  }
+
+  spawnCoal() {
+    return coal
   }
 }

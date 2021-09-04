@@ -1691,7 +1691,7 @@ export const minePlot = (state, x, y) => {
     return state
   }
 
-  const spawnedResources = ResourceFactory.generate()
+  const spawnedResources = ResourceFactory.instance().generateResources()
   let spawnedOre = null
   let daysUntilClear = Math.round(Math.random() * 2) + 1
 
@@ -1700,11 +1700,11 @@ export const minePlot = (state, x, y) => {
     // for all subsequent logic
     spawnedOre = spawnedResources[0]
 
-    // if ore was spawned, add up to 5 days to the time to clear
-    // at random, + a minimum based on the spawnChance meant to make
+    // if ore was spawned, add up to 10 days to the time to clear
+    // at random, based loosely on the spawnChance meant to make
     // rarer ores take longer to cooldown
     daysUntilClear += Math.round(
-      Math.random() * 5 + (1 - spawnedOre.spawnChance) * 10
+      Math.random() * (1 - spawnedOre.spawnChance) * 10
     )
 
     for (let resource of spawnedResources) {
