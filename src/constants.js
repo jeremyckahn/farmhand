@@ -188,20 +188,18 @@ export const TOOLBELT_FIELD_MODES = new Set([
   fieldMode.MINE,
 ])
 
-/* resource spawning constants to control randomness */
-
 // should a resource attempt to spawn when plot is mined?
-export const RESOURCE_SPAWN_CHANCE = 0.4
+export const RESOURCE_SPAWN_CHANCE = 0.3
 
 // if a resource is going to spawn, which kind?
-export const ORE_SPAWN_CHANCE = 0.2
-export const COAL_SPAWN_CHANCE = 0.1
-export const STONE_SPAWN_CHANCE = 0.35
+// note: these values end being used relative to each other
+export const ORE_SPAWN_CHANCE = 0.25
+export const COAL_SPAWN_CHANCE = 0.25
+export const STONE_SPAWN_CHANCE = 0.5
 
 // if spawning ore, which kind?
+// note: these values end being used relative to each other
 export const BRONZE_SPAWN_CHANCE = 0.4
 export const GOLD_SPAWN_CHANCE = 0.1
 export const IRON_SPAWN_CHANCE = 0.3
 export const SILVER_SPAWN_CHANCE = 0.2
-
-/* end of resource spawning constants */
