@@ -194,8 +194,8 @@ export const RESOURCE_SPAWN_CHANCE = 0.3
 // if a resource is going to spawn, which kind?
 // note: these values end being used relative to each other
 export const ORE_SPAWN_CHANCE = 0.25
-export const COAL_SPAWN_CHANCE = 0.25
-export const STONE_SPAWN_CHANCE = 0.5
+export const COAL_SPAWN_CHANCE = 0.15
+export const STONE_SPAWN_CHANCE = 0.6
 
 // if spawning ore, which kind?
 // note: these values end being used relative to each other
