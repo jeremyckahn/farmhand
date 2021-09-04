@@ -7,8 +7,10 @@ export default class CoalFactory {
     const amount = Math.floor(Math.random() * 3) + 1
 
     for (let i = 0; i < amount; i++) {
-      spawns.push(this.spawnCoal(), this.spawnStone())
+      spawns.push(this.spawnCoal())
     }
+
+    spawns.push(this.spawnStone())
 
     return spawns
   }
