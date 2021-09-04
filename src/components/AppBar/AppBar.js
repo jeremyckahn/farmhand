@@ -78,7 +78,7 @@ export const AppBar = ({
 }) => (
   <MuiAppBar
     {...{
-      className: 'AppBar',
+      className: 'AppBar top-level',
       position: 'fixed',
     }}
   >
