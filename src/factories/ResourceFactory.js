@@ -51,8 +51,8 @@ export default class ResourceFactory {
 
   /**
    * Generate an instance for specific factory
-   * @param {int} type - an item type from itemType enum
-   * @returns {?@factory} returns a factory if one exists for type, default return is null
+   * @param {Number} type - an item type from itemType enum
+   * @returns {?Factory} returns a factory if one exists for type, default return is null
    * @static
    */
   static generateFactoryInstance(type) {
@@ -74,8 +74,8 @@ export default class ResourceFactory {
   /**
    * Retrieve a specific factory for generating resources. Will create and cache
    * a factory instance for reuse.
-   * @param {int} type - an item type from itemType enum
-   * @return {factory}
+   * @param {Number} type - an item type from itemType enum
+   * @return {Factory}
    * @static
    */
   static getFactoryForItemType = type => {
@@ -90,7 +90,7 @@ export default class ResourceFactory {
 
   /**
    * Use dice roll and resource factories to generate resources at random
-   * @returns {?array} array of resource objects, or null if no resoures were spawned
+   * @returns {?Array} array of resource objects, or null if no resoures were spawned
    */
   generateResources() {
     let diceRoll = Math.random()
