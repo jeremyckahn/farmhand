@@ -1,7 +1,6 @@
-import { STONE_SPAWN_CHANCE, COAL_WITH_STONE_SPAWN_CHANCE } from '../constants'
+import { COAL_SPAWN_CHANCE } from '../constants'
 import { coal, stone } from '../data/ores'
 
-import CoalFactory from './CoalFactory'
 import StoneFactory from './StoneFactory'
 
 describe('StoneFactory', () => {
@@ -13,31 +12,24 @@ describe('StoneFactory', () => {
     jest.restoreAllMocks()
   })
 
-  describe('spawn', () => {
-    test('it can spawn a stone', () => {
-      expect(StoneFactory.spawn()).toEqual(stone)
-    })
-  })
-
   describe('generate', () => {
-    test('it generates a stone based on spawnChance', () => {
-      global.Math.random.mockReturnValueOnce(STONE_SPAWN_CHANCE)
-      const spawns = StoneFactory.generate(CoalFactory)
-      expect(spawns[0]).toEqual(stone)
+    let stoneFactory
+
+    beforeEach(() => {
+      stoneFactory = new StoneFactory()
     })
 
-    test('it generates a coal when second dice roll is below chance', () => {
-      global.Math.random
-        .mockReturnValueOnce(STONE_SPAWN_CHANCE)
-        .mockReturnValue(COAL_WITH_STONE_SPAWN_CHANCE)
-      const spawns = StoneFactory.generate(CoalFactory)
+    test('it generates stones', () => {
+      const resources = stoneFactory.generate()
 
-      expect(spawns).toEqual([stone, coal])
+      expect(resources[0]).toEqual(stone)
     })
 
-    test('it does not generate a stone when dice roll exceeds spawnChance', () => {
-      global.Math.random.mockReturnValueOnce(STONE_SPAWN_CHANCE + 0.01)
-      expect(StoneFactory.generate(CoalFactory)).toEqual([])
+    test('it randomly generates a coal along with the stone', () => {
+      global.Math.random.mockReturnValueOnce(COAL_SPAWN_CHANCE)
+      const resources = stoneFactory.generate()
+
+      expect(resources).toEqual([stone, coal])
     })
   })
 })

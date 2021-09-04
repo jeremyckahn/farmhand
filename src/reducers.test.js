@@ -64,7 +64,6 @@ jest.mock('./data/items')
 jest.mock('./data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
 jest.mock('./data/recipes')
 jest.mock('./data/shop-inventory')
-jest.mock('./factories/ResourceFactory')
 
 jest.mock('./constants', () => ({
   __esModule: true,
@@ -3323,7 +3322,12 @@ describe('minePlot', () => {
       inventory: [],
     }
 
-    ResourceFactory.generate.mockReturnValue([goldOre])
+    jest.spyOn(ResourceFactory, 'instance')
+
+    ResourceFactory.instance.mockReturnValue({
+      generateResources: () => [goldOre],
+    })
+
     gameState = fn.minePlot(gameState, 0, 0)
   })
 

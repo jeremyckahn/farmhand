@@ -11,21 +11,16 @@ describe('OreFactory', () => {
     jest.restoreAllMocks()
   })
 
-  test('does not spawn anything when first dice roll is higher than spawn chance', () => {
-    global.Math.random.mockImplementationOnce(() => 1)
+  describe('generate', () => {
+    let oreFactory
 
-    const ore = OreFactory.spawn()
+    beforeEach(() => {
+      oreFactory = new OreFactory()
+    })
 
-    expect(ore).toEqual(null)
-  })
-
-  test('spawns a random ore when both dice rolls align', () => {
-    global.Math.random
-      .mockImplementationOnce(() => 0)
-      .mockImplementationOnce(() => 0.001)
-
-    const ore = OreFactory.spawn()
-
-    expect(ore.type).toEqual(itemType.ORE)
+    test('it generates an ore', () => {
+      const resources = oreFactory.generate()
+      expect(resources[0].type).toEqual(itemType.ORE)
+    })
   })
 })
