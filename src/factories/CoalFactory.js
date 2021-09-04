@@ -1,6 +1,14 @@
 import { coal, stone } from '../data/ores'
 
+/**
+ * Resource factory used for spawning coal
+ * @constructor
+ */
 export default class CoalFactory {
+  /**
+   * Generate resources
+   * @returns {Array} an array of coal and stone resources
+   */
   generate() {
     let spawns = []
 
@@ -15,10 +23,20 @@ export default class CoalFactory {
     return spawns
   }
 
+  /**
+   * Spawn a piece of coal
+   * @returns {Object} coal item
+   * @private
+   */
   spawnCoal() {
     return coal
   }
 
+  /**
+   * Spawn a piece of stone
+   * @returns {Object} stone item
+   * @private
+   */
   spawnStone() {
     return stone
   }

@@ -3,6 +3,10 @@ import { randomChoice } from '../common/utils'
 
 const SPAWNABLE_ORES = [goldOre, ironOre, bronzeOre, silverOre]
 
+/**
+ * Resource factory used for spawning ores
+ * @constructor
+ */
 export default class OreFactory {
   constructor() {
     this.oreOptions = []
@@ -14,20 +18,21 @@ export default class OreFactory {
     }
   }
 
+  /**
+   * Generate resources
+   * @returns {Array} an array of ore resources
+   */
+  generate() {
+    return [this.spawn()]
+  }
+
   /*
-   * @function spawn
-   * @yields {object} an object representing ore, or null if none was spawned
+   * Spawn a random ore
+   * @returns {Object} an object representing an ore
+   * @private
    **/
   spawn() {
     const spawnedOption = randomChoice(this.oreOptions)
     return spawnedOption.ore
-  }
-
-  /*
-   * @function generate
-   * @yields {array} an array containing ores
-   **/
-  generate() {
-    return [this.spawn()]
   }
 }

@@ -11,10 +11,36 @@ import OreFactory from './OreFactory'
 import CoalFactory from './CoalFactory'
 import StoneFactory from './StoneFactory'
 
+/**
+ * Used for spawning mined resources
+ * @constructor
+ */
 export default class ResourceFactory {
+  constructor() {
+    this.resourceOptions = [
+      { weight: ORE_SPAWN_CHANCE, name: itemType.ORE },
+      { weight: COAL_SPAWN_CHANCE, name: itemType.FUEL },
+      { weight: STONE_SPAWN_CHANCE, name: itemType.STONE },
+    ]
+  }
+
+  /**
+   * Object for internal cache of factory instances
+   * @static
+   */
   static _factoryInstances = {}
+
+  /**
+   * Var for caching reference to instance of ResourceFactory
+   * @static
+   */
   static _instance = null
 
+  /**
+   * Retrieve a reusable instance of ResourceFactory
+   * @returns {ResourceFactory}
+   * @static
+   */
   static instance() {
     if (!ResourceFactory._instance) {
       ResourceFactory._instance = new ResourceFactory()
@@ -23,6 +49,12 @@ export default class ResourceFactory {
     return ResourceFactory._instance
   }
 
+  /**
+   * Generate an instance for specific factory
+   * @param {int} type - an item type from itemType enum
+   * @returns {?@factory} returns a factory if one exists for type, default return is null
+   * @static
+   */
   static generateFactoryInstance(type) {
     switch (type) {
       case itemType.STONE:
@@ -39,6 +71,13 @@ export default class ResourceFactory {
     }
   }
 
+  /**
+   * Retrieve a specific factory for generating resources. Will create and cache
+   * a factory instance for reuse.
+   * @param {int} type - an item type from itemType enum
+   * @return {factory}
+   * @static
+   */
   static getFactoryForItemType = type => {
     if (!ResourceFactory._factoryInstances[type]) {
       ResourceFactory._factoryInstances[
@@ -49,22 +88,10 @@ export default class ResourceFactory {
     return ResourceFactory._factoryInstances[type]
   }
 
-  static spawnItem(typeToSpawn) {
-    let factory = ResourceFactory.getFactoryForItemType(typeToSpawn)
-
-    if (!factory) return null
-
-    return factory.spawn()
-  }
-
-  constructor() {
-    this.resourceOptions = [
-      { weight: ORE_SPAWN_CHANCE, name: itemType.ORE },
-      { weight: COAL_SPAWN_CHANCE, name: itemType.FUEL },
-      { weight: STONE_SPAWN_CHANCE, name: itemType.STONE },
-    ]
-  }
-
+  /**
+   * Use dice roll and resource factories to generate resources at random
+   * @returns {?array} array of resource objects, or null if no resoures were spawned
+   */
   generateResources() {
     let diceRoll = Math.random()
 

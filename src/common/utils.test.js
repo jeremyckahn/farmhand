@@ -1,4 +1,4 @@
-import { generateValueAdjustments } from './utils'
+import { generateValueAdjustments, randomChoice } from './utils'
 
 jest.mock('../data/maps')
 jest.mock('../data/items')
@@ -40,5 +40,18 @@ describe('generateValueAdjustments', () => {
     )
 
     expect(valueAdjustments['sample-crop-1']).toEqual(1.5)
+  })
+})
+
+describe('randomChoice', () => {
+  const choices = [
+    { weight: 0.2, name: 'first-choice' },
+    { weight: 0.5, name: 'second-choice' },
+    { weight: 0.3, name: 'third-choice' },
+  ]
+
+  test('it returns a choice at random', () => {
+    const choice = randomChoice(choices)
+    expect(choices.includes(choice)).toEqual(true)
   })
 })

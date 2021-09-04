@@ -20,6 +20,10 @@ export const generateValueAdjustments = (priceCrashes = {}, priceSurges = {}) =>
     return acc
   }, {})
 
+/**
+ * @param {Array} an array of objects each containing a `weight` property
+ * @returns {Object} one of the items from weightedOptions
+ */
 export function randomChoice(weightedOptions) {
   let totalWeight = 0
   let sortedOptions = []
