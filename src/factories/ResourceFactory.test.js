@@ -1,8 +1,17 @@
 import { coal, stone } from '../data/ores'
 import { itemType } from '../enums'
-import { COAL_SPAWN_CHANCE, STONE_SPAWN_CHANCE } from '../constants'
+import {
+  RESOURCE_SPAWN_CHANCE,
+  ORE_SPAWN_CHANCE,
+  COAL_SPAWN_CHANCE,
+  STONE_SPAWN_CHANCE,
+} from '../constants'
 
-import { ResourceFactory, CoalFactory, StoneFactory } from './ResourceFactory'
+import ResourceFactory from './ResourceFactory'
+
+import CoalFactory from './CoalFactory'
+import OreFactory from './OreFactory'
+import StoneFactory from './StoneFactory'
 
 describe('ResourceFactory', () => {
   beforeEach(() => {
@@ -13,105 +22,68 @@ describe('ResourceFactory', () => {
     jest.restoreAllMocks()
   })
 
-  it('can spawn stones', () => {
-    const item = ResourceFactory.spawn(itemType.STONE)
-    expect(item).toEqual(stone)
-  })
-
-  it('can spawn coal', () => {
-    const item = ResourceFactory.spawn(itemType.FUEL)
-    expect(item).toEqual(coal)
-  })
-
-  it('can spawn ore', () => {
-    global.Math.random.mockReturnValueOnce(0)
-    const item = ResourceFactory.spawn(itemType.ORE)
-    expect(item.type).toEqual(itemType.ORE)
-  })
-})
-
-describe('StoneFactory', () => {
-  beforeEach(() => {
-    jest.spyOn(global.Math, 'random')
-  })
-
-  afterAll(() => {
-    jest.restoreAllMocks()
-  })
-
   describe('spawn', () => {
-    test('it can spawn a stone', () => {
-      expect(StoneFactory.spawn()).toEqual(stone)
+    it('can spawn stones', () => {
+      const item = ResourceFactory.spawn(itemType.STONE)
+      expect(item).toEqual(stone)
+    })
+
+    it('can spawn coal', () => {
+      const item = ResourceFactory.spawn(itemType.FUEL)
+      expect(item).toEqual(coal)
+    })
+
+    it('can spawn ore', () => {
+      global.Math.random.mockReturnValueOnce(0)
+      const item = ResourceFactory.spawn(itemType.ORE)
+      expect(item.type).toEqual(itemType.ORE)
+    })
+
+    it('returns null if there is no factory for an item type', () => {
+      const item = ResourceFactory.spawn(itemType.SPRINKLER)
+      expect(item).toEqual(null)
     })
   })
 
   describe('generate', () => {
-    test('it generates a stone based on spawnChance', () => {
-      global.Math.random.mockReturnValueOnce(STONE_SPAWN_CHANCE)
-      expect(StoneFactory.generate()).toEqual([stone])
+    beforeEach(() => {
+      jest.spyOn(CoalFactory, 'generate')
+      jest.spyOn(OreFactory, 'generate')
+      jest.spyOn(StoneFactory, 'generate')
     })
 
-    test('it does not generate a stone when dice roll exceeds spawnChance', () => {
-      global.Math.random.mockReturnValueOnce(STONE_SPAWN_CHANCE + 0.01)
-      expect(StoneFactory.generate()).toEqual([])
-    })
-  })
-})
+    it('does not generate anything when dice roll is higher than resource spawn chance', () => {
+      global.Math.random.mockReturnValueOnce(RESOURCE_SPAWN_CHANCE + 0.01)
+      const resources = ResourceFactory.generate()
 
-describe('CoalFactory', () => {
-  beforeEach(() => {
-    jest.spyOn(global.Math, 'random')
-  })
-
-  afterAll(() => {
-    jest.restoreAllMocks()
-  })
-
-  describe('spawn', () => {
-    test('it can spawn coal', () => {
-      expect(CoalFactory.spawn()).toEqual(coal)
-    })
-  })
-
-  describe('generate', () => {
-    test('it does not generate any coal when dice roll exceeds spawn chance', () => {
-      global.Math.random.mockReturnValueOnce(COAL_SPAWN_CHANCE + 0.01)
-      expect(CoalFactory.generate()).toEqual([])
+      expect(resources).toEqual(null)
     })
 
-    test('it uses a second dice roll to determine how many coal to spawn', () => {
+    it('uses OreFactory when second dice roll is below ore spawn chance', () => {
       global.Math.random
-        .mockReturnValueOnce(COAL_SPAWN_CHANCE)
-        .mockReturnValueOnce(0)
-      let numCoalSpawned = 0
-      const spawns = CoalFactory.generate()
+        .mockReturnValueOnce(RESOURCE_SPAWN_CHANCE)
+        .mockReturnValueOnce(ORE_SPAWN_CHANCE)
+      ResourceFactory.generate()
 
-      for (let item of spawns) {
-        if (item.id === coal.id) {
-          numCoalSpawned++
-        }
-      }
-
-      expect(numCoalSpawned).toEqual(1)
+      expect(OreFactory.generate).toHaveBeenCalledTimes(1)
     })
 
-    test('it spawns a rock for every coal spawned', () => {
+    it('uses CoalFactory when second dice roll is below coal spawn chance', () => {
       global.Math.random
+        .mockReturnValueOnce(RESOURCE_SPAWN_CHANCE)
         .mockReturnValueOnce(COAL_SPAWN_CHANCE)
-        .mockReturnValueOnce(1)
-      let numCoalSpawned = 0,
-        numStoneSpawned = 0
-      const spawns = CoalFactory.generate()
+      ResourceFactory.generate()
 
-      for (let item of spawns) {
-        if (item.id === coal.id) {
-          numCoalSpawned++
-        } else if (item.id === stone.id) {
-          numStoneSpawned++
-        }
-      }
+      expect(CoalFactory.generate).toHaveBeenCalledTimes(1)
+    })
 
-      expect(numCoalSpawned).toEqual(numStoneSpawned)
+    it('uses StoneFactory when second dice roll is below stone spawn chance', () => {
+      global.Math.random
+        .mockReturnValueOnce(RESOURCE_SPAWN_CHANCE)
+        .mockReturnValueOnce(STONE_SPAWN_CHANCE)
+      ResourceFactory.generate()
+
+      expect(StoneFactory.generate).toHaveBeenCalledTimes(1)
     })
   })
 })

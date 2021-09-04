@@ -1,7 +1,5 @@
-import { coal, stone } from '../data/ores'
 import { itemType } from '../enums'
 import {
-  COAL_WITH_STONE_SPAWN_CHANCE,
   RESOURCE_SPAWN_CHANCE,
   ORE_SPAWN_CHANCE,
   COAL_SPAWN_CHANCE,
@@ -9,10 +7,8 @@ import {
 } from '../constants'
 
 import OreFactory from './OreFactory'
-
-/*
- * TODO: break this file up or bring OreFactory in (probably break up...)
- **/
+import CoalFactory from './CoalFactory'
+import StoneFactory from './StoneFactory'
 
 const factoryForItemType = type => {
   switch (type) {
@@ -30,7 +26,7 @@ const factoryForItemType = type => {
   }
 }
 
-export class ResourceFactory {
+export default class ResourceFactory {
   static generate() {
     let diceRoll = Math.random()
 
@@ -40,9 +36,9 @@ export class ResourceFactory {
       if (diceRoll <= ORE_SPAWN_CHANCE) {
         return OreFactory.generate()
       } else if (diceRoll <= COAL_SPAWN_CHANCE) {
-        return CoalFactory.generate()
+        return CoalFactory.generate(StoneFactory)
       } else if (diceRoll <= STONE_SPAWN_CHANCE) {
-        return StoneFactory.generate()
+        return StoneFactory.generate(CoalFactory)
       }
     }
 
@@ -55,47 +51,5 @@ export class ResourceFactory {
     if (!factory) return null
 
     return factory.spawn()
-  }
-}
-
-export class CoalFactory {
-  static generate() {
-    const diceRoll = Math.random()
-    let spawns = []
-
-    if (diceRoll <= coal.spawnChance) {
-      const amount = Math.round(Math.random() * 3) + 1
-
-      for (let i = 0; i < amount; i++) {
-        spawns.push(CoalFactory.spawn(), StoneFactory.spawn())
-      }
-    }
-
-    return spawns
-  }
-
-  static spawn() {
-    return coal
-  }
-}
-
-export class StoneFactory {
-  static generate() {
-    const diceRoll = Math.random()
-    let resources = []
-
-    if (diceRoll <= stone.spawnChance) {
-      resources.push(StoneFactory.spawn())
-
-      if (diceRoll <= COAL_WITH_STONE_SPAWN_CHANCE) {
-        resources.push(CoalFactory.spawn())
-      }
-    }
-
-    return resources
-  }
-
-  static spawn() {
-    return stone
   }
 }

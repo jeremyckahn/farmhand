@@ -1,2 +1,1 @@
-export { default as OreFactory } from './OreFactory'
-export { ResourceFactory } from './ResourceFactory'
+export { default as ResourceFactory } from './ResourceFactory'

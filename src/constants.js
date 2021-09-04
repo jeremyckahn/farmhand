@@ -196,12 +196,14 @@ export const RESOURCE_SPAWN_CHANCE = 0.5
 // if a resource is going to spawn, which kind?
 export const ORE_SPAWN_CHANCE = 0.3
 export const COAL_SPAWN_CHANCE = 0.4
-export const COAL_WITH_STONE_SPAWN_CHANCE = 0.4
 export const STONE_SPAWN_CHANCE = 0.5
 
+// stone can also spawn a coal
+export const COAL_WITH_STONE_SPAWN_CHANCE = 0.4
+
 // if spawning ore, which kind?
-export const BRONZE_SPAWN_CHANCE = 0.6
-export const GOLD_SPAWN_CHANCE = 0.2
+export const BRONZE_SPAWN_CHANCE = 0.5
+export const GOLD_SPAWN_CHANCE = 0.15
 export const IRON_SPAWN_CHANCE = 0.4
 export const SILVER_SPAWN_CHANCE = 0.3
 
