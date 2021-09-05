@@ -1,5 +1,5 @@
 import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores'
-import { randomChoice } from '../common/utils'
+import { randomChoice } from '../utils'
 
 const SPAWNABLE_ORES = [goldOre, ironOre, bronzeOre, silverOre]
 

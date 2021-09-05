@@ -1,6 +1,6 @@
 import { itemType } from '../enums'
 import { RESOURCE_SPAWN_CHANCE } from '../constants'
-import { randomChoice } from '../common/utils'
+import { randomChoice } from '../utils'
 
 import ResourceFactory from './ResourceFactory'
 
@@ -8,8 +8,8 @@ jest.mock('./CoalFactory')
 jest.mock('./OreFactory')
 jest.mock('./StoneFactory')
 
-jest.mock('../common/utils', () => ({
-  ...jest.requireActual('../common/utils'),
+jest.mock('../utils', () => ({
+  ...jest.requireActual('../utils'),
   randomChoice: jest.fn(),
 }))
 

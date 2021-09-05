@@ -5,7 +5,7 @@ import {
   COAL_SPAWN_CHANCE,
   STONE_SPAWN_CHANCE,
 } from '../constants'
-import { randomChoice } from '../common/utils'
+import { randomChoice } from '../utils'
 
 import OreFactory from './OreFactory'
 import CoalFactory from './CoalFactory'
