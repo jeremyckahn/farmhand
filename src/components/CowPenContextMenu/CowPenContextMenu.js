@@ -1,19 +1,21 @@
 import React, { memo, useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
-import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardActions from '@material-ui/core/CardActions'
-import Checkbox from '@material-ui/core/Checkbox'
-import Divider from '@material-ui/core/Divider'
-import MenuItem from '@material-ui/core/MenuItem'
-import Select from '@material-ui/core/Select'
-import TextField from '@material-ui/core/TextField'
-import Fab from '@material-ui/core/Fab'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Tooltip from '@material-ui/core/Tooltip'
+import AppBar from '@material-ui/core/AppBar'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
+import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardHeader from '@material-ui/core/CardHeader'
+import Checkbox from '@material-ui/core/Checkbox'
+import Fab from '@material-ui/core/Fab'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import Tab from '@material-ui/core/Tab'
+import Tabs from '@material-ui/core/Tabs'
+import TextField from '@material-ui/core/TextField'
+import Tooltip from '@material-ui/core/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import sortBy from 'lodash.sortby'
 import classNames from 'classnames'
@@ -40,6 +42,8 @@ import {
 } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { cowFeed, huggingMachine } from '../../data/items'
+
+import { TabPanel, a11yProps } from './TabPanel'
 
 import './CowPenContextMenu.sass'
 
@@ -374,31 +378,10 @@ export const CowPenContextMenu = ({
 }) => {
   const [sortType, setSortType] = useState(AGE)
   const [isAscending, setIsAscending] = useState(false)
+  const [currentTab, setCurrentTab] = useState(0)
 
   return (
     <div className="CowPenContextMenu">
-      <h3>Supplies</h3>
-      <ul className="card-list">
-        <li>
-          <Item
-            {...{
-              item: cowFeed,
-              isPurchaseView: true,
-              showQuantity: true,
-            }}
-          />
-        </li>
-        <li>
-          <Item
-            {...{
-              item: huggingMachine,
-              isPurchaseView: true,
-              showQuantity: true,
-            }}
-          />
-        </li>
-      </ul>
-      <Divider />
       <h3>For sale</h3>
       <CowCard
         {...{
@@ -411,100 +394,135 @@ export const CowPenContextMenu = ({
           purchasedCowPen,
         }}
       />
-      <Divider />
-      <h3>Breeding pen ({numberOfCowsBreeding(cowBreedingPen)} / 2)</h3>
-      <ul className="card-list purchased-cows breeding-cows">
-        {nullArray(numberOfCowsBreeding(cowBreedingPen)).map((_null, i) => {
-          const cowId = cowBreedingPen[`cowId${i + 1}`]
-          const cow = findCowById(cowInventory, cowId)
-          return (
-            <li {...{ key: cowId }}>
-              <CowCard
-                {...{
-                  cow,
-                  cowBreedingPen,
-                  cowInventory,
-                  debounced,
-                  handleCowAutomaticHugChange,
-                  handleCowBreedChange,
-                  handleCowHugClick,
-                  handleCowNameInputChange,
-                  handleCowSellClick,
-                  inventory,
-                  isSelected: cow.id === selectedCowId,
-                  money,
-                  purchasedCowPen,
-                }}
-              />
-            </li>
-          )
-        })}
-      </ul>
-      <Divider />
-      <h3>
-        Cows ({cowInventory.length} /{' '}
-        {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows})
-      </h3>
-      {cowInventory.length > 1 && (
-        <div {...{ className: 'sort-wrapper' }}>
-          <Fab
-            {...{
-              'aria-label': 'Toggle sorting order',
-              onClick: () => setIsAscending(!isAscending),
-              color: 'primary',
-            }}
-          >
-            {isAscending ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
-          </Fab>
-          <Select
-            {...{
-              className: 'sort-select',
-              displayEmpty: true,
-              value: sortType,
-              onChange: ({ target: { value } }) => setSortType(value),
-            }}
-          >
-            <MenuItem {...{ value: VALUE }}>Sort by Value</MenuItem>
-            <MenuItem {...{ value: AGE }}>Sort by Age</MenuItem>
-            <MenuItem {...{ value: HAPPINESS }}>Sort by Happiness</MenuItem>
-            <MenuItem {...{ value: WEIGHT }}>Sort by Weight</MenuItem>
-            <MenuItem {...{ value: GENDER }}>Sort by Gender</MenuItem>
-            <MenuItem {...{ value: COLOR }}>Sort by Color</MenuItem>
-          </Select>
-        </div>
-      )}
-
-      <ul className="card-list purchased-cows">
-        {sortCows(cowInventory, sortType, isAscending).map(cow =>
-          isCowInBreedingPen(cow, cowBreedingPen) ? null : (
-            <li
+      <AppBar position="static" color="primary">
+        <Tabs
+          value={currentTab}
+          onChange={(e, newTab) => setCurrentTab(newTab)}
+          aria-label="Cow tabs"
+        >
+          <Tab {...{ label: 'Cows', ...a11yProps(0) }} />
+          <Tab {...{ label: 'Breeding Pen', ...a11yProps(1) }} />
+          <Tab {...{ label: 'Supplies', ...a11yProps(2) }} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={currentTab} index={0}>
+        <h3>
+          Capacity: {cowInventory.length} /{' '}
+          {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows}
+        </h3>
+        {cowInventory.length > 1 && (
+          <div {...{ className: 'sort-wrapper' }}>
+            <Fab
               {...{
-                key: cow.id,
-                onFocus: () => handleCowSelect(cow),
-                onClick: () => handleCowSelect(cow),
+                'aria-label': 'Toggle sorting order',
+                onClick: () => setIsAscending(!isAscending),
+                color: 'primary',
               }}
             >
-              <CowCard
-                {...{
-                  cow,
-                  cowBreedingPen,
-                  cowInventory,
-                  debounced,
-                  handleCowAutomaticHugChange,
-                  handleCowBreedChange,
-                  handleCowHugClick,
-                  handleCowNameInputChange,
-                  handleCowSellClick,
-                  inventory,
-                  isSelected: cow.id === selectedCowId,
-                  money,
-                  purchasedCowPen,
-                }}
-              />
-            </li>
-          )
+              {isAscending ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+            </Fab>
+            <Select
+              {...{
+                className: 'sort-select',
+                displayEmpty: true,
+                value: sortType,
+                onChange: ({ target: { value } }) => setSortType(value),
+              }}
+            >
+              <MenuItem {...{ value: VALUE }}>Sort by Value</MenuItem>
+              <MenuItem {...{ value: AGE }}>Sort by Age</MenuItem>
+              <MenuItem {...{ value: HAPPINESS }}>Sort by Happiness</MenuItem>
+              <MenuItem {...{ value: WEIGHT }}>Sort by Weight</MenuItem>
+              <MenuItem {...{ value: GENDER }}>Sort by Gender</MenuItem>
+              <MenuItem {...{ value: COLOR }}>Sort by Color</MenuItem>
+            </Select>
+          </div>
         )}
-      </ul>
+
+        <ul className="card-list purchased-cows">
+          {sortCows(cowInventory, sortType, isAscending).map(cow =>
+            isCowInBreedingPen(cow, cowBreedingPen) ? null : (
+              <li
+                {...{
+                  key: cow.id,
+                  onFocus: () => handleCowSelect(cow),
+                  onClick: () => handleCowSelect(cow),
+                }}
+              >
+                <CowCard
+                  {...{
+                    cow,
+                    cowBreedingPen,
+                    cowInventory,
+                    debounced,
+                    handleCowAutomaticHugChange,
+                    handleCowBreedChange,
+                    handleCowHugClick,
+                    handleCowNameInputChange,
+                    handleCowSellClick,
+                    inventory,
+                    isSelected: cow.id === selectedCowId,
+                    money,
+                    purchasedCowPen,
+                  }}
+                />
+              </li>
+            )
+          )}
+        </ul>
+      </TabPanel>
+      <TabPanel value={currentTab} index={1}>
+        <h3>Capacity: {numberOfCowsBreeding(cowBreedingPen)} / 2</h3>
+        <ul className="card-list purchased-cows breeding-cows">
+          {nullArray(numberOfCowsBreeding(cowBreedingPen)).map((_null, i) => {
+            const cowId = cowBreedingPen[`cowId${i + 1}`]
+            const cow = findCowById(cowInventory, cowId)
+            return (
+              <li {...{ key: cowId }}>
+                <CowCard
+                  {...{
+                    cow,
+                    cowBreedingPen,
+                    cowInventory,
+                    debounced,
+                    handleCowAutomaticHugChange,
+                    handleCowBreedChange,
+                    handleCowHugClick,
+                    handleCowNameInputChange,
+                    handleCowSellClick,
+                    inventory,
+                    isSelected: cow.id === selectedCowId,
+                    money,
+                    purchasedCowPen,
+                  }}
+                />
+              </li>
+            )
+          })}
+        </ul>
+      </TabPanel>
+      <TabPanel value={currentTab} index={2}>
+        <ul className="card-list">
+          <li>
+            <Item
+              {...{
+                item: cowFeed,
+                isPurchaseView: true,
+                showQuantity: true,
+              }}
+            />
+          </li>
+          <li>
+            <Item
+              {...{
+                item: huggingMachine,
+                isPurchaseView: true,
+                showQuantity: true,
+              }}
+            />
+          </li>
+        </ul>
+      </TabPanel>
     </div>
   )
 }
