@@ -200,6 +200,6 @@ export const STONE_SPAWN_CHANCE = 0.6
 // if spawning ore, which kind?
 // note: these values end being used relative to each other
 export const BRONZE_SPAWN_CHANCE = 0.4
-export const GOLD_SPAWN_CHANCE = 0.1
-export const IRON_SPAWN_CHANCE = 0.3
+export const GOLD_SPAWN_CHANCE = 0.07
+export const IRON_SPAWN_CHANCE = 0.33
 export const SILVER_SPAWN_CHANCE = 0.2

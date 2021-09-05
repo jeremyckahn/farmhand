@@ -13,6 +13,6 @@ export const silverOre = freeze({
   id: 'silver-ore',
   name: 'Silver Ore',
   type: itemType.ORE,
-  value: 50,
+  value: 100,
   spawnChance: SILVER_SPAWN_CHANCE,
 })
