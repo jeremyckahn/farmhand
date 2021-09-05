@@ -1,3 +1,4 @@
+import { chooseRandom } from '../utils'
 import { coal, stone } from '../data/ores'
 
 /**
@@ -12,7 +13,7 @@ export default class CoalFactory {
   generate() {
     let spawns = []
 
-    const amount = Math.floor(Math.random() * 2) + 1
+    const amount = chooseRandom([1, 1, 1, 2, 3])
 
     for (let i = 0; i < amount; i++) {
       spawns.push(this.spawnCoal())

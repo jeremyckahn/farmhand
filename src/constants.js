@@ -192,13 +192,13 @@ export const TOOLBELT_FIELD_MODES = new Set([
 export const RESOURCE_SPAWN_CHANCE = 0.3
 
 // if a resource is going to spawn, which kind?
-// note: these values end being used relative to each other
+// note: these values end up being used relative to each other
 export const ORE_SPAWN_CHANCE = 0.25
 export const COAL_SPAWN_CHANCE = 0.15
 export const STONE_SPAWN_CHANCE = 0.6
 
 // if spawning ore, which kind?
-// note: these values end being used relative to each other
+// note: these values end up being used relative to each other
 export const BRONZE_SPAWN_CHANCE = 0.4
 export const GOLD_SPAWN_CHANCE = 0.07
 export const IRON_SPAWN_CHANCE = 0.33
