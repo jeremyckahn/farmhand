@@ -3349,7 +3349,7 @@ describe('minePlot', () => {
     for (let item of gameState.inventory) {
       if (item.id === goldOre.id) {
         itemIsInInventory = true
-        return
+        break
       }
     }
 
