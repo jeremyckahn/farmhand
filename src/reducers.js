@@ -1695,7 +1695,7 @@ export const minePlot = (state, x, y) => {
   let spawnedOre = null
   let daysUntilClear = Math.round(Math.random() * 2) + 1
 
-  if (spawnedResources && spawnedResources.length) {
+  if (spawnedResources.length) {
     // even when multiple resources are spawned, the first one is ok to use
     // for all subsequent logic
     spawnedOre = spawnedResources[0]

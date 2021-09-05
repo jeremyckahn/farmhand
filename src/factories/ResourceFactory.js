@@ -90,22 +90,21 @@ export default class ResourceFactory {
 
   /**
    * Use dice roll and resource factories to generate resources at random
-   * @returns {?Array} array of resource objects, or null if no resoures were spawned
+   * @returns {Array} array of resource objects
    */
   generateResources() {
     let diceRoll = Math.random()
+    let resources = []
 
-    if (diceRoll > RESOURCE_SPAWN_CHANCE) {
-      return null
+    if (diceRoll <= RESOURCE_SPAWN_CHANCE) {
+      const opt = randomChoice(this.resourceOptions)
+      const factory = ResourceFactory.getFactoryForItemType(opt.name)
+
+      if (factory) {
+        resources = factory.generate()
+      }
     }
 
-    const opt = randomChoice(this.resourceOptions)
-    const factory = ResourceFactory.getFactoryForItemType(opt.name)
-
-    if (factory) {
-      return factory.generate()
-    }
-
-    return null
+    return resources
   }
 }

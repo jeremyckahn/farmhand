@@ -26,7 +26,7 @@ export default class OreFactory {
     return [this.spawn()]
   }
 
-  /*
+  /**
    * Spawn a random ore
    * @returns {Object} an object representing an ore
    * @private

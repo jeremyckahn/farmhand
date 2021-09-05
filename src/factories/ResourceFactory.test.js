@@ -23,10 +23,10 @@ describe('ResourceFactory', () => {
   })
 
   describe('generateResources', () => {
-    test('it returns null when dice roll is above resource spawn chance', () => {
+    test('does not spawn any resources when dice roll is above resource spawn chance', () => {
       global.Math.random.mockReturnValueOnce(RESOURCE_SPAWN_CHANCE + 0.01)
 
-      expect(ResourceFactory.instance().generateResources()).toEqual(null)
+      expect(ResourceFactory.instance().generateResources()).toEqual([])
     })
 
     test('it can use the ore factory to generate ore', () => {
