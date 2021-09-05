@@ -170,18 +170,14 @@ export const resetWasWatered = plotContent =>
  * @returns {?farmhand.plotContent}
  */
 export const resetWasShoveled = plotContent => {
-  if (
-    plotContent &&
-    plotContent.wasShoveled &&
-    plotContent.daysUntilClear > 1
-  ) {
+  if (plotContent && plotContent.isShoveled && plotContent.daysUntilClear > 1) {
     return {
       ...plotContent,
       daysUntilClear: plotContent.daysUntilClear - 1,
     }
   }
 
-  return plotContent && !plotContent.wasShoveled ? plotContent : null
+  return plotContent && !plotContent.isShoveled ? plotContent : null
 }
 
 /**
@@ -1715,7 +1711,7 @@ export const minePlot = (state, x, y) => {
 
   state = modifyFieldPlotAt(state, x, y, () => {
     return {
-      wasShoveled: true,
+      isShoveled: true,
       daysUntilClear,
       oreId: spawnedOre ? spawnedOre.id : null,
     }
@@ -1735,7 +1731,7 @@ export const minePlot = (state, x, y) => {
 export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
 
-  if (!plotContent || plotContent.wasShoveled) {
+  if (!plotContent || plotContent.isShoveled) {
     return state
   }
 

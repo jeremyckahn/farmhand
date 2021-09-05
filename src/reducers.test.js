@@ -3332,7 +3332,7 @@ describe('minePlot', () => {
   })
 
   test('updates the plot to be shoveled if the plot is empty', () => {
-    expect(gameState.field[0][0].wasShoveled).toEqual(true)
+    expect(gameState.field[0][0].isShoveled).toEqual(true)
   })
 
   test('sets the oreId on the plot if ore was spawned', () => {
@@ -3364,16 +3364,16 @@ describe('minePlot', () => {
 describe('resetWasShoveled', () => {
   test('it decrements daysUntilClear if value is above 1', () => {
     const plotContents = fn.resetWasShoveled({
-      wasShoveled: true,
+      isShoveled: true,
       daysUntilClear: 2,
     })
 
-    expect(plotContents).toEqual({ wasShoveled: true, daysUntilClear: 1 })
+    expect(plotContents).toEqual({ isShoveled: true, daysUntilClear: 1 })
   })
 
   test('it resets the plotContents when daysUntilClear is 1', () => {
     const plotContents = fn.resetWasShoveled({
-      wasShoveled: true,
+      isShoveled: true,
       daysUntilClear: 1,
     })
 
