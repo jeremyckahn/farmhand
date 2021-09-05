@@ -3339,6 +3339,10 @@ describe('minePlot', () => {
     expect(gameState.field[0][0].oreId).toEqual(goldOre.id)
   })
 
+  test('sets the days until clear', () => {
+    expect(gameState.field[0][0].daysUntilClear > 0).toEqual(true)
+  })
+
   test('adds the spawned ore to the inventory', () => {
     let itemIsInInventory = false
 

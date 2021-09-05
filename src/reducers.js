@@ -11,6 +11,7 @@ import {
   areHuggingMachinesInInventory,
   canMakeRecipe,
   castToMoney,
+  chooseRandom,
   clampNumber,
   doesInventorySpaceRemain,
   farmProductsSold,
@@ -1693,7 +1694,7 @@ export const minePlot = (state, x, y) => {
 
   const spawnedResources = ResourceFactory.instance().generateResources()
   let spawnedOre = null
-  let daysUntilClear = Math.round(Math.random() * 2) + 1
+  let daysUntilClear = chooseRandom([1, 2, 2, 3])
 
   if (spawnedResources.length) {
     // even when multiple resources are spawned, the first one is ok to use
