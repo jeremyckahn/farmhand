@@ -18,9 +18,9 @@ import StoneFactory from './StoneFactory'
 export default class ResourceFactory {
   constructor() {
     this.resourceOptions = [
-      { weight: ORE_SPAWN_CHANCE, name: itemType.ORE },
-      { weight: COAL_SPAWN_CHANCE, name: itemType.FUEL },
-      { weight: STONE_SPAWN_CHANCE, name: itemType.STONE },
+      { weight: ORE_SPAWN_CHANCE, itemType: itemType.ORE },
+      { weight: COAL_SPAWN_CHANCE, itemType: itemType.FUEL },
+      { weight: STONE_SPAWN_CHANCE, itemType: itemType.STONE },
     ]
   }
 
@@ -98,7 +98,7 @@ export default class ResourceFactory {
 
     if (diceRoll <= RESOURCE_SPAWN_CHANCE) {
       const opt = randomChoice(this.resourceOptions)
-      const factory = ResourceFactory.getFactoryForItemType(opt.name)
+      const factory = ResourceFactory.getFactoryForItemType(opt.itemType)
 
       if (factory) {
         resources = factory.generate()

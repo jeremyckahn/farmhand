@@ -31,7 +31,7 @@ describe('ResourceFactory', () => {
 
     test('it can use the ore factory to generate ore', () => {
       global.Math.random.mockReturnValueOnce(RESOURCE_SPAWN_CHANCE)
-      randomChoice.mockReturnValueOnce({ name: itemType.ORE })
+      randomChoice.mockReturnValueOnce({ itemType: itemType.ORE })
 
       ResourceFactory.instance().generateResources()
       const factory = ResourceFactory.getFactoryForItemType(itemType.ORE)
@@ -41,7 +41,7 @@ describe('ResourceFactory', () => {
 
     test('it can use the coal factory to generate coal', () => {
       global.Math.random.mockReturnValueOnce(RESOURCE_SPAWN_CHANCE)
-      randomChoice.mockReturnValueOnce({ name: itemType.FUEL })
+      randomChoice.mockReturnValueOnce({ itemType: itemType.FUEL })
 
       ResourceFactory.instance().generateResources()
       const factory = ResourceFactory.getFactoryForItemType(itemType.FUEL)
@@ -51,7 +51,7 @@ describe('ResourceFactory', () => {
 
     test('it can use the stone factory to generate stone', () => {
       global.Math.random.mockReturnValueOnce(RESOURCE_SPAWN_CHANCE)
-      randomChoice.mockReturnValueOnce({ name: itemType.STONE })
+      randomChoice.mockReturnValueOnce({ itemType: itemType.STONE })
 
       ResourceFactory.instance().generateResources()
       const factory = ResourceFactory.getFactoryForItemType(itemType.STONE)
