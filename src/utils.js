@@ -1017,7 +1017,7 @@ export const getSalePriceMultiplier = (completedAchievements = {}) => {
 }
 
 /**
- * @param {Array} an array of objects each containing a `weight` property
+ * @param {Array} weightedOptions an array of objects each containing a `weight` property
  * @returns {Object} one of the items from weightedOptions
  */
 export function randomChoice(weightedOptions) {
