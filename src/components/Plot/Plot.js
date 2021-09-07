@@ -35,7 +35,7 @@ export const getBackgroundStyles = plotContent => {
 
   if (plotContent.wasWateredToday) {
     backgroundImages.push(`url(${plotStates['watered-plot']})`)
-  } else if (plotContent.wasShoveledToday) {
+  } else if (plotContent.isShoveled) {
     backgroundImages.push(`url(${plotStates['shoveled-plot']})`)
   }
 
@@ -135,7 +135,7 @@ export const Plot = ({
   let tooltipContents = null
   if (item) {
     tooltipContents = item.name
-  } else if (plotContent && plotContent.wasShoveledToday) {
+  } else if (plotContent && plotContent.isShoveled) {
     tooltipContents = SHOVELED
   }
 

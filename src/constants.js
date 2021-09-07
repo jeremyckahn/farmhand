@@ -46,7 +46,7 @@ export const PURCHASEABLE_COMBINES = freeze(
 )
 
 export const PURCHASEABLE_SMELTERS = freeze(
-  new Map([[1, { type: 'Basic', price: 15_000 }]])
+  new Map([[1, { type: 'Basic', price: 500_000 }]])
 )
 
 export const PURCHASEABLE_COW_PENS = freeze(
@@ -187,3 +187,21 @@ export const TOOLBELT_FIELD_MODES = new Set([
   fieldMode.WATER,
   fieldMode.MINE,
 ])
+
+// should a resource attempt to spawn when plot is mined?
+export const RESOURCE_SPAWN_CHANCE = 0.3
+
+// if a resource is going to spawn, which kind?
+// note: these values end up being used relative to each other
+// todo: migrate these to an object called RESOURCE_SPAWN_CHANCES once reducers is refactored
+export const ORE_SPAWN_CHANCE = 0.25
+export const COAL_SPAWN_CHANCE = 0.15
+export const STONE_SPAWN_CHANCE = 0.6
+
+// if spawning ore, which kind?
+// note: these values end up being used relative to each other
+// todo: migrate these to an object called ORE_SPAWN_CHANCES once reducers is refactored
+export const BRONZE_SPAWN_CHANCE = 0.4
+export const GOLD_SPAWN_CHANCE = 0.07
+export const IRON_SPAWN_CHANCE = 0.33
+export const SILVER_SPAWN_CHANCE = 0.2

@@ -338,6 +338,7 @@ export const bronzeIngot = itemify({
   name: 'Bronze Ingot',
   ingredients: {
     [items.bronzeOre.id]: 5,
+    [items.coal.id]: 5,
   },
   condition: state =>
     state.purchasedSmelter && state.itemsSold[items.bronzeOre.id] >= 50,
@@ -353,6 +354,7 @@ export const ironIngot = itemify({
   name: 'Iron Ingot',
   ingredients: {
     [items.ironOre.id]: 5,
+    [items.coal.id]: 12,
   },
   condition: state =>
     state.purchasedSmelter && state.itemsSold[items.ironOre.id] >= 50,
@@ -368,6 +370,7 @@ export const silverIngot = itemify({
   name: 'Silver Ingot',
   ingredients: {
     [items.silverOre.id]: 5,
+    [items.coal.id]: 8,
   },
   condition: state =>
     state.purchasedSmelter && state.itemsSold[items.silverOre.id] >= 50,
@@ -383,6 +386,7 @@ export const goldIngot = itemify({
   name: 'Gold Ingot',
   ingredients: {
     [items.goldOre.id]: 5,
+    [items.coal.id]: 10,
   },
   condition: state =>
     state.purchasedSmelter && state.itemsSold[items.goldOre.id] >= 50,
