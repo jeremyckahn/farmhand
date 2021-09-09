@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { getPlotContentFromItemId } from '../../utils'
-import { testCrop } from '../../test-utils'
+import { testCrop, testShoveledPlot } from '../../test-utils'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, fertilizerType } from '../../enums'
 import { FERTILIZER_BONUS } from '../../constants'
@@ -159,6 +159,16 @@ describe('"can-be-fertilized" class', () => {
   })
 })
 
+describe('can-be-mined class', () => {
+  test('renders class', () => {
+    component.setProps({
+      plotContent: null,
+    })
+
+    expect(component.find('.Plot').hasClass('can-be-mined')).toBeTruthy()
+  })
+})
+
 test('renders provided image data', () => {
   const image = 'data:image/png;base64,some-other-image'
 
@@ -188,6 +198,63 @@ describe('background image', () => {
     expect(component.find('.Plot').props().style.backgroundImage).toBe(
       `url(${plotStates['watered-plot']})`
     )
+  })
+
+  describe('class states', () => {
+    describe('crops', () => {
+      test('renders fertilized crop classes', () => {
+        component.setProps({
+          plotContent: testCrop({
+            itemId: 'sample-crop-1',
+            fertilizerType: fertilizerType.STANDARD,
+          }),
+          lifeStage: cropLifeStage.GROWN,
+        })
+
+        const classList = component
+          .find('img')
+          .props()
+          .className.split(' ')
+
+        expect(classList).toContain('animated')
+        expect(classList).toContain('heartBeat')
+      })
+    })
+
+    describe('ores', () => {
+      test('renders newly-mined ore classes', () => {
+        component.setProps({
+          plotContent: testShoveledPlot({
+            oreId: 'sample-ore',
+            isShoveled: false
+          }),
+        })
+
+        let classList = component
+          .find('img')
+          .props()
+          .className.split(' ')
+
+        expect(classList).not.toContain('animated')
+        expect(classList).not.toContain('was-just-shoveled')
+
+        component.setProps({
+          plotContent: testShoveledPlot({
+            oreId: 'sample-ore',
+            isShoveled: true
+          }),
+        })
+
+        // FIXME: Get this to work
+        // classList = component
+          // .find('img')
+          // .props()
+          // .className.split(' ')
+
+        // expect(classList).toContain('animated')
+        // expect(classList).toContain('was-just-shoveled')
+      })
+    })
   })
 })
 
