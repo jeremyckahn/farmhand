@@ -338,6 +338,7 @@ const cropLifeStageToImageSuffixMap = {
  * @returns {?string}
  */
 export const getPlotImage = plotContent =>
+  // TODO: Fix this insanity
   plotContent
     ? getPlotContentType(plotContent) === itemType.CROP
       ? getCropLifeStage(plotContent) === GROWN
@@ -347,6 +348,8 @@ export const getPlotImage = plotContent =>
               cropLifeStageToImageSuffixMap[getCropLifeStage(plotContent)]
             }`
           ]
+      : plotContent?.oreId
+      ? itemImages[plotContent.oreId]
       : itemImages[plotContent.itemId]
     : null
 

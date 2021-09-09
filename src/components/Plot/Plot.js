@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { bool, func, number, object, string } from 'prop-types'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
@@ -85,6 +85,24 @@ export const Plot = ({
   const isCrop =
     plotContent && getPlotContentType(plotContent) === itemType.CROP
   const isScarecow = itemsMap[plotContent?.itemId]?.type === itemType.SCARECROW
+  const [wasJustShoveled, setWasJustShoveled] = useState(false)
+  const [plotStartedShoveled, setPlotStartedShoveled] = useState(
+    Boolean(plotContent?.isShoveled)
+  )
+
+  useEffect(() => {
+    if (!plotStartedShoveled && plotContent?.isShoveled && plotContent?.oreId)
+      setWasJustShoveled(true)
+  }, [plotStartedShoveled, plotContent])
+
+  useEffect(() => {
+    if (plotContent === null) setPlotStartedShoveled(false)
+  }, [plotContent])
+
+  const showPlotImage = Boolean(
+    image &&
+      (wasJustShoveled || getPlotContentType(plotContent) === itemType.CROP)
+  )
 
   const plot = (
     <div
@@ -119,11 +137,16 @@ export const Plot = ({
       <img
         {...{
           className: classNames('square', {
-            animated: isRipe,
-            heartBeat: isRipe,
+            ...(isCrop && {
+              animated: isRipe,
+              heartBeat: isRipe,
+            }),
+            ...(wasJustShoveled && {
+              wasJustShoveled,
+            }),
           }),
           style: {
-            backgroundImage: image ? `url(${image})` : undefined,
+            backgroundImage: showPlotImage ? `url(${image})` : undefined,
           },
           src: pixel,
           alt: '',
