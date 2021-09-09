@@ -142,7 +142,8 @@ export const Plot = ({
               heartBeat: isRipe,
             }),
             ...(wasJustShoveled && {
-              wasJustShoveled,
+              animated: true,
+              'was-just-shoveled': true,
             }),
           }),
           style: {
