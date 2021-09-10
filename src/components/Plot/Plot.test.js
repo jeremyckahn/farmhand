@@ -199,54 +199,6 @@ describe('background image', () => {
       `url(${plotStates['watered-plot']})`
     )
   })
-
-  describe('class states', () => {
-    describe('crops', () => {
-      test('renders fertilized crop classes', () => {
-        component.setProps({
-          plotContent: testCrop({
-            itemId: 'sample-crop-1',
-            fertilizerType: fertilizerType.STANDARD,
-          }),
-          lifeStage: cropLifeStage.GROWN,
-        })
-
-        const classList = component
-          .find('img')
-          .props()
-          .className.split(' ')
-
-        expect(classList).toContain('animated')
-        expect(classList).toContain('heartBeat')
-      })
-    })
-
-    describe('ores', () => {
-      test('renders newly-mined ore classes', () => {
-        component.setProps({
-          plotContent: testShoveledPlot({
-            oreId: 'sample-ore',
-            isShoveled: false
-          }),
-        })
-
-        let classList = component
-          .find('img')
-          .props()
-          .className.split(' ')
-
-        expect(classList).not.toContain('animated')
-        expect(classList).not.toContain('was-just-shoveled')
-
-        component.setProps({
-          plotContent: testShoveledPlot({
-            oreId: 'sample-ore',
-            isShoveled: true
-          }),
-        })
-      })
-    })
-  })
 })
 
 describe('getBackgroundStyles', () => {
