@@ -244,15 +244,6 @@ describe('background image', () => {
             isShoveled: true
           }),
         })
-
-        // FIXME: Get this to work
-        // classList = component
-          // .find('img')
-          // .props()
-          // .className.split(' ')
-
-        // expect(classList).toContain('animated')
-        // expect(classList).toContain('was-just-shoveled')
       })
     })
   })

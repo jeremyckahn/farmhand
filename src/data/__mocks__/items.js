@@ -51,6 +51,15 @@ export const sampleItem6 = testItem({
   value: 6,
 })
 
+export const sampleOre1 = testItem({
+  id: 'sample-ore-1',
+  doesPriceFluctuate: false,
+  name: 'Sample Ore 1',
+  type: itemType.FUEL,
+  spawnChance: 0.5,
+  value: 2,
+})
+
 export const craftedItem1 = testItem({
   id: 'sample-crafted-item-1',
   name: 'Sample Crafted Item 1',
