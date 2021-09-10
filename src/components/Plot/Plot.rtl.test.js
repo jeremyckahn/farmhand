@@ -12,54 +12,58 @@ jest.mock('../../data/items')
 jest.mock('../../img')
 
 describe('background image', () => {
-  describe('class states', () => {
-    describe('ores', () => {
-      test('renders newly-mined ore classes', () => {
-        const PlotTestHarness = ({ children, plotProps }) => {
-          const [isShoveled, setIsShoveled] = useState(false)
+  describe('ores', () => {
+    beforeEach(() => {
+      const PlotTestHarness = ({ children, plotProps }) => {
+        const [isShoveled, setIsShoveled] = useState(false)
 
-          return (
-            <div>
-              <Plot
-                {...{
-                  ...plotProps,
-                  plotContent: testShoveledPlot({
-                    oreId: 'sample-ore-1',
-                    isShoveled,
-                  }),
-                  handlePlotClick: () => setIsShoveled(true),
-                }}
-              />
-            </div>
-          )
-        }
-
-        render(
-          <PlotTestHarness
-            {...{
-              plotProps: {
-                isInHoverRange: false,
-                lifeStage: cropLifeStage.SEED,
-                selectedItemId: '',
-                setHoveredPlot: () => {},
-                x: 0,
-                y: 0,
-              },
-            }}
-          />
+        return (
+          <div>
+            <Plot
+              {...{
+                ...plotProps,
+                plotContent: testShoveledPlot({
+                  oreId: 'sample-ore-1',
+                  isShoveled,
+                }),
+                handlePlotClick: () => setIsShoveled(true),
+              }}
+            />
+          </div>
         )
+      }
 
-        const img = screen.queryByAltText('Sample Ore 1')
-        const { classList } = img
+      render(
+        <PlotTestHarness
+          {...{
+            plotProps: {
+              isInHoverRange: false,
+              lifeStage: cropLifeStage.SEED,
+              selectedItemId: '',
+              setHoveredPlot: () => {},
+              x: 0,
+              y: 0,
+            },
+          }}
+        />
+      )
+    })
 
-        expect(classList).not.toContain('animated')
-        expect(classList).not.toContain('was-just-shoveled')
+    test('renders bare plot classes', () => {
+      const img = screen.queryByAltText('Sample Ore 1')
+      const { classList } = img
 
-        userEvent.click(img)
+      expect(classList).not.toContain('animated')
+      expect(classList).not.toContain('was-just-shoveled')
+    })
 
-        expect(classList).toContain('animated')
-        expect(classList).toContain('was-just-shoveled')
-      })
+    test('renders newly-mined ore classes', () => {
+      const img = screen.queryByAltText('Sample Ore 1')
+      const { classList } = img
+      userEvent.click(img)
+
+      expect(classList).toContain('animated')
+      expect(classList).toContain('was-just-shoveled')
     })
   })
 })
