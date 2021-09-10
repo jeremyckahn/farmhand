@@ -125,7 +125,7 @@ export const Plot = ({
           'can-be-mined': !plotContent,
 
           // For scarecrows and sprinklers
-          'is-replantable': plotContent && item && item.isReplantable,
+          'is-replantable': plotContent && item?.isReplantable,
         }),
         style: {
           backgroundImage: getBackgroundStyles(plotContent),
@@ -150,7 +150,7 @@ export const Plot = ({
             backgroundImage: showPlotImage ? `url(${image})` : undefined,
           },
           src: pixel,
-          alt: '',
+          alt: itemsMap[plotContent?.itemId ?? plotContent?.oreId]?.name || '',
         }}
       />
     </div>
@@ -159,7 +159,7 @@ export const Plot = ({
   let tooltipContents = null
   if (item) {
     tooltipContents = item.name
-  } else if (plotContent && plotContent.isShoveled) {
+  } else if (plotContent?.isShoveled) {
     tooltipContents = SHOVELED
   }
 
