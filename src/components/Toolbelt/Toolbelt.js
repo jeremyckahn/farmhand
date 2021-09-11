@@ -5,12 +5,14 @@ import classNames from 'classnames'
 import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
 
+import { toolLevel } from '../../enums'
+
 import { memoize } from '../../utils'
 
 import FarmhandContext from '../../Farmhand.context'
 import toolsData from '../../data/tools'
 
-import { tools as toolImages, pixel } from '../../img'
+import { tools as toolImages, craftedItems, pixel } from '../../img'
 
 import './Toolbelt.sass'
 
@@ -21,17 +23,27 @@ const getTools = memoize(shovelUnlocked => {
     .sort(t => t.order)
 })
 
+const getToolImage = tool => {
+  if (tool.level === toolLevel.DEFAULT) {
+    return toolImages[tool.id]
+  }
+
+  let id = `${tool.id}-${tool.level.toLowerCase()}`
+  return craftedItems[id]
+}
+
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
   completedAchievements,
+  toolLevels,
 }) => {
   const tools = getTools(completedAchievements['gold-digger'])
 
   return (
     <div className="Toolbelt">
       <div className="button-array">
-        {tools.map(({ alt, fieldMode, fieldKey, hiddenText, id }) => (
+        {tools.map(({ alt, fieldMode, fieldKey, hiddenText, id, type }) => (
           <Tooltip
             {...{
               key: fieldMode,
@@ -59,7 +71,12 @@ export const Toolbelt = ({
                 {...{
                   className: `square ${id}`,
                   src: pixel,
-                  style: { backgroundImage: `url(${toolImages[id]}` },
+                  style: {
+                    backgroundImage: `url(${getToolImage({
+                      level: toolLevels[type],
+                      id,
+                    })})`,
+                  },
                 }}
                 alt={alt}
               />
@@ -76,6 +93,7 @@ Toolbelt.propTypes = {
   fieldMode: PropTypes.string.isRequired,
   handleFieldModeSelect: PropTypes.func,
   completedAchievements: PropTypes.object,
+  toolLevels: PropTypes.object.isRequired,
 }
 
 Toolbelt.defaultProps = {

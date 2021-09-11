@@ -1,5 +1,7 @@
-import * as recipes from '../data/recipes'
 import { cropType, recipeType } from '../enums'
+
+import * as recipes from './recipes'
+import upgrades from './upgrades'
 
 import baseItemsMap from './items-map'
 
@@ -33,9 +35,18 @@ for (const recipeId of Object.keys(recipes)) {
   recipesMap[recipe.id] = recipe
 }
 
+export const upgradesMap = {}
+
+for (let toolType of Object.keys(upgrades)) {
+  for (let upgrade of Object.values(upgrades[toolType])) {
+    upgradesMap[upgrade.id] = upgrade
+  }
+}
+
 export const itemsMap = {
   ...baseItemsMap,
   ...recipesMap,
+  ...upgradesMap,
 }
 
 export const cropIdToTypeMap = {

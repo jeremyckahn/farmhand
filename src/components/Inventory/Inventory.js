@@ -22,6 +22,7 @@ const {
   SPRINKLER,
   STONE,
   FUEL,
+  TOOL_UPGRADE,
 } = itemType
 
 export const categoryIds = enumify([
@@ -57,6 +58,7 @@ const itemTypeCategoryMap = Object.freeze({
   [SCARECROW]: FIELD_TOOLS,
   [SPRINKLER]: FIELD_TOOLS,
   [STONE]: MINED_RESOURCES,
+  [TOOL_UPGRADE]: '',
 })
 
 const getItemCategories = () =>
@@ -72,7 +74,7 @@ export const separateItemsIntoCategories = items =>
 
     if (category === CROPS) {
       acc[item.isPlantableCrop ? SEEDS : CROPS].push(item)
-    } else {
+    } else if (acc[category]) {
       acc[category].push(item)
     }
 

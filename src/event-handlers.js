@@ -57,6 +57,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.upgrade} upgrade
+   */
+  handleUpgradeTool(upgrade) {
+    this.upgradeTool(upgrade)
+  },
+
+  /**
    * @param {farmhand.cow} cow
    */
   handleCowPurchaseClick(cow) {

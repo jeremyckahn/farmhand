@@ -157,6 +157,7 @@ export const PERSISTED_STATE_KEYS = [
   'todaysPurchases',
   'todaysRevenue',
   'todaysStartingInventory',
+  'toolLevels',
   'useAlternateEndDayButtonPosition',
   'valueAdjustments',
   'version',

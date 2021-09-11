@@ -11,7 +11,6 @@ import Tabs from '@material-ui/core/Tabs'
 import { features } from '../../config'
 import { recipeType, toolType } from '../../enums'
 
-import * as items from '../../data/items'
 import { recipeCategories, recipesMap } from '../../data/maps'
 import toolUpgrades from '../../data/upgrades'
 
@@ -57,17 +56,6 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
     learnedKitchenRecipes,
     learnedForgeRecipes,
   } = getLearnedRecipeCategories(learnedRecipes)
-
-  const upgradeRecipe = {
-    id: 'tool-upgrade',
-    name: 'Tool Upgrade',
-    ingredients: {
-      [items.goldOre.id]: 5,
-      [items.coal.id]: 10,
-    },
-    condition: state => true,
-    recipeType: recipeType.FORGE,
-  }
 
   const nextLevel =
     toolUpgrades[toolType.SCYTHE][toolLevels[toolType.SCYTHE]].nextLevel
@@ -142,14 +130,16 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
           <li>
             <h4>Tool Upgrades</h4>
           </li>
-          <li>
-            <UpgradePurchase
-              upgrade={scytheUpgrade}
-              toolType={toolType.SCYTHE}
-              title={scytheUpgrade.name}
-              description="Use ore to craft a better scythe"
-            />
-          </li>
+          {scytheUpgrade ? (
+            <li>
+              <UpgradePurchase
+                upgrade={scytheUpgrade}
+                toolType={toolType.SCYTHE}
+                title={scytheUpgrade.name}
+                description="Use ore to craft a better scythe"
+              />
+            </li>
+          ) : null}
         </ul>
       </TabPanel>
     </div>

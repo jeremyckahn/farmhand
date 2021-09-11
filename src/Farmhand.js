@@ -515,6 +515,7 @@ export default class Farmhand extends Component {
       'setSprinkler',
       'showNotification',
       'updatePeer',
+      'upgradeTool',
       'waterField',
       'waterAllPlots',
       'waterPlot',

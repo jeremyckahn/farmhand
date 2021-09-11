@@ -89,6 +89,7 @@ export const itemType = enumify([
   'SCARECROW',
   'SPRINKLER',
   'STONE',
+  'TOOL_UPGRADE',
 ])
 
 /**

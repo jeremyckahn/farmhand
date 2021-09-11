@@ -53,6 +53,7 @@ if (features.MINING) {
     order: 4,
     fieldKey: 'shift+4',
     hiddenText: SHOVEL_HIDDEN_TEXT,
+    type: toolType.SHOVEL,
   }
 }
 

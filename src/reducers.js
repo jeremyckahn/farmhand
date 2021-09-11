@@ -105,7 +105,14 @@ import {
   PURCHASED_ITEM_PEER_NOTIFICATION,
   SOLD_ITEM_PEER_NOTIFICATION,
 } from './templates'
-import { cropLifeStage, fertilizerType, fieldMode, itemType } from './enums'
+import {
+  cropLifeStage,
+  fertilizerType,
+  fieldMode,
+  itemType,
+  toolLevel,
+  toolType,
+} from './enums'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
@@ -1245,6 +1252,20 @@ export const makeRecipe = (state, recipe, howMany = 1) => {
   return addItemToInventory(state, recipe, howMany)
 }
 
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.upgrade} upgrade
+ */
+export const upgradeTool = (state, upgrade) => {
+  state = makeRecipe(state, upgrade)
+
+  state.toolLevels[upgrade.toolType] = upgrade.level
+
+  state = showNotification(state, 'Tool upgraded!')
+
+  return { ...state }
+}
+
 // TODO: Change showNotification to accept a configuration object instead of so
 // many formal parameters.
 /**
@@ -1645,8 +1666,15 @@ export const harvestPlot = (state, x, y) => {
   const plotWasRainbowFertilized =
     crop.fertilizerType === fertilizerType.RAINBOW
 
+  let harvestedQuantity = 1
+  // TODO: move this but also more logic to come
+  if (state.toolLevels[toolType.SCYTHE] !== toolLevel.DEFAULT) {
+    harvestedQuantity = 2
+  }
+
   state = removeFieldPlotAt(state, x, y)
-  state = addItemToInventory(state, item)
+  state = addItemToInventory(state, item, harvestedQuantity)
+
   const { cropType } = item
 
   if (plotWasRainbowFertilized) {
@@ -1668,7 +1696,7 @@ export const harvestPlot = (state, x, y) => {
     ...state,
     cropsHarvested: {
       ...cropsHarvested,
-      [cropType]: (cropsHarvested[cropType] || 0) + 1,
+      [cropType]: (cropsHarvested[cropType] || 0) + harvestedQuantity,
     },
   }
 }
