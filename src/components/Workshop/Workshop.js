@@ -9,9 +9,14 @@ import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 
 import { features } from '../../config'
-import { recipeType } from '../../enums'
+import { recipeType, toolType } from '../../enums'
+
+import * as items from '../../data/items'
 import { recipeCategories, recipesMap } from '../../data/maps'
+import toolUpgrades from '../../data/upgrades'
+
 import Recipe from '../Recipe'
+import UpgradePurchase from '../UpgradePurchase'
 
 import FarmhandContext from '../../Farmhand.context'
 
@@ -45,13 +50,28 @@ const getLearnedRecipeCategories = learnedRecipes => {
   return { learnedKitchenRecipes, learnedForgeRecipes }
 }
 
-const Workshop = ({ learnedRecipes }) => {
+const Workshop = ({ learnedRecipes, toolLevels }) => {
   const [currentTab, setCurrentTab] = useState(0)
 
   const {
     learnedKitchenRecipes,
     learnedForgeRecipes,
   } = getLearnedRecipeCategories(learnedRecipes)
+
+  const upgradeRecipe = {
+    id: 'tool-upgrade',
+    name: 'Tool Upgrade',
+    ingredients: {
+      [items.goldOre.id]: 5,
+      [items.coal.id]: 10,
+    },
+    condition: state => true,
+    recipeType: recipeType.FORGE,
+  }
+
+  const nextLevel =
+    toolUpgrades[toolType.SCYTHE][toolLevels[toolType.SCYTHE]].nextLevel
+  const scytheUpgrade = toolUpgrades[toolType.SCYTHE][nextLevel]
 
   return (
     <div className="Workshop">
@@ -117,6 +137,19 @@ const Workshop = ({ learnedRecipes }) => {
               />
             </li>
           ))}
+        </ul>
+        <ul className="card-list">
+          <li>
+            <h4>Tool Upgrades</h4>
+          </li>
+          <li>
+            <UpgradePurchase
+              upgrade={scytheUpgrade}
+              toolType={toolType.SCYTHE}
+              title={scytheUpgrade.name}
+              description="Use ore to craft a better scythe"
+            />
+          </li>
         </ul>
       </TabPanel>
     </div>

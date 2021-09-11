@@ -22,7 +22,7 @@ import FarmhandContext from '../../Farmhand.context'
 
 import './Recipe.sass'
 
-const IngredientsList = ({
+export const IngredientsList = ({
   playerInventoryQuantities,
   recipe: { ingredients, name },
 }) => (

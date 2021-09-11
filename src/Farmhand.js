@@ -54,7 +54,13 @@ import {
 } from './utils'
 import { getData, postData } from './fetch-utils'
 import { itemsMap, recipesMap } from './data/maps'
-import { dialogView, fieldMode, stageFocusType } from './enums'
+import {
+  dialogView,
+  fieldMode,
+  stageFocusType,
+  toolLevel,
+  toolType,
+} from './enums'
 import {
   DEFAULT_ROOM,
   INITIAL_STORAGE_LIMIT,
@@ -390,6 +396,12 @@ export default class Farmhand extends Component {
       todaysPurchases: {},
       todaysRevenue: 0,
       todaysStartingInventory: {},
+      toolLevels: {
+        [toolType.HOE]: toolLevel.DEFAULT,
+        [toolType.SCYTHE]: toolLevel.DEFAULT,
+        [toolType.SHOVEL]: toolLevel.DEFAULT,
+        [toolType.WATERING_CAN]: toolLevel.DEFAULT,
+      },
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
       version: process.env.REACT_APP_VERSION,

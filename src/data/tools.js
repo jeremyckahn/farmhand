@@ -1,4 +1,4 @@
-import { fieldMode } from '../enums'
+import { fieldMode, toolType } from '../enums'
 
 import { features } from '../config'
 
@@ -23,6 +23,7 @@ const tools = {
     order: 1,
     fieldKey: 'shift+1',
     hiddenText: WATERING_CAN_HIDDEN_TEXT,
+    type: toolType.WATERING_CAN,
   },
   scythe: {
     id: 'scythe',
@@ -31,6 +32,7 @@ const tools = {
     order: 2,
     fieldKey: 'shift+2',
     hiddenText: SCYTHE_HIDDEN_TEXT,
+    type: toolType.SCYTHE,
   },
   hoe: {
     id: 'hoe',
@@ -39,6 +41,7 @@ const tools = {
     order: 3,
     fieldKey: 'shift+3',
     hiddenText: HOE_HIDDEN_TEXT,
+    type: toolType.HOE,
   },
 }
 

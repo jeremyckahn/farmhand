@@ -81,6 +81,7 @@ import chocolateMilk from './items/chocolate-milk.png'
 import inventoryBox from './items/inventory-box.png'
 import hoe from './tools/hoe.png'
 import scythe from './tools/scythe.png'
+import scytheBronze from './tools/scythe-bronze.png'
 import shovel from './tools/shovel.png'
 import wateringCan from './tools/watering-can.png'
 
@@ -118,6 +119,9 @@ const smeltedItems = {
   'iron-ingot': ironIngot,
   'silver-ingot': silverIngot,
   'gold-ingot': goldIngot,
+
+  // tool upgrades
+  'scythe-bronze': scytheBronze,
 }
 
 export const craftedItems = {

@@ -136,3 +136,21 @@ export const dialogView = enumify([
   'SETTINGS',
   'STATS',
 ])
+
+/**
+ * @property farmhand.module:enums.toolType
+ * @enum {string}
+ */
+export const toolType = enumify(['SCYTHE', 'SHOVEL', 'HOE', 'WATERING_CAN'])
+
+/**
+ * @property farmhand.module:enums.toolLevel
+ * @enum {string}
+ */
+export const toolLevel = enumify([
+  'DEFAULT',
+  'BRONZE',
+  'IRON',
+  'SILVER',
+  'GOLD',
+])
