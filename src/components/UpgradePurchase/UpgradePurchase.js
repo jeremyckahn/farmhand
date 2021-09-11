@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
-import { array, func, node, number, string, object } from 'prop-types'
+import { array, func, number, object } from 'prop-types'
 
 import { IngredientsList } from '../Recipe/Recipe'
 
@@ -76,14 +76,10 @@ export class UpgradePurchase extends Component {
 }
 
 UpgradePurchase.propTypes = {
-  description: string,
   handleUpgradeTool: func.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
-  maxedOutPlaceholder: node,
-  money: number.isRequired,
   playerInventoryQuantities: object.isRequired,
-  title: string.isRequired,
   toolLevels: object,
   upgrade: object,
 }

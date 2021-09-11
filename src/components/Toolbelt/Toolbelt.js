@@ -93,12 +93,12 @@ Toolbelt.propTypes = {
   fieldMode: PropTypes.string.isRequired,
   handleFieldModeSelect: PropTypes.func,
   completedAchievements: PropTypes.object,
-  toolLevels: PropTypes.object.isRequired,
 }
 
 Toolbelt.defaultProps = {
   handleFieldModeSelect: noop,
   completedAchievements: {},
+  toolLevels: {},
 }
 
 export default function Consumer(props) {

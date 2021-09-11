@@ -1,6 +1,8 @@
 import { testCrop } from '../test-utils'
 import * as reducers from '../reducers'
 
+import { toolLevel, toolType } from '../enums'
+
 import { achievementsMap } from './achievements'
 
 jest.mock('./items')
@@ -26,6 +28,9 @@ describe('harvest-crop', () => {
         ],
         inventory: [],
         inventoryLimit: -1,
+        toolLevels: {
+          [toolType.SCYTHE]: toolLevel.DEFAULT,
+        },
       }
     })
 

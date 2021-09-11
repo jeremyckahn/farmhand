@@ -227,3 +227,31 @@ export const chocolateMilk = testItem({
   type: itemType.MILK,
   value: 10,
 })
+
+export const bronzeOre = testItem({
+  id: 'bronze-ore',
+  name: 'Bronze Ore',
+  type: itemType.ORE,
+  value: 25,
+})
+
+export const goldOre = testItem({
+  id: 'gold-ore',
+  name: 'Gold Ore',
+  type: itemType.ORE,
+  value: 500,
+})
+
+export const stone = testItem({
+  id: 'stone',
+  name: 'Stone',
+  type: itemType.STONE,
+  value: 5,
+})
+
+export const coal = testItem({
+  id: 'coal',
+  name: 'Coal',
+  type: itemType.FUEL,
+  value: 1,
+})
