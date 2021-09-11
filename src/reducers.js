@@ -7,6 +7,7 @@ import { itemsMap, recipesMap } from './data/maps'
 import { levels } from './data/levels'
 import { ResourceFactory } from './factories'
 import achievements from './data/achievements'
+import upgrades from './data/upgrades'
 import {
   areHuggingMachinesInInventory,
   canMakeRecipe,
@@ -48,7 +49,6 @@ import {
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
-  isRandomChance,
   levelAchieved,
   moneyTotal,
   nullArray,
@@ -1261,9 +1261,14 @@ export const makeRecipe = (state, recipe, howMany = 1) => {
 export const upgradeTool = (state, upgrade) => {
   state = makeRecipe(state, upgrade)
 
+  const currentName =
+    upgrades[upgrade.toolType][state.toolLevels[upgrade.toolType]].name
   state.toolLevels[upgrade.toolType] = upgrade.level
 
-  state = showNotification(state, TOOL_UPGRADED_NOTIFICATION`${upgrade.name}`)
+  state = showNotification(
+    state,
+    TOOL_UPGRADED_NOTIFICATION`${currentName}${upgrade.name}`
+  )
 
   return { ...state }
 }
@@ -1735,7 +1740,10 @@ export const minePlot = (state, x, y) => {
     return state
   }
 
-  const spawnedResources = ResourceFactory.instance().generateResources()
+  const shovelLevel = state.toolLevels[toolType.SHOVEL]
+  const spawnedResources = ResourceFactory.instance().generateResources(
+    shovelLevel
+  )
   let spawnedOre = null
   let daysUntilClear = chooseRandom([1, 2, 2, 3])
 

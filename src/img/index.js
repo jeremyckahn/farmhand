@@ -83,6 +83,7 @@ import hoe from './tools/hoe.png'
 import scythe from './tools/scythe.png'
 import scytheBronze from './tools/scythe-bronze.png'
 import shovel from './tools/shovel.png'
+import shovelBronze from './tools/shovel-bronze.png'
 import wateringCan from './tools/watering-can.png'
 
 import coal from './ores/coal.png'
@@ -122,6 +123,7 @@ const smeltedItems = {
 
   // tool upgrades
   'scythe-bronze': scytheBronze,
+  'shovel-bronze': shovelBronze,
 }
 
 export const craftedItems = {

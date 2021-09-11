@@ -21,6 +21,23 @@ const upgrades = {
       isMaxLevel: true,
     },
   },
+  [toolType.SHOVEL]: {
+    [toolLevel.DEFAULT]: {
+      id: 'shovel-default',
+      name: 'Basic Shovel',
+      nextLevel: toolLevel.BRONZE,
+    },
+    [toolLevel.BRONZE]: {
+      id: 'shovel-bronze',
+      description: 'Increases chance of finding ore',
+      name: 'Bronze Shovel',
+      ingredients: {
+        [recipes.bronzeIngot.id]: 35,
+        [items.coal.id]: 115,
+      },
+      isMaxLevel: true,
+    },
+  },
 }
 
 // add some defaults to each upgrade object
