@@ -25,7 +25,7 @@ export class UpgradePurchase extends Component {
       upgrade,
     } = this.props
 
-    const { id, name } = upgrade
+    const { id, name, description } = upgrade
 
     const spaceFreedByIngredientsConsumed = Object.values(
       upgrade.ingredients
@@ -56,7 +56,7 @@ export class UpgradePurchase extends Component {
             title: name,
             subheader: (
               <>
-                <p>Increases crop yield</p>
+                <p>{description}</p>
                 <IngredientsList
                   {...{ playerInventoryQuantities, recipe: upgrade }}
                 />

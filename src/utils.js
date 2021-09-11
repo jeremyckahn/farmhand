@@ -1045,3 +1045,5 @@ export function randomChoice(weightedOptions) {
     runningTotal += option.weight
   }
 }
+
+export { default as isRandomChance } from './utils/isRandomChance'

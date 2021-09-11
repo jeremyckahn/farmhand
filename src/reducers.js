@@ -48,6 +48,7 @@ import {
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
+  isRandomChance,
   levelAchieved,
   moneyTotal,
   nullArray,
@@ -104,6 +105,7 @@ import {
   PRICE_SURGE,
   PURCHASED_ITEM_PEER_NOTIFICATION,
   SOLD_ITEM_PEER_NOTIFICATION,
+  TOOL_UPGRADED_NOTIFICATION,
 } from './templates'
 import {
   cropLifeStage,
@@ -1261,7 +1263,7 @@ export const upgradeTool = (state, upgrade) => {
 
   state.toolLevels[upgrade.toolType] = upgrade.level
 
-  state = showNotification(state, 'Tool upgraded!')
+  state = showNotification(state, TOOL_UPGRADED_NOTIFICATION`${upgrade.name}`)
 
   return { ...state }
 }
@@ -1667,9 +1669,27 @@ export const harvestPlot = (state, x, y) => {
     crop.fertilizerType === fertilizerType.RAINBOW
 
   let harvestedQuantity = 1
-  // TODO: move this but also more logic to come
-  if (state.toolLevels[toolType.SCYTHE] !== toolLevel.DEFAULT) {
-    harvestedQuantity = 2
+
+  switch (state.toolLevels[toolType.SCYTHE]) {
+    case toolLevel.BRONZE:
+      if (isRandomChance(0.25)) harvestedQuantity += 1
+      break
+
+    case toolLevel.IRON:
+      if (isRandomChance(0.5)) harvestedQuantity += 1
+      break
+
+    case toolLevel.SILVER:
+      if (isRandomChance(0.5)) harvestedQuantity += 2
+      break
+
+    case toolLevel.GOLD:
+      harvestedQuantity += 1
+      if (isRandomChance(0.5)) harvestedQuantity += 2
+      break
+
+    default:
+      harvestedQuantity = 1
   }
 
   state = removeFieldPlotAt(state, x, y)

@@ -251,3 +251,6 @@ export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
  */
 export const SOLD_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
   `sold ${integerString(quantity)} unit${quantity > 1 ? 's' : ''} of ${name}.`
+
+export const TOOL_UPGRADED_NOTIFICATION = (_, name) =>
+  `Your scythe has been upgraded to a ${name}!`

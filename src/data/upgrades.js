@@ -11,6 +11,7 @@ const upgrades = {
     },
     [toolLevel.BRONZE]: {
       id: 'scythe-bronze',
+      description: 'Has a 25% chance to harvest extra crops',
       name: 'Bronze Scythe',
       ingredients: {
         [items.bronzeOre.id]: 5,
