@@ -1,6 +1,7 @@
 import { itemType, toolType, toolLevel } from '../enums'
 
 import * as items from './items'
+import * as recipes from './recipes'
 
 const upgrades = {
   [toolType.SCYTHE]: {
@@ -11,10 +12,11 @@ const upgrades = {
     },
     [toolLevel.BRONZE]: {
       id: 'scythe-bronze',
-      description: 'Has a 25% chance to harvest extra crops',
+      description: 'Increases crop yield when harvesting',
       name: 'Bronze Scythe',
       ingredients: {
-        [items.bronzeOre.id]: 5,
+        [recipes.bronzeIngot.id]: 25,
+        [items.coal.id]: 100,
       },
       isMaxLevel: true,
     },
