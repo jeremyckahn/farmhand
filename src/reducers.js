@@ -1672,20 +1672,19 @@ export const harvestPlot = (state, x, y) => {
 
   switch (state.toolLevels[toolType.SCYTHE]) {
     case toolLevel.BRONZE:
-      if (isRandomChance(0.25)) harvestedQuantity += 1
+      harvestedQuantity += 1
       break
 
     case toolLevel.IRON:
-      if (isRandomChance(0.5)) harvestedQuantity += 1
+      harvestedQuantity += 2
       break
 
     case toolLevel.SILVER:
-      if (isRandomChance(0.5)) harvestedQuantity += 2
+      harvestedQuantity += 3
       break
 
     case toolLevel.GOLD:
-      harvestedQuantity += 1
-      if (isRandomChance(0.5)) harvestedQuantity += 2
+      harvestedQuantity += 4
       break
 
     default:

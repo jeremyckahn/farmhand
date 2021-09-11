@@ -9,7 +9,7 @@ import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 
 import { features } from '../../config'
-import { recipeType, toolType } from '../../enums'
+import { recipeType } from '../../enums'
 
 import { recipeCategories, recipesMap } from '../../data/maps'
 import toolUpgrades from '../../data/upgrades'
@@ -49,6 +49,24 @@ const getLearnedRecipeCategories = learnedRecipes => {
   return { learnedKitchenRecipes, learnedForgeRecipes }
 }
 
+/**
+ * Get available upgrades based on current tool levels
+ * @param {object} toolLevels - the current level of each tool
+ * @returns {array} a list of all applicable upgrades
+ */
+const getUpgradesAvailable = toolLevels => {
+  let upgradesAvailable = []
+
+  for (let type of Object.keys(toolUpgrades)) {
+    let upgrade = toolUpgrades[type][toolLevels[type]]
+    if (!upgrade.isMaxLevel && upgrade.nextLevel) {
+      upgradesAvailable.push(toolUpgrades[type][upgrade.nextLevel])
+    }
+  }
+
+  return upgradesAvailable
+}
+
 const Workshop = ({ learnedRecipes, toolLevels }) => {
   const [currentTab, setCurrentTab] = useState(0)
 
@@ -57,9 +75,7 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
     learnedForgeRecipes,
   } = getLearnedRecipeCategories(learnedRecipes)
 
-  const nextLevel =
-    toolUpgrades[toolType.SCYTHE][toolLevels[toolType.SCYTHE]].nextLevel
-  const scytheUpgrade = toolUpgrades[toolType.SCYTHE][nextLevel]
+  const upgradesAvailable = getUpgradesAvailable(toolLevels)
 
   return (
     <div className="Workshop">
@@ -70,7 +86,9 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
           aria-label="Workshop tabs"
         >
           <Tab {...{ label: 'Kitchen', ...a11yProps(0) }} />
-          {features.MINING && <Tab {...{ label: 'Forge', ...a11yProps(1) }} />}
+          {features.MINING && learnedForgeRecipes.length && (
+            <Tab {...{ label: 'Forge', ...a11yProps(1) }} />
+          )}
         </Tabs>
       </AppBar>
       <TabPanel value={currentTab} index={0}>
@@ -126,21 +144,18 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
             </li>
           ))}
         </ul>
-        <ul className="card-list">
-          <li>
-            <h4>Tool Upgrades</h4>
-          </li>
-          {scytheUpgrade ? (
+        {upgradesAvailable.length ? (
+          <ul className="card-list">
             <li>
-              <UpgradePurchase
-                upgrade={scytheUpgrade}
-                toolType={toolType.SCYTHE}
-                title={scytheUpgrade.name}
-                description="Use ore to craft a better scythe"
-              />
+              <h4>Tool Upgrades</h4>
             </li>
-          ) : null}
-        </ul>
+            {upgradesAvailable.map(upgrade => (
+              <li key={upgrade.id}>
+                <UpgradePurchase upgrade={upgrade} />
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </TabPanel>
     </div>
   )

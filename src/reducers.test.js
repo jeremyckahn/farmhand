@@ -61,7 +61,6 @@ import {
   getCropFromItemId,
   getPlotContentFromItemId,
   getPriceEventForCrop,
-  isRandomChance,
 } from './utils'
 import * as fn from './reducers'
 
@@ -72,8 +71,6 @@ jest.mock('./data/items')
 jest.mock('./data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
 jest.mock('./data/recipes')
 jest.mock('./data/shop-inventory')
-
-jest.mock('./utils/isRandomChance')
 
 jest.mock('./constants', () => ({
   __esModule: true,
@@ -2737,7 +2734,6 @@ describe('harvestPlot', () => {
       })
 
       test('harvests 1 extra crop if random chance succeeds', () => {
-        isRandomChance.mockReturnValueOnce(true)
         const { cropsHarvested, inventory } = fn.harvestPlot(
           farmhandState,
           0,
@@ -2746,18 +2742,6 @@ describe('harvestPlot', () => {
 
         expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 2 }])
         expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 2 })
-      })
-
-      test('does not harvest extra crops if random chance fails', () => {
-        isRandomChance.mockReturnValueOnce(false)
-        const { cropsHarvested, inventory } = fn.harvestPlot(
-          farmhandState,
-          0,
-          0
-        )
-
-        expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 1 }])
-        expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 1 })
       })
     })
 
