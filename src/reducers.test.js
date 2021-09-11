@@ -3372,6 +3372,9 @@ describe('minePlot', () => {
     gameState = {
       field: [[null, 'crop']],
       inventory: [],
+      toolLevels: {
+        [toolType.SHOVEL]: toolLevel.DEFAULT,
+      },
     }
 
     jest.spyOn(ResourceFactory, 'instance')
