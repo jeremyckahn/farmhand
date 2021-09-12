@@ -252,5 +252,9 @@ export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
 export const SOLD_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
   `sold ${integerString(quantity)} unit${quantity > 1 ? 's' : ''} of ${name}.`
 
+/**
+ * @param {string} toolName - the name of the tool being replaced
+ * @param {string} upgradedName - the new name of the tool
+ */
 export const TOOL_UPGRADED_NOTIFICATION = (_, toolName, upgradedName) =>
-  `Your ${toolName} has been upgraded to a ${upgradedName}!`
+  `Your ${toolName} has been upgraded to a **${upgradedName}**!`
