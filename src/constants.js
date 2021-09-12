@@ -148,6 +148,7 @@ export const PERSISTED_STATE_KEYS = [
   'purchasedCombine',
   'purchasedCowPen',
   'purchasedField',
+  'purchasedSmelter',
   'record7dayProfitAverage',
   'recordProfitabilityStreak',
   'recordSingleDayProfit',
