@@ -91,8 +91,9 @@ export const Plot = ({
   )
 
   useEffect(() => {
-    if (!plotStartedShoveled && plotContent?.isShoveled && plotContent?.oreId)
+    if (!plotStartedShoveled && plotContent?.isShoveled && plotContent?.oreId) {
       setWasJustShoveled(true)
+    }
   }, [plotStartedShoveled, plotContent])
 
   useEffect(() => {

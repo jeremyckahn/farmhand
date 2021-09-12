@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { getPlotContentFromItemId } from '../../utils'
-import { testCrop, testShoveledPlot } from '../../test-utils'
+import { testCrop } from '../../test-utils'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, fertilizerType } from '../../enums'
 import { FERTILIZER_BONUS } from '../../constants'

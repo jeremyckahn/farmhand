@@ -95,7 +95,6 @@ describe('background image', () => {
           {...{
             plotProps: {
               isInHoverRange: false,
-              lifeStage: cropLifeStage.SEED,
               selectedItemId: '',
               setHoveredPlot: () => {},
               x: 0,
