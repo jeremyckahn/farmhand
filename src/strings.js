@@ -31,3 +31,34 @@ export const HOE_HIDDEN_TEXT =
   'Select the hoe to clear crops, or replantable field items'
 export const SHOVEL_ALT_TEXT = 'A shovel for digging up rocks.'
 export const SHOVEL_HIDDEN_TEXT = 'Select the shovel to dig for ore'
+
+export const TOOL_LEVEL_INFO = {
+  SCYTHE: {
+    DEFAULT: 'Basic - harvests one crop per plot',
+    BRONZE: 'Bronze - harvests two crops per plot',
+    IRON: 'Iron - harvests three crops per plot',
+    SILVER: 'Silver - harvests four crops per plot',
+    GOLD: 'Gold - harvests five crops per plot',
+  },
+  SHOVEL: {
+    DEFAULT: 'Basic - has a 30% chance of digging up resources',
+    BRONZE: 'Bronze - has a 40% chance of digging up resources',
+    IRON: 'Iron - has a 50% chance of digging up resources',
+    SILVER: 'Silver - has a 60% chance of digging up resources',
+    GOLD: 'Gold - has a 70% chance of digging up resources',
+  },
+  WATERING_CAN: {
+    DEFAULT: 'Basic - keeps plots watered for one day',
+    BRONZE: 'Bronze - keeps plots watered for two days',
+    IRON: 'Iron - keeps plots watered for three days',
+    SILVER: 'Silver - keeps plots watered for four days',
+    GOLD: 'Gold - keeps plots watered for five days',
+  },
+  HOE: {
+    DEFAULT: 'Basic - destroys crops',
+    BRONZE: 'Bronze - 20% chance to retrieve seeds when destroying crops',
+    IRON: 'Iron - 40% chance to retrieve seeds when destroying crops',
+    SILVER: 'Silver - 60% chance to retrieve seeds when destroying crops',
+    GOLD: 'Gold - 80% chance to retrieve seeds when destroying crops',
+  },
+}

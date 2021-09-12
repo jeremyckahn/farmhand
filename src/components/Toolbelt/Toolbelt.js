@@ -43,47 +43,51 @@ export const Toolbelt = ({
   return (
     <div className="Toolbelt">
       <div className="button-array">
-        {tools.map(({ alt, fieldMode, fieldKey, hiddenText, id, type }) => (
-          <Tooltip
-            {...{
-              key: fieldMode,
-              placement: 'top',
-              title: (
-                <>
-                  <p>{alt}</p>
-                  <p>({fieldKey})</p>
-                </>
-              ),
-            }}
-          >
-            <Button
+        {tools.map(
+          ({ alt, fieldMode, fieldKey, hiddenText, id, levelInfo, type }) => (
+            <Tooltip
               {...{
-                className: classNames({
-                  selected: fieldMode === currentFieldMode,
-                }),
-                color: 'primary',
-                onClick: () => handleFieldModeSelect(fieldMode),
-                variant: fieldMode === currentFieldMode ? 'contained' : 'text',
+                key: fieldMode,
+                placement: 'top',
+                title: (
+                  <>
+                    <p>{alt}</p>
+                    <p>{levelInfo[toolLevels[type]]}</p>
+                    <p>({fieldKey})</p>
+                  </>
+                ),
               }}
             >
-              {/* alt is in a different format here because of linter weirdness. */}
-              <img
+              <Button
                 {...{
-                  className: `square ${id}`,
-                  src: pixel,
-                  style: {
-                    backgroundImage: `url(${getToolImage({
-                      level: toolLevels[type],
-                      id,
-                    })})`,
-                  },
+                  className: classNames({
+                    selected: fieldMode === currentFieldMode,
+                  }),
+                  color: 'primary',
+                  onClick: () => handleFieldModeSelect(fieldMode),
+                  variant:
+                    fieldMode === currentFieldMode ? 'contained' : 'text',
                 }}
-                alt={alt}
-              />
-              <span className="visually_hidden">{hiddenText}</span>
-            </Button>
-          </Tooltip>
-        ))}
+              >
+                {/* alt is in a different format here because of linter weirdness. */}
+                <img
+                  {...{
+                    className: `square ${id}`,
+                    src: pixel,
+                    style: {
+                      backgroundImage: `url(${getToolImage({
+                        level: toolLevels[type],
+                        id,
+                      })})`,
+                    },
+                  }}
+                  alt={alt}
+                />
+                <span className="visually_hidden">{hiddenText}</span>
+              </Button>
+            </Tooltip>
+          )
+        )}
       </div>
     </div>
   )

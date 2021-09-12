@@ -94,7 +94,7 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
     learnedForgeRecipes
   )
 
-  const showForge = features.MINING && learnedForgeRecipes.length
+  const showForge = features.MINING
 
   return (
     <div className="Workshop">
@@ -137,7 +137,7 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
                   {...{
                     linkTarget: '_blank',
                     className: 'markdown',
-                    source: `Recipes are learned by selling crops and animal products. Sell as much as you can of a wide variety of items!`,
+                    source: `Kitchen recipes are learned by selling crops and animal products. Sell as much as you can of a wide variety of items!`,
                   }}
                 />
               </CardContent>
@@ -163,17 +163,36 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
             ))}
           </ul>
           {upgradesAvailable.length ? (
-            <ul className="card-list">
-              <li>
-                <h4>Tool Upgrades</h4>
-              </li>
-              {upgradesAvailable.map(upgrade => (
-                <li key={upgrade.id}>
-                  <UpgradePurchase upgrade={upgrade} />
+            <>
+              <Divider />
+              <ul className="card-list">
+                <li>
+                  <h4>Tool Upgrades</h4>
                 </li>
-              ))}
-            </ul>
+                {upgradesAvailable.map(upgrade => (
+                  <li key={upgrade.id}>
+                    <UpgradePurchase upgrade={upgrade} />
+                  </li>
+                ))}
+              </ul>
+            </>
           ) : null}
+          <Divider />
+          <ul className="card-list">
+            <li>
+              <Card>
+                <CardContent>
+                  <ReactMarkdown
+                    {...{
+                      linkTarget: '_blank',
+                      className: 'markdown',
+                      source: `Forge Recipes are learned by selling resources mined from the field.`,
+                    }}
+                  />
+                </CardContent>
+              </Card>
+            </li>
+          </ul>
         </TabPanel>
       ) : null}
     </div>

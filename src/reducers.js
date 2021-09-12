@@ -1884,6 +1884,11 @@ export const purchaseSmelter = (state, smelterId) => {
     money: moneyTotal(money, -PURCHASEABLE_SMELTERS.get(smelterId).price),
   }
 
+  state = showNotification(
+    state,
+    '**The Forge** is now available in the Workshop!'
+  )
+
   return updateLearnedRecipes(state)
 }
 
