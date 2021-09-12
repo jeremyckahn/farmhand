@@ -152,7 +152,7 @@ export const Item = ({
   // #140 - never increase the value of items the shop sells otherwise they
   // can be bought and instantly resold for a profit to game the.. game
   if (!shopItemIds.has(id)) {
-    sellPrice *= getSalePriceMultiplier(completedAchievements)
+    sellPrice *= getSalePriceMultiplier(completedAchievements, item)
   }
 
   return (

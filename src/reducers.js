@@ -1173,7 +1173,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
         )
       : 0
     const garnishedProfit =
-      adjustedItemValue * getSalePriceMultiplier(completedAchievements) -
+      adjustedItemValue * getSalePriceMultiplier(completedAchievements, item) -
       loanGarnishment
     loanBalance = moneyTotal(loanBalance, -loanGarnishment)
     saleValue = moneyTotal(saleValue, garnishedProfit)
@@ -1703,6 +1703,10 @@ export const minePlot = (state, x, y) => {
     daysUntilClear += Math.round(
       Math.random() * (1 - spawnedOre.spawnChance) * 10
     )
+
+    if (state.completedAchievements['need-a-chiropractor']) {
+      daysUntilClear = Math.max(1, Math.round(daysUntilClear * 0.75))
+    }
 
     for (let resource of spawnedResources) {
       state = addItemToInventory(state, resource)

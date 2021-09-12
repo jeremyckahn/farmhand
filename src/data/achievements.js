@@ -295,6 +295,34 @@ if (features.MINING) {
       }
     )
   )
+
+  achievements.push(
+    Object.assign(
+      {},
+      {
+        id: 'prospector',
+        name: 'Prospector',
+        description: `Sell 100 gold ingots.`,
+        rewardDescription: `Ore and Ingots are worth 10% more`, //TODO: template
+        condition: state => state.loanBalance === 0 && state.dayCount > 1,
+        reward: state => state,
+      }
+    )
+  )
+
+  achievements.push(
+    Object.assign(
+      {},
+      {
+        id: 'need-a-chiropractor',
+        name: 'Need a Chiropractor',
+        description: `Sell 100,000 stone.`,
+        rewardDescription: `Mined plots regenerate faster`, //TODO: template
+        condition: state => state.itemsSold['stone'] >= 100_000,
+        reward: state => state,
+      }
+    )
+  )
 }
 
 export default achievements

@@ -22,6 +22,7 @@ import {
   rainbowMilk2,
   rainbowMilk3,
 } from './data/items'
+import { bronzeIngot, ironIngot, silverIngot, goldIngot } from './data/recipes'
 import { levels } from './data/levels'
 import { unlockableItems } from './data/levels'
 import { items as itemImages } from './img'
@@ -69,6 +70,8 @@ const shopInventoryMap = shopInventory.reduce((acc, item) => {
   acc[item.id] = item
   return acc
 }, {})
+
+const INGOT_IDS = [bronzeIngot.id, ironIngot.id, silverIngot.id, goldIngot.id]
 
 export const chooseRandom = list =>
   list[Math.round(Math.random() * (list.length - 1))]
@@ -1000,9 +1003,12 @@ export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 /**
  * @param {object} completedAchievements from game state
+ * @param {object} itemForSale the item this multiplier is for because some multipliers depend on item type
  * @returns {number} multiplier to be used for sales price adjustments based on completedAchievements
  */
-export const getSalePriceMultiplier = (completedAchievements = {}) => {
+export const getSalePriceMultiplier = (completedAchievements, itemForSale) => {
+  if (!completedAchievements) return 1
+
   let salePriceMultiplier = 1
 
   if (completedAchievements['i-am-rich-3']) {
@@ -1011,6 +1017,15 @@ export const getSalePriceMultiplier = (completedAchievements = {}) => {
     salePriceMultiplier += I_AM_RICH_BONUSES[1]
   } else if (completedAchievements['i-am-rich-1']) {
     salePriceMultiplier += I_AM_RICH_BONUSES[0]
+  }
+
+  if (itemForSale && completedAchievements['prospector']) {
+    if (
+      itemForSale.type === itemType.ORE ||
+      INGOT_IDS.includes(itemForSale.id)
+    ) {
+      salePriceMultiplier += 0.1
+    }
   }
 
   return salePriceMultiplier
