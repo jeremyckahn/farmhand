@@ -82,6 +82,7 @@ import inventoryBox from './items/inventory-box.png'
 import hoe from './tools/hoe.png'
 import scythe from './tools/scythe.png'
 import scytheBronze from './tools/scythe-bronze.png'
+import scytheIron from './tools/scythe-iron.png'
 import shovel from './tools/shovel.png'
 import shovelBronze from './tools/shovel-bronze.png'
 import wateringCan from './tools/watering-can.png'
@@ -123,6 +124,7 @@ const smeltedItems = {
 
   // tool upgrades
   'scythe-bronze': scytheBronze,
+  'scythe-iron': scytheIron,
   'shovel-bronze': shovelBronze,
 }
 

@@ -12,11 +12,21 @@ const upgrades = {
     },
     [toolLevel.BRONZE]: {
       id: 'scythe-bronze',
-      description: 'Increases crop yield when harvesting',
+      description: 'Increases crop yield by 1 when harvesting',
       name: 'Bronze Scythe',
       ingredients: {
         [recipes.bronzeIngot.id]: 25,
         [items.coal.id]: 100,
+      },
+      nextLevel: toolLevel.IRON,
+    },
+    [toolLevel.IRON]: {
+      id: 'scythe-iron',
+      description: 'Increases crop yield by 2 when harvesting',
+      name: 'Iron Scythe',
+      ingredients: {
+        [recipes.ironIngot.id]: 25,
+        [items.coal.id]: 120,
       },
       isMaxLevel: true,
     },

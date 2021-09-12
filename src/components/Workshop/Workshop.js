@@ -54,13 +54,26 @@ const getLearnedRecipeCategories = learnedRecipes => {
  * @param {object} toolLevels - the current level of each tool
  * @returns {array} a list of all applicable upgrades
  */
-const getUpgradesAvailable = toolLevels => {
+const getUpgradesAvailable = (toolLevels, learnedRecipes) => {
   let upgradesAvailable = []
+  const learnedRecipeIds = learnedRecipes.map(r => r.id)
 
   for (let type of Object.keys(toolUpgrades)) {
     let upgrade = toolUpgrades[type][toolLevels[type]]
+
     if (!upgrade.isMaxLevel && upgrade.nextLevel) {
-      upgradesAvailable.push(toolUpgrades[type][upgrade.nextLevel])
+      const nextLevelUpgrade = toolUpgrades[type][upgrade.nextLevel]
+      let allIngredientsUnlocked = true
+
+      for (let ingredient of Object.keys(nextLevelUpgrade.ingredients)) {
+        allIngredientsUnlocked =
+          allIngredientsUnlocked &&
+          !!(!recipesMap[ingredient] || learnedRecipeIds.includes(ingredient))
+      }
+
+      if (allIngredientsUnlocked) {
+        upgradesAvailable.push(nextLevelUpgrade)
+      }
     }
   }
 
@@ -75,7 +88,12 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
     learnedForgeRecipes,
   } = getLearnedRecipeCategories(learnedRecipes)
 
-  const upgradesAvailable = getUpgradesAvailable(toolLevels)
+  const upgradesAvailable = getUpgradesAvailable(
+    toolLevels,
+    learnedForgeRecipes
+  )
+
+  const showForge = features.MINING //&& learnedForgeRecipes.length
 
   return (
     <div className="Workshop">
@@ -86,9 +104,7 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
           aria-label="Workshop tabs"
         >
           <Tab {...{ label: 'Kitchen', ...a11yProps(0) }} />
-          {features.MINING && learnedForgeRecipes.length && (
-            <Tab {...{ label: 'Forge', ...a11yProps(1) }} />
-          )}
+          {showForge ? <Tab {...{ label: 'Forge', ...a11yProps(1) }} /> : null}
         </Tabs>
       </AppBar>
       <TabPanel value={currentTab} index={0}>
@@ -128,35 +144,37 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
           </li>
         </ul>
       </TabPanel>
-      <TabPanel value={currentTab} index={1}>
-        <h3>
-          Learned Recipes ({learnedForgeRecipes.length} /{' '}
-          {Object.keys(recipeCategories[recipeType.FORGE]).length})
-        </h3>
-        <ul className="card-list">
-          {learnedForgeRecipes.map(({ id: recipeId }) => (
-            <li key={recipeId}>
-              <Recipe
-                {...{
-                  recipe: recipeCategories[recipeType.FORGE][recipeId],
-                }}
-              />
-            </li>
-          ))}
-        </ul>
-        {upgradesAvailable.length ? (
+      {showForge ? (
+        <TabPanel value={currentTab} index={1}>
+          <h3>
+            Learned Recipes ({learnedForgeRecipes.length} /{' '}
+            {Object.keys(recipeCategories[recipeType.FORGE]).length})
+          </h3>
           <ul className="card-list">
-            <li>
-              <h4>Tool Upgrades</h4>
-            </li>
-            {upgradesAvailable.map(upgrade => (
-              <li key={upgrade.id}>
-                <UpgradePurchase upgrade={upgrade} />
+            {learnedForgeRecipes.map(({ id: recipeId }) => (
+              <li key={recipeId}>
+                <Recipe
+                  {...{
+                    recipe: recipeCategories[recipeType.FORGE][recipeId],
+                  }}
+                />
               </li>
             ))}
           </ul>
-        ) : null}
-      </TabPanel>
+          {upgradesAvailable.length ? (
+            <ul className="card-list">
+              <li>
+                <h4>Tool Upgrades</h4>
+              </li>
+              {upgradesAvailable.map(upgrade => (
+                <li key={upgrade.id}>
+                  <UpgradePurchase upgrade={upgrade} />
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </TabPanel>
+      ) : null}
     </div>
   )
 }
