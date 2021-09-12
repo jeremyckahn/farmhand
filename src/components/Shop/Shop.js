@@ -40,14 +40,20 @@ import './Shop.sass'
  * @returns {Object.<'seeds' | 'fieldTools', Array.<farmhand.item>>}
  */
 const categorizeShopInventory = memoize(shopInventory =>
-  shopInventory.reduce((acc, inventoryItem) => {
-    acc[inventoryItem.type === itemType.CROP ? 'seeds' : 'fieldTools'].push(inventoryItem)
+  shopInventory.reduce(
+    (acc, inventoryItem) => {
+      acc[inventoryItem.type === itemType.CROP ? 'seeds' : 'fieldTools'].push(
+        inventoryItem
+      )
 
-    return acc
-  }, {seeds: [], fieldTools: []})
+      return acc
+    },
+    { seeds: [], fieldTools: [] }
+  )
 )
 
 export const Shop = ({
+  completedAchievements,
   handleCombinePurchase,
   handleCowPenPurchase,
   handleFieldPurchase,
@@ -187,7 +193,7 @@ export const Shop = ({
               }}
             />
           </li>
-          {features.MINING ? (
+          {features.MINING && completedAchievements['gold-digger'] ? (
             <li>
               <TierPurchase
                 {...{
