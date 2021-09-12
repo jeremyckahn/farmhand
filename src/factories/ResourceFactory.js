@@ -99,19 +99,19 @@ export default class ResourceFactory {
 
     switch (shovelLevel) {
       case toolLevel.BRONZE:
-        spawnChance += 0.5
-        break
-
-      case toolLevel.IRON:
         spawnChance += 0.1
         break
 
-      case toolLevel.SILVER:
+      case toolLevel.IRON:
         spawnChance += 0.2
         break
 
+      case toolLevel.SILVER:
+        spawnChance += 0.3
+        break
+
       case toolLevel.GOLD:
-        spawnChance += 0.33
+        spawnChance += 0.5
         break
 
       default:

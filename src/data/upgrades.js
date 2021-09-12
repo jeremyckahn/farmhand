@@ -3,6 +3,28 @@ import { itemType, toolType, toolLevel } from '../enums'
 import * as items from './items'
 import * as recipes from './recipes'
 
+const coalNeededForIngots = (ingotId, amount = 1) => {
+  switch (ingotId) {
+    case recipes.bronzeIngot.id:
+      return amount * 2
+
+    case recipes.ironIngot.id:
+      return Math.round(amount * 3.5)
+
+    case recipes.silverIngot.id:
+      return Math.round(amount * 2.5)
+
+    case recipes.goldIngot.id:
+      return amount * 3
+
+    default:
+      return amount
+  }
+}
+
+const { bronzeIngot, ironIngot, silverIngot, goldIngot } = recipes
+const { coal } = items
+
 const upgrades = {
   [toolType.SCYTHE]: {
     [toolLevel.DEFAULT]: {
@@ -15,8 +37,8 @@ const upgrades = {
       description: 'Increases crop yield by 1 when harvesting',
       name: 'Bronze Scythe',
       ingredients: {
-        [recipes.bronzeIngot.id]: 25,
-        [items.coal.id]: 50,
+        [bronzeIngot.id]: 10,
+        [coal.id]: coalNeededForIngots(bronzeIngot.id, 10),
       },
       nextLevel: toolLevel.IRON,
     },
@@ -25,8 +47,8 @@ const upgrades = {
       description: 'Increases crop yield by 2 when harvesting',
       name: 'Iron Scythe',
       ingredients: {
-        [recipes.ironIngot.id]: 25,
-        [items.coal.id]: 75,
+        [ironIngot.id]: 10,
+        [coal.id]: coalNeededForIngots(ironIngot.id, 10),
       },
       nextLevel: toolLevel.SILVER,
     },
@@ -35,8 +57,8 @@ const upgrades = {
       description: 'Increases crop yield by 3 when harvesting',
       name: 'Silver Scythe',
       ingredients: {
-        [recipes.silverIngot.id]: 25,
-        [items.coal.id]: 55,
+        [silverIngot.id]: 10,
+        [coal.id]: coalNeededForIngots(silverIngot.id, 10),
       },
       nextLevel: toolLevel.GOLD,
     },
@@ -45,8 +67,8 @@ const upgrades = {
       description: 'Increases crop yield by 4 when harvesting',
       name: 'Gold Scythe',
       ingredients: {
-        [recipes.goldIngot.id]: 25,
-        [items.coal.id]: 35,
+        [goldIngot.id]: 10,
+        [coal.id]: coalNeededForIngots(goldIngot.id, 10),
       },
       isMaxLevel: true,
     },
@@ -62,8 +84,38 @@ const upgrades = {
       description: 'Increases chance of finding ore',
       name: 'Bronze Shovel',
       ingredients: {
-        [recipes.bronzeIngot.id]: 35,
-        [items.coal.id]: 115,
+        [bronzeIngot.id]: 15,
+        [coal.id]: coalNeededForIngots(bronzeIngot.id, 15),
+      },
+      nextLevel: toolLevel.IRON,
+    },
+    [toolLevel.IRON]: {
+      id: 'shovel-iron',
+      description: 'Increases chance of finding ore',
+      name: 'Iron Shovel',
+      ingredients: {
+        [ironIngot.id]: 15,
+        [coal.id]: coalNeededForIngots(ironIngot.id, 15),
+      },
+      nextLevel: toolLevel.SILVER,
+    },
+    [toolLevel.SILVER]: {
+      id: 'shovel-silver',
+      description: 'Increases chance of finding ore',
+      name: 'Silver Shovel',
+      ingredients: {
+        [silverIngot.id]: 15,
+        [coal.id]: coalNeededForIngots(silverIngot.id, 15),
+      },
+      nextLevel: toolLevel.GOLD,
+    },
+    [toolLevel.GOLD]: {
+      id: 'shovel-gold',
+      description: 'Increases chance of finding ore',
+      name: 'Gold Shovel',
+      ingredients: {
+        [goldIngot.id]: 15,
+        [coal.id]: coalNeededForIngots(goldIngot.id, 15),
       },
       isMaxLevel: true,
     },
