@@ -50,8 +50,9 @@ const getLearnedRecipeCategories = learnedRecipes => {
 }
 
 /**
- * Get available upgrades based on current tool levels
+ * Get available upgrades based on current tool levels and unlocked recipes
  * @param {object} toolLevels - the current level of each tool
+ * @param {array} learnedRecipes - list of learned recipes from farmhand state
  * @returns {array} a list of all applicable upgrades
  */
 const getUpgradesAvailable = (toolLevels, learnedRecipes) => {
@@ -93,7 +94,7 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
     learnedForgeRecipes
   )
 
-  const showForge = features.MINING //&& learnedForgeRecipes.length
+  const showForge = features.MINING && learnedForgeRecipes.length
 
   return (
     <div className="Workshop">
