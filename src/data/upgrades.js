@@ -16,7 +16,7 @@ const upgrades = {
       name: 'Bronze Scythe',
       ingredients: {
         [recipes.bronzeIngot.id]: 25,
-        [items.coal.id]: 100,
+        [items.coal.id]: 50,
       },
       nextLevel: toolLevel.IRON,
     },
@@ -26,7 +26,27 @@ const upgrades = {
       name: 'Iron Scythe',
       ingredients: {
         [recipes.ironIngot.id]: 25,
-        [items.coal.id]: 120,
+        [items.coal.id]: 75,
+      },
+      nextLevel: toolLevel.SILVER,
+    },
+    [toolLevel.SILVER]: {
+      id: 'scythe-silver',
+      description: 'Increases crop yield by 3 when harvesting',
+      name: 'Silver Scythe',
+      ingredients: {
+        [recipes.silverIngot.id]: 25,
+        [items.coal.id]: 55,
+      },
+      nextLevel: toolLevel.GOLD,
+    },
+    [toolLevel.GOLD]: {
+      id: 'scythe-gold',
+      description: 'Increases crop yield by 4 when harvesting',
+      name: 'Gold Scythe',
+      ingredients: {
+        [recipes.goldIngot.id]: 25,
+        [items.coal.id]: 35,
       },
       isMaxLevel: true,
     },

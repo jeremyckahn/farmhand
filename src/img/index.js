@@ -83,6 +83,8 @@ import hoe from './tools/hoe.png'
 import scythe from './tools/scythe.png'
 import scytheBronze from './tools/scythe-bronze.png'
 import scytheIron from './tools/scythe-iron.png'
+import scytheSilver from './tools/scythe-silver.png'
+import scytheGold from './tools/scythe-gold.png'
 import shovel from './tools/shovel.png'
 import shovelBronze from './tools/shovel-bronze.png'
 import wateringCan from './tools/watering-can.png'
@@ -125,6 +127,8 @@ const smeltedItems = {
   // tool upgrades
   'scythe-bronze': scytheBronze,
   'scythe-iron': scytheIron,
+  'scythe-silver': scytheSilver,
+  'scythe-gold': scytheGold,
   'shovel-bronze': shovelBronze,
 }
 
