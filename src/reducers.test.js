@@ -2733,7 +2733,7 @@ describe('harvestPlot', () => {
         expect(field[0][0]).toBe(null)
       })
 
-      test('harvests 1 extra crop if random chance succeeds', () => {
+      test('harvests 2 crops', () => {
         const { cropsHarvested, inventory } = fn.harvestPlot(
           farmhandState,
           0,
