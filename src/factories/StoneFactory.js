@@ -1,5 +1,6 @@
 import { coal, stone } from '../data/ores'
 import { COAL_SPAWN_CHANCE } from '../constants'
+import { isRandomChance } from '../utils'
 
 /**
  * Resource factory used for spawning stone
@@ -11,12 +12,11 @@ export default class StoneFactory {
    * @returns {Array} an array of stone and coal resources
    */
   generate() {
-    let diceRoll = Math.random()
     let resources = []
 
     resources.push(this.spawnStone())
 
-    if (diceRoll <= COAL_SPAWN_CHANCE) {
+    if (isRandomChance(COAL_SPAWN_CHANCE)) {
       resources.push(this.spawnCoal())
     }
 

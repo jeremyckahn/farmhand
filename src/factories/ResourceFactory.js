@@ -5,7 +5,7 @@ import {
   COAL_SPAWN_CHANCE,
   STONE_SPAWN_CHANCE,
 } from '../constants'
-import { randomChoice } from '../utils'
+import { isRandomChance, randomChoice } from '../utils'
 
 import OreFactory from './OreFactory'
 import CoalFactory from './CoalFactory'
@@ -93,7 +93,6 @@ export default class ResourceFactory {
    * @returns {Array} array of resource objects
    */
   generateResources(shovelLevel) {
-    let diceRoll = Math.random()
     let resources = []
     let spawnChance = RESOURCE_SPAWN_CHANCE
 
@@ -117,7 +116,7 @@ export default class ResourceFactory {
       default:
     }
 
-    if (diceRoll <= spawnChance) {
+    if (isRandomChance(spawnChance)) {
       const opt = randomChoice(this.resourceOptions)
       const factory = ResourceFactory.getFactoryForItemType(opt.itemType)
 

@@ -1,17 +1,12 @@
-import { COAL_SPAWN_CHANCE } from '../constants'
 import { coal, stone } from '../data/ores'
+
+import { isRandomChance } from '../utils'
 
 import StoneFactory from './StoneFactory'
 
+jest.mock('../utils/isRandomChance')
+
 describe('StoneFactory', () => {
-  beforeEach(() => {
-    jest.spyOn(global.Math, 'random')
-  })
-
-  afterAll(() => {
-    jest.restoreAllMocks()
-  })
-
   describe('generate', () => {
     let stoneFactory
 
@@ -25,8 +20,8 @@ describe('StoneFactory', () => {
       expect(resources[0]).toEqual(stone)
     })
 
-    test('it randomly generates a coal along with the stone', () => {
-      global.Math.random.mockReturnValueOnce(COAL_SPAWN_CHANCE)
+    test('it generates a coal along with the stone when random chance passes', () => {
+      isRandomChance.mockReturnValue(true)
       const resources = stoneFactory.generate()
 
       expect(resources).toEqual([stone, coal])
