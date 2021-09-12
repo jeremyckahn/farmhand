@@ -9,6 +9,7 @@ export const items = {
   'sample-crop-type-1-seed': 'data:image/png;base64,sample-crop-type-1-seed',
   'sample-ore-1': 'data:image/png;base64,sample-ore-1',
 
+  scarecrow: 'data:image/png;base64,scarecrow',
   sprinkler: 'data:image/png;base64,sprinkler',
 }
 

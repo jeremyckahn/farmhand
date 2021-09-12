@@ -101,7 +101,9 @@ export const Plot = ({
 
   const showPlotImage = Boolean(
     image &&
-      (wasJustShoveled || getPlotContentType(plotContent) === itemType.CROP)
+      (wasJustShoveled ||
+        plotContent.itemId ||
+        getPlotContentType(plotContent) === itemType.CROP)
   )
 
   const plot = (

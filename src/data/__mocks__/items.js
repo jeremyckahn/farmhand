@@ -155,6 +155,7 @@ export const fertilizer = testItem({
 export const sprinkler = testItem({
   enablesFieldMode: 'SET_SPRINKLER',
   id: 'sprinkler',
+  name: 'Sprinkler',
   isReplantable: true,
   type: itemType.SPRINKLER,
   value: 120,
@@ -163,6 +164,7 @@ export const sprinkler = testItem({
 export const scarecrow = testItem({
   enablesFieldMode: 'SET_SCARECROW',
   id: 'scarecrow',
+  name: 'Scarecrow',
   isReplantable: true,
   type: itemType.SCARECROW,
   value: 160,
