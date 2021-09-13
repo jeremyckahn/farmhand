@@ -81,7 +81,7 @@ const getUpgradesAvailable = (toolLevels, learnedRecipes) => {
   return upgradesAvailable
 }
 
-const Workshop = ({ learnedRecipes, toolLevels }) => {
+const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
   const [currentTab, setCurrentTab] = useState(0)
 
   const {
@@ -94,7 +94,7 @@ const Workshop = ({ learnedRecipes, toolLevels }) => {
     learnedForgeRecipes
   )
 
-  const showForge = features.MINING
+  const showForge = features.MINING && purchasedSmelter
 
   return (
     <div className="Workshop">
