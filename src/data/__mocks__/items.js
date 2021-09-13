@@ -51,6 +51,15 @@ export const sampleItem6 = testItem({
   value: 6,
 })
 
+export const sampleOre1 = testItem({
+  id: 'sample-ore-1',
+  doesPriceFluctuate: false,
+  name: 'Sample Ore 1',
+  type: itemType.FUEL,
+  spawnChance: 0.5,
+  value: 2,
+})
+
 export const craftedItem1 = testItem({
   id: 'sample-crafted-item-1',
   name: 'Sample Crafted Item 1',
@@ -146,6 +155,7 @@ export const fertilizer = testItem({
 export const sprinkler = testItem({
   enablesFieldMode: 'SET_SPRINKLER',
   id: 'sprinkler',
+  name: 'Sprinkler',
   isReplantable: true,
   type: itemType.SPRINKLER,
   value: 120,
@@ -154,6 +164,7 @@ export const sprinkler = testItem({
 export const scarecrow = testItem({
   enablesFieldMode: 'SET_SCARECROW',
   id: 'scarecrow',
+  name: 'Scarecrow',
   isReplantable: true,
   type: itemType.SCARECROW,
   value: 160,

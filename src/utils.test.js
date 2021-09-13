@@ -558,7 +558,13 @@ describe('getPlotImage', () => {
     )
   })
 
-  test('returns item image for non-crop content', () => {
+  test('returns item image for oreId', () => {
+    expect(getPlotImage(getPlotContentFromItemId('sample-ore-1'))).toBe(
+      itemImages['sample-ore-1']
+    )
+  });
+
+  test('returns item image for other content', () => {
     expect(getPlotImage(getPlotContentFromItemId('sprinkler'))).toBe(
       itemImages['sprinkler']
     )
