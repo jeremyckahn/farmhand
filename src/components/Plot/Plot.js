@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { bool, func, number, object, string } from 'prop-types'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
@@ -85,6 +85,27 @@ export const Plot = ({
   const isCrop =
     plotContent && getPlotContentType(plotContent) === itemType.CROP
   const isScarecow = itemsMap[plotContent?.itemId]?.type === itemType.SCARECROW
+  const [wasJustShoveled, setWasJustShoveled] = useState(false)
+  const [initialIsShoveledState, setInitialIsShoveledState] = useState(
+    Boolean(plotContent?.isShoveled)
+  )
+
+  useEffect(() => {
+    if (!initialIsShoveledState && plotContent?.isShoveled && plotContent?.oreId) {
+      setWasJustShoveled(true)
+    }
+  }, [initialIsShoveledState, plotContent])
+
+  useEffect(() => {
+    if (plotContent === null) setInitialIsShoveledState(false)
+  }, [plotContent])
+
+  const showPlotImage = Boolean(
+    image &&
+      (wasJustShoveled ||
+        plotContent.itemId ||
+        getPlotContentType(plotContent) === itemType.CROP)
+  )
 
   const plot = (
     <div
@@ -107,7 +128,7 @@ export const Plot = ({
           'can-be-mined': !plotContent,
 
           // For scarecrows and sprinklers
-          'is-replantable': plotContent && item && item.isReplantable,
+          'is-replantable': plotContent && item?.isReplantable,
         }),
         style: {
           backgroundImage: getBackgroundStyles(plotContent),
@@ -119,14 +140,20 @@ export const Plot = ({
       <img
         {...{
           className: classNames('square', {
-            animated: isRipe,
-            heartBeat: isRipe,
+            ...(isCrop && {
+              animated: isRipe,
+              heartBeat: isRipe,
+            }),
+            ...(wasJustShoveled && {
+              animated: true,
+              'was-just-shoveled': true,
+            }),
           }),
           style: {
-            backgroundImage: image ? `url(${image})` : undefined,
+            backgroundImage: showPlotImage ? `url(${image})` : undefined,
           },
           src: pixel,
-          alt: '',
+          alt: itemsMap[plotContent?.itemId ?? plotContent?.oreId]?.name || '',
         }}
       />
     </div>
@@ -135,7 +162,7 @@ export const Plot = ({
   let tooltipContents = null
   if (item) {
     tooltipContents = item.name
-  } else if (plotContent && plotContent.isShoveled) {
+  } else if (plotContent?.isShoveled) {
     tooltipContents = SHOVELED
   }
 

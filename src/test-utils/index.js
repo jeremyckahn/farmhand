@@ -15,6 +15,15 @@ export const testCrop = (item = {}) => ({
   ...item,
 })
 
+/**
+ * @param {farmhand.shoveledPlot} plotProps
+ */
+export const testShoveledPlot = (plotProps) => ({
+  isShoveled: true,
+  daysUntilClear: 5,
+  ...plotProps
+})
+
 export const testItem = (item = {}) => ({
   id: '',
   name: '',
