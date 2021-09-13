@@ -85,6 +85,7 @@ import {
   STORM_CHANCE,
 } from './constants'
 import {
+  INVENTORY_FULL_NOTIFICATION,
   OUT_OF_COW_FEED_NOTIFICATION,
   RAIN_MESSAGE,
   STORM_MESSAGE,
@@ -1752,6 +1753,10 @@ export const minePlot = (state, x, y) => {
   if (row[x]) {
     // Something is already planted in field[x][y]
     return state
+  }
+
+  if (!doesInventorySpaceRemain(state)) {
+    return showNotification(state, INVENTORY_FULL_NOTIFICATION)
   }
 
   const shovelLevel = state.toolLevels[toolType.SHOVEL]

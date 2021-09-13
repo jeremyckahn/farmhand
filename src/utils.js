@@ -707,7 +707,7 @@ export const inventorySpaceConsumed = memoize(inventory =>
 export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
   inventoryLimit === -1
     ? Infinity
-    : inventoryLimit - inventorySpaceConsumed(inventory)
+    : Math.max(0, inventoryLimit - inventorySpaceConsumed(inventory))
 
 /**
  * @param {{ inventory: Array.<farmhand.item>, inventoryLimit: number}} state
