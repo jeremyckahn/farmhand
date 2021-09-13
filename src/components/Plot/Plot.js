@@ -86,18 +86,18 @@ export const Plot = ({
     plotContent && getPlotContentType(plotContent) === itemType.CROP
   const isScarecow = itemsMap[plotContent?.itemId]?.type === itemType.SCARECROW
   const [wasJustShoveled, setWasJustShoveled] = useState(false)
-  const [plotStartedShoveled, setPlotStartedShoveled] = useState(
+  const [initialIsShoveledState, setInitialIsShoveledState] = useState(
     Boolean(plotContent?.isShoveled)
   )
 
   useEffect(() => {
-    if (!plotStartedShoveled && plotContent?.isShoveled && plotContent?.oreId) {
+    if (!initialIsShoveledState && plotContent?.isShoveled && plotContent?.oreId) {
       setWasJustShoveled(true)
     }
-  }, [plotStartedShoveled, plotContent])
+  }, [initialIsShoveledState, plotContent])
 
   useEffect(() => {
-    if (plotContent === null) setPlotStartedShoveled(false)
+    if (plotContent === null) setInitialIsShoveledState(false)
   }, [plotContent])
 
   const showPlotImage = Boolean(
