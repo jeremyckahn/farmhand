@@ -62,7 +62,7 @@ const getUpgradesAvailable = (toolLevels, learnedRecipes) => {
   for (let type of Object.keys(toolUpgrades)) {
     let upgrade = toolUpgrades[type][toolLevels[type]]
 
-    if (!upgrade.isMaxLevel && upgrade.nextLevel) {
+    if (upgrade && !upgrade.isMaxLevel && upgrade.nextLevel) {
       const nextLevelUpgrade = toolUpgrades[type][upgrade.nextLevel]
       let allIngredientsUnlocked = true
 
