@@ -178,6 +178,10 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
         randomCropSeed.name
       }** as a reward!`
     )
+  } else if (levelObject && levelObject.unlocksTool) {
+    // todo: there is only one tool that can be unlocked currently, but this is a bit
+    // short-sighted if we ever introduce other tool unlocks
+    chunks.push(`You've unlocked a new tool for the field, The **Shovel**!`)
   }
 
   return chunks.join(' ')

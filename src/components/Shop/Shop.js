@@ -20,7 +20,7 @@ import {
   moneyString,
 } from '../../utils'
 import { items } from '../../img'
-import { itemType } from '../../enums'
+import { itemType, toolType } from '../../enums'
 import {
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
@@ -53,7 +53,6 @@ const categorizeShopInventory = memoize(shopInventory =>
 )
 
 export const Shop = ({
-  completedAchievements,
   handleCombinePurchase,
   handleCowPenPurchase,
   handleFieldPurchase,
@@ -66,6 +65,7 @@ export const Shop = ({
   purchasedField,
   purchasedSmelter,
   shopInventory,
+  toolLevels,
 
   storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit),
 }) => {
@@ -193,7 +193,7 @@ export const Shop = ({
               }}
             />
           </li>
-          {features.MINING && completedAchievements['gold-digger'] ? (
+          {features.MINING && toolLevels[toolType.SHOVEL] ? (
             <li>
               <TierPurchase
                 {...{

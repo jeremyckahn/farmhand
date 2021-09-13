@@ -259,6 +259,20 @@ export const processLevelUp = (state, oldLevel) => {
         getRandomLevelUpRewardQuantity(i),
         true
       )
+    } else if (levelObject && levelObject.unlocksTool) {
+      const { unlocksTool } = levelObject
+
+      if (!state.toolLevels[unlocksTool]) {
+        const stateToolLevels = { ...state.toolLevels }
+
+        state = {
+          ...state,
+          toolLevels: {
+            ...stateToolLevels,
+            [unlocksTool]: toolLevel.DEFAULT,
+          },
+        }
+      }
     }
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already

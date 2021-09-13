@@ -101,41 +101,24 @@ describe.each(iAmRichVariants)(
 
 describe('gold-digger', () => {
   const achievement = achievementsMap['gold-digger']
+  let state
 
-  test('is not achieved when the player has an outstanding loanBalance', () => {
-    const state = {
-      loanBalance: 1,
+  beforeEach(() => {
+    state = {
+      inventory: [{ id: 'gold-ore' }],
+      inventoryLimit: 99,
     }
-
-    expect(achievement.condition(state)).toEqual(false)
   })
 
-  test('can not be achieved on day 1', () => {
-    const state = {
-      loanBalance: 1,
-      dayCount: 1,
-    }
-
-    expect(achievement.condition(state)).toEqual(false)
-  })
-
-  test('is achieved when the loanBalance is 0', () => {
-    const state = {
-      loanBalance: 0,
-      dayCount: 2,
-    }
-
+  test('is achieved when the player acquires a piece of gold ore', () => {
     expect(achievement.condition(state)).toEqual(true)
   })
 
-  test('it rewards the player the shovel unlock', () => {
-    let state = {
-      loanBalance: 0,
-      shovelUnlocked: false,
-    }
-
+  test('it rewards the player with a gold ingot', () => {
     state = achievement.reward(state)
 
-    expect(state.shovelUnlocked).toEqual(true)
+    const ingot = state.inventory.find(item => item.id === 'gold-ingot')
+
+    expect(ingot).toEqual({ id: 'gold-ingot', quantity: 1 })
   })
 })

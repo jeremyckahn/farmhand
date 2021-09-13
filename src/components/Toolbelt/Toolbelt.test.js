@@ -1,6 +1,8 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
+import { memoize } from '../../utils'
+
 import { fieldMode, toolLevel, toolType } from '../../enums'
 
 import { Toolbelt } from './Toolbelt'
@@ -12,6 +14,15 @@ jest.mock('../../config', () => ({
   },
 }))
 
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  memoize: jest.fn(callback => {
+    return (...args) => {
+      return callback(...args)
+    }
+  }),
+}))
+
 describe('<ToolBelt />', () => {
   const getSelectedButton = () => {
     return screen
@@ -19,28 +30,35 @@ describe('<ToolBelt />', () => {
       .find(b => b.classList.contains('selected'))
   }
 
-  let toolLevels = {}
-  for (let type in toolType) {
-    toolLevels[type] = toolLevel.DEFAULT
+  const getToolLevels = () => {
+    let toolLevels = []
+
+    for (let type in toolType) {
+      toolLevels[type] = toolLevel.DEFAULT
+    }
+
+    return toolLevels
   }
 
-  test('renders a button for each of the default tools', () => {
-    render(<Toolbelt fieldMode={fieldMode.OBSERVE} toolLevels={toolLevels} />)
-    expect(screen.getAllByRole('button')).toHaveLength(3)
-  })
-
-  test('renders the shovel tool once gold digger achievement is completed', () => {
+  test('renders a button for each tool that has a level set', () => {
     render(
-      <Toolbelt
-        fieldMode={fieldMode.OBSERVE}
-        completedAchievements={{ 'gold-digger': true }}
-        toolLevels={toolLevels}
-      />
+      <Toolbelt fieldMode={fieldMode.OBSERVE} toolLevels={getToolLevels()} />
     )
     expect(screen.getAllByRole('button')).toHaveLength(4)
   })
 
+  test('does not render a tool that does not have a level set', () => {
+    let toolLevels = getToolLevels()
+    toolLevels[toolType.SHOVEL] = null
+
+    render(<Toolbelt fieldMode={fieldMode.OBSERVE} toolLevels={toolLevels} />)
+
+    expect(screen.getAllByRole('button')).toHaveLength(3)
+  })
+
   describe('tool selection', () => {
+    let toolLevels = getToolLevels()
+
     test('there are no selected tools by default', () => {
       render(<Toolbelt fieldMode={fieldMode.OBSERVE} toolLevels={toolLevels} />)
       expect(getSelectedButton()).toBeUndefined()
@@ -74,13 +92,7 @@ describe('<ToolBelt />', () => {
     })
 
     test('marks the shovel selected for field mode MINE', () => {
-      render(
-        <Toolbelt
-          fieldMode={fieldMode.MINE}
-          completedAchievements={{ 'gold-digger': true }}
-          toolLevels={toolLevels}
-        />
-      )
+      render(<Toolbelt fieldMode={fieldMode.MINE} toolLevels={toolLevels} />)
       const label = screen.getByText(/Select the shovel/)
 
       expect(label.closest('button').classList.contains('selected')).toEqual(

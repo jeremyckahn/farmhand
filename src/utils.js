@@ -768,20 +768,27 @@ export const getLevelEntitlements = memoize(levelNumber => {
   const acc = {
     sprinklerRange: INITIAL_SPRINKLER_RANGE,
     items: {},
+    tools: {},
   }
 
   // Assumes that levels is sorted by id.
-  levels.find(({ unlocksShopItem, id, increasesSprinklerRange }) => {
-    if (increasesSprinklerRange) {
-      acc.sprinklerRange++
-    }
+  levels.find(
+    ({ unlocksShopItem, unlocksTool, id, increasesSprinklerRange }) => {
+      if (increasesSprinklerRange) {
+        acc.sprinklerRange++
+      }
 
-    if (unlocksShopItem) {
-      acc.items[unlocksShopItem] = true
-    }
+      if (unlocksShopItem) {
+        acc.items[unlocksShopItem] = true
+      }
 
-    return id === levelNumber
-  })
+      if (unlocksTool) {
+        acc.tools[unlocksTool] = true
+      }
+
+      return id === levelNumber
+    }
+  )
 
   return acc
 })

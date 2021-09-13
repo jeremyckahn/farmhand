@@ -399,7 +399,7 @@ export default class Farmhand extends Component {
       toolLevels: {
         [toolType.HOE]: toolLevel.DEFAULT,
         [toolType.SCYTHE]: toolLevel.DEFAULT,
-        [toolType.SHOVEL]: toolLevel.DEFAULT,
+        [toolType.SHOVEL]: null,
         [toolType.WATERING_CAN]: toolLevel.DEFAULT,
       },
       useAlternateEndDayButtonPosition: false,

@@ -17,10 +17,19 @@ import { tools as toolImages, craftedItems, pixel } from '../../img'
 import './Toolbelt.sass'
 
 const noop = () => {}
-const getTools = memoize(shovelUnlocked => {
-  return Object.values(toolsData)
-    .filter(t => shovelUnlocked || t.id !== 'shovel')
-    .sort(t => t.order)
+
+const getTools = memoize(toolLevels => {
+  let tools = []
+
+  for (let tool of Object.values(toolsData)) {
+    if (toolLevels[tool.type]) {
+      tools.push(tool)
+    }
+  }
+
+  tools.sort(t => t.order)
+
+  return tools
 })
 
 const getToolImage = tool => {
@@ -38,7 +47,7 @@ export const Toolbelt = ({
   completedAchievements,
   toolLevels,
 }) => {
-  const tools = getTools(completedAchievements['gold-digger'])
+  const tools = getTools(toolLevels)
 
   return (
     <div className="Toolbelt">
