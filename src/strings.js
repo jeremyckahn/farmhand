@@ -62,3 +62,6 @@ export const TOOL_LEVEL_INFO = {
     GOLD: 'Gold - 80% chance to retrieve seeds when destroying crops',
   },
 }
+
+export const FORGE_AVAILABLE_NOTIFICATION =
+  '**The Forge** is now available in the Workshop!'

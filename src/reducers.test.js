@@ -3419,8 +3419,15 @@ describe('minePlot', () => {
   test('shows a notification if there is no room in the inventory', () => {
     gameState.inventoryLimit = 0
     gameState.showNotifications = true
+    gameState.todaysNotifications = []
+    gameState.field[0][0] = null
+
     const { latestNotification } = fn.minePlot(gameState, 0, 0)
-    expect(latestNotification).toEqual({ message: 'hi', severity: 'info' })
+
+    expect(latestNotification).toEqual({
+      message: 'Your inventory is full!',
+      severity: 'info',
+    })
   })
 })
 

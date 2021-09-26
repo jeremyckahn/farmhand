@@ -85,6 +85,7 @@ import {
   STORM_CHANCE,
 } from './constants'
 import {
+  FORGE_AVAILABLE_NOTIFICATION,
   INVENTORY_FULL_NOTIFICATION,
   OUT_OF_COW_FEED_NOTIFICATION,
   RAIN_MESSAGE,
@@ -1903,10 +1904,7 @@ export const purchaseSmelter = (state, smelterId) => {
     money: moneyTotal(money, -PURCHASEABLE_SMELTERS.get(smelterId).price),
   }
 
-  state = showNotification(
-    state,
-    '**The Forge** is now available in the Workshop!'
-  )
+  state = showNotification(state, FORGE_AVAILABLE_NOTIFICATION)
 
   return updateLearnedRecipes(state)
 }
