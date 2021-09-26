@@ -33,6 +33,7 @@ export const categoryIds = enumify([
   'FIELD_TOOLS',
   'MINED_RESOURCES',
   'SEEDS',
+  'UPGRADES',
 ])
 const categoryIdKeys = Object.keys(categoryIds)
 const {
@@ -43,6 +44,7 @@ const {
   FIELD_TOOLS,
   MINED_RESOURCES,
   SEEDS,
+  UPGRADES,
 } = categoryIds
 
 const itemTypeCategoryMap = Object.freeze({
@@ -58,7 +60,7 @@ const itemTypeCategoryMap = Object.freeze({
   [SCARECROW]: FIELD_TOOLS,
   [SPRINKLER]: FIELD_TOOLS,
   [STONE]: MINED_RESOURCES,
-  [TOOL_UPGRADE]: '',
+  [TOOL_UPGRADE]: UPGRADES,
 })
 
 const getItemCategories = () =>
