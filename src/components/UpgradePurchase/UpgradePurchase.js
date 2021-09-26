@@ -6,7 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
 import { array, func, number, object } from 'prop-types'
 
-import { IngredientsList } from '../Recipe/Recipe'
+import IngredientsList from '../IngredientsList'
 
 import { canMakeRecipe, doesInventorySpaceRemain } from '../../utils'
 
