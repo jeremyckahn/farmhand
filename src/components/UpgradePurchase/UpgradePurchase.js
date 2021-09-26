@@ -15,64 +15,60 @@ import { craftedItems } from '../../img'
 import FarmhandContext from '../../Farmhand.context'
 import './UpgradePurchase.sass'
 
-export class UpgradePurchase extends Component {
-  render() {
-    const {
-      handleUpgradeTool,
+export function UpgradePurchase({
+  handleUpgradeTool,
+  inventory,
+  inventoryLimit,
+  playerInventoryQuantities,
+  upgrade,
+}) {
+  const { id, name, description } = upgrade
+
+  const spaceFreedByIngredientsConsumed = Object.values(
+    upgrade.ingredients
+  ).reduce((acc, quantity) => acc + quantity, 0)
+
+  const canBeMade =
+    canMakeRecipe(upgrade, inventory, 1) &&
+    doesInventorySpaceRemain({
       inventory,
-      inventoryLimit,
-      playerInventoryQuantities,
-      upgrade,
-    } = this.props
+      // Without the Infinity coercion, this would break recipes for unlimited
+      // inventoryLimits.
+      inventoryLimit:
+        (inventoryLimit === -1 ? Infinity : inventoryLimit) +
+        spaceFreedByIngredientsConsumed,
+    })
 
-    const { id, name, description } = upgrade
+  const handleUpgrade = () => handleUpgradeTool(upgrade)
 
-    const spaceFreedByIngredientsConsumed = Object.values(
-      upgrade.ingredients
-    ).reduce((acc, quantity) => acc + quantity, 0)
-
-    const canBeMade =
-      canMakeRecipe(upgrade, inventory, 1) &&
-      doesInventorySpaceRemain({
-        inventory,
-        // Without the Infinity coercion, this would break recipes for unlimited
-        // inventoryLimits.
-        inventoryLimit:
-          (inventoryLimit === -1 ? Infinity : inventoryLimit) +
-          spaceFreedByIngredientsConsumed,
-      })
-
-    const handleUpgrade = () => handleUpgradeTool(upgrade)
-
-    return (
-      <Card
+  return (
+    <Card
+      {...{
+        className: classNames('Recipe', { 'can-be-made': canBeMade }),
+      }}
+    >
+      <CardHeader
         {...{
-          className: classNames('Recipe', { 'can-be-made': canBeMade }),
+          avatar: <img {...{ src: craftedItems[id], alt: name }} />,
+          title: name,
+          subheader: (
+            <>
+              <p>{description}</p>
+              <IngredientsList
+                {...{ playerInventoryQuantities, recipe: upgrade }}
+              />
+            </>
+          ),
         }}
-      >
-        <CardHeader
-          {...{
-            avatar: <img {...{ src: craftedItems[id], alt: name }} />,
-            title: name,
-            subheader: (
-              <>
-                <p>{description}</p>
-                <IngredientsList
-                  {...{ playerInventoryQuantities, recipe: upgrade }}
-                />
-              </>
-            ),
-          }}
-        />
+      />
 
-        <CardActions>
-          <Button color="primary" onClick={handleUpgrade} variant="contained">
-            Upgrade Tool
-          </Button>
-        </CardActions>
-      </Card>
-    )
-  }
+      <CardActions>
+        <Button color="primary" onClick={handleUpgrade} variant="contained">
+          Upgrade Tool
+        </Button>
+      </CardActions>
+    </Card>
+  )
 }
 
 UpgradePurchase.propTypes = {

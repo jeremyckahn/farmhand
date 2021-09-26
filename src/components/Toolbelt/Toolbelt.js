@@ -37,7 +37,7 @@ const getToolImage = tool => {
     return toolImages[tool.id]
   }
 
-  let id = `${tool.id}-${tool.level.toLowerCase()}`
+  const id = `${tool.id}-${tool.level.toLowerCase()}`
   return craftedItems[id]
 }
 
