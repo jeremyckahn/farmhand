@@ -3372,6 +3372,7 @@ describe('minePlot', () => {
     gameState = {
       field: [[null, 'crop']],
       inventory: [],
+      inventoryLimit: 99,
       toolLevels: {
         [toolType.SHOVEL]: toolLevel.DEFAULT,
       },
@@ -3413,6 +3414,13 @@ describe('minePlot', () => {
 
   test('does not alter the plot if something is already there', () => {
     expect(gameState.field[0][1]).toEqual('crop')
+  })
+
+  test('shows a notification if there is no room in the inventory', () => {
+    gameState.inventoryLimit = 0
+    gameState.showNotifications = true
+    const { latestNotification } = fn.minePlot(gameState, 0, 0)
+    expect(latestNotification).toEqual({ message: 'hi', severity: 'info' })
   })
 })
 
