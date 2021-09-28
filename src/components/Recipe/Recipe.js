@@ -12,6 +12,7 @@ import {
   dollarString,
   maxYieldOfRecipe,
   integerString,
+  totalIngredientsInRecipe,
 } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { craftedItems } from '../../img'
@@ -40,11 +41,7 @@ const Recipe = ({
 
   // Fixes https://github.com/jeremyckahn/farmhand/issues/25
   const spaceFreedByIngredientsConsumed =
-    quantity *
-    Object.values(recipe.ingredients).reduce(
-      (acc, quantity) => acc + quantity,
-      0
-    )
+    quantity * totalIngredientsInRecipe(recipe)
 
   const canBeMade =
     quantity > 0 &&

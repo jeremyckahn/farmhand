@@ -8,7 +8,11 @@ import { array, func, number, object } from 'prop-types'
 
 import IngredientsList from '../IngredientsList'
 
-import { canMakeRecipe, doesInventorySpaceRemain } from '../../utils'
+import {
+  canMakeRecipe,
+  doesInventorySpaceRemain,
+  totalIngredientsInRecipe,
+} from '../../utils'
 
 import { craftedItems } from '../../img'
 
@@ -24,9 +28,7 @@ export function UpgradePurchase({
 }) {
   const { id, name, description } = upgrade
 
-  const spaceFreedByIngredientsConsumed = Object.values(
-    upgrade.ingredients
-  ).reduce((acc, quantity) => acc + quantity, 0)
+  const spaceFreedByIngredientsConsumed = totalIngredientsInRecipe(upgrade)
 
   const canBeMade =
     canMakeRecipe(upgrade, inventory, 1) &&

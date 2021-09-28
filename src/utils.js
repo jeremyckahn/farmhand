@@ -1065,3 +1065,4 @@ export function randomChoice(weightedOptions) {
 }
 
 export { default as isRandomChance } from './utils/isRandomChance'
+export { default as totalIngredientsInRecipe } from './utils/totalIngredientsInRecipe'

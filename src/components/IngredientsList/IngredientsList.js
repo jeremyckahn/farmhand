@@ -6,7 +6,6 @@ import { INGREDIENTS_LIST_ITEM } from '../../templates'
 
 import { integerString } from '../../utils'
 import { itemsMap } from '../../data/maps'
-import AnimatedNumber from '../AnimatedNumber'
 
 export default function IngredientsList({
   playerInventoryQuantities,
