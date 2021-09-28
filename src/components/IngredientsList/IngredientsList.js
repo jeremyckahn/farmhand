@@ -2,6 +2,8 @@ import React from 'react'
 import classNames from 'classnames'
 import { object, shape, string } from 'prop-types'
 
+import { INGREDIENTS_LIST_ITEM } from '../../templates'
+
 import { integerString } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import AnimatedNumber from '../AnimatedNumber'
@@ -26,14 +28,10 @@ export default function IngredientsList({
               ),
             }}
           >
-            {ingredients[itemId]} x {itemsMap[itemId].name} (On hand:{' '}
-            <AnimatedNumber
-              {...{
-                number: playerInventoryQuantities[itemId],
-                formatter: integerString,
-              }}
-            />
-            )
+            {INGREDIENTS_LIST_ITEM`${ingredients[itemId]}${
+              itemsMap[itemId].name
+            }${integerString(playerInventoryQuantities[itemId])}
+            `}
           </p>
         </li>
       ))}

@@ -262,3 +262,10 @@ export const SOLD_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
  */
 export const TOOL_UPGRADED_NOTIFICATION = (_, toolName, upgradedName) =>
   `Your ${toolName} has been upgraded to a **${upgradedName}**!`
+
+export const INGREDIENTS_LIST_ITEM = (
+  _,
+  ingredientName,
+  quantityNeeded,
+  quantityAvailable
+) => `${ingredientName} x ${quantityNeeded} (On hand: ${quantityAvailable})`
