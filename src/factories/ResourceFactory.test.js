@@ -1,5 +1,5 @@
 import { itemType, toolLevel } from '../enums'
-import { isRandomChance, randomChoice } from '../utils'
+import { isRandomNumberLessThan, randomChoice } from '../utils'
 
 import ResourceFactory from './ResourceFactory'
 
@@ -10,7 +10,7 @@ jest.mock('./StoneFactory')
 jest.mock('../utils', () => ({
   ...jest.requireActual('../utils'),
   randomChoice: jest.fn(),
-  isRandomChance: jest.fn(),
+  isRandomNumberLessThan: jest.fn(),
 }))
 
 describe('ResourceFactory', () => {
@@ -18,7 +18,7 @@ describe('ResourceFactory', () => {
 
   describe('generateResources', () => {
     test('does not spawn any resources when dice roll is above resource spawn chance', () => {
-      isRandomChance.mockReturnValue(false)
+      isRandomNumberLessThan.mockReturnValue(false)
 
       expect(ResourceFactory.instance().generateResources(shovelLevel)).toEqual(
         []
@@ -26,7 +26,7 @@ describe('ResourceFactory', () => {
     })
 
     test('it can use the ore factory to generate ore', () => {
-      isRandomChance.mockReturnValue(true)
+      isRandomNumberLessThan.mockReturnValue(true)
       randomChoice.mockReturnValueOnce({ itemType: itemType.ORE })
 
       ResourceFactory.instance().generateResources(shovelLevel)
@@ -36,7 +36,7 @@ describe('ResourceFactory', () => {
     })
 
     test('it can use the coal factory to generate coal', () => {
-      isRandomChance.mockReturnValue(true)
+      isRandomNumberLessThan.mockReturnValue(true)
       randomChoice.mockReturnValueOnce({ itemType: itemType.FUEL })
 
       ResourceFactory.instance().generateResources(shovelLevel)
@@ -46,7 +46,7 @@ describe('ResourceFactory', () => {
     })
 
     test('it can use the stone factory to generate stone', () => {
-      isRandomChance.mockReturnValue(true)
+      isRandomNumberLessThan.mockReturnValue(true)
       randomChoice.mockReturnValueOnce({ itemType: itemType.STONE })
 
       ResourceFactory.instance().generateResources(shovelLevel)

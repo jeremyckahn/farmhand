@@ -1,6 +1,6 @@
 import { coal, stone } from '../data/ores'
 import { COAL_SPAWN_CHANCE } from '../constants'
-import { isRandomChance } from '../utils'
+import { isRandomNumberLessThan } from '../utils'
 
 /**
  * Resource factory used for spawning stone
@@ -16,7 +16,7 @@ export default class StoneFactory {
 
     resources.push(this.spawnStone())
 
-    if (isRandomChance(COAL_SPAWN_CHANCE)) {
+    if (isRandomNumberLessThan(COAL_SPAWN_CHANCE)) {
       resources.push(this.spawnCoal())
     }
 
