@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import ReactMarkdown from 'react-markdown'
 
 import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -61,7 +62,12 @@ export const Toolbelt = ({
                 title: (
                   <>
                     <p>{alt}</p>
-                    <p>{levelInfo[toolLevels[type]]}</p>
+                    <ReactMarkdown
+                      {...{
+                        className: 'markdown',
+                        source: levelInfo[toolLevels[type]],
+                      }}
+                    />
                     <p>({fieldKey})</p>
                   </>
                 ),
