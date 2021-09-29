@@ -149,6 +149,7 @@ export const toolType = enumify(['SCYTHE', 'SHOVEL', 'HOE', 'WATERING_CAN'])
  * @enum {string}
  */
 export const toolLevel = enumify([
+  'UNAVAILABLE',
   'DEFAULT',
   'BRONZE',
   'IRON',

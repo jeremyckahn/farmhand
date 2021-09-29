@@ -22,7 +22,7 @@ const getTools = memoize(toolLevels => {
   let tools = []
 
   for (let tool of Object.values(toolsData)) {
-    if (toolLevels[tool.type]) {
+    if (toolLevels[tool.type] !== toolLevel.UNAVAILABLE) {
       tools.push(tool)
     }
   }

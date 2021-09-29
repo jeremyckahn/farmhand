@@ -49,7 +49,7 @@ describe('<ToolBelt />', () => {
 
   test('does not render a tool that does not have a level set', () => {
     let toolLevels = getToolLevels()
-    toolLevels[toolType.SHOVEL] = null
+    toolLevels[toolType.SHOVEL] = toolLevel.UNAVAILABLE
 
     render(<Toolbelt fieldMode={fieldMode.OBSERVE} toolLevels={toolLevels} />)
 

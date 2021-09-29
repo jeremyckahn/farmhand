@@ -1916,6 +1916,35 @@ describe('processLevelUp', () => {
 
     expect(hoveredPlotRangeSize).toEqual(2)
   })
+
+  test('unlocksTool reward makes tool become available', () => {
+    jest.resetModules()
+    jest.mock('./data/levels', () => ({
+      levels: [
+        {
+          id: 0,
+        },
+        {
+          id: 1,
+          unlocksTool: 'SHOVEL',
+        },
+      ],
+      itemUnlockLevels: {},
+    }))
+    const newState = jest.requireActual('./reducers').processLevelUp(
+      {
+        itemsSold: {},
+        inventory: [],
+        todaysNotifications: [],
+        toolLevels: {
+          SHOVEL: toolLevel.UNAVAILABLE,
+        },
+      },
+      0
+    )
+
+    expect(newState.toolLevels['SHOVEL']).toEqual(toolLevel.DEFAULT)
+  })
 })
 
 describe('purchaseCow', () => {

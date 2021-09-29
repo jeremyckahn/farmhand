@@ -264,7 +264,7 @@ export const processLevelUp = (state, oldLevel) => {
     } else if (levelObject && levelObject.unlocksTool) {
       const { unlocksTool } = levelObject
 
-      if (!state.toolLevels[unlocksTool]) {
+      if (state.toolLevels[unlocksTool] === toolLevel.UNAVAILABLE) {
         const stateToolLevels = { ...state.toolLevels }
 
         state = {
