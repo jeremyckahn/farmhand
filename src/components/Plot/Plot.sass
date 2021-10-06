@@ -82,3 +82,18 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
     &.is-empty img
       background-image: url(../../img/items/scarecrow.png)
 
+
+  .was-just-shoveled
+    animation-name: fadeAwayShoveledContent
+
+  @keyframes fadeAwayShoveledContent
+    from
+      opacity: 1
+      transform: translate3d(0, 0, 0) scale(1)
+
+    to
+      opacity: 0
+      visibility: hidden
+      transform: translate3d(0, -100%, 0) scale(0.75)
+
+

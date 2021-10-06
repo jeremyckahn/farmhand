@@ -337,18 +337,29 @@ const cropLifeStageToImageSuffixMap = {
  * @param {farmhand.plotContent} plotContent
  * @returns {?string}
  */
-export const getPlotImage = plotContent =>
-  plotContent
-    ? getPlotContentType(plotContent) === itemType.CROP
-      ? getCropLifeStage(plotContent) === GROWN
-        ? itemImages[getCropId(plotContent)]
-        : itemImages[
-            `${getCropId(plotContent)}-${
-              cropLifeStageToImageSuffixMap[getCropLifeStage(plotContent)]
-            }`
-          ]
-      : itemImages[plotContent.itemId]
-    : null
+export const getPlotImage = plotContent => {
+  if (plotContent) {
+    if (getPlotContentType(plotContent) === itemType.CROP) {
+      if (getCropLifeStage(plotContent) === GROWN) {
+        return itemImages[getCropId(plotContent)]
+      } else {
+        return itemImages[
+          `${getCropId(plotContent)}-${
+            cropLifeStageToImageSuffixMap[getCropLifeStage(plotContent)]
+          }`
+        ]
+      }
+    }
+
+    if (plotContent?.oreId) {
+      return itemImages[plotContent.oreId]
+    } else {
+      return itemImages[plotContent.itemId]
+    }
+  }
+
+  return null
+}
 
 /**
  * @param {number} rangeSize
@@ -1014,4 +1025,34 @@ export const getSalePriceMultiplier = (completedAchievements = {}) => {
   }
 
   return salePriceMultiplier
+}
+
+/**
+ * @param {Array} weightedOptions an array of objects each containing a `weight` property
+ * @returns {Object} one of the items from weightedOptions
+ */
+export function randomChoice(weightedOptions) {
+  let totalWeight = 0
+  let sortedOptions = []
+
+  for (let option of weightedOptions) {
+    totalWeight += option.weight
+    sortedOptions.push(option)
+  }
+
+  sortedOptions.sort(o => o.weight)
+
+  let diceRoll = Math.random() * totalWeight
+  let option
+  let runningTotal = 0
+
+  for (let i in sortedOptions) {
+    option = sortedOptions[i]
+
+    if (diceRoll < option.weight + runningTotal) {
+      return option
+    }
+
+    runningTotal += option.weight
+  }
 }

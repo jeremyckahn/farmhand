@@ -32,6 +32,7 @@ import {
   moneyString,
   moneyTotal,
   percentageString,
+  randomChoice,
 } from './utils'
 import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
@@ -557,7 +558,13 @@ describe('getPlotImage', () => {
     )
   })
 
-  test('returns item image for non-crop content', () => {
+  test('returns item image for oreId', () => {
+    expect(getPlotImage(getPlotContentFromItemId('sample-ore-1'))).toBe(
+      itemImages['sample-ore-1']
+    )
+  });
+
+  test('returns item image for other content', () => {
     expect(getPlotImage(getPlotContentFromItemId('sprinkler'))).toBe(
       itemImages['sprinkler']
     )
@@ -964,4 +971,33 @@ describe('getSalePriceMultiplier', () => {
       })
     }
   )
+})
+
+describe('randomChoice', () => {
+  const choices = [
+    { weight: 0.2, name: 'first-choice' },
+    { weight: 0.5, name: 'second-choice' },
+    { weight: 0.3, name: 'third-choice' },
+  ]
+
+  beforeEach(() => {
+    jest.spyOn(global.Math, 'random')
+  })
+
+  test('it returns a choice at random', () => {
+    const choice = randomChoice(choices)
+    expect(choices.includes(choice)).toEqual(true)
+  })
+
+  test('it can handle the lower bound of Math.random', () => {
+    global.Math.random.mockReturnValueOnce(0)
+    const choice = randomChoice(choices)
+    expect(choice).toEqual(choices[0])
+  })
+
+  test('it can handle the upper bound of Math.random', () => {
+    global.Math.random.mockReturnValueOnce(0.99)
+    const choice = randomChoice(choices)
+    expect(choice).toEqual(choices[2])
+  })
 })

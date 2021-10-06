@@ -58,13 +58,29 @@
       src="https://www.googletagmanager.com/gtag/js?id=G-SH37EG4NP9"
     ></script>
     <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-      gtag('js', new Date())
+      ;(function() {
+        let analyticsId
 
-      gtag('config', 'G-SH37EG4NP9')
+        switch (window.location.host) {
+          case 'jeremyckahn.github.io':
+            analyticsId = 'G-SH37EG4NP9'
+            break
+          case 'www.farmhand.life':
+            analyticsId = 'G-3KRQX38CYH'
+            break
+          default:
+            console.warn('Unrecognized domain. No analytics will be recorded.')
+            return
+        }
+
+        window.dataLayer = window.dataLayer || []
+        function gtag() {
+          dataLayer.push(arguments)
+        }
+        gtag('js', new Date())
+
+        gtag('config', analyticsId)
+      })()
     </script>
   </head>
   <body>

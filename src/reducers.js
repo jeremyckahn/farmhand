@@ -5,11 +5,13 @@
 
 import { itemsMap, recipesMap } from './data/maps'
 import { levels } from './data/levels'
+import { ResourceFactory } from './factories'
 import achievements from './data/achievements'
 import {
   areHuggingMachinesInInventory,
   canMakeRecipe,
   castToMoney,
+  chooseRandom,
   clampNumber,
   doesInventorySpaceRemain,
   farmProductsSold,
@@ -167,8 +169,16 @@ export const resetWasWatered = plotContent =>
  * @param {?farmhand.plotContent} plotContent
  * @returns {?farmhand.plotContent}
  */
-export const resetWasShoveled = plotContent =>
-  plotContent && plotContent.wasShoveledToday ? null : plotContent
+export const resetWasShoveled = plotContent => {
+  if (plotContent && plotContent.isShoveled && plotContent.daysUntilClear > 1) {
+    return {
+      ...plotContent,
+      daysUntilClear: plotContent.daysUntilClear - 1,
+    }
+  }
+
+  return plotContent && !plotContent.isShoveled ? plotContent : null
+}
 
 /**
  * Invokes a function on every plot in a field.
@@ -1678,8 +1688,33 @@ export const minePlot = (state, x, y) => {
     return state
   }
 
+  const spawnedResources = ResourceFactory.instance().generateResources()
+  let spawnedOre = null
+  let daysUntilClear = chooseRandom([1, 2, 2, 3])
+
+  if (spawnedResources.length) {
+    // even when multiple resources are spawned, the first one is ok to use
+    // for all subsequent logic
+    spawnedOre = spawnedResources[0]
+
+    // if ore was spawned, add up to 10 days to the time to clear
+    // at random, based loosely on the spawnChance meant to make
+    // rarer ores take longer to cooldown
+    daysUntilClear += Math.round(
+      Math.random() * (1 - spawnedOre.spawnChance) * 10
+    )
+
+    for (let resource of spawnedResources) {
+      state = addItemToInventory(state, resource)
+    }
+  }
+
   state = modifyFieldPlotAt(state, x, y, () => {
-    return { wasShoveledToday: true }
+    return {
+      isShoveled: true,
+      daysUntilClear,
+      oreId: spawnedOre ? spawnedOre.id : null,
+    }
   })
 
   return {
@@ -1696,7 +1731,7 @@ export const minePlot = (state, x, y) => {
 export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
 
-  if (!plotContent || plotContent.wasShoveledToday) {
+  if (!plotContent || plotContent.isShoveled) {
     return state
   }
 

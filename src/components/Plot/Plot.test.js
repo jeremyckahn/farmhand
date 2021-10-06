@@ -37,10 +37,6 @@ test('defaults to rending a pixel', () => {
   expect(component.find('img').props().src).toBe(pixel)
 })
 
-test('renders empty class', () => {
-  expect(component.find('.Plot').hasClass('is-empty')).toBeTruthy()
-})
-
 test('renders crop class', () => {
   component.setProps({ plotContent: testCrop({ itemId: 'sample-crop-1' }) })
   expect(component.find('.Plot').hasClass('crop')).toBeTruthy()

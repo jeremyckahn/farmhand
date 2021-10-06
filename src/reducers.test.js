@@ -41,6 +41,8 @@ import {
 import { huggingMachine, sampleCropItem1 } from './data/items'
 import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
+import { goldOre } from './data/ores'
+import { ResourceFactory } from './factories'
 import { fertilizerType, fieldMode, genders, standardCowColors } from './enums'
 import {
   farmProductSalesVolumeNeededForLevel,
@@ -3317,12 +3319,41 @@ describe('minePlot', () => {
   beforeAll(() => {
     gameState = {
       field: [[null, 'crop']],
+      inventory: [],
     }
+
+    jest.spyOn(ResourceFactory, 'instance')
+
+    ResourceFactory.instance.mockReturnValue({
+      generateResources: () => [goldOre],
+    })
+
     gameState = fn.minePlot(gameState, 0, 0)
   })
 
   test('updates the plot to be shoveled if the plot is empty', () => {
-    expect(gameState.field[0][0].wasShoveledToday).toEqual(true)
+    expect(gameState.field[0][0].isShoveled).toEqual(true)
+  })
+
+  test('sets the oreId on the plot if ore was spawned', () => {
+    expect(gameState.field[0][0].oreId).toEqual(goldOre.id)
+  })
+
+  test('sets the days until clear', () => {
+    expect(gameState.field[0][0].daysUntilClear > 0).toEqual(true)
+  })
+
+  test('adds the spawned ore to the inventory', () => {
+    let itemIsInInventory = false
+
+    for (let item of gameState.inventory) {
+      if (item.id === goldOre.id) {
+        itemIsInInventory = true
+        break
+      }
+    }
+
+    expect(itemIsInInventory).toEqual(true)
   })
 
   test('does not alter the plot if something is already there', () => {
@@ -3331,8 +3362,20 @@ describe('minePlot', () => {
 })
 
 describe('resetWasShoveled', () => {
-  test('it will return null if the plot was shoveled today', () => {
-    const plotContents = fn.resetWasShoveled({ wasShoveledToday: true })
+  test('it decrements daysUntilClear if value is above 1', () => {
+    const plotContents = fn.resetWasShoveled({
+      isShoveled: true,
+      daysUntilClear: 2,
+    })
+
+    expect(plotContents).toEqual({ isShoveled: true, daysUntilClear: 1 })
+  })
+
+  test('it resets the plotContents when daysUntilClear is 1', () => {
+    const plotContents = fn.resetWasShoveled({
+      isShoveled: true,
+      daysUntilClear: 1,
+    })
 
     expect(plotContents).toEqual(null)
   })

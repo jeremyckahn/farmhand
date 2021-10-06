@@ -287,7 +287,7 @@ if (features.MINING) {
         name: 'Gold Digger',
         description: `Pay off your loan from the bank.`,
         rewardDescription: `The Shovel`,
-        condition: state => state.loanBalance === 0,
+        condition: state => state.loanBalance === 0 && state.dayCount > 1,
         reward: state => ({
           ...state,
           shovelUnlocked: true,
