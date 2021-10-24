@@ -123,13 +123,15 @@ const upgrades = {
 }
 
 // add some defaults to each upgrade object
-for (let type in upgrades) {
-  for (let i in upgrades[type]) {
-    upgrades[type][i].toolType = type
-    upgrades[type][i].value = 0
-    upgrades[type][i].doesPriceFluctuate = false
-    upgrades[type][i].type = itemType.TOOL_UPGRADE
-    upgrades[type][i].level = i
+for (let toolType in upgrades) {
+  for (let i in upgrades[toolType]) {
+    Object.assign(upgrades[toolType][i], {
+      toolType,
+      value: 0,
+      doesPriceFluctuate: false,
+      type: itemType.TOOL_UPGRADE,
+      level: i,
+    })
   }
 }
 
