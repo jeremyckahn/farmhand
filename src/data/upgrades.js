@@ -25,6 +25,9 @@ const coalNeededForIngots = (ingotId, amount = 1) => {
 const { bronzeIngot, ironIngot, silverIngot, goldIngot } = recipes
 const { coal } = items
 
+/**
+ * @type {farmhand.upgradesMetadata}
+ */
 const upgrades = {
   [toolType.SCYTHE]: {
     [toolLevel.DEFAULT]: {

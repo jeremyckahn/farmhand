@@ -32,6 +32,7 @@ export const HOE_HIDDEN_TEXT =
 export const SHOVEL_ALT_TEXT = 'A shovel for digging up rocks.'
 export const SHOVEL_HIDDEN_TEXT = 'Select the shovel to dig for ore'
 
+// TODO: Implement all of these upgrades
 export const TOOL_LEVEL_INFO = {
   SCYTHE: {
     DEFAULT: '**Basic**: Harvests one crop per plot.',
