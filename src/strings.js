@@ -31,3 +31,38 @@ export const HOE_HIDDEN_TEXT =
   'Select the hoe to clear crops, or replantable field items'
 export const SHOVEL_ALT_TEXT = 'A shovel for digging up rocks.'
 export const SHOVEL_HIDDEN_TEXT = 'Select the shovel to dig for ore'
+
+// TODO: Implement all of these upgrades
+export const TOOL_LEVEL_INFO = {
+  SCYTHE: {
+    DEFAULT: '**Basic**: Harvests one crop per plot.',
+    BRONZE: '**Bronze**: Harvests two crops per plot.',
+    IRON: '**Iron**: Harvests three crops per plot.',
+    SILVER: '**Silver**: Harvests four crops per plot.',
+    GOLD: '**Gold**: Harvests five crops per plot.',
+  },
+  SHOVEL: {
+    DEFAULT: '**Basic**: Has a 30% chance of digging up resources.',
+    BRONZE: '**Bronze**: Has a 40% chance of digging up resources.',
+    IRON: '**Iron**: Has a 50% chance of digging up resources.',
+    SILVER: '**Silver**: Has a 60% chance of digging up resources.',
+    GOLD: '**Gold**: Has a 70% chance of digging up resources.',
+  },
+  WATERING_CAN: {
+    DEFAULT: '**Basic**: Keeps plots watered for one day.',
+    BRONZE: '**Bronze**: Keeps plots watered for two days.',
+    IRON: '**Iron**: Keeps plots watered for three days.',
+    SILVER: '**Silver**: Keeps plots watered for four days.',
+    GOLD: '**Gold**: Keeps plots watered for five days.',
+  },
+  HOE: {
+    DEFAULT: '**Basic**: Destroys crops.',
+    BRONZE: '**Bronze**: 20% chance to retrieve seeds when destroying crops.',
+    IRON: '**Iron**: 40% chance to retrieve seeds when destroying crops.',
+    SILVER: '**Silver**: 60% chance to retrieve seeds when destroying crops.',
+    GOLD: '**Gold**: 80% chance to retrieve seeds when destroying crops.',
+  },
+}
+
+export const FORGE_AVAILABLE_NOTIFICATION =
+  '**The Forge** is now available in the Workshop!'

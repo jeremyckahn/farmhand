@@ -1,72 +1,108 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import ReactMarkdown from 'react-markdown'
 
 import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
+
+import { toolLevel } from '../../enums'
 
 import { memoize } from '../../utils'
 
 import FarmhandContext from '../../Farmhand.context'
 import toolsData from '../../data/tools'
 
-import { tools as toolImages, pixel } from '../../img'
+import { tools as toolImages, craftedItems, pixel } from '../../img'
 
 import './Toolbelt.sass'
 
 const noop = () => {}
-const getTools = memoize(shovelUnlocked => {
-  return Object.values(toolsData)
-    .filter(t => shovelUnlocked || t.id !== 'shovel')
-    .sort(t => t.order)
+
+const getTools = memoize(toolLevels => {
+  let tools = []
+
+  for (let tool of Object.values(toolsData)) {
+    if (toolLevels[tool.type] !== toolLevel.UNAVAILABLE) {
+      tools.push(tool)
+    }
+  }
+
+  tools.sort(t => t.order)
+
+  return tools
 })
+
+const getToolImage = tool => {
+  if (tool.level === toolLevel.DEFAULT) {
+    return toolImages[tool.id]
+  }
+
+  const id = `${tool.id}-${tool.level.toLowerCase()}`
+  return craftedItems[id]
+}
 
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
   completedAchievements,
+  toolLevels,
 }) => {
-  const tools = getTools(completedAchievements['gold-digger'])
+  const tools = getTools(toolLevels)
 
   return (
     <div className="Toolbelt">
       <div className="button-array">
-        {tools.map(({ alt, fieldMode, fieldKey, hiddenText, id }) => (
-          <Tooltip
-            {...{
-              key: fieldMode,
-              placement: 'top',
-              title: (
-                <>
-                  <p>{alt}</p>
-                  <p>({fieldKey})</p>
-                </>
-              ),
-            }}
-          >
-            <Button
+        {tools.map(
+          ({ alt, fieldMode, fieldKey, hiddenText, id, levelInfo, type }) => (
+            <Tooltip
               {...{
-                className: classNames({
-                  selected: fieldMode === currentFieldMode,
-                }),
-                color: 'primary',
-                onClick: () => handleFieldModeSelect(fieldMode),
-                variant: fieldMode === currentFieldMode ? 'contained' : 'text',
+                key: fieldMode,
+                placement: 'top',
+                title: (
+                  <>
+                    <p>{alt}</p>
+                    <ReactMarkdown
+                      {...{
+                        className: 'markdown',
+                        source: levelInfo[toolLevels[type]],
+                      }}
+                    />
+                    <p>({fieldKey})</p>
+                  </>
+                ),
               }}
             >
-              {/* alt is in a different format here because of linter weirdness. */}
-              <img
+              <Button
                 {...{
-                  className: `square ${id}`,
-                  src: pixel,
-                  style: { backgroundImage: `url(${toolImages[id]}` },
+                  className: classNames({
+                    selected: fieldMode === currentFieldMode,
+                  }),
+                  color: 'primary',
+                  onClick: () => handleFieldModeSelect(fieldMode),
+                  variant:
+                    fieldMode === currentFieldMode ? 'contained' : 'text',
                 }}
-                alt={alt}
-              />
-              <span className="visually_hidden">{hiddenText}</span>
-            </Button>
-          </Tooltip>
-        ))}
+              >
+                {/* alt is in a different format here because of linter weirdness. */}
+                <img
+                  {...{
+                    className: `square ${id}`,
+                    src: pixel,
+                    style: {
+                      backgroundImage: `url(${getToolImage({
+                        level: toolLevels[type],
+                        id,
+                      })})`,
+                    },
+                  }}
+                  alt={alt}
+                />
+                <span className="visually_hidden">{hiddenText}</span>
+              </Button>
+            </Tooltip>
+          )
+        )}
       </div>
     </div>
   )
@@ -81,6 +117,7 @@ Toolbelt.propTypes = {
 Toolbelt.defaultProps = {
   handleFieldModeSelect: noop,
   completedAchievements: {},
+  toolLevels: {},
 }
 
 export default function Consumer(props) {

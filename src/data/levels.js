@@ -1,3 +1,7 @@
+import { toolType } from '../enums'
+
+import { features } from '../config'
+
 import * as items from './items'
 
 export const levels = []
@@ -20,6 +24,12 @@ levels[4] = {
 
 levels[5] = {
   unlocksShopItem: items.sprinkler.id,
+}
+
+if (features.MINING) {
+  levels[6] = {
+    unlocksTool: toolType.SHOVEL,
+  }
 }
 
 levels[8] = {

@@ -707,7 +707,7 @@ export const inventorySpaceConsumed = memoize(inventory =>
 export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
   inventoryLimit === -1
     ? Infinity
-    : inventoryLimit - inventorySpaceConsumed(inventory)
+    : Math.max(0, inventoryLimit - inventorySpaceConsumed(inventory))
 
 /**
  * @param {{ inventory: Array.<farmhand.item>, inventoryLimit: number}} state
@@ -779,20 +779,27 @@ export const getLevelEntitlements = memoize(levelNumber => {
   const acc = {
     sprinklerRange: INITIAL_SPRINKLER_RANGE,
     items: {},
+    tools: {},
   }
 
   // Assumes that levels is sorted by id.
-  levels.find(({ unlocksShopItem, id, increasesSprinklerRange }) => {
-    if (increasesSprinklerRange) {
-      acc.sprinklerRange++
-    }
+  levels.find(
+    ({ unlocksShopItem, unlocksTool, id, increasesSprinklerRange }) => {
+      if (increasesSprinklerRange) {
+        acc.sprinklerRange++
+      }
 
-    if (unlocksShopItem) {
-      acc.items[unlocksShopItem] = true
-    }
+      if (unlocksShopItem) {
+        acc.items[unlocksShopItem] = true
+      }
 
-    return id === levelNumber
-  })
+      if (unlocksTool) {
+        acc.tools[unlocksTool] = true
+      }
+
+      return id === levelNumber
+    }
+  )
 
   return acc
 })
@@ -1056,3 +1063,6 @@ export function randomChoice(weightedOptions) {
     runningTotal += option.weight
   }
 }
+
+export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'
+export { default as totalIngredientsInRecipe } from './utils/totalIngredientsInRecipe'

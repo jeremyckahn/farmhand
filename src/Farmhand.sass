@@ -7,7 +7,21 @@
 body
   overscroll-behavior: contain
 
+@mixin markdown-styles
+  .markdown
+    ul li
+      list-style: disc
+      margin-left: 1em
+
+    strong
+      font-weight: bold
+
+// Needed for MUI tooltips, as they are outside of the .Farmhand DOM
++markdown-styles()
+
 .Farmhand
+  +markdown-styles()
+
   // padding-left and breakpoints correspond to AppBar dimensions
   // https://material-ui.com/demos/app-bar/
   display: flex
@@ -62,11 +76,6 @@ body
     position: absolute
     white-space: nowrap
     width: 1px
-
-  .markdown
-    ul li
-      list-style: disc
-      margin-left: 1em
 
   .MuiDivider-root
     margin: 1.5em 0

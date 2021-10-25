@@ -167,6 +167,22 @@
  * @property {string} message
  */
 
+/**
+ * @typedef farmhand.upgradesMetadatum
+ * @type {Object}
+ * @property {string} id
+ * @property {string?} description
+ * @property {string} name
+ * @property {Object.<farmhand.item.id, number>?} ingredients
+ * @property {farmhand.module:enums.toolLevel?} nextLevel
+ * @property {boolean?} isMaxLevel
+ */
+
+/**
+ * @typedef farmhand.upgradesMetadata
+ * @type {Object.<farmhand.module:enums.toolType, farmhand.upgradesMetadatum>}
+ */
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route } from 'react-router-dom'

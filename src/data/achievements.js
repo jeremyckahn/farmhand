@@ -285,13 +285,12 @@ if (features.MINING) {
       {
         id: 'gold-digger',
         name: 'Gold Digger',
-        description: `Pay off your loan from the bank.`,
-        rewardDescription: `The Shovel`,
-        condition: state => state.loanBalance === 0 && state.dayCount > 1,
-        reward: state => ({
-          ...state,
-          shovelUnlocked: true,
-        }),
+        description: `Dig up your first piece of gold.`,
+        rewardDescription: `A Gold Ingot`,
+        condition: state => !!state.inventory.find(i => i.id === 'gold-ore'),
+        reward: state => {
+          return addItemToInventory(state, itemsMap['gold-ingot'], 1, true)
+        },
       }
     )
   )

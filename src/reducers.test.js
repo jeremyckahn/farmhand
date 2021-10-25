@@ -43,7 +43,14 @@ import { sampleRecipe1 } from './data/recipes'
 import { itemsMap } from './data/maps'
 import { goldOre } from './data/ores'
 import { ResourceFactory } from './factories'
-import { fertilizerType, fieldMode, genders, standardCowColors } from './enums'
+import {
+  fertilizerType,
+  fieldMode,
+  genders,
+  standardCowColors,
+  toolType,
+  toolLevel,
+} from './enums'
 import {
   farmProductSalesVolumeNeededForLevel,
   generateCow,
@@ -1909,6 +1916,35 @@ describe('processLevelUp', () => {
 
     expect(hoveredPlotRangeSize).toEqual(2)
   })
+
+  test('unlocksTool reward makes tool become available', () => {
+    jest.resetModules()
+    jest.mock('./data/levels', () => ({
+      levels: [
+        {
+          id: 0,
+        },
+        {
+          id: 1,
+          unlocksTool: 'SHOVEL',
+        },
+      ],
+      itemUnlockLevels: {},
+    }))
+    const newState = jest.requireActual('./reducers').processLevelUp(
+      {
+        itemsSold: {},
+        inventory: [],
+        todaysNotifications: [],
+        toolLevels: {
+          SHOVEL: toolLevel.UNAVAILABLE,
+        },
+      },
+      0
+    )
+
+    expect(newState.toolLevels['SHOVEL']).toEqual(toolLevel.DEFAULT)
+  })
 })
 
 describe('purchaseCow', () => {
@@ -2656,11 +2692,20 @@ describe('setScarecrow', () => {
 })
 
 describe('harvestPlot', () => {
+  const toolLevelsDefault = {
+    [toolType.SCYTHE]: toolLevel.DEFAULT,
+  }
+
+  const toolLevelsBronze = {
+    [toolType.SCYTHE]: toolLevel.BRONZE,
+  }
+
   describe('non-crop plotContent', () => {
     test('no-ops', () => {
       const inputState = {
         cropsHarvested: {},
         field: [[getPlotContentFromItemId('sprinkler')]],
+        toolLevels: toolLevelsDefault,
       }
       const state = fn.harvestPlot(inputState, 0, 0)
       expect(state).toEqual(inputState)
@@ -2672,6 +2717,7 @@ describe('harvestPlot', () => {
       const inputState = {
         cropsHarvested: {},
         field: [[testCrop({ itemId: 'sample-crop-1' })]],
+        toolLevels: toolLevelsDefault,
       }
       const state = fn.harvestPlot(inputState, 0, 0)
       expect(state).toEqual(inputState)
@@ -2686,6 +2732,7 @@ describe('harvestPlot', () => {
           field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
           inventory: [],
           inventoryLimit: -1,
+          toolLevels: toolLevelsDefault,
         },
         0,
         0
@@ -2696,6 +2743,37 @@ describe('harvestPlot', () => {
       expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 1 })
     })
 
+    describe('bronze scythe', () => {
+      let farmhandState
+
+      beforeEach(() => {
+        farmhandState = {
+          cropsHarvested: {},
+          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
+          inventory: [],
+          inventoryLimit: -1,
+          toolLevels: toolLevelsBronze,
+        }
+      })
+
+      test('harvests the plot', () => {
+        const { field } = fn.harvestPlot(farmhandState, 0, 0)
+
+        expect(field[0][0]).toBe(null)
+      })
+
+      test('harvests 2 crops', () => {
+        const { cropsHarvested, inventory } = fn.harvestPlot(
+          farmhandState,
+          0,
+          0
+        )
+
+        expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 2 }])
+        expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 2 })
+      })
+    })
+
     describe('there is insufficient inventory space', () => {
       test('no-ops', () => {
         const inputState = {
@@ -2703,6 +2781,7 @@ describe('harvestPlot', () => {
           field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
           inventory: [{ id: 'sample-crop-1', quantity: 5 }],
           inventoryLimit: 5,
+          toolLevels: toolLevelsDefault,
         }
         const state = fn.harvestPlot(inputState, 0, 0)
 
@@ -2720,6 +2799,7 @@ describe('harvestPlot', () => {
         } = fn.harvestPlot(
           {
             cropsHarvested: {},
+            toolLevels: toolLevelsDefault,
             field: [
               [
                 testCrop({
@@ -2756,6 +2836,7 @@ describe('harvestPlot', () => {
         } = fn.harvestPlot(
           {
             cropsHarvested: {},
+            toolLevels: toolLevelsDefault,
             field: [
               [
                 testCrop({
@@ -3320,6 +3401,10 @@ describe('minePlot', () => {
     gameState = {
       field: [[null, 'crop']],
       inventory: [],
+      inventoryLimit: 99,
+      toolLevels: {
+        [toolType.SHOVEL]: toolLevel.DEFAULT,
+      },
     }
 
     jest.spyOn(ResourceFactory, 'instance')
@@ -3358,6 +3443,20 @@ describe('minePlot', () => {
 
   test('does not alter the plot if something is already there', () => {
     expect(gameState.field[0][1]).toEqual('crop')
+  })
+
+  test('shows a notification if there is no room in the inventory', () => {
+    gameState.inventoryLimit = 0
+    gameState.showNotifications = true
+    gameState.todaysNotifications = []
+    gameState.field[0][0] = null
+
+    const { latestNotification } = fn.minePlot(gameState, 0, 0)
+
+    expect(latestNotification).toEqual({
+      message: 'Your inventory is full!',
+      severity: 'info',
+    })
   })
 })
 
