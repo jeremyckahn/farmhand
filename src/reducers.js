@@ -49,6 +49,7 @@ import {
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
+  isRandomNumberLessThan,
   levelAchieved,
   moneyTotal,
   nullArray,
@@ -1797,6 +1798,14 @@ export const minePlot = (state, x, y) => {
   }
 }
 
+const hoeLevelToSeedReclaimRate = {
+  [toolLevel.DEFAULT]: 0,
+  [toolLevel.BRONZE]: 0.25,
+  [toolLevel.IRON]: 0.5,
+  [toolLevel.SILVER]: 0.75,
+  [toolLevel.GOLD]: 1,
+}
+
 /**
  * @param {farmhand.state} state
  * @param {number} x
@@ -1805,9 +1814,20 @@ export const minePlot = (state, x, y) => {
  */
 export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
+  const hoeLevel = state.toolLevels[toolType.HOE]
 
   if (!plotContent || plotContent.isShoveled) {
     return state
+  }
+
+  if (getPlotContentType(plotContent) === itemType.CROP) {
+    if (getCropLifeStage(plotContent) === GROWN) {
+      // Harvest the plot if inventory space remains
+    } else {
+      if (isRandomNumberLessThan(hoeLevelToSeedReclaimRate[hoeLevel])) {
+        // Return the seed to inventory if space remains
+      }
+    }
   }
 
   const item = itemsMap[plotContent.itemId]
