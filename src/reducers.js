@@ -1822,10 +1822,11 @@ export const clearPlot = (state, x, y) => {
 
   if (getPlotContentType(plotContent) === itemType.CROP) {
     if (getCropLifeStage(plotContent) === GROWN) {
-      // Harvest the plot if inventory space remains
+      // FIXME: Harvest the plot if inventory space remains
     } else {
       if (isRandomNumberLessThan(hoeLevelToSeedReclaimRate[hoeLevel])) {
-        // Return the seed to inventory if space remains
+        const seedId = getSeedItemIdFromFinalStageCropItemId(plotContent.itemId)
+        state = addItemToInventory(state, itemsMap[seedId])
       }
     }
   }

@@ -61,6 +61,7 @@ import {
   getCropFromItemId,
   getPlotContentFromItemId,
   getPriceEventForCrop,
+  isRandomNumberLessThan,
 } from './utils'
 import * as fn from './reducers'
 
@@ -71,6 +72,7 @@ jest.mock('./data/items')
 jest.mock('./data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
 jest.mock('./data/recipes')
 jest.mock('./data/shop-inventory')
+jest.mock('./utils/isRandomNumberLessThan')
 
 jest.mock('./constants', () => ({
   __esModule: true,
@@ -2927,6 +2929,48 @@ describe('clearPlot', () => {
         expect(state).toEqual(inputState)
       })
     })
+  })
+
+  describe('hoe upgrades', () => {
+    beforeEach(() => {
+      isRandomNumberLessThan.mockReturnValue(true)
+    })
+
+    describe('inventory space remains', () => {
+      test('returns seed to inventory', () => {
+        const { field, inventory } = fn.clearPlot(
+          {
+            field: [[testCrop({ itemId: 'sample-crop-1' })]],
+            toolLevels: { [toolType.HOE]: toolLevel.BRONZE },
+            inventory: [],
+            inventoryLimit: 10,
+          },
+          0,
+          0
+        )
+
+        expect(field[0][0]).toBe(null)
+        expect(inventory).toEqual([{ id: 'sample-crop-seeds-1', quantity: 1 }])
+      });
+    });
+
+    describe('no inventory space remains', () => {
+      test('seed is discarded', () => {
+        const { field, inventory } = fn.clearPlot(
+          {
+            field: [[testCrop({ itemId: 'sample-crop-1' })]],
+            toolLevels: { [toolType.HOE]: toolLevel.BRONZE },
+            inventory: [],
+            inventoryLimit: 0,
+          },
+          0,
+          0
+        )
+
+        expect(field[0][0]).toBe(null)
+        expect(inventory).toEqual([])
+      });
+    });
   })
 })
 
