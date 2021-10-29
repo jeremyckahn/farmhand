@@ -1820,15 +1820,13 @@ export const clearPlot = (state, x, y) => {
     return state
   }
 
-  if (getPlotContentType(plotContent) === itemType.CROP) {
-    if (getCropLifeStage(plotContent) === GROWN) {
-      // FIXME: Harvest the plot if inventory space remains
-    } else {
-      if (isRandomNumberLessThan(hoeLevelToSeedReclaimRate[hoeLevel])) {
-        const seedId = getSeedItemIdFromFinalStageCropItemId(plotContent.itemId)
-        state = addItemToInventory(state, itemsMap[seedId])
-      }
-    }
+  if (
+    getPlotContentType(plotContent) === itemType.CROP &&
+    getCropLifeStage(plotContent) !== GROWN &&
+    isRandomNumberLessThan(hoeLevelToSeedReclaimRate[hoeLevel])
+  ) {
+    const seedId = getSeedItemIdFromFinalStageCropItemId(plotContent.itemId)
+    state = addItemToInventory(state, itemsMap[seedId])
   }
 
   const item = itemsMap[plotContent.itemId]
@@ -1839,7 +1837,9 @@ export const clearPlot = (state, x, y) => {
 
   state = removeFieldPlotAt(state, x, y)
 
-  return item.isReplantable ? addItemToInventory(state, item) : state
+  return item.isReplantable || getCropLifeStage(plotContent) === GROWN
+    ? addItemToInventory(state, item)
+    : state
 }
 
 /**

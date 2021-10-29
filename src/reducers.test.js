@@ -2899,6 +2899,24 @@ describe('clearPlot', () => {
     })
   })
 
+  describe('crop is fully grown', () => {
+    test('harvests crop', () => {
+      const { field, inventory } = fn.clearPlot(
+        {
+          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 3 })]],
+          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
+          inventory: [],
+          inventoryLimit: 10,
+        },
+        0,
+        0
+      )
+
+      expect(field[0][0]).toBe(null)
+      expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 1 }])
+    })
+  })
+
   describe('plotContent is replantable', () => {
     test('updates state', () => {
       const { field, inventory } = fn.clearPlot(
@@ -2936,7 +2954,7 @@ describe('clearPlot', () => {
       isRandomNumberLessThan.mockReturnValue(true)
     })
 
-    describe('inventory space remains', () => {
+    describe('crop is not fully grown', () => {
       test('returns seed to inventory', () => {
         const { field, inventory } = fn.clearPlot(
           {
@@ -2951,26 +2969,8 @@ describe('clearPlot', () => {
 
         expect(field[0][0]).toBe(null)
         expect(inventory).toEqual([{ id: 'sample-crop-seeds-1', quantity: 1 }])
-      });
-    });
-
-    describe('no inventory space remains', () => {
-      test('seed is discarded', () => {
-        const { field, inventory } = fn.clearPlot(
-          {
-            field: [[testCrop({ itemId: 'sample-crop-1' })]],
-            toolLevels: { [toolType.HOE]: toolLevel.BRONZE },
-            inventory: [],
-            inventoryLimit: 0,
-          },
-          0,
-          0
-        )
-
-        expect(field[0][0]).toBe(null)
-        expect(inventory).toEqual([])
-      });
-    });
+      })
+    })
   })
 })
 
