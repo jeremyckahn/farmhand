@@ -2867,6 +2867,7 @@ describe('clearPlot', () => {
       const { field } = fn.clearPlot(
         {
           field: [[testCrop({ itemId: 'sample-crop-1' })]],
+          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
           inventory: [],
           inventoryLimit: -1,
         },
@@ -2882,6 +2883,7 @@ describe('clearPlot', () => {
         const { field, inventory } = fn.clearPlot(
           {
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
+            toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
             inventory: [{ id: 'sample-item-1', quantity: 5 }],
             inventoryLimit: 5,
           },
@@ -2900,6 +2902,7 @@ describe('clearPlot', () => {
       const { field, inventory } = fn.clearPlot(
         {
           field: [[getPlotContentFromItemId('replantable-item')]],
+          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
           inventory: [],
           inventoryLimit: -1,
         },
@@ -2915,6 +2918,7 @@ describe('clearPlot', () => {
       test('no-ops', () => {
         const inputState = {
           field: [[getPlotContentFromItemId('replantable-item')]],
+          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
           inventory: [{ id: 'sample-item-1', quantity: 5 }],
           inventoryLimit: 5,
         }
