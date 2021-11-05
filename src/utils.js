@@ -62,6 +62,7 @@ import {
   STORAGE_EXPANSION_BASE_PRICE,
   STORAGE_EXPANSION_SCALE_PREMIUM,
 } from './constants'
+import { unlockTool } from './reducers'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
@@ -944,7 +945,7 @@ export const computeMarketPositions = (
  * @return {Object}
  */
 export const transformStateDataForImport = state => {
-  const sanitizedState = { ...state }
+  let sanitizedState = { ...state }
 
   const rejectedKeys = ['version']
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
@@ -971,6 +972,12 @@ export const transformStateDataForImport = state => {
         }
       })
     )
+  }
+
+  const { tools: unlockedTools } = getLevelEntitlements(levelAchieved(farmProductsSold(sanitizedState.itemsSold)))
+
+  for (const tool of Object.keys(unlockedTools)) {
+    sanitizedState = unlockTool(sanitizedState, tool)
   }
 
   return sanitizedState
