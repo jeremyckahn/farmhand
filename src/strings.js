@@ -57,10 +57,10 @@ export const TOOL_LEVEL_INFO = {
   },
   HOE: {
     DEFAULT: '**Basic**: Destroys crops.',
-    BRONZE: '**Bronze**: 20% chance to retrieve seeds when destroying crops.',
-    IRON: '**Iron**: 40% chance to retrieve seeds when destroying crops.',
-    SILVER: '**Silver**: 60% chance to retrieve seeds when destroying crops.',
-    GOLD: '**Gold**: 80% chance to retrieve seeds when destroying crops.',
+    BRONZE: '**Bronze**: 25% chance to retrieve seeds when destroying crops.',
+    IRON: '**Iron**: 50% chance to retrieve seeds when destroying crops.',
+    SILVER: '**Silver**: 75% chance to retrieve seeds when destroying crops.',
+    GOLD: '**Gold**: 100% chance to retrieve seeds when destroying crops.',
   },
 }
 
