@@ -25,6 +25,7 @@ const onboardingAchievements = [
   achievementsMap['water-crop'],
   achievementsMap['harvest-crop'],
   achievementsMap['purchase-cow-pen'],
+  achievementsMap['max-cow-hearts'],
 ]
 
 const getRemainingOnboardingAchievements = memoize(completedAchievements =>
@@ -50,6 +51,7 @@ const Home = ({
 }) => (
   <div className="Home">
     <h1>Welcome!</h1>
+    {/*
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Click to read a note from the developer</h2>
@@ -77,6 +79,23 @@ Happy farming! 🐮
       </AccordionDetails>
     </Accordion>
     <Divider />
+    */}
+    {completedAchievements['max-cow-hearts'] ? (
+      <>
+        <Card>
+          <CardContent>
+            <ReactMarkdown
+              {...{
+                className: 'markdown',
+                source: `### 🎄 The secret code 🎄
+# \`12-25-20-21\``,
+              }}
+            />
+          </CardContent>
+        </Card>
+        <Divider />
+      </>
+    ) : null}
     <Card>
       <CardContent>
         <ReactMarkdown
@@ -126,6 +145,7 @@ It looks like you're new here. Thanks for stopping by! Here are some goals to he
       </CardContent>
     </Card>
     <Divider />
+    {/*
     <Card>
       <CardContent>
         <ReactMarkdown
@@ -176,6 +196,7 @@ If you're playing on a mobile device, all you need to do is [add it to your home
         <Divider />
       </>
     )}
+    */}
     <Card>
       <CardContent>
         <ReactMarkdown

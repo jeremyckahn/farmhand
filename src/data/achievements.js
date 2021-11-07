@@ -68,6 +68,7 @@ const achievements = [
     reward: state => addMoney(state, reward),
   }))(),
 
+  /*
   ((goal = 10000) => ({
     id: 'unlock-crop-price-guide',
     name: 'Prove Yourself as a Farmer',
@@ -82,6 +83,7 @@ const achievements = [
     // to gate the price guides.
     reward: state => state,
   }))(),
+  */
 
   ((reward = 15) => ({
     id: 'purchase-cow-pen',
@@ -93,6 +95,17 @@ const achievements = [
     reward: state => addItemToInventory(state, cowFeed, reward, true),
   }))(),
 
+  (() => ({
+    id: 'max-cow-hearts',
+    name: 'Happy Cows',
+    description: 'Get a cow to maximum hearts!',
+    rewardDescription: `The padlock code!`,
+    condition: state =>
+      state.cowInventory.some(({ happiness }) => happiness === 1),
+    reward: state => state,
+  }))(),
+
+  /*
   ((reward = 100) => ({
     id: 'purchase-all-cow-colors',
     name: 'Cows of Many Colors',
@@ -276,8 +289,10 @@ const achievements = [
     condition: state => state.revenue >= goal,
     reward: state => state,
   }))(),
+  */
 ]
 
+/*
 if (features.MINING) {
   achievements.push(
     Object.assign(
@@ -295,6 +310,7 @@ if (features.MINING) {
     )
   )
 }
+*/
 
 export default achievements
 

@@ -245,7 +245,7 @@ export default class Farmhand extends Component {
   // Bind event handlers
 
   localforage = localforage.createInstance({
-    name: 'farmhand',
+    name: 'farmhand-xmas',
     description: 'Persisted game data for Farmhand',
   })
 
