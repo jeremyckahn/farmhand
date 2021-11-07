@@ -1,13 +1,15 @@
 import React from 'react'
 import { func, object } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import window from 'global/window'
+// import window from 'global/window'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
+/*
 import Accordion from '@material-ui/core/Accordion'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+*/
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
@@ -31,7 +33,7 @@ const onboardingAchievements = [
 const getRemainingOnboardingAchievements = memoize(completedAchievements =>
   onboardingAchievements.filter(({ id }) => !completedAchievements[id])
 )
-
+/*
 // https://stackoverflow.com/questions/41742390/javascript-to-check-if-pwa-or-mobile-web/41749865#41749865
 const isInstallable =
   // process.env checks are needed to make tests not fail
@@ -40,6 +42,7 @@ const isInstallable =
   !window.matchMedia('(display-mode: standalone)').matches &&
   (window.location.origin === 'https://jeremyckahn.github.io' ||
     window.location.origin === 'http://localhost:3000') // For debugging
+*/
 
 const Home = ({
   completedAchievements,

@@ -3,16 +3,16 @@ import {
   dollarString,
   findInField,
   getCropLifeStage,
-  getProfitRecord,
-  integerString,
+  // getProfitRecord,
+  // integerString,
   memoize,
   moneyTotal,
-  percentageString,
+  // percentageString,
 } from '../utils'
-import { cropLifeStage, standardCowColors } from '../enums'
-import { COW_FEED_ITEM_ID, I_AM_RICH_BONUSES } from '../constants'
+import { cropLifeStage } from '../enums'
+import { COW_FEED_ITEM_ID } from '../constants'
 import { addItemToInventory } from '../reducers'
-import { features } from '../config'
+// import { features } from '../config'
 
 import { itemsMap } from './maps'
 

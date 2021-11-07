@@ -55,6 +55,7 @@ describe('harvest-crop', () => {
   })
 })
 
+/*
 const iAmRichVariants = [
   ['i-am-rich-1', 500000, 'Earn $500,000.', 'All sales receive a 5% bonus'],
   ['i-am-rich-2', 1000000, 'Earn $1,000,000.', 'All sales receive a 10% bonus'],
@@ -122,3 +123,4 @@ describe('gold-digger', () => {
     expect(ingot).toEqual({ id: 'gold-ingot', quantity: 1 })
   })
 })
+*/
