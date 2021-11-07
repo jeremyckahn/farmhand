@@ -359,8 +359,10 @@ export default {
         }
 
         this.setState({
-          ...this.createInitialState(),
-          ...transformStateDataForImport(state),
+          ...transformStateDataForImport({
+            ...this.createInitialState(),
+            ...state,
+          }),
           hasBooted: true,
         })
 

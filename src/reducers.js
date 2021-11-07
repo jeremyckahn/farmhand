@@ -53,6 +53,7 @@ import {
   levelAchieved,
   moneyTotal,
   nullArray,
+  unlockTool,
 } from './utils'
 import { generateValueAdjustments } from './common/utils'
 import {
@@ -241,27 +242,6 @@ export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
 
 /**
  * @param {farmhand.state} state
- * @param {farmhand.module:enums.toolType} toolType
- * @returns {farmhand.state}
- */
-export const unlockTool = (state, toolType) => {
-  if (state.toolLevels[toolType] === toolLevel.UNAVAILABLE) {
-    const stateToolLevels = { ...state.toolLevels }
-
-    state = {
-      ...state,
-      toolLevels: {
-        ...stateToolLevels,
-        [toolType]: toolLevel.DEFAULT,
-      },
-    }
-  }
-
-  return state
-}
-
-/**
- * @param {farmhand.state} state
  * @param {number} oldLevel
  * @returns {farmhand.state}
  */
@@ -284,7 +264,7 @@ export const processLevelUp = (state, oldLevel) => {
         true
       )
     } else if (levelObject && levelObject.unlocksTool) {
-      state = unlockTool(levelObject.unlockTool)
+      state.toolLevels = unlockTool(state.toolLevels, levelObject.unlocksTool)
     }
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already

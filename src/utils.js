@@ -32,6 +32,7 @@ import {
   genders,
   itemType,
   standardCowColors,
+  toolLevel,
 } from './enums'
 import {
   BREAKPOINTS,
@@ -62,7 +63,6 @@ import {
   STORAGE_EXPANSION_BASE_PRICE,
   STORAGE_EXPANSION_SCALE_PREMIUM,
 } from './constants'
-import { unlockTool } from './reducers'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
@@ -941,6 +941,19 @@ export const computeMarketPositions = (
   }, {})
 
 /**
+ * @param {Object.<farmhand.module:enums.toolType, farmhand.module:enums.toolLevel>} state
+ * @param {farmhand.module:enums.toolType} toolType
+ * @returns {farmhand.state}
+ */
+export const unlockTool = (currentToolLevels, toolType) => {
+  if (currentToolLevels[toolType] === toolLevel.UNAVAILABLE) {
+    return Object.assign({}, currentToolLevels, { [toolType]: toolLevel.DEFAULT })
+  }
+
+  return currentToolLevels
+}
+
+/**
  * @param {Farmhand.state} state
  * @return {Object}
  */
@@ -974,10 +987,12 @@ export const transformStateDataForImport = state => {
     )
   }
 
-  const { tools: unlockedTools } = getLevelEntitlements(levelAchieved(farmProductsSold(sanitizedState.itemsSold)))
+  const { tools: unlockedTools } = getLevelEntitlements(
+    levelAchieved(farmProductsSold(sanitizedState.itemsSold))
+  )
 
   for (const tool of Object.keys(unlockedTools)) {
-    sanitizedState = unlockTool(sanitizedState, tool)
+    sanitizedState.toolLevels = unlockTool(sanitizedState.toolLevels, tool)
   }
 
   return sanitizedState
