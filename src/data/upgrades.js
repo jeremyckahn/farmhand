@@ -29,6 +29,53 @@ const { coal } = items
  * @type {farmhand.upgradesMetadata}
  */
 const upgrades = {
+  [toolType.HOE]: {
+    [toolLevel.DEFAULT]: {
+      id: 'hoe-default',
+      name: 'Basic Hoe',
+      nextLevel: toolLevel.BRONZE,
+    },
+    [toolLevel.BRONZE]: {
+      id: 'hoe-bronze',
+      description: 'Gives 25% chance to retrieve seeds when digging up crops',
+      name: 'Bronze Hoe',
+      ingredients: {
+        [bronzeIngot.id]: 10,
+        [coal.id]: coalNeededForIngots(bronzeIngot.id, 10),
+      },
+      nextLevel: toolLevel.IRON,
+    },
+    [toolLevel.IRON]: {
+      id: 'hoe-iron',
+      description: 'Gives 50% chance to retrieve seeds when digging up crops',
+      name: 'Iron Hoe',
+      ingredients: {
+        [ironIngot.id]: 10,
+        [coal.id]: coalNeededForIngots(ironIngot.id, 10),
+      },
+      nextLevel: toolLevel.SILVER,
+    },
+    [toolLevel.SILVER]: {
+      id: 'hoe-silver',
+      description: 'Gives 75% chance to retrieve seeds when digging up crops',
+      name: 'Silver Hoe',
+      ingredients: {
+        [silverIngot.id]: 10,
+        [coal.id]: coalNeededForIngots(silverIngot.id, 10),
+      },
+      nextLevel: toolLevel.GOLD,
+    },
+    [toolLevel.GOLD]: {
+      id: 'hoe-gold',
+      description: 'Gives 100% chance to retrieve seeds when digging up crops',
+      name: 'Gold Hoe',
+      ingredients: {
+        [goldIngot.id]: 10,
+        [coal.id]: coalNeededForIngots(goldIngot.id, 10),
+      },
+      isMaxLevel: true,
+    },
+  },
   [toolType.SCYTHE]: {
     [toolLevel.DEFAULT]: {
       id: 'scythe-default',
