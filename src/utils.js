@@ -958,7 +958,7 @@ export const unlockTool = (currentToolLevels, toolType) => {
  * @return {Object}
  */
 export const transformStateDataForImport = state => {
-  let sanitizedState = { ...state }
+  const sanitizedState = { ...state }
 
   const rejectedKeys = ['version']
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
