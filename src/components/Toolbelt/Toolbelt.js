@@ -20,7 +20,7 @@ import './Toolbelt.sass'
 const noop = () => {}
 
 const getTools = memoize(toolLevels => {
-  let tools = []
+  const tools = []
 
   for (let tool of Object.values(toolsData)) {
     if (toolLevels[tool.type] !== toolLevel.UNAVAILABLE) {
@@ -28,9 +28,7 @@ const getTools = memoize(toolLevels => {
     }
   }
 
-  tools.sort(t => t.order)
-
-  return tools
+  return tools.sort((a, b) => a.order > b.order)
 })
 
 const getToolImage = tool => {
