@@ -941,7 +941,7 @@ export const computeMarketPositions = (
   }, {})
 
 /**
- * @param {Object.<farmhand.module:enums.toolType, farmhand.module:enums.toolLevel>} state
+ * @param {Object.<farmhand.module:enums.toolType, farmhand.module:enums.toolLevel>} currentToolLevels
  * @param {farmhand.module:enums.toolType} toolType
  * @returns {farmhand.state}
  */
