@@ -40,8 +40,8 @@ const upgrades = {
       description: 'Gives 25% chance to retrieve seeds when digging up crops',
       name: 'Bronze Hoe',
       ingredients: {
-        [bronzeIngot.id]: 10,
-        [coal.id]: coalNeededForIngots(bronzeIngot.id, 10),
+        [bronzeIngot.id]: 8,
+        [coal.id]: coalNeededForIngots(bronzeIngot.id, 8),
       },
       nextLevel: toolLevel.IRON,
     },
@@ -50,8 +50,8 @@ const upgrades = {
       description: 'Gives 50% chance to retrieve seeds when digging up crops',
       name: 'Iron Hoe',
       ingredients: {
-        [ironIngot.id]: 10,
-        [coal.id]: coalNeededForIngots(ironIngot.id, 10),
+        [ironIngot.id]: 8,
+        [coal.id]: coalNeededForIngots(ironIngot.id, 8),
       },
       nextLevel: toolLevel.SILVER,
     },
@@ -60,8 +60,8 @@ const upgrades = {
       description: 'Gives 75% chance to retrieve seeds when digging up crops',
       name: 'Silver Hoe',
       ingredients: {
-        [silverIngot.id]: 10,
-        [coal.id]: coalNeededForIngots(silverIngot.id, 10),
+        [silverIngot.id]: 8,
+        [coal.id]: coalNeededForIngots(silverIngot.id, 8),
       },
       nextLevel: toolLevel.GOLD,
     },
@@ -70,8 +70,8 @@ const upgrades = {
       description: 'Gives 100% chance to retrieve seeds when digging up crops',
       name: 'Gold Hoe',
       ingredients: {
-        [goldIngot.id]: 10,
-        [coal.id]: coalNeededForIngots(goldIngot.id, 10),
+        [goldIngot.id]: 8,
+        [coal.id]: coalNeededForIngots(goldIngot.id, 8),
       },
       isMaxLevel: true,
     },
