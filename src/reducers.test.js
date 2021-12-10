@@ -61,6 +61,7 @@ import {
   getCropFromItemId,
   getPlotContentFromItemId,
   getPriceEventForCrop,
+  isRandomNumberLessThan,
 } from './utils'
 import * as fn from './reducers'
 
@@ -71,6 +72,7 @@ jest.mock('./data/items')
 jest.mock('./data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
 jest.mock('./data/recipes')
 jest.mock('./data/shop-inventory')
+jest.mock('./utils/isRandomNumberLessThan')
 
 jest.mock('./constants', () => ({
   __esModule: true,
@@ -2867,6 +2869,7 @@ describe('clearPlot', () => {
       const { field } = fn.clearPlot(
         {
           field: [[testCrop({ itemId: 'sample-crop-1' })]],
+          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
           inventory: [],
           inventoryLimit: -1,
         },
@@ -2882,6 +2885,7 @@ describe('clearPlot', () => {
         const { field, inventory } = fn.clearPlot(
           {
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
+            toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
             inventory: [{ id: 'sample-item-1', quantity: 5 }],
             inventoryLimit: 5,
           },
@@ -2895,11 +2899,30 @@ describe('clearPlot', () => {
     })
   })
 
+  describe('crop is fully grown', () => {
+    test('harvests crop', () => {
+      const { field, inventory } = fn.clearPlot(
+        {
+          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 3 })]],
+          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
+          inventory: [],
+          inventoryLimit: 10,
+        },
+        0,
+        0
+      )
+
+      expect(field[0][0]).toBe(null)
+      expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 1 }])
+    })
+  })
+
   describe('plotContent is replantable', () => {
     test('updates state', () => {
       const { field, inventory } = fn.clearPlot(
         {
           field: [[getPlotContentFromItemId('replantable-item')]],
+          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
           inventory: [],
           inventoryLimit: -1,
         },
@@ -2915,12 +2938,37 @@ describe('clearPlot', () => {
       test('no-ops', () => {
         const inputState = {
           field: [[getPlotContentFromItemId('replantable-item')]],
+          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
           inventory: [{ id: 'sample-item-1', quantity: 5 }],
           inventoryLimit: 5,
         }
         const state = fn.clearPlot(inputState, 0, 0)
 
         expect(state).toEqual(inputState)
+      })
+    })
+  })
+
+  describe('hoe upgrades', () => {
+    beforeEach(() => {
+      isRandomNumberLessThan.mockReturnValue(true)
+    })
+
+    describe('crop is not fully grown', () => {
+      test('returns seed to inventory', () => {
+        const { field, inventory } = fn.clearPlot(
+          {
+            field: [[testCrop({ itemId: 'sample-crop-1' })]],
+            toolLevels: { [toolType.HOE]: toolLevel.BRONZE },
+            inventory: [],
+            inventoryLimit: 10,
+          },
+          0,
+          0
+        )
+
+        expect(field[0][0]).toBe(null)
+        expect(inventory).toEqual([{ id: 'sample-crop-seeds-1', quantity: 1 }])
       })
     })
   })

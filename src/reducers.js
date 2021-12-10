@@ -49,9 +49,11 @@ import {
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
+  isRandomNumberLessThan,
   levelAchieved,
   moneyTotal,
   nullArray,
+  unlockTool,
 } from './utils'
 import { generateValueAdjustments } from './common/utils'
 import {
@@ -65,6 +67,7 @@ import {
   CROW_CHANCE,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   FERTILIZER_BONUS,
+  HOE_LEVEL_TO_SEED_RECLAIM_RATE,
   HUGGING_MACHINE_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
@@ -262,19 +265,7 @@ export const processLevelUp = (state, oldLevel) => {
         true
       )
     } else if (levelObject && levelObject.unlocksTool) {
-      const { unlocksTool } = levelObject
-
-      if (state.toolLevels[unlocksTool] === toolLevel.UNAVAILABLE) {
-        const stateToolLevels = { ...state.toolLevels }
-
-        state = {
-          ...state,
-          toolLevels: {
-            ...stateToolLevels,
-            [unlocksTool]: toolLevel.DEFAULT,
-          },
-        }
-      }
+      state.toolLevels = unlockTool(state.toolLevels, levelObject.unlocksTool)
     }
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already
@@ -1805,9 +1796,19 @@ export const minePlot = (state, x, y) => {
  */
 export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
+  const hoeLevel = state.toolLevels[toolType.HOE]
 
   if (!plotContent || plotContent.isShoveled) {
     return state
+  }
+
+  if (
+    getPlotContentType(plotContent) === itemType.CROP &&
+    getCropLifeStage(plotContent) !== GROWN &&
+    isRandomNumberLessThan(HOE_LEVEL_TO_SEED_RECLAIM_RATE[hoeLevel])
+  ) {
+    const seedId = getSeedItemIdFromFinalStageCropItemId(plotContent.itemId)
+    state = addItemToInventory(state, itemsMap[seedId])
   }
 
   const item = itemsMap[plotContent.itemId]
@@ -1818,7 +1819,9 @@ export const clearPlot = (state, x, y) => {
 
   state = removeFieldPlotAt(state, x, y)
 
-  return item.isReplantable ? addItemToInventory(state, item) : state
+  return item.isReplantable || getCropLifeStage(plotContent) === GROWN
+    ? addItemToInventory(state, item)
+    : state
 }
 
 /**

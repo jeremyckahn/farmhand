@@ -80,6 +80,10 @@ import rainbowMilk3 from './items/rainbow-milk-3.png'
 import chocolateMilk from './items/chocolate-milk.png'
 import inventoryBox from './items/inventory-box.png'
 import hoe from './tools/hoe.png'
+import hoeBronze from './tools/hoe-bronze.png'
+import hoeIron from './tools/hoe-iron.png'
+import hoeSilver from './tools/hoe-silver.png'
+import hoeGold from './tools/hoe-gold.png'
 import scythe from './tools/scythe.png'
 import scytheBronze from './tools/scythe-bronze.png'
 import scytheIron from './tools/scythe-iron.png'
@@ -128,6 +132,10 @@ const smeltedItems = {
   'gold-ingot': goldIngot,
 
   // tool upgrades
+  'hoe-bronze': hoeBronze,
+  'hoe-iron': hoeIron,
+  'hoe-silver': hoeSilver,
+  'hoe-gold': hoeGold,
   'scythe-bronze': scytheBronze,
   'scythe-iron': scytheIron,
   'scythe-silver': scytheSilver,
