@@ -67,6 +67,7 @@ import {
   CROW_CHANCE,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   FERTILIZER_BONUS,
+  HOE_LEVEL_TO_SEED_RECLAIM_RATE,
   HUGGING_MACHINE_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
@@ -1787,14 +1788,6 @@ export const minePlot = (state, x, y) => {
   }
 }
 
-const hoeLevelToSeedReclaimRate = {
-  [toolLevel.DEFAULT]: 0,
-  [toolLevel.BRONZE]: 0.25,
-  [toolLevel.IRON]: 0.5,
-  [toolLevel.SILVER]: 0.75,
-  [toolLevel.GOLD]: 1,
-}
-
 /**
  * @param {farmhand.state} state
  * @param {number} x
@@ -1812,7 +1805,7 @@ export const clearPlot = (state, x, y) => {
   if (
     getPlotContentType(plotContent) === itemType.CROP &&
     getCropLifeStage(plotContent) !== GROWN &&
-    isRandomNumberLessThan(hoeLevelToSeedReclaimRate[hoeLevel])
+    isRandomNumberLessThan(HOE_LEVEL_TO_SEED_RECLAIM_RATE[hoeLevel])
   ) {
     const seedId = getSeedItemIdFromFinalStageCropItemId(plotContent.itemId)
     state = addItemToInventory(state, itemsMap[seedId])
