@@ -83,7 +83,37 @@ Happy farming! 🐮
     </Accordion>
     <Divider />
     */}
-    {completedAchievements['max-cow-hearts'] ? (
+    {remainingOnboardingAchievements.length ? (
+      <>
+        <Card>
+          <CardContent>
+            <>
+              <ReactMarkdown
+                {...{
+                  className: 'markdown',
+                  linkTarget: '_blank',
+                  source: `
+### 🎅🤶The Christmas Challenge! 🤶🎅
+
+Complete the goals below to unlock the **lock combination** on the chest. It will appear above once you do.
+
+Merry Christmas!
+    `,
+                }}
+              />
+              <ul className="card-list">
+                {remainingOnboardingAchievements.map(achievement => (
+                  <li {...{ key: achievement.id }}>
+                    <Achievement {...{ achievement }} />
+                  </li>
+                ))}
+              </ul>
+            </>
+          </CardContent>
+        </Card>
+        <Divider />
+      </>
+    ) : (
       <>
         <Card>
           <CardContent>
@@ -91,14 +121,14 @@ Happy farming! 🐮
               {...{
                 className: 'markdown',
                 source: `### 🎄 The secret code 🎄
-# \`12-25-20-21\``,
+# \`16-22-36\``,
               }}
             />
           </CardContent>
         </Card>
         <Divider />
       </>
-    ) : null}
+    )}
     <Card>
       <CardContent>
         <ReactMarkdown
@@ -114,28 +144,6 @@ If you can master the art of the harvest, there's no limit to how profitable you
     `,
           }}
         />
-        {remainingOnboardingAchievements.length ? (
-          <>
-            <ReactMarkdown
-              {...{
-                className: 'markdown',
-                linkTarget: '_blank',
-                source: `
-### Getting started
-
-It looks like you're new here. Thanks for stopping by! Here are some goals to help you get familiar with the game.
-    `,
-              }}
-            />
-            <ul className="card-list">
-              {remainingOnboardingAchievements.map(achievement => (
-                <li {...{ key: achievement.id }}>
-                  <Achievement {...{ achievement }} />
-                </li>
-              ))}
-            </ul>
-          </>
-        ) : null}
         <Button
           {...{
             color: 'primary',
