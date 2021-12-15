@@ -210,6 +210,7 @@ describe('instance methods', () => {
             Promise.resolve({
               foo: 'bar',
               newDayNotifications: [{ message: 'baz', severity: 'info' }],
+              itemsSold: {},
             }),
           setItem: data => Promise.resolve(data),
         })

@@ -12,48 +12,16 @@ import {
   dollarString,
   maxYieldOfRecipe,
   integerString,
+  totalIngredientsInRecipe,
 } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { craftedItems } from '../../img'
 import QuantityInput from '../QuantityInput'
-import AnimatedNumber from '../AnimatedNumber'
+import IngredientsList from '../IngredientsList'
 
 import FarmhandContext from '../../Farmhand.context'
 
 import './Recipe.sass'
-
-const IngredientsList = ({
-  playerInventoryQuantities,
-  recipe: { ingredients, name },
-}) => (
-  <ul {...{ className: 'card-list', title: `Ingredients for ${name}` }}>
-    <li>
-      <h4>Ingredients required:</h4>
-    </li>
-    {Object.keys(ingredients).map(itemId => (
-      <li {...{ key: itemId }}>
-        <p
-          {...{
-            className: classNames(
-              playerInventoryQuantities[itemId] >= ingredients[itemId]
-                ? 'in-stock'
-                : 'out-of-stock'
-            ),
-          }}
-        >
-          {ingredients[itemId]} x {itemsMap[itemId].name} (On hand:{' '}
-          <AnimatedNumber
-            {...{
-              number: playerInventoryQuantities[itemId],
-              formatter: integerString,
-            }}
-          />
-          )
-        </p>
-      </li>
-    ))}
-  </ul>
-)
 
 const Recipe = ({
   handleMakeRecipeClick,
@@ -73,11 +41,7 @@ const Recipe = ({
 
   // Fixes https://github.com/jeremyckahn/farmhand/issues/25
   const spaceFreedByIngredientsConsumed =
-    quantity *
-    Object.values(recipe.ingredients).reduce(
-      (acc, quantity) => acc + quantity,
-      0
-    )
+    quantity * totalIngredientsInRecipe(recipe)
 
   const canBeMade =
     quantity > 0 &&

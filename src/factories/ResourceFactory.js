@@ -1,11 +1,11 @@
-import { itemType } from '../enums'
+import { itemType, toolLevel } from '../enums'
 import {
   RESOURCE_SPAWN_CHANCE,
   ORE_SPAWN_CHANCE,
   COAL_SPAWN_CHANCE,
   STONE_SPAWN_CHANCE,
 } from '../constants'
-import { randomChoice } from '../utils'
+import { isRandomNumberLessThan, randomChoice } from '../utils'
 
 import OreFactory from './OreFactory'
 import CoalFactory from './CoalFactory'
@@ -92,11 +92,31 @@ export default class ResourceFactory {
    * Use dice roll and resource factories to generate resources at random
    * @returns {Array} array of resource objects
    */
-  generateResources() {
-    let diceRoll = Math.random()
+  generateResources(shovelLevel) {
     let resources = []
+    let spawnChance = RESOURCE_SPAWN_CHANCE
 
-    if (diceRoll <= RESOURCE_SPAWN_CHANCE) {
+    switch (shovelLevel) {
+      case toolLevel.BRONZE:
+        spawnChance += 0.1
+        break
+
+      case toolLevel.IRON:
+        spawnChance += 0.2
+        break
+
+      case toolLevel.SILVER:
+        spawnChance += 0.3
+        break
+
+      case toolLevel.GOLD:
+        spawnChance += 0.5
+        break
+
+      default:
+    }
+
+    if (isRandomNumberLessThan(spawnChance)) {
       const opt = randomChoice(this.resourceOptions)
       const factory = ResourceFactory.getFactoryForItemType(opt.itemType)
 

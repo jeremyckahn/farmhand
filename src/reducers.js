@@ -7,6 +7,7 @@ import { itemsMap, recipesMap } from './data/maps'
 import { levels } from './data/levels'
 import { ResourceFactory } from './factories'
 import achievements from './data/achievements'
+import upgrades from './data/upgrades'
 import {
   areHuggingMachinesInInventory,
   canMakeRecipe,
@@ -48,9 +49,11 @@ import {
   inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
+  isRandomNumberLessThan,
   levelAchieved,
   moneyTotal,
   nullArray,
+  unlockTool,
 } from './utils'
 import { generateValueAdjustments } from './common/utils'
 import {
@@ -64,6 +67,7 @@ import {
   CROW_CHANCE,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   FERTILIZER_BONUS,
+  HOE_LEVEL_TO_SEED_RECLAIM_RATE,
   HUGGING_MACHINE_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
@@ -84,6 +88,8 @@ import {
   STORM_CHANCE,
 } from './constants'
 import {
+  FORGE_AVAILABLE_NOTIFICATION,
+  INVENTORY_FULL_NOTIFICATION,
   OUT_OF_COW_FEED_NOTIFICATION,
   RAIN_MESSAGE,
   STORM_MESSAGE,
@@ -104,8 +110,16 @@ import {
   PRICE_SURGE,
   PURCHASED_ITEM_PEER_NOTIFICATION,
   SOLD_ITEM_PEER_NOTIFICATION,
+  TOOL_UPGRADED_NOTIFICATION,
 } from './templates'
-import { cropLifeStage, fertilizerType, fieldMode, itemType } from './enums'
+import {
+  cropLifeStage,
+  fertilizerType,
+  fieldMode,
+  itemType,
+  toolLevel,
+  toolType,
+} from './enums'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
@@ -250,6 +264,8 @@ export const processLevelUp = (state, oldLevel) => {
         getRandomLevelUpRewardQuantity(i),
         true
       )
+    } else if (levelObject && levelObject.unlocksTool) {
+      state.toolLevels = unlockTool(state.toolLevels, levelObject.unlocksTool)
     }
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already
@@ -1245,6 +1261,25 @@ export const makeRecipe = (state, recipe, howMany = 1) => {
   return addItemToInventory(state, recipe, howMany)
 }
 
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.upgrade} upgrade
+ */
+export const upgradeTool = (state, upgrade) => {
+  state = makeRecipe(state, upgrade)
+
+  const currentName =
+    upgrades[upgrade.toolType][state.toolLevels[upgrade.toolType]].name
+  state.toolLevels[upgrade.toolType] = upgrade.level
+
+  state = showNotification(
+    state,
+    TOOL_UPGRADED_NOTIFICATION`${currentName}${upgrade.name}`
+  )
+
+  return { ...state }
+}
+
 // TODO: Change showNotification to accept a configuration object instead of so
 // many formal parameters.
 /**
@@ -1645,8 +1680,32 @@ export const harvestPlot = (state, x, y) => {
   const plotWasRainbowFertilized =
     crop.fertilizerType === fertilizerType.RAINBOW
 
+  let harvestedQuantity = 1
+
+  switch (state.toolLevels[toolType.SCYTHE]) {
+    case toolLevel.BRONZE:
+      harvestedQuantity += 1
+      break
+
+    case toolLevel.IRON:
+      harvestedQuantity += 2
+      break
+
+    case toolLevel.SILVER:
+      harvestedQuantity += 3
+      break
+
+    case toolLevel.GOLD:
+      harvestedQuantity += 4
+      break
+
+    default:
+      harvestedQuantity = 1
+  }
+
   state = removeFieldPlotAt(state, x, y)
-  state = addItemToInventory(state, item)
+  state = addItemToInventory(state, item, harvestedQuantity)
+
   const { cropType } = item
 
   if (plotWasRainbowFertilized) {
@@ -1668,7 +1727,7 @@ export const harvestPlot = (state, x, y) => {
     ...state,
     cropsHarvested: {
       ...cropsHarvested,
-      [cropType]: (cropsHarvested[cropType] || 0) + 1,
+      [cropType]: (cropsHarvested[cropType] || 0) + harvestedQuantity,
     },
   }
 }
@@ -1688,7 +1747,14 @@ export const minePlot = (state, x, y) => {
     return state
   }
 
-  const spawnedResources = ResourceFactory.instance().generateResources()
+  if (!doesInventorySpaceRemain(state)) {
+    return showNotification(state, INVENTORY_FULL_NOTIFICATION)
+  }
+
+  const shovelLevel = state.toolLevels[toolType.SHOVEL]
+  const spawnedResources = ResourceFactory.instance().generateResources(
+    shovelLevel
+  )
   let spawnedOre = null
   let daysUntilClear = chooseRandom([1, 2, 2, 3])
 
@@ -1730,9 +1796,19 @@ export const minePlot = (state, x, y) => {
  */
 export const clearPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
+  const hoeLevel = state.toolLevels[toolType.HOE]
 
   if (!plotContent || plotContent.isShoveled) {
     return state
+  }
+
+  if (
+    getPlotContentType(plotContent) === itemType.CROP &&
+    getCropLifeStage(plotContent) !== GROWN &&
+    isRandomNumberLessThan(HOE_LEVEL_TO_SEED_RECLAIM_RATE[hoeLevel])
+  ) {
+    const seedId = getSeedItemIdFromFinalStageCropItemId(plotContent.itemId)
+    state = addItemToInventory(state, itemsMap[seedId])
   }
 
   const item = itemsMap[plotContent.itemId]
@@ -1743,7 +1819,9 @@ export const clearPlot = (state, x, y) => {
 
   state = removeFieldPlotAt(state, x, y)
 
-  return item.isReplantable ? addItemToInventory(state, item) : state
+  return item.isReplantable || getCropLifeStage(plotContent) === GROWN
+    ? addItemToInventory(state, item)
+    : state
 }
 
 /**
@@ -1828,6 +1906,8 @@ export const purchaseSmelter = (state, smelterId) => {
     purchasedSmelter: smelterId,
     money: moneyTotal(money, -PURCHASEABLE_SMELTERS.get(smelterId).price),
   }
+
+  state = showNotification(state, FORGE_AVAILABLE_NOTIFICATION)
 
   return updateLearnedRecipes(state)
 }

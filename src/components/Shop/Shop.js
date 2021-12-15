@@ -20,7 +20,7 @@ import {
   moneyString,
 } from '../../utils'
 import { items } from '../../img'
-import { itemType } from '../../enums'
+import { itemType, toolType } from '../../enums'
 import {
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
@@ -40,11 +40,16 @@ import './Shop.sass'
  * @returns {Object.<'seeds' | 'fieldTools', Array.<farmhand.item>>}
  */
 const categorizeShopInventory = memoize(shopInventory =>
-  shopInventory.reduce((acc, inventoryItem) => {
-    acc[inventoryItem.type === itemType.CROP ? 'seeds' : 'fieldTools'].push(inventoryItem)
+  shopInventory.reduce(
+    (acc, inventoryItem) => {
+      acc[inventoryItem.type === itemType.CROP ? 'seeds' : 'fieldTools'].push(
+        inventoryItem
+      )
 
-    return acc
-  }, {seeds: [], fieldTools: []})
+      return acc
+    },
+    { seeds: [], fieldTools: [] }
+  )
 )
 
 export const Shop = ({
@@ -60,6 +65,7 @@ export const Shop = ({
   purchasedField,
   purchasedSmelter,
   shopInventory,
+  toolLevels,
 
   storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit),
 }) => {
@@ -187,7 +193,7 @@ export const Shop = ({
               }}
             />
           </li>
-          {features.MINING ? (
+          {features.MINING && toolLevels[toolType.SHOVEL] ? (
             <li>
               <TierPurchase
                 {...{

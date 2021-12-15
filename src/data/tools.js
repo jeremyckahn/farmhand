@@ -1,55 +1,64 @@
-import { fieldMode } from '../enums'
+import { fieldMode, toolType } from '../enums'
 
 import { features } from '../config'
 
 import {
-  WATERING_CAN_ALT_TEXT,
-  WATERING_CAN_HIDDEN_TEXT,
-  SCYTHE_ALT_TEXT,
-  SCYTHE_HIDDEN_TEXT,
   HOE_ALT_TEXT,
   HOE_HIDDEN_TEXT,
+  SCYTHE_ALT_TEXT,
+  SCYTHE_HIDDEN_TEXT,
   SHOVEL_ALT_TEXT,
   SHOVEL_HIDDEN_TEXT,
+  TOOL_LEVEL_INFO,
+  WATERING_CAN_ALT_TEXT,
+  WATERING_CAN_HIDDEN_TEXT,
 } from '../strings'
 
 const { CLEANUP, HARVEST, MINE, WATER } = fieldMode
 
 const tools = {
   wateringCan: {
-    id: 'watering-can',
     alt: WATERING_CAN_ALT_TEXT,
-    fieldMode: WATER,
-    order: 1,
     fieldKey: 'shift+1',
+    fieldMode: WATER,
     hiddenText: WATERING_CAN_HIDDEN_TEXT,
+    id: 'watering-can',
+    levelInfo: TOOL_LEVEL_INFO.WATERING_CAN,
+    order: 1,
+    type: toolType.WATERING_CAN,
   },
   scythe: {
-    id: 'scythe',
     alt: SCYTHE_ALT_TEXT,
-    fieldMode: HARVEST,
-    order: 2,
     fieldKey: 'shift+2',
+    fieldMode: HARVEST,
     hiddenText: SCYTHE_HIDDEN_TEXT,
+    id: 'scythe',
+    levelInfo: TOOL_LEVEL_INFO.SCYTHE,
+    order: 2,
+    type: toolType.SCYTHE,
   },
   hoe: {
-    id: 'hoe',
     alt: HOE_ALT_TEXT,
-    fieldMode: CLEANUP,
-    order: 3,
     fieldKey: 'shift+3',
+    fieldMode: CLEANUP,
     hiddenText: HOE_HIDDEN_TEXT,
+    id: 'hoe',
+    levelInfo: TOOL_LEVEL_INFO.HOE,
+    order: 3,
+    type: toolType.HOE,
   },
 }
 
 if (features.MINING) {
   tools.shovel = {
-    id: 'shovel',
     alt: SHOVEL_ALT_TEXT,
-    fieldMode: MINE,
-    order: 4,
     fieldKey: 'shift+4',
+    fieldMode: MINE,
     hiddenText: SHOVEL_HIDDEN_TEXT,
+    id: 'shovel',
+    levelInfo: TOOL_LEVEL_INFO.SHOVEL,
+    order: 4,
+    type: toolType.SHOVEL,
   }
 }
 

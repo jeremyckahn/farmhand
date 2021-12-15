@@ -89,6 +89,7 @@ export const itemType = enumify([
   'SCARECROW',
   'SPRINKLER',
   'STONE',
+  'TOOL_UPGRADE',
 ])
 
 /**
@@ -135,4 +136,23 @@ export const dialogView = enumify([
   'PRICE_EVENTS',
   'SETTINGS',
   'STATS',
+])
+
+/**
+ * @property farmhand.module:enums.toolType
+ * @enum {string}
+ */
+export const toolType = enumify(['SCYTHE', 'SHOVEL', 'HOE', 'WATERING_CAN'])
+
+/**
+ * @property farmhand.module:enums.toolLevel
+ * @enum {string}
+ */
+export const toolLevel = enumify([
+  'UNAVAILABLE',
+  'DEFAULT',
+  'BRONZE',
+  'IRON',
+  'SILVER',
+  'GOLD',
 ])

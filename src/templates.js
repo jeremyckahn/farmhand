@@ -178,6 +178,10 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
         randomCropSeed.name
       }** as a reward!`
     )
+  } else if (levelObject && levelObject.unlocksTool) {
+    // todo: there is only one tool that can be unlocked currently, but this is a bit
+    // short-sighted if we ever introduce other tool unlocks
+    chunks.push(`You've unlocked a new tool for the field, The **Shovel**!`)
   }
 
   return chunks.join(' ')
@@ -251,3 +255,17 @@ export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
  */
 export const SOLD_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
   `sold ${integerString(quantity)} unit${quantity > 1 ? 's' : ''} of ${name}.`
+
+/**
+ * @param {string} toolName - the name of the tool being replaced
+ * @param {string} upgradedName - the new name of the tool
+ */
+export const TOOL_UPGRADED_NOTIFICATION = (_, toolName, upgradedName) =>
+  `Your ${toolName} has been upgraded to a **${upgradedName}**!`
+
+export const INGREDIENTS_LIST_ITEM = (
+  _,
+  ingredientName,
+  quantityNeeded,
+  quantityAvailable
+) => `${ingredientName} x ${quantityNeeded} (On hand: ${quantityAvailable})`

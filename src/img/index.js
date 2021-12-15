@@ -80,8 +80,20 @@ import rainbowMilk3 from './items/rainbow-milk-3.png'
 import chocolateMilk from './items/chocolate-milk.png'
 import inventoryBox from './items/inventory-box.png'
 import hoe from './tools/hoe.png'
+import hoeBronze from './tools/hoe-bronze.png'
+import hoeIron from './tools/hoe-iron.png'
+import hoeSilver from './tools/hoe-silver.png'
+import hoeGold from './tools/hoe-gold.png'
 import scythe from './tools/scythe.png'
+import scytheBronze from './tools/scythe-bronze.png'
+import scytheIron from './tools/scythe-iron.png'
+import scytheSilver from './tools/scythe-silver.png'
+import scytheGold from './tools/scythe-gold.png'
 import shovel from './tools/shovel.png'
+import shovelBronze from './tools/shovel-bronze.png'
+import shovelIron from './tools/shovel-iron.png'
+import shovelSilver from './tools/shovel-silver.png'
+import shovelGold from './tools/shovel-gold.png'
 import wateringCan from './tools/watering-can.png'
 
 import coal from './ores/coal.png'
@@ -118,6 +130,20 @@ const smeltedItems = {
   'iron-ingot': ironIngot,
   'silver-ingot': silverIngot,
   'gold-ingot': goldIngot,
+
+  // tool upgrades
+  'hoe-bronze': hoeBronze,
+  'hoe-iron': hoeIron,
+  'hoe-silver': hoeSilver,
+  'hoe-gold': hoeGold,
+  'scythe-bronze': scytheBronze,
+  'scythe-iron': scytheIron,
+  'scythe-silver': scytheSilver,
+  'scythe-gold': scytheGold,
+  'shovel-bronze': shovelBronze,
+  'shovel-iron': shovelIron,
+  'shovel-silver': shovelSilver,
+  'shovel-gold': shovelGold,
 }
 
 export const craftedItems = {

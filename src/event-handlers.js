@@ -57,6 +57,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.upgrade} upgrade
+   */
+  handleUpgradeTool(upgrade) {
+    this.upgradeTool(upgrade)
+  },
+
+  /**
    * @param {farmhand.cow} cow
    */
   handleCowPurchaseClick(cow) {
@@ -352,8 +359,10 @@ export default {
         }
 
         this.setState({
-          ...this.createInitialState(),
-          ...transformStateDataForImport(state),
+          ...transformStateDataForImport({
+            ...this.createInitialState(),
+            ...state,
+          }),
           hasBooted: true,
         })
 

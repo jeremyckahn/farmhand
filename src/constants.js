@@ -3,7 +3,7 @@
  * @ignore
  */
 
-import { fieldMode, stageFocusType } from './enums'
+import { fieldMode, stageFocusType, toolLevel } from './enums'
 
 const { freeze } = Object
 
@@ -148,6 +148,7 @@ export const PERSISTED_STATE_KEYS = [
   'purchasedCombine',
   'purchasedCowPen',
   'purchasedField',
+  'purchasedSmelter',
   'record7dayProfitAverage',
   'recordProfitabilityStreak',
   'recordSingleDayProfit',
@@ -157,6 +158,7 @@ export const PERSISTED_STATE_KEYS = [
   'todaysPurchases',
   'todaysRevenue',
   'todaysStartingInventory',
+  'toolLevels',
   'useAlternateEndDayButtonPosition',
   'valueAdjustments',
   'version',
@@ -205,3 +207,11 @@ export const BRONZE_SPAWN_CHANCE = 0.4
 export const GOLD_SPAWN_CHANCE = 0.07
 export const IRON_SPAWN_CHANCE = 0.33
 export const SILVER_SPAWN_CHANCE = 0.2
+
+export const HOE_LEVEL_TO_SEED_RECLAIM_RATE = {
+  [toolLevel.DEFAULT]: 0,
+  [toolLevel.BRONZE]: 0.25,
+  [toolLevel.IRON]: 0.5,
+  [toolLevel.SILVER]: 0.75,
+  [toolLevel.GOLD]: 1,
+}
