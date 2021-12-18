@@ -228,6 +228,7 @@ Shop.propTypes = {
   purchasedSmelter: number.isRequired,
   purchasedCombine: number.isRequired,
   shopInventory: array.isRequired,
+  toolLevels: object.isRequired,
   valueAdjustments: object.isRequired,
 }
 

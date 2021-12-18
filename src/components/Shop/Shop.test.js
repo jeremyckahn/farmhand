@@ -22,6 +22,7 @@ beforeEach(() => {
         purchasedSmelter: 0,
         purchasedField: 0,
         shopInventory: [],
+        toolLevels: {},
         valueAdjustments: {},
       }}
     />
