@@ -947,7 +947,9 @@ export const computeMarketPositions = (
  */
 export const unlockTool = (currentToolLevels, toolType) => {
   if (currentToolLevels[toolType] === toolLevel.UNAVAILABLE) {
-    return Object.assign({}, currentToolLevels, { [toolType]: toolLevel.DEFAULT })
+    return Object.assign({}, currentToolLevels, {
+      [toolType]: toolLevel.DEFAULT,
+    })
   }
 
   return currentToolLevels
