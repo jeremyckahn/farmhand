@@ -532,7 +532,10 @@ export default class Farmhand extends Component {
     const state = await this.localforage.getItem('state')
 
     if (state) {
-      const sanitizedState = transformStateDataForImport(state)
+      const sanitizedState = transformStateDataForImport({
+        ...this.createInitialState(),
+        ...state,
+      })
       const { isCombineEnabled, newDayNotifications } = sanitizedState
 
       this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {
