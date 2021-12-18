@@ -32,13 +32,11 @@ const getTools = memoize(toolLevels => {
 })
 
 const getToolImage = tool => {
-  const currentToolLevel = tool.level || toolLevel.DEFAULT
-
-  if (currentToolLevel === toolLevel.DEFAULT) {
+  if (tool.level === toolLevel.DEFAULT) {
     return toolImages[tool.id]
   }
 
-  const id = `${tool.id}-${currentToolLevel.toLowerCase()}`
+  const id = `${tool.id}-${tool.level.toLowerCase()}`
   return craftedItems[id]
 }
 
