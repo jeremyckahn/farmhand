@@ -994,9 +994,7 @@ export const transformStateDataForImport = state => {
   )
 
   for (const tool of Object.keys(unlockedTools)) {
-    sanitizedState.toolLevels = sanitizedState.toolLevels
-      ? unlockTool(sanitizedState.toolLevels, tool)
-      : {}
+    sanitizedState.toolLevels = unlockTool(sanitizedState.toolLevels, tool)
   }
 
   return sanitizedState
