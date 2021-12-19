@@ -6,7 +6,7 @@
 
 ### A farming game by [Jeremy Kahn](https://github.com/jeremyckahn)
 
-**[Play Farmhand in your browser!](https://www.farmhand.life)**
+**[Play Farmhand in your browser!](https://www.farmhand.life/)**
 
 - `develop`: [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI) [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
 - All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
@@ -99,7 +99,7 @@ Use this GitHub Action to deploy a new version of Farmhand: [![Release New Versi
 
 As an authenticated repo owner or collaborator, click "Run workflow" and enter the argument to be passed to [`npm version`](https://docs.npmjs.com/cli/v7/commands/npm-version) and press the green "Run workflow". For updates that do not change [`farmhand.state`](https://jeremyckahn.github.io/farmhand/docs/farmhand.html#.state) (which is most of them), use the default `patch` version. This workflow will deploy Farmhand to:
 
-- https://www.farmhand.life
+- https://www.farmhand.life/
 - https://jeremyckahn.github.io/farmhand/
 - https://jeremyckahn.itch.io/farmhand
 - https://www.npmjs.com/package/@jeremyckahn/farmhand
