@@ -6,7 +6,7 @@
   },
   "description": "A farming game",
   "unpkg": "build/index.html",
-  "homepage": "https://www.farmhand.life",
+  "homepage": "https://www.farmhand.life/",
   "scripts": {
     "build": "react-scripts build",
     "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
