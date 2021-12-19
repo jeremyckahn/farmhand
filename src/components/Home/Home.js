@@ -38,6 +38,7 @@ const isInstallable =
     process.env.NODE_ENV === 'development') &&
   !window.matchMedia('(display-mode: standalone)').matches &&
   (window.location.origin === 'https://jeremyckahn.github.io' ||
+    window.location.origin === 'https://www.farmhand.life' ||
     window.location.origin === 'http://localhost:3000') // For debugging
 
 const Home = ({
