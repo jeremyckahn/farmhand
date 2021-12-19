@@ -53,18 +53,40 @@
         image-rendering: pixelated;
       }
     </style>
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-SH37EG4NP9"
-    ></script>
     <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-      gtag('js', new Date())
+      ;(function() {
+        let analyticsID
 
-      gtag('config', 'G-SH37EG4NP9')
+        switch (window.location.host) {
+          case 'jeremyckahn.github.io':
+            gtag('js', new Date())
+            analyticsId = 'G-SH37EG4NP9'
+            break
+          case 'www.farmhand.life':
+            analyticsId = 'G-3KRQX38CYH'
+            break
+          default:
+            console.warn('Unrecognized domain. No analytics will be recorded.')
+            return
+        }
+
+        const script = document.createElement('script')
+        script.setAttribute('async', '')
+        script.setAttribute(
+          'src',
+          `https://www.googletagmanager.com/gtag/js?id=${analyticsID}`
+        )
+
+        document.head.appendChild(script)
+        window.dataLayer = window.dataLayer || []
+
+        function gtag() {
+          dataLayer.push(arguments)
+        }
+
+        gtag('js', new Date())
+        gtag('config', analyticsID)
+      })()
     </script>
   </head>
   <body>
