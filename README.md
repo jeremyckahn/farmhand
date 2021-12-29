@@ -89,6 +89,10 @@ npm start
 
 In this case, the local app will be using the Production API and database. However you boot, Farmhand will be accessible from http://localhost:3000/.
 
+### Multiplayer system architecture
+
+The system design for Farmhand's multiplayer functionality has been [detailed in this blog post](https://dev.to/jeremyckahn/how-i-designed-an-abuse-resistant-fault-tolerant-zero-cost-multiplayer-online-game-140g).
+
 ### CI/CD
 
 Automation is done with [GitHub Actions](.github/workflows). All changes are tested and built upon Git push. Merges to `main` automatically deploy to Production (the `gh-pages` branch) upon a successful test run and build.
