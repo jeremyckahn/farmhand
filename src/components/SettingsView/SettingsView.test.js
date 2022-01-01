@@ -15,8 +15,10 @@ beforeEach(() => {
         handleSaveButtonClick: () => {},
         handleShowNotificationsChange: () => {},
         handleUseAlternateEndDayButtonPositionChange: () => {},
+        handleHideHomeScreenChange: () => {},
         showNotifications: true,
         useAlternateEndDayButtonPosition: false,
+        hideHomeScreen: false
       }}
     />
   )

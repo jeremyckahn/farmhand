@@ -399,6 +399,17 @@ export default {
     this.setState({ useAlternateEndDayButtonPosition })
   },
 
+  handleHideHomeScreenChange(
+      _e,
+      hideHomeScreen
+  ) {
+    if (this.state.stageFocus === 'HOME') {
+      this.focusNextView()
+    }
+
+    this.setState({ hideHomeScreen })
+  },
+
   handleShowNotificationsChange({ target: { checked } }) {
     this.setState({ showNotifications: checked })
   },

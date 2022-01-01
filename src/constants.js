@@ -160,6 +160,7 @@ export const PERSISTED_STATE_KEYS = [
   'todaysStartingInventory',
   'toolLevels',
   'useAlternateEndDayButtonPosition',
+  'hideHomeScreen',
   'valueAdjustments',
   'version',
 ]

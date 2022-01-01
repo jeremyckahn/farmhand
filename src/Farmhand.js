@@ -236,6 +236,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * their respective quantities.
  * @property {boolean} useAlternateEndDayButtonPosition Option to display the
  * Bed button on the left side of the screen.
+ * @property {boolean} hideHomeScreen Option to hide the Home Screen
  * @property {Object.<number>} valueAdjustments
  * @property {string} version Comes from the `version` property in
  * package.json.
@@ -299,7 +300,11 @@ export default class Farmhand extends Component {
 
   get viewList() {
     const { COW_PEN, FIELD, HOME, WORKSHOP, SHOP } = stageFocusType
-    const viewList = [HOME, SHOP, FIELD]
+    const viewList = [SHOP, FIELD]
+
+    if (!this.state.hideHomeScreen) {
+      viewList.unshift(HOME)
+    }
 
     if (this.state.purchasedCowPen) {
       viewList.push(COW_PEN)
@@ -403,6 +408,7 @@ export default class Farmhand extends Component {
         [toolType.WATERING_CAN]: toolLevel.DEFAULT,
       },
       useAlternateEndDayButtonPosition: false,
+      hideHomeScreen: false,
       valueAdjustments: {},
       version: process.env.REACT_APP_VERSION,
     }
