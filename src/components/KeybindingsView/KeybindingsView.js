@@ -18,7 +18,10 @@ const KeybindingsView = () => (
       <Table aria-label="Keyboard Shortcuts">
         <TableBody>
           {[
-            { label: 'Show Keyboard Shortcuts (this screen)', keybinding: 'Shift + ?' },
+            {
+              label: 'Show Keyboard Shortcuts (this screen)',
+              keybinding: 'Shift + ?',
+            },
             { label: 'Toggle menu', keybinding: 'M' },
             { label: 'End the day', keybinding: 'Shift + C' },
             { label: 'Go to screen by <1-9> order', keybinding: '<1-9>' },

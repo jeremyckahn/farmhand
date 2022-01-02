@@ -1,21 +1,23 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React from 'react'
+import { shallow } from 'enzyme'
 
-import OnlinePeersView from './OnlinePeersView';
+import OnlinePeersView from './OnlinePeersView'
 
-let component;
+let component
 
 beforeEach(() => {
   component = shallow(
-    <OnlinePeersView {...{
-      activePlayers: 0,
-      id: '',
-      latestPeerMessages: [],
-      peers: {},
-    }} />
-  );
-});
+    <OnlinePeersView
+      {...{
+        activePlayers: 0,
+        id: '',
+        latestPeerMessages: [],
+        peers: {},
+      }}
+    />
+  )
+})
 
 test('renders', () => {
-  expect(component).toHaveLength(1);
-});
+  expect(component).toHaveLength(1)
+})
