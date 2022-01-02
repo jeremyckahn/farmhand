@@ -116,7 +116,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "if git-branch-is develop; then pretty-quick --staged && npm run lint && cross-env CI=true react-scripts test --env=jsdom; fi"
+      "pre-commit": "pretty-quick --staged && npm run lint && if git-branch-is develop; then cross-env CI=true react-scripts test --env=jsdom; fi"
     }
   },
   "files": [
