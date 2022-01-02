@@ -168,3 +168,48 @@ describe('handleCowSelect', () => {
     expect(component.instance().selectCow).toHaveBeenCalledWith({ id: 'abc' })
   })
 })
+
+describe('handleShowHomeScreenChange', () => {
+
+  beforeEach(() => {
+    jest.spyOn(component.instance(), 'setState').mockImplementation()
+    jest.spyOn(component.instance(), 'focusNextView').mockImplementation()
+  })
+
+  test('change show home screen setting to False and navigate to the next view', () => {
+    component.state().stageFocus = stageFocusType.HOME
+    component.state().showHomeScreen = true
+
+    handlers().handleShowHomeScreenChange(null, false)
+    expect(component.instance().setState).toHaveBeenCalled()
+    // expect(component.showHomeScreen).toBeFalse()
+    expect(component.instance().focusNextView).toHaveBeenCalled()
+  })
+
+  test('change show home screen setting to False and do not navigate', () => {
+    component.state().stageFocus = stageFocusType.SHOP
+    component.state().showHomeScreen = true
+
+    handlers().handleShowHomeScreenChange(null, false)
+    expect(component.instance().setState).toHaveBeenCalled()
+    expect(component.instance().focusNextView).not.toHaveBeenCalled()
+  })
+
+  test('change show home screen setting to True and does not navigate', () => {
+    component.state().stageFocus = stageFocusType.HOME
+    component.state().showHomeScreen = false
+
+    handlers().handleShowHomeScreenChange(null, true)
+    expect(component.instance().setState).toHaveBeenCalled()
+    expect(component.instance().focusNextView).not.toHaveBeenCalled()
+  })
+
+  test('change show home screen setting to True and does not navigate', () => {
+    component.state().stageFocus = stageFocusType.SHOP
+    component.state().showHomeScreen = false
+
+    handlers().handleShowHomeScreenChange(null, true)
+    expect(component.instance().setState).toHaveBeenCalled()
+    expect(component.instance().focusNextView).not.toHaveBeenCalled()
+  })
+})
