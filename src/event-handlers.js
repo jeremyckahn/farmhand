@@ -21,7 +21,7 @@ import {
   SPRINKLER_ITEM_ID,
   TOOLBELT_FIELD_MODES,
 } from './constants'
-import {dialogView, fieldMode, stageFocusType} from './enums'
+import { dialogView, fieldMode, stageFocusType } from './enums'
 import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
