@@ -403,7 +403,7 @@ export default {
       _e,
       showHomeScreen
   ) {
-    if (this.state.stageFocus === stageFocusType.HOME) {
+    if (this.state.stageFocus === stageFocusType.HOME && !(showHomeScreen)) {
       this.focusNextView()
     }
 
