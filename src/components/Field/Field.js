@@ -18,7 +18,13 @@ import Plot from '../Plot'
 import QuickSelect from '../QuickSelect'
 import { fieldMode } from '../../enums'
 import tools from '../../data/tools'
-import { doesInventorySpaceRemain, nullArray } from '../../utils'
+import {
+  doesInventorySpaceRemain,
+  farmProductsSold,
+  getLevelEntitlements,
+  levelAchieved,
+  nullArray,
+} from '../../utils'
 
 import './Field.sass'
 
@@ -27,6 +33,7 @@ const {
   FERTILIZE,
   HARVEST,
   MINE,
+  OBSERVE,
   PLANT,
   SET_SCARECROW,
   SET_SPRINKLER,
@@ -49,19 +56,40 @@ if (tools.shovel) {
 }
 
 export const isInHoverRange = ({
+  fieldMode,
   hoveredPlotRangeSize,
   hoveredPlot: { x: hoveredPlotX, y: hoveredPlotY },
+  itemsSold,
   x,
   y,
 }) => {
   // If hoveredPlotX is null, assume that hoveredPlotY is as well.
-  if (hoveredPlotX == null) {
+  // If fieldMode === OBSERVE, nothing is in hover range.
+  if (hoveredPlotX == null || fieldMode === OBSERVE) {
     return false
   }
 
-  const squareSize = 2 * hoveredPlotRangeSize
-  const rangeFloorX = hoveredPlotX - hoveredPlotRangeSize
-  const rangeFloorY = hoveredPlotY - hoveredPlotRangeSize
+  let hoveredPlotRangeSizeToRender = hoveredPlotRangeSize
+
+  switch (fieldMode) {
+    case SET_SPRINKLER:
+      hoveredPlotRangeSizeToRender = getLevelEntitlements(
+        levelAchieved(farmProductsSold(itemsSold))
+      ).sprinklerRange
+
+      break
+
+    case SET_SCARECROW:
+      hoveredPlotRangeSizeToRender = Number.MAX_SAFE_INTEGER
+
+      break
+
+    default:
+  }
+
+  const squareSize = 2 * hoveredPlotRangeSizeToRender
+  const rangeFloorX = hoveredPlotX - hoveredPlotRangeSizeToRender
+  const rangeFloorY = hoveredPlotY - hoveredPlotRangeSizeToRender
   const rangeCeilingX = rangeFloorX + squareSize
   const rangeCeilingY = rangeFloorY + squareSize
 
@@ -103,8 +131,10 @@ export const MemoPlot = memo(
 )
 
 MemoPlot.propTypes = {
+  fieldMode: string.isRequired,
   hoveredPlot: object.isRequired,
   hoveredPlotRangeSize: number.isRequired,
+  itemsSold: object.isRequired,
   plotContent: object,
   setHoveredPlot: func.isRequired,
   x: number.isRequired,
@@ -185,10 +215,12 @@ FieldContentWrapper.propTypes = {
 export const FieldContent = ({
   columns,
   field,
+  fieldMode,
   handleCombineEnabledChange,
   hoveredPlot,
   hoveredPlotRangeSize,
   isCombineEnabled,
+  itemsSold,
   purchasedCombine,
   rows,
   setHoveredPlot,
@@ -207,8 +239,10 @@ export const FieldContent = ({
               <MemoPlot
                 key={x}
                 {...{
+                  fieldMode,
                   hoveredPlot,
                   hoveredPlotRangeSize,
+                  itemsSold,
                   plotContent,
                   setHoveredPlot,
                   x,
@@ -243,10 +277,12 @@ export const FieldContent = ({
 FieldContent.propTypes = {
   columns: number.isRequired,
   field: array.isRequired,
+  fieldMode: string.isRequired,
   handleCombineEnabledChange: func.isRequired,
   hoveredPlot: object.isRequired,
   hoveredPlotRangeSize: number.isRequired,
   isCombineEnabled: bool.isRequired,
+  itemsSold: object.isRequired,
   purchasedCombine: number.isRequired,
   rows: number.isRequired,
   setHoveredPlot: func.isRequired,
@@ -398,6 +434,7 @@ Field.propTypes = {
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
   isCombineEnabled: bool.isRequired,
+  itemsSold: object.isRequired,
   purchasedCombine: number.isRequired,
   purchasedField: number.isRequired,
   rows: number.isRequired,

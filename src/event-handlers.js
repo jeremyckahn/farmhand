@@ -9,16 +9,12 @@ import {
   waterPlot,
 } from './reducers'
 import {
-  farmProductsSold,
-  getLevelEntitlements,
-  levelAchieved,
   moneyTotal,
   reduceByPersistedKeys,
   transformStateDataForImport,
 } from './utils'
 import {
   DEFAULT_ROOM,
-  SPRINKLER_ITEM_ID,
   TOOLBELT_FIELD_MODES,
 } from './constants'
 import { dialogView, fieldMode } from './enums'
@@ -151,24 +147,9 @@ export default {
     enablesFieldMode,
     hoveredPlotRangeSize: newHoveredPlotRangeSize,
   }) {
-    this.setState(({ hoveredPlotRangeSize, itemsSold }) => {
-      if (id === SPRINKLER_ITEM_ID) {
-        hoveredPlotRangeSize = getLevelEntitlements(
-          levelAchieved(farmProductsSold(itemsSold))
-        ).sprinklerRange
-      } else {
-        // newHoveredPlotRangeSize is either a number or undefined.
-        hoveredPlotRangeSize =
-          typeof newHoveredPlotRangeSize === 'number'
-            ? newHoveredPlotRangeSize
-            : hoveredPlotRangeSize
-      }
-
-      return {
-        fieldMode: enablesFieldMode,
-        hoveredPlotRangeSize,
-        selectedItemId: id,
-      }
+    this.setState({
+      fieldMode: enablesFieldMode,
+      selectedItemId: id,
     })
   },
 

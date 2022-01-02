@@ -22,6 +22,7 @@ beforeEach(() => {
         hoveredPlotRangeSize: 0,
         handleCombineEnabledChange: () => {},
         handleFieldActionRangeChange: () => {},
+        itemsSold: {},
         rows: 0,
         field: [
           [null, null],
@@ -53,7 +54,9 @@ describe('field rendering', () => {
           ],
           hoveredPlot: {},
           hoveredPlotRangeSize: 0,
+          fieldMode: fieldMode.OBSERVE,
           isCombineEnabled: false,
+          itemsSold: {},
           purchasedCombine: 0,
           rows: 0,
           setHoveredPlot: () => {},
@@ -159,6 +162,7 @@ describe('isInHoverRange', () => {
         isInHoverRange({
           hoveredPlotRangeSize: 2,
           hoveredPlot: { x: 1, y: 1 },
+          itemsSold: {},
           x: 4,
           y: 4,
         })
@@ -172,6 +176,7 @@ describe('isInHoverRange', () => {
         isInHoverRange({
           hoveredPlotRangeSize: 2,
           hoveredPlot: { x: 1, y: 1 },
+          itemsSold: {},
           x: 0,
           y: 0,
         })
