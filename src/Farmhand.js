@@ -225,6 +225,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} revenue The amount of money the player has generated in
  * @property {string} redirect Transient value used to drive router redirection.
  * @property {string} room What online room the player is in.
+ * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Array.<farmhand.notification>} todaysNotifications
@@ -236,7 +237,6 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * their respective quantities.
  * @property {boolean} useAlternateEndDayButtonPosition Option to display the
  * Bed button on the left side of the screen.
- * @property {boolean} hideHomeScreen Option to hide the Home Screen
  * @property {Object.<number>} valueAdjustments
  * @property {string} version Comes from the `version` property in
  * package.json.
@@ -302,7 +302,7 @@ export default class Farmhand extends Component {
     const { COW_PEN, FIELD, HOME, WORKSHOP, SHOP } = stageFocusType
     const viewList = [SHOP, FIELD]
 
-    if (!this.state.hideHomeScreen) {
+    if (this.state.showHomeScreen) {
       viewList.unshift(HOME)
     }
 
@@ -394,6 +394,7 @@ export default class Farmhand extends Component {
       purchasedCowPen: 0,
       purchasedField: 0,
       purchasedSmelter: 0,
+      showHomeScreen: true,
       showNotifications: true,
       stageFocus: stageFocusType.HOME,
       todaysNotifications: [],
@@ -408,7 +409,6 @@ export default class Farmhand extends Component {
         [toolType.WATERING_CAN]: toolLevel.DEFAULT,
       },
       useAlternateEndDayButtonPosition: false,
-      hideHomeScreen: false,
       valueAdjustments: {},
       version: process.env.REACT_APP_VERSION,
     }

@@ -153,6 +153,7 @@ export const PERSISTED_STATE_KEYS = [
   'recordProfitabilityStreak',
   'recordSingleDayProfit',
   'revenue',
+  'showHomeScreen',
   'showNotifications',
   'todaysLosses',
   'todaysPurchases',
@@ -160,7 +161,6 @@ export const PERSISTED_STATE_KEYS = [
   'todaysStartingInventory',
   'toolLevels',
   'useAlternateEndDayButtonPosition',
-  'hideHomeScreen',
   'valueAdjustments',
   'version',
 ]

@@ -21,7 +21,7 @@ import {
   SPRINKLER_ITEM_ID,
   TOOLBELT_FIELD_MODES,
 } from './constants'
-import { dialogView, fieldMode } from './enums'
+import {dialogView, fieldMode, stageFocusType} from './enums'
 import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
@@ -399,15 +399,15 @@ export default {
     this.setState({ useAlternateEndDayButtonPosition })
   },
 
-  handleHideHomeScreenChange(
+  handleShowHomeScreenChange(
       _e,
-      hideHomeScreen
+      showHomeScreen
   ) {
-    if (this.state.stageFocus === 'HOME') {
+    if (this.state.stageFocus === stageFocusType.HOME) {
       this.focusNextView()
     }
 
-    this.setState({ hideHomeScreen })
+    this.setState({ showHomeScreen })
   },
 
   handleShowNotificationsChange({ target: { checked } }) {
