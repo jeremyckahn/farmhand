@@ -555,6 +555,13 @@ export default class Farmhand extends Component {
           }
         })
       })
+
+      if (
+        !this.state.showHomeScreen &&
+        this.state.stageFocus === stageFocusType.HOME
+      ) {
+        this.focusNextView()
+      }
     } else {
       // Initialize new game
       this.incrementDay(true)
