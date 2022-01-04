@@ -1,1 +1,1 @@
-export { default } from './KeybindingsView';
+export { default } from './KeybindingsView'
