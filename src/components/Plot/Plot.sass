@@ -1,11 +1,10 @@
-$not-allowed-color: rgba(255, 0, 0, 0.5)
-
 .Plot
+  --color-generic-highlight: rgba(255, 255, 255, 0.8)
   --color-red-danger: rgba(255, 0, 0, 0.5)
   --color-blue-water: rgba(125, 245, 255, 0.75)
   --color-brown-fertilize: rgba(125, 56, 0, .75)
   --color-green-ok: rgba(0, 255, 0, 0.5)
-  --color-yellow: #ff0
+  --color-yellow: rgba(255, 255, 0, 0.75)
 
   background-repeat: no-repeat
   background-size: cover
@@ -13,9 +12,19 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
   flex-grow: 1
   image-rendering: pixelated
 
+  &:hover
+    background-color: var(--color-generic-highlight)
+    cursor: pointer
+
+  &.is-in-hover-range
+    border-color: var(--color-generic-highlight)
+
   .water-mode &.crop:hover
     background-color: var(--color-blue-water)
     cursor: pointer
+
+  .water-mode &.is-in-hover-range
+    border-color: var(--color-blue-water)
 
   .fertilize-mode &.can-be-fertilized
     background-color: var(--color-brown-fertilize)
@@ -36,8 +45,11 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
       cursor: pointer
       border-color: var(--color-yellow)
 
+    &.is-in-hover-range
+      border-color: var(--color-yellow)
+
   .cleanup-mode &.crop,
-    background-color: rgba(255, 255, 0, 0.5)
+    background-color: var(--color-yellow)
     cursor: pointer
 
   .harvest-mode.is-inventory-full &.crop.is-ripe,
@@ -52,13 +64,6 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
   .cleanup-mode &.is-ripe
     background-color: var(--color-green-ok)
     cursor: auto
-
-  &.is-in-hover-range
-    border-color: #fff
-
-  &:hover
-    background-color: rgba(255, 255, 255, 0.8)
-    cursor: pointer
 
   .set-sprinkler-mode:hover &:hover,
   .set-scarecrow-mode:hover &:hover
@@ -95,5 +100,3 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
       opacity: 0
       visibility: hidden
       transform: translate3d(0, -100%, 0) scale(0.75)
-
-
