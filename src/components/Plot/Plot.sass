@@ -1,10 +1,10 @@
 .Plot
-  --color-generic-highlight: rgba(255, 255, 255, 0.8)
-  --color-red-danger: rgba(255, 0, 0, 0.5)
-  --color-blue-water: rgba(125, 245, 255, 0.75)
-  --color-brown-fertilize: rgba(125, 56, 0, .75)
-  --color-green-ok: rgba(0, 255, 0, 0.5)
-  --color-yellow: rgba(255, 255, 0, 0.75)
+  $colorGenericHighlight: rgba(255, 255, 255, 0.8)
+  $colorRedDanger: rgba(255, 0, 0, 0.5)
+  $colorBlueWater: rgba(125, 245, 255, 0.75)
+  $colorBrownFertilize: rgba(125, 56, 0, .75)
+  $colorGreenOk: rgba(0, 255, 0, 0.5)
+  $colorYellow: rgba(255, 255, 0, 0.75)
 
   background-repeat: no-repeat
   background-size: cover
@@ -13,56 +13,56 @@
   image-rendering: pixelated
 
   &:hover
-    background-color: var(--color-generic-highlight)
+    background-color: #{$colorGenericHighlight}
     cursor: pointer
 
   &.is-in-hover-range
-    border-color: var(--color-generic-highlight)
+    border-color: #{$colorGenericHighlight}
 
   .water-mode &.crop:hover
-    background-color: var(--color-blue-water)
+    background-color: #{$colorBlueWater}
     cursor: pointer
 
   .water-mode &.is-in-hover-range
-    border-color: var(--color-blue-water)
+    border-color: #{$colorBlueWater}
 
   .fertilize-mode &.can-be-fertilized
-    background-color: var(--color-brown-fertilize)
+    background-color: #{$colorBrownFertilize}
 
     &:hover
       cursor: pointer
 
   .harvest-mode &.is-ripe
-    background-color: var(--color-green-ok)
+    background-color: #{$colorGreenOk}
 
     &:hover
       cursor: pointer
 
   .mine-mode &.can-be-mined
-    background-color: var(--color-green-ok)
+    background-color: #{$colorGreenOk}
 
     &:hover
       cursor: pointer
-      border-color: var(--color-yellow)
+      border-color: #{$colorYellow}
 
     &.is-in-hover-range
-      border-color: var(--color-yellow)
+      border-color: #{$colorYellow}
 
   .cleanup-mode &.crop,
-    background-color: var(--color-yellow)
+    background-color: #{$colorYellow}
     cursor: pointer
 
   .harvest-mode.is-inventory-full &.crop.is-ripe,
   .cleanup-mode.is-inventory-full &.is-replantable
-    background-color: var(--color-red-danger)
+    background-color: #{$colorRedDanger}
     cursor: not-allowed
 
   .cleanup-mode &.is-replantable
-    background-color: var(--color-green-ok)
+    background-color: #{$colorGreenOk}
     cursor: pointer
 
   .cleanup-mode &.is-ripe
-    background-color: var(--color-green-ok)
+    background-color: #{$colorGreenOk}
     cursor: auto
 
   .set-sprinkler-mode:hover &:hover,
@@ -73,7 +73,7 @@
       opacity: 0.5
 
     &:not(.is-empty)
-      background-color: var(--color-red-danger)
+      background-color: #{$colorRedDanger}
       background-image: none
       cursor: not-allowed
 
