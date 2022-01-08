@@ -22,6 +22,7 @@ beforeEach(() => {
         hoveredPlotRangeSize: 0,
         handleCombineEnabledChange: () => {},
         handleFieldActionRangeChange: () => {},
+        itemsSold: {},
         rows: 0,
         field: [
           [null, null],
@@ -53,7 +54,9 @@ describe('field rendering', () => {
           ],
           hoveredPlot: {},
           hoveredPlotRangeSize: 0,
+          fieldMode: fieldMode.OBSERVE,
           isCombineEnabled: false,
+          itemsSold: {},
           purchasedCombine: 0,
           rows: 0,
           setHoveredPlot: () => {},
@@ -153,27 +156,107 @@ describe('water-mode class', () => {
 })
 
 describe('isInHoverRange', () => {
-  describe('plot is not in hover range', () => {
-    test('returns false', () => {
+  test('indicates when plot is not in hover range', () => {
+    expect(
+      isInHoverRange({
+        hoveredPlotRangeSize: 2,
+        hoveredPlot: { x: 1, y: 1 },
+        itemsSold: {},
+        x: 4,
+        y: 4,
+      })
+    ).toBe(false)
+  })
+
+  test('indicates when plot is in hover range', () => {
+    expect(
+      isInHoverRange({
+        hoveredPlotRangeSize: 2,
+        hoveredPlot: { x: 1, y: 1 },
+        itemsSold: {},
+        x: 0,
+        y: 0,
+      })
+    ).toBe(true)
+  })
+
+  describe('when observing the field', () => {
+    test('indicates when plot is not in hover range', () => {
       expect(
         isInHoverRange({
           hoveredPlotRangeSize: 2,
           hoveredPlot: { x: 1, y: 1 },
+          fieldMode: fieldMode.OBSERVE,
+          itemsSold: {},
           x: 4,
           y: 4,
         })
       ).toBe(false)
     })
-  })
 
-  describe('plot is in hover range', () => {
-    test('returns true', () => {
+    test('indicates when plot is in hover range', () => {
       expect(
         isInHoverRange({
           hoveredPlotRangeSize: 2,
           hoveredPlot: { x: 1, y: 1 },
+          fieldMode: fieldMode.OBSERVE,
+          itemsSold: {},
           x: 0,
           y: 0,
+        })
+      ).toBe(false)
+    })
+  })
+
+  describe('when placing a sprinkler', () => {
+    test('indicates when plot is not in hover range', () => {
+      expect(
+        isInHoverRange({
+          hoveredPlotRangeSize: 2,
+          hoveredPlot: { x: 1, y: 1 },
+          fieldMode: fieldMode.SET_SPRINKLER,
+          itemsSold: {},
+          x: 4,
+          y: 4,
+        })
+      ).toBe(false)
+    })
+
+    test('indicates when plot is in hover range', () => {
+      expect(
+        isInHoverRange({
+          hoveredPlotRangeSize: 2,
+          hoveredPlot: { x: 1, y: 1 },
+          fieldMode: fieldMode.SET_SPRINKLER,
+          itemsSold: {},
+          x: 0,
+          y: 0,
+        })
+      ).toBe(true)
+    })
+  })
+
+  describe('when placing a scarecrow', () => {
+    test('indicates that all plots are in hover range', () => {
+      expect(
+        isInHoverRange({
+          hoveredPlotRangeSize: 2,
+          hoveredPlot: { x: 1, y: 1 },
+          fieldMode: fieldMode.SET_SCARECROW,
+          itemsSold: {},
+          x: 2,
+          y: 2,
+        })
+      ).toBe(true)
+
+      expect(
+        isInHoverRange({
+          hoveredPlotRangeSize: 2,
+          hoveredPlot: { x: 1, y: 1 },
+          fieldMode: fieldMode.SET_SCARECROW,
+          itemsSold: {},
+          x: 100,
+          y: 100,
         })
       ).toBe(true)
     })

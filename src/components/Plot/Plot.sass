@@ -1,11 +1,10 @@
-$not-allowed-color: rgba(255, 0, 0, 0.5)
-
 .Plot
-  --color-red-danger: rgba(255, 0, 0, 0.5)
-  --color-blue-water: rgba(125, 245, 255, 0.75)
-  --color-brown-fertilize: rgba(125, 56, 0, .75)
-  --color-green-ok: rgba(0, 255, 0, 0.5)
-  --color-yellow: #ff0
+  $colorGenericHighlight: rgba(255, 255, 255, 0.8)
+  $colorRedDanger: rgba(255, 0, 0, 0.5)
+  $colorBlueWater: rgba(125, 245, 255, 0.75)
+  $colorBrownFertilize: rgba(125, 56, 0, .75)
+  $colorGreenOk: rgba(0, 255, 0, 0.5)
+  $colorYellow: rgba(255, 255, 0, 0.75)
 
   background-repeat: no-repeat
   background-size: cover
@@ -13,52 +12,58 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
   flex-grow: 1
   image-rendering: pixelated
 
-  .water-mode &.crop:hover
-    background-color: var(--color-blue-hover)
+  &:hover
+    background-color: $colorGenericHighlight
     cursor: pointer
 
+  &.is-in-hover-range
+    border-color: $colorGenericHighlight
+
+  .water-mode &.crop:hover
+    background-color: $colorBlueWater
+    cursor: pointer
+
+  .water-mode &.is-in-hover-range
+    border-color: $colorBlueWater
+
   .fertilize-mode &.can-be-fertilized
-    background-color: var(--color-brown-fertilize)
+    background-color: $colorBrownFertilize
 
     &:hover
       cursor: pointer
 
   .harvest-mode &.is-ripe
-    background-color: var(--color-green-ok)
+    background-color: $colorGreenOk
 
     &:hover
       cursor: pointer
 
   .mine-mode &.can-be-mined
-    background-color: var(--color-green-ok)
+    background-color: $colorGreenOk
 
     &:hover
       cursor: pointer
-      border-color: var(--color-yellow)
+      border-color: $colorYellow
+
+    &.is-in-hover-range
+      border-color: $colorYellow
 
   .cleanup-mode &.crop,
-    background-color: rgba(255, 255, 0, 0.5)
+    background-color: $colorYellow
     cursor: pointer
 
   .harvest-mode.is-inventory-full &.crop.is-ripe,
   .cleanup-mode.is-inventory-full &.is-replantable
-    background-color: var(--color-red-danger)
+    background-color: $colorRedDanger
     cursor: not-allowed
 
   .cleanup-mode &.is-replantable
-    background-color: var(--color-green-ok)
+    background-color: $colorGreenOk
     cursor: pointer
 
   .cleanup-mode &.is-ripe
-    background-color: var(--color-green-ok)
+    background-color: $colorGreenOk
     cursor: auto
-
-  &.is-in-hover-range
-    background-color: rgba(255, 255, 255, 0.4)
-
-  &:hover
-    background-color: rgba(255, 255, 255, 0.8)
-    cursor: pointer
 
   .set-sprinkler-mode:hover &:hover,
   .set-scarecrow-mode:hover &:hover
@@ -68,7 +73,7 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
       opacity: 0.5
 
     &:not(.is-empty)
-      background-color: var(--color-red-danger)
+      background-color: $colorRedDanger
       background-image: none
       cursor: not-allowed
 
@@ -95,5 +100,3 @@ $not-allowed-color: rgba(255, 0, 0, 0.5)
       opacity: 0
       visibility: hidden
       transform: translate3d(0, -100%, 0) scale(0.75)
-
-
