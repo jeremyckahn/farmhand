@@ -156,7 +156,7 @@ describe('water-mode class', () => {
 })
 
 describe('isInHoverRange', () => {
-  test('indicated plot is not in hover range', () => {
+  test('indicates when plot is not in hover range', () => {
     expect(
       isInHoverRange({
         hoveredPlotRangeSize: 2,
@@ -168,7 +168,7 @@ describe('isInHoverRange', () => {
     ).toBe(false)
   })
 
-  test('indicated plot is in hover range', () => {
+  test('indicates when plot is in hover range', () => {
     expect(
       isInHoverRange({
         hoveredPlotRangeSize: 2,
@@ -180,8 +180,8 @@ describe('isInHoverRange', () => {
     ).toBe(true)
   })
 
-  describe('fieldMode === OBSERVE', () => {
-    test('indicated plot is not in hover range', () => {
+  describe('when observing the field', () => {
+    test('indicates when plot is not in hover range', () => {
       expect(
         isInHoverRange({
           hoveredPlotRangeSize: 2,
@@ -194,7 +194,7 @@ describe('isInHoverRange', () => {
       ).toBe(false)
     })
 
-    test('indicated plot is in hover range', () => {
+    test('indicates when plot is in hover range', () => {
       expect(
         isInHoverRange({
           hoveredPlotRangeSize: 2,
@@ -208,8 +208,8 @@ describe('isInHoverRange', () => {
     })
   })
 
-  describe('fieldMode === SET_SPRINKLER', () => {
-    test('indicated plot is not in hover range', () => {
+  describe('when placing a sprinkler', () => {
+    test('indicates when plot is not in hover range', () => {
       expect(
         isInHoverRange({
           hoveredPlotRangeSize: 2,
@@ -222,7 +222,7 @@ describe('isInHoverRange', () => {
       ).toBe(false)
     })
 
-    test('indicated plot is in hover range', () => {
+    test('indicates when plot is in hover range', () => {
       expect(
         isInHoverRange({
           hoveredPlotRangeSize: 2,
@@ -236,8 +236,8 @@ describe('isInHoverRange', () => {
     })
   })
 
-  describe('fieldMode === SET_SCARECROW', () => {
-    test('all plots are in hover range', () => {
+  describe('when placing a scarecrow', () => {
+    test('indicates that all plots are in hover range', () => {
       expect(
         isInHoverRange({
           hoveredPlotRangeSize: 2,
