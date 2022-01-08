@@ -161,10 +161,7 @@ export class Cow extends Component {
   }
 
   componentWillUnmount() {
-    ;[
-      this.repositionTimeoutId,
-      this.animateHugTimeoutId,
-    ].forEach(clearTimeout)
+    ;[this.repositionTimeoutId, this.animateHugTimeoutId].forEach(clearTimeout)
 
     this.tweenable.cancel()
   }

@@ -295,7 +295,7 @@ describe('CowCard', () => {
         .closest('label')
         .querySelector('[type=checkbox]')
       expect(button).not.toHaveAttribute('disabled')
-    });
+    })
 
     test('is disabled when pen has space and incompatible partner', () => {
       const testCow = generateCow({

@@ -562,7 +562,7 @@ describe('getPlotImage', () => {
     expect(getPlotImage(getPlotContentFromItemId('sample-ore-1'))).toBe(
       itemImages['sample-ore-1']
     )
-  });
+  })
 
   test('returns item image for other content', () => {
     expect(getPlotImage(getPlotContentFromItemId('sprinkler'))).toBe(
