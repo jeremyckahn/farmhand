@@ -13,56 +13,56 @@
   image-rendering: pixelated
 
   &:hover
-    background-color: #{$colorGenericHighlight}
+    background-color: $colorGenericHighlight
     cursor: pointer
 
   &.is-in-hover-range
-    border-color: #{$colorGenericHighlight}
+    border-color: $colorGenericHighlight
 
   .water-mode &.crop:hover
-    background-color: #{$colorBlueWater}
+    background-color: $colorBlueWater
     cursor: pointer
 
   .water-mode &.is-in-hover-range
-    border-color: #{$colorBlueWater}
+    border-color: $colorBlueWater
 
   .fertilize-mode &.can-be-fertilized
-    background-color: #{$colorBrownFertilize}
+    background-color: $colorBrownFertilize
 
     &:hover
       cursor: pointer
 
   .harvest-mode &.is-ripe
-    background-color: #{$colorGreenOk}
+    background-color: $colorGreenOk
 
     &:hover
       cursor: pointer
 
   .mine-mode &.can-be-mined
-    background-color: #{$colorGreenOk}
+    background-color: $colorGreenOk
 
     &:hover
       cursor: pointer
-      border-color: #{$colorYellow}
+      border-color: $colorYellow
 
     &.is-in-hover-range
-      border-color: #{$colorYellow}
+      border-color: $colorYellow
 
   .cleanup-mode &.crop,
-    background-color: #{$colorYellow}
+    background-color: $colorYellow
     cursor: pointer
 
   .harvest-mode.is-inventory-full &.crop.is-ripe,
   .cleanup-mode.is-inventory-full &.is-replantable
-    background-color: #{$colorRedDanger}
+    background-color: $colorRedDanger
     cursor: not-allowed
 
   .cleanup-mode &.is-replantable
-    background-color: #{$colorGreenOk}
+    background-color: $colorGreenOk
     cursor: pointer
 
   .cleanup-mode &.is-ripe
-    background-color: #{$colorGreenOk}
+    background-color: $colorGreenOk
     cursor: auto
 
   .set-sprinkler-mode:hover &:hover,
@@ -73,7 +73,7 @@
       opacity: 0.5
 
     &:not(.is-empty)
-      background-color: #{$colorRedDanger}
+      background-color: $colorRedDanger
       background-image: none
       cursor: not-allowed
 
