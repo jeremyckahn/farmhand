@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { func, object } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 import window from 'global/window'
@@ -10,6 +11,8 @@ import AccordionDetails from '@material-ui/core/AccordionDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+
+import { items } from '../../img'
 
 import { achievementsMap } from '../../data/achievements'
 import FarmhandContext from '../../Farmhand.context'
@@ -124,6 +127,26 @@ It looks like you're new here. Thanks for stopping by! Here are some goals to he
         >
           Go to the shop
         </Button>
+      </CardContent>
+    </Card>
+    <Divider />
+    <Card>
+      <CardContent>
+        <ReactMarkdown
+          {...{
+            className: 'markdown',
+            linkTarget: '_blank',
+            source: `
+### ![Animated Scarecrow](${items['scarecrow-animated']}) Looking for more farming fun? ![Animated Scarecrow](${items['scarecrow-animated']})
+
+The Farmhand team is working on a brand new game for you to play: **[Farmhand Go!](https://rainbowcow-studio.itch.io/farmhand-go)**
+
+**Farmhand Go!** is a complementary game to the one you're playing right now. It's a more active take on the Farmhand concept, with days passing in real time and crows that you need to click/tap to defend against. If you like growing, harvesting, and selling crops in Farmhand, you're going to love **Farmhand Go!**
+
+The Farmhand game you're playing now is still under active development, so don't be concerned about it being abandonded by the team. We just love exploring new ideas and making fun games!
+    `,
+          }}
+        />
       </CardContent>
     </Card>
     <Divider />
