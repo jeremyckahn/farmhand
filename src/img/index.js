@@ -68,6 +68,7 @@ import tomatoSeed from './items/tomato-seed.png'
 import fertilizer from './items/fertilizer.png'
 import rainbowFertilizer from './items/rainbow-fertilizer.png'
 import scarecrow from './items/scarecrow.png'
+import scarecrowAnimated from './items/scarecrow-animated.gif'
 import sprinkler from './items/sprinkler.png'
 import cowFeed from './items/cow-feed.png'
 import huggingMachine from './items/hugging-machine.png'
@@ -239,6 +240,8 @@ export const items = {
   'rainbow-milk-3': rainbowMilk3,
   'chocolate-milk': chocolateMilk,
 
+  // Miscellaneous
+  'scarecrow-animated': scarecrowAnimated,
   'inventory-box': inventoryBox,
 
   ...craftedItems,
