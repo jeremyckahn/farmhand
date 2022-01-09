@@ -149,7 +149,6 @@ The Farmhand game you're playing now is still under active development, so don't
         />
       </CardContent>
     </Card>
-
     <Divider />
     <Card>
       <CardContent>
