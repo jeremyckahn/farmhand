@@ -70,7 +70,7 @@ jobs:
           VERSION_FILE: build/version.txt
 
       - run: |
-          npm run build
+          PUBLIC_URL='/farmhand' npm run build
           npm run doc
 
       # https://github.com/marketplace/actions/deploy-to-github-pages
