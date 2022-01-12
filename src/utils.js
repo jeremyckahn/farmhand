@@ -998,7 +998,10 @@ export const transformStateDataForImport = state => {
     sanitizedState.toolLevels = unlockTool(sanitizedState.toolLevels, tool)
   }
 
-  if (!sanitizedState.showHomeScreen) {
+  if (
+    !sanitizedState.showHomeScreen &&
+    sanitizedState.stageFocus === stageFocusType.HOME
+  ) {
     sanitizedState.stageFocus = stageFocusType.SHOP
   }
 
