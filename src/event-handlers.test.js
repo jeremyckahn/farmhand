@@ -170,10 +170,6 @@ describe('handleCowSelect', () => {
 })
 
 describe('handleShowHomeScreenChange', () => {
-  beforeEach(() => {
-    jest.spyOn(component.instance(), 'focusNextView').mockImplementation()
-  })
-
   test('change show home screen setting to False while on Home and navigate to the next view', () => {
     component.setState({
       stageFocus: stageFocusType.HOME,
@@ -182,7 +178,7 @@ describe('handleShowHomeScreenChange', () => {
 
     handlers().handleShowHomeScreenChange(null, false)
     expect(component.state().showHomeScreen).toBeFalse()
-    expect(component.instance().focusNextView).toHaveBeenCalled()
+    expect(component.state().stageFocus).not.toEqual(stageFocusType.HOME)
   })
 
   test('change show home screen setting to False while not on Home and do not navigate', () => {
@@ -193,7 +189,7 @@ describe('handleShowHomeScreenChange', () => {
 
     handlers().handleShowHomeScreenChange(null, false)
     expect(component.state().showHomeScreen).toBeFalse()
-    expect(component.instance().focusNextView).not.toHaveBeenCalled()
+    expect(component.state().stageFocus).toEqual(stageFocusType.SHOP)
   })
 
   test('change show home screen setting to True while on Home and do not navigate', () => {
@@ -204,7 +200,7 @@ describe('handleShowHomeScreenChange', () => {
 
     handlers().handleShowHomeScreenChange(null, true)
     expect(component.state().showHomeScreen).toBeTrue()
-    expect(component.instance().focusNextView).not.toHaveBeenCalled()
+    expect(component.state().stageFocus).toEqual(stageFocusType.HOME)
   })
 
   test('change show home screen setting to True while not on Home and do not navigate', () => {
@@ -215,6 +211,6 @@ describe('handleShowHomeScreenChange', () => {
 
     handlers().handleShowHomeScreenChange(null, true)
     expect(component.state().showHomeScreen).toBeTrue()
-    expect(component.instance().focusNextView).not.toHaveBeenCalled()
+    expect(component.state().stageFocus).toEqual(stageFocusType.SHOP)
   })
 })
