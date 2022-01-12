@@ -168,3 +168,49 @@ describe('handleCowSelect', () => {
     expect(component.instance().selectCow).toHaveBeenCalledWith({ id: 'abc' })
   })
 })
+
+describe('handleShowHomeScreenChange', () => {
+  test('change show home screen setting to False while on Home and navigate to the next view', () => {
+    component.setState({
+      stageFocus: stageFocusType.HOME,
+      showHomeScreen: true,
+    })
+
+    handlers().handleShowHomeScreenChange(null, false)
+    expect(component.state().showHomeScreen).toBeFalse()
+    expect(component.state().stageFocus).not.toEqual(stageFocusType.HOME)
+  })
+
+  test('change show home screen setting to False while not on Home and do not navigate', () => {
+    component.setState({
+      stageFocus: stageFocusType.SHOP,
+      showHomeScreen: true,
+    })
+
+    handlers().handleShowHomeScreenChange(null, false)
+    expect(component.state().showHomeScreen).toBeFalse()
+    expect(component.state().stageFocus).toEqual(stageFocusType.SHOP)
+  })
+
+  test('change show home screen setting to True while on Home and do not navigate', () => {
+    component.setState({
+      stageFocus: stageFocusType.HOME,
+      showHomeScreen: false,
+    })
+
+    handlers().handleShowHomeScreenChange(null, true)
+    expect(component.state().showHomeScreen).toBeTrue()
+    expect(component.state().stageFocus).toEqual(stageFocusType.HOME)
+  })
+
+  test('change show home screen setting to True while not on Home and do not navigate', () => {
+    component.setState({
+      stageFocus: stageFocusType.SHOP,
+      showHomeScreen: false,
+    })
+
+    handlers().handleShowHomeScreenChange(null, true)
+    expect(component.state().showHomeScreen).toBeTrue()
+    expect(component.state().stageFocus).toEqual(stageFocusType.SHOP)
+  })
+})

@@ -17,7 +17,7 @@ import {
   DEFAULT_ROOM,
   TOOLBELT_FIELD_MODES,
 } from './constants'
-import { dialogView, fieldMode } from './enums'
+import { dialogView, fieldMode, stageFocusType } from './enums'
 import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
@@ -378,6 +378,17 @@ export default {
     useAlternateEndDayButtonPosition
   ) {
     this.setState({ useAlternateEndDayButtonPosition })
+  },
+
+  handleShowHomeScreenChange(
+      _e,
+      showHomeScreen
+  ) {
+    if (this.state.stageFocus === stageFocusType.HOME && !(showHomeScreen)) {
+      this.focusNextView()
+    }
+
+    this.setState({ showHomeScreen })
   },
 
   handleShowNotificationsChange({ target: { checked } }) {
