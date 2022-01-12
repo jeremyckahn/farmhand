@@ -225,6 +225,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} revenue The amount of money the player has generated in
  * @property {string} redirect Transient value used to drive router redirection.
  * @property {string} room What online room the player is in.
+ * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
  * @property {Array.<farmhand.notification>} todaysNotifications
@@ -299,7 +300,11 @@ export default class Farmhand extends Component {
 
   get viewList() {
     const { COW_PEN, FIELD, HOME, WORKSHOP, SHOP } = stageFocusType
-    const viewList = [HOME, SHOP, FIELD]
+    const viewList = [SHOP, FIELD]
+
+    if (this.state.showHomeScreen) {
+      viewList.unshift(HOME)
+    }
 
     if (this.state.purchasedCowPen) {
       viewList.push(COW_PEN)
@@ -389,6 +394,7 @@ export default class Farmhand extends Component {
       purchasedCowPen: 0,
       purchasedField: 0,
       purchasedSmelter: 0,
+      showHomeScreen: true,
       showNotifications: true,
       stageFocus: stageFocusType.HOME,
       todaysNotifications: [],

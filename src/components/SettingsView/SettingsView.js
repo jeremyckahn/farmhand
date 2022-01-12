@@ -25,8 +25,10 @@ const SettingsView = ({
   handleSaveButtonClick,
   handleShowNotificationsChange,
   handleUseAlternateEndDayButtonPositionChange,
+  handleShowHomeScreenChange,
   showNotifications,
   useAlternateEndDayButtonPosition,
+  showHomeScreen,
 }) => {
   const [isClearDataDialogOpen, setIsClearDataDialogOpen] = useState(false)
 
@@ -69,6 +71,17 @@ const SettingsView = ({
               />
             }
             label="Show new notifications"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                color="primary"
+                checked={showHomeScreen}
+                onChange={handleShowHomeScreenChange}
+                name="show-home-screen"
+              />
+            }
+            label="Show the Home Screen"
           />
         </FormGroup>
       </FormControl>
@@ -175,8 +188,10 @@ SettingsView.propTypes = {
   handleSaveButtonClick: func.isRequired,
   handleShowNotificationsChange: func.isRequired,
   handleUseAlternateEndDayButtonPositionChange: func.isRequired,
+  handleShowHomeScreenChange: func.isRequired,
   showNotifications: bool.isRequired,
   useAlternateEndDayButtonPosition: bool.isRequired,
+  showHomeScreen: bool.isRequired,
 }
 
 export default function Consumer(props) {

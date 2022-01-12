@@ -31,6 +31,7 @@ import {
   fertilizerType,
   genders,
   itemType,
+  stageFocusType,
   standardCowColors,
   toolLevel,
 } from './enums'
@@ -995,6 +996,13 @@ export const transformStateDataForImport = state => {
 
   for (const tool of Object.keys(unlockedTools)) {
     sanitizedState.toolLevels = unlockTool(sanitizedState.toolLevels, tool)
+  }
+
+  if (
+    !sanitizedState.showHomeScreen &&
+    sanitizedState.stageFocus === stageFocusType.HOME
+  ) {
+    sanitizedState.stageFocus = stageFocusType.SHOP
   }
 
   return sanitizedState
