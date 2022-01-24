@@ -3,8 +3,10 @@
  * @ignore
  */
 
+import { Buffer } from 'buffer/'
 import Dinero from 'dinero.js'
 import fastMemoize from 'fast-memoize'
+import Jimp from 'jimp'
 import sortBy from 'lodash.sortby'
 import { v4 as uuid } from 'uuid'
 
@@ -24,7 +26,7 @@ import {
 } from './data/items'
 import { levels } from './data/levels'
 import { unlockableItems } from './data/levels'
-import { items as itemImages } from './img'
+import { items as itemImages, animals } from './img'
 import {
   cowColors,
   cropLifeStage,
@@ -37,6 +39,7 @@ import {
 } from './enums'
 import {
   BREAKPOINTS,
+  COW_COLORS_HEX_MAP,
   COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
   COW_MAXIMUM_VALUE_MATURITY_AGE,
@@ -1094,6 +1097,78 @@ export function randomChoice(weightedOptions) {
 
     runningTotal += option.weight
   }
+}
+
+const colorizeCowTemplate = (() => {
+  const cowImageWidth = 48
+  const cowImageHeight = 48
+  const cowImageFactoryCanvas = document.createElement('canvas')
+  cowImageFactoryCanvas.setAttribute('height', cowImageHeight)
+  cowImageFactoryCanvas.setAttribute('width', cowImageWidth)
+
+  const cachedCowImages = {}
+
+  // https://stackoverflow.com/a/5624139
+  const hexToRgb = hex => {
+    const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+
+    return {
+      r: parseInt(r, 16),
+      g: parseInt(g, 16),
+      b: parseInt(b, 16),
+    }
+  }
+
+  /**
+   * @param {string} cowTemplate Base64 representation of an image
+   * @param {string} color
+   * @returns {string} Base64 representation of an image
+   */
+  return async (cowTemplate, color) => {
+    if (color === cowColors.RAINBOW) return Promise.resolve(animals.cow.rainbow)
+
+    const imageKey = `${color}_${cowTemplate}`
+
+    if (cachedCowImages[imageKey])
+      return Promise.resolve(cachedCowImages[imageKey])
+
+    const cowTemplateBuffer = Buffer.from(cowTemplate.split(',')[1], 'base64')
+    const image = await Jimp.read(cowTemplateBuffer)
+
+    image.scan(0, 0, image.bitmap.width, image.bitmap.height, function(x, y) {
+      const { r, g, b } = Jimp.intToRGBA(image.getPixelColor(x, y))
+
+      if (r === 102 && g === 102 && b === 102) {
+        const cowColorRgb = hexToRgb(COW_COLORS_HEX_MAP[color])
+        const colorNumber = Jimp.rgbaToInt(
+          cowColorRgb.r,
+          cowColorRgb.g,
+          cowColorRgb.b,
+          255
+        )
+        image.setPixelColor(colorNumber, x, y)
+      }
+    })
+
+    cachedCowImages[imageKey] = await image.getBase64Async(Jimp.MIME_PNG)
+
+    return cachedCowImages[imageKey]
+  }
+})()
+
+/**
+ * @param {farmhand.cow} cow
+ * @returns {string} Base64 representation of an image
+ */
+export const getCowImage = cow => {
+  const cowIdNumber = cow.id
+    .split('')
+    .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
+
+  const { variations } = animals.cow
+  const cowTemplate = variations[cowIdNumber % variations.length]
+
+  return colorizeCowTemplate(cowTemplate, cow.color)
 }
 
 export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'

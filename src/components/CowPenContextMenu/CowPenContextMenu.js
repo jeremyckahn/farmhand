@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
@@ -27,11 +27,12 @@ import {
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons'
 
 import Item from '../Item'
-import { animals } from '../../img'
+import { pixel } from '../../img'
 import FarmhandContext from '../../Farmhand.context'
-import { cowColors, enumify, genders } from '../../enums'
+import { enumify, genders } from '../../enums'
 import {
   areHuggingMachinesInInventory,
+  getCowImage,
   getCowValue,
   getCowSellValue,
   getCowWeight,
@@ -220,6 +221,13 @@ export const CowCard = ({
   isNameEditable = !!handleCowNameInputChange,
 }) => {
   const [name, setName] = useState(cow.name)
+  const [cowImage, setCowImage] = useState(pixel)
+
+  useEffect(() => {
+    ;(async () => {
+      setCowImage(await getCowImage(cow))
+    })()
+  }, [cow])
 
   return (
     <Card {...{ className: 'cow-card', raised: isSelected }}>
@@ -230,12 +238,7 @@ export const CowCard = ({
       )}
       <CardHeader
         {...{
-          avatar: (
-            <img
-              {...{ src: animals.cow[cowColors[cow.color].toLowerCase()] }}
-              alt="Cow"
-            />
-          ),
+          avatar: <img {...{ src: cowImage }} alt="Cow" />,
           title: (
             <>
               {isNameEditable ? (

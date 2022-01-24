@@ -117,6 +117,14 @@ import rainbowCow from './animals/cows/rainbow-cow.png'
 import whiteCow from './animals/cows/white-cow.png'
 import yellowCow from './animals/cows/yellow-cow.png'
 
+import cowVariation1 from './animals/cows/cow-variation-1.png'
+import cowVariation2 from './animals/cows/cow-variation-2.png'
+import cowVariation3 from './animals/cows/cow-variation-3.png'
+import cowVariation4 from './animals/cows/cow-variation-4.png'
+import cowVariation5 from './animals/cows/cow-variation-5.png'
+import cowVariation6 from './animals/cows/cow-variation-6.png'
+import cowVariation7 from './animals/cows/cow-variation-7.png'
+
 export { default as pixel } from './pixel.png'
 
 export const plotStates = {
@@ -264,5 +272,14 @@ export const animals = {
     rainbow: rainbowCow,
     white: whiteCow,
     yellow: yellowCow,
+    variations: [
+      cowVariation1,
+      cowVariation2,
+      cowVariation3,
+      cowVariation4,
+      cowVariation5,
+      cowVariation6,
+      cowVariation7,
+    ],
   },
 }
