@@ -27,6 +27,7 @@ import {
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons'
 
 import Item from '../Item'
+import { COW_COLOR_NAMES } from '../../strings'
 import { pixel } from '../../img'
 import FarmhandContext from '../../Farmhand.context'
 import { enumify, genders } from '../../enums'
@@ -67,7 +68,16 @@ const CowBloodline = memo(({ colorsInBloodline }) => (
     {Object.keys(colorsInBloodline || {})
       .sort()
       .map(color => (
-        <li {...{ key: color, className: color.toLowerCase() }} />
+        <Tooltip
+          {...{
+            key: color,
+            arrow: true,
+            placement: 'top',
+            title: COW_COLOR_NAMES[color],
+          }}
+        >
+          <li {...{ className: color.toLowerCase() }} />
+        </Tooltip>
       ))}
   </ul>
 ))
@@ -116,6 +126,7 @@ export const CowCardSubheader = ({
           {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
         </p>
       )}
+      <p>Color: {COW_COLOR_NAMES[cow.color]}</p>
       <p>
         {isCowPurchased ? 'Value' : 'Price'}: {moneyString(cowValue)}
       </p>

@@ -1,3 +1,5 @@
+import { cowColors } from './enums'
+
 export const PROGRESS_SAVED_MESSAGE = 'Progress saved!'
 export const RAIN_MESSAGE = 'It rained in the night!'
 export const STORM_MESSAGE = 'There was a storm in the night!'
@@ -66,3 +68,14 @@ export const TOOL_LEVEL_INFO = {
 
 export const FORGE_AVAILABLE_NOTIFICATION =
   '**The Forge** is now available in the Workshop!'
+
+export const COW_COLOR_NAMES = {
+  [cowColors.BLUE]: 'Blue',
+  [cowColors.BROWN]: 'Brown',
+  [cowColors.GREEN]: 'Green',
+  [cowColors.ORANGE]: 'Orange',
+  [cowColors.PURPLE]: 'Purple',
+  [cowColors.RAINBOW]: 'Rainbow',
+  [cowColors.WHITE]: 'White',
+  [cowColors.YELLOW]: 'Yellow',
+}
