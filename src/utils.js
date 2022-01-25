@@ -1110,7 +1110,7 @@ const colorizeCowTemplate = (() => {
   const cachedCowImages = {}
 
   // https://stackoverflow.com/a/5624139
-  const hexToRgb = hex => {
+  const hexToRgb = memoize(hex => {
     const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
 
     return {
@@ -1118,7 +1118,7 @@ const colorizeCowTemplate = (() => {
       g: parseInt(g, 16),
       b: parseInt(b, 16),
     }
-  }
+  })
 
   /**
    * @param {string} cowTemplate Base64 representation of an image
@@ -1133,6 +1133,9 @@ const colorizeCowTemplate = (() => {
     if (cachedCowImages[imageKey]) return cachedCowImages[imageKey]
 
     try {
+      // `data:image/png;base64,` needs to be removed from the base64 string
+      // before being provided to Buffer.
+      // https://github.com/oliver-moran/jimp/issues/231#issuecomment-282167737
       const cowTemplateBuffer = Buffer.from(
         cowTemplate.split(',')[1] ?? '',
         'base64'
@@ -1142,6 +1145,8 @@ const colorizeCowTemplate = (() => {
       image.scan(0, 0, image.bitmap.width, image.bitmap.height, function(x, y) {
         const { r, g, b } = Jimp.intToRGBA(image.getPixelColor(x, y))
 
+        // rgb(102, 102, 102) represents the color to replace in the template
+        // source images (#666).
         if (r === 102 && g === 102 && b === 102) {
           const cowColorRgb = hexToRgb(COW_COLORS_HEX_MAP[color])
           const colorNumber = Jimp.rgbaToInt(
