@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import { array, bool, func, object, string } from 'prop-types'
 import classNames from 'classnames'
 import { Tweenable } from 'shifty'
@@ -242,25 +242,39 @@ Cow.propTypes = {
   isSelected: bool.isRequired,
 }
 
-export const CowPen = ({ cowInventory, handleCowClick, selectedCowId }) => (
-  <div className="CowPen fill">
-    {cowInventory.map(cow => (
-      <Cow
-        {...{
-          cow,
-          cowInventory,
-          key: cow.id,
-          handleCowClick,
-          isSelected: selectedCowId === cow.id,
-        }}
-      />
-    ))}
-  </div>
-)
+export const CowPen = ({
+  cowInventory,
+  handleCowPenUnmount,
+  handleCowClick,
+  selectedCowId,
+}) => {
+  useEffect(() => {
+    return () => {
+      handleCowPenUnmount()
+    }
+  }, [handleCowPenUnmount])
+
+  return (
+    <div className="CowPen fill">
+      {cowInventory.map(cow => (
+        <Cow
+          {...{
+            cow,
+            cowInventory,
+            key: cow.id,
+            handleCowClick,
+            isSelected: selectedCowId === cow.id,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
 
 CowPen.propTypes = {
   cowInventory: array.isRequired,
   handleCowClick: func.isRequired,
+  handleCowPenUnmount: func.isRequired,
   selectedCowId: string.isRequired,
 }
 

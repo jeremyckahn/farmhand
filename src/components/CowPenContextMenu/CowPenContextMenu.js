@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
@@ -233,6 +233,7 @@ export const CowCard = ({
 }) => {
   const [name, setName] = useState(cow.name)
   const [cowImage, setCowImage] = useState(pixel)
+  const ref = useRef()
 
   useEffect(() => {
     ;(async () => {
@@ -240,8 +241,18 @@ export const CowCard = ({
     })()
   }, [cow])
 
+  useEffect(() => {
+    if (isSelected) {
+      const { current } = ref
+      if (!current) return
+
+      // scrollIntoView is not defined in the unit test environment.
+      if (current.scrollIntoView) current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [isSelected])
+
   return (
-    <Card {...{ className: 'cow-card', raised: isSelected }}>
+    <Card {...{ className: 'cow-card', raised: isSelected, ref }}>
       {isSelected && (
         <span className="visually_hidden">
           {cow.name} is currently selected
