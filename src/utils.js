@@ -1185,5 +1185,21 @@ export const getCowImage = async cow => {
   return await colorizeCowTemplate(cowTemplate, cow.color)
 }
 
+/**
+ * Adapted from https://www.javascripttutorial.net/dom/css/check-if-an-element-is-visible-in-the-viewport/
+ * @param {Element} element
+ * @returns {boolean}
+ */
+export const isInViewport = element => {
+  const { top, left, bottom, right } = element.getBoundingClientRect()
+
+  return (
+    top >= 0 &&
+    left >= 0 &&
+    bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    right <= (window.innerWidth || document.documentElement.clientWidth)
+  )
+}
+
 export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'
 export { default as totalIngredientsInRecipe } from './utils/totalIngredientsInRecipe'

@@ -38,6 +38,7 @@ import {
   getCowSellValue,
   getCowWeight,
   findCowById,
+  isInViewport,
   memoize,
   moneyString,
   nullArray,
@@ -233,6 +234,7 @@ export const CowCard = ({
 }) => {
   const [name, setName] = useState(cow.name)
   const [cowImage, setCowImage] = useState(pixel)
+  const cardRef = useRef()
   const scrollAnchorRef = useRef()
 
   useEffect(() => {
@@ -243,11 +245,14 @@ export const CowCard = ({
 
   useEffect(() => {
     if (isSelected) {
-      const { current } = scrollAnchorRef
-      if (!current) return
+      const { current: scrollAnchor } = scrollAnchorRef
+      const { current: card } = cardRef
+      if (!scrollAnchor || !card) return
 
       // scrollIntoView is not defined in the unit test environment.
-      if (current.scrollIntoView) current.scrollIntoView({ behavior: 'smooth' })
+      if (scrollAnchor.scrollIntoView && !isInViewport(card)) {
+        scrollAnchor.scrollIntoView({ behavior: 'smooth' })
+      }
     }
   }, [isSelected])
 
@@ -266,6 +271,7 @@ export const CowCard = ({
         {...{
           className: classNames('cow-card', { 'is-selected': isSelected }),
           raised: isSelected,
+          ref: cardRef,
         }}
       >
         {isSelected && (
