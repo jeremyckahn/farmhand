@@ -15,6 +15,10 @@ img
 @mixin card-style
   background: $card-background
   border: solid 2px #b68000
+  transition: background $duration-entering-screen $easing-ease-out
+
+  &.is-selected
+    background: scale-color($card-background, $lightness: 40%)
 
 @mixin center-tabs
   margin: 0 auto
