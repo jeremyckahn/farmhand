@@ -3,7 +3,8 @@
  * @ignore
  */
 
-import { Buffer } from 'buffer/'
+import { Buffer } from 'buffer'
+
 import Dinero from 'dinero.js'
 import fastMemoize from 'fast-memoize'
 import Jimp from 'jimp'
@@ -1125,12 +1126,11 @@ const colorizeCowTemplate = (() => {
    * @returns {string} Base64 representation of an image
    */
   return async (cowTemplate, color) => {
-    if (color === cowColors.RAINBOW) return Promise.resolve(animals.cow.rainbow)
+    if (color === cowColors.RAINBOW) return animals.cow.rainbow
 
     const imageKey = `${color}_${cowTemplate}`
 
-    if (cachedCowImages[imageKey])
-      return Promise.resolve(cachedCowImages[imageKey])
+    if (cachedCowImages[imageKey]) return cachedCowImages[imageKey]
 
     try {
       const cowTemplateBuffer = Buffer.from(
@@ -1174,7 +1174,7 @@ const colorizeCowTemplate = (() => {
  * @param {farmhand.cow} cow
  * @returns {string} Base64 representation of an image
  */
-export const getCowImage = cow => {
+export const getCowImage = async cow => {
   const cowIdNumber = cow.id
     .split('')
     .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
@@ -1182,7 +1182,7 @@ export const getCowImage = cow => {
   const { variations } = animals.cow
   const cowTemplate = variations[cowIdNumber % variations.length]
 
-  return colorizeCowTemplate(cowTemplate, cow.color)
+  return await colorizeCowTemplate(cowTemplate, cow.color)
 }
 
 export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'
