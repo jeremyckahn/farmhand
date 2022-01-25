@@ -1132,27 +1132,41 @@ const colorizeCowTemplate = (() => {
     if (cachedCowImages[imageKey])
       return Promise.resolve(cachedCowImages[imageKey])
 
-    const cowTemplateBuffer = Buffer.from(cowTemplate.split(',')[1], 'base64')
-    const image = await Jimp.read(cowTemplateBuffer)
+    try {
+      const cowTemplateBuffer = Buffer.from(
+        cowTemplate.split(',')[1] ?? '',
+        'base64'
+      )
+      const image = await Jimp.read(cowTemplateBuffer)
 
-    image.scan(0, 0, image.bitmap.width, image.bitmap.height, function(x, y) {
-      const { r, g, b } = Jimp.intToRGBA(image.getPixelColor(x, y))
+      image.scan(0, 0, image.bitmap.width, image.bitmap.height, function(x, y) {
+        const { r, g, b } = Jimp.intToRGBA(image.getPixelColor(x, y))
 
-      if (r === 102 && g === 102 && b === 102) {
-        const cowColorRgb = hexToRgb(COW_COLORS_HEX_MAP[color])
-        const colorNumber = Jimp.rgbaToInt(
-          cowColorRgb.r,
-          cowColorRgb.g,
-          cowColorRgb.b,
-          255
-        )
-        image.setPixelColor(colorNumber, x, y)
+        if (r === 102 && g === 102 && b === 102) {
+          const cowColorRgb = hexToRgb(COW_COLORS_HEX_MAP[color])
+          const colorNumber = Jimp.rgbaToInt(
+            cowColorRgb.r,
+            cowColorRgb.g,
+            cowColorRgb.b,
+            255
+          )
+
+          image.setPixelColor(colorNumber, x, y)
+        }
+      })
+
+      cachedCowImages[imageKey] = await image.getBase64Async(Jimp.MIME_PNG)
+
+      return cachedCowImages[imageKey]
+    } catch (e) {
+      // Jimp.read() expectedly errors out when it receives an empty buffer,
+      // which it will in some unit tests.
+      if (process.env.NODE_ENV !== 'test') {
+        console.error(e)
       }
-    })
 
-    cachedCowImages[imageKey] = await image.getBase64Async(Jimp.MIME_PNG)
-
-    return cachedCowImages[imageKey]
+      return ''
+    }
   }
 })()
 
