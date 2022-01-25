@@ -108,14 +108,7 @@ import silverIngot from './ores/silver-ingot.png'
 import goldOre from './ores/gold-ore.png'
 import goldIngot from './ores/gold-ingot.png'
 
-import blueCow from './animals/cows/blue-cow.png'
-import brownCow from './animals/cows/brown-cow.png'
-import greenCow from './animals/cows/green-cow.png'
-import orangeCow from './animals/cows/orange-cow.png'
-import purpleCow from './animals/cows/purple-cow.png'
 import rainbowCow from './animals/cows/rainbow-cow.png'
-import whiteCow from './animals/cows/white-cow.png'
-import yellowCow from './animals/cows/yellow-cow.png'
 
 import cowVariation1 from './animals/cows/cow-variation-1.png'
 import cowVariation2 from './animals/cows/cow-variation-2.png'
@@ -264,14 +257,7 @@ export const tools = {
 
 export const animals = {
   cow: {
-    blue: blueCow,
-    brown: brownCow,
-    green: greenCow,
-    orange: orangeCow,
-    purple: purpleCow,
     rainbow: rainbowCow,
-    white: whiteCow,
-    yellow: yellowCow,
     variations: [
       cowVariation1,
       cowVariation2,
