@@ -7,8 +7,10 @@
   $hug-animation-duration: 750ms
 
   .cow
+    opacity: 0
     position: absolute
     z-index: 20
+    transition: opacity $duration-entering-screen $easing-ease-out
 
     &:hover
       cursor: pointer
@@ -23,6 +25,9 @@
       position: absolute
       width: 100px
       z-index: -20
+
+    &.is-loaded
+      opacity: 1
 
     &.is-selected
       // Render the selected cow on top of all others

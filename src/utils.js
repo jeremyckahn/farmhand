@@ -27,7 +27,7 @@ import {
 } from './data/items'
 import { levels } from './data/levels'
 import { unlockableItems } from './data/levels'
-import { items as itemImages, animals } from './img'
+import { items as itemImages, animals, pixel } from './img'
 import {
   cowColors,
   cropLifeStage,
@@ -1165,7 +1165,7 @@ const colorizeCowTemplate = (() => {
         console.error(e)
       }
 
-      return ''
+      return pixel
     }
   }
 })()

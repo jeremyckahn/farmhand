@@ -183,6 +183,7 @@ export class Cow extends Component {
           className: classNames('cow', {
             'is-transitioning': isTransitioning,
             'is-selected': isSelected,
+            'is-loaded': cowImage !== pixel,
           }),
           onClick: () => handleCowClick(cow),
           style: {
