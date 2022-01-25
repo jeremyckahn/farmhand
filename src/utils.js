@@ -7,7 +7,8 @@ import { Buffer } from 'buffer'
 
 import Dinero from 'dinero.js'
 import fastMemoize from 'fast-memoize'
-import Jimp from 'jimp'
+import configureJimp from '@jimp/custom'
+import jimpPng from '@jimp/png'
 import sortBy from 'lodash.sortby'
 import { v4 as uuid } from 'uuid'
 
@@ -68,6 +69,10 @@ import {
   STORAGE_EXPANSION_BASE_PRICE,
   STORAGE_EXPANSION_SCALE_PREMIUM,
 } from './constants'
+
+const Jimp = configureJimp({
+  types: [jimpPng],
+})
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
