@@ -13,10 +13,7 @@ import {
   reduceByPersistedKeys,
   transformStateDataForImport,
 } from './utils'
-import {
-  DEFAULT_ROOM,
-  TOOLBELT_FIELD_MODES,
-} from './constants'
+import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from './constants'
 import { dialogView, fieldMode, stageFocusType } from './enums'
 import {
   DISCONNECTING_FROM_SERVER,
@@ -277,6 +274,10 @@ export default {
     this.hugCow(cow.id)
   },
 
+  handleCowPenUnmount() {
+    this.setState({ selectedCowId: '' })
+  },
+
   /**
    * @param {farmhand.module:enums.dialogView} dialogView
    */
@@ -380,11 +381,8 @@ export default {
     this.setState({ useAlternateEndDayButtonPosition })
   },
 
-  handleShowHomeScreenChange(
-      _e,
-      showHomeScreen
-  ) {
-    if (this.state.stageFocus === stageFocusType.HOME && !(showHomeScreen)) {
+  handleShowHomeScreenChange(_e, showHomeScreen) {
+    if (this.state.stageFocus === stageFocusType.HOME && !showHomeScreen) {
       this.focusNextView()
     }
 

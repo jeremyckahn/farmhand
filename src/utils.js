@@ -3,8 +3,12 @@
  * @ignore
  */
 
+import { Buffer } from 'buffer'
+
 import Dinero from 'dinero.js'
 import fastMemoize from 'fast-memoize'
+import configureJimp from '@jimp/custom'
+import jimpPng from '@jimp/png'
 import sortBy from 'lodash.sortby'
 import { v4 as uuid } from 'uuid'
 
@@ -24,7 +28,7 @@ import {
 } from './data/items'
 import { levels } from './data/levels'
 import { unlockableItems } from './data/levels'
-import { items as itemImages } from './img'
+import { items as itemImages, animals, pixel } from './img'
 import {
   cowColors,
   cropLifeStage,
@@ -37,6 +41,7 @@ import {
 } from './enums'
 import {
   BREAKPOINTS,
+  COW_COLORS_HEX_MAP,
   COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
   COW_MAXIMUM_VALUE_MATURITY_AGE,
@@ -64,6 +69,10 @@ import {
   STORAGE_EXPANSION_BASE_PRICE,
   STORAGE_EXPANSION_SCALE_PREMIUM,
 } from './constants'
+
+const Jimp = configureJimp({
+  types: [jimpPng],
+})
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
@@ -1094,6 +1103,112 @@ export function randomChoice(weightedOptions) {
 
     runningTotal += option.weight
   }
+}
+
+const colorizeCowTemplate = (() => {
+  const cowImageWidth = 48
+  const cowImageHeight = 48
+  const cowImageFactoryCanvas = document.createElement('canvas')
+  cowImageFactoryCanvas.setAttribute('height', cowImageHeight)
+  cowImageFactoryCanvas.setAttribute('width', cowImageWidth)
+
+  const cachedCowImages = {}
+
+  // https://stackoverflow.com/a/5624139
+  const hexToRgb = memoize(hex => {
+    const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+
+    return {
+      r: parseInt(r, 16),
+      g: parseInt(g, 16),
+      b: parseInt(b, 16),
+    }
+  })
+
+  /**
+   * @param {string} cowTemplate Base64 representation of an image
+   * @param {string} color
+   * @returns {string} Base64 representation of an image
+   */
+  return async (cowTemplate, color) => {
+    if (color === cowColors.RAINBOW) return animals.cow.rainbow
+
+    const imageKey = `${color}_${cowTemplate}`
+
+    if (cachedCowImages[imageKey]) return cachedCowImages[imageKey]
+
+    try {
+      // `data:image/png;base64,` needs to be removed from the base64 string
+      // before being provided to Buffer.
+      // https://github.com/oliver-moran/jimp/issues/231#issuecomment-282167737
+      const cowTemplateBuffer = Buffer.from(
+        cowTemplate.split(',')[1] ?? '',
+        'base64'
+      )
+      const image = await Jimp.read(cowTemplateBuffer)
+
+      image.scan(0, 0, image.bitmap.width, image.bitmap.height, function(x, y) {
+        const { r, g, b } = Jimp.intToRGBA(image.getPixelColor(x, y))
+
+        // rgb(102, 102, 102) represents the color to replace in the template
+        // source images (#666).
+        if (r === 102 && g === 102 && b === 102) {
+          const cowColorRgb = hexToRgb(COW_COLORS_HEX_MAP[color])
+          const colorNumber = Jimp.rgbaToInt(
+            cowColorRgb.r,
+            cowColorRgb.g,
+            cowColorRgb.b,
+            255
+          )
+
+          image.setPixelColor(colorNumber, x, y)
+        }
+      })
+
+      cachedCowImages[imageKey] = await image.getBase64Async(Jimp.MIME_PNG)
+
+      return cachedCowImages[imageKey]
+    } catch (e) {
+      // Jimp.read() expectedly errors out when it receives an empty buffer,
+      // which it will in some unit tests.
+      if (process.env.NODE_ENV !== 'test') {
+        console.error(e)
+      }
+
+      return pixel
+    }
+  }
+})()
+
+/**
+ * @param {farmhand.cow} cow
+ * @returns {string} Base64 representation of an image
+ */
+export const getCowImage = async cow => {
+  const cowIdNumber = cow.id
+    .split('')
+    .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
+
+  const { variations } = animals.cow
+  const cowTemplate = variations[cowIdNumber % variations.length]
+
+  return await colorizeCowTemplate(cowTemplate, cow.color)
+}
+
+/**
+ * Adapted from https://www.javascripttutorial.net/dom/css/check-if-an-element-is-visible-in-the-viewport/
+ * @param {Element} element
+ * @returns {boolean}
+ */
+export const isInViewport = element => {
+  const { top, left, bottom, right } = element.getBoundingClientRect()
+
+  return (
+    top >= 0 &&
+    left >= 0 &&
+    bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    right <= (window.innerWidth || document.documentElement.clientWidth)
+  )
 }
 
 export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'

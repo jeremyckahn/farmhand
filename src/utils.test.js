@@ -9,6 +9,7 @@ import {
   generateCow,
   generateOffspringCow,
   get7DayAverage,
+  getCowImage,
   getCowMilkRate,
   getCowFertilizerProductionRate,
   getCowValue,
@@ -36,7 +37,7 @@ import {
 } from './utils'
 import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
-import { items as itemImages } from './img'
+import { items as itemImages, animals } from './img'
 import { cowColors, cropLifeStage, genders, standardCowColors } from './enums'
 import {
   sampleCropItem1,
@@ -1009,5 +1010,22 @@ describe('randomChoice', () => {
     global.Math.random.mockReturnValueOnce(0.99)
     const choice = randomChoice(choices)
     expect(choice).toEqual(choices[2])
+  })
+})
+
+describe('getCowImage', () => {
+  test('colors a cow template image', async () => {
+    const cow = generateCow({ color: cowColors.GREEN, id: '1' })
+    const image = await getCowImage(cow)
+
+    // image data can viewed with https://jaredwinick.github.io/base64-image-viewer/
+    expect(image).toMatchSnapshot()
+  })
+
+  test('does not modify rainbow cow image', async () => {
+    const cow = generateCow({ color: cowColors.RAINBOW })
+    const image = await getCowImage(cow)
+
+    expect(image).toEqual(animals.cow.rainbow)
   })
 })

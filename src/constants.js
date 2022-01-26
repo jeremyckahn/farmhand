@@ -3,7 +3,7 @@
  * @ignore
  */
 
-import { fieldMode, stageFocusType, toolLevel } from './enums'
+import { cowColors, fieldMode, stageFocusType, toolLevel } from './enums'
 
 const { freeze } = Object
 
@@ -215,4 +215,14 @@ export const HOE_LEVEL_TO_SEED_RECLAIM_RATE = {
   [toolLevel.IRON]: 0.5,
   [toolLevel.SILVER]: 0.75,
   [toolLevel.GOLD]: 1,
+}
+
+export const COW_COLORS_HEX_MAP = {
+  [cowColors.BLUE]: '#8ff0f9',
+  [cowColors.BROWN]: '#b45f28',
+  [cowColors.GREEN]: '#65f295',
+  [cowColors.ORANGE]: '#ff7031',
+  [cowColors.PURPLE]: '#d884f2',
+  [cowColors.WHITE]: '#ffffff',
+  [cowColors.YELLOW]: '#fff931',
 }
