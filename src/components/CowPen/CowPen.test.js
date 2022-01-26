@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import { generateCow } from '../../utils'
 import { cowColors } from '../../enums'
-import { animals } from '../../img'
+import { pixel } from '../../img'
 
 import { Cow, CowPen } from './CowPen'
 
@@ -19,6 +19,7 @@ describe('CowPen', () => {
       <CowPen
         {...{
           cowInventory: [],
+          handleCowPenUnmount: () => {},
           handleCowClick: () => {},
           selectedCowId: '',
         }}
@@ -62,6 +63,7 @@ describe('Cow', () => {
             color: cowColors.WHITE,
           },
           cowInventory: [],
+          handleCowPenUnmount: () => {},
           handleCowClick: () => {},
           isSelected: false,
         }}
@@ -70,9 +72,7 @@ describe('Cow', () => {
   })
 
   test('has correct image', () => {
-    expect(component.find('img').props().src).toEqual(
-      animals.cow[cowColors.WHITE.toLowerCase()]
-    )
+    expect(component.find('img').props().src).toEqual(pixel)
   })
 
   describe('movement', () => {

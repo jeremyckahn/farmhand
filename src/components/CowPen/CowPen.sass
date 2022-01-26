@@ -7,36 +7,38 @@
   $hug-animation-duration: 750ms
 
   .cow
+    opacity: 0
     position: absolute
     z-index: 20
+    transition: opacity $duration-entering-screen $easing-ease-out
 
     &:hover
       cursor: pointer
 
     &::before
-      background: rgba(128, 128, 128, 0.5)
+      background: hsla(0, 0, 30%, .5)
       border-radius: 50%
       bottom: 5px
       content: ''
-      height: 20px
-      left: 0
+      height: 16px
+      left: 16px
       position: absolute
-      width: 100px
-      z-index: -20
+      width: 75px
+      z-index: -1
+
+    &.is-loaded
+      opacity: 1
 
     &.is-selected
       // Render the selected cow on top of all others
       z-index: 40
 
-      &::before
-        background: rgba(128, 128, 128, 1)
-        // This is slightly off center to account for the balance of the cow
-        // image.
-        left: -13px
-        width: 120px
+      img
+        filter: drop-shadow(0 0 5px #fff)
 
     img
       width: 100px
+      transition: filter $duration-entering-screen $easing-ease-out
 
     .fa-heart
       color: $heart-color

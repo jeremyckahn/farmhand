@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import { array, bool, func, object, string } from 'prop-types'
 import classNames from 'classnames'
 import { Tweenable } from 'shifty'
@@ -6,15 +6,17 @@ import Tooltip from '@material-ui/core/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
-import { cowColors } from '../../enums'
 import { LEFT, RIGHT } from '../../constants'
 import FarmhandContext from '../../Farmhand.context'
-import { animals } from '../../img'
+import { pixel } from '../../img'
+
+import { getCowImage } from '../../utils'
 
 import './CowPen.sass'
 
 export class Cow extends Component {
   state = {
+    cowImage: pixel,
     isTransitioning: false,
     moveDirection: RIGHT,
     rotate: 0,
@@ -158,6 +160,9 @@ export class Cow extends Component {
 
   componentDidMount() {
     this.scheduleMove()
+    ;(async () => {
+      this.setState({ cowImage: await getCowImage(this.props.cow) })
+    })()
   }
 
   componentWillUnmount() {
@@ -169,7 +174,7 @@ export class Cow extends Component {
   render() {
     const {
       props: { cow, handleCowClick, isSelected },
-      state: { isTransitioning, rotate, showHugAnimation, x, y },
+      state: { cowImage, isTransitioning, rotate, showHugAnimation, x, y },
     } = this
 
     return (
@@ -178,6 +183,7 @@ export class Cow extends Component {
           className: classNames('cow', {
             'is-transitioning': isTransitioning,
             'is-selected': isSelected,
+            'is-loaded': cowImage !== pixel,
           }),
           onClick: () => handleCowClick(cow),
           style: {
@@ -200,7 +206,7 @@ export class Cow extends Component {
           <div {...{ style: { transform: `rotateY(${rotate}deg)` } }}>
             <img
               {...{
-                src: animals.cow[cowColors[cow.color].toLowerCase()],
+                src: cowImage,
               }}
               alt="Cow"
             />
@@ -237,25 +243,39 @@ Cow.propTypes = {
   isSelected: bool.isRequired,
 }
 
-export const CowPen = ({ cowInventory, handleCowClick, selectedCowId }) => (
-  <div className="CowPen fill">
-    {cowInventory.map(cow => (
-      <Cow
-        {...{
-          cow,
-          cowInventory,
-          key: cow.id,
-          handleCowClick,
-          isSelected: selectedCowId === cow.id,
-        }}
-      />
-    ))}
-  </div>
-)
+export const CowPen = ({
+  cowInventory,
+  handleCowPenUnmount,
+  handleCowClick,
+  selectedCowId,
+}) => {
+  useEffect(() => {
+    return () => {
+      handleCowPenUnmount()
+    }
+  }, [handleCowPenUnmount])
+
+  return (
+    <div className="CowPen fill">
+      {cowInventory.map(cow => (
+        <Cow
+          {...{
+            cow,
+            cowInventory,
+            key: cow.id,
+            handleCowClick,
+            isSelected: selectedCowId === cow.id,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
 
 CowPen.propTypes = {
   cowInventory: array.isRequired,
   handleCowClick: func.isRequired,
+  handleCowPenUnmount: func.isRequired,
   selectedCowId: string.isRequired,
 }
 

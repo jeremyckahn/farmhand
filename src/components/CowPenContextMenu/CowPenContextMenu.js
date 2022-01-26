@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
@@ -27,15 +27,18 @@ import {
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons'
 
 import Item from '../Item'
-import { animals } from '../../img'
+import { COW_COLOR_NAMES } from '../../strings'
+import { pixel } from '../../img'
 import FarmhandContext from '../../Farmhand.context'
-import { cowColors, enumify, genders } from '../../enums'
+import { enumify, genders } from '../../enums'
 import {
   areHuggingMachinesInInventory,
+  getCowImage,
   getCowValue,
   getCowSellValue,
   getCowWeight,
   findCowById,
+  isInViewport,
   memoize,
   moneyString,
   nullArray,
@@ -66,7 +69,16 @@ const CowBloodline = memo(({ colorsInBloodline }) => (
     {Object.keys(colorsInBloodline || {})
       .sort()
       .map(color => (
-        <li {...{ key: color, className: color.toLowerCase() }} />
+        <Tooltip
+          {...{
+            key: color,
+            arrow: true,
+            placement: 'top',
+            title: COW_COLOR_NAMES[color],
+          }}
+        >
+          <li {...{ className: color.toLowerCase() }} />
+        </Tooltip>
       ))}
   </ul>
 ))
@@ -115,6 +127,7 @@ export const CowCardSubheader = ({
           {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
         </p>
       )}
+      <p>Color: {COW_COLOR_NAMES[cow.color]}</p>
       <p>
         {isCowPurchased ? 'Value' : 'Price'}: {moneyString(cowValue)}
       </p>
@@ -220,104 +233,138 @@ export const CowCard = ({
   isNameEditable = !!handleCowNameInputChange,
 }) => {
   const [name, setName] = useState(cow.name)
+  const [cowImage, setCowImage] = useState(pixel)
+  const cardRef = useRef()
+  const scrollAnchorRef = useRef()
+
+  useEffect(() => {
+    ;(async () => {
+      setCowImage(await getCowImage(cow))
+    })()
+  }, [cow])
+
+  useEffect(() => {
+    if (isSelected) {
+      const { current: scrollAnchor } = scrollAnchorRef
+      const { current: card } = cardRef
+      if (!scrollAnchor || !card) return
+
+      // scrollIntoView is not defined in the unit test environment.
+      if (scrollAnchor.scrollIntoView && !isInViewport(card)) {
+        scrollAnchor.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }, [isSelected])
 
   return (
-    <Card {...{ className: 'cow-card', raised: isSelected }}>
-      {isSelected && (
-        <span className="visually_hidden">
-          {cow.name} is currently selected
-        </span>
-      )}
-      <CardHeader
+    <>
+      <a
         {...{
-          avatar: (
-            <img
-              {...{ src: animals.cow[cowColors[cow.color].toLowerCase()] }}
-              alt="Cow"
-            />
-          ),
-          title: (
-            <>
-              {isNameEditable ? (
-                <TextField
+          className: 'scroll-anchor',
+          href: `#cow-${cow.id}`,
+          ref: scrollAnchorRef,
+        }}
+      >
+        &nbsp;
+      </a>
+      <Card
+        {...{
+          className: classNames('cow-card', { 'is-selected': isSelected }),
+          raised: isSelected,
+          ref: cardRef,
+        }}
+      >
+        {isSelected && (
+          <span className="visually_hidden">
+            {cow.name} is currently selected
+          </span>
+        )}
+        <CardHeader
+          {...{
+            avatar: <img {...{ src: cowImage }} alt="Cow" />,
+            title: (
+              <>
+                {isNameEditable ? (
+                  <TextField
+                    {...{
+                      onChange: e => {
+                        setName(e.target.value)
+                        debounced.handleCowNameInputChange({ ...e }, cow)
+                      },
+                      placeholder: 'Name',
+                      value: name,
+                    }}
+                  />
+                ) : (
+                  cow.name
+                )}{' '}
+                <FontAwesomeIcon
                   {...{
-                    onChange: e => {
-                      setName(e.target.value)
-                      debounced.handleCowNameInputChange({ ...e }, cow)
-                    },
-                    placeholder: 'Name',
-                    value: name,
+                    icon: genderIcons[cow.gender],
                   }}
                 />
-              ) : (
-                cow.name
-              )}{' '}
-              <FontAwesomeIcon
+              </>
+            ),
+            subheader: (
+              <CowCardSubheader
                 {...{
-                  icon: genderIcons[cow.gender],
+                  cow,
+                  cowBreedingPen,
+                  cowInventory,
+                  cowValue,
+                  handleCowBreedChange,
+                  handleCowAutomaticHugChange,
+                  huggingMachinesRemain,
+                  isCowPurchased,
                 }}
               />
-            </>
-          ),
-          subheader: (
-            <CowCardSubheader
-              {...{
-                cow,
-                cowBreedingPen,
-                cowInventory,
-                cowValue,
-                handleCowBreedChange,
-                handleCowAutomaticHugChange,
-                huggingMachinesRemain,
-                isCowPurchased,
-              }}
-            />
-          ),
-        }}
-      />
-      <CardActions>
-        {!isCowPurchased && (
-          <Button
-            {...{
-              className: 'purchase',
-              color: 'primary',
-              disabled:
-                cowValue > money ||
-                cowInventory.length >=
-                  PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
-              onClick: () => handleCowPurchaseClick(cow),
-              variant: 'contained',
-            }}
-          >
-            Buy
-          </Button>
-        )}
-        {isCowPurchased && (
-          <>
+            ),
+          }}
+        />
+        <CardActions>
+          {!isCowPurchased && (
             <Button
               {...{
-                className: 'hug',
+                className: 'purchase',
                 color: 'primary',
-                onClick: () => handleCowHugClick(cow),
+                disabled:
+                  cowValue > money ||
+                  cowInventory.length >=
+                    PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
+                onClick: () => handleCowPurchaseClick(cow),
                 variant: 'contained',
               }}
             >
-              Hug
+              Buy
             </Button>
-            <Button
-              {...{
-                className: 'sell',
-                color: 'secondary',
-                onClick: () => handleCowSellClick(cow),
-                variant: 'contained',
-              }}
-            >
-              Sell
-            </Button>
-          </>
-        )}
-      </CardActions>
-    </Card>
+          )}
+          {isCowPurchased && (
+            <>
+              <Button
+                {...{
+                  className: 'hug',
+                  color: 'primary',
+                  onClick: () => handleCowHugClick(cow),
+                  variant: 'contained',
+                }}
+              >
+                Hug
+              </Button>
+              <Button
+                {...{
+                  className: 'sell',
+                  color: 'secondary',
+                  onClick: () => handleCowSellClick(cow),
+                  variant: 'contained',
+                }}
+              >
+                Sell
+              </Button>
+            </>
+          )}
+        </CardActions>
+      </Card>
+    </>
   )
 }
 
