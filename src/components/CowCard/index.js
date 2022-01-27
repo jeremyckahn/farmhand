@@ -1,1 +1,1 @@
-export { CowCard, CowCardSubheader } from './CowCard'
+export { default } from './CowCard'

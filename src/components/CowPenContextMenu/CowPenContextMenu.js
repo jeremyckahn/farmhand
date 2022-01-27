@@ -23,7 +23,7 @@ import {
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { cowFeed, huggingMachine } from '../../data/items'
 
-import { CowCard } from '../CowCard'
+import CowCard from '../CowCard'
 
 import { TabPanel, a11yProps } from './TabPanel'
 

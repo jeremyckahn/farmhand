@@ -5,7 +5,7 @@ import { generateCow } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { cowColors, genders } from '../../enums'
 
-import { CowCard, CowCardSubheader } from './CowCard'
+import CowCard from './CowCard'
 
 describe('CowCard', () => {
   const baseProps = {
@@ -302,85 +302,6 @@ describe('CowCard', () => {
         .closest('label')
         .querySelector('[type=checkbox]')
       expect(button).toHaveAttribute('disabled')
-    })
-  })
-})
-
-describe('CowCardSubheader', () => {
-  let baseProps
-
-  beforeEach(() => {
-    jest.spyOn(Math, 'random').mockReturnValue(0)
-    baseProps = {
-      cow: generateCow({
-        color: cowColors.WHITE,
-        happiness: 0,
-        name: '',
-        baseWeight: 100,
-      }),
-      cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
-      cowInventory: [],
-      cowValue: 1000,
-      huggingMachinesRemain: false,
-      isCowPurchased: false,
-    }
-  })
-
-  describe('happiness display', () => {
-    describe('cow is not purchased', () => {
-      test('renders no hearts', () => {
-        const { container } = render(<CowCardSubheader {...baseProps} />)
-
-        expect(container.querySelector('.heart')).toBeNull()
-      })
-    })
-
-    describe('cow is purchased', () => {
-      test('renders hearts', () => {
-        const { container } = render(
-          <CowCardSubheader {...{ ...baseProps, isCowPurchased: true }} />
-        )
-
-        expect(container.querySelectorAll('.heart')).toHaveLength(10)
-      })
-
-      test('renders full hearts that match cow happiness', () => {
-        let { container } = render(
-          <CowCardSubheader
-            {...{
-              ...baseProps,
-              cow: generateCow({
-                color: cowColors.WHITE,
-                happiness: 0.5,
-                name: '',
-                baseWeight: 100,
-              }),
-              isCowPurchased: true,
-            }}
-          />
-        )
-
-        expect(container.querySelectorAll('.heart')).toHaveLength(10)
-        expect(container.querySelectorAll('.heart.is-full')).toHaveLength(5)
-
-        container = render(
-          <CowCardSubheader
-            {...{
-              ...baseProps,
-              cow: generateCow({
-                color: cowColors.WHITE,
-                happiness: 1,
-                name: '',
-                baseWeight: 100,
-              }),
-              isCowPurchased: true,
-            }}
-          />
-        ).container
-
-        expect(container.querySelectorAll('.heart')).toHaveLength(10)
-        expect(container.querySelectorAll('.heart.is-full')).toHaveLength(10)
-      })
     })
   })
 })
