@@ -1211,6 +1211,11 @@ export const isInViewport = element => {
   )
 }
 
+/**
+ * @param {farmhand.cow} cow
+ * @param {farmhand.cowBreedingPen} cowBreedingPen
+ * @returns {boolean}
+ */
 export const isCowInBreedingPen = (cow, cowBreedingPen) =>
   cowBreedingPen.cowId1 === cow.id || cowBreedingPen.cowId2 === cow.id
 
