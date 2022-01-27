@@ -1,1 +1,73 @@
+@import ../../styles/variables.sass
+
+=heartListStyle()
+  .hearts
+    margin-top: .5em
+
+    li
+      display: inline
+      margin: 0 .25em 0 0
+
 .CowCard
+  +heartListStyle()
+
+  .hearts
+    [data-prefix="fas"] // Full heart
+      color: $heart-color
+
+  .card-list & // This specificity is needed to override a global card style
+    +heartListStyle()
+
+  ul.bloodline // This needs the ul specificity to override .card-list styles
+    display: flex
+    margin: 1em 0
+
+    li
+      $indicator-size: 1.25em
+      background: #000
+      border-radius: 50%
+      border: solid 1px #000
+      height: $indicator-size
+      margin-bottom: 0
+      margin-right: 0.5em
+      margin-top: 0
+      width: $indicator-size
+
+      &.blue
+        background: #8ff0f9
+      &.brown
+        background: #b45f28
+      &.green
+        background: #65f295
+      &.orange
+        background: #ff7031
+      &.purple
+        background: #d884f2
+      &.white
+        background: #fff
+      &.yellow
+        background: #fff931
+
+  .fa
+    font-size: 1em
+
+  &.is-purchased
+    ul.bloodline
+      margin-top: 0.25em
+
+    .MuiCardHeader-root
+      padding-top: 0
+
+    .MuiCardHeader-title
+      align-items: baseline
+      display: flex
+
+      svg
+        padding-left: 1em
+
+.CowCard-scroll-anchor
+  display: block
+  height: 0
+  position: relative
+  top: -0.75em
+  visibility: hidden

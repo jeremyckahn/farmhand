@@ -256,7 +256,7 @@ export const CowCard = ({
     <>
       <a
         {...{
-          className: 'scroll-anchor',
+          className: 'CowCard-scroll-anchor',
           href: `#cow-${cow.id}`,
           ref: scrollAnchorRef,
         }}
@@ -265,7 +265,10 @@ export const CowCard = ({
       </a>
       <Card
         {...{
-          className: classNames('cow-card', { 'is-selected': isSelected }),
+          className: classNames('CowCard', {
+            'is-selected': isSelected,
+            'is-purchased': isCowPurchased,
+          }),
           raised: isSelected,
           ref: cardRef,
         }}
