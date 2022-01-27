@@ -1211,5 +1211,8 @@ export const isInViewport = element => {
   )
 }
 
+export const isCowInBreedingPen = (cow, cowBreedingPen) =>
+  cowBreedingPen.cowId1 === cow.id || cowBreedingPen.cowId2 === cow.id
+
 export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'
 export { default as totalIngredientsInRecipe } from './utils/totalIngredientsInRecipe'
