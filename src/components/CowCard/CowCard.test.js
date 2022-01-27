@@ -321,6 +321,7 @@ describe('CowCardSubheader', () => {
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       cowInventory: [],
       cowValue: 1000,
+      huggingMachinesRemain: false,
       isCowPurchased: false,
     }
   })

@@ -1,4 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
+import { array, bool, func, number, object } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -146,7 +147,9 @@ export const CowCardSubheader = ({
                     {...{
                       color: 'primary',
                       checked: cow.isUsingHuggingMachine,
-                      onChange: e => handleCowAutomaticHugChange(e, cow),
+                      onChange: e =>
+                        handleCowAutomaticHugChange &&
+                        handleCowAutomaticHugChange(e, cow),
                     }}
                   />
                 ),
@@ -178,7 +181,8 @@ export const CowCardSubheader = ({
                     {...{
                       color: 'primary',
                       checked: isInBreedingPen,
-                      onChange: e => handleCowBreedChange(e, cow),
+                      onChange: e =>
+                        handleCowBreedChange && handleCowBreedChange(e, cow),
                     }}
                   />
                 ),
@@ -191,6 +195,16 @@ export const CowCardSubheader = ({
       )}
     </>
   )
+}
+
+CowCardSubheader.propTypes = {
+  cow: object.isRequired,
+  cowBreedingPen: object.isRequired,
+  cowInventory: array.isRequired,
+  handleCowAutomaticHugChange: func,
+  handleCowBreedChange: func,
+  huggingMachinesRemain: bool.isRequired,
+  isCowPurchased: bool.isRequired,
 }
 
 export const CowCard = ({
@@ -270,8 +284,10 @@ export const CowCard = ({
                   <TextField
                     {...{
                       onChange: e => {
-                        setName(e.target.value)
-                        debounced.handleCowNameInputChange({ ...e }, cow)
+                        if (debounced) {
+                          setName(e.target.value)
+                          debounced.handleCowNameInputChange({ ...e }, cow)
+                        }
                       },
                       placeholder: 'Name',
                       value: name,
@@ -326,7 +342,7 @@ export const CowCard = ({
                 {...{
                   className: 'hug',
                   color: 'primary',
-                  onClick: () => handleCowHugClick(cow),
+                  onClick: () => handleCowHugClick && handleCowHugClick(cow),
                   variant: 'contained',
                 }}
               >
@@ -350,4 +366,19 @@ export const CowCard = ({
   )
 }
 
-CowCard.propTypes = {}
+CowCard.propTypes = {
+  cow: object.isRequired,
+  cowBreedingPen: object.isRequired,
+  cowInventory: array.isRequired,
+  debounced: object,
+  handleCowAutomaticHugChange: func,
+  handleCowBreedChange: func,
+  handleCowHugClick: func,
+  handleCowNameInputChange: func,
+  handleCowPurchaseClick: func,
+  handleCowSellClick: func,
+  inventory: array.isRequired,
+  isSelected: bool,
+  money: number.isRequired,
+  purchasedCowPen: number.isRequired,
+}
