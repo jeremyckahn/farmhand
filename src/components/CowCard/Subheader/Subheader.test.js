@@ -44,7 +44,7 @@ describe('Subheader', () => {
         expect(container.querySelectorAll('.heart')).toHaveLength(10)
       })
 
-      test('renders full hearts that match cow happiness', () => {
+      test('renders partial full hearts', () => {
         let { container } = render(
           <Subheader
             {...{
@@ -60,10 +60,11 @@ describe('Subheader', () => {
           />
         )
 
-        expect(container.querySelectorAll('.heart')).toHaveLength(10)
         expect(container.querySelectorAll('.heart.is-full')).toHaveLength(5)
+      })
 
-        container = render(
+      test('renders complete full hearts', () => {
+        let { container } = render(
           <Subheader
             {...{
               ...baseProps,
@@ -76,9 +77,8 @@ describe('Subheader', () => {
               isCowPurchased: true,
             }}
           />
-        ).container
+        )
 
-        expect(container.querySelectorAll('.heart')).toHaveLength(10)
         expect(container.querySelectorAll('.heart.is-full')).toHaveLength(10)
       })
     })
