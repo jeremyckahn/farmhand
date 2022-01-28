@@ -269,3 +269,17 @@ export const INGREDIENTS_LIST_ITEM = (
   quantityNeeded,
   quantityAvailable
 ) => `${ingredientName} x ${quantityNeeded} (On hand: ${quantityAvailable})`
+
+/**
+ * @param {farmhand.cow} cow
+ * @returns {string}
+ */
+export const OFFER_COW_FOR_TRADE = (_, cow) =>
+  `Offer ${cow.name} for trade with online players`
+
+/**
+ * @param {farmhand.cow} cow
+ * @returns {string}
+ */
+export const RESCIND_COW_FROM_TRADE = (_, cow) =>
+  `Keep ${cow.name} from being traded`

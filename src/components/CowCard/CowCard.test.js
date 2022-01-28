@@ -20,6 +20,7 @@ describe('CowCard', () => {
       cowId2: null,
       daysUntilBirth: -1,
     },
+    cowIdOfferedForTrade: '',
     handleCowSelect: () => {},
     handleCowNameInputChange: () => {},
     handleCowPurchaseClick: () => {},

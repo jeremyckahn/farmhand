@@ -3173,11 +3173,29 @@ describe('hugCow', () => {
 })
 
 describe('offerCow', () => {
-  test('updates cowIdOfferedForTrade', () => {
+  test('makes specified cow available for trade', () => {
     const cowId = 'abc123'
     const { cowIdOfferedForTrade } = fn.offerCow({}, cowId)
 
     expect(cowIdOfferedForTrade).toEqual(cowId)
+  })
+})
+
+describe('rescindCow', () => {
+  test('makes specified cow unavailable for trade', () => {
+    const cowId = 'abc123'
+
+    let { cowIdOfferedForTrade } = fn.rescindCow(
+      { cowIdOfferedForTrade: cowId },
+      'some-other-cow'
+    )
+
+    expect(cowIdOfferedForTrade).toEqual(cowId)
+
+    cowIdOfferedForTrade = fn.rescindCow({ cowIdOfferedForTrade: cowId }, cowId)
+      .cowIdOfferedForTrade
+
+    expect(cowIdOfferedForTrade).toEqual('')
   })
 })
 

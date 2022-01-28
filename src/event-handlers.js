@@ -101,6 +101,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowRescindClick(cow) {
+    this.rescindCow(cow.id)
+  },
+
+  /**
    * @param {external:React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
@@ -418,9 +425,16 @@ export default {
     // side-effects. Consider using componentDidUpdate or a callback."
     setTimeout(
       () =>
-        this.setState(() => ({
-          redirect: goOnline ? `/online/${encodeURIComponent(room)}` : '/',
-        })),
+        this.setState(() =>
+          goOnline
+            ? {
+                redirect: `/online/${encodeURIComponent(room)}`,
+              }
+            : {
+                redirect: '/',
+                cowIdOfferedForTrade: '',
+              }
+        ),
       1
     )
   },

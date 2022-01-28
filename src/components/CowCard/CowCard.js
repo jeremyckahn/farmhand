@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { array, bool, func, number, object } from 'prop-types'
+import { array, bool, func, number, object, string } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -19,6 +19,7 @@ import {
   isInViewport,
 } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
+import { OFFER_COW_FOR_TRADE, RESCIND_COW_FROM_TRADE } from '../../templates'
 
 import Subheader from './Subheader'
 
@@ -32,12 +33,14 @@ const genderIcons = {
 const CowCard = ({
   cow,
   cowBreedingPen,
+  cowIdOfferedForTrade,
   cowInventory,
   debounced,
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   handleCowHugClick,
   handleCowOfferClick,
+  handleCowRescindClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSellClick,
@@ -175,28 +178,50 @@ const CowCard = ({
               >
                 Hug
               </Button>
-              {isOnline && (
-                <Tooltip
-                  {...{
-                    arrow: true,
-                    placement: 'top',
-                    title: `Offer ${cow.name} up to be traded with online players`,
-                  }}
-                >
-                  <Button
+              {isOnline &&
+                (cowIdOfferedForTrade === cow.id ? (
+                  <Tooltip
                     {...{
-                      className: 'offer',
-                      color: 'primary',
-                      onClick: () => {
-                        handleCowOfferClick && handleCowOfferClick(cow)
-                      },
-                      variant: 'contained',
+                      arrow: true,
+                      placement: 'top',
+                      title: RESCIND_COW_FROM_TRADE`${cow}`,
                     }}
                   >
-                    Offer
-                  </Button>
-                </Tooltip>
-              )}
+                    <Button
+                      {...{
+                        className: 'offer',
+                        color: 'primary',
+                        onClick: () => {
+                          handleCowRescindClick && handleCowRescindClick(cow)
+                        },
+                        variant: 'contained',
+                      }}
+                    >
+                      Rescind
+                    </Button>
+                  </Tooltip>
+                ) : (
+                  <Tooltip
+                    {...{
+                      arrow: true,
+                      placement: 'top',
+                      title: OFFER_COW_FOR_TRADE`${cow}`,
+                    }}
+                  >
+                    <Button
+                      {...{
+                        className: 'offer',
+                        color: 'primary',
+                        onClick: () => {
+                          handleCowOfferClick && handleCowOfferClick(cow)
+                        },
+                        variant: 'contained',
+                      }}
+                    >
+                      Offer
+                    </Button>
+                  </Tooltip>
+                ))}
               <Button
                 {...{
                   className: 'sell',
@@ -220,12 +245,14 @@ export default CowCard
 CowCard.propTypes = {
   cow: object.isRequired,
   cowBreedingPen: object.isRequired,
+  cowIdOfferedForTrade: string.isRequired,
   cowInventory: array.isRequired,
   debounced: object,
   handleCowAutomaticHugChange: func,
   handleCowBreedChange: func,
   handleCowHugClick: func,
   handleCowOfferClick: func,
+  handleCowRescindClick: func,
   handleCowNameInputChange: func,
   handleCowPurchaseClick: func,
   handleCowSellClick: func,

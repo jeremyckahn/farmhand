@@ -518,6 +518,7 @@ export default class Farmhand extends Component {
       'plantInPlot',
       'prependPendingPeerMessage',
       'removePeer',
+      'rescindCow',
       'sellItem',
       'sellCow',
       'selectCow',
