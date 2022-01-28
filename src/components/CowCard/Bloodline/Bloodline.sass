@@ -1,3 +1,5 @@
+@import ../../../styles/variables.sass
+
 .CowCard
   .Bloodline,
   // This additional specificity variant is needed to override the global .card-list styles
@@ -17,19 +19,19 @@
       width: $indicator-size
 
       &.blue
-        background: #8ff0f9
+        background: $cow-color-blue
       &.brown
-        background: #b45f28
+        background: $cow-color-brown
       &.green
-        background: #65f295
+        background: $cow-color-green
       &.orange
-        background: #ff7031
+        background: $cow-color-orange
       &.purple
-        background: #d884f2
+        background: $cow-color-purple
       &.white
-        background: #fff
+        background: $cow-color-white
       &.yellow
-        background: #fff931
+        background: $cow-color-yellow
 
   &.is-purchased
     ul.Bloodline
