@@ -163,7 +163,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
  * @property {farmhand.cow} cowForSale
- * @property {Array.<farmhand.cowBreedingPen>} cowBreedingPen
+ * @property {farmhand.cowBreedingPen} cowBreedingPen
  * @property {Array.<farmhand.cow>} cowInventory
  * @property {Object.<farmhand.module:enums.cowColors, number>}
  * cowColorsPurchased Keys are color enums, values are the number of that color
