@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardHeader from '@material-ui/core/CardHeader'
 import TextField from '@material-ui/core/TextField'
+import Tooltip from '@material-ui/core/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
@@ -36,11 +37,13 @@ const CowCard = ({
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   handleCowHugClick,
+  handleCowOfferClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSellClick,
   inventory,
   isSelected,
+  isOnline,
   money,
   purchasedCowPen,
 
@@ -172,6 +175,28 @@ const CowCard = ({
               >
                 Hug
               </Button>
+              {isOnline && (
+                <Tooltip
+                  {...{
+                    arrow: true,
+                    placement: 'top',
+                    title: `Offer ${cow.name} up to be traded with online players`,
+                  }}
+                >
+                  <Button
+                    {...{
+                      className: 'offer',
+                      color: 'primary',
+                      onClick: () => {
+                        handleCowOfferClick && handleCowOfferClick(cow)
+                      },
+                      variant: 'contained',
+                    }}
+                  >
+                    Offer
+                  </Button>
+                </Tooltip>
+              )}
               <Button
                 {...{
                   className: 'sell',
@@ -200,10 +225,12 @@ CowCard.propTypes = {
   handleCowAutomaticHugChange: func,
   handleCowBreedChange: func,
   handleCowHugClick: func,
+  handleCowOfferClick: func,
   handleCowNameInputChange: func,
   handleCowPurchaseClick: func,
   handleCowSellClick: func,
   inventory: array.isRequired,
+  isOnline: bool.isRequired,
   isSelected: bool,
   money: number.isRequired,
   purchasedCowPen: number.isRequired,

@@ -94,6 +94,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowOfferClick(cow) {
+    this.offerCow(cow.id)
+  },
+
+  /**
    * @param {external:React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */

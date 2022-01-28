@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { array, func, number, object, string } from 'prop-types'
+import { array, bool, func, number, object, string } from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
@@ -75,11 +75,13 @@ export const CowPenContextMenu = ({
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   handleCowHugClick,
+  handleCowOfferClick,
   handleCowNameInputChange,
   handleCowPurchaseClick,
   handleCowSelect,
   handleCowSellClick,
   inventory,
+  isOnline,
   money,
   purchasedCowPen,
   selectedCowId,
@@ -98,6 +100,7 @@ export const CowPenContextMenu = ({
           cowInventory,
           handleCowPurchaseClick,
           inventory,
+          isOnline,
           money,
           purchasedCowPen,
         }}
@@ -166,9 +169,11 @@ export const CowPenContextMenu = ({
                     handleCowAutomaticHugChange,
                     handleCowBreedChange,
                     handleCowHugClick,
+                    handleCowOfferClick,
                     handleCowNameInputChange,
                     handleCowSellClick,
                     inventory,
+                    isOnline,
                     isSelected: cow.id === selectedCowId,
                     money,
                     purchasedCowPen,
@@ -196,9 +201,11 @@ export const CowPenContextMenu = ({
                     handleCowAutomaticHugChange,
                     handleCowBreedChange,
                     handleCowHugClick,
+                    handleCowOfferClick,
                     handleCowNameInputChange,
                     handleCowSellClick,
                     inventory,
+                    isOnline,
                     isSelected: cow.id === selectedCowId,
                     money,
                     purchasedCowPen,
@@ -242,11 +249,13 @@ CowPenContextMenu.propTypes = {
   handleCowAutomaticHugChange: func.isRequired,
   handleCowBreedChange: func.isRequired,
   handleCowHugClick: func.isRequired,
+  handleCowOfferClick: func.isRequired,
   handleCowNameInputChange: func.isRequired,
   handleCowPurchaseClick: func.isRequired,
   handleCowSelect: func.isRequired,
   handleCowSellClick: func.isRequired,
   inventory: array.isRequired,
+  isOnline: bool.isRequired,
   money: number.isRequired,
   purchasedCowPen: number.isRequired,
   selectedCowId: string.isRequired,

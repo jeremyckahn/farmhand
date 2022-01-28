@@ -3172,6 +3172,15 @@ describe('hugCow', () => {
   })
 })
 
+describe('offerCow', () => {
+  test('updates cowIdOfferedForTrade', () => {
+    const cowId = 'abc123'
+    const { cowIdOfferedForTrade } = fn.offerCow({}, cowId)
+
+    expect(cowIdOfferedForTrade).toEqual(cowId)
+  })
+})
+
 describe('changeCowName', () => {
   test('updates cow name', () => {
     const cow = generateCow()

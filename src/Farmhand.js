@@ -168,6 +168,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Object.<farmhand.module:enums.cowColors, number>}
  * cowColorsPurchased Keys are color enums, values are the number of that color
  * of cow purchased.
+ * @property {string} cowIdOfferedForTrade The ID of the cow that is currently
+ * set to be traded with online peers.
  * @property {Object} cowsSold Keys are items IDs, values are the id references
  * of cow colors (rainbow-cow, etc.).
  * @property {Object.<farmhand.module:enums.cropType, number>} cropsHarvested A
@@ -343,8 +345,9 @@ export default class Farmhand extends Component {
         cowId2: null,
         daysUntilBirth: -1,
       },
-      cowInventory: [],
       cowColorsPurchased: {},
+      cowIdOfferedForTrade: '',
+      cowInventory: [],
       cowsSold: {},
       cropsHarvested: {},
       dayCount: 0,
@@ -504,6 +507,7 @@ export default class Farmhand extends Component {
       'hugCow',
       'makeRecipe',
       'modifyCow',
+      'offerCow',
       'purchaseCow',
       'purchaseCombine',
       'purchaseCowPen',
