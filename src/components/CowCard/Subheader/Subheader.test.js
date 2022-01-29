@@ -19,6 +19,7 @@ describe('Subheader', () => {
         baseWeight: 100,
       }),
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
+      cowIdOfferedForTrade: '',
       cowInventory: [],
       cowValue: 1000,
       huggingMachinesRemain: false,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, bool, func, object } from 'prop-types'
+import { array, bool, func, object, string } from 'prop-types'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -37,6 +37,7 @@ const getCowMapById = memoize(cowInventory =>
 const Subheader = ({
   cow,
   cowBreedingPen,
+  cowIdOfferedForTrade,
   cowInventory,
   cowValue,
   handleCowAutomaticHugChange,
@@ -49,7 +50,11 @@ const Subheader = ({
   const isBreedingPenFull =
     cowBreedingPen.cowId1 !== null && cowBreedingPen.cowId2 !== null
 
-  let canBeMovedToBreedingPen = !isBreedingPenFull
+  const isCowOfferedForTrade = !!cowInventory.find(
+    ({ id }) => id === cowIdOfferedForTrade
+  )
+
+  let canBeMovedToBreedingPen = !isBreedingPenFull && !isCowOfferedForTrade
 
   if (canBeMovedToBreedingPen) {
     const potentialMateId = cowBreedingPen.cowId2 ?? cowBreedingPen.cowId1
@@ -163,6 +168,7 @@ export default Subheader
 Subheader.propTypes = {
   cow: object.isRequired,
   cowBreedingPen: object.isRequired,
+  cowIdOfferedForTrade: string.isRequired,
   cowInventory: array.isRequired,
   handleCowAutomaticHugChange: func,
   handleCowBreedChange: func,

@@ -19,6 +19,7 @@ import {
   areHuggingMachinesInInventory,
   getCowImage,
   getCowValue,
+  isCowInBreedingPen,
   isInViewport,
 } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
@@ -61,8 +62,8 @@ export const CowCard = ({
   const scrollAnchorRef = useRef()
 
   const isCowPurchased = !!cowInventory.find(({ id }) => id === cow.id)
-
   const cowValue = getCowValue(cow, isCowPurchased)
+  const cowCanBeTraded = isOnline && !isCowInBreedingPen(cow, cowBreedingPen)
 
   useEffect(() => {
     ;(async () => {
@@ -142,6 +143,7 @@ export const CowCard = ({
                 {...{
                   cow,
                   cowBreedingPen,
+                  cowIdOfferedForTrade,
                   cowInventory,
                   cowValue,
                   handleCowBreedChange,
@@ -182,7 +184,7 @@ export const CowCard = ({
               >
                 Hug
               </Button>
-              {isOnline &&
+              {cowCanBeTraded &&
                 (cowIdOfferedForTrade === cow.id ? (
                   <Tooltip
                     {...{
