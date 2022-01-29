@@ -1,7 +1,5 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
 import Divider from '@material-ui/core/Divider'
 import Alert from '@material-ui/lab/Alert'
 import sortBy from 'lodash.sortby'
@@ -9,38 +7,12 @@ import { array, number, object, string } from 'prop-types'
 
 import BailOutErrorBoundary from '../BailOutErrorBoundary'
 
-import {
-  getPlayerName,
-  farmProductsSold,
-  integerString,
-  levelAchieved,
-  moneyString,
-} from '../../utils'
+import { getPlayerName, farmProductsSold, levelAchieved } from '../../utils'
 import FarmhandContext from '../../Farmhand.context'
 
-import './OnlinePeersView.sass'
+import OnlinePeer from './OnlinePeer'
 
-const OnlinePeer = ({ peer: { dayCount, id, itemsSold, money } }) => (
-  <li>
-    <Card>
-      <CardHeader
-        {...{
-          title: getPlayerName(id),
-          subheader: (
-            <div>
-              <p>Day: {integerString(dayCount)}</p>
-              <p>
-                Level:{' '}
-                {integerString(levelAchieved(farmProductsSold(itemsSold)))}
-              </p>
-              <p>Money: {moneyString(money)}</p>
-            </div>
-          ),
-        }}
-      />
-    </Card>
-  </li>
-)
+import './OnlinePeersView.sass'
 
 const OnlinePeersView = ({ activePlayers, id, latestPeerMessages, peers }) => {
   const peerKeys = Object.keys(peers)
