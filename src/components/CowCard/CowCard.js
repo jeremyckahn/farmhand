@@ -48,19 +48,21 @@ export const CowCard = ({
   handleCowPurchaseClick,
   handleCowSellClick,
   inventory,
-  isCowPurchased,
   isSelected,
   isOnline,
   money,
   purchasedCowPen,
 
-  cowValue = getCowValue(cow, isCowPurchased),
   huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
 }) => {
   const [name, setName] = useState(cow.name)
   const [cowImage, setCowImage] = useState(pixel)
   const cardRef = useRef()
   const scrollAnchorRef = useRef()
+
+  const isCowPurchased = !!cowInventory.find(({ id }) => id === cow.id)
+
+  const cowValue = getCowValue(cow, isCowPurchased)
 
   useEffect(() => {
     ;(async () => {
@@ -257,7 +259,6 @@ CowCard.propTypes = {
   handleCowPurchaseClick: func,
   handleCowSellClick: func,
   inventory: array.isRequired,
-  isCowPurchased: bool,
   isOnline: bool.isRequired,
   isSelected: bool,
   money: number.isRequired,

@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import Divider from '@material-ui/core/Divider'
 import Alert from '@material-ui/lab/Alert'
+import Divider from '@material-ui/core/Divider'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
 import sortBy from 'lodash.sortby'
 import { array, number, object, string } from 'prop-types'
 
@@ -10,21 +12,37 @@ import BailOutErrorBoundary from '../BailOutErrorBoundary'
 import { getPlayerName, farmProductsSold, levelAchieved } from '../../utils'
 import FarmhandContext from '../../Farmhand.context'
 
+import CowCard from '../CowCard'
+
 import OnlinePeer from './OnlinePeer'
 
 import './OnlinePeersView.sass'
 
-const OnlinePeersView = ({ activePlayers, id, latestPeerMessages, peers }) => {
+const OnlinePeersView = ({
+  activePlayers,
+  cowIdOfferedForTrade,
+  cowInventory,
+  id,
+  latestPeerMessages,
+  peers,
+}) => {
   const peerKeys = Object.keys(peers)
+
+  const cowOfferedForTrade = cowInventory.find(
+    ({ id }) => id === cowIdOfferedForTrade
+  )
 
   // Filter out peers that may have connected but not sent data yet.
   const populatedPeers = peerKeys.filter(peerId => peers[peerId])
 
   return (
     <div {...{ className: 'OnlinePeersView' }}>
-      <p>
-        Your player name: <strong>{getPlayerName(id)}</strong>
-      </p>
+      <h3>Your player name</h3>
+      <Card>
+        <CardContent>
+          <strong>{getPlayerName(id)}</strong>
+        </CardContent>
+      </Card>
       {activePlayers - 1 > populatedPeers.length && <p>Waiting for peers...</p>}
       <ul className="card-list">
         {sortBy(populatedPeers, [
@@ -37,6 +55,13 @@ const OnlinePeersView = ({ activePlayers, id, latestPeerMessages, peers }) => {
           </BailOutErrorBoundary>
         ))}
       </ul>
+      {cowOfferedForTrade && (
+        <>
+          <Divider />
+          <h3>Cow offered for trade</h3>
+          <CowCard {...{ cow: cowOfferedForTrade }} />
+        </>
+      )}
       <Divider />
       <ul>
         {latestPeerMessages.map(({ id, message, severity = 'info' }, i) => (
@@ -55,6 +80,8 @@ const OnlinePeersView = ({ activePlayers, id, latestPeerMessages, peers }) => {
 
 OnlinePeersView.propTypes = {
   activePlayers: number.isRequired,
+  cowIdOfferedForTrade: string.isRequired,
+  cowInventory: array.isRequired,
   id: string.isRequired,
   latestPeerMessages: array.isRequired,
   peers: object.isRequired,

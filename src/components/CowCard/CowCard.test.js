@@ -8,12 +8,13 @@ import { cowColors, genders } from '../../enums'
 import { CowCard } from './CowCard'
 
 describe('CowCard', () => {
+  const cow = generateCow({
+    color: cowColors.WHITE,
+    name: '',
+    baseWeight: 100,
+  })
   const baseProps = {
-    cow: generateCow({
-      color: cowColors.WHITE,
-      name: '',
-      baseWeight: 100,
-    }),
+    cow,
     cowInventory: [],
     cowBreedingPen: {
       cowId1: null,
@@ -137,7 +138,6 @@ describe('CowCard', () => {
             cow: testCow,
             cowInventory: [testCow],
             money: 0,
-            isCowPurchased: true,
           }}
         />
       )
@@ -175,7 +175,6 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            isCowPurchased: true,
           }}
         />
       )
@@ -213,7 +212,6 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            isCowPurchased: true,
           }}
         />
       )
@@ -251,7 +249,6 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            isCowPurchased: true,
           }}
         />
       )
@@ -294,7 +291,6 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            isCowPurchased: true,
           }}
         />
       )
@@ -314,8 +310,8 @@ describe('CowCard', () => {
           <CowCard
             {...{
               ...baseProps,
+              cowInventory: [cow],
               isSelected: false,
-              isCowPurchased: true,
             }}
           />
         )
@@ -331,8 +327,8 @@ describe('CowCard', () => {
           <CowCard
             {...{
               ...baseProps,
+              cowInventory: [cow],
               isSelected: true,
-              isCowPurchased: true,
             }}
           />
         )
