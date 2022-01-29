@@ -167,5 +167,5 @@ Subheader.propTypes = {
   handleCowAutomaticHugChange: func,
   handleCowBreedChange: func,
   huggingMachinesRemain: bool.isRequired,
-  isCowPurchased: bool.isRequired,
+  isCowPurchased: bool,
 }

@@ -5,6 +5,11 @@ import { generateCow } from '../../utils'
 
 import { CowPenContextMenu } from './CowPenContextMenu'
 
+jest.mock('../CowCard', () => ({
+  __esModule: true,
+  default: () => <></>,
+}))
+
 jest.mock('../Item', () => ({
   __esModule: true,
   default: () => <></>,
@@ -13,68 +18,31 @@ jest.mock('../Item', () => ({
 describe('CowPenContextMenu', () => {
   let baseProps
 
-  describe('cow selection', () => {
-    let testCow
+  beforeEach(() => {
+    baseProps = {
+      cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
+      cowForSale: generateCow(),
+      cowInventory: [],
+      handleCowAutomaticHugChange: () => {},
+      handleCowBreedChange: () => {},
+      handleCowHugClick: () => {},
+      handleCowOfferClick: () => {},
+      handleCowRescindClick: () => {},
+      handleCowNameInputChange: () => {},
+      handleCowPurchaseClick: () => {},
+      handleCowSelect: () => {},
+      handleCowSellClick: () => {},
+      purchasedCowPen: 1,
+      selectedCowId: '',
+    }
+  })
 
-    beforeEach(() => {
-      jest.spyOn(Math, 'random').mockReturnValue(0)
+  test('renders', () => {
+    render(<CowPenContextMenu {...{ ...baseProps }} />)
 
-      baseProps = {
-        cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
-        cowForSale: generateCow(),
-        cowInventory: [],
-        cowIdOfferedForTrade: '',
-        debounced: {},
-        handleCowAutomaticHugChange: () => {},
-        handleCowBreedChange: () => {},
-        handleCowHugClick: () => {},
-        handleCowOfferClick: () => {},
-        handleCowRescindClick: () => {},
-        handleCowNameInputChange: () => {},
-        handleCowPurchaseClick: () => {},
-        handleCowSelect: () => {},
-        handleCowSellClick: () => {},
-        inventory: [],
-        isOnline: true,
-        money: 0,
-        purchasedCowPen: 1,
-        selectedCowId: '',
-      }
-      testCow = generateCow({ id: 'foo' })
-    })
-
-    describe('cow is not selected', () => {
-      test('provides correct isSelected prop', () => {
-        render(
-          <CowPenContextMenu
-            {...{
-              ...baseProps,
-              cowInventory: [testCow],
-              selectedCowId: 'bar',
-            }}
-          />
-        )
-
-        const selectedText = screen.queryByText(/is currently selected/)
-        expect(selectedText).toBeNull()
-      })
-    })
-
-    describe('cow is selected', () => {
-      test('provides correct isSelected prop', () => {
-        render(
-          <CowPenContextMenu
-            {...{
-              ...baseProps,
-              cowInventory: [testCow],
-              selectedCowId: 'foo',
-            }}
-          />
-        )
-
-        const selectedText = screen.queryByText(/is currently selected/)
-        expect(selectedText).not.toBeNull()
-      })
-    })
+    expect(screen.getByText('For sale')).toBeTruthy()
+    expect(screen.getByText('Cows')).toBeTruthy()
+    expect(screen.getByText('Breeding Pen')).toBeTruthy()
+    expect(screen.getByText('Supplies')).toBeTruthy()
   })
 })

@@ -5,7 +5,7 @@ import { generateCow } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { cowColors, genders } from '../../enums'
 
-import CowCard from './CowCard'
+import { CowCard } from './CowCard'
 
 describe('CowCard', () => {
   const baseProps = {
@@ -137,7 +137,7 @@ describe('CowCard', () => {
             cow: testCow,
             cowInventory: [testCow],
             money: 0,
-            handleCowSellClick: () => {},
+            isCowPurchased: true,
           }}
         />
       )
@@ -175,7 +175,7 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            handleCowSellClick: () => {},
+            isCowPurchased: true,
           }}
         />
       )
@@ -213,7 +213,7 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            handleCowSellClick: () => {},
+            isCowPurchased: true,
           }}
         />
       )
@@ -251,7 +251,7 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            handleCowSellClick: () => {},
+            isCowPurchased: true,
           }}
         />
       )
@@ -294,7 +294,7 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            handleCowSellClick: () => {},
+            isCowPurchased: true,
           }}
         />
       )
@@ -304,6 +304,42 @@ describe('CowCard', () => {
         .closest('label')
         .querySelector('[type=checkbox]')
       expect(button).toHaveAttribute('disabled')
+    })
+  })
+
+  describe('cow selection', () => {
+    describe('cow is not selected', () => {
+      test('provides correct isSelected prop', () => {
+        render(
+          <CowCard
+            {...{
+              ...baseProps,
+              isSelected: false,
+              isCowPurchased: true,
+            }}
+          />
+        )
+
+        const selectedText = screen.queryByText(/is currently selected/)
+        expect(selectedText).toBeNull()
+      })
+    })
+
+    describe('cow is selected', () => {
+      test('provides correct isSelected prop', () => {
+        render(
+          <CowCard
+            {...{
+              ...baseProps,
+              isSelected: true,
+              isCowPurchased: true,
+            }}
+          />
+        )
+
+        const selectedText = screen.queryByText(/is currently selected/)
+        expect(selectedText).not.toBeNull()
+      })
     })
   })
 })

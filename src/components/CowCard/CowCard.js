@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+
 import { array, bool, func, number, object, string } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -9,6 +10,8 @@ import Tooltip from '@material-ui/core/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+
+import FarmhandContext from '../../Farmhand.context'
 
 import { pixel } from '../../img'
 import { genders } from '../../enums'
@@ -30,7 +33,7 @@ const genderIcons = {
   [genders.MALE]: faMars,
 }
 
-const CowCard = ({
+export const CowCard = ({
   cow,
   cowBreedingPen,
   cowIdOfferedForTrade,
@@ -45,15 +48,14 @@ const CowCard = ({
   handleCowPurchaseClick,
   handleCowSellClick,
   inventory,
+  isCowPurchased,
   isSelected,
   isOnline,
   money,
   purchasedCowPen,
 
-  isCowPurchased = !!handleCowSellClick,
   cowValue = getCowValue(cow, isCowPurchased),
   huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
-  isNameEditable = !!handleCowNameInputChange,
 }) => {
   const [name, setName] = useState(cow.name)
   const [cowImage, setCowImage] = useState(pixel)
@@ -110,7 +112,7 @@ const CowCard = ({
             avatar: <img {...{ src: cowImage }} alt="Cow" />,
             title: (
               <>
-                {isNameEditable ? (
+                {isCowPurchased ? (
                   <TextField
                     {...{
                       onChange: e => {
@@ -240,8 +242,6 @@ const CowCard = ({
   )
 }
 
-export default CowCard
-
 CowCard.propTypes = {
   cow: object.isRequired,
   cowBreedingPen: object.isRequired,
@@ -257,8 +257,19 @@ CowCard.propTypes = {
   handleCowPurchaseClick: func,
   handleCowSellClick: func,
   inventory: array.isRequired,
+  isCowPurchased: bool,
   isOnline: bool.isRequired,
   isSelected: bool,
   money: number.isRequired,
   purchasedCowPen: number.isRequired,
+}
+
+export default function Consumer(props) {
+  return (
+    <FarmhandContext.Consumer>
+      {({ gameState, handlers }) => (
+        <CowCard {...{ ...gameState, ...handlers, ...props }} />
+      )}
+    </FarmhandContext.Consumer>
+  )
 }
