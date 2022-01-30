@@ -459,9 +459,10 @@ export const generateCow = (options = {}) => {
  * Generates a cow based on two parents.
  * @param {farmhand.cow} cow1
  * @param {farmhand.cow} cow2
+ * @param {string} ownerId
  * @returns {farmhand.cow}
  */
-export const generateOffspringCow = (cow1, cow2) => {
+export const generateOffspringCow = (cow1, cow2, ownerId) => {
   if (cow1.gender === cow2.gender) {
     throw new Error(
       `${JSON.stringify(cow1)} ${JSON.stringify(
@@ -494,6 +495,8 @@ export const generateOffspringCow = (cow1, cow2) => {
     colorsInBloodline,
     baseWeight: (maleCow.baseWeight + femaleCow.baseWeight) / 2,
     isBred: true,
+    ownerId,
+    originalOwnerId: ownerId,
   })
 }
 
@@ -847,16 +850,24 @@ export const getRandomLevelUpReward = level =>
 export const getRandomLevelUpRewardQuantity = level => level * 10
 
 /**
- * @param {Object} state
- * @returns {Object} A version of `state` that only contains keys of
- * farmhand.state data that should be shared with Trystero peers.
+ * @param {farmhand.state} state
+ * @returns {Object} Data that is meant to be shared with Trystero peers.
  */
-export const reduceByPeerMetadataKeys = state =>
-  PEER_METADATA_STATE_KEYS.reduce((acc, key) => {
+export const getPeerMetadata = state => {
+  const reducedState = PEER_METADATA_STATE_KEYS.reduce((acc, key) => {
     acc[key] = state[key]
 
     return acc
   }, {})
+
+  Object.assign(reducedState, {
+    cowOfferedForTrade: state.cowInventory.find(
+      ({ id }) => id === state.cowIdOfferedForTrade
+    ),
+  })
+
+  return reducedState
+}
 
 /**
  * @param {Object} state
@@ -971,6 +982,7 @@ export const unlockTool = (currentToolLevels, toolType) => {
  */
 export const transformStateDataForImport = state => {
   const sanitizedState = { ...state }
+  const { id } = sanitizedState
 
   const rejectedKeys = ['version']
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
@@ -1013,6 +1025,12 @@ export const transformStateDataForImport = state => {
   ) {
     sanitizedState.stageFocus = stageFocusType.SHOP
   }
+
+  sanitizedState.cowInventory = sanitizedState.cowInventory.map(cow => ({
+    ownerId: id,
+    originalOwnerId: id,
+    ...cow,
+  }))
 
   return sanitizedState
 }

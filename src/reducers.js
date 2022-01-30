@@ -710,6 +710,7 @@ export const processCowBreeding = state => {
   const {
     cowBreedingPen,
     cowInventory,
+    id,
     newDayNotifications,
     purchasedCowPen,
   } = state
@@ -738,7 +739,8 @@ export const processCowBreeding = state => {
     cowInventory.length < PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows &&
     daysUntilBirth === 0
 
-  let offspringCow = shouldGenerateOffspring && generateOffspringCow(cow1, cow2)
+  let offspringCow =
+    shouldGenerateOffspring && generateOffspringCow(cow1, cow2, id)
 
   return {
     ...state,
@@ -1322,7 +1324,7 @@ export const showNotification = (
  * @returns {farmhand.state}
  */
 export const purchaseCow = (state, cow) => {
-  const { cowInventory, cowColorsPurchased, money, purchasedCowPen } = state
+  const { cowInventory, cowColorsPurchased, id, money, purchasedCowPen } = state
   const { color } = cow
   const cowValue = getCowValue(cow, false)
 
@@ -1336,7 +1338,10 @@ export const purchaseCow = (state, cow) => {
 
   return {
     ...state,
-    cowInventory: [...cowInventory, { ...cow }],
+    cowInventory: [
+      ...cowInventory,
+      { ...cow, ownerId: id, originalOwnerId: id },
+    ],
     cowColorsPurchased: {
       ...cowColorsPurchased,
       [color]: (cowColorsPurchased[color] || 0) + 1,

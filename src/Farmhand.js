@@ -42,12 +42,12 @@ import {
   getAvailableShopInventory,
   getItemCurrentValue,
   getLevelEntitlements,
+  getPeerMetadata,
   inventorySpaceRemaining,
   levelAchieved,
   memoize,
   moneyTotal,
   nullArray,
-  reduceByPeerMetadataKeys,
   reduceByPersistedKeys,
   sleep,
   transformStateDataForImport,
@@ -328,7 +328,7 @@ export default class Farmhand extends Component {
   }
 
   get peerMetadata() {
-    return reduceByPeerMetadataKeys(this.state)
+    return getPeerMetadata(this.state)
   }
 
   /**
