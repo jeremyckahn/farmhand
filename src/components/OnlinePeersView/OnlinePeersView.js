@@ -37,24 +37,13 @@ const OnlinePeersView = ({
 
   return (
     <div {...{ className: 'OnlinePeersView' }}>
+      {activePlayers - 1 > populatedPeers.length && <p>Waiting for peers...</p>}
       <h3>Your player name</h3>
       <Card>
         <CardContent>
           <strong>{getPlayerName(id)}</strong>
         </CardContent>
       </Card>
-      {activePlayers - 1 > populatedPeers.length && <p>Waiting for peers...</p>}
-      <ul className="card-list">
-        {sortBy(populatedPeers, [
-          peerId =>
-            // Use negative value to reverse sort order
-            -levelAchieved(farmProductsSold(peers[peerId].itemsSold || 0)),
-        ]).map(peerId => (
-          <BailOutErrorBoundary {...{ key: peerId }}>
-            <OnlinePeer {...{ peer: peers[peerId] }} />
-          </BailOutErrorBoundary>
-        ))}
-      </ul>
       {cowOfferedForTrade && (
         <>
           <Divider />
@@ -62,18 +51,38 @@ const OnlinePeersView = ({
           <CowCard {...{ cow: cowOfferedForTrade }} />
         </>
       )}
-      <Divider />
-      <ul>
-        {latestPeerMessages.map(({ id, message, severity = 'info' }, i) => (
-          <li {...{ key: i }}>
-            <Alert {...{ elevation: 3, severity }}>
-              <ReactMarkdown
-                {...{ source: `**${getPlayerName(id)}** ${message}` }}
-              />
-            </Alert>
-          </li>
-        ))}
-      </ul>
+      {populatedPeers.length > 0 && (
+        <>
+          <Divider />
+          <ul className="card-list">
+            {sortBy(populatedPeers, [
+              peerId =>
+                // Use negative value to reverse sort order
+                -levelAchieved(farmProductsSold(peers[peerId].itemsSold || 0)),
+            ]).map(peerId => (
+              <BailOutErrorBoundary {...{ key: peerId }}>
+                <OnlinePeer {...{ peer: peers[peerId] }} />
+              </BailOutErrorBoundary>
+            ))}
+          </ul>
+        </>
+      )}
+      {latestPeerMessages.length > 0 && (
+        <>
+          <Divider />
+          <ul>
+            {latestPeerMessages.map(({ id, message, severity = 'info' }, i) => (
+              <li {...{ key: i }}>
+                <Alert {...{ elevation: 3, severity }}>
+                  <ReactMarkdown
+                    {...{ source: `**${getPlayerName(id)}** ${message}` }}
+                  />
+                </Alert>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   )
 }
