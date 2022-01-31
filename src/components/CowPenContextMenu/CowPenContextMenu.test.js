@@ -29,7 +29,6 @@ describe('CowPenContextMenu', () => {
       handleCowOfferClick: () => {},
       handleCowRescindClick: () => {},
       handleCowNameInputChange: () => {},
-      handleCowPurchaseClick: () => {},
       handleCowSelect: () => {},
       handleCowSellClick: () => {},
       purchasedCowPen: 1,

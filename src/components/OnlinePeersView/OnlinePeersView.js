@@ -47,7 +47,7 @@ const OnlinePeersView = ({
       {cowOfferedForTrade && (
         <>
           <Divider />
-          <h3>Cow offered for trade</h3>
+          <h3>You are offering to trade away</h3>
           <CowCard {...{ cow: cowOfferedForTrade }} />
         </>
       )}

@@ -71,6 +71,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowTradeClick(cow) {
+    console.warn('unimplemented')
+  },
+
+  /**
    * @param {external:React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */

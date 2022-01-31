@@ -43,11 +43,12 @@ export const CowCard = ({
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   handleCowHugClick,
-  handleCowOfferClick,
-  handleCowRescindClick,
   handleCowNameInputChange,
+  handleCowOfferClick,
   handleCowPurchaseClick,
+  handleCowRescindClick,
   handleCowSellClick,
+  handleCowTradeClick,
   id,
   inventory,
   isSelected,
@@ -66,8 +67,13 @@ export const CowCard = ({
   const cowValue = getCowValue(cow, isCowPurchased)
   const cowCanBeTradedAway =
     isOnline && !isCowInBreedingPen(cow, cowBreedingPen)
-  const cowCanBeTradedFor =
-    isOnline && typeof cow.ownerId === 'string' && cow.ownerId !== id
+  const isCowOfferedForTradeByPeer =
+    isOnline &&
+    !isCowPurchased &&
+    typeof cow.ownerId === 'string' &&
+    cow.ownerId !== id
+  const canCowBeTradedFor =
+    isCowOfferedForTradeByPeer && cowIdOfferedForTrade.length > 0
 
   useEffect(() => {
     ;(async () => {
@@ -160,25 +166,33 @@ export const CowCard = ({
           }}
         />
         <CardActions>
-          {!isCowPurchased && (
-            <>
-              {!cowCanBeTradedFor && (
-                <Button
-                  {...{
-                    className: 'purchase',
-                    color: 'primary',
-                    disabled:
-                      cowValue > money ||
-                      cowInventory.length >=
-                        PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
-                    onClick: () => handleCowPurchaseClick(cow),
-                    variant: 'contained',
-                  }}
-                >
-                  Buy
-                </Button>
-              )}
-            </>
+          {!isCowPurchased && !isCowOfferedForTradeByPeer && (
+            <Button
+              {...{
+                className: 'purchase',
+                color: 'primary',
+                disabled:
+                  cowValue > money ||
+                  cowInventory.length >=
+                    PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
+                onClick: () => handleCowPurchaseClick(cow),
+                variant: 'contained',
+              }}
+            >
+              Buy
+            </Button>
+          )}
+          {canCowBeTradedFor && (
+            <Button
+              {...{
+                className: 'purchase',
+                color: 'primary',
+                onClick: () => handleCowTradeClick(cow),
+                variant: 'contained',
+              }}
+            >
+              Trade
+            </Button>
           )}
           {isCowPurchased && (
             <>
@@ -263,11 +277,12 @@ CowCard.propTypes = {
   handleCowAutomaticHugChange: func,
   handleCowBreedChange: func,
   handleCowHugClick: func,
-  handleCowOfferClick: func,
-  handleCowRescindClick: func,
   handleCowNameInputChange: func,
+  handleCowOfferClick: func,
   handleCowPurchaseClick: func,
+  handleCowRescindClick: func,
   handleCowSellClick: func,
+  handleCowTradeClick: func,
   id: string.isRequired,
   inventory: array.isRequired,
   isOnline: bool.isRequired,

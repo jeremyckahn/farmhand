@@ -77,7 +77,6 @@ export const CowPenContextMenu = ({
   handleCowOfferClick,
   handleCowRescindClick,
   handleCowNameInputChange,
-  handleCowPurchaseClick,
   handleCowSelect,
   handleCowSellClick,
   purchasedCowPen,
@@ -93,7 +92,6 @@ export const CowPenContextMenu = ({
       <CowCard
         {...{
           cow: cowForSale,
-          handleCowPurchaseClick,
         }}
       />
       <AppBar position="static" color="primary">
@@ -232,7 +230,6 @@ CowPenContextMenu.propTypes = {
   handleCowOfferClick: func.isRequired,
   handleCowRescindClick: func.isRequired,
   handleCowNameInputChange: func.isRequired,
-  handleCowPurchaseClick: func.isRequired,
   handleCowSelect: func.isRequired,
   handleCowSellClick: func.isRequired,
   purchasedCowPen: number.isRequired,

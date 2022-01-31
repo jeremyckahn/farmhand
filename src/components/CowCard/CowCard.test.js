@@ -25,6 +25,7 @@ describe('CowCard', () => {
     handleCowSelect: () => {},
     handleCowNameInputChange: () => {},
     handleCowPurchaseClick: () => {},
+    handleCowTradeClick: () => {},
     id: '',
     isSelected: false,
     isOnline: false,
