@@ -307,6 +307,8 @@ export default {
   },
 
   handleCloseDialogView() {
+    if (this.state.isAwaitingCowTradeRequest) return
+
     this.closeDialogView()
   },
 

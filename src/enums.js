@@ -156,3 +156,9 @@ export const toolLevel = enumify([
   'SILVER',
   'GOLD',
 ])
+
+/**
+ * @property farmhand.module:enums.cowTradeRejectionReason
+ * @enum {string}
+ */
+export const cowTradeRejectionReason = enumify(['REQUESTED_COW_UNAVAILABLE'])

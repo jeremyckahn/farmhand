@@ -55,6 +55,7 @@ import {
 import { getData, postData } from './fetch-utils'
 import { itemsMap, recipesMap } from './data/maps'
 import {
+  cowTradeRejectionReason,
   dialogView,
   fieldMode,
   stageFocusType,
@@ -84,6 +85,7 @@ import {
   DISCONNECTED_FROM_SERVER,
   INVENTORY_FULL_NOTIFICATION,
   PROGRESS_SAVED_MESSAGE,
+  REQUESTED_COW_TRADE_UNAVAILABLE,
   SERVER_ERROR,
   UPDATE_AVAILABLE,
 } from './strings'
@@ -178,6 +180,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {Function?} getCowAccept https://github.com/dmotz/trystero#receiver
+ * @property {Function?} getCowReject https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowTradeRequest https://github.com/dmotz/trystero#receiver
  * @property {Function?} getPeerMetadata https://github.com/dmotz/trystero#receiver
  * @property {number?} heartbeatTimeoutId
@@ -191,6 +195,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {string} id
  * @property {Array.<{ id: farmhand.item, quantity: number }>} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
+ * @property {boolean} isAwaitingCowTradeRequest
  * @property {boolean} isAwaitingNetworkRequest
  * @property {boolean} isCombineEnabled
  * @property {boolean} isMenuOpen
@@ -229,6 +234,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} revenue The amount of money the player has generated in
  * @property {string} redirect Transient value used to drive router redirection.
  * @property {string} room What online room the player is in.
+ * @property {Function?} sendCowAccept https://github.com/dmotz/trystero#sender
+ * @property {Function?} sendCowReject https://github.com/dmotz/trystero#sender
  * @property {Function?} sendCowTradeRequest https://github.com/dmotz/trystero#sender
  * @property {Function?} sendPeerMetadata https://github.com/dmotz/trystero#sender
  * @property {boolean} showHomeScreen Option to show the Home Screen
@@ -366,6 +373,7 @@ export default class Farmhand extends Component {
       id: uuid(),
       inventory: [],
       inventoryLimit: INITIAL_STORAGE_LIMIT,
+      isAwaitingCowTradeRequest: false,
       isAwaitingNetworkRequest: false,
       isCombineEnabled: false,
       isMenuOpen: !doesMenuObstructStage(),
@@ -673,19 +681,27 @@ export default class Farmhand extends Component {
         const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
           'peerMetadata'
         )
-
         getPeerMetadata(this.onGetPeerMetadata.bind(this))
 
         const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
           'cowTrade'
         )
-
         getCowTradeRequest(this.onGetCowTradeRequest.bind(this))
 
+        const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
+        getCowAccept(this.onGetCowAccept.bind(this))
+
+        const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
+        getCowReject(this.onGetCowReject.bind(this))
+
         this.setState({
+          getCowAccept,
+          getCowReject,
           getCowTradeRequest,
           getPeerMetadata,
           pendingPeerMessages: [],
+          sendCowAccept,
+          sendCowReject,
           sendCowTradeRequest,
           sendPeerMetadata: this.wrapSendPeerMetadata(sendPeerMetadata),
         })
@@ -732,10 +748,49 @@ export default class Farmhand extends Component {
   }
 
   /**
+   * @param {farmhand.cow} peerPlayerCow
+   */
+  tradeForPeerCow(peerPlayerCow) {
+    const { sendCowTradeRequest } = this.state
+    if (!sendCowTradeRequest) return
+
+    const { ownerId } = peerPlayerCow
+    const [peerId] = Object.entries(this.state.peers).find(
+      ([peerId, { id }]) => id === ownerId
+    )
+
+    if (!peerId)
+      throw new Error(
+        `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
+      )
+
+    // FIXME: Implement a timeout to reset isAwaitingCowTradeRequest
+    this.setState({ isAwaitingCowTradeRequest: true })
+    sendCowTradeRequest(peerPlayerCow, peerId)
+  }
+
+  /**
    * @param {farmhand.cow} cowOffered
    */
   onGetCowTradeRequest(cowOffered) {
-    console.warn('cow trade request received', cowOffered)
+    const { sendCowAccept, sendCowReject } = this.state
+
+    if (!sendCowAccept || !sendCowReject)
+      throw new Error('Peer connection not set up correctly')
+
+    sendCowReject({ reason: cowTradeRejectionReason.REQUESTED_COW_UNAVAILABLE })
+  }
+
+  onGetCowAccept() {
+    console.log('cow trade accepted')
+
+    this.setState({ isAwaitingCowTradeRequest: false })
+  }
+
+  onGetCowReject({ reason }) {
+    this.setState({ isAwaitingCowTradeRequest: false })
+
+    this.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error')
   }
 
   async clearPersistedData() {
@@ -802,7 +857,10 @@ export default class Farmhand extends Component {
       console.error(e)
     }
 
-    this.setState({ isAwaitingNetworkRequest: false })
+    this.setState({
+      isAwaitingNetworkRequest: false,
+      isAwaitingCowTradeRequest: false,
+    })
   }
 
   handleRoomSyncError(errorCode) {
@@ -1111,26 +1169,6 @@ export default class Farmhand extends Component {
     this.prependPendingPeerMessage(message, severity)
   }
 
-  /**
-   * @param {farmhand.cow} peerPlayerCow
-   */
-  tradeForPeerCow(peerPlayerCow) {
-    const { sendCowTradeRequest } = this.state
-    if (!sendCowTradeRequest) return
-
-    const { ownerId } = peerPlayerCow
-    const [peerId] = Object.entries(this.state.peers).find(
-      ([peerId, { id }]) => id === ownerId
-    )
-
-    if (!peerId)
-      throw new Error(
-        `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
-      )
-
-    sendCowTradeRequest(peerPlayerCow, peerId)
-  }
-
   /*!
    * @param {ServiceWorkerRegistration} registration
    */
@@ -1161,10 +1199,16 @@ export default class Farmhand extends Component {
       viewTitle,
     } = this
 
+    const blockInput =
+      this.state.isAwaitingNetworkRequest ||
+      this.state.isAwaitingCowTradeRequest ||
+      this.state.isWaitingForDayToCompleteIncrementing
+
     // Bundle up the raw state and the computed state into one object to be
     // passed down through the component tree.
     const gameState = {
       ...this.state,
+      blockInput,
       features,
       fieldToolInventory,
       levelEntitlements,
@@ -1175,10 +1219,6 @@ export default class Farmhand extends Component {
       viewList,
       viewTitle,
     }
-
-    const blockInput =
-      this.state.isAwaitingNetworkRequest ||
-      this.state.isWaitingForDayToCompleteIncrementing
 
     return (
       <GlobalHotKeys

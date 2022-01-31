@@ -16,6 +16,8 @@ export const SERVER_ERROR =
 export const CONNECTING_TO_SERVER = 'Connecting...'
 export const DISCONNECTING_FROM_SERVER = 'Disconnecting...'
 export const DISCONNECTED_FROM_SERVER = 'You are now playing offline.'
+export const REQUESTED_COW_TRADE_UNAVAILABLE =
+  'The requested cow is no longer available.'
 export const OUT_OF_COW_FEED_NOTIFICATION =
   "You're out of cow feed! Buy some more before your cows get hungry and run away!"
 export const INVENTORY_FULL_NOTIFICATION = 'Your inventory is full!'
