@@ -1336,18 +1336,25 @@ export const purchaseCow = (state, cow) => {
     return state
   }
 
+  state = addCowToInventory(state, { ...cow, ownerId: id, originalOwnerId: id })
+
   return {
     ...state,
-    cowInventory: [
-      ...cowInventory,
-      { ...cow, ownerId: id, originalOwnerId: id },
-    ],
     cowColorsPurchased: {
       ...cowColorsPurchased,
       [color]: (cowColorsPurchased[color] || 0) + 1,
     },
     money: moneyTotal(money, -cowValue),
     cowForSale: generateCow(),
+  }
+}
+
+export const addCowToInventory = (state, cow) => {
+  const { cowInventory } = state
+
+  return {
+    ...state,
+    cowInventory: [...cowInventory, cow],
   }
 }
 

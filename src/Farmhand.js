@@ -506,13 +506,14 @@ export default class Farmhand extends Component {
 
   initReducers() {
     ;[
-      'adjustLoan',
+      'addCowToInventory',
       'addPeer',
-      'computeStateForNextDay',
+      'adjustLoan',
       'changeCowAutomaticHugState',
       'changeCowBreedingPenResident',
       'changeCowName',
       'clearPlot',
+      'computeStateForNextDay',
       'fertilizePlot',
       'forRange',
       'harvestPlot',
@@ -520,27 +521,28 @@ export default class Farmhand extends Component {
       'makeRecipe',
       'modifyCow',
       'offerCow',
-      'purchaseCow',
-      'purchaseCombine',
-      'purchaseCowPen',
-      'purchaseField',
-      'purchaseSmelter',
-      'purchaseItem',
-      'purchaseStorageExpansion',
       'plantInPlot',
       'prependPendingPeerMessage',
+      'purchaseCombine',
+      'purchaseCow',
+      'purchaseCowPen',
+      'purchaseField',
+      'purchaseItem',
+      'purchaseSmelter',
+      'purchaseStorageExpansion',
+      'removeCowFromInventory',
       'removePeer',
       'rescindCow',
-      'sellItem',
-      'sellCow',
       'selectCow',
+      'sellCow',
+      'sellItem',
       'setScarecrow',
       'setSprinkler',
       'showNotification',
       'updatePeer',
       'upgradeTool',
-      'waterField',
       'waterAllPlots',
+      'waterField',
       'waterPlot',
     ].forEach(reducerName => {
       const reducer = reducers[reducerName]
@@ -751,7 +753,11 @@ export default class Farmhand extends Component {
    * @param {farmhand.cow} peerPlayerCow
    */
   tradeForPeerCow(peerPlayerCow) {
-    const { sendCowTradeRequest } = this.state
+    const {
+      cowIdOfferedForTrade,
+      cowInventory,
+      sendCowTradeRequest,
+    } = this.state
     if (!sendCowTradeRequest) return
 
     const { ownerId } = peerPlayerCow
@@ -764,27 +770,87 @@ export default class Farmhand extends Component {
         `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
       )
 
+    const cowToTradeAway = cowInventory.find(
+      ({ id }) => id === cowIdOfferedForTrade
+    )
+
+    if (!cowToTradeAway)
+      throw new Error(`Cow ID ${cowIdOfferedForTrade} not found`)
+
     // FIXME: Implement a timeout to reset isAwaitingCowTradeRequest
     this.setState({ isAwaitingCowTradeRequest: true })
-    sendCowTradeRequest(peerPlayerCow, peerId)
+
+    // FIXME: This needs to indicate the cow being expected in return so that
+    // sender receives what they expect
+    sendCowTradeRequest(
+      { ...cowToTradeAway, isUsingHuggingMachine: false },
+      peerId
+    )
   }
 
   /**
    * @param {farmhand.cow} cowOffered
    */
-  onGetCowTradeRequest(cowOffered) {
-    const { sendCowAccept, sendCowReject } = this.state
+  async onGetCowTradeRequest(cowOffered) {
+    const {
+      cowIdOfferedForTrade,
+      cowInventory,
+      id,
+      isAwaitingCowTradeRequest,
+      sendCowAccept,
+      sendCowReject,
+    } = this.state
 
     if (!sendCowAccept || !sendCowReject)
       throw new Error('Peer connection not set up correctly')
 
-    sendCowReject({ reason: cowTradeRejectionReason.REQUESTED_COW_UNAVAILABLE })
+    const cowToTradeAway = cowInventory.find(
+      ({ id }) => id === cowIdOfferedForTrade
+    )
+
+    if (
+      isAwaitingCowTradeRequest ||
+      cowIdOfferedForTrade.length === 0 ||
+      !cowToTradeAway
+    ) {
+      sendCowReject({
+        reason: cowTradeRejectionReason.REQUESTED_COW_UNAVAILABLE,
+      })
+
+      return
+    }
+
+    this.changeCowAutomaticHugState(cowToTradeAway, false)
+    this.removeCowFromInventory(cowToTradeAway)
+    this.addCowToInventory({ ...cowOffered, ownerId: id })
+    this.setState(() => ({
+      cowIdOfferedForTrade: cowOffered.id,
+      selectedCowId: cowOffered.id,
+    }))
+
+    await sendCowAccept({ ...cowToTradeAway, isUsingHuggingMachine: false })
+
+    this.state.sendPeerMetadata?.(this.peerMetadata)
   }
 
-  onGetCowAccept() {
-    console.log('cow trade accepted')
+  /**
+   * @param {farmhand.cow} cowReceived
+   */
+  onGetCowAccept(cowReceived) {
+    const { cowIdOfferedForTrade, cowInventory, id } = this.state
 
-    this.setState({ isAwaitingCowTradeRequest: false })
+    const cowTradedAway = cowInventory.find(
+      ({ id }) => id === cowIdOfferedForTrade
+    )
+
+    this.removeCowFromInventory(cowTradedAway)
+    this.addCowToInventory({ ...cowReceived, ownerId: id })
+
+    this.setState(() => ({
+      isAwaitingCowTradeRequest: false,
+      cowIdOfferedForTrade: cowReceived.id,
+      selectedCowId: cowReceived.id,
+    }))
   }
 
   onGetCowReject({ reason }) {
