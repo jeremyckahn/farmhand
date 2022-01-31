@@ -74,7 +74,7 @@ export default {
    * @param {farmhand.cow} cow
    */
   handleCowTradeClick(cow) {
-    console.warn('unimplemented')
+    this.tradeForPeerCow(cow)
   },
 
   /**

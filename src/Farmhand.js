@@ -178,6 +178,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {Function?} getCowTradeRequest https://github.com/dmotz/trystero#receiver
+ * @property {Function?} getPeerMetadata https://github.com/dmotz/trystero#receiver
  * @property {number?} heartbeatTimeoutId
  * @property {Array.<number>} historicalDailyLosses
  * @property {Array.<number>} historicalDailyRevenue
@@ -227,6 +229,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} revenue The amount of money the player has generated in
  * @property {string} redirect Transient value used to drive router redirection.
  * @property {string} room What online room the player is in.
+ * @property {Function?} sendCowTradeRequest https://github.com/dmotz/trystero#sender
+ * @property {Function?} sendPeerMetadata https://github.com/dmotz/trystero#sender
  * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
@@ -672,9 +676,17 @@ export default class Farmhand extends Component {
 
         getPeerMetadata(this.onGetPeerMetadata.bind(this))
 
+        const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
+          'cowTrade'
+        )
+
+        getCowTradeRequest(this.onGetCowTradeRequest.bind(this))
+
         this.setState({
+          getCowTradeRequest,
           getPeerMetadata,
           pendingPeerMessages: [],
+          sendCowTradeRequest,
           sendPeerMetadata: this.wrapSendPeerMetadata(sendPeerMetadata),
         })
 
@@ -717,6 +729,13 @@ export default class Farmhand extends Component {
 
   onGetPeerMetadata(peerState, peerId) {
     this.updatePeer(peerId, peerState)
+  }
+
+  /**
+   * @param {farmhand.cow} cowOffered
+   */
+  onGetCowTradeRequest(cowOffered) {
+    console.warn('cow trade request received', cowOffered)
   }
 
   async clearPersistedData() {
@@ -1090,6 +1109,26 @@ export default class Farmhand extends Component {
    */
   messagePeers(message, severity) {
     this.prependPendingPeerMessage(message, severity)
+  }
+
+  /**
+   * @param {farmhand.cow} peerPlayerCow
+   */
+  tradeForPeerCow(peerPlayerCow) {
+    const { sendCowTradeRequest } = this.state
+    if (!sendCowTradeRequest) return
+
+    const { ownerId } = peerPlayerCow
+    const [peerId] = Object.entries(this.state.peers).find(
+      ([peerId, { id }]) => id === ownerId
+    )
+
+    if (!peerId)
+      throw new Error(
+        `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
+      )
+
+    sendCowTradeRequest(peerPlayerCow, peerId)
   }
 
   /*!
