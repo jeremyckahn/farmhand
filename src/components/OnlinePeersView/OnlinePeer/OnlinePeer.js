@@ -38,7 +38,11 @@ const OnlinePeer = ({
           }}
         />
         <CardContent>
-          {cowOfferedForTrade && <CowCard {...{ cow: cowOfferedForTrade }} />}
+          {cowOfferedForTrade && (
+            <CowCard
+              {...{ cow: cowOfferedForTrade, isCowOfferedForTradeByPeer: true }}
+            />
+          )}
         </CardContent>
       </Card>
     </li>

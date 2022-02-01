@@ -51,6 +51,7 @@ export const CowCard = ({
   handleCowTradeClick,
   id,
   inventory,
+  isCowOfferedForTradeByPeer,
   isSelected,
   isOnline,
   money,
@@ -63,15 +64,12 @@ export const CowCard = ({
   const cardRef = useRef()
   const scrollAnchorRef = useRef()
 
-  const isCowPurchased = !!cowInventory.find(({ id }) => id === cow.id)
+  const isCowPurchased =
+    !!cowInventory.find(({ id }) => id === cow.id) &&
+    !isCowOfferedForTradeByPeer
   const cowValue = getCowValue(cow, isCowPurchased)
   const cowCanBeTradedAway =
     isOnline && !isCowInBreedingPen(cow, cowBreedingPen)
-  const isCowOfferedForTradeByPeer =
-    isOnline &&
-    !isCowPurchased &&
-    typeof cow.ownerId === 'string' &&
-    cow.ownerId !== id
   const canCowBeTradedFor =
     isCowOfferedForTradeByPeer && cowIdOfferedForTrade.length > 0
 
@@ -285,6 +283,7 @@ CowCard.propTypes = {
   handleCowTradeClick: func,
   id: string.isRequired,
   inventory: array.isRequired,
+  isCowOfferedForTradeByPeer: bool,
   isOnline: bool.isRequired,
   isSelected: bool,
   money: number.isRequired,
