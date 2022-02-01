@@ -63,6 +63,7 @@ import {
   toolType,
 } from './enums'
 import {
+  COW_TRADE_TIMEOUT,
   DEFAULT_ROOM,
   INITIAL_STORAGE_LIMIT,
   PURCHASEABLE_COW_PENS,
@@ -174,6 +175,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * set to be traded with online peers.
  * @property {Object} cowsSold Keys are items IDs, values are the id references
  * of cow colors (rainbow-cow, etc.).
+ * @property {number?} cowTradeTimeoutId
  * @property {Object.<farmhand.module:enums.cropType, number>} cropsHarvested A
  * map of totals of crops harvested. Keys are crop type IDs, values are the
  * number of that crop harvested.
@@ -778,8 +780,19 @@ export default class Farmhand extends Component {
     if (!cowToTradeAway)
       throw new Error(`Cow ID ${cowIdOfferedForTrade} not found`)
 
-    // FIXME: Implement a timeout to reset isAwaitingCowTradeRequest
-    this.setState({ isAwaitingCowTradeRequest: true })
+    const cowTradeTimeoutId = setTimeout(() => {
+      if (typeof this.state.cowTradeTimeoutId === 'number') {
+        this.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error')
+        this.setState({
+          cowTradeTimeoutId: null,
+          isAwaitingCowTradeRequest: false,
+        })
+
+        console.error('Cow trade request timed out')
+      }
+    }, COW_TRADE_TIMEOUT)
+
+    this.setState({ cowTradeTimeoutId, isAwaitingCowTradeRequest: true })
 
     sendCowTradeRequest(
       {
@@ -851,7 +864,13 @@ export default class Farmhand extends Component {
    * @param {farmhand.cow} cowReceived
    */
   onGetCowAccept(cowReceived) {
-    const { cowIdOfferedForTrade, cowInventory, id, peers } = this.state
+    const {
+      cowIdOfferedForTrade,
+      cowInventory,
+      cowTradeTimeoutId,
+      id,
+      peers,
+    } = this.state
 
     const cowTradedAway = cowInventory.find(
       ({ id }) => id === cowIdOfferedForTrade
@@ -864,7 +883,10 @@ export default class Farmhand extends Component {
     this.removeCowFromInventory(cowTradedAway)
     this.addCowToInventory({ ...cowReceived, ownerId: id })
 
+    clearTimeout(cowTradeTimeoutId)
+
     this.setState(() => ({
+      cowTradeTimeoutId: null,
       isAwaitingCowTradeRequest: false,
       cowIdOfferedForTrade: cowReceived.id,
       selectedCowId: cowReceived.id,
@@ -879,8 +901,10 @@ export default class Farmhand extends Component {
   }
 
   onGetCowReject({ reason }) {
-    this.setState({ isAwaitingCowTradeRequest: false })
+    const { cowTradeTimeoutId } = this.state
 
+    clearTimeout(cowTradeTimeoutId)
+    this.setState({ cowTradeTimeoutId: null, isAwaitingCowTradeRequest: false })
     this.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error')
   }
 

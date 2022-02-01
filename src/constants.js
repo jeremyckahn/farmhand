@@ -226,3 +226,5 @@ export const COW_COLORS_HEX_MAP = {
   [cowColors.WHITE]: '#ffffff',
   [cowColors.YELLOW]: '#fff931',
 }
+
+export const COW_TRADE_TIMEOUT = 10000
