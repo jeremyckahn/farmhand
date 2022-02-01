@@ -780,18 +780,21 @@ export default class Farmhand extends Component {
     // FIXME: Implement a timeout to reset isAwaitingCowTradeRequest
     this.setState({ isAwaitingCowTradeRequest: true })
 
-    // FIXME: This needs to indicate the cow being expected in return so that
-    // sender receives what they expect
     sendCowTradeRequest(
-      { ...cowToTradeAway, isUsingHuggingMachine: false },
+      {
+        cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
+        cowRequested: peerPlayerCow,
+      },
       peerId
     )
   }
 
   /**
-   * @param {farmhand.cow} cowOffered
+   * @param {Object} cowTradeRequestPayload
+   * @param {farmhand.cow} cowTradeRequestPayload.cowOffered
+   * @param {farmhand.cow} cowTradeRequestPayload.cowRequested
    */
-  async onGetCowTradeRequest(cowOffered) {
+  async onGetCowTradeRequest({ cowOffered, cowRequested }) {
     const {
       cowIdOfferedForTrade,
       cowInventory,
@@ -810,7 +813,7 @@ export default class Farmhand extends Component {
 
     if (
       isAwaitingCowTradeRequest ||
-      cowIdOfferedForTrade.length === 0 ||
+      cowRequested.id !== cowIdOfferedForTrade ||
       !cowToTradeAway
     ) {
       sendCowReject({
