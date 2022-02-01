@@ -715,6 +715,7 @@ export default class Farmhand extends Component {
         this.setState({ peers: {}, sendPeerMetadata: null })
       }
     }
+
     ;[
       'showCowPenPurchasedNotifications',
       'showInventoryFullNotifications',
@@ -800,6 +801,7 @@ export default class Farmhand extends Component {
       cowInventory,
       id,
       isAwaitingCowTradeRequest,
+      peers,
       sendCowAccept,
       sendCowReject,
     } = this.state
@@ -823,27 +825,40 @@ export default class Farmhand extends Component {
       return
     }
 
+    const [peerId, peerMetadata] = Object.entries(peers).find(
+      ([peerId, { id }]) => id === cowOffered.ownerId
+    )
+
     this.changeCowAutomaticHugState(cowToTradeAway, false)
     this.removeCowFromInventory(cowToTradeAway)
     this.addCowToInventory({ ...cowOffered, ownerId: id })
     this.setState(() => ({
       cowIdOfferedForTrade: cowOffered.id,
       selectedCowId: cowOffered.id,
+      peers: {
+        ...peers,
+        [peerId]: {
+          ...peerMetadata,
+          cowOfferedForTrade: { ...cowToTradeAway, ownerId: peerMetadata.id },
+        },
+      },
     }))
 
-    await sendCowAccept({ ...cowToTradeAway, isUsingHuggingMachine: false })
-
-    this.state.sendPeerMetadata?.(this.peerMetadata)
+    sendCowAccept({ ...cowToTradeAway, isUsingHuggingMachine: false })
   }
 
   /**
    * @param {farmhand.cow} cowReceived
    */
   onGetCowAccept(cowReceived) {
-    const { cowIdOfferedForTrade, cowInventory, id } = this.state
+    const { cowIdOfferedForTrade, cowInventory, id, peers } = this.state
 
     const cowTradedAway = cowInventory.find(
       ({ id }) => id === cowIdOfferedForTrade
+    )
+
+    const [peerId, peerMetadata] = Object.entries(peers).find(
+      ([peerId, { id }]) => id === cowReceived.ownerId
     )
 
     this.removeCowFromInventory(cowTradedAway)
@@ -853,6 +868,13 @@ export default class Farmhand extends Component {
       isAwaitingCowTradeRequest: false,
       cowIdOfferedForTrade: cowReceived.id,
       selectedCowId: cowReceived.id,
+      peers: {
+        ...peers,
+        [peerId]: {
+          ...peerMetadata,
+          cowOfferedForTrade: { ...cowTradedAway, ownerId: peerMetadata.id },
+        },
+      },
     }))
   }
 
