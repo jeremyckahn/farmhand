@@ -168,6 +168,13 @@ export const moneyTotal = (...args) =>
 export const scaleNumber = (value, min, max, baseMin, baseMax) =>
   ((value - min) * (baseMax - baseMin)) / (max - min) + baseMin
 
+/**
+ * @param {string} string
+ * @returns {number}
+ */
+const convertStringToInteger = string =>
+  string.split('').reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
+
 export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
     .fill(undefined)
@@ -426,6 +433,8 @@ export const getSeedItemIdFromFinalStageCropItemId = memoize(
  */
 export const generateCow = (options = {}) => {
   const gender = options.gender || chooseRandom(Object.values(genders))
+  const color = options.color || chooseRandom(Object.values(standardCowColors))
+  const id = uuid()
 
   const baseWeight = Math.round(
     COW_STARTING_WEIGHT_BASE *
@@ -433,8 +442,6 @@ export const generateCow = (options = {}) => {
       COW_STARTING_WEIGHT_VARIANCE +
       Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
   )
-
-  const color = options.color || chooseRandom(Object.values(standardCowColors))
 
   return {
     baseWeight,
@@ -446,7 +453,7 @@ export const generateCow = (options = {}) => {
     gender,
     happiness: 0,
     happinessBoostsToday: 0,
-    id: uuid(),
+    id,
     isBred: false,
     isUsingHuggingMachine: false,
     name: chooseRandom(fruitNames),
@@ -1040,14 +1047,9 @@ export const transformStateDataForImport = state => {
  * @returns {string}
  */
 export const getPlayerName = memoize(playerId => {
-  const playerIdNumber = playerId
-    .split('')
-    .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
-
+  const playerIdNumber = convertStringToInteger(playerId)
   const adjective = adjectives[playerIdNumber % adjectives.length]
-  const adjectiveNumberValue = adjective
-    .split('')
-    .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
+  const adjectiveNumberValue = convertStringToInteger(adjective)
 
   const animal =
     animalNames[(playerIdNumber + adjectiveNumberValue) % animalNames.length]
@@ -1203,10 +1205,7 @@ const colorizeCowTemplate = (() => {
  * @returns {string} Base64 representation of an image
  */
 export const getCowImage = async cow => {
-  const cowIdNumber = cow.id
-    .split('')
-    .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
-
+  const cowIdNumber = convertStringToInteger(cow.id)
   const { variations } = animals.cow
   const cowTemplate = variations[cowIdNumber % variations.length]
 
