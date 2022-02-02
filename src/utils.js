@@ -427,6 +427,13 @@ export const getSeedItemIdFromFinalStageCropItemId = memoize(
 )
 
 /**
+ * @param {string} id
+ * @returns {string}
+ */
+const getCowNameFromId = id =>
+  fruitNames[convertStringToInteger(id) % fruitNames.length]
+
+/**
  * Generates a friendly cow.
  * @param {Object} [options]
  * @returns {farmhand.cow}
@@ -434,7 +441,7 @@ export const getSeedItemIdFromFinalStageCropItemId = memoize(
 export const generateCow = (options = {}) => {
   const gender = options.gender || chooseRandom(Object.values(genders))
   const color = options.color || chooseRandom(Object.values(standardCowColors))
-  const id = uuid()
+  const id = options.id || uuid()
 
   const baseWeight = Math.round(
     COW_STARTING_WEIGHT_BASE *
@@ -456,7 +463,7 @@ export const generateCow = (options = {}) => {
     id,
     isBred: false,
     isUsingHuggingMachine: false,
-    name: chooseRandom(fruitNames),
+    name: getCowNameFromId(id),
     weightMultiplier: 1,
     ...options,
   }
@@ -467,9 +474,10 @@ export const generateCow = (options = {}) => {
  * @param {farmhand.cow} cow1
  * @param {farmhand.cow} cow2
  * @param {string} ownerId
+ * @param {Partial<farmhand.cow>?} customProps
  * @returns {farmhand.cow}
  */
-export const generateOffspringCow = (cow1, cow2, ownerId) => {
+export const generateOffspringCow = (cow1, cow2, ownerId, customProps = {}) => {
   if (cow1.gender === cow2.gender) {
     throw new Error(
       `${JSON.stringify(cow1)} ${JSON.stringify(
@@ -504,6 +512,7 @@ export const generateOffspringCow = (cow1, cow2, ownerId) => {
     isBred: true,
     ownerId,
     originalOwnerId: ownerId,
+    ...customProps,
   })
 }
 
