@@ -17,6 +17,7 @@ import { pixel } from '../../img'
 import { genders } from '../../enums'
 import {
   areHuggingMachinesInInventory,
+  getCowNameFromId,
   getCowImage,
   getCowValue,
   isCowInBreedingPen,
@@ -35,6 +36,7 @@ const genderIcons = {
 }
 
 export const CowCard = ({
+  allowCustomPeerCowNames,
   cow,
   cowBreedingPen,
   cowIdOfferedForTrade,
@@ -77,7 +79,14 @@ export const CowCard = ({
     ;(async () => {
       setCowImage(await getCowImage(cow))
     })()
+
+    setName(cow.name)
   }, [cow])
+
+  const displayName =
+    isCowOfferedForTradeByPeer && !allowCustomPeerCowNames
+      ? getCowNameFromId(cow.id)
+      : name
 
   useEffect(() => {
     if (isSelected) {
@@ -115,7 +124,7 @@ export const CowCard = ({
       >
         {isSelected && (
           <span className="visually_hidden">
-            {cow.name} is currently selected
+            {displayName} is currently selected
           </span>
         )}
         <CardHeader
@@ -133,11 +142,11 @@ export const CowCard = ({
                         }
                       },
                       placeholder: 'Name',
-                      value: name,
+                      value: displayName,
                     }}
                   />
                 ) : (
-                  cow.name
+                  displayName
                 )}{' '}
                 <FontAwesomeIcon
                   {...{
@@ -267,6 +276,7 @@ export const CowCard = ({
 }
 
 CowCard.propTypes = {
+  allowCustomPeerCowNames: bool.isRequired,
   cow: object.isRequired,
   cowBreedingPen: object.isRequired,
   cowIdOfferedForTrade: string.isRequired,

@@ -430,7 +430,7 @@ export const getSeedItemIdFromFinalStageCropItemId = memoize(
  * @param {string} id
  * @returns {string}
  */
-const getCowNameFromId = id =>
+export const getCowNameFromId = id =>
   fruitNames[convertStringToInteger(id) % fruitNames.length]
 
 /**

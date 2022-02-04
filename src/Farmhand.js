@@ -40,6 +40,7 @@ import {
   doesMenuObstructStage,
   farmProductsSold,
   getAvailableShopInventory,
+  getCowNameFromId,
   getItemCurrentValue,
   getLevelEntitlements,
   getPeerMetadata,
@@ -162,6 +163,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @typedef farmhand.state
  * @type {Object}
  * @property {number?} activePlayers
+ * @property {boolean} allowCustomPeerCowNames
  * @property {farmhand.module:enums.dialogView} currentDialogView
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
@@ -350,6 +352,7 @@ export default class Farmhand extends Component {
   createInitialState() {
     return {
       activePlayers: null,
+      allowCustomPeerCowNames: false,
       currentDialogView: dialogView.NONE,
       completedAchievements: {},
       cowForSale: {},
@@ -810,6 +813,7 @@ export default class Farmhand extends Component {
    */
   async onGetCowTradeRequest({ cowOffered, cowRequested }) {
     const {
+      allowCustomPeerCowNames,
       cowIdOfferedForTrade,
       cowInventory,
       id,
@@ -844,7 +848,13 @@ export default class Farmhand extends Component {
 
     this.changeCowAutomaticHugState(cowToTradeAway, false)
     this.removeCowFromInventory(cowToTradeAway)
-    this.addCowToInventory({ ...cowOffered, ownerId: id })
+    this.addCowToInventory({
+      ...cowOffered,
+      ownerId: id,
+      name: allowCustomPeerCowNames
+        ? cowOffered.name
+        : getCowNameFromId(cowOffered.id),
+    })
     this.setState(() => ({
       cowIdOfferedForTrade: cowOffered.id,
       selectedCowId: cowOffered.id,
@@ -865,6 +875,7 @@ export default class Farmhand extends Component {
    */
   onGetCowAccept(cowReceived) {
     const {
+      allowCustomPeerCowNames,
       cowIdOfferedForTrade,
       cowInventory,
       cowTradeTimeoutId,
@@ -881,7 +892,13 @@ export default class Farmhand extends Component {
     )
 
     this.removeCowFromInventory(cowTradedAway)
-    this.addCowToInventory({ ...cowReceived, ownerId: id })
+    this.addCowToInventory({
+      ...cowReceived,
+      ownerId: id,
+      name: allowCustomPeerCowNames
+        ? cowReceived.name
+        : getCowNameFromId(cowReceived.id),
+    })
 
     clearTimeout(cowTradeTimeoutId)
 

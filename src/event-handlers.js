@@ -404,6 +404,10 @@ export default {
     this.setState({ useAlternateEndDayButtonPosition })
   },
 
+  handleAllowCustomPeerCowNamesChange(_e, allowCustomPeerCowNames) {
+    this.setState({ allowCustomPeerCowNames })
+  },
+
   handleShowHomeScreenChange(_e, showHomeScreen) {
     if (this.state.stageFocus === stageFocusType.HOME && !showHomeScreen) {
       this.focusNextView()

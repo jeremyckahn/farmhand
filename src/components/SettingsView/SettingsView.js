@@ -19,6 +19,8 @@ import FarmhandContext from '../../Farmhand.context'
 import './SettingsView.sass'
 
 const SettingsView = ({
+  allowCustomPeerCowNames,
+  handleAllowCustomPeerCowNamesChange,
   handleClearPersistedDataClick,
   handleExportDataClick,
   handleImportDataClick,
@@ -82,6 +84,17 @@ const SettingsView = ({
               />
             }
             label="Show the Home Screen"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                color="primary"
+                checked={allowCustomPeerCowNames}
+                onChange={handleAllowCustomPeerCowNamesChange}
+                name="allow-custom-peer-cow-names"
+              />
+            }
+            label="Display custom names for cows received from other players"
           />
         </FormGroup>
       </FormControl>
@@ -182,16 +195,18 @@ const SettingsView = ({
 }
 
 SettingsView.propTypes = {
+  allowCustomPeerCowNames: bool.isRequired,
+  handleAllowCustomPeerCowNamesChange: func.isRequired,
   handleClearPersistedDataClick: func.isRequired,
   handleExportDataClick: func.isRequired,
   handleImportDataClick: func.isRequired,
   handleSaveButtonClick: func.isRequired,
+  handleShowHomeScreenChange: func.isRequired,
   handleShowNotificationsChange: func.isRequired,
   handleUseAlternateEndDayButtonPositionChange: func.isRequired,
-  handleShowHomeScreenChange: func.isRequired,
+  showHomeScreen: bool.isRequired,
   showNotifications: bool.isRequired,
   useAlternateEndDayButtonPosition: bool.isRequired,
-  showHomeScreen: bool.isRequired,
 }
 
 export default function Consumer(props) {

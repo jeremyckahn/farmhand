@@ -117,6 +117,7 @@ export const RECIPE_INGREDIENT_VALUE_MULTIPLIER = 1.25
 export const I_AM_RICH_BONUSES = [0.05, 0.1, 0.25]
 
 export const PERSISTED_STATE_KEYS = [
+  'allowCustomPeerCowNames',
   'completedAchievements',
   'cowBreedingPen',
   'cowColorsPurchased',

@@ -14,6 +14,7 @@ describe('CowCard', () => {
     baseWeight: 100,
   })
   const baseProps = {
+    allowCustomPeerCowNames: false,
     cow,
     cowInventory: [],
     cowBreedingPen: {
