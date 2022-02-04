@@ -430,8 +430,20 @@ export const getSeedItemIdFromFinalStageCropItemId = memoize(
  * @param {farmhand.cow} cow
  * @returns {string}
  */
-export const getCowDefaultName = ({ id }) =>
+const getDefaultCowName = ({ id }) =>
   fruitNames[convertStringToInteger(id) % fruitNames.length]
+
+/**
+ * @param {farmhand.cow} cow
+ * @param {string} playerId
+ * @param {boolean} allowCustomPeerCowNames
+ * @returns {string}
+ */
+export const getCowName = (cow, playerId, allowCustomPeerCowNames) => {
+  return cow.originalOwnerId !== playerId && !allowCustomPeerCowNames
+    ? getDefaultCowName(cow)
+    : cow.name
+}
 
 /**
  * Generates a friendly cow.
@@ -468,7 +480,7 @@ export const generateCow = (options = {}) => {
     ...options,
   }
 
-  cow.name = getCowDefaultName(cow)
+  cow.name = getDefaultCowName(cow)
 
   return cow
 }
