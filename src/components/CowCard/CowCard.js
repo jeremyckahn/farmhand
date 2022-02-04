@@ -17,7 +17,7 @@ import { pixel } from '../../img'
 import { genders } from '../../enums'
 import {
   areHuggingMachinesInInventory,
-  getCowNameFromId,
+  getCowDefaultName,
   getCowImage,
   getCowValue,
   isCowInBreedingPen,
@@ -85,7 +85,7 @@ export const CowCard = ({
 
   const displayName =
     isCowOfferedForTradeByPeer && !allowCustomPeerCowNames
-      ? getCowNameFromId(cow.id)
+      ? getCowDefaultName(cow)
       : name
 
   useEffect(() => {

@@ -427,10 +427,10 @@ export const getSeedItemIdFromFinalStageCropItemId = memoize(
 )
 
 /**
- * @param {string} id
+ * @param {farmhand.cow} cow
  * @returns {string}
  */
-export const getCowNameFromId = id =>
+export const getCowDefaultName = ({ id }) =>
   fruitNames[convertStringToInteger(id) % fruitNames.length]
 
 /**
@@ -450,7 +450,7 @@ export const generateCow = (options = {}) => {
       Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
   )
 
-  return {
+  const cow = {
     baseWeight,
     color,
     colorsInBloodline: { [color]: true },
@@ -463,10 +463,14 @@ export const generateCow = (options = {}) => {
     id,
     isBred: false,
     isUsingHuggingMachine: false,
-    name: getCowNameFromId(id),
+    name: '', // FIXME: Remove name from the farmhand.cow typedef
     weightMultiplier: 1,
     ...options,
   }
+
+  cow.name = getCowDefaultName(cow)
+
+  return cow
 }
 
 /**
