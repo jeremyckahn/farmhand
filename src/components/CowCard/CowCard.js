@@ -17,7 +17,7 @@ import { pixel } from '../../img'
 import { genders } from '../../enums'
 import {
   areHuggingMachinesInInventory,
-  getCowName,
+  getCowDisplayName,
   getCowImage,
   getCowValue,
   isCowInBreedingPen,
@@ -61,7 +61,9 @@ export const CowCard = ({
 
   huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
 }) => {
-  const [name, setName] = useState(cow.name)
+  const [displayName, setDisplayName] = useState(
+    getCowDisplayName(cow, id, allowCustomPeerCowNames)
+  )
   const [cowImage, setCowImage] = useState(pixel)
   const cardRef = useRef()
   const scrollAnchorRef = useRef()
@@ -80,12 +82,8 @@ export const CowCard = ({
       setCowImage(await getCowImage(cow))
     })()
 
-    setName(cow.name)
-  }, [cow])
-
-  const displayName = isCowOfferedForTradeByPeer
-    ? getCowName(cow, id, allowCustomPeerCowNames)
-    : name
+    setDisplayName(getCowDisplayName(cow, id, allowCustomPeerCowNames))
+  }, [cow, id, allowCustomPeerCowNames])
 
   useEffect(() => {
     if (isSelected) {
@@ -134,9 +132,10 @@ export const CowCard = ({
                 {isCowPurchased ? (
                   <TextField
                     {...{
+                      disabled: id !== cow.originalOwnerId,
                       onChange: e => {
                         if (debounced) {
-                          setName(e.target.value)
+                          setDisplayName(e.target.value)
                           debounced.handleCowNameInputChange({ ...e }, cow)
                         }
                       },

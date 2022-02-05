@@ -439,7 +439,7 @@ const getDefaultCowName = ({ id }) =>
  * @param {boolean} allowCustomPeerCowNames
  * @returns {string}
  */
-export const getCowName = (cow, playerId, allowCustomPeerCowNames) => {
+export const getCowDisplayName = (cow, playerId, allowCustomPeerCowNames) => {
   return cow.originalOwnerId !== playerId && !allowCustomPeerCowNames
     ? getDefaultCowName(cow)
     : cow.name

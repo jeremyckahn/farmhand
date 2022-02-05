@@ -40,7 +40,6 @@ import {
   doesMenuObstructStage,
   farmProductsSold,
   getAvailableShopInventory,
-  getCowName,
   getItemCurrentValue,
   getLevelEntitlements,
   getPeerMetadata,
@@ -813,7 +812,6 @@ export default class Farmhand extends Component {
    */
   async onGetCowTradeRequest({ cowOffered, cowRequested }) {
     const {
-      allowCustomPeerCowNames,
       cowIdOfferedForTrade,
       cowInventory,
       id,
@@ -851,9 +849,6 @@ export default class Farmhand extends Component {
     this.addCowToInventory({
       ...cowOffered,
       ownerId: id,
-      name: allowCustomPeerCowNames
-        ? cowOffered.name
-        : getCowName(cowOffered, id, allowCustomPeerCowNames),
     })
     this.setState(() => ({
       cowIdOfferedForTrade: cowOffered.id,
@@ -875,7 +870,6 @@ export default class Farmhand extends Component {
    */
   onGetCowAccept(cowReceived) {
     const {
-      allowCustomPeerCowNames,
       cowIdOfferedForTrade,
       cowInventory,
       cowTradeTimeoutId,
@@ -895,9 +889,6 @@ export default class Farmhand extends Component {
     this.addCowToInventory({
       ...cowReceived,
       ownerId: id,
-      name: allowCustomPeerCowNames
-        ? cowReceived.name
-        : getCowName(cowReceived, id, allowCustomPeerCowNames),
     })
 
     clearTimeout(cowTradeTimeoutId)
