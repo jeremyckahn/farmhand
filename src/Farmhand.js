@@ -893,19 +893,24 @@ export default class Farmhand extends Component {
 
     clearTimeout(cowTradeTimeoutId)
 
-    this.setState(() => ({
-      cowTradeTimeoutId: null,
-      isAwaitingCowTradeRequest: false,
-      cowIdOfferedForTrade: cowReceived.id,
-      selectedCowId: cowReceived.id,
-      peers: {
-        ...peers,
-        [peerId]: {
-          ...peerMetadata,
-          cowOfferedForTrade: { ...cowTradedAway, ownerId: peerMetadata.id },
+    this.setState(
+      () => ({
+        cowTradeTimeoutId: null,
+        isAwaitingCowTradeRequest: false,
+        cowIdOfferedForTrade: cowReceived.id,
+        selectedCowId: cowReceived.id,
+        peers: {
+          ...peers,
+          [peerId]: {
+            ...peerMetadata,
+            cowOfferedForTrade: { ...cowTradedAway, ownerId: peerMetadata.id },
+          },
         },
-      },
-    }))
+      }),
+      async () => {
+        await this.persistState()
+      }
+    )
   }
 
   onGetCowReject({ reason }) {
