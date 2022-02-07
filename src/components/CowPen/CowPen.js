@@ -10,10 +10,11 @@ import { LEFT, RIGHT } from '../../constants'
 import FarmhandContext from '../../Farmhand.context'
 import { pixel } from '../../img'
 
-import { getCowImage } from '../../utils'
+import { getCowDisplayName, getCowImage } from '../../utils'
 
 import './CowPen.sass'
 
+// TODO: Break this out into its own component file
 export class Cow extends Component {
   state = {
     cowImage: pixel,
@@ -173,7 +174,7 @@ export class Cow extends Component {
 
   render() {
     const {
-      props: { cow, handleCowClick, isSelected },
+      props: { allowCustomPeerCowNames, cow, handleCowClick, id, isSelected },
       state: { cowImage, isTransitioning, rotate, showHugAnimation, x, y },
     } = this
 
@@ -196,7 +197,7 @@ export class Cow extends Component {
           {...{
             arrow: true,
             placement: 'top',
-            title: cow.name,
+            title: getCowDisplayName(cow, id, allowCustomPeerCowNames),
             open: isSelected,
             PopperProps: {
               disablePortal: true,
@@ -237,16 +238,20 @@ export class Cow extends Component {
 }
 
 Cow.propTypes = {
+  allowCustomPeerCowNames: bool.isRequired,
   cow: object.isRequired,
   cowInventory: array.isRequired,
   handleCowClick: func.isRequired,
+  id: string.isRequired,
   isSelected: bool.isRequired,
 }
 
 export const CowPen = ({
+  allowCustomPeerCowNames,
   cowInventory,
   handleCowPenUnmount,
   handleCowClick,
+  id,
   selectedCowId,
 }) => {
   useEffect(() => {
@@ -260,10 +265,12 @@ export const CowPen = ({
       {cowInventory.map(cow => (
         <Cow
           {...{
+            allowCustomPeerCowNames,
             cow,
             cowInventory,
             key: cow.id,
             handleCowClick,
+            id,
             isSelected: selectedCowId === cow.id,
           }}
         />
@@ -273,9 +280,11 @@ export const CowPen = ({
 }
 
 CowPen.propTypes = {
+  allowCustomPeerCowNames: bool.isRequired,
   cowInventory: array.isRequired,
   handleCowClick: func.isRequired,
   handleCowPenUnmount: func.isRequired,
+  id: string.isRequired,
   selectedCowId: string.isRequired,
 }
 
