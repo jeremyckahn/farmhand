@@ -74,6 +74,7 @@ import { HEARTBEAT_INTERVAL_PERIOD, SERVER_ERRORS } from './common/constants'
 import {
   CONNECTED_TO_ROOM,
   COW_PEN_PURCHASED,
+  COW_TRADED_NOTIFICATION,
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
@@ -812,6 +813,7 @@ export default class Farmhand extends Component {
    */
   async onGetCowTradeRequest({ cowOffered, cowRequested }) {
     const {
+      allowCustomPeerCowNames,
       cowIdOfferedForTrade,
       cowInventory,
       id,
@@ -863,6 +865,11 @@ export default class Farmhand extends Component {
     }))
 
     sendCowAccept({ ...cowToTradeAway, isUsingHuggingMachine: false })
+
+    this.showNotification(
+      COW_TRADED_NOTIFICATION`${cowToTradeAway}${cowOffered}${id}${allowCustomPeerCowNames}`,
+      'success'
+    )
   }
 
   /**
@@ -870,6 +877,7 @@ export default class Farmhand extends Component {
    */
   onGetCowAccept(cowReceived) {
     const {
+      allowCustomPeerCowNames,
       cowIdOfferedForTrade,
       cowInventory,
       cowTradeTimeoutId,
@@ -910,6 +918,11 @@ export default class Farmhand extends Component {
       async () => {
         await this.persistState()
       }
+    )
+
+    this.showNotification(
+      COW_TRADED_NOTIFICATION`${cowTradedAway}${cowReceived}${id}${allowCustomPeerCowNames}`,
+      'success'
     )
   }
 
