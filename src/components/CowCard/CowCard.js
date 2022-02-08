@@ -188,16 +188,24 @@ export const CowCard = ({
             </Button>
           )}
           {canCowBeTradedFor && (
-            <Button
+            <Tooltip
               {...{
-                className: 'purchase',
-                color: 'primary',
-                onClick: () => handleCowTradeClick(cow),
-                variant: 'contained',
+                arrow: true,
+                placement: 'top',
+                title: 'The game will be saved when the trade is completed.',
               }}
             >
-              Trade
-            </Button>
+              <Button
+                {...{
+                  className: 'purchase',
+                  color: 'primary',
+                  onClick: () => handleCowTradeClick(cow),
+                  variant: 'contained',
+                }}
+              >
+                Trade
+              </Button>
+            </Tooltip>
           )}
           {isCowPurchased && (
             <>
