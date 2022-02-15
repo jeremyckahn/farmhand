@@ -83,6 +83,7 @@ import {
 } from './templates'
 import {
   CONNECTING_TO_SERVER,
+  COW_ALREADY_OWNED,
   DATA_DELETED,
   DISCONNECTED_FROM_SERVER,
   INVENTORY_FULL_NOTIFICATION,
@@ -771,17 +772,29 @@ export default class Farmhand extends Component {
       ([peerId, { id }]) => id === ownerId
     )
 
-    if (!peerId)
-      throw new Error(
-        `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
-      )
+    if (!peerId) {
+      console.error(`Owner not found for cow ${JSON.stringify(peerPlayerCow)}`)
+      return
+    }
+
+    const playerAlreadyOwnsRequestedCow = cowInventory.find(
+      ({ id }) => id === peerPlayerCow.id
+    )
+
+    if (playerAlreadyOwnsRequestedCow) {
+      this.showNotification(COW_ALREADY_OWNED, 'error')
+      console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
+      return
+    }
 
     const cowToTradeAway = cowInventory.find(
       ({ id }) => id === cowIdOfferedForTrade
     )
 
-    if (!cowToTradeAway)
-      throw new Error(`Cow ID ${cowIdOfferedForTrade} not found`)
+    if (!cowToTradeAway) {
+      console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
+      return
+    }
 
     const cowTradeTimeoutId = setTimeout(() => {
       if (typeof this.state.cowTradeTimeoutId === 'number') {
@@ -924,6 +937,8 @@ export default class Farmhand extends Component {
       COW_TRADED_NOTIFICATION`${cowTradedAway}${cowReceived}${id}${allowCustomPeerCowNames}`,
       'success'
     )
+
+    this.showNotification(PROGRESS_SAVED_MESSAGE, 'info')
   }
 
   onGetCowReject({ reason }) {
