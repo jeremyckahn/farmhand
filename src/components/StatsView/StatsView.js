@@ -23,7 +23,10 @@ import {
   moneyString,
   moneyTotal,
 } from '../../utils'
-import { FARM_PRODUCTS_TOOLTIP_TEXT } from '../../strings'
+import {
+  COW_SOLD_TOOLTIP_TEXT,
+  FARM_PRODUCTS_TOOLTIP_TEXT,
+} from '../../strings'
 import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants'
 
 import './StatsView.sass'
@@ -33,6 +36,7 @@ const ElevatedPaper = props => (
 )
 
 const StatsView = ({
+  cowsTraded,
   farmName,
   historicalDailyLosses,
   historicalDailyRevenue,
@@ -106,6 +110,20 @@ const StatsView = ({
             </TableCell>
             <TableCell align="right">{integerString(loansTakenOut)}</TableCell>
           </TableRow>
+          <Tooltip
+            {...{
+              arrow: true,
+              placement: 'top',
+              title: COW_SOLD_TOOLTIP_TEXT,
+            }}
+          >
+            <TableRow>
+              <TableCell {...{ component: 'th', scope: 'row' }}>
+                Cows traded
+              </TableCell>
+              <TableCell align="right">{integerString(cowsTraded)}</TableCell>
+            </TableRow>
+          </Tooltip>
         </TableBody>
       </Table>
     </TableContainer>
@@ -233,6 +251,7 @@ const StatsView = ({
 )
 
 StatsView.propTypes = {
+  cowsTraded: number.isRequired,
   farmName: string.isRequired,
   historicalDailyLosses: array.isRequired,
   historicalDailyRevenue: array.isRequired,

@@ -178,6 +178,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * set to be traded with online peers.
  * @property {Object} cowsSold Keys are items IDs, values are the id references
  * of cow colors (rainbow-cow, etc.).
+ * @property {number} cowsTraded
  * @property {number?} cowTradeTimeoutId
  * @property {Object.<farmhand.module:enums.cropType, number>} cropsHarvested A
  * map of totals of crops harvested. Keys are crop type IDs, values are the
@@ -366,6 +367,7 @@ export default class Farmhand extends Component {
       cowIdOfferedForTrade: '',
       cowInventory: [],
       cowsSold: {},
+      cowsTraded: 0,
       cropsHarvested: {},
       dayCount: 0,
       farmName: 'Unnamed',
@@ -828,6 +830,7 @@ export default class Farmhand extends Component {
     const {
       allowCustomPeerCowNames,
       cowIdOfferedForTrade,
+      cowsTraded,
       cowInventory,
       id,
       isAwaitingCowTradeRequest,
@@ -867,6 +870,8 @@ export default class Farmhand extends Component {
     })
     this.setState(() => ({
       cowIdOfferedForTrade: cowOffered.id,
+      cowsTraded:
+        cowOffered.originalOwnerId === id ? cowsTraded : cowsTraded + 1,
       selectedCowId: cowOffered.id,
       peers: {
         ...peers,
@@ -893,6 +898,7 @@ export default class Farmhand extends Component {
       allowCustomPeerCowNames,
       cowIdOfferedForTrade,
       cowInventory,
+      cowsTraded,
       cowTradeTimeoutId,
       id,
       peers,
@@ -916,6 +922,8 @@ export default class Farmhand extends Component {
 
     this.setState(
       () => ({
+        cowsTraded:
+          cowReceived.originalOwnerId === id ? cowsTraded : cowsTraded + 1,
         cowTradeTimeoutId: null,
         isAwaitingCowTradeRequest: false,
         cowIdOfferedForTrade: cowReceived.id,
