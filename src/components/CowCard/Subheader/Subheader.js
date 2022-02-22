@@ -12,6 +12,7 @@ import { COW_COLOR_NAMES } from '../../../strings'
 import { genders } from '../../../enums'
 import {
   getCowWeight,
+  integerString,
   isCowInBreedingPen,
   memoize,
   moneyString,
@@ -35,6 +36,7 @@ const getCowMapById = memoize(cowInventory =>
 )
 
 const Subheader = ({
+  canCowBeTradedFor,
   cow,
   cowBreedingPen,
   cowIdOfferedForTrade,
@@ -81,6 +83,9 @@ const Subheader = ({
         {isCowPurchased ? 'Value' : 'Price'}: {moneyString(cowValue)}
       </p>
       <p>Weight: {getCowWeight(cow)} lbs.</p>
+      {(isCowPurchased || canCowBeTradedFor) && (
+        <p>Times traded: {integerString(cow.timesTraded)}</p>
+      )}
       {isCowPurchased && (
         <>
           <ol className="hearts">
@@ -166,6 +171,7 @@ const Subheader = ({
 export default Subheader
 
 Subheader.propTypes = {
+  canCowBeTradedFor: bool.isRequired,
   cow: object.isRequired,
   cowBreedingPen: object.isRequired,
   cowIdOfferedForTrade: string.isRequired,

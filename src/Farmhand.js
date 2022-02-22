@@ -858,21 +858,29 @@ export default class Farmhand extends Component {
       return
     }
 
+    const updatedCowOffered = {
+      ...cowOffered,
+      timesTraded:
+        cowOffered.originalOwnerId === id
+          ? cowOffered.timesTraded
+          : cowOffered.timesTraded + 1,
+    }
+
     const [peerId, peerMetadata] = Object.entries(peers).find(
-      ([peerId, { id }]) => id === cowOffered.ownerId
+      ([peerId, { id }]) => id === updatedCowOffered.ownerId
     )
 
     this.changeCowAutomaticHugState(cowToTradeAway, false)
     this.removeCowFromInventory(cowToTradeAway)
     this.addCowToInventory({
-      ...cowOffered,
+      ...updatedCowOffered,
       ownerId: id,
     })
     this.setState(() => ({
-      cowIdOfferedForTrade: cowOffered.id,
+      cowIdOfferedForTrade: updatedCowOffered.id,
       cowsTraded:
-        cowOffered.originalOwnerId === id ? cowsTraded : cowsTraded + 1,
-      selectedCowId: cowOffered.id,
+        updatedCowOffered.originalOwnerId === id ? cowsTraded : cowsTraded + 1,
+      selectedCowId: updatedCowOffered.id,
       peers: {
         ...peers,
         [peerId]: {
@@ -912,9 +920,17 @@ export default class Farmhand extends Component {
       ([peerId, { id }]) => id === cowReceived.ownerId
     )
 
+    const updatedCowReceived = {
+      ...cowReceived,
+      timesTraded:
+        cowReceived.originalOwnerId === id
+          ? cowReceived.timesTraded
+          : cowReceived.timesTraded + 1,
+    }
+
     this.removeCowFromInventory(cowTradedAway)
     this.addCowToInventory({
-      ...cowReceived,
+      ...updatedCowReceived,
       ownerId: id,
     })
 
@@ -923,11 +939,13 @@ export default class Farmhand extends Component {
     this.setState(
       () => ({
         cowsTraded:
-          cowReceived.originalOwnerId === id ? cowsTraded : cowsTraded + 1,
+          updatedCowReceived.originalOwnerId === id
+            ? cowsTraded
+            : cowsTraded + 1,
         cowTradeTimeoutId: null,
         isAwaitingCowTradeRequest: false,
-        cowIdOfferedForTrade: cowReceived.id,
-        selectedCowId: cowReceived.id,
+        cowIdOfferedForTrade: updatedCowReceived.id,
+        selectedCowId: updatedCowReceived.id,
         peers: {
           ...peers,
           [peerId]: {
@@ -942,7 +960,7 @@ export default class Farmhand extends Component {
     )
 
     this.showNotification(
-      COW_TRADED_NOTIFICATION`${cowTradedAway}${cowReceived}${id}${allowCustomPeerCowNames}`,
+      COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${id}${allowCustomPeerCowNames}`,
       'success'
     )
 

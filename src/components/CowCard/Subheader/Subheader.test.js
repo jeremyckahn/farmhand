@@ -12,6 +12,7 @@ describe('Subheader', () => {
   beforeEach(() => {
     jest.spyOn(Math, 'random').mockReturnValue(0)
     baseProps = {
+      canCowBeTradedFor: false,
       cow: generateCow({
         color: cowColors.WHITE,
         happiness: 0,

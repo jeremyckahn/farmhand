@@ -271,6 +271,8 @@ export const INGREDIENTS_LIST_ITEM = (
   quantityAvailable
 ) => `${ingredientName} x ${quantityNeeded} (On hand: ${quantityAvailable})`
 
+// FIXME: Use getCowDisplayName instead of cow.name
+
 /**
  * @param {farmhand.cow} cow
  * @returns {string}

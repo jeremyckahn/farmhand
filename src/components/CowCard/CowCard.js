@@ -74,8 +74,9 @@ export const CowCard = ({
   const cowValue = getCowValue(cow, isCowPurchased)
   const cowCanBeTradedAway =
     isOnline && !isCowInBreedingPen(cow, cowBreedingPen)
-  const canCowBeTradedFor =
+  const canCowBeTradedFor = Boolean(
     isCowOfferedForTradeByPeer && cowIdOfferedForTrade.length > 0
+  )
 
   useEffect(() => {
     ;(async () => {
@@ -156,6 +157,7 @@ export const CowCard = ({
             subheader: (
               <Subheader
                 {...{
+                  canCowBeTradedFor,
                   cow,
                   cowBreedingPen,
                   cowIdOfferedForTrade,

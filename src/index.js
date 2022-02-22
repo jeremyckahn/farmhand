@@ -63,6 +63,7 @@
  * @property {string?} oreId Only exists if ore was spawned
  */
 
+// TODO: Add property to track number of times traded
 // Note: At some point farmhand.cow will be abstracted to farmhand.animal, but
 // there's only one animal so far so the abstraction isn't helpful yet.
 /**
@@ -83,6 +84,7 @@
  * @property {string} name
  * @property {string?} originalOwnerId
  * @property {string?} ownerId
+ * @property {number} timesTraded
  * @property {number} weightMultiplier Clamped between 0.5 and 1.5.
  */
 

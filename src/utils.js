@@ -475,7 +475,8 @@ export const generateCow = (options = {}) => {
     id,
     isBred: false,
     isUsingHuggingMachine: false,
-    name: '', // FIXME: Remove name from the farmhand.cow typedef
+    name: '',
+    timesTraded: 0,
     weightMultiplier: 1,
     ...options,
   }
@@ -1061,6 +1062,7 @@ export const transformStateDataForImport = state => {
   sanitizedState.cowInventory = sanitizedState.cowInventory.map(cow => ({
     ownerId: id,
     originalOwnerId: id,
+    timesTraded: 0,
     ...cow,
   }))
 
