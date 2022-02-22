@@ -271,21 +271,19 @@ export const INGREDIENTS_LIST_ITEM = (
   quantityAvailable
 ) => `${ingredientName} x ${quantityNeeded} (On hand: ${quantityAvailable})`
 
-// FIXME: Use getCowDisplayName instead of cow.name
-
 /**
- * @param {farmhand.cow} cow
+ * @param {string} cowDisplayName
  * @returns {string}
  */
-export const OFFER_COW_FOR_TRADE = (_, cow) =>
-  `Offer ${cow.name} for trade with online players`
+export const OFFER_COW_FOR_TRADE = (_, cowDisplayName) =>
+  `Offer ${cowDisplayName} for trade with online players`
 
 /**
- * @param {farmhand.cow} cow
+ * @param {string} cowDisplayName
  * @returns {string}
  */
-export const RESCIND_COW_FROM_TRADE = (_, cow) =>
-  `Keep ${cow.name} from being traded`
+export const RESCIND_COW_FROM_TRADE = (_, cowDisplayName) =>
+  `Keep ${cowDisplayName} from being traded`
 
 /**
  * @param {farmhand.cow} cowTradedAway

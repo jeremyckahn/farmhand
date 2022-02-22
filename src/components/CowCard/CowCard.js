@@ -61,9 +61,9 @@ export const CowCard = ({
 
   huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
 }) => {
-  const [displayName, setDisplayName] = useState(
-    getCowDisplayName(cow, id, allowCustomPeerCowNames)
-  )
+  const cowDisplayName = getCowDisplayName(cow, id, allowCustomPeerCowNames)
+
+  const [displayName, setDisplayName] = useState(cowDisplayName)
   const [cowImage, setCowImage] = useState(pixel)
   const cardRef = useRef()
   const scrollAnchorRef = useRef()
@@ -227,7 +227,7 @@ export const CowCard = ({
                     {...{
                       arrow: true,
                       placement: 'top',
-                      title: RESCIND_COW_FROM_TRADE`${cow}`,
+                      title: RESCIND_COW_FROM_TRADE`${cowDisplayName}`,
                     }}
                   >
                     <Button
@@ -248,7 +248,7 @@ export const CowCard = ({
                     {...{
                       arrow: true,
                       placement: 'top',
-                      title: OFFER_COW_FOR_TRADE`${cow}`,
+                      title: OFFER_COW_FOR_TRADE`${cowDisplayName}`,
                     }}
                   >
                     <Button
