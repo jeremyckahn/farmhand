@@ -1962,6 +1962,7 @@ describe('purchaseCow', () => {
   )
 
   test('purchases a cow', () => {
+    const playerId = 'abc123'
     const oldCowForSale = generateCow()
 
     const state = fn.purchaseCow(
@@ -1969,6 +1970,7 @@ describe('purchaseCow', () => {
         cowForSale: oldCowForSale,
         cowInventory: [],
         cowColorsPurchased: {},
+        id: playerId,
         money: 5000,
         purchasedCowPen: 1,
       },
@@ -1976,7 +1978,7 @@ describe('purchaseCow', () => {
     )
 
     expect(state).toMatchObject({
-      cowInventory: [cow],
+      cowInventory: [{ ...cow, ownerId: playerId, originalOwnerId: playerId }],
       money: 5000 - getCowValue(cow, false),
     })
 

@@ -754,6 +754,8 @@ export default class Farmhand extends Component {
     )
   }
 
+  // FIXME: Move these Trystero sender/receiver handlers into a separate file
+
   onGetPeerMetadata(peerState, peerId) {
     this.updatePeer(peerId, peerState)
   }

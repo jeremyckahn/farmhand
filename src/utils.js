@@ -476,6 +476,8 @@ export const generateCow = (options = {}) => {
     isBred: false,
     isUsingHuggingMachine: false,
     name: '',
+    ownerId: '',
+    originalOwnerId: '',
     timesTraded: 0,
     weightMultiplier: 1,
     ...options,
