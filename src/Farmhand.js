@@ -55,7 +55,6 @@ import {
 import { getData, postData } from './fetch-utils'
 import { itemsMap, recipesMap } from './data/maps'
 import {
-  cowTradeRejectionReason,
   dialogView,
   fieldMode,
   stageFocusType,
@@ -74,7 +73,6 @@ import { HEARTBEAT_INTERVAL_PERIOD, SERVER_ERRORS } from './common/constants'
 import {
   CONNECTED_TO_ROOM,
   COW_PEN_PURCHASED,
-  COW_TRADED_NOTIFICATION,
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
@@ -92,6 +90,12 @@ import {
   SERVER_ERROR,
   UPDATE_AVAILABLE,
 } from './strings'
+import {
+  onGetPeerMetadata,
+  onGetCowTradeRequest,
+  onGetCowAccept,
+  onGetCowReject,
+} from './tystero-handlers'
 import { endpoints } from './config'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
@@ -691,18 +695,22 @@ export default class Farmhand extends Component {
         const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
           'peerMetadata'
         )
-        getPeerMetadata(this.onGetPeerMetadata.bind(this))
+
+        getPeerMetadata((...args) => onGetPeerMetadata(this, ...args))
 
         const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
           'cowTrade'
         )
-        getCowTradeRequest(this.onGetCowTradeRequest.bind(this))
+
+        getCowTradeRequest((...args) => onGetCowTradeRequest(this, ...args))
 
         const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
-        getCowAccept(this.onGetCowAccept.bind(this))
+
+        getCowAccept((...args) => onGetCowAccept(this, ...args))
 
         const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
-        getCowReject(this.onGetCowReject.bind(this))
+
+        getCowReject((...args) => onGetCowReject(this, ...args))
 
         this.setState({
           getCowAccept,
@@ -752,12 +760,6 @@ export default class Farmhand extends Component {
         trailing: true,
       }
     )
-  }
-
-  // FIXME: Move these Trystero sender/receiver handlers into a separate file
-
-  onGetPeerMetadata(peerState, peerId) {
-    this.updatePeer(peerId, peerState)
   }
 
   /**
@@ -821,160 +823,6 @@ export default class Farmhand extends Component {
       },
       peerId
     )
-  }
-
-  /**
-   * @param {Object} cowTradeRequestPayload
-   * @param {farmhand.cow} cowTradeRequestPayload.cowOffered
-   * @param {farmhand.cow} cowTradeRequestPayload.cowRequested
-   */
-  async onGetCowTradeRequest({ cowOffered, cowRequested }) {
-    const {
-      allowCustomPeerCowNames,
-      cowIdOfferedForTrade,
-      cowsTraded,
-      cowInventory,
-      id,
-      isAwaitingCowTradeRequest,
-      peers,
-      sendCowAccept,
-      sendCowReject,
-    } = this.state
-
-    if (!sendCowAccept || !sendCowReject)
-      throw new Error('Peer connection not set up correctly')
-
-    const cowToTradeAway = cowInventory.find(
-      ({ id }) => id === cowIdOfferedForTrade
-    )
-
-    if (
-      isAwaitingCowTradeRequest ||
-      cowRequested.id !== cowIdOfferedForTrade ||
-      !cowToTradeAway
-    ) {
-      sendCowReject({
-        reason: cowTradeRejectionReason.REQUESTED_COW_UNAVAILABLE,
-      })
-
-      return
-    }
-
-    const updatedCowOffered = {
-      ...cowOffered,
-      timesTraded:
-        cowOffered.originalOwnerId === id
-          ? cowOffered.timesTraded
-          : cowOffered.timesTraded + 1,
-    }
-
-    const [peerId, peerMetadata] = Object.entries(peers).find(
-      ([peerId, { id }]) => id === updatedCowOffered.ownerId
-    )
-
-    this.changeCowAutomaticHugState(cowToTradeAway, false)
-    this.removeCowFromInventory(cowToTradeAway)
-    this.addCowToInventory({
-      ...updatedCowOffered,
-      ownerId: id,
-    })
-    this.setState(() => ({
-      cowIdOfferedForTrade: updatedCowOffered.id,
-      cowsTraded:
-        updatedCowOffered.originalOwnerId === id ? cowsTraded : cowsTraded + 1,
-      selectedCowId: updatedCowOffered.id,
-      peers: {
-        ...peers,
-        [peerId]: {
-          ...peerMetadata,
-          cowOfferedForTrade: { ...cowToTradeAway, ownerId: peerMetadata.id },
-        },
-      },
-    }))
-
-    sendCowAccept({ ...cowToTradeAway, isUsingHuggingMachine: false })
-
-    this.showNotification(
-      COW_TRADED_NOTIFICATION`${cowToTradeAway}${cowOffered}${id}${allowCustomPeerCowNames}`,
-      'success'
-    )
-  }
-
-  /**
-   * @param {farmhand.cow} cowReceived
-   */
-  onGetCowAccept(cowReceived) {
-    const {
-      allowCustomPeerCowNames,
-      cowIdOfferedForTrade,
-      cowInventory,
-      cowsTraded,
-      cowTradeTimeoutId,
-      id,
-      peers,
-    } = this.state
-
-    const cowTradedAway = cowInventory.find(
-      ({ id }) => id === cowIdOfferedForTrade
-    )
-
-    const [peerId, peerMetadata] = Object.entries(peers).find(
-      ([peerId, { id }]) => id === cowReceived.ownerId
-    )
-
-    const updatedCowReceived = {
-      ...cowReceived,
-      timesTraded:
-        cowReceived.originalOwnerId === id
-          ? cowReceived.timesTraded
-          : cowReceived.timesTraded + 1,
-    }
-
-    this.removeCowFromInventory(cowTradedAway)
-    this.addCowToInventory({
-      ...updatedCowReceived,
-      ownerId: id,
-    })
-
-    clearTimeout(cowTradeTimeoutId)
-
-    this.setState(
-      () => ({
-        cowsTraded:
-          updatedCowReceived.originalOwnerId === id
-            ? cowsTraded
-            : cowsTraded + 1,
-        cowTradeTimeoutId: null,
-        isAwaitingCowTradeRequest: false,
-        cowIdOfferedForTrade: updatedCowReceived.id,
-        selectedCowId: updatedCowReceived.id,
-        peers: {
-          ...peers,
-          [peerId]: {
-            ...peerMetadata,
-            cowOfferedForTrade: { ...cowTradedAway, ownerId: peerMetadata.id },
-          },
-        },
-      }),
-      async () => {
-        await this.persistState()
-      }
-    )
-
-    this.showNotification(
-      COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${id}${allowCustomPeerCowNames}`,
-      'success'
-    )
-
-    this.showNotification(PROGRESS_SAVED_MESSAGE, 'info')
-  }
-
-  onGetCowReject({ reason }) {
-    const { cowTradeTimeoutId } = this.state
-
-    clearTimeout(cowTradeTimeoutId)
-    this.setState({ cowTradeTimeoutId: null, isAwaitingCowTradeRequest: false })
-    this.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error')
   }
 
   async clearPersistedData() {
