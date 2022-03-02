@@ -91,10 +91,10 @@ import {
   UPDATE_AVAILABLE,
 } from './strings'
 import {
-  onGetPeerMetadata,
-  onGetCowTradeRequest,
-  onGetCowAccept,
-  onGetCowReject,
+  handlePeerMetadataRequest,
+  handleCowTradeRequest,
+  handleCowTradeRequestAccept,
+  handleCowTradeRequestReject,
 } from './tystero-handlers'
 import { endpoints } from './config'
 
@@ -695,22 +695,18 @@ export default class Farmhand extends Component {
         const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
           'peerMetadata'
         )
-
-        getPeerMetadata((...args) => onGetPeerMetadata(this, ...args))
+        getPeerMetadata((...args) => handlePeerMetadataRequest(this, ...args))
 
         const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
           'cowTrade'
         )
-
-        getCowTradeRequest((...args) => onGetCowTradeRequest(this, ...args))
+        getCowTradeRequest((...args) => handleCowTradeRequest(this, ...args))
 
         const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
-
-        getCowAccept((...args) => onGetCowAccept(this, ...args))
+        getCowAccept((...args) => handleCowTradeRequestAccept(this, ...args))
 
         const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
-
-        getCowReject((...args) => onGetCowReject(this, ...args))
+        getCowReject((...args) => handleCowTradeRequestReject(this, ...args))
 
         this.setState({
           getCowAccept,

@@ -10,17 +10,18 @@ import {
  * @param {Object} peerState
  * @param {string} peerId
  */
-export const onGetPeerMetadata = (farmhand, peerState, peerId) => {
+export const handlePeerMetadataRequest = (farmhand, peerState, peerId) => {
   farmhand.updatePeer(peerId, peerState)
 }
 
 /**
+ * Handles another player's initiation of a cow trade request.
  * @param {Farmhand} farmhand
  * @param {Object} cowTradeRequestPayload
  * @param {farmhand.cow} cowTradeRequestPayload.cowOffered
  * @param {farmhand.cow} cowTradeRequestPayload.cowRequested
  */
-export const onGetCowTradeRequest = async (
+export const handleCowTradeRequest = async (
   farmhand,
   { cowOffered, cowRequested }
 ) => {
@@ -99,7 +100,7 @@ export const onGetCowTradeRequest = async (
  * @param {Farmhand} farmhand
  * @param {farmhand.cow} cowReceived
  */
-export const onGetCowAccept = (farmhand, cowReceived) => {
+export const handleCowTradeRequestAccept = (farmhand, cowReceived) => {
   const {
     allowCustomPeerCowNames,
     cowIdOfferedForTrade,
@@ -168,7 +169,7 @@ export const onGetCowAccept = (farmhand, cowReceived) => {
  * @param {Object} cowTradeRejectionPayload
  * @param {string} cowTradeRejectionPayload.reason
  */
-export const onGetCowReject = (farmhand, { reason }) => {
+export const handleCowTradeRequestReject = (farmhand, { reason }) => {
   const { cowTradeTimeoutId } = farmhand.state
 
   clearTimeout(cowTradeTimeoutId)
