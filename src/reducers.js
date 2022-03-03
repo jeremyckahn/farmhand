@@ -1349,6 +1349,11 @@ export const purchaseCow = (state, cow) => {
   }
 }
 
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.cow} cow
+ * @returns {farmhand.state}
+ */
 export const addCowToInventory = (state, cow) => {
   const { cowInventory } = state
 
