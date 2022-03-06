@@ -95,7 +95,7 @@ import {
   handleCowTradeRequest,
   handleCowTradeRequestAccept,
   handleCowTradeRequestReject,
-} from './tystero-handlers'
+} from './trystero-handlers'
 import { endpoints } from './config'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
