@@ -20,6 +20,8 @@ export const DISCONNECTING_FROM_SERVER = 'Disconnecting...'
 export const DISCONNECTED_FROM_SERVER = 'You are now playing offline.'
 export const REQUESTED_COW_TRADE_UNAVAILABLE =
   'The requested cow is no longer available.'
+export const UNKNOWN_COW_TRADE_FAILURE =
+  'Something went wrong with your cow trade request. Please try again!'
 export const COW_ALREADY_OWNED = 'It looks like you already have this cow!'
 export const OUT_OF_COW_FEED_NOTIFICATION =
   "You're out of cow feed! Buy some more before your cows get hungry and run away!"

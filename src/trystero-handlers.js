@@ -3,6 +3,7 @@ import { COW_TRADED_NOTIFICATION } from './templates'
 import {
   PROGRESS_SAVED_MESSAGE,
   REQUESTED_COW_TRADE_UNAVAILABLE,
+  UNKNOWN_COW_TRADE_FAILURE,
 } from './strings'
 
 /**
@@ -114,6 +115,19 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived) => {
   const cowTradedAway = cowInventory.find(
     ({ id }) => id === cowIdOfferedForTrade
   )
+
+  if (!cowTradedAway) {
+    console.error(
+      `handleCowTradeRequestAccept: cow with ID ${cowIdOfferedForTrade} is no longer available`
+    )
+
+    farmhand.showNotification(UNKNOWN_COW_TRADE_FAILURE, 'error')
+    farmhand.setState(() => ({
+      isAwaitingCowTradeRequest: false,
+    }))
+
+    return
+  }
 
   const [peerId, peerMetadata] = Object.entries(peers).find(
     ([peerId, { id }]) => id === cowReceived.ownerId
