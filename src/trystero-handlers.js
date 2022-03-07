@@ -38,8 +38,10 @@ export const handleCowTradeRequest = async (
     sendCowReject,
   } = farmhand.state
 
-  if (!sendCowAccept || !sendCowReject)
-    throw new Error('Peer connection not set up correctly')
+  if (!sendCowAccept || !sendCowReject) {
+    console.error('Peer connection not set up correctly')
+    return
+  }
 
   const cowToTradeAway = cowInventory.find(
     ({ id }) => id === cowIdOfferedForTrade

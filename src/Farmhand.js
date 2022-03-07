@@ -762,63 +762,76 @@ export default class Farmhand extends Component {
    * @param {farmhand.cow} peerPlayerCow
    */
   tradeForPeerCow(peerPlayerCow) {
-    const {
-      cowIdOfferedForTrade,
-      cowInventory,
-      sendCowTradeRequest,
-    } = this.state
-    if (!sendCowTradeRequest) return
+    this.setState(
+      state => {
+        const {
+          cowIdOfferedForTrade,
+          cowInventory,
+          peers,
+          sendCowTradeRequest,
+        } = state
 
-    const { ownerId } = peerPlayerCow
-    const [peerId] = Object.entries(this.state.peers).find(
-      ([peerId, { id }]) => id === ownerId
-    )
+        if (!sendCowTradeRequest) return null
 
-    if (!peerId) {
-      console.error(`Owner not found for cow ${JSON.stringify(peerPlayerCow)}`)
-      return
-    }
+        const { ownerId } = peerPlayerCow
+        const [peerId] = Object.entries(peers).find(
+          ([peerId, { id }]) => id === ownerId
+        )
 
-    const playerAlreadyOwnsRequestedCow = cowInventory.find(
-      ({ id }) => id === peerPlayerCow.id
-    )
+        if (!peerId) {
+          console.error(
+            `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
+          )
+          return null
+        }
 
-    if (playerAlreadyOwnsRequestedCow) {
-      this.showNotification(COW_ALREADY_OWNED, 'error')
-      console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
-      return
-    }
+        const playerAlreadyOwnsRequestedCow = cowInventory.find(
+          ({ id }) => id === peerPlayerCow.id
+        )
 
-    const cowToTradeAway = cowInventory.find(
-      ({ id }) => id === cowIdOfferedForTrade
-    )
+        if (playerAlreadyOwnsRequestedCow) {
+          console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
+          return reducers.showNotification(state, COW_ALREADY_OWNED, 'error')
+        }
 
-    if (!cowToTradeAway) {
-      console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
-      return
-    }
+        const cowToTradeAway = cowInventory.find(
+          ({ id }) => id === cowIdOfferedForTrade
+        )
 
-    const cowTradeTimeoutId = setTimeout(() => {
-      if (typeof this.state.cowTradeTimeoutId === 'number') {
-        this.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error')
-        this.setState({
-          cowTradeTimeoutId: null,
-          isAwaitingCowTradeRequest: false,
-        })
+        if (!cowToTradeAway) {
+          console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
+          return null
+        }
 
-        console.error('Cow trade request timed out')
-      }
-    }, COW_TRADE_TIMEOUT)
+        const cowTradeTimeoutId = setTimeout(
+          this.handleCowTradeTimeout,
+          COW_TRADE_TIMEOUT
+        )
 
-    this.setState({ cowTradeTimeoutId, isAwaitingCowTradeRequest: true })
+        sendCowTradeRequest(
+          {
+            cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
+            cowRequested: peerPlayerCow,
+          },
+          peerId
+        )
 
-    sendCowTradeRequest(
-      {
-        cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
-        cowRequested: peerPlayerCow,
+        return { cowTradeTimeoutId, isAwaitingCowTradeRequest: true }
       },
-      peerId
+      () => {}
     )
+  }
+
+  handleCowTradeTimeout = () => {
+    if (typeof this.state.cowTradeTimeoutId === 'number') {
+      this.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error')
+      this.setState({
+        cowTradeTimeoutId: null,
+        isAwaitingCowTradeRequest: false,
+      })
+
+      console.error('Cow trade request timed out')
+    }
   }
 
   async clearPersistedData() {
