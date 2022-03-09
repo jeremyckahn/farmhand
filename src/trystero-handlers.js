@@ -21,10 +21,12 @@ export const handlePeerMetadataRequest = (farmhand, peerState, peerId) => {
  * @param {Object} cowTradeRequestPayload
  * @param {farmhand.cow} cowTradeRequestPayload.cowOffered
  * @param {farmhand.cow} cowTradeRequestPayload.cowRequested
+ * @param {string} peerId
  */
-export const handleCowTradeRequest = async (
+export const handleCowTradeRequest = (
   farmhand,
-  { cowOffered, cowRequested }
+  { cowOffered, cowRequested },
+  peerId
 ) => {
   const {
     allowCustomPeerCowNames,
@@ -52,9 +54,12 @@ export const handleCowTradeRequest = async (
     cowRequested.id !== cowIdOfferedForTrade ||
     !cowToTradeAway
   ) {
-    sendCowReject({
-      reason: cowTradeRejectionReason.REQUESTED_COW_UNAVAILABLE,
-    })
+    sendCowReject(
+      {
+        reason: cowTradeRejectionReason.REQUESTED_COW_UNAVAILABLE,
+      },
+      peerId
+    )
 
     return
   }
@@ -67,8 +72,8 @@ export const handleCowTradeRequest = async (
         : cowOffered.timesTraded + 1,
   }
 
-  const [peerId, peerMetadata] = Object.entries(peers).find(
-    ([peerId, { id }]) => id === updatedCowOffered.ownerId
+  const [, peerMetadata] = Object.entries(peers).find(
+    ([, { id }]) => id === updatedCowOffered.ownerId
   )
 
   farmhand.changeCowAutomaticHugState(cowToTradeAway, false)
@@ -91,7 +96,7 @@ export const handleCowTradeRequest = async (
     },
   }))
 
-  sendCowAccept({ ...cowToTradeAway, isUsingHuggingMachine: false })
+  sendCowAccept({ ...cowToTradeAway, isUsingHuggingMachine: false }, peerId)
 
   farmhand.showNotification(
     COW_TRADED_NOTIFICATION`${cowToTradeAway}${cowOffered}${id}${allowCustomPeerCowNames}`,
@@ -102,8 +107,9 @@ export const handleCowTradeRequest = async (
 /**
  * @param {Farmhand} farmhand
  * @param {farmhand.cow} cowReceived
+ * @param {string} peerId
  */
-export const handleCowTradeRequestAccept = (farmhand, cowReceived) => {
+export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
   const {
     allowCustomPeerCowNames,
     cowIdOfferedForTrade,
@@ -131,8 +137,8 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived) => {
     return
   }
 
-  const [peerId, peerMetadata] = Object.entries(peers).find(
-    ([peerId, { id }]) => id === cowReceived.ownerId
+  const [, peerMetadata] = Object.entries(peers).find(
+    ([, { id }]) => id === cowReceived.ownerId
   )
 
   const updatedCowReceived = {
