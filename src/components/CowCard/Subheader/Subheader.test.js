@@ -24,6 +24,7 @@ describe('Subheader', () => {
       cowInventory: [],
       cowValue: 1000,
       huggingMachinesRemain: false,
+      id: '',
       isCowPurchased: false,
     }
   })

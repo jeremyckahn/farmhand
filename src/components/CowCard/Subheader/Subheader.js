@@ -12,6 +12,7 @@ import { COW_COLOR_NAMES } from '../../../strings'
 import { genders } from '../../../enums'
 import {
   getCowWeight,
+  getPlayerName,
   integerString,
   isCowInBreedingPen,
   memoize,
@@ -45,6 +46,7 @@ const Subheader = ({
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   huggingMachinesRemain,
+  id,
   isCowPurchased,
 }) => {
   const numberOfFullHearts = cow.happiness * 10
@@ -70,6 +72,9 @@ const Subheader = ({
   const disableBreedingControlTooltip =
     !canBeMovedToBreedingPen && !isInBreedingPen
 
+  const showOriginalOwner =
+    isCowPurchased && id !== cow.originalOwnerId && id === cow.ownerId
+
   return (
     <div {...{ className: 'Subheader' }}>
       <Bloodline {...{ colorsInBloodline: cow.colorsInBloodline }} />
@@ -85,6 +90,11 @@ const Subheader = ({
       <p>Weight: {getCowWeight(cow)} lbs.</p>
       {(isCowPurchased || canCowBeTradedFor) && (
         <p>Times traded: {integerString(cow.timesTraded)}</p>
+      )}
+      {showOriginalOwner && (
+        <p>
+          Original owner: <strong>{getPlayerName(cow.originalOwnerId)}</strong>
+        </p>
       )}
       {isCowPurchased && (
         <>
@@ -179,5 +189,6 @@ Subheader.propTypes = {
   handleCowAutomaticHugChange: func,
   handleCowBreedChange: func,
   huggingMachinesRemain: bool.isRequired,
+  id: string.isRequired,
   isCowPurchased: bool,
 }

@@ -166,6 +166,7 @@ export const CowCard = ({
                   handleCowBreedChange,
                   handleCowAutomaticHugChange,
                   huggingMachinesRemain,
+                  id,
                   isCowPurchased,
                 }}
               />
