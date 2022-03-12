@@ -588,7 +588,7 @@ export default class Farmhand extends Component {
       })
     } else {
       // Initialize new game
-      this.incrementDay(true)
+      await this.incrementDay(true)
       this.setState(() => ({ historicalValueAdjustments: [] }))
       this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
     }
