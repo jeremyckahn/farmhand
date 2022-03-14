@@ -5,6 +5,12 @@ import {
   REQUESTED_COW_TRADE_UNAVAILABLE,
   UNKNOWN_COW_TRADE_FAILURE,
 } from './strings'
+import {
+  addCowToInventory,
+  changeCowAutomaticHugState,
+  removeCowFromInventory,
+  showNotification,
+} from './reducers'
 
 /**
  * @param {Farmhand} farmhand
@@ -28,80 +34,84 @@ export const handleCowTradeRequest = (
   { cowOffered, cowRequested },
   peerId
 ) => {
-  const {
-    allowCustomPeerCowNames,
-    cowIdOfferedForTrade,
-    cowsTraded,
-    cowInventory,
-    id,
-    isAwaitingCowTradeRequest,
-    peers,
-    sendCowAccept,
-    sendCowReject,
-  } = farmhand.state
+  farmhand.setState(state => {
+    const {
+      allowCustomPeerCowNames,
+      cowIdOfferedForTrade,
+      cowsTraded,
+      cowInventory,
+      id,
+      isAwaitingCowTradeRequest,
+      peers,
+      sendCowAccept,
+      sendCowReject,
+    } = state
 
-  if (!sendCowAccept || !sendCowReject) {
-    console.error('Peer connection not set up correctly')
-    return
-  }
+    if (!sendCowAccept || !sendCowReject) {
+      console.error('Peer connection not set up correctly')
+      return null
+    }
 
-  const cowToTradeAway = cowInventory.find(
-    ({ id }) => id === cowIdOfferedForTrade
-  )
-
-  if (
-    isAwaitingCowTradeRequest ||
-    cowRequested.id !== cowIdOfferedForTrade ||
-    !cowToTradeAway
-  ) {
-    sendCowReject(
-      {
-        reason: cowTradeRejectionReason.REQUESTED_COW_UNAVAILABLE,
-      },
-      peerId
+    const cowToTradeAway = cowInventory.find(
+      ({ id }) => id === cowIdOfferedForTrade
     )
 
-    return
-  }
+    if (
+      isAwaitingCowTradeRequest ||
+      cowRequested.id !== cowIdOfferedForTrade ||
+      !cowToTradeAway
+    ) {
+      sendCowReject(
+        {
+          reason: cowTradeRejectionReason.REQUESTED_COW_UNAVAILABLE,
+        },
+        peerId
+      )
 
-  const updatedCowOffered = {
-    ...cowOffered,
-    timesTraded:
-      cowOffered.originalOwnerId === id
-        ? cowOffered.timesTraded
-        : cowOffered.timesTraded + 1,
-  }
+      return null
+    }
 
-  const [, peerMetadata] = Object.entries(peers).find(
-    ([, { id }]) => id === updatedCowOffered.ownerId
-  )
+    const updatedCowOffered = {
+      ...cowOffered,
+      timesTraded:
+        cowOffered.originalOwnerId === id
+          ? cowOffered.timesTraded
+          : cowOffered.timesTraded + 1,
+    }
 
-  farmhand.changeCowAutomaticHugState(cowToTradeAway, false)
-  farmhand.removeCowFromInventory(cowToTradeAway)
-  farmhand.addCowToInventory({
-    ...updatedCowOffered,
-    ownerId: id,
-  })
-  farmhand.setState(() => ({
-    cowIdOfferedForTrade: updatedCowOffered.id,
-    cowsTraded:
-      updatedCowOffered.originalOwnerId === id ? cowsTraded : cowsTraded + 1,
-    selectedCowId: updatedCowOffered.id,
-    peers: {
-      ...peers,
-      [peerId]: {
-        ...peerMetadata,
-        cowOfferedForTrade: { ...cowToTradeAway, ownerId: peerMetadata.id },
+    const [, peerMetadata] = Object.entries(peers).find(
+      ([, { id }]) => id === updatedCowOffered.ownerId
+    )
+
+    state = changeCowAutomaticHugState(state, cowToTradeAway, false)
+    state = removeCowFromInventory(state, cowToTradeAway)
+    state = addCowToInventory(state, {
+      ...updatedCowOffered,
+      ownerId: id,
+    })
+    state = showNotification(
+      state,
+      COW_TRADED_NOTIFICATION`${cowToTradeAway}${cowOffered}${id}${allowCustomPeerCowNames}`,
+      'success'
+    )
+
+    sendCowAccept({ ...cowToTradeAway, isUsingHuggingMachine: false }, peerId)
+
+    return {
+      ...state,
+      cowIdOfferedForTrade: updatedCowOffered.id,
+      cowsTraded:
+        updatedCowOffered.originalOwnerId === id ? cowsTraded : cowsTraded + 1,
+      selectedCowId: updatedCowOffered.id,
+      peers: {
+        ...peers,
+        [peerId]: {
+          ...peerMetadata,
+          cowOfferedForTrade: { ...cowToTradeAway, ownerId: peerMetadata.id },
+        },
       },
-    },
-  }))
-
-  sendCowAccept({ ...cowToTradeAway, isUsingHuggingMachine: false }, peerId)
-
-  farmhand.showNotification(
-    COW_TRADED_NOTIFICATION`${cowToTradeAway}${cowOffered}${id}${allowCustomPeerCowNames}`,
-    'success'
-  )
+    }
+  })
 }
 
 /**
@@ -175,6 +185,8 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
     }),
     async () => {
       await farmhand.persistState()
+
+      farmhand.showNotification(PROGRESS_SAVED_MESSAGE, 'info')
     }
   )
 
@@ -182,8 +194,6 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
     COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${id}${allowCustomPeerCowNames}`,
     'success'
   )
-
-  farmhand.showNotification(PROGRESS_SAVED_MESSAGE, 'info')
 }
 
 /**
