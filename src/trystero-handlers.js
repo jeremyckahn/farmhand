@@ -112,6 +112,8 @@ export const handleCowTradeRequest = (
       },
     }
   })
+
+  // FIXME: Save the game upon successful trade
 }
 
 /**
@@ -120,79 +122,84 @@ export const handleCowTradeRequest = (
  * @param {string} peerId
  */
 export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
-  const {
-    allowCustomPeerCowNames,
-    cowIdOfferedForTrade,
-    cowInventory,
-    cowsTraded,
-    cowTradeTimeoutId,
-    id,
-    peers,
-  } = farmhand.state
-
-  const cowTradedAway = cowInventory.find(
-    ({ id }) => id === cowIdOfferedForTrade
-  )
-
-  if (!cowTradedAway) {
-    console.error(
-      `handleCowTradeRequestAccept: cow with ID ${cowIdOfferedForTrade} is no longer available`
-    )
-
-    farmhand.showNotification(UNKNOWN_COW_TRADE_FAILURE, 'error')
-    farmhand.setState(() => ({
-      isAwaitingCowTradeRequest: false,
-    }))
-
-    return
-  }
-
-  const [, peerMetadata] = Object.entries(peers).find(
-    ([, { id }]) => id === cowReceived.ownerId
-  )
-
-  const updatedCowReceived = {
-    ...cowReceived,
-    timesTraded:
-      cowReceived.originalOwnerId === id
-        ? cowReceived.timesTraded
-        : cowReceived.timesTraded + 1,
-  }
-
-  farmhand.removeCowFromInventory(cowTradedAway)
-  farmhand.addCowToInventory({
-    ...updatedCowReceived,
-    ownerId: id,
-  })
-
-  clearTimeout(cowTradeTimeoutId)
-
   farmhand.setState(
-    () => ({
-      cowsTraded:
-        updatedCowReceived.originalOwnerId === id ? cowsTraded : cowsTraded + 1,
-      cowTradeTimeoutId: null,
-      isAwaitingCowTradeRequest: false,
-      cowIdOfferedForTrade: updatedCowReceived.id,
-      selectedCowId: updatedCowReceived.id,
-      peers: {
-        ...peers,
-        [peerId]: {
-          ...peerMetadata,
-          cowOfferedForTrade: { ...cowTradedAway, ownerId: peerMetadata.id },
+    state => {
+      const {
+        allowCustomPeerCowNames,
+        cowIdOfferedForTrade,
+        cowInventory,
+        cowsTraded,
+        cowTradeTimeoutId,
+        id,
+        peers,
+      } = state
+
+      const cowTradedAway = cowInventory.find(
+        ({ id }) => id === cowIdOfferedForTrade
+      )
+
+      if (!cowTradedAway) {
+        console.error(
+          `handleCowTradeRequestAccept: cow with ID ${cowIdOfferedForTrade} is no longer available`
+        )
+
+        state = showNotification(state, UNKNOWN_COW_TRADE_FAILURE, 'error')
+
+        return {
+          ...state,
+          isAwaitingCowTradeRequest: false,
+        }
+      }
+
+      const [, peerMetadata] = Object.entries(peers).find(
+        ([, { id }]) => id === cowReceived.ownerId
+      )
+
+      const updatedCowReceived = {
+        ...cowReceived,
+        timesTraded:
+          cowReceived.originalOwnerId === id
+            ? cowReceived.timesTraded
+            : cowReceived.timesTraded + 1,
+      }
+
+      state = removeCowFromInventory(state, cowTradedAway)
+      state = addCowToInventory(state, {
+        ...updatedCowReceived,
+        ownerId: id,
+      })
+      state = showNotification(
+        state,
+        COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${id}${allowCustomPeerCowNames}`,
+        'success'
+      )
+
+      clearTimeout(cowTradeTimeoutId)
+
+      return {
+        ...state,
+        cowsTraded:
+          updatedCowReceived.originalOwnerId === id
+            ? cowsTraded
+            : cowsTraded + 1,
+        cowTradeTimeoutId: null,
+        isAwaitingCowTradeRequest: false,
+        cowIdOfferedForTrade: updatedCowReceived.id,
+        selectedCowId: updatedCowReceived.id,
+        peers: {
+          ...peers,
+          [peerId]: {
+            ...peerMetadata,
+            cowOfferedForTrade: { ...cowTradedAway, ownerId: peerMetadata.id },
+          },
         },
-      },
-    }),
+      }
+    },
     async () => {
       await farmhand.persistState()
 
       farmhand.showNotification(PROGRESS_SAVED_MESSAGE, 'info')
     }
-  )
-
-  farmhand.showNotification(
-    COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${id}${allowCustomPeerCowNames}`,
-    'success'
   )
 }
 
