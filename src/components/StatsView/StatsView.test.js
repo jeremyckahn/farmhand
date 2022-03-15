@@ -9,6 +9,7 @@ beforeEach(() => {
   component = shallow(
     <StatsView
       {...{
+        cowsTraded: 0,
         farmName: '',
         historicalDailyLosses: [],
         historicalDailyRevenue: [],

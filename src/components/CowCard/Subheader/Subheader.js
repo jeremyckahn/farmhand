@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, bool, func, object } from 'prop-types'
+import { array, bool, func, object, string } from 'prop-types'
 import Checkbox from '@material-ui/core/Checkbox'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -12,6 +12,8 @@ import { COW_COLOR_NAMES } from '../../../strings'
 import { genders } from '../../../enums'
 import {
   getCowWeight,
+  getPlayerName,
+  integerString,
   isCowInBreedingPen,
   memoize,
   moneyString,
@@ -35,13 +37,16 @@ const getCowMapById = memoize(cowInventory =>
 )
 
 const Subheader = ({
+  canCowBeTradedFor,
   cow,
   cowBreedingPen,
+  cowIdOfferedForTrade,
   cowInventory,
   cowValue,
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   huggingMachinesRemain,
+  id,
   isCowPurchased,
 }) => {
   const numberOfFullHearts = cow.happiness * 10
@@ -49,7 +54,11 @@ const Subheader = ({
   const isBreedingPenFull =
     cowBreedingPen.cowId1 !== null && cowBreedingPen.cowId2 !== null
 
-  let canBeMovedToBreedingPen = !isBreedingPenFull
+  const isCowOfferedForTrade = !!cowInventory.find(
+    ({ id }) => id === cowIdOfferedForTrade
+  )
+
+  let canBeMovedToBreedingPen = !isBreedingPenFull && !isCowOfferedForTrade
 
   if (canBeMovedToBreedingPen) {
     const potentialMateId = cowBreedingPen.cowId2 ?? cowBreedingPen.cowId1
@@ -62,6 +71,9 @@ const Subheader = ({
 
   const disableBreedingControlTooltip =
     !canBeMovedToBreedingPen && !isInBreedingPen
+
+  const showOriginalOwner =
+    isCowPurchased && id !== cow.originalOwnerId && id === cow.ownerId
 
   return (
     <div {...{ className: 'Subheader' }}>
@@ -76,6 +88,14 @@ const Subheader = ({
         {isCowPurchased ? 'Value' : 'Price'}: {moneyString(cowValue)}
       </p>
       <p>Weight: {getCowWeight(cow)} lbs.</p>
+      {(isCowPurchased || canCowBeTradedFor) && (
+        <p>Times traded: {integerString(cow.timesTraded)}</p>
+      )}
+      {showOriginalOwner && (
+        <p>
+          Original owner: <strong>{getPlayerName(cow.originalOwnerId)}</strong>
+        </p>
+      )}
       {isCowPurchased && (
         <>
           <ol className="hearts">
@@ -161,11 +181,14 @@ const Subheader = ({
 export default Subheader
 
 Subheader.propTypes = {
+  canCowBeTradedFor: bool.isRequired,
   cow: object.isRequired,
   cowBreedingPen: object.isRequired,
+  cowIdOfferedForTrade: string.isRequired,
   cowInventory: array.isRequired,
   handleCowAutomaticHugChange: func,
   handleCowBreedChange: func,
   huggingMachinesRemain: bool.isRequired,
-  isCowPurchased: bool.isRequired,
+  id: string.isRequired,
+  isCowPurchased: bool,
 }

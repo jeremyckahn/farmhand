@@ -71,16 +71,14 @@ export const CowPenContextMenu = ({
   cowBreedingPen,
   cowForSale,
   cowInventory,
-  debounced,
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   handleCowHugClick,
   handleCowNameInputChange,
-  handleCowPurchaseClick,
+  handleCowOfferClick,
   handleCowSelect,
   handleCowSellClick,
-  inventory,
-  money,
+  handleCowWithdrawClick,
   purchasedCowPen,
   selectedCowId,
 }) => {
@@ -94,12 +92,6 @@ export const CowPenContextMenu = ({
       <CowCard
         {...{
           cow: cowForSale,
-          cowBreedingPen,
-          cowInventory,
-          handleCowPurchaseClick,
-          inventory,
-          money,
-          purchasedCowPen,
         }}
       />
       <AppBar position="static" color="primary">
@@ -160,18 +152,15 @@ export const CowPenContextMenu = ({
                 <CowCard
                   {...{
                     cow,
-                    cowBreedingPen,
-                    cowInventory,
-                    debounced,
                     handleCowAutomaticHugChange,
                     handleCowBreedChange,
                     handleCowHugClick,
                     handleCowNameInputChange,
+                    handleCowOfferClick,
                     handleCowSellClick,
-                    inventory,
+                    handleCowWithdrawClick,
+                    isCowPurchased: true,
                     isSelected: cow.id === selectedCowId,
-                    money,
-                    purchasedCowPen,
                   }}
                 />
               </li>
@@ -190,18 +179,15 @@ export const CowPenContextMenu = ({
                 <CowCard
                   {...{
                     cow,
-                    cowBreedingPen,
-                    cowInventory,
-                    debounced,
                     handleCowAutomaticHugChange,
                     handleCowBreedChange,
                     handleCowHugClick,
                     handleCowNameInputChange,
+                    handleCowOfferClick,
                     handleCowSellClick,
-                    inventory,
+                    handleCowWithdrawClick,
+                    isCowPurchased: true,
                     isSelected: cow.id === selectedCowId,
-                    money,
-                    purchasedCowPen,
                   }}
                 />
               </li>
@@ -238,16 +224,14 @@ export const CowPenContextMenu = ({
 CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
   cowInventory: array.isRequired,
-  debounced: object.isRequired,
   handleCowAutomaticHugChange: func.isRequired,
   handleCowBreedChange: func.isRequired,
   handleCowHugClick: func.isRequired,
   handleCowNameInputChange: func.isRequired,
-  handleCowPurchaseClick: func.isRequired,
+  handleCowOfferClick: func.isRequired,
   handleCowSelect: func.isRequired,
   handleCowSellClick: func.isRequired,
-  inventory: array.isRequired,
-  money: number.isRequired,
+  handleCowWithdrawClick: func.isRequired,
   purchasedCowPen: number.isRequired,
   selectedCowId: string.isRequired,
 }

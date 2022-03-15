@@ -18,9 +18,11 @@ describe('CowPen', () => {
     component = shallow(
       <CowPen
         {...{
+          allowCustomPeerCowNames: false,
           cowInventory: [],
           handleCowPenUnmount: () => {},
           handleCowClick: () => {},
+          id: '',
           selectedCowId: '',
         }}
       />
@@ -58,6 +60,7 @@ describe('Cow', () => {
     component = shallow(
       <Cow
         {...{
+          allowCustomPeerCowNames: false,
           cow: {
             ...generateCow(),
             color: cowColors.WHITE,
@@ -65,6 +68,7 @@ describe('Cow', () => {
           cowInventory: [],
           handleCowPenUnmount: () => {},
           handleCowClick: () => {},
+          id: '',
           isSelected: false,
         }}
       />

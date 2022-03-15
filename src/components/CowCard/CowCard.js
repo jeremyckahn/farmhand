@@ -1,23 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { array, bool, func, number, object } from 'prop-types'
+
+import { array, bool, func, number, object, string } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardHeader from '@material-ui/core/CardHeader'
 import TextField from '@material-ui/core/TextField'
+import Tooltip from '@material-ui/core/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+
+import FarmhandContext from '../../Farmhand.context'
 
 import { pixel } from '../../img'
 import { genders } from '../../enums'
 import {
   areHuggingMachinesInInventory,
+  getCowDisplayName,
   getCowImage,
   getCowValue,
+  isCowInBreedingPen,
   isInViewport,
 } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
+import { OFFER_COW_FOR_TRADE, WITHDRAW_COW_FROM_TRADE } from '../../templates'
 
 import Subheader from './Subheader'
 
@@ -28,37 +35,56 @@ const genderIcons = {
   [genders.MALE]: faMars,
 }
 
-const CowCard = ({
+export const CowCard = ({
+  allowCustomPeerCowNames,
   cow,
   cowBreedingPen,
+  cowIdOfferedForTrade,
   cowInventory,
   debounced,
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   handleCowHugClick,
   handleCowNameInputChange,
+  handleCowOfferClick,
   handleCowPurchaseClick,
+  handleCowWithdrawClick,
   handleCowSellClick,
+  handleCowTradeClick,
+  id,
   inventory,
+  isCowOfferedForTradeByPeer,
   isSelected,
+  isOnline,
   money,
   purchasedCowPen,
 
-  isCowPurchased = !!handleCowSellClick,
-  cowValue = getCowValue(cow, isCowPurchased),
   huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
-  isNameEditable = !!handleCowNameInputChange,
 }) => {
-  const [name, setName] = useState(cow.name)
+  const cowDisplayName = getCowDisplayName(cow, id, allowCustomPeerCowNames)
+
+  const [displayName, setDisplayName] = useState(cowDisplayName)
   const [cowImage, setCowImage] = useState(pixel)
   const cardRef = useRef()
   const scrollAnchorRef = useRef()
+
+  const isCowPurchased =
+    !!cowInventory.find(({ id }) => id === cow.id) &&
+    !isCowOfferedForTradeByPeer
+  const cowValue = getCowValue(cow, isCowPurchased)
+  const cowCanBeTradedAway =
+    isOnline && !isCowInBreedingPen(cow, cowBreedingPen)
+  const canCowBeTradedFor = Boolean(
+    isCowOfferedForTradeByPeer && cowIdOfferedForTrade.length > 0
+  )
 
   useEffect(() => {
     ;(async () => {
       setCowImage(await getCowImage(cow))
     })()
-  }, [cow])
+
+    setDisplayName(getCowDisplayName(cow, id, allowCustomPeerCowNames))
+  }, [cow, id, allowCustomPeerCowNames])
 
   useEffect(() => {
     if (isSelected) {
@@ -96,7 +122,7 @@ const CowCard = ({
       >
         {isSelected && (
           <span className="visually_hidden">
-            {cow.name} is currently selected
+            {displayName} is currently selected
           </span>
         )}
         <CardHeader
@@ -104,21 +130,22 @@ const CowCard = ({
             avatar: <img {...{ src: cowImage }} alt="Cow" />,
             title: (
               <>
-                {isNameEditable ? (
+                {isCowPurchased ? (
                   <TextField
                     {...{
+                      disabled: id !== cow.originalOwnerId,
                       onChange: e => {
                         if (debounced) {
-                          setName(e.target.value)
+                          setDisplayName(e.target.value)
                           debounced.handleCowNameInputChange({ ...e }, cow)
                         }
                       },
                       placeholder: 'Name',
-                      value: name,
+                      value: displayName,
                     }}
                   />
                 ) : (
-                  cow.name
+                  displayName
                 )}{' '}
                 <FontAwesomeIcon
                   {...{
@@ -130,13 +157,16 @@ const CowCard = ({
             subheader: (
               <Subheader
                 {...{
+                  canCowBeTradedFor,
                   cow,
                   cowBreedingPen,
+                  cowIdOfferedForTrade,
                   cowInventory,
                   cowValue,
                   handleCowBreedChange,
                   handleCowAutomaticHugChange,
                   huggingMachinesRemain,
+                  id,
                   isCowPurchased,
                 }}
               />
@@ -144,7 +174,7 @@ const CowCard = ({
           }}
         />
         <CardActions>
-          {!isCowPurchased && (
+          {!isCowPurchased && !isCowOfferedForTradeByPeer && (
             <Button
               {...{
                 className: 'purchase',
@@ -160,6 +190,26 @@ const CowCard = ({
               Buy
             </Button>
           )}
+          {canCowBeTradedFor && (
+            <Tooltip
+              {...{
+                arrow: true,
+                placement: 'top',
+                title: 'The game will be saved when the trade is completed.',
+              }}
+            >
+              <Button
+                {...{
+                  className: 'purchase',
+                  color: 'primary',
+                  onClick: () => handleCowTradeClick(cow),
+                  variant: 'contained',
+                }}
+              >
+                Trade
+              </Button>
+            </Tooltip>
+          )}
           {isCowPurchased && (
             <>
               <Button
@@ -172,6 +222,50 @@ const CowCard = ({
               >
                 Hug
               </Button>
+              {cowCanBeTradedAway &&
+                (cowIdOfferedForTrade === cow.id ? (
+                  <Tooltip
+                    {...{
+                      arrow: true,
+                      placement: 'top',
+                      title: WITHDRAW_COW_FROM_TRADE`${cowDisplayName}`,
+                    }}
+                  >
+                    <Button
+                      {...{
+                        className: 'offer',
+                        color: 'primary',
+                        onClick: () => {
+                          handleCowWithdrawClick && handleCowWithdrawClick(cow)
+                        },
+                        variant: 'contained',
+                      }}
+                    >
+                      Withdraw
+                    </Button>
+                  </Tooltip>
+                ) : (
+                  <Tooltip
+                    {...{
+                      arrow: true,
+                      placement: 'top',
+                      title: OFFER_COW_FOR_TRADE`${cowDisplayName}`,
+                    }}
+                  >
+                    <Button
+                      {...{
+                        className: 'offer',
+                        color: 'primary',
+                        onClick: () => {
+                          handleCowOfferClick && handleCowOfferClick(cow)
+                        },
+                        variant: 'contained',
+                      }}
+                    >
+                      Offer
+                    </Button>
+                  </Tooltip>
+                ))}
               <Button
                 {...{
                   className: 'sell',
@@ -190,21 +284,37 @@ const CowCard = ({
   )
 }
 
-export default CowCard
-
 CowCard.propTypes = {
+  allowCustomPeerCowNames: bool.isRequired,
   cow: object.isRequired,
   cowBreedingPen: object.isRequired,
+  cowIdOfferedForTrade: string.isRequired,
   cowInventory: array.isRequired,
   debounced: object,
   handleCowAutomaticHugChange: func,
   handleCowBreedChange: func,
   handleCowHugClick: func,
   handleCowNameInputChange: func,
+  handleCowOfferClick: func,
   handleCowPurchaseClick: func,
+  handleCowWithdrawClick: func,
   handleCowSellClick: func,
+  handleCowTradeClick: func,
+  id: string.isRequired,
   inventory: array.isRequired,
+  isCowOfferedForTradeByPeer: bool,
+  isOnline: bool.isRequired,
   isSelected: bool,
   money: number.isRequired,
   purchasedCowPen: number.isRequired,
+}
+
+export default function Consumer(props) {
+  return (
+    <FarmhandContext.Consumer>
+      {({ gameState, handlers }) => (
+        <CowCard {...{ ...gameState, ...handlers, ...props }} />
+      )}
+    </FarmhandContext.Consumer>
+  )
 }

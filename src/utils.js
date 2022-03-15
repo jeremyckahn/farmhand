@@ -168,6 +168,13 @@ export const moneyTotal = (...args) =>
 export const scaleNumber = (value, min, max, baseMin, baseMax) =>
   ((value - min) * (baseMax - baseMin)) / (max - min) + baseMin
 
+/**
+ * @param {string} string
+ * @returns {number}
+ */
+const convertStringToInteger = string =>
+  string.split('').reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
+
 export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
     .fill(undefined)
@@ -420,12 +427,33 @@ export const getSeedItemIdFromFinalStageCropItemId = memoize(
 )
 
 /**
+ * @param {farmhand.cow} cow
+ * @returns {string}
+ */
+const getDefaultCowName = ({ id }) =>
+  fruitNames[convertStringToInteger(id) % fruitNames.length]
+
+/**
+ * @param {farmhand.cow} cow
+ * @param {string} playerId
+ * @param {boolean} allowCustomPeerCowNames
+ * @returns {string}
+ */
+export const getCowDisplayName = (cow, playerId, allowCustomPeerCowNames) => {
+  return cow.originalOwnerId !== playerId && !allowCustomPeerCowNames
+    ? getDefaultCowName(cow)
+    : cow.name
+}
+
+/**
  * Generates a friendly cow.
  * @param {Object} [options]
  * @returns {farmhand.cow}
  */
 export const generateCow = (options = {}) => {
   const gender = options.gender || chooseRandom(Object.values(genders))
+  const color = options.color || chooseRandom(Object.values(standardCowColors))
+  const id = options.id || uuid()
 
   const baseWeight = Math.round(
     COW_STARTING_WEIGHT_BASE *
@@ -434,9 +462,7 @@ export const generateCow = (options = {}) => {
       Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
   )
 
-  const color = options.color || chooseRandom(Object.values(standardCowColors))
-
-  return {
+  const cow = {
     baseWeight,
     color,
     colorsInBloodline: { [color]: true },
@@ -446,22 +472,31 @@ export const generateCow = (options = {}) => {
     gender,
     happiness: 0,
     happinessBoostsToday: 0,
-    id: uuid(),
+    id,
     isBred: false,
     isUsingHuggingMachine: false,
-    name: chooseRandom(fruitNames),
+    name: '',
+    ownerId: '',
+    originalOwnerId: '',
+    timesTraded: 0,
     weightMultiplier: 1,
     ...options,
   }
+
+  cow.name = getDefaultCowName(cow)
+
+  return cow
 }
 
 /**
  * Generates a cow based on two parents.
  * @param {farmhand.cow} cow1
  * @param {farmhand.cow} cow2
+ * @param {string} ownerId
+ * @param {Partial<farmhand.cow>?} customProps
  * @returns {farmhand.cow}
  */
-export const generateOffspringCow = (cow1, cow2) => {
+export const generateOffspringCow = (cow1, cow2, ownerId, customProps = {}) => {
   if (cow1.gender === cow2.gender) {
     throw new Error(
       `${JSON.stringify(cow1)} ${JSON.stringify(
@@ -494,6 +529,9 @@ export const generateOffspringCow = (cow1, cow2) => {
     colorsInBloodline,
     baseWeight: (maleCow.baseWeight + femaleCow.baseWeight) / 2,
     isBred: true,
+    ownerId,
+    originalOwnerId: ownerId,
+    ...customProps,
   })
 }
 
@@ -847,16 +885,24 @@ export const getRandomLevelUpReward = level =>
 export const getRandomLevelUpRewardQuantity = level => level * 10
 
 /**
- * @param {Object} state
- * @returns {Object} A version of `state` that only contains keys of
- * farmhand.state data that should be shared with Trystero peers.
+ * @param {farmhand.state} state
+ * @returns {Object} Data that is meant to be shared with Trystero peers.
  */
-export const reduceByPeerMetadataKeys = state =>
-  PEER_METADATA_STATE_KEYS.reduce((acc, key) => {
+export const getPeerMetadata = state => {
+  const reducedState = PEER_METADATA_STATE_KEYS.reduce((acc, key) => {
     acc[key] = state[key]
 
     return acc
   }, {})
+
+  Object.assign(reducedState, {
+    cowOfferedForTrade: state.cowInventory.find(
+      ({ id }) => id === state.cowIdOfferedForTrade
+    ),
+  })
+
+  return reducedState
+}
 
 /**
  * @param {Object} state
@@ -971,6 +1017,7 @@ export const unlockTool = (currentToolLevels, toolType) => {
  */
 export const transformStateDataForImport = state => {
   const sanitizedState = { ...state }
+  const { id } = sanitizedState
 
   const rejectedKeys = ['version']
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
@@ -1014,6 +1061,13 @@ export const transformStateDataForImport = state => {
     sanitizedState.stageFocus = stageFocusType.SHOP
   }
 
+  sanitizedState.cowInventory = sanitizedState.cowInventory.map(cow => ({
+    ownerId: id,
+    originalOwnerId: id,
+    timesTraded: 0,
+    ...cow,
+  }))
+
   return sanitizedState
 }
 
@@ -1022,14 +1076,9 @@ export const transformStateDataForImport = state => {
  * @returns {string}
  */
 export const getPlayerName = memoize(playerId => {
-  const playerIdNumber = playerId
-    .split('')
-    .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
-
+  const playerIdNumber = convertStringToInteger(playerId)
   const adjective = adjectives[playerIdNumber % adjectives.length]
-  const adjectiveNumberValue = adjective
-    .split('')
-    .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
+  const adjectiveNumberValue = convertStringToInteger(adjective)
 
   const animal =
     animalNames[(playerIdNumber + adjectiveNumberValue) % animalNames.length]
@@ -1185,10 +1234,7 @@ const colorizeCowTemplate = (() => {
  * @returns {string} Base64 representation of an image
  */
 export const getCowImage = async cow => {
-  const cowIdNumber = cow.id
-    .split('')
-    .reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
-
+  const cowIdNumber = convertStringToInteger(cow.id)
   const { variations } = animals.cow
   const cowTemplate = variations[cowIdNumber % variations.length]
 

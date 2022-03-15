@@ -7,6 +7,8 @@ export const STORM_DESTROYS_SCARECROWS_MESSAGE =
   'There was a storm in the night! No scarecrows survived!'
 export const FARM_PRODUCTS_TOOLTIP_TEXT =
   'This figure only includes sales of grown crops, crafted items, and animal products.'
+export const COW_SOLD_TOOLTIP_TEXT =
+  'This figure only includes cows you were not the original owner for.'
 export const DATA_DELETED = 'Your local game data has been deleted.'
 export const INVALID_DATA_PROVIDED = 'Invalid Farmhand data provided.'
 export const UPDATE_AVAILABLE =
@@ -16,6 +18,11 @@ export const SERVER_ERROR =
 export const CONNECTING_TO_SERVER = 'Connecting...'
 export const DISCONNECTING_FROM_SERVER = 'Disconnecting...'
 export const DISCONNECTED_FROM_SERVER = 'You are now playing offline.'
+export const REQUESTED_COW_TRADE_UNAVAILABLE =
+  'The requested cow is no longer available.'
+export const UNKNOWN_COW_TRADE_FAILURE =
+  'Something went wrong with your cow trade request. Please try again!'
+export const COW_ALREADY_OWNED = 'It looks like you already have this cow!'
 export const OUT_OF_COW_FEED_NOTIFICATION =
   "You're out of cow feed! Buy some more before your cows get hungry and run away!"
 export const INVENTORY_FULL_NOTIFICATION = 'Your inventory is full!'

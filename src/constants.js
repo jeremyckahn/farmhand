@@ -117,12 +117,14 @@ export const RECIPE_INGREDIENT_VALUE_MULTIPLIER = 1.25
 export const I_AM_RICH_BONUSES = [0.05, 0.1, 0.25]
 
 export const PERSISTED_STATE_KEYS = [
+  'allowCustomPeerCowNames',
   'completedAchievements',
   'cowBreedingPen',
   'cowColorsPurchased',
   'cowForSale',
   'cowInventory',
   'cowsSold',
+  'cowsTraded',
   'cropsHarvested',
   'dayCount',
   'farmName',
@@ -226,3 +228,5 @@ export const COW_COLORS_HEX_MAP = {
   [cowColors.WHITE]: '#ffffff',
   [cowColors.YELLOW]: '#fff931',
 }
+
+export const COW_TRADE_TIMEOUT = 10000

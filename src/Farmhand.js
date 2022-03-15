@@ -42,12 +42,12 @@ import {
   getAvailableShopInventory,
   getItemCurrentValue,
   getLevelEntitlements,
+  getPeerMetadata,
   inventorySpaceRemaining,
   levelAchieved,
   memoize,
   moneyTotal,
   nullArray,
-  reduceByPeerMetadataKeys,
   reduceByPersistedKeys,
   sleep,
   transformStateDataForImport,
@@ -62,6 +62,7 @@ import {
   toolType,
 } from './enums'
 import {
+  COW_TRADE_TIMEOUT,
   DEFAULT_ROOM,
   INITIAL_STORAGE_LIMIT,
   PURCHASEABLE_COW_PENS,
@@ -80,13 +81,21 @@ import {
 } from './templates'
 import {
   CONNECTING_TO_SERVER,
+  COW_ALREADY_OWNED,
   DATA_DELETED,
   DISCONNECTED_FROM_SERVER,
   INVENTORY_FULL_NOTIFICATION,
   PROGRESS_SAVED_MESSAGE,
+  REQUESTED_COW_TRADE_UNAVAILABLE,
   SERVER_ERROR,
   UPDATE_AVAILABLE,
 } from './strings'
+import {
+  handlePeerMetadataRequest,
+  handleCowTradeRequest,
+  handleCowTradeRequestAccept,
+  handleCowTradeRequestReject,
+} from './trystero-handlers'
 import { endpoints } from './config'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
@@ -159,6 +168,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @typedef farmhand.state
  * @type {Object}
  * @property {number?} activePlayers
+ * @property {boolean} allowCustomPeerCowNames
  * @property {farmhand.module:enums.dialogView} currentDialogView
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
@@ -168,14 +178,22 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Object.<farmhand.module:enums.cowColors, number>}
  * cowColorsPurchased Keys are color enums, values are the number of that color
  * of cow purchased.
+ * @property {string} cowIdOfferedForTrade The ID of the cow that is currently
+ * set to be traded with online peers.
  * @property {Object} cowsSold Keys are items IDs, values are the id references
  * of cow colors (rainbow-cow, etc.).
+ * @property {number} cowsTraded
+ * @property {number?} cowTradeTimeoutId
  * @property {Object.<farmhand.module:enums.cropType, number>} cropsHarvested A
  * map of totals of crops harvested. Keys are crop type IDs, values are the
  * number of that crop harvested.
  * @property {number} dayCount
  * @property {Array.<Array.<?farmhand.plotContent>>} field
  * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {Function?} getCowAccept https://github.com/dmotz/trystero#receiver
+ * @property {Function?} getCowReject https://github.com/dmotz/trystero#receiver
+ * @property {Function?} getCowTradeRequest https://github.com/dmotz/trystero#receiver
+ * @property {Function?} getPeerMetadata https://github.com/dmotz/trystero#receiver
  * @property {number?} heartbeatTimeoutId
  * @property {Array.<number>} historicalDailyLosses
  * @property {Array.<number>} historicalDailyRevenue
@@ -187,6 +205,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {string} id
  * @property {Array.<{ id: farmhand.item, quantity: number }>} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
+ * @property {boolean} isAwaitingCowTradeRequest
  * @property {boolean} isAwaitingNetworkRequest
  * @property {boolean} isCombineEnabled
  * @property {boolean} isMenuOpen
@@ -225,6 +244,10 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} revenue The amount of money the player has generated in
  * @property {string} redirect Transient value used to drive router redirection.
  * @property {string} room What online room the player is in.
+ * @property {Function?} sendCowAccept https://github.com/dmotz/trystero#sender
+ * @property {Function?} sendCowReject https://github.com/dmotz/trystero#sender
+ * @property {Function?} sendCowTradeRequest https://github.com/dmotz/trystero#sender
+ * @property {Function?} sendPeerMetadata https://github.com/dmotz/trystero#sender
  * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
@@ -326,7 +349,15 @@ export default class Farmhand extends Component {
   }
 
   get peerMetadata() {
-    return reduceByPeerMetadataKeys(this.state)
+    return getPeerMetadata(this.state)
+  }
+
+  get isInputBlocked() {
+    return (
+      this.state.isAwaitingNetworkRequest ||
+      this.state.isAwaitingCowTradeRequest ||
+      this.state.isWaitingForDayToCompleteIncrementing
+    )
   }
 
   /**
@@ -335,6 +366,7 @@ export default class Farmhand extends Component {
   createInitialState() {
     return {
       activePlayers: null,
+      allowCustomPeerCowNames: false,
       currentDialogView: dialogView.NONE,
       completedAchievements: {},
       cowForSale: {},
@@ -343,9 +375,11 @@ export default class Farmhand extends Component {
         cowId2: null,
         daysUntilBirth: -1,
       },
-      cowInventory: [],
       cowColorsPurchased: {},
+      cowIdOfferedForTrade: '',
+      cowInventory: [],
       cowsSold: {},
+      cowsTraded: 0,
       cropsHarvested: {},
       dayCount: 0,
       farmName: 'Unnamed',
@@ -359,6 +393,7 @@ export default class Farmhand extends Component {
       id: uuid(),
       inventory: [],
       inventoryLimit: INITIAL_STORAGE_LIMIT,
+      isAwaitingCowTradeRequest: false,
       isAwaitingNetworkRequest: false,
       isCombineEnabled: false,
       isMenuOpen: !doesMenuObstructStage(),
@@ -491,40 +526,44 @@ export default class Farmhand extends Component {
 
   initReducers() {
     ;[
-      'adjustLoan',
+      'addCowToInventory',
       'addPeer',
-      'computeStateForNextDay',
+      'adjustLoan',
       'changeCowAutomaticHugState',
       'changeCowBreedingPenResident',
       'changeCowName',
       'clearPlot',
+      'computeStateForNextDay',
       'fertilizePlot',
       'forRange',
       'harvestPlot',
       'hugCow',
       'makeRecipe',
       'modifyCow',
-      'purchaseCow',
-      'purchaseCombine',
-      'purchaseCowPen',
-      'purchaseField',
-      'purchaseSmelter',
-      'purchaseItem',
-      'purchaseStorageExpansion',
+      'offerCow',
       'plantInPlot',
       'prependPendingPeerMessage',
+      'purchaseCombine',
+      'purchaseCow',
+      'purchaseCowPen',
+      'purchaseField',
+      'purchaseItem',
+      'purchaseSmelter',
+      'purchaseStorageExpansion',
+      'removeCowFromInventory',
       'removePeer',
-      'sellItem',
-      'sellCow',
       'selectCow',
+      'sellCow',
+      'sellItem',
       'setScarecrow',
       'setSprinkler',
       'showNotification',
       'updatePeer',
       'upgradeTool',
-      'waterField',
       'waterAllPlots',
+      'waterField',
       'waterPlot',
+      'withdrawCow',
     ].forEach(reducerName => {
       const reducer = reducers[reducerName]
 
@@ -557,7 +596,7 @@ export default class Farmhand extends Component {
       })
     } else {
       // Initialize new game
-      this.incrementDay(true)
+      await this.incrementDay(true)
       this.setState(() => ({ historicalValueAdjustments: [] }))
       this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
     }
@@ -664,12 +703,28 @@ export default class Farmhand extends Component {
         const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
           'peerMetadata'
         )
+        getPeerMetadata((...args) => handlePeerMetadataRequest(this, ...args))
 
-        getPeerMetadata(this.onGetPeerMetadata.bind(this))
+        const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
+          'cowTrade'
+        )
+        getCowTradeRequest((...args) => handleCowTradeRequest(this, ...args))
+
+        const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
+        getCowAccept((...args) => handleCowTradeRequestAccept(this, ...args))
+
+        const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
+        getCowReject((...args) => handleCowTradeRequestReject(this, ...args))
 
         this.setState({
+          getCowAccept,
+          getCowReject,
+          getCowTradeRequest,
           getPeerMetadata,
           pendingPeerMessages: [],
+          sendCowAccept,
+          sendCowReject,
+          sendCowTradeRequest,
           sendPeerMetadata: this.wrapSendPeerMetadata(sendPeerMetadata),
         })
 
@@ -680,6 +735,7 @@ export default class Farmhand extends Component {
         this.setState({ peers: {}, sendPeerMetadata: null })
       }
     }
+
     ;[
       'showCowPenPurchasedNotifications',
       'showInventoryFullNotifications',
@@ -710,8 +766,80 @@ export default class Farmhand extends Component {
     )
   }
 
-  onGetPeerMetadata(peerState, peerId) {
-    this.updatePeer(peerId, peerState)
+  /**
+   * @param {farmhand.cow} peerPlayerCow
+   */
+  tradeForPeerCow(peerPlayerCow) {
+    this.setState(
+      state => {
+        const {
+          cowIdOfferedForTrade,
+          cowInventory,
+          peers,
+          sendCowTradeRequest,
+        } = state
+
+        if (!sendCowTradeRequest) return null
+
+        const { ownerId } = peerPlayerCow
+        const [peerId] = Object.entries(peers).find(
+          ([peerId, { id }]) => id === ownerId
+        )
+
+        if (!peerId) {
+          console.error(
+            `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
+          )
+          return null
+        }
+
+        const playerAlreadyOwnsRequestedCow = cowInventory.find(
+          ({ id }) => id === peerPlayerCow.id
+        )
+
+        if (playerAlreadyOwnsRequestedCow) {
+          console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
+          return reducers.showNotification(state, COW_ALREADY_OWNED, 'error')
+        }
+
+        const cowToTradeAway = cowInventory.find(
+          ({ id }) => id === cowIdOfferedForTrade
+        )
+
+        if (!cowToTradeAway) {
+          console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
+          return null
+        }
+
+        const cowTradeTimeoutId = setTimeout(
+          this.handleCowTradeTimeout,
+          COW_TRADE_TIMEOUT
+        )
+
+        sendCowTradeRequest(
+          {
+            cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
+            cowRequested: peerPlayerCow,
+          },
+          peerId
+        )
+
+        return { cowTradeTimeoutId, isAwaitingCowTradeRequest: true }
+      },
+      () => {}
+    )
+  }
+
+  handleCowTradeTimeout = () => {
+    if (typeof this.state.cowTradeTimeoutId === 'number') {
+      this.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error')
+      this.setState({
+        cowTradeTimeoutId: null,
+        isAwaitingCowTradeRequest: false,
+      })
+
+      console.error('Cow trade request timed out')
+    }
   }
 
   async clearPersistedData() {
@@ -778,7 +906,10 @@ export default class Farmhand extends Component {
       console.error(e)
     }
 
-    this.setState({ isAwaitingNetworkRequest: false })
+    this.setState({
+      isAwaitingNetworkRequest: false,
+      isAwaitingCowTradeRequest: false,
+    })
   }
 
   handleRoomSyncError(errorCode) {
@@ -1117,10 +1248,13 @@ export default class Farmhand extends Component {
       viewTitle,
     } = this
 
+    const blockInput = this.isInputBlocked
+
     // Bundle up the raw state and the computed state into one object to be
     // passed down through the component tree.
     const gameState = {
       ...this.state,
+      blockInput,
       features,
       fieldToolInventory,
       levelEntitlements,
@@ -1131,10 +1265,6 @@ export default class Farmhand extends Component {
       viewList,
       viewTitle,
     }
-
-    const blockInput =
-      this.state.isAwaitingNetworkRequest ||
-      this.state.isWaitingForDayToCompleteIncrementing
 
     return (
       <GlobalHotKeys

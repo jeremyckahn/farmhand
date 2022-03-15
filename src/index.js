@@ -81,6 +81,9 @@
  * @property {boolean} isBred
  * @property {boolean} isUsingHuggingMachine
  * @property {string} name
+ * @property {string} originalOwnerId
+ * @property {string} ownerId
+ * @property {number} timesTraded
  * @property {number} weightMultiplier Clamped between 0.5 and 1.5.
  */
 

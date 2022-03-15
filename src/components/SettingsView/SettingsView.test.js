@@ -9,6 +9,7 @@ beforeEach(() => {
   component = shallow(
     <SettingsView
       {...{
+        allowCustomPeerCowNames: false,
         handleClearPersistedDataClick: () => {},
         handleExportDataClick: () => {},
         handleImportDataClick: () => {},
@@ -18,7 +19,7 @@ beforeEach(() => {
         handleShowHomeScreenChange: () => {},
         showNotifications: true,
         useAlternateEndDayButtonPosition: false,
-        showHomeScreen: false
+        showHomeScreen: false,
       }}
     />
   )

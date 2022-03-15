@@ -5,25 +5,31 @@ import { generateCow } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { cowColors, genders } from '../../enums'
 
-import CowCard from './CowCard'
+import { CowCard } from './CowCard'
 
 describe('CowCard', () => {
+  const cow = generateCow({
+    color: cowColors.WHITE,
+    name: '',
+    baseWeight: 100,
+  })
   const baseProps = {
-    cow: generateCow({
-      color: cowColors.WHITE,
-      name: '',
-      baseWeight: 100,
-    }),
+    allowCustomPeerCowNames: false,
+    cow,
     cowInventory: [],
     cowBreedingPen: {
       cowId1: null,
       cowId2: null,
       daysUntilBirth: -1,
     },
+    cowIdOfferedForTrade: '',
     handleCowSelect: () => {},
     handleCowNameInputChange: () => {},
     handleCowPurchaseClick: () => {},
+    handleCowTradeClick: () => {},
+    id: '',
     isSelected: false,
+    isOnline: false,
     inventory: [],
     money: 0,
     purchasedCowPen: 1,
@@ -135,7 +141,6 @@ describe('CowCard', () => {
             cow: testCow,
             cowInventory: [testCow],
             money: 0,
-            handleCowSellClick: () => {},
           }}
         />
       )
@@ -173,7 +178,6 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            handleCowSellClick: () => {},
           }}
         />
       )
@@ -211,7 +215,6 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            handleCowSellClick: () => {},
           }}
         />
       )
@@ -249,7 +252,6 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            handleCowSellClick: () => {},
           }}
         />
       )
@@ -292,7 +294,6 @@ describe('CowCard', () => {
               daysUntilBirth: -1,
             },
             money: 0,
-            handleCowSellClick: () => {},
           }}
         />
       )
@@ -302,6 +303,42 @@ describe('CowCard', () => {
         .closest('label')
         .querySelector('[type=checkbox]')
       expect(button).toHaveAttribute('disabled')
+    })
+  })
+
+  describe('cow selection', () => {
+    describe('cow is not selected', () => {
+      test('provides correct isSelected prop', () => {
+        render(
+          <CowCard
+            {...{
+              ...baseProps,
+              cowInventory: [cow],
+              isSelected: false,
+            }}
+          />
+        )
+
+        const selectedText = screen.queryByText(/is currently selected/)
+        expect(selectedText).toBeNull()
+      })
+    })
+
+    describe('cow is selected', () => {
+      test('provides correct isSelected prop', () => {
+        render(
+          <CowCard
+            {...{
+              ...baseProps,
+              cowInventory: [cow],
+              isSelected: true,
+            }}
+          />
+        )
+
+        const selectedText = screen.queryByText(/is currently selected/)
+        expect(selectedText).not.toBeNull()
+      })
     })
   })
 })

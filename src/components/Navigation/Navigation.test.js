@@ -13,6 +13,7 @@ beforeEach(() => {
     <Navigation
       {...{
         activePlayers: null,
+        blockInput: false,
         currentDialogView: dialogView.NONE,
         dayCount: 0,
         farmName: '',
