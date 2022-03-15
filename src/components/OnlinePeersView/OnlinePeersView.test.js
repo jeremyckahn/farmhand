@@ -10,6 +10,8 @@ beforeEach(() => {
     <OnlinePeersView
       {...{
         activePlayers: 0,
+        cowIdOfferedForTrade: '',
+        cowInventory: [],
         id: '',
         latestPeerMessages: [],
         peers: {},

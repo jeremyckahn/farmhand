@@ -710,6 +710,7 @@ export const processCowBreeding = state => {
   const {
     cowBreedingPen,
     cowInventory,
+    id,
     newDayNotifications,
     purchasedCowPen,
   } = state
@@ -738,7 +739,8 @@ export const processCowBreeding = state => {
     cowInventory.length < PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows &&
     daysUntilBirth === 0
 
-  let offspringCow = shouldGenerateOffspring && generateOffspringCow(cow1, cow2)
+  let offspringCow =
+    shouldGenerateOffspring && generateOffspringCow(cow1, cow2, id)
 
   return {
     ...state,
@@ -1322,7 +1324,7 @@ export const showNotification = (
  * @returns {farmhand.state}
  */
 export const purchaseCow = (state, cow) => {
-  const { cowInventory, cowColorsPurchased, money, purchasedCowPen } = state
+  const { cowInventory, cowColorsPurchased, id, money, purchasedCowPen } = state
   const { color } = cow
   const cowValue = getCowValue(cow, false)
 
@@ -1334,15 +1336,30 @@ export const purchaseCow = (state, cow) => {
     return state
   }
 
+  state = addCowToInventory(state, { ...cow, ownerId: id, originalOwnerId: id })
+
   return {
     ...state,
-    cowInventory: [...cowInventory, { ...cow }],
     cowColorsPurchased: {
       ...cowColorsPurchased,
       [color]: (cowColorsPurchased[color] || 0) + 1,
     },
     money: moneyTotal(money, -cowValue),
     cowForSale: generateCow(),
+  }
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.cow} cow
+ * @returns {farmhand.state}
+ */
+export const addCowToInventory = (state, cow) => {
+  const { cowInventory } = state
+
+  return {
+    ...state,
+    cowInventory: [...cowInventory, cow],
   }
 }
 
@@ -1963,6 +1980,32 @@ export const hugCow = (state, cowId) =>
           happinessBoostsToday: cow.happinessBoostsToday + 1,
         }
   )
+
+/**
+ * @param {farmhand.state} state
+ * @param {string} cowId
+ * @returns {farmhand.state}
+ */
+export const offerCow = (state, cowId) => {
+  state = { ...state, cowIdOfferedForTrade: cowId }
+
+  return state
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {string} cowId
+ * @returns {farmhand.state}
+ */
+export const withdrawCow = (state, cowId) => {
+  const { cowIdOfferedForTrade } = state
+
+  if (cowId === cowIdOfferedForTrade) {
+    state = { ...state, cowIdOfferedForTrade: '' }
+  }
+
+  return state
+}
 
 /**
  * @param {farmhand.state} state

@@ -1,0 +1,31 @@
+=heartListStyle()
+  .hearts
+    margin-top: .5em
+
+    li
+      display: inline
+      margin: 0 .25em 0 0
+
+.CowCard
+  +heartListStyle()
+
+  .card-list & // This specificity is needed to override a global card style
+    +heartListStyle()
+
+  &.is-purchased
+    .MuiCardHeader-root
+      padding-top: 0
+
+    .MuiCardHeader-title
+      align-items: baseline
+      display: flex
+
+      svg
+        padding-left: 1em
+
+.CowCard-scroll-anchor
+  display: block
+  height: 0
+  position: relative
+  top: -0.75em
+  visibility: hidden

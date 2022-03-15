@@ -203,6 +203,7 @@ const dialogContentMap = {
 
 export const Navigation = ({
   activePlayers,
+  blockInput,
   currentDialogView,
   dayCount,
   farmName,
@@ -339,7 +340,7 @@ export const Navigation = ({
     */}
     <Dialog
       {...{
-        className: 'Farmhand',
+        className: classNames('Farmhand', { 'block-input': blockInput }),
         fullWidth: true,
         maxWidth: 'xs',
         onClose: handleCloseDialogView,
@@ -368,6 +369,7 @@ export const Navigation = ({
 
 Navigation.propTypes = {
   activePlayers: number,
+  blockInput: bool.isRequired,
   dayCount: number.isRequired,
   farmName: string.isRequired,
   handleClickDialogViewButton: func.isRequired,

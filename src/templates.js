@@ -4,6 +4,7 @@
  */
 
 import {
+  getCowDisplayName,
   getRandomLevelUpRewardQuantity,
   integerString,
   moneyString,
@@ -269,3 +270,37 @@ export const INGREDIENTS_LIST_ITEM = (
   quantityNeeded,
   quantityAvailable
 ) => `${ingredientName} x ${quantityNeeded} (On hand: ${quantityAvailable})`
+
+/**
+ * @param {string} cowDisplayName
+ * @returns {string}
+ */
+export const OFFER_COW_FOR_TRADE = (_, cowDisplayName) =>
+  `Offer ${cowDisplayName} for trade with online players`
+
+/**
+ * @param {string} cowDisplayName
+ * @returns {string}
+ */
+export const WITHDRAW_COW_FROM_TRADE = (_, cowDisplayName) =>
+  `Keep ${cowDisplayName} from being traded`
+
+/**
+ * @param {farmhand.cow} cowTradedAway
+ * @param {farmhand.cow} cowReceived
+ * @param {string} playerId
+ * @param {boolean} allowCustomPeerCowNames
+ * @returns {string}
+ */
+export const COW_TRADED_NOTIFICATION = (
+  _,
+  cowTradedAway,
+  cowReceived,
+  playerId,
+  allowCustomPeerCowNames
+) =>
+  `You traded ${getCowDisplayName(
+    cowTradedAway,
+    playerId,
+    allowCustomPeerCowNames
+  )} for ${getCowDisplayName(cowReceived, playerId, allowCustomPeerCowNames)}!`

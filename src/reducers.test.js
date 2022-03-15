@@ -1962,6 +1962,7 @@ describe('purchaseCow', () => {
   )
 
   test('purchases a cow', () => {
+    const playerId = 'abc123'
     const oldCowForSale = generateCow()
 
     const state = fn.purchaseCow(
@@ -1969,6 +1970,7 @@ describe('purchaseCow', () => {
         cowForSale: oldCowForSale,
         cowInventory: [],
         cowColorsPurchased: {},
+        id: playerId,
         money: 5000,
         purchasedCowPen: 1,
       },
@@ -1976,7 +1978,7 @@ describe('purchaseCow', () => {
     )
 
     expect(state).toMatchObject({
-      cowInventory: [cow],
+      cowInventory: [{ ...cow, ownerId: playerId, originalOwnerId: playerId }],
       money: 5000 - getCowValue(cow, false),
     })
 
@@ -3169,6 +3171,35 @@ describe('hugCow', () => {
       expect(happiness).toBe(0.5)
       expect(happinessBoostsToday).toBe(3)
     })
+  })
+})
+
+describe('offerCow', () => {
+  test('makes specified cow available for trade', () => {
+    const cowId = 'abc123'
+    const { cowIdOfferedForTrade } = fn.offerCow({}, cowId)
+
+    expect(cowIdOfferedForTrade).toEqual(cowId)
+  })
+})
+
+describe('withdrawCow', () => {
+  test('makes specified cow unavailable for trade', () => {
+    const cowId = 'abc123'
+
+    let { cowIdOfferedForTrade } = fn.withdrawCow(
+      { cowIdOfferedForTrade: cowId },
+      'some-other-cow'
+    )
+
+    expect(cowIdOfferedForTrade).toEqual(cowId)
+
+    cowIdOfferedForTrade = fn.withdrawCow(
+      { cowIdOfferedForTrade: cowId },
+      cowId
+    ).cowIdOfferedForTrade
+
+    expect(cowIdOfferedForTrade).toEqual('')
   })
 })
 

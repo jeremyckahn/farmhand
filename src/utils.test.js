@@ -35,7 +35,6 @@ import {
   percentageString,
   randomChoice,
 } from './utils'
-import fruitNames from './data/fruit-names'
 import { testCrop } from './test-utils'
 import { items as itemImages, animals } from './img'
 import { cowColors, cropLifeStage, genders, standardCowColors } from './enums'
@@ -175,8 +174,9 @@ describe('generateCow', () => {
     const baseCowProperties = {
       color: Object.keys(standardCowColors)[0],
       daysOld: 1,
+      id: '123',
       isBred: false,
-      name: fruitNames[0],
+      name: 'Peach',
     }
 
     describe('female cows', () => {
@@ -185,7 +185,9 @@ describe('generateCow', () => {
           COW_STARTING_WEIGHT_BASE - COW_STARTING_WEIGHT_VARIANCE
         )
 
-        expect(generateCow({ gender: genders.FEMALE })).toMatchObject({
+        expect(
+          generateCow({ gender: genders.FEMALE, id: '123' })
+        ).toMatchObject({
           ...baseCowProperties,
           gender: genders.FEMALE,
           baseWeight,
@@ -200,7 +202,7 @@ describe('generateCow', () => {
             COW_STARTING_WEIGHT_VARIANCE
         )
 
-        expect(generateCow({ gender: genders.MALE })).toMatchObject({
+        expect(generateCow({ gender: genders.MALE, id: '123' })).toMatchObject({
           ...baseCowProperties,
           gender: genders.MALE,
           baseWeight,
@@ -217,13 +219,13 @@ describe('generateCow', () => {
     test('generates a cow', () => {
       const baseWeight = COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE
 
-      expect(generateCow()).toMatchObject({
+      expect(generateCow({ id: '123' })).toMatchObject({
         baseWeight,
         color: Object.keys(standardCowColors).pop(),
         daysOld: 1,
         gender: Object.keys(genders).pop(),
         isBred: false,
-        name: fruitNames[fruitNames.length - 1],
+        name: 'Peach',
       })
     })
   })
@@ -257,7 +259,7 @@ describe('generateOffspringCow', () => {
   })
 
   test('generates offspring', () => {
-    expect(generateOffspringCow(maleCow, femaleCow)).toMatchObject({
+    expect(generateOffspringCow(maleCow, femaleCow, 'foo')).toMatchObject({
       color: chooseRandom([femaleCow.color, maleCow.color]),
       colorsInBloodline: {
         [standardCowColors.GREEN]: true,
@@ -267,18 +269,32 @@ describe('generateOffspringCow', () => {
       },
       baseWeight: 2100,
       isBred: true,
+      ownerId: 'foo',
+      originalOwnerId: 'foo',
     })
   })
 
   test('order of parents does not matter', () => {
-    const { id: id1, ...offspring1 } = generateOffspringCow(maleCow, femaleCow)
-    const { id: id2, ...offspring2 } = generateOffspringCow(femaleCow, maleCow)
+    const idProps = { id: '123' }
+
+    const { ...offspring1 } = generateOffspringCow(
+      maleCow,
+      femaleCow,
+      'foo',
+      idProps
+    )
+    const { ...offspring2 } = generateOffspringCow(
+      femaleCow,
+      maleCow,
+      'foo',
+      idProps
+    )
 
     expect(offspring1).toEqual(offspring2)
   })
 
   test('two cows of the same gender throw an error', () => {
-    expect(() => generateOffspringCow(femaleCow, femaleCow)).toThrow()
+    expect(() => generateOffspringCow(femaleCow, femaleCow, 'foo')).toThrow()
   })
 
   describe('rainbow cows', () => {
@@ -308,7 +324,7 @@ describe('generateOffspringCow', () => {
         gender: genders.FEMALE,
       })
 
-      expect(generateOffspringCow(maleCow, femaleCow)).toMatchObject({
+      expect(generateOffspringCow(maleCow, femaleCow, 'foo')).toMatchObject({
         color: cowColors.RAINBOW,
         colorsInBloodline: {
           [standardCowColors.BLUE]: true,
@@ -321,6 +337,8 @@ describe('generateOffspringCow', () => {
         },
         baseWeight: 2100,
         isBred: true,
+        ownerId: 'foo',
+        originalOwnerId: 'foo',
       })
     })
 
@@ -351,7 +369,11 @@ describe('generateOffspringCow', () => {
         gender: genders.MALE,
       })
 
-      const { colorsInBloodline } = generateOffspringCow(maleCow, femaleCow)
+      const { colorsInBloodline } = generateOffspringCow(
+        maleCow,
+        femaleCow,
+        'foo'
+      )
 
       expect(colorsInBloodline).toEqual({
         [standardCowColors.BLUE]: true,

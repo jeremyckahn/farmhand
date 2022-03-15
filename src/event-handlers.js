@@ -71,6 +71,13 @@ export default {
   },
 
   /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowTradeClick(cow) {
+    this.tradeForPeerCow(cow)
+  },
+
+  /**
    * @param {external:React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
@@ -91,6 +98,20 @@ export default {
    */
   handleCowHugClick(cow) {
     this.hugCow(cow.id)
+  },
+
+  /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowOfferClick(cow) {
+    this.offerCow(cow.id)
+  },
+
+  /**
+   * @param {farmhand.cow} cow
+   */
+  handleCowWithdrawClick(cow) {
+    this.withdrawCow(cow.id)
   },
 
   /**
@@ -286,6 +307,8 @@ export default {
   },
 
   handleCloseDialogView() {
+    if (this.state.isAwaitingCowTradeRequest) return
+
     this.closeDialogView()
   },
 
@@ -381,6 +404,10 @@ export default {
     this.setState({ useAlternateEndDayButtonPosition })
   },
 
+  handleAllowCustomPeerCowNamesChange(_e, allowCustomPeerCowNames) {
+    this.setState({ allowCustomPeerCowNames })
+  },
+
   handleShowHomeScreenChange(_e, showHomeScreen) {
     if (this.state.stageFocus === stageFocusType.HOME && !showHomeScreen) {
       this.focusNextView()
@@ -411,9 +438,16 @@ export default {
     // side-effects. Consider using componentDidUpdate or a callback."
     setTimeout(
       () =>
-        this.setState(() => ({
-          redirect: goOnline ? `/online/${encodeURIComponent(room)}` : '/',
-        })),
+        this.setState(() =>
+          goOnline
+            ? {
+                redirect: `/online/${encodeURIComponent(room)}`,
+              }
+            : {
+                redirect: '/',
+                cowIdOfferedForTrade: '',
+              }
+        ),
       1
     )
   },

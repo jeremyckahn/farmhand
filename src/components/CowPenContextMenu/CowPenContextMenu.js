@@ -1,372 +1,33 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
-import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardHeader from '@material-ui/core/CardHeader'
-import Checkbox from '@material-ui/core/Checkbox'
 import Fab from '@material-ui/core/Fab'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
-import TextField from '@material-ui/core/TextField'
-import Tooltip from '@material-ui/core/Tooltip'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import sortBy from 'lodash.sortby'
-import classNames from 'classnames'
-import {
-  faMars,
-  faVenus,
-  faHeart as faFullHeart,
-} from '@fortawesome/free-solid-svg-icons'
-import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons'
 
 import Item from '../Item'
-import { COW_COLOR_NAMES } from '../../strings'
-import { pixel } from '../../img'
 import FarmhandContext from '../../Farmhand.context'
-import { enumify, genders } from '../../enums'
+import { enumify } from '../../enums'
 import {
-  areHuggingMachinesInInventory,
-  getCowImage,
-  getCowValue,
+  findCowById,
   getCowSellValue,
   getCowWeight,
-  findCowById,
-  isInViewport,
-  memoize,
-  moneyString,
+  isCowInBreedingPen,
   nullArray,
 } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { cowFeed, huggingMachine } from '../../data/items'
 
+import CowCard from '../CowCard'
+
 import { TabPanel, a11yProps } from './TabPanel'
 
 import './CowPenContextMenu.sass'
-
-const genderIcons = {
-  [genders.FEMALE]: faVenus,
-  [genders.MALE]: faMars,
-}
-
-// The extra 0.5 is for rounding up to the next full heart. This allows a fully
-// happy cow to have full hearts on the beginning of a new day.
-const isHeartFull = (heartIndex, numberOfFullHearts) =>
-  heartIndex + 0.5 < numberOfFullHearts
-
-const isCowInBreedingPen = (cow, cowBreedingPen) =>
-  cowBreedingPen.cowId1 === cow.id || cowBreedingPen.cowId2 === cow.id
-
-const CowBloodline = memo(({ colorsInBloodline }) => (
-  <ul {...{ className: 'bloodline' }}>
-    {/* TODO: Remove the `|| {}` after 1/11/2020. */}
-    {Object.keys(colorsInBloodline || {})
-      .sort()
-      .map(color => (
-        <Tooltip
-          {...{
-            key: color,
-            arrow: true,
-            placement: 'top',
-            title: COW_COLOR_NAMES[color],
-          }}
-        >
-          <li {...{ className: color.toLowerCase() }} />
-        </Tooltip>
-      ))}
-  </ul>
-))
-
-const getCowMapById = memoize(cowInventory =>
-  cowInventory.reduce((acc, cow) => {
-    acc[cow.id] = cow
-    return acc
-  }, {})
-)
-
-export const CowCardSubheader = ({
-  cow,
-  cowBreedingPen,
-  cowInventory,
-  cowValue,
-  handleCowAutomaticHugChange,
-  handleCowBreedChange,
-  huggingMachinesRemain,
-  isCowPurchased,
-}) => {
-  const numberOfFullHearts = cow.happiness * 10
-  const isInBreedingPen = isCowInBreedingPen(cow, cowBreedingPen)
-  const isBreedingPenFull =
-    cowBreedingPen.cowId1 !== null && cowBreedingPen.cowId2 !== null
-
-  let canBeMovedToBreedingPen = !isBreedingPenFull
-
-  if (canBeMovedToBreedingPen) {
-    const potentialMateId = cowBreedingPen.cowId2 ?? cowBreedingPen.cowId1
-
-    if (potentialMateId !== null) {
-      canBeMovedToBreedingPen =
-        cow.gender !== getCowMapById(cowInventory)[potentialMateId].gender
-    }
-  }
-
-  const disableBreedingControlTooltip =
-    !canBeMovedToBreedingPen && !isInBreedingPen
-
-  return (
-    <>
-      <CowBloodline {...{ colorsInBloodline: cow.colorsInBloodline }} />
-      {isCowPurchased && (
-        <p>
-          {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
-        </p>
-      )}
-      <p>Color: {COW_COLOR_NAMES[cow.color]}</p>
-      <p>
-        {isCowPurchased ? 'Value' : 'Price'}: {moneyString(cowValue)}
-      </p>
-      <p>Weight: {getCowWeight(cow)} lbs.</p>
-      {isCowPurchased && (
-        <>
-          <ol className="hearts">
-            {nullArray(10).map((_null, i) => (
-              <li key={`${cow.id}_${i}`}>
-                <FontAwesomeIcon
-                  {...{
-                    icon: isHeartFull(i, numberOfFullHearts)
-                      ? faFullHeart
-                      : faEmptyHeart,
-                    className: classNames('heart', {
-                      'is-full': isHeartFull(i, numberOfFullHearts),
-                    }),
-                  }}
-                />
-              </li>
-            ))}
-          </ol>
-          <Tooltip
-            {...{
-              arrow: true,
-              placement: 'top',
-              title: `Check this box to put ${cow.name} into a ${huggingMachine.name} and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory.`,
-            }}
-          >
-            <FormControlLabel
-              {...{
-                control: (
-                  <Checkbox
-                    {...{
-                      color: 'primary',
-                      checked: cow.isUsingHuggingMachine,
-                      onChange: e => handleCowAutomaticHugChange(e, cow),
-                    }}
-                  />
-                ),
-                disabled: !cow.isUsingHuggingMachine && !huggingMachinesRemain,
-                label: 'Hug automatically',
-              }}
-            />
-          </Tooltip>
-          <Tooltip
-            {...{
-              arrow: true,
-              placement: 'top',
-              disableFocusListener: disableBreedingControlTooltip,
-              disableHoverListener: disableBreedingControlTooltip,
-              disableTouchListener: disableBreedingControlTooltip,
-              title: isInBreedingPen
-                ? `Uncheck this box to return ${cow.name} to the regular pen.`
-                : `Check this box to move ${
-                    cow.name
-                  } to the breeding pen to mate with a ${
-                    cow.gender === genders.MALE ? 'female' : 'male'
-                  } cow.`,
-            }}
-          >
-            <FormControlLabel
-              {...{
-                control: (
-                  <Checkbox
-                    {...{
-                      color: 'primary',
-                      checked: isInBreedingPen,
-                      onChange: e => handleCowBreedChange(e, cow),
-                    }}
-                  />
-                ),
-                disabled: isInBreedingPen ? false : !canBeMovedToBreedingPen,
-                label: 'Breed',
-              }}
-            />
-          </Tooltip>
-        </>
-      )}
-    </>
-  )
-}
-
-export const CowCard = ({
-  cow,
-  cowBreedingPen,
-  cowInventory,
-  debounced,
-  handleCowAutomaticHugChange,
-  handleCowBreedChange,
-  handleCowHugClick,
-  handleCowNameInputChange,
-  handleCowPurchaseClick,
-  handleCowSellClick,
-  inventory,
-  isSelected,
-  money,
-  purchasedCowPen,
-
-  isCowPurchased = !!handleCowSellClick,
-  cowValue = getCowValue(cow, isCowPurchased),
-  huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
-  isNameEditable = !!handleCowNameInputChange,
-}) => {
-  const [name, setName] = useState(cow.name)
-  const [cowImage, setCowImage] = useState(pixel)
-  const cardRef = useRef()
-  const scrollAnchorRef = useRef()
-
-  useEffect(() => {
-    ;(async () => {
-      setCowImage(await getCowImage(cow))
-    })()
-  }, [cow])
-
-  useEffect(() => {
-    if (isSelected) {
-      const { current: scrollAnchor } = scrollAnchorRef
-      const { current: card } = cardRef
-      if (!scrollAnchor || !card) return
-
-      // scrollIntoView is not defined in the unit test environment.
-      if (scrollAnchor.scrollIntoView && !isInViewport(card)) {
-        scrollAnchor.scrollIntoView({ behavior: 'smooth' })
-      }
-    }
-  }, [isSelected])
-
-  return (
-    <>
-      <a
-        {...{
-          className: 'scroll-anchor',
-          href: `#cow-${cow.id}`,
-          ref: scrollAnchorRef,
-        }}
-      >
-        &nbsp;
-      </a>
-      <Card
-        {...{
-          className: classNames('cow-card', { 'is-selected': isSelected }),
-          raised: isSelected,
-          ref: cardRef,
-        }}
-      >
-        {isSelected && (
-          <span className="visually_hidden">
-            {cow.name} is currently selected
-          </span>
-        )}
-        <CardHeader
-          {...{
-            avatar: <img {...{ src: cowImage }} alt="Cow" />,
-            title: (
-              <>
-                {isNameEditable ? (
-                  <TextField
-                    {...{
-                      onChange: e => {
-                        setName(e.target.value)
-                        debounced.handleCowNameInputChange({ ...e }, cow)
-                      },
-                      placeholder: 'Name',
-                      value: name,
-                    }}
-                  />
-                ) : (
-                  cow.name
-                )}{' '}
-                <FontAwesomeIcon
-                  {...{
-                    icon: genderIcons[cow.gender],
-                  }}
-                />
-              </>
-            ),
-            subheader: (
-              <CowCardSubheader
-                {...{
-                  cow,
-                  cowBreedingPen,
-                  cowInventory,
-                  cowValue,
-                  handleCowBreedChange,
-                  handleCowAutomaticHugChange,
-                  huggingMachinesRemain,
-                  isCowPurchased,
-                }}
-              />
-            ),
-          }}
-        />
-        <CardActions>
-          {!isCowPurchased && (
-            <Button
-              {...{
-                className: 'purchase',
-                color: 'primary',
-                disabled:
-                  cowValue > money ||
-                  cowInventory.length >=
-                    PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
-                onClick: () => handleCowPurchaseClick(cow),
-                variant: 'contained',
-              }}
-            >
-              Buy
-            </Button>
-          )}
-          {isCowPurchased && (
-            <>
-              <Button
-                {...{
-                  className: 'hug',
-                  color: 'primary',
-                  onClick: () => handleCowHugClick(cow),
-                  variant: 'contained',
-                }}
-              >
-                Hug
-              </Button>
-              <Button
-                {...{
-                  className: 'sell',
-                  color: 'secondary',
-                  onClick: () => handleCowSellClick(cow),
-                  variant: 'contained',
-                }}
-              >
-                Sell
-              </Button>
-            </>
-          )}
-        </CardActions>
-      </Card>
-    </>
-  )
-}
 
 const { AGE, COLOR, GENDER, HAPPINESS, VALUE, WEIGHT } = enumify([
   'AGE',
@@ -410,16 +71,14 @@ export const CowPenContextMenu = ({
   cowBreedingPen,
   cowForSale,
   cowInventory,
-  debounced,
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   handleCowHugClick,
   handleCowNameInputChange,
-  handleCowPurchaseClick,
+  handleCowOfferClick,
   handleCowSelect,
   handleCowSellClick,
-  inventory,
-  money,
+  handleCowWithdrawClick,
   purchasedCowPen,
   selectedCowId,
 }) => {
@@ -433,12 +92,6 @@ export const CowPenContextMenu = ({
       <CowCard
         {...{
           cow: cowForSale,
-          cowBreedingPen,
-          cowInventory,
-          handleCowPurchaseClick,
-          inventory,
-          money,
-          purchasedCowPen,
         }}
       />
       <AppBar position="static" color="primary">
@@ -499,18 +152,15 @@ export const CowPenContextMenu = ({
                 <CowCard
                   {...{
                     cow,
-                    cowBreedingPen,
-                    cowInventory,
-                    debounced,
                     handleCowAutomaticHugChange,
                     handleCowBreedChange,
                     handleCowHugClick,
                     handleCowNameInputChange,
+                    handleCowOfferClick,
                     handleCowSellClick,
-                    inventory,
+                    handleCowWithdrawClick,
+                    isCowPurchased: true,
                     isSelected: cow.id === selectedCowId,
-                    money,
-                    purchasedCowPen,
                   }}
                 />
               </li>
@@ -529,18 +179,15 @@ export const CowPenContextMenu = ({
                 <CowCard
                   {...{
                     cow,
-                    cowBreedingPen,
-                    cowInventory,
-                    debounced,
                     handleCowAutomaticHugChange,
                     handleCowBreedChange,
                     handleCowHugClick,
                     handleCowNameInputChange,
+                    handleCowOfferClick,
                     handleCowSellClick,
-                    inventory,
+                    handleCowWithdrawClick,
+                    isCowPurchased: true,
                     isSelected: cow.id === selectedCowId,
-                    money,
-                    purchasedCowPen,
                   }}
                 />
               </li>
@@ -577,16 +224,14 @@ export const CowPenContextMenu = ({
 CowPenContextMenu.propTypes = {
   cowForSale: object.isRequired,
   cowInventory: array.isRequired,
-  debounced: object.isRequired,
   handleCowAutomaticHugChange: func.isRequired,
   handleCowBreedChange: func.isRequired,
   handleCowHugClick: func.isRequired,
   handleCowNameInputChange: func.isRequired,
-  handleCowPurchaseClick: func.isRequired,
+  handleCowOfferClick: func.isRequired,
   handleCowSelect: func.isRequired,
   handleCowSellClick: func.isRequired,
-  inventory: array.isRequired,
-  money: number.isRequired,
+  handleCowWithdrawClick: func.isRequired,
   purchasedCowPen: number.isRequired,
   selectedCowId: string.isRequired,
 }
