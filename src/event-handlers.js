@@ -110,8 +110,8 @@ export default {
   /**
    * @param {farmhand.cow} cow
    */
-  handleCowRescindClick(cow) {
-    this.rescindCow(cow.id)
+  handleCowWithdrawClick(cow) {
+    this.withdrawCow(cow.id)
   },
 
   /**

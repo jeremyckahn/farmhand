@@ -26,11 +26,11 @@ describe('CowPenContextMenu', () => {
       handleCowAutomaticHugChange: () => {},
       handleCowBreedChange: () => {},
       handleCowHugClick: () => {},
-      handleCowOfferClick: () => {},
-      handleCowRescindClick: () => {},
       handleCowNameInputChange: () => {},
+      handleCowOfferClick: () => {},
       handleCowSelect: () => {},
       handleCowSellClick: () => {},
+      handleCowWithdrawClick: () => {},
       purchasedCowPen: 1,
       selectedCowId: '',
     }

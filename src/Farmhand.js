@@ -544,7 +544,6 @@ export default class Farmhand extends Component {
       'purchaseStorageExpansion',
       'removeCowFromInventory',
       'removePeer',
-      'rescindCow',
       'selectCow',
       'sellCow',
       'sellItem',
@@ -556,6 +555,7 @@ export default class Farmhand extends Component {
       'waterAllPlots',
       'waterField',
       'waterPlot',
+      'withdrawCow',
     ].forEach(reducerName => {
       const reducer = reducers[reducerName]
 

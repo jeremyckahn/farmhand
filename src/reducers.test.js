@@ -3183,19 +3183,21 @@ describe('offerCow', () => {
   })
 })
 
-describe('rescindCow', () => {
+describe('withdrawCow', () => {
   test('makes specified cow unavailable for trade', () => {
     const cowId = 'abc123'
 
-    let { cowIdOfferedForTrade } = fn.rescindCow(
+    let { cowIdOfferedForTrade } = fn.withdrawCow(
       { cowIdOfferedForTrade: cowId },
       'some-other-cow'
     )
 
     expect(cowIdOfferedForTrade).toEqual(cowId)
 
-    cowIdOfferedForTrade = fn.rescindCow({ cowIdOfferedForTrade: cowId }, cowId)
-      .cowIdOfferedForTrade
+    cowIdOfferedForTrade = fn.withdrawCow(
+      { cowIdOfferedForTrade: cowId },
+      cowId
+    ).cowIdOfferedForTrade
 
     expect(cowIdOfferedForTrade).toEqual('')
   })

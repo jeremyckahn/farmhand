@@ -1997,7 +1997,7 @@ export const offerCow = (state, cowId) => {
  * @param {string} cowId
  * @returns {farmhand.state}
  */
-export const rescindCow = (state, cowId) => {
+export const withdrawCow = (state, cowId) => {
   const { cowIdOfferedForTrade } = state
 
   if (cowId === cowIdOfferedForTrade) {

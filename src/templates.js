@@ -282,7 +282,7 @@ export const OFFER_COW_FOR_TRADE = (_, cowDisplayName) =>
  * @param {string} cowDisplayName
  * @returns {string}
  */
-export const RESCIND_COW_FROM_TRADE = (_, cowDisplayName) =>
+export const WITHDRAW_COW_FROM_TRADE = (_, cowDisplayName) =>
   `Keep ${cowDisplayName} from being traded`
 
 /**

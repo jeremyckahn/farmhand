@@ -24,7 +24,7 @@ import {
   isInViewport,
 } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
-import { OFFER_COW_FOR_TRADE, RESCIND_COW_FROM_TRADE } from '../../templates'
+import { OFFER_COW_FOR_TRADE, WITHDRAW_COW_FROM_TRADE } from '../../templates'
 
 import Subheader from './Subheader'
 
@@ -48,7 +48,7 @@ export const CowCard = ({
   handleCowNameInputChange,
   handleCowOfferClick,
   handleCowPurchaseClick,
-  handleCowRescindClick,
+  handleCowWithdrawClick,
   handleCowSellClick,
   handleCowTradeClick,
   id,
@@ -228,7 +228,7 @@ export const CowCard = ({
                     {...{
                       arrow: true,
                       placement: 'top',
-                      title: RESCIND_COW_FROM_TRADE`${cowDisplayName}`,
+                      title: WITHDRAW_COW_FROM_TRADE`${cowDisplayName}`,
                     }}
                   >
                     <Button
@@ -236,12 +236,12 @@ export const CowCard = ({
                         className: 'offer',
                         color: 'primary',
                         onClick: () => {
-                          handleCowRescindClick && handleCowRescindClick(cow)
+                          handleCowWithdrawClick && handleCowWithdrawClick(cow)
                         },
                         variant: 'contained',
                       }}
                     >
-                      Rescind
+                      Withdraw
                     </Button>
                   </Tooltip>
                 ) : (
@@ -297,7 +297,7 @@ CowCard.propTypes = {
   handleCowNameInputChange: func,
   handleCowOfferClick: func,
   handleCowPurchaseClick: func,
-  handleCowRescindClick: func,
+  handleCowWithdrawClick: func,
   handleCowSellClick: func,
   handleCowTradeClick: func,
   id: string.isRequired,
