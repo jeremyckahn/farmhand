@@ -352,6 +352,14 @@ export default class Farmhand extends Component {
     return getPeerMetadata(this.state)
   }
 
+  get isInputBlocked() {
+    return (
+      this.state.isAwaitingNetworkRequest ||
+      this.state.isAwaitingCowTradeRequest ||
+      this.state.isWaitingForDayToCompleteIncrementing
+    )
+  }
+
   /**
    * @returns {farmhand.state}
    */
@@ -1240,10 +1248,7 @@ export default class Farmhand extends Component {
       viewTitle,
     } = this
 
-    const blockInput =
-      this.state.isAwaitingNetworkRequest ||
-      this.state.isAwaitingCowTradeRequest ||
-      this.state.isWaitingForDayToCompleteIncrementing
+    const blockInput = this.isInputBlocked
 
     // Bundle up the raw state and the computed state into one object to be
     // passed down through the component tree.
