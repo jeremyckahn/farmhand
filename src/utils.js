@@ -1061,12 +1061,21 @@ export const transformStateDataForImport = state => {
     sanitizedState.stageFocus = stageFocusType.SHOP
   }
 
+  // TODO: Remove these cowInventory and cowForSale transformations after
+  // 3/15/2023
   sanitizedState.cowInventory = sanitizedState.cowInventory.map(cow => ({
     ownerId: id,
     originalOwnerId: id,
     timesTraded: 0,
     ...cow,
   }))
+
+  sanitizedState.cowForSale = {
+    ownerId: '',
+    originalOwnerId: '',
+    timesTraded: 0,
+    ...sanitizedState.cowForSale,
+  }
 
   return sanitizedState
 }
