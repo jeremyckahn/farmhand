@@ -1369,21 +1369,12 @@ export const addCowToInventory = (state, cow) => {
  * @returns {farmhand.state}
  */
 export const sellCow = (state, cow) => {
-  const { cowsSold, money } = state
+  const { cowsSold } = state
+  const cowColorId = getCowColorId(cow)
   const cowValue = getCowValue(cow, true)
 
   state = removeCowFromInventory(state, cow)
-
-  const cowColorId = getCowColorId(cow)
-
-  if (cow.isBred) {
-    state = addRevenue(state, cowValue)
-  } else {
-    state = {
-      ...state,
-      money: moneyTotal(money, cowValue),
-    }
-  }
+  state = addRevenue(state, cowValue)
 
   const newCowsSold = {
     ...cowsSold,
