@@ -83,9 +83,15 @@ export const handleCowTradeRequest = async (
             : cowOffered.timesTraded + 1,
       }
 
-      const [, peerMetadata] = Object.entries(peers).find(
-        ([, { id }]) => id === updatedCowOffered.ownerId
-      )
+      const [, peerMetadata] =
+        Object.entries(peers).find(
+          ([, peer]) => peer?.id === updatedCowOffered.ownerId
+        ) ?? []
+
+      if (!peerMetadata) {
+        console.error(`No data for peer ${updatedCowOffered.ownerId}`)
+        return
+      }
 
       state = changeCowAutomaticHugState(state, cowToTradeAway, false)
       state = removeCowFromInventory(state, cowToTradeAway)
