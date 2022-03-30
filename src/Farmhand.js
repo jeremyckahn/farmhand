@@ -782,9 +782,11 @@ export default class Farmhand extends Component {
         if (!sendCowTradeRequest) return null
 
         const { ownerId } = peerPlayerCow
-        const [peerId] = Object.entries(peers).find(
-          ([peerId, { id }]) => id === ownerId
-        )
+
+        const [peerId] =
+          Object.entries(peers).find(
+            ([peerId, peer]) => peer?.id === ownerId
+          ) ?? []
 
         if (!peerId) {
           console.error(
