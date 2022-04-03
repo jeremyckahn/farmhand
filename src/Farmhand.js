@@ -20,7 +20,7 @@ import throttle from 'lodash.throttle'
 import classNames from 'classnames'
 
 import FarmhandContext from './Farmhand.context'
-import eventHandlers from './event-handlers'
+import eventHandlers from './game-logic/event-handlers'
 import * as reducers from './game-logic/reducers'
 // This must be imported here so that it can be overridden by component styles.
 import './Farmhand.sass'
