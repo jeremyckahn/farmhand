@@ -95,7 +95,7 @@ import {
   handleCowTradeRequest,
   handleCowTradeRequestAccept,
   handleCowTradeRequestReject,
-} from './trystero-handlers'
+} from './game-logic/peer-event-handlers'
 import { endpoints } from './config'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
