@@ -21,7 +21,7 @@ import classNames from 'classnames'
 
 import FarmhandContext from './Farmhand.context'
 import eventHandlers from './event-handlers'
-import * as reducers from './reducers'
+import * as reducers from './game-logic/reducers'
 // This must be imported here so that it can be overridden by component styles.
 import './Farmhand.sass'
 

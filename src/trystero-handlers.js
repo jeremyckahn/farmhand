@@ -10,7 +10,7 @@ import {
   changeCowAutomaticHugState,
   removeCowFromInventory,
   showNotification,
-} from './reducers'
+} from './game-logic/reducers'
 import { sleep } from './utils'
 
 /**

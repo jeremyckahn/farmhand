@@ -1,10 +1,10 @@
-import { shapeOf, testCrop, testItem } from './test-utils'
+import { shapeOf, testCrop, testItem } from '../test-utils'
 import {
   OUT_OF_COW_FEED_NOTIFICATION,
   RAIN_MESSAGE,
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
-} from './strings'
+} from '../strings'
 import {
   ACHIEVEMENT_COMPLETED,
   COW_ATTRITION_MESSAGE,
@@ -16,7 +16,7 @@ import {
   MILKS_PRODUCED,
   PRICE_CRASH,
   PRICE_SURGE,
-} from './templates'
+} from '../templates'
 import {
   COW_FEED_ITEM_ID,
   COW_GESTATION_PERIOD_DAYS,
@@ -37,12 +37,12 @@ import {
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
   STORAGE_EXPANSION_AMOUNT,
-} from './constants'
-import { huggingMachine, sampleCropItem1 } from './data/items'
-import { sampleRecipe1 } from './data/recipes'
-import { itemsMap } from './data/maps'
-import { goldOre } from './data/ores'
-import { ResourceFactory } from './factories'
+} from '../constants'
+import { huggingMachine, sampleCropItem1 } from '../data/items'
+import { sampleRecipe1 } from '../data/recipes'
+import { itemsMap } from '../data/maps'
+import { goldOre } from '../data/ores'
+import { ResourceFactory } from '../factories'
 import {
   fertilizerType,
   fieldMode,
@@ -50,7 +50,7 @@ import {
   standardCowColors,
   toolType,
   toolLevel,
-} from './enums'
+} from '../enums'
 import {
   farmProductSalesVolumeNeededForLevel,
   generateCow,
@@ -62,20 +62,21 @@ import {
   getPlotContentFromItemId,
   getPriceEventForCrop,
   isRandomNumberLessThan,
-} from './utils'
+} from '../utils'
+
 import * as fn from './reducers'
 
-jest.mock('./data/achievements')
-jest.mock('./data/maps')
-jest.mock('./data/items')
-jest.mock('./data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
-jest.mock('./data/recipes')
-jest.mock('./data/shop-inventory')
-jest.mock('./utils/isRandomNumberLessThan')
+jest.mock('../data/achievements')
+jest.mock('../data/maps')
+jest.mock('../data/items')
+jest.mock('../data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
+jest.mock('../data/recipes')
+jest.mock('../data/shop-inventory')
+jest.mock('../utils/isRandomNumberLessThan')
 
-jest.mock('./constants', () => ({
+jest.mock('../constants', () => ({
   __esModule: true,
-  ...jest.requireActual('./constants'),
+  ...jest.requireActual('../constants'),
   COW_HUG_BENEFIT: 0.5,
   CROW_CHANCE: 0,
   PRECIPITATION_CHANCE: 0,
@@ -246,7 +247,7 @@ describe('generatePriceEvents', () => {
       jest.spyOn(Math, 'random').mockReturnValue(0)
 
       jest.resetModules()
-      jest.mock('./data/levels', () => ({
+      jest.mock('../data/levels', () => ({
         levels: [
           {
             id: 0,
@@ -988,7 +989,7 @@ describe('processWeather', () => {
     describe('is rainy day', () => {
       test('does water plants', () => {
         jest.resetModules()
-        jest.mock('./constants', () => ({
+        jest.mock('../constants', () => ({
           PRECIPITATION_CHANCE: 1,
         }))
 
@@ -1022,7 +1023,7 @@ describe('processNerfs', () => {
     describe('crows attack', () => {
       test('crop is destroyed', () => {
         jest.resetModules()
-        jest.mock('./constants', () => ({
+        jest.mock('../constants', () => ({
           CROW_CHANCE: 1,
         }))
 
@@ -1043,7 +1044,7 @@ describe('processNerfs', () => {
 
       test('multiple messages are grouped', () => {
         jest.resetModules()
-        jest.mock('./constants', () => ({
+        jest.mock('../constants', () => ({
           CROW_CHANCE: 1,
         }))
 
@@ -1073,7 +1074,7 @@ describe('processNerfs', () => {
       describe('there is a scarecrow', () => {
         test('crow attack is prevented', () => {
           jest.resetModules()
-          jest.mock('./constants', () => ({
+          jest.mock('../constants', () => ({
             CROW_CHANCE: 1,
             SCARECROW_ITEM_ID: 'scarecrow',
           }))
@@ -1845,7 +1846,7 @@ describe('sellItem', () => {
 describe('processLevelUp', () => {
   test('shows notifications for each level gained in the sale', () => {
     jest.resetModules()
-    jest.mock('./data/levels', () => ({
+    jest.mock('../data/levels', () => ({
       levels: [
         {
           id: 1,
@@ -1881,7 +1882,7 @@ describe('processLevelUp', () => {
 
   test('when sprinkler is selected when it gets a level up boost, hoveredPlotRangeSize increase', () => {
     jest.resetModules()
-    jest.mock('./data/levels', () => ({
+    jest.mock('../data/levels', () => ({
       levels: [
         {
           id: 0,
@@ -1896,7 +1897,7 @@ describe('processLevelUp', () => {
       ],
       itemUnlockLevels: {},
     }))
-    jest.mock('./constants', () => ({
+    jest.mock('../constants', () => ({
       INITIAL_SPRINKLER_RANGE: 1,
       SPRINKLER_ITEM_ID: 'sprinkler',
     }))
@@ -1920,7 +1921,7 @@ describe('processLevelUp', () => {
 
   test('unlocksTool reward makes tool become available', () => {
     jest.resetModules()
-    jest.mock('./data/levels', () => ({
+    jest.mock('../data/levels', () => ({
       levels: [
         {
           id: 0,
@@ -2994,7 +2995,7 @@ describe('purchaseField', () => {
   describe('field expansion', () => {
     test('field expands without destroying existing data', () => {
       jest.resetModules()
-      jest.mock('./constants', () => ({
+      jest.mock('../constants', () => ({
         PURCHASEABLE_FIELD_SIZES: new Map([
           [1, { columns: 3, rows: 4, price: 1000 }],
         ]),
@@ -3238,7 +3239,7 @@ describe('updateAchievements', () => {
 
   beforeAll(() => {
     jest.resetModules()
-    jest.mock('./data/achievements', () => [
+    jest.mock('../data/achievements', () => [
       {
         id: 'test-achievement',
         name: 'Test Achievement',

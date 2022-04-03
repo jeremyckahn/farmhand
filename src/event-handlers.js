@@ -7,7 +7,7 @@ import {
   minePlot,
   plantInPlot,
   waterPlot,
-} from './reducers'
+} from './game-logic/reducers'
 import {
   moneyTotal,
   reduceByPersistedKeys,

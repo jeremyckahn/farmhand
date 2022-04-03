@@ -1,3 +1,4 @@
+import { addItemToInventory } from '../game-logic/reducers'
 import {
   doesPlotContainCrop,
   dollarString,
@@ -11,7 +12,6 @@ import {
 } from '../utils'
 import { cropLifeStage, standardCowColors } from '../enums'
 import { COW_FEED_ITEM_ID, I_AM_RICH_BONUSES } from '../constants'
-import { addItemToInventory } from '../reducers'
 import { features } from '../config'
 
 import { itemsMap } from './maps'
