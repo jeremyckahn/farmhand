@@ -31,7 +31,9 @@ const onboardingAchievements = [
 ]
 
 const getRemainingOnboardingAchievements = memoize(completedAchievements =>
-  onboardingAchievements.filter(({ id }) => !completedAchievements[id])
+  onboardingAchievements.filter(
+    achievement => achievement && !completedAchievements[achievement.id]
+  )
 )
 
 // https://stackoverflow.com/questions/41742390/javascript-to-check-if-pwa-or-mobile-web/41749865#41749865

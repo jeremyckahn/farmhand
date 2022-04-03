@@ -65,7 +65,6 @@ import {
 } from './utils'
 import * as fn from './reducers'
 
-jest.mock('localforage')
 jest.mock('./data/achievements')
 jest.mock('./data/maps')
 jest.mock('./data/items')

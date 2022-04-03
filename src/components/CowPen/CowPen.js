@@ -209,7 +209,7 @@ export class Cow extends Component {
               {...{
                 src: cowImage,
               }}
-              alt="Cow"
+              alt={getCowDisplayName(cow, id, allowCustomPeerCowNames)}
             />
             <FontAwesomeIcon
               {...{
