@@ -362,7 +362,7 @@ export default class Farmhand extends Component {
   }
 
   /**
-   * @property {Object} overrides
+   * @property {Object} [overrides]
    * @returns {farmhand.state}
    */
   createInitialState(overrides = {}) {
