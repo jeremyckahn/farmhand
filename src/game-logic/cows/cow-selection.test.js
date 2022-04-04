@@ -13,13 +13,13 @@ describe('cow selection', () => {
   let cow1 = null
   let cow2 = null
 
-  const getCowStub1 = async () => {
+  const getCow1 = async () => {
     return (
       await screen.findByAltText(getCowDisplayName(cowStub1, cowId1, false))
     ).closest('.cow')
   }
 
-  const getCowStub2 = async () => {
+  const getCow2 = async () => {
     return (
       await screen.findByAltText(getCowDisplayName(cowStub2, cowId2, false))
     ).closest('.cow')
@@ -42,8 +42,8 @@ describe('cow selection', () => {
       hasBooted: true,
     })
 
-    cow1 = await getCowStub1()
-    cow2 = await getCowStub2()
+    cow1 = await getCow1()
+    cow2 = await getCow2()
   })
 
   afterEach(() => {
@@ -100,17 +100,12 @@ describe('cow selection', () => {
     const nextViewButton = await screen.findByLabelText('Next view')
 
     userEvent.click(previousViewButton)
-
-    act(() => {
-      jest.advanceTimersByTime(500)
-    })
-
     userEvent.click(nextViewButton)
 
     // The old stubs unmounted when the view changed, so they need to be
     // re-queried from the page
-    cow1 = await getCowStub1()
-    cow2 = await getCowStub2()
+    cow1 = await getCow1()
+    cow2 = await getCow2()
 
     expect(cow1.classList).not.toContain('is-selected')
     expect(cow2.classList).not.toContain('is-selected')
