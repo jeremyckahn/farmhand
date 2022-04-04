@@ -18,6 +18,7 @@ import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
 import throttle from 'lodash.throttle'
 import classNames from 'classnames'
+import { object } from 'prop-types'
 
 import FarmhandContext from './Farmhand.context'
 import eventHandlers from './game-logic/event-handlers'
@@ -1237,7 +1238,7 @@ export default class Farmhand extends Component {
 
   render() {
     const {
-      props: { features },
+      props: { features = {} },
       state: { redirect },
       fieldToolInventory,
       handlers,
@@ -1402,4 +1403,12 @@ export default class Farmhand extends Component {
       </GlobalHotKeys>
     )
   }
+}
+
+Farmhand.propTypes = {
+  features: object,
+  history: object,
+  location: object,
+  match: object.isRequired,
+  initialState: object,
 }

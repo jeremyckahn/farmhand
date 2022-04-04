@@ -6,7 +6,7 @@ import Farmhand from '../../Farmhand'
 
 export const farmhandStub = async (initialState = {}) => {
   const FarmhandRoute = routeProps => (
-    <Farmhand {...{ features: {}, ...routeProps, initialState }} />
+    <Farmhand {...{ ...routeProps, initialState }} />
   )
 
   render(
