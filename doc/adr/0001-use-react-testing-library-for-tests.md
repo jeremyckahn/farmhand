@@ -12,7 +12,7 @@ Since its inception, Farmhand has used [Enzyme](https://enzymejs.github.io/enzym
 
 ## Decision
 
-Farmhand's test will be gradually rewritten to use React Testing Library. New tests will not be written with Enzyme unless there is an urgent and critical need to do so.
+Farmhand's tests will be gradually rewritten to use React Testing Library. New tests will be written with React Testing Library and not Enzyme unless there is an urgent and critical reason.
 
 ## Consequences
 
