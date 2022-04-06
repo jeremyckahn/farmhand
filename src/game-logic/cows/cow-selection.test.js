@@ -52,12 +52,7 @@ describe('cow selection', () => {
   })
 
   test('no cows are selected by default', () => {
-    expect(
-      screen.queryByText(`${cowDisplayName1} is selected`)
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByText(`${cowDisplayName2} is selected`)
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText('is selected')).not.toBeInTheDocument()
   })
 
   test('a cow can be selected', () => {
@@ -109,16 +104,6 @@ describe('cow selection', () => {
     userEvent.click(previousViewButton)
     userEvent.click(nextViewButton)
 
-    // The old stubs unmounted when the view changed, so they need to be
-    // re-queried from the page
-    cow1 = await getCow1()
-    cow2 = await getCow2()
-
-    expect(
-      screen.queryByText(`${cowDisplayName1} is selected`)
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByText(`${cowDisplayName2} is selected`)
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText('is selected')).not.toBeInTheDocument()
   })
 })
