@@ -178,6 +178,8 @@ export class Cow extends Component {
       state: { cowImage, isTransitioning, rotate, showHugAnimation, x, y },
     } = this
 
+    const cowDisplayName = getCowDisplayName(cow, id, allowCustomPeerCowNames)
+
     return (
       <div
         {...{
@@ -193,11 +195,14 @@ export class Cow extends Component {
           },
         }}
       >
+        {isSelected && (
+          <p className="visually_hidden">{cowDisplayName} is selected</p>
+        )}
         <Tooltip
           {...{
             arrow: true,
             placement: 'top',
-            title: getCowDisplayName(cow, id, allowCustomPeerCowNames),
+            title: cowDisplayName,
             open: isSelected,
             PopperProps: {
               disablePortal: true,
@@ -209,7 +214,7 @@ export class Cow extends Component {
               {...{
                 src: cowImage,
               }}
-              alt={getCowDisplayName(cow, id, allowCustomPeerCowNames)}
+              alt={cowDisplayName}
             />
             <FontAwesomeIcon
               {...{

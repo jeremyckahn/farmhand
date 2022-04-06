@@ -10,19 +10,17 @@ describe('cow selection', () => {
   const cowId2 = 'bar'
   const cowStub1 = generateCow({ id: cowId1 })
   const cowStub2 = generateCow({ id: cowId2 })
+  const cowDisplayName1 = getCowDisplayName(cowStub1, cowId1, false)
+  const cowDisplayName2 = getCowDisplayName(cowStub2, cowId1, false)
   let cow1 = null
   let cow2 = null
 
   const getCow1 = async () => {
-    return (
-      await screen.findByAltText(getCowDisplayName(cowStub1, cowId1, false))
-    ).closest('.cow')
+    return (await screen.findByAltText(cowDisplayName1)).closest('.cow')
   }
 
   const getCow2 = async () => {
-    return (
-      await screen.findByAltText(getCowDisplayName(cowStub2, cowId2, false))
-    ).closest('.cow')
+    return (await screen.findByAltText(cowDisplayName2)).closest('.cow')
   }
 
   beforeEach(async () => {
@@ -54,8 +52,12 @@ describe('cow selection', () => {
   })
 
   test('no cows are selected by default', () => {
-    expect(cow1.classList).not.toContain('is-selected')
-    expect(cow2.classList).not.toContain('is-selected')
+    expect(
+      screen.queryByText(`${cowDisplayName1} is selected`)
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(`${cowDisplayName2} is selected`)
+    ).not.toBeInTheDocument()
   })
 
   test('a cow can be selected', () => {
@@ -68,8 +70,9 @@ describe('cow selection', () => {
       jest.advanceTimersByTime(500)
     })
 
-    expect(cow1.classList).toContain('is-selected')
-    expect(cow2.classList).not.toContain('is-selected')
+    expect(
+      screen.queryByText(`${cowDisplayName1} is selected`)
+    ).toBeInTheDocument()
   })
 
   test('selecting another cow deselects the first one', () => {
@@ -85,8 +88,12 @@ describe('cow selection', () => {
       jest.advanceTimersByTime(500)
     })
 
-    expect(cow1.classList).not.toContain('is-selected')
-    expect(cow2.classList).toContain('is-selected')
+    expect(
+      screen.queryByText(`${cowDisplayName1} is selected`)
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(`${cowDisplayName2} is selected`)
+    ).toBeInTheDocument()
   })
 
   test('changing views deselects all cows', async () => {
@@ -107,7 +114,11 @@ describe('cow selection', () => {
     cow1 = await getCow1()
     cow2 = await getCow2()
 
-    expect(cow1.classList).not.toContain('is-selected')
-    expect(cow2.classList).not.toContain('is-selected')
+    expect(
+      screen.queryByText(`${cowDisplayName1} is selected`)
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(`${cowDisplayName2} is selected`)
+    ).not.toBeInTheDocument()
   })
 })
