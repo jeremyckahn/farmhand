@@ -6,28 +6,18 @@ import { generateCow, getCowDisplayName } from '../../utils'
 import { stageFocusType } from '../../enums'
 
 describe('cow selection', () => {
-  const cowId1 = 'foo'
-  const cowId2 = 'bar'
-  const cowStub1 = generateCow({ id: cowId1 })
-  const cowStub2 = generateCow({ id: cowId2 })
-  const cowDisplayName1 = getCowDisplayName(cowStub1, cowId1, false)
-  const cowDisplayName2 = getCowDisplayName(cowStub2, cowId1, false)
+  let cowDisplayName1 = null
+  let cowDisplayName2 = null
   let cow1 = null
   let cow2 = null
-
-  const getCow1 = async () => {
-    return (await screen.findByAltText(cowDisplayName1)).closest('.cow')
-  }
-
-  const getCow2 = async () => {
-    return (await screen.findByAltText(cowDisplayName2)).closest('.cow')
-  }
 
   beforeEach(async () => {
     jest.useFakeTimers()
 
-    cow1 = null
-    cow2 = null
+    const cowId1 = 'foo'
+    const cowId2 = 'bar'
+    const cowStub1 = generateCow({ id: cowId1 })
+    const cowStub2 = generateCow({ id: cowId2 })
 
     await farmhandStub({
       cowInventory: [cowStub1, cowStub2],
@@ -35,8 +25,10 @@ describe('cow selection', () => {
       purchasedCowPen: 1,
     })
 
-    cow1 = await getCow1()
-    cow2 = await getCow2()
+    cowDisplayName1 = getCowDisplayName(cowStub1, cowId1, false)
+    cowDisplayName2 = getCowDisplayName(cowStub2, cowId1, false)
+    cow1 = (await screen.findByAltText(cowDisplayName1)).closest('.cow')
+    cow2 = (await screen.findByAltText(cowDisplayName2)).closest('.cow')
   })
 
   afterEach(() => {
