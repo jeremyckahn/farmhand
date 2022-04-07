@@ -33,11 +33,6 @@ describe('cow selection', () => {
       cowInventory: [cowStub1, cowStub2],
       stageFocus: stageFocusType.COW_PEN,
       purchasedCowPen: 1,
-
-      // Usually this gets initialized during the boot process, but it needs to
-      // be stubbed to prevent a spurious crash
-      cowForSale: generateCow(),
-      hasBooted: true,
     })
 
     cow1 = await getCow1()

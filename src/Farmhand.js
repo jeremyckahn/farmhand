@@ -278,7 +278,7 @@ export default class Farmhand extends Component {
    * @member farmhand.Farmhand#state
    * @type {farmhand.state}
    */
-  state = this.createInitialState(this.props.initialState)
+  state = this.createInitialState()
 
   constructor() {
     super(...arguments)
@@ -362,10 +362,9 @@ export default class Farmhand extends Component {
   }
 
   /**
-   * @property {Object} [overrides]
    * @returns {farmhand.state}
    */
-  createInitialState(overrides = {}) {
+  createInitialState() {
     return {
       activePlayers: null,
       allowCustomPeerCowNames: false,
@@ -448,7 +447,6 @@ export default class Farmhand extends Component {
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
       version: process.env.REACT_APP_VERSION,
-      ...overrides,
     }
   }
 
@@ -606,7 +604,7 @@ export default class Farmhand extends Component {
 
     this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
-    this.setState({ hasBooted: true })
+    this.setState({ hasBooted: true, ...this.props.initialState })
   }
 
   componentDidUpdate(prevProps, prevState) {
