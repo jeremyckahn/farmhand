@@ -57,7 +57,7 @@ describe('cow selection', () => {
       // Prevent async update warning from Popper.js (used by Material UI
       // tooltips). See "Case 2" here:
       // https://davidwcai.medium.com/react-testing-library-and-the-not-wrapped-in-act-errors-491a5629193b
-      jest.advanceTimersByTime(500)
+      jest.advanceTimersByTime(200)
     })
 
     expect(
@@ -69,13 +69,13 @@ describe('cow selection', () => {
     userEvent.click(cow1)
 
     act(() => {
-      jest.advanceTimersByTime(500)
+      jest.advanceTimersByTime(200)
     })
 
     userEvent.click(cow2)
 
     act(() => {
-      jest.advanceTimersByTime(500)
+      jest.advanceTimersByTime(200)
     })
 
     expect(
@@ -90,7 +90,7 @@ describe('cow selection', () => {
     userEvent.click(cow1)
 
     act(() => {
-      jest.advanceTimersByTime(500)
+      jest.advanceTimersByTime(200)
     })
 
     const previousViewButton = await screen.findByLabelText('Previous view')
