@@ -5,53 +5,12 @@ import { generateCow } from '../../utils'
 import { cowColors } from '../../enums'
 import { pixel } from '../../img'
 
-import { Cow, CowPen } from './CowPen'
+import { Cow } from './CowPen'
 
 let component
 
 beforeEach(() => {
   jest.useFakeTimers()
-})
-
-describe('CowPen', () => {
-  beforeEach(() => {
-    component = shallow(
-      <CowPen
-        {...{
-          allowCustomPeerCowNames: false,
-          cowInventory: [],
-          handleCowPenUnmount: () => {},
-          handleCowClick: () => {},
-          id: '',
-          selectedCowId: '',
-        }}
-      />
-    )
-  })
-
-  describe('cow selection', () => {
-    describe('cow is not selected', () => {
-      test('provides correct isSelected prop', () => {
-        component.setProps({
-          cowInventory: [generateCow({ id: 'foo' })],
-          selectedCowId: 'bar',
-        })
-
-        expect(component.find(Cow).props().isSelected).toEqual(false)
-      })
-    })
-
-    describe('cow is selected', () => {
-      test('provides correct isSelected prop', () => {
-        component.setProps({
-          cowInventory: [generateCow({ id: 'foo' })],
-          selectedCowId: 'foo',
-        })
-
-        expect(component.find(Cow).props().isSelected).toEqual(true)
-      })
-    })
-  })
 })
 
 describe('Cow', () => {

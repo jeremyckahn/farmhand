@@ -8,6 +8,13 @@ configure({
   setupFilesAfterEnv: ['jest-extended'],
 })
 
+jest.mock('localforage', () => ({
+  createInstance: () => ({
+    getItem: () => Promise.resolve(null),
+    setItem: (_key, data) => Promise.resolve(data),
+  }),
+}))
+
 afterEach(() => {
   jest.restoreAllMocks()
 })

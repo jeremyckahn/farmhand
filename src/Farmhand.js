@@ -18,10 +18,17 @@ import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
 import throttle from 'lodash.throttle'
 import classNames from 'classnames'
+import { object } from 'prop-types'
 
 import FarmhandContext from './Farmhand.context'
-import eventHandlers from './event-handlers'
-import * as reducers from './reducers'
+import eventHandlers from './handlers/ui-events'
+import {
+  handlePeerMetadataRequest,
+  handleCowTradeRequest,
+  handleCowTradeRequestAccept,
+  handleCowTradeRequestReject,
+} from './handlers/peer-events'
+import * as reducers from './game-logic/reducers'
 // This must be imported here so that it can be overridden by component styles.
 import './Farmhand.sass'
 
@@ -90,12 +97,6 @@ import {
   SERVER_ERROR,
   UPDATE_AVAILABLE,
 } from './strings'
-import {
-  handlePeerMetadataRequest,
-  handleCowTradeRequest,
-  handleCowTradeRequestAccept,
-  handleCowTradeRequestReject,
-} from './trystero-handlers'
 import { endpoints } from './config'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
@@ -603,7 +604,7 @@ export default class Farmhand extends Component {
 
     this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
-    this.setState({ hasBooted: true })
+    this.setState({ hasBooted: true, ...this.props.initialState })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -1235,7 +1236,7 @@ export default class Farmhand extends Component {
 
   render() {
     const {
-      props: { features },
+      props: { features = {} },
       state: { redirect },
       fieldToolInventory,
       handlers,
@@ -1400,4 +1401,12 @@ export default class Farmhand extends Component {
       </GlobalHotKeys>
     )
   }
+}
+
+Farmhand.propTypes = {
+  features: object,
+  history: object,
+  location: object,
+  match: object.isRequired,
+  initialState: object,
 }
