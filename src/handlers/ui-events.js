@@ -20,7 +20,7 @@ import {
   minePlot,
   plantInPlot,
   waterPlot,
-} from './reducers'
+} from '../game-logic/reducers'
 
 const {
   CLEANUP,

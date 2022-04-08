@@ -21,7 +21,13 @@ import classNames from 'classnames'
 import { object } from 'prop-types'
 
 import FarmhandContext from './Farmhand.context'
-import eventHandlers from './game-logic/event-handlers'
+import eventHandlers from './handlers/ui-events'
+import {
+  handlePeerMetadataRequest,
+  handleCowTradeRequest,
+  handleCowTradeRequestAccept,
+  handleCowTradeRequestReject,
+} from './handlers/peer-events'
 import * as reducers from './game-logic/reducers'
 // This must be imported here so that it can be overridden by component styles.
 import './Farmhand.sass'
@@ -91,12 +97,6 @@ import {
   SERVER_ERROR,
   UPDATE_AVAILABLE,
 } from './strings'
-import {
-  handlePeerMetadataRequest,
-  handleCowTradeRequest,
-  handleCowTradeRequestAccept,
-  handleCowTradeRequestReject,
-} from './game-logic/peer-event-handlers'
 import { endpoints } from './config'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode

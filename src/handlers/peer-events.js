@@ -12,7 +12,7 @@ import {
   changeCowAutomaticHugState,
   removeCowFromInventory,
   showNotification,
-} from './reducers'
+} from '../game-logic/reducers'
 
 /**
  * @param {Farmhand} farmhand
