@@ -65,7 +65,12 @@ export function UpgradePurchase({
       />
 
       <CardActions>
-        <Button color="primary" onClick={handleUpgrade} variant="contained">
+        <Button
+          color="primary"
+          onClick={handleUpgrade}
+          variant="contained"
+          disabled={!canBeMade}
+        >
           Upgrade Tool
         </Button>
       </CardActions>
