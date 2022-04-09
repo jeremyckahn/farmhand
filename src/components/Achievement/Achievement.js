@@ -6,7 +6,7 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
 import BeenhereIcon from '@material-ui/icons/Beenhere'
-import { bool, object } from 'prop-types'
+import { bool, object, shape, string } from 'prop-types'
 
 import FarmhandContext from '../../Farmhand.context'
 
@@ -35,7 +35,12 @@ const Achievement = ({
 )
 
 Achievement.propTypes = {
-  achievement: object.isRequired,
+  achievement: shape({
+    description: string,
+    id: string,
+    name: string,
+    rewardDescription: string,
+  }).isRequired,
   completedAchievements: object.isRequired,
   isComplete: bool,
 }
