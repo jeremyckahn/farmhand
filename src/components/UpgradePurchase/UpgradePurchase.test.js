@@ -73,7 +73,7 @@ describe('<UpgradePurchase />', () => {
 
       screen.getByRole('button').click()
 
-      expect(props.handleUpgradeTool).not.toHaveBeenCalledWith(upgrade)
+      expect(props.handleUpgradeTool).not.toHaveBeenCalled()
     })
 
     test('it calls the provided callback to handle the upgrade action', () => {
