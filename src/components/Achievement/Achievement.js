@@ -36,10 +36,10 @@ const Achievement = ({
 
 Achievement.propTypes = {
   achievement: shape({
-    description: string,
-    id: string,
-    name: string,
-    rewardDescription: string,
+    description: string.isRequired,
+    id: string.isRequired,
+    name: string.isRequired,
+    rewardDescription: string.isRequired,
   }).isRequired,
   completedAchievements: object.isRequired,
   isComplete: bool,
