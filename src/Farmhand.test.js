@@ -8,11 +8,7 @@ import {
   sampleCropSeedsItem1,
 } from './data/items'
 import { testItem } from './test-utils'
-import {
-  INITIAL_FIELD_WIDTH,
-  INITIAL_FIELD_HEIGHT,
-  PURCHASEABLE_COW_PENS,
-} from './constants'
+import { PURCHASEABLE_COW_PENS } from './constants'
 import {
   COW_PEN_PURCHASED,
   LOAN_BALANCE_NOTIFICATION,
@@ -20,7 +16,6 @@ import {
   RECIPES_LEARNED,
 } from './templates'
 import { reduceByPersistedKeys } from './utils'
-import { stageFocusType } from './enums'
 import { recipesMap } from './data/maps'
 import Farmhand, {
   computePlayerInventory,
@@ -28,7 +23,6 @@ import Farmhand, {
   getPlantableCropInventory,
 } from './Farmhand'
 
-jest.mock('localforage')
 jest.mock('./data/maps')
 jest.mock('./data/items')
 jest.mock('./data/levels', () => ({ levels: [] }))
@@ -144,24 +138,6 @@ describe('private helpers', () => {
     test('filters out non-plantable items', () => {
       expect(plantableCropInventory).toEqual([sampleCropSeedsItem1])
     })
-  })
-})
-
-describe('state', () => {
-  test('inits field', () => {
-    expect(component.state().field).toHaveLength(INITIAL_FIELD_HEIGHT)
-    expect(component.state().field[0]).toHaveLength(INITIAL_FIELD_WIDTH)
-  })
-
-  test('changing to state.stageFocus === stageFocusType.COW_PEN resets selectedCowId', () => {
-    component.setState({
-      selectedCowId: 'foo',
-      stageFocus: stageFocusType.FIELD,
-    })
-
-    component.setState({ stageFocus: stageFocusType.COW_PEN })
-
-    expect(component.state().selectedCowId).toEqual('')
   })
 })
 

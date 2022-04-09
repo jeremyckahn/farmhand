@@ -1,5 +1,5 @@
+import * as reducers from '../game-logic/reducers'
 import { testCrop } from '../test-utils'
-import * as reducers from '../reducers'
 
 import { toolLevel, toolType } from '../enums'
 

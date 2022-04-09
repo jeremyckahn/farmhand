@@ -1,17 +1,18 @@
-import { cowTradeRejectionReason } from './enums'
-import { COW_TRADED_NOTIFICATION } from './templates'
+import { cowTradeRejectionReason } from '../enums'
+import { COW_TRADED_NOTIFICATION } from '../templates'
 import {
   PROGRESS_SAVED_MESSAGE,
   REQUESTED_COW_TRADE_UNAVAILABLE,
   UNKNOWN_COW_TRADE_FAILURE,
-} from './strings'
+} from '../strings'
+import { sleep } from '../utils'
+
 import {
   addCowToInventory,
   changeCowAutomaticHugState,
   removeCowFromInventory,
   showNotification,
-} from './reducers'
-import { sleep } from './utils'
+} from '../game-logic/reducers'
 
 /**
  * @param {Farmhand} farmhand

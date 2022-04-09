@@ -1,25 +1,26 @@
 import { saveAs } from 'file-saver'
 
 import {
+  moneyTotal,
+  reduceByPersistedKeys,
+  transformStateDataForImport,
+} from '../utils'
+import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants'
+import { dialogView, fieldMode, stageFocusType } from '../enums'
+import {
+  DISCONNECTING_FROM_SERVER,
+  INVALID_DATA_PROVIDED,
+  PROGRESS_SAVED_MESSAGE,
+} from '../strings'
+
+import {
   clearPlot,
   fertilizePlot,
   harvestPlot,
   minePlot,
   plantInPlot,
   waterPlot,
-} from './reducers'
-import {
-  moneyTotal,
-  reduceByPersistedKeys,
-  transformStateDataForImport,
-} from './utils'
-import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from './constants'
-import { dialogView, fieldMode, stageFocusType } from './enums'
-import {
-  DISCONNECTING_FROM_SERVER,
-  INVALID_DATA_PROVIDED,
-  PROGRESS_SAVED_MESSAGE,
-} from './strings'
+} from '../game-logic/reducers'
 
 const {
   CLEANUP,
