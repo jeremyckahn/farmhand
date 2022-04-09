@@ -26,12 +26,18 @@ describe('<UpgradePurchase />', () => {
 
     props = {
       handleUpgradeTool: jest.fn(),
-      inventory: [],
-      inventoryLimit: 99,
+      inventory: [
+        {
+          id: 'bronze-ore',
+          quantity: 100,
+        },
+        { id: 'coal', quantity: 100 },
+      ],
       playerInventoryQuantities: {
         'bronze-ore': 100,
         coal: 100,
       },
+      inventoryLimit: 999,
       toolLevels,
       upgrade,
     }
@@ -62,6 +68,14 @@ describe('<UpgradePurchase />', () => {
   })
 
   describe('handle upgrade', () => {
+    test('it does not call handle upgrade if the player does not have the ingredients available', () => {
+      render(<UpgradePurchase {...props} inventory={[]} />)
+
+      screen.getByRole('button').click()
+
+      expect(props.handleUpgradeTool).not.toHaveBeenCalled()
+    })
+
     test('it calls the provided callback to handle the upgrade action', () => {
       render(<UpgradePurchase {...props} />)
 
