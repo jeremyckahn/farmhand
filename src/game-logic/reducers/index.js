@@ -3,11 +3,11 @@
  * @ignore
  */
 
-import { itemsMap, recipesMap } from '../data/maps'
-import { levels } from '../data/levels'
-import { ResourceFactory } from '../factories'
-import achievements from '../data/achievements'
-import upgrades from '../data/upgrades'
+import { itemsMap, recipesMap } from '../../data/maps'
+import { levels } from '../../data/levels'
+import { ResourceFactory } from '../../factories'
+import achievements from '../../data/achievements'
+import upgrades from '../../data/upgrades'
 import {
   areHuggingMachinesInInventory,
   canMakeRecipe,
@@ -54,8 +54,8 @@ import {
   moneyTotal,
   nullArray,
   unlockTool,
-} from '../utils'
-import { generateValueAdjustments } from '../common/utils'
+} from '../../utils'
+import { generateValueAdjustments } from '../../common/utils'
 import {
   COW_FEED_ITEM_ID,
   COW_GESTATION_PERIOD_DAYS,
@@ -86,7 +86,7 @@ import {
   SPRINKLER_ITEM_ID,
   STORAGE_EXPANSION_AMOUNT,
   STORM_CHANCE,
-} from '../constants'
+} from '../../constants'
 import {
   FORGE_AVAILABLE_NOTIFICATION,
   INVENTORY_FULL_NOTIFICATION,
@@ -94,7 +94,7 @@ import {
   RAIN_MESSAGE,
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
-} from '../strings'
+} from '../../strings'
 import {
   ACHIEVEMENT_COMPLETED,
   COW_ATTRITION_MESSAGE,
@@ -111,7 +111,7 @@ import {
   PURCHASED_ITEM_PEER_NOTIFICATION,
   SOLD_ITEM_PEER_NOTIFICATION,
   TOOL_UPGRADED_NOTIFICATION,
-} from '../templates'
+} from '../../templates'
 import {
   cropLifeStage,
   fertilizerType,
@@ -119,7 +119,7 @@ import {
   itemType,
   toolLevel,
   toolType,
-} from '../enums'
+} from '../../enums'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
