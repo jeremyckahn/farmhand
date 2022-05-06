@@ -42,7 +42,8 @@ import { CROW_ATTACKED } from '../../templates'
 import { ResourceFactory } from '../../factories'
 
 import { applyChanceEvent } from './helpers'
-import { addItemToInventory, showNotification } from './common'
+import { showNotification } from './common'
+import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { incrementPlotContentAge } from './incrementPlotContentAge'
 
