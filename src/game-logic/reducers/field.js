@@ -26,7 +26,6 @@ import {
 } from '../../utils'
 import {
   CROW_CHANCE,
-  FERTILIZER_BONUS,
   HOE_LEVEL_TO_SEED_RECLAIM_RATE,
   PRECIPITATION_CHANCE,
   SCARECROW_ITEM_ID,
@@ -45,6 +44,7 @@ import { ResourceFactory } from '../../factories'
 import { applyChanceEvent } from './helpers'
 import { addItemToInventory, showNotification } from './common'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
+import { incrementPlotContentAge } from './incrementPlotContentAge'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
@@ -69,26 +69,6 @@ const fieldHasScarecrow = field => findInField(field, plotContainsScarecrow)
  */
 const updateField = (field, modifierFn) =>
   field.map((row, y) => row.map((plot, x) => modifierFn(plot, x, y)))
-
-/**
- * @param {?farmhand.crop} crop
- * @returns {?farmhand.crop}
- */
-export const incrementPlotContentAge = crop =>
-  crop && getPlotContentType(crop) === itemType.CROP
-    ? {
-        ...crop,
-        daysOld: crop.daysOld + 1,
-        daysWatered:
-          crop.daysWatered +
-          (crop.wasWateredToday
-            ? 1 +
-              (crop.fertilizerType === fertilizerType.NONE
-                ? 0
-                : FERTILIZER_BONUS)
-            : 0),
-      }
-    : crop
 
 /**
  * @param {?farmhand.plotContent} plotContent

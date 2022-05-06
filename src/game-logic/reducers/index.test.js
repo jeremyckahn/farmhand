@@ -26,7 +26,6 @@ import {
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
-  FERTILIZER_BONUS,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
@@ -1420,54 +1419,6 @@ describe('computeCowInventoryForNextDay', () => {
           ],
         })
       })
-    })
-  })
-})
-
-describe('incrementPlotContentAge', () => {
-  describe('plot contains a crop', () => {
-    describe('crop is not watered', () => {
-      test('updates daysOld', () => {
-        const { daysOld, daysWatered } = fn.incrementPlotContentAge(
-          testCrop({ itemId: 'sample-crop-1' })
-        )
-
-        expect(daysOld).toBe(1)
-        expect(daysWatered).toBe(0)
-      })
-    })
-
-    describe('crop is watered', () => {
-      test('updates daysOld and daysWatered', () => {
-        const { daysOld, daysWatered } = fn.incrementPlotContentAge(
-          testCrop({ itemId: 'sample-crop-1', wasWateredToday: true })
-        )
-
-        expect(daysOld).toBe(1)
-        expect(daysWatered).toBe(1)
-      })
-    })
-
-    describe('crop is fertilized', () => {
-      test('updates daysOld with bonus', () => {
-        const { daysWatered } = fn.incrementPlotContentAge(
-          testCrop({
-            itemId: 'sample-crop-1',
-            fertilizerType: fertilizerType.STANDARD,
-            wasWateredToday: true,
-          })
-        )
-
-        expect(daysWatered).toBe(1 + FERTILIZER_BONUS)
-      })
-    })
-  })
-
-  describe('plot contains a non-crop item', () => {
-    test('plot content is not changed', () => {
-      const plotContent = testCrop({ itemId: 'scarecrow' })
-
-      expect(fn.incrementPlotContentAge(plotContent)).toBe(plotContent)
     })
   })
 })
