@@ -43,11 +43,8 @@ import { CROW_ATTACKED } from '../../templates'
 import { ResourceFactory } from '../../factories'
 
 import { applyChanceEvent } from './helpers'
-import {
-  addItemToInventory,
-  decrementItemFromInventory,
-  showNotification,
-} from './common'
+import { addItemToInventory, showNotification } from './common'
+import { decrementItemFromInventory } from './decrementItemFromInventory'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage

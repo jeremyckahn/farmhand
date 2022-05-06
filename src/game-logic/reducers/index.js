@@ -94,11 +94,8 @@ import { itemType } from '../../enums'
 
 import { applyChanceEvent } from './helpers'
 
-import {
-  addItemToInventory,
-  decrementItemFromInventory,
-  showNotification,
-} from './common'
+import { addItemToInventory, showNotification } from './common'
+import { decrementItemFromInventory } from './decrementItemFromInventory'
 import {
   applyCrows,
   modifyFieldPlotAt,
