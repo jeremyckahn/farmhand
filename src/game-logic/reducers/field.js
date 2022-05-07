@@ -42,10 +42,12 @@ import { CROW_ATTACKED } from '../../templates'
 import { ResourceFactory } from '../../factories'
 
 import { applyChanceEvent } from './helpers'
-import { showNotification } from './common'
+
 import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { incrementPlotContentAge } from './incrementPlotContentAge'
+
+import { showNotification } from './'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
