@@ -47,6 +47,8 @@ import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { incrementPlotContentAge } from './incrementPlotContentAge'
 
+import { resetWasShoveled } from './resetWasShoveled'
+
 import { showNotification } from './'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
@@ -72,21 +74,6 @@ const fieldHasScarecrow = field => findInField(field, plotContainsScarecrow)
  */
 const updateField = (field, modifierFn) =>
   field.map((row, y) => row.map((plot, x) => modifierFn(plot, x, y)))
-
-/**
- * @param {?farmhand.plotContent} plotContent
- * @returns {?farmhand.plotContent}
- */
-export const resetWasShoveled = plotContent => {
-  if (plotContent && plotContent.isShoveled && plotContent.daysUntilClear > 1) {
-    return {
-      ...plotContent,
-      daysUntilClear: plotContent.daysUntilClear - 1,
-    }
-  }
-
-  return plotContent && !plotContent.isShoveled ? plotContent : null
-}
 
 /**
  * @param {farmhand.state} state

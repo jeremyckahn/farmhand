@@ -110,6 +110,7 @@ export * from './showNotification'
 export * from './decrementItemFromInventory'
 export * from './addItemToInventory'
 export * from './incrementPlotContentAge'
+export * from './resetWasShoveled'
 
 ///////////////////////////////////////////////////////////
 //
