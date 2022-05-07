@@ -30,14 +30,8 @@ import {
   PRECIPITATION_CHANCE,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
-  STORM_CHANCE,
 } from '../../constants'
-import {
-  INVENTORY_FULL_NOTIFICATION,
-  RAIN_MESSAGE,
-  STORM_MESSAGE,
-  STORM_DESTROYS_SCARECROWS_MESSAGE,
-} from '../../strings'
+import { INVENTORY_FULL_NOTIFICATION } from '../../strings'
 import { CROW_ATTACKED } from '../../templates'
 import { ResourceFactory } from '../../factories'
 
@@ -48,8 +42,8 @@ import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { incrementPlotContentAge } from './incrementPlotContentAge'
 
 import { resetWasShoveled } from './resetWasShoveled'
-
-import { showNotification } from './'
+import { applyPrecipitation } from './applyPrecipitation'
+import { showNotification } from './showNotification'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
@@ -58,13 +52,15 @@ const { GROWN } = cropLifeStage
  * @param {?farmhand.plotContent} plot
  * @returns {boolean}
  */
-const plotContainsScarecrow = plot => plot && plot.itemId === SCARECROW_ITEM_ID
+export const plotContainsScarecrow = plot =>
+  plot && plot.itemId === SCARECROW_ITEM_ID
 
 /**
  * @param {Array.<Array.<?farmhand.plotContent>>} field
  * @returns {boolean}
  */
-const fieldHasScarecrow = field => findInField(field, plotContainsScarecrow)
+export const fieldHasScarecrow = field =>
+  findInField(field, plotContainsScarecrow)
 
 /**
  * Invokes a function on every plot in a field.
@@ -72,68 +68,8 @@ const fieldHasScarecrow = field => findInField(field, plotContainsScarecrow)
  * @param {Function(?farmhand.plotContent)} modifierFn
  * @returns {Array.<Array.<?farmhand.plotContent>>}
  */
-const updateField = (field, modifierFn) =>
+export const updateField = (field, modifierFn) =>
   field.map((row, y) => row.map((plot, x) => modifierFn(plot, x, y)))
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const applyPrecipitation = state => {
-  let { field } = state
-  let scarecrowsConsumedByReplanting = 0
-  let notification
-
-  if (Math.random() < STORM_CHANCE) {
-    if (fieldHasScarecrow(field)) {
-      notification = {
-        message: STORM_DESTROYS_SCARECROWS_MESSAGE,
-        severity: 'error',
-      }
-
-      let { scarecrow: scarecrowsInInventory = 0 } = getInventoryQuantityMap(
-        state.inventory
-      )
-
-      field = updateField(field, plot => {
-        if (!plotContainsScarecrow(plot)) {
-          return plot
-        }
-
-        if (
-          scarecrowsInInventory &&
-          plot.fertilizerType === fertilizerType.RAINBOW
-        ) {
-          scarecrowsInInventory--
-          scarecrowsConsumedByReplanting++
-
-          return plot
-        }
-
-        return null
-      })
-    } else {
-      notification = { message: STORM_MESSAGE, severity: 'info' }
-    }
-  } else {
-    notification = { message: RAIN_MESSAGE, severity: 'info' }
-  }
-
-  state = decrementItemFromInventory(
-    { ...state, field },
-    'scarecrow',
-    scarecrowsConsumedByReplanting
-  )
-
-  state = {
-    ...state,
-    newDayNotifications: [...state.newDayNotifications, notification],
-  }
-
-  state = waterField(state)
-
-  return state
-}
 
 /**
  * @param {farmhand.state} state
