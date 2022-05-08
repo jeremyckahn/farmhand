@@ -13,7 +13,7 @@ import {
   updateField,
 } from './helpers'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
-import { waterField } from './field'
+import { waterField } from './waterField'
 
 /**
  * @param {farmhand.state} state

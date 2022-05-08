@@ -113,6 +113,7 @@ export * from './incrementPlotContentAge'
 export * from './resetWasShoveled'
 export * from './applyPrecipitation'
 export * from './applyCrows'
+export * from './waterField'
 
 ///////////////////////////////////////////////////////////
 //

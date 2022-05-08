@@ -41,18 +41,10 @@ import { incrementPlotContentAge } from './incrementPlotContentAge'
 import { resetWasShoveled } from './resetWasShoveled'
 import { applyPrecipitation } from './applyPrecipitation'
 import { showNotification } from './showNotification'
+import { waterField } from './waterField'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const waterField = state => ({
-  ...state,
-  field: updateField(state.field, setWasWatered),
-})
 
 /**
  * @param {farmhand.state} state
