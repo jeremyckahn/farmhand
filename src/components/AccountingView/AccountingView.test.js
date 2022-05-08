@@ -45,7 +45,7 @@ describe('<AccountView />', () => {
       expect(screen.getByText('Loan Balance')).toBeInTheDocument()
     })
 
-    test('it displays the load input', () => {
+    test('it displays the loan input', () => {
       expect(screen.getByRole('textbox')).toBeInTheDocument()
     })
 
