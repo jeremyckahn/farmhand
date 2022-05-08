@@ -111,6 +111,7 @@ export * from './decrementItemFromInventory'
 export * from './addItemToInventory'
 export * from './incrementPlotContentAge'
 export * from './resetWasShoveled'
+export * from './applyPrecipitation'
 
 ///////////////////////////////////////////////////////////
 //

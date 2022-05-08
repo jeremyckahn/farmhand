@@ -7,13 +7,13 @@ import {
   STORM_DESTROYS_SCARECROWS_MESSAGE,
 } from '../../strings'
 
-import { decrementItemFromInventory } from './decrementItemFromInventory'
 import {
   fieldHasScarecrow,
-  updateField,
   plotContainsScarecrow,
-  waterField,
-} from './field'
+  updateField,
+} from './helpers'
+import { decrementItemFromInventory } from './decrementItemFromInventory'
+import { waterField } from './field'
 
 /**
  * @param {farmhand.state} state

@@ -11,7 +11,6 @@ import {
   chooseRandom,
   doesInventorySpaceRemain,
   farmProductsSold,
-  findInField,
   getCropFromItemId,
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
@@ -35,7 +34,7 @@ import { INVENTORY_FULL_NOTIFICATION } from '../../strings'
 import { CROW_ATTACKED } from '../../templates'
 import { ResourceFactory } from '../../factories'
 
-import { applyChanceEvent } from './helpers'
+import { applyChanceEvent, fieldHasScarecrow, updateField } from './helpers'
 
 import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
@@ -47,29 +46,6 @@ import { showNotification } from './showNotification'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
-
-/**
- * @param {?farmhand.plotContent} plot
- * @returns {boolean}
- */
-export const plotContainsScarecrow = plot =>
-  plot && plot.itemId === SCARECROW_ITEM_ID
-
-/**
- * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @returns {boolean}
- */
-export const fieldHasScarecrow = field =>
-  findInField(field, plotContainsScarecrow)
-
-/**
- * Invokes a function on every plot in a field.
- * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @param {Function(?farmhand.plotContent)} modifierFn
- * @returns {Array.<Array.<?farmhand.plotContent>>}
- */
-export const updateField = (field, modifierFn) =>
-  field.map((row, y) => row.map((plot, x) => modifierFn(plot, x, y)))
 
 /**
  * @param {farmhand.state} state

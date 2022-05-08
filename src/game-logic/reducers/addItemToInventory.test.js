@@ -1,9 +1,9 @@
-import * as fn from './'
+import { addItemToInventory } from './addItemToInventory'
 
 describe('addItemToInventory', () => {
   test('creates a new item in the inventory', () => {
     expect(
-      fn.addItemToInventory(
+      addItemToInventory(
         { inventory: [], inventoryLimit: -1 },
         { id: 'sample-item-1' }
       )
@@ -12,7 +12,7 @@ describe('addItemToInventory', () => {
 
   test('increments an existing item in the inventory', () => {
     expect(
-      fn.addItemToInventory(
+      addItemToInventory(
         {
           inventory: [{ id: 'sample-item-1', quantity: 1 }],
           inventoryLimit: -1,
@@ -33,7 +33,7 @@ describe('addItemToInventory', () => {
     describe('there is no room for any of the items being added', () => {
       test('no items are added', () => {
         expect(
-          fn.addItemToInventory(
+          addItemToInventory(
             {
               inventory: [{ id: 'sample-item-1', quantity: 3 }],
               inventoryLimit: 3,
@@ -54,7 +54,7 @@ describe('addItemToInventory', () => {
     describe('there is only room for some of the items being added', () => {
       test('a reduced amount of items are added', () => {
         expect(
-          fn.addItemToInventory(
+          addItemToInventory(
             {
               inventory: [{ id: 'sample-item-1', quantity: 2 }],
               inventoryLimit: 3,
@@ -80,7 +80,7 @@ describe('addItemToInventory', () => {
     describe('allowInventoryOverage is true', () => {
       test('all items are added to inventory', () => {
         expect(
-          fn.addItemToInventory(
+          addItemToInventory(
             {
               inventory: [{ id: 'sample-item-1', quantity: 3 }],
               inventoryLimit: 3,
