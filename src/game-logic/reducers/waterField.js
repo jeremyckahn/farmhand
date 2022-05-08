@@ -1,5 +1,4 @@
-import { updateField } from './helpers'
-import { setWasWatered } from './field'
+import { setWasWatered, updateField } from './helpers'
 
 /**
  * @param {farmhand.state} state

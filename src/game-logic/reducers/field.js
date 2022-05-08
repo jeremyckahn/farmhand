@@ -32,7 +32,12 @@ import {
 import { INVENTORY_FULL_NOTIFICATION } from '../../strings'
 import { ResourceFactory } from '../../factories'
 
-import { applyChanceEvent, updateField } from './helpers'
+import {
+  applyChanceEvent,
+  updateField,
+  setWasWatered,
+  resetWasWatered,
+} from './helpers'
 
 import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
@@ -44,35 +49,6 @@ import { showNotification } from './showNotification'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
-
-/**
- * @param {?farmhand.plotContent} plotContent
- * @param {boolean} wasWateredToday
- * @returns {?farmhand.plotContent}
- */
-const setWasWateredProperty = (plotContent, wasWateredToday) => {
-  if (plotContent === null) {
-    return null
-  }
-
-  return getPlotContentType(plotContent) === itemType.CROP
-    ? { ...plotContent, wasWateredToday }
-    : { ...plotContent }
-}
-
-/**
- * @param {?farmhand.plotContent} plotContent
- * @returns {?farmhand.plotContent}
- */
-export const setWasWatered = plotContent =>
-  setWasWateredProperty(plotContent, true)
-
-/**
- * @param {?farmhand.plotContent} plotContent
- * @returns {?farmhand.plotContent}
- */
-export const resetWasWatered = plotContent =>
-  setWasWateredProperty(plotContent, false)
 
 /**
  * @param {farmhand.state} state

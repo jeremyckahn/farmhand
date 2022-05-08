@@ -986,22 +986,6 @@ describe('processNerfs', () => {
   })
 })
 
-describe('resetWasWatered', () => {
-  test('updates wasWateredToday property', () => {
-    expect(fn.resetWasWatered(testCrop({ itemId: 'sample-crop-1' }))).toEqual(
-      testCrop({ itemId: 'sample-crop-1' })
-    )
-
-    expect(
-      fn.resetWasWatered(
-        testCrop({ itemId: 'sample-crop-2', wasWateredToday: true })
-      )
-    ).toEqual(testCrop({ itemId: 'sample-crop-2' }))
-
-    expect(fn.resetWasWatered(null)).toBe(null)
-  })
-})
-
 describe('processCowBreeding', () => {
   const maleCow1 = generateCow({ gender: genders.MALE, happiness: 1 })
   const maleCow2 = generateCow({ gender: genders.MALE, happiness: 1 })

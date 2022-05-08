@@ -1,5 +1,36 @@
+import { itemType } from '../../enums'
+
 import { SCARECROW_ITEM_ID } from '../../constants'
-import { findInField } from '../../utils'
+import { findInField, getPlotContentType } from '../../utils'
+
+/**
+ * @param {?farmhand.plotContent} plotContent
+ * @param {boolean} wasWateredToday
+ * @returns {?farmhand.plotContent}
+ */
+const setWasWateredProperty = (plotContent, wasWateredToday) => {
+  if (plotContent === null) {
+    return null
+  }
+
+  return getPlotContentType(plotContent) === itemType.CROP
+    ? { ...plotContent, wasWateredToday }
+    : { ...plotContent }
+}
+
+/**
+ * @param {?farmhand.plotContent} plotContent
+ * @returns {?farmhand.plotContent}
+ */
+export const setWasWatered = plotContent =>
+  setWasWateredProperty(plotContent, true)
+
+/**
+ * @param {?farmhand.plotContent} plotContent
+ * @returns {?farmhand.plotContent}
+ */
+export const resetWasWatered = plotContent =>
+  setWasWateredProperty(plotContent, false)
 
 /**
  * @param {Array.<Array.<?farmhand.plotContent>>} field
