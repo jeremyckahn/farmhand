@@ -24,17 +24,15 @@ import {
   levelAchieved,
 } from '../../utils'
 import {
-  CROW_CHANCE,
   HOE_LEVEL_TO_SEED_RECLAIM_RATE,
   PRECIPITATION_CHANCE,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from '../../constants'
 import { INVENTORY_FULL_NOTIFICATION } from '../../strings'
-import { CROW_ATTACKED } from '../../templates'
 import { ResourceFactory } from '../../factories'
 
-import { applyChanceEvent, fieldHasScarecrow, updateField } from './helpers'
+import { applyChanceEvent, updateField } from './helpers'
 
 import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
@@ -46,44 +44,6 @@ import { showNotification } from './showNotification'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const applyCrows = state => {
-  const { field } = state
-  const newDayNotifications = [...state.newDayNotifications]
-
-  let notificationMessages = []
-
-  const updatedField = fieldHasScarecrow(field)
-    ? field
-    : updateField(field, plotContent => {
-        if (!plotContent || getPlotContentType(plotContent) !== itemType.CROP) {
-          return plotContent
-        }
-
-        const destroyCrop = Math.random() <= CROW_CHANCE
-
-        if (destroyCrop) {
-          notificationMessages.push(
-            CROW_ATTACKED`${itemsMap[plotContent.itemId]}`
-          )
-        }
-
-        return destroyCrop ? null : plotContent
-      })
-
-  if (notificationMessages.length) {
-    newDayNotifications.push({
-      message: notificationMessages.join('\n\n'),
-      severity: 'error',
-    })
-  }
-
-  return { ...state, field: updatedField, newDayNotifications }
-}
 
 /**
  * @param {farmhand.state} state

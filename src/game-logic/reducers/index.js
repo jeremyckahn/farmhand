@@ -96,14 +96,14 @@ import { applyChanceEvent } from './helpers'
 
 import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
+import { applyCrows } from './applyCrows'
+import { showNotification } from './showNotification'
 import {
-  applyCrows,
   modifyFieldPlotAt,
   processField,
   processWeather,
   processSprinklers,
 } from './field'
-import { showNotification } from './showNotification'
 
 export * from './field'
 export * from './showNotification'
@@ -112,6 +112,7 @@ export * from './addItemToInventory'
 export * from './incrementPlotContentAge'
 export * from './resetWasShoveled'
 export * from './applyPrecipitation'
+export * from './applyCrows'
 
 ///////////////////////////////////////////////////////////
 //
