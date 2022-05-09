@@ -859,39 +859,6 @@ describe('processCowFertilizerProduction', () => {
   })
 })
 
-describe('processWeather', () => {
-  describe('rain', () => {
-    describe('is not rainy day', () => {
-      test('does not water plants', () => {
-        const state = fn.processWeather({
-          field: [[testCrop()]],
-          newDayNotifications: [],
-        })
-
-        expect(state.field[0][0].wasWateredToday).toBe(false)
-      })
-    })
-
-    describe('is rainy day', () => {
-      test('does water plants', () => {
-        jest.resetModules()
-        jest.mock('../../constants', () => ({
-          PRECIPITATION_CHANCE: 1,
-        }))
-
-        const { processWeather } = jest.requireActual('./')
-        const state = processWeather({
-          field: [[testCrop()]],
-          inventory: [],
-          newDayNotifications: [],
-        })
-
-        expect(state.field[0][0].wasWateredToday).toBe(true)
-      })
-    })
-  })
-})
-
 describe('processNerfs', () => {
   describe('crows', () => {
     describe('crows do not attack', () => {

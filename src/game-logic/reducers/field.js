@@ -25,37 +25,23 @@ import {
 } from '../../utils'
 import {
   HOE_LEVEL_TO_SEED_RECLAIM_RATE,
-  PRECIPITATION_CHANCE,
   SCARECROW_ITEM_ID,
   SPRINKLER_ITEM_ID,
 } from '../../constants'
 import { INVENTORY_FULL_NOTIFICATION } from '../../strings'
 import { ResourceFactory } from '../../factories'
 
-import {
-  applyChanceEvent,
-  updateField,
-  setWasWatered,
-  resetWasWatered,
-} from './helpers'
+import { updateField, setWasWatered, resetWasWatered } from './helpers'
 
 import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { incrementPlotContentAge } from './incrementPlotContentAge'
 
 import { resetWasShoveled } from './resetWasShoveled'
-import { applyPrecipitation } from './applyPrecipitation'
 import { showNotification } from './showNotification'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processWeather = state =>
-  applyChanceEvent([[PRECIPITATION_CHANCE, applyPrecipitation]], state)
 
 /**
  * @param {farmhand.state} state
