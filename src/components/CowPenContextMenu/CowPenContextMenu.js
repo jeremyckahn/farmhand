@@ -197,8 +197,8 @@ export const CowPenContextMenu = ({
       </TabPanel>
       <TabPanel value={currentTab} index={2}>
         <ul className="card-list">
-          {cowShopInventory.map((item, i) => (
-            <li key={i}>
+          {cowShopInventory.map(item => (
+            <li key={item.id}>
               <Item
                 {...{
                   item,
