@@ -21,7 +21,7 @@ import {
   nullArray,
 } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
-import shopInventory from '../../data/shop-inventory-cow'
+import cowShopInventory from '../../data/shop-inventory-cow'
 
 import CowCard from '../CowCard'
 
@@ -197,11 +197,11 @@ export const CowPenContextMenu = ({
       </TabPanel>
       <TabPanel value={currentTab} index={2}>
         <ul className="card-list">
-          {shopInventory.map(i => (
-            <li>
+          {cowShopInventory.map((item, i) => (
+            <li key={i}>
               <Item
                 {...{
-                  item: i,
+                  item,
                   isPurchaseView: true,
                   showQuantity: true,
                 }}

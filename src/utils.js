@@ -77,15 +77,13 @@ const Jimp = configureJimp({
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
-const purchasableItemMap = cowShopInventory.reduce((acc, item) => {
-  acc[item.id] = item
-  return acc
-}, {})
-
-shopInventory.reduce((acc, item) => {
-  acc[item.id] = item
-  return acc
-}, purchasableItemMap)
+const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
+  (acc, item) => {
+    acc[item.id] = item
+    return acc
+  },
+  {}
+)
 
 export const chooseRandom = list =>
   list[Math.round(Math.random() * (list.length - 1))]
