@@ -12,6 +12,7 @@ import jimpPng from '@jimp/png'
 import sortBy from 'lodash.sortby'
 import { v4 as uuid } from 'uuid'
 
+import cowShopInventory from './data/shop-inventory-cow'
 import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
 import { cropIdToTypeMap, itemsMap } from './data/maps'
@@ -76,10 +77,13 @@ const Jimp = configureJimp({
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
-const shopInventoryMap = shopInventory.reduce((acc, item) => {
-  acc[item.id] = item
-  return acc
-}, {})
+const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
+  (acc, item) => {
+    acc[item.id] = item
+    return acc
+  },
+  {}
+)
 
 export const chooseRandom = list =>
   list[Math.round(Math.random() * (list.length - 1))]
@@ -251,7 +255,7 @@ export const getAdjustedItemValue = (valueAdjustments, itemId) =>
  * @param {farmhand.item} item
  * @returns {boolean}
  */
-export const isItemSoldInShop = ({ id }) => Boolean(shopInventoryMap[id])
+export const isItemSoldInShop = ({ id }) => Boolean(purchasableItemMap[id])
 
 /**
  * @param {farmhand.item} item
