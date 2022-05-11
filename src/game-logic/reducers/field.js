@@ -10,18 +10,14 @@ import { itemsMap } from '../../data/maps'
 import {
   chooseRandom,
   doesInventorySpaceRemain,
-  farmProductsSold,
   getCropFromItemId,
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
   getInventoryQuantityMap,
-  getLevelEntitlements,
   getPlotContentFromItemId,
   getPlotContentType,
-  getRangeCoords,
   getSeedItemIdFromFinalStageCropItemId,
   isRandomNumberLessThan,
-  levelAchieved,
 } from '../../utils'
 import {
   HOE_LEVEL_TO_SEED_RECLAIM_RATE,
@@ -31,7 +27,7 @@ import {
 import { INVENTORY_FULL_NOTIFICATION } from '../../strings'
 import { ResourceFactory } from '../../factories'
 
-import { updateField, setWasWatered, resetWasWatered } from './helpers'
+import { updateField, resetWasWatered } from './helpers'
 
 import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
@@ -39,64 +35,10 @@ import { incrementPlotContentAge } from './incrementPlotContentAge'
 
 import { resetWasShoveled } from './resetWasShoveled'
 import { showNotification } from './showNotification'
+import { processSprinklers } from './processSprinklers'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processSprinklers = state => {
-  const { field, itemsSold } = state
-  const crops = new Map()
-  let modifiedField = [...field]
-
-  const { sprinklerRange } = getLevelEntitlements(
-    levelAchieved(farmProductsSold(itemsSold))
-  )
-
-  field.forEach((row, plotY) => {
-    row.forEach((plot, plotX) => {
-      if (!plot || getPlotContentType(plot) !== itemType.SPRINKLER) {
-        return
-      }
-
-      ;[]
-        .concat(
-          // Flatten this 2D array for less iteration below
-          ...getRangeCoords(sprinklerRange, plotX, plotY)
-        )
-        .forEach(({ x, y }) => {
-          const fieldRow = field[y]
-
-          if (!fieldRow) {
-            return
-          }
-
-          const plotContent = fieldRow[x]
-
-          if (
-            plotContent &&
-            getPlotContentType(plotContent) === itemType.CROP
-          ) {
-            if (!crops.has(plotContent)) {
-              modifiedField = modifyFieldPlotAt(
-                { ...state, field: modifiedField },
-                x,
-                y,
-                setWasWatered
-              ).field
-            }
-
-            crops.set(plotContent, { x, y })
-          }
-        })
-    })
-  })
-
-  return { ...state, field: modifiedField }
-}
 
 /**
  * @param {farmhand.state} state
