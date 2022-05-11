@@ -8,7 +8,7 @@ import {
 } from '../../utils'
 
 import { setWasWatered } from './helpers'
-import { modifyFieldPlotAt } from './field'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 
 /**
  * @param {farmhand.state} state

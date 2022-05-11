@@ -99,7 +99,8 @@ import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { applyCrows } from './applyCrows'
 import { showNotification } from './showNotification'
 import { processWeather } from './processWeather'
-import { modifyFieldPlotAt, processField } from './field'
+import { processField } from './field'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { processSprinklers } from './processSprinklers'
 
 export * from './field'
@@ -114,6 +115,7 @@ export * from './waterField'
 export * from './waterAllPlots'
 export * from './processWeather'
 export * from './processSprinklers'
+export * from './modifyFieldPlotAt'
 
 ///////////////////////////////////////////////////////////
 //
