@@ -37,18 +37,10 @@ import { resetWasShoveled } from './resetWasShoveled'
 import { showNotification } from './showNotification'
 import { processSprinklers } from './processSprinklers'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
+import { removeFieldPlotAt } from './removeFieldPlotAt'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
-
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-export const removeFieldPlotAt = (state, x, y) =>
-  modifyFieldPlotAt(state, x, y, () => null)
 
 /**
  * @param {farmhand.state} state
