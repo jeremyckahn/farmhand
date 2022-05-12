@@ -10,9 +10,7 @@ import { itemsMap } from '../../data/maps'
 import {
   chooseRandom,
   doesInventorySpaceRemain,
-  getCropFromItemId,
   getCropLifeStage,
-  getFinalCropItemIdFromSeedItemId,
   getInventoryQuantityMap,
   getPlotContentFromItemId,
   getPlotContentType,
@@ -38,48 +36,10 @@ import { showNotification } from './showNotification'
 import { processSprinklers } from './processSprinklers'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { removeFieldPlotAt } from './removeFieldPlotAt'
+import { plantInPlot } from './plantInPlot'
 
 const { FERTILIZE, OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
 const { GROWN } = cropLifeStage
-
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @param {string} plantableItemId
- * @returns {farmhand.state}
- */
-export const plantInPlot = (state, x, y, plantableItemId) => {
-  if (
-    !plantableItemId ||
-    !state.inventory.some(({ id }) => id === plantableItemId)
-  ) {
-    return state
-  }
-
-  const { field } = state
-  const row = field[y]
-  const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId)
-
-  if (row[x]) {
-    // Something is already planted in field[x][y]
-    return state
-  }
-
-  state = modifyFieldPlotAt(state, x, y, () =>
-    getCropFromItemId(finalCropItemId)
-  )
-
-  state = decrementItemFromInventory(state, plantableItemId)
-  state = processSprinklers(state)
-
-  return {
-    ...state,
-    selectedItemId: state.inventory.find(({ id }) => id === plantableItemId)
-      ? plantableItemId
-      : '',
-  }
-}
 
 const fertilizerItemIdToTypeMap = {
   [itemsMap['fertilizer'].id]: fertilizerType.STANDARD,

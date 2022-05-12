@@ -117,6 +117,7 @@ export * from './processWeather'
 export * from './processSprinklers'
 export * from './modifyFieldPlotAt'
 export * from './removeFieldPlotAt'
+export * from './plantInPlot'
 
 ///////////////////////////////////////////////////////////
 //
