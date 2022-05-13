@@ -121,6 +121,7 @@ export * from './plantInPlot'
 export * from './fertilizePlot'
 export * from './setSprinkler'
 export * from './processField'
+export * from './setScarecrow'
 
 ///////////////////////////////////////////////////////////
 //

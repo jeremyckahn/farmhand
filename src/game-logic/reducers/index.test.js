@@ -38,7 +38,6 @@ import { goldOre } from '../../data/ores'
 import { ResourceFactory } from '../../factories'
 import {
   fertilizerType,
-  fieldMode,
   genders,
   standardCowColors,
   toolType,
@@ -1952,61 +1951,6 @@ describe('changeCowBreedingPenResident', () => {
             daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
           },
         })
-      })
-    })
-  })
-})
-
-describe('setScarecrow', () => {
-  let state
-
-  beforeEach(() => {
-    state = {
-      field: [[null]],
-      fieldMode: fieldMode.SET_SCARECROW,
-      inventory: [testItem({ id: 'scarecrow', quantity: 1 })],
-      selectedItemId: SCARECROW_ITEM_ID,
-    }
-  })
-
-  describe('plot is not empty', () => {
-    test('does nothing', () => {
-      const inputState = { ...state, field: [[testCrop()]] }
-      state = fn.setScarecrow(inputState, 0, 0)
-      expect(state).toEqual(inputState)
-    })
-  })
-
-  describe('plot is empty', () => {
-    test('sets scarecrow', () => {
-      const { inventory, field } = fn.setScarecrow(state, 0, 0)
-      expect(inventory).toHaveLength(0)
-      expect(field[0][0]).toEqual(getPlotContentFromItemId('scarecrow'))
-    })
-
-    describe('multiple scarecrow units remaining', () => {
-      test('updates state', () => {
-        const { fieldMode: newFieldMode, selectedItemId } = fn.setScarecrow(
-          { ...state, inventory: [testItem({ id: 'scarecrow', quantity: 2 })] },
-          0,
-          0
-        )
-
-        expect(newFieldMode).toBe(fieldMode.SET_SCARECROW)
-        expect(selectedItemId).toBe(SCARECROW_ITEM_ID)
-      })
-    })
-
-    describe('one scarecrow unit remaining', () => {
-      test('updates state', () => {
-        const { fieldMode: newFieldMode, selectedItemId } = fn.setScarecrow(
-          state,
-          0,
-          0
-        )
-
-        expect(newFieldMode).toBe(fieldMode.OBSERVE)
-        expect(selectedItemId).toBe('')
       })
     })
   })
