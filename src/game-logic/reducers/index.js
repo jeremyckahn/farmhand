@@ -119,6 +119,7 @@ export * from './modifyFieldPlotAt'
 export * from './removeFieldPlotAt'
 export * from './plantInPlot'
 export * from './fertilizePlot'
+export * from './setSprinkler'
 
 ///////////////////////////////////////////////////////////
 //

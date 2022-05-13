@@ -20,7 +20,6 @@ import {
 import {
   HOE_LEVEL_TO_SEED_RECLAIM_RATE,
   SCARECROW_ITEM_ID,
-  SPRINKLER_ITEM_ID,
 } from '../../constants'
 import { INVENTORY_FULL_NOTIFICATION } from '../../strings'
 import { ResourceFactory } from '../../factories'
@@ -33,51 +32,16 @@ import { incrementPlotContentAge } from './incrementPlotContentAge'
 
 import { resetWasShoveled } from './resetWasShoveled'
 import { showNotification } from './showNotification'
-import { processSprinklers } from './processSprinklers'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { removeFieldPlotAt } from './removeFieldPlotAt'
 import { plantInPlot } from './plantInPlot'
 
-const { OBSERVE, SET_SCARECROW, SET_SPRINKLER } = fieldMode
+const { OBSERVE, SET_SCARECROW } = fieldMode
 const { GROWN } = cropLifeStage
 
 export const fertilizerItemIdToTypeMap = {
   [itemsMap['fertilizer'].id]: fertilizerType.STANDARD,
   [itemsMap['rainbow-fertilizer'].id]: fertilizerType.RAINBOW,
-}
-
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-export const setSprinkler = (state, x, y) => {
-  const { field } = state
-  const plot = field[y][x]
-
-  // Only set sprinklers in empty plots
-  if (plot !== null) {
-    return state
-  }
-
-  state = decrementItemFromInventory(state, SPRINKLER_ITEM_ID)
-
-  const doSprinklersRemain = state.inventory.some(
-    item => item.id === SPRINKLER_ITEM_ID
-  )
-
-  state = modifyFieldPlotAt(state, x, y, () =>
-    getPlotContentFromItemId(SPRINKLER_ITEM_ID)
-  )
-
-  state = processSprinklers(state)
-
-  return {
-    ...state,
-    fieldMode: doSprinklersRemain ? SET_SPRINKLER : OBSERVE,
-    selectedItemId: doSprinklersRemain ? SPRINKLER_ITEM_ID : '',
-  }
 }
 
 const fieldReducer = (acc, fn) => fn(acc)
