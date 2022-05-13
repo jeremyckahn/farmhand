@@ -24,13 +24,9 @@ import {
 import { INVENTORY_FULL_NOTIFICATION } from '../../strings'
 import { ResourceFactory } from '../../factories'
 
-import { updateField, resetWasWatered } from './helpers'
-
 import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
-import { incrementPlotContentAge } from './incrementPlotContentAge'
 
-import { resetWasShoveled } from './resetWasShoveled'
 import { showNotification } from './showNotification'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { removeFieldPlotAt } from './removeFieldPlotAt'
@@ -43,24 +39,6 @@ export const fertilizerItemIdToTypeMap = {
   [itemsMap['fertilizer'].id]: fertilizerType.STANDARD,
   [itemsMap['rainbow-fertilizer'].id]: fertilizerType.RAINBOW,
 }
-
-const fieldReducer = (acc, fn) => fn(acc)
-const fieldUpdaters = [
-  incrementPlotContentAge,
-  resetWasWatered,
-  resetWasShoveled,
-]
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processField = state => ({
-  ...state,
-  field: updateField(state.field, plotContent =>
-    fieldUpdaters.reduce(fieldReducer, plotContent)
-  ),
-})
 
 /**
  * @param {farmhand.state} state
