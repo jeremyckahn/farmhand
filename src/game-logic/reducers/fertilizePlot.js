@@ -4,9 +4,13 @@ import { getPlotContentType } from '../../utils'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
-import { fertilizerItemIdToTypeMap } from './field'
 
 const { FERTILIZE, OBSERVE } = fieldMode
+
+const fertilizerItemIdToTypeMap = {
+  [itemsMap['fertilizer'].id]: fertilizerType.STANDARD,
+  [itemsMap['rainbow-fertilizer'].id]: fertilizerType.RAINBOW,
+}
 
 /**
  * Assumes that state.selectedItemId references an item with type ===

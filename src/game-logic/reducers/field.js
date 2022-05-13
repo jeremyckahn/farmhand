@@ -35,11 +35,6 @@ import { plantInPlot } from './plantInPlot'
 const { OBSERVE, SET_SCARECROW } = fieldMode
 const { GROWN } = cropLifeStage
 
-export const fertilizerItemIdToTypeMap = {
-  [itemsMap['fertilizer'].id]: fertilizerType.STANDARD,
-  [itemsMap['rainbow-fertilizer'].id]: fertilizerType.RAINBOW,
-}
-
 /**
  * @param {farmhand.state} state
  * @param {number} x
