@@ -1,9 +1,14 @@
-import { updateField } from './helpers'
+import { updateField, setWasWateredProperty } from './helpers'
 import { incrementPlotContentAge } from './incrementPlotContentAge'
-import { resetWasWatered } from './helpers'
 import { resetWasShoveled } from './resetWasShoveled'
 
 const fieldReducer = (acc, fn) => fn(acc)
+
+/**
+ * @param {?farmhand.plotContent} plotContent
+ * @returns {?farmhand.plotContent}
+ */
+const resetWasWatered = plotContent => setWasWateredProperty(plotContent, false)
 
 const fieldUpdaters = [
   incrementPlotContentAge,

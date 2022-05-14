@@ -4,7 +4,6 @@
  * @param {number} [howMany=1]
  * @returns {farmhand.state}
  */
-
 export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
   const inventory = [...state.inventory]
   const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId)

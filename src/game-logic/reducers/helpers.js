@@ -3,12 +3,15 @@ import { itemType } from '../../enums'
 import { SCARECROW_ITEM_ID } from '../../constants'
 import { findInField, getPlotContentType } from '../../utils'
 
+// This file is designed to contain common logic that is needed across multiple
+// reducers.
+
 /**
  * @param {?farmhand.plotContent} plotContent
  * @param {boolean} wasWateredToday
  * @returns {?farmhand.plotContent}
  */
-const setWasWateredProperty = (plotContent, wasWateredToday) => {
+export const setWasWateredProperty = (plotContent, wasWateredToday) => {
   if (plotContent === null) {
     return null
   }
@@ -24,13 +27,6 @@ const setWasWateredProperty = (plotContent, wasWateredToday) => {
  */
 export const setWasWatered = plotContent =>
   setWasWateredProperty(plotContent, true)
-
-/**
- * @param {?farmhand.plotContent} plotContent
- * @returns {?farmhand.plotContent}
- */
-export const resetWasWatered = plotContent =>
-  setWasWateredProperty(plotContent, false)
 
 /**
  * @param {Array.<Array.<?farmhand.plotContent>>} field

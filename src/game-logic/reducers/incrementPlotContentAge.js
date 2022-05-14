@@ -1,11 +1,11 @@
 import { fertilizerType, itemType } from '../../enums'
 import { getPlotContentType } from '../../utils'
 import { FERTILIZER_BONUS } from '../../constants'
+
 /**
  * @param {?farmhand.crop} crop
  * @returns {?farmhand.crop}
  */
-
 export const incrementPlotContentAge = crop =>
   crop && getPlotContentType(crop) === itemType.CROP
     ? {

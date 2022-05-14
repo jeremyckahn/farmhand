@@ -1,4 +1,5 @@
 import { inventorySpaceRemaining } from '../../utils'
+
 /**
  * Only adds as many items as there is room in the inventory for unless
  * allowInventoryOverage is true.
@@ -8,7 +9,6 @@ import { inventorySpaceRemaining } from '../../utils'
  * @param {boolean} [allowInventoryOverage=false]
  * @returns {farmhand.state}
  */
-
 export const addItemToInventory = (
   state,
   item,

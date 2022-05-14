@@ -5,7 +5,6 @@
  * @param {Function(?farmhand.plotContent)} modifierFn
  * @returns {farmhand.state}
  */
-
 export const modifyFieldPlotAt = (state, x, y, modifierFn) => {
   const { field } = state
   const row = [...field[y]]

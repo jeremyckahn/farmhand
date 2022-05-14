@@ -2,7 +2,6 @@
  * @param {?farmhand.plotContent} plotContent
  * @returns {?farmhand.plotContent}
  */
-
 export const resetWasShoveled = plotContent => {
   if (plotContent && plotContent.isShoveled && plotContent.daysUntilClear > 1) {
     return {
