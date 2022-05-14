@@ -103,7 +103,6 @@ import { processField } from './processField'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { processSprinklers } from './processSprinklers'
 
-export * from './field'
 export * from './showNotification'
 export * from './decrementItemFromInventory'
 export * from './addItemToInventory'
@@ -124,6 +123,7 @@ export * from './processField'
 export * from './setScarecrow'
 export * from './harvestPlot'
 export * from './minePlot'
+export * from './clearPlot'
 
 ///////////////////////////////////////////////////////////
 //
