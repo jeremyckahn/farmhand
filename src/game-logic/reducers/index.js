@@ -123,6 +123,7 @@ export * from './setSprinkler'
 export * from './processField'
 export * from './setScarecrow'
 export * from './harvestPlot'
+export * from './minePlot'
 
 ///////////////////////////////////////////////////////////
 //
