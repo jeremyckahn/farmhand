@@ -4,6 +4,7 @@ import { resetWasShoveled } from './resetWasShoveled'
 
 const fieldReducer = (acc, fn) => fn(acc)
 
+// TODO: Add tests for this reducer.
 /**
  * @param {?farmhand.plotContent} plotContent
  * @returns {?farmhand.plotContent}

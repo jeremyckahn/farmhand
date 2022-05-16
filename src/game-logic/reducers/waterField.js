@@ -1,5 +1,6 @@
 import { setWasWatered, updateField } from './helpers'
 
+// TODO: Add tests for this reducer
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
