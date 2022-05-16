@@ -1,4 +1,4 @@
-import { addItemToInventory } from '../game-logic/reducers'
+import { addItemToInventory } from '../game-logic/reducers/'
 import {
   doesPlotContainCrop,
   dollarString,

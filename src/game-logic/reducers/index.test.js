@@ -1,10 +1,5 @@
-import { shapeOf, testCrop, testItem } from '../test-utils'
-import {
-  OUT_OF_COW_FEED_NOTIFICATION,
-  RAIN_MESSAGE,
-  STORM_MESSAGE,
-  STORM_DESTROYS_SCARECROWS_MESSAGE,
-} from '../strings'
+import { shapeOf, testCrop, testItem } from '../../test-utils'
+import { OUT_OF_COW_FEED_NOTIFICATION } from '../../strings'
 import {
   ACHIEVEMENT_COMPLETED,
   COW_ATTRITION_MESSAGE,
@@ -16,7 +11,7 @@ import {
   MILKS_PRODUCED,
   PRICE_CRASH,
   PRICE_SURGE,
-} from '../templates'
+} from '../../templates'
 import {
   COW_FEED_ITEM_ID,
   COW_GESTATION_PERIOD_DAYS,
@@ -26,7 +21,6 @@ import {
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
-  FERTILIZER_BONUS,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
@@ -35,22 +29,12 @@ import {
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
-  SPRINKLER_ITEM_ID,
   STORAGE_EXPANSION_AMOUNT,
-} from '../constants'
-import { huggingMachine, sampleCropItem1 } from '../data/items'
-import { sampleRecipe1 } from '../data/recipes'
-import { itemsMap } from '../data/maps'
-import { goldOre } from '../data/ores'
-import { ResourceFactory } from '../factories'
-import {
-  fertilizerType,
-  fieldMode,
-  genders,
-  standardCowColors,
-  toolType,
-  toolLevel,
-} from '../enums'
+} from '../../constants'
+import { huggingMachine, sampleCropItem1 } from '../../data/items'
+import { sampleRecipe1 } from '../../data/recipes'
+import { itemsMap } from '../../data/maps'
+import { genders, standardCowColors, toolLevel } from '../../enums'
 import {
   farmProductSalesVolumeNeededForLevel,
   generateCow,
@@ -58,25 +42,23 @@ import {
   getCowFertilizerItem,
   getCowMilkItem,
   getCowValue,
-  getCropFromItemId,
   getPlotContentFromItemId,
   getPriceEventForCrop,
-  isRandomNumberLessThan,
-} from '../utils'
+} from '../../utils'
 
-import * as fn from './reducers'
+import * as fn from './'
 
-jest.mock('../data/achievements')
-jest.mock('../data/maps')
-jest.mock('../data/items')
-jest.mock('../data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
-jest.mock('../data/recipes')
-jest.mock('../data/shop-inventory')
-jest.mock('../utils/isRandomNumberLessThan')
+jest.mock('../../data/achievements')
+jest.mock('../../data/maps')
+jest.mock('../../data/items')
+jest.mock('../../data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
+jest.mock('../../data/recipes')
+jest.mock('../../data/shop-inventory')
+jest.mock('../../utils/isRandomNumberLessThan')
 
-jest.mock('../constants', () => ({
+jest.mock('../../constants', () => ({
   __esModule: true,
-  ...jest.requireActual('../constants'),
+  ...jest.requireActual('../../constants'),
   COW_HUG_BENEFIT: 0.5,
   CROW_CHANCE: 0,
   PRECIPITATION_CHANCE: 0,
@@ -247,7 +229,7 @@ describe('generatePriceEvents', () => {
       jest.spyOn(Math, 'random').mockReturnValue(0)
 
       jest.resetModules()
-      jest.mock('../data/levels', () => ({
+      jest.mock('../../data/levels', () => ({
         levels: [
           {
             id: 0,
@@ -259,7 +241,7 @@ describe('generatePriceEvents', () => {
         ],
         itemUnlockLevels: {},
       }))
-      const { generatePriceEvents } = jest.requireActual('./reducers')
+      const { generatePriceEvents } = jest.requireActual('./')
       state = generatePriceEvents({
         newDayNotifications: [],
         priceCrashes: {},
@@ -463,142 +445,6 @@ describe('computeStateForNextDay', () => {
     expect(firstRow[0].daysWatered).toBe(1)
     expect(firstRow[0].daysOld).toBe(1)
     expect(todaysNotifications).toBeEmpty()
-  })
-})
-
-describe('applyPrecipitation', () => {
-  test('waters all plots', () => {
-    const state = fn.applyPrecipitation({
-      field: [
-        [
-          testCrop({
-            wasWateredToday: false,
-          }),
-          testCrop({
-            wasWateredToday: false,
-          }),
-        ],
-      ],
-      inventory: [],
-      newDayNotifications: [],
-    })
-
-    expect(state.field[0][0].wasWateredToday).toBe(true)
-    expect(state.field[0][1].wasWateredToday).toBe(true)
-  })
-
-  describe('rain shower', () => {
-    test('waters all plots', () => {
-      jest.spyOn(Math, 'random').mockReturnValue(1)
-      const state = fn.applyPrecipitation({
-        field: [[]],
-        inventory: [],
-        newDayNotifications: [],
-      })
-
-      expect(state.newDayNotifications[0]).toEqual({
-        message: RAIN_MESSAGE,
-        severity: 'info',
-      })
-    })
-  })
-
-  describe('storm', () => {
-    beforeEach(() => {
-      jest.spyOn(Math, 'random').mockReturnValue(0)
-    })
-
-    describe('scarecrows are planted', () => {
-      test('scarecrows are destroyed', () => {
-        const state = fn.applyPrecipitation({
-          field: [[getPlotContentFromItemId(SCARECROW_ITEM_ID)]],
-          inventory: [],
-          newDayNotifications: [],
-        })
-
-        expect(state.field[0][0]).toBe(null)
-        expect(state.newDayNotifications[0]).toEqual({
-          message: STORM_DESTROYS_SCARECROWS_MESSAGE,
-          severity: 'error',
-        })
-      })
-
-      describe('scarecows are rainbow fertilized', () => {
-        test('scarecrows are replaced based on available inventory', () => {
-          const { field, inventory } = fn.applyPrecipitation({
-            field: [
-              [
-                {
-                  ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
-                  fertilizerType: fertilizerType.RAINBOW,
-                },
-                {
-                  ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
-                  fertilizerType: fertilizerType.RAINBOW,
-                },
-              ],
-            ],
-            inventory: [{ id: 'scarecrow', quantity: 1 }],
-            newDayNotifications: [],
-          })
-
-          // Scarecrow is replanted from inventory
-          expect(field[0][0]).toEqual({
-            ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
-            fertilizerType: fertilizerType.RAINBOW,
-          })
-
-          // Scarecrow replacement was not available
-          expect(field[0][1]).toBe(null)
-
-          // Scarecrow inventory is consumed
-          expect(inventory).toEqual([])
-        })
-      })
-    })
-
-    describe('scarecrows are not planted', () => {
-      test('shows appropriate message', () => {
-        const state = fn.applyPrecipitation({
-          field: [[]],
-          inventory: [],
-          newDayNotifications: [],
-        })
-
-        expect(state.newDayNotifications[0]).toEqual({
-          message: STORM_MESSAGE,
-          severity: 'info',
-        })
-      })
-    })
-  })
-})
-
-describe('processSprinklers', () => {
-  let computedState
-
-  beforeEach(() => {
-    const field = new Array(8).fill().map(() => new Array(8).fill(null))
-    field[0][0] = getPlotContentFromItemId('sprinkler')
-    field[1][1] = getPlotContentFromItemId('sprinkler')
-    field[6][5] = getPlotContentFromItemId('sprinkler')
-    field[1][0] = testCrop()
-    field[2][2] = testCrop()
-    field[3][3] = testCrop()
-
-    computedState = fn.processSprinklers({
-      field,
-      itemsSold: {},
-    })
-  })
-
-  test('waters crops within range', () => {
-    expect(computedState.field[1][0].wasWateredToday).toBeTruthy()
-    expect(computedState.field[2][2].wasWateredToday).toBeTruthy()
-  })
-
-  test('does not water crops out of range', () => {
-    expect(computedState.field[3][3].wasWateredToday).toBeFalsy()
   })
 })
 
@@ -973,39 +819,6 @@ describe('processCowFertilizerProduction', () => {
   })
 })
 
-describe('processWeather', () => {
-  describe('rain', () => {
-    describe('is not rainy day', () => {
-      test('does not water plants', () => {
-        const state = fn.processWeather({
-          field: [[testCrop()]],
-          newDayNotifications: [],
-        })
-
-        expect(state.field[0][0].wasWateredToday).toBe(false)
-      })
-    })
-
-    describe('is rainy day', () => {
-      test('does water plants', () => {
-        jest.resetModules()
-        jest.mock('../constants', () => ({
-          PRECIPITATION_CHANCE: 1,
-        }))
-
-        const { processWeather } = jest.requireActual('./reducers')
-        const state = processWeather({
-          field: [[testCrop()]],
-          inventory: [],
-          newDayNotifications: [],
-        })
-
-        expect(state.field[0][0].wasWateredToday).toBe(true)
-      })
-    })
-  })
-})
-
 describe('processNerfs', () => {
   describe('crows', () => {
     describe('crows do not attack', () => {
@@ -1023,11 +836,11 @@ describe('processNerfs', () => {
     describe('crows attack', () => {
       test('crop is destroyed', () => {
         jest.resetModules()
-        jest.mock('../constants', () => ({
+        jest.mock('../../constants', () => ({
           CROW_CHANCE: 1,
         }))
 
-        const { processNerfs } = jest.requireActual('./reducers')
+        const { processNerfs } = jest.requireActual('./')
         const state = processNerfs({
           field: [[testCrop({ itemId: 'sample-crop-1' })]],
           newDayNotifications: [],
@@ -1044,11 +857,11 @@ describe('processNerfs', () => {
 
       test('multiple messages are grouped', () => {
         jest.resetModules()
-        jest.mock('../constants', () => ({
+        jest.mock('../../constants', () => ({
           CROW_CHANCE: 1,
         }))
 
-        const { processNerfs } = jest.requireActual('./reducers')
+        const { processNerfs } = jest.requireActual('./')
         const state = processNerfs({
           field: [
             [
@@ -1074,12 +887,12 @@ describe('processNerfs', () => {
       describe('there is a scarecrow', () => {
         test('crow attack is prevented', () => {
           jest.resetModules()
-          jest.mock('../constants', () => ({
+          jest.mock('../../constants', () => ({
             CROW_CHANCE: 1,
             SCARECROW_ITEM_ID: 'scarecrow',
           }))
 
-          const { processNerfs } = jest.requireActual('./reducers')
+          const { processNerfs } = jest.requireActual('./')
           const state = processNerfs({
             field: [
               [
@@ -1094,128 +907,6 @@ describe('processNerfs', () => {
             testCrop({ itemId: 'sample-crop-1' })
           )
           expect(state.newDayNotifications).toEqual([])
-        })
-      })
-    })
-  })
-})
-
-describe('resetWasWatered', () => {
-  test('updates wasWateredToday property', () => {
-    expect(fn.resetWasWatered(testCrop({ itemId: 'sample-crop-1' }))).toEqual(
-      testCrop({ itemId: 'sample-crop-1' })
-    )
-
-    expect(
-      fn.resetWasWatered(
-        testCrop({ itemId: 'sample-crop-2', wasWateredToday: true })
-      )
-    ).toEqual(testCrop({ itemId: 'sample-crop-2' }))
-
-    expect(fn.resetWasWatered(null)).toBe(null)
-  })
-})
-
-describe('addItemToInventory', () => {
-  test('creates a new item in the inventory', () => {
-    expect(
-      fn.addItemToInventory(
-        { inventory: [], inventoryLimit: -1 },
-        { id: 'sample-item-1' }
-      )
-    ).toMatchObject({ inventory: [{ id: 'sample-item-1', quantity: 1 }] })
-  })
-
-  test('increments an existing item in the inventory', () => {
-    expect(
-      fn.addItemToInventory(
-        {
-          inventory: [{ id: 'sample-item-1', quantity: 1 }],
-          inventoryLimit: -1,
-        },
-        { id: 'sample-item-1' }
-      )
-    ).toMatchObject({
-      inventory: [
-        {
-          id: 'sample-item-1',
-          quantity: 2,
-        },
-      ],
-    })
-  })
-
-  describe('there is not enough room in the inventory', () => {
-    describe('there is no room for any of the items being added', () => {
-      test('no items are added', () => {
-        expect(
-          fn.addItemToInventory(
-            {
-              inventory: [{ id: 'sample-item-1', quantity: 3 }],
-              inventoryLimit: 3,
-            },
-            { id: 'sample-item-2' }
-          )
-        ).toMatchObject({
-          inventory: [
-            {
-              id: 'sample-item-1',
-              quantity: 3,
-            },
-          ],
-        })
-      })
-    })
-
-    describe('there is only room for some of the items being added', () => {
-      test('a reduced amount of items are added', () => {
-        expect(
-          fn.addItemToInventory(
-            {
-              inventory: [{ id: 'sample-item-1', quantity: 2 }],
-              inventoryLimit: 3,
-            },
-            { id: 'sample-item-2' },
-            10
-          )
-        ).toMatchObject({
-          inventory: [
-            {
-              id: 'sample-item-1',
-              quantity: 2,
-            },
-            {
-              id: 'sample-item-2',
-              quantity: 1,
-            },
-          ],
-        })
-      })
-    })
-
-    describe('allowInventoryOverage is true', () => {
-      test('all items are added to inventory', () => {
-        expect(
-          fn.addItemToInventory(
-            {
-              inventory: [{ id: 'sample-item-1', quantity: 3 }],
-              inventoryLimit: 3,
-            },
-            { id: 'sample-item-2' },
-            5,
-            true
-          )
-        ).toMatchObject({
-          inventory: [
-            {
-              id: 'sample-item-1',
-              quantity: 3,
-            },
-            {
-              id: 'sample-item-2',
-              quantity: 5,
-            },
-          ],
         })
       })
     })
@@ -1424,108 +1115,6 @@ describe('computeCowInventoryForNextDay', () => {
   })
 })
 
-describe('incrementPlotContentAge', () => {
-  describe('plot contains a crop', () => {
-    describe('crop is not watered', () => {
-      test('updates daysOld', () => {
-        const { daysOld, daysWatered } = fn.incrementPlotContentAge(
-          testCrop({ itemId: 'sample-crop-1' })
-        )
-
-        expect(daysOld).toBe(1)
-        expect(daysWatered).toBe(0)
-      })
-    })
-
-    describe('crop is watered', () => {
-      test('updates daysOld and daysWatered', () => {
-        const { daysOld, daysWatered } = fn.incrementPlotContentAge(
-          testCrop({ itemId: 'sample-crop-1', wasWateredToday: true })
-        )
-
-        expect(daysOld).toBe(1)
-        expect(daysWatered).toBe(1)
-      })
-    })
-
-    describe('crop is fertilized', () => {
-      test('updates daysOld with bonus', () => {
-        const { daysWatered } = fn.incrementPlotContentAge(
-          testCrop({
-            itemId: 'sample-crop-1',
-            fertilizerType: fertilizerType.STANDARD,
-            wasWateredToday: true,
-          })
-        )
-
-        expect(daysWatered).toBe(1 + FERTILIZER_BONUS)
-      })
-    })
-  })
-
-  describe('plot contains a non-crop item', () => {
-    test('plot content is not changed', () => {
-      const plotContent = testCrop({ itemId: 'scarecrow' })
-
-      expect(fn.incrementPlotContentAge(plotContent)).toBe(plotContent)
-    })
-  })
-})
-
-describe('decrementItemFromInventory', () => {
-  let updatedState
-
-  describe('item is not in inventory', () => {
-    beforeEach(() => {
-      updatedState = fn.decrementItemFromInventory(
-        { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
-        'nonexistent-item'
-      )
-    })
-
-    test('no-ops', () => {
-      expect(updatedState).toMatchObject({
-        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
-      })
-    })
-  })
-
-  describe('item is in inventory', () => {
-    describe('single instance of item in inventory', () => {
-      beforeEach(() => {
-        updatedState = fn.decrementItemFromInventory(
-          { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
-          'sample-item-1'
-        )
-      })
-
-      test('removes item from inventory', () => {
-        expect(updatedState).toMatchObject({ inventory: [] })
-      })
-    })
-
-    describe('multiple instances of item in inventory', () => {
-      beforeEach(() => {
-        updatedState = fn.decrementItemFromInventory(
-          { inventory: [testItem({ id: 'sample-item-1', quantity: 2 })] },
-          'sample-item-1'
-        )
-      })
-
-      test('decrements item', () => {
-        expect(updatedState).toMatchObject({
-          inventory: [
-            testItem({
-              id: 'sample-item-1',
-              quantity: 1,
-            }),
-          ],
-        })
-      })
-    })
-  })
-})
-
 describe('purchaseItem', () => {
   describe('howMany === 0', () => {
     test('no-ops', () => {
@@ -1688,25 +1277,6 @@ describe('makeRecipe', () => {
   })
 })
 
-describe('showNotification', () => {
-  test('sets notification state', () => {
-    const { latestNotification, todaysNotifications } = fn.showNotification(
-      { showNotifications: true, todaysNotifications: [] },
-      'foo'
-    )
-    const notificationObject = { message: 'foo', severity: 'info' }
-    expect(latestNotification).toEqual(notificationObject)
-    expect(todaysNotifications).toEqual([{ ...notificationObject }])
-  })
-
-  test('does not show redundant notifications', () => {
-    const state = fn.showNotification({ todaysNotifications: [] }, 'foo')
-
-    const { todaysNotifications } = fn.showNotification(state, 'foo')
-    expect(todaysNotifications).toEqual([{ message: 'foo', severity: 'info' }])
-  })
-})
-
 describe('sellItem', () => {
   test('sells item', () => {
     const state = fn.sellItem(
@@ -1846,7 +1416,7 @@ describe('sellItem', () => {
 describe('processLevelUp', () => {
   test('shows notifications for each level gained in the sale', () => {
     jest.resetModules()
-    jest.mock('../data/levels', () => ({
+    jest.mock('../../data/levels', () => ({
       levels: [
         {
           id: 1,
@@ -1855,18 +1425,16 @@ describe('processLevelUp', () => {
       ],
       itemUnlockLevels: {},
     }))
-    const { todaysNotifications } = jest
-      .requireActual('./reducers')
-      .processLevelUp(
-        {
-          inventory: [],
-          itemsSold: {
-            'sample-crop-1': farmProductSalesVolumeNeededForLevel(3),
-          },
-          todaysNotifications: [],
+    const { todaysNotifications } = jest.requireActual('./').processLevelUp(
+      {
+        inventory: [],
+        itemsSold: {
+          'sample-crop-1': farmProductSalesVolumeNeededForLevel(3),
         },
-        1
-      )
+        todaysNotifications: [],
+      },
+      1
+    )
 
     expect(todaysNotifications).toEqual([
       {
@@ -1882,7 +1450,7 @@ describe('processLevelUp', () => {
 
   test('when sprinkler is selected when it gets a level up boost, hoveredPlotRangeSize increase', () => {
     jest.resetModules()
-    jest.mock('../data/levels', () => ({
+    jest.mock('../../data/levels', () => ({
       levels: [
         {
           id: 0,
@@ -1897,31 +1465,29 @@ describe('processLevelUp', () => {
       ],
       itemUnlockLevels: {},
     }))
-    jest.mock('../constants', () => ({
+    jest.mock('../../constants', () => ({
       INITIAL_SPRINKLER_RANGE: 1,
       SPRINKLER_ITEM_ID: 'sprinkler',
     }))
 
-    const { hoveredPlotRangeSize } = jest
-      .requireActual('./reducers')
-      .processLevelUp(
-        {
-          hoveredPlotRangeSize: 1,
-          itemsSold: {
-            'sample-crop-1': farmProductSalesVolumeNeededForLevel(2),
-          },
-          selectedItemId: 'sprinkler',
-          todaysNotifications: [],
+    const { hoveredPlotRangeSize } = jest.requireActual('./').processLevelUp(
+      {
+        hoveredPlotRangeSize: 1,
+        itemsSold: {
+          'sample-crop-1': farmProductSalesVolumeNeededForLevel(2),
         },
-        1
-      )
+        selectedItemId: 'sprinkler',
+        todaysNotifications: [],
+      },
+      1
+    )
 
     expect(hoveredPlotRangeSize).toEqual(2)
   })
 
   test('unlocksTool reward makes tool become available', () => {
     jest.resetModules()
-    jest.mock('../data/levels', () => ({
+    jest.mock('../../data/levels', () => ({
       levels: [
         {
           id: 0,
@@ -1933,7 +1499,7 @@ describe('processLevelUp', () => {
       ],
       itemUnlockLevels: {},
     }))
-    const newState = jest.requireActual('./reducers').processLevelUp(
+    const newState = jest.requireActual('./').processLevelUp(
       {
         itemsSold: {},
         inventory: [],
@@ -2362,620 +1928,6 @@ describe('changeCowBreedingPenResident', () => {
   })
 })
 
-describe('plantInPlot', () => {
-  describe('crop quantity > 1', () => {
-    describe('plot is empty', () => {
-      test('plants the crop', () => {
-        const state = fn.plantInPlot(
-          {
-            field: [[]],
-            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
-            itemsSold: {},
-            selectedItemId: 'sample-crop-seeds-1',
-          },
-          0,
-          0,
-          'sample-crop-seeds-1'
-        )
-
-        expect(state.field[0][0]).toEqual(getCropFromItemId('sample-crop-1'))
-
-        expect(state.inventory[0].quantity).toEqual(1)
-      })
-    })
-
-    describe('plot is not empty', () => {
-      test('does not decrement crop quantity', () => {
-        const state = fn.plantInPlot(
-          {
-            field: [[getCropFromItemId('sample-crop-seeds-1')]],
-            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
-            selectedItemId: 'sample-crop-seeds-1',
-          },
-          0,
-          0,
-          'sample-crop-seeds-1'
-        )
-
-        expect(state.inventory[0].quantity).toEqual(2)
-      })
-    })
-  })
-
-  describe('crop quantity === 1', () => {
-    test('resets selectedItemId state', () => {
-      const state = fn.plantInPlot(
-        {
-          field: [[]],
-          inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
-          itemsSold: {},
-          selectedItemId: 'sample-crop-seeds-1',
-        },
-        0,
-        0,
-        'sample-crop-seeds-1'
-      )
-
-      expect(state.selectedItemId).toEqual('')
-    })
-  })
-
-  describe('crop is not in inventory', () => {
-    test('no-ops', () => {
-      const inputState = {
-        field: [[]],
-        inventory: [],
-        selectedItemId: 'sample-crop-seeds-1',
-      }
-      const state = fn.plantInPlot(inputState, 0, 0, 'sample-crop-seeds-1')
-
-      expect(inputState).toEqual(state)
-    })
-  })
-})
-
-describe('fertilizePlot', () => {
-  describe('no fertilizer in inventory', () => {
-    test('no-ops', () => {
-      const oldState = {
-        field: [[testCrop({ itemId: 'sample-crop-1' })]],
-        inventory: [],
-        selectedItemId: 'fertilizer',
-      }
-      const state = fn.fertilizePlot(oldState, 0, 0)
-      expect(state).toBe(oldState)
-    })
-  })
-
-  describe('non-crop plotContent', () => {
-    describe('plotContent is a sprinkler', () => {
-      test('no-ops with standard fertilizer', () => {
-        const oldState = {
-          field: [[getPlotContentFromItemId('sprinkler')]],
-          inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
-          selectedItemId: 'fertilizer',
-        }
-        const state = fn.fertilizePlot(oldState, 0, 0)
-        expect(state).toBe(oldState)
-      })
-
-      test('no-ops with rainbow fertilizer', () => {
-        const oldState = {
-          field: [[getPlotContentFromItemId('sprinkler')]],
-          inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
-          selectedItemId: 'rainbow-fertilizer',
-        }
-        const state = fn.fertilizePlot(oldState, 0, 0)
-        expect(state).toBe(oldState)
-      })
-    })
-
-    describe('plotContent is a scarecrow', () => {
-      test('no-ops with standard fertilizer', () => {
-        const oldState = {
-          field: [[getPlotContentFromItemId('scarecrow')]],
-          inventory: [],
-          selectedItemId: 'fertilizer',
-        }
-        const state = fn.fertilizePlot(oldState, 0, 0)
-        expect(state).toBe(oldState)
-      })
-
-      test('fertilizes with rainbow fertilizer', () => {
-        const state = fn.fertilizePlot(
-          {
-            field: [[getPlotContentFromItemId('scarecrow')]],
-            inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
-            selectedItemId: 'rainbow-fertilizer',
-          },
-          0,
-          0
-        )
-
-        expect(state.field[0][0]).toEqual({
-          ...getPlotContentFromItemId('scarecrow'),
-          fertilizerType: fertilizerType.RAINBOW,
-        })
-        expect(state.inventory).toEqual([])
-      })
-    })
-  })
-
-  describe('unfertilized crops', () => {
-    describe('happy path', () => {
-      test('fertilizes crop with standard fertilizer', () => {
-        const state = fn.fertilizePlot(
-          {
-            field: [[testCrop({ itemId: 'sample-crop-1' })]],
-            inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
-            selectedItemId: 'fertilizer',
-          },
-          0,
-          0
-        )
-
-        expect(state.field[0][0]).toEqual(
-          testCrop({
-            itemId: 'sample-crop-1',
-            fertilizerType: fertilizerType.STANDARD,
-          })
-        )
-        expect(state.inventory).toEqual([])
-      })
-
-      test('fertilizes crop with rainbow fertilizer', () => {
-        const state = fn.fertilizePlot(
-          {
-            field: [[testCrop({ itemId: 'sample-crop-1' })]],
-            inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
-            selectedItemId: 'rainbow-fertilizer',
-          },
-          0,
-          0
-        )
-
-        expect(state.field[0][0]).toEqual(
-          testCrop({
-            itemId: 'sample-crop-1',
-            fertilizerType: fertilizerType.RAINBOW,
-          })
-        )
-        expect(state.inventory).toEqual([])
-      })
-    })
-
-    describe('FERTILIZE field mode updating', () => {
-      describe('multiple fertilizer units remaining', () => {
-        beforeEach(() => {})
-
-        test('does not change fieldMode', () => {
-          const state = fn.fertilizePlot(
-            {
-              field: [[testCrop({ itemId: 'sample-crop-1' })]],
-              inventory: [testItem({ id: 'fertilizer', quantity: 2 })],
-              selectedItemId: 'fertilizer',
-            },
-            0,
-            0
-          )
-
-          expect(state.fieldMode).toBe(fieldMode.FERTILIZE)
-          expect(state.selectedItemId).toBe('fertilizer')
-        })
-      })
-
-      describe('one fertilizer unit remaining', () => {
-        test('changes fieldMode to OBSERVE', () => {
-          const state = fn.fertilizePlot(
-            {
-              field: [[testCrop({ itemId: 'sample-crop-1' })]],
-              inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
-              selectedItemId: 'fertilizer',
-            },
-            0,
-            0
-          )
-
-          expect(state.fieldMode).toBe(fieldMode.OBSERVE)
-          expect(state.selectedItemId).toBe('')
-        })
-      })
-    })
-  })
-})
-
-describe('setSprinkler', () => {
-  let state
-
-  beforeEach(() => {
-    state = {
-      field: [[null]],
-      fieldMode: fieldMode.SET_SPRINKLER,
-      inventory: [testItem({ id: 'sprinkler', quantity: 1 })],
-      itemsSold: {},
-      selectedItemId: SPRINKLER_ITEM_ID,
-    }
-  })
-
-  describe('plot is not empty', () => {
-    test('does nothing', () => {
-      const inputState = { ...state, field: [[testCrop()]] }
-      state = fn.setSprinkler(inputState, 0, 0)
-      expect(state).toEqual(inputState)
-    })
-  })
-
-  describe('plot is empty', () => {
-    test('sets sprinkler', () => {
-      const { field, inventory } = fn.setSprinkler(state, 0, 0)
-
-      expect(field[0][0]).toEqual(getPlotContentFromItemId('sprinkler'))
-      expect(inventory).toHaveLength(0)
-    })
-
-    describe('multiple sprinkler units remaining', () => {
-      test('updates state', () => {
-        const { fieldMode: newFieldMode, selectedItemId } = fn.setSprinkler(
-          { ...state, inventory: [testItem({ id: 'sprinkler', quantity: 2 })] },
-          0,
-          0
-        )
-        expect(newFieldMode).toBe(fieldMode.SET_SPRINKLER)
-        expect(selectedItemId).toBe(SPRINKLER_ITEM_ID)
-      })
-    })
-
-    describe('one sprinkler unit remaining', () => {
-      test('updates state', () => {
-        const { fieldMode: newFieldMode, selectedItemId } = fn.setSprinkler(
-          state,
-          0,
-          0
-        )
-
-        expect(newFieldMode).toBe(fieldMode.OBSERVE)
-        expect(selectedItemId).toBe('')
-      })
-    })
-  })
-})
-
-describe('setScarecrow', () => {
-  let state
-
-  beforeEach(() => {
-    state = {
-      field: [[null]],
-      fieldMode: fieldMode.SET_SCARECROW,
-      inventory: [testItem({ id: 'scarecrow', quantity: 1 })],
-      selectedItemId: SCARECROW_ITEM_ID,
-    }
-  })
-
-  describe('plot is not empty', () => {
-    test('does nothing', () => {
-      const inputState = { ...state, field: [[testCrop()]] }
-      state = fn.setScarecrow(inputState, 0, 0)
-      expect(state).toEqual(inputState)
-    })
-  })
-
-  describe('plot is empty', () => {
-    test('sets scarecrow', () => {
-      const { inventory, field } = fn.setScarecrow(state, 0, 0)
-      expect(inventory).toHaveLength(0)
-      expect(field[0][0]).toEqual(getPlotContentFromItemId('scarecrow'))
-    })
-
-    describe('multiple scarecrow units remaining', () => {
-      test('updates state', () => {
-        const { fieldMode: newFieldMode, selectedItemId } = fn.setScarecrow(
-          { ...state, inventory: [testItem({ id: 'scarecrow', quantity: 2 })] },
-          0,
-          0
-        )
-
-        expect(newFieldMode).toBe(fieldMode.SET_SCARECROW)
-        expect(selectedItemId).toBe(SCARECROW_ITEM_ID)
-      })
-    })
-
-    describe('one scarecrow unit remaining', () => {
-      test('updates state', () => {
-        const { fieldMode: newFieldMode, selectedItemId } = fn.setScarecrow(
-          state,
-          0,
-          0
-        )
-
-        expect(newFieldMode).toBe(fieldMode.OBSERVE)
-        expect(selectedItemId).toBe('')
-      })
-    })
-  })
-})
-
-describe('harvestPlot', () => {
-  const toolLevelsDefault = {
-    [toolType.SCYTHE]: toolLevel.DEFAULT,
-  }
-
-  const toolLevelsBronze = {
-    [toolType.SCYTHE]: toolLevel.BRONZE,
-  }
-
-  describe('non-crop plotContent', () => {
-    test('no-ops', () => {
-      const inputState = {
-        cropsHarvested: {},
-        field: [[getPlotContentFromItemId('sprinkler')]],
-        toolLevels: toolLevelsDefault,
-      }
-      const state = fn.harvestPlot(inputState, 0, 0)
-      expect(state).toEqual(inputState)
-    })
-  })
-
-  describe('unripe crops', () => {
-    test('no-ops', () => {
-      const inputState = {
-        cropsHarvested: {},
-        field: [[testCrop({ itemId: 'sample-crop-1' })]],
-        toolLevels: toolLevelsDefault,
-      }
-      const state = fn.harvestPlot(inputState, 0, 0)
-      expect(state).toEqual(inputState)
-    })
-  })
-
-  describe('ripe crops', () => {
-    test('harvests the plot', () => {
-      const { cropsHarvested, field, inventory } = fn.harvestPlot(
-        {
-          cropsHarvested: {},
-          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
-          inventory: [],
-          inventoryLimit: -1,
-          toolLevels: toolLevelsDefault,
-        },
-        0,
-        0
-      )
-
-      expect(field[0][0]).toBe(null)
-      expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 1 }])
-      expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 1 })
-    })
-
-    describe('bronze scythe', () => {
-      let farmhandState
-
-      beforeEach(() => {
-        farmhandState = {
-          cropsHarvested: {},
-          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
-          inventory: [],
-          inventoryLimit: -1,
-          toolLevels: toolLevelsBronze,
-        }
-      })
-
-      test('harvests the plot', () => {
-        const { field } = fn.harvestPlot(farmhandState, 0, 0)
-
-        expect(field[0][0]).toBe(null)
-      })
-
-      test('harvests 2 crops', () => {
-        const { cropsHarvested, inventory } = fn.harvestPlot(
-          farmhandState,
-          0,
-          0
-        )
-
-        expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 2 }])
-        expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 2 })
-      })
-    })
-
-    describe('there is insufficient inventory space', () => {
-      test('no-ops', () => {
-        const inputState = {
-          cropsHarvested: {},
-          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
-          inventory: [{ id: 'sample-crop-1', quantity: 5 }],
-          inventoryLimit: 5,
-          toolLevels: toolLevelsDefault,
-        }
-        const state = fn.harvestPlot(inputState, 0, 0)
-
-        expect(state).toEqual(inputState)
-      })
-    })
-  })
-
-  describe('plot is rainbow fertilized', () => {
-    describe('more seeds remain in inventory', () => {
-      test('seed is consumed to replant plot', () => {
-        const {
-          field: [[plotContent]],
-          inventory: [{ quantity }],
-        } = fn.harvestPlot(
-          {
-            cropsHarvested: {},
-            toolLevels: toolLevelsDefault,
-            field: [
-              [
-                testCrop({
-                  daysOld: 10,
-                  itemId: 'sample-crop-1',
-                  daysWatered: 4,
-                  fertilizerType: fertilizerType.RAINBOW,
-                }),
-              ],
-            ],
-            inventory: [{ id: 'sample-crop-seeds-1', quantity: 2 }],
-            inventoryLimit: -1,
-            itemsSold: {},
-          },
-          0,
-          0
-        )
-
-        expect(plotContent).toEqual(
-          testCrop({
-            itemId: 'sample-crop-1',
-            daysOld: 0,
-            fertilizerType: fertilizerType.RAINBOW,
-          })
-        )
-        expect(quantity).toEqual(1)
-      })
-    })
-
-    describe('no more seeds remain in inventory', () => {
-      test('plot is cleared', () => {
-        const {
-          field: [[plotContent]],
-        } = fn.harvestPlot(
-          {
-            cropsHarvested: {},
-            toolLevels: toolLevelsDefault,
-            field: [
-              [
-                testCrop({
-                  daysOld: 10,
-                  itemId: 'sample-crop-1',
-                  daysWatered: 4,
-                  fertilizerType: fertilizerType.RAINBOW,
-                }),
-              ],
-            ],
-            inventory: [],
-            inventoryLimit: -1,
-            itemsSold: {},
-          },
-          0,
-          0
-        )
-
-        expect(plotContent).toEqual(null)
-      })
-    })
-  })
-})
-
-describe('clearPlot', () => {
-  describe('plotContent is a crop', () => {
-    test('clears the plot', () => {
-      const { field } = fn.clearPlot(
-        {
-          field: [[testCrop({ itemId: 'sample-crop-1' })]],
-          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
-          inventory: [],
-          inventoryLimit: -1,
-        },
-        0,
-        0
-      )
-
-      expect(field[0][0]).toBe(null)
-    })
-
-    describe('there is no room in the inventory', () => {
-      test('clears the plot', () => {
-        const { field, inventory } = fn.clearPlot(
-          {
-            field: [[testCrop({ itemId: 'sample-crop-1' })]],
-            toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
-            inventory: [{ id: 'sample-item-1', quantity: 5 }],
-            inventoryLimit: 5,
-          },
-          0,
-          0
-        )
-
-        expect(field[0][0]).toBe(null)
-        expect(inventory).toEqual([{ id: 'sample-item-1', quantity: 5 }])
-      })
-    })
-  })
-
-  describe('crop is fully grown', () => {
-    test('harvests crop', () => {
-      const { field, inventory } = fn.clearPlot(
-        {
-          field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 3 })]],
-          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
-          inventory: [],
-          inventoryLimit: 10,
-        },
-        0,
-        0
-      )
-
-      expect(field[0][0]).toBe(null)
-      expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 1 }])
-    })
-  })
-
-  describe('plotContent is replantable', () => {
-    test('updates state', () => {
-      const { field, inventory } = fn.clearPlot(
-        {
-          field: [[getPlotContentFromItemId('replantable-item')]],
-          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
-          inventory: [],
-          inventoryLimit: -1,
-        },
-        0,
-        0
-      )
-
-      expect(inventory).toEqual([{ id: 'replantable-item', quantity: 1 }])
-      expect(field[0][0]).toBe(null)
-    })
-
-    describe('there is no room in the inventory', () => {
-      test('no-ops', () => {
-        const inputState = {
-          field: [[getPlotContentFromItemId('replantable-item')]],
-          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
-          inventory: [{ id: 'sample-item-1', quantity: 5 }],
-          inventoryLimit: 5,
-        }
-        const state = fn.clearPlot(inputState, 0, 0)
-
-        expect(state).toEqual(inputState)
-      })
-    })
-  })
-
-  describe('hoe upgrades', () => {
-    beforeEach(() => {
-      isRandomNumberLessThan.mockReturnValue(true)
-    })
-
-    describe('crop is not fully grown', () => {
-      test('returns seed to inventory', () => {
-        const { field, inventory } = fn.clearPlot(
-          {
-            field: [[testCrop({ itemId: 'sample-crop-1' })]],
-            toolLevels: { [toolType.HOE]: toolLevel.BRONZE },
-            inventory: [],
-            inventoryLimit: 10,
-          },
-          0,
-          0
-        )
-
-        expect(field[0][0]).toBe(null)
-        expect(inventory).toEqual([{ id: 'sample-crop-seeds-1', quantity: 1 }])
-      })
-    })
-  })
-})
-
 describe('purchaseField', () => {
   test('updates purchasedField', () => {
     const { purchasedField } = fn.purchaseField({ purchasedField: 0 }, 0)
@@ -2995,13 +1947,13 @@ describe('purchaseField', () => {
   describe('field expansion', () => {
     test('field expands without destroying existing data', () => {
       jest.resetModules()
-      jest.mock('../constants', () => ({
+      jest.mock('../../constants', () => ({
         PURCHASEABLE_FIELD_SIZES: new Map([
           [1, { columns: 3, rows: 4, price: 1000 }],
         ]),
       }))
 
-      const { purchaseField } = jest.requireActual('./reducers')
+      const { purchaseField } = jest.requireActual('./')
 
       const { field } = purchaseField(
         {
@@ -3043,24 +1995,6 @@ describe('waterPlot', () => {
 
       expect(field[0][0].wasWateredToday).toBe(true)
     })
-  })
-})
-
-describe('waterAllPlots', () => {
-  test('sets wasWateredToday to true for all plots', () => {
-    const { field } = fn.waterAllPlots({
-      field: [
-        [
-          testCrop({ itemId: 'sample-crop-1' }),
-          testCrop({ itemId: 'sample-crop-2' }),
-        ],
-        [testCrop({ itemId: 'sample-crop-3' })],
-      ],
-    })
-
-    expect(field[0][0].wasWateredToday).toBe(true)
-    expect(field[0][1].wasWateredToday).toBe(true)
-    expect(field[1][0].wasWateredToday).toBe(true)
   })
 })
 
@@ -3239,7 +2173,7 @@ describe('updateAchievements', () => {
 
   beforeAll(() => {
     jest.resetModules()
-    jest.mock('../data/achievements', () => [
+    jest.mock('../../data/achievements', () => [
       {
         id: 'test-achievement',
         name: 'Test Achievement',
@@ -3250,7 +2184,7 @@ describe('updateAchievements', () => {
       },
     ])
 
-    updateAchievements = jest.requireActual('./reducers').updateAchievements
+    updateAchievements = jest.requireActual('./').updateAchievements
   })
 
   describe('achievement was not previously met', () => {
@@ -3470,97 +2404,5 @@ describe('prependPendingPeerMessage', () => {
     })
 
     expect(pendingPeerMessages).toHaveLength(MAX_PENDING_PEER_MESSAGES)
-  })
-})
-
-describe('minePlot', () => {
-  let gameState
-
-  beforeAll(() => {
-    gameState = {
-      field: [[null, 'crop']],
-      inventory: [],
-      inventoryLimit: 99,
-      toolLevels: {
-        [toolType.SHOVEL]: toolLevel.DEFAULT,
-      },
-    }
-
-    jest.spyOn(ResourceFactory, 'instance')
-
-    ResourceFactory.instance.mockReturnValue({
-      generateResources: () => [goldOre],
-    })
-
-    gameState = fn.minePlot(gameState, 0, 0)
-  })
-
-  test('updates the plot to be shoveled if the plot is empty', () => {
-    expect(gameState.field[0][0].isShoveled).toEqual(true)
-  })
-
-  test('sets the oreId on the plot if ore was spawned', () => {
-    expect(gameState.field[0][0].oreId).toEqual(goldOre.id)
-  })
-
-  test('sets the days until clear', () => {
-    expect(gameState.field[0][0].daysUntilClear > 0).toEqual(true)
-  })
-
-  test('adds the spawned ore to the inventory', () => {
-    let itemIsInInventory = false
-
-    for (let item of gameState.inventory) {
-      if (item.id === goldOre.id) {
-        itemIsInInventory = true
-        break
-      }
-    }
-
-    expect(itemIsInInventory).toEqual(true)
-  })
-
-  test('does not alter the plot if something is already there', () => {
-    expect(gameState.field[0][1]).toEqual('crop')
-  })
-
-  test('shows a notification if there is no room in the inventory', () => {
-    gameState.inventoryLimit = 0
-    gameState.showNotifications = true
-    gameState.todaysNotifications = []
-    gameState.field[0][0] = null
-
-    const { latestNotification } = fn.minePlot(gameState, 0, 0)
-
-    expect(latestNotification).toEqual({
-      message: 'Your inventory is full!',
-      severity: 'info',
-    })
-  })
-})
-
-describe('resetWasShoveled', () => {
-  test('it decrements daysUntilClear if value is above 1', () => {
-    const plotContents = fn.resetWasShoveled({
-      isShoveled: true,
-      daysUntilClear: 2,
-    })
-
-    expect(plotContents).toEqual({ isShoveled: true, daysUntilClear: 1 })
-  })
-
-  test('it resets the plotContents when daysUntilClear is 1', () => {
-    const plotContents = fn.resetWasShoveled({
-      isShoveled: true,
-      daysUntilClear: 1,
-    })
-
-    expect(plotContents).toEqual(null)
-  })
-
-  test('will return the plot contents if it is anything else', () => {
-    const plotContents = fn.resetWasShoveled('sprinkler')
-
-    expect(plotContents).toEqual('sprinkler')
   })
 })

@@ -568,6 +568,14 @@ export default class Farmhand extends Component {
     ].forEach(reducerName => {
       const reducer = reducers[reducerName]
 
+      if (process.env.NODE_ENV === 'development') {
+        if (typeof reducer === 'undefined') {
+          throw new Error(
+            `Reducer ${reducerName} is not exported from reducers/index.js`
+          )
+        }
+      }
+
       this[reducerName] = (...args) => {
         this.setState(state => reducer(state, ...args))
       }
