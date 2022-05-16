@@ -1277,25 +1277,6 @@ describe('makeRecipe', () => {
   })
 })
 
-describe('showNotification', () => {
-  test('sets notification state', () => {
-    const { latestNotification, todaysNotifications } = fn.showNotification(
-      { showNotifications: true, todaysNotifications: [] },
-      'foo'
-    )
-    const notificationObject = { message: 'foo', severity: 'info' }
-    expect(latestNotification).toEqual(notificationObject)
-    expect(todaysNotifications).toEqual([{ ...notificationObject }])
-  })
-
-  test('does not show redundant notifications', () => {
-    const state = fn.showNotification({ todaysNotifications: [] }, 'foo')
-
-    const { todaysNotifications } = fn.showNotification(state, 'foo')
-    expect(todaysNotifications).toEqual([{ message: 'foo', severity: 'info' }])
-  })
-})
-
 describe('sellItem', () => {
   test('sells item', () => {
     const state = fn.sellItem(
