@@ -29,13 +29,11 @@ Farmhand is a resource management game that puts a farm in your hand. It is desi
 
 This is an open source project built with web technologies. It is implemented as a [Progressive Web App](https://web.dev/what-are-pwas/), which means it can be played in your web browser or installed onto your device for offline play.
 
-I am working on this entirely solo in my free time and am building it strictly with open source development tools (aside from hardware and operating systems). Farmhand is designed such that it would be fun for anyone that is into resource management and farming games, but ultimately my goal to make the game that I wish existed, the way I wish it existed. And I want to have fun doing it! 🙂
+## State of the project
 
-## Current Progress
+Farmhand is completely playable and stable. However, the game should not be considered "finished," inasmuch as it will never be finished. It is an ongoing open source project that will grow and improve organically over time. Stability and cohesiveness are top priorities for the project. It'll only ever get better and have more content over time!
 
-At this point, the game is completely playable and stable (and worth playing, I think!). However, I would not consider the game "finished," inasmuch as it will never be finished. I plan to work Farmhand as I can for many years to come. Being an open source project, I hope that it will grow and improve organically over time. All that said, it's my goal as a designer and developer to ensure that this game is always stable and playable. It'll only ever get better and have more content over time!
-
-[This GitHub project](https://github.com/jeremyckahn/farmhand/projects/1) is used for tracking and organizing work. If you'd like to suggest a feature or ask a question, please [open a GitHub issue](https://github.com/jeremyckahn/farmhand/issues).
+[This GitHub project](https://github.com/jeremyckahn/farmhand/projects/1) is used for tracking and organizing work. If you'd like to suggest a feature or ask a question, please [open a GitHub issue](https://github.com/jeremyckahn/farmhand/issues), or [join the Discord](https://discord.gg/6cHEZ9H).
 
 ## Versioning system
 
