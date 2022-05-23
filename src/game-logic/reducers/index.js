@@ -92,16 +92,14 @@ import {
 } from '../../templates'
 import { itemType } from '../../enums'
 
-import { applyChanceEvent } from './helpers'
-
 import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
-import { applyCrows } from './applyCrows'
 import { showNotification } from './showNotification'
 import { processWeather } from './processWeather'
 import { processField } from './processField'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { processSprinklers } from './processSprinklers'
+import { processNerfs } from './processNerfs'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -124,18 +122,7 @@ export * from './setSprinkler'
 export * from './showNotification'
 export * from './waterAllPlots'
 export * from './waterField'
-
-///////////////////////////////////////////////////////////
-//
-// Local helper functions
-//
-///////////////////////////////////////////////////////////
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processNerfs = state => applyChanceEvent([[1, applyCrows]], state)
+export * from './processNerfs'
 
 /**
  * @param {farmhand.state} state

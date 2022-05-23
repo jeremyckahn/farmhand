@@ -3,7 +3,6 @@ import { OUT_OF_COW_FEED_NOTIFICATION } from '../../strings'
 import {
   ACHIEVEMENT_COMPLETED,
   COW_ATTRITION_MESSAGE,
-  CROW_ATTACKED,
   FERTILIZERS_PRODUCED,
   LEVEL_GAINED_NOTIFICATION,
   LOAN_INCREASED,
@@ -28,12 +27,10 @@ import {
   NOTIFICATION_LOG_SIZE,
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
-  SCARECROW_ITEM_ID,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
 import { huggingMachine, sampleCropItem1 } from '../../data/items'
 import { sampleRecipe1 } from '../../data/recipes'
-import { itemsMap } from '../../data/maps'
 import { genders, standardCowColors, toolLevel } from '../../enums'
 import {
   farmProductSalesVolumeNeededForLevel,
@@ -814,100 +811,6 @@ describe('processCowFertilizerProduction', () => {
             severity: 'success',
           },
         ])
-      })
-    })
-  })
-})
-
-describe('processNerfs', () => {
-  describe('crows', () => {
-    describe('crows do not attack', () => {
-      test('crop is safe', () => {
-        const state = fn.processNerfs({
-          field: [[testCrop({ itemId: 'sample-crop-1' })]],
-          newDayNotifications: [],
-        })
-
-        expect(state.field[0][0]).toEqual(testCrop({ itemId: 'sample-crop-1' }))
-        expect(state.newDayNotifications).toEqual([])
-      })
-    })
-
-    describe('crows attack', () => {
-      test('crop is destroyed', () => {
-        jest.resetModules()
-        jest.mock('../../constants', () => ({
-          CROW_CHANCE: 1,
-        }))
-
-        const { processNerfs } = jest.requireActual('./')
-        const state = processNerfs({
-          field: [[testCrop({ itemId: 'sample-crop-1' })]],
-          newDayNotifications: [],
-        })
-
-        expect(state.field[0][0]).toBe(null)
-        expect(state.newDayNotifications).toEqual([
-          {
-            message: CROW_ATTACKED`${itemsMap['sample-crop-1']}`,
-            severity: 'error',
-          },
-        ])
-      })
-
-      test('multiple messages are grouped', () => {
-        jest.resetModules()
-        jest.mock('../../constants', () => ({
-          CROW_CHANCE: 1,
-        }))
-
-        const { processNerfs } = jest.requireActual('./')
-        const state = processNerfs({
-          field: [
-            [
-              testCrop({ itemId: 'sample-crop-1' }),
-              testCrop({ itemId: 'sample-crop-2' }),
-            ],
-          ],
-          newDayNotifications: [],
-        })
-
-        expect(state.field[0][0]).toBe(null)
-        expect(state.newDayNotifications).toEqual([
-          {
-            message: [
-              CROW_ATTACKED`${itemsMap['sample-crop-1']}`,
-              CROW_ATTACKED`${itemsMap['sample-crop-2']}`,
-            ].join('\n\n'),
-            severity: 'error',
-          },
-        ])
-      })
-
-      describe('there is a scarecrow', () => {
-        test('crow attack is prevented', () => {
-          jest.resetModules()
-          jest.mock('../../constants', () => ({
-            CROW_CHANCE: 1,
-            SCARECROW_ITEM_ID: 'scarecrow',
-          }))
-
-          const { processNerfs } = jest.requireActual('./')
-          const state = processNerfs({
-            field: [
-              [
-                testCrop({ itemId: 'sample-crop-1' }),
-                getPlotContentFromItemId(SCARECROW_ITEM_ID),
-              ],
-            ],
-            newDayNotifications: [],
-          })
-
-          expect(state.field[0][0]).toEqual(
-            testCrop({ itemId: 'sample-crop-1' })
-          )
-          expect(state.newDayNotifications).toEqual([])
-        })
       })
     })
   })
