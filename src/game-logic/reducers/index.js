@@ -100,6 +100,7 @@ import { processField } from './processField'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { processSprinklers } from './processSprinklers'
 import { processNerfs } from './processNerfs'
+import { createPriceEvent } from './createPriceEvent'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -123,19 +124,7 @@ export * from './showNotification'
 export * from './waterAllPlots'
 export * from './waterField'
 export * from './processNerfs'
-
-/**
- * @param {farmhand.state} state
- * @param {farmhand.priceEvent} priceEvent
- * @param {string} priceEventKey Either 'priceCrashes' or 'priceSurges'
- * @returns {farmhand.state}
- */
-export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
-  [priceEventKey]: {
-    ...state[priceEventKey],
-    [priceEvent.itemId]: priceEvent,
-  },
-})
+export * from './createPriceEvent'
 
 /**
  * @param {farmhand.state} state

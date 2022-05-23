@@ -162,42 +162,6 @@ describe('rotateNotificationLogs', () => {
   })
 })
 
-describe('createPriceEvent', () => {
-  test('creates priceCrashes data', () => {
-    const priceEvent = {
-      itemId: sampleCropItem1.id,
-      daysRemaining: 1,
-    }
-
-    const { priceCrashes } = fn.createPriceEvent(
-      { priceCrashes: {} },
-      priceEvent,
-      'priceCrashes'
-    )
-
-    expect(priceCrashes).toMatchObject({
-      [sampleCropItem1.id]: priceEvent,
-    })
-  })
-
-  test('creates priceSurges data', () => {
-    const priceEvent = {
-      itemId: sampleCropItem1.id,
-      daysRemaining: 1,
-    }
-
-    const { priceSurges } = fn.createPriceEvent(
-      { priceSurges: {} },
-      priceEvent,
-      'priceSurges'
-    )
-
-    expect(priceSurges).toMatchObject({
-      [sampleCropItem1.id]: priceEvent,
-    })
-  })
-})
-
 describe('generatePriceEvents', () => {
   describe('price event already exists', () => {
     test('no-ops', () => {
