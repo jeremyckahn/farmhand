@@ -1,11 +1,11 @@
-# Farmhand Smoke Test Checklist
+# Smoke Test Report
 
 This is a high-level checklist for things to test in Farmhand to ensure there are no regressions. Check off each item once you have manually tested it and verified that it works correctly. You don't need to check off every item here, but the more that's tested, the more stable we know the game is!
 
 ## Preparation
 
-- Start a new game (this can be easily done with a Private Browsing or Incognito browser window)
-- **Optional**: To make testing easier, feel free to load the game save file at `./saves/lots-of-money.json`. This will give you \$1,000,000 so you can test all of the features more quickly.
+- Open https://farmhand-git-develop-jeremyckahn.vercel.app/ in a Private Browsing or Incognito browser window.
+- **Optional**: To make testing easier, feel free to load the game save file at https://github.com/jeremyckahn/farmhand/tree/develop/src/test-utils/saves/lots-of-money.json. This will give you \$1,000,000 so you can test all of the features more quickly.
 
 ## Basic features
 
