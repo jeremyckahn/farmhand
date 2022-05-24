@@ -95,6 +95,12 @@ The system design for Farmhand's multiplayer functionality has been [detailed in
 
 Automation is done with [GitHub Actions](.github/workflows). All changes are tested and built upon Git push. Merges to `main` automatically deploy to Production (the `gh-pages` branch) upon a successful test run and build.
 
+### Smoke Testing
+
+All are welcome to help with smoke testing Farmhand to ensure the game is stable! All you need is to be logged into GitHub and open a [new Smoke Test Report issue](https://github.com/jeremyckahn/farmhand/issues/new?template=smoke-test-report.md). This issue will have interactive checkboxes that you can use to track your progress. Once smoke testing is complete, please close the issue.
+
+It would be a good idea to perform a smoke test whenever there is a significant change to the codebase (such as a major new feature or refactor). The process is intended to catch defects before making a Production release. If any issues are encountered during testing, please leave a comment on the Smoke Test Report issue explaining what you experienced. Non-trivial issues should be addressed by the dev team before releasing to the Production environment.
+
 ### Releasing updates
 
 Use this GitHub Action to deploy a new version of Farmhand: [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
