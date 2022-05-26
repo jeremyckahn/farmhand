@@ -8,6 +8,12 @@ import { processNerfs } from './processNerfs'
 
 jest.mock('../../data/maps')
 
+jest.mock('../../constants', () => ({
+  __esModule: true,
+  ...jest.requireActual('../../constants'),
+  CROW_CHANCE: 0,
+}))
+
 describe('processNerfs', () => {
   describe('crows', () => {
     describe('crows do not attack', () => {
