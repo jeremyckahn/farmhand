@@ -10,7 +10,6 @@ import {
   areHuggingMachinesInInventory,
   canMakeRecipe,
   castToMoney,
-  clampNumber,
   doesInventorySpaceRemain,
   farmProductsSold,
   filterItemIdsToSeeds,
@@ -42,12 +41,9 @@ import {
 } from '../../utils'
 import { generateValueAdjustments } from '../../common/utils'
 import {
-  COW_FEED_ITEM_ID,
   COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
   COW_MINIMUM_HAPPINESS_TO_BREED,
-  COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
-  COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   HUGGING_MACHINE_ITEM_ID,
@@ -65,10 +61,7 @@ import {
   PURCHASEABLE_SMELTERS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
-import {
-  FORGE_AVAILABLE_NOTIFICATION,
-  OUT_OF_COW_FEED_NOTIFICATION,
-} from '../../strings'
+import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings'
 import {
   ACHIEVEMENT_COMPLETED,
   COW_ATTRITION_MESSAGE,
@@ -96,6 +89,7 @@ import { processSprinklers } from './processSprinklers'
 import { processNerfs } from './processNerfs'
 import { createPriceEvent } from './createPriceEvent'
 import { processLevelUp } from './processLevelUp'
+import { processFeedingCows } from './processFeedingCows'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -121,6 +115,7 @@ export * from './waterField'
 export * from './processNerfs'
 export * from './createPriceEvent'
 export * from './processLevelUp'
+export * from './processFeedingCows'
 
 /**
  * @param {farmhand.state} state
@@ -134,65 +129,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-///////////////////////////////////////////////////////////
-//
-// Exported reducers
-//
-///////////////////////////////////////////////////////////
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processFeedingCows = state => {
-  const cowInventory = [...state.cowInventory]
-  const { length: cowInventoryLength } = cowInventory
-  const newDayNotifications = [...state.newDayNotifications]
-  let inventory = [...state.inventory]
-
-  const cowFeedInventoryPosition = inventory.findIndex(
-    ({ id }) => id === COW_FEED_ITEM_ID
-  )
-
-  const cowFeed = inventory[cowFeedInventoryPosition]
-  const quantity = cowFeed ? cowFeed.quantity : 0
-
-  let unitsSpent = 0
-
-  for (let i = 0; i < cowInventoryLength; i++) {
-    const cow = cowInventory[i]
-    const anyUnitsRemain = unitsSpent < quantity
-
-    cowInventory[i] = {
-      ...cow,
-      weightMultiplier: clampNumber(
-        anyUnitsRemain
-          ? cow.weightMultiplier + COW_WEIGHT_MULTIPLIER_FEED_BENEFIT
-          : cow.weightMultiplier - COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
-        COW_WEIGHT_MULTIPLIER_MINIMUM,
-        COW_WEIGHT_MULTIPLIER_MAXIMUM
-      ),
-    }
-
-    if (anyUnitsRemain) {
-      unitsSpent++
-    }
-  }
-
-  if (quantity <= cowInventoryLength && cowInventoryLength > 0) {
-    newDayNotifications.push({
-      message: OUT_OF_COW_FEED_NOTIFICATION,
-      severity: 'error',
-    })
-  }
-
-  return decrementItemFromInventory(
-    { ...state, cowInventory, inventory, newDayNotifications },
-    COW_FEED_ITEM_ID,
-    unitsSpent
-  )
-}
 
 /**
  * @param {farmhand.state} state
