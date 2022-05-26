@@ -4,7 +4,6 @@
  */
 
 import { itemsMap, recipesMap } from '../../data/maps'
-import { levels } from '../../data/levels'
 import achievements from '../../data/achievements'
 import upgrades from '../../data/upgrades'
 import {
@@ -31,8 +30,6 @@ import {
   getPlotContentType,
   getPriceEventForCrop,
   getProfit,
-  getRandomLevelUpReward,
-  getRandomLevelUpRewardQuantity,
   getRandomUnlockedCrop,
   getResaleValue,
   getSalePriceMultiplier,
@@ -42,7 +39,6 @@ import {
   levelAchieved,
   moneyTotal,
   nullArray,
-  unlockTool,
 } from '../../utils'
 import { generateValueAdjustments } from '../../common/utils'
 import {
@@ -67,7 +63,6 @@ import {
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   PURCHASEABLE_SMELTERS,
-  SPRINKLER_ITEM_ID,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
 import {
@@ -79,7 +74,6 @@ import {
   COW_ATTRITION_MESSAGE,
   COW_BORN_MESSAGE,
   FERTILIZERS_PRODUCED,
-  LEVEL_GAINED_NOTIFICATION,
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
@@ -101,6 +95,7 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { processSprinklers } from './processSprinklers'
 import { processNerfs } from './processNerfs'
 import { createPriceEvent } from './createPriceEvent'
+import { processLevelUp } from './processLevelUp'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -125,62 +120,7 @@ export * from './waterAllPlots'
 export * from './waterField'
 export * from './processNerfs'
 export * from './createPriceEvent'
-
-/**
- * @param {farmhand.state} state
- * @param {number} oldLevel
- * @returns {farmhand.state}
- */
-export const processLevelUp = (state, oldLevel) => {
-  const { itemsSold, selectedItemId } = state
-  const newLevel = levelAchieved(farmProductsSold(itemsSold))
-
-  // Loop backwards so that the notifications appear in descending order.
-  for (let i = newLevel; i > oldLevel; i--) {
-    const levelObject = levels[i] || {}
-
-    let randomCropSeed
-    // There is no predefined reward for this level up.
-    if (Object.keys(levelObject).length < 2) {
-      randomCropSeed = getRandomLevelUpReward(i)
-      state = addItemToInventory(
-        state,
-        randomCropSeed,
-        getRandomLevelUpRewardQuantity(i),
-        true
-      )
-    } else if (levelObject && levelObject.unlocksTool) {
-      state.toolLevels = unlockTool(state.toolLevels, levelObject.unlocksTool)
-    }
-    // This handles an edge case where the player levels up to level that
-    // unlocks greater sprinkler range, but the sprinkler item is already
-    // selected. In that case, update the hoveredPlotRangeSize state.
-    else if (
-      levelObject &&
-      levelObject.increasesSprinklerRange &&
-      selectedItemId === SPRINKLER_ITEM_ID
-    ) {
-      const { sprinklerRange } = getLevelEntitlements(
-        levelAchieved(farmProductsSold(itemsSold))
-      )
-
-      if (sprinklerRange > state.hoveredPlotRangeSize) {
-        state = {
-          ...state,
-          hoveredPlotRangeSize: sprinklerRange,
-        }
-      }
-    }
-
-    state = showNotification(
-      state,
-      LEVEL_GAINED_NOTIFICATION`${i}${randomCropSeed}`,
-      'success'
-    )
-  }
-
-  return state
-}
+export * from './processLevelUp'
 
 /**
  * @param {farmhand.state} state
