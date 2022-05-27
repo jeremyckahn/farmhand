@@ -44,7 +44,6 @@ import {
   COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
   COW_MINIMUM_HAPPINESS_TO_BREED,
-  COW_WEIGHT_MULTIPLIER_MINIMUM,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   HUGGING_MACHINE_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
@@ -64,7 +63,6 @@ import {
 import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings'
 import {
   ACHIEVEMENT_COMPLETED,
-  COW_ATTRITION_MESSAGE,
   COW_BORN_MESSAGE,
   FERTILIZERS_PRODUCED,
   LOAN_BALANCE_NOTIFICATION,
@@ -90,6 +88,7 @@ import { processNerfs } from './processNerfs'
 import { createPriceEvent } from './createPriceEvent'
 import { processLevelUp } from './processLevelUp'
 import { processFeedingCows } from './processFeedingCows'
+import { processCowAttrition } from './processCowAttrition'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -116,6 +115,7 @@ export * from './processNerfs'
 export * from './createPriceEvent'
 export * from './processLevelUp'
 export * from './processFeedingCows'
+export * from './processCowAttrition'
 
 /**
  * @param {farmhand.state} state
@@ -129,33 +129,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processCowAttrition = state => {
-  const newDayNotifications = [...state.newDayNotifications]
-  const oldCowInventory = [...state.cowInventory]
-
-  for (let i = 0; i < oldCowInventory.length; i++) {
-    const cow = oldCowInventory[i]
-
-    if (
-      // Cast toFixed(2) to prevent IEEE 754 rounding errors.
-      Number(cow.weightMultiplier.toFixed(2)) === COW_WEIGHT_MULTIPLIER_MINIMUM
-    ) {
-      state = removeCowFromInventory(state, cow)
-
-      newDayNotifications.push({
-        message: COW_ATTRITION_MESSAGE`${cow}`,
-        severity: 'error',
-      })
-    }
-  }
-
-  return { ...state, newDayNotifications }
-}
 
 /**
  * @param {farmhand.state} state
