@@ -10,7 +10,6 @@ import {
   areHuggingMachinesInInventory,
   canMakeRecipe,
   castToMoney,
-  doesInventorySpaceRemain,
   farmProductsSold,
   filterItemIdsToSeeds,
   findCowById,
@@ -20,8 +19,6 @@ import {
   getAdjustedItemValue,
   getCostOfNextStorageExpansion,
   getCowColorId,
-  getCowFertilizerItem,
-  getCowFertilizerProductionRate,
   getCowValue,
   getLevelEntitlements,
   getPlotContentType,
@@ -62,7 +59,6 @@ import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings'
 import {
   ACHIEVEMENT_COMPLETED,
   COW_BORN_MESSAGE,
-  FERTILIZERS_PRODUCED,
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
@@ -87,6 +83,7 @@ import { processLevelUp } from './processLevelUp'
 import { processFeedingCows } from './processFeedingCows'
 import { processCowAttrition } from './processCowAttrition'
 import { processMilkingCows } from './processMilkingCows'
+import { processCowFertilizerProduction } from './processCowFertilizerProduction'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -115,6 +112,7 @@ export * from './processLevelUp'
 export * from './processFeedingCows'
 export * from './processCowAttrition'
 export * from './processMilkingCows'
+export * from './processCowFertilizerProduction'
 
 /**
  * @param {farmhand.state} state
@@ -128,49 +126,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processCowFertilizerProduction = state => {
-  const cowInventory = [...state.cowInventory]
-  const newDayNotifications = [...state.newDayNotifications]
-  const { length: cowInventoryLength } = cowInventory
-  const fertilizersProduced = {}
-
-  for (let i = 0; i < cowInventoryLength; i++) {
-    const cow = cowInventory[i]
-
-    if (
-      // `cow.daysSinceProducingFertilizer || 0` is needed because legacy cows
-      // did not define daysSinceProducingFertilizer.
-      (cow.daysSinceProducingFertilizer || 0) >
-      getCowFertilizerProductionRate(cow)
-    ) {
-      cowInventory[i] = { ...cow, daysSinceProducingFertilizer: 0 }
-
-      const fertilizer = getCowFertilizerItem(cow)
-      const { name } = fertilizer
-
-      if (!doesInventorySpaceRemain(state)) {
-        break
-      }
-
-      fertilizersProduced[name] = (fertilizersProduced[name] || 0) + 1
-      state = addItemToInventory(state, fertilizer)
-    }
-  }
-
-  if (Object.keys(fertilizersProduced).length) {
-    newDayNotifications.push({
-      message: FERTILIZERS_PRODUCED`${fertilizersProduced}`,
-      severity: 'success',
-    })
-  }
-
-  return { ...state, cowInventory, newDayNotifications }
-}
 
 /**
  * @param {farmhand.state} state
