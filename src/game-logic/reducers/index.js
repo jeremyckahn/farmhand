@@ -22,8 +22,6 @@ import {
   getCowColorId,
   getCowFertilizerItem,
   getCowFertilizerProductionRate,
-  getCowMilkItem,
-  getCowMilkRate,
   getCowValue,
   getLevelEntitlements,
   getPlotContentType,
@@ -68,7 +66,6 @@ import {
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
-  MILKS_PRODUCED,
   PRICE_CRASH,
   PRICE_SURGE,
   PURCHASED_ITEM_PEER_NOTIFICATION,
@@ -89,6 +86,7 @@ import { createPriceEvent } from './createPriceEvent'
 import { processLevelUp } from './processLevelUp'
 import { processFeedingCows } from './processFeedingCows'
 import { processCowAttrition } from './processCowAttrition'
+import { processMilkingCows } from './processMilkingCows'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -116,6 +114,7 @@ export * from './createPriceEvent'
 export * from './processLevelUp'
 export * from './processFeedingCows'
 export * from './processCowAttrition'
+export * from './processMilkingCows'
 
 /**
  * @param {farmhand.state} state
@@ -129,44 +128,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processMilkingCows = state => {
-  const cowInventory = [...state.cowInventory]
-  const newDayNotifications = [...state.newDayNotifications]
-  const { length: cowInventoryLength } = cowInventory
-  const milksProduced = {}
-
-  for (let i = 0; i < cowInventoryLength; i++) {
-    const cow = cowInventory[i]
-
-    if (cow.daysSinceMilking > getCowMilkRate(cow)) {
-      cowInventory[i] = { ...cow, daysSinceMilking: 0 }
-
-      const milk = getCowMilkItem(cow)
-      const { name } = milk
-
-      if (!doesInventorySpaceRemain(state)) {
-        break
-      }
-
-      milksProduced[name] = (milksProduced[name] || 0) + 1
-      state = addItemToInventory(state, milk)
-    }
-  }
-
-  if (Object.keys(milksProduced).length) {
-    newDayNotifications.push({
-      message: MILKS_PRODUCED`${milksProduced}`,
-      severity: 'success',
-    })
-  }
-
-  return { ...state, cowInventory, newDayNotifications }
-}
 
 /**
  * @param {farmhand.state} state
