@@ -12,13 +12,11 @@ import {
   castToMoney,
   farmProductsSold,
   generateCow,
-  get7DayAverage,
   getAdjustedItemValue,
   getCostOfNextStorageExpansion,
   getCowColorId,
   getCowValue,
   getPlotContentType,
-  getProfit,
   getResaleValue,
   getSalePriceMultiplier,
   inventorySpaceRemaining,
@@ -32,7 +30,6 @@ import { generateValueAdjustments } from '../../common/utils'
 import {
   COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
-  DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   HUGGING_MACHINE_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
@@ -76,6 +73,7 @@ import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay'
 import { rotateNotificationLogs } from './rotateNotificationLogs'
 import { generatePriceEvents } from './generatePriceEvents'
 import { updatePriceEvents } from './updatePriceEvents'
+import { updateFinancialRecords } from './updateFinancialRecords'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -110,6 +108,7 @@ export * from './computeCowInventoryForNextDay'
 export * from './rotateNotificationLogs'
 export * from './generatePriceEvents'
 export * from './updatePriceEvents'
+export * from './updateFinancialRecords'
 
 /**
  * @param {farmhand.state} state
@@ -123,64 +122,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const updateFinancialRecords = state => {
-  const {
-    profitabilityStreak,
-    todaysLosses,
-    todaysRevenue,
-    record7dayProfitAverage,
-    recordProfitabilityStreak,
-  } = state
-  let {
-    historicalDailyLosses,
-    historicalDailyRevenue,
-    recordSingleDayProfit,
-  } = state
-
-  historicalDailyLosses = [todaysLosses, ...historicalDailyLosses].slice(
-    0,
-    DAILY_FINANCIAL_HISTORY_RECORD_LENGTH
-  )
-
-  historicalDailyRevenue = [todaysRevenue, ...historicalDailyRevenue].slice(
-    0,
-    DAILY_FINANCIAL_HISTORY_RECORD_LENGTH
-  )
-
-  const profitAverage = get7DayAverage(
-    historicalDailyLosses.map((loss, i) =>
-      moneyTotal(historicalDailyRevenue[i], loss)
-    )
-  )
-
-  const wasTodayProfitable = todaysRevenue + todaysLosses > 0
-  const currentProfitabilityStreak = wasTodayProfitable
-    ? profitabilityStreak + 1
-    : 0
-
-  return {
-    ...state,
-    historicalDailyLosses,
-    historicalDailyRevenue,
-    profitabilityStreak: currentProfitabilityStreak,
-    record7dayProfitAverage: Math.max(record7dayProfitAverage, profitAverage),
-    recordProfitabilityStreak: Math.max(
-      recordProfitabilityStreak,
-      currentProfitabilityStreak
-    ),
-    recordSingleDayProfit: Math.max(
-      recordSingleDayProfit,
-      getProfit(todaysRevenue, todaysLosses)
-    ),
-    todaysLosses: 0,
-    todaysRevenue: 0,
-  }
-}
 
 /**
  * @param {farmhand.state} state
