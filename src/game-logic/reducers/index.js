@@ -11,18 +11,14 @@ import {
   canMakeRecipe,
   castToMoney,
   farmProductsSold,
-  filterItemIdsToSeeds,
   generateCow,
   get7DayAverage,
   getAdjustedItemValue,
   getCostOfNextStorageExpansion,
   getCowColorId,
   getCowValue,
-  getLevelEntitlements,
   getPlotContentType,
-  getPriceEventForCrop,
   getProfit,
-  getRandomUnlockedCrop,
   getResaleValue,
   getSalePriceMultiplier,
   inventorySpaceRemaining,
@@ -44,7 +40,6 @@ import {
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
-  PRICE_EVENT_CHANCE,
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
@@ -57,8 +52,6 @@ import {
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
-  PRICE_CRASH,
-  PRICE_SURGE,
   PURCHASED_ITEM_PEER_NOTIFICATION,
   SOLD_ITEM_PEER_NOTIFICATION,
   TOOL_UPGRADED_NOTIFICATION,
@@ -73,7 +66,6 @@ import { processField } from './processField'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { processSprinklers } from './processSprinklers'
 import { processNerfs } from './processNerfs'
-import { createPriceEvent } from './createPriceEvent'
 import { processLevelUp } from './processLevelUp'
 import { processFeedingCows } from './processFeedingCows'
 import { processCowAttrition } from './processCowAttrition'
@@ -82,6 +74,7 @@ import { processCowFertilizerProduction } from './processCowFertilizerProduction
 import { processCowBreeding } from './processCowBreeding'
 import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay'
 import { rotateNotificationLogs } from './rotateNotificationLogs'
+import { generatePriceEvents } from './generatePriceEvents'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -114,6 +107,7 @@ export * from './processCowFertilizerProduction'
 export * from './processCowBreeding'
 export * from './computeCowInventoryForNextDay'
 export * from './rotateNotificationLogs'
+export * from './generatePriceEvents'
 
 /**
  * @param {farmhand.state} state
@@ -127,54 +121,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const generatePriceEvents = state => {
-  const priceCrashes = { ...state.priceCrashes }
-  const priceSurges = { ...state.priceSurges }
-  let newDayNotifications = [...state.newDayNotifications]
-  let priceEvent
-
-  if (Math.random() < PRICE_EVENT_CHANCE) {
-    const { items: unlockedItems } = getLevelEntitlements(
-      levelAchieved(farmProductsSold(state.itemsSold))
-    )
-
-    const cropItem = getRandomUnlockedCrop(
-      filterItemIdsToSeeds(Object.keys(unlockedItems))
-    )
-    const { id } = cropItem
-
-    // Only create a priceEvent if one does not already exist
-    if (!priceCrashes[id] && !priceSurges[id]) {
-      const priceEventType =
-        Math.random() < 0.5 ? 'priceCrashes' : 'priceSurges'
-
-      priceEvent = createPriceEvent(
-        state,
-        getPriceEventForCrop(cropItem),
-        priceEventType
-      )
-
-      newDayNotifications.push(
-        priceEventType === 'priceCrashes'
-          ? {
-              message: PRICE_CRASH`${cropItem}`,
-              severity: 'warning',
-            }
-          : {
-              message: PRICE_SURGE`${cropItem}`,
-              severity: 'success',
-            }
-      )
-    }
-  }
-
-  return { ...state, ...priceEvent, newDayNotifications }
-}
 
 /**
  * @param {Object.<farmhand.priceEvent>} priceEvents
