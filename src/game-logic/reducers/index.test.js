@@ -10,7 +10,6 @@ import {
   COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
   MAX_ANIMAL_NAME_LENGTH,
-  MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
   NOTIFICATION_LOG_SIZE,
@@ -392,56 +391,6 @@ describe('computeStateForNextDay', () => {
     expect(firstRow[0].daysWatered).toBe(1)
     expect(firstRow[0].daysOld).toBe(1)
     expect(todaysNotifications).toBeEmpty()
-  })
-})
-
-describe('computeCowInventoryForNextDay', () => {
-  test('ages cows', () => {
-    expect(
-      fn.computeCowInventoryForNextDay({
-        cowInventory: [
-          { daysOld: 0 },
-          { daysOld: 5, happiness: 0.5, happinessBoostsToday: 3 },
-        ],
-      })
-    ).toMatchObject({
-      cowInventory: [
-        { daysOld: 1, happinessBoostsToday: 0 },
-        {
-          daysOld: 6,
-          happiness: 0.5 - COW_HUG_BENEFIT,
-          happinessBoostsToday: 0,
-        },
-      ],
-    })
-  })
-
-  describe('happiness', () => {
-    describe('has a hugging machine', () => {
-      test('happiness is pre-maxed for the day', () => {
-        expect(
-          fn.computeCowInventoryForNextDay({
-            cowInventory: [
-              {
-                daysOld: 5,
-                happiness: 0,
-                happinessBoostsToday: 0,
-                isUsingHuggingMachine: true,
-              },
-            ],
-          })
-        ).toMatchObject({
-          cowInventory: [
-            {
-              daysOld: 6,
-              happiness: COW_HUG_BENEFIT * (MAX_DAILY_COW_HUG_BENEFITS - 1),
-              happinessBoostsToday: MAX_DAILY_COW_HUG_BENEFITS,
-              isUsingHuggingMachine: true,
-            },
-          ],
-        })
-      })
-    })
   })
 })
 

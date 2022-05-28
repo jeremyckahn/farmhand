@@ -81,6 +81,7 @@ import { processCowAttrition } from './processCowAttrition'
 import { processMilkingCows } from './processMilkingCows'
 import { processCowFertilizerProduction } from './processCowFertilizerProduction'
 import { processCowBreeding } from './processCowBreeding'
+import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -111,6 +112,7 @@ export * from './processCowAttrition'
 export * from './processMilkingCows'
 export * from './processCowFertilizerProduction'
 export * from './processCowBreeding'
+export * from './computeCowInventoryForNextDay'
 
 /**
  * @param {farmhand.state} state
@@ -123,38 +125,6 @@ const adjustItemValues = state => ({
     state.priceCrashes,
     state.priceSurges
   ),
-})
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const computeCowInventoryForNextDay = state => ({
-  ...state,
-  cowInventory: state.cowInventory.map(cow => ({
-    ...cow,
-    daysOld: cow.daysOld + 1,
-    daysSinceMilking: cow.daysSinceMilking + 1,
-    // `cow.daysSinceProducingFertilizer || 0` is needed because legacy cows
-    // did not define daysSinceProducingFertilizer.
-    daysSinceProducingFertilizer: (cow.daysSinceProducingFertilizer || 0) + 1,
-    happiness: Math.max(
-      0,
-      cow.isUsingHuggingMachine
-        ? Math.min(
-            1,
-            cow.happiness + (MAX_DAILY_COW_HUG_BENEFITS - 1) * COW_HUG_BENEFIT
-          )
-        : cow.happiness - COW_HUG_BENEFIT
-    ),
-    happinessBoostsToday: cow.isUsingHuggingMachine
-      ? MAX_DAILY_COW_HUG_BENEFITS
-      : 0,
-
-    // TODO: This line is for backwards compatibility and can be removed after
-    // 10/1/2020.
-    isUsingHuggingMachine: Boolean(cow.isUsingHuggingMachine),
-  })),
 })
 
 /**
