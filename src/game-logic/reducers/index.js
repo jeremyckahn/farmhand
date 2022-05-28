@@ -12,9 +12,7 @@ import {
   castToMoney,
   farmProductsSold,
   filterItemIdsToSeeds,
-  findCowById,
   generateCow,
-  generateOffspringCow,
   get7DayAverage,
   getAdjustedItemValue,
   getCostOfNextStorageExpansion,
@@ -38,7 +36,6 @@ import { generateValueAdjustments } from '../../common/utils'
 import {
   COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
-  COW_MINIMUM_HAPPINESS_TO_BREED,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   HUGGING_MACHINE_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
@@ -58,7 +55,6 @@ import {
 import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings'
 import {
   ACHIEVEMENT_COMPLETED,
-  COW_BORN_MESSAGE,
   LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
@@ -84,6 +80,7 @@ import { processFeedingCows } from './processFeedingCows'
 import { processCowAttrition } from './processCowAttrition'
 import { processMilkingCows } from './processMilkingCows'
 import { processCowFertilizerProduction } from './processCowFertilizerProduction'
+import { processCowBreeding } from './processCowBreeding'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -113,6 +110,7 @@ export * from './processFeedingCows'
 export * from './processCowAttrition'
 export * from './processMilkingCows'
 export * from './processCowFertilizerProduction'
+export * from './processCowBreeding'
 
 /**
  * @param {farmhand.state} state
@@ -126,69 +124,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processCowBreeding = state => {
-  const {
-    cowBreedingPen,
-    cowInventory,
-    id,
-    newDayNotifications,
-    purchasedCowPen,
-  } = state
-  const { cowId1, cowId2 } = cowBreedingPen
-
-  if (!cowId2) {
-    return state
-  }
-
-  const cow1 = findCowById(cowInventory, cowId1)
-  const cow2 = findCowById(cowInventory, cowId2)
-
-  // Same-sex couples are as valid and wonderful as any, but in this game they
-  // cannot naturally produce offspring.
-  if (cow1.gender === cow2.gender) {
-    return state
-  }
-
-  const daysUntilBirth =
-    cow1.happiness >= COW_MINIMUM_HAPPINESS_TO_BREED &&
-    cow2.happiness >= COW_MINIMUM_HAPPINESS_TO_BREED
-      ? cowBreedingPen.daysUntilBirth - 1
-      : COW_GESTATION_PERIOD_DAYS
-
-  const shouldGenerateOffspring =
-    cowInventory.length < PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows &&
-    daysUntilBirth === 0
-
-  let offspringCow =
-    shouldGenerateOffspring && generateOffspringCow(cow1, cow2, id)
-
-  return {
-    ...state,
-    cowInventory: shouldGenerateOffspring
-      ? [...cowInventory, offspringCow]
-      : cowInventory,
-    cowBreedingPen: {
-      ...cowBreedingPen,
-      daysUntilBirth: shouldGenerateOffspring
-        ? COW_GESTATION_PERIOD_DAYS
-        : daysUntilBirth,
-    },
-    newDayNotifications: offspringCow
-      ? [
-          ...newDayNotifications,
-          {
-            message: COW_BORN_MESSAGE`${cow1}${cow2}${offspringCow}`,
-            severity: 'success',
-          },
-        ]
-      : newDayNotifications,
-  }
-}
 
 /**
  * @param {farmhand.state} state
