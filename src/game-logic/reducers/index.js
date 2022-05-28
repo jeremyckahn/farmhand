@@ -75,6 +75,7 @@ import { processCowBreeding } from './processCowBreeding'
 import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay'
 import { rotateNotificationLogs } from './rotateNotificationLogs'
 import { generatePriceEvents } from './generatePriceEvents'
+import { updatePriceEvents } from './updatePriceEvents'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -108,6 +109,7 @@ export * from './processCowBreeding'
 export * from './computeCowInventoryForNextDay'
 export * from './rotateNotificationLogs'
 export * from './generatePriceEvents'
+export * from './updatePriceEvents'
 
 /**
  * @param {farmhand.state} state
@@ -121,35 +123,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-/**
- * @param {Object.<farmhand.priceEvent>} priceEvents
- * @returns {Object.<farmhand.priceEvent>}
- */
-const decrementPriceEventDays = priceEvents =>
-  Object.keys(priceEvents).reduce((acc, key) => {
-    const { itemId, daysRemaining } = priceEvents[key]
-
-    if (daysRemaining > 1) {
-      acc[key] = { itemId, daysRemaining: daysRemaining - 1 }
-    }
-
-    return acc
-  }, {})
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const updatePriceEvents = state => {
-  const { priceCrashes, priceSurges } = state
-
-  return {
-    ...state,
-    priceCrashes: decrementPriceEventDays(priceCrashes),
-    priceSurges: decrementPriceEventDays(priceSurges),
-  }
-}
 
 /**
  * @param {farmhand.state} state
