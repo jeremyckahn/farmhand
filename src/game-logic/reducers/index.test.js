@@ -12,7 +12,6 @@ import {
   MAX_ANIMAL_NAME_LENGTH,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
-  NOTIFICATION_LOG_SIZE,
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   STORAGE_EXPANSION_AMOUNT,
@@ -45,107 +44,6 @@ jest.mock('../../constants', () => ({
   CROW_CHANCE: 0,
   PRECIPITATION_CHANCE: 0,
 }))
-
-describe('rotateNotificationLogs', () => {
-  test('rotates logs', () => {
-    const { notificationLog } = fn.rotateNotificationLogs({
-      dayCount: 1,
-      newDayNotifications: [{ message: 'b', severity: 'info' }],
-      notificationLog: [
-        {
-          day: 0,
-          notifications: {
-            error: [],
-            info: ['a'],
-            success: [],
-            warning: [],
-          },
-        },
-      ],
-    })
-
-    expect(notificationLog).toEqual([
-      {
-        day: 1,
-        notifications: {
-          error: [],
-          info: ['b'],
-          success: [],
-          warning: [],
-        },
-      },
-      {
-        day: 0,
-        notifications: {
-          error: [],
-          info: ['a'],
-          success: [],
-          warning: [],
-        },
-      },
-    ])
-  })
-
-  test('limits log size', () => {
-    const { notificationLog } = fn.rotateNotificationLogs({
-      dayCount: 50,
-      newDayNotifications: [{ message: 'new log', severity: 'info' }],
-      notificationLog: new Array(NOTIFICATION_LOG_SIZE).fill({
-        day: 1,
-        notifications: {
-          error: [],
-          info: ['a'],
-          success: [],
-          warning: [],
-        },
-      }),
-    })
-
-    expect(notificationLog).toHaveLength(NOTIFICATION_LOG_SIZE)
-    expect(notificationLog[0]).toEqual({
-      day: 50,
-      notifications: {
-        error: [],
-        info: ['new log'],
-        success: [],
-        warning: [],
-      },
-    })
-  })
-
-  test('ignores empty logs', () => {
-    const { notificationLog } = fn.rotateNotificationLogs({
-      newDayNotifications: [],
-      notificationLog: [
-        {
-          day: 0,
-          notifications: [
-            {
-              error: [],
-              info: ['a'],
-              success: [],
-              warning: [],
-            },
-          ],
-        },
-      ],
-    })
-
-    expect(notificationLog).toEqual([
-      {
-        day: 0,
-        notifications: [
-          {
-            error: [],
-            info: ['a'],
-            success: [],
-            warning: [],
-          },
-        ],
-      },
-    ])
-  })
-})
 
 describe('generatePriceEvents', () => {
   describe('price event already exists', () => {

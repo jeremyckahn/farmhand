@@ -44,7 +44,6 @@ import {
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
-  NOTIFICATION_LOG_SIZE,
   PRICE_EVENT_CHANCE,
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
@@ -82,6 +81,7 @@ import { processMilkingCows } from './processMilkingCows'
 import { processCowFertilizerProduction } from './processCowFertilizerProduction'
 import { processCowBreeding } from './processCowBreeding'
 import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay'
+import { rotateNotificationLogs } from './rotateNotificationLogs'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -113,6 +113,7 @@ export * from './processMilkingCows'
 export * from './processCowFertilizerProduction'
 export * from './processCowBreeding'
 export * from './computeCowInventoryForNextDay'
+export * from './rotateNotificationLogs'
 
 /**
  * @param {farmhand.state} state
@@ -126,40 +127,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const rotateNotificationLogs = state => {
-  const notificationLog = [...state.notificationLog]
-
-  const { dayCount, newDayNotifications } = state
-
-  const notifications = {
-    error: [],
-    info: [],
-    success: [],
-    warning: [],
-  }
-
-  newDayNotifications.forEach(({ message, severity }) =>
-    notifications[severity].push(message)
-  )
-
-  newDayNotifications.length &&
-    notificationLog.unshift({
-      day: dayCount,
-      notifications,
-    })
-
-  notificationLog.length = Math.min(
-    notificationLog.length,
-    NOTIFICATION_LOG_SIZE
-  )
-
-  return { ...state, notificationLog }
-}
 
 /**
  * @param {farmhand.state} state
