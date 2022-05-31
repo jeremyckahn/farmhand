@@ -74,6 +74,7 @@ import { rotateNotificationLogs } from './rotateNotificationLogs'
 import { generatePriceEvents } from './generatePriceEvents'
 import { updatePriceEvents } from './updatePriceEvents'
 import { updateFinancialRecords } from './updateFinancialRecords'
+import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -109,6 +110,7 @@ export * from './rotateNotificationLogs'
 export * from './generatePriceEvents'
 export * from './updatePriceEvents'
 export * from './updateFinancialRecords'
+export * from './updateInventoryRecordsForNextDay'
 
 /**
  * @param {farmhand.state} state
@@ -121,19 +123,6 @@ const adjustItemValues = state => ({
     state.priceCrashes,
     state.priceSurges
   ),
-})
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const updateInventoryRecordsForNextDay = state => ({
-  ...state,
-  todaysPurchases: {},
-  todaysStartingInventory: state.inventory.reduce((acc, { id, quantity }) => {
-    acc[id] = quantity
-    return acc
-  }, {}),
 })
 
 export const applyLoanInterest = state => {
