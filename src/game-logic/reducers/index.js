@@ -56,24 +56,8 @@ import { itemType } from '../../enums'
 import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { showNotification } from './showNotification'
-import { processWeather } from './processWeather'
-import { processField } from './processField'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
-import { processSprinklers } from './processSprinklers'
-import { processNerfs } from './processNerfs'
 import { processLevelUp } from './processLevelUp'
-import { processFeedingCows } from './processFeedingCows'
-import { processCowAttrition } from './processCowAttrition'
-import { processMilkingCows } from './processMilkingCows'
-import { processCowFertilizerProduction } from './processCowFertilizerProduction'
-import { processCowBreeding } from './processCowBreeding'
-import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay'
-import { rotateNotificationLogs } from './rotateNotificationLogs'
-import { generatePriceEvents } from './generatePriceEvents'
-import { updatePriceEvents } from './updatePriceEvents'
-import { updateFinancialRecords } from './updateFinancialRecords'
-import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay'
-import { applyLoanInterest } from './applyLoanInterest'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -110,12 +94,13 @@ export * from './generatePriceEvents'
 export * from './updatePriceEvents'
 export * from './updateFinancialRecords'
 export * from './updateInventoryRecordsForNextDay'
+export * from './computeStateForNextDay'
 
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-const adjustItemValues = state => ({
+export const adjustItemValues = state => ({
   ...state,
   historicalValueAdjustments: [state.valueAdjustments],
   valueAdjustments: generateValueAdjustments(
@@ -123,40 +108,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const computeStateForNextDay = (state, isFirstDay = false) =>
-  (isFirstDay
-    ? []
-    : [
-        computeCowInventoryForNextDay,
-        processCowBreeding,
-        processField,
-        processNerfs,
-        processWeather,
-        processSprinklers,
-        processFeedingCows,
-        processCowAttrition,
-        processMilkingCows,
-        processCowFertilizerProduction,
-        updatePriceEvents,
-        updateFinancialRecords,
-        updateInventoryRecordsForNextDay,
-        generatePriceEvents,
-        applyLoanInterest,
-        rotateNotificationLogs,
-      ]
-  )
-    .concat([adjustItemValues])
-    .reduce((acc, fn) => fn({ ...acc }), {
-      ...state,
-      cowForSale: generateCow(),
-      dayCount: state.dayCount + 1,
-      todaysNotifications: [],
-    })
 
 /**
  * @param {farmhand.state} state
