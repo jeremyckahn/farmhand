@@ -5,7 +5,6 @@
 
 import { itemsMap } from '../../data/maps'
 import achievements from '../../data/achievements'
-import upgrades from '../../data/upgrades'
 import {
   areHuggingMachinesInInventory,
   generateCow,
@@ -35,7 +34,6 @@ import {
   ACHIEVEMENT_COMPLETED,
   LOAN_INCREASED,
   LOAN_PAYOFF,
-  TOOL_UPGRADED_NOTIFICATION,
 } from '../../templates'
 import { itemType } from '../../enums'
 
@@ -45,7 +43,6 @@ import { showNotification } from './showNotification'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { addRevenue } from './addRevenue'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
-import { makeRecipe } from './makeRecipe'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -88,25 +85,7 @@ export * from './addRevenue'
 export * from './sellItem'
 export * from './updateLearnedRecipes'
 export * from './makeRecipe'
-
-/**
- * @param {farmhand.state} state
- * @param {farmhand.upgrade} upgrade
- */
-export const upgradeTool = (state, upgrade) => {
-  state = makeRecipe(state, upgrade)
-
-  const currentName =
-    upgrades[upgrade.toolType][state.toolLevels[upgrade.toolType]].name
-  state.toolLevels[upgrade.toolType] = upgrade.level
-
-  state = showNotification(
-    state,
-    TOOL_UPGRADED_NOTIFICATION`${currentName}${upgrade.name}`
-  )
-
-  return { ...state }
-}
+export * from './upgradeTool'
 
 /**
  * @param {farmhand.state} state
