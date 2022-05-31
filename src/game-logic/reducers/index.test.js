@@ -42,15 +42,6 @@ jest.mock('../../constants', () => ({
   PRECIPITATION_CHANCE: 0,
 }))
 
-describe('applyLoanInterest', () => {
-  test('applies loan interest', () => {
-    expect(
-      fn.applyLoanInterest({ loanBalance: 100, newDayNotifications: [] })
-        .loanBalance
-    ).toEqual(102)
-  })
-})
-
 describe('computeStateForNextDay', () => {
   beforeEach(() => {
     jest.spyOn(Math, 'random').mockReturnValue(0.75)

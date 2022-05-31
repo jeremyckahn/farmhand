@@ -32,7 +32,6 @@ import {
   COW_HUG_BENEFIT,
   HUGGING_MACHINE_ITEM_ID,
   LOAN_GARNISHMENT_RATE,
-  LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
@@ -46,7 +45,6 @@ import {
 import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings'
 import {
   ACHIEVEMENT_COMPLETED,
-  LOAN_BALANCE_NOTIFICATION,
   LOAN_INCREASED,
   LOAN_PAYOFF,
   PURCHASED_ITEM_PEER_NOTIFICATION,
@@ -75,6 +73,7 @@ import { generatePriceEvents } from './generatePriceEvents'
 import { updatePriceEvents } from './updatePriceEvents'
 import { updateFinancialRecords } from './updateFinancialRecords'
 import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay'
+import { applyLoanInterest } from './applyLoanInterest'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -124,30 +123,6 @@ const adjustItemValues = state => ({
     state.priceSurges
   ),
 })
-
-export const applyLoanInterest = state => {
-  const loanBalance = moneyTotal(
-    state.loanBalance,
-    castToMoney(state.loanBalance * LOAN_INTEREST_RATE)
-  )
-
-  const newDayNotifications =
-    loanBalance > 0
-      ? [
-          ...state.newDayNotifications,
-          {
-            severity: 'warning',
-            message: LOAN_BALANCE_NOTIFICATION`${loanBalance}`,
-          },
-        ]
-      : state.newDayNotifications
-
-  return {
-    ...state,
-    loanBalance,
-    newDayNotifications,
-  }
-}
 
 /**
  * @param {farmhand.state} state
