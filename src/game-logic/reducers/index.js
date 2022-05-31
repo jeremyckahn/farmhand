@@ -19,7 +19,6 @@ import {
   getPlotContentType,
   getResaleValue,
   getSalePriceMultiplier,
-  inventorySpaceRemaining,
   isItemAFarmProduct,
   isItemSoldInShop,
   levelAchieved,
@@ -46,7 +45,6 @@ import {
   ACHIEVEMENT_COMPLETED,
   LOAN_INCREASED,
   LOAN_PAYOFF,
-  PURCHASED_ITEM_PEER_NOTIFICATION,
   SOLD_ITEM_PEER_NOTIFICATION,
   TOOL_UPGRADED_NOTIFICATION,
 } from '../../templates'
@@ -94,46 +92,7 @@ export * from './updatePriceEvents'
 export * from './updateFinancialRecords'
 export * from './updateInventoryRecordsForNextDay'
 export * from './computeStateForNextDay'
-
-/**
- * @param {farmhand.state} state
- * @param {farmhand.item} item
- * @param {number} [howMany=1]
- * @returns {farmhand.state}
- */
-export const purchaseItem = (state, item, howMany = 1) => {
-  const { money, todaysPurchases, valueAdjustments } = state
-  const numberOfItemsToAdd = Math.min(howMany, inventorySpaceRemaining(state))
-
-  if (numberOfItemsToAdd === 0) {
-    return state
-  }
-
-  const value = getAdjustedItemValue(valueAdjustments, item.id)
-  const totalValue = value * numberOfItemsToAdd
-
-  if (totalValue > money) {
-    return state
-  }
-
-  state = prependPendingPeerMessage(
-    state,
-    PURCHASED_ITEM_PEER_NOTIFICATION`${howMany}${item}`
-  )
-
-  return addItemToInventory(
-    {
-      ...state,
-      money: moneyTotal(money, -totalValue),
-      todaysPurchases: {
-        ...todaysPurchases,
-        [item.id]: (todaysPurchases[item.id] || 0) + numberOfItemsToAdd,
-      },
-    },
-    item,
-    numberOfItemsToAdd
-  )
-}
+export * from './purchaseItem'
 
 /**
  * @param {farmhand.state} state
