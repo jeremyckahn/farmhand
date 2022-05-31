@@ -9,19 +9,11 @@ import upgrades from '../../data/upgrades'
 import {
   areHuggingMachinesInInventory,
   canMakeRecipe,
-  castToMoney,
-  farmProductsSold,
   generateCow,
-  getAdjustedItemValue,
   getCostOfNextStorageExpansion,
   getCowColorId,
   getCowValue,
   getPlotContentType,
-  getResaleValue,
-  getSalePriceMultiplier,
-  isItemAFarmProduct,
-  isItemSoldInShop,
-  levelAchieved,
   moneyTotal,
   nullArray,
 } from '../../utils'
@@ -29,7 +21,6 @@ import {
   COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
   HUGGING_MACHINE_ITEM_ID,
-  LOAN_GARNISHMENT_RATE,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
@@ -45,7 +36,6 @@ import {
   ACHIEVEMENT_COMPLETED,
   LOAN_INCREASED,
   LOAN_PAYOFF,
-  SOLD_ITEM_PEER_NOTIFICATION,
   TOOL_UPGRADED_NOTIFICATION,
 } from '../../templates'
 import { itemType } from '../../enums'
@@ -54,7 +44,6 @@ import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { showNotification } from './showNotification'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
-import { processLevelUp } from './processLevelUp'
 import { addRevenue } from './addRevenue'
 
 export * from './addItemToInventory'
@@ -95,73 +84,7 @@ export * from './updateInventoryRecordsForNextDay'
 export * from './computeStateForNextDay'
 export * from './purchaseItem'
 export * from './addRevenue'
-
-/**
- * @param {farmhand.state} state
- * @param {farmhand.item} item
- * @param {number} [howMany=1]
- * @returns {farmhand.state}
- */
-export const sellItem = (state, { id }, howMany = 1) => {
-  if (howMany === 0) {
-    return state
-  }
-
-  const item = itemsMap[id]
-  const {
-    completedAchievements,
-    itemsSold,
-    money: initialMoney,
-    valueAdjustments,
-  } = state
-  const oldLevel = levelAchieved(farmProductsSold(itemsSold))
-  let { loanBalance } = state
-
-  const adjustedItemValue = isItemSoldInShop(item)
-    ? getResaleValue(item)
-    : getAdjustedItemValue(valueAdjustments, id)
-  const saleIsGarnished = isItemAFarmProduct(item)
-  let saleValue = 0
-  for (let i = 0; i < howMany; i++) {
-    const loanGarnishment = saleIsGarnished
-      ? Math.min(
-          loanBalance,
-          castToMoney(adjustedItemValue * LOAN_GARNISHMENT_RATE)
-        )
-      : 0
-    const garnishedProfit =
-      adjustedItemValue * getSalePriceMultiplier(completedAchievements) -
-      loanGarnishment
-    loanBalance = moneyTotal(loanBalance, -loanGarnishment)
-    saleValue = moneyTotal(saleValue, garnishedProfit)
-  }
-
-  if (saleIsGarnished) {
-    state = adjustLoan(state, moneyTotal(loanBalance, -state.loanBalance))
-  }
-
-  const newItemsSold = { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany }
-
-  // money needs to be passed in explicitly here because state.money gets
-  // mutated above and addRevenue needs its initial value.
-  state = addRevenue({ ...state, money: initialMoney }, saleValue)
-
-  state = {
-    ...state,
-    itemsSold: newItemsSold,
-  }
-
-  state = processLevelUp(state, oldLevel)
-  state = decrementItemFromInventory(state, id, howMany)
-
-  state = prependPendingPeerMessage(
-    state,
-    SOLD_ITEM_PEER_NOTIFICATION`${howMany}${item}`,
-    'warning'
-  )
-
-  return updateLearnedRecipes(state)
-}
+export * from './sellItem'
 
 /**
  * @param {farmhand.state} state
