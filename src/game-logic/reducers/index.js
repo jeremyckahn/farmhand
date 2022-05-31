@@ -55,6 +55,7 @@ import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { showNotification } from './showNotification'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { processLevelUp } from './processLevelUp'
+import { addRevenue } from './addRevenue'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -93,22 +94,7 @@ export * from './updateFinancialRecords'
 export * from './updateInventoryRecordsForNextDay'
 export * from './computeStateForNextDay'
 export * from './purchaseItem'
-
-/**
- * @param {farmhand.state} state
- * @param {number} revenue
- * @returns {farmhand.state}
- */
-const addRevenue = (state, revenueToAdd) => {
-  const { money, revenue, todaysRevenue } = state
-
-  return {
-    ...state,
-    money: moneyTotal(money, revenueToAdd),
-    revenue: moneyTotal(revenue, revenueToAdd),
-    todaysRevenue: moneyTotal(todaysRevenue, revenueToAdd),
-  }
-}
+export * from './addRevenue'
 
 /**
  * @param {farmhand.state} state
