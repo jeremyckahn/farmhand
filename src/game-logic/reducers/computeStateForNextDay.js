@@ -1,4 +1,5 @@
 import { generateCow } from '../../utils'
+import { generateValueAdjustments } from '../../common/utils'
 
 import { processWeather } from './processWeather'
 import { processField } from './processField'
@@ -17,7 +18,18 @@ import { updateFinancialRecords } from './updateFinancialRecords'
 import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay'
 import { applyLoanInterest } from './applyLoanInterest'
 
-import { adjustItemValues } from './index'
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.state}
+ */
+const adjustItemValues = state => ({
+  ...state,
+  historicalValueAdjustments: [state.valueAdjustments],
+  valueAdjustments: generateValueAdjustments(
+    state.priceCrashes,
+    state.priceSurges
+  ),
+})
 
 /**
  * @param {farmhand.state} state

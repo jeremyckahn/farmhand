@@ -26,7 +26,6 @@ import {
   moneyTotal,
   nullArray,
 } from '../../utils'
-import { generateValueAdjustments } from '../../common/utils'
 import {
   COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
@@ -95,19 +94,6 @@ export * from './updatePriceEvents'
 export * from './updateFinancialRecords'
 export * from './updateInventoryRecordsForNextDay'
 export * from './computeStateForNextDay'
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const adjustItemValues = state => ({
-  ...state,
-  historicalValueAdjustments: [state.valueAdjustments],
-  valueAdjustments: generateValueAdjustments(
-    state.priceCrashes,
-    state.priceSurges
-  ),
-})
 
 /**
  * @param {farmhand.state} state
