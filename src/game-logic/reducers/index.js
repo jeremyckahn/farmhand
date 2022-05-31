@@ -8,7 +8,6 @@ import achievements from '../../data/achievements'
 import upgrades from '../../data/upgrades'
 import {
   areHuggingMachinesInInventory,
-  canMakeRecipe,
   generateCow,
   getCostOfNextStorageExpansion,
   getCowColorId,
@@ -46,6 +45,7 @@ import { showNotification } from './showNotification'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { addRevenue } from './addRevenue'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
+import { makeRecipe } from './makeRecipe'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -87,30 +87,7 @@ export * from './purchaseItem'
 export * from './addRevenue'
 export * from './sellItem'
 export * from './updateLearnedRecipes'
-
-/**
- * @param {farmhand.state} state
- * @param {farmhand.recipe} recipe
- * @param {number} [howMany=1]
- * @returns {farmhand.state}
- */
-export const makeRecipe = (state, recipe, howMany = 1) => {
-  if (!canMakeRecipe(recipe, state.inventory, howMany)) {
-    return state
-  }
-
-  state = Object.keys(recipe.ingredients).reduce(
-    (state, ingredientId) =>
-      decrementItemFromInventory(
-        state,
-        ingredientId,
-        recipe.ingredients[ingredientId] * howMany
-      ),
-    state
-  )
-
-  return addItemToInventory(state, recipe, howMany)
-}
+export * from './makeRecipe'
 
 /**
  * @param {farmhand.state} state

@@ -15,7 +15,6 @@ import {
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
 import { huggingMachine } from '../../data/items'
-import { sampleRecipe1 } from '../../data/recipes'
 import { genders, standardCowColors } from '../../enums'
 import {
   generateCow,
@@ -41,39 +40,6 @@ jest.mock('../../constants', () => ({
   CROW_CHANCE: 0,
   PRECIPITATION_CHANCE: 0,
 }))
-
-describe('makeRecipe', () => {
-  describe('there are insufficient ingredients for recipe', () => {
-    test('the recipe is not made', () => {
-      const { inventory } = fn.makeRecipe(
-        {
-          inventory: [{ id: 'sample-item-1', quantity: 1 }],
-          inventoryLimit: -1,
-        },
-        sampleRecipe1
-      )
-
-      expect(inventory).toEqual([{ id: 'sample-item-1', quantity: 1 }])
-    })
-  })
-
-  describe('there are sufficient ingredients for recipe', () => {
-    test('consumes ingredients and adds recipe item to inventory', () => {
-      const { inventory } = fn.makeRecipe(
-        {
-          inventory: [{ id: 'sample-item-1', quantity: 3 }],
-          inventoryLimit: -1,
-        },
-        sampleRecipe1
-      )
-
-      expect(inventory).toEqual([
-        { id: 'sample-item-1', quantity: 1 },
-        { id: 'sample-recipe-1', quantity: 1 },
-      ])
-    })
-  })
-})
 
 describe('purchaseCow', () => {
   const cow = Object.freeze(
