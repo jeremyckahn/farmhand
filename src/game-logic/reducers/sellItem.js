@@ -16,12 +16,9 @@ import { SOLD_ITEM_PEER_NOTIFICATION } from '../../templates'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { processLevelUp } from './processLevelUp'
 import { addRevenue } from './addRevenue'
+import { updateLearnedRecipes } from './updateLearnedRecipes'
 
-import {
-  adjustLoan,
-  prependPendingPeerMessage,
-  updateLearnedRecipes,
-} from './index'
+import { adjustLoan, prependPendingPeerMessage } from './index'
 
 /**
  * @param {farmhand.state} state

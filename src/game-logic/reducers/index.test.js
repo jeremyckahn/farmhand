@@ -42,28 +42,6 @@ jest.mock('../../constants', () => ({
   PRECIPITATION_CHANCE: 0,
 }))
 
-describe('updateLearnedRecipes', () => {
-  describe('recipe condition is not met', () => {
-    test('recipe is not in the returned map', () => {
-      const { learnedRecipes } = fn.updateLearnedRecipes({
-        itemsSold: {},
-      })
-
-      expect(learnedRecipes['sample-recipe-1']).toBe(undefined)
-    })
-  })
-
-  describe('recipe condition is met', () => {
-    test('recipe is in the returned map', () => {
-      const { learnedRecipes } = fn.updateLearnedRecipes({
-        itemsSold: { 'sample-item-1': 3 },
-      })
-
-      expect(learnedRecipes['sample-recipe-1']).toEqual(true)
-    })
-  })
-})
-
 describe('makeRecipe', () => {
   describe('there are insufficient ingredients for recipe', () => {
     test('the recipe is not made', () => {

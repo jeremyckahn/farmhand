@@ -3,7 +3,7 @@
  * @ignore
  */
 
-import { itemsMap, recipesMap } from '../../data/maps'
+import { itemsMap } from '../../data/maps'
 import achievements from '../../data/achievements'
 import upgrades from '../../data/upgrades'
 import {
@@ -45,6 +45,7 @@ import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { showNotification } from './showNotification'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { addRevenue } from './addRevenue'
+import { updateLearnedRecipes } from './updateLearnedRecipes'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -85,21 +86,7 @@ export * from './computeStateForNextDay'
 export * from './purchaseItem'
 export * from './addRevenue'
 export * from './sellItem'
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const updateLearnedRecipes = state => ({
-  ...state,
-  learnedRecipes: Object.keys(recipesMap).reduce((acc, recipeId) => {
-    if (recipesMap[recipeId].condition(state)) {
-      acc[recipeId] = true
-    }
-
-    return acc
-  }, {}),
-})
+export * from './updateLearnedRecipes'
 
 /**
  * @param {farmhand.state} state
