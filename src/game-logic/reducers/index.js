@@ -8,8 +8,6 @@ import achievements from '../../data/achievements'
 import {
   areHuggingMachinesInInventory,
   getCostOfNextStorageExpansion,
-  getCowColorId,
-  getCowValue,
   getPlotContentType,
   moneyTotal,
   nullArray,
@@ -40,7 +38,6 @@ import { addItemToInventory } from './addItemToInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { showNotification } from './showNotification'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
-import { addRevenue } from './addRevenue'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
 
 export * from './addItemToInventory'
@@ -87,29 +84,7 @@ export * from './makeRecipe'
 export * from './upgradeTool'
 export * from './purchaseCow'
 export * from './addCowToInventory'
-
-/**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @returns {farmhand.state}
- */
-export const sellCow = (state, cow) => {
-  const { cowsSold } = state
-  const cowColorId = getCowColorId(cow)
-  const cowValue = getCowValue(cow, true)
-
-  state = removeCowFromInventory(state, cow)
-  state = addRevenue(state, cowValue)
-
-  const newCowsSold = {
-    ...cowsSold,
-    [cowColorId]: (cowsSold[cowColorId] || 0) + 1,
-  }
-
-  state = { ...state, cowsSold: newCowsSold }
-
-  return state
-}
+export * from './sellCow'
 
 /**
  * @param {farmhand.state} state
