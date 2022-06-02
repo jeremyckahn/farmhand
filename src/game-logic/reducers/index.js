@@ -3,10 +3,8 @@
  * @ignore
  */
 
-import { itemsMap } from '../../data/maps'
 import achievements from '../../data/achievements'
 import {
-  areHuggingMachinesInInventory,
   getCostOfNextStorageExpansion,
   getPlotContentType,
   moneyTotal,
@@ -15,7 +13,6 @@ import {
 import {
   COW_GESTATION_PERIOD_DAYS,
   COW_HUG_BENEFIT,
-  HUGGING_MACHINE_ITEM_ID,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
@@ -34,8 +31,6 @@ import {
 } from '../../templates'
 import { itemType } from '../../enums'
 
-import { addItemToInventory } from './addItemToInventory'
-import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { showNotification } from './showNotification'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
@@ -88,34 +83,7 @@ export * from './addCowToInventory'
 export * from './sellCow'
 export * from './removeCowFromInventory'
 export * from './modifyCow'
-
-/**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @param {boolean} doAutomaticallyHug
- * @returns {farmhand.state}
- */
-export const changeCowAutomaticHugState = (state, cow, doAutomaticallyHug) => {
-  if (
-    (doAutomaticallyHug && !areHuggingMachinesInInventory(state.inventory)) ||
-    // TODO: This Boolean cast is needed for backwards compatibility. Remove it
-    // after 10/1/2020.
-    Boolean(cow.isUsingHuggingMachine) === doAutomaticallyHug
-  ) {
-    return state
-  }
-
-  state = modifyCow(state, cow.id, cow => ({
-    ...cow,
-    isUsingHuggingMachine: doAutomaticallyHug,
-  }))
-
-  state = doAutomaticallyHug
-    ? decrementItemFromInventory(state, HUGGING_MACHINE_ITEM_ID)
-    : addItemToInventory(state, itemsMap[HUGGING_MACHINE_ITEM_ID])
-
-  return state
-}
+export * from './changeCowAutomaticHugState'
 
 /**
  * @param {farmhand.state} state
