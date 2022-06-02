@@ -1,7 +1,7 @@
 import { COW_WEIGHT_MULTIPLIER_MINIMUM } from '../../constants'
 import { COW_ATTRITION_MESSAGE } from '../../templates'
 
-import { removeCowFromInventory } from './index'
+import { removeCowFromInventory } from './removeCowFromInventory'
 
 /**
  * @param {farmhand.state} state

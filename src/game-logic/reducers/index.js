@@ -85,26 +85,7 @@ export * from './upgradeTool'
 export * from './purchaseCow'
 export * from './addCowToInventory'
 export * from './sellCow'
-
-/**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @returns {farmhand.state}
- */
-export const removeCowFromInventory = (state, cow) => {
-  const cowInventory = [...state.cowInventory]
-  const { isUsingHuggingMachine } = cow
-
-  cowInventory.splice(cowInventory.indexOf(cow), 1)
-
-  if (isUsingHuggingMachine) {
-    state = addItemToInventory(state, itemsMap[HUGGING_MACHINE_ITEM_ID])
-  }
-
-  state = changeCowBreedingPenResident(state, cow, false)
-
-  return { ...state, cowInventory }
-}
+export * from './removeCowFromInventory'
 
 /**
  * @param {farmhand.state} state

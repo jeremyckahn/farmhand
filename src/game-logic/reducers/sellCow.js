@@ -2,7 +2,7 @@ import { getCowColorId, getCowValue } from '../../utils'
 
 import { addRevenue } from './addRevenue'
 
-import { removeCowFromInventory } from './index'
+import { removeCowFromInventory } from './removeCowFromInventory'
 
 /**
  * @param {farmhand.state} state
