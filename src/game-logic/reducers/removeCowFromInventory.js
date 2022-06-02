@@ -3,7 +3,7 @@ import { HUGGING_MACHINE_ITEM_ID } from '../../constants'
 
 import { addItemToInventory } from './addItemToInventory'
 
-import { changeCowBreedingPenResident } from './index'
+import { changeCowBreedingPenResident } from './changeCowBreedingPenResident'
 
 /**
  * @param {farmhand.state} state
