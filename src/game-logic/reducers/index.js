@@ -39,6 +39,7 @@ import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { showNotification } from './showNotification'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
+import { modifyCow } from './modifyCow'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -86,29 +87,7 @@ export * from './purchaseCow'
 export * from './addCowToInventory'
 export * from './sellCow'
 export * from './removeCowFromInventory'
-
-/**
- * @param {farmhand.state} state
- * @param {string} cowId
- * @param {Function(farmhand.cow)} fn Must return the modified cow or
- * undefined.
- * @returns {farmhand.state}
- */
-export const modifyCow = (state, cowId, fn) => {
-  const cowInventory = [...state.cowInventory]
-  const cow = cowInventory.find(({ id }) => id === cowId)
-  const cowIndex = cowInventory.indexOf(cow)
-
-  cowInventory[cowIndex] = {
-    ...cow,
-    ...fn(cow),
-  }
-
-  return {
-    ...state,
-    cowInventory,
-  }
-}
+export * from './modifyCow'
 
 /**
  * @param {farmhand.state} state
