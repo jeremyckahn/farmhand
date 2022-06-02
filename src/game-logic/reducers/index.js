@@ -8,7 +8,6 @@ import {
   getCostOfNextStorageExpansion,
   getPlotContentType,
   moneyTotal,
-  nullArray,
 } from '../../utils'
 import {
   COW_HUG_BENEFIT,
@@ -18,7 +17,6 @@ import {
   MAX_PENDING_PEER_MESSAGES,
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
-  PURCHASEABLE_FIELD_SIZES,
   PURCHASEABLE_SMELTERS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
@@ -83,30 +81,8 @@ export * from './sellCow'
 export * from './removeCowFromInventory'
 export * from './modifyCow'
 export * from './changeCowAutomaticHugState'
-
-/**
- * @param {farmhand.state} state
- * @param {number} fieldId
- * @returns {farmhand.state}
- */
-export const purchaseField = (state, fieldId) => {
-  const { field, money, purchasedField } = state
-  if (purchasedField >= fieldId) {
-    return state
-  }
-
-  const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId)
-
-  return {
-    purchasedField: fieldId,
-    field: nullArray(rows).map((_, row) =>
-      nullArray(columns).map(
-        (_, column) => (field[row] && field[row][column]) || null
-      )
-    ),
-    money: moneyTotal(money, -price),
-  }
-}
+export * from './changeCowBreedingPenResident'
+export * from './purchaseField'
 
 /**
  * @param {farmhand.state} state
