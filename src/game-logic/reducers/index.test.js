@@ -36,15 +36,6 @@ describe('selectCow', () => {
   })
 })
 
-describe('offerCow', () => {
-  test('makes specified cow available for trade', () => {
-    const cowId = 'abc123'
-    const { cowIdOfferedForTrade } = fn.offerCow({}, cowId)
-
-    expect(cowIdOfferedForTrade).toEqual(cowId)
-  })
-})
-
 describe('withdrawCow', () => {
   test('makes specified cow unavailable for trade', () => {
     const cowId = 'abc123'
