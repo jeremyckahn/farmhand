@@ -12,10 +12,8 @@ import {
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
   PURCHASEABLE_COW_PENS,
-  PURCHASEABLE_SMELTERS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
-import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings'
 import {
   ACHIEVEMENT_COMPLETED,
   LOAN_INCREASED,
@@ -23,7 +21,6 @@ import {
 } from '../../templates'
 
 import { showNotification } from './showNotification'
-import { updateLearnedRecipes } from './updateLearnedRecipes'
 import { modifyCow } from './modifyCow'
 
 export * from './addItemToInventory'
@@ -78,27 +75,7 @@ export * from './changeCowBreedingPenResident'
 export * from './purchaseField'
 export * from './waterPlot'
 export * from './purchaseCombine'
-
-/**
- * @param {farmhand.state} state
- * @param {number} smelterId
- * @returns {farmhand.state}
- */
-export const purchaseSmelter = (state, smelterId) => {
-  const { money, purchasedSmelter } = state
-
-  if (purchasedSmelter >= smelterId) return state
-
-  state = {
-    ...state,
-    purchasedSmelter: smelterId,
-    money: moneyTotal(money, -PURCHASEABLE_SMELTERS.get(smelterId).price),
-  }
-
-  state = showNotification(state, FORGE_AVAILABLE_NOTIFICATION)
-
-  return updateLearnedRecipes(state)
-}
+export * from './purchaseSmelter'
 
 /**
  * @param {farmhand.state} state
