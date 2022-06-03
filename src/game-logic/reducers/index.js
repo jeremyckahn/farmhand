@@ -6,9 +6,7 @@
 import achievements from '../../data/achievements'
 import { moneyTotal } from '../../utils'
 import {
-  COW_HUG_BENEFIT,
   MAX_ANIMAL_NAME_LENGTH,
-  MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
 } from '../../constants'
@@ -76,21 +74,7 @@ export * from './purchaseCombine'
 export * from './purchaseSmelter'
 export * from './purchaseCowPen'
 export * from './purchaseStorageExpansion'
-
-/**
- * @param {farmhand.state} state
- * @param {string} cowId
- * @returns {farmhand.state}
- */
-export const hugCow = (state, cowId) =>
-  modifyCow(state, cowId, cow =>
-    cow.happinessBoostsToday >= MAX_DAILY_COW_HUG_BENEFITS
-      ? cow
-      : {
-          happiness: Math.min(1, cow.happiness + COW_HUG_BENEFIT),
-          happinessBoostsToday: cow.happinessBoostsToday + 1,
-        }
-  )
+export * from './hugCow'
 
 /**
  * @param {farmhand.state} state

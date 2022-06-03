@@ -5,7 +5,6 @@ import {
   LOAN_PAYOFF,
 } from '../../templates'
 import {
-  COW_HUG_BENEFIT,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
@@ -34,56 +33,6 @@ describe('selectCow', () => {
   test('updates selectedCowId', () => {
     const { selectedCowId } = fn.selectCow({}, { id: 'abc' })
     expect(selectedCowId).toEqual('abc')
-  })
-})
-
-describe('hugCow', () => {
-  describe('cow has not hit daily hug benefit limit', () => {
-    test('increases cow happiness', () => {
-      const cow = generateCow()
-      const {
-        cowInventory: [{ happiness, happinessBoostsToday }],
-      } = fn.hugCow(
-        {
-          cowInventory: [cow],
-        },
-        cow.id
-      )
-
-      expect(happiness).toBe(COW_HUG_BENEFIT)
-      expect(happinessBoostsToday).toBe(1)
-    })
-
-    describe('cow is at max happiness', () => {
-      test('does not increase cow happiness', () => {
-        const cow = generateCow({ happiness: 1 })
-        const { cowInventory } = fn.hugCow(
-          {
-            cowInventory: [cow],
-          },
-          cow.id
-        )
-
-        expect(cowInventory[0].happiness).toBe(1)
-      })
-    })
-  })
-
-  describe('cow has hit daily hug benefit limit', () => {
-    test('does not increase cow happiness', () => {
-      const cow = generateCow({ happiness: 0.5, happinessBoostsToday: 3 })
-      const {
-        cowInventory: [{ happiness, happinessBoostsToday }],
-      } = fn.hugCow(
-        {
-          cowInventory: [cow],
-        },
-        cow.id
-      )
-
-      expect(happiness).toBe(0.5)
-      expect(happinessBoostsToday).toBe(3)
-    })
   })
 })
 
