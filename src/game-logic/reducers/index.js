@@ -11,7 +11,6 @@ import {
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
-  PURCHASEABLE_COW_PENS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
 import {
@@ -76,24 +75,7 @@ export * from './purchaseField'
 export * from './waterPlot'
 export * from './purchaseCombine'
 export * from './purchaseSmelter'
-
-/**
- * @param {farmhand.state} state
- * @param {number} cowPenId
- * @returns {farmhand.state}
- */
-export const purchaseCowPen = (state, cowPenId) => {
-  const { money, purchasedCowPen } = state
-
-  if (purchasedCowPen >= cowPenId) {
-    return state
-  }
-
-  return {
-    purchasedCowPen: cowPenId,
-    money: moneyTotal(money, -PURCHASEABLE_COW_PENS.get(cowPenId).price),
-  }
-}
+export * from './purchaseCowPen'
 
 /**
  * @param {farmhand.state} state

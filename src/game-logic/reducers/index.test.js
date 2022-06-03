@@ -9,7 +9,6 @@ import {
   MAX_ANIMAL_NAME_LENGTH,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
-  PURCHASEABLE_COW_PENS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
 import { generateCow, getCostOfNextStorageExpansion } from '../../utils'
@@ -36,23 +35,6 @@ describe('selectCow', () => {
   test('updates selectedCowId', () => {
     const { selectedCowId } = fn.selectCow({}, { id: 'abc' })
     expect(selectedCowId).toEqual('abc')
-  })
-})
-
-describe('purchaseCowPen', () => {
-  test('updates purchasedCowPen', () => {
-    const { purchasedCowPen } = fn.purchaseCowPen({}, 1)
-    expect(purchasedCowPen).toEqual(1)
-  })
-
-  test('prevents repurchasing options', () => {
-    const { purchasedCowPen } = fn.purchaseCowPen({ purchasedCowPen: 2 }, 1)
-    expect(purchasedCowPen).toEqual(2)
-  })
-
-  test('deducts money', () => {
-    const { money } = fn.purchaseCowPen({ money: 1500 }, 1)
-    expect(money).toEqual(PURCHASEABLE_COW_PENS.get(1).price - 1500)
   })
 })
 
