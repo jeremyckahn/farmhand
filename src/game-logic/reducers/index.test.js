@@ -9,7 +9,6 @@ import {
   MAX_ANIMAL_NAME_LENGTH,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
-  PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
@@ -37,23 +36,6 @@ describe('selectCow', () => {
   test('updates selectedCowId', () => {
     const { selectedCowId } = fn.selectCow({}, { id: 'abc' })
     expect(selectedCowId).toEqual('abc')
-  })
-})
-
-describe('purchaseCombine', () => {
-  test('updates purchasedCombine', () => {
-    const { purchasedCombine } = fn.purchaseCombine({}, 1)
-    expect(purchasedCombine).toEqual(1)
-  })
-
-  test('prevents repurchasing options', () => {
-    const { purchasedCombine } = fn.purchaseCombine({ purchasedCombine: 2 }, 1)
-    expect(purchasedCombine).toEqual(2)
-  })
-
-  test('deducts money', () => {
-    const { money } = fn.purchaseCombine({ money: 500000 }, 1)
-    expect(money).toEqual(PURCHASEABLE_COMBINES.get(1).price - 500000)
   })
 })
 

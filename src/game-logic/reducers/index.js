@@ -11,7 +11,6 @@ import {
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
-  PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_SMELTERS,
   STORAGE_EXPANSION_AMOUNT,
@@ -78,24 +77,7 @@ export * from './changeCowAutomaticHugState'
 export * from './changeCowBreedingPenResident'
 export * from './purchaseField'
 export * from './waterPlot'
-
-/**
- * @param {farmhand.state} state
- * @param {number} combineId
- * @returns {farmhand.state}
- */
-export const purchaseCombine = (state, combineId) => {
-  const { money, purchasedCombine } = state
-
-  if (purchasedCombine >= combineId) {
-    return state
-  }
-
-  return {
-    purchasedCombine: combineId,
-    money: moneyTotal(money, -PURCHASEABLE_COMBINES.get(combineId).price),
-  }
-}
+export * from './purchaseCombine'
 
 /**
  * @param {farmhand.state} state
