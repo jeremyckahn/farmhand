@@ -6,7 +6,6 @@
 import achievements from '../../data/achievements'
 import { moneyTotal } from '../../utils'
 import {
-  MAX_ANIMAL_NAME_LENGTH,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
 } from '../../constants'
@@ -17,7 +16,6 @@ import {
 } from '../../templates'
 
 import { showNotification } from './showNotification'
-import { modifyCow } from './modifyCow'
 
 export * from './addItemToInventory'
 export * from './applyCrows'
@@ -77,17 +75,7 @@ export * from './purchaseStorageExpansion'
 export * from './hugCow'
 export * from './offerCow'
 export * from './withdrawCow'
-
-/**
- * @param {farmhand.state} state
- * @param {string} newName
- * @param {string} cowId
- * @returns {farmhand.state}
- */
-export const changeCowName = (state, cowId, newName) =>
-  modifyCow(state, cowId, () => ({
-    name: newName.slice(0, MAX_ANIMAL_NAME_LENGTH),
-  }))
+export * from './changeCowName'
 
 /**
  * @param {farmhand.state} state

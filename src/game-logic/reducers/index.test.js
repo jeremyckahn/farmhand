@@ -5,11 +5,9 @@ import {
   LOAN_PAYOFF,
 } from '../../templates'
 import {
-  MAX_ANIMAL_NAME_LENGTH,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
 } from '../../constants'
-import { generateCow } from '../../utils'
 
 import * as fn from './'
 
@@ -33,37 +31,6 @@ describe('selectCow', () => {
   test('updates selectedCowId', () => {
     const { selectedCowId } = fn.selectCow({}, { id: 'abc' })
     expect(selectedCowId).toEqual('abc')
-  })
-})
-
-describe('changeCowName', () => {
-  test('updates cow name', () => {
-    const cow = generateCow()
-    const { cowInventory } = fn.changeCowName(
-      {
-        cowInventory: [generateCow(), cow],
-      },
-      cow.id,
-      'new name'
-    )
-
-    expect(cowInventory[1]).toEqual({
-      ...cow,
-      name: 'new name',
-    })
-  })
-
-  test('restricts name length', () => {
-    const cow = generateCow()
-    const { cowInventory } = fn.changeCowName(
-      {
-        cowInventory: [cow],
-      },
-      cow.id,
-      new Array(100).join('.')
-    )
-
-    expect(cowInventory[0].name).toHaveLength(MAX_ANIMAL_NAME_LENGTH)
   })
 })
 
