@@ -76,21 +76,7 @@ export * from './purchaseCowPen'
 export * from './purchaseStorageExpansion'
 export * from './hugCow'
 export * from './offerCow'
-
-/**
- * @param {farmhand.state} state
- * @param {string} cowId
- * @returns {farmhand.state}
- */
-export const withdrawCow = (state, cowId) => {
-  const { cowIdOfferedForTrade } = state
-
-  if (cowId === cowIdOfferedForTrade) {
-    state = { ...state, cowIdOfferedForTrade: '' }
-  }
-
-  return state
-}
+export * from './withdrawCow'
 
 /**
  * @param {farmhand.state} state

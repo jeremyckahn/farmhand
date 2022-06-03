@@ -36,26 +36,6 @@ describe('selectCow', () => {
   })
 })
 
-describe('withdrawCow', () => {
-  test('makes specified cow unavailable for trade', () => {
-    const cowId = 'abc123'
-
-    let { cowIdOfferedForTrade } = fn.withdrawCow(
-      { cowIdOfferedForTrade: cowId },
-      'some-other-cow'
-    )
-
-    expect(cowIdOfferedForTrade).toEqual(cowId)
-
-    cowIdOfferedForTrade = fn.withdrawCow(
-      { cowIdOfferedForTrade: cowId },
-      cowId
-    ).cowIdOfferedForTrade
-
-    expect(cowIdOfferedForTrade).toEqual('')
-  })
-})
-
 describe('changeCowName', () => {
   test('updates cow name', () => {
     const cow = generateCow()
