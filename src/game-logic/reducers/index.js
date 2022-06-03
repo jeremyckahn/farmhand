@@ -4,14 +4,13 @@
  */
 
 import achievements from '../../data/achievements'
-import { getCostOfNextStorageExpansion, moneyTotal } from '../../utils'
+import { moneyTotal } from '../../utils'
 import {
   COW_HUG_BENEFIT,
   MAX_ANIMAL_NAME_LENGTH,
   MAX_DAILY_COW_HUG_BENEFITS,
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
-  STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
 import {
   ACHIEVEMENT_COMPLETED,
@@ -76,25 +75,7 @@ export * from './waterPlot'
 export * from './purchaseCombine'
 export * from './purchaseSmelter'
 export * from './purchaseCowPen'
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const purchaseStorageExpansion = state => {
-  const { money, inventoryLimit } = state
-  const storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit)
-
-  if (money < storageUpgradeCost || inventoryLimit === -1) {
-    return state
-  }
-
-  return {
-    ...state,
-    inventoryLimit: inventoryLimit + STORAGE_EXPANSION_AMOUNT,
-    money: moneyTotal(money, -storageUpgradeCost),
-  }
-}
+export * from './purchaseStorageExpansion'
 
 /**
  * @param {farmhand.state} state
