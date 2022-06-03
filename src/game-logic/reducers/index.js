@@ -4,11 +4,7 @@
  */
 
 import achievements from '../../data/achievements'
-import {
-  getCostOfNextStorageExpansion,
-  getPlotContentType,
-  moneyTotal,
-} from '../../utils'
+import { getCostOfNextStorageExpansion, moneyTotal } from '../../utils'
 import {
   COW_HUG_BENEFIT,
   MAX_ANIMAL_NAME_LENGTH,
@@ -26,10 +22,8 @@ import {
   LOAN_INCREASED,
   LOAN_PAYOFF,
 } from '../../templates'
-import { itemType } from '../../enums'
 
 import { showNotification } from './showNotification'
-import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
 import { modifyCow } from './modifyCow'
 
@@ -83,25 +77,7 @@ export * from './modifyCow'
 export * from './changeCowAutomaticHugState'
 export * from './changeCowBreedingPenResident'
 export * from './purchaseField'
-
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-export const waterPlot = (state, x, y) => {
-  const plotContent = state.field[y][x]
-
-  if (!plotContent || getPlotContentType(plotContent) !== itemType.CROP) {
-    return state
-  }
-
-  return modifyFieldPlotAt(state, x, y, crop => ({
-    ...crop,
-    wasWateredToday: true,
-  }))
-}
+export * from './waterPlot'
 
 /**
  * @param {farmhand.state} state

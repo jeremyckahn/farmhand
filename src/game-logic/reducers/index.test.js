@@ -13,11 +13,7 @@ import {
   PURCHASEABLE_COW_PENS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
-import {
-  generateCow,
-  getCostOfNextStorageExpansion,
-  getPlotContentFromItemId,
-} from '../../utils'
+import { generateCow, getCostOfNextStorageExpansion } from '../../utils'
 
 import * as fn from './'
 
@@ -41,30 +37,6 @@ describe('selectCow', () => {
   test('updates selectedCowId', () => {
     const { selectedCowId } = fn.selectCow({}, { id: 'abc' })
     expect(selectedCowId).toEqual('abc')
-  })
-})
-
-describe('waterPlot', () => {
-  describe('non-crop plotContent', () => {
-    test('no-ops', () => {
-      const inputState = { field: [[getPlotContentFromItemId('sprinkler')]] }
-      const state = fn.waterPlot(inputState, 0, 0)
-      expect(state).toEqual(inputState)
-    })
-  })
-
-  describe('crops', () => {
-    test('sets wasWateredToday to true', () => {
-      const { field } = fn.waterPlot(
-        {
-          field: [[testCrop({ itemId: 'sample-crop-1' })]],
-        },
-        0,
-        0
-      )
-
-      expect(field[0][0].wasWateredToday).toBe(true)
-    })
   })
 })
 
