@@ -3,17 +3,11 @@
  * @ignore
  */
 
-import { moneyTotal } from '../../utils'
 import {
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
 } from '../../constants'
-import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates'
-
-import { showNotification } from './showNotification'
-
 export * from './addItemToInventory'
-export * from './applyCrows'
 export * from './applyPrecipitation'
 export * from './clearPlot'
 export * from './decrementItemFromInventory'
@@ -73,37 +67,11 @@ export * from './withdrawCow'
 export * from './changeCowName'
 export * from './selectCow'
 export * from './updateAchievements'
+export * from './adjustLoan'
 
 /**
  * @param {farmhand.state} state
  * @param {number} adjustmentAmount This should be a negative number if the
- * loan is being paid down, positive if a loan is being taken out.
- * @returns {farmhand.state}
- */
-export const adjustLoan = (state, adjustmentAmount) => {
-  const loanBalance = moneyTotal(state.loanBalance, adjustmentAmount)
-  const money = moneyTotal(state.money, adjustmentAmount)
-
-  if (loanBalance === 0 && adjustmentAmount < 0) {
-    state = showNotification(state, LOAN_PAYOFF``, 'success')
-  } else if (adjustmentAmount > 0) {
-    // Player is taking out a new loan
-    state = {
-      ...showNotification(state, LOAN_INCREASED`${loanBalance}`, 'info'),
-      loansTakenOut: state.loansTakenOut + 1,
-    }
-  }
-
-  return {
-    ...state,
-    loanBalance,
-    money,
-  }
-}
-
-/**
- * @param {farmhand.state} state
- * @param {function(farmhand.state, number, number)} fieldFn
  * @param {number} rangeRadius
  * @param {number} x
  * @param {number} y

@@ -18,7 +18,9 @@ import { processLevelUp } from './processLevelUp'
 import { addRevenue } from './addRevenue'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
 
-import { adjustLoan, prependPendingPeerMessage } from './index'
+import { adjustLoan } from './adjustLoan'
+
+import { prependPendingPeerMessage } from './index'
 
 /**
  * @param {farmhand.state} state
