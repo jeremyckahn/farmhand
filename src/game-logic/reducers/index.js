@@ -69,18 +69,7 @@ export * from './selectCow'
 export * from './updateAchievements'
 export * from './adjustLoan'
 export * from './forRange'
-
-/**
- * @param {farmhand.state} state
- * @param {string} peerId The peer to add
- * @returns {farmhand.state}
- */
-export const addPeer = (state, peerId) => {
-  const peers = { ...state.peers }
-  peers[peerId] = null
-
-  return { ...state, peers }
-}
+export * from './addPeer'
 
 /**
  * @param {farmhand.state} state
