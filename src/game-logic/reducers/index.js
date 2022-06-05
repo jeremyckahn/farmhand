@@ -76,13 +76,7 @@ export * from './hugCow'
 export * from './offerCow'
 export * from './withdrawCow'
 export * from './changeCowName'
-
-/**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @returns {farmhand.state}
- */
-export const selectCow = (state, { id }) => ({ ...state, selectedCowId: id })
+export * from './selectCow'
 
 /**
  * @param {farmhand.state} state

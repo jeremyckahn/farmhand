@@ -27,13 +27,6 @@ jest.mock('../../constants', () => ({
   PRECIPITATION_CHANCE: 0,
 }))
 
-describe('selectCow', () => {
-  test('updates selectedCowId', () => {
-    const { selectedCowId } = fn.selectCow({}, { id: 'abc' })
-    expect(selectedCowId).toEqual('abc')
-  })
-})
-
 describe('updateAchievements', () => {
   let updateAchievements
 
