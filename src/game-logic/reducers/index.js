@@ -3,7 +3,6 @@
  * @ignore
  */
 
-import { MAX_PENDING_PEER_MESSAGES } from '../../constants'
 export * from './addItemToInventory'
 export * from './applyPrecipitation'
 export * from './clearPlot'
@@ -69,23 +68,4 @@ export * from './forRange'
 export * from './addPeer'
 export * from './removePeer'
 export * from './updatePeer'
-
-/**
- * @param {farmhand.state} state
- * @param {string} peerMessage
- * @param {string?} [severity='info']
- * @returns {farmhand.state}
- */
-export const prependPendingPeerMessage = (
-  state,
-  message,
-  severity = 'info'
-) => {
-  return {
-    ...state,
-    pendingPeerMessages: [
-      { id: state.id, message, severity },
-      ...state.pendingPeerMessages,
-    ].slice(0, MAX_PENDING_PEER_MESSAGES),
-  }
-}
+export * from './prependPendingPeerMessage'
