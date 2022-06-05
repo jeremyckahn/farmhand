@@ -1,7 +1,4 @@
-import {
-  MAX_LATEST_PEER_MESSAGES,
-  MAX_PENDING_PEER_MESSAGES,
-} from '../../constants'
+import { MAX_PENDING_PEER_MESSAGES } from '../../constants'
 
 import * as fn from './'
 
@@ -20,35 +17,6 @@ jest.mock('../../constants', () => ({
   CROW_CHANCE: 0,
   PRECIPITATION_CHANCE: 0,
 }))
-
-describe('updatePeer', () => {
-  test('updates peer data', () => {
-    const { latestPeerMessages, peers } = fn.updatePeer(
-      {
-        latestPeerMessages: [],
-        peers: { abc123: { foo: true } },
-      },
-      'abc123',
-      { foo: false }
-    )
-
-    expect(latestPeerMessages).toEqual([])
-    expect(peers).toEqual({ abc123: { foo: false } })
-  })
-
-  test('limits pendingPeerMessages', () => {
-    const { latestPeerMessages } = fn.updatePeer(
-      {
-        latestPeerMessages: new Array(50).fill('message'),
-        peers: { abc123: { foo: true } },
-      },
-      'abc123',
-      { foo: false }
-    )
-
-    expect(latestPeerMessages).toHaveLength(MAX_LATEST_PEER_MESSAGES)
-  })
-})
 
 describe('prependPendingPeerMessage', () => {
   test('prepends a message', () => {

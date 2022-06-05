@@ -3,10 +3,7 @@
  * @ignore
  */
 
-import {
-  MAX_LATEST_PEER_MESSAGES,
-  MAX_PENDING_PEER_MESSAGES,
-} from '../../constants'
+import { MAX_PENDING_PEER_MESSAGES } from '../../constants'
 export * from './addItemToInventory'
 export * from './applyPrecipitation'
 export * from './clearPlot'
@@ -71,30 +68,7 @@ export * from './adjustLoan'
 export * from './forRange'
 export * from './addPeer'
 export * from './removePeer'
-
-/**
- * @param {farmhand.state} state
- * @param {string} peerId The peer to update
- * @param {Object} state
- * @returns {farmhand.state}
- */
-export const updatePeer = (state, peerId, peerState) => {
-  const peers = { ...state.peers }
-  peers[peerId] = peerState
-
-  // Out of date peer clients may not provide pendingPeerMessages, so default
-  // it here.
-  const { pendingPeerMessages = [] } = peerState
-
-  return {
-    ...state,
-    peers,
-    latestPeerMessages: [
-      ...pendingPeerMessages,
-      ...state.latestPeerMessages,
-    ].slice(0, MAX_LATEST_PEER_MESSAGES),
-  }
-}
+export * from './updatePeer'
 
 /**
  * @param {farmhand.state} state
