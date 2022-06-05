@@ -1,4 +1,3 @@
-import { testCrop } from '../../test-utils'
 import {
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
@@ -21,34 +20,6 @@ jest.mock('../../constants', () => ({
   CROW_CHANCE: 0,
   PRECIPITATION_CHANCE: 0,
 }))
-
-describe('forRange', () => {
-  test('calls given reducer on range of plots', () => {
-    const { field } = fn.forRange(
-      {
-        field: [
-          [
-            testCrop({ itemId: 'sample-crop-1' }),
-            testCrop({ itemId: 'sample-crop-1' }),
-          ],
-          [testCrop({ itemId: 'sample-crop-1' })],
-          [],
-          [],
-          [testCrop({ itemId: 'sample-crop-1' })],
-        ],
-      },
-      fn.waterPlot,
-      1,
-      1,
-      1
-    )
-
-    expect(field[0][0].wasWateredToday).toBe(true)
-    expect(field[0][1].wasWateredToday).toBe(true)
-    expect(field[1][0].wasWateredToday).toBe(true)
-    expect(field[4][0].wasWateredToday).toBe(false)
-  })
-})
 
 describe('updatePeer', () => {
   test('updates peer data', () => {
