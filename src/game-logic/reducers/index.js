@@ -3,17 +3,12 @@
  * @ignore
  */
 
-import achievements from '../../data/achievements'
 import { moneyTotal } from '../../utils'
 import {
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
 } from '../../constants'
-import {
-  ACHIEVEMENT_COMPLETED,
-  LOAN_INCREASED,
-  LOAN_PAYOFF,
-} from '../../templates'
+import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates'
 
 import { showNotification } from './showNotification'
 
@@ -77,35 +72,7 @@ export * from './offerCow'
 export * from './withdrawCow'
 export * from './changeCowName'
 export * from './selectCow'
-
-/**
- * @param {farmhand.state} state
- * @param {farmhand.state} prevState
- * @returns {farmhand.state}
- */
-export const updateAchievements = (state, prevState) =>
-  achievements.reduce((state, achievement) => {
-    if (
-      !state.completedAchievements[achievement.id] &&
-      achievement.condition(state, prevState)
-    ) {
-      state = {
-        ...achievement.reward(state),
-        completedAchievements: {
-          ...state.completedAchievements,
-          [achievement.id]: true,
-        },
-      }
-
-      state = showNotification(
-        state,
-        ACHIEVEMENT_COMPLETED`${achievement}`,
-        'success'
-      )
-    }
-
-    return state
-  }, state)
+export * from './updateAchievements'
 
 /**
  * @param {farmhand.state} state

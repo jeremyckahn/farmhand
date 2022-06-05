@@ -1,9 +1,5 @@
 import { testCrop } from '../../test-utils'
-import {
-  ACHIEVEMENT_COMPLETED,
-  LOAN_INCREASED,
-  LOAN_PAYOFF,
-} from '../../templates'
+import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates'
 import {
   MAX_LATEST_PEER_MESSAGES,
   MAX_PENDING_PEER_MESSAGES,
@@ -26,98 +22,6 @@ jest.mock('../../constants', () => ({
   CROW_CHANCE: 0,
   PRECIPITATION_CHANCE: 0,
 }))
-
-describe('updateAchievements', () => {
-  let updateAchievements
-
-  beforeAll(() => {
-    jest.resetModules()
-    jest.mock('../../data/achievements', () => [
-      {
-        id: 'test-achievement',
-        name: 'Test Achievement',
-        description: '',
-        rewardDescription: '',
-        condition: state => !state.conditionSatisfied,
-        reward: state => ({ ...state, conditionSatisfied: true }),
-      },
-    ])
-
-    updateAchievements = jest.requireActual('./').updateAchievements
-  })
-
-  describe('achievement was not previously met', () => {
-    describe('condition is not met', () => {
-      test('does not update state', () => {
-        const inputState = {
-          completedAchievements: {},
-          conditionSatisfied: true,
-          todaysNotifications: [],
-        }
-
-        const state = updateAchievements(inputState)
-
-        expect(state).toBe(inputState)
-      })
-    })
-
-    describe('condition is met', () => {
-      test('updates state', () => {
-        const inputState = {
-          completedAchievements: {},
-          conditionSatisfied: false,
-          todaysNotifications: [],
-        }
-
-        const state = updateAchievements(inputState)
-
-        expect(state).toMatchObject({
-          completedAchievements: { 'test-achievement': true },
-          conditionSatisfied: true,
-          todaysNotifications: [
-            {
-              message: ACHIEVEMENT_COMPLETED`${{
-                name: 'Test Achievement',
-                rewardDescription: '',
-              }}`,
-              severity: 'success',
-            },
-          ],
-        })
-      })
-    })
-  })
-
-  describe('achievement was previously met', () => {
-    describe('condition is not met', () => {
-      test('does not update state', () => {
-        const inputState = {
-          completedAchievements: { 'test-achievement': true },
-          conditionSatisfied: true,
-          todaysNotifications: [],
-        }
-
-        const state = updateAchievements(inputState)
-
-        expect(state).toBe(inputState)
-      })
-    })
-
-    describe('condition is met', () => {
-      test('does not update state', () => {
-        const inputState = {
-          completedAchievements: { 'test-achievement': true },
-          conditionSatisfied: false,
-          todaysNotifications: [],
-        }
-
-        const state = updateAchievements(inputState)
-
-        expect(state).toBe(inputState)
-      })
-    })
-  })
-})
 
 describe('adjustLoan', () => {
   test('updates state', () => {
