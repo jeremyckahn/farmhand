@@ -4,11 +4,7 @@ import { farmProductSalesVolumeNeededForLevel } from '../../utils'
 
 jest.mock('../../data/achievements')
 jest.mock('../../data/maps')
-jest.mock('../../data/items')
 jest.mock('../../data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
-jest.mock('../../data/recipes')
-jest.mock('../../data/shop-inventory')
-jest.mock('../../utils/isRandomNumberLessThan')
 
 describe('processLevelUp', () => {
   test('shows notifications for each level gained in the sale', () => {

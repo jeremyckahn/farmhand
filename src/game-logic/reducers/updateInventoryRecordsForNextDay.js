@@ -2,7 +2,6 @@
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-
 export const updateInventoryRecordsForNextDay = state => ({
   ...state,
   todaysPurchases: {},
