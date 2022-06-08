@@ -4,7 +4,7 @@ import Alert from '@material-ui/lab/Alert'
 import ReactMarkdown from 'react-markdown'
 import Divider from '@material-ui/core/Divider'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import './LogView.sass'
 

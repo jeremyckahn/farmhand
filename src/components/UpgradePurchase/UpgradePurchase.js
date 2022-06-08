@@ -16,7 +16,7 @@ import {
 
 import { craftedItems } from '../../img'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import './UpgradePurchase.sass'
 
 export function UpgradePurchase({

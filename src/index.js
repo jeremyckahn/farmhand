@@ -192,7 +192,7 @@ import { HashRouter as Router, Route } from 'react-router-dom'
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import './index.sass'
-import Farmhand from './Farmhand'
+import Farmhand from './components/Farmhand'
 import { features } from './config'
 import 'typeface-francois-one'
 import 'typeface-public-sans'

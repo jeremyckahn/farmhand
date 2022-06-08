@@ -11,7 +11,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Typography from '@material-ui/core/Typography'
 
 import { features } from '../../config'
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import {
   dollarString,
   getCostOfNextStorageExpansion,

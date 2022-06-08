@@ -17,7 +17,7 @@ import toolUpgrades from '../../data/upgrades'
 import Recipe from '../Recipe'
 import UpgradePurchase from '../UpgradePurchase'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import { TabPanel, a11yProps } from './TabPanel'
 

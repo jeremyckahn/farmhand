@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import { STANDARD_LOAN_AMOUNT } from '../../constants'
 

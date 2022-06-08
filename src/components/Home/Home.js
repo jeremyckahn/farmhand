@@ -15,7 +15,7 @@ import CardContent from '@material-ui/core/CardContent'
 import { items } from '../../img'
 
 import { achievementsMap } from '../../data/achievements'
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import { STANDARD_LOAN_AMOUNT } from '../../constants'
 import { stageFocusType } from '../../enums'
 import { memoize } from '../../utils'

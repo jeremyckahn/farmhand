@@ -4,7 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import classNames from 'classnames'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import {
   getCropLifeStage,
   getCropLifecycleDuration,

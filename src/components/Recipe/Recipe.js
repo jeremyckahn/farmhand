@@ -19,7 +19,7 @@ import { craftedItems } from '../../img'
 import QuantityInput from '../QuantityInput'
 import IngredientsList from '../IngredientsList'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import './Recipe.sass'
 

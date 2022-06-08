@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 import { LEFT, RIGHT } from '../../constants'
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import { pixel } from '../../img'
 
 import { getCowDisplayName, getCowImage } from '../../utils'

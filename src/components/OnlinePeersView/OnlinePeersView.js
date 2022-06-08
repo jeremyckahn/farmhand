@@ -10,7 +10,7 @@ import { array, number, object, string } from 'prop-types'
 import BailOutErrorBoundary from '../BailOutErrorBoundary'
 
 import { getPlayerName, farmProductsSold, levelAchieved } from '../../utils'
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import CowCard from '../CowCard'
 

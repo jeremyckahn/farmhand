@@ -7,7 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import StepIcon from '@material-ui/core/StepIcon'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import { moneyString } from '../../utils'
 import './AppBar.sass'
 

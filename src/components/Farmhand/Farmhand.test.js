@@ -6,37 +6,38 @@ import {
   sampleItem2,
   sampleFieldTool1,
   sampleCropSeedsItem1,
-} from './data/items'
-import { testItem } from './test-utils'
-import { PURCHASEABLE_COW_PENS } from './constants'
+} from '../../data/items'
+import { testItem } from '../../test-utils'
+import { PURCHASEABLE_COW_PENS } from '../../constants'
 import {
   COW_PEN_PURCHASED,
   LOAN_BALANCE_NOTIFICATION,
   RECIPE_LEARNED,
   RECIPES_LEARNED,
-} from './templates'
-import { reduceByPersistedKeys } from './utils'
-import { recipesMap } from './data/maps'
+} from '../../templates'
+import { reduceByPersistedKeys } from '../../utils'
+import { recipesMap } from '../../data/maps'
+
 import Farmhand, {
   computePlayerInventory,
   getFieldToolInventory,
   getPlantableCropInventory,
 } from './Farmhand'
 
-jest.mock('./data/maps')
-jest.mock('./data/items')
-jest.mock('./data/levels', () => ({ levels: [] }))
-jest.mock('./data/shop-inventory')
+jest.mock('../../data/maps')
+jest.mock('../../data/items')
+jest.mock('../../data/levels', () => ({ levels: [] }))
+jest.mock('../../data/shop-inventory')
 
-jest.mock('./data/achievements', () => ({
+jest.mock('../../data/achievements', () => ({
   __esModule: true,
-  ...jest.requireActual('./data/achievements'),
+  ...jest.requireActual('../../data/achievements'),
   achievementsMap: {},
 }))
 
-jest.mock('./constants', () => ({
+jest.mock('../..//constants', () => ({
   __esModule: true,
-  ...jest.requireActual('./constants'),
+  ...jest.requireActual('../../constants'),
   COW_HUG_BENEFIT: 0.5,
   CROW_CHANCE: 0,
   INITIAL_FIELD_HEIGHT: 4,

@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent'
 import BeenhereIcon from '@material-ui/icons/Beenhere'
 import { bool, object, shape, string } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import './Achievement.sass'
 
