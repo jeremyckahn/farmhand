@@ -5,6 +5,7 @@ import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings'
 import { showNotification } from './showNotification'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
 
+// TODO: Add tests for this reducer
 /**
  * @param {farmhand.state} state
  * @param {number} smelterId

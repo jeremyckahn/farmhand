@@ -1,5 +1,6 @@
 import { moneyTotal } from '../../utils'
 
+// TODO: Add tests for this reducer
 /**
  * @param {farmhand.state} state
  * @param {number} revenue

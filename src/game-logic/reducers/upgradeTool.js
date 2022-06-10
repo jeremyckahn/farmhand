@@ -4,6 +4,7 @@ import { TOOL_UPGRADED_NOTIFICATION } from '../../templates'
 import { showNotification } from './showNotification'
 import { makeRecipe } from './makeRecipe'
 
+// TODO: Add tests for this reducer
 /**
  * @param {farmhand.state} state
  * @param {farmhand.upgrade} upgrade

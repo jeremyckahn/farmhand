@@ -5,6 +5,7 @@ import { addItemToInventory } from './addItemToInventory'
 
 import { changeCowBreedingPenResident } from './changeCowBreedingPenResident'
 
+// TODO: Add tests for this reducer
 /**
  * @param {farmhand.state} state
  * @param {farmhand.cow} cow
