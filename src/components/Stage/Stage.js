@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { array, arrayOf, bool, string } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import Field from '../Field'
 import Home from '../Home'
 import CowPen from '../CowPen'

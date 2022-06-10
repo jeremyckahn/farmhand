@@ -26,7 +26,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import { array, bool, func, number, object, string } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import {
   doesInventorySpaceRemain,
   farmProductSalesVolumeNeededForLevel,

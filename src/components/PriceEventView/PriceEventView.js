@@ -3,7 +3,7 @@ import { object } from 'prop-types'
 import Divider from '@material-ui/core/Divider'
 
 import { itemsMap } from '../../data/maps'
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import Item from '../Item'
 
 import './PriceEventView.sass'

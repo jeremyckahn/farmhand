@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { array } from 'prop-types'
 import Divider from '@material-ui/core/Divider'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import Item from '../Item'
 import { itemsMap } from '../../data/maps'
 import { enumify, itemType } from '../../enums'

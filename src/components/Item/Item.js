@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography'
 import { array, bool, func, number, object } from 'prop-types'
 import classNames from 'classnames'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
 import { itemIds as shopItemIds } from '../../data/shop-inventory'

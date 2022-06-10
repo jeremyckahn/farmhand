@@ -8,7 +8,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
 import NumberFormat from 'react-number-format'
 import { func, number } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import { dollarString, moneyString, moneyTotal } from '../../utils'
 import {
   STANDARD_LOAN_AMOUNT,

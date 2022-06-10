@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Farmhand from '../Farmhand'
+import Farmhand from '../components/Farmhand'
 import { stageFocusType, fieldMode } from '../enums'
 import { testItem } from '../test-utils'
 

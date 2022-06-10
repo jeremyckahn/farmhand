@@ -13,7 +13,7 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import { GlobalHotKeys } from 'react-hotkeys'
 import classNames from 'classnames'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import Plot from '../Plot'
 import QuickSelect from '../QuickSelect'
 import { fieldMode } from '../../enums'

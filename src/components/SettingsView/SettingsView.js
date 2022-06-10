@@ -14,7 +14,7 @@ import Switch from '@material-ui/core/Switch'
 import Tooltip from '@material-ui/core/Tooltip'
 import FileReaderInput from 'react-file-reader-input'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import './SettingsView.sass'
 

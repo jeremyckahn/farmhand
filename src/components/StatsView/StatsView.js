@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper'
 import sortBy from 'lodash.sortby'
 
 import { itemsMap } from '../../data/maps'
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import {
   farmProductSalesVolumeNeededForLevel,
   farmProductsSold,

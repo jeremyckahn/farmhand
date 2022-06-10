@@ -20,27 +20,26 @@ import throttle from 'lodash.throttle'
 import classNames from 'classnames'
 import { object } from 'prop-types'
 
-import FarmhandContext from './Farmhand.context'
-import eventHandlers from './handlers/ui-events'
+import eventHandlers from '../../handlers/ui-events'
 import {
   handlePeerMetadataRequest,
   handleCowTradeRequest,
   handleCowTradeRequestAccept,
   handleCowTradeRequestReject,
-} from './handlers/peer-events'
-import * as reducers from './game-logic/reducers'
+} from '../../handlers/peer-events'
+import * as reducers from '../../game-logic/reducers'
 // This must be imported here so that it can be overridden by component styles.
 import './Farmhand.sass'
 
-import AppBar from './components/AppBar'
-import Navigation from './components/Navigation'
-import ContextPane from './components/ContextPane'
-import Stage from './components/Stage'
+import AppBar from '../AppBar'
+import Navigation from '../Navigation'
+import ContextPane from '../ContextPane'
+import Stage from '../Stage'
 import NotificationSystem, {
   snackbarProviderContentCallback,
-} from './components/NotificationSystem'
-import DebugMenu from './components/DebugMenu'
-import theme from './mui-theme'
+} from '../NotificationSystem'
+import DebugMenu from '../DebugMenu'
+import theme from '../../mui-theme'
 import {
   computeMarketPositions,
   createNewField,
@@ -58,16 +57,16 @@ import {
   reduceByPersistedKeys,
   sleep,
   transformStateDataForImport,
-} from './utils'
-import { getData, postData } from './fetch-utils'
-import { itemsMap, recipesMap } from './data/maps'
+} from '../../utils'
+import { getData, postData } from '../../fetch-utils'
+import { itemsMap, recipesMap } from '../../data/maps'
 import {
   dialogView,
   fieldMode,
   stageFocusType,
   toolLevel,
   toolType,
-} from './enums'
+} from '../../enums'
 import {
   COW_TRADE_TIMEOUT,
   DEFAULT_ROOM,
@@ -75,8 +74,11 @@ import {
   PURCHASEABLE_COW_PENS,
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
-} from './constants'
-import { HEARTBEAT_INTERVAL_PERIOD, SERVER_ERRORS } from './common/constants'
+} from '../../constants'
+import {
+  HEARTBEAT_INTERVAL_PERIOD,
+  SERVER_ERRORS,
+} from '../../common/constants'
 import {
   CONNECTED_TO_ROOM,
   COW_PEN_PURCHASED,
@@ -85,7 +87,7 @@ import {
   RECIPE_LEARNED,
   RECIPES_LEARNED,
   ROOM_FULL_NOTIFICATION,
-} from './templates'
+} from '../../templates'
 import {
   CONNECTING_TO_SERVER,
   COW_ALREADY_OWNED,
@@ -96,8 +98,10 @@ import {
   REQUESTED_COW_TRADE_UNAVAILABLE,
   SERVER_ERROR,
   UPDATE_AVAILABLE,
-} from './strings'
-import { endpoints } from './config'
+} from '../../strings'
+import { endpoints } from '../../config'
+
+import FarmhandContext from './Farmhand.context'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
 

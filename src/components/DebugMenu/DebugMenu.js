@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button'
 
 import { carrot } from '../../data/items'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import './DebugMenu.sass'
 
