@@ -20,11 +20,12 @@ export const rotateNotificationLogs = state => {
     notifications[severity].push(message)
   )
 
-  newDayNotifications.length &&
+  if (newDayNotifications.length) {
     notificationLog.unshift({
       day: dayCount,
       notifications,
     })
+  }
 
   notificationLog.length = Math.min(
     notificationLog.length,
