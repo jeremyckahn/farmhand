@@ -22,6 +22,7 @@ import {
 import { items } from '../../img'
 import { itemType, toolType } from '../../enums'
 import {
+  INVENTORY_LIMIT,
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
@@ -104,7 +105,7 @@ export const Shop = ({
       </TabPanel>
       <TabPanel value={currentTab} index={2}>
         <ul className="card-list">
-          {inventoryLimit > -1 && (
+          {inventoryLimit > INVENTORY_LIMIT && (
             <li>
               <Card>
                 <CardHeader

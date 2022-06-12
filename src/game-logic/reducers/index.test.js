@@ -30,6 +30,7 @@ import {
   PURCHASEABLE_COW_PENS,
   SCARECROW_ITEM_ID,
   STORAGE_EXPANSION_AMOUNT,
+  INVENTORY_LIMIT,
 } from '../../constants'
 import { huggingMachine, sampleCropItem1 } from '../../data/items'
 import { sampleRecipe1 } from '../../data/recipes'
@@ -600,7 +601,7 @@ describe('processCowAttrition', () => {
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       cowInventory: [unfedCow, unfedCowWithHuggingMachine],
       inventory: [],
-      inventoryLimit: -1,
+      inventoryLimit: INVENTORY_LIMIT,
       newDayNotifications: [],
     })
 
@@ -616,7 +617,7 @@ describe('processMilkingCows', () => {
     state = {
       cowInventory: [],
       inventory: [],
-      inventoryLimit: -1,
+      inventoryLimit: INVENTORY_LIMIT,
       newDayNotifications: [],
     }
   })
@@ -718,7 +719,7 @@ describe('processCowFertilizerProduction', () => {
     state = {
       cowInventory: [],
       inventory: [],
-      inventoryLimit: -1,
+      inventoryLimit: INVENTORY_LIMIT,
       newDayNotifications: [],
     }
   })
@@ -1122,7 +1123,7 @@ describe('purchaseItem', () => {
         fn.purchaseItem(
           {
             inventory: [],
-            inventoryLimit: -1,
+            inventoryLimit: INVENTORY_LIMIT,
             money: 0,
             todaysPurchases: {},
             valueAdjustments: { 'sample-item-1': 1 },
@@ -1140,7 +1141,7 @@ describe('purchaseItem', () => {
         fn.purchaseItem(
           {
             inventory: [],
-            inventoryLimit: -1,
+            inventoryLimit: INVENTORY_LIMIT,
             money: 0,
             todaysPurchases: {},
             valueAdjustments: { 'sample-item-1': 1 },
@@ -1158,7 +1159,7 @@ describe('purchaseItem', () => {
         fn.purchaseItem(
           {
             inventory: [],
-            inventoryLimit: -1,
+            inventoryLimit: INVENTORY_LIMIT,
             money: 10,
             pendingPeerMessages: [],
             todaysPurchases: {},
@@ -1250,7 +1251,7 @@ describe('makeRecipe', () => {
       const { inventory } = fn.makeRecipe(
         {
           inventory: [{ id: 'sample-item-1', quantity: 1 }],
-          inventoryLimit: -1,
+          inventoryLimit: INVENTORY_LIMIT,
         },
         sampleRecipe1
       )
@@ -1264,7 +1265,7 @@ describe('makeRecipe', () => {
       const { inventory } = fn.makeRecipe(
         {
           inventory: [{ id: 'sample-item-1', quantity: 3 }],
-          inventoryLimit: -1,
+          inventoryLimit: INVENTORY_LIMIT,
         },
         sampleRecipe1
       )
@@ -1689,7 +1690,7 @@ describe('sellCow', () => {
           cowInventory: [cow],
           cowsSold: {},
           inventory: [],
-          inventoryLimit: -1,
+          inventoryLimit: INVENTORY_LIMIT,
           money: 0,
         },
         cow
@@ -1707,7 +1708,7 @@ describe('changeCowAutomaticHugState', () => {
       const inputState = {
         cowInventory: [cow],
         inventory: [{ id: huggingMachine.id, quantity: 1 }],
-        inventoryLimit: -1,
+        inventoryLimit: INVENTORY_LIMIT,
       }
       const {
         cowInventory: [{ isUsingHuggingMachine }],
@@ -1724,7 +1725,7 @@ describe('changeCowAutomaticHugState', () => {
         const inputState = {
           cowInventory: [cow],
           inventory: [],
-          inventoryLimit: -1,
+          inventoryLimit: INVENTORY_LIMIT,
         }
         const state = fn.changeCowAutomaticHugState(inputState, cow, true)
 
@@ -1738,7 +1739,7 @@ describe('changeCowAutomaticHugState', () => {
         const inputState = {
           cowInventory: [cow],
           inventory: [{ id: huggingMachine.id, quantity: 1 }],
-          inventoryLimit: -1,
+          inventoryLimit: INVENTORY_LIMIT,
         }
         const state = fn.changeCowAutomaticHugState(inputState, cow, true)
 
@@ -1753,7 +1754,7 @@ describe('changeCowAutomaticHugState', () => {
       const inputState = {
         cowInventory: [cow],
         inventory: [],
-        inventoryLimit: -1,
+        inventoryLimit: INVENTORY_LIMIT,
       }
       const {
         cowInventory: [{ isUsingHuggingMachine }],

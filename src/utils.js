@@ -61,6 +61,7 @@ import {
   INITIAL_FIELD_WIDTH,
   INITIAL_SPRINKLER_RANGE,
   INITIAL_STORAGE_LIMIT,
+  INVENTORY_LIMIT,
   MALE_COW_WEIGHT_MULTIPLIER,
   MEMOIZE_CACHE_CLEAR_THRESHOLD,
   PEER_METADATA_STATE_KEYS,
@@ -758,7 +759,7 @@ export const inventorySpaceConsumed = memoize(inventory =>
  * @returns {number}
  */
 export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
-  inventoryLimit === -1
+  inventoryLimit === INVENTORY_LIMIT
     ? Infinity
     : Math.max(0, inventoryLimit - inventorySpaceConsumed(inventory))
 

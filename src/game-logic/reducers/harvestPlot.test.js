@@ -3,6 +3,7 @@ import { fertilizerType, toolType, toolLevel } from '../../enums'
 import { getPlotContentFromItemId } from '../../utils'
 
 import { harvestPlot } from './harvestPlot'
+import { INVENTORY_LIMIT } from "../../constants";
 
 jest.mock('../../data/maps')
 
@@ -46,7 +47,7 @@ describe('harvestPlot', () => {
           cropsHarvested: {},
           field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
           inventory: [],
-          inventoryLimit: -1,
+          inventoryLimit: INVENTORY_LIMIT,
           toolLevels: toolLevelsDefault,
         },
         0,
@@ -66,7 +67,7 @@ describe('harvestPlot', () => {
           cropsHarvested: {},
           field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
           inventory: [],
-          inventoryLimit: -1,
+          inventoryLimit: INVENTORY_LIMIT,
           toolLevels: toolLevelsBronze,
         }
       })
@@ -122,7 +123,7 @@ describe('harvestPlot', () => {
               ],
             ],
             inventory: [{ id: 'sample-crop-seeds-1', quantity: 2 }],
-            inventoryLimit: -1,
+            inventoryLimit: INVENTORY_LIMIT,
             itemsSold: {},
           },
           0,
@@ -159,7 +160,7 @@ describe('harvestPlot', () => {
               ],
             ],
             inventory: [],
-            inventoryLimit: -1,
+            inventoryLimit: INVENTORY_LIMIT,
             itemsSold: {},
           },
           0,

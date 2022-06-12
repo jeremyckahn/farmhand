@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Recipe from './Recipe'
+import { INVENTORY_LIMIT } from "../../constants";
 
 let component
 
@@ -11,7 +12,7 @@ beforeEach(() => {
       {...{
         recipe: {},
         inventory: [],
-        inventoryLimit: -1,
+        inventoryLimit: INVENTORY_LIMIT,
         playerInventoryQuantities: {},
       }}
     />

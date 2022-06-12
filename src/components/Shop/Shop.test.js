@@ -4,6 +4,7 @@ import { shallow } from 'enzyme'
 import Inventory from '../Inventory'
 
 import { Shop } from './Shop'
+import { INVENTORY_LIMIT } from "../../constants";
 
 let component
 
@@ -15,7 +16,7 @@ beforeEach(() => {
         handleCowPenPurchase: () => {},
         handleFieldPurchase: () => {},
         handleStorageExpansionPurchase: () => {},
-        inventoryLimit: -1,
+        inventoryLimit: INVENTORY_LIMIT,
         money: 0,
         purchasedCombine: 0,
         purchasedCowPen: 0,

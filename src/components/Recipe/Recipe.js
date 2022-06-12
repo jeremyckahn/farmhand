@@ -22,6 +22,7 @@ import IngredientsList from '../IngredientsList'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import './Recipe.sass'
+import { INVENTORY_LIMIT } from "../../constants";
 
 const Recipe = ({
   handleMakeRecipeClick,
@@ -51,7 +52,7 @@ const Recipe = ({
       // Without the Infinity coercion, this would break recipes for unlimited
       // inventoryLimits.
       inventoryLimit:
-        (inventoryLimit === -1 ? Infinity : inventoryLimit) +
+        (inventoryLimit === INVENTORY_LIMIT ? Infinity : inventoryLimit) +
         spaceFreedByIngredientsConsumed,
     })
 
