@@ -5,7 +5,7 @@ import { fieldMode } from '../../enums'
 import { testItem } from '../../test-utils'
 
 import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field'
-import { INVENTORY_LIMIT } from "../../constants";
+import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
@@ -32,7 +32,7 @@ beforeEach(() => {
         ],
         fieldMode: fieldMode.OBSERVE,
         inventory: [],
-        inventoryLimit: INVENTORY_LIMIT,
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
         isCombineEnabled: false,
         purchasedCombine: 0,
         purchasedField: 0,

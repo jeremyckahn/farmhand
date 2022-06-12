@@ -55,7 +55,7 @@ import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   HUGGING_MACHINE_ITEM_ID,
-  INVENTORY_LIMIT,
+  INFINITE_STORAGE_LIMIT,
   LOAN_GARNISHMENT_RATE,
   LOAN_INTEREST_RATE,
   MAX_ANIMAL_NAME_LENGTH,
@@ -1195,7 +1195,7 @@ export const purchaseStorageExpansion = state => {
   const { money, inventoryLimit } = state
   const storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit)
 
-  if (money < storageUpgradeCost || inventoryLimit === INVENTORY_LIMIT) {
+  if (money < storageUpgradeCost || inventoryLimit === INFINITE_STORAGE_LIMIT) {
     return state
   }
 

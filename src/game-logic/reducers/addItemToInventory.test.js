@@ -1,5 +1,5 @@
 import { addItemToInventory } from './addItemToInventory'
-import { INVENTORY_LIMIT } from "../../constants";
+import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 describe('addItemToInventory', () => {
   test('creates a new item in the inventory', () => {
@@ -16,7 +16,7 @@ describe('addItemToInventory', () => {
       addItemToInventory(
         {
           inventory: [{ id: 'sample-item-1', quantity: 1 }],
-          inventoryLimit: INVENTORY_LIMIT,
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
         { id: 'sample-item-1' }
       )

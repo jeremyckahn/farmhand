@@ -37,7 +37,7 @@ import {
   scaleNumber,
 } from '../../utils'
 import { dialogView } from '../../enums'
-import { INVENTORY_LIMIT, STAGE_TITLE_MAP } from '../../constants'
+import { INFINITE_STORAGE_LIMIT, STAGE_TITLE_MAP } from '../../constants'
 import { MAX_ROOM_NAME_LENGTH } from '../../common/constants'
 
 import AccountingView from '../AccountingView'
@@ -276,7 +276,7 @@ export const Navigation = ({
         room,
       }}
     />
-    {inventoryLimit > INVENTORY_LIMIT && (
+    {inventoryLimit > INFINITE_STORAGE_LIMIT && (
       <h3
         {...{
           className: classNames('inventory-info', {

@@ -3,7 +3,7 @@ import { toolType, toolLevel } from '../../enums'
 import { getPlotContentFromItemId, isRandomNumberLessThan } from '../../utils'
 
 import { clearPlot } from './clearPlot'
-import { INVENTORY_LIMIT } from "../../constants";
+import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 jest.mock('../../data/maps')
 jest.mock('../../utils/isRandomNumberLessThan')
@@ -16,7 +16,7 @@ describe('clearPlot', () => {
           field: [[testCrop({ itemId: 'sample-crop-1' })]],
           toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
           inventory: [],
-          inventoryLimit: INVENTORY_LIMIT,
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
         0,
         0
@@ -69,7 +69,7 @@ describe('clearPlot', () => {
           field: [[getPlotContentFromItemId('replantable-item')]],
           toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
           inventory: [],
-          inventoryLimit: INVENTORY_LIMIT,
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
         0,
         0

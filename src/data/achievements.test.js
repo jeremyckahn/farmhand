@@ -4,7 +4,7 @@ import { testCrop } from '../test-utils'
 import { toolLevel, toolType } from '../enums'
 
 import { achievementsMap } from './achievements'
-import { INVENTORY_LIMIT } from "../constants";
+import { INFINITE_STORAGE_LIMIT } from "../constants";
 
 jest.mock('./items')
 jest.mock('./levels', () => ({ levels: [] }))
@@ -28,7 +28,7 @@ describe('harvest-crop', () => {
           [null, null, testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })],
         ],
         inventory: [],
-        inventoryLimit: INVENTORY_LIMIT,
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
         toolLevels: {
           [toolType.SCYTHE]: toolLevel.DEFAULT,
         },
