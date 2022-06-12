@@ -7,25 +7,25 @@ import { LOAN_BALANCE_NOTIFICATION } from '../../templates'
  * @returns {farmhand.state}
  */
 export const applyLoanInterest = state => {
-  const loanBalance = moneyTotal(
+  const newLoanBalance = moneyTotal(
     state.loanBalance,
     castToMoney(state.loanBalance * LOAN_INTEREST_RATE)
   )
 
   const newDayNotifications =
-    loanBalance > 0
+    newLoanBalance > 0
       ? [
           ...state.newDayNotifications,
           {
             severity: 'warning',
-            message: LOAN_BALANCE_NOTIFICATION`${loanBalance}`,
+            message: LOAN_BALANCE_NOTIFICATION`${newLoanBalance}`,
           },
         ]
       : state.newDayNotifications
 
   return {
     ...state,
-    loanBalance,
+    loanBalance: newLoanBalance,
     newDayNotifications,
   }
 }
