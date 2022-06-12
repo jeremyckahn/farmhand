@@ -9,23 +9,25 @@ import { modifyCow } from './modifyCow'
 /**
  * @param {farmhand.state} state
  * @param {farmhand.cow} cow
- * @param {boolean} doAutomaticallyHug
+ * @param {boolean} doUseHuggingMachine
  * @returns {farmhand.state}
  */
-export const changeCowAutomaticHugState = (state, cow, doAutomaticallyHug) => {
-  if (
-    (doAutomaticallyHug && !areHuggingMachinesInInventory(state.inventory)) ||
-    Boolean(cow.isUsingHuggingMachine) === doAutomaticallyHug
-  ) {
-    return state
+export const changeCowAutomaticHugState = (state, cow, doUseHuggingMachine) => {
+  if (doUseHuggingMachine) {
+    if (
+      cow.isUsingHuggingMachine ||
+      !areHuggingMachinesInInventory(state.inventory)
+    ) {
+      return state
+    }
   }
 
   state = modifyCow(state, cow.id, cow => ({
     ...cow,
-    isUsingHuggingMachine: doAutomaticallyHug,
+    isUsingHuggingMachine: doUseHuggingMachine,
   }))
 
-  state = doAutomaticallyHug
+  state = doUseHuggingMachine
     ? decrementItemFromInventory(state, HUGGING_MACHINE_ITEM_ID)
     : addItemToInventory(state, itemsMap[HUGGING_MACHINE_ITEM_ID])
 
