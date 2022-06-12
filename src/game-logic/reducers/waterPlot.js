@@ -12,7 +12,10 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 export const waterPlot = (state, x, y) => {
   const plotContent = state.field[y][x]
 
-  if (!plotContent || getPlotContentType(plotContent) !== itemType.CROP) {
+  const canBeWatered =
+    plotContent && getPlotContentType(plotContent) === itemType.CROP
+
+  if (!canBeWatered) {
     return state
   }
 
