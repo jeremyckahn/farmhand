@@ -21,6 +21,8 @@ export const generatePriceEvents = state => {
   let newDayNotifications = [...state.newDayNotifications]
   let priceEvent
 
+  // TODO: Use isRandomNumberLessThan here once it supports an exclusive
+  // less-than check.
   if (Math.random() < PRICE_EVENT_CHANCE) {
     const { items: unlockedItems } = getLevelEntitlements(
       levelAchieved(farmProductsSold(state.itemsSold))
@@ -31,8 +33,11 @@ export const generatePriceEvents = state => {
     )
     const { id } = cropItem
 
-    // Only create a priceEvent if one does not already exist
-    if (!priceCrashes[id] && !priceSurges[id]) {
+    const doesPriceEventAlreadyExist = Boolean(
+      priceCrashes[id] || priceSurges[id]
+    )
+
+    if (!doesPriceEventAlreadyExist) {
       const priceEventType =
         Math.random() < 0.5 ? 'priceCrashes' : 'priceSurges'
 
