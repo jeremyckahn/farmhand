@@ -11,6 +11,9 @@ import { PRICE_CRASH, PRICE_SURGE } from '../../templates'
 
 import { createPriceEvent } from './createPriceEvent'
 
+const TYPE_CRASH = 'priceCrashes'
+const TYPE_SURGE = 'priceSurges'
+
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
@@ -38,8 +41,7 @@ export const generatePriceEvents = state => {
     )
 
     if (!doesPriceEventAlreadyExist) {
-      const priceEventType =
-        Math.random() < 0.5 ? 'priceCrashes' : 'priceSurges'
+      const priceEventType = Math.random() < 0.5 ? TYPE_CRASH : TYPE_SURGE
 
       priceEvent = createPriceEvent(
         state,
@@ -48,7 +50,7 @@ export const generatePriceEvents = state => {
       )
 
       newDayNotifications.push(
-        priceEventType === 'priceCrashes'
+        priceEventType === TYPE_CRASH
           ? {
               message: PRICE_CRASH`${cropItem}`,
               severity: 'warning',
