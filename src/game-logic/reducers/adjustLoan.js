@@ -11,9 +11,11 @@ import { showNotification } from './showNotification'
  */
 export const adjustLoan = (state, adjustmentAmount) => {
   const loanBalance = moneyTotal(state.loanBalance, adjustmentAmount)
-  const money = moneyTotal(state.money, adjustmentAmount)
+  const newMoney = moneyTotal(state.money, adjustmentAmount)
 
-  if (loanBalance === 0 && adjustmentAmount < 0) {
+  const isLoanPayoff = loanBalance === 0 && adjustmentAmount < 0
+
+  if (isLoanPayoff) {
     state = showNotification(state, LOAN_PAYOFF``, 'success')
   } else {
     const isNewLoan = adjustmentAmount > 0
@@ -29,6 +31,6 @@ export const adjustLoan = (state, adjustmentAmount) => {
   return {
     ...state,
     loanBalance,
-    money,
+    money: newMoney,
   }
 }
