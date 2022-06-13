@@ -101,11 +101,10 @@ import {
 } from '../../strings'
 import { endpoints } from '../../config'
 
+import { getPlayerInventoryQuantities } from './helpers/getPlayerInventoryQuantities'
 import FarmhandContext from './Farmhand.context'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
-
-const itemIds = Object.freeze(Object.keys(itemsMap))
 
 // Utility object for reuse in no-ops to save on memory
 const emptyObject = Object.freeze({})
@@ -314,12 +313,7 @@ export default class Farmhand extends Component {
   get playerInventoryQuantities() {
     const { inventory } = this.state
 
-    return itemIds.reduce((acc, itemId) => {
-      const itemInInventory = inventory.find(({ id }) => id === itemId)
-      acc[itemId] = itemInInventory ? itemInInventory.quantity : 0
-
-      return acc
-    }, {})
+    return getPlayerInventoryQuantities(inventory)
   }
 
   get plantableCropInventory() {

@@ -7,7 +7,6 @@ import {
   sampleFieldTool1,
   sampleCropSeedsItem1,
 } from '../../data/items'
-import { testItem } from '../../test-utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import {
   COW_PEN_PURCHASED,
@@ -44,8 +43,6 @@ jest.mock('../..//constants', () => ({
   INITIAL_FIELD_WIDTH: 4,
   PRECIPITATION_CHANCE: 0,
 }))
-
-const { objectContaining } = expect
 
 let component
 
@@ -138,27 +135,6 @@ describe('private helpers', () => {
 
     test('filters out non-plantable items', () => {
       expect(plantableCropInventory).toEqual([sampleCropSeedsItem1])
-    })
-  })
-})
-
-describe('getters', () => {
-  describe('playerInventoryQuantities', () => {
-    test('computes a map of item IDs to their quantity in the inventory', () => {
-      component.setState({
-        inventory: [
-          testItem({ id: 'sample-item-1', quantity: 1 }),
-          testItem({ id: 'sample-item-2', quantity: 2 }),
-        ],
-      })
-
-      expect(component.instance().playerInventoryQuantities).toEqual(
-        objectContaining({
-          'sample-item-1': 1,
-          'sample-item-2': 2,
-          'sample-item-3': 0,
-        })
-      )
     })
   })
 })
