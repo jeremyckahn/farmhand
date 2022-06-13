@@ -1,5 +1,5 @@
 import { MILKS_PRODUCED } from '../../templates'
-import { COW_MILK_RATE_SLOWEST } from '../../constants'
+import { COW_MILK_RATE_SLOWEST, INFINITE_STORAGE_LIMIT } from '../../constants'
 import { genders, standardCowColors } from '../../enums'
 import { generateCow, getCowMilkItem } from '../../utils'
 
@@ -12,7 +12,7 @@ describe('processMilkingCows', () => {
     state = {
       cowInventory: [],
       inventory: [],
-      inventoryLimit: -1,
+      inventoryLimit: INFINITE_STORAGE_LIMIT,
       newDayNotifications: [],
     }
   })

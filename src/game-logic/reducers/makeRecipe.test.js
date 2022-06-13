@@ -1,6 +1,7 @@
 import { sampleRecipe1 } from '../../data/recipes'
 
 import { makeRecipe } from './makeRecipe'
+import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 jest.mock('../../data/recipes')
 
@@ -10,7 +11,7 @@ describe('makeRecipe', () => {
       const { inventory } = makeRecipe(
         {
           inventory: [{ id: 'sample-item-1', quantity: 1 }],
-          inventoryLimit: -1,
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
         sampleRecipe1
       )
@@ -24,7 +25,7 @@ describe('makeRecipe', () => {
       const { inventory } = makeRecipe(
         {
           inventory: [{ id: 'sample-item-1', quantity: 3 }],
-          inventoryLimit: -1,
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
         sampleRecipe1
       )

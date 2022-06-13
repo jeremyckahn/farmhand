@@ -1,4 +1,5 @@
 import { purchaseItem } from './purchaseItem'
+import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 jest.mock('../../data/maps')
 
@@ -9,7 +10,7 @@ describe('purchaseItem', () => {
         purchaseItem(
           {
             inventory: [],
-            inventoryLimit: -1,
+            inventoryLimit: INFINITE_STORAGE_LIMIT,
             money: 0,
             todaysPurchases: {},
             valueAdjustments: { 'sample-item-1': 1 },
@@ -27,7 +28,7 @@ describe('purchaseItem', () => {
         purchaseItem(
           {
             inventory: [],
-            inventoryLimit: -1,
+            inventoryLimit: INFINITE_STORAGE_LIMIT,
             money: 0,
             todaysPurchases: {},
             valueAdjustments: { 'sample-item-1': 1 },
@@ -45,7 +46,7 @@ describe('purchaseItem', () => {
         purchaseItem(
           {
             inventory: [],
-            inventoryLimit: -1,
+            inventoryLimit: INFINITE_STORAGE_LIMIT,
             money: 10,
             pendingPeerMessages: [],
             todaysPurchases: {},

@@ -57,6 +57,7 @@ import {
   DAILY_FINANCIAL_HISTORY_RECORD_LENGTH,
   HUGGING_MACHINE_ITEM_ID,
   I_AM_RICH_BONUSES,
+  INFINITE_STORAGE_LIMIT,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   INITIAL_SPRINKLER_RANGE,
@@ -758,7 +759,7 @@ export const inventorySpaceConsumed = memoize(inventory =>
  * @returns {number}
  */
 export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
-  inventoryLimit === -1
+  inventoryLimit === INFINITE_STORAGE_LIMIT
     ? Infinity
     : Math.max(0, inventoryLimit - inventorySpaceConsumed(inventory))
 

@@ -1,5 +1,5 @@
 import { FERTILIZERS_PRODUCED } from '../../templates'
-import { COW_FERTILIZER_PRODUCTION_RATE_SLOWEST } from '../../constants'
+import { COW_FERTILIZER_PRODUCTION_RATE_SLOWEST, INFINITE_STORAGE_LIMIT } from '../../constants'
 import { genders, standardCowColors } from '../../enums'
 import { generateCow, getCowFertilizerItem } from '../../utils'
 
@@ -12,7 +12,7 @@ describe('processCowFertilizerProduction', () => {
     state = {
       cowInventory: [],
       inventory: [],
-      inventoryLimit: -1,
+      inventoryLimit: INFINITE_STORAGE_LIMIT,
       newDayNotifications: [],
     }
   })

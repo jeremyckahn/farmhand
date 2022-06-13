@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { dialogView, stageFocusType } from '../../enums'
 
 import { Navigation } from './Navigation'
+import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 let component
 
@@ -26,7 +27,7 @@ beforeEach(() => {
         handleRoomChange: () => {},
         handleViewChange: () => {},
         inventory: [],
-        inventoryLimit: -1,
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
         itemsSold: {},
         isDialogViewOpen: false,
         isOnline: false,

@@ -3,6 +3,7 @@ import { genders, standardCowColors } from '../../enums'
 import { getCowValue } from '../../utils'
 
 import { sellCow } from './sellCow'
+import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 describe('sellCow', () => {
   let cow
@@ -85,7 +86,7 @@ describe('sellCow', () => {
           cowInventory: [cow],
           cowsSold: {},
           inventory: [],
-          inventoryLimit: -1,
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
           money: 0,
         },
         cow
