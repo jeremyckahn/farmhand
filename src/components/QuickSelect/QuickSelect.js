@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper'
 import Tooltip from '@material-ui/core/Tooltip'
 import classNames from 'classnames'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import { items as itemImages, pixel } from '../../img'
 import { integerString, sortItems } from '../../utils'
 import Toolbelt from '../Toolbelt'

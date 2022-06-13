@@ -19,9 +19,10 @@ import { craftedItems } from '../../img'
 import QuantityInput from '../QuantityInput'
 import IngredientsList from '../IngredientsList'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import './Recipe.sass'
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
 
 const Recipe = ({
   handleMakeRecipeClick,
@@ -51,8 +52,9 @@ const Recipe = ({
       // Without the Infinity coercion, this would break recipes for unlimited
       // inventoryLimits.
       inventoryLimit:
-        (inventoryLimit === -1 ? Infinity : inventoryLimit) +
-        spaceFreedByIngredientsConsumed,
+        (inventoryLimit === INFINITE_STORAGE_LIMIT
+          ? Infinity
+          : inventoryLimit) + spaceFreedByIngredientsConsumed,
     })
 
   const handleMakeRecipe = () => {

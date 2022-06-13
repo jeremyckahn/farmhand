@@ -1,6 +1,6 @@
 {
   "name": "@jeremyckahn/farmhand",
-  "version": "1.12.5",
+  "version": "1.12.6",
   "publishConfig": {
     "access": "public"
   },
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "react-scripts build",
     "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
-    "dev": "concurrently --kill-others npm:start*",
+    "dev": "mprocs \"npm run start\" \"npm run start:api\" \"npm run start:backend\"",
     "doc": "jsdoc -c .jsdoc -r src",
     "doc:view": "serve -S dist/doc",
     "doc:watch": "nodemon --exec \"npm run doc\" --watch src --watch ./ --ext js,md --ignore dist",
@@ -39,7 +39,6 @@
     "@testing-library/user-event": "^13.2.1",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
-    "concurrently": "^6.0.0",
     "cross-env": "^7.0.2",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
@@ -56,6 +55,7 @@
     "jimp": "^0.16.1",
     "jsdoc": "^3.5.5",
     "jsdom": "^16.2.1",
+    "mprocs": "^0.2.2",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.2",
     "npm-run-all": "^4.1.3",

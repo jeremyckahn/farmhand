@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import { withSnackbar } from 'notistack'
 
 import { NOTIFICATION_DURATION } from '../../constants'
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import './NotificationSystem.sass'
 
 export const snackbarProviderContentCallback = (

@@ -4,6 +4,8 @@ import { shallow } from 'enzyme'
 
 import { testItem } from '../../test-utils'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { Item } from './Item'
 
 jest.mock('../../data/maps')
@@ -17,7 +19,7 @@ beforeEach(() => {
         completedAchievements: {},
         historicalValueAdjustments: [],
         inventory: [],
-        inventoryLimit: -1,
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
         item: testItem({ name: '' }),
         money: 0,
         playerInventoryQuantities: {},

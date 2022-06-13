@@ -26,7 +26,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 import { array, bool, func, number, object, string } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import {
   doesInventorySpaceRemain,
   farmProductSalesVolumeNeededForLevel,
@@ -37,7 +37,7 @@ import {
   scaleNumber,
 } from '../../utils'
 import { dialogView } from '../../enums'
-import { STAGE_TITLE_MAP } from '../../constants'
+import { INFINITE_STORAGE_LIMIT, STAGE_TITLE_MAP } from '../../constants'
 import { MAX_ROOM_NAME_LENGTH } from '../../common/constants'
 
 import AccountingView from '../AccountingView'
@@ -276,7 +276,7 @@ export const Navigation = ({
         room,
       }}
     />
-    {inventoryLimit > -1 && (
+    {inventoryLimit > INFINITE_STORAGE_LIMIT && (
       <h3
         {...{
           className: classNames('inventory-info', {

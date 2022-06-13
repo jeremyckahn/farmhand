@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import { pixel } from '../../img'
 import { genders } from '../../enums'
@@ -45,7 +45,6 @@ export const CowCard = ({
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   handleCowHugClick,
-  handleCowNameInputChange,
   handleCowOfferClick,
   handleCowPurchaseClick,
   handleCowWithdrawClick,

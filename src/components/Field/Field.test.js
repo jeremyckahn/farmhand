@@ -4,6 +4,8 @@ import { shallow } from 'enzyme'
 import { fieldMode } from '../../enums'
 import { testItem } from '../../test-utils'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field'
 
 jest.mock('../../data/maps')
@@ -31,7 +33,7 @@ beforeEach(() => {
         ],
         fieldMode: fieldMode.OBSERVE,
         inventory: [],
-        inventoryLimit: -1,
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
         isCombineEnabled: false,
         purchasedCombine: 0,
         purchasedField: 0,

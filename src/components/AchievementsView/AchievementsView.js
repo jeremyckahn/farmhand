@@ -5,7 +5,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails'
 import { object } from 'prop-types'
 import Divider from '@material-ui/core/Divider'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import ProgressBar from '../ProgressBar'
 import Achievement from '../Achievement'
 import achievements from '../../data/achievements'

@@ -9,7 +9,7 @@ import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 import { func, instanceOf, node, number, string } from 'prop-types'
 
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import './TierPurchase.sass'
 
 export class TierPurchase extends Component {

@@ -11,7 +11,7 @@ import Tabs from '@material-ui/core/Tabs'
 import sortBy from 'lodash.sortby'
 
 import Item from '../Item'
-import FarmhandContext from '../../Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import { enumify } from '../../enums'
 import {
   findCowById,
