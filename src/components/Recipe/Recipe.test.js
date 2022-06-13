@@ -1,8 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import Recipe from './Recipe'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 let component
 

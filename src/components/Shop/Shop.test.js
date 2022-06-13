@@ -3,8 +3,9 @@ import { shallow } from 'enzyme'
 
 import Inventory from '../Inventory'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { Shop } from './Shop'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 let component
 

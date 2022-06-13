@@ -4,8 +4,9 @@ import { shallow } from 'enzyme'
 import { fieldMode } from '../../enums'
 import { testItem } from '../../test-utils'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')

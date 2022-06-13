@@ -18,7 +18,7 @@ import { craftedItems } from '../../img'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import './UpgradePurchase.sass'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
 
 export function UpgradePurchase({
   handleUpgradeTool,
@@ -38,8 +38,9 @@ export function UpgradePurchase({
       // Without the Infinity coercion, this would break recipes for unlimited
       // inventoryLimits.
       inventoryLimit:
-        (inventoryLimit === INFINITE_STORAGE_LIMIT ? Infinity : inventoryLimit) +
-        spaceFreedByIngredientsConsumed,
+        (inventoryLimit === INFINITE_STORAGE_LIMIT
+          ? Infinity
+          : inventoryLimit) + spaceFreedByIngredientsConsumed,
     })
 
   const handleUpgrade = () => handleUpgradeTool(upgrade)

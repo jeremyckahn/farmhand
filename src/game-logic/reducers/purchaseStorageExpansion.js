@@ -1,5 +1,8 @@
 import { getCostOfNextStorageExpansion, moneyTotal } from '../../utils'
-import { INFINITE_STORAGE_LIMIT, STORAGE_EXPANSION_AMOUNT } from '../../constants'
+import {
+  INFINITE_STORAGE_LIMIT,
+  STORAGE_EXPANSION_AMOUNT,
+} from '../../constants'
 
 /**
  * @param {farmhand.state} state

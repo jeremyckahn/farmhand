@@ -4,8 +4,9 @@ import { shallow } from 'enzyme'
 
 import { testItem } from '../../test-utils'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { Item } from './Item'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 jest.mock('../../data/maps')
 

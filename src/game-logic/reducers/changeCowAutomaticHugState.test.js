@@ -1,8 +1,9 @@
 import { huggingMachine } from '../../data/items'
 import { generateCow } from '../../utils'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { changeCowAutomaticHugState } from './changeCowAutomaticHugState'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 describe('changeCowAutomaticHugState', () => {
   describe('setting isUsingHuggingMachine to true', () => {

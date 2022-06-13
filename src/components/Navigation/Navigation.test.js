@@ -4,8 +4,9 @@ import MenuItem from '@material-ui/core/MenuItem'
 
 import { dialogView, stageFocusType } from '../../enums'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { Navigation } from './Navigation'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 let component
 

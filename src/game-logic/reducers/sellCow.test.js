@@ -2,8 +2,9 @@ import { huggingMachine } from '../../data/items'
 import { genders, standardCowColors } from '../../enums'
 import { getCowValue } from '../../utils'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { sellCow } from './sellCow'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 describe('sellCow', () => {
   let cow

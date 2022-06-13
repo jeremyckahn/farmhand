@@ -3,8 +3,9 @@ import { testCrop } from '../test-utils'
 
 import { toolLevel, toolType } from '../enums'
 
+import { INFINITE_STORAGE_LIMIT } from '../constants'
+
 import { achievementsMap } from './achievements'
-import { INFINITE_STORAGE_LIMIT } from "../constants";
 
 jest.mock('./items')
 jest.mock('./levels', () => ({ levels: [] }))

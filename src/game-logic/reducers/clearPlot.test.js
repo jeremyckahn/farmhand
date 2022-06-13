@@ -2,8 +2,9 @@ import { testCrop } from '../../test-utils'
 import { toolType, toolLevel } from '../../enums'
 import { getPlotContentFromItemId, isRandomNumberLessThan } from '../../utils'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { clearPlot } from './clearPlot'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 jest.mock('../../data/maps')
 jest.mock('../../utils/isRandomNumberLessThan')

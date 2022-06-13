@@ -1,5 +1,6 @@
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { purchaseItem } from './purchaseItem'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 jest.mock('../../data/maps')
 

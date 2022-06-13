@@ -1,7 +1,8 @@
 import { sampleRecipe1 } from '../../data/recipes'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { makeRecipe } from './makeRecipe'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 jest.mock('../../data/recipes')
 

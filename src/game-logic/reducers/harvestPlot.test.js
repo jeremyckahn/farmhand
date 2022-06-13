@@ -2,8 +2,9 @@ import { testCrop } from '../../test-utils'
 import { fertilizerType, toolType, toolLevel } from '../../enums'
 import { getPlotContentFromItemId } from '../../utils'
 
+import { INFINITE_STORAGE_LIMIT } from '../../constants'
+
 import { harvestPlot } from './harvestPlot'
-import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 jest.mock('../../data/maps')
 

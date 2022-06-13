@@ -1,5 +1,8 @@
 import { COW_ATTRITION_MESSAGE } from '../../templates'
-import { COW_WEIGHT_MULTIPLIER_MINIMUM, INFINITE_STORAGE_LIMIT } from '../../constants'
+import {
+  COW_WEIGHT_MULTIPLIER_MINIMUM,
+  INFINITE_STORAGE_LIMIT,
+} from '../../constants'
 import { huggingMachine } from '../../data/items'
 import { generateCow } from '../../utils'
 
