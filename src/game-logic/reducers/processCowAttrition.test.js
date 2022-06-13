@@ -1,5 +1,5 @@
 import { COW_ATTRITION_MESSAGE } from '../../templates'
-import { COW_WEIGHT_MULTIPLIER_MINIMUM } from '../../constants'
+import { COW_WEIGHT_MULTIPLIER_MINIMUM, INFINITE_STORAGE_LIMIT } from '../../constants'
 import { huggingMachine } from '../../data/items'
 import { generateCow } from '../../utils'
 
@@ -41,7 +41,7 @@ describe('processCowAttrition', () => {
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       cowInventory: [unfedCow, unfedCowWithHuggingMachine],
       inventory: [],
-      inventoryLimit: -1,
+      inventoryLimit: INFINITE_STORAGE_LIMIT,
       newDayNotifications: [],
     })
 

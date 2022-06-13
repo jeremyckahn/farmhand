@@ -1,5 +1,5 @@
 import { getCostOfNextStorageExpansion, moneyTotal } from '../../utils'
-import { STORAGE_EXPANSION_AMOUNT } from '../../constants'
+import { INFINITE_STORAGE_LIMIT, STORAGE_EXPANSION_AMOUNT } from '../../constants'
 
 /**
  * @param {farmhand.state} state
@@ -9,7 +9,7 @@ export const purchaseStorageExpansion = state => {
   const { money, inventoryLimit } = state
   const storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit)
 
-  if (money < storageUpgradeCost || inventoryLimit === -1) {
+  if (money < storageUpgradeCost || inventoryLimit === INFINITE_STORAGE_LIMIT) {
     return state
   }
 

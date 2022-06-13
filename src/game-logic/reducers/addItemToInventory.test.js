@@ -1,10 +1,11 @@
 import { addItemToInventory } from './addItemToInventory'
+import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 describe('addItemToInventory', () => {
   test('creates a new item in the inventory', () => {
     expect(
       addItemToInventory(
-        { inventory: [], inventoryLimit: -1 },
+        { inventory: [], inventoryLimit: INFINITE_STORAGE_LIMIT },
         { id: 'sample-item-1' }
       )
     ).toMatchObject({ inventory: [{ id: 'sample-item-1', quantity: 1 }] })
@@ -15,7 +16,7 @@ describe('addItemToInventory', () => {
       addItemToInventory(
         {
           inventory: [{ id: 'sample-item-1', quantity: 1 }],
-          inventoryLimit: -1,
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
         { id: 'sample-item-1' }
       )

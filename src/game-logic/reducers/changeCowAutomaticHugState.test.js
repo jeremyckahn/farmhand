@@ -2,6 +2,7 @@ import { huggingMachine } from '../../data/items'
 import { generateCow } from '../../utils'
 
 import { changeCowAutomaticHugState } from './changeCowAutomaticHugState'
+import { INFINITE_STORAGE_LIMIT } from "../../constants";
 
 describe('changeCowAutomaticHugState', () => {
   describe('setting isUsingHuggingMachine to true', () => {
@@ -10,7 +11,7 @@ describe('changeCowAutomaticHugState', () => {
       const inputState = {
         cowInventory: [cow],
         inventory: [{ id: huggingMachine.id, quantity: 1 }],
-        inventoryLimit: -1,
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
       }
       const {
         cowInventory: [{ isUsingHuggingMachine }],
@@ -27,7 +28,7 @@ describe('changeCowAutomaticHugState', () => {
         const inputState = {
           cowInventory: [cow],
           inventory: [],
-          inventoryLimit: -1,
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
         }
         const state = changeCowAutomaticHugState(inputState, cow, true)
 
@@ -41,7 +42,7 @@ describe('changeCowAutomaticHugState', () => {
         const inputState = {
           cowInventory: [cow],
           inventory: [{ id: huggingMachine.id, quantity: 1 }],
-          inventoryLimit: -1,
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
         }
         const state = changeCowAutomaticHugState(inputState, cow, true)
 
@@ -56,7 +57,7 @@ describe('changeCowAutomaticHugState', () => {
       const inputState = {
         cowInventory: [cow],
         inventory: [],
-        inventoryLimit: -1,
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
       }
       const {
         cowInventory: [{ isUsingHuggingMachine }],
