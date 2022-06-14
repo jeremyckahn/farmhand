@@ -46,18 +46,18 @@ jest.mock('../..//constants', () => ({
 
 let component
 
-const stubLocalforage = () => {
-  const localforage = jest.requireMock('localforage')
-  localforage.createInstance = () => ({
-    getItem: () => Promise.resolve(null),
-    setItem: (_key, data) => Promise.resolve(data),
-  })
+const localforageMock = {
+  getItem: () => Promise.resolve(null),
+  setItem: (_key, data) => Promise.resolve(data),
 }
 
 beforeEach(() => {
-  stubLocalforage()
   jest.useFakeTimers()
-  component = shallow(<Farmhand {...{ match: { path: '', params: {} } }} />)
+  component = shallow(
+    <Farmhand
+      {...{ match: { path: '', params: {} }, localforage: localforageMock }}
+    />
+  )
 })
 
 describe('private helpers', () => {
@@ -157,19 +157,21 @@ describe('instance methods', () => {
 
     describe('boot from persisted state', () => {
       beforeEach(() => {
-        const localforage = jest.requireMock('localforage')
-        localforage.createInstance = () => ({
-          getItem: () =>
-            Promise.resolve({
-              foo: 'bar',
-              newDayNotifications: [{ message: 'baz', severity: 'info' }],
-              itemsSold: {},
-            }),
-          setItem: data => Promise.resolve(data),
-        })
-
         component = shallow(
-          <Farmhand {...{ match: { path: '', params: {} } }} />
+          <Farmhand
+            {...{
+              match: { path: '', params: {} },
+              localforage: {
+                getItem: () =>
+                  Promise.resolve({
+                    foo: 'bar',
+                    newDayNotifications: [{ message: 'baz', severity: 'info' }],
+                    itemsSold: {},
+                  }),
+                setItem: data => Promise.resolve(data),
+              },
+            }}
+          />
         )
 
         jest.spyOn(component.instance(), 'incrementDay')
@@ -283,7 +285,7 @@ describe('instance methods', () => {
 
   describe('incrementDay', () => {
     beforeEach(() => {
-      jest.spyOn(component.instance().localforage, 'setItem')
+      jest.spyOn(localforageMock, 'setItem')
       jest.spyOn(component.instance(), 'showNotification')
       jest.spyOn(Math, 'random').mockReturnValue(1)
 
@@ -298,7 +300,7 @@ describe('instance methods', () => {
     })
 
     test('persists app state with pending newDayNotifications', () => {
-      expect(component.instance().localforage.setItem).toHaveBeenCalledWith(
+      expect(localforageMock.setItem).toHaveBeenCalledWith(
         'state',
         reduceByPersistedKeys({
           ...component.state(),

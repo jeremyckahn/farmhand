@@ -270,13 +270,6 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  */
 
 export default class Farmhand extends Component {
-  // Bind event handlers
-
-  localforage = localforage.createInstance({
-    name: 'farmhand',
-    description: 'Persisted game data for Farmhand',
-  })
-
   /*!
    * @member farmhand.Farmhand#state
    * @type {farmhand.state}
@@ -284,7 +277,10 @@ export default class Farmhand extends Component {
   state = this.createInitialState()
 
   static defaultProps = {
-    localforage,
+    localforage: localforage.createInstance({
+      name: 'farmhand',
+      description: 'Persisted game data for Farmhand',
+    }),
     features: {},
     initialState: {},
   }
@@ -587,7 +583,7 @@ export default class Farmhand extends Component {
   }
 
   async componentDidMount() {
-    const state = await this.localforage.getItem('state')
+    const state = await this.props.localforage.getItem('state')
 
     if (state) {
       const sanitizedState = transformStateDataForImport({
@@ -858,7 +854,7 @@ export default class Farmhand extends Component {
   }
 
   async clearPersistedData() {
-    await this.localforage.clear()
+    await this.props.localforage.clear()
 
     this.showNotification(DATA_DELETED)
   }
@@ -1056,7 +1052,7 @@ export default class Farmhand extends Component {
    * @return {Promise}
    */
   persistState(overrides = {}) {
-    return this.localforage.setItem(
+    return this.props.localforage.setItem(
       'state',
       reduceByPersistedKeys({
         ...this.state,
