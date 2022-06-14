@@ -53,11 +53,7 @@ const localforageMock = {
 
 beforeEach(() => {
   jest.useFakeTimers()
-  component = shallow(
-    <Farmhand
-      {...{ match: { path: '', params: {} }, localforage: localforageMock }}
-    />
-  )
+  component = shallow(<Farmhand {...{ localforage: localforageMock }} />)
 })
 
 describe('private helpers', () => {
@@ -160,7 +156,6 @@ describe('instance methods', () => {
         component = shallow(
           <Farmhand
             {...{
-              match: { path: '', params: {} },
               localforage: {
                 getItem: () =>
                   Promise.resolve({

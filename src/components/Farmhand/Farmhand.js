@@ -283,6 +283,7 @@ export default class Farmhand extends Component {
     }),
     features: {},
     initialState: {},
+    match: { path: '', params: {} },
   }
 
   constructor() {
