@@ -283,6 +283,12 @@ export default class Farmhand extends Component {
    */
   state = this.createInitialState()
 
+  static defaultProps = {
+    localforage,
+    features: {},
+    initialState: {},
+  }
+
   constructor() {
     super(...arguments)
 
@@ -1242,7 +1248,7 @@ export default class Farmhand extends Component {
 
   render() {
     const {
-      props: { features = {} },
+      props: { features },
       state: { redirect },
       fieldToolInventory,
       handlers,
