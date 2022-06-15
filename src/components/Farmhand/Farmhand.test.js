@@ -98,64 +98,6 @@ describe('private helpers', () => {
 })
 
 describe('instance methods', () => {
-  describe('componentDidMount', () => {
-    beforeEach(() => {
-      jest.spyOn(component.instance(), 'incrementDay')
-    })
-
-    describe('fresh boot', () => {
-      beforeEach(() => {
-        component.instance().componentDidMount()
-      })
-
-      test('increments the day by one', () => {
-        expect(component.instance().incrementDay).toHaveBeenCalled()
-      })
-    })
-
-    describe('boot from persisted state', () => {
-      beforeEach(() => {
-        component = shallow(
-          <Farmhand
-            {...{
-              localforage: {
-                getItem: () =>
-                  Promise.resolve({
-                    foo: 'bar',
-                    newDayNotifications: [{ message: 'baz', severity: 'info' }],
-                    itemsSold: {},
-                  }),
-                setItem: data => Promise.resolve(data),
-              },
-            }}
-          />
-        )
-
-        jest.spyOn(component.instance(), 'incrementDay')
-        jest.spyOn(component.instance(), 'showNotification')
-
-        component.instance().componentDidMount()
-      })
-
-      test('rehydrates from persisted state', () => {
-        expect(component.instance().incrementDay).not.toHaveBeenCalled()
-        expect(component.state().foo).toBe('bar')
-      })
-
-      test('shows todaysNotifications for pending newDayNotifications', () => {
-        jest.runOnlyPendingTimers()
-        expect(component.instance().showNotification).toHaveBeenCalledWith(
-          'baz',
-          'info'
-        )
-      })
-
-      test('empties newDayNotifications', () => {
-        expect(component.state().newDayNotifications).toHaveLength(0)
-      })
-    })
-  })
-
   describe('showCowPenPurchasedNotifications', () => {
     describe('cow pen purchasing', () => {
       test('does show notification', () => {

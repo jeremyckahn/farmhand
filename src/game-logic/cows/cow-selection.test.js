@@ -20,9 +20,11 @@ describe('cow selection', () => {
     const cowStub2 = generateCow({ id: cowId2 })
 
     await farmhandStub({
-      cowInventory: [cowStub1, cowStub2],
-      stageFocus: stageFocusType.COW_PEN,
-      purchasedCowPen: 1,
+      initialState: {
+        cowInventory: [cowStub1, cowStub2],
+        stageFocus: stageFocusType.COW_PEN,
+        purchasedCowPen: 1,
+      },
     })
 
     cowDisplayName1 = getCowDisplayName(cowStub1, cowId1, false)
