@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 
 import {
   sampleItem1,
-  sampleItem2,
   sampleFieldTool1,
   sampleCropSeedsItem1,
 } from '../../data/items'
@@ -58,78 +57,41 @@ beforeEach(() => {
 
 describe('private helpers', () => {
   describe('computePlayerInventory', () => {
-    let playerInventory
-    let inventory
-    let valueAdjustments
+    const inventory = [{ quantity: 1, id: 'sample-item-1' }]
 
-    beforeEach(() => {
-      inventory = [{ quantity: 1, id: 'sample-item-1' }]
-      valueAdjustments = {}
-      playerInventory = computePlayerInventory(inventory, valueAdjustments)
-    })
+    test('computes inventory with no value adjustments', () => {
+      const playerInventory = computePlayerInventory(inventory, {})
 
-    test('maps inventory state to renderable inventory data', () => {
       expect(playerInventory).toEqual([{ quantity: 1, ...sampleItem1 }])
     })
 
-    test('returns cached result with unchanged input', () => {
-      const newPlayerInventory = computePlayerInventory(
-        inventory,
-        valueAdjustments
-      )
-      expect(playerInventory).toEqual(newPlayerInventory)
-    })
-
-    test('invalidates cache with changed input', () => {
-      playerInventory = computePlayerInventory(
-        [{ quantity: 1, id: 'sample-item-2' }],
-        valueAdjustments
-      )
-      expect(playerInventory).toEqual([{ ...sampleItem2, quantity: 1 }])
-    })
-
-    describe('with valueAdjustments', () => {
-      beforeEach(() => {
-        valueAdjustments = {
-          'sample-item-1': 2,
-        }
-
-        playerInventory = computePlayerInventory(inventory, valueAdjustments)
+    test('computes inventory with value adjustments', () => {
+      const playerInventory = computePlayerInventory(inventory, {
+        'sample-item-1': 2,
       })
 
-      test('maps inventory state to renderable inventory data', () => {
-        expect(playerInventory).toEqual([
-          { ...sampleItem1, quantity: 1, value: 2 },
-        ])
-      })
+      expect(playerInventory).toEqual([
+        { ...sampleItem1, quantity: 1, value: 2 },
+      ])
     })
   })
 
   describe('getFieldToolInventory', () => {
-    let fieldToolInventory
-
-    beforeEach(() => {
-      fieldToolInventory = getFieldToolInventory([
+    test('selects field tools from inventory', () => {
+      const fieldToolInventory = getFieldToolInventory([
         sampleFieldTool1,
         sampleCropSeedsItem1,
       ])
-    })
 
-    test('filters out non-field tool items', () => {
       expect(fieldToolInventory).toEqual([sampleFieldTool1])
     })
   })
 
   describe('getPlantableCropInventory', () => {
-    let plantableCropInventory
-    let inventory
+    test('selects plantable crop items from inventory', () => {
+      const inventory = [{ id: 'sample-crop-seeds-1' }, { id: 'sample-item-1' }]
+      const plantableCropInventory = getPlantableCropInventory(inventory)
 
-    beforeEach(() => {
-      inventory = [{ id: 'sample-crop-seeds-1' }, { id: 'sample-item-1' }]
-      plantableCropInventory = getPlantableCropInventory(inventory)
-    })
-
-    test('filters out non-plantable items', () => {
       expect(plantableCropInventory).toEqual([sampleCropSeedsItem1])
     })
   })
