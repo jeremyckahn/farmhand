@@ -194,10 +194,6 @@ describe('instance methods', () => {
       component.instance().incrementDay()
     })
 
-    test('empties out newDayNotifications', () => {
-      expect(component.state().newDayNotifications).toHaveLength(0)
-    })
-
     test('persists app state with pending newDayNotifications', () => {
       expect(localforageMock.setItem).toHaveBeenCalledWith(
         'state',

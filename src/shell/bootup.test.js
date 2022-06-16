@@ -1,6 +1,13 @@
-import { waitFor, screen } from '@testing-library/react'
+import { act, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { farmhandStub } from '../test-utils/stubs/farmhandStub'
+
+import { NOTIFICATION_DURATION } from '../constants'
+
+beforeEach(() => {
+  jest.useFakeTimers()
+})
 
 describe('bootup', () => {
   test('boots a fresh game when there is no save file', async () => {
@@ -21,6 +28,58 @@ describe('bootup', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Day 10', { exact: false })).toBeInTheDocument()
+    })
+  })
+
+  test('shows pending notification for loaded day', async () => {
+    await farmhandStub({
+      localforage: {
+        getItem: () =>
+          Promise.resolve({
+            newDayNotifications: [
+              {
+                message: 'Pending notification',
+                severity: 'info',
+              },
+            ],
+          }),
+        setItem: (_key, data) => Promise.resolve(data),
+      },
+    })
+
+    await waitFor(() => {
+      expect(screen.getByText('Pending notification')).toBeInTheDocument()
+    })
+  })
+
+  test('pending notifications for the loaded day are not shown again the next day', async () => {
+    await farmhandStub({
+      localforage: {
+        getItem: () =>
+          Promise.resolve({
+            newDayNotifications: [
+              {
+                message: 'Pending notification',
+                severity: 'info',
+              },
+            ],
+          }),
+        setItem: (_key, data) => Promise.resolve(data),
+      },
+    })
+
+    act(() => {
+      jest.advanceTimersByTime(NOTIFICATION_DURATION)
+    })
+
+    const endDayButton = await screen.findByLabelText(
+      'End the day to save your progress and advance the game.'
+    )
+
+    userEvent.click(endDayButton)
+
+    await waitFor(() => {
+      expect(screen.queryByText('Pending notification')).not.toBeInTheDocument()
     })
   })
 })
