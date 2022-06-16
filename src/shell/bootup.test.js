@@ -1,6 +1,6 @@
 import { waitFor, screen } from '@testing-library/react'
 
-import { farmhandStub } from '../../test-utils/stubs/farmhandStub'
+import { farmhandStub } from '../test-utils/stubs/farmhandStub'
 
 describe('bootup', () => {
   test('boots a fresh game when there is no save file', async () => {
