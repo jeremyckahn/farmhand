@@ -1,9 +1,7 @@
-import { act, screen, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { farmhandStub } from '../test-utils/stubs/farmhandStub'
-
-import { NOTIFICATION_DURATION } from '../constants'
 
 beforeEach(() => {
   jest.useFakeTimers()
@@ -66,10 +64,6 @@ describe('bootup', () => {
           }),
         setItem: (_key, data) => Promise.resolve(data),
       },
-    })
-
-    act(() => {
-      jest.advanceTimersByTime(NOTIFICATION_DURATION)
     })
 
     const endDayButton = await screen.findByLabelText(

@@ -9,11 +9,9 @@ import {
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import {
   COW_PEN_PURCHASED,
-  LOAN_BALANCE_NOTIFICATION,
   RECIPE_LEARNED,
   RECIPES_LEARNED,
 } from '../../templates'
-import { reduceByPersistedKeys } from '../../utils'
 import { recipesMap } from '../../data/maps'
 
 import Farmhand, {
@@ -179,43 +177,6 @@ describe('instance methods', () => {
           severity: 'info',
         })
       })
-    })
-  })
-
-  describe('incrementDay', () => {
-    beforeEach(() => {
-      jest.spyOn(localforageMock, 'setItem')
-      jest.spyOn(component.instance(), 'showNotification')
-      jest.spyOn(Math, 'random').mockReturnValue(1)
-
-      component.setState({
-        newDayNotifications: [{ message: 'foo', severity: 'info' }],
-      })
-      component.instance().incrementDay()
-    })
-
-    test('persists app state with pending newDayNotifications', () => {
-      expect(localforageMock.setItem).toHaveBeenCalledWith(
-        'state',
-        reduceByPersistedKeys({
-          ...component.state(),
-          newDayNotifications: [
-            { message: 'foo', severity: 'info' },
-            {
-              message: LOAN_BALANCE_NOTIFICATION`${
-                component.state().loanBalance
-              }`,
-              severity: 'warning',
-            },
-          ],
-        })
-      )
-    })
-
-    test('makes pending notification', () => {
-      const { showNotification } = component.instance()
-      expect(showNotification).toHaveBeenCalledTimes(3)
-      expect(showNotification).toHaveBeenNthCalledWith(1, 'foo', 'info')
     })
   })
 
