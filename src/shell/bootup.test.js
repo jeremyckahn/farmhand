@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 
 import { farmhandStub } from '../test-utils/stubs/farmhandStub'
+import { endDay } from '../test-utils/ui'
 
 beforeEach(() => {
   jest.useFakeTimers()
@@ -66,11 +66,7 @@ describe('bootup', () => {
       },
     })
 
-    const endDayButton = await screen.findByLabelText(
-      'End the day to save your progress and advance the game.'
-    )
-
-    userEvent.click(endDayButton)
+    await endDay()
 
     await waitFor(() => {
       expect(screen.queryByText('Pending notification')).not.toBeInTheDocument()
