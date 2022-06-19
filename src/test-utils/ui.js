@@ -7,3 +7,8 @@ export const endDay = async () => {
   )
   userEvent.click(endDayButton)
 }
+
+export const previousView = async () => {
+  const previousViewButton = await screen.findByLabelText('Previous view')
+  userEvent.click(previousViewButton)
+}

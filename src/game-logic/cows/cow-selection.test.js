@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 
 import { farmhandStub } from '../../test-utils/stubs/farmhandStub'
 import { saveFileStubFactory } from '../../test-utils/stubs/saveFileStubFactory'
+import { previousView } from '../../test-utils/ui'
 import { generateCow, getCowDisplayName } from '../../utils'
 
 describe('cow selection', () => {
@@ -31,9 +32,8 @@ describe('cow selection', () => {
       },
     })
 
-    const previousViewButton = screen.queryByLabelText('Previous view')
-    userEvent.click(previousViewButton)
-    userEvent.click(previousViewButton)
+    await previousView()
+    await previousView()
     cowDisplayName1 = getCowDisplayName(cowStub1, cowId1, false)
     cowDisplayName2 = getCowDisplayName(cowStub2, cowId1, false)
     cow1 = (await screen.findByAltText(cowDisplayName1)).closest('.cow')
