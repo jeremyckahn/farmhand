@@ -2,8 +2,8 @@ import { act, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { farmhandStub } from '../../test-utils/stubs/farmhandStub'
+import { saveFileStubFactory } from '../../test-utils/stubs/saveFileStubFactory'
 import { generateCow, getCowDisplayName } from '../../utils'
-import { stageFocusType } from '../../enums'
 
 describe('cow selection', () => {
   let cowDisplayName1 = null
@@ -19,14 +19,21 @@ describe('cow selection', () => {
     const cowStub1 = generateCow({ id: cowId1 })
     const cowStub2 = generateCow({ id: cowId2 })
 
+    const loadedState = saveFileStubFactory({
+      cowInventory: [cowStub1, cowStub2],
+      purchasedCowPen: 1,
+    })
+
     await farmhandStub({
-      initialState: {
-        cowInventory: [cowStub1, cowStub2],
-        stageFocus: stageFocusType.COW_PEN,
-        purchasedCowPen: 1,
+      localforage: {
+        getItem: () => Promise.resolve(loadedState),
+        setItem: (_key, data) => Promise.resolve(data),
       },
     })
 
+    const previousViewButton = screen.queryByLabelText('Previous view')
+    userEvent.click(previousViewButton)
+    userEvent.click(previousViewButton)
     cowDisplayName1 = getCowDisplayName(cowStub1, cowId1, false)
     cowDisplayName2 = getCowDisplayName(cowStub2, cowId1, false)
     cow1 = (await screen.findByAltText(cowDisplayName1)).closest('.cow')

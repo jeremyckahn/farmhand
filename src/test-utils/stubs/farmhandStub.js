@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { MemoryRouter, Route } from 'react-router-dom'
 
 import Farmhand from '../../components/Farmhand'
@@ -23,9 +23,4 @@ export const farmhandStub = async (props = {}) => {
       />
     </MemoryRouter>
   )
-
-  if (!props.localforage) {
-    // Wait for the notification that is shown when a new game has finished booting
-    await screen.findByText('You took out a new loan', { exact: false })
-  }
 }

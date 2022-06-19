@@ -282,7 +282,6 @@ export default class Farmhand extends Component {
       description: 'Persisted game data for Farmhand',
     }),
     features: {},
-    initialState: {},
     match: { path: '', params: {} },
   }
 
@@ -613,7 +612,7 @@ export default class Farmhand extends Component {
 
     this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
-    this.setState({ hasBooted: true, ...this.props.initialState })
+    this.setState({ hasBooted: true })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -1417,5 +1416,4 @@ Farmhand.propTypes = {
   history: object,
   location: object,
   match: object.isRequired,
-  initialState: object,
 }
