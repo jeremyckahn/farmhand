@@ -179,38 +179,4 @@ describe('instance methods', () => {
       })
     })
   })
-
-  describe('focusNextView', () => {
-    test('goes to next view', () => {
-      const { viewList } = component.instance()
-      component.setState({ stageFocus: viewList[0] })
-      component.instance().focusNextView()
-      expect(component.state().stageFocus).toEqual(viewList[1])
-    })
-
-    test('cycles to the beginning', () => {
-      const { viewList } = component.instance()
-      component.setState({ stageFocus: viewList[viewList.length - 1] })
-      component.instance().focusNextView()
-      expect(component.state().stageFocus).toEqual(viewList[0])
-    })
-  })
-
-  describe('focusPreviousView', () => {
-    test('goes to previous view', () => {
-      const { viewList } = component.instance()
-      component.setState({ stageFocus: viewList[1] })
-      component.instance().focusPreviousView()
-      expect(component.state().stageFocus).toEqual(viewList[0])
-    })
-
-    test('cycles to the end', () => {
-      const { viewList } = component.instance()
-      component.setState({ stageFocus: viewList[0] })
-      component.instance().focusPreviousView()
-      expect(component.state().stageFocus).toEqual(
-        viewList[viewList.length - 1]
-      )
-    })
-  })
 })

@@ -12,3 +12,8 @@ export const previousView = async () => {
   const previousViewButton = await screen.findByLabelText('Previous view')
   userEvent.click(previousViewButton)
 }
+
+export const nextView = async () => {
+  const nextViewButton = await screen.findByLabelText('Next view')
+  userEvent.click(nextViewButton)
+}
