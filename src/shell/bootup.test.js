@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { act, screen, waitFor } from '@testing-library/react'
 
 import { saveFileStubFactory } from '../test-utils/stubs/saveFileStubFactory'
 import { farmhandStub } from '../test-utils/stubs/farmhandStub'
@@ -73,10 +73,21 @@ describe('bootup', () => {
       },
     })
 
-    await endDay()
+    await waitFor(() => {
+      expect(screen.getByText('Pending notification')).toBeInTheDocument()
+    })
+
+    act(() => {
+      jest.runAllTimers()
+    })
 
     await waitFor(() => {
       expect(screen.queryByText('Pending notification')).not.toBeInTheDocument()
     })
+
+    await endDay()
+
+    // The notification was not shown again
+    expect(screen.queryByText('Pending notification')).not.toBeInTheDocument()
   })
 })
