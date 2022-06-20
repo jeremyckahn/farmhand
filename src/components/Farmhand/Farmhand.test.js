@@ -125,18 +125,6 @@ describe('instance methods', () => {
       })
     })
 
-    describe('new recipe was learned', () => {
-      test('does show notification', () => {
-        component.setState({ learnedRecipes: { 'sample-recipe-1': true } })
-        component.update()
-
-        expect(component.state().todaysNotifications).toContainEqual({
-          message: RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`,
-          severity: 'info',
-        })
-      })
-    })
-
     describe('two new recipes were learned', () => {
       test('does show notification', () => {
         const learnedRecipes = ['sample-recipe-1', 'sample-recipe-2'].map(
