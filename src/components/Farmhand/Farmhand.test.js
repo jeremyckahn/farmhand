@@ -7,12 +7,7 @@ import {
   sampleCropSeedsItem1,
 } from '../../data/items'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
-import {
-  COW_PEN_PURCHASED,
-  RECIPE_LEARNED,
-  RECIPES_LEARNED,
-} from '../../templates'
-import { recipesMap } from '../../data/maps'
+import { COW_PEN_PURCHASED } from '../../templates'
 
 import Farmhand, {
   computePlayerInventory,
@@ -106,62 +101,6 @@ describe('instance methods', () => {
 
         expect(component.state().todaysNotifications).toContainEqual({
           message: COW_PEN_PURCHASED`${PURCHASEABLE_COW_PENS.get(1).cows}`,
-          severity: 'info',
-        })
-      })
-    })
-  })
-
-  describe('showRecipeLearnedNotifications', () => {
-    describe('no new recipes were learned', () => {
-      test('does not show notification', () => {
-        component.setState({ learnedRecipes: {} })
-        component.update()
-
-        expect(component.state().todaysNotifications).not.toContainEqual({
-          message: RECIPE_LEARNED`${recipesMap['sample-recipe-1']}`,
-          severity: 'info',
-        })
-      })
-    })
-
-    describe('two new recipes were learned', () => {
-      test('does show notification', () => {
-        const learnedRecipes = ['sample-recipe-1', 'sample-recipe-2'].map(
-          id => recipesMap[id]
-        )
-
-        component.setState({
-          learnedRecipes: { 'sample-recipe-1': true, 'sample-recipe-2': true },
-        })
-        component.update()
-
-        expect(component.state().todaysNotifications).toContainEqual({
-          message: RECIPES_LEARNED`${learnedRecipes}`,
-          severity: 'info',
-        })
-      })
-    })
-
-    describe('three new recipes were learned', () => {
-      test('does show notification', () => {
-        const learnedRecipes = [
-          'sample-recipe-1',
-          'sample-recipe-2',
-          'sample-recipe-3',
-        ].map(id => recipesMap[id])
-
-        component.setState({
-          learnedRecipes: {
-            'sample-recipe-1': true,
-            'sample-recipe-2': true,
-            'sample-recipe-3': true,
-          },
-        })
-        component.update()
-
-        expect(component.state().todaysNotifications).toContainEqual({
-          message: RECIPES_LEARNED`${learnedRecipes}`,
           severity: 'info',
         })
       })
