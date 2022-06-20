@@ -1,5 +1,6 @@
 import { screen, waitFor } from '@testing-library/react'
 
+import { saveFileStubFactory } from '../test-utils/stubs/saveFileStubFactory'
 import { farmhandStub } from '../test-utils/stubs/farmhandStub'
 import { endDay } from '../test-utils/ui'
 
@@ -17,9 +18,13 @@ describe('bootup', () => {
   })
 
   test('boots from save file if there is one', async () => {
+    const loadedState = saveFileStubFactory({
+      dayCount: 10,
+    })
+
     await farmhandStub({
       localforage: {
-        getItem: () => Promise.resolve({ dayCount: 10 }),
+        getItem: () => Promise.resolve(loadedState),
         setItem: (_key, data) => Promise.resolve(data),
       },
     })
@@ -30,17 +35,18 @@ describe('bootup', () => {
   })
 
   test('shows pending notification for loaded day', async () => {
+    const loadedState = saveFileStubFactory({
+      newDayNotifications: [
+        {
+          message: 'Pending notification',
+          severity: 'info',
+        },
+      ],
+    })
+
     await farmhandStub({
       localforage: {
-        getItem: () =>
-          Promise.resolve({
-            newDayNotifications: [
-              {
-                message: 'Pending notification',
-                severity: 'info',
-              },
-            ],
-          }),
+        getItem: () => Promise.resolve(loadedState),
         setItem: (_key, data) => Promise.resolve(data),
       },
     })
@@ -51,17 +57,18 @@ describe('bootup', () => {
   })
 
   test('pending notifications for the loaded day are not shown again the next day', async () => {
+    const loadedState = saveFileStubFactory({
+      newDayNotifications: [
+        {
+          message: 'Pending notification',
+          severity: 'info',
+        },
+      ],
+    })
+
     await farmhandStub({
       localforage: {
-        getItem: () =>
-          Promise.resolve({
-            newDayNotifications: [
-              {
-                message: 'Pending notification',
-                severity: 'info',
-              },
-            ],
-          }),
+        getItem: () => Promise.resolve(loadedState),
         setItem: (_key, data) => Promise.resolve(data),
       },
     })
