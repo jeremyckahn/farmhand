@@ -1,21 +1,28 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+
+import { screen, render } from '@testing-library/react'
+
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import Home from './Home'
 
-let component
-
 beforeEach(() => {
-  component = shallow(
-    <Home
-      {...{
-        completedAchievements: {},
-        handleViewChangeButtonClick: () => {},
-      }}
-    />
+  const gameState = {
+    completedAchievements: {},
+  }
+
+  render(
+    <FarmhandContext.Provider value={{ gameState, handlers: {} }}>
+      <Home
+        {...{
+          completedAchievements: {},
+          handleViewChangeButtonClick: () => {},
+        }}
+      />
+    </FarmhandContext.Provider>
   )
 })
 
 test('renders', () => {
-  expect(component).toHaveLength(1)
+  expect(screen.getByText('Welcome!')).toBeInTheDocument()
 })
