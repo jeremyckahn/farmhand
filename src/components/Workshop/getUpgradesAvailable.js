@@ -1,15 +1,13 @@
+import toolUpgrades from '../../data/upgrades'
+import { recipesMap } from '../../data/maps'
+
 /**
  * Get available upgrades based on current tool levels and unlocked recipes
- * @param {object} toolLevels - the current level of each tool
  * @param {array} learnedForgeRecipes - list of learned forge recipes from farmhand state
+ * @param {object} toolLevels - the current level of each tool
  * @returns {array} a list of all applicable upgrades
  */
-export function getUpgradesAvailable({
-  toolLevels,
-  learnedForgeRecipes,
-  toolUpgrades,
-  recipesMap,
-}) {
+export function getUpgradesAvailable({ learnedForgeRecipes, toolLevels }) {
   let upgradesAvailable = []
   const learnedRecipeIds = learnedForgeRecipes.map(r => r.id)
 
