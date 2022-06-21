@@ -98,10 +98,6 @@ const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
         </ul>
         <Divider />
         <ul className="card-list">
-          {/*
-          This really isn't a list, but it makes it easy to keep the UI
-          consistent.
-        */}
           <li>
             <Card>
               <CardContent>
