@@ -21,6 +21,8 @@ import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import { TabPanel, a11yProps } from './TabPanel'
 
+import { getUpgradesAvailable } from './getUpgradesAvailable'
+
 import './Workshop.sass'
 
 /**
@@ -49,38 +51,6 @@ const getLearnedRecipeCategories = learnedRecipes => {
   return { learnedKitchenRecipes, learnedForgeRecipes }
 }
 
-/**
- * Get available upgrades based on current tool levels and unlocked recipes
- * @param {object} toolLevels - the current level of each tool
- * @param {array} learnedRecipes - list of learned recipes from farmhand state
- * @returns {array} a list of all applicable upgrades
- */
-const getUpgradesAvailable = (toolLevels, learnedRecipes) => {
-  let upgradesAvailable = []
-  const learnedRecipeIds = learnedRecipes.map(r => r.id)
-
-  for (let type of Object.keys(toolUpgrades)) {
-    let upgrade = toolUpgrades[type][toolLevels[type]]
-
-    if (upgrade && !upgrade.isMaxLevel && upgrade.nextLevel) {
-      const nextLevelUpgrade = toolUpgrades[type][upgrade.nextLevel]
-      let allIngredientsUnlocked = true
-
-      for (let ingredient of Object.keys(nextLevelUpgrade.ingredients)) {
-        allIngredientsUnlocked =
-          allIngredientsUnlocked &&
-          !!(!recipesMap[ingredient] || learnedRecipeIds.includes(ingredient))
-      }
-
-      if (allIngredientsUnlocked) {
-        upgradesAvailable.push(nextLevelUpgrade)
-      }
-    }
-  }
-
-  return upgradesAvailable
-}
-
 const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
   const [currentTab, setCurrentTab] = useState(0)
 
@@ -89,10 +59,12 @@ const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
     learnedForgeRecipes,
   } = getLearnedRecipeCategories(learnedRecipes)
 
-  const upgradesAvailable = getUpgradesAvailable(
+  const upgradesAvailable = getUpgradesAvailable({
     toolLevels,
-    learnedForgeRecipes
-  )
+    learnedForgeRecipes,
+    toolUpgrades,
+    recipesMap,
+  })
 
   const showForge = features.MINING && purchasedSmelter
 
