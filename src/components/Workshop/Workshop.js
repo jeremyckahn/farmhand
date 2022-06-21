@@ -12,7 +12,6 @@ import { features } from '../../config'
 import { recipeType } from '../../enums'
 
 import { recipeCategories, recipesMap } from '../../data/maps'
-import toolUpgrades from '../../data/upgrades'
 
 import Recipe from '../Recipe'
 import UpgradePurchase from '../UpgradePurchase'
@@ -62,8 +61,6 @@ const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
   const upgradesAvailable = getUpgradesAvailable({
     toolLevels,
     learnedForgeRecipes,
-    toolUpgrades,
-    recipesMap,
   })
 
   const showForge = features.MINING && purchasedSmelter
