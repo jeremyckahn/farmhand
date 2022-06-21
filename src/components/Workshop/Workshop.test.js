@@ -1,5 +1,6 @@
 import React from 'react'
 import { screen, render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
@@ -12,6 +13,11 @@ jest.mock('../../data/maps', () => ({
       id: 'kitchen-recipe-1',
       name: 'kitchen recipe 1',
       recipeType: 'KITCHEN',
+    },
+    'forge-recipe-1': {
+      id: 'forge-recipe-1',
+      name: 'forge recipe 1',
+      recipeType: 'FORGE',
     },
   },
 }))
@@ -34,39 +40,69 @@ describe('<Workshop />', () => {
   }
 
   describe('kitchen', () => {
-    test('is available', () => {
-      renderWorkshop(gameState)
+    let numLearnedRecipes = 0
+    beforeEach(() => {
+      numLearnedRecipes = Object.keys(gameState.learnedRecipes).length
 
+      gameState.learnedRecipes = {
+        'kitchen-recipe-1': true,
+      }
+
+      renderWorkshop(gameState)
+    })
+
+    test('is available', () => {
       expect(screen.getByText('Kitchen')).toBeInTheDocument()
     })
 
     test('renders learned recipes', () => {
-      gameState.learnedRecipes = {
-        'kitchen-recipe-1': true,
-      }
-      renderWorkshop(gameState)
-
       expect(
-        screen.getByText('Learned Recipes (1', { exact: false })
+        screen.getByText(`Learned Recipes (${numLearnedRecipes}`, {
+          exact: false,
+        })
       ).toBeInTheDocument()
+    })
+
+    test('renders a Recipe card for each learned recipe', () => {
+      const recipesList = screen.getByText('Learned Recipes', { exact: false })
+        .nextElementSibling
+
+      expect(recipesList.querySelectorAll('li')).toHaveLength(numLearnedRecipes)
     })
   })
 
   describe('forge', () => {
-    test('is rendered if smelter is purchased', () => {
-      gameState.purchasedSmelter = true
+    describe('has not purchased smelter', () => {
+      test('is not rendered', () => {
+        renderWorkshop(gameState)
 
-      renderWorkshop(gameState)
-
-      expect(screen.getByText('Forge')).toBeInTheDocument()
+        expect(screen.queryByText('Forge')).not.toBeInTheDocument()
+      })
     })
 
-    test('is not rendered if smelter is not purchased', () => {
-      gameState.purchasedSmelter = false
+    describe('has purchased smelter', () => {
+      beforeEach(() => {
+        gameState.purchasedSmelter = true
+        gameState.learnedRecipes = {
+          'forge-recipe-1': true,
+        }
 
-      renderWorkshop(gameState)
+        renderWorkshop(gameState)
 
-      expect(screen.queryByText('Forge')).not.toBeInTheDocument()
+        userEvent.click(screen.getByText('Forge'))
+      })
+
+      test('is rendered', () => {
+        expect(screen.getByText('Forge')).toBeInTheDocument()
+      })
+
+      test('renders a Recipe card for each learned recipe', () => {
+        const recipesList = screen.getByText('Learned Recipes', {
+          exact: false,
+        }).nextElementSibling
+
+        expect(recipesList.querySelectorAll('li')).toHaveLength(1)
+      })
     })
   })
 })
