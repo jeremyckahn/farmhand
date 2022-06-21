@@ -14,15 +14,30 @@ jest.mock('../../data/maps', () => ({
       name: 'kitchen recipe 1',
       recipeType: 'KITCHEN',
     },
+    'kitchen-recipe-2': {
+      id: 'kitchen-recipe-2',
+      name: 'kitchen recipe 2',
+      recipeType: 'KITCHEN',
+    },
+    'kitchen-recipe-3': {
+      id: 'kitchen-recipe-3',
+      name: 'kitchen recipe 3',
+      recipeType: 'KITCHEN',
+    },
     'forge-recipe-1': {
       id: 'forge-recipe-1',
       name: 'forge recipe 1',
       recipeType: 'FORGE',
     },
+    'forge-recipe-2': {
+      id: 'forge-recipe-2',
+      name: 'forge recipe 2',
+      recipeType: 'FORGE',
+    },
   },
 }))
 
-jest.mock('../Recipe', () => () => 'Recipe')
+jest.mock('../Recipe', () => props => <div data-testid="Recipe">Recipe</div>)
 
 describe('<Workshop />', () => {
   let gameState = {
@@ -46,6 +61,8 @@ describe('<Workshop />', () => {
 
       gameState.learnedRecipes = {
         'kitchen-recipe-1': true,
+        'kitchen-recipe-2': true,
+        'kitchen-recipe-3': true,
       }
 
       renderWorkshop(gameState)
@@ -64,10 +81,7 @@ describe('<Workshop />', () => {
     })
 
     test('renders a Recipe card for each learned recipe', () => {
-      const recipesList = screen.getByText('Learned Recipes', { exact: false })
-        .nextElementSibling
-
-      expect(recipesList.querySelectorAll('li')).toHaveLength(numLearnedRecipes)
+      expect(screen.getAllByTestId('Recipe')).toHaveLength(numLearnedRecipes)
     })
   })
 
@@ -85,6 +99,7 @@ describe('<Workshop />', () => {
         gameState.purchasedSmelter = true
         gameState.learnedRecipes = {
           'forge-recipe-1': true,
+          'forge-recipe-2': true,
         }
 
         renderWorkshop(gameState)
@@ -97,11 +112,7 @@ describe('<Workshop />', () => {
       })
 
       test('renders a Recipe card for each learned recipe', () => {
-        const recipesList = screen.getByText('Learned Recipes', {
-          exact: false,
-        }).nextElementSibling
-
-        expect(recipesList.querySelectorAll('li')).toHaveLength(1)
+        expect(screen.getAllByTestId('Recipe')).toHaveLength(2)
       })
     })
   })
