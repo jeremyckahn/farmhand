@@ -4,7 +4,11 @@ import userEvent from '@testing-library/user-event'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
+import { getUpgradesAvailable } from './getUpgradesAvailable'
+
 import Workshop from './Workshop'
+
+jest.mock('./getUpgradesAvailable')
 
 jest.mock('../../data/maps', () => ({
   ...jest.requireActual('../../data/maps'),
@@ -37,7 +41,10 @@ jest.mock('../../data/maps', () => ({
   },
 }))
 
-jest.mock('../Recipe', () => props => <div data-testid="Recipe">Recipe</div>)
+jest.mock('../Recipe', () => () => <div data-testid="Recipe">Recipe</div>)
+jest.mock('../UpgradePurchase', () => () => (
+  <div data-testid="UpgradePurchase">UpgradePurchase</div>
+))
 
 describe('<Workshop />', () => {
   let gameState = {
@@ -96,6 +103,8 @@ describe('<Workshop />', () => {
 
     describe('has purchased smelter', () => {
       beforeEach(() => {
+        getUpgradesAvailable.mockReturnValue([])
+
         gameState.purchasedSmelter = true
         gameState.learnedRecipes = {
           'forge-recipe-1': true,
@@ -113,6 +122,27 @@ describe('<Workshop />', () => {
 
       test('renders a Recipe card for each learned recipe', () => {
         expect(screen.getAllByTestId('Recipe')).toHaveLength(2)
+      })
+    })
+
+    describe('has upgrades available', () => {
+      beforeEach(() => {
+        const availableUpgrades = [{ id: 'upgrade-1' }, { id: 'upgrade-2' }]
+
+        getUpgradesAvailable.mockReturnValue(availableUpgrades)
+        gameState.purchasedSmelter = true
+
+        renderWorkshop(gameState)
+
+        userEvent.click(screen.getByText('Forge'))
+      })
+
+      test('renders upgrades heading', () => {
+        expect(screen.getByText('Tool Upgrades')).toBeInTheDocument()
+      })
+
+      it('renders an UpgradePurchase card for each upgrade available', () => {
+        expect(screen.getAllByTestId('UpgradePurchase')).toHaveLength(2)
       })
     })
   })
