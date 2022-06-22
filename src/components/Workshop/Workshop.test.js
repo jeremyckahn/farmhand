@@ -93,7 +93,7 @@ describe('<Workshop />', () => {
   })
 
   describe('forge', () => {
-    describe('has not purchased smelter', () => {
+    describe('player has not purchased the smelter', () => {
       test('is not rendered', () => {
         renderWorkshop(gameState)
 
@@ -101,7 +101,7 @@ describe('<Workshop />', () => {
       })
     })
 
-    describe('has purchased smelter', () => {
+    describe('player has purchased the smelter', () => {
       beforeEach(() => {
         getUpgradesAvailable.mockReturnValue([])
 
