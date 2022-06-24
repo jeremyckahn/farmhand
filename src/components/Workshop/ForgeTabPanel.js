@@ -19,6 +19,7 @@ import { getUpgradesAvailable } from './getUpgradesAvailable'
 
 export function ForgeTabPanel({
   currentTab,
+  index,
   learnedForgeRecipes,
   setCurrentTab,
   toolLevels,
@@ -29,7 +30,7 @@ export function ForgeTabPanel({
   })
 
   return (
-    <TabPanel value={currentTab} index={1}>
+    <TabPanel value={currentTab} index={index}>
       <RecipeList
         learnedRecipes={learnedForgeRecipes}
         allRecipes={recipeCategories[recipeType.FORGE]}
@@ -71,6 +72,7 @@ export function ForgeTabPanel({
 
 ForgeTabPanel.propTypes = {
   currentTab: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
   learnedForgeRecipes: PropTypes.array.isRequired,
   setCurrentTab: PropTypes.func.isRequired,
   toolLevels: PropTypes.object.isRequired,

@@ -12,7 +12,7 @@ export function getUpgradesAvailable({ learnedForgeRecipes, toolLevels }) {
   const learnedRecipeIds = learnedForgeRecipes.map(r => r.id)
 
   for (let type of Object.keys(toolUpgrades)) {
-    let upgrade = toolUpgrades[type][toolLevels[type]]
+    const upgrade = toolUpgrades[type][toolLevels[type]]
 
     if (upgrade && !upgrade.isMaxLevel && upgrade.nextLevel) {
       const nextLevelUpgrade = toolUpgrades[type][upgrade.nextLevel]

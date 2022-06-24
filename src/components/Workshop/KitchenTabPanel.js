@@ -15,11 +15,12 @@ import { RecipeList } from './RecipeList'
 
 export function KitchenTabPanel({
   currentTab,
-  setCurrentTab,
+  index,
   learnedKitchenRecipes,
+  setCurrentTab,
 }) {
   return (
-    <TabPanel value={currentTab} index={0}>
+    <TabPanel value={currentTab} index={index}>
       <RecipeList
         learnedRecipes={learnedKitchenRecipes}
         allRecipes={recipeCategories[recipeType.KITCHEN]}
@@ -46,6 +47,7 @@ export function KitchenTabPanel({
 
 KitchenTabPanel.propTypes = {
   currentTab: PropTypes.number.isRequired,
-  setCurrentTab: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
   learnedKitchenRecipes: PropTypes.array.isRequired,
+  setCurrentTab: PropTypes.func.isRequired,
 }

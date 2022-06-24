@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { bool, object } from 'prop-types'
+import { number, object } from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
@@ -45,12 +45,14 @@ const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
       </AppBar>
       <KitchenTabPanel
         currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
+        index={0}
         learnedKitchenRecipes={learnedKitchenRecipes}
+        setCurrentTab={setCurrentTab}
       />
       {showForge ? (
         <ForgeTabPanel
           currentTab={currentTab}
+          index={1}
           learnedForgeRecipes={learnedForgeRecipes}
           setCurrentTab={setCurrentTab}
           toolLevels={toolLevels}
@@ -62,7 +64,7 @@ const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
 
 Workshop.propTypes = {
   learnedRecipes: object.isRequired,
-  purchasedSmelter: bool,
+  purchasedSmelter: number,
   toolLevels: object.isRequired,
 }
 

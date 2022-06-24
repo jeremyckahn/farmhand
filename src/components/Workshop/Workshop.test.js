@@ -49,7 +49,7 @@ jest.mock('../UpgradePurchase', () => () => (
 describe('<Workshop />', () => {
   let gameState = {
     learnedRecipes: {},
-    purchasedSmelter: false,
+    purchasedSmelter: 0,
     toolLevels: {},
   }
 
@@ -64,13 +64,13 @@ describe('<Workshop />', () => {
   describe('kitchen', () => {
     let numLearnedRecipes = 0
     beforeEach(() => {
-      numLearnedRecipes = Object.keys(gameState.learnedRecipes).length
-
       gameState.learnedRecipes = {
         'kitchen-recipe-1': true,
         'kitchen-recipe-2': true,
         'kitchen-recipe-3': true,
       }
+
+      numLearnedRecipes = Object.keys(gameState.learnedRecipes).length
 
       renderWorkshop(gameState)
     })
@@ -105,7 +105,7 @@ describe('<Workshop />', () => {
       beforeEach(() => {
         getUpgradesAvailable.mockReturnValue([])
 
-        gameState.purchasedSmelter = true
+        gameState.purchasedSmelter = 1
         gameState.learnedRecipes = {
           'forge-recipe-1': true,
           'forge-recipe-2': true,
@@ -130,7 +130,7 @@ describe('<Workshop />', () => {
         const availableUpgrades = [{ id: 'upgrade-1' }, { id: 'upgrade-2' }]
 
         getUpgradesAvailable.mockReturnValue(availableUpgrades)
-        gameState.purchasedSmelter = true
+        gameState.purchasedSmelter = 1
 
         renderWorkshop(gameState)
 
