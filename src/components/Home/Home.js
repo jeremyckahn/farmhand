@@ -36,15 +36,21 @@ const getRemainingOnboardingAchievements = memoize(completedAchievements =>
   )
 )
 
+const environmentAllowsInstall = ['production', 'development'].includes(
+  process.env.NODE_ENV
+)
+
+const VALID_ORIGINS = [
+  'https://jeremyckahn.github.io',
+  'https://www.farmhand.life',
+  'http://localhost:3000',
+]
+
 // https://stackoverflow.com/questions/41742390/javascript-to-check-if-pwa-or-mobile-web/41749865#41749865
 const isInstallable =
-  // process.env checks are needed to make tests not fail
-  (process.env.NODE_ENV === 'production' ||
-    process.env.NODE_ENV === 'development') &&
+  environmentAllowsInstall &&
   !window.matchMedia('(display-mode: standalone)').matches &&
-  (window.location.origin === 'https://jeremyckahn.github.io' ||
-    window.location.origin === 'https://www.farmhand.life' ||
-    window.location.origin === 'http://localhost:3000') // For debugging
+  VALID_ORIGINS.includes(window.location.origin)
 
 const Home = ({
   completedAchievements,
