@@ -38,9 +38,6 @@ describe('notifications', () => {
     userEvent.click(carrotSellButton)
     const notification = await screen.findByRole('alert')
 
-    within(notification).getByText('You learned a new recipe:', {
-      exact: false,
-    })
     within(notification).getByText('Carrot Soup')
   })
 
