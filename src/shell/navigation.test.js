@@ -1,6 +1,6 @@
 import { within } from '@testing-library/dom'
 
-import { saveFileStubFactory } from '../test-utils/stubs/saveFileStubFactory'
+import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory'
 import { farmhandStub } from '../test-utils/stubs/farmhandStub'
 import { nextView, previousView } from '../test-utils/ui'
 
@@ -26,7 +26,7 @@ describe('navigation', () => {
   })
 
   test('cycles forwards through the unlocked views', async () => {
-    const loadedState = saveFileStubFactory({
+    const loadedState = saveDataStubFactory({
       purchasedCowPen: 1,
     })
 
@@ -46,7 +46,7 @@ describe('navigation', () => {
   })
 
   test('cycles backwards through the unlocked views', async () => {
-    const loadedState = saveFileStubFactory({
+    const loadedState = saveDataStubFactory({
       purchasedCowPen: 1,
     })
 

@@ -1,6 +1,6 @@
 import { computeStateForNextDay } from '../../game-logic/reducers'
 
-export const saveFileStubFactory = ({ dayCount = 1, ...restOverrides }) =>
+export const saveDataStubFactory = ({ dayCount = 1, ...restOverrides }) =>
   computeStateForNextDay(
     // dayCount is offset by 1 here to account for the fact that
     // computeStateForNextDay's isFirstDay argument below is true.

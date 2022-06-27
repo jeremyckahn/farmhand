@@ -2,7 +2,7 @@ import { act, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { farmhandStub } from '../../test-utils/stubs/farmhandStub'
-import { saveFileStubFactory } from '../../test-utils/stubs/saveFileStubFactory'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory'
 import { previousView } from '../../test-utils/ui'
 import { generateCow, getCowDisplayName } from '../../utils'
 
@@ -20,7 +20,7 @@ describe('cow selection', () => {
     const cowStub1 = generateCow({ id: cowId1 })
     const cowStub2 = generateCow({ id: cowId2 })
 
-    const loadedState = saveFileStubFactory({
+    const loadedState = saveDataStubFactory({
       cowInventory: [cowStub1, cowStub2],
       purchasedCowPen: 1,
     })

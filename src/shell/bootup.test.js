@@ -1,6 +1,6 @@
 import { act, screen, waitFor } from '@testing-library/react'
 
-import { saveFileStubFactory } from '../test-utils/stubs/saveFileStubFactory'
+import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory'
 import { farmhandStub } from '../test-utils/stubs/farmhandStub'
 import { endDay } from '../test-utils/ui'
 
@@ -18,7 +18,7 @@ describe('bootup', () => {
   })
 
   test('boots from save file if there is one', async () => {
-    const loadedState = saveFileStubFactory({
+    const loadedState = saveDataStubFactory({
       dayCount: 10,
     })
 
@@ -35,7 +35,7 @@ describe('bootup', () => {
   })
 
   test('shows pending notification for loaded day', async () => {
-    const loadedState = saveFileStubFactory({
+    const loadedState = saveDataStubFactory({
       newDayNotifications: [
         {
           message: 'Pending notification',
@@ -57,7 +57,7 @@ describe('bootup', () => {
   })
 
   test('pending notifications for the loaded day are not shown again the next day', async () => {
-    const loadedState = saveFileStubFactory({
+    const loadedState = saveDataStubFactory({
       newDayNotifications: [
         {
           message: 'Pending notification',

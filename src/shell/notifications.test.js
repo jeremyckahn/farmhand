@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { endDay, getItemByName } from '../test-utils/ui'
 import { STORM_MESSAGE } from '../strings'
 import { farmhandStub } from '../test-utils/stubs/farmhandStub'
-import { saveFileStubFactory } from '../test-utils/stubs/saveFileStubFactory'
+import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory'
 
 describe('notifications', () => {
   test('pending notifications are shown when a day starts', async () => {
@@ -20,7 +20,7 @@ describe('notifications', () => {
   })
 
   test('notification is shown when recipe is learned', async () => {
-    const loadedState = saveFileStubFactory({
+    const loadedState = saveDataStubFactory({
       inventory: [{ id: 'carrot', quantity: 10 }],
     })
 
@@ -45,7 +45,7 @@ describe('notifications', () => {
   })
 
   test('multiple notifications are shown when multiple recipes are learned', async () => {
-    const loadedState = saveFileStubFactory({
+    const loadedState = saveDataStubFactory({
       inventory: [
         { id: 'carrot', quantity: 10 },
         { id: 'corn', quantity: 6 },
