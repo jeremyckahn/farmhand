@@ -1,11 +1,11 @@
 import { fertilizerType } from '../../enums'
 import { getInventoryQuantityMap } from '../../utils'
-import { STORM_CHANCE } from '../../constants'
 import {
   RAIN_MESSAGE,
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
 } from '../../strings'
+import { shouldStormToday } from '../../utils'
 
 import {
   fieldHasScarecrow,
@@ -24,7 +24,7 @@ export const applyPrecipitation = state => {
   let scarecrowsConsumedByReplanting = 0
   let notification
 
-  if (Math.random() < STORM_CHANCE) {
+  if (shouldStormToday()) {
     if (fieldHasScarecrow(field)) {
       notification = {
         message: STORM_DESTROYS_SCARECROWS_MESSAGE,

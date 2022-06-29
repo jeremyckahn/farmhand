@@ -36,16 +36,22 @@ export const fieldHasScarecrow = field =>
   findInField(field, plotContainsScarecrow)
 
 /**
- * @param {Array} chancesAndEvents An array of arrays in which the first
- * element is a number and the second number is a function.
+ * @typedef farmhand.chanceAndEvent
+ * @type {[function():boolean, function(farmhand.state):farmhand.state)]}
+ */
+
+/**
+ * @param {Array.<farmhand.chanceAndEvent>} chancesAndEvents An array of arrays
+ * in which the first element is a function that determines whether to trigger
+ * an event, and the second function which is a reducer that implements the
+ * event.
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
 export const applyChanceEvent = (chancesAndEvents, state) =>
-  chancesAndEvents.reduce(
-    (acc, [chance, fn]) => (Math.random() <= chance ? fn(acc) : acc),
-    state
-  )
+  chancesAndEvents.reduce((acc, [chanceCalculator, fn]) => {
+    return chanceCalculator() ? fn(acc) : acc
+  }, state)
 
 /**
  * @param {?farmhand.plotContent} plot
