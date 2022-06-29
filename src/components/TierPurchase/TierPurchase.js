@@ -13,11 +13,14 @@ import FarmhandContext from '../Farmhand/Farmhand.context'
 import './TierPurchase.sass'
 
 export class TierPurchase extends Component {
-  state = {
-    selectedTier: '',
-  }
+  constructor(props) {
+    super(props)
+    this.state = {
+      selectedTier: '',
+    }
 
-  tierValues = [...this.props.tiers.entries()]
+    this.tierValues = [...props.tiers.entries()]
+  }
 
   get selectedTierNumber() {
     return Number(this.state.selectedTier)
