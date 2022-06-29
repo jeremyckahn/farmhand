@@ -7,10 +7,15 @@ const itemIds = Object.keys(itemsMap)
  * @returns {Object.<string, number>}
  */
 export const getInventoryQuantities = inventory => {
-  return itemIds.reduce((acc, itemId) => {
-    const itemInInventory = inventory.find(({ id }) => id === itemId)
-    acc[itemId] = itemInInventory ? itemInInventory.quantity : 0
+  const quantities = {}
 
-    return acc
-  }, {})
+  for (const itemId of itemIds) {
+    quantities[itemId] = 0
+  }
+
+  for (const { id, quantity } of inventory) {
+    quantities[id] = quantity
+  }
+
+  return quantities
 }
