@@ -101,7 +101,7 @@ import {
 } from '../../strings'
 import { endpoints } from '../../config'
 
-import { getPlayerInventoryQuantities } from './helpers/getPlayerInventoryQuantities'
+import { getInventoryQuantities } from './helpers/getInventoryQuantities'
 import FarmhandContext from './Farmhand.context'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
@@ -315,7 +315,7 @@ export default class Farmhand extends Component {
   get playerInventoryQuantities() {
     const { inventory } = this.state
 
-    return getPlayerInventoryQuantities(inventory)
+    return getInventoryQuantities(inventory)
   }
 
   get plantableCropInventory() {
