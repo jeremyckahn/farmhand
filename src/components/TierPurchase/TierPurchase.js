@@ -16,7 +16,7 @@ export class TierPurchase extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedTier: '',
+      selectedTier: props.purchasedTier > 0 ? `${props.purchasedTier}` : '',
     }
 
     this.tierValues = [...props.tiers.entries()]

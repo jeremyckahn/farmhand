@@ -106,5 +106,18 @@ describe('<TierPurchase />', () => {
         'true'
       )
     })
+
+    test('it has the next available tier selected', () => {
+      props.money = 2000
+      props.purchasedTier = 1
+
+      render(<TierPurchase {...props} />)
+      openSelect()
+
+      expect(screen.getByRole('option', { name: 'bar' })).toHaveAttribute(
+        'aria-selected',
+        'true'
+      )
+    })
   })
 })
