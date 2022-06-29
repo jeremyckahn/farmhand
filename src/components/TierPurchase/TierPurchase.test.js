@@ -82,6 +82,18 @@ describe('<TierPurchase />', () => {
       expect(handleTierPurchase).toHaveBeenCalledWith(2)
     })
 
+    test('tiers that can be afforded can be selected', () => {
+      props.money = 2000
+
+      render(<TierPurchase {...props} />)
+      openSelect()
+
+      expect(screen.getByRole('option', { name: 'foo' })).toHaveAttribute(
+        'aria-disabled',
+        'false'
+      )
+    })
+
     test('tiers that are too expensive cannot be selected', () => {
       props.money = 2000
 

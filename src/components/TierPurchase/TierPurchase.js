@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -12,145 +12,104 @@ import { func, instanceOf, node, number, string } from 'prop-types'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import './TierPurchase.sass'
 
-export class TierPurchase extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      selectedTier: props.purchasedTier > 0 ? `${props.purchasedTier}` : '',
+export function TierPurchase({
+  description,
+  handleTierPurchase,
+  maxedOutPlaceholder,
+  money,
+  purchasedTier,
+  renderTierLabel,
+  tiers,
+  title,
+}) {
+  const [selectedTier, setSelectedTier] = useState(purchasedTier)
+
+  const tierValues = [...tiers.entries()]
+
+  const selectedTierNumber = Number(selectedTier)
+
+  const hasPurchasedTier = tierLevel => tierLevel <= purchasedTier
+  const hasPurchasedHighestTier = hasPurchasedTier(tierValues.slice(-1)[0][0])
+
+  if (hasPurchasedTier(selectedTier)) {
+    const nextTierNumber = selectedTierNumber + 1
+    const nextTierToPurchase = tiers.get(nextTierNumber)
+
+    if (nextTierToPurchase && money >= nextTierToPurchase.price) {
+      setSelectedTier(`${nextTierNumber}`)
     }
-
-    this.tierValues = [...props.tiers.entries()]
   }
 
-  get selectedTierNumber() {
-    return Number(this.state.selectedTier)
-  }
-
-  get canPlayerBuySelectedTier() {
-    const {
-      props: { money },
-      selectedTierNumber,
-    } = this
-
-    const selectedTier = this.props.tiers.get(selectedTierNumber)
+  const canPlayerBuySelectedTier = () => {
+    const selectedTier = tiers.get(selectedTierNumber)
 
     return (
       !!selectedTier &&
-      !this.hasPurchasedTier(selectedTierNumber) &&
+      !hasPurchasedTier(selectedTierNumber) &&
       money >= selectedTier.price
     )
   }
 
-  hasPurchasedTier = tierLevel => tierLevel <= this.props.purchasedTier
+  const onClickBuy = () => {
+    const canAfford = tiers.get(selectedTierNumber).price <= money
 
-  handleTierPurchase = () => {
-    const {
-      props: { handleTierPurchase, money },
-      selectedTierNumber,
-    } = this
-    const { price } = this.props.tiers.get(selectedTierNumber)
-
-    if (money >= price) {
+    if (canAfford) {
       handleTierPurchase(selectedTierNumber)
     }
   }
 
-  onSelectChange = ({ target: { value } }) => {
-    this.setState({ selectedTier: value })
+  const onSelectChange = ({ target: { value } }) => {
+    setSelectedTier(value)
   }
 
-  updateSelectedTier = () => {
-    const {
-      props: { money },
-      selectedTierNumber,
-    } = this
-
-    const nextTierNumber = selectedTierNumber + 1
-    const nextTierToPurchase = this.props.tiers.get(nextTierNumber)
-
-    if (nextTierToPurchase && money >= nextTierToPurchase.price) {
-      this.setState({ selectedTier: String(nextTierNumber) })
-    }
-  }
-
-  componentDidMount() {
-    this.updateSelectedTier()
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.money !== prevProps.money) {
-      this.updateSelectedTier()
-    }
-  }
-
-  render() {
-    const {
-      canPlayerBuySelectedTier,
-      handleTierPurchase,
-      hasPurchasedTier,
-      onSelectChange,
-      props: {
-        description,
-        maxedOutPlaceholder,
-        money,
-        renderTierLabel,
-        title,
-      },
-      tierValues,
-      state: { selectedTier },
-    } = this
-
-    const hasPurchasedHighestTier = hasPurchasedTier(tierValues.slice(-1)[0][0])
-
-    return (
-      <Card className="TierPurchase">
-        <CardHeader {...{ title }} />
-        {description && (
-          <CardContent>
-            <Typography>{description}</Typography>
-          </CardContent>
-        )}
-        {hasPurchasedHighestTier && maxedOutPlaceholder ? (
-          <CardContent>
-            <Typography>
-              <strong>{maxedOutPlaceholder}</strong>
-            </Typography>
-          </CardContent>
-        ) : (
-          <>
-            <CardActions>
-              <Button
-                {...{
-                  color: 'primary',
-                  disabled: !canPlayerBuySelectedTier,
-                  onClick: handleTierPurchase,
-                  variant: 'contained',
-                }}
-              >
-                Buy
-              </Button>
-              <Select
-                {...{
-                  onChange: onSelectChange,
-                  value: selectedTier,
-                }}
-              >
-                {tierValues.map(([id, tier]) => (
-                  <MenuItem
-                    key={id}
-                    value={id}
-                    disabled={money < tier.price || hasPurchasedTier(id)}
-                  >
-                    {renderTierLabel(tier)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </CardActions>
-          </>
-        )}
-      </Card>
-    )
-  }
+  return (
+    <Card className="TierPurchase">
+      <CardHeader {...{ title }} />
+      {description && (
+        <CardContent>
+          <Typography>{description}</Typography>
+        </CardContent>
+      )}
+      {hasPurchasedHighestTier && maxedOutPlaceholder ? (
+        <CardContent>
+          <Typography>
+            <strong>{maxedOutPlaceholder}</strong>
+          </Typography>
+        </CardContent>
+      ) : (
+        <>
+          <CardActions>
+            <Button
+              {...{
+                color: 'primary',
+                disabled: !canPlayerBuySelectedTier,
+                onClick: onClickBuy,
+                variant: 'contained',
+              }}
+            >
+              Buy
+            </Button>
+            <Select
+              {...{
+                onChange: onSelectChange,
+                value: selectedTier > 0 ? selectedTier : '',
+              }}
+            >
+              {tierValues.map(([id, tier]) => (
+                <MenuItem
+                  key={id}
+                  value={id}
+                  disabled={money < tier.price || hasPurchasedTier(id)}
+                >
+                  {renderTierLabel(tier)}
+                </MenuItem>
+              ))}
+            </Select>
+          </CardActions>
+        </>
+      )}
+    </Card>
+  )
 }
 
 TierPurchase.propTypes = {
