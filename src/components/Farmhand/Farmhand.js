@@ -312,12 +312,6 @@ export default class Farmhand extends Component {
     return computePlayerInventory(inventory, valueAdjustments)
   }
 
-  get playerInventoryQuantities() {
-    const { inventory } = this.state
-
-    return getInventoryQuantities(inventory)
-  }
-
   get plantableCropInventory() {
     return getPlantableCropInventory(this.state.inventory)
   }
@@ -1253,7 +1247,6 @@ export default class Farmhand extends Component {
       levelEntitlements,
       plantableCropInventory,
       playerInventory,
-      playerInventoryQuantities,
       shopInventory,
       viewList,
       viewTitle,
@@ -1271,7 +1264,7 @@ export default class Farmhand extends Component {
       levelEntitlements,
       plantableCropInventory,
       playerInventory,
-      playerInventoryQuantities,
+      playerInventoryQuantities: getInventoryQuantities(this.state.inventory),
       shopInventory,
       viewList,
       viewTitle,
