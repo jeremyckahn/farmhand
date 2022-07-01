@@ -63,6 +63,9 @@ describe('notifications', () => {
     userEvent.type(spinachInput, '30')
     userEvent.click(spinachSellButton)
 
+    // Both Carrot Soup and Summer Salad have Carrot as an ingredient (as well
+    // as various other constituent ingredients for Summer Salad). By selling
+    // 10 Carrots here, both recipes are unlocked at the same time.
     userEvent.type(carrotInput, '10')
     userEvent.click(carrotSellButton)
 
