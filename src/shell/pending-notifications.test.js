@@ -19,6 +19,7 @@ describe('pending notifications', () => {
     await farmhandStub()
     await endDay()
 
-    await screen.findByText(STORM_MESSAGE)
+    const stormNotification = await screen.findByText(STORM_MESSAGE)
+    expect(stormNotification).toBeInTheDocument()
   })
 })

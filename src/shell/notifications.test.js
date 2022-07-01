@@ -26,7 +26,7 @@ describe('notifications', () => {
     userEvent.click(carrotSellButton)
     const notification = await screen.findByRole('alert')
 
-    within(notification).getByText('Carrot Soup')
+    expect(within(notification).getByText('Carrot Soup')).toBeInTheDocument()
   })
 
   test('multiple notifications are shown when multiple recipes are learned', async () => {
@@ -70,7 +70,7 @@ describe('notifications', () => {
     userEvent.click(carrotSellButton)
 
     const notification = await screen.findByRole('alert')
-    within(notification).getByText('Carrot Soup')
-    within(notification).getByText('Summer Salad')
+    expect(within(notification).getByText('Carrot Soup')).toBeInTheDocument()
+    expect(within(notification).getByText('Summer Salad')).toBeInTheDocument()
   })
 })

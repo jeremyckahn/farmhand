@@ -11,7 +11,7 @@ describe('navigation', () => {
 
     for (const viewName of ['Shop', 'Field', 'Workshop', 'Home']) {
       await nextView()
-      within(header).getByText(viewName)
+      expect(within(header).getByText(viewName)).toBeInTheDocument()
     }
   })
 
@@ -21,7 +21,7 @@ describe('navigation', () => {
 
     for (const viewName of ['Workshop', 'Field', 'Shop', 'Home']) {
       await previousView()
-      within(header).getByText(viewName)
+      expect(within(header).getByText(viewName)).toBeInTheDocument()
     }
   })
 
@@ -41,7 +41,7 @@ describe('navigation', () => {
 
     for (const viewName of ['Shop', 'Field', 'Cows', 'Workshop', 'Home']) {
       await nextView()
-      within(header).getByText(viewName)
+      expect(within(header).getByText(viewName)).toBeInTheDocument()
     }
   })
 
@@ -61,7 +61,7 @@ describe('navigation', () => {
 
     for (const viewName of ['Workshop', 'Cows', 'Field', 'Shop', 'Home']) {
       await previousView()
-      within(header).getByText(viewName)
+      expect(within(header).getByText(viewName)).toBeInTheDocument()
     }
   })
 })
