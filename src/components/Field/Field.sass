@@ -5,27 +5,28 @@ $appBarOffset: 135px
 .Field
   margin: 0 auto
 
-  @media (min-width: #{$break-sm})
-    padding-right: 5em
+  @media (orientation: portrait)
+    @media (min-width: #{$break-sm})
+      padding-right: 5em
 
-  @media (min-width: #{$break-md})
-    &[data-purchased-field="0"]
-      max-width: calc(100vh * (6/10) - #{$appBarOffset})
+    @media (min-width: #{$break-md})
+      &[data-purchased-field="0"]
+        max-width: calc(100vh * (6/10) - #{$appBarOffset})
 
-    &[data-purchased-field="1"]
-      max-width: calc(100vh * (8/12) - #{$appBarOffset})
+      &[data-purchased-field="1"]
+        max-width: calc(100vh * (8/12) - #{$appBarOffset})
 
-    &[data-purchased-field="2"]
-      max-width: calc(100vh * (10/16) - #{$appBarOffset})
+      &[data-purchased-field="2"]
+        max-width: calc(100vh * (10/16) - #{$appBarOffset})
 
-    &[data-purchased-field="3"]
-      max-width: calc(100vh * (12/18) - #{$appBarOffset})
+      &[data-purchased-field="3"]
+        max-width: calc(100vh * (12/18) - #{$appBarOffset})
 
   .spacer
-    min-height: 8em
+    min-height: 12em
 
-    @media (min-width: #{$break-sm})
-      min-height: 7.5em
+    @media (orientation: portrait)
+      min-height: 5em
 
   .row
     display: flex
@@ -42,12 +43,19 @@ $appBarOffset: 135px
     height: auto
     width: auto
 
+    @media (orientation: landscape)
+      height: 50vh
+
     .row-wrapper
       background-image: url('../../img/ui/dirt.png')
       border: solid 1px #000
       background-repeat: repeat
       background-size: calc(100% * (1 / 6) * 1.5)
       image-rendering: pixelated
+
+      @media (orientation: landscape)
+        transform: translateY(-32.5%) scale(0.5) rotate(-90deg)
+        margin-bottom: -98%;
 
   &[data-purchased-field="1"]
     .react-transform-element
@@ -117,3 +125,6 @@ $appBarOffset: 135px
     align-items: center
     display: flex
     padding: 1em 0 0
+
+    @media (orientation: landscape)
+      margin-bottom: 7.5em
