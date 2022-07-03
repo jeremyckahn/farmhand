@@ -8,7 +8,7 @@
   position: fixed
   transform: translateX(-50%)
 
-  @media (min-width: #{$break-sm})
+  @media (orientation: landscape)
     &.MuiPaper-root // Specificity is needed for card-style overrides
       @include card-style
       bottom: auto
@@ -31,13 +31,13 @@
     display: flex
     flex-flow: row
 
-    @media (min-width: #{$break-sm})
+    @media (orientation: landscape)
       flex-flow: column
 
-  @media (max-width: #{$break-medium-phone})
-    bottom: 6em
+  @media (orientation: portrait)
+    bottom: 7.5em
 
-  @media (max-width: #{$break-sm})
+  @media (orientation: portrait)
     .menu-open &
       display: none
 
@@ -48,18 +48,18 @@
     padding: .5em
     position: relative
 
-    @media (min-width: #{$break-sm})
+    @media (orientation: landscape)
       overflow-x: hidden
 
     > *
-      @media (min-width: #{$break-sm})
+      @media (orientation: landscape)
         align-items: center
         width: 3em
 
-    @media (max-width: #{$break-sm})
+    @media (orientation: portrait)
       @include card-style
 
-    @media (min-width: #{$break-sm})
+    @media (orientation: landscape)
       flex-direction: column
 
   .Toolbelt
@@ -78,7 +78,7 @@
   .MuiDivider-root
     margin: 0 0.5em
 
-    @media (min-width: #{$break-sm})
+    @media (orientation: landscape)
       margin: 0 0 1em 0
       height: 1px
       width: 100%

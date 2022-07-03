@@ -23,10 +23,8 @@ $appBarOffset: 135px
         max-width: calc(100vh * (12/18) - #{$appBarOffset})
 
   .spacer
-    min-height: 12em
-
     @media (orientation: portrait)
-      min-height: 5em
+      min-height: 10em
 
   .row
     display: flex
@@ -73,7 +71,7 @@ $appBarOffset: 135px
   .slider-wrapper
     background: rgba(128, 128, 128, 0.75)
     border-radius: 2em
-    bottom: 13.5em
+    bottom: 7.5em
     left: 50%
     padding: 0 1em
     position: fixed
@@ -81,15 +79,11 @@ $appBarOffset: 135px
     transition: left $duration-entering-screen $easing-ease-out
     width: 250px
 
-    @media (min-width: #{$break-sm})
-      bottom: 7.5em
+    @media (orientation: portrait)
+      bottom: 13.5em
 
-    @media (min-width: #{$break-md})
-      .menu-open &
-        left: calc(50vw + #{$sidebar-width / 2})
-
-    @media (max-width: #{$break-medium-phone})
-      bottom: 11em
+    .menu-open &
+      left: calc(50vw + #{$sidebar-width / 2})
 
   .zoom-controls
     position: fixed
@@ -100,20 +94,17 @@ $appBarOffset: 135px
     &.right
       right: 0.5em
 
-      @media (max-width: #{$break-medium-phone})
+      @media (orientation: portrait)
         right: 0.25em
 
-      @media (min-width: #{$break-sm})
+      @media (orientation: landscape)
         bottom: 5.5em
 
     &.left
-      left: 0.5em
+      @media (orientation: portrait)
+        left: 0.5em
 
-      @media (max-width: #{$break-medium-phone})
-        left: 0.25em
-
-      @media (min-width: #{$break-sm})
-        left: auto
+      @media (orientation: landscape)
         right: 0.5em
 
     @media (max-width: #{$break-medium-phone})
@@ -128,4 +119,4 @@ $appBarOffset: 135px
     padding: 1em 0 0
 
     @media (orientation: landscape)
-      margin-bottom: 7.5em
+      margin-bottom: 10.5em
