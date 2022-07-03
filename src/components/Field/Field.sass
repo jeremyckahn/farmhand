@@ -5,22 +5,8 @@ $appBarOffset: 135px
 .Field
   margin: 0 auto
 
-  @media (orientation: portrait)
-    @media (min-width: #{$break-sm})
-      padding-right: 5em
-
-    @media (min-width: #{$break-md})
-      &[data-purchased-field="0"]
-        max-width: calc(100vh * (6/10) - #{$appBarOffset})
-
-      &[data-purchased-field="1"]
-        max-width: calc(100vh * (8/12) - #{$appBarOffset})
-
-      &[data-purchased-field="2"]
-        max-width: calc(100vh * (10/16) - #{$appBarOffset})
-
-      &[data-purchased-field="3"]
-        max-width: calc(100vh * (12/18) - #{$appBarOffset})
+  @media (min-width: #{$break-medium-phone})
+    margin-top: 5em
 
   .spacer
     @media (orientation: portrait)
@@ -53,8 +39,8 @@ $appBarOffset: 135px
 
       @media (orientation: landscape)
         border-width: 2px
-        margin-bottom: -98%;
-        transform: translateY(-32.5%) scale(0.5) rotate(-90deg)
+        margin-bottom: -94%
+        transform: translateY(-32.5%) translateX(-4.5%) scale(0.6) rotate(-90deg)
 
   &[data-purchased-field="1"]
     .react-transform-element
