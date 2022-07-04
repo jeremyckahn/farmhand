@@ -418,7 +418,6 @@ export const Field = props => {
           </div>
         )}
         <QuickSelect />
-        <div {...{ className: 'spacer' }} />
       </div>
     </>
   )

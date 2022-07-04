@@ -5,15 +5,21 @@ $appBarOffset: 135px
 .Field
   margin: 0 auto
 
+  @media (orientation: portrait)
+    margin-bottom: 10.5em
+  @media (orientation: landscape)
+    margin-bottom: 5em
+
   @media (min-width: #{$break-medium-phone})
     margin-top: 5em
 
-  .spacer
-    @media (orientation: portrait)
-      min-height: 10em
-
   .row
     display: flex
+    flex-direction: row
+    width: 100%
+
+    @media (orientation: landscape)
+      flex-direction: column-reverse
 
   .react-transform-component
     overflow: visible
@@ -27,9 +33,6 @@ $appBarOffset: 135px
     height: auto
     width: auto
 
-    @media (orientation: landscape)
-      height: 50vh
-
     .row-wrapper
       background-image: url('../../img/ui/dirt.png')
       border: solid 1px #000
@@ -37,10 +40,12 @@ $appBarOffset: 135px
       background-size: calc(100% * (1 / 6) * 1.5)
       image-rendering: pixelated
 
+      display: flex
+      flex-direction: column
+
       @media (orientation: landscape)
-        border-width: 2px
-        margin-bottom: -94%
-        transform: translateY(-32.5%) translateX(-4.5%) scale(0.6) rotate(-90deg)
+        flex-direction: row
+        margin-right: 4.5em
 
   &[data-purchased-field="1"]
     .react-transform-element
@@ -106,6 +111,3 @@ $appBarOffset: 135px
     align-items: center
     display: flex
     padding: 1em 0 0
-
-    @media (orientation: landscape)
-      margin-bottom: 10.5em
