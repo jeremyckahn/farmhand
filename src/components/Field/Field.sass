@@ -85,6 +85,10 @@ $appBarOffset: 135px
     flex-direction: column
     bottom: 1em
 
+    @media (orientation: portrait)
+      .menu-open &
+        display: none
+
     &.zoom-in-wrapper
       right: 0.5em
 
