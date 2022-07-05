@@ -14,7 +14,7 @@ import './TierPurchase.sass'
 
 export function TierPurchase({
   description,
-  handleTierPurchase,
+  onBuyClick,
   maxedOutPlaceholder,
   money,
   purchasedTier,
@@ -50,15 +50,15 @@ export function TierPurchase({
     )
   }
 
-  const onClickBuy = () => {
+  const handleBuyClick = () => {
     const canAfford = tiers.get(selectedTierNumber).price <= money
 
     if (canAfford) {
-      handleTierPurchase(selectedTierNumber)
+      onBuyClick(selectedTierNumber)
     }
   }
 
-  const onSelectChange = ({ target: { value } }) => {
+  const handleTierSelected = ({ target: { value } }) => {
     setSelectedTier(value)
   }
 
@@ -83,7 +83,7 @@ export function TierPurchase({
               {...{
                 color: 'primary',
                 disabled: !canPlayerBuySelectedTier,
-                onClick: onClickBuy,
+                onClick: handleBuyClick,
                 variant: 'contained',
               }}
             >
@@ -91,7 +91,7 @@ export function TierPurchase({
             </Button>
             <Select
               {...{
-                onChange: onSelectChange,
+                onChange: handleTierSelected,
                 value: selectedTier > 0 ? selectedTier : '',
               }}
             >
@@ -114,7 +114,7 @@ export function TierPurchase({
 
 TierPurchase.propTypes = {
   description: string,
-  handleTierPurchase: func.isRequired,
+  onBuyClick: func.isRequired,
   maxedOutPlaceholder: node,
   money: number.isRequired,
   purchasedTier: number.isRequired,

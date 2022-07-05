@@ -153,7 +153,7 @@ export const Shop = ({
           <li>
             <TierPurchase
               {...{
-                handleTierPurchase: handleFieldPurchase,
+                onBuyClick: handleFieldPurchase,
                 maxedOutPlaceholder:
                   "You've purchased the largest field available!",
                 purchasedTier: purchasedField,
@@ -167,7 +167,7 @@ export const Shop = ({
           <li>
             <TierPurchase
               {...{
-                handleTierPurchase: handleCowPenPurchase,
+                onBuyClick: handleCowPenPurchase,
                 maxedOutPlaceholder:
                   "You've purchased the largest cow pen available!",
                 purchasedTier: purchasedCowPen,
@@ -183,7 +183,7 @@ export const Shop = ({
               {...{
                 description:
                   'You can purchase a combine to automatically harvest your mature crops at the start of every day.',
-                handleTierPurchase: handleCombinePurchase,
+                onBuyClick: handleCombinePurchase,
                 maxedOutPlaceholder:
                   "You've purchased the best combine harvester available!",
                 purchasedTier: purchasedCombine,
@@ -200,7 +200,7 @@ export const Shop = ({
                 {...{
                   description:
                     'You can purchase a Smelter to convert ore into ingots and other useful items.',
-                  handleTierPurchase: handleSmelterPurchase,
+                  onBuyClick: handleSmelterPurchase,
                   maxedOutPlaceholder: "You've already purchased the smelter!",
                   purchasedTier: purchasedSmelter,
                   renderTierLabel: ({ type, price }) =>

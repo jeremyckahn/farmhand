@@ -5,12 +5,12 @@ import userEvent from '@testing-library/user-event'
 import { TierPurchase } from './TierPurchase'
 
 describe('<TierPurchase />', () => {
-  let handleTierPurchase, props
+  let onBuyClick, props
 
   beforeEach(() => {
-    handleTierPurchase = jest.fn()
+    onBuyClick = jest.fn()
     props = {
-      handleTierPurchase,
+      onBuyClick,
       money: 0,
       purchasedTier: 0,
       renderTierLabel: tier => tier.value,
@@ -70,7 +70,7 @@ describe('<TierPurchase />', () => {
       expect(screen.getByText('at max')).toBeInTheDocument()
     })
 
-    test('it calls handleTierPurchase if the selected tier can be purchased', () => {
+    test('it calls onBuyClick if the selected tier can be purchased', () => {
       props.purchasedTier = 1
       props.money = 2000
 
@@ -79,7 +79,7 @@ describe('<TierPurchase />', () => {
       userEvent.click(screen.getByRole('option', { name: 'bar' }))
       userEvent.click(buyButton())
 
-      expect(handleTierPurchase).toHaveBeenCalledWith(2)
+      expect(onBuyClick).toHaveBeenCalledWith(2)
     })
 
     test('tiers that can be afforded can be selected', () => {
