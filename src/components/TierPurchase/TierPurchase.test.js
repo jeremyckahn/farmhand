@@ -1,156 +1,135 @@
 import React from 'react'
-import MenuItem from '@material-ui/core/MenuItem'
-
-import { shallow } from 'enzyme'
+import { screen, render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { TierPurchase } from './TierPurchase'
 
-let component
+describe('<TierPurchase />', () => {
+  let onBuyClick, props
 
-beforeEach(() => {
-  component = shallow(
-    <TierPurchase
-      {...{
-        handleTierPurchase: () => {},
-        money: 0,
-        purchasedTier: 0,
-        renderTierLabel: () => {},
-        tiers: new Map([
-          [1, { value: 'foo', price: 1000 }],
-          [2, { value: 'bar', price: 2000 }],
-          [3, { value: 'baz', price: 3000 }],
-        ]),
-        title: '',
-      }}
-    />
-  )
-})
-
-test('renders', () => {
-  expect(component).toHaveLength(1)
-})
-
-test('renders tiers', () => {
-  expect(component.find(MenuItem)).toHaveLength(3)
-})
-
-describe('option rendering', () => {
-  describe('user does not have enough money for tier', () => {
-    test('tier is disabled', () => {
-      expect(
-        component
-          .find(MenuItem)
-          .first()
-          .props().disabled
-      ).toBeTruthy()
-    })
+  beforeEach(() => {
+    onBuyClick = jest.fn()
+    props = {
+      onBuyClick,
+      money: 0,
+      purchasedTier: 0,
+      renderTierLabel: tier => tier.value,
+      description: 'describe yourself',
+      maxedOutPlaceholder: 'at max',
+      tiers: new Map([
+        [1, { value: 'foo', price: 1000 }],
+        [2, { value: 'bar', price: 2000 }],
+        [3, { value: 'baz', price: 3000 }],
+      ]),
+      title: 'Purchasable Item',
+    }
   })
 
-  describe('unpurchased tiers', () => {
-    describe('user has enough money for tier', () => {
-      test('tier is not disabled', () => {
-        component.setProps({
-          purchasedTier: 0,
-          money: 1000,
-        })
+  const buyButton = () => screen.getByRole('button', { name: 'Buy' })
 
-        expect(
-          component
-            .find(MenuItem)
-            .first()
-            .props().disabled
-        ).toBeFalsy()
-      })
-    })
-  })
+  // MUI doesn't give this button a name but clicking it is required to get the listbox to render
+  const openSelect = () => userEvent.click(screen.getAllByRole('button')[1])
 
-  describe('purchased tiers', () => {
-    test('tier is disabled', () => {
-      component.setProps({
-        purchasedTier: 1,
-        money: Number.MAX_VALUE,
-      })
-
-      expect(
-        component
-          .find(MenuItem)
-          .first()
-          .props().disabled
-      ).toBeTruthy()
-    })
-  })
-})
-
-describe('getters', () => {
-  describe('canPlayerBuySelectedTier', () => {
+  describe('renders', () => {
     beforeEach(() => {
-      component.setState({ selectedTier: '1' })
+      render(<TierPurchase {...props} />)
     })
 
-    describe('player can not buy selected tier', () => {
-      test('button is enabled', () => {
-        expect(component.instance().canPlayerBuySelectedTier).toBeFalsy()
-      })
+    test('contains the title', () => {
+      expect(screen.getByText('Purchasable Item')).toBeInTheDocument()
     })
 
-    describe('player can buy selected tier', () => {
-      test('button is enabled', () => {
-        component.setProps({
-          purchasedTier: 0,
-          money: 100000,
-        })
-
-        expect(component.instance().canPlayerBuySelectedTier).toBeTruthy()
-      })
+    test('it contains a buy button', () => {
+      expect(buyButton()).toBeInTheDocument()
     })
-  })
-})
 
-describe('handleTierPurchase', () => {
-  let handleTierPurchase
+    test('contains the tiers select', () => {
+      openSelect()
 
-  beforeEach(() => {
-    handleTierPurchase = jest.fn()
-    component.setProps({ handleTierPurchase })
-    component.setState({ selectedTier: 2 })
-  })
+      expect(screen.getByRole('listbox')).toBeInTheDocument()
+    })
 
-  describe('user does not have enough money', () => {
-    test('does not call handleTierPurchase prop', () => {
-      component.instance().handleTierPurchase()
-      expect(handleTierPurchase).not.toHaveBeenCalled()
+    test('it contains the description', () => {
+      expect(screen.getByText('describe yourself')).toBeInTheDocument()
     })
   })
 
-  describe('user has enough money', () => {
-    test('does call handleTierPurchase prop', () => {
-      component.setProps({ purchasedTier: 0, money: 2000 })
-      component.instance().handleTierPurchase()
-      expect(handleTierPurchase).toHaveBeenCalledWith(2)
+  describe('tiers', () => {
+    test('it contains an option for each tier', () => {
+      render(<TierPurchase {...props} />)
+      openSelect()
+
+      expect(screen.getAllByRole('option')).toHaveLength(3)
     })
-  })
-})
 
-describe('updateSelectedTier', () => {
-  beforeEach(() => {
-    component.setState({ selectedTier: '1' })
-  })
+    test('it contains the maxed out placeholder when the highest tier has been purchased', () => {
+      props.purchasedTier = 3
 
-  describe('player does not have enough money for next tier', () => {
-    test('does not update selectedTier', () => {
-      component.setProps({ purchasedTier: 1, money: 0 })
-      component.instance().updateSelectedTier()
+      render(<TierPurchase {...props} />)
 
-      expect(component.state().selectedTier).toEqual('1')
+      expect(screen.getByText('at max')).toBeInTheDocument()
     })
-  })
 
-  describe('player has enough money for next tier', () => {
-    test('updates selectedTier', () => {
-      component.setProps({ purchasedTier: 1, money: 2000 })
-      component.instance().updateSelectedTier()
+    test('it calls onBuyClick if the selected tier can be purchased', () => {
+      props.purchasedTier = 1
+      props.money = 2000
 
-      expect(component.state().selectedTier).toEqual('2')
+      render(<TierPurchase {...props} />)
+      openSelect()
+      userEvent.click(screen.getByRole('option', { name: 'bar' }))
+      userEvent.click(buyButton())
+
+      expect(onBuyClick).toHaveBeenCalledWith(2)
+    })
+
+    test('tiers that can be afforded can be selected', () => {
+      props.money = 2000
+
+      render(<TierPurchase {...props} />)
+      openSelect()
+
+      expect(screen.getByRole('option', { name: 'foo' })).toHaveAttribute(
+        'aria-disabled',
+        'false'
+      )
+    })
+
+    test('tiers that are too expensive cannot be selected', () => {
+      props.money = 2000
+
+      render(<TierPurchase {...props} />)
+      openSelect()
+
+      expect(screen.getByRole('option', { name: 'baz' })).toHaveAttribute(
+        'aria-disabled',
+        'true'
+      )
+    })
+
+    test('tiers that that have already been purchased cannot be selected', () => {
+      props.money = 2000
+      props.purchasedTier = 1
+
+      render(<TierPurchase {...props} />)
+      openSelect()
+
+      expect(screen.getByRole('option', { name: 'foo' })).toHaveAttribute(
+        'aria-disabled',
+        'true'
+      )
+    })
+
+    test('it has the next available tier selected', () => {
+      props.money = 2000
+      props.purchasedTier = 1
+
+      render(<TierPurchase {...props} />)
+      openSelect()
+
+      expect(screen.getByRole('option', { name: 'bar' })).toHaveAttribute(
+        'aria-selected',
+        'true'
+      )
     })
   })
 })
