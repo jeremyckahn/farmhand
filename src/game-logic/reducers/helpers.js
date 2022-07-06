@@ -36,15 +36,9 @@ export const fieldHasScarecrow = field =>
   findInField(field, plotContainsScarecrow)
 
 /**
- * @typedef farmhand.chanceAndEvent
- * @type {[function():boolean, function(farmhand.state):farmhand.state)]}
- */
-
-/**
- * @param {Array.<farmhand.chanceAndEvent>} chancesAndEvents An array of arrays
- * in which the first element is a function that determines whether to trigger
- * an event, and the second function which is a reducer that implements the
- * event.
+ * @param {Array.<function>} chancesAndEvents An array of arrays in which the
+ * first element is a function that determines whether to trigger an event, and
+ * the second function which is a reducer that implements the event.
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
