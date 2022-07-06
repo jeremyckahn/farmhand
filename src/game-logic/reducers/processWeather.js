@@ -1,4 +1,4 @@
-import { PRECIPITATION_CHANCE } from '../../constants'
+import { shouldPrecipitateToday } from '../../utils'
 
 import { applyChanceEvent } from './helpers'
 import { applyPrecipitation } from './applyPrecipitation'
@@ -8,4 +8,4 @@ import { applyPrecipitation } from './applyPrecipitation'
  * @returns {farmhand.state}
  */
 export const processWeather = state =>
-  applyChanceEvent([[PRECIPITATION_CHANCE, applyPrecipitation]], state)
+  applyChanceEvent([[shouldPrecipitateToday, applyPrecipitation]], state)

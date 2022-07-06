@@ -101,11 +101,10 @@ import {
 } from '../../strings'
 import { endpoints } from '../../config'
 
+import { getInventoryQuantities } from './helpers/getInventoryQuantities'
 import FarmhandContext from './Farmhand.context'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
-
-const itemIds = Object.freeze(Object.keys(itemsMap))
 
 // Utility object for reuse in no-ops to save on memory
 const emptyObject = Object.freeze({})
@@ -271,18 +270,20 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  */
 
 export default class Farmhand extends Component {
-  // Bind event handlers
-
-  localforage = localforage.createInstance({
-    name: 'farmhand',
-    description: 'Persisted game data for Farmhand',
-  })
-
   /*!
    * @member farmhand.Farmhand#state
    * @type {farmhand.state}
    */
   state = this.createInitialState()
+
+  static defaultProps = {
+    localforage: localforage.createInstance({
+      name: 'farmhand',
+      description: 'Persisted game data for Farmhand',
+    }),
+    features: {},
+    match: { path: '', params: {} },
+  }
 
   constructor() {
     super(...arguments)
@@ -309,17 +310,6 @@ export default class Farmhand extends Component {
   get playerInventory() {
     const { inventory, valueAdjustments } = this.state
     return computePlayerInventory(inventory, valueAdjustments)
-  }
-
-  get playerInventoryQuantities() {
-    const { inventory } = this.state
-
-    return itemIds.reduce((acc, itemId) => {
-      const itemInInventory = inventory.find(({ id }) => id === itemId)
-      acc[itemId] = itemInInventory ? itemInInventory.quantity : 0
-
-      return acc
-    }, {})
   }
 
   get plantableCropInventory() {
@@ -587,7 +577,7 @@ export default class Farmhand extends Component {
   }
 
   async componentDidMount() {
-    const state = await this.localforage.getItem('state')
+    const state = await this.props.localforage.getItem('state')
 
     if (state) {
       const sanitizedState = transformStateDataForImport({
@@ -616,7 +606,7 @@ export default class Farmhand extends Component {
 
     this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
-    this.setState({ hasBooted: true, ...this.props.initialState })
+    this.setState({ hasBooted: true })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -858,7 +848,7 @@ export default class Farmhand extends Component {
   }
 
   async clearPersistedData() {
-    await this.localforage.clear()
+    await this.props.localforage.clear()
 
     this.showNotification(DATA_DELETED)
   }
@@ -1056,7 +1046,7 @@ export default class Farmhand extends Component {
    * @return {Promise}
    */
   persistState(overrides = {}) {
-    return this.localforage.setItem(
+    return this.props.localforage.setItem(
       'state',
       reduceByPersistedKeys({
         ...this.state,
@@ -1248,7 +1238,7 @@ export default class Farmhand extends Component {
 
   render() {
     const {
-      props: { features = {} },
+      props: { features },
       state: { redirect },
       fieldToolInventory,
       handlers,
@@ -1257,7 +1247,6 @@ export default class Farmhand extends Component {
       levelEntitlements,
       plantableCropInventory,
       playerInventory,
-      playerInventoryQuantities,
       shopInventory,
       viewList,
       viewTitle,
@@ -1275,7 +1264,7 @@ export default class Farmhand extends Component {
       levelEntitlements,
       plantableCropInventory,
       playerInventory,
-      playerInventoryQuantities,
+      playerInventoryQuantities: getInventoryQuantities(this.state.inventory),
       shopInventory,
       viewList,
       viewTitle,
@@ -1420,5 +1409,4 @@ Farmhand.propTypes = {
   history: object,
   location: object,
   match: object.isRequired,
-  initialState: object,
 }

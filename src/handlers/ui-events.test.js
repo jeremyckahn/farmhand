@@ -26,7 +26,7 @@ let component
 const handlers = () => component.instance().handlers
 
 beforeEach(() => {
-  component = shallow(<Farmhand {...{ match: { path: '', params: {} } }} />)
+  component = shallow(<Farmhand />)
 })
 
 describe('handleItemPurchaseClick', () => {

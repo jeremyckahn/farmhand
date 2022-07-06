@@ -1,16 +1,16 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { MemoryRouter, Route } from 'react-router-dom'
 
 import Farmhand from '../../components/Farmhand'
 
 /**
- * @param {Object} [initialState] State to start the Farmhand instance with for
+ * @param {Object} [props] props to start the Farmhand instance with for
  * testing.
  */
-export const farmhandStub = async (initialState = {}) => {
+export const farmhandStub = async (props = {}) => {
   const FarmhandRoute = routeProps => (
-    <Farmhand {...{ ...routeProps, initialState }} />
+    <Farmhand {...{ ...routeProps, ...props }} />
   )
 
   render(
@@ -23,7 +23,4 @@ export const farmhandStub = async (initialState = {}) => {
       />
     </MemoryRouter>
   )
-
-  // Wait for the notification that is shown when the game has finished booting
-  await screen.findByText('You took out a new loan', { exact: false })
 }

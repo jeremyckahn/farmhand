@@ -66,9 +66,11 @@ import {
   MEMOIZE_CACHE_CLEAR_THRESHOLD,
   PEER_METADATA_STATE_KEYS,
   PERSISTED_STATE_KEYS,
+  PRECIPITATION_CHANCE,
   PRICE_EVENT_STANDARD_DURATION_DECREASE,
   STORAGE_EXPANSION_AMOUNT,
   STORAGE_EXPANSION_BASE_PRICE,
+  STORM_CHANCE,
   STORAGE_EXPANSION_SCALE_PREMIUM,
 } from './constants'
 
@@ -1273,6 +1275,9 @@ export const isInViewport = element => {
     right <= (window.innerWidth || document.documentElement.clientWidth)
   )
 }
+
+export const shouldPrecipitateToday = () => Math.random() < PRECIPITATION_CHANCE
+export const shouldStormToday = () => Math.random() < STORM_CHANCE
 
 /**
  * @param {farmhand.cow} cow
