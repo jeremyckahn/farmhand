@@ -5,30 +5,21 @@ $appBarOffset: 135px
 .Field
   margin: 0 auto
 
-  @media (min-width: #{$break-sm})
-    padding-right: 5em
+  @media (orientation: portrait)
+    margin-bottom: 10.5em
+  @media (orientation: landscape)
+    margin-bottom: 5em
 
-  @media (min-width: #{$break-md})
-    &[data-purchased-field="0"]
-      max-width: calc(100vh * (6/10) - #{$appBarOffset})
-
-    &[data-purchased-field="1"]
-      max-width: calc(100vh * (8/12) - #{$appBarOffset})
-
-    &[data-purchased-field="2"]
-      max-width: calc(100vh * (10/16) - #{$appBarOffset})
-
-    &[data-purchased-field="3"]
-      max-width: calc(100vh * (12/18) - #{$appBarOffset})
-
-  .spacer
-    min-height: 8em
-
-    @media (min-width: #{$break-sm})
-      min-height: 7.5em
+  @media (min-width: #{$break-medium-phone})
+    margin-top: 5em
 
   .row
     display: flex
+    flex-direction: row
+    width: 100%
+
+    @media (orientation: landscape)
+      flex-direction: column-reverse
 
   .react-transform-component
     overflow: visible
@@ -49,6 +40,13 @@ $appBarOffset: 135px
       background-size: calc(100% * (1 / 6) * 1.5)
       image-rendering: pixelated
 
+      display: flex
+      flex-direction: column
+
+      @media (orientation: landscape)
+        flex-direction: row
+        margin-right: 4.5em
+
   &[data-purchased-field="1"]
     .react-transform-element
       background-size: calc(100% * (1 / 8) * 1.5)
@@ -64,7 +62,7 @@ $appBarOffset: 135px
   .slider-wrapper
     background: rgba(128, 128, 128, 0.75)
     border-radius: 2em
-    bottom: 13.5em
+    bottom: 7.5em
     left: 50%
     padding: 0 1em
     position: fixed
@@ -72,15 +70,14 @@ $appBarOffset: 135px
     transition: left $duration-entering-screen $easing-ease-out
     width: 250px
 
-    @media (min-width: #{$break-sm})
-      bottom: 7.5em
+    @media (orientation: portrait)
+      bottom: 13.5em
 
-    @media (min-width: #{$break-md})
       .menu-open &
-        left: calc(50vw + #{$sidebar-width / 2})
+        display: none
 
-    @media (max-width: #{$break-medium-phone})
-      bottom: 11em
+    .menu-open &
+      left: calc(50vw + #{$sidebar-width / 2})
 
   .zoom-controls
     position: fixed
@@ -88,23 +85,24 @@ $appBarOffset: 135px
     flex-direction: column
     bottom: 1em
 
-    &.right
+    @media (orientation: portrait)
+      .menu-open &
+        display: none
+
+    &.zoom-in-wrapper
       right: 0.5em
 
-      @media (max-width: #{$break-medium-phone})
+      @media (orientation: portrait)
         right: 0.25em
 
-      @media (min-width: #{$break-sm})
+      @media (orientation: landscape)
         bottom: 5.5em
 
-    &.left
-      left: 0.5em
+    &.zoom-out-wrapper
+      @media (orientation: portrait)
+        left: 0.5em
 
-      @media (max-width: #{$break-medium-phone})
-        left: 0.25em
-
-      @media (min-width: #{$break-sm})
-        left: auto
+      @media (orientation: landscape)
         right: 0.5em
 
     @media (max-width: #{$break-medium-phone})

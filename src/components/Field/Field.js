@@ -168,7 +168,7 @@ export const FieldContentWrapper = ({
         }}
       />
       <TransformComponent>{fieldContent}</TransformComponent>
-      <div className="fab-buttons zoom-controls right">
+      <div className="fab-buttons zoom-controls zoom-in-wrapper">
         <Tooltip
           {...{
             placement: 'top',
@@ -186,7 +186,7 @@ export const FieldContentWrapper = ({
           </Fab>
         </Tooltip>
       </div>
-      <div className="fab-buttons zoom-controls left">
+      <div className="fab-buttons zoom-controls zoom-out-wrapper">
         <Tooltip
           {...{
             placement: 'top',
@@ -418,7 +418,6 @@ export const Field = props => {
           </div>
         )}
         <QuickSelect />
-        <div {...{ className: 'spacer' }} />
       </div>
     </>
   )

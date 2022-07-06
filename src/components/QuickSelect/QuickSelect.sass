@@ -2,42 +2,43 @@
 @import ../../styles/utils.sass
 
 .QuickSelect
-  bottom: 8em
+  bottom: 7.5em
   left: 50%
-  max-width: calc(100% - 1em)
+  max-width: calc(100% - 12em)
   position: fixed
   transform: translateX(-50%)
 
-  @media (min-width: #{$break-sm})
-    &.MuiPaper-root // Specificity is needed for card-style overrides
-      @include card-style
-      bottom: auto
-      left: auto
-      max-height: calc(100vh - 20em)
-      min-width: 4em
-      overflow: auto
-      right: 0.75em
-      top: 9em
-      transform: none
+  &.MuiPaper-root // Specificity is needed for card-style overrides
+    @include card-style
 
-  // This specificity is needed to overwrite MUI Paper transition styles.
-  &.MuiPaper-root
-    transition: max-width $duration-entering-screen $easing-ease-out
+  @media (orientation: landscape) and (min-height: #{$break-large-phone})
+    bottom: auto
+    left: auto
+    max-height: calc(100vh - 20em)
+    min-width: 4em
+    overflow: auto
+    right: 0.75em
+    top: 9em
+    transform: none
 
-  .menu-open &
-    max-width: calc(100% - 1em - #{2 * $sidebar-width})
+  @media (orientation: landscape) and (max-height: #{$break-large-phone})
+    bottom: auto
+    top: 5em
+
+    .menu-open &
+      display: none
 
   .button-array
     display: flex
     flex-flow: row
 
-    @media (min-width: #{$break-sm})
+    @media (orientation: landscape) and (min-height: #{$break-large-phone})
       flex-flow: column
 
-  @media (max-width: #{$break-medium-phone})
-    bottom: 6em
+  @media (orientation: landscape) and (min-height: #{$break-large-phone})
+    bottom: 8em
 
-  @media (max-width: #{$break-sm})
+  @media (orientation: portrait)
     .menu-open &
       display: none
 
@@ -48,18 +49,15 @@
     padding: .5em
     position: relative
 
-    @media (min-width: #{$break-sm})
+    @media (orientation: landscape) and (min-height: #{$break-large-phone})
       overflow-x: hidden
 
     > *
-      @media (min-width: #{$break-sm})
+      @media (orientation: landscape) and (min-height: #{$break-large-phone})
         align-items: center
         width: 3em
 
-    @media (max-width: #{$break-sm})
-      @include card-style
-
-    @media (min-width: #{$break-sm})
+    @media (orientation: landscape) and (min-height: #{$break-large-phone})
       flex-direction: column
 
   .Toolbelt
@@ -78,7 +76,7 @@
   .MuiDivider-root
     margin: 0 0.5em
 
-    @media (min-width: #{$break-sm})
+    @media (orientation: landscape) and (min-height: #{$break-large-phone})
       margin: 0 0 1em 0
       height: 1px
       width: 100%
