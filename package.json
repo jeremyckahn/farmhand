@@ -5,12 +5,15 @@
     "access": "public"
   },
   "description": "A farming game",
+  "main": "public/electron.js",
   "unpkg": "build/index.html",
   "homepage": "https://www.farmhand.life/",
   "scripts": {
     "build": "react-scripts build",
     "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
     "dev": "mprocs \"npm run start\" \"npm run start:api\" \"npm run start:backend\"",
+    "dev:native": "mprocs \"BROWSER=none npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run electron\"",
+    "electron": "wait-on tcp:3000 && electron .",
     "doc": "jsdoc -c .jsdoc -r src",
     "doc:view": "serve -S dist/doc",
     "doc:watch": "nodemon --exec \"npm run doc\" --watch src --watch ./ --ext js,md --ignore dist",
@@ -40,6 +43,8 @@
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
     "cross-env": "^7.0.2",
+    "electron": "^19.0.8",
+    "electron-is-dev": "^2.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^7.13.0",
@@ -63,7 +68,8 @@
     "pretty-quick": "^2.0.1",
     "react-scripts": "^4.0.3",
     "serve": "^11.3.2",
-    "vercel": "^21.3.3"
+    "vercel": "^21.3.3",
+    "wait-on": "^6.0.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
