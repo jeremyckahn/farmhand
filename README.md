@@ -135,4 +135,4 @@ In addition to enabling features via environment variables, players can manually
 
 ## License
 
-[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
+All Farmhand code and is licensed under [GNU GPL v2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html). All media assets (such as game art) are licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
