@@ -10,6 +10,9 @@
   "homepage": "https://www.farmhand.life/",
   "scripts": {
     "build": "react-scripts build",
+    "build:native:mac": "PUBLIC_URL='./' npm run build && electron-builder -m -c.extraMetadata.main=build/electron.js",
+    "build:native:win": "PUBLIC_URL='./' npm run build && electron-builder -w -c.extraMetadata.main=build/electron.js",
+    "build:native:linux": "PUBLIC_URL='./' npm run build && electron-builder -l -c.extraMetadata.main=build/electron.js",
     "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
     "dev": "mprocs \"npm run start\" \"npm run start:api\" \"npm run start:backend\"",
     "dev:native": "mprocs \"BROWSER=none npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run electron\"",
@@ -44,7 +47,7 @@
     "@typescript-eslint/parser": "^2.23.0",
     "cross-env": "^7.0.2",
     "electron": "^19.0.8",
-    "electron-is-dev": "^2.0.0",
+    "electron-builder": "^23.1.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^7.13.0",
@@ -85,6 +88,7 @@
     "classnames": "^2.2.6",
     "compass-mixins": "^0.12.10",
     "dinero.js": "^1.7.0",
+    "electron-is-dev": "^2.0.0",
     "fast-memoize": "^2.5.2",
     "file-saver": "^2.0.2",
     "global": "^4.4.0",
@@ -121,6 +125,35 @@
     "workbox-routing": "^6.1.5",
     "workbox-strategies": "^6.1.5",
     "workbox-streams": "^6.1.5"
+  },
+  "build": {
+    "appId": "life.farmhand.game",
+    "productName": "farmhand",
+    "extraMetadata": {
+      "name": "Farmhand"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "public"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "./public/app-icons/Icon-512x512.png"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage"
+        }
+      ],
+      "category": "Game"
+    }
   },
   "husky": {
     "hooks": {
