@@ -10,8 +10,6 @@
   "homepage": "https://www.farmhand.life/",
   "scripts": {
     "build": "react-scripts build",
-    "build:native:mac": "PUBLIC_URL='./' npm run build && electron-builder -m -c.extraMetadata.main=build/electron.js",
-    "build:native:win": "PUBLIC_URL='./' npm run build && electron-builder -w -c.extraMetadata.main=build/electron.js",
     "build:native:linux": "PUBLIC_URL='./' npm run build && electron-builder -l -c.extraMetadata.main=build/electron.js",
     "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
     "dev": "mprocs \"npm run start\" \"npm run start:api\" \"npm run start:backend\"",
@@ -140,20 +138,14 @@
       "buildResources": "public",
       "output": "build/native"
     },
-    "mac": {
-      "target": "dmg",
-      "icon": "./public/app-icons/Icon-512x512.png"
-    },
-    "win": {
-      "target": "nsis"
-    },
     "linux": {
       "target": [
         {
           "target": "AppImage"
         }
       ],
-      "category": "Game"
+      "category": "Game",
+      "icon": "./public/app-icons/Icon-512x512.png"
     }
   },
   "husky": {
