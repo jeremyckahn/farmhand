@@ -137,7 +137,8 @@
       "node_modules/**/*"
     ],
     "directories": {
-      "buildResources": "public"
+      "buildResources": "public",
+      "output": "build/native"
     },
     "mac": {
       "target": "dmg",
