@@ -17,3 +17,8 @@ jobs:
       - run: npm ci --no-optional
       - run: npm test
       - run: npm run build
+      - run: npm run build:native:linux
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: build
