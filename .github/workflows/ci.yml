@@ -10,17 +10,20 @@ jobs:
   test_and_build:
     runs-on: ubuntu-latest
     steps:
-      - env:
-        # Needed for electron-builder
-        GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - uses: actions/checkout@v2.3.1
       - uses: actions/setup-node@v1
         with:
           node-version: 14
       - run: npm ci --no-optional
       - run: npm test
+
+      - name: 'Build web app artifacts'
       - run: npm run build
+
+      - name: 'Build native app artifacts'
       - run: npm run build:native:linux
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - uses: actions/upload-artifact@v3
         with:
           name: build-output
