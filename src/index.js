@@ -216,3 +216,6 @@ ReactDOM.render(
 )
 
 serviceWorkerRegistration.register()
+
+// FIXME: Remove this.
+console.log('updated version!')
