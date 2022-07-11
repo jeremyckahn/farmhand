@@ -31,6 +31,14 @@ jobs:
             build
             !build/native/linux-unpacked/
 
+        # FIXME: Move everything below to run-release.yml before merging
+
+        # Set package version as ${{ env.PACKAGE_VERSION }}
+      - uses: nyaa8/package-version@v1
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
       - name: Prepare Web Artifacts
         run: |
           zip farmhand-web -r build/* -x build/native/**\* -x build/native/
@@ -45,7 +53,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: Release ${{ env.PACKAGE_VERSION }}-${{ steps.date.outputs.date }}
           draft: true
           prerelease: true
 
