@@ -39,7 +39,7 @@ jobs:
           zip farmhand-native -r build/native/ -x build/native/linux-unpacked/**\* -x build/native/linux-unpacked/
 
       - name: Create Release
-        id: create-release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -50,7 +50,7 @@ jobs:
           prerelease: true
 
       - name: Upload Release Web Asset
-        id: upload-release-web-asset
+        id: upload_release_web_asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,7 +61,7 @@ jobs:
           asset_content_type: application/zip
 
       - name: Upload Release Native Asset
-        id: upload-release-native-asset
+        id: upload_release_native_asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
