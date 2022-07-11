@@ -4,6 +4,8 @@ const path = require('path')
 const { app, BrowserWindow } = require('electron')
 const isDev = require('electron-is-dev')
 
+const { autoUpdater } = require('electron-updater')
+
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
@@ -26,6 +28,8 @@ function createWindow() {
   if (isDev) {
     win.webContents.openDevTools({ mode: 'detach' })
   }
+
+  autoUpdater.checkForUpdatesAndNotify()
 }
 
 // This method will be called when Electron has finished
