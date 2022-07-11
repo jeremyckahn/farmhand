@@ -24,6 +24,8 @@
   @media (orientation: landscape) and (max-height: #{$break-large-phone})
     bottom: auto
     top: 5em
+    max-width: calc(100% - 12em)
+    left: calc(50% - (#{$field-space-for-right-side-controls} / 2))
 
     .menu-open &
       display: none
