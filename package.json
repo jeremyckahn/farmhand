@@ -155,7 +155,8 @@
     "publish": {
       "provider": "github",
       "owner": "jeremyckahn",
-      "repo": "farmhand"
+      "repo": "farmhand",
+      "releaseType": "prerelease"
     }
   },
   "husky": {

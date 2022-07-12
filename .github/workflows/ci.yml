@@ -53,7 +53,7 @@ jobs:
           tag_name: ${{ env.PACKAGE_VERSION }}
           release_name: Release ${{ env.PACKAGE_VERSION }}
           draft: false
-          prerelease: false
+          prerelease: true
 
       - name: Upload Release Web Asset
         id: upload_release_web_asset
