@@ -68,3 +68,16 @@ jobs:
           asset_path: ./farmhand-web.zip
           asset_name: farmhand-web.zip
           asset_content_type: application/zip
+
+  publish_linux_build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm ci --no-optional
+      - name: 'Build Linux artifacts'
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: npm run build:native:linux
