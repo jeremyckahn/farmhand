@@ -15,7 +15,8 @@ jobs:
         with:
           node-version: 14
       - run: npm ci --no-optional
-      - run: npm test
+      # FIXME: Uncomment these lines
+      # - run: npm test
 
       - name: 'Build web app artifacts'
         run: npm run build
@@ -23,7 +24,7 @@ jobs:
       - name: 'Build native app artifacts'
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        run: npm run build:native:linux
+        # run: npm run build:native:linux
       - uses: actions/upload-artifact@v3
         with:
           name: build-output
@@ -42,19 +43,19 @@ jobs:
       - name: Prepare Web Artifacts
         run: |
           zip farmhand-web -r build/* -x build/native/**\* -x build/native/
-      - name: Prepare Native Artifacts
-        run: |
-          zip farmhand-native -r build/native/ -x build/native/linux-unpacked/**\* -x build/native/linux-unpacked/
 
+        # run: |
+        # zip farmhand-native -r build/native/ -x build/native/linux-unpacked/**\* -x build/native/linux-unpacked/
+      # - name: Prepare Native Artifacts
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ env.PACKAGE_VERSION }}
           release_name: Release ${{ env.PACKAGE_VERSION }}-${{ steps.date.outputs.date }}
-          draft: true
+          draft: false
           prerelease: true
 
       - name: Upload Release Web Asset
@@ -66,15 +67,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the Create Release step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: ./farmhand-web.zip
           asset_name: farmhand-web.zip
-          asset_content_type: application/zip
-
-      - name: Upload Release Native Asset
-        id: upload_release_native_asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./farmhand-native.zip
-          asset_name: farmhand-native.zip
           asset_content_type: application/zip
