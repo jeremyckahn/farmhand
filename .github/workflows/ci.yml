@@ -21,10 +21,10 @@ jobs:
       - name: 'Build web app artifacts'
         run: npm run build
 
-      - name: 'Build native app artifacts'
-        env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        # run: npm run build:native:linux
+      # - name: 'Build native app artifacts'
+      # env:
+      # GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      # run: npm run build:native:linux
       - uses: actions/upload-artifact@v3
         with:
           name: build-output
