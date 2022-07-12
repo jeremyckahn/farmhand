@@ -79,3 +79,17 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: npm run build:native:linux
+
+  publish_mac_build:
+    needs: test_and_build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm ci --no-optional
+      - name: 'Build Mac artifacts'
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: npm run build:native:mac
