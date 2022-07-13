@@ -146,8 +146,7 @@
     },
     "mac": {
       "target": "dmg",
-      "icon": "./public/app-icons/Icon-512x512.png",
-      "arch": "universal"
+      "icon": "./public/app-icons/Icon-512x512.png"
     },
     "win": {
       "target": "nsis",
