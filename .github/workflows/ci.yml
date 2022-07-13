@@ -66,30 +66,19 @@ jobs:
           asset_name: farmhand-web.zip
           asset_content_type: application/zip
 
-  publish_linux_build:
+  publish_native_build:
     needs: test_and_build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2.3.1
       - uses: actions/setup-node@v1
         with:
           node-version: 14
       - run: npm ci --no-optional
-      - name: 'Build Linux artifacts'
+      - name: 'Build and Release Electron App'
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        run: npm run build:native:linux
-
-  publish_mac_build:
-    needs: test_and_build
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2.3.1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14
-      - run: npm ci --no-optional
-      - name: 'Build Mac artifacts'
-        env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        run: npm run build:native:mac
+        run: npm run build:native
