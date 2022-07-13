@@ -19,10 +19,12 @@ function createWindow() {
 
   // and load the index.html of the app.
   // win.loadFile("index.html");
-  const hostUrl = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`
-  
+  const hostUrl = isDev
+    ? 'http://localhost:3000'
+    : `file://${path.join(__dirname, '../build/index.html')}`
+
   win.loadURL(hostUrl)
-  )
+
   // Open the DevTools.
   if (isDev) {
     win.webContents.openDevTools({ mode: 'detach' })
