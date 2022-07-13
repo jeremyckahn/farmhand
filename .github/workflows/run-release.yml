@@ -34,6 +34,9 @@ jobs:
       - name: Tag release
         run: npm version ${{ github.event.inputs.releaseType }}
 
+        # Sets new package version as ${{ env.PACKAGE_VERSION }}
+      - uses: nyaa8/package-version@v1
+
       - name: Check out main
         uses: actions/checkout@v2.3.1
         with:
@@ -57,6 +60,31 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Prepare Web Artifacts
+        run: zip farmhand-web -r build/*
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.PACKAGE_VERSION }}
+          release_name: ${{ env.PACKAGE_VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Web Asset
+        id: upload_release_web_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the Create Release step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./farmhand-web.zip
+          asset_name: farmhand-web-${{ env.PACKAGE_VERSION }}.zip
+          asset_content_type: application/zip
 
       - run: node -e "console.log(require('./package.json').version)" > build/version.txt
       - name: Publish itch.io build
@@ -82,3 +110,20 @@ jobs:
           FOLDER: build
           CLEAN: true
           SINGLE_COMMIT: true
+
+  publish_native_build:
+    needs: release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v2.3.1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm ci --no-optional
+      - name: 'Build and Release Electron App'
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: npm run build:native

@@ -16,4 +16,11 @@ jobs:
           node-version: 14
       - run: npm ci --no-optional
       - run: npm test
-      - run: npm run build
+
+      - name: 'Build web app artifacts'
+        run: npm run build
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-output
+          path: build
