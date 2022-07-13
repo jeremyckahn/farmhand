@@ -20,7 +20,7 @@
     "doc:watch": "nodemon --exec \"npm run doc\" --watch src --watch ./ --ext js,md --ignore dist",
     "lint": "eslint src --max-warnings=0",
     "prettier": "prettier 'src/**/*.js' --write",
-    "FIXME-preversion": "CI=true npm run test",
+    "preversion": "CI=true npm run test",
     "postversion": "git push && git push --tags",
     "start": "react-scripts start",
     "start:api": "vercel dev --listen localhost:3001",
