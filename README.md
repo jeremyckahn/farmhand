@@ -8,6 +8,7 @@
 
 **[Play Farmhand in your browser!](https://www.farmhand.life/)**
 
+- [Latest release](https://github.com/jeremyckahn/farmhand/releases/latest)
 - `develop`: [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI) [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
 - All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
 - [Wiki](https://github.com/jeremyckahn/farmhand/wiki)
@@ -79,6 +80,12 @@ To run the game locally with the API and Redis database, run:
 npm run dev
 ```
 
+To run the native app locally, run:
+
+```sh
+npm run dev:native
+```
+
 Note that you will need a Vercel account and be logged into locally for this to work (at least until [Vercel fixes this](https://github.com/vercel/vercel/discussions/4925)). Alternatively, if you just want to run the front end with no API or backend, you can run:
 
 ```sh
@@ -113,7 +120,9 @@ As an authenticated repo owner or collaborator, click "Run workflow" and enter t
 - https://www.npmjs.com/package/@jeremyckahn/farmhand
   - Playable from https://unpkg.com/browse/@jeremyckahn/farmhand/build/
 
-The process will take about 3-4 minutes to complete and it will notify the Discord server's `#updates` channel. It is customary to explain what you just shipped in the `#updates` channel as well.
+The Action will also publish [the latest release to GitHub](https://github.com/jeremyckahn/farmhand/releases/latest).
+
+The process will take several minutes to complete and it will notify the Discord server's `#updates` channel. It is customary to explain what you just shipped in the `#updates` channel as well.
 
 ## Feature flags
 
