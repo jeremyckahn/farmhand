@@ -131,7 +131,7 @@
   },
   "build": {
     "appId": "life.farmhand.game",
-    "productName": "farmhand",
+    "productName": "Farmhand",
     "extraMetadata": {
       "name": "Farmhand",
       "main": "build/electron.js"

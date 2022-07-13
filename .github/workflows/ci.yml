@@ -21,10 +21,6 @@ jobs:
       - name: 'Build web app artifacts'
         run: npm run build
 
-      # - name: 'Build native app artifacts'
-      # env:
-      # GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      # run: npm run build:native:linux
       - uses: actions/upload-artifact@v3
         with:
           name: build-output
@@ -39,11 +35,8 @@ jobs:
 
       - name: Prepare Web Artifacts
         run: |
-          zip farmhand-web -r build/* -x build/native/**\* -x build/native/
+          zip farmhand-web-${{ env.PACKAGE_VERSION }} -r build/* -x build/native/**\* -x build/native/
 
-        # run: |
-        # zip farmhand-native -r build/native/ -x build/native/linux-unpacked/**\* -x build/native/linux-unpacked/
-      # - name: Prepare Native Artifacts
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -51,7 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.PACKAGE_VERSION }}
-          release_name: Release ${{ env.PACKAGE_VERSION }}
+          release_name: ${{ env.PACKAGE_VERSION }}
           draft: false
           prerelease: true
 
