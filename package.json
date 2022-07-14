@@ -145,7 +145,11 @@
       "output": "build/native"
     },
     "mac": {
-      "target": "dmg",
+      "target": {
+        "target": "dmg",
+        "arch": "universal"
+      },
+      "mergeASARs": false,
       "icon": "./public/app-icons/Icon-512x512.png"
     },
     "win": {
