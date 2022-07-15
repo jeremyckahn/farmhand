@@ -1,6 +1,8 @@
 @import ../../styles/variables.sass
 
 $appBarOffset: 135px
+$bottomControlsOffset: 260px
+$obscuringUiVerticalOffset: $appBarOffset + $bottomControlsOffset
 
 .Field
   margin: 0 auto
@@ -9,10 +11,21 @@ $appBarOffset: 135px
     margin-bottom: 10.5em
   @media (orientation: landscape)
     margin-bottom: 5em
-    max-width: 120vh
 
-  @media (min-width: #{$break-medium-phone})
-    margin-top: 5em
+    &[data-purchased-field="0"]
+      max-width: calc(100vh * (10/6) - #{$obscuringUiVerticalOffset})
+
+    &[data-purchased-field="1"]
+      max-width: calc(100vh * (12/8) - #{$obscuringUiVerticalOffset})
+
+    &[data-purchased-field="2"]
+      max-width: calc(100vh * (16/10) - #{$obscuringUiVerticalOffset})
+
+    &[data-purchased-field="3"]
+      max-width: calc(100vh * (18/12) - #{$obscuringUiVerticalOffset})
+
+    @media (max-height: #{$break-large-phone})
+      margin-top: 5em
 
   .row
     display: flex
