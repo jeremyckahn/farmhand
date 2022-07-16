@@ -1,17 +1,47 @@
 @import ../../styles/variables.sass
 
 $appBarOffset: 135px
+$bottomControlsOffset: 260px
+$horizontalQuickSelectOffest: 80px
+$obscuringPortraitUiVerticalOffset: $appBarOffset + $horizontalQuickSelectOffest
+$obscuringLandscapeUiVerticalOffset: $appBarOffset + $bottomControlsOffset
 
 .Field
   margin: 0 auto
 
   @media (orientation: portrait)
     margin-bottom: 10.5em
+
+    @media (min-width: #{$break-sm})
+      &[data-purchased-field="0"]
+        max-width: calc(100vh * (6/10) - #{$obscuringPortraitUiVerticalOffset})
+
+      &[data-purchased-field="1"]
+        max-width: calc(100vh * (8/12) - #{$obscuringPortraitUiVerticalOffset})
+
+      &[data-purchased-field="2"]
+        max-width: calc(100vh * (10/16) - #{$obscuringPortraitUiVerticalOffset})
+
+      &[data-purchased-field="3"]
+        max-width: calc(100vh * (12/18) - #{$obscuringPortraitUiVerticalOffset})
+
   @media (orientation: landscape)
     margin-bottom: 5em
 
-  @media (min-width: #{$break-medium-phone})
-    margin-top: 5em
+    &[data-purchased-field="0"]
+      max-width: calc(100vh * (10/6) - #{$obscuringLandscapeUiVerticalOffset})
+
+    &[data-purchased-field="1"]
+      max-width: calc(100vh * (12/8) - #{$obscuringLandscapeUiVerticalOffset})
+
+    &[data-purchased-field="2"]
+      max-width: calc(100vh * (16/10) - #{$obscuringLandscapeUiVerticalOffset})
+
+    &[data-purchased-field="3"]
+      max-width: calc(100vh * (18/12) - #{$obscuringLandscapeUiVerticalOffset})
+
+    @media (max-height: #{$break-large-phone})
+      margin-top: 5em
 
   .row
     display: flex
