@@ -20,7 +20,7 @@ describe('getUpgradesAvailable', () => {
   })
 
   test('it returns a list of available upgrades when required recipes have been learned', () => {
-    const learnedForgeRecipes = [{ id: 'bronze-ingot' }]
+    const learnedForgeRecipes = ['bronze-ingot']
 
     const availableUpgrades = getUpgradesAvailable({
       toolLevels,

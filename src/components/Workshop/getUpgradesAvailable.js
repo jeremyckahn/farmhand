@@ -9,7 +9,6 @@ import { recipesMap } from '../../data/maps'
  */
 export function getUpgradesAvailable({ learnedForgeRecipes, toolLevels }) {
   let upgradesAvailable = []
-  const learnedRecipeIds = learnedForgeRecipes.map(r => r.id)
 
   for (let type of Object.keys(toolUpgrades)) {
     const upgrade = toolUpgrades[type][toolLevels[type]]
@@ -21,7 +20,9 @@ export function getUpgradesAvailable({ learnedForgeRecipes, toolLevels }) {
       for (let ingredient of Object.keys(nextLevelUpgrade.ingredients)) {
         allIngredientsUnlocked =
           allIngredientsUnlocked &&
-          !!(!recipesMap[ingredient] || learnedRecipeIds.includes(ingredient))
+          !!(
+            !recipesMap[ingredient] || learnedForgeRecipes.includes(ingredient)
+          )
       }
 
       if (allIngredientsUnlocked) {
