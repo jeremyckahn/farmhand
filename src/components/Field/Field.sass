@@ -26,9 +26,11 @@ $obscuringLandscapeUiVerticalOffset: $appBarOffset + $bottomControlsOffset
         max-width: calc(100vh * (12/18) - #{$obscuringPortraitUiVerticalOffset})
 
   @media (orientation: landscape)
-    margin-bottom: 5em
+    margin: 5em auto
 
     @media (min-height: #{$break-large-phone})
+      margin-top: auto
+
       &[data-purchased-field="0"]
         max-width: calc(100vh * (10/6) - #{$obscuringLandscapeUiVerticalOffset})
 
@@ -40,9 +42,6 @@ $obscuringLandscapeUiVerticalOffset: $appBarOffset + $bottomControlsOffset
 
       &[data-purchased-field="3"]
         max-width: calc(100vh * (18/12) - #{$obscuringLandscapeUiVerticalOffset})
-
-    @media (max-height: #{$break-large-phone})
-      margin-top: 5em
 
   .row
     display: flex
