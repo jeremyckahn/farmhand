@@ -28,8 +28,9 @@
       top: 9em
       transform: none
 
-    .menu-open &
-      display: none
+    @media (max-width:  #{$break-md})
+      .menu-open &
+        display: none
 
   .button-array
     display: flex
