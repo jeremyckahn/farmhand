@@ -11,21 +11,22 @@
   &.MuiPaper-root // Specificity is needed for card-style overrides
     @include card-style
 
-  @media (orientation: landscape) and (min-height: #{$break-large-phone})
+  @media (orientation: landscape)
     bottom: auto
-    left: auto
-    max-height: calc(100vh - 20em)
-    min-width: 4em
-    overflow: auto
-    right: 0.75em
-    top: 9em
-    transform: none
 
-  @media (orientation: landscape) and (max-height: #{$break-large-phone})
-    bottom: auto
-    top: 5em
-    max-width: calc(100% - 12em)
-    left: calc(50% - (#{$field-space-for-right-side-controls} / 2))
+    @media (max-height: #{$break-large-phone})
+      top: 5em
+      max-width: calc(100% - 12em)
+      left: calc(50% - (#{$field-space-for-right-side-controls} / 2))
+
+    @media (min-height: #{$break-large-phone})
+      left: auto
+      max-height: calc(100vh - 20em)
+      min-width: 4em
+      overflow: auto
+      right: 0.75em
+      top: 9em
+      transform: none
 
     .menu-open &
       display: none
