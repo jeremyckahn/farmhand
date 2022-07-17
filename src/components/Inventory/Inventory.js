@@ -23,6 +23,7 @@ const {
   STONE,
   FUEL,
   TOOL_UPGRADE,
+  WEEDS,
 } = itemType
 
 export const categoryIds = enumify([
@@ -61,6 +62,7 @@ const itemTypeCategoryMap = Object.freeze({
   [SPRINKLER]: FIELD_TOOLS,
   [STONE]: MINED_RESOURCES,
   [TOOL_UPGRADE]: UPGRADES,
+  [WEEDS]: CROPS,
 })
 
 const getItemCategories = () =>

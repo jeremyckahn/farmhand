@@ -27,7 +27,11 @@ export const getBackgroundStyles = plotContent => {
 
   const backgroundImages = []
 
-  if (plotContent.fertilizerType === fertilizerType.STANDARD) {
+  if (
+    [fertilizerType.STANDARD, fertilizerType.COMPOST].includes(
+      plotContent.fertilizerType
+    )
+  ) {
     backgroundImages.push(`url(${plotStates['fertilized-plot']})`)
   } else if (plotContent.fertilizerType === fertilizerType.RAINBOW) {
     backgroundImages.push(`url(${plotStates['rainbow-fertilized-plot']})`)

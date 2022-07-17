@@ -9,12 +9,6 @@ import {
   INITIAL_SPRINKLER_RANGE,
 } from '../constants'
 
-import { cropLifeStage, cropType } from '../enums'
-
-import { crop } from './crop'
-
-const { SEED, GROWING } = cropLifeStage
-
 const { freeze } = Object
 const {
   COW_FEED,
@@ -23,6 +17,7 @@ const {
   MILK,
   SCARECROW,
   SPRINKLER,
+  WEEDS,
 } = itemType
 
 export {
@@ -56,18 +51,12 @@ export {
   wheatSeed,
 } from './crops'
 
-const weeds = crop({
-  cropType: cropType.WEEDS,
-  cropTimetable: {
-    [SEED]: 0,
-    [GROWING]: 0,
-  },
+const weeds = freeze({
   id: 'weeds',
   name: 'Weeds',
-  isSeed: false,
-  tier: 0,
-  value: 1,
-  growsInto: 'weeds',
+  value: 0.1,
+  doesPriceFluctuate: false,
+  type: WEEDS,
 })
 
 export { weeds }

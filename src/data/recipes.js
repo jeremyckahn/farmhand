@@ -397,9 +397,22 @@ export const compost = itemify({
   id: 'compost',
   name: 'Compost',
   ingredients: {
-    [items.weeds.id]: 10,
+    [items.weeds.id]: 100,
   },
-  condition: state => state.itemsSold[items.weeds.id] >= 50,
+  condition: state =>
+    state.purchasedComposter && state.itemsSold[items.weeds.id] >= 100,
+  recipeType: recipeType.KITCHEN,
+  type: itemType.CRAFTED_ITEM,
+})
+
+export const fertilizer = itemify({
+  id: 'fertilizer',
+  name: 'Fertilizer',
+  ingredients: {
+    [compost.id]: 10,
+  },
+  condition: state =>
+    state.purchasedComposter && state.itemsSold[compost.id] >= 10,
   recipeType: recipeType.KITCHEN,
   type: itemType.FERTILIZER,
   enablesFieldMode: fieldMode.FERTILIZE,
