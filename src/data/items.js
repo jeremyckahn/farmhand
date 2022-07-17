@@ -9,6 +9,12 @@ import {
   INITIAL_SPRINKLER_RANGE,
 } from '../constants'
 
+import { cropLifeStage, cropType } from '../enums'
+
+import { crop } from './crop'
+
+const { SEED, GROWING } = cropLifeStage
+
 const { freeze } = Object
 const {
   COW_FEED,
@@ -49,6 +55,22 @@ export {
   wheat,
   wheatSeed,
 } from './crops'
+
+const weeds = crop({
+  cropType: cropType.WEEDS,
+  cropTimetable: {
+    [SEED]: 0,
+    [GROWING]: 0,
+  },
+  id: 'weeds',
+  name: 'Weeds',
+  isSeed: false,
+  tier: 0,
+  value: 1,
+  growsInto: 'weeds',
+})
+
+export { weeds }
 
 export { bronzeOre, coal, goldOre, ironOre, silverOre, stone } from './ores'
 

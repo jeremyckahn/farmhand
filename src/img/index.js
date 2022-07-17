@@ -44,6 +44,7 @@ import spinachSeed from './items/spinach-seed.png'
 import strawberry from './items/strawberry.png'
 import strawberryGrowing from './items/strawberry-growing.png'
 import strawberrySeed from './items/strawberry-seed.png'
+import compost from './items/compost.png'
 import corn from './items/corn.png'
 import cornGrowing from './items/corn-growing.png'
 import cornSeed from './items/corn-seed.png'
@@ -80,6 +81,8 @@ import rainbowMilk2 from './items/rainbow-milk-2.png'
 import rainbowMilk3 from './items/rainbow-milk-3.png'
 import chocolateMilk from './items/chocolate-milk.png'
 import inventoryBox from './items/inventory-box.png'
+import weeds from './items/weeds.png'
+
 import hoe from './tools/hoe.png'
 import hoeBronze from './tools/hoe-bronze.png'
 import hoeIron from './tools/hoe-iron.png'
@@ -153,6 +156,7 @@ export const craftedItems = {
   cheese,
   chocolate,
   'chocolate-soy-milk': chocolateSoyMilk,
+  compost,
   bread,
   burger,
   butter,
@@ -215,6 +219,7 @@ export const items = {
   watermelon,
   'watermelon-growing': watermelonGrowing,
   'watermelon-seed': watermelonSeed,
+  weeds,
 
   // Ores
   coal,
