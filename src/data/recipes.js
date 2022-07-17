@@ -405,6 +405,10 @@ export const compost = itemify({
   type: itemType.CRAFTED_ITEM,
 })
 
+/**
+ * @property farmhand.module:items.fertilizer
+ * @type {farmhand.item}
+ */
 export const fertilizer = itemify({
   id: 'fertilizer',
   name: 'Fertilizer',
@@ -413,7 +417,9 @@ export const fertilizer = itemify({
   },
   condition: state =>
     state.purchasedComposter && state.itemsSold[compost.id] >= 10,
+  description: 'Helps crops grow and mature a little faster.',
+  enablesFieldMode: fieldMode.FERTILIZE,
   recipeType: recipeType.KITCHEN,
   type: itemType.FERTILIZER,
-  enablesFieldMode: fieldMode.FERTILIZE,
+  value: 25,
 })
