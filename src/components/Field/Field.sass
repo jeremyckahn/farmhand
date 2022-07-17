@@ -31,6 +31,7 @@ $obscuringLandscapeUiVerticalOffset: $appBarOffset + $bottomControlsOffset
     @media (min-height: #{$break-large-phone})
       margin-top: auto
 
+    @media (min-height: #{$break-sm})
       &[data-purchased-field="0"]
         max-width: calc(100vh * (10/6) - #{$obscuringLandscapeUiVerticalOffset})
 
