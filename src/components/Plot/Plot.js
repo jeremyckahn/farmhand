@@ -74,7 +74,7 @@ export const Plot = ({
   x,
   y,
 
-  image = getPlotImage(plotContent),
+  image = getPlotImage(plotContent, x, y),
   lifeStage = plotContent &&
     getPlotContentType(plotContent) === itemType.CROP &&
     getCropLifeStage(plotContent),
