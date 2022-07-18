@@ -401,6 +401,7 @@ export const compost = itemify({
   },
   condition: state =>
     state.purchasedComposter && state.itemsSold[items.weed.id] >= 100,
+  description: 'Can be used to make fertilizer.',
   recipeType: recipeType.RECYCLING,
   type: itemType.CRAFTED_ITEM,
 })
