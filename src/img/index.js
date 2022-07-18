@@ -222,7 +222,7 @@ export const items = {
   watermelon,
   'watermelon-growing': watermelonGrowing,
   'watermelon-seed': watermelonSeed,
-  weed: weedYellow, // this one is used for the inventory
+  weed: weedPink, // this one is used for the inventory
   'weed-yellow': weedYellow,
   'weed-orange': weedOrange,
   'weed-pink': weedPink,
