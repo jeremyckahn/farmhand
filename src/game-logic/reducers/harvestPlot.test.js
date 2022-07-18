@@ -22,6 +22,7 @@ describe('harvestPlot', () => {
       const inputState = {
         cropsHarvested: {},
         field: [[getPlotContentFromItemId('sprinkler')]],
+        inventory: [],
         toolLevels: toolLevelsDefault,
       }
       const state = harvestPlot(inputState, 0, 0)
@@ -34,6 +35,7 @@ describe('harvestPlot', () => {
       const inputState = {
         cropsHarvested: {},
         field: [[testCrop({ itemId: 'sample-crop-1' })]],
+        inventory: [],
         toolLevels: toolLevelsDefault,
       }
       const state = harvestPlot(inputState, 0, 0)
