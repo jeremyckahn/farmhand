@@ -34,7 +34,7 @@ export function RecyclingTabPanel({
                 {...{
                   linkTarget: '_blank',
                   className: 'markdown',
-                  source: `Recyling Recipes are learned by selling items foraged from the field.`,
+                  source: `Recyling recipes are learned by selling items foraged from the field.`,
                 }}
               />
             </CardContent>

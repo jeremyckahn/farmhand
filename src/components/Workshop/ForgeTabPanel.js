@@ -59,7 +59,7 @@ export function ForgeTabPanel({
                 {...{
                   linkTarget: '_blank',
                   className: 'markdown',
-                  source: `Forge Recipes are learned by selling resources mined from the field.`,
+                  source: `Forge recipes are learned by selling resources mined from the field.`,
                 }}
               />
             </CardContent>
