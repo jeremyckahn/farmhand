@@ -5,6 +5,10 @@ import { weed } from '../../data/items'
 import isRandomNumberLessThan from '../../utils/isRandomNumberLessThan'
 import { getPlotContentFromItemId } from '../../utils'
 
+/**
+ * @param {?farmhand.plotContent} plotContent
+ * @returns {?farmhand.plotContent}
+ */
 export function spawnWeeds(plotContents) {
   if (plotContents) return plotContents
 
