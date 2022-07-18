@@ -86,7 +86,7 @@ function harvestCrops(state, x, y) {
   }
 }
 
-function harvestWeeds(state, x, y) {
+function harvestWeed(state, x, y) {
   const row = state.field[y]
   const crop = row[x]
   const item = itemsMap[crop.itemId]
@@ -109,15 +109,15 @@ export const harvestPlot = (state, x, y) => {
   const crop = row[x]
 
   if (!crop) return state
+  if (!doesInventorySpaceRemain(state)) return state
 
   if (
     getPlotContentType(crop) === itemType.CROP &&
-    getCropLifeStage(crop) === GROWN &&
-    doesInventorySpaceRemain(state)
+    getCropLifeStage(crop) === GROWN
   ) {
     return harvestCrops(state, x, y)
   } else if (getPlotContentType(crop) === itemType.WEED) {
-    return harvestWeeds(state, x, y)
+    return harvestWeed(state, x, y)
   }
 
   return state

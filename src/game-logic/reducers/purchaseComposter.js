@@ -1,8 +1,8 @@
 import { moneyTotal } from '../../utils'
 import { PURCHASEABLE_COMPOSTERS } from '../../constants'
-//import { COMPOSTER_AVAILABLE_NOTIFICATION } from '../../strings'
+import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings'
 
-//import { showNotification } from './showNotification'
+import { showNotification } from './showNotification'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
 
 // TODO: Add tests for this reducer
@@ -22,7 +22,7 @@ export const purchaseComposter = (state, composterId) => {
     money: moneyTotal(money, -PURCHASEABLE_COMPOSTERS.get(composterId).price),
   }
 
-  //state = showNotification(state, COMPOSTER_AVAILABLE_NOTIFICATION)
+  state = showNotification(state, RECYCLING_AVAILABLE_NOTIFICATION)
 
   return updateLearnedRecipes(state)
 }

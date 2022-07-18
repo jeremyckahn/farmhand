@@ -365,7 +365,6 @@ const cropLifeStageToImageSuffixMap = {
 export const getPlotImage = plotContent => {
   if (plotContent) {
     if (getPlotContentType(plotContent) === itemType.CROP) {
-      console.log(getCropLifeStage(plotContent), getCropId(plotContent))
       if (getCropLifeStage(plotContent) === GROWN) {
         return itemImages[getCropId(plotContent)]
       } else {
