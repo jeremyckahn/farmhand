@@ -26,6 +26,7 @@ const {
 export const recipeCategories = {
   [recipeType.KITCHEN]: {},
   [recipeType.FORGE]: {},
+  [recipeType.RECYCLING]: {},
 }
 
 export const recipesMap = {}
@@ -65,5 +66,5 @@ export const cropIdToTypeMap = {
   [TOMATO]: 'tomato',
   [WATERMELON]: 'watermelon',
   [WHEAT]: 'wheat',
-  [WEED]: 'weeds',
+  [WEED]: 'weed',
 }

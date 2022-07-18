@@ -81,7 +81,7 @@ import rainbowMilk2 from './items/rainbow-milk-2.png'
 import rainbowMilk3 from './items/rainbow-milk-3.png'
 import chocolateMilk from './items/chocolate-milk.png'
 import inventoryBox from './items/inventory-box.png'
-import weeds from './items/weeds.png'
+import weed from './items/weeds.png'
 
 import hoe from './tools/hoe.png'
 import hoeBronze from './tools/hoe-bronze.png'
@@ -219,7 +219,7 @@ export const items = {
   watermelon,
   'watermelon-growing': watermelonGrowing,
   'watermelon-seed': watermelonSeed,
-  weeds,
+  weed,
 
   // Ores
   coal,

@@ -32,6 +32,7 @@ export const categoryIds = enumify([
   'CRAFTED_ITEMS',
   'CROPS',
   'FIELD_TOOLS',
+  'FORAGED_ITEMS',
   'MINED_RESOURCES',
   'SEEDS',
   'UPGRADES',
@@ -43,6 +44,7 @@ const {
   CRAFTED_ITEMS,
   CROPS,
   FIELD_TOOLS,
+  FORAGED_ITEMS,
   MINED_RESOURCES,
   SEEDS,
   UPGRADES,
@@ -62,7 +64,7 @@ const itemTypeCategoryMap = Object.freeze({
   [SPRINKLER]: FIELD_TOOLS,
   [STONE]: MINED_RESOURCES,
   [TOOL_UPGRADE]: UPGRADES,
-  [WEED]: CROPS,
+  [WEED]: FORAGED_ITEMS,
 })
 
 const getItemCategories = () =>
@@ -99,6 +101,7 @@ export const Inventory = ({
     {[
       [CROPS, 'Crops'],
       [SEEDS, 'Seeds'],
+      [FORAGED_ITEMS, 'Foraged Items'],
       [FIELD_TOOLS, 'Field Tools'],
       [ANIMAL_PRODUCTS, 'Animal Products'],
       [ANIMAL_SUPPLIES, 'Animal Supplies'],

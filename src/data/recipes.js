@@ -401,7 +401,7 @@ export const compost = itemify({
   },
   condition: state =>
     state.purchasedComposter && state.itemsSold[items.weed.id] >= 100,
-  recipeType: recipeType.KITCHEN,
+  recipeType: recipeType.RECYCLING,
   type: itemType.CRAFTED_ITEM,
 })
 
@@ -419,7 +419,7 @@ export const fertilizer = itemify({
     state.purchasedComposter && state.itemsSold[compost.id] >= 10,
   description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,
-  recipeType: recipeType.KITCHEN,
+  recipeType: recipeType.RECYCLING,
   type: itemType.FERTILIZER,
   value: 25,
 })
