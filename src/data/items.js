@@ -17,7 +17,7 @@ const {
   MILK,
   SCARECROW,
   SPRINKLER,
-  WEEDS,
+  WEED,
 } = itemType
 
 export {
@@ -56,7 +56,7 @@ const weeds = freeze({
   name: 'Weeds',
   value: 0.1,
   doesPriceFluctuate: false,
-  type: WEEDS,
+  type: WEED,
 })
 
 export { weeds }

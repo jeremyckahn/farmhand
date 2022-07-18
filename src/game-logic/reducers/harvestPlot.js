@@ -116,7 +116,7 @@ export const harvestPlot = (state, x, y) => {
     doesInventorySpaceRemain(state)
   ) {
     return harvestCrops(state, x, y)
-  } else if (getPlotContentType(crop) === itemType.WEEDS) {
+  } else if (getPlotContentType(crop) === itemType.WEED) {
     return harvestWeeds(state, x, y)
   }
 

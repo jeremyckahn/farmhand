@@ -29,7 +29,7 @@ export const cropType = enumify([
   'TOMATO',
   'WATERMELON',
   'WHEAT',
-  'WEEDS',
+  'WEED',
 ])
 
 /**
@@ -91,7 +91,7 @@ export const itemType = enumify([
   'SPRINKLER',
   'STONE',
   'TOOL_UPGRADE',
-  'WEEDS',
+  'WEED',
 ])
 
 /**
