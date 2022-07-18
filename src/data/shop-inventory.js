@@ -16,10 +16,11 @@ import {
   wheatSeed,
 
   // Field items
-  fertilizer,
   scarecrow,
   sprinkler,
 } from './items'
+
+import { fertilizer } from './recipes'
 
 const inventory = [
   // Plantable crops

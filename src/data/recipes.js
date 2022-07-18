@@ -406,7 +406,7 @@ export const compost = itemify({
 })
 
 /**
- * @property farmhand.module:items.fertilizer
+ * @property farmhand.module:recipes.fertilizer
  * @type {farmhand.item}
  */
 export const fertilizer = itemify({

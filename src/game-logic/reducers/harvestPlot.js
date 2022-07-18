@@ -117,7 +117,6 @@ export const harvestPlot = (state, x, y) => {
   ) {
     return harvestCrops(state, x, y)
   } else if (getPlotContentType(crop) === itemType.WEEDS) {
-    console.log('harvest weeds')
     return harvestWeeds(state, x, y)
   }
 
