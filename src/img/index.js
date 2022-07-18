@@ -162,6 +162,7 @@ export const craftedItems = {
   bread,
   burger,
   butter,
+  fertilizer,
   'french-onion-soup': frenchOnionSoup,
   jackolantern,
   'hot-sauce': hotSauce,
@@ -235,7 +236,6 @@ export const items = {
   'gold-ore': goldOre,
 
   // Field tools
-  fertilizer,
   'rainbow-fertilizer': rainbowFertilizer,
   scarecrow,
   sprinkler,

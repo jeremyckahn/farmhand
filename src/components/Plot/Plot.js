@@ -78,7 +78,8 @@ export const Plot = ({
   lifeStage = plotContent &&
     getPlotContentType(plotContent) === itemType.CROP &&
     getCropLifeStage(plotContent),
-  isRipe = lifeStage === cropLifeStage.GROWN,
+  isRipe = lifeStage === cropLifeStage.GROWN ||
+    (plotContent && getPlotContentType(plotContent) === itemType.WEED),
 }) => {
   const item = plotContent ? itemsMap[plotContent.itemId] : null
   const daysLeftToMature = getDaysLeftToMature(plotContent)
