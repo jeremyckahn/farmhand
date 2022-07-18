@@ -15,7 +15,7 @@ describe('spawnWeeds', () => {
     isRandomNumberLessThan.mockReturnValue(true)
 
     expect(spawnWeeds(null)).toEqual({
-      itemId: 'weeds',
+      itemId: 'weed',
       fertilizerType: 'NONE',
     })
   })

@@ -1,6 +1,6 @@
 import { WEEDS_SPAWN_CHANCE } from '../../constants'
 
-import { weeds } from '../../data/items'
+import { weed } from '../../data/items'
 
 import isRandomNumberLessThan from '../../utils/isRandomNumberLessThan'
 import { getPlotContentFromItemId } from '../../utils'
@@ -11,7 +11,7 @@ export function spawnWeeds(plotContents) {
   let contents = null
 
   if (isRandomNumberLessThan(WEEDS_SPAWN_CHANCE)) {
-    contents = getPlotContentFromItemId(weeds.id)
+    contents = getPlotContentFromItemId(weed.id)
   }
 
   return contents

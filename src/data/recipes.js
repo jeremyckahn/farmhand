@@ -397,10 +397,10 @@ export const compost = itemify({
   id: 'compost',
   name: 'Compost',
   ingredients: {
-    [items.weeds.id]: 100,
+    [items.weed.id]: 100,
   },
   condition: state =>
-    state.purchasedComposter && state.itemsSold[items.weeds.id] >= 100,
+    state.purchasedComposter && state.itemsSold[items.weed.id] >= 100,
   recipeType: recipeType.KITCHEN,
   type: itemType.CRAFTED_ITEM,
 })

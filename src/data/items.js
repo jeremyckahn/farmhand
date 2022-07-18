@@ -51,9 +51,9 @@ export {
   wheatSeed,
 } from './crops'
 
-export const weeds = freeze({
-  id: 'weeds',
-  name: 'Weeds',
+export const weed = freeze({
+  id: 'weed',
+  name: 'Weed',
   value: 0.1,
   doesPriceFluctuate: false,
   type: WEED,
