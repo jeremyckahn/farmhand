@@ -6,6 +6,7 @@ import * as recipes from './recipes'
 export const recipeCategories = {
   [recipeType.KITCHEN]: {},
   [recipeType.FORGE]: {},
+  [recipeType.RECYCLING]: {},
 }
 
 export const recipesMap = {}
