@@ -51,15 +51,13 @@ export {
   wheatSeed,
 } from './crops'
 
-const weeds = freeze({
+export const weeds = freeze({
   id: 'weeds',
   name: 'Weeds',
   value: 0.1,
   doesPriceFluctuate: false,
   type: WEED,
 })
-
-export { weeds }
 
 export { bronzeOre, coal, goldOre, ironOre, silverOre, stone } from './ores'
 

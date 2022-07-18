@@ -47,7 +47,7 @@ export const PURCHASEABLE_COMBINES = freeze(
 )
 
 export const PURCHASEABLE_COMPOSTERS = freeze(
-  new Map([[1, { type: 'Bin', price: 1_000 }]])
+  new Map([[1, { type: 'Basic', price: 1_000 }]])
 )
 
 export const PURCHASEABLE_SMELTERS = freeze(
