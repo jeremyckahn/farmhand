@@ -98,12 +98,7 @@ export const itemType = enumify([
  * @property farmhand.module:enums.fertilizerType
  * @enum {string}
  */
-export const fertilizerType = enumify([
-  'NONE',
-  'STANDARD',
-  'RAINBOW',
-  'COMPOST',
-])
+export const fertilizerType = enumify(['NONE', 'STANDARD', 'RAINBOW'])
 
 /**
  * @property farmhand.module:enums.genders
