@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { bool, func, number, object, string } from 'prop-types'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
@@ -86,24 +86,11 @@ export const Plot = ({
   const isCrop =
     plotContent && getPlotContentType(plotContent) === itemType.CROP
   const isScarecow = itemsMap[plotContent?.itemId]?.type === itemType.SCARECROW
-  const [wasJustShoveled, setWasJustShoveled] = useState(false)
-  const [initialIsShoveledState, setInitialIsShoveledState] = useState(
-    Boolean(plotContent?.isShoveled)
-  )
 
-  useEffect(() => {
-    if (
-      !initialIsShoveledState &&
-      plotContent?.isShoveled &&
-      plotContent?.oreId
-    ) {
-      setWasJustShoveled(true)
-    }
-  }, [initialIsShoveledState, plotContent])
-
-  useEffect(() => {
-    if (plotContent === null) setInitialIsShoveledState(false)
-  }, [plotContent])
+  let wasJustShoveled = false
+  if (plotContent && plotContent.wasJustShoveled) {
+    wasJustShoveled = true
+  }
 
   const showPlotImage = Boolean(
     image &&
@@ -145,14 +132,9 @@ export const Plot = ({
       <img
         {...{
           className: classNames('square', {
-            ...(isCrop && {
-              animated: isRipe,
-              heartBeat: isRipe,
-            }),
-            ...(wasJustShoveled && {
-              animated: true,
-              'was-just-shoveled': true,
-            }),
+            animated: wasJustShoveled || (isCrop && isRipe),
+            heartBeat: isCrop && isRipe,
+            'was-just-shoveled': wasJustShoveled,
           }),
           style: {
             backgroundImage: showPlotImage ? `url(${image})` : undefined,

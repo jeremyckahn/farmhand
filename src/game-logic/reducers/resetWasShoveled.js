@@ -7,6 +7,7 @@ export const resetWasShoveled = plotContent => {
     return {
       ...plotContent,
       daysUntilClear: plotContent.daysUntilClear - 1,
+      wasJustShoveled: false,
     }
   }
 
