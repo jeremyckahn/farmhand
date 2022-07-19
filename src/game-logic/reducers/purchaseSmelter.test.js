@@ -28,7 +28,7 @@ describe('purchaseSmelter', () => {
       expect(newState.money).toEqual(0)
     })
 
-    test('it shows the recycling available notification', () => {
+    test('it shows the forge available notification', () => {
       expect(newState.todaysNotifications[0].message).toEqual(
         FORGE_AVAILABLE_NOTIFICATION
       )
