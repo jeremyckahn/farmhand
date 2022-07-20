@@ -82,6 +82,7 @@ describe('background image', () => {
                 plotContent: testShoveledPlot({
                   oreId: 'sample-ore-1',
                   isShoveled,
+                  wasJustShoveled: isShoveled,
                 }),
                 handlePlotClick: () => setIsShoveled(true),
               }}

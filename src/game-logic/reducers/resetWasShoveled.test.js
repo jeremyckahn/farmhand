@@ -1,27 +1,35 @@
 import { resetWasShoveled } from './resetWasShoveled'
 
 describe('resetWasShoveled', () => {
-  test('it decrements daysUntilClear if value is above 1', () => {
-    const plotContents = resetWasShoveled({
-      isShoveled: true,
-      daysUntilClear: 2,
-    })
+  let plotContents
 
-    expect(plotContents).toEqual({ isShoveled: true, daysUntilClear: 1 })
+  beforeEach(() => {
+    plotContents = {
+      isShoveled: true,
+      daysUntilClear: 0,
+      wasJustShoveled: true,
+    }
+  })
+
+  test('it decrements daysUntilClear and updates wasJustShoveled if value is above 1', () => {
+    plotContents.daysUntilClear = 2
+
+    expect(resetWasShoveled(plotContents)).toEqual({
+      isShoveled: true,
+      daysUntilClear: 1,
+      wasJustShoveled: false,
+    })
   })
 
   test('it resets the plotContents when daysUntilClear is 1', () => {
-    const plotContents = resetWasShoveled({
-      isShoveled: true,
-      daysUntilClear: 1,
-    })
+    plotContents.daysUntilClear = 1
 
-    expect(plotContents).toEqual(null)
+    expect(resetWasShoveled(plotContents)).toEqual(null)
   })
 
   test('will return the plot contents if it is anything else', () => {
-    const plotContents = resetWasShoveled('sprinkler')
+    plotContents = 'sprinkler'
 
-    expect(plotContents).toEqual('sprinkler')
+    expect(resetWasShoveled(plotContents)).toEqual('sprinkler')
   })
 })
