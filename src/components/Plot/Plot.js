@@ -87,10 +87,7 @@ export const Plot = ({
     plotContent && getPlotContentType(plotContent) === itemType.CROP
   const isScarecow = itemsMap[plotContent?.itemId]?.type === itemType.SCARECROW
 
-  let wasJustShoveled = false
-  if (plotContent && plotContent.wasJustShoveled) {
-    wasJustShoveled = true
-  }
+  const wasJustShoveled = plotContent && plotContent.wasJustShoveled
 
   const showPlotImage = Boolean(
     image &&
