@@ -53,7 +53,6 @@ export const minePlot = (state, x, y) => {
   state = modifyFieldPlotAt(state, x, y, () => {
     return {
       isShoveled: true,
-      wasJustShoveled: true,
       daysUntilClear,
       oreId: spawnedOre ? spawnedOre.id : null,
     }
