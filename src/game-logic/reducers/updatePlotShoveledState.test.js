@@ -1,8 +1,8 @@
-import { resetWasShoveled } from './resetWasShoveled'
+import { updatePlotShoveledState } from './updatePlotShoveledState'
 
-describe('resetWasShoveled', () => {
+describe('updatePlotShoveledState', () => {
   test('it decrements daysUntilClear if value is above 1', () => {
-    const plotContents = resetWasShoveled({
+    const plotContents = updatePlotShoveledState({
       isShoveled: true,
       daysUntilClear: 2,
     })
@@ -11,7 +11,7 @@ describe('resetWasShoveled', () => {
   })
 
   test('it resets the plotContents when daysUntilClear is 1', () => {
-    const plotContents = resetWasShoveled({
+    const plotContents = updatePlotShoveledState({
       isShoveled: true,
       daysUntilClear: 1,
     })
@@ -20,7 +20,7 @@ describe('resetWasShoveled', () => {
   })
 
   test('will return the plot contents if it is anything else', () => {
-    const plotContents = resetWasShoveled('sprinkler')
+    const plotContents = updatePlotShoveledState('sprinkler')
 
     expect(plotContents).toEqual('sprinkler')
   })
