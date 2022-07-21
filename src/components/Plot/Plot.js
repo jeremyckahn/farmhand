@@ -78,7 +78,7 @@ export const Plot = ({
   lifeStage = plotContent &&
     getPlotContentType(plotContent) === itemType.CROP &&
     getCropLifeStage(plotContent),
-  isRipe = lifeStage === cropLifeStage.GROWN ||
+  canBeHarvested = lifeStage === cropLifeStage.GROWN ||
     (plotContent && getPlotContentType(plotContent) === itemType.WEED),
 }) => {
   const item = plotContent ? itemsMap[plotContent.itemId] : null
@@ -124,7 +124,7 @@ export const Plot = ({
 
           // For crops
           crop: isCrop,
-          'is-ripe': isRipe,
+          'can-be-harvested': canBeHarvested,
 
           // For crops and scarecrows
           'can-be-fertilized':
@@ -149,8 +149,8 @@ export const Plot = ({
         {...{
           className: classNames('square', {
             ...(isCrop && {
-              animated: isRipe,
-              heartBeat: isRipe,
+              animated: canBeHarvested,
+              heartBeat: canBeHarvested,
             }),
             ...(wasJustShoveled && {
               animated: true,
