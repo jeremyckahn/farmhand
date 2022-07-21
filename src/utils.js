@@ -360,6 +360,8 @@ const cropLifeStageToImageSuffixMap = {
 
 /**
  * @param {farmhand.plotContent} plotContent
+ * @param {number} x
+ * @param {number} y
  * @returns {?string}
  */
 export const getPlotImage = (plotContent, x, y) => {
