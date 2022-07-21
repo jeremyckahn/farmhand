@@ -1,6 +1,7 @@
 import { updateField, setWasWateredProperty } from './helpers'
 import { incrementPlotContentAge } from './incrementPlotContentAge'
-import { resetWasShoveled } from './resetWasShoveled'
+import { updatePlotShoveledState } from './updatePlotShoveledState'
+import { spawnWeeds } from './spawnWeeds'
 
 const fieldReducer = (acc, fn) => fn(acc)
 
@@ -14,7 +15,8 @@ const resetWasWatered = plotContent => setWasWateredProperty(plotContent, false)
 const fieldUpdaters = [
   incrementPlotContentAge,
   resetWasWatered,
-  resetWasShoveled,
+  spawnWeeds,
+  updatePlotShoveledState,
 ]
 
 /**

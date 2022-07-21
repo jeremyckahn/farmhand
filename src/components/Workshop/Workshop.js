@@ -15,10 +15,16 @@ import { a11yProps } from './TabPanel'
 
 import { ForgeTabPanel } from './ForgeTabPanel'
 import { KitchenTabPanel } from './KitchenTabPanel'
+import { RecyclingTabPanel } from './RecyclingTabPanel'
 
 import './Workshop.sass'
 
-const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
+const Workshop = ({
+  learnedRecipes,
+  purchasedComposter,
+  purchasedSmelter,
+  toolLevels,
+}) => {
   const [currentTab, setCurrentTab] = useState(0)
 
   const learnedKitchenRecipes = Object.keys(learnedRecipes).filter(
@@ -29,7 +35,13 @@ const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
     recipeId => recipesMap[recipeId].recipeType === recipeType.FORGE
   )
 
+  const learnedRecyclingRecipes = Object.keys(learnedRecipes).filter(
+    recipeId => recipesMap[recipeId].recipeType === recipeType.RECYCLING
+  )
+
   const showForge = features.MINING && purchasedSmelter
+
+  const recyclingTabIndex = showForge ? 2 : 1
 
   return (
     <div className="Workshop">
@@ -41,6 +53,9 @@ const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
         >
           <Tab {...{ label: 'Kitchen', ...a11yProps(0) }} />
           {showForge ? <Tab {...{ label: 'Forge', ...a11yProps(1) }} /> : null}
+          {purchasedComposter ? (
+            <Tab {...{ label: 'Recycling', ...a11yProps(recyclingTabIndex) }} />
+          ) : null}
         </Tabs>
       </AppBar>
       <KitchenTabPanel
@@ -58,12 +73,21 @@ const Workshop = ({ learnedRecipes, purchasedSmelter, toolLevels }) => {
           toolLevels={toolLevels}
         />
       ) : null}
+      {purchasedComposter ? (
+        <RecyclingTabPanel
+          currentTab={currentTab}
+          index={recyclingTabIndex}
+          learnedRecipes={learnedRecyclingRecipes}
+          setCurrentTab={setCurrentTab}
+        />
+      ) : null}
     </div>
   )
 }
 
 Workshop.propTypes = {
   learnedRecipes: object.isRequired,
+  purchasedComposter: number,
   purchasedSmelter: number,
   toolLevels: object.isRequired,
 }

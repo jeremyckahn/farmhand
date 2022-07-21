@@ -38,6 +38,11 @@ jest.mock('../../data/maps', () => ({
       name: 'forge recipe 2',
       recipeType: 'FORGE',
     },
+    'recycling-recipe-1': {
+      id: 'recycling-recipe-1',
+      name: 'recycling recipe 1',
+      recipeType: 'RECYCLING',
+    },
   },
 }))
 
@@ -47,11 +52,16 @@ jest.mock('../UpgradePurchase', () => () => (
 ))
 
 describe('<Workshop />', () => {
-  let gameState = {
-    learnedRecipes: {},
-    purchasedSmelter: 0,
-    toolLevels: {},
-  }
+  let gameState
+
+  beforeEach(() => {
+    gameState = {
+      learnedRecipes: {},
+      purchasedComposter: 0,
+      purchasedSmelter: 0,
+      toolLevels: {},
+    }
+  })
 
   const renderWorkshop = gameState => {
     render(
@@ -63,6 +73,7 @@ describe('<Workshop />', () => {
 
   describe('kitchen', () => {
     let numLearnedRecipes = 0
+
     beforeEach(() => {
       gameState.learnedRecipes = {
         'kitchen-recipe-1': true,
@@ -117,7 +128,11 @@ describe('<Workshop />', () => {
       })
 
       test('is rendered', () => {
-        expect(screen.getByText('Forge')).toBeInTheDocument()
+        expect(
+          screen.getByText(
+            'Forge recipes are learned by selling resources mined from the field.'
+          )
+        ).toBeInTheDocument()
       })
 
       test('renders a Recipe card for each learned recipe', () => {
@@ -143,6 +158,41 @@ describe('<Workshop />', () => {
 
       it('renders an UpgradePurchase card for each upgrade available', () => {
         expect(screen.getAllByTestId('UpgradePurchase')).toHaveLength(2)
+      })
+    })
+  })
+
+  describe('recycling', () => {
+    describe('player has not purchased the composter', () => {
+      test('is not rendered', () => {
+        renderWorkshop(gameState)
+
+        expect(screen.queryByText('Recycling')).not.toBeInTheDocument()
+      })
+    })
+
+    describe('player has purchased the composter', () => {
+      beforeEach(() => {
+        gameState.purchasedComposter = 1
+        gameState.learnedRecipes = {
+          'recycling-recipe-1': true,
+        }
+
+        renderWorkshop(gameState)
+
+        userEvent.click(screen.getByText('Recycling'))
+      })
+
+      test('is rendered', () => {
+        expect(
+          screen.getByText(
+            'Recyling recipes are learned by selling items foraged from the field.'
+          )
+        ).toBeInTheDocument()
+      })
+
+      test('renders a Recipe card for each learned recipe', () => {
+        expect(screen.getAllByTestId('Recipe')).toHaveLength(1)
       })
     })
   })

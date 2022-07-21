@@ -1,8 +1,9 @@
-import { testCrop } from '../../test-utils'
+import { testCrop, testItem } from '../../test-utils'
 import { fertilizerType, toolType, toolLevel } from '../../enums'
 import { getPlotContentFromItemId } from '../../utils'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { itemType } from '../../enums'
 
 import { harvestPlot } from './harvestPlot'
 
@@ -22,6 +23,7 @@ describe('harvestPlot', () => {
       const inputState = {
         cropsHarvested: {},
         field: [[getPlotContentFromItemId('sprinkler')]],
+        inventory: [],
         toolLevels: toolLevelsDefault,
       }
       const state = harvestPlot(inputState, 0, 0)
@@ -34,6 +36,7 @@ describe('harvestPlot', () => {
       const inputState = {
         cropsHarvested: {},
         field: [[testCrop({ itemId: 'sample-crop-1' })]],
+        inventory: [],
         toolLevels: toolLevelsDefault,
       }
       const state = harvestPlot(inputState, 0, 0)
@@ -170,6 +173,36 @@ describe('harvestPlot', () => {
 
         expect(plotContent).toEqual(null)
       })
+    })
+  })
+
+  describe('weed', () => {
+    let harvest
+
+    beforeEach(() => {
+      harvest = harvestPlot(
+        {
+          cropsHarvested: {},
+          field: [[testItem({ itemId: 'weed', type: itemType.WEED })]],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          toolLevels: toolLevelsDefault,
+        },
+        0,
+        0
+      )
+    })
+
+    test('it harvests the plot', () => {
+      expect(harvest.field[0][0]).toBe(null)
+    })
+
+    test('it added the weed to the inventory', () => {
+      expect(harvest.inventory).toEqual([{ id: 'weed', quantity: 1 }])
+    })
+
+    test('it did not alter cropsHarvested', () => {
+      expect(harvest.cropsHarvested).toEqual({})
     })
   })
 })

@@ -32,7 +32,7 @@
     &:hover
       cursor: pointer
 
-  .harvest-mode &.is-ripe
+  .harvest-mode &.can-be-harvested
     background-color: $colorGreenOk
 
     &:hover
@@ -52,7 +52,7 @@
     background-color: $colorYellow
     cursor: pointer
 
-  .harvest-mode.is-inventory-full &.crop.is-ripe,
+  .harvest-mode.is-inventory-full &.crop.can-be-harvested,
   .cleanup-mode.is-inventory-full &.is-replantable
     background-color: $colorRedDanger
     cursor: not-allowed
@@ -61,7 +61,7 @@
     background-color: $colorGreenOk
     cursor: pointer
 
-  .cleanup-mode &.is-ripe
+  .cleanup-mode &.can-be-harvested
     background-color: $colorGreenOk
     cursor: auto
 

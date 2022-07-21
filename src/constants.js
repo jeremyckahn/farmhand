@@ -46,6 +46,10 @@ export const PURCHASEABLE_COMBINES = freeze(
   new Map([[1, { type: 'Basic', price: 500_000 }]])
 )
 
+export const PURCHASEABLE_COMPOSTERS = freeze(
+  new Map([[1, { type: 'Basic', price: 1_000 }]])
+)
+
 export const PURCHASEABLE_SMELTERS = freeze(
   new Map([[1, { type: 'Basic', price: 500_000 }]])
 )
@@ -149,6 +153,7 @@ export const PERSISTED_STATE_KEYS = [
   'priceSurges',
   'profitabilityStreak',
   'purchasedCombine',
+  'purchasedComposter',
   'purchasedCowPen',
   'purchasedField',
   'purchasedSmelter',
@@ -231,3 +236,5 @@ export const COW_COLORS_HEX_MAP = {
 }
 
 export const COW_TRADE_TIMEOUT = 10000
+
+export const WEEDS_SPAWN_CHANCE = 0.15

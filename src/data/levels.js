@@ -3,6 +3,7 @@ import { toolType } from '../enums'
 import { features } from '../config'
 
 import * as items from './items'
+import * as recipes from './recipes'
 
 export const levels = []
 
@@ -15,7 +16,7 @@ levels[2] = {
 }
 
 levels[3] = {
-  unlocksShopItem: items.fertilizer.id,
+  unlocksShopItem: recipes.fertilizer.id,
 }
 
 levels[4] = {

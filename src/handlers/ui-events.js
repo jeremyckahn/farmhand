@@ -247,6 +247,13 @@ export default {
   },
 
   /**
+   * @param {number} composterId
+   */
+  handleComposterPurchase(composterId) {
+    this.purchaseComposter(composterId)
+  },
+
+  /**
    * @param {number} smelterId
    */
   handleSmelterPurchase(smelterId) {

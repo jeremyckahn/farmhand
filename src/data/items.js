@@ -17,6 +17,7 @@ const {
   MILK,
   SCARECROW,
   SPRINKLER,
+  WEED,
 } = itemType
 
 export {
@@ -50,6 +51,14 @@ export {
   wheatSeed,
 } from './crops'
 
+export const weed = freeze({
+  id: 'weed',
+  name: 'Weed',
+  value: 0.1,
+  doesPriceFluctuate: false,
+  type: WEED,
+})
+
 export { bronzeOre, coal, goldOre, ironOre, silverOre, stone } from './ores'
 
 ////////////////////////////////////////
@@ -57,19 +66,6 @@ export { bronzeOre, coal, goldOre, ironOre, silverOre, stone } from './ores'
 // FIELD TOOLS
 //
 ////////////////////////////////////////
-
-/**
- * @property farmhand.module:items.fertilizer
- * @type {farmhand.item}
- */
-export const fertilizer = freeze({
-  description: 'Helps crops grow and mature a little faster.',
-  enablesFieldMode: fieldMode.FERTILIZE,
-  id: 'fertilizer',
-  name: 'Fertilizer',
-  type: FERTILIZER,
-  value: 25,
-})
 
 /**
  * @property farmhand.module:items.rainbowFertilizer

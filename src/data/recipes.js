@@ -1,7 +1,7 @@
 /**
  * @module farmhand.recipes
  */
-import { itemType, recipeType } from '../enums'
+import { itemType, fieldMode, recipeType } from '../enums'
 import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
 
 import * as items from './items'
@@ -11,7 +11,6 @@ const itemsMap = { ...baseItemsMap }
 
 const itemify = recipe => {
   const item = Object.freeze({
-    ...recipe,
     type: itemType.CRAFTED_ITEM,
     value: Object.keys(recipe.ingredients).reduce(
       (sum, itemId) =>
@@ -21,6 +20,7 @@ const itemify = recipe => {
           recipe.ingredients[itemId],
       0
     ),
+    ...recipe,
   })
 
   itemsMap[recipe.id] = item
@@ -391,4 +391,36 @@ export const goldIngot = itemify({
   condition: state =>
     state.purchasedSmelter && state.itemsSold[items.goldOre.id] >= 50,
   recipeType: recipeType.FORGE,
+})
+
+export const compost = itemify({
+  id: 'compost',
+  name: 'Compost',
+  ingredients: {
+    [items.weed.id]: 25,
+  },
+  condition: state =>
+    state.purchasedComposter && state.itemsSold[items.weed.id] >= 100,
+  description: 'Can be used to make fertilizer.',
+  recipeType: recipeType.RECYCLING,
+  type: itemType.CRAFTED_ITEM,
+})
+
+/**
+ * @property farmhand.module:recipes.fertilizer
+ * @type {farmhand.item}
+ */
+export const fertilizer = itemify({
+  id: 'fertilizer',
+  name: 'Fertilizer',
+  ingredients: {
+    [compost.id]: 10,
+  },
+  condition: state =>
+    state.purchasedComposter && state.itemsSold[compost.id] >= 10,
+  description: 'Helps crops grow and mature a little faster.',
+  enablesFieldMode: fieldMode.FERTILIZE,
+  recipeType: recipeType.RECYCLING,
+  type: itemType.FERTILIZER,
+  value: 25,
 })

@@ -360,9 +360,11 @@ const cropLifeStageToImageSuffixMap = {
 
 /**
  * @param {farmhand.plotContent} plotContent
+ * @param {number} x
+ * @param {number} y
  * @returns {?string}
  */
-export const getPlotImage = plotContent => {
+export const getPlotImage = (plotContent, x, y) => {
   if (plotContent) {
     if (getPlotContentType(plotContent) === itemType.CROP) {
       if (getCropLifeStage(plotContent) === GROWN) {
@@ -376,7 +378,12 @@ export const getPlotImage = plotContent => {
       }
     }
 
-    if (plotContent?.oreId) {
+    if (getPlotContentType(plotContent) === itemType.WEED) {
+      const weedColors = ['yellow', 'orange', 'pink']
+      const color = weedColors[(x * y) % weedColors.length]
+
+      return itemImages[`weed-${color}`]
+    } else if (plotContent?.oreId) {
       return itemImages[plotContent.oreId]
     } else {
       return itemImages[plotContent.itemId]

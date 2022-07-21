@@ -95,6 +95,24 @@ describe('clearPlot', () => {
     })
   })
 
+  describe('plotContent is a weed', () => {
+    test('weed is pulled', () => {
+      const { field, inventory } = clearPlot(
+        {
+          field: [[getPlotContentFromItemId('weed')]],
+          toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+        },
+        0,
+        0
+      )
+
+      expect(inventory).toEqual([{ id: 'weed', quantity: 1 }])
+      expect(field[0][0]).toBe(null)
+    })
+  })
+
   describe('hoe upgrades', () => {
     beforeEach(() => {
       isRandomNumberLessThan.mockReturnValue(true)

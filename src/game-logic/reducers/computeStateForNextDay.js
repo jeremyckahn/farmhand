@@ -37,7 +37,7 @@ const adjustItemValues = state => ({
  */
 export const computeStateForNextDay = (state, isFirstDay = false) =>
   (isFirstDay
-    ? []
+    ? [processField]
     : [
         computeCowInventoryForNextDay,
         processCowBreeding,

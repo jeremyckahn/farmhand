@@ -20,11 +20,13 @@ const {
   TOMATO,
   WATERMELON,
   WHEAT,
+  WEED,
 } = cropType
 
 export const recipeCategories = {
   [recipeType.KITCHEN]: {},
   [recipeType.FORGE]: {},
+  [recipeType.RECYCLING]: {},
 }
 
 export const recipesMap = {}
@@ -64,4 +66,5 @@ export const cropIdToTypeMap = {
   [TOMATO]: 'tomato',
   [WATERMELON]: 'watermelon',
   [WHEAT]: 'wheat',
+  [WEED]: 'weed',
 }

@@ -76,6 +76,9 @@ export const TOOL_LEVEL_INFO = {
 export const FORGE_AVAILABLE_NOTIFICATION =
   '**The Forge** is now available in the Workshop!'
 
+export const RECYCLING_AVAILABLE_NOTIFICATION =
+  '**Recycling** is now available in the Workshop!'
+
 export const COW_COLOR_NAMES = {
   [cowColors.BLUE]: 'Blue',
   [cowColors.BROWN]: 'Brown',

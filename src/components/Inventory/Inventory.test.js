@@ -75,6 +75,7 @@ describe('item sorting', () => {
       )
     ).toEqual({
       [categoryIds.CROPS]: [testItem({ id: 'sample-crop-1' })],
+      [categoryIds.FORAGED_ITEMS]: [],
       [categoryIds.MINED_RESOURCES]: [
         testItem({ id: 'coal' }),
         testItem({ id: 'stone' }),

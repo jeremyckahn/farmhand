@@ -24,6 +24,7 @@ import { itemType, toolType } from '../../enums'
 import {
   INFINITE_STORAGE_LIMIT,
   PURCHASEABLE_COMBINES,
+  PURCHASEABLE_COMPOSTERS,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
   PURCHASEABLE_SMELTERS,
@@ -55,6 +56,7 @@ const categorizeShopInventory = memoize(shopInventory =>
 
 export const Shop = ({
   handleCombinePurchase,
+  handleComposterPurchase,
   handleCowPenPurchase,
   handleFieldPurchase,
   handleSmelterPurchase,
@@ -62,6 +64,7 @@ export const Shop = ({
   inventoryLimit,
   money,
   purchasedCombine,
+  purchasedComposter,
   purchasedCowPen,
   purchasedField,
   purchasedSmelter,
@@ -211,6 +214,21 @@ export const Shop = ({
               />
             </li>
           ) : null}
+          <li>
+            <TierPurchase
+              {...{
+                description:
+                  'You can purchase a Composter to turn weeds into fertilizer.',
+                onBuyClick: handleComposterPurchase,
+                maxedOutPlaceholder: "You've already purchased the composter!",
+                purchasedTier: purchasedComposter,
+                renderTierLabel: ({ type, price }) =>
+                  `${dollarString(price)}: ${type} Composter`,
+                tiers: PURCHASEABLE_COMPOSTERS,
+                title: 'Buy composter',
+              }}
+            />
+          </li>
         </ul>
       </TabPanel>
     </div>

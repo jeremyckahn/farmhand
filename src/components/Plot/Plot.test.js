@@ -49,9 +49,9 @@ test('renders is-replantable class', () => {
   expect(component.find('.Plot').hasClass('is-replantable')).toBeTruthy()
 })
 
-test('renders "is-ripe" class', () => {
+test('renders "can-be-harvested" class', () => {
   component.setProps({ lifeStage: cropLifeStage.GROWN })
-  expect(component.find('.Plot').hasClass('is-ripe')).toBeTruthy()
+  expect(component.find('.Plot').hasClass('can-be-harvested')).toBeTruthy()
 })
 
 describe('"can-be-fertilized" class', () => {

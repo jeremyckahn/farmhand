@@ -10,46 +10,21 @@ import { recipeType } from '../../enums'
 
 import { recipeCategories } from '../../data/maps'
 
-import UpgradePurchase from '../UpgradePurchase'
-
 import { TabPanel } from './TabPanel'
 import { RecipeList } from './RecipeList'
 
-import { getUpgradesAvailable } from './getUpgradesAvailable'
-
-export function ForgeTabPanel({
+export function RecyclingTabPanel({
   currentTab,
   index,
-  learnedForgeRecipes,
+  learnedRecipes,
   setCurrentTab,
-  toolLevels,
 }) {
-  const upgradesAvailable = getUpgradesAvailable({
-    toolLevels,
-    learnedForgeRecipes,
-  })
-
   return (
     <TabPanel value={currentTab} index={index}>
       <RecipeList
-        learnedRecipes={learnedForgeRecipes}
-        allRecipes={recipeCategories[recipeType.FORGE]}
+        learnedRecipes={learnedRecipes}
+        allRecipes={recipeCategories[recipeType.RECYCLING]}
       />
-      {upgradesAvailable.length ? (
-        <>
-          <Divider />
-          <ul className="card-list">
-            <li>
-              <h4>Tool Upgrades</h4>
-            </li>
-            {upgradesAvailable.map(upgrade => (
-              <li key={upgrade.id}>
-                <UpgradePurchase upgrade={upgrade} />
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : null}
       <Divider />
       <ul className="card-list">
         <li>
@@ -59,7 +34,7 @@ export function ForgeTabPanel({
                 {...{
                   linkTarget: '_blank',
                   className: 'markdown',
-                  source: `Forge recipes are learned by selling resources mined from the field.`,
+                  source: `Recyling recipes are learned by selling items foraged from the field.`,
                 }}
               />
             </CardContent>
@@ -70,10 +45,9 @@ export function ForgeTabPanel({
   )
 }
 
-ForgeTabPanel.propTypes = {
+RecyclingTabPanel.propTypes = {
   currentTab: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
-  learnedForgeRecipes: PropTypes.array.isRequired,
+  learnedRecipes: PropTypes.array.isRequired,
   setCurrentTab: PropTypes.func.isRequired,
-  toolLevels: PropTypes.object.isRequired,
 }

@@ -46,7 +46,10 @@ export const clearPlot = (state, x, y) => {
 
   state = removeFieldPlotAt(state, x, y)
 
-  return item.isReplantable || getCropLifeStage(plotContent) === GROWN
-    ? addItemToInventory(state, item)
-    : state
+  const shouldAddItemToInventory =
+    item.isReplantable ||
+    getPlotContentType(plotContent) === itemType.WEED ||
+    getCropLifeStage(plotContent) === GROWN
+
+  return shouldAddItemToInventory ? addItemToInventory(state, item) : state
 }
