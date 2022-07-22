@@ -3,7 +3,9 @@ import classNames from 'classnames'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
+import Typography from '@material-ui/core/Typography'
 import { array, func, number, object } from 'prop-types'
 
 import {
@@ -30,7 +32,7 @@ const Recipe = ({
   inventoryLimit,
   playerInventoryQuantities,
   recipe,
-  recipe: { id, name },
+  recipe: { id, name, description },
 }) => {
   const [quantity, setQuantity] = useState(1)
 
@@ -86,6 +88,11 @@ const Recipe = ({
           ),
         }}
       />
+      {description && (
+        <CardContent>
+          <Typography>{description}</Typography>
+        </CardContent>
+      )}
       <CardActions>
         <Button
           {...{

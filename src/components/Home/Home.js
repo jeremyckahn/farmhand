@@ -221,6 +221,8 @@ If you're playing on a mobile device, all you need to do is [add it to your home
 
 * Crops need to be watered daily to grow.
 
+* Keep the field free of weeds with the scythe or the hoe.
+
 * Crafting items out of harvested crops in the Workshop is an excellent way to make money!
 
 * Purchasing a cow pen will allow you to buy, sell, milk, and breed cows. Can you breed the mythical Rainbow Cow?
