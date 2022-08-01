@@ -94,6 +94,13 @@ npm start
 
 In this case, the local app will be using the Production API and database. However you boot, Farmhand will be accessible from http://localhost:3000/.
 
+### Coding conventions
+
+- Farmhand uses Prettier and ESLint to ensure a consistent code style. Both tools are run as part of the pre-commit Git hook (please do not override this).
+- React event handler naming should follow [the convention described in this article](https://jaketrent.com/post/naming-event-handlers-react).
+  - Any pre-existing code that does not adhere to this convention should be updated to do so.
+- Regarding automated tests: [Write tests. Not too many. Mostly integration.](https://kentcdodds.com/blog/write-tests)
+
 ### Multiplayer system architecture
 
 The system design for Farmhand's multiplayer functionality has been [detailed in this blog post](https://dev.to/jeremyckahn/how-i-designed-an-abuse-resistant-fault-tolerant-zero-cost-multiplayer-online-game-140g).
@@ -102,7 +109,7 @@ The system design for Farmhand's multiplayer functionality has been [detailed in
 
 Automation is done with [GitHub Actions](.github/workflows). All changes are tested and built upon Git push. Merges to `main` automatically deploy to Production (the `gh-pages` branch) upon a successful test run and build.
 
-### Smoke Testing
+### Smoke testing
 
 All are welcome to help with smoke testing Farmhand to ensure the game is stable! All you need is to be logged into GitHub and open a [new Smoke Test Report issue](https://github.com/jeremyckahn/farmhand/issues/new?template=smoke-test-report.md). This issue will have interactive checkboxes that you can use to track your progress. Once smoke testing is complete, please close the issue.
 
