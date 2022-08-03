@@ -1,15 +1,10 @@
-import React from 'react'
-import { shallow } from 'enzyme'
-
 import {
   sampleItem1,
   sampleFieldTool1,
   sampleCropSeedsItem1,
 } from '../../data/items'
-import { PURCHASEABLE_COW_PENS } from '../../constants'
-import { COW_PEN_PURCHASED } from '../../templates'
 
-import Farmhand, {
+import {
   computePlayerInventory,
   getFieldToolInventory,
   getPlantableCropInventory,
@@ -17,36 +12,6 @@ import Farmhand, {
 
 jest.mock('../../data/maps')
 jest.mock('../../data/items')
-jest.mock('../../data/levels', () => ({ levels: [] }))
-jest.mock('../../data/shop-inventory')
-
-jest.mock('../../data/achievements', () => ({
-  __esModule: true,
-  ...jest.requireActual('../../data/achievements'),
-  achievementsMap: {},
-}))
-
-jest.mock('../..//constants', () => ({
-  __esModule: true,
-  ...jest.requireActual('../../constants'),
-  COW_HUG_BENEFIT: 0.5,
-  CROW_CHANCE: 0,
-  INITIAL_FIELD_HEIGHT: 4,
-  INITIAL_FIELD_WIDTH: 4,
-  PRECIPITATION_CHANCE: 0,
-}))
-
-let component
-
-const localforageMock = {
-  getItem: () => Promise.resolve(null),
-  setItem: (_key, data) => Promise.resolve(data),
-}
-
-beforeEach(() => {
-  jest.useFakeTimers()
-  component = shallow(<Farmhand {...{ localforage: localforageMock }} />)
-})
 
 describe('private helpers', () => {
   describe('computePlayerInventory', () => {
@@ -86,24 +51,6 @@ describe('private helpers', () => {
       const plantableCropInventory = getPlantableCropInventory(inventory)
 
       expect(plantableCropInventory).toEqual([sampleCropSeedsItem1])
-    })
-  })
-})
-
-describe('instance methods', () => {
-  describe('showCowPenPurchasedNotifications', () => {
-    describe('cow pen purchasing', () => {
-      test('does show notification', () => {
-        component.setState({ purchasedCowPen: 1 })
-        component
-          .instance()
-          .showCowPenPurchasedNotifications({ purchasedCowPen: 0 })
-
-        expect(component.state().todaysNotifications).toContainEqual({
-          message: COW_PEN_PURCHASED`${PURCHASEABLE_COW_PENS.get(1).cows}`,
-          severity: 'info',
-        })
-      })
     })
   })
 })

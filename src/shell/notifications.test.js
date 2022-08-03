@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 import { within } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 
-import { getItemByName } from '../test-utils/ui'
+import { getItemByName, nextView } from '../test-utils/ui'
 import { farmhandStub } from '../test-utils/stubs/farmhandStub'
 import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory'
 
@@ -27,6 +27,42 @@ describe('notifications', () => {
     const notification = await screen.findByRole('alert')
 
     expect(within(notification).getByText('Carrot Soup')).toBeInTheDocument()
+  })
+
+  test('notification is shown when cow pen is purchased', async () => {
+    const loadedState = saveDataStubFactory({
+      money: 1500,
+    })
+
+    await farmhandStub({
+      localforage: {
+        getItem: () => Promise.resolve(loadedState),
+        setItem: (_key, data) => Promise.resolve(data),
+      },
+    })
+
+    await nextView()
+    const upgradesTab = screen.getByText('Upgrades')
+    userEvent.click(upgradesTab)
+
+    const cowPenContainer = screen
+      .getByText('Buy cow pen')
+      .closest('.TierPurchase')
+
+    // Open the list of cow pen options
+    userEvent.click(within(cowPenContainer).getAllByRole('button')[1])
+
+    userEvent.click(screen.getByRole('option', { name: '$1,500: 10 cow pen' }))
+
+    // Make the purchase
+    userEvent.click(within(cowPenContainer).getAllByRole('button')[0])
+
+    const notification = await screen.findByRole('alert')
+    expect(
+      within(notification).getByText(
+        'Purchased a cow pen with capacity for 10 cows! You can visit your cow pen by going to the "Cows" page.'
+      )
+    ).toBeInTheDocument()
   })
 
   test('multiple notifications are shown when multiple recipes are learned', async () => {
