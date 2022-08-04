@@ -29,20 +29,6 @@ beforeEach(() => {
   component = shallow(<Farmhand />)
 })
 
-describe('handleItemPurchaseClick', () => {
-  test('calls purchaseItem', () => {
-    jest
-      .spyOn(component.instance(), 'purchaseItem')
-      .mockImplementation(() => {})
-    handlers().handleItemPurchaseClick(testItem({ id: 'sample-item-1' }), 3)
-
-    expect(component.instance().purchaseItem).toHaveBeenCalledWith(
-      testItem({ id: 'sample-item-1' }),
-      3
-    )
-  })
-})
-
 describe('handleItemSellClick', () => {
   test('calls sellItem', () => {
     jest.spyOn(component.instance(), 'sellItem').mockImplementation(() => {})
@@ -52,16 +38,6 @@ describe('handleItemSellClick', () => {
       testItem({ id: 'sample-item-1' }),
       1
     )
-  })
-})
-
-describe('handleViewChange', () => {
-  beforeEach(() => {
-    handlers().handleViewChange({ target: { value: stageFocusType.SHOP } })
-  })
-
-  test('changes the view type', () => {
-    expect(component.state('stageFocus')).toEqual(stageFocusType.SHOP)
   })
 })
 
