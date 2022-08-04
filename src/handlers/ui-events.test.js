@@ -29,18 +29,6 @@ beforeEach(() => {
   component = shallow(<Farmhand />)
 })
 
-describe('handleItemSellClick', () => {
-  test('calls sellItem', () => {
-    jest.spyOn(component.instance(), 'sellItem').mockImplementation(() => {})
-    handlers().handleItemSellClick(testItem({ id: 'sample-item-1' }))
-
-    expect(component.instance().sellItem).toHaveBeenCalledWith(
-      testItem({ id: 'sample-item-1' }),
-      1
-    )
-  })
-})
-
 describe('handleFieldModeSelect', () => {
   beforeEach(() => {
     component.setState({
