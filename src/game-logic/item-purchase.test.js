@@ -10,14 +10,14 @@ describe('item purchasing', () => {
     await farmhandStub()
     await nextView()
 
-    const stage = screen.getByTestId('stage')
-    const carrotSeedShopItem = within(stage)
+    const main = screen.getByRole('main')
+    const carrotSeedShopItem = within(main)
       .getByText('Carrot Seed')
       .closest('.Item')
     const buyButton = within(carrotSeedShopItem).getByText('Buy')
     userEvent.click(buyButton)
 
-    const menu = screen.getByTestId('menu')
+    const menu = screen.getByRole('complementary')
     expect(within(menu).getByText('Carrot Seed')).toBeInTheDocument()
   })
 })

@@ -38,7 +38,7 @@ export const Stage = ({
       {...{
         className: 'Stage',
         'data-stage-focus': stageFocus,
-        'data-testid': 'stage',
+        role: 'main',
         ref,
       }}
     >

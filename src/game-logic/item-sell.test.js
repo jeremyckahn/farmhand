@@ -18,7 +18,7 @@ describe('item selling', () => {
       },
     })
 
-    const menu = screen.getByTestId('menu')
+    const menu = screen.getByRole('complementary')
     const carrotSeedMenuItem = within(menu)
       .getByText('Carrot Seed')
       .closest('.Item')
