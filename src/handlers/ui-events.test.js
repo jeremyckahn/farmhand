@@ -93,14 +93,6 @@ describe('handleClickEndDayButton', () => {
   })
 })
 
-describe('handleFieldPurchase', () => {
-  test('calls purchaseField', () => {
-    jest.spyOn(component.instance(), 'purchaseField').mockImplementation()
-    handlers().handleFieldPurchase()
-    expect(component.instance().purchaseField).toHaveBeenCalled()
-  })
-})
-
 describe('handleMenuToggle', () => {
   test('toggle menu state', () => {
     const { isMenuOpen } = component.state()
