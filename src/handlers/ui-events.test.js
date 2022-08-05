@@ -29,42 +29,6 @@ beforeEach(() => {
   component = shallow(<Farmhand />)
 })
 
-describe('handleItemPurchaseClick', () => {
-  test('calls purchaseItem', () => {
-    jest
-      .spyOn(component.instance(), 'purchaseItem')
-      .mockImplementation(() => {})
-    handlers().handleItemPurchaseClick(testItem({ id: 'sample-item-1' }), 3)
-
-    expect(component.instance().purchaseItem).toHaveBeenCalledWith(
-      testItem({ id: 'sample-item-1' }),
-      3
-    )
-  })
-})
-
-describe('handleItemSellClick', () => {
-  test('calls sellItem', () => {
-    jest.spyOn(component.instance(), 'sellItem').mockImplementation(() => {})
-    handlers().handleItemSellClick(testItem({ id: 'sample-item-1' }))
-
-    expect(component.instance().sellItem).toHaveBeenCalledWith(
-      testItem({ id: 'sample-item-1' }),
-      1
-    )
-  })
-})
-
-describe('handleViewChange', () => {
-  beforeEach(() => {
-    handlers().handleViewChange({ target: { value: stageFocusType.SHOP } })
-  })
-
-  test('changes the view type', () => {
-    expect(component.state('stageFocus')).toEqual(stageFocusType.SHOP)
-  })
-})
-
 describe('handleFieldModeSelect', () => {
   beforeEach(() => {
     component.setState({
@@ -126,14 +90,6 @@ describe('handleClickEndDayButton', () => {
     jest.spyOn(component.instance(), 'incrementDay')
     handlers().handleClickEndDayButton()
     expect(component.instance().incrementDay).toHaveBeenCalled()
-  })
-})
-
-describe('handleFieldPurchase', () => {
-  test('calls purchaseField', () => {
-    jest.spyOn(component.instance(), 'purchaseField').mockImplementation()
-    handlers().handleFieldPurchase()
-    expect(component.instance().purchaseField).toHaveBeenCalled()
   })
 })
 

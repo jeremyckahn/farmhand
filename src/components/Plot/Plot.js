@@ -161,7 +161,9 @@ export const Plot = ({
             backgroundImage: showPlotImage ? `url(${image})` : undefined,
           },
           src: pixel,
-          alt: itemsMap[plotContent?.itemId ?? plotContent?.oreId]?.name || '',
+          alt:
+            itemsMap[plotContent?.itemId ?? plotContent?.oreId]?.name ||
+            'Empty plot',
         }}
       />
     </div>

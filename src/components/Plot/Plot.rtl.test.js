@@ -31,7 +31,7 @@ describe('class states', () => {
   })
 
   test('renders standard classes', () => {
-    const img = screen.queryByAltText('')
+    const img = screen.queryByAltText('Empty plot')
     const { classList } = img.closest('.Plot')
 
     expect(classList).toContain('is-empty')

@@ -1313,6 +1313,7 @@ export default class Farmhand extends Component {
                     className: 'sidebar-wrapper',
                     open: gameState.isMenuOpen,
                     variant: 'persistent',
+                    role: 'complementary',
                     PaperProps: {
                       className: 'sidebar',
                     },
