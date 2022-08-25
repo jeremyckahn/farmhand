@@ -12,7 +12,6 @@ import {
 } from '../utils'
 import { cropLifeStage, standardCowColors } from '../enums'
 import { COW_FEED_ITEM_ID, I_AM_RICH_BONUSES } from '../constants'
-import { features } from '../config'
 
 import { itemsMap } from './maps'
 
@@ -276,25 +275,18 @@ const achievements = [
     condition: state => state.revenue >= goal,
     reward: state => state,
   }))(),
-]
 
-if (features.MINING) {
-  achievements.push(
-    Object.assign(
-      {},
-      {
-        id: 'gold-digger',
-        name: 'Gold Digger',
-        description: `Dig up your first piece of gold.`,
-        rewardDescription: `A Gold Ingot`,
-        condition: state => !!state.inventory.find(i => i.id === 'gold-ore'),
-        reward: state => {
-          return addItemToInventory(state, itemsMap['gold-ingot'], 1, true)
-        },
-      }
-    )
-  )
-}
+  (() => ({
+    id: 'gold-digger',
+    name: 'Gold Digger',
+    description: `Dig up your first piece of gold.`,
+    rewardDescription: `A Gold Ingot`,
+    condition: state => !!state.inventory.find(i => i.id === 'gold-ore'),
+    reward: state => {
+      return addItemToInventory(state, itemsMap['gold-ingot'], 1, true)
+    },
+  }))(),
+]
 
 export default achievements
 

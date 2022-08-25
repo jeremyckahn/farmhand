@@ -1,7 +1,5 @@
 import { toolType } from '../enums'
 
-import { features } from '../config'
-
 import * as items from './items'
 import * as recipes from './recipes'
 
@@ -27,10 +25,8 @@ levels[5] = {
   unlocksShopItem: items.sprinkler.id,
 }
 
-if (features.MINING) {
-  levels[6] = {
-    unlocksTool: toolType.SHOVEL,
-  }
+levels[6] = {
+  unlocksTool: toolType.SHOVEL,
 }
 
 levels[8] = {

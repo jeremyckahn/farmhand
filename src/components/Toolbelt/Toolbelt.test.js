@@ -5,13 +5,6 @@ import { fieldMode, toolLevel, toolType } from '../../enums'
 
 import { Toolbelt } from './Toolbelt'
 
-jest.mock('../../config', () => ({
-  ...jest.requireActual('../../config'),
-  features: {
-    MINING: true,
-  },
-}))
-
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
   memoize: jest.fn(callback => {
