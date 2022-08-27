@@ -11,12 +11,6 @@ jest.mock('./items')
 jest.mock('./levels', () => ({ levels: [] }))
 jest.mock('./recipes')
 jest.mock('./shop-inventory')
-jest.mock('../config', () => ({
-  ...jest.requireActual('../config'),
-  features: {
-    MINING: true,
-  },
-}))
 
 describe('harvest-crop', () => {
   describe('condition', () => {

@@ -1,7 +1,5 @@
 import { fieldMode, toolType } from '../enums'
 
-import { features } from '../config'
-
 import {
   HOE_ALT_TEXT,
   HOE_HIDDEN_TEXT,
@@ -47,10 +45,7 @@ const tools = {
     order: 3,
     type: toolType.HOE,
   },
-}
-
-if (features.MINING) {
-  tools.shovel = {
+  shovel: {
     alt: SHOVEL_ALT_TEXT,
     fieldKey: 'shift+4',
     fieldMode: MINE,
@@ -59,7 +54,7 @@ if (features.MINING) {
     levelInfo: TOOL_LEVEL_INFO.SHOVEL,
     order: 4,
     type: toolType.SHOVEL,
-  }
+  },
 }
 
 export default tools

@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 
-import { features } from '../../config'
 import { recipeType } from '../../enums'
 
 import { recipesMap } from '../../data/maps'
@@ -39,7 +38,7 @@ const Workshop = ({
     recipeId => recipesMap[recipeId].recipeType === recipeType.RECYCLING
   )
 
-  const showForge = features.MINING && purchasedSmelter
+  const showForge = purchasedSmelter
 
   const recyclingTabIndex = showForge ? 2 : 1
 
@@ -48,7 +47,7 @@ const Workshop = ({
       <AppBar position="static" color="primary">
         <Tabs
           value={currentTab}
-          onChange={(e, newTab) => setCurrentTab(newTab)}
+          onChange={(_e, newTab) => setCurrentTab(newTab)}
           aria-label="Workshop tabs"
         >
           <Tab {...{ label: 'Kitchen', ...a11yProps(0) }} />

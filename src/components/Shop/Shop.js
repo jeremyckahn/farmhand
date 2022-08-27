@@ -10,7 +10,6 @@ import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 import Typography from '@material-ui/core/Typography'
 
-import { features } from '../../config'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import {
   dollarString,
@@ -82,7 +81,7 @@ export const Shop = ({
       <AppBar position="static" color="primary">
         <Tabs
           value={currentTab}
-          onChange={(e, newTab) => setCurrentTab(newTab)}
+          onChange={(_e, newTab) => setCurrentTab(newTab)}
           aria-label="Shop tabs"
         >
           <Tab {...{ label: 'Seeds', ...a11yProps(0) }} />
@@ -197,7 +196,7 @@ export const Shop = ({
               }}
             />
           </li>
-          {features.MINING && toolLevels[toolType.SHOVEL] ? (
+          {toolLevels[toolType.SHOVEL] ? (
             <li>
               <TierPurchase
                 {...{
