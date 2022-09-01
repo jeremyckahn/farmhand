@@ -99,7 +99,7 @@ import {
   SERVER_ERROR,
   UPDATE_AVAILABLE,
 } from '../../strings'
-import { endpoints, rtcConfig } from '../../config'
+import { endpoints, rtcConfig, trackerUrls } from '../../config'
 
 import { getInventoryQuantities } from './helpers/getInventoryQuantities'
 import FarmhandContext from './Farmhand.context'
@@ -892,6 +892,7 @@ export default class Farmhand extends Component {
         peerRoom: joinRoom(
           {
             appId: process.env.REACT_APP_NAME,
+            trackerUrls,
             rtcConfig,
           },
           room
@@ -981,6 +982,7 @@ export default class Farmhand extends Component {
             joinRoom(
               {
                 appId: process.env.REACT_APP_NAME,
+                trackerUrls,
                 rtcConfig,
               },
               room
