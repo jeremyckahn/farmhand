@@ -61,3 +61,7 @@ export const rtcConfig = {
     },
   ],
 }
+
+export const trackerUrls = process.env.REACT_APP_TRACKER_URL
+  ? [process.env.REACT_APP_TRACKER_URL]
+  : undefined
