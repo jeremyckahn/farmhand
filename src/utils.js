@@ -11,13 +11,12 @@ import configureJimp from '@jimp/custom'
 import jimpPng from '@jimp/png'
 import sortBy from 'lodash.sortby'
 import { v4 as uuid } from 'uuid'
+import { funAnimalName } from 'fun-animal-names'
 
 import cowShopInventory from './data/shop-inventory-cow'
 import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
 import { cropIdToTypeMap, itemsMap } from './data/maps'
-import adjectives from './data/adjectives'
-import animalNames from './data/animal-names'
 import {
   chocolateMilk,
   milk1,
@@ -180,7 +179,7 @@ export const scaleNumber = (value, min, max, baseMin, baseMax) =>
  * @returns {number}
  */
 const convertStringToInteger = string =>
-  string.split('').reduce((acc, char, i) => acc + char.charCodeAt() * i, 0)
+  string.split('').reduce((acc, char, i) => acc + char.charCodeAt(0) * i, 0)
 
 export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
@@ -1099,14 +1098,7 @@ export const transformStateDataForImport = state => {
  * @returns {string}
  */
 export const getPlayerName = memoize(playerId => {
-  const playerIdNumber = convertStringToInteger(playerId)
-  const adjective = adjectives[playerIdNumber % adjectives.length]
-  const adjectiveNumberValue = convertStringToInteger(adjective)
-
-  const animal =
-    animalNames[(playerIdNumber + adjectiveNumberValue) % animalNames.length]
-
-  return `${adjective} ${animal}`
+  return funAnimalName(playerId)
 })
 
 /**
