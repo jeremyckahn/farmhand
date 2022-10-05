@@ -104,6 +104,18 @@ const achievements = [
     reward: state => addItemToInventory(state, cowFeed, reward, true),
   }))(),
 
+  ((reward = 100, goal = 10_000) => ({
+    id: 'sell-10000-jack-o-lanterns',
+    name: 'Spooky Pumpkin Patch',
+    description: `Sell ${integerString(goal)} units of ${
+      itemsMap.jackolantern.name
+    }. That's enough to fill a whole pumpkin patch!`,
+    rewardDescription: `${reward} units of ${itemsMap.scarecrow.name}`,
+    condition: state => state.itemsSold.jackolantern >= goal,
+    reward: state =>
+      addItemToInventory(state, itemsMap.scarecrow, reward, true),
+  }))(),
+
   ((goal = 5000, reward = 25) => ({
     id: 'daily-profit-1',
     name: `Daily profit: ${dollarString(goal)}`,
