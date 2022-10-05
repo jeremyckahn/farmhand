@@ -2,5 +2,5 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: npm ci && npm run build
+  - init: npm ci --legacy-peer-deps && npm run build
     command: npm run start
