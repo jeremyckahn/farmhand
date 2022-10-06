@@ -104,6 +104,16 @@ const achievements = [
     reward: state => addItemToInventory(state, cowFeed, reward, true),
   }))(),
 
+  ((reward = 150) => ({
+    id: 'play-during-october',
+    name: 'Halloween Harvest',
+    description: 'Play Farmhand in October and get the gift of the season.',
+    rewardDescription: `${reward} units of ${itemsMap.jackolantern.name}`,
+    condition: () => new Date().getMonth() === 9,
+    reward: state =>
+      addItemToInventory(state, itemsMap.jackolantern, reward, true),
+  }))(),
+
   ((reward = 100, goal = 10_000) => ({
     id: 'sell-10000-jack-o-lanterns',
     name: 'Spooky Pumpkin Patch',
