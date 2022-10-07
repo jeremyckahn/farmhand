@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
-import { array, arrayOf, bool, string } from 'prop-types'
+import { array, arrayOf, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import Field from '../Field'
@@ -13,13 +13,7 @@ import { isOctober } from '../../utils'
 
 import './Stage.sass'
 
-export const Stage = ({
-  field,
-  isMenuOpen,
-  playerInventory,
-  stageFocus,
-  viewTitle,
-}) => {
+export const Stage = ({ field, stageFocus, viewTitle }) => {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -66,8 +60,6 @@ export const Stage = ({
 
 Stage.propTypes = {
   field: arrayOf(array).isRequired,
-  isMenuOpen: bool.isRequired,
-  playerInventory: array.isRequired,
   stageFocus: string.isRequired,
   viewTitle: string.isRequired,
 }

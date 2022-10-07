@@ -15,8 +15,6 @@ beforeEach(() => {
     <Stage
       {...{
         field: [[]],
-        isMenuOpen: true,
-        playerInventory: [],
         stageFocus: stageFocusType.FIELD,
         viewTitle: '',
       }}
