@@ -490,7 +490,11 @@ export default class Farmhand extends Component {
       selectHoe: () => this.handlers.handleFieldModeSelect(CLEANUP),
       selectScythe: () => this.handlers.handleFieldModeSelect(HARVEST),
       selectWateringCan: () => this.handlers.handleFieldModeSelect(WATER),
-      selectShovel: () => this.handlers.handleFieldModeSelect(MINE),
+      selectShovel: () => {
+        if (this.state.toolLevels[toolType.SHOVEL] !== toolLevel.UNAVAILABLE) {
+          this.handlers.handleFieldModeSelect(MINE)
+        }
+      },
       toggleMenu: () => this.handlers.handleMenuToggle(),
     }
 
