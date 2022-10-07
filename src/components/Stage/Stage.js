@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import classNames from 'classnames'
 import { array, arrayOf, bool, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
@@ -8,6 +9,7 @@ import CowPen from '../CowPen'
 import Shop from '../Shop'
 import Workshop from '../Workshop'
 import { stageFocusType } from '../../enums'
+import { isOctober } from '../../utils'
 
 import './Stage.sass'
 
@@ -36,7 +38,9 @@ export const Stage = ({
   return (
     <div
       {...{
-        className: 'Stage',
+        className: classNames('Stage', {
+          'is-october': isOctober(),
+        }),
         'data-stage-focus': stageFocus,
         role: 'main',
         ref,

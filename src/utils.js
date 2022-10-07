@@ -1286,5 +1286,10 @@ export const shouldStormToday = () => Math.random() < STORM_CHANCE
 export const isCowInBreedingPen = (cow, cowBreedingPen) =>
   cowBreedingPen.cowId1 === cow.id || cowBreedingPen.cowId2 === cow.id
 
+/**
+ * @returns {boolean}
+ */
+export const isOctober = memoize(() => new Date().getMonth() === 9)
+
 export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'
 export { default as totalIngredientsInRecipe } from './utils/totalIngredientsInRecipe'
