@@ -6,6 +6,7 @@ import {
   getCropLifeStage,
   getProfitRecord,
   integerString,
+  isOctober,
   memoize,
   moneyTotal,
   percentageString,
@@ -109,7 +110,7 @@ const achievements = [
     name: 'Halloween Harvest',
     description: 'Play Farmhand in October and get the gift of the season.',
     rewardDescription: `${reward} units of ${itemsMap.jackolantern.name}`,
-    condition: () => new Date().getMonth() === 9,
+    condition: () => isOctober(),
     reward: state =>
       addItemToInventory(state, itemsMap.jackolantern, reward, true),
   }))(),
