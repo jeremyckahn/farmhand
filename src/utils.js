@@ -1289,7 +1289,7 @@ export const isCowInBreedingPen = (cow, cowBreedingPen) =>
 /**
  * @returns {boolean}
  */
-export const isOctober = memoize(() => new Date().getMonth() === 9)
+export const isOctober = () => new Date().getMonth() === 9
 
 export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'
 export { default as totalIngredientsInRecipe } from './utils/totalIngredientsInRecipe'
