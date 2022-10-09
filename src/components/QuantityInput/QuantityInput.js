@@ -68,15 +68,15 @@ const QuantityInput = ({
   value,
 }) => {
   const decrementQuantity = () => {
-    var newValue = value - 1
+    let newValue = value - 1
     if (newValue === 0) {
       newValue = maxQuantity
     }
     setQuantity(newValue)
   }
 
-  const incrementValue = () => {
-    var newValue = value + 1
+  const incrementQuantity = () => {
+    let newValue = value + 1
     if (newValue > maxQuantity) {
       newValue = 1
     }
@@ -100,7 +100,7 @@ const QuantityInput = ({
           {...{
             'aria-label': 'Increment',
             color: 'primary',
-            onClick: incrementValue,
+            onClick: incrementQuantity,
             size: 'small',
           }}
         >
