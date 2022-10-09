@@ -66,41 +66,61 @@ const QuantityInput = ({
   maxQuantity,
   setQuantity,
   value,
-}) => (
-  <div className="QuantityInput">
-    <QuantityTextInput
-      {...{ handleSubmit, handleUpdateNumber, maxQuantity, value }}
-    />
-    <span className="quantity">
-      /{' '}
-      <AnimatedNumber {...{ number: maxQuantity, formatter: integerString }} />
-    </span>
-    <div className="number-nudger-container">
-      <Fab
-        disabled={!value}
-        {...{
-          'aria-label': 'Increment',
-          color: 'primary',
-          onClick: () => setQuantity(++value > maxQuantity ? 1 : value),
-          size: 'small',
-        }}
-      >
-        <KeyboardArrowUp />
-      </Fab>
-      <Fab
-        disabled={!value}
-        {...{
-          'aria-label': 'Decrement',
-          color: 'primary',
-          onClick: () => setQuantity(--value === 0 ? maxQuantity : value),
-          size: 'small',
-        }}
-      >
-        <KeyboardArrowDown />
-      </Fab>
+}) => {
+  const decrementQuantity = () => {
+    var newValue = value - 1
+    if (newValue === 0) {
+      newValue = maxQuantity
+    }
+    setQuantity(newValue)
+  }
+
+  const incrementValue = () => {
+    var newValue = value + 1
+    if (newValue > maxQuantity) {
+      newValue = 1
+    }
+    setQuantity(newValue)
+  }
+
+  return (
+    <div className="QuantityInput">
+      <QuantityTextInput
+        {...{ handleSubmit, handleUpdateNumber, maxQuantity, value }}
+      />
+      <span className="quantity">
+        /{' '}
+        <AnimatedNumber
+          {...{ number: maxQuantity, formatter: integerString }}
+        />
+      </span>
+      <div className="number-nudger-container">
+        <Fab
+          disabled={!value}
+          {...{
+            'aria-label': 'Increment',
+            color: 'primary',
+            onClick: incrementValue,
+            size: 'small',
+          }}
+        >
+          <KeyboardArrowUp />
+        </Fab>
+        <Fab
+          disabled={!value}
+          {...{
+            'aria-label': 'Decrement',
+            color: 'primary',
+            onClick: decrementQuantity,
+            size: 'small',
+          }}
+        >
+          <KeyboardArrowDown />
+        </Fab>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 QuantityInput.propTypes = {
   handleSubmit: func.isRequired,
