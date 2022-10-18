@@ -147,14 +147,6 @@
       "buildResources": "public",
       "output": "build/native"
     },
-    "mac": {
-      "target": {
-        "target": "dmg",
-        "arch": "universal"
-      },
-      "mergeASARs": false,
-      "icon": "./public/app-icons/Icon-512x512.png"
-    },
     "win": {
       "target": "nsis",
       "icon": "./public/app-icons/Icon-512x512.png"
