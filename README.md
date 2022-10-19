@@ -8,8 +8,10 @@
 
 **[Play Farmhand in your browser!](https://www.farmhand.life/)**
 
+[![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI) [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
+
 - [Latest release](https://github.com/jeremyckahn/farmhand/releases/latest)
-- `develop`: [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI) [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
+  - Includes native app downloads for Linux, MacOS and Windows.
 - All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
 - [Wiki](https://github.com/jeremyckahn/farmhand/wiki)
 - [Data model documentation](https://jeremyckahn.github.io/farmhand/docs/index.html)
@@ -25,6 +27,7 @@ Storefront links:
 
 - https://jeremyckahn.itch.io/farmhand
 - https://plaza.dsolver.ca/games/farmhand
+- https://www.appimagehub.com/p/1859153
 
 Farmhand is a resource management game that puts a farm in your hand. It is designed to be both desktop and mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
 
