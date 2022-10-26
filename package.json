@@ -64,6 +64,7 @@
     "git-branch-is": "^4.0.0",
     "husky": "^4.2.3",
     "jest-extended": "^0.11.5",
+    "jest-junit": "^14.0.1",
     "jimp": "^0.16.1",
     "jsdoc": "^3.5.5",
     "jsdom": "^16.2.1",
@@ -202,5 +203,14 @@
   },
   "optionalDependencies": {
     "piskel-cli": "^1.0.41"
+  },
+  "jest-junit": {
+    "outputDirectory": "reports",
+    "outputName": "jest-junit.xml",
+    "ancestorSeparator": " › ",
+    "uniqueOutputName": "false",
+    "suiteNameTemplate": "{filepath}",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}"
   }
 }
