@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 14
       - run: npm ci --no-optional --legacy-peer-deps
-      - run: npm test -- --reporters=default --reporters=jest-Junit
+      - run: npm test -- --reporters=default --reporters=jest-junit
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure() # run this step even if previous step failed
