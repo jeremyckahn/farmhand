@@ -18,7 +18,6 @@ jobs:
       - run: npm test -- --reporters=default --reporters=jest-junit
       - name: Test Report
         uses: dorny/test-reporter@v1
-        if: success() || failure() # run this step even if previous step failed
         with:
           name: Jest Tests # Name of the check run which will be created
           path: reports/jest-*.xml # Path to test results
