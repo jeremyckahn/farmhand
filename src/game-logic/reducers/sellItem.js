@@ -17,7 +17,6 @@ import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { processLevelUp } from './processLevelUp'
 import { addRevenue } from './addRevenue'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
-
 import { adjustLoan } from './adjustLoan'
 
 import { prependPendingPeerMessage } from './index'
@@ -68,9 +67,13 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
   const newItemsSold = { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany }
 
-  // money needs to be passed in explicitly here because state.money gets
-  // mutated above and addRevenue needs its initial value.
-  state = addRevenue({ ...state, money: initialMoney }, saleValue)
+  if (item.isPlantableCrop) {
+    state = { ...state, money: moneyTotal(initialMoney, saleValue) }
+  } else {
+    // money needs to be passed in explicitly here because state.money gets
+    // mutated above and addRevenue needs its initial value.
+    state = addRevenue({ ...state, money: initialMoney }, saleValue)
+  }
 
   state = {
     ...state,

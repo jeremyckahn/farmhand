@@ -29,6 +29,29 @@ describe('sellItem', () => {
     expect(state.itemsSold).toEqual({ 'sample-item-1': 1 })
   })
 
+  test('does not change revenue for seed sales', () => {
+    const state = sellItem(
+      {
+        inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
+        itemsSold: {},
+        loanBalance: 0,
+        money: 100,
+        pendingPeerMessages: [],
+        todaysNotifications: [],
+        revenue: 0,
+        todaysRevenue: 0,
+        valueAdjustments: { 'sample-crop-seeds-1': 1 },
+      },
+      testItem({ id: 'sample-crop-seeds-1' })
+    )
+
+    expect(state.inventory).toEqual([])
+    expect(state.money).toEqual(101)
+    expect(state.revenue).toEqual(0)
+    expect(state.todaysRevenue).toEqual(0)
+    expect(state.itemsSold).toEqual({ 'sample-crop-seeds-1': 1 })
+  })
+
   test('updates learnedRecipes', () => {
     const { learnedRecipes } = sellItem(
       {
@@ -72,8 +95,8 @@ describe('sellItem', () => {
 
         expect(state.loanBalance).toEqual(100)
         expect(state.money).toEqual(130)
-        expect(state.revenue).toEqual(30)
-        expect(state.todaysRevenue).toEqual(30)
+        expect(state.revenue).toEqual(0)
+        expect(state.todaysRevenue).toEqual(0)
       })
     })
 
