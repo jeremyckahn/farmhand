@@ -52,6 +52,58 @@ describe('sellItem', () => {
     expect(state.itemsSold).toEqual({ 'sample-crop-seeds-1': 1 })
   })
 
+  test('applies achievement bonus to farm products', () => {
+    const state = sellItem(
+      {
+        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+        itemsSold: {},
+        loanBalance: 0,
+        money: 100,
+        pendingPeerMessages: [],
+        todaysNotifications: [],
+        revenue: 0,
+        todaysRevenue: 0,
+        valueAdjustments: { 'sample-item-1': 1 },
+        completedAchievements: {
+          'i-am-rich-3': true,
+        },
+      },
+      testItem({ id: 'sample-item-1' })
+    )
+
+    expect(state.inventory).toEqual([])
+    expect(state.money).toEqual(101.25)
+    expect(state.revenue).toEqual(1.25)
+    expect(state.todaysRevenue).toEqual(1.25)
+    expect(state.itemsSold).toEqual({ 'sample-item-1': 1 })
+  })
+
+  test('does not apply achievement bonus to seeds', () => {
+    const state = sellItem(
+      {
+        inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
+        itemsSold: {},
+        loanBalance: 0,
+        money: 100,
+        pendingPeerMessages: [],
+        todaysNotifications: [],
+        revenue: 0,
+        todaysRevenue: 0,
+        valueAdjustments: { 'sample-crop-seeds-1': 1 },
+        completedAchievements: {
+          'i-am-rich-3': true,
+        },
+      },
+      testItem({ id: 'sample-crop-seeds-1' })
+    )
+
+    expect(state.inventory).toEqual([])
+    expect(state.money).toEqual(101)
+    expect(state.revenue).toEqual(0)
+    expect(state.todaysRevenue).toEqual(0)
+    expect(state.itemsSold).toEqual({ 'sample-crop-seeds-1': 1 })
+  })
+
   test('updates learnedRecipes', () => {
     const { learnedRecipes } = sellItem(
       {
