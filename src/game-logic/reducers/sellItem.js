@@ -45,8 +45,10 @@ export const sellItem = (state, { id }, howMany = 1) => {
   const adjustedItemValue = isItemSoldInShop(item)
     ? getResaleValue(item)
     : getAdjustedItemValue(valueAdjustments, id)
+
   const saleIsGarnished = isItemAFarmProduct(item)
   let saleValue = 0
+
   for (let i = 0; i < howMany; i++) {
     const loanGarnishment = saleIsGarnished
       ? Math.min(
@@ -54,9 +56,14 @@ export const sellItem = (state, { id }, howMany = 1) => {
           castToMoney(adjustedItemValue * LOAN_GARNISHMENT_RATE)
         )
       : 0
+
+    const salePriceMultiplier = isItemAFarmProduct(item)
+      ? getSalePriceMultiplier(completedAchievements)
+      : 1
+
     const garnishedProfit =
-      adjustedItemValue * getSalePriceMultiplier(completedAchievements) -
-      loanGarnishment
+      adjustedItemValue * salePriceMultiplier - loanGarnishment
+
     loanBalance = moneyTotal(loanBalance, -loanGarnishment)
     saleValue = moneyTotal(saleValue, garnishedProfit)
   }
