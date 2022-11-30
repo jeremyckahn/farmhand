@@ -147,9 +147,9 @@ It looks like you're new here. Thanks for stopping by! Here are some goals to he
             source: `
 ### ![Animated Scarecrow](${items['scarecrow-animated']}) Looking for more farming fun? ![Animated Scarecrow](${items['scarecrow-animated']})
 
-The Farmhand team is working on a brand new game for you to play: **[Farmhand Go!](https://rainbowcow-studio.itch.io/farmhand-go)**
+The Farmhand team has another game for you to play: **Farmhand Go!** You can [try it for free online](https://rainbowcow-studio.itch.io/farmhand-go) and support the developers by [purchasing it on Steam](https://store.steampowered.com/app/2080880/Farmhand_Go/).
 
-**Farmhand Go!** is a complementary game to the one you're playing right now. It's a more active take on the Farmhand concept, with days passing in real time and crows that you need to click/tap to defend against. If you like growing, harvesting, and selling crops in Farmhand, you're going to love **Farmhand Go!**
+**Farmhand Go!** is a complementary game to the one you're playing right now. It's a more active take on the Farmhand concept, with days passing in real time and crows that you need to click or tap to defend against. If you like growing, harvesting, and selling crops in Farmhand, you're going to love **Farmhand Go!**
 
 The Farmhand game you're playing now is still under active development, so don't be concerned about it being abandonded by the team. We just love exploring new ideas and making fun games!
     `,
