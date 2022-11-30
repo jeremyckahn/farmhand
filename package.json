@@ -98,6 +98,7 @@
     "fast-memoize": "^2.5.2",
     "file-saver": "^2.0.2",
     "fun-animal-names": "^0.1.1",
+    "gapi-browser": "^1.0.4",
     "global": "^4.4.0",
     "localforage": "^1.7.3",
     "lodash.debounce": "^4.0.8",
