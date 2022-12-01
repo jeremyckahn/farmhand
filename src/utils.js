@@ -1291,5 +1291,10 @@ export const isCowInBreedingPen = (cow, cowBreedingPen) =>
  */
 export const isOctober = () => new Date().getMonth() === 9
 
+/**
+ * @returns {boolean}
+ */
+export const isDecember = () => new Date().getMonth() === 11
+
 export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'
 export { default as totalIngredientsInRecipe } from './utils/totalIngredientsInRecipe'
