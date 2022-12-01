@@ -21,6 +21,7 @@ import { stageFocusType } from '../../enums'
 import { isDecember, memoize } from '../../utils'
 import Achievement from '../Achievement'
 
+import { SnowBackground } from './SnowBackground'
 import './Home.sass'
 
 const onboardingAchievements = [
@@ -62,12 +63,15 @@ const Home = ({
 }) => (
   <div className="Home">
     {isDecember() ? (
-      <h1 className="holiday-greeting">
-        Happy holidays!{' '}
-        <span role="img" aria-label="Snowman">
-          ⛄️
-        </span>
-      </h1>
+      <>
+        <SnowBackground />
+        <h1 className="holiday-greeting">
+          Happy holidays!{' '}
+          <span role="img" aria-label="Snowman">
+            ⛄️
+          </span>
+        </h1>
+      </>
     ) : (
       <h1>Welcome!</h1>
     )}
