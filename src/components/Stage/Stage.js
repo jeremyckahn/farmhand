@@ -34,7 +34,7 @@ export const Stage = ({ field, stageFocus, viewTitle }) => {
       {...{
         className: classNames('Stage', {
           'is-october': isOctober(),
-          'is-winter': isDecember(),
+          'is-december': isDecember(),
         }),
         'data-stage-focus': stageFocus,
         role: 'main',
