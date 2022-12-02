@@ -24,7 +24,9 @@ jobs:
           reporter: jest-junit # Format of test results
 
       - name: 'Build web app artifacts'
-        run: npm run build
+        run: |
+          npm run build
+          npm run doc
 
       - uses: actions/upload-artifact@v3
         with:
