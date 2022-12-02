@@ -35,6 +35,7 @@ export const SnowBackground = () => {
       drawShape={drawSnowflake}
       colors={['#FFFFFF', '#CBDDF8']}
       gravity={0.03}
+      numberOfPieces={10}
       wind={0.01}
     />
   )
