@@ -18,9 +18,10 @@ import { achievementsMap } from '../../data/achievements'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { STANDARD_LOAN_AMOUNT } from '../../constants'
 import { stageFocusType } from '../../enums'
-import { memoize } from '../../utils'
+import { isDecember, memoize } from '../../utils'
 import Achievement from '../Achievement'
 
+import { SnowBackground } from './SnowBackground'
 import './Home.sass'
 
 const onboardingAchievements = [
@@ -61,7 +62,19 @@ const Home = ({
   ),
 }) => (
   <div className="Home">
-    <h1>Welcome!</h1>
+    {isDecember() ? (
+      <>
+        <SnowBackground />
+        <h1 className="holiday-greeting">
+          Happy holidays!{' '}
+          <span role="img" aria-label="Snowman">
+            ⛄️
+          </span>
+        </h1>
+      </>
+    ) : (
+      <h1>Welcome!</h1>
+    )}
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <h2>Click to read a note from the developer</h2>
