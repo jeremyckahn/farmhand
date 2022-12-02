@@ -2,7 +2,7 @@ import React from 'react'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 
-const randomInt = (min: number, max: number) => {
+const randomInt = (min, max) => {
   return Math.floor(min + Math.random() * (max - min + 1))
 }
 
