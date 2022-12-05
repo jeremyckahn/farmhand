@@ -123,14 +123,14 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2.3.1
-      # https://stackoverflow.com/a/69634516
-      - name: Reconfigure git to use HTTP authentication
-        run: >
-          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
         with:
           fetch-depth: 0
           persist-credentials: true
           ref: main
+      # https://stackoverflow.com/a/69634516
+      - name: Reconfigure git to use HTTP authentication
+        run: >
+          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
       - uses: actions/setup-node@v1
         with:
           node-version: 14
