@@ -26,7 +26,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 14
+          # TODO: Revert to node-version 14 when
+          # https://github.com/dmotz/trystero/pull/30 is merged and available
+          # in NPM.
+          node-version: 16
           registry-url: 'https://registry.npmjs.org'
 
       - run: npm ci --no-optional --legacy-peer-deps
@@ -125,7 +128,10 @@ jobs:
           ref: main
       - uses: actions/setup-node@v1
         with:
-          node-version: 14
+          # TODO: Revert to node-version 14 when
+          # https://github.com/dmotz/trystero/pull/30 is merged and available
+          # in NPM.
+          node-version: 16
       - run: npm ci --no-optional --legacy-peer-deps
       - name: 'Build and Release Electron App'
         env:
