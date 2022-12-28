@@ -1,5 +1,5 @@
 import { doesPlotContainCrop } from '../../utils'
-import { MAX_CROWS } from '../../constants'
+import { CROW_CHANCE, MAX_CROWS } from '../../constants'
 import { CROWS_DESTROYED } from '../../templates'
 
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
@@ -14,8 +14,8 @@ import { fieldHasScarecrow } from './helpers'
 export const applyCrows = state => {
   const { field, purchasedField } = state
 
-  if (fieldHasScarecrow(field)) {
-    return field
+  if (fieldHasScarecrow(field) || Math.random() > CROW_CHANCE) {
+    return state
   }
 
   const newDayNotifications = [...state.newDayNotifications]

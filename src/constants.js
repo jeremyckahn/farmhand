@@ -63,7 +63,7 @@ export const PURCHASEABLE_COW_PENS = freeze(
 )
 
 // Buff/nerf chances
-export const CROW_CHANCE = 0.1
+export const CROW_CHANCE = 0.4
 export const MAX_CROWS = 5
 export const PRECIPITATION_CHANCE = 0.1
 export const STORM_CHANCE = 0.5
