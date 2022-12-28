@@ -1,10 +1,10 @@
-import { itemType } from '../../enums'
-import { itemsMap } from '../../data/maps'
-import { getPlotContentType } from '../../utils'
-import { CROW_CHANCE } from '../../constants'
-import { CROW_ATTACKED } from '../../templates'
+import { doesPlotContainCrop } from '../../utils'
+import { MAX_CROWS } from '../../constants'
+import { CROWS_DESTROYED } from '../../templates'
 
-import { fieldHasScarecrow, updateField } from './helpers'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt'
+
+import { fieldHasScarecrow } from './helpers'
 
 // TODO: Add tests for this reducer.
 /**
@@ -12,28 +12,42 @@ import { fieldHasScarecrow, updateField } from './helpers'
  * @returns {farmhand.state}
  */
 export const applyCrows = state => {
-  const { field } = state
+  const { field, purchasedField } = state
+
+  if (fieldHasScarecrow(field)) {
+    return field
+  }
+
   const newDayNotifications = [...state.newDayNotifications]
 
   let notificationMessages = []
+  const plotsWithCrops = []
 
-  const updatedField = fieldHasScarecrow(field)
-    ? field
-    : updateField(field, plotContent => {
-        if (!plotContent || getPlotContentType(plotContent) !== itemType.CROP) {
-          return plotContent
-        }
+  field.forEach((row, y) =>
+    row.forEach((plotContents, x) => {
+      if (doesPlotContainCrop(plotContents)) {
+        plotsWithCrops.push({ x, y })
+      }
+    })
+  )
 
-        const destroyCrop = Math.random() <= CROW_CHANCE
+  const numCrows = Math.min(
+    plotsWithCrops.length,
+    Math.floor(Math.random() * (purchasedField + 1) * MAX_CROWS)
+  )
+  let numCropsDestroyed = 0
 
-        if (destroyCrop) {
-          notificationMessages.push(
-            CROW_ATTACKED`${itemsMap[plotContent.itemId]}`
-          )
-        }
+  for (let i = 0; i < numCrows; i++) {
+    const attackPlotId = Math.floor(Math.random() * plotsWithCrops.length)
+    const target = plotsWithCrops.splice(attackPlotId, 1)[0]
 
-        return destroyCrop ? null : plotContent
-      })
+    state = modifyFieldPlotAt(state, target.x, target.y, () => null)
+    numCropsDestroyed += 1
+  }
+
+  if (numCropsDestroyed > 0) {
+    notificationMessages.push(CROWS_DESTROYED`${numCropsDestroyed}`)
+  }
 
   if (notificationMessages.length) {
     newDayNotifications.push({
@@ -42,5 +56,8 @@ export const applyCrows = state => {
     })
   }
 
-  return { ...state, field: updatedField, newDayNotifications }
+  return {
+    ...state,
+    newDayNotifications,
+  }
 }
