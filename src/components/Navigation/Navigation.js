@@ -345,7 +345,9 @@ export const Navigation = ({
         maxWidth: 'xs',
         onClose: handleCloseDialogView,
         open: isDialogViewOpen,
-        onExited: handleDialogViewExited,
+        TransitionProps: {
+          onExited: handleDialogViewExited,
+        },
       }}
       aria-describedby={modalTitleId}
       aria-labelledby={modalContentId}
