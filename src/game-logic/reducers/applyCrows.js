@@ -3,6 +3,7 @@ import { CROW_CHANCE, MAX_CROWS } from '../../constants'
 import { CROWS_DESTROYED } from '../../templates'
 
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
+import { forRange } from './forRange'
 
 import { fieldHasScarecrow } from './helpers'
 
@@ -14,7 +15,7 @@ import { fieldHasScarecrow } from './helpers'
 export const applyCrows = state => {
   const { field, purchasedField } = state
 
-  if (fieldHasScarecrow(field) || !isRandomNumberLessThan(CROW_CHANCE)) {
+  if (fieldHasScarecrow(field) || isRandomNumberLessThan(1 - CROW_CHANCE)) {
     return state
   }
 
@@ -23,12 +24,18 @@ export const applyCrows = state => {
   let notificationMessages = []
   const plotsWithCrops = []
 
-  field.forEach((row, y) =>
-    row.forEach((plotContents, x) => {
-      if (doesPlotContainCrop(plotContents)) {
+  forRange(
+    state,
+    (_, x, y) => {
+      if (doesPlotContainCrop(state.field[y][x])) {
         plotsWithCrops.push({ x, y })
       }
-    })
+
+      return state
+    },
+    Infinity,
+    0,
+    0
   )
 
   const numCrows = Math.min(
