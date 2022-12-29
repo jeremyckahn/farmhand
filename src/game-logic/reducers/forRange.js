@@ -1,10 +1,10 @@
 /**
  * @param {farmhand.state} state
- * @param {number} adjustmentAmount This should be a negative number if the
+ * @param {function(farmhand.state, number, number, ...any)} fieldFn Performs an operation on each plot within the range.
  * @param {number} rangeRadius
- * @param {number} x
- * @param {number} y
- * @param {...any} args Passed to fieldFn.
+ * @param {number} plotX
+ * @param {number} plotY
+ * @param {...any} args Passed as arguments to fieldFn.
  * @returns {farmhand.state}
  */
 export const forRange = (
