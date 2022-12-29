@@ -21,7 +21,7 @@ jobs:
       - run: npm ci
       - run: npm test -- --reporters=default --reporters=jest-junit
       - name: Test Report
-        uses: dorny/test-reporter@v1
+        uses: dorny/test-reporter@v1.6.0
         with:
           name: Jest Tests # Name of the check run which will be created
           path: reports/jest-*.xml # Path to test results
