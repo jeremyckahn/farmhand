@@ -3,11 +3,26 @@ import { CROW_CHANCE, MAX_CROWS } from '../../constants'
 import { CROWS_DESTROYED } from '../../templates'
 
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
-import { forRange } from './forRange'
 
 import { fieldHasScarecrow } from './helpers'
 
-// TODO: Add tests for this reducer.
+/**
+ * @param {farmhand.state} state
+ * @callback {forEachPlotCallback} callback
+ */
+function forEachPlot(state, callback) {
+  state.field.forEach((row, y) =>
+    row.forEach((plotContents, x) => callback(plotContents, x, y))
+  )
+}
+
+/**
+ * @callback forEachPlotCallback
+ * @param {object} plotContents - the contents of the plot
+ * @param {number} x - the X coordinate for the plot
+ * @param {number} y - the Y coordinate for the plot
+ */
+
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}
@@ -24,19 +39,11 @@ export const applyCrows = state => {
   let notificationMessages = []
   const plotsWithCrops = []
 
-  forRange(
-    state,
-    (_, x, y) => {
-      if (doesPlotContainCrop(state.field[y][x])) {
-        plotsWithCrops.push({ x, y })
-      }
-
-      return state
-    },
-    Infinity,
-    0,
-    0
-  )
+  forEachPlot(state, (plotContents, x, y) => {
+    if (doesPlotContainCrop(state.field[y][x])) {
+      plotsWithCrops.push({ x, y })
+    }
+  })
 
   const numCrows = Math.min(
     plotsWithCrops.length,
