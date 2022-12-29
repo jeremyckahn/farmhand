@@ -17,8 +17,8 @@ jobs:
           git config --global url."https://github.com/".insteadOf ssh://git@github.com/
       - uses: actions/setup-node@v1
         with:
-          node-version: 16
-      - run: npm ci --no-optional --legacy-peer-deps
+          node-version: 18
+      - run: npm ci
       - run: npm test -- --reporters=default --reporters=jest-junit
       - name: Test Report
         uses: dorny/test-reporter@v1

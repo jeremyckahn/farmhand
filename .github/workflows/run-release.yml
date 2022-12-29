@@ -31,10 +31,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
           registry-url: 'https://registry.npmjs.org'
 
-      - run: npm ci --no-optional --legacy-peer-deps
+      - run: npm ci
 
       - name: Tag release
         run: npm version ${{ github.event.inputs.releaseType }}
@@ -134,8 +134,8 @@ jobs:
           git config --global url."https://github.com/".insteadOf ssh://git@github.com/
       - uses: actions/setup-node@v1
         with:
-          node-version: 16
-      - run: npm ci --no-optional --legacy-peer-deps
+          node-version: 18
+      - run: npm ci
       - name: 'Build and Release Electron App'
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
