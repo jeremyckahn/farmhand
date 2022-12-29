@@ -19,8 +19,12 @@ import { itemsMap } from './data/maps'
  */
 export const CROW_ATTACKED = (_, crop) => `Oh no a crow ate your ${crop.name}!`
 
+/**
+ * @param {number} numCropsDestroyed
+ * @returns {string}
+ */
 export const CROWS_DESTROYED = (_, numCropsDestroyed) =>
-  `Crows destroyed ${numCropsDestroyed} crop${
+  `Oh no! Crows destroyed ${numCropsDestroyed} crop${
     numCropsDestroyed > 1 ? 's' : ''
   }!`
 

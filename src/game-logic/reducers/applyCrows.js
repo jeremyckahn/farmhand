@@ -1,4 +1,4 @@
-import { doesPlotContainCrop } from '../../utils'
+import { doesPlotContainCrop, isRandomNumberLessThan } from '../../utils'
 import { CROW_CHANCE, MAX_CROWS } from '../../constants'
 import { CROWS_DESTROYED } from '../../templates'
 
@@ -14,7 +14,7 @@ import { fieldHasScarecrow } from './helpers'
 export const applyCrows = state => {
   const { field, purchasedField } = state
 
-  if (fieldHasScarecrow(field) || Math.random() > CROW_CHANCE) {
+  if (fieldHasScarecrow(field) || !isRandomNumberLessThan(CROW_CHANCE)) {
     return state
   }
 
