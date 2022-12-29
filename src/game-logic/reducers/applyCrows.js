@@ -10,7 +10,7 @@ import { fieldHasScarecrow } from './helpers'
  * @param {farmhand.state} state
  * @callback {forEachPlotCallback} callback
  */
-function forEachPlot(state, callback) {
+export function forEachPlot(state, callback) {
   state.field.forEach((row, y) =>
     row.forEach((plotContents, x) => callback(plotContents, x, y))
   )
