@@ -186,6 +186,7 @@
  * @type {Object.<farmhand.module:enums.toolType, farmhand.upgradesMetadatum>}
  */
 
+import './polyfills'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route } from 'react-router-dom'
