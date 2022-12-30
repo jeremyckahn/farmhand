@@ -13,6 +13,11 @@ describe('cow selection', () => {
   let cow2 = null
 
   beforeEach(async () => {
+    // Silences the following warning:
+    //
+    //   FakeTimers: cancelAnimationFrame was invoked to clear a native timer instead of one created by this library.
+    //    To automatically clean-up native timers, use `shouldClearNativeTimers`.
+    jest.spyOn(global, 'cancelAnimationFrame')
     jest.useFakeTimers()
 
     const cowId1 = 'foo'
