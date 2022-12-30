@@ -10,18 +10,18 @@ jobs:
   test_and_build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.2.0
+      - uses: actions/checkout@v3
       # https://stackoverflow.com/a/69634516
       - name: Reconfigure git to use HTTP authentication
         run: >
           git config --global url."https://github.com/".insteadOf ssh://git@github.com/
-      - uses: actions/setup-node@v3.5.1
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
       - run: npm ci
       - run: npm test -- --reporters=default --reporters=jest-junit
       - name: Test Report
-        uses: dorny/test-reporter@v1.6.0
+        uses: dorny/test-reporter@v1
         with:
           name: Jest Tests # Name of the check run which will be created
           path: reports/jest-*.xml # Path to test results
@@ -32,7 +32,7 @@ jobs:
           npm run build
           npm run doc
 
-      - uses: actions/upload-artifact@v3.1.1
+      - uses: actions/upload-artifact@v3
         with:
           name: build-output
           path: build
