@@ -108,7 +108,7 @@ jobs:
 
       # https://github.com/marketplace/actions/deploy-to-github-pages
       - name: Deploy to jeremyckahn.github.io/farmhand
-        uses: JamesIves/github-pages-deploy-action@4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           BRANCH: gh-pages
           FOLDER: build
