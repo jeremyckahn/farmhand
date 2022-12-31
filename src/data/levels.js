@@ -29,6 +29,10 @@ levels[6] = {
   unlocksTool: toolType.SHOVEL,
 }
 
+levels[7] = {
+  unlocksShopItem: items.garlicSeed.id,
+}
+
 levels[8] = {
   increasesSprinklerRange: true,
 }
