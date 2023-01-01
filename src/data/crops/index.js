@@ -1,6 +1,7 @@
 export { asparagus, asparagusSeed } from './asparagus'
 export { carrot, carrotSeed } from './carrot'
 export { corn, cornSeed } from './corn'
+export { garlic, garlicSeed } from './garlic'
 export { jalapeno, jalapenoSeed } from './jalapeno'
 export { onion, onionSeed } from './onion'
 export { pea, peaSeed } from './pea'
