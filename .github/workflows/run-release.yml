@@ -67,7 +67,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Prepare Web Artifacts
-        run: zip farmhand-web-${{ env.PACKAGE_VERSION }} -r build/*
+        run: zip farmhand-web-${{ env.PACKAGE_VERSION }}.zip -r build/*
 
       - name: Create Release
         id: create_release
