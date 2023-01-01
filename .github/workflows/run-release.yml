@@ -40,7 +40,7 @@ jobs:
         run: npm version ${{ github.event.inputs.releaseType }}
 
         # Sets new package version as ${{ env.PACKAGE_VERSION }}
-      - uses: jozsefsallai/node-package-version@v1
+      - uses: jozsefsallai/node-package-version@v1.0.4
 
       - name: Check out main
         uses: actions/checkout@v3
