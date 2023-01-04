@@ -101,6 +101,8 @@ import {
 } from '../../strings'
 import { endpoints, rtcConfig, trackerUrls } from '../../config'
 
+import { scarecrow } from '../../data/items'
+
 import { getInventoryQuantities } from './helpers/getInventoryQuantities'
 import FarmhandContext from './Farmhand.context'
 
@@ -386,7 +388,7 @@ export default class Farmhand extends Component {
       historicalValueAdjustments: [],
       hoveredPlotRangeSize: 0,
       id: uuid(),
-      inventory: [],
+      inventory: [{ id: scarecrow.id, quantity: 1 }],
       inventoryLimit: INITIAL_STORAGE_LIMIT,
       isAwaitingCowTradeRequest: false,
       isAwaitingNetworkRequest: false,
