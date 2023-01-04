@@ -14,6 +14,9 @@ import { getCowDisplayName, getCowImage } from '../../utils'
 
 import './CowPen.sass'
 
+// Only moves the cow within the middle 80% of the pen
+const randomPosition = () => 10 + Math.random() * 80
+
 // TODO: Break this out into its own component file
 export class Cow extends Component {
   state = {
@@ -22,8 +25,8 @@ export class Cow extends Component {
     moveDirection: RIGHT,
     rotate: 0,
     showHugAnimation: false,
-    x: Cow.randomPosition(),
-    y: Cow.randomPosition(),
+    x: randomPosition(),
+    y: randomPosition(),
   }
 
   repositionTimeoutId = null
@@ -35,9 +38,6 @@ export class Cow extends Component {
 
   // This MUST be kept in sync with $hug-animation-duration in CowPen.sass.
   static hugAnimationDuration = 750
-
-  // Only moves the cow within the middle 80% of the pen
-  static randomPosition = () => 10 + Math.random() * 80
 
   get waitVariance() {
     return 2000 * this.props.cowInventory.length
@@ -71,7 +71,7 @@ export class Cow extends Component {
   }
 
   move = async () => {
-    const newX = Cow.randomPosition()
+    const newX = randomPosition()
 
     const { moveDirection: oldDirection, x, y } = this.state
     const newDirection = newX < this.state.x ? LEFT : RIGHT
@@ -127,7 +127,7 @@ export class Cow extends Component {
     try {
       await this.tweenable.tween({
         from: { x, y },
-        to: { x: newX, y: Cow.randomPosition() },
+        to: { x: newX, y: randomPosition() },
         duration: Cow.transitionAnimationDuration,
         render: ({ x, y }) => {
           this.setState({ x, y })

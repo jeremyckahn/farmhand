@@ -300,6 +300,40 @@ export const spicyCheese = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.spicyPickledGarlic
+ * @type {farmhand.recipe}
+ */
+export const spicyPickledGarlic = itemify({
+  id: 'spicy-pickled-garlic',
+  name: 'Spicy Pickled Garlic',
+  ingredients: {
+    [items.jalapeno.id]: 2,
+    [items.garlic.id]: 5,
+  },
+  condition: state =>
+    state.itemsSold[items.jalapeno.id] >= 12 &&
+    state.itemsSold[items.garlic.id] >= 25,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.garlicFries
+ * @type {farmhand.recipe}
+ */
+export const garlicFries = itemify({
+  id: 'garlic-fries',
+  name: 'Garlic Fries',
+  ingredients: {
+    [items.potato.id]: 5,
+    [items.garlic.id]: 3,
+  },
+  condition: state =>
+    state.itemsSold[items.potato.id] >= 50 &&
+    state.itemsSold[items.garlic.id] >= 30,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.strawberryJam
  * @type {farmhand.recipe}
  */

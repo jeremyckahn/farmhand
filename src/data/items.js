@@ -27,6 +27,8 @@ export {
   carrotSeed,
   corn,
   cornSeed,
+  garlic,
+  garlicSeed,
   jalapeno,
   jalapenoSeed,
   onion,

@@ -11,6 +11,8 @@ let component
 
 beforeEach(() => {
   jest.useFakeTimers()
+  jest.spyOn(global, 'setTimeout')
+  jest.spyOn(global, 'clearTimeout')
 })
 
 describe('Cow', () => {
@@ -40,7 +42,7 @@ describe('Cow', () => {
 
   describe('movement', () => {
     test('schedules a position change at boot', () => {
-      expect(setTimeout).toHaveBeenCalledWith(
+      expect(global.setTimeout).toHaveBeenCalledWith(
         component.instance().repositionTimeoutHandler,
         0
       )
@@ -48,11 +50,11 @@ describe('Cow', () => {
 
     describe('cow is selected', () => {
       test('reposition is not scheduled', () => {
-        setTimeout.mockClear()
+        global.setTimeout.mockClear()
         component.setProps({ isSelected: true })
         component.instance().scheduleMove()
 
-        expect(setTimeout).not.toHaveBeenCalledWith(
+        expect(global.setTimeout).not.toHaveBeenCalledWith(
           component.instance().repositionTimeoutHandler,
           0
         )
@@ -62,7 +64,7 @@ describe('Cow', () => {
     describe('receiving different isSelected prop', () => {
       describe('while cow is moving', () => {
         beforeEach(() => {
-          clearTimeout.mockClear()
+          jest.clearAllTimers()
         })
 
         describe('isSelected false -> true', () => {
@@ -70,7 +72,7 @@ describe('Cow', () => {
             component.setProps({ isSelected: false })
             component.instance().scheduleMove()
             component.setProps({ isSelected: true })
-            expect(clearTimeout).toHaveBeenCalled()
+            expect(global.clearTimeout).toHaveBeenCalled()
           })
         })
 
@@ -78,9 +80,9 @@ describe('Cow', () => {
           test('no-ops', () => {
             component.setProps({ isSelected: true })
             component.instance().scheduleMove()
-            clearTimeout.mockClear()
+            global.clearTimeout.mockClear()
             component.setProps({ isSelected: false })
-            expect(clearTimeout).not.toHaveBeenCalled()
+            expect(global.clearTimeout).not.toHaveBeenCalled()
           })
         })
       })

@@ -9,6 +9,7 @@ import butter from './dishes/butter.png'
 import carrotSoup from './dishes/carrot-soup.png'
 import cheese from './dishes/cheese.png'
 import chocolate from './dishes/chocolate.png'
+import garlicFries from './dishes/garlic-fries.png'
 import frenchOnionSoup from './dishes/french-onion-soup.png'
 import jackolantern from './items/jackolantern.png'
 import hotSauce from './dishes/hot-sauce.png'
@@ -16,6 +17,7 @@ import rainbowCheese from './dishes/rainbow-cheese.png'
 import salsa from './dishes/salsa.png'
 import soyMilk from './dishes/soy-milk.png'
 import spicyCheese from './dishes/spicy-cheese.png'
+import spicyPickledGarlic from './dishes/spicy-pickled-garlic.png'
 import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
 import popcorn from './dishes/popcorn.png'
 import summerSalad from './dishes/summer-salad.png'
@@ -29,6 +31,9 @@ import asparagusSeed from './items/asparagus-seed.png'
 import carrot from './items/carrot.png'
 import carrotGrowing from './items/carrot-growing.png'
 import carrotSeed from './items/carrot-seed.png'
+import garlic from './items/garlic.png'
+import garlicGrowing from './items/garlic-growing.png'
+import garlicSeed from './items/garlic-seed.png'
 import jalapeno from './items/jalapeno.png'
 import jalapenoGrowing from './items/jalapeno-growing.png'
 import jalapenoSeed from './items/jalapeno-seed.png'
@@ -164,6 +169,7 @@ export const craftedItems = {
   butter,
   fertilizer,
   'french-onion-soup': frenchOnionSoup,
+  'garlic-fries': garlicFries,
   jackolantern,
   'hot-sauce': hotSauce,
   popcorn,
@@ -171,6 +177,7 @@ export const craftedItems = {
   salsa,
   'soy-milk': soyMilk,
   'spicy-cheese': spicyCheese,
+  'spicy-pickled-garlic': spicyPickledGarlic,
   spaghetti,
   'strawberry-jam': strawberryJam,
   'summer-salad': summerSalad,
@@ -186,6 +193,9 @@ export const items = {
   carrot,
   'carrot-growing': carrotGrowing,
   'carrot-seed': carrotSeed,
+  garlic,
+  'garlic-growing': garlicGrowing,
+  'garlic-seed': garlicSeed,
   jalapeno,
   'jalapeno-growing': jalapenoGrowing,
   'jalapeno-seed': jalapenoSeed,

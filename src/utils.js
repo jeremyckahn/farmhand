@@ -1121,9 +1121,6 @@ export const getCostOfNextStorageExpansion = currentInventoryLimit => {
  */
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-// TODO: This needs to be used for rendering the values of items:
-// https://github.com/jeremyckahn/farmhand/issues/264
-//
 /**
  * @param {object} completedAchievements from game state
  * @returns {number} multiplier to be used for sales price adjustments based on completedAchievements
@@ -1290,6 +1287,11 @@ export const isCowInBreedingPen = (cow, cowBreedingPen) =>
  * @returns {boolean}
  */
 export const isOctober = () => new Date().getMonth() === 9
+
+/**
+ * @returns {boolean}
+ */
+export const isDecember = () => new Date().getMonth() === 11
 
 export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'
 export { default as totalIngredientsInRecipe } from './utils/totalIngredientsInRecipe'

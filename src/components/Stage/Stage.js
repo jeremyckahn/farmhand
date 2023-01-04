@@ -9,7 +9,7 @@ import CowPen from '../CowPen'
 import Shop from '../Shop'
 import Workshop from '../Workshop'
 import { stageFocusType } from '../../enums'
-import { isOctober } from '../../utils'
+import { isOctober, isDecember } from '../../utils'
 
 import './Stage.sass'
 
@@ -34,6 +34,7 @@ export const Stage = ({ field, stageFocus, viewTitle }) => {
       {...{
         className: classNames('Stage', {
           'is-october': isOctober(),
+          'is-december': isDecember(),
         }),
         'data-stage-focus': stageFocus,
         role: 'main',
