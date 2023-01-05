@@ -104,6 +104,7 @@
     "fun-animal-names": "^0.1.1",
     "gapi-browser": "^1.0.4",
     "global": "^4.4.0",
+    "google-oauth-gsi": "^1.3.2",
     "http": "npm:http-browserify@^1.7.0",
     "https": "npm:https-browserify@^1.0.0",
     "localforage": "^1.7.3",
