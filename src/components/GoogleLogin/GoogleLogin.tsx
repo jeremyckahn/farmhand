@@ -22,6 +22,7 @@ export const GoogleLogin = () => {
       useOneTap: true,
       auto_select: true,
       element: logInButton,
+      prompt_parent_id: 'google-log-in-container',
       onError: () => console.error('Failed to render button'),
       onSuccess: res =>
         console.log('Logged in with google (render button)', res),
@@ -47,7 +48,11 @@ export const GoogleLogin = () => {
   }
 
   return userWantsToUseGoogle ? (
-    <Button ref={logInButtonRef} />
+    <>
+      <Button ref={logInButtonRef} />
+      {/* FIXME: Move this somewhere global such as the menu */}
+      <div id="google-log-in-container"></div>
+    </>
   ) : (
     <Button
       {...{
