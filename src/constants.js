@@ -239,3 +239,5 @@ export const COW_COLORS_HEX_MAP = {
 export const COW_TRADE_TIMEOUT = 10000
 
 export const WEEDS_SPAWN_CHANCE = 0.15
+
+export const GOOGLE_PROMPT_PARENT_ID = 'google-log-in-container'

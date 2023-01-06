@@ -1,12 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Button from '@material-ui/core/Button'
-import { GoogleOAuthProvider } from 'google-oauth-gsi'
 
-const googleProvider = new GoogleOAuthProvider({
-  clientId: process.env.REACT_APP_GOOGLE_DRIVE_CLIENT_ID ?? '',
-  onScriptLoadError: () => console.log('onScriptLoadError'),
-  onScriptLoadSuccess: () => console.log('onScriptLoadSuccess'),
-})
+import { GOOGLE_PROMPT_PARENT_ID } from '../../constants.js'
+import { googleProvider } from '../../services/google-login/google-login'
 
 export const GoogleLogin = () => {
   const [hasLoadedGapi, setHasLoadedGapi] = useState(false)
@@ -22,7 +18,7 @@ export const GoogleLogin = () => {
       useOneTap: true,
       auto_select: true,
       element: logInButton,
-      prompt_parent_id: 'google-log-in-container',
+      prompt_parent_id: GOOGLE_PROMPT_PARENT_ID,
       onError: () => console.error('Failed to render button'),
       onSuccess: res =>
         console.log('Logged in with google (render button)', res),
@@ -50,8 +46,6 @@ export const GoogleLogin = () => {
   return userWantsToUseGoogle ? (
     <>
       <Button ref={logInButtonRef} />
-      {/* FIXME: Move this somewhere global such as the menu */}
-      <div id="google-log-in-container"></div>
     </>
   ) : (
     <Button

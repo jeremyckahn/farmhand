@@ -1,1 +1,1 @@
-export * from './GoogleLogin.tsx'
+export * from './GoogleLogin'
