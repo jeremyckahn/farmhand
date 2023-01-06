@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Button from '@material-ui/core/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import { GoogleOAuthProvider } from 'google-oauth-gsi'
 
 const googleProvider = new GoogleOAuthProvider({
@@ -9,14 +8,27 @@ const googleProvider = new GoogleOAuthProvider({
   onScriptLoadSuccess: () => console.log('onScriptLoadSuccess'),
 })
 
-const login = googleProvider.useGoogleLogin({
-  flow: 'auth-code',
-  onSuccess: res => console.log('Logged in with google', res),
-  onError: err => console.error('Failed to login with google', err),
-})
-
 export const GoogleLogin = () => {
   const [hasLoadedGapi, setHasLoadedGapi] = useState(false)
+  const logInButtonRef = useRef<HTMLButtonElement>(null)
+  const [userWantsToUseGoogle, setUserWantsToUseGoogle] = useState(false)
+
+  useEffect(() => {
+    const { current: logInButton } = logInButtonRef
+
+    if (!logInButton) return
+
+    const renderButton = googleProvider.useRenderButton({
+      useOneTap: true,
+      auto_select: true,
+      element: logInButton,
+      onError: () => console.error('Failed to render button'),
+      onSuccess: res =>
+        console.log('Logged in with google (render button)', res),
+    })
+
+    renderButton()
+  }, [logInButtonRef, userWantsToUseGoogle])
 
   useEffect(() => {
     ;(async () => {
@@ -31,22 +43,12 @@ export const GoogleLogin = () => {
   }, [hasLoadedGapi])
 
   const handleEnableCloudSaveClick = () => {
-    // https://medium.com/@willikay11/how-to-link-your-react-application-with-google-drive-api-v3-list-and-search-files-2e4e036291b7
-    const { gapi } = window
-
-    const initClient = async () => {
-      try {
-        login()
-      } catch (e) {
-        console.error(e)
-        return
-      }
-    }
-
-    gapi.load('client:auth2', initClient)
+    setUserWantsToUseGoogle(true)
   }
 
-  return hasLoadedGapi ? (
+  return userWantsToUseGoogle ? (
+    <Button ref={logInButtonRef} />
+  ) : (
     <Button
       {...{
         color: 'primary',
@@ -56,7 +58,5 @@ export const GoogleLogin = () => {
     >
       Enable cloud save with Google Drive
     </Button>
-  ) : (
-    <CircularProgress variant="indeterminate" />
   )
 }
