@@ -15,7 +15,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import FileReaderInput from 'react-file-reader-input'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import { GoogleLogin } from '../GoogleLogin/GoogleLogin.tsx'
+import { GoogleLogin } from '../GoogleLogin/GoogleLogin'
 
 import './SettingsView.sass'
 

@@ -6,7 +6,7 @@ import { googleProvider } from '../../services/google-login/google-login'
 
 export const GoogleLogin = () => {
   const [hasLoadedGapi, setHasLoadedGapi] = useState(false)
-  const logInButtonRef = useRef<HTMLButtonElement>(null)
+  const logInButtonRef = useRef(null)
   const [userWantsToUseGoogle, setUserWantsToUseGoogle] = useState(false)
 
   useEffect(() => {
