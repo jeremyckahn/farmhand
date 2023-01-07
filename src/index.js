@@ -15,7 +15,6 @@
  * Reference object for an item.
  * @typedef farmhand.item
  * @type {Object}
- * @readonly
  * @property {string} id
  * @property {string} name
  * @property {string} type
@@ -24,14 +23,13 @@
  * @property {string} [description] A user-friendly description of the item.
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.
  * @property {string} [growsInto] The id of another farmhand.item.
- * @property {boolean} [doesPriceFluctuate] Whether or not this item has a
- * value that fluctuates from day to day.
- * @property {number} [hoveredPlotRange] The number to set.
- * farmhand.state.hoveredPlotRange to when the item is active.
+ * @property {boolean} [doesPriceFluctuate] Whether or not this item has a value that fluctuates from day to day.
+ * @property {number} [hoveredPlotRange] The number to set farmhand.state.hoveredPlotRange to when the item is active.
  * @property {boolean} [isPlantableCrop]
  * @property {boolean} [isReplantable]
  * @property {number} [quantity] How many of the item the player has.
  * @property {number} [tier] The value tier that the item belongs to.
+ * @readonly
  */
 
 /**
@@ -184,6 +182,15 @@
 /**
  * @typedef farmhand.upgradesMetadata
  * @type {Object.<farmhand.module:enums.toolType, farmhand.upgradesMetadatum>}
+ */
+
+/**
+ * @typedef googleOauthGsi.CredentialResponse
+ * @type {Object}
+ * @property {string=} credential This field is the returned ID token
+ * @property {string=} select_by This field sets how the credential is selected
+ * @property {string=} clientId
+ * @see https://github.com/i7N3/google-oauth-gsi/blob/e412b2c02aedfae165ae7c573f9eee7a7e068c5c/src/types/index.ts#L57-L71
  */
 
 import './polyfills'

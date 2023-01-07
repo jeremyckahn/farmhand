@@ -1,3 +1,5 @@
+/** @typedef {import("../index").farmhand.item} farmhand.item */
+/** @typedef {import("../index").googleOauthGsi.CredentialResponse} CredentialResponse */
 import { saveAs } from 'file-saver'
 
 import {
@@ -468,5 +470,13 @@ export default {
 
   handleActivePlayerButtonClick() {
     this.openDialogView(dialogView.ONLINE_PEERS)
+  },
+  // * @param {googleOauthGsi.CredentialResponse} credentialResponse
+  /**
+   * See: https://github.com/i7N3/google-oauth-gsi/blob/e412b2c02aedfae165ae7c573f9eee7a7e068c5c/src/types/index.ts#L57-L71
+   * @param {CredentialResponse} credentialResponse
+   */
+  handleGoogleLoginSuccess(credentialResponse) {
+    console.log('ta-da!', credentialResponse)
   },
 }
