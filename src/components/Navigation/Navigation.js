@@ -37,7 +37,11 @@ import {
   scaleNumber,
 } from '../../utils'
 import { dialogView } from '../../enums'
-import { INFINITE_STORAGE_LIMIT, STAGE_TITLE_MAP } from '../../constants'
+import {
+  GOOGLE_PROMPT_PARENT_ID,
+  INFINITE_STORAGE_LIMIT,
+  STAGE_TITLE_MAP,
+} from '../../constants'
 import { MAX_ROOM_NAME_LENGTH } from '../../common/constants'
 
 import AccountingView from '../AccountingView'
@@ -334,6 +338,7 @@ export const Navigation = ({
         </Tooltip>
       ))}
     </div>
+    <div {...{ id: GOOGLE_PROMPT_PARENT_ID }}></div>
     {/*
     This Dialog gets the Farmhand class because it renders outside of the root
     Farmhand component. This explicit class maintains style consistency.

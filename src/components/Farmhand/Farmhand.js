@@ -38,6 +38,7 @@ import Stage from '../Stage'
 import NotificationSystem, {
   snackbarProviderContentCallback,
 } from '../NotificationSystem'
+import '../../services/google-login'
 import DebugMenu from '../DebugMenu'
 import theme from '../../mui-theme'
 import {
@@ -71,7 +72,6 @@ import {
   COW_TRADE_TIMEOUT,
   DEFAULT_ROOM,
   INITIAL_STORAGE_LIMIT,
-  GOOGLE_PROMPT_PARENT_ID,
   PURCHASEABLE_COW_PENS,
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
@@ -614,6 +614,14 @@ export default class Farmhand extends Component {
     this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
     this.setState({ hasBooted: true })
+
+    try {
+      window.google.accounts.id.prompt()
+    } catch (e) {
+      console.warn(
+        'Google API failed to initialize. Cloud saving is unavailable.'
+      )
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -1340,7 +1348,6 @@ export default class Farmhand extends Component {
                 >
                   <Navigation />
                   <ContextPane />
-                  <div {...{ id: GOOGLE_PROMPT_PARENT_ID }}></div>
                   {process.env.NODE_ENV === 'development' && <DebugMenu />}
                   <div {...{ className: 'spacer' }} />
                 </Drawer>

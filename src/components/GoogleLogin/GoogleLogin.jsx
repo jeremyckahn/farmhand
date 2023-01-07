@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import Button from '@material-ui/core/Button'
 
 import { GOOGLE_PROMPT_PARENT_ID } from '../../constants.js'
-import { googleProvider } from '../../services/google-login/google-login'
+import { googleProvider } from '../../services/google-login'
 
 export const GoogleLogin = () => {
   const [hasLoadedGapi, setHasLoadedGapi] = useState(false)
