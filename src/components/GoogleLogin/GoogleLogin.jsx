@@ -28,7 +28,7 @@ export const GoogleLogin = ({ handleGoogleLoginSuccess }) => {
     })
 
     renderButton()
-  }, [logInButtonRef])
+  }, [handleGoogleLoginSuccess, logInButtonRef])
 
   useEffect(() => {
     ;(async () => {
