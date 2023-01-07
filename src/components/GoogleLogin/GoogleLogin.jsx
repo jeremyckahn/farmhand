@@ -4,10 +4,11 @@ import Button from '@material-ui/core/Button'
 import { GOOGLE_PROMPT_PARENT_ID } from '../../constants.js'
 import { googleProvider } from '../../services/google-login'
 
+import './GoogleLogin.sass'
+
 export const GoogleLogin = () => {
   const [hasLoadedGapi, setHasLoadedGapi] = useState(false)
   const logInButtonRef = useRef(null)
-  const [userWantsToUseGoogle, setUserWantsToUseGoogle] = useState(false)
 
   useEffect(() => {
     const { current: logInButton } = logInButtonRef
@@ -19,13 +20,14 @@ export const GoogleLogin = () => {
       auto_select: true,
       element: logInButton,
       prompt_parent_id: GOOGLE_PROMPT_PARENT_ID,
+      theme: 'filled_blue',
       onError: () => console.error('Failed to render button'),
       onSuccess: res =>
         console.log('Logged in with google (render button)', res),
     })
 
     renderButton()
-  }, [logInButtonRef, userWantsToUseGoogle])
+  }, [logInButtonRef])
 
   useEffect(() => {
     ;(async () => {
@@ -39,23 +41,5 @@ export const GoogleLogin = () => {
     })()
   }, [hasLoadedGapi])
 
-  const handleEnableCloudSaveClick = () => {
-    setUserWantsToUseGoogle(true)
-  }
-
-  return userWantsToUseGoogle ? (
-    <>
-      <Button ref={logInButtonRef} />
-    </>
-  ) : (
-    <Button
-      {...{
-        color: 'primary',
-        onClick: handleEnableCloudSaveClick,
-        variant: 'contained',
-      }}
-    >
-      Enable cloud save with Google Drive
-    </Button>
-  )
+  return <Button className="GoogleLogin" ref={logInButtonRef} />
 }

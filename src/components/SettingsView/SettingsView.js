@@ -47,8 +47,16 @@ const SettingsView = ({
         >
           Save Game
         </Button>
-        <GoogleLogin />
       </div>
+      <Divider />
+
+      <FormControl component="fieldset">
+        <FormLabel component="legend">Cloud saving</FormLabel>
+        <div className="button-row">
+          <GoogleLogin />
+        </div>
+      </FormControl>
+
       <Divider />
 
       <FormControl component="fieldset">
