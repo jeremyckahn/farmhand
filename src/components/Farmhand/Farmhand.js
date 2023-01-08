@@ -19,6 +19,7 @@ import debounce from 'lodash.debounce'
 import throttle from 'lodash.throttle'
 import classNames from 'classnames'
 import { object } from 'prop-types'
+import Cookies from 'js-cookie'
 
 import eventHandlers from '../../handlers/ui-events'
 import {
@@ -62,6 +63,7 @@ import {
 import { getData, postData } from '../../fetch-utils'
 import { itemsMap, recipesMap } from '../../data/maps'
 import {
+  cookieNames,
   dialogView,
   fieldMode,
   stageFocusType,
@@ -615,16 +617,18 @@ export default class Farmhand extends Component {
 
     this.setState({ hasBooted: true })
 
-    try {
-      window.google.accounts.id.prompt()
-    } catch (e) {
-      console.warn(
-        'Google API failed to initialize. Cloud saving is unavailable.'
-      )
+    if (Cookies.get(cookieNames.USER_WANTS_GOOGLE_SYNC) === '1') {
+      try {
+        window.google.accounts.id.prompt()
+      } catch (e) {
+        console.warn(
+          'Google API failed to initialize. Cloud saving is unavailable.'
+        )
+      }
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     const {
       hasBooted,
       heartbeatTimeoutId,

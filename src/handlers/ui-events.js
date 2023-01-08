@@ -1,6 +1,7 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 /** @typedef {import("../index").googleOauthGsi.CredentialResponse} CredentialResponse */
 import { saveAs } from 'file-saver'
+import Cookies from 'js-cookie'
 
 import {
   moneyTotal,
@@ -8,7 +9,7 @@ import {
   transformStateDataForImport,
 } from '../utils'
 import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants'
-import { dialogView, fieldMode, stageFocusType } from '../enums'
+import { cookieNames, dialogView, fieldMode, stageFocusType } from '../enums'
 import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
@@ -478,5 +479,6 @@ export default {
    */
   handleGoogleLoginSuccess(credentialResponse) {
     console.log('ta-da!', credentialResponse)
+    Cookies.set(cookieNames.USER_WANTS_GOOGLE_SYNC, '1')
   },
 }

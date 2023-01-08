@@ -165,3 +165,9 @@ export const toolLevel = enumify([
  * @enum {string}
  */
 export const cowTradeRejectionReason = enumify(['REQUESTED_COW_UNAVAILABLE'])
+
+/**
+ * @property farmhand.module:enums.cookieNames
+ * @enum {string}
+ */
+export const cookieNames = enumify(['USER_WANTS_GOOGLE_SYNC'])
