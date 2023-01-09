@@ -364,6 +364,25 @@ export const popcorn = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.pumpkinPie
+ * @type {farmhand.recipe}
+ */
+export const pumpkinPie = itemify({
+  id: 'pumpkin-pie',
+  name: 'Pumpkin Pie',
+  ingredients: {
+    [items.pumpkin.id]: 4,
+    [items.wheat.id]: 10,
+    [butter.id]: 2,
+  },
+  condition: state =>
+    state.itemsSold[items.pumpkin.id] >= 200 &&
+    state.itemsSold[items.wheat.id] >= 250 &&
+    state.itemsSold[butter.id] >= 75,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.bronzeIngot
  * @type {farmhand.recipe}
  */
