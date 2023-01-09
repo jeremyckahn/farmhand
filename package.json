@@ -88,6 +88,8 @@
     "@material-ui/lab": "^4.0.0-alpha.53",
     "@types/gapi": "^0.0.43",
     "@types/gapi.auth2": "^0.0.56",
+    "@types/gapi.client.drive": "^3.0.14",
+    "@types/google.accounts": "^0.0.5",
     "animate.css": "^4.1.0",
     "assert": "npm:assert-browserify@^2.0.0",
     "axios": "^0.21.1",

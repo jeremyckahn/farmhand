@@ -619,7 +619,8 @@ export default class Farmhand extends Component {
 
     if (Cookies.get(cookieNames.USER_WANTS_GOOGLE_SYNC) === '1') {
       try {
-        window.google.accounts.id.prompt()
+        // eslint-disable-next-line no-undef
+        google.accounts.id.prompt()
       } catch (e) {
         console.warn(
           'Google API failed to initialize. Cloud saving is unavailable.'
