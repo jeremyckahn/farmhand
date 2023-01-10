@@ -1,8 +1,10 @@
+// Plot states
 import wateredPlot from './plot-states/watered-plot.png'
 import fertilizedPlot from './plot-states/fertilized-plot.png'
 import rainbowFertilizedPlot from './plot-states/rainbow-fertilized-plot.png'
 import shoveledPlot from './plot-states/shoveled-plot.png'
 
+// Recipes
 import bread from './dishes/bread.png'
 import burger from './dishes/burger.png'
 import butter from './dishes/butter.png'
@@ -20,11 +22,13 @@ import spicyCheese from './dishes/spicy-cheese.png'
 import spicyPickledGarlic from './dishes/spicy-pickled-garlic.png'
 import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
 import popcorn from './dishes/popcorn.png'
+import pumpkinPie from './dishes/pumpkin-pie.png'
 import summerSalad from './dishes/summer-salad.png'
 import spaghetti from './dishes/spaghetti.png'
 import strawberryJam from './dishes/strawberry-jam.png'
 import tofu from './dishes/tofu.png'
 
+// Crops
 import asparagus from './items/asparagus.png'
 import asparagusGrowing from './items/asparagus-growing.png'
 import asparagusSeed from './items/asparagus-seed.png'
@@ -90,6 +94,7 @@ import weedYellow from './items/weed-yellow.png'
 import weedOrange from './items/weed-orange.png'
 import weedPink from './items/weed-pink.png'
 
+// Tools
 import hoe from './tools/hoe.png'
 import hoeBronze from './tools/hoe-bronze.png'
 import hoeIron from './tools/hoe-iron.png'
@@ -107,6 +112,7 @@ import shovelSilver from './tools/shovel-silver.png'
 import shovelGold from './tools/shovel-gold.png'
 import wateringCan from './tools/watering-can.png'
 
+// Mined resources
 import coal from './ores/coal.png'
 import stone from './ores/stone.png'
 import bronzeOre from './ores/bronze-ore.png'
@@ -118,8 +124,8 @@ import silverIngot from './ores/silver-ingot.png'
 import goldOre from './ores/gold-ore.png'
 import goldIngot from './ores/gold-ingot.png'
 
+// Cows
 import rainbowCow from './animals/cows/rainbow-cow.png'
-
 import cowVariation1 from './animals/cows/cow-variation-1.png'
 import cowVariation2 from './animals/cows/cow-variation-2.png'
 import cowVariation3 from './animals/cows/cow-variation-3.png'
@@ -173,6 +179,7 @@ export const craftedItems = {
   jackolantern,
   'hot-sauce': hotSauce,
   popcorn,
+  'pumpkin-pie': pumpkinPie,
   rainbowCheese,
   salsa,
   'soy-milk': soyMilk,
