@@ -22,6 +22,7 @@ import soyMilk from './dishes/soy-milk.png'
 import spicyCheese from './dishes/spicy-cheese.png'
 import spicyPickledGarlic from './dishes/spicy-pickled-garlic.png'
 import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
+import onionRings from './dishes/onion-rings.png'
 import popcorn from './dishes/popcorn.png'
 import pumpkinPie from './dishes/pumpkin-pie.png'
 import summerSalad from './dishes/summer-salad.png'
@@ -186,6 +187,7 @@ export const craftedItems = {
   'garlic-fries': garlicFries,
   jackolantern,
   'hot-sauce': hotSauce,
+  'onion-rings': onionRings,
   popcorn,
   'pumpkin-pie': pumpkinPie,
   rainbowCheese,

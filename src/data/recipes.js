@@ -455,6 +455,27 @@ export const sweetPotatoFries = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.onionRings
+ * @type {farmhand.recipe}
+ */
+export const onionRings = itemify({
+  id: 'onion-rings',
+  name: 'Onion Rings',
+  ingredients: {
+    [items.onion.id]: 1,
+    [vegetableOil.id]: 1,
+    [items.wheat.id]: 5,
+    [soyMilk.id]: 1,
+  },
+  condition: state =>
+    state.itemsSold[items.onion.id] >= 50 &&
+    state.itemsSold[vegetableOil.id] > 20 &&
+    state.itemsSold[soyMilk.id] > 20 &&
+    state.itemsSold[items.wheat.id] > 30,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.bronzeIngot
  * @type {farmhand.recipe}
  */
