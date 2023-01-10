@@ -14,6 +14,7 @@ import chicknPotPie from './dishes/chickn-pot-pie.png'
 import chocolate from './dishes/chocolate.png'
 import garlicFries from './dishes/garlic-fries.png'
 import frenchOnionSoup from './dishes/french-onion-soup.png'
+import friedTofu from './dishes/fried-tofu.png'
 import jackolantern from './items/jackolantern.png'
 import hotSauce from './dishes/hot-sauce.png'
 import rainbowCheese from './dishes/rainbow-cheese.png'
@@ -184,6 +185,7 @@ export const craftedItems = {
   butter,
   fertilizer,
   'french-onion-soup': frenchOnionSoup,
+  'fried-tofu': friedTofu,
   'garlic-fries': garlicFries,
   jackolantern,
   'hot-sauce': hotSauce,

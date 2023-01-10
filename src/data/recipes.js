@@ -337,6 +337,22 @@ export const vegetableOil = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.friedTofu
+ * @type {farmhand.recipe}
+ */
+export const friedTofu = itemify({
+  id: 'fried-tofu',
+  name: 'Deep Fried Tofu',
+  ingredients: {
+    [tofu.id]: 1,
+    [vegetableOil.id]: 2,
+  },
+  condition: state =>
+    state.itemsSold[tofu.id] >= 50 && state.itemsSold[vegetableOil.id] >= 50,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.spicyPickledGarlic
  * @type {farmhand.recipe}
  */
