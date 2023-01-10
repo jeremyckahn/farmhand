@@ -26,6 +26,7 @@ export const cropType = enumify([
   'PUMPKIN',
   'SOYBEAN',
   'SPINACH',
+  'SUNFLOWER',
   'STRAWBERRY',
   'SWEET_POTATO',
   'TOMATO',
