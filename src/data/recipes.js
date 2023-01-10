@@ -248,6 +248,29 @@ export const tofu = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.chicknPotPie
+ * @type {farmhand.recipe}
+ */
+export const chicknPotPie = itemify({
+  id: 'chickn-pot-pie',
+  name: "Chick'n Pot Pie",
+  ingredients: {
+    [tofu.id]: 6,
+    [items.pea.id]: 10,
+    [items.carrot.id]: 8,
+    [items.wheat.id]: 12,
+    [soyMilk.id]: 3,
+  },
+  condition: state =>
+    state.itemsSold[tofu.id] >= 30 &&
+    state.itemsSold[items.pea.id] >= 225 &&
+    state.itemsSold[items.carrot.id] >= 300 &&
+    state.itemsSold[items.wheat.id] >= 425 &&
+    state.itemsSold[soyMilk.id] >= 15,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.hotSauce
  * @type {farmhand.recipe}
  */
