@@ -24,6 +24,7 @@ import spicyCheese from './dishes/spicy-cheese.png'
 import spicyPickledGarlic from './dishes/spicy-pickled-garlic.png'
 import sunButter from './dishes/sun-butter.png'
 import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
+import oliveOil from './dishes/olive-oil.png'
 import onionRings from './dishes/onion-rings.png'
 import popcorn from './dishes/popcorn.png'
 import pumpkinPie from './dishes/pumpkin-pie.png'
@@ -70,6 +71,9 @@ import potatoSeed from './items/potato-seed.png'
 import sweetPotato from './items/sweet-potato.png'
 import sweetPotatoGrowing from './items/sweet-potato-growing.png'
 import sweetPotatoSeed from './items/sweet-potato-seed.png'
+import olive from './items/olive.png'
+import oliveGrowing from './items/olive-growing.png'
+import oliveSeed from './items/olive-seed.png'
 import onion from './items/onion.png'
 import onionGrowing from './items/onion-growing.png'
 import onionSeed from './items/onion-seed.png'
@@ -193,6 +197,7 @@ export const craftedItems = {
   'garlic-fries': garlicFries,
   jackolantern,
   'hot-sauce': hotSauce,
+  'olive-oil': oliveOil,
   'onion-rings': onionRings,
   popcorn,
   'pumpkin-pie': pumpkinPie,
@@ -241,6 +246,9 @@ export const items = {
   potato,
   'potato-growing': potatoGrowing,
   'potato-seed': potatoSeed,
+  olive,
+  'olive-growing': oliveGrowing,
+  'olive-seed': oliveSeed,
   onion,
   'onion-growing': onionGrowing,
   'onion-seed': onionSeed,

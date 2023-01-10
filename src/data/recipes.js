@@ -70,6 +70,20 @@ export const sunButter = itemify({
   recipeType: recipeType.KITCHEN,
 })
 
+/*
+ * @property farmhand.module:recipes.oliveOil
+ * @type {farmhand.recipe}
+ */
+export const oliveOil = itemify({
+  id: 'olive-oil',
+  name: 'Olive Oil',
+  ingredients: {
+    [items.olive.id]: 15,
+  },
+  condition: state => state.itemsSold[items.olive.id] >= 150,
+  recipeType: recipeType.KITCHEN,
+})
+
 /**
  * @property farmhand.module:recipes.cheese
  * @type {farmhand.recipe}

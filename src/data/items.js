@@ -31,6 +31,8 @@ export {
   garlicSeed,
   jalapeno,
   jalapenoSeed,
+  olive,
+  oliveSeed,
   onion,
   onionSeed,
   pea,

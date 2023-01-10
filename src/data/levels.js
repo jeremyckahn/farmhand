@@ -89,6 +89,10 @@ levels[36] = {
   unlocksShopItem: items.sweetPotatoSeed.id,
 }
 
+levels[38] = {
+  unlocksShopItem: items.olive.id,
+}
+
 levels[40] = {
   unlocksShopItem: items.sunflowerSeed.id,
 }
