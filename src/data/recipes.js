@@ -323,6 +323,20 @@ export const spicyCheese = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.vegetableOil
+ * @type {farmhand.recipe}
+ */
+export const vegetableOil = itemify({
+  id: 'vegetable-oil',
+  name: 'Vegetable Oil',
+  ingredients: {
+    [items.soybean.id]: 30,
+  },
+  condition: state => state.itemsSold[items.soybean.id] >= 300,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.spicyPickledGarlic
  * @type {farmhand.recipe}
  */
@@ -349,6 +363,7 @@ export const garlicFries = itemify({
   ingredients: {
     [items.potato.id]: 5,
     [items.garlic.id]: 3,
+    [vegetableOil.id]: 1,
   },
   condition: state =>
     state.itemsSold[items.potato.id] >= 50 &&
@@ -433,6 +448,7 @@ export const sweetPotatoFries = itemify({
   name: 'Sweet Potato Fries',
   ingredients: {
     [items.sweetPotato.id]: 10,
+    [vegetableOil.id]: 1,
   },
   condition: state => state.itemsSold[items.sweetPotato.id] >= 100,
   recipeType: recipeType.KITCHEN,

@@ -30,6 +30,7 @@ import sweetPotatoPie from './dishes/sweet-potato-pie.png'
 import spaghetti from './dishes/spaghetti.png'
 import strawberryJam from './dishes/strawberry-jam.png'
 import tofu from './dishes/tofu.png'
+import vegetableOil from './dishes/vegetable-oil.png'
 
 // Crops
 import asparagus from './items/asparagus.png'
@@ -198,6 +199,7 @@ export const craftedItems = {
   'sweet-potato-fries': sweetPotatoFries,
   'sweet-potato-pie': sweetPotatoPie,
   tofu,
+  'vegetable-oil': vegetableOil,
   ...smeltedItems,
 }
 
