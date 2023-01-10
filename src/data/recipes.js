@@ -406,6 +406,39 @@ export const pumpkinPie = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.sweetPotatoPie
+ * @type {farmhand.recipe}
+ */
+export const sweetPotatoPie = itemify({
+  id: 'sweet-potato-pie',
+  name: 'Sweet Potato Pie',
+  ingredients: {
+    [items.sweetPotato.id]: 6,
+    [items.wheat.id]: 10,
+    [butter.id]: 2,
+  },
+  condition: state =>
+    state.itemsSold[items.sweetPotato.id] >= 200 &&
+    state.itemsSold[items.wheat.id] >= 250 &&
+    state.itemsSold[butter.id] >= 75,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.sweetPotatoFries
+ * @type {farmhand.recipe}
+ */
+export const sweetPotatoFries = itemify({
+  id: 'sweet-potato-fries',
+  name: 'Sweet Potato Fries',
+  ingredients: {
+    [items.sweetPotato.id]: 10,
+  },
+  condition: state => state.itemsSold[items.sweetPotato.id] >= 100,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.bronzeIngot
  * @type {farmhand.recipe}
  */

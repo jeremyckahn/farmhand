@@ -25,6 +25,8 @@ import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
 import popcorn from './dishes/popcorn.png'
 import pumpkinPie from './dishes/pumpkin-pie.png'
 import summerSalad from './dishes/summer-salad.png'
+import sweetPotatoFries from './dishes/sweet-potato-fries.png'
+import sweetPotatoPie from './dishes/sweet-potato-pie.png'
 import spaghetti from './dishes/spaghetti.png'
 import strawberryJam from './dishes/strawberry-jam.png'
 import tofu from './dishes/tofu.png'
@@ -61,6 +63,9 @@ import cornSeed from './items/corn-seed.png'
 import potato from './items/potato.png'
 import potatoGrowing from './items/potato-growing.png'
 import potatoSeed from './items/potato-seed.png'
+import sweetPotato from './items/sweet-potato.png'
+import sweetPotatoGrowing from './items/sweet-potato-growing.png'
+import sweetPotatoSeed from './items/sweet-potato-seed.png'
 import onion from './items/onion.png'
 import onionGrowing from './items/onion-growing.png'
 import onionSeed from './items/onion-seed.png'
@@ -190,6 +195,8 @@ export const craftedItems = {
   spaghetti,
   'strawberry-jam': strawberryJam,
   'summer-salad': summerSalad,
+  'sweet-potato-fries': sweetPotatoFries,
+  'sweet-potato-pie': sweetPotatoPie,
   tofu,
   ...smeltedItems,
 }
@@ -229,6 +236,9 @@ export const items = {
   soybean,
   'soybean-growing': soybeanGrowing,
   'soybean-seed': soybeanSeed,
+  'sweet-potato': sweetPotato,
+  'sweet-potato-growing': sweetPotatoGrowing,
+  'sweet-potato-seed': sweetPotatoSeed,
   wheat,
   'wheat-growing': wheatGrowing,
   'wheat-seed': wheatSeed,
