@@ -10,6 +10,7 @@ import burger from './dishes/burger.png'
 import butter from './dishes/butter.png'
 import carrotSoup from './dishes/carrot-soup.png'
 import cheese from './dishes/cheese.png'
+import chicknPotPie from './dishes/chickn-pot-pie.png'
 import chocolate from './dishes/chocolate.png'
 import garlicFries from './dishes/garlic-fries.png'
 import frenchOnionSoup from './dishes/french-onion-soup.png'
@@ -167,6 +168,7 @@ const smeltedItems = {
 export const craftedItems = {
   'carrot-soup': carrotSoup,
   cheese,
+  'chickn-pot-pie': chicknPotPie,
   chocolate,
   'chocolate-soy-milk': chocolateSoyMilk,
   compost,
