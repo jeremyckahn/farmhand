@@ -62,7 +62,7 @@ export const butter = itemify({
  */
 export const sunButter = itemify({
   id: 'sun-butter',
-  name: 'SunButter',
+  name: 'Sun Butter',
   ingredients: {
     [items.sunflower.id]: 25,
   },
