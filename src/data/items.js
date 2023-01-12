@@ -45,6 +45,8 @@ export {
   spinachSeed,
   strawberry,
   strawberrySeed,
+  sweetPotato,
+  sweetPotatoSeed,
   tomato,
   tomatoSeed,
   watermelon,
