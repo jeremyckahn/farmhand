@@ -64,9 +64,9 @@ export const sunButter = itemify({
   id: 'sun-butter',
   name: 'SunButter',
   ingredients: {
-    [items.sunflower.id]: 8,
+    [items.sunflower.id]: 25,
   },
-  condition: state => state.itemsSold[items.sunflower.id] >= 90,
+  condition: state => state.itemsSold[items.sunflower.id] >= 200,
   recipeType: recipeType.KITCHEN,
 })
 
