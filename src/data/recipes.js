@@ -78,9 +78,9 @@ export const oliveOil = itemify({
   id: 'olive-oil',
   name: 'Olive Oil',
   ingredients: {
-    [items.olive.id]: 15,
+    [items.olive.id]: 250,
   },
-  condition: state => state.itemsSold[items.olive.id] >= 150,
+  condition: state => state.itemsSold[items.olive.id] >= 500,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -358,9 +358,9 @@ export const vegetableOil = itemify({
   id: 'vegetable-oil',
   name: 'Vegetable Oil',
   ingredients: {
-    [items.soybean.id]: 30,
+    [items.soybean.id]: 350,
   },
-  condition: state => state.itemsSold[items.soybean.id] >= 300,
+  condition: state => state.itemsSold[items.soybean.id] >= 900,
   recipeType: recipeType.KITCHEN,
 })
 
