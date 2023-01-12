@@ -43,6 +43,8 @@ export {
   soybeanSeed,
   spinach,
   spinachSeed,
+  sunflower,
+  sunflowerSeed,
   strawberry,
   strawberrySeed,
   sweetPotato,

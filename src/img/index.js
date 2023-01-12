@@ -22,6 +22,7 @@ import salsa from './dishes/salsa.png'
 import soyMilk from './dishes/soy-milk.png'
 import spicyCheese from './dishes/spicy-cheese.png'
 import spicyPickledGarlic from './dishes/spicy-pickled-garlic.png'
+import sunButter from './dishes/sun-butter.png'
 import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
 import onionRings from './dishes/onion-rings.png'
 import popcorn from './dishes/popcorn.png'
@@ -75,6 +76,9 @@ import onionSeed from './items/onion-seed.png'
 import soybean from './items/soybean.png'
 import soybeanGrowing from './items/soybean-growing.png'
 import soybeanSeed from './items/soybean-seed.png'
+import sunflower from './items/sunflower.png'
+import sunflowerGrowing from './items/sunflower-growing.png'
+import sunflowerSeed from './items/sunflower-seed.png'
 import watermelon from './items/watermelon.png'
 import watermelonGrowing from './items/watermelon-growing.png'
 import watermelonSeed from './items/watermelon-seed.png'
@@ -200,6 +204,7 @@ export const craftedItems = {
   spaghetti,
   'strawberry-jam': strawberryJam,
   'summer-salad': summerSalad,
+  'sun-butter': sunButter,
   'sweet-potato-fries': sweetPotatoFries,
   'sweet-potato-pie': sweetPotatoPie,
   tofu,
@@ -254,6 +259,9 @@ export const items = {
   strawberry,
   'strawberry-growing': strawberryGrowing,
   'strawberry-seed': strawberrySeed,
+  sunflower,
+  'sunflower-growing': sunflowerGrowing,
+  'sunflower-seed': sunflowerSeed,
   watermelon,
   'watermelon-growing': watermelonGrowing,
   'watermelon-seed': watermelonSeed,
