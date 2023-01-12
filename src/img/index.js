@@ -12,6 +12,7 @@ import carrotSoup from './dishes/carrot-soup.png'
 import cheese from './dishes/cheese.png'
 import chicknPotPie from './dishes/chickn-pot-pie.png'
 import chocolate from './dishes/chocolate.png'
+import garlicBread from './dishes/garlic-bread.png'
 import garlicFries from './dishes/garlic-fries.png'
 import frenchOnionSoup from './dishes/french-onion-soup.png'
 import friedTofu from './dishes/fried-tofu.png'
@@ -194,6 +195,7 @@ export const craftedItems = {
   fertilizer,
   'french-onion-soup': frenchOnionSoup,
   'fried-tofu': friedTofu,
+  'garlic-bread': garlicBread,
   'garlic-fries': garlicFries,
   jackolantern,
   'hot-sauce': hotSauce,

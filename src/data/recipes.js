@@ -416,6 +416,25 @@ export const garlicFries = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.garlicBread
+ * @type {farmhand.recipe}
+ */
+export const garlicBread = itemify({
+  id: 'garlic-bread',
+  name: 'Garlic Bread',
+  ingredients: {
+    [bread.id]: 1,
+    [items.garlic.id]: 5,
+    [oliveOil.id]: 1,
+  },
+  condition: state =>
+    state.itemsSold[bread.id] >= 30 &&
+    state.itemsSold[oliveOil.id] >= 20 &&
+    state.itemsSold[items.garlic.id] >= 50,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.strawberryJam
  * @type {farmhand.recipe}
  */
