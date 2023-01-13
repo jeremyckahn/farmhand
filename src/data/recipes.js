@@ -419,7 +419,7 @@ export const garlicFries = itemify({
  * @property farmhand.module:recipes.garlicBread
  * @type {farmhand.recipe}
  */
-/*export const garlicBread = itemify({
+export const garlicBread = itemify({
   id: 'garlic-bread',
   name: 'Garlic Bread',
   ingredients: {
@@ -432,7 +432,7 @@ export const garlicFries = itemify({
     state.itemsSold[oliveOil.id] >= 20 &&
     state.itemsSold[items.garlic.id] >= 50,
   recipeType: recipeType.KITCHEN,
-})*/
+})
 
 /**
  * @property farmhand.module:recipes.strawberryJam
