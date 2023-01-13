@@ -1,16 +1,20 @@
+// Plot states
 import wateredPlot from './plot-states/watered-plot.png'
 import fertilizedPlot from './plot-states/fertilized-plot.png'
 import rainbowFertilizedPlot from './plot-states/rainbow-fertilized-plot.png'
 import shoveledPlot from './plot-states/shoveled-plot.png'
 
+// Recipes
 import bread from './dishes/bread.png'
 import burger from './dishes/burger.png'
 import butter from './dishes/butter.png'
 import carrotSoup from './dishes/carrot-soup.png'
 import cheese from './dishes/cheese.png'
+import chicknPotPie from './dishes/chickn-pot-pie.png'
 import chocolate from './dishes/chocolate.png'
 import garlicFries from './dishes/garlic-fries.png'
 import frenchOnionSoup from './dishes/french-onion-soup.png'
+import friedTofu from './dishes/fried-tofu.png'
 import jackolantern from './items/jackolantern.png'
 import hotSauce from './dishes/hot-sauce.png'
 import rainbowCheese from './dishes/rainbow-cheese.png'
@@ -18,13 +22,20 @@ import salsa from './dishes/salsa.png'
 import soyMilk from './dishes/soy-milk.png'
 import spicyCheese from './dishes/spicy-cheese.png'
 import spicyPickledGarlic from './dishes/spicy-pickled-garlic.png'
+import sunButter from './dishes/sun-butter.png'
 import chocolateSoyMilk from './dishes/chocolate-soy-milk.png'
+import onionRings from './dishes/onion-rings.png'
 import popcorn from './dishes/popcorn.png'
+import pumpkinPie from './dishes/pumpkin-pie.png'
 import summerSalad from './dishes/summer-salad.png'
+import sweetPotatoFries from './dishes/sweet-potato-fries.png'
+import sweetPotatoPie from './dishes/sweet-potato-pie.png'
 import spaghetti from './dishes/spaghetti.png'
 import strawberryJam from './dishes/strawberry-jam.png'
 import tofu from './dishes/tofu.png'
+import vegetableOil from './dishes/vegetable-oil.png'
 
+// Crops
 import asparagus from './items/asparagus.png'
 import asparagusGrowing from './items/asparagus-growing.png'
 import asparagusSeed from './items/asparagus-seed.png'
@@ -56,12 +67,18 @@ import cornSeed from './items/corn-seed.png'
 import potato from './items/potato.png'
 import potatoGrowing from './items/potato-growing.png'
 import potatoSeed from './items/potato-seed.png'
+import sweetPotato from './items/sweet-potato.png'
+import sweetPotatoGrowing from './items/sweet-potato-growing.png'
+import sweetPotatoSeed from './items/sweet-potato-seed.png'
 import onion from './items/onion.png'
 import onionGrowing from './items/onion-growing.png'
 import onionSeed from './items/onion-seed.png'
 import soybean from './items/soybean.png'
 import soybeanGrowing from './items/soybean-growing.png'
 import soybeanSeed from './items/soybean-seed.png'
+import sunflower from './items/sunflower.png'
+import sunflowerGrowing from './items/sunflower-growing.png'
+import sunflowerSeed from './items/sunflower-seed.png'
 import watermelon from './items/watermelon.png'
 import watermelonGrowing from './items/watermelon-growing.png'
 import watermelonSeed from './items/watermelon-seed.png'
@@ -90,6 +107,7 @@ import weedYellow from './items/weed-yellow.png'
 import weedOrange from './items/weed-orange.png'
 import weedPink from './items/weed-pink.png'
 
+// Tools
 import hoe from './tools/hoe.png'
 import hoeBronze from './tools/hoe-bronze.png'
 import hoeIron from './tools/hoe-iron.png'
@@ -107,6 +125,7 @@ import shovelSilver from './tools/shovel-silver.png'
 import shovelGold from './tools/shovel-gold.png'
 import wateringCan from './tools/watering-can.png'
 
+// Mined resources
 import coal from './ores/coal.png'
 import stone from './ores/stone.png'
 import bronzeOre from './ores/bronze-ore.png'
@@ -118,8 +137,8 @@ import silverIngot from './ores/silver-ingot.png'
 import goldOre from './ores/gold-ore.png'
 import goldIngot from './ores/gold-ingot.png'
 
+// Cows
 import rainbowCow from './animals/cows/rainbow-cow.png'
-
 import cowVariation1 from './animals/cows/cow-variation-1.png'
 import cowVariation2 from './animals/cows/cow-variation-2.png'
 import cowVariation3 from './animals/cows/cow-variation-3.png'
@@ -161,6 +180,7 @@ const smeltedItems = {
 export const craftedItems = {
   'carrot-soup': carrotSoup,
   cheese,
+  'chickn-pot-pie': chicknPotPie,
   chocolate,
   'chocolate-soy-milk': chocolateSoyMilk,
   compost,
@@ -169,10 +189,13 @@ export const craftedItems = {
   butter,
   fertilizer,
   'french-onion-soup': frenchOnionSoup,
+  'fried-tofu': friedTofu,
   'garlic-fries': garlicFries,
   jackolantern,
   'hot-sauce': hotSauce,
+  'onion-rings': onionRings,
   popcorn,
+  'pumpkin-pie': pumpkinPie,
   rainbowCheese,
   salsa,
   'soy-milk': soyMilk,
@@ -181,7 +204,11 @@ export const craftedItems = {
   spaghetti,
   'strawberry-jam': strawberryJam,
   'summer-salad': summerSalad,
+  'sun-butter': sunButter,
+  'sweet-potato-fries': sweetPotatoFries,
+  'sweet-potato-pie': sweetPotatoPie,
   tofu,
+  'vegetable-oil': vegetableOil,
   ...smeltedItems,
 }
 
@@ -220,6 +247,9 @@ export const items = {
   soybean,
   'soybean-growing': soybeanGrowing,
   'soybean-seed': soybeanSeed,
+  'sweet-potato': sweetPotato,
+  'sweet-potato-growing': sweetPotatoGrowing,
+  'sweet-potato-seed': sweetPotatoSeed,
   wheat,
   'wheat-growing': wheatGrowing,
   'wheat-seed': wheatSeed,
@@ -229,6 +259,9 @@ export const items = {
   strawberry,
   'strawberry-growing': strawberryGrowing,
   'strawberry-seed': strawberrySeed,
+  sunflower,
+  'sunflower-growing': sunflowerGrowing,
+  'sunflower-seed': sunflowerSeed,
   watermelon,
   'watermelon-growing': watermelonGrowing,
   'watermelon-seed': watermelonSeed,

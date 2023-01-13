@@ -57,6 +57,20 @@ export const butter = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.sunButter
+ * @type {farmhand.recipe}
+ */
+export const sunButter = itemify({
+  id: 'sun-butter',
+  name: 'Sun Butter',
+  ingredients: {
+    [items.sunflower.id]: 25,
+  },
+  condition: state => state.itemsSold[items.sunflower.id] >= 200,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.cheese
  * @type {farmhand.recipe}
  */
@@ -248,6 +262,29 @@ export const tofu = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.chicknPotPie
+ * @type {farmhand.recipe}
+ */
+export const chicknPotPie = itemify({
+  id: 'chickn-pot-pie',
+  name: "Chick'n Pot Pie",
+  ingredients: {
+    [tofu.id]: 6,
+    [items.pea.id]: 10,
+    [items.carrot.id]: 8,
+    [items.wheat.id]: 12,
+    [soyMilk.id]: 3,
+  },
+  condition: state =>
+    state.itemsSold[tofu.id] >= 30 &&
+    state.itemsSold[items.pea.id] >= 225 &&
+    state.itemsSold[items.carrot.id] >= 300 &&
+    state.itemsSold[items.wheat.id] >= 425 &&
+    state.itemsSold[soyMilk.id] >= 15,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.hotSauce
  * @type {farmhand.recipe}
  */
@@ -300,6 +337,36 @@ export const spicyCheese = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.vegetableOil
+ * @type {farmhand.recipe}
+ */
+export const vegetableOil = itemify({
+  id: 'vegetable-oil',
+  name: 'Vegetable Oil',
+  ingredients: {
+    [items.soybean.id]: 30,
+  },
+  condition: state => state.itemsSold[items.soybean.id] >= 300,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.friedTofu
+ * @type {farmhand.recipe}
+ */
+export const friedTofu = itemify({
+  id: 'fried-tofu',
+  name: 'Deep Fried Tofu',
+  ingredients: {
+    [tofu.id]: 1,
+    [vegetableOil.id]: 2,
+  },
+  condition: state =>
+    state.itemsSold[tofu.id] >= 50 && state.itemsSold[vegetableOil.id] >= 50,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.spicyPickledGarlic
  * @type {farmhand.recipe}
  */
@@ -326,6 +393,7 @@ export const garlicFries = itemify({
   ingredients: {
     [items.potato.id]: 5,
     [items.garlic.id]: 3,
+    [vegetableOil.id]: 1,
   },
   condition: state =>
     state.itemsSold[items.potato.id] >= 50 &&
@@ -360,6 +428,80 @@ export const popcorn = itemify({
   },
   condition: state =>
     state.itemsSold[items.corn.id] >= 12 && state.itemsSold[butter.id] >= 6,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.pumpkinPie
+ * @type {farmhand.recipe}
+ */
+export const pumpkinPie = itemify({
+  id: 'pumpkin-pie',
+  name: 'Pumpkin Pie',
+  ingredients: {
+    [items.pumpkin.id]: 4,
+    [items.wheat.id]: 10,
+    [butter.id]: 2,
+  },
+  condition: state =>
+    state.itemsSold[items.pumpkin.id] >= 200 &&
+    state.itemsSold[items.wheat.id] >= 250 &&
+    state.itemsSold[butter.id] >= 75,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.sweetPotatoPie
+ * @type {farmhand.recipe}
+ */
+export const sweetPotatoPie = itemify({
+  id: 'sweet-potato-pie',
+  name: 'Sweet Potato Pie',
+  ingredients: {
+    [items.sweetPotato.id]: 6,
+    [items.wheat.id]: 10,
+    [butter.id]: 2,
+  },
+  condition: state =>
+    state.itemsSold[items.sweetPotato.id] >= 200 &&
+    state.itemsSold[items.wheat.id] >= 250 &&
+    state.itemsSold[butter.id] >= 75,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.sweetPotatoFries
+ * @type {farmhand.recipe}
+ */
+export const sweetPotatoFries = itemify({
+  id: 'sweet-potato-fries',
+  name: 'Sweet Potato Fries',
+  ingredients: {
+    [items.sweetPotato.id]: 10,
+    [vegetableOil.id]: 1,
+  },
+  condition: state => state.itemsSold[items.sweetPotato.id] >= 100,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.onionRings
+ * @type {farmhand.recipe}
+ */
+export const onionRings = itemify({
+  id: 'onion-rings',
+  name: 'Onion Rings',
+  ingredients: {
+    [items.onion.id]: 1,
+    [vegetableOil.id]: 1,
+    [items.wheat.id]: 5,
+    [soyMilk.id]: 1,
+  },
+  condition: state =>
+    state.itemsSold[items.onion.id] >= 50 &&
+    state.itemsSold[vegetableOil.id] > 20 &&
+    state.itemsSold[soyMilk.id] > 20 &&
+    state.itemsSold[items.wheat.id] > 30,
   recipeType: recipeType.KITCHEN,
 })
 

@@ -299,6 +299,18 @@ const achievements = [
     reward: state => state,
   }))(),
 
+  ((goal = Math.floor(Math.PI * 1_000_000), reward = 1000) => ({
+    id: 'lord-of-the-pies',
+    name: 'Lord of the Pies',
+    description: `Have ${dollarString(goal)} on hand.`,
+    rewardDescription: `${integerString(reward)} units of ${
+      itemsMap['pumpkin-pie'].name
+    }`,
+    condition: state => Math.floor(state.money) === goal,
+    reward: state =>
+      addItemToInventory(state, itemsMap['pumpkin-pie'], reward, true),
+  }))(),
+
   (() => ({
     id: 'gold-digger',
     name: 'Gold Digger',
