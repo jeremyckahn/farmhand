@@ -90,7 +90,7 @@ levels[36] = {
 }
 
 levels[38] = {
-  unlocksShopItem: items.olive.id,
+  unlocksShopItem: items.oliveSeed.id,
 }
 
 levels[40] = {
