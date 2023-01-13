@@ -20,6 +20,7 @@ export const cropType = enumify([
   'CORN',
   'GARLIC',
   'JALAPENO',
+  'OLIVE',
   'ONION',
   'PEA',
   'POTATO',

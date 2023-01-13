@@ -70,6 +70,20 @@ export const sunButter = itemify({
   recipeType: recipeType.KITCHEN,
 })
 
+/*
+ * @property farmhand.module:recipes.oliveOil
+ * @type {farmhand.recipe}
+ */
+export const oliveOil = itemify({
+  id: 'olive-oil',
+  name: 'Olive Oil',
+  ingredients: {
+    [items.olive.id]: 250,
+  },
+  condition: state => state.itemsSold[items.olive.id] >= 500,
+  recipeType: recipeType.KITCHEN,
+})
+
 /**
  * @property farmhand.module:recipes.cheese
  * @type {farmhand.recipe}
@@ -344,9 +358,9 @@ export const vegetableOil = itemify({
   id: 'vegetable-oil',
   name: 'Vegetable Oil',
   ingredients: {
-    [items.soybean.id]: 30,
+    [items.soybean.id]: 350,
   },
-  condition: state => state.itemsSold[items.soybean.id] >= 300,
+  condition: state => state.itemsSold[items.soybean.id] >= 900,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -398,6 +412,25 @@ export const garlicFries = itemify({
   condition: state =>
     state.itemsSold[items.potato.id] >= 50 &&
     state.itemsSold[items.garlic.id] >= 30,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.garlicBread
+ * @type {farmhand.recipe}
+ */
+export const garlicBread = itemify({
+  id: 'garlic-bread',
+  name: 'Garlic Bread',
+  ingredients: {
+    [bread.id]: 1,
+    [items.garlic.id]: 5,
+    [oliveOil.id]: 1,
+  },
+  condition: state =>
+    state.itemsSold[bread.id] >= 30 &&
+    state.itemsSold[oliveOil.id] >= 20 &&
+    state.itemsSold[items.garlic.id] >= 50,
   recipeType: recipeType.KITCHEN,
 })
 
