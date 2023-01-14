@@ -60,7 +60,6 @@ import {
   computeMarketPositions,
   createNewField,
   doesMenuObstructStage,
-  farmProductsSold,
   generateCow,
   getAvailableShopInventory,
   getItemCurrentValue,
@@ -381,7 +380,7 @@ export default class Farmhand extends FarmhandReducers {
 
   get levelEntitlements() {
     return getLevelEntitlements(
-      levelAchieved(farmProductsSold(this.state.itemsSold))
+      levelAchieved({ itemsSold: this.state.itemsSold })
     )
   }
 
@@ -425,6 +424,7 @@ export default class Farmhand extends FarmhandReducers {
       cowTradeTimeoutId: -1,
       cropsHarvested: {},
       dayCount: 0,
+      experience: 0,
       farmName: 'Unnamed',
       field: createNewField(),
       fieldMode: OBSERVE,
@@ -497,6 +497,7 @@ export default class Farmhand extends FarmhandReducers {
         [toolType.WATERING_CAN]: toolLevel.DEFAULT,
       },
       useAlternateEndDayButtonPosition: false,
+      useLegacyLevelingSystem: true,
       valueAdjustments: {},
       version: process.env.REACT_APP_VERSION ?? '',
     }

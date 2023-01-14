@@ -768,12 +768,41 @@ describe('farmProductsSold', () => {
 })
 
 describe('levelAchieved', () => {
-  test('calculates achieved level', () => {
-    expect(levelAchieved(0)).toEqual(1)
-    expect(levelAchieved(100)).toEqual(2)
-    expect(levelAchieved(150)).toEqual(2)
-    expect(levelAchieved(400)).toEqual(3)
-    expect(levelAchieved(980100)).toEqual(100)
+  const cases = [
+    [1, 0],
+    [2, 100],
+    [2, 150],
+    [3, 400],
+    [100, 980100],
+  ]
+
+  describe('with legacy system', () => {
+    test.each(cases)(
+      `returns level %p for %p items sold`,
+      (expectedLevel, numItemsSold) => {
+        const level = levelAchieved({
+          itemsSold: { carrot: numItemsSold },
+          useLegacyLevelingSystem: true,
+        })
+
+        expect(level).toEqual(expectedLevel)
+      }
+    )
+  })
+
+  describe('with experience system', () => {
+    test.each(cases)(
+      `returns level %p for %p experience`,
+      (expectedLevel, experience) => {
+        const level = levelAchieved({
+          experience,
+          features: { EXPERIENCE: true },
+          useLegacyLevelingSystem: false,
+        })
+
+        expect(level).toEqual(expectedLevel)
+      }
+    )
   })
 })
 

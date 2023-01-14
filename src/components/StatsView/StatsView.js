@@ -51,7 +51,7 @@ const StatsView = ({
   todaysRevenue,
 
   totalFarmProductsSold = farmProductsSold(itemsSold),
-  currentLevel = levelAchieved(totalFarmProductsSold),
+  currentLevel = levelAchieved({ itemsSold }),
 }) => (
   <div className="StatsView">
     <TableContainer {...{ component: ElevatedPaper }}>

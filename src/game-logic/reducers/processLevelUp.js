@@ -1,6 +1,5 @@
 import { levels } from '../../data/levels'
 import {
-  farmProductsSold,
   getRandomLevelUpReward,
   getRandomLevelUpRewardQuantity,
   levelAchieved,
@@ -20,7 +19,7 @@ import { showNotification } from './showNotification'
  */
 export const processLevelUp = (state, oldLevel) => {
   const { itemsSold, selectedItemId } = state
-  const newLevel = levelAchieved(farmProductsSold(itemsSold))
+  const newLevel = levelAchieved({ itemsSold })
 
   // Loop backwards so that the notifications appear in descending order.
   for (let i = newLevel; i > oldLevel; i--) {
@@ -48,7 +47,7 @@ export const processLevelUp = (state, oldLevel) => {
       selectedItemId === SPRINKLER_ITEM_ID
     ) {
       const { sprinklerRange } = getLevelEntitlements(
-        levelAchieved(farmProductsSold(itemsSold))
+        levelAchieved({ itemsSold })
       )
 
       if (sprinklerRange > state.hoveredPlotRangeSize) {

@@ -1,10 +1,5 @@
 import { itemType } from '../../enums'
-import {
-  farmProductsSold,
-  getPlotContentType,
-  getRangeCoords,
-  levelAchieved,
-} from '../../utils'
+import { getPlotContentType, getRangeCoords, levelAchieved } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 
 import { setWasWatered } from './helpers'
@@ -19,9 +14,7 @@ export const processSprinklers = state => {
   const crops = new Map()
   let modifiedField = [...field]
 
-  const { sprinklerRange } = getLevelEntitlements(
-    levelAchieved(farmProductsSold(itemsSold))
-  )
+  const { sprinklerRange } = getLevelEntitlements(levelAchieved({ itemsSold }))
 
   field.forEach((row, plotY) => {
     row.forEach((plot, plotX) => {
