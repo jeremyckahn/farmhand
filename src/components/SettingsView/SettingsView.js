@@ -31,6 +31,7 @@ const SettingsView = ({
   handleShowHomeScreenChange,
   showNotifications,
   useAlternateEndDayButtonPosition,
+  useLegacyLevelingSystem,
   showHomeScreen,
 }) => {
   const [isClearDataDialogOpen, setIsClearDataDialogOpen] = useState(false)
@@ -98,6 +99,17 @@ const SettingsView = ({
               />
             }
             label="Display custom names for cows received from other players"
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                color="primary"
+                checked={useLegacyLevelingSystem}
+                onChange={() => console.log('todo: save change')}
+                name="use-legacy-leveling-system"
+              />
+            }
+            label="Use legacy leveling system (items sold)"
           />
         </FormGroup>
       </FormControl>
@@ -210,6 +222,7 @@ SettingsView.propTypes = {
   showHomeScreen: bool.isRequired,
   showNotifications: bool.isRequired,
   useAlternateEndDayButtonPosition: bool.isRequired,
+  useLegacyLevelingSystem: bool,
 }
 
 export default function Consumer(props) {

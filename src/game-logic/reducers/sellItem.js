@@ -1,7 +1,6 @@
 import { itemsMap } from '../../data/maps'
 import {
   castToMoney,
-  farmProductsSold,
   getAdjustedItemValue,
   getResaleValue,
   getSalePriceMultiplier,
@@ -39,7 +38,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
     money: initialMoney,
     valueAdjustments,
   } = state
-  const oldLevel = levelAchieved(farmProductsSold(itemsSold))
+  const oldLevel = levelAchieved({ itemsSold })
   let { loanBalance } = state
 
   const adjustedItemValue = isItemSoldInShop(item)

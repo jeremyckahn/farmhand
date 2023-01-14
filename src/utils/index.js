@@ -88,6 +88,7 @@ import { getCropLifecycleDuration } from './getCropLifecycleDuration'
 import { getItemBaseValue } from './getItemBaseValue'
 import { getInventoryQuantityMap } from './getInventoryQuantityMap'
 import { getLevelEntitlements } from './getLevelEntitlements'
+import { levelAchieved } from './levelAchieved'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -805,13 +806,6 @@ export const farmProductsSold = memoize(
 )
 
 /**
- * @param {number} farmProductsSold
- * @returns {number}
- */
-export const levelAchieved = farmProductsSold =>
-  Math.floor(Math.sqrt(farmProductsSold) / 10) + 1
-
-/**
  * @param {number} targetLevel
  * @returns {number}
  */
@@ -1202,3 +1196,5 @@ export const isOctober = () => new Date().getMonth() === 9
 export const isDecember = () => new Date().getMonth() === 11
 
 export { default as totalIngredientsInRecipe } from './totalIngredientsInRecipe'
+
+export { levelAchieved }

@@ -9,7 +9,6 @@ import CowCard from '../../CowCard'
 import { moneyString } from '../../../utils/moneyString'
 import {
   getPlayerName,
-  farmProductsSold,
   integerString,
   levelAchieved,
 } from '../../../utils'
@@ -28,10 +27,7 @@ const OnlinePeer = ({
             subheader: (
               <div>
                 <p>Day: {integerString(dayCount)}</p>
-                <p>
-                  Level:{' '}
-                  {integerString(levelAchieved(farmProductsSold(itemsSold)))}
-                </p>
+                <p>Level: {integerString(levelAchieved({ itemsSold }))}</p>
                 <p>Money: {moneyString(money)}</p>
               </div>
             ),

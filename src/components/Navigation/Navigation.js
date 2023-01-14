@@ -225,7 +225,7 @@ export const Navigation = ({
   viewList,
 
   totalFarmProductsSold = farmProductsSold(itemsSold),
-  currentLevel = levelAchieved(totalFarmProductsSold),
+  currentLevel = levelAchieved({ itemsSold }),
   levelPercent = scaleNumber(
     totalFarmProductsSold,
     farmProductSalesVolumeNeededForLevel(currentLevel),

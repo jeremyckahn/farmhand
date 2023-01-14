@@ -143,6 +143,7 @@ export const PERSISTED_STATE_KEYS = [
   'cowsTraded',
   'cropsHarvested',
   'dayCount',
+  'experience',
   'farmName',
   'field',
   'historicalDailyLosses',

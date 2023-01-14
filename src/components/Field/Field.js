@@ -74,7 +74,7 @@ export const isInHoverRange = ({
   switch (fieldMode) {
     case SET_SPRINKLER:
       hoveredPlotRangeSizeToRender = getLevelEntitlements(
-        levelAchieved(farmProductsSold(itemsSold))
+        levelAchieved({ itemsSold })
       ).sprinklerRange
 
       break
