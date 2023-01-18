@@ -1,3 +1,5 @@
+/** @typedef {import("./index").farmhand.item} farmhand.item */
+
 /**
  * @module farmhand.utils
  * @ignore
@@ -414,28 +416,50 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
 
 /**
  * @param {string} seedItemId
+ * @param {number} [variationIdx]
  * @returns {string}
  */
-export const getFinalCropItemIdFromSeedItemId = seedItemId =>
-  itemsMap[seedItemId].growsInto
+export const getFinalCropItemIdFromSeedItemId = (
+  seedItemId,
+  variationIdx = 0
+) => {
+  const { growsInto } = itemsMap[seedItemId]
+
+  if (Array.isArray(growsInto)) {
+    return growsInto[variationIdx]
+  } else {
+    return growsInto
+  }
+}
 
 /**
  * @param {farmhand.item} item
+ * @param {number} [variationIdx]
  * @returns {farmhand.item}
  */
-export const getFinalCropItemFromSeedItem = ({ id }) =>
-  itemsMap[getFinalCropItemIdFromSeedItemId(id)]
+export const getFinalCropItemFromSeedItem = ({ id }, variantIdx) =>
+  itemsMap[getFinalCropItemIdFromSeedItemId(id, variantIdx)]
 
 /**
- * @param {farmhand.item} cropItemId
+ * @param {string} cropItemId
  * @returns {string}
  */
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
-  cropItemId =>
-    Object.values(itemsMap).find(({ growsInto }) => growsInto === cropItemId)
-      ?.id,
+  cropItemId => {
+    return Object.values(itemsMap).find(
+      ({ growsInto }) => {
+        if (Array.isArray(growsInto)) {
+          return growsInto.includes(cropItemId)
+        } else {
+          return growsInto === cropItemId
+        }
+      }
+      // TODO: The optional chaining operator here is only necessary for testing
+      // convenience. Update the relevant tests to make it unnecessary.
+    )?.id
+  },
   {
-    cacheSize: 30,
+    cacheSize: Object.keys(itemsMap).length,
   }
 )
 
