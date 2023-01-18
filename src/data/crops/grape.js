@@ -26,7 +26,7 @@ export const grapeSeed = crop({
  * @type {farmhand.item}
  */
 export const grapeGreen = crop({
-  ...fromSeed(grapeSeed, 0),
+  ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-green')),
   name: 'Green Grape',
 })
 
@@ -35,7 +35,7 @@ export const grapeGreen = crop({
  * @type {farmhand.item}
  */
 export const grapePurple = crop({
-  ...fromSeed(grapeSeed, 1),
+  ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-purple')),
   name: 'Purple Grape',
 })
 
@@ -44,6 +44,6 @@ export const grapePurple = crop({
  * @type {farmhand.item}
  */
 export const grapeRed = crop({
-  ...fromSeed(grapeSeed, 2),
+  ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-red')),
   name: 'Red Grape',
 })
