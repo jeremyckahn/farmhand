@@ -1,3 +1,5 @@
+/** @typedef {import("../index").farmhand.item} farmhand.item */
+
 import { fieldMode, itemType } from '../enums'
 
 const { freeze } = Object
@@ -29,6 +31,10 @@ export const crop = ({
     ...rest,
   })
 
+/**
+ * @param {farmhand.item} item
+ * @returns {farmhand.item}
+ */
 export const fromSeed = ({ cropTimetable, cropType, growsInto, tier }) => ({
   cropTimetable,
   cropType,
