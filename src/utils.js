@@ -89,6 +89,10 @@ const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
   {}
 )
 
+/**
+ * @param {Array.<*>} list
+ * @return {*}
+ */
 export const chooseRandom = list =>
   list[Math.round(Math.random() * (list.length - 1))]
 
@@ -434,10 +438,10 @@ export const getFinalCropItemIdFromSeedItemId = (
 
 /**
  * @param {farmhand.item} item
- * @param {number} [variationIdx]
+ * @param {number} [variationIdx=0]
  * @returns {farmhand.item}
  */
-export const getFinalCropItemFromSeedItem = ({ id }, variantIdx) =>
+export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) =>
   itemsMap[getFinalCropItemIdFromSeedItemId(id, variantIdx)]
 
 /**

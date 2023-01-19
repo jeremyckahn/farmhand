@@ -1,7 +1,10 @@
+/** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
+
 import {
   getCropFromItemId,
   getFinalCropItemIdFromSeedItemId,
 } from '../../utils'
+import { itemsMap } from '../../data/maps'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { processSprinklers } from './processSprinklers'
@@ -24,12 +27,24 @@ export const plantInPlot = (state, x, y, plantableItemId) => {
 
   const { field } = state
   const row = field[y]
-  const finalCropItemId = getFinalCropItemIdFromSeedItemId(plantableItemId)
 
   if (row[x]) {
     // Something is already planted in field[x][y]
     return state
   }
+
+  let variationIdx = 0
+
+  const item = itemsMap[plantableItemId]
+
+  if (Array.isArray(item.growsInto)) {
+    variationIdx = Math.round(Math.random() * (item.growsInto.length - 1))
+  }
+
+  const finalCropItemId = getFinalCropItemIdFromSeedItemId(
+    plantableItemId,
+    variationIdx
+  )
 
   state = modifyFieldPlotAt(state, x, y, () =>
     getCropFromItemId(finalCropItemId)

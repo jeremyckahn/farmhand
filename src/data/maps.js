@@ -1,3 +1,5 @@
+/** @typedef {import("../index").farmhand.item} farmhand.item */
+
 import { cropType, recipeType } from '../enums'
 
 import * as recipes from './recipes'
@@ -49,6 +51,9 @@ for (let toolType of Object.keys(upgrades)) {
   }
 }
 
+/**
+ * @type {Object.<string, farmhand.item>}
+ */
 export const itemsMap = {
   ...baseItemsMap,
   ...recipesMap,

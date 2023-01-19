@@ -17,7 +17,7 @@ export const grapeSeed = crop({
   },
   growsInto: ['grape-green', 'grape-purple', 'grape-red'],
   id: 'grape-seed',
-  name: 'Grape Bulb',
+  name: 'Grape Seed',
   tier: 7,
 })
 
