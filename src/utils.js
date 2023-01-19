@@ -1,4 +1,5 @@
 /** @typedef {import("./index").farmhand.item} farmhand.item */
+/** @typedef {import("./index").farmhand.crop} farmhand.crop */
 
 /**
  * @module farmhand.utils
