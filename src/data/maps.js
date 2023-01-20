@@ -7,6 +7,8 @@ import upgrades from './upgrades'
 
 import baseItemsMap from './items-map'
 
+import { grapeSeed } from './crops'
+
 const {
   ASPARAGUS,
   CARROT,
@@ -61,12 +63,34 @@ export const itemsMap = {
   ...upgradesMap,
 }
 
-export const cropIdToTypeMap = {
+/**
+ * @type {Object.<string, farmhand.item>}
+ */
+export const cropItemIdToSeedItemIdMap = Object.entries(baseItemsMap).reduce(
+  (acc, [itemId, item]) => {
+    const { growsInto } = item
+    if (growsInto) {
+      const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
+
+      for (const variantId of variants) {
+        acc[variantId] = baseItemsMap[itemId]
+      }
+    }
+
+    return acc
+  },
+  {}
+)
+
+/**
+ * @type {Object.<string, string|Array.<string>>}
+ */
+export const cropTypeToIdMap = {
   [ASPARAGUS]: 'asparagus',
   [CARROT]: 'carrot',
   [CORN]: 'corn',
   [GARLIC]: 'garlic',
-  [GRAPE]: 'grape',
+  [GRAPE]: grapeSeed.growsInto,
   [JALAPENO]: 'jalapeno',
   [OLIVE]: 'olive',
   [ONION]: 'onion',

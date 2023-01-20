@@ -32,7 +32,7 @@ describe('sellItem', () => {
   test('does not change revenue for seed sales', () => {
     const state = sellItem(
       {
-        inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
+        inventory: [testItem({ id: 'sample-crop-1-seed', quantity: 1 })],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -40,16 +40,16 @@ describe('sellItem', () => {
         todaysNotifications: [],
         revenue: 0,
         todaysRevenue: 0,
-        valueAdjustments: { 'sample-crop-seeds-1': 1 },
+        valueAdjustments: { 'sample-crop-1-seed': 1 },
       },
-      testItem({ id: 'sample-crop-seeds-1' })
+      testItem({ id: 'sample-crop-1-seed' })
     )
 
     expect(state.inventory).toEqual([])
     expect(state.money).toEqual(101)
     expect(state.revenue).toEqual(0)
     expect(state.todaysRevenue).toEqual(0)
-    expect(state.itemsSold).toEqual({ 'sample-crop-seeds-1': 1 })
+    expect(state.itemsSold).toEqual({ 'sample-crop-1-seed': 1 })
   })
 
   test('applies achievement bonus to farm products', () => {
@@ -81,7 +81,7 @@ describe('sellItem', () => {
   test('does not apply achievement bonus to seeds', () => {
     const state = sellItem(
       {
-        inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
+        inventory: [testItem({ id: 'sample-crop-1-seed', quantity: 1 })],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -89,19 +89,19 @@ describe('sellItem', () => {
         todaysNotifications: [],
         revenue: 0,
         todaysRevenue: 0,
-        valueAdjustments: { 'sample-crop-seeds-1': 1 },
+        valueAdjustments: { 'sample-crop-1-seed': 1 },
         completedAchievements: {
           'i-am-rich-3': true,
         },
       },
-      testItem({ id: 'sample-crop-seeds-1' })
+      testItem({ id: 'sample-crop-1-seed' })
     )
 
     expect(state.inventory).toEqual([])
     expect(state.money).toEqual(101)
     expect(state.revenue).toEqual(0)
     expect(state.todaysRevenue).toEqual(0)
-    expect(state.itemsSold).toEqual({ 'sample-crop-seeds-1': 1 })
+    expect(state.itemsSold).toEqual({ 'sample-crop-1-seed': 1 })
   })
 
   test('updates learnedRecipes', () => {
@@ -131,7 +131,7 @@ describe('sellItem', () => {
       test('sale is not garnished', () => {
         state = sellItem(
           {
-            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 3 })],
+            inventory: [testItem({ id: 'sample-crop-1-seed', quantity: 3 })],
             itemsSold: {},
             loanBalance: 100,
             money: 100,
@@ -139,9 +139,9 @@ describe('sellItem', () => {
             todaysNotifications: [],
             revenue: 0,
             todaysRevenue: 0,
-            valueAdjustments: { 'sample-crop-seeds-1': 10 },
+            valueAdjustments: { 'sample-crop-1-seed': 10 },
           },
-          testItem({ id: 'sample-crop-seeds-1' }),
+          testItem({ id: 'sample-crop-1-seed' }),
           3
         )
 

@@ -47,7 +47,7 @@ describe('private helpers', () => {
 
   describe('getPlantableCropInventory', () => {
     test('selects plantable crop items from inventory', () => {
-      const inventory = [{ id: 'sample-crop-seeds-1' }, { id: 'sample-item-1' }]
+      const inventory = [{ id: 'sample-crop-1-seed' }, { id: 'sample-item-1' }]
       const plantableCropInventory = getPlantableCropInventory(inventory)
 
       expect(plantableCropInventory).toEqual([sampleCropSeedsItem1])

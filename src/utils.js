@@ -1,5 +1,6 @@
-/** @typedef {import("./index").farmhand.item} farmhand.item */
 /** @typedef {import("./index").farmhand.crop} farmhand.crop */
+/** @typedef {import("./index").farmhand.item} farmhand.item */
+/** @typedef {import("./index").farmhand.plotContent} farmhand.plotContent */
 
 /**
  * @module farmhand.utils
@@ -19,7 +20,7 @@ import { funAnimalName } from 'fun-animal-names'
 import cowShopInventory from './data/shop-inventory-cow'
 import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
-import { cropIdToTypeMap, itemsMap } from './data/maps'
+import { cropItemIdToSeedItemIdMap, itemsMap } from './data/maps'
 import {
   chocolateMilk,
   milk1,
@@ -327,13 +328,6 @@ export const isItemAFarmProduct = item =>
 
 /**
  * @param {farmhand.crop} crop
- * @returns {string}
- */
-export const getCropId = ({ itemId }) =>
-  cropIdToTypeMap[itemsMap[itemId].cropType]
-
-/**
- * @param {farmhand.crop} crop
  * @returns {number}
  */
 export const getCropLifecycleDuration = memoize(({ cropTimetable }) =>
@@ -359,11 +353,6 @@ export const getCropLifeStage = ({ itemId, daysWatered }) =>
   getLifeStageRange(itemsMap[itemId].cropTimetable)[Math.floor(daysWatered)] ||
   GROWN
 
-const cropLifeStageToImageSuffixMap = {
-  [SEED]: 'seed',
-  [GROWING]: 'growing',
-}
-
 /**
  * @param {farmhand.plotContent} plotContent
  * @param {number} x
@@ -373,15 +362,22 @@ const cropLifeStageToImageSuffixMap = {
 export const getPlotImage = (plotContent, x, y) => {
   if (plotContent) {
     if (getPlotContentType(plotContent) === itemType.CROP) {
-      if (getCropLifeStage(plotContent) === GROWN) {
-        return itemImages[getCropId(plotContent)]
-      } else {
-        return itemImages[
-          `${getCropId(plotContent)}-${
-            cropLifeStageToImageSuffixMap[getCropLifeStage(plotContent)]
-          }`
-        ]
+      let itemImageId
+      switch (getCropLifeStage(plotContent)) {
+        case GROWN:
+          itemImageId = plotContent.itemId
+          break
+
+        case GROWING:
+          itemImageId = `${plotContent.itemId}-growing`
+          break
+
+        default:
+          const seedItem = cropItemIdToSeedItemIdMap[plotContent.itemId]
+          itemImageId = seedItem.id
       }
+
+      return itemImages[itemImageId]
     }
 
     if (getPlotContentType(plotContent) === itemType.WEED) {

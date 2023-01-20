@@ -126,7 +126,7 @@ describe('harvestPlot', () => {
                 }),
               ],
             ],
-            inventory: [{ id: 'sample-crop-seeds-1', quantity: 2 }],
+            inventory: [{ id: 'sample-crop-1-seed', quantity: 2 }],
             inventoryLimit: INFINITE_STORAGE_LIMIT,
             itemsSold: {},
           },

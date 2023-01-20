@@ -1,3 +1,5 @@
+/** @typedef {import("../../index").farmhand.item} farmhand.item */
+
 import { recipeType } from '../../enums'
 
 import * as items from './items'
@@ -26,6 +28,25 @@ export const itemsMap = {
   ...recipesMap,
 }
 
-export const cropIdToTypeMap = {
+/**
+ * @type {Object.<string, farmhand.item>}
+ */
+export const cropItemIdToSeedItemIdMap = Object.entries(itemsMap).reduce(
+  (acc, [itemId, item]) => {
+    const { growsInto } = item
+    if (growsInto) {
+      const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
+
+      for (const variantId of variants) {
+        acc[variantId] = itemsMap[itemId]
+      }
+    }
+
+    return acc
+  },
+  {}
+)
+
+export const cropTypeToIdMap = {
   SAMPLE_CROP_TYPE_1: 'sample-crop-type-1',
 }

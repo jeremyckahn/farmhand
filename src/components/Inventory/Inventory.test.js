@@ -42,14 +42,14 @@ describe('item sorting', () => {
   test('sorts by type and base value', () => {
     expect(
       sortItems([
-        testItem({ id: 'sample-crop-seeds-2', value: 0.5 }),
+        testItem({ id: 'sample-crop-seed-2', value: 0.5 }),
         testItem({ id: 'scarecrow' }),
         testItem({ id: 'sprinkler' }),
-        testItem({ id: 'sample-crop-seeds-1' }),
+        testItem({ id: 'sample-crop-1-seed' }),
       ])
     ).toEqual([
-      testItem({ id: 'sample-crop-seeds-1' }),
-      testItem({ id: 'sample-crop-seeds-2', value: 0.5 }),
+      testItem({ id: 'sample-crop-1-seed' }),
+      testItem({ id: 'sample-crop-seed-2', value: 0.5 }),
       testItem({ id: 'sprinkler' }),
       testItem({ id: 'scarecrow' }),
     ])
@@ -59,10 +59,10 @@ describe('item sorting', () => {
     expect(
       separateItemsIntoCategories(
         [
-          testItem({ id: 'sample-crop-seeds-2', isPlantableCrop: true }),
+          testItem({ id: 'sample-crop-seed-2', isPlantableCrop: true }),
           testItem({ id: 'scarecrow' }),
           testItem({ id: 'sprinkler' }),
-          testItem({ id: 'sample-crop-seeds-1', isPlantableCrop: true }),
+          testItem({ id: 'sample-crop-1-seed', isPlantableCrop: true }),
           testItem({ id: 'sample-recipe-1' }),
           testItem({ id: 'cow-feed' }),
           testItem({ id: 'sample-crop-1' }),
@@ -82,8 +82,8 @@ describe('item sorting', () => {
         testItem({ id: 'iron-ore' }),
       ],
       [categoryIds.SEEDS]: [
-        testItem({ id: 'sample-crop-seeds-1', isPlantableCrop: true }),
-        testItem({ id: 'sample-crop-seeds-2', isPlantableCrop: true }),
+        testItem({ id: 'sample-crop-1-seed', isPlantableCrop: true }),
+        testItem({ id: 'sample-crop-seed-2', isPlantableCrop: true }),
       ],
       [categoryIds.FIELD_TOOLS]: [
         testItem({ id: 'sprinkler' }),

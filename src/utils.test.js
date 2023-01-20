@@ -14,7 +14,6 @@ import {
   getCowFertilizerProductionRate,
   getCowValue,
   getCowWeight,
-  getCropId,
   getCropLifeStage,
   getCropLifecycleDuration,
   getFinalCropItemIdFromSeedItemId,
@@ -530,12 +529,6 @@ describe('getCowWeight', () => {
   })
 })
 
-describe('getCropId', () => {
-  test('returns an ID for a provided crop', () => {
-    expect(getCropId({ itemId: 'sample-crop-1' })).toBe('sample-crop-type-1')
-  })
-})
-
 describe('getLifeStageRange', () => {
   test('converts a cropTimetable to an array of stages', () => {
     expect(getLifeStageRange({ [SEED]: 1, [GROWING]: 2 })).toEqual([
@@ -571,13 +564,13 @@ describe('getPlotImage', () => {
     const itemId = 'sample-crop-1'
 
     expect(getPlotImage(testCrop({ itemId, daysWatered: 0 }))).toBe(
-      itemImages['sample-crop-type-1-seed']
+      itemImages['sample-crop-1-seed']
     )
     expect(getPlotImage(testCrop({ itemId, daysWatered: 1 }))).toBe(
-      itemImages['sample-crop-type-1-growing']
+      itemImages['sample-crop-1-growing']
     )
     expect(getPlotImage(testCrop({ itemId, daysWatered: 3 }))).toBe(
-      itemImages['sample-crop-type-1']
+      itemImages['sample-crop-1']
     )
   })
 
@@ -642,7 +635,7 @@ describe('getRangeCoords', () => {
 
 describe('getFinalCropItemIdFromSeedItemId', () => {
   test('gets "final" crop item id from seed item id', () => {
-    expect(getFinalCropItemIdFromSeedItemId('sample-crop-seeds-1')).toEqual(
+    expect(getFinalCropItemIdFromSeedItemId('sample-crop-1-seed')).toEqual(
       'sample-crop-1'
     )
   })
@@ -651,7 +644,7 @@ describe('getFinalCropItemIdFromSeedItemId', () => {
 describe('getSeedItemIdFromFinalStageCropItemId', () => {
   test('gets seed item from crop item', () => {
     expect(getSeedItemIdFromFinalStageCropItemId('sample-crop-1')).toEqual(
-      'sample-crop-seeds-1'
+      'sample-crop-1-seed'
     )
   })
 
