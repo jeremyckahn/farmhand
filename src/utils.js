@@ -93,10 +93,16 @@ const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
 
 /**
  * @param {Array.<*>} list
+ * @return {number}
+ */
+export const chooseRandomIndex = list =>
+  Math.round(Math.random() * (list.length - 1))
+
+/**
+ * @param {Array.<*>} list
  * @return {*}
  */
-export const chooseRandom = list =>
-  list[Math.round(Math.random() * (list.length - 1))]
+export const chooseRandom = list => list[chooseRandomIndex(list)]
 
 // Ensures that the condition argument to memoize() is not ignored, per
 // https://github.com/caiogondim/fast-memoize.js#function-arguments

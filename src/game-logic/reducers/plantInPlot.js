@@ -1,6 +1,7 @@
 /** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
 
 import {
+  chooseRandomIndex,
   getCropFromItemId,
   getFinalCropItemIdFromSeedItemId,
 } from '../../utils'
@@ -33,13 +34,11 @@ export const plantInPlot = (state, x, y, plantableItemId) => {
     return state
   }
 
-  let variationIdx = 0
+  const { growsInto } = itemsMap[plantableItemId]
 
-  const item = itemsMap[plantableItemId]
-
-  if (Array.isArray(item.growsInto)) {
-    variationIdx = Math.round(Math.random() * (item.growsInto.length - 1))
-  }
+  const variationIdx = Array.isArray(growsInto)
+    ? chooseRandomIndex(growsInto)
+    : 0
 
   const finalCropItemId = getFinalCropItemIdFromSeedItemId(
     plantableItemId,
