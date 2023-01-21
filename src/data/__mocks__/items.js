@@ -74,6 +74,7 @@ export const sampleCropSeedsItem1 = testItem({
   enablesFieldMode: 'PLANT',
   growsInto: 'sample-crop-1',
   id: 'sample-crop-1-seed',
+  name: 'Sample Crop Item Seed 1',
   isPlantableCrop: true,
   type: itemType.CROP,
   value: 1,
@@ -136,6 +137,46 @@ export const sampleCropItem3 = testItem({
   cropTimetable: {
     [SEED]: 5,
     [GROWING]: 5,
+  },
+})
+
+export const sampleCropSeedsItemWithVarieties = testItem({
+  cropType: 'SAMPLE_CROP_TYPE_WITH_VARIETIES',
+  doesPriceFluctuate: true,
+  enablesFieldMode: 'PLANT',
+  growsInto: [
+    'sample-crop-with-varieties-variety-1',
+    'sample-crop-with-varieties-variety-2',
+  ],
+  id: 'sample-crop-1-with-varieties-seed',
+  isPlantableCrop: true,
+  type: itemType.CROP,
+  value: 1,
+})
+
+export const sampleCropItemWithVarieties_variety1 = testItem({
+  cropType: 'SAMPLE_CROP_TYPE_WITH_VARIETIES',
+  doesPriceFluctuate: true,
+  id: 'sample-crop-with-varieties-variety-1',
+  name: 'Sample Crop Item With Varieties, Variety 1',
+  type: itemType.CROP,
+  value: 2,
+  cropTimetable: {
+    [SEED]: 1,
+    [GROWING]: 2,
+  },
+})
+
+export const sampleCropItemWithVarieties_variety2 = testItem({
+  cropType: 'SAMPLE_CROP_TYPE_WITH_VARIETIES',
+  doesPriceFluctuate: true,
+  id: 'sample-crop-with-varieties-variety-2',
+  name: 'Sample Crop Item With Varieties, Variety 2',
+  type: itemType.CROP,
+  value: 2,
+  cropTimetable: {
+    [SEED]: 1,
+    [GROWING]: 2,
   },
 })
 

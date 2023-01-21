@@ -281,6 +281,15 @@ export const getResaleValue = ({ id }) => itemsMap[id].value / 2
 
 /**
  * @param {string} itemId
+ * @returns {farmhand.plotContent}
+ */
+export const getPlotContentFromItemId = itemId => ({
+  itemId,
+  fertilizerType: fertilizerType.NONE,
+})
+
+/**
+ * @param {string} itemId
  * @returns {farmhand.crop}
  */
 export const getCropFromItemId = itemId => ({
@@ -289,15 +298,6 @@ export const getCropFromItemId = itemId => ({
   daysWatered: 0,
   fertilizerType: fertilizerType.NONE,
   wasWateredToday: false,
-})
-
-/**
- * @param {string} itemId
- * @returns {farmhand.plotContent}
- */
-export const getPlotContentFromItemId = itemId => ({
-  itemId,
-  fertilizerType: fertilizerType.NONE,
 })
 
 /**

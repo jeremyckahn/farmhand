@@ -122,6 +122,21 @@ export const Plot = ({
         getPlotContentType(plotContent) === itemType.CROP)
   )
 
+  let plotLabelText = null
+  if (item) {
+    const isSeedItem =
+      item.type === itemType.CROP &&
+      getCropLifeStage(plotContent) === cropLifeStage.SEED
+
+    plotLabelText = isSeedItem
+      ? cropItemIdToSeedItemMap[item.id].name
+      : item.name
+  } else if (plotContent?.isShoveled) {
+    // FIXME: Show the name of the ore that was just shoveled, if available
+    // (`plotContent?.itemId`).
+    plotLabelText = SHOVELED
+  }
+
   const plot = (
     <div
       {...{
@@ -168,26 +183,11 @@ export const Plot = ({
             backgroundImage: showPlotImage ? `url(${image})` : undefined,
           },
           src: pixel,
-          alt:
-            itemsMap[plotContent?.itemId ?? plotContent?.oreId]?.name ||
-            'Empty plot',
+          alt: plotLabelText ?? 'Empty plot',
         }}
       />
     </div>
   )
-
-  let tooltipContents = null
-  if (item) {
-    const isSeedItem =
-      item.type === itemType.CROP &&
-      getCropLifeStage(plotContent) === cropLifeStage.SEED
-
-    tooltipContents = isSeedItem
-      ? cropItemIdToSeedItemMap[item.id].name
-      : item.name
-  } else if (plotContent?.isShoveled) {
-    tooltipContents = SHOVELED
-  }
 
   if (!plotContent) {
     return plot
@@ -200,9 +200,7 @@ export const Plot = ({
         placement: 'top',
         title: (
           <>
-            {tooltipContents ? (
-              <Typography>{tooltipContents}</Typography>
-            ) : null}
+            {plotLabelText ? <Typography>{plotLabelText}</Typography> : null}
             {isCrop && (
               <Typography>
                 {daysLeftToMature
