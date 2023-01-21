@@ -66,7 +66,7 @@ export const itemsMap = {
 /**
  * @type {Object.<string, farmhand.item>}
  */
-export const cropItemIdToSeedItemIdMap = Object.entries(baseItemsMap).reduce(
+export const cropItemIdToSeedItemMap = Object.entries(baseItemsMap).reduce(
   (acc, [itemId, item]) => {
     const { growsInto } = item
     if (growsInto) {

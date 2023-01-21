@@ -1,3 +1,6 @@
+/** @typedef {import("../../index").farmhand.item} farmhand.item */
+/** @typedef {import("../../index").farmhand.plotContent} farmhand.plotContent */
+
 import React, { useEffect, useState } from 'react'
 import { bool, func, number, object, string } from 'prop-types'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -11,7 +14,7 @@ import {
   getPlotContentType,
   getPlotImage,
 } from '../../utils'
-import { itemsMap } from '../../data/maps'
+import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, fertilizerType, itemType } from '../../enums'
 import { FERTILIZER_BONUS } from '../../constants'
@@ -20,6 +23,10 @@ import { SHOVELED } from '../../strings'
 
 import './Plot.sass'
 
+/**
+ * @param {farmhand.plotContent?} plotContent
+ * @returns {string}
+ */
 export const getBackgroundStyles = plotContent => {
   if (!plotContent) {
     return null
@@ -171,7 +178,13 @@ export const Plot = ({
 
   let tooltipContents = null
   if (item) {
-    tooltipContents = item.name
+    const isSeedItem =
+      item.type === itemType.CROP &&
+      getCropLifeStage(plotContent) === cropLifeStage.SEED
+
+    tooltipContents = isSeedItem
+      ? cropItemIdToSeedItemMap[item.id].name
+      : item.name
   } else if (plotContent?.isShoveled) {
     tooltipContents = SHOVELED
   }

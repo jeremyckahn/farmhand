@@ -20,7 +20,7 @@ import { funAnimalName } from 'fun-animal-names'
 import cowShopInventory from './data/shop-inventory-cow'
 import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
-import { cropItemIdToSeedItemIdMap, itemsMap } from './data/maps'
+import { cropItemIdToSeedItemMap, itemsMap } from './data/maps'
 import {
   chocolateMilk,
   milk1,
@@ -379,7 +379,7 @@ export const getPlotImage = (plotContent, x, y) => {
           break
 
         default:
-          const seedItem = cropItemIdToSeedItemIdMap[plotContent.itemId]
+          const seedItem = cropItemIdToSeedItemMap[plotContent.itemId]
           itemImageId = seedItem.id
       }
 
