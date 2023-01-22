@@ -422,6 +422,14 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
 }
 
 /**
+ * @param {farmhand.item} item
+ * @param {number} [variationIdx=0]
+ * @returns {farmhand.item}
+ */
+export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) =>
+  itemsMap[getFinalCropItemIdFromSeedItemId(id, variantIdx)]
+
+/**
  * @param {string} seedItemId
  * @param {number} [variationIdx]
  * @returns {string}
@@ -440,30 +448,18 @@ export const getFinalCropItemIdFromSeedItemId = (
 }
 
 /**
- * @param {farmhand.item} item
- * @param {number} [variationIdx=0]
- * @returns {farmhand.item}
- */
-export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) =>
-  itemsMap[getFinalCropItemIdFromSeedItemId(id, variantIdx)]
-
-/**
  * @param {string} cropItemId
  * @returns {string}
  */
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
   cropItemId => {
-    return Object.values(itemsMap).find(
-      ({ growsInto }) => {
-        if (Array.isArray(growsInto)) {
-          return growsInto.includes(cropItemId)
-        } else {
-          return growsInto === cropItemId
-        }
+    return Object.values(itemsMap).find(({ growsInto }) => {
+      if (Array.isArray(growsInto)) {
+        return growsInto.includes(cropItemId)
+      } else {
+        return growsInto === cropItemId
       }
-      // TODO: The optional chaining operator here is only necessary for testing
-      // convenience. Update the relevant tests to make it unnecessary.
-    )?.id
+    }).id
   },
   {
     cacheSize: Object.keys(itemsMap).length,

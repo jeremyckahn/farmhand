@@ -648,14 +648,14 @@ describe('getFinalCropItemIdFromSeedItemId', () => {
 
 describe('getSeedItemIdFromFinalStageCropItemId', () => {
   test('gets seed item from crop item', () => {
-    expect(getSeedItemIdFromFinalStageCropItemId('sample-crop-1')).toEqual(
-      'sample-crop-1-seed'
+    expect(getSeedItemIdFromFinalStageCropItemId('carrot')).toEqual(
+      'carrot-seed'
     )
   })
 
-  test('handles invalid crop id input', () => {
-    expect(getSeedItemIdFromFinalStageCropItemId('nonexistent-crop')).toEqual(
-      undefined
+  test('gets seed item from crop item with varieties', () => {
+    expect(getSeedItemIdFromFinalStageCropItemId('grape-green')).toEqual(
+      'grape-seed'
     )
   })
 })
