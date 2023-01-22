@@ -635,8 +635,13 @@ describe('getRangeCoords', () => {
 
 describe('getFinalCropItemIdFromSeedItemId', () => {
   test('gets "final" crop item id from seed item id', () => {
-    expect(getFinalCropItemIdFromSeedItemId('sample-crop-1-seed')).toEqual(
-      'sample-crop-1'
+    expect(getFinalCropItemIdFromSeedItemId('carrot-seed')).toEqual('carrot')
+  })
+
+  test('gets "final" crop item id from seed item id with varieties', () => {
+    jest.spyOn(Math, 'random').mockReturnValue(0)
+    expect(getFinalCropItemIdFromSeedItemId('grape-seed')).toEqual(
+      'grape-green'
     )
   })
 })
