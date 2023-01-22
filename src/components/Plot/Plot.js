@@ -22,6 +22,7 @@ import { FERTILIZER_BONUS } from '../../constants'
 import { SHOVELED } from '../../strings'
 
 import './Plot.sass'
+import { SHOVELED_PLOT } from '../../templates'
 
 /**
  * @param {farmhand.plotContent?} plotContent
@@ -131,10 +132,10 @@ export const Plot = ({
     plotLabelText = isSeedItem
       ? cropItemIdToSeedItemMap[item.id].name
       : item.name
-  } else if (plotContent?.isShoveled) {
-    // FIXME: Show the name of the ore that was just shoveled, if available
-    // (`plotContent?.itemId`).
-    plotLabelText = SHOVELED
+  } else if (wasJustShoveled || plotContent?.isShoveled) {
+    const oreItem = itemsMap[plotContent?.oreId]
+
+    plotLabelText = oreItem ? SHOVELED_PLOT`${oreItem}` : SHOVELED
   }
 
   const plot = (

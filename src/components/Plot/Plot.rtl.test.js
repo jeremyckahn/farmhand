@@ -143,7 +143,7 @@ describe('background image', () => {
               {...{
                 ...plotProps,
                 plotContent: testShoveledPlot({
-                  oreId: 'sample-ore-1',
+                  oreId: 'stone',
                   isShoveled,
                 }),
                 handlePlotClick: () => setIsShoveled(true),
@@ -169,7 +169,7 @@ describe('background image', () => {
     })
 
     test('renders bare plot classes', () => {
-      const img = screen.queryByAltText('Empty plot')
+      const img = screen.getByAltText('Empty plot')
       const { classList } = img
 
       expect(classList).not.toContain('animated')
@@ -177,12 +177,15 @@ describe('background image', () => {
     })
 
     test('renders newly-mined ore classes', () => {
-      const img = screen.queryByAltText('Empty plot')
+      const img = screen.getByAltText('Empty plot')
       const { classList } = img
       userEvent.click(img)
 
       expect(classList).toContain('animated')
       expect(classList).toContain('was-just-shoveled')
+
+      const updatedImg = screen.getByAltText('Shoveled plot of Stone')
+      expect(updatedImg).toBeInTheDocument()
     })
   })
 

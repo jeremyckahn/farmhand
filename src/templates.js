@@ -1,3 +1,5 @@
+/** @typedef {import("./index").farmhand.item} farmhand.item */
+
 /**
  * @module farmhand.templates
  * @ignore
@@ -313,3 +315,9 @@ export const COW_TRADED_NOTIFICATION = (
     playerId,
     allowCustomPeerCowNames
   )} for ${getCowDisplayName(cowReceived, playerId, allowCustomPeerCowNames)}!`
+
+/**
+ * @param {farmhand.item} item
+ * @returns {string}
+ */
+export const SHOVELED_PLOT = (_, item) => `Shoveled plot of ${item.name}`

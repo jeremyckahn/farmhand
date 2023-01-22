@@ -27,7 +27,7 @@ export const OUT_OF_COW_FEED_NOTIFICATION =
   "You're out of cow feed! Buy some more before your cows get hungry and run away!"
 export const INVENTORY_FULL_NOTIFICATION = 'Your inventory is full!'
 
-export const SHOVELED = 'Shoveled'
+export const SHOVELED = 'Shoveled plot'
 
 export const WATERING_CAN_ALT_TEXT = 'A watering can for hydrating plants.'
 export const WATERING_CAN_HIDDEN_TEXT =
