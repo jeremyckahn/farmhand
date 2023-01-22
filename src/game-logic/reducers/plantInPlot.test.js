@@ -75,4 +75,23 @@ describe('plantInPlot', () => {
       expect(inputState).toEqual(state)
     })
   })
+
+  describe('crops with varieties', () => {
+    test('plants a crop from a seed with varieties', () => {
+      jest.spyOn(Math, 'random').mockReturnValue(0)
+      const state = plantInPlot(
+        {
+          field: [[]],
+          inventory: [testItem({ id: 'grape-seed', quantity: 1 })],
+          itemsSold: {},
+          selectedItemId: 'grape-seed',
+        },
+        0,
+        0,
+        'grape-seed'
+      )
+
+      expect(state.field[0][0]).toEqual(getCropFromItemId('grape-green'))
+    })
+  })
 })
