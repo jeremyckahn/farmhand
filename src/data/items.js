@@ -31,7 +31,6 @@ export {
   garlicSeed,
   grapeGreen,
   grapePurple,
-  grapeRed,
   grapeSeed,
   jalapeno,
   jalapenoSeed,

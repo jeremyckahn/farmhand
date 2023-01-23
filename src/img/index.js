@@ -50,10 +50,8 @@ import garlicSeed from './items/garlic-seed.png'
 import grapeSeed from './items/grape-seed.png'
 import grapeGreenGrowing from './items/grape-green-growing.png'
 import grapePurpleGrowing from './items/grape-purple-growing.png'
-import grapeRedGrowing from './items/grape-red-growing.png'
 import grapeGreen from './items/grape-green.png'
 import grapePurple from './items/grape-purple.png'
-import grapeRed from './items/grape-red.png'
 import jalapeno from './items/jalapeno.png'
 import jalapenoGrowing from './items/jalapeno-growing.png'
 import jalapenoSeed from './items/jalapeno-seed.png'
@@ -240,10 +238,8 @@ export const items = {
   'grape-seed': grapeSeed,
   'grape-green-growing': grapeGreenGrowing,
   'grape-purple-growing': grapePurpleGrowing,
-  'grape-red-growing': grapeRedGrowing,
   'grape-green': grapeGreen,
   'grape-purple': grapePurple,
-  'grape-red': grapeRed,
   jalapeno,
   'jalapeno-growing': jalapenoGrowing,
   'jalapeno-seed': jalapenoSeed,
