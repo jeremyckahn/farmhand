@@ -57,11 +57,10 @@ const Subheader = ({
 
   const mateId = cowBreedingPen.cowId1 ?? cowBreedingPen.cowId2
   const mate = getCowMapById(cowInventory)[mateId]
+  const isEligibleToBreed = cow.gender !== mate?.gender
 
-  const isEligibleToBreed =
-    (!mate || cow.gender !== mate.gender) && !isThisCowOfferedForTrade
-
-  const canBeMovedToBreedingPen = isRoomInBreedingPen && isEligibleToBreed
+  const canBeMovedToBreedingPen =
+    isRoomInBreedingPen && isEligibleToBreed && !isThisCowOfferedForTrade
 
   const disableBreedingControlTooltip =
     !canBeMovedToBreedingPen && !isInBreedingPen
