@@ -3,26 +3,30 @@ import { COW_GESTATION_PERIOD_DAYS } from '../../constants'
 /**
  * @param {farmhand.state} state
  * @param {farmhand.cow} cow
- * @param {boolean} doAdd If true, cow will be added to the breeding pen. If
+ * @param {boolean} isAdding If true, cow will be added to the breeding pen. If
  * false, they will be removed.
  * @returns {farmhand.state}
  */
-export const changeCowBreedingPenResident = (state, cow, doAdd) => {
-  const { cowBreedingPen } = state
+export const changeCowBreedingPenResident = (state, cow, isAdding) => {
+  const { cowBreedingPen, cowInventory } = state
   const { cowId1, cowId2 } = cowBreedingPen
-  const isPenFull = cowId1 !== null && cowId2 !== null
-  const isCowInPen = cowId1 === cow.id || cowId2 === cow.id
+  const isBreedingPenFull = cowId1 !== null && cowId2 !== null
+  const isCowInBreedingPen = cowId1 === cow.id || cowId2 === cow.id
   let newCowBreedingPen = { ...cowBreedingPen }
 
-  if (doAdd) {
-    if (isPenFull || isCowInPen) {
+  const isCowInInventory = !!cowInventory.find(({ id }) => {
+    return id === cow.id
+  })
+
+  if (isAdding) {
+    if (!isCowInInventory || isBreedingPenFull || isCowInBreedingPen) {
       return state
     }
 
     const cowId = cowId1 === null ? 'cowId1' : 'cowId2'
     newCowBreedingPen = { ...newCowBreedingPen, [cowId]: cow.id }
   } else {
-    if (!isCowInPen) {
+    if (!isCowInBreedingPen) {
       return state
     }
 

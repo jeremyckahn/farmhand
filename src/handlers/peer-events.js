@@ -91,7 +91,7 @@ export const handleCowTradeRequest = async (
 
       if (!peerMetadata) {
         console.error(`No data for peer ${updatedCowOffered.ownerId}`)
-        return
+        return null
       }
 
       state = changeCowAutomaticHugState(state, cowToTradeAway, false)
