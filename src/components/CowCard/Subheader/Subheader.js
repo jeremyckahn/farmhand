@@ -46,28 +46,22 @@ const Subheader = ({
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   huggingMachinesRemain,
-  id,
+  id, // Player ID, not cow ID
   isCowPurchased,
 }) => {
   const numberOfFullHearts = cow.happiness * 10
   const isInBreedingPen = isCowInBreedingPen(cow, cowBreedingPen)
-  const isBreedingPenFull =
-    cowBreedingPen.cowId1 !== null && cowBreedingPen.cowId2 !== null
+  const isRoomInBreedingPen =
+    cowBreedingPen.cowId1 === null || cowBreedingPen.cowId2 === null
+  const isThisCowOfferedForTrade = cowIdOfferedForTrade === cow.id
 
-  const isCowOfferedForTrade = !!cowInventory.find(
-    ({ id }) => id === cowIdOfferedForTrade
-  )
+  const mateId = cowBreedingPen.cowId1 ?? cowBreedingPen.cowId2
+  const mate = getCowMapById(cowInventory)[mateId]
 
-  let canBeMovedToBreedingPen = !isBreedingPenFull && !isCowOfferedForTrade
+  const isEligibleToBreed =
+    (!mate || cow.gender !== mate.gender) && !isThisCowOfferedForTrade
 
-  if (canBeMovedToBreedingPen) {
-    const potentialMateId = cowBreedingPen.cowId2 ?? cowBreedingPen.cowId1
-
-    if (potentialMateId !== null) {
-      canBeMovedToBreedingPen =
-        cow.gender !== getCowMapById(cowInventory)[potentialMateId].gender
-    }
-  }
+  const canBeMovedToBreedingPen = isRoomInBreedingPen && isEligibleToBreed
 
   const disableBreedingControlTooltip =
     !canBeMovedToBreedingPen && !isInBreedingPen
