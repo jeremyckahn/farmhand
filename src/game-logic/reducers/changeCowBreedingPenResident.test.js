@@ -97,6 +97,23 @@ describe('changeCowBreedingPenResident', () => {
       })
     })
 
+    describe('cow is not in inventory', () => {
+      test('no-ops', () => {
+        const inputState = {
+          cowBreedingPen: {
+            cowId1: 'cow-a',
+            cowId2: null,
+            daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+          },
+          cowInventory: [cowA],
+        }
+
+        const state = changeCowBreedingPenResident(inputState, cowB, true)
+
+        expect(state).toBe(inputState)
+      })
+    })
+
     describe('breeding pen is full', () => {
       test('no-ops', () => {
         const inputState = {
