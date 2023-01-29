@@ -3,6 +3,10 @@ import { generateCow } from '../../utils'
 
 import { changeCowBreedingPenResident } from './changeCowBreedingPenResident'
 
+const cowA = generateCow({ id: 'cow-a' })
+const cowB = generateCow({ id: 'cow-b' })
+const cowC = generateCow({ id: 'cow-c' })
+
 describe('changeCowBreedingPenResident', () => {
   describe('doAdd === false', () => {
     describe('cow is not in breeding pen', () => {
@@ -13,13 +17,10 @@ describe('changeCowBreedingPenResident', () => {
             cowId2: 'cow-b',
             daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
           },
+          cowInventory: [cowA, cowB, cowC],
         }
 
-        const state = changeCowBreedingPenResident(
-          inputState,
-          generateCow({ id: 'cow-c' }),
-          false
-        )
+        const state = changeCowBreedingPenResident(inputState, cowC, false)
 
         expect(state).toBe(inputState)
       })
@@ -34,8 +35,9 @@ describe('changeCowBreedingPenResident', () => {
               cowId2: 'cow-b',
               daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
             },
+            cowInventory: [cowA, cowB],
           },
-          generateCow({ id: 'cow-a' }),
+          cowA,
           false
         )
 
@@ -45,6 +47,7 @@ describe('changeCowBreedingPenResident', () => {
             cowId2: null,
             daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
           },
+          cowInventory: [cowA, cowB],
         })
       })
     })
@@ -58,8 +61,9 @@ describe('changeCowBreedingPenResident', () => {
               cowId2: 'cow-b',
               daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
             },
+            cowInventory: [cowA, cowB],
           },
-          generateCow({ id: 'cow-b' }),
+          cowB,
           false
         )
 
@@ -69,6 +73,7 @@ describe('changeCowBreedingPenResident', () => {
             cowId2: null,
             daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
           },
+          cowInventory: [cowA, cowB],
         })
       })
     })
@@ -83,13 +88,27 @@ describe('changeCowBreedingPenResident', () => {
             cowId2: 'cow-b',
             daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
           },
+          cowInventory: [cowA, cowB],
         }
 
-        const state = changeCowBreedingPenResident(
-          inputState,
-          generateCow({ id: 'cow-a' }),
-          true
-        )
+        const state = changeCowBreedingPenResident(inputState, cowA, true)
+
+        expect(state).toBe(inputState)
+      })
+    })
+
+    describe('cow is not in inventory', () => {
+      test('no-ops', () => {
+        const inputState = {
+          cowBreedingPen: {
+            cowId1: 'cow-a',
+            cowId2: null,
+            daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+          },
+          cowInventory: [cowA],
+        }
+
+        const state = changeCowBreedingPenResident(inputState, cowB, true)
 
         expect(state).toBe(inputState)
       })
@@ -103,13 +122,10 @@ describe('changeCowBreedingPenResident', () => {
             cowId2: 'cow-b',
             daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
           },
+          cowInventory: [cowA, cowB],
         }
 
-        const state = changeCowBreedingPenResident(
-          inputState,
-          generateCow({ id: 'cow-c' }),
-          true
-        )
+        const state = changeCowBreedingPenResident(inputState, cowC, true)
 
         expect(state).toBe(inputState)
       })
@@ -124,8 +140,9 @@ describe('changeCowBreedingPenResident', () => {
               cowId2: null,
               daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
             },
+            cowInventory: [cowA, cowB],
           },
-          generateCow({ id: 'cow-a' }),
+          cowA,
           true
         )
 
@@ -135,6 +152,7 @@ describe('changeCowBreedingPenResident', () => {
             cowId2: null,
             daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
           },
+          cowInventory: [cowA, cowB],
         })
       })
     })
@@ -148,8 +166,9 @@ describe('changeCowBreedingPenResident', () => {
               cowId2: null,
               daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
             },
+            cowInventory: [cowA, cowB],
           },
-          generateCow({ id: 'cow-b' }),
+          cowB,
           true
         )
 
@@ -159,6 +178,7 @@ describe('changeCowBreedingPenResident', () => {
             cowId2: 'cow-b',
             daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
           },
+          cowInventory: [cowA, cowB],
         })
       })
     })

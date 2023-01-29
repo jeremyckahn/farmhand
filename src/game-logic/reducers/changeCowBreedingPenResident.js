@@ -1,31 +1,48 @@
 import { COW_GESTATION_PERIOD_DAYS } from '../../constants'
 
 /**
+ * @param {farmhand.cow} cow
+ * @param {farmhand.cowBreedingPen} cowBreedingPen
+ * @param {Array.<farmhand.cow>} cowInventory
+ * @return {boolean}
+ */
+const cowCanBeAdded = (cow, cowBreedingPen, cowInventory) => {
+  const { cowId1, cowId2 } = cowBreedingPen
+  const isBreedingPenFull = cowId1 !== null && cowId2 !== null
+  const isCowInBreedingPen = cowId1 === cow.id || cowId2 === cow.id
+
+  const isCowInInventory = !!cowInventory.find(({ id }) => {
+    return id === cow.id
+  })
+
+  return isCowInInventory && !isBreedingPenFull && !isCowInBreedingPen
+}
+
+/**
  * @param {farmhand.state} state
  * @param {farmhand.cow} cow
- * @param {boolean} doAdd If true, cow will be added to the breeding pen. If
+ * @param {boolean} isAdding If true, cow will be added to the breeding pen. If
  * false, they will be removed.
  * @returns {farmhand.state}
  */
-export const changeCowBreedingPenResident = (state, cow, doAdd) => {
-  const { cowBreedingPen } = state
+export const changeCowBreedingPenResident = (state, cow, isAdding) => {
+  const { cowBreedingPen, cowInventory } = state
   const { cowId1, cowId2 } = cowBreedingPen
-  const isPenFull = cowId1 !== null && cowId2 !== null
-  const isCowInPen = cowId1 === cow.id || cowId2 === cow.id
+  const isCowInBreedingPen = cowId1 === cow.id || cowId2 === cow.id
   let newCowBreedingPen = { ...cowBreedingPen }
 
-  if (doAdd) {
-    if (isPenFull || isCowInPen) {
-      return state
-    }
+  if (isAdding && !cowCanBeAdded(cow, cowBreedingPen, cowInventory)) {
+    return state
+  }
 
-    const cowId = cowId1 === null ? 'cowId1' : 'cowId2'
-    newCowBreedingPen = { ...newCowBreedingPen, [cowId]: cow.id }
+  if (!isAdding && !isCowInBreedingPen) {
+    return state
+  }
+
+  if (isAdding) {
+    const breedingPenCowId = cowId1 === null ? 'cowId1' : 'cowId2'
+    newCowBreedingPen = { ...newCowBreedingPen, [breedingPenCowId]: cow.id }
   } else {
-    if (!isCowInPen) {
-      return state
-    }
-
     if (cowId1 === cow.id) {
       newCowBreedingPen = {
         ...newCowBreedingPen,
