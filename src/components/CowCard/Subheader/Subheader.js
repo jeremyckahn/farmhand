@@ -46,7 +46,7 @@ const Subheader = ({
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   huggingMachinesRemain,
-  id, // Player ID, not cow ID
+  id: playerId,
   isCowPurchased,
 }) => {
   const numberOfFullHearts = cow.happiness * 10
@@ -66,7 +66,9 @@ const Subheader = ({
     !canBeMovedToBreedingPen && !isInBreedingPen
 
   const showOriginalOwner =
-    isCowPurchased && id !== cow.originalOwnerId && id === cow.ownerId
+    isCowPurchased &&
+    playerId !== cow.originalOwnerId &&
+    playerId === cow.ownerId
 
   return (
     <div {...{ className: 'Subheader' }}>
