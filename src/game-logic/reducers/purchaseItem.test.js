@@ -16,7 +16,7 @@ describe('purchaseItem', () => {
             todaysPurchases: {},
             valueAdjustments: { 'sample-item-1': 1 },
           },
-          { id: 'sample-item-1' },
+          { playerId: 'sample-item-1' },
           0
         )
       ).toMatchObject({ inventory: [] })
@@ -34,7 +34,7 @@ describe('purchaseItem', () => {
             todaysPurchases: {},
             valueAdjustments: { 'sample-item-1': 1 },
           },
-          { id: 'sample-item-1' },
+          { playerId: 'sample-item-1' },
           1
         )
       ).toMatchObject({ inventory: [] })
@@ -53,11 +53,11 @@ describe('purchaseItem', () => {
             todaysPurchases: {},
             valueAdjustments: { 'sample-item-1': 1 },
           },
-          { id: 'sample-item-1' },
+          { playerId: 'sample-item-1' },
           2
         )
       ).toMatchObject({
-        inventory: [{ id: 'sample-item-1', quantity: 2 }],
+        inventory: [{ playerId: 'sample-item-1', quantity: 2 }],
         todaysPurchases: { 'sample-item-1': 2 },
         money: 8,
       })
@@ -68,18 +68,18 @@ describe('purchaseItem', () => {
         expect(
           purchaseItem(
             {
-              inventory: [{ id: 'sample-item-1', quantity: 3 }],
+              inventory: [{ playerId: 'sample-item-1', quantity: 3 }],
               inventoryLimit: 3,
               money: 10,
               pendingPeerMessages: [],
               todaysPurchases: {},
               valueAdjustments: { 'sample-item-1': 1 },
             },
-            { id: 'sample-item-1' },
+            { playerId: 'sample-item-1' },
             1
           )
         ).toMatchObject({
-          inventory: [{ id: 'sample-item-1', quantity: 3 }],
+          inventory: [{ playerId: 'sample-item-1', quantity: 3 }],
           todaysPurchases: {},
           money: 10,
         })
@@ -91,18 +91,18 @@ describe('purchaseItem', () => {
         expect(
           purchaseItem(
             {
-              inventory: [{ id: 'sample-item-1', quantity: 2 }],
+              inventory: [{ playerId: 'sample-item-1', quantity: 2 }],
               inventoryLimit: 3,
               money: 10,
               pendingPeerMessages: [],
               todaysPurchases: {},
               valueAdjustments: { 'sample-item-1': 1 },
             },
-            { id: 'sample-item-1' },
+            { playerId: 'sample-item-1' },
             10
           )
         ).toMatchObject({
-          inventory: [{ id: 'sample-item-1', quantity: 3 }],
+          inventory: [{ playerId: 'sample-item-1', quantity: 3 }],
           todaysPurchases: { 'sample-item-1': 1 },
           money: 9,
         })

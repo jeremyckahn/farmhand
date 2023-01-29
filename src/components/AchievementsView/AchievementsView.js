@@ -17,7 +17,7 @@ const partitionAchievements = memoize(completedAchievements =>
   achievements.reduce(
     (acc, achievement) => {
       acc[
-        completedAchievements[achievement.id] ? 'complete' : 'incomplete'
+        completedAchievements[achievement.playerId] ? 'complete' : 'incomplete'
       ].push(achievement)
 
       return acc
@@ -30,7 +30,7 @@ const AchievementsList = ({ achievements }) => (
   <AccordionDetails>
     <ul className="card-list">
       {achievements.map(achievement => (
-        <li {...{ key: achievement.id }}>
+        <li {...{ key: achievement.playerId }}>
           <Achievement {...{ achievement }} />
         </li>
       ))}

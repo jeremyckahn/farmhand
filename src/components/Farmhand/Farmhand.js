@@ -112,43 +112,43 @@ const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
 const emptyObject = Object.freeze({})
 
 /*!
- * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
+ * @param {Array.<{ playerId: farmhand.item, quantity: number }>} inventory
  * @param {Object.<number>} valueAdjustments
  * @returns {Array.<farmhand.item>}
  */
 export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
-  inventory.map(({ quantity, id }) => ({
+  inventory.map(({ quantity, playerId }) => ({
     quantity,
-    ...itemsMap[id],
-    value: getItemCurrentValue(itemsMap[id], valueAdjustments),
+    ...itemsMap[playerId],
+    value: getItemCurrentValue(itemsMap[playerId], valueAdjustments),
   }))
 )
 
 /*!
- * @param {Array.<{ id: farmhand.item }>} inventory
- * @returns {Array.<{ id: farmhand.item }>}
+ * @param {Array.<{ playerId: farmhand.item }>} inventory
+ * @returns {Array.<{ playerId: farmhand.item }>}
  */
 export const getFieldToolInventory = memoize(inventory =>
   inventory
-    .filter(({ id }) => {
-      const { enablesFieldMode } = itemsMap[id]
+    .filter(({ playerId }) => {
+      const { enablesFieldMode } = itemsMap[playerId]
 
       return (
         typeof enablesFieldMode === 'string' &&
         enablesFieldMode !== fieldMode.PLANT
       )
     })
-    .map(({ id }) => itemsMap[id])
+    .map(({ playerId }) => itemsMap[playerId])
 )
 
 /*!
- * @param {Array.<{ id: farmhand.item }>} inventory
- * @returns {Array.<{ id: farmhand.item }>}
+ * @param {Array.<{ playerId: farmhand.item }>} inventory
+ * @returns {Array.<{ playerId: farmhand.item }>}
  */
 export const getPlantableCropInventory = memoize(inventory =>
   inventory
-    .filter(({ id }) => itemsMap[id].isPlantableCrop)
-    .map(({ id }) => itemsMap[id])
+    .filter(({ playerId }) => itemsMap[playerId].isPlantableCrop)
+    .map(({ playerId }) => itemsMap[playerId])
 )
 
 /**
@@ -186,7 +186,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * of cow purchased.
  * @property {string} cowIdOfferedForTrade The ID of the cow that is currently
  * set to be traded with online peers.
- * @property {Object} cowsSold Keys are items IDs, values are the id references
+ * @property {Object} cowsSold Keys are items IDs, values are the playerId references
  * of cow colors (rainbow-cow, etc.).
  * @property {number} cowsTraded
  * @property {number?} cowTradeTimeoutId
@@ -208,8 +208,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * historical price data analysis in the future. It is an array for
  * future-facing flexibility.
  * @property {number} hoveredPlotRangeSize
- * @property {string} id
- * @property {Array.<{ id: farmhand.item, quantity: number }>} inventory
+ * @property {string} playerId
+ * @property {Array.<{ playerId: farmhand.item, quantity: number }>} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
  * @property {boolean} isAwaitingCowTradeRequest
  * @property {boolean} isAwaitingNetworkRequest
@@ -387,8 +387,8 @@ export default class Farmhand extends Component {
       historicalDailyRevenue: [],
       historicalValueAdjustments: [],
       hoveredPlotRangeSize: 0,
-      id: uuid(),
-      inventory: [{ id: scarecrow.id, quantity: 1 }],
+      playerId: uuid(),
+      inventory: [{ playerId: scarecrow.playerId, quantity: 1 }],
       inventoryLimit: INITIAL_STORAGE_LIMIT,
       isAwaitingCowTradeRequest: false,
       isAwaitingNetworkRequest: false,
@@ -703,12 +703,12 @@ export default class Farmhand extends Component {
 
     if (peerRoom !== prevState.peerRoom) {
       if (peerRoom) {
-        peerRoom.onPeerJoin(id => {
-          this.addPeer(id)
+        peerRoom.onPeerJoin(playerId => {
+          this.addPeer(playerId)
         })
 
-        peerRoom.onPeerLeave(id => {
-          this.removePeer(id)
+        peerRoom.onPeerLeave(playerId => {
+          this.removePeer(playerId)
         })
 
         const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
@@ -796,7 +796,7 @@ export default class Farmhand extends Component {
 
         const [peerId] =
           Object.entries(peers).find(
-            ([peerId, peer]) => peer?.id === ownerId
+            ([peerId, peer]) => peer?.playerId === ownerId
           ) ?? []
 
         if (!peerId) {
@@ -807,16 +807,16 @@ export default class Farmhand extends Component {
         }
 
         const playerAlreadyOwnsRequestedCow = cowInventory.find(
-          ({ id }) => id === peerPlayerCow.id
+          ({ playerId }) => playerId === peerPlayerCow.playerId
         )
 
         if (playerAlreadyOwnsRequestedCow) {
-          console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
+          console.error(`Cow ID ${peerPlayerCow.playerId} is already in inventory`)
           return reducers.showNotification(state, COW_ALREADY_OWNED, 'error')
         }
 
         const cowToTradeAway = cowInventory.find(
-          ({ id }) => id === cowIdOfferedForTrade
+          ({ playerId }) => playerId === cowIdOfferedForTrade
         )
 
         if (!cowToTradeAway) {
@@ -881,7 +881,7 @@ export default class Farmhand extends Component {
       const { activePlayers, errorCode, valueAdjustments } = await getData(
         endpoints.getMarketData,
         {
-          farmId: this.state.id,
+          farmId: this.state.playerId,
           room: room,
         }
       )
@@ -961,7 +961,7 @@ export default class Farmhand extends Component {
   }
 
   scheduleHeartbeat() {
-    const { heartbeatTimeoutId, id, room } = this.state
+    const { heartbeatTimeoutId, playerId, room } = this.state
     clearTimeout(heartbeatTimeoutId)
 
     this.setState(() => ({
@@ -970,7 +970,7 @@ export default class Farmhand extends Component {
           const { activePlayers, errorCode } = await getData(
             endpoints.getMarketData,
             {
-              farmId: id,
+              farmId: playerId,
               room,
             }
           )

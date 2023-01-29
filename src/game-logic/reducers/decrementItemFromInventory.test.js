@@ -8,14 +8,14 @@ describe('decrementItemFromInventory', () => {
   describe('item is not in inventory', () => {
     beforeEach(() => {
       updatedState = decrementItemFromInventory(
-        { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
+        { inventory: [testItem({ playerId: 'sample-item-1', quantity: 1 })] },
         'nonexistent-item'
       )
     })
 
     test('no-ops', () => {
       expect(updatedState).toMatchObject({
-        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+        inventory: [testItem({ playerId: 'sample-item-1', quantity: 1 })],
       })
     })
   })
@@ -24,7 +24,7 @@ describe('decrementItemFromInventory', () => {
     describe('single instance of item in inventory', () => {
       beforeEach(() => {
         updatedState = decrementItemFromInventory(
-          { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
+          { inventory: [testItem({ playerId: 'sample-item-1', quantity: 1 })] },
           'sample-item-1'
         )
       })
@@ -37,7 +37,7 @@ describe('decrementItemFromInventory', () => {
     describe('multiple instances of item in inventory', () => {
       beforeEach(() => {
         updatedState = decrementItemFromInventory(
-          { inventory: [testItem({ id: 'sample-item-1', quantity: 2 })] },
+          { inventory: [testItem({ playerId: 'sample-item-1', quantity: 2 })] },
           'sample-item-1'
         )
       })
@@ -46,7 +46,7 @@ describe('decrementItemFromInventory', () => {
         expect(updatedState).toMatchObject({
           inventory: [
             testItem({
-              id: 'sample-item-1',
+              playerId: 'sample-item-1',
               quantity: 1,
             }),
           ],

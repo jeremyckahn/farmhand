@@ -37,15 +37,15 @@ export const recipesMap = {}
 
 for (const recipeId of Object.keys(recipes)) {
   const recipe = recipes[recipeId]
-  recipeCategories[recipe.recipeType][recipe.id] = recipe
-  recipesMap[recipe.id] = recipe
+  recipeCategories[recipe.recipeType][recipe.playerId] = recipe
+  recipesMap[recipe.playerId] = recipe
 }
 
 export const upgradesMap = {}
 
 for (let toolType of Object.keys(upgrades)) {
   for (let upgrade of Object.values(upgrades[toolType])) {
-    upgradesMap[upgrade.id] = upgrade
+    upgradesMap[upgrade.playerId] = upgrade
   }
 }
 

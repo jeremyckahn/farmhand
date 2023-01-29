@@ -32,7 +32,7 @@ const Recipe = ({
   inventoryLimit,
   playerInventoryQuantities,
   recipe,
-  recipe: { id, name, description },
+  recipe: { playerId, name, description },
 }) => {
   const [quantity, setQuantity] = useState(1)
 
@@ -75,13 +75,13 @@ const Recipe = ({
     >
       <CardHeader
         {...{
-          avatar: <img {...{ src: craftedItems[id], alt: name }} />,
+          avatar: <img {...{ src: craftedItems[playerId], alt: name }} />,
           title: name,
           subheader: (
             <>
-              <p>Sell price: {dollarString(itemsMap[id].value)}</p>
+              <p>Sell price: {dollarString(itemsMap[playerId].value)}</p>
               <p>
-                In Inventory: {integerString(playerInventoryQuantities[id])}
+                In Inventory: {integerString(playerInventoryQuantities[playerId])}
               </p>
               <IngredientsList {...{ playerInventoryQuantities, recipe }} />
             </>

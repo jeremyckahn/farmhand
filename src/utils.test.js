@@ -151,7 +151,7 @@ describe('getItemCurrentValue', () => {
   describe('stable value item', () => {
     test('computes value', () => {
       expect(
-        getItemCurrentValue({ id: 'sample-item-1' }, valueAdjustments)
+        getItemCurrentValue({ playerId: 'sample-item-1' }, valueAdjustments)
       ).toEqual(sampleItem1.value * 1.5)
     })
   })
@@ -159,7 +159,7 @@ describe('getItemCurrentValue', () => {
   describe('fluctuating value item', () => {
     test('computes value', () => {
       expect(
-        getItemCurrentValue({ id: 'sample-field-tool-1' }, valueAdjustments)
+        getItemCurrentValue({ playerId: 'sample-field-tool-1' }, valueAdjustments)
       ).toEqual(sampleFieldTool1.value)
     })
   })
@@ -174,7 +174,7 @@ describe('generateCow', () => {
     const baseCowProperties = {
       color: Object.keys(standardCowColors)[0],
       daysOld: 1,
-      id: '123',
+      playerId: '123',
       isBred: false,
       name: 'Peach',
     }
@@ -186,7 +186,7 @@ describe('generateCow', () => {
         )
 
         expect(
-          generateCow({ gender: genders.FEMALE, id: '123' })
+          generateCow({ gender: genders.FEMALE, playerId: '123' })
         ).toMatchObject({
           ...baseCowProperties,
           gender: genders.FEMALE,
@@ -202,7 +202,7 @@ describe('generateCow', () => {
             COW_STARTING_WEIGHT_VARIANCE
         )
 
-        expect(generateCow({ gender: genders.MALE, id: '123' })).toMatchObject({
+        expect(generateCow({ gender: genders.MALE, playerId: '123' })).toMatchObject({
           ...baseCowProperties,
           gender: genders.MALE,
           baseWeight,
@@ -219,7 +219,7 @@ describe('generateCow', () => {
     test('generates a cow', () => {
       const baseWeight = COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE
 
-      expect(generateCow({ id: '123' })).toMatchObject({
+      expect(generateCow({ playerId: '123' })).toMatchObject({
         baseWeight,
         color: Object.keys(standardCowColors).pop(),
         daysOld: 1,
@@ -275,7 +275,7 @@ describe('generateOffspringCow', () => {
   })
 
   test('order of parents does not matter', () => {
-    const idProps = { id: '123' }
+    const idProps = { playerId: '123' }
 
     const { ...offspring1 } = generateOffspringCow(
       maleCow,
@@ -641,7 +641,7 @@ describe('getRangeCoords', () => {
 })
 
 describe('getFinalCropItemIdFromSeedItemId', () => {
-  test('gets "final" crop item id from seed item id', () => {
+  test('gets "final" crop item playerId from seed item playerId', () => {
     expect(getFinalCropItemIdFromSeedItemId('sample-crop-seeds-1')).toEqual(
       'sample-crop-1'
     )
@@ -655,7 +655,7 @@ describe('getSeedItemIdFromFinalStageCropItemId', () => {
     )
   })
 
-  test('handles invalid crop id input', () => {
+  test('handles invalid crop playerId input', () => {
     expect(getSeedItemIdFromFinalStageCropItemId('nonexistent-crop')).toEqual(
       undefined
     )
@@ -673,7 +673,7 @@ describe('maxYieldOfRecipe', () => {
     expect(
       maxYieldOfRecipe(
         { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
-        [{ id: 'sample-item-1', quantity: 2 }]
+        [{ playerId: 'sample-item-1', quantity: 2 }]
       )
     ).toEqual(0)
 
@@ -681,8 +681,8 @@ describe('maxYieldOfRecipe', () => {
       maxYieldOfRecipe(
         { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
         [
-          { id: 'sample-item-1', quantity: 1 },
-          { id: 'sample-item-2', quantity: 2 },
+          { playerId: 'sample-item-1', quantity: 1 },
+          { playerId: 'sample-item-2', quantity: 2 },
         ]
       )
     ).toEqual(0)
@@ -691,8 +691,8 @@ describe('maxYieldOfRecipe', () => {
       maxYieldOfRecipe(
         { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
         [
-          { id: 'sample-item-1', quantity: 4 },
-          { id: 'sample-item-2', quantity: 3 },
+          { playerId: 'sample-item-1', quantity: 4 },
+          { playerId: 'sample-item-2', quantity: 3 },
         ]
       )
     ).toEqual(1)
@@ -703,8 +703,8 @@ describe('maxYieldOfRecipe', () => {
       maxYieldOfRecipe(
         { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
         [
-          { id: 'sample-item-1', quantity: 2 },
-          { id: 'sample-item-2', quantity: 2 },
+          { playerId: 'sample-item-1', quantity: 2 },
+          { playerId: 'sample-item-2', quantity: 2 },
         ]
       )
     ).toEqual(1)
@@ -713,8 +713,8 @@ describe('maxYieldOfRecipe', () => {
       maxYieldOfRecipe(
         { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
         [
-          { id: 'sample-item-1', quantity: 4 },
-          { id: 'sample-item-2', quantity: 4 },
+          { playerId: 'sample-item-1', quantity: 4 },
+          { playerId: 'sample-item-2', quantity: 4 },
         ]
       )
     ).toEqual(2)
@@ -727,7 +727,7 @@ describe('canMakeRecipe', () => {
       expect(
         canMakeRecipe(
           { ingredients: { 'sample-item-1': 2 } },
-          [{ id: 'sample-item-1', quantity: 1 }],
+          [{ playerId: 'sample-item-1', quantity: 1 }],
           1
         )
       ).toBe(false)
@@ -739,7 +739,7 @@ describe('canMakeRecipe', () => {
       expect(
         canMakeRecipe(
           { ingredients: { 'sample-item-1': 2 } },
-          [{ id: 'sample-item-1', quantity: 2 }],
+          [{ playerId: 'sample-item-1', quantity: 2 }],
           1
         )
       ).toBe(true)
@@ -750,7 +750,7 @@ describe('canMakeRecipe', () => {
 describe('getPriceEventForCrop', () => {
   test('returns price event', () => {
     expect(getPriceEventForCrop(sampleCropItem1)).toEqual({
-      itemId: sampleCropItem1.id,
+      itemId: sampleCropItem1.playerId,
       daysRemaining: 2,
     })
   })
@@ -760,8 +760,8 @@ describe('farmProductsSold', () => {
   test('sums products sold', () => {
     expect(
       farmProductsSold({
-        [sampleCropItem1.id]: 3,
-        [sampleCropSeedsItem1.id]: 2,
+        [sampleCropItem1.playerId]: 3,
+        [sampleCropSeedsItem1.playerId]: 2,
       })
     ).toEqual(3)
   })
@@ -793,14 +793,14 @@ describe('getLevelEntitlements', () => {
     jest.resetModules()
     jest.mock('./data/levels', () => ({
       levels: [
-        { id: 0 },
-        { id: 1 },
-        { id: 2, unlocksShopItem: 'sample-item-1' },
-        { id: 3, increasesSprinklerRange: true },
-        { id: 4, unlocksShopItem: 'sample-item-2' },
-        { id: 5, unlocksTool: 'shovel' },
-        { id: 6, increasesSprinklerRange: true },
-        { id: 7, unlocksShopItem: 'sample-item-3' },
+        { playerId: 0 },
+        { playerId: 1 },
+        { playerId: 2, unlocksShopItem: 'sample-item-1' },
+        { playerId: 3, increasesSprinklerRange: true },
+        { playerId: 4, unlocksShopItem: 'sample-item-2' },
+        { playerId: 5, unlocksTool: 'shovel' },
+        { playerId: 6, increasesSprinklerRange: true },
+        { playerId: 7, unlocksShopItem: 'sample-item-3' },
       ],
     }))
 
@@ -825,8 +825,8 @@ describe('getAvailableShopInventory', () => {
   test('computes shop inventory that has been unlocked', () => {
     jest.resetModules()
     jest.mock('./data/shop-inventory', () => [
-      { id: 'sample-item-1' },
-      { id: 'sample-item-2' },
+      { playerId: 'sample-item-1' },
+      { playerId: 'sample-item-2' },
     ])
 
     jest.mock('./data/levels', () => ({
@@ -841,7 +841,7 @@ describe('getAvailableShopInventory', () => {
 
     expect(
       getAvailableShopInventory({ items: { 'sample-item-1': true } })
-    ).toEqual([{ id: 'sample-item-1' }])
+    ).toEqual([{ playerId: 'sample-item-1' }])
   })
 })
 
@@ -849,7 +849,7 @@ describe('getRandomLevelUpReward', () => {
   test('returns a crop item', () => {
     jest.resetModules()
     jest.mock('./data/levels', () => ({
-      levels: [{ id: 0, unlocksShopItem: 'sample-crop-item-1' }],
+      levels: [{ playerId: 0, unlocksShopItem: 'sample-crop-item-1' }],
       unlockableItems: {
         'sample-crop-item-1': true,
         'sample-crop-item-2': true,
@@ -858,7 +858,7 @@ describe('getRandomLevelUpReward', () => {
     jest.mock('./data/maps', () => ({
       itemsMap: {
         'sample-crop-item-1': {
-          id: 'sample-crop-item-1',
+          playerId: 'sample-crop-item-1',
           name: 'crop 1',
           type: 'CROP',
         },
@@ -867,7 +867,7 @@ describe('getRandomLevelUpReward', () => {
     jest.spyOn(Math, 'random').mockReturnValue(0)
 
     expect(jest.requireActual('./utils').getRandomLevelUpReward(2)).toEqual({
-      id: 'sample-crop-item-1',
+      playerId: 'sample-crop-item-1',
       name: 'crop 1',
       type: 'CROP',
     })
@@ -890,10 +890,10 @@ describe('computeMarketPositions', () => {
         { 'sample-item-1': 10, 'sample-item-2': 5, 'sample-item-3': 0 },
         {},
         [
-          { id: 'sample-item-1', quantity: 5 },
-          { id: 'sample-item-2', quantity: 10 },
-          { id: 'sample-item-3', quantity: 0 },
-          { id: 'sample-item-4', quantity: 10 },
+          { playerId: 'sample-item-1', quantity: 5 },
+          { playerId: 'sample-item-2', quantity: 10 },
+          { playerId: 'sample-item-3', quantity: 0 },
+          { playerId: 'sample-item-4', quantity: 10 },
         ]
       )
     ).toEqual({
@@ -907,10 +907,10 @@ describe('computeMarketPositions', () => {
         {},
         { 'sample-item-1': 10, 'sample-item-2': 5, 'sample-item-3': 0 },
         [
-          { id: 'sample-item-1', quantity: 5 },
-          { id: 'sample-item-2', quantity: 10 },
-          { id: 'sample-item-3', quantity: 0 },
-          { id: 'sample-item-4', quantity: 10 },
+          { playerId: 'sample-item-1', quantity: 5 },
+          { playerId: 'sample-item-2', quantity: 10 },
+          { playerId: 'sample-item-3', quantity: 0 },
+          { playerId: 'sample-item-4', quantity: 10 },
         ]
       )
     ).toEqual({
@@ -936,12 +936,12 @@ describe('computeMarketPositions', () => {
           'sample-item-6': 10,
         },
         [
-          { id: 'sample-item-1', quantity: 5 },
-          { id: 'sample-item-2', quantity: 10 },
-          { id: 'sample-item-3', quantity: 0 },
-          { id: 'sample-item-4', quantity: 0 },
-          { id: 'sample-item-5', quantity: 5 },
-          { id: 'sample-item-6', quantity: 5 },
+          { playerId: 'sample-item-1', quantity: 5 },
+          { playerId: 'sample-item-2', quantity: 10 },
+          { playerId: 'sample-item-3', quantity: 0 },
+          { playerId: 'sample-item-4', quantity: 0 },
+          { playerId: 'sample-item-5', quantity: 5 },
+          { playerId: 'sample-item-6', quantity: 5 },
         ]
       )
     ).toEqual({
@@ -1037,7 +1037,7 @@ describe('randomChoice', () => {
 
 describe('getCowImage', () => {
   test('colors a cow template image', async () => {
-    const cow = generateCow({ color: cowColors.GREEN, id: '1' })
+    const cow = generateCow({ color: cowColors.GREEN, playerId: '1' })
     const image = await getCowImage(cow)
 
     // image data can viewed with https://jaredwinick.github.io/base64-image-viewer/

@@ -9,10 +9,10 @@ jest.mock('../data/items')
 jest.mock('../data/levels', () => ({
   levels: [
     {
-      id: 0,
+      playerId: 0,
     },
     {
-      id: 1,
+      playerId: 1,
       unlocksShopItem: 'sample-crop-seeds-1',
     },
   ],
@@ -72,7 +72,7 @@ describe('handleItemSelectClick', () => {
     })
 
     handlers().handleItemSelectClick(
-      testItem({ enablesFieldMode: 'FOO', id: 'field-tool' })
+      testItem({ enablesFieldMode: 'FOO', playerId: 'field-tool' })
     )
   })
 
@@ -120,8 +120,8 @@ describe('handleClickPreviousMenuButton', () => {
 describe('handleCowSelect', () => {
   test('calls selectCow', () => {
     jest.spyOn(component.instance(), 'selectCow').mockImplementation()
-    handlers().handleCowSelect({ id: 'abc' })
-    expect(component.instance().selectCow).toHaveBeenCalledWith({ id: 'abc' })
+    handlers().handleCowSelect({ playerId: 'abc' })
+    expect(component.instance().selectCow).toHaveBeenCalledWith({ playerId: 'abc' })
   })
 })
 

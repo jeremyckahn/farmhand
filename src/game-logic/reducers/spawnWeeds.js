@@ -15,7 +15,7 @@ export function spawnWeeds(plotContents) {
   let contents = null
 
   if (isRandomNumberLessThan(WEEDS_SPAWN_CHANCE)) {
-    contents = getPlotContentFromItemId(weed.id)
+    contents = getPlotContentFromItemId(weed.playerId)
   }
 
   return contents

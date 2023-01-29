@@ -27,7 +27,7 @@ export function UpgradePurchase({
   playerInventoryQuantities,
   upgrade,
 }) {
-  const { id, name, description } = upgrade
+  const { playerId, name, description } = upgrade
 
   const spaceFreedByIngredientsConsumed = totalIngredientsInRecipe(upgrade)
 
@@ -53,7 +53,7 @@ export function UpgradePurchase({
     >
       <CardHeader
         {...{
-          avatar: <img {...{ src: craftedItems[id], alt: name }} />,
+          avatar: <img {...{ src: craftedItems[playerId], alt: name }} />,
           title: name,
           subheader: (
             <>

@@ -10,7 +10,7 @@ const { freeze } = Object
 export const stone = freeze({
   description: 'A piece of rock.',
   doesPriceFluctuate: false,
-  id: 'stone',
+  playerId: 'stone',
   name: 'Stone',
   spawnChance: STONE_SPAWN_CHANCE,
   type: itemType.STONE,

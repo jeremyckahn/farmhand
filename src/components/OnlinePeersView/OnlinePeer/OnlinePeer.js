@@ -17,14 +17,14 @@ import {
 import './OnlinePeer.sass'
 
 const OnlinePeer = ({
-  peer: { cowOfferedForTrade, dayCount, id, itemsSold, money },
+  peer: { cowOfferedForTrade, dayCount, playerId, itemsSold, money },
 }) => {
   return (
     <li>
       <Card>
         <CardHeader
           {...{
-            title: getPlayerName(id),
+            title: getPlayerName(playerId),
             subheader: (
               <div>
                 <p>Day: {integerString(dayCount)}</p>
@@ -53,7 +53,7 @@ OnlinePeer.propTypes = {
   peer: shape({
     cowOfferedForTrade: object,
     dayCount: number.isRequired,
-    id: string.isRequired,
+    playerId: string.isRequired,
     itemsSold: object.isRequired,
     money: number.isRequired,
   }).isRequired,

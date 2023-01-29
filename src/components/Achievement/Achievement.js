@@ -13,10 +13,10 @@ import FarmhandContext from '../Farmhand/Farmhand.context'
 import './Achievement.sass'
 
 const Achievement = ({
-  achievement: { description, id, name, rewardDescription },
+  achievement: { description, playerId, name, rewardDescription },
   completedAchievements,
 
-  isComplete = Boolean(completedAchievements[id]),
+  isComplete = Boolean(completedAchievements[playerId]),
 }) => (
   <Card
     {...{ className: classNames('Achievement', { 'is-complete': isComplete }) }}
@@ -37,7 +37,7 @@ const Achievement = ({
 Achievement.propTypes = {
   achievement: shape({
     description: string.isRequired,
-    id: string.isRequired,
+    playerId: string.isRequired,
     name: string.isRequired,
     rewardDescription: string.isRequired,
   }).isRequired,

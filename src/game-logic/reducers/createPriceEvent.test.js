@@ -7,7 +7,7 @@ jest.mock('../../data/items')
 describe('createPriceEvent', () => {
   test('creates priceCrashes data', () => {
     const priceEvent = {
-      itemId: sampleCropItem1.id,
+      itemId: sampleCropItem1.playerId,
       daysRemaining: 1,
     }
 
@@ -18,13 +18,13 @@ describe('createPriceEvent', () => {
     )
 
     expect(priceCrashes).toMatchObject({
-      [sampleCropItem1.id]: priceEvent,
+      [sampleCropItem1.playerId]: priceEvent,
     })
   })
 
   test('creates priceSurges data', () => {
     const priceEvent = {
-      itemId: sampleCropItem1.id,
+      itemId: sampleCropItem1.playerId,
       daysRemaining: 1,
     }
 
@@ -35,7 +35,7 @@ describe('createPriceEvent', () => {
     )
 
     expect(priceSurges).toMatchObject({
-      [sampleCropItem1.id]: priceEvent,
+      [sampleCropItem1.playerId]: priceEvent,
     })
   })
 })

@@ -23,7 +23,7 @@ const itemify = recipe => {
     ...recipe,
   })
 
-  itemsMap[recipe.id] = item
+  itemsMap[recipe.playerId] = item
 
   return item
 }
@@ -33,12 +33,12 @@ const itemify = recipe => {
  * @type {farmhand.recipe}
  */
 export const bread = itemify({
-  id: 'bread',
+  playerId: 'bread',
   name: 'Bread',
   ingredients: {
-    [items.wheat.id]: 15,
+    [items.wheat.playerId]: 15,
   },
-  condition: state => state.itemsSold[items.wheat.id] >= 30,
+  condition: state => state.itemsSold[items.wheat.playerId] >= 30,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -47,12 +47,12 @@ export const bread = itemify({
  * @type {farmhand.recipe}
  */
 export const butter = itemify({
-  id: 'butter',
+  playerId: 'butter',
   name: 'Butter',
   ingredients: {
-    [items.milk3.id]: 5,
+    [items.milk3.playerId]: 5,
   },
-  condition: state => state.itemsSold[items.milk3.id] >= 30,
+  condition: state => state.itemsSold[items.milk3.playerId] >= 30,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -61,12 +61,12 @@ export const butter = itemify({
  * @type {farmhand.recipe}
  */
 export const sunButter = itemify({
-  id: 'sun-butter',
+  playerId: 'sun-butter',
   name: 'Sun Butter',
   ingredients: {
-    [items.sunflower.id]: 25,
+    [items.sunflower.playerId]: 25,
   },
-  condition: state => state.itemsSold[items.sunflower.id] >= 200,
+  condition: state => state.itemsSold[items.sunflower.playerId] >= 200,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -75,12 +75,12 @@ export const sunButter = itemify({
  * @type {farmhand.recipe}
  */
 export const oliveOil = itemify({
-  id: 'olive-oil',
+  playerId: 'olive-oil',
   name: 'Olive Oil',
   ingredients: {
-    [items.olive.id]: 250,
+    [items.olive.playerId]: 250,
   },
-  condition: state => state.itemsSold[items.olive.id] >= 500,
+  condition: state => state.itemsSold[items.olive.playerId] >= 500,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -89,12 +89,12 @@ export const oliveOil = itemify({
  * @type {farmhand.recipe}
  */
 export const cheese = itemify({
-  id: 'cheese',
+  playerId: 'cheese',
   name: 'Cheese',
   ingredients: {
-    [items.milk3.id]: 8,
+    [items.milk3.playerId]: 8,
   },
-  condition: state => (state.itemsSold[items.milk3.id] || 0) >= 20,
+  condition: state => (state.itemsSold[items.milk3.playerId] || 0) >= 20,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -103,12 +103,12 @@ export const cheese = itemify({
  * @type {farmhand.recipe}
  */
 export const rainbowCheese = itemify({
-  id: 'rainbowCheese',
+  playerId: 'rainbowCheese',
   name: 'Rainbow Cheese',
   ingredients: {
-    [items.rainbowMilk3.id]: 10,
+    [items.rainbowMilk3.playerId]: 10,
   },
-  condition: state => (state.itemsSold[items.rainbowMilk3.id] || 0) >= 30,
+  condition: state => (state.itemsSold[items.rainbowMilk3.playerId] || 0) >= 30,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -117,12 +117,12 @@ export const rainbowCheese = itemify({
  * @type {farmhand.recipe}
  */
 export const chocolate = itemify({
-  id: 'chocolate',
+  playerId: 'chocolate',
   name: 'Chocolate',
   ingredients: {
-    [items.chocolateMilk.id]: 10,
+    [items.chocolateMilk.playerId]: 10,
   },
-  condition: state => (state.itemsSold[items.chocolateMilk.id] || 0) >= 25,
+  condition: state => (state.itemsSold[items.chocolateMilk.playerId] || 0) >= 25,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -131,12 +131,12 @@ export const chocolate = itemify({
  * @type {farmhand.recipe}
  */
 export const carrotSoup = itemify({
-  id: 'carrot-soup',
+  playerId: 'carrot-soup',
   name: 'Carrot Soup',
   ingredients: {
-    [items.carrot.id]: 4,
+    [items.carrot.playerId]: 4,
   },
-  condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
+  condition: state => (state.itemsSold[items.carrot.playerId] || 0) >= 10,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -145,12 +145,12 @@ export const carrotSoup = itemify({
  * @type {farmhand.recipe}
  */
 export const jackolantern = itemify({
-  id: 'jackolantern',
+  playerId: 'jackolantern',
   name: "Jack-o'-lantern",
   ingredients: {
-    [items.pumpkin.id]: 1,
+    [items.pumpkin.playerId]: 1,
   },
-  condition: state => (state.itemsSold[items.pumpkin.id] || 0) >= 50,
+  condition: state => (state.itemsSold[items.pumpkin.playerId] || 0) >= 50,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -159,15 +159,15 @@ export const jackolantern = itemify({
  * @type {farmhand.recipe}
  */
 export const spaghetti = itemify({
-  id: 'spaghetti',
+  playerId: 'spaghetti',
   name: 'Spaghetti',
   ingredients: {
-    [items.wheat.id]: 10,
-    [items.tomato.id]: 2,
+    [items.wheat.playerId]: 10,
+    [items.tomato.playerId]: 2,
   },
   condition: state =>
-    state.itemsSold[items.wheat.id] >= 20 &&
-    state.itemsSold[items.tomato.id] >= 5,
+    state.itemsSold[items.wheat.playerId] >= 20 &&
+    state.itemsSold[items.tomato.playerId] >= 5,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -176,14 +176,14 @@ export const spaghetti = itemify({
  * @type {farmhand.recipe}
  */
 export const frenchOnionSoup = itemify({
-  id: 'french-onion-soup',
+  playerId: 'french-onion-soup',
   name: 'French Onion Soup',
   ingredients: {
-    [items.onion.id]: 5,
-    [cheese.id]: 2,
+    [items.onion.playerId]: 5,
+    [cheese.playerId]: 2,
   },
   condition: state =>
-    state.itemsSold[items.onion.id] >= 15 && state.itemsSold[cheese.id] >= 10,
+    state.itemsSold[items.onion.playerId] >= 15 && state.itemsSold[cheese.playerId] >= 10,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -192,23 +192,23 @@ export const frenchOnionSoup = itemify({
  * @type {farmhand.recipe}
  */
 export const burger = itemify({
-  id: 'burger',
+  playerId: 'burger',
   name: 'Burger',
   ingredients: {
-    [bread.id]: 1,
-    [cheese.id]: 1,
-    [items.onion.id]: 1,
-    [items.soybean.id]: 12,
-    [items.spinach.id]: 1,
-    [items.tomato.id]: 1,
+    [bread.playerId]: 1,
+    [cheese.playerId]: 1,
+    [items.onion.playerId]: 1,
+    [items.soybean.playerId]: 12,
+    [items.spinach.playerId]: 1,
+    [items.tomato.playerId]: 1,
   },
   condition: state =>
-    state.itemsSold[bread.id] >= 5 &&
-    state.itemsSold[cheese.id] >= 5 &&
-    state.itemsSold[items.onion.id] >= 5 &&
-    state.itemsSold[items.soybean.id] >= 25 &&
-    state.itemsSold[items.spinach.id] >= 5 &&
-    state.itemsSold[items.tomato.id] >= 5,
+    state.itemsSold[bread.playerId] >= 5 &&
+    state.itemsSold[cheese.playerId] >= 5 &&
+    state.itemsSold[items.onion.playerId] >= 5 &&
+    state.itemsSold[items.soybean.playerId] >= 25 &&
+    state.itemsSold[items.spinach.playerId] >= 5 &&
+    state.itemsSold[items.tomato.playerId] >= 5,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -217,17 +217,17 @@ export const burger = itemify({
  * @type {farmhand.recipe}
  */
 export const summerSalad = itemify({
-  id: 'summer-salad',
+  playerId: 'summer-salad',
   name: 'Summer Salad',
   ingredients: {
-    [items.spinach.id]: 6,
-    [items.corn.id]: 1,
-    [items.carrot.id]: 1,
+    [items.spinach.playerId]: 6,
+    [items.corn.playerId]: 1,
+    [items.carrot.playerId]: 1,
   },
   condition: state =>
-    state.itemsSold[items.spinach.id] >= 30 &&
-    state.itemsSold[items.corn.id] > 5 &&
-    state.itemsSold[items.carrot.id] > 5,
+    state.itemsSold[items.spinach.playerId] >= 30 &&
+    state.itemsSold[items.corn.playerId] > 5 &&
+    state.itemsSold[items.carrot.playerId] > 5,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -236,12 +236,12 @@ export const summerSalad = itemify({
  * @type {farmhand.recipe}
  */
 export const soyMilk = itemify({
-  id: 'soy-milk',
+  playerId: 'soy-milk',
   name: 'Soy Milk',
   ingredients: {
-    [items.soybean.id]: 20,
+    [items.soybean.playerId]: 20,
   },
-  condition: state => state.itemsSold[items.soybean.id] >= 100,
+  condition: state => state.itemsSold[items.soybean.playerId] >= 100,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -250,14 +250,14 @@ export const soyMilk = itemify({
  * @type {farmhand.recipe}
  */
 export const chocolateSoyMilk = itemify({
-  id: 'chocolate-soy-milk',
+  playerId: 'chocolate-soy-milk',
   name: 'Chocolate Soy Milk',
   ingredients: {
-    [soyMilk.id]: 1,
-    [chocolate.id]: 1,
+    [soyMilk.playerId]: 1,
+    [chocolate.playerId]: 1,
   },
   condition: state =>
-    state.itemsSold[soyMilk.id] >= 5 && state.itemsSold[chocolate.id] >= 5,
+    state.itemsSold[soyMilk.playerId] >= 5 && state.itemsSold[chocolate.playerId] >= 5,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -266,12 +266,12 @@ export const chocolateSoyMilk = itemify({
  * @type {farmhand.recipe}
  */
 export const tofu = itemify({
-  id: 'tofu',
+  playerId: 'tofu',
   name: 'Tofu',
   ingredients: {
-    [soyMilk.id]: 4,
+    [soyMilk.playerId]: 4,
   },
-  condition: state => state.itemsSold[soyMilk.id] >= 20,
+  condition: state => state.itemsSold[soyMilk.playerId] >= 20,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -280,21 +280,21 @@ export const tofu = itemify({
  * @type {farmhand.recipe}
  */
 export const chicknPotPie = itemify({
-  id: 'chickn-pot-pie',
+  playerId: 'chickn-pot-pie',
   name: "Chick'n Pot Pie",
   ingredients: {
-    [tofu.id]: 6,
-    [items.pea.id]: 10,
-    [items.carrot.id]: 8,
-    [items.wheat.id]: 12,
-    [soyMilk.id]: 3,
+    [tofu.playerId]: 6,
+    [items.pea.playerId]: 10,
+    [items.carrot.playerId]: 8,
+    [items.wheat.playerId]: 12,
+    [soyMilk.playerId]: 3,
   },
   condition: state =>
-    state.itemsSold[tofu.id] >= 30 &&
-    state.itemsSold[items.pea.id] >= 225 &&
-    state.itemsSold[items.carrot.id] >= 300 &&
-    state.itemsSold[items.wheat.id] >= 425 &&
-    state.itemsSold[soyMilk.id] >= 15,
+    state.itemsSold[tofu.playerId] >= 30 &&
+    state.itemsSold[items.pea.playerId] >= 225 &&
+    state.itemsSold[items.carrot.playerId] >= 300 &&
+    state.itemsSold[items.wheat.playerId] >= 425 &&
+    state.itemsSold[soyMilk.playerId] >= 15,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -303,12 +303,12 @@ export const chicknPotPie = itemify({
  * @type {farmhand.recipe}
  */
 export const hotSauce = itemify({
-  id: 'hot-sauce',
+  playerId: 'hot-sauce',
   name: 'Hot Sauce',
   ingredients: {
-    [items.jalapeno.id]: 10,
+    [items.jalapeno.playerId]: 10,
   },
-  condition: state => state.itemsSold[items.jalapeno.id] >= 50,
+  condition: state => state.itemsSold[items.jalapeno.playerId] >= 50,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -317,19 +317,19 @@ export const hotSauce = itemify({
  * @type {farmhand.recipe}
  */
 export const salsa = itemify({
-  id: 'salsa',
+  playerId: 'salsa',
   name: 'Salsa',
   ingredients: {
-    [items.jalapeno.id]: 1,
-    [items.onion.id]: 1,
-    [items.tomato.id]: 1,
-    [items.corn.id]: 1,
+    [items.jalapeno.playerId]: 1,
+    [items.onion.playerId]: 1,
+    [items.tomato.playerId]: 1,
+    [items.corn.playerId]: 1,
   },
   condition: state =>
-    state.itemsSold[items.jalapeno.id] >= 5 &&
-    state.itemsSold[items.onion.id] >= 5 &&
-    state.itemsSold[items.tomato.id] >= 5 &&
-    state.itemsSold[items.corn.id] >= 5,
+    state.itemsSold[items.jalapeno.playerId] >= 5 &&
+    state.itemsSold[items.onion.playerId] >= 5 &&
+    state.itemsSold[items.tomato.playerId] >= 5 &&
+    state.itemsSold[items.corn.playerId] >= 5,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -338,15 +338,15 @@ export const salsa = itemify({
  * @type {farmhand.recipe}
  */
 export const spicyCheese = itemify({
-  id: 'spicy-cheese',
+  playerId: 'spicy-cheese',
   name: 'Spicy Cheese',
   ingredients: {
-    [items.jalapeno.id]: 4,
-    [items.milk3.id]: 10,
+    [items.jalapeno.playerId]: 4,
+    [items.milk3.playerId]: 10,
   },
   condition: state =>
-    state.itemsSold[items.jalapeno.id] >= 20 &&
-    state.itemsSold[items.milk3.id] >= 50,
+    state.itemsSold[items.jalapeno.playerId] >= 20 &&
+    state.itemsSold[items.milk3.playerId] >= 50,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -355,12 +355,12 @@ export const spicyCheese = itemify({
  * @type {farmhand.recipe}
  */
 export const vegetableOil = itemify({
-  id: 'vegetable-oil',
+  playerId: 'vegetable-oil',
   name: 'Vegetable Oil',
   ingredients: {
-    [items.soybean.id]: 350,
+    [items.soybean.playerId]: 350,
   },
-  condition: state => state.itemsSold[items.soybean.id] >= 900,
+  condition: state => state.itemsSold[items.soybean.playerId] >= 900,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -369,14 +369,14 @@ export const vegetableOil = itemify({
  * @type {farmhand.recipe}
  */
 export const friedTofu = itemify({
-  id: 'fried-tofu',
+  playerId: 'fried-tofu',
   name: 'Deep Fried Tofu',
   ingredients: {
-    [tofu.id]: 1,
-    [vegetableOil.id]: 2,
+    [tofu.playerId]: 1,
+    [vegetableOil.playerId]: 2,
   },
   condition: state =>
-    state.itemsSold[tofu.id] >= 50 && state.itemsSold[vegetableOil.id] >= 50,
+    state.itemsSold[tofu.playerId] >= 50 && state.itemsSold[vegetableOil.playerId] >= 50,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -385,15 +385,15 @@ export const friedTofu = itemify({
  * @type {farmhand.recipe}
  */
 export const spicyPickledGarlic = itemify({
-  id: 'spicy-pickled-garlic',
+  playerId: 'spicy-pickled-garlic',
   name: 'Spicy Pickled Garlic',
   ingredients: {
-    [items.jalapeno.id]: 2,
-    [items.garlic.id]: 5,
+    [items.jalapeno.playerId]: 2,
+    [items.garlic.playerId]: 5,
   },
   condition: state =>
-    state.itemsSold[items.jalapeno.id] >= 12 &&
-    state.itemsSold[items.garlic.id] >= 25,
+    state.itemsSold[items.jalapeno.playerId] >= 12 &&
+    state.itemsSold[items.garlic.playerId] >= 25,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -402,16 +402,16 @@ export const spicyPickledGarlic = itemify({
  * @type {farmhand.recipe}
  */
 export const garlicFries = itemify({
-  id: 'garlic-fries',
+  playerId: 'garlic-fries',
   name: 'Garlic Fries',
   ingredients: {
-    [items.potato.id]: 5,
-    [items.garlic.id]: 3,
-    [vegetableOil.id]: 1,
+    [items.potato.playerId]: 5,
+    [items.garlic.playerId]: 3,
+    [vegetableOil.playerId]: 1,
   },
   condition: state =>
-    state.itemsSold[items.potato.id] >= 50 &&
-    state.itemsSold[items.garlic.id] >= 30,
+    state.itemsSold[items.potato.playerId] >= 50 &&
+    state.itemsSold[items.garlic.playerId] >= 30,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -420,17 +420,17 @@ export const garlicFries = itemify({
  * @type {farmhand.recipe}
  */
 export const garlicBread = itemify({
-  id: 'garlic-bread',
+  playerId: 'garlic-bread',
   name: 'Garlic Bread',
   ingredients: {
-    [bread.id]: 1,
-    [items.garlic.id]: 5,
-    [oliveOil.id]: 1,
+    [bread.playerId]: 1,
+    [items.garlic.playerId]: 5,
+    [oliveOil.playerId]: 1,
   },
   condition: state =>
-    state.itemsSold[bread.id] >= 30 &&
-    state.itemsSold[oliveOil.id] >= 20 &&
-    state.itemsSold[items.garlic.id] >= 50,
+    state.itemsSold[bread.playerId] >= 30 &&
+    state.itemsSold[oliveOil.playerId] >= 20 &&
+    state.itemsSold[items.garlic.playerId] >= 50,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -439,12 +439,12 @@ export const garlicBread = itemify({
  * @type {farmhand.recipe}
  */
 export const strawberryJam = itemify({
-  id: 'strawberry-jam',
+  playerId: 'strawberry-jam',
   name: 'Strawberry Jam',
   ingredients: {
-    [items.strawberry.id]: 10,
+    [items.strawberry.playerId]: 10,
   },
-  condition: state => state.itemsSold[items.strawberry.id] >= 60,
+  condition: state => state.itemsSold[items.strawberry.playerId] >= 60,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -453,14 +453,14 @@ export const strawberryJam = itemify({
  * @type {farmhand.recipe}
  */
 export const popcorn = itemify({
-  id: 'popcorn',
+  playerId: 'popcorn',
   name: 'Popcorn',
   ingredients: {
-    [items.corn.id]: 2,
-    [butter.id]: 1,
+    [items.corn.playerId]: 2,
+    [butter.playerId]: 1,
   },
   condition: state =>
-    state.itemsSold[items.corn.id] >= 12 && state.itemsSold[butter.id] >= 6,
+    state.itemsSold[items.corn.playerId] >= 12 && state.itemsSold[butter.playerId] >= 6,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -469,17 +469,17 @@ export const popcorn = itemify({
  * @type {farmhand.recipe}
  */
 export const pumpkinPie = itemify({
-  id: 'pumpkin-pie',
+  playerId: 'pumpkin-pie',
   name: 'Pumpkin Pie',
   ingredients: {
-    [items.pumpkin.id]: 4,
-    [items.wheat.id]: 10,
-    [butter.id]: 2,
+    [items.pumpkin.playerId]: 4,
+    [items.wheat.playerId]: 10,
+    [butter.playerId]: 2,
   },
   condition: state =>
-    state.itemsSold[items.pumpkin.id] >= 200 &&
-    state.itemsSold[items.wheat.id] >= 250 &&
-    state.itemsSold[butter.id] >= 75,
+    state.itemsSold[items.pumpkin.playerId] >= 200 &&
+    state.itemsSold[items.wheat.playerId] >= 250 &&
+    state.itemsSold[butter.playerId] >= 75,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -488,17 +488,17 @@ export const pumpkinPie = itemify({
  * @type {farmhand.recipe}
  */
 export const sweetPotatoPie = itemify({
-  id: 'sweet-potato-pie',
+  playerId: 'sweet-potato-pie',
   name: 'Sweet Potato Pie',
   ingredients: {
-    [items.sweetPotato.id]: 6,
-    [items.wheat.id]: 10,
-    [butter.id]: 2,
+    [items.sweetPotato.playerId]: 6,
+    [items.wheat.playerId]: 10,
+    [butter.playerId]: 2,
   },
   condition: state =>
-    state.itemsSold[items.sweetPotato.id] >= 200 &&
-    state.itemsSold[items.wheat.id] >= 250 &&
-    state.itemsSold[butter.id] >= 75,
+    state.itemsSold[items.sweetPotato.playerId] >= 200 &&
+    state.itemsSold[items.wheat.playerId] >= 250 &&
+    state.itemsSold[butter.playerId] >= 75,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -507,13 +507,13 @@ export const sweetPotatoPie = itemify({
  * @type {farmhand.recipe}
  */
 export const sweetPotatoFries = itemify({
-  id: 'sweet-potato-fries',
+  playerId: 'sweet-potato-fries',
   name: 'Sweet Potato Fries',
   ingredients: {
-    [items.sweetPotato.id]: 10,
-    [vegetableOil.id]: 1,
+    [items.sweetPotato.playerId]: 10,
+    [vegetableOil.playerId]: 1,
   },
-  condition: state => state.itemsSold[items.sweetPotato.id] >= 100,
+  condition: state => state.itemsSold[items.sweetPotato.playerId] >= 100,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -522,19 +522,19 @@ export const sweetPotatoFries = itemify({
  * @type {farmhand.recipe}
  */
 export const onionRings = itemify({
-  id: 'onion-rings',
+  playerId: 'onion-rings',
   name: 'Onion Rings',
   ingredients: {
-    [items.onion.id]: 1,
-    [vegetableOil.id]: 1,
-    [items.wheat.id]: 5,
-    [soyMilk.id]: 1,
+    [items.onion.playerId]: 1,
+    [vegetableOil.playerId]: 1,
+    [items.wheat.playerId]: 5,
+    [soyMilk.playerId]: 1,
   },
   condition: state =>
-    state.itemsSold[items.onion.id] >= 50 &&
-    state.itemsSold[vegetableOil.id] > 20 &&
-    state.itemsSold[soyMilk.id] > 20 &&
-    state.itemsSold[items.wheat.id] > 30,
+    state.itemsSold[items.onion.playerId] >= 50 &&
+    state.itemsSold[vegetableOil.playerId] > 20 &&
+    state.itemsSold[soyMilk.playerId] > 20 &&
+    state.itemsSold[items.wheat.playerId] > 30,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -543,14 +543,14 @@ export const onionRings = itemify({
  * @type {farmhand.recipe}
  */
 export const bronzeIngot = itemify({
-  id: 'bronze-ingot',
+  playerId: 'bronze-ingot',
   name: 'Bronze Ingot',
   ingredients: {
-    [items.bronzeOre.id]: 5,
-    [items.coal.id]: 5,
+    [items.bronzeOre.playerId]: 5,
+    [items.coal.playerId]: 5,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.bronzeOre.id] >= 50,
+    state.purchasedSmelter && state.itemsSold[items.bronzeOre.playerId] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -559,14 +559,14 @@ export const bronzeIngot = itemify({
  * @type {farmhand.recipe}
  */
 export const ironIngot = itemify({
-  id: 'iron-ingot',
+  playerId: 'iron-ingot',
   name: 'Iron Ingot',
   ingredients: {
-    [items.ironOre.id]: 5,
-    [items.coal.id]: 12,
+    [items.ironOre.playerId]: 5,
+    [items.coal.playerId]: 12,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.ironOre.id] >= 50,
+    state.purchasedSmelter && state.itemsSold[items.ironOre.playerId] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -575,14 +575,14 @@ export const ironIngot = itemify({
  * @type {farmhand.recipe}
  */
 export const silverIngot = itemify({
-  id: 'silver-ingot',
+  playerId: 'silver-ingot',
   name: 'Silver Ingot',
   ingredients: {
-    [items.silverOre.id]: 5,
-    [items.coal.id]: 8,
+    [items.silverOre.playerId]: 5,
+    [items.coal.playerId]: 8,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.silverOre.id] >= 50,
+    state.purchasedSmelter && state.itemsSold[items.silverOre.playerId] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -591,25 +591,25 @@ export const silverIngot = itemify({
  * @type {farmhand.recipe}
  */
 export const goldIngot = itemify({
-  id: 'gold-ingot',
+  playerId: 'gold-ingot',
   name: 'Gold Ingot',
   ingredients: {
-    [items.goldOre.id]: 5,
-    [items.coal.id]: 10,
+    [items.goldOre.playerId]: 5,
+    [items.coal.playerId]: 10,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.goldOre.id] >= 50,
+    state.purchasedSmelter && state.itemsSold[items.goldOre.playerId] >= 50,
   recipeType: recipeType.FORGE,
 })
 
 export const compost = itemify({
-  id: 'compost',
+  playerId: 'compost',
   name: 'Compost',
   ingredients: {
-    [items.weed.id]: 25,
+    [items.weed.playerId]: 25,
   },
   condition: state =>
-    state.purchasedComposter && state.itemsSold[items.weed.id] >= 100,
+    state.purchasedComposter && state.itemsSold[items.weed.playerId] >= 100,
   description: 'Can be used to make fertilizer.',
   recipeType: recipeType.RECYCLING,
   type: itemType.CRAFTED_ITEM,
@@ -620,13 +620,13 @@ export const compost = itemify({
  * @type {farmhand.item}
  */
 export const fertilizer = itemify({
-  id: 'fertilizer',
+  playerId: 'fertilizer',
   name: 'Fertilizer',
   ingredients: {
-    [compost.id]: 10,
+    [compost.playerId]: 10,
   },
   condition: state =>
-    state.purchasedComposter && state.itemsSold[compost.id] >= 10,
+    state.purchasedComposter && state.itemsSold[compost.playerId] >= 10,
   description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,
   recipeType: recipeType.RECYCLING,

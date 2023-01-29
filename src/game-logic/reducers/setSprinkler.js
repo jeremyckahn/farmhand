@@ -26,7 +26,7 @@ export const setSprinkler = (state, x, y) => {
   state = decrementItemFromInventory(state, SPRINKLER_ITEM_ID)
 
   const doSprinklersRemain = state.inventory.some(
-    item => item.id === SPRINKLER_ITEM_ID
+    item => item.playerId === SPRINKLER_ITEM_ID
   )
 
   state = modifyFieldPlotAt(state, x, y, () =>

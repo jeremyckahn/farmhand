@@ -50,15 +50,15 @@ const ValueIndicator = ({ poorValue }) => (
 )
 
 const PurchaseValueIndicator = ({
-  id,
+  playerId,
   value,
   valueAdjustments,
 
-  poorValue = value > itemsMap[id].value,
+  poorValue = value > itemsMap[playerId].value,
 }) => (
   <ValueIndicator
     {...{
-      id,
+      playerId,
       poorValue,
       value,
       valueAdjustments,
@@ -67,15 +67,15 @@ const PurchaseValueIndicator = ({
 )
 
 const SellValueIndicator = ({
-  id,
+  playerId,
   value,
   valueAdjustments,
 
-  poorValue = value < itemsMap[id].value,
+  poorValue = value < itemsMap[playerId].value,
 }) => (
   <ValueIndicator
     {...{
-      id,
+      playerId,
       poorValue,
       value,
       valueAdjustments,
@@ -96,7 +96,7 @@ export const Item = ({
   isSelected,
   isSellView,
   item,
-  item: { description, doesPriceFluctuate, id, isReplantable, name },
+  item: { description, doesPriceFluctuate, playerId, isReplantable, name },
   money,
   playerInventoryQuantities,
   showQuantity,
@@ -133,8 +133,8 @@ export const Item = ({
   }, [maxQuantityPlayerCanPurchase, purchaseQuantity])
 
   useEffect(() => {
-    setSellQuantity(Math.min(playerInventoryQuantities[id], sellQuantity))
-  }, [id, playerInventoryQuantities, sellQuantity])
+    setSellQuantity(Math.min(playerInventoryQuantities[playerId], sellQuantity))
+  }, [playerId, playerInventoryQuantities, sellQuantity])
 
   const handleItemPurchase = () => {
     handleItemPurchaseClick(item, purchaseQuantity)
@@ -142,16 +142,16 @@ export const Item = ({
   }
   const handleItemSell = () => {
     handleItemSellClick(item, sellQuantity)
-    setSellQuantity(Math.min(1, playerInventoryQuantities[id]))
+    setSellQuantity(Math.min(1, playerInventoryQuantities[playerId]))
   }
 
-  const avatar = <img {...{ src: items[id] }} alt={name} />
+  const avatar = <img {...{ src: items[playerId] }} alt={name} />
 
   let sellPrice = adjustedValue
 
   // #140 - never increase the value of items the shop sells otherwise they
   // can be bought and instantly resold for a profit to game the.. game
-  if (!shopItemIds.has(id)) {
+  if (!shopItemIds.has(playerId)) {
     sellPrice *= getSalePriceMultiplier(completedAchievements)
   }
 
@@ -207,9 +207,9 @@ export const Item = ({
                     </span>
                   </Tooltip>
                   {completedAchievements['unlock-crop-price-guide'] &&
-                    valueAdjustments[id] && (
+                    valueAdjustments[playerId] && (
                       <PurchaseValueIndicator
-                        {...{ id, value: adjustedValue, valueAdjustments }}
+                        {...{ playerId, value: adjustedValue, valueAdjustments }}
                       />
                     )}
                 </p>
@@ -236,9 +236,9 @@ export const Item = ({
                     </span>
                   </Tooltip>
                   {completedAchievements['unlock-crop-price-guide'] &&
-                    valueAdjustments[id] && (
+                    valueAdjustments[playerId] && (
                       <SellValueIndicator
-                        {...{ id, value: adjustedValue, valueAdjustments }}
+                        {...{ playerId, value: adjustedValue, valueAdjustments }}
                       />
                     )}
                 </p>
@@ -248,7 +248,7 @@ export const Item = ({
                   <strong>In inventory:</strong>{' '}
                   <AnimatedNumber
                     {...{
-                      number: playerInventoryQuantities[id],
+                      number: playerInventoryQuantities[playerId],
                       formatter: integerString,
                     }}
                   />
@@ -331,7 +331,7 @@ export const Item = ({
               {...{
                 handleSubmit: handleItemSell,
                 handleUpdateNumber: setSellQuantity,
-                maxQuantity: playerInventoryQuantities[id],
+                maxQuantity: playerInventoryQuantities[playerId],
                 setQuantity: setSellQuantity,
                 value: sellQuantity,
               }}

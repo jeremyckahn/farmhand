@@ -22,14 +22,14 @@ const OnlinePeersView = ({
   activePlayers,
   cowIdOfferedForTrade,
   cowInventory,
-  id,
+  playerId,
   latestPeerMessages,
   peers,
 }) => {
   const peerKeys = Object.keys(peers)
 
   const cowOfferedForTrade = cowInventory.find(
-    ({ id }) => id === cowIdOfferedForTrade
+    ({ playerId }) => playerId === cowIdOfferedForTrade
   )
 
   // Filter out peers that may have connected but not sent data yet.
@@ -41,7 +41,7 @@ const OnlinePeersView = ({
       <h3>Your player name</h3>
       <Card>
         <CardContent>
-          <strong>{getPlayerName(id)}</strong>
+          <strong>{getPlayerName(playerId)}</strong>
         </CardContent>
       </Card>
       {cowOfferedForTrade && (
@@ -71,11 +71,11 @@ const OnlinePeersView = ({
         <>
           <Divider />
           <ul>
-            {latestPeerMessages.map(({ id, message, severity = 'info' }, i) => (
+            {latestPeerMessages.map(({ playerId, message, severity = 'info' }, i) => (
               <li {...{ key: i }}>
                 <Alert {...{ elevation: 3, severity }}>
                   <ReactMarkdown
-                    {...{ source: `**${getPlayerName(id)}** ${message}` }}
+                    {...{ source: `**${getPlayerName(playerId)}** ${message}` }}
                   />
                 </Alert>
               </li>
@@ -91,7 +91,7 @@ OnlinePeersView.propTypes = {
   activePlayers: number.isRequired,
   cowIdOfferedForTrade: string.isRequired,
   cowInventory: array.isRequired,
-  id: string.isRequired,
+  playerId: string.isRequired,
   latestPeerMessages: array.isRequired,
   peers: object.isRequired,
 }

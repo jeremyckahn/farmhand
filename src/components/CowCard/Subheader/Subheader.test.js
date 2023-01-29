@@ -24,7 +24,7 @@ describe('Subheader', () => {
       cowInventory: [],
       cowValue: 1000,
       huggingMachinesRemain: false,
-      id: '',
+      playerId: '',
       isCowPurchased: false,
     }
   })

@@ -25,7 +25,7 @@ export const testShoveledPlot = plotProps => ({
 })
 
 export const testItem = (item = {}) => ({
-  id: '',
+  playerId: '',
   name: '',
   value: 0,
   ...item,

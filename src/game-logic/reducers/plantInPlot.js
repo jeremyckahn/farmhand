@@ -17,7 +17,7 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 export const plantInPlot = (state, x, y, plantableItemId) => {
   if (
     !plantableItemId ||
-    !state.inventory.some(({ id }) => id === plantableItemId)
+    !state.inventory.some(({ playerId }) => playerId === plantableItemId)
   ) {
     return state
   }
@@ -40,7 +40,7 @@ export const plantInPlot = (state, x, y, plantableItemId) => {
 
   return {
     ...state,
-    selectedItemId: state.inventory.find(({ id }) => id === plantableItemId)
+    selectedItemId: state.inventory.find(({ playerId }) => playerId === plantableItemId)
       ? plantableItemId
       : '',
   }

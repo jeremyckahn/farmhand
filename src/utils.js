@@ -81,7 +81,7 @@ const { SEED, GROWING, GROWN } = cropLifeStage
 
 const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
   (acc, item) => {
-    acc[item.id] = item
+    acc[item.playerId] = item
     return acc
   },
   {}
@@ -234,13 +234,13 @@ const getItemBaseValue = itemId => itemsMap[itemId].value
  * @param {Object.<number>} valueAdjustments
  * @returns {number}
  */
-export const getItemCurrentValue = ({ id }, valueAdjustments) =>
+export const getItemCurrentValue = ({ playerId }, valueAdjustments) =>
   Dinero({
     amount: Math.round(
-      (valueAdjustments[id]
-        ? getItemBaseValue(id) *
-          (itemsMap[id].doesPriceFluctuate ? valueAdjustments[id] : 1)
-        : getItemBaseValue(id)) * 100
+      (valueAdjustments[playerId]
+        ? getItemBaseValue(playerId) *
+          (itemsMap[playerId].doesPriceFluctuate ? valueAdjustments[playerId] : 1)
+        : getItemBaseValue(playerId)) * 100
     ),
     precision: 2,
   }).toUnit()
@@ -257,13 +257,13 @@ export const getAdjustedItemValue = (valueAdjustments, itemId) =>
  * @param {farmhand.item} item
  * @returns {boolean}
  */
-export const isItemSoldInShop = ({ id }) => Boolean(purchasableItemMap[id])
+export const isItemSoldInShop = ({ playerId }) => Boolean(purchasableItemMap[playerId])
 
 /**
  * @param {farmhand.item} item
  * @returns {number}
  */
-export const getResaleValue = ({ id }) => itemsMap[id].value / 2
+export const getResaleValue = ({ playerId }) => itemsMap[playerId].value / 2
 
 /**
  * @param {string} itemId
@@ -423,8 +423,8 @@ export const getFinalCropItemIdFromSeedItemId = seedItemId =>
  * @param {farmhand.item} item
  * @returns {farmhand.item}
  */
-export const getFinalCropItemFromSeedItem = ({ id }) =>
-  itemsMap[getFinalCropItemIdFromSeedItemId(id)]
+export const getFinalCropItemFromSeedItem = ({ playerId }) =>
+  itemsMap[getFinalCropItemIdFromSeedItemId(playerId)]
 
 /**
  * @param {farmhand.item} cropItemId
@@ -433,7 +433,7 @@ export const getFinalCropItemFromSeedItem = ({ id }) =>
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
   cropItemId =>
     Object.values(itemsMap).find(({ growsInto }) => growsInto === cropItemId)
-      ?.id,
+      ?.playerId,
   {
     cacheSize: 30,
   }
@@ -443,8 +443,8 @@ export const getSeedItemIdFromFinalStageCropItemId = memoize(
  * @param {farmhand.cow} cow
  * @returns {string}
  */
-const getDefaultCowName = ({ id }) =>
-  fruitNames[convertStringToInteger(id) % fruitNames.length]
+const getDefaultCowName = ({ playerId }) =>
+  fruitNames[convertStringToInteger(playerId) % fruitNames.length]
 
 /**
  * @param {farmhand.cow} cow
@@ -466,7 +466,7 @@ export const getCowDisplayName = (cow, playerId, allowCustomPeerCowNames) => {
 export const generateCow = (options = {}) => {
   const gender = options.gender || chooseRandom(Object.values(genders))
   const color = options.color || chooseRandom(Object.values(standardCowColors))
-  const id = options.id || uuid()
+  const playerId = options.playerId || uuid()
 
   const baseWeight = Math.round(
     COW_STARTING_WEIGHT_BASE *
@@ -485,7 +485,7 @@ export const generateCow = (options = {}) => {
     gender,
     happiness: 0,
     happinessBoostsToday: 0,
-    id,
+    playerId,
     isBred: false,
     isUsingHuggingMachine: false,
     name: '',
@@ -640,8 +640,8 @@ export const getCowSellValue = cow => getCowValue(cow, true)
  * @returns {Object}
  */
 export const getInventoryQuantityMap = memoize(inventory =>
-  inventory.reduce((acc, { id, quantity }) => {
-    acc[id] = quantity
+  inventory.reduce((acc, { playerId, quantity }) => {
+    acc[playerId] = quantity
     return acc
   }, {})
 )
@@ -677,7 +677,7 @@ export const canMakeRecipe = (recipe, inventory, howMany) =>
  * @returns {Array.<string>}
  */
 export const filterItemIdsToSeeds = itemsIds =>
-  itemsIds.filter(id => itemsMap[id].type === itemType.CROP)
+  itemsIds.filter(playerId => itemsMap[playerId].type === itemType.CROP)
 
 /**
  * @param {Array.<string>} unlockedSeedItemIds
@@ -691,7 +691,7 @@ export const getRandomUnlockedCrop = unlockedSeedItemIds =>
  * @returns {farmhand.priceEvent}
  */
 export const getPriceEventForCrop = cropItem => ({
-  itemId: cropItem.id,
+  itemId: cropItem.playerId,
   daysRemaining:
     getCropLifecycleDuration(cropItem) - PRICE_EVENT_STANDARD_DURATION_DECREASE,
 })
@@ -735,9 +735,9 @@ const itemTypesToShowInReverse = new Set([itemType.MILK])
 
 const sortItemIdsByTypeAndValue = memoize(itemIds =>
   sortBy(itemIds, [
-    id => Number(itemsMap[id].type !== itemType.CROP),
-    id => {
-      const { type, value } = itemsMap[id]
+    playerId => Number(itemsMap[playerId].type !== itemType.CROP),
+    playerId => {
+      const { type, value } = itemsMap[playerId]
       return itemTypesToShowInReverse.has(type) ? -value : value
     },
   ])
@@ -749,9 +749,9 @@ const sortItemIdsByTypeAndValue = memoize(itemIds =>
  */
 export const sortItems = items => {
   const map = {}
-  items.forEach(item => (map[item.id] = item))
+  items.forEach(item => (map[item.playerId] = item))
 
-  return sortItemIdsByTypeAndValue(items.map(({ id }) => id)).map(id => map[id])
+  return sortItemIdsByTypeAndValue(items.map(({ playerId }) => playerId)).map(playerId => map[playerId])
 }
 
 /**
@@ -783,7 +783,7 @@ export const doesInventorySpaceRemain = ({ inventory, inventoryLimit }) =>
  * @return {boolean}
  */
 export const areHuggingMachinesInInventory = memoize(inventory =>
-  inventory.some(({ id }) => id === HUGGING_MACHINE_ITEM_ID)
+  inventory.some(({ playerId }) => playerId === HUGGING_MACHINE_ITEM_ID)
 )
 
 /**
@@ -799,11 +799,11 @@ export const nullArray = memoize(
 
 /**
  * @param {Array.<farmhand.cow>} cowInventory
- * @param {string} id
+ * @param {string} playerId
  * @returns {farmhand.cow|undefined}
  */
-export const findCowById = memoize((cowInventory, id) =>
-  cowInventory.find(cow => id === cow.id)
+export const findCowById = memoize((cowInventory, playerId) =>
+  cowInventory.find(cow => playerId === cow.playerId)
 )
 
 /**
@@ -844,9 +844,9 @@ export const getLevelEntitlements = memoize(levelNumber => {
     tools: {},
   }
 
-  // Assumes that levels is sorted by id.
+  // Assumes that levels is sorted by playerId.
   levels.find(
-    ({ unlocksShopItem, unlocksTool, id, increasesSprinklerRange }) => {
+    ({ unlocksShopItem, unlocksTool, playerId, increasesSprinklerRange }) => {
       if (increasesSprinklerRange) {
         acc.sprinklerRange++
       }
@@ -859,7 +859,7 @@ export const getLevelEntitlements = memoize(levelNumber => {
         acc.tools[unlocksTool] = true
       }
 
-      return id === levelNumber
+      return playerId === levelNumber
     }
   )
 
@@ -872,10 +872,10 @@ export const getLevelEntitlements = memoize(levelNumber => {
  */
 export const getAvailableShopInventory = memoize(levelEntitlements =>
   shopInventory.filter(
-    ({ id }) =>
+    ({ playerId }) =>
       !(
-        unlockableItems.hasOwnProperty(id) &&
-        !levelEntitlements.items.hasOwnProperty(id)
+        unlockableItems.hasOwnProperty(playerId) &&
+        !levelEntitlements.items.hasOwnProperty(playerId)
       )
   )
 )
@@ -910,7 +910,7 @@ export const getPeerMetadata = state => {
 
   Object.assign(reducedState, {
     cowOfferedForTrade: state.cowInventory.find(
-      ({ id }) => id === state.cowIdOfferedForTrade
+      ({ playerId }) => playerId === state.cowIdOfferedForTrade
     ),
   })
 
@@ -976,7 +976,7 @@ export const getProfitRecord = (
 /**
  * @param {Object} todaysStartingInventory
  * @param {Object} todaysPurchases
- * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
+ * @param {Array.<{ playerId: farmhand.item, quantity: number }>} inventory
  * @return {Object} Keys are item IDs, values are either 1 or -1.
  */
 export const computeMarketPositions = (
@@ -984,11 +984,11 @@ export const computeMarketPositions = (
   todaysPurchases,
   inventory
 ) =>
-  inventory.reduce((acc, { id, quantity: endingPosition }) => {
-    const startingInventory = todaysStartingInventory[id] || 0
-    const purchaseQuantity = todaysPurchases[id] || 0
+  inventory.reduce((acc, { playerId, quantity: endingPosition }) => {
+    const startingInventory = todaysStartingInventory[playerId] || 0
+    const purchaseQuantity = todaysPurchases[playerId] || 0
 
-    if (!itemsMap[id].doesPriceFluctuate) {
+    if (!itemsMap[playerId].doesPriceFluctuate) {
       return acc
     }
 
@@ -997,12 +997,12 @@ export const computeMarketPositions = (
         endingPosition < startingInventory ||
         endingPosition < purchaseQuantity
       ) {
-        acc[id] = -1
+        acc[playerId] = -1
       } else if (
         endingPosition > startingInventory ||
         endingPosition > purchaseQuantity
       ) {
-        acc[id] = 1
+        acc[playerId] = 1
       }
     }
 
@@ -1030,7 +1030,7 @@ export const unlockTool = (currentToolLevels, toolType) => {
  */
 export const transformStateDataForImport = state => {
   const sanitizedState = { ...state }
-  const { id } = sanitizedState
+  const { playerId } = sanitizedState
 
   const rejectedKeys = ['version']
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
@@ -1077,8 +1077,8 @@ export const transformStateDataForImport = state => {
   // TODO: Remove these cowInventory and cowForSale transformations after
   // 3/15/2023
   sanitizedState.cowInventory = sanitizedState.cowInventory.map(cow => ({
-    ownerId: id,
-    originalOwnerId: id,
+    ownerId: playerId,
+    originalOwnerId: playerId,
     timesTraded: 0,
     ...cow,
   }))
@@ -1249,7 +1249,7 @@ const colorizeCowTemplate = (() => {
  * @returns {string} Base64 representation of an image
  */
 export const getCowImage = async cow => {
-  const cowIdNumber = convertStringToInteger(cow.id)
+  const cowIdNumber = convertStringToInteger(cow.playerId)
   const { variations } = animals.cow
   const cowTemplate = variations[cowIdNumber % variations.length]
 
@@ -1281,7 +1281,7 @@ export const shouldStormToday = () => Math.random() < STORM_CHANCE
  * @returns {boolean}
  */
 export const isCowInBreedingPen = (cow, cowBreedingPen) =>
-  cowBreedingPen.cowId1 === cow.id || cowBreedingPen.cowId2 === cow.id
+  cowBreedingPen.cowId1 === cow.playerId || cowBreedingPen.cowId2 === cow.playerId
 
 /**
  * @returns {boolean}

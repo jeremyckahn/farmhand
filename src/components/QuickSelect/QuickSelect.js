@@ -24,7 +24,7 @@ const ItemList = ({
     {sortItems(items).map(item => (
       <Tooltip
         {...{
-          key: item.id,
+          key: item.playerId,
           placement: 'top',
           title: item.name,
         }}
@@ -32,11 +32,11 @@ const ItemList = ({
         <Button
           {...{
             className: classNames({
-              'is-selected': item.id === selectedItemId,
+              'is-selected': item.playerId === selectedItemId,
             }),
             color: 'primary',
             onClick: () => handleItemSelectClick(item),
-            variant: item.id === selectedItemId ? 'contained' : 'text',
+            variant: item.playerId === selectedItemId ? 'contained' : 'text',
           }}
         >
           <img
@@ -44,11 +44,11 @@ const ItemList = ({
             {...{
               className: 'square',
               src: pixel,
-              style: { backgroundImage: `url(${itemImages[item.id]}` },
+              style: { backgroundImage: `url(${itemImages[item.playerId]}` },
             }}
           />
           <p {...{ className: 'quantity' }}>
-            {integerString(playerInventoryQuantities[item.id])}
+            {integerString(playerInventoryQuantities[item.playerId])}
           </p>
         </Button>
       </Tooltip>

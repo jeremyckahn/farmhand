@@ -8,8 +8,8 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 const { FERTILIZE, OBSERVE } = fieldMode
 
 const fertilizerItemIdToTypeMap = {
-  [itemsMap['fertilizer'].id]: fertilizerType.STANDARD,
-  [itemsMap['rainbow-fertilizer'].id]: fertilizerType.RAINBOW,
+  [itemsMap['fertilizer'].playerId]: fertilizerType.STANDARD,
+  [itemsMap['rainbow-fertilizer'].playerId]: fertilizerType.RAINBOW,
 }
 
 /**
@@ -29,10 +29,10 @@ export const fertilizePlot = (state, x, y) => {
     return state
   }
 
-  const { id: fertilizerItemId } = itemsMap[selectedItemId]
+  const { playerId: fertilizerItemId } = itemsMap[selectedItemId]
 
   const fertilizerInventory = state.inventory.find(
-    item => item.id === fertilizerItemId
+    item => item.playerId === fertilizerItemId
   )
 
   const plotContentType = getPlotContentType(plotContent)

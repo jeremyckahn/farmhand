@@ -9,10 +9,10 @@ import { COW_GESTATION_PERIOD_DAYS } from '../../constants'
 const cowCanBeAdded = (cow, cowBreedingPen, cowInventory) => {
   const { cowId1, cowId2 } = cowBreedingPen
   const isBreedingPenFull = cowId1 !== null && cowId2 !== null
-  const isCowInBreedingPen = cowId1 === cow.id || cowId2 === cow.id
+  const isCowInBreedingPen = cowId1 === cow.playerId || cowId2 === cow.playerId
 
-  const isCowInInventory = !!cowInventory.find(({ id }) => {
-    return id === cow.id
+  const isCowInInventory = !!cowInventory.find(({ playerId }) => {
+    return playerId === cow.playerId
   })
 
   return isCowInInventory && !isBreedingPenFull && !isCowInBreedingPen
@@ -28,7 +28,7 @@ const cowCanBeAdded = (cow, cowBreedingPen, cowInventory) => {
 export const changeCowBreedingPenResident = (state, cow, isAdding) => {
   const { cowBreedingPen, cowInventory } = state
   const { cowId1, cowId2 } = cowBreedingPen
-  const isCowInBreedingPen = cowId1 === cow.id || cowId2 === cow.id
+  const isCowInBreedingPen = cowId1 === cow.playerId || cowId2 === cow.playerId
   let newCowBreedingPen = { ...cowBreedingPen }
 
   if (isAdding && !cowCanBeAdded(cow, cowBreedingPen, cowInventory)) {
@@ -41,9 +41,9 @@ export const changeCowBreedingPenResident = (state, cow, isAdding) => {
 
   if (isAdding) {
     const breedingPenCowId = cowId1 === null ? 'cowId1' : 'cowId2'
-    newCowBreedingPen = { ...newCowBreedingPen, [breedingPenCowId]: cow.id }
+    newCowBreedingPen = { ...newCowBreedingPen, [breedingPenCowId]: cow.playerId }
   } else {
-    if (cowId1 === cow.id) {
+    if (cowId1 === cow.playerId) {
       newCowBreedingPen = {
         ...newCowBreedingPen,
         cowId1: newCowBreedingPen.cowId2,

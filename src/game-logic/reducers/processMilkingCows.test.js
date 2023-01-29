@@ -60,7 +60,7 @@ describe('processMilkingCows', () => {
         const { daysSinceMilking } = cow
 
         expect(daysSinceMilking).toEqual(0)
-        expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
+        expect(inventory).toEqual([{ playerId: 'milk-1', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
             message: MILKS_PRODUCED`${{ [getCowMilkItem(cow).name]: 1 }}`,
@@ -95,7 +95,7 @@ describe('processMilkingCows', () => {
         const { daysSinceMilking } = cow
 
         expect(daysSinceMilking).toEqual(0)
-        expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
+        expect(inventory).toEqual([{ playerId: 'milk-1', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
             message: MILKS_PRODUCED`${{ [getCowMilkItem(cow).name]: 1 }}`,

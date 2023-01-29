@@ -24,7 +24,7 @@ export const setScarecrow = (state, x, y) => {
   state = decrementItemFromInventory(state, SCARECROW_ITEM_ID)
 
   const doScarecrowsRemain = state.inventory.some(
-    item => item.id === SCARECROW_ITEM_ID
+    item => item.playerId === SCARECROW_ITEM_ID
   )
 
   state = modifyFieldPlotAt(state, x, y, () =>

@@ -33,7 +33,7 @@ const onboardingAchievements = [
 
 const getRemainingOnboardingAchievements = memoize(completedAchievements =>
   onboardingAchievements.filter(
-    achievement => achievement && !completedAchievements[achievement.id]
+    achievement => achievement && !completedAchievements[achievement.playerId]
   )
 )
 
@@ -132,7 +132,7 @@ It looks like you're new here. Thanks for stopping by! Here are some goals to he
             />
             <ul className="card-list">
               {remainingOnboardingAchievements.map(achievement => (
-                <li {...{ key: achievement.id }}>
+                <li {...{ key: achievement.playerId }}>
                   <Achievement {...{ achievement }} />
                 </li>
               ))}

@@ -174,11 +174,11 @@ export class Cow extends Component {
 
   render() {
     const {
-      props: { allowCustomPeerCowNames, cow, handleCowClick, id, isSelected },
+      props: { allowCustomPeerCowNames, cow, handleCowClick, playerId, isSelected },
       state: { cowImage, isTransitioning, rotate, showHugAnimation, x, y },
     } = this
 
-    const cowDisplayName = getCowDisplayName(cow, id, allowCustomPeerCowNames)
+    const cowDisplayName = getCowDisplayName(cow, playerId, allowCustomPeerCowNames)
 
     return (
       <div
@@ -247,7 +247,7 @@ Cow.propTypes = {
   cow: object.isRequired,
   cowInventory: array.isRequired,
   handleCowClick: func.isRequired,
-  id: string.isRequired,
+  playerId: string.isRequired,
   isSelected: bool.isRequired,
 }
 
@@ -256,7 +256,7 @@ export const CowPen = ({
   cowInventory,
   handleCowPenUnmount,
   handleCowClick,
-  id,
+  playerId,
   selectedCowId,
 }) => {
   useEffect(() => {
@@ -273,10 +273,10 @@ export const CowPen = ({
             allowCustomPeerCowNames,
             cow,
             cowInventory,
-            key: cow.id,
+            key: cow.playerId,
             handleCowClick,
-            id,
-            isSelected: selectedCowId === cow.id,
+            playerId,
+            isSelected: selectedCowId === cow.playerId,
           }}
         />
       ))}
@@ -289,7 +289,7 @@ CowPen.propTypes = {
   cowInventory: array.isRequired,
   handleCowClick: func.isRequired,
   handleCowPenUnmount: func.isRequired,
-  id: string.isRequired,
+  playerId: string.isRequired,
   selectedCowId: string.isRequired,
 }
 

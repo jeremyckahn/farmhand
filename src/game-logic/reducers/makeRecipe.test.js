@@ -11,13 +11,13 @@ describe('makeRecipe', () => {
     test('the recipe is not made', () => {
       const { inventory } = makeRecipe(
         {
-          inventory: [{ id: 'sample-item-1', quantity: 1 }],
+          inventory: [{ playerId: 'sample-item-1', quantity: 1 }],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
         sampleRecipe1
       )
 
-      expect(inventory).toEqual([{ id: 'sample-item-1', quantity: 1 }])
+      expect(inventory).toEqual([{ playerId: 'sample-item-1', quantity: 1 }])
     })
   })
 
@@ -25,15 +25,15 @@ describe('makeRecipe', () => {
     test('consumes ingredients and adds recipe item to inventory', () => {
       const { inventory } = makeRecipe(
         {
-          inventory: [{ id: 'sample-item-1', quantity: 3 }],
+          inventory: [{ playerId: 'sample-item-1', quantity: 3 }],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
         sampleRecipe1
       )
 
       expect(inventory).toEqual([
-        { id: 'sample-item-1', quantity: 1 },
-        { id: 'sample-recipe-1', quantity: 1 },
+        { playerId: 'sample-item-1', quantity: 1 },
+        { playerId: 'sample-recipe-1', quantity: 1 },
       ])
     })
   })

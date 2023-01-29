@@ -16,14 +16,14 @@
  * @typedef farmhand.item
  * @type {Object}
  * @readonly
- * @property {string} id
+ * @property {string} playerId
  * @property {string} name
  * @property {string} type
  * @property {farmhand.cropTimetable} [cropTimetable]
  * @property {farmhand.module:enums.cropType} [cropType]
  * @property {string} [description] A user-friendly description of the item.
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.
- * @property {string} [growsInto] The id of another farmhand.item.
+ * @property {string} [growsInto] The playerId of another farmhand.item.
  * @property {boolean} [doesPriceFluctuate] Whether or not this item has a
  * value that fluctuates from day to day.
  * @property {number} [hoveredPlotRange] The number to set.
@@ -77,7 +77,7 @@
  * @property {string} gender
  * @property {number} happiness 0-1.
  * @property {number} happinessBoostsToday
- * @property {string} id
+ * @property {string} playerId
  * @property {boolean} isBred
  * @property {boolean} isUsingHuggingMachine
  * @property {string} name
@@ -108,7 +108,7 @@
  * @property {farmhand.module:enums.recipeType} recipeType The type of recipe
  * this is.
  * @property {{string: number}} ingredients An object where each
- * key is the id of a farmhand.item and the value is the quantity of that item.
+ * key is the playerId of a farmhand.item and the value is the quantity of that item.
  * @property {farmhand.recipeCondition} condition This must return `true` for
  * the recipe to be made available to the player.
  */
@@ -137,7 +137,7 @@
  * @typedef farmhand.achievement
  * @readonly
  * @type {Object}
- * @property {string} id
+ * @property {string} playerId
  * @property {string} name
  * @property {string} description
  * @property {string} rewardDescription
@@ -149,9 +149,9 @@
  * @typedef farmhand.level
  * @readonly
  * @type {Object}
- * @property {number} id
+ * @property {number} playerId
  * @property {boolean} [increasesSprinklerRange]
- * @property {string} [unlocksShopItem] Must reference a farmhand.item id.
+ * @property {string} [unlocksShopItem] Must reference a farmhand.item playerId.
  */
 
 /**
@@ -165,7 +165,7 @@
 /**
  * @typedef farmhand.peerMessage
  * @type {Object}
- * @property {string} id The farmhand.state.id of the peer.
+ * @property {string} playerId The farmhand.state.playerId of the peer.
  * @property {'error'|'info'|'success'|'warning'} severity
  * @property {string} message
  */
@@ -173,10 +173,10 @@
 /**
  * @typedef farmhand.upgradesMetadatum
  * @type {Object}
- * @property {string} id
+ * @property {string} playerId
  * @property {string?} description
  * @property {string} name
- * @property {Object.<farmhand.item.id, number>?} ingredients
+ * @property {Object.<farmhand.item.playerId, number>?} ingredients
  * @property {farmhand.module:enums.toolLevel?} nextLevel
  * @property {boolean?} isMaxLevel
  */

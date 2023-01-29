@@ -14,7 +14,7 @@ export const cornSeed = crop({
     [GROWING]: 7,
   },
   growsInto: 'corn',
-  id: 'corn-seed',
+  playerId: 'corn-seed',
   name: 'Corn Kernels',
   tier: 2,
 })

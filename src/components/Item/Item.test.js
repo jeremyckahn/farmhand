@@ -90,7 +90,7 @@ describe('conditional UI', () => {
     beforeEach(() => {
       component.setProps({
         isSellView: true,
-        item: testItem({ id: 'an-item' }),
+        item: testItem({ playerId: 'an-item' }),
         playerInventoryQuantities: {
           'an-item': 1,
         },

@@ -33,7 +33,7 @@ export const fromSeed = ({ cropTimetable, cropType, growsInto, tier }) => ({
   cropTimetable,
   cropType,
   doesPriceFluctuate: true,
-  id: growsInto,
+  playerId: growsInto,
   tier,
   type: itemType.CROP,
 })

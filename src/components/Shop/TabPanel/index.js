@@ -8,7 +8,7 @@ export const TabPanel = props => {
     <section
       role="tabpanel"
       hidden={value !== index}
-      id={`shop-tabpanel-${index}`}
+      playerId={`shop-tabpanel-${index}`}
       aria-labelledby={`shop-tab-${index}`}
       {...other}
     >
@@ -24,6 +24,6 @@ TabPanel.propTypes = {
 }
 
 export const a11yProps = index => ({
-  id: `shop-tab-${index}`,
+  playerId: `shop-tab-${index}`,
   'aria-controls': `shop-tabpanel-${index}`,
 })

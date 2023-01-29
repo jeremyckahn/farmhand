@@ -15,7 +15,7 @@ export const addItemToInventory = (
   howMany = 1,
   allowInventoryOverage = false
 ) => {
-  const { id } = item
+  const { playerId } = item
   const inventory = [...state.inventory]
 
   const numberOfItemsToAdd = allowInventoryOverage
@@ -26,7 +26,7 @@ export const addItemToInventory = (
     return state
   }
 
-  const currentItemSlot = inventory.findIndex(({ id: itemId }) => id === itemId)
+  const currentItemSlot = inventory.findIndex(({ playerId: itemId }) => playerId === itemId)
 
   if (~currentItemSlot) {
     const currentItem = inventory[currentItemSlot]
@@ -36,7 +36,7 @@ export const addItemToInventory = (
       quantity: currentItem.quantity + numberOfItemsToAdd,
     }
   } else {
-    inventory.push({ id, quantity: numberOfItemsToAdd })
+    inventory.push({ playerId, quantity: numberOfItemsToAdd })
   }
 
   return { ...state, inventory }

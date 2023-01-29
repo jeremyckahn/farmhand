@@ -62,7 +62,7 @@ function harvestCrops(state, x, y) {
   const row = state.field[y]
   const crop = row[x]
   const item = itemsMap[crop.itemId]
-  const seedItemIdForCrop = getSeedItemIdFromFinalStageCropItemId(item.id)
+  const seedItemIdForCrop = getSeedItemIdFromFinalStageCropItemId(item.playerId)
   const plotWasRainbowFertilized =
     crop.fertilizerType === fertilizerType.RAINBOW
 

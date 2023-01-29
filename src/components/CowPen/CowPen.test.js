@@ -29,7 +29,7 @@ describe('Cow', () => {
           cowInventory: [],
           handleCowPenUnmount: () => {},
           handleCowClick: () => {},
-          id: '',
+          playerId: '',
           isSelected: false,
         }}
       />

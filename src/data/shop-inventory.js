@@ -55,4 +55,4 @@ const inventory = [
 
 export default inventory
 
-export const itemIds = new Set(inventory.map(item => item.id))
+export const itemIds = new Set(inventory.map(item => item.playerId))

@@ -64,18 +64,18 @@ const iAmRichVariants = [
 
 describe.each(iAmRichVariants)(
   'I am Rich variants',
-  (id, goal, description, rewardDescription) => {
-    describe(id, () => {
+  (playerId, goal, description, rewardDescription) => {
+    describe(playerId, () => {
       test('has the expected description', () => {
-        expect(achievementsMap[id].description).toEqual(description)
+        expect(achievementsMap[playerId].description).toEqual(description)
       })
 
       test('has the expected rewardDescription', () => {
-        expect(achievementsMap[id].rewardDescription).toEqual(rewardDescription)
+        expect(achievementsMap[playerId].rewardDescription).toEqual(rewardDescription)
       })
 
       test(`is achieved when revenue is greater than or equal to ${goal}`, () => {
-        const achievement = achievementsMap[id]
+        const achievement = achievementsMap[playerId]
         const state = {
           revenue: goal,
         }
@@ -84,7 +84,7 @@ describe.each(iAmRichVariants)(
       })
 
       test(`is not achieved when revenue is less than ${goal}`, () => {
-        const achievement = achievementsMap[id]
+        const achievement = achievementsMap[playerId]
         const state = {
           revenue: goal - 1,
         }
@@ -101,7 +101,7 @@ describe('gold-digger', () => {
 
   beforeEach(() => {
     state = {
-      inventory: [{ id: 'gold-ore' }],
+      inventory: [{ playerId: 'gold-ore' }],
       inventoryLimit: 99,
     }
   })
@@ -113,8 +113,8 @@ describe('gold-digger', () => {
   test('it rewards the player with a gold ingot', () => {
     state = achievement.reward(state)
 
-    const ingot = state.inventory.find(item => item.id === 'gold-ingot')
+    const ingot = state.inventory.find(item => item.playerId === 'gold-ingot')
 
-    expect(ingot).toEqual({ id: 'gold-ingot', quantity: 1 })
+    expect(ingot).toEqual({ playerId: 'gold-ingot', quantity: 1 })
   })
 })

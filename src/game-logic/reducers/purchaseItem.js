@@ -23,7 +23,7 @@ export const purchaseItem = (state, item, howMany = 1) => {
     return state
   }
 
-  const value = getAdjustedItemValue(valueAdjustments, item.id)
+  const value = getAdjustedItemValue(valueAdjustments, item.playerId)
   const totalValue = value * numberOfItemsToAdd
 
   if (totalValue > money) {
@@ -41,7 +41,7 @@ export const purchaseItem = (state, item, howMany = 1) => {
       money: moneyTotal(money, -totalValue),
       todaysPurchases: {
         ...todaysPurchases,
-        [item.id]: (todaysPurchases[item.id] || 0) + numberOfItemsToAdd,
+        [item.playerId]: (todaysPurchases[item.playerId] || 0) + numberOfItemsToAdd,
       },
     },
     item,

@@ -34,7 +34,7 @@ const cowFeed = itemsMap[COW_FEED_ITEM_ID]
 
 const achievements = [
   ((reward = 100) => ({
-    id: 'plant-crop',
+    playerId: 'plant-crop',
     name: 'Plant a Crop',
     description: 'Purchase a seed and plant it in the field.',
     rewardDescription: dollarString(reward),
@@ -47,7 +47,7 @@ const achievements = [
   }))(),
 
   ((reward = 150) => ({
-    id: 'water-crop',
+    playerId: 'water-crop',
     name: 'Water a Crop',
     description: 'Water a crop that you planted.',
     rewardDescription: dollarString(reward),
@@ -60,7 +60,7 @@ const achievements = [
   }))(),
 
   ((reward = 200) => ({
-    id: 'harvest-crop',
+    playerId: 'harvest-crop',
     name: 'Harvest a Crop',
     description: 'Harvest a crop that you planted.',
     rewardDescription: dollarString(reward),
@@ -69,7 +69,7 @@ const achievements = [
   }))(),
 
   ((goal = 10000) => ({
-    id: 'unlock-crop-price-guide',
+    playerId: 'unlock-crop-price-guide',
     name: 'Prove Yourself as a Farmer',
     description: `Show that you can run a farm by earning at least ${dollarString(
       goal
@@ -84,7 +84,7 @@ const achievements = [
   }))(),
 
   ((reward = 15) => ({
-    id: 'purchase-cow-pen',
+    playerId: 'purchase-cow-pen',
     name: 'Purchase a Cow Pen',
     description:
       'Construct any size cow pen to let your bovine buddies moo-ve on in!',
@@ -94,7 +94,7 @@ const achievements = [
   }))(),
 
   ((reward = 100) => ({
-    id: 'purchase-all-cow-colors',
+    playerId: 'purchase-all-cow-colors',
     name: 'Cows of Many Colors',
     description: 'Show that you love all cows and purchase one of every color.',
     rewardDescription: `${reward} units of ${cowFeed.name}`,
@@ -106,7 +106,7 @@ const achievements = [
   }))(),
 
   ((reward = 150) => ({
-    id: 'play-during-october',
+    playerId: 'play-during-october',
     name: 'Halloween Harvest',
     description: 'Play Farmhand in October and get the gift of the season.',
     rewardDescription: `${reward} units of ${itemsMap.jackolantern.name}`,
@@ -116,7 +116,7 @@ const achievements = [
   }))(),
 
   ((reward = 100, goal = 10_000) => ({
-    id: 'sell-10000-jack-o-lanterns',
+    playerId: 'sell-10000-jack-o-lanterns',
     name: 'Spooky Pumpkin Patch',
     description: `Sell ${integerString(goal)} units of ${
       itemsMap.jackolantern.name
@@ -128,7 +128,7 @@ const achievements = [
   }))(),
 
   ((goal = 5000, reward = 25) => ({
-    id: 'daily-profit-1',
+    playerId: 'daily-profit-1',
     name: `Daily profit: ${dollarString(goal)}`,
     description: `Earn ${dollarString(goal)} of profit in a single day.`,
     rewardDescription: `${reward} units of ${itemsMap.fertilizer.name}`,
@@ -143,7 +143,7 @@ const achievements = [
   }))(),
 
   ((goal = 15000, reward = 50) => ({
-    id: 'daily-profit-2',
+    playerId: 'daily-profit-2',
     name: `Daily profit: ${dollarString(goal)}`,
     description: `Earn ${dollarString(goal)} of profit in a single day.`,
     rewardDescription: `${reward} units of ${itemsMap['onion-seed'].name}`,
@@ -158,7 +158,7 @@ const achievements = [
   }))(),
 
   ((goal = 50000, reward = 100) => ({
-    id: 'daily-profit-3',
+    playerId: 'daily-profit-3',
     name: `Daily profit: ${dollarString(goal)}`,
     description: `Earn ${dollarString(goal)} of profit in a single day.`,
     rewardDescription: `${reward} units of ${itemsMap['tomato-seed'].name}`,
@@ -173,7 +173,7 @@ const achievements = [
   }))(),
 
   ((goal = 2500, reward = 35, rewardItem = itemsMap['pumpkin-seed']) => ({
-    id: 'profit-average-1',
+    playerId: 'profit-average-1',
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
@@ -182,7 +182,7 @@ const achievements = [
   }))(),
 
   ((goal = 10000, reward = 100, rewardItem = itemsMap['potato-seed']) => ({
-    id: 'profit-average-2',
+    playerId: 'profit-average-2',
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
@@ -191,7 +191,7 @@ const achievements = [
   }))(),
 
   ((goal = 25000, reward = 250, rewardItem = itemsMap['soybean-seed']) => ({
-    id: 'profit-average-3',
+    playerId: 'profit-average-3',
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
@@ -200,7 +200,7 @@ const achievements = [
   }))(),
 
   ((goal = 50000, reward = 300, rewardItem = itemsMap['chocolate-milk']) => ({
-    id: 'profit-average-4',
+    playerId: 'profit-average-4',
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
@@ -209,7 +209,7 @@ const achievements = [
   }))(),
 
   ((goal = 150000, reward = 500, rewardItem = itemsMap['rainbow-milk-3']) => ({
-    id: 'profit-average-5',
+    playerId: 'profit-average-5',
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
@@ -218,7 +218,7 @@ const achievements = [
   }))(),
 
   ((goal = 1000000, reward = 1000, rewardItem = itemsMap['rainbowCheese']) => ({
-    id: 'profit-average-6',
+    playerId: 'profit-average-6',
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
@@ -232,11 +232,11 @@ const achievements = [
     reward = 5000,
     rewardItem = itemsMap['fertilizer']
   ) => ({
-    id: 'sale-goal-1',
+    playerId: 'sale-goal-1',
     name: `Dairy Master`,
     description: `Sell ${integerString(goal)} units of ${goalItem.name}.`,
     rewardDescription: `${integerString(reward)} ${rewardItem.name} units`,
-    condition: state => state.itemsSold[goalItem.id] >= goal,
+    condition: state => state.itemsSold[goalItem.playerId] >= goal,
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -246,20 +246,20 @@ const achievements = [
     reward = 500,
     rewardItem = itemsMap['scarecrow']
   ) => ({
-    id: 'sale-goal-2',
+    playerId: 'sale-goal-2',
     name: `A Big Average Rainbow`,
     description: `Sell ${integerString(goal)} units of ${goalItem.name}.`,
     rewardDescription: `${integerString(reward)} ${rewardItem.name} units`,
-    condition: state => state.itemsSold[goalItem.id] >= goal,
+    condition: state => state.itemsSold[goalItem.playerId] >= goal,
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
   ((goal = 10000, goalItem = itemsMap['burger'], reward = 5000) => ({
-    id: 'sale-goal-3',
+    playerId: 'sale-goal-3',
     name: `Burger Master`,
     description: `Sell ${integerString(goal)} ${goalItem.name} units.`,
     rewardDescription: `${integerString(reward)} additional inventory spaces`,
-    condition: state => state.itemsSold[goalItem.id] >= goal,
+    condition: state => state.itemsSold[goalItem.playerId] >= goal,
     reward: state => ({
       ...state,
       inventoryLimit: state.inventoryLimit + reward,
@@ -267,7 +267,7 @@ const achievements = [
   }))(),
 
   ((goal = 500000) => ({
-    id: 'i-am-rich-1',
+    playerId: 'i-am-rich-1',
     name: 'I am Rich!',
     description: `Earn ${dollarString(goal)}.`,
     rewardDescription: `All sales receive a ${percentageString(
@@ -278,7 +278,7 @@ const achievements = [
   }))(),
 
   ((goal = 1000000) => ({
-    id: 'i-am-rich-2',
+    playerId: 'i-am-rich-2',
     name: 'Millionaire',
     description: `Earn ${dollarString(goal)}.`,
     rewardDescription: `All sales receive a ${percentageString(
@@ -289,7 +289,7 @@ const achievements = [
   }))(),
 
   ((goal = 1000000000) => ({
-    id: 'i-am-rich-3',
+    playerId: 'i-am-rich-3',
     name: 'Billionaire',
     description: `Earn ${dollarString(goal)}.`,
     rewardDescription: `All sales receive a ${percentageString(
@@ -300,7 +300,7 @@ const achievements = [
   }))(),
 
   ((goal = Math.floor(Math.PI * 1_000_000), reward = 1000) => ({
-    id: 'lord-of-the-pies',
+    playerId: 'lord-of-the-pies',
     name: 'Lord of the Pies',
     description: `Have ${dollarString(goal)} on hand.`,
     rewardDescription: `${integerString(reward)} units of ${
@@ -312,11 +312,11 @@ const achievements = [
   }))(),
 
   (() => ({
-    id: 'gold-digger',
+    playerId: 'gold-digger',
     name: 'Gold Digger',
     description: `Dig up your first piece of gold.`,
     rewardDescription: `A Gold Ingot`,
-    condition: state => !!state.inventory.find(i => i.id === 'gold-ore'),
+    condition: state => !!state.inventory.find(i => i.playerId === 'gold-ore'),
     reward: state => {
       return addItemToInventory(state, itemsMap['gold-ingot'], 1, true)
     },
@@ -326,7 +326,7 @@ const achievements = [
 export default achievements
 
 export const achievementsMap = achievements.reduce((acc, achievement) => {
-  acc[achievement.id] = achievement
+  acc[achievement.playerId] = achievement
 
   return acc
 }, {})

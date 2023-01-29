@@ -31,7 +31,7 @@ const isHeartFull = (heartIndex, numberOfFullHearts) =>
 
 const getCowMapById = memoize(cowInventory =>
   cowInventory.reduce((acc, cow) => {
-    acc[cow.id] = cow
+    acc[cow.playerId] = cow
     return acc
   }, {})
 )
@@ -46,14 +46,14 @@ const Subheader = ({
   handleCowAutomaticHugChange,
   handleCowBreedChange,
   huggingMachinesRemain,
-  id: playerId,
+  playerId: playerId,
   isCowPurchased,
 }) => {
   const numberOfFullHearts = cow.happiness * 10
   const isInBreedingPen = isCowInBreedingPen(cow, cowBreedingPen)
   const isRoomInBreedingPen =
     cowBreedingPen.cowId1 === null || cowBreedingPen.cowId2 === null
-  const isThisCowOfferedForTrade = cowIdOfferedForTrade === cow.id
+  const isThisCowOfferedForTrade = cowIdOfferedForTrade === cow.playerId
 
   const mateId = cowBreedingPen.cowId1 ?? cowBreedingPen.cowId2
   const mate = getCowMapById(cowInventory)[mateId]
@@ -95,7 +95,7 @@ const Subheader = ({
         <>
           <ol className="hearts">
             {nullArray(10).map((_null, i) => (
-              <li key={`${cow.id}_${i}`}>
+              <li key={`${cow.playerId}_${i}`}>
                 <FontAwesomeIcon
                   {...{
                     icon: isHeartFull(i, numberOfFullHearts)
@@ -184,6 +184,6 @@ Subheader.propTypes = {
   handleCowAutomaticHugChange: func,
   handleCowBreedChange: func,
   huggingMachinesRemain: bool.isRequired,
-  id: string.isRequired,
+  playerId: string.isRequired,
   isCowPurchased: bool,
 }

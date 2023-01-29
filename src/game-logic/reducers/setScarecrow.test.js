@@ -12,7 +12,7 @@ describe('setScarecrow', () => {
     state = {
       field: [[null]],
       fieldMode: fieldMode.SET_SCARECROW,
-      inventory: [testItem({ id: 'scarecrow', quantity: 1 })],
+      inventory: [testItem({ playerId: 'scarecrow', quantity: 1 })],
       selectedItemId: SCARECROW_ITEM_ID,
     }
   })
@@ -35,7 +35,7 @@ describe('setScarecrow', () => {
     describe('multiple scarecrow units remaining', () => {
       test('updates state', () => {
         const { fieldMode: newFieldMode, selectedItemId } = setScarecrow(
-          { ...state, inventory: [testItem({ id: 'scarecrow', quantity: 2 })] },
+          { ...state, inventory: [testItem({ playerId: 'scarecrow', quantity: 2 })] },
           0,
           0
         )

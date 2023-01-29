@@ -14,7 +14,7 @@ export const jalapenoSeed = crop({
     [GROWING]: 3,
   },
   growsInto: 'jalapeno',
-  id: 'jalapeno-seed',
+  playerId: 'jalapeno-seed',
   name: 'Jalapeño Seed',
   tier: 4,
 })

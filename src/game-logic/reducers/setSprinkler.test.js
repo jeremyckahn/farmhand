@@ -12,7 +12,7 @@ describe('setSprinkler', () => {
     state = {
       field: [[null]],
       fieldMode: fieldMode.SET_SPRINKLER,
-      inventory: [testItem({ id: 'sprinkler', quantity: 1 })],
+      inventory: [testItem({ playerId: 'sprinkler', quantity: 1 })],
       itemsSold: {},
       selectedItemId: SPRINKLER_ITEM_ID,
     }
@@ -37,7 +37,7 @@ describe('setSprinkler', () => {
     describe('multiple sprinkler units remaining', () => {
       test('updates state', () => {
         const { fieldMode: newFieldMode, selectedItemId } = setSprinkler(
-          { ...state, inventory: [testItem({ id: 'sprinkler', quantity: 2 })] },
+          { ...state, inventory: [testItem({ playerId: 'sprinkler', quantity: 2 })] },
           0,
           0
         )

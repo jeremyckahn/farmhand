@@ -54,7 +54,7 @@ export const minePlot = (state, x, y) => {
     return {
       isShoveled: true,
       daysUntilClear,
-      oreId: spawnedOre ? spawnedOre.id : null,
+      oreId: spawnedOre ? spawnedOre.playerId : null,
     }
   })
 

@@ -10,7 +10,7 @@ const { freeze } = Object
 export const coal = freeze({
   description: 'A piece of coal.',
   doesPriceFluctuate: false,
-  id: 'coal',
+  playerId: 'coal',
   name: 'Coal',
   type: itemType.FUEL,
   spawnChance: COAL_SPAWN_CHANCE,

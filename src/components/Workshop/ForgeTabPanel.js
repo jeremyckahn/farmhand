@@ -43,7 +43,7 @@ export function ForgeTabPanel({
               <h4>Tool Upgrades</h4>
             </li>
             {upgradesAvailable.map(upgrade => (
-              <li key={upgrade.id}>
+              <li key={upgrade.playerId}>
                 <UpgradePurchase upgrade={upgrade} />
               </li>
             ))}

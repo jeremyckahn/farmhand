@@ -7,8 +7,8 @@ jest.mock('../../../data/maps')
 describe('playerInventoryQuantities', () => {
   test('computes a map of item IDs to their quantity in the inventory', () => {
     const playerInventoryQuantities = getInventoryQuantities([
-      testItem({ id: 'sample-item-1', quantity: 1 }),
-      testItem({ id: 'sample-item-2', quantity: 2 }),
+      testItem({ playerId: 'sample-item-1', quantity: 1 }),
+      testItem({ playerId: 'sample-item-2', quantity: 2 }),
     ])
 
     expect(playerInventoryQuantities).toEqual(

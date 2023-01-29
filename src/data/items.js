@@ -60,7 +60,7 @@ export {
 } from './crops'
 
 export const weed = freeze({
-  id: 'weed',
+  playerId: 'weed',
   name: 'Weed',
   value: 0.1,
   doesPriceFluctuate: false,
@@ -83,7 +83,7 @@ export const rainbowFertilizer = freeze({
   description:
     'Helps crops grow a little faster and automatically replants them upon harvesting. Consumes seeds upon replanting and disappears if none are available. Also works for Scarecrows.',
   enablesFieldMode: fieldMode.FERTILIZE,
-  id: 'rainbow-fertilizer',
+  playerId: 'rainbow-fertilizer',
   name: 'Rainbow Fertilizer',
   type: FERTILIZER,
   // Rainbow Fertilizer is worth less than regular Fertilizer because it is not
@@ -103,7 +103,7 @@ export const sprinkler = freeze({
   // Note: The actual hoveredPlotRangeSize of sprinklers grows with the
   // player's level.
   hoveredPlotRangeSize: INITIAL_SPRINKLER_RANGE,
-  id: 'sprinkler',
+  playerId: 'sprinkler',
   isReplantable: true,
   name: 'Sprinkler',
   type: SPRINKLER,
@@ -122,7 +122,7 @@ export const scarecrow = freeze({
   // potentially gets JSON.stringify-ed during data export. Non-safe numbers
   // get stringify-ed to "null", which breaks reimporting.
   hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
-  id: 'scarecrow',
+  playerId: 'scarecrow',
   isReplantable: true,
   name: 'Scarecrow',
   type: SCARECROW,
@@ -140,7 +140,7 @@ export const scarecrow = freeze({
  * @type {farmhand.item}
  */
 export const cowFeed = freeze({
-  id: COW_FEED_ITEM_ID,
+  playerId: COW_FEED_ITEM_ID,
   description:
     'Each cow automatically consumes one unit of Cow Feed per day. Fed cows gain and maintain weight.',
   name: 'Cow Feed',
@@ -153,7 +153,7 @@ export const cowFeed = freeze({
  * @type {farmhand.item}
  */
 export const huggingMachine = freeze({
-  id: HUGGING_MACHINE_ITEM_ID,
+  playerId: HUGGING_MACHINE_ITEM_ID,
   description: 'Automatically hugs one cow three times every day.',
   name: 'Hugging Machine',
   type: HUGGING_MACHINE,
@@ -165,7 +165,7 @@ export const huggingMachine = freeze({
  * @type {farmhand.item}
  */
 export const milk1 = freeze({
-  id: 'milk-1',
+  playerId: 'milk-1',
   name: 'Grade C Milk',
   type: MILK,
   value: 40,
@@ -176,7 +176,7 @@ export const milk1 = freeze({
  * @type {farmhand.item}
  */
 export const milk2 = freeze({
-  id: 'milk-2',
+  playerId: 'milk-2',
   name: 'Grade B Milk',
   type: MILK,
   value: 80,
@@ -187,7 +187,7 @@ export const milk2 = freeze({
  * @type {farmhand.item}
  */
 export const milk3 = freeze({
-  id: 'milk-3',
+  playerId: 'milk-3',
   name: 'Grade A Milk',
   type: MILK,
   value: 120,
@@ -198,7 +198,7 @@ export const milk3 = freeze({
  * @type {farmhand.item}
  */
 export const rainbowMilk1 = freeze({
-  id: 'rainbow-milk-1',
+  playerId: 'rainbow-milk-1',
   name: 'Grade C Rainbow Milk',
   type: MILK,
   value: 60,
@@ -209,7 +209,7 @@ export const rainbowMilk1 = freeze({
  * @type {farmhand.item}
  */
 export const rainbowMilk2 = freeze({
-  id: 'rainbow-milk-2',
+  playerId: 'rainbow-milk-2',
   name: 'Grade B Rainbow Milk',
   type: MILK,
   value: 120,
@@ -220,7 +220,7 @@ export const rainbowMilk2 = freeze({
  * @type {farmhand.item}
  */
 export const rainbowMilk3 = freeze({
-  id: 'rainbow-milk-3',
+  playerId: 'rainbow-milk-3',
   name: 'Grade A Rainbow Milk',
   type: MILK,
   value: 180,
@@ -231,7 +231,7 @@ export const rainbowMilk3 = freeze({
  * @type {farmhand.item}
  */
 export const chocolateMilk = freeze({
-  id: 'chocolate-milk',
+  playerId: 'chocolate-milk',
   name: 'Chocolate Milk',
   type: MILK,
   value: 80,

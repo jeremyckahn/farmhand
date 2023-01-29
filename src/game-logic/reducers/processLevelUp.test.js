@@ -12,7 +12,7 @@ describe('processLevelUp', () => {
     jest.mock('../../data/levels', () => ({
       levels: [
         {
-          id: 1,
+          playerId: 1,
           unlocksShopItem: 'sample-crop-seeds-1',
         },
       ],
@@ -46,13 +46,13 @@ describe('processLevelUp', () => {
     jest.mock('../../data/levels', () => ({
       levels: [
         {
-          id: 0,
+          playerId: 0,
         },
         {
-          id: 1,
+          playerId: 1,
         },
         {
-          id: 2,
+          playerId: 2,
           increasesSprinklerRange: true,
         },
       ],
@@ -83,10 +83,10 @@ describe('processLevelUp', () => {
     jest.mock('../../data/levels', () => ({
       levels: [
         {
-          id: 0,
+          playerId: 0,
         },
         {
-          id: 1,
+          playerId: 1,
           unlocksTool: 'SHOVEL',
         },
       ],

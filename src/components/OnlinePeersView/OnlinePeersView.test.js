@@ -12,7 +12,7 @@ beforeEach(() => {
         activePlayers: 0,
         cowIdOfferedForTrade: '',
         cowInventory: [],
-        id: '',
+        playerId: '',
         latestPeerMessages: [],
         peers: {},
       }}

@@ -10,7 +10,7 @@ export const modifyCow = (state, cowId, fn) => {
   const cowInventory = [...state.cowInventory]
 
   // TODO: Use the findCowById util here.
-  const cow = cowInventory.find(({ id }) => id === cowId)
+  const cow = cowInventory.find(({ playerId }) => playerId === cowId)
 
   const cowIndex = cowInventory.indexOf(cow)
 

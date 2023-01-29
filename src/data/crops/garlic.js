@@ -14,7 +14,7 @@ export const garlicSeed = crop({
     [GROWING]: 3,
   },
   growsInto: 'garlic',
-  id: 'garlic-seed',
+  playerId: 'garlic-seed',
   name: 'Garlic Bulb',
   tier: 5,
 })

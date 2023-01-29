@@ -10,7 +10,7 @@ describe('changeCowName', () => {
       {
         cowInventory: [generateCow(), cow],
       },
-      cow.id,
+      cow.playerId,
       'new name'
     )
 
@@ -26,7 +26,7 @@ describe('changeCowName', () => {
       {
         cowInventory: [cow],
       },
-      cow.id,
+      cow.playerId,
       new Array(100).join('.')
     )
 

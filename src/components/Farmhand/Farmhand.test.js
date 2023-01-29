@@ -15,7 +15,7 @@ jest.mock('../../data/items')
 
 describe('private helpers', () => {
   describe('computePlayerInventory', () => {
-    const inventory = [{ quantity: 1, id: 'sample-item-1' }]
+    const inventory = [{ quantity: 1, playerId: 'sample-item-1' }]
 
     test('computes inventory with no value adjustments', () => {
       const playerInventory = computePlayerInventory(inventory, {})
@@ -47,7 +47,7 @@ describe('private helpers', () => {
 
   describe('getPlantableCropInventory', () => {
     test('selects plantable crop items from inventory', () => {
-      const inventory = [{ id: 'sample-crop-seeds-1' }, { id: 'sample-item-1' }]
+      const inventory = [{ playerId: 'sample-crop-seeds-1' }, { playerId: 'sample-item-1' }]
       const plantableCropInventory = getPlantableCropInventory(inventory)
 
       expect(plantableCropInventory).toEqual([sampleCropSeedsItem1])

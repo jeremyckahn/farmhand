@@ -3,9 +3,9 @@ import { generateCow } from '../../utils'
 
 import { changeCowBreedingPenResident } from './changeCowBreedingPenResident'
 
-const cowA = generateCow({ id: 'cow-a' })
-const cowB = generateCow({ id: 'cow-b' })
-const cowC = generateCow({ id: 'cow-c' })
+const cowA = generateCow({ playerId: 'cow-a' })
+const cowB = generateCow({ playerId: 'cow-b' })
+const cowC = generateCow({ playerId: 'cow-c' })
 
 describe('changeCowBreedingPenResident', () => {
   describe('doAdd === false', () => {

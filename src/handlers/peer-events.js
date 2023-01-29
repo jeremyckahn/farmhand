@@ -45,7 +45,7 @@ export const handleCowTradeRequest = async (
         cowIdOfferedForTrade,
         cowsTraded,
         cowInventory,
-        id,
+        playerId,
         isAwaitingCowTradeRequest,
         peers,
         sendCowAccept,
@@ -58,12 +58,12 @@ export const handleCowTradeRequest = async (
       }
 
       const cowToTradeAway = cowInventory.find(
-        ({ id }) => id === cowIdOfferedForTrade
+        ({ playerId }) => playerId === cowIdOfferedForTrade
       )
 
       if (
         isAwaitingCowTradeRequest ||
-        cowRequested.id !== cowIdOfferedForTrade ||
+        cowRequested.playerId !== cowIdOfferedForTrade ||
         !cowToTradeAway
       ) {
         sendCowReject(
@@ -79,14 +79,14 @@ export const handleCowTradeRequest = async (
       const updatedCowOffered = {
         ...cowOffered,
         timesTraded:
-          cowOffered.originalOwnerId === id
+          cowOffered.originalOwnerId === playerId
             ? cowOffered.timesTraded
             : cowOffered.timesTraded + 1,
       }
 
       const [, peerMetadata] =
         Object.entries(peers).find(
-          ([, peer]) => peer?.id === updatedCowOffered.ownerId
+          ([, peer]) => peer?.playerId === updatedCowOffered.ownerId
         ) ?? []
 
       if (!peerMetadata) {
@@ -98,11 +98,11 @@ export const handleCowTradeRequest = async (
       state = removeCowFromInventory(state, cowToTradeAway)
       state = addCowToInventory(state, {
         ...updatedCowOffered,
-        ownerId: id,
+        ownerId: playerId,
       })
       state = showNotification(
         state,
-        COW_TRADED_NOTIFICATION`${cowToTradeAway}${cowOffered}${id}${allowCustomPeerCowNames}`,
+        COW_TRADED_NOTIFICATION`${cowToTradeAway}${cowOffered}${playerId}${allowCustomPeerCowNames}`,
         'success'
       )
 
@@ -112,18 +112,18 @@ export const handleCowTradeRequest = async (
 
       return {
         ...state,
-        cowIdOfferedForTrade: updatedCowOffered.id,
+        cowIdOfferedForTrade: updatedCowOffered.playerId,
         cowsTraded:
-          updatedCowOffered.originalOwnerId === id
+          updatedCowOffered.originalOwnerId === playerId
             ? cowsTraded
             : cowsTraded + 1,
         isAwaitingCowTradeRequest: true,
-        selectedCowId: updatedCowOffered.id,
+        selectedCowId: updatedCowOffered.playerId,
         peers: {
           ...peers,
           [peerId]: {
             ...peerMetadata,
-            cowOfferedForTrade: { ...cowToTradeAway, ownerId: peerMetadata.id },
+            cowOfferedForTrade: { ...cowToTradeAway, ownerId: peerMetadata.playerId },
           },
         },
       }
@@ -161,12 +161,12 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
         cowInventory,
         cowsTraded,
         cowTradeTimeoutId,
-        id,
+        playerId,
         peers,
       } = state
 
       const cowTradedAway = cowInventory.find(
-        ({ id }) => id === cowIdOfferedForTrade
+        ({ playerId }) => playerId === cowIdOfferedForTrade
       )
 
       if (!cowTradedAway) {
@@ -183,13 +183,13 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
       }
 
       const [, peerMetadata] = Object.entries(peers).find(
-        ([, { id }]) => id === cowReceived.ownerId
+        ([, { playerId }]) => playerId === cowReceived.ownerId
       )
 
       const updatedCowReceived = {
         ...cowReceived,
         timesTraded:
-          cowReceived.originalOwnerId === id
+          cowReceived.originalOwnerId === playerId
             ? cowReceived.timesTraded
             : cowReceived.timesTraded + 1,
       }
@@ -197,11 +197,11 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
       state = removeCowFromInventory(state, cowTradedAway)
       state = addCowToInventory(state, {
         ...updatedCowReceived,
-        ownerId: id,
+        ownerId: playerId,
       })
       state = showNotification(
         state,
-        COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${id}${allowCustomPeerCowNames}`,
+        COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${playerId}${allowCustomPeerCowNames}`,
         'success'
       )
 
@@ -212,18 +212,18 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
       return {
         ...state,
         cowsTraded:
-          updatedCowReceived.originalOwnerId === id
+          updatedCowReceived.originalOwnerId === playerId
             ? cowsTraded
             : cowsTraded + 1,
         cowTradeTimeoutId: null,
         isAwaitingCowTradeRequest: false,
-        cowIdOfferedForTrade: updatedCowReceived.id,
-        selectedCowId: updatedCowReceived.id,
+        cowIdOfferedForTrade: updatedCowReceived.playerId,
+        selectedCowId: updatedCowReceived.playerId,
         peers: {
           ...peers,
           [peerId]: {
             ...peerMetadata,
-            cowOfferedForTrade: { ...cowTradedAway, ownerId: peerMetadata.id },
+            cowOfferedForTrade: { ...cowTradedAway, ownerId: peerMetadata.playerId },
           },
         },
       }

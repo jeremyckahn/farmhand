@@ -22,8 +22,8 @@ describe('cow selection', () => {
 
     const cowId1 = 'foo'
     const cowId2 = 'bar'
-    const cowStub1 = generateCow({ id: cowId1 })
-    const cowStub2 = generateCow({ id: cowId2 })
+    const cowStub1 = generateCow({ playerId: cowId1 })
+    const cowStub2 = generateCow({ playerId: cowId2 })
 
     const loadedState = saveDataStubFactory({
       cowInventory: [cowStub1, cowStub2],

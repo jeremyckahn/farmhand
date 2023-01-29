@@ -16,7 +16,7 @@ describe('processCowBreeding', () => {
     test('no-ops', () => {
       const inputState = {
         cowBreedingPen: {
-          cowId1: maleCow1.id,
+          cowId1: maleCow1.playerId,
           cowId2: null,
           daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
         },
@@ -36,8 +36,8 @@ describe('processCowBreeding', () => {
       test('no-ops', () => {
         const inputState = {
           cowBreedingPen: {
-            cowId1: maleCow1.id,
-            cowId2: maleCow2.id,
+            cowId1: maleCow1.playerId,
+            cowId2: maleCow2.playerId,
             daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
           },
           cowInventory: [maleCow1, maleCow2],
@@ -58,8 +58,8 @@ describe('processCowBreeding', () => {
             cowBreedingPen: { daysUntilBirth },
           } = processCowBreeding({
             cowBreedingPen: {
-              cowId1: maleCow1.id,
-              cowId2: femaleCow.id,
+              cowId1: maleCow1.playerId,
+              cowId2: femaleCow.playerId,
               daysUntilBirth: COW_GESTATION_PERIOD_DAYS - 1,
             },
             cowInventory: [
@@ -81,8 +81,8 @@ describe('processCowBreeding', () => {
               cowBreedingPen: { daysUntilBirth },
             } = processCowBreeding({
               cowBreedingPen: {
-                cowId1: maleCow1.id,
-                cowId2: femaleCow.id,
+                cowId1: maleCow1.playerId,
+                cowId2: femaleCow.playerId,
                 daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
               },
               cowInventory: [maleCow1, femaleCow],
@@ -99,8 +99,8 @@ describe('processCowBreeding', () => {
             test('adds offspring cow to cowInventory', () => {
               const { cowInventory } = processCowBreeding({
                 cowBreedingPen: {
-                  cowId1: maleCow1.id,
-                  cowId2: femaleCow.id,
+                  cowId1: maleCow1.playerId,
+                  cowId2: femaleCow.playerId,
                   daysUntilBirth: 1,
                 },
                 cowInventory: [maleCow1, femaleCow],
@@ -116,8 +116,8 @@ describe('processCowBreeding', () => {
             test('offspring cow is not added to cowInventory', () => {
               const { cowInventory } = processCowBreeding({
                 cowBreedingPen: {
-                  cowId1: maleCow1.id,
-                  cowId2: femaleCow.id,
+                  cowId1: maleCow1.playerId,
+                  cowId2: femaleCow.playerId,
                   daysUntilBirth: 1,
                 },
                 cowInventory: [
@@ -142,8 +142,8 @@ describe('processCowBreeding', () => {
               cowBreedingPen: { daysUntilBirth },
             } = processCowBreeding({
               cowBreedingPen: {
-                cowId1: maleCow1.id,
-                cowId2: femaleCow.id,
+                cowId1: maleCow1.playerId,
+                cowId2: femaleCow.playerId,
                 daysUntilBirth: 1,
               },
               cowInventory: [maleCow1, femaleCow],

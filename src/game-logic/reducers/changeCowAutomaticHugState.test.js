@@ -11,7 +11,7 @@ describe('changeCowAutomaticHugState', () => {
       const cow = generateCow()
       const inputState = {
         cowInventory: [cow],
-        inventory: [{ id: huggingMachine.id, quantity: 1 }],
+        inventory: [{ playerId: huggingMachine.playerId, quantity: 1 }],
         inventoryLimit: INFINITE_STORAGE_LIMIT,
       }
       const {
@@ -42,7 +42,7 @@ describe('changeCowAutomaticHugState', () => {
         const cow = generateCow({ isUsingHuggingMachine: true })
         const inputState = {
           cowInventory: [cow],
-          inventory: [{ id: huggingMachine.id, quantity: 1 }],
+          inventory: [{ playerId: huggingMachine.playerId, quantity: 1 }],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
         }
         const state = changeCowAutomaticHugState(inputState, cow, true)
@@ -66,7 +66,7 @@ describe('changeCowAutomaticHugState', () => {
       } = changeCowAutomaticHugState(inputState, cow, false)
 
       expect(isUsingHuggingMachine).toEqual(false)
-      expect(inventory).toEqual([{ id: huggingMachine.id, quantity: 1 }])
+      expect(inventory).toEqual([{ playerId: huggingMachine.playerId, quantity: 1 }])
     })
   })
 })

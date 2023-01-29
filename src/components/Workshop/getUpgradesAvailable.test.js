@@ -25,7 +25,7 @@ describe('getUpgradesAvailable', () => {
     const availableUpgrades = getUpgradesAvailable({
       toolLevels,
       learnedForgeRecipes,
-    }).map(item => item.id)
+    }).map(item => item.playerId)
 
     expect(availableUpgrades).toEqual(['hoe-bronze', 'scythe-bronze'])
   })

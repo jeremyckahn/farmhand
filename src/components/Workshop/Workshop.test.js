@@ -14,32 +14,32 @@ jest.mock('../../data/maps', () => ({
   ...jest.requireActual('../../data/maps'),
   recipesMap: {
     'kitchen-recipe-1': {
-      id: 'kitchen-recipe-1',
+      playerId: 'kitchen-recipe-1',
       name: 'kitchen recipe 1',
       recipeType: 'KITCHEN',
     },
     'kitchen-recipe-2': {
-      id: 'kitchen-recipe-2',
+      playerId: 'kitchen-recipe-2',
       name: 'kitchen recipe 2',
       recipeType: 'KITCHEN',
     },
     'kitchen-recipe-3': {
-      id: 'kitchen-recipe-3',
+      playerId: 'kitchen-recipe-3',
       name: 'kitchen recipe 3',
       recipeType: 'KITCHEN',
     },
     'forge-recipe-1': {
-      id: 'forge-recipe-1',
+      playerId: 'forge-recipe-1',
       name: 'forge recipe 1',
       recipeType: 'FORGE',
     },
     'forge-recipe-2': {
-      id: 'forge-recipe-2',
+      playerId: 'forge-recipe-2',
       name: 'forge recipe 2',
       recipeType: 'FORGE',
     },
     'recycling-recipe-1': {
-      id: 'recycling-recipe-1',
+      playerId: 'recycling-recipe-1',
       name: 'recycling recipe 1',
       recipeType: 'RECYCLING',
     },
@@ -142,7 +142,7 @@ describe('<Workshop />', () => {
 
     describe('has upgrades available', () => {
       beforeEach(() => {
-        const availableUpgrades = [{ id: 'upgrade-1' }, { id: 'upgrade-2' }]
+        const availableUpgrades = [{ playerId: 'upgrade-1' }, { playerId: 'upgrade-2' }]
 
         getUpgradesAvailable.mockReturnValue(availableUpgrades)
         gameState.purchasedSmelter = 1

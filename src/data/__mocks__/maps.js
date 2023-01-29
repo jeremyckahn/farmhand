@@ -13,14 +13,14 @@ export const recipesMap = {}
 
 for (const recipeId of Object.keys(recipes)) {
   const recipe = recipes[recipeId]
-  recipeCategories[recipe.recipeType][recipe.id] = recipe
-  recipesMap[recipe.id] = recipe
+  recipeCategories[recipe.recipeType][recipe.playerId] = recipe
+  recipesMap[recipe.playerId] = recipe
 }
 
 export const itemsMap = {
   ...Object.keys(items).reduce((acc, itemName) => {
     const item = items[itemName]
-    acc[item.id] = item
+    acc[item.playerId] = item
     return acc
   }, {}),
   ...recipesMap,

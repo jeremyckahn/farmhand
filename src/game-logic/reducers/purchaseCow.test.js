@@ -25,7 +25,7 @@ describe('purchaseCow', () => {
         cowForSale: oldCowForSale,
         cowInventory: [],
         cowColorsPurchased: {},
-        id: playerId,
+        playerId: playerId,
         money: 5000,
         purchasedCowPen: 1,
       },

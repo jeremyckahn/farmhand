@@ -14,8 +14,8 @@ describe('generatePriceEvents', () => {
       const inputState = {
         newDayNotifications: [],
         priceCrashes: {
-          [sampleCropItem1.id]: {
-            itemId: sampleCropItem1.id,
+          [sampleCropItem1.playerId]: {
+            itemId: sampleCropItem1.playerId,
             daysRemaining: 1,
           },
         },
@@ -38,10 +38,10 @@ describe('generatePriceEvents', () => {
       jest.mock('../../data/levels', () => ({
         levels: [
           {
-            id: 0,
+            playerId: 0,
           },
           {
-            id: 1,
+            playerId: 1,
             unlocksShopItem: 'sample-crop-seeds-1',
           },
         ],
@@ -58,7 +58,7 @@ describe('generatePriceEvents', () => {
 
     test('generates a price event', () => {
       const priceEvents = {
-        [sampleCropItem1.id]: getPriceEventForCrop(sampleCropItem1),
+        [sampleCropItem1.playerId]: getPriceEventForCrop(sampleCropItem1),
       }
 
       expect(state).toContainAnyEntries([

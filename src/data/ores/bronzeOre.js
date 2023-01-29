@@ -10,7 +10,7 @@ const { freeze } = Object
 export const bronzeOre = freeze({
   description: 'A piece of bronze ore.',
   doesPriceFluctuate: true,
-  id: 'bronze-ore',
+  playerId: 'bronze-ore',
   name: 'Bronze Ore',
   type: itemType.ORE,
   value: 25,

@@ -33,11 +33,11 @@ const getTools = memoize(toolLevels => {
 
 const getToolImage = tool => {
   if (tool.level === toolLevel.DEFAULT) {
-    return toolImages[tool.id]
+    return toolImages[tool.playerId]
   }
 
-  const id = `${tool.id}-${tool.level.toLowerCase()}`
-  return craftedItems[id]
+  const playerId = `${tool.playerId}-${tool.level.toLowerCase()}`
+  return craftedItems[playerId]
 }
 
 export const Toolbelt = ({
@@ -52,7 +52,7 @@ export const Toolbelt = ({
     <div className="Toolbelt">
       <div className="button-array">
         {tools.map(
-          ({ alt, fieldMode, fieldKey, hiddenText, id, levelInfo, type }) => (
+          ({ alt, fieldMode, fieldKey, hiddenText, playerId, levelInfo, type }) => (
             <Tooltip
               {...{
                 key: fieldMode,
@@ -85,12 +85,12 @@ export const Toolbelt = ({
                 {/* alt is in a different format here because of linter weirdness. */}
                 <img
                   {...{
-                    className: `square ${id}`,
+                    className: `square ${playerId}`,
                     src: pixel,
                     style: {
                       backgroundImage: `url(${getToolImage({
                         level: toolLevels[type],
-                        id,
+                        playerId,
                       })})`,
                     },
                   }}

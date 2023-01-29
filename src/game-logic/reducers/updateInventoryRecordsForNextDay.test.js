@@ -7,8 +7,8 @@ describe('updateInventoryRecordsForNextDay', () => {
       todaysStartingInventory,
     } = updateInventoryRecordsForNextDay({
       inventory: [
-        { id: 'sample-item-1', quantity: 2 },
-        { id: 'sample-item-2', quantity: 5 },
+        { playerId: 'sample-item-1', quantity: 2 },
+        { playerId: 'sample-item-2', quantity: 5 },
       ],
       todaysPurchases: {
         'sample-item-3': 3,

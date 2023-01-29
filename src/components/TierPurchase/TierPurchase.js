@@ -95,11 +95,11 @@ export function TierPurchase({
                 value: selectedTier > 0 ? selectedTier : '',
               }}
             >
-              {tierValues.map(([id, tier]) => (
+              {tierValues.map(([playerId, tier]) => (
                 <MenuItem
-                  key={id}
-                  value={id}
-                  disabled={money < tier.price || hasPurchasedTier(id)}
+                  key={playerId}
+                  value={playerId}
+                  disabled={money < tier.price || hasPurchasedTier(playerId)}
                 >
                   {renderTierLabel(tier)}
                 </MenuItem>

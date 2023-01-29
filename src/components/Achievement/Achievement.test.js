@@ -11,7 +11,7 @@ describe('<Achievement />', () => {
   beforeEach(() => {
     achievementObject = {
       description: 'the best achievement',
-      id: 'achievement-1',
+      playerId: 'achievement-1',
       name: 'achievement one',
       rewardDescription: 'the greatest reward',
     }

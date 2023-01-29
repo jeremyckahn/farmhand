@@ -20,7 +20,7 @@ export const processFeedingCows = state => {
   const inventory = [...state.inventory]
 
   const cowFeedInventoryPosition = inventory.findIndex(
-    ({ id }) => id === COW_FEED_ITEM_ID
+    ({ playerId }) => playerId === COW_FEED_ITEM_ID
   )
 
   const cowFeed = inventory[cowFeedInventoryPosition]

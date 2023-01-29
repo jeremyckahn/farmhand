@@ -7,24 +7,24 @@ describe('addItemToInventory', () => {
     expect(
       addItemToInventory(
         { inventory: [], inventoryLimit: INFINITE_STORAGE_LIMIT },
-        { id: 'sample-item-1' }
+        { playerId: 'sample-item-1' }
       )
-    ).toMatchObject({ inventory: [{ id: 'sample-item-1', quantity: 1 }] })
+    ).toMatchObject({ inventory: [{ playerId: 'sample-item-1', quantity: 1 }] })
   })
 
   test('increments an existing item in the inventory', () => {
     expect(
       addItemToInventory(
         {
-          inventory: [{ id: 'sample-item-1', quantity: 1 }],
+          inventory: [{ playerId: 'sample-item-1', quantity: 1 }],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
-        { id: 'sample-item-1' }
+        { playerId: 'sample-item-1' }
       )
     ).toMatchObject({
       inventory: [
         {
-          id: 'sample-item-1',
+          playerId: 'sample-item-1',
           quantity: 2,
         },
       ],
@@ -37,15 +37,15 @@ describe('addItemToInventory', () => {
         expect(
           addItemToInventory(
             {
-              inventory: [{ id: 'sample-item-1', quantity: 3 }],
+              inventory: [{ playerId: 'sample-item-1', quantity: 3 }],
               inventoryLimit: 3,
             },
-            { id: 'sample-item-2' }
+            { playerId: 'sample-item-2' }
           )
         ).toMatchObject({
           inventory: [
             {
-              id: 'sample-item-1',
+              playerId: 'sample-item-1',
               quantity: 3,
             },
           ],
@@ -58,20 +58,20 @@ describe('addItemToInventory', () => {
         expect(
           addItemToInventory(
             {
-              inventory: [{ id: 'sample-item-1', quantity: 2 }],
+              inventory: [{ playerId: 'sample-item-1', quantity: 2 }],
               inventoryLimit: 3,
             },
-            { id: 'sample-item-2' },
+            { playerId: 'sample-item-2' },
             10
           )
         ).toMatchObject({
           inventory: [
             {
-              id: 'sample-item-1',
+              playerId: 'sample-item-1',
               quantity: 2,
             },
             {
-              id: 'sample-item-2',
+              playerId: 'sample-item-2',
               quantity: 1,
             },
           ],
@@ -84,21 +84,21 @@ describe('addItemToInventory', () => {
         expect(
           addItemToInventory(
             {
-              inventory: [{ id: 'sample-item-1', quantity: 3 }],
+              inventory: [{ playerId: 'sample-item-1', quantity: 3 }],
               inventoryLimit: 3,
             },
-            { id: 'sample-item-2' },
+            { playerId: 'sample-item-2' },
             5,
             true
           )
         ).toMatchObject({
           inventory: [
             {
-              id: 'sample-item-1',
+              playerId: 'sample-item-1',
               quantity: 3,
             },
             {
-              id: 'sample-item-2',
+              playerId: 'sample-item-2',
               quantity: 5,
             },
           ],

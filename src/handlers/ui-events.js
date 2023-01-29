@@ -98,21 +98,21 @@ export default {
    * @param {farmhand.cow} cow
    */
   handleCowHugClick(cow) {
-    this.hugCow(cow.id)
+    this.hugCow(cow.playerId)
   },
 
   /**
    * @param {farmhand.cow} cow
    */
   handleCowOfferClick(cow) {
-    this.offerCow(cow.id)
+    this.offerCow(cow.playerId)
   },
 
   /**
    * @param {farmhand.cow} cow
    */
   handleCowWithdrawClick(cow) {
-    this.withdrawCow(cow.id)
+    this.withdrawCow(cow.playerId)
   },
 
   /**
@@ -120,7 +120,7 @@ export default {
    * @param {farmhand.cow} cow
    */
   handleCowNameInputChange({ target: { value } }, cow) {
-    this.changeCowName(cow.id, value)
+    this.changeCowName(cow.playerId, value)
   },
 
   /**
@@ -162,13 +162,13 @@ export default {
    * @param {farmhand.item} item
    */
   handleItemSelectClick({
-    id,
+    playerId,
     enablesFieldMode,
     hoveredPlotRangeSize: newHoveredPlotRangeSize,
   }) {
     this.setState({
       fieldMode: enablesFieldMode,
-      selectedItemId: id,
+      selectedItemId: playerId,
     })
   },
 
@@ -300,7 +300,7 @@ export default {
    */
   handleCowClick(cow) {
     this.selectCow(cow)
-    this.hugCow(cow.id)
+    this.hugCow(cow.playerId)
   },
 
   handleCowPenUnmount() {

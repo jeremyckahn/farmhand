@@ -11,14 +11,14 @@ import { showNotification } from './showNotification'
 export const updateAchievements = (state, prevState) =>
   achievements.reduce((state, achievement) => {
     if (
-      !state.completedAchievements[achievement.id] &&
+      !state.completedAchievements[achievement.playerId] &&
       achievement.condition(state, prevState)
     ) {
       state = {
         ...achievement.reward(state),
         completedAchievements: {
           ...state.completedAchievements,
-          [achievement.id]: true,
+          [achievement.playerId]: true,
         },
       }
 

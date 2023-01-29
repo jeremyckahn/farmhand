@@ -30,7 +30,7 @@ beforeEach(() => {
 
 describe('rendering items', () => {
   test('shows the inventory', () => {
-    component.setProps({ items: [testItem({ id: 'sample-item-1' })] })
+    component.setProps({ items: [testItem({ playerId: 'sample-item-1' })] })
 
     const li = component.find('li')
     expect(li).toHaveLength(1)
@@ -42,16 +42,16 @@ describe('item sorting', () => {
   test('sorts by type and base value', () => {
     expect(
       sortItems([
-        testItem({ id: 'sample-crop-seeds-2', value: 0.5 }),
-        testItem({ id: 'scarecrow' }),
-        testItem({ id: 'sprinkler' }),
-        testItem({ id: 'sample-crop-seeds-1' }),
+        testItem({ playerId: 'sample-crop-seeds-2', value: 0.5 }),
+        testItem({ playerId: 'scarecrow' }),
+        testItem({ playerId: 'sprinkler' }),
+        testItem({ playerId: 'sample-crop-seeds-1' }),
       ])
     ).toEqual([
-      testItem({ id: 'sample-crop-seeds-1' }),
-      testItem({ id: 'sample-crop-seeds-2', value: 0.5 }),
-      testItem({ id: 'sprinkler' }),
-      testItem({ id: 'scarecrow' }),
+      testItem({ playerId: 'sample-crop-seeds-1' }),
+      testItem({ playerId: 'sample-crop-seeds-2', value: 0.5 }),
+      testItem({ playerId: 'sprinkler' }),
+      testItem({ playerId: 'scarecrow' }),
     ])
   })
 
@@ -59,39 +59,39 @@ describe('item sorting', () => {
     expect(
       separateItemsIntoCategories(
         [
-          testItem({ id: 'sample-crop-seeds-2', isPlantableCrop: true }),
-          testItem({ id: 'scarecrow' }),
-          testItem({ id: 'sprinkler' }),
-          testItem({ id: 'sample-crop-seeds-1', isPlantableCrop: true }),
-          testItem({ id: 'sample-recipe-1' }),
-          testItem({ id: 'cow-feed' }),
-          testItem({ id: 'sample-crop-1' }),
-          testItem({ id: 'milk-1' }),
-          testItem({ id: 'stone' }),
-          testItem({ id: 'iron-ore' }),
-          testItem({ id: 'coal' }),
+          testItem({ playerId: 'sample-crop-seeds-2', isPlantableCrop: true }),
+          testItem({ playerId: 'scarecrow' }),
+          testItem({ playerId: 'sprinkler' }),
+          testItem({ playerId: 'sample-crop-seeds-1', isPlantableCrop: true }),
+          testItem({ playerId: 'sample-recipe-1' }),
+          testItem({ playerId: 'cow-feed' }),
+          testItem({ playerId: 'sample-crop-1' }),
+          testItem({ playerId: 'milk-1' }),
+          testItem({ playerId: 'stone' }),
+          testItem({ playerId: 'iron-ore' }),
+          testItem({ playerId: 'coal' }),
         ],
         {}
       )
     ).toEqual({
-      [categoryIds.CROPS]: [testItem({ id: 'sample-crop-1' })],
+      [categoryIds.CROPS]: [testItem({ playerId: 'sample-crop-1' })],
       [categoryIds.FORAGED_ITEMS]: [],
       [categoryIds.MINED_RESOURCES]: [
-        testItem({ id: 'coal' }),
-        testItem({ id: 'stone' }),
-        testItem({ id: 'iron-ore' }),
+        testItem({ playerId: 'coal' }),
+        testItem({ playerId: 'stone' }),
+        testItem({ playerId: 'iron-ore' }),
       ],
       [categoryIds.SEEDS]: [
-        testItem({ id: 'sample-crop-seeds-1', isPlantableCrop: true }),
-        testItem({ id: 'sample-crop-seeds-2', isPlantableCrop: true }),
+        testItem({ playerId: 'sample-crop-seeds-1', isPlantableCrop: true }),
+        testItem({ playerId: 'sample-crop-seeds-2', isPlantableCrop: true }),
       ],
       [categoryIds.FIELD_TOOLS]: [
-        testItem({ id: 'sprinkler' }),
-        testItem({ id: 'scarecrow' }),
+        testItem({ playerId: 'sprinkler' }),
+        testItem({ playerId: 'scarecrow' }),
       ],
-      [categoryIds.ANIMAL_PRODUCTS]: [testItem({ id: 'milk-1' })],
-      [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
-      [categoryIds.CRAFTED_ITEMS]: [testItem({ id: 'sample-recipe-1' })],
+      [categoryIds.ANIMAL_PRODUCTS]: [testItem({ playerId: 'milk-1' })],
+      [categoryIds.ANIMAL_SUPPLIES]: [testItem({ playerId: 'cow-feed' })],
+      [categoryIds.CRAFTED_ITEMS]: [testItem({ playerId: 'sample-recipe-1' })],
       [categoryIds.UPGRADES]: [],
     })
   })

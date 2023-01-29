@@ -9,7 +9,7 @@ import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory'
 describe('notifications', () => {
   test('notification is shown when recipe is learned', async () => {
     const loadedState = saveDataStubFactory({
-      inventory: [{ id: 'carrot', quantity: 10 }],
+      inventory: [{ playerId: 'carrot', quantity: 10 }],
     })
 
     await farmhandStub({
@@ -68,9 +68,9 @@ describe('notifications', () => {
   test('multiple notifications are shown when multiple recipes are learned', async () => {
     const loadedState = saveDataStubFactory({
       inventory: [
-        { id: 'carrot', quantity: 10 },
-        { id: 'corn', quantity: 6 },
-        { id: 'spinach', quantity: 30 },
+        { playerId: 'carrot', quantity: 10 },
+        { playerId: 'corn', quantity: 6 },
+        { playerId: 'spinach', quantity: 30 },
       ],
     })
 

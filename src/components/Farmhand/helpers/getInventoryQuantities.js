@@ -3,7 +3,7 @@ import { itemsMap } from '../../../data/maps'
 const itemIds = Object.keys(itemsMap)
 
 /**
- * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
+ * @param {Array.<{ playerId: farmhand.item, quantity: number }>} inventory
  * @returns {Object.<string, number>}
  */
 export const getInventoryQuantities = inventory => {
@@ -13,8 +13,8 @@ export const getInventoryQuantities = inventory => {
     quantities[itemId] = 0
   }
 
-  for (const { id, quantity } of inventory) {
-    quantities[id] = quantity
+  for (const { playerId, quantity } of inventory) {
+    quantities[playerId] = quantity
   }
 
   return quantities

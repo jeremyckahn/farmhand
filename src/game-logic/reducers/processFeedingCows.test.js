@@ -52,7 +52,7 @@ describe('processFeedingCows', () => {
 
     describe('there are more feed units than cows to feed', () => {
       test('units are distributed to cows', () => {
-        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 4 }]
+        state.inventory = [{ playerId: COW_FEED_ITEM_ID, quantity: 4 }]
         const {
           cowInventory,
           inventory: [{ quantity }],
@@ -72,7 +72,7 @@ describe('processFeedingCows', () => {
 
     describe('there are more cows to feed than feed units', () => {
       test('units are distributed to cows and remainder goes hungry', () => {
-        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 1 }]
+        state.inventory = [{ playerId: COW_FEED_ITEM_ID, quantity: 1 }]
         const {
           cowInventory,
           inventory,
@@ -103,7 +103,7 @@ describe('processFeedingCows', () => {
           generateCow({ weightMultiplier: 1 }),
           generateCow({ weightMultiplier: 1 }),
         ]
-        state.inventory = [{ id: COW_FEED_ITEM_ID, quantity: 3 }]
+        state.inventory = [{ playerId: COW_FEED_ITEM_ID, quantity: 3 }]
 
         const { cowInventory, inventory } = processFeedingCows(state)
 

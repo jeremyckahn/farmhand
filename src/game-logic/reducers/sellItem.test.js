@@ -9,7 +9,7 @@ describe('sellItem', () => {
   test('sells item', () => {
     const state = sellItem(
       {
-        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+        inventory: [testItem({ playerId: 'sample-item-1', quantity: 1 })],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -19,7 +19,7 @@ describe('sellItem', () => {
         todaysRevenue: 0,
         valueAdjustments: { 'sample-item-1': 1 },
       },
-      testItem({ id: 'sample-item-1' })
+      testItem({ playerId: 'sample-item-1' })
     )
 
     expect(state.inventory).toEqual([])
@@ -32,7 +32,7 @@ describe('sellItem', () => {
   test('does not change revenue for seed sales', () => {
     const state = sellItem(
       {
-        inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
+        inventory: [testItem({ playerId: 'sample-crop-seeds-1', quantity: 1 })],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -42,7 +42,7 @@ describe('sellItem', () => {
         todaysRevenue: 0,
         valueAdjustments: { 'sample-crop-seeds-1': 1 },
       },
-      testItem({ id: 'sample-crop-seeds-1' })
+      testItem({ playerId: 'sample-crop-seeds-1' })
     )
 
     expect(state.inventory).toEqual([])
@@ -55,7 +55,7 @@ describe('sellItem', () => {
   test('applies achievement bonus to farm products', () => {
     const state = sellItem(
       {
-        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+        inventory: [testItem({ playerId: 'sample-item-1', quantity: 1 })],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -68,7 +68,7 @@ describe('sellItem', () => {
           'i-am-rich-3': true,
         },
       },
-      testItem({ id: 'sample-item-1' })
+      testItem({ playerId: 'sample-item-1' })
     )
 
     expect(state.inventory).toEqual([])
@@ -81,7 +81,7 @@ describe('sellItem', () => {
   test('does not apply achievement bonus to seeds', () => {
     const state = sellItem(
       {
-        inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
+        inventory: [testItem({ playerId: 'sample-crop-seeds-1', quantity: 1 })],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -94,7 +94,7 @@ describe('sellItem', () => {
           'i-am-rich-3': true,
         },
       },
-      testItem({ id: 'sample-crop-seeds-1' })
+      testItem({ playerId: 'sample-crop-seeds-1' })
     )
 
     expect(state.inventory).toEqual([])
@@ -107,7 +107,7 @@ describe('sellItem', () => {
   test('updates learnedRecipes', () => {
     const { learnedRecipes } = sellItem(
       {
-        inventory: [testItem({ id: 'sample-item-1', quantity: 3 })],
+        inventory: [testItem({ playerId: 'sample-item-1', quantity: 3 })],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -117,7 +117,7 @@ describe('sellItem', () => {
         todaysRevenue: 0,
         valueAdjustments: { 'sample-item-1': 1 },
       },
-      testItem({ id: 'sample-item-1' }),
+      testItem({ playerId: 'sample-item-1' }),
       3
     )
 
@@ -131,7 +131,7 @@ describe('sellItem', () => {
       test('sale is not garnished', () => {
         state = sellItem(
           {
-            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 3 })],
+            inventory: [testItem({ playerId: 'sample-crop-seeds-1', quantity: 3 })],
             itemsSold: {},
             loanBalance: 100,
             money: 100,
@@ -141,7 +141,7 @@ describe('sellItem', () => {
             todaysRevenue: 0,
             valueAdjustments: { 'sample-crop-seeds-1': 10 },
           },
-          testItem({ id: 'sample-crop-seeds-1' }),
+          testItem({ playerId: 'sample-crop-seeds-1' }),
           3
         )
 
@@ -157,7 +157,7 @@ describe('sellItem', () => {
         test('sale is garnished', () => {
           state = sellItem(
             {
-              inventory: [testItem({ id: 'sample-crop-1', quantity: 3 })],
+              inventory: [testItem({ playerId: 'sample-crop-1', quantity: 3 })],
               itemsSold: {},
               loanBalance: 100,
               money: 100,
@@ -167,7 +167,7 @@ describe('sellItem', () => {
               todaysRevenue: 0,
               valueAdjustments: { 'sample-crop-1': 10 },
             },
-            testItem({ id: 'sample-crop-1' }),
+            testItem({ playerId: 'sample-crop-1' }),
             3
           )
 
@@ -182,7 +182,7 @@ describe('sellItem', () => {
         beforeEach(() => {
           state = sellItem(
             {
-              inventory: [testItem({ id: 'sample-crop-1', quantity: 3 })],
+              inventory: [testItem({ playerId: 'sample-crop-1', quantity: 3 })],
               itemsSold: {},
               loanBalance: 1.5,
               money: 100,
@@ -192,7 +192,7 @@ describe('sellItem', () => {
               todaysRevenue: 0,
               valueAdjustments: { 'sample-crop-1': 10 },
             },
-            testItem({ id: 'sample-crop-1' }),
+            testItem({ playerId: 'sample-crop-1' }),
             3
           )
         })

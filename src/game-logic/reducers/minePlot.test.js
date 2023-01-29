@@ -31,7 +31,7 @@ describe('minePlot', () => {
   })
 
   test('sets the oreId on the plot if ore was spawned', () => {
-    expect(gameState.field[0][0].oreId).toEqual(goldOre.id)
+    expect(gameState.field[0][0].oreId).toEqual(goldOre.playerId)
   })
 
   test('sets the days until clear', () => {
@@ -42,7 +42,7 @@ describe('minePlot', () => {
     let itemIsInInventory = false
 
     for (let item of gameState.inventory) {
-      if (item.id === goldOre.id) {
+      if (item.playerId === goldOre.playerId) {
         itemIsInInventory = true
         break
       }

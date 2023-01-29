@@ -27,12 +27,12 @@ import { prependPendingPeerMessage } from './index'
  * @param {number} [howMany=1]
  * @returns {farmhand.state}
  */
-export const sellItem = (state, { id }, howMany = 1) => {
+export const sellItem = (state, { playerId }, howMany = 1) => {
   if (howMany === 0) {
     return state
   }
 
-  const item = itemsMap[id]
+  const item = itemsMap[playerId]
   const {
     completedAchievements,
     itemsSold,
@@ -44,7 +44,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
   const adjustedItemValue = isItemSoldInShop(item)
     ? getResaleValue(item)
-    : getAdjustedItemValue(valueAdjustments, id)
+    : getAdjustedItemValue(valueAdjustments, playerId)
 
   const saleIsGarnished = isItemAFarmProduct(item)
   let saleValue = 0
@@ -72,7 +72,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
     state = adjustLoan(state, moneyTotal(loanBalance, -state.loanBalance))
   }
 
-  const newItemsSold = { ...itemsSold, [id]: (itemsSold[id] || 0) + howMany }
+  const newItemsSold = { ...itemsSold, [playerId]: (itemsSold[playerId] || 0) + howMany }
 
   if (item.isPlantableCrop) {
     state = { ...state, money: moneyTotal(initialMoney, saleValue) }
@@ -88,7 +88,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
   }
 
   state = processLevelUp(state, oldLevel)
-  state = decrementItemFromInventory(state, id, howMany)
+  state = decrementItemFromInventory(state, playerId, howMany)
 
   state = prependPendingPeerMessage(
     state,

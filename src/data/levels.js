@@ -6,23 +6,23 @@ import * as recipes from './recipes'
 export const levels = []
 
 levels[1] = {
-  unlocksShopItem: items.carrotSeed.id,
+  unlocksShopItem: items.carrotSeed.playerId,
 }
 
 levels[2] = {
-  unlocksShopItem: items.spinachSeed.id,
+  unlocksShopItem: items.spinachSeed.playerId,
 }
 
 levels[3] = {
-  unlocksShopItem: recipes.fertilizer.id,
+  unlocksShopItem: recipes.fertilizer.playerId,
 }
 
 levels[4] = {
-  unlocksShopItem: items.pumpkinSeed.id,
+  unlocksShopItem: items.pumpkinSeed.playerId,
 }
 
 levels[5] = {
-  unlocksShopItem: items.sprinkler.id,
+  unlocksShopItem: items.sprinkler.playerId,
 }
 
 levels[6] = {
@@ -34,7 +34,7 @@ levels[8] = {
 }
 
 levels[10] = {
-  unlocksShopItem: items.cornSeed.id,
+  unlocksShopItem: items.cornSeed.playerId,
 }
 
 levels[12] = {
@@ -42,70 +42,70 @@ levels[12] = {
 }
 
 levels[14] = {
-  unlocksShopItem: items.potatoSeed.id,
+  unlocksShopItem: items.potatoSeed.playerId,
 }
 
 levels[16] = {
-  unlocksShopItem: items.onionSeed.id,
+  unlocksShopItem: items.onionSeed.playerId,
 }
 
 levels[18] = {
-  unlocksShopItem: items.soybeanSeed.id,
+  unlocksShopItem: items.soybeanSeed.playerId,
 }
 
 levels[20] = {
-  unlocksShopItem: items.wheatSeed.id,
+  unlocksShopItem: items.wheatSeed.playerId,
 }
 
 levels[22] = {
-  unlocksShopItem: items.tomatoSeed.id,
+  unlocksShopItem: items.tomatoSeed.playerId,
 }
 
 levels[24] = {
-  unlocksShopItem: items.asparagusSeed.id,
+  unlocksShopItem: items.asparagusSeed.playerId,
 }
 
 levels[26] = {
-  unlocksShopItem: items.jalapenoSeed.id,
+  unlocksShopItem: items.jalapenoSeed.playerId,
 }
 
 levels[28] = {
-  unlocksShopItem: items.watermelonSeed.id,
+  unlocksShopItem: items.watermelonSeed.playerId,
 }
 
 levels[30] = {
-  unlocksShopItem: items.peaSeed.id,
+  unlocksShopItem: items.peaSeed.playerId,
 }
 
 levels[32] = {
-  unlocksShopItem: items.strawberrySeed.id,
+  unlocksShopItem: items.strawberrySeed.playerId,
 }
 
 levels[34] = {
-  unlocksShopItem: items.garlicSeed.id,
+  unlocksShopItem: items.garlicSeed.playerId,
 }
 
 levels[36] = {
-  unlocksShopItem: items.sweetPotatoSeed.id,
+  unlocksShopItem: items.sweetPotatoSeed.playerId,
 }
 
 levels[38] = {
-  unlocksShopItem: items.oliveSeed.id,
+  unlocksShopItem: items.oliveSeed.playerId,
 }
 
 levels[40] = {
-  unlocksShopItem: items.sunflowerSeed.id,
+  unlocksShopItem: items.sunflowerSeed.playerId,
 }
 
 for (let i = 0; i < levels.length; i++) {
-  levels[i] = { id: i, ...levels[i] }
+  levels[i] = { playerId: i, ...levels[i] }
 }
 
 Object.freeze(levels)
 
-export const unlockableItems = levels.reduce((acc, { id, unlocksShopItem }) => {
+export const unlockableItems = levels.reduce((acc, { playerId, unlocksShopItem }) => {
   if (unlocksShopItem) {
-    acc[unlocksShopItem] = id
+    acc[unlocksShopItem] = playerId
   }
 
   return acc

@@ -32,7 +32,7 @@ describe('clearPlot', () => {
           {
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
             toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
-            inventory: [{ id: 'sample-item-1', quantity: 5 }],
+            inventory: [{ playerId: 'sample-item-1', quantity: 5 }],
             inventoryLimit: 5,
           },
           0,
@@ -40,7 +40,7 @@ describe('clearPlot', () => {
         )
 
         expect(field[0][0]).toBe(null)
-        expect(inventory).toEqual([{ id: 'sample-item-1', quantity: 5 }])
+        expect(inventory).toEqual([{ playerId: 'sample-item-1', quantity: 5 }])
       })
     })
   })
@@ -59,7 +59,7 @@ describe('clearPlot', () => {
       )
 
       expect(field[0][0]).toBe(null)
-      expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 1 }])
+      expect(inventory).toEqual([{ playerId: 'sample-crop-1', quantity: 1 }])
     })
   })
 
@@ -76,7 +76,7 @@ describe('clearPlot', () => {
         0
       )
 
-      expect(inventory).toEqual([{ id: 'replantable-item', quantity: 1 }])
+      expect(inventory).toEqual([{ playerId: 'replantable-item', quantity: 1 }])
       expect(field[0][0]).toBe(null)
     })
 
@@ -85,7 +85,7 @@ describe('clearPlot', () => {
         const inputState = {
           field: [[getPlotContentFromItemId('replantable-item')]],
           toolLevels: { [toolType.HOE]: toolLevel.DEFAULT },
-          inventory: [{ id: 'sample-item-1', quantity: 5 }],
+          inventory: [{ playerId: 'sample-item-1', quantity: 5 }],
           inventoryLimit: 5,
         }
         const state = clearPlot(inputState, 0, 0)
@@ -108,7 +108,7 @@ describe('clearPlot', () => {
         0
       )
 
-      expect(inventory).toEqual([{ id: 'weed', quantity: 1 }])
+      expect(inventory).toEqual([{ playerId: 'weed', quantity: 1 }])
       expect(field[0][0]).toBe(null)
     })
   })
@@ -132,7 +132,7 @@ describe('clearPlot', () => {
         )
 
         expect(field[0][0]).toBe(null)
-        expect(inventory).toEqual([{ id: 'sample-crop-seeds-1', quantity: 1 }])
+        expect(inventory).toEqual([{ playerId: 'sample-crop-seeds-1', quantity: 1 }])
       })
     })
   })

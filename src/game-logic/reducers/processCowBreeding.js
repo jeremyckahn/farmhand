@@ -14,7 +14,7 @@ export const processCowBreeding = state => {
   const {
     cowBreedingPen,
     cowInventory,
-    id,
+    playerId,
     newDayNotifications,
     purchasedCowPen,
   } = state
@@ -44,7 +44,7 @@ export const processCowBreeding = state => {
     daysUntilBirth === 0
 
   let offspringCow =
-    shouldGenerateOffspring && generateOffspringCow(cow1, cow2, id)
+    shouldGenerateOffspring && generateOffspringCow(cow1, cow2, playerId)
 
   return {
     ...state,

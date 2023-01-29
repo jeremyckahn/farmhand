@@ -34,10 +34,10 @@ export const generatePriceEvents = state => {
     const cropItem = getRandomUnlockedCrop(
       filterItemIdsToSeeds(Object.keys(unlockedItems))
     )
-    const { id } = cropItem
+    const { playerId } = cropItem
 
     const doesPriceEventAlreadyExist = Boolean(
-      priceCrashes[id] || priceSurges[id]
+      priceCrashes[playerId] || priceSurges[playerId]
     )
 
     if (!doesPriceEventAlreadyExist) {

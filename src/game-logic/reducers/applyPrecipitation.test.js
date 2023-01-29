@@ -85,7 +85,7 @@ describe('applyPrecipitation', () => {
                 },
               ],
             ],
-            inventory: [{ id: 'scarecrow', quantity: 1 }],
+            inventory: [{ playerId: 'scarecrow', quantity: 1 }],
             newDayNotifications: [],
           })
 

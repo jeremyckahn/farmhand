@@ -6,7 +6,7 @@
  */
 export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
   const inventory = [...state.inventory]
-  const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId)
+  const itemInventoryIndex = inventory.findIndex(({ playerId }) => playerId === itemId)
 
   if (itemInventoryIndex === -1) {
     return state

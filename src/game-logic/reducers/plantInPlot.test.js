@@ -12,7 +12,7 @@ describe('plantInPlot', () => {
         const state = plantInPlot(
           {
             field: [[]],
-            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
+            inventory: [testItem({ playerId: 'sample-crop-seeds-1', quantity: 2 })],
             itemsSold: {},
             selectedItemId: 'sample-crop-seeds-1',
           },
@@ -32,7 +32,7 @@ describe('plantInPlot', () => {
         const state = plantInPlot(
           {
             field: [[getCropFromItemId('sample-crop-seeds-1')]],
-            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
+            inventory: [testItem({ playerId: 'sample-crop-seeds-1', quantity: 2 })],
             selectedItemId: 'sample-crop-seeds-1',
           },
           0,
@@ -50,7 +50,7 @@ describe('plantInPlot', () => {
       const state = plantInPlot(
         {
           field: [[]],
-          inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
+          inventory: [testItem({ playerId: 'sample-crop-seeds-1', quantity: 1 })],
           itemsSold: {},
           selectedItemId: 'sample-crop-seeds-1',
         },

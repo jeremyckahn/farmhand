@@ -50,7 +50,7 @@ export const CowCard = ({
   handleCowWithdrawClick,
   handleCowSellClick,
   handleCowTradeClick,
-  id,
+  playerId,
   inventory,
   isCowOfferedForTradeByPeer,
   isSelected,
@@ -60,7 +60,7 @@ export const CowCard = ({
 
   huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
 }) => {
-  const cowDisplayName = getCowDisplayName(cow, id, allowCustomPeerCowNames)
+  const cowDisplayName = getCowDisplayName(cow, playerId, allowCustomPeerCowNames)
 
   const [displayName, setDisplayName] = useState(cowDisplayName)
   const [cowImage, setCowImage] = useState(pixel)
@@ -68,7 +68,7 @@ export const CowCard = ({
   const scrollAnchorRef = useRef()
 
   const isCowPurchased =
-    !!cowInventory.find(({ id }) => id === cow.id) &&
+    !!cowInventory.find(({ playerId }) => playerId === cow.playerId) &&
     !isCowOfferedForTradeByPeer
   const cowValue = getCowValue(cow, isCowPurchased)
   const cowCanBeTradedAway =
@@ -82,8 +82,8 @@ export const CowCard = ({
       setCowImage(await getCowImage(cow))
     })()
 
-    setDisplayName(getCowDisplayName(cow, id, allowCustomPeerCowNames))
-  }, [cow, id, allowCustomPeerCowNames])
+    setDisplayName(getCowDisplayName(cow, playerId, allowCustomPeerCowNames))
+  }, [cow, playerId, allowCustomPeerCowNames])
 
   useEffect(() => {
     if (isSelected) {
@@ -103,7 +103,7 @@ export const CowCard = ({
       <a
         {...{
           className: 'CowCard-scroll-anchor',
-          href: `#cow-${cow.id}`,
+          href: `#cow-${cow.playerId}`,
           ref: scrollAnchorRef,
         }}
       >
@@ -132,7 +132,7 @@ export const CowCard = ({
                 {isCowPurchased ? (
                   <TextField
                     {...{
-                      disabled: id !== cow.originalOwnerId,
+                      disabled: playerId !== cow.originalOwnerId,
                       onChange: e => {
                         if (debounced) {
                           setDisplayName(e.target.value)
@@ -165,7 +165,7 @@ export const CowCard = ({
                   handleCowBreedChange,
                   handleCowAutomaticHugChange,
                   huggingMachinesRemain,
-                  id,
+                  playerId,
                   isCowPurchased,
                 }}
               />
@@ -222,7 +222,7 @@ export const CowCard = ({
                 Hug
               </Button>
               {cowCanBeTradedAway &&
-                (cowIdOfferedForTrade === cow.id ? (
+                (cowIdOfferedForTrade === cow.playerId ? (
                   <Tooltip
                     {...{
                       arrow: true,
@@ -299,7 +299,7 @@ CowCard.propTypes = {
   handleCowWithdrawClick: func,
   handleCowSellClick: func,
   handleCowTradeClick: func,
-  id: string.isRequired,
+  playerId: string.isRequired,
   inventory: array.isRequired,
   isCowOfferedForTradeByPeer: bool,
   isOnline: bool.isRequired,

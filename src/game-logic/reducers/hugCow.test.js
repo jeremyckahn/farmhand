@@ -13,7 +13,7 @@ describe('hugCow', () => {
         {
           cowInventory: [cow],
         },
-        cow.id
+        cow.playerId
       )
 
       expect(happiness).toBe(COW_HUG_BENEFIT)
@@ -27,7 +27,7 @@ describe('hugCow', () => {
           {
             cowInventory: [cow],
           },
-          cow.id
+          cow.playerId
         )
 
         expect(cowInventory[0].happiness).toBe(1)
@@ -44,7 +44,7 @@ describe('hugCow', () => {
         {
           cowInventory: [cow],
         },
-        cow.id
+        cow.playerId
       )
 
       expect(happiness).toBe(0.5)

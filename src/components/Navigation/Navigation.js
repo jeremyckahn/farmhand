@@ -353,11 +353,11 @@ export const Navigation = ({
       aria-labelledby={modalContentId}
     >
       <DialogTitle {...{ disableTypography: true }}>
-        <Typography {...{ id: modalTitleId, component: 'h2', variant: 'h6' }}>
+        <Typography {...{ playerId: modalTitleId, component: 'h2', variant: 'h6' }}>
           {dialogTitleMap[currentDialogView]}
         </Typography>
       </DialogTitle>
-      <DialogContent {...{ id: modalContentId }}>
+      <DialogContent {...{ playerId: modalContentId }}>
         {dialogContentMap[currentDialogView]}
       </DialogContent>
       <DialogActions>

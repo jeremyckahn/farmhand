@@ -93,7 +93,7 @@ describe('sellCow', () => {
         cow
       )
 
-      expect(inventory).toEqual([{ id: huggingMachine.id, quantity: 1 }])
+      expect(inventory).toEqual([{ playerId: huggingMachine.playerId, quantity: 1 }])
     })
   })
 })

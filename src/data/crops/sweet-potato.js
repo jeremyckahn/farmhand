@@ -14,7 +14,7 @@ export const sweetPotatoSeed = crop({
     [GROWING]: 6,
   },
   growsInto: 'sweet-potato',
-  id: 'sweet-potato-seed',
+  playerId: 'sweet-potato-seed',
   name: 'Sweet Potato Slip',
   tier: 6,
 })

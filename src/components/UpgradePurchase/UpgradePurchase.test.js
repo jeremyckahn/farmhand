@@ -11,7 +11,7 @@ describe('<UpgradePurchase />', () => {
 
   beforeEach(() => {
     upgrade = {
-      id: 'test-upgrade',
+      playerId: 'test-upgrade',
       name: 'Test Upgrade',
       description: 'This is the greeetest update',
       ingredients: {
@@ -28,10 +28,10 @@ describe('<UpgradePurchase />', () => {
       handleUpgradeTool: jest.fn(),
       inventory: [
         {
-          id: 'bronze-ore',
+          playerId: 'bronze-ore',
           quantity: 100,
         },
-        { id: 'coal', quantity: 100 },
+        { playerId: 'coal', quantity: 100 },
       ],
       playerInventoryQuantities: {
         'bronze-ore': 100,

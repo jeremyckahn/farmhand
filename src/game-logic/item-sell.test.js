@@ -8,7 +8,7 @@ import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory'
 describe('item selling', () => {
   test('item in inventory can be sold', async () => {
     const loadedState = saveDataStubFactory({
-      inventory: [{ id: 'carrot-seed', quantity: 1 }],
+      inventory: [{ playerId: 'carrot-seed', quantity: 1 }],
     })
 
     await farmhandStub({

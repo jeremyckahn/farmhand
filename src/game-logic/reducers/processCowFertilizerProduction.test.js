@@ -65,7 +65,7 @@ describe('processCowFertilizerProduction', () => {
         const { daysSinceProducingFertilizer } = cow
 
         expect(daysSinceProducingFertilizer).toEqual(0)
-        expect(inventory).toEqual([{ id: 'fertilizer', quantity: 1 }])
+        expect(inventory).toEqual([{ playerId: 'fertilizer', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
             message: FERTILIZERS_PRODUCED`${{
@@ -102,7 +102,7 @@ describe('processCowFertilizerProduction', () => {
         const { daysSinceProducingFertilizer } = cow
 
         expect(daysSinceProducingFertilizer).toEqual(0)
-        expect(inventory).toEqual([{ id: 'fertilizer', quantity: 1 }])
+        expect(inventory).toEqual([{ playerId: 'fertilizer', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
             message: FERTILIZERS_PRODUCED`${{

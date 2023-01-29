@@ -11,7 +11,7 @@ beforeEach(() => {
       {...{
         peer: {
           dayCount: 0,
-          id: '',
+          playerId: '',
           itemsSold: {},
           money: 0,
         },

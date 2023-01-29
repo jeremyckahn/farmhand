@@ -75,7 +75,7 @@ const getItemCategories = () =>
 
 export const separateItemsIntoCategories = items =>
   sortItems(items).reduce((acc, item) => {
-    const { type } = itemsMap[item.id]
+    const { type } = itemsMap[item.playerId]
     const category = itemTypeCategoryMap[type]
 
     if (category === CROPS) {
@@ -114,7 +114,7 @@ export const Inventory = ({
             {isPurchaseView ? null : <h3>{headerText}</h3>}
             <ul className="card-list">
               {itemCategories[category].map(item => (
-                <li key={item.id}>
+                <li key={item.playerId}>
                   <Item
                     {...{
                       isPurchaseView,

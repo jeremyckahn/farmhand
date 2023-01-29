@@ -144,7 +144,7 @@ export const CowPenContextMenu = ({
             isCowInBreedingPen(cow, cowBreedingPen) ? null : (
               <li
                 {...{
-                  key: cow.id,
+                  key: cow.playerId,
                   onFocus: () => handleCowSelect(cow),
                   onClick: () => handleCowSelect(cow),
                 }}
@@ -160,7 +160,7 @@ export const CowPenContextMenu = ({
                     handleCowSellClick,
                     handleCowWithdrawClick,
                     isCowPurchased: true,
-                    isSelected: cow.id === selectedCowId,
+                    isSelected: cow.playerId === selectedCowId,
                   }}
                 />
               </li>
@@ -187,7 +187,7 @@ export const CowPenContextMenu = ({
                     handleCowSellClick,
                     handleCowWithdrawClick,
                     isCowPurchased: true,
-                    isSelected: cow.id === selectedCowId,
+                    isSelected: cow.playerId === selectedCowId,
                   }}
                 />
               </li>
@@ -198,7 +198,7 @@ export const CowPenContextMenu = ({
       <TabPanel value={currentTab} index={2}>
         <ul className="card-list">
           {cowShopInventory.map(item => (
-            <li key={item.id}>
+            <li key={item.playerId}>
               <Item
                 {...{
                   item,

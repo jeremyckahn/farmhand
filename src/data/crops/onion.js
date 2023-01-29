@@ -14,7 +14,7 @@ export const onionSeed = crop({
     [GROWING]: 4,
   },
   growsInto: 'onion',
-  id: 'onion-seed',
+  playerId: 'onion-seed',
   name: 'Onion Seeds',
   tier: 2,
 })

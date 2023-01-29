@@ -7,7 +7,7 @@ describe('updateAchievements', () => {
     jest.resetModules()
     jest.mock('../../data/achievements', () => [
       {
-        id: 'test-achievement',
+        playerId: 'test-achievement',
         name: 'Test Achievement',
         description: '',
         rewardDescription: '',

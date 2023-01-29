@@ -59,7 +59,7 @@ describe('harvestPlot', () => {
       )
 
       expect(field[0][0]).toBe(null)
-      expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 1 }])
+      expect(inventory).toEqual([{ playerId: 'sample-crop-1', quantity: 1 }])
       expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 1 })
     })
 
@@ -85,7 +85,7 @@ describe('harvestPlot', () => {
       test('harvests 2 crops', () => {
         const { cropsHarvested, inventory } = harvestPlot(farmhandState, 0, 0)
 
-        expect(inventory).toEqual([{ id: 'sample-crop-1', quantity: 2 }])
+        expect(inventory).toEqual([{ playerId: 'sample-crop-1', quantity: 2 }])
         expect(cropsHarvested).toEqual({ SAMPLE_CROP_TYPE_1: 2 })
       })
     })
@@ -95,7 +95,7 @@ describe('harvestPlot', () => {
         const inputState = {
           cropsHarvested: {},
           field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
-          inventory: [{ id: 'sample-crop-1', quantity: 5 }],
+          inventory: [{ playerId: 'sample-crop-1', quantity: 5 }],
           inventoryLimit: 5,
           toolLevels: toolLevelsDefault,
         }
@@ -126,7 +126,7 @@ describe('harvestPlot', () => {
                 }),
               ],
             ],
-            inventory: [{ id: 'sample-crop-seeds-1', quantity: 2 }],
+            inventory: [{ playerId: 'sample-crop-seeds-1', quantity: 2 }],
             inventoryLimit: INFINITE_STORAGE_LIMIT,
             itemsSold: {},
           },
@@ -198,7 +198,7 @@ describe('harvestPlot', () => {
     })
 
     test('it added the weed to the inventory', () => {
-      expect(harvest.inventory).toEqual([{ id: 'weed', quantity: 1 }])
+      expect(harvest.inventory).toEqual([{ playerId: 'weed', quantity: 1 }])
     })
 
     test('it did not alter cropsHarvested', () => {

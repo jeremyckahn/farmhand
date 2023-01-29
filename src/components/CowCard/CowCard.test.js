@@ -27,7 +27,7 @@ describe('CowCard', () => {
     handleCowNameInputChange: () => {},
     handleCowPurchaseClick: () => {},
     handleCowTradeClick: () => {},
-    id: '',
+    playerId: '',
     isSelected: false,
     isOnline: false,
     inventory: [],
@@ -173,7 +173,7 @@ describe('CowCard', () => {
             cow: testCow,
             cowInventory: [testCow, breedingCow1],
             cowBreedingPen: {
-              cowId1: breedingCow1.id,
+              cowId1: breedingCow1.playerId,
               cowId2: null,
               daysUntilBirth: -1,
             },
@@ -210,8 +210,8 @@ describe('CowCard', () => {
             cow: breedingCow1,
             cowInventory: [breedingCow1, breedingCow2],
             cowBreedingPen: {
-              cowId1: breedingCow1.id,
-              cowId2: breedingCow2.id,
+              cowId1: breedingCow1.playerId,
+              cowId2: breedingCow2.playerId,
               daysUntilBirth: -1,
             },
             money: 0,
@@ -247,7 +247,7 @@ describe('CowCard', () => {
             cow: testCow,
             cowInventory: [testCow, breedingCow1],
             cowBreedingPen: {
-              cowId1: breedingCow1.id,
+              cowId1: breedingCow1.playerId,
               cowId2: null,
               daysUntilBirth: -1,
             },
@@ -289,8 +289,8 @@ describe('CowCard', () => {
             cow: testCow,
             cowInventory: [testCow, breedingCow1, breedingCow2],
             cowBreedingPen: {
-              cowId1: breedingCow1.id,
-              cowId2: breedingCow2.id,
+              cowId1: breedingCow1.playerId,
+              cowId2: breedingCow2.playerId,
               daysUntilBirth: -1,
             },
             money: 0,
