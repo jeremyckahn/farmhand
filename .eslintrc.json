@@ -4,6 +4,7 @@
     "import/order": [
       "error",
       { "newlines-between": "always-and-inside-groups" }
-    ]
+    ],
+    "no-shadow": "error"
   }
 }
