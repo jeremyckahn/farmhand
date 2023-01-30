@@ -223,10 +223,5 @@
     "suiteNameTemplate": "{filepath}",
     "classNameTemplate": "{classname}",
     "titleTemplate": "{title}"
-  },
-  "eslintConfig": {
-    "rules": {
-      "no-shadow": 2
-    }
   }
 }
