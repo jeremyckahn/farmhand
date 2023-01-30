@@ -67,7 +67,7 @@ describe('plot label', () => {
           isInHoverRange: false,
           selectedItemId: '',
           setHoveredPlot: () => {},
-          plotContent: getCropFromItemId('grape-green'),
+          plotContent: getCropFromItemId('grape-chardonnay'),
           x: 0,
           y: 0,
         }}

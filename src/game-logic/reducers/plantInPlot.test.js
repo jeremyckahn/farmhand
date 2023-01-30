@@ -91,7 +91,7 @@ describe('plantInPlot', () => {
         'grape-seed'
       )
 
-      expect(state.field[0][0]).toEqual(getCropFromItemId('grape-green'))
+      expect(state.field[0][0]).toEqual(getCropFromItemId('grape-chardonnay'))
     })
   })
 })

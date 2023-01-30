@@ -641,7 +641,7 @@ describe('getFinalCropItemIdFromSeedItemId', () => {
   test('gets "final" crop item id from seed item id with varieties', () => {
     jest.spyOn(Math, 'random').mockReturnValue(0)
     expect(getFinalCropItemIdFromSeedItemId('grape-seed')).toEqual(
-      'grape-green'
+      'grape-chardonnay'
     )
   })
 })
@@ -654,7 +654,7 @@ describe('getSeedItemIdFromFinalStageCropItemId', () => {
   })
 
   test('gets seed item from crop item with varieties', () => {
-    expect(getSeedItemIdFromFinalStageCropItemId('grape-green')).toEqual(
+    expect(getSeedItemIdFromFinalStageCropItemId('grape-chardonnay')).toEqual(
       'grape-seed'
     )
   })
