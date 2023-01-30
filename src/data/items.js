@@ -29,8 +29,20 @@ export {
   cornSeed,
   garlic,
   garlicSeed,
-  grapeGreen,
-  grapePurple,
+  // Green grapes
+  grapeChardonnay,
+  grapeSauvignonBlanc,
+  grapePinotBlanc,
+  grapeMuscat,
+  grapeRiesling,
+  // End green grapes
+  // Purple grapes
+  grapeMerlot,
+  grapeCabernetSauvignon,
+  grapeSyrah,
+  grapeTempranillo,
+  grapeNebbiolo,
+  // End purple grapes
   grapeSeed,
   jalapeno,
   jalapenoSeed,
