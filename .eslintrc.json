@@ -5,6 +5,7 @@
       "error",
       { "newlines-between": "always-and-inside-groups" }
     ],
-    "no-shadow": 2
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"]
   }
 }
