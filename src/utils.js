@@ -710,8 +710,18 @@ export const filterItemIdsToSeeds = itemsIds =>
  * @param {Array.<string>} unlockedSeedItemIds
  * @returns {farmhand.item}
  */
-export const getRandomUnlockedCrop = unlockedSeedItemIds =>
-  itemsMap[getFinalCropItemIdFromSeedItemId(chooseRandom(unlockedSeedItemIds))]
+export const getRandomUnlockedCrop = unlockedSeedItemIds => {
+  const seedItemId = chooseRandom(unlockedSeedItemIds)
+  const seedItem = itemsMap[seedItemId]
+  const variationIdx = Array.isArray(seedItem.growsInto)
+    ? chooseRandomIndex(seedItem.growsInto)
+    : 0
+
+  const cropItem =
+    itemsMap[getFinalCropItemIdFromSeedItemId(seedItemId, variationIdx)]
+
+  return cropItem
+}
 
 /**
  * @param {farmhand.item} cropItem
