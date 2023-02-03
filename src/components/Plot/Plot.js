@@ -125,13 +125,12 @@ export const Plot = ({
 
   let plotLabelText = null
   if (item) {
-    const isSeedItem =
+    const isPlotContentACropSeed =
       item.type === itemType.CROP &&
       getCropLifeStage(plotContent) === cropLifeStage.SEED
 
-    plotLabelText = isSeedItem
-      ? cropItemIdToSeedItemMap[item.id].name
-      : item.name
+    const seedItem = cropItemIdToSeedItemMap[item.id]
+    plotLabelText = isPlotContentACropSeed ? seedItem.name : item.name
   } else if (wasJustShoveled || plotContent?.isShoveled) {
     const oreItem = itemsMap[plotContent?.oreId]
 
