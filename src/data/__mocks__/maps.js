@@ -28,24 +28,8 @@ export const itemsMap = {
   ...recipesMap,
 }
 
-/**
- * @type {Object.<string, farmhand.item>}
- */
-export const cropItemIdToSeedItemMap = Object.entries(itemsMap).reduce(
-  (acc, [itemId, item]) => {
-    const { growsInto } = item
-    if (growsInto) {
-      const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
-
-      for (const variantId of variants) {
-        acc[variantId] = itemsMap[itemId]
-      }
-    }
-
-    return acc
-  },
-  {}
-)
+export const cropItemIdToSeedItemMap = jest.requireActual('../maps')
+  .cropItemIdToSeedItemMap
 
 export const cropTypeToIdMap = {
   SAMPLE_CROP_TYPE_1: 'sample-crop-type-1',
