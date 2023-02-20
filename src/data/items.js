@@ -32,14 +32,14 @@ export {
   // Green grapes
   grapeChardonnay,
   grapeSauvignonBlanc,
-  grapePinotBlanc,
-  grapeMuscat,
-  grapeRiesling,
+  // grapePinotBlanc,
+  // grapeMuscat,
+  // grapeRiesling,
   // End green grapes
   // Purple grapes
-  grapeMerlot,
+  // grapeMerlot,
   grapeCabernetSauvignon,
-  grapeSyrah,
+  // grapeSyrah,
   grapeTempranillo,
   grapeNebbiolo,
   // End purple grapes
