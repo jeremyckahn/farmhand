@@ -47,6 +47,11 @@ import carrotSeed from './items/carrot-seed.png'
 import garlic from './items/garlic.png'
 import garlicGrowing from './items/garlic-growing.png'
 import garlicSeed from './items/garlic-seed.png'
+import grapeSeed from './items/grape-seed.png'
+import grapeGreenGrowing from './items/grape-green-growing.png'
+import grapePurpleGrowing from './items/grape-purple-growing.png'
+import grapeGreen from './items/grape-green.png'
+import grapePurple from './items/grape-purple.png'
 import jalapeno from './items/jalapeno.png'
 import jalapenoGrowing from './items/jalapeno-growing.png'
 import jalapenoSeed from './items/jalapeno-seed.png'
@@ -230,6 +235,37 @@ export const items = {
   garlic,
   'garlic-growing': garlicGrowing,
   'garlic-seed': garlicSeed,
+  'grape-seed': grapeSeed,
+  'grape-cabernet-sauvignon': grapePurple,
+  'grape-cabernet-sauvignon-growing': grapePurpleGrowing,
+  'grape-cabernet-sauvignon-seed': grapeSeed,
+  'grape-chardonnay': grapeGreen,
+  'grape-chardonnay-growing': grapeGreenGrowing,
+  'grape-chardonnay-seed': grapeSeed,
+  // 'grape-merlot': grapePurple,
+  // 'grape-merlot-growing': grapePurpleGrowing,
+  // 'grape-merlot-seed': grapeSeed,
+  // 'grape-muscat': grapeGreen,
+  // 'grape-muscat-growing': grapeGreenGrowing,
+  // 'grape-muscat-seed': grapeSeed,
+  'grape-nebbiolo': grapePurple,
+  'grape-nebbiolo-growing': grapePurpleGrowing,
+  'grape-nebbiolo-seed': grapeSeed,
+  // 'grape-pinot-blanc': grapeGreen,
+  // 'grape-pinot-blanc-growing': grapeGreenGrowing,
+  // 'grape-pinot-blanc-seed': grapeSeed,
+  // 'grape-riesling': grapeGreen,
+  // 'grape-riesling-growing': grapeGreenGrowing,
+  // 'grape-riesling-seed': grapeSeed,
+  'grape-sauvignon-blanc': grapeGreen,
+  'grape-sauvignon-blanc-growing': grapeGreenGrowing,
+  'grape-sauvignon-blanc-seed': grapeSeed,
+  // 'grape-syrah': grapePurple,
+  // 'grape-syrah-growing': grapePurpleGrowing,
+  // 'grape-syrah-seed': grapeSeed,
+  'grape-tempranillo': grapePurple,
+  'grape-tempranillo-growing': grapePurpleGrowing,
+  'grape-tempranillo-seed': grapeSeed,
   jalapeno,
   'jalapeno-growing': jalapenoGrowing,
   'jalapeno-seed': jalapenoSeed,

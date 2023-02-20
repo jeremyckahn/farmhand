@@ -15,7 +15,6 @@
  * Reference object for an item.
  * @typedef farmhand.item
  * @type {Object}
- * @readonly
  * @property {string} id
  * @property {string} name
  * @property {string} type
@@ -23,11 +22,9 @@
  * @property {farmhand.module:enums.cropType} [cropType]
  * @property {string} [description] A user-friendly description of the item.
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.
- * @property {string} [growsInto] The id of another farmhand.item.
- * @property {boolean} [doesPriceFluctuate] Whether or not this item has a
- * value that fluctuates from day to day.
- * @property {number} [hoveredPlotRange] The number to set.
- * farmhand.state.hoveredPlotRange to when the item is active.
+ * @property {string|Array.<string>} [growsInto] The id of farmhand.item or list of ids of other farmhand.items that this farmhand.item (likely a crop seed) will grow into.
+ * @property {boolean} [doesPriceFluctuate] Whether or not this item has a value that fluctuates from day to day.
+ * @property {number} [hoveredPlotRange] The number to set farmhand.state.hoveredPlotRange to when the item is active.
  * @property {boolean} [isPlantableCrop]
  * @property {boolean} [isReplantable]
  * @property {number} [quantity] How many of the item the player has.

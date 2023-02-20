@@ -1,3 +1,7 @@
+/** @typedef {import("./index").farmhand.crop} farmhand.crop */
+/** @typedef {import("./index").farmhand.item} farmhand.item */
+/** @typedef {import("./index").farmhand.plotContent} farmhand.plotContent */
+
 /**
  * @module farmhand.utils
  * @ignore
@@ -16,7 +20,7 @@ import { funAnimalName } from 'fun-animal-names'
 import cowShopInventory from './data/shop-inventory-cow'
 import shopInventory from './data/shop-inventory'
 import fruitNames from './data/fruit-names'
-import { cropIdToTypeMap, itemsMap } from './data/maps'
+import { cropItemIdToSeedItemMap, itemsMap } from './data/maps'
 import {
   chocolateMilk,
   milk1,
@@ -87,8 +91,18 @@ const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
   {}
 )
 
-export const chooseRandom = list =>
-  list[Math.round(Math.random() * (list.length - 1))]
+/**
+ * @param {Array.<*>} list
+ * @return {number}
+ */
+export const chooseRandomIndex = list =>
+  Math.round(Math.random() * (list.length - 1))
+
+/**
+ * @param {Array.<*>} list
+ * @return {*}
+ */
+export const chooseRandom = list => list[chooseRandomIndex(list)]
 
 // Ensures that the condition argument to memoize() is not ignored, per
 // https://github.com/caiogondim/fast-memoize.js#function-arguments
@@ -267,6 +281,15 @@ export const getResaleValue = ({ id }) => itemsMap[id].value / 2
 
 /**
  * @param {string} itemId
+ * @returns {farmhand.plotContent}
+ */
+export const getPlotContentFromItemId = itemId => ({
+  itemId,
+  fertilizerType: fertilizerType.NONE,
+})
+
+/**
+ * @param {string} itemId
  * @returns {farmhand.crop}
  */
 export const getCropFromItemId = itemId => ({
@@ -275,15 +298,6 @@ export const getCropFromItemId = itemId => ({
   daysWatered: 0,
   fertilizerType: fertilizerType.NONE,
   wasWateredToday: false,
-})
-
-/**
- * @param {string} itemId
- * @returns {farmhand.plotContent}
- */
-export const getPlotContentFromItemId = itemId => ({
-  itemId,
-  fertilizerType: fertilizerType.NONE,
 })
 
 /**
@@ -320,13 +334,6 @@ export const isItemAFarmProduct = item =>
 
 /**
  * @param {farmhand.crop} crop
- * @returns {string}
- */
-export const getCropId = ({ itemId }) =>
-  cropIdToTypeMap[itemsMap[itemId].cropType]
-
-/**
- * @param {farmhand.crop} crop
  * @returns {number}
  */
 export const getCropLifecycleDuration = memoize(({ cropTimetable }) =>
@@ -352,11 +359,6 @@ export const getCropLifeStage = ({ itemId, daysWatered }) =>
   getLifeStageRange(itemsMap[itemId].cropTimetable)[Math.floor(daysWatered)] ||
   GROWN
 
-const cropLifeStageToImageSuffixMap = {
-  [SEED]: 'seed',
-  [GROWING]: 'growing',
-}
-
 /**
  * @param {farmhand.plotContent} plotContent
  * @param {number} x
@@ -366,15 +368,22 @@ const cropLifeStageToImageSuffixMap = {
 export const getPlotImage = (plotContent, x, y) => {
   if (plotContent) {
     if (getPlotContentType(plotContent) === itemType.CROP) {
-      if (getCropLifeStage(plotContent) === GROWN) {
-        return itemImages[getCropId(plotContent)]
-      } else {
-        return itemImages[
-          `${getCropId(plotContent)}-${
-            cropLifeStageToImageSuffixMap[getCropLifeStage(plotContent)]
-          }`
-        ]
+      let itemImageId
+      switch (getCropLifeStage(plotContent)) {
+        case GROWN:
+          itemImageId = plotContent.itemId
+          break
+
+        case GROWING:
+          itemImageId = `${plotContent.itemId}-growing`
+          break
+
+        default:
+          const seedItem = cropItemIdToSeedItemMap[plotContent.itemId]
+          itemImageId = seedItem.id
       }
+
+      return itemImages[itemImageId]
     }
 
     if (getPlotContentType(plotContent) === itemType.WEED) {
@@ -413,29 +422,47 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
 }
 
 /**
- * @param {string} seedItemId
- * @returns {string}
- */
-export const getFinalCropItemIdFromSeedItemId = seedItemId =>
-  itemsMap[seedItemId].growsInto
-
-/**
  * @param {farmhand.item} item
+ * @param {number} [variationIdx=0]
  * @returns {farmhand.item}
  */
-export const getFinalCropItemFromSeedItem = ({ id }) =>
-  itemsMap[getFinalCropItemIdFromSeedItemId(id)]
+export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) =>
+  itemsMap[getFinalCropItemIdFromSeedItemId(id, variantIdx)]
 
 /**
- * @param {farmhand.item} cropItemId
+ * @param {string} seedItemId
+ * @param {number} [variationIdx]
+ * @returns {string}
+ */
+export const getFinalCropItemIdFromSeedItemId = (
+  seedItemId,
+  variationIdx = 0
+) => {
+  const { growsInto } = itemsMap[seedItemId]
+
+  if (Array.isArray(growsInto)) {
+    return growsInto[variationIdx]
+  } else {
+    return growsInto
+  }
+}
+
+/**
+ * @param {string} cropItemId
  * @returns {string}
  */
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
-  cropItemId =>
-    Object.values(itemsMap).find(({ growsInto }) => growsInto === cropItemId)
-      ?.id,
+  cropItemId => {
+    return Object.values(itemsMap).find(({ growsInto }) => {
+      if (Array.isArray(growsInto)) {
+        return growsInto.includes(cropItemId)
+      } else {
+        return growsInto === cropItemId
+      }
+    }).id
+  },
   {
-    cacheSize: 30,
+    cacheSize: Object.keys(itemsMap).length,
   }
 )
 
@@ -683,8 +710,18 @@ export const filterItemIdsToSeeds = itemsIds =>
  * @param {Array.<string>} unlockedSeedItemIds
  * @returns {farmhand.item}
  */
-export const getRandomUnlockedCrop = unlockedSeedItemIds =>
-  itemsMap[getFinalCropItemIdFromSeedItemId(chooseRandom(unlockedSeedItemIds))]
+export const getRandomUnlockedCrop = unlockedSeedItemIds => {
+  const seedItemId = chooseRandom(unlockedSeedItemIds)
+  const seedItem = itemsMap[seedItemId]
+  const variationIdx = Array.isArray(seedItem.growsInto)
+    ? chooseRandomIndex(seedItem.growsInto)
+    : 0
+
+  const cropItem =
+    itemsMap[getFinalCropItemIdFromSeedItemId(seedItemId, variationIdx)]
+
+  return cropItem
+}
 
 /**
  * @param {farmhand.item} cropItem

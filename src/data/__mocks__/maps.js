@@ -1,3 +1,5 @@
+/** @typedef {import("../../index").farmhand.item} farmhand.item */
+
 import { recipeType } from '../../enums'
 
 import * as items from './items'
@@ -26,6 +28,9 @@ export const itemsMap = {
   ...recipesMap,
 }
 
-export const cropIdToTypeMap = {
+export const cropItemIdToSeedItemMap = jest.requireActual('../maps')
+  .cropItemIdToSeedItemMap
+
+export const cropTypeToIdMap = {
   SAMPLE_CROP_TYPE_1: 'sample-crop-type-1',
 }

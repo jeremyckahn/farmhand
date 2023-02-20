@@ -12,13 +12,13 @@ describe('plantInPlot', () => {
         const state = plantInPlot(
           {
             field: [[]],
-            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
+            inventory: [testItem({ id: 'sample-crop-1-seed', quantity: 2 })],
             itemsSold: {},
-            selectedItemId: 'sample-crop-seeds-1',
+            selectedItemId: 'sample-crop-1-seed',
           },
           0,
           0,
-          'sample-crop-seeds-1'
+          'sample-crop-1-seed'
         )
 
         expect(state.field[0][0]).toEqual(getCropFromItemId('sample-crop-1'))
@@ -31,13 +31,13 @@ describe('plantInPlot', () => {
       test('does not decrement crop quantity', () => {
         const state = plantInPlot(
           {
-            field: [[getCropFromItemId('sample-crop-seeds-1')]],
-            inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 2 })],
-            selectedItemId: 'sample-crop-seeds-1',
+            field: [[getCropFromItemId('sample-crop-1-seed')]],
+            inventory: [testItem({ id: 'sample-crop-1-seed', quantity: 2 })],
+            selectedItemId: 'sample-crop-1-seed',
           },
           0,
           0,
-          'sample-crop-seeds-1'
+          'sample-crop-1-seed'
         )
 
         expect(state.inventory[0].quantity).toEqual(2)
@@ -50,13 +50,13 @@ describe('plantInPlot', () => {
       const state = plantInPlot(
         {
           field: [[]],
-          inventory: [testItem({ id: 'sample-crop-seeds-1', quantity: 1 })],
+          inventory: [testItem({ id: 'sample-crop-1-seed', quantity: 1 })],
           itemsSold: {},
-          selectedItemId: 'sample-crop-seeds-1',
+          selectedItemId: 'sample-crop-1-seed',
         },
         0,
         0,
-        'sample-crop-seeds-1'
+        'sample-crop-1-seed'
       )
 
       expect(state.selectedItemId).toEqual('')
@@ -68,11 +68,30 @@ describe('plantInPlot', () => {
       const inputState = {
         field: [[]],
         inventory: [],
-        selectedItemId: 'sample-crop-seeds-1',
+        selectedItemId: 'sample-crop-1-seed',
       }
-      const state = plantInPlot(inputState, 0, 0, 'sample-crop-seeds-1')
+      const state = plantInPlot(inputState, 0, 0, 'sample-crop-1-seed')
 
       expect(inputState).toEqual(state)
+    })
+  })
+
+  describe('crops with varieties', () => {
+    test('plants a crop from a seed with varieties', () => {
+      jest.spyOn(Math, 'random').mockReturnValue(0)
+      const state = plantInPlot(
+        {
+          field: [[]],
+          inventory: [testItem({ id: 'grape-seed', quantity: 1 })],
+          itemsSold: {},
+          selectedItemId: 'grape-seed',
+        },
+        0,
+        0,
+        'grape-seed'
+      )
+
+      expect(state.field[0][0]).toEqual(getCropFromItemId('grape-chardonnay'))
     })
   })
 })

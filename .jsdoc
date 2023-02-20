@@ -1,5 +1,8 @@
 {
-  "plugins": ["plugins/markdown"],
+  "plugins": [
+    "plugins/markdown",
+    "./jsdoc-ts.js"
+  ],
   "opts": {
     "destination": "build/docs",
     "template": "node_modules/@jeremyckahn/minami",

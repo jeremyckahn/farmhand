@@ -132,7 +132,7 @@ describe('clearPlot', () => {
         )
 
         expect(field[0][0]).toBe(null)
-        expect(inventory).toEqual([{ id: 'sample-crop-seeds-1', quantity: 1 }])
+        expect(inventory).toEqual([{ id: 'sample-crop-1-seed', quantity: 1 }])
       })
     })
   })

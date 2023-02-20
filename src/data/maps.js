@@ -1,3 +1,5 @@
+/** @typedef {import("../index").farmhand.item} farmhand.item */
+
 import { cropType, recipeType } from '../enums'
 
 import * as recipes from './recipes'
@@ -5,11 +7,14 @@ import upgrades from './upgrades'
 
 import baseItemsMap from './items-map'
 
+import { grapeSeed } from './crops'
+
 const {
   ASPARAGUS,
   CARROT,
   CORN,
   GARLIC,
+  GRAPE,
   JALAPENO,
   OLIVE,
   ONION,
@@ -49,17 +54,43 @@ for (let toolType of Object.keys(upgrades)) {
   }
 }
 
+/**
+ * @type {Object.<string, farmhand.item>}
+ */
 export const itemsMap = {
   ...baseItemsMap,
   ...recipesMap,
   ...upgradesMap,
 }
 
-export const cropIdToTypeMap = {
+/**
+ * @type {Object.<string, farmhand.item>}
+ */
+export const cropItemIdToSeedItemMap = Object.entries(baseItemsMap).reduce(
+  (acc, [itemId, item]) => {
+    const { growsInto } = item
+    if (growsInto) {
+      const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
+
+      for (const variantId of variants) {
+        acc[variantId] = baseItemsMap[itemId]
+      }
+    }
+
+    return acc
+  },
+  {}
+)
+
+/**
+ * @type {Object.<string, string|Array.<string>>}
+ */
+export const cropTypeToIdMap = {
   [ASPARAGUS]: 'asparagus',
   [CARROT]: 'carrot',
   [CORN]: 'corn',
   [GARLIC]: 'garlic',
+  [GRAPE]: grapeSeed.growsInto,
   [JALAPENO]: 'jalapeno',
   [OLIVE]: 'olive',
   [ONION]: 'onion',

@@ -42,7 +42,7 @@ describe('generatePriceEvents', () => {
           },
           {
             id: 1,
-            unlocksShopItem: 'sample-crop-seeds-1',
+            unlocksShopItem: 'sample-crop-1-seed',
           },
         ],
         itemUnlockLevels: {},

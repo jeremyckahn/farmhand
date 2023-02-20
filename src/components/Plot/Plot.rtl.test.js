@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 
 import { cropLifeStage } from '../../enums'
 import { testCrop, testShoveledPlot } from '../../test-utils'
-import { getPlotContentFromItemId } from '../../utils'
+import { getCropFromItemId, getPlotContentFromItemId } from '../../utils'
 
 import { items } from '../../img'
 
@@ -39,6 +39,69 @@ describe('class states', () => {
   })
 })
 
+describe('plot label', () => {
+  test('renders label for seed', () => {
+    render(
+      <Plot
+        {...{
+          handlePlotClick: () => {},
+          isInHoverRange: false,
+          selectedItemId: '',
+          setHoveredPlot: () => {},
+          plotContent: getCropFromItemId('carrot'),
+          x: 0,
+          y: 0,
+        }}
+      />
+    )
+
+    const plantedCrop = screen.getByAltText('Carrot Seed')
+    expect(plantedCrop).toBeInTheDocument()
+  })
+
+  test('renders label for seed of crop with varieties', () => {
+    render(
+      <Plot
+        {...{
+          handlePlotClick: () => {},
+          isInHoverRange: false,
+          selectedItemId: '',
+          setHoveredPlot: () => {},
+          plotContent: getCropFromItemId('grape-chardonnay'),
+          x: 0,
+          y: 0,
+        }}
+      />
+    )
+
+    const plantedCrop = screen.getByAltText('Grape Seed')
+    expect(plantedCrop).toBeInTheDocument()
+  })
+
+  test('renders label for crop', () => {
+    render(
+      <Plot
+        {...{
+          handlePlotClick: () => {},
+          isInHoverRange: false,
+          selectedItemId: '',
+          setHoveredPlot: () => {},
+          plotContent: {
+            ...getCropFromItemId('carrot'),
+            daysOld: 9,
+            daysWatered: 9,
+          },
+          x: 0,
+          y: 0,
+        }}
+      />
+    )
+
+    const plantedCrop = screen.getByAltText('Carrot')
+    expect(plantedCrop).toBeInTheDocument()
+  })
+})
+
 describe('background image', () => {
   describe('crops', () => {
     beforeEach(() => {
@@ -61,7 +124,7 @@ describe('background image', () => {
     })
 
     test('renders crop classes', () => {
-      const img = screen.queryByAltText('Sample Crop Item 1')
+      const img = screen.getByAltText('Sample Crop Item Seed 1')
       const { classList } = img
 
       expect(classList).toContain('animated')
@@ -71,7 +134,7 @@ describe('background image', () => {
 
   describe('ores', () => {
     beforeEach(() => {
-      const PlotTestHarness = ({ children, plotProps }) => {
+      const PlotTestHarness = ({ plotProps }) => {
         const [isShoveled, setIsShoveled] = useState(false)
 
         return (
@@ -80,7 +143,7 @@ describe('background image', () => {
               {...{
                 ...plotProps,
                 plotContent: testShoveledPlot({
-                  oreId: 'sample-ore-1',
+                  oreId: 'stone',
                   isShoveled,
                 }),
                 handlePlotClick: () => setIsShoveled(true),
@@ -106,7 +169,7 @@ describe('background image', () => {
     })
 
     test('renders bare plot classes', () => {
-      const img = screen.queryByAltText('Sample Ore 1')
+      const img = screen.getByAltText('Empty plot')
       const { classList } = img
 
       expect(classList).not.toContain('animated')
@@ -114,12 +177,15 @@ describe('background image', () => {
     })
 
     test('renders newly-mined ore classes', () => {
-      const img = screen.queryByAltText('Sample Ore 1')
+      const img = screen.getByAltText('Empty plot')
       const { classList } = img
       userEvent.click(img)
 
       expect(classList).toContain('animated')
       expect(classList).toContain('was-just-shoveled')
+
+      const updatedImg = screen.getByAltText('Shoveled plot of Stone')
+      expect(updatedImg).toBeInTheDocument()
     })
   })
 

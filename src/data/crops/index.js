@@ -1,6 +1,19 @@
 export { asparagus, asparagusSeed } from './asparagus'
 export { carrot, carrotSeed } from './carrot'
 export { corn, cornSeed } from './corn'
+export {
+  grapeSeed,
+  grapeChardonnay,
+  grapeSauvignonBlanc,
+  // grapePinotBlanc,
+  // grapeMuscat,
+  // grapeRiesling,
+  // grapeMerlot,
+  grapeCabernetSauvignon,
+  // grapeSyrah,
+  grapeTempranillo,
+  grapeNebbiolo,
+} from './grape'
 export { garlic, garlicSeed } from './garlic'
 export { jalapeno, jalapenoSeed } from './jalapeno'
 export { olive, oliveSeed } from './olive'

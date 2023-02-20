@@ -14,7 +14,6 @@ import {
   getCowFertilizerProductionRate,
   getCowValue,
   getCowWeight,
-  getCropId,
   getCropLifeStage,
   getCropLifecycleDuration,
   getFinalCropItemIdFromSeedItemId,
@@ -23,6 +22,7 @@ import {
   getLifeStageRange,
   getPlotContentFromItemId,
   getPlotImage,
+  getRandomUnlockedCrop,
   getPriceEventForCrop,
   getRangeCoords,
   getSalePriceMultiplier,
@@ -530,12 +530,6 @@ describe('getCowWeight', () => {
   })
 })
 
-describe('getCropId', () => {
-  test('returns an ID for a provided crop', () => {
-    expect(getCropId({ itemId: 'sample-crop-1' })).toBe('sample-crop-type-1')
-  })
-})
-
 describe('getLifeStageRange', () => {
   test('converts a cropTimetable to an array of stages', () => {
     expect(getLifeStageRange({ [SEED]: 1, [GROWING]: 2 })).toEqual([
@@ -571,13 +565,13 @@ describe('getPlotImage', () => {
     const itemId = 'sample-crop-1'
 
     expect(getPlotImage(testCrop({ itemId, daysWatered: 0 }))).toBe(
-      itemImages['sample-crop-type-1-seed']
+      itemImages['sample-crop-1-seed']
     )
     expect(getPlotImage(testCrop({ itemId, daysWatered: 1 }))).toBe(
-      itemImages['sample-crop-type-1-growing']
+      itemImages['sample-crop-1-growing']
     )
     expect(getPlotImage(testCrop({ itemId, daysWatered: 3 }))).toBe(
-      itemImages['sample-crop-type-1']
+      itemImages['sample-crop-1']
     )
   })
 
@@ -642,22 +636,27 @@ describe('getRangeCoords', () => {
 
 describe('getFinalCropItemIdFromSeedItemId', () => {
   test('gets "final" crop item id from seed item id', () => {
-    expect(getFinalCropItemIdFromSeedItemId('sample-crop-seeds-1')).toEqual(
-      'sample-crop-1'
+    expect(getFinalCropItemIdFromSeedItemId('carrot-seed')).toEqual('carrot')
+  })
+
+  test('gets "final" crop item id from seed item id with varieties', () => {
+    jest.spyOn(Math, 'random').mockReturnValue(0)
+    expect(getFinalCropItemIdFromSeedItemId('grape-seed')).toEqual(
+      'grape-chardonnay'
     )
   })
 })
 
 describe('getSeedItemIdFromFinalStageCropItemId', () => {
   test('gets seed item from crop item', () => {
-    expect(getSeedItemIdFromFinalStageCropItemId('sample-crop-1')).toEqual(
-      'sample-crop-seeds-1'
+    expect(getSeedItemIdFromFinalStageCropItemId('carrot')).toEqual(
+      'carrot-seed'
     )
   })
 
-  test('handles invalid crop id input', () => {
-    expect(getSeedItemIdFromFinalStageCropItemId('nonexistent-crop')).toEqual(
-      undefined
+  test('gets seed item from crop item with varieties', () => {
+    expect(getSeedItemIdFromFinalStageCropItemId('grape-chardonnay')).toEqual(
+      'grape-seed'
     )
   })
 })
@@ -744,6 +743,20 @@ describe('canMakeRecipe', () => {
         )
       ).toBe(true)
     })
+  })
+})
+
+describe('getRandomUnlockedCrop', () => {
+  test('gets a random unlocked crop', () => {
+    jest.spyOn(Math, 'random').mockReturnValue(1)
+    const crop = getRandomUnlockedCrop(['carrot-seed', 'pumpkin-seed'])
+    expect(crop.id).toEqual('pumpkin')
+  })
+
+  test('gets a random unlocked crop with varieties', () => {
+    jest.spyOn(Math, 'random').mockReturnValue(0)
+    const crop = getRandomUnlockedCrop(['grape-seed'])
+    expect(crop.id).toEqual('grape-chardonnay')
   })
 })
 

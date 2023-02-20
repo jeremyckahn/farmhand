@@ -1,3 +1,6 @@
+/** @typedef {import("../../index").farmhand.item} farmhand.item */
+/** @typedef {import("../../index").farmhand.plotContent} farmhand.plotContent */
+
 import React, { useEffect, useState } from 'react'
 import { bool, func, number, object, string } from 'prop-types'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -11,7 +14,7 @@ import {
   getPlotContentType,
   getPlotImage,
 } from '../../utils'
-import { itemsMap } from '../../data/maps'
+import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, fertilizerType, itemType } from '../../enums'
 import { FERTILIZER_BONUS } from '../../constants'
@@ -19,7 +22,12 @@ import { FERTILIZER_BONUS } from '../../constants'
 import { SHOVELED } from '../../strings'
 
 import './Plot.sass'
+import { SHOVELED_PLOT } from '../../templates'
 
+/**
+ * @param {farmhand.plotContent?} plotContent
+ * @returns {string}
+ */
 export const getBackgroundStyles = plotContent => {
   if (!plotContent) {
     return null
@@ -115,6 +123,20 @@ export const Plot = ({
         getPlotContentType(plotContent) === itemType.CROP)
   )
 
+  let plotLabelText = null
+  if (item) {
+    const isPlotContentACropSeed =
+      item.type === itemType.CROP &&
+      getCropLifeStage(plotContent) === cropLifeStage.SEED
+
+    const seedItem = cropItemIdToSeedItemMap[item.id]
+    plotLabelText = isPlotContentACropSeed ? seedItem.name : item.name
+  } else if (wasJustShoveled || plotContent?.isShoveled) {
+    const oreItem = itemsMap[plotContent?.oreId]
+
+    plotLabelText = oreItem ? SHOVELED_PLOT`${oreItem}` : SHOVELED
+  }
+
   const plot = (
     <div
       {...{
@@ -161,20 +183,11 @@ export const Plot = ({
             backgroundImage: showPlotImage ? `url(${image})` : undefined,
           },
           src: pixel,
-          alt:
-            itemsMap[plotContent?.itemId ?? plotContent?.oreId]?.name ||
-            'Empty plot',
+          alt: plotLabelText ?? 'Empty plot',
         }}
       />
     </div>
   )
-
-  let tooltipContents = null
-  if (item) {
-    tooltipContents = item.name
-  } else if (plotContent?.isShoveled) {
-    tooltipContents = SHOVELED
-  }
 
   if (!plotContent) {
     return plot
@@ -187,9 +200,7 @@ export const Plot = ({
         placement: 'top',
         title: (
           <>
-            {tooltipContents ? (
-              <Typography>{tooltipContents}</Typography>
-            ) : null}
+            {plotLabelText ? <Typography>{plotLabelText}</Typography> : null}
             {isCrop && (
               <Typography>
                 {daysLeftToMature

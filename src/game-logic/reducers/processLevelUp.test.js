@@ -13,7 +13,7 @@ describe('processLevelUp', () => {
       levels: [
         {
           id: 1,
-          unlocksShopItem: 'sample-crop-seeds-1',
+          unlocksShopItem: 'carrot',
         },
       ],
       itemUnlockLevels: {},
@@ -31,11 +31,11 @@ describe('processLevelUp', () => {
 
     expect(todaysNotifications).toEqual([
       {
-        message: LEVEL_GAINED_NOTIFICATION`${3}${{ name: '' }}`,
+        message: LEVEL_GAINED_NOTIFICATION`${3}${{ name: 'Carrot' }}`,
         severity: 'success',
       },
       {
-        message: LEVEL_GAINED_NOTIFICATION`${2}${{ name: '' }}`,
+        message: LEVEL_GAINED_NOTIFICATION`${2}${{ name: 'Carrot' }}`,
         severity: 'success',
       },
     ])

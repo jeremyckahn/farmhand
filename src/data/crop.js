@@ -1,7 +1,13 @@
+/** @typedef {import("../index").farmhand.item} farmhand.item */
+
 import { fieldMode, itemType } from '../enums'
 
 const { freeze } = Object
 
+/**
+ * @param {farmhand.item} item
+ * @returns {farmhand.item}
+ */
 export const crop = ({
   cropTimetable,
   growsInto,
@@ -29,11 +35,23 @@ export const crop = ({
     ...rest,
   })
 
-export const fromSeed = ({ cropTimetable, cropType, growsInto, tier }) => ({
-  cropTimetable,
-  cropType,
-  doesPriceFluctuate: true,
-  id: growsInto,
-  tier,
-  type: itemType.CROP,
-})
+/**
+ * @param {farmhand.item} item
+ * @param {number} [variantIdx]
+ * @returns {farmhand.item}
+ */
+export const fromSeed = (
+  { cropTimetable, cropType, growsInto, tier },
+  variantIdx = 0
+) => {
+  const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
+
+  return {
+    cropTimetable,
+    cropType,
+    doesPriceFluctuate: true,
+    id: variants[variantIdx],
+    tier,
+    type: itemType.CROP,
+  }
+}
