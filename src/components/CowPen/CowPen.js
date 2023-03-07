@@ -13,9 +13,10 @@ import { pixel } from '../../img'
 import { getCowDisplayName, getCowImage } from '../../utils'
 
 import './CowPen.sass'
+import { random } from '../../common/utils'
 
 // Only moves the cow within the middle 80% of the pen
-const randomPosition = () => 10 + Math.random() * 80
+const randomPosition = () => 10 + random() * 80
 
 // TODO: Break this out into its own component file
 export class Cow extends Component {
@@ -155,7 +156,7 @@ export class Cow extends Component {
 
     this.repositionTimeoutId = setTimeout(
       this.repositionTimeoutHandler,
-      Math.random() * this.waitVariance
+      random() * this.waitVariance
     )
   }
 

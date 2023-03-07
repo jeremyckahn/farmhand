@@ -15,6 +15,7 @@ const {
   getRoomData,
   getRoomName,
 } = require('../api-etc/utils')
+const { random } = require('../src/common/utils')
 
 const client = getRedisClient()
 
@@ -30,7 +31,7 @@ const applyPositionsToMarket = (valueAdjustments, positions) => {
     (acc, itemName) => {
       const itemPositionChange = positions[itemName]
 
-      const variance = Math.random() * 0.2
+      const variance = random() * 0.2
 
       const MAX = 1.5
       const MIN = 0.5
@@ -43,7 +44,7 @@ const applyPositionsToMarket = (valueAdjustments, positions) => {
         // If item value is at a range boundary but was not changed in this
         // operation, randomize it to introduce some variability to the market.
         if (acc[itemName] === MAX || acc[itemName] === MIN) {
-          acc[itemName] = Math.random() + MIN
+          acc[itemName] = random() + MIN
         }
       }
 

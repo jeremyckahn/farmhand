@@ -1,4 +1,9 @@
+/** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
 import { itemsMap } from '../data/maps'
+
+export const random = () => {
+  return Math.random()
+}
 
 /**
  * @param {farmhand.priceEvent} [priceCrashes]
@@ -13,7 +18,7 @@ export const generateValueAdjustments = (priceCrashes = {}, priceSurges = {}) =>
       } else if (priceSurges[key]) {
         acc[key] = 1.5
       } else {
-        acc[key] = Math.random() + 0.5
+        acc[key] = random() + 0.5
       }
     }
 

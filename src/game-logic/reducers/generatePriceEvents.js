@@ -8,6 +8,7 @@ import {
 } from '../../utils'
 import { PRICE_EVENT_CHANCE } from '../../constants'
 import { PRICE_CRASH, PRICE_SURGE } from '../../templates'
+import { random } from '../../common/utils'
 
 import { createPriceEvent } from './createPriceEvent'
 
@@ -26,7 +27,7 @@ export const generatePriceEvents = state => {
 
   // TODO: Use isRandomNumberLessThan here once it supports an exclusive
   // less-than check.
-  if (Math.random() < PRICE_EVENT_CHANCE) {
+  if (random() < PRICE_EVENT_CHANCE) {
     const { items: unlockedItems } = getLevelEntitlements(
       levelAchieved(farmProductsSold(state.itemsSold))
     )
@@ -41,7 +42,7 @@ export const generatePriceEvents = state => {
     )
 
     if (!doesPriceEventAlreadyExist) {
-      const priceEventType = Math.random() < 0.5 ? TYPE_CRASH : TYPE_SURGE
+      const priceEventType = random() < 0.5 ? TYPE_CRASH : TYPE_SURGE
 
       priceEvent = createPriceEvent(
         state,
