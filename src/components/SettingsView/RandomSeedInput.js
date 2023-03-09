@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
+import window from 'global/window'
 import TextField from '@material-ui/core/TextField'
 
 import './RandomSeedInput.sass'
 import { randomNumberService } from '../../common/services/randomNumber'
 
 export const RandomSeedInput = () => {
-  const [seed, setSeed] = useState('')
+  const [seed, setSeed] = useState(
+    new URLSearchParams(window.location.search).get('seed') ?? ''
+  )
+
   /**
    * @param {React.SyntheticEvent<HTMLInputElement>} e
    */
@@ -19,18 +23,29 @@ export const RandomSeedInput = () => {
   const handleSubmit = e => {
     e.preventDefault()
 
+    const { origin, pathname, search, hash } = window.location
+    const queryParams = new URLSearchParams(search)
+
     if (seed === '') {
       randomNumberService.unseedRandomNumber()
+      queryParams.delete('seed')
     } else {
       randomNumberService.seedRandomNumber(seed)
+      queryParams.set('seed', seed)
     }
+
+    const newQueryParams = queryParams.toString()
+    const newSearch = newQueryParams.length > 0 ? `?${newQueryParams}` : ''
+
+    const newUrl = `${origin}${pathname}${newSearch}${hash}`
+    window.history.replaceState({}, '', newUrl)
   }
 
   return (
     <form className="RandomSeedInput" onSubmit={handleSubmit}>
       <TextField
         value={seed}
-        variant="filled"
+        variant="outlined"
         label="Random number seed"
         onChange={handleChange}
       />
