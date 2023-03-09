@@ -122,6 +122,7 @@
     "react-use": "^17.4.0",
     "react-zoom-pan-pinch": "^1.6.1",
     "redis": "^3.0.2",
+    "seedrandom": "^3.0.5",
     "shifty": "^2.15.2",
     "source-map-explorer": "^2.3.1",
     "stream": "npm:stream-browserify@^3.0.0",
