@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import window from 'global/window'
 import TextField from '@material-ui/core/TextField'
 
 import './RandomSeedInput.sass'
-import { randomNumberService } from '../../common/services/randomNumber'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 export const RandomSeedInput = () => {
+  const {
+    handlers: { handleRNGSeedChange },
+  } = useContext(FarmhandContext)
+
   const [seed, setSeed] = useState(
     new URLSearchParams(window.location.search).get('seed') ?? ''
   )
@@ -23,22 +27,7 @@ export const RandomSeedInput = () => {
   const handleSubmit = e => {
     e.preventDefault()
 
-    const { origin, pathname, search, hash } = window.location
-    const queryParams = new URLSearchParams(search)
-
-    if (seed === '') {
-      randomNumberService.unseedRandomNumber()
-      queryParams.delete('seed')
-    } else {
-      randomNumberService.seedRandomNumber(seed)
-      queryParams.set('seed', seed)
-    }
-
-    const newQueryParams = queryParams.toString()
-    const newSearch = newQueryParams.length > 0 ? `?${newQueryParams}` : ''
-
-    const newUrl = `${origin}${pathname}${newSearch}${hash}`
-    window.history.replaceState({}, '', newUrl)
+    handleRNGSeedChange(seed)
   }
 
   return (
@@ -48,6 +37,9 @@ export const RandomSeedInput = () => {
         variant="outlined"
         label="Random number seed"
         onChange={handleChange}
+        inputProps={{
+          maxLength: 30,
+        }}
       />
     </form>
   )

@@ -21,6 +21,7 @@ import {
   plantInPlot,
   waterPlot,
 } from '../game-logic/reducers'
+import { randomNumberService } from '../common/services/randomNumber'
 
 const {
   CLEANUP,
@@ -468,5 +469,31 @@ export default {
 
   handleActivePlayerButtonClick() {
     this.openDialogView(dialogView.ONLINE_PEERS)
+  },
+
+  /**
+   * @param {string} seed
+   */
+  handleRNGSeedChange(seed) {
+    const { origin, pathname, search, hash } = window.location
+    const queryParams = new URLSearchParams(search)
+
+    if (seed === '') {
+      randomNumberService.unseedRandomNumber()
+      queryParams.delete('seed')
+
+      this.showNotification('Random seed reset', 'info')
+    } else {
+      randomNumberService.seedRandomNumber(seed)
+      queryParams.set('seed', seed)
+
+      this.showNotification(`Random seed set to "${seed}"`, 'success')
+    }
+
+    const newQueryParams = queryParams.toString()
+    const newSearch = newQueryParams.length > 0 ? `?${newQueryParams}` : ''
+
+    const newUrl = `${origin}${pathname}${newSearch}${hash}`
+    window.history.replaceState({}, '', newUrl)
   },
 }
