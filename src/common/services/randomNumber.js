@@ -23,4 +23,3 @@ export class RandomNumberService {
 }
 
 export const randomNumberService = new RandomNumberService()
-window.randomNumberService = randomNumberService
