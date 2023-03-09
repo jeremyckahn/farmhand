@@ -1,7 +1,7 @@
 import seedrandom from 'seedrandom'
 
 export class RandomNumberService {
-  random = Math.random()
+  random = Math.random
 
   /**
    * @param {string} seed
@@ -16,6 +16,11 @@ export class RandomNumberService {
   generateRandomNumber() {
     return this.random()
   }
+
+  unseedRandomNumber() {
+    this.random = Math.random
+  }
 }
 
 export const randomNumberService = new RandomNumberService()
+window.randomNumberService = randomNumberService
