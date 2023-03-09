@@ -1,7 +1,16 @@
 import seedrandom from 'seedrandom'
+import window from 'global/window'
 
 export class RandomNumberService {
   random = Math.random
+
+  constructor() {
+    const initialSeed = new URLSearchParams(window.location.search).get('seed')
+
+    if (initialSeed) {
+      this.seedRandomNumber(initialSeed)
+    }
+  }
 
   /**
    * @param {string} seed
