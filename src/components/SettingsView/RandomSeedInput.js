@@ -1,17 +1,19 @@
 import React, { useContext, useState } from 'react'
+import { string } from 'prop-types'
 import window from 'global/window'
 import TextField from '@material-ui/core/TextField'
 
-import './RandomSeedInput.sass'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
-export const RandomSeedInput = () => {
+import './RandomSeedInput.sass'
+
+export const RandomSeedInput = ({ search = window.location.search }) => {
   const {
     handlers: { handleRNGSeedChange },
   } = useContext(FarmhandContext)
 
   const [seed, setSeed] = useState(
-    new URLSearchParams(window.location.search).get('seed') ?? ''
+    new URLSearchParams(search).get('seed') ?? ''
   )
 
   /**
@@ -43,4 +45,8 @@ export const RandomSeedInput = () => {
       />
     </form>
   )
+}
+
+RandomSeedInput.propTypes = {
+  search: string,
 }
