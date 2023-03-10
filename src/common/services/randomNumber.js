@@ -5,7 +5,10 @@ export class RandomNumberService {
   random = Math.random
 
   constructor() {
-    const initialSeed = new URLSearchParams(window.location.search).get('seed')
+    // The availability of window.location needs to be checked before accessing
+    // its .search property. This code runs in both a browser and Node.js
+    // context, and window.location is not defined in Node.js environments.
+    const initialSeed = new URLSearchParams(window.location?.search).get('seed')
 
     if (initialSeed) {
       this.seedRandomNumber(initialSeed)
