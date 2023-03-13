@@ -1,9 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import window from 'global/window'
 
 import Farmhand from '../components/Farmhand'
 import { stageFocusType, fieldMode } from '../enums'
 import { testItem } from '../test-utils'
+import { randomNumberService } from '../common/services/randomNumber'
 
 jest.mock('../data/items')
 jest.mock('../data/levels', () => ({
@@ -168,5 +170,35 @@ describe('handleShowHomeScreenChange', () => {
     handlers().handleShowHomeScreenChange(null, true)
     expect(component.state().showHomeScreen).toBeTrue()
     expect(component.state().stageFocus).toEqual(stageFocusType.SHOP)
+  })
+})
+
+describe('handleRNGSeedChange', () => {
+  test('updates random seed', () => {
+    jest.spyOn(window.history, 'replaceState')
+    jest.spyOn(randomNumberService, 'seedRandomNumber')
+
+    handlers().handleRNGSeedChange('123')
+
+    expect(window.history.replaceState).toHaveBeenCalledWith(
+      {},
+      '',
+      expect.stringContaining('?seed=123')
+    )
+    expect(randomNumberService.seedRandomNumber).toHaveBeenCalledWith('123')
+  })
+
+  test('resets random seed', () => {
+    jest.spyOn(window.history, 'replaceState')
+    jest.spyOn(randomNumberService, 'unseedRandomNumber')
+
+    handlers().handleRNGSeedChange('')
+
+    expect(window.history.replaceState).toHaveBeenCalledWith(
+      {},
+      '',
+      expect.not.stringContaining('?')
+    )
+    expect(randomNumberService.unseedRandomNumber).toHaveBeenCalled()
   })
 })
