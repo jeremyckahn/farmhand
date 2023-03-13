@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react'
 import React from 'react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
@@ -22,11 +23,13 @@ describe('RandomSeedInput', () => {
     expect(screen.getByDisplayValue('123')).toBeInTheDocument()
   })
 
-  xtest('updates query param', () => {
-    // TODO
-  })
+  test('updates query param', () => {
+    render(<MockRandomSeedInput search="?seed=123" />)
 
-  xtest('submits seed change', () => {
-    // TODO
+    const input = screen.getByDisplayValue('123')
+
+    userEvent.type(input, '[Backspace][Backspace][Backspace]456[Enter]')
+
+    expect(mockHandleRNGSeedChange).toHaveBeenCalledWith('456')
   })
 })
