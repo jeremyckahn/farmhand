@@ -1,4 +1,5 @@
 import { saveAs } from 'file-saver'
+import window from 'global/window'
 
 import {
   moneyTotal,

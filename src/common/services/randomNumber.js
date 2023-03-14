@@ -2,7 +2,10 @@ import seedrandom from 'seedrandom'
 import window from 'global/window'
 
 export class RandomNumberService {
-  random = Math.random
+  /**
+   * @type {Function?}
+   */
+  seededRandom = null
 
   constructor() {
     // The availability of window.location needs to be checked before accessing
@@ -19,18 +22,18 @@ export class RandomNumberService {
    * @param {string} seed
    */
   seedRandomNumber(seed) {
-    this.random = seedrandom(seed)
+    this.seededRandom = seedrandom(seed)
   }
 
   /**
    * @returns {number}
    */
   generateRandomNumber() {
-    return this.random()
+    return this.seededRandom ? this.seededRandom() : Math.random()
   }
 
   unseedRandomNumber() {
-    this.random = Math.random
+    this.seededRandom = null
   }
 }
 
