@@ -1,6 +1,7 @@
 import { random } from '../common/utils'
 
 // TODO: Migrate this to src/common/services/randomNumber.js
+// @see https://github.com/jeremyckahn/farmhand/issues/400
 /**
  * Compares given number against a randomly generated number
  * @param {number} chance float between 0-1 to compare dice roll against
