@@ -478,17 +478,18 @@ export default {
   handleRNGSeedChange(seed) {
     const { origin, pathname, search, hash } = window.location
     const queryParams = new URLSearchParams(search)
+    const trimmedSeed = seed.trim()
 
-    if (seed === '') {
+    if (trimmedSeed === '') {
       randomNumberService.unseedRandomNumber()
       queryParams.delete('seed')
 
       this.showNotification('Random seed reset', 'info')
     } else {
-      randomNumberService.seedRandomNumber(seed)
-      queryParams.set('seed', seed)
+      randomNumberService.seedRandomNumber(trimmedSeed)
+      queryParams.set('seed', trimmedSeed)
 
-      this.showNotification(`Random seed set to "${seed}"`, 'success')
+      this.showNotification(`Random seed set to "${trimmedSeed}"`, 'success')
     }
 
     const newQueryParams = queryParams.toString()
