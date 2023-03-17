@@ -2,6 +2,7 @@ import { toolType } from '../../enums'
 import { chooseRandom, doesInventorySpaceRemain } from '../../utils'
 import { INVENTORY_FULL_NOTIFICATION } from '../../strings'
 import { ResourceFactory } from '../../factories'
+import { random } from '../../common/utils'
 
 import { addItemToInventory } from './addItemToInventory'
 import { showNotification } from './showNotification'
@@ -41,9 +42,7 @@ export const minePlot = (state, x, y) => {
     // if ore was spawned, add up to 10 days to the time to clear
     // at random, based loosely on the spawnChance meant to make
     // rarer ores take longer to cooldown
-    daysUntilClear += Math.round(
-      Math.random() * (1 - spawnedOre.spawnChance) * 10
-    )
+    daysUntilClear += Math.round(random() * (1 - spawnedOre.spawnChance) * 10)
 
     for (let resource of spawnedResources) {
       state = addItemToInventory(state, resource)

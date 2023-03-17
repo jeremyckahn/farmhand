@@ -76,6 +76,7 @@ import {
   STORM_CHANCE,
   STORAGE_EXPANSION_SCALE_PREMIUM,
 } from './constants'
+import { random } from './common/utils'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -96,7 +97,7 @@ const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
  * @return {number}
  */
 export const chooseRandomIndex = list =>
-  Math.round(Math.random() * (list.length - 1))
+  Math.round(random() * (list.length - 1))
 
 /**
  * @param {Array.<*>} list
@@ -499,7 +500,7 @@ export const generateCow = (options = {}) => {
     COW_STARTING_WEIGHT_BASE *
       (gender === genders.MALE ? MALE_COW_WEIGHT_MULTIPLIER : 1) -
       COW_STARTING_WEIGHT_VARIANCE +
-      Math.random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
+      random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
   )
 
   const cow = {
@@ -1191,7 +1192,7 @@ export function randomChoice(weightedOptions) {
 
   sortedOptions.sort(o => o.weight)
 
-  let diceRoll = Math.random() * totalWeight
+  let diceRoll = random() * totalWeight
   let option
   let runningTotal = 0
 
@@ -1309,8 +1310,8 @@ export const isInViewport = element => {
   )
 }
 
-export const shouldPrecipitateToday = () => Math.random() < PRECIPITATION_CHANCE
-export const shouldStormToday = () => Math.random() < STORM_CHANCE
+export const shouldPrecipitateToday = () => random() < PRECIPITATION_CHANCE
+export const shouldStormToday = () => random() < STORM_CHANCE
 
 /**
  * @param {farmhand.cow} cow

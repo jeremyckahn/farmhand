@@ -16,6 +16,7 @@ import FileReaderInput from 'react-file-reader-input'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
+import { RandomSeedInput } from './RandomSeedInput'
 import './SettingsView.sass'
 
 const SettingsView = ({
@@ -47,6 +48,8 @@ const SettingsView = ({
           Save Game
         </Button>
       </div>
+      <Divider />
+      <RandomSeedInput />
       <Divider />
 
       <FormControl component="fieldset">

@@ -1,9 +1,9 @@
+import { random } from '../../common/utils'
 import { doesPlotContainCrop, isRandomNumberLessThan } from '../../utils'
 import { CROW_CHANCE, MAX_CROWS } from '../../constants'
 import { CROWS_DESTROYED } from '../../templates'
 
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
-
 import { fieldHasScarecrow } from './helpers'
 
 /**
@@ -47,12 +47,12 @@ export const applyCrows = state => {
 
   const numCrows = Math.min(
     plotsWithCrops.length,
-    Math.floor(Math.random() * (purchasedField + 1) * MAX_CROWS)
+    Math.floor(random() * (purchasedField + 1) * MAX_CROWS)
   )
   let numCropsDestroyed = 0
 
   for (let i = 0; i < numCrows; i++) {
-    const attackPlotId = Math.floor(Math.random() * plotsWithCrops.length)
+    const attackPlotId = Math.floor(random() * plotsWithCrops.length)
     const target = plotsWithCrops.splice(attackPlotId, 1)[0]
 
     state = modifyFieldPlotAt(state, target.x, target.y, () => null)

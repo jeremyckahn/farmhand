@@ -1,4 +1,5 @@
 import { saveAs } from 'file-saver'
+import window from 'global/window'
 
 import {
   moneyTotal,
@@ -21,6 +22,7 @@ import {
   plantInPlot,
   waterPlot,
 } from '../game-logic/reducers'
+import { randomNumberService } from '../common/services/randomNumber'
 
 const {
   CLEANUP,
@@ -468,5 +470,32 @@ export default {
 
   handleActivePlayerButtonClick() {
     this.openDialogView(dialogView.ONLINE_PEERS)
+  },
+
+  /**
+   * @param {string} seed
+   */
+  handleRNGSeedChange(seed) {
+    const { origin, pathname, search, hash } = window.location
+    const queryParams = new URLSearchParams(search)
+    const trimmedSeed = seed.trim()
+
+    if (trimmedSeed === '') {
+      randomNumberService.unseedRandomNumber()
+      queryParams.delete('seed')
+
+      this.showNotification('Random seed reset', 'info')
+    } else {
+      randomNumberService.seedRandomNumber(trimmedSeed)
+      queryParams.set('seed', trimmedSeed)
+
+      this.showNotification(`Random seed set to "${trimmedSeed}"`, 'success')
+    }
+
+    const newQueryParams = queryParams.toString()
+    const newSearch = newQueryParams.length > 0 ? `?${newQueryParams}` : ''
+
+    const newUrl = `${origin}${pathname}${newSearch}${hash}`
+    window.history.replaceState({}, '', newUrl)
   },
 }
