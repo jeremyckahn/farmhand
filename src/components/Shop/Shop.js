@@ -11,6 +11,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
+import { features } from '../../config'
 import {
   dollarString,
   getCostOfNextStorageExpansion,
@@ -183,20 +184,22 @@ export const Shop = ({
               }}
             />
           </li>
-          <li>
-            <TierPurchase
-              {...{
-                onBuyClick: handleCellarPurchase,
-                maxedOutPlaceholder:
-                  "You've purchased the largest cellar available!",
-                purchasedTier: purchasedCellar,
-                renderTierLabel: ({ space, price }) =>
-                  `${dollarString(price)}: Space for ${space} kegs`,
-                tiers: PURCHASEABLE_CELLARS,
-                title: 'Buy cellar',
-              }}
-            />
-          </li>
+          {features.KEGS ? (
+            <li>
+              <TierPurchase
+                {...{
+                  onBuyClick: handleCellarPurchase,
+                  maxedOutPlaceholder:
+                    "You've purchased the largest cellar available!",
+                  purchasedTier: purchasedCellar,
+                  renderTierLabel: ({ space, price }) =>
+                    `${dollarString(price)}: Space for ${space} kegs`,
+                  tiers: PURCHASEABLE_CELLARS,
+                  title: 'Buy cellar',
+                }}
+              />
+            </li>
+          ) : null}
           <li>
             <TierPurchase
               {...{
