@@ -62,6 +62,14 @@ export const PURCHASEABLE_COW_PENS = freeze(
   ])
 )
 
+export const PURCHASEABLE_CELLARS = freeze(
+  new Map([
+    [1, { space: 10, price: 250_000 }],
+    [2, { space: 20, price: 400_000 }],
+    [3, { space: 30, price: 500_000 }],
+  ])
+)
+
 // Buff/nerf chances
 export const CROW_CHANCE = 0.4
 export const MAX_CROWS = 5

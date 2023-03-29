@@ -269,6 +269,13 @@ export default {
     this.purchaseCowPen(cowPenId)
   },
 
+  /**
+   * @param {number} cellarId
+   */
+  handleCellarPurchase(cellarId) {
+    this.purchaseCellar(cellarId)
+  },
+
   handleStorageExpansionPurchase() {
     this.purchaseStorageExpansion()
   },
