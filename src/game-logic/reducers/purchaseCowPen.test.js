@@ -15,6 +15,6 @@ describe('purchaseCowPen', () => {
 
   test('deducts money', () => {
     const { money } = purchaseCowPen({ money: 1500 }, 1)
-    expect(money).toEqual(PURCHASEABLE_COW_PENS.get(1).price - 1500)
+    expect(money).toEqual(1500 - PURCHASEABLE_COW_PENS.get(1).price)
   })
 })
