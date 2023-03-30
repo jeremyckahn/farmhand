@@ -21,6 +21,7 @@ beforeEach(() => {
         money: 0,
         purchasedCombine: 0,
         purchasedCowPen: 0,
+        purchasedCellar: 0,
         purchasedSmelter: 0,
         purchasedField: 0,
         shopInventory: [],

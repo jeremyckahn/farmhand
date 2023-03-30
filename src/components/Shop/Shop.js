@@ -11,6 +11,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
+import { features } from '../../config'
 import {
   dollarString,
   getCostOfNextStorageExpansion,
@@ -22,6 +23,7 @@ import { items } from '../../img'
 import { itemType, toolType } from '../../enums'
 import {
   INFINITE_STORAGE_LIMIT,
+  PURCHASEABLE_CELLARS,
   PURCHASEABLE_COMBINES,
   PURCHASEABLE_COMPOSTERS,
   PURCHASEABLE_COW_PENS,
@@ -57,6 +59,7 @@ export const Shop = ({
   handleCombinePurchase,
   handleComposterPurchase,
   handleCowPenPurchase,
+  handleCellarPurchase,
   handleFieldPurchase,
   handleSmelterPurchase,
   handleStorageExpansionPurchase,
@@ -65,6 +68,7 @@ export const Shop = ({
   purchasedCombine,
   purchasedComposter,
   purchasedCowPen,
+  purchasedCellar,
   purchasedField,
   purchasedSmelter,
   shopInventory,
@@ -180,6 +184,22 @@ export const Shop = ({
               }}
             />
           </li>
+          {features.KEGS ? (
+            <li>
+              <TierPurchase
+                {...{
+                  onBuyClick: handleCellarPurchase,
+                  maxedOutPlaceholder:
+                    "You've purchased the largest cellar available!",
+                  purchasedTier: purchasedCellar,
+                  renderTierLabel: ({ space, price }) =>
+                    `${dollarString(price)}: Space for ${space} kegs`,
+                  tiers: PURCHASEABLE_CELLARS,
+                  title: 'Buy cellar',
+                }}
+              />
+            </li>
+          ) : null}
           <li>
             <TierPurchase
               {...{
@@ -237,11 +257,13 @@ export const Shop = ({
 Shop.propTypes = {
   handleCombinePurchase: func.isRequired,
   handleCowPenPurchase: func.isRequired,
+  handleCellarPurchase: func.isRequired,
   handleFieldPurchase: func.isRequired,
   handleStorageExpansionPurchase: func.isRequired,
   inventoryLimit: number.isRequired,
   money: number.isRequired,
   purchasedCowPen: number.isRequired,
+  purchasedCellar: number.isRequired,
   purchasedField: number.isRequired,
   purchasedSmelter: number.isRequired,
   purchasedCombine: number.isRequired,
