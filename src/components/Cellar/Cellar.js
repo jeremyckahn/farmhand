@@ -1,8 +1,7 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
 
 export const Cellar = () => {
-  return <Box className="Cellar"></Box>
+  return <div className="Cellar"></div>
 }
 
 Cellar.propTypes = {}
