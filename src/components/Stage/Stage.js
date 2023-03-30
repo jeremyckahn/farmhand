@@ -8,6 +8,7 @@ import Home from '../Home'
 import CowPen from '../CowPen'
 import Shop from '../Shop'
 import Workshop from '../Workshop'
+import { Cellar } from '../Cellar'
 import { stageFocusType } from '../../enums'
 import { isOctober, isDecember } from '../../utils'
 
@@ -54,6 +55,7 @@ export const Stage = ({ field, stageFocus, viewTitle }) => {
       {stageFocus === stageFocusType.SHOP && <Shop />}
       {stageFocus === stageFocusType.COW_PEN && <CowPen />}
       {stageFocus === stageFocusType.WORKSHOP && <Workshop />}
+      {stageFocus === stageFocusType.CELLAR && <Cellar />}
       <div {...{ className: 'spacer' }} />
     </div>
   )

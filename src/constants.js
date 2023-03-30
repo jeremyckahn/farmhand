@@ -122,6 +122,7 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.SHOP]: 'Shop',
   [stageFocusType.COW_PEN]: 'Cows',
   [stageFocusType.WORKSHOP]: 'Workshop',
+  [stageFocusType.CELLAR]: 'Cellar',
 }
 
 export const DAILY_FINANCIAL_HISTORY_RECORD_LENGTH = 7

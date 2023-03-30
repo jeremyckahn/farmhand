@@ -319,7 +319,7 @@ export default class Farmhand extends Component {
   }
 
   get viewList() {
-    const { COW_PEN, FIELD, HOME, WORKSHOP, SHOP } = stageFocusType
+    const { CELLAR, COW_PEN, FIELD, HOME, WORKSHOP, SHOP } = stageFocusType
     const viewList = [SHOP, FIELD]
 
     if (this.state.showHomeScreen) {
@@ -331,6 +331,10 @@ export default class Farmhand extends Component {
     }
 
     viewList.push(WORKSHOP)
+
+    if (this.state.purchasedCellar) {
+      viewList.push(CELLAR)
+    }
 
     return viewList
   }
