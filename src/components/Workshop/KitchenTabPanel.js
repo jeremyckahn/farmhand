@@ -13,12 +13,7 @@ import { recipeCategories } from '../../data/maps'
 import { TabPanel } from './TabPanel'
 import { RecipeList } from './RecipeList'
 
-export function KitchenTabPanel({
-  currentTab,
-  index,
-  learnedKitchenRecipes,
-  setCurrentTab,
-}) {
+export function KitchenTabPanel({ currentTab, index, learnedKitchenRecipes }) {
   return (
     <TabPanel value={currentTab} index={index}>
       <RecipeList
