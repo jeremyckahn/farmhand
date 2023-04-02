@@ -7,11 +7,10 @@ import Divider from '@material-ui/core/Divider'
 import ReactMarkdown from 'react-markdown'
 
 import { recipeType } from '../../enums'
-
 import { recipeCategories } from '../../data/maps'
+import { RecipeList } from '../RecipeList/RecipeList'
 
 import { TabPanel } from './TabPanel'
-import { RecipeList } from './RecipeList'
 
 export function KitchenTabPanel({ currentTab, index, learnedKitchenRecipes }) {
   return (

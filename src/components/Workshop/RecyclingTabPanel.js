@@ -7,18 +7,12 @@ import Divider from '@material-ui/core/Divider'
 import ReactMarkdown from 'react-markdown'
 
 import { recipeType } from '../../enums'
-
 import { recipeCategories } from '../../data/maps'
+import { RecipeList } from '../RecipeList/RecipeList'
 
 import { TabPanel } from './TabPanel'
-import { RecipeList } from './RecipeList'
 
-export function RecyclingTabPanel({
-  currentTab,
-  index,
-  learnedRecipes,
-  setCurrentTab,
-}) {
+export function RecyclingTabPanel({ currentTab, index, learnedRecipes }) {
   return (
     <TabPanel value={currentTab} index={index}>
       <RecipeList
