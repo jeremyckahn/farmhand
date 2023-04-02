@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { number, array, object } from 'prop-types'
 
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -68,9 +68,8 @@ export function ForgeTabPanel({
 }
 
 ForgeTabPanel.propTypes = {
-  currentTab: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
-  learnedForgeRecipes: PropTypes.array.isRequired,
-  setCurrentTab: PropTypes.func.isRequired,
-  toolLevels: PropTypes.object.isRequired,
+  currentTab: number.isRequired,
+  index: number.isRequired,
+  learnedForgeRecipes: array.isRequired,
+  toolLevels: object.isRequired,
 }
