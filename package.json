@@ -70,6 +70,7 @@
     "jimp": "^0.16.1",
     "jsdoc": "^3.5.5",
     "jsdom": "^16.2.1",
+    "markdown-table": "^2.0.0",
     "mprocs": "^0.6.4",
     "node-sass": "^8.0.0",
     "nodemon": "^2.0.2",
