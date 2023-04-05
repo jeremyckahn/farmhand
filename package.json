@@ -18,7 +18,7 @@
     "doc": "jsdoc -c .jsdoc -r src",
     "doc:view": "serve -S dist/doc",
     "doc:watch": "nodemon --exec \"npm run doc\" --watch src --watch ./ --ext js,md --ignore dist",
-    "generate-table:items": "npx -p @babel/core -p @babel/node babel-node --presets @babel/preset-env src/scripts/generate-item-table.js",
+    "print:crops": "npx -p @babel/core -p @babel/node babel-node --presets @babel/preset-env src/scripts/generate-crop-table.js",
     "lint": "eslint src --max-warnings=0",
     "prettier": "prettier 'src/**/*.js' --write",
     "preversion": "CI=true npm run test",
