@@ -32,7 +32,7 @@ const rows = []
  */
 const getCropRow = (level, seedItem, cropItem) => {
   return [
-    'Image to come',
+    `![${cropItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${cropItem.id}.png)`,
     cropItem.name,
     seedItem.name,
     level,
@@ -51,8 +51,6 @@ for (const level of levels) {
     const { growsInto } = item
 
     if (growsInto) {
-      console.log(id, item)
-
       const seedItem = item
       if (Array.isArray(growsInto)) {
         for (const cropItemId of growsInto) {
