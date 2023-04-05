@@ -1,3 +1,5 @@
+/** @typedef {import("../index").farmhand.item} farmhand.item */
+
 // Must be invoked with babel: https://stackoverflow.com/a/51532127/470685
 import markdownTable from 'markdown-table'
 
@@ -7,6 +9,22 @@ import { itemsMap } from '../data/maps'
 const headers = ['Image', 'Crop', 'Seed', 'Level unlock', 'Tier', 'Base value']
 
 const rows = []
+
+/**
+ * @param {number} level
+ * @param {farmhand.item} seedItem
+ * @param {farmhand.item} cropItem
+ */
+const getCropRow = (level, seedItem, cropItem) => {
+  return [
+    'Image to come',
+    cropItem.name,
+    seedItem.name,
+    level,
+    seedItem.tier,
+    `$${seedItem.value}`,
+  ]
+}
 
 for (const level of levels) {
   const { id, unlocksShopItem } = level
@@ -19,20 +37,17 @@ for (const level of levels) {
     if (growsInto) {
       console.log(id, item)
 
+      const seedItem = item
       if (Array.isArray(growsInto)) {
-        // FIMXE: Implement this
+        for (const cropItemId of growsInto) {
+          const cropItem = itemsMap[cropItemId]
+
+          rows.push(getCropRow(id, seedItem, cropItem))
+        }
       } else {
-        const seedItem = item
         const cropItem = itemsMap[growsInto]
 
-        rows.push([
-          'Image to come',
-          cropItem.name,
-          seedItem.name,
-          id,
-          seedItem.tier,
-          seedItem.value,
-        ])
+        rows.push(getCropRow(id, seedItem, cropItem))
       }
     }
   }
