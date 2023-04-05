@@ -15,6 +15,7 @@ beforeEach(() => {
       {...{
         handleCombinePurchase: () => {},
         handleCowPenPurchase: () => {},
+        handleCellarPurchase: () => {},
         handleFieldPurchase: () => {},
         handleStorageExpansionPurchase: () => {},
         inventoryLimit: INFINITE_STORAGE_LIMIT,
