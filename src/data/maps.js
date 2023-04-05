@@ -35,6 +35,7 @@ const {
 export const recipeCategories = {
   [recipeType.KITCHEN]: {},
   [recipeType.FORGE]: {},
+  [recipeType.FERMENTATION]: {},
   [recipeType.RECYCLING]: {},
 }
 

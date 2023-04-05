@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { number, array, object } from 'prop-types'
 
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -7,13 +7,11 @@ import Divider from '@material-ui/core/Divider'
 import ReactMarkdown from 'react-markdown'
 
 import { recipeType } from '../../enums'
-
 import { recipeCategories } from '../../data/maps'
-
 import UpgradePurchase from '../UpgradePurchase'
+import { RecipeList } from '../RecipeList/RecipeList'
 
 import { TabPanel } from './TabPanel'
-import { RecipeList } from './RecipeList'
 
 import { getUpgradesAvailable } from './getUpgradesAvailable'
 
@@ -21,7 +19,6 @@ export function ForgeTabPanel({
   currentTab,
   index,
   learnedForgeRecipes,
-  setCurrentTab,
   toolLevels,
 }) {
   const upgradesAvailable = getUpgradesAvailable({
@@ -71,9 +68,8 @@ export function ForgeTabPanel({
 }
 
 ForgeTabPanel.propTypes = {
-  currentTab: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
-  learnedForgeRecipes: PropTypes.array.isRequired,
-  setCurrentTab: PropTypes.func.isRequired,
-  toolLevels: PropTypes.object.isRequired,
+  currentTab: number.isRequired,
+  index: number.isRequired,
+  learnedForgeRecipes: array.isRequired,
+  toolLevels: object.isRequired,
 }
