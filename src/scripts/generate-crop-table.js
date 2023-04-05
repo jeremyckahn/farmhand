@@ -6,7 +6,22 @@ import markdownTable from 'markdown-table'
 import { levels } from '../data/levels.js'
 import { itemsMap } from '../data/maps'
 
-const headers = ['Image', 'Crop', 'Seed', 'Level unlock', 'Tier', 'Base value']
+const getDaysToMature = seedItem => {
+  return Object.values(seedItem.cropTimetable).reduce(
+    (days, acc) => days + acc,
+    0
+  )
+}
+
+const headers = [
+  'Image',
+  'Crop',
+  'Seed',
+  'Level unlock',
+  'Base value',
+  'Days to mature',
+  'Tier',
+]
 
 const rows = []
 
@@ -21,8 +36,9 @@ const getCropRow = (level, seedItem, cropItem) => {
     cropItem.name,
     seedItem.name,
     level,
-    seedItem.tier,
     `$${seedItem.value}`,
+    getDaysToMature(seedItem),
+    seedItem.tier,
   ]
 }
 
