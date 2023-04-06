@@ -1,4 +1,5 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
+/** @typedef {import("../index").farmhand.cropVariety} farmhand.cropVariety */
 
 // Must be invoked with babel: https://stackoverflow.com/a/51532127/470685
 import markdownTable from 'markdown-table'
@@ -11,6 +12,18 @@ const getDaysToMature = seedItem => {
     (days, acc) => days + acc,
     0
   )
+}
+
+/**
+ * @param {farmhand.item} seedItem
+ * @param {(farmhand.item|farmhand.cropVariety)} cropItem
+ */
+function getItemImage(seedItem, cropItem) {
+  if (Array.isArray(seedItem.growsInto)) {
+    return `![${cropItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${cropItem.imageId}.png)`
+  } else {
+    return `![${cropItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${cropItem.id}.png)`
+  }
 }
 
 const headers = [
@@ -32,7 +45,7 @@ const rows = []
  */
 const getCropRow = (level, seedItem, cropItem) => {
   return [
-    `![${cropItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${cropItem.id}.png)`,
+    getItemImage(seedItem, cropItem),
     cropItem.name,
     seedItem.name,
     level,
