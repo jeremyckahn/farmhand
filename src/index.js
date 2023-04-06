@@ -32,6 +32,12 @@
  */
 
 /**
+ * @typedef farmhand.cropVariety
+ * @type {farmhand.item}
+ * @property {string} imageId
+ */
+
+/**
  * This is a minimalist base type to be inherited and expanded on by types like
  * farmhand.crop. This also represents non-crop plot content like scarecrows
  * and sprinklers.
