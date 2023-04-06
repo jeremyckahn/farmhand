@@ -18,7 +18,7 @@ const getDaysToMature = seedItem => {
  * @param {farmhand.item} seedItem
  * @param {(farmhand.item|farmhand.cropVariety)} cropItem
  */
-function getItemImage(seedItem, cropItem) {
+function getCropImage(seedItem, cropItem) {
   if (Array.isArray(seedItem.growsInto)) {
     return `![${cropItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${cropItem.imageId}.png)`
   } else {
@@ -26,11 +26,17 @@ function getItemImage(seedItem, cropItem) {
   }
 }
 
+/**
+ * @param {farmhand.item} seedItem
+ */
+function getSeedImage(seedItem) {
+  return `![${seedItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${seedItem.id}.png)`
+}
+
 const headers = [
-  'Image',
   'Crop',
   'Seed',
-  'Level unlock',
+  'Unlocked at level',
   'Base value',
   'Days to mature',
   'Tier',
@@ -45,9 +51,8 @@ const rows = []
  */
 const getCropRow = (level, seedItem, cropItem) => {
   return [
-    getItemImage(seedItem, cropItem),
-    cropItem.name,
-    seedItem.name,
+    `${getCropImage(seedItem, cropItem)} ${cropItem.name}`,
+    `${getSeedImage(seedItem)} ${seedItem.name}`,
     level,
     `$${seedItem.value}`,
     getDaysToMature(seedItem),
