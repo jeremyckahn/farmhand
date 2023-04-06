@@ -16,9 +16,9 @@ import {
   integerString,
   isCowInBreedingPen,
   memoize,
-  moneyString,
   nullArray,
 } from '../../../utils'
+import { moneyString } from '../../../utils/moneyString'
 import { huggingMachine } from '../../../data/items'
 import Bloodline from '../Bloodline'
 

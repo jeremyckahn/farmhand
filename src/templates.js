@@ -9,8 +9,8 @@ import {
   getCowDisplayName,
   getRandomLevelUpRewardQuantity,
   integerString,
-  moneyString,
 } from './utils'
+import { moneyString } from './utils/moneyString'
 
 import { itemUnlockLevels, levels } from './data/levels'
 import { itemsMap } from './data/maps'

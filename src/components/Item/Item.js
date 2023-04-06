@@ -23,9 +23,9 @@ import {
   getItemCurrentValue,
   getResaleValue,
   getSalePriceMultiplier,
-  moneyString,
   integerString,
 } from '../../utils'
+import { moneyString } from '../../utils/moneyString'
 import QuantityInput from '../QuantityInput'
 import AnimatedNumber from '../AnimatedNumber'
 

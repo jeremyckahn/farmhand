@@ -203,13 +203,6 @@ export const createNewField = () =>
 
 /**
  * @param {number} number
- * @returns {string} Include dollar sign and other formatting, as well as cents.
- */
-export const moneyString = number =>
-  Dinero({ amount: Math.round(number * 100) }).toFormat()
-
-/**
- * @param {number} number
  * @param {string} format
  * @see https://dinerojs.com/module-dinero#~toFormat
  * @returns {string}

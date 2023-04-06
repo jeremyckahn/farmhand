@@ -57,7 +57,6 @@ import {
   isItemAFarmProduct,
   levelAchieved,
   maxYieldOfRecipe,
-  moneyString,
   moneyTotal,
   percentageString,
   randomChoice,
@@ -92,12 +91,6 @@ describe('castToMoney', () => {
 
   test('rounds down', () => {
     expect(castToMoney(1.234)).toEqual(1.23)
-  })
-})
-
-describe('moneyString', () => {
-  test('formats number to dollar string', () => {
-    expect(moneyString(1234.567)).toEqual('$1,234.57')
   })
 })
 

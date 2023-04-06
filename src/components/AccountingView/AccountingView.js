@@ -9,7 +9,8 @@ import NumberFormat from 'react-number-format'
 import { func, number } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import { dollarString, moneyString, moneyTotal } from '../../utils'
+import { dollarString, moneyTotal } from '../../utils'
+import { moneyString } from '../../utils/moneyString'
 import {
   STANDARD_LOAN_AMOUNT,
   LOAN_INTEREST_RATE,

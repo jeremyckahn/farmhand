@@ -20,9 +20,9 @@ import {
   getProfitRecord,
   integerString,
   levelAchieved,
-  moneyString,
   moneyTotal,
 } from '../../utils'
+import { moneyString } from '../../utils/moneyString'
 import {
   COW_SOLD_TOOLTIP_TEXT,
   FARM_PRODUCTS_TOOLTIP_TEXT,

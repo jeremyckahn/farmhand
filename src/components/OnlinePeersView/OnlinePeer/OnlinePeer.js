@@ -11,8 +11,8 @@ import {
   farmProductsSold,
   integerString,
   levelAchieved,
-  moneyString,
 } from '../../../utils'
+import { moneyString } from '../../../utils/moneyString'
 
 import './OnlinePeer.sass'
 

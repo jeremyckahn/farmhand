@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import StepIcon from '@material-ui/core/StepIcon'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import { moneyString } from '../../utils'
+import { moneyString } from '../../utils/moneyString'
 import './AppBar.sass'
 
 const MoneyDisplay = ({ money }) => {
