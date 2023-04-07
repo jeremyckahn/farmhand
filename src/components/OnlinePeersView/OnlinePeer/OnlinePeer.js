@@ -6,12 +6,12 @@ import CardHeader from '@material-ui/core/CardHeader'
 
 import CowCard from '../../CowCard'
 
+import { moneyString } from '../../../utils/moneyString'
 import {
   getPlayerName,
   farmProductsSold,
   integerString,
   levelAchieved,
-  moneyString,
 } from '../../../utils'
 
 import './OnlinePeer.sass'

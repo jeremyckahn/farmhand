@@ -1,3 +1,30 @@
+import { testCrop } from '../test-utils'
+import { items as itemImages, animals } from '../img'
+import { cowColors, cropLifeStage, genders, standardCowColors } from '../enums'
+import {
+  sampleCropItem1,
+  sampleCropSeedsItem1,
+  craftedItem1,
+  sampleItem1,
+  sampleFieldTool1,
+  milk1,
+} from '../data/items'
+import {
+  COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
+  COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+  COW_MAXIMUM_VALUE_MATURITY_AGE,
+  COW_MAXIMUM_VALUE_MULTIPLIER,
+  COW_MILK_RATE_FASTEST,
+  COW_MILK_RATE_SLOWEST,
+  COW_MINIMUM_VALUE_MULTIPLIER,
+  COW_STARTING_WEIGHT_BASE,
+  COW_STARTING_WEIGHT_VARIANCE,
+  COW_WEIGHT_MULTIPLIER_MAXIMUM,
+  COW_WEIGHT_MULTIPLIER_MINIMUM,
+  I_AM_RICH_BONUSES,
+  MALE_COW_WEIGHT_MULTIPLIER,
+} from '../constants'
+
 import {
   canMakeRecipe,
   castToMoney,
@@ -30,43 +57,16 @@ import {
   isItemAFarmProduct,
   levelAchieved,
   maxYieldOfRecipe,
-  moneyString,
   moneyTotal,
   percentageString,
   randomChoice,
-} from './utils'
-import { testCrop } from './test-utils'
-import { items as itemImages, animals } from './img'
-import { cowColors, cropLifeStage, genders, standardCowColors } from './enums'
-import {
-  sampleCropItem1,
-  sampleCropSeedsItem1,
-  craftedItem1,
-  sampleItem1,
-  sampleFieldTool1,
-  milk1,
-} from './data/items'
-import {
-  COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
-  COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
-  COW_MAXIMUM_VALUE_MATURITY_AGE,
-  COW_MAXIMUM_VALUE_MULTIPLIER,
-  COW_MILK_RATE_FASTEST,
-  COW_MILK_RATE_SLOWEST,
-  COW_MINIMUM_VALUE_MULTIPLIER,
-  COW_STARTING_WEIGHT_BASE,
-  COW_STARTING_WEIGHT_VARIANCE,
-  COW_WEIGHT_MULTIPLIER_MAXIMUM,
-  COW_WEIGHT_MULTIPLIER_MINIMUM,
-  I_AM_RICH_BONUSES,
-  MALE_COW_WEIGHT_MULTIPLIER,
-} from './constants'
+} from './index'
 
-jest.mock('./data/maps')
-jest.mock('./data/items')
-jest.mock('./data/levels')
-jest.mock('./data/shop-inventory')
-jest.mock('./img')
+jest.mock('../data/maps')
+jest.mock('../data/items')
+jest.mock('../data/levels')
+jest.mock('../data/shop-inventory')
+jest.mock('../img')
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
@@ -91,12 +91,6 @@ describe('castToMoney', () => {
 
   test('rounds down', () => {
     expect(castToMoney(1.234)).toEqual(1.23)
-  })
-})
-
-describe('moneyString', () => {
-  test('formats number to dollar string', () => {
-    expect(moneyString(1234.567)).toEqual('$1,234.57')
   })
 })
 
@@ -804,7 +798,7 @@ describe('getLevelEntitlements', () => {
 
   beforeEach(() => {
     jest.resetModules()
-    jest.mock('./data/levels', () => ({
+    jest.mock('../data/levels', () => ({
       levels: [
         { id: 0 },
         { id: 1 },
@@ -817,7 +811,7 @@ describe('getLevelEntitlements', () => {
       ],
     }))
 
-    entitlements = jest.requireActual('./utils').getLevelEntitlements(5)
+    entitlements = jest.requireActual('./index').getLevelEntitlements(5)
   })
 
   test('calculates level entitlements', () => {
@@ -837,12 +831,12 @@ describe('getLevelEntitlements', () => {
 describe('getAvailableShopInventory', () => {
   test('computes shop inventory that has been unlocked', () => {
     jest.resetModules()
-    jest.mock('./data/shop-inventory', () => [
+    jest.mock('../data/shop-inventory', () => [
       { id: 'sample-item-1' },
       { id: 'sample-item-2' },
     ])
 
-    jest.mock('./data/levels', () => ({
+    jest.mock('../data/levels', () => ({
       levels: [],
       unlockableItems: {
         'sample-item-1': true,
@@ -850,7 +844,7 @@ describe('getAvailableShopInventory', () => {
       },
     }))
 
-    const { getAvailableShopInventory } = jest.requireActual('./utils')
+    const { getAvailableShopInventory } = jest.requireActual('./index')
 
     expect(
       getAvailableShopInventory({ items: { 'sample-item-1': true } })
@@ -861,14 +855,14 @@ describe('getAvailableShopInventory', () => {
 describe('getRandomLevelUpReward', () => {
   test('returns a crop item', () => {
     jest.resetModules()
-    jest.mock('./data/levels', () => ({
+    jest.mock('../data/levels', () => ({
       levels: [{ id: 0, unlocksShopItem: 'sample-crop-item-1' }],
       unlockableItems: {
         'sample-crop-item-1': true,
         'sample-crop-item-2': true,
       },
     }))
-    jest.mock('./data/maps', () => ({
+    jest.mock('../data/maps', () => ({
       itemsMap: {
         'sample-crop-item-1': {
           id: 'sample-crop-item-1',
@@ -879,7 +873,7 @@ describe('getRandomLevelUpReward', () => {
     }))
     jest.spyOn(Math, 'random').mockReturnValue(0)
 
-    expect(jest.requireActual('./utils').getRandomLevelUpReward(2)).toEqual({
+    expect(jest.requireActual('./index').getRandomLevelUpReward(2)).toEqual({
       id: 'sample-crop-item-1',
       name: 'crop 1',
       type: 'CROP',

@@ -12,6 +12,7 @@ import sortBy from 'lodash.sortby'
 
 import { itemsMap } from '../../data/maps'
 import FarmhandContext from '../Farmhand/Farmhand.context'
+import { moneyString } from '../../utils/moneyString'
 import {
   farmProductSalesVolumeNeededForLevel,
   farmProductsSold,
@@ -20,7 +21,6 @@ import {
   getProfitRecord,
   integerString,
   levelAchieved,
-  moneyString,
   moneyTotal,
 } from '../../utils'
 import {

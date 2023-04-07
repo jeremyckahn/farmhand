@@ -5,15 +5,14 @@
  * @ignore
  */
 
+import { itemUnlockLevels, levels } from './data/levels'
+import { itemsMap } from './data/maps'
+import { moneyString } from './utils/moneyString'
 import {
   getCowDisplayName,
   getRandomLevelUpRewardQuantity,
   integerString,
-  moneyString,
 } from './utils'
-
-import { itemUnlockLevels, levels } from './data/levels'
-import { itemsMap } from './data/maps'
 
 /**
  * @param {farmhand.crop} crop

@@ -1,6 +1,6 @@
-/** @typedef {import("./index").farmhand.crop} farmhand.crop */
-/** @typedef {import("./index").farmhand.item} farmhand.item */
-/** @typedef {import("./index").farmhand.plotContent} farmhand.plotContent */
+/** @typedef {import("../index").farmhand.crop} farmhand.crop */
+/** @typedef {import("../index").farmhand.item} farmhand.item */
+/** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
 
 /**
  * @module farmhand.utils
@@ -17,10 +17,10 @@ import sortBy from 'lodash.sortby'
 import { v4 as uuid } from 'uuid'
 import { funAnimalName } from 'fun-animal-names'
 
-import cowShopInventory from './data/shop-inventory-cow'
-import shopInventory from './data/shop-inventory'
-import fruitNames from './data/fruit-names'
-import { cropItemIdToSeedItemMap, itemsMap } from './data/maps'
+import cowShopInventory from '../data/shop-inventory-cow'
+import shopInventory from '../data/shop-inventory'
+import fruitNames from '../data/fruit-names'
+import { cropItemIdToSeedItemMap, itemsMap } from '../data/maps'
 import {
   chocolateMilk,
   milk1,
@@ -29,10 +29,10 @@ import {
   rainbowMilk1,
   rainbowMilk2,
   rainbowMilk3,
-} from './data/items'
-import { levels } from './data/levels'
-import { unlockableItems } from './data/levels'
-import { items as itemImages, animals, pixel } from './img'
+} from '../data/items'
+import { levels } from '../data/levels'
+import { unlockableItems } from '../data/levels'
+import { items as itemImages, animals, pixel } from '../img'
 import {
   cowColors,
   cropLifeStage,
@@ -42,7 +42,7 @@ import {
   stageFocusType,
   standardCowColors,
   toolLevel,
-} from './enums'
+} from '../enums'
 import {
   BREAKPOINTS,
   COW_COLORS_HEX_MAP,
@@ -75,8 +75,8 @@ import {
   STORAGE_EXPANSION_BASE_PRICE,
   STORM_CHANCE,
   STORAGE_EXPANSION_SCALE_PREMIUM,
-} from './constants'
-import { random } from './common/utils'
+} from '../constants'
+import { random } from '../common/utils'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -200,13 +200,6 @@ export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
     .fill(undefined)
     .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null))
-
-/**
- * @param {number} number
- * @returns {string} Include dollar sign and other formatting, as well as cents.
- */
-export const moneyString = number =>
-  Dinero({ amount: Math.round(number * 100) }).toFormat()
 
 /**
  * @param {number} number
@@ -1331,5 +1324,5 @@ export const isOctober = () => new Date().getMonth() === 9
  */
 export const isDecember = () => new Date().getMonth() === 11
 
-export { default as isRandomNumberLessThan } from './utils/isRandomNumberLessThan'
-export { default as totalIngredientsInRecipe } from './utils/totalIngredientsInRecipe'
+export { default as isRandomNumberLessThan } from './isRandomNumberLessThan'
+export { default as totalIngredientsInRecipe } from './totalIngredientsInRecipe'

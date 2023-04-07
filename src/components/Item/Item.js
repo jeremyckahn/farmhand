@@ -15,6 +15,7 @@ import FarmhandContext from '../Farmhand/Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
 import { itemIds as shopItemIds } from '../../data/shop-inventory'
+import { moneyString } from '../../utils/moneyString'
 import {
   inventorySpaceRemaining,
   isItemSoldInShop,
@@ -23,7 +24,6 @@ import {
   getItemCurrentValue,
   getResaleValue,
   getSalePriceMultiplier,
-  moneyString,
   integerString,
 } from '../../utils'
 import QuantityInput from '../QuantityInput'

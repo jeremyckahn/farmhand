@@ -12,12 +12,12 @@ import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { features } from '../../config'
+import { moneyString } from '../../utils/moneyString'
 import {
   dollarString,
   getCostOfNextStorageExpansion,
   integerString,
   memoize,
-  moneyString,
 } from '../../utils'
 import { items } from '../../img'
 import { itemType, toolType } from '../../enums'
