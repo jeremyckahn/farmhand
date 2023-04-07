@@ -87,4 +87,5 @@ for (const level of levels) {
 }
 
 const table = markdownTable([headers, ...rows])
+
 console.log(table)

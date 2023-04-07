@@ -10,6 +10,7 @@ import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons'
 
 import { COW_COLOR_NAMES } from '../../../strings'
 import { genders } from '../../../enums'
+import { moneyString } from '../../../utils/moneyString'
 import {
   getCowWeight,
   getPlayerName,
@@ -18,7 +19,6 @@ import {
   memoize,
   nullArray,
 } from '../../../utils'
-import { moneyString } from '../../../utils/moneyString'
 import { huggingMachine } from '../../../data/items'
 import Bloodline from '../Bloodline'
 
