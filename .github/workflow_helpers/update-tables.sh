@@ -19,4 +19,6 @@ if [[ `git status --short | wc -l` > 0 ]]; then
   git add Crops.md
   git commit -m "Update tables"
   git push origin master
+else
+  echo "No table changes were made. Skipping wiki update."
 fi
