@@ -1,6 +1,8 @@
 # https://spinscale.de/posts/2021-10-29-github-actions-updating-github-wiki-after-edit.html
 name: Update Wiki
 
+# TODO: Consider rolling this into run-release.yml
+
 on:
   workflow_dispatch:
   push:

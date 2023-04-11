@@ -13,8 +13,10 @@ npm run --silent print:crops > Crops.md
 
 echo "Updated Crops.md"
 
-git config --global user.email "github-actions@users.noreply.github.com"
-git config --global user.name "github-actions[bot]"
-git add Crops.md
-git commit -m "Update tables"
-git push origin master
+if [[ `git status --short | wc -l` > 0 ]]; then
+  git config --global user.email "github-actions@users.noreply.github.com"
+  git config --global user.name "github-actions[bot]"
+  git add Crops.md
+  git commit -m "Update tables"
+  git push origin master
+fi
