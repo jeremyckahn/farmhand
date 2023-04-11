@@ -1,0 +1,29 @@
+# https://spinscale.de/posts/2021-10-29-github-actions-updating-github-wiki-after-edit.html
+name: Update Wiki
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+      - 'feature/automatically-update-tables'
+
+jobs:
+  update_wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - name: Check out wiki
+        uses: actions/checkout@v3
+        with:
+          repository: 'jeremyckahn/farmhand.wiki'
+          ref: 'master'
+          path: 'farmhand.wiki'
+      - name: Update tables
+        working-directory: ./.github/workflow_helpers
+        run: |
+          ./update-tables.sh $GITHUB_WORKSPACE/farmhand.wiki
