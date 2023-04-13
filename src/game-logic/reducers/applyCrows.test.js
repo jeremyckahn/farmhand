@@ -5,10 +5,6 @@ import { randomNumberService } from '../../common/services/randomNumber'
 
 import { applyCrows, forEachPlot } from './applyCrows'
 
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
-}))
-
 const CARROT = 'carrot'
 
 beforeEach(() => {
