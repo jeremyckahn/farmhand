@@ -14,6 +14,16 @@ import CoalFactory from './CoalFactory'
 import StoneFactory from './StoneFactory'
 
 /**
+ * Object for private cache of factory instances
+ */
+const factoryInstances = {}
+
+/**
+ * Var for caching reference to instance of ResourceFactory
+ */
+let instance = null
+
+/**
  * Used for spawning mined resources
  * @constructor
  */
@@ -27,28 +37,16 @@ export default class ResourceFactory {
   }
 
   /**
-   * Object for internal cache of factory instances
-   * @static
-   */
-  static _factoryInstances = {}
-
-  /**
-   * Var for caching reference to instance of ResourceFactory
-   * @static
-   */
-  static _instance = null
-
-  /**
    * Retrieve a reusable instance of ResourceFactory
    * @returns {ResourceFactory}
    * @static
    */
   static instance() {
-    if (!ResourceFactory._instance) {
-      ResourceFactory._instance = new ResourceFactory()
+    if (!instance) {
+      instance = new ResourceFactory()
     }
 
-    return ResourceFactory._instance
+    return instance
   }
 
   /**
@@ -81,13 +79,11 @@ export default class ResourceFactory {
    * @static
    */
   static getFactoryForItemType = type => {
-    if (!ResourceFactory._factoryInstances[type]) {
-      ResourceFactory._factoryInstances[
-        type
-      ] = ResourceFactory.generateFactoryInstance(type)
+    if (!factoryInstances[type]) {
+      factoryInstances[type] = ResourceFactory.generateFactoryInstance(type)
     }
 
-    return ResourceFactory._factoryInstances[type]
+    return factoryInstances[type]
   }
 
   /**
