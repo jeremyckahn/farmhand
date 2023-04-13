@@ -8,6 +8,8 @@ import { addItemToInventory } from './addItemToInventory'
 import { showNotification } from './showNotification'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 
+const daysUntilClearPeriods = [1, 2, 2, 3]
+
 /**
  * @param {farmhand.state} state
  * @param {number} x
@@ -32,7 +34,7 @@ export const minePlot = (state, x, y) => {
     shovelLevel
   )
   let spawnedOre = null
-  let daysUntilClear = chooseRandom([1, 2, 2, 3])
+  let daysUntilClear = chooseRandom(daysUntilClearPeriods)
 
   if (spawnedResources.length) {
     // even when multiple resources are spawned, the first one is ok to use

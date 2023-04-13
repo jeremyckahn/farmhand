@@ -1,14 +1,19 @@
-import { findInField, isRandomNumberLessThan } from '../../utils'
+import { findInField } from '../../utils'
 import { MAX_CROWS, SCARECROW_ITEM_ID } from '../../constants'
+
+import { randomNumberService } from '../../common/services/randomNumber'
 
 import { applyCrows, forEachPlot } from './applyCrows'
 
 jest.mock('../../utils', () => ({
   ...jest.requireActual('../../utils'),
-  isRandomNumberLessThan: jest.fn(),
 }))
 
 const CARROT = 'carrot'
+
+beforeEach(() => {
+  jest.spyOn(randomNumberService, 'isRandomNumberLessThan')
+})
 
 describe('applyCrows', () => {
   let state
@@ -38,7 +43,7 @@ describe('applyCrows', () => {
     })
 
     it('does not modify plots if rng fails', () => {
-      isRandomNumberLessThan.mockReturnValue(true)
+      randomNumberService.isRandomNumberLessThan.mockReturnValue(true)
       const newState = applyCrows(state)
 
       expect(newState.field).toEqual(state.field)
@@ -54,7 +59,7 @@ describe('applyCrows', () => {
 
   describe('crows spawned', () => {
     beforeEach(() => {
-      isRandomNumberLessThan.mockReturnValue(false)
+      randomNumberService.isRandomNumberLessThan.mockReturnValue(false)
       Math.random.mockReturnValueOnce(1) // spawn max amount of crows
     })
 

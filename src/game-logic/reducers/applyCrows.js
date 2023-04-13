@@ -1,7 +1,9 @@
 import { random } from '../../common/utils'
-import { doesPlotContainCrop, isRandomNumberLessThan } from '../../utils'
+import { doesPlotContainCrop } from '../../utils'
 import { CROW_CHANCE, MAX_CROWS } from '../../constants'
 import { CROWS_DESTROYED } from '../../templates'
+
+import { randomNumberService } from '../../common/services/randomNumber'
 
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'
 import { fieldHasScarecrow } from './helpers'
@@ -30,7 +32,10 @@ export function forEachPlot(state, callback) {
 export const applyCrows = state => {
   const { field, purchasedField } = state
 
-  if (fieldHasScarecrow(field) || isRandomNumberLessThan(1 - CROW_CHANCE)) {
+  if (
+    fieldHasScarecrow(field) ||
+    randomNumberService.isRandomNumberLessThan(1 - CROW_CHANCE)
+  ) {
     return state
   }
 
@@ -39,7 +44,7 @@ export const applyCrows = state => {
   let notificationMessages = []
   const plotsWithCrops = []
 
-  forEachPlot(state, (plotContents, x, y) => {
+  forEachPlot(state, (_plotContents, x, y) => {
     if (doesPlotContainCrop(state.field[y][x])) {
       plotsWithCrops.push({ x, y })
     }

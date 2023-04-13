@@ -1324,5 +1324,4 @@ export const isOctober = () => new Date().getMonth() === 9
  */
 export const isDecember = () => new Date().getMonth() === 11
 
-export { default as isRandomNumberLessThan } from './isRandomNumberLessThan'
 export { default as totalIngredientsInRecipe } from './totalIngredientsInRecipe'

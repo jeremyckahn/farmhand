@@ -35,6 +35,16 @@ export class RandomNumberService {
   unseedRandomNumber() {
     this.seededRandom = null
   }
+
+  /**
+   * Compares given number against a randomly generated number.
+   * @param {number} chance Float between 0-1 to compare dice roll against.
+   * @returns {boolean} True if the dice roll was equal to or lower than the
+   * given chance, false otherwise.
+   */
+  isRandomNumberLessThan(chance) {
+    return this.generateRandomNumber() <= chance
+  }
 }
 
 export const randomNumberService = new RandomNumberService()

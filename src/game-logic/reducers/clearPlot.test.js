@@ -1,13 +1,12 @@
 import { testCrop } from '../../test-utils'
 import { toolType, toolLevel } from '../../enums'
-import { getPlotContentFromItemId, isRandomNumberLessThan } from '../../utils'
-
+import { getPlotContentFromItemId } from '../../utils'
 import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { randomNumberService } from '../../common/services/randomNumber'
 
 import { clearPlot } from './clearPlot'
 
 jest.mock('../../data/maps')
-jest.mock('../../utils/isRandomNumberLessThan')
 
 describe('clearPlot', () => {
   describe('plotContent is a crop', () => {
@@ -115,7 +114,9 @@ describe('clearPlot', () => {
 
   describe('hoe upgrades', () => {
     beforeEach(() => {
-      isRandomNumberLessThan.mockReturnValue(true)
+      jest
+        .spyOn(randomNumberService, 'isRandomNumberLessThan')
+        .mockReturnValue(true)
     })
 
     describe('crop is not fully grown', () => {
