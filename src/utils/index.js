@@ -1223,7 +1223,7 @@ const colorizeCowTemplate = (() => {
   /**
    * @param {string} cowTemplate Base64 representation of an image
    * @param {string} color
-   * @returns {string} Base64 representation of an image
+   * @returns {Promise.<string>} Base64 representation of an image
    */
   return async (cowTemplate, color) => {
     if (color === cowColors.RAINBOW) return animals.cow.rainbow
