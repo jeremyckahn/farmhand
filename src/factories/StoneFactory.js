@@ -1,5 +1,9 @@
-import { coal, stone } from '../data/ores'
-import { COAL_SPAWN_CHANCE } from '../constants'
+import { coal, saltRock, stone } from '../data/ores'
+import {
+  COAL_SPAWN_CHANCE,
+  SALT_ROCK_SPAWN_CHANCE,
+  STONE_SPAWN_CHANCE,
+} from '../constants'
 import { randomNumberService } from '../common/services/randomNumber'
 
 /**
@@ -14,7 +18,13 @@ export default class StoneFactory {
   generate() {
     let resources = []
 
-    resources.push(this.spawnStone())
+    if (randomNumberService.isRandomNumberLessThan(STONE_SPAWN_CHANCE)) {
+      resources.push(this.spawnStone())
+    }
+
+    if (randomNumberService.isRandomNumberLessThan(SALT_ROCK_SPAWN_CHANCE)) {
+      resources.push(this.spawnSaltRock())
+    }
 
     if (randomNumberService.isRandomNumberLessThan(COAL_SPAWN_CHANCE)) {
       resources.push(this.spawnCoal())
@@ -25,7 +35,7 @@ export default class StoneFactory {
 
   /**
    * Spawn a piece of stone
-   * @returns {Object} stone item
+   * @returns {farmhand.module:items.stone} Stone item
    * @private
    */
   spawnStone() {
@@ -33,8 +43,17 @@ export default class StoneFactory {
   }
 
   /**
+   * Spawn a piece of stone
+   * @returns {farmhand.module:items.saltRock} Salt Rock item
+   * @private
+   */
+  spawnSaltRock() {
+    return saltRock
+  }
+
+  /**
    * Spawn a piece of coal
-   * @returns {Object} coal item
+   * @returns {farmhand.module:items.coal} Coal item
    * @private
    */
   spawnCoal() {

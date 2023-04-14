@@ -218,7 +218,8 @@ export const RESOURCE_SPAWN_CHANCE = 0.3
 // todo: migrate these to an object called RESOURCE_SPAWN_CHANCES once reducers is refactored
 export const ORE_SPAWN_CHANCE = 0.25
 export const COAL_SPAWN_CHANCE = 0.15
-export const STONE_SPAWN_CHANCE = 0.6
+export const STONE_SPAWN_CHANCE = 0.4
+export const SALT_ROCK_SPAWN_CHANCE = 0.3
 
 // if spawning ore, which kind?
 // note: these values end up being used relative to each other
