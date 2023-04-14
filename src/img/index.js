@@ -138,6 +138,7 @@ import wateringCan from './tools/watering-can.png'
 // Mined resources
 import coal from './ores/coal.png'
 import stone from './ores/stone.png'
+import saltRock from './ores/salt-rock.png'
 import bronzeOre from './ores/bronze-ore.png'
 import bronzeIngot from './ores/bronze-ingot.png'
 import ironOre from './ores/iron-ore.png'
@@ -319,6 +320,7 @@ export const items = {
   // Ores
   coal,
   stone,
+  'salt-rock': saltRock,
   'bronze-ore': bronzeOre,
   'iron-ore': ironOre,
   'silver-ore': silverOre,
