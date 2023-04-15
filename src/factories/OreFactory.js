@@ -1,3 +1,4 @@
+/** @typedef {import("../index").farmhand.item} farmhand.item */
 import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores'
 import { randomChoice } from '../utils'
 
@@ -20,7 +21,7 @@ export default class OreFactory {
 
   /**
    * Generate resources
-   * @returns {Array} an array of ore resources
+   * @returns {Array.<farmhand.item>} an array of ore resources
    */
   generate() {
     return [this.spawn()]

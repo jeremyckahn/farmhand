@@ -1,3 +1,4 @@
+/** @typedef {import("../../index").farmhand.item} farmhand.item */
 import { itemType } from '../../enums'
 import { STONE_SPAWN_CHANCE } from '../../constants'
 

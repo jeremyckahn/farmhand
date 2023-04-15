@@ -1,3 +1,4 @@
+/** @typedef {import("../index").farmhand.item} farmhand.item */
 import { itemType, toolLevel } from '../enums'
 import {
   RESOURCE_SPAWN_CHANCE,
@@ -88,7 +89,7 @@ export default class ResourceFactory {
 
   /**
    * Use dice roll and resource factories to generate resources at random
-   * @returns {Array} array of resource objects
+   * @returns {Array.<farmhand.item>} array of resource objects
    */
   generateResources(shovelLevel) {
     let resources = []

@@ -1,3 +1,4 @@
+/** @typedef {import("../index").farmhand.item} farmhand.item */
 import { chooseRandom } from '../utils'
 import { coal, stone } from '../data/ores'
 
@@ -8,7 +9,7 @@ import { coal, stone } from '../data/ores'
 export default class CoalFactory {
   /**
    * Generate resources
-   * @returns {Array} an array of coal and stone resources
+   * @returns {Array.<farmhand.item>} an array of coal and stone resources
    */
   generate() {
     let spawns = []
