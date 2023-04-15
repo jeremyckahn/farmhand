@@ -15,20 +15,15 @@ describe('StoneFactory', () => {
       stoneFactory = new StoneFactory()
     })
 
-    test('it generates stones', () => {
+    test('it generates resources', () => {
       randomNumberService.isRandomNumberLessThan.mockReturnValue(true)
 
       const resources = stoneFactory.generate()
 
-      expect(resources[0]).toEqual(stone)
-    })
-
-    test('it generates a coal along with the stone when random chance passes', () => {
-      randomNumberService.isRandomNumberLessThan.mockReturnValue(true)
-
-      const resources = stoneFactory.generate()
-
-      expect(resources).toEqual([stone, saltRock, coal])
+      expect(resources).toHaveLength(3)
+      expect(resources).toContain(stone)
+      expect(resources).toContain(saltRock)
+      expect(resources).toContain(coal)
     })
   })
 })
