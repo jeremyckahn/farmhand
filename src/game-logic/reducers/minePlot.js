@@ -42,7 +42,7 @@ export const minePlot = (state, x, y) => {
 
     // if a resource was spawned, add up to 10 days to the time to clear at
     // random, based loosely on the minimum spawnChance meant to make rarer
-    // ores take longer to cooldown
+    // resources take longer to cooldown
     daysUntilClear += Math.round(random() * (1 - minSpawnChance) * 10)
   }
 

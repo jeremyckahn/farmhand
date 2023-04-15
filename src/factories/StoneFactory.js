@@ -1,17 +1,18 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
+import { randomNumberService } from '../common/services/randomNumber'
+import { Factory } from '../interfaces/Factory'
 import { coal, saltRock, stone } from '../data/ores'
 import {
   COAL_SPAWN_CHANCE,
   SALT_ROCK_SPAWN_CHANCE,
   STONE_SPAWN_CHANCE,
 } from '../constants'
-import { randomNumberService } from '../common/services/randomNumber'
 
 /**
  * Resource factory used for spawning stone
  * @constructor
  */
-export default class StoneFactory {
+export default class StoneFactory extends Factory {
   /**
    * Generate resources
    * @returns {Array.<farmhand.item>} an array of stone and coal resources

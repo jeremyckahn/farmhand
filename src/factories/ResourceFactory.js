@@ -1,4 +1,5 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
+/** @typedef {import("../enums").itemType} farmhand.itemType */
 import { itemType, toolLevel } from '../enums'
 import {
   RESOURCE_SPAWN_CHANCE,
@@ -7,8 +8,9 @@ import {
   STONE_SPAWN_CHANCE,
 } from '../constants'
 import { randomChoice } from '../utils'
-
 import { randomNumberService } from '../common/services/randomNumber'
+// eslint-disable-next-line no-unused-vars
+import { Factory } from '../interfaces/Factory'
 
 import OreFactory from './OreFactory'
 import CoalFactory from './CoalFactory'
@@ -16,6 +18,7 @@ import StoneFactory from './StoneFactory'
 
 /**
  * Object for private cache of factory instances
+ * @type {Record.<string, Factory>}
  */
 const factoryInstances = {}
 
@@ -52,9 +55,8 @@ export default class ResourceFactory {
 
   /**
    * Generate an instance for specific factory
-   * @param {Number} type - an item type from itemType enum
-   * @returns {?Factory} returns a factory if one exists for type, default return is null
-   * @static
+   * @param {farmhand.itemType} type
+   * @returns {?Factory} A factory if one exists for type, default return is null
    */
   static generateFactoryInstance(type) {
     switch (type) {
@@ -75,9 +77,7 @@ export default class ResourceFactory {
   /**
    * Retrieve a specific factory for generating resources. Will create and cache
    * a factory instance for reuse.
-   * @param {Number} type - an item type from itemType enum
-   * @return {Factory}
-   * @static
+   * @returns {?Factory}
    */
   static getFactoryForItemType = type => {
     if (!factoryInstances[type]) {
@@ -92,6 +92,7 @@ export default class ResourceFactory {
    * @returns {Array.<farmhand.item>} array of resource objects
    */
   generateResources(shovelLevel) {
+    /** @type {Array.<farmhand.item>} */
     let resources = []
     let spawnChance = RESOURCE_SPAWN_CHANCE
 
@@ -119,9 +120,7 @@ export default class ResourceFactory {
       const opt = randomChoice(this.resourceOptions)
       const factory = ResourceFactory.getFactoryForItemType(opt.itemType)
 
-      if (factory) {
-        resources = factory.generate()
-      }
+      resources = factory?.generate()
     }
 
     return resources

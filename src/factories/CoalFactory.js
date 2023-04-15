@@ -1,12 +1,13 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
-import { chooseRandom } from '../utils'
 import { coal, stone } from '../data/ores'
+import { Factory } from '../interfaces/Factory'
+import { chooseRandom } from '../utils'
 
 /**
  * Resource factory used for spawning coal
  * @constructor
  */
-export default class CoalFactory {
+export default class CoalFactory extends Factory {
   /**
    * Generate resources
    * @returns {Array.<farmhand.item>} an array of coal and stone resources
