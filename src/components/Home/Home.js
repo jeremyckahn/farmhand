@@ -87,7 +87,7 @@ const Home = ({
             source: `
 Hi, you're playing **Farmhand**! This is an open source game project created by [Jeremy Kahn](https://github.com/jeremyckahn). The project has evolved over time and is now developed with the support of [a community of contributors](https://github.com/jeremyckahn/farmhand/blob/develop/CONTRIBUTORS.md).
 
-[![Source code](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/jeremyckahn/farmhand) [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand+discord)](https://discord.gg/6cHEZ9H) [![@farmhandgame](https://badgen.net/twitter/follow/farmhandgame)](https://twitter.com/farmhandgame) [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
+[![Source code](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/jeremyckahn/farmhand) [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand+discord)](https://discord.gg/6cHEZ9H) [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/) [Twitter: @farmhandgame](https://badgen.net/twitter/follow/farmhandgame)
 
 Farmhand is a resource management game that puts a farm in your hand. It is designed to be both desktop and mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
 

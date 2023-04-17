@@ -20,7 +20,7 @@
 Community links:
 
 - Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
-- Twitter link: [![@farmhandgame](https://badgen.net/twitter/follow/farmhandgame)](https://twitter.com/farmhandgame)
+- Twitter link: [@farmhandgame](https://badgen.net/twitter/follow/farmhandgame)
 - Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
 
 Storefront links:
