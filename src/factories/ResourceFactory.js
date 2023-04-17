@@ -120,7 +120,9 @@ export default class ResourceFactory {
       const opt = randomChoice(this.resourceOptions)
       const factory = ResourceFactory.getFactoryForItemType(opt.itemType)
 
-      resources = factory?.generate()
+      if (factory) {
+        resources = factory.generate()
+      }
     }
 
     return resources
