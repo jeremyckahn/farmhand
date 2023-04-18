@@ -1,8 +1,10 @@
-import isRandomNumberLessThan from '../../utils/isRandomNumberLessThan'
+import { randomNumberService } from '../../common/services/randomNumber'
 
 import { spawnWeeds } from './spawnWeeds'
 
-jest.mock('../../utils/isRandomNumberLessThan')
+beforeEach(() => {
+  jest.spyOn(randomNumberService, 'isRandomNumberLessThan')
+})
 
 describe('spawnWeeds', () => {
   it('will not spawn weeds in an occupied plot', () => {
@@ -12,7 +14,7 @@ describe('spawnWeeds', () => {
   })
 
   it('will spawn weeds if the plot is empty and the random chance event succeeds', () => {
-    isRandomNumberLessThan.mockReturnValue(true)
+    randomNumberService.isRandomNumberLessThan.mockReturnValue(true)
 
     expect(spawnWeeds(null)).toEqual({
       itemId: 'weed',
@@ -21,7 +23,7 @@ describe('spawnWeeds', () => {
   })
 
   it('will not spawn weeds if the random chance fails', () => {
-    isRandomNumberLessThan.mockReturnValue(false)
+    randomNumberService.isRandomNumberLessThan.mockReturnValue(false)
 
     expect(spawnWeeds(null)).toEqual(null)
   })

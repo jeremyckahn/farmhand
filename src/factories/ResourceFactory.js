@@ -5,7 +5,9 @@ import {
   COAL_SPAWN_CHANCE,
   STONE_SPAWN_CHANCE,
 } from '../constants'
-import { isRandomNumberLessThan, randomChoice } from '../utils'
+import { randomChoice } from '../utils'
+
+import { randomNumberService } from '../common/services/randomNumber'
 
 import OreFactory from './OreFactory'
 import CoalFactory from './CoalFactory'
@@ -116,7 +118,7 @@ export default class ResourceFactory {
       default:
     }
 
-    if (isRandomNumberLessThan(spawnChance)) {
+    if (randomNumberService.isRandomNumberLessThan(spawnChance)) {
       const opt = randomChoice(this.resourceOptions)
       const factory = ResourceFactory.getFactoryForItemType(opt.itemType)
 

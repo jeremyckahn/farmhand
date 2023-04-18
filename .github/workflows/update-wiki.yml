@@ -2,6 +2,7 @@
 name: Update Wiki
 
 # TODO: Consider rolling this into run-release.yml
+# https://github.com/jeremyckahn/farmhand/issues/407
 
 on:
   workflow_dispatch:
