@@ -29,6 +29,7 @@ import oliveOil from './dishes/olive-oil.png'
 import onionRings from './dishes/onion-rings.png'
 import popcorn from './dishes/popcorn.png'
 import pumpkinPie from './dishes/pumpkin-pie.png'
+import salt from './dishes/salt.png'
 import summerSalad from './dishes/summer-salad.png'
 import sweetPotatoFries from './dishes/sweet-potato-fries.png'
 import sweetPotatoPie from './dishes/sweet-potato-pie.png'
@@ -216,6 +217,7 @@ export const craftedItems = {
   'spicy-pickled-garlic': spicyPickledGarlic,
   spaghetti,
   'strawberry-jam': strawberryJam,
+  salt,
   'summer-salad': summerSalad,
   'sun-butter': sunButter,
   'sweet-potato-fries': sweetPotatoFries,
