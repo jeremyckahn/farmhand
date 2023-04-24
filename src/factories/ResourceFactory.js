@@ -24,6 +24,7 @@ const factoryInstances = {}
 
 /**
  * Var for caching reference to instance of ResourceFactory
+ * @type {?ResourceFactory}
  */
 let instance = null
 
@@ -94,6 +95,7 @@ export default class ResourceFactory {
   generateResources(shovelLevel) {
     /** @type {Array.<farmhand.item>} */
     let resources = []
+
     let spawnChance = RESOURCE_SPAWN_CHANCE
 
     switch (shovelLevel) {

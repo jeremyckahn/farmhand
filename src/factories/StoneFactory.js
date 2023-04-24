@@ -45,7 +45,7 @@ export default class StoneFactory extends Factory {
   }
 
   /**
-   * Spawn a piece of stone
+   * Spawn a salt rock
    * @returns {farmhand.module:items.saltRock} Salt Rock item
    * @private
    */
