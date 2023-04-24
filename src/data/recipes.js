@@ -3,6 +3,7 @@
  */
 import { itemType, fieldMode, recipeType } from '../enums'
 import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
+import { features } from '../config'
 
 import * as items from './items'
 import baseItemsMap from './items-map'
@@ -535,6 +536,23 @@ export const onionRings = itemify({
     state.itemsSold[vegetableOil.id] > 20 &&
     state.itemsSold[soyMilk.id] > 20 &&
     state.itemsSold[items.wheat.id] > 30,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.salt
+ * @type {farmhand.item}
+ */
+export const salt = itemify({
+  id: 'salt',
+  name: 'Salt',
+  ingredients: {
+    [items.saltRock.id]: 1,
+  },
+  condition: state => state.itemsSold[items.saltRock.id] >= 30,
+  description: features.KEGS
+    ? 'Useful for seasoning food and fermentation.'
+    : 'Useful for seasoning food.',
   recipeType: recipeType.KITCHEN,
 })
 
