@@ -29,7 +29,9 @@ export const features = Object.keys(process.env).reduce((acc, key) => {
   return acc
 }, {})
 
-const searchParams = new URLSearchParams(window.location.search)
+// Use optional chaining here because window.location will not be defined when
+// this is running in a Node.js context.
+const searchParams = new URLSearchParams(window.location?.search)
 
 for (const key of searchParams.keys()) {
   const matches = key.match(/enable_(.*)/)
