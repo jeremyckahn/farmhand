@@ -8,6 +8,12 @@ import {
   STONE_SPAWN_CHANCE,
 } from '../constants'
 
+const spawnableResources = [
+  [stone, STONE_SPAWN_CHANCE],
+  [saltRock, SALT_ROCK_SPAWN_CHANCE],
+  [coal, COAL_SPAWN_CHANCE],
+]
+
 /**
  * Resource factory used for spawning stone
  * @constructor
@@ -20,45 +26,12 @@ export default class StoneFactory extends Factory {
   generate() {
     let resources = []
 
-    if (randomNumberService.isRandomNumberLessThan(STONE_SPAWN_CHANCE)) {
-      resources.push(this.spawnStone())
-    }
-
-    if (randomNumberService.isRandomNumberLessThan(SALT_ROCK_SPAWN_CHANCE)) {
-      resources.push(this.spawnSaltRock())
-    }
-
-    if (randomNumberService.isRandomNumberLessThan(COAL_SPAWN_CHANCE)) {
-      resources.push(this.spawnCoal())
+    for (const [resource, spawnChance] of spawnableResources) {
+      if (randomNumberService.isRandomNumberLessThan(spawnChance)) {
+        resources.push(resource)
+      }
     }
 
     return resources
-  }
-
-  /**
-   * Spawn a piece of stone
-   * @returns {farmhand.module:items.stone} Stone item
-   * @private
-   */
-  spawnStone() {
-    return stone
-  }
-
-  /**
-   * Spawn a salt rock
-   * @returns {farmhand.module:items.saltRock} Salt Rock item
-   * @private
-   */
-  spawnSaltRock() {
-    return saltRock
-  }
-
-  /**
-   * Spawn a piece of coal
-   * @returns {farmhand.module:items.coal} Coal item
-   * @private
-   */
-  spawnCoal() {
-    return coal
   }
 }
