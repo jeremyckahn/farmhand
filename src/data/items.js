@@ -82,7 +82,15 @@ export const weed = freeze({
   type: WEED,
 })
 
-export { bronzeOre, coal, goldOre, ironOre, silverOre, stone } from './ores'
+export {
+  bronzeOre,
+  coal,
+  goldOre,
+  ironOre,
+  silverOre,
+  stone,
+  saltRock,
+} from './ores'
 
 ////////////////////////////////////////
 //

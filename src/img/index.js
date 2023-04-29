@@ -29,6 +29,7 @@ import oliveOil from './dishes/olive-oil.png'
 import onionRings from './dishes/onion-rings.png'
 import popcorn from './dishes/popcorn.png'
 import pumpkinPie from './dishes/pumpkin-pie.png'
+import salt from './dishes/salt.png'
 import summerSalad from './dishes/summer-salad.png'
 import sweetPotatoFries from './dishes/sweet-potato-fries.png'
 import sweetPotatoPie from './dishes/sweet-potato-pie.png'
@@ -138,6 +139,7 @@ import wateringCan from './tools/watering-can.png'
 // Mined resources
 import coal from './ores/coal.png'
 import stone from './ores/stone.png'
+import saltRock from './ores/salt-rock.png'
 import bronzeOre from './ores/bronze-ore.png'
 import bronzeIngot from './ores/bronze-ingot.png'
 import ironOre from './ores/iron-ore.png'
@@ -215,6 +217,7 @@ export const craftedItems = {
   'spicy-pickled-garlic': spicyPickledGarlic,
   spaghetti,
   'strawberry-jam': strawberryJam,
+  salt,
   'summer-salad': summerSalad,
   'sun-butter': sunButter,
   'sweet-potato-fries': sweetPotatoFries,
@@ -319,6 +322,7 @@ export const items = {
   // Ores
   coal,
   stone,
+  'salt-rock': saltRock,
   'bronze-ore': bronzeOre,
   'iron-ore': ironOre,
   'silver-ore': silverOre,

@@ -1,4 +1,6 @@
+/** @typedef {import("../index").farmhand.item} farmhand.item */
 import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores'
+import { Factory } from '../interfaces/Factory'
 import { randomChoice } from '../utils'
 
 const SPAWNABLE_ORES = [goldOre, ironOre, bronzeOre, silverOre]
@@ -7,8 +9,10 @@ const SPAWNABLE_ORES = [goldOre, ironOre, bronzeOre, silverOre]
  * Resource factory used for spawning ores
  * @constructor
  */
-export default class OreFactory {
+export default class OreFactory extends Factory {
   constructor() {
+    super()
+
     this.oreOptions = []
     for (let o of SPAWNABLE_ORES) {
       this.oreOptions.push({
@@ -20,7 +24,7 @@ export default class OreFactory {
 
   /**
    * Generate resources
-   * @returns {Array} an array of ore resources
+   * @returns {Array.<farmhand.item>} an array of ore resources
    */
   generate() {
     return [this.spawn()]

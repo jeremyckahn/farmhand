@@ -1,3 +1,4 @@
+import { randomNumberService } from '../../common/services/randomNumber'
 import { goldOre } from '../../data/ores'
 import { ResourceFactory } from '../../factories'
 import { toolType, toolLevel } from '../../enums'
@@ -18,6 +19,7 @@ describe('minePlot', () => {
     }
 
     jest.spyOn(ResourceFactory, 'instance')
+    jest.spyOn(randomNumberService, 'generateRandomNumber').mockReturnValue(1)
 
     ResourceFactory.instance.mockReturnValue({
       generateResources: () => [goldOre],
@@ -35,7 +37,7 @@ describe('minePlot', () => {
   })
 
   test('sets the days until clear', () => {
-    expect(gameState.field[0][0].daysUntilClear > 0).toEqual(true)
+    expect(gameState.field[0][0].daysUntilClear).toEqual(12)
   })
 
   test('adds the spawned ore to the inventory', () => {

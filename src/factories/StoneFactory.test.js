@@ -1,5 +1,5 @@
 import { randomNumberService } from '../common/services/randomNumber'
-import { coal, stone } from '../data/ores'
+import { coal, stone, saltRock } from '../data/ores'
 
 import StoneFactory from './StoneFactory'
 
@@ -15,17 +15,15 @@ describe('StoneFactory', () => {
       stoneFactory = new StoneFactory()
     })
 
-    test('it generates stones', () => {
-      const resources = stoneFactory.generate()
-
-      expect(resources[0]).toEqual(stone)
-    })
-
-    test('it generates a coal along with the stone when random chance passes', () => {
+    test('it generates resources', () => {
       randomNumberService.isRandomNumberLessThan.mockReturnValue(true)
+
       const resources = stoneFactory.generate()
 
-      expect(resources).toEqual([stone, coal])
+      expect(resources).toHaveLength(3)
+      expect(resources).toContain(stone)
+      expect(resources).toContain(saltRock)
+      expect(resources).toContain(coal)
     })
   })
 })

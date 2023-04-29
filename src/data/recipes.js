@@ -3,6 +3,7 @@
  */
 import { itemType, fieldMode, recipeType } from '../enums'
 import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
+import { features } from '../config'
 
 import * as items from './items'
 import baseItemsMap from './items-map'
@@ -27,6 +28,23 @@ const itemify = recipe => {
 
   return item
 }
+
+/**
+ * @property farmhand.module:recipes.salt
+ * @type {farmhand.item}
+ */
+export const salt = itemify({
+  id: 'salt',
+  name: 'Salt',
+  ingredients: {
+    [items.saltRock.id]: 1,
+  },
+  condition: state => state.itemsSold[items.saltRock.id] >= 30,
+  description: features.KEGS
+    ? 'Useful for seasoning food and fermentation.'
+    : 'Useful for seasoning food.',
+  recipeType: recipeType.KITCHEN,
+})
 
 /**
  * @property farmhand.module:recipes.bread
@@ -181,6 +199,7 @@ export const frenchOnionSoup = itemify({
   ingredients: {
     [items.onion.id]: 5,
     [cheese.id]: 2,
+    [salt.id]: 2,
   },
   condition: state =>
     state.itemsSold[items.onion.id] >= 15 && state.itemsSold[cheese.id] >= 10,
@@ -307,6 +326,7 @@ export const hotSauce = itemify({
   name: 'Hot Sauce',
   ingredients: {
     [items.jalapeno.id]: 10,
+    [salt.id]: 1,
   },
   condition: state => state.itemsSold[items.jalapeno.id] >= 50,
   recipeType: recipeType.KITCHEN,
@@ -408,6 +428,7 @@ export const garlicFries = itemify({
     [items.potato.id]: 5,
     [items.garlic.id]: 3,
     [vegetableOil.id]: 1,
+    [salt.id]: 2,
   },
   condition: state =>
     state.itemsSold[items.potato.id] >= 50 &&
@@ -512,6 +533,7 @@ export const sweetPotatoFries = itemify({
   ingredients: {
     [items.sweetPotato.id]: 10,
     [vegetableOil.id]: 1,
+    [salt.id]: 1,
   },
   condition: state => state.itemsSold[items.sweetPotato.id] >= 100,
   recipeType: recipeType.KITCHEN,
@@ -529,6 +551,7 @@ export const onionRings = itemify({
     [vegetableOil.id]: 1,
     [items.wheat.id]: 5,
     [soyMilk.id]: 1,
+    [salt.id]: 3,
   },
   condition: state =>
     state.itemsSold[items.onion.id] >= 50 &&
