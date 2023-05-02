@@ -1,3 +1,6 @@
+/** @typedef {import("../../index").farmhand.item} farmhand.item */
+/** @typedef {import("../../index").farmhand.cow} farmhand.cow */
+/** @typedef {import("../../index").farmhand.keg} farmhand.keg */
 import React, { Component } from 'react'
 import window from 'global/window'
 import { Redirect } from 'react-router-dom'
@@ -175,6 +178,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @type {Object}
  * @property {number?} activePlayers
  * @property {boolean} allowCustomPeerCowNames
+ * @property {Array.<farmhand.keg>} cellarInventory
  * @property {farmhand.module:enums.dialogView} currentDialogView
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
@@ -209,7 +213,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * future-facing flexibility.
  * @property {number} hoveredPlotRangeSize
  * @property {string} id
- * @property {Array.<{ id: farmhand.item, quantity: number }>} inventory
+ * @property {Array.<{ id: farmhand.item.id, quantity: number }>} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
  * @property {boolean} isAwaitingCowTradeRequest
  * @property {boolean} isAwaitingNetworkRequest

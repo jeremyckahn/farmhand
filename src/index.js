@@ -118,6 +118,23 @@
  */
 
 /**
+ * @typedef farmhand.kegRecipe
+ * @readonly
+ * @type {farmhand.recipe}
+ * @property {number} daysToMature How many days must pass before this recipe
+ * can be sold.
+ */
+
+/**
+ * @typedef farmhand.keg
+ * @type {Object}
+ * @property {string} recipeId
+ * @property {number} daysUntilMature Days remaining until this recipe can be
+ * sold. This value can go negative. When negative, the value of the keg is
+ * increased.
+ */
+
+/**
  * @typedef farmhand.priceEvent
  * @type {Object}
  * @property {string} itemId
