@@ -8,6 +8,7 @@ import { recipeType } from '../../enums'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
+import { InventoryTabPanel } from './InventoryTabPanel'
 import { FermentationTabPanel } from './FermentationTabPanel'
 import { a11yProps } from './TabPanel'
 
@@ -32,11 +33,13 @@ export const Cellar = () => {
           onChange={(_e, newTab) => setCurrentTab(newTab)}
           aria-label="Cellar tabs"
         >
-          <Tab {...{ label: 'Fermentation', ...a11yProps(0) }} />
+          <Tab {...{ label: 'Cellar Inventory', ...a11yProps(0) }} />
+          <Tab {...{ label: 'Fermentation', ...a11yProps(1) }} />
         </Tabs>
       </AppBar>
+      <InventoryTabPanel index={0} currentTab={currentTab} />
       <FermentationTabPanel
-        index={0}
+        index={1}
         currentTab={currentTab}
         learnedFermentationRecipes={learnedFermentationRecipes}
       />
