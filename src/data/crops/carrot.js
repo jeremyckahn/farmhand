@@ -26,4 +26,5 @@ export const carrotSeed = crop({
 export const carrot = crop({
   ...fromSeed(carrotSeed),
   name: 'Carrot',
+  daysToFerment: 4,
 })

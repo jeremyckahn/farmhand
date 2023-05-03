@@ -67,6 +67,17 @@ export const itemsMap = {
 /**
  * @type {Object.<string, farmhand.item>}
  */
+export const fermentableItemsMap = Object.fromEntries(
+  Object.entries(itemsMap).filter(([itemId]) => {
+    const item = itemsMap[itemId]
+
+    return 'daysToFerment' in item
+  })
+)
+
+/**
+ * @type {Object.<string, farmhand.item>}
+ */
 export const cropItemIdToSeedItemMap = Object.entries(baseItemsMap).reduce(
   (acc, [itemId, item]) => {
     const { growsInto } = item

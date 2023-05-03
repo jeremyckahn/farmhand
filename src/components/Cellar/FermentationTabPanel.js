@@ -1,26 +1,17 @@
 import React from 'react'
-import { number, array } from 'prop-types'
+import { number } from 'prop-types'
 import Divider from '@material-ui/core/Divider'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import ReactMarkdown from 'react-markdown'
 
-import { recipeType } from '../../enums'
-import { recipeCategories } from '../../data/maps'
-import { RecipeList } from '../RecipeList/RecipeList'
+import { FermentationRecipeList } from '../FermentationRecipeList/FermentationRecipeList'
 
 import { TabPanel } from './TabPanel'
 
-export const FermentationTabPanel = ({
-  index,
-  currentTab,
-  learnedFermentationRecipes,
-}) => (
+export const FermentationTabPanel = ({ index, currentTab }) => (
   <TabPanel value={currentTab} index={index}>
-    <RecipeList
-      learnedRecipes={learnedFermentationRecipes}
-      allRecipes={recipeCategories[recipeType.FERMENTATION]}
-    />
+    <FermentationRecipeList />
     <Divider />
     <ul className="card-list">
       <li>
@@ -30,7 +21,8 @@ export const FermentationTabPanel = ({
               {...{
                 linkTarget: '_blank',
                 className: 'markdown',
-                source: `Fermentation recipes are learned by selling crops. Sell as much as you can of a wide variety of items!`,
+                source:
+                  'Some items can be fermented. Fermented items become much more valuable over time!',
               }}
             />
           </CardContent>
@@ -43,5 +35,4 @@ export const FermentationTabPanel = ({
 FermentationTabPanel.propTypes = {
   currentTab: number.isRequired,
   index: number.isRequired,
-  learnedFermentationRecipes: array.isRequired,
 }

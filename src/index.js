@@ -30,6 +30,8 @@
  * @property {number} [quantity] How many of the item the player has.
  * @property {number} [tier] The value tier that the item belongs to.
  * @property {number?} [spawnChance] The respawn rate for the item.
+ * @property {number?} [daysToFerment] This number is defined if the item can
+ * be fermented.
  */
 
 /**
@@ -115,14 +117,6 @@
  * key is the id of a farmhand.item and the value is the quantity of that item.
  * @property {farmhand.recipeCondition} condition This must return `true` for
  * the recipe to be made available to the player.
- */
-
-/**
- * @typedef farmhand.kegRecipe
- * @readonly
- * @type {farmhand.recipe}
- * @property {number} daysToMature How many days must pass before this recipe
- * can be sold.
  */
 
 /**
