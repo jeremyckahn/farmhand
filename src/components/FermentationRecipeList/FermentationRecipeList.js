@@ -1,16 +1,10 @@
 import React, { useContext } from 'react'
 
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
-
 import { itemsMap, fermentableItemsMap } from '../../data/maps'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { getFinalCropItemFromSeedItem } from '../../utils'
-import { items } from '../../img'
 
-import './FermentationRecipe.sass'
+import { FermentationRecipe } from './FermentationRecipe'
 
 const totalFermentableItems = Object.keys(fermentableItemsMap).length
 
@@ -35,14 +29,7 @@ export function FermentationRecipeList() {
       </h3>
       <ul className="card-list">
         {cropsAvailableToFerment.map(item => (
-          <Card key={item.id} className="FermentationRecipe">
-            <CardHeader
-              title={item.name}
-              avatar={<img {...{ src: items[item.id] }} alt={item.name} />}
-            ></CardHeader>
-            <CardContent></CardContent>
-            <CardActions></CardActions>
-          </Card>
+          <FermentationRecipe key={item.id} item={item} />
         ))}
       </ul>
     </>
