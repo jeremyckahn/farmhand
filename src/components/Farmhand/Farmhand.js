@@ -372,6 +372,7 @@ export default class Farmhand extends Component {
     return {
       activePlayers: null,
       allowCustomPeerCowNames: false,
+      cellarInventory: [],
       currentDialogView: dialogView.NONE,
       completedAchievements: {},
       cowForSale: {},

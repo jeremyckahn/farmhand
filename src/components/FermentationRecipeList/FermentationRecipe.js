@@ -1,17 +1,19 @@
 /** @typedef {import("../../index").farmhand.item} farmhand.item */
+/** @typedef {import("../../index").farmhand.keg} farmhand.keg */
 
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { object } from 'prop-types'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 
+import { PURCHASEABLE_CELLARS } from '../../constants'
 import { items } from '../../img'
 import { doesCellarSpaceRemain } from '../../utils/doesCellarSpaceRemain'
 import { maxYieldOfFermentationRecipe } from '../../utils/maxYieldOfFermentationRecipe'
 import QuantityInput from '../QuantityInput'
-
+import FarmhandContext from '../Farmhand/Farmhand.context'
 import './FermentationRecipe.sass'
 
 /**
@@ -19,10 +21,40 @@ import './FermentationRecipe.sass'
  * @param {farmhand.item} props.item
  */
 export const FermentationRecipe = ({ item }) => {
+  /**
+   * @type {{
+   *   gameState: {
+   *     inventory: Array.<farmhand.item>,
+   *     cellarInventory: Array.<farmhand.keg>,
+   *     purchasedCellar: number,
+   *     inventoryLimit: number
+   *   }
+   * }}
+   */
+  const {
+    gameState: { inventory, cellarInventory, purchasedCellar, inventoryLimit },
+  } = useContext(FarmhandContext)
+
   const fermentationRecipeName = `Fermented ${item.name}`
 
-  // FIXME: Complete this
   const [quantity, setQuantity] = useState(1)
+
+  const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar)
+
+  useEffect(() => {
+    setQuantity(
+      Math.min(
+        maxYieldOfFermentationRecipe(
+          item,
+          inventory,
+          cellarInventory,
+          cellarSize,
+          inventoryLimit
+        ),
+        Math.max(1, quantity)
+      )
+    )
+  }, [cellarInventory, cellarSize, inventory, inventoryLimit, item, quantity])
 
   const canBeMade =
     quantity > 0 && doesCellarSpaceRemain(/* FIXME: Provide args */)
@@ -31,7 +63,13 @@ export const FermentationRecipe = ({ item }) => {
     // FIXME: Implement this
   }
 
-  const maxQuantity = maxYieldOfFermentationRecipe()
+  const maxQuantity = maxYieldOfFermentationRecipe(
+    item,
+    inventory,
+    cellarInventory,
+    cellarSize,
+    inventoryLimit
+  )
 
   return (
     <Card className="FermentationRecipe">
