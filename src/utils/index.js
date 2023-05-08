@@ -10,7 +10,6 @@
 import { Buffer } from 'buffer'
 
 import Dinero from 'dinero.js'
-import fastMemoize from 'fast-memoize'
 import configureJimp from '@jimp/custom'
 import jimpPng from '@jimp/png'
 import sortBy from 'lodash.sortby'
@@ -66,7 +65,6 @@ import {
   INITIAL_SPRINKLER_RANGE,
   INITIAL_STORAGE_LIMIT,
   MALE_COW_WEIGHT_MULTIPLIER,
-  MEMOIZE_CACHE_CLEAR_THRESHOLD,
   PEER_METADATA_STATE_KEYS,
   PERSISTED_STATE_KEYS,
   PRECIPITATION_CHANCE,
@@ -77,6 +75,8 @@ import {
   STORAGE_EXPANSION_SCALE_PREMIUM,
 } from '../constants'
 import { random } from '../common/utils'
+
+import { memoize } from './memoize'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -114,49 +114,6 @@ const memoizationSerializer = args =>
   JSON.stringify(
     [...args].map(arg => (typeof arg === 'function' ? arg.toString() : arg))
   )
-
-// This is basically the same as fast-memoize's default cache, except that it
-// clears the cache once the size exceeds MEMOIZE_CACHE_CLEAR_THRESHOLD to
-// prevent memory bloat.
-// https://github.com/caiogondim/fast-memoize.js/blob/5cdfc8dde23d86b16e0104bae1b04cd447b98c63/src/index.js#L114-L128
-/**
- * @ignore
- */
-class MemoizeCache {
-  cache = {}
-
-  /**
-   * @param {Object} [config] Can also contain the config options used to
-   * configure fast-memoize.
-   * @param {number} [config.cacheSize]
-   * @see https://github.com/caiogondim/fast-memoize.js
-   */
-  constructor({ cacheSize = MEMOIZE_CACHE_CLEAR_THRESHOLD } = {}) {
-    this.cacheSize = cacheSize
-  }
-
-  has(key) {
-    return key in this.cache
-  }
-
-  get(key) {
-    return this.cache[key]
-  }
-
-  set(key, value) {
-    if (Object.keys(this.cache).length > this.cacheSize) {
-      this.cache = {}
-    }
-
-    this.cache[key] = value
-  }
-}
-
-export const memoize = (fn, config) =>
-  fastMemoize(fn, {
-    cache: { create: () => new MemoizeCache(config) },
-    ...config,
-  })
 
 /**
  * @param {number} num

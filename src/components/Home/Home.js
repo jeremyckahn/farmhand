@@ -18,7 +18,8 @@ import { achievementsMap } from '../../data/achievements'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { STANDARD_LOAN_AMOUNT } from '../../constants'
 import { stageFocusType } from '../../enums'
-import { isDecember, memoize } from '../../utils'
+import { isDecember } from '../../utils'
+import {memoize} from "../../utils/memoize"
 import Achievement from '../Achievement'
 
 import { SnowBackground } from './SnowBackground'

@@ -7,9 +7,7 @@ import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
 
 import { toolLevel } from '../../enums'
-
-import { memoize } from '../../utils'
-
+import { memoize } from '../../utils/memoize'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import toolsData from '../../data/tools'
 

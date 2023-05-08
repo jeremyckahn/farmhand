@@ -16,9 +16,9 @@ import {
   getPlayerName,
   integerString,
   isCowInBreedingPen,
-  memoize,
   nullArray,
 } from '../../../utils'
+import { memoize } from '../../../utils/memoize'
 import { huggingMachine } from '../../../data/items'
 import Bloodline from '../Bloodline'
 

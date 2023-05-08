@@ -54,13 +54,13 @@ import {
   getPeerMetadata,
   inventorySpaceRemaining,
   levelAchieved,
-  memoize,
   moneyTotal,
   nullArray,
   reduceByPersistedKeys,
   sleep,
   transformStateDataForImport,
 } from '../../utils'
+import {memoize} from "../../utils/memoize"
 import { getData, postData } from '../../fetch-utils'
 import { itemsMap, recipesMap } from '../../data/maps'
 import {
