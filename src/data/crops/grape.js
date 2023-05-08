@@ -38,7 +38,9 @@ export const grapeSeed = crop({
  * @type {farmhand.cropVariety}
  */
 export const grapeChardonnay = crop({
-  ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-chardonnay')),
+  ...fromSeed(grapeSeed, {
+    variantIdx: grapeSeed.growsInto.indexOf('grape-chardonnay'),
+  }),
   name: 'Chardonnay Grape',
   imageId: 'grape-green',
 })
@@ -48,7 +50,9 @@ export const grapeChardonnay = crop({
  * @type {farmhand.cropVariety}
  */
 export const grapeSauvignonBlanc = crop({
-  ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-sauvignon-blanc')),
+  ...fromSeed(grapeSeed, {
+    variantIdx: grapeSeed.growsInto.indexOf('grape-sauvignon-blanc'),
+  }),
   name: 'Sauvignon Blanc Grape',
   imageId: 'grape-green',
 })
@@ -58,7 +62,7 @@ export const grapeSauvignonBlanc = crop({
  * @type {farmhand.cropVariety}
  */
 // export const grapePinotBlanc = crop({
-// ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-pinot-blanc')),
+// ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto.indexOf('grape-pinot-blanc') }),
 // name: 'Pinot Blanc Grape',
 // imageId: 'grape-green',
 // })
@@ -68,7 +72,7 @@ export const grapeSauvignonBlanc = crop({
  * @type {farmhand.cropVariety}
  */
 // export const grapeMuscat = crop({
-// ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-muscat')),
+// ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto.indexOf('grape-muscat') }),
 // name: 'Muscat Grape',
 // imageId: 'grape-green',
 // })
@@ -78,7 +82,7 @@ export const grapeSauvignonBlanc = crop({
  * @type {farmhand.cropVariety}
  */
 // export const grapeRiesling = crop({
-// ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-riesling')),
+// ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto.indexOf('grape-riesling') }),
 // name: 'Riesling Grape',
 // imageId: 'grape-green',
 // })
@@ -88,7 +92,7 @@ export const grapeSauvignonBlanc = crop({
  * @type {farmhand.cropVariety}
  */
 // export const grapeMerlot = crop({
-// ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-merlot')),
+// ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto.indexOf('grape-merlot') }),
 // name: 'Merlot Grape',
 // imageId: 'grape-purple',
 // })
@@ -98,10 +102,9 @@ export const grapeSauvignonBlanc = crop({
  * @type {farmhand.cropVariety}
  */
 export const grapeCabernetSauvignon = crop({
-  ...fromSeed(
-    grapeSeed,
-    grapeSeed.growsInto.indexOf('grape-cabernet-sauvignon')
-  ),
+  ...fromSeed(grapeSeed, {
+    variantIdx: grapeSeed.growsInto.indexOf('grape-cabernet-sauvignon'),
+  }),
   name: 'Cabernet Sauvignon Grape',
   imageId: 'grape-purple',
 })
@@ -111,7 +114,7 @@ export const grapeCabernetSauvignon = crop({
  * @type {farmhand.cropVariety}
  */
 // export const grapeSyrah = crop({
-// ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-syrah')),
+// ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto.indexOf('grape-syrah') }),
 // name: 'Syrah Grape',
 // imageId: 'grape-purple',
 // })
@@ -121,7 +124,9 @@ export const grapeCabernetSauvignon = crop({
  * @type {farmhand.cropVariety}
  */
 export const grapeTempranillo = crop({
-  ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-tempranillo')),
+  ...fromSeed(grapeSeed, {
+    variantIdx: grapeSeed.growsInto.indexOf('grape-tempranillo'),
+  }),
   name: 'Tempranillo Grape',
   imageId: 'grape-purple',
 })
@@ -131,7 +136,9 @@ export const grapeTempranillo = crop({
  * @type {farmhand.cropVariety}
  */
 export const grapeNebbiolo = crop({
-  ...fromSeed(grapeSeed, grapeSeed.growsInto.indexOf('grape-nebbiolo')),
+  ...fromSeed(grapeSeed, {
+    variantIdx: grapeSeed.growsInto.indexOf('grape-nebbiolo'),
+  }),
   name: 'Nebbiolo Grape',
   imageId: 'grape-purple',
 })

@@ -37,12 +37,13 @@ export const crop = ({
 
 /**
  * @param {farmhand.item} item
- * @param {number} [variantIdx]
+ * @param {Object} [config]
+ * @param {number} [config.variantIdx]
  * @returns {farmhand.item}
  */
 export const fromSeed = (
   { cropTimetable, cropType, growsInto, tier },
-  variantIdx = 0
+  { variantIdx = 0 } = {}
 ) => {
   const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 

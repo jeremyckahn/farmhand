@@ -87,6 +87,8 @@ export const FermentationRecipe = ({ item }) => {
           <>
             <p>Days to ferment: {item.daysToFerment}</p>
             {/* FIXME: Implement this */}
+            <p>Units of salt required: </p>
+            {/* FIXME: Implement this */}
             <p>In cellar: </p>
           </>
         }
