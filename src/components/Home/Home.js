@@ -19,7 +19,7 @@ import FarmhandContext from '../Farmhand/Farmhand.context'
 import { STANDARD_LOAN_AMOUNT } from '../../constants'
 import { stageFocusType } from '../../enums'
 import { isDecember } from '../../utils'
-import {memoize} from "../../utils/memoize"
+import { memoize } from '../../utils/memoize'
 import Achievement from '../Achievement'
 
 import { SnowBackground } from './SnowBackground'

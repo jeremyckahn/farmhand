@@ -25,7 +25,7 @@ import {
   getSalePriceMultiplier,
   integerString,
 } from '../../utils'
-import {getCropLifecycleDuration} from "../../utils/getCropLifecycleDuration"
+import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration'
 import QuantityInput from '../QuantityInput'
 import AnimatedNumber from '../AnimatedNumber'
 

@@ -77,7 +77,7 @@ import {
 import { random } from '../common/utils'
 
 import { memoize } from './memoize'
-import {getCropLifecycleDuration} from './getCropLifecycleDuration'
+import { getCropLifecycleDuration } from './getCropLifecycleDuration'
 
 const Jimp = configureJimp({
   types: [jimpPng],
