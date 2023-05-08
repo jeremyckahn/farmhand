@@ -10,10 +10,10 @@ import classNames from 'classnames'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import {
   getCropLifeStage,
-  getCropLifecycleDuration,
   getPlotContentType,
   getPlotImage,
 } from '../../utils'
+import {getCropLifecycleDuration} from "../../utils/getCropLifecycleDuration"
 import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, fertilizerType, itemType } from '../../enums'

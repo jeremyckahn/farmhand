@@ -77,6 +77,7 @@ import {
 import { random } from '../common/utils'
 
 import { memoize } from './memoize'
+import {getCropLifecycleDuration} from './getCropLifecycleDuration'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -282,14 +283,6 @@ export const isItemAFarmProduct = item =>
       item.type === itemType.MILK ||
       item.type === itemType.CRAFTED_ITEM
   )
-
-/**
- * @param {farmhand.crop} crop
- * @returns {number}
- */
-export const getCropLifecycleDuration = memoize(({ cropTimetable }) =>
-  Object.values(cropTimetable).reduce((acc, value) => acc + value, 0)
-)
 
 /**
  * @param {farmhand.cropTimetable} cropTimetable

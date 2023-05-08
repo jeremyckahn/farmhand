@@ -42,7 +42,6 @@ import {
   getCowValue,
   getCowWeight,
   getCropLifeStage,
-  getCropLifecycleDuration,
   getFinalCropItemIdFromSeedItemId,
   getSeedItemIdFromFinalStageCropItemId,
   getItemCurrentValue,
@@ -531,12 +530,6 @@ describe('getLifeStageRange', () => {
       GROWING,
       GROWING,
     ])
-  })
-})
-
-describe('getCropLifecycleDuration', () => {
-  test('computes lifecycle duration', () => {
-    expect(getCropLifecycleDuration(sampleCropItem1)).toEqual(3)
   })
 })
 
