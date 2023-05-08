@@ -24,8 +24,6 @@ export const carrotSeed = crop({
  * @type {farmhand.item}
  */
 export const carrot = crop({
-  ...fromSeed(carrotSeed),
+  ...fromSeed(carrotSeed, { canBeFermented: true }),
   name: 'Carrot',
-  // FIXME: Make daysToFerment a computed value of tier and cropTimetable
-  daysToFerment: 4,
 })
