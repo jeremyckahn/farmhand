@@ -21,6 +21,7 @@ export function FermentationRecipeList() {
     .length
 
   // FIXME: Test recipe count display
+  // FIXME: Show units of salf in inventory
   return (
     <>
       <h3>

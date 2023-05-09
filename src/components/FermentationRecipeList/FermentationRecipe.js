@@ -12,9 +12,11 @@ import { PURCHASEABLE_CELLARS } from '../../constants'
 import { items } from '../../img'
 import { doesCellarSpaceRemain } from '../../utils/doesCellarSpaceRemain'
 import { maxYieldOfFermentationRecipe } from '../../utils/maxYieldOfFermentationRecipe'
+import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe'
 import QuantityInput from '../QuantityInput'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import './FermentationRecipe.sass'
+import { itemsMap } from '../../data/maps'
 
 /**
  * @param {Object} props
@@ -87,7 +89,10 @@ export const FermentationRecipe = ({ item }) => {
           <>
             <p>Days to ferment: {item.daysToFerment}</p>
             {/* FIXME: Implement this */}
-            <p>Units of salt required: </p>
+            <p>
+              Units of {itemsMap.salt.name} required:{' '}
+              {getSaltRequirementsForFermentationRecipe(item)}
+            </p>
             {/* FIXME: Implement this */}
             <p>In cellar: </p>
           </>
