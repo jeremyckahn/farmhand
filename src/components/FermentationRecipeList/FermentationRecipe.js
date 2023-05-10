@@ -73,6 +73,15 @@ export const FermentationRecipe = ({ item }) => {
     inventoryLimit
   )
 
+  // TODO: Memoize this
+  const recipeInstancesInCellar = cellarInventory.reduce((acc, keg) => {
+    if (keg.recipeId === item.id) {
+      acc++
+    }
+
+    return acc
+  }, 0)
+
   return (
     <Card className="FermentationRecipe">
       <CardHeader
@@ -88,13 +97,11 @@ export const FermentationRecipe = ({ item }) => {
         subheader={
           <>
             <p>Days to ferment: {item.daysToFerment}</p>
-            {/* FIXME: Implement this */}
             <p>
               Units of {itemsMap.salt.name} required:{' '}
               {getSaltRequirementsForFermentationRecipe(item)}
             </p>
-            {/* FIXME: Implement this */}
-            <p>In cellar: </p>
+            <p>In cellar: {recipeInstancesInCellar}</p>
           </>
         }
       ></CardHeader>
