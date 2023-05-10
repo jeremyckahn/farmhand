@@ -30,11 +30,15 @@ export const FermentationRecipe = ({ item }) => {
    *     cellarInventory: Array.<farmhand.keg>,
    *     purchasedCellar: number,
    *     inventoryLimit: number
+   *   },
+   *   handlers: {
+   *     handleMakeFermentationRecipeClick: function(farmhand.item, number)
    *   }
    * }}
    */
   const {
     gameState: { inventory, cellarInventory, purchasedCellar, inventoryLimit },
+    handlers: { handleMakeFermentationRecipeClick },
   } = useContext(FarmhandContext)
 
   const fermentationRecipeName = `Fermented ${item.name}`
@@ -62,7 +66,9 @@ export const FermentationRecipe = ({ item }) => {
     quantity > 0 && doesCellarSpaceRemain(cellarInventory, purchasedCellar)
 
   const handleMakeFermentationRecipe = () => {
-    // FIXME: Implement this
+    if (canBeMade) {
+      handleMakeFermentationRecipeClick(item, quantity)
+    }
   }
 
   const maxQuantity = maxYieldOfFermentationRecipe(

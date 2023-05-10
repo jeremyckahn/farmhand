@@ -1,3 +1,4 @@
+/** @typedef {import("../index").farmhand.item} item */
 import { saveAs } from 'file-saver'
 import window from 'global/window'
 
@@ -504,5 +505,14 @@ export default {
 
     const newUrl = `${origin}${pathname}${newSearch}${hash}`
     window.history.replaceState({}, '', newUrl)
+  },
+
+  /**
+   * @param {item} fermentationRecipe
+   * @param {number} quantity
+   */
+  handleMakeFermentationRecipeClick(fermentationRecipe, quantity) {
+    // FIXME: Implement this
+    console.log({ fermentationRecipe, quantity })
   },
 }

@@ -1,6 +1,8 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 /** @typedef {import("../index").farmhand.keg} farmhand.keg */
 
+import { itemsMap } from '../data/maps'
+
 import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsForFermentationRecipe'
 
 import { getInventoryQuantityMap } from '.'
@@ -23,7 +25,7 @@ export const maxYieldOfFermentationRecipe = (
 ) => {
   const {
     [fermentationRecipe.id]: itemQuantityInInventory = 0,
-    saltQuantityInInventory = 0,
+    [itemsMap.salt.id]: saltQuantityInInventory = 0,
   } = getInventoryQuantityMap(inventory)
 
   const maxYieldWithoutSalt = Math.min(
