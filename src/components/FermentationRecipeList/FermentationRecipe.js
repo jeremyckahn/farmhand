@@ -59,7 +59,7 @@ export const FermentationRecipe = ({ item }) => {
   }, [cellarInventory, cellarSize, inventory, inventoryLimit, item, quantity])
 
   const canBeMade =
-    quantity > 0 && doesCellarSpaceRemain(/* FIXME: Provide args */)
+    quantity > 0 && doesCellarSpaceRemain(cellarInventory, purchasedCellar)
 
   const handleMakeFermentationRecipe = () => {
     // FIXME: Implement this

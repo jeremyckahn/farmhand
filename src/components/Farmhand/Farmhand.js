@@ -246,6 +246,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * itemIds.
  * @property {number} purchasedCombine
  * @property {number} purchasedCowPen
+ * @property {number} purchasedCellar
  * @property {number} purchasedField
  * @property {number} profitabilityStreak
  * @property {number} record7dayProfitAverage

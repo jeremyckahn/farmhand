@@ -1,11 +1,14 @@
-/** @typedef {import("../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
+/** @typedef {import("../index").farmhand.keg} keg */
+
+import { PURCHASEABLE_CELLARS } from '../constants'
 
 /**
- * @param {farmhand.state} state
+ * @param {Array.<keg>} cellarInventory
+ * @param {number} purchasedCellar
  * @returns {boolean}
  */
-
-export const doesCellarSpaceRemain = () => {
-  // FIXME: Implement this
-  return false
+export const doesCellarSpaceRemain = (cellarInventory, purchasedCellar) => {
+  return (
+    cellarInventory.length < PURCHASEABLE_CELLARS.get(purchasedCellar).space
+  )
 }
