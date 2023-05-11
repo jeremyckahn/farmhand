@@ -38,7 +38,7 @@ const {
 
 export default {
   /**
-   * @param {farmhand.item} item
+   * @param {item} item
    * @param {number} [howMany=1]
    */
   handleItemPurchaseClick(item, howMany = 1) {
@@ -51,6 +51,14 @@ export default {
    */
   handleMakeRecipeClick(recipe, howMany = 1) {
     this.makeRecipe(recipe, howMany)
+  },
+
+  /**
+   * @param {item} fermentationRecipe
+   * @param {number} [howMany=1]
+   */
+  handleMakeFermentationRecipeClick(fermentationRecipe, howMany = 1) {
+    this.makeFermentationRecipe(fermentationRecipe, howMany)
   },
 
   /**
@@ -127,7 +135,7 @@ export default {
   },
 
   /**
-   * @param {farmhand.item} item
+   * @param {item} item
    * @param {number} [howMany=1]
    */
   handleItemSellClick(item, howMany = 1) {
@@ -162,13 +170,9 @@ export default {
   },
 
   /**
-   * @param {farmhand.item} item
+   * @param {item} item
    */
-  handleItemSelectClick({
-    id,
-    enablesFieldMode,
-    hoveredPlotRangeSize: newHoveredPlotRangeSize,
-  }) {
+  handleItemSelectClick({ id, enablesFieldMode }) {
     this.setState({
       fieldMode: enablesFieldMode,
       selectedItemId: id,
@@ -505,14 +509,5 @@ export default {
 
     const newUrl = `${origin}${pathname}${newSearch}${hash}`
     window.history.replaceState({}, '', newUrl)
-  },
-
-  /**
-   * @param {item} fermentationRecipe
-   * @param {number} quantity
-   */
-  handleMakeFermentationRecipeClick(fermentationRecipe, quantity) {
-    // FIXME: Implement this
-    console.log({ fermentationRecipe, quantity })
   },
 }

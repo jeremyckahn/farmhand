@@ -109,7 +109,7 @@ import { scarecrow } from '../../data/items'
 import { getInventoryQuantities } from './helpers/getInventoryQuantities'
 import FarmhandContext from './Farmhand.context'
 
-const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
+const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 
 // Utility object for reuse in no-ops to save on memory
 const emptyObject = Object.freeze({})
@@ -136,10 +136,7 @@ export const getFieldToolInventory = memoize(inventory =>
     .filter(({ id }) => {
       const { enablesFieldMode } = itemsMap[id]
 
-      return (
-        typeof enablesFieldMode === 'string' &&
-        enablesFieldMode !== fieldMode.PLANT
-      )
+      return typeof enablesFieldMode === 'string' && enablesFieldMode !== PLANT
     })
     .map(({ id }) => itemsMap[id])
 )
@@ -552,6 +549,7 @@ export default class Farmhand extends Component {
       'harvestPlot',
       'hugCow',
       'makeRecipe',
+      'makeFermentationRecipe',
       'modifyCow',
       'offerCow',
       'plantInPlot',

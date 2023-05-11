@@ -81,7 +81,7 @@ export const FermentationRecipe = ({ item }) => {
 
   // TODO: Memoize this
   const recipeInstancesInCellar = cellarInventory.reduce((acc, keg) => {
-    if (keg.recipeId === item.id) {
+    if (keg.itemId === item.id) {
       acc++
     }
 
