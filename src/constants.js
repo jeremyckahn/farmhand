@@ -133,6 +133,7 @@ export const I_AM_RICH_BONUSES = [0.05, 0.1, 0.25]
 
 export const PERSISTED_STATE_KEYS = [
   'allowCustomPeerCowNames',
+  'cellarInventory',
   'completedAchievements',
   'cowBreedingPen',
   'cowColorsPurchased',

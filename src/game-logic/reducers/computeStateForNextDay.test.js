@@ -28,6 +28,7 @@ describe('computeStateForNextDay', () => {
           }),
         ],
       ],
+      cellarInventory: [],
       cowInventory: [],
       historicalDailyLosses: [],
       historicalDailyRevenue: [],
