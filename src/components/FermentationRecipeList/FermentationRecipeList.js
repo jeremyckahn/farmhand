@@ -30,7 +30,9 @@ export function FermentationRecipeList() {
       </h3>
       <ul className="card-list">
         {cropsAvailableToFerment.map(item => (
-          <FermentationRecipe key={item.id} item={item} />
+          <li key={item.id}>
+            <FermentationRecipe item={item} />
+          </li>
         ))}
       </ul>
     </>
