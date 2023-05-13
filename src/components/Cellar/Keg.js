@@ -32,8 +32,10 @@ export function Keg({ keg }) {
   const fermentationRecipeName = `Fermented ${item.name}`
 
   const handleSellRecipeClick = () => {
-    handleSellKegClick(item)
+    handleSellKegClick(keg)
   }
+
+  // FIXME: Show keg value
 
   return (
     <Card className="Keg">
