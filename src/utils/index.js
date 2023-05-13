@@ -78,6 +78,7 @@ import { random } from '../common/utils'
 
 import { memoize } from './memoize'
 import { getCropLifecycleDuration } from './getCropLifecycleDuration'
+import { getItemBaseValue } from './getItemBaseValue'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -188,12 +189,6 @@ export const integerString = number => formatNumber(number, '0,0')
  * @returns {string} the float converted to a full number with a % added
  */
 export const percentageString = number => `${Math.round(number * 100)}%`
-
-/**
- * @param {string} itemId
- * @returns {number}
- */
-const getItemBaseValue = itemId => itemsMap[itemId].value
 
 /**
  * @param {farmhand.item} item

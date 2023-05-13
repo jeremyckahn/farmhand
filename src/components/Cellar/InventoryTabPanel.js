@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent'
 import ReactMarkdown from 'react-markdown'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
+import { KEG_INTEREST_RATE } from '../../constants'
 
 import { TabPanel } from './TabPanel'
 import { Keg } from './Keg'
@@ -28,6 +29,8 @@ export const InventoryTabPanel = ({ index, currentTab }) => {
     gameState: { cellarInventory },
   } = useContext(FarmhandContext)
 
+  // FIXME: Show cellar capacity
+
   return (
     <TabPanel value={currentTab} index={index}>
       <ul className="card-list">
@@ -48,8 +51,7 @@ export const InventoryTabPanel = ({ index, currentTab }) => {
                 {...{
                   linkTarget: '_blank',
                   className: 'markdown',
-                  source:
-                    'This is your inventory of cellar kegs. Keg contents take time to reach maturity until they can be sold. Once they reach maturity, they become higher in quality and value as time passes.',
+                  source: `This is your inventory of cellar kegs. Keg contents take time to reach maturity before they can be sold. Once they reach maturity, keg contents become higher in quality and their value compounds at a rate of ${KEG_INTEREST_RATE}% a day.`,
                 }}
               />
             </CardContent>

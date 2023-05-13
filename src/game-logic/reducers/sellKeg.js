@@ -6,13 +6,13 @@ import { itemsMap } from '../../data/maps'
 import {
   castToMoney,
   farmProductsSold,
-  getAdjustedItemValue,
   getSalePriceMultiplier,
   levelAchieved,
   moneyTotal,
 } from '../../utils'
 import { LOAN_GARNISHMENT_RATE } from '../../constants'
 import { SOLD_ITEM_PEER_NOTIFICATION } from '../../templates'
+import { getKegValue } from '../../utils/getKegValue'
 
 import { processLevelUp } from './processLevelUp'
 import { addRevenue } from './addRevenue'
@@ -30,29 +30,22 @@ import { prependPendingPeerMessage } from './index'
 export const sellKeg = (state, keg) => {
   const { itemId } = keg
   const item = itemsMap[itemId]
-  const {
-    completedAchievements,
-    itemsSold,
-    money: initialMoney,
-    valueAdjustments,
-  } = state
+  const { completedAchievements, itemsSold, money: initialMoney } = state
   const oldLevel = levelAchieved(farmProductsSold(itemsSold))
 
   let { loanBalance } = state
   let saleValue = 0
 
-  // FIXME: Calculate fermented item value here
-  const adjustedItemValue = getAdjustedItemValue(valueAdjustments, itemId)
+  const kegValue = getKegValue(keg)
 
   const loanGarnishment = Math.min(
     loanBalance,
-    castToMoney(adjustedItemValue * LOAN_GARNISHMENT_RATE)
+    castToMoney(kegValue * LOAN_GARNISHMENT_RATE)
   )
 
   const salePriceMultiplier = getSalePriceMultiplier(completedAchievements)
 
-  const garnishedProfit =
-    adjustedItemValue * salePriceMultiplier - loanGarnishment
+  const garnishedProfit = kegValue * salePriceMultiplier - loanGarnishment
 
   loanBalance = moneyTotal(loanBalance, -loanGarnishment)
   saleValue = moneyTotal(saleValue, garnishedProfit)
