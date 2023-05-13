@@ -568,6 +568,7 @@ export default class Farmhand extends Component {
       'selectCow',
       'sellCow',
       'sellItem',
+      'sellKeg',
       'setScarecrow',
       'setSprinkler',
       'showNotification',

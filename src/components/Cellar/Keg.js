@@ -1,4 +1,5 @@
-import React from 'react'
+/** @typedef {import("../../index").farmhand.keg} keg */
+import React, { useContext } from 'react'
 import { object } from 'prop-types'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -7,13 +8,32 @@ import Button from '@material-ui/core/Button'
 
 import { itemsMap } from '../../data/maps'
 import { items } from '../../img'
-import QuantityInput from '../QuantityInput'
 
 import './Keg.sass'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
+/**
+ * @param {Object} props
+ * @param {keg} props.keg
+ */
 export function Keg({ keg }) {
+  /**
+   * @type {{
+   *   handlers: {
+   *     handleSellKegClick: function(keg): void
+   *   }
+   * }}
+   */
+  const {
+    handlers: { handleSellKegClick },
+  } = useContext(FarmhandContext)
+
   const item = itemsMap[keg.itemId]
   const fermentationRecipeName = `Fermented ${item.name}`
+
+  const handleSellRecipeClick = () => {
+    handleSellKegClick(item)
+  }
 
   return (
     <Card className="Keg">
@@ -34,23 +54,12 @@ export function Keg({ keg }) {
           {...{
             className: 'make-recipe',
             color: 'primary',
-            onClick: () => {
-              /* FIXME */
-            },
+            onClick: handleSellRecipeClick,
             variant: 'contained',
           }}
         >
-          Make
+          Sell
         </Button>
-        <QuantityInput
-          {...{
-            handleSubmit: () => {},
-            handleUpdateNumber: () => {},
-            maxQuantity: -1,
-            setQuantity: () => {},
-            value: -1,
-          }}
-        />
       </CardActions>
     </Card>
   )
