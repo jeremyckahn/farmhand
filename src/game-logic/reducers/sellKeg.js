@@ -14,11 +14,11 @@ import {
 import { LOAN_GARNISHMENT_RATE } from '../../constants'
 import { SOLD_ITEM_PEER_NOTIFICATION } from '../../templates'
 
-import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { processLevelUp } from './processLevelUp'
 import { addRevenue } from './addRevenue'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
 import { adjustLoan } from './adjustLoan'
+import { removeKegFromCellar } from './removeKegFromCellar'
 
 import { prependPendingPeerMessage } from './index'
 
@@ -83,9 +83,7 @@ export const sellKeg = (state, keg, howMany = 1) => {
   }
 
   state = processLevelUp(state, oldLevel)
-
-  // FIXME: Keg should be removed from the cellar instead of this logic
-  state = decrementItemFromInventory(state, itemId, howMany)
+  state = removeKegFromCellar(state, keg.id)
 
   // FIXME: Display kegged item name, not base item
   state = prependPendingPeerMessage(

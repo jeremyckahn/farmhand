@@ -122,6 +122,7 @@
 /**
  * @typedef farmhand.keg
  * @type {Object}
+ * @property {string} id UUID to uniquely identify the keg.
  * @property {string} itemId The item that this keg is based on.
  * @property {number} daysUntilMature Days remaining until this recipe can be
  * sold. This value can go negative to indicate "days since fermented." When

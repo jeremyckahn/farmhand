@@ -2,6 +2,8 @@
 /** @typedef {import("../../index").farmhand.keg} keg */
 /** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
 
+import { v4 as uuid } from 'uuid'
+
 import { PURCHASEABLE_CELLARS } from '../../constants'
 import { itemsMap } from '../../data/maps'
 import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe'
@@ -41,6 +43,7 @@ export const makeFermentationRecipe = (
   for (let i = 0; i < howMany; i++) {
     /** @type keg */
     const keg = {
+      id: uuid(),
       itemId: fermentationRecipe.id,
       daysUntilMature: fermentationRecipe.daysToFerment,
     }
