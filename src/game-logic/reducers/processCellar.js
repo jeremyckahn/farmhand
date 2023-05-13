@@ -15,7 +15,7 @@ export const processCellar = state => {
 
     newCellarInventory[i] = {
       ...keg,
-      daysUntilFermented: keg.daysUntilFermented - 1,
+      daysUntilMature: keg.daysUntilMature - 1,
     }
   }
 

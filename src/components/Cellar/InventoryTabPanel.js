@@ -33,7 +33,7 @@ export const InventoryTabPanel = ({ index, currentTab }) => {
       <ul className="card-list">
         {cellarInventory.map((keg, i) => {
           return (
-            <li key={`${i}-${keg.itemId}-${keg.daysUntilFermented}`}>
+            <li key={`${i}-${keg.itemId}-${keg.daysUntilMature}`}>
               <Keg keg={keg} />
             </li>
           )

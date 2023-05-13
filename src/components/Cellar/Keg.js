@@ -47,7 +47,7 @@ export function Keg({ keg }) {
             alt={fermentationRecipeName}
           />
         }
-        subheader={<p>Days until fermented: {keg.daysUntilFermented}</p>}
+        subheader={<p>Days until ready: {keg.daysUntilMature}</p>}
       ></CardHeader>
       <CardActions>
         <Button

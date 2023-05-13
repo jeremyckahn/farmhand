@@ -42,7 +42,7 @@ export const makeFermentationRecipe = (
     /** @type keg */
     const keg = {
       itemId: fermentationRecipe.id,
-      daysUntilFermented: fermentationRecipe.daysToFerment,
+      daysUntilMature: fermentationRecipe.daysToFerment,
     }
 
     state = addKegToCellarInventory(state, keg)
