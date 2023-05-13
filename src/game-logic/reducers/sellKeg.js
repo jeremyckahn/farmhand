@@ -25,14 +25,9 @@ import { prependPendingPeerMessage } from './index'
 /**
  * @param {state} state
  * @param {keg} keg
- * @param {number} [howMany=1]
  * @returns {state}
  */
-export const sellKeg = (state, keg, howMany = 1) => {
-  if (howMany === 0) {
-    return state
-  }
-
+export const sellKeg = (state, keg) => {
   const { itemId } = keg
   const item = itemsMap[itemId]
   const {
@@ -42,27 +37,25 @@ export const sellKeg = (state, keg, howMany = 1) => {
     valueAdjustments,
   } = state
   const oldLevel = levelAchieved(farmProductsSold(itemsSold))
-  let { loanBalance } = state
 
+  let { loanBalance } = state
   let saleValue = 0
 
-  for (let i = 0; i < howMany; i++) {
-    // FIXME: Calculate fermented item value here
-    const adjustedItemValue = getAdjustedItemValue(valueAdjustments, itemId)
+  // FIXME: Calculate fermented item value here
+  const adjustedItemValue = getAdjustedItemValue(valueAdjustments, itemId)
 
-    const loanGarnishment = Math.min(
-      loanBalance,
-      castToMoney(adjustedItemValue * LOAN_GARNISHMENT_RATE)
-    )
+  const loanGarnishment = Math.min(
+    loanBalance,
+    castToMoney(adjustedItemValue * LOAN_GARNISHMENT_RATE)
+  )
 
-    const salePriceMultiplier = getSalePriceMultiplier(completedAchievements)
+  const salePriceMultiplier = getSalePriceMultiplier(completedAchievements)
 
-    const garnishedProfit =
-      adjustedItemValue * salePriceMultiplier - loanGarnishment
+  const garnishedProfit =
+    adjustedItemValue * salePriceMultiplier - loanGarnishment
 
-    loanBalance = moneyTotal(loanBalance, -loanGarnishment)
-    saleValue = moneyTotal(saleValue, garnishedProfit)
-  }
+  loanBalance = moneyTotal(loanBalance, -loanGarnishment)
+  saleValue = moneyTotal(saleValue, garnishedProfit)
 
   state = adjustLoan(state, moneyTotal(loanBalance, -state.loanBalance))
 
@@ -70,7 +63,7 @@ export const sellKeg = (state, keg, howMany = 1) => {
   // items should be treated distinctly from their originating Grape items.
   const newItemsSold = {
     ...itemsSold,
-    [itemId]: (itemsSold[itemId] ?? 0) + howMany,
+    [itemId]: itemsSold[itemId] ?? 0,
   }
 
   // money needs to be passed in explicitly here because state.money gets
@@ -88,7 +81,7 @@ export const sellKeg = (state, keg, howMany = 1) => {
   // FIXME: Display kegged item name, not base item
   state = prependPendingPeerMessage(
     state,
-    SOLD_ITEM_PEER_NOTIFICATION`${howMany}${item}`,
+    SOLD_ITEM_PEER_NOTIFICATION`${1}${item}`,
     'warning'
   )
 
