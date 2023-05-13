@@ -15,6 +15,7 @@ import { moneyString } from '../../utils/moneyString'
 import { getSalePriceMultiplier } from '../../utils'
 
 import './Keg.sass'
+import AnimatedNumber from '../AnimatedNumber'
 
 /**
  * @param {Object} props
@@ -66,7 +67,14 @@ export function Keg({ keg }) {
             ) : (
               <p>Days until ready: {keg.daysUntilMature}</p>
             )}
-            {canBeSold ? <p>Current value: {moneyString(kegValue)}</p> : null}
+            {canBeSold ? (
+              <p>
+                Current value:{' '}
+                <AnimatedNumber
+                  {...{ number: kegValue, formatter: moneyString }}
+                />
+              </p>
+            ) : null}
           </>
         }
       ></CardHeader>

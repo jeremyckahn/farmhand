@@ -34,13 +34,11 @@ export const InventoryTabPanel = ({ index, currentTab }) => {
   return (
     <TabPanel value={currentTab} index={index}>
       <ul className="card-list">
-        {cellarInventory.map((keg, i) => {
-          return (
-            <li key={`${i}-${keg.itemId}-${keg.daysUntilMature}`}>
-              <Keg keg={keg} />
-            </li>
-          )
-        })}
+        {cellarInventory.map(keg => (
+          <li key={keg.id}>
+            <Keg keg={keg} />
+          </li>
+        ))}
       </ul>
       <Divider />
       <ul className="card-list">
