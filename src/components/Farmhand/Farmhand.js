@@ -564,6 +564,7 @@ export default class Farmhand extends Component {
       'purchaseSmelter',
       'purchaseStorageExpansion',
       'removeCowFromInventory',
+      'removeKegFromCellar',
       'removePeer',
       'selectCow',
       'sellCow',

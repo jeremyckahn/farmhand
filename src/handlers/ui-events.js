@@ -75,6 +75,13 @@ export default {
   },
 
   /**
+   * @param {keg} keg
+   */
+  handleThrowAwayKegClick(keg) {
+    this.removeKegFromCellar(keg.id)
+  },
+
+  /**
    * @param {farmhand.upgrade} upgrade
    */
   handleUpgradeTool(upgrade) {

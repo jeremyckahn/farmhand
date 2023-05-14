@@ -25,7 +25,8 @@ export function Keg({ keg }) {
   /**
    * @type {{
    *   handlers: {
-   *     handleSellKegClick: function(keg): void
+   *     handleSellKegClick: function(keg): void,
+   *     handleThrowAwayKegClick: function(keg): void
    *   },
    *   gameState: {
    *     completedAchievements: Object.<string, boolean>
@@ -33,15 +34,19 @@ export function Keg({ keg }) {
    * }}
    */
   const {
-    handlers: { handleSellKegClick },
+    handlers: { handleSellKegClick, handleThrowAwayKegClick },
     gameState: { completedAchievements },
   } = useContext(FarmhandContext)
 
   const item = itemsMap[keg.itemId]
   const fermentationRecipeName = `Fermented ${item.name}`
 
-  const handleSellRecipeClick = () => {
+  const handleSellClick = () => {
     handleSellKegClick(keg)
+  }
+
+  const handleThrowAwayClick = () => {
+    handleThrowAwayKegClick(keg)
   }
 
   const canBeSold = keg.daysUntilMature <= 0
@@ -81,16 +86,27 @@ export function Keg({ keg }) {
       <CardActions>
         <Button
           {...{
-            className: 'make-recipe',
+            className: 'sell-keg',
             color: 'secondary',
-            onClick: handleSellRecipeClick,
+            onClick: handleSellClick,
             variant: 'contained',
             disabled: !canBeSold,
           }}
         >
           Sell
         </Button>
-        {/* FIXME: Add "Toss" button */}
+        {!canBeSold ? (
+          <Button
+            {...{
+              className: 'throw-away-keg',
+              color: 'secondary',
+              onClick: handleThrowAwayClick,
+              variant: 'contained',
+            }}
+          >
+            Throw away
+          </Button>
+        ) : null}
       </CardActions>
     </Card>
   )
