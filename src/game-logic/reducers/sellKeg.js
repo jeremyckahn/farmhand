@@ -30,7 +30,12 @@ import { prependPendingPeerMessage } from './index'
 export const sellKeg = (state, keg) => {
   const { itemId } = keg
   const item = itemsMap[itemId]
-  const { completedAchievements, itemsSold, money: initialMoney } = state
+  const {
+    cellarItemsSold,
+    completedAchievements,
+    itemsSold,
+    money: initialMoney,
+  } = state
   const oldLevel = levelAchieved(farmProductsSold(itemsSold))
 
   let { loanBalance } = state
@@ -56,17 +61,22 @@ export const sellKeg = (state, keg) => {
   // items should be treated distinctly from their originating Grape items.
   const newItemsSold = {
     ...itemsSold,
-    [itemId]: itemsSold[itemId] ?? 0,
+    [itemId]: (itemsSold[itemId] ?? 0) + 1,
+  }
+  const newCellarItemsSold = {
+    ...cellarItemsSold,
+    [itemId]: (cellarItemsSold[itemId] ?? 0) + 1,
+  }
+
+  state = {
+    ...state,
+    itemsSold: newItemsSold,
+    cellarItemsSold: newCellarItemsSold,
   }
 
   // money needs to be passed in explicitly here because state.money gets
   // mutated above and addRevenue needs its initial value.
   state = addRevenue({ ...state, money: initialMoney }, saleValue)
-
-  state = {
-    ...state,
-    itemsSold: newItemsSold,
-  }
 
   state = processLevelUp(state, oldLevel)
   state = removeKegFromCellar(state, keg.id)

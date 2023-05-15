@@ -217,7 +217,12 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {boolean} isCombineEnabled
  * @property {boolean} isMenuOpen
  * @property {Object} itemsSold Keys are items IDs, values are the number of
- * that item sold.
+ * that item sold. The numbers in this map are inclusive of the corresponding
+ * ones in cellarItemsSold and represent the grand total of each item sold.
+ * @property {Object} cellarItemsSold Keys are items IDs, values are the number
+ * of that cellar item sold. The numbers in this map represent a subset of the
+ * corresponding ones in itemsSold. cellarItemsSold is intended to be used for
+ * internal bookkeeping.
  * @property {boolean} isDialogViewOpen
  * @property {boolean} isOnline Whether the player is playing online.
  * @property {boolean} isWaitingForDayToCompleteIncrementing
@@ -402,6 +407,7 @@ export default class Farmhand extends Component {
       isCombineEnabled: false,
       isMenuOpen: !doesMenuObstructStage(),
       itemsSold: {},
+      cellarItemsSold: {},
       isDialogViewOpen: false,
       isOnline: this.props.match.path.startsWith('/online'),
       isWaitingForDayToCompleteIncrementing: false,

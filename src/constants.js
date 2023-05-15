@@ -154,6 +154,7 @@ export const PERSISTED_STATE_KEYS = [
   'inventoryLimit',
   'isCombineEnabled',
   'itemsSold',
+  'cellarItemsSold',
   'learnedRecipes',
   'loanBalance',
   'loansTakenOut',
