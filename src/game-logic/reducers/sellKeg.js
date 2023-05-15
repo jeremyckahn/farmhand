@@ -11,7 +11,7 @@ import {
   moneyTotal,
 } from '../../utils'
 import { LOAN_GARNISHMENT_RATE } from '../../constants'
-import { SOLD_ITEM_PEER_NOTIFICATION } from '../../templates'
+import { SOLD_FERMENTED_ITEM_PEER_NOTIFICATION } from '../../templates'
 import { getKegValue } from '../../utils/getKegValue'
 
 import { processLevelUp } from './processLevelUp'
@@ -81,10 +81,10 @@ export const sellKeg = (state, keg) => {
   state = processLevelUp(state, oldLevel)
   state = removeKegFromCellar(state, keg.id)
 
-  // FIXME: Display kegged item name, not base item
+  // NOTE: This notification will need to be revisited to support Wine sales.
   state = prependPendingPeerMessage(
     state,
-    SOLD_ITEM_PEER_NOTIFICATION`${1}${item}`,
+    SOLD_FERMENTED_ITEM_PEER_NOTIFICATION`${item}`,
     'warning'
   )
 

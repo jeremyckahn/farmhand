@@ -1,5 +1,5 @@
-/** @typedef {import("../../index").farmhand.item} farmhand.item */
-/** @typedef {import("../../index").farmhand.keg} farmhand.keg */
+/** @typedef {import("../../index").farmhand.item} item */
+/** @typedef {import("../../index").farmhand.keg} keg */
 
 import React, { useContext, useEffect, useState } from 'react'
 import { object } from 'prop-types'
@@ -13,26 +13,28 @@ import { items } from '../../img'
 import { doesCellarSpaceRemain } from '../../utils/doesCellarSpaceRemain'
 import { maxYieldOfFermentationRecipe } from '../../utils/maxYieldOfFermentationRecipe'
 import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe'
+import { getFermentedRecipeName } from '../../utils/getFermentedRecipeName'
 import QuantityInput from '../QuantityInput'
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import './FermentationRecipe.sass'
 import { itemsMap } from '../../data/maps'
+
+import './FermentationRecipe.sass'
 
 /**
  * @param {Object} props
- * @param {farmhand.item} props.item
+ * @param {item} props.item
  */
 export const FermentationRecipe = ({ item }) => {
   /**
    * @type {{
    *   gameState: {
-   *     inventory: Array.<farmhand.item>,
-   *     cellarInventory: Array.<farmhand.keg>,
+   *     inventory: Array.<item>,
+   *     cellarInventory: Array.<keg>,
    *     purchasedCellar: number,
    *     inventoryLimit: number
    *   },
    *   handlers: {
-   *     handleMakeFermentationRecipeClick: function(farmhand.item, number)
+   *     handleMakeFermentationRecipeClick: function(item, number)
    *   }
    * }}
    */
@@ -41,7 +43,7 @@ export const FermentationRecipe = ({ item }) => {
     handlers: { handleMakeFermentationRecipeClick },
   } = useContext(FarmhandContext)
 
-  const fermentationRecipeName = `Fermented ${item.name}`
+  const fermentationRecipeName = getFermentedRecipeName(item)
 
   const [quantity, setQuantity] = useState(1)
 

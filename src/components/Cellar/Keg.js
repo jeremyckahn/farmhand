@@ -12,10 +12,11 @@ import { items } from '../../img'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { getKegValue } from '../../utils/getKegValue'
 import { moneyString } from '../../utils/moneyString'
+import { getFermentedRecipeName } from '../../utils/getFermentedRecipeName'
 import { getSalePriceMultiplier } from '../../utils'
+import AnimatedNumber from '../AnimatedNumber'
 
 import './Keg.sass'
-import AnimatedNumber from '../AnimatedNumber'
 
 /**
  * @param {Object} props
@@ -39,7 +40,7 @@ export function Keg({ keg }) {
   } = useContext(FarmhandContext)
 
   const item = itemsMap[keg.itemId]
-  const fermentationRecipeName = `Fermented ${item.name}`
+  const fermentationRecipeName = getFermentedRecipeName(item)
 
   const handleSellClick = () => {
     handleSellKegClick(keg)
