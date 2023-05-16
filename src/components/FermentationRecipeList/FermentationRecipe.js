@@ -19,6 +19,9 @@ import FarmhandContext from '../Farmhand/Farmhand.context'
 import { itemsMap } from '../../data/maps'
 
 import './FermentationRecipe.sass'
+import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
+import { integerString } from '../../utils'
+import AnimatedNumber from '../AnimatedNumber'
 
 /**
  * @param {Object} props
@@ -43,10 +46,10 @@ export const FermentationRecipe = ({ item }) => {
     handlers: { handleMakeFermentationRecipeClick },
   } = useContext(FarmhandContext)
 
-  const fermentationRecipeName = getFermentedRecipeName(item)
-
   const [quantity, setQuantity] = useState(1)
 
+  const inventoryQuantityMap = getInventoryQuantityMap(inventory)
+  const fermentationRecipeName = getFermentedRecipeName(item)
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar)
 
   useEffect(() => {
@@ -107,7 +110,14 @@ export const FermentationRecipe = ({ item }) => {
             <p>Days to ferment: {item.daysToFerment}</p>
             <p>
               Units of {itemsMap.salt.name} required:{' '}
-              {getSaltRequirementsForFermentationRecipe(item)}
+              {getSaltRequirementsForFermentationRecipe(item)} (on hand:{' '}
+              <AnimatedNumber
+                {...{
+                  number: inventoryQuantityMap[itemsMap.salt.id],
+                  formatter: integerString,
+                }}
+              />
+              )
             </p>
             <p>In cellar: {recipeInstancesInCellar}</p>
           </>

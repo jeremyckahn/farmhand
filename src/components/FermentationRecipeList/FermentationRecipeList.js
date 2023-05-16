@@ -21,7 +21,6 @@ export function FermentationRecipeList() {
     .length
 
   // FIXME: Test recipe count display
-  // FIXME: Show units of salt in inventory
   return (
     <>
       <h3>

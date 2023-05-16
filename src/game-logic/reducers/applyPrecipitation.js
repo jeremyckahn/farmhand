@@ -1,5 +1,5 @@
 import { fertilizerType } from '../../enums'
-import { getInventoryQuantityMap } from '../../utils'
+import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
 import {
   RAIN_MESSAGE,
   STORM_MESSAGE,

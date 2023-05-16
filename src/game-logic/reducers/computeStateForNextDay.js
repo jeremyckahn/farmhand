@@ -32,7 +32,6 @@ const adjustItemValues = state => ({
   ),
 })
 
-// FIXME: Process cellar kegs
 /**
  * @param {farmhand.state} state
  * @returns {farmhand.state}

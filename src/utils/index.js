@@ -79,6 +79,7 @@ import { random } from '../common/utils'
 import { memoize } from './memoize'
 import { getCropLifecycleDuration } from './getCropLifecycleDuration'
 import { getItemBaseValue } from './getItemBaseValue'
+import { getInventoryQuantityMap } from './getInventoryQuantityMap'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -600,17 +601,6 @@ export const getCowValue = (cow, computeSaleValue = false) =>
     : getCowWeight(cow) * 1.5
 
 export const getCowSellValue = cow => getCowValue(cow, true)
-
-/**
- * @param {Array.<farmhand.item>} inventory
- * @returns {Object}
- */
-export const getInventoryQuantityMap = memoize(inventory =>
-  inventory.reduce((acc, { id, quantity }) => {
-    acc[id] = quantity
-    return acc
-  }, {})
-)
 
 /**
  * @param {farmhand.recipe} recipe

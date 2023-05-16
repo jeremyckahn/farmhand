@@ -3,9 +3,9 @@
 
 import { itemsMap } from '../data/maps'
 
-import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsForFermentationRecipe'
+import { getInventoryQuantityMap } from './getInventoryQuantityMap'
 
-import { getInventoryQuantityMap } from '.'
+import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsForFermentationRecipe'
 
 // FIXME: Test this
 /**
