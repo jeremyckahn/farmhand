@@ -7,7 +7,9 @@ import CardContent from '@material-ui/core/CardContent'
 import ReactMarkdown from 'react-markdown'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import { KEG_INTEREST_RATE } from '../../constants'
+import { KEG_INTEREST_RATE, PURCHASEABLE_CELLARS } from '../../constants'
+
+import { integerString } from '../../utils'
 
 import { TabPanel } from './TabPanel'
 import { Keg } from './Keg'
@@ -21,18 +23,21 @@ export const InventoryTabPanel = ({ index, currentTab }) => {
   /**
    * @type {{
    *   gameState: {
-   *     cellarInventory:Array.<keg>
+   *     cellarInventory:Array.<keg>,
+   *     purchasedCellar: number
    *   }
    * }}
    */
   const {
-    gameState: { cellarInventory },
+    gameState: { cellarInventory, purchasedCellar },
   } = useContext(FarmhandContext)
-
-  // FIXME: Show cellar capacity
 
   return (
     <TabPanel value={currentTab} index={index}>
+      <h3>
+        Capacity: {integerString(cellarInventory.length)} /{' '}
+        {integerString(PURCHASEABLE_CELLARS.get(purchasedCellar).space)}
+      </h3>
       <ul className="card-list">
         {cellarInventory.map(keg => (
           <li key={keg.id}>
