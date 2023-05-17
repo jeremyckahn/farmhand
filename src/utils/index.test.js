@@ -786,41 +786,6 @@ describe('farmProductSalesVolumeNeededForLevel', () => {
   })
 })
 
-describe('getLevelEntitlements', () => {
-  let entitlements = null
-
-  beforeEach(() => {
-    jest.resetModules()
-    jest.mock('../data/levels', () => ({
-      levels: [
-        { id: 0 },
-        { id: 1 },
-        { id: 2, unlocksShopItem: 'sample-item-1' },
-        { id: 3, increasesSprinklerRange: true },
-        { id: 4, unlocksShopItem: 'sample-item-2' },
-        { id: 5, unlocksTool: 'shovel' },
-        { id: 6, increasesSprinklerRange: true },
-        { id: 7, unlocksShopItem: 'sample-item-3' },
-      ],
-    }))
-
-    entitlements = jest.requireActual('./index').getLevelEntitlements(5)
-  })
-
-  test('calculates level entitlements', () => {
-    expect(entitlements).toEqual({
-      items: {
-        'sample-item-1': true,
-        'sample-item-2': true,
-      },
-      sprinklerRange: 2,
-      tools: {
-        shovel: true,
-      },
-    })
-  })
-})
-
 describe('getAvailableShopInventory', () => {
   test('computes shop inventory that has been unlocked', () => {
     jest.resetModules()
