@@ -202,6 +202,13 @@
  * @type {Object.<farmhand.module:enums.toolType, farmhand.upgradesMetadatum>}
  */
 
+/**
+ * @typedef {Object} farmhand.levelEntitlements
+ * @property {number} sprinklerRange
+ * @property {Object.<string, boolean>} items
+ * @property {Object.<string, boolean>} tools
+ */
+
 import './polyfills'
 import React from 'react'
 import ReactDOM from 'react-dom'

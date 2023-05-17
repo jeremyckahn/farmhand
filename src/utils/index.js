@@ -29,7 +29,6 @@ import {
   rainbowMilk2,
   rainbowMilk3,
 } from '../data/items'
-import { levels } from '../data/levels'
 import { unlockableItems } from '../data/levels'
 import { items as itemImages, animals, pixel } from '../img'
 import {
@@ -62,7 +61,6 @@ import {
   INFINITE_STORAGE_LIMIT,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
-  INITIAL_SPRINKLER_RANGE,
   INITIAL_STORAGE_LIMIT,
   MALE_COW_WEIGHT_MULTIPLIER,
   PEER_METADATA_STATE_KEYS,
@@ -80,6 +78,7 @@ import { memoize } from './memoize'
 import { getCropLifecycleDuration } from './getCropLifecycleDuration'
 import { getItemBaseValue } from './getItemBaseValue'
 import { getInventoryQuantityMap } from './getInventoryQuantityMap'
+import { getLevelEntitlements } from './getLevelEntitlements'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -797,40 +796,6 @@ export const levelAchieved = farmProductsSold =>
  */
 export const farmProductSalesVolumeNeededForLevel = targetLevel =>
   ((targetLevel - 1) * 10) ** 2
-
-/**
- * @param {number} levelNumber
- * @returns {Object} Contains `sprinklerRange` and keys that correspond to
- * unlocked items.
- */
-export const getLevelEntitlements = memoize(levelNumber => {
-  const acc = {
-    sprinklerRange: INITIAL_SPRINKLER_RANGE,
-    items: {},
-    tools: {},
-  }
-
-  // Assumes that levels is sorted by id.
-  levels.find(
-    ({ unlocksShopItem, unlocksTool, id, increasesSprinklerRange }) => {
-      if (increasesSprinklerRange) {
-        acc.sprinklerRange++
-      }
-
-      if (unlocksShopItem) {
-        acc.items[unlocksShopItem] = true
-      }
-
-      if (unlocksTool) {
-        acc.tools[unlocksTool] = true
-      }
-
-      return id === levelNumber
-    }
-  )
-
-  return acc
-})
 
 /**
  * @param {Object} levelEntitlements

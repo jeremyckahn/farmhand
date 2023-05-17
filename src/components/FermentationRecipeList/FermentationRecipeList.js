@@ -20,7 +20,6 @@ export function FermentationRecipeList() {
   const numberOfCropsAvailableToFerment = Object.keys(cropsAvailableToFerment)
     .length
 
-  // FIXME: Test recipe count display
   return (
     <>
       <h3>

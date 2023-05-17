@@ -1,11 +1,11 @@
 import {
   farmProductsSold,
   filterItemIdsToSeeds,
-  getLevelEntitlements,
   getPriceEventForCrop,
   getRandomUnlockedCrop,
   levelAchieved,
 } from '../../utils'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 import { PRICE_EVENT_CHANCE } from '../../constants'
 import { PRICE_CRASH, PRICE_SURGE } from '../../templates'
 import { random } from '../../common/utils'

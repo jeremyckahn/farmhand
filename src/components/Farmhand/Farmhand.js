@@ -50,7 +50,6 @@ import {
   farmProductsSold,
   getAvailableShopInventory,
   getItemCurrentValue,
-  getLevelEntitlements,
   getPeerMetadata,
   inventorySpaceRemaining,
   levelAchieved,
@@ -60,6 +59,7 @@ import {
   sleep,
   transformStateDataForImport,
 } from '../../utils'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 import { memoize } from '../../utils/memoize'
 import { getData, postData } from '../../fetch-utils'
 import { itemsMap, recipesMap } from '../../data/maps'

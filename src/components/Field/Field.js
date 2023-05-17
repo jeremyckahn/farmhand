@@ -21,10 +21,10 @@ import tools from '../../data/tools'
 import {
   doesInventorySpaceRemain,
   farmProductsSold,
-  getLevelEntitlements,
   levelAchieved,
   nullArray,
 } from '../../utils'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 
 import './Field.sass'
 
