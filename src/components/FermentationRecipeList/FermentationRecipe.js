@@ -33,8 +33,7 @@ export const FermentationRecipe = ({ item }) => {
    *   gameState: {
    *     inventory: Array.<item>,
    *     cellarInventory: Array.<keg>,
-   *     purchasedCellar: number,
-   *     inventoryLimit: number
+   *     purchasedCellar: number
    *   },
    *   handlers: {
    *     handleMakeFermentationRecipeClick: function(item, number)
@@ -42,7 +41,7 @@ export const FermentationRecipe = ({ item }) => {
    * }}
    */
   const {
-    gameState: { inventory, cellarInventory, purchasedCellar, inventoryLimit },
+    gameState: { inventory, cellarInventory, purchasedCellar },
     handlers: { handleMakeFermentationRecipeClick },
   } = useContext(FarmhandContext)
 
@@ -59,13 +58,12 @@ export const FermentationRecipe = ({ item }) => {
           item,
           inventory,
           cellarInventory,
-          cellarSize,
-          inventoryLimit
+          cellarSize
         ),
         Math.max(1, quantity)
       )
     )
-  }, [cellarInventory, cellarSize, inventory, inventoryLimit, item, quantity])
+  }, [cellarInventory, cellarSize, inventory, item, quantity])
 
   const canBeMade =
     quantity > 0 && doesCellarSpaceRemain(cellarInventory, purchasedCellar)
@@ -80,8 +78,7 @@ export const FermentationRecipe = ({ item }) => {
     item,
     inventory,
     cellarInventory,
-    cellarSize,
-    inventoryLimit
+    cellarSize
   )
 
   // TODO: Memoize this

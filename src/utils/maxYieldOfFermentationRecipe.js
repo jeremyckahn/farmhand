@@ -1,5 +1,5 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
-/** @typedef {import("../index").farmhand.keg} farmhand.keg */
+/** @typedef {import("../index").farmhand.item} item */
+/** @typedef {import("../index").farmhand.keg} keg */
 
 import { itemsMap } from '../data/maps'
 
@@ -7,21 +7,18 @@ import { getInventoryQuantityMap } from './getInventoryQuantityMap'
 
 import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsForFermentationRecipe'
 
-// FIXME: Test this
 /**
- * @param {farmhand.item} fermentationRecipe
- * @param {Array.<farmhand.item>} inventory
- * @param {Array.<farmhand.keg>} cellarInventory
+ * @param {item} fermentationRecipe
+ * @param {{ id: string, quantity: number }} inventory
+ * @param {Array.<keg>} cellarInventory
  * @param {number} cellarSize
- * @param {number} inventoryLimit
  * @returns {number}
  */
 export const maxYieldOfFermentationRecipe = (
   fermentationRecipe,
   inventory,
   cellarInventory,
-  cellarSize,
-  inventoryLimit
+  cellarSize
 ) => {
   const {
     [fermentationRecipe.id]: itemQuantityInInventory = 0,
@@ -30,8 +27,7 @@ export const maxYieldOfFermentationRecipe = (
 
   const maxYieldWithoutSalt = Math.min(
     cellarSize - cellarInventory.length,
-    itemQuantityInInventory,
-    inventory.length - inventoryLimit
+    itemQuantityInInventory
   )
 
   const maxSaltYieldPotential = Math.floor(

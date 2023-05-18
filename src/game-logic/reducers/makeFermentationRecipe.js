@@ -24,7 +24,7 @@ export const makeFermentationRecipe = (
   fermentationRecipe,
   howMany = 1
 ) => {
-  const { inventory, cellarInventory, purchasedCellar, inventoryLimit } = state
+  const { inventory, cellarInventory, purchasedCellar } = state
 
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar)
 
@@ -32,8 +32,7 @@ export const makeFermentationRecipe = (
     fermentationRecipe,
     inventory,
     cellarInventory,
-    cellarSize,
-    inventoryLimit
+    cellarSize
   )
 
   if (maxYield < howMany) {
