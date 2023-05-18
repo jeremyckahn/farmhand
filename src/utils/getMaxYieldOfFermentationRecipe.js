@@ -14,7 +14,7 @@ import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsF
  * @param {number} cellarSize
  * @returns {number}
  */
-export const maxYieldOfFermentationRecipe = (
+export const getMaxYieldOfFermentationRecipe = (
   fermentationRecipe,
   inventory,
   cellarInventory,

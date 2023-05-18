@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button'
 import { PURCHASEABLE_CELLARS } from '../../constants'
 import { items } from '../../img'
 import { doesCellarSpaceRemain } from '../../utils/doesCellarSpaceRemain'
-import { maxYieldOfFermentationRecipe } from '../../utils/maxYieldOfFermentationRecipe'
+import { getMaxYieldOfFermentationRecipe } from '../../utils/getMaxYieldOfFermentationRecipe'
 import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe'
 import { getFermentedRecipeName } from '../../utils/getFermentedRecipeName'
 import QuantityInput from '../QuantityInput'
@@ -54,7 +54,7 @@ export const FermentationRecipe = ({ item }) => {
   useEffect(() => {
     setQuantity(
       Math.min(
-        maxYieldOfFermentationRecipe(
+        getMaxYieldOfFermentationRecipe(
           item,
           inventory,
           cellarInventory,
@@ -74,7 +74,7 @@ export const FermentationRecipe = ({ item }) => {
     }
   }
 
-  const maxQuantity = maxYieldOfFermentationRecipe(
+  const maxQuantity = getMaxYieldOfFermentationRecipe(
     item,
     inventory,
     cellarInventory,

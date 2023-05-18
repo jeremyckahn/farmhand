@@ -3,9 +3,9 @@ import { v4 as uuid } from 'uuid'
 import { carrot } from '../data/crops'
 import { salt } from '../data/recipes'
 
-import { maxYieldOfFermentationRecipe } from './maxYieldOfFermentationRecipe'
+import { getMaxYieldOfFermentationRecipe } from './getMaxYieldOfFermentationRecipe'
 
-describe('maxYieldOfFermentationRecipe', () => {
+describe('getMaxYieldOfFermentationRecipe', () => {
   test.each([
     // Happy path
     [
@@ -50,7 +50,7 @@ describe('maxYieldOfFermentationRecipe', () => {
   ])(
     'computes max potential yield of a given recipe',
     (inventory, cellarInventory, cellarSize, expectedYield) => {
-      const maxYield = maxYieldOfFermentationRecipe(
+      const maxYield = getMaxYieldOfFermentationRecipe(
         carrot,
         inventory,
         cellarInventory,

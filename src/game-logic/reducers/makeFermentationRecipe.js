@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid'
 import { PURCHASEABLE_CELLARS } from '../../constants'
 import { itemsMap } from '../../data/maps'
 import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe'
-import { maxYieldOfFermentationRecipe } from '../../utils/maxYieldOfFermentationRecipe'
+import { getMaxYieldOfFermentationRecipe } from '../../utils/getMaxYieldOfFermentationRecipe'
 
 import { addKegToCellarInventory } from './addKegToCellarInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
@@ -28,7 +28,7 @@ export const makeFermentationRecipe = (
 
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar)
 
-  const maxYield = maxYieldOfFermentationRecipe(
+  const maxYield = getMaxYieldOfFermentationRecipe(
     fermentationRecipe,
     inventory,
     cellarInventory,
