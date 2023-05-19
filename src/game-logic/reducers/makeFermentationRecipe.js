@@ -12,7 +12,6 @@ import { getMaxYieldOfFermentationRecipe } from '../../utils/getMaxYieldOfFermen
 import { addKegToCellarInventory } from './addKegToCellarInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 
-// FIXME: Test this
 /**
  * @param {state} state
  * @param {item} fermentationRecipe
@@ -53,6 +52,8 @@ export const makeFermentationRecipe = (
   const saltRequirements = getSaltRequirementsForFermentationRecipe(
     fermentationRecipe
   )
+
+  state = decrementItemFromInventory(state, fermentationRecipe.id, howMany)
 
   state = decrementItemFromInventory(
     state,
