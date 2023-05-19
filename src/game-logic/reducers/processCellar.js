@@ -1,6 +1,5 @@
 /** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
 
-// FIXME: Test this
 /**
  * @param {state} state
  * @returns state
