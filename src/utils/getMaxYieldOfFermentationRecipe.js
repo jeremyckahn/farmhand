@@ -25,17 +25,16 @@ export const getMaxYieldOfFermentationRecipe = (
     [itemsMap.salt.id]: saltQuantityInInventory = 0,
   } = getInventoryQuantityMap(inventory)
 
-  const maxYieldWithoutSalt = Math.min(
-    cellarSize - cellarInventory.length,
-    itemQuantityInInventory
-  )
-
   const maxSaltYieldPotential = Math.floor(
     saltQuantityInInventory /
       getSaltRequirementsForFermentationRecipe(fermentationRecipe)
   )
 
-  const maxYieldWithSalt = Math.min(maxYieldWithoutSalt, maxSaltYieldPotential)
+  const maxYield = Math.min(
+    cellarSize - cellarInventory.length,
+    itemQuantityInInventory,
+    maxSaltYieldPotential
+  )
 
-  return maxYieldWithSalt
+  return maxYield
 }
