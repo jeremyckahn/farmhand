@@ -1,21 +1,19 @@
 import React, { useContext } from 'react'
 
-import { itemsMap, fermentableItemsMap } from '../../data/maps'
+import { fermentableItemsMap } from '../../data/maps'
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import { getFinalCropItemFromSeedItem } from '../../utils'
+import { getCropsAvailableToFerment } from '../../utils/getCropsAvailableToFerment'
 
 import { FermentationRecipe } from './FermentationRecipe'
 
 const totalFermentableItems = Object.keys(fermentableItemsMap).length
 
-export function FermentationRecipeList() {
+export const FermentationRecipeList = () => {
   const {
     gameState: { levelEntitlements },
   } = useContext(FarmhandContext)
 
-  const cropsAvailableToFerment = Object.keys(levelEntitlements.items)
-    .map(itemId => getFinalCropItemFromSeedItem(itemsMap[itemId]))
-    .filter(item => (item ? 'daysToFerment' in item : false))
+  const cropsAvailableToFerment = getCropsAvailableToFerment(levelEntitlements)
 
   const numberOfCropsAvailableToFerment = Object.keys(cropsAvailableToFerment)
     .length

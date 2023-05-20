@@ -1,20 +1,28 @@
+/**
+ * @typedef {import('../../index').farmhand.levelEntitlements} levelEntitlements
+ */
 import React from 'react'
 import { screen } from '@testing-library/dom'
 import { render } from '@testing-library/react'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
-
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
+import { getCropsAvailableToFerment } from '../../utils/getCropsAvailableToFerment'
+import { fermentableItemsMap } from '../../data/maps'
 
 import { FermentationRecipeList } from './FermentationRecipeList'
+
+const totalFermentableItems = Object.keys(fermentableItemsMap).length
 
 jest.mock('./FermentationRecipe', () => ({
   FermentationRecipe: () => <></>,
 }))
 
-const FermentationRecipeListStub = ({
-  levelEntitlements = getLevelEntitlements(0),
-} = {}) => (
+/**
+ * @param {Object} props
+ * @param {levelEntitlements} props.levelEntitlements
+ */
+const FermentationRecipeListStub = ({ levelEntitlements } = {}) => (
   <FarmhandContext.Provider
     value={{
       gameState: {
@@ -29,9 +37,12 @@ const FermentationRecipeListStub = ({
 
 describe('FermentationRecipeList', () => {
   test('displays unlearned recipes', () => {
-    render(<FermentationRecipeListStub />)
+    const levelEntitlements = getLevelEntitlements(0)
 
-    const header = screen.getByText(`Learned Fermentation Recipes (0 / 2)`)
+    render(<FermentationRecipeListStub levelEntitlements={levelEntitlements} />)
+    const header = screen.getByText(
+      `Learned Fermentation Recipes (0 / ${totalFermentableItems})`
+    )
 
     expect(header).toBeInTheDocument()
   })
@@ -41,7 +52,13 @@ describe('FermentationRecipeList', () => {
 
     render(<FermentationRecipeListStub levelEntitlements={levelEntitlements} />)
 
-    const header = screen.getByText(`Learned Fermentation Recipes (2 / 2)`)
+    const cropsAvailableToFerment = getCropsAvailableToFerment(
+      levelEntitlements
+    )
+
+    const header = screen.getByText(
+      `Learned Fermentation Recipes (${cropsAvailableToFerment.length} / ${totalFermentableItems})`
+    )
 
     expect(header).toBeInTheDocument()
   })
