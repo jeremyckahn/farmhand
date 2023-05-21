@@ -6,7 +6,6 @@ import { itemsMap } from '../data/maps'
 
 import { getFinalCropItemFromSeedItem } from '.'
 
-// FIXME: Test this
 /**
  * @param {levelEntitlements} levelEntitlements
  * @returns {item[]}
