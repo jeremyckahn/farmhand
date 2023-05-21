@@ -15,7 +15,7 @@ export const getLevelEntitlements = memoize(
    * @returns {levelEntitlements}
    */
   levelNumber => {
-    /** @type levelEntitlements} */
+    /** @type levelEntitlements */
     const acc = {
       sprinklerRange: INITIAL_SPRINKLER_RANGE,
       items: {},

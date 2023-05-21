@@ -41,13 +41,13 @@ describe('FermentationRecipeList', () => {
 
     render(<FermentationRecipeListStub levelEntitlements={levelEntitlements} />)
     const header = screen.getByText(
-      `Learned Fermentation Recipes (0 / ${totalFermentableItems})`
+      `Available Fermentation Recipes (0 / ${totalFermentableItems})`
     )
 
     expect(header).toBeInTheDocument()
   })
 
-  test('displays learned recipes', () => {
+  test('displays available recipes', () => {
     const levelEntitlements = getLevelEntitlements(100)
 
     render(<FermentationRecipeListStub levelEntitlements={levelEntitlements} />)
@@ -57,7 +57,7 @@ describe('FermentationRecipeList', () => {
     )
 
     const header = screen.getByText(
-      `Learned Fermentation Recipes (${cropsAvailableToFerment.length} / ${totalFermentableItems})`
+      `Available Fermentation Recipes (${cropsAvailableToFerment.length} / ${totalFermentableItems})`
     )
 
     expect(header).toBeInTheDocument()
