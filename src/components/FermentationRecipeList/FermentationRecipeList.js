@@ -21,7 +21,7 @@ export const FermentationRecipeList = () => {
   return (
     <>
       <h3>
-        Learned Fermentation Recipes ({numberOfCropsAvailableToFerment} /{' '}
+        Available Fermentation Recipes ({numberOfCropsAvailableToFerment} /{' '}
         {totalFermentableItems})
       </h3>
       <ul className="card-list">
