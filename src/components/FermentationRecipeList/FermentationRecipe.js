@@ -16,12 +16,34 @@ import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltReq
 import { getFermentedRecipeName } from '../../utils/getFermentedRecipeName'
 import QuantityInput from '../QuantityInput'
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import { itemsMap } from '../../data/maps'
+import { fermentableItemsMap, itemsMap } from '../../data/maps'
 
 import './FermentationRecipe.sass'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
 import { integerString } from '../../utils'
 import AnimatedNumber from '../AnimatedNumber'
+import { memoize } from '../../utils/memoize'
+
+/**
+ * @type {function(keg[], item):number}
+ */
+const getRecipesInstancesInCellar = memoize(
+  /**
+   * @param {keg[]} cellarInventory
+   * @param {item} item
+   * @returns number
+   */
+  (cellarInventory, item) => {
+    return cellarInventory.reduce((acc, keg) => {
+      if (keg.itemId === item.id) {
+        acc++
+      }
+
+      return acc
+    }, 0)
+  },
+  { cacheSize: Object.keys(fermentableItemsMap).length }
+)
 
 /**
  * @param {Object} props
@@ -81,14 +103,10 @@ export const FermentationRecipe = ({ item }) => {
     cellarSize
   )
 
-  // TODO: Memoize this
-  const recipeInstancesInCellar = cellarInventory.reduce((acc, keg) => {
-    if (keg.itemId === item.id) {
-      acc++
-    }
-
-    return acc
-  }, 0)
+  const recipeInstancesInCellar = getRecipesInstancesInCellar(
+    cellarInventory,
+    item
+  )
 
   return (
     <Card className="FermentationRecipe">

@@ -39,6 +39,12 @@ export class MemoizeCache {
   }
 }
 
+/**
+ * @param {function} fn
+ * @param {Object} [config]
+ * @param {number} [config.cacheSize]
+ * @see https://github.com/caiogondim/fast-memoize.js
+ */
 export const memoize = (fn, config) =>
   fastMemoize(fn, {
     cache: { create: () => new MemoizeCache(config) },
