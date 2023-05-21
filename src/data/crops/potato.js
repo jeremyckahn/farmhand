@@ -24,6 +24,6 @@ export const potatoSeed = crop({
  * @type {farmhand.item}
  */
 export const potato = crop({
-  ...fromSeed(potatoSeed),
+  ...fromSeed(potatoSeed, { canBeFermented: true }),
   name: 'Potato',
 })

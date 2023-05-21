@@ -19,8 +19,6 @@ export const carrotSeed = crop({
   tier: 1,
 })
 
-// FIXME: Add more fermented items
-
 /**
  * @property farmhand.module:items.carrot
  * @type {farmhand.item}

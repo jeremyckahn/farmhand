@@ -24,6 +24,6 @@ export const jalapenoSeed = crop({
  * @type {farmhand.item}
  */
 export const jalapeno = crop({
-  ...fromSeed(jalapenoSeed),
+  ...fromSeed(jalapenoSeed, { canBeFermented: true }),
   name: 'Jalapeño',
 })
