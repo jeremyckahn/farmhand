@@ -1,6 +1,8 @@
-/** @typedef {import("../../index").farmhand.item} item */
-/** @typedef {import("../../index").farmhand.keg} keg */
-/** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
+/**
+ * @typedef {import("../../index").farmhand.item} item
+ * @typedef {import("../../index").farmhand.keg} keg
+ * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
+ */
 
 import { v4 as uuid } from 'uuid'
 

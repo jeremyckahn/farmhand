@@ -138,7 +138,7 @@ export const FermentationRecipe = ({ item }) => {
               />
               )
             </p>
-            <p>In cellar: {recipeInstancesInCellar}</p>
+            <p>In cellar: {integerString(recipeInstancesInCellar ?? 0)}</p>
           </>
         }
       ></CardHeader>
