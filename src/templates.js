@@ -13,7 +13,6 @@ import {
   getRandomLevelUpRewardQuantity,
   integerString,
 } from './utils'
-import { getFermentedRecipeName } from './utils/getFermentedRecipeName'
 
 /**
  * @param {farmhand.crop} crop
@@ -274,7 +273,7 @@ export const SOLD_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
  * @returns {string}
  */
 export const SOLD_FERMENTED_ITEM_PEER_NOTIFICATION = (_, item) =>
-  `sold one unit of ${getFermentedRecipeName(item)}.`
+  `sold one unit of ${FERMENTED_CROP_NAME`${item}`}.`
 
 /**
  * @param {string} toolName - the name of the tool being replaced
@@ -329,3 +328,10 @@ export const COW_TRADED_NOTIFICATION = (
  * @returns {string}
  */
 export const SHOVELED_PLOT = (_, item) => `Shoveled plot of ${item.name}`
+
+/**
+ * @param {string} _
+ * @param {farmhand.item} item
+ * @returns {string}
+ */
+export const FERMENTED_CROP_NAME = (_, item) => `Fermented ${item.name}`

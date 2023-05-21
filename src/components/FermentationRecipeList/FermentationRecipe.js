@@ -1,5 +1,7 @@
-/** @typedef {import("../../index").farmhand.item} item */
-/** @typedef {import("../../index").farmhand.keg} keg */
+/**
+ * @typedef {import("../../index").farmhand.item} item
+ * @typedef {import("../../index").farmhand.keg} keg
+ */
 
 import React, { useContext, useEffect, useState } from 'react'
 import { object } from 'prop-types'
@@ -13,7 +15,7 @@ import { items } from '../../img'
 import { doesCellarSpaceRemain } from '../../utils/doesCellarSpaceRemain'
 import { getMaxYieldOfFermentationRecipe } from '../../utils/getMaxYieldOfFermentationRecipe'
 import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe'
-import { getFermentedRecipeName } from '../../utils/getFermentedRecipeName'
+import { FERMENTED_CROP_NAME } from '../../templates'
 import QuantityInput from '../QuantityInput'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { fermentableItemsMap, itemsMap } from '../../data/maps'
@@ -70,7 +72,7 @@ export const FermentationRecipe = ({ item }) => {
   const [quantity, setQuantity] = useState(1)
 
   const inventoryQuantityMap = getInventoryQuantityMap(inventory)
-  const fermentationRecipeName = getFermentedRecipeName(item)
+  const fermentationRecipeName = FERMENTED_CROP_NAME`${item}`
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar)
 
   useEffect(() => {
