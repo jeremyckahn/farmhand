@@ -3,6 +3,7 @@
  */
 import { LOAN_GARNISHMENT_RATE } from '../../constants'
 import { carrot } from '../../data/crops'
+import { LOAN_PAYOFF } from '../../templates'
 import { castToMoney } from '../../utils'
 import { getKegValue } from '../../utils/getKegValue'
 
@@ -14,7 +15,7 @@ const stubKeg = { id: 'stub-keg', daysUntilMature: 4, itemId: carrot.id }
 const stubKegValue = getKegValue(stubKeg)
 
 describe('sellKeg', () => {
-  test('sells keg', () => {
+  test('updates inventory', () => {
     const state = sellKeg(
       {
         id: 'abc123',
@@ -34,14 +35,30 @@ describe('sellKeg', () => {
 
     expect(state).toMatchObject({
       cellarInventory: [],
+    })
+  })
+
+  test('updates sales records', () => {
+    const state = sellKeg(
+      {
+        id: 'abc123',
+        cellarInventory: [stubKeg],
+        cellarItemsSold: {},
+        completedAchievements: {},
+        itemsSold: {},
+        learnedRecipes: {},
+        loanBalance: 500,
+        money: 1000,
+        pendingPeerMessages: [],
+        revenue: 0,
+        todaysRevenue: 0,
+      },
+      stubKeg
+    )
+
+    expect(state).toMatchObject({
       cellarItemsSold: { carrot: 1 },
-      completedAchievements: {},
       itemsSold: { carrot: 1 },
-      learnedRecipes: {},
-      loanBalance: castToMoney(500 - stubKegValue * LOAN_GARNISHMENT_RATE),
-      money: castToMoney(
-        1000 + stubKegValue - stubKegValue * LOAN_GARNISHMENT_RATE
-      ),
       pendingPeerMessages: [
         {
           id: 'abc123',
@@ -49,10 +66,6 @@ describe('sellKeg', () => {
           severity: 'warning',
         },
       ],
-      revenue: castToMoney(stubKegValue - stubKegValue * LOAN_GARNISHMENT_RATE),
-      todaysRevenue: castToMoney(
-        stubKegValue - stubKegValue * LOAN_GARNISHMENT_RATE
-      ),
     })
   })
 
@@ -150,8 +163,7 @@ describe('sellKeg', () => {
     })
 
     describe('loan is less than garnishment', () => {
-      // FIXME: Correct this test
-      xtest('loan is payed off', () => {
+      test('loan is payed off', () => {
         const state = sellKeg(
           {
             id: 'abc123',
@@ -170,29 +182,95 @@ describe('sellKeg', () => {
           stubKeg
         )
 
-        const garnishedKegValue = stubKegValue * LOAN_GARNISHMENT_RATE
-
         expect(state).toMatchObject({
           loanBalance: 0,
-          money: castToMoney(1000 + stubKegValue - garnishedKegValue),
-          revenue: castToMoney(stubKegValue - garnishedKegValue),
-          todaysRevenue: castToMoney(stubKegValue - garnishedKegValue),
         })
       })
 
-      test('sale is reduced based on remaining loan balance', () => {
-        // FIXME: Implement this
+      test('sale is reduced by remaining loan balance', () => {
+        const state = sellKeg(
+          {
+            id: 'abc123',
+            cellarInventory: [stubKeg],
+            cellarItemsSold: {},
+            completedAchievements: {},
+            itemsSold: {},
+            learnedRecipes: {},
+            loanBalance: 1,
+            money: 1000,
+            pendingPeerMessages: [],
+            revenue: 0,
+            todaysRevenue: 0,
+            todaysNotifications: [],
+          },
+          stubKeg
+        )
+
+        expect(state).toMatchObject({
+          money: castToMoney(1000 + stubKegValue - 1),
+          revenue: castToMoney(stubKegValue - 1),
+          todaysRevenue: castToMoney(stubKegValue - 1),
+        })
       })
 
       test('payoff notification is shown', () => {
-        // FIXME: Implement this
+        const state = sellKeg(
+          {
+            id: 'abc123',
+            cellarInventory: [stubKeg],
+            cellarItemsSold: {},
+            completedAchievements: {},
+            itemsSold: {},
+            learnedRecipes: {},
+            loanBalance: 1,
+            money: 1000,
+            pendingPeerMessages: [],
+            revenue: 0,
+            todaysRevenue: 0,
+            todaysNotifications: [],
+          },
+          stubKeg
+        )
+
+        expect(state).toMatchObject({
+          todaysNotifications: [
+            { message: LOAN_PAYOFF``, severity: 'success' },
+          ],
+        })
       })
     })
   })
 
   describe('there is not an outstanding loan', () => {
     test('sale is not garnished', () => {
-      // FIXME: Implement this
+      const state = sellKeg(
+        {
+          id: 'abc123',
+          cellarInventory: [stubKeg],
+          cellarItemsSold: {},
+          completedAchievements: {},
+          itemsSold: {},
+          learnedRecipes: {},
+          loanBalance: 0,
+          money: 1000,
+          pendingPeerMessages: [],
+          revenue: 0,
+          todaysRevenue: 0,
+        },
+        stubKeg
+      )
+
+      expect(state).toMatchObject({
+        cellarInventory: [],
+        cellarItemsSold: { carrot: 1 },
+        completedAchievements: {},
+        itemsSold: { carrot: 1 },
+        learnedRecipes: {},
+        loanBalance: 0,
+        money: castToMoney(1000 + stubKegValue),
+        revenue: castToMoney(stubKegValue),
+        todaysRevenue: castToMoney(stubKegValue),
+      })
     })
   })
 })
