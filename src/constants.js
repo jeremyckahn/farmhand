@@ -133,6 +133,7 @@ export const I_AM_RICH_BONUSES = [0.05, 0.1, 0.25]
 
 export const PERSISTED_STATE_KEYS = [
   'allowCustomPeerCowNames',
+  'cellarInventory',
   'completedAchievements',
   'cowBreedingPen',
   'cowColorsPurchased',
@@ -153,6 +154,7 @@ export const PERSISTED_STATE_KEYS = [
   'inventoryLimit',
   'isCombineEnabled',
   'itemsSold',
+  'cellarItemsSold',
   'learnedRecipes',
   'loanBalance',
   'loansTakenOut',
@@ -250,3 +252,5 @@ export const COW_COLORS_HEX_MAP = {
 export const COW_TRADE_TIMEOUT = 10000
 
 export const WEEDS_SPAWN_CHANCE = 0.15
+
+export const KEG_INTEREST_RATE = 0.02

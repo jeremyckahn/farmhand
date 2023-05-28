@@ -7,10 +7,10 @@ import {
   getProfitRecord,
   integerString,
   isOctober,
-  memoize,
   moneyTotal,
   percentageString,
 } from '../utils'
+import { memoize } from '../utils/memoize'
 import { cropLifeStage, standardCowColors } from '../enums'
 import { COW_FEED_ITEM_ID, I_AM_RICH_BONUSES } from '../constants'
 

@@ -9,7 +9,7 @@ import FarmhandContext from '../Farmhand/Farmhand.context'
 import ProgressBar from '../ProgressBar'
 import Achievement from '../Achievement'
 import achievements from '../../data/achievements'
-import { memoize } from '../../utils'
+import { memoize } from '../../utils/memoize'
 
 import './AchievementsView.sass'
 

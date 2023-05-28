@@ -9,10 +9,10 @@ import { itemsMap } from '../../data/maps'
 import {
   doesInventorySpaceRemain,
   getCropLifeStage,
-  getInventoryQuantityMap,
   getPlotContentType,
   getSeedItemIdFromFinalStageCropItemId,
 } from '../../utils'
+import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
 
 import { addItemToInventory } from './addItemToInventory'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt'

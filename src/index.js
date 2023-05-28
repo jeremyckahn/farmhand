@@ -30,6 +30,8 @@
  * @property {number} [quantity] How many of the item the player has.
  * @property {number} [tier] The value tier that the item belongs to.
  * @property {number?} [spawnChance] The respawn rate for the item.
+ * @property {number?} [daysToFerment] This number is defined if the item can
+ * be fermented.
  */
 
 /**
@@ -118,6 +120,16 @@
  */
 
 /**
+ * @typedef farmhand.keg
+ * @type {Object}
+ * @property {string} id UUID to uniquely identify the keg.
+ * @property {string} itemId The item that this keg is based on.
+ * @property {number} daysUntilMature Days remaining until this recipe can be
+ * sold. This value can go negative to indicate "days since fermented." When
+ * negative, the value of the keg is increased.
+ */
+
+/**
  * @typedef farmhand.priceEvent
  * @type {Object}
  * @property {string} itemId
@@ -188,6 +200,13 @@
 /**
  * @typedef farmhand.upgradesMetadata
  * @type {Object.<farmhand.module:enums.toolType, farmhand.upgradesMetadatum>}
+ */
+
+/**
+ * @typedef {Object} farmhand.levelEntitlements
+ * @property {number} sprinklerRange
+ * @property {Object.<string, boolean>} items
+ * @property {Object.<string, boolean>} tools
  */
 
 import './polyfills'

@@ -26,6 +26,8 @@ const QuantityNumberFormat = ({ inputRef, min, max, onChange, ...rest }) => (
   />
 )
 
+// TODO: Rename event handlers to use on* format
+// https://github.com/jeremyckahn/farmhand/issues/414
 const QuantityTextInput = ({
   handleSubmit,
   handleUpdateNumber,

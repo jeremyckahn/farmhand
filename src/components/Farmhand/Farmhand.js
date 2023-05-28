@@ -1,3 +1,6 @@
+/** @typedef {import("../../index").farmhand.item} farmhand.item */
+/** @typedef {import("../../index").farmhand.cow} farmhand.cow */
+/** @typedef {import("../../index").farmhand.keg} farmhand.keg */
 import React, { Component } from 'react'
 import window from 'global/window'
 import { Redirect } from 'react-router-dom'
@@ -47,17 +50,17 @@ import {
   farmProductsSold,
   getAvailableShopInventory,
   getItemCurrentValue,
-  getLevelEntitlements,
   getPeerMetadata,
   inventorySpaceRemaining,
   levelAchieved,
-  memoize,
   moneyTotal,
   nullArray,
   reduceByPersistedKeys,
   sleep,
   transformStateDataForImport,
 } from '../../utils'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
+import { memoize } from '../../utils/memoize'
 import { getData, postData } from '../../fetch-utils'
 import { itemsMap, recipesMap } from '../../data/maps'
 import {
@@ -106,7 +109,7 @@ import { scarecrow } from '../../data/items'
 import { getInventoryQuantities } from './helpers/getInventoryQuantities'
 import FarmhandContext from './Farmhand.context'
 
-const { CLEANUP, HARVEST, MINE, OBSERVE, WATER } = fieldMode
+const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 
 // Utility object for reuse in no-ops to save on memory
 const emptyObject = Object.freeze({})
@@ -133,10 +136,7 @@ export const getFieldToolInventory = memoize(inventory =>
     .filter(({ id }) => {
       const { enablesFieldMode } = itemsMap[id]
 
-      return (
-        typeof enablesFieldMode === 'string' &&
-        enablesFieldMode !== fieldMode.PLANT
-      )
+      return typeof enablesFieldMode === 'string' && enablesFieldMode !== PLANT
     })
     .map(({ id }) => itemsMap[id])
 )
@@ -175,6 +175,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @type {Object}
  * @property {number?} activePlayers
  * @property {boolean} allowCustomPeerCowNames
+ * @property {Array.<farmhand.keg>} cellarInventory
  * @property {farmhand.module:enums.dialogView} currentDialogView
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
@@ -209,14 +210,19 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * future-facing flexibility.
  * @property {number} hoveredPlotRangeSize
  * @property {string} id
- * @property {Array.<{ id: farmhand.item, quantity: number }>} inventory
+ * @property {Array.<{ id: farmhand.item.id, quantity: number }>} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
  * @property {boolean} isAwaitingCowTradeRequest
  * @property {boolean} isAwaitingNetworkRequest
  * @property {boolean} isCombineEnabled
  * @property {boolean} isMenuOpen
  * @property {Object} itemsSold Keys are items IDs, values are the number of
- * that item sold.
+ * that item sold. The numbers in this map are inclusive of the corresponding
+ * ones in cellarItemsSold and represent the grand total of each item sold.
+ * @property {Object} cellarItemsSold Keys are items IDs, values are the number
+ * of that cellar item sold. The numbers in this map represent a subset of the
+ * corresponding ones in itemsSold. cellarItemsSold is intended to be used for
+ * internal bookkeeping.
  * @property {boolean} isDialogViewOpen
  * @property {boolean} isOnline Whether the player is playing online.
  * @property {boolean} isWaitingForDayToCompleteIncrementing
@@ -242,6 +248,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * itemIds.
  * @property {number} purchasedCombine
  * @property {number} purchasedCowPen
+ * @property {number} purchasedCellar
  * @property {number} purchasedField
  * @property {number} profitabilityStreak
  * @property {number} record7dayProfitAverage
@@ -368,6 +375,7 @@ export default class Farmhand extends Component {
     return {
       activePlayers: null,
       allowCustomPeerCowNames: false,
+      cellarInventory: [],
       currentDialogView: dialogView.NONE,
       completedAchievements: {},
       cowForSale: {},
@@ -399,6 +407,7 @@ export default class Farmhand extends Component {
       isCombineEnabled: false,
       isMenuOpen: !doesMenuObstructStage(),
       itemsSold: {},
+      cellarItemsSold: {},
       isDialogViewOpen: false,
       isOnline: this.props.match.path.startsWith('/online'),
       isWaitingForDayToCompleteIncrementing: false,
@@ -546,6 +555,7 @@ export default class Farmhand extends Component {
       'harvestPlot',
       'hugCow',
       'makeRecipe',
+      'makeFermentationRecipe',
       'modifyCow',
       'offerCow',
       'plantInPlot',
@@ -560,10 +570,12 @@ export default class Farmhand extends Component {
       'purchaseSmelter',
       'purchaseStorageExpansion',
       'removeCowFromInventory',
+      'removeKegFromCellar',
       'removePeer',
       'selectCow',
       'sellCow',
       'sellItem',
+      'sellKeg',
       'setScarecrow',
       'setSprinkler',
       'showNotification',

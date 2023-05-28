@@ -24,6 +24,6 @@ export const garlicSeed = crop({
  * @type {farmhand.item}
  */
 export const garlic = crop({
-  ...fromSeed(garlicSeed),
+  ...fromSeed(garlicSeed, { canBeFermented: true }),
   name: 'Garlic',
 })

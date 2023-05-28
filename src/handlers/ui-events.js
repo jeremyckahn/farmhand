@@ -1,3 +1,7 @@
+/**
+ * @typedef {import("../index").farmhand.item} item
+ * @typedef {import("../index").farmhand.keg} keg
+ */
 import { saveAs } from 'file-saver'
 import window from 'global/window'
 
@@ -35,9 +39,12 @@ const {
   WATER,
 } = fieldMode
 
+// All of the functions exported here are bound to the Farmhand component
+// class. See the definition of initInputHandlers:
+// https://github.com/search?q=repo%3Ajeremyckahn%2Ffarmhand+path%3A**%2FFarmhand.js+%2FeventHandlers.*bind%2F&type=code
 export default {
   /**
-   * @param {farmhand.item} item
+   * @param {item} item
    * @param {number} [howMany=1]
    */
   handleItemPurchaseClick(item, howMany = 1) {
@@ -50,6 +57,28 @@ export default {
    */
   handleMakeRecipeClick(recipe, howMany = 1) {
     this.makeRecipe(recipe, howMany)
+  },
+
+  /**
+   * @param {item} fermentationRecipe
+   * @param {number} [howMany=1]
+   */
+  handleMakeFermentationRecipeClick(fermentationRecipe, howMany = 1) {
+    this.makeFermentationRecipe(fermentationRecipe, howMany)
+  },
+
+  /**
+   * @param {keg} keg
+   */
+  handleSellKegClick(keg) {
+    this.sellKeg(keg)
+  },
+
+  /**
+   * @param {keg} keg
+   */
+  handleThrowAwayKegClick(keg) {
+    this.removeKegFromCellar(keg.id)
   },
 
   /**
@@ -126,7 +155,7 @@ export default {
   },
 
   /**
-   * @param {farmhand.item} item
+   * @param {item} item
    * @param {number} [howMany=1]
    */
   handleItemSellClick(item, howMany = 1) {
@@ -161,13 +190,9 @@ export default {
   },
 
   /**
-   * @param {farmhand.item} item
+   * @param {item} item
    */
-  handleItemSelectClick({
-    id,
-    enablesFieldMode,
-    hoveredPlotRangeSize: newHoveredPlotRangeSize,
-  }) {
+  handleItemSelectClick({ id, enablesFieldMode }) {
     this.setState({
       fieldMode: enablesFieldMode,
       selectedItemId: id,

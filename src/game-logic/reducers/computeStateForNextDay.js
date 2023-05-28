@@ -1,22 +1,23 @@
 import { generateCow } from '../../utils'
 import { generateValueAdjustments } from '../../common/utils'
 
-import { processWeather } from './processWeather'
-import { processField } from './processField'
-import { processSprinklers } from './processSprinklers'
-import { processNerfs } from './processNerfs'
-import { processFeedingCows } from './processFeedingCows'
-import { processCowAttrition } from './processCowAttrition'
-import { processMilkingCows } from './processMilkingCows'
-import { processCowFertilizerProduction } from './processCowFertilizerProduction'
-import { processCowBreeding } from './processCowBreeding'
+import { applyLoanInterest } from './applyLoanInterest'
 import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay'
-import { rotateNotificationLogs } from './rotateNotificationLogs'
 import { generatePriceEvents } from './generatePriceEvents'
-import { updatePriceEvents } from './updatePriceEvents'
+import { processCellar } from './processCellar'
+import { processCowAttrition } from './processCowAttrition'
+import { processCowBreeding } from './processCowBreeding'
+import { processCowFertilizerProduction } from './processCowFertilizerProduction'
+import { processFeedingCows } from './processFeedingCows'
+import { processField } from './processField'
+import { processMilkingCows } from './processMilkingCows'
+import { processNerfs } from './processNerfs'
+import { processSprinklers } from './processSprinklers'
+import { processWeather } from './processWeather'
+import { rotateNotificationLogs } from './rotateNotificationLogs'
 import { updateFinancialRecords } from './updateFinancialRecords'
 import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay'
-import { applyLoanInterest } from './applyLoanInterest'
+import { updatePriceEvents } from './updatePriceEvents'
 
 /**
  * @param {farmhand.state} state
@@ -49,6 +50,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
         processCowAttrition,
         processMilkingCows,
         processCowFertilizerProduction,
+        processCellar,
         updatePriceEvents,
         updateFinancialRecords,
         updateInventoryRecordsForNextDay,

@@ -1,12 +1,12 @@
 import { levels } from '../../data/levels'
 import {
   farmProductsSold,
-  getLevelEntitlements,
   getRandomLevelUpReward,
   getRandomLevelUpRewardQuantity,
   levelAchieved,
   unlockTool,
 } from '../../utils'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 import { SPRINKLER_ITEM_ID } from '../../constants'
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
 

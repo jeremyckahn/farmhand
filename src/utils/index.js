@@ -10,7 +10,6 @@
 import { Buffer } from 'buffer'
 
 import Dinero from 'dinero.js'
-import fastMemoize from 'fast-memoize'
 import configureJimp from '@jimp/custom'
 import jimpPng from '@jimp/png'
 import sortBy from 'lodash.sortby'
@@ -30,7 +29,6 @@ import {
   rainbowMilk2,
   rainbowMilk3,
 } from '../data/items'
-import { levels } from '../data/levels'
 import { unlockableItems } from '../data/levels'
 import { items as itemImages, animals, pixel } from '../img'
 import {
@@ -63,10 +61,8 @@ import {
   INFINITE_STORAGE_LIMIT,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
-  INITIAL_SPRINKLER_RANGE,
   INITIAL_STORAGE_LIMIT,
   MALE_COW_WEIGHT_MULTIPLIER,
-  MEMOIZE_CACHE_CLEAR_THRESHOLD,
   PEER_METADATA_STATE_KEYS,
   PERSISTED_STATE_KEYS,
   PRECIPITATION_CHANCE,
@@ -77,6 +73,12 @@ import {
   STORAGE_EXPANSION_SCALE_PREMIUM,
 } from '../constants'
 import { random } from '../common/utils'
+
+import { memoize } from './memoize'
+import { getCropLifecycleDuration } from './getCropLifecycleDuration'
+import { getItemBaseValue } from './getItemBaseValue'
+import { getInventoryQuantityMap } from './getInventoryQuantityMap'
+import { getLevelEntitlements } from './getLevelEntitlements'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -114,49 +116,6 @@ const memoizationSerializer = args =>
   JSON.stringify(
     [...args].map(arg => (typeof arg === 'function' ? arg.toString() : arg))
   )
-
-// This is basically the same as fast-memoize's default cache, except that it
-// clears the cache once the size exceeds MEMOIZE_CACHE_CLEAR_THRESHOLD to
-// prevent memory bloat.
-// https://github.com/caiogondim/fast-memoize.js/blob/5cdfc8dde23d86b16e0104bae1b04cd447b98c63/src/index.js#L114-L128
-/**
- * @ignore
- */
-class MemoizeCache {
-  cache = {}
-
-  /**
-   * @param {Object} [config] Can also contain the config options used to
-   * configure fast-memoize.
-   * @param {number} [config.cacheSize]
-   * @see https://github.com/caiogondim/fast-memoize.js
-   */
-  constructor({ cacheSize = MEMOIZE_CACHE_CLEAR_THRESHOLD } = {}) {
-    this.cacheSize = cacheSize
-  }
-
-  has(key) {
-    return key in this.cache
-  }
-
-  get(key) {
-    return this.cache[key]
-  }
-
-  set(key, value) {
-    if (Object.keys(this.cache).length > this.cacheSize) {
-      this.cache = {}
-    }
-
-    this.cache[key] = value
-  }
-}
-
-export const memoize = (fn, config) =>
-  fastMemoize(fn, {
-    cache: { create: () => new MemoizeCache(config) },
-    ...config,
-  })
 
 /**
  * @param {number} num
@@ -230,12 +189,6 @@ export const integerString = number => formatNumber(number, '0,0')
  * @returns {string} the float converted to a full number with a % added
  */
 export const percentageString = number => `${Math.round(number * 100)}%`
-
-/**
- * @param {string} itemId
- * @returns {number}
- */
-const getItemBaseValue = itemId => itemsMap[itemId].value
 
 /**
  * @param {farmhand.item} item
@@ -325,14 +278,6 @@ export const isItemAFarmProduct = item =>
       item.type === itemType.MILK ||
       item.type === itemType.CRAFTED_ITEM
   )
-
-/**
- * @param {farmhand.crop} crop
- * @returns {number}
- */
-export const getCropLifecycleDuration = memoize(({ cropTimetable }) =>
-  Object.values(cropTimetable).reduce((acc, value) => acc + value, 0)
-)
 
 /**
  * @param {farmhand.cropTimetable} cropTimetable
@@ -657,17 +602,6 @@ export const getCowValue = (cow, computeSaleValue = false) =>
 export const getCowSellValue = cow => getCowValue(cow, true)
 
 /**
- * @param {Array.<farmhand.item>} inventory
- * @returns {Object}
- */
-export const getInventoryQuantityMap = memoize(inventory =>
-  inventory.reduce((acc, { id, quantity }) => {
-    acc[id] = quantity
-    return acc
-  }, {})
-)
-
-/**
  * @param {farmhand.recipe} recipe
  * @param {Array.<farmhand.item>} inventory
  * @returns {number}
@@ -862,40 +796,6 @@ export const levelAchieved = farmProductsSold =>
  */
 export const farmProductSalesVolumeNeededForLevel = targetLevel =>
   ((targetLevel - 1) * 10) ** 2
-
-/**
- * @param {number} levelNumber
- * @returns {Object} Contains `sprinklerRange` and keys that correspond to
- * unlocked items.
- */
-export const getLevelEntitlements = memoize(levelNumber => {
-  const acc = {
-    sprinklerRange: INITIAL_SPRINKLER_RANGE,
-    items: {},
-    tools: {},
-  }
-
-  // Assumes that levels is sorted by id.
-  levels.find(
-    ({ unlocksShopItem, unlocksTool, id, increasesSprinklerRange }) => {
-      if (increasesSprinklerRange) {
-        acc.sprinklerRange++
-      }
-
-      if (unlocksShopItem) {
-        acc.items[unlocksShopItem] = true
-      }
-
-      if (unlocksTool) {
-        acc.tools[unlocksTool] = true
-      }
-
-      return id === levelNumber
-    }
-  )
-
-  return acc
-})
 
 /**
  * @param {Object} levelEntitlements

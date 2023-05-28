@@ -28,9 +28,11 @@ export const itemsMap = {
   ...recipesMap,
 }
 
-export const cropItemIdToSeedItemMap = jest.requireActual('../maps')
-  .cropItemIdToSeedItemMap
-
 export const cropTypeToIdMap = {
   SAMPLE_CROP_TYPE_1: 'sample-crop-type-1',
 }
+
+export const {
+  cropItemIdToSeedItemMap,
+  fermentableItemsMap,
+} = jest.requireActual('../maps')

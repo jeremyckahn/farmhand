@@ -17,8 +17,8 @@ import {
   dollarString,
   getCostOfNextStorageExpansion,
   integerString,
-  memoize,
 } from '../../utils'
+import { memoize } from '../../utils/memoize'
 import { items } from '../../img'
 import { itemType, toolType } from '../../enums'
 import {

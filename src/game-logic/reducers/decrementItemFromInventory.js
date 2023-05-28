@@ -1,8 +1,10 @@
+/** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
+
 /**
- * @param {farmhand.state} state
+ * @param {state} state
  * @param {string} itemId
  * @param {number} [howMany=1]
- * @returns {farmhand.state}
+ * @returns {state}
  */
 export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
   const inventory = [...state.inventory]

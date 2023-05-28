@@ -5,8 +5,7 @@ import { fieldMode, toolLevel, toolType } from '../../enums'
 
 import { Toolbelt } from './Toolbelt'
 
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
+jest.mock('../../utils/memoize', () => ({
   memoize: jest.fn(callback => {
     return (...args) => {
       return callback(...args)

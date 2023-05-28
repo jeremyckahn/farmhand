@@ -42,7 +42,6 @@ import {
   getCowValue,
   getCowWeight,
   getCropLifeStage,
-  getCropLifecycleDuration,
   getFinalCropItemIdFromSeedItemId,
   getSeedItemIdFromFinalStageCropItemId,
   getItemCurrentValue,
@@ -534,12 +533,6 @@ describe('getLifeStageRange', () => {
   })
 })
 
-describe('getCropLifecycleDuration', () => {
-  test('computes lifecycle duration', () => {
-    expect(getCropLifecycleDuration(sampleCropItem1)).toEqual(3)
-  })
-})
-
 describe('getCropLifeStage', () => {
   test('maps a life cycle label to an image name chunk', () => {
     const itemId = 'sample-crop-1'
@@ -790,41 +783,6 @@ describe('farmProductSalesVolumeNeededForLevel', () => {
     expect(farmProductSalesVolumeNeededForLevel(2)).toEqual(100)
     expect(farmProductSalesVolumeNeededForLevel(3)).toEqual(400)
     expect(farmProductSalesVolumeNeededForLevel(100)).toEqual(980100)
-  })
-})
-
-describe('getLevelEntitlements', () => {
-  let entitlements = null
-
-  beforeEach(() => {
-    jest.resetModules()
-    jest.mock('../data/levels', () => ({
-      levels: [
-        { id: 0 },
-        { id: 1 },
-        { id: 2, unlocksShopItem: 'sample-item-1' },
-        { id: 3, increasesSprinklerRange: true },
-        { id: 4, unlocksShopItem: 'sample-item-2' },
-        { id: 5, unlocksTool: 'shovel' },
-        { id: 6, increasesSprinklerRange: true },
-        { id: 7, unlocksShopItem: 'sample-item-3' },
-      ],
-    }))
-
-    entitlements = jest.requireActual('./index').getLevelEntitlements(5)
-  })
-
-  test('calculates level entitlements', () => {
-    expect(entitlements).toEqual({
-      items: {
-        'sample-item-1': true,
-        'sample-item-2': true,
-      },
-      sprinklerRange: 2,
-      tools: {
-        shovel: true,
-      },
-    })
   })
 })
 

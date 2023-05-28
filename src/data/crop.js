@@ -1,6 +1,7 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 
 import { fieldMode, itemType } from '../enums'
+import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration'
 
 const { freeze } = Object
 
@@ -14,10 +15,7 @@ export const crop = ({
   tier,
 
   isSeed = Boolean(growsInto),
-  cropLifecycleDuration = Object.values(cropTimetable).reduce(
-    (acc, value) => acc + value,
-    0
-  ),
+  cropLifecycleDuration = getCropLifecycleDuration({ cropTimetable }),
 
   ...rest
 }) =>
@@ -37,12 +35,14 @@ export const crop = ({
 
 /**
  * @param {farmhand.item} item
- * @param {number} [variantIdx]
+ * @param {Object} [config]
+ * @param {number} [config.variantIdx]
+ * @param {boolean} [config.canBeFermented]
  * @returns {farmhand.item}
  */
 export const fromSeed = (
   { cropTimetable, cropType, growsInto, tier },
-  variantIdx = 0
+  { variantIdx = 0, canBeFermented = false } = {}
 ) => {
   const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 
@@ -53,5 +53,8 @@ export const fromSeed = (
     id: variants[variantIdx],
     tier,
     type: itemType.CROP,
+    ...(canBeFermented && {
+      daysToFerment: getCropLifecycleDuration({ cropTimetable }) * tier,
+    }),
   }
 }
