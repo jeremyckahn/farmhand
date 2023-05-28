@@ -19,7 +19,7 @@ import { Keg } from './Keg'
  * @param {number} props.index
  * @param {number} props.currentTab
  */
-export const InventoryTabPanel = ({ index, currentTab }) => {
+export const CellarInventoryTabPanel = ({ index, currentTab }) => {
   /**
    * @type {{
    *   gameState: {
@@ -65,7 +65,7 @@ export const InventoryTabPanel = ({ index, currentTab }) => {
   )
 }
 
-InventoryTabPanel.propTypes = {
+CellarInventoryTabPanel.propTypes = {
   currentTab: number.isRequired,
   index: number.isRequired,
 }

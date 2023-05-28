@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 
-import { InventoryTabPanel } from './InventoryTabPanel'
+import { CellarInventoryTabPanel } from './CellarInventoryTabPanel'
 import { FermentationTabPanel } from './FermentationTabPanel'
 import { a11yProps } from './TabPanel'
 
@@ -24,7 +24,7 @@ export const Cellar = () => {
           <Tab {...{ label: 'Fermentation', ...a11yProps(1) }} />
         </Tabs>
       </AppBar>
-      <InventoryTabPanel index={0} currentTab={currentTab} />
+      <CellarInventoryTabPanel index={0} currentTab={currentTab} />
       <FermentationTabPanel index={1} currentTab={currentTab} />
     </div>
   )
