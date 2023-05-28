@@ -36,13 +36,7 @@ const getRecipesInstancesInCellar = memoize(
    * @returns number
    */
   (cellarInventory, item) => {
-    return cellarInventory.reduce((acc, keg) => {
-      if (keg.itemId === item.id) {
-        acc++
-      }
-
-      return acc
-    }, 0)
+    return cellarInventory.filter(keg => keg.itemId === item.id).length
   },
   { cacheSize: Object.keys(fermentableItemsMap).length }
 )
