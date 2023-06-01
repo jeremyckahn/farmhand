@@ -1,7 +1,7 @@
 /** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
 
 import { randomNumberService } from '../../common/services/randomNumber'
-import { getKeySpoilageRate } from '../../utils/getKegSpoilageRate'
+import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate'
 
 import { removeKegFromCellar } from './removeKegFromCellar'
 
@@ -16,7 +16,7 @@ export const processCellarSpoilage = state => {
 
   for (let i = newCellarInventory.length - 1; i > -1; i--) {
     const keg = newCellarInventory[i]
-    const spoilageRate = getKeySpoilageRate(keg)
+    const spoilageRate = getKegSpoilageRate(keg)
 
     if (randomNumberService.isRandomNumberLessThan(spoilageRate)) {
       state = removeKegFromCellar(state, keg)

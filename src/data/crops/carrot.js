@@ -1,3 +1,5 @@
+/** @typedef {import("../../index").farmhand.item} item */
+
 import { crop, fromSeed } from '../crop'
 import { cropLifeStage, cropType } from '../../enums'
 
@@ -5,7 +7,7 @@ const { SEED, GROWING } = cropLifeStage
 
 /**
  * @property farmhand.module:items.carrotSeed
- * @type {farmhand.item}
+ * @type {item}
  */
 export const carrotSeed = crop({
   cropType: cropType.CARROT,
@@ -21,7 +23,7 @@ export const carrotSeed = crop({
 
 /**
  * @property farmhand.module:items.carrot
- * @type {farmhand.item}
+ * @type {item}
  */
 export const carrot = crop({
   ...fromSeed(carrotSeed, { canBeFermented: true }),
