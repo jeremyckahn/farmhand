@@ -19,7 +19,7 @@ export const processCellarSpoilage = state => {
     const spoilageRate = getKegSpoilageRate(keg)
 
     if (randomNumberService.isRandomNumberLessThan(spoilageRate)) {
-      state = removeKegFromCellar(state, keg)
+      state = removeKegFromCellar(state, keg.id)
     }
   }
 
