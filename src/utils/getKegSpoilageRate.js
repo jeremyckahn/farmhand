@@ -1,6 +1,6 @@
 /** @typedef {import("../index").farmhand.keg} keg */
 
-const KEG_SPOILAGE_RATE_MULTIPLIER = 0.001
+import { KEG_SPOILAGE_RATE_MULTIPLIER } from '../constants'
 
 /**
  * @param {keg} keg
