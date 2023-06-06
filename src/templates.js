@@ -1,4 +1,7 @@
-/** @typedef {import("./index").farmhand.item} farmhand.item */
+/**
+ * @typedef {import("./index").farmhand.item} farmhand.item
+ * @typedef {import("./index").farmhand.keg} keg
+ */
 
 /**
  * @module farmhand.templates
@@ -335,3 +338,11 @@ export const SHOVELED_PLOT = (_, item) => `Shoveled plot of ${item.name}`
  * @returns {string}
  */
 export const FERMENTED_CROP_NAME = (_, item) => `Fermented ${item.name}`
+
+/**
+ * @param {string} _
+ * @param {keg} keg
+ * @returns {string}
+ */
+export const KEG_SPOILED_MESSAGE = (_, keg) =>
+  `Oh no! Your ${FERMENTED_CROP_NAME`${itemsMap[keg.itemId]}`} has spoiled!`

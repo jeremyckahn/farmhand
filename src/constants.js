@@ -254,3 +254,4 @@ export const COW_TRADE_TIMEOUT = 10000
 export const WEEDS_SPAWN_CHANCE = 0.15
 
 export const KEG_INTEREST_RATE = 0.02
+export const KEG_SPOILAGE_RATE_MULTIPLIER = 0.001

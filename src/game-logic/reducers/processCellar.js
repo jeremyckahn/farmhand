@@ -1,10 +1,13 @@
 /** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
 
+import { processCellarSpoilage } from './processCellarSpoilage'
+
 /**
  * @param {state} state
  * @returns state
  */
 export const processCellar = state => {
+  state = processCellarSpoilage(state)
   const { cellarInventory } = state
 
   const newCellarInventory = [...cellarInventory]

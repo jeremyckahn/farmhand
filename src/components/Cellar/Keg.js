@@ -17,6 +17,7 @@ import { FERMENTED_CROP_NAME } from '../../templates'
 import AnimatedNumber from '../AnimatedNumber'
 
 import './Keg.sass'
+import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate'
 
 /**
  * @param {Object} props
@@ -54,6 +55,9 @@ export function Keg({ keg }) {
   const kegValue =
     getKegValue(keg) * getSalePriceMultiplier(completedAchievements)
 
+  const spoilageRate = getKegSpoilageRate(keg)
+  const spoilageRateDisplayValue = Number((spoilageRate * 100).toPrecision(2))
+
   return (
     <Card className="Keg">
       <CardHeader
@@ -69,18 +73,19 @@ export function Keg({ keg }) {
         subheader={
           <>
             {canBeSold ? (
-              <p>Days since ready: {Math.abs(keg.daysUntilMature)}</p>
+              <>
+                <p>Days since ready: {Math.abs(keg.daysUntilMature)}</p>
+                <p>
+                  Current value:{' '}
+                  <AnimatedNumber
+                    {...{ number: kegValue, formatter: moneyString }}
+                  />
+                </p>
+                <p>Potential for spoilage: {spoilageRateDisplayValue}%</p>
+              </>
             ) : (
               <p>Days until ready: {keg.daysUntilMature}</p>
             )}
-            {canBeSold ? (
-              <p>
-                Current value:{' '}
-                <AnimatedNumber
-                  {...{ number: kegValue, formatter: moneyString }}
-                />
-              </p>
-            ) : null}
           </>
         }
       ></CardHeader>
