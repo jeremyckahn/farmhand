@@ -41,6 +41,14 @@ export const COW_PEN_PURCHASED = (_, cows) =>
   `Purchased a cow pen with capacity for ${cows} cows! You can visit your cow pen by going to the "Cows" page.`
 
 /**
+ * @param {string} _
+ * @param {number} kegCapacity
+ * @returns {string}
+ */
+export const CELLAR_PURCHASED = (_, kegCapacity) =>
+  `Purchased a cellar with capacity for ${kegCapacity} kegs! View your keg inventory by going to the "Cellar" page.`
+
+/**
  * @param {Object.<string, number>} milksProduced
  * @returns {string}
  */

@@ -24,7 +24,7 @@ describe('purchaseCowPen', () => {
     expect(money).toEqual(1500 - PURCHASEABLE_COW_PENS.get(1).price)
   })
 
-  test('shows notifications of purchase', () => {
+  test('shows notification of purchase', () => {
     const { todaysNotifications } = purchaseCowPen(
       { todaysNotifications: [] },
       1
