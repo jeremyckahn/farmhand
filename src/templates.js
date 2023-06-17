@@ -33,6 +33,7 @@ export const CROWS_DESTROYED = (_, numCropsDestroyed) =>
   }!`
 
 /**
+ * @param {string} _
  * @param {number} cows
  * @returns {string}
  */

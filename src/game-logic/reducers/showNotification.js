@@ -1,11 +1,16 @@
+/**
+ * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
+ * @typedef {import("@material-ui/lab/Alert").Color} alertSeverity
+ */
+
 // TODO: Change showNotification to accept a configuration object instead of so
 // many formal parameters.
 /**
- * @param {farmhand.state} state
+ * @param {state} state
  * @param {string} message
- * @param {string} [severity] Corresponds to the `severity` prop here:
+ * @param {alertSeverity} [severity] Corresponds to the `severity` prop here:
  * https://material-ui.com/api/alert/
- * @returns {farmhand.state}
+ * @returns {state}
  * @see https://material-ui.com/api/alert/
  */
 export const showNotification = (
