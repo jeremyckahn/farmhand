@@ -1,6 +1,9 @@
-/** @typedef {import("../../index").farmhand.item} farmhand.item */
-/** @typedef {import("../../index").farmhand.cow} farmhand.cow */
-/** @typedef {import("../../index").farmhand.keg} farmhand.keg */
+/**
+ * @typedef {import("../../index").farmhand.item} farmhand.item
+ * @typedef {import("../../index").farmhand.cow} farmhand.cow
+ * @typedef {import("../../index").farmhand.keg} farmhand.keg
+ * @typedef {import("../../index").farmhand.notification} notification
+ */
 import React, { Component } from 'react'
 import window from 'global/window'
 import { Redirect } from 'react-router-dom'
@@ -74,7 +77,6 @@ import {
   COW_TRADE_TIMEOUT,
   DEFAULT_ROOM,
   INITIAL_STORAGE_LIMIT,
-  PURCHASEABLE_COW_PENS,
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
 } from '../../constants'
@@ -84,7 +86,6 @@ import {
 } from '../../common/constants'
 import {
   CONNECTED_TO_ROOM,
-  COW_PEN_PURCHASED,
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
@@ -230,9 +231,9 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} loanBalance
  * @property {number} loansTakenOut
  * @property {number} money
- * @property {farmhand.notification} latestNotification
- * @property {Array.<farmhand.notification>} newDayNotifications
- * @property {Array.<farmhand.notification>} notificationLog
+ * @property {notification} latestNotification
+ * @property {Array.<notification>} newDayNotifications
+ * @property {Array.<notification>} notificationLog
  * @property {Object} peers Keys are (Trystero) peer ids, values are their respective metadata or null.
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
  * @property {Array.<farmhand.peerMessage>} pendingPeerMessages An array of
@@ -264,7 +265,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
  * @property {farmhand.module:enums.stageFocusType} stageFocus
- * @property {Array.<farmhand.notification>} todaysNotifications
+ * @property {Array.<notification>} todaysNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {Object} todaysPurchases Keys are item names, values are their
  * respective quantities.
@@ -635,7 +636,7 @@ export default class Farmhand extends Component {
     this.setState({ hasBooted: true })
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     const {
       hasBooted,
       heartbeatTimeoutId,
@@ -766,7 +767,6 @@ export default class Farmhand extends Component {
     }
 
     ;[
-      'showCowPenPurchasedNotifications',
       'showInventoryFullNotifications',
       'showRecipeLearnedNotifications',
     ].forEach(fn => this[fn](prevState))
@@ -813,9 +813,7 @@ export default class Farmhand extends Component {
         const { ownerId } = peerPlayerCow
 
         const [peerId] =
-          Object.entries(peers).find(
-            ([peerId, peer]) => peer?.id === ownerId
-          ) ?? []
+          Object.entries(peers).find(([, peer]) => peer?.id === ownerId) ?? []
 
         if (!peerId) {
           console.error(
@@ -1033,21 +1031,6 @@ export default class Farmhand extends Component {
         this.scheduleHeartbeat()
       }, HEARTBEAT_INTERVAL_PERIOD),
     }))
-  }
-
-  /*!
-   * @param {farmhand.state} prevState
-   */
-  showCowPenPurchasedNotifications(prevState) {
-    const {
-      state: { purchasedCowPen },
-    } = this
-
-    if (purchasedCowPen !== prevState.purchasedCowPen) {
-      const { cows } = PURCHASEABLE_COW_PENS.get(purchasedCowPen)
-
-      this.showNotification(COW_PEN_PURCHASED`${cows}`)
-    }
   }
 
   /*!
