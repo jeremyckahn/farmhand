@@ -68,7 +68,7 @@
     "husky": "^4.2.3",
     "jest-extended": "^0.11.5",
     "jest-junit": "^14.0.1",
-    "jimp": "^0.16.1",
+    "jimp": "^0.22.8",
     "jsdoc": "^3.5.5",
     "jsdom": "^16.2.1",
     "markdown-table": "^2.0.0",
