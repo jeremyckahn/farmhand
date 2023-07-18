@@ -201,7 +201,7 @@
  * @property {string} id
  * @property {string?} description
  * @property {string} name
- * @property {Object.<farmhand.item["id"], number>?} ingredients
+ * @property {Record<farmhand.item["id"], number>?} ingredients
  * @property {toolLevel?} nextLevel
  * @property {boolean?} isMaxLevel
  */
