@@ -3,12 +3,20 @@
  */
 
 /**
+ * @typedef {import("./enums").cropType} cropType
+ * @typedef {import("./enums").cowColors} cowColors
+ * @typedef {import("./enums").recipeType} recipeType
+ * @typedef {import("./enums").toolLevel} toolLevel
+ * @typedef {import("./enums").toolType} toolType
+ */
+
+/**
  * Lookup table for the lifecycle durations of a crop (in days).
  * @typedef farmhand.cropTimetable
- * @readonly
  * @type {Object}
  * @property {number} seed
  * @property {number} growing
+ * @readonly
  */
 
 /**
@@ -20,7 +28,7 @@
  * @property {string} type
  * @property {number} value
  * @property {farmhand.cropTimetable} [cropTimetable]
- * @property {farmhand.module:enums.cropType} [cropType]
+ * @property {cropType} [cropType]
  * @property {string} [description] A user-friendly description of the item.
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.
  * @property {string|Array.<string>} [growsInto] The id of farmhand.item or list of ids of other farmhand.items that this farmhand.item (likely a crop seed) will grow into.
@@ -57,7 +65,7 @@
  * @property {number} daysOld
  * @property {number} daysWatered
  * @property {boolean?} isFertilized Deprecated by fertilizerType.
- * @property {farmhand.module:enums.fertilizerType} fertilizerType
+ * @property {farmhand.enums.fertilizerType} fertilizerType
  * @property {boolean} wasWateredToday
  */
 
@@ -77,7 +85,7 @@
  * @type {Object}
  * @property {number} baseWeight
  * @property {string} color
- * @property {Object.<farmhand.module:enums.cowColors, boolean>} colorsInBloodline
+ * @property {Object.<cowColors, boolean>} colorsInBloodline
  * @property {number} daysOld
  * @property {number} daysSinceMilking Only applies to female cows.
  * @property {number} daysSinceProducingFertilizer Only applies to male cows.
@@ -110,14 +118,14 @@
 
 /**
  * @typedef farmhand.recipe
- * @readonly
  * @type {farmhand.item}
- * @property {farmhand.module:enums.recipeType} recipeType The type of recipe
+ * @property {recipeType} recipeType The type of recipe
  * this is.
  * @property {{string: number}} ingredients An object where each
  * key is the id of a farmhand.item and the value is the quantity of that item.
  * @property {farmhand.recipeCondition} condition This must return `true` for
  * the recipe to be made available to the player.
+ * @readonly
  */
 
 /**
@@ -152,7 +160,6 @@
 
 /**
  * @typedef farmhand.achievement
- * @readonly
  * @type {Object}
  * @property {string} id
  * @property {string} name
@@ -160,15 +167,16 @@
  * @property {string} rewardDescription
  * @property {farmhand.achievementCondition} condition
  * @property {farmhand.achievementReward} reward
+ * @readonly
  */
 
 /**
  * @typedef farmhand.level
- * @readonly
  * @type {Object}
  * @property {number} id
  * @property {boolean} [increasesSprinklerRange]
  * @property {string} [unlocksShopItem] Must reference a farmhand.item id.
+ * @readonly
  */
 
 /**
@@ -193,14 +201,14 @@
  * @property {string} id
  * @property {string?} description
  * @property {string} name
- * @property {Object.<farmhand.item.id, number>?} ingredients
- * @property {farmhand.module:enums.toolLevel?} nextLevel
+ * @property {Object.<farmhand.item["id"], number>?} ingredients
+ * @property {toolLevel?} nextLevel
  * @property {boolean?} isMaxLevel
  */
 
 /**
  * @typedef farmhand.upgradesMetadata
- * @type {Object.<farmhand.module:enums.toolType, farmhand.upgradesMetadatum>}
+ * @type {Object.<toolType, farmhand.upgradesMetadatum>}
  */
 
 /**
