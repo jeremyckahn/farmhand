@@ -107,11 +107,14 @@ export const chooseRandomIndex = list =>
  */
 export const chooseRandom = list => list[chooseRandomIndex(list)]
 
-// Ensures that the condition argument to memoize() is not ignored, per
-// https://github.com/caiogondim/fast-memoize.js#function-arguments
-//
-// Pass this is the `serializer` option to any memoize()-ed functions that
-// accept function arguments.
+/**
+ * Ensures that the condition argument to memoize() is not ignored, per
+ * https://github.com/caiogondim/fast-memoize.js#function-arguments
+ *
+ * Pass this is the `serializer` option to any memoize()-ed functions that
+ * accept function arguments.
+ * @param {any[]} args
+ */
 const memoizationSerializer = args =>
   JSON.stringify(
     [...args].map(arg => (typeof arg === 'function' ? arg.toString() : arg))
@@ -125,11 +128,14 @@ const memoizationSerializer = args =>
 export const clampNumber = (num, min, max) =>
   num <= min ? min : num >= max ? max : num
 
+/**
+ * @param {number} num
+ */
 export const castToMoney = num => Math.round(num * 100) / 100
 
 /**
  * Safely adds dollar figures to avoid IEEE 754 rounding errors.
- * @param {...number} num Numbers that represent money values.
+ * @param {...number} args Numbers that represent money values.
  * @returns {number}
  * @see http://adripofjavascript.com/blog/drips/avoiding-problems-with-decimal-math-in-javascript.html
  */
@@ -192,7 +198,7 @@ export const percentageString = number => `${Math.round(number * 100)}%`
 
 /**
  * @param {farmhand.item} item
- * @param {Object.<number>} valueAdjustments
+ * @param {Record<string, number>} valueAdjustments
  * @returns {number}
  */
 export const getItemCurrentValue = ({ id }, valueAdjustments) =>
@@ -207,7 +213,7 @@ export const getItemCurrentValue = ({ id }, valueAdjustments) =>
   }).toUnit()
 
 /**
- * @param {Object} valueAdjustments
+ * @param {Record<string, number>} valueAdjustments
  * @param {string} itemId
  * @returns {number} Rounded to a money value.
  */

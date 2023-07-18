@@ -18,6 +18,7 @@
  * @property {string} id
  * @property {string} name
  * @property {string} type
+ * @property {number} value
  * @property {farmhand.cropTimetable} [cropTimetable]
  * @property {farmhand.module:enums.cropType} [cropType]
  * @property {string} [description] A user-friendly description of the item.
