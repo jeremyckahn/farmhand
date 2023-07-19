@@ -8,6 +8,7 @@
  * @typedef {import("./enums").recipeType} recipeType
  * @typedef {import("./enums").toolLevel} toolLevel
  * @typedef {import("./enums").toolType} toolType
+ * @typedef {import("./enums").fertilizerType} fertilizerType
  */
 
 /**
@@ -56,6 +57,8 @@
  * @typedef farmhand.plotContent
  * @type {Object}
  * @property {string} itemId
+ * @property {boolean=} isFertilized Deprecated by fertilizerType.
+ * @property {fertilizerType} fertilizerType
  */
 
 /**
@@ -64,8 +67,6 @@
  * @type {farmhand.plotContent}
  * @property {number} daysOld
  * @property {number} daysWatered
- * @property {boolean?} isFertilized Deprecated by fertilizerType.
- * @property {farmhand.enums.fertilizerType} fertilizerType
  * @property {boolean} wasWateredToday
  */
 

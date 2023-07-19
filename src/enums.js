@@ -5,7 +5,7 @@
 
 /**
  * @param {Array.<string>} keys
- * @returns {Object.<string>}
+ * @returns {Record<string, string>}
  */
 export const enumify = keys =>
   keys.reduce((acc, key) => ({ [key]: key, ...acc }), {})

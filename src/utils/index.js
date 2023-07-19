@@ -245,11 +245,10 @@ export const getPlotContentFromItemId = itemId => ({
  * @param {string} itemId
  * @returns {farmhand.crop}
  */
-export const getCropFromItemId = itemId => ({
+export const getCropFromItemId = itemId => /** @type farmhand.crop */ ({
   ...getPlotContentFromItemId(itemId),
   daysOld: 0,
   daysWatered: 0,
-  fertilizerType: fertilizerType.NONE,
   wasWateredToday: false,
 })
 
@@ -265,7 +264,7 @@ export const getPlotContentType = ({ itemId }) =>
  * @returns {boolean}
  */
 export const doesPlotContainCrop = plot =>
-  plot && getPlotContentType(plot) === itemType.CROP
+  plot !== null && getPlotContentType(plot) === itemType.CROP
 
 /**
  * @param {farmhand.item} item
