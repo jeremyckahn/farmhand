@@ -1,6 +1,8 @@
 /** @typedef {import("../index").farmhand.crop} farmhand.crop */
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 /** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
+/** @typedef {import("../index").farmhand.cropTimetable} farmhand.cropTimetable */
+/** @typedef {import("../enums").cropLifeStage} cropLifeStage */
 
 /**
  * @module farmhand.utils
@@ -284,12 +286,13 @@ export const isItemAFarmProduct = item =>
       item.type === itemType.CRAFTED_ITEM
   )
 
-/**
- * @param {farmhand.cropTimetable} cropTimetable
- * @returns {Array.<enums.cropLifeStage>}
- */
-export const getLifeStageRange = memoize(cropTimetable =>
+export const getLifeStageRange = memoize((
+  /** @type {farmhand.cropTimetable} */ cropTimetable
+) =>
   [SEED, GROWING].reduce(
+    /**
+     * @param {cropLifeStage[]} acc
+     */
     (acc, stage) => acc.concat(Array(cropTimetable[stage]).fill(stage)),
     []
   )
