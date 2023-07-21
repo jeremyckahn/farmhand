@@ -3,6 +3,9 @@
 /** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
 /** @typedef {import("../index").farmhand.shoveledPlot} farmhand.shoveledPlot */
 /** @typedef {import("../index").farmhand.cropTimetable} farmhand.cropTimetable */
+/** @typedef {import("../index").farmhand.cow} farmhand.cow */
+/** @typedef {import("../index").farmhand.recipe} farmhand.recipe */
+/** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
 /** @typedef {import("../enums").cropLifeStage} farmhand.cropLifeStage */
 
 /**
@@ -376,7 +379,7 @@ export const getPlotImage = (plotContents, x, y) => {
  * @param {number} rangeSize
  * @param {number} centerX
  * @param {number} centerY
- * @returns {Array.<Array.<?farmhand.plotContent>>}
+ * @returns {{x: number, y: number}[][]}
  */
 export const getRangeCoords = (rangeSize, centerX, centerY) => {
   const squareSize = 2 * rangeSize + 1
@@ -384,26 +387,28 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
   const rangeStartY = centerY - rangeSize
 
   return new Array(squareSize)
-    .fill()
+    .fill(null)
     .map((_, y) =>
       new Array(squareSize)
-        .fill()
+        .fill(null)
         .map((_, x) => ({ x: rangeStartX + x, y: rangeStartY + y }))
     )
 }
 
 /**
  * @param {farmhand.item} item
- * @param {number} [variationIdx=0]
- * @returns {farmhand.item}
+ * @param {number} [variantIdx]
  */
-export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) =>
-  itemsMap[getFinalCropItemIdFromSeedItemId(id, variantIdx)]
+export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) => {
+  const itemId = getFinalCropItemIdFromSeedItemId(id, variantIdx)
+
+  if (itemId) return itemsMap[itemId]
+}
 
 /**
  * @param {string} seedItemId
  * @param {number} [variationIdx]
- * @returns {string}
+ * @returns {string=}
  */
 export const getFinalCropItemIdFromSeedItemId = (
   seedItemId,
@@ -418,19 +423,22 @@ export const getFinalCropItemIdFromSeedItemId = (
   }
 }
 
-/**
- * @param {string} cropItemId
- * @returns {string}
- */
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
-  cropItemId => {
-    return Object.values(itemsMap).find(({ growsInto }) => {
+  (/** @type {string} */ cropItemId) => {
+    const seedItemId = Object.values(itemsMap).find(({ growsInto }) => {
       if (Array.isArray(growsInto)) {
         return growsInto.includes(cropItemId)
       } else {
         return growsInto === cropItemId
       }
-    }).id
+    })?.id
+
+    if (!seedItemId)
+      throw new Error(
+        `Crop item ID ${cropItemId} does not have a corresponding seed`
+      )
+
+    return seedItemId
   },
   {
     cacheSize: Object.keys(itemsMap).length,
@@ -652,7 +660,7 @@ export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
 
 /**
  * @param {farmhand.recipe} recipe
- * @param {Array.<farmhand.item>} inventory
+ * @param {farmhand.item[]} inventory
  * @param {number} howMany
  * @returns {boolean}
  */
@@ -660,8 +668,8 @@ export const canMakeRecipe = (recipe, inventory, howMany) =>
   maxYieldOfRecipe(recipe, inventory) >= howMany
 
 /**
- * @param {Array.<string>} itemIds
- * @returns {Array.<string>}
+ * @param {string[]} itemsIds
+ * @returns {string[]}
  */
 export const filterItemIdsToSeeds = itemsIds =>
   itemsIds.filter(id => itemsMap[id].type === itemType.CROP)
@@ -677,10 +685,17 @@ export const getRandomUnlockedCrop = unlockedSeedItemIds => {
     ? chooseRandomIndex(seedItem.growsInto)
     : 0
 
-  const cropItem =
-    itemsMap[getFinalCropItemIdFromSeedItemId(seedItemId, variationIdx)]
+  const finalCropItemId = getFinalCropItemIdFromSeedItemId(
+    seedItemId,
+    variationIdx
+  )
 
-  return cropItem
+  if (!finalCropItemId)
+    throw new Error(
+      `Seed item ID ${seedItemId} has no corresponding final crop ID`
+    )
+
+  return itemsMap[finalCropItemId]
 }
 
 /**
@@ -695,7 +710,7 @@ export const getPriceEventForCrop = cropItem => ({
 
 /**
  * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @param {function(?farmhand.plotContent)} condition
+ * @param {function(?farmhand.plotContent): boolean} condition
  * @returns {?farmhand.plotContent}
  */
 export const findInField = memoize(
