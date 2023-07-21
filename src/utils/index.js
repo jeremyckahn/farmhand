@@ -89,6 +89,20 @@ const Jimp = configureJimp({
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
+/**
+ * @param {unknown} obj
+ * @returns {obj is farmhand.plotContent}
+ */
+const isPlotContent = (obj = {}) =>
+  Boolean(obj && obj['itemId'] && obj['fertilizerType'])
+
+/**
+ * @param {unknown} obj
+ * @returns {obj is farmhand.shoveledPlot}
+ */
+const isShoveledPlot = (obj = {}) =>
+  Boolean(obj && obj['isShoveled'] && obj['daysUntilClear'])
+
 const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
   (acc, item) => {
     acc[item.id] = item
@@ -315,43 +329,47 @@ export const getCropLifeStage = crop => {
 }
 
 /**
- * @param {farmhand.plotContent | farmhand.shoveledPlot | null} plotContent
+ * @param {farmhand.plotContent | farmhand.shoveledPlot | null} plotContents
  * @param {number} x
  * @param {number} y
  * @returns {?string}
  */
-export const getPlotImage = (plotContent, x, y) => {
-  if (!plotContent) return null
+export const getPlotImage = (plotContents, x, y) => {
+  if (isPlotContent(plotContents)) {
+    if (isPlotContentACrop(plotContents)) {
+      let itemImageId
+      switch (getCropLifeStage(plotContents)) {
+        case GROWN:
+          itemImageId = plotContents.itemId
+          break
 
-  if (getPlotContentType(plotContent) === itemType.CROP) {
-    let itemImageId
-    switch (getCropLifeStage(plotContent)) {
-      case GROWN:
-        itemImageId = plotContent.itemId
-        break
+        case GROWING:
+          itemImageId = `${plotContents.itemId}-growing`
+          break
 
-      case GROWING:
-        itemImageId = `${plotContent.itemId}-growing`
-        break
+        default:
+          const seedItem = cropItemIdToSeedItemMap[plotContents.itemId]
+          itemImageId = seedItem.id
+      }
 
-      default:
-        const seedItem = cropItemIdToSeedItemMap[plotContent.itemId]
-        itemImageId = seedItem.id
+      return itemImages[itemImageId]
     }
 
-    return itemImages[itemImageId]
+    if (getPlotContentType(plotContents) === itemType.WEED) {
+      const weedColors = ['yellow', 'orange', 'pink']
+      const color = weedColors[(x * y) % weedColors.length]
+
+      return itemImages[`weed-${color}`]
+    }
   }
 
-  if (getPlotContentType(plotContent) === itemType.WEED) {
-    const weedColors = ['yellow', 'orange', 'pink']
-    const color = weedColors[(x * y) % weedColors.length]
-
-    return itemImages[`weed-${color}`]
-  } else if (plotContent?.oreId) {
-    return itemImages[plotContent.oreId]
-  } else {
-    return itemImages[plotContent.itemId]
+  if (isShoveledPlot(plotContents) && plotContents?.oreId) {
+    return itemImages[plotContents.oreId]
+  } else if (isPlotContent(plotContents)) {
+    return itemImages[plotContents.itemId]
   }
+
+  return null
 }
 
 /**
@@ -1083,6 +1101,13 @@ export const getSalePriceMultiplier = (completedAchievements = {}) => {
 
   return salePriceMultiplier
 }
+
+/**
+ * @param {farmhand.plotContent} plotContents
+ * @returns {plotContents is farmhand.crop}
+ */
+const isPlotContentACrop = plotContents =>
+  getPlotContentType(plotContents) === itemType.CROP
 
 /**
  * @param {Array} weightedOptions an array of objects each containing a `weight` property
