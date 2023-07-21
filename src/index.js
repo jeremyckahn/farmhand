@@ -46,28 +46,28 @@
 
 /**
  * @typedef farmhand.cropVariety
- * @type {farmhand.item}
  * @property {string} imageId
+ * @extends farmhand.item
  */
 
 /**
  * This is a minimalist base type to be inherited and expanded on by types like
  * farmhand.crop. This also represents non-crop plot content like scarecrows
  * and sprinklers.
- * @typedef farmhand.plotContent
- * @type {Object}
+ * @typedef farmhand.plotContentType
  * @property {string} itemId
  * @property {boolean=} isFertilized Deprecated by fertilizerType.
  * @property {fertilizerType} fertilizerType
+ * @typedef {farmhand.plotContentType} farmhand.plotContent
  */
 
 /**
  * Represents a crop as it proceeds through the lifecycle.
- * @typedef farmhand.crop
- * @type {farmhand.plotContent}
+ * @typedef farmhand.cropType
  * @property {number} daysOld
  * @property {number} daysWatered
  * @property {boolean} wasWateredToday
+ * @typedef {farmhand.plotContent & farmhand.cropType} farmhand.crop
  */
 
 /**

@@ -1,8 +1,9 @@
 /** @typedef {import("../index").farmhand.crop} farmhand.crop */
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 /** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
+/** @typedef {import("../index").farmhand.shoveledPlot} farmhand.shoveledPlot */
 /** @typedef {import("../index").farmhand.cropTimetable} farmhand.cropTimetable */
-/** @typedef {import("../enums").cropLifeStage} cropLifeStage */
+/** @typedef {import("../enums").cropLifeStage} farmhand.cropLifeStage */
 
 /**
  * @module farmhand.utils
@@ -291,7 +292,7 @@ export const getLifeStageRange = memoize((
 ) =>
   [SEED, GROWING].reduce(
     /**
-     * @param {cropLifeStage[]} acc
+     * @param {farmhand.cropLifeStage[]} acc
      */
     (acc, stage) => acc.concat(Array(cropTimetable[stage]).fill(stage)),
     []
@@ -300,52 +301,57 @@ export const getLifeStageRange = memoize((
 
 /**
  * @param {farmhand.crop} crop
- * @returns {enums.cropLifeStage}
+ * @returns {farmhand.cropLifeStage}
  */
-export const getCropLifeStage = ({ itemId, daysWatered }) =>
-  getLifeStageRange(itemsMap[itemId].cropTimetable)[Math.floor(daysWatered)] ||
-  GROWN
+export const getCropLifeStage = crop => {
+  const { itemId, daysWatered } = crop
+  const { cropTimetable } = itemsMap[itemId]
+
+  if (!cropTimetable) {
+    throw new Error(`${itemId} has no cropTimetable`)
+  }
+
+  return getLifeStageRange(cropTimetable)[Math.floor(daysWatered)] || GROWN
+}
 
 /**
- * @param {farmhand.plotContent} plotContent
+ * @param {farmhand.plotContent | farmhand.shoveledPlot | null} plotContent
  * @param {number} x
  * @param {number} y
  * @returns {?string}
  */
 export const getPlotImage = (plotContent, x, y) => {
-  if (plotContent) {
-    if (getPlotContentType(plotContent) === itemType.CROP) {
-      let itemImageId
-      switch (getCropLifeStage(plotContent)) {
-        case GROWN:
-          itemImageId = plotContent.itemId
-          break
+  if (!plotContent) return null
 
-        case GROWING:
-          itemImageId = `${plotContent.itemId}-growing`
-          break
+  if (getPlotContentType(plotContent) === itemType.CROP) {
+    let itemImageId
+    switch (getCropLifeStage(plotContent)) {
+      case GROWN:
+        itemImageId = plotContent.itemId
+        break
 
-        default:
-          const seedItem = cropItemIdToSeedItemMap[plotContent.itemId]
-          itemImageId = seedItem.id
-      }
+      case GROWING:
+        itemImageId = `${plotContent.itemId}-growing`
+        break
 
-      return itemImages[itemImageId]
+      default:
+        const seedItem = cropItemIdToSeedItemMap[plotContent.itemId]
+        itemImageId = seedItem.id
     }
 
-    if (getPlotContentType(plotContent) === itemType.WEED) {
-      const weedColors = ['yellow', 'orange', 'pink']
-      const color = weedColors[(x * y) % weedColors.length]
-
-      return itemImages[`weed-${color}`]
-    } else if (plotContent?.oreId) {
-      return itemImages[plotContent.oreId]
-    } else {
-      return itemImages[plotContent.itemId]
-    }
+    return itemImages[itemImageId]
   }
 
-  return null
+  if (getPlotContentType(plotContent) === itemType.WEED) {
+    const weedColors = ['yellow', 'orange', 'pink']
+    const color = weedColors[(x * y) % weedColors.length]
+
+    return itemImages[`weed-${color}`]
+  } else if (plotContent?.oreId) {
+    return itemImages[plotContent.oreId]
+  } else {
+    return itemImages[plotContent.itemId]
+  }
 }
 
 /**
