@@ -30,7 +30,6 @@ jobs:
       - name: 'Build web app artifacts'
         run: |
           npm run build
-          npm run doc
 
       - uses: actions/upload-artifact@v3
         with:

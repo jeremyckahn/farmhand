@@ -95,7 +95,6 @@ jobs:
 
       - run: |
           PUBLIC_URL='/farmhand' npm run build
-          npm run doc
 
       # https://github.com/marketplace/actions/deploy-to-github-pages
       - name: Deploy to jeremyckahn.github.io/farmhand

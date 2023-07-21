@@ -14,7 +14,6 @@
   - Includes native app downloads for Linux, MacOS and Windows.
 - All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
 - [Wiki](https://github.com/jeremyckahn/farmhand/wiki)
-- [Data model documentation](https://jeremyckahn.github.io/farmhand/docs/index.html)
 - [API deployment logs](https://farmhand.vercel.app/_logs)
 
 Community links:
