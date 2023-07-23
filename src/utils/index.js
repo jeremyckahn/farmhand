@@ -708,13 +708,20 @@ export const getPriceEventForCrop = cropItem => ({
     getCropLifecycleDuration(cropItem) - PRICE_EVENT_STANDARD_DURATION_DECREASE,
 })
 
-/**
- * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @param {function(?farmhand.plotContent): boolean} condition
- * @returns {?farmhand.plotContent}
- */
 export const findInField = memoize(
-  (field, condition) => field.find(row => row.find(condition)) || null,
+  /**
+   * @param {(?farmhand.plotContent)[][]} field
+   * @param {function(?farmhand.plotContent): boolean} condition
+   * @returns {?farmhand.plotContent}
+   */
+  (field, condition) => {
+    const [plot = null] =
+      field.find(row => {
+        return row.find(condition)
+      }) ?? []
+
+    return plot
+  },
   {
     serializer: memoizationSerializer,
   }

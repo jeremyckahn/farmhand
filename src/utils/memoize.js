@@ -1,3 +1,5 @@
+/** @typedef {import("fast-memoize").Options} MemoizeOptions */
+
 import fastMemoize from 'fast-memoize'
 
 import { MEMOIZE_CACHE_CLEAR_THRESHOLD } from '../constants'
@@ -42,8 +44,7 @@ export class MemoizeCache {
 /**
  * @template {(...args: any[]) => any} T Copied from https://github.com/caiogondim/fast-memoize.js/blob/5cdfc8dde23d86b16e0104bae1b04cd447b98c63/typings/fast-memoize.d.ts#L1
  * @param {T} fn
- * @param {Object} [config]
- * @param {number} [config.cacheSize]
+ * @param {MemoizeOptions & Partial<{ cacheSize: number }>} [config]
  * @returns T
  * @see https://github.com/caiogondim/fast-memoize.js
  */
