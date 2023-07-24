@@ -270,8 +270,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Object} todaysPurchases Keys are item names, values are their
  * respective quantities.
  * @property {number} todaysRevenue Should always be a positive number.
- * @property {Object} todaysStartingInventory Keys are item names, values are
- * their respective quantities.
+ * @property {Record<farmhand.item['id'], number>} todaysStartingInventory Keys
+ * are item names, values are their respective quantities.
  * @property {boolean} useAlternateEndDayButtonPosition Option to display the
  * Bed button on the left side of the screen.
  * @property {Object.<number>} valueAdjustments

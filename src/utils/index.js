@@ -6,7 +6,10 @@
 /** @typedef {import("../index").farmhand.cow} farmhand.cow */
 /** @typedef {import("../index").farmhand.recipe} farmhand.recipe */
 /** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
+/** @typedef {import("../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen */
 /** @typedef {import("../enums").cropLifeStage} farmhand.cropLifeStage */
+/** @typedef {import("../enums").toolLevel} farmhand.toolLevel */
+/** @typedef {import("../enums").toolType} farmhand.toolType */
 /** @typedef {import("../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
 
 /**
@@ -44,7 +47,6 @@ import {
   fertilizerType,
   genders,
   itemType,
-  stageFocusType,
   standardCowColors,
   toolLevel,
 } from '../enums'
@@ -640,6 +642,9 @@ export const getCowValue = (cow, computeSaleValue = false) =>
       )
     : getCowWeight(cow) * 1.5
 
+/**
+ * @param {farmhand.cow} cow
+ */
 export const getCowSellValue = cow => getCowValue(cow, true)
 
 /**
@@ -940,9 +945,9 @@ export const getProfitRecord = (
 ) => Math.max(recordSingleDayProfit, getProfit(todaysRevenue, todaysLosses))
 
 /**
- * @param {Object} todaysStartingInventory
- * @param {Object} todaysPurchases
- * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
+ * @param {farmhand.state['todaysStartingInventory']} todaysStartingInventory
+ * @param {farmhand.state['todaysPurchases']} todaysPurchases
+ * @param {{ id: farmhand.item['id'], quantity: number }[]} inventory
  * @return {Object} Keys are item IDs, values are either 1 or -1.
  */
 export const computeMarketPositions = (
@@ -976,8 +981,8 @@ export const computeMarketPositions = (
   }, {})
 
 /**
- * @param {Object.<farmhand.module:enums.toolType, farmhand.module:enums.toolLevel>} currentToolLevels
- * @param {farmhand.module:enums.toolType} toolType
+ * @param {Object.<farmhand.toolType, farmhand.toolLevel>} currentToolLevels
+ * @param {farmhand.toolType} toolType
  * @returns {farmhand.state}
  */
 export const unlockTool = (currentToolLevels, toolType) => {
@@ -991,70 +996,14 @@ export const unlockTool = (currentToolLevels, toolType) => {
 }
 
 /**
- * @param {Farmhand.state} state
- * @return {Object}
+ * @param {farmhand.state} state
+ * @return {farmhand.state}
  */
 export const transformStateDataForImport = state => {
   const sanitizedState = { ...state }
-  const { id } = sanitizedState
 
   const rejectedKeys = ['version']
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
-
-  // Update old data models
-
-  if (sanitizedState.field) {
-    // Update plot data
-    sanitizedState.field = sanitizedState.field.map(row =>
-      row.map(plot => {
-        if (plot === null) {
-          return null
-        }
-
-        const { isFertilized, ...rest } = plot
-
-        return {
-          ...rest,
-
-          // Convert from isFertilized (boolean) to fertilizerType (enum)
-          fertilizerType:
-            rest.fertilizerType ||
-            (isFertilized ? fertilizerType.STANDARD : fertilizerType.NONE),
-        }
-      })
-    )
-  }
-
-  const { tools: unlockedTools } = getLevelEntitlements(
-    levelAchieved(farmProductsSold(sanitizedState.itemsSold))
-  )
-
-  for (const tool of Object.keys(unlockedTools)) {
-    sanitizedState.toolLevels = unlockTool(sanitizedState.toolLevels, tool)
-  }
-
-  if (
-    !sanitizedState.showHomeScreen &&
-    sanitizedState.stageFocus === stageFocusType.HOME
-  ) {
-    sanitizedState.stageFocus = stageFocusType.SHOP
-  }
-
-  // TODO: Remove these cowInventory and cowForSale transformations after
-  // 3/15/2023
-  sanitizedState.cowInventory = sanitizedState.cowInventory.map(cow => ({
-    ownerId: id,
-    originalOwnerId: id,
-    timesTraded: 0,
-    ...cow,
-  }))
-
-  sanitizedState.cowForSale = {
-    ownerId: '',
-    originalOwnerId: '',
-    timesTraded: 0,
-    ...sanitizedState.cowForSale,
-  }
 
   return sanitizedState
 }
@@ -1083,7 +1032,8 @@ export const getCostOfNextStorageExpansion = currentInventoryLimit => {
 
 /**
  * Create a no-op Promise that resolves in a specified amount of time.
- * @returns {Promise}
+ * @param {number} ms
+ * @returns {Promise<void>}
  */
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -1146,14 +1096,16 @@ const colorizeCowTemplate = (() => {
   const cowImageWidth = 48
   const cowImageHeight = 48
   const cowImageFactoryCanvas = document.createElement('canvas')
-  cowImageFactoryCanvas.setAttribute('height', cowImageHeight)
-  cowImageFactoryCanvas.setAttribute('width', cowImageWidth)
+  cowImageFactoryCanvas.setAttribute('height', String(cowImageHeight))
+  cowImageFactoryCanvas.setAttribute('width', String(cowImageWidth))
 
   const cachedCowImages = {}
 
   // https://stackoverflow.com/a/5624139
   const hexToRgb = memoize(hex => {
-    const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
+      hex
+    ) ?? ['', '0', '0', '0']
 
     return {
       r: parseInt(r, 16),
@@ -1219,7 +1171,7 @@ const colorizeCowTemplate = (() => {
 
 /**
  * @param {farmhand.cow} cow
- * @returns {string} Base64 representation of an image
+ * @returns {Promise<string>} Base64 representation of an image
  */
 export const getCowImage = async cow => {
   const cowIdNumber = convertStringToInteger(cow.id)
