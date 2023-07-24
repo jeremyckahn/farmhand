@@ -7,6 +7,7 @@
 /** @typedef {import("../index").farmhand.recipe} farmhand.recipe */
 /** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
 /** @typedef {import("../enums").cropLifeStage} farmhand.cropLifeStage */
+/** @typedef {import("../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
 
 /**
  * @module farmhand.utils
@@ -727,27 +728,6 @@ export const findInField = memoize(
   }
 )
 
-// This is currently unused, but it could be useful later.
-/**
- * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @param {function(?farmhand.plotContent)} filterCondition
- * @returns {Array.<Array.<?farmhand.plotContent>>}
- */
-export const getCrops = memoize(
-  (field, filterCondition) =>
-    field.reduce((acc, row) => {
-      acc.push(...row.filter(filterCondition))
-
-      return acc
-    }, []),
-  {
-    serializer: memoizationSerializer,
-  }
-)
-
-/**
- * @returns {boolean}
- */
 export const doesMenuObstructStage = () => window.innerWidth < BREAKPOINTS.MD
 
 const itemTypesToShowInReverse = new Set([itemType.MILK])
@@ -773,12 +753,12 @@ export const sortItems = items => {
   return sortItemIdsByTypeAndValue(items.map(({ id }) => id)).map(id => map[id])
 }
 
-/**
- * @param {Array.<farmhand.item>} inventory
- * @returns {number}
- */
-export const inventorySpaceConsumed = memoize(inventory =>
-  inventory.reduce((sum, { quantity }) => sum + quantity, 0)
+export const inventorySpaceConsumed = memoize(
+  /**
+   * @param {farmhand.item[]} inventory
+   * @returns {number}
+   */
+  inventory => inventory.reduce((sum, { quantity = 0 }) => sum + quantity, 0)
 )
 
 /**
@@ -816,25 +796,26 @@ export const nullArray = memoize(
   }
 )
 
-/**
- * @param {Array.<farmhand.cow>} cowInventory
- * @param {string} id
- * @returns {farmhand.cow|undefined}
- */
-export const findCowById = memoize((cowInventory, id) =>
-  cowInventory.find(cow => id === cow.id)
+export const findCowById = memoize(
+  /**
+   * @param {Array.<farmhand.cow>} cowInventory
+   * @param {string} id
+   * @returns {farmhand.cow|undefined}
+   */
+  (cowInventory, id) => cowInventory.find(cow => id === cow.id)
 )
 
-/**
- * @param {Object.<number>} itemsSold
- * @returns {number}
- */
-export const farmProductsSold = memoize(itemsSold =>
-  Object.entries(itemsSold).reduce(
-    (sum, [itemId, numberSold]) =>
-      sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold : 0),
-    0
-  )
+export const farmProductsSold = memoize(
+  /**
+   * @param {Record<string, number>} itemsSold
+   * @returns {number}
+   */
+  itemsSold =>
+    Object.entries(itemsSold).reduce(
+      (sum, [itemId, numberSold]) =>
+        sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold : 0),
+      0
+    )
 )
 
 /**

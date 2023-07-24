@@ -14,7 +14,6 @@
 /**
  * Lookup table for the lifecycle durations of a crop (in days).
  * @typedef farmhand.cropTimetable
- * @type {Object}
  * @property {number} seed
  * @property {number} growing
  * @readonly
@@ -23,7 +22,6 @@
 /**
  * Reference object for an item.
  * @typedef farmhand.item
- * @type {Object}
  * @property {string} id
  * @property {string} name
  * @property {string} type
