@@ -1,8 +1,17 @@
 /**
  * @typedef {import("../../index").farmhand.item} farmhand.item
  * @typedef {import("../../index").farmhand.cow} farmhand.cow
+ * @typedef {import("../../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen
  * @typedef {import("../../index").farmhand.keg} farmhand.keg
+ * @typedef {import("../../index").farmhand.plotContent} farmhand.plotContent
+ * @typedef {import("../../index").farmhand.peerMessage} farmhand.peerMessage
+ * @typedef {import("../../index").farmhand.priceEvent} farmhand.priceEvent
  * @typedef {import("../../index").farmhand.notification} notification
+ * @typedef {import("../../enums").cowColors} farmhand.cowColors
+ * @typedef {import("../../enums").cropType} farmhand.cropType
+ * @typedef {import("../../enums").dialogView} farmhand.dialogView
+ * @typedef {import("../../enums").fieldMode} farmhand.fieldMode
+ * @typedef {import("../../enums").stageFocusType} farmhand.stageFocusType
  */
 import React, { Component } from 'react'
 import window from 'global/window'
@@ -153,10 +162,10 @@ export const getPlantableCropInventory = memoize(inventory =>
 )
 
 /**
- * @param {Object.<number>} valueAdjustments
+ * @param {Record<string, number>} valueAdjustments
  * @param {farmhand.priceEvent} priceCrashes
  * @param {farmhand.priceEvent} priceSurges
- * @returns {Object.<number>}
+ * @returns {Record<string, number>}
  */
 const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
   const patchedValueAdjustments = { ...valueAdjustments }
@@ -177,27 +186,26 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number?} activePlayers
  * @property {boolean} allowCustomPeerCowNames
  * @property {Array.<farmhand.keg>} cellarInventory
- * @property {farmhand.module:enums.dialogView} currentDialogView
+ * @property {farmhand.dialogView} currentDialogView
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
  * @property {farmhand.cow} cowForSale
  * @property {farmhand.cowBreedingPen} cowBreedingPen
  * @property {Array.<farmhand.cow>} cowInventory
- * @property {Object.<farmhand.module:enums.cowColors, number>}
- * cowColorsPurchased Keys are color enums, values are the number of that color
- * of cow purchased.
+ * @property {Object.<farmhand.cowColors, number>} cowColorsPurchased Keys are
+ * color enums, values are the number of that color of cow purchased.
  * @property {string} cowIdOfferedForTrade The ID of the cow that is currently
  * set to be traded with online peers.
  * @property {Object} cowsSold Keys are items IDs, values are the id references
  * of cow colors (rainbow-cow, etc.).
  * @property {number} cowsTraded
  * @property {number?} cowTradeTimeoutId
- * @property {Object.<farmhand.module:enums.cropType, number>} cropsHarvested A
- * map of totals of crops harvested. Keys are crop type IDs, values are the
- * number of that crop harvested.
+ * @property {Object.<farmhand.cropType, number>} cropsHarvested A map of
+ * totals of crops harvested. Keys are crop type IDs, values are the number of
+ * that crop harvested.
  * @property {number} dayCount
- * @property {Array.<Array.<?farmhand.plotContent>>} field
- * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {(?farmhand.plotContent)[][]} field
+ * @property {farmhand.fieldMode} fieldMode
  * @property {Function?} getCowAccept https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowReject https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowTradeRequest https://github.com/dmotz/trystero#receiver
@@ -205,13 +213,13 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number?} heartbeatTimeoutId
  * @property {Array.<number>} historicalDailyLosses
  * @property {Array.<number>} historicalDailyRevenue
- * @property {Array.<Object.<number>>} historicalValueAdjustments Currently
- * there is only one element in this array, but it will be used for more
- * historical price data analysis in the future. It is an array for
+ * @property {Record<string, number>[]} historicalValueAdjustments
+ * Currently there is only one element in this array, but it will be used for
+ * more historical price data analysis in the future. It is an array for
  * future-facing flexibility.
  * @property {number} hoveredPlotRangeSize
  * @property {string} id
- * @property {Array.<{ id: farmhand.item.id, quantity: number }>} inventory
+ * @property {{ id: farmhand.item['id'], quantity: number }[]} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
  * @property {boolean} isAwaitingCowTradeRequest
  * @property {boolean} isAwaitingNetworkRequest
@@ -236,10 +244,10 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Array.<notification>} notificationLog
  * @property {Object} peers Keys are (Trystero) peer ids, values are their respective metadata or null.
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
- * @property {Array.<farmhand.peerMessage>} pendingPeerMessages An array of
- * messages to be sent to the Trystero peer room upon the next broadcast.
- * @property {Array.<farmhand.peerMessage>} latestPeerMessages An array of
- * messages that have been received from peers.
+ * @property {farmhand.peerMessage[]} pendingPeerMessages An array of messages
+ * to be sent to the Trystero peer room upon the next broadcast.
+ * @property {farmhand.peerMessage[]} latestPeerMessages An array of messages
+ * that have been received from peers.
  * @property {function?} sendPeerMetadata See https://github.com/dmotz/trystero
  * @property {string} selectedCowId
  * @property {string} selectedItemId
@@ -264,7 +272,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Function?} sendPeerMetadata https://github.com/dmotz/trystero#sender
  * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
- * @property {farmhand.module:enums.stageFocusType} stageFocus
+ * @property {farmhand.stageFocusType} stageFocus
  * @property {Array.<notification>} todaysNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {Object} todaysPurchases Keys are item names, values are their
@@ -274,7 +282,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * are item names, values are their respective quantities.
  * @property {boolean} useAlternateEndDayButtonPosition Option to display the
  * Bed button on the left side of the screen.
- * @property {Object.<number>} valueAdjustments
+ * @property {Record<string, number>} valueAdjustments
  * @property {string} version Comes from the `version` property in
  * package.json.
  */
