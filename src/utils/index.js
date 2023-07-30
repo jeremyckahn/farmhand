@@ -1,6 +1,16 @@
 /** @typedef {import("../index").farmhand.crop} farmhand.crop */
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 /** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
+/** @typedef {import("../index").farmhand.shoveledPlot} farmhand.shoveledPlot */
+/** @typedef {import("../index").farmhand.cropTimetable} farmhand.cropTimetable */
+/** @typedef {import("../index").farmhand.cow} farmhand.cow */
+/** @typedef {import("../index").farmhand.recipe} farmhand.recipe */
+/** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
+/** @typedef {import("../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen */
+/** @typedef {import("../enums").cropLifeStage} farmhand.cropLifeStage */
+/** @typedef {import("../enums").toolLevel} farmhand.toolLevel */
+/** @typedef {import("../enums").toolType} farmhand.toolType */
+/** @typedef {import("../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
 
 /**
  * @module farmhand.utils
@@ -37,7 +47,6 @@ import {
   fertilizerType,
   genders,
   itemType,
-  stageFocusType,
   standardCowColors,
   toolLevel,
 } from '../enums'
@@ -86,6 +95,20 @@ const Jimp = configureJimp({
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
+/**
+ * @param {unknown} obj
+ * @returns {obj is farmhand.plotContent}
+ */
+const isPlotContent = (obj = {}) =>
+  Boolean(obj && obj['itemId'] && obj['fertilizerType'])
+
+/**
+ * @param {unknown} obj
+ * @returns {obj is farmhand.shoveledPlot}
+ */
+const isShoveledPlot = (obj = {}) =>
+  Boolean(obj && obj['isShoveled'] && obj['daysUntilClear'])
+
 const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
   (acc, item) => {
     acc[item.id] = item
@@ -107,11 +130,14 @@ export const chooseRandomIndex = list =>
  */
 export const chooseRandom = list => list[chooseRandomIndex(list)]
 
-// Ensures that the condition argument to memoize() is not ignored, per
-// https://github.com/caiogondim/fast-memoize.js#function-arguments
-//
-// Pass this is the `serializer` option to any memoize()-ed functions that
-// accept function arguments.
+/**
+ * Ensures that the condition argument to memoize() is not ignored, per
+ * https://github.com/caiogondim/fast-memoize.js#function-arguments
+ *
+ * Pass this is the `serializer` option to any memoize()-ed functions that
+ * accept function arguments.
+ * @param {any[]} args
+ */
 const memoizationSerializer = args =>
   JSON.stringify(
     [...args].map(arg => (typeof arg === 'function' ? arg.toString() : arg))
@@ -125,11 +151,14 @@ const memoizationSerializer = args =>
 export const clampNumber = (num, min, max) =>
   num <= min ? min : num >= max ? max : num
 
+/**
+ * @param {number} num
+ */
 export const castToMoney = num => Math.round(num * 100) / 100
 
 /**
  * Safely adds dollar figures to avoid IEEE 754 rounding errors.
- * @param {...number} num Numbers that represent money values.
+ * @param {...number} args Numbers that represent money values.
  * @returns {number}
  * @see http://adripofjavascript.com/blog/drips/avoiding-problems-with-decimal-math-in-javascript.html
  */
@@ -192,7 +221,7 @@ export const percentageString = number => `${Math.round(number * 100)}%`
 
 /**
  * @param {farmhand.item} item
- * @param {Object.<number>} valueAdjustments
+ * @param {Record<string, number>} valueAdjustments
  * @returns {number}
  */
 export const getItemCurrentValue = ({ id }, valueAdjustments) =>
@@ -207,7 +236,7 @@ export const getItemCurrentValue = ({ id }, valueAdjustments) =>
   }).toUnit()
 
 /**
- * @param {Object} valueAdjustments
+ * @param {Record<string, number>} valueAdjustments
  * @param {string} itemId
  * @returns {number} Rounded to a money value.
  */
@@ -239,11 +268,10 @@ export const getPlotContentFromItemId = itemId => ({
  * @param {string} itemId
  * @returns {farmhand.crop}
  */
-export const getCropFromItemId = itemId => ({
+export const getCropFromItemId = itemId => /** @type farmhand.crop */ ({
   ...getPlotContentFromItemId(itemId),
   daysOld: 0,
   daysWatered: 0,
-  fertilizerType: fertilizerType.NONE,
   wasWateredToday: false,
 })
 
@@ -259,7 +287,7 @@ export const getPlotContentType = ({ itemId }) =>
  * @returns {boolean}
  */
 export const doesPlotContainCrop = plot =>
-  plot && getPlotContentType(plot) === itemType.CROP
+  plot !== null && getPlotContentType(plot) === itemType.CROP
 
 /**
  * @param {farmhand.item} item
@@ -279,12 +307,13 @@ export const isItemAFarmProduct = item =>
       item.type === itemType.CRAFTED_ITEM
   )
 
-/**
- * @param {farmhand.cropTimetable} cropTimetable
- * @returns {Array.<enums.cropLifeStage>}
- */
-export const getLifeStageRange = memoize(cropTimetable =>
+export const getLifeStageRange = memoize((
+  /** @type {farmhand.cropTimetable} */ cropTimetable
+) =>
   [SEED, GROWING].reduce(
+    /**
+     * @param {farmhand.cropLifeStage[]} acc
+     */
     (acc, stage) => acc.concat(Array(cropTimetable[stage]).fill(stage)),
     []
   )
@@ -292,49 +321,58 @@ export const getLifeStageRange = memoize(cropTimetable =>
 
 /**
  * @param {farmhand.crop} crop
- * @returns {enums.cropLifeStage}
+ * @returns {farmhand.cropLifeStage}
  */
-export const getCropLifeStage = ({ itemId, daysWatered }) =>
-  getLifeStageRange(itemsMap[itemId].cropTimetable)[Math.floor(daysWatered)] ||
-  GROWN
+export const getCropLifeStage = crop => {
+  const { itemId, daysWatered } = crop
+  const { cropTimetable } = itemsMap[itemId]
+
+  if (!cropTimetable) {
+    throw new Error(`${itemId} has no cropTimetable`)
+  }
+
+  return getLifeStageRange(cropTimetable)[Math.floor(daysWatered)] || GROWN
+}
 
 /**
- * @param {farmhand.plotContent} plotContent
+ * @param {farmhand.plotContent | farmhand.shoveledPlot | null} plotContents
  * @param {number} x
  * @param {number} y
  * @returns {?string}
  */
-export const getPlotImage = (plotContent, x, y) => {
-  if (plotContent) {
-    if (getPlotContentType(plotContent) === itemType.CROP) {
+export const getPlotImage = (plotContents, x, y) => {
+  if (isPlotContent(plotContents)) {
+    if (isPlotContentACrop(plotContents)) {
       let itemImageId
-      switch (getCropLifeStage(plotContent)) {
+      switch (getCropLifeStage(plotContents)) {
         case GROWN:
-          itemImageId = plotContent.itemId
+          itemImageId = plotContents.itemId
           break
 
         case GROWING:
-          itemImageId = `${plotContent.itemId}-growing`
+          itemImageId = `${plotContents.itemId}-growing`
           break
 
         default:
-          const seedItem = cropItemIdToSeedItemMap[plotContent.itemId]
+          const seedItem = cropItemIdToSeedItemMap[plotContents.itemId]
           itemImageId = seedItem.id
       }
 
       return itemImages[itemImageId]
     }
 
-    if (getPlotContentType(plotContent) === itemType.WEED) {
+    if (getPlotContentType(plotContents) === itemType.WEED) {
       const weedColors = ['yellow', 'orange', 'pink']
       const color = weedColors[(x * y) % weedColors.length]
 
       return itemImages[`weed-${color}`]
-    } else if (plotContent?.oreId) {
-      return itemImages[plotContent.oreId]
-    } else {
-      return itemImages[plotContent.itemId]
     }
+  }
+
+  if (isShoveledPlot(plotContents) && plotContents?.oreId) {
+    return itemImages[plotContents.oreId]
+  } else if (isPlotContent(plotContents)) {
+    return itemImages[plotContents.itemId]
   }
 
   return null
@@ -344,7 +382,7 @@ export const getPlotImage = (plotContent, x, y) => {
  * @param {number} rangeSize
  * @param {number} centerX
  * @param {number} centerY
- * @returns {Array.<Array.<?farmhand.plotContent>>}
+ * @returns {{x: number, y: number}[][]}
  */
 export const getRangeCoords = (rangeSize, centerX, centerY) => {
   const squareSize = 2 * rangeSize + 1
@@ -352,26 +390,28 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
   const rangeStartY = centerY - rangeSize
 
   return new Array(squareSize)
-    .fill()
+    .fill(null)
     .map((_, y) =>
       new Array(squareSize)
-        .fill()
+        .fill(null)
         .map((_, x) => ({ x: rangeStartX + x, y: rangeStartY + y }))
     )
 }
 
 /**
  * @param {farmhand.item} item
- * @param {number} [variationIdx=0]
- * @returns {farmhand.item}
+ * @param {number} [variantIdx]
  */
-export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) =>
-  itemsMap[getFinalCropItemIdFromSeedItemId(id, variantIdx)]
+export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) => {
+  const itemId = getFinalCropItemIdFromSeedItemId(id, variantIdx)
+
+  if (itemId) return itemsMap[itemId]
+}
 
 /**
  * @param {string} seedItemId
  * @param {number} [variationIdx]
- * @returns {string}
+ * @returns {string=}
  */
 export const getFinalCropItemIdFromSeedItemId = (
   seedItemId,
@@ -386,19 +426,22 @@ export const getFinalCropItemIdFromSeedItemId = (
   }
 }
 
-/**
- * @param {string} cropItemId
- * @returns {string}
- */
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
-  cropItemId => {
-    return Object.values(itemsMap).find(({ growsInto }) => {
+  (/** @type {string} */ cropItemId) => {
+    const seedItemId = Object.values(itemsMap).find(({ growsInto }) => {
       if (Array.isArray(growsInto)) {
         return growsInto.includes(cropItemId)
       } else {
         return growsInto === cropItemId
       }
-    }).id
+    })?.id
+
+    if (!seedItemId)
+      throw new Error(
+        `Crop item ID ${cropItemId} does not have a corresponding seed`
+      )
+
+    return seedItemId
   },
   {
     cacheSize: Object.keys(itemsMap).length,
@@ -599,6 +642,9 @@ export const getCowValue = (cow, computeSaleValue = false) =>
       )
     : getCowWeight(cow) * 1.5
 
+/**
+ * @param {farmhand.cow} cow
+ */
 export const getCowSellValue = cow => getCowValue(cow, true)
 
 /**
@@ -620,7 +666,7 @@ export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
 
 /**
  * @param {farmhand.recipe} recipe
- * @param {Array.<farmhand.item>} inventory
+ * @param {farmhand.item[]} inventory
  * @param {number} howMany
  * @returns {boolean}
  */
@@ -628,8 +674,8 @@ export const canMakeRecipe = (recipe, inventory, howMany) =>
   maxYieldOfRecipe(recipe, inventory) >= howMany
 
 /**
- * @param {Array.<string>} itemIds
- * @returns {Array.<string>}
+ * @param {string[]} itemsIds
+ * @returns {string[]}
  */
 export const filterItemIdsToSeeds = itemsIds =>
   itemsIds.filter(id => itemsMap[id].type === itemType.CROP)
@@ -645,10 +691,17 @@ export const getRandomUnlockedCrop = unlockedSeedItemIds => {
     ? chooseRandomIndex(seedItem.growsInto)
     : 0
 
-  const cropItem =
-    itemsMap[getFinalCropItemIdFromSeedItemId(seedItemId, variationIdx)]
+  const finalCropItemId = getFinalCropItemIdFromSeedItemId(
+    seedItemId,
+    variationIdx
+  )
 
-  return cropItem
+  if (!finalCropItemId)
+    throw new Error(
+      `Seed item ID ${seedItemId} has no corresponding final crop ID`
+    )
+
+  return itemsMap[finalCropItemId]
 }
 
 /**
@@ -661,39 +714,25 @@ export const getPriceEventForCrop = cropItem => ({
     getCropLifecycleDuration(cropItem) - PRICE_EVENT_STANDARD_DURATION_DECREASE,
 })
 
-/**
- * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @param {function(?farmhand.plotContent)} condition
- * @returns {?farmhand.plotContent}
- */
 export const findInField = memoize(
-  (field, condition) => field.find(row => row.find(condition)) || null,
+  /**
+   * @param {(?farmhand.plotContent)[][]} field
+   * @param {function(?farmhand.plotContent): boolean} condition
+   * @returns {?farmhand.plotContent}
+   */
+  (field, condition) => {
+    const [plot = null] =
+      field.find(row => {
+        return row.find(condition)
+      }) ?? []
+
+    return plot
+  },
   {
     serializer: memoizationSerializer,
   }
 )
 
-// This is currently unused, but it could be useful later.
-/**
- * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @param {function(?farmhand.plotContent)} filterCondition
- * @returns {Array.<Array.<?farmhand.plotContent>>}
- */
-export const getCrops = memoize(
-  (field, filterCondition) =>
-    field.reduce((acc, row) => {
-      acc.push(...row.filter(filterCondition))
-
-      return acc
-    }, []),
-  {
-    serializer: memoizationSerializer,
-  }
-)
-
-/**
- * @returns {boolean}
- */
 export const doesMenuObstructStage = () => window.innerWidth < BREAKPOINTS.MD
 
 const itemTypesToShowInReverse = new Set([itemType.MILK])
@@ -719,12 +758,12 @@ export const sortItems = items => {
   return sortItemIdsByTypeAndValue(items.map(({ id }) => id)).map(id => map[id])
 }
 
-/**
- * @param {Array.<farmhand.item>} inventory
- * @returns {number}
- */
-export const inventorySpaceConsumed = memoize(inventory =>
-  inventory.reduce((sum, { quantity }) => sum + quantity, 0)
+export const inventorySpaceConsumed = memoize(
+  /**
+   * @param {farmhand.item[]} inventory
+   * @returns {number}
+   */
+  inventory => inventory.reduce((sum, { quantity = 0 }) => sum + quantity, 0)
 )
 
 /**
@@ -762,25 +801,26 @@ export const nullArray = memoize(
   }
 )
 
-/**
- * @param {Array.<farmhand.cow>} cowInventory
- * @param {string} id
- * @returns {farmhand.cow|undefined}
- */
-export const findCowById = memoize((cowInventory, id) =>
-  cowInventory.find(cow => id === cow.id)
+export const findCowById = memoize(
+  /**
+   * @param {Array.<farmhand.cow>} cowInventory
+   * @param {string} id
+   * @returns {farmhand.cow|undefined}
+   */
+  (cowInventory, id) => cowInventory.find(cow => id === cow.id)
 )
 
-/**
- * @param {Object.<number>} itemsSold
- * @returns {number}
- */
-export const farmProductsSold = memoize(itemsSold =>
-  Object.entries(itemsSold).reduce(
-    (sum, [itemId, numberSold]) =>
-      sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold : 0),
-    0
-  )
+export const farmProductsSold = memoize(
+  /**
+   * @param {Record<string, number>} itemsSold
+   * @returns {number}
+   */
+  itemsSold =>
+    Object.entries(itemsSold).reduce(
+      (sum, [itemId, numberSold]) =>
+        sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold : 0),
+      0
+    )
 )
 
 /**
@@ -905,9 +945,9 @@ export const getProfitRecord = (
 ) => Math.max(recordSingleDayProfit, getProfit(todaysRevenue, todaysLosses))
 
 /**
- * @param {Object} todaysStartingInventory
- * @param {Object} todaysPurchases
- * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
+ * @param {farmhand.state['todaysStartingInventory']} todaysStartingInventory
+ * @param {farmhand.state['todaysPurchases']} todaysPurchases
+ * @param {{ id: farmhand.item['id'], quantity: number }[]} inventory
  * @return {Object} Keys are item IDs, values are either 1 or -1.
  */
 export const computeMarketPositions = (
@@ -941,8 +981,8 @@ export const computeMarketPositions = (
   }, {})
 
 /**
- * @param {Object.<farmhand.module:enums.toolType, farmhand.module:enums.toolLevel>} currentToolLevels
- * @param {farmhand.module:enums.toolType} toolType
+ * @param {Object.<farmhand.toolType, farmhand.toolLevel>} currentToolLevels
+ * @param {farmhand.toolType} toolType
  * @returns {farmhand.state}
  */
 export const unlockTool = (currentToolLevels, toolType) => {
@@ -956,70 +996,14 @@ export const unlockTool = (currentToolLevels, toolType) => {
 }
 
 /**
- * @param {Farmhand.state} state
- * @return {Object}
+ * @param {farmhand.state} state
+ * @return {farmhand.state}
  */
 export const transformStateDataForImport = state => {
   const sanitizedState = { ...state }
-  const { id } = sanitizedState
 
   const rejectedKeys = ['version']
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
-
-  // Update old data models
-
-  if (sanitizedState.field) {
-    // Update plot data
-    sanitizedState.field = sanitizedState.field.map(row =>
-      row.map(plot => {
-        if (plot === null) {
-          return null
-        }
-
-        const { isFertilized, ...rest } = plot
-
-        return {
-          ...rest,
-
-          // Convert from isFertilized (boolean) to fertilizerType (enum)
-          fertilizerType:
-            rest.fertilizerType ||
-            (isFertilized ? fertilizerType.STANDARD : fertilizerType.NONE),
-        }
-      })
-    )
-  }
-
-  const { tools: unlockedTools } = getLevelEntitlements(
-    levelAchieved(farmProductsSold(sanitizedState.itemsSold))
-  )
-
-  for (const tool of Object.keys(unlockedTools)) {
-    sanitizedState.toolLevels = unlockTool(sanitizedState.toolLevels, tool)
-  }
-
-  if (
-    !sanitizedState.showHomeScreen &&
-    sanitizedState.stageFocus === stageFocusType.HOME
-  ) {
-    sanitizedState.stageFocus = stageFocusType.SHOP
-  }
-
-  // TODO: Remove these cowInventory and cowForSale transformations after
-  // 3/15/2023
-  sanitizedState.cowInventory = sanitizedState.cowInventory.map(cow => ({
-    ownerId: id,
-    originalOwnerId: id,
-    timesTraded: 0,
-    ...cow,
-  }))
-
-  sanitizedState.cowForSale = {
-    ownerId: '',
-    originalOwnerId: '',
-    timesTraded: 0,
-    ...sanitizedState.cowForSale,
-  }
 
   return sanitizedState
 }
@@ -1048,7 +1032,8 @@ export const getCostOfNextStorageExpansion = currentInventoryLimit => {
 
 /**
  * Create a no-op Promise that resolves in a specified amount of time.
- * @returns {Promise}
+ * @param {number} ms
+ * @returns {Promise<void>}
  */
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -1069,6 +1054,13 @@ export const getSalePriceMultiplier = (completedAchievements = {}) => {
 
   return salePriceMultiplier
 }
+
+/**
+ * @param {farmhand.plotContent} plotContents
+ * @returns {plotContents is farmhand.crop}
+ */
+const isPlotContentACrop = plotContents =>
+  getPlotContentType(plotContents) === itemType.CROP
 
 /**
  * @param {Array} weightedOptions an array of objects each containing a `weight` property
@@ -1104,14 +1096,16 @@ const colorizeCowTemplate = (() => {
   const cowImageWidth = 48
   const cowImageHeight = 48
   const cowImageFactoryCanvas = document.createElement('canvas')
-  cowImageFactoryCanvas.setAttribute('height', cowImageHeight)
-  cowImageFactoryCanvas.setAttribute('width', cowImageWidth)
+  cowImageFactoryCanvas.setAttribute('height', String(cowImageHeight))
+  cowImageFactoryCanvas.setAttribute('width', String(cowImageWidth))
 
   const cachedCowImages = {}
 
   // https://stackoverflow.com/a/5624139
   const hexToRgb = memoize(hex => {
-    const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
+      hex
+    ) ?? ['', '0', '0', '0']
 
     return {
       r: parseInt(r, 16),
@@ -1177,7 +1171,7 @@ const colorizeCowTemplate = (() => {
 
 /**
  * @param {farmhand.cow} cow
- * @returns {string} Base64 representation of an image
+ * @returns {Promise<string>} Base64 representation of an image
  */
 export const getCowImage = async cow => {
   const cowIdNumber = convertStringToInteger(cow.id)
