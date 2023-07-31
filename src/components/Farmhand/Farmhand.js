@@ -6,7 +6,7 @@
  * @typedef {import("../../index").farmhand.plotContent} farmhand.plotContent
  * @typedef {import("../../index").farmhand.peerMessage} farmhand.peerMessage
  * @typedef {import("../../index").farmhand.priceEvent} farmhand.priceEvent
- * @typedef {import("../../index").farmhand.notification} notification
+ * @typedef {import("../../index").farmhand.notification} farmhand.notification
  * @typedef {import("../../enums").cowColors} farmhand.cowColors
  * @typedef {import("../../enums").cropType} farmhand.cropType
  * @typedef {import("../../enums").dialogView} farmhand.dialogView
@@ -60,6 +60,7 @@ import {
   createNewField,
   doesMenuObstructStage,
   farmProductsSold,
+  generateCow,
   getAvailableShopInventory,
   getItemCurrentValue,
   getPeerMetadata,
@@ -239,9 +240,9 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} loanBalance
  * @property {number} loansTakenOut
  * @property {number} money
- * @property {notification} latestNotification
- * @property {Array.<notification>} newDayNotifications
- * @property {Array.<notification>} notificationLog
+ * @property {farmhand.notification?} latestNotification
+ * @property {Array.<farmhand.notification>} newDayNotifications
+ * @property {Array.<farmhand.notification>} notificationLog
  * @property {Object} peers Keys are (Trystero) peer ids, values are their respective metadata or null.
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
  * @property {farmhand.peerMessage[]} pendingPeerMessages An array of messages
@@ -273,13 +274,14 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
  * @property {farmhand.stageFocusType} stageFocus
- * @property {Array.<notification>} todaysNotifications
+ * @property {Array.<farmhand.notification>} todaysNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {Object} todaysPurchases Keys are item names, values are their
  * respective quantities.
  * @property {number} todaysRevenue Should always be a positive number.
  * @property {Record<farmhand.item['id'], number>} todaysStartingInventory Keys
  * are item names, values are their respective quantities.
+ * @property {Record<toolType, toolLevel>} toolLevels
  * @property {boolean} useAlternateEndDayButtonPosition Option to display the
  * Bed button on the left side of the screen.
  * @property {Record<string, number>} valueAdjustments
@@ -294,6 +296,18 @@ export default class Farmhand extends Component {
    */
   state = this.createInitialState()
 
+  handlers = { debounced: {} }
+
+  /**
+   * @type {Record<string, string>}
+   */
+  keyMap = {}
+
+  /**
+   * @type {Record<string, () => void>}
+   */
+  keyHandlers = {}
+
   static defaultProps = {
     localforage: localforage.createInstance({
       name: 'farmhand',
@@ -303,13 +317,16 @@ export default class Farmhand extends Component {
     match: { path: '', params: {} },
   }
 
-  constructor() {
-    super(...arguments)
+  /**
+   * @param {farmhand.state} props
+   */
+  constructor(props) {
+    super(props)
 
     this.initInputHandlers()
     this.initReducers()
 
-    // This is antipattern, but it's useful for debugging. The Farmhand
+    // This is an antipattern, but it's useful for debugging. The Farmhand
     // component assumes that it is a singleton.
     window.farmhand = this
   }
@@ -387,7 +404,7 @@ export default class Farmhand extends Component {
       cellarInventory: [],
       currentDialogView: dialogView.NONE,
       completedAchievements: {},
-      cowForSale: {},
+      cowForSale: generateCow(),
       cowBreedingPen: {
         cowId1: null,
         cowId2: null,
@@ -466,14 +483,12 @@ export default class Farmhand extends Component {
       },
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
-      version: process.env.REACT_APP_VERSION,
+      version: process.env.REACT_APP_VERSION ?? '',
     }
   }
 
   initInputHandlers() {
     const debouncedInputRate = 50
-
-    this.handlers = { debounced: {} }
 
     Object.keys(eventHandlers).forEach(method => {
       this.handlers[method] = eventHandlers[method].bind(this)
