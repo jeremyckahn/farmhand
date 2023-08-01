@@ -6,7 +6,6 @@ import * as reducers from '../../game-logic/reducers'
 
 /**
  * @callback BoundReducer
- * @param {farmhand.state} state
  * @param {...any} rest
  * @returns {farmhand.state}
  */

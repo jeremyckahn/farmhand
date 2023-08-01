@@ -572,7 +572,7 @@ export default class Farmhand extends FarmhandReducers {
 
     Object.assign(this.keyHandlers, {
       clearPersistedData: () => this.clearPersistedData(),
-      waterAllPlots: () => this.waterAllPlots(this.state),
+      waterAllPlots: () => this.waterAllPlots(),
     })
   }
 
@@ -651,7 +651,7 @@ export default class Farmhand extends FarmhandReducers {
     if (isOnline !== prevState.isOnline || room !== prevState.room) {
       this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
-      if (!isOnline) {
+      if (!isOnline && typeof heartbeatTimeoutId === 'number') {
         clearTimeout(heartbeatTimeoutId)
         this.setState({
           activePlayers: null,
@@ -706,18 +706,30 @@ export default class Farmhand extends FarmhandReducers {
         const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
           'peerMetadata'
         )
-        getPeerMetadata((...args) => handlePeerMetadataRequest(this, ...args))
+        getPeerMetadata((
+          /** @type {[object, string]} */
+          ...args
+        ) => handlePeerMetadataRequest(this, ...args))
 
         const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
           'cowTrade'
         )
-        getCowTradeRequest((...args) => handleCowTradeRequest(this, ...args))
+        getCowTradeRequest((
+          /** @type {[object, string]} */
+          ...args
+        ) => handleCowTradeRequest(this, ...args))
 
         const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
-        getCowAccept((...args) => handleCowTradeRequestAccept(this, ...args))
+        getCowAccept((
+          /** @type {[object, string]} */
+          ...args
+        ) => handleCowTradeRequestAccept(this, ...args))
 
         const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
-        getCowReject((...args) => handleCowTradeRequestReject(this, ...args))
+        getCowReject((
+          /** @type {[object]} */
+          ...args
+        ) => handleCowTradeRequestReject(this, ...args))
 
         this.setState({
           getCowAccept,
