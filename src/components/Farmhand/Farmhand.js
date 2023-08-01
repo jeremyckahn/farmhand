@@ -289,7 +289,82 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * package.json.
  */
 
-export default class Farmhand extends Component {
+class FarmhandReducers extends Component {
+  addCowToInventory() {}
+  addPeer() {}
+  adjustLoan() {}
+  changeCowAutomaticHugState() {}
+  changeCowBreedingPenResident() {}
+  changeCowName() {}
+  clearPlot() {}
+  computeStateForNextDay() {}
+  fertilizePlot() {}
+  forRange() {}
+  harvestPlot() {}
+  hugCow() {}
+  makeRecipe() {}
+  makeFermentationRecipe() {}
+  modifyCow() {}
+  offerCow() {}
+  plantInPlot() {}
+  prependPendingPeerMessage() {}
+  purchaseCombine() {}
+  purchaseComposter() {}
+  purchaseCow() {}
+  purchaseCowPen() {}
+  purchaseCellar() {}
+  purchaseField() {}
+  purchaseItem() {}
+  purchaseSmelter() {}
+  purchaseStorageExpansion() {}
+  removeCowFromInventory() {}
+  removeKegFromCellar() {}
+  removePeer() {}
+  selectCow() {}
+  sellCow() {}
+  sellItem() {}
+  sellKeg() {}
+  setScarecrow() {}
+  setSprinkler() {}
+  showNotification() {}
+  updatePeer() {}
+  upgradeTool() {}
+  waterAllPlots() {}
+  waterField() {}
+  waterPlot() {}
+  withdrawCow() {}
+
+  /**
+   * @param {object} props
+   */
+  constructor(props) {
+    super(props)
+
+    const reducerNames = Object.getOwnPropertyNames(
+      FarmhandReducers.prototype
+    ).filter(key => key !== 'constructor')
+
+    for (const reducerName of reducerNames) {
+      const reducer = reducers[reducerName]
+
+      if (process.env.NODE_ENV === 'development') {
+        if (typeof reducer === 'undefined') {
+          throw new Error(
+            `Reducer ${reducerName} is not exported from reducers/index.js`
+          )
+        }
+      }
+
+      this[reducerName] = (/** @type any[] */ ...args) => {
+        this.setState((/** @type {farmhand.state} */ state) =>
+          reducer(state, ...args)
+        )
+      }
+    }
+  }
+}
+
+export default class Farmhand extends FarmhandReducers {
   /*!
    * @member farmhand.Farmhand#state
    * @type {farmhand.state}
@@ -324,7 +399,6 @@ export default class Farmhand extends Component {
     super(props)
 
     this.initInputHandlers()
-    this.initReducers()
 
     // This is an antipattern, but it's useful for debugging. The Farmhand
     // component assumes that it is a singleton.
@@ -561,68 +635,6 @@ export default class Farmhand extends Component {
     Object.assign(this.keyHandlers, {
       clearPersistedData: () => this.clearPersistedData(),
       waterAllPlots: () => this.waterAllPlots(this.state),
-    })
-  }
-
-  initReducers() {
-    ;[
-      'addCowToInventory',
-      'addPeer',
-      'adjustLoan',
-      'changeCowAutomaticHugState',
-      'changeCowBreedingPenResident',
-      'changeCowName',
-      'clearPlot',
-      'computeStateForNextDay',
-      'fertilizePlot',
-      'forRange',
-      'harvestPlot',
-      'hugCow',
-      'makeRecipe',
-      'makeFermentationRecipe',
-      'modifyCow',
-      'offerCow',
-      'plantInPlot',
-      'prependPendingPeerMessage',
-      'purchaseCombine',
-      'purchaseComposter',
-      'purchaseCow',
-      'purchaseCowPen',
-      'purchaseCellar',
-      'purchaseField',
-      'purchaseItem',
-      'purchaseSmelter',
-      'purchaseStorageExpansion',
-      'removeCowFromInventory',
-      'removeKegFromCellar',
-      'removePeer',
-      'selectCow',
-      'sellCow',
-      'sellItem',
-      'sellKeg',
-      'setScarecrow',
-      'setSprinkler',
-      'showNotification',
-      'updatePeer',
-      'upgradeTool',
-      'waterAllPlots',
-      'waterField',
-      'waterPlot',
-      'withdrawCow',
-    ].forEach(reducerName => {
-      const reducer = reducers[reducerName]
-
-      if (process.env.NODE_ENV === 'development') {
-        if (typeof reducer === 'undefined') {
-          throw new Error(
-            `Reducer ${reducerName} is not exported from reducers/index.js`
-          )
-        }
-      }
-
-      this[reducerName] = (...args) => {
-        this.setState(state => reducer(state, ...args))
-      }
     })
   }
 
