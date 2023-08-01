@@ -13,7 +13,7 @@
  * @typedef {import("../../enums").fieldMode} farmhand.fieldMode
  * @typedef {import("../../enums").stageFocusType} farmhand.stageFocusType
  */
-import React, { Component } from 'react'
+import React from 'react'
 import window from 'global/window'
 import { Redirect } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
@@ -119,6 +119,7 @@ import { scarecrow } from '../../data/items'
 
 import { getInventoryQuantities } from './helpers/getInventoryQuantities'
 import FarmhandContext from './Farmhand.context'
+import { FarmhandReducers } from './FarmhandReducers'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 
@@ -289,81 +290,6 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * package.json.
  */
 
-class FarmhandReducers extends Component {
-  addCowToInventory() {}
-  addPeer() {}
-  adjustLoan() {}
-  changeCowAutomaticHugState() {}
-  changeCowBreedingPenResident() {}
-  changeCowName() {}
-  clearPlot() {}
-  computeStateForNextDay() {}
-  fertilizePlot() {}
-  forRange() {}
-  harvestPlot() {}
-  hugCow() {}
-  makeRecipe() {}
-  makeFermentationRecipe() {}
-  modifyCow() {}
-  offerCow() {}
-  plantInPlot() {}
-  prependPendingPeerMessage() {}
-  purchaseCombine() {}
-  purchaseComposter() {}
-  purchaseCow() {}
-  purchaseCowPen() {}
-  purchaseCellar() {}
-  purchaseField() {}
-  purchaseItem() {}
-  purchaseSmelter() {}
-  purchaseStorageExpansion() {}
-  removeCowFromInventory() {}
-  removeKegFromCellar() {}
-  removePeer() {}
-  selectCow() {}
-  sellCow() {}
-  sellItem() {}
-  sellKeg() {}
-  setScarecrow() {}
-  setSprinkler() {}
-  showNotification() {}
-  updatePeer() {}
-  upgradeTool() {}
-  waterAllPlots() {}
-  waterField() {}
-  waterPlot() {}
-  withdrawCow() {}
-
-  /**
-   * @param {object} props
-   */
-  constructor(props) {
-    super(props)
-
-    const reducerNames = Object.getOwnPropertyNames(
-      FarmhandReducers.prototype
-    ).filter(key => key !== 'constructor')
-
-    for (const reducerName of reducerNames) {
-      const reducer = reducers[reducerName]
-
-      if (process.env.NODE_ENV === 'development') {
-        if (typeof reducer === 'undefined') {
-          throw new Error(
-            `Reducer ${reducerName} is not exported from reducers/index.js`
-          )
-        }
-      }
-
-      this[reducerName] = (/** @type any[] */ ...args) => {
-        this.setState((/** @type {farmhand.state} */ state) =>
-          reducer(state, ...args)
-        )
-      }
-    }
-  }
-}
-
 export default class Farmhand extends FarmhandReducers {
   /*!
    * @member farmhand.Farmhand#state
@@ -393,7 +319,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /**
-   * @param {farmhand.state} props
+   * @param {typeof Farmhand.defaultProps} props
    */
   constructor(props) {
     super(props)
