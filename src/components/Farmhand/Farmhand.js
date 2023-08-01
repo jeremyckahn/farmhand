@@ -206,6 +206,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * totals of crops harvested. Keys are crop type IDs, values are the number of
  * that crop harvested.
  * @property {number} dayCount
+ * @property {string} farmName
+ * @property {boolean} hasBooted
  * @property {(?farmhand.plotContent)[][]} field
  * @property {farmhand.fieldMode} fieldMode
  * @property {Function?} getCowAccept https://github.com/dmotz/trystero#receiver
@@ -258,9 +260,11 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Object.<string, farmhand.priceEvent>} priceSurges Keys are
  * itemIds.
  * @property {number} purchasedCombine
+ * @property {number} purchasedComposter
  * @property {number} purchasedCowPen
  * @property {number} purchasedCellar
  * @property {number} purchasedField
+ * @property {number} purchasedSmelter
  * @property {number} profitabilityStreak
  * @property {number} record7dayProfitAverage
  * @property {number} recordProfitabilityStreak
@@ -415,10 +419,16 @@ export default class Farmhand extends FarmhandReducers {
       cowInventory: [],
       cowsSold: {},
       cowsTraded: 0,
+      cowTradeTimeoutId: -1,
       cropsHarvested: {},
       dayCount: 0,
       farmName: 'Unnamed',
       field: createNewField(),
+      fieldMode: OBSERVE,
+      getCowAccept: () => {},
+      getCowReject: () => {},
+      getCowTradeRequest: () => {},
+      getPeerMetadata: () => {},
       hasBooted: false,
       heartbeatTimeoutId: null,
       historicalDailyLosses: [],
@@ -451,7 +461,6 @@ export default class Farmhand extends FarmhandReducers {
       sendPeerMetadata: null,
       selectedCowId: '',
       selectedItemId: '',
-      fieldMode: OBSERVE,
       priceCrashes: {},
       priceSurges: {},
       profitabilityStreak: 0,
@@ -461,12 +470,15 @@ export default class Farmhand extends FarmhandReducers {
       revenue: 0,
       redirect: '',
       room: decodeURIComponent(this.props.match.params.room || DEFAULT_ROOM),
+      sendCowAccept: () => {},
+      sendCowReject: () => {},
       purchasedCombine: 0,
       purchasedComposter: 0,
       purchasedCowPen: 0,
       purchasedCellar: 0,
       purchasedField: 0,
       purchasedSmelter: 0,
+      sendCowTradeRequest: () => {},
       showHomeScreen: true,
       showNotifications: true,
       stageFocus: stageFocusType.HOME,
