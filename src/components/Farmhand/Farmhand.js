@@ -165,8 +165,8 @@ export const getPlantableCropInventory = memoize(inventory =>
 
 /**
  * @param {Record<string, number>} valueAdjustments
- * @param {farmhand.priceEvent} priceCrashes
- * @param {farmhand.priceEvent} priceSurges
+ * @param {Record<string, farmhand.priceEvent>} priceCrashes
+ * @param {Record<string, farmhand.priceEvent>} priceSurges
  * @returns {Record<string, number>}
  */
 const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
@@ -913,13 +913,15 @@ export default class Farmhand extends FarmhandReducers {
 
       this.showNotification(CONNECTED_TO_ROOM`${room}`, 'success')
     } catch (e) {
+      const message = e instanceof Error ? e.message : 'Unexpected error'
+
       // TODO: Add some reasonable fallback behavior in case the server request
       // fails. Possibility: Regenerate valueAdjustments and notify the user
       // they are offline.
 
-      if (SERVER_ERRORS[e.message]) {
+      if (SERVER_ERRORS[message]) {
         // Bubble up the errorCode to be handled by game logic
-        throw e.message
+        throw message
       }
 
       this.showNotification(SERVER_ERROR, 'error')
@@ -939,7 +941,7 @@ export default class Farmhand extends FarmhandReducers {
     switch (errorCode) {
       case SERVER_ERRORS.ROOM_FULL:
         const roomNameChunks = room.split('-')
-        const roomNumber = parseInt(roomNameChunks.slice(-1)) // May be NaN
+        const roomNumber = parseInt(roomNameChunks.slice(-1)[0]) // May be NaN
         const nextRoomNumber = isNaN(roomNumber) ? 2 : roomNumber + 1
         const roomBaseName = roomNameChunks
           .slice(0, isNaN(roomNumber) ? undefined : -1)
@@ -963,7 +965,7 @@ export default class Farmhand extends FarmhandReducers {
 
   scheduleHeartbeat() {
     const { heartbeatTimeoutId, id, room } = this.state
-    clearTimeout(heartbeatTimeoutId)
+    clearTimeout(heartbeatTimeoutId ?? -1)
 
     this.setState(() => ({
       heartbeatTimeoutId: setTimeout(async () => {
@@ -1001,9 +1003,11 @@ export default class Farmhand extends FarmhandReducers {
             peerRoom,
           }))
         } catch (e) {
-          if (SERVER_ERRORS[e.message]) {
+          const message = e instanceof Error ? e.message : 'Unexpected error'
+
+          if (SERVER_ERRORS[message]) {
             // Bubble up the errorCode to be handled by game logic
-            throw e.message
+            throw message
           }
 
           this.showNotification(SERVER_ERROR, 'error')
@@ -1018,7 +1022,7 @@ export default class Farmhand extends FarmhandReducers {
     }))
   }
 
-  /*!
+  /**
    * @param {farmhand.state} prevState
    */
   showInventoryFullNotifications(prevState) {
