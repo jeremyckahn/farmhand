@@ -182,7 +182,7 @@
  * @typedef farmhand.notification
  * @type {Object}
  * @property {'error'|'info'|'success'|'warning'} severity
- * @property {Function?} onClick
+ * @property {Function=} onClick
  * @property {string} message
  */
 

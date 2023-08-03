@@ -1149,8 +1149,11 @@ export default class Farmhand extends FarmhandReducers {
             // shown to the player when the app reloads.
             newDayNotifications: pendingNotifications,
           })
-          ;[]
-            .concat(pendingNotifications)
+
+          /** @type {farmhand.notification[]} */
+          const notifications = [...pendingNotifications]
+
+          notifications
             .concat(
               isFirstDay
                 ? []
@@ -1197,7 +1200,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   focusNextView() {
-    if (document.activeElement.getAttribute('role') === 'tab') return
+    if (document.activeElement?.getAttribute('role') === 'tab') return
 
     const { viewList } = this
 
@@ -1209,7 +1212,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   focusPreviousView() {
-    if (document.activeElement.getAttribute('role') === 'tab') return
+    if (document.activeElement?.getAttribute('role') === 'tab') return
 
     const { viewList } = this
 
@@ -1347,6 +1350,8 @@ export default class Farmhand extends FarmhandReducers {
                     position="static"
                     activeStep={viewList.indexOf(this.state.stageFocus)}
                     className=""
+                    backButton={null}
+                    nextButton={null}
                   />
                   <div className="fab-buttons buttons">
                     <Fab
