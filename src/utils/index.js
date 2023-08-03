@@ -760,14 +760,14 @@ export const sortItems = items => {
 
 export const inventorySpaceConsumed = memoize(
   /**
-   * @param {farmhand.item[]} inventory
+   * @param {farmhand.state['inventory']} inventory
    * @returns {number}
    */
   inventory => inventory.reduce((sum, { quantity = 0 }) => sum + quantity, 0)
 )
 
 /**
- * @param {{ inventory: Array.<farmhand.item>, inventoryLimit: number}} state
+ * @param {farmhand.state} state
  * @returns {number}
  */
 export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
@@ -776,11 +776,11 @@ export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
     : Math.max(0, inventoryLimit - inventorySpaceConsumed(inventory))
 
 /**
- * @param {{ inventory: Array.<farmhand.item>, inventoryLimit: number}} state
+ * @param {farmhand.state} state
  * @returns {boolean}
  */
-export const doesInventorySpaceRemain = ({ inventory, inventoryLimit }) =>
-  inventorySpaceRemaining({ inventory, inventoryLimit }) > 0
+export const doesInventorySpaceRemain = state =>
+  inventorySpaceRemaining(state) > 0
 
 /**
  * @param {Array.<farmhand.item>} inventory
