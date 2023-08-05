@@ -118,8 +118,6 @@ describe('fertilizePlot', () => {
 
     describe('FERTILIZE field mode updating', () => {
       describe('multiple fertilizer units remaining', () => {
-        beforeEach(() => {})
-
         test('does not change fieldMode', () => {
           const state = fertilizePlot(
             {

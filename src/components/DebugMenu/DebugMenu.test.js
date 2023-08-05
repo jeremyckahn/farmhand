@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import { noop } from '../../utils/noop'
+
 import { DebugMenu } from './DebugMenu'
 
 let component
@@ -9,8 +11,8 @@ beforeEach(() => {
   component = shallow(
     <DebugMenu
       {...{
-        handleAddMoneyClick: () => {},
-        handleItemPurchaseClick: () => {},
+        handleAddMoneyClick: noop,
+        handleItemPurchaseClick: noop,
       }}
     />
   )

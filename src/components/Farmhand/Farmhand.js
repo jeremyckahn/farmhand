@@ -72,6 +72,7 @@ import {
   sleep,
   transformStateDataForImport,
 } from '../../utils'
+import { noop } from '../../utils/noop'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 import { memoize } from '../../utils/memoize'
 import { getData, postData } from '../../fetch-utils'
@@ -425,10 +426,10 @@ export default class Farmhand extends FarmhandReducers {
       farmName: 'Unnamed',
       field: createNewField(),
       fieldMode: OBSERVE,
-      getCowAccept: () => {},
-      getCowReject: () => {},
-      getCowTradeRequest: () => {},
-      getPeerMetadata: () => {},
+      getCowAccept: noop,
+      getCowReject: noop,
+      getCowTradeRequest: noop,
+      getPeerMetadata: noop,
       hasBooted: false,
       heartbeatTimeoutId: null,
       historicalDailyLosses: [],
@@ -470,15 +471,15 @@ export default class Farmhand extends FarmhandReducers {
       revenue: 0,
       redirect: '',
       room: decodeURIComponent(this.props.match.params.room || DEFAULT_ROOM),
-      sendCowAccept: () => {},
-      sendCowReject: () => {},
+      sendCowAccept: noop,
+      sendCowReject: noop,
       purchasedCombine: 0,
       purchasedComposter: 0,
       purchasedCowPen: 0,
       purchasedCellar: 0,
       purchasedField: 0,
       purchasedSmelter: 0,
-      sendCowTradeRequest: () => {},
+      sendCowTradeRequest: noop,
       showHomeScreen: true,
       showNotifications: true,
       stageFocus: stageFocusType.HOME,
@@ -784,64 +785,61 @@ export default class Farmhand extends FarmhandReducers {
    * @param {farmhand.cow} peerPlayerCow
    */
   tradeForPeerCow(peerPlayerCow) {
-    this.setState(
-      state => {
-        const {
-          cowIdOfferedForTrade,
-          cowInventory,
-          peers,
-          sendCowTradeRequest,
-        } = state
+    this.setState(state => {
+      const {
+        cowIdOfferedForTrade,
+        cowInventory,
+        peers,
+        sendCowTradeRequest,
+      } = state
 
-        if (!sendCowTradeRequest) return null
+      if (!sendCowTradeRequest) return null
 
-        const { ownerId } = peerPlayerCow
+      const { ownerId } = peerPlayerCow
 
-        const [peerId] =
-          Object.entries(peers).find(([, peer]) => peer?.id === ownerId) ?? []
+      const [peerId] =
+        Object.entries(peers).find(([, peer]) => peer?.id === ownerId) ?? []
 
-        if (!peerId) {
-          console.error(
-            `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
-          )
-          return null
-        }
-
-        const playerAlreadyOwnsRequestedCow = cowInventory.find(
-          ({ id }) => id === peerPlayerCow.id
+      if (!peerId) {
+        console.error(
+          `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
         )
+        return null
+      }
 
-        if (playerAlreadyOwnsRequestedCow) {
-          console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
-          return reducers.showNotification(state, COW_ALREADY_OWNED, 'error')
-        }
+      const playerAlreadyOwnsRequestedCow = cowInventory.find(
+        ({ id }) => id === peerPlayerCow.id
+      )
 
-        const cowToTradeAway = cowInventory.find(
-          ({ id }) => id === cowIdOfferedForTrade
-        )
+      if (playerAlreadyOwnsRequestedCow) {
+        console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
+        return reducers.showNotification(state, COW_ALREADY_OWNED, 'error')
+      }
 
-        if (!cowToTradeAway) {
-          console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
-          return null
-        }
+      const cowToTradeAway = cowInventory.find(
+        ({ id }) => id === cowIdOfferedForTrade
+      )
 
-        const cowTradeTimeoutId = setTimeout(
-          this.handleCowTradeTimeout,
-          COW_TRADE_TIMEOUT
-        )
+      if (!cowToTradeAway) {
+        console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
+        return null
+      }
 
-        sendCowTradeRequest(
-          {
-            cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
-            cowRequested: peerPlayerCow,
-          },
-          peerId
-        )
+      const cowTradeTimeoutId = setTimeout(
+        this.handleCowTradeTimeout,
+        COW_TRADE_TIMEOUT
+      )
 
-        return { cowTradeTimeoutId, isAwaitingCowTradeRequest: true }
-      },
-      () => {}
-    )
+      sendCowTradeRequest(
+        {
+          cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
+          cowRequested: peerPlayerCow,
+        },
+        peerId
+      )
+
+      return { cowTradeTimeoutId, isAwaitingCowTradeRequest: true }
+    }, noop)
   }
 
   handleCowTradeTimeout = () => {

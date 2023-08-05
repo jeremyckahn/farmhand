@@ -2,6 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 
 import { generateCow } from '../../utils'
+import { noop } from '../../utils/noop'
 
 import { CowPenContextMenu } from './CowPenContextMenu'
 
@@ -23,14 +24,14 @@ describe('CowPenContextMenu', () => {
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       cowForSale: generateCow(),
       cowInventory: [],
-      handleCowAutomaticHugChange: () => {},
-      handleCowBreedChange: () => {},
-      handleCowHugClick: () => {},
-      handleCowNameInputChange: () => {},
-      handleCowOfferClick: () => {},
-      handleCowSelect: () => {},
-      handleCowSellClick: () => {},
-      handleCowWithdrawClick: () => {},
+      handleCowAutomaticHugChange: noop,
+      handleCowBreedChange: noop,
+      handleCowHugClick: noop,
+      handleCowNameInputChange: noop,
+      handleCowOfferClick: noop,
+      handleCowSelect: noop,
+      handleCowSellClick: noop,
+      handleCowWithdrawClick: noop,
       purchasedCowPen: 1,
       selectedCowId: '',
     }

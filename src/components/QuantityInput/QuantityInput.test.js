@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import { noop } from '../../utils/noop'
+
 import QuantityInput from './QuantityInput'
 
 let component
@@ -9,10 +11,10 @@ beforeEach(() => {
   component = shallow(
     <QuantityInput
       {...{
-        handleSubmit: () => {},
-        handleUpdateNumber: () => {},
+        handleSubmit: noop,
+        handleUpdateNumber: noop,
         maxQuantity: 0,
-        setQuantity: () => {},
+        setQuantity: noop,
         value: 0,
       }}
     />

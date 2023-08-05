@@ -2,6 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 
 import { generateCow } from '../../utils'
+import { noop } from '../../utils/noop'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { cowColors, genders } from '../../enums'
 
@@ -23,10 +24,10 @@ describe('CowCard', () => {
       daysUntilBirth: -1,
     },
     cowIdOfferedForTrade: '',
-    handleCowSelect: () => {},
-    handleCowNameInputChange: () => {},
-    handleCowPurchaseClick: () => {},
-    handleCowTradeClick: () => {},
+    handleCowSelect: noop,
+    handleCowNameInputChange: noop,
+    handleCowPurchaseClick: noop,
+    handleCowTradeClick: noop,
     id: '',
     isSelected: false,
     isOnline: false,
