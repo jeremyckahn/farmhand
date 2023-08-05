@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { getPlotContentFromItemId } from '../../utils'
+import { noop } from '../../utils/noop'
 import { testCrop } from '../../test-utils'
 import { pixel, plotStates } from '../../img'
 import { cropLifeStage, fertilizerType } from '../../enums'
@@ -21,11 +22,11 @@ beforeEach(() => {
   component = shallow(
     <Plot
       {...{
-        handlePlotClick: () => {},
+        handlePlotClick: noop,
         isInHoverRange: false,
         lifeStage: cropLifeStage.SEED,
         selectedItemId: '',
-        setHoveredPlot: () => {},
+        setHoveredPlot: noop,
         x: 0,
         y: 0,
       }}

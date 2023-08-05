@@ -5,6 +5,7 @@ import { fieldMode } from '../../enums'
 import { testItem } from '../../test-utils'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { noop } from '../../utils/noop'
 
 import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field'
 
@@ -22,8 +23,8 @@ beforeEach(() => {
       {...{
         columns: 0,
         hoveredPlotRangeSize: 0,
-        handleCombineEnabledChange: () => {},
-        handleFieldActionRangeChange: () => {},
+        handleCombineEnabledChange: noop,
+        handleFieldActionRangeChange: noop,
         itemsSold: {},
         rows: 0,
         field: [
@@ -48,7 +49,7 @@ describe('field rendering', () => {
       <FieldContent
         {...{
           columns: 0,
-          handleCombineEnabledChange: () => {},
+          handleCombineEnabledChange: noop,
           field: [
             [null, null],
             [null, null],
@@ -61,7 +62,7 @@ describe('field rendering', () => {
           itemsSold: {},
           purchasedCombine: 0,
           rows: 0,
-          setHoveredPlot: () => {},
+          setHoveredPlot: noop,
         }}
       />
     )

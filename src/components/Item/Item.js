@@ -15,6 +15,7 @@ import FarmhandContext from '../Farmhand/Farmhand.context'
 import { items } from '../../img'
 import { itemsMap } from '../../data/maps'
 import { itemIds as shopItemIds } from '../../data/shop-inventory'
+import { noop } from '../../utils/noop'
 import { moneyString } from '../../utils/moneyString'
 import {
   inventorySpaceRemaining,
@@ -30,8 +31,6 @@ import QuantityInput from '../QuantityInput'
 import AnimatedNumber from '../AnimatedNumber'
 
 import './Item.sass'
-
-const noop = () => {}
 
 const ValueIndicator = ({ poorValue }) => (
   <Tooltip

@@ -8,14 +8,13 @@ import Tooltip from '@material-ui/core/Tooltip'
 
 import { toolLevel } from '../../enums'
 import { memoize } from '../../utils/memoize'
+import { noop } from '../../utils/noop'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import toolsData from '../../data/tools'
 
 import { tools as toolImages, craftedItems, pixel } from '../../img'
 
 import './Toolbelt.sass'
-
-const noop = () => {}
 
 const getTools = memoize(toolLevels => {
   const tools = []

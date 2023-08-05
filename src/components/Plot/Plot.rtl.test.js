@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { cropLifeStage } from '../../enums'
 import { testCrop, testShoveledPlot } from '../../test-utils'
 import { getCropFromItemId, getPlotContentFromItemId } from '../../utils'
-
+import { noop } from '../../utils/noop'
 import { items } from '../../img'
 
 import { Plot } from './Plot'
@@ -19,10 +19,10 @@ describe('class states', () => {
     render(
       <Plot
         {...{
-          handlePlotClick: () => {},
+          handlePlotClick: noop,
           isInHoverRange: false,
           selectedItemId: '',
-          setHoveredPlot: () => {},
+          setHoveredPlot: noop,
           x: 0,
           y: 0,
         }}
@@ -44,10 +44,10 @@ describe('plot label', () => {
     render(
       <Plot
         {...{
-          handlePlotClick: () => {},
+          handlePlotClick: noop,
           isInHoverRange: false,
           selectedItemId: '',
-          setHoveredPlot: () => {},
+          setHoveredPlot: noop,
           plotContent: getCropFromItemId('carrot'),
           x: 0,
           y: 0,
@@ -63,10 +63,10 @@ describe('plot label', () => {
     render(
       <Plot
         {...{
-          handlePlotClick: () => {},
+          handlePlotClick: noop,
           isInHoverRange: false,
           selectedItemId: '',
-          setHoveredPlot: () => {},
+          setHoveredPlot: noop,
           plotContent: getCropFromItemId('grape-chardonnay'),
           x: 0,
           y: 0,
@@ -82,10 +82,10 @@ describe('plot label', () => {
     render(
       <Plot
         {...{
-          handlePlotClick: () => {},
+          handlePlotClick: noop,
           isInHoverRange: false,
           selectedItemId: '',
-          setHoveredPlot: () => {},
+          setHoveredPlot: noop,
           plotContent: {
             ...getCropFromItemId('carrot'),
             daysOld: 9,
@@ -108,14 +108,14 @@ describe('background image', () => {
       render(
         <Plot
           {...{
-            handlePlotClick: () => {},
+            handlePlotClick: noop,
             isInHoverRange: false,
             lifeStage: cropLifeStage.GROWN,
             plotContent: testCrop({
               itemId: 'sample-crop-1',
             }),
             selectedItemId: '',
-            setHoveredPlot: () => {},
+            setHoveredPlot: noop,
             x: 0,
             y: 0,
           }}
@@ -159,7 +159,7 @@ describe('background image', () => {
             plotProps: {
               isInHoverRange: false,
               selectedItemId: '',
-              setHoveredPlot: () => {},
+              setHoveredPlot: noop,
               x: 0,
               y: 0,
             },
@@ -194,13 +194,13 @@ describe('background image', () => {
       render(
         <Plot
           {...{
-            handlePlotClick: () => {},
+            handlePlotClick: noop,
             isInHoverRange: false,
             plotContent: {
               ...getPlotContentFromItemId('scarecrow'),
             },
             selectedItemId: '',
-            setHoveredPlot: () => {},
+            setHoveredPlot: noop,
             x: 0,
             y: 0,
           }}
@@ -219,13 +219,13 @@ describe('background image', () => {
       render(
         <Plot
           {...{
-            handlePlotClick: () => {},
+            handlePlotClick: noop,
             isInHoverRange: false,
             plotContent: {
               ...getPlotContentFromItemId('sprinkler'),
             },
             selectedItemId: '',
-            setHoveredPlot: () => {},
+            setHoveredPlot: noop,
             x: 0,
             y: 0,
           }}

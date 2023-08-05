@@ -12,6 +12,8 @@
     "build": "react-scripts --openssl-legacy-provider build",
     "build:native": "cross-env PUBLIC_URL='./' npm run build && electron-builder --publish=always",
     "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
+    "check:types": "tsc",
+    "check:types:noerror": "tsc; exit 0",
     "dev": "mprocs \"cross-env REACT_APP_TRACKER_URL='ws://localhost:8000' npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run start:tracker\"",
     "dev:native": "mprocs \"BROWSER=none npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run electron\"",
     "electron": "wait-on tcp:3000 && electron .",

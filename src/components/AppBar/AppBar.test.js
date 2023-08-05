@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import { noop } from '../../utils/noop'
+
 import AppBar from './AppBar'
 
 let component
@@ -9,7 +11,7 @@ beforeEach(() => {
   component = shallow(
     <AppBar
       {...{
-        handleClickNotificationIndicator: () => {},
+        handleClickNotificationIndicator: noop,
         money: 0,
         showNotifications: false,
         todaysNotifications: [],

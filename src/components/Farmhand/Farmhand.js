@@ -1,10 +1,19 @@
 /**
  * @typedef {import("../../index").farmhand.item} farmhand.item
  * @typedef {import("../../index").farmhand.cow} farmhand.cow
+ * @typedef {import("../../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen
  * @typedef {import("../../index").farmhand.keg} farmhand.keg
- * @typedef {import("../../index").farmhand.notification} notification
+ * @typedef {import("../../index").farmhand.plotContent} farmhand.plotContent
+ * @typedef {import("../../index").farmhand.peerMessage} farmhand.peerMessage
+ * @typedef {import("../../index").farmhand.priceEvent} farmhand.priceEvent
+ * @typedef {import("../../index").farmhand.notification} farmhand.notification
+ * @typedef {import("../../enums").cowColors} farmhand.cowColors
+ * @typedef {import("../../enums").cropType} farmhand.cropType
+ * @typedef {import("../../enums").dialogView} farmhand.dialogView
+ * @typedef {import("../../enums").fieldMode} farmhand.fieldMode
+ * @typedef {import("../../enums").stageFocusType} farmhand.stageFocusType
  */
-import React, { Component } from 'react'
+import React from 'react'
 import window from 'global/window'
 import { Redirect } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
@@ -51,6 +60,7 @@ import {
   createNewField,
   doesMenuObstructStage,
   farmProductsSold,
+  generateCow,
   getAvailableShopInventory,
   getItemCurrentValue,
   getPeerMetadata,
@@ -62,6 +72,7 @@ import {
   sleep,
   transformStateDataForImport,
 } from '../../utils'
+import { noop } from '../../utils/noop'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 import { memoize } from '../../utils/memoize'
 import { getData, postData } from '../../fetch-utils'
@@ -109,6 +120,7 @@ import { scarecrow } from '../../data/items'
 
 import { getInventoryQuantities } from './helpers/getInventoryQuantities'
 import FarmhandContext from './Farmhand.context'
+import { FarmhandReducers } from './FarmhandReducers'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 
@@ -153,10 +165,10 @@ export const getPlantableCropInventory = memoize(inventory =>
 )
 
 /**
- * @param {Object.<number>} valueAdjustments
- * @param {farmhand.priceEvent} priceCrashes
- * @param {farmhand.priceEvent} priceSurges
- * @returns {Object.<number>}
+ * @param {Record<string, number>} valueAdjustments
+ * @param {Record<string, farmhand.priceEvent>} priceCrashes
+ * @param {Record<string, farmhand.priceEvent>} priceSurges
+ * @returns {Record<string, number>}
  */
 const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
   const patchedValueAdjustments = { ...valueAdjustments }
@@ -177,27 +189,28 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number?} activePlayers
  * @property {boolean} allowCustomPeerCowNames
  * @property {Array.<farmhand.keg>} cellarInventory
- * @property {farmhand.module:enums.dialogView} currentDialogView
+ * @property {farmhand.dialogView} currentDialogView
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
  * @property {farmhand.cow} cowForSale
  * @property {farmhand.cowBreedingPen} cowBreedingPen
  * @property {Array.<farmhand.cow>} cowInventory
- * @property {Object.<farmhand.module:enums.cowColors, number>}
- * cowColorsPurchased Keys are color enums, values are the number of that color
- * of cow purchased.
+ * @property {Object.<farmhand.cowColors, number>} cowColorsPurchased Keys are
+ * color enums, values are the number of that color of cow purchased.
  * @property {string} cowIdOfferedForTrade The ID of the cow that is currently
  * set to be traded with online peers.
  * @property {Object} cowsSold Keys are items IDs, values are the id references
  * of cow colors (rainbow-cow, etc.).
  * @property {number} cowsTraded
  * @property {number?} cowTradeTimeoutId
- * @property {Object.<farmhand.module:enums.cropType, number>} cropsHarvested A
- * map of totals of crops harvested. Keys are crop type IDs, values are the
- * number of that crop harvested.
+ * @property {Object.<farmhand.cropType, number>} cropsHarvested A map of
+ * totals of crops harvested. Keys are crop type IDs, values are the number of
+ * that crop harvested.
  * @property {number} dayCount
- * @property {Array.<Array.<?farmhand.plotContent>>} field
- * @property {farmhand.module:enums.fieldMode} fieldMode
+ * @property {string} farmName
+ * @property {boolean} hasBooted
+ * @property {(?farmhand.plotContent)[][]} field
+ * @property {farmhand.fieldMode} fieldMode
  * @property {Function?} getCowAccept https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowReject https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowTradeRequest https://github.com/dmotz/trystero#receiver
@@ -205,13 +218,13 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number?} heartbeatTimeoutId
  * @property {Array.<number>} historicalDailyLosses
  * @property {Array.<number>} historicalDailyRevenue
- * @property {Array.<Object.<number>>} historicalValueAdjustments Currently
- * there is only one element in this array, but it will be used for more
- * historical price data analysis in the future. It is an array for
+ * @property {Record<string, number>[]} historicalValueAdjustments
+ * Currently there is only one element in this array, but it will be used for
+ * more historical price data analysis in the future. It is an array for
  * future-facing flexibility.
  * @property {number} hoveredPlotRangeSize
  * @property {string} id
- * @property {Array.<{ id: farmhand.item.id, quantity: number }>} inventory
+ * @property {{ id: farmhand.item['id'], quantity: number }[]} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
  * @property {boolean} isAwaitingCowTradeRequest
  * @property {boolean} isAwaitingNetworkRequest
@@ -231,15 +244,15 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} loanBalance
  * @property {number} loansTakenOut
  * @property {number} money
- * @property {notification} latestNotification
- * @property {Array.<notification>} newDayNotifications
- * @property {Array.<notification>} notificationLog
+ * @property {farmhand.notification?} latestNotification
+ * @property {Array.<farmhand.notification>} newDayNotifications
+ * @property {Array.<farmhand.notification>} notificationLog
  * @property {Object} peers Keys are (Trystero) peer ids, values are their respective metadata or null.
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
- * @property {Array.<farmhand.peerMessage>} pendingPeerMessages An array of
- * messages to be sent to the Trystero peer room upon the next broadcast.
- * @property {Array.<farmhand.peerMessage>} latestPeerMessages An array of
- * messages that have been received from peers.
+ * @property {farmhand.peerMessage[]} pendingPeerMessages An array of messages
+ * to be sent to the Trystero peer room upon the next broadcast.
+ * @property {farmhand.peerMessage[]} latestPeerMessages An array of messages
+ * that have been received from peers.
  * @property {function?} sendPeerMetadata See https://github.com/dmotz/trystero
  * @property {string} selectedCowId
  * @property {string} selectedItemId
@@ -248,9 +261,11 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Object.<string, farmhand.priceEvent>} priceSurges Keys are
  * itemIds.
  * @property {number} purchasedCombine
+ * @property {number} purchasedComposter
  * @property {number} purchasedCowPen
  * @property {number} purchasedCellar
  * @property {number} purchasedField
+ * @property {number} purchasedSmelter
  * @property {number} profitabilityStreak
  * @property {number} record7dayProfitAverage
  * @property {number} recordProfitabilityStreak
@@ -264,27 +279,40 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Function?} sendPeerMetadata https://github.com/dmotz/trystero#sender
  * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
- * @property {farmhand.module:enums.stageFocusType} stageFocus
- * @property {Array.<notification>} todaysNotifications
+ * @property {farmhand.stageFocusType} stageFocus
+ * @property {Array.<farmhand.notification>} todaysNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {Object} todaysPurchases Keys are item names, values are their
  * respective quantities.
  * @property {number} todaysRevenue Should always be a positive number.
  * @property {Record<farmhand.item['id'], number>} todaysStartingInventory Keys
  * are item names, values are their respective quantities.
+ * @property {Record<toolType, toolLevel>} toolLevels
  * @property {boolean} useAlternateEndDayButtonPosition Option to display the
  * Bed button on the left side of the screen.
- * @property {Object.<number>} valueAdjustments
+ * @property {Record<string, number>} valueAdjustments
  * @property {string} version Comes from the `version` property in
  * package.json.
  */
 
-export default class Farmhand extends Component {
+export default class Farmhand extends FarmhandReducers {
   /*!
    * @member farmhand.Farmhand#state
    * @type {farmhand.state}
    */
   state = this.createInitialState()
+
+  handlers = { debounced: {} }
+
+  /**
+   * @type {Record<string, string>}
+   */
+  keyMap = {}
+
+  /**
+   * @type {Record<string, () => void>}
+   */
+  keyHandlers = {}
 
   static defaultProps = {
     localforage: localforage.createInstance({
@@ -295,13 +323,15 @@ export default class Farmhand extends Component {
     match: { path: '', params: {} },
   }
 
-  constructor() {
-    super(...arguments)
+  /**
+   * @param {typeof Farmhand.defaultProps} props
+   */
+  constructor(props) {
+    super(props)
 
     this.initInputHandlers()
-    this.initReducers()
 
-    // This is antipattern, but it's useful for debugging. The Farmhand
+    // This is an antipattern, but it's useful for debugging. The Farmhand
     // component assumes that it is a singleton.
     window.farmhand = this
   }
@@ -379,7 +409,7 @@ export default class Farmhand extends Component {
       cellarInventory: [],
       currentDialogView: dialogView.NONE,
       completedAchievements: {},
-      cowForSale: {},
+      cowForSale: generateCow(),
       cowBreedingPen: {
         cowId1: null,
         cowId2: null,
@@ -390,10 +420,16 @@ export default class Farmhand extends Component {
       cowInventory: [],
       cowsSold: {},
       cowsTraded: 0,
+      cowTradeTimeoutId: -1,
       cropsHarvested: {},
       dayCount: 0,
       farmName: 'Unnamed',
       field: createNewField(),
+      fieldMode: OBSERVE,
+      getCowAccept: noop,
+      getCowReject: noop,
+      getCowTradeRequest: noop,
+      getPeerMetadata: noop,
       hasBooted: false,
       heartbeatTimeoutId: null,
       historicalDailyLosses: [],
@@ -426,7 +462,6 @@ export default class Farmhand extends Component {
       sendPeerMetadata: null,
       selectedCowId: '',
       selectedItemId: '',
-      fieldMode: OBSERVE,
       priceCrashes: {},
       priceSurges: {},
       profitabilityStreak: 0,
@@ -436,12 +471,15 @@ export default class Farmhand extends Component {
       revenue: 0,
       redirect: '',
       room: decodeURIComponent(this.props.match.params.room || DEFAULT_ROOM),
+      sendCowAccept: noop,
+      sendCowReject: noop,
       purchasedCombine: 0,
       purchasedComposter: 0,
       purchasedCowPen: 0,
       purchasedCellar: 0,
       purchasedField: 0,
       purchasedSmelter: 0,
+      sendCowTradeRequest: noop,
       showHomeScreen: true,
       showNotifications: true,
       stageFocus: stageFocusType.HOME,
@@ -458,14 +496,12 @@ export default class Farmhand extends Component {
       },
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
-      version: process.env.REACT_APP_VERSION,
+      version: process.env.REACT_APP_VERSION ?? '',
     }
   }
 
   initInputHandlers() {
     const debouncedInputRate = 50
-
-    this.handlers = { debounced: {} }
 
     Object.keys(eventHandlers).forEach(method => {
       this.handlers[method] = eventHandlers[method].bind(this)
@@ -537,69 +573,7 @@ export default class Farmhand extends Component {
 
     Object.assign(this.keyHandlers, {
       clearPersistedData: () => this.clearPersistedData(),
-      waterAllPlots: () => this.waterAllPlots(this.state),
-    })
-  }
-
-  initReducers() {
-    ;[
-      'addCowToInventory',
-      'addPeer',
-      'adjustLoan',
-      'changeCowAutomaticHugState',
-      'changeCowBreedingPenResident',
-      'changeCowName',
-      'clearPlot',
-      'computeStateForNextDay',
-      'fertilizePlot',
-      'forRange',
-      'harvestPlot',
-      'hugCow',
-      'makeRecipe',
-      'makeFermentationRecipe',
-      'modifyCow',
-      'offerCow',
-      'plantInPlot',
-      'prependPendingPeerMessage',
-      'purchaseCombine',
-      'purchaseComposter',
-      'purchaseCow',
-      'purchaseCowPen',
-      'purchaseCellar',
-      'purchaseField',
-      'purchaseItem',
-      'purchaseSmelter',
-      'purchaseStorageExpansion',
-      'removeCowFromInventory',
-      'removeKegFromCellar',
-      'removePeer',
-      'selectCow',
-      'sellCow',
-      'sellItem',
-      'sellKeg',
-      'setScarecrow',
-      'setSprinkler',
-      'showNotification',
-      'updatePeer',
-      'upgradeTool',
-      'waterAllPlots',
-      'waterField',
-      'waterPlot',
-      'withdrawCow',
-    ].forEach(reducerName => {
-      const reducer = reducers[reducerName]
-
-      if (process.env.NODE_ENV === 'development') {
-        if (typeof reducer === 'undefined') {
-          throw new Error(
-            `Reducer ${reducerName} is not exported from reducers/index.js`
-          )
-        }
-      }
-
-      this[reducerName] = (...args) => {
-        this.setState(state => reducer(state, ...args))
-      }
+      waterAllPlots: () => this.waterAllPlots(),
     })
   }
 
@@ -678,7 +652,7 @@ export default class Farmhand extends Component {
     if (isOnline !== prevState.isOnline || room !== prevState.room) {
       this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
 
-      if (!isOnline) {
+      if (!isOnline && typeof heartbeatTimeoutId === 'number') {
         clearTimeout(heartbeatTimeoutId)
         this.setState({
           activePlayers: null,
@@ -733,18 +707,30 @@ export default class Farmhand extends Component {
         const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
           'peerMetadata'
         )
-        getPeerMetadata((...args) => handlePeerMetadataRequest(this, ...args))
+        getPeerMetadata((
+          /** @type {[object, string]} */
+          ...args
+        ) => handlePeerMetadataRequest(this, ...args))
 
         const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
           'cowTrade'
         )
-        getCowTradeRequest((...args) => handleCowTradeRequest(this, ...args))
+        getCowTradeRequest((
+          /** @type {[object, string]} */
+          ...args
+        ) => handleCowTradeRequest(this, ...args))
 
         const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
-        getCowAccept((...args) => handleCowTradeRequestAccept(this, ...args))
+        getCowAccept((
+          /** @type {[object, string]} */
+          ...args
+        ) => handleCowTradeRequestAccept(this, ...args))
 
         const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
-        getCowReject((...args) => handleCowTradeRequestReject(this, ...args))
+        getCowReject((
+          /** @type {[object]} */
+          ...args
+        ) => handleCowTradeRequestReject(this, ...args))
 
         this.setState({
           getCowAccept,
@@ -799,64 +785,61 @@ export default class Farmhand extends Component {
    * @param {farmhand.cow} peerPlayerCow
    */
   tradeForPeerCow(peerPlayerCow) {
-    this.setState(
-      state => {
-        const {
-          cowIdOfferedForTrade,
-          cowInventory,
-          peers,
-          sendCowTradeRequest,
-        } = state
+    this.setState(state => {
+      const {
+        cowIdOfferedForTrade,
+        cowInventory,
+        peers,
+        sendCowTradeRequest,
+      } = state
 
-        if (!sendCowTradeRequest) return null
+      if (!sendCowTradeRequest) return null
 
-        const { ownerId } = peerPlayerCow
+      const { ownerId } = peerPlayerCow
 
-        const [peerId] =
-          Object.entries(peers).find(([, peer]) => peer?.id === ownerId) ?? []
+      const [peerId] =
+        Object.entries(peers).find(([, peer]) => peer?.id === ownerId) ?? []
 
-        if (!peerId) {
-          console.error(
-            `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
-          )
-          return null
-        }
-
-        const playerAlreadyOwnsRequestedCow = cowInventory.find(
-          ({ id }) => id === peerPlayerCow.id
+      if (!peerId) {
+        console.error(
+          `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
         )
+        return null
+      }
 
-        if (playerAlreadyOwnsRequestedCow) {
-          console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
-          return reducers.showNotification(state, COW_ALREADY_OWNED, 'error')
-        }
+      const playerAlreadyOwnsRequestedCow = cowInventory.find(
+        ({ id }) => id === peerPlayerCow.id
+      )
 
-        const cowToTradeAway = cowInventory.find(
-          ({ id }) => id === cowIdOfferedForTrade
-        )
+      if (playerAlreadyOwnsRequestedCow) {
+        console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
+        return reducers.showNotification(state, COW_ALREADY_OWNED, 'error')
+      }
 
-        if (!cowToTradeAway) {
-          console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
-          return null
-        }
+      const cowToTradeAway = cowInventory.find(
+        ({ id }) => id === cowIdOfferedForTrade
+      )
 
-        const cowTradeTimeoutId = setTimeout(
-          this.handleCowTradeTimeout,
-          COW_TRADE_TIMEOUT
-        )
+      if (!cowToTradeAway) {
+        console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
+        return null
+      }
 
-        sendCowTradeRequest(
-          {
-            cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
-            cowRequested: peerPlayerCow,
-          },
-          peerId
-        )
+      const cowTradeTimeoutId = setTimeout(
+        this.handleCowTradeTimeout,
+        COW_TRADE_TIMEOUT
+      )
 
-        return { cowTradeTimeoutId, isAwaitingCowTradeRequest: true }
-      },
-      () => {}
-    )
+      sendCowTradeRequest(
+        {
+          cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
+          cowRequested: peerPlayerCow,
+        },
+        peerId
+      )
+
+      return { cowTradeTimeoutId, isAwaitingCowTradeRequest: true }
+    }, noop)
   }
 
   handleCowTradeTimeout = () => {
@@ -928,13 +911,15 @@ export default class Farmhand extends Component {
 
       this.showNotification(CONNECTED_TO_ROOM`${room}`, 'success')
     } catch (e) {
+      const message = e instanceof Error ? e.message : 'Unexpected error'
+
       // TODO: Add some reasonable fallback behavior in case the server request
       // fails. Possibility: Regenerate valueAdjustments and notify the user
       // they are offline.
 
-      if (SERVER_ERRORS[e.message]) {
+      if (SERVER_ERRORS[message]) {
         // Bubble up the errorCode to be handled by game logic
-        throw e.message
+        throw message
       }
 
       this.showNotification(SERVER_ERROR, 'error')
@@ -954,7 +939,7 @@ export default class Farmhand extends Component {
     switch (errorCode) {
       case SERVER_ERRORS.ROOM_FULL:
         const roomNameChunks = room.split('-')
-        const roomNumber = parseInt(roomNameChunks.slice(-1)) // May be NaN
+        const roomNumber = parseInt(roomNameChunks.slice(-1)[0]) // May be NaN
         const nextRoomNumber = isNaN(roomNumber) ? 2 : roomNumber + 1
         const roomBaseName = roomNameChunks
           .slice(0, isNaN(roomNumber) ? undefined : -1)
@@ -978,7 +963,7 @@ export default class Farmhand extends Component {
 
   scheduleHeartbeat() {
     const { heartbeatTimeoutId, id, room } = this.state
-    clearTimeout(heartbeatTimeoutId)
+    clearTimeout(heartbeatTimeoutId ?? -1)
 
     this.setState(() => ({
       heartbeatTimeoutId: setTimeout(async () => {
@@ -1016,9 +1001,11 @@ export default class Farmhand extends Component {
             peerRoom,
           }))
         } catch (e) {
-          if (SERVER_ERRORS[e.message]) {
+          const message = e instanceof Error ? e.message : 'Unexpected error'
+
+          if (SERVER_ERRORS[message]) {
             // Bubble up the errorCode to be handled by game logic
-            throw e.message
+            throw message
           }
 
           this.showNotification(SERVER_ERROR, 'error')
@@ -1033,7 +1020,7 @@ export default class Farmhand extends Component {
     }))
   }
 
-  /*!
+  /**
    * @param {farmhand.state} prevState
    */
   showInventoryFullNotifications(prevState) {
@@ -1160,8 +1147,11 @@ export default class Farmhand extends Component {
             // shown to the player when the app reloads.
             newDayNotifications: pendingNotifications,
           })
-          ;[]
-            .concat(pendingNotifications)
+
+          /** @type {farmhand.notification[]} */
+          const notifications = [...pendingNotifications]
+
+          notifications
             .concat(
               isFirstDay
                 ? []
@@ -1208,7 +1198,7 @@ export default class Farmhand extends Component {
   }
 
   focusNextView() {
-    if (document.activeElement.getAttribute('role') === 'tab') return
+    if (document.activeElement?.getAttribute('role') === 'tab') return
 
     const { viewList } = this
 
@@ -1220,7 +1210,7 @@ export default class Farmhand extends Component {
   }
 
   focusPreviousView() {
-    if (document.activeElement.getAttribute('role') === 'tab') return
+    if (document.activeElement?.getAttribute('role') === 'tab') return
 
     const { viewList } = this
 
@@ -1358,6 +1348,8 @@ export default class Farmhand extends Component {
                     position="static"
                     activeStep={viewList.indexOf(this.state.stageFocus)}
                     className=""
+                    backButton={null}
+                    nextButton={null}
                   />
                   <div className="fab-buttons buttons">
                     <Fab

@@ -4,6 +4,7 @@ import { shallow } from 'enzyme'
 import { generateCow } from '../../utils'
 import { cowColors } from '../../enums'
 import { pixel } from '../../img'
+import { noop } from '../../utils/noop'
 
 import { Cow } from './CowPen'
 
@@ -27,8 +28,8 @@ describe('Cow', () => {
             color: cowColors.WHITE,
           },
           cowInventory: [],
-          handleCowPenUnmount: () => {},
-          handleCowClick: () => {},
+          handleCowPenUnmount: noop,
+          handleCowClick: noop,
           id: '',
           isSelected: false,
         }}

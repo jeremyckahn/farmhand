@@ -3,8 +3,8 @@ import { shallow } from 'enzyme'
 import MenuItem from '@material-ui/core/MenuItem'
 
 import { dialogView, stageFocusType } from '../../enums'
-
 import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { noop } from '../../utils/noop'
 
 import { Navigation } from './Navigation'
 
@@ -19,14 +19,14 @@ beforeEach(() => {
         currentDialogView: dialogView.NONE,
         dayCount: 0,
         farmName: '',
-        handleActivePlayerButtonClick: () => {},
-        handleClickDialogViewButton: () => {},
-        handleCloseDialogView: () => {},
-        handleDialogViewExited: () => {},
-        handleFarmNameUpdate: () => {},
-        handleOnlineToggleChange: () => {},
-        handleRoomChange: () => {},
-        handleViewChange: () => {},
+        handleActivePlayerButtonClick: noop,
+        handleClickDialogViewButton: noop,
+        handleCloseDialogView: noop,
+        handleDialogViewExited: noop,
+        handleFarmNameUpdate: noop,
+        handleOnlineToggleChange: noop,
+        handleRoomChange: noop,
+        handleViewChange: noop,
         inventory: [],
         inventoryLimit: INFINITE_STORAGE_LIMIT,
         itemsSold: {},

@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import { noop } from '../../utils/noop'
+
 import QuickSelect from './QuickSelect'
 
 let component
@@ -10,7 +12,7 @@ beforeEach(() => {
     <QuickSelect
       {...{
         fieldToolInventory: [],
-        handleItemSelectClick: () => {},
+        handleItemSelectClick: noop,
         playerInventoryQuantities: {},
         plantableCropInventory: [],
         selectedItemId: '',

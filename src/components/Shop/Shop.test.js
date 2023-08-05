@@ -2,8 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Inventory from '../Inventory'
-
 import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { noop } from '../../utils/noop'
 
 import { Shop } from './Shop'
 
@@ -13,11 +13,11 @@ beforeEach(() => {
   component = shallow(
     <Shop
       {...{
-        handleCombinePurchase: () => {},
-        handleCowPenPurchase: () => {},
-        handleCellarPurchase: () => {},
-        handleFieldPurchase: () => {},
-        handleStorageExpansionPurchase: () => {},
+        handleCombinePurchase: noop,
+        handleCowPenPurchase: noop,
+        handleCellarPurchase: noop,
+        handleFieldPurchase: noop,
+        handleStorageExpansionPurchase: noop,
         inventoryLimit: INFINITE_STORAGE_LIMIT,
         money: 0,
         purchasedCombine: 0,
