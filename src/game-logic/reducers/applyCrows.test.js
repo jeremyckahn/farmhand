@@ -1,5 +1,5 @@
-import { findInField } from '../../utils'
 import { MAX_CROWS, SCARECROW_ITEM_ID } from '../../constants'
+import { findInField } from '../../utils/findInField'
 
 import { randomNumberService } from '../../common/services/randomNumber'
 

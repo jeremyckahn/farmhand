@@ -138,7 +138,7 @@ export const chooseRandom = list => list[chooseRandomIndex(list)]
  * accept function arguments.
  * @param {any[]} args
  */
-const memoizationSerializer = args =>
+export const memoizationSerializer = args =>
   JSON.stringify(
     [...args].map(arg => (typeof arg === 'function' ? arg.toString() : arg))
   )
@@ -713,33 +713,6 @@ export const getPriceEventForCrop = cropItem => ({
   daysRemaining:
     getCropLifecycleDuration(cropItem) - PRICE_EVENT_STANDARD_DURATION_DECREASE,
 })
-
-export const findInField = memoize(
-  /**
-   * @param {(?farmhand.plotContent)[][]} field
-   * @param {function(?farmhand.plotContent): boolean} condition
-   * @returns {?farmhand.plotContent}
-   */
-  (field, condition) => {
-    /** @type {?farmhand.plotContent} */
-    let foundPlot = null
-
-    field.find(row => {
-      const matchingPlot = row.find(condition)
-
-      if (matchingPlot) {
-        foundPlot = matchingPlot
-      }
-
-      return matchingPlot
-    })
-
-    return foundPlot
-  },
-  {
-    serializer: memoizationSerializer,
-  }
-)
 
 export const doesMenuObstructStage = () => window.innerWidth < BREAKPOINTS.MD
 
