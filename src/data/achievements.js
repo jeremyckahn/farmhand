@@ -2,7 +2,6 @@ import { addItemToInventory } from '../game-logic/reducers/'
 import {
   doesPlotContainCrop,
   dollarString,
-  findInField,
   getCropLifeStage,
   getProfitRecord,
   integerString,
@@ -11,6 +10,7 @@ import {
   percentageString,
 } from '../utils'
 import { memoize } from '../utils/memoize'
+import { findInField } from '../utils/findInField'
 import { cropLifeStage, standardCowColors } from '../enums'
 import { COW_FEED_ITEM_ID, I_AM_RICH_BONUSES } from '../constants'
 
