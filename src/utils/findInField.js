@@ -10,20 +10,15 @@ export const findInField = memoize(
    * @returns {?farmhand.plotContent}
    */
   (field, condition) => {
-    /** @type {?farmhand.plotContent} */
-    let foundPlot = null
-
-    field.find(row => {
-      const matchingPlot = row.find(condition)
-
-      if (matchingPlot) {
-        foundPlot = matchingPlot
+    for (const row of field) {
+      for (const plot of row) {
+        if (condition(plot)) {
+          return plot
+        }
       }
+    }
 
-      return matchingPlot
-    })
-
-    return foundPlot
+    return null
   },
   {
     serializer: memoizationSerializer,
