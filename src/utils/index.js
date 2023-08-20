@@ -989,13 +989,15 @@ export const transformStateDataForImport = state => {
   return sanitizedState
 }
 
-/**
- * @param {string} playerId
- * @returns {string}
- */
-export const getPlayerName = memoize(playerId => {
-  return funAnimalName(playerId)
-})
+export const getPlayerName = memoize(
+  /**
+   * @param {string} playerId
+   * @returns {string}
+   */
+  playerId => {
+    return funAnimalName(playerId)
+  }
+)
 
 /**
  * @param {number} currentInventoryLimit

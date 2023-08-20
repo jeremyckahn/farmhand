@@ -3,6 +3,7 @@
  * @typedef {import('../../index').farmhand.peerMetadata} farmhand.peerMetadata
  */
 import { MAX_LATEST_PEER_MESSAGES } from '../../constants'
+import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates'
 
 import { showNotification } from './showNotification'
 
@@ -17,9 +18,12 @@ export const updatePeer = (state, peerId, peerMetadata) => {
 
   const previousPeerMetadata = peers[peerId]
 
+  const previousCowOfferedId = previousPeerMetadata?.cowOfferedForTrade?.id
+  const newCowOfferedId = peerMetadata.cowOfferedForTrade?.id
+
   const isCowNewlyBeingOfferedForTrade =
-    previousPeerMetadata?.cowOfferedForTrade?.id !==
-    peerMetadata.cowOfferedForTrade?.id
+    newCowOfferedId &&
+    previousCowOfferedId !== peerMetadata.cowOfferedForTrade?.id
 
   peers[peerId] = peerMetadata
 
@@ -28,8 +32,7 @@ export const updatePeer = (state, peerId, peerMetadata) => {
   const { pendingPeerMessages = [] } = peerMetadata
 
   if (isCowNewlyBeingOfferedForTrade) {
-    // FIXME: Improve this message
-    state = showNotification(state, `A new cow is being offered for trade!`)
+    state = showNotification(state, NEW_COW_OFFERED_FOR_TRADE`${peerMetadata}`)
   }
 
   return {
