@@ -1,3 +1,5 @@
+/** @typedef {import('../components/Farmhand/Farmhand').default} Farmhand */
+/** @typedef {import('../index').farmhand.peerMetadata} farmhand.peerMetadata */
 import { cowTradeRejectionReason } from '../enums'
 import { COW_TRADED_NOTIFICATION } from '../templates'
 import {
@@ -16,11 +18,11 @@ import {
 
 /**
  * @param {Farmhand} farmhand
- * @param {Object} peerState
+ * @param {farmhand.peerMetadata} peerMetadata
  * @param {string} peerId
  */
-export const handlePeerMetadataRequest = (farmhand, peerState, peerId) => {
-  farmhand.updatePeer(peerId, peerState)
+export const handlePeerMetadataRequest = (farmhand, peerMetadata, peerId) => {
+  farmhand.updatePeer(peerId, peerMetadata)
 }
 
 /**

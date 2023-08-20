@@ -3,6 +3,10 @@
  */
 
 /**
+ * @typedef {import("./components/Farmhand/Farmhand").farmhand.state} farmhand.state
+ */
+
+/**
  * @typedef {import("./enums").cropType} cropType
  * @typedef {import("./enums").cowColors} cowColors
  * @typedef {import("./enums").recipeType} recipeType
@@ -192,6 +196,17 @@
  * @property {string} id The farmhand.state.id of the peer.
  * @property {'error'|'info'|'success'|'warning'} severity
  * @property {string} message
+ */
+
+/**
+ * @typedef farmhand.offeredCow
+ * @type {farmhand.cow}
+ * @property {string} ownerId
+ */
+
+/**
+ * @typedef farmhand.peerMetadata
+ * @type {Pick<farmhand.state, 'cowsSold' | 'cropsHarvested' | 'dayCount' | 'id' | 'itemsSold' | 'money' | 'pendingPeerMessages' | 'version'> & { cowOfferedForTrade?: farmhand.offeredCow }}
  */
 
 /**
