@@ -892,12 +892,15 @@ export default class Farmhand extends FarmhandReducers {
 
       this.scheduleHeartbeat()
 
+      const trackerRedundancy = 4
+
       this.setState({
         activePlayers,
         peerRoom: joinRoom(
           {
             appId: process.env.REACT_APP_NAME,
             trackerUrls,
+            trackerRedundancy,
             rtcConfig,
           },
           room
