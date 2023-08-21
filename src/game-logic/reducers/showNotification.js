@@ -1,6 +1,7 @@
 /**
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
- * @typedef {import("@material-ui/lab/Alert").Color} alertSeverity
+ * @typedef {import('@material-ui/lab/Alert').Color} alertSeverity
+ * @typedef {import('@material-ui/lab/Alert').AlertProps} AlertProps
  */
 
 // TODO: Change showNotification to accept a configuration object instead of so
@@ -10,6 +11,7 @@
  * @param {string} message
  * @param {alertSeverity} [severity] Corresponds to the `severity` prop here:
  * https://material-ui.com/api/alert/
+ * @param {AlertProps['onClick']} onClick
  * @returns {state}
  * @see https://material-ui.com/api/alert/
  */

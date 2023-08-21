@@ -22,7 +22,7 @@ import {
  * @param {string} peerId
  */
 export const handlePeerMetadataRequest = (farmhand, peerMetadata, peerId) => {
-  farmhand.updatePeer(peerId, peerMetadata)
+  farmhand.updatePeer(peerId, peerMetadata, farmhand)
 }
 
 /**

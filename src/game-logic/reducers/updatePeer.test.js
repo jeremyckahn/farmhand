@@ -1,3 +1,4 @@
+import Farmhand from '../../components/Farmhand'
 import { MAX_LATEST_PEER_MESSAGES } from '../../constants'
 
 import { updatePeer } from './updatePeer'
@@ -10,7 +11,8 @@ describe('updatePeer', () => {
         peers: { abc123: { foo: true } },
       },
       'abc123',
-      { foo: false }
+      { foo: false },
+      Farmhand
     )
 
     expect(latestPeerMessages).toEqual([])
@@ -24,7 +26,8 @@ describe('updatePeer', () => {
         peers: { abc123: { foo: true } },
       },
       'abc123',
-      { foo: false }
+      { foo: false },
+      Farmhand
     )
 
     expect(latestPeerMessages).toHaveLength(MAX_LATEST_PEER_MESSAGES)
