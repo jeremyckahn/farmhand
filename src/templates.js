@@ -360,7 +360,7 @@ export const KEG_SPOILED_MESSAGE = (_, keg) =>
   `Oh no! Your ${FERMENTED_CROP_NAME`${itemsMap[keg.itemId]}`} has spoiled!`
 
 /**
- * @param {string} _
+ * @param {TemplateStringsArray} _
  * @param {farmhand.peerMetadata} peerMetadata
  * @returns {string}
  */
