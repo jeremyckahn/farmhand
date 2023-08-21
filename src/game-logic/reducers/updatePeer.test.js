@@ -10,9 +10,9 @@ describe('updatePeer', () => {
         latestPeerMessages: [],
         peers: { abc123: { foo: true } },
       },
-      'abc123',
+      Farmhand,
       { foo: false },
-      Farmhand
+      'abc123'
     )
 
     expect(latestPeerMessages).toEqual([])
@@ -25,9 +25,9 @@ describe('updatePeer', () => {
         latestPeerMessages: new Array(50).fill('message'),
         peers: { abc123: { foo: true } },
       },
-      'abc123',
+      Farmhand,
       { foo: false },
-      Farmhand
+      'abc123'
     )
 
     expect(latestPeerMessages).toHaveLength(MAX_LATEST_PEER_MESSAGES)

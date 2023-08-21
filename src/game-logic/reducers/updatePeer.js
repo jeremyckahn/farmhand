@@ -11,12 +11,12 @@ import { showNotification } from './showNotification'
 
 /**
  * @param {farmhand.state} state
- * @param {string} peerId The peer to update
- * @param {farmhand.peerMetadata} peerMetadata
  * @param {Farmhand} farmhand
+ * @param {farmhand.peerMetadata} peerMetadata
+ * @param {string} peerId The peer to update
  * @returns {farmhand.state}
  */
-export const updatePeer = (state, peerId, peerMetadata, farmhand) => {
+export const updatePeer = (state, farmhand, peerMetadata, peerId) => {
   const peers = { ...state.peers }
 
   const previousPeerMetadata = peers[peerId]
