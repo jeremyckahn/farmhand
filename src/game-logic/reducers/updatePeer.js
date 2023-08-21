@@ -24,7 +24,7 @@ export const updatePeer = (state, farmhand, peerMetadata, peerId) => {
   const previousCowOfferedId = previousPeerMetadata?.cowOfferedForTrade?.id
   const newCowOfferedId = peerMetadata.cowOfferedForTrade?.id
 
-  const isCowNewlyBeingOfferedForTrade =
+  const isNewTrade =
     newCowOfferedId &&
     previousCowOfferedId !== peerMetadata.cowOfferedForTrade?.id
 
@@ -34,7 +34,7 @@ export const updatePeer = (state, farmhand, peerMetadata, peerId) => {
   // it here.
   const { pendingPeerMessages = [] } = peerMetadata
 
-  if (isCowNewlyBeingOfferedForTrade) {
+  if (isNewTrade) {
     state = showNotification(
       state,
       NEW_COW_OFFERED_FOR_TRADE`${peerMetadata}`,
