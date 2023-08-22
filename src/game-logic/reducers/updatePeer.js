@@ -24,9 +24,7 @@ export const updatePeer = (state, farmhand, peerMetadata, peerId) => {
   const previousCowOfferedId = previousPeerMetadata?.cowOfferedForTrade?.id
   const newCowOfferedId = peerMetadata.cowOfferedForTrade?.id
 
-  const isNewTrade =
-    newCowOfferedId &&
-    previousCowOfferedId !== peerMetadata.cowOfferedForTrade?.id
+  const isNewTrade = newCowOfferedId && previousCowOfferedId !== newCowOfferedId
 
   peers[peerId] = peerMetadata
 
