@@ -5,6 +5,7 @@
  * @typedef {import("../../index").farmhand.keg} farmhand.keg
  * @typedef {import("../../index").farmhand.plotContent} farmhand.plotContent
  * @typedef {import("../../index").farmhand.peerMessage} farmhand.peerMessage
+ * @typedef {import("../../index").farmhand.peerMetadata} farmhand.peerMetadata
  * @typedef {import("../../index").farmhand.priceEvent} farmhand.priceEvent
  * @typedef {import("../../index").farmhand.notification} farmhand.notification
  * @typedef {import("../../enums").cowColors} farmhand.cowColors
@@ -247,7 +248,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {farmhand.notification?} latestNotification
  * @property {Array.<farmhand.notification>} newDayNotifications
  * @property {Array.<farmhand.notification>} notificationLog
- * @property {Object} peers Keys are (Trystero) peer ids, values are their respective metadata or null.
+ * @property {Record<string, farmhand.peerMetadata?>} peers Keys are (Trystero)
+ * peer ids, values are their respective metadata or null.
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
  * @property {farmhand.peerMessage[]} pendingPeerMessages An array of messages
  * to be sent to the Trystero peer room upon the next broadcast.
@@ -707,6 +709,7 @@ export default class Farmhand extends FarmhandReducers {
         const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
           'peerMetadata'
         )
+
         getPeerMetadata((
           /** @type {[object, string]} */
           ...args
@@ -715,18 +718,21 @@ export default class Farmhand extends FarmhandReducers {
         const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
           'cowTrade'
         )
+
         getCowTradeRequest((
           /** @type {[object, string]} */
           ...args
         ) => handleCowTradeRequest(this, ...args))
 
         const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
+
         getCowAccept((
           /** @type {[object, string]} */
           ...args
         ) => handleCowTradeRequestAccept(this, ...args))
 
         const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
+
         getCowReject((
           /** @type {[object]} */
           ...args
@@ -892,12 +898,15 @@ export default class Farmhand extends FarmhandReducers {
 
       this.scheduleHeartbeat()
 
+      const trackerRedundancy = 4
+
       this.setState({
         activePlayers,
         peerRoom: joinRoom(
           {
             appId: process.env.REACT_APP_NAME,
             trackerUrls,
+            trackerRedundancy,
             rtcConfig,
           },
           room

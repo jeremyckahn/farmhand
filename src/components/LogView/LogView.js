@@ -14,7 +14,16 @@ export const LogView = ({ notificationLog, todaysNotifications }) => (
     <ul>
       {todaysNotifications.map(({ message, onClick, severity }) => (
         <li {...{ key: message }}>
-          <Alert {...{ elevation: 3, onClick, severity }}>
+          <Alert
+            {...{
+              elevation: 3,
+              onClick,
+              severity,
+              style: {
+                cursor: onClick ? 'pointer' : 'default',
+              },
+            }}
+          >
             <ReactMarkdown {...{ source: message }} />
           </Alert>
         </li>

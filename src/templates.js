@@ -1,6 +1,8 @@
 /**
  * @typedef {import("./index").farmhand.item} farmhand.item
+ * @typedef {import("./index").farmhand.crop} farmhand.crop
  * @typedef {import("./index").farmhand.keg} keg
+ * @typedef {import("./index").farmhand.peerMetadata} farmhand.peerMetadata
  */
 
 /**
@@ -13,6 +15,7 @@ import { itemsMap } from './data/maps'
 import { moneyString } from './utils/moneyString'
 import {
   getCowDisplayName,
+  getPlayerName,
   getRandomLevelUpRewardQuantity,
   integerString,
 } from './utils'
@@ -355,3 +358,11 @@ export const FERMENTED_CROP_NAME = (_, item) => `Fermented ${item.name}`
  */
 export const KEG_SPOILED_MESSAGE = (_, keg) =>
   `Oh no! Your ${FERMENTED_CROP_NAME`${itemsMap[keg.itemId]}`} has spoiled!`
+
+/**
+ * @param {TemplateStringsArray} _
+ * @param {farmhand.peerMetadata} peerMetadata
+ * @returns {string}
+ */
+export const NEW_COW_OFFERED_FOR_TRADE = (_, peerMetadata) =>
+  `A new cow is being offered for trade by ${getPlayerName(peerMetadata.id)}!`

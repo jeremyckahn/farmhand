@@ -18,6 +18,9 @@ export const snackbarProviderContentCallback = (
       key,
       onClick,
       severity,
+      style: {
+        cursor: onClick ? 'pointer' : 'default',
+      },
     }}
   >
     <ReactMarkdown {...{ source: message }} />
