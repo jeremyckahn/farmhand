@@ -1,3 +1,5 @@
+/** @typedef {import('../../components/Farmhand/Farmhand').farmhand.state} farmhand.state */
+/** @typedef {import('../../index').farmhand.cow} farmhand.cow */
 import React, { useEffect, useRef, useState } from 'react'
 
 import { array, bool, func, number, object, string } from 'prop-types'
@@ -35,31 +37,39 @@ const genderIcons = {
   [genders.MALE]: faMars,
 }
 
-export const CowCard = ({
-  allowCustomPeerCowNames,
-  cow,
-  cowBreedingPen,
-  cowIdOfferedForTrade,
-  cowInventory,
-  debounced,
-  handleCowAutomaticHugChange,
-  handleCowBreedChange,
-  handleCowHugClick,
-  handleCowOfferClick,
-  handleCowPurchaseClick,
-  handleCowWithdrawClick,
-  handleCowSellClick,
-  handleCowTradeClick,
-  id,
-  inventory,
-  isCowOfferedForTradeByPeer,
-  isSelected,
-  isOnline,
-  money,
-  purchasedCowPen,
+export const CowCard = (
+  /**
+   * @type {{
+   *   cow: farmhand.cow,
+   *   id: farmhand.state['id']
+   * }}
+   */
+  {
+    allowCustomPeerCowNames,
+    cow,
+    cowBreedingPen,
+    cowIdOfferedForTrade,
+    cowInventory,
+    debounced,
+    handleCowAutomaticHugChange,
+    handleCowBreedChange,
+    handleCowHugClick,
+    handleCowOfferClick,
+    handleCowPurchaseClick,
+    handleCowWithdrawClick,
+    handleCowSellClick,
+    handleCowTradeClick,
+    id,
+    inventory,
+    isCowOfferedForTradeByPeer,
+    isSelected,
+    isOnline,
+    money,
+    purchasedCowPen,
 
-  huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
-}) => {
+    huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
+  }
+) => {
   const cowDisplayName = getCowDisplayName(cow, id, allowCustomPeerCowNames)
 
   const [displayName, setDisplayName] = useState(cowDisplayName)
@@ -70,7 +80,9 @@ export const CowCard = ({
   const isCowPurchased =
     !!cowInventory.find(({ id }) => id === cow.id) &&
     !isCowOfferedForTradeByPeer
-  const cowValue = getCowValue(cow, isCowPurchased)
+
+  // cow.originalOwnerId is only an empty string when it is for sale.
+  const cowValue = getCowValue(cow, cow.originalOwnerId !== '')
   const cowCanBeTradedAway =
     isOnline && !isCowInBreedingPen(cow, cowBreedingPen)
   const canCowBeTradedFor = Boolean(

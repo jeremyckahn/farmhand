@@ -1,3 +1,5 @@
+/** @typedef {import('../../../components/Farmhand/Farmhand').farmhand.state} farmhand.state */
+/** @typedef {import('../../../index').farmhand.cow} farmhand.cow */
 import React from 'react'
 import { array, bool, func, object, string } from 'prop-types'
 import Checkbox from '@material-ui/core/Checkbox'
@@ -36,19 +38,27 @@ const getCowMapById = memoize(cowInventory =>
   }, {})
 )
 
-const Subheader = ({
-  canCowBeTradedFor,
-  cow,
-  cowBreedingPen,
-  cowIdOfferedForTrade,
-  cowInventory,
-  cowValue,
-  handleCowAutomaticHugChange,
-  handleCowBreedChange,
-  huggingMachinesRemain,
-  id: playerId,
-  isCowPurchased,
-}) => {
+const Subheader = (
+  /**
+   * @type {{
+   *   cow: farmhand.cow,
+   *   id: farmhand.state['id']
+   * }}
+   */
+  {
+    canCowBeTradedFor,
+    cow,
+    cowBreedingPen,
+    cowIdOfferedForTrade,
+    cowInventory,
+    cowValue,
+    handleCowAutomaticHugChange,
+    handleCowBreedChange,
+    huggingMachinesRemain,
+    id: playerId,
+    isCowPurchased,
+  }
+) => {
   const numberOfFullHearts = cow.happiness * 10
   const isInBreedingPen = isCowInBreedingPen(cow, cowBreedingPen)
   const isRoomInBreedingPen =
@@ -80,7 +90,9 @@ const Subheader = ({
       )}
       <p>Color: {COW_COLOR_NAMES[cow.color]}</p>
       <p>
-        {isCowPurchased ? 'Value' : 'Price'}: {moneyString(cowValue)}
+        {/* cow.originalOwnerId is only an empty string when it is for sale. */}
+        {cow.originalOwnerId === '' ? 'Value' : 'Price'}:{' '}
+        {moneyString(cowValue)}
       </p>
       <p>Weight: {getCowWeight(cow)} lbs.</p>
       {(isCowPurchased || canCowBeTradedFor) && (
