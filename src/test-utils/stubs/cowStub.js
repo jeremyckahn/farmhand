@@ -4,7 +4,10 @@ import { v4 as uuid } from 'uuid'
 
 import { cowColors, genders } from '../../enums'
 
-export const getCowStub = () => {
+/**
+ * @param {Partial<farmhand.cow>?} overrides
+ */
+export const getCowStub = (overrides = {}) => {
   /** @type farmhand.cow */
   const cow = {
     baseWeight: 1000,
@@ -24,6 +27,7 @@ export const getCowStub = () => {
     ownerId: uuid(),
     timesTraded: 0,
     weightMultiplier: 1,
+    ...overrides,
   }
 
   return cow
