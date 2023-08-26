@@ -1,5 +1,8 @@
+/** @typedef {import('../../handlers/ui-events')['default']} farmhand.uiHandlers */
 /** @typedef {import('../../components/Farmhand/Farmhand').farmhand.state} farmhand.state */
+/** @typedef {import('../../components/Farmhand/Farmhand').default} Farmhand */
 /** @typedef {import('../../index').farmhand.cow} farmhand.cow */
+/** @typedef {import('../../index').farmhand.cowBreedingPen} farmhand.cowBreedingPen */
 import React, { useEffect, useRef, useState } from 'react'
 
 import { array, bool, func, number, object, string } from 'prop-types'
@@ -37,12 +40,36 @@ const genderIcons = {
   [genders.MALE]: faMars,
 }
 
+/**
+ * @typedef {{
+ *   allowCustomPeerCowNames: boolean,
+ *   cow: farmhand.cow,
+ *   cowBreedingPen: farmhand.cowBreedingPen,
+ *   cowInventory: farmhand.state['cowInventory'],
+ *   cowIdOfferedForTrade: farmhand.cow['id'],
+ *   debounced: Farmhand['handlers']['debounced'],
+ *   handleCowAutomaticHugChange: farmhand.uiHandlers['handleCowAutomaticHugChange'],
+ *   handleCowBreedChange: farmhand.uiHandlers['handleCowBreedChange'],
+ *   handleCowHugClick: farmhand.uiHandlers['handleCowHugClick'],
+ *   handleCowOfferClick: farmhand.uiHandlers['handleCowOfferClick'],
+ *   handleCowPurchaseClick: farmhand.uiHandlers['handleCowPurchaseClick'],
+ *   handleCowWithdrawClick: farmhand.uiHandlers['handleCowWithdrawClick'],
+ *   handleCowSellClick: farmhand.uiHandlers['handleCowSellClick'],
+ *   handleCowTradeClick: farmhand.uiHandlers['handleCowTradeClick'],
+ *   id: farmhand.state['id'],
+ *   inventory: farmhand.state['inventory'],
+ *   isCowOfferedForTradeByPeer: boolean,
+ *   isSelected: boolean,
+ *   isOnline: boolean,
+ *   money: farmhand.state['money'],
+ *   purchasedCowPen: farmhand.state['purchasedCowPen'],
+ *   huggingMachinesRemain?: boolean,
+ * }} CowCardProps
+ */
+
 export const CowCard = (
   /**
-   * @type {{
-   *   cow: farmhand.cow,
-   *   id: farmhand.state['id']
-   * }}
+   * @type CowCardProps
    */
   {
     allowCustomPeerCowNames,

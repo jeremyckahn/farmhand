@@ -1,6 +1,7 @@
 /**
  * @typedef {import("../index").farmhand.item} item
  * @typedef {import("../index").farmhand.keg} keg
+ * @typedef {import("../index").farmhand.cow} farmhand.cow
  */
 import { saveAs } from 'file-saver'
 import window from 'global/window'

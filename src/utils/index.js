@@ -763,12 +763,12 @@ export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
 export const doesInventorySpaceRemain = state =>
   inventorySpaceRemaining(state) > 0
 
-/**
- * @param {Array.<farmhand.item>} inventory
- * @return {boolean}
- */
-export const areHuggingMachinesInInventory = memoize(inventory =>
-  inventory.some(({ id }) => id === HUGGING_MACHINE_ITEM_ID)
+export const areHuggingMachinesInInventory = memoize(
+  /**
+   * @param {farmhand.state['inventory']} inventory
+   * @return {boolean}
+   */
+  inventory => inventory.some(({ id }) => id === HUGGING_MACHINE_ITEM_ID)
 )
 
 /**
