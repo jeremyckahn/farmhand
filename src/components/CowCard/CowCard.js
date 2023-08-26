@@ -101,8 +101,10 @@ export const CowCard = (
 
   const [displayName, setDisplayName] = useState(cowDisplayName)
   const [cowImage, setCowImage] = useState(pixel)
-  const cardRef = useRef()
-  const scrollAnchorRef = useRef()
+
+  // @see https://github.com/microsoft/TypeScript/issues/27387#issuecomment-659671940
+  const cardRef = useRef(/** @type {Element|null} */ (null))
+  const scrollAnchorRef = useRef(/** @type {HTMLAnchorElement|null} */ (null))
 
   const isCowPurchased =
     !!cowInventory.find(({ id }) => id === cow.id) &&
@@ -220,7 +222,7 @@ export const CowCard = (
                 disabled:
                   cowValue > money ||
                   cowInventory.length >=
-                    PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows,
+                    (PURCHASEABLE_COW_PENS.get(purchasedCowPen)?.cows ?? 0),
                 onClick: () => handleCowPurchaseClick(cow),
                 variant: 'contained',
               }}
@@ -347,6 +349,9 @@ CowCard.propTypes = {
   purchasedCowPen: number.isRequired,
 }
 
+/**
+ * @param {CowCardProps} props
+ */
 export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
