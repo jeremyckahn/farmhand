@@ -91,7 +91,7 @@ const Subheader = (
       <p>Color: {COW_COLOR_NAMES[cow.color]}</p>
       <p>
         {/* cow.originalOwnerId is only an empty string when it is for sale. */}
-        {cow.originalOwnerId === '' ? 'Value' : 'Price'}:{' '}
+        {cow.originalOwnerId === '' ? 'Price' : 'Value'}:{' '}
         {moneyString(cowValue)}
       </p>
       <p>Weight: {getCowWeight(cow)} lbs.</p>

@@ -81,10 +81,7 @@ describe('Subheader', () => {
   describe('price/value display', () => {
     test('displays price for cows that can be purchased', () => {
       render(
-        <Subheader
-          {...baseProps}
-          cow={getCowStub({ originalOwnerId: 'abc123' })}
-        />
+        <Subheader {...baseProps} cow={getCowStub({ originalOwnerId: '' })} />
       )
 
       const price = screen.getByText(`Price: ${moneyString(cowValueStub)}`)
@@ -93,7 +90,10 @@ describe('Subheader', () => {
 
     test('displays value for cows that have been purchased', () => {
       render(
-        <Subheader {...baseProps} cow={getCowStub({ originalOwnerId: '' })} />
+        <Subheader
+          {...baseProps}
+          cow={getCowStub({ originalOwnerId: 'abc123' })}
+        />
       )
 
       const value = screen.getByText(`Value: ${moneyString(cowValueStub)}`)
