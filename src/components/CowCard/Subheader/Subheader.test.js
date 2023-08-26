@@ -80,7 +80,12 @@ describe('Subheader', () => {
 
   describe('price/value display', () => {
     test('displays price for cows that can be purchased', () => {
-      render(<Subheader {...baseProps} />)
+      render(
+        <Subheader
+          {...baseProps}
+          cow={getCowStub({ originalOwnerId: 'abc123' })}
+        />
+      )
 
       const price = screen.getByText(`Price: ${moneyString(cowValueStub)}`)
       expect(price).toBeInTheDocument()
