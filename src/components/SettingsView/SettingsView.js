@@ -21,6 +21,7 @@ import './SettingsView.sass'
 
 const SettingsView = ({
   allowCustomPeerCowNames,
+  features = {},
   handleAllowCustomPeerCowNamesChange,
   handleClearPersistedDataClick,
   handleExportDataClick,
@@ -29,6 +30,7 @@ const SettingsView = ({
   handleShowNotificationsChange,
   handleUseAlternateEndDayButtonPositionChange,
   handleShowHomeScreenChange,
+  handleUseLegacyLevelSystemChange,
   showNotifications,
   useAlternateEndDayButtonPosition,
   useLegacyLevelingSystem,
@@ -100,17 +102,19 @@ const SettingsView = ({
             }
             label="Display custom names for cows received from other players"
           />
-          <FormControlLabel
-            control={
-              <Switch
-                color="primary"
-                checked={useLegacyLevelingSystem}
-                onChange={() => console.log('todo: save change')}
-                name="use-legacy-leveling-system"
-              />
-            }
-            label="Use legacy leveling system (items sold)"
-          />
+          {features.EXPERIENCE ? (
+            <FormControlLabel
+              control={
+                <Switch
+                  color="primary"
+                  checked={useLegacyLevelingSystem}
+                  onChange={handleUseLegacyLevelSystemChange}
+                  name="use-legacy-leveling-system"
+                />
+              }
+              label="Use legacy leveling system (experience is only gained by selling items)"
+            />
+          ) : null}
         </FormGroup>
       </FormControl>
 

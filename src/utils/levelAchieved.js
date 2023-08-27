@@ -1,12 +1,17 @@
 import { farmProductsSold } from './farmProductsSold'
 
 /**
- * @param {number} farmProductsSold
+ * @param {{
+ *   itemsSold: Record<string, number>,
+ *   experience?: number,
+ *   features?: { EXPERIENCE?: boolean },
+ *   useLegacyLevelingSystem?: boolean,
+ * }} props
  * @returns {number}
  */
 export function levelAchieved({
   itemsSold,
-  experience,
+  experience = 0,
   features = {},
   useLegacyLevelingSystem = true,
 }) {
