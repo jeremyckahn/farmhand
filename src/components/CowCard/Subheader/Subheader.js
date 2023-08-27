@@ -1,3 +1,6 @@
+/** @typedef {import('../../../components/Farmhand/Farmhand').farmhand.state} farmhand.state */
+/** @typedef {import('../../../index').farmhand.cow} farmhand.cow */
+/** @typedef {import('../CowCard').CowCardProps} CowCardProps */
 import React from 'react'
 import { array, bool, func, object, string } from 'prop-types'
 import Checkbox from '@material-ui/core/Checkbox'
@@ -26,29 +29,58 @@ import './Subheader.sass'
 
 // The extra 0.5 is for rounding up to the next full heart. This allows a fully
 // happy cow to have full hearts on the beginning of a new day.
+/**
+ * @param {number} heartIndex
+ * @param {number} numberOfFullHearts
+ */
 const isHeartFull = (heartIndex, numberOfFullHearts) =>
   heartIndex + 0.5 < numberOfFullHearts
 
-const getCowMapById = memoize(cowInventory =>
-  cowInventory.reduce((acc, cow) => {
-    acc[cow.id] = cow
-    return acc
-  }, {})
+const getCowMapById = memoize(
+  /**
+   * @param {farmhand.state['cowInventory']} cowInventory
+   */
+  cowInventory =>
+    cowInventory.reduce((acc, cow) => {
+      acc[cow.id] = cow
+      return acc
+    }, {})
 )
 
-const Subheader = ({
-  canCowBeTradedFor,
-  cow,
-  cowBreedingPen,
-  cowIdOfferedForTrade,
-  cowInventory,
-  cowValue,
-  handleCowAutomaticHugChange,
-  handleCowBreedChange,
-  huggingMachinesRemain,
-  id: playerId,
-  isCowPurchased,
-}) => {
+/**
+ * @typedef {Pick<
+ *    CowCardProps,
+ *    'cow' |
+ *    'cowBreedingPen' |
+ *    'cowIdOfferedForTrade' |
+ *    'cowInventory' |
+ *    'handleCowAutomaticHugChange' |
+ *    'handleCowBreedChange' |
+ *    'huggingMachinesRemain' |
+ *    'id'
+ *  > & {
+ *    canCowBeTradedFor: boolean,
+ *    cowValue: number,
+ *    isCowPurchased: boolean,
+ *  }} SubheaderProps
+ */
+
+const Subheader = (
+  /** @type {SubheaderProps} */
+  {
+    canCowBeTradedFor,
+    cow,
+    cowBreedingPen,
+    cowIdOfferedForTrade,
+    cowInventory,
+    cowValue,
+    handleCowAutomaticHugChange,
+    handleCowBreedChange,
+    huggingMachinesRemain,
+    id: playerId,
+    isCowPurchased,
+  }
+) => {
   const numberOfFullHearts = cow.happiness * 10
   const isInBreedingPen = isCowInBreedingPen(cow, cowBreedingPen)
   const isRoomInBreedingPen =
@@ -56,7 +88,7 @@ const Subheader = ({
   const isThisCowOfferedForTrade = cowIdOfferedForTrade === cow.id
 
   const mateId = cowBreedingPen.cowId1 ?? cowBreedingPen.cowId2
-  const mate = getCowMapById(cowInventory)[mateId]
+  const mate = getCowMapById(cowInventory)[mateId ?? '']
   const isEligibleToBreed = cow.gender !== mate?.gender
 
   const canBeMovedToBreedingPen =
@@ -80,7 +112,9 @@ const Subheader = ({
       )}
       <p>Color: {COW_COLOR_NAMES[cow.color]}</p>
       <p>
-        {isCowPurchased ? 'Value' : 'Price'}: {moneyString(cowValue)}
+        {/* cow.originalOwnerId is only an empty string when it is for sale. */}
+        {cow.originalOwnerId === '' ? 'Price' : 'Value'}:{' '}
+        {moneyString(cowValue)}
       </p>
       <p>Weight: {getCowWeight(cow)} lbs.</p>
       {(isCowPurchased || canCowBeTradedFor) && (

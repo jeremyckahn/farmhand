@@ -1,6 +1,7 @@
 /**
  * @typedef {import("../index").farmhand.item} item
  * @typedef {import("../index").farmhand.keg} keg
+ * @typedef {import("../index").farmhand.cow} farmhand.cow
  */
 import { saveAs } from 'file-saver'
 import window from 'global/window'
@@ -110,7 +111,7 @@ export default {
   },
 
   /**
-   * @param {external:React.SyntheticEvent} e
+   * @param {React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
   handleCowAutomaticHugChange({ target: { checked } }, cow) {
@@ -118,7 +119,7 @@ export default {
   },
 
   /**
-   * @param {external:React.SyntheticEvent} e
+   * @param {React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
   handleCowBreedChange({ target: { checked } }, cow) {
@@ -147,7 +148,7 @@ export default {
   },
 
   /**
-   * @param {external:React.SyntheticEvent} e
+   * @param {React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
   handleCowNameInputChange({ target: { value } }, cow) {
@@ -163,7 +164,7 @@ export default {
   },
 
   /**
-   * @param {external:React.SyntheticEvent} e
+   * @param {React.SyntheticEvent} e
    */
   handleViewChange({ target: { value } }) {
     this.setState({ stageFocus: value })

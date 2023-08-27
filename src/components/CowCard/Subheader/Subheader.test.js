@@ -1,10 +1,12 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
-import { generateCow } from '../../../utils'
-import { cowColors } from '../../../enums'
+import { getCowStub } from '../../../test-utils/stubs/cowStub'
+import { moneyString } from '../../../utils/moneyString'
 
 import Subheader from './Subheader'
+
+const COW_VALUE = 1000
 
 describe('Subheader', () => {
   let baseProps
@@ -13,16 +15,11 @@ describe('Subheader', () => {
     jest.spyOn(Math, 'random').mockReturnValue(0)
     baseProps = {
       canCowBeTradedFor: false,
-      cow: generateCow({
-        color: cowColors.WHITE,
-        happiness: 0,
-        name: '',
-        baseWeight: 100,
-      }),
+      cow: getCowStub(),
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       cowIdOfferedForTrade: '',
       cowInventory: [],
-      cowValue: 1000,
+      cowValue: COW_VALUE,
       huggingMachinesRemain: false,
       id: '',
       isCowPurchased: false,
@@ -52,11 +49,8 @@ describe('Subheader', () => {
           <Subheader
             {...{
               ...baseProps,
-              cow: generateCow({
-                color: cowColors.WHITE,
+              cow: getCowStub({
                 happiness: 0.5,
-                name: '',
-                baseWeight: 100,
               }),
               isCowPurchased: true,
             }}
@@ -71,11 +65,8 @@ describe('Subheader', () => {
           <Subheader
             {...{
               ...baseProps,
-              cow: generateCow({
-                color: cowColors.WHITE,
+              cow: getCowStub({
                 happiness: 1,
-                name: '',
-                baseWeight: 100,
               }),
               isCowPurchased: true,
             }}
@@ -84,6 +75,29 @@ describe('Subheader', () => {
 
         expect(container.querySelectorAll('.heart.is-full')).toHaveLength(10)
       })
+    })
+  })
+
+  describe('price/value display', () => {
+    test('displays price for cows that can be purchased', () => {
+      render(
+        <Subheader {...baseProps} cow={getCowStub({ originalOwnerId: '' })} />
+      )
+
+      const price = screen.getByText(`Price: ${moneyString(COW_VALUE)}`)
+      expect(price).toBeInTheDocument()
+    })
+
+    test('displays value for cows that have been purchased', () => {
+      render(
+        <Subheader
+          {...baseProps}
+          cow={getCowStub({ originalOwnerId: 'abc123' })}
+        />
+      )
+
+      const value = screen.getByText(`Value: ${moneyString(COW_VALUE)}`)
+      expect(value).toBeInTheDocument()
     })
   })
 })
