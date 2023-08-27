@@ -60,7 +60,6 @@ import {
   computeMarketPositions,
   createNewField,
   doesMenuObstructStage,
-  farmProductsSold,
   generateCow,
   getAvailableShopInventory,
   getItemCurrentValue,

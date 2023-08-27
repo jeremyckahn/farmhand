@@ -7,7 +7,6 @@
 import { itemsMap } from '../../data/maps'
 import {
   castToMoney,
-  farmProductsSold,
   getSalePriceMultiplier,
   levelAchieved,
   moneyTotal,
@@ -38,7 +37,7 @@ export const sellKeg = (state, keg) => {
     itemsSold,
     money: initialMoney,
   } = state
-  const oldLevel = levelAchieved(farmProductsSold(itemsSold))
+  const oldLevel = levelAchieved({ itemsSold })
 
   let { loanBalance } = state
   let saleValue = 0

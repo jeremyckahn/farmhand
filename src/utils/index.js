@@ -88,7 +88,6 @@ import { getCropLifecycleDuration } from './getCropLifecycleDuration'
 import { getItemBaseValue } from './getItemBaseValue'
 import { getInventoryQuantityMap } from './getInventoryQuantityMap'
 import { getLevelEntitlements } from './getLevelEntitlements'
-import { levelAchieved } from './levelAchieved'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -289,24 +288,6 @@ export const getPlotContentType = ({ itemId }) =>
  */
 export const doesPlotContainCrop = plot =>
   plot !== null && getPlotContentType(plot) === itemType.CROP
-
-/**
- * @param {farmhand.item} item
- * @returns {boolean}
- */
-export const isItemAGrownCrop = item =>
-  Boolean(item.type === itemType.CROP && !item.growsInto)
-
-/**
- * @param {farmhand.item} item
- * @returns {boolean}
- */
-export const isItemAFarmProduct = item =>
-  Boolean(
-    isItemAGrownCrop(item) ||
-      item.type === itemType.MILK ||
-      item.type === itemType.CRAFTED_ITEM
-  )
 
 export const getLifeStageRange = memoize((
   /** @type {farmhand.cropTimetable} */ cropTimetable
@@ -792,19 +773,6 @@ export const findCowById = memoize(
   (cowInventory, id) => cowInventory.find(cow => id === cow.id)
 )
 
-export const farmProductsSold = memoize(
-  /**
-   * @param {Record<string, number>} itemsSold
-   * @returns {number}
-   */
-  itemsSold =>
-    Object.entries(itemsSold).reduce(
-      (sum, [itemId, numberSold]) =>
-        sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold : 0),
-      0
-    )
-)
-
 /**
  * @param {number} targetLevel
  * @returns {number}
@@ -1196,5 +1164,7 @@ export const isOctober = () => new Date().getMonth() === 9
 export const isDecember = () => new Date().getMonth() === 11
 
 export { default as totalIngredientsInRecipe } from './totalIngredientsInRecipe'
-
-export { levelAchieved }
+export { farmProductsSold } from './farmProductsSold'
+export { isItemAFarmProduct } from './isItemAFarmProduct'
+export { isItemAGrownCrop } from './isItemAGrownCrop'
+export { levelAchieved } from './levelAchieved'

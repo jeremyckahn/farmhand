@@ -1,6 +1,5 @@
 import { levels } from '../../data/levels'
 import {
-  farmProductsSold,
   getRandomLevelUpReward,
   getRandomLevelUpRewardQuantity,
   levelAchieved,

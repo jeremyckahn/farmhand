@@ -1,10 +1,5 @@
 import { itemType } from '../../enums'
-import {
-  farmProductsSold,
-  getPlotContentType,
-  getRangeCoords,
-  levelAchieved,
-} from '../../utils'
+import { getPlotContentType, getRangeCoords, levelAchieved } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 
 import { setWasWatered } from './helpers'
