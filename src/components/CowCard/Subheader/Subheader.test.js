@@ -6,7 +6,7 @@ import { moneyString } from '../../../utils/moneyString'
 
 import Subheader from './Subheader'
 
-const cowValueStub = 1000
+const COW_VALUE = 1000
 
 describe('Subheader', () => {
   let baseProps
@@ -19,7 +19,7 @@ describe('Subheader', () => {
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       cowIdOfferedForTrade: '',
       cowInventory: [],
-      cowValue: cowValueStub,
+      cowValue: COW_VALUE,
       huggingMachinesRemain: false,
       id: '',
       isCowPurchased: false,
@@ -84,7 +84,7 @@ describe('Subheader', () => {
         <Subheader {...baseProps} cow={getCowStub({ originalOwnerId: '' })} />
       )
 
-      const price = screen.getByText(`Price: ${moneyString(cowValueStub)}`)
+      const price = screen.getByText(`Price: ${moneyString(COW_VALUE)}`)
       expect(price).toBeInTheDocument()
     })
 
@@ -96,7 +96,7 @@ describe('Subheader', () => {
         />
       )
 
-      const value = screen.getByText(`Value: ${moneyString(cowValueStub)}`)
+      const value = screen.getByText(`Value: ${moneyString(COW_VALUE)}`)
       expect(value).toBeInTheDocument()
     })
   })
