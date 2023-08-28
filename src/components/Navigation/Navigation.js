@@ -22,7 +22,7 @@ import Switch from '@material-ui/core/Switch'
 import TextField from '@material-ui/core/TextField'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
-import { array, bool, func, number, object, string } from 'prop-types'
+import { array, bool, func, number, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import {
@@ -43,7 +43,7 @@ import SettingsView from '../SettingsView'
 import StatsView from '../StatsView'
 import KeybindingsView from '../KeybindingsView'
 
-import { DayAndProgressContainer } from './DayAndProgressContainer'
+import DayAndProgressContainer from './DayAndProgressContainer'
 
 import './Navigation.sass'
 
@@ -201,7 +201,6 @@ export const Navigation = ({
   activePlayers,
   blockInput,
   currentDialogView,
-  dayCount,
   farmName,
   handleActivePlayerButtonClick,
   handleClickDialogViewButton,
@@ -213,7 +212,6 @@ export const Navigation = ({
   handleViewChange,
   inventory,
   inventoryLimit,
-  itemsSold,
   isDialogViewOpen,
   isOnline,
   room,
@@ -228,7 +226,7 @@ export const Navigation = ({
     <h1>Farmhand</h1>
     <p className="version">v{process.env.REACT_APP_VERSION}</p>
     <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
-    <DayAndProgressContainer itemsSold={itemsSold} dayCount={dayCount} />
+    <DayAndProgressContainer />
     <OnlineControls
       {...{
         activePlayers,
@@ -335,7 +333,6 @@ export const Navigation = ({
 Navigation.propTypes = {
   activePlayers: number,
   blockInput: bool.isRequired,
-  dayCount: number.isRequired,
   farmName: string.isRequired,
   handleClickDialogViewButton: func.isRequired,
   handleActivePlayerButtonClick: func.isRequired,
@@ -347,11 +344,9 @@ Navigation.propTypes = {
   handleViewChange: func.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
-  itemsSold: object.isRequired,
   isDialogViewOpen: bool.isRequired,
   isOnline: bool.isRequired,
   stageFocus: string.isRequired,
-  useLegacyLevelingSystem: bool.isRequired,
   viewList: array.isRequired,
 }
 

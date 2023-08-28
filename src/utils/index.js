@@ -782,6 +782,13 @@ export const farmProductSalesVolumeNeededForLevel = targetLevel =>
   ((targetLevel - 1) * 10) ** 2
 
 /**
+ * @param {number} targetLevel
+ * @returns {number}
+ */
+export const experienceNeededForLevel = targetLevel =>
+  ((targetLevel - 1) * 10) ** 2
+
+/**
  * @param {Object} levelEntitlements
  * @returns {Array.<{ item: farmhand.item }>}
  */
