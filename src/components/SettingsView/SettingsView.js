@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { bool, func } from 'prop-types'
+import { bool, func, object } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -21,7 +21,7 @@ import './SettingsView.sass'
 
 const SettingsView = ({
   allowCustomPeerCowNames,
-  features = {},
+  features,
   handleAllowCustomPeerCowNamesChange,
   handleClearPersistedDataClick,
   handleExportDataClick,
@@ -215,6 +215,7 @@ const SettingsView = ({
 
 SettingsView.propTypes = {
   allowCustomPeerCowNames: bool.isRequired,
+  features: object.isRequired,
   handleAllowCustomPeerCowNamesChange: func.isRequired,
   handleClearPersistedDataClick: func.isRequired,
   handleExportDataClick: func.isRequired,

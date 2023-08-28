@@ -595,7 +595,8 @@ export default class Farmhand extends FarmhandReducers {
       let { experience } = state
       if (experience === 0) {
         experience = Object.values(state.itemsSold).reduce(
-          (acc, value) => acc + value
+          (acc, value) => acc + value,
+          0
         )
       }
 
