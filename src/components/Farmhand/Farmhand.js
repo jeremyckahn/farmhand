@@ -56,6 +56,7 @@ import NotificationSystem, {
 } from '../NotificationSystem'
 import DebugMenu from '../DebugMenu'
 import theme from '../../mui-theme'
+import { levelAchieved } from '../../utils/levelAchieved'
 import {
   computeMarketPositions,
   createNewField,
@@ -65,7 +66,6 @@ import {
   getItemCurrentValue,
   getPeerMetadata,
   inventorySpaceRemaining,
-  levelAchieved,
   moneyTotal,
   nullArray,
   reduceByPersistedKeys,

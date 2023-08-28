@@ -7,7 +7,8 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CowCard from '../../CowCard'
 
 import { moneyString } from '../../../utils/moneyString'
-import { getPlayerName, integerString, levelAchieved } from '../../../utils'
+import { levelAchieved } from '../../../utils/levelAchieved'
+import { getPlayerName, integerString } from '../../../utils'
 
 import './OnlinePeer.sass'
 

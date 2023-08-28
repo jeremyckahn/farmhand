@@ -27,13 +27,13 @@ import Typography from '@material-ui/core/Typography'
 import { array, bool, func, number, object, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
+import { farmProductsSold } from '../../utils/farmProductsSold'
+import { levelAchieved } from '../../utils/levelAchieved'
 import {
   doesInventorySpaceRemain,
   farmProductSalesVolumeNeededForLevel,
-  farmProductsSold,
   integerString,
   inventorySpaceConsumed,
-  levelAchieved,
   scaleNumber,
 } from '../../utils'
 import { dialogView } from '../../enums'

@@ -1162,9 +1162,3 @@ export const isOctober = () => new Date().getMonth() === 9
  * @returns {boolean}
  */
 export const isDecember = () => new Date().getMonth() === 11
-
-export { default as totalIngredientsInRecipe } from './totalIngredientsInRecipe'
-export { farmProductsSold } from './farmProductsSold'
-export { isItemAFarmProduct } from './isItemAFarmProduct'
-export { isItemAGrownCrop } from './isItemAGrownCrop'
-export { levelAchieved } from './levelAchieved'

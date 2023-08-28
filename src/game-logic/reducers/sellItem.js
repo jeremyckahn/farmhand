@@ -1,12 +1,12 @@
 import { itemsMap } from '../../data/maps'
+import { isItemAFarmProduct } from '../../utils/isItemAFarmProduct'
+import { levelAchieved } from '../../utils/levelAchieved'
 import {
   castToMoney,
   getAdjustedItemValue,
   getResaleValue,
   getSalePriceMultiplier,
-  isItemAFarmProduct,
   isItemSoldInShop,
-  levelAchieved,
   moneyTotal,
 } from '../../utils'
 import { LOAN_GARNISHMENT_RATE } from '../../constants'

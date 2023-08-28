@@ -1,8 +1,8 @@
+import { levelAchieved } from '../../utils/levelAchieved'
 import {
   filterItemIdsToSeeds,
   getPriceEventForCrop,
   getRandomUnlockedCrop,
-  levelAchieved,
 } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 import { PRICE_EVENT_CHANCE } from '../../constants'

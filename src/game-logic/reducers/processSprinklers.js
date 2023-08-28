@@ -1,5 +1,6 @@
 import { itemType } from '../../enums'
-import { getPlotContentType, getRangeCoords, levelAchieved } from '../../utils'
+import { levelAchieved } from '../../utils/levelAchieved'
+import { getPlotContentType, getRangeCoords } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 
 import { setWasWatered } from './helpers'

@@ -1,8 +1,8 @@
 import { levels } from '../../data/levels'
+import { levelAchieved } from '../../utils/levelAchieved'
 import {
   getRandomLevelUpReward,
   getRandomLevelUpRewardQuantity,
-  levelAchieved,
   unlockTool,
 } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'

@@ -1,4 +1,4 @@
-import { levelAchieved } from '../../utils'
+import { levelAchieved } from '../../utils/levelAchieved'
 
 import { processLevelUp } from './processLevelUp'
 

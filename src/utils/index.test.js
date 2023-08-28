@@ -25,6 +25,10 @@ import {
   MALE_COW_WEIGHT_MULTIPLIER,
 } from '../constants'
 
+import { levelAchieved } from './levelAchieved'
+import { farmProductsSold } from './farmProductsSold'
+import { isItemAFarmProduct } from './isItemAFarmProduct'
+
 import {
   canMakeRecipe,
   castToMoney,
@@ -32,7 +36,6 @@ import {
   chooseRandom,
   dollarString,
   farmProductSalesVolumeNeededForLevel,
-  farmProductsSold,
   generateCow,
   generateOffspringCow,
   get7DayAverage,
@@ -53,8 +56,6 @@ import {
   getRangeCoords,
   getSalePriceMultiplier,
   integerString,
-  isItemAFarmProduct,
-  levelAchieved,
   maxYieldOfRecipe,
   moneyTotal,
   percentageString,

@@ -8,13 +8,13 @@ import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 import { array, func, number, object } from 'prop-types'
 
+import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe'
 import {
   canMakeRecipe,
   doesInventorySpaceRemain,
   dollarString,
   maxYieldOfRecipe,
   integerString,
-  totalIngredientsInRecipe,
 } from '../../utils'
 import { itemsMap } from '../../data/maps'
 import { craftedItems } from '../../img'
