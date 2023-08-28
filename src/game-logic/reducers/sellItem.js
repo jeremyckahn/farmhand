@@ -14,6 +14,7 @@ import { SOLD_ITEM_PEER_NOTIFICATION } from '../../templates'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 import { processLevelUp } from './processLevelUp'
+import { addExperience } from './addExperience'
 import { addRevenue } from './addRevenue'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
 import { adjustLoan } from './adjustLoan'
@@ -80,6 +81,8 @@ export const sellItem = (state, { id }, howMany = 1) => {
     // mutated above and addRevenue needs its initial value.
     state = addRevenue({ ...state, money: initialMoney }, saleValue)
   }
+
+  state = addExperience(state, howMany)
 
   state = {
     ...state,

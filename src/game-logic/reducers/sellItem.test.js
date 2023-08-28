@@ -9,6 +9,7 @@ describe('sellItem', () => {
   test('sells item', () => {
     const state = sellItem(
       {
+        experience: 0,
         inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
         itemsSold: {},
         loanBalance: 0,
@@ -22,6 +23,7 @@ describe('sellItem', () => {
       testItem({ id: 'sample-item-1' })
     )
 
+    expect(state.experience).toEqual(1)
     expect(state.inventory).toEqual([])
     expect(state.money).toEqual(101)
     expect(state.revenue).toEqual(1)
