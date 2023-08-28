@@ -5,9 +5,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import BeenhereIcon from '@material-ui/icons/Beenhere.js'
 import BookIcon from '@material-ui/icons/Book'
-import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -27,14 +25,10 @@ import Typography from '@material-ui/core/Typography'
 import { array, bool, func, number, object, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import { farmProductsSold } from '../../utils/farmProductsSold'
-import { levelAchieved } from '../../utils/levelAchieved'
 import {
   doesInventorySpaceRemain,
-  farmProductSalesVolumeNeededForLevel,
   integerString,
   inventorySpaceConsumed,
-  scaleNumber,
 } from '../../utils'
 import { dialogView } from '../../enums'
 import { INFINITE_STORAGE_LIMIT, STAGE_TITLE_MAP } from '../../constants'
@@ -48,6 +42,8 @@ import PriceEventView from '../PriceEventView'
 import SettingsView from '../SettingsView'
 import StatsView from '../StatsView'
 import KeybindingsView from '../KeybindingsView'
+
+import { DayAndProgressContainer } from './DayAndProgressContainer'
 
 import './Navigation.sass'
 
@@ -224,15 +220,6 @@ export const Navigation = ({
   stageFocus,
   viewList,
 
-  totalFarmProductsSold = farmProductsSold(itemsSold),
-  currentLevel = levelAchieved({ itemsSold }),
-  levelPercent = scaleNumber(
-    totalFarmProductsSold,
-    farmProductSalesVolumeNeededForLevel(currentLevel),
-    farmProductSalesVolumeNeededForLevel(currentLevel + 1),
-    0,
-    100
-  ),
   currentDialogViewLowerCase = currentDialogView.toLowerCase(),
   modalTitleId = `${currentDialogViewLowerCase}-modal-title`,
   modalContentId = `${currentDialogViewLowerCase}-modal-content`,
@@ -241,31 +228,7 @@ export const Navigation = ({
     <h1>Farmhand</h1>
     <p className="version">v{process.env.REACT_APP_VERSION}</p>
     <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
-    <h2 className="day-and-progress-container">
-      <span>Day {integerString(dayCount)}, level:</span>
-      <Tooltip
-        {...{
-          arrow: true,
-          placement: 'top',
-          title: `${integerString(
-            farmProductSalesVolumeNeededForLevel(currentLevel + 1) -
-              totalFarmProductsSold
-          )} more sales needed for level ${integerString(currentLevel + 1)}`,
-        }}
-      >
-        <Box>
-          <CircularProgress
-            {...{
-              value: levelPercent,
-              variant: 'determinate',
-            }}
-          />
-          <span {...{ className: 'current-level' }}>
-            {integerString(currentLevel)}
-          </span>
-        </Box>
-      </Tooltip>
-    </h2>
+    <DayAndProgressContainer itemsSold={itemsSold} dayCount={dayCount} />
     <OnlineControls
       {...{
         activePlayers,
@@ -388,6 +351,7 @@ Navigation.propTypes = {
   isDialogViewOpen: bool.isRequired,
   isOnline: bool.isRequired,
   stageFocus: string.isRequired,
+  useLegacyLevelingSystem: bool.isRequired,
   viewList: array.isRequired,
 }
 
