@@ -9,7 +9,6 @@ describe('sellItem', () => {
   test('sells item', () => {
     const state = sellItem(
       {
-        experience: 0,
         inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
         itemsSold: {},
         loanBalance: 0,
@@ -23,7 +22,6 @@ describe('sellItem', () => {
       testItem({ id: 'sample-item-1' })
     )
 
-    expect(state.experience).toEqual(1)
     expect(state.inventory).toEqual([])
     expect(state.money).toEqual(101)
     expect(state.revenue).toEqual(1)
@@ -130,9 +128,10 @@ describe('sellItem', () => {
     let state
 
     describe('item is not a farm product', () => {
-      test('sale is not garnished', () => {
+      beforeEach(() => {
         state = sellItem(
           {
+            experience: 0,
             inventory: [testItem({ id: 'sample-crop-1-seed', quantity: 3 })],
             itemsSold: {},
             loanBalance: 100,
@@ -146,11 +145,17 @@ describe('sellItem', () => {
           testItem({ id: 'sample-crop-1-seed' }),
           3
         )
+      })
 
+      test('sale is not garnished', () => {
         expect(state.loanBalance).toEqual(100)
         expect(state.money).toEqual(130)
         expect(state.revenue).toEqual(0)
         expect(state.todaysRevenue).toEqual(0)
+      })
+
+      test('experience is not gained', () => {
+        expect(state.experience).toEqual(0)
       })
     })
 
@@ -184,6 +189,7 @@ describe('sellItem', () => {
         beforeEach(() => {
           state = sellItem(
             {
+              experience: 0,
               inventory: [testItem({ id: 'sample-crop-1', quantity: 3 })],
               itemsSold: {},
               loanBalance: 1.5,
@@ -212,6 +218,10 @@ describe('sellItem', () => {
           expect(state.todaysNotifications).toEqual([
             { message: LOAN_PAYOFF``, severity: 'success' },
           ])
+        })
+
+        test('experience is gained', () => {
+          expect(state.experience).toEqual(3)
         })
       })
     })

@@ -47,7 +47,9 @@ export const sellItem = (state, { id }, howMany = 1) => {
     : getAdjustedItemValue(valueAdjustments, id)
 
   const saleIsGarnished = isItemAFarmProduct(item)
-  let saleValue = 0
+  let saleValue = 0,
+    experienceGained = 0,
+    salePriceMultiplier = 1
 
   for (let i = 0; i < howMany; i++) {
     const loanGarnishment = saleIsGarnished
@@ -57,9 +59,10 @@ export const sellItem = (state, { id }, howMany = 1) => {
         )
       : 0
 
-    const salePriceMultiplier = isItemAFarmProduct(item)
-      ? getSalePriceMultiplier(completedAchievements)
-      : 1
+    if (isItemAFarmProduct(item)) {
+      salePriceMultiplier = getSalePriceMultiplier(completedAchievements)
+      experienceGained += 1
+    }
 
     const garnishedProfit =
       adjustedItemValue * salePriceMultiplier - loanGarnishment
@@ -82,7 +85,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
     state = addRevenue({ ...state, money: initialMoney }, saleValue)
   }
 
-  state = addExperience(state, howMany)
+  state = addExperience(state, experienceGained)
 
   state = {
     ...state,
