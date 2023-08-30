@@ -83,11 +83,12 @@ import {
 } from '../constants'
 import { random } from '../common/utils'
 
-import { memoize } from './memoize'
+import { farmProductsSold } from './farmProductsSold'
 import { getCropLifecycleDuration } from './getCropLifecycleDuration'
-import { getItemBaseValue } from './getItemBaseValue'
 import { getInventoryQuantityMap } from './getInventoryQuantityMap'
+import { getItemBaseValue } from './getItemBaseValue'
 import { getLevelEntitlements } from './getLevelEntitlements'
+import { memoize } from './memoize'
 
 const Jimp = configureJimp({
   types: [jimpPng],
@@ -947,6 +948,10 @@ export const transformStateDataForImport = state => {
 
   const rejectedKeys = ['version']
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
+
+  if (sanitizedState.experience === 0) {
+    sanitizedState.experience = farmProductsSold(sanitizedState.itemsSold)
+  }
 
   return sanitizedState
 }
