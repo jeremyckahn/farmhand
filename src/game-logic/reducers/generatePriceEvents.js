@@ -1,9 +1,8 @@
+import { levelAchieved } from '../../utils/levelAchieved'
 import {
-  farmProductsSold,
   filterItemIdsToSeeds,
   getPriceEventForCrop,
   getRandomUnlockedCrop,
-  levelAchieved,
 } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 import { PRICE_EVENT_CHANCE } from '../../constants'
@@ -29,7 +28,7 @@ export const generatePriceEvents = state => {
   // less-than check.
   if (random() < PRICE_EVENT_CHANCE) {
     const { items: unlockedItems } = getLevelEntitlements(
-      levelAchieved(farmProductsSold(state.itemsSold))
+      levelAchieved({ itemsSold: state.itemsSold })
     )
 
     const cropItem = getRandomUnlockedCrop(

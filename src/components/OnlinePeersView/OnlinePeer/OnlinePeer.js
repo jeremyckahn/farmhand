@@ -7,12 +7,8 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CowCard from '../../CowCard'
 
 import { moneyString } from '../../../utils/moneyString'
-import {
-  getPlayerName,
-  farmProductsSold,
-  integerString,
-  levelAchieved,
-} from '../../../utils'
+import { levelAchieved } from '../../../utils/levelAchieved'
+import { getPlayerName, integerString } from '../../../utils'
 
 import './OnlinePeer.sass'
 
@@ -28,10 +24,7 @@ const OnlinePeer = ({
             subheader: (
               <div>
                 <p>Day: {integerString(dayCount)}</p>
-                <p>
-                  Level:{' '}
-                  {integerString(levelAchieved(farmProductsSold(itemsSold)))}
-                </p>
+                <p>Level: {integerString(levelAchieved({ itemsSold }))}</p>
                 <p>Money: {moneyString(money)}</p>
               </div>
             ),

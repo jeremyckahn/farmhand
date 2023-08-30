@@ -13,14 +13,14 @@ import sortBy from 'lodash.sortby'
 import { itemsMap } from '../../data/maps'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { moneyString } from '../../utils/moneyString'
+import { farmProductsSold } from '../../utils/farmProductsSold'
+import { levelAchieved } from '../../utils/levelAchieved'
 import {
   farmProductSalesVolumeNeededForLevel,
-  farmProductsSold,
   get7DayAverage,
   getProfit,
   getProfitRecord,
   integerString,
-  levelAchieved,
   moneyTotal,
 } from '../../utils'
 import {
@@ -51,7 +51,7 @@ const StatsView = ({
   todaysRevenue,
 
   totalFarmProductsSold = farmProductsSold(itemsSold),
-  currentLevel = levelAchieved(totalFarmProductsSold),
+  currentLevel = levelAchieved({ itemsSold }),
 }) => (
   <div className="StatsView">
     <TableContainer {...{ component: ElevatedPaper }}>

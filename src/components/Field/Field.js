@@ -18,12 +18,8 @@ import Plot from '../Plot'
 import QuickSelect from '../QuickSelect'
 import { fieldMode } from '../../enums'
 import tools from '../../data/tools'
-import {
-  doesInventorySpaceRemain,
-  farmProductsSold,
-  levelAchieved,
-  nullArray,
-} from '../../utils'
+import { levelAchieved } from '../../utils/levelAchieved'
+import { doesInventorySpaceRemain, nullArray } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 
 import './Field.sass'
@@ -74,7 +70,7 @@ export const isInHoverRange = ({
   switch (fieldMode) {
     case SET_SPRINKLER:
       hoveredPlotRangeSizeToRender = getLevelEntitlements(
-        levelAchieved(farmProductsSold(itemsSold))
+        levelAchieved({ itemsSold })
       ).sprinklerRange
 
       break

@@ -8,11 +8,8 @@ import { array, func, number, object } from 'prop-types'
 
 import IngredientsList from '../IngredientsList'
 
-import {
-  canMakeRecipe,
-  doesInventorySpaceRemain,
-  totalIngredientsInRecipe,
-} from '../../utils'
+import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe'
+import { canMakeRecipe, doesInventorySpaceRemain } from '../../utils'
 
 import { craftedItems } from '../../img'
 

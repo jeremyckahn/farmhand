@@ -9,7 +9,8 @@ import { array, number, object, string } from 'prop-types'
 
 import BailOutErrorBoundary from '../BailOutErrorBoundary'
 
-import { getPlayerName, farmProductsSold, levelAchieved } from '../../utils'
+import { levelAchieved } from '../../utils/levelAchieved'
+import { getPlayerName } from '../../utils'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import CowCard from '../CowCard'
@@ -58,7 +59,7 @@ const OnlinePeersView = ({
             {sortBy(populatedPeers, [
               peerId =>
                 // Use negative value to reverse sort order
-                -levelAchieved(farmProductsSold(peers[peerId].itemsSold || 0)),
+                -levelAchieved({ itemsSold: peers[peerId].itemsSold || 0 }),
             ]).map(peerId => (
               <BailOutErrorBoundary {...{ key: peerId }}>
                 <OnlinePeer {...{ peer: peers[peerId] }} />

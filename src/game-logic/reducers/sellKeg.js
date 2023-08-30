@@ -5,13 +5,8 @@
  */
 
 import { itemsMap } from '../../data/maps'
-import {
-  castToMoney,
-  farmProductsSold,
-  getSalePriceMultiplier,
-  levelAchieved,
-  moneyTotal,
-} from '../../utils'
+import { levelAchieved } from '../../utils/levelAchieved'
+import { castToMoney, getSalePriceMultiplier, moneyTotal } from '../../utils'
 import { LOAN_GARNISHMENT_RATE } from '../../constants'
 import { SOLD_FERMENTED_ITEM_PEER_NOTIFICATION } from '../../templates'
 import { getKegValue } from '../../utils/getKegValue'
@@ -38,7 +33,7 @@ export const sellKeg = (state, keg) => {
     itemsSold,
     money: initialMoney,
   } = state
-  const oldLevel = levelAchieved(farmProductsSold(itemsSold))
+  const oldLevel = levelAchieved({ itemsSold })
 
   let { loanBalance } = state
   let saleValue = 0

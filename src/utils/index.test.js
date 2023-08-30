@@ -25,6 +25,10 @@ import {
   MALE_COW_WEIGHT_MULTIPLIER,
 } from '../constants'
 
+import { levelAchieved } from './levelAchieved'
+import { farmProductsSold } from './farmProductsSold'
+import { isItemAFarmProduct } from './isItemAFarmProduct'
+
 import {
   canMakeRecipe,
   castToMoney,
@@ -32,7 +36,6 @@ import {
   chooseRandom,
   dollarString,
   farmProductSalesVolumeNeededForLevel,
-  farmProductsSold,
   generateCow,
   generateOffspringCow,
   get7DayAverage,
@@ -53,12 +56,11 @@ import {
   getRangeCoords,
   getSalePriceMultiplier,
   integerString,
-  isItemAFarmProduct,
-  levelAchieved,
   maxYieldOfRecipe,
   moneyTotal,
   percentageString,
   randomChoice,
+  transformStateDataForImport,
 } from './index'
 
 jest.mock('../data/maps')
@@ -768,12 +770,41 @@ describe('farmProductsSold', () => {
 })
 
 describe('levelAchieved', () => {
-  test('calculates achieved level', () => {
-    expect(levelAchieved(0)).toEqual(1)
-    expect(levelAchieved(100)).toEqual(2)
-    expect(levelAchieved(150)).toEqual(2)
-    expect(levelAchieved(400)).toEqual(3)
-    expect(levelAchieved(980100)).toEqual(100)
+  const cases = [
+    [1, 0],
+    [2, 100],
+    [2, 150],
+    [3, 400],
+    [100, 980100],
+  ]
+
+  describe('with legacy system', () => {
+    test.each(cases)(
+      `returns level %p for %p items sold`,
+      (expectedLevel, numItemsSold) => {
+        const level = levelAchieved({
+          itemsSold: { carrot: numItemsSold },
+          useLegacyLevelingSystem: true,
+        })
+
+        expect(level).toEqual(expectedLevel)
+      }
+    )
+  })
+
+  describe('with experience system', () => {
+    test.each(cases)(
+      `returns level %p for %p experience`,
+      (expectedLevel, experience) => {
+        const level = levelAchieved({
+          experience,
+          features: { EXPERIENCE: true },
+          useLegacyLevelingSystem: false,
+        })
+
+        expect(level).toEqual(expectedLevel)
+      }
+    )
   })
 })
 
@@ -1014,5 +1045,54 @@ describe('getCowImage', () => {
     const image = await getCowImage(cow)
 
     expect(image).toEqual(animals.cow.rainbow)
+  })
+})
+
+describe('transformStateDataForImport', () => {
+  let state
+
+  beforeEach(() => {
+    state = {
+      dayCount: 100,
+      experience: 10,
+      inventoryLimit: 1000,
+      loanBalance: 100,
+      money: 1234,
+      version: 1,
+    }
+  })
+
+  test('it returns a sanitized state without version', () => {
+    const sanitizedState = transformStateDataForImport(state)
+
+    expect(sanitizedState).toEqual({
+      dayCount: 100,
+      experience: 10,
+      inventoryLimit: 1000,
+      loanBalance: 100,
+      money: 1234,
+    })
+  })
+
+  test('it calculates experience from itemsSold if experience is 0', () => {
+    state.experience = 0
+    state.itemsSold = {
+      'sample-crop-1': 5,
+      'sample-crop-1-seed': 10,
+    }
+
+    const sanitizedState = transformStateDataForImport(state)
+
+    expect(sanitizedState).toEqual({
+      dayCount: 100,
+      experience: 5,
+      inventoryLimit: 1000,
+      itemsSold: {
+        'sample-crop-1': 5,
+        'sample-crop-1-seed': 10,
+      },
+      loanBalance: 100,
+      money: 1234,
+    })
   })
 })
