@@ -590,30 +590,17 @@ export default class Farmhand extends FarmhandReducers {
       })
       const { isCombineEnabled, newDayNotifications } = sanitizedState
 
-      // saved games will likely have itemsSold but not experience since it's a new
-      // feature so this will "sync" them up
-      let { experience } = state
-      if (experience === 0) {
-        experience = Object.values(state.itemsSold).reduce(
-          (acc, value) => acc + value,
-          0
-        )
-      }
+      this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {
+        newDayNotifications.forEach(({ message, severity }) => {
+          // Defer these notifications so that notistack doesn't swallow all
+          // but the last one.
+          setTimeout(() => this.showNotification(message, severity), 0)
 
-      this.setState(
-        { ...sanitizedState, newDayNotifications: [], experience },
-        () => {
-          newDayNotifications.forEach(({ message, severity }) => {
-            // Defer these notifications so that notistack doesn't swallow all
-            // but the last one.
-            setTimeout(() => this.showNotification(message, severity), 0)
-
-            if (isCombineEnabled) {
-              this.forRange(reducers.harvestPlot, Infinity, 0, 0)
-            }
-          })
-        }
-      )
+          if (isCombineEnabled) {
+            this.forRange(reducers.harvestPlot, Infinity, 0, 0)
+          }
+        })
+      })
     } else {
       // Initialize new game
       await this.incrementDay(true)
