@@ -60,6 +60,7 @@ import {
   moneyTotal,
   percentageString,
   randomChoice,
+  transformStateDataForImport,
 } from './index'
 
 jest.mock('../data/maps')
@@ -1044,5 +1045,54 @@ describe('getCowImage', () => {
     const image = await getCowImage(cow)
 
     expect(image).toEqual(animals.cow.rainbow)
+  })
+})
+
+describe('transformStateDataForImport', () => {
+  let state
+
+  beforeEach(() => {
+    state = {
+      dayCount: 100,
+      experience: 10,
+      inventoryLimit: 1000,
+      loanBalance: 100,
+      money: 1234,
+      version: 1,
+    }
+  })
+
+  test('it returns a sanitized state without version', () => {
+    const sanitizedState = transformStateDataForImport(state)
+
+    expect(sanitizedState).toEqual({
+      dayCount: 100,
+      experience: 10,
+      inventoryLimit: 1000,
+      loanBalance: 100,
+      money: 1234,
+    })
+  })
+
+  test('it calculates experience from itemsSold if experience is 0', () => {
+    state.experience = 0
+    state.itemsSold = {
+      'sample-crop-1': 5,
+      'sample-crop-1-seed': 10,
+    }
+
+    const sanitizedState = transformStateDataForImport(state)
+
+    expect(sanitizedState).toEqual({
+      dayCount: 100,
+      experience: 5,
+      inventoryLimit: 1000,
+      itemsSold: {
+        'sample-crop-1': 5,
+        'sample-crop-1-seed': 10,
+      },
+      loanBalance: 100,
+      money: 1234,
+    })
   })
 })
