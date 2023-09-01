@@ -11,8 +11,13 @@ import {
 } from '../utils'
 import { memoize } from '../utils/memoize'
 import { findInField } from '../utils/findInField'
+import { addExperience } from '../game-logic/reducers'
 import { cropLifeStage, standardCowColors } from '../enums'
-import { COW_FEED_ITEM_ID, I_AM_RICH_BONUSES } from '../constants'
+import {
+  COW_FEED_ITEM_ID,
+  EXPERIENCE_VALUES,
+  I_AM_RICH_BONUSES,
+} from '../constants'
 
 import { itemsMap } from './maps'
 
@@ -320,6 +325,15 @@ const achievements = [
     reward: state => {
       return addItemToInventory(state, itemsMap['gold-ingot'], 1, true)
     },
+  }))(),
+
+  (() => ({
+    id: 'debt-free',
+    name: 'Debt Free',
+    description: 'Pay off your initial loan from the bank.',
+    rewardDescription: 'Experience bonus',
+    condition: state => state.loanBalance === 0,
+    reward: state => addExperience(state, EXPERIENCE_VALUES.LOAN_PAID_OFF),
   }))(),
 ]
 

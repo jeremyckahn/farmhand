@@ -4,6 +4,7 @@
  */
 
 export * from './addCowToInventory'
+export * from './addExperience'
 export * from './addItemToInventory'
 export * from './addPeer'
 export * from './addRevenue'
