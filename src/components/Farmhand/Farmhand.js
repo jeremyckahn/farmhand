@@ -503,6 +503,15 @@ export default class Farmhand extends FarmhandReducers {
     }
   }
 
+  async initializeNewGame() {
+    await this.incrementDay(true)
+    this.setState(() => ({
+      historicalValueAdjustments: [],
+      useLegacyLevelingSystem: !this.props.features.EXPERIENCE,
+    }))
+    this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
+  }
+
   initInputHandlers() {
     const debouncedInputRate = 50
 
@@ -602,10 +611,7 @@ export default class Farmhand extends FarmhandReducers {
         })
       })
     } else {
-      // Initialize new game
-      await this.incrementDay(true)
-      this.setState(() => ({ historicalValueAdjustments: [] }))
-      this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
+      await this.initializeNewGame()
     }
 
     this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
