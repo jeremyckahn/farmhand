@@ -18,8 +18,8 @@ import { showNotification } from './showNotification'
  * @returns {farmhand.state}
  */
 export const processLevelUp = (state, oldLevel) => {
-  const { itemsSold, selectedItemId } = state
-  const newLevel = levelAchieved({ itemsSold })
+  const { experience, selectedItemId } = state
+  const newLevel = levelAchieved({ experience })
 
   // Loop backwards so that the notifications appear in descending order.
   for (let i = newLevel; i > oldLevel; i--) {
@@ -47,7 +47,7 @@ export const processLevelUp = (state, oldLevel) => {
       selectedItemId === SPRINKLER_ITEM_ID
     ) {
       const { sprinklerRange } = getLevelEntitlements(
-        levelAchieved({ itemsSold })
+        levelAchieved({ experience })
       )
 
       if (sprinklerRange > state.hoveredPlotRangeSize) {

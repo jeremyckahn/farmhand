@@ -531,11 +531,4 @@ export default {
     const newUrl = `${origin}${pathname}${newSearch}${hash}`
     window.history.replaceState({}, '', newUrl)
   },
-
-  /**
-   * @param {React.SyntheticEvent} e
-   */
-  handleUseLegacyLevelSystemChange(e) {
-    this.setState({ useLegacyLevelingSystem: e.target.checked })
-  },
 }

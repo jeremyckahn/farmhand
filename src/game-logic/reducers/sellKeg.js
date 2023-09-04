@@ -30,10 +30,11 @@ export const sellKeg = (state, keg) => {
   const {
     cellarItemsSold,
     completedAchievements,
+    experience,
     itemsSold,
     money: initialMoney,
   } = state
-  const oldLevel = levelAchieved({ itemsSold })
+  const oldLevel = levelAchieved({ experience })
 
   let { loanBalance } = state
   let saleValue = 0

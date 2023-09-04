@@ -28,7 +28,7 @@ export const generatePriceEvents = state => {
   // less-than check.
   if (random() < PRICE_EVENT_CHANCE) {
     const { items: unlockedItems } = getLevelEntitlements(
-      levelAchieved({ itemsSold: state.itemsSold })
+      levelAchieved({ experience: state.experience })
     )
 
     const cropItem = getRandomUnlockedCrop(

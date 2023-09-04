@@ -13,7 +13,7 @@ import { getPlayerName, integerString } from '../../../utils'
 import './OnlinePeer.sass'
 
 const OnlinePeer = ({
-  peer: { cowOfferedForTrade, dayCount, id, itemsSold, money },
+  peer: { cowOfferedForTrade, dayCount, id, experience, money },
 }) => {
   return (
     <li>
@@ -24,7 +24,7 @@ const OnlinePeer = ({
             subheader: (
               <div>
                 <p>Day: {integerString(dayCount)}</p>
-                <p>Level: {integerString(levelAchieved({ itemsSold }))}</p>
+                <p>Level: {integerString(levelAchieved({ experience }))}</p>
                 <p>Money: {moneyString(money)}</p>
               </div>
             ),
@@ -46,8 +46,8 @@ OnlinePeer.propTypes = {
   peer: shape({
     cowOfferedForTrade: object,
     dayCount: number.isRequired,
+    experience: number.isRequired,
     id: string.isRequired,
-    itemsSold: object.isRequired,
     money: number.isRequired,
   }).isRequired,
 }

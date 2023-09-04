@@ -183,7 +183,6 @@ export const PERSISTED_STATE_KEYS = [
   'todaysStartingInventory',
   'toolLevels',
   'useAlternateEndDayButtonPosition',
-  'useLegacyLevelingSystem',
   'valueAdjustments',
   'version',
 ]

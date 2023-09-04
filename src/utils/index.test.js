@@ -35,7 +35,7 @@ import {
   computeMarketPositions,
   chooseRandom,
   dollarString,
-  farmProductSalesVolumeNeededForLevel,
+  experienceNeededForLevel,
   generateCow,
   generateOffspringCow,
   get7DayAverage,
@@ -778,42 +778,22 @@ describe('levelAchieved', () => {
     [100, 980100],
   ]
 
-  describe('with legacy system', () => {
-    test.each(cases)(
-      `returns level %p for %p items sold`,
-      (expectedLevel, numItemsSold) => {
-        const level = levelAchieved({
-          itemsSold: { carrot: numItemsSold },
-          useLegacyLevelingSystem: true,
-        })
-
-        expect(level).toEqual(expectedLevel)
-      }
-    )
-  })
-
-  describe('with experience system', () => {
-    test.each(cases)(
-      `returns level %p for %p experience`,
-      (expectedLevel, experience) => {
-        const level = levelAchieved({
-          experience,
-          features: { EXPERIENCE: true },
-          useLegacyLevelingSystem: false,
-        })
-
-        expect(level).toEqual(expectedLevel)
-      }
-    )
-  })
+  test.each(cases)(
+    `returns level %p for %p experience`,
+    (expectedLevel, experience) => {
+      expect(levelAchieved({ experience })).toEqual(expectedLevel)
+    }
+  )
 })
 
-describe('farmProductSalesVolumeNeededForLevel', () => {
-  test('calculates farm sales volume that will meet level requirements', () => {
-    expect(farmProductSalesVolumeNeededForLevel(1)).toEqual(0)
-    expect(farmProductSalesVolumeNeededForLevel(2)).toEqual(100)
-    expect(farmProductSalesVolumeNeededForLevel(3)).toEqual(400)
-    expect(farmProductSalesVolumeNeededForLevel(100)).toEqual(980100)
+describe('experienceNeededForLevel', () => {
+  test.each([
+    [0, 1],
+    [100, 2],
+    [400, 3],
+    [980100, 100],
+  ])('it returns %s experience for level %s', (experienceNeeded, levelNum) => {
+    expect(experienceNeededForLevel(levelNum)).toEqual(experienceNeeded)
   })
 })
 

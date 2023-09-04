@@ -52,10 +52,10 @@ if (tools.shovel) {
 }
 
 export const isInHoverRange = ({
+  experience,
   fieldMode,
   hoveredPlotRangeSize,
   hoveredPlot: { x: hoveredPlotX, y: hoveredPlotY },
-  itemsSold,
   x,
   y,
 }) => {
@@ -70,7 +70,7 @@ export const isInHoverRange = ({
   switch (fieldMode) {
     case SET_SPRINKLER:
       hoveredPlotRangeSizeToRender = getLevelEntitlements(
-        levelAchieved({ itemsSold })
+        levelAchieved({ experience })
       ).sprinklerRange
 
       break
@@ -127,10 +127,10 @@ export const MemoPlot = memo(
 )
 
 MemoPlot.propTypes = {
+  experience: number.isRequired,
   fieldMode: string.isRequired,
   hoveredPlot: object.isRequired,
   hoveredPlotRangeSize: number.isRequired,
-  itemsSold: object.isRequired,
   plotContent: object,
   setHoveredPlot: func.isRequired,
   x: number.isRequired,
@@ -210,13 +210,13 @@ FieldContentWrapper.propTypes = {
 
 export const FieldContent = ({
   columns,
+  experience,
   field,
   fieldMode,
   handleCombineEnabledChange,
   hoveredPlot,
   hoveredPlotRangeSize,
   isCombineEnabled,
-  itemsSold,
   purchasedCombine,
   rows,
   setHoveredPlot,
@@ -235,10 +235,10 @@ export const FieldContent = ({
               <MemoPlot
                 key={x}
                 {...{
+                  experience,
                   fieldMode,
                   hoveredPlot,
                   hoveredPlotRangeSize,
-                  itemsSold,
                   plotContent,
                   setHoveredPlot,
                   x,
@@ -272,13 +272,13 @@ export const FieldContent = ({
 
 FieldContent.propTypes = {
   columns: number.isRequired,
+  experience: number.isRequired,
   field: array.isRequired,
   fieldMode: string.isRequired,
   handleCombineEnabledChange: func.isRequired,
   hoveredPlot: object.isRequired,
   hoveredPlotRangeSize: number.isRequired,
   isCombineEnabled: bool.isRequired,
-  itemsSold: object.isRequired,
   purchasedCombine: number.isRequired,
   rows: number.isRequired,
   setHoveredPlot: func.isRequired,
@@ -429,7 +429,6 @@ Field.propTypes = {
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
   isCombineEnabled: bool.isRequired,
-  itemsSold: object.isRequired,
   purchasedCombine: number.isRequired,
   purchasedField: number.isRequired,
   rows: number.isRequired,

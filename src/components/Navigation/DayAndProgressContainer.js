@@ -7,10 +7,8 @@ import Tooltip from '@material-ui/core/Tooltip'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
-import { farmProductsSold } from '../../utils/farmProductsSold'
 import { levelAchieved } from '../../utils/levelAchieved'
 import {
-  farmProductSalesVolumeNeededForLevel,
   experienceNeededForLevel,
   integerString,
   scaleNumber,
@@ -21,44 +19,20 @@ export function DayAndProgressContainer({
   experience,
   features,
   itemsSold,
-  useLegacyLevelingSystem,
 }) {
-  const totalFarmProductsSold = farmProductsSold(itemsSold)
-  const currentLevel = levelAchieved({
-    itemsSold,
+  const currentLevel = levelAchieved({ experience })
+
+  const levelPercent = scaleNumber(
     experience,
-    features,
-    useLegacyLevelingSystem,
-  })
+    experienceNeededForLevel(currentLevel),
+    experienceNeededForLevel(currentLevel + 1),
+    0,
+    100
+  )
 
-  let levelPercent = 0
-  let tooltipText = ''
-  if (useLegacyLevelingSystem) {
-    levelPercent = scaleNumber(
-      totalFarmProductsSold,
-      farmProductSalesVolumeNeededForLevel(currentLevel),
-      farmProductSalesVolumeNeededForLevel(currentLevel + 1),
-      0,
-      100
-    )
-
-    tooltipText = `${integerString(
-      farmProductSalesVolumeNeededForLevel(currentLevel + 1) -
-        totalFarmProductsSold
-    )} more sales needed for level ${integerString(currentLevel + 1)}`
-  } else {
-    levelPercent = scaleNumber(
-      experience,
-      experienceNeededForLevel(currentLevel),
-      experienceNeededForLevel(currentLevel + 1),
-      0,
-      100
-    )
-
-    tooltipText = `${integerString(
-      experienceNeededForLevel(currentLevel + 1) - experience
-    )} more experience needed to reach level ${integerString(currentLevel + 1)}`
-  }
+  const tooltipText = `${integerString(
+    experienceNeededForLevel(currentLevel + 1) - experience
+  )} more experience needed to reach level ${integerString(currentLevel + 1)}`
 
   return (
     <h2 className="day-and-progress-container">

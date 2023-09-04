@@ -16,7 +16,7 @@ import { moneyString } from '../../utils/moneyString'
 import { farmProductsSold } from '../../utils/farmProductsSold'
 import { levelAchieved } from '../../utils/levelAchieved'
 import {
-  farmProductSalesVolumeNeededForLevel,
+  experienceNeededForLevel,
   get7DayAverage,
   getProfit,
   getProfitRecord,
@@ -37,6 +37,7 @@ const ElevatedPaper = props => (
 
 const StatsView = ({
   cowsTraded,
+  experience,
   farmName,
   historicalDailyLosses,
   historicalDailyRevenue,
@@ -51,7 +52,7 @@ const StatsView = ({
   todaysRevenue,
 
   totalFarmProductsSold = farmProductsSold(itemsSold),
-  currentLevel = levelAchieved({ itemsSold }),
+  currentLevel = levelAchieved({ experience }),
 }) => (
   <div className="StatsView">
     <TableContainer {...{ component: ElevatedPaper }}>
@@ -94,12 +95,11 @@ const StatsView = ({
           >
             <TableRow>
               <TableCell {...{ component: 'th', scope: 'row' }}>
-                Sales Needed for Next Level
+                Experience Points Needed for Next Level
               </TableCell>
               <TableCell align="right">
                 {integerString(
-                  farmProductSalesVolumeNeededForLevel(currentLevel + 1) -
-                    totalFarmProductsSold
+                  experienceNeededForLevel(currentLevel + 1) - experience
                 )}
               </TableCell>
             </TableRow>

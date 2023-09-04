@@ -35,11 +35,12 @@ export const sellItem = (state, { id }, howMany = 1) => {
   const item = itemsMap[id]
   const {
     completedAchievements,
+    experience,
     itemsSold,
     money: initialMoney,
     valueAdjustments,
   } = state
-  const oldLevel = levelAchieved({ itemsSold })
+  const oldLevel = levelAchieved({ experience })
   let { loanBalance } = state
 
   const adjustedItemValue = isItemSoldInShop(item)

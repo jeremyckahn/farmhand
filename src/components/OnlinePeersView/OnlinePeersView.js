@@ -59,7 +59,7 @@ const OnlinePeersView = ({
             {sortBy(populatedPeers, [
               peerId =>
                 // Use negative value to reverse sort order
-                -levelAchieved({ itemsSold: peers[peerId].itemsSold || 0 }),
+                -levelAchieved({ experience: peers[peerId].experience || 0 }),
             ]).map(peerId => (
               <BailOutErrorBoundary {...{ key: peerId }}>
                 <OnlinePeer {...{ peer: peers[peerId] }} />
