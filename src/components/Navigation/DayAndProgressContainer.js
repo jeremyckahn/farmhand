@@ -32,7 +32,9 @@ export function DayAndProgressContainer({
 
   const tooltipText = `${integerString(
     experienceNeededForLevel(currentLevel + 1) - experience
-  )} more experience needed to reach level ${integerString(currentLevel + 1)}`
+  )} more experience points needed to reach level ${integerString(
+    currentLevel + 1
+  )}`
 
   return (
     <h2 className="day-and-progress-container">
