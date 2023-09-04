@@ -73,6 +73,15 @@ const achievements = [
     reward: state => addMoney(state, reward),
   }))(),
 
+  ((reward = EXPERIENCE_VALUES.LOAN_PAID_OFF) => ({
+    id: 'financial-freedom',
+    name: 'Financial Freedom',
+    description: 'Pay off your initial loan from the bank.',
+    rewardDescription: `${reward} Experience points`,
+    condition: state => state.loanBalance === 0,
+    reward: state => addExperience(state, reward),
+  }))(),
+
   ((goal = 10000) => ({
     id: 'unlock-crop-price-guide',
     name: 'Prove Yourself as a Farmer',
@@ -325,15 +334,6 @@ const achievements = [
     reward: state => {
       return addItemToInventory(state, itemsMap['gold-ingot'], 1, true)
     },
-  }))(),
-
-  (() => ({
-    id: 'debt-free',
-    name: 'Debt Free',
-    description: 'Pay off your initial loan from the bank.',
-    rewardDescription: 'Experience bonus',
-    condition: state => state.loanBalance === 0,
-    reward: state => addExperience(state, EXPERIENCE_VALUES.LOAN_PAID_OFF),
   }))(),
 ]
 

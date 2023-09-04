@@ -119,8 +119,8 @@ describe('gold-digger', () => {
   })
 })
 
-describe('debt-free', () => {
-  const achievement = achievementsMap['debt-free']
+describe('financial-freedom', () => {
+  const achievement = achievementsMap['financial-freedom']
   let state
 
   beforeEach(() => {
