@@ -257,6 +257,8 @@ export const WEEDS_SPAWN_CHANCE = 0.15
 export const KEG_INTEREST_RATE = 0.02
 export const KEG_SPOILAGE_RATE_MULTIPLIER = 0.001
 
+// NOTE: not all of these are implemented yet, these are for all the currently
+// planned experience rewards
 export const EXPERIENCE_VALUES = {
   COMPOSTER_ACQUIRED: 10,
   CELLAR_ACQUIRED: 10,
