@@ -778,7 +778,7 @@ export const findCowById = memoize(
  * @param {number} targetLevel
  * @returns {number}
  */
-export const farmProductSalesVolumeNeededForLevel = targetLevel =>
+export const experienceNeededForLevel = targetLevel =>
   ((targetLevel - 1) * 10) ** 2
 
 /**

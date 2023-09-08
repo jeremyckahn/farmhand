@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { bool, func, object } from 'prop-types'
+import { bool, func } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -21,7 +21,6 @@ import './SettingsView.sass'
 
 const SettingsView = ({
   allowCustomPeerCowNames,
-  features,
   handleAllowCustomPeerCowNamesChange,
   handleClearPersistedDataClick,
   handleExportDataClick,
@@ -30,10 +29,8 @@ const SettingsView = ({
   handleShowNotificationsChange,
   handleUseAlternateEndDayButtonPositionChange,
   handleShowHomeScreenChange,
-  handleUseLegacyLevelSystemChange,
   showNotifications,
   useAlternateEndDayButtonPosition,
-  useLegacyLevelingSystem,
   showHomeScreen,
 }) => {
   const [isClearDataDialogOpen, setIsClearDataDialogOpen] = useState(false)
@@ -102,19 +99,6 @@ const SettingsView = ({
             }
             label="Display custom names for cows received from other players"
           />
-          {features.EXPERIENCE ? (
-            <FormControlLabel
-              control={
-                <Switch
-                  color="primary"
-                  checked={useLegacyLevelingSystem}
-                  onChange={handleUseLegacyLevelSystemChange}
-                  name="use-legacy-leveling-system"
-                />
-              }
-              label="Use legacy leveling system (experience is only gained by selling items)"
-            />
-          ) : null}
         </FormGroup>
       </FormControl>
 
@@ -215,7 +199,6 @@ const SettingsView = ({
 
 SettingsView.propTypes = {
   allowCustomPeerCowNames: bool.isRequired,
-  features: object.isRequired,
   handleAllowCustomPeerCowNamesChange: func.isRequired,
   handleClearPersistedDataClick: func.isRequired,
   handleExportDataClick: func.isRequired,
@@ -227,7 +210,6 @@ SettingsView.propTypes = {
   showHomeScreen: bool.isRequired,
   showNotifications: bool.isRequired,
   useAlternateEndDayButtonPosition: bool.isRequired,
-  useLegacyLevelingSystem: bool,
 }
 
 export default function Consumer(props) {

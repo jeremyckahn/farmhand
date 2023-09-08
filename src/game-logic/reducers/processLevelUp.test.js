@@ -1,6 +1,6 @@
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
 import { toolLevel } from '../../enums'
-import { farmProductSalesVolumeNeededForLevel } from '../../utils'
+import { experienceNeededForLevel } from '../../utils'
 
 jest.mock('../../data/achievements')
 jest.mock('../../data/maps')
@@ -20,10 +20,8 @@ describe('processLevelUp', () => {
     }))
     const { todaysNotifications } = jest.requireActual('./').processLevelUp(
       {
+        experience: experienceNeededForLevel(3),
         inventory: [],
-        itemsSold: {
-          'sample-crop-1': farmProductSalesVolumeNeededForLevel(3),
-        },
         todaysNotifications: [],
       },
       1
@@ -65,10 +63,8 @@ describe('processLevelUp', () => {
 
     const { hoveredPlotRangeSize } = jest.requireActual('./').processLevelUp(
       {
+        experience: experienceNeededForLevel(2),
         hoveredPlotRangeSize: 1,
-        itemsSold: {
-          'sample-crop-1': farmProductSalesVolumeNeededForLevel(2),
-        },
         selectedItemId: 'sprinkler',
         todaysNotifications: [],
       },

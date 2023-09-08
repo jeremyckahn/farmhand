@@ -9,7 +9,7 @@ import {
   isItemSoldInShop,
   moneyTotal,
 } from '../../utils'
-import { LOAN_GARNISHMENT_RATE } from '../../constants'
+import { LOAN_GARNISHMENT_RATE, EXPERIENCE_VALUES } from '../../constants'
 import { SOLD_ITEM_PEER_NOTIFICATION } from '../../templates'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory'
@@ -35,11 +35,12 @@ export const sellItem = (state, { id }, howMany = 1) => {
   const item = itemsMap[id]
   const {
     completedAchievements,
+    experience,
     itemsSold,
     money: initialMoney,
     valueAdjustments,
   } = state
-  const oldLevel = levelAchieved({ itemsSold })
+  const oldLevel = levelAchieved(experience)
   let { loanBalance } = state
 
   const adjustedItemValue = isItemSoldInShop(item)
@@ -61,7 +62,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
 
     if (isItemAFarmProduct(item)) {
       salePriceMultiplier = getSalePriceMultiplier(completedAchievements)
-      experienceGained += 1
+      experienceGained += EXPERIENCE_VALUES.ITEM_SOLD
     }
 
     const garnishedProfit =

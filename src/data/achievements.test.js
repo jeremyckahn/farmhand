@@ -118,3 +118,24 @@ describe('gold-digger', () => {
     expect(ingot).toEqual({ id: 'gold-ingot', quantity: 1 })
   })
 })
+
+describe('financial-freedom', () => {
+  const achievement = achievementsMap['financial-freedom']
+  let state
+
+  beforeEach(() => {
+    state = {
+      loanBalance: 100,
+    }
+  })
+
+  test('is not achievemed when loan balance is greater than 0', () => {
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
+  test('is achievemented when the loan balance is at 0', () => {
+    state.loanBalance = 0
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+})

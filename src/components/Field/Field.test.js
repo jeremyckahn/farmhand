@@ -22,10 +22,10 @@ beforeEach(() => {
     <Field
       {...{
         columns: 0,
+        experience: 0,
         hoveredPlotRangeSize: 0,
         handleCombineEnabledChange: noop,
         handleFieldActionRangeChange: noop,
-        itemsSold: {},
         rows: 0,
         field: [
           [null, null],
@@ -49,6 +49,7 @@ describe('field rendering', () => {
       <FieldContent
         {...{
           columns: 0,
+          experience: 1,
           handleCombineEnabledChange: noop,
           field: [
             [null, null],
@@ -59,7 +60,6 @@ describe('field rendering', () => {
           hoveredPlotRangeSize: 0,
           fieldMode: fieldMode.OBSERVE,
           isCombineEnabled: false,
-          itemsSold: {},
           purchasedCombine: 0,
           rows: 0,
           setHoveredPlot: noop,
@@ -162,9 +162,9 @@ describe('isInHoverRange', () => {
   test('indicates when plot is not in hover range', () => {
     expect(
       isInHoverRange({
+        experience: 0,
         hoveredPlotRangeSize: 2,
         hoveredPlot: { x: 1, y: 1 },
-        itemsSold: {},
         x: 4,
         y: 4,
       })
@@ -174,9 +174,9 @@ describe('isInHoverRange', () => {
   test('indicates when plot is in hover range', () => {
     expect(
       isInHoverRange({
+        experience: 0,
         hoveredPlotRangeSize: 2,
         hoveredPlot: { x: 1, y: 1 },
-        itemsSold: {},
         x: 0,
         y: 0,
       })
@@ -187,10 +187,10 @@ describe('isInHoverRange', () => {
     test('indicates when plot is not in hover range', () => {
       expect(
         isInHoverRange({
+          experience: 0,
           hoveredPlotRangeSize: 2,
           hoveredPlot: { x: 1, y: 1 },
           fieldMode: fieldMode.OBSERVE,
-          itemsSold: {},
           x: 4,
           y: 4,
         })
@@ -200,10 +200,10 @@ describe('isInHoverRange', () => {
     test('indicates when plot is in hover range', () => {
       expect(
         isInHoverRange({
+          experience: 0,
           hoveredPlotRangeSize: 2,
           hoveredPlot: { x: 1, y: 1 },
           fieldMode: fieldMode.OBSERVE,
-          itemsSold: {},
           x: 0,
           y: 0,
         })
@@ -215,10 +215,10 @@ describe('isInHoverRange', () => {
     test('indicates when plot is not in hover range', () => {
       expect(
         isInHoverRange({
+          experience: 0,
           hoveredPlotRangeSize: 2,
           hoveredPlot: { x: 1, y: 1 },
           fieldMode: fieldMode.SET_SPRINKLER,
-          itemsSold: {},
           x: 4,
           y: 4,
         })
@@ -228,10 +228,10 @@ describe('isInHoverRange', () => {
     test('indicates when plot is in hover range', () => {
       expect(
         isInHoverRange({
+          experience: 0,
           hoveredPlotRangeSize: 2,
           hoveredPlot: { x: 1, y: 1 },
           fieldMode: fieldMode.SET_SPRINKLER,
-          itemsSold: {},
           x: 0,
           y: 0,
         })
@@ -243,10 +243,10 @@ describe('isInHoverRange', () => {
     test('indicates that all plots are in hover range', () => {
       expect(
         isInHoverRange({
+          experience: 0,
           hoveredPlotRangeSize: 2,
           hoveredPlot: { x: 1, y: 1 },
           fieldMode: fieldMode.SET_SCARECROW,
-          itemsSold: {},
           x: 2,
           y: 2,
         })
@@ -254,10 +254,10 @@ describe('isInHoverRange', () => {
 
       expect(
         isInHoverRange({
+          experience: 0,
           hoveredPlotRangeSize: 2,
           hoveredPlot: { x: 1, y: 1 },
           fieldMode: fieldMode.SET_SCARECROW,
-          itemsSold: {},
           x: 100,
           y: 100,
         })

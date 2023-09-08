@@ -11,8 +11,13 @@ import {
 } from '../utils'
 import { memoize } from '../utils/memoize'
 import { findInField } from '../utils/findInField'
+import { addExperience } from '../game-logic/reducers'
 import { cropLifeStage, standardCowColors } from '../enums'
-import { COW_FEED_ITEM_ID, I_AM_RICH_BONUSES } from '../constants'
+import {
+  COW_FEED_ITEM_ID,
+  EXPERIENCE_VALUES,
+  I_AM_RICH_BONUSES,
+} from '../constants'
 
 import { itemsMap } from './maps'
 
@@ -66,6 +71,15 @@ const achievements = [
     rewardDescription: dollarString(reward),
     condition: state => sumOfCropsHarvested(state.cropsHarvested) >= 1,
     reward: state => addMoney(state, reward),
+  }))(),
+
+  ((reward = EXPERIENCE_VALUES.LOAN_PAID_OFF) => ({
+    id: 'financial-freedom',
+    name: 'Financial Freedom',
+    description: 'Pay off your initial loan from the bank.',
+    rewardDescription: `${reward} experience points`,
+    condition: state => state.loanBalance === 0,
+    reward: state => addExperience(state, reward),
   }))(),
 
   ((goal = 10000) => ({

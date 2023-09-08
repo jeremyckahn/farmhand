@@ -11,11 +11,11 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt'
  * @returns {farmhand.state}
  */
 export const processSprinklers = state => {
-  const { field, itemsSold } = state
+  const { field, experience } = state
   const crops = new Map()
   let modifiedField = [...field]
 
-  const { sprinklerRange } = getLevelEntitlements(levelAchieved({ itemsSold }))
+  const { sprinklerRange } = getLevelEntitlements(levelAchieved(experience))
 
   field.forEach((row, plotY) => {
     row.forEach((plot, plotX) => {

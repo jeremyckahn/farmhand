@@ -207,14 +207,15 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * totals of crops harvested. Keys are crop type IDs, values are the number of
  * that crop harvested.
  * @property {number} dayCount
+ * @property {number} experience
  * @property {string} farmName
- * @property {boolean} hasBooted
  * @property {(?farmhand.plotContent)[][]} field
  * @property {farmhand.fieldMode} fieldMode
  * @property {Function?} getCowAccept https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowReject https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowTradeRequest https://github.com/dmotz/trystero#receiver
  * @property {Function?} getPeerMetadata https://github.com/dmotz/trystero#receiver
+ * @property {boolean} hasBooted
  * @property {number?} heartbeatTimeoutId
  * @property {Array.<number>} historicalDailyLosses
  * @property {Array.<number>} historicalDailyRevenue
@@ -379,9 +380,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   get levelEntitlements() {
-    return getLevelEntitlements(
-      levelAchieved({ itemsSold: this.state.itemsSold })
-    )
+    return getLevelEntitlements(levelAchieved(this.state.experience))
   }
 
   get shopInventory() {
@@ -497,10 +496,17 @@ export default class Farmhand extends FarmhandReducers {
         [toolType.WATERING_CAN]: toolLevel.DEFAULT,
       },
       useAlternateEndDayButtonPosition: false,
-      useLegacyLevelingSystem: true,
       valueAdjustments: {},
       version: process.env.REACT_APP_VERSION ?? '',
     }
+  }
+
+  async initializeNewGame() {
+    await this.incrementDay(true)
+    this.setState(() => ({
+      historicalValueAdjustments: [],
+    }))
+    this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
   }
 
   initInputHandlers() {
@@ -602,10 +608,7 @@ export default class Farmhand extends FarmhandReducers {
         })
       })
     } else {
-      // Initialize new game
-      await this.incrementDay(true)
-      this.setState(() => ({ historicalValueAdjustments: [] }))
-      this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
+      await this.initializeNewGame()
     }
 
     this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))

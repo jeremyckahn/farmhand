@@ -183,7 +183,6 @@ export const PERSISTED_STATE_KEYS = [
   'todaysStartingInventory',
   'toolLevels',
   'useAlternateEndDayButtonPosition',
-  'useLegacyLevelingSystem',
   'valueAdjustments',
   'version',
 ]
@@ -192,8 +191,8 @@ export const PEER_METADATA_STATE_KEYS = [
   'cowsSold',
   'cropsHarvested',
   'dayCount',
+  'experience',
   'id',
-  'itemsSold',
   'money',
   'pendingPeerMessages',
   'version',
@@ -257,3 +256,24 @@ export const WEEDS_SPAWN_CHANCE = 0.15
 
 export const KEG_INTEREST_RATE = 0.02
 export const KEG_SPOILAGE_RATE_MULTIPLIER = 0.001
+
+// NOTE: not all of these are implemented yet, these are for all the currently
+// planned experience rewards
+export const EXPERIENCE_VALUES = {
+  COMPOSTER_ACQUIRED: 10,
+  CELLAR_ACQUIRED: 10,
+  CELLAR_EXPANDED: 5,
+  COW_BRED: 1,
+  COW_PEN_ACQUIRED: 10,
+  COW_PEN_EXPANDED: 5,
+  COW_TRADED: 1,
+  FIELD_EXPANDED: 5,
+  ITEM_FORGED: 3,
+  ITEM_SOLD: 1,
+  KEG_SOLD: 2,
+  LOAN_PAID_OFF: 25,
+  NEW_YEAR: 5,
+  RAINBOW_COW_BRED: 2,
+  RECIPE_CRAFTED: 2,
+  SMELTER_ACQUIRED: 10,
+}
