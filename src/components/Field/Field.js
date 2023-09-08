@@ -421,6 +421,7 @@ export const Field = props => {
 
 Field.propTypes = {
   columns: number.isRequired,
+  experience: number.isRequired,
   field: array.isRequired,
   fieldMode: string.isRequired,
   handleCombineEnabledChange: func.isRequired,
