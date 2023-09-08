@@ -23,10 +23,8 @@ describe('addExperience', () => {
   it('process a level up when enough experience is achieved', () => {
     const newState = addExperience(gameState, experienceNeededForLevel(2))
 
-    const notification = /You reached \*\*level 2!\*\*/
-
-    expect(notification.test(newState.todaysNotifications[0].message)).toEqual(
-      true
+    expect(newState.todaysNotifications[0].message).toEqual(
+      expect.stringContaining('You reached **level 2!**')
     )
   })
 })
