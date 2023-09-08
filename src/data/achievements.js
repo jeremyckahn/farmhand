@@ -77,7 +77,7 @@ const achievements = [
     id: 'financial-freedom',
     name: 'Financial Freedom',
     description: 'Pay off your initial loan from the bank.',
-    rewardDescription: `${reward} Experience points`,
+    rewardDescription: `${reward} experience points`,
     condition: state => state.loanBalance === 0,
     reward: state => addExperience(state, reward),
   }))(),

@@ -1,5 +1,5 @@
 import React from 'react'
-import { bool, number, object } from 'prop-types'
+import { number, object } from 'prop-types'
 
 import Box from '@material-ui/core/Box'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -14,12 +14,7 @@ import {
   scaleNumber,
 } from '../../utils'
 
-export function DayAndProgressContainer({
-  dayCount,
-  experience,
-  features,
-  itemsSold,
-}) {
+export function DayAndProgressContainer({ dayCount, experience, itemsSold }) {
   const currentLevel = levelAchieved(experience)
 
   const levelPercent = scaleNumber(
@@ -65,9 +60,7 @@ export function DayAndProgressContainer({
 DayAndProgressContainer.propTypes = {
   dayCount: number.isRequired,
   experience: number.isRequired,
-  features: object.isRequired,
   itemsSold: object.isRequired,
-  useLegacyLevelingSystem: bool.isRequired,
 }
 
 export default function Consumer(props) {
