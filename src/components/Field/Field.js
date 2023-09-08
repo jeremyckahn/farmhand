@@ -70,7 +70,7 @@ export const isInHoverRange = ({
   switch (fieldMode) {
     case SET_SPRINKLER:
       hoveredPlotRangeSizeToRender = getLevelEntitlements(
-        levelAchieved({ experience })
+        levelAchieved(experience)
       ).sprinklerRange
 
       break

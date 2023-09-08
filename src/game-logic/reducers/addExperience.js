@@ -9,7 +9,7 @@ import { processLevelUp } from './processLevelUp'
  */
 export const addExperience = (state, amount) => {
   const { experience } = state
-  const oldLevel = levelAchieved({ experience })
+  const oldLevel = levelAchieved(experience)
 
   let newState = {
     ...state,

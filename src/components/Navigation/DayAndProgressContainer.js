@@ -20,7 +20,7 @@ export function DayAndProgressContainer({
   features,
   itemsSold,
 }) {
-  const currentLevel = levelAchieved({ experience })
+  const currentLevel = levelAchieved(experience)
 
   const levelPercent = scaleNumber(
     experience,

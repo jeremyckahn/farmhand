@@ -380,9 +380,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   get levelEntitlements() {
-    return getLevelEntitlements(
-      levelAchieved({ experience: this.state.experience })
-    )
+    return getLevelEntitlements(levelAchieved(this.state.experience))
   }
 
   get shopInventory() {

@@ -781,7 +781,7 @@ describe('levelAchieved', () => {
   test.each(cases)(
     `returns level %p for %p experience`,
     (expectedLevel, experience) => {
-      expect(levelAchieved({ experience })).toEqual(expectedLevel)
+      expect(levelAchieved(experience)).toEqual(expectedLevel)
     }
   )
 })

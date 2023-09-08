@@ -24,7 +24,7 @@ const OnlinePeer = ({
             subheader: (
               <div>
                 <p>Day: {integerString(dayCount)}</p>
-                <p>Level: {integerString(levelAchieved({ experience }))}</p>
+                <p>Level: {integerString(levelAchieved(experience))}</p>
                 <p>Money: {moneyString(money)}</p>
               </div>
             ),

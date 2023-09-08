@@ -40,7 +40,7 @@ export const sellItem = (state, { id }, howMany = 1) => {
     money: initialMoney,
     valueAdjustments,
   } = state
-  const oldLevel = levelAchieved({ experience })
+  const oldLevel = levelAchieved(experience)
   let { loanBalance } = state
 
   const adjustedItemValue = isItemSoldInShop(item)

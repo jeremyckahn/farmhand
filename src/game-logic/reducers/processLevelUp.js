@@ -19,7 +19,7 @@ import { showNotification } from './showNotification'
  */
 export const processLevelUp = (state, oldLevel) => {
   const { experience, selectedItemId } = state
-  const newLevel = levelAchieved({ experience })
+  const newLevel = levelAchieved(experience)
 
   // Loop backwards so that the notifications appear in descending order.
   for (let i = newLevel; i > oldLevel; i--) {
@@ -46,9 +46,7 @@ export const processLevelUp = (state, oldLevel) => {
       levelObject.increasesSprinklerRange &&
       selectedItemId === SPRINKLER_ITEM_ID
     ) {
-      const { sprinklerRange } = getLevelEntitlements(
-        levelAchieved({ experience })
-      )
+      const { sprinklerRange } = getLevelEntitlements(levelAchieved(experience))
 
       if (sprinklerRange > state.hoveredPlotRangeSize) {
         state = {
