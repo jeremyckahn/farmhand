@@ -206,7 +206,7 @@
 
 /**
  * @typedef farmhand.peerMetadata
- * @type {Pick<farmhand.state, 'cowsSold' | 'cropsHarvested' | 'dayCount' | 'id' | 'itemsSold' | 'money' | 'pendingPeerMessages' | 'version'> & { cowOfferedForTrade?: farmhand.offeredCow }}
+ * @type {Pick<farmhand.state, 'cowsSold' | 'cropsHarvested' | 'dayCount' | 'experience' | 'id' | 'money' | 'pendingPeerMessages' | 'version'> & { cowOfferedForTrade?: farmhand.offeredCow }}
  */
 
 /**
