@@ -2,9 +2,10 @@
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
  */
 import { moneyTotal } from '../../utils'
-import { PURCHASEABLE_COW_PENS } from '../../constants'
+import { EXPERIENCE_VALUES, PURCHASEABLE_COW_PENS } from '../../constants'
 import { COW_PEN_PURCHASED } from '../../templates'
 
+import { addExperience } from './addExperience'
 import { showNotification } from './showNotification'
 
 /**
@@ -22,6 +23,12 @@ export const purchaseCowPen = (state, cowPenId) => {
   const { cows, price } = PURCHASEABLE_COW_PENS.get(cowPenId)
 
   state = showNotification(state, COW_PEN_PURCHASED`${cows}`, 'success')
+
+  const experienceEarned =
+    cowPenId > 1
+      ? EXPERIENCE_VALUES.COW_PEN_EXPANDED
+      : EXPERIENCE_VALUES.COW_PEN_ACQUIRED
+  state = addExperience(state, experienceEarned)
 
   return {
     ...state,

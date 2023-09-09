@@ -57,6 +57,7 @@ describe('processLevelUp', () => {
       itemUnlockLevels: {},
     }))
     jest.mock('../../constants', () => ({
+      ...jest.requireActual('../../constants'),
       INITIAL_SPRINKLER_RANGE: 1,
       SPRINKLER_ITEM_ID: 'sprinkler',
     }))

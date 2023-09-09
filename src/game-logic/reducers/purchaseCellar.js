@@ -1,8 +1,9 @@
 import { moneyTotal } from '../../utils'
-import { PURCHASEABLE_CELLARS } from '../../constants'
+import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants'
 
 import { CELLAR_PURCHASED } from '../../templates'
 
+import { addExperience } from './addExperience'
 import { showNotification } from './showNotification'
 
 /**
@@ -20,6 +21,12 @@ export const purchaseCellar = (state, cellarId) => {
   const { price, space } = PURCHASEABLE_CELLARS.get(cellarId)
 
   state = showNotification(state, CELLAR_PURCHASED`${space}`, 'success')
+
+  const experienceEarned =
+    cellarId > 1
+      ? EXPERIENCE_VALUES.CELLAR_EXPANDED
+      : EXPERIENCE_VALUES.CELLAR_ACQUIRED
+  state = addExperience(state, experienceEarned)
 
   return {
     ...state,

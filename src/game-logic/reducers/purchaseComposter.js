@@ -1,7 +1,8 @@
 import { moneyTotal } from '../../utils'
-import { PURCHASEABLE_COMPOSTERS } from '../../constants'
+import { EXPERIENCE_VALUES, PURCHASEABLE_COMPOSTERS } from '../../constants'
 import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings'
 
+import { addExperience } from './addExperience'
 import { showNotification } from './showNotification'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
 
@@ -22,6 +23,7 @@ export const purchaseComposter = (state, composterId) => {
   }
 
   state = showNotification(state, RECYCLING_AVAILABLE_NOTIFICATION)
+  state = addExperience(state, EXPERIENCE_VALUES.COMPOSTER_ACQUIRED)
 
   return updateLearnedRecipes(state)
 }

@@ -1,6 +1,8 @@
 import { generateCow } from '../../utils'
 import { generateValueAdjustments } from '../../common/utils'
+import { EXPERIENCE_VALUES } from '../../constants'
 
+import { addExperience } from './addExperience'
 import { applyLoanInterest } from './applyLoanInterest'
 import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay'
 import { generatePriceEvents } from './generatePriceEvents'
@@ -36,8 +38,8 @@ const adjustItemValues = state => ({
  * @param {farmhand.state} state
  * @returns {farmhand.state}
  */
-export const computeStateForNextDay = (state, isFirstDay = false) =>
-  (isFirstDay
+export const computeStateForNextDay = (state, isFirstDay = false) => {
+  const reducers = isFirstDay
     ? [processField]
     : [
         computeCowInventoryForNextDay,
@@ -58,7 +60,8 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
         applyLoanInterest,
         rotateNotificationLogs,
       ]
-  )
+
+  let newState = reducers
     .concat([adjustItemValues])
     .reduce((acc, fn) => fn({ ...acc }), {
       ...state,
@@ -66,3 +69,10 @@ export const computeStateForNextDay = (state, isFirstDay = false) =>
       dayCount: state.dayCount + 1,
       todaysNotifications: [],
     })
+
+  if (newState.dayCount > 1 && newState.dayCount % 365 === 1) {
+    newState = addExperience(newState, EXPERIENCE_VALUES.NEW_YEAR)
+  }
+
+  return newState
+}

@@ -1,4 +1,4 @@
-import { PURCHASEABLE_SMELTERS } from '../../constants'
+import { EXPERIENCE_VALUES, PURCHASEABLE_SMELTERS } from '../../constants'
 import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings'
 
 import { purchaseSmelter } from './purchaseSmelter'
@@ -8,6 +8,7 @@ describe('purchaseSmelter', () => {
 
   beforeEach(() => {
     gameState = {
+      experience: 0,
       money: PURCHASEABLE_SMELTERS.get(1).price,
       purchasedSmelter: 0,
       todaysNotifications: [],
@@ -32,6 +33,10 @@ describe('purchaseSmelter', () => {
       expect(newState.todaysNotifications[0].message).toEqual(
         FORGE_AVAILABLE_NOTIFICATION
       )
+    })
+
+    test('adds experience', () => {
+      expect(newState.experience).toEqual(EXPERIENCE_VALUES.SMELTER_ACQUIRED)
     })
   })
 

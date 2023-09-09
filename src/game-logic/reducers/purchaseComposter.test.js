@@ -1,4 +1,4 @@
-import { PURCHASEABLE_COMPOSTERS } from '../../constants'
+import { EXPERIENCE_VALUES, PURCHASEABLE_COMPOSTERS } from '../../constants'
 import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings'
 
 import { purchaseComposter } from './purchaseComposter'
@@ -8,6 +8,7 @@ describe('purchaseComposter', () => {
 
   beforeEach(() => {
     gameState = {
+      experience: 0,
       money: PURCHASEABLE_COMPOSTERS.get(1).price,
       purchasedComposter: 0,
       todaysNotifications: [],
@@ -26,6 +27,10 @@ describe('purchaseComposter', () => {
 
     test('it deducts the composter cost', () => {
       expect(newState.money).toEqual(0)
+    })
+
+    test('it adds experience', () => {
+      expect(newState.experience).toEqual(EXPERIENCE_VALUES.COMPOSTER_ACQUIRED)
     })
 
     test('it shows the recycling available notification', () => {
