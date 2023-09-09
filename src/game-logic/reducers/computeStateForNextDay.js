@@ -61,7 +61,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) => {
         rotateNotificationLogs,
       ]
 
-  let newState = reducers
+  state = reducers
     .concat([adjustItemValues])
     .reduce((acc, fn) => fn({ ...acc }), {
       ...state,
@@ -70,9 +70,9 @@ export const computeStateForNextDay = (state, isFirstDay = false) => {
       todaysNotifications: [],
     })
 
-  if (newState.dayCount > 1 && newState.dayCount % 365 === 1) {
-    newState = addExperience(newState, EXPERIENCE_VALUES.NEW_YEAR)
+  if (state.dayCount > 1 && state.dayCount % 365 === 1) {
+    state = addExperience(state, EXPERIENCE_VALUES.NEW_YEAR)
   }
 
-  return newState
+  return state
 }

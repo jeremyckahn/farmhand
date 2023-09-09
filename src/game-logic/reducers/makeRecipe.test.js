@@ -48,11 +48,6 @@ describe('makeRecipe', () => {
         experience: 0,
         inventory: [],
       }
-
-      jest.mock('../../utils', () => ({
-        ...jest.requireActual('../../utils'),
-        canMakeRecipe: jest.fn(() => true),
-      }))
     })
 
     test.each([
