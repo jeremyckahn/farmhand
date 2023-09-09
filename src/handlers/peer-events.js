@@ -1,7 +1,7 @@
 /** @typedef {import('../components/Farmhand/Farmhand').default} Farmhand */
 /** @typedef {import('../index').farmhand.peerMetadata} farmhand.peerMetadata */
 import { cowTradeRejectionReason } from '../enums'
-import { COW_TRADED_NOTIFICATION } from '../templates'
+import { EXPERIENCE_VALUES, COW_TRADED_NOTIFICATION } from '../templates'
 import {
   PROGRESS_SAVED_MESSAGE,
   REQUESTED_COW_TRADE_UNAVAILABLE,
@@ -15,6 +15,8 @@ import {
   removeCowFromInventory,
   showNotification,
 } from '../game-logic/reducers'
+
+import { addExperience } from '../game-logic/reducers/addExperience'
 
 /**
  * @param {Farmhand} farmhand
@@ -206,6 +208,7 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
         COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${id}${allowCustomPeerCowNames}`,
         'success'
       )
+      state = addExperience(state, EXPERIENCE_VALUES.COW_TRADED)
 
       clearTimeout(cowTradeTimeoutId)
 
