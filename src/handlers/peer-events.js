@@ -1,7 +1,8 @@
 /** @typedef {import('../components/Farmhand/Farmhand').default} Farmhand */
 /** @typedef {import('../index').farmhand.peerMetadata} farmhand.peerMetadata */
 import { cowTradeRejectionReason } from '../enums'
-import { EXPERIENCE_VALUES, COW_TRADED_NOTIFICATION } from '../templates'
+import { EXPERIENCE_VALUES } from '../constants'
+import { COW_TRADED_NOTIFICATION } from '../templates'
 import {
   PROGRESS_SAVED_MESSAGE,
   REQUESTED_COW_TRADE_UNAVAILABLE,
