@@ -1,4 +1,4 @@
-import { PURCHASEABLE_CELLARS } from '../../constants'
+import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants'
 
 import { purchaseCellar } from './purchaseCellar'
 
@@ -32,5 +32,23 @@ describe('purchaseCellar', () => {
     expect(todaysNotifications[0].message).toEqual(
       'Purchased a cellar with capacity for 10 kegs! View your keg inventory by going to the "Cellar" page.'
     )
+  })
+
+  test('adds experience when acquired', () => {
+    const { experience } = purchaseCellar(
+      { experience: 0, todaysNotifications: [] },
+      1
+    )
+
+    expect(experience).toEqual(EXPERIENCE_VALUES.CELLAR_ACQUIRED)
+  })
+
+  test('adds experience when expanded', () => {
+    const { experience } = purchaseCellar(
+      { experience: 0, todaysNotifications: [] },
+      2
+    )
+
+    expect(experience).toEqual(EXPERIENCE_VALUES.CELLAR_EXPANDED)
   })
 })

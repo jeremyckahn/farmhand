@@ -1,4 +1,5 @@
 import {
+  EXPERIENCE_VALUES,
   COW_GESTATION_PERIOD_DAYS,
   PURCHASEABLE_COW_PENS,
 } from '../../constants'
@@ -96,19 +97,28 @@ describe('processCowBreeding', () => {
 
         describe('daysUntilBirth === 1', () => {
           describe('there is space in cowInventory', () => {
-            test('adds offspring cow to cowInventory', () => {
-              const { cowInventory } = processCowBreeding({
+            let newState
+
+            beforeEach(() => {
+              newState = processCowBreeding({
                 cowBreedingPen: {
                   cowId1: maleCow1.id,
                   cowId2: femaleCow.id,
                   daysUntilBirth: 1,
                 },
                 cowInventory: [maleCow1, femaleCow],
+                experience: 0,
                 newDayNotifications: [],
                 purchasedCowPen: 1,
               })
+            })
 
-              expect(cowInventory).toHaveLength(3)
+            test('adds offspring cow to cowInventory', () => {
+              expect(newState.cowInventory).toHaveLength(3)
+            })
+
+            test('adds experience', () => {
+              expect(newState.experience).toEqual(EXPERIENCE_VALUES.COW_BRED)
             })
           })
 

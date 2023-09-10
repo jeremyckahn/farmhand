@@ -1,10 +1,14 @@
 import { findCowById, generateOffspringCow } from '../../utils'
+import { cowColors } from '../../enums'
 import {
+  EXPERIENCE_VALUES,
   COW_GESTATION_PERIOD_DAYS,
   COW_MINIMUM_HAPPINESS_TO_BREED,
   PURCHASEABLE_COW_PENS,
 } from '../../constants'
 import { COW_BORN_MESSAGE } from '../../templates'
+
+import { addExperience } from './addExperience'
 
 /**
  * @param {farmhand.state} state
@@ -43,8 +47,16 @@ export const processCowBreeding = state => {
     cowInventory.length < PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows &&
     daysUntilBirth === 0
 
-  let offspringCow =
+  const offspringCow =
     shouldGenerateOffspring && generateOffspringCow(cow1, cow2, id)
+
+  if (offspringCow) {
+    const experienceGained =
+      offspringCow.color === cowColors.RAINBOW
+        ? EXPERIENCE_VALUES.RAINBOW_COW_BRED
+        : EXPERIENCE_VALUES.COW_BRED
+    state = addExperience(state, experienceGained)
+  }
 
   return {
     ...state,

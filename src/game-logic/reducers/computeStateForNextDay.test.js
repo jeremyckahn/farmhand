@@ -1,23 +1,18 @@
 import { shapeOf, testCrop } from '../../test-utils'
 import { generateCow } from '../../utils'
+import { EXPERIENCE_VALUES } from '../../constants'
 
 import { computeStateForNextDay } from './computeStateForNextDay'
 
 jest.mock('../../data/maps')
 
 describe('computeStateForNextDay', () => {
+  let state
+
   beforeEach(() => {
     jest.spyOn(Math, 'random').mockReturnValue(0.75)
-  })
 
-  test('computes state for next day', () => {
-    const {
-      cowForSale,
-      dayCount,
-      field: [firstRow],
-      valueAdjustments,
-      todaysNotifications,
-    } = computeStateForNextDay({
+    state = {
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       dayCount: 1,
       field: [
@@ -30,6 +25,7 @@ describe('computeStateForNextDay', () => {
       ],
       cellarInventory: [],
       cowInventory: [],
+      experience: 0,
       historicalDailyLosses: [],
       historicalDailyRevenue: [],
       inventory: [],
@@ -43,7 +39,17 @@ describe('computeStateForNextDay', () => {
       record7dayProfitAverage: 0,
       recordProfitabilityStreak: 0,
       todaysNotifications: [{ message: 'some message', severity: 'info' }],
-    })
+    }
+  })
+
+  test('computes state for next day', () => {
+    const {
+      cowForSale,
+      dayCount,
+      field: [firstRow],
+      valueAdjustments,
+      todaysNotifications,
+    } = computeStateForNextDay(state)
 
     expect(shapeOf(cowForSale)).toEqual(shapeOf(generateCow()))
     expect(dayCount).toEqual(2)
@@ -53,5 +59,29 @@ describe('computeStateForNextDay', () => {
     expect(firstRow[0].daysWatered).toBe(1)
     expect(firstRow[0].daysOld).toBe(1)
     expect(todaysNotifications).toBeEmpty()
+  })
+
+  describe('new year experience', () => {
+    const ONE_YEAR = 365
+
+    test.each([1, 5, 100, 363, 365, 730])(
+      'it does not add any experience on day %s',
+      dayCount => {
+        const { experience } = computeStateForNextDay({ ...state, dayCount })
+
+        expect(experience).toEqual(0)
+      }
+    )
+
+    test.each([
+      ONE_YEAR - 1,
+      ONE_YEAR * 2 - 1,
+      ONE_YEAR * 3 - 1,
+      ONE_YEAR * 4 - 1,
+    ])('it adds experience on day %s', dayCount => {
+      const { experience } = computeStateForNextDay({ ...state, dayCount })
+
+      expect(experience).toEqual(EXPERIENCE_VALUES.NEW_YEAR)
+    })
   })
 })

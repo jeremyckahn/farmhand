@@ -1,6 +1,8 @@
 import { sampleRecipe1 } from '../../data/recipes'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { EXPERIENCE_VALUES, INFINITE_STORAGE_LIMIT } from '../../constants'
+
+import { recipeType } from '../../enums'
 
 import { makeRecipe } from './makeRecipe'
 
@@ -35,6 +37,31 @@ describe('makeRecipe', () => {
         { id: 'sample-item-1', quantity: 1 },
         { id: 'sample-recipe-1', quantity: 1 },
       ])
+    })
+  })
+
+  describe('experience', () => {
+    let state
+
+    beforeEach(() => {
+      state = {
+        experience: 0,
+        inventory: [],
+      }
+    })
+
+    test.each([
+      [recipeType.FERMENTATION, EXPERIENCE_VALUES.FERMENTATION_RECIPE_MADE],
+      [recipeType.FORGE, EXPERIENCE_VALUES.FORGE_RECIPE_MADE],
+      [recipeType.KITCHEN, EXPERIENCE_VALUES.KITCHEN_RECIPE_MADE],
+      [recipeType.RECYCLING, EXPERIENCE_VALUES.RECYCLING_RECIPE_MADE],
+    ])('adds experience for a %s recipe', (recipeType, experienceValue) => {
+      const { experience } = makeRecipe(state, {
+        ingredients: {},
+        recipeType,
+      })
+
+      expect(experience).toEqual(experienceValue)
     })
   })
 })

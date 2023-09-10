@@ -1,4 +1,5 @@
 import { testCrop } from '../../test-utils'
+import { EXPERIENCE_VALUES } from '../../constants'
 
 import { purchaseField } from './purchaseField'
 
@@ -18,10 +19,17 @@ describe('purchaseField', () => {
     expect(money).toEqual(500)
   })
 
+  test('adds experience', () => {
+    const { experience } = purchaseField({ experience: 0, field: [[]] }, 1)
+
+    expect(experience).toEqual(EXPERIENCE_VALUES.FIELD_EXPANDED)
+  })
+
   describe('field expansion', () => {
     test('field expands without destroying existing data', () => {
       jest.resetModules()
       jest.mock('../../constants', () => ({
+        EXPERIENCE_VALUES: {},
         PURCHASEABLE_FIELD_SIZES: new Map([
           [1, { columns: 3, rows: 4, price: 1000 }],
         ]),
