@@ -70,7 +70,7 @@ export const computeStateForNextDay = (state, isFirstDay = false) => {
       todaysNotifications: [],
     })
 
-  if (state.dayCount > 1 && state.dayCount % 365 === 1) {
+  if (state.dayCount % 365 === 0) {
     state = addExperience(state, EXPERIENCE_VALUES.NEW_YEAR)
   }
 

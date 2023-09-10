@@ -62,7 +62,9 @@ describe('computeStateForNextDay', () => {
   })
 
   describe('new year experience', () => {
-    test.each([1, 5, 100, 364, 366, 729])(
+    const ONE_YEAR = 365
+
+    test.each([1, 5, 100, 363, 365, 730])(
       'it does not add any experience on day %s',
       dayCount => {
         const { experience } = computeStateForNextDay({ ...state, dayCount })
@@ -71,13 +73,15 @@ describe('computeStateForNextDay', () => {
       }
     )
 
-    test.each([365, 365 * 2, 365 * 3, 365 * 4])(
-      'it adds experience on day %s',
-      dayCount => {
-        const { experience } = computeStateForNextDay({ ...state, dayCount })
+    test.each([
+      ONE_YEAR - 1,
+      ONE_YEAR * 2 - 1,
+      ONE_YEAR * 3 - 1,
+      ONE_YEAR * 4 - 1,
+    ])('it adds experience on day %s', dayCount => {
+      const { experience } = computeStateForNextDay({ ...state, dayCount })
 
-        expect(experience).toEqual(EXPERIENCE_VALUES.NEW_YEAR)
-      }
-    )
+      expect(experience).toEqual(EXPERIENCE_VALUES.NEW_YEAR)
+    })
   })
 })
