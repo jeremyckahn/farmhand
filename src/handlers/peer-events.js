@@ -191,12 +191,13 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
         ([, { id }]) => id === cowReceived.ownerId
       )
 
+      const didOriginallyOwnReceivedCow = cowReceived.originalOwnerId === id
+
       const updatedCowReceived = {
         ...cowReceived,
-        timesTraded:
-          cowReceived.originalOwnerId === id
-            ? cowReceived.timesTraded
-            : cowReceived.timesTraded + 1,
+        timesTraded: didOriginallyOwnReceivedCow
+          ? cowReceived.timesTraded
+          : cowReceived.timesTraded + 1,
       }
 
       state = removeCowFromInventory(state, cowTradedAway)
@@ -209,7 +210,10 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
         COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${id}${allowCustomPeerCowNames}`,
         'success'
       )
-      state = addExperience(state, EXPERIENCE_VALUES.COW_TRADED)
+
+      if (!didOriginallyOwnReceivedCow) {
+        state = addExperience(state, EXPERIENCE_VALUES.COW_TRADED)
+      }
 
       clearTimeout(cowTradeTimeoutId)
 
