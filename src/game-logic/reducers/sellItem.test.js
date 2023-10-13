@@ -1,7 +1,7 @@
 import { testItem } from '../../test-utils'
 import { LOAN_PAYOFF } from '../../templates'
 import { carrot } from '../../data/crops'
-import { bronzeOre, coal, milk1 } from '../../data/items'
+import { bronzeOre, coal, milk1, saltRock } from '../../data/items'
 import { carrotSoup } from '../../data/recipes'
 
 import { sellItem } from './sellItem'
@@ -236,6 +236,7 @@ describe('sellItem', () => {
     coal,
     carrotSoup,
     bronzeOre,
+    saltRock,
   ].map(item => [item.type, item])
 
   test.each(experienceTestArgs)(

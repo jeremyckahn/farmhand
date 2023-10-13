@@ -8,6 +8,7 @@ const FARM_PRODUCT_TYPES = [
   itemType.FUEL,
   itemType.MILK,
   itemType.ORE,
+  itemType.STONE,
 ]
 
 /**
