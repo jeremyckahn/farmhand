@@ -1,8 +1,14 @@
+/** @typedef {import('../index').farmhand.item} farmhand.item */
 import { itemType } from '../enums'
 
 import { isItemAGrownCrop } from './isItemAGrownCrop'
 
-const FARM_PRODUCT_TYPES = [itemType.MILK, itemType.CRAFTED_ITEM]
+const FARM_PRODUCT_TYPES = [
+  itemType.CRAFTED_ITEM,
+  itemType.FUEL,
+  itemType.MILK,
+  itemType.ORE,
+]
 
 /**
  * @param {farmhand.item} item
