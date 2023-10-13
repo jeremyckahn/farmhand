@@ -44,22 +44,27 @@ for (const key of searchParams.keys()) {
 export const rtcConfig = {
   iceServers: [
     {
-      urls: 'stun:openrelay.metered.ca:80',
+      urls: 'stun:stun.relay.metered.ca:80',
     },
     {
-      urls: 'turn:openrelay.metered.ca:80',
-      username: 'openrelayproject',
-      credential: 'openrelayproject',
+      urls: 'turn:a.relay.metered.ca:80',
+      username: 'fd396a3275680a085c4d66cd',
+      credential: 'hFQmauZyx0Mv0bCK',
     },
     {
-      urls: 'turn:openrelay.metered.ca:443',
-      username: 'openrelayproject',
-      credential: 'openrelayproject',
+      urls: 'turn:a.relay.metered.ca:80?transport=tcp',
+      username: 'fd396a3275680a085c4d66cd',
+      credential: 'hFQmauZyx0Mv0bCK',
     },
     {
-      urls: 'turn:openrelay.metered.ca:443?transport=tcp',
-      username: 'openrelayproject',
-      credential: 'openrelayproject',
+      urls: 'turn:a.relay.metered.ca:443',
+      username: 'fd396a3275680a085c4d66cd',
+      credential: 'hFQmauZyx0Mv0bCK',
+    },
+    {
+      urls: 'turn:a.relay.metered.ca:443?transport=tcp',
+      username: 'fd396a3275680a085c4d66cd',
+      credential: 'hFQmauZyx0Mv0bCK',
     },
   ],
 }
