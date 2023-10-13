@@ -1,5 +1,8 @@
 import { testItem } from '../../test-utils'
 import { LOAN_PAYOFF } from '../../templates'
+import { carrot } from '../../data/crops'
+import { bronzeOre, coal, milk1, saltRock } from '../../data/items'
+import { carrotSoup } from '../../data/recipes'
 
 import { sellItem } from './sellItem'
 
@@ -226,4 +229,37 @@ describe('sellItem', () => {
       })
     })
   })
+
+  const experienceTestArgs = [
+    carrot,
+    milk1,
+    coal,
+    carrotSoup,
+    bronzeOre,
+    saltRock,
+  ].map(item => [item.type, item])
+
+  test.each(experienceTestArgs)(
+    'selling item of type %s gives experience',
+    (_, item) => {
+      const state = sellItem(
+        {
+          experience: 0,
+          inventory: [testItem({ id: item.id, quantity: 1 })],
+          itemsSold: {},
+          loanBalance: 0,
+          money: 100,
+          pendingPeerMessages: [],
+          todaysNotifications: [],
+          revenue: 0,
+          todaysRevenue: 0,
+          valueAdjustments: { [item.id]: 1 },
+        },
+        testItem({ id: item.id }),
+        1
+      )
+
+      expect(state.experience).toEqual(1)
+    }
+  )
 })
