@@ -402,6 +402,11 @@ export default class Farmhand extends FarmhandReducers {
     )
   }
 
+  get isChatAvailable() {
+    const { isOnline, room } = this.state
+    return isOnline && room !== DEFAULT_ROOM
+  }
+
   /**
    * @returns {farmhand.state}
    */
@@ -1272,6 +1277,7 @@ export default class Farmhand extends FarmhandReducers {
       state: { redirect },
       fieldToolInventory,
       handlers,
+      isChatAvailable,
       keyHandlers,
       keyMap,
       levelEntitlements,
@@ -1291,6 +1297,7 @@ export default class Farmhand extends FarmhandReducers {
       blockInput,
       features,
       fieldToolInventory,
+      isChatAvailable,
       levelEntitlements,
       plantableCropInventory,
       playerInventory,
@@ -1428,7 +1435,7 @@ export default class Farmhand extends FarmhandReducers {
                   </Fab>
                 </Tooltip>
               </div>
-              <ChatRoom />
+              {isChatAvailable ? <ChatRoom /> : null}
               <NotificationSystem />
             </FarmhandContext.Provider>
           </SnackbarProvider>

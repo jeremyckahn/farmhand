@@ -10,9 +10,7 @@ import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
-// FIXME: Use stable domain
-const chitchatterDomain =
-  'https://chitchatter-git-feature-sdk-jeremyckahn.vercel.app'
+const chitchatterDomain = 'https://chitchatter.im'
 
 export const ChatRoom = () => {
   const dialogTitleId = 'chat-title'
@@ -20,21 +18,21 @@ export const ChatRoom = () => {
 
   const {
     handlers: { handleChatRoomOpenStateChange },
-    gameState: { id, isChatOpen },
+    gameState: { id, isChatOpen, room },
   } = useContext(FarmhandContext)
 
   const handleChatRoomClose = () => {
     handleChatRoomOpenStateChange(false)
   }
 
-  // FIXME: Add the room name
-  // FIXME: Keep the chat component mounted while the player is online
   const chatRoomComponent = (
     // @ts-ignore
     <chat-room
       root-url={chitchatterDomain}
+      room={`__farmhand__${room}`}
       user-id={id}
-      style={{ minHeight: 300 }}
+      style={{ height: '100%', width: '100%' }}
+      color-mode="light"
     />
   )
 
@@ -47,7 +45,8 @@ export const ChatRoom = () => {
         {...{
           className: classNames('Farmhand'),
           fullWidth: true,
-          maxWidth: 'xs',
+          keepMounted: true,
+          fullScreen: true,
           open: isChatOpen,
         }}
         aria-describedby={dialogTitleId}
