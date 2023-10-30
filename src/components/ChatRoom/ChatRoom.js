@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
+import './ChatRoom.sass'
+
 const chitchatterDomain = 'https://chitchatter.im'
 
 export const ChatRoom = () => {
@@ -43,11 +45,12 @@ export const ChatRoom = () => {
       </Helmet>
       <Dialog
         {...{
-          className: classNames('Farmhand'),
+          className: classNames('Farmhand', 'ChatRoom'),
           fullWidth: true,
           keepMounted: true,
           fullScreen: true,
           open: isChatOpen,
+          onClose: handleChatRoomClose,
         }}
         aria-describedby={dialogTitleId}
         aria-labelledby={dialogContentId}

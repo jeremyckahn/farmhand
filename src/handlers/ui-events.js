@@ -536,6 +536,12 @@ export default {
    * @param {boolean} isChatOpen
    */
   handleChatRoomOpenStateChange(isChatOpen) {
-    this.setState({ isChatOpen })
+    this.setState({
+      isChatOpen,
+      ...(isChatOpen && {
+        currentDialogView: dialogView.NONE,
+        isDialogViewOpen: false,
+      }),
+    })
   },
 }
