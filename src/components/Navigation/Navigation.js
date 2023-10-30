@@ -31,7 +31,11 @@ import {
   inventorySpaceConsumed,
 } from '../../utils'
 import { dialogView } from '../../enums'
-import { INFINITE_STORAGE_LIMIT, STAGE_TITLE_MAP } from '../../constants'
+import {
+  DEFAULT_ROOM,
+  INFINITE_STORAGE_LIMIT,
+  STAGE_TITLE_MAP,
+} from '../../constants'
 import { MAX_ROOM_NAME_LENGTH } from '../../common/constants'
 
 import AccountingView from '../AccountingView'
@@ -79,8 +83,10 @@ const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
 const OnlineControls = ({
   activePlayers,
   handleActivePlayerButtonClick,
+  handleChatRoomOpenStateChange,
   handleOnlineToggleChange,
   handleRoomChange,
+  isChatAvailable,
   isOnline,
   room,
 }) => {
@@ -89,6 +95,10 @@ const OnlineControls = ({
   useEffect(() => {
     setDisplayedRoom(room)
   }, [room, setDisplayedRoom])
+
+  const handleChatButtonClick = () => {
+    handleChatRoomOpenStateChange(true)
+  }
 
   return (
     <>
@@ -133,15 +143,30 @@ const OnlineControls = ({
         />
       </FormControl>
       {activePlayers && (
-        <Button
-          {...{
-            color: 'primary',
-            onClick: handleActivePlayerButtonClick,
-            variant: 'contained',
-          }}
-        >
-          Active players: {integerString(activePlayers)}
-        </Button>
+        <>
+          <Button
+            {...{
+              color: 'primary',
+              onClick: handleActivePlayerButtonClick,
+              variant: 'contained',
+            }}
+          >
+            Active players: {integerString(activePlayers)}
+          </Button>
+          {isChatAvailable ? (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleChatButtonClick}
+            >
+              Open chat
+            </Button>
+          ) : (
+            <Typography className="chat-placeholder">
+              Chat is available for online rooms other than "{DEFAULT_ROOM}"
+            </Typography>
+          )}
+        </>
       )}
     </>
   )
@@ -203,6 +228,7 @@ export const Navigation = ({
   currentDialogView,
   farmName,
   handleActivePlayerButtonClick,
+  handleChatRoomOpenStateChange,
   handleClickDialogViewButton,
   handleCloseDialogView,
   handleDialogViewExited,
@@ -212,6 +238,7 @@ export const Navigation = ({
   handleViewChange,
   inventory,
   inventoryLimit,
+  isChatAvailable,
   isDialogViewOpen,
   isOnline,
   room,
@@ -231,8 +258,10 @@ export const Navigation = ({
       {...{
         activePlayers,
         handleActivePlayerButtonClick,
+        handleChatRoomOpenStateChange,
         handleOnlineToggleChange,
         handleRoomChange,
+        isChatAvailable,
         isOnline,
         room,
       }}
@@ -335,6 +364,7 @@ Navigation.propTypes = {
   blockInput: bool.isRequired,
   farmName: string.isRequired,
   handleClickDialogViewButton: func.isRequired,
+  handleChatRoomOpenStateChange: func.isRequired,
   handleActivePlayerButtonClick: func.isRequired,
   handleCloseDialogView: func.isRequired,
   handleDialogViewExited: func.isRequired,
@@ -344,6 +374,7 @@ Navigation.propTypes = {
   handleViewChange: func.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
+  isChatAvailable: bool.isRequired,
   isDialogViewOpen: bool.isRequired,
   isOnline: bool.isRequired,
   stageFocus: string.isRequired,

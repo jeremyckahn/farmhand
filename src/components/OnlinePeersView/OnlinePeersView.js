@@ -2,7 +2,6 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import Alert from '@material-ui/lab/Alert'
 import Divider from '@material-ui/core/Divider'
-import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import sortBy from 'lodash.sortby'
@@ -25,20 +24,14 @@ const OnlinePeersView = ({
   cowIdOfferedForTrade,
   cowInventory,
   id,
-  isChatAvailable,
   latestPeerMessages,
   peers,
-  handleChatRoomOpenStateChange,
 }) => {
   const peerKeys = Object.keys(peers)
 
   const cowOfferedForTrade = cowInventory.find(
     ({ id }) => id === cowIdOfferedForTrade
   )
-
-  const handleChatButtonClick = () => {
-    handleChatRoomOpenStateChange(true)
-  }
 
   // Filter out peers that may have connected but not sent data yet.
   const populatedPeers = peerKeys.filter(peerId => peers[peerId])
@@ -52,15 +45,6 @@ const OnlinePeersView = ({
           <strong>{getPlayerName(id)}</strong>
         </CardContent>
       </Card>
-      {isChatAvailable && (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleChatButtonClick}
-        >
-          Open chat
-        </Button>
-      )}
       {cowOfferedForTrade && (
         <>
           <Divider />

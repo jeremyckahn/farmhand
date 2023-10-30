@@ -33,7 +33,7 @@ export const ChatRoom = () => {
       root-url={chitchatterDomain}
       room={`__farmhand__${room}`}
       user-id={id}
-      style={{ height: '100%', width: '100%' }}
+      style={{ height: '100%', width: '100%', border: 'none' }}
       color-mode="light"
     />
   )
