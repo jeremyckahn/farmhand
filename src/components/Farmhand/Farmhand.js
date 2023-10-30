@@ -240,7 +240,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * of that cellar item sold. The numbers in this map represent a subset of the
  * corresponding ones in itemsSold. cellarItemsSold is intended to be used for
  * internal bookkeeping.
- * @property {boolean} isChatOpen
+ * @property {boolean} isChatOpen Whether the chat modal is open.
  * @property {boolean} isDialogViewOpen
  * @property {boolean} isOnline Whether the player is playing online.
  * @property {boolean} isWaitingForDayToCompleteIncrementing
