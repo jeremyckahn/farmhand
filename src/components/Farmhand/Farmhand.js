@@ -118,6 +118,8 @@ import { endpoints, rtcConfig, trackerUrls } from '../../config'
 
 import { scarecrow } from '../../data/items'
 
+import { ChatRoom } from '../ChatRoom'
+
 import { getInventoryQuantities } from './helpers/getInventoryQuantities'
 import FarmhandContext from './Farmhand.context'
 import { FarmhandReducers } from './FarmhandReducers'
@@ -238,6 +240,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * of that cellar item sold. The numbers in this map represent a subset of the
  * corresponding ones in itemsSold. cellarItemsSold is intended to be used for
  * internal bookkeeping.
+ * @property {boolean} isChatOpen Whether the chat modal is open.
  * @property {boolean} isDialogViewOpen
  * @property {boolean} isOnline Whether the player is playing online.
  * @property {boolean} isWaitingForDayToCompleteIncrementing
@@ -399,6 +402,11 @@ export default class Farmhand extends FarmhandReducers {
     )
   }
 
+  get isChatAvailable() {
+    const { isOnline, room } = this.state
+    return isOnline && room !== DEFAULT_ROOM
+  }
+
   /**
    * @returns {farmhand.state}
    */
@@ -446,6 +454,7 @@ export default class Farmhand extends FarmhandReducers {
       isMenuOpen: !doesMenuObstructStage(),
       itemsSold: {},
       cellarItemsSold: {},
+      isChatOpen: false,
       isDialogViewOpen: false,
       isOnline: this.props.match.path.startsWith('/online'),
       isWaitingForDayToCompleteIncrementing: false,
@@ -1268,6 +1277,7 @@ export default class Farmhand extends FarmhandReducers {
       state: { redirect },
       fieldToolInventory,
       handlers,
+      isChatAvailable,
       keyHandlers,
       keyMap,
       levelEntitlements,
@@ -1287,6 +1297,7 @@ export default class Farmhand extends FarmhandReducers {
       blockInput,
       features,
       fieldToolInventory,
+      isChatAvailable,
       levelEntitlements,
       plantableCropInventory,
       playerInventory,
@@ -1424,6 +1435,7 @@ export default class Farmhand extends FarmhandReducers {
                   </Fab>
                 </Tooltip>
               </div>
+              {isChatAvailable ? <ChatRoom /> : null}
               <NotificationSystem />
             </FarmhandContext.Provider>
           </SnackbarProvider>

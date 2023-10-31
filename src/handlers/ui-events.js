@@ -531,4 +531,11 @@ export default {
     const newUrl = `${origin}${pathname}${newSearch}${hash}`
     window.history.replaceState({}, '', newUrl)
   },
+
+  /**
+   * @param {boolean} isChatOpen
+   */
+  handleChatRoomOpenStateChange(isChatOpen) {
+    this.setState({ isChatOpen })
+  },
 }
