@@ -179,6 +179,22 @@ The Farmhand game you're playing now is still under active development, so don't
             className: 'markdown',
             linkTarget: '_blank',
             source: `
+### Official merchandise
+
+You can support Farmhand's ongoing development by purchasing [official merchandise](https://www.zazzle.com/store/farmhandgame/products)! This also spreads awareness of the game and makes every day a little brighter.
+    `,
+          }}
+        />
+      </CardContent>
+    </Card>
+    <Divider />
+    <Card>
+      <CardContent>
+        <ReactMarkdown
+          {...{
+            className: 'markdown',
+            linkTarget: '_blank',
+            source: `
 ### Online multiplayer
 
 You can play Farmhand online with others! Online play is totally free and anonymous.
