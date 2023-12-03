@@ -19,8 +19,8 @@
 Community links:
 
 - Discord link: [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand)](https://discord.gg/6cHEZ9H)
-- Twitter link: [@farmhandgame](https://badgen.net/twitter/follow/farmhandgame)
 - Reddit link: [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/)
+- Instagram link: [![@FarmhandGame](https://img.shields.io/badge/@farmhandgame-E4405F?style=flat-square&logo=Instagram&logoColor=white)](https://www.instagram.com/farmhandgame/)
 
 Storefront links:
 

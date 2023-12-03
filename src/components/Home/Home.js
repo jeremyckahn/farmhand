@@ -88,7 +88,7 @@ const Home = ({
             source: `
 Hi, you're playing **Farmhand**! This is an open source game project created by [Jeremy Kahn](https://github.com/jeremyckahn). The project has evolved over time and is now developed with the support of [a community of contributors](https://github.com/jeremyckahn/farmhand/blob/develop/CONTRIBUTORS.md).
 
-[![Source code](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/jeremyckahn/farmhand) [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand+discord)](https://discord.gg/6cHEZ9H) [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/) [Twitter: @farmhandgame](https://badgen.net/twitter/follow/farmhandgame)
+[![Source code](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/jeremyckahn/farmhand) [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand+discord)](https://discord.gg/6cHEZ9H) [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/) [![@FarmhandGame](https://img.shields.io/badge/@farmhandgame-E4405F?style=flat-square&logo=Instagram&logoColor=white)](https://www.instagram.com/farmhandgame/)
 
 Farmhand is a resource management game that puts a farm in your hand. It is designed to be both desktop and mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
 
@@ -213,7 +213,7 @@ As an added bonus for playing online, **you'll get free money** a few times ever
 
 Farmhand can be installed to your device right from this web page! Once installed, the game can be played with or without an internet connection.
 
-If you're playing on a mobile device, all you need to do is [add it to your home screen](https://www.howtogeek.com/196087/how-to-add-websites-to-the-home-screen-on-any-smartphone-or-tablet/). If you're playing it on desktop Chrome or Microsoft Edge, you can [install it as an app there as well](https://twitter.com/jeremyckahn/status/1329266318785253377?s=20).
+If you're playing on a mobile device, all you need to do is [add it to your home screen](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Installing#add_to_home_screen). If you're playing it on desktop Chrome or Microsoft Edge, [you can install it as an app there as well](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Installing#installing_pwas).
     `,
               }}
             />
