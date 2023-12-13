@@ -2,7 +2,7 @@ import React from 'react'
 
 import { func, object } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import window from 'global/window'
+import _window from 'global/window'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import Accordion from '@material-ui/core/Accordion'
@@ -51,8 +51,8 @@ const VALID_ORIGINS = [
 // https://stackoverflow.com/questions/41742390/javascript-to-check-if-pwa-or-mobile-web/41749865#41749865
 const isInstallable =
   environmentAllowsInstall &&
-  !window.matchMedia('(display-mode: standalone)').matches &&
-  VALID_ORIGINS.includes(window.location.origin)
+  !_window.matchMedia('(display-mode: standalone)').matches &&
+  VALID_ORIGINS.includes(_window.location.origin)
 
 const Home = ({
   completedAchievements,

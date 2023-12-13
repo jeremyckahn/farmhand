@@ -15,7 +15,7 @@
  * @typedef {import("../../enums").stageFocusType} farmhand.stageFocusType
  */
 import React from 'react'
-import window from 'global/window'
+import _window from 'global/window'
 import { Redirect } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
 import localforage from 'localforage'
@@ -338,7 +338,7 @@ export default class Farmhand extends FarmhandReducers {
 
     // This is an antipattern, but it's useful for debugging. The Farmhand
     // component assumes that it is a singleton.
-    window.farmhand = this
+    _window.farmhand = this
   }
 
   getData = getData
@@ -506,7 +506,7 @@ export default class Farmhand extends FarmhandReducers {
       },
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
-      version: process.env.REACT_APP_VERSION ?? '',
+      version: process.env.VITE_VERSION ?? '',
     }
   }
 
@@ -917,7 +917,7 @@ export default class Farmhand extends FarmhandReducers {
         activePlayers,
         peerRoom: joinRoom(
           {
-            appId: process.env.REACT_APP_NAME,
+            appId: process.env.VITE_NAME,
             trackerUrls,
             trackerRedundancy,
             rtcConfig,
@@ -1010,7 +1010,7 @@ export default class Farmhand extends FarmhandReducers {
             this.state.peerRoom ||
             joinRoom(
               {
-                appId: process.env.REACT_APP_NAME,
+                appId: process.env.VITE_NAME,
                 trackerUrls,
                 rtcConfig,
               },
@@ -1267,7 +1267,7 @@ export default class Farmhand extends FarmhandReducers {
     registration.waiting.postMessage({ type: 'SKIP_WAITING' })
 
     this.showNotification(UPDATE_AVAILABLE, 'success', () => {
-      window.location.reload()
+      _window.location.reload()
     })
   }
 

@@ -251,7 +251,7 @@ export const Navigation = ({
 }) => (
   <header className="Navigation">
     <h1>Farmhand</h1>
-    <p className="version">v{process.env.REACT_APP_VERSION}</p>
+    <p className="version">v{process.env.VITE_VERSION}</p>
     <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
     <DayAndProgressContainer />
     <OnlineControls

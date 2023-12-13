@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
 import { string } from 'prop-types'
-import window from 'global/window'
+import _window from 'global/window'
 import TextField from '@material-ui/core/TextField'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import './RandomSeedInput.sass'
 
-export const RandomSeedInput = ({ search = window.location.search }) => {
+export const RandomSeedInput = ({ search = _window.location.search }) => {
   const {
     handlers: { handleRNGSeedChange },
   } = useContext(FarmhandContext)
