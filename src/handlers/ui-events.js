@@ -6,7 +6,7 @@
  * @typedef {import("../index").farmhand.grape} grape
  */
 import { saveAs } from 'file-saver'
-import window from 'global/window'
+import globalWindow from 'global/window'
 
 import {
   moneyTotal,
@@ -533,7 +533,7 @@ export default {
    * @param {string} seed
    */
   handleRNGSeedChange(seed) {
-    const { origin, pathname, search, hash } = window.location
+    const { origin, pathname, search, hash } = globalWindow.location
     const queryParams = new URLSearchParams(search)
     const trimmedSeed = seed.trim()
 
@@ -553,7 +553,7 @@ export default {
     const newSearch = newQueryParams.length > 0 ? `?${newQueryParams}` : ''
 
     const newUrl = `${origin}${pathname}${newSearch}${hash}`
-    window.history.replaceState({}, '', newUrl)
+    globalWindow.history.replaceState({}, '', newUrl)
   },
 
   /**
