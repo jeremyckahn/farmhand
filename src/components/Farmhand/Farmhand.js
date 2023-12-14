@@ -20,7 +20,7 @@ import { Redirect } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
 import localforage from 'localforage'
 import { v4 as uuid } from 'uuid'
-import { ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 import Drawer from '@mui/material/Drawer'
 import Fab from '@mui/material/Fab'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -1315,131 +1315,133 @@ export default class Farmhand extends FarmhandReducers {
           handlers: blockInput ? emptyObject : keyHandlers,
         }}
       >
-        <ThemeProvider theme={theme}>
-          <SnackbarProvider
-            {...{
-              anchorOrigin: { vertical: 'top', horizontal: 'right' },
-              classes: {
-                containerRoot: 'Farmhand notification-container',
-              },
-              content: snackbarProviderContentCallback,
-              maxSnack: 4,
-            }}
-          >
-            {redirect && <Redirect {...{ to: redirect }} />}
-            <FarmhandContext.Provider value={{ gameState, handlers }}>
-              <div
-                {...{
-                  className: classNames(
-                    'Farmhand farmhand-root fill',
-                    this.state.isMenuOpen ? 'menu-open' : 'menu-closed',
-                    {
-                      'use-alternate-end-day-button-position': this.state
-                        .useAlternateEndDayButtonPosition,
-                      'block-input': blockInput,
-                      'has-booted': this.state.hasBooted,
-                    }
-                  ),
-                }}
-              >
-                <AppBar />
-                <Drawer
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <SnackbarProvider
+              {...{
+                anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                classes: {
+                  containerRoot: 'Farmhand notification-container',
+                },
+                content: snackbarProviderContentCallback,
+                maxSnack: 4,
+              }}
+            >
+              {redirect && <Redirect {...{ to: redirect }} />}
+              <FarmhandContext.Provider value={{ gameState, handlers }}>
+                <div
                   {...{
-                    className: 'sidebar-wrapper',
-                    open: gameState.isMenuOpen,
-                    variant: 'persistent',
-                    role: 'complementary',
-                    PaperProps: {
-                      className: 'sidebar',
-                    },
-                  }}
-                >
-                  <Navigation />
-                  <ContextPane />
-                  {process.env.NODE_ENV === 'development' && <DebugMenu />}
-                  <div {...{ className: 'spacer' }} />
-                </Drawer>
-                <Stage />
-
-                {/*
-              These controls need to be at this top level instead of the Stage
-              because of scrolling issues in iOS.
-              */}
-                <div className="bottom-controls">
-                  <MobileStepper
-                    variant="dots"
-                    steps={viewList.length}
-                    position="static"
-                    activeStep={viewList.indexOf(this.state.stageFocus)}
-                    className=""
-                    backButton={null}
-                    nextButton={null}
-                  />
-                  <div className="fab-buttons buttons">
-                    <Fab
-                      {...{
-                        'aria-label': 'Previous view',
-                        color: 'primary',
-                        onClick: () => this.focusPreviousView(),
-                      }}
-                    >
-                      <KeyboardArrowLeft />
-                    </Fab>
-                    <Fab
-                      {...{
-                        className: classNames('menu-button', {
-                          'is-open': this.state.isMenuOpen,
-                        }),
-                        color: 'primary',
-                        'aria-label': 'Open drawer',
-                        onClick: () => handlers.handleMenuToggle(),
-                      }}
-                    >
-                      <MenuIcon />
-                    </Fab>
-                    <Fab
-                      {...{
-                        'aria-label': 'Next view',
-                        color: 'primary',
-                        onClick: () => this.focusNextView(),
-                      }}
-                    >
-                      <KeyboardArrowRight />
-                    </Fab>
-                  </div>
-                </div>
-                <Tooltip
-                  {...{
-                    placement: 'left',
-                    title: (
-                      <>
-                        <p>
-                          End the day to save your progress and advance the
-                          game.
-                        </p>
-                        <p>(shift + c)</p>
-                      </>
+                    className: classNames(
+                      'Farmhand farmhand-root fill',
+                      this.state.isMenuOpen ? 'menu-open' : 'menu-closed',
+                      {
+                        'use-alternate-end-day-button-position': this.state
+                          .useAlternateEndDayButtonPosition,
+                        'block-input': blockInput,
+                        'has-booted': this.state.hasBooted,
+                      }
                     ),
                   }}
                 >
-                  <Fab
+                  <AppBar />
+                  <Drawer
                     {...{
-                      'aria-label':
-                        'End the day to save your progress and advance the game.',
-                      className: 'end-day',
-                      color: 'secondary',
-                      onClick: handlers.handleClickEndDayButton,
+                      className: 'sidebar-wrapper',
+                      open: gameState.isMenuOpen,
+                      variant: 'persistent',
+                      role: 'complementary',
+                      PaperProps: {
+                        className: 'sidebar',
+                      },
                     }}
                   >
-                    <HotelIcon />
-                  </Fab>
-                </Tooltip>
-              </div>
-              {isChatAvailable ? <ChatRoom /> : null}
-              <NotificationSystem />
-            </FarmhandContext.Provider>
-          </SnackbarProvider>
-        </ThemeProvider>
+                    <Navigation />
+                    <ContextPane />
+                    {process.env.NODE_ENV === 'development' && <DebugMenu />}
+                    <div {...{ className: 'spacer' }} />
+                  </Drawer>
+                  <Stage />
+
+                  {/*
+                These controls need to be at this top level instead of the Stage
+                because of scrolling issues in iOS.
+                */}
+                  <div className="bottom-controls">
+                    <MobileStepper
+                      variant="dots"
+                      steps={viewList.length}
+                      position="static"
+                      activeStep={viewList.indexOf(this.state.stageFocus)}
+                      className=""
+                      backButton={null}
+                      nextButton={null}
+                    />
+                    <div className="fab-buttons buttons">
+                      <Fab
+                        {...{
+                          'aria-label': 'Previous view',
+                          color: 'primary',
+                          onClick: () => this.focusPreviousView(),
+                        }}
+                      >
+                        <KeyboardArrowLeft />
+                      </Fab>
+                      <Fab
+                        {...{
+                          className: classNames('menu-button', {
+                            'is-open': this.state.isMenuOpen,
+                          }),
+                          color: 'primary',
+                          'aria-label': 'Open drawer',
+                          onClick: () => handlers.handleMenuToggle(),
+                        }}
+                      >
+                        <MenuIcon />
+                      </Fab>
+                      <Fab
+                        {...{
+                          'aria-label': 'Next view',
+                          color: 'primary',
+                          onClick: () => this.focusNextView(),
+                        }}
+                      >
+                        <KeyboardArrowRight />
+                      </Fab>
+                    </div>
+                  </div>
+                  <Tooltip
+                    {...{
+                      placement: 'left',
+                      title: (
+                        <>
+                          <p>
+                            End the day to save your progress and advance the
+                            game.
+                          </p>
+                          <p>(shift + c)</p>
+                        </>
+                      ),
+                    }}
+                  >
+                    <Fab
+                      {...{
+                        'aria-label':
+                          'End the day to save your progress and advance the game.',
+                        className: 'end-day',
+                        color: 'secondary',
+                        onClick: handlers.handleClickEndDayButton,
+                      }}
+                    >
+                      <HotelIcon />
+                    </Fab>
+                  </Tooltip>
+                </div>
+                {isChatAvailable ? <ChatRoom /> : null}
+                <NotificationSystem />
+              </FarmhandContext.Provider>
+            </SnackbarProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </GlobalHotKeys>
     )
   }
