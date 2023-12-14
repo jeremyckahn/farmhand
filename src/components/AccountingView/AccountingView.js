@@ -21,19 +21,22 @@ import './AccountingView.sass'
 
 const MoneyNumberFormat = forwardRef(
   ({ max, min, onChange, setLoanInputValue, ...rest }, ref) => (
-    <NumberFormat
-      ref={ref}
-      fixedDecimalScale
-      thousandSeparator
-      {...{
-        ...rest,
-        allowNegative: false,
-        decimalScale: 2,
-        prefix: '$',
-        isAllowed: ({ floatValue = 0 }) => min >= 0 && floatValue <= max,
-        onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
-      }}
-    />
+    <>
+      <NumberFormat
+        getInputRef={ref}
+        fixedDecimalScale
+        thousandSeparator
+        {...{
+          ...rest,
+          customInput: TextField,
+          allowNegative: false,
+          decimalScale: 2,
+          prefix: '$',
+          isAllowed: ({ floatValue = 0 }) => min >= 0 && floatValue <= max,
+          onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
+        }}
+      />
+    </>
   )
 )
 
