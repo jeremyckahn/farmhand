@@ -35,6 +35,7 @@ const QuantityTextInput = ({
   value,
 }) => (
   <TextField
+    variant="standard"
     {...{
       value,
       inputProps: {

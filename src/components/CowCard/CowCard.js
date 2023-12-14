@@ -172,6 +172,7 @@ export const CowCard = (
               <>
                 {isCowPurchased ? (
                   <TextField
+                    variant="standard"
                     {...{
                       disabled: id !== cow.originalOwnerId,
                       onChange: e => {

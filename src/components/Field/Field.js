@@ -251,7 +251,7 @@ export const FieldContent = ({
       ))}
     </div>
     {purchasedCombine ? (
-      <FormControl component="fieldset">
+      <FormControl variant="standard" component="fieldset">
         <FormGroup>
           <FormControlLabel
             control={

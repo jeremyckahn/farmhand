@@ -90,6 +90,7 @@ export function TierPurchase({
               Buy
             </Button>
             <Select
+              variant="standard"
               {...{
                 onChange: handleTierSelected,
                 value: selectedTier > 0 ? selectedTier : '',

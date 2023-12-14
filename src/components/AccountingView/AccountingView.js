@@ -69,6 +69,7 @@ const AccountingView = ({
         <CardContent>
           <div className="loan-container">
             <TextField
+              variant="standard"
               {...{
                 value: loanInputValue,
                 inputProps: {

@@ -61,6 +61,7 @@ const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
   return (
     <h2 className="farm-name">
       <TextField
+        variant="standard"
         {...{
           inputProps: {
             maxLength: 12,
@@ -103,6 +104,7 @@ const OnlineControls = ({
   return (
     <>
       <FormControl
+        variant="standard"
         {...{ className: 'online-control-container', component: 'fieldset' }}
       >
         <FormGroup {...{ className: 'toggle-container' }}>
@@ -119,6 +121,7 @@ const OnlineControls = ({
           />
         </FormGroup>
         <TextField
+          variant="standard"
           {...{
             className: 'room-name',
             inputProps: {
@@ -283,6 +286,7 @@ export const Navigation = ({
     )}
 
     <Select
+      variant="standard"
       {...{
         className: 'view-select',
         onChange: handleViewChange,

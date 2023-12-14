@@ -52,7 +52,7 @@ const SettingsView = ({
       <RandomSeedInput />
       <Divider />
 
-      <FormControl component="fieldset">
+      <FormControl variant="standard" component="fieldset">
         <FormLabel component="legend">Options</FormLabel>
         <FormGroup>
           <FormControlLabel

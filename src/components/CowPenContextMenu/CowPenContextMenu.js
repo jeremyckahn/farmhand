@@ -122,6 +122,7 @@ export const CowPenContextMenu = ({
               {isAscending ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
             </Fab>
             <Select
+              variant="standard"
               {...{
                 className: 'sort-select',
                 displayEmpty: true,
