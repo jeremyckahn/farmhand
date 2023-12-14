@@ -28,7 +28,7 @@ describe('<TierPurchase />', () => {
   const buyButton = () => screen.getByRole('button', { name: 'Buy' })
 
   // MUI doesn't give this button a name but clicking it is required to get the listbox to render
-  const openSelect = () => userEvent.click(screen.getAllByRole('button')[1])
+  const openSelect = () => userEvent.click(screen.getByRole('combobox'))
 
   describe('renders', () => {
     beforeEach(() => {
@@ -88,9 +88,8 @@ describe('<TierPurchase />', () => {
       render(<TierPurchase {...props} />)
       openSelect()
 
-      expect(screen.getByRole('option', { name: 'foo' })).toHaveAttribute(
-        'aria-disabled',
-        'false'
+      expect(screen.getByRole('option', { name: 'foo' })).not.toHaveAttribute(
+        'aria-disabled'
       )
     })
 
