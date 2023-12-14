@@ -1,11 +1,11 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import AssignmentLateIcon from '@material-ui/icons/AssignmentLate'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardContent from '@material-ui/core/CardContent'
-import BeenhereIcon from '@material-ui/icons/Beenhere'
+import AssignmentLateIcon from '@mui/icons-material/AssignmentLate'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import BeenhereIcon from '@mui/icons-material/Beenhere'
 import { bool, object, shape, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'

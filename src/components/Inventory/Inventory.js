@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { array } from 'prop-types'
-import Divider from '@material-ui/core/Divider'
+import Divider from '@mui/material/Divider'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import Item from '../Item'

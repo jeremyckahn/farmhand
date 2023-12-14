@@ -1,10 +1,10 @@
 import React from 'react'
 import { func, number } from 'prop-types'
-import Fab from '@material-ui/core/Fab'
-import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
+import Fab from '@mui/material/Fab'
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import NumberFormat from 'react-number-format'
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 
 import AnimatedNumber from '../AnimatedNumber'
 

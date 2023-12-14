@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { number, object } from 'prop-types'
-import AppBar from '@material-ui/core/AppBar'
-import Tab from '@material-ui/core/Tab'
-import Tabs from '@material-ui/core/Tabs'
+import AppBar from '@mui/material/AppBar'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
 
 import { recipeType } from '../../enums'
 

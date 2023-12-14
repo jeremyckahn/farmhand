@@ -1,5 +1,5 @@
 import React from 'react'
-import CardHeader from '@material-ui/core/CardHeader'
+import CardHeader from '@mui/material/CardHeader'
 import { shallow } from 'enzyme'
 
 import { testItem } from '../../test-utils'

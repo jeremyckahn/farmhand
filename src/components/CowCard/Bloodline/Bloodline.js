@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { object } from 'prop-types'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 
 import { COW_COLOR_NAMES } from '../../../strings'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MenuItem from '@material-ui/core/MenuItem'
+import MenuItem from '@mui/material/MenuItem'
 
 import { dialogView, stageFocusType } from '../../enums'
 import { INFINITE_STORAGE_LIMIT } from '../../constants'

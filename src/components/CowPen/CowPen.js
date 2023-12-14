@@ -2,7 +2,7 @@ import React, { Component, useEffect } from 'react'
 import { array, bool, func, object, string } from 'prop-types'
 import classNames from 'classnames'
 import { Tweenable } from 'shifty'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 

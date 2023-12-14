@@ -3,9 +3,9 @@
 /** @typedef {import('../CowCard').CowCardProps} CowCardProps */
 import React from 'react'
 import { array, bool, func, object, string } from 'prop-types'
-import Checkbox from '@material-ui/core/Checkbox'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Tooltip from '@material-ui/core/Tooltip'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Tooltip from '@mui/material/Tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { faHeart as faFullHeart } from '@fortawesome/free-solid-svg-icons'

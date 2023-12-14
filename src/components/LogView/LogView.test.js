@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Alert from '@material-ui/lab/Alert'
+import Alert from '@mui/lab/Alert'
 import ReactMarkdown from 'react-markdown'
 
 import { LogView } from './LogView'

@@ -20,15 +20,15 @@ import { Redirect } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
 import localforage from 'localforage'
 import { v4 as uuid } from 'uuid'
-import { MuiThemeProvider } from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
-import Fab from '@material-ui/core/Fab'
-import MenuIcon from '@material-ui/icons/Menu'
-import HotelIcon from '@material-ui/icons/Hotel'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-import Tooltip from '@material-ui/core/Tooltip'
-import MobileStepper from '@material-ui/core/MobileStepper'
+import { ThemeProvider } from '@mui/material/styles'
+import Drawer from '@mui/material/Drawer'
+import Fab from '@mui/material/Fab'
+import MenuIcon from '@mui/icons-material/Menu'
+import HotelIcon from '@mui/icons-material/Hotel'
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
+import Tooltip from '@mui/material/Tooltip'
+import MobileStepper from '@mui/material/MobileStepper'
 import { joinRoom } from 'trystero'
 import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
@@ -1315,7 +1315,7 @@ export default class Farmhand extends FarmhandReducers {
           handlers: blockInput ? emptyObject : keyHandlers,
         }}
       >
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <SnackbarProvider
             {...{
               anchorOrigin: { vertical: 'top', horizontal: 'right' },
@@ -1439,7 +1439,7 @@ export default class Farmhand extends FarmhandReducers {
               <NotificationSystem />
             </FarmhandContext.Provider>
           </SnackbarProvider>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </GlobalHotKeys>
     )
   }

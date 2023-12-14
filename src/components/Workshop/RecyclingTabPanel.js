@@ -1,9 +1,9 @@
 import React from 'react'
 import { number, array } from 'prop-types'
 
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import Divider from '@material-ui/core/Divider'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Divider from '@mui/material/Divider'
 import ReactMarkdown from 'react-markdown'
 
 import { recipeType } from '../../enums'

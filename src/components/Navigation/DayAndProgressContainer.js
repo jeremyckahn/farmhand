@@ -1,9 +1,9 @@
 import React from 'react'
 import { number, object } from 'prop-types'
 
-import Box from '@material-ui/core/Box'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Tooltip from '@material-ui/core/Tooltip'
+import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
+import Tooltip from '@mui/material/Tooltip'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 

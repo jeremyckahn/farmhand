@@ -1,9 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
-import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardActions from '@material-ui/core/CardActions'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardActions from '@mui/material/CardActions'
 import { array, func, number, object } from 'prop-types'
 
 import IngredientsList from '../IngredientsList'
