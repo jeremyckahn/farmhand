@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, forwardRef } from 'react'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -19,26 +19,22 @@ import {
 
 import './AccountingView.sass'
 
-const MoneyNumberFormat = ({
-  inputRef,
-  max,
-  min,
-  onChange,
-  setLoanInputValue,
-  ...rest
-}) => (
-  <NumberFormat
-    fixedDecimalScale
-    thousandSeparator
-    {...{
-      ...rest,
-      allowNegative: false,
-      decimalScale: 2,
-      prefix: '$',
-      isAllowed: ({ floatValue = 0 }) => min >= 0 && floatValue <= max,
-      onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
-    }}
-  />
+const MoneyNumberFormat = forwardRef(
+  ({ max, min, onChange, setLoanInputValue, ...rest }, ref) => (
+    <NumberFormat
+      ref={ref}
+      fixedDecimalScale
+      thousandSeparator
+      {...{
+        ...rest,
+        allowNegative: false,
+        decimalScale: 2,
+        prefix: '$',
+        isAllowed: ({ floatValue = 0 }) => min >= 0 && floatValue <= max,
+        onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
+      }}
+    />
+  )
 )
 
 const AccountingView = ({

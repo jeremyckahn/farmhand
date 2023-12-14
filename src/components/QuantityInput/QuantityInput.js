@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { func, number } from 'prop-types'
 import Fab from '@mui/material/Fab'
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
@@ -12,18 +12,20 @@ import { integerString } from '../../utils'
 
 import './QuantityInput.sass'
 
-const QuantityNumberFormat = ({ inputRef, min, max, onChange, ...rest }) => (
-  <NumberFormat
-    isNumericString
-    thousandSeparator
-    {...{
-      ...rest,
-      allowNegative: false,
-      decimalScale: 0,
-      onValueChange: ({ floatValue = 0 }) =>
-        onChange(Math.min(floatValue, max)),
-    }}
-  />
+const QuantityNumberFormat = forwardRef(
+  ({ min, max, onChange, ...rest }, _ref) => (
+    <NumberFormat
+      isNumericString
+      thousandSeparator
+      {...{
+        ...rest,
+        allowNegative: false,
+        decimalScale: 0,
+        onValueChange: ({ floatValue = 0 }) =>
+          onChange(Math.min(floatValue, max)),
+      }}
+    />
+  )
 )
 
 // TODO: Rename event handlers to use on* format
