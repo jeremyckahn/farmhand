@@ -1,6 +1,6 @@
 import React from 'react'
 import { array } from 'prop-types'
-import Alert from '@mui/lab/Alert'
+import Alert from '@mui/material/Alert'
 import ReactMarkdown from 'react-markdown'
 import Divider from '@mui/material/Divider'
 
