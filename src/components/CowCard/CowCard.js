@@ -310,7 +310,7 @@ export const CowCard = (
               <Button
                 {...{
                   className: 'sell',
-                  color: 'secondary',
+                  color: 'error',
                   onClick: () => handleCowSellClick(cow),
                   variant: 'contained',
                 }}

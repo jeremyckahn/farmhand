@@ -318,7 +318,7 @@ export const Item = ({
             <Button
               {...{
                 className: 'sell',
-                color: 'secondary',
+                color: 'error',
                 disabled: sellQuantity === 0 || !sellQuantity,
                 onClick: handleItemSell,
                 variant: 'contained',

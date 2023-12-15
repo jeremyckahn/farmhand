@@ -1428,7 +1428,7 @@ export default class Farmhand extends FarmhandReducers {
                         'aria-label':
                           'End the day to save your progress and advance the game.',
                         className: 'end-day',
-                        color: 'secondary',
+                        color: 'error',
                         onClick: handlers.handleClickEndDayButton,
                       }}
                     >
