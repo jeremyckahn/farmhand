@@ -251,117 +251,117 @@ export const Navigation = ({
   currentDialogViewLowerCase = currentDialogView.toLowerCase(),
   modalTitleId = `${currentDialogViewLowerCase}-modal-title`,
   modalContentId = `${currentDialogViewLowerCase}-modal-content`,
-}) => (
-  <header className="Navigation">
-    <h1>Farmhand</h1>
-    <p className="version">v{process.env.REACT_APP_VERSION}</p>
-    <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
-    <DayAndProgressContainer />
-    <OnlineControls
-      {...{
-        activePlayers,
-        handleActivePlayerButtonClick,
-        handleChatRoomOpenStateChange,
-        handleOnlineToggleChange,
-        handleRoomChange,
-        isChatAvailable,
-        isOnline,
-        room,
-      }}
-    />
-    {inventoryLimit > INFINITE_STORAGE_LIMIT && (
-      <h3
+}) => {
+  return (
+    <header className="Navigation">
+      <h1>Farmhand</h1>
+      <p className="version">v{process.env.REACT_APP_VERSION}</p>
+      <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
+      <DayAndProgressContainer />
+      <OnlineControls
         {...{
-          className: classNames('inventory-info', {
-            'is-inventory-full': !doesInventorySpaceRemain({
-              inventory,
-              inventoryLimit,
-            }),
-          }),
+          activePlayers,
+          handleActivePlayerButtonClick,
+          handleChatRoomOpenStateChange,
+          handleOnlineToggleChange,
+          handleRoomChange,
+          isChatAvailable,
+          isOnline,
+          room,
         }}
-      >
-        Inventory: {integerString(inventorySpaceConsumed(inventory))} /{' '}
-        {integerString(inventoryLimit)}
-      </h3>
-    )}
-
-    <Select
-      variant="standard"
-      {...{
-        className: 'view-select',
-        onChange: handleViewChange,
-        value: stageFocus,
-      }}
-    >
-      {viewList.map((view, i) => (
-        <MenuItem {...{ key: view, value: view }}>
-          {i + 1}: {STAGE_TITLE_MAP[view]}
-        </MenuItem>
-      ))}
-    </Select>
-    <div className="button-array">
-      {[
-        { dialogView: FARMERS_LOG, Icon: BookIcon },
-        { dialogView: PRICE_EVENTS, Icon: FlashOnIcon },
-        { dialogView: STATS, Icon: AssessmentIcon },
-        { dialogView: ACHIEVEMENTS, Icon: BeenhereIcon },
-        { dialogView: ACCOUNTING, Icon: AccountBalanceIcon },
-        { dialogView: SETTINGS, Icon: SettingsIcon },
-      ].map(({ dialogView, Icon }) => (
-        <Tooltip
+      />
+      {inventoryLimit > INFINITE_STORAGE_LIMIT && (
+        <h3
           {...{
-            arrow: true,
-            key: dialogView,
-            placement: 'top',
-            title: dialogTriggerTextMap[dialogView],
+            className: classNames('inventory-info', {
+              'is-inventory-full': !doesInventorySpaceRemain({
+                inventory,
+                inventoryLimit,
+              }),
+            }),
           }}
         >
-          <Fab
+          Inventory: {integerString(inventorySpaceConsumed(inventory))} /{' '}
+          {integerString(inventoryLimit)}
+        </h3>
+      )}
+
+      <Select
+        variant="standard"
+        {...{
+          className: 'view-select',
+          onChange: handleViewChange,
+          value: stageFocus,
+        }}
+      >
+        {viewList.map((view, i) => (
+          <MenuItem {...{ key: view, value: view }}>
+            {i + 1}: {STAGE_TITLE_MAP[view]}
+          </MenuItem>
+        ))}
+      </Select>
+      <div className="button-array">
+        {[
+          { dialogView: FARMERS_LOG, Icon: BookIcon },
+          { dialogView: PRICE_EVENTS, Icon: FlashOnIcon },
+          { dialogView: STATS, Icon: AssessmentIcon },
+          { dialogView: ACHIEVEMENTS, Icon: BeenhereIcon },
+          { dialogView: ACCOUNTING, Icon: AccountBalanceIcon },
+          { dialogView: SETTINGS, Icon: SettingsIcon },
+        ].map(({ dialogView, Icon }) => (
+          <Tooltip
             {...{
-              'aria-label': dialogTriggerTextMap[dialogView],
-              color: 'primary',
-              onClick: () => handleClickDialogViewButton(dialogView),
+              arrow: true,
+              key: dialogView,
+              placement: 'top',
+              title: dialogTriggerTextMap[dialogView],
             }}
           >
-            <Icon />
-          </Fab>
-        </Tooltip>
-      ))}
-    </div>
-    {/*
+            <Fab
+              {...{
+                'aria-label': dialogTriggerTextMap[dialogView],
+                color: 'primary',
+                onClick: () => handleClickDialogViewButton(dialogView),
+              }}
+            >
+              <Icon />
+            </Fab>
+          </Tooltip>
+        ))}
+      </div>
+      {/*
     This Dialog gets the Farmhand class because it renders outside of the root
     Farmhand component. This explicit class maintains style consistency.
     */}
-    <Dialog
-      {...{
-        className: classNames('Farmhand', { 'block-input': blockInput }),
-        fullWidth: true,
-        maxWidth: 'xs',
-        onClose: handleCloseDialogView,
-        open: isDialogViewOpen,
-        TransitionProps: {
-          onExited: handleDialogViewExited,
-        },
-      }}
-      aria-describedby={modalTitleId}
-      aria-labelledby={modalContentId}
-    >
-      <DialogTitle {...{ disableTypography: true }}>
-        <Typography {...{ id: modalTitleId, component: 'h2', variant: 'h6' }}>
+      <Dialog
+        {...{
+          className: classNames('Farmhand', { 'block-input': blockInput }),
+          fullWidth: true,
+          maxWidth: 'xs',
+          onClose: handleCloseDialogView,
+          open: isDialogViewOpen,
+          TransitionProps: {
+            onExited: handleDialogViewExited,
+          },
+        }}
+        aria-describedby={modalTitleId}
+        aria-labelledby={modalContentId}
+      >
+        <DialogTitle {...{ id: modalTitleId }}>
           {dialogTitleMap[currentDialogView]}
-        </Typography>
-      </DialogTitle>
-      <DialogContent {...{ id: modalContentId }}>
-        {dialogContentMap[currentDialogView]}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleCloseDialogView} color="primary" autoFocus>
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
-  </header>
-)
+        </DialogTitle>
+        <DialogContent {...{ id: modalContentId }}>
+          {dialogContentMap[currentDialogView]}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialogView} color="primary" autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </header>
+  )
+}
 
 Navigation.propTypes = {
   activePlayers: number,
