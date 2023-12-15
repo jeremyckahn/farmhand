@@ -1,9 +1,7 @@
-import { createTheme } from '@material-ui/core'
+import createTheme from '@mui/material/styles/createTheme'
 
 export default createTheme({
-  typography: {
-    // Needed to silence this warning:
-    // https://material-ui.com/style/typography/#migration-to-typography-v2
-    useNextVariants: true,
+  palette: {
+    mode: 'light',
   },
 })

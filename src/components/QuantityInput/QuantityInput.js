@@ -13,10 +13,11 @@ import { integerString } from '../../utils'
 import './QuantityInput.sass'
 
 const QuantityNumberFormat = forwardRef(
-  ({ min, max, onChange, ...rest }, _ref) => (
+  ({ min, max, onChange, ...rest }, ref) => (
     <NumberFormat
       isNumericString
       thousandSeparator
+      getInputRef={ref}
       {...{
         ...rest,
         allowNegative: false,
