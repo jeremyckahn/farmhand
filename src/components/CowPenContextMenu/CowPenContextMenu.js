@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
-import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import Fab from '@mui/material/Fab'
@@ -94,7 +94,7 @@ export const CowPenContextMenu = ({
           cow: cowForSale,
         }}
       />
-      <AppBar position="static" color="primary">
+      <Box sx={{ mt: '1rem' }}>
         <Tabs
           value={currentTab}
           onChange={(e, newTab) => setCurrentTab(newTab)}
@@ -104,7 +104,7 @@ export const CowPenContextMenu = ({
           <Tab {...{ label: 'Breeding Pen', ...a11yProps(1) }} />
           <Tab {...{ label: 'Supplies', ...a11yProps(2) }} />
         </Tabs>
-      </AppBar>
+      </Box>
       <TabPanel value={currentTab} index={0}>
         <h3>
           Capacity: {cowInventory.length} /{' '}

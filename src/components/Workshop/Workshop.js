@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { number, object } from 'prop-types'
-import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 
@@ -44,7 +44,7 @@ const Workshop = ({
 
   return (
     <div className="Workshop">
-      <AppBar position="static" color="primary">
+      <Box>
         <Tabs
           value={currentTab}
           onChange={(_e, newTab) => setCurrentTab(newTab)}
@@ -56,7 +56,7 @@ const Workshop = ({
             <Tab {...{ label: 'Recycling', ...a11yProps(recyclingTabIndex) }} />
           ) : null}
         </Tabs>
-      </AppBar>
+      </Box>
       <KitchenTabPanel
         currentTab={currentTab}
         index={0}
