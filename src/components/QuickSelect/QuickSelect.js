@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
@@ -26,7 +27,7 @@ const ItemList = ({
         {...{
           key: item.id,
           placement: 'top',
-          title: item.name,
+          title: <Typography>{item.name}</Typography>,
         }}
       >
         <Button

@@ -16,12 +16,5 @@ export default createTheme({
         }),
       },
     },
-    MuiTooltip: {
-      styleOverrides: {
-        tooltip: {
-          paddingBottom: 6,
-        },
-      },
-    },
   },
 })
