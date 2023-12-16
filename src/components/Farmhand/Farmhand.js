@@ -1430,6 +1430,9 @@ export default class Farmhand extends FarmhandReducers {
                         className: 'end-day',
                         color: 'error',
                         onClick: handlers.handleClickEndDayButton,
+                        sx: {
+                          zIndex: 1100,
+                        },
                       }}
                     >
                       <HotelIcon />
