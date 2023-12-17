@@ -6,7 +6,6 @@ import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
-import Typography from '@mui/material/Typography'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
@@ -55,13 +54,7 @@ export const ChatRoom = () => {
         aria-describedby={dialogTitleId}
         aria-labelledby={dialogContentId}
       >
-        <DialogTitle {...{ disableTypography: true }}>
-          <Typography
-            {...{ id: dialogTitleId, component: 'h2', variant: 'h6' }}
-          >
-            Chat room
-          </Typography>
-        </DialogTitle>
+        <DialogTitle>Chat room</DialogTitle>
         <DialogContent {...{ id: dialogContentId }}>
           {chatRoomComponent}
         </DialogContent>
