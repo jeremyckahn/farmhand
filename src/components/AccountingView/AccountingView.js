@@ -107,7 +107,7 @@ const AccountingView = ({
           </div>
           <Button
             {...{
-              color: 'secondary',
+              color: 'error',
               disabled: money >= STANDARD_LOAN_AMOUNT,
               onClick: () => {
                 handleClickTakeOutLoanButton(STANDARD_LOAN_AMOUNT)
