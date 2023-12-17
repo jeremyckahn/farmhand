@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { array, func, number, object } from 'prop-types'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
@@ -82,17 +81,15 @@ export const Shop = ({
 
   return (
     <div className="Shop">
-      <Box>
-        <Tabs
-          value={currentTab}
-          onChange={(_e, newTab) => setCurrentTab(newTab)}
-          aria-label="Shop tabs"
-        >
-          <Tab {...{ label: 'Seeds', ...a11yProps(0) }} />
-          <Tab {...{ label: 'Supplies', ...a11yProps(1) }} />
-          <Tab {...{ label: 'Upgrades', ...a11yProps(2) }} />
-        </Tabs>
-      </Box>
+      <Tabs
+        value={currentTab}
+        onChange={(_e, newTab) => setCurrentTab(newTab)}
+        aria-label="Shop tabs"
+      >
+        <Tab {...{ label: 'Seeds', ...a11yProps(0) }} />
+        <Tab {...{ label: 'Supplies', ...a11yProps(1) }} />
+        <Tab {...{ label: 'Upgrades', ...a11yProps(2) }} />
+      </Tabs>
       <TabPanel value={currentTab} index={0}>
         <Inventory
           {...{

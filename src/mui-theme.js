@@ -4,6 +4,7 @@ export default createTheme({
   palette: {
     mode: 'light',
   },
+  shape: {},
   components: {
     MuiTabs: {
       styleOverrides: {
@@ -12,7 +13,7 @@ export default createTheme({
           borderColor: '#9b6d00',
           borderWidth: 2,
           borderStyle: 'solid',
-          borderRadius: theme.shape.borderRadius,
+          borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
         }),
       },
     },

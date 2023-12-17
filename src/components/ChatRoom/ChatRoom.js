@@ -54,7 +54,7 @@ export const ChatRoom = () => {
         aria-describedby={dialogTitleId}
         aria-labelledby={dialogContentId}
       >
-        <DialogTitle>Chat room</DialogTitle>
+        <DialogTitle id={dialogTitleId}>Chat room</DialogTitle>
         <DialogContent {...{ id: dialogContentId }}>
           {chatRoomComponent}
         </DialogContent>

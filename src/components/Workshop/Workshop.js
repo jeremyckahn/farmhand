@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { number, object } from 'prop-types'
-import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 
@@ -44,19 +43,17 @@ const Workshop = ({
 
   return (
     <div className="Workshop">
-      <Box>
-        <Tabs
-          value={currentTab}
-          onChange={(_e, newTab) => setCurrentTab(newTab)}
-          aria-label="Workshop tabs"
-        >
-          <Tab {...{ label: 'Kitchen', ...a11yProps(0) }} />
-          {showForge ? <Tab {...{ label: 'Forge', ...a11yProps(1) }} /> : null}
-          {purchasedComposter ? (
-            <Tab {...{ label: 'Recycling', ...a11yProps(recyclingTabIndex) }} />
-          ) : null}
-        </Tabs>
-      </Box>
+      <Tabs
+        value={currentTab}
+        onChange={(_e, newTab) => setCurrentTab(newTab)}
+        aria-label="Workshop tabs"
+      >
+        <Tab {...{ label: 'Kitchen', ...a11yProps(0) }} />
+        {showForge ? <Tab {...{ label: 'Forge', ...a11yProps(1) }} /> : null}
+        {purchasedComposter ? (
+          <Tab {...{ label: 'Recycling', ...a11yProps(recyclingTabIndex) }} />
+        ) : null}
+      </Tabs>
       <KitchenTabPanel
         currentTab={currentTab}
         index={0}

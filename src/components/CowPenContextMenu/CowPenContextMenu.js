@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
-import Box from '@mui/material/Box'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import Fab from '@mui/material/Fab'
@@ -94,17 +93,16 @@ export const CowPenContextMenu = ({
           cow: cowForSale,
         }}
       />
-      <Box sx={{ mt: '1rem' }}>
-        <Tabs
-          value={currentTab}
-          onChange={(e, newTab) => setCurrentTab(newTab)}
-          aria-label="Cow tabs"
-        >
-          <Tab {...{ label: 'Cows', ...a11yProps(0) }} />
-          <Tab {...{ label: 'Breeding Pen', ...a11yProps(1) }} />
-          <Tab {...{ label: 'Supplies', ...a11yProps(2) }} />
-        </Tabs>
-      </Box>
+      <Tabs
+        value={currentTab}
+        onChange={(_e, newTab) => setCurrentTab(newTab)}
+        aria-label="Cow tabs"
+        sx={{ mt: '1rem' }}
+      >
+        <Tab {...{ label: 'Cows', ...a11yProps(0) }} />
+        <Tab {...{ label: 'Breeding Pen', ...a11yProps(1) }} />
+        <Tab {...{ label: 'Supplies', ...a11yProps(2) }} />
+      </Tabs>
       <TabPanel value={currentTab} index={0}>
         <h3>
           Capacity: {cowInventory.length} /{' '}
