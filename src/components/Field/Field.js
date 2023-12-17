@@ -9,6 +9,7 @@ import Slider from '@mui/material/Slider'
 import ZoomInIcon from '@mui/icons-material/ZoomIn'
 import ZoomOutIcon from '@mui/icons-material/ZoomOut'
 import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import { GlobalHotKeys } from 'react-hotkeys'
 import classNames from 'classnames'
@@ -294,7 +295,17 @@ const adjustableRangeFieldModes = new Set([
 ])
 
 const RangeSliderValueLabelComponent = ({ children, open, value }) => (
-  <Tooltip {...{ open, placement: 'top', title: `Range: ${value} x ${value}` }}>
+  <Tooltip
+    {...{
+      open,
+      placement: 'top',
+      title: (
+        <Typography>
+          Range: {value} x {value}
+        </Typography>
+      ),
+    }}
+  >
     {children}
   </Tooltip>
 )
@@ -408,7 +419,9 @@ export const Field = props => {
                 value: fieldActionRange,
                 valueLabelDisplay: 'auto',
                 valueLabelFormat: value => `${value * 2 + 1}`,
-                ValueLabelComponent: RangeSliderValueLabelComponent,
+                components: {
+                  ValueLabel: RangeSliderValueLabelComponent,
+                },
               }}
             />
           </div>
