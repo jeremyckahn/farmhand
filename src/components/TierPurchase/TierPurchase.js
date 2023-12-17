@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography'
 import { func, instanceOf, node, number, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import './TierPurchase.sass'
 
 export function TierPurchase({
   description,
@@ -77,37 +76,41 @@ export function TierPurchase({
           </Typography>
         </CardContent>
       ) : (
-        <>
-          <CardActions>
-            <Button
-              {...{
-                color: 'primary',
-                disabled: !canPlayerBuySelectedTier,
-                onClick: handleBuyClick,
-                variant: 'contained',
-              }}
-            >
-              Buy
-            </Button>
-            <Select
-              variant="standard"
-              {...{
-                onChange: handleTierSelected,
-                value: selectedTier > 0 ? selectedTier : '',
-              }}
-            >
-              {tierValues.map(([id, tier]) => (
-                <MenuItem
-                  key={id}
-                  value={id}
-                  disabled={money < tier.price || hasPurchasedTier(id)}
-                >
-                  {renderTierLabel(tier)}
-                </MenuItem>
-              ))}
-            </Select>
-          </CardActions>
-        </>
+        <CardActions>
+          <Button
+            {...{
+              color: 'primary',
+              disabled: !canPlayerBuySelectedTier,
+              onClick: handleBuyClick,
+              variant: 'contained',
+            }}
+          >
+            Buy
+          </Button>
+          <Select
+            variant="standard"
+            sx={{
+              flexGrow: 1,
+              m: 0,
+              ml: '1rem',
+              maxWidth: 300,
+            }}
+            {...{
+              onChange: handleTierSelected,
+              value: selectedTier > 0 ? selectedTier : '',
+            }}
+          >
+            {tierValues.map(([id, tier]) => (
+              <MenuItem
+                key={id}
+                value={id}
+                disabled={money < tier.price || hasPurchasedTier(id)}
+              >
+                {renderTierLabel(tier)}
+              </MenuItem>
+            ))}
+          </Select>
+        </CardActions>
       )}
     </Card>
   )

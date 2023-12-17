@@ -16,5 +16,15 @@ export default createTheme({
         }),
       },
     },
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          margin: '1rem 0',
+          '& input': {
+            padding: '0.5rem',
+          },
+        },
+      },
+    },
   },
 })
