@@ -181,7 +181,7 @@ const SettingsView = ({
             </Button>
             <Button
               {...{
-                color: 'secondary',
+                color: 'error',
                 onClick: () => {
                   handleClearPersistedDataClick()
                   setIsClearDataDialogOpen(false)

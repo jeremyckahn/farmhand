@@ -93,7 +93,7 @@ export function Keg({ keg }) {
         <Button
           {...{
             className: 'sell-keg',
-            color: 'secondary',
+            color: 'error',
             onClick: handleSellClick,
             variant: 'contained',
             disabled: !canBeSold,
@@ -105,7 +105,7 @@ export function Keg({ keg }) {
           <Button
             {...{
               className: 'throw-away-keg',
-              color: 'secondary',
+              color: 'error',
               onClick: handleThrowAwayClick,
               variant: 'contained',
             }}
