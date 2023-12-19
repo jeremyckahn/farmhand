@@ -34,6 +34,7 @@ export class Cow extends Component {
   repositionTimeoutId = null
   animateHugTimeoutId = null
   tweenable = new Tweenable()
+  isComponentMounted = false
 
   static flipAnimationDuration = 1000
   static transitionAnimationDuration = 3000
@@ -162,15 +163,21 @@ export class Cow extends Component {
   }
 
   componentDidMount() {
+    this.isComponentMounted = true
     this.scheduleMove()
     ;(async () => {
-      this.setState({ cowImage: await getCowImage(this.props.cow) })
+      const cowImage = await getCowImage(this.props.cow)
+
+      if (!this.isComponentMounted) return
+
+      this.setState({ cowImage: cowImage })
     })()
   }
 
   componentWillUnmount() {
     ;[this.repositionTimeoutId, this.animateHugTimeoutId].forEach(clearTimeout)
 
+    this.isComponentMounted = false
     this.tweenable.cancel()
   }
 
