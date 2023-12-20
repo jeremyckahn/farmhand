@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardContent from '@material-ui/core/CardContent'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import React, { useEffect, useState, forwardRef } from 'react'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import NumberFormat from 'react-number-format'
 import { func, number } from 'prop-types'
 
@@ -19,26 +19,22 @@ import {
 
 import './AccountingView.sass'
 
-const MoneyNumberFormat = ({
-  inputRef,
-  max,
-  min,
-  onChange,
-  setLoanInputValue,
-  ...rest
-}) => (
-  <NumberFormat
-    fixedDecimalScale
-    thousandSeparator
-    {...{
-      ...rest,
-      allowNegative: false,
-      decimalScale: 2,
-      prefix: '$',
-      isAllowed: ({ floatValue = 0 }) => min >= 0 && floatValue <= max,
-      onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
-    }}
-  />
+const MoneyNumberFormat = forwardRef(
+  ({ max, min, onChange, setLoanInputValue, ...rest }, ref) => (
+    <NumberFormat
+      fixedDecimalScale
+      thousandSeparator
+      getInputRef={ref}
+      {...{
+        ...rest,
+        allowNegative: false,
+        decimalScale: 2,
+        prefix: '$',
+        isAllowed: ({ floatValue = 0 }) => min >= 0 && floatValue <= max,
+        onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
+      }}
+    />
+  )
 )
 
 const AccountingView = ({
@@ -69,6 +65,7 @@ const AccountingView = ({
         <CardContent>
           <div className="loan-container">
             <TextField
+              variant="standard"
               {...{
                 value: loanInputValue,
                 inputProps: {
@@ -110,7 +107,7 @@ const AccountingView = ({
           </div>
           <Button
             {...{
-              color: 'secondary',
+              color: 'error',
               disabled: money >= STANDARD_LOAN_AMOUNT,
               onClick: () => {
                 handleClickTakeOutLoanButton(STANDARD_LOAN_AMOUNT)

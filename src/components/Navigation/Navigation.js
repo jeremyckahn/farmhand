@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
-import AssessmentIcon from '@material-ui/icons/Assessment'
-import BeenhereIcon from '@material-ui/icons/Beenhere.js'
-import BookIcon from '@material-ui/icons/Book'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import Fab from '@material-ui/core/Fab'
-import FlashOnIcon from '@material-ui/icons/FlashOn'
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormGroup from '@material-ui/core/FormGroup'
-import MenuItem from '@material-ui/core/MenuItem'
-import Select from '@material-ui/core/Select'
-import SettingsIcon from '@material-ui/icons/Settings'
-import Switch from '@material-ui/core/Switch'
-import TextField from '@material-ui/core/TextField'
-import Tooltip from '@material-ui/core/Tooltip'
-import Typography from '@material-ui/core/Typography'
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
+import AssessmentIcon from '@mui/icons-material/Assessment'
+import BeenhereIcon from '@mui/icons-material/Beenhere.js'
+import BookIcon from '@mui/icons-material/Book'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Fab from '@mui/material/Fab'
+import FlashOnIcon from '@mui/icons-material/FlashOn'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormGroup from '@mui/material/FormGroup'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import SettingsIcon from '@mui/icons-material/Settings'
+import Switch from '@mui/material/Switch'
+import TextField from '@mui/material/TextField'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import { array, bool, func, number, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
@@ -61,6 +61,7 @@ const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
   return (
     <h2 className="farm-name">
       <TextField
+        variant="standard"
         {...{
           inputProps: {
             maxLength: 12,
@@ -103,6 +104,7 @@ const OnlineControls = ({
   return (
     <>
       <FormControl
+        variant="standard"
         {...{ className: 'online-control-container', component: 'fieldset' }}
       >
         <FormGroup {...{ className: 'toggle-container' }}>
@@ -119,6 +121,7 @@ const OnlineControls = ({
           />
         </FormGroup>
         <TextField
+          variant="standard"
           {...{
             className: 'room-name',
             inputProps: {
@@ -248,116 +251,117 @@ export const Navigation = ({
   currentDialogViewLowerCase = currentDialogView.toLowerCase(),
   modalTitleId = `${currentDialogViewLowerCase}-modal-title`,
   modalContentId = `${currentDialogViewLowerCase}-modal-content`,
-}) => (
-  <header className="Navigation">
-    <h1>Farmhand</h1>
-    <p className="version">v{process.env.REACT_APP_VERSION}</p>
-    <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
-    <DayAndProgressContainer />
-    <OnlineControls
-      {...{
-        activePlayers,
-        handleActivePlayerButtonClick,
-        handleChatRoomOpenStateChange,
-        handleOnlineToggleChange,
-        handleRoomChange,
-        isChatAvailable,
-        isOnline,
-        room,
-      }}
-    />
-    {inventoryLimit > INFINITE_STORAGE_LIMIT && (
-      <h3
+}) => {
+  return (
+    <header className="Navigation">
+      <h1>Farmhand</h1>
+      <p className="version">v{process.env.REACT_APP_VERSION}</p>
+      <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
+      <DayAndProgressContainer />
+      <OnlineControls
         {...{
-          className: classNames('inventory-info', {
-            'is-inventory-full': !doesInventorySpaceRemain({
-              inventory,
-              inventoryLimit,
-            }),
-          }),
+          activePlayers,
+          handleActivePlayerButtonClick,
+          handleChatRoomOpenStateChange,
+          handleOnlineToggleChange,
+          handleRoomChange,
+          isChatAvailable,
+          isOnline,
+          room,
         }}
-      >
-        Inventory: {integerString(inventorySpaceConsumed(inventory))} /{' '}
-        {integerString(inventoryLimit)}
-      </h3>
-    )}
-
-    <Select
-      {...{
-        className: 'view-select',
-        onChange: handleViewChange,
-        value: stageFocus,
-      }}
-    >
-      {viewList.map((view, i) => (
-        <MenuItem {...{ key: view, value: view }}>
-          {i + 1}: {STAGE_TITLE_MAP[view]}
-        </MenuItem>
-      ))}
-    </Select>
-    <div className="button-array">
-      {[
-        { dialogView: FARMERS_LOG, Icon: BookIcon },
-        { dialogView: PRICE_EVENTS, Icon: FlashOnIcon },
-        { dialogView: STATS, Icon: AssessmentIcon },
-        { dialogView: ACHIEVEMENTS, Icon: BeenhereIcon },
-        { dialogView: ACCOUNTING, Icon: AccountBalanceIcon },
-        { dialogView: SETTINGS, Icon: SettingsIcon },
-      ].map(({ dialogView, Icon }) => (
-        <Tooltip
+      />
+      {inventoryLimit > INFINITE_STORAGE_LIMIT && (
+        <h3
           {...{
-            arrow: true,
-            key: dialogView,
-            placement: 'top',
-            title: dialogTriggerTextMap[dialogView],
+            className: classNames('inventory-info', {
+              'is-inventory-full': !doesInventorySpaceRemain({
+                inventory,
+                inventoryLimit,
+              }),
+            }),
           }}
         >
-          <Fab
+          Inventory: {integerString(inventorySpaceConsumed(inventory))} /{' '}
+          {integerString(inventoryLimit)}
+        </h3>
+      )}
+
+      <Select
+        variant="standard"
+        {...{
+          className: 'view-select',
+          onChange: handleViewChange,
+          value: stageFocus,
+        }}
+      >
+        {viewList.map((view, i) => (
+          <MenuItem {...{ key: view, value: view }}>
+            {i + 1}: {STAGE_TITLE_MAP[view]}
+          </MenuItem>
+        ))}
+      </Select>
+      <div className="button-array">
+        {[
+          { dialogView: FARMERS_LOG, Icon: BookIcon },
+          { dialogView: PRICE_EVENTS, Icon: FlashOnIcon },
+          { dialogView: STATS, Icon: AssessmentIcon },
+          { dialogView: ACHIEVEMENTS, Icon: BeenhereIcon },
+          { dialogView: ACCOUNTING, Icon: AccountBalanceIcon },
+          { dialogView: SETTINGS, Icon: SettingsIcon },
+        ].map(({ dialogView, Icon }) => (
+          <Tooltip
             {...{
-              'aria-label': dialogTriggerTextMap[dialogView],
-              color: 'primary',
-              onClick: () => handleClickDialogViewButton(dialogView),
+              arrow: true,
+              key: dialogView,
+              placement: 'top',
+              title: dialogTriggerTextMap[dialogView],
             }}
           >
-            <Icon />
-          </Fab>
-        </Tooltip>
-      ))}
-    </div>
-    {/*
+            <Fab
+              {...{
+                'aria-label': dialogTriggerTextMap[dialogView],
+                color: 'primary',
+                onClick: () => handleClickDialogViewButton(dialogView),
+              }}
+            >
+              <Icon />
+            </Fab>
+          </Tooltip>
+        ))}
+      </div>
+      {/*
     This Dialog gets the Farmhand class because it renders outside of the root
     Farmhand component. This explicit class maintains style consistency.
     */}
-    <Dialog
-      {...{
-        className: classNames('Farmhand', { 'block-input': blockInput }),
-        fullWidth: true,
-        maxWidth: 'xs',
-        onClose: handleCloseDialogView,
-        open: isDialogViewOpen,
-        TransitionProps: {
-          onExited: handleDialogViewExited,
-        },
-      }}
-      aria-describedby={modalTitleId}
-      aria-labelledby={modalContentId}
-    >
-      <DialogTitle {...{ disableTypography: true }}>
-        <Typography {...{ id: modalTitleId, component: 'h2', variant: 'h6' }}>
+      <Dialog
+        {...{
+          className: classNames('Farmhand', { 'block-input': blockInput }),
+          fullWidth: true,
+          maxWidth: 'xs',
+          onClose: handleCloseDialogView,
+          open: isDialogViewOpen,
+          TransitionProps: {
+            onExited: handleDialogViewExited,
+          },
+        }}
+        aria-describedby={modalTitleId}
+        aria-labelledby={modalContentId}
+      >
+        <DialogTitle {...{ id: modalTitleId }}>
           {dialogTitleMap[currentDialogView]}
-        </Typography>
-      </DialogTitle>
-      <DialogContent {...{ id: modalContentId }}>
-        {dialogContentMap[currentDialogView]}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleCloseDialogView} color="primary" autoFocus>
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
-  </header>
-)
+        </DialogTitle>
+        <DialogContent {...{ id: modalContentId }}>
+          {dialogContentMap[currentDialogView]}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialogView} color="primary" autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </header>
+  )
+}
 
 Navigation.propTypes = {
   activePlayers: number,

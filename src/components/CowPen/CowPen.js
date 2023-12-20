@@ -2,7 +2,8 @@ import React, { Component, useEffect } from 'react'
 import { array, bool, func, object, string } from 'prop-types'
 import classNames from 'classnames'
 import { Tweenable } from 'shifty'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
@@ -203,7 +204,7 @@ export class Cow extends Component {
           {...{
             arrow: true,
             placement: 'top',
-            title: cowDisplayName,
+            title: <Typography>{cowDisplayName}</Typography>,
             open: isSelected,
             PopperProps: {
               disablePortal: true,

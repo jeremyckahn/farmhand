@@ -279,3 +279,7 @@ export const EXPERIENCE_VALUES = {
   RECYCLING_RECIPE_MADE: 1,
   SMELTER_ACQUIRED: 10,
 }
+
+export const Z_INDEX = {
+  END_DAY_BUTTON: 1100,
+}

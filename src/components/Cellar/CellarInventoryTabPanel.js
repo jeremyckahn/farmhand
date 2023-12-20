@@ -1,9 +1,9 @@
 /** @typedef {import("../../index").farmhand.keg} keg */
 import React, { useContext } from 'react'
 import { number } from 'prop-types'
-import Divider from '@material-ui/core/Divider'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
+import Divider from '@mui/material/Divider'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 import ReactMarkdown from 'react-markdown'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'

@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
-import AppBar from '@material-ui/core/AppBar'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
-import Fab from '@material-ui/core/Fab'
-import MenuItem from '@material-ui/core/MenuItem'
-import Select from '@material-ui/core/Select'
-import Tab from '@material-ui/core/Tab'
-import Tabs from '@material-ui/core/Tabs'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import Fab from '@mui/material/Fab'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
 import sortBy from 'lodash.sortby'
 
 import Item from '../Item'
@@ -94,17 +93,16 @@ export const CowPenContextMenu = ({
           cow: cowForSale,
         }}
       />
-      <AppBar position="static" color="primary">
-        <Tabs
-          value={currentTab}
-          onChange={(e, newTab) => setCurrentTab(newTab)}
-          aria-label="Cow tabs"
-        >
-          <Tab {...{ label: 'Cows', ...a11yProps(0) }} />
-          <Tab {...{ label: 'Breeding Pen', ...a11yProps(1) }} />
-          <Tab {...{ label: 'Supplies', ...a11yProps(2) }} />
-        </Tabs>
-      </AppBar>
+      <Tabs
+        value={currentTab}
+        onChange={(_e, newTab) => setCurrentTab(newTab)}
+        aria-label="Cow tabs"
+        sx={{ mt: '1rem' }}
+      >
+        <Tab {...{ label: 'Cows', ...a11yProps(0) }} />
+        <Tab {...{ label: 'Breeding Pen', ...a11yProps(1) }} />
+        <Tab {...{ label: 'Supplies', ...a11yProps(2) }} />
+      </Tabs>
       <TabPanel value={currentTab} index={0}>
         <h3>
           Capacity: {cowInventory.length} /{' '}
@@ -122,6 +120,7 @@ export const CowPenContextMenu = ({
               {isAscending ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
             </Fab>
             <Select
+              variant="standard"
               {...{
                 className: 'sort-select',
                 displayEmpty: true,

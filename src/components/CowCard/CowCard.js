@@ -6,12 +6,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import { array, bool, func, number, object, string } from 'prop-types'
-import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardHeader from '@material-ui/core/CardHeader'
-import TextField from '@material-ui/core/TextField'
-import Tooltip from '@material-ui/core/Tooltip'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardHeader from '@mui/material/CardHeader'
+import TextField from '@mui/material/TextField'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
@@ -172,6 +173,7 @@ export const CowCard = (
               <>
                 {isCowPurchased ? (
                   <TextField
+                    variant="standard"
                     {...{
                       disabled: id !== cow.originalOwnerId,
                       onChange: e => {
@@ -289,7 +291,9 @@ export const CowCard = (
                     {...{
                       arrow: true,
                       placement: 'top',
-                      title: OFFER_COW_FOR_TRADE`${cowDisplayName}`,
+                      title: (
+                        <Typography>{OFFER_COW_FOR_TRADE`${cowDisplayName}`}</Typography>
+                      ),
                     }}
                   >
                     <Button
@@ -309,7 +313,7 @@ export const CowCard = (
               <Button
                 {...{
                   className: 'sell',
-                  color: 'secondary',
+                  color: 'error',
                   onClick: () => handleCowSellClick(cow),
                   variant: 'contained',
                 }}

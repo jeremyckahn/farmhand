@@ -1,10 +1,10 @@
 /** @typedef {import("../../index").farmhand.keg} keg */
 import React, { useContext } from 'react'
 import { object } from 'prop-types'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardActions from '@material-ui/core/CardActions'
-import Button from '@material-ui/core/Button'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardActions from '@mui/material/CardActions'
+import Button from '@mui/material/Button'
 
 import { itemsMap } from '../../data/maps'
 import { items } from '../../img'
@@ -93,7 +93,7 @@ export function Keg({ keg }) {
         <Button
           {...{
             className: 'sell-keg',
-            color: 'secondary',
+            color: 'error',
             onClick: handleSellClick,
             variant: 'contained',
             disabled: !canBeSold,
@@ -105,7 +105,7 @@ export function Keg({ keg }) {
           <Button
             {...{
               className: 'throw-away-keg',
-              color: 'secondary',
+              color: 'error',
               onClick: handleThrowAwayClick,
               variant: 'contained',
             }}

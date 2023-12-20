@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import ReactMarkdown from 'react-markdown'
 
-import Button from '@material-ui/core/Button'
-import Tooltip from '@material-ui/core/Tooltip'
+import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 
 import { toolLevel } from '../../enums'
 import { memoize } from '../../utils/memoize'
@@ -40,7 +41,6 @@ const getToolImage = tool => {
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
-  completedAchievements,
   toolLevels,
 }) => {
   const tools = getTools(toolLevels)
@@ -51,11 +51,12 @@ export const Toolbelt = ({
         {tools.map(
           ({ alt, fieldMode, fieldKey, hiddenText, id, levelInfo, type }) => (
             <Tooltip
+              followCursor
               {...{
                 key: fieldMode,
                 placement: 'top',
                 title: (
-                  <>
+                  <Typography component="div">
                     <p>{alt}</p>
                     <ReactMarkdown
                       {...{
@@ -64,7 +65,7 @@ export const Toolbelt = ({
                       }}
                     />
                     <p>({fieldKey})</p>
-                  </>
+                  </Typography>
                 ),
               }}
             >
@@ -106,12 +107,10 @@ export const Toolbelt = ({
 Toolbelt.propTypes = {
   fieldMode: PropTypes.string.isRequired,
   handleFieldModeSelect: PropTypes.func,
-  completedAchievements: PropTypes.object,
 }
 
 Toolbelt.defaultProps = {
   handleFieldModeSelect: noop,
-  completedAchievements: {},
   toolLevels: {},
 }
 

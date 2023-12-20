@@ -3,9 +3,10 @@
 /** @typedef {import('../CowCard').CowCardProps} CowCardProps */
 import React from 'react'
 import { array, bool, func, object, string } from 'prop-types'
-import Checkbox from '@material-ui/core/Checkbox'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Tooltip from '@material-ui/core/Tooltip'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { faHeart as faFullHeart } from '@fortawesome/free-solid-svg-icons'
@@ -147,7 +148,13 @@ const Subheader = (
             {...{
               arrow: true,
               placement: 'top',
-              title: `Check this box to put ${cow.name} into a ${huggingMachine.name} and automatically hug them at the start of every day. Requires a Hugging Machine in your inventory.`,
+              title: (
+                <Typography>
+                  Check this box to put {cow.name} into a {huggingMachine.name}
+                  and automatically hug them at the start of every day. Requires
+                  a Hugging Machine in your inventory.
+                </Typography>
+              ),
             }}
           >
             <FormControlLabel
@@ -175,13 +182,17 @@ const Subheader = (
               disableFocusListener: disableBreedingControlTooltip,
               disableHoverListener: disableBreedingControlTooltip,
               disableTouchListener: disableBreedingControlTooltip,
-              title: isInBreedingPen
-                ? `Uncheck this box to return ${cow.name} to the regular pen.`
-                : `Check this box to move ${
-                    cow.name
-                  } to the breeding pen to mate with a ${
-                    cow.gender === genders.MALE ? 'female' : 'male'
-                  } cow.`,
+              title: (
+                <Typography>
+                  {isInBreedingPen
+                    ? `Uncheck this box to return ${cow.name} to the regular pen.`
+                    : `Check this box to move ${
+                        cow.name
+                      } to the breeding pen to mate with a ${
+                        cow.gender === genders.MALE ? 'female' : 'male'
+                      } cow.`}
+                </Typography>
+              ),
             }}
           >
             <FormControlLabel

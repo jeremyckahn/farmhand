@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import { array, func, number, object } from 'prop-types'
-import AppBar from '@material-ui/core/AppBar'
-import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardHeader from '@material-ui/core/CardHeader'
-import Tab from '@material-ui/core/Tab'
-import Tabs from '@material-ui/core/Tabs'
-import Typography from '@material-ui/core/Typography'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
+import Typography from '@mui/material/Typography'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { features } from '../../config'
@@ -82,17 +81,15 @@ export const Shop = ({
 
   return (
     <div className="Shop">
-      <AppBar position="static" color="primary">
-        <Tabs
-          value={currentTab}
-          onChange={(_e, newTab) => setCurrentTab(newTab)}
-          aria-label="Shop tabs"
-        >
-          <Tab {...{ label: 'Seeds', ...a11yProps(0) }} />
-          <Tab {...{ label: 'Supplies', ...a11yProps(1) }} />
-          <Tab {...{ label: 'Upgrades', ...a11yProps(2) }} />
-        </Tabs>
-      </AppBar>
+      <Tabs
+        value={currentTab}
+        onChange={(_e, newTab) => setCurrentTab(newTab)}
+        aria-label="Shop tabs"
+      >
+        <Tab {...{ label: 'Seeds', ...a11yProps(0) }} />
+        <Tab {...{ label: 'Supplies', ...a11yProps(1) }} />
+        <Tab {...{ label: 'Upgrades', ...a11yProps(2) }} />
+      </Tabs>
       <TabPanel value={currentTab} index={0}>
         <Inventory
           {...{

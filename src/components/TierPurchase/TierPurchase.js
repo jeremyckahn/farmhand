@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
-import Button from '@material-ui/core/Button'
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardActions from '@material-ui/core/CardActions'
-import Typography from '@material-ui/core/Typography'
+import Button from '@mui/material/Button'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import CardActions from '@mui/material/CardActions'
+import Typography from '@mui/material/Typography'
 import { func, instanceOf, node, number, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import './TierPurchase.sass'
 
 export function TierPurchase({
   description,
@@ -77,36 +76,41 @@ export function TierPurchase({
           </Typography>
         </CardContent>
       ) : (
-        <>
-          <CardActions>
-            <Button
-              {...{
-                color: 'primary',
-                disabled: !canPlayerBuySelectedTier,
-                onClick: handleBuyClick,
-                variant: 'contained',
-              }}
-            >
-              Buy
-            </Button>
-            <Select
-              {...{
-                onChange: handleTierSelected,
-                value: selectedTier > 0 ? selectedTier : '',
-              }}
-            >
-              {tierValues.map(([id, tier]) => (
-                <MenuItem
-                  key={id}
-                  value={id}
-                  disabled={money < tier.price || hasPurchasedTier(id)}
-                >
-                  {renderTierLabel(tier)}
-                </MenuItem>
-              ))}
-            </Select>
-          </CardActions>
-        </>
+        <CardActions>
+          <Button
+            {...{
+              color: 'primary',
+              disabled: !canPlayerBuySelectedTier,
+              onClick: handleBuyClick,
+              variant: 'contained',
+            }}
+          >
+            Buy
+          </Button>
+          <Select
+            variant="standard"
+            sx={{
+              flexGrow: 1,
+              m: 0,
+              ml: '1rem',
+              maxWidth: 300,
+            }}
+            {...{
+              onChange: handleTierSelected,
+              value: selectedTier > 0 ? selectedTier : '',
+            }}
+          >
+            {tierValues.map(([id, tier]) => (
+              <MenuItem
+                key={id}
+                value={id}
+                disabled={money < tier.price || hasPurchasedTier(id)}
+              >
+                {renderTierLabel(tier)}
+              </MenuItem>
+            ))}
+          </Select>
+        </CardActions>
       )}
     </Card>
   )

@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { bool, func } from 'prop-types'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import Divider from '@material-ui/core/Divider'
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormLabel from '@material-ui/core/FormLabel'
-import Switch from '@material-ui/core/Switch'
-import Tooltip from '@material-ui/core/Tooltip'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Divider from '@mui/material/Divider'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormGroup from '@mui/material/FormGroup'
+import FormLabel from '@mui/material/FormLabel'
+import Switch from '@mui/material/Switch'
+import Tooltip from '@mui/material/Tooltip'
 import FileReaderInput from 'react-file-reader-input'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
@@ -52,7 +52,7 @@ const SettingsView = ({
       <RandomSeedInput />
       <Divider />
 
-      <FormControl component="fieldset">
+      <FormControl variant="standard" component="fieldset">
         <FormLabel component="legend">Options</FormLabel>
         <FormGroup>
           <FormControlLabel
@@ -181,7 +181,7 @@ const SettingsView = ({
             </Button>
             <Button
               {...{
-                color: 'secondary',
+                color: 'error',
                 onClick: () => {
                   handleClearPersistedDataClick()
                   setIsClearDataDialogOpen(false)

@@ -1,8 +1,8 @@
 import React from 'react'
 import { array } from 'prop-types'
-import Alert from '@material-ui/lab/Alert'
+import Alert from '@mui/material/Alert'
 import ReactMarkdown from 'react-markdown'
-import Divider from '@material-ui/core/Divider'
+import Divider from '@mui/material/Divider'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 

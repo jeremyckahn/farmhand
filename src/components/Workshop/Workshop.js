@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { number, object } from 'prop-types'
-import AppBar from '@material-ui/core/AppBar'
-import Tab from '@material-ui/core/Tab'
-import Tabs from '@material-ui/core/Tabs'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
 
 import { recipeType } from '../../enums'
 
@@ -44,19 +43,17 @@ const Workshop = ({
 
   return (
     <div className="Workshop">
-      <AppBar position="static" color="primary">
-        <Tabs
-          value={currentTab}
-          onChange={(_e, newTab) => setCurrentTab(newTab)}
-          aria-label="Workshop tabs"
-        >
-          <Tab {...{ label: 'Kitchen', ...a11yProps(0) }} />
-          {showForge ? <Tab {...{ label: 'Forge', ...a11yProps(1) }} /> : null}
-          {purchasedComposter ? (
-            <Tab {...{ label: 'Recycling', ...a11yProps(recyclingTabIndex) }} />
-          ) : null}
-        </Tabs>
-      </AppBar>
+      <Tabs
+        value={currentTab}
+        onChange={(_e, newTab) => setCurrentTab(newTab)}
+        aria-label="Workshop tabs"
+      >
+        <Tab {...{ label: 'Kitchen', ...a11yProps(0) }} />
+        {showForge ? <Tab {...{ label: 'Forge', ...a11yProps(1) }} /> : null}
+        {purchasedComposter ? (
+          <Tab {...{ label: 'Recycling', ...a11yProps(recyclingTabIndex) }} />
+        ) : null}
+      </Tabs>
       <KitchenTabPanel
         currentTab={currentTab}
         index={0}

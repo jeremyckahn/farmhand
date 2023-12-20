@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
-import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
-import Tooltip from '@material-ui/core/Tooltip'
-import Typography from '@material-ui/core/Typography'
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import { array, bool, func, number, object } from 'prop-types'
 import classNames from 'classnames'
 
@@ -318,7 +318,7 @@ export const Item = ({
             <Button
               {...{
                 className: 'sell',
-                color: 'secondary',
+                color: 'error',
                 disabled: sellQuantity === 0 || !sellQuantity,
                 onClick: handleItemSell,
                 variant: 'contained',

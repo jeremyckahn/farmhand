@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { func, shape, string } from 'prop-types'
-import Alert from '@material-ui/lab/Alert'
+import Alert from '@mui/material/Alert'
 import ReactMarkdown from 'react-markdown'
 import { withSnackbar } from 'notistack'
 

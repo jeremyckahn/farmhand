@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { func, number } from 'prop-types'
-import Fab from '@material-ui/core/Fab'
-import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
+import Fab from '@mui/material/Fab'
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import NumberFormat from 'react-number-format'
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 
 import AnimatedNumber from '../AnimatedNumber'
 
@@ -12,18 +12,21 @@ import { integerString } from '../../utils'
 
 import './QuantityInput.sass'
 
-const QuantityNumberFormat = ({ inputRef, min, max, onChange, ...rest }) => (
-  <NumberFormat
-    isNumericString
-    thousandSeparator
-    {...{
-      ...rest,
-      allowNegative: false,
-      decimalScale: 0,
-      onValueChange: ({ floatValue = 0 }) =>
-        onChange(Math.min(floatValue, max)),
-    }}
-  />
+const QuantityNumberFormat = forwardRef(
+  ({ min, max, onChange, ...rest }, ref) => (
+    <NumberFormat
+      isNumericString
+      thousandSeparator
+      getInputRef={ref}
+      {...{
+        ...rest,
+        allowNegative: false,
+        decimalScale: 0,
+        onValueChange: ({ floatValue = 0 }) =>
+          onChange(Math.min(floatValue, max)),
+      }}
+    />
+  )
 )
 
 // TODO: Rename event handlers to use on* format
@@ -35,6 +38,7 @@ const QuantityTextInput = ({
   value,
 }) => (
   <TextField
+    variant="standard"
     {...{
       value,
       inputProps: {

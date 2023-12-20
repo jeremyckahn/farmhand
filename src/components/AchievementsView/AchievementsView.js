@@ -1,9 +1,9 @@
 import React from 'react'
-import Accordion from '@material-ui/core/Accordion'
-import AccordionSummary from '@material-ui/core/AccordionSummary'
-import AccordionDetails from '@material-ui/core/AccordionDetails'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
 import { object } from 'prop-types'
-import Divider from '@material-ui/core/Divider'
+import Divider from '@mui/material/Divider'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import ProgressBar from '../ProgressBar'

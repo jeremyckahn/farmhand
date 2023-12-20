@@ -3,8 +3,8 @@
 
 import React, { useEffect, useState } from 'react'
 import { bool, func, number, object, string } from 'prop-types'
-import Tooltip from '@material-ui/core/Tooltip'
-import Typography from '@material-ui/core/Typography'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
@@ -191,8 +191,8 @@ export const Plot = ({
 
   return (
     <Tooltip
+      followCursor
       {...{
-        arrow: true,
         placement: 'top',
         title: (
           <>

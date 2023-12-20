@@ -1,10 +1,11 @@
 import React from 'react'
 import { array, func, object, string } from 'prop-types'
-import Button from '@material-ui/core/Button'
-import Divider from '@material-ui/core/Divider'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
-import Tooltip from '@material-ui/core/Tooltip'
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
@@ -23,10 +24,11 @@ const ItemList = ({
   <div {...{ className: 'button-array' }}>
     {sortItems(items).map(item => (
       <Tooltip
+        followCursor
         {...{
           key: item.id,
           placement: 'top',
-          title: item.name,
+          title: <Typography>{item.name}</Typography>,
         }}
       >
         <Button

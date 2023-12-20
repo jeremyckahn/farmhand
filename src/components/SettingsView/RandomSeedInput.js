@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { string } from 'prop-types'
 import window from 'global/window'
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 
