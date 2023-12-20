@@ -90,6 +90,7 @@ import {
   INITIAL_STORAGE_LIMIT,
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
+  Z_INDEX,
 } from '../../constants'
 import {
   HEARTBEAT_INTERVAL_PERIOD,
@@ -1431,7 +1432,7 @@ export default class Farmhand extends FarmhandReducers {
                         color: 'error',
                         onClick: handlers.handleClickEndDayButton,
                         sx: {
-                          zIndex: 1100,
+                          zIndex: Z_INDEX.END_DAY_BUTTON,
                         },
                       }}
                     >
