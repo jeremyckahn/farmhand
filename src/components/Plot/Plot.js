@@ -191,8 +191,8 @@ export const Plot = ({
 
   return (
     <Tooltip
+      followCursor
       {...{
-        arrow: true,
         placement: 'top',
         title: (
           <>

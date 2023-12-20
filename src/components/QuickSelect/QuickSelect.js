@@ -24,6 +24,7 @@ const ItemList = ({
   <div {...{ className: 'button-array' }}>
     {sortItems(items).map(item => (
       <Tooltip
+        followCursor
         {...{
           key: item.id,
           placement: 'top',

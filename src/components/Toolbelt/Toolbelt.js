@@ -51,6 +51,7 @@ export const Toolbelt = ({
         {tools.map(
           ({ alt, fieldMode, fieldKey, hiddenText, id, levelInfo, type }) => (
             <Tooltip
+              followCursor
               {...{
                 key: fieldMode,
                 placement: 'top',
