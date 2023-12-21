@@ -280,6 +280,8 @@ export const EXPERIENCE_VALUES = {
   SMELTER_ACQUIRED: 10,
 }
 
+export const STANDARD_VIEW_LIST = [stageFocusType.SHOP, stageFocusType.FIELD]
+
 export const Z_INDEX = {
   END_DAY_BUTTON: 1100,
 }

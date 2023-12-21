@@ -47,6 +47,7 @@ import {
   fertilizerType,
   genders,
   itemType,
+  stageFocusType,
   standardCowColors,
   toolLevel,
 } from '../enums'
@@ -80,6 +81,7 @@ import {
   STORAGE_EXPANSION_BASE_PRICE,
   STORM_CHANCE,
   STORAGE_EXPANSION_SCALE_PREMIUM,
+  STANDARD_VIEW_LIST,
 } from '../constants'
 import { random } from '../common/utils'
 
@@ -944,13 +946,20 @@ export const unlockTool = (currentToolLevels, toolType) => {
  * @return {farmhand.state}
  */
 export const transformStateDataForImport = state => {
-  const sanitizedState = { ...state }
+  let sanitizedState = { ...state }
 
   const rejectedKeys = ['version']
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
 
   if (sanitizedState.experience === 0) {
     sanitizedState.experience = farmProductsSold(sanitizedState.itemsSold)
+  }
+
+  if (
+    sanitizedState.showHomeScreen === false &&
+    sanitizedState.stageFocus === stageFocusType.HOME
+  ) {
+    sanitizedState = { ...sanitizedState, stageFocus: STANDARD_VIEW_LIST[0] }
   }
 
   return sanitizedState

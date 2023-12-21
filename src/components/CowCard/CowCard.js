@@ -31,6 +31,7 @@ import {
 } from '../../utils'
 import { PURCHASEABLE_COW_PENS } from '../../constants'
 import { OFFER_COW_FOR_TRADE, WITHDRAW_COW_FROM_TRADE } from '../../templates'
+import { useMountState } from '../../hooks/useMountState'
 
 import Subheader from './Subheader'
 
@@ -119,13 +120,19 @@ export const CowCard = (
     isCowOfferedForTradeByPeer && cowIdOfferedForTrade.length > 0
   )
 
+  const { isMounted } = useMountState()
+
   useEffect(() => {
     ;(async () => {
-      setCowImage(await getCowImage(cow))
+      const cowImage = await getCowImage(cow)
+
+      if (isMounted() === false) return
+
+      setCowImage(cowImage)
     })()
 
     setDisplayName(getCowDisplayName(cow, id, allowCustomPeerCowNames))
-  }, [cow, id, allowCustomPeerCowNames])
+  }, [cow, id, allowCustomPeerCowNames, isMounted])
 
   useEffect(() => {
     if (isSelected) {

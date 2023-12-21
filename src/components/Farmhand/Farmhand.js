@@ -91,6 +91,7 @@ import {
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
   Z_INDEX,
+  STANDARD_VIEW_LIST,
 } from '../../constants'
 import {
   HEARTBEAT_INTERVAL_PERIOD,
@@ -363,8 +364,8 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   get viewList() {
-    const { CELLAR, COW_PEN, FIELD, HOME, WORKSHOP, SHOP } = stageFocusType
-    const viewList = [SHOP, FIELD]
+    const { CELLAR, COW_PEN, HOME, WORKSHOP } = stageFocusType
+    const viewList = [...STANDARD_VIEW_LIST]
 
     if (this.state.showHomeScreen) {
       viewList.unshift(HOME)
