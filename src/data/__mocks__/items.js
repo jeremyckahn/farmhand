@@ -89,7 +89,7 @@ export const sampleCropItem1 = testItem({
   value: 2,
   cropTimetable: {
     [SEED]: 1,
-    [GROWING]: 2,
+    [GROWING]: [2],
   },
 })
 
@@ -113,7 +113,7 @@ export const sampleCropItem2 = testItem({
   value: 3,
   cropTimetable: {
     [SEED]: 2,
-    [GROWING]: 3,
+    [GROWING]: [3],
   },
 })
 
@@ -136,7 +136,7 @@ export const sampleCropItem3 = testItem({
   value: 4,
   cropTimetable: {
     [SEED]: 5,
-    [GROWING]: 5,
+    [GROWING]: [5],
   },
 })
 
