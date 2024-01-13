@@ -11,7 +11,7 @@ export const jalapenoSeed = crop({
   cropType: cropType.JALAPENO,
   cropTimetable: {
     [SEED]: 2,
-    [GROWING]: 3,
+    [GROWING]: [3],
   },
   growsInto: 'jalapeno',
   id: 'jalapeno-seed',

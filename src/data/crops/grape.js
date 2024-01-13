@@ -14,7 +14,7 @@ export const grapeSeed = crop({
   cropType: cropType.GRAPE,
   cropTimetable: {
     [SEED]: 3,
-    [GROWING]: 4,
+    [GROWING]: [4],
   },
   growsInto: [
     'grape-chardonnay',

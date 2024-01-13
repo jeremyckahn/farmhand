@@ -11,7 +11,7 @@ export const potatoSeed = crop({
   cropType: cropType.POTATO,
   cropTimetable: {
     [SEED]: 2,
-    [GROWING]: 3,
+    [GROWING]: [3],
   },
   growsInto: 'potato',
   id: 'potato-seed',

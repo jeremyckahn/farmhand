@@ -507,7 +507,7 @@ describe('getCowWeight', () => {
 
 describe('getLifeStageRange', () => {
   test('converts a cropTimetable to an array of stages', () => {
-    expect(getLifeStageRange({ [SEED]: 1, [GROWING]: 2 })).toEqual([
+    expect(getLifeStageRange({ [SEED]: 1, [GROWING]: [2] })).toEqual([
       SEED,
       GROWING,
       GROWING,

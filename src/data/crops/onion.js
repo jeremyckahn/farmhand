@@ -11,7 +11,7 @@ export const onionSeed = crop({
   cropType: cropType.ONION,
   cropTimetable: {
     [SEED]: 3,
-    [GROWING]: 4,
+    [GROWING]: [4],
   },
   growsInto: 'onion',
   id: 'onion-seed',

@@ -11,7 +11,7 @@ export const sunflowerSeed = crop({
   cropType: cropType.SUNFLOWER,
   cropTimetable: {
     [SEED]: 3,
-    [GROWING]: 3,
+    [GROWING]: [3],
   },
   growsInto: 'sunflower',
   id: 'sunflower-seed',

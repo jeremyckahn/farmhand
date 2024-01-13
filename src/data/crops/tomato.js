@@ -11,7 +11,7 @@ export const tomatoSeed = crop({
   cropType: cropType.TOMATO,
   cropTimetable: {
     [SEED]: 5,
-    [GROWING]: 6,
+    [GROWING]: [6],
   },
   growsInto: 'tomato',
   id: 'tomato-seed',

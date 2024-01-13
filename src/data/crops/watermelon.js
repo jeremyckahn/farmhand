@@ -11,7 +11,7 @@ export const watermelonSeed = crop({
   cropType: cropType.WATERMELON,
   cropTimetable: {
     [SEED]: 2,
-    [GROWING]: 10,
+    [GROWING]: [10],
   },
   growsInto: 'watermelon',
   id: 'watermelon-seed',

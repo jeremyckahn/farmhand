@@ -11,7 +11,7 @@ export const oliveSeed = crop({
   cropType: cropType.OLIVE,
   cropTimetable: {
     [SEED]: 3,
-    [GROWING]: 6,
+    [GROWING]: [6],
   },
   growsInto: 'olive',
   id: 'olive-seed',

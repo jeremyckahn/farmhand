@@ -300,7 +300,7 @@ export const getLifeStageRange = memoize((
      * @param {farmhand.cropLifeStage[]} acc
      */
     (acc, stage) => {
-      if (Array.isArray(cropTimetable[stage])) {
+      if (stage === GROWING) {
         return acc.concat(
           cropTimetable[stage].reduce(
             (acc2, value) => acc2.concat(Array(value).fill(stage)),
@@ -323,7 +323,7 @@ export const getGrowingPhase = memoize(crop => {
   const { itemId, daysWatered } = crop
   const { cropTimetable } = itemsMap[itemId]
 
-  if (!Array.isArray(cropTimetable[GROWING])) {
+  if (cropTimetable[GROWING].length === 1) {
     return 0
   }
 

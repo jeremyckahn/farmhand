@@ -11,7 +11,7 @@ export const garlicSeed = crop({
   cropType: cropType.GARLIC,
   cropTimetable: {
     [SEED]: 2,
-    [GROWING]: 3,
+    [GROWING]: [3],
   },
   growsInto: 'garlic',
   id: 'garlic-seed',
