@@ -46,6 +46,7 @@ import {
   getCowWeight,
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
+  getGrowingPhase,
   getSeedItemIdFromFinalStageCropItemId,
   getItemCurrentValue,
   getLifeStageRange,
@@ -550,7 +551,7 @@ describe('getPlotImage', () => {
     expect(getPlotImage(null)).toBe(null)
   })
 
-  test('returns a plot images for a crop', () => {
+  test('returns plot images for a crop', () => {
     const itemId = 'sample-crop-1'
 
     expect(getPlotImage(testCrop({ itemId, daysWatered: 0 }))).toBe(
@@ -1074,5 +1075,23 @@ describe('transformStateDataForImport', () => {
       loanBalance: 100,
       money: 1234,
     })
+  })
+})
+
+describe('getGrowingPhase', () => {
+  test('it returns 0 when there is only one growing phase', () => {
+    const crop = testCrop({ itemId: 'sample-crop-2', daysWatered: 0 })
+    expect(getGrowingPhase(crop)).toEqual(0)
+  })
+
+  test.each([
+    [1, 2],
+    [2, 3],
+    [2, 4],
+    [3, 5],
+  ])('it returns phase %s when days watered is %s', (phase, daysWatered) => {
+    const crop = { itemId: 'sample-crop-4', daysWatered }
+
+    expect(getGrowingPhase(crop)).toEqual(phase)
   })
 })

@@ -294,15 +294,52 @@ export const doesPlotContainCrop = plot =>
 
 export const getLifeStageRange = memoize((
   /** @type {farmhand.cropTimetable} */ cropTimetable
-) =>
-  [SEED, GROWING].reduce(
+) => {
+  return [SEED, GROWING].reduce(
     /**
      * @param {farmhand.cropLifeStage[]} acc
      */
-    (acc, stage) => acc.concat(Array(cropTimetable[stage]).fill(stage)),
+    (acc, stage) => {
+      if (Array.isArray(cropTimetable[stage])) {
+        return acc.concat(
+          cropTimetable[stage].reduce(
+            (acc2, value) => acc2.concat(Array(value).fill(stage)),
+            []
+          )
+        )
+      }
+
+      return acc.concat(Array(cropTimetable[stage]).fill(stage))
+    },
     []
   )
-)
+})
+
+/**
+ * @param {farmhand.crop} crop
+ * @returns {number}
+ */
+export const getGrowingPhase = memoize(crop => {
+  const { itemId, daysWatered } = crop
+  const { cropTimetable } = itemsMap[itemId]
+
+  if (!Array.isArray(cropTimetable[GROWING])) {
+    return 0
+  }
+
+  // daysWatered is 0 based so we add 1 to it for this math
+  let daysGrowing = daysWatered + 1 - cropTimetable[SEED]
+  let phase = 1
+
+  for (let value of Object.values(cropTimetable[GROWING])) {
+    if (daysGrowing - value <= 0) break
+
+    daysGrowing -= value
+    phase += 1
+  }
+
+  return phase
+})
 
 /**
  * @param {farmhand.crop} crop
@@ -335,7 +372,12 @@ export const getPlotImage = (plotContents, x, y) => {
           break
 
         case GROWING:
-          itemImageId = `${plotContents.itemId}-growing`
+          const phase = getGrowingPhase(plotContents)
+          if (phase === 0) {
+            itemImageId = `${plotContents.itemId}-growing`
+          } else {
+            itemImageId = `${plotContents.itemId}-growing-${phase}`
+          }
           break
 
         default:

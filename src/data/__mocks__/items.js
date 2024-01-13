@@ -140,6 +140,19 @@ export const sampleCropItem3 = testItem({
   },
 })
 
+export const sampleCropItem4 = testItem({
+  cropType: 'SAMPLE_CROP_TYPE_4',
+  doesPriceFluctuate: true,
+  id: 'sample-crop-4',
+  name: 'Sample Crop Item 4',
+  type: itemType.CROP,
+  value: 2,
+  cropTimetable: {
+    [SEED]: 2,
+    [GROWING]: [1, 2, 1],
+  },
+})
+
 export const sampleFieldTool1 = testItem({
   id: 'sample-field-tool-1',
   enablesFieldMode: 'MOCK_FIELD_MODE_1',

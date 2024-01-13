@@ -6,6 +6,12 @@ import { memoize } from './memoize'
  * @param {{ cropTimetable: Object }} crop
  * @returns {number}
  */
-export const getCropLifecycleDuration = memoize(({ cropTimetable }) =>
-  Object.values(cropTimetable).reduce((acc, value) => acc + value, 0)
-)
+export const getCropLifecycleDuration = memoize(({ cropTimetable }) => {
+  return Object.values(cropTimetable).reduce((acc, value) => {
+    if (Array.isArray(value)) {
+      return acc + value.reduce((acc2, value2) => acc2 + value2)
+    }
+
+    return acc + value
+  }, 0)
+})

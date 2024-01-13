@@ -13,7 +13,7 @@ export const carrotSeed = crop({
   cropType: cropType.CARROT,
   cropTimetable: {
     [SEED]: 2,
-    [GROWING]: 3,
+    [GROWING]: [1, 1, 1],
   },
   growsInto: 'carrot',
   id: 'carrot-seed',
