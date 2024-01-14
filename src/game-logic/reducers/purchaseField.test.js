@@ -1,5 +1,5 @@
 import { testCrop } from '../../test-utils'
-import { EXPERIENCE_VALUES } from '../../constants'
+import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants'
 
 import { purchaseField } from './purchaseField'
 
@@ -27,15 +27,16 @@ describe('purchaseField', () => {
 
   describe('field expansion', () => {
     test('field expands without destroying existing data', () => {
-      jest.resetModules()
-      jest.mock('../../constants', () => ({
-        EXPERIENCE_VALUES: {},
-        PURCHASEABLE_FIELD_SIZES: new Map([
-          [1, { columns: 3, rows: 4, price: 1000 }],
-        ]),
-      }))
+      const expectedField = []
+      const fieldSize = PURCHASEABLE_FIELD_SIZES.get(1)
 
-      const { purchaseField } = jest.requireActual('./purchaseField')
+      for (let y = 0; y < fieldSize.rows; y++) {
+        const row = []
+        for (let x = 0; x < fieldSize.columns; x++) {
+          row.push(null)
+        }
+        expectedField.push(row)
+      }
 
       const { field } = purchaseField(
         {
@@ -46,12 +47,11 @@ describe('purchaseField', () => {
         },
         1
       )
-      expect(field).toEqual([
-        [testCrop(), null, null],
-        [null, testCrop(), null],
-        [null, null, null],
-        [null, null, null],
-      ])
+
+      expectedField[0][0] = testCrop()
+      expectedField[1][1] = testCrop()
+
+      expect(field).toEqual(expectedField)
     })
   })
 })
