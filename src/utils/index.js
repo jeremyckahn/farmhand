@@ -343,7 +343,9 @@ export const getGrowingPhase = memoize(
     return phase
   },
   {
-    cacheSize: PURCHASEABLE_FIELD_SIZES.get(3).columns,
+    cacheSize:
+      PURCHASEABLE_FIELD_SIZES.get(3).columns *
+      PURCHASEABLE_FIELD_SIZES.get(3).rows,
   }
 )
 
