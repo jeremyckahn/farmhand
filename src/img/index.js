@@ -40,7 +40,9 @@ import vegetableOil from './dishes/vegetable-oil.png'
 
 // Crops
 import asparagus from './items/asparagus.png'
-import asparagusGrowing from './items/asparagus-growing.png'
+import asparagusGrowing1 from './items/asparagus-growing1.png'
+import asparagusGrowing2 from './items/asparagus-growing2.png'
+import asparagusGrowing3 from './items/asparagus-growing3.png'
 import asparagusSeed from './items/asparagus-seed.png'
 import carrot from './items/carrot.png'
 import carrotGrowing1 from './items/carrot-growing1.png'
@@ -48,7 +50,9 @@ import carrotGrowing2 from './items/carrot-growing2.png'
 import carrotGrowing3 from './items/carrot-growing3.png'
 import carrotSeed from './items/carrot-seed.png'
 import garlic from './items/garlic.png'
-import garlicGrowing from './items/garlic-growing.png'
+import garlicGrowing1 from './items/garlic-growing1.png'
+import garlicGrowing2 from './items/garlic-growing2.png'
+import garlicGrowing3 from './items/garlic-growing3.png'
 import garlicSeed from './items/garlic-seed.png'
 import grapeSeed from './items/grape-seed.png'
 import grapeGreenGrowing from './items/grape-green-growing.png'
@@ -56,13 +60,19 @@ import grapePurpleGrowing from './items/grape-purple-growing.png'
 import grapeGreen from './items/grape-green.png'
 import grapePurple from './items/grape-purple.png'
 import jalapeno from './items/jalapeno.png'
-import jalapenoGrowing from './items/jalapeno-growing.png'
+import jalapenoGrowing1 from './items/jalapeno-growing1.png'
+import jalapenoGrowing2 from './items/jalapeno-growing2.png'
+import jalapenoGrowing3 from './items/jalapeno-growing3.png'
 import jalapenoSeed from './items/jalapeno-seed.png'
 import pea from './items/pea.png'
 import peaGrowing from './items/pea-growing.png'
 import peaSeed from './items/pea-seed.png'
 import pumpkin from './items/pumpkin.png'
-import pumpkinGrowing from './items/pumpkin-growing.png'
+import pumpkinGrowing1 from './items/pumpkin-growing1.png'
+import pumpkinGrowing2 from './items/pumpkin-growing2.png'
+import pumpkinGrowing3 from './items/pumpkin-growing3.png'
+import pumpkinGrowing4 from './items/pumpkin-growing4.png'
+import pumpkinGrowing5 from './items/pumpkin-growing5.png'
 import pumpkinSeed from './items/pumpkin-seed.png'
 import spinach from './items/spinach.png'
 import spinachGrowing from './items/spinach-growing.png'
@@ -72,25 +82,40 @@ import strawberryGrowing from './items/strawberry-growing.png'
 import strawberrySeed from './items/strawberry-seed.png'
 import compost from './items/compost.png'
 import corn from './items/corn.png'
-import cornGrowing from './items/corn-growing.png'
+import cornGrowing1 from './items/corn-growing1.png'
+import cornGrowing2 from './items/corn-growing2.png'
+import cornGrowing3 from './items/corn-growing3.png'
+import cornGrowing4 from './items/corn-growing4.png'
+import cornGrowing5 from './items/corn-growing5.png'
 import cornSeed from './items/corn-seed.png'
 import potato from './items/potato.png'
-import potatoGrowing from './items/potato-growing.png'
+import potatoGrowing1 from './items/potato-growing1.png'
+import potatoGrowing2 from './items/potato-growing2.png'
+import potatoGrowing3 from './items/potato-growing3.png'
 import potatoSeed from './items/potato-seed.png'
 import sweetPotato from './items/sweet-potato.png'
-import sweetPotatoGrowing from './items/sweet-potato-growing.png'
+import sweetPotatoGrowing1 from './items/sweet-potato-growing1.png'
+import sweetPotatoGrowing2 from './items/sweet-potato-growing2.png'
+import sweetPotatoGrowing3 from './items/sweet-potato-growing3.png'
+import sweetPotatoGrowing4 from './items/sweet-potato-growing4.png'
 import sweetPotatoSeed from './items/sweet-potato-seed.png'
 import olive from './items/olive.png'
 import oliveGrowing from './items/olive-growing.png'
 import oliveSeed from './items/olive-seed.png'
 import onion from './items/onion.png'
-import onionGrowing from './items/onion-growing.png'
+import onionGrowing1 from './items/onion-growing1.png'
+import onionGrowing2 from './items/onion-growing2.png'
+import onionGrowing3 from './items/onion-growing3.png'
 import onionSeed from './items/onion-seed.png'
 import soybean from './items/soybean.png'
 import soybeanGrowing from './items/soybean-growing.png'
 import soybeanSeed from './items/soybean-seed.png'
 import sunflower from './items/sunflower.png'
-import sunflowerGrowing from './items/sunflower-growing.png'
+import sunflowerGrowing1 from './items/sunflower-growing1.png'
+import sunflowerGrowing2 from './items/sunflower-growing2.png'
+import sunflowerGrowing3 from './items/sunflower-growing3.png'
+import sunflowerGrowing4 from './items/sunflower-growing4.png'
+import sunflowerGrowing5 from './items/sunflower-growing5.png'
 import sunflowerSeed from './items/sunflower-seed.png'
 import watermelon from './items/watermelon.png'
 import watermelonGrowing from './items/watermelon-growing.png'
@@ -99,7 +124,12 @@ import wheat from './items/wheat.png'
 import wheatGrowing from './items/wheat-growing.png'
 import wheatSeed from './items/wheat-seed.png'
 import tomato from './items/tomato.png'
-import tomatoGrowing from './items/tomato-growing.png'
+import tomatoGrowing1 from './items/tomato-growing1.png'
+import tomatoGrowing2 from './items/tomato-growing2.png'
+import tomatoGrowing3 from './items/tomato-growing3.png'
+import tomatoGrowing4 from './items/tomato-growing4.png'
+import tomatoGrowing5 from './items/tomato-growing5.png'
+import tomatoGrowing6 from './items/tomato-growing6.png'
 import tomatoSeed from './items/tomato-seed.png'
 import fertilizer from './items/fertilizer.png'
 import rainbowFertilizer from './items/rainbow-fertilizer.png'
@@ -232,7 +262,9 @@ export const craftedItems = {
 export const items = {
   // Crops
   asparagus,
-  'asparagus-growing': asparagusGrowing,
+  'asparagus-growing-1': asparagusGrowing1,
+  'asparagus-growing-2': asparagusGrowing2,
+  'asparagus-growing-3': asparagusGrowing3,
   'asparagus-seed': asparagusSeed,
   carrot,
   'carrot-growing-1': carrotGrowing1,
@@ -240,7 +272,9 @@ export const items = {
   'carrot-growing-3': carrotGrowing3,
   'carrot-seed': carrotSeed,
   garlic,
-  'garlic-growing': garlicGrowing,
+  'garlic-growing-1': garlicGrowing1,
+  'garlic-growing-2': garlicGrowing2,
+  'garlic-growing-3': garlicGrowing3,
   'garlic-seed': garlicSeed,
   'grape-seed': grapeSeed,
   'grape-cabernet-sauvignon': grapePurple,
@@ -274,10 +308,16 @@ export const items = {
   'grape-tempranillo-growing': grapePurpleGrowing,
   'grape-tempranillo-seed': grapeSeed,
   jalapeno,
-  'jalapeno-growing': jalapenoGrowing,
+  'jalapeno-growing-1': jalapenoGrowing1,
+  'jalapeno-growing-2': jalapenoGrowing2,
+  'jalapeno-growing-3': jalapenoGrowing3,
   'jalapeno-seed': jalapenoSeed,
   pumpkin,
-  'pumpkin-growing': pumpkinGrowing,
+  'pumpkin-growing-1': pumpkinGrowing1,
+  'pumpkin-growing-2': pumpkinGrowing2,
+  'pumpkin-growing-3': pumpkinGrowing3,
+  'pumpkin-growing-4': pumpkinGrowing4,
+  'pumpkin-growing-5': pumpkinGrowing5,
   'pumpkin-seed': pumpkinSeed,
   pea,
   'pea-growing': peaGrowing,
@@ -286,34 +326,54 @@ export const items = {
   'spinach-growing': spinachGrowing,
   'spinach-seed': spinachSeed,
   corn,
-  'corn-growing': cornGrowing,
+  'corn-growing-1': cornGrowing1,
+  'corn-growing-2': cornGrowing2,
+  'corn-growing-3': cornGrowing3,
+  'corn-growing-4': cornGrowing4,
+  'corn-growing-5': cornGrowing5,
   'corn-seed': cornSeed,
   potato,
-  'potato-growing': potatoGrowing,
+  'potato-growing-1': potatoGrowing1,
+  'potato-growing-2': potatoGrowing2,
+  'potato-growing-3': potatoGrowing3,
   'potato-seed': potatoSeed,
   olive,
   'olive-growing': oliveGrowing,
   'olive-seed': oliveSeed,
   onion,
-  'onion-growing': onionGrowing,
+  'onion-growing-1': onionGrowing1,
+  'onion-growing-2': onionGrowing2,
+  'onion-growing-3': onionGrowing3,
   'onion-seed': onionSeed,
   soybean,
   'soybean-growing': soybeanGrowing,
   'soybean-seed': soybeanSeed,
   'sweet-potato': sweetPotato,
-  'sweet-potato-growing': sweetPotatoGrowing,
+  'sweet-potato-growing-1': sweetPotatoGrowing1,
+  'sweet-potato-growing-2': sweetPotatoGrowing2,
+  'sweet-potato-growing-3': sweetPotatoGrowing3,
+  'sweet-potato-growing-4': sweetPotatoGrowing4,
   'sweet-potato-seed': sweetPotatoSeed,
   wheat,
   'wheat-growing': wheatGrowing,
   'wheat-seed': wheatSeed,
   tomato,
-  'tomato-growing': tomatoGrowing,
+  'tomato-growing-1': tomatoGrowing1,
+  'tomato-growing-2': tomatoGrowing2,
+  'tomato-growing-3': tomatoGrowing3,
+  'tomato-growing-4': tomatoGrowing4,
+  'tomato-growing-5': tomatoGrowing5,
+  'tomato-growing-6': tomatoGrowing6,
   'tomato-seed': tomatoSeed,
   strawberry,
   'strawberry-growing': strawberryGrowing,
   'strawberry-seed': strawberrySeed,
   sunflower,
-  'sunflower-growing': sunflowerGrowing,
+  'sunflower-growing-1': sunflowerGrowing1,
+  'sunflower-growing-2': sunflowerGrowing2,
+  'sunflower-growing-3': sunflowerGrowing3,
+  'sunflower-growing-4': sunflowerGrowing4,
+  'sunflower-growing-5': sunflowerGrowing5,
   'sunflower-seed': sunflowerSeed,
   watermelon,
   'watermelon-growing': watermelonGrowing,

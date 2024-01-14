@@ -1,3 +1,5 @@
+/** @typedef {import('../../components/Farmhand/Farmhand').farmhand.item} farmhand.item */
+
 import { crop, fromSeed } from '../crop'
 import { cropLifeStage, cropType } from '../../enums'
 
@@ -10,8 +12,8 @@ const { SEED, GROWING } = cropLifeStage
 export const sunflowerSeed = crop({
   cropType: cropType.SUNFLOWER,
   cropTimetable: {
-    [SEED]: 3,
-    [GROWING]: [3],
+    [SEED]: 1,
+    [GROWING]: [1, 1, 1, 1, 1],
   },
   growsInto: 'sunflower',
   id: 'sunflower-seed',

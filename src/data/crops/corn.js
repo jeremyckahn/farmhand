@@ -1,3 +1,5 @@
+/** @typedef {import('../../components/Farmhand/Farmhand').farmhand.item} farmhand.item */
+
 import { crop, fromSeed } from '../crop'
 import { cropLifeStage, cropType } from '../../enums'
 
@@ -11,7 +13,7 @@ export const cornSeed = crop({
   cropType: cropType.CORN,
   cropTimetable: {
     [SEED]: 3,
-    [GROWING]: [7],
+    [GROWING]: [1, 1, 1, 2, 2],
   },
   growsInto: 'corn',
   id: 'corn-seed',

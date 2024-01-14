@@ -1070,7 +1070,7 @@ describe('transformStateDataForImport', () => {
 
 describe('getGrowingPhase', () => {
   test('it returns 0 when there is only one growing phase', () => {
-    const crop = testCrop({ itemId: 'asparagus', daysWatered: 0 })
+    const crop = testCrop({ itemId: 'wheat', daysWatered: 0 })
     expect(getGrowingPhase(crop)).toEqual(0)
   })
 
