@@ -514,7 +514,7 @@ describe('getLifeStageRange', () => {
     ])
   })
 
-  test('converts a multi-staging growing cycle into the expected stages', () => {
+  test('converts a multi-stage growing cycle into the expected stages', () => {
     expect(getLifeStageRange({ [SEED]: 2, [GROWING]: [1, 2, 1] })).toEqual([
       SEED,
       SEED,
