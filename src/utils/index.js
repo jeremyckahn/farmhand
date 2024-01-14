@@ -77,6 +77,7 @@ import {
   PERSISTED_STATE_KEYS,
   PRECIPITATION_CHANCE,
   PRICE_EVENT_STANDARD_DURATION_DECREASE,
+  PURCHASEABLE_FIELD_SIZES,
   STORAGE_EXPANSION_AMOUNT,
   STORAGE_EXPANSION_BASE_PRICE,
   STORM_CHANCE,
@@ -319,27 +320,32 @@ export const getLifeStageRange = memoize((
  * @param {farmhand.crop} crop
  * @returns {number}
  */
-export const getGrowingPhase = memoize(crop => {
-  const { itemId, daysWatered } = crop
-  const { cropTimetable } = itemsMap[itemId]
+export const getGrowingPhase = memoize(
+  crop => {
+    const { itemId, daysWatered } = crop
+    const { cropTimetable } = itemsMap[itemId]
 
-  if (cropTimetable[GROWING].length === 1) {
-    return 0
+    if (cropTimetable[GROWING].length === 1) {
+      return 0
+    }
+
+    // daysWatered is 0 based so we add 1 to it for this math
+    let daysGrowing = daysWatered + 1 - cropTimetable[SEED]
+    let phase = 1
+
+    for (let value of Object.values(cropTimetable[GROWING])) {
+      if (daysGrowing - value <= 0) break
+
+      daysGrowing -= value
+      phase += 1
+    }
+
+    return phase
+  },
+  {
+    cacheSize: PURCHASEABLE_FIELD_SIZES.get(3).columns,
   }
-
-  // daysWatered is 0 based so we add 1 to it for this math
-  let daysGrowing = daysWatered + 1 - cropTimetable[SEED]
-  let phase = 1
-
-  for (let value of Object.values(cropTimetable[GROWING])) {
-    if (daysGrowing - value <= 0) break
-
-    daysGrowing -= value
-    phase += 1
-  }
-
-  return phase
-})
+)
 
 /**
  * @param {farmhand.crop} crop
