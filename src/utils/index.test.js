@@ -506,16 +506,12 @@ describe('getCowWeight', () => {
 })
 
 describe('getLifeStageRange', () => {
-  test('converts a cropTimetable to an array of stages', () => {
-    expect(getLifeStageRange({ [SEED]: 1, [GROWING]: [2] })).toEqual([
-      SEED,
-      GROWING,
-      GROWING,
-    ])
+  test('converts a cropTimeline to an array of stages', () => {
+    expect(getLifeStageRange([1, 2])).toEqual([SEED, GROWING, GROWING])
   })
 
   test('converts a multi-stage growing cycle into the expected stages', () => {
-    expect(getLifeStageRange({ [SEED]: 2, [GROWING]: [1, 2, 1] })).toEqual([
+    expect(getLifeStageRange([2, 1, 2, 1])).toEqual([
       SEED,
       SEED,
       GROWING,
@@ -1069,17 +1065,13 @@ describe('transformStateDataForImport', () => {
 })
 
 describe('getGrowingPhase', () => {
-  test('it returns 0 when there is only one growing phase', () => {
-    const crop = testCrop({ itemId: 'wheat', daysWatered: 0 })
-    expect(getGrowingPhase(crop)).toEqual(0)
-  })
-
   test.each([
+    [0, 0],
+    [0, 1],
     [1, 2],
     [2, 3],
-    [3, 4],
   ])('it returns phase %s when days watered is %s', (phase, daysWatered) => {
-    const crop = { itemId: 'carrot', daysWatered }
+    const crop = { itemId: 'potato', daysWatered }
 
     expect(getGrowingPhase(crop)).toEqual(phase)
   })

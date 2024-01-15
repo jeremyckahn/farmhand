@@ -55,8 +55,8 @@ import garlicGrowing2 from './items/garlic-growing2.png'
 import garlicGrowing3 from './items/garlic-growing3.png'
 import garlicSeed from './items/garlic-seed.png'
 import grapeSeed from './items/grape-seed.png'
-import grapeGreenGrowing from './items/grape-green-growing.png'
-import grapePurpleGrowing from './items/grape-purple-growing.png'
+import grapeGreenGrowing1 from './items/grape-green-growing1.png'
+import grapePurpleGrowing1 from './items/grape-purple-growing1.png'
 import grapeGreen from './items/grape-green.png'
 import grapePurple from './items/grape-purple.png'
 import jalapeno from './items/jalapeno.png'
@@ -65,7 +65,7 @@ import jalapenoGrowing2 from './items/jalapeno-growing2.png'
 import jalapenoGrowing3 from './items/jalapeno-growing3.png'
 import jalapenoSeed from './items/jalapeno-seed.png'
 import pea from './items/pea.png'
-import peaGrowing from './items/pea-growing.png'
+import peaGrowing1 from './items/pea-growing1.png'
 import peaSeed from './items/pea-seed.png'
 import pumpkin from './items/pumpkin.png'
 import pumpkinGrowing1 from './items/pumpkin-growing1.png'
@@ -75,10 +75,10 @@ import pumpkinGrowing4 from './items/pumpkin-growing4.png'
 import pumpkinGrowing5 from './items/pumpkin-growing5.png'
 import pumpkinSeed from './items/pumpkin-seed.png'
 import spinach from './items/spinach.png'
-import spinachGrowing from './items/spinach-growing.png'
+import spinachGrowing1 from './items/spinach-growing1.png'
 import spinachSeed from './items/spinach-seed.png'
 import strawberry from './items/strawberry.png'
-import strawberryGrowing from './items/strawberry-growing.png'
+import strawberryGrowing1 from './items/strawberry-growing1.png'
 import strawberrySeed from './items/strawberry-seed.png'
 import compost from './items/compost.png'
 import corn from './items/corn.png'
@@ -100,7 +100,7 @@ import sweetPotatoGrowing3 from './items/sweet-potato-growing3.png'
 import sweetPotatoGrowing4 from './items/sweet-potato-growing4.png'
 import sweetPotatoSeed from './items/sweet-potato-seed.png'
 import olive from './items/olive.png'
-import oliveGrowing from './items/olive-growing.png'
+import oliveGrowing1 from './items/olive-growing1.png'
 import oliveSeed from './items/olive-seed.png'
 import onion from './items/onion.png'
 import onionGrowing1 from './items/onion-growing1.png'
@@ -108,7 +108,7 @@ import onionGrowing2 from './items/onion-growing2.png'
 import onionGrowing3 from './items/onion-growing3.png'
 import onionSeed from './items/onion-seed.png'
 import soybean from './items/soybean.png'
-import soybeanGrowing from './items/soybean-growing.png'
+import soybeanGrowing1 from './items/soybean-growing1.png'
 import soybeanSeed from './items/soybean-seed.png'
 import sunflower from './items/sunflower.png'
 import sunflowerGrowing1 from './items/sunflower-growing1.png'
@@ -118,10 +118,10 @@ import sunflowerGrowing4 from './items/sunflower-growing4.png'
 import sunflowerGrowing5 from './items/sunflower-growing5.png'
 import sunflowerSeed from './items/sunflower-seed.png'
 import watermelon from './items/watermelon.png'
-import watermelonGrowing from './items/watermelon-growing.png'
+import watermelonGrowing1 from './items/watermelon-growing1.png'
 import watermelonSeed from './items/watermelon-seed.png'
 import wheat from './items/wheat.png'
-import wheatGrowing from './items/wheat-growing.png'
+import wheatGrowing1 from './items/wheat-growing1.png'
 import wheatSeed from './items/wheat-seed.png'
 import tomato from './items/tomato.png'
 import tomatoGrowing1 from './items/tomato-growing1.png'
@@ -278,34 +278,34 @@ export const items = {
   'garlic-seed': garlicSeed,
   'grape-seed': grapeSeed,
   'grape-cabernet-sauvignon': grapePurple,
-  'grape-cabernet-sauvignon-growing': grapePurpleGrowing,
+  'grape-cabernet-sauvignon-growing-1': grapePurpleGrowing1,
   'grape-cabernet-sauvignon-seed': grapeSeed,
   'grape-chardonnay': grapeGreen,
-  'grape-chardonnay-growing': grapeGreenGrowing,
+  'grape-chardonnay-growing-1': grapeGreenGrowing1,
   'grape-chardonnay-seed': grapeSeed,
   // 'grape-merlot': grapePurple,
-  // 'grape-merlot-growing': grapePurpleGrowing,
+  // 'grape-merlot-growing-1': grapePurpleGrowing1,
   // 'grape-merlot-seed': grapeSeed,
   // 'grape-muscat': grapeGreen,
-  // 'grape-muscat-growing': grapeGreenGrowing,
+  // 'grape-muscat-growing-1': grapeGreenGrowing1,
   // 'grape-muscat-seed': grapeSeed,
   'grape-nebbiolo': grapePurple,
-  'grape-nebbiolo-growing': grapePurpleGrowing,
+  'grape-nebbiolo-growing-1': grapePurpleGrowing1,
   'grape-nebbiolo-seed': grapeSeed,
   // 'grape-pinot-blanc': grapeGreen,
-  // 'grape-pinot-blanc-growing': grapeGreenGrowing,
+  // 'grape-pinot-blanc-growing-1': grapeGreenGrowing1,
   // 'grape-pinot-blanc-seed': grapeSeed,
   // 'grape-riesling': grapeGreen,
-  // 'grape-riesling-growing': grapeGreenGrowing,
+  // 'grape-riesling-growing-1': grapeGreenGrowing1,
   // 'grape-riesling-seed': grapeSeed,
   'grape-sauvignon-blanc': grapeGreen,
-  'grape-sauvignon-blanc-growing': grapeGreenGrowing,
+  'grape-sauvignon-blanc-growing-1': grapeGreenGrowing1,
   'grape-sauvignon-blanc-seed': grapeSeed,
   // 'grape-syrah': grapePurple,
-  // 'grape-syrah-growing': grapePurpleGrowing,
+  // 'grape-syrah-growing-1': grapePurpleGrowing1,
   // 'grape-syrah-seed': grapeSeed,
   'grape-tempranillo': grapePurple,
-  'grape-tempranillo-growing': grapePurpleGrowing,
+  'grape-tempranillo-growing-1': grapePurpleGrowing1,
   'grape-tempranillo-seed': grapeSeed,
   jalapeno,
   'jalapeno-growing-1': jalapenoGrowing1,
@@ -320,10 +320,10 @@ export const items = {
   'pumpkin-growing-5': pumpkinGrowing5,
   'pumpkin-seed': pumpkinSeed,
   pea,
-  'pea-growing': peaGrowing,
+  'pea-growing-1': peaGrowing1,
   'pea-seed': peaSeed,
   spinach,
-  'spinach-growing': spinachGrowing,
+  'spinach-growing-1': spinachGrowing1,
   'spinach-seed': spinachSeed,
   corn,
   'corn-growing-1': cornGrowing1,
@@ -338,7 +338,7 @@ export const items = {
   'potato-growing-3': potatoGrowing3,
   'potato-seed': potatoSeed,
   olive,
-  'olive-growing': oliveGrowing,
+  'olive-growing-1': oliveGrowing1,
   'olive-seed': oliveSeed,
   onion,
   'onion-growing-1': onionGrowing1,
@@ -346,7 +346,7 @@ export const items = {
   'onion-growing-3': onionGrowing3,
   'onion-seed': onionSeed,
   soybean,
-  'soybean-growing': soybeanGrowing,
+  'soybean-growing-1': soybeanGrowing1,
   'soybean-seed': soybeanSeed,
   'sweet-potato': sweetPotato,
   'sweet-potato-growing-1': sweetPotatoGrowing1,
@@ -355,7 +355,7 @@ export const items = {
   'sweet-potato-growing-4': sweetPotatoGrowing4,
   'sweet-potato-seed': sweetPotatoSeed,
   wheat,
-  'wheat-growing': wheatGrowing,
+  'wheat-growing-1': wheatGrowing1,
   'wheat-seed': wheatSeed,
   tomato,
   'tomato-growing-1': tomatoGrowing1,
@@ -366,7 +366,7 @@ export const items = {
   'tomato-growing-6': tomatoGrowing6,
   'tomato-seed': tomatoSeed,
   strawberry,
-  'strawberry-growing': strawberryGrowing,
+  'strawberry-growing-1': strawberryGrowing1,
   'strawberry-seed': strawberrySeed,
   sunflower,
   'sunflower-growing-1': sunflowerGrowing1,
@@ -376,7 +376,7 @@ export const items = {
   'sunflower-growing-5': sunflowerGrowing5,
   'sunflower-seed': sunflowerSeed,
   watermelon,
-  'watermelon-growing': watermelonGrowing,
+  'watermelon-growing-1': watermelonGrowing1,
   'watermelon-seed': watermelonSeed,
   weed: weedPink, // this one is used for the inventory
   'weed-yellow': weedYellow,

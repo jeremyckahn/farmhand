@@ -2,7 +2,6 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 /** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
 /** @typedef {import("../index").farmhand.shoveledPlot} farmhand.shoveledPlot */
-/** @typedef {import("../index").farmhand.cropTimetable} farmhand.cropTimetable */
 /** @typedef {import("../index").farmhand.cow} farmhand.cow */
 /** @typedef {import("../index").farmhand.recipe} farmhand.recipe */
 /** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
@@ -294,26 +293,17 @@ export const doesPlotContainCrop = plot =>
   plot !== null && getPlotContentType(plot) === itemType.CROP
 
 export const getLifeStageRange = memoize((
-  /** @type {farmhand.cropTimetable} */ cropTimetable
+  /** @type {farmhand.cropTimeline} */ cropTimeline
 ) => {
-  return [SEED, GROWING].reduce(
-    /**
-     * @param {farmhand.cropLifeStage[]} acc
-     */
-    (acc, stage) => {
-      if (stage === GROWING) {
-        return acc.concat(
-          cropTimetable[stage].reduce(
-            (acc2, value) => acc2.concat(Array(value).fill(stage)),
-            []
-          )
-        )
-      }
+  let lifeStageRange = Array(cropTimeline.slice(0, 1)[0]).fill(SEED)
 
-      return acc.concat(Array(cropTimetable[stage]).fill(stage))
-    },
-    []
+  lifeStageRange = lifeStageRange.concat(
+    cropTimeline
+      .slice(1)
+      .reduce((acc, value) => acc.concat(Array(value).fill(GROWING)), [])
   )
+
+  return lifeStageRange
 })
 
 /**
@@ -323,17 +313,12 @@ export const getLifeStageRange = memoize((
 export const getGrowingPhase = memoize(
   crop => {
     const { itemId, daysWatered } = crop
-    const { cropTimetable } = itemsMap[itemId]
+    const { cropTimeline } = itemsMap[itemId]
 
-    if (cropTimetable[GROWING].length === 1) {
-      return 0
-    }
+    let daysGrowing = daysWatered + 1
+    let phase = 0
 
-    // daysWatered is 0 based so we add 1 to it for this math
-    let daysGrowing = daysWatered + 1 - cropTimetable[SEED]
-    let phase = 1
-
-    for (let value of Object.values(cropTimetable[GROWING])) {
+    for (let value of cropTimeline) {
       if (daysGrowing - value <= 0) break
 
       daysGrowing -= value
@@ -355,13 +340,13 @@ export const getGrowingPhase = memoize(
  */
 export const getCropLifeStage = crop => {
   const { itemId, daysWatered } = crop
-  const { cropTimetable } = itemsMap[itemId]
+  const { cropTimeline } = itemsMap[itemId]
 
-  if (!cropTimetable) {
-    throw new Error(`${itemId} has no cropTimetable`)
+  if (!cropTimeline) {
+    throw new Error(`${itemId} has no cropTimeline`)
   }
 
-  return getLifeStageRange(cropTimetable)[Math.floor(daysWatered)] || GROWN
+  return getLifeStageRange(cropTimeline)[Math.floor(daysWatered)] || GROWN
 }
 
 /**
@@ -381,11 +366,7 @@ export const getPlotImage = (plotContents, x, y) => {
 
         case GROWING:
           const phase = getGrowingPhase(plotContents)
-          if (phase === 0) {
-            itemImageId = `${plotContents.itemId}-growing`
-          } else {
-            itemImageId = `${plotContents.itemId}-growing-${phase}`
-          }
+          itemImageId = `${plotContents.itemId}-growing-${phase}`
           break
 
         default:

@@ -16,21 +16,13 @@
  */
 
 /**
- * Lookup table for the lifecycle durations of a crop (in days).
- * @typedef farmhand.cropTimetable
- * @property {number} seed
- * @property {number} growing
- * @readonly
- */
-
-/**
  * Reference object for an item.
  * @typedef farmhand.item
  * @property {string} id
  * @property {string} name
  * @property {string} type
  * @property {number} value
- * @property {farmhand.cropTimetable} [cropTimetable]
+ * @property {Array.<number>} [cropTimeline] The number of days for each growing phase
  * @property {cropType} [cropType]
  * @property {string} [description] A user-friendly description of the item.
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.

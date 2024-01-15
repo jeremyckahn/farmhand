@@ -9,10 +9,7 @@ import { itemsMap } from '../data/maps'
 import { moneyString } from '../utils/moneyString.js'
 
 const getDaysToMature = seedItem => {
-  return Object.values(seedItem.cropTimetable).reduce(
-    (days, acc) => days + acc,
-    0
-  )
+  return seedItem.cropTimeline.reduce((days, acc) => days + acc)
 }
 
 /**

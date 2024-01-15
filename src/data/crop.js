@@ -10,17 +10,17 @@ const { freeze } = Object
  * @returns {farmhand.item}
  */
 export const crop = ({
-  cropTimetable,
+  cropTimeline,
   growsInto,
   tier,
 
   isSeed = Boolean(growsInto),
-  cropLifecycleDuration = getCropLifecycleDuration({ cropTimetable }),
+  cropLifecycleDuration = getCropLifecycleDuration({ cropTimeline }),
 
   ...rest
 }) =>
   freeze({
-    cropTimetable,
+    cropTimeline,
     doesPriceFluctuate: true,
     tier,
     type: itemType.CROP,
@@ -41,20 +41,20 @@ export const crop = ({
  * @returns {farmhand.item}
  */
 export const fromSeed = (
-  { cropTimetable, cropType, growsInto, tier },
+  { cropTimeline, cropType, growsInto, tier },
   { variantIdx = 0, canBeFermented = false } = {}
 ) => {
   const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 
   return {
-    cropTimetable,
+    cropTimeline,
     cropType,
     doesPriceFluctuate: true,
     id: variants[variantIdx],
     tier,
     type: itemType.CROP,
     ...(canBeFermented && {
-      daysToFerment: getCropLifecycleDuration({ cropTimetable }) * tier,
+      daysToFerment: getCropLifecycleDuration({ cropTimeline }) * tier,
     }),
   }
 }
