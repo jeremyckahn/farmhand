@@ -1,14 +1,8 @@
 import { testCrop } from '../test-utils'
 import { items as itemImages, animals } from '../img'
 import { cowColors, cropLifeStage, genders, standardCowColors } from '../enums'
-import {
-  sampleCropItem1,
-  sampleCropSeedsItem1,
-  craftedItem1,
-  sampleItem1,
-  sampleFieldTool1,
-  milk1,
-} from '../data/items'
+import { rainbowFertilizer, carrot, carrotSeed, milk1 } from '../data/items'
+import { carrotSoup } from '../data/recipes'
 import {
   COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
@@ -46,6 +40,7 @@ import {
   getCowWeight,
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
+  getGrowingPhase,
   getSeedItemIdFromFinalStageCropItemId,
   getItemCurrentValue,
   getLifeStageRange,
@@ -108,28 +103,13 @@ describe('integerString', () => {
 })
 
 describe('isItemAFarmProduct', () => {
-  describe('item is a seed', () => {
-    test('returns correct result', () => {
-      expect(isItemAFarmProduct(sampleCropSeedsItem1)).toBe(false)
-    })
-  })
-
-  describe('item is grown crop', () => {
-    test('returns correct result', () => {
-      expect(isItemAFarmProduct(sampleCropItem1)).toBe(true)
-    })
-  })
-
-  describe('item is milk', () => {
-    test('returns correct result', () => {
-      expect(isItemAFarmProduct(milk1)).toBe(true)
-    })
-  })
-
-  describe('item is a crafted item', () => {
-    test('returns correct result', () => {
-      expect(isItemAFarmProduct(craftedItem1)).toBe(true)
-    })
+  test.each([
+    ['seed', carrotSeed, false],
+    ['crop', carrot, true],
+    ['milk', milk1, true],
+    ['crafted item', carrotSoup, true],
+  ])('when item is a %s', (_itemType, item, isAFarmProduct) => {
+    expect(isItemAFarmProduct(item)).toBe(isAFarmProduct)
   })
 })
 
@@ -138,24 +118,24 @@ describe('getItemCurrentValue', () => {
 
   beforeEach(() => {
     valueAdjustments = {
-      'sample-item-1': 1.5,
-      'sample-field-tool-1': 1.5,
+      carrot: 1.5,
+      'rainbow-fertilizer': 1.5,
     }
   })
 
   describe('stable value item', () => {
     test('computes value', () => {
-      expect(
-        getItemCurrentValue({ id: 'sample-item-1' }, valueAdjustments)
-      ).toEqual(sampleItem1.value * 1.5)
+      expect(getItemCurrentValue({ id: 'carrot' }, valueAdjustments)).toEqual(
+        carrot.value * 1.5
+      )
     })
   })
 
   describe('fluctuating value item', () => {
     test('computes value', () => {
       expect(
-        getItemCurrentValue({ id: 'sample-field-tool-1' }, valueAdjustments)
-      ).toEqual(sampleFieldTool1.value)
+        getItemCurrentValue({ id: 'rainbow-fertilizer' }, valueAdjustments)
+      ).toEqual(rainbowFertilizer.value)
     })
   })
 })
@@ -526,9 +506,16 @@ describe('getCowWeight', () => {
 })
 
 describe('getLifeStageRange', () => {
-  test('converts a cropTimetable to an array of stages', () => {
-    expect(getLifeStageRange({ [SEED]: 1, [GROWING]: 2 })).toEqual([
+  test('converts a cropTimeline to an array of stages', () => {
+    expect(getLifeStageRange([1, 2])).toEqual([SEED, GROWING, GROWING])
+  })
+
+  test('converts a multi-stage growing cycle into the expected stages', () => {
+    expect(getLifeStageRange([2, 1, 2, 1])).toEqual([
       SEED,
+      SEED,
+      GROWING,
+      GROWING,
       GROWING,
       GROWING,
     ])
@@ -537,11 +524,11 @@ describe('getLifeStageRange', () => {
 
 describe('getCropLifeStage', () => {
   test('maps a life cycle label to an image name chunk', () => {
-    const itemId = 'sample-crop-1'
+    const itemId = 'carrot'
 
     expect(getCropLifeStage({ itemId, daysWatered: 0 })).toBe(SEED)
-    expect(getCropLifeStage({ itemId, daysWatered: 1.5 })).toBe(GROWING)
-    expect(getCropLifeStage({ itemId, daysWatered: 3 })).toBe(GROWN)
+    expect(getCropLifeStage({ itemId, daysWatered: 2.5 })).toBe(GROWING)
+    expect(getCropLifeStage({ itemId, daysWatered: 5 })).toBe(GROWN)
   })
 })
 
@@ -550,17 +537,17 @@ describe('getPlotImage', () => {
     expect(getPlotImage(null)).toBe(null)
   })
 
-  test('returns a plot images for a crop', () => {
-    const itemId = 'sample-crop-1'
+  test('returns plot images for a crop', () => {
+    const itemId = 'carrot'
 
     expect(getPlotImage(testCrop({ itemId, daysWatered: 0 }))).toBe(
-      itemImages['sample-crop-1-seed']
+      itemImages['carrot-seed']
     )
     expect(getPlotImage(testCrop({ itemId, daysWatered: 1 }))).toBe(
-      itemImages['sample-crop-1-growing']
+      itemImages['carrot-growing']
     )
     expect(getPlotImage(testCrop({ itemId, daysWatered: 3 }))).toBe(
-      itemImages['sample-crop-1']
+      itemImages['carrot']
     )
   })
 
@@ -751,9 +738,9 @@ describe('getRandomUnlockedCrop', () => {
 
 describe('getPriceEventForCrop', () => {
   test('returns price event', () => {
-    expect(getPriceEventForCrop(sampleCropItem1)).toEqual({
-      itemId: sampleCropItem1.id,
-      daysRemaining: 2,
+    expect(getPriceEventForCrop(carrot)).toEqual({
+      itemId: carrot.id,
+      daysRemaining: 4,
     })
   })
 })
@@ -762,8 +749,8 @@ describe('farmProductsSold', () => {
   test('sums products sold', () => {
     expect(
       farmProductsSold({
-        [sampleCropItem1.id]: 3,
-        [sampleCropSeedsItem1.id]: 2,
+        [carrot.id]: 3,
+        [carrotSeed.id]: 2,
       })
     ).toEqual(3)
   })
@@ -1057,8 +1044,8 @@ describe('transformStateDataForImport', () => {
   test('it calculates experience from itemsSold if experience is 0', () => {
     state.experience = 0
     state.itemsSold = {
-      'sample-crop-1': 5,
-      'sample-crop-1-seed': 10,
+      carrot: 5,
+      'carrot-seed': 10,
     }
 
     const sanitizedState = transformStateDataForImport(state)
@@ -1068,11 +1055,24 @@ describe('transformStateDataForImport', () => {
       experience: 5,
       inventoryLimit: 1000,
       itemsSold: {
-        'sample-crop-1': 5,
-        'sample-crop-1-seed': 10,
+        carrot: 5,
+        'carrot-seed': 10,
       },
       loanBalance: 100,
       money: 1234,
     })
+  })
+})
+
+describe('getGrowingPhase', () => {
+  test.each([
+    [0, 0],
+    [0, 1],
+    [1, 2],
+    [2, 3],
+  ])('it returns phase %s when days watered is %s', (phase, daysWatered) => {
+    const crop = { itemId: 'potato', daysWatered }
+
+    expect(getGrowingPhase(crop)).toEqual(phase)
   })
 })

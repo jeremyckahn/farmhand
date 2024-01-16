@@ -1,7 +1,5 @@
 import { testItem } from '../../test-utils'
-import { cropLifeStage, itemType } from '../../enums'
-
-const { SEED, GROWING } = cropLifeStage
+import { itemType } from '../../enums'
 
 // Patch the original items data into the mock. This has the potential to break
 // with future versions of Webpack (keep an eye on
@@ -87,10 +85,7 @@ export const sampleCropItem1 = testItem({
   name: 'Sample Crop Item 1',
   type: itemType.CROP,
   value: 2,
-  cropTimetable: {
-    [SEED]: 1,
-    [GROWING]: 2,
-  },
+  cropTimeline: [1, 2],
 })
 
 export const sampleCropSeedsItem2 = testItem({
@@ -111,10 +106,7 @@ export const sampleCropItem2 = testItem({
   name: 'Sample Crop Item 2',
   type: itemType.CROP,
   value: 3,
-  cropTimetable: {
-    [SEED]: 2,
-    [GROWING]: 3,
-  },
+  cropTimeline: [2, 3],
 })
 
 export const sampleCropSeedsItem3 = testItem({
@@ -134,10 +126,7 @@ export const sampleCropItem3 = testItem({
   name: 'Sample Crop Item 3',
   type: itemType.CROP,
   value: 4,
-  cropTimetable: {
-    [SEED]: 5,
-    [GROWING]: 5,
-  },
+  cropTimeline: [5, 5],
 })
 
 export const sampleFieldTool1 = testItem({

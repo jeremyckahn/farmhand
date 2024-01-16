@@ -2,7 +2,6 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 /** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
 /** @typedef {import("../index").farmhand.shoveledPlot} farmhand.shoveledPlot */
-/** @typedef {import("../index").farmhand.cropTimetable} farmhand.cropTimetable */
 /** @typedef {import("../index").farmhand.cow} farmhand.cow */
 /** @typedef {import("../index").farmhand.recipe} farmhand.recipe */
 /** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
@@ -72,6 +71,7 @@ import {
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   INITIAL_STORAGE_LIMIT,
+  LARGEST_PURCHASABLE_FIELD_SIZE,
   MALE_COW_WEIGHT_MULTIPLIER,
   PEER_METADATA_STATE_KEYS,
   PERSISTED_STATE_KEYS,
@@ -293,15 +293,49 @@ export const doesPlotContainCrop = plot =>
   plot !== null && getPlotContentType(plot) === itemType.CROP
 
 export const getLifeStageRange = memoize((
-  /** @type {farmhand.cropTimetable} */ cropTimetable
-) =>
-  [SEED, GROWING].reduce(
-    /**
-     * @param {farmhand.cropLifeStage[]} acc
-     */
-    (acc, stage) => acc.concat(Array(cropTimetable[stage]).fill(stage)),
-    []
+  /** @type {number[]} */ cropTimeline
+) => {
+  let lifeStageRange = Array(cropTimeline[0]).fill(SEED)
+
+  lifeStageRange = lifeStageRange.concat(
+    cropTimeline
+      .slice(1)
+      .reduce(
+        (/** @type {number[]} */ acc, value) =>
+          acc.concat(Array(value).fill(GROWING)),
+        []
+      )
   )
+
+  return lifeStageRange
+})
+
+/**
+ * @param {farmhand.crop} crop
+ * @returns {number}
+ */
+export const getGrowingPhase = memoize(
+  crop => {
+    const { itemId, daysWatered } = crop
+    const { cropTimeline = [] } = itemsMap[itemId]
+
+    let daysGrowing = daysWatered + 1
+    let phase = 0
+
+    for (let value of cropTimeline) {
+      if (daysGrowing - value <= 0) break
+
+      daysGrowing -= value
+      phase += 1
+    }
+
+    return phase
+  },
+  {
+    cacheSize:
+      LARGEST_PURCHASABLE_FIELD_SIZE.columns *
+      LARGEST_PURCHASABLE_FIELD_SIZE.rows,
+  }
 )
 
 /**
@@ -310,13 +344,13 @@ export const getLifeStageRange = memoize((
  */
 export const getCropLifeStage = crop => {
   const { itemId, daysWatered } = crop
-  const { cropTimetable } = itemsMap[itemId]
+  const { cropTimeline } = itemsMap[itemId]
 
-  if (!cropTimetable) {
-    throw new Error(`${itemId} has no cropTimetable`)
+  if (!cropTimeline) {
+    throw new Error(`${itemId} has no cropTimeline`)
   }
 
-  return getLifeStageRange(cropTimetable)[Math.floor(daysWatered)] || GROWN
+  return getLifeStageRange(cropTimeline)[Math.floor(daysWatered)] || GROWN
 }
 
 /**
@@ -335,7 +369,8 @@ export const getPlotImage = (plotContents, x, y) => {
           break
 
         case GROWING:
-          itemImageId = `${plotContents.itemId}-growing`
+          const phase = getGrowingPhase(plotContents)
+          itemImageId = `${plotContents.itemId}-growing-${phase}`
           break
 
         default:

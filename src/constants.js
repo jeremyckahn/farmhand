@@ -3,6 +3,10 @@
  * @ignore
  */
 
+/**
+ * @typedef {import('./index').farmhand.purchaseableFieldSize} farmhand.purchaseableFieldSize
+ */
+
 import { cowColors, fieldMode, stageFocusType, toolLevel } from './enums'
 
 const { freeze } = Object
@@ -34,6 +38,9 @@ export const STORAGE_EXPANSION_SCALE_PREMIUM = 50
 export const INITIAL_FIELD_WIDTH = 6
 export const INITIAL_FIELD_HEIGHT = 10
 
+/**
+ * @type Map<number, farmhand.purchaseableFieldSize>
+ */
 export const PURCHASEABLE_FIELD_SIZES = freeze(
   new Map([
     [1, { columns: 8, rows: 12, price: 1_000 }],
@@ -41,6 +48,10 @@ export const PURCHASEABLE_FIELD_SIZES = freeze(
     [3, { columns: 12, rows: 18, price: 3_000 }],
   ])
 )
+
+export const LARGEST_PURCHASABLE_FIELD_SIZE = /** @type {farmhand.purchaseableFieldSize} */ (PURCHASEABLE_FIELD_SIZES.get(
+  PURCHASEABLE_FIELD_SIZES.size
+))
 
 export const PURCHASEABLE_COMBINES = freeze(
   new Map([[1, { type: 'Basic', price: 500_000 }]])

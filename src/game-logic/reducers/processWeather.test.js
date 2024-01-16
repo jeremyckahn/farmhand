@@ -1,17 +1,18 @@
 import { testCrop } from '../../test-utils'
 
-jest.mock('../../data/maps')
+import { shouldPrecipitateToday } from '../../utils'
 
-// TODO: Dependency-inject external constants rather than mocking them out.
+import { processWeather } from './processWeather'
+
+jest.mock('../../data/maps')
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  shouldPrecipitateToday: jest.fn(),
+}))
 
 describe('processWeather', () => {
   test('does not water plants when there is no precipitation', () => {
-    jest.resetModules()
-    jest.mock('../../constants', () => ({
-      PRECIPITATION_CHANCE: 0,
-    }))
-
-    const { processWeather } = jest.requireActual('./processWeather')
+    shouldPrecipitateToday.mockReturnValue(false)
 
     const state = processWeather({
       field: [[testCrop()]],
@@ -22,12 +23,7 @@ describe('processWeather', () => {
   })
 
   test('does water plants on a rainy day', () => {
-    jest.resetModules()
-    jest.mock('../../constants', () => ({
-      PRECIPITATION_CHANCE: 1,
-    }))
-
-    const { processWeather } = jest.requireActual('./processWeather')
+    shouldPrecipitateToday.mockReturnValue(true)
 
     const state = processWeather({
       field: [[testCrop()]],

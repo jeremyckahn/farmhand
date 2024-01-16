@@ -1,7 +1,7 @@
-import { crop, fromSeed } from '../crop'
-import { cropLifeStage, cropType } from '../../enums'
+/** @typedef {import('../../components/Farmhand/Farmhand').farmhand.item} farmhand.item */
 
-const { SEED, GROWING } = cropLifeStage
+import { crop, fromSeed } from '../crop'
+import { cropType } from '../../enums'
 
 /**
  * @property farmhand.module:items.oliveSeed
@@ -9,10 +9,7 @@ const { SEED, GROWING } = cropLifeStage
  */
 export const oliveSeed = crop({
   cropType: cropType.OLIVE,
-  cropTimetable: {
-    [SEED]: 3,
-    [GROWING]: 6,
-  },
+  cropTimeline: [3, 6],
   growsInto: 'olive',
   id: 'olive-seed',
   name: 'Olive Seed',

@@ -16,21 +16,13 @@
  */
 
 /**
- * Lookup table for the lifecycle durations of a crop (in days).
- * @typedef farmhand.cropTimetable
- * @property {number} seed
- * @property {number} growing
- * @readonly
- */
-
-/**
  * Reference object for an item.
  * @typedef farmhand.item
  * @property {string} id
  * @property {string} name
  * @property {string} type
  * @property {number} value
- * @property {farmhand.cropTimetable} [cropTimetable]
+ * @property {Array.<number>} [cropTimeline] The number of days for each growing phase
  * @property {cropType} [cropType]
  * @property {string} [description] A user-friendly description of the item.
  * @property {string} [enablesFieldMode] The fieldMode that this item enables.
@@ -230,6 +222,13 @@
  * @property {number} sprinklerRange
  * @property {Object.<string, boolean>} items
  * @property {Object.<string, boolean>} tools
+ */
+
+/**
+ * @typedef {Object} farmhand.purchaseableFieldSize
+ * @property {number} columns
+ * @property {number} rows
+ * @property {number} price
  */
 
 import './polyfills'
