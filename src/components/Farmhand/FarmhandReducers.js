@@ -118,6 +118,10 @@ export class FarmhandReducers extends Component {
     throw new Error('Unimplemented')
   }
   /** @type BoundReducer */
+  purchaseForest() {
+    throw new Error('Unimplemented')
+  }
+  /** @type BoundReducer */
   purchaseItem() {
     throw new Error('Unimplemented')
   }

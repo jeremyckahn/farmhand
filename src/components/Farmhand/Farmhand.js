@@ -60,6 +60,7 @@ import { levelAchieved } from '../../utils/levelAchieved'
 import {
   computeMarketPositions,
   createNewField,
+  createNewForest,
   doesMenuObstructStage,
   generateCow,
   getAvailableShopInventory,
@@ -116,7 +117,7 @@ import {
   SERVER_ERROR,
   UPDATE_AVAILABLE,
 } from '../../strings'
-import { endpoints, rtcConfig, trackerUrls } from '../../config'
+import { endpoints, features, rtcConfig, trackerUrls } from '../../config'
 
 import { scarecrow } from '../../data/items'
 
@@ -214,6 +215,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} experience
  * @property {string} farmName
  * @property {(?farmhand.plotContent)[][]} field
+ * @property {(?farmhand.plotContent)[][]} forest
  * @property {farmhand.fieldMode} fieldMode
  * @property {Function?} getCowAccept https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowReject https://github.com/dmotz/trystero#receiver
@@ -272,6 +274,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} purchasedCowPen
  * @property {number} purchasedCellar
  * @property {number} purchasedField
+ * @property {number} purchasedForest
  * @property {number} purchasedSmelter
  * @property {number} profitabilityStreak
  * @property {number} record7dayProfitAverage
@@ -364,11 +367,15 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   get viewList() {
-    const { CELLAR, COW_PEN, HOME, WORKSHOP } = stageFocusType
+    const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
     const viewList = [...STANDARD_VIEW_LIST]
 
     if (this.state.showHomeScreen) {
       viewList.unshift(HOME)
+    }
+
+    if (this.state.purchasedForest && features.FOREST) {
+      viewList.push(FOREST)
     }
 
     if (this.state.purchasedCowPen) {
@@ -437,6 +444,7 @@ export default class Farmhand extends FarmhandReducers {
       farmName: 'Unnamed',
       field: createNewField(),
       fieldMode: OBSERVE,
+      forest: createNewForest(),
       getCowAccept: noop,
       getCowReject: noop,
       getCowTradeRequest: noop,
@@ -490,6 +498,7 @@ export default class Farmhand extends FarmhandReducers {
       purchasedCowPen: 0,
       purchasedCellar: 0,
       purchasedField: 0,
+      purchasedForest: 0,
       purchasedSmelter: 0,
       sendCowTradeRequest: noop,
       showHomeScreen: true,

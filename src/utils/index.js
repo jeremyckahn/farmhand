@@ -70,6 +70,8 @@ import {
   INFINITE_STORAGE_LIMIT,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
+  INITIAL_FOREST_HEIGHT,
+  INITIAL_FOREST_WIDTH,
   INITIAL_STORAGE_LIMIT,
   LARGEST_PURCHASABLE_FIELD_SIZE,
   MALE_COW_WEIGHT_MULTIPLIER,
@@ -191,6 +193,12 @@ export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
     .fill(undefined)
     .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null))
+
+export const createNewForest = () => {
+  return new Array(INITIAL_FOREST_HEIGHT)
+    .fill(undefined)
+    .map(() => new Array(INITIAL_FOREST_WIDTH).fill(null))
+}
 
 /**
  * @param {number} number

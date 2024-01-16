@@ -268,6 +268,13 @@ export default {
   },
 
   /**
+   * @param {number} forestId
+   */
+  handleForestPurchase(forestId) {
+    this.purchaseForest(forestId)
+  },
+
+  /**
    * @param {number} combineId
    */
   handleCombinePurchase(combineId) {

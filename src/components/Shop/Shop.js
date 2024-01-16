@@ -27,6 +27,7 @@ import {
   PURCHASEABLE_COMPOSTERS,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
+  PURCHASABLE_FOREST_SIZES,
   PURCHASEABLE_SMELTERS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
@@ -60,6 +61,7 @@ export const Shop = ({
   handleCowPenPurchase,
   handleCellarPurchase,
   handleFieldPurchase,
+  handleForestPurchase,
   handleSmelterPurchase,
   handleStorageExpansionPurchase,
   inventoryLimit,
@@ -69,6 +71,7 @@ export const Shop = ({
   purchasedCowPen,
   purchasedCellar,
   purchasedField,
+  purchasedForest,
   purchasedSmelter,
   shopInventory,
   toolLevels,
@@ -193,6 +196,22 @@ export const Shop = ({
                     `${dollarString(price)}: Space for ${space} kegs`,
                   tiers: PURCHASEABLE_CELLARS,
                   title: 'Buy cellar',
+                }}
+              />
+            </li>
+          ) : null}
+          {features.FOREST ? (
+            <li>
+              <TierPurchase
+                {...{
+                  onBuyClick: handleForestPurchase,
+                  maxedOutPlaceholder:
+                    "You've purchased the largest forest available!",
+                  purchasedTier: purchasedForest,
+                  renderTierLabel: ({ columns, price, rows }) =>
+                    `${dollarString(price)}: ${columns} x ${rows}`,
+                  tiers: PURCHASABLE_FOREST_SIZES,
+                  title: purchasedForest ? 'Expand Forest' : 'Purchase Forest',
                 }}
               />
             </li>
