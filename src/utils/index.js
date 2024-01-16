@@ -2,7 +2,6 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 /** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
 /** @typedef {import("../index").farmhand.shoveledPlot} farmhand.shoveledPlot */
-/** @typedef {import("../index").farmhand.cropTimeline} farmhand.cropTimeline */
 /** @typedef {import("../index").farmhand.cow} farmhand.cow */
 /** @typedef {import("../index").farmhand.recipe} farmhand.recipe */
 /** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
@@ -72,12 +71,12 @@ import {
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
   INITIAL_STORAGE_LIMIT,
+  LARGEST_PURCHASABLE_FIELD_SIZE,
   MALE_COW_WEIGHT_MULTIPLIER,
   PEER_METADATA_STATE_KEYS,
   PERSISTED_STATE_KEYS,
   PRECIPITATION_CHANCE,
   PRICE_EVENT_STANDARD_DURATION_DECREASE,
-  PURCHASEABLE_FIELD_SIZES,
   STORAGE_EXPANSION_AMOUNT,
   STORAGE_EXPANSION_BASE_PRICE,
   STORM_CHANCE,
@@ -294,14 +293,18 @@ export const doesPlotContainCrop = plot =>
   plot !== null && getPlotContentType(plot) === itemType.CROP
 
 export const getLifeStageRange = memoize((
-  /** @type {farmhand.cropTimeline} */ cropTimeline
+  /** @type {number[]} */ cropTimeline
 ) => {
   let lifeStageRange = Array(cropTimeline[0]).fill(SEED)
 
   lifeStageRange = lifeStageRange.concat(
     cropTimeline
       .slice(1)
-      .reduce((acc, value) => acc.concat(Array(value).fill(GROWING)), [])
+      .reduce(
+        (/** @type {number[]} */ acc, value) =>
+          acc.concat(Array(value).fill(GROWING)),
+        []
+      )
   )
 
   return lifeStageRange
@@ -314,7 +317,7 @@ export const getLifeStageRange = memoize((
 export const getGrowingPhase = memoize(
   crop => {
     const { itemId, daysWatered } = crop
-    const { cropTimeline } = itemsMap[itemId]
+    const { cropTimeline = [] } = itemsMap[itemId]
 
     let daysGrowing = daysWatered + 1
     let phase = 0
@@ -330,8 +333,8 @@ export const getGrowingPhase = memoize(
   },
   {
     cacheSize:
-      PURCHASEABLE_FIELD_SIZES.get(3).columns *
-      PURCHASEABLE_FIELD_SIZES.get(3).rows,
+      LARGEST_PURCHASABLE_FIELD_SIZE.columns *
+      LARGEST_PURCHASABLE_FIELD_SIZE.rows,
   }
 )
 

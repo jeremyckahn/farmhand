@@ -224,6 +224,13 @@
  * @property {Object.<string, boolean>} tools
  */
 
+/**
+ * @typedef {Object} farmhand.purchaseableFieldSize
+ * @property {number} columns
+ * @property {number} rows
+ * @property {number} price
+ */
+
 import './polyfills'
 import React from 'react'
 import ReactDOM from 'react-dom'
