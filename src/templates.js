@@ -369,12 +369,6 @@ export const NEW_COW_OFFERED_FOR_TRADE = (_, peerMetadata) =>
 
 /**
  * @param {TemplatesStringsArray}
- * @returns {string}
- */
-export const FOREST_UNLOCKED = _ => 'You now have access to the Forest!'
-
-/**
- * @param {TemplatesStringsArray}
  * @param {number} numTrees
  * @returns {string}
  */
