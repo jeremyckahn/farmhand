@@ -2,6 +2,7 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 /** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
 /** @typedef {import("../index").farmhand.shoveledPlot} farmhand.shoveledPlot */
+/** @typedef {import("../index").farmhand.cropTimeline} farmhand.cropTimeline */
 /** @typedef {import("../index").farmhand.cow} farmhand.cow */
 /** @typedef {import("../index").farmhand.recipe} farmhand.recipe */
 /** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
@@ -295,7 +296,7 @@ export const doesPlotContainCrop = plot =>
 export const getLifeStageRange = memoize((
   /** @type {farmhand.cropTimeline} */ cropTimeline
 ) => {
-  let lifeStageRange = Array(cropTimeline.slice(0, 1)[0]).fill(SEED)
+  let lifeStageRange = Array(cropTimeline[0]).fill(SEED)
 
   lifeStageRange = lifeStageRange.concat(
     cropTimeline
