@@ -1,1 +1,1 @@
-export { default } from './Forest'
+export { Forest } from './Forest'

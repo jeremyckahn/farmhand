@@ -4,6 +4,13 @@ import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings'
 
 import { purchaseForest } from './purchaseForest'
 
+const tree = () => {
+  return {
+    daysOld: 0,
+    itemId: 'test-tree',
+  }
+}
+
 describe('purchaseForest', () => {
   test('updates purchasedForest', () => {
     const { purchasedForest } = purchaseForest({ purchasedForest: 0 }, 0)
@@ -60,15 +67,15 @@ describe('purchaseForest', () => {
         {
           todaysNotifications: [],
           forest: [
-            [testCrop(), null],
-            [null, testCrop()],
+            [tree(), null],
+            [null, tree()],
           ],
         },
         1
       )
 
-      expectedForest[0][0] = testCrop()
-      expectedForest[1][1] = testCrop()
+      expectedForest[0][0] = tree()
+      expectedForest[1][1] = tree()
 
       expect(forest).toEqual(expectedForest)
     })

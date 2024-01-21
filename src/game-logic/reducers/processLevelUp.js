@@ -6,8 +6,9 @@ import {
   unlockTool,
 } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
-import { SPRINKLER_ITEM_ID } from '../../constants'
+import { SPRINKLER_ITEM_ID, UNLOCK_FOREST_LEVEL } from '../../constants'
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
+import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings'
 
 import { addItemToInventory } from './addItemToInventory'
 import { showNotification } from './showNotification'
@@ -61,6 +62,10 @@ export const processLevelUp = (state, oldLevel) => {
       LEVEL_GAINED_NOTIFICATION`${i}${randomCropSeed}`,
       'success'
     )
+
+    if (i === UNLOCK_FOREST_LEVEL) {
+      state = showNotification(state, FOREST_AVAILABLE_NOTIFICATION, 'success')
+    }
   }
 
   return state

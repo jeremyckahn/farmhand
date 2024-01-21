@@ -4,7 +4,7 @@ import { array, arrayOf, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import Field from '../Field'
-import Forest from '../Forest'
+import { Forest } from '../Forest'
 import Home from '../Home'
 import CowPen from '../CowPen'
 import Shop from '../Shop'

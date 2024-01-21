@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { features } from '../../config'
 import { moneyString } from '../../utils/moneyString'
+import { levelAchieved } from '../../utils/levelAchieved'
 import {
   dollarString,
   getCostOfNextStorageExpansion,
@@ -30,6 +31,7 @@ import {
   PURCHASABLE_FOREST_SIZES,
   PURCHASEABLE_SMELTERS,
   STORAGE_EXPANSION_AMOUNT,
+  UNLOCK_FOREST_LEVEL,
 } from '../../constants'
 import Inventory from '../Inventory'
 import TierPurchase from '../TierPurchase'
@@ -56,6 +58,7 @@ const categorizeShopInventory = memoize(shopInventory =>
 )
 
 export const Shop = ({
+  experience,
   handleCombinePurchase,
   handleComposterPurchase,
   handleCowPenPurchase,
@@ -81,6 +84,8 @@ export const Shop = ({
   const [currentTab, setCurrentTab] = useState(0)
 
   const { seeds, fieldTools } = categorizeShopInventory(shopInventory)
+
+  const isForestUnlocked = levelAchieved(experience) >= UNLOCK_FOREST_LEVEL
 
   return (
     <div className="Shop">
@@ -200,7 +205,7 @@ export const Shop = ({
               />
             </li>
           ) : null}
-          {features.FOREST ? (
+          {features.FOREST && isForestUnlocked ? (
             <li>
               <TierPurchase
                 {...{
@@ -211,7 +216,7 @@ export const Shop = ({
                   renderTierLabel: ({ columns, price, rows }) =>
                     `${dollarString(price)}: ${columns} x ${rows}`,
                   tiers: PURCHASABLE_FOREST_SIZES,
-                  title: purchasedForest ? 'Expand Forest' : 'Purchase Forest',
+                  title: 'Expand Forest',
                 }}
               />
             </li>

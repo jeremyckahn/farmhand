@@ -2,7 +2,9 @@
  * @typedef {import("../../index").farmhand.item} farmhand.item
  * @typedef {import("../../index").farmhand.cow} farmhand.cow
  * @typedef {import("../../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen
+ * @typedef {import("../../index").farmhand.forestForageable} farmhand.forestForageable
  * @typedef {import("../../index").farmhand.keg} farmhand.keg
+ * @typedef {import("../../index").farmhand.plantedTree} farmhand.plantedTree
  * @typedef {import("../../index").farmhand.plotContent} farmhand.plotContent
  * @typedef {import("../../index").farmhand.peerMessage} farmhand.peerMessage
  * @typedef {import("../../index").farmhand.peerMetadata} farmhand.peerMetadata
@@ -93,6 +95,7 @@ import {
   STANDARD_LOAN_AMOUNT,
   Z_INDEX,
   STANDARD_VIEW_LIST,
+  UNLOCK_FOREST_LEVEL,
 } from '../../constants'
 import {
   HEARTBEAT_INTERVAL_PERIOD,
@@ -215,7 +218,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} experience
  * @property {string} farmName
  * @property {(?farmhand.plotContent)[][]} field
- * @property {(?farmhand.plotContent)[][]} forest
+ * @property {(farmhand.plantedTree | farmhand.forestForageable | null)[][]} forest
  * @property {farmhand.fieldMode} fieldMode
  * @property {Function?} getCowAccept https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowReject https://github.com/dmotz/trystero#receiver
@@ -374,7 +377,7 @@ export default class Farmhand extends FarmhandReducers {
       viewList.unshift(HOME)
     }
 
-    if (this.state.purchasedForest && features.FOREST) {
+    if (this.isForestUnlocked && features.FOREST) {
       viewList.push(FOREST)
     }
 
@@ -414,6 +417,10 @@ export default class Farmhand extends FarmhandReducers {
   get isChatAvailable() {
     const { isOnline, room } = this.state
     return isOnline && room !== DEFAULT_ROOM
+  }
+
+  get isForestUnlocked() {
+    return levelAchieved(this.state.experience) >= UNLOCK_FOREST_LEVEL
   }
 
   /**
