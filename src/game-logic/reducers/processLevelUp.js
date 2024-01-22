@@ -37,7 +37,7 @@ export const processLevelUp = (state, oldLevel) => {
         true
       )
     } else if (levelObject?.unlocksTool) {
-      state.toolLevels = unlockTool(state.toolLevels, levelObject.unlocksTool)
+      state = unlockTool(state, levelObject.unlocksTool)
     } else if (levelObject?.unlocksStageFocusType) {
       state = unlockStage(state, levelObject.unlocksStageFocusType)
     }

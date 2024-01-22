@@ -974,14 +974,20 @@ export const computeMarketPositions = (
  * @param {farmhand.toolType} toolType
  * @returns {farmhand.state}
  */
-export const unlockTool = (currentToolLevels, toolType) => {
+export const unlockTool = (state, toolType) => {
+  const { currentToolLevels } = state
+
   if (currentToolLevels[toolType] === toolLevel.UNAVAILABLE) {
-    return Object.assign({}, currentToolLevels, {
-      [toolType]: toolLevel.DEFAULT,
-    })
+    return {
+      ...state,
+      currentToolLevels: {
+        ...currentToolLevels,
+        [toolType]: toolLevel.DEFAULT,
+      },
+    }
   }
 
-  return currentToolLevels
+  return state
 }
 
 /*

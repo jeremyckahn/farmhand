@@ -1087,12 +1087,34 @@ describe('getGrowingPhase', () => {
 
 describe('unlockTool', () => {
   it('unlocks the specified tool', () => {
-    const tools = {
-      [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
+    const state = {
+      currentToolLevels: {
+        [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
+      },
     }
 
-    const updatedTools = unlockTool(tools, toolType.SHOVEL)
+    const { currentToolLevels } = unlockTool(state, toolType.SHOVEL)
 
-    expect(updatedTools[toolType.SHOVEL]).toEqual(toolLevel.DEFAULT)
+    expect(currentToolLevels[toolType.SHOVEL]).toEqual(toolLevel.DEFAULT)
+  })
+
+  it('does not alter the rest of the tools', () => {
+    const state = {
+      currentToolLevels: {
+        [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
+        [toolType.HOE]: toolLevel.DEFAULT,
+        [toolType.SCYTHE]: toolLevel.GOLD,
+      },
+    }
+
+    const { currentToolLevels } = unlockTool(state, toolType.SHOVEL)
+
+    expect(currentToolLevels).toMatchInlineSnapshot(`
+      Object {
+        "HOE": "DEFAULT",
+        "SCYTHE": "GOLD",
+        "SHOVEL": "DEFAULT",
+      }
+    `)
   })
 })
