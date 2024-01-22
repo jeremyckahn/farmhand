@@ -1,6 +1,13 @@
 import { testCrop } from '../test-utils'
 import { items as itemImages, animals } from '../img'
-import { cowColors, cropLifeStage, genders, standardCowColors } from '../enums'
+import {
+  cowColors,
+  cropLifeStage,
+  genders,
+  standardCowColors,
+  toolType,
+  toolLevel,
+} from '../enums'
 import { rainbowFertilizer, carrot, carrotSeed, milk1 } from '../data/items'
 import { carrotSoup } from '../data/recipes'
 import {
@@ -56,6 +63,7 @@ import {
   percentageString,
   randomChoice,
   transformStateDataForImport,
+  unlockTool,
 } from './index'
 
 jest.mock('../data/maps')
@@ -1074,5 +1082,17 @@ describe('getGrowingPhase', () => {
     const crop = { itemId: 'potato', daysWatered }
 
     expect(getGrowingPhase(crop)).toEqual(phase)
+  })
+})
+
+describe('unlockTool', () => {
+  it('unlocks the specified tool', () => {
+    const tools = {
+      [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
+    }
+
+    const updatedTools = unlockTool(tools, toolType.SHOVEL)
+
+    expect(updatedTools[toolType.SHOVEL]).toEqual(toolLevel.DEFAULT)
   })
 })
