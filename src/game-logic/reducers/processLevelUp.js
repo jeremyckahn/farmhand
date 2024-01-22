@@ -8,9 +8,7 @@ import {
 } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 import { SPRINKLER_ITEM_ID } from '../../constants'
-import { stageFocusType } from '../../enums'
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
-import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings'
 
 import { addItemToInventory } from './addItemToInventory'
 import { showNotification } from './showNotification'
@@ -42,14 +40,6 @@ export const processLevelUp = (state, oldLevel) => {
       state.toolLevels = unlockTool(state.toolLevels, levelObject.unlocksTool)
     } else if (levelObject?.unlocksStageFocusType) {
       state = unlockStage(state, levelObject.unlocksStageFocusType)
-
-      if (levelObject.unlocksStageFocusType === stageFocusType.FOREST) {
-        state = showNotification(
-          state,
-          FOREST_AVAILABLE_NOTIFICATION,
-          'success'
-        )
-      }
     }
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already

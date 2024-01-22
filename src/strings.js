@@ -91,3 +91,6 @@ export const COW_COLOR_NAMES = {
   [cowColors.WHITE]: 'White',
   [cowColors.YELLOW]: 'Yellow',
 }
+
+export const SHOVEL_UNLOCKED =
+  "You've unlocked a new tool for the field, The **Shovel**!"
