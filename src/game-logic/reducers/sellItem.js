@@ -1,6 +1,6 @@
 import { itemsMap } from '../../data/maps'
 import { isItemAFarmProduct } from '../../utils/isItemAFarmProduct'
-import { levelAchieved } from '../../utils/levelAchieved'
+//import { levelAchieved } from '../../utils/levelAchieved'
 import {
   castToMoney,
   getAdjustedItemValue,
@@ -13,7 +13,7 @@ import { LOAN_GARNISHMENT_RATE, EXPERIENCE_VALUES } from '../../constants'
 import { SOLD_ITEM_PEER_NOTIFICATION } from '../../templates'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory'
-import { processLevelUp } from './processLevelUp'
+//import { processLevelUp } from './processLevelUp'
 import { addExperience } from './addExperience'
 import { addRevenue } from './addRevenue'
 import { updateLearnedRecipes } from './updateLearnedRecipes'
@@ -35,12 +35,12 @@ export const sellItem = (state, { id }, howMany = 1) => {
   const item = itemsMap[id]
   const {
     completedAchievements,
-    experience,
+    //  experience,
     itemsSold,
     money: initialMoney,
     valueAdjustments,
   } = state
-  const oldLevel = levelAchieved(experience)
+  //const oldLevel = levelAchieved(experience)
   let { loanBalance } = state
 
   const adjustedItemValue = isItemSoldInShop(item)
@@ -93,7 +93,10 @@ export const sellItem = (state, { id }, howMany = 1) => {
     itemsSold: newItemsSold,
   }
 
-  state = processLevelUp(state, oldLevel)
+  // this processLevelUp call actually doesn't have to happen because addExperience
+  // will call it and this results in double processing. although it doesn't cause
+  // any negative side effects, we could remove it.. eh?
+  //state = processLevelUp(state, oldLevel)
   state = decrementItemFromInventory(state, id, howMany)
 
   state = prependPendingPeerMessage(

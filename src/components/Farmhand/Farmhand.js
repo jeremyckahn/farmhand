@@ -95,7 +95,6 @@ import {
   STANDARD_LOAN_AMOUNT,
   Z_INDEX,
   STANDARD_VIEW_LIST,
-  UNLOCK_FOREST_LEVEL,
 } from '../../constants'
 import {
   HEARTBEAT_INTERVAL_PERIOD,
@@ -293,6 +292,8 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
  * @property {farmhand.stageFocusType} stageFocus
+ * @property {Object} stagesUnlocked Keys are stageFocusType, values are booleans
+ * indicating if the stage has been unlocked
  * @property {Array.<farmhand.notification>} todaysNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {Object} todaysPurchases Keys are item names, values are their
@@ -420,7 +421,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   get isForestUnlocked() {
-    return levelAchieved(this.state.experience) >= UNLOCK_FOREST_LEVEL
+    return this.state.stagesUnlocked[stageFocusType.FOREST]
   }
 
   /**
@@ -511,6 +512,9 @@ export default class Farmhand extends FarmhandReducers {
       showHomeScreen: true,
       showNotifications: true,
       stageFocus: stageFocusType.HOME,
+      stagesUnlocked: {
+        [stageFocusType.FOREST]: false,
+      },
       todaysNotifications: [],
       todaysLosses: 0,
       todaysPurchases: {},

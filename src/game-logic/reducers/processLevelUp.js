@@ -3,10 +3,12 @@ import { levelAchieved } from '../../utils/levelAchieved'
 import {
   getRandomLevelUpReward,
   getRandomLevelUpRewardQuantity,
+  unlockStage,
   unlockTool,
 } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
-import { SPRINKLER_ITEM_ID, UNLOCK_FOREST_LEVEL } from '../../constants'
+import { SPRINKLER_ITEM_ID } from '../../constants'
+import { stageFocusType } from '../../enums'
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
 import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings'
 
@@ -36,8 +38,18 @@ export const processLevelUp = (state, oldLevel) => {
         getRandomLevelUpRewardQuantity(i),
         true
       )
-    } else if (levelObject && levelObject.unlocksTool) {
+    } else if (levelObject?.unlocksTool) {
       state.toolLevels = unlockTool(state.toolLevels, levelObject.unlocksTool)
+    } else if (levelObject?.unlocksStageFocusType) {
+      state = unlockStage(state, levelObject.unlocksStageFocusType)
+
+      if (levelObject.unlocksStageFocusType === stageFocusType.FOREST) {
+        state = showNotification(
+          state,
+          FOREST_AVAILABLE_NOTIFICATION,
+          'success'
+        )
+      }
     }
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already
@@ -62,10 +74,6 @@ export const processLevelUp = (state, oldLevel) => {
       LEVEL_GAINED_NOTIFICATION`${i}${randomCropSeed}`,
       'success'
     )
-
-    if (i === UNLOCK_FOREST_LEVEL) {
-      state = showNotification(state, FOREST_AVAILABLE_NOTIFICATION, 'success')
-    }
   }
 
   return state

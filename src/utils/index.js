@@ -984,6 +984,21 @@ export const unlockTool = (currentToolLevels, toolType) => {
   return currentToolLevels
 }
 
+/*
+ * @param {farmhand.state} state
+ * @param {farmhand.stageFocusType} stageType
+ * @return {farmhand.state}
+ */
+export const unlockStage = (state, stageType) => {
+  return {
+    ...state,
+    stagesUnlocked: {
+      ...state.stagesUnlocked,
+      [stageType]: true,
+    },
+  }
+}
+
 /**
  * @param {farmhand.state} state
  * @return {farmhand.state}

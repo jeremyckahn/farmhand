@@ -1,4 +1,4 @@
-import { toolType } from '../enums'
+import { stageFocusType, toolType } from '../enums'
 
 import * as items from './items'
 import * as recipes from './recipes'
@@ -43,6 +43,10 @@ levels[12] = {
 
 levels[14] = {
   unlocksShopItem: items.potatoSeed.id,
+}
+
+levels[15] = {
+  unlocksStageFocusType: stageFocusType.FOREST,
 }
 
 levels[16] = {

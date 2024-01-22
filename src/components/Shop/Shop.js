@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { features } from '../../config'
 import { moneyString } from '../../utils/moneyString'
-import { levelAchieved } from '../../utils/levelAchieved'
 import {
   dollarString,
   getCostOfNextStorageExpansion,
@@ -20,7 +19,7 @@ import {
 } from '../../utils'
 import { memoize } from '../../utils/memoize'
 import { items } from '../../img'
-import { itemType, toolType } from '../../enums'
+import { itemType, stageFocusType, toolType } from '../../enums'
 import {
   INFINITE_STORAGE_LIMIT,
   PURCHASEABLE_CELLARS,
@@ -31,7 +30,6 @@ import {
   PURCHASABLE_FOREST_SIZES,
   PURCHASEABLE_SMELTERS,
   STORAGE_EXPANSION_AMOUNT,
-  UNLOCK_FOREST_LEVEL,
 } from '../../constants'
 import Inventory from '../Inventory'
 import TierPurchase from '../TierPurchase'
@@ -77,6 +75,7 @@ export const Shop = ({
   purchasedForest,
   purchasedSmelter,
   shopInventory,
+  stagesUnlocked,
   toolLevels,
 
   storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit),
@@ -85,7 +84,7 @@ export const Shop = ({
 
   const { seeds, fieldTools } = categorizeShopInventory(shopInventory)
 
-  const isForestUnlocked = levelAchieved(experience) >= UNLOCK_FOREST_LEVEL
+  const isForestUnlocked = stagesUnlocked[stageFocusType.FOREST]
 
   return (
     <div className="Shop">
