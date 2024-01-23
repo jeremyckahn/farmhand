@@ -1,5 +1,5 @@
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
-import { stageFocusType, toolLevel } from '../../enums'
+import { toolLevel } from '../../enums'
 import { experienceNeededForLevel } from '../../utils'
 
 jest.mock('../../data/achievements')
@@ -102,34 +102,5 @@ describe('processLevelUp', () => {
     )
 
     expect(newState.toolLevels['SHOVEL']).toEqual(toolLevel.DEFAULT)
-  })
-
-  test('unlocksStageFocusType marks stage as unlocked', () => {
-    jest.resetModules()
-    jest.mock('../../data/levels', () => ({
-      levels: [
-        {
-          id: 0,
-        },
-        {
-          id: 1,
-          unlocksStageFocusType: 'FOREST',
-        },
-      ],
-      itemUnlockLevels: {},
-    }))
-    const newState = jest.requireActual('./').processLevelUp(
-      {
-        itemsSold: {},
-        inventory: [],
-        todaysNotifications: [],
-        stagesUnlocked: {
-          [stageFocusType.FOREST]: false,
-        },
-      },
-      0
-    )
-
-    expect(newState.stagesUnlocked[stageFocusType.FOREST]).toEqual(true)
   })
 })

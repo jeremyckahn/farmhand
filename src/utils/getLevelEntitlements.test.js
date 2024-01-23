@@ -13,6 +13,7 @@ describe('getLevelEntitlements', () => {
         sprinkler: true,
       },
       sprinklerRange: 2,
+      stageFocusType: {},
       tools: {
         SHOVEL: true,
       },

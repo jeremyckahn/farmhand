@@ -205,7 +205,6 @@ export const PERSISTED_STATE_KEYS = [
   'revenue',
   'showHomeScreen',
   'showNotifications',
-  'stagesUnlocked',
   'todaysLosses',
   'todaysPurchases',
   'todaysRevenue',

@@ -1,13 +1,6 @@
 import { testCrop } from '../test-utils'
 import { items as itemImages, animals } from '../img'
-import {
-  cowColors,
-  cropLifeStage,
-  genders,
-  standardCowColors,
-  toolType,
-  toolLevel,
-} from '../enums'
+import { cowColors, cropLifeStage, genders, standardCowColors } from '../enums'
 import { rainbowFertilizer, carrot, carrotSeed, milk1 } from '../data/items'
 import { carrotSoup } from '../data/recipes'
 import {
@@ -63,7 +56,6 @@ import {
   percentageString,
   randomChoice,
   transformStateDataForImport,
-  unlockTool,
 } from './index'
 
 jest.mock('../data/maps')
@@ -1082,39 +1074,5 @@ describe('getGrowingPhase', () => {
     const crop = { itemId: 'potato', daysWatered }
 
     expect(getGrowingPhase(crop)).toEqual(phase)
-  })
-})
-
-describe('unlockTool', () => {
-  it('unlocks the specified tool', () => {
-    const state = {
-      toolLevels: {
-        [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
-      },
-    }
-
-    const { toolLevels } = unlockTool(state, toolType.SHOVEL)
-
-    expect(toolLevels[toolType.SHOVEL]).toEqual(toolLevel.DEFAULT)
-  })
-
-  it('does not alter the rest of the tools', () => {
-    const state = {
-      toolLevels: {
-        [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
-        [toolType.HOE]: toolLevel.DEFAULT,
-        [toolType.SCYTHE]: toolLevel.GOLD,
-      },
-    }
-
-    const { toolLevels } = unlockTool(state, toolType.SHOVEL)
-
-    expect(toolLevels).toMatchInlineSnapshot(`
-      Object {
-        "HOE": "DEFAULT",
-        "SCYTHE": "GOLD",
-        "SHOVEL": "DEFAULT",
-      }
-    `)
   })
 })

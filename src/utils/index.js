@@ -7,8 +7,6 @@
 /** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
 /** @typedef {import("../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen */
 /** @typedef {import("../enums").cropLifeStage} farmhand.cropLifeStage */
-/** @typedef {import("../enums").toolLevel} farmhand.toolLevel */
-/** @typedef {import("../enums").toolType} farmhand.toolType */
 /** @typedef {import("../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
 
 /**
@@ -48,7 +46,6 @@ import {
   itemType,
   stageFocusType,
   standardCowColors,
-  toolLevel,
 } from '../enums'
 import {
   BREAKPOINTS,
@@ -968,42 +965,6 @@ export const computeMarketPositions = (
 
     return acc
   }, {})
-
-/**
- * @param {Object.<farmhand.toolType, farmhand.toolLevel>} toolLevels
- * @param {farmhand.toolType} toolType
- * @returns {farmhand.state}
- */
-export const unlockTool = (state, toolType) => {
-  const { toolLevels } = state
-
-  if (toolLevels[toolType] === toolLevel.UNAVAILABLE) {
-    return {
-      ...state,
-      toolLevels: {
-        ...toolLevels,
-        [toolType]: toolLevel.DEFAULT,
-      },
-    }
-  }
-
-  return state
-}
-
-/*
- * @param {farmhand.state} state
- * @param {farmhand.stageFocusType} stageType
- * @return {farmhand.state}
- */
-export const unlockStage = (state, stageType) => {
-  return {
-    ...state,
-    stagesUnlocked: {
-      ...state.stagesUnlocked,
-      [stageType]: true,
-    },
-  }
-}
 
 /**
  * @param {farmhand.state} state

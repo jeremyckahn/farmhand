@@ -66,6 +66,7 @@ export const Shop = ({
   handleSmelterPurchase,
   handleStorageExpansionPurchase,
   inventoryLimit,
+  levelEntitlements,
   money,
   purchasedCombine,
   purchasedComposter,
@@ -75,7 +76,6 @@ export const Shop = ({
   purchasedForest,
   purchasedSmelter,
   shopInventory,
-  stagesUnlocked,
   toolLevels,
 
   storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit),
@@ -84,7 +84,8 @@ export const Shop = ({
 
   const { seeds, fieldTools } = categorizeShopInventory(shopInventory)
 
-  const isForestUnlocked = stagesUnlocked[stageFocusType.FOREST]
+  const isForestUnlocked =
+    levelEntitlements.stageFocusType[stageFocusType.FOREST]
 
   return (
     <div className="Shop">
