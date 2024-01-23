@@ -56,7 +56,6 @@ const categorizeShopInventory = memoize(shopInventory =>
 )
 
 export const Shop = ({
-  experience,
   handleCombinePurchase,
   handleComposterPurchase,
   handleCowPenPurchase,
