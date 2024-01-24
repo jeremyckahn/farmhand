@@ -3,7 +3,6 @@ import { levelAchieved } from '../../utils/levelAchieved'
 import {
   getRandomLevelUpReward,
   getRandomLevelUpRewardQuantity,
-  unlockTool,
 } from '../../utils'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
 import { SPRINKLER_ITEM_ID } from '../../constants'
@@ -11,6 +10,7 @@ import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
 
 import { addItemToInventory } from './addItemToInventory'
 import { showNotification } from './showNotification'
+import { unlockTool } from './unlockTool'
 
 /**
  * @param {farmhand.state} state
@@ -35,8 +35,8 @@ export const processLevelUp = (state, oldLevel) => {
         getRandomLevelUpRewardQuantity(i),
         true
       )
-    } else if (levelObject && levelObject.unlocksTool) {
-      state.toolLevels = unlockTool(state.toolLevels, levelObject.unlocksTool)
+    } else if (levelObject?.unlocksTool) {
+      state = unlockTool(state, levelObject.unlocksTool)
     }
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already

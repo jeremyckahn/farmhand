@@ -19,7 +19,7 @@ import {
 } from '../../utils'
 import { memoize } from '../../utils/memoize'
 import { items } from '../../img'
-import { itemType, toolType } from '../../enums'
+import { itemType, stageFocusType, toolType } from '../../enums'
 import {
   INFINITE_STORAGE_LIMIT,
   PURCHASEABLE_CELLARS,
@@ -27,6 +27,7 @@ import {
   PURCHASEABLE_COMPOSTERS,
   PURCHASEABLE_COW_PENS,
   PURCHASEABLE_FIELD_SIZES,
+  PURCHASABLE_FOREST_SIZES,
   PURCHASEABLE_SMELTERS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants'
@@ -60,15 +61,18 @@ export const Shop = ({
   handleCowPenPurchase,
   handleCellarPurchase,
   handleFieldPurchase,
+  handleForestPurchase,
   handleSmelterPurchase,
   handleStorageExpansionPurchase,
   inventoryLimit,
+  levelEntitlements,
   money,
   purchasedCombine,
   purchasedComposter,
   purchasedCowPen,
   purchasedCellar,
   purchasedField,
+  purchasedForest,
   purchasedSmelter,
   shopInventory,
   toolLevels,
@@ -78,6 +82,9 @@ export const Shop = ({
   const [currentTab, setCurrentTab] = useState(0)
 
   const { seeds, fieldTools } = categorizeShopInventory(shopInventory)
+
+  const isForestUnlocked =
+    levelEntitlements.stageFocusType[stageFocusType.FOREST]
 
   return (
     <div className="Shop">
@@ -193,6 +200,22 @@ export const Shop = ({
                     `${dollarString(price)}: Space for ${space} kegs`,
                   tiers: PURCHASEABLE_CELLARS,
                   title: 'Buy cellar',
+                }}
+              />
+            </li>
+          ) : null}
+          {features.FOREST && isForestUnlocked ? (
+            <li>
+              <TierPurchase
+                {...{
+                  onBuyClick: handleForestPurchase,
+                  maxedOutPlaceholder:
+                    "You've purchased the largest forest available!",
+                  purchasedTier: purchasedForest,
+                  renderTierLabel: ({ columns, price, rows }) =>
+                    `${dollarString(price)}: ${columns} x ${rows}`,
+                  tiers: PURCHASABLE_FOREST_SIZES,
+                  title: 'Expand Forest',
                 }}
               />
             </li>

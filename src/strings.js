@@ -79,6 +79,8 @@ export const FORGE_AVAILABLE_NOTIFICATION =
 export const RECYCLING_AVAILABLE_NOTIFICATION =
   '**Recycling** is now available in the Workshop!'
 
+export const FOREST_AVAILABLE_NOTIFICATION = 'The **Forest** is now available!'
+
 export const COW_COLOR_NAMES = {
   [cowColors.BLUE]: 'Blue',
   [cowColors.BROWN]: 'Brown',
@@ -89,3 +91,6 @@ export const COW_COLOR_NAMES = {
   [cowColors.WHITE]: 'White',
   [cowColors.YELLOW]: 'Yellow',
 }
+
+export const SHOVEL_UNLOCKED =
+  "You've unlocked a new tool for the field, The **Shovel**!"

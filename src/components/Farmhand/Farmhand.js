@@ -2,7 +2,9 @@
  * @typedef {import("../../index").farmhand.item} farmhand.item
  * @typedef {import("../../index").farmhand.cow} farmhand.cow
  * @typedef {import("../../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen
+ * @typedef {import("../../index").farmhand.forestForageable} farmhand.forestForageable
  * @typedef {import("../../index").farmhand.keg} farmhand.keg
+ * @typedef {import("../../index").farmhand.plantedTree} farmhand.plantedTree
  * @typedef {import("../../index").farmhand.plotContent} farmhand.plotContent
  * @typedef {import("../../index").farmhand.peerMessage} farmhand.peerMessage
  * @typedef {import("../../index").farmhand.peerMetadata} farmhand.peerMetadata
@@ -60,6 +62,7 @@ import { levelAchieved } from '../../utils/levelAchieved'
 import {
   computeMarketPositions,
   createNewField,
+  createNewForest,
   doesMenuObstructStage,
   generateCow,
   getAvailableShopInventory,
@@ -116,7 +119,7 @@ import {
   SERVER_ERROR,
   UPDATE_AVAILABLE,
 } from '../../strings'
-import { endpoints, rtcConfig, trackerUrls } from '../../config'
+import { endpoints, features, rtcConfig, trackerUrls } from '../../config'
 
 import { scarecrow } from '../../data/items'
 
@@ -214,6 +217,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} experience
  * @property {string} farmName
  * @property {(?farmhand.plotContent)[][]} field
+ * @property {(farmhand.plantedTree | farmhand.forestForageable | null)[][]} forest
  * @property {farmhand.fieldMode} fieldMode
  * @property {Function?} getCowAccept https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowReject https://github.com/dmotz/trystero#receiver
@@ -272,6 +276,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} purchasedCowPen
  * @property {number} purchasedCellar
  * @property {number} purchasedField
+ * @property {number} purchasedForest
  * @property {number} purchasedSmelter
  * @property {number} profitabilityStreak
  * @property {number} record7dayProfitAverage
@@ -287,6 +292,7 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
  * @property {farmhand.stageFocusType} stageFocus
+ * indicating if the stage has been unlocked
  * @property {Array.<farmhand.notification>} todaysNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {Object} todaysPurchases Keys are item names, values are their
@@ -364,11 +370,15 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   get viewList() {
-    const { CELLAR, COW_PEN, HOME, WORKSHOP } = stageFocusType
+    const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
     const viewList = [...STANDARD_VIEW_LIST]
 
     if (this.state.showHomeScreen) {
       viewList.unshift(HOME)
+    }
+
+    if (this.isForestUnlocked && features.FOREST) {
+      viewList.push(FOREST)
     }
 
     if (this.state.purchasedCowPen) {
@@ -409,6 +419,10 @@ export default class Farmhand extends FarmhandReducers {
     return isOnline && room !== DEFAULT_ROOM
   }
 
+  get isForestUnlocked() {
+    return this.levelEntitlements.stageFocusType[stageFocusType.FOREST]
+  }
+
   /**
    * @returns {farmhand.state}
    */
@@ -437,6 +451,7 @@ export default class Farmhand extends FarmhandReducers {
       farmName: 'Unnamed',
       field: createNewField(),
       fieldMode: OBSERVE,
+      forest: createNewForest(),
       getCowAccept: noop,
       getCowReject: noop,
       getCowTradeRequest: noop,
@@ -490,6 +505,7 @@ export default class Farmhand extends FarmhandReducers {
       purchasedCowPen: 0,
       purchasedCellar: 0,
       purchasedField: 0,
+      purchasedForest: 0,
       purchasedSmelter: 0,
       sendCowTradeRequest: noop,
       showHomeScreen: true,

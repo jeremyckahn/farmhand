@@ -7,8 +7,6 @@
 /** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
 /** @typedef {import("../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen */
 /** @typedef {import("../enums").cropLifeStage} farmhand.cropLifeStage */
-/** @typedef {import("../enums").toolLevel} farmhand.toolLevel */
-/** @typedef {import("../enums").toolType} farmhand.toolType */
 /** @typedef {import("../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
 
 /**
@@ -48,7 +46,6 @@ import {
   itemType,
   stageFocusType,
   standardCowColors,
-  toolLevel,
 } from '../enums'
 import {
   BREAKPOINTS,
@@ -70,6 +67,8 @@ import {
   INFINITE_STORAGE_LIMIT,
   INITIAL_FIELD_HEIGHT,
   INITIAL_FIELD_WIDTH,
+  INITIAL_FOREST_HEIGHT,
+  INITIAL_FOREST_WIDTH,
   INITIAL_STORAGE_LIMIT,
   LARGEST_PURCHASABLE_FIELD_SIZE,
   MALE_COW_WEIGHT_MULTIPLIER,
@@ -191,6 +190,12 @@ export const createNewField = () =>
   new Array(INITIAL_FIELD_HEIGHT)
     .fill(undefined)
     .map(() => new Array(INITIAL_FIELD_WIDTH).fill(null))
+
+export const createNewForest = () => {
+  return new Array(INITIAL_FOREST_HEIGHT)
+    .fill(undefined)
+    .map(() => new Array(INITIAL_FOREST_WIDTH).fill(null))
+}
 
 /**
  * @param {number} number
@@ -960,21 +965,6 @@ export const computeMarketPositions = (
 
     return acc
   }, {})
-
-/**
- * @param {Object.<farmhand.toolType, farmhand.toolLevel>} currentToolLevels
- * @param {farmhand.toolType} toolType
- * @returns {farmhand.state}
- */
-export const unlockTool = (currentToolLevels, toolType) => {
-  if (currentToolLevels[toolType] === toolLevel.UNAVAILABLE) {
-    return Object.assign({}, currentToolLevels, {
-      [toolType]: toolLevel.DEFAULT,
-    })
-  }
-
-  return currentToolLevels
-}
 
 /**
  * @param {farmhand.state} state

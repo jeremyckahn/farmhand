@@ -4,6 +4,7 @@ import { array, arrayOf, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import Field from '../Field'
+import { Forest } from '../Forest'
 import Home from '../Home'
 import CowPen from '../CowPen'
 import Shop from '../Shop'
@@ -52,6 +53,7 @@ export const Stage = ({ field, stageFocus, viewTitle }) => {
           }}
         />
       )}
+      {stageFocus === stageFocusType.FOREST && <Forest />}
       {stageFocus === stageFocusType.SHOP && <Shop />}
       {stageFocus === stageFocusType.COW_PEN && <CowPen />}
       {stageFocus === stageFocusType.WORKSHOP && <Workshop />}

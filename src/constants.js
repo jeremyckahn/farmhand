@@ -49,6 +49,20 @@ export const PURCHASEABLE_FIELD_SIZES = freeze(
   ])
 )
 
+export const INITIAL_FOREST_WIDTH = 4
+export const INITIAL_FOREST_HEIGHT = 1
+
+/**
+ * @type Map<number, farmhand.purchasableFieldSize>
+ */
+export const PURCHASABLE_FOREST_SIZES = freeze(
+  new Map([
+    [1, { columns: 4, rows: 2, price: 100_000 }],
+    [2, { columns: 4, rows: 3, price: 200_000 }],
+    [3, { columns: 4, rows: 4, price: 300_000 }],
+  ])
+)
+
 export const LARGEST_PURCHASABLE_FIELD_SIZE = /** @type {farmhand.purchaseableFieldSize} */ (PURCHASEABLE_FIELD_SIZES.get(
   PURCHASEABLE_FIELD_SIZES.size
 ))
@@ -130,6 +144,7 @@ export const PRICE_EVENT_STANDARD_DURATION_DECREASE = 1
 export const STAGE_TITLE_MAP = {
   [stageFocusType.HOME]: 'Home',
   [stageFocusType.FIELD]: 'Field',
+  [stageFocusType.FOREST]: 'Forest',
   [stageFocusType.SHOP]: 'Shop',
   [stageFocusType.COW_PEN]: 'Cows',
   [stageFocusType.WORKSHOP]: 'Workshop',
@@ -157,6 +172,7 @@ export const PERSISTED_STATE_KEYS = [
   'experience',
   'farmName',
   'field',
+  'forest',
   'historicalDailyLosses',
   'historicalDailyRevenue',
   'historicalValueAdjustments',
@@ -181,6 +197,7 @@ export const PERSISTED_STATE_KEYS = [
   'purchasedCowPen',
   'purchasedCellar',
   'purchasedField',
+  'purchasedForest',
   'purchasedSmelter',
   'record7dayProfitAverage',
   'recordProfitabilityStreak',
@@ -280,6 +297,7 @@ export const EXPERIENCE_VALUES = {
   COW_TRADED: 1,
   FERMENTATION_RECIPE_MADE: 1,
   FIELD_EXPANDED: 5,
+  FOREST_EXPANDED: 10,
   FORGE_RECIPE_MADE: 3,
   ITEM_SOLD: 1,
   KEG_SOLD: 2,

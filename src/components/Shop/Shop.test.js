@@ -1,38 +1,50 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, screen } from '@testing-library/react'
 
-import Inventory from '../Inventory'
 import { INFINITE_STORAGE_LIMIT } from '../../constants'
 import { noop } from '../../utils/noop'
 
-import { Shop } from './Shop'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
-let component
+import Shop from './Shop'
 
 beforeEach(() => {
-  component = shallow(
-    <Shop
-      {...{
-        handleCombinePurchase: noop,
-        handleCowPenPurchase: noop,
-        handleCellarPurchase: noop,
-        handleFieldPurchase: noop,
-        handleStorageExpansionPurchase: noop,
-        inventoryLimit: INFINITE_STORAGE_LIMIT,
-        money: 0,
-        purchasedCombine: 0,
-        purchasedCowPen: 0,
-        purchasedCellar: 0,
-        purchasedSmelter: 0,
-        purchasedField: 0,
-        shopInventory: [],
-        toolLevels: {},
-        valueAdjustments: {},
-      }}
-    />
+  const gameState = {
+    inventoryLimit: INFINITE_STORAGE_LIMIT,
+    levelEntitlements: {
+      stageFocusType: {},
+    },
+    money: 0,
+    purchasedCombine: 0,
+    purchasedCowPen: 0,
+    purchasedCellar: 0,
+    purchasedSmelter: 0,
+    purchasedField: 0,
+    shopInventory: [],
+    toolLevels: {},
+    valueAdjustments: {},
+  }
+
+  const handlers = {
+    handleCombinePurchase: noop,
+    handleCowPenPurchase: noop,
+    handleCellarPurchase: noop,
+    handleFieldPurchase: noop,
+    handleStorageExpansionPurchase: noop,
+  }
+
+  render(
+    <FarmhandContext.Provider value={{ gameState, handlers }}>
+      <Shop />
+    </FarmhandContext.Provider>
   )
 })
 
-test('renders shop inventory', () => {
-  expect(component.find(Inventory)).toHaveLength(2)
+describe('<Shop />', () => {
+  test.each(['Seeds', 'Supplies', 'Upgrades'])(
+    'the %s tab exists',
+    tabLabel => {
+      expect(screen.getByText(tabLabel)).toBeInTheDocument()
+    }
+  )
 })

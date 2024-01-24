@@ -72,6 +72,7 @@ export const stageFocusType = enumify([
   'NONE', // Used for testing
   'HOME',
   'FIELD',
+  'FOREST',
   'SHOP',
   'COW_PEN',
   'INVENTORY',

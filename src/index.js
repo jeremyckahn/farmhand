@@ -65,6 +65,20 @@
  */
 
 /**
+ * Represents a tree
+ * @typedef farmhand.plantedTree
+ * @property {number} daysOld
+ * @property {string} itemId
+ */
+
+/**
+ * Represents a forageable item that grows in the forest
+ * @typedef farmhand.forestForageable
+ * @property {number} daysOld
+ * @property {'mushroom' | 'acorn'} forageableId
+ */
+
+/**
  * Represents a shoveled plot
  * @typedef farmhand.shoveledPlot
  * @type {Object}

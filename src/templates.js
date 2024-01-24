@@ -10,9 +10,11 @@
  * @ignore
  */
 
+import { FOREST_AVAILABLE_NOTIFICATION, SHOVEL_UNLOCKED } from './strings'
 import { itemUnlockLevels, levels } from './data/levels'
 import { itemsMap } from './data/maps'
 import { moneyString } from './utils/moneyString'
+import { stageFocusType, toolType } from './enums'
 import {
   getCowDisplayName,
   getPlayerName,
@@ -205,9 +207,13 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
       }** as a reward!`
     )
   } else if (levelObject && levelObject.unlocksTool) {
-    // todo: there is only one tool that can be unlocked currently, but this is a bit
-    // short-sighted if we ever introduce other tool unlocks
-    chunks.push(`You've unlocked a new tool for the field, The **Shovel**!`)
+    if (levelObject.unlocksTool === toolType.SHOVEL) {
+      chunks.push(SHOVEL_UNLOCKED)
+    }
+  } else if (levelObject && levelObject.unlocksStageFocusType) {
+    if (levelObject.unlocksStageFocusType === stageFocusType.FOREST) {
+      chunks.push(FOREST_AVAILABLE_NOTIFICATION)
+    }
   }
 
   return chunks.join(' ')
@@ -366,3 +372,11 @@ export const KEG_SPOILED_MESSAGE = (_, keg) =>
  */
 export const NEW_COW_OFFERED_FOR_TRADE = (_, peerMetadata) =>
   `A new cow is being offered for trade by ${getPlayerName(peerMetadata.id)}!`
+
+/**
+ * @param {TemplatesStringsArray}
+ * @param {number} numTrees
+ * @returns {string}
+ */
+export const FOREST_EXPANDED = (_, numTrees) =>
+  `The Forest has expanded! You can now plant up to ${numTrees} trees.`
