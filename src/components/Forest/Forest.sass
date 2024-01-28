@@ -1,0 +1,16 @@
+.Forest
+  display: flex
+  flex-direction: column
+  justify-content: center
+  height: 100%
+
+  .forest-plots
+    display: grid
+    grid-template-rows: repeat(4, 36px)
+    grid-template-columns: repeat(4, 36px)
+    gap: 1rem
+    justify-content: center
+
+  .forest-plot
+    background-image: url(../../img/plot-states/forest-plot-default.png)
+    background-size: cover
