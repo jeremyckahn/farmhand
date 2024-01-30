@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 
 import { testItem } from '../../test-utils'
 
@@ -45,7 +45,7 @@ describe('Item', () => {
       const props = {
         ...baseProps,
         isPurchaseView: true,
-        adjustedValue: 10,
+        adjustedValue: 10.42,
       }
 
       describe('user has enough money', () => {
@@ -67,6 +67,17 @@ describe('Item', () => {
           expect(screen.getByRole('button', { name: 'Buy' })).toBeDisabled()
         })
       })
+
+      describe('prices', () => {
+        beforeEach(() => {
+          render(<Item {...{ ...props }} />)
+        })
+
+        test('displays item price', () => {
+          const buyPrice = screen.getByText('Price:')
+          expect(within(buyPrice).getByText('$10.42')).toBeInTheDocument()
+        })
+      })
     })
 
     describe('isSellView', () => {
@@ -77,6 +88,7 @@ describe('Item', () => {
             {...{
               ...baseProps,
               isSellView: true,
+              adjustedValue: 10.42,
               item: testItem({ id }),
               playerInventoryQuantities: { [id]: 1 },
             }}
@@ -86,6 +98,13 @@ describe('Item', () => {
 
       test('renders sell buttons', () => {
         expect(screen.getByRole('button', { name: 'Sell' })).toBeInTheDocument()
+      })
+
+      describe('prices', () => {
+        test('displays item price', () => {
+          const sellPrice = screen.getByText('Sell price:')
+          expect(within(sellPrice).getByText('$10.42')).toBeInTheDocument()
+        })
       })
     })
   })
