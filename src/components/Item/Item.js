@@ -82,6 +82,24 @@ const SellValueIndicator = ({
   />
 )
 
+const TotalPrice = ({ quantity, pricePerUnit }) => {
+  if (!quantity || quantity <= 1) return null
+
+  return (
+    <span>
+      {' '}
+      (Total:{' '}
+      <AnimatedNumber
+        {...{
+          number: quantity * pricePerUnit,
+          formatter: moneyString,
+        }}
+      />
+      )
+    </span>
+  )
+}
+
 export const Item = ({
   completedAchievements,
   handleItemPurchaseClick,
@@ -203,6 +221,12 @@ export const Item = ({
                       <AnimatedNumber
                         {...{ number: adjustedValue, formatter: moneyString }}
                       />
+                      <TotalPrice
+                        {...{
+                          quantity: purchaseQuantity,
+                          pricePerUnit: adjustedValue,
+                        }}
+                      />
                     </span>
                   </Tooltip>
                   {completedAchievements['unlock-crop-price-guide'] &&
@@ -231,6 +255,9 @@ export const Item = ({
                       Sell price:{' '}
                       <AnimatedNumber
                         {...{ number: sellPrice, formatter: moneyString }}
+                      />
+                      <TotalPrice
+                        {...{ quantity: sellQuantity, pricePerUnit: sellPrice }}
                       />
                     </span>
                   </Tooltip>
