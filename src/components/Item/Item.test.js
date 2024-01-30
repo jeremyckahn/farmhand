@@ -1,6 +1,5 @@
 import React from 'react'
-import CardHeader from '@mui/material/CardHeader'
-import { shallow } from 'enzyme'
+import { render, screen } from '@testing-library/react'
 
 import { testItem } from '../../test-utils'
 
@@ -10,95 +9,84 @@ import { Item } from './Item'
 
 jest.mock('../../data/maps')
 
-let component
+describe('Item', () => {
+  const baseProps = {
+    completedAchievements: {},
+    historicalValueAdjustments: [],
+    inventory: [],
+    inventoryLimit: INFINITE_STORAGE_LIMIT,
+    item: testItem(),
+    money: 0,
+    playerInventoryQuantities: {},
+    valueAdjustments: {},
+    adjustedValue: 0,
+    previousDayAdjustedValue: 0,
+  }
 
-beforeEach(() => {
-  component = shallow(
-    <Item
-      {...{
-        completedAchievements: {},
-        historicalValueAdjustments: [],
-        inventory: [],
-        inventoryLimit: INFINITE_STORAGE_LIMIT,
-        item: testItem({ name: '' }),
-        money: 0,
-        playerInventoryQuantities: {},
-        valueAdjustments: {},
-        adjustedValue: 0,
-        previousDayAdjustedValue: 0,
-      }}
-    />
-  )
-})
-
-describe('static UI', () => {
-  beforeEach(() => {
-    component.setProps({ item: testItem({ name: 'an-item' }) })
-  })
-
-  test('renders the name', () => {
-    expect(component.find(CardHeader).props().title).toEqual('an-item')
-  })
-})
-
-describe('conditional UI', () => {
-  describe('class names', () => {
-    beforeEach(() => {
-      component.setProps({ isSelected: true })
-    })
-
-    test('supports is-selected', () => {
-      expect(component.hasClass('is-selected')).toBeTruthy()
+  describe('static UI', () => {
+    test('renders the name', () => {
+      const itemName = 'Cool Item'
+      render(<Item {...{ ...baseProps, item: testItem({ name: itemName }) }} />)
+      expect(screen.getByText(itemName)).toBeInTheDocument()
     })
   })
 
-  describe('isPurchaseView', () => {
-    beforeEach(() => {
-      component.setProps({
+  describe('conditional UI', () => {
+    describe('class names', () => {
+      test('supports is-selected', () => {
+        const { container } = render(
+          <Item {...{ ...baseProps, isSelected: true }} />
+        )
+        expect(container.firstChild).toHaveClass('is-selected')
+      })
+    })
+
+    describe('isPurchaseView', () => {
+      const props = {
+        ...baseProps,
         isPurchaseView: true,
-        item: testItem({ name: 'an-item' }),
         adjustedValue: 10,
-      })
-    })
+      }
 
-    describe('user has enough money', () => {
-      beforeEach(() => {
-        component.setProps({
-          money: 20,
+      describe('user has enough money', () => {
+        beforeEach(() => {
+          render(<Item {...{ ...props, money: 20 }} />)
+        })
+
+        test('enables purchase buttons', () => {
+          expect(screen.getByRole('button', { name: 'Buy' })).not.toBeDisabled()
         })
       })
 
-      test('enables purchase buttons', () => {
-        expect(component.find('.purchase').props().disabled).toEqual(false)
-      })
-    })
+      describe('user does not have enough money', () => {
+        beforeEach(() => {
+          render(<Item {...{ ...props, money: 5 }} />)
+        })
 
-    describe('user does not have enough money', () => {
-      beforeEach(() => {
-        component.setProps({
-          money: 5,
+        test('disables purchase buttons', () => {
+          expect(screen.getByRole('button', { name: 'Buy' })).toBeDisabled()
         })
       })
-
-      test('disables purchase buttons', () => {
-        expect(component.find('.purchase').props().disabled).toEqual(true)
-      })
-    })
-  })
-
-  describe('isSellView', () => {
-    beforeEach(() => {
-      component.setProps({
-        isSellView: true,
-        item: testItem({ id: 'an-item' }),
-        playerInventoryQuantities: {
-          'an-item': 1,
-        },
-      })
     })
 
-    test('renders sell buttons', () => {
-      expect(component.find('.sell')).toHaveLength(1)
+    describe('isSellView', () => {
+      beforeEach(() => {
+        const id = 'an-item'
+        render(
+          <Item
+            {...{
+              ...baseProps,
+              isSellView: true,
+              item: testItem({ id }),
+              playerInventoryQuantities: { [id]: 1 },
+            }}
+          />
+        )
+      })
+
+      test('renders sell buttons', () => {
+        expect(screen.getByRole('button', { name: 'Sell' })).toBeInTheDocument()
+      })
     })
   })
 })
