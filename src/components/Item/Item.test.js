@@ -1,5 +1,6 @@
 import React from 'react'
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { testItem } from '../../test-utils'
 
@@ -70,12 +71,21 @@ describe('Item', () => {
 
       describe('prices', () => {
         beforeEach(() => {
-          render(<Item {...{ ...props }} />)
+          render(<Item {...{ ...props, money: 100 }} />)
         })
 
         test('displays item price', () => {
           const buyPrice = screen.getByText('Price:')
           expect(within(buyPrice).getByText('$10.42')).toBeInTheDocument()
+        })
+
+        test('displays total price', async () => {
+          const increment = screen.getByRole('button', { name: 'Increment' })
+          userEvent.click(increment)
+          const total = screen.getByText('Total:')
+          await waitFor(() =>
+            expect(within(total).getByText('$20.84')).toBeInTheDocument()
+          )
         })
       })
     })
@@ -90,7 +100,7 @@ describe('Item', () => {
               isSellView: true,
               adjustedValue: 10.42,
               item: testItem({ id }),
-              playerInventoryQuantities: { [id]: 1 },
+              playerInventoryQuantities: { [id]: 4 },
             }}
           />
         )
@@ -104,6 +114,17 @@ describe('Item', () => {
         test('displays item price', () => {
           const sellPrice = screen.getByText('Sell price:')
           expect(within(sellPrice).getByText('$10.42')).toBeInTheDocument()
+        })
+
+        test('displays total price', async () => {
+          const increment = screen.getByRole('button', { name: 'Increment' })
+          userEvent.click(increment)
+          userEvent.click(increment)
+          userEvent.click(increment)
+          const total = screen.getByText('Total:')
+          await waitFor(() =>
+            expect(within(total).getByText('$41.68')).toBeInTheDocument()
+          )
         })
       })
     })
