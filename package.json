@@ -24,7 +24,7 @@
     "postversion": "git push && git push --tags",
     "start": "react-scripts --openssl-legacy-provider start",
     "start:api": "NODE_OPTIONS=--openssl-legacy-provider vercel dev --listen localhost:3001",
-    "start:backend": "docker-compose up",
+    "start:backend": "docker compose up",
     "start:tracker": "bittorrent-tracker",
     "test": "react-scripts test",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
