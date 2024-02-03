@@ -213,6 +213,19 @@ export const Item = ({
                     )}
                 </p>
               )}
+              {isPurchaseView && (
+                <p>
+                  Total:{' '}
+                  {purchaseQuantity ? (
+                    <AnimatedNumber
+                      {...{
+                        number: purchaseQuantity * adjustedValue,
+                        formatter: moneyString,
+                      }}
+                    />
+                  ) : null}
+                </p>
+              )}
               {isSellView && (
                 <p>
                   <Tooltip
@@ -240,6 +253,19 @@ export const Item = ({
                         {...{ id, value: adjustedValue, valueAdjustments }}
                       />
                     )}
+                </p>
+              )}
+              {isSellView && (
+                <p>
+                  Total:{' '}
+                  {sellQuantity ? (
+                    <AnimatedNumber
+                      {...{
+                        number: sellQuantity * sellPrice,
+                        formatter: moneyString,
+                      }}
+                    />
+                  ) : null}
                 </p>
               )}
               {showQuantity && (

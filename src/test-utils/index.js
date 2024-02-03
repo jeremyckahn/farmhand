@@ -28,5 +28,8 @@ export const testItem = (item = {}) => ({
   id: '',
   name: '',
   value: 0,
+  description: '',
+  doesPriceFluctuate: false,
+  isReplantable: false,
   ...item,
 })
