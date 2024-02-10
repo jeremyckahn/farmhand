@@ -100,4 +100,34 @@ describe('Subheader', () => {
       expect(value).toBeInTheDocument()
     })
   })
+
+  describe('cow age display', () => {
+    const ageRegex = /days? old/
+    test('displays when purchased', () => {
+      render(<Subheader {...baseProps} isCowPurchased={true} />)
+
+      const age = screen.queryByText(ageRegex)
+      expect(age).not.toBeNull()
+    })
+
+    test('displays when offered as trade', () => {
+      render(
+        <Subheader
+          {...baseProps}
+          cowIdOfferedForTrade="1234"
+          isCowPurchased={false}
+        />
+      )
+
+      const age = screen.queryByText(ageRegex)
+      expect(age).not.toBeNull()
+    })
+
+    test('hidden when unpurchased from shop', () => {
+      render(<Subheader {...baseProps} isCowPurchased={false} />)
+
+      const age = screen.queryByText(ageRegex)
+      expect(age).toBeNull()
+    })
+  })
 })

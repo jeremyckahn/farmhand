@@ -106,7 +106,7 @@ const Subheader = (
   return (
     <div {...{ className: 'Subheader' }}>
       <Bloodline {...{ colorsInBloodline: cow.colorsInBloodline }} />
-      {isCowPurchased && (
+      {(isCowPurchased || cowIdOfferedForTrade) && (
         <p>
           {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
         </p>
