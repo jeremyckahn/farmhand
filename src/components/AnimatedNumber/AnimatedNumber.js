@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { tween } from 'shifty'
-import { func, number } from 'prop-types'
+import { func, number, object } from 'prop-types'
 
+import { Span } from '../Elements'
 import './AnimatedNumber.sass'
 
 const defaultFormatter = number => `${number}`
 
-const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
+const AnimatedNumber = ({
+  number,
+  animatedNumberSx,
+  formatter = defaultFormatter,
+}) => {
   const [displayedNumber, setDisplayedNumber] = useState(number)
   const [previousNumber, setPreviousNumber] = useState(number)
   const [currentTweenable, setCurrentTweenable] = useState()
@@ -42,12 +47,17 @@ const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
       }
     }
   }, [currentTweenable, number, previousNumber])
-  return <span className="AnimatedNumber">{formatter(displayedNumber)}</span>
+  return (
+    <Span className="AnimatedNumber" sx={animatedNumberSx}>
+      {formatter(displayedNumber)}
+    </Span>
+  )
 }
 
 AnimatedNumber.propTypes = {
   formatter: func,
   number: number.isRequired,
+  animatedNumberSx: object,
 }
 
 export default AnimatedNumber

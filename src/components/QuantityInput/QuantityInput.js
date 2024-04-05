@@ -97,7 +97,11 @@ const QuantityInput = ({
       <span className="quantity">
         /{' '}
         <AnimatedNumber
-          {...{ number: maxQuantity, formatter: integerString }}
+          {...{
+            number: maxQuantity,
+            formatter: integerString,
+            animatedNumberSx: { pl: 1 },
+          }}
         />
       </span>
       <div className="number-nudger-container">
