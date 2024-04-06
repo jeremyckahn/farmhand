@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -340,7 +341,7 @@ export const Item = ({
           </>
         )}
         {isSellView && (
-          <>
+          <Box display="flex" pr={0.5}>
             <Button
               {...{
                 className: 'sell',
@@ -361,7 +362,7 @@ export const Item = ({
                 value: sellQuantity,
               }}
             />
-          </>
+          </Box>
         )}
       </CardActions>
     </Card>

@@ -61,6 +61,18 @@ const QuantityTextInput = ({
 
       InputProps: {
         inputComponent: QuantityNumberFormat,
+        endAdornment: (
+          <>
+            /{' '}
+            <AnimatedNumber
+              {...{
+                number: maxQuantity,
+                formatter: integerString,
+                animatedNumberSx: { pl: 1 },
+              }}
+            />
+          </>
+        ),
       },
     }}
   />
@@ -94,16 +106,6 @@ const QuantityInput = ({
       <QuantityTextInput
         {...{ handleSubmit, handleUpdateNumber, maxQuantity, value }}
       />
-      <span className="quantity">
-        /{' '}
-        <AnimatedNumber
-          {...{
-            number: maxQuantity,
-            formatter: integerString,
-            animatedNumberSx: { pl: 1 },
-          }}
-        />
-      </span>
       <div className="number-nudger-container">
         <Fab
           disabled={!value}
