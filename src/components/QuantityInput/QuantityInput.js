@@ -6,9 +6,9 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import NumberFormat from 'react-number-format'
 import TextField from '@mui/material/TextField'
 
-import AnimatedNumber from '../AnimatedNumber'
-
 import { integerString } from '../../utils'
+import AnimatedNumber from '../AnimatedNumber'
+import { Span } from '../Elements'
 
 import './QuantityInput.sass'
 
@@ -63,12 +63,11 @@ const QuantityTextInput = ({
         inputComponent: QuantityNumberFormat,
         endAdornment: (
           <>
-            /{' '}
+            <Span sx={{ px: 1 }}>/</Span>
             <AnimatedNumber
               {...{
                 number: maxQuantity,
                 formatter: integerString,
-                animatedNumberSx: { pl: 1 },
               }}
             />
           </>

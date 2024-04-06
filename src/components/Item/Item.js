@@ -341,7 +341,7 @@ export const Item = ({
           </>
         )}
         {isSellView && (
-          <Box display="flex" pr={0.5}>
+          <Box display="flex">
             <Button
               {...{
                 className: 'sell',
