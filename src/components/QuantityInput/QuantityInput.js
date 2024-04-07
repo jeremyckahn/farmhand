@@ -6,9 +6,9 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 import NumberFormat from 'react-number-format'
 import TextField from '@mui/material/TextField'
 
-import AnimatedNumber from '../AnimatedNumber'
-
 import { integerString } from '../../utils'
+import AnimatedNumber from '../AnimatedNumber'
+import { Span } from '../Elements'
 
 import './QuantityInput.sass'
 
@@ -61,6 +61,17 @@ const QuantityTextInput = ({
 
       InputProps: {
         inputComponent: QuantityNumberFormat,
+        endAdornment: (
+          <>
+            <Span sx={{ px: 1 }}>/</Span>
+            <AnimatedNumber
+              {...{
+                number: maxQuantity,
+                formatter: integerString,
+              }}
+            />
+          </>
+        ),
       },
     }}
   />
@@ -94,12 +105,6 @@ const QuantityInput = ({
       <QuantityTextInput
         {...{ handleSubmit, handleUpdateNumber, maxQuantity, value }}
       />
-      <span className="quantity">
-        /{' '}
-        <AnimatedNumber
-          {...{ number: maxQuantity, formatter: integerString }}
-        />
-      </span>
       <div className="number-nudger-container">
         <Fab
           disabled={!value}

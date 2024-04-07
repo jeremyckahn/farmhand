@@ -4,7 +4,7 @@ import { func, number } from 'prop-types'
 
 import './AnimatedNumber.sass'
 
-const defaultFormatter = number => `${number}`
+const defaultFormatter = (/** @type {number} */ number) => `${number}`
 
 const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
   const [displayedNumber, setDisplayedNumber] = useState(number)
@@ -42,6 +42,7 @@ const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
       }
     }
   }, [currentTweenable, number, previousNumber])
+
   return <span className="AnimatedNumber">{formatter(displayedNumber)}</span>
 }
 

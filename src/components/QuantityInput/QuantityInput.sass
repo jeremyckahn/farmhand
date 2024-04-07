@@ -1,22 +1,12 @@
 @import ../../styles/variables.sass
 
 .QuantityInput
-  // Needed to override the .MuiCardActions-root to work well with the MUI card
-  // action item spacing.
-  .MuiCardActions-root &
-    button
-      margin-left: 1em
-
-  .quantity
-    line-height: 2.8em
 
   .MuiInput-root
-    max-width: 75px
     margin: 1px 0.25em 0
 
     @media (max-width: #{$break-medium-phone})
       margin: 0 0.25em 0 0.5em
-      max-width: 65px
 
     input
       text-align: right
@@ -25,11 +15,11 @@
     display: flex
     flex-direction: column
     position: absolute
-    top: 0
+    top: 0.25em
     right: 0
 
     button
-      margin: 0.25em
+      margin: 0.25em .5em
 
       svg
         // Needed to override
