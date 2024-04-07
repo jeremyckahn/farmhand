@@ -188,22 +188,20 @@ export const Shop = ({
               }}
             />
           </li>
-          {features.KEGS ? (
-            <li>
-              <TierPurchase
-                {...{
-                  onBuyClick: handleCellarPurchase,
-                  maxedOutPlaceholder:
-                    "You've purchased the largest cellar available!",
-                  purchasedTier: purchasedCellar,
-                  renderTierLabel: ({ space, price }) =>
-                    `${dollarString(price)}: Space for ${space} kegs`,
-                  tiers: PURCHASEABLE_CELLARS,
-                  title: 'Buy cellar',
-                }}
-              />
-            </li>
-          ) : null}
+          <li>
+            <TierPurchase
+              {...{
+                onBuyClick: handleCellarPurchase,
+                maxedOutPlaceholder:
+                  "You've purchased the largest cellar available!",
+                purchasedTier: purchasedCellar,
+                renderTierLabel: ({ space, price }) =>
+                  `${dollarString(price)}: Space for ${space} kegs`,
+                tiers: PURCHASEABLE_CELLARS,
+                title: 'Buy cellar',
+              }}
+            />
+          </li>
           {features.FOREST && isForestUnlocked ? (
             <li>
               <TierPurchase
