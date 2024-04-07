@@ -3,7 +3,6 @@
  */
 import { itemType, fieldMode, recipeType } from '../enums'
 import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
-import { features } from '../config'
 
 import * as items from './items'
 import baseItemsMap from './items-map'
@@ -40,9 +39,7 @@ export const salt = itemify({
     [items.saltRock.id]: 1,
   },
   condition: state => state.itemsSold[items.saltRock.id] >= 30,
-  description: features.KEGS
-    ? 'Useful for seasoning food and fermentation.'
-    : 'Useful for seasoning food.',
+  description: 'Useful for seasoning food and fermentation.',
   recipeType: recipeType.KITCHEN,
 })
 
