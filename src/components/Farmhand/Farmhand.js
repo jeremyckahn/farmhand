@@ -235,9 +235,10 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {boolean} isAwaitingNetworkRequest
  * @property {boolean} isCombineEnabled
  * @property {boolean} isMenuOpen
- * @property {Object} itemsSold Keys are items IDs, values are the number of
- * that item sold. The numbers in this map are inclusive of the corresponding
- * ones in cellarItemsSold and represent the grand total of each item sold.
+ * @property {Record<farmhand.item['id'], number>} itemsSold Keys are items
+ * IDs, values are the number of that item sold. The numbers in this map are
+ * inclusive of the corresponding ones in cellarItemsSold and represent the
+ * grand total of each item sold.
  * @property {Object} cellarItemsSold Keys are items IDs, values are the number
  * of that cellar item sold. The numbers in this map represent a subset of the
  * corresponding ones in itemsSold. cellarItemsSold is intended to be used for
