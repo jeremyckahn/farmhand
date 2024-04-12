@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs'
 
 import { CellarInventoryTabPanel } from './CellarInventoryTabPanel'
 import { FermentationTabPanel } from './FermentationTabPanel'
+import { WinemakingTabPanel } from './WinemakingTabPanel'
 import { a11yProps } from './TabPanel'
 
 import './Cellar.sass'
@@ -20,9 +21,11 @@ export const Cellar = () => {
       >
         <Tab {...{ label: 'Cellar Inventory', ...a11yProps(0) }} />
         <Tab {...{ label: 'Fermentation', ...a11yProps(1) }} />
+        <Tab {...{ label: 'Winemaking', ...a11yProps(1) }} />
       </Tabs>
       <CellarInventoryTabPanel index={0} currentTab={currentTab} />
       <FermentationTabPanel index={1} currentTab={currentTab} />
+      <WinemakingTabPanel index={2} currentTab={currentTab} />
     </div>
   )
 }
