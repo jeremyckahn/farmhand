@@ -3,7 +3,10 @@
  * @ignore
  */
 
+// TODO: Eliminate enumify and use raw enums.
+// @see https://jsdoc.app/tags-enum
 /**
+ * @deprecated
  * @param {Array.<string>} keys
  * @returns {Record<string, string>}
  */
@@ -176,3 +179,12 @@ export const toolLevel = enumify([
  * @enum {string}
  */
 export const cowTradeRejectionReason = enumify(['REQUESTED_COW_UNAVAILABLE'])
+
+/**
+ * @property farmhand.module:enums.cropFamily
+ * @readonly
+ * @enum {string}
+ */
+export const cropFamily = {
+  GRAPE: 'GRAPE',
+}

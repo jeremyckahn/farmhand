@@ -4,6 +4,7 @@
 
 /**
  * @typedef {import("./components/Farmhand/Farmhand").farmhand.state} farmhand.state
+ * @typedef {import("./enums").cropFamily} cropFamily
  */
 
 /**
@@ -39,10 +40,10 @@
  */
 
 /**
- * @typedef farmhand.cropVariety
- * @property {string} imageId
- * @extends farmhand.item
- */
+ * @typedef {farmhand.item & {
+ *   imageId: string,
+ *   cropFamily: cropFamily
+ * }} farmhand.cropVariety
 
 /**
  * This is a minimalist base type to be inherited and expanded on by types like
