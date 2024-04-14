@@ -183,7 +183,6 @@ export const cowTradeRejectionReason = enumify(['REQUESTED_COW_UNAVAILABLE'])
 /**
  * @property farmhand.module:enums.cropFamily
  * @readonly
- * @enum {string}
  */
 export const cropFamily = {
   GRAPE: 'GRAPE',

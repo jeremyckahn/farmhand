@@ -5,6 +5,20 @@ import { crop, fromSeed, cropVariety } from '../crop'
 import { cropFamily, cropType } from '../../enums'
 
 /**
+ * @typedef {cropVariety & {
+ *   cropFamily: cropFamily['GRAPE']
+ * }} Grape
+ */
+
+/**
+ * @param {farmhand.item | farmhand.cropVariety} item
+ * @returns {item is Grape}
+ */
+export const isGrape = item => {
+  return 'cropFamily' in item && item.cropFamily === cropFamily.GRAPE
+}
+
+/**
  * @property farmhand.module:items.grapeSeed
  * @type {farmhand.item}
  */
