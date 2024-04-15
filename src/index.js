@@ -2,9 +2,23 @@
  * @namespace farmhand
  */
 
+import './polyfills'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
+
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+import './index.sass'
+import Farmhand from './components/Farmhand'
+import { features } from './config'
+import 'typeface-francois-one'
+import 'typeface-public-sans'
+
+// eslint-disable-next-line no-unused-vars
+import { cropFamily } from './enums'
+
 /**
  * @typedef {import("./components/Farmhand/Farmhand").farmhand.state} farmhand.state
- * @typedef {import("./enums").cropFamily} cropFamily
  */
 
 /**
@@ -44,6 +58,17 @@
  *   imageId: string,
  *   cropFamily: cropFamily
  * }} farmhand.cropVariety
+
+/**
+ * @typedef {farmhand.cropVariety & {
+ *   cropFamily: 'GRAPE'
+ * }} farmhand.grape
+ */
+
+/**
+ * @typedef farmhand.wine
+ * @property {farmhand.grape} sourceCrop
+ */
 
 /**
  * This is a minimalist base type to be inherited and expanded on by types like
@@ -144,8 +169,8 @@
  * @property {string} id UUID to uniquely identify the keg.
  * @property {string} itemId The item that this keg is based on.
  * @property {number} daysUntilMature Days remaining until this recipe can be
- * sold. This value can go negative to indicate "days since fermented." When
- * negative, the value of the keg is increased.
+ * sold. This value can go negative to indicate "days since fermented" or "days
+ * open" When negative, the value of the keg is increased.
  */
 
 /**
@@ -245,18 +270,6 @@
  * @property {number} rows
  * @property {number} price
  */
-
-import './polyfills'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { HashRouter as Router, Route } from 'react-router-dom'
-
-import * as serviceWorkerRegistration from './serviceWorkerRegistration'
-import './index.sass'
-import Farmhand from './components/Farmhand'
-import { features } from './config'
-import 'typeface-francois-one'
-import 'typeface-public-sans'
 
 const FarmhandRoute = props => <Farmhand {...{ ...props, features }} />
 
