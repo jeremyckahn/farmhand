@@ -19,6 +19,22 @@ export const isGrape = item => {
 }
 
 /**
+ * @param {Omit<farmhand.cropVariety, 'cropFamily'>} grapeProps
+ * @returns {Grape}
+ */
+const grape = grapeProps => {
+  const newGrape = {
+    ...cropVariety({ ...grapeProps, cropFamily: cropFamily.GRAPE }),
+  }
+
+  if (!isGrape(newGrape)) {
+    throw new Error(`Invalid cropVariety props`)
+  }
+
+  return newGrape
+}
+
+/**
  * @property farmhand.module:items.grapeSeed
  * @type {farmhand.item}
  */
@@ -44,57 +60,53 @@ export const grapeSeed = crop({
 
 /**
  * @property farmhand.module:items.grapeChardonnay
- * @type {farmhand.cropVariety}
+ * @type {Grape}
  */
-export const grapeChardonnay = cropVariety({
+export const grapeChardonnay = grape({
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-chardonnay'),
   }),
   name: 'Chardonnay Grape',
   imageId: 'grape-green',
-  cropFamily: cropFamily.GRAPE,
 })
 
 /**
  * @property farmhand.module:items.grapeSauvignonBlanc
- * @type {farmhand.cropVariety}
+ * @type {Grape}
  */
-export const grapeSauvignonBlanc = cropVariety({
+export const grapeSauvignonBlanc = grape({
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-sauvignon-blanc'),
   }),
   name: 'Sauvignon Blanc Grape',
   imageId: 'grape-green',
-  cropFamily: cropFamily.GRAPE,
 })
 
 /**
  * @property farmhand.module:items.grapePinotBlanc
- * @type {farmhand.cropVariety}
+ * @type {Grape}
  */
-// export const grapePinotBlanc = cropVariety({
+// export const grapePinotBlanc = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-pinot-blanc') }),
 // name: 'Pinot Blanc Grape',
 // imageId: 'grape-green',
-// cropFamily: cropFamily.GRAPE,
 // })
 
 /**
  * @property farmhand.module:items.grapeMuscat
- * @type {farmhand.cropVariety}
+ * @type {Grape}
  */
-// export const grapeMuscat = cropVariety({
+// export const grapeMuscat = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-muscat') }),
 // name: 'Muscat Grape',
 // imageId: 'grape-green',
-// cropFamily: cropFamily.GRAPE,
 // })
 
 /**
  * @property farmhand.module:items.grapeRiesling
- * @type {farmhand.cropVariety}
+ * @type {Grape}
  */
-// export const grapeRiesling = cropVariety({
+// export const grapeRiesling = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-riesling') }),
 // name: 'Riesling Grape',
 // imageId: 'grape-green',
@@ -102,61 +114,56 @@ export const grapeSauvignonBlanc = cropVariety({
 
 /**
  * @property farmhand.module:items.grapeMerlot
- * @type {farmhand.cropVariety}
+ * @type {Grape}
  */
-// export const grapeMerlot = cropVariety({
+// export const grapeMerlot = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-merlot') }),
 // name: 'Merlot Grape',
 // imageId: 'grape-purple',
-// cropFamily: cropFamily.GRAPE,
 // })
 
 /**
  * @property farmhand.module:items.grapeCabernetSauvignon
- * @type {farmhand.cropVariety}
+ * @type {Grape}
  */
-export const grapeCabernetSauvignon = cropVariety({
+export const grapeCabernetSauvignon = grape({
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-cabernet-sauvignon'),
   }),
   name: 'Cabernet Sauvignon Grape',
   imageId: 'grape-purple',
-  cropFamily: cropFamily.GRAPE,
 })
 
 /**
  * @property farmhand.module:items.grapeSyrah
- * @type {farmhand.cropVariety}
+ * @type {Grape}
  */
-// export const grapeSyrah = cropVariety({
+// export const grapeSyrah = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-syrah') }),
 // name: 'Syrah Grape',
 // imageId: 'grape-purple',
-// cropFamily: cropFamily.GRAPE,
 // })
 
 /**
  * @property farmhand.module:items.grapeTempranillo
- * @type {farmhand.cropVariety}
+ * @type {Grape}
  */
-export const grapeTempranillo = cropVariety({
+export const grapeTempranillo = grape({
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-tempranillo'),
   }),
   name: 'Tempranillo Grape',
   imageId: 'grape-purple',
-  cropFamily: cropFamily.GRAPE,
 })
 
 /**
  * @property farmhand.module:items.grapeNebbiolo
- * @type {farmhand.cropVariety}
+ * @type {Grape}
  */
-export const grapeNebbiolo = cropVariety({
+export const grapeNebbiolo = grape({
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-nebbiolo'),
   }),
   name: 'Nebbiolo Grape',
   imageId: 'grape-purple',
-  cropFamily: cropFamily.GRAPE,
 })
