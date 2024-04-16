@@ -188,3 +188,21 @@ export const cowTradeRejectionReason = enumify(['REQUESTED_COW_UNAVAILABLE'])
 export const cropFamily = {
   GRAPE: 'GRAPE',
 }
+
+/**
+ * @property farmhand.module:enums.grapeVariety
+ * @readonly
+ * @enum {string}
+ */
+export const grapeVariety = {
+  CHARDONNAY: 'CHARDONNAY',
+  SAUVIGNON_BLANC: 'SAUVIGNON_BLANC',
+  PINOT_BLANC: 'PINOT_BLANC',
+  MUSCAT: 'MUSCAT',
+  RIESLING: 'RIESLING',
+  MERLOT: 'MERLOT',
+  CABERNET_SAUVIGNON: 'CABERNET_SAUVIGNON',
+  SYRAH: 'SYRAH',
+  TEMPRANILLO: 'TEMPRANILLO',
+  NEBBIOLO: 'NEBBIOLO',
+}

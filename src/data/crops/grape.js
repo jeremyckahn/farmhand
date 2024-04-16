@@ -3,7 +3,7 @@
 /** @typedef {import("../../index").farmhand.cropVariety} farmhand.cropVariety */
 
 import { crop, fromSeed, cropVariety } from '../crop'
-import { cropFamily, cropType } from '../../enums'
+import { cropFamily, cropType, grapeVariety } from '../../enums'
 
 /**
  * @param {farmhand.item | farmhand.cropVariety} item
@@ -63,6 +63,7 @@ export const grapeChardonnay = grape({
   }),
   name: 'Chardonnay Grape',
   imageId: 'grape-green',
+  variety: grapeVariety.CHARDONNAY,
 })
 
 /**
@@ -75,6 +76,7 @@ export const grapeSauvignonBlanc = grape({
   }),
   name: 'Sauvignon Blanc Grape',
   imageId: 'grape-green',
+  variety: grapeVariety.SAUVIGNON_BLANC,
 })
 
 /**
@@ -85,6 +87,7 @@ export const grapeSauvignonBlanc = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-pinot-blanc') }),
 // name: 'Pinot Blanc Grape',
 // imageId: 'grape-green',
+// variety: grapeVariety.PINOT_BLANC,
 // })
 
 /**
@@ -95,6 +98,7 @@ export const grapeSauvignonBlanc = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-muscat') }),
 // name: 'Muscat Grape',
 // imageId: 'grape-green',
+// variety: grapeVariety.MUSCAT,
 // })
 
 /**
@@ -105,6 +109,7 @@ export const grapeSauvignonBlanc = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-riesling') }),
 // name: 'Riesling Grape',
 // imageId: 'grape-green',
+// variety: grapeVariety.RIESLING,
 // })
 
 /**
@@ -115,6 +120,7 @@ export const grapeSauvignonBlanc = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-merlot') }),
 // name: 'Merlot Grape',
 // imageId: 'grape-purple',
+// variety: grapeVariety.MERLOT,
 // })
 
 /**
@@ -127,6 +133,7 @@ export const grapeCabernetSauvignon = grape({
   }),
   name: 'Cabernet Sauvignon Grape',
   imageId: 'grape-purple',
+  variety: grapeVariety.CABERNET_SAUVIGNON,
 })
 
 /**
@@ -137,6 +144,7 @@ export const grapeCabernetSauvignon = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-syrah') }),
 // name: 'Syrah Grape',
 // imageId: 'grape-purple',
+// variety: grapeVariety.SYRAH,
 // })
 
 /**
@@ -149,6 +157,7 @@ export const grapeTempranillo = grape({
   }),
   name: 'Tempranillo Grape',
   imageId: 'grape-purple',
+  variety: grapeVariety.TEMPRANILLO,
 })
 
 /**
@@ -161,4 +170,5 @@ export const grapeNebbiolo = grape({
   }),
   name: 'Nebbiolo Grape',
   imageId: 'grape-purple',
+  variety: grapeVariety.NEBBIOLO,
 })

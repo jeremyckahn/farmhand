@@ -15,7 +15,7 @@ import 'typeface-francois-one'
 import 'typeface-public-sans'
 
 // eslint-disable-next-line no-unused-vars
-import { cropFamily } from './enums'
+import { cropFamily, grapeVariety } from './enums'
 
 /**
  * @typedef {import("./components/Farmhand/Farmhand").farmhand.state} farmhand.state
@@ -56,12 +56,14 @@ import { cropFamily } from './enums'
 /**
  * @typedef {farmhand.item & {
  *   imageId: string,
- *   cropFamily: cropFamily
+ *   cropFamily: cropFamily,
+ *   variety: string
  * }} farmhand.cropVariety
 
 /**
  * @typedef {farmhand.cropVariety & {
- *   cropFamily: 'GRAPE'
+ *   cropFamily: 'GRAPE',
+ *   variety: grapeVariety
  * }} farmhand.grape
  */
 
