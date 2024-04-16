@@ -2,18 +2,19 @@
  * @typedef {import('../index').farmhand.state['itemsSold']} itemsSold
  * @typedef {import('../index').farmhand.item} item
  * @typedef {import('../index').farmhand.cropVariety} cropVariety
- * @typedef {import('../data/crops/grape').Grape} Grape
+ * @typedef {import('../index').farmhand.grape} grape
+ * @typedef {import('../enums').grapeVariety} grapeVariety
  */
 import { isGrape } from '../data/crops/grape'
 import { itemsMap } from '../data/maps'
 
 /**
  * @param {itemsSold} itemsSold
- * @returns {Grape[]}
+ * @returns {grape[]}
  */
 const getGrapesSold = itemsSold => {
   const grapesSold = Object.entries(itemsSold).reduce((
-    /** @type {Grape[]} */ acc,
+    /** @type {grape[]} */ acc,
     [itemId, quantity]
   ) => {
     const item = itemsMap[itemId]
@@ -28,17 +29,15 @@ const getGrapesSold = itemsSold => {
   return grapesSold
 }
 
+// FIXME: Test this
 /**
  * @param {itemsSold} itemsSold
- * @returns {item['id'][]}
+ * @returns {grapeVariety[]}
  */
-export function getWinesAvailableToMake(itemsSold) {
-  // FIXME: Use this
-  // eslint-disable-next-line no-unused-vars
+export function getWineVarietiesAvailableToMake(itemsSold) {
   const grapesSold = getGrapesSold(itemsSold)
 
-  // FIXME: Populate this
-  const winesAvailableToMake = []
+  const winesVarietiesAvailableToMake = grapesSold.map(({ variety }) => variety)
 
-  return winesAvailableToMake
+  return winesVarietiesAvailableToMake
 }
