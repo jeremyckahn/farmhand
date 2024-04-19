@@ -5,10 +5,13 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import ReactMarkdown from 'react-markdown'
 
+import { WineRecipeList } from '../WineRecipeList/WineRecipeList'
+
 import { TabPanel } from './TabPanel'
 
 export const WinemakingTabPanel = ({ index, currentTab }) => (
   <TabPanel value={currentTab} index={index}>
+    <WineRecipeList />
     <Divider />
     <ul className="card-list">
       <li>

@@ -29,7 +29,6 @@ const getGrapesSold = itemsSold => {
   return grapesSold
 }
 
-// FIXME: Test this
 /**
  * @param {itemsSold} itemsSold
  * @returns {grapeVariety[]}
