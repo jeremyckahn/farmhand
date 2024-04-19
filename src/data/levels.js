@@ -69,6 +69,10 @@ levels[24] = {
   unlocksShopItem: items.asparagusSeed.id,
 }
 
+levels[25] = {
+  increasesSprinklerRange: true,
+}
+
 levels[26] = {
   unlocksShopItem: items.jalapenoSeed.id,
 }
