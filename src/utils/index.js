@@ -8,6 +8,7 @@
 /** @typedef {import("../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen */
 /** @typedef {import("../enums").cropLifeStage} farmhand.cropLifeStage */
 /** @typedef {import("../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
+/** @typedef {import("../index").farmhand.levelEntitlements} farmhand.levelEntitlements */
 
 /**
  * @module farmhand.utils
@@ -824,10 +825,12 @@ export const experienceNeededForLevel = targetLevel =>
   ((targetLevel - 1) * 10) ** 2
 
 /**
- * @param {Object} levelEntitlements
+ * @param {farmhand.levelEntitlements} levelEntitlements
  * @returns {Array.<{ item: farmhand.item }>}
  */
-export const getAvailableShopInventory = memoize(levelEntitlements =>
+export const getAvailableShopInventory = memoize((
+  /** @type {farmhand.levelEntitlements} */ levelEntitlements
+) =>
   shopInventory.filter(
     ({ id }) =>
       !(

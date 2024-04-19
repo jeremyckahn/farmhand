@@ -1,3 +1,7 @@
+/**
+ * @typedef {import('../index').farmhand.item} farmhand.item
+ */
+
 import {
   // Plantable crops
   asparagusSeed,
@@ -27,6 +31,7 @@ import {
 
 import { fertilizer } from './recipes'
 
+/** @type {farmhand.item[]} */
 const inventory = [
   // Plantable crops
   asparagusSeed,

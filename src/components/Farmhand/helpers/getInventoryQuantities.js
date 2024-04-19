@@ -4,7 +4,7 @@ const itemIds = Object.keys(itemsMap)
 
 /**
  * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
- * @returns {Object.<string, number>}
+ * @returns {Record<string, number>}
  */
 export const getInventoryQuantities = inventory => {
   const quantities = {}
