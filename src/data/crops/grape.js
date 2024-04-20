@@ -70,6 +70,23 @@ export const grapeVarietyNameMap = {
 }
 
 /**
+ * @type {Record<grapeVariety, number>} The number value represents a wine's
+ * value relative to a baseline of 1. Must be an integer.
+ */
+export const wineVarietyValueMap = {
+  [grapeVariety.CHARDONNAY]: 1,
+  [grapeVariety.SAUVIGNON_BLANC]: 8,
+  //[grapeVariety.PINOT_BLANC]: 2,
+  //[grapeVariety.MUSCAT]: 4,
+  //[grapeVariety.RIESLING]: 7,
+  //[grapeVariety.MERLOT]: 6,
+  [grapeVariety.CABERNET_SAUVIGNON]: 3,
+  //[grapeVariety.SYRAH]: 9,
+  [grapeVariety.TEMPRANILLO]: 5,
+  [grapeVariety.NEBBIOLO]: 10,
+}
+
+/**
  * @property farmhand.module:items.grapeChardonnay
  * @type {farmhand.grape}
  */
