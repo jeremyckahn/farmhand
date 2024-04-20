@@ -1,3 +1,5 @@
+import { grapeVariety } from '../enums'
+
 // Plot states
 import wateredPlot from './plot-states/watered-plot.png'
 import fertilizedPlot from './plot-states/fertilized-plot.png'
@@ -37,6 +39,10 @@ import spaghetti from './dishes/spaghetti.png'
 import strawberryJam from './dishes/strawberry-jam.png'
 import tofu from './dishes/tofu.png'
 import vegetableOil from './dishes/vegetable-oil.png'
+
+// Wine recipes
+import wineGreen from './wines/wine-green.png'
+import winePurple from './wines/wine-purple.png'
 
 // Crops
 import asparagus from './items/asparagus.png'
@@ -413,6 +419,22 @@ export const items = {
   'inventory-box': inventoryBox,
 
   ...craftedItems,
+}
+
+/**
+ * @type {Record<grapeVariety, string>}
+ */
+export const wines = {
+  [grapeVariety.CHARDONNAY]: wineGreen,
+  [grapeVariety.SAUVIGNON_BLANC]: wineGreen,
+  //[grapeVariety.PINOT_BLANC]: wineGreen,
+  //[grapeVariety.MUSCAT]: wineGreen,
+  //[grapeVariety.RIESLING]: wineGreen,
+  //[grapeVariety.MERLOT]: winePurple,
+  [grapeVariety.CABERNET_SAUVIGNON]: winePurple,
+  //[grapeVariety.SYRAH]: winePurple,
+  [grapeVariety.TEMPRANILLO]: winePurple,
+  [grapeVariety.NEBBIOLO]: winePurple,
 }
 
 export const tools = {

@@ -54,6 +54,22 @@ export const grapeSeed = crop({
 })
 
 /**
+ * @type {Record<grapeVariety, string>}
+ */
+export const grapeVarietyNameMap = {
+  [grapeVariety.CHARDONNAY]: 'Chardonnay',
+  [grapeVariety.SAUVIGNON_BLANC]: 'Sauvignon Blanc',
+  //[grapeVariety.PINOT_BLANC]: 'Pinot Blanc',
+  //[grapeVariety.MUSCAT]: 'Muscat',
+  //[grapeVariety.RIESLING]: 'Riesling',
+  //[grapeVariety.MERLOT]: 'Merlot',
+  [grapeVariety.CABERNET_SAUVIGNON]: 'Cabernet Sauvignon',
+  //[grapeVariety.SYRAH]: 'Syrah',
+  [grapeVariety.TEMPRANILLO]: 'Tempranillo',
+  [grapeVariety.NEBBIOLO]: 'Nebbiolo',
+}
+
+/**
  * @property farmhand.module:items.grapeChardonnay
  * @type {farmhand.grape}
  */
