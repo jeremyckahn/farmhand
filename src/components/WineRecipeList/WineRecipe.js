@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { oneOf } from 'prop-types'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -13,6 +13,8 @@ import { wineService } from '../../services/wine'
 import { grapeVariety } from '../../enums'
 import { wines } from '../../img'
 import { integerString } from '../../utils'
+import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
+import FarmhandContext from '../Farmhand/Farmhand.context'
 
 /**
  * @param {{
@@ -20,8 +22,13 @@ import { integerString } from '../../utils'
  * }} props
  */
 export const WineRecipe = ({ wineVariety }) => {
+  const {
+    gameState: { inventory },
+  } = useContext(FarmhandContext)
   const wineName = grapeVarietyNameMap[wineVariety]
   const grape = grapeVarietyVarietyGrapeMap[wineVariety]
+
+  const inventoryQuantityMap = getInventoryQuantityMap(inventory)
 
   return (
     <Card className="WineRecipe">
@@ -42,12 +49,12 @@ export const WineRecipe = ({ wineVariety }) => {
               {integerString(wineService.getDaysToMature(wineVariety))}
             </p>
             <p>
-              Ingredients:{' '}
+              Required:{' '}
               {integerString(wineService.getGrapesRequiredForWine(wineVariety))}{' '}
-              x {grape.name}
+              x {grape.name} (available:{' '}
+              {integerString(inventoryQuantityMap[grape.id])})
             </p>
             {
-              // FIXME: Show number of required grapes in inventory
               // FIXME: Show amount in cellar
             }
           </>

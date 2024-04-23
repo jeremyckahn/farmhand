@@ -8,19 +8,19 @@ import { createContext } from 'react'
 /**
  * @type {import('react').Context<{
  *   gameState: farmhand.state & {
- *    blockInput: boolean,
- *    features: Record<string, boolean>,
- *    fieldToolInventory: farmhand.item[],
- *    isChatAvailable: boolean,
- *    levelEntitlements: farmhand.levelEntitlements,
- *    plantableCropInventory: farmhand.item[],
- *    playerInventory: farmhand.item[],
- *    playerInventoryQuantities: Record<string, number>,
- *    shopInventory: farmhand.item[],
- *    viewList: string[],
- *    viewTitle: string,
+ *     blockInput: boolean,
+ *     features: Record<string, boolean>,
+ *     fieldToolInventory: farmhand.item[],
+ *     isChatAvailable: boolean,
+ *     levelEntitlements: farmhand.levelEntitlements,
+ *     plantableCropInventory: farmhand.item[],
+ *     playerInventory: farmhand.item[],
+ *     playerInventoryQuantities: Record<string, number>,
+ *     shopInventory: farmhand.item[],
+ *     viewList: string[],
+ *     viewTitle: string,
  *   }
- *   handlers: {}
+ *   handlers: Record<string, (...any) => void>
  * }>}
  */
 // @ts-expect-error
