@@ -23,7 +23,7 @@ import uiEventHandlers from '../../handlers/ui-events'
  *     viewList: string[],
  *     viewTitle: string,
  *   }
- *   handlers: uiEventHandlers
+ *   handlers: uiEventHandlers & { debounced: uiEventHandlers }
  * }>}
  */
 // @ts-expect-error
