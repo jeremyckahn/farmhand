@@ -5,7 +5,10 @@ import CardHeader from '@mui/material/CardHeader'
 import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
 
-import { grapeVarietyNameMap } from '../../data/crops/grape'
+import {
+  grapeVarietyNameMap,
+  grapeVarietyVarietyGrapeMap,
+} from '../../data/crops/grape'
 import { wineService } from '../../services/wine'
 import { grapeVariety } from '../../enums'
 import { wines } from '../../img'
@@ -18,6 +21,7 @@ import { integerString } from '../../utils'
  */
 export const WineRecipe = ({ wineVariety }) => {
   const wineName = grapeVarietyNameMap[wineVariety]
+  const grape = grapeVarietyVarietyGrapeMap[wineVariety]
 
   return (
     <Card className="WineRecipe">
@@ -37,8 +41,12 @@ export const WineRecipe = ({ wineVariety }) => {
               Days to mature:{' '}
               {integerString(wineService.getDaysToMature(wineVariety))}
             </p>
+            <p>
+              Ingredients:{' '}
+              {integerString(wineService.getGrapesRequiredForWine(wineVariety))}{' '}
+              x {grape.name}
+            </p>
             {
-              // FIXME: Show type and number of grapes required (4x their wineVarietyValueMap value)
               // FIXME: Show number of required grapes in inventory
               // FIXME: Show amount in cellar
             }

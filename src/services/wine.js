@@ -11,10 +11,22 @@ export class WineService {
   maturityDayMultiplier = 3
 
   /**
+   * @private
+   */
+  grapeRequirementMultiplier = 4
+
+  /**
    * @param {grapeVarietyEnum} grapeVariety
    */
   getDaysToMature = grapeVariety => {
     return wineVarietyValueMap[grapeVariety] * this.maturityDayMultiplier
+  }
+
+  /**
+   * @param {grapeVarietyEnum} grapeVariety
+   */
+  getGrapesRequiredForWine = grapeVariety => {
+    return wineVarietyValueMap[grapeVariety] * this.grapeRequirementMultiplier
   }
 }
 
