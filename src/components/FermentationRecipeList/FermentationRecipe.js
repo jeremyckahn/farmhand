@@ -48,9 +48,7 @@ const getRecipesInstancesInCellar = memoize(
 export const FermentationRecipe = ({ item }) => {
   const {
     gameState: { inventory, cellarInventory, purchasedCellar },
-    handlers: {
-      /** @type {function(item, number)} */ handleMakeFermentationRecipeClick,
-    },
+    handlers: { handleMakeFermentationRecipeClick },
   } = useContext(FarmhandContext)
 
   const [quantity, setQuantity] = useState(1)

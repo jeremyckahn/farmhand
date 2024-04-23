@@ -5,6 +5,9 @@
  */
 import { createContext } from 'react'
 
+// eslint-disable-next-line no-unused-vars
+import uiEventHandlers from '../../handlers/ui-events'
+
 /**
  * @type {import('react').Context<{
  *   gameState: farmhand.state & {
@@ -20,7 +23,7 @@ import { createContext } from 'react'
  *     viewList: string[],
  *     viewTitle: string,
  *   }
- *   handlers: Record<string, (...any) => void>
+ *   handlers: uiEventHandlers
  * }>}
  */
 // @ts-expect-error
