@@ -96,17 +96,13 @@ import {
   Z_INDEX,
   STANDARD_VIEW_LIST,
 } from '../../constants'
-import {
-  HEARTBEAT_INTERVAL_PERIOD,
-  SERVER_ERRORS,
-} from '../../common/constants'
+import { HEARTBEAT_INTERVAL_PERIOD } from '../../common/constants'
 import {
   CONNECTED_TO_ROOM,
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
   RECIPES_LEARNED,
-  ROOM_FULL_NOTIFICATION,
 } from '../../templates'
 import {
   CONNECTING_TO_SERVER,
@@ -638,7 +634,7 @@ export default class Farmhand extends FarmhandReducers {
       await this.initializeNewGame()
     }
 
-    this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
+    this.syncToRoom()
 
     this.setState({ hasBooted: true })
   }
@@ -683,7 +679,7 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     if (isOnline !== prevState.isOnline || room !== prevState.room) {
-      this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
+      this.syncToRoom()
 
       if (!isOnline && typeof heartbeatTimeoutId === 'number') {
         clearTimeout(heartbeatTimeoutId)
@@ -914,18 +910,10 @@ export default class Farmhand extends FarmhandReducers {
 
       this.state.peerRoom?.leave()
 
-      const { errorCode, valueAdjustments } = await getData(
-        endpoints.getMarketData,
-        {
-          farmId: this.state.id,
-          room: room,
-        }
-      )
-
-      if (errorCode) {
-        // Bail out and move control to this try's catch
-        throw new Error(errorCode)
-      }
+      const { valueAdjustments } = await getData(endpoints.getMarketData, {
+        farmId: this.state.id,
+        room: room,
+      })
 
       this.scheduleHeartbeat()
 
@@ -957,12 +945,7 @@ export default class Farmhand extends FarmhandReducers {
       // fails. Possibility: Regenerate valueAdjustments and notify the user
       // they are offline.
 
-      if (SERVER_ERRORS[message]) {
-        // Bubble up the errorCode to be handled by game logic
-        throw message
-      }
-
-      this.showNotification(SERVER_ERROR, 'error')
+      this.showNotification(`Server error: ${message}`, 'error')
 
       console.error(e)
     }
@@ -971,34 +954,6 @@ export default class Farmhand extends FarmhandReducers {
       isAwaitingNetworkRequest: false,
       isAwaitingCowTradeRequest: false,
     })
-  }
-
-  handleRoomSyncError(errorCode) {
-    const { room } = this.state
-
-    switch (errorCode) {
-      case SERVER_ERRORS.ROOM_FULL:
-        const roomNameChunks = room.split('-')
-        const roomNumber = parseInt(roomNameChunks.slice(-1)[0]) // May be NaN
-        const nextRoomNumber = isNaN(roomNumber) ? 2 : roomNumber + 1
-        const roomBaseName = roomNameChunks
-          .slice(0, isNaN(roomNumber) ? undefined : -1)
-          .join('-')
-        const nextRoom = `${roomBaseName}-${nextRoomNumber}`
-
-        this.showNotification(
-          ROOM_FULL_NOTIFICATION`${room}${nextRoom}`,
-          'warning'
-        )
-
-        this.setState(() => ({
-          redirect: `/online/${encodeURIComponent(nextRoom)}`,
-        }))
-
-        break
-
-      default:
-    }
   }
 
   scheduleHeartbeat() {
