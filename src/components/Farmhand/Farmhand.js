@@ -914,7 +914,7 @@ export default class Farmhand extends FarmhandReducers {
 
       this.state.peerRoom?.leave()
 
-      const { activePlayers, errorCode, valueAdjustments } = await getData(
+      const { errorCode, valueAdjustments } = await getData(
         endpoints.getMarketData,
         {
           farmId: this.state.id,
@@ -932,7 +932,7 @@ export default class Farmhand extends FarmhandReducers {
       const trackerRedundancy = 4
 
       this.setState({
-        activePlayers,
+        activePlayers: 1,
         peerRoom: joinRoom(
           {
             appId: process.env.REACT_APP_NAME,
@@ -1002,58 +1002,15 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   scheduleHeartbeat() {
-    const { heartbeatTimeoutId, id, room } = this.state
+    const { heartbeatTimeoutId } = this.state
     clearTimeout(heartbeatTimeoutId ?? -1)
 
     this.setState(() => ({
       heartbeatTimeoutId: setTimeout(async () => {
-        try {
-          const { activePlayers, errorCode } = await getData(
-            endpoints.getMarketData,
-            {
-              farmId: id,
-              room,
-            }
-          )
-
-          if (errorCode) {
-            // Bail out and move control to this try's catch
-            throw new Error(errorCode)
-          }
-
-          // If the player has been previously disconnected due to network
-          // flakiness (see the catch block below), attempt to rejoin the peer
-          // room.
-          const peerRoom =
-            this.state.peerRoom ||
-            joinRoom(
-              {
-                appId: process.env.REACT_APP_NAME,
-                trackerUrls,
-                rtcConfig,
-              },
-              room
-            )
-
-          this.setState(({ money }) => ({
-            activePlayers,
-            money: moneyTotal(money, activePlayers),
-            peerRoom,
-          }))
-        } catch (e) {
-          const message = e instanceof Error ? e.message : 'Unexpected error'
-
-          if (SERVER_ERRORS[message]) {
-            // Bubble up the errorCode to be handled by game logic
-            throw message
-          }
-
-          this.showNotification(SERVER_ERROR, 'error')
-
-          this.setState({ peerRoom: null })
-
-          console.error(e)
-        }
+        this.setState(({ money, activePlayers }) => ({
+          activePlayers,
+          money: moneyTotal(money, activePlayers),
+        }))
 
         this.scheduleHeartbeat()
       }, HEARTBEAT_INTERVAL_PERIOD),
