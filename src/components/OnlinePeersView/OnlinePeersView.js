@@ -38,7 +38,9 @@ const OnlinePeersView = ({
 
   return (
     <div {...{ className: 'OnlinePeersView' }}>
-      {activePlayers - 1 > populatedPeers.length && <p>Waiting for peers...</p>}
+      {activePlayers - 1 > populatedPeers.length && (
+        <p>Getting player information...</p>
+      )}
       <h3>Your player name</h3>
       <Card>
         <CardContent>

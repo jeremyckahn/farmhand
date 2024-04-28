@@ -90,13 +90,13 @@ import {
 import {
   COW_TRADE_TIMEOUT,
   DEFAULT_ROOM,
+  HEARTBEAT_INTERVAL_PERIOD,
   INITIAL_STORAGE_LIMIT,
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
   Z_INDEX,
   STANDARD_VIEW_LIST,
 } from '../../constants'
-import { HEARTBEAT_INTERVAL_PERIOD } from '../../common/constants'
 import {
   CONNECTED_TO_ROOM,
   LOAN_INCREASED,
@@ -947,6 +947,7 @@ export default class Farmhand extends FarmhandReducers {
 
       console.error(e)
 
+      // NOTE: Syncing failed, so take the user offline
       this.setState(() => {
         return {
           redirect: '/',
@@ -1075,6 +1076,7 @@ export default class Farmhand extends FarmhandReducers {
           severity: 'error',
         })
 
+        // NOTE: Takes the user offline
         this.setState({
           redirect: '/',
           cowIdOfferedForTrade: '',
