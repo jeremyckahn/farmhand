@@ -939,15 +939,20 @@ export default class Farmhand extends FarmhandReducers {
 
       this.showNotification(CONNECTED_TO_ROOM`${room}`, 'success')
     } catch (e) {
-      const message = e instanceof Error ? e.message : 'Unexpected error'
-
       // TODO: Add some reasonable fallback behavior in case the server request
       // fails. Possibility: Regenerate valueAdjustments and notify the user
       // they are offline.
 
-      this.showNotification(`Server error: ${message}`, 'error')
+      this.showNotification(SERVER_ERROR, 'error')
 
       console.error(e)
+
+      this.setState(() => {
+        return {
+          redirect: '/',
+          cowIdOfferedForTrade: '',
+        }
+      })
     }
 
     this.setState({
@@ -1064,9 +1069,15 @@ export default class Farmhand extends FarmhandReducers {
           nextDayState.priceSurges
         )
       } catch (e) {
+        // NOTE: This will get reached when there's an issue posting data to the server.
         serverMessages.push({
           message: SERVER_ERROR,
           severity: 'error',
+        })
+
+        this.setState({
+          redirect: '/',
+          cowIdOfferedForTrade: '',
         })
 
         console.error(e)
