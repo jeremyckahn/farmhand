@@ -668,6 +668,7 @@ export default class Farmhand extends FarmhandReducers {
 
     const decodedRoom = decodeURIComponent(newRoom)
 
+    // NOTE: This indicates that the client should attempt to connect to the server
     const newIsOnline = path.startsWith('/online')
 
     if (newIsOnline !== this.state.isOnline || decodedRoom !== room) {
@@ -679,7 +680,9 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     if (isOnline !== prevState.isOnline || room !== prevState.room) {
-      this.syncToRoom()
+      if (newIsOnline) {
+        this.syncToRoom()
+      }
 
       if (!isOnline && typeof heartbeatTimeoutId === 'number') {
         clearTimeout(heartbeatTimeoutId)
