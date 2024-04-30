@@ -678,7 +678,7 @@ export default class Farmhand extends FarmhandReducers {
       }))
     }
 
-    if (newIsOnline !== prevState.isOnline || room !== prevState.room) {
+    if (isOnline !== prevState.isOnline || room !== prevState.room) {
       this.syncToRoom()
 
       if (!isOnline && typeof heartbeatTimeoutId === 'number') {
