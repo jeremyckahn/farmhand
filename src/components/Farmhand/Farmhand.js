@@ -1053,6 +1053,11 @@ export default class Farmhand extends FarmhandReducers {
           inventory
         )
 
+        const { valueAdjustments } = await postData(endpoints.postDayResults, {
+          positions,
+          room,
+        })
+
         if (Object.keys(positions).length) {
           serverMessages.push({
             message: POSITIONS_POSTED_NOTIFICATION`${'You'}${positions}`,
@@ -1061,11 +1066,6 @@ export default class Farmhand extends FarmhandReducers {
 
           broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION`${''}${positions}`
         }
-
-        const { valueAdjustments } = await postData(endpoints.postDayResults, {
-          positions,
-          room,
-        })
 
         nextDayState.valueAdjustments = applyPriceEvents(
           valueAdjustments,
