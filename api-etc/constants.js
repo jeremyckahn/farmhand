@@ -7,5 +7,3 @@ export const ACCEPTED_ORIGINS = new Set([
   'https://www.farmhand.life',
   'https://v6p9d9t4.ssl.hwcdn.net', // itch.io's CDN that the game is served from
 ])
-
-export const MAX_ROOM_SIZE = 25

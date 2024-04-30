@@ -90,6 +90,7 @@ import {
 import {
   COW_TRADE_TIMEOUT,
   DEFAULT_ROOM,
+  HEARTBEAT_INTERVAL_PERIOD,
   INITIAL_STORAGE_LIMIT,
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
@@ -97,16 +98,11 @@ import {
   STANDARD_VIEW_LIST,
 } from '../../constants'
 import {
-  HEARTBEAT_INTERVAL_PERIOD,
-  SERVER_ERRORS,
-} from '../../common/constants'
-import {
   CONNECTED_TO_ROOM,
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
   RECIPES_LEARNED,
-  ROOM_FULL_NOTIFICATION,
 } from '../../templates'
 import {
   CONNECTING_TO_SERVER,
@@ -638,7 +634,7 @@ export default class Farmhand extends FarmhandReducers {
       await this.initializeNewGame()
     }
 
-    this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
+    this.syncToRoom()
 
     this.setState({ hasBooted: true })
   }
@@ -672,6 +668,7 @@ export default class Farmhand extends FarmhandReducers {
 
     const decodedRoom = decodeURIComponent(newRoom)
 
+    // NOTE: This indicates that the client should attempt to connect to the server
     const newIsOnline = path.startsWith('/online')
 
     if (newIsOnline !== this.state.isOnline || decodedRoom !== room) {
@@ -683,7 +680,9 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     if (isOnline !== prevState.isOnline || room !== prevState.room) {
-      this.syncToRoom().catch(errorCode => this.handleRoomSyncError(errorCode))
+      if (newIsOnline) {
+        this.syncToRoom()
+      }
 
       if (!isOnline && typeof heartbeatTimeoutId === 'number') {
         clearTimeout(heartbeatTimeoutId)
@@ -914,25 +913,17 @@ export default class Farmhand extends FarmhandReducers {
 
       this.state.peerRoom?.leave()
 
-      const { activePlayers, errorCode, valueAdjustments } = await getData(
-        endpoints.getMarketData,
-        {
-          farmId: this.state.id,
-          room: room,
-        }
-      )
-
-      if (errorCode) {
-        // Bail out and move control to this try's catch
-        throw new Error(errorCode)
-      }
+      const { valueAdjustments } = await getData(endpoints.getMarketData, {
+        farmId: this.state.id,
+        room: room,
+      })
 
       this.scheduleHeartbeat()
 
       const trackerRedundancy = 4
 
       this.setState({
-        activePlayers,
+        activePlayers: 1,
         peerRoom: joinRoom(
           {
             appId: process.env.REACT_APP_NAME,
@@ -951,20 +942,21 @@ export default class Farmhand extends FarmhandReducers {
 
       this.showNotification(CONNECTED_TO_ROOM`${room}`, 'success')
     } catch (e) {
-      const message = e instanceof Error ? e.message : 'Unexpected error'
-
       // TODO: Add some reasonable fallback behavior in case the server request
       // fails. Possibility: Regenerate valueAdjustments and notify the user
       // they are offline.
 
-      if (SERVER_ERRORS[message]) {
-        // Bubble up the errorCode to be handled by game logic
-        throw message
-      }
-
       this.showNotification(SERVER_ERROR, 'error')
 
       console.error(e)
+
+      // NOTE: Syncing failed, so take the user offline
+      this.setState(() => {
+        return {
+          redirect: '/',
+          cowIdOfferedForTrade: '',
+        }
+      })
     }
 
     this.setState({
@@ -973,87 +965,16 @@ export default class Farmhand extends FarmhandReducers {
     })
   }
 
-  handleRoomSyncError(errorCode) {
-    const { room } = this.state
-
-    switch (errorCode) {
-      case SERVER_ERRORS.ROOM_FULL:
-        const roomNameChunks = room.split('-')
-        const roomNumber = parseInt(roomNameChunks.slice(-1)[0]) // May be NaN
-        const nextRoomNumber = isNaN(roomNumber) ? 2 : roomNumber + 1
-        const roomBaseName = roomNameChunks
-          .slice(0, isNaN(roomNumber) ? undefined : -1)
-          .join('-')
-        const nextRoom = `${roomBaseName}-${nextRoomNumber}`
-
-        this.showNotification(
-          ROOM_FULL_NOTIFICATION`${room}${nextRoom}`,
-          'warning'
-        )
-
-        this.setState(() => ({
-          redirect: `/online/${encodeURIComponent(nextRoom)}`,
-        }))
-
-        break
-
-      default:
-    }
-  }
-
   scheduleHeartbeat() {
-    const { heartbeatTimeoutId, id, room } = this.state
+    const { heartbeatTimeoutId } = this.state
     clearTimeout(heartbeatTimeoutId ?? -1)
 
     this.setState(() => ({
       heartbeatTimeoutId: setTimeout(async () => {
-        try {
-          const { activePlayers, errorCode } = await getData(
-            endpoints.getMarketData,
-            {
-              farmId: id,
-              room,
-            }
-          )
-
-          if (errorCode) {
-            // Bail out and move control to this try's catch
-            throw new Error(errorCode)
-          }
-
-          // If the player has been previously disconnected due to network
-          // flakiness (see the catch block below), attempt to rejoin the peer
-          // room.
-          const peerRoom =
-            this.state.peerRoom ||
-            joinRoom(
-              {
-                appId: process.env.REACT_APP_NAME,
-                trackerUrls,
-                rtcConfig,
-              },
-              room
-            )
-
-          this.setState(({ money }) => ({
-            activePlayers,
-            money: moneyTotal(money, activePlayers),
-            peerRoom,
-          }))
-        } catch (e) {
-          const message = e instanceof Error ? e.message : 'Unexpected error'
-
-          if (SERVER_ERRORS[message]) {
-            // Bubble up the errorCode to be handled by game logic
-            throw message
-          }
-
-          this.showNotification(SERVER_ERROR, 'error')
-
-          this.setState({ peerRoom: null })
-
-          console.error(e)
-        }
+        this.setState(({ money, activePlayers }) => ({
+          activePlayers,
+          money: moneyTotal(money, activePlayers),
+        }))
 
         this.scheduleHeartbeat()
       }, HEARTBEAT_INTERVAL_PERIOD),
@@ -1132,6 +1053,11 @@ export default class Farmhand extends FarmhandReducers {
           inventory
         )
 
+        const { valueAdjustments } = await postData(endpoints.postDayResults, {
+          positions,
+          room,
+        })
+
         if (Object.keys(positions).length) {
           serverMessages.push({
             message: POSITIONS_POSTED_NOTIFICATION`${'You'}${positions}`,
@@ -1141,20 +1067,22 @@ export default class Farmhand extends FarmhandReducers {
           broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION`${''}${positions}`
         }
 
-        const { valueAdjustments } = await postData(endpoints.postDayResults, {
-          positions,
-          room,
-        })
-
         nextDayState.valueAdjustments = applyPriceEvents(
           valueAdjustments,
           nextDayState.priceCrashes,
           nextDayState.priceSurges
         )
       } catch (e) {
+        // NOTE: This will get reached when there's an issue posting data to the server.
         serverMessages.push({
           message: SERVER_ERROR,
           severity: 'error',
+        })
+
+        // NOTE: Takes the user offline
+        this.setState({
+          redirect: '/',
+          cowIdOfferedForTrade: '',
         })
 
         console.error(e)

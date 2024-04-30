@@ -14,7 +14,7 @@ export const INVALID_DATA_PROVIDED = 'Invalid Farmhand data provided.'
 export const UPDATE_AVAILABLE =
   "A game update is available! Click this message to reload and see what's new."
 export const SERVER_ERROR =
-  "There was an issue communicating with the server. You can keep playing offline, and you'll be reconnected as soon as things improve."
+  'There was an issue connecting to the server. Please try again in a moment.'
 export const CONNECTING_TO_SERVER = 'Connecting...'
 export const DISCONNECTING_FROM_SERVER = 'Disconnecting...'
 export const DISCONNECTED_FROM_SERVER = 'You are now playing offline.'

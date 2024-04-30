@@ -154,7 +154,7 @@ const OnlineControls = ({
               variant: 'contained',
             }}
           >
-            Active players: {integerString(activePlayers)}
+            Connected players: {integerString(activePlayers)}
           </Button>
           {isChatAvailable ? (
             <Button
