@@ -40,6 +40,7 @@ import spaghetti from './dishes/spaghetti.png'
 import strawberryJam from './dishes/strawberry-jam.png'
 import tofu from './dishes/tofu.png'
 import vegetableOil from './dishes/vegetable-oil.png'
+import yeast from './dishes/yeast.png'
 
 // Wine recipes
 import wineGreen from './wines/wine-green.png'
@@ -264,6 +265,7 @@ export const craftedItems = {
   'sweet-potato-pie': sweetPotatoPie,
   tofu,
   'vegetable-oil': vegetableOil,
+  yeast,
   ...smeltedItems,
 }
 
