@@ -154,14 +154,11 @@ import { cropFamily, grapeVariety } from './enums'
  */
 
 /**
- * @typedef farmhand.recipe
- * @type {farmhand.item}
- * @property {recipeType} recipeType The type of recipe
- * this is.
- * @property {{string: number}} ingredients An object where each
- * key is the id of a farmhand.item and the value is the quantity of that item.
- * @property {farmhand.recipeCondition} condition This must return `true` for
- * the recipe to be made available to the player.
+ * @typedef {farmhand.item & {
+ *   recipeType: recipeType, // The type of recipe of recipe this is.
+ *   ingredients: Record<string, number>, // An object where each key is the id of a farmhand.item and the value is the quantity of that item.
+ *   condition: farmhand.recipeCondition, // This must return `true` for the recipe to be made available to the player.
+ * }} farmhand.recipe
  * @readonly
  */
 

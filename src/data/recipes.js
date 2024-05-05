@@ -1,5 +1,7 @@
 /**
  * @module farmhand.recipes
+ * @typedef {import('../index').farmhand.item} farmhand.item
+ * @typedef {import('../index').farmhand.recipe} farmhand.recipe
  */
 import { itemType, fieldMode, recipeType } from '../enums'
 import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
@@ -9,6 +11,10 @@ import baseItemsMap from './items-map'
 
 const itemsMap = { ...baseItemsMap }
 
+/**
+ * @param {Omit<farmhand.recipe, 'type' | 'value'> & { type?: string }} recipe
+ * @returns {farmhand.recipe}
+ */
 const itemify = recipe => {
   const item = Object.freeze({
     type: itemType.CRAFTED_ITEM,
@@ -30,7 +36,7 @@ const itemify = recipe => {
 
 /**
  * @property farmhand.module:recipes.salt
- * @type {farmhand.item}
+ * @type {farmhand.recipe}
  */
 export const salt = itemify({
   id: 'salt',
@@ -43,6 +49,35 @@ export const salt = itemify({
   recipeType: recipeType.KITCHEN,
 })
 
+/**
+ * @property farmhand.module:recipes.flour
+ * @type {farmhand.recipe}
+ */
+export const flour = itemify({
+  id: 'flour',
+  name: 'Flour',
+  ingredients: {
+    [items.wheat.id]: 10,
+  },
+  condition: state => state.itemsSold[items.wheat.id] >= 20,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.yeast
+ * @type {farmhand.recipe}
+ */
+export const yeast = itemify({
+  id: 'yeast',
+  name: 'Yeast',
+  ingredients: {
+    [flour.id]: 5,
+  },
+  condition: state => state.itemsSold[flour.id] >= 25,
+  recipeType: recipeType.KITCHEN,
+})
+
+// FIXME: Change bread ingredients to be flour
 /**
  * @property farmhand.module:recipes.bread
  * @type {farmhand.recipe}
@@ -570,7 +605,7 @@ export const bronzeIngot = itemify({
     [items.coal.id]: 5,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.bronzeOre.id] >= 50,
+    state.purchasedSmelter > 0 && state.itemsSold[items.bronzeOre.id] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -586,7 +621,7 @@ export const ironIngot = itemify({
     [items.coal.id]: 12,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.ironOre.id] >= 50,
+    state.purchasedSmelter > 0 && state.itemsSold[items.ironOre.id] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -602,7 +637,7 @@ export const silverIngot = itemify({
     [items.coal.id]: 8,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.silverOre.id] >= 50,
+    state.purchasedSmelter > 0 && state.itemsSold[items.silverOre.id] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -618,7 +653,7 @@ export const goldIngot = itemify({
     [items.coal.id]: 10,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.goldOre.id] >= 50,
+    state.purchasedSmelter > 0 && state.itemsSold[items.goldOre.id] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -629,7 +664,7 @@ export const compost = itemify({
     [items.weed.id]: 25,
   },
   condition: state =>
-    state.purchasedComposter && state.itemsSold[items.weed.id] >= 100,
+    state.purchasedComposter > 0 && state.itemsSold[items.weed.id] >= 100,
   description: 'Can be used to make fertilizer.',
   recipeType: recipeType.RECYCLING,
   type: itemType.CRAFTED_ITEM,
@@ -646,7 +681,7 @@ export const fertilizer = itemify({
     [compost.id]: 10,
   },
   condition: state =>
-    state.purchasedComposter && state.itemsSold[compost.id] >= 10,
+    state.purchasedComposter > 0 && state.itemsSold[compost.id] >= 10,
   description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,
   recipeType: recipeType.RECYCLING,
