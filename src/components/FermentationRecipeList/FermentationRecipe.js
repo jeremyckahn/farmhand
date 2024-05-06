@@ -18,25 +18,13 @@ import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltReq
 import { FERMENTED_CROP_NAME } from '../../templates'
 import QuantityInput from '../QuantityInput'
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import { fermentableItemsMap, itemsMap } from '../../data/maps'
-
-import './FermentationRecipe.sass'
+import { itemsMap } from '../../data/maps'
+import { cellarService } from '../../services/cellar'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
 import { integerString } from '../../utils'
 import AnimatedNumber from '../AnimatedNumber'
-import { memoize } from '../../utils/memoize'
 
-const getRecipeInstancesInCellar = memoize(
-  /**
-   * @param {keg[]} cellarInventory
-   * @param {item} item
-   * @returns number
-   */
-  (cellarInventory, item) => {
-    return cellarInventory.filter(keg => keg.itemId === item.id).length
-  },
-  { cacheSize: Object.keys(fermentableItemsMap).length }
-)
+import './FermentationRecipe.sass'
 
 /**
  * @param {Object} props
@@ -84,7 +72,7 @@ export const FermentationRecipe = ({ item }) => {
     cellarSize
   )
 
-  const recipeInstancesInCellar = getRecipeInstancesInCellar(
+  const recipeInstancesInCellar = cellarService.getItemInstancesInCellar(
     cellarInventory,
     item
   )
