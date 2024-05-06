@@ -45,7 +45,7 @@ export const makeFermentationRecipe = (
     const keg = {
       id: uuid(),
       itemId: fermentationRecipe.id,
-      daysUntilMature: fermentationRecipe.daysToFerment,
+      daysUntilMature: fermentationRecipe.daysToFerment ?? 0,
     }
 
     state = addKegToCellarInventory(state, keg)

@@ -26,10 +26,7 @@ import { integerString } from '../../utils'
 import AnimatedNumber from '../AnimatedNumber'
 import { memoize } from '../../utils/memoize'
 
-/**
- * @type {function(keg[], item):number}
- */
-const getRecipesInstancesInCellar = memoize(
+const getRecipeInstancesInCellar = memoize(
   /**
    * @param {keg[]} cellarInventory
    * @param {item} item
@@ -87,7 +84,7 @@ export const FermentationRecipe = ({ item }) => {
     cellarSize
   )
 
-  const recipeInstancesInCellar = getRecipesInstancesInCellar(
+  const recipeInstancesInCellar = getRecipeInstancesInCellar(
     cellarInventory,
     item
   )
