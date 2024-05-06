@@ -15,6 +15,7 @@ import { wines } from '../../img'
 import { integerString } from '../../utils'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
 import FarmhandContext from '../Farmhand/Farmhand.context'
+import { GRAPES_REQUIRED_FOR_WINE } from '../../constants'
 
 /**
  * @param {{
@@ -49,10 +50,13 @@ export const WineRecipe = ({ wineVariety }) => {
               {integerString(wineService.getDaysToMature(wineVariety))}
             </p>
             <p>
-              Required:{' '}
-              {integerString(wineService.getGrapesRequiredForWine(wineVariety))}{' '}
-              x {grape.name} (available:{' '}
+              Units of {grape.name} required:{' '}
+              {integerString(GRAPES_REQUIRED_FOR_WINE)} (available:{' '}
               {integerString(inventoryQuantityMap[grape.id])})
+            </p>
+            <p>
+              Units of {'yeast'} required:{' '}
+              {integerString(wineService.getYeastRequiredForWine(wineVariety))}
             </p>
             {
               // FIXME: Show amount in cellar

@@ -13,7 +13,7 @@ export class WineService {
   /**
    * @private
    */
-  grapeRequirementMultiplier = 4
+  yeastRequirementMultiplier = 5
 
   /**
    * @param {grapeVarietyEnum} grapeVariety
@@ -25,8 +25,8 @@ export class WineService {
   /**
    * @param {grapeVarietyEnum} grapeVariety
    */
-  getGrapesRequiredForWine = grapeVariety => {
-    return wineVarietyValueMap[grapeVariety] * this.grapeRequirementMultiplier
+  getYeastRequiredForWine = grapeVariety => {
+    return wineVarietyValueMap[grapeVariety] * this.yeastRequirementMultiplier
   }
 }
 
