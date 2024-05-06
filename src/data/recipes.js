@@ -77,7 +77,6 @@ export const yeast = itemify({
   recipeType: recipeType.KITCHEN,
 })
 
-// FIXME: Change bread ingredients to be flour
 /**
  * @property farmhand.module:recipes.bread
  * @type {farmhand.recipe}
@@ -86,9 +85,11 @@ export const bread = itemify({
   id: 'bread',
   name: 'Bread',
   ingredients: {
-    [items.wheat.id]: 15,
+    [flour.id]: 10,
+    [yeast.id]: 5,
   },
-  condition: state => state.itemsSold[items.wheat.id] >= 30,
+  condition: state =>
+    state.itemsSold[flour.id] >= 30 && state.itemsSold[yeast.id] >= 15,
   recipeType: recipeType.KITCHEN,
 })
 
