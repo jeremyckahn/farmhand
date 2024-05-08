@@ -12,7 +12,6 @@ import Button from '@mui/material/Button'
 
 import { PURCHASEABLE_CELLARS } from '../../constants'
 import { items } from '../../img'
-import { doesCellarSpaceRemain } from '../../utils/doesCellarSpaceRemain'
 import { getMaxYieldOfFermentationRecipe } from '../../utils/getMaxYieldOfFermentationRecipe'
 import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe'
 import { FERMENTED_CROP_NAME } from '../../templates'
@@ -39,6 +38,7 @@ export const FermentationRecipe = ({ item }) => {
   const [quantity, setQuantity] = useState(1)
 
   const inventoryQuantityMap = getInventoryQuantityMap(inventory)
+  // @ts-expect-error
   const fermentationRecipeName = FERMENTED_CROP_NAME`${item}`
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
     space: 0,
@@ -59,7 +59,8 @@ export const FermentationRecipe = ({ item }) => {
   }, [cellarInventory, cellarSize, inventory, item, quantity])
 
   const canBeMade =
-    quantity > 0 && doesCellarSpaceRemain(cellarInventory, purchasedCellar)
+    quantity > 0 &&
+    cellarService.doesCellarSpaceRemain(cellarInventory, purchasedCellar)
 
   const handleMakeFermentationRecipe = () => {
     if (canBeMade) {

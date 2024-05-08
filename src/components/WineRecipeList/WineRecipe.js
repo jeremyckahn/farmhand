@@ -17,7 +17,6 @@ import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants'
 import { cellarService } from '../../services/cellar'
-import { doesCellarSpaceRemain } from '../../utils/doesCellarSpaceRemain'
 
 /**
  * @param {{
@@ -53,7 +52,8 @@ export const WineRecipe = ({ wineVariety }) => {
   }, [cellarInventory, cellarSize, grape, inventory, quantity, wineVariety])
 
   const canBeMade =
-    quantity > 0 && doesCellarSpaceRemain(cellarInventory, purchasedCellar)
+    quantity > 0 &&
+    cellarService.doesCellarSpaceRemain(cellarInventory, purchasedCellar)
 
   const wineInstancesInCellar = cellarService.getItemInstancesInCellar(
     cellarInventory,

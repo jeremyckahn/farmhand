@@ -11,6 +11,8 @@ import { getInventoryQuantityMap } from '../utils/getInventoryQuantityMap'
 // eslint-disable-next-line no-unused-vars
 import { grapeVariety as grapeVarietyEnum } from '../enums'
 
+import { PURCHASEABLE_CELLARS } from '../constants'
+
 import { wineService } from './wine'
 
 export class CellarService {
@@ -36,6 +38,18 @@ export class CellarService {
       itemId: item.id,
       daysUntilMature: item.daysToFerment ?? 0,
     }
+  }
+
+  /**
+   * @param {Array.<keg>} cellarInventory
+   * @param {number} purchasedCellar
+   * @returns {boolean}
+   */
+  doesCellarSpaceRemain = (cellarInventory, purchasedCellar) => {
+    return (
+      cellarInventory.length <
+      (PURCHASEABLE_CELLARS.get(purchasedCellar)?.space ?? 0)
+    )
   }
 
   // FIXME: Test this
