@@ -2,6 +2,7 @@
 
 import { PURCHASEABLE_CELLARS } from '../constants'
 
+// FIXME: Move to cellarService
 /**
  * @param {Array.<keg>} cellarInventory
  * @param {number} purchasedCellar

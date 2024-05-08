@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { oneOf } from 'prop-types'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
@@ -15,8 +15,9 @@ import { wines } from '../../img'
 import { integerString } from '../../utils'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import { GRAPES_REQUIRED_FOR_WINE } from '../../constants'
+import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants'
 import { cellarService } from '../../services/cellar'
+import { doesCellarSpaceRemain } from '../../utils/doesCellarSpaceRemain'
 
 /**
  * @param {{
@@ -25,12 +26,34 @@ import { cellarService } from '../../services/cellar'
  */
 export const WineRecipe = ({ wineVariety }) => {
   const {
-    gameState: { cellarInventory, inventory },
+    gameState: { cellarInventory, inventory, purchasedCellar },
   } = useContext(FarmhandContext)
+  const [quantity, setQuantity] = useState(1)
   const wineName = grapeVarietyNameMap[wineVariety]
   const grape = grapeVarietyVarietyGrapeMap[wineVariety]
+  const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
+    space: 0,
+  }
 
   const inventoryQuantityMap = getInventoryQuantityMap(inventory)
+
+  useEffect(() => {
+    setQuantity(
+      Math.min(
+        cellarService.getMaxWineYield(
+          grape,
+          inventory,
+          cellarInventory,
+          cellarSize,
+          wineVariety
+        ),
+        Math.max(1, quantity)
+      )
+    )
+  }, [cellarInventory, cellarSize, grape, inventory, quantity, wineVariety])
+
+  const canBeMade =
+    quantity > 0 && doesCellarSpaceRemain(cellarInventory, purchasedCellar)
 
   const wineInstancesInCellar = cellarService.getItemInstancesInCellar(
     cellarInventory,
@@ -81,7 +104,12 @@ export const WineRecipe = ({ wineVariety }) => {
         }
       ></CardHeader>
       <CardActions>
-        <Button color="primary" variant="contained">
+        <Button
+          color="primary"
+          variant="contained"
+          // FIXME: Test this
+          disabled={!canBeMade || !quantity}
+        >
           Make
         </Button>
       </CardActions>
