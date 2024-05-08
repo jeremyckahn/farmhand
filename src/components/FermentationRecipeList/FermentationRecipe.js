@@ -40,7 +40,9 @@ export const FermentationRecipe = ({ item }) => {
 
   const inventoryQuantityMap = getInventoryQuantityMap(inventory)
   const fermentationRecipeName = FERMENTED_CROP_NAME`${item}`
-  const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar)
+  const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
+    space: 0,
+  }
 
   useEffect(() => {
     setQuantity(
