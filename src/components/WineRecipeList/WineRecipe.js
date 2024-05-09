@@ -17,6 +17,7 @@ import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants'
 import { cellarService } from '../../services/cellar'
+import QuantityInput from '../QuantityInput'
 
 /**
  * @param {{
@@ -26,6 +27,7 @@ import { cellarService } from '../../services/cellar'
 export const WineRecipe = ({ wineVariety }) => {
   const {
     gameState: { cellarInventory, inventory, purchasedCellar },
+    handlers: { handleMakeWineClick },
   } = useContext(FarmhandContext)
   const [quantity, setQuantity] = useState(1)
   const wineName = grapeVarietyNameMap[wineVariety]
@@ -59,6 +61,20 @@ export const WineRecipe = ({ wineVariety }) => {
     cellarInventory,
     grape
   )
+
+  const maxQuantity = cellarService.getMaxWineYield(
+    grape,
+    inventory,
+    cellarInventory,
+    cellarSize,
+    wineVariety
+  )
+
+  const handleMakeWine = () => {
+    if (canBeMade) {
+      handleMakeWineClick(grape, quantity)
+    }
+  }
 
   return (
     <Card className="WineRecipe">
@@ -109,9 +125,19 @@ export const WineRecipe = ({ wineVariety }) => {
           variant="contained"
           // FIXME: Test this
           disabled={!canBeMade || !quantity}
+          onClick={handleMakeWine}
         >
           Make
         </Button>
+        <QuantityInput
+          {...{
+            handleSubmit: handleMakeWine,
+            handleUpdateNumber: setQuantity,
+            maxQuantity,
+            setQuantity,
+            value: quantity,
+          }}
+        />
       </CardActions>
     </Card>
   )

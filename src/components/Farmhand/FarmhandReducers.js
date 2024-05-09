@@ -78,6 +78,10 @@ export class FarmhandReducers extends Component {
     throw new Error('Unimplemented')
   }
   /** @type BoundReducer */
+  makeWine() {
+    throw new Error('Unimplemented')
+  }
+  /** @type BoundReducer */
   modifyCow() {
     throw new Error('Unimplemented')
   }
