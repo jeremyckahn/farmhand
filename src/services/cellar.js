@@ -52,6 +52,7 @@ export class CellarService {
     )
   }
 
+  // FIXME: Move this to WineService
   // FIXME: Test this
   /**
    * @param {item} grape

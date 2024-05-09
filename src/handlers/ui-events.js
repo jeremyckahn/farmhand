@@ -13,7 +13,13 @@ import {
   transformStateDataForImport,
 } from '../utils'
 import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants'
-import { dialogView, fieldMode, stageFocusType } from '../enums'
+import {
+  dialogView,
+  fieldMode,
+  // eslint-disable-next-line no-unused-vars
+  grapeVariety,
+  stageFocusType,
+} from '../enums'
 import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
@@ -71,10 +77,11 @@ export default {
 
   /**
    * @param {item} wine
+   * @param {grapeVariety} wineVariety
    * @param {number} [howMany=1]
    */
-  handleMakeWineClick(wine, howMany = 1) {
-    this.makeWine(wine, howMany)
+  handleMakeWineClick(wine, wineVariety, howMany = 1) {
+    this.makeWine(wine, wineVariety, howMany)
   },
 
   /**
@@ -123,6 +130,7 @@ export default {
    * @param {React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
+  // @ts-ignore
   handleCowAutomaticHugChange({ target: { checked } }, cow) {
     this.changeCowAutomaticHugState(cow, checked)
   },

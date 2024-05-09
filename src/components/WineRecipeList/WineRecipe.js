@@ -72,7 +72,7 @@ export const WineRecipe = ({ wineVariety }) => {
 
   const handleMakeWine = () => {
     if (canBeMade) {
-      handleMakeWineClick(grape, quantity)
+      handleMakeWineClick(grape, wineVariety, quantity)
     }
   }
 
