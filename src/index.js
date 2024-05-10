@@ -63,7 +63,8 @@ import { cropFamily, grapeVariety } from './enums'
 /**
  * @typedef {farmhand.cropVariety & {
  *   cropFamily: 'GRAPE',
- *   variety: grapeVariety
+ *   variety: grapeVariety,
+ *   wineId: string
  * }} farmhand.grape
  */
 

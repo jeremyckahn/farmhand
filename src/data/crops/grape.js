@@ -14,7 +14,7 @@ export const isGrape = item => {
 }
 
 /**
- * @param {Omit<farmhand.cropVariety, 'cropFamily'>} grapeProps
+ * @param {Omit<farmhand.cropVariety, 'cropFamily'> & { wineId: string }} grapeProps
  * @returns {farmhand.grape}
  */
 const grape = grapeProps => {
@@ -97,6 +97,7 @@ export const grapeChardonnay = grape({
   name: 'Chardonnay Grape',
   imageId: 'grape-green',
   variety: grapeVariety.CHARDONNAY,
+  wineId: 'wine-chardonnay',
 })
 
 /**
@@ -110,6 +111,7 @@ export const grapeSauvignonBlanc = grape({
   name: 'Sauvignon Blanc Grape',
   imageId: 'grape-green',
   variety: grapeVariety.SAUVIGNON_BLANC,
+  wineId: 'wine-sauvignon-blanc',
 })
 
 /**
@@ -121,6 +123,7 @@ export const grapeSauvignonBlanc = grape({
 // name: 'Pinot Blanc Grape',
 // imageId: 'grape-green',
 // variety: grapeVariety.PINOT_BLANC,
+// wineId: 'wine-pinot-blanc',
 // })
 
 /**
@@ -132,6 +135,7 @@ export const grapeSauvignonBlanc = grape({
 // name: 'Muscat Grape',
 // imageId: 'grape-green',
 // variety: grapeVariety.MUSCAT,
+// wineId: 'wine-muscat',
 // })
 
 /**
@@ -143,6 +147,7 @@ export const grapeSauvignonBlanc = grape({
 // name: 'Riesling Grape',
 // imageId: 'grape-green',
 // variety: grapeVariety.RIESLING,
+// wineId: 'wine-riesling',
 // })
 
 /**
@@ -154,6 +159,7 @@ export const grapeSauvignonBlanc = grape({
 // name: 'Merlot Grape',
 // imageId: 'grape-purple',
 // variety: grapeVariety.MERLOT,
+// wineId: 'wine-merlot',
 // })
 
 /**
@@ -167,6 +173,7 @@ export const grapeCabernetSauvignon = grape({
   name: 'Cabernet Sauvignon Grape',
   imageId: 'grape-purple',
   variety: grapeVariety.CABERNET_SAUVIGNON,
+  wineId: 'wine-cabernet-sauvignon',
 })
 
 /**
@@ -178,6 +185,7 @@ export const grapeCabernetSauvignon = grape({
 // name: 'Syrah Grape',
 // imageId: 'grape-purple',
 // variety: grapeVariety.SYRAH,
+// wineId: 'wine-syrah',
 // })
 
 /**
@@ -191,6 +199,7 @@ export const grapeTempranillo = grape({
   name: 'Tempranillo Grape',
   imageId: 'grape-purple',
   variety: grapeVariety.TEMPRANILLO,
+  wineId: 'wine-tempranillo',
 })
 
 /**
@@ -204,6 +213,7 @@ export const grapeNebbiolo = grape({
   name: 'Nebbiolo Grape',
   imageId: 'grape-purple',
   variety: grapeVariety.NEBBIOLO,
+  wineId: 'wine-nebbiolo',
 })
 
 /**
