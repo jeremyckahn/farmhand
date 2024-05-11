@@ -3,6 +3,7 @@
  * @typedef {import("../index").farmhand.keg} keg
  * @typedef {import("../index").farmhand.cow} farmhand.cow
  * @typedef {import("../index").farmhand.recipe} farmhand.recipe
+ * @typedef {import("../index").farmhand.grape} grape
  */
 import { saveAs } from 'file-saver'
 import window from 'global/window'
@@ -76,12 +77,12 @@ export default {
   },
 
   /**
-   * @param {item} wine
+   * @param {grape} grape
    * @param {grapeVariety} wineVariety
    * @param {number} [howMany=1]
    */
-  handleMakeWineClick(wine, wineVariety, howMany = 1) {
-    this.makeWine(wine, wineVariety, howMany)
+  handleMakeWineClick(grape, wineVariety, howMany = 1) {
+    this.makeWine(grape, wineVariety, howMany)
   },
 
   /**

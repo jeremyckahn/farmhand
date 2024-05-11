@@ -1,6 +1,7 @@
 /**
  * @typedef {import("../../index").farmhand.item} item
  * @typedef {import("../../index").farmhand.keg} keg
+ * @typedef {import("../../index").farmhand.grape} grape
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
  */
 
@@ -17,12 +18,12 @@ import { decrementItemFromInventory } from './decrementItemFromInventory'
 // FIXME: Test this
 /**
  * @param {state} state
- * @param {item} wine
+ * @param {grape} grape
  * @param {grapeVariety} wineVariety
  * @param {number} [howMany=1]
  * @returns {state}
  */
-export const makeWine = (state, wine, wineVariety, howMany = 1) => {
+export const makeWine = (state, grape, wineVariety, howMany = 1) => {
   const { inventory, cellarInventory, purchasedCellar } = state
 
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
@@ -30,7 +31,7 @@ export const makeWine = (state, wine, wineVariety, howMany = 1) => {
   }
 
   const maxYield = cellarService.getMaxWineYield(
-    wine,
+    grape,
     inventory,
     cellarInventory,
     cellarSize,
@@ -44,14 +45,14 @@ export const makeWine = (state, wine, wineVariety, howMany = 1) => {
   for (let i = 0; i < howMany; i++) {
     // FIXME: `wine` here is just the grape item. This needs to be resolved
     // into a wine to be added to the cellar inventory.
-    const keg = cellarService.generateKeg(wine)
+    const keg = cellarService.generateKeg(grape)
 
     state = addKegToCellarInventory(state, keg)
   }
 
   const saltRequirements = wineService.getYeastRequiredForWine(wineVariety)
 
-  state = decrementItemFromInventory(state, wine.id, howMany)
+  state = decrementItemFromInventory(state, grape.id, howMany)
 
   state = decrementItemFromInventory(
     state,
