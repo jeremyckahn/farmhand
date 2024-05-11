@@ -3,6 +3,7 @@
  * @typedef {import('../index').farmhand.item} farmhand.item
  * @typedef {import('../index').farmhand.recipe} farmhand.recipe
  * @typedef {import('../index').farmhand.grape} farmhand.grape
+ * @typedef {import('../index').farmhand.wine} farmhand.wine
  */
 import { itemType, fieldMode, recipeType } from '../enums'
 import {
@@ -19,7 +20,7 @@ import { grapeVarietyNameMap } from './crops/grape'
 const itemsMap = { ...baseItemsMap }
 
 /**
- * @param {Omit<farmhand.recipe, 'type' | 'value'> & { type?: string, value?: number }} recipe
+ * @param {Omit<farmhand.recipe, 'type' | 'value'> & { type?: string, value?: number, variety?: string }} recipe
  * @returns {farmhand.recipe}
  */
 const itemify = recipe => {
@@ -86,7 +87,7 @@ export const yeast = itemify({
 
 /**
  * @param {farmhand.grape} grape
- * @returns {farmhand.recipe}
+ * @returns {farmhand.wine}
  */
 const getWineRecipeFromGrape = grape => {
   return itemify({
@@ -103,6 +104,7 @@ const getWineRecipeFromGrape = grape => {
     recipeType: recipeType.WINE,
     // NOTE: This prevents wines from appearing in the Learned Recipes list in the Workshop
     condition: () => false,
+    variety: grape.variety,
   })
 }
 

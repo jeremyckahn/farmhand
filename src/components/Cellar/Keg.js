@@ -7,7 +7,7 @@ import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
 
 import { itemsMap } from '../../data/maps'
-import { items } from '../../img'
+import { items, wines } from '../../img'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { getKegValue } from '../../utils/getKegValue'
@@ -18,6 +18,7 @@ import AnimatedNumber from '../AnimatedNumber'
 
 import './Keg.sass'
 import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate'
+import { wineService } from '../../services/wine'
 
 /**
  * @param {Object} props
@@ -41,7 +42,16 @@ export function Keg({ keg }) {
   } = useContext(FarmhandContext)
 
   const item = itemsMap[keg.itemId]
-  const fermentationRecipeName = FERMENTED_CROP_NAME`${item}`
+
+  let imageSrc = items[item.id]
+
+  // @ts-expect-error
+  let recipeName = FERMENTED_CROP_NAME`${item}`
+
+  if (wineService.isWineRecipe(item)) {
+    imageSrc = wines[item.variety]
+    recipeName = item.name
+  }
 
   const handleSellClick = () => {
     handleSellKegClick(keg)
@@ -61,13 +71,13 @@ export function Keg({ keg }) {
   return (
     <Card className="Keg">
       <CardHeader
-        title={fermentationRecipeName}
+        title={recipeName}
         avatar={
           <img
             {...{
-              src: items[item.id],
+              src: imageSrc,
             }}
-            alt={fermentationRecipeName}
+            alt={recipeName}
           />
         }
         subheader={

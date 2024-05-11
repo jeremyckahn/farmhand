@@ -42,10 +42,10 @@ export const makeWine = (state, grape, wineVariety, howMany = 1) => {
     return state
   }
 
+  const wine = itemsMap[grape.wineId]
+
   for (let i = 0; i < howMany; i++) {
-    // FIXME: `wine` here is just the grape item. This needs to be resolved
-    // into a wine to be added to the cellar inventory.
-    const keg = cellarService.generateKeg(grape)
+    const keg = cellarService.generateKeg(wine)
 
     state = addKegToCellarInventory(state, keg)
   }
