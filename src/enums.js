@@ -49,6 +49,7 @@ export const recipeType = enumify([
   'FORGE',
   'KITCHEN',
   'RECYCLING',
+  'WINE',
 ])
 
 /**

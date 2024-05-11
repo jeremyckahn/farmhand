@@ -2,17 +2,24 @@
  * @module farmhand.recipes
  * @typedef {import('../index').farmhand.item} farmhand.item
  * @typedef {import('../index').farmhand.recipe} farmhand.recipe
+ * @typedef {import('../index').farmhand.grape} farmhand.grape
  */
 import { itemType, fieldMode, recipeType } from '../enums'
-import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
+import {
+  GRAPES_REQUIRED_FOR_WINE,
+  RECIPE_INGREDIENT_VALUE_MULTIPLIER,
+} from '../constants'
+
+import { wineService } from '../services/wine'
 
 import * as items from './items'
 import baseItemsMap from './items-map'
+import { grapeVarietyNameMap } from './crops/grape'
 
 const itemsMap = { ...baseItemsMap }
 
 /**
- * @param {Omit<farmhand.recipe, 'type' | 'value'> & { type?: string }} recipe
+ * @param {Omit<farmhand.recipe, 'type' | 'value'> & { type?: string, value?: number }} recipe
  * @returns {farmhand.recipe}
  */
 const itemify = recipe => {
@@ -76,6 +83,28 @@ export const yeast = itemify({
   condition: state => state.itemsSold[flour.id] >= 25,
   recipeType: recipeType.KITCHEN,
 })
+
+/**
+ * @param {farmhand.grape} grape
+ * @returns {farmhand.recipe}
+ */
+const getWineRecipeFromGrape = grape => {
+  return itemify({
+    id: grape.wineId,
+    name: `${grapeVarietyNameMap[grape.variety]} Wine`,
+    type: itemType.CRAFTED_ITEM,
+    ingredients: {
+      [grape.id]: GRAPES_REQUIRED_FOR_WINE,
+      // FIXME: Move the implementation for getYeastRequiredForWine out of the
+      // service so that using it in this file doesn't cause a circular
+      // dependency.
+      [yeast.id]: wineService.getYeastRequiredForWine(grape.variety),
+    },
+    recipeType: recipeType.WINE,
+    // NOTE: This prevents wines from appearing in the Learned Recipes list in the Workshop
+    condition: () => false,
+  })
+}
 
 /**
  * @property farmhand.module:recipes.bread
@@ -688,4 +717,84 @@ export const fertilizer = itemify({
   recipeType: recipeType.RECYCLING,
   type: itemType.FERTILIZER,
   value: 25,
+})
+
+/**
+ * @property farmhand.module:recipes.wineChardonnay
+ * @type {farmhand.recipe}
+ */
+export const wineChardonnay = getWineRecipeFromGrape({
+  ...items.grapeChardonnay,
+})
+
+/**
+ * @property farmhand.module:recipes.wineSauvignonBlanc
+ * @type {farmhand.recipe}
+ */
+export const wineSauvignonBlanc = getWineRecipeFromGrape({
+  ...items.grapeSauvignonBlanc,
+})
+
+///**
+// * @property farmhand.module:recipes.winePinotBlanc
+// * @type {farmhand.recipe}
+// */
+//export const winePinotBlanc = getWineRecipeFromGrape({
+//  ...items.grapePinotBlanc,
+//})
+
+///**
+// * @property farmhand.module:recipes.wineMuscat
+// * @type {farmhand.recipe}
+// */
+//export const wineMuscat = getWineRecipeFromGrape({
+//  ...items.grapeMuscat,
+//})
+
+///**
+// * @property farmhand.module:recipes.wineRiesling
+// * @type {farmhand.recipe}
+// */
+//export const wineRiesling = getWineRecipeFromGrape({
+//  ...items.grapeRiesling,
+//})
+
+///**
+// * @property farmhand.module:recipes.wineMerlot
+// * @type {farmhand.recipe}
+// */
+//export const wineMerlot = getWineRecipeFromGrape({
+//  ...items.grapeMerlot,
+//})
+
+/**
+ * @property farmhand.module:recipes.wineCabernetSauvignon
+ * @type {farmhand.recipe}
+ */
+export const wineCabernetSauvignon = getWineRecipeFromGrape({
+  ...items.grapeCabernetSauvignon,
+})
+
+///**
+// * @property farmhand.module:recipes.wineSyrah
+// * @type {farmhand.recipe}
+// */
+//export const wineSyrah = getWineRecipeFromGrape({
+//  ...items.grapeSyrah,
+//})
+
+/**
+ * @property farmhand.module:recipes.wineTempranillo
+ * @type {farmhand.recipe}
+ */
+export const wineTempranillo = getWineRecipeFromGrape({
+  ...items.grapeTempranillo,
+})
+
+/**
+ * @property farmhand.module:recipes.wineNebbiolo
+ * @type {farmhand.recipe}
+ */
+export const wineNebbiolo = getWineRecipeFromGrape({
+  ...items.grapeNebbiolo,
 })
