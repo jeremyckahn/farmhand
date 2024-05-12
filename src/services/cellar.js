@@ -33,11 +33,19 @@ export class CellarService {
    * @returns {keg}
    */
   generateKeg = item => {
-    return {
+    /** @type {keg} */
+    const keg = {
       id: uuid(),
       itemId: item.id,
       daysUntilMature: item.daysToFerment ?? 0,
     }
+
+    // FIXME: Test this
+    if (wineService.isWineRecipe(item)) {
+      keg.daysUntilMature = wineService.getYeastRequiredForWine(item.variety)
+    }
+
+    return keg
   }
 
   /**
