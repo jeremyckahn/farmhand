@@ -91,7 +91,9 @@ export function Keg({ keg }) {
                     {...{ number: kegValue, formatter: moneyString }}
                   />
                 </p>
-                <p>Potential for spoilage: {spoilageRateDisplayValue}%</p>
+                {!wineService.isWineRecipe(item) && (
+                  <p>Potential for spoilage: {spoilageRateDisplayValue}%</p>
+                )}
               </>
             ) : (
               <p>Days until ready: {keg.daysUntilMature}</p>
