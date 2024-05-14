@@ -10,7 +10,7 @@ import { removeKegFromCellar } from './removeKegFromCellar'
 
 /**
  * @param {state} state
- * @returns state
+ * @returns {state}
  */
 export const processCellarSpoilage = state => {
   const { cellarInventory } = state

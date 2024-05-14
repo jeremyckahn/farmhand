@@ -3,9 +3,11 @@
  * @typedef {import('../').farmhand.recipe} recipe
  * @typedef {import('../').farmhand.wine} wine
  * @typedef {import('../enums').grapeVariety} grapeVarietyEnum
+ * @typedef {import('../').farmhand.keg} keg
  */
 
 import { wineVarietyValueMap } from '../data/crops/grape'
+import { itemsMap } from '../data/maps'
 import { recipeType } from '../enums'
 
 export class WineService {
@@ -19,6 +21,29 @@ export class WineService {
    */
   getDaysToMature = grapeVariety => {
     return wineVarietyValueMap[grapeVariety] * this.maturityDayMultiplier
+  }
+
+  // FIXME: Test this
+  /**
+   * @param {keg} wineKeg
+   * @returns {number}
+   */
+  getWineValue = wineKeg => {
+    const kegRecipe = itemsMap[wineKeg.itemId]
+
+    if (!this.isWineRecipe(kegRecipe)) {
+      throw new Error(`getWineValue received a non-wine keg recipe`)
+    }
+
+    const grapeVariety = kegRecipe.variety
+    const wineVarietyValue = wineVarietyValueMap[grapeVariety]
+
+    const { daysUntilMature } = wineKeg
+
+    const multiplier = Math.min(daysUntilMature, 100)
+    const value = kegRecipe.value + (multiplier + wineVarietyValue) ** 2.5
+
+    return value
   }
 
   /**
