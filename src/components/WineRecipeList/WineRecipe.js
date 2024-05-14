@@ -14,6 +14,7 @@ import { grapeVariety } from '../../enums'
 import { wines } from '../../img'
 import { integerString } from '../../utils'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants'
 import { cellarService } from '../../services/cellar'
@@ -110,7 +111,7 @@ export const WineRecipe = ({ wineVariety }) => {
             }
             <p>
               Units of {'yeast'} required:{' '}
-              {integerString(wineService.getYeastRequiredForWine(wineVariety))}
+              {integerString(getYeastRequiredForWine(wineVariety))}
             </p>
             {
               // FIXME: Test this

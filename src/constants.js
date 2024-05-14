@@ -318,3 +318,5 @@ export const Z_INDEX = {
 export const HEARTBEAT_INTERVAL_PERIOD = 10 * 1000 // 10 seconds
 
 export const GRAPES_REQUIRED_FOR_WINE = 50
+
+export const YEAST_REQUIREMENT_MULTIPLIER = 5

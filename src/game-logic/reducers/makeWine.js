@@ -10,7 +10,7 @@ import { itemsMap } from '../../data/maps'
 // eslint-disable-next-line no-unused-vars
 import { grapeVariety } from '../../enums'
 import { cellarService } from '../../services/cellar'
-import { wineService } from '../../services/wine'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
 
 import { addKegToCellarInventory } from './addKegToCellarInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
@@ -50,7 +50,7 @@ export const makeWine = (state, grape, wineVariety, howMany = 1) => {
     state = addKegToCellarInventory(state, keg)
   }
 
-  const saltRequirements = wineService.getYeastRequiredForWine(wineVariety)
+  const saltRequirements = getYeastRequiredForWine(wineVariety)
 
   state = decrementItemFromInventory(state, grape.id, howMany)
 

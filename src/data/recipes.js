@@ -10,8 +10,7 @@ import {
   GRAPES_REQUIRED_FOR_WINE,
   RECIPE_INGREDIENT_VALUE_MULTIPLIER,
 } from '../constants'
-
-import { wineService } from '../services/wine'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine'
 
 import * as items from './items'
 import baseItemsMap from './items-map'
@@ -99,7 +98,7 @@ const getWineRecipeFromGrape = grape => {
       // FIXME: Move the implementation for getYeastRequiredForWine out of the
       // service so that using it in this file doesn't cause a circular
       // dependency.
-      [yeast.id]: wineService.getYeastRequiredForWine(grape.variety),
+      [yeast.id]: getYeastRequiredForWine(grape.variety),
     },
     recipeType: recipeType.WINE,
     // NOTE: This prevents wines from appearing in the Learned Recipes list in the Workshop

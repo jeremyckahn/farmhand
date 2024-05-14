@@ -8,6 +8,7 @@ import { v4 as uuid } from 'uuid'
 import { fermentableItemsMap, itemsMap } from '../data/maps'
 import { memoize } from '../utils/memoize'
 import { getInventoryQuantityMap } from '../utils/getInventoryQuantityMap'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine'
 // eslint-disable-next-line no-unused-vars
 import { grapeVariety as grapeVarietyEnum } from '../enums'
 
@@ -42,7 +43,7 @@ export class CellarService {
 
     // FIXME: Test this
     if (wineService.isWineRecipe(item)) {
-      keg.daysUntilMature = wineService.getYeastRequiredForWine(item.variety)
+      keg.daysUntilMature = getYeastRequiredForWine(item.variety)
     }
 
     return keg
@@ -83,8 +84,7 @@ export class CellarService {
     } = getInventoryQuantityMap(inventory)
 
     const maxWineYieldPotential = Math.floor(
-      yeastQuantityInInventory /
-        wineService.getYeastRequiredForWine(grapeVariety)
+      yeastQuantityInInventory / getYeastRequiredForWine(grapeVariety)
     )
 
     const maxYield = Math.min(
