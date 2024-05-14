@@ -40,7 +40,7 @@ export class WineService {
 
     const { daysUntilMature } = wineKeg
 
-    const multiplier = Math.min(daysUntilMature, 100)
+    const multiplier = Math.min(Math.max(-daysUntilMature, 1), 100)
     const value = kegRecipe.value + (multiplier + wineVarietyValue) ** 2.5
 
     return value

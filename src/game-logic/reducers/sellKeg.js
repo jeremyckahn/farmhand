@@ -37,6 +37,7 @@ export const sellKeg = (state, keg) => {
   let saleValue = 0
 
   const kegValue = getKegValue(keg)
+  // FIXME: Calculate wine value here
 
   const loanGarnishment = Math.min(
     loanBalance,

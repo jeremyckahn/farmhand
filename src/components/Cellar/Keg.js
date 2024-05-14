@@ -48,11 +48,6 @@ export function Keg({ keg }) {
   // @ts-expect-error
   let recipeName = FERMENTED_CROP_NAME`${item}`
 
-  if (wineService.isWineRecipe(item)) {
-    imageSrc = wines[item.variety]
-    recipeName = item.name
-  }
-
   const handleSellClick = () => {
     handleSellKegClick(keg)
   }
@@ -62,8 +57,14 @@ export function Keg({ keg }) {
   }
 
   const canBeSold = keg.daysUntilMature <= 0
-  const kegValue =
+  let kegValue =
     getKegValue(keg) * getSalePriceMultiplier(completedAchievements)
+
+  if (wineService.isWineRecipe(item)) {
+    imageSrc = wines[item.variety]
+    recipeName = item.name
+    kegValue = wineService.getWineValue(keg)
+  }
 
   const spoilageRate = getKegSpoilageRate(keg)
   const spoilageRateDisplayValue = Number((spoilageRate * 100).toPrecision(2))
