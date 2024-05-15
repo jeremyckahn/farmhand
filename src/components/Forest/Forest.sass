@@ -1,16 +1,22 @@
 .Forest
   display: flex
+  height: 100%
   flex-direction: column
   justify-content: center
-  height: 100%
 
   .forest-plots
     display: grid
-    grid-template-rows: repeat(4, 36px)
-    grid-template-columns: repeat(4, 36px)
-    gap: 1rem
+    grid-template-rows: repeat(1, minmax(36px, 1fr))
+    grid-template-columns: repeat(4, minmax(36px, 1fr))
+    gap: 2%
     justify-content: center
+    width: 100%
 
   .forest-plot
     background-image: url(../../img/plot-states/forest-plot-default.png)
     background-size: cover
+    background-repeat: no-repeat
+    width: 100%
+    height: auto
+    aspect-ratio: 1
+    object-fit: contain
