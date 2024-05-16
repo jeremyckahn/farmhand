@@ -6,6 +6,7 @@
  * @typedef {import('../').farmhand.keg} keg
  */
 
+import { WINE_EXPONENT_RATE, WINE_GROWTH_TIMELINE_CAP } from '../constants'
 import { wineVarietyValueMap } from '../data/crops/grape'
 import { itemsMap } from '../data/maps'
 import { recipeType } from '../enums'
@@ -40,8 +41,12 @@ export class WineService {
 
     const { daysUntilMature } = wineKeg
 
-    const multiplier = Math.min(Math.max(-daysUntilMature, 1), 100)
-    const value = kegRecipe.value + (multiplier + wineVarietyValue) ** 2.5
+    const multiplier = Math.min(
+      Math.max(-daysUntilMature, 1),
+      WINE_GROWTH_TIMELINE_CAP
+    )
+    const value =
+      kegRecipe.value + (multiplier + wineVarietyValue) ** WINE_EXPONENT_RATE
 
     return value
   }

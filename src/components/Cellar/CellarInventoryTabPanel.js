@@ -7,7 +7,11 @@ import CardContent from '@mui/material/CardContent'
 import ReactMarkdown from 'react-markdown'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
-import { KEG_INTEREST_RATE, PURCHASEABLE_CELLARS } from '../../constants'
+import {
+  KEG_INTEREST_RATE,
+  PURCHASEABLE_CELLARS,
+  WINE_GROWTH_TIMELINE_CAP,
+} from '../../constants'
 
 import { integerString } from '../../utils'
 
@@ -54,7 +58,16 @@ export const CellarInventoryTabPanel = ({ index, currentTab }) => {
                 {...{
                   linkTarget: '_blank',
                   className: 'markdown',
-                  source: `This is your inventory of cellar kegs. Keg contents take time to reach maturity before they can be sold. Once they reach maturity, keg contents become higher in quality and their value compounds at a rate of ${KEG_INTEREST_RATE}% a day.`,
+                  source: `This is your inventory of cellar kegs.
+
+Keg contents take time to reach maturity before they can be sold. Once they reach maturity, keg contents become higher in quality and their value grows.
+
+
+Kegs that contain fermented crop recipes compound at a rate of ${KEG_INTEREST_RATE}% a day.
+
+Kegs that contain wine grow at an exponential rate for ${integerString(
+                    WINE_GROWTH_TIMELINE_CAP
+                  )} days.`,
                 }}
               />
             </CardContent>
