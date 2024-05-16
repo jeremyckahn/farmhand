@@ -19,7 +19,7 @@ import { grapeVarietyNameMap } from './crops/grape'
 const itemsMap = { ...baseItemsMap }
 
 /**
- * @param {Omit<farmhand.recipe, 'type' | 'value'> & { type?: string, value?: number, variety?: string }} recipe
+ * @param {Omit<farmhand.recipe, 'type' | 'value'> & { type?: string, value?: number }} recipe
  * @returns {farmhand.recipe}
  */
 const itemify = recipe => {
@@ -89,22 +89,24 @@ export const yeast = itemify({
  * @returns {farmhand.wine}
  */
 const getWineRecipeFromGrape = grape => {
-  return itemify({
-    id: grape.wineId,
-    name: `${grapeVarietyNameMap[grape.variety]} Wine`,
-    type: itemType.CRAFTED_ITEM,
-    ingredients: {
-      [grape.id]: GRAPES_REQUIRED_FOR_WINE,
-      // FIXME: Move the implementation for getYeastRequiredForWine out of the
-      // service so that using it in this file doesn't cause a circular
-      // dependency.
-      [yeast.id]: getYeastRequiredForWine(grape.variety),
-    },
-    recipeType: recipeType.WINE,
-    // NOTE: This prevents wines from appearing in the Learned Recipes list in the Workshop
-    condition: () => false,
+  return {
+    ...itemify({
+      id: grape.wineId,
+      name: `${grapeVarietyNameMap[grape.variety]} Wine`,
+      type: itemType.CRAFTED_ITEM,
+      ingredients: {
+        [grape.id]: GRAPES_REQUIRED_FOR_WINE,
+        // FIXME: Move the implementation for getYeastRequiredForWine out of the
+        // service so that using it in this file doesn't cause a circular
+        // dependency.
+        [yeast.id]: getYeastRequiredForWine(grape.variety),
+      },
+      recipeType: recipeType.WINE,
+      // NOTE: This prevents wines from appearing in the Learned Recipes list in the Workshop
+      condition: () => false,
+    }),
     variety: grape.variety,
-  })
+  }
 }
 
 /**
