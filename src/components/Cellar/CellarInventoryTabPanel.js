@@ -11,6 +11,7 @@ import {
   KEG_INTEREST_RATE,
   PURCHASEABLE_CELLARS,
   WINE_GROWTH_TIMELINE_CAP,
+  WINE_INTEREST_RATE,
 } from '../../constants'
 
 import { integerString } from '../../utils'
@@ -62,12 +63,11 @@ export const CellarInventoryTabPanel = ({ index, currentTab }) => {
 
 Keg contents take time to reach maturity before they can be sold. Once they reach maturity, keg contents become higher in quality and their value grows.
 
+Kegs that contain fermented crop recipes compound value at a rate of ${KEG_INTEREST_RATE}% a day but have an increasing chance of spoiling.
 
-Kegs that contain fermented crop recipes compound at a rate of ${KEG_INTEREST_RATE}% a day.
-
-Kegs that contain wine grow at an exponential rate for ${integerString(
+Kegs that contain wine compound value at a rate of ${WINE_INTEREST_RATE}% for up to ${integerString(
                     WINE_GROWTH_TIMELINE_CAP
-                  )} days.`,
+                  )} days and never spoil.`,
                 }}
               />
             </CardContent>

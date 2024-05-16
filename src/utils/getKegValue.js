@@ -13,7 +13,9 @@ export const getKegValue = keg => {
   const kegItem = itemsMap[itemId]
   const principalValue = (kegItem.tier ?? 1) * getItemBaseValue(itemId)
 
-  // Standard compound interest rate formula:
+  // NOTE: This is (loosely) based on the standard compound interest rate
+  // formula:
+  //
   //   A = P(1 + r/n)^nt
   //
   // A = final amount
