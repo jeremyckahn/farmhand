@@ -27,24 +27,23 @@ import { getItemBaseValue } from './getItemBaseValue'
 export const getKegValue = keg => {
   const { itemId, daysUntilMature } = keg
   const kegItem = itemsMap[itemId]
-  let kegValue = 0
 
-  // FIXME: Test this
+  let principalValue = 0
+  let interestRate = 0
+  let exponent = 0
+
   if (wineService.isWineRecipe(kegItem)) {
-    const valueExponent = Math.min(
-      Math.max(-daysUntilMature, 1),
-      WINE_GROWTH_TIMELINE_CAP
-    )
-
-    const principalValue = kegItem.value
-
-    kegValue = principalValue * (1 + WINE_INTEREST_RATE) ** valueExponent
+    // FIXME: Test this
+    principalValue = kegItem.value
+    interestRate = WINE_INTEREST_RATE
+    exponent = Math.min(Math.max(-daysUntilMature, 1), WINE_GROWTH_TIMELINE_CAP)
   } else {
-    const principalValue = (kegItem.tier ?? 1) * getItemBaseValue(itemId)
-
-    kegValue =
-      principalValue * (1 + KEG_INTEREST_RATE) ** Math.abs(keg.daysUntilMature)
+    principalValue = (kegItem.tier ?? 1) * getItemBaseValue(itemId)
+    interestRate = KEG_INTEREST_RATE
+    exponent = Math.abs(keg.daysUntilMature)
   }
+
+  const kegValue = principalValue * (1 + interestRate) ** exponent
 
   return kegValue
 }
