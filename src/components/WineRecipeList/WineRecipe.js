@@ -42,7 +42,7 @@ export const WineRecipe = ({ wineVariety }) => {
   useEffect(() => {
     setQuantity(
       Math.min(
-        cellarService.getMaxWineYield(
+        wineService.getMaxWineYield(
           grape,
           inventory,
           cellarInventory,
@@ -63,7 +63,7 @@ export const WineRecipe = ({ wineVariety }) => {
     grape
   )
 
-  const maxQuantity = cellarService.getMaxWineYield(
+  const maxQuantity = wineService.getMaxWineYield(
     grape,
     inventory,
     cellarInventory,

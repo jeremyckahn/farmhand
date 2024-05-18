@@ -10,6 +10,7 @@ import { itemsMap } from '../../data/maps'
 // eslint-disable-next-line no-unused-vars
 import { grapeVariety } from '../../enums'
 import { cellarService } from '../../services/cellar'
+import { wineService } from '../../services/wine'
 import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
 
 import { addKegToCellarInventory } from './addKegToCellarInventory'
@@ -30,7 +31,7 @@ export const makeWine = (state, grape, wineVariety, howMany = 1) => {
     space: 0,
   }
 
-  const maxYield = cellarService.getMaxWineYield(
+  const maxYield = wineService.getMaxWineYield(
     grape,
     inventory,
     cellarInventory,
