@@ -9,6 +9,7 @@ import {
   grapeVarietyNameMap,
   grapeVarietyVarietyGrapeMap,
 } from '../../data/crops/grape'
+import { itemsMap } from '../../data/maps'
 import { wineService } from '../../services/wine'
 import { grapeVariety } from '../../enums'
 import { wines } from '../../img'
@@ -33,6 +34,7 @@ export const WineRecipe = ({ wineVariety }) => {
   const [quantity, setQuantity] = useState(1)
   const wineName = grapeVarietyNameMap[wineVariety]
   const grape = grapeVarietyVarietyGrapeMap[wineVariety]
+  const wine = itemsMap[grape.wineId]
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
     space: 0,
   }
@@ -59,7 +61,7 @@ export const WineRecipe = ({ wineVariety }) => {
 
   const wineInstancesInCellar = cellarService.getItemInstancesInCellar(
     cellarInventory,
-    grape
+    wine
   )
 
   const maxQuantity = wineService.getMaxWineYield(
