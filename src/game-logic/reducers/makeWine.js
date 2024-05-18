@@ -35,8 +35,7 @@ export const makeWine = (state, grape, wineVariety, howMany = 1) => {
     grape,
     inventory,
     cellarInventory,
-    cellarSize,
-    wineVariety
+    cellarSize
   )
 
   if (maxYield < howMany) {

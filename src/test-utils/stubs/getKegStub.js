@@ -6,13 +6,13 @@ import { carrot } from '../../data/crops'
 
 /**
  * @param {Partial<keg>} overrides
- * @returns keg
+ * @returns {keg}
  */
-export const getKegStub = overrides => {
+export const getKegStub = (overrides = {}) => {
   return {
     id: uuid(),
     itemId: carrot.id,
-    daysUntilMature: carrot.daysToFerment,
+    daysUntilMature: carrot.daysToFerment ?? 0,
     ...overrides,
   }
 }

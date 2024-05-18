@@ -2,6 +2,7 @@
  * @typedef {import('../').farmhand.item} item
  * @typedef {import('../').farmhand.recipe} recipe
  * @typedef {import('../').farmhand.wine} wine
+ * @typedef {import('../').farmhand.grape} grape
  * @typedef {import('../enums').grapeVariety} grapeVarietyEnum
  * @typedef {import('../').farmhand.keg} keg
  */
@@ -33,29 +34,21 @@ export class WineService {
     return 'recipeType' in recipe && recipe.recipeType === recipeType.WINE
   }
 
-  // FIXME: Test this
   /**
-   * @param {item} grape
+   * @param {grape} grape
    * @param {{ id: string, quantity: number }[]} inventory
-   * @param {Array.<keg>} cellarInventory
+   * @param {keg[]} cellarInventory
    * @param {number} cellarSize
-   * @param {grapeVarietyEnum} grapeVariety
    * @returns {number}
    */
-  getMaxWineYield = (
-    grape,
-    inventory,
-    cellarInventory,
-    cellarSize,
-    grapeVariety
-  ) => {
+  getMaxWineYield = (grape, inventory, cellarInventory, cellarSize) => {
     const {
       [grape.id]: grapeQuantityInInventory = 0,
       [itemsMap.yeast.id]: yeastQuantityInInventory = 0,
     } = getInventoryQuantityMap(inventory)
 
     const maxWineYieldPotential = Math.floor(
-      yeastQuantityInInventory / getYeastRequiredForWine(grapeVariety)
+      yeastQuantityInInventory / getYeastRequiredForWine(grape.variety)
     )
 
     const maxYield = Math.min(

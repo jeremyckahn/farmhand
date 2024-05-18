@@ -46,8 +46,7 @@ export const WineRecipe = ({ wineVariety }) => {
           grape,
           inventory,
           cellarInventory,
-          cellarSize,
-          wineVariety
+          cellarSize
         ),
         Math.max(1, quantity)
       )
@@ -67,8 +66,7 @@ export const WineRecipe = ({ wineVariety }) => {
     grape,
     inventory,
     cellarInventory,
-    cellarSize,
-    wineVariety
+    cellarSize
   )
 
   const handleMakeWine = () => {
