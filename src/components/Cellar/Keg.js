@@ -57,13 +57,12 @@ export function Keg({ keg }) {
   }
 
   const canBeSold = keg.daysUntilMature <= 0
-  let kegValue =
+  const kegValue =
     getKegValue(keg) * getSalePriceMultiplier(completedAchievements)
 
   if (wineService.isWineRecipe(item)) {
     imageSrc = wines[item.variety]
     recipeName = item.name
-    kegValue = wineService.getWineValue(keg)
   }
 
   const spoilageRate = getKegSpoilageRate(keg)

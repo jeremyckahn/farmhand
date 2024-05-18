@@ -9,7 +9,6 @@ import { castToMoney, getSalePriceMultiplier, moneyTotal } from '../../utils'
 import { EXPERIENCE_VALUES, LOAN_GARNISHMENT_RATE } from '../../constants'
 import { SOLD_FERMENTED_ITEM_PEER_NOTIFICATION } from '../../templates'
 import { getKegValue } from '../../utils/getKegValue'
-import { wineService } from '../../services/wine'
 
 import { addExperience } from './addExperience'
 import { addRevenue } from './addRevenue'
@@ -37,10 +36,7 @@ export const sellKeg = (state, keg) => {
   let { loanBalance } = state
   let saleValue = 0
 
-  // FIXME: Test this
-  const kegValue = wineService.isWineRecipe(item)
-    ? wineService.getWineValue(keg)
-    : getKegValue(keg)
+  const kegValue = getKegValue(keg)
 
   const loanGarnishment = Math.min(
     loanBalance,

@@ -6,7 +6,6 @@
  * @typedef {import('../').farmhand.keg} keg
  */
 
-import { WINE_INTEREST_RATE, WINE_GROWTH_TIMELINE_CAP } from '../constants'
 import { wineVarietyValueMap } from '../data/crops/grape'
 import { itemsMap } from '../data/maps'
 import { recipeType } from '../enums'
@@ -24,43 +23,6 @@ export class WineService {
    */
   getDaysToMature = grapeVariety => {
     return wineVarietyValueMap[grapeVariety] * this.maturityDayMultiplier
-  }
-
-  // FIXME: Test this
-  // FIXME: Roll this into getKegValue
-  /**
-   * @param {keg} wineKeg
-   * @returns {number}
-   */
-  getWineValue = wineKeg => {
-    const kegRecipe = itemsMap[wineKeg.itemId]
-
-    if (!this.isWineRecipe(kegRecipe)) {
-      throw new Error(`getWineValue received a non-wine keg recipe`)
-    }
-
-    const { daysUntilMature } = wineKeg
-
-    const multiplier = Math.min(
-      Math.max(-daysUntilMature, 1),
-      WINE_GROWTH_TIMELINE_CAP
-    )
-
-    const principalValue = kegRecipe.value
-
-    // NOTE: This is (loosely) based on the standard compound interest rate
-    // formula:
-    //
-    //   A = P(1 + r/n)^nt
-    //
-    // A = final amount
-    // P = initial principal balance
-    // r = interest rate
-    // n = number of times interest applied per time period
-    // t = number of time periods elapsed
-    const value = principalValue * (1 + WINE_INTEREST_RATE) ** multiplier
-
-    return value
   }
 
   /**

@@ -96,9 +96,6 @@ const getWineRecipeFromGrape = grape => {
       type: itemType.CRAFTED_ITEM,
       ingredients: {
         [grape.id]: GRAPES_REQUIRED_FOR_WINE,
-        // FIXME: Move the implementation for getYeastRequiredForWine out of the
-        // service so that using it in this file doesn't cause a circular
-        // dependency.
         [yeast.id]: getYeastRequiredForWine(grape.variety),
       },
       recipeType: recipeType.WINE,

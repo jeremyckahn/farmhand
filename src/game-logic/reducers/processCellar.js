@@ -2,8 +2,6 @@
 
 import { processCellarSpoilage } from './processCellarSpoilage'
 
-// FIXME: Update mature wine values
-
 /**
  * @param {state} state
  * @returns state
