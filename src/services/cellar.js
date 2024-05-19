@@ -14,6 +14,15 @@ import { PURCHASEABLE_CELLARS } from '../constants'
 import { wineService } from './wine'
 
 export class CellarService {
+  /**
+   * @private
+   */
+  _uuid
+
+  constructor(uuidFactory = uuid) {
+    this._uuid = uuidFactory
+  }
+
   getItemInstancesInCellar = memoize(
     /**
      * @param {keg[]} cellarInventory
@@ -33,12 +42,11 @@ export class CellarService {
   generateKeg = item => {
     /** @type {keg} */
     const keg = {
-      id: uuid(),
+      id: this._uuid(),
       itemId: item.id,
       daysUntilMature: item.daysToFerment ?? 0,
     }
 
-    // FIXME: Test this
     if (wineService.isWineRecipe(item)) {
       keg.daysUntilMature = getYeastRequiredForWine(item.variety)
     }

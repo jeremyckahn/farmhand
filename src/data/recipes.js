@@ -721,7 +721,6 @@ export const fertilizer = itemify({
 
 /**
  * @property farmhand.module:recipes.wineChardonnay
- * @type {farmhand.recipe}
  */
 export const wineChardonnay = getWineRecipeFromGrape({
   ...items.grapeChardonnay,
@@ -729,7 +728,6 @@ export const wineChardonnay = getWineRecipeFromGrape({
 
 /**
  * @property farmhand.module:recipes.wineSauvignonBlanc
- * @type {farmhand.recipe}
  */
 export const wineSauvignonBlanc = getWineRecipeFromGrape({
   ...items.grapeSauvignonBlanc,
@@ -737,7 +735,6 @@ export const wineSauvignonBlanc = getWineRecipeFromGrape({
 
 ///**
 // * @property farmhand.module:recipes.winePinotBlanc
-// * @type {farmhand.recipe}
 // */
 //export const winePinotBlanc = getWineRecipeFromGrape({
 //  ...items.grapePinotBlanc,
@@ -745,7 +742,6 @@ export const wineSauvignonBlanc = getWineRecipeFromGrape({
 
 ///**
 // * @property farmhand.module:recipes.wineMuscat
-// * @type {farmhand.recipe}
 // */
 //export const wineMuscat = getWineRecipeFromGrape({
 //  ...items.grapeMuscat,
@@ -753,7 +749,6 @@ export const wineSauvignonBlanc = getWineRecipeFromGrape({
 
 ///**
 // * @property farmhand.module:recipes.wineRiesling
-// * @type {farmhand.recipe}
 // */
 //export const wineRiesling = getWineRecipeFromGrape({
 //  ...items.grapeRiesling,
@@ -761,7 +756,6 @@ export const wineSauvignonBlanc = getWineRecipeFromGrape({
 
 ///**
 // * @property farmhand.module:recipes.wineMerlot
-// * @type {farmhand.recipe}
 // */
 //export const wineMerlot = getWineRecipeFromGrape({
 //  ...items.grapeMerlot,
@@ -769,7 +763,6 @@ export const wineSauvignonBlanc = getWineRecipeFromGrape({
 
 /**
  * @property farmhand.module:recipes.wineCabernetSauvignon
- * @type {farmhand.recipe}
  */
 export const wineCabernetSauvignon = getWineRecipeFromGrape({
   ...items.grapeCabernetSauvignon,
@@ -777,7 +770,6 @@ export const wineCabernetSauvignon = getWineRecipeFromGrape({
 
 ///**
 // * @property farmhand.module:recipes.wineSyrah
-// * @type {farmhand.recipe}
 // */
 //export const wineSyrah = getWineRecipeFromGrape({
 //  ...items.grapeSyrah,
@@ -785,7 +777,6 @@ export const wineCabernetSauvignon = getWineRecipeFromGrape({
 
 /**
  * @property farmhand.module:recipes.wineTempranillo
- * @type {farmhand.recipe}
  */
 export const wineTempranillo = getWineRecipeFromGrape({
   ...items.grapeTempranillo,
@@ -793,7 +784,6 @@ export const wineTempranillo = getWineRecipeFromGrape({
 
 /**
  * @property farmhand.module:recipes.wineNebbiolo
- * @type {farmhand.recipe}
  */
 export const wineNebbiolo = getWineRecipeFromGrape({
   ...items.grapeNebbiolo,
