@@ -3,21 +3,19 @@ import { pumpkin } from '../data/crops'
 
 import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine'
 
-import { CellarService } from './cellar'
+import { cellarService } from './cellar'
 
 const mockUuid = 'abc123'
 
-const mockUuidFactory = () => {
-  return mockUuid
-}
-
-// @ts-expect-error
-const stubCellarService = new CellarService(mockUuidFactory)
+beforeEach(() => {
+  // @ts-expect-error
+  jest.spyOn(cellarService, '_uuid').mockReturnValue(mockUuid)
+})
 
 describe('CellarService', () => {
   describe('generateKeg', () => {
     test('generates a fermented crop keg', () => {
-      const keg = stubCellarService.generateKeg(pumpkin)
+      const keg = cellarService.generateKeg(pumpkin)
 
       expect(keg).toEqual({
         daysUntilMature: pumpkin.daysToFerment,
@@ -27,7 +25,7 @@ describe('CellarService', () => {
     })
 
     test('generates a wine keg', () => {
-      const keg = stubCellarService.generateKeg(wineChardonnay)
+      const keg = cellarService.generateKeg(wineChardonnay)
 
       expect(keg).toEqual({
         daysUntilMature: getYeastRequiredForWine(wineChardonnay.variety),

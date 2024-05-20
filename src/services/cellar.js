@@ -17,11 +17,7 @@ export class CellarService {
   /**
    * @private
    */
-  _uuid
-
-  constructor(uuidFactory = uuid) {
-    this._uuid = uuidFactory
-  }
+  _uuid = uuid
 
   getItemInstancesInCellar = memoize(
     /**
