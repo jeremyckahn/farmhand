@@ -9,7 +9,7 @@ describe('getKegValue', () => {
     // Tier 1 crop
     {
       keg: getKegStub({ itemId: carrot.id, daysUntilMature: 5 }),
-      expected: 27.6,
+      expected: 0,
     },
     {
       keg: getKegStub({ itemId: carrot.id, daysUntilMature: 0 }),
@@ -30,11 +30,11 @@ describe('getKegValue', () => {
       expected: 708,
     },
     {
-      keg: getKegStub({ itemId: sunflower.id, daysUntilMature: 5 }),
+      keg: getKegStub({ itemId: sunflower.id, daysUntilMature: -5 }),
       expected: 781.69,
     },
     {
-      keg: getKegStub({ itemId: sunflower.id, daysUntilMature: 50 }),
+      keg: getKegStub({ itemId: sunflower.id, daysUntilMature: -50 }),
       expected: 1905.64,
     },
   ])(
@@ -51,7 +51,7 @@ describe('getKegValue', () => {
     // Lower value wine
     {
       keg: getKegStub({ itemId: wineChardonnay.id, daysUntilMature: 5 }),
-      expected: 23836.64,
+      expected: 0,
     },
     {
       keg: getKegStub({ itemId: wineChardonnay.id, daysUntilMature: 0 }),

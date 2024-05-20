@@ -28,6 +28,8 @@ export const getKegValue = keg => {
   const { itemId, daysUntilMature } = keg
   const kegItem = itemsMap[itemId]
 
+  if (daysUntilMature > 0) return 0
+
   let principalValue = 0
   let interestRate = 0
   let exponent = 0
