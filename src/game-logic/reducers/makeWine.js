@@ -16,7 +16,6 @@ import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
 import { addKegToCellarInventory } from './addKegToCellarInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 
-// FIXME: Test this
 /**
  * @param {state} state
  * @param {grape} grape
@@ -38,13 +37,10 @@ export const makeWine = (state, grape, wineVariety, howMany = 1) => {
     cellarSize
   )
 
-  if (maxYield < howMany) {
-    return state
-  }
-
   const wine = itemsMap[grape.wineId]
+  const wineYield = Math.min(howMany, maxYield)
 
-  for (let i = 0; i < howMany; i++) {
+  for (let i = 0; i < wineYield; i++) {
     const keg = cellarService.generateKeg(wine)
 
     state = addKegToCellarInventory(state, keg)
@@ -52,7 +48,7 @@ export const makeWine = (state, grape, wineVariety, howMany = 1) => {
 
   const saltRequirements = getYeastRequiredForWine(wineVariety)
 
-  state = decrementItemFromInventory(state, grape.id, howMany)
+  state = decrementItemFromInventory(state, grape.id, wineYield)
 
   state = decrementItemFromInventory(
     state,
