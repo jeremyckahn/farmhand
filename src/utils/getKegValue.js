@@ -33,7 +33,6 @@ export const getKegValue = keg => {
   let exponent = 0
 
   if (wineService.isWineRecipe(kegItem)) {
-    // FIXME: Test this
     principalValue = kegItem.value
     interestRate = WINE_INTEREST_RATE
     exponent = Math.min(Math.max(-daysUntilMature, 1), WINE_GROWTH_TIMELINE_CAP)
