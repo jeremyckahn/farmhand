@@ -22,15 +22,20 @@ import { cellarService } from '../../services/cellar'
 import QuantityInput from '../QuantityInput'
 
 /**
- * @param {{
+ * @typedef {{
  *   wineVariety: grapeVariety
- * }} props
+ * }} WineRecipeProps
+ */
+
+/**
+ * @param {WineRecipeProps} props
  */
 export const WineRecipe = ({ wineVariety }) => {
   const {
     gameState: { cellarInventory, inventory, purchasedCellar },
     handlers: { handleMakeWineClick },
   } = useContext(FarmhandContext)
+
   const [quantity, setQuantity] = useState(1)
   const wineName = grapeVarietyNameMap[wineVariety]
   const grape = grapeVarietyVarietyGrapeMap[wineVariety]
@@ -91,9 +96,6 @@ export const WineRecipe = ({ wineVariety }) => {
         }
         subheader={
           <>
-            {
-              // FIXME: Test this
-            }
             <p>
               Days to mature:{' '}
               {integerString(wineService.getDaysToMature(wineVariety))}

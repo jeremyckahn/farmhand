@@ -16,6 +16,7 @@ import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
 import { addKegToCellarInventory } from './addKegToCellarInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 
+// FIXME: Get wineVariety from the grape
 /**
  * @param {state} state
  * @param {grape} grape
