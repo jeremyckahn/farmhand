@@ -7,8 +7,6 @@
 
 import { PURCHASEABLE_CELLARS } from '../../constants'
 import { itemsMap } from '../../data/maps'
-// eslint-disable-next-line no-unused-vars
-import { grapeVariety } from '../../enums'
 import { cellarService } from '../../services/cellar'
 import { wineService } from '../../services/wine'
 import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
@@ -16,15 +14,13 @@ import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
 import { addKegToCellarInventory } from './addKegToCellarInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
 
-// FIXME: Get wineVariety from the grape
 /**
  * @param {state} state
  * @param {grape} grape
- * @param {grapeVariety} wineVariety
  * @param {number} [howMany=1]
  * @returns {state}
  */
-export const makeWine = (state, grape, wineVariety, howMany = 1) => {
+export const makeWine = (state, grape, howMany = 1) => {
   const { inventory, cellarInventory, purchasedCellar } = state
 
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
@@ -47,7 +43,7 @@ export const makeWine = (state, grape, wineVariety, howMany = 1) => {
     state = addKegToCellarInventory(state, keg)
   }
 
-  const saltRequirements = getYeastRequiredForWine(wineVariety)
+  const saltRequirements = getYeastRequiredForWine(grape.variety)
 
   state = decrementItemFromInventory(state, grape.id, wineYield)
 

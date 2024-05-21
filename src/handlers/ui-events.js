@@ -78,11 +78,10 @@ export default {
 
   /**
    * @param {grape} grape
-   * @param {grapeVariety} wineVariety
    * @param {number} [howMany=1]
    */
-  handleMakeWineClick(grape, wineVariety, howMany = 1) {
-    this.makeWine(grape, wineVariety, howMany)
+  handleMakeWineClick(grape, howMany = 1) {
+    this.makeWine(grape, howMany)
   },
 
   /**

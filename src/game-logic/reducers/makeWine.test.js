@@ -4,7 +4,6 @@
 
 import { grapeChardonnay } from '../../data/crops'
 import { yeast, wineChardonnay } from '../../data/recipes'
-import { grapeVariety } from '../../enums'
 import { cellarService } from '../../services/cellar'
 import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
 
@@ -28,7 +27,6 @@ describe('makeWine', () => {
         purchasedCellar: 2,
       },
       grape: grapeChardonnay,
-      wineVariety: grapeVariety.CHARDONNAY,
       howMany: 1,
       /** @type {Partial<state>} */
       expected: {
@@ -53,7 +51,6 @@ describe('makeWine', () => {
         purchasedCellar: 2,
       },
       grape: grapeChardonnay,
-      wineVariety: grapeVariety.CHARDONNAY,
       howMany: 1,
       /** @type {Partial<state>} */
       expected: {
@@ -84,7 +81,6 @@ describe('makeWine', () => {
         purchasedCellar: 2,
       },
       grape: grapeChardonnay,
-      wineVariety: grapeVariety.CHARDONNAY,
       howMany: 1,
       /** @type {Partial<state>} */
       expected: {
@@ -120,7 +116,6 @@ describe('makeWine', () => {
         purchasedCellar: 2,
       },
       grape: grapeChardonnay,
-      wineVariety: grapeVariety.CHARDONNAY,
       howMany: 10,
       /** @type {Partial<state>} */
       expected: {
@@ -151,7 +146,6 @@ describe('makeWine', () => {
         purchasedCellar: 2,
       },
       grape: grapeChardonnay,
-      wineVariety: grapeVariety.CHARDONNAY,
       howMany: 10,
       /** @type {Partial<state>} */
       expected: {
@@ -173,9 +167,9 @@ describe('makeWine', () => {
     },
   ])(
     'makes $expected.cellarInventory.length wine unit(s) based on $state.inventory.0.id: $state.inventory.0.quantity, $state.inventory.1.id: $state.inventory.1.quantity',
-    ({ state, grape, wineVariety, howMany, expected }) => {
+    ({ state, grape, howMany, expected }) => {
       // @ts-expect-error
-      const result = makeWine(state, grape, wineVariety, howMany)
+      const result = makeWine(state, grape, howMany)
 
       expect(result).toEqual(expected)
     }
