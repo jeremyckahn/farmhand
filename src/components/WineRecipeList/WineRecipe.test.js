@@ -68,23 +68,33 @@ const WineRecipeStub = (
 
 describe('WineRecipe', () => {
   test.each([
-    { grape: grapeChardonnay },
-    { grape: grapeSauvignonBlanc },
-    { grape: grapeNebbiolo },
-  ])('shows days to mature for $grape.id', ({ grape }) => {
-    render(
-      <WineRecipeStub
-        props={{ wineVariety: grape.variety }}
-        state={{ inventory: [{ id: grape.id, quantity: 1 }] }}
-      />
-    )
+    {
+      grape: grapeChardonnay,
+      daysToMature: wineService.getDaysToMature(grapeChardonnay.variety),
+    },
+    {
+      grape: grapeSauvignonBlanc,
+      daysToMature: wineService.getDaysToMature(grapeSauvignonBlanc.variety),
+    },
+    {
+      grape: grapeNebbiolo,
+      daysToMature: wineService.getDaysToMature(grapeNebbiolo.variety),
+    },
+  ])(
+    'shows $daysToMature days to mature for $grape.id',
+    ({ grape, daysToMature }) => {
+      render(
+        <WineRecipeStub
+          props={{ wineVariety: grape.variety }}
+          state={{ inventory: [{ id: grape.id, quantity: 1 }] }}
+        />
+      )
 
-    const daysToMature = wineService.getDaysToMature(grape.variety)
+      const label = screen.getByText(`Days to mature: ${daysToMature}`)
 
-    const label = screen.getByText(`Days to mature: ${daysToMature}`)
-
-    expect(label).toBeInTheDocument()
-  })
+      expect(label).toBeInTheDocument()
+    }
+  )
 
   xtest('shows grapes required', () => {})
 
