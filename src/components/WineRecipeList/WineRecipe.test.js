@@ -140,14 +140,19 @@ describe('WineRecipe', () => {
     render(
       <WineRecipeStub
         props={{ wineVariety: grape.variety }}
-        state={{ inventory: [{ id: grape.id, quantity }] }}
+        state={{
+          inventory: [
+            { id: grape.id, quantity: 1 },
+            { id: yeast.id, quantity },
+          ],
+        }}
       />
     )
 
     const label = screen.getByText(
       `Units of ${yeast.name} required: ${integerString(
         getYeastRequiredForWine(grape.variety)
-      )}`
+      )} (available: ${integerString(quantity)})`
     )
 
     expect(label).toBeInTheDocument()

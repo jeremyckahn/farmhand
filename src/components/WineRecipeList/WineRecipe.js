@@ -104,14 +104,12 @@ export const WineRecipe = ({ wineVariety }) => {
             <p>
               Units of {grape.name} required:{' '}
               {integerString(GRAPES_REQUIRED_FOR_WINE)} (available:{' '}
-              {integerString(inventoryQuantityMap[grape.id])})
+              {integerString(inventoryQuantityMap[grape.id] ?? 0)})
             </p>
-            {
-              // FIXME: Show available yeast
-            }
             <p>
               Units of {yeast.name} required:{' '}
-              {integerString(getYeastRequiredForWine(wineVariety))}
+              {integerString(getYeastRequiredForWine(wineVariety))} (available:{' '}
+              {integerString(inventoryQuantityMap[yeast.id] ?? 0)})
             </p>
             {
               // FIXME: Test this
