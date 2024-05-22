@@ -20,6 +20,7 @@ import FarmhandContext from '../Farmhand/Farmhand.context'
 import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants'
 import { cellarService } from '../../services/cellar'
 import QuantityInput from '../QuantityInput'
+import { yeast } from '../../data/recipes'
 
 /**
  * @typedef {{
@@ -100,19 +101,16 @@ export const WineRecipe = ({ wineVariety }) => {
               Days to mature:{' '}
               {integerString(wineService.getDaysToMature(wineVariety))}
             </p>
-            {
-              // FIXME: Test this
-            }
             <p>
               Units of {grape.name} required:{' '}
               {integerString(GRAPES_REQUIRED_FOR_WINE)} (available:{' '}
               {integerString(inventoryQuantityMap[grape.id])})
             </p>
             {
-              // FIXME: Test this
+              // FIXME: Show available yeast
             }
             <p>
-              Units of {'yeast'} required:{' '}
+              Units of {yeast.name} required:{' '}
               {integerString(getYeastRequiredForWine(wineVariety))}
             </p>
             {

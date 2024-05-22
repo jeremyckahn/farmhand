@@ -16,6 +16,10 @@ import {
   grapeNebbiolo,
   grapeSauvignonBlanc,
 } from '../../data/crops'
+import { yeast } from '../../data/recipes'
+import { GRAPES_REQUIRED_FOR_WINE } from '../../constants'
+import { integerString } from '../../utils'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
 
 import { WineRecipe } from './WineRecipe'
 
@@ -30,13 +34,6 @@ const stubGameState = {
 const stubHandlers = {
   handleMakeWineClick: jest.fn(),
 }
-
-/**
- * @param {Partial<WineRecipeProps>} props
- * @param {Partial<typeof stubGameState>} state
- * @param {Partial<typeof stubHandlers>} handlers
- */
-//const WineRecipeStub = (props = {}, state = {}, handlers = {}) => {
 
 /**
  * @param {Partial<{
@@ -96,9 +93,65 @@ describe('WineRecipe', () => {
     }
   )
 
-  xtest('shows grapes required', () => {})
+  test.each([
+    {
+      grape: grapeChardonnay,
+      quantity: 1,
+    },
+    {
+      grape: grapeSauvignonBlanc,
+      quantity: 10,
+    },
+    {
+      grape: grapeNebbiolo,
+      quantity: 100000,
+    },
+  ])('shows grape requirements for $grape.wineId', ({ grape, quantity }) => {
+    render(
+      <WineRecipeStub
+        props={{ wineVariety: grape.variety }}
+        state={{ inventory: [{ id: grape.id, quantity }] }}
+      />
+    )
 
-  xtest('shows yeast required', () => {})
+    const label = screen.getByText(
+      `Units of ${grape.name} required: ${integerString(
+        GRAPES_REQUIRED_FOR_WINE
+      )} (available: ${integerString(quantity)})`
+    )
+
+    expect(label).toBeInTheDocument()
+  })
+
+  test.each([
+    {
+      grape: grapeChardonnay,
+      quantity: 1,
+    },
+    {
+      grape: grapeSauvignonBlanc,
+      quantity: 10,
+    },
+    {
+      grape: grapeNebbiolo,
+      quantity: 100000,
+    },
+  ])('shows yeast requirements for $grape.wineId', ({ grape, quantity }) => {
+    render(
+      <WineRecipeStub
+        props={{ wineVariety: grape.variety }}
+        state={{ inventory: [{ id: grape.id, quantity }] }}
+      />
+    )
+
+    const label = screen.getByText(
+      `Units of ${yeast.name} required: ${integerString(
+        getYeastRequiredForWine(grape.variety)
+      )}`
+    )
+
+    expect(label).toBeInTheDocument()
+  })
 
   xtest('shows number already in cellar', () => {})
 
