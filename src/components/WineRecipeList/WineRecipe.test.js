@@ -21,6 +21,8 @@ import { GRAPES_REQUIRED_FOR_WINE } from '../../constants'
 import { integerString } from '../../utils'
 import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
 
+import { getKegStub } from '../../test-utils/stubs/getKegStub'
+
 import { WineRecipe } from './WineRecipe'
 
 /** @type {Pick<farmhand.state, 'cellarInventory' | 'inventory' | 'purchasedCellar'>} */
@@ -158,7 +160,38 @@ describe('WineRecipe', () => {
     expect(label).toBeInTheDocument()
   })
 
-  xtest('shows number already in cellar', () => {})
+  test.each([
+    {
+      grape: grapeChardonnay,
+      quantity: 0,
+    },
+    {
+      grape: grapeSauvignonBlanc,
+      quantity: 1,
+    },
+    {
+      grape: grapeNebbiolo,
+      quantity: 10,
+    },
+  ])(
+    'shows that there are already $quantity units of $grape.wineId in cellar',
+    ({ grape, quantity }) => {
+      render(
+        <WineRecipeStub
+          props={{ wineVariety: grape.variety }}
+          state={{
+            cellarInventory: new Array(quantity).fill(
+              getKegStub({ itemId: grape.wineId })
+            ),
+          }}
+        />
+      )
+
+      const label = screen.getByText(`In cellar: ${integerString(quantity)}`)
+
+      expect(label).toBeInTheDocument()
+    }
+  )
 
   xtest('disables "Make" button when desired wine quantity cannot be made', () => {})
 })

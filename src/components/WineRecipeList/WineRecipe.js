@@ -106,14 +106,14 @@ export const WineRecipe = ({ wineVariety }) => {
               {integerString(GRAPES_REQUIRED_FOR_WINE)} (available:{' '}
               {integerString(inventoryQuantityMap[grape.id] ?? 0)})
             </p>
+            {
+              // FIXME: Show yeast requirements for specified quantity
+            }
             <p>
               Units of {yeast.name} required:{' '}
               {integerString(getYeastRequiredForWine(wineVariety))} (available:{' '}
               {integerString(inventoryQuantityMap[yeast.id] ?? 0)})
             </p>
-            {
-              // FIXME: Test this
-            }
             <p>In cellar: {integerString(wineInstancesInCellar ?? 0)}</p>
           </>
         }
