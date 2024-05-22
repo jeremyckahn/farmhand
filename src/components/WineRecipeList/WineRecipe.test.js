@@ -195,14 +195,13 @@ describe('WineRecipe', () => {
 
   test.each([
     { grape: grapeChardonnay, grapeQuantity: 0, yeastQuantity: 0 },
-    // FIXME: Make this test pass
-    //{
-    //grape: grapeChardonnay,
-    //grapeQuantity: 1,
-    //yeastQuantity: getYeastRequiredForWine(grapeChardonnay.variety),
-    //},
+    {
+      grape: grapeChardonnay,
+      grapeQuantity: GRAPES_REQUIRED_FOR_WINE - 1,
+      yeastQuantity: getYeastRequiredForWine(grapeChardonnay.variety),
+    },
   ])(
-    'disables "Make" button when there are insufficient ingredient ($grape.id: $grapeQuantity, yeast: $yeastQuantity)',
+    'disables "Make" button when there are insufficient ingredients ($grape.id: $grapeQuantity, yeast: $yeastQuantity)',
     ({ grape, grapeQuantity, yeastQuantity }) => {
       render(
         <WineRecipeStub
@@ -220,5 +219,12 @@ describe('WineRecipe', () => {
 
       expect(makeButton).toBeDisabled()
     }
+  )
+
+  xtest.each(
+    []
+  )(
+    'enables "Make" button when there are sufficient ingredients ($grape.id: $grapeQuantity, yeast: $yeastQuantity)',
+    () => {}
   )
 })

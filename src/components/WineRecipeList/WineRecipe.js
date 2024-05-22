@@ -46,6 +46,8 @@ export const WineRecipe = ({ wineVariety }) => {
   }
 
   const inventoryQuantityMap = getInventoryQuantityMap(inventory)
+  const quantityOfGrape = inventoryQuantityMap[grape.id] ?? 0
+  const quantityOfYeast = inventoryQuantityMap[yeast.id] ?? 0
 
   useEffect(() => {
     setQuantity(
@@ -61,9 +63,9 @@ export const WineRecipe = ({ wineVariety }) => {
     )
   }, [cellarInventory, cellarSize, grape, inventory, quantity, wineVariety])
 
-  // FIXME: This needs to account for insufficient grape inventory
   const canBeMade =
     quantity > 0 &&
+    quantityOfGrape > GRAPES_REQUIRED_FOR_WINE &&
     cellarService.doesCellarSpaceRemain(cellarInventory, purchasedCellar)
 
   const wineInstancesInCellar = cellarService.getItemInstancesInCellar(
@@ -71,6 +73,7 @@ export const WineRecipe = ({ wineVariety }) => {
     wine
   )
 
+  // FIXME: This doesn't get updated when grapes are sold
   const maxQuantity = wineService.getMaxWineYield(
     grape,
     inventory,
@@ -105,7 +108,7 @@ export const WineRecipe = ({ wineVariety }) => {
             <p>
               Units of {grape.name} required:{' '}
               {integerString(GRAPES_REQUIRED_FOR_WINE)} (available:{' '}
-              {integerString(inventoryQuantityMap[grape.id] ?? 0)})
+              {integerString(quantityOfGrape)})
             </p>
             {
               // FIXME: Show yeast requirements for specified quantity
@@ -113,7 +116,7 @@ export const WineRecipe = ({ wineVariety }) => {
             <p>
               Units of {yeast.name} required:{' '}
               {integerString(getYeastRequiredForWine(wineVariety))} (available:{' '}
-              {integerString(inventoryQuantityMap[yeast.id] ?? 0)})
+              {integerString(quantityOfYeast)})
             </p>
             <p>In cellar: {integerString(wineInstancesInCellar ?? 0)}</p>
           </>
@@ -123,6 +126,7 @@ export const WineRecipe = ({ wineVariety }) => {
         <Button
           color="primary"
           variant="contained"
+          // FIXME: Test when this enabled
           disabled={!canBeMade || !quantity}
           onClick={handleMakeWine}
         >
