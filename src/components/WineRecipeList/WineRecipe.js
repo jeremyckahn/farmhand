@@ -61,6 +61,7 @@ export const WineRecipe = ({ wineVariety }) => {
     )
   }, [cellarInventory, cellarSize, grape, inventory, quantity, wineVariety])
 
+  // FIXME: This needs to account for insufficient grape inventory
   const canBeMade =
     quantity > 0 &&
     cellarService.doesCellarSpaceRemain(cellarInventory, purchasedCellar)
@@ -122,7 +123,6 @@ export const WineRecipe = ({ wineVariety }) => {
         <Button
           color="primary"
           variant="contained"
-          // FIXME: Test this
           disabled={!canBeMade || !quantity}
           onClick={handleMakeWine}
         >

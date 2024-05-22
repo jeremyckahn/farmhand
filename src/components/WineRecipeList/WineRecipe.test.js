@@ -193,5 +193,32 @@ describe('WineRecipe', () => {
     }
   )
 
-  xtest('disables "Make" button when desired wine quantity cannot be made', () => {})
+  test.each([
+    { grape: grapeChardonnay, grapeQuantity: 0, yeastQuantity: 0 },
+    // FIXME: Make this test pass
+    //{
+    //grape: grapeChardonnay,
+    //grapeQuantity: 1,
+    //yeastQuantity: getYeastRequiredForWine(grapeChardonnay.variety),
+    //},
+  ])(
+    'disables "Make" button when there are insufficient ingredient ($grape.id: $grapeQuantity, yeast: $yeastQuantity)',
+    ({ grape, grapeQuantity, yeastQuantity }) => {
+      render(
+        <WineRecipeStub
+          props={{ wineVariety: grape.variety }}
+          state={{
+            inventory: [
+              { id: grape.id, quantity: grapeQuantity },
+              { id: yeast.id, quantity: yeastQuantity },
+            ],
+          }}
+        />
+      )
+
+      const makeButton = screen.getByText('Make')
+
+      expect(makeButton).toBeDisabled()
+    }
+  )
 })
