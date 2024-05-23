@@ -75,7 +75,6 @@ export const WineRecipe = ({ wineVariety }) => {
     wine
   )
 
-  // FIXME: This doesn't get updated when grapes are sold
   const maxQuantity = wineService.getMaxWineYield(
     grape,
     inventory,

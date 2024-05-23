@@ -5,7 +5,7 @@
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
  */
 
-import { PURCHASEABLE_CELLARS } from '../../constants'
+import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants'
 import { itemsMap } from '../../data/maps'
 import { cellarService } from '../../services/cellar'
 import { wineService } from '../../services/wine'
@@ -45,7 +45,11 @@ export const makeWine = (state, grape, howMany = 1) => {
 
   const saltRequirements = getYeastRequiredForWine(grape.variety)
 
-  state = decrementItemFromInventory(state, grape.id, wineYield)
+  state = decrementItemFromInventory(
+    state,
+    grape.id,
+    wineYield * GRAPES_REQUIRED_FOR_WINE
+  )
 
   state = decrementItemFromInventory(
     state,

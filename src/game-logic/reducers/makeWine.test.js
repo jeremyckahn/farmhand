@@ -2,6 +2,7 @@
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
  */
 
+import { GRAPES_REQUIRED_FOR_WINE } from '../../constants'
 import { grapeChardonnay } from '../../data/crops'
 import { yeast, wineChardonnay } from '../../data/recipes'
 import { cellarService } from '../../services/cellar'
@@ -41,7 +42,7 @@ describe('makeWine', () => {
       /** @type {Partial<state>} */
       state: {
         inventory: [
-          { id: grapeChardonnay.id, quantity: 1 },
+          { id: grapeChardonnay.id, quantity: GRAPES_REQUIRED_FOR_WINE },
           {
             id: yeast.id,
             quantity: getYeastRequiredForWine(grapeChardonnay.variety),
@@ -71,7 +72,7 @@ describe('makeWine', () => {
       /** @type {Partial<state>} */
       state: {
         inventory: [
-          { id: grapeChardonnay.id, quantity: 1 },
+          { id: grapeChardonnay.id, quantity: GRAPES_REQUIRED_FOR_WINE },
           {
             id: yeast.id,
             quantity: getYeastRequiredForWine(grapeChardonnay.variety) + 1,
@@ -106,7 +107,7 @@ describe('makeWine', () => {
       /** @type {Partial<state>} */
       state: {
         inventory: [
-          { id: grapeChardonnay.id, quantity: 1 },
+          { id: grapeChardonnay.id, quantity: GRAPES_REQUIRED_FOR_WINE },
           {
             id: yeast.id,
             quantity: getYeastRequiredForWine(grapeChardonnay.variety),
@@ -136,7 +137,7 @@ describe('makeWine', () => {
       /** @type {Partial<state>} */
       state: {
         inventory: [
-          { id: grapeChardonnay.id, quantity: 2 },
+          { id: grapeChardonnay.id, quantity: GRAPES_REQUIRED_FOR_WINE * 2 },
           {
             id: yeast.id,
             quantity: getYeastRequiredForWine(grapeChardonnay.variety) * 2,

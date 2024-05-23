@@ -7,6 +7,7 @@
  * @typedef {import('../').farmhand.keg} keg
  */
 
+import { GRAPES_REQUIRED_FOR_WINE } from '../constants'
 import { wineVarietyValueMap } from '../data/crops/grape'
 import { itemsMap } from '../data/maps'
 import { recipeType } from '../enums'
@@ -47,14 +48,20 @@ export class WineService {
       [itemsMap.yeast.id]: yeastQuantityInInventory = 0,
     } = getInventoryQuantityMap(inventory)
 
-    const maxWineYieldPotential = Math.floor(
+    const availableCellarSpace = cellarSize - cellarInventory.length
+
+    const grapeQuantityConstraint = Math.floor(
+      grapeQuantityInInventory / GRAPES_REQUIRED_FOR_WINE
+    )
+
+    const yeastQuantityConstraint = Math.floor(
       yeastQuantityInInventory / getYeastRequiredForWine(grape.variety)
     )
 
     const maxYield = Math.min(
-      cellarSize - cellarInventory.length,
-      grapeQuantityInInventory,
-      maxWineYieldPotential
+      availableCellarSpace,
+      grapeQuantityConstraint,
+      yeastQuantityConstraint
     )
 
     return maxYield
