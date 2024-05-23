@@ -200,6 +200,11 @@ describe('WineRecipe', () => {
       grapeQuantity: GRAPES_REQUIRED_FOR_WINE - 1,
       yeastQuantity: getYeastRequiredForWine(grapeChardonnay.variety),
     },
+    {
+      grape: grapeChardonnay,
+      grapeQuantity: GRAPES_REQUIRED_FOR_WINE,
+      yeastQuantity: getYeastRequiredForWine(grapeChardonnay.variety) - 1,
+    },
   ])(
     'disables "Make" button when there are insufficient ingredients ($grape.id: $grapeQuantity, yeast: $yeastQuantity)',
     ({ grape, grapeQuantity, yeastQuantity }) => {
@@ -221,10 +226,30 @@ describe('WineRecipe', () => {
     }
   )
 
-  xtest.each(
-    []
-  )(
+  test.each([
+    {
+      grape: grapeChardonnay,
+      grapeQuantity: GRAPES_REQUIRED_FOR_WINE,
+      yeastQuantity: getYeastRequiredForWine(grapeChardonnay.variety),
+    },
+  ])(
     'enables "Make" button when there are sufficient ingredients ($grape.id: $grapeQuantity, yeast: $yeastQuantity)',
-    () => {}
+    ({ grape, grapeQuantity, yeastQuantity }) => {
+      render(
+        <WineRecipeStub
+          props={{ wineVariety: grape.variety }}
+          state={{
+            inventory: [
+              { id: grape.id, quantity: grapeQuantity },
+              { id: yeast.id, quantity: yeastQuantity },
+            ],
+          }}
+        />
+      )
+
+      const makeButton = screen.getByText('Make')
+
+      expect(makeButton).toBeEnabled()
+    }
   )
 })

@@ -65,8 +65,10 @@ export const WineRecipe = ({ wineVariety }) => {
 
   const canBeMade =
     quantity > 0 &&
-    quantityOfGrape > GRAPES_REQUIRED_FOR_WINE &&
+    quantityOfGrape >= GRAPES_REQUIRED_FOR_WINE &&
     cellarService.doesCellarSpaceRemain(cellarInventory, purchasedCellar)
+
+  const disableMakeButton = !canBeMade || !quantity
 
   const wineInstancesInCellar = cellarService.getItemInstancesInCellar(
     cellarInventory,
@@ -126,8 +128,7 @@ export const WineRecipe = ({ wineVariety }) => {
         <Button
           color="primary"
           variant="contained"
-          // FIXME: Test when this enabled
-          disabled={!canBeMade || !quantity}
+          disabled={disableMakeButton}
           onClick={handleMakeWine}
         >
           Make
