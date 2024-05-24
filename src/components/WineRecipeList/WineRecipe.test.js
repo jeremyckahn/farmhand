@@ -131,24 +131,23 @@ describe('WineRecipe', () => {
   test.each([
     {
       grape: grapeChardonnay,
-      quantity: 1,
     },
     {
       grape: grapeSauvignonBlanc,
-      quantity: 10,
     },
     {
       grape: grapeNebbiolo,
-      quantity: 100000,
     },
-  ])('shows yeast requirements for $grape.wineId', ({ grape, quantity }) => {
+  ])('shows yeast requirements for $grape.wineId', ({ grape }) => {
+    const yeastQuantity = getYeastRequiredForWine(grape.variety)
+
     render(
       <WineRecipeStub
         props={{ wineVariety: grape.variety }}
         state={{
           inventory: [
-            { id: grape.id, quantity: 1 },
-            { id: yeast.id, quantity },
+            { id: grape.id, quantity: GRAPES_REQUIRED_FOR_WINE },
+            { id: yeast.id, quantity: yeastQuantity },
           ],
         }}
       />
@@ -157,7 +156,7 @@ describe('WineRecipe', () => {
     const label = screen.getByText(
       `Units of ${yeast.name} required: ${integerString(
         getYeastRequiredForWine(grape.variety)
-      )} (available: ${integerString(quantity)})`
+      )} (available: ${integerString(yeastQuantity)})`
     )
 
     expect(label).toBeInTheDocument()
@@ -256,41 +255,40 @@ describe('WineRecipe', () => {
     }
   )
 
-  test.each([
-    { wineYield: 1 },
-    // FIXME: This is failing (it needs to be implemented)
-    //{ wineYield: 2 },
-  ])('shows yeast requirements for $wineYield wines', ({ wineYield }) => {
-    const grape = grapeChardonnay
+  test.each([{ wineYield: 1 }, { wineYield: 2 }])(
+    'shows yeast requirements for $wineYield wines',
+    ({ wineYield }) => {
+      const grape = grapeChardonnay
 
-    const yeastQuantity = getYeastRequiredForWine(grape.variety) * wineYield
-    const grapeQuantity = GRAPES_REQUIRED_FOR_WINE * wineYield
+      const yeastQuantity = getYeastRequiredForWine(grape.variety) * wineYield
+      const grapeQuantity = GRAPES_REQUIRED_FOR_WINE * wineYield
 
-    render(
-      <WineRecipeStub
-        props={{ wineVariety: grape.variety }}
-        state={{
-          inventory: [
-            { id: grape.id, quantity: grapeQuantity },
-            {
-              id: yeast.id,
-              quantity: yeastQuantity,
-            },
-          ],
-        }}
-      />
-    )
+      render(
+        <WineRecipeStub
+          props={{ wineVariety: grape.variety }}
+          state={{
+            inventory: [
+              { id: grape.id, quantity: grapeQuantity },
+              {
+                id: yeast.id,
+                quantity: yeastQuantity,
+              },
+            ],
+          }}
+        />
+      )
 
-    const input = screen.getByPlaceholderText(QUANTITY_INPUT_PLACEHOLDER_TEXT)
+      const input = screen.getByPlaceholderText(QUANTITY_INPUT_PLACEHOLDER_TEXT)
 
-    userEvent.type(input, String(wineYield))
+      userEvent.type(input, String(wineYield))
 
-    const label = screen.getByText(
-      `Units of ${yeast.name} required: ${integerString(
-        getYeastRequiredForWine(grape.variety) * wineYield
-      )} (available: ${integerString(yeastQuantity)})`
-    )
+      const label = screen.getByText(
+        `Units of ${yeast.name} required: ${integerString(
+          getYeastRequiredForWine(grape.variety) * wineYield
+        )} (available: ${integerString(yeastQuantity)})`
+      )
 
-    expect(label).toBeInTheDocument()
-  })
+      expect(label).toBeInTheDocument()
+    }
+  )
 })

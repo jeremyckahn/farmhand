@@ -89,7 +89,7 @@ export const WineRecipe = ({ wineVariety }) => {
   }
 
   return (
-    <Card className="WineRecipe">
+    <Card className="WineRecipe" sx={{ position: 'relative' }}>
       <CardHeader
         title={wineName}
         avatar={
@@ -111,13 +111,10 @@ export const WineRecipe = ({ wineVariety }) => {
               {integerString(GRAPES_REQUIRED_FOR_WINE)} (available:{' '}
               {integerString(quantityOfGrape)})
             </p>
-            {
-              // FIXME: Show yeast requirements for specified quantity
-            }
             <p>
               Units of {yeast.name} required:{' '}
-              {integerString(getYeastRequiredForWine(wineVariety))} (available:{' '}
-              {integerString(quantityOfYeast)})
+              {integerString(getYeastRequiredForWine(wineVariety) * quantity)}{' '}
+              (available: {integerString(quantityOfYeast)})
             </p>
             <p>In cellar: {integerString(wineInstancesInCellar ?? 0)}</p>
           </>
