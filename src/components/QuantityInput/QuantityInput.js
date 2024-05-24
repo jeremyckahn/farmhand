@@ -12,6 +12,8 @@ import { Span } from '../Elements'
 
 import './QuantityInput.sass'
 
+export const QUANTITY_INPUT_PLACEHOLDER_TEXT = '0'
+
 const QuantityNumberFormat = forwardRef(
   ({ min, max, onChange, ...rest }, ref) => (
     <NumberFormat
@@ -41,6 +43,7 @@ const QuantityTextInput = ({
     variant="standard"
     {...{
       value,
+      placeholder: QUANTITY_INPUT_PLACEHOLDER_TEXT,
       inputProps: {
         pattern: '[0-9]*',
         min: 0,

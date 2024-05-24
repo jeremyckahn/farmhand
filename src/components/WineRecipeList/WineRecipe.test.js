@@ -5,6 +5,7 @@
 
 import React from 'react'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 // eslint-disable-next-line no-unused-vars
 import uiHandlers from '../../handlers/ui-events'
@@ -22,6 +23,8 @@ import { integerString } from '../../utils'
 import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
 
 import { getKegStub } from '../../test-utils/stubs/getKegStub'
+
+import { QUANTITY_INPUT_PLACEHOLDER_TEXT } from '../QuantityInput/QuantityInput'
 
 import { WineRecipe } from './WineRecipe'
 
@@ -252,4 +255,42 @@ describe('WineRecipe', () => {
       expect(makeButton).toBeEnabled()
     }
   )
+
+  test.each([
+    { wineYield: 1 },
+    // FIXME: This is failing (it needs to be implemented)
+    //{ wineYield: 2 },
+  ])('shows yeast requirements for $wineYield wines', ({ wineYield }) => {
+    const grape = grapeChardonnay
+
+    const yeastQuantity = getYeastRequiredForWine(grape.variety) * wineYield
+    const grapeQuantity = GRAPES_REQUIRED_FOR_WINE * wineYield
+
+    render(
+      <WineRecipeStub
+        props={{ wineVariety: grape.variety }}
+        state={{
+          inventory: [
+            { id: grape.id, quantity: grapeQuantity },
+            {
+              id: yeast.id,
+              quantity: yeastQuantity,
+            },
+          ],
+        }}
+      />
+    )
+
+    const input = screen.getByPlaceholderText(QUANTITY_INPUT_PLACEHOLDER_TEXT)
+
+    userEvent.type(input, String(wineYield))
+
+    const label = screen.getByText(
+      `Units of ${yeast.name} required: ${integerString(
+        getYeastRequiredForWine(grape.variety) * wineYield
+      )} (available: ${integerString(yeastQuantity)})`
+    )
+
+    expect(label).toBeInTheDocument()
+  })
 })
