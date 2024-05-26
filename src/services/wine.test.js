@@ -116,13 +116,15 @@ describe('WineService', () => {
       },
     ])(
       `
-  grape: $grape.variety
-  grape in inventory: $inventory.0.quantity
-  yeast in inventory: $inventory.1.quantity
-  cellarInventory length: $cellarInventory.length
-  cellarSize: $cellarSize
-  ---------------------
-  expect: $expected`,
+grape: $grape.variety
+grape in inventory: $inventory.0.quantity
+yeast in inventory: $inventory.1.quantity
+cellarInventory length: $cellarInventory.length
+cellarSize: $cellarSize
+---------------------
+expect: $expected
+
+`,
       ({ grape, inventory, cellarInventory, cellarSize, expected }) => {
         const result = wineService.getMaxWineYield(
           grape,

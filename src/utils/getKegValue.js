@@ -10,17 +10,6 @@ import { wineService } from '../services/wine'
 
 import { getItemBaseValue } from './getItemBaseValue'
 
-// NOTE: Keg values are (loosely) based on the standard compound interest rate
-// formula:
-//
-//   A = P(1 + r/n)^nt
-//
-// A = final amount
-// P = initial principal balance
-// r = interest rate
-// n = number of times interest applied per time period
-// t = number of time periods elapsed
-
 /**
  * @param {keg} keg
  */
@@ -44,6 +33,16 @@ export const getKegValue = keg => {
     exponent = Math.abs(keg.daysUntilMature)
   }
 
+  // NOTE: Keg values are (loosely) based on the standard compound interest
+  // rate formula:
+  //
+  //   A = P(1 + r/n)^nt
+  //
+  // A = final amount
+  // P = initial principal balance
+  // r = interest rate
+  // n = number of times interest applied per time period
+  // t = number of time periods elapsed
   const kegValue = principalValue * (1 + interestRate) ** exponent
 
   return kegValue

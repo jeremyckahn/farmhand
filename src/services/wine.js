@@ -40,7 +40,6 @@ export class WineService {
    * @param {{ id: string, quantity: number }[]} inventory
    * @param {keg[]} cellarInventory
    * @param {number} cellarSize
-   * @returns {number}
    */
   getMaxWineYield = (grape, inventory, cellarInventory, cellarSize) => {
     const {

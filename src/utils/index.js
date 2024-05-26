@@ -824,10 +824,6 @@ export const findCowById = memoize(
 export const experienceNeededForLevel = targetLevel =>
   ((targetLevel - 1) * 10) ** 2
 
-/**
- * @param {farmhand.levelEntitlements} levelEntitlements
- * @returns {Array.<{ item: farmhand.item }>}
- */
 export const getAvailableShopInventory = memoize((
   /** @type {farmhand.levelEntitlements} */ levelEntitlements
 ) =>
