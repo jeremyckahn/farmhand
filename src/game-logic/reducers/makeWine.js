@@ -43,18 +43,18 @@ export const makeWine = (state, grape, howMany = 1) => {
     state = addKegToCellarInventory(state, keg)
   }
 
-  const saltRequirements = getYeastRequiredForWine(grape.variety)
-
   state = decrementItemFromInventory(
     state,
     grape.id,
     wineYield * GRAPES_REQUIRED_FOR_WINE
   )
 
+  const yeastRequirements = getYeastRequiredForWine(grape.variety)
+
   state = decrementItemFromInventory(
     state,
     itemsMap.yeast.id,
-    howMany * saltRequirements
+    wineYield * yeastRequirements
   )
 
   return state
