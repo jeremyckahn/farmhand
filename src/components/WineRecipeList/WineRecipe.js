@@ -92,14 +92,7 @@ export const WineRecipe = ({ wineVariety }) => {
     <Card className="WineRecipe" sx={{ position: 'relative' }}>
       <CardHeader
         title={wineName}
-        avatar={
-          <img
-            {...{
-              src: wines[wineVariety],
-            }}
-            alt={wineName}
-          />
-        }
+        avatar={<img src={wines[wineVariety]} alt={wineName} />}
         subheader={
           <>
             <p>
@@ -130,13 +123,11 @@ export const WineRecipe = ({ wineVariety }) => {
           Make
         </Button>
         <QuantityInput
-          {...{
-            handleSubmit: handleMakeWine,
-            handleUpdateNumber: setQuantity,
-            maxQuantity,
-            setQuantity,
-            value: quantity,
-          }}
+          handleSubmit={handleMakeWine}
+          handleUpdateNumber={setQuantity}
+          maxQuantity={maxQuantity}
+          setQuantity={setQuantity}
+          value={quantity}
         />
       </CardActions>
     </Card>

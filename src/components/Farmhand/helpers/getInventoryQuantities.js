@@ -1,12 +1,15 @@
+/**
+ * @typedef {import('../../../').farmhand.item} farmhand.item
+ */
 import { itemsMap } from '../../../data/maps'
 
 const itemIds = Object.keys(itemsMap)
 
 /**
- * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
- * @returns {Record<string, number>}
+ * @param {Array.<{ id: farmhand.item['id'], quantity: number }>} inventory
  */
 export const getInventoryQuantities = inventory => {
+  /** @type {Record<string, number>} */
   const quantities = {}
 
   for (const itemId of itemIds) {
