@@ -69,7 +69,8 @@ export const fromSeed = (
 export const cropVariety = ({
   imageId,
   cropFamily,
+  variety,
   ...cropVarietyProperties
 }) => {
-  return { imageId, cropFamily, ...crop({ ...cropVarietyProperties }) }
+  return { imageId, cropFamily, variety, ...crop({ ...cropVarietyProperties }) }
 }
