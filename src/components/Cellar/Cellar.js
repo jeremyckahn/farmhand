@@ -21,7 +21,7 @@ export const Cellar = () => {
       >
         <Tab {...{ label: 'Cellar Inventory', ...a11yProps(0) }} />
         <Tab {...{ label: 'Fermentation', ...a11yProps(1) }} />
-        <Tab {...{ label: 'Winemaking', ...a11yProps(1) }} />
+        <Tab {...{ label: 'Winemaking', ...a11yProps(2) }} />
       </Tabs>
       <CellarInventoryTabPanel index={0} currentTab={currentTab} />
       <FermentationTabPanel index={1} currentTab={currentTab} />
