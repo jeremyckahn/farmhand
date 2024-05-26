@@ -22,7 +22,7 @@ export const FermentationTabPanel = ({ index, currentTab }) => (
                 linkTarget: '_blank',
                 className: 'markdown',
                 source:
-                  'Some items can be fermented. Fermented items become much more valuable over time!',
+                  'Some items can be fermented and become much more valuable over time.',
               }}
             />
           </CardContent>

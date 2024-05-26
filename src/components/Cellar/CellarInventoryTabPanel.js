@@ -59,13 +59,13 @@ export const CellarInventoryTabPanel = ({ index, currentTab }) => {
                 {...{
                   linkTarget: '_blank',
                   className: 'markdown',
-                  source: `This is your inventory of cellar kegs.
+                  source: `This is your inventory of Cellar kegs.
 
-Keg contents take time to reach maturity before they can be sold. Once they reach maturity, keg contents become higher in quality and their value grows.
+Keg contents take time to reach maturity before they can be sold. After they reach maturity, keg contents become higher in quality over time and their value grows.
 
-Kegs that contain fermented crop recipes compound value at a rate of ${KEG_INTEREST_RATE}% a day but have an increasing chance of spoiling.
+Kegs that contain fermented crops compound in value at a rate of ${KEG_INTEREST_RATE}% a day but have an increasing chance of spoiling.
 
-Kegs that contain wine compound value at a rate of ${WINE_INTEREST_RATE}% for up to ${integerString(
+Kegs that contain wine compound in value at a rate of ${WINE_INTEREST_RATE}% for up to ${integerString(
                     WINE_GROWTH_TIMELINE_CAP
                   )} days and never spoil.`,
                 }}
