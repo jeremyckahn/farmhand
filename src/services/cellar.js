@@ -23,7 +23,6 @@ export class CellarService {
     /**
      * @param {keg[]} cellarInventory
      * @param {item} item
-     * @returns number
      */
     (cellarInventory, item) => {
       return cellarInventory.filter(keg => keg.itemId === item.id).length
@@ -33,7 +32,6 @@ export class CellarService {
 
   /**
    * @param {item} item
-   * @returns {keg}
    */
   generateKeg = item => {
     /** @type {keg} */
@@ -51,9 +49,8 @@ export class CellarService {
   }
 
   /**
-   * @param {Array.<keg>} cellarInventory
+   * @param {keg[]} cellarInventory
    * @param {number} purchasedCellar
-   * @returns {boolean}
    */
   doesCellarSpaceRemain = (cellarInventory, purchasedCellar) => {
     return (
