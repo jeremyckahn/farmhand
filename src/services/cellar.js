@@ -5,7 +5,7 @@
 
 import { v4 as uuid } from 'uuid'
 
-import { fermentableItemsMap } from '../data/maps'
+import { fermentableItemsMap, itemsMap } from '../data/maps'
 import { memoize } from '../utils/memoize'
 import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine'
 
@@ -57,6 +57,16 @@ export class CellarService {
       cellarInventory.length <
       (PURCHASEABLE_CELLARS.get(purchasedCellar)?.space ?? 0)
     )
+  }
+
+  /**
+   * @param {keg} keg
+   */
+  doesKegSpoil = keg => {
+    const item = itemsMap[keg.itemId]
+    const doesKegSpoil = !wineService.isWineRecipe(item)
+
+    return doesKegSpoil
   }
 }
 

@@ -19,6 +19,7 @@ import AnimatedNumber from '../AnimatedNumber'
 import './Keg.sass'
 import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate'
 import { wineService } from '../../services/wine'
+import { cellarService } from '../../services/cellar'
 
 /**
  * @param {Object} props
@@ -91,7 +92,7 @@ export function Keg({ keg }) {
                     {...{ number: kegValue, formatter: moneyString }}
                   />
                 </p>
-                {!wineService.isWineRecipe(item) && (
+                {cellarService.doesKegSpoil(keg) && (
                   <p>Potential for spoilage: {spoilageRateDisplayValue}%</p>
                 )}
               </>

@@ -34,4 +34,15 @@ describe('CellarService', () => {
       })
     })
   })
+
+  describe('doesKegSpoil', () => {
+    test.each([
+      { keg: cellarService.generateKeg(pumpkin), expected: true },
+      { keg: cellarService.generateKeg(wineChardonnay), expected: false },
+    ])('$keg.itemId spoils -> $expected', ({ keg, expected }) => {
+      const result = cellarService.doesKegSpoil(keg)
+
+      expect(result).toEqual(expected)
+    })
+  })
 })
