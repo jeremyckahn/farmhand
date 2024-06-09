@@ -219,7 +219,7 @@ export const grapeNebbiolo = grape({
 /**
  * @type {Record<grapeVariety, farmhand.grape>}
  */
-export const grapeVarietyVarietyGrapeMap = {
+export const grapeVarietyToGrapeItemMap = {
   [grapeVariety.CHARDONNAY]: grapeChardonnay,
   [grapeVariety.SAUVIGNON_BLANC]: grapeSauvignonBlanc,
   //[grapeVariety.PINOT_BLANC]: grapePinotBlanc,

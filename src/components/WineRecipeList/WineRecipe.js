@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 
 import {
   grapeVarietyNameMap,
-  grapeVarietyVarietyGrapeMap,
+  grapeVarietyToGrapeItemMap,
 } from '../../data/crops/grape'
 import { itemsMap } from '../../data/maps'
 import { wineService } from '../../services/wine'
@@ -39,7 +39,7 @@ export const WineRecipe = ({ wineVariety }) => {
 
   const [quantity, setQuantity] = useState(1)
   const wineName = grapeVarietyNameMap[wineVariety]
-  const grape = grapeVarietyVarietyGrapeMap[wineVariety]
+  const grape = grapeVarietyToGrapeItemMap[wineVariety]
   const wine = itemsMap[grape.wineId]
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
     space: 0,
