@@ -10,7 +10,7 @@ import { getKegValue } from '../../utils/getKegValue'
 import { sellKeg } from './sellKeg'
 
 /** @type keg */
-const stubKeg = { id: 'stub-keg', daysUntilMature: 4, itemId: carrot.id }
+const stubKeg = { id: 'stub-keg', daysUntilMature: -4, itemId: carrot.id }
 
 const stubKegValue = getKegValue(stubKeg)
 

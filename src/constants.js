@@ -284,6 +284,8 @@ export const WEEDS_SPAWN_CHANCE = 0.15
 
 export const KEG_INTEREST_RATE = 0.02
 export const KEG_SPOILAGE_RATE_MULTIPLIER = 0.001
+export const WINE_INTEREST_RATE = 0.015
+export const WINE_GROWTH_TIMELINE_CAP = 100
 
 // NOTE: not all of these are implemented yet, these are for all the currently
 // planned experience rewards
@@ -316,3 +318,7 @@ export const Z_INDEX = {
 }
 
 export const HEARTBEAT_INTERVAL_PERIOD = 10 * 1000 // 10 seconds
+
+export const GRAPES_REQUIRED_FOR_WINE = 50
+
+export const YEAST_REQUIREMENT_FOR_WINE_MULTIPLIER = 5

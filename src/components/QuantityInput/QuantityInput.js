@@ -12,6 +12,8 @@ import { Span } from '../Elements'
 
 import './QuantityInput.sass'
 
+export const QUANTITY_INPUT_PLACEHOLDER_TEXT = '0'
+
 const QuantityNumberFormat = forwardRef(
   ({ min, max, onChange, ...rest }, ref) => (
     <NumberFormat
@@ -41,15 +43,17 @@ const QuantityTextInput = ({
     variant="standard"
     {...{
       value,
+      placeholder: QUANTITY_INPUT_PLACEHOLDER_TEXT,
       inputProps: {
         pattern: '[0-9]*',
         min: 0,
         max: maxQuantity,
       },
       onChange: handleUpdateNumber,
-      onFocus: () => {
-        // clear the input when input is first selected so the user doesn't have to fight with clearing out default values
-        handleUpdateNumber(undefined)
+      onFocus: event => {
+        // NOTE: This highlights the contents of the input so the user
+        // doesn't have to fight with clearing out the default value.
+        event.target.select()
       },
       // Bind to keyup to prevent spamming the event handler.
       onKeyUp: ({ which }) => {

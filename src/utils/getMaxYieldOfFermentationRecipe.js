@@ -9,7 +9,7 @@ import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsF
 
 /**
  * @param {item} fermentationRecipe
- * @param {{ id: string, quantity: number }} inventory
+ * @param {{ id: string, quantity: number }[]} inventory
  * @param {Array.<keg>} cellarInventory
  * @param {number} cellarSize
  * @returns {number}

@@ -1,14 +1,27 @@
 /**
  * @module farmhand.recipes
+ * @typedef {import('../index').farmhand.item} farmhand.item
+ * @typedef {import('../index').farmhand.recipe} farmhand.recipe
+ * @typedef {import('../index').farmhand.grape} farmhand.grape
+ * @typedef {import('../index').farmhand.wine} farmhand.wine
  */
 import { itemType, fieldMode, recipeType } from '../enums'
-import { RECIPE_INGREDIENT_VALUE_MULTIPLIER } from '../constants'
+import {
+  GRAPES_REQUIRED_FOR_WINE,
+  RECIPE_INGREDIENT_VALUE_MULTIPLIER,
+} from '../constants'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine'
 
 import * as items from './items'
 import baseItemsMap from './items-map'
+import { grapeVarietyNameMap } from './crops/grape'
 
 const itemsMap = { ...baseItemsMap }
 
+/**
+ * @param {Omit<farmhand.recipe, 'type' | 'value'> & { type?: string, value?: number }} recipe
+ * @returns {farmhand.recipe}
+ */
 const itemify = recipe => {
   const item = Object.freeze({
     type: itemType.CRAFTED_ITEM,
@@ -30,7 +43,7 @@ const itemify = recipe => {
 
 /**
  * @property farmhand.module:recipes.salt
- * @type {farmhand.item}
+ * @type {farmhand.recipe}
  */
 export const salt = itemify({
   id: 'salt',
@@ -44,6 +57,56 @@ export const salt = itemify({
 })
 
 /**
+ * @property farmhand.module:recipes.flour
+ * @type {farmhand.recipe}
+ */
+export const flour = itemify({
+  id: 'flour',
+  name: 'Flour',
+  ingredients: {
+    [items.wheat.id]: 10,
+  },
+  condition: state => state.itemsSold[items.wheat.id] >= 20,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.yeast
+ * @type {farmhand.recipe}
+ */
+export const yeast = itemify({
+  id: 'yeast',
+  name: 'Yeast',
+  ingredients: {
+    [flour.id]: 5,
+  },
+  condition: state => state.itemsSold[flour.id] >= 25,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @param {farmhand.grape} grape
+ * @returns {farmhand.wine}
+ */
+const getWineRecipeFromGrape = grape => {
+  return {
+    ...itemify({
+      id: grape.wineId,
+      name: `${grapeVarietyNameMap[grape.variety]} Wine`,
+      type: itemType.CRAFTED_ITEM,
+      ingredients: {
+        [grape.id]: GRAPES_REQUIRED_FOR_WINE,
+        [yeast.id]: getYeastRequiredForWine(grape.variety),
+      },
+      recipeType: recipeType.WINE,
+      // NOTE: This prevents wines from appearing in the Learned Recipes list in the Workshop
+      condition: () => false,
+    }),
+    variety: grape.variety,
+  }
+}
+
+/**
  * @property farmhand.module:recipes.bread
  * @type {farmhand.recipe}
  */
@@ -51,9 +114,11 @@ export const bread = itemify({
   id: 'bread',
   name: 'Bread',
   ingredients: {
-    [items.wheat.id]: 15,
+    [flour.id]: 10,
+    [yeast.id]: 5,
   },
-  condition: state => state.itemsSold[items.wheat.id] >= 30,
+  condition: state =>
+    state.itemsSold[flour.id] >= 30 && state.itemsSold[yeast.id] >= 15,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -570,7 +635,7 @@ export const bronzeIngot = itemify({
     [items.coal.id]: 5,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.bronzeOre.id] >= 50,
+    state.purchasedSmelter > 0 && state.itemsSold[items.bronzeOre.id] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -586,7 +651,7 @@ export const ironIngot = itemify({
     [items.coal.id]: 12,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.ironOre.id] >= 50,
+    state.purchasedSmelter > 0 && state.itemsSold[items.ironOre.id] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -602,7 +667,7 @@ export const silverIngot = itemify({
     [items.coal.id]: 8,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.silverOre.id] >= 50,
+    state.purchasedSmelter > 0 && state.itemsSold[items.silverOre.id] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -618,7 +683,7 @@ export const goldIngot = itemify({
     [items.coal.id]: 10,
   },
   condition: state =>
-    state.purchasedSmelter && state.itemsSold[items.goldOre.id] >= 50,
+    state.purchasedSmelter > 0 && state.itemsSold[items.goldOre.id] >= 50,
   recipeType: recipeType.FORGE,
 })
 
@@ -629,7 +694,7 @@ export const compost = itemify({
     [items.weed.id]: 25,
   },
   condition: state =>
-    state.purchasedComposter && state.itemsSold[items.weed.id] >= 100,
+    state.purchasedComposter > 0 && state.itemsSold[items.weed.id] >= 100,
   description: 'Can be used to make fertilizer.',
   recipeType: recipeType.RECYCLING,
   type: itemType.CRAFTED_ITEM,
@@ -646,10 +711,80 @@ export const fertilizer = itemify({
     [compost.id]: 10,
   },
   condition: state =>
-    state.purchasedComposter && state.itemsSold[compost.id] >= 10,
+    state.purchasedComposter > 0 && state.itemsSold[compost.id] >= 10,
   description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,
   recipeType: recipeType.RECYCLING,
   type: itemType.FERTILIZER,
   value: 25,
+})
+
+/**
+ * @property farmhand.module:recipes.wineChardonnay
+ */
+export const wineChardonnay = getWineRecipeFromGrape({
+  ...items.grapeChardonnay,
+})
+
+/**
+ * @property farmhand.module:recipes.wineSauvignonBlanc
+ */
+export const wineSauvignonBlanc = getWineRecipeFromGrape({
+  ...items.grapeSauvignonBlanc,
+})
+
+///**
+// * @property farmhand.module:recipes.winePinotBlanc
+// */
+//export const winePinotBlanc = getWineRecipeFromGrape({
+//  ...items.grapePinotBlanc,
+//})
+
+///**
+// * @property farmhand.module:recipes.wineMuscat
+// */
+//export const wineMuscat = getWineRecipeFromGrape({
+//  ...items.grapeMuscat,
+//})
+
+///**
+// * @property farmhand.module:recipes.wineRiesling
+// */
+//export const wineRiesling = getWineRecipeFromGrape({
+//  ...items.grapeRiesling,
+//})
+
+///**
+// * @property farmhand.module:recipes.wineMerlot
+// */
+//export const wineMerlot = getWineRecipeFromGrape({
+//  ...items.grapeMerlot,
+//})
+
+/**
+ * @property farmhand.module:recipes.wineCabernetSauvignon
+ */
+export const wineCabernetSauvignon = getWineRecipeFromGrape({
+  ...items.grapeCabernetSauvignon,
+})
+
+///**
+// * @property farmhand.module:recipes.wineSyrah
+// */
+//export const wineSyrah = getWineRecipeFromGrape({
+//  ...items.grapeSyrah,
+//})
+
+/**
+ * @property farmhand.module:recipes.wineTempranillo
+ */
+export const wineTempranillo = getWineRecipeFromGrape({
+  ...items.grapeTempranillo,
+})
+
+/**
+ * @property farmhand.module:recipes.wineNebbiolo
+ */
+export const wineNebbiolo = getWineRecipeFromGrape({
+  ...items.grapeNebbiolo,
 })

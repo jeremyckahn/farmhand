@@ -1,4 +1,5 @@
 import { randomNumberService } from '../../common/services/randomNumber'
+import { wineTempranillo } from '../../data/recipes'
 import { KEG_SPOILED_MESSAGE } from '../../templates'
 import { getKegStub } from '../../test-utils/stubs/getKegStub'
 
@@ -13,6 +14,8 @@ describe('processCellarSpoilage', () => {
     const keg = getKegStub()
     const cellarInventory = [keg]
     const newDayNotifications = []
+
+    // @ts-expect-error
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
@@ -29,12 +32,32 @@ describe('processCellarSpoilage', () => {
     const keg = getKegStub()
     const cellarInventory = [keg]
     const newDayNotifications = []
+
+    // @ts-expect-error
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
     })
 
     expect(expectedState.cellarInventory).toHaveLength(0)
+  })
+
+  test('does not remove wine keg', () => {
+    jest
+      .spyOn(randomNumberService, 'isRandomNumberLessThan')
+      .mockReturnValueOnce(true)
+
+    const keg = getKegStub({ itemId: wineTempranillo.id })
+    const cellarInventory = [keg]
+    const newDayNotifications = []
+
+    // @ts-expect-error
+    const expectedState = processCellarSpoilage({
+      cellarInventory,
+      newDayNotifications,
+    })
+
+    expect(expectedState.cellarInventory).toHaveLength(1)
   })
 
   test('shows notification for kegs that have spoiled', () => {
@@ -45,6 +68,8 @@ describe('processCellarSpoilage', () => {
     const keg = getKegStub()
     const cellarInventory = [keg]
     const newDayNotifications = []
+
+    // @ts-expect-error
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
@@ -52,6 +77,7 @@ describe('processCellarSpoilage', () => {
 
     expect(expectedState.newDayNotifications).toEqual([
       {
+        // @ts-expect-error
         message: KEG_SPOILED_MESSAGE`${keg}`,
         severity: 'error',
       },

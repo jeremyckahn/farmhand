@@ -5,13 +5,13 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import ReactMarkdown from 'react-markdown'
 
-import { FermentationRecipeList } from '../FermentationRecipeList/FermentationRecipeList'
+import { WineRecipeList } from '../WineRecipeList/WineRecipeList'
 
 import { TabPanel } from './TabPanel'
 
-export const FermentationTabPanel = ({ index, currentTab }) => (
+export const WinemakingTabPanel = ({ index, currentTab }) => (
   <TabPanel value={currentTab} index={index}>
-    <FermentationRecipeList />
+    <WineRecipeList />
     <Divider />
     <ul className="card-list">
       <li>
@@ -22,7 +22,7 @@ export const FermentationTabPanel = ({ index, currentTab }) => (
                 linkTarget: '_blank',
                 className: 'markdown',
                 source:
-                  'Some items can be fermented and become much more valuable over time.',
+                  'Grapes can be made into wine. Wine becomes very valuable in time and never spoils.',
               }}
             />
           </CardContent>
@@ -32,7 +32,7 @@ export const FermentationTabPanel = ({ index, currentTab }) => (
   </TabPanel>
 )
 
-FermentationTabPanel.propTypes = {
+WinemakingTabPanel.propTypes = {
   currentTab: number.isRequired,
   index: number.isRequired,
 }

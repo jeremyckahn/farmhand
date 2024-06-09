@@ -1,4 +1,7 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
+/**
+ * @typedef {import("../index").farmhand.item} farmhand.item
+ * @typedef {import("../index").farmhand.cropVariety} farmhand.cropVariety
+ */
 
 import { fieldMode, itemType } from '../enums'
 import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration'
@@ -6,13 +9,13 @@ import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration'
 const { freeze } = Object
 
 /**
- * @param {farmhand.item} item
+ * @param {Partial<farmhand.item>} item
  * @returns {farmhand.item}
  */
 export const crop = ({
   cropTimeline,
   growsInto,
-  tier,
+  tier = 1,
 
   isSeed = Boolean(growsInto),
   cropLifecycleDuration = getCropLifecycleDuration({ cropTimeline }),
@@ -57,4 +60,17 @@ export const fromSeed = (
       daysToFerment: getCropLifecycleDuration({ cropTimeline }) * tier,
     }),
   }
+}
+
+/**
+ * @param {farmhand.cropVariety} cropVariety
+ * @returns {farmhand.cropVariety}
+ */
+export const cropVariety = ({
+  imageId,
+  cropFamily,
+  variety,
+  ...cropVarietyProperties
+}) => {
+  return { imageId, cropFamily, variety, ...crop({ ...cropVarietyProperties }) }
 }

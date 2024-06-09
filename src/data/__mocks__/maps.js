@@ -9,6 +9,7 @@ export const recipeCategories = {
   [recipeType.KITCHEN]: {},
   [recipeType.FORGE]: {},
   [recipeType.RECYCLING]: {},
+  [recipeType.WINE]: {},
 }
 
 export const recipesMap = {}

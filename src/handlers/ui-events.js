@@ -2,6 +2,8 @@
  * @typedef {import("../index").farmhand.item} item
  * @typedef {import("../index").farmhand.keg} keg
  * @typedef {import("../index").farmhand.cow} farmhand.cow
+ * @typedef {import("../index").farmhand.recipe} farmhand.recipe
+ * @typedef {import("../index").farmhand.grape} grape
  */
 import { saveAs } from 'file-saver'
 import window from 'global/window'
@@ -12,7 +14,13 @@ import {
   transformStateDataForImport,
 } from '../utils'
 import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants'
-import { dialogView, fieldMode, stageFocusType } from '../enums'
+import {
+  dialogView,
+  fieldMode,
+  // eslint-disable-next-line no-unused-vars
+  grapeVariety,
+  stageFocusType,
+} from '../enums'
 import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
@@ -69,6 +77,14 @@ export default {
   },
 
   /**
+   * @param {grape} grape
+   * @param {number} [howMany=1]
+   */
+  handleMakeWineClick(grape, howMany = 1) {
+    this.makeWine(grape, howMany)
+  },
+
+  /**
    * @param {keg} keg
    */
   handleSellKegClick(keg) {
@@ -114,6 +130,7 @@ export default {
    * @param {React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
+  // @ts-ignore
   handleCowAutomaticHugChange({ target: { checked } }, cow) {
     this.changeCowAutomaticHugState(cow, checked)
   },

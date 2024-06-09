@@ -4,12 +4,11 @@
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
  */
 
-import { v4 as uuid } from 'uuid'
-
 import { PURCHASEABLE_CELLARS } from '../../constants'
 import { itemsMap } from '../../data/maps'
 import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe'
 import { getMaxYieldOfFermentationRecipe } from '../../utils/getMaxYieldOfFermentationRecipe'
+import { cellarService } from '../../services/cellar'
 
 import { addKegToCellarInventory } from './addKegToCellarInventory'
 import { decrementItemFromInventory } from './decrementItemFromInventory'
@@ -18,7 +17,7 @@ import { decrementItemFromInventory } from './decrementItemFromInventory'
  * @param {state} state
  * @param {item} fermentationRecipe
  * @param {number} [howMany=1]
- * @returns {farmhand.state}
+ * @returns {state}
  */
 export const makeFermentationRecipe = (
   state,
@@ -27,7 +26,9 @@ export const makeFermentationRecipe = (
 ) => {
   const { inventory, cellarInventory, purchasedCellar } = state
 
-  const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar)
+  const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
+    space: 0,
+  }
 
   const maxYield = getMaxYieldOfFermentationRecipe(
     fermentationRecipe,
@@ -41,12 +42,7 @@ export const makeFermentationRecipe = (
   }
 
   for (let i = 0; i < howMany; i++) {
-    /** @type keg */
-    const keg = {
-      id: uuid(),
-      itemId: fermentationRecipe.id,
-      daysUntilMature: fermentationRecipe.daysToFerment,
-    }
+    const keg = cellarService.generateKeg(fermentationRecipe)
 
     state = addKegToCellarInventory(state, keg)
   }

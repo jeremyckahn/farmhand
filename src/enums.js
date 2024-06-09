@@ -3,7 +3,10 @@
  * @ignore
  */
 
+// TODO: Eliminate enumify and use raw enums.
+// @see https://jsdoc.app/tags-enum
 /**
+ * @deprecated
  * @param {Array.<string>} keys
  * @returns {Record<string, string>}
  */
@@ -46,6 +49,7 @@ export const recipeType = enumify([
   'FORGE',
   'KITCHEN',
   'RECYCLING',
+  'WINE',
 ])
 
 /**
@@ -176,3 +180,30 @@ export const toolLevel = enumify([
  * @enum {string}
  */
 export const cowTradeRejectionReason = enumify(['REQUESTED_COW_UNAVAILABLE'])
+
+/**
+ * @property farmhand.module:enums.cropFamily
+ * @readonly
+ * @enum {string}
+ */
+export const cropFamily = {
+  GRAPE: 'GRAPE',
+}
+
+/**
+ * @property farmhand.module:enums.grapeVariety
+ * @readonly
+ * @enum {string}
+ */
+export const grapeVariety = {
+  CHARDONNAY: 'CHARDONNAY',
+  SAUVIGNON_BLANC: 'SAUVIGNON_BLANC',
+  //PINOT_BLANC: 'PINOT_BLANC',
+  //MUSCAT: 'MUSCAT',
+  //RIESLING: 'RIESLING',
+  //MERLOT: 'MERLOT',
+  CABERNET_SAUVIGNON: 'CABERNET_SAUVIGNON',
+  //SYRAH: 'SYRAH',
+  TEMPRANILLO: 'TEMPRANILLO',
+  NEBBIOLO: 'NEBBIOLO',
+}

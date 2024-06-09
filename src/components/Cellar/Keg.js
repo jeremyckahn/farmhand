@@ -7,7 +7,7 @@ import CardActions from '@mui/material/CardActions'
 import Button from '@mui/material/Button'
 
 import { itemsMap } from '../../data/maps'
-import { items } from '../../img'
+import { items, wines } from '../../img'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import { getKegValue } from '../../utils/getKegValue'
@@ -18,6 +18,8 @@ import AnimatedNumber from '../AnimatedNumber'
 
 import './Keg.sass'
 import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate'
+import { wineService } from '../../services/wine'
+import { cellarService } from '../../services/cellar'
 
 /**
  * @param {Object} props
@@ -41,7 +43,11 @@ export function Keg({ keg }) {
   } = useContext(FarmhandContext)
 
   const item = itemsMap[keg.itemId]
-  const fermentationRecipeName = FERMENTED_CROP_NAME`${item}`
+
+  let imageSrc = items[item.id]
+
+  // @ts-expect-error
+  let recipeName = FERMENTED_CROP_NAME`${item}`
 
   const handleSellClick = () => {
     handleSellKegClick(keg)
@@ -55,19 +61,24 @@ export function Keg({ keg }) {
   const kegValue =
     getKegValue(keg) * getSalePriceMultiplier(completedAchievements)
 
+  if (wineService.isWineRecipe(item)) {
+    imageSrc = wines[item.variety]
+    recipeName = item.name
+  }
+
   const spoilageRate = getKegSpoilageRate(keg)
   const spoilageRateDisplayValue = Number((spoilageRate * 100).toPrecision(2))
 
   return (
     <Card className="Keg">
       <CardHeader
-        title={fermentationRecipeName}
+        title={recipeName}
         avatar={
           <img
             {...{
-              src: items[item.id],
+              src: imageSrc,
             }}
-            alt={fermentationRecipeName}
+            alt={recipeName}
           />
         }
         subheader={
@@ -81,7 +92,9 @@ export function Keg({ keg }) {
                     {...{ number: kegValue, formatter: moneyString }}
                   />
                 </p>
-                <p>Potential for spoilage: {spoilageRateDisplayValue}%</p>
+                {cellarService.doesKegSpoil(keg) && (
+                  <p>Potential for spoilage: {spoilageRateDisplayValue}%</p>
+                )}
               </>
             ) : (
               <p>Days until ready: {keg.daysUntilMature}</p>

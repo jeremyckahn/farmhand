@@ -1,3 +1,6 @@
+/**
+ * @typedef {import('../Farmhand/Farmhand').farmhand.state} farmhand.state
+ */
 import React from 'react'
 import { array, object, number, string } from 'prop-types'
 import classNames from 'classnames'
@@ -35,25 +38,32 @@ const ElevatedPaper = props => (
   <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
 )
 
-const StatsView = ({
-  cowsTraded,
-  experience,
-  farmName,
-  historicalDailyLosses,
-  historicalDailyRevenue,
-  itemsSold,
-  loansTakenOut,
-  profitabilityStreak,
-  record7dayProfitAverage,
-  recordProfitabilityStreak,
-  recordSingleDayProfit,
-  revenue,
-  todaysLosses,
-  todaysRevenue,
+const StatsView = (
+  /**
+   * @type {farmhand.state &
+   *   {totalFarmProductsSold?: number, currentLevel?: number}
+   * }
+   */
+  {
+    cowsTraded,
+    experience,
+    farmName,
+    historicalDailyLosses,
+    historicalDailyRevenue,
+    itemsSold,
+    loansTakenOut,
+    profitabilityStreak,
+    record7dayProfitAverage,
+    recordProfitabilityStreak,
+    recordSingleDayProfit,
+    revenue,
+    todaysLosses,
+    todaysRevenue,
 
-  totalFarmProductsSold = farmProductsSold(itemsSold),
-  currentLevel = levelAchieved(experience),
-}) => (
+    totalFarmProductsSold = farmProductsSold(itemsSold),
+    currentLevel = levelAchieved(experience),
+  }
+) => (
   <div className="StatsView">
     <TableContainer {...{ component: ElevatedPaper }}>
       <Table aria-label="Farmer Stats">
@@ -230,18 +240,17 @@ const StatsView = ({
         <TableContainer {...{ component: ElevatedPaper }}>
           <Table aria-label="Profit and Loss Stats">
             <TableBody>
-              {sortBy(Object.entries(itemsSold), ([itemId]) => itemId).map(
-                ([itemId, quantity]) => (
-                  <TableRow {...{ key: itemId }}>
-                    <TableCell {...{ component: 'th', scope: 'row' }}>
-                      {itemsMap[itemId].name}
-                    </TableCell>
-                    <TableCell align="right">
-                      {integerString(quantity)}
-                    </TableCell>
-                  </TableRow>
-                )
-              )}
+              {sortBy(
+                Object.entries(itemsSold),
+                ([itemId]) => itemsMap[itemId].name
+              ).map(([itemId, quantity]) => (
+                <TableRow {...{ key: itemId }}>
+                  <TableCell {...{ component: 'th', scope: 'row' }}>
+                    {itemsMap[itemId].name}
+                  </TableCell>
+                  <TableCell align="right">{integerString(quantity)}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

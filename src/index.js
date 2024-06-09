@@ -2,6 +2,21 @@
  * @namespace farmhand
  */
 
+import './polyfills'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
+
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+import './index.sass'
+import Farmhand from './components/Farmhand'
+import { features } from './config'
+import 'typeface-francois-one'
+import 'typeface-public-sans'
+
+// eslint-disable-next-line no-unused-vars
+import { cropFamily, grapeVariety } from './enums'
+
 /**
  * @typedef {import("./components/Farmhand/Farmhand").farmhand.state} farmhand.state
  */
@@ -39,9 +54,24 @@
  */
 
 /**
- * @typedef farmhand.cropVariety
- * @property {string} imageId
- * @extends farmhand.item
+ * @typedef {farmhand.item & {
+ *   imageId: string,
+ *   cropFamily: cropFamily,
+ *   variety: string
+ * }} farmhand.cropVariety
+
+/**
+ * @typedef {farmhand.cropVariety & {
+ *   cropFamily: 'GRAPE',
+ *   variety: grapeVariety,
+ *   wineId: string
+ * }} farmhand.grape
+ */
+
+/**
+ * @typedef {farmhand.recipe & {
+ *   variety: grapeVariety
+ * }} farmhand.wine
  */
 
 /**
@@ -126,14 +156,11 @@
  */
 
 /**
- * @typedef farmhand.recipe
- * @type {farmhand.item}
- * @property {recipeType} recipeType The type of recipe
- * this is.
- * @property {{string: number}} ingredients An object where each
- * key is the id of a farmhand.item and the value is the quantity of that item.
- * @property {farmhand.recipeCondition} condition This must return `true` for
- * the recipe to be made available to the player.
+ * @typedef {farmhand.item & {
+ *   recipeType: recipeType, // The type of recipe of recipe this is.
+ *   ingredients: Record<string, number>, // An object where each key is the id of a farmhand.item and the value is the quantity of that item.
+ *   condition: farmhand.recipeCondition, // This must return `true` for the recipe to be made available to the player.
+ * }} farmhand.recipe
  * @readonly
  */
 
@@ -143,8 +170,8 @@
  * @property {string} id UUID to uniquely identify the keg.
  * @property {string} itemId The item that this keg is based on.
  * @property {number} daysUntilMature Days remaining until this recipe can be
- * sold. This value can go negative to indicate "days since fermented." When
- * negative, the value of the keg is increased.
+ * sold. This value can go negative to indicate "days since fermented" or "days
+ * open" When negative, the value of the keg is increased.
  */
 
 /**
@@ -244,18 +271,6 @@
  * @property {number} rows
  * @property {number} price
  */
-
-import './polyfills'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { HashRouter as Router, Route } from 'react-router-dom'
-
-import * as serviceWorkerRegistration from './serviceWorkerRegistration'
-import './index.sass'
-import Farmhand from './components/Farmhand'
-import { features } from './config'
-import 'typeface-francois-one'
-import 'typeface-public-sans'
 
 const FarmhandRoute = props => <Farmhand {...{ ...props, features }} />
 

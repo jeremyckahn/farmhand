@@ -219,6 +219,7 @@ describe('sellItem', () => {
 
         test('payoff notification is shown', () => {
           expect(state.todaysNotifications).toEqual([
+            // @ts-expect-error
             { message: LOAN_PAYOFF``, severity: 'success' },
           ])
         })

@@ -37,6 +37,7 @@ export const recipeCategories = {
   [recipeType.FORGE]: {},
   [recipeType.FERMENTATION]: {},
   [recipeType.RECYCLING]: {},
+  [recipeType.WINE]: {},
 }
 
 export const recipesMap = {}

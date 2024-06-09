@@ -131,11 +131,14 @@ const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 const emptyObject = Object.freeze({})
 
 /*!
- * @param {Array.<{ id: farmhand.item, quantity: number }>} inventory
- * @param {Object.<number>} valueAdjustments
- * @returns {Array.<farmhand.item>}
+ * @param {{ id: farmhand.item['id'], quantity: number }} inventory
+ * @param {Record<string, number>} valueAdjustments
+ * @returns {farmhand.item[]}
  */
-export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
+export const computePlayerInventory = memoize((
+  /** @type {{ id: farmhand.item['id'], quantity: number }[]}  */ inventory,
+  /** @type {Record<string, number>} */ valueAdjustments
+) =>
   inventory.map(({ quantity, id }) => ({
     quantity,
     ...itemsMap[id],
@@ -144,10 +147,12 @@ export const computePlayerInventory = memoize((inventory, valueAdjustments) =>
 )
 
 /*!
- * @param {Array.<{ id: farmhand.item }>} inventory
- * @returns {Array.<{ id: farmhand.item }>}
+ * @param {farmhand.item[]} inventory
+ * @returns {{ id: farmhand.item }[]}
  */
-export const getFieldToolInventory = memoize(inventory =>
+export const getFieldToolInventory = memoize((
+  /** @type {Array.<farmhand.item>} */ inventory
+) =>
   inventory
     .filter(({ id }) => {
       const { enablesFieldMode } = itemsMap[id]
@@ -158,10 +163,12 @@ export const getFieldToolInventory = memoize(inventory =>
 )
 
 /*!
- * @param {Array.<{ id: farmhand.item }>} inventory
+ * @param {farmhand.item[]} inventory
  * @returns {Array.<{ id: farmhand.item }>}
  */
-export const getPlantableCropInventory = memoize(inventory =>
+export const getPlantableCropInventory = memoize((
+  /** @type {farmhand.item[]} */ inventory
+) =>
   inventory
     .filter(({ id }) => itemsMap[id].isPlantableCrop)
     .map(({ id }) => itemsMap[id])
@@ -235,9 +242,10 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {boolean} isAwaitingNetworkRequest
  * @property {boolean} isCombineEnabled
  * @property {boolean} isMenuOpen
- * @property {Object} itemsSold Keys are items IDs, values are the number of
- * that item sold. The numbers in this map are inclusive of the corresponding
- * ones in cellarItemsSold and represent the grand total of each item sold.
+ * @property {Record<farmhand.item['id'], number>} itemsSold Keys are items
+ * IDs, values are the number of that item sold. The numbers in this map are
+ * inclusive of the corresponding ones in cellarItemsSold and represent the
+ * grand total of each item sold.
  * @property {Object} cellarItemsSold Keys are items IDs, values are the number
  * of that cellar item sold. The numbers in this map represent a subset of the
  * corresponding ones in itemsSold. cellarItemsSold is intended to be used for
