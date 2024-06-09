@@ -126,12 +126,12 @@ expect: $expected
 
 `,
       ({ grape, inventory, cellarInventory, cellarSize, expected }) => {
-        const result = wineService.getMaxWineYield(
+        const result = wineService.getMaxWineYield({
           grape,
           inventory,
           cellarInventory,
-          cellarSize
-        )
+          cellarSize,
+        })
 
         expect(result).toEqual(expected)
       }

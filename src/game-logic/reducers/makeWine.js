@@ -27,12 +27,12 @@ export const makeWine = (state, grape, howMany = 1) => {
     space: 0,
   }
 
-  const maxYield = wineService.getMaxWineYield(
+  const maxYield = wineService.getMaxWineYield({
     grape,
     inventory,
     cellarInventory,
-    cellarSize
-  )
+    cellarSize,
+  })
 
   const wine = itemsMap[grape.wineId]
   const wineYield = Math.min(howMany, maxYield)

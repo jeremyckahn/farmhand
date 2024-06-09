@@ -36,12 +36,13 @@ export class WineService {
   }
 
   /**
-   * @param {grape} grape
-   * @param {{ id: string, quantity: number }[]} inventory
-   * @param {keg[]} cellarInventory
-   * @param {number} cellarSize
+   * @param {Object} props
+   * @param {grape} props.grape
+   * @param {{ id: string, quantity: number }[]} props.inventory
+   * @param {keg[]} props.cellarInventory
+   * @param {number} props.cellarSize
    */
-  getMaxWineYield = (grape, inventory, cellarInventory, cellarSize) => {
+  getMaxWineYield = ({ grape, inventory, cellarInventory, cellarSize }) => {
     const {
       [grape.id]: grapeQuantityInInventory = 0,
       [itemsMap.yeast.id]: yeastQuantityInInventory = 0,
