@@ -13,6 +13,7 @@ import {
   integerString,
   scaleNumber,
 } from '../../utils'
+import { EXPERIENCE_GAUGE_TOOLTIP_LABEL } from '../../templates'
 
 export function DayAndProgressContainer({ dayCount, experience, itemsSold }) {
   const currentLevel = levelAchieved(experience)
@@ -25,11 +26,9 @@ export function DayAndProgressContainer({ dayCount, experience, itemsSold }) {
     100
   )
 
-  const tooltipText = `${integerString(
+  const experiencePointsToNextLevel =
     experienceNeededForLevel(currentLevel + 1) - experience
-  )} more experience points needed to reach level ${integerString(
-    currentLevel + 1
-  )}`
+  const nextLevel = currentLevel + 1
 
   return (
     <h2 className="day-and-progress-container">
@@ -38,7 +37,7 @@ export function DayAndProgressContainer({ dayCount, experience, itemsSold }) {
         {...{
           arrow: true,
           placement: 'top',
-          title: tooltipText,
+          title: EXPERIENCE_GAUGE_TOOLTIP_LABEL`${experiencePointsToNextLevel}${nextLevel}`,
         }}
       >
         <Box>
