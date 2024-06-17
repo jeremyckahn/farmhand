@@ -18,7 +18,12 @@ export const endpoints = {
 // them via URL query parameters. This can be done by constructing a query
 // parameter that looks like:
 //
-//   ?enable_MINING=true
+//   ?enable_FOREST=true
+/**
+ * @type {{
+ *   FOREST?: boolean
+ * }}
+ */
 export const features = Object.keys(process.env).reduce((acc, key) => {
   const matches = key.match(/REACT_APP_ENABLE_(.*)/)
 

@@ -380,3 +380,25 @@ export const NEW_COW_OFFERED_FOR_TRADE = (_, peerMetadata) =>
  */
 export const FOREST_EXPANDED = (_, numTrees) =>
   `The Forest has expanded! You can now plant up to ${numTrees} trees.`
+
+/**
+ * @param {TemplatesStringsArray} _
+ * @param {number} experiencePointsToNextLevel
+ * @param {number} nextLevel
+ * @returns {string}
+ */
+export const EXPERIENCE_GAUGE_TOOLTIP_LABEL = (
+  _,
+  experiencePointsToNextLevel,
+  nextLevel
+) => {
+  if (experiencePointsToNextLevel === 1) {
+    return `Just 1 more experience point needed to reach level ${integerString(
+      nextLevel
+    )}!`
+  }
+
+  return `${integerString(
+    experiencePointsToNextLevel
+  )} more experience points needed to reach level ${integerString(nextLevel)}`
+}

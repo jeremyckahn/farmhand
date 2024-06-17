@@ -1,4 +1,5 @@
 import { stageFocusType, toolType } from '../enums'
+import { features } from '../config'
 
 import * as items from './items'
 import * as recipes from './recipes'
@@ -45,8 +46,10 @@ levels[14] = {
   unlocksShopItem: items.potatoSeed.id,
 }
 
-levels[15] = {
-  unlocksStageFocusType: stageFocusType.FOREST,
+if (features.FOREST) {
+  levels[15] = {
+    unlocksStageFocusType: stageFocusType.FOREST,
+  }
 }
 
 levels[16] = {
