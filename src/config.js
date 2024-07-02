@@ -53,23 +53,23 @@ export const rtcConfig = {
     },
     {
       urls: 'turn:a.relay.metered.ca:80',
-      username: 'fd396a3275680a085c4d66cd',
-      credential: 'hFQmauZyx0Mv0bCK',
+      username: process.env.REACT_APP_TURN_USERNAME,
+      credential: process.env.REACT_APP_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:80?transport=tcp',
-      username: 'fd396a3275680a085c4d66cd',
-      credential: 'hFQmauZyx0Mv0bCK',
+      username: process.env.REACT_APP_TURN_USERNAME,
+      credential: process.env.REACT_APP_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:443',
-      username: 'fd396a3275680a085c4d66cd',
-      credential: 'hFQmauZyx0Mv0bCK',
+      username: process.env.REACT_APP_TURN_USERNAME,
+      credential: process.env.REACT_APP_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:443?transport=tcp',
-      username: 'fd396a3275680a085c4d66cd',
-      credential: 'hFQmauZyx0Mv0bCK',
+      username: process.env.REACT_APP_TURN_USERNAME,
+      credential: process.env.REACT_APP_TURN_CREDENTIAL,
     },
   ],
 }
