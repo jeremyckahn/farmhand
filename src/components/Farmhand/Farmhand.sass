@@ -25,6 +25,7 @@ body
 .Farmhand
   +markdown-styles()
 
+.Farmhand
   // padding-left and breakpoints correspond to AppBar dimensions
   // https://material-ui.com/demos/app-bar/
   display: flex
@@ -155,7 +156,7 @@ body
 
   @media (orientation: landscape)
     &.menu-open .bottom-controls
-      left: calc(50vw + #{$sidebar-width / 2})
+      left: calc(50vw + $sidebar-width / 2)
 
   .end-day
     position: fixed

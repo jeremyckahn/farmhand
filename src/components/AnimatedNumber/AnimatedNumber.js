@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { tween } from 'shifty'
 import { func, number } from 'prop-types'
 
-import './AnimatedNumber.sass'
-
 const defaultFormatter = (/** @type {number} */ number) => `${number}`
 
 const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {

@@ -17,8 +17,6 @@ import CowCard from '../CowCard'
 
 import OnlinePeer from './OnlinePeer'
 
-import './OnlinePeersView.sass'
-
 const OnlinePeersView = ({
   activePlayers,
   cowIdOfferedForTrade,
