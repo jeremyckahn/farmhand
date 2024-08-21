@@ -11,9 +11,5 @@ configure({
 beforeEach(() => {
   // Return an invalid month number so that any conditional logic that depends
   // on a specific month is not run in tests (unless getMonth is re-mocked).
-  jest.spyOn(Date.prototype, 'getMonth').mockReturnValue(-1)
-})
-
-afterEach(() => {
-  jest.restoreAllMocks()
+  vitest.spyOn(Date.prototype, 'getMonth').mockReturnValue(-1)
 })

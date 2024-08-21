@@ -6,7 +6,7 @@ import { recipeType } from '../../enums'
 
 import { makeRecipe } from './makeRecipe'
 
-jest.mock('../../data/recipes')
+vitest.mock('../../data/recipes')
 
 describe('makeRecipe', () => {
   describe('there are insufficient ingredients for recipe', () => {

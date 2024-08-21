@@ -6,7 +6,7 @@ import { carrotSoup } from '../../data/recipes'
 
 import { sellItem } from './sellItem'
 
-jest.mock('../../data/maps')
+vitest.mock('../../data/maps')
 
 describe('sellItem', () => {
   test('sells item', () => {

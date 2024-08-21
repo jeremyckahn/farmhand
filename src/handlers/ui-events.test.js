@@ -7,8 +7,8 @@ import { stageFocusType, fieldMode } from '../enums'
 import { testItem } from '../test-utils'
 import { randomNumberService } from '../common/services/randomNumber'
 
-jest.mock('../data/items')
-jest.mock('../data/levels', () => ({
+vitest.mock('../data/items')
+vitest.mock('../data/levels', () => ({
   levels: [
     {
       id: 0,
@@ -20,8 +20,8 @@ jest.mock('../data/levels', () => ({
   ],
   itemUnlockLevels: {},
 }))
-jest.mock('../data/recipes')
-jest.mock('../data/shop-inventory')
+vitest.mock('../data/recipes')
+vitest.mock('../data/shop-inventory')
 
 let component
 
@@ -89,7 +89,7 @@ describe('handleItemSelectClick', () => {
 
 describe('handleClickEndDayButton', () => {
   test('increments the day', () => {
-    jest.spyOn(component.instance(), 'incrementDay')
+    vitest.spyOn(component.instance(), 'incrementDay')
     handlers().handleClickEndDayButton()
     expect(component.instance().incrementDay).toHaveBeenCalled()
   })
@@ -105,7 +105,7 @@ describe('handleMenuToggle', () => {
 
 describe('handleClickNextMenuButton', () => {
   test('calls focusNextView', () => {
-    jest.spyOn(component.instance(), 'focusNextView').mockImplementation()
+    vitest.spyOn(component.instance(), 'focusNextView').mockImplementation()
     handlers().handleClickNextMenuButton()
     expect(component.instance().focusNextView).toHaveBeenCalled()
   })
@@ -113,7 +113,7 @@ describe('handleClickNextMenuButton', () => {
 
 describe('handleClickPreviousMenuButton', () => {
   test('calls focusPreviousView', () => {
-    jest.spyOn(component.instance(), 'focusPreviousView').mockImplementation()
+    vitest.spyOn(component.instance(), 'focusPreviousView').mockImplementation()
     handlers().handleClickPreviousMenuButton()
     expect(component.instance().focusPreviousView).toHaveBeenCalled()
   })
@@ -121,7 +121,7 @@ describe('handleClickPreviousMenuButton', () => {
 
 describe('handleCowSelect', () => {
   test('calls selectCow', () => {
-    jest.spyOn(component.instance(), 'selectCow').mockImplementation()
+    vitest.spyOn(component.instance(), 'selectCow').mockImplementation()
     handlers().handleCowSelect({ id: 'abc' })
     expect(component.instance().selectCow).toHaveBeenCalledWith({ id: 'abc' })
   })
@@ -175,8 +175,8 @@ describe('handleShowHomeScreenChange', () => {
 
 describe('handleRNGSeedChange', () => {
   test('updates random seed', () => {
-    jest.spyOn(window.history, 'replaceState')
-    jest.spyOn(randomNumberService, 'seedRandomNumber')
+    vitest.spyOn(window.history, 'replaceState')
+    vitest.spyOn(randomNumberService, 'seedRandomNumber')
 
     handlers().handleRNGSeedChange('123')
 
@@ -189,8 +189,8 @@ describe('handleRNGSeedChange', () => {
   })
 
   test('resets random seed', () => {
-    jest.spyOn(window.history, 'replaceState')
-    jest.spyOn(randomNumberService, 'unseedRandomNumber')
+    vitest.spyOn(window.history, 'replaceState')
+    vitest.spyOn(randomNumberService, 'unseedRandomNumber')
 
     handlers().handleRNGSeedChange('')
 

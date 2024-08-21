@@ -9,11 +9,11 @@ import { noop } from '../../utils/noop'
 
 import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field'
 
-jest.mock('../../data/maps')
-jest.mock('../../data/items')
-jest.mock('../../data/levels', () => ({ levels: [] }))
-jest.mock('../../data/shop-inventory')
-jest.mock('../../img')
+vitest.mock('../../data/maps')
+vitest.mock('../../data/items')
+vitest.mock('../../data/levels', () => ({ levels: [] }))
+vitest.mock('../../data/shop-inventory')
+vitest.mock('../../img')
 
 let component
 

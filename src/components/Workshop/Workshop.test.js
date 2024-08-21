@@ -8,10 +8,10 @@ import { getUpgradesAvailable } from './getUpgradesAvailable'
 
 import Workshop from './Workshop'
 
-jest.mock('./getUpgradesAvailable')
+vitest.mock('./getUpgradesAvailable')
 
-jest.mock('../../data/maps', () => ({
-  ...jest.requireActual('../../data/maps'),
+vitest.mock('../../data/maps', () => ({
+  ...vitest.requireActual('../../data/maps'),
   recipesMap: {
     'kitchen-recipe-1': {
       id: 'kitchen-recipe-1',
@@ -46,8 +46,8 @@ jest.mock('../../data/maps', () => ({
   },
 }))
 
-jest.mock('../Recipe', () => () => <div data-testid="Recipe">Recipe</div>)
-jest.mock('../UpgradePurchase', () => () => (
+vitest.mock('../Recipe', () => () => <div data-testid="Recipe">Recipe</div>)
+vitest.mock('../UpgradePurchase', () => () => (
   <div data-testid="UpgradePurchase">UpgradePurchase</div>
 ))
 

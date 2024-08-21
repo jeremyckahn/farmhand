@@ -17,8 +17,8 @@ describe('cow selection', () => {
     //
     //   FakeTimers: cancelAnimationFrame was invoked to clear a native timer instead of one created by this library.
     //    To automatically clean-up native timers, use `shouldClearNativeTimers`.
-    jest.spyOn(global, 'cancelAnimationFrame')
-    jest.useFakeTimers()
+    vitest.spyOn(global, 'cancelAnimationFrame')
+    vitest.useFakeTimers()
 
     const cowId1 = 'foo'
     const cowId2 = 'bar'
@@ -48,7 +48,7 @@ describe('cow selection', () => {
   afterEach(() => {
     // Allow all cow movement timers to expire
     act(() => {
-      jest.advanceTimersByTime(2000)
+      vitest.advanceTimersByTime(2000)
     })
   })
 
@@ -63,7 +63,7 @@ describe('cow selection', () => {
       // Prevent async update warning from Popper.js (used by Material UI
       // tooltips). See "Case 2" here:
       // https://davidwcai.medium.com/react-testing-library-and-the-not-wrapped-in-act-errors-491a5629193b
-      jest.advanceTimersByTime(200)
+      vitest.advanceTimersByTime(200)
     })
 
     expect(
@@ -75,13 +75,13 @@ describe('cow selection', () => {
     userEvent.click(cow1)
 
     act(() => {
-      jest.advanceTimersByTime(200)
+      vitest.advanceTimersByTime(200)
     })
 
     userEvent.click(cow2)
 
     act(() => {
-      jest.advanceTimersByTime(200)
+      vitest.advanceTimersByTime(200)
     })
 
     expect(
@@ -96,7 +96,7 @@ describe('cow selection', () => {
     userEvent.click(cow1)
 
     act(() => {
-      jest.advanceTimersByTime(200)
+      vitest.advanceTimersByTime(200)
     })
 
     const previousViewButton = await screen.findByLabelText('Previous view')

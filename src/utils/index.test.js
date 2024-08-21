@@ -58,11 +58,11 @@ import {
   transformStateDataForImport,
 } from './index'
 
-jest.mock('../data/maps')
-jest.mock('../data/items')
-jest.mock('../data/levels')
-jest.mock('../data/shop-inventory')
-jest.mock('../img')
+vitest.mock('../data/maps')
+vitest.mock('../data/items')
+vitest.mock('../data/levels')
+vitest.mock('../data/shop-inventory')
+vitest.mock('../img')
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
@@ -143,7 +143,7 @@ describe('getItemCurrentValue', () => {
 describe('generateCow', () => {
   describe('randomizer: lower bound', () => {
     beforeEach(() => {
-      jest.spyOn(Math, 'random').mockReturnValue(0)
+      vitest.spyOn(Math, 'random').mockReturnValue(0)
     })
 
     const baseCowProperties = {
@@ -188,7 +188,7 @@ describe('generateCow', () => {
 
   describe('randomizer: upper bound', () => {
     beforeEach(() => {
-      jest.spyOn(Math, 'random').mockReturnValue(1)
+      vitest.spyOn(Math, 'random').mockReturnValue(1)
     })
 
     test('generates a cow', () => {
@@ -210,7 +210,7 @@ describe('generateOffspringCow', () => {
   let maleCow, femaleCow
 
   beforeEach(() => {
-    jest.spyOn(Math, 'random').mockReturnValue(1)
+    vitest.spyOn(Math, 'random').mockReturnValue(1)
 
     maleCow = generateCow({
       baseWeight: 2200,
@@ -274,7 +274,7 @@ describe('generateOffspringCow', () => {
 
   describe('rainbow cows', () => {
     test('cows with all of the colors in their bloodline are rainbow cows', () => {
-      jest.spyOn(Math, 'random').mockReturnValue(1)
+      vitest.spyOn(Math, 'random').mockReturnValue(1)
 
       maleCow = generateCow({
         baseWeight: 2200,
@@ -318,7 +318,7 @@ describe('generateOffspringCow', () => {
     })
 
     test('rainbow color is not stored in bloodline', () => {
-      jest.spyOn(Math, 'random').mockReturnValue(1)
+      vitest.spyOn(Math, 'random').mockReturnValue(1)
 
       maleCow = generateCow({
         baseWeight: 2200,
@@ -616,7 +616,7 @@ describe('getFinalCropItemIdFromSeedItemId', () => {
   })
 
   test('gets "final" crop item id from seed item id with varieties', () => {
-    jest.spyOn(Math, 'random').mockReturnValue(0)
+    vitest.spyOn(Math, 'random').mockReturnValue(0)
     expect(getFinalCropItemIdFromSeedItemId('grape-seed')).toEqual(
       'grape-chardonnay'
     )
@@ -724,13 +724,13 @@ describe('canMakeRecipe', () => {
 
 describe('getRandomUnlockedCrop', () => {
   test('gets a random unlocked crop', () => {
-    jest.spyOn(Math, 'random').mockReturnValue(1)
+    vitest.spyOn(Math, 'random').mockReturnValue(1)
     const crop = getRandomUnlockedCrop(['carrot-seed', 'pumpkin-seed'])
     expect(crop.id).toEqual('pumpkin')
   })
 
   test('gets a random unlocked crop with varieties', () => {
-    jest.spyOn(Math, 'random').mockReturnValue(0)
+    vitest.spyOn(Math, 'random').mockReturnValue(0)
     const crop = getRandomUnlockedCrop(['grape-seed'])
     expect(crop.id).toEqual('grape-chardonnay')
   })
@@ -786,13 +786,13 @@ describe('experienceNeededForLevel', () => {
 
 describe('getAvailableShopInventory', () => {
   test('computes shop inventory that has been unlocked', () => {
-    jest.resetModules()
-    jest.mock('../data/shop-inventory', () => [
+    vitest.resetModules()
+    vitest.mock('../data/shop-inventory', () => [
       { id: 'sample-item-1' },
       { id: 'sample-item-2' },
     ])
 
-    jest.mock('../data/levels', () => ({
+    vitest.mock('../data/levels', () => ({
       levels: [],
       unlockableItems: {
         'sample-item-1': true,
@@ -800,7 +800,7 @@ describe('getAvailableShopInventory', () => {
       },
     }))
 
-    const { getAvailableShopInventory } = jest.requireActual('./index')
+    const { getAvailableShopInventory } = vitest.requireActual('./index')
 
     expect(
       getAvailableShopInventory({ items: { 'sample-item-1': true } })
@@ -810,15 +810,15 @@ describe('getAvailableShopInventory', () => {
 
 describe('getRandomLevelUpReward', () => {
   test('returns a crop item', () => {
-    jest.resetModules()
-    jest.mock('../data/levels', () => ({
+    vitest.resetModules()
+    vitest.mock('../data/levels', () => ({
       levels: [{ id: 0, unlocksShopItem: 'sample-crop-item-1' }],
       unlockableItems: {
         'sample-crop-item-1': true,
         'sample-crop-item-2': true,
       },
     }))
-    jest.mock('../data/maps', () => ({
+    vitest.mock('../data/maps', () => ({
       itemsMap: {
         'sample-crop-item-1': {
           id: 'sample-crop-item-1',
@@ -827,9 +827,9 @@ describe('getRandomLevelUpReward', () => {
         },
       },
     }))
-    jest.spyOn(Math, 'random').mockReturnValue(0)
+    vitest.spyOn(Math, 'random').mockReturnValue(0)
 
-    expect(jest.requireActual('./index').getRandomLevelUpReward(2)).toEqual({
+    expect(vitest.requireActual('./index').getRandomLevelUpReward(2)).toEqual({
       id: 'sample-crop-item-1',
       name: 'crop 1',
       type: 'CROP',
@@ -977,7 +977,7 @@ describe('randomChoice', () => {
   ]
 
   beforeEach(() => {
-    jest.spyOn(global.Math, 'random')
+    vitest.spyOn(global.Math, 'random')
   })
 
   test('it returns a choice at random', () => {

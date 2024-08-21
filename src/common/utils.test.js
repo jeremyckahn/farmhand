@@ -1,13 +1,13 @@
 import { generateValueAdjustments } from './utils'
 
-jest.mock('../data/maps')
-jest.mock('../data/items')
+vitest.mock('../data/maps')
+vitest.mock('../data/items')
 
 describe('generateValueAdjustments', () => {
   let valueAdjustments
 
   beforeEach(() => {
-    jest.spyOn(Math, 'random').mockReturnValue(1)
+    vitest.spyOn(Math, 'random').mockReturnValue(1)
     valueAdjustments = generateValueAdjustments({}, {})
   })
 

@@ -1,6 +1,6 @@
 import { updateLearnedRecipes } from './updateLearnedRecipes'
 
-jest.mock('../../data/recipes')
+vitest.mock('../../data/recipes')
 
 describe('updateLearnedRecipes', () => {
   describe('recipe condition is not met', () => {

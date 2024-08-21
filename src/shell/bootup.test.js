@@ -5,7 +5,7 @@ import { farmhandStub } from '../test-utils/stubs/farmhandStub'
 import { endDay } from '../test-utils/ui'
 
 beforeEach(() => {
-  jest.useFakeTimers()
+  vitest.useFakeTimers()
 })
 
 describe('bootup', () => {
@@ -78,7 +78,7 @@ describe('bootup', () => {
     })
 
     act(() => {
-      jest.runAllTimers()
+      vitest.runAllTimers()
     })
 
     await waitFor(() => {

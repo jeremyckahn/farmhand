@@ -11,10 +11,10 @@ import {
   separateItemsIntoCategories,
 } from './Inventory'
 
-jest.mock('../../data/maps')
-jest.mock('../../data/items')
-jest.mock('../../data/levels', () => ({ levels: [], unlockableItems: {} }))
-jest.mock('../../data/shop-inventory')
+vitest.mock('../../data/maps')
+vitest.mock('../../data/items')
+vitest.mock('../../data/levels', () => ({ levels: [], unlockableItems: {} }))
+vitest.mock('../../data/shop-inventory')
 
 let component
 

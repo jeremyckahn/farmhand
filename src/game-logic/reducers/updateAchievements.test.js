@@ -4,8 +4,8 @@ describe('updateAchievements', () => {
   let updateAchievements
 
   beforeAll(() => {
-    jest.resetModules()
-    jest.mock('../../data/achievements', () => [
+    vitest.resetModules()
+    vitest.mock('../../data/achievements', () => [
       {
         id: 'test-achievement',
         name: 'Test Achievement',
@@ -16,7 +16,7 @@ describe('updateAchievements', () => {
       },
     ])
 
-    updateAchievements = jest.requireActual('./updateAchievements')
+    updateAchievements = vitest.requireActual('./updateAchievements')
       .updateAchievements
   })
 

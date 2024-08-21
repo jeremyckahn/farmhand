@@ -4,13 +4,13 @@ import { EXPERIENCE_VALUES } from '../../constants'
 
 import { computeStateForNextDay } from './computeStateForNextDay'
 
-jest.mock('../../data/maps')
+vitest.mock('../../data/maps')
 
 describe('computeStateForNextDay', () => {
   let state
 
   beforeEach(() => {
-    jest.spyOn(Math, 'random').mockReturnValue(0.75)
+    vitest.spyOn(Math, 'random').mockReturnValue(0.75)
 
     state = {
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },

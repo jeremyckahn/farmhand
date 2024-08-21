@@ -3,7 +3,7 @@ import { getPlotContentFromItemId } from '../../utils'
 
 import { waterPlot } from './waterPlot'
 
-jest.mock('../../data/maps')
+vitest.mock('../../data/maps')
 
 describe('waterPlot', () => {
   describe('non-crop plotContent', () => {

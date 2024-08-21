@@ -10,9 +10,9 @@ import { items } from '../../img'
 
 import { Plot } from './Plot'
 
-jest.mock('../../data/maps')
-jest.mock('../../data/items')
-jest.mock('../../img')
+vitest.mock('../../data/maps')
+vitest.mock('../../data/items')
+vitest.mock('../../img')
 
 describe('class states', () => {
   beforeEach(() => {

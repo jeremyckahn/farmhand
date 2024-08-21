@@ -4,10 +4,10 @@ import { shouldPrecipitateToday } from '../../utils'
 
 import { processWeather } from './processWeather'
 
-jest.mock('../../data/maps')
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
-  shouldPrecipitateToday: jest.fn(),
+vitest.mock('../../data/maps')
+vitest.mock('../../utils', () => ({
+  ...vitest.requireActual('../../utils'),
+  shouldPrecipitateToday: vitest.fn(),
 }))
 
 describe('processWeather', () => {

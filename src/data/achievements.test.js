@@ -7,10 +7,10 @@ import { INFINITE_STORAGE_LIMIT } from '../constants'
 
 import { achievementsMap } from './achievements'
 
-jest.mock('./items')
-jest.mock('./levels', () => ({ levels: [] }))
-jest.mock('./recipes')
-jest.mock('./shop-inventory')
+vitest.mock('./items')
+vitest.mock('./levels', () => ({ levels: [] }))
+vitest.mock('./recipes')
+vitest.mock('./shop-inventory')
 
 describe('harvest-crop', () => {
   describe('condition', () => {
