@@ -8,8 +8,8 @@ import { farmhandStub } from '../test-utils/stubs/farmhandStub'
 // module mocking does not seem to work correctly when mixed with other tests.
 // This seems to be due to: https://github.com/facebook/jest/issues/8987
 
-vitest.mock('../utils', () => ({
-  ...vitest.requireActual('../utils'),
+vitest.mock('../utils', async () => ({
+  ...(await vitest.importActual('../utils')),
   shouldStormToday: () => true,
   shouldPrecipitateToday: () => true,
 }))

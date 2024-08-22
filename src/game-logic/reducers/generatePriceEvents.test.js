@@ -31,7 +31,7 @@ describe('generatePriceEvents', () => {
   describe('price event does not already exist', () => {
     let state
 
-    beforeEach(() => {
+    beforeEach(async () => {
       vitest.spyOn(Math, 'random').mockReturnValue(0)
 
       vitest.resetModules()
@@ -47,7 +47,7 @@ describe('generatePriceEvents', () => {
         ],
         itemUnlockLevels: {},
       }))
-      const { generatePriceEvents } = vitest.requireActual('./')
+      const { generatePriceEvents } = await vitest.importActual('./')
       state = generatePriceEvents({
         newDayNotifications: [],
         priceCrashes: {},

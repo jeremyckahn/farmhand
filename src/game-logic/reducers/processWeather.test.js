@@ -5,8 +5,8 @@ import { shouldPrecipitateToday } from '../../utils'
 import { processWeather } from './processWeather'
 
 vitest.mock('../../data/maps')
-vitest.mock('../../utils', () => ({
-  ...vitest.requireActual('../../utils'),
+vitest.mock('../../utils', async () => ({
+  ...(await vitest.importActual('../../utils')),
   shouldPrecipitateToday: vitest.fn(),
 }))
 

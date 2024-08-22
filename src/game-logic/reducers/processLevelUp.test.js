@@ -7,7 +7,7 @@ vitest.mock('../../data/maps')
 vitest.mock('../../data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
 
 describe('processLevelUp', () => {
-  test('shows notifications for each level gained in the sale', () => {
+  test('shows notifications for each level gained in the sale', async () => {
     vitest.resetModules()
     vitest.mock('../../data/levels', () => ({
       levels: [
@@ -18,7 +18,9 @@ describe('processLevelUp', () => {
       ],
       itemUnlockLevels: {},
     }))
-    const { todaysNotifications } = vitest.requireActual('./').processLevelUp(
+    const { todaysNotifications } = (
+      await vitest.importActual('./')
+    ).processLevelUp(
       {
         experience: experienceNeededForLevel(3),
         inventory: [],
@@ -39,7 +41,7 @@ describe('processLevelUp', () => {
     ])
   })
 
-  test('when sprinkler is selected when it gets a level up boost, hoveredPlotRangeSize increase', () => {
+  test('when sprinkler is selected when it gets a level up boost, hoveredPlotRangeSize increase', async () => {
     vitest.resetModules()
     vitest.mock('../../data/levels', () => ({
       levels: [
@@ -56,13 +58,16 @@ describe('processLevelUp', () => {
       ],
       itemUnlockLevels: {},
     }))
-    vitest.mock('../../constants', () => ({
-      ...vitest.requireActual('../../constants'),
+    vitest.mock('../../constants', async importOriginal => ({
+      ...(await importOriginal()),
+      ...(await vitest.importActual('../../constants')),
       INITIAL_SPRINKLER_RANGE: 1,
       SPRINKLER_ITEM_ID: 'sprinkler',
     }))
 
-    const { hoveredPlotRangeSize } = vitest.requireActual('./').processLevelUp(
+    const { hoveredPlotRangeSize } = (
+      await vitest.importActual('./')
+    ).processLevelUp(
       {
         experience: experienceNeededForLevel(2),
         hoveredPlotRangeSize: 1,
@@ -75,7 +80,7 @@ describe('processLevelUp', () => {
     expect(hoveredPlotRangeSize).toEqual(2)
   })
 
-  test('unlocksTool reward makes tool become available', () => {
+  test('unlocksTool reward makes tool become available', async () => {
     vitest.resetModules()
     vitest.mock('../../data/levels', () => ({
       levels: [
@@ -89,7 +94,7 @@ describe('processLevelUp', () => {
       ],
       itemUnlockLevels: {},
     }))
-    const newState = vitest.requireActual('./').processLevelUp(
+    const newState = (await vitest.importActual('./')).processLevelUp(
       {
         itemsSold: {},
         inventory: [],

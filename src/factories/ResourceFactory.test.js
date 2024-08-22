@@ -8,8 +8,8 @@ vitest.mock('./CoalFactory')
 vitest.mock('./OreFactory')
 vitest.mock('./StoneFactory')
 
-vitest.mock('../utils', () => ({
-  ...vitest.requireActual('../utils'),
+vitest.mock('../utils', async () => ({
+  ...(await vitest.importActual('../utils')),
   randomChoice: vitest.fn(),
 }))
 

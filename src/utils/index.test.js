@@ -785,7 +785,7 @@ describe('experienceNeededForLevel', () => {
 })
 
 describe('getAvailableShopInventory', () => {
-  test('computes shop inventory that has been unlocked', () => {
+  test('computes shop inventory that has been unlocked', async () => {
     vitest.resetModules()
     vitest.mock('../data/shop-inventory', () => [
       { id: 'sample-item-1' },
@@ -800,7 +800,7 @@ describe('getAvailableShopInventory', () => {
       },
     }))
 
-    const { getAvailableShopInventory } = vitest.requireActual('./index')
+    const { getAvailableShopInventory } = await vitest.importActual('./index')
 
     expect(
       getAvailableShopInventory({ items: { 'sample-item-1': true } })
@@ -809,7 +809,7 @@ describe('getAvailableShopInventory', () => {
 })
 
 describe('getRandomLevelUpReward', () => {
-  test('returns a crop item', () => {
+  test('returns a crop item', async () => {
     vitest.resetModules()
     vitest.mock('../data/levels', () => ({
       levels: [{ id: 0, unlocksShopItem: 'sample-crop-item-1' }],
@@ -829,7 +829,9 @@ describe('getRandomLevelUpReward', () => {
     }))
     vitest.spyOn(Math, 'random').mockReturnValue(0)
 
-    expect(vitest.requireActual('./index').getRandomLevelUpReward(2)).toEqual({
+    expect(
+      (await vitest.importActual('./index')).getRandomLevelUpReward(2)
+    ).toEqual({
       id: 'sample-crop-item-1',
       name: 'crop 1',
       type: 'CROP',

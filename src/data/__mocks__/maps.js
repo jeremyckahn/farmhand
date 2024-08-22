@@ -36,4 +36,4 @@ export const cropTypeToIdMap = {
 export const {
   cropItemIdToSeedItemMap,
   fermentableItemsMap,
-} = vitest.requireActual('../maps')
+} = vitest.importActual('../maps')

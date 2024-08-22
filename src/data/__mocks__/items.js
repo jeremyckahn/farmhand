@@ -4,7 +4,7 @@ import { itemType } from '../../enums'
 // Patch the original items data into the mock. This has the potential to break
 // with future versions of Webpack (keep an eye on
 // https://webpack.js.org/api/module-methods/).
-Object.assign(module.exports, vitest.requireActual('../items'))
+Object.assign(module.exports, vitest.importActual('../items'))
 
 // Non-crop items
 export const sampleItem1 = testItem({

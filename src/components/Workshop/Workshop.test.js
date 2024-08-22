@@ -10,8 +10,8 @@ import Workshop from './Workshop'
 
 vitest.mock('./getUpgradesAvailable')
 
-vitest.mock('../../data/maps', () => ({
-  ...vitest.requireActual('../../data/maps'),
+vitest.mock('../../data/maps', async () => ({
+  ...(await vitest.importActual('../../data/maps')),
   recipesMap: {
     'kitchen-recipe-1': {
       id: 'kitchen-recipe-1',

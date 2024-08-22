@@ -3,7 +3,7 @@ import { ACHIEVEMENT_COMPLETED } from '../../templates'
 describe('updateAchievements', () => {
   let updateAchievements
 
-  beforeAll(() => {
+  beforeAll(async () => {
     vitest.resetModules()
     vitest.mock('../../data/achievements', () => [
       {
@@ -16,7 +16,7 @@ describe('updateAchievements', () => {
       },
     ])
 
-    updateAchievements = vitest.requireActual('./updateAchievements')
+    updateAchievements = (await vitest.importActual('./updateAchievements'))
       .updateAchievements
   })
 

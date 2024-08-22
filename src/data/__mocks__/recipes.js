@@ -2,7 +2,7 @@ import { itemType, recipeType } from '../../enums'
 
 import * as items from './items'
 
-Object.assign(module.exports, vitest.requireActual('../recipes'))
+Object.assign(module.exports, vitest.importActual('../recipes'))
 
 export const sampleRecipe1 = {
   id: 'sample-recipe-1',
