@@ -1,12 +1,8 @@
-import { act, screen, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 
 import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory'
 import { farmhandStub } from '../test-utils/stubs/farmhandStub'
 import { endDay } from '../test-utils/ui'
-
-beforeEach(() => {
-  vitest.useFakeTimers()
-})
 
 describe('bootup', () => {
   test('boots a fresh game when there is no save file', async () => {
@@ -75,10 +71,6 @@ describe('bootup', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Pending notification')).toBeInTheDocument()
-    })
-
-    act(() => {
-      vitest.runAllTimers()
     })
 
     await waitFor(() => {

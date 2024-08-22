@@ -2,25 +2,11 @@ import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
 import { toolLevel } from '../../enums'
 import { experienceNeededForLevel } from '../../utils'
 
-vitest.mock('../../data/achievements')
-vitest.mock('../../data/maps')
-vitest.mock('../../data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
+import { processLevelUp } from './processLevelUp'
 
 describe('processLevelUp', () => {
   test('shows notifications for each level gained in the sale', async () => {
-    vitest.resetModules()
-    vitest.mock('../../data/levels', () => ({
-      levels: [
-        {
-          id: 1,
-          unlocksShopItem: 'carrot',
-        },
-      ],
-      itemUnlockLevels: {},
-    }))
-    const { todaysNotifications } = (
-      await vitest.importActual('./')
-    ).processLevelUp(
+    const { todaysNotifications } = processLevelUp(
       {
         experience: experienceNeededForLevel(3),
         inventory: [],
@@ -42,37 +28,16 @@ describe('processLevelUp', () => {
   })
 
   test('when sprinkler is selected when it gets a level up boost, hoveredPlotRangeSize increase', async () => {
-    vitest.resetModules()
-    vitest.mock('../../data/levels', () => ({
-      levels: [
-        {
-          id: 0,
-        },
-        {
-          id: 1,
-        },
-        {
-          id: 2,
-          increasesSprinklerRange: true,
-        },
-      ],
-      itemUnlockLevels: {},
-    }))
-    vitest.mock('../../constants', async importOriginal => ({
-      ...(await importOriginal()),
-      ...(await vitest.importActual('../../constants')),
-      INITIAL_SPRINKLER_RANGE: 1,
-      SPRINKLER_ITEM_ID: 'sprinkler',
-    }))
-
-    const { hoveredPlotRangeSize } = (
-      await vitest.importActual('./')
-    ).processLevelUp(
+    const { hoveredPlotRangeSize } = processLevelUp(
       {
-        experience: experienceNeededForLevel(2),
+        experience: experienceNeededForLevel(8),
         hoveredPlotRangeSize: 1,
         selectedItemId: 'sprinkler',
         todaysNotifications: [],
+        inventory: [],
+        toolLevels: {
+          SHOVEL: toolLevel.UNAVAILABLE,
+        },
       },
       1
     )
@@ -81,21 +46,9 @@ describe('processLevelUp', () => {
   })
 
   test('unlocksTool reward makes tool become available', async () => {
-    vitest.resetModules()
-    vitest.mock('../../data/levels', () => ({
-      levels: [
-        {
-          id: 0,
-        },
-        {
-          id: 1,
-          unlocksTool: 'SHOVEL',
-        },
-      ],
-      itemUnlockLevels: {},
-    }))
-    const newState = (await vitest.importActual('./')).processLevelUp(
+    const newState = processLevelUp(
       {
+        experience: experienceNeededForLevel(6),
         itemsSold: {},
         inventory: [],
         todaysNotifications: [],

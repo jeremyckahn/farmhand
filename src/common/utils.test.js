@@ -24,7 +24,7 @@ describe('generateValueAdjustments', () => {
     })
   })
 
-  describe('factors in price crashes', () => {
+  test('factors in price crashes', () => {
     valueAdjustments = generateValueAdjustments(
       { 'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 } },
       {}
@@ -33,7 +33,7 @@ describe('generateValueAdjustments', () => {
     expect(valueAdjustments['sample-crop-1']).toEqual(0.5)
   })
 
-  describe('factors in price surges', () => {
+  test('factors in price surges', () => {
     valueAdjustments = generateValueAdjustments(
       {},
       { 'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 } }

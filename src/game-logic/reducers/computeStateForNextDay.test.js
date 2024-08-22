@@ -58,7 +58,7 @@ describe('computeStateForNextDay', () => {
     expect(firstRow[0].wasWateredToday).toBe(false)
     expect(firstRow[0].daysWatered).toBe(1)
     expect(firstRow[0].daysOld).toBe(1)
-    expect(todaysNotifications).toBeEmpty()
+    expect(todaysNotifications).toHaveLength(0)
   })
 
   describe('new year experience', () => {

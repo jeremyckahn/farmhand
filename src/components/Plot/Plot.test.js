@@ -233,7 +233,7 @@ describe('getDaysLeftToMature', () => {
       })
     })
 
-    describe('plot contains non-crop content', () => {
+    test('plot contains non-crop content', () => {
       expect(
         getDaysLeftToMature(getPlotContentFromItemId('replantable-item'))
       ).toEqual(null)

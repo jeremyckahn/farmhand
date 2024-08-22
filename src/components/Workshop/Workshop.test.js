@@ -10,8 +10,8 @@ import Workshop from './Workshop'
 
 vitest.mock('./getUpgradesAvailable')
 
-vitest.mock('../../data/maps', async () => ({
-  ...(await vitest.importActual('../../data/maps')),
+vitest.mock('../../data/maps', async importOriginal => ({
+  ...(await importOriginal()),
   recipesMap: {
     'kitchen-recipe-1': {
       id: 'kitchen-recipe-1',
@@ -46,10 +46,14 @@ vitest.mock('../../data/maps', async () => ({
   },
 }))
 
-vitest.mock('../Recipe', () => () => <div data-testid="Recipe">Recipe</div>)
-vitest.mock('../UpgradePurchase', () => () => (
-  <div data-testid="UpgradePurchase">UpgradePurchase</div>
-))
+vitest.mock('../Recipe', () => {
+  return { default: () => <div data-testid="Recipe">Recipe</div> }
+})
+vitest.mock('../UpgradePurchase', () => {
+  return {
+    default: () => <div data-testid="UpgradePurchase">UpgradePurchase</div>,
+  }
+})
 
 describe('<Workshop />', () => {
   let gameState

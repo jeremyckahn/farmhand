@@ -15,8 +15,8 @@ export const recipeCategories = {
 
 export const recipesMap = {}
 
-for (const recipeId of Object.keys(recipes)) {
-  const recipe = recipes[recipeId]
+for (const recipeId of Object.keys(recipes.default)) {
+  const recipe = recipes.default[recipeId]
   recipeCategories[recipe.recipeType][recipe.id] = recipe
   recipesMap[recipe.id] = recipe
 }

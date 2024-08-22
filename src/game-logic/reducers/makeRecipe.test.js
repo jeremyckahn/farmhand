@@ -1,4 +1,5 @@
-import { sampleRecipe1 } from '../../data/recipes'
+import { carrotSoup } from '../../data/recipes'
+import { carrot } from '../../data/crops'
 
 import { EXPERIENCE_VALUES, INFINITE_STORAGE_LIMIT } from '../../constants'
 
@@ -6,20 +7,18 @@ import { recipeType } from '../../enums'
 
 import { makeRecipe } from './makeRecipe'
 
-vitest.mock('../../data/recipes')
-
 describe('makeRecipe', () => {
   describe('there are insufficient ingredients for recipe', () => {
     test('the recipe is not made', () => {
       const { inventory } = makeRecipe(
         {
-          inventory: [{ id: 'sample-item-1', quantity: 1 }],
+          inventory: [{ id: 'carrot', quantity: 1 }],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
-        sampleRecipe1
+        carrotSoup
       )
 
-      expect(inventory).toEqual([{ id: 'sample-item-1', quantity: 1 }])
+      expect(inventory).toEqual([{ id: 'carrot', quantity: 1 }])
     })
   })
 
@@ -27,15 +26,15 @@ describe('makeRecipe', () => {
     test('consumes ingredients and adds recipe item to inventory', () => {
       const { inventory } = makeRecipe(
         {
-          inventory: [{ id: 'sample-item-1', quantity: 3 }],
+          inventory: [{ id: carrot.id, quantity: 5 }],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
         },
-        sampleRecipe1
+        carrotSoup
       )
 
       expect(inventory).toEqual([
-        { id: 'sample-item-1', quantity: 1 },
-        { id: 'sample-recipe-1', quantity: 1 },
+        { id: carrot.id, quantity: 1 },
+        { id: carrotSoup.id, quantity: 1 },
       ])
     })
   })
