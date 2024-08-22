@@ -1,6 +1,7 @@
 /** @typedef {import("../../index").farmhand.item} farmhand.item */
 
 import { recipeType } from '../../enums'
+import * as actualMaps from '../maps'
 
 import * as items from './items'
 import * as recipes from './recipes'
@@ -33,7 +34,6 @@ export const cropTypeToIdMap = {
   SAMPLE_CROP_TYPE_1: 'sample-crop-type-1',
 }
 
-export const {
-  cropItemIdToSeedItemMap,
-  fermentableItemsMap,
-} = vitest.importActual('../maps')
+export const { cropItemIdToSeedItemMap, fermentableItemsMap } = {
+  ...actualMaps,
+}
