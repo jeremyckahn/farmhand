@@ -24,14 +24,7 @@ jobs:
         run: npm ci
 
       - name: 'Run tests'
-        run: npm test -- --reporters=default --reporters=jest-junit
-
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        with:
-          name: Jest Tests # Name of the check run which will be created
-          path: reports/jest-*.xml # Path to test results
-          reporter: jest-junit # Format of test results
+        run: npm test -- --coverage --run
 
       - name: 'Check types'
         # TODO: Change this to check:types when all type errors are fixed

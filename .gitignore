@@ -4,5 +4,6 @@ build
 Session.vim
 .DS_Store
 .idea
+coverage
 
 .vercel

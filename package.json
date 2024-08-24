@@ -53,6 +53,7 @@
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/coverage-v8": "^2.0.5",
     "bittorrent-tracker": "^9.19.0",
     "browserslist": "^4.21.9",
     "cheerio": "^1.0.0-rc.12",
