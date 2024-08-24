@@ -1,6 +1,32 @@
+import fs from 'node:fs'
+
 import { defineConfig, transformWithEsbuild, mergeConfig } from 'vite'
 import { defineConfig as vitestDefineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
+
+// NOTE: See:
+//   - https://stackoverflow.com/a/78012267/470685
+//   - https://www.codu.co/articles/converting-an-image-to-a-data-uri-string-in-node-js-dznt83ha
+const base64Loader = {
+  name: 'dataUri-loader',
+  transform(_, id) {
+    const [path, query] = id.split('?')
+    if (query !== 'dataUri') return null
+
+    const data = fs.readFileSync(path)
+
+    // convert binary data to base64 encoded string
+    const base64Image = Buffer.from(data).toString('base64')
+
+    // Get image file extension
+    const ext = path.split('.').pop()
+
+    // complete data URI
+    const uri = `data:image/${ext};base64,${base64Image}`
+
+    return `export default '${uri}';`
+  },
+}
 
 const viteConfig = defineConfig({
   plugins: [
@@ -22,6 +48,7 @@ const viteConfig = defineConfig({
         })
       },
     },
+    base64Loader,
   ],
   resolve: {
     alias: [

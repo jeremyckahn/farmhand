@@ -973,7 +973,7 @@ describe('randomChoice', () => {
 })
 
 // FIXME: The implementation for getCowImage needs to be updated in order for this to pass.
-describe.skip('getCowImage', () => {
+describe('getCowImage', () => {
   test('colors a cow template image', async () => {
     const cow = generateCow({ color: cowColors.GREEN, id: '1' })
     const image = await getCowImage(cow)
