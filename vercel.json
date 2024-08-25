@@ -1,4 +1,5 @@
 {
+  "ignoreCommand": "stat static",
   "rewrites": [
     {
       "source": "/api/get-market-data",
