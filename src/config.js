@@ -1,8 +1,8 @@
 import globalWindow from 'global/window'
 
 export const endpoints = {
-  getMarketData: `${process.env.VITE_API_ROOT}api/get-market-data`,
-  postDayResults: `${process.env.VITE_API_ROOT}api/post-day-results`,
+  getMarketData: `${import.meta.env.VITE_API_ROOT}api/get-market-data`,
+  postDayResults: `${import.meta.env.VITE_API_ROOT}api/post-day-results`,
 }
 
 // Represents all of the features enabled for the current environment. Features
@@ -24,7 +24,7 @@ export const endpoints = {
  *   FOREST?: boolean
  * }}
  */
-export const features = Object.keys(process.env).reduce((acc, key) => {
+export const features = Object.keys(import.meta.env).reduce((acc, key) => {
   const matches = key.match(/VITE_ENABLE_(.*)/)
 
   if (matches) {
@@ -53,27 +53,27 @@ export const rtcConfig = {
     },
     {
       urls: 'turn:a.relay.metered.ca:80',
-      username: process.env.REACT_APP_TURN_USERNAME,
-      credential: process.env.REACT_APP_TURN_CREDENTIAL,
+      username: import.meta.env.VITE_TURN_USERNAME,
+      credential: import.meta.env.VITE_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:80?transport=tcp',
-      username: process.env.REACT_APP_TURN_USERNAME,
-      credential: process.env.REACT_APP_TURN_CREDENTIAL,
+      username: import.meta.env.VITE_TURN_USERNAME,
+      credential: import.meta.env.VITE_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:443',
-      username: process.env.REACT_APP_TURN_USERNAME,
-      credential: process.env.REACT_APP_TURN_CREDENTIAL,
+      username: import.meta.env.VITE_TURN_USERNAME,
+      credential: import.meta.env.VITE_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:443?transport=tcp',
-      username: process.env.REACT_APP_TURN_USERNAME,
-      credential: process.env.REACT_APP_TURN_CREDENTIAL,
+      username: import.meta.env.VITE_TURN_USERNAME,
+      credential: import.meta.env.VITE_TURN_CREDENTIAL,
     },
   ],
 }
 
-export const trackerUrls = process.env.VITE_TRACKER_URL
-  ? [process.env.VITE_TRACKER_URL]
+export const trackerUrls = import.meta.env.VITE_TRACKER_URL
+  ? [import.meta.env.VITE_TRACKER_URL]
   : undefined

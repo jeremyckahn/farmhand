@@ -528,7 +528,7 @@ export default class Farmhand extends FarmhandReducers {
       },
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
-      version: process.env.REACT_APP_VERSION ?? '',
+      version: import.meta.env.VITE_FARMHAND_PACKAGE_VERSION ?? '',
     }
   }
 
@@ -604,7 +604,7 @@ export default class Farmhand extends FarmhandReducers {
       }
     })
 
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.NODE_ENV === 'development') {
       Object.assign(this.keyMap, {
         clearPersistedData: 'shift+d',
         waterAllPlots: 'w',
@@ -934,7 +934,7 @@ export default class Farmhand extends FarmhandReducers {
         activePlayers: 1,
         peerRoom: joinRoom(
           {
-            appId: process.env.REACT_APP_NAME,
+            appId: import.meta.env.VITE_NAME,
             trackerUrls,
             trackerRedundancy,
             rtcConfig,
@@ -1311,7 +1311,9 @@ export default class Farmhand extends FarmhandReducers {
                   >
                     <Navigation />
                     <ContextPane />
-                    {process.env.NODE_ENV === 'development' && <DebugMenu />}
+                    {import.meta.env.NODE_ENV === 'development' && (
+                      <DebugMenu />
+                    )}
                     <div {...{ className: 'spacer' }} />
                   </Drawer>
                   <Stage />

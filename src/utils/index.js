@@ -1143,7 +1143,7 @@ const colorizeCowTemplate = (() => {
     } catch (e) {
       // Jimp.read() expectedly errors out when it receives an empty buffer,
       // which it will in some unit tests.
-      if (process.env.NODE_ENV !== 'test') {
+      if (import.meta.env.NODE_ENV !== 'test') {
         console.error(e)
       }
 
