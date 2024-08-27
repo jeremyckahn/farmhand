@@ -3,6 +3,9 @@ import fs from 'node:fs'
 import { defineConfig, transformWithEsbuild, mergeConfig } from 'vite'
 import { defineConfig as vitestDefineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
+
+import { manifest } from './manifest'
 
 // NOTE: See:
 //   - https://stackoverflow.com/a/78012267/470685
@@ -31,6 +34,15 @@ const base64Loader = {
 const viteConfig = defineConfig({
   plugins: [
     react(),
+    VitePWA({
+      registerType: 'prompt',
+      devOptions: {
+        enabled: false,
+      },
+      injectRegister: 'auto',
+      filename: 'service-worker.js',
+      manifest,
+    }),
     // NOTE: This makes Vite treat .js files as .jsx (for legacy support)
     // See: https://stackoverflow.com/a/76458411/470685
     {

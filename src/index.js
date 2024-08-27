@@ -7,7 +7,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route } from 'react-router-dom'
 
-import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import './index.sass'
 import Farmhand from './components/Farmhand'
 import { features } from './config'
@@ -289,5 +288,3 @@ ReactDOM.render(
   </Router>,
   document.getElementById('root')
 )
-
-serviceWorkerRegistration.register()

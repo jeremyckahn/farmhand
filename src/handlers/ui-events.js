@@ -25,6 +25,7 @@ import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
   PROGRESS_SAVED_MESSAGE,
+  UPDATE_AVAILABLE,
 } from '../strings'
 
 import {
@@ -561,5 +562,14 @@ export default {
    */
   handleChatRoomOpenStateChange(isChatOpen) {
     this.setState({ isChatOpen })
+  },
+
+  /**
+   * @param {(reloadPage?: boolean) => Promise<void>} updateServiceWorker
+   */
+  handleGameUpdateAvailable(updateServiceWorker) {
+    this.showNotification(UPDATE_AVAILABLE, 'success', () => {
+      updateServiceWorker(true)
+    })
   },
 }
