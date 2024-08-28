@@ -72,7 +72,6 @@
     "git-branch-is": "^4.0.0",
     "husky": "^4.2.3",
     "jest-extended": "^0.11.5",
-    "jest-junit": "^14.0.1",
     "jimp": "^0.22.8",
     "jsdom": "^16.2.1",
     "markdown-table": "^2.0.0",
@@ -225,22 +224,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "jest": {
-    "transformIgnorePatterns": [
-      "node_modules/(?!trystero)/"
-    ]
-  },
-  "optionalDependencies": {
-    "piskel-cli": "^1.0.41"
-  },
-  "jest-junit": {
-    "outputDirectory": "reports",
-    "outputName": "jest-junit.xml",
-    "ancestorSeparator": " › ",
-    "uniqueOutputName": "false",
-    "suiteNameTemplate": "{filepath}",
-    "classNameTemplate": "{classname}",
-    "titleTemplate": "{title}"
-  }
+  ]
 }
