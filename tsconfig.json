@@ -74,5 +74,5 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
   //"include": ["src/utils/index.js"],
-  "exclude": ["build"]
+  "exclude": ["dist", "coverage"]
 }
