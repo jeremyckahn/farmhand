@@ -27,7 +27,7 @@
     "start:backend": "docker compose up",
     "start:tracker": "bittorrent-tracker",
     "test": "vitest",
-    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
+    "test:debug": "vitest --inspect-brk --no-file-parallelism --run",
     "update-images": "bash update-images.sh"
   },
   "author": "Jeremy Kahn <jeremyckahn@gmail.com>",
@@ -207,7 +207,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run lint && if git-branch-is develop; then cross-env CI=true react-scripts test --env=jsdom; fi"
+      "pre-commit": "pretty-quick --staged && npm run lint && if git-branch-is develop; then npm test -- --run; fi"
     }
   },
   "files": [
