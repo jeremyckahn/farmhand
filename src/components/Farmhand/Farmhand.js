@@ -604,7 +604,7 @@ export default class Farmhand extends FarmhandReducers {
       }
     })
 
-    if (import.meta.env.NODE_ENV === 'development') {
+    if (import.meta.env.MODE === 'development') {
       Object.assign(this.keyMap, {
         clearPersistedData: 'shift+d',
         waterAllPlots: 'w',
