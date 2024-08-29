@@ -61,7 +61,7 @@ jobs:
           tags: true
           branch: main
 
-      - run: npm run build
+      - run: npm run build -- --base="./"
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -94,7 +94,7 @@ jobs:
           VERSION_FILE: dist/version.txt
 
       - run: |
-          PUBLIC_URL='/farmhand' npm run build
+          npm run build -- --base='/farmhand'
 
       # https://github.com/marketplace/actions/deploy-to-github-pages
       - name: Deploy to jeremyckahn.github.io/farmhand
