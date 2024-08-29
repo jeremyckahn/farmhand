@@ -10,8 +10,8 @@
   "homepage": "https://www.farmhand.life/",
   "scripts": {
     "build": "vite build",
-    "build:native": "cross-env PUBLIC_URL='./' npm run build && electron-builder --publish=always",
     "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
+    "build:native": "npm run build && electron-builder --publish=always",
     "check:types": "tsc",
     "check:types:noerror": "tsc; exit 0",
     "dev": "mprocs \"cross-env VITE_TRACKER_URL='ws://localhost:8000' npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run start:tracker\"",
@@ -154,15 +154,15 @@
     "productName": "Farmhand",
     "extraMetadata": {
       "name": "Farmhand",
-      "main": "build/electron.js"
+      "main": "dist/electron.js"
     },
     "files": [
-      "build/**/*",
+      "dist/**/*",
       "node_modules/**/*"
     ],
     "directories": {
       "buildResources": "public",
-      "output": "build/native"
+      "output": "dist/native"
     },
     "mac": {
       "target": {
