@@ -32,6 +32,9 @@ const base64Loader = {
 }
 
 const viteConfig = defineConfig({
+  build: {
+    sourcemap: true,
+  },
   plugins: [
     react(),
     VitePWA({
