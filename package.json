@@ -8,6 +8,7 @@
   "main": "public/electron.js",
   "unpkg": "build/index.html",
   "homepage": "https://www.farmhand.life/",
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "build:native": "npm run build -- --base='./' && electron-builder --publish=always",
