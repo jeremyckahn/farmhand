@@ -56,7 +56,7 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 
 ## Project overview
 
-- This project is built with [Create React App](https://create-react-app.dev/), so please refer to the documentation of that project to learn about the development toolchain.
+- This project uses [Vite](https://vitejs.dev/), so please refer to the documentation of that project to learn about the development toolchain.
 - Farmhand uses [Piskel](https://www.piskelapp.com/) for the art assets.
 
 ## Running locally
