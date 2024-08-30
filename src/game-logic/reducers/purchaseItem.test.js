@@ -2,7 +2,7 @@ import { INFINITE_STORAGE_LIMIT } from '../../constants'
 
 import { purchaseItem } from './purchaseItem'
 
-jest.mock('../../data/maps')
+vitest.mock('../../data/maps')
 
 describe('purchaseItem', () => {
   describe('howMany === 0', () => {

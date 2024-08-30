@@ -7,7 +7,7 @@ import { itemType } from '../../enums'
 
 import { harvestPlot } from './harvestPlot'
 
-jest.mock('../../data/maps')
+vitest.mock('../../data/maps')
 
 describe('harvestPlot', () => {
   const toolLevelsDefault = {

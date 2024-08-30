@@ -4,13 +4,13 @@ import { getPriceEventForCrop } from '../../utils'
 
 import { generatePriceEvents } from './generatePriceEvents'
 
-jest.mock('../../data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
-jest.mock('../../data/items')
+vitest.mock('../../data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
+vitest.mock('../../data/items')
 
 describe('generatePriceEvents', () => {
   describe('price event already exists', () => {
     test('no-ops', () => {
-      jest.spyOn(Math, 'random').mockReturnValue(1)
+      vitest.spyOn(Math, 'random').mockReturnValue(1)
       const inputState = {
         newDayNotifications: [],
         priceCrashes: {
@@ -31,11 +31,11 @@ describe('generatePriceEvents', () => {
   describe('price event does not already exist', () => {
     let state
 
-    beforeEach(() => {
-      jest.spyOn(Math, 'random').mockReturnValue(0)
+    beforeEach(async () => {
+      vitest.spyOn(Math, 'random').mockReturnValue(0)
 
-      jest.resetModules()
-      jest.mock('../../data/levels', () => ({
+      vitest.resetModules()
+      vitest.mock('../../data/levels', () => ({
         levels: [
           {
             id: 0,
@@ -47,7 +47,7 @@ describe('generatePriceEvents', () => {
         ],
         itemUnlockLevels: {},
       }))
-      const { generatePriceEvents } = jest.requireActual('./')
+      const { generatePriceEvents } = await vitest.importActual('./')
       state = generatePriceEvents({
         newDayNotifications: [],
         priceCrashes: {},

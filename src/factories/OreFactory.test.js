@@ -4,11 +4,11 @@ import OreFactory from './OreFactory'
 
 describe('OreFactory', () => {
   beforeEach(() => {
-    jest.spyOn(global.Math, 'random')
+    vitest.spyOn(global.Math, 'random')
   })
 
   afterEach(() => {
-    jest.restoreAllMocks()
+    vitest.restoreAllMocks()
   })
 
   describe('generate', () => {

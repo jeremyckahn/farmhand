@@ -1,6 +1,7 @@
 /** @typedef {import("../../index").farmhand.item} farmhand.item */
 
 import { recipeType } from '../../enums'
+import * as actualMaps from '../maps'
 
 import * as items from './items'
 import * as recipes from './recipes'
@@ -14,8 +15,8 @@ export const recipeCategories = {
 
 export const recipesMap = {}
 
-for (const recipeId of Object.keys(recipes)) {
-  const recipe = recipes[recipeId]
+for (const recipeId of Object.keys(recipes.default)) {
+  const recipe = recipes.default[recipeId]
   recipeCategories[recipe.recipeType][recipe.id] = recipe
   recipesMap[recipe.id] = recipe
 }
@@ -33,7 +34,6 @@ export const cropTypeToIdMap = {
   SAMPLE_CROP_TYPE_1: 'sample-crop-type-1',
 }
 
-export const {
-  cropItemIdToSeedItemMap,
-  fermentableItemsMap,
-} = jest.requireActual('../maps')
+export const { cropItemIdToSeedItemMap, fermentableItemsMap } = {
+  ...actualMaps,
+}

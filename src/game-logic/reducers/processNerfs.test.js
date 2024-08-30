@@ -2,7 +2,7 @@ import { applyCrows } from './applyCrows'
 
 import { processNerfs } from './processNerfs'
 
-jest.mock('./applyCrows')
+vitest.mock('./applyCrows')
 
 describe('processNerfs', () => {
   it('invokes applyCrows', () => {

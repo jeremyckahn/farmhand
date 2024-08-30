@@ -14,7 +14,7 @@ const stubKegUuid = 'abc123'
 
 beforeEach(() => {
   // @ts-expect-error
-  jest.spyOn(cellarService, '_uuid').mockReturnValue(stubKegUuid)
+  vitest.spyOn(cellarService, '_uuid').mockReturnValue(stubKegUuid)
 })
 
 describe('makeWine', () => {

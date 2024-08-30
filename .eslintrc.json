@@ -1,4 +1,7 @@
 {
+  "globals": {
+    "vitest": true
+  },
   "extends": ["react-app"],
   "rules": {
     "import/order": [

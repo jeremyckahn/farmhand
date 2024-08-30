@@ -18,8 +18,8 @@ describe('minePlot', () => {
       },
     }
 
-    jest.spyOn(ResourceFactory, 'instance')
-    jest.spyOn(randomNumberService, 'generateRandomNumber').mockReturnValue(1)
+    vitest.spyOn(ResourceFactory, 'instance')
+    vitest.spyOn(randomNumberService, 'generateRandomNumber').mockReturnValue(1)
 
     ResourceFactory.instance.mockReturnValue({
       generateResources: () => [goldOre],

@@ -15,7 +15,7 @@ describe('<Home />', () => {
       completedAchievements: {},
     }
 
-    handleViewChangeButtonClick = jest.fn()
+    handleViewChangeButtonClick = vitest.fn()
 
     render(
       <FarmhandContext.Provider value={{ gameState, handlers: {} }}>

@@ -2,7 +2,7 @@ import { testItem } from '../../../test-utils'
 
 import { getInventoryQuantities } from './getInventoryQuantities'
 
-jest.mock('../../../data/maps')
+vitest.mock('../../../data/maps')
 
 describe('playerInventoryQuantities', () => {
   test('computes a map of item IDs to their quantity in the inventory', () => {

@@ -4,7 +4,7 @@ import { getPlotContentFromItemId } from '../../utils'
 
 import { fertilizePlot } from './fertilizePlot'
 
-jest.mock('../../data/maps')
+vitest.mock('../../data/maps')
 
 describe('fertilizePlot', () => {
   describe('no fertilizer in inventory', () => {
