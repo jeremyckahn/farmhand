@@ -1,18 +1,18 @@
 // Dependencies required by ./utils (see below) need to be explicitly required
 // here to ensure that that they are included in serverless builds. Do NOT
 // remove them unless they are not needed by any upstream modules.
-import 'redis'
-import '../src/common/utils'
-import '../src/common/constants'
-import '../api-etc/constants'
+require('redis')
+require('../src/common/utils')
+require('../src/common/constants')
+require('../api-etc/constants')
 // End explicit requires for serverless builds
 
-import { promisify } from 'util'
+const { promisify } = require('util')
 
-import axios from 'axios'
+const axios = require('axios')
 
-import { MARKET_SUMMARY_FOR_DISCORD } from '../api-etc/templates'
-import { allowCors, getRedisClient, getRoomData } from '../api-etc/utils'
+const { MARKET_SUMMARY_FOR_DISCORD } = require('../api-etc/templates')
+const { allowCors, getRedisClient, getRoomData } = require('../api-etc/utils')
 
 const client = getRedisClient()
 
