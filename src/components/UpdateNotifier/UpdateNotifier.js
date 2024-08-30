@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 
 import FarmhandContext from '../Farmhand/Farmhand.context'
@@ -20,13 +20,13 @@ const UpdateNotifier = () => {
 
     handleGameUpdateAvailable(updateServiceWorker)
 
-    // NOTE: Ensure the game is updated when the user opens the game next.
+    // NOTE: This ensures the game is updated when the user next opensit.
     window.addEventListener('beforeunload', () => {
       updateServiceWorker(true)
     })
   }, [appNeedsUpdate, handleGameUpdateAvailable, updateServiceWorker])
 
-  return <></>
+  return null
 }
 
 export default UpdateNotifier

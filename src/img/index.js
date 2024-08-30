@@ -191,6 +191,8 @@ import goldIngot from './ores/gold-ingot.png'
 
 // Cows
 import rainbowCow from './animals/cows/rainbow-cow.png'
+// NOTE: These need to be imported as dataUri strings because the image data is
+// programmatically manipulated by the getCowImage utility function.
 import cowVariation1 from './animals/cows/cow-variation-1.png?dataUri'
 import cowVariation2 from './animals/cows/cow-variation-2.png?dataUri'
 import cowVariation3 from './animals/cows/cow-variation-3.png?dataUri'

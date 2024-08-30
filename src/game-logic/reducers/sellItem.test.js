@@ -141,7 +141,7 @@ describe('sellItem', () => {
             todaysNotifications: [],
             revenue: 0,
             todaysRevenue: 0,
-            valueAdjustments: { [carrotSeed.id]: 10 },
+            valueAdjustments: { [carrotSeed.id]: 1 },
           },
           testItem({ id: carrotSeed.id }),
           3
@@ -173,16 +173,16 @@ describe('sellItem', () => {
               todaysNotifications: [],
               revenue: 0,
               todaysRevenue: 0,
-              valueAdjustments: { [carrot.id]: 10 },
+              valueAdjustments: { [carrot.id]: 1 },
             },
             testItem({ id: carrot.id }),
             3
           )
 
-          expect(state.loanBalance).toEqual(62.5)
-          expect(state.money).toEqual(812.5)
-          expect(state.revenue).toEqual(712.5)
-          expect(state.todaysRevenue).toEqual(712.5)
+          expect(state.loanBalance).toEqual(96.25)
+          expect(state.money).toEqual(171.25)
+          expect(state.revenue).toEqual(71.25)
+          expect(state.todaysRevenue).toEqual(71.25)
         })
       })
 
@@ -199,7 +199,7 @@ describe('sellItem', () => {
               todaysNotifications: [],
               revenue: 0,
               todaysRevenue: 0,
-              valueAdjustments: { [carrot.id]: 10 },
+              valueAdjustments: { [carrot.id]: 1 },
             },
             testItem({ id: carrot.id }),
             3
@@ -211,8 +211,8 @@ describe('sellItem', () => {
         })
 
         test('sale is reduced based on remaining loan balance', () => {
-          expect(state.money).toEqual(848.5)
-          expect(state.todaysRevenue).toEqual(748.5)
+          expect(state.money).toEqual(173.5)
+          expect(state.todaysRevenue).toEqual(73.5)
         })
 
         test('payoff notification is shown', () => {

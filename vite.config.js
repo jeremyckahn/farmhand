@@ -10,7 +10,7 @@ import { manifest } from './manifest'
 // NOTE: See:
 //   - https://stackoverflow.com/a/78012267/470685
 //   - https://www.codu.co/articles/converting-an-image-to-a-data-uri-string-in-node-js-dznt83ha
-const base64Loader = {
+const dataUriLoader = {
   name: 'dataUri-loader',
   transform(_, id) {
     const [path, query] = id.split('?')
@@ -63,7 +63,7 @@ const viteConfig = defineConfig({
         })
       },
     },
-    base64Loader,
+    dataUriLoader,
   ],
   resolve: {
     alias: [
@@ -77,15 +77,6 @@ const viteConfig = defineConfig({
   define: {
     // NOTE: By default, Vite doesn't include shims for NodeJS.
     global: {},
-  },
-  // NOTE: This makes Vite treat .js files as .jsx (for legacy support)
-  // See: https://stackoverflow.com/a/76458411/470685
-  optimizeDeps: {
-    esbuildOptions: {
-      loader: {
-        '.js': 'jsx',
-      },
-    },
   },
 })
 

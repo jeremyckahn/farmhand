@@ -72,10 +72,10 @@ describe('field interaction', () => {
 
   test('can enable fertilize mode', async () => {
     const field = screen.getByTestId('field')
-    const [, carrotSeedButton] = screen.getAllByAltText(fertilizer.name)
+    const [, fertilizerButton] = screen.getAllByAltText(fertilizer.name)
 
     expect(field).not.toHaveClass('fertilize-mode')
-    userEvent.click(carrotSeedButton)
+    userEvent.click(fertilizerButton)
     expect(field).toHaveClass('fertilize-mode')
   })
 })
