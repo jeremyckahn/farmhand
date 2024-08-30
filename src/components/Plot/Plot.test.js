@@ -10,11 +10,11 @@ import { FERTILIZER_BONUS } from '../../constants'
 
 import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot'
 
-vitest.mock('../../data/maps')
-vitest.mock('../../data/items')
-vitest.mock('../../data/levels', () => ({ levels: [] }))
-vitest.mock('../../data/shop-inventory')
-vitest.mock('../../img')
+jest.mock('../../data/maps')
+jest.mock('../../data/items')
+jest.mock('../../data/levels', () => ({ levels: [] }))
+jest.mock('../../data/shop-inventory')
+jest.mock('../../img')
 
 let component
 
@@ -233,7 +233,7 @@ describe('getDaysLeftToMature', () => {
       })
     })
 
-    test('plot contains non-crop content', () => {
+    describe('plot contains non-crop content', () => {
       expect(
         getDaysLeftToMature(getPlotContentFromItemId('replantable-item'))
       ).toEqual(null)

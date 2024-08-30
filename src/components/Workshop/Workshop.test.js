@@ -8,10 +8,10 @@ import { getUpgradesAvailable } from './getUpgradesAvailable'
 
 import Workshop from './Workshop'
 
-vitest.mock('./getUpgradesAvailable')
+jest.mock('./getUpgradesAvailable')
 
-vitest.mock('../../data/maps', async importOriginal => ({
-  ...(await importOriginal()),
+jest.mock('../../data/maps', () => ({
+  ...jest.requireActual('../../data/maps'),
   recipesMap: {
     'kitchen-recipe-1': {
       id: 'kitchen-recipe-1',
@@ -46,14 +46,10 @@ vitest.mock('../../data/maps', async importOriginal => ({
   },
 }))
 
-vitest.mock('../Recipe', () => {
-  return { default: () => <div data-testid="Recipe">Recipe</div> }
-})
-vitest.mock('../UpgradePurchase', () => {
-  return {
-    default: () => <div data-testid="UpgradePurchase">UpgradePurchase</div>,
-  }
-})
+jest.mock('../Recipe', () => () => <div data-testid="Recipe">Recipe</div>)
+jest.mock('../UpgradePurchase', () => () => (
+  <div data-testid="UpgradePurchase">UpgradePurchase</div>
+))
 
 describe('<Workshop />', () => {
   let gameState

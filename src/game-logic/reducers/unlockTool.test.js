@@ -27,7 +27,7 @@ describe('unlockTool', () => {
     const { toolLevels } = unlockTool(state, toolType.SHOVEL)
 
     expect(toolLevels).toMatchInlineSnapshot(`
-      {
+      Object {
         "HOE": "DEFAULT",
         "SCYTHE": "GOLD",
         "SHOVEL": "DEFAULT",

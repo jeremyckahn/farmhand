@@ -3,7 +3,7 @@ import { getCropFromItemId } from '../../utils'
 
 import { plantInPlot } from './plantInPlot'
 
-vitest.mock('../../data/items')
+jest.mock('../../data/items')
 
 describe('plantInPlot', () => {
   describe('crop quantity > 1', () => {
@@ -78,7 +78,7 @@ describe('plantInPlot', () => {
 
   describe('crops with varieties', () => {
     test('plants a crop from a seed with varieties', () => {
-      vitest.spyOn(Math, 'random').mockReturnValue(0)
+      jest.spyOn(Math, 'random').mockReturnValue(0)
       const state = plantInPlot(
         {
           field: [[]],

@@ -25,7 +25,6 @@ body
 .Farmhand
   +markdown-styles()
 
-.Farmhand
   // padding-left and breakpoints correspond to AppBar dimensions
   // https://material-ui.com/demos/app-bar/
   display: flex
@@ -156,7 +155,7 @@ body
 
   @media (orientation: landscape)
     &.menu-open .bottom-controls
-      left: calc(50vw + $sidebar-width / 2)
+      left: calc(50vw + #{$sidebar-width / 2})
 
   .end-day
     position: fixed
@@ -189,13 +188,13 @@ body
   h5,
   h6,
   p,
-  p.MuiTypography-root
+  p.MuiTypography-root,
     font-family: "Public Sans", sans-serif
 
   h3,
   h4,
   h5,
-  h6
+  h6,
     font-weight: bold
 
   h2
@@ -249,7 +248,7 @@ body
   .MuiTypography-h4,
   .MuiTypography-h5,
   .MuiTypography-h6,
-  .MuiButtonBase-root
+  .MuiButtonBase-root,
     font-family: "Francois One", sans-serif
 
   .MuiButtonBase-root
@@ -302,14 +301,6 @@ body
     ol
       li
         list-style: decimal
-
-  hr
-    background: none
-
-  // NOTE: Fixes an unhelpful style from scss-reset/reset
-  .MuiDivider-vertical
-    width: auto
-
 
 .Farmhand.notification-container
   margin-top: 8em

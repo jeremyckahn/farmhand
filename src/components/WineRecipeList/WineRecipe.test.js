@@ -37,7 +37,7 @@ const stubGameState = {
 
 /** @type {Pick<uiHandlers, 'handleMakeWineClick'>} */
 const stubHandlers = {
-  handleMakeWineClick: vitest.fn(),
+  handleMakeWineClick: jest.fn(),
 }
 
 /**

@@ -4,8 +4,8 @@ import { fertilizerType } from '../../enums'
 
 import { incrementPlotContentAge } from './incrementPlotContentAge'
 
-vitest.mock('../../data/maps')
-vitest.mock('../../data/items')
+jest.mock('../../data/maps')
+jest.mock('../../data/items')
 
 describe('incrementPlotContentAge', () => {
   describe('plot contains a crop', () => {

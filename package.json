@@ -8,26 +8,26 @@
   "main": "public/electron.js",
   "unpkg": "build/index.html",
   "homepage": "https://www.farmhand.life/",
-  "type": "module",
   "scripts": {
-    "build": "vite build",
-    "build:native": "npm run build -- --base='./' && electron-builder --publish=always",
+    "build": "react-scripts --openssl-legacy-provider build",
+    "build:native": "cross-env PUBLIC_URL='./' npm run build && electron-builder --publish=always",
+    "build:analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
     "check:types": "tsc",
     "check:types:noerror": "tsc; exit 0",
-    "dev": "mprocs \"cross-env VITE_TRACKER_URL='ws://localhost:8000' npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run start:tracker\"",
+    "dev": "mprocs \"cross-env REACT_APP_TRACKER_URL='ws://localhost:8000' npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run start:tracker\"",
     "dev:native": "mprocs \"BROWSER=none npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run electron\"",
     "electron": "wait-on tcp:3000 && electron .",
-    "print:crops": "npx babel-node --presets @babel/preset-env --presets babel-preset-vite src/scripts/generate-crop-table.js",
+    "print:crops": "npx -p @babel/core -p @babel/node babel-node --presets @babel/preset-env src/scripts/generate-crop-table.js",
     "lint": "eslint src --max-warnings=0",
     "prettier": "prettier 'src/**/*.js' --write",
-    "preversion": "npm test -- --run",
+    "preversion": "CI=true npm run test",
     "postversion": "git push && git push --tags",
-    "start": "vite --port=3000",
+    "start": "react-scripts --openssl-legacy-provider start",
     "start:api": "NODE_OPTIONS=--openssl-legacy-provider vercel dev --listen localhost:3001",
     "start:backend": "docker compose up",
     "start:tracker": "bittorrent-tracker",
-    "test": "vitest",
-    "test:debug": "vitest --inspect-brk --no-file-parallelism --run",
+    "test": "react-scripts test",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "update-images": "bash update-images.sh"
   },
   "author": "Jeremy Kahn <jeremyckahn@gmail.com>",
@@ -40,7 +40,6 @@
     "node": "18.x"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
     "@babel/node": "^7.20.7",
     "@testing-library/dom": "^8.3.0",
     "@testing-library/jest-dom": "^5.14.1",
@@ -53,12 +52,8 @@
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "@vitest/coverage-v8": "^2.0.5",
-    "babel-preset-vite": "^1.1.3",
     "bittorrent-tracker": "^9.19.0",
     "browserslist": "^4.21.9",
-    "cheerio": "^1.0.0-rc.3",
     "cross-env": "^7.0.2",
     "electron": "^22.1.0",
     "electron-builder": "^24.13.3",
@@ -74,6 +69,7 @@
     "git-branch-is": "^4.0.0",
     "husky": "^4.2.3",
     "jest-extended": "^0.11.5",
+    "jest-junit": "^14.0.1",
     "jimp": "^0.22.8",
     "jsdom": "^16.2.1",
     "markdown-table": "^2.0.0",
@@ -83,13 +79,9 @@
     "npm-run-all": "^4.1.3",
     "prettier": "^1.13.7",
     "pretty-quick": "^2.0.1",
-    "sass": "^1.69.5",
-    "scss-reset": "^1.4.2",
+    "react-scripts": "^5.0.1",
     "serve": "^14.2.0",
     "vercel": "^28.14.0",
-    "vite": "^5.0.8",
-    "vite-plugin-pwa": "^0.20.1",
-    "vitest": "^2.0.5",
     "wait-on": "^6.0.1"
   },
   "dependencies": {
@@ -109,7 +101,7 @@
     "babel-eslint": "^10.1.0",
     "buffer": "^6.0.3",
     "classnames": "^2.2.6",
-    "compass-mixins": "^0.12.12",
+    "compass-mixins": "^0.12.10",
     "dinero.js": "^1.7.0",
     "electron-is-dev": "^2.0.0",
     "electron-updater": "^5.0.5",
@@ -142,12 +134,25 @@
     "redis": "^3.0.2",
     "seedrandom": "^3.0.5",
     "shifty": "^3.0.1",
+    "source-map-explorer": "^2.3.1",
     "stream": "npm:stream-browserify@^3.0.0",
-    "trystero": "^0.20.0",
+    "trystero": "^0.16.0",
     "typeface-francois-one": "0.0.71",
     "typeface-public-sans": "^1.1.4",
     "url": "^0.11.0",
     "uuid": "^3.4.0",
+    "workbox-background-sync": "^6.1.5",
+    "workbox-broadcast-update": "^6.1.5",
+    "workbox-cacheable-response": "^6.1.5",
+    "workbox-core": "^6.1.5",
+    "workbox-expiration": "^6.1.5",
+    "workbox-google-analytics": "^6.1.5",
+    "workbox-navigation-preload": "^6.1.5",
+    "workbox-precaching": "^6.1.5",
+    "workbox-range-requests": "^6.1.5",
+    "workbox-routing": "^6.1.5",
+    "workbox-strategies": "^6.1.5",
+    "workbox-streams": "^6.1.5",
     "zlib": "npm:browserify-zlib@^0.2.0"
   },
   "build": {
@@ -155,15 +160,15 @@
     "productName": "Farmhand",
     "extraMetadata": {
       "name": "Farmhand",
-      "main": "dist/electron.js"
+      "main": "build/electron.js"
     },
     "files": [
-      "dist/**/*",
+      "build/**/*",
       "node_modules/**/*"
     ],
     "directories": {
       "buildResources": "public",
-      "output": "dist/native"
+      "output": "build/native"
     },
     "mac": {
       "target": {
@@ -195,7 +200,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run lint && if git-branch-is develop; then npm test -- --run; fi"
+      "pre-commit": "pretty-quick --staged && npm run lint && if git-branch-is develop; then cross-env CI=true react-scripts test --env=jsdom; fi"
     }
   },
   "files": [
@@ -212,5 +217,22 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!trystero)/"
+    ]
+  },
+  "optionalDependencies": {
+    "piskel-cli": "^1.0.41"
+  },
+  "jest-junit": {
+    "outputDirectory": "reports",
+    "outputName": "jest-junit.xml",
+    "ancestorSeparator": " › ",
+    "uniqueOutputName": "false",
+    "suiteNameTemplate": "{filepath}",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}"
+  }
 }

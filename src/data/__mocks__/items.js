@@ -1,11 +1,10 @@
 import { testItem } from '../../test-utils'
 import { itemType } from '../../enums'
-import * as actualItems from '../items'
 
 // Patch the original items data into the mock. This has the potential to break
 // with future versions of Webpack (keep an eye on
 // https://webpack.js.org/api/module-methods/).
-Object.assign(module.exports, { ...actualItems })
+Object.assign(module.exports, jest.requireActual('../items'))
 
 // Non-crop items
 export const sampleItem1 = testItem({

@@ -6,7 +6,7 @@ import FarmhandContext from '../Farmhand/Farmhand.context'
 
 import { RandomSeedInput } from './RandomSeedInput'
 
-const mockHandleRNGSeedChange = vitest.fn()
+const mockHandleRNGSeedChange = jest.fn()
 
 const MockRandomSeedInput = props => (
   <FarmhandContext.Provider

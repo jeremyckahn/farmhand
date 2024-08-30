@@ -10,8 +10,8 @@ import {
   getPlantableCropInventory,
 } from './Farmhand'
 
-vitest.mock('../../data/maps')
-vitest.mock('../../data/items')
+jest.mock('../../data/maps')
+jest.mock('../../data/items')
 
 describe('private helpers', () => {
   describe('computePlayerInventory', () => {

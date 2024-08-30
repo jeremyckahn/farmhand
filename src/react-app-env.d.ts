@@ -1,3 +1,5 @@
+/// <reference types="react-scripts" />
+
 import Farmhand from './components/Farmhand'
 
 // TODO: Contribute type definitions for 'global' package to

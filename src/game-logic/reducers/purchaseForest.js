@@ -22,7 +22,7 @@ export const purchaseForest = (state, forestId) => {
   const { columns, price, rows } = PURCHASABLE_FOREST_SIZES.get(forestId)
 
   /*
-   * TODO: using FOREST_AVAILABLE_NOTIFICATION here is temporary, this code path will
+   * FIXME: using FOREST_AVAILABLE_NOTIFICATION here is temporary, this code path will
    * ultimately just be for expansion and availability will happen elsewhere, such as
    * through leveling up to a certain level
    */

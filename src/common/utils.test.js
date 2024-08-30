@@ -1,13 +1,13 @@
 import { generateValueAdjustments } from './utils'
 
-vitest.mock('../data/maps')
-vitest.mock('../data/items')
+jest.mock('../data/maps')
+jest.mock('../data/items')
 
 describe('generateValueAdjustments', () => {
   let valueAdjustments
 
   beforeEach(() => {
-    vitest.spyOn(Math, 'random').mockReturnValue(1)
+    jest.spyOn(Math, 'random').mockReturnValue(1)
     valueAdjustments = generateValueAdjustments({}, {})
   })
 
@@ -24,7 +24,7 @@ describe('generateValueAdjustments', () => {
     })
   })
 
-  test('factors in price crashes', () => {
+  describe('factors in price crashes', () => {
     valueAdjustments = generateValueAdjustments(
       { 'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 } },
       {}
@@ -33,7 +33,7 @@ describe('generateValueAdjustments', () => {
     expect(valueAdjustments['sample-crop-1']).toEqual(0.5)
   })
 
-  test('factors in price surges', () => {
+  describe('factors in price surges', () => {
     valueAdjustments = generateValueAdjustments(
       {},
       { 'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 } }

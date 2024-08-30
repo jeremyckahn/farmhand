@@ -255,9 +255,7 @@ export const Navigation = ({
   return (
     <header className="Navigation">
       <h1>Farmhand</h1>
-      <p className="version">
-        v{import.meta.env.VITE_FARMHAND_PACKAGE_VERSION}
-      </p>
+      <p className="version">v{process.env.REACT_APP_VERSION}</p>
       <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
       <DayAndProgressContainer />
       <OnlineControls

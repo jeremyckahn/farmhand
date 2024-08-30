@@ -4,7 +4,24 @@ import window from 'global/window'
 
 import Farmhand from '../components/Farmhand'
 import { stageFocusType, fieldMode } from '../enums'
+import { testItem } from '../test-utils'
 import { randomNumberService } from '../common/services/randomNumber'
+
+jest.mock('../data/items')
+jest.mock('../data/levels', () => ({
+  levels: [
+    {
+      id: 0,
+    },
+    {
+      id: 1,
+      unlocksShopItem: 'sample-crop-1-seed',
+    },
+  ],
+  itemUnlockLevels: {},
+}))
+jest.mock('../data/recipes')
+jest.mock('../data/shop-inventory')
 
 let component
 
@@ -18,6 +35,20 @@ describe('handleFieldModeSelect', () => {
   beforeEach(() => {
     component.setState({
       selectedItemId: 'sample-crop-3',
+    })
+  })
+
+  describe('fieldMode === PLANT', () => {
+    beforeEach(() => {
+      handlers().handleFieldModeSelect(fieldMode.PLANT)
+    })
+
+    test('updates fieldMode state', () => {
+      expect(component.state().fieldMode).toEqual(fieldMode.PLANT)
+    })
+
+    test('does not change state.selectedItemId', () => {
+      expect(component.state().selectedItemId).toEqual('sample-crop-3')
     })
   })
 
@@ -36,9 +67,29 @@ describe('handleFieldModeSelect', () => {
   })
 })
 
+describe('handleItemSelectClick', () => {
+  beforeEach(() => {
+    component.setState({
+      selectedItemId: 'sample-crop-1',
+    })
+
+    handlers().handleItemSelectClick(
+      testItem({ enablesFieldMode: 'FOO', id: 'field-tool' })
+    )
+  })
+
+  test('resets state.selectedItemId', () => {
+    expect(component.state().selectedItemId).toEqual('field-tool')
+  })
+
+  test('sets state.fieldMode', () => {
+    expect(component.state().fieldMode).toEqual('FOO')
+  })
+})
+
 describe('handleClickEndDayButton', () => {
   test('increments the day', () => {
-    vitest.spyOn(component.instance(), 'incrementDay')
+    jest.spyOn(component.instance(), 'incrementDay')
     handlers().handleClickEndDayButton()
     expect(component.instance().incrementDay).toHaveBeenCalled()
   })
@@ -54,7 +105,7 @@ describe('handleMenuToggle', () => {
 
 describe('handleClickNextMenuButton', () => {
   test('calls focusNextView', () => {
-    vitest.spyOn(component.instance(), 'focusNextView').mockImplementation()
+    jest.spyOn(component.instance(), 'focusNextView').mockImplementation()
     handlers().handleClickNextMenuButton()
     expect(component.instance().focusNextView).toHaveBeenCalled()
   })
@@ -62,7 +113,7 @@ describe('handleClickNextMenuButton', () => {
 
 describe('handleClickPreviousMenuButton', () => {
   test('calls focusPreviousView', () => {
-    vitest.spyOn(component.instance(), 'focusPreviousView').mockImplementation()
+    jest.spyOn(component.instance(), 'focusPreviousView').mockImplementation()
     handlers().handleClickPreviousMenuButton()
     expect(component.instance().focusPreviousView).toHaveBeenCalled()
   })
@@ -70,7 +121,7 @@ describe('handleClickPreviousMenuButton', () => {
 
 describe('handleCowSelect', () => {
   test('calls selectCow', () => {
-    vitest.spyOn(component.instance(), 'selectCow').mockImplementation()
+    jest.spyOn(component.instance(), 'selectCow').mockImplementation()
     handlers().handleCowSelect({ id: 'abc' })
     expect(component.instance().selectCow).toHaveBeenCalledWith({ id: 'abc' })
   })
@@ -124,8 +175,8 @@ describe('handleShowHomeScreenChange', () => {
 
 describe('handleRNGSeedChange', () => {
   test('updates random seed', () => {
-    vitest.spyOn(window.history, 'replaceState')
-    vitest.spyOn(randomNumberService, 'seedRandomNumber')
+    jest.spyOn(window.history, 'replaceState')
+    jest.spyOn(randomNumberService, 'seedRandomNumber')
 
     handlers().handleRNGSeedChange('123')
 
@@ -138,8 +189,8 @@ describe('handleRNGSeedChange', () => {
   })
 
   test('resets random seed', () => {
-    vitest.spyOn(window.history, 'replaceState')
-    vitest.spyOn(randomNumberService, 'unseedRandomNumber')
+    jest.spyOn(window.history, 'replaceState')
+    jest.spyOn(randomNumberService, 'unseedRandomNumber')
 
     handlers().handleRNGSeedChange('')
 

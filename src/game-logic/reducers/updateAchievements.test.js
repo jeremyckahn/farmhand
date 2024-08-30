@@ -3,24 +3,20 @@ import { ACHIEVEMENT_COMPLETED } from '../../templates'
 describe('updateAchievements', () => {
   let updateAchievements
 
-  beforeAll(async () => {
-    vitest.resetModules()
-    vitest.mock('../../data/achievements', () => {
-      return {
-        default: [
-          {
-            id: 'test-achievement',
-            name: 'Test Achievement',
-            description: '',
-            rewardDescription: '',
-            condition: state => !state.conditionSatisfied,
-            reward: state => ({ ...state, conditionSatisfied: true }),
-          },
-        ],
-      }
-    })
+  beforeAll(() => {
+    jest.resetModules()
+    jest.mock('../../data/achievements', () => [
+      {
+        id: 'test-achievement',
+        name: 'Test Achievement',
+        description: '',
+        rewardDescription: '',
+        condition: state => !state.conditionSatisfied,
+        reward: state => ({ ...state, conditionSatisfied: true }),
+      },
+    ])
 
-    updateAchievements = (await vitest.importActual('./updateAchievements'))
+    updateAchievements = jest.requireActual('./updateAchievements')
       .updateAchievements
   })
 

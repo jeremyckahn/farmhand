@@ -17,8 +17,8 @@ describe('<AccountView />', () => {
       handlers: {},
     }
 
-    handleClickLoanPaydownButton = vitest.fn()
-    handleClickTakeOutLoanButton = vitest.fn()
+    handleClickLoanPaydownButton = jest.fn()
+    handleClickTakeOutLoanButton = jest.fn()
 
     render(
       <FarmhandContext.Provider value={contextValue}>

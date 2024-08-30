@@ -12,7 +12,7 @@ describe('Subheader', () => {
   let baseProps
 
   beforeEach(() => {
-    vitest.spyOn(Math, 'random').mockReturnValue(0)
+    jest.spyOn(Math, 'random').mockReturnValue(0)
     baseProps = {
       canCowBeTradedFor: false,
       cow: getCowStub(),

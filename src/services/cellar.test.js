@@ -9,7 +9,7 @@ const mockUuid = 'abc123'
 
 beforeEach(() => {
   // @ts-expect-error
-  vitest.spyOn(cellarService, '_uuid').mockReturnValue(mockUuid)
+  jest.spyOn(cellarService, '_uuid').mockReturnValue(mockUuid)
 })
 
 describe('CellarService', () => {

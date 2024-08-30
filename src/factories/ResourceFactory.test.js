@@ -4,17 +4,17 @@ import { randomChoice } from '../utils'
 
 import ResourceFactory from './ResourceFactory'
 
-vitest.mock('./CoalFactory')
-vitest.mock('./OreFactory')
-vitest.mock('./StoneFactory')
+jest.mock('./CoalFactory')
+jest.mock('./OreFactory')
+jest.mock('./StoneFactory')
 
-vitest.mock('../utils', async () => ({
-  ...(await vitest.importActual('../utils')),
-  randomChoice: vitest.fn(),
+jest.mock('../utils', () => ({
+  ...jest.requireActual('../utils'),
+  randomChoice: jest.fn(),
 }))
 
 beforeEach(() => {
-  vitest.spyOn(randomNumberService, 'isRandomNumberLessThan')
+  jest.spyOn(randomNumberService, 'isRandomNumberLessThan')
 })
 
 describe('ResourceFactory', () => {

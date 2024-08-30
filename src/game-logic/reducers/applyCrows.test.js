@@ -8,7 +8,7 @@ import { applyCrows, forEachPlot } from './applyCrows'
 const CARROT = 'carrot'
 
 beforeEach(() => {
-  vitest.spyOn(randomNumberService, 'isRandomNumberLessThan')
+  jest.spyOn(randomNumberService, 'isRandomNumberLessThan')
 })
 
 describe('applyCrows', () => {
@@ -26,7 +26,7 @@ describe('applyCrows', () => {
 
     addToField(CARROT)
 
-    vitest.spyOn(Math, 'random')
+    jest.spyOn(Math, 'random')
   })
 
   describe('no crows spawned', () => {

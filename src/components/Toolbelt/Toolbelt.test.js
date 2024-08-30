@@ -5,8 +5,8 @@ import { fieldMode, toolLevel, toolType } from '../../enums'
 
 import { Toolbelt } from './Toolbelt'
 
-vitest.mock('../../utils/memoize', () => ({
-  memoize: vitest.fn(callback => {
+jest.mock('../../utils/memoize', () => ({
+  memoize: jest.fn(callback => {
     return (...args) => {
       return callback(...args)
     }

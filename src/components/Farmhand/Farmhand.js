@@ -57,7 +57,6 @@ import NotificationSystem, {
   snackbarProviderContentCallback,
 } from '../NotificationSystem'
 import DebugMenu from '../DebugMenu'
-import UpdateNotifier from '../UpdateNotifier'
 import theme from '../../mui-theme'
 import { levelAchieved } from '../../utils/levelAchieved'
 import {
@@ -114,6 +113,7 @@ import {
   PROGRESS_SAVED_MESSAGE,
   REQUESTED_COW_TRADE_UNAVAILABLE,
   SERVER_ERROR,
+  UPDATE_AVAILABLE,
 } from '../../strings'
 import { endpoints, features, rtcConfig, trackerUrls } from '../../config'
 
@@ -528,7 +528,7 @@ export default class Farmhand extends FarmhandReducers {
       },
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
-      version: import.meta.env.VITE_FARMHAND_PACKAGE_VERSION ?? '',
+      version: process.env.REACT_APP_VERSION ?? '',
     }
   }
 
@@ -604,7 +604,7 @@ export default class Farmhand extends FarmhandReducers {
       }
     })
 
-    if (import.meta.env.MODE === 'development') {
+    if (process.env.NODE_ENV === 'development') {
       Object.assign(this.keyMap, {
         clearPersistedData: 'shift+d',
         waterAllPlots: 'w',
@@ -934,7 +934,7 @@ export default class Farmhand extends FarmhandReducers {
         activePlayers: 1,
         peerRoom: joinRoom(
           {
-            appId: import.meta.env.VITE_NAME,
+            appId: process.env.REACT_APP_NAME,
             trackerUrls,
             trackerRedundancy,
             rtcConfig,
@@ -1212,6 +1212,19 @@ export default class Farmhand extends FarmhandReducers {
     this.prependPendingPeerMessage(message, severity)
   }
 
+  /*!
+   * @param {ServiceWorkerRegistration} registration
+   */
+  showUpdateNotification(registration) {
+    // @see https://github.com/jeremyckahn/farmhand/blob/dd1dd502b079be39f50c7d62a54a2027ba83360c/src/service-worker.js#L65-L71
+    // @see https://github.com/pwa-builder/pwa-update/blob/1b709e339e1bde6b13cc71eb4812618d2d28fd54/src/pwa-update.ts#L169-L171
+    registration.waiting.postMessage({ type: 'SKIP_WAITING' })
+
+    this.showNotification(UPDATE_AVAILABLE, 'success', () => {
+      window.location.reload()
+    })
+  }
+
   render() {
     const {
       props: { features },
@@ -1284,7 +1297,6 @@ export default class Farmhand extends FarmhandReducers {
                     ),
                   }}
                 >
-                  <UpdateNotifier />
                   <AppBar />
                   <Drawer
                     {...{
@@ -1299,7 +1311,7 @@ export default class Farmhand extends FarmhandReducers {
                   >
                     <Navigation />
                     <ContextPane />
-                    {import.meta.env.MODE === 'development' && <DebugMenu />}
+                    {process.env.NODE_ENV === 'development' && <DebugMenu />}
                     <div {...{ className: 'spacer' }} />
                   </Drawer>
                   <Stage />

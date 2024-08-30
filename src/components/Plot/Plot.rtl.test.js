@@ -10,7 +10,9 @@ import { items } from '../../img'
 
 import { Plot } from './Plot'
 
-vitest.mock('../../img')
+jest.mock('../../data/maps')
+jest.mock('../../data/items')
+jest.mock('../../img')
 
 describe('class states', () => {
   beforeEach(() => {
@@ -110,7 +112,7 @@ describe('background image', () => {
             isInHoverRange: false,
             lifeStage: cropLifeStage.GROWN,
             plotContent: testCrop({
-              itemId: 'carrot',
+              itemId: 'sample-crop-1',
             }),
             selectedItemId: '',
             setHoveredPlot: noop,
@@ -122,7 +124,7 @@ describe('background image', () => {
     })
 
     test('renders crop classes', () => {
-      const img = screen.getByAltText('Carrot Seed')
+      const img = screen.getByAltText('Sample Crop Item Seed 1')
       const { classList } = img
 
       expect(classList).toContain('animated')

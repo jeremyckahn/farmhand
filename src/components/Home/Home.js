@@ -2,7 +2,7 @@ import React from 'react'
 
 import { func, object } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import globalWindow from 'global/window'
+import window from 'global/window'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import Accordion from '@mui/material/Accordion'
@@ -39,7 +39,7 @@ const getRemainingOnboardingAchievements = memoize(completedAchievements =>
 )
 
 const environmentAllowsInstall = ['production', 'development'].includes(
-  import.meta.env.MODE
+  process.env.NODE_ENV
 )
 
 const VALID_ORIGINS = [
@@ -51,8 +51,8 @@ const VALID_ORIGINS = [
 // https://stackoverflow.com/questions/41742390/javascript-to-check-if-pwa-or-mobile-web/41749865#41749865
 const isInstallable =
   environmentAllowsInstall &&
-  !globalWindow.matchMedia('(display-mode: standalone)').matches &&
-  VALID_ORIGINS.includes(globalWindow.location.origin)
+  !window.matchMedia('(display-mode: standalone)').matches &&
+  VALID_ORIGINS.includes(window.location.origin)
 
 const Home = ({
   completedAchievements,

@@ -9,11 +9,11 @@ import { noop } from '../../utils/noop'
 
 import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field'
 
-vitest.mock('../../data/maps')
-vitest.mock('../../data/items')
-vitest.mock('../../data/levels', () => ({ levels: [] }))
-vitest.mock('../../data/shop-inventory')
-vitest.mock('../../img')
+jest.mock('../../data/maps')
+jest.mock('../../data/items')
+jest.mock('../../data/levels', () => ({ levels: [] }))
+jest.mock('../../data/shop-inventory')
+jest.mock('../../img')
 
 let component
 
@@ -83,6 +83,39 @@ describe('field rendering', () => {
   })
 })
 
+describe('fertilize-mode class', () => {
+  test('is not present when fieldMode != FERTILIZE', () => {
+    expect(component.find('.Field').hasClass('fertilize-mode')).toBeFalsy()
+  })
+
+  test('is present when fieldMode == FERTILIZE', () => {
+    component.setProps({ fieldMode: fieldMode.FERTILIZE })
+    expect(component.find('.Field').hasClass('fertilize-mode')).toBeTruthy()
+  })
+})
+
+describe('plant-mode class', () => {
+  test('is not present when fieldMode != PLANT', () => {
+    expect(component.find('.Field').hasClass('plant-mode')).toBeFalsy()
+  })
+
+  test('is present when fieldMode == PLANT', () => {
+    component.setProps({ fieldMode: fieldMode.PLANT })
+    expect(component.find('.Field').hasClass('plant-mode')).toBeTruthy()
+  })
+})
+
+describe('harvest-mode class', () => {
+  test('is not present when fieldMode != HARVEST', () => {
+    expect(component.find('.Field').hasClass('harvest-mode')).toBeFalsy()
+  })
+
+  test('is present when fieldMode == HARVEST', () => {
+    component.setProps({ fieldMode: fieldMode.HARVEST })
+    expect(component.find('.Field').hasClass('harvest-mode')).toBeTruthy()
+  })
+})
+
 describe('is-inventory-full class', () => {
   beforeEach(() => {
     component.setProps({
@@ -100,6 +133,28 @@ describe('is-inventory-full class', () => {
       inventory: [testItem({ quantity: 2 })],
     })
     expect(component.find('.Field').hasClass('is-inventory-full')).toBeTruthy()
+  })
+})
+
+describe('cleanup-mode class', () => {
+  test('is not present when fieldMode != CLEANUP', () => {
+    expect(component.find('.Field').hasClass('cleanup-mode')).toBeFalsy()
+  })
+
+  test('is present when fieldMode == CLEANUP', () => {
+    component.setProps({ fieldMode: fieldMode.CLEANUP })
+    expect(component.find('.Field').hasClass('cleanup-mode')).toBeTruthy()
+  })
+})
+
+describe('water-mode class', () => {
+  test('is not present when fieldMode != WATER', () => {
+    expect(component.find('.Field').hasClass('water-mode')).toBeFalsy()
+  })
+
+  test('is present when fieldMode == WATER', () => {
+    component.setProps({ fieldMode: fieldMode.WATER })
+    expect(component.find('.Field').hasClass('water-mode')).toBeTruthy()
   })
 })
 

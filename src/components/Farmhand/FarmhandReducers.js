@@ -216,7 +216,7 @@ export class FarmhandReducers extends Component {
       const reducer = reducers[reducerName]
 
       if (
-        import.meta.env.MODE === 'development' &&
+        process.env.NODE_ENV === 'development' &&
         typeof reducer === 'undefined'
       ) {
         throw new Error(
