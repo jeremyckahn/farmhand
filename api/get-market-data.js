@@ -1,18 +1,18 @@
 // Dependencies required by ./utils (see below) need to be explicitly required
 // here to ensure that that they are included in serverless builds. Do NOT
 // remove them unless they are not needed by any upstream modules.
-const { promisify } = require('util')
+import { promisify } from 'util'
 
-require('redis')
-require('../src/common/utils')
+import 'redis'
+import '../src/common/utils'
 // End explicit requires for serverless builds
 
-const {
+import {
   allowCors,
   getRedisClient,
   getRoomData,
   getRoomName,
-} = require('../api-etc/utils')
+} from '../api-etc/utils'
 
 const client = getRedisClient()
 
