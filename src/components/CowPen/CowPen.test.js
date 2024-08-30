@@ -11,14 +11,14 @@ import { Cow } from './CowPen'
 let component
 
 beforeEach(() => {
-  jest.useFakeTimers()
-  jest.spyOn(global, 'setTimeout')
-  jest.spyOn(global, 'clearTimeout')
+  vitest.useFakeTimers()
+  vitest.spyOn(global, 'setTimeout')
+  vitest.spyOn(global, 'clearTimeout')
 })
 
 describe('Cow', () => {
   beforeEach(() => {
-    jest.spyOn(Math, 'random').mockReturnValue(0)
+    vitest.spyOn(Math, 'random').mockReturnValue(0)
     component = shallow(
       <Cow
         {...{
@@ -65,7 +65,7 @@ describe('Cow', () => {
     describe('receiving different isSelected prop', () => {
       describe('while cow is moving', () => {
         beforeEach(() => {
-          jest.clearAllTimers()
+          vitest.clearAllTimers()
         })
 
         describe('isSelected false -> true', () => {
@@ -91,7 +91,10 @@ describe('Cow', () => {
       describe('isSelected true -> false', () => {
         test('schedules a position change', () => {
           component.setProps({ isSelected: true })
-          const scheduleMove = jest.spyOn(component.instance(), 'scheduleMove')
+          const scheduleMove = vitest.spyOn(
+            component.instance(),
+            'scheduleMove'
+          )
           component.setProps({ isSelected: false })
           expect(scheduleMove).toHaveBeenCalled()
         })
@@ -132,7 +135,7 @@ describe('Cow', () => {
           cow: { ...cow, happinessBoostsToday: 1 },
         })
 
-        jest.runOnlyPendingTimers()
+        vitest.runOnlyPendingTimers()
         expect(component.state().showHugAnimation).toBe(false)
       })
     })

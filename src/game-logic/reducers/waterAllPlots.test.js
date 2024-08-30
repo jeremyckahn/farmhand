@@ -2,8 +2,8 @@ import { testCrop } from '../../test-utils'
 
 import { waterAllPlots } from './waterAllPlots'
 
-jest.mock('../../data/maps')
-jest.mock('../../data/items')
+vitest.mock('../../data/maps')
+vitest.mock('../../data/items')
 
 describe('waterAllPlots', () => {
   test('sets wasWateredToday to true for all plots', () => {

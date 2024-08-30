@@ -25,7 +25,7 @@ describe('<UpgradePurchase />', () => {
     }
 
     props = {
-      handleUpgradeTool: jest.fn(),
+      handleUpgradeTool: vitest.fn(),
       inventory: [
         {
           id: 'bronze-ore',

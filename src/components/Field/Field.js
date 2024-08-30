@@ -359,6 +359,7 @@ export const Field = props => {
             'water-mode': fieldMode === WATER,
           }),
           'data-purchased-field': purchasedField,
+          'data-testid': 'field',
         }}
       >
         <TransformWrapper

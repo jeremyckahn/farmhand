@@ -1,14 +1,14 @@
-import window from 'global/window'
+import globalWindow from 'global/window'
 
 export const endpoints = {
-  getMarketData: `${process.env.REACT_APP_API_ROOT}api/get-market-data`,
-  postDayResults: `${process.env.REACT_APP_API_ROOT}api/post-day-results`,
+  getMarketData: `${import.meta.env.VITE_API_ROOT}api/get-market-data`,
+  postDayResults: `${import.meta.env.VITE_API_ROOT}api/post-day-results`,
 }
 
 // Represents all of the features enabled for the current environment. Features
 // are enabled by environment-specific envars that start with
-// "REACT_APP_ENABLE_" prefix. The name of the enabled feature is the part of
-// the envar name that follows the prefix. So, `REACT_APP_ENABLE_MINING=true`
+// "VITE_ENABLE_" prefix. The name of the enabled feature is the part of
+// the envar name that follows the prefix. So, `VITE_ENABLE_MINING=true`
 // in a .env file will enable the "MINING" feature for its corresponding
 // environment.
 //
@@ -24,8 +24,8 @@ export const endpoints = {
  *   FOREST?: boolean
  * }}
  */
-export const features = Object.keys(process.env).reduce((acc, key) => {
-  const matches = key.match(/REACT_APP_ENABLE_(.*)/)
+export const features = Object.keys(import.meta.env).reduce((acc, key) => {
+  const matches = key.match(/VITE_ENABLE_(.*)/)
 
   if (matches) {
     acc[matches[1]] = true
@@ -36,7 +36,7 @@ export const features = Object.keys(process.env).reduce((acc, key) => {
 
 // Use optional chaining here because window.location will not be defined when
 // this is running in a Node.js context.
-const searchParams = new URLSearchParams(window.location?.search)
+const searchParams = new URLSearchParams(globalWindow.location?.search)
 
 for (const key of searchParams.keys()) {
   const matches = key.match(/enable_(.*)/)
@@ -53,27 +53,27 @@ export const rtcConfig = {
     },
     {
       urls: 'turn:a.relay.metered.ca:80',
-      username: process.env.REACT_APP_TURN_USERNAME,
-      credential: process.env.REACT_APP_TURN_CREDENTIAL,
+      username: import.meta.env.VITE_TURN_USERNAME,
+      credential: import.meta.env.VITE_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:80?transport=tcp',
-      username: process.env.REACT_APP_TURN_USERNAME,
-      credential: process.env.REACT_APP_TURN_CREDENTIAL,
+      username: import.meta.env.VITE_TURN_USERNAME,
+      credential: import.meta.env.VITE_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:443',
-      username: process.env.REACT_APP_TURN_USERNAME,
-      credential: process.env.REACT_APP_TURN_CREDENTIAL,
+      username: import.meta.env.VITE_TURN_USERNAME,
+      credential: import.meta.env.VITE_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:443?transport=tcp',
-      username: process.env.REACT_APP_TURN_USERNAME,
-      credential: process.env.REACT_APP_TURN_CREDENTIAL,
+      username: import.meta.env.VITE_TURN_USERNAME,
+      credential: import.meta.env.VITE_TURN_CREDENTIAL,
     },
   ],
 }
 
-export const trackerUrls = process.env.REACT_APP_TRACKER_URL
-  ? [process.env.REACT_APP_TRACKER_URL]
+export const trackerUrls = import.meta.env.VITE_TRACKER_URL
+  ? [import.meta.env.VITE_TRACKER_URL]
   : undefined

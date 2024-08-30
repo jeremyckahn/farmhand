@@ -6,11 +6,7 @@ import { toolLevel, toolType } from '../enums'
 import { INFINITE_STORAGE_LIMIT } from '../constants'
 
 import { achievementsMap } from './achievements'
-
-jest.mock('./items')
-jest.mock('./levels', () => ({ levels: [] }))
-jest.mock('./recipes')
-jest.mock('./shop-inventory')
+import { carrot } from './crops'
 
 describe('harvest-crop', () => {
   describe('condition', () => {
@@ -19,9 +15,7 @@ describe('harvest-crop', () => {
     beforeEach(() => {
       inputState = {
         cropsHarvested: {},
-        field: [
-          [null, null, testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })],
-        ],
+        field: [[null, null, testCrop({ itemId: carrot.id, daysWatered: 5 })]],
         inventory: [],
         inventoryLimit: INFINITE_STORAGE_LIMIT,
         toolLevels: {

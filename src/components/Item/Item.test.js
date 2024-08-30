@@ -8,7 +8,7 @@ import { INFINITE_STORAGE_LIMIT } from '../../constants'
 
 import { Item } from './Item'
 
-jest.mock('../../data/maps')
+vitest.mock('../../data/maps')
 
 describe('Item', () => {
   const baseProps = {
