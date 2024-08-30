@@ -3,7 +3,7 @@ import { testCrop } from '../../test-utils'
 import { waterPlot } from './waterPlot'
 import { forRange } from './forRange'
 
-vitest.mock('../../data/maps')
+jest.mock('../../data/maps')
 
 describe('forRange', () => {
   test('calls given reducer on range of plots', () => {

@@ -8,7 +8,7 @@ describe('<TierPurchase />', () => {
   let onBuyClick, props
 
   beforeEach(() => {
-    onBuyClick = vitest.fn()
+    onBuyClick = jest.fn()
     props = {
       onBuyClick,
       money: 0,

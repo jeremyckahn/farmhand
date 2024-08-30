@@ -6,6 +6,8 @@ import { itemsMap } from '../../data/maps'
 import FarmhandContext from '../Farmhand/Farmhand.context'
 import Item from '../Item'
 
+import './PriceEventView.sass'
+
 const PriceEventView = ({ priceCrashes, priceSurges }) => (
   <div className="PriceEventView">
     <h3>Price Surges</h3>

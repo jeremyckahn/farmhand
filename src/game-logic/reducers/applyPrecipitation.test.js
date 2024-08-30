@@ -10,8 +10,8 @@ import { getPlotContentFromItemId } from '../../utils'
 
 import { applyPrecipitation } from './applyPrecipitation'
 
-vitest.mock('../../data/maps')
-vitest.mock('../../data/items')
+jest.mock('../../data/maps')
+jest.mock('../../data/items')
 
 describe('applyPrecipitation', () => {
   test('waters all plots', () => {
@@ -36,7 +36,7 @@ describe('applyPrecipitation', () => {
 
   describe('rain shower', () => {
     test('waters all plots', () => {
-      vitest.spyOn(Math, 'random').mockReturnValue(1)
+      jest.spyOn(Math, 'random').mockReturnValue(1)
       const state = applyPrecipitation({
         field: [[]],
         inventory: [],
@@ -52,7 +52,7 @@ describe('applyPrecipitation', () => {
 
   describe('storm', () => {
     beforeEach(() => {
-      vitest.spyOn(Math, 'random').mockReturnValue(0)
+      jest.spyOn(Math, 'random').mockReturnValue(0)
     })
 
     describe('scarecrows are planted', () => {

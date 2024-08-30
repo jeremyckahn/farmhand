@@ -6,6 +6,8 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 
+import './KeybindingsView.sass'
+
 const ElevatedPaper = props => (
   <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
 )

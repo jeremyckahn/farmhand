@@ -5,7 +5,7 @@ import CoalFactory from './CoalFactory'
 
 describe('CoalFactory', () => {
   beforeEach(() => {
-    vitest.spyOn(utils, 'chooseRandom')
+    jest.spyOn(utils, 'chooseRandom')
   })
 
   describe('generate', () => {

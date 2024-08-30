@@ -5,7 +5,7 @@ describe('RandomNumberService', () => {
     const chance = 0.6
 
     beforeEach(() => {
-      vitest.spyOn(randomNumberService, 'generateRandomNumber')
+      jest.spyOn(randomNumberService, 'generateRandomNumber')
     })
 
     test('it returns true when random number is below chance', () => {

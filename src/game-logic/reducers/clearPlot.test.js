@@ -6,7 +6,7 @@ import { randomNumberService } from '../../common/services/randomNumber'
 
 import { clearPlot } from './clearPlot'
 
-vitest.mock('../../data/maps')
+jest.mock('../../data/maps')
 
 describe('clearPlot', () => {
   describe('plotContent is a crop', () => {
@@ -114,7 +114,7 @@ describe('clearPlot', () => {
 
   describe('hoe upgrades', () => {
     beforeEach(() => {
-      vitest
+      jest
         .spyOn(randomNumberService, 'isRandomNumberLessThan')
         .mockReturnValue(true)
     })

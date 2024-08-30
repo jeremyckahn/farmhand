@@ -2,7 +2,7 @@ import { sampleCropItem1 } from '../../data/items'
 
 import { createPriceEvent } from './createPriceEvent'
 
-vitest.mock('../../data/items')
+jest.mock('../../data/items')
 
 describe('createPriceEvent', () => {
   test('creates priceCrashes data', () => {

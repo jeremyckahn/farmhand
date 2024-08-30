@@ -6,12 +6,12 @@ import { noop } from '../../utils/noop'
 
 import { CowPenContextMenu } from './CowPenContextMenu'
 
-vitest.mock('../CowCard', () => ({
+jest.mock('../CowCard', () => ({
   __esModule: true,
   default: () => <></>,
 }))
 
-vitest.mock('../Item', () => ({
+jest.mock('../Item', () => ({
   __esModule: true,
   default: () => <></>,
 }))

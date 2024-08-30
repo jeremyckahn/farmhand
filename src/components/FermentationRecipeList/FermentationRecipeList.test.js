@@ -14,7 +14,7 @@ import { FermentationRecipeList } from './FermentationRecipeList'
 
 const totalFermentableItems = Object.keys(fermentableItemsMap).length
 
-vitest.mock('./FermentationRecipe', () => ({
+jest.mock('./FermentationRecipe', () => ({
   FermentationRecipe: () => <></>,
 }))
 

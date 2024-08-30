@@ -1,7 +1,4 @@
 {
-  "ignoreCommand": "stat static",
-  "framework": "vite",
-  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/api/get-market-data",

@@ -6,7 +6,7 @@
  * @typedef {import("../index").farmhand.grape} grape
  */
 import { saveAs } from 'file-saver'
-import globalWindow from 'global/window'
+import window from 'global/window'
 
 import {
   moneyTotal,
@@ -25,7 +25,6 @@ import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
   PROGRESS_SAVED_MESSAGE,
-  UPDATE_AVAILABLE,
 } from '../strings'
 
 import {
@@ -534,7 +533,7 @@ export default {
    * @param {string} seed
    */
   handleRNGSeedChange(seed) {
-    const { origin, pathname, search, hash } = globalWindow.location
+    const { origin, pathname, search, hash } = window.location
     const queryParams = new URLSearchParams(search)
     const trimmedSeed = seed.trim()
 
@@ -554,7 +553,7 @@ export default {
     const newSearch = newQueryParams.length > 0 ? `?${newQueryParams}` : ''
 
     const newUrl = `${origin}${pathname}${newSearch}${hash}`
-    globalWindow.history.replaceState({}, '', newUrl)
+    window.history.replaceState({}, '', newUrl)
   },
 
   /**
@@ -562,14 +561,5 @@ export default {
    */
   handleChatRoomOpenStateChange(isChatOpen) {
     this.setState({ isChatOpen })
-  },
-
-  /**
-   * @param {(reloadPage?: boolean) => Promise<void>} updateServiceWorker
-   */
-  handleGameUpdateAvailable(updateServiceWorker) {
-    this.showNotification(UPDATE_AVAILABLE, 'success', () => {
-      updateServiceWorker(true)
-    })
   },
 }

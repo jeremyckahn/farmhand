@@ -56,7 +56,7 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 
 ## Project overview
 
-- This project uses [Vite](https://vitejs.dev/), so please refer to the documentation of that project to learn about the development toolchain.
+- This project is built with [Create React App](https://create-react-app.dev/), so please refer to the documentation of that project to learn about the development toolchain.
 - Farmhand uses [Piskel](https://www.piskelapp.com/) for the art assets.
 
 ## Running locally
@@ -138,13 +138,13 @@ The process will take several minutes to complete and it will notify the Discord
 Farmhand supports feature flags for code that should only be enabled in specific environments. To create a feature flag, add a line that looks like this in the relevant `.env` file:
 
 ```
-VITE_ENABLE_[FEATURE_NAME]=true
+REACT_APP_ENABLE_[FEATURE_NAME]=true
 ```
 
 Where `[FEATURE_NAME]` is replaced with the name of your feature. So, adding this to `.env.development.local`:
 
 ```
-VITE_ENABLE_MINING=true
+REACT_APP_ENABLE_MINING=true
 ```
 
 Would enable the `MINING` feature only for the local development environment. You can access the enabled feature flags at runtime by `import`ing the `features` Object from [`config.js`](https://github.com/jeremyckahn/farmhand/blob/develop/src/config.js). See [Adding Custom Environment Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/) for more information on how to use environment variables.

@@ -10,6 +10,8 @@ import { moneyString } from '../../../utils/moneyString'
 import { levelAchieved } from '../../../utils/levelAchieved'
 import { getPlayerName, integerString } from '../../../utils'
 
+import './OnlinePeer.sass'
+
 const OnlinePeer = ({
   peer: { cowOfferedForTrade, dayCount, id, experience, money },
 }) => {

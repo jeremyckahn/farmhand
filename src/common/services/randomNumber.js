@@ -1,5 +1,5 @@
 import seedrandom from 'seedrandom'
-import globalWindow from 'global/window'
+import window from 'global/window'
 
 export class RandomNumberService {
   /**
@@ -11,9 +11,7 @@ export class RandomNumberService {
     // The availability of window.location needs to be checked before accessing
     // its .search property. This code runs in both a browser and Node.js
     // context, and window.location is not defined in Node.js environments.
-    const initialSeed = new URLSearchParams(globalWindow.location?.search).get(
-      'seed'
-    )
+    const initialSeed = new URLSearchParams(window.location?.search).get('seed')
 
     if (initialSeed) {
       this.seedRandomNumber(initialSeed)

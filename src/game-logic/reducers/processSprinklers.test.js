@@ -3,7 +3,7 @@ import { getPlotContentFromItemId } from '../../utils'
 
 import { processSprinklers } from './processSprinklers'
 
-vitest.mock('../../data/items')
+jest.mock('../../data/items')
 
 describe('processSprinklers', () => {
   let computedState

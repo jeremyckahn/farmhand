@@ -4,13 +4,13 @@ import { EXPERIENCE_VALUES } from '../../constants'
 
 import { computeStateForNextDay } from './computeStateForNextDay'
 
-vitest.mock('../../data/maps')
+jest.mock('../../data/maps')
 
 describe('computeStateForNextDay', () => {
   let state
 
   beforeEach(() => {
-    vitest.spyOn(Math, 'random').mockReturnValue(0.75)
+    jest.spyOn(Math, 'random').mockReturnValue(0.75)
 
     state = {
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
@@ -58,7 +58,7 @@ describe('computeStateForNextDay', () => {
     expect(firstRow[0].wasWateredToday).toBe(false)
     expect(firstRow[0].daysWatered).toBe(1)
     expect(firstRow[0].daysOld).toBe(1)
-    expect(todaysNotifications).toHaveLength(0)
+    expect(todaysNotifications).toBeEmpty()
   })
 
   describe('new year experience', () => {

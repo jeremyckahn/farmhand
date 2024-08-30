@@ -1,19 +1,7 @@
 import { testCrop } from '../test-utils'
 import { items as itemImages, animals } from '../img'
 import { cowColors, cropLifeStage, genders, standardCowColors } from '../enums'
-import {
-  rainbowFertilizer,
-  carrot,
-  carrotSeed,
-  milk1,
-  pumpkin,
-  spinach,
-  corn,
-  potato,
-  wheat,
-  scarecrow,
-  silverOre,
-} from '../data/items'
+import { rainbowFertilizer, carrot, carrotSeed, milk1 } from '../data/items'
 import { carrotSoup } from '../data/recipes'
 import {
   COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
@@ -68,9 +56,13 @@ import {
   percentageString,
   randomChoice,
   transformStateDataForImport,
-  getAvailableShopInventory,
-  getRandomLevelUpReward,
 } from './index'
+
+jest.mock('../data/maps')
+jest.mock('../data/items')
+jest.mock('../data/levels')
+jest.mock('../data/shop-inventory')
+jest.mock('../img')
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
@@ -151,7 +143,7 @@ describe('getItemCurrentValue', () => {
 describe('generateCow', () => {
   describe('randomizer: lower bound', () => {
     beforeEach(() => {
-      vitest.spyOn(Math, 'random').mockReturnValue(0)
+      jest.spyOn(Math, 'random').mockReturnValue(0)
     })
 
     const baseCowProperties = {
@@ -196,7 +188,7 @@ describe('generateCow', () => {
 
   describe('randomizer: upper bound', () => {
     beforeEach(() => {
-      vitest.spyOn(Math, 'random').mockReturnValue(1)
+      jest.spyOn(Math, 'random').mockReturnValue(1)
     })
 
     test('generates a cow', () => {
@@ -218,7 +210,7 @@ describe('generateOffspringCow', () => {
   let maleCow, femaleCow
 
   beforeEach(() => {
-    vitest.spyOn(Math, 'random').mockReturnValue(1)
+    jest.spyOn(Math, 'random').mockReturnValue(1)
 
     maleCow = generateCow({
       baseWeight: 2200,
@@ -282,7 +274,7 @@ describe('generateOffspringCow', () => {
 
   describe('rainbow cows', () => {
     test('cows with all of the colors in their bloodline are rainbow cows', () => {
-      vitest.spyOn(Math, 'random').mockReturnValue(1)
+      jest.spyOn(Math, 'random').mockReturnValue(1)
 
       maleCow = generateCow({
         baseWeight: 2200,
@@ -326,7 +318,7 @@ describe('generateOffspringCow', () => {
     })
 
     test('rainbow color is not stored in bloodline', () => {
-      vitest.spyOn(Math, 'random').mockReturnValue(1)
+      jest.spyOn(Math, 'random').mockReturnValue(1)
 
       maleCow = generateCow({
         baseWeight: 2200,
@@ -552,19 +544,16 @@ describe('getPlotImage', () => {
       itemImages['carrot-seed']
     )
     expect(getPlotImage(testCrop({ itemId, daysWatered: 1 }))).toBe(
-      itemImages['carrot-seed']
+      itemImages['carrot-growing']
     )
     expect(getPlotImage(testCrop({ itemId, daysWatered: 3 }))).toBe(
-      itemImages['carrot-growing-2']
-    )
-    expect(getPlotImage(testCrop({ itemId, daysWatered: 5 }))).toBe(
       itemImages['carrot']
     )
   })
 
   test('returns item image for oreId', () => {
-    expect(getPlotImage(getPlotContentFromItemId(silverOre.id))).toBe(
-      itemImages[silverOre.id]
+    expect(getPlotImage(getPlotContentFromItemId('sample-ore-1'))).toBe(
+      itemImages['sample-ore-1']
     )
   })
 
@@ -627,7 +616,7 @@ describe('getFinalCropItemIdFromSeedItemId', () => {
   })
 
   test('gets "final" crop item id from seed item id with varieties', () => {
-    vitest.spyOn(Math, 'random').mockReturnValue(0)
+    jest.spyOn(Math, 'random').mockReturnValue(0)
     expect(getFinalCropItemIdFromSeedItemId('grape-seed')).toEqual(
       'grape-chardonnay'
     )
@@ -735,13 +724,13 @@ describe('canMakeRecipe', () => {
 
 describe('getRandomUnlockedCrop', () => {
   test('gets a random unlocked crop', () => {
-    vitest.spyOn(Math, 'random').mockReturnValue(1)
+    jest.spyOn(Math, 'random').mockReturnValue(1)
     const crop = getRandomUnlockedCrop(['carrot-seed', 'pumpkin-seed'])
     expect(crop.id).toEqual('pumpkin')
   })
 
   test('gets a random unlocked crop with varieties', () => {
-    vitest.spyOn(Math, 'random').mockReturnValue(0)
+    jest.spyOn(Math, 'random').mockReturnValue(0)
     const crop = getRandomUnlockedCrop(['grape-seed'])
     expect(crop.id).toEqual('grape-chardonnay')
   })
@@ -796,18 +785,55 @@ describe('experienceNeededForLevel', () => {
 })
 
 describe('getAvailableShopInventory', () => {
-  test('computes shop inventory that has been unlocked', async () => {
+  test('computes shop inventory that has been unlocked', () => {
+    jest.resetModules()
+    jest.mock('../data/shop-inventory', () => [
+      { id: 'sample-item-1' },
+      { id: 'sample-item-2' },
+    ])
+
+    jest.mock('../data/levels', () => ({
+      levels: [],
+      unlockableItems: {
+        'sample-item-1': true,
+        'sample-item-2': true,
+      },
+    }))
+
+    const { getAvailableShopInventory } = jest.requireActual('./index')
+
     expect(
-      getAvailableShopInventory({ items: {}, sprinklerRange: 0, tools: {} })
-    ).toEqual([scarecrow])
+      getAvailableShopInventory({ items: { 'sample-item-1': true } })
+    ).toEqual([{ id: 'sample-item-1' }])
   })
 })
 
 describe('getRandomLevelUpReward', () => {
-  test('returns a crop item', async () => {
-    vitest.spyOn(Math, 'random').mockReturnValue(0)
+  test('returns a crop item', () => {
+    jest.resetModules()
+    jest.mock('../data/levels', () => ({
+      levels: [{ id: 0, unlocksShopItem: 'sample-crop-item-1' }],
+      unlockableItems: {
+        'sample-crop-item-1': true,
+        'sample-crop-item-2': true,
+      },
+    }))
+    jest.mock('../data/maps', () => ({
+      itemsMap: {
+        'sample-crop-item-1': {
+          id: 'sample-crop-item-1',
+          name: 'crop 1',
+          type: 'CROP',
+        },
+      },
+    }))
+    jest.spyOn(Math, 'random').mockReturnValue(0)
 
-    expect(getRandomLevelUpReward(2)).toEqual(carrotSeed)
+    expect(jest.requireActual('./index').getRandomLevelUpReward(2)).toEqual({
+      id: 'sample-crop-item-1',
+      name: 'crop 1',
+      type: 'CROP',
+    })
   })
 })
 
@@ -824,68 +850,68 @@ describe('computeMarketPositions', () => {
   test('computes day positions', () => {
     expect(
       computeMarketPositions(
-        { [carrot.id]: 10, [pumpkin.id]: 5, [spinach.id]: 0 },
+        { 'sample-item-1': 10, 'sample-item-2': 5, 'sample-item-3': 0 },
         {},
         [
-          { id: carrot.id, quantity: 5 },
-          { id: pumpkin.id, quantity: 10 },
-          { id: spinach.id, quantity: 0 },
-          { id: corn.id, quantity: 10 },
+          { id: 'sample-item-1', quantity: 5 },
+          { id: 'sample-item-2', quantity: 10 },
+          { id: 'sample-item-3', quantity: 0 },
+          { id: 'sample-item-4', quantity: 10 },
         ]
       )
     ).toEqual({
-      [carrot.id]: -1,
-      [pumpkin.id]: 1,
-      [corn.id]: 1,
+      'sample-item-1': -1,
+      'sample-item-2': 1,
+      'sample-item-4': 1,
     })
 
     expect(
       computeMarketPositions(
         {},
-        { [carrot.id]: 10, [pumpkin.id]: 5, [spinach.id]: 0 },
+        { 'sample-item-1': 10, 'sample-item-2': 5, 'sample-item-3': 0 },
         [
-          { id: carrot.id, quantity: 5 },
-          { id: pumpkin.id, quantity: 10 },
-          { id: spinach.id, quantity: 0 },
-          { id: corn.id, quantity: 10 },
+          { id: 'sample-item-1', quantity: 5 },
+          { id: 'sample-item-2', quantity: 10 },
+          { id: 'sample-item-3', quantity: 0 },
+          { id: 'sample-item-4', quantity: 10 },
         ]
       )
     ).toEqual({
-      [carrot.id]: -1,
-      [pumpkin.id]: 1,
-      [corn.id]: 1,
+      'sample-item-1': -1,
+      'sample-item-2': 1,
+      'sample-item-4': 1,
     })
 
     expect(
       computeMarketPositions(
         {
-          [carrot.id]: 5,
-          [pumpkin.id]: 5,
-          [spinach.id]: 5,
-          [corn.id]: 0,
-          [potato.id]: 10,
+          'sample-item-1': 5,
+          'sample-item-2': 5,
+          'sample-item-3': 5,
+          'sample-item-4': 0,
+          'sample-item-5': 10,
         },
         {
-          [carrot.id]: 10,
-          [pumpkin.id]: 5,
-          [spinach.id]: 0,
-          [potato.id]: 5,
-          [wheat.id]: 10,
+          'sample-item-1': 10,
+          'sample-item-2': 5,
+          'sample-item-3': 0,
+          'sample-item-4': 5,
+          'sample-item-6': 10,
         },
         [
-          { id: carrot.id, quantity: 5 },
-          { id: pumpkin.id, quantity: 10 },
-          { id: spinach.id, quantity: 0 },
-          { id: corn.id, quantity: 0 },
-          { id: potato.id, quantity: 5 },
-          { id: wheat.id, quantity: 5 },
+          { id: 'sample-item-1', quantity: 5 },
+          { id: 'sample-item-2', quantity: 10 },
+          { id: 'sample-item-3', quantity: 0 },
+          { id: 'sample-item-4', quantity: 0 },
+          { id: 'sample-item-5', quantity: 5 },
+          { id: 'sample-item-6', quantity: 5 },
         ]
       )
     ).toEqual({
-      [pumpkin.id]: 1,
-      [spinach.id]: -1,
-      [potato.id]: -1,
-      [wheat.id]: -1,
+      'sample-item-2': 1,
+      'sample-item-3': -1,
+      'sample-item-5': -1,
+      'sample-item-6': -1,
     })
   })
 })
@@ -951,7 +977,7 @@ describe('randomChoice', () => {
   ]
 
   beforeEach(() => {
-    vitest.spyOn(global.Math, 'random')
+    jest.spyOn(global.Math, 'random')
   })
 
   test('it returns a choice at random', () => {

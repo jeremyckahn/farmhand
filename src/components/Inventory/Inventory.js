@@ -8,6 +8,8 @@ import { itemsMap } from '../../data/maps'
 import { enumify, itemType } from '../../enums'
 import { sortItems } from '../../utils'
 
+import './Inventory.sass'
+
 const {
   COW_FEED,
   CRAFTED_ITEM,

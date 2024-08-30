@@ -1,8 +1,5 @@
 import { computeStateForNextDay } from '../../game-logic/reducers'
 
-/**
- * @param {Partial<import('../../components/Farmhand/Farmhand').farmhand.state>} state
- */
 export const saveDataStubFactory = ({ dayCount = 1, ...restOverrides }) =>
   computeStateForNextDay(
     // dayCount is offset by 1 here to account for the fact that

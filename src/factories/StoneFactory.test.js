@@ -4,7 +4,7 @@ import { coal, stone, saltRock } from '../data/ores'
 import StoneFactory from './StoneFactory'
 
 beforeEach(() => {
-  vitest.spyOn(randomNumberService, 'isRandomNumberLessThan')
+  jest.spyOn(randomNumberService, 'isRandomNumberLessThan')
 })
 
 describe('StoneFactory', () => {

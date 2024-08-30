@@ -3,7 +3,7 @@ import { randomNumberService } from '../../common/services/randomNumber'
 import { spawnWeeds } from './spawnWeeds'
 
 beforeEach(() => {
-  vitest.spyOn(randomNumberService, 'isRandomNumberLessThan')
+  jest.spyOn(randomNumberService, 'isRandomNumberLessThan')
 })
 
 describe('spawnWeeds', () => {
