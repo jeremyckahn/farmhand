@@ -7,6 +7,7 @@
     "import/order": [
       "error",
       { "newlines-between": "always-and-inside-groups" }
-    ]
+    ],
+    "import/extensions": ["error", "always"]
   }
 }
