@@ -1,10 +1,10 @@
-import { huggingMachine } from '../../data/items'
-import { genders, standardCowColors } from '../../enums'
-import { getCowValue } from '../../utils'
+import { huggingMachine } from '../../data/items.js'
+import { genders, standardCowColors } from '../../enums.js'
+import { getCowValue } from '../../utils/index.js'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
-import { sellCow } from './sellCow'
+import { sellCow } from './sellCow.js'
 
 describe('sellCow', () => {
   let cow

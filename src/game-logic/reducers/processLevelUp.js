@@ -1,16 +1,16 @@
-import { levels } from '../../data/levels'
-import { levelAchieved } from '../../utils/levelAchieved'
+import { levels } from '../../data/levels.js'
+import { levelAchieved } from '../../utils/levelAchieved.js'
 import {
   getRandomLevelUpReward,
   getRandomLevelUpRewardQuantity,
-} from '../../utils'
-import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
-import { SPRINKLER_ITEM_ID } from '../../constants'
-import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
+} from '../../utils/index.js'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
+import { SPRINKLER_ITEM_ID } from '../../constants.js'
+import { LEVEL_GAINED_NOTIFICATION } from '../../templates.js'
 
-import { addItemToInventory } from './addItemToInventory'
-import { showNotification } from './showNotification'
-import { unlockTool } from './unlockTool'
+import { addItemToInventory } from './addItemToInventory.js'
+import { showNotification } from './showNotification.js'
+import { unlockTool } from './unlockTool.js'
 
 /**
  * @param {farmhand.state} state

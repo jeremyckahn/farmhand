@@ -1,15 +1,15 @@
-import { levelAchieved } from '../../utils/levelAchieved'
+import { levelAchieved } from '../../utils/levelAchieved.js'
 import {
   filterItemIdsToSeeds,
   getPriceEventForCrop,
   getRandomUnlockedCrop,
-} from '../../utils'
-import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
-import { PRICE_EVENT_CHANCE } from '../../constants'
-import { PRICE_CRASH, PRICE_SURGE } from '../../templates'
-import { random } from '../../common/utils'
+} from '../../utils/index.js'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
+import { PRICE_EVENT_CHANCE } from '../../constants.js'
+import { PRICE_CRASH, PRICE_SURGE } from '../../templates.js'
+import { random } from '../../common/utils.js'
 
-import { createPriceEvent } from './createPriceEvent'
+import { createPriceEvent } from './createPriceEvent.js'
 
 const TYPE_CRASH = 'priceCrashes'
 const TYPE_SURGE = 'priceSurges'

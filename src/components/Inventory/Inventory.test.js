@@ -1,17 +1,17 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Item from '../Item'
-import { testItem } from '../../test-utils'
-import { sortItems } from '../../utils'
-import { carrot, carrotSeed, pumpkinSeed } from '../../data/crops'
-import { carrotSoup } from '../../data/recipes'
+import Item from '../Item/index.js'
+import { testItem } from '../../test-utils/index.js'
+import { sortItems } from '../../utils/index.js'
+import { carrot, carrotSeed, pumpkinSeed } from '../../data/crops/index.js'
+import { carrotSoup } from '../../data/recipes.js'
 
 import {
   Inventory,
   categoryIds,
   separateItemsIntoCategories,
-} from './Inventory'
+} from './Inventory.js'
 
 let component
 

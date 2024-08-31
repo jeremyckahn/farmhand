@@ -1,1 +1,1 @@
-export { default } from './Workshop'
+export { default } from './Workshop.js'

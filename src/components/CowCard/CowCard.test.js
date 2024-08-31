@@ -1,12 +1,12 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { generateCow } from '../../utils'
-import { noop } from '../../utils/noop'
-import { PURCHASEABLE_COW_PENS } from '../../constants'
-import { cowColors, genders } from '../../enums'
+import { generateCow } from '../../utils/index.js'
+import { noop } from '../../utils/noop.js'
+import { PURCHASEABLE_COW_PENS } from '../../constants.js'
+import { cowColors, genders } from '../../enums.js'
 
-import { CowCard } from './CowCard'
+import { CowCard } from './CowCard.js'
 
 describe('CowCard', () => {
   const cow = generateCow({

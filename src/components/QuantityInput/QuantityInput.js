@@ -1,14 +1,14 @@
 import React, { forwardRef } from 'react'
 import { func, number } from 'prop-types'
-import Fab from '@mui/material/Fab'
-import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
+import Fab from '@mui/material/Fab/index.js'
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp.js'
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown.js'
 import NumberFormat from 'react-number-format'
-import TextField from '@mui/material/TextField'
+import TextField from '@mui/material/TextField/index.js'
 
-import { integerString } from '../../utils'
-import AnimatedNumber from '../AnimatedNumber'
-import { Span } from '../Elements'
+import { integerString } from '../../utils/index.js'
+import AnimatedNumber from '../AnimatedNumber/index.js'
+import { Span } from '../Elements/index.js'
 
 import './QuantityInput.sass'
 

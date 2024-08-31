@@ -1,12 +1,12 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
-import { noop } from '../../utils/noop'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { noop } from '../../utils/noop.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import Shop from './Shop'
+import Shop from './Shop.js'
 
 beforeEach(() => {
   const gameState = {

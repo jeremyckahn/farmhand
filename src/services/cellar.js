@@ -5,13 +5,13 @@
 
 import { v4 as uuid } from 'uuid'
 
-import { fermentableItemsMap, itemsMap } from '../data/maps'
-import { memoize } from '../utils/memoize'
-import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine'
+import { fermentableItemsMap, itemsMap } from '../data/maps.js'
+import { memoize } from '../utils/memoize.js'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
 
-import { PURCHASEABLE_CELLARS } from '../constants'
+import { PURCHASEABLE_CELLARS } from '../constants.js'
 
-import { wineService } from './wine'
+import { wineService } from './wine.js'
 
 export class CellarService {
   /**

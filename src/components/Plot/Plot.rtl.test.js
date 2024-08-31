@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { cropLifeStage } from '../../enums'
-import { testCrop, testShoveledPlot } from '../../test-utils'
-import { getCropFromItemId, getPlotContentFromItemId } from '../../utils'
-import { noop } from '../../utils/noop'
-import { items } from '../../img'
+import { cropLifeStage } from '../../enums.js'
+import { testCrop, testShoveledPlot } from '../../test-utils/index.js'
+import { getCropFromItemId, getPlotContentFromItemId } from '../../utils/index.js'
+import { noop } from '../../utils/noop.js'
+import { items } from '../../img/index.js'
 
-import { Plot } from './Plot'
+import { Plot } from './Plot.js'
 
-vitest.mock('../../img')
+vitest.mock('../../img/index.js')
 
 describe('class states', () => {
   beforeEach(() => {

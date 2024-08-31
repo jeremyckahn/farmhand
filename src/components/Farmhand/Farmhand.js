@@ -17,20 +17,23 @@
  * @typedef {import("../../enums").stageFocusType} farmhand.stageFocusType
  */
 import React from 'react'
-import window from 'global/window'
+import window from 'global/window.js'
 import { Redirect } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
 import localforage from 'localforage'
 import { v4 as uuid } from 'uuid'
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
-import Drawer from '@mui/material/Drawer'
-import Fab from '@mui/material/Fab'
-import MenuIcon from '@mui/icons-material/Menu'
-import HotelIcon from '@mui/icons-material/Hotel'
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
-import Tooltip from '@mui/material/Tooltip'
-import MobileStepper from '@mui/material/MobileStepper'
+import {
+  ThemeProvider,
+  StyledEngineProvider,
+} from '@mui/material/styles/index.js'
+import Drawer from '@mui/material/Drawer/index.js'
+import Fab from '@mui/material/Fab/index.js'
+import MenuIcon from '@mui/icons-material/Menu.js'
+import HotelIcon from '@mui/icons-material/Hotel.js'
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft.js'
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight.js'
+import Tooltip from '@mui/material/Tooltip/index.js'
+import MobileStepper from '@mui/material/MobileStepper/index.js'
 import { joinRoom } from 'trystero'
 import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
@@ -38,28 +41,28 @@ import throttle from 'lodash.throttle'
 import classNames from 'classnames'
 import { object } from 'prop-types'
 
-import eventHandlers from '../../handlers/ui-events'
+import eventHandlers from '../../handlers/ui-events.js'
 import {
   handlePeerMetadataRequest,
   handleCowTradeRequest,
   handleCowTradeRequestAccept,
   handleCowTradeRequestReject,
-} from '../../handlers/peer-events'
-import * as reducers from '../../game-logic/reducers'
+} from '../../handlers/peer-events.js'
+import * as reducers from '../../game-logic/reducers/index.js'
 // This must be imported here so that it can be overridden by component styles.
 import './Farmhand.sass'
 
-import AppBar from '../AppBar'
-import Navigation from '../Navigation'
-import ContextPane from '../ContextPane'
-import Stage from '../Stage'
+import AppBar from '../AppBar/index.js'
+import Navigation from '../Navigation/index.js'
+import ContextPane from '../ContextPane/index.js'
+import Stage from '../Stage/index.js'
 import NotificationSystem, {
   snackbarProviderContentCallback,
-} from '../NotificationSystem'
-import DebugMenu from '../DebugMenu'
-import UpdateNotifier from '../UpdateNotifier'
-import theme from '../../mui-theme'
-import { levelAchieved } from '../../utils/levelAchieved'
+} from '../NotificationSystem/index.js'
+import DebugMenu from '../DebugMenu/index.js'
+import UpdateNotifier from '../UpdateNotifier/index.js'
+import theme from '../../mui-theme.js'
+import { levelAchieved } from '../../utils/levelAchieved.js'
 import {
   computeMarketPositions,
   createNewField,
@@ -75,19 +78,19 @@ import {
   reduceByPersistedKeys,
   sleep,
   transformStateDataForImport,
-} from '../../utils'
-import { noop } from '../../utils/noop'
-import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
-import { memoize } from '../../utils/memoize'
-import { getData, postData } from '../../fetch-utils'
-import { itemsMap, recipesMap } from '../../data/maps'
+} from '../../utils/index.js'
+import { noop } from '../../utils/noop.js'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
+import { memoize } from '../../utils/memoize.js'
+import { getData, postData } from '../../fetch-utils.js'
+import { itemsMap, recipesMap } from '../../data/maps.js'
 import {
   dialogView,
   fieldMode,
   stageFocusType,
   toolLevel,
   toolType,
-} from '../../enums'
+} from '../../enums.js'
 import {
   COW_TRADE_TIMEOUT,
   DEFAULT_ROOM,
@@ -97,14 +100,14 @@ import {
   STANDARD_LOAN_AMOUNT,
   Z_INDEX,
   STANDARD_VIEW_LIST,
-} from '../../constants'
+} from '../../constants.js'
 import {
   CONNECTED_TO_ROOM,
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
   RECIPES_LEARNED,
-} from '../../templates'
+} from '../../templates.js'
 import {
   CONNECTING_TO_SERVER,
   COW_ALREADY_OWNED,
@@ -114,16 +117,16 @@ import {
   PROGRESS_SAVED_MESSAGE,
   REQUESTED_COW_TRADE_UNAVAILABLE,
   SERVER_ERROR,
-} from '../../strings'
-import { endpoints, features, rtcConfig, trackerUrls } from '../../config'
+} from '../../strings.js'
+import { endpoints, features, rtcConfig, trackerUrls } from '../../config.js'
 
-import { scarecrow } from '../../data/items'
+import { scarecrow } from '../../data/items.js'
 
-import { ChatRoom } from '../ChatRoom'
+import { ChatRoom } from '../ChatRoom/index.js'
 
-import { getInventoryQuantities } from './helpers/getInventoryQuantities'
-import FarmhandContext from './Farmhand.context'
-import { FarmhandReducers } from './FarmhandReducers'
+import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
+import FarmhandContext from './Farmhand.context.js'
+import { FarmhandReducers } from './FarmhandReducers.js'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 

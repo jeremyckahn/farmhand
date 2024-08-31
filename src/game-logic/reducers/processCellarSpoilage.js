@@ -1,12 +1,12 @@
 /** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
 
-import { randomNumberService } from '../../common/services/randomNumber'
-import { itemsMap } from '../../data/maps'
-import { wineService } from '../../services/wine'
-import { KEG_SPOILED_MESSAGE } from '../../templates'
-import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate'
+import { randomNumberService } from '../../common/services/randomNumber.js'
+import { itemsMap } from '../../data/maps.js'
+import { wineService } from '../../services/wine.js'
+import { KEG_SPOILED_MESSAGE } from '../../templates.js'
+import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
 
-import { removeKegFromCellar } from './removeKegFromCellar'
+import { removeKegFromCellar } from './removeKegFromCellar.js'
 
 /**
  * @param {state} state

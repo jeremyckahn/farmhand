@@ -1,4 +1,4 @@
-import { computeStateForNextDay } from '../../game-logic/reducers'
+import { computeStateForNextDay } from '../../game-logic/reducers/index.js'
 
 /**
  * @param {Partial<import('../../components/Farmhand/Farmhand').farmhand.state>} state

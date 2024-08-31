@@ -1,13 +1,13 @@
 /**
  * @typedef {import("../../index").farmhand.keg} keg
  */
-import { LOAN_GARNISHMENT_RATE } from '../../constants'
-import { carrot } from '../../data/crops'
-import { LOAN_PAYOFF } from '../../templates'
-import { castToMoney } from '../../utils'
-import { getKegValue } from '../../utils/getKegValue'
+import { LOAN_GARNISHMENT_RATE } from '../../constants.js'
+import { carrot } from '../../data/crops/index.js'
+import { LOAN_PAYOFF } from '../../templates.js'
+import { castToMoney } from '../../utils/index.js'
+import { getKegValue } from '../../utils/getKegValue.js'
 
-import { sellKeg } from './sellKeg'
+import { sellKeg } from './sellKeg.js'
 
 /** @type keg */
 const stubKeg = { id: 'stub-keg', daysUntilMature: -4, itemId: carrot.id }

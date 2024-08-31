@@ -1,10 +1,10 @@
 import React from 'react'
 import { object } from 'prop-types'
-import Divider from '@mui/material/Divider'
+import Divider from '@mui/material/Divider/index.js'
 
-import { itemsMap } from '../../data/maps'
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import Item from '../Item'
+import { itemsMap } from '../../data/maps.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import Item from '../Item/index.js'
 
 const PriceEventView = ({ priceCrashes, priceSurges }) => (
   <div className="PriceEventView">

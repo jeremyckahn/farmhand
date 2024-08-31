@@ -1,7 +1,7 @@
-import { generateCow, getCowValue, moneyTotal } from '../../utils'
-import { PURCHASEABLE_COW_PENS } from '../../constants'
+import { generateCow, getCowValue, moneyTotal } from '../../utils/index.js'
+import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 
-import { addCowToInventory } from './addCowToInventory'
+import { addCowToInventory } from './addCowToInventory.js'
 
 /**
  * @param {farmhand.state} state

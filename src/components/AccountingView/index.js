@@ -1,1 +1,1 @@
-export { default } from './AccountingView'
+export { default } from './AccountingView.js'

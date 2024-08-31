@@ -4,19 +4,23 @@
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
  */
 
-import { itemsMap } from '../../data/maps'
-import { castToMoney, getSalePriceMultiplier, moneyTotal } from '../../utils'
-import { EXPERIENCE_VALUES, LOAN_GARNISHMENT_RATE } from '../../constants'
-import { SOLD_FERMENTED_ITEM_PEER_NOTIFICATION } from '../../templates'
-import { getKegValue } from '../../utils/getKegValue'
+import { itemsMap } from '../../data/maps.js'
+import {
+  castToMoney,
+  getSalePriceMultiplier,
+  moneyTotal,
+} from '../../utils/index.js'
+import { EXPERIENCE_VALUES, LOAN_GARNISHMENT_RATE } from '../../constants.js'
+import { SOLD_FERMENTED_ITEM_PEER_NOTIFICATION } from '../../templates.js'
+import { getKegValue } from '../../utils/getKegValue.js'
 
-import { addExperience } from './addExperience'
-import { addRevenue } from './addRevenue'
-import { adjustLoan } from './adjustLoan'
-import { removeKegFromCellar } from './removeKegFromCellar'
-import { updateLearnedRecipes } from './updateLearnedRecipes'
+import { addExperience } from './addExperience.js'
+import { addRevenue } from './addRevenue.js'
+import { adjustLoan } from './adjustLoan.js'
+import { removeKegFromCellar } from './removeKegFromCellar.js'
+import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 
-import { prependPendingPeerMessage } from './index'
+import { prependPendingPeerMessage } from './index.js'
 
 /**
  * @param {state} state

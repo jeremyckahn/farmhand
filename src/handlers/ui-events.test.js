@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import window from 'global/window'
+import window from 'global/window.js'
 
-import Farmhand from '../components/Farmhand'
-import { stageFocusType, fieldMode } from '../enums'
-import { randomNumberService } from '../common/services/randomNumber'
+import Farmhand from '../components/Farmhand/index.js'
+import { stageFocusType, fieldMode } from '../enums.js'
+import { randomNumberService } from '../common/services/randomNumber.js'
 
 let component
 

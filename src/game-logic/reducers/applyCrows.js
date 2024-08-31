@@ -1,12 +1,12 @@
-import { random } from '../../common/utils'
-import { doesPlotContainCrop } from '../../utils'
-import { CROW_CHANCE, MAX_CROWS } from '../../constants'
-import { CROWS_DESTROYED } from '../../templates'
+import { random } from '../../common/utils.js'
+import { doesPlotContainCrop } from '../../utils/index.js'
+import { CROW_CHANCE, MAX_CROWS } from '../../constants.js'
+import { CROWS_DESTROYED } from '../../templates.js'
 
-import { randomNumberService } from '../../common/services/randomNumber'
+import { randomNumberService } from '../../common/services/randomNumber.js'
 
-import { modifyFieldPlotAt } from './modifyFieldPlotAt'
-import { fieldHasScarecrow } from './helpers'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
+import { fieldHasScarecrow } from './helpers.js'
 
 /**
  * @param {farmhand.state} state

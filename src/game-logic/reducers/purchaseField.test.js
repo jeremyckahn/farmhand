@@ -1,7 +1,7 @@
-import { testCrop } from '../../test-utils'
-import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants'
+import { testCrop } from '../../test-utils/index.js'
+import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
 
-import { purchaseField } from './purchaseField'
+import { purchaseField } from './purchaseField.js'
 
 describe('purchaseField', () => {
   test('updates purchasedField', () => {

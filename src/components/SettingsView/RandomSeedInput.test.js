@@ -2,9 +2,9 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { RandomSeedInput } from './RandomSeedInput'
+import { RandomSeedInput } from './RandomSeedInput.js'
 
 const mockHandleRNGSeedChange = vitest.fn()
 

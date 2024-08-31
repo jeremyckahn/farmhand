@@ -1,8 +1,8 @@
-import { carrot } from '../data/crops'
-import { wineChardonnay } from '../data/recipes'
-import { getKegStub } from '../test-utils/stubs/getKegStub'
+import { carrot } from '../data/crops/index.js'
+import { wineChardonnay } from '../data/recipes.js'
+import { getKegStub } from '../test-utils/stubs/getKegStub.js'
 
-import { getKegSpoilageRate } from './getKegSpoilageRate'
+import { getKegSpoilageRate } from './getKegSpoilageRate.js'
 
 describe('getKegSpoilageRate', () => {
   test('handles kegs that are not mature', () => {

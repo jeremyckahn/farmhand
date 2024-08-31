@@ -1,4 +1,4 @@
-import { randomNumberService } from './randomNumber'
+import { randomNumberService } from './randomNumber.js'
 
 describe('RandomNumberService', () => {
   describe('isRandomNumberLessThan', () => {

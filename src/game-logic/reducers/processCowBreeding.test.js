@@ -2,11 +2,11 @@ import {
   EXPERIENCE_VALUES,
   COW_GESTATION_PERIOD_DAYS,
   PURCHASEABLE_COW_PENS,
-} from '../../constants'
-import { genders } from '../../enums'
-import { generateCow } from '../../utils'
+} from '../../constants.js'
+import { genders } from '../../enums.js'
+import { generateCow } from '../../utils/index.js'
 
-import { processCowBreeding } from './processCowBreeding'
+import { processCowBreeding } from './processCowBreeding.js'
 
 describe('processCowBreeding', () => {
   const maleCow1 = generateCow({ gender: genders.MALE, happiness: 1 })

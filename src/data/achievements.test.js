@@ -1,12 +1,12 @@
-import * as reducers from '../game-logic/reducers'
-import { testCrop } from '../test-utils'
+import * as reducers from '../game-logic/reducers/index.js'
+import { testCrop } from '../test-utils/index.js'
 
-import { toolLevel, toolType } from '../enums'
+import { toolLevel, toolType } from '../enums.js'
 
-import { INFINITE_STORAGE_LIMIT } from '../constants'
+import { INFINITE_STORAGE_LIMIT } from '../constants.js'
 
-import { achievementsMap } from './achievements'
-import { carrot } from './crops'
+import { achievementsMap } from './achievements.js'
+import { carrot } from './crops/index.js'
 
 describe('harvest-crop', () => {
   describe('condition', () => {

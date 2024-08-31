@@ -1,4 +1,4 @@
-import { updateLearnedRecipes } from './updateLearnedRecipes'
+import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 
 describe('updateLearnedRecipes', () => {
   describe('recipe condition is not met', () => {

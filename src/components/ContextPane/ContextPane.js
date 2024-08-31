@@ -1,10 +1,10 @@
 import React, { memo } from 'react'
 import { array, string } from 'prop-types'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import Inventory from '../Inventory'
-import CowPenContextMenu from '../CowPenContextMenu'
-import { stageFocusType } from '../../enums'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import Inventory from '../Inventory/index.js'
+import CowPenContextMenu from '../CowPenContextMenu/index.js'
+import { stageFocusType } from '../../enums.js'
 
 import './ContextPane.sass'
 

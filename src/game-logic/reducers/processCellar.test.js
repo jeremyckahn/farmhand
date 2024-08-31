@@ -1,6 +1,6 @@
-import { carrot, garlic } from '../../data/items'
+import { carrot, garlic } from '../../data/items.js'
 
-import { processCellar } from './processCellar'
+import { processCellar } from './processCellar.js'
 
 describe('processCellar', () => {
   test('kegs are updated', () => {

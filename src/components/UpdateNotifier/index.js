@@ -1,1 +1,1 @@
-export { default } from './UpdateNotifier'
+export { default } from './UpdateNotifier.js'

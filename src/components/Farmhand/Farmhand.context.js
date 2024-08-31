@@ -1,12 +1,12 @@
 /**
  * @typedef {import('../../').farmhand.item} farmhand.item
  * @typedef {import('../../').farmhand.levelEntitlements} farmhand.levelEntitlements
- * @typedef {import('./Farmhand').farmhand.state} farmhand.state
+ * @typedef {import('./Farmhand.js').farmhand.state} farmhand.state
  */
 import { createContext } from 'react'
 
 // eslint-disable-next-line no-unused-vars
-import uiEventHandlers from '../../handlers/ui-events'
+import uiEventHandlers from '../../handlers/ui-events.js'
 
 /**
  * @type {import('react').Context<{

@@ -1,10 +1,10 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { generateCow } from '../../utils'
-import { noop } from '../../utils/noop'
+import { generateCow } from '../../utils/index.js'
+import { noop } from '../../utils/noop.js'
 
-import { CowPenContextMenu } from './CowPenContextMenu'
+import { CowPenContextMenu } from './CowPenContextMenu.js'
 
 vitest.mock('../CowCard', () => ({
   __esModule: true,

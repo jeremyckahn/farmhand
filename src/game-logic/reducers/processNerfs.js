@@ -1,5 +1,5 @@
-import { applyChanceEvent } from './helpers'
-import { applyCrows } from './applyCrows'
+import { applyChanceEvent } from './helpers.js'
+import { applyCrows } from './applyCrows.js'
 
 /**
  * @param {farmhand.state} state

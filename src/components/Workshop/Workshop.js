@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { number, object } from 'prop-types'
-import Tab from '@mui/material/Tab'
-import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab/index.js'
+import Tabs from '@mui/material/Tabs/index.js'
 
-import { recipeType } from '../../enums'
+import { recipeType } from '../../enums.js'
 
-import { recipesMap } from '../../data/maps'
+import { recipesMap } from '../../data/maps.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { a11yProps } from './TabPanel'
+import { a11yProps } from './TabPanel/index.js'
 
-import { ForgeTabPanel } from './ForgeTabPanel'
-import { KitchenTabPanel } from './KitchenTabPanel'
-import { RecyclingTabPanel } from './RecyclingTabPanel'
+import { ForgeTabPanel } from './ForgeTabPanel.js'
+import { KitchenTabPanel } from './KitchenTabPanel.js'
+import { RecyclingTabPanel } from './RecyclingTabPanel.js'
 
 import './Workshop.sass'
 

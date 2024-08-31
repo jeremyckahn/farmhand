@@ -1,6 +1,6 @@
 /** @typedef {import('../../index').farmhand.cow} farmhand.cow */
 
-import { generateCow } from '../../utils'
+import { generateCow } from '../../utils/index.js'
 
 /**
  * @param {Partial<farmhand.cow>?} overrides

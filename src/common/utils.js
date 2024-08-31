@@ -1,7 +1,7 @@
 /** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
-import { itemsMap } from '../data/maps'
+import { itemsMap } from '../data/maps.js'
 
-import { randomNumberService } from './services/randomNumber'
+import { randomNumberService } from './services/randomNumber.js'
 
 export const random = () => {
   return randomNumberService.generateRandomNumber()

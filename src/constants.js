@@ -4,10 +4,10 @@
  */
 
 /**
- * @typedef {import('./index').farmhand.purchaseableFieldSize} farmhand.purchaseableFieldSize
+* @typedef {import('./index.js').farmhand.purchaseableFieldSize} farmhand.purchaseableFieldSize
  */
 
-import { cowColors, fieldMode, stageFocusType, toolLevel } from './enums'
+import { cowColors, fieldMode, stageFocusType, toolLevel } from './enums.js'
 
 const { freeze } = Object
 

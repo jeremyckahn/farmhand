@@ -1,8 +1,8 @@
 import { screen, waitFor } from '@testing-library/react'
 
-import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory'
-import { farmhandStub } from '../test-utils/stubs/farmhandStub'
-import { endDay } from '../test-utils/ui'
+import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory.js'
+import { farmhandStub } from '../test-utils/stubs/farmhandStub.js'
+import { endDay } from '../test-utils/ui.js'
 
 describe('bootup', () => {
   test('boots a fresh game when there is no save file', async () => {

@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
+import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp.js'
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown.js'
+import Button from '@mui/material/Button/index.js'
+import Box from '@mui/material/Box/index.js'
+import Card from '@mui/material/Card/index.js'
+import CardHeader from '@mui/material/CardHeader/index.js'
+import CardContent from '@mui/material/CardContent/index.js'
+import CardActions from '@mui/material/CardActions/index.js'
+import Tooltip from '@mui/material/Tooltip/index.js'
+import Typography from '@mui/material/Typography/index.js'
 import { array, bool, func, number, object } from 'prop-types'
 import classNames from 'classnames'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { items } from '../../img'
-import { itemsMap } from '../../data/maps'
-import { itemIds as shopItemIds } from '../../data/shop-inventory'
-import { noop } from '../../utils/noop'
-import { moneyString } from '../../utils/moneyString'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { items } from '../../img/index.js'
+import { itemsMap } from '../../data/maps.js'
+import { itemIds as shopItemIds } from '../../data/shop-inventory.js'
+import { noop } from '../../utils/noop.js'
+import { moneyString } from '../../utils/moneyString.js'
 import {
   inventorySpaceRemaining,
   isItemSoldInShop,
@@ -26,10 +26,10 @@ import {
   getResaleValue,
   getSalePriceMultiplier,
   integerString,
-} from '../../utils'
-import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration'
-import QuantityInput from '../QuantityInput'
-import AnimatedNumber from '../AnimatedNumber'
+} from '../../utils/index.js'
+import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
+import QuantityInput from '../QuantityInput/index.js'
+import AnimatedNumber from '../AnimatedNumber/index.js'
 
 import './Item.sass'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import AnimatedNumber from './AnimatedNumber'
+import AnimatedNumber from './AnimatedNumber.js'
 
 let component
 

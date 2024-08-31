@@ -1,6 +1,6 @@
-import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates'
+import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates.js'
 
-import { adjustLoan } from './adjustLoan'
+import { adjustLoan } from './adjustLoan.js'
 
 describe('adjustLoan', () => {
   test('updates state', () => {

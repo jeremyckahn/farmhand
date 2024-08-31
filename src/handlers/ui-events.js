@@ -6,27 +6,27 @@
  * @typedef {import("../index").farmhand.grape} grape
  */
 import { saveAs } from 'file-saver'
-import globalWindow from 'global/window'
+import globalWindow from 'global/window.js'
 
 import {
   moneyTotal,
   reduceByPersistedKeys,
   transformStateDataForImport,
-} from '../utils'
-import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants'
+} from '../utils/index.js'
+import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants.js'
 import {
   dialogView,
   fieldMode,
   // eslint-disable-next-line no-unused-vars
   grapeVariety,
   stageFocusType,
-} from '../enums'
+} from '../enums.js'
 import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
   PROGRESS_SAVED_MESSAGE,
   UPDATE_AVAILABLE,
-} from '../strings'
+} from '../strings.js'
 
 import {
   clearPlot,
@@ -35,8 +35,8 @@ import {
   minePlot,
   plantInPlot,
   waterPlot,
-} from '../game-logic/reducers'
-import { randomNumberService } from '../common/services/randomNumber'
+} from '../game-logic/reducers/index.js'
+import { randomNumberService } from '../common/services/randomNumber.js'
 
 const {
   CLEANUP,

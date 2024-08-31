@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import Tab from '@mui/material/Tab'
-import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab/index.js'
+import Tabs from '@mui/material/Tabs/index.js'
 
-import { CellarInventoryTabPanel } from './CellarInventoryTabPanel'
-import { FermentationTabPanel } from './FermentationTabPanel'
-import { WinemakingTabPanel } from './WinemakingTabPanel'
-import { a11yProps } from './TabPanel'
+import { CellarInventoryTabPanel } from './CellarInventoryTabPanel.js'
+import { FermentationTabPanel } from './FermentationTabPanel.js'
+import { WinemakingTabPanel } from './WinemakingTabPanel.js'
+import { a11yProps } from './TabPanel/index.js'
 
 import './Cellar.sass'
 

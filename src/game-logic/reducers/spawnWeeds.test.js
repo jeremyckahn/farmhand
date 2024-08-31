@@ -1,6 +1,6 @@
-import { randomNumberService } from '../../common/services/randomNumber'
+import { randomNumberService } from '../../common/services/randomNumber.js'
 
-import { spawnWeeds } from './spawnWeeds'
+import { spawnWeeds } from './spawnWeeds.js'
 
 beforeEach(() => {
   vitest.spyOn(randomNumberService, 'isRandomNumberLessThan')

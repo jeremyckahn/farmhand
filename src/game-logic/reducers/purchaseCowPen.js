@@ -1,12 +1,12 @@
 /**
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
  */
-import { moneyTotal } from '../../utils'
-import { EXPERIENCE_VALUES, PURCHASEABLE_COW_PENS } from '../../constants'
-import { COW_PEN_PURCHASED } from '../../templates'
+import { moneyTotal } from '../../utils/index.js'
+import { EXPERIENCE_VALUES, PURCHASEABLE_COW_PENS } from '../../constants.js'
+import { COW_PEN_PURCHASED } from '../../templates.js'
 
-import { addExperience } from './addExperience'
-import { showNotification } from './showNotification'
+import { addExperience } from './addExperience.js'
+import { showNotification } from './showNotification.js'
 
 /**
  * @param {state} state

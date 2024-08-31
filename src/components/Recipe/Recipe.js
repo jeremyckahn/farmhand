@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
-import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button/index.js'
+import Card from '@mui/material/Card/index.js'
+import CardHeader from '@mui/material/CardHeader/index.js'
+import CardContent from '@mui/material/CardContent/index.js'
+import CardActions from '@mui/material/CardActions/index.js'
+import Typography from '@mui/material/Typography/index.js'
 import { array, func, number, object } from 'prop-types'
 
-import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe'
+import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe.js'
 import {
   canMakeRecipe,
   doesInventorySpaceRemain,
   dollarString,
   maxYieldOfRecipe,
   integerString,
-} from '../../utils'
-import { itemsMap } from '../../data/maps'
-import { craftedItems } from '../../img'
-import QuantityInput from '../QuantityInput'
-import IngredientsList from '../IngredientsList'
+} from '../../utils/index.js'
+import { itemsMap } from '../../data/maps.js'
+import { craftedItems } from '../../img/index.js'
+import QuantityInput from '../QuantityInput/index.js'
+import IngredientsList from '../IngredientsList/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import './Recipe.sass'
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
 const Recipe = ({
   handleMakeRecipeClick,

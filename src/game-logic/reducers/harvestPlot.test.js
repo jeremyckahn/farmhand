@@ -1,13 +1,13 @@
-import { testCrop, testItem } from '../../test-utils'
-import { fertilizerType, toolType, toolLevel } from '../../enums'
-import { getPlotContentFromItemId } from '../../utils'
+import { testCrop, testItem } from '../../test-utils/index.js'
+import { fertilizerType, toolType, toolLevel } from '../../enums.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
-import { itemType } from '../../enums'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { itemType } from '../../enums.js'
 
-import { harvestPlot } from './harvestPlot'
+import { harvestPlot } from './harvestPlot.js'
 
-vitest.mock('../../data/maps')
+vitest.mock('../../data/maps.js')
 
 describe('harvestPlot', () => {
   const toolLevelsDefault = {

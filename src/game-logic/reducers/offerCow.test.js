@@ -1,4 +1,4 @@
-import { offerCow } from './offerCow'
+import { offerCow } from './offerCow.js'
 
 describe('offerCow', () => {
   test('makes specified cow available for trade', () => {

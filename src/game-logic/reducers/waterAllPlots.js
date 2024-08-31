@@ -1,4 +1,4 @@
-import { waterField } from './waterField'
+import { waterField } from './waterField.js'
 
 // TODO: Remove this and just use waterField directly.
 /**

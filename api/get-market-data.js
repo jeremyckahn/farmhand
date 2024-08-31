@@ -4,7 +4,7 @@
 import { promisify } from 'util'
 
 import 'redis'
-import '../src/common/utils'
+import '../src/common/utils.js'
 // End explicit requires for serverless builds
 
 import {
@@ -12,7 +12,7 @@ import {
   getRedisClient,
   getRoomData,
   getRoomName,
-} from '../api-etc/utils'
+} from '../api-etc/utils.js'
 
 const client = getRedisClient()
 

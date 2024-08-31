@@ -1,1 +1,1 @@
-export { default } from './Achievement'
+export { default } from './Achievement.js'

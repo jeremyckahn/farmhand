@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import OnlinePeer from './OnlinePeer'
+import OnlinePeer from './OnlinePeer.js'
 
 let component
 

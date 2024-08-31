@@ -1,8 +1,8 @@
 import { within } from '@testing-library/dom'
 
-import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory'
-import { farmhandStub } from '../test-utils/stubs/farmhandStub'
-import { nextView, previousView } from '../test-utils/ui'
+import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory.js'
+import { farmhandStub } from '../test-utils/stubs/farmhandStub.js'
+import { nextView, previousView } from '../test-utils/ui.js'
 
 describe('navigation', () => {
   test('cycles forwards through the standard views', async () => {

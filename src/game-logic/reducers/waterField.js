@@ -1,4 +1,4 @@
-import { setWasWatered, updateField } from './helpers'
+import { setWasWatered, updateField } from './helpers.js'
 
 // TODO: Add tests for this reducer
 /**

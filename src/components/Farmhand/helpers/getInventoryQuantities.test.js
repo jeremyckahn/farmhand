@@ -1,8 +1,8 @@
-import { testItem } from '../../../test-utils'
+import { testItem } from '../../../test-utils/index.js'
 
-import { getInventoryQuantities } from './getInventoryQuantities'
+import { getInventoryQuantities } from './getInventoryQuantities.js'
 
-vitest.mock('../../../data/maps')
+vitest.mock('../../../data/maps.js')
 
 describe('playerInventoryQuantities', () => {
   test('computes a map of item IDs to their quantity in the inventory', () => {

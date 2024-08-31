@@ -5,7 +5,7 @@
 import markdownTable from 'markdown-table'
 
 import { levels } from '../data/levels.js'
-import { itemsMap } from '../data/maps'
+import { itemsMap } from '../data/maps.js'
 import { moneyString } from '../utils/moneyString.js'
 
 const getDaysToMature = seedItem => {

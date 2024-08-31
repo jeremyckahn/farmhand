@@ -1,10 +1,10 @@
-import { GRAPES_REQUIRED_FOR_WINE } from '../constants'
-import { grapeChardonnay, grapeNebbiolo } from '../data/crops'
-import { yeast } from '../data/recipes'
-import { getKegStub } from '../test-utils/stubs/getKegStub'
-import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine'
+import { GRAPES_REQUIRED_FOR_WINE } from '../constants.js'
+import { grapeChardonnay, grapeNebbiolo } from '../data/crops/index.js'
+import { yeast } from '../data/recipes.js'
+import { getKegStub } from '../test-utils/stubs/getKegStub.js'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
 
-import { wineService } from './wine'
+import { wineService } from './wine.js'
 
 describe('WineService', () => {
   describe('getMaxWineYield', () => {

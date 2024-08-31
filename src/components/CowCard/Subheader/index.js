@@ -1,1 +1,1 @@
-export { default } from './Subheader'
+export { default } from './Subheader.js'

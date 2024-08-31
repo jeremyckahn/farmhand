@@ -2,17 +2,17 @@
 // here to ensure that that they are included in serverless builds. Do NOT
 // remove them unless they are not needed by any upstream modules.
 import 'redis'
-import '../src/common/utils'
-import '../src/common/constants'
-import '../api-etc/constants'
+import '../src/common/utils.js'
+import '../src/common/constants.js'
+import '../api-etc/constants.js'
 // End explicit requires for serverless builds
 
 import { promisify } from 'util'
 
 import axios from 'axios'
 
-import { MARKET_SUMMARY_FOR_DISCORD } from '../api-etc/templates'
-import { allowCors, getRedisClient, getRoomData } from '../api-etc/utils'
+import { MARKET_SUMMARY_FOR_DISCORD } from '../api-etc/templates.js'
+import { allowCors, getRedisClient, getRoomData } from '../api-etc/utils.js'
 
 const client = getRedisClient()
 

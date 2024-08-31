@@ -1,7 +1,7 @@
-import { moneyTotal, nullArray } from '../../utils'
-import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants'
+import { moneyTotal, nullArray } from '../../utils/index.js'
+import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
 
-import { addExperience } from './addExperience'
+import { addExperience } from './addExperience.js'
 
 /**
  * @param {farmhand.state} state

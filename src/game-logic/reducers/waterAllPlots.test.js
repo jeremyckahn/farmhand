@@ -1,9 +1,9 @@
-import { testCrop } from '../../test-utils'
+import { testCrop } from '../../test-utils/index.js'
 
-import { waterAllPlots } from './waterAllPlots'
+import { waterAllPlots } from './waterAllPlots.js'
 
-vitest.mock('../../data/maps')
-vitest.mock('../../data/items')
+vitest.mock('../../data/maps.js')
+vitest.mock('../../data/items.js')
 
 describe('waterAllPlots', () => {
   test('sets wasWateredToday to true for all plots', () => {

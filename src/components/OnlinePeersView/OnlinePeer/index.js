@@ -1,1 +1,1 @@
-export { default } from './OnlinePeer'
+export { default } from './OnlinePeer.js'

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 
-import { fermentableItemsMap } from '../../data/maps'
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { getCropsAvailableToFerment } from '../../utils/getCropsAvailableToFerment'
+import { fermentableItemsMap } from '../../data/maps.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { getCropsAvailableToFerment } from '../../utils/getCropsAvailableToFerment.js'
 
-import { FermentationRecipe } from './FermentationRecipe'
+import { FermentationRecipe } from './FermentationRecipe.js'
 
 const totalFermentableItems = Object.keys(fermentableItemsMap).length
 

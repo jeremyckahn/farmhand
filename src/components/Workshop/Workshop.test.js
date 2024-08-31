@@ -2,15 +2,15 @@ import React from 'react'
 import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { getUpgradesAvailable } from './getUpgradesAvailable'
+import { getUpgradesAvailable } from './getUpgradesAvailable.js'
 
-import Workshop from './Workshop'
+import Workshop from './Workshop.js'
 
-vitest.mock('./getUpgradesAvailable')
+vitest.mock('./getUpgradesAvailable.js')
 
-vitest.mock('../../data/maps', async importOriginal => ({
+vitest.mock('../../data/maps.js', async importOriginal => ({
   ...(await importOriginal()),
   recipesMap: {
     'kitchen-recipe-1': {

@@ -1,6 +1,6 @@
-import { testCrop } from '../test-utils'
-import { items as itemImages, animals } from '../img'
-import { cowColors, cropLifeStage, genders, standardCowColors } from '../enums'
+import { testCrop } from '../test-utils/index.js'
+import { items as itemImages, animals } from '../img/index.js'
+import { cowColors, cropLifeStage, genders, standardCowColors } from '../enums.js'
 import {
   rainbowFertilizer,
   carrot,
@@ -13,8 +13,8 @@ import {
   wheat,
   scarecrow,
   silverOre,
-} from '../data/items'
-import { carrotSoup } from '../data/recipes'
+} from '../data/items.js'
+import { carrotSoup } from '../data/recipes.js'
 import {
   COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
@@ -29,11 +29,11 @@ import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   I_AM_RICH_BONUSES,
   MALE_COW_WEIGHT_MULTIPLIER,
-} from '../constants'
+} from '../constants.js'
 
-import { levelAchieved } from './levelAchieved'
-import { farmProductsSold } from './farmProductsSold'
-import { isItemAFarmProduct } from './isItemAFarmProduct'
+import { levelAchieved } from './levelAchieved.js'
+import { farmProductsSold } from './farmProductsSold.js'
+import { isItemAFarmProduct } from './isItemAFarmProduct.js'
 
 import {
   canMakeRecipe,
@@ -70,7 +70,7 @@ import {
   transformStateDataForImport,
   getAvailableShopInventory,
   getRandomLevelUpReward,
-} from './index'
+} from './index.js'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 

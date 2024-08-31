@@ -1,7 +1,7 @@
-import { itemType, recipeType } from '../../enums'
-import * as actualRecipes from '../recipes'
+import { itemType, recipeType } from '../../enums.js'
+import * as actualRecipes from '../recipes.js'
 
-import * as items from './items'
+import * as items from './items.js'
 
 Object.assign(module.exports, { ...actualRecipes })
 

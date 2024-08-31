@@ -1,9 +1,9 @@
 const redis = require('redis')
 
-const { generateValueAdjustments } = require('../src/common/utils')
-const { MAX_ROOM_NAME_LENGTH } = require('../src/common/constants')
+const { generateValueAdjustments } = require('../src/common/utils.js')
+const { MAX_ROOM_NAME_LENGTH } = require('../src/common/constants.js')
 
-const { GLOBAL_ROOM_KEY, ACCEPTED_ORIGINS } = require('./constants')
+const { GLOBAL_ROOM_KEY, ACCEPTED_ORIGINS } = require('./constants.js')
 
 module.exports.getRedisClient = () => {
   const client = redis.createClient({

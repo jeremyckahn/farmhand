@@ -1,20 +1,20 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 /** @typedef {import("../enums").itemType} farmhand.itemType */
-import { itemType, toolLevel } from '../enums'
+import { itemType, toolLevel } from '../enums.js'
 import {
   RESOURCE_SPAWN_CHANCE,
   ORE_SPAWN_CHANCE,
   COAL_SPAWN_CHANCE,
   STONE_SPAWN_CHANCE,
-} from '../constants'
-import { randomChoice } from '../utils'
-import { randomNumberService } from '../common/services/randomNumber'
+} from '../constants.js'
+import { randomChoice } from '../utils/index.js'
+import { randomNumberService } from '../common/services/randomNumber.js'
 // eslint-disable-next-line no-unused-vars
-import { Factory } from '../interfaces/Factory'
+import { Factory } from '../interfaces/Factory.js'
 
-import OreFactory from './OreFactory'
-import CoalFactory from './CoalFactory'
-import StoneFactory from './StoneFactory'
+import OreFactory from './OreFactory.js'
+import CoalFactory from './CoalFactory.js'
+import StoneFactory from './StoneFactory.js'
 
 /**
  * Object for private cache of factory instances

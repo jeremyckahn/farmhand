@@ -1,8 +1,8 @@
-import { stageFocusType, toolType } from '../enums'
-import { features } from '../config'
+import { stageFocusType, toolType } from '../enums.js'
+import { features } from '../config.js'
 
-import * as items from './items'
-import * as recipes from './recipes'
+import * as items from './items.js'
+import * as recipes from './recipes.js'
 
 export const levels = []
 

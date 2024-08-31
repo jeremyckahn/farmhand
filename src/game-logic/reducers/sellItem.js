@@ -3,8 +3,8 @@
  * @typedef {import("../../").farmhand.item} farmhand.item
  */
 
-import { itemsMap } from '../../data/maps'
-import { isItemAFarmProduct } from '../../utils/isItemAFarmProduct'
+import { itemsMap } from '../../data/maps.js'
+import { isItemAFarmProduct } from '../../utils/isItemAFarmProduct.js'
 import {
   castToMoney,
   getAdjustedItemValue,
@@ -12,17 +12,17 @@ import {
   getSalePriceMultiplier,
   isItemSoldInShop,
   moneyTotal,
-} from '../../utils'
-import { LOAN_GARNISHMENT_RATE, EXPERIENCE_VALUES } from '../../constants'
-import { SOLD_ITEM_PEER_NOTIFICATION } from '../../templates'
+} from '../../utils/index.js'
+import { LOAN_GARNISHMENT_RATE, EXPERIENCE_VALUES } from '../../constants.js'
+import { SOLD_ITEM_PEER_NOTIFICATION } from '../../templates.js'
 
-import { decrementItemFromInventory } from './decrementItemFromInventory'
-import { addExperience } from './addExperience'
-import { addRevenue } from './addRevenue'
-import { updateLearnedRecipes } from './updateLearnedRecipes'
-import { adjustLoan } from './adjustLoan'
+import { decrementItemFromInventory } from './decrementItemFromInventory.js'
+import { addExperience } from './addExperience.js'
+import { addRevenue } from './addRevenue.js'
+import { updateLearnedRecipes } from './updateLearnedRecipes.js'
+import { adjustLoan } from './adjustLoan.js'
 
-import { prependPendingPeerMessage } from './index'
+import { prependPendingPeerMessage } from './index.js'
 
 /**
  * @param {farmhand.state} state

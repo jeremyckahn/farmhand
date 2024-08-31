@@ -1,4 +1,4 @@
-import { updatePlotShoveledState } from './updatePlotShoveledState'
+import { updatePlotShoveledState } from './updatePlotShoveledState.js'
 
 describe('updatePlotShoveledState', () => {
   test('it decrements daysUntilClear if value is above 1', () => {

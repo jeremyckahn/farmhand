@@ -1,7 +1,7 @@
-import { carrot } from '../../data/crops'
-import { salt } from '../../data/recipes'
+import { carrot } from '../../data/crops/index.js'
+import { salt } from '../../data/recipes.js'
 
-import { makeFermentationRecipe } from './makeFermentationRecipe'
+import { makeFermentationRecipe } from './makeFermentationRecipe.js'
 
 describe('makeFermentationRecipe', () => {
   test.each([

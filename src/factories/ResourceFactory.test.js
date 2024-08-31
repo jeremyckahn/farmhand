@@ -1,15 +1,15 @@
-import { randomNumberService } from '../common/services/randomNumber'
-import { itemType, toolLevel } from '../enums'
-import { randomChoice } from '../utils'
+import { randomNumberService } from '../common/services/randomNumber.js'
+import { itemType, toolLevel } from '../enums.js'
+import { randomChoice } from '../utils/index.js'
 
-import ResourceFactory from './ResourceFactory'
+import ResourceFactory from './ResourceFactory.js'
 
-vitest.mock('./CoalFactory')
-vitest.mock('./OreFactory')
-vitest.mock('./StoneFactory')
+vitest.mock('./CoalFactory.js')
+vitest.mock('./OreFactory.js')
+vitest.mock('./StoneFactory.js')
 
-vitest.mock('../utils', async () => ({
-  ...(await vitest.importActual('../utils')),
+vitest.mock('../utils/index.js', async () => ({
+  ...(await vitest.importActual('../utils/index.js')),
   randomChoice: vitest.fn(),
 }))
 

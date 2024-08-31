@@ -1,30 +1,30 @@
 import React, { useState } from 'react'
 import { array, func, number, object, string } from 'prop-types'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-import Fab from '@mui/material/Fab'
-import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
-import Tab from '@mui/material/Tab'
-import Tabs from '@mui/material/Tabs'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward.js'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward.js'
+import Fab from '@mui/material/Fab/index.js'
+import MenuItem from '@mui/material/MenuItem/index.js'
+import Select from '@mui/material/Select/index.js'
+import Tab from '@mui/material/Tab/index.js'
+import Tabs from '@mui/material/Tabs/index.js'
 import sortBy from 'lodash.sortby'
 
-import Item from '../Item'
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { enumify } from '../../enums'
+import Item from '../Item/index.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { enumify } from '../../enums.js'
 import {
   findCowById,
   getCowSellValue,
   getCowWeight,
   isCowInBreedingPen,
   nullArray,
-} from '../../utils'
-import { PURCHASEABLE_COW_PENS } from '../../constants'
-import cowShopInventory from '../../data/shop-inventory-cow'
+} from '../../utils/index.js'
+import { PURCHASEABLE_COW_PENS } from '../../constants.js'
+import cowShopInventory from '../../data/shop-inventory-cow.js'
 
-import CowCard from '../CowCard'
+import CowCard from '../CowCard/index.js'
 
-import { TabPanel, a11yProps } from './TabPanel'
+import { TabPanel, a11yProps } from './TabPanel/index.js'
 
 import './CowPenContextMenu.sass'
 

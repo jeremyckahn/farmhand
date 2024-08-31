@@ -1,8 +1,8 @@
-import upgrades from '../../data/upgrades'
-import { TOOL_UPGRADED_NOTIFICATION } from '../../templates'
+import upgrades from '../../data/upgrades.js'
+import { TOOL_UPGRADED_NOTIFICATION } from '../../templates.js'
 
-import { showNotification } from './showNotification'
-import { makeRecipe } from './makeRecipe'
+import { showNotification } from './showNotification.js'
+import { makeRecipe } from './makeRecipe.js'
 
 // TODO: Add tests for this reducer
 /**

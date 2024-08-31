@@ -24,10 +24,10 @@ import sortBy from 'lodash.sortby'
 import { v4 as uuid } from 'uuid'
 import { funAnimalName } from 'fun-animal-names'
 
-import cowShopInventory from '../data/shop-inventory-cow'
-import shopInventory from '../data/shop-inventory'
-import fruitNames from '../data/fruit-names'
-import { cropItemIdToSeedItemMap, itemsMap } from '../data/maps'
+import cowShopInventory from '../data/shop-inventory-cow.js'
+import shopInventory from '../data/shop-inventory.js'
+import fruitNames from '../data/fruit-names.js'
+import { cropItemIdToSeedItemMap, itemsMap } from '../data/maps.js'
 import {
   chocolateMilk,
   milk1,
@@ -36,9 +36,9 @@ import {
   rainbowMilk1,
   rainbowMilk2,
   rainbowMilk3,
-} from '../data/items'
-import { unlockableItems } from '../data/levels'
-import { items as itemImages, animals, pixel } from '../img'
+} from '../data/items.js'
+import { unlockableItems } from '../data/levels.js'
+import { items as itemImages, animals, pixel } from '../img/index.js'
 import {
   cowColors,
   cropLifeStage,
@@ -47,7 +47,7 @@ import {
   itemType,
   stageFocusType,
   standardCowColors,
-} from '../enums'
+} from '../enums.js'
 import {
   BREAKPOINTS,
   COW_COLORS_HEX_MAP,
@@ -82,15 +82,15 @@ import {
   STORM_CHANCE,
   STORAGE_EXPANSION_SCALE_PREMIUM,
   STANDARD_VIEW_LIST,
-} from '../constants'
-import { random } from '../common/utils'
+} from '../constants.js'
+import { random } from '../common/utils.js'
 
-import { farmProductsSold } from './farmProductsSold'
-import { getCropLifecycleDuration } from './getCropLifecycleDuration'
-import { getInventoryQuantityMap } from './getInventoryQuantityMap'
-import { getItemBaseValue } from './getItemBaseValue'
-import { getLevelEntitlements } from './getLevelEntitlements'
-import { memoize } from './memoize'
+import { farmProductsSold } from './farmProductsSold.js'
+import { getCropLifecycleDuration } from './getCropLifecycleDuration.js'
+import { getInventoryQuantityMap } from './getInventoryQuantityMap.js'
+import { getItemBaseValue } from './getItemBaseValue.js'
+import { getLevelEntitlements } from './getLevelEntitlements.js'
+import { memoize } from './memoize.js'
 
 const Jimp = configureJimp({
   types: [jimpPng],

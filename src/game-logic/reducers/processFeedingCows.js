@@ -1,13 +1,13 @@
-import { clampNumber } from '../../utils'
+import { clampNumber } from '../../utils/index.js'
 import {
   COW_FEED_ITEM_ID,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_MINIMUM,
-} from '../../constants'
-import { OUT_OF_COW_FEED_NOTIFICATION } from '../../strings'
+} from '../../constants.js'
+import { OUT_OF_COW_FEED_NOTIFICATION } from '../../strings.js'
 
-import { decrementItemFromInventory } from './decrementItemFromInventory'
+import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 /**
  * @param {farmhand.state} state

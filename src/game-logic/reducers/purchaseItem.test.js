@@ -1,8 +1,8 @@
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
-import { purchaseItem } from './purchaseItem'
+import { purchaseItem } from './purchaseItem.js'
 
-vitest.mock('../../data/maps')
+vitest.mock('../../data/maps.js')
 
 describe('purchaseItem', () => {
   describe('howMany === 0', () => {

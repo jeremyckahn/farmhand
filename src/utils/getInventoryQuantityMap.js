@@ -1,7 +1,7 @@
 /**
  * @typedef {import("../index").farmhand.item} item
  */
-import { memoize } from './memoize'
+import { memoize } from './memoize.js'
 
 export const getInventoryQuantityMap = memoize(
   /**

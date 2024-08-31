@@ -1,11 +1,11 @@
-import { PRICE_CRASH, PRICE_SURGE } from '../../templates'
-import { sampleCropItem1 } from '../../data/items'
-import { getPriceEventForCrop } from '../../utils'
+import { PRICE_CRASH, PRICE_SURGE } from '../../templates.js'
+import { sampleCropItem1 } from '../../data/items.js'
+import { getPriceEventForCrop } from '../../utils/index.js'
 
-import { generatePriceEvents } from './generatePriceEvents'
+import { generatePriceEvents } from './generatePriceEvents.js'
 
-vitest.mock('../../data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
-vitest.mock('../../data/items')
+vitest.mock('../../data/levels.js', () => ({ levels: [], itemUnlockLevels: {} }))
+vitest.mock('../../data/items.js')
 
 describe('generatePriceEvents', () => {
   describe('price event already exists', () => {
@@ -35,7 +35,7 @@ describe('generatePriceEvents', () => {
       vitest.spyOn(Math, 'random').mockReturnValue(0)
 
       vitest.resetModules()
-      vitest.mock('../../data/levels', () => ({
+      vitest.mock('../../data/levels.js', () => ({
         levels: [
           {
             id: 0,

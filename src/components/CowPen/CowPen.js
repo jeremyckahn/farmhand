@@ -2,19 +2,19 @@ import React, { Component, useEffect } from 'react'
 import { array, bool, func, object, string } from 'prop-types'
 import classNames from 'classnames'
 import { Tweenable } from 'shifty'
-import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip/index.js'
+import Typography from '@mui/material/Typography/index.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
-import { LEFT, RIGHT } from '../../constants'
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { pixel } from '../../img'
+import { LEFT, RIGHT } from '../../constants.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { pixel } from '../../img/index.js'
 
-import { getCowDisplayName, getCowImage } from '../../utils'
+import { getCowDisplayName, getCowImage } from '../../utils/index.js'
 
 import './CowPen.sass'
-import { random } from '../../common/utils'
+import { random } from '../../common/utils.js'
 
 // Only moves the cow within the middle 80% of the pen
 const randomPosition = () => 10 + random() * 80

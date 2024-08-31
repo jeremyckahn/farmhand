@@ -1,6 +1,6 @@
 /** @typedef {import("../../index").farmhand.item} farmhand.item */
-import { itemType } from '../../enums'
-import { STONE_SPAWN_CHANCE } from '../../constants'
+import { itemType } from '../../enums.js'
+import { STONE_SPAWN_CHANCE } from '../../constants.js'
 
 const { freeze } = Object
 

@@ -1,4 +1,4 @@
-import { selectCow } from './selectCow'
+import { selectCow } from './selectCow.js'
 
 describe('selectCow', () => {
   test('updates selectedCowId', () => {

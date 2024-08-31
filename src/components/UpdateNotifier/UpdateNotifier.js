@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 const UpdateNotifier = () => {
   const {

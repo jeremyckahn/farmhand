@@ -1,20 +1,20 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { getPlotContentFromItemId } from '../../utils'
-import { noop } from '../../utils/noop'
-import { testCrop } from '../../test-utils'
-import { pixel, plotStates } from '../../img'
-import { cropLifeStage, fertilizerType } from '../../enums'
-import { FERTILIZER_BONUS } from '../../constants'
+import { getPlotContentFromItemId } from '../../utils/index.js'
+import { noop } from '../../utils/noop.js'
+import { testCrop } from '../../test-utils/index.js'
+import { pixel, plotStates } from '../../img/index.js'
+import { cropLifeStage, fertilizerType } from '../../enums.js'
+import { FERTILIZER_BONUS } from '../../constants.js'
 
-import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot'
+import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot.js'
 
-vitest.mock('../../data/maps')
-vitest.mock('../../data/items')
-vitest.mock('../../data/levels', () => ({ levels: [] }))
-vitest.mock('../../data/shop-inventory')
-vitest.mock('../../img')
+vitest.mock('../../data/maps.js')
+vitest.mock('../../data/items.js')
+vitest.mock('../../data/levels.js', () => ({ levels: [] }))
+vitest.mock('../../data/shop-inventory.js')
+vitest.mock('../../img/index.js')
 
 let component
 

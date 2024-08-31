@@ -1,6 +1,6 @@
-import { testItem } from '../../test-utils'
-import { itemType } from '../../enums'
-import * as actualItems from '../items'
+import { testItem } from '../../test-utils/index.js'
+import { itemType } from '../../enums.js'
+import * as actualItems from '../items.js'
 
 // Patch the original items data into the mock. This has the potential to break
 // with future versions of Webpack (keep an eye on

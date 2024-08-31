@@ -1,12 +1,12 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Field from '../Field'
-import CowPen from '../CowPen'
-import Shop from '../Shop'
-import { stageFocusType } from '../../../src/enums'
+import Field from '../Field/index.js'
+import CowPen from '../CowPen/index.js'
+import Shop from '../Shop/index.js'
+import { stageFocusType } from '../../../src/enums.js'
 
-import { Stage } from './Stage'
+import { Stage } from './Stage.js'
 
 let component
 

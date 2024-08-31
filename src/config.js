@@ -1,4 +1,4 @@
-import globalWindow from 'global/window'
+import globalWindow from 'global/window.js'
 
 export const endpoints = {
   getMarketData: `${import.meta.env.VITE_API_ROOT}api/get-market-data`,

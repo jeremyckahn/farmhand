@@ -1,16 +1,16 @@
 import React from 'react'
 import { number, array } from 'prop-types'
 
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Divider from '@mui/material/Divider'
+import Card from '@mui/material/Card/index.js'
+import CardContent from '@mui/material/CardContent/index.js'
+import Divider from '@mui/material/Divider/index.js'
 import ReactMarkdown from 'react-markdown'
 
-import { recipeType } from '../../enums'
-import { recipeCategories } from '../../data/maps'
-import { RecipeList } from '../RecipeList/RecipeList'
+import { recipeType } from '../../enums.js'
+import { recipeCategories } from '../../data/maps.js'
+import { RecipeList } from '../RecipeList/RecipeList.js'
 
-import { TabPanel } from './TabPanel'
+import { TabPanel } from './TabPanel/index.js'
 
 export function RecyclingTabPanel({ currentTab, index, learnedRecipes }) {
   return (

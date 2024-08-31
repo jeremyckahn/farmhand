@@ -1,14 +1,14 @@
 import React from 'react'
 import { number, object, shape, string } from 'prop-types'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardHeader from '@mui/material/CardHeader'
+import Card from '@mui/material/Card/index.js'
+import CardContent from '@mui/material/CardContent/index.js'
+import CardHeader from '@mui/material/CardHeader/index.js'
 
-import CowCard from '../../CowCard'
+import CowCard from '../../CowCard/index.js'
 
-import { moneyString } from '../../../utils/moneyString'
-import { levelAchieved } from '../../../utils/levelAchieved'
-import { getPlayerName, integerString } from '../../../utils'
+import { moneyString } from '../../../utils/moneyString.js'
+import { levelAchieved } from '../../../utils/levelAchieved.js'
+import { getPlayerName, integerString } from '../../../utils/index.js'
 
 const OnlinePeer = ({
   peer: { cowOfferedForTrade, dayCount, id, experience, money },

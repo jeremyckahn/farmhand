@@ -1,10 +1,10 @@
 /** @typedef {import("../../index").farmhand.item} farmhand.item */
 
-import { recipeType } from '../../enums'
-import * as actualMaps from '../maps'
+import { recipeType } from '../../enums.js'
+import * as actualMaps from '../maps.js'
 
-import * as items from './items'
-import * as recipes from './recipes'
+import * as items from './items.js'
+import * as recipes from './recipes.js'
 
 export const recipeCategories = {
   [recipeType.KITCHEN]: {},

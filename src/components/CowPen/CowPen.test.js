@@ -1,12 +1,12 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { generateCow } from '../../utils'
-import { cowColors } from '../../enums'
-import { pixel } from '../../img'
-import { noop } from '../../utils/noop'
+import { generateCow } from '../../utils/index.js'
+import { cowColors } from '../../enums.js'
+import { pixel } from '../../img/index.js'
+import { noop } from '../../utils/noop.js'
 
-import { Cow } from './CowPen'
+import { Cow } from './CowPen.js'
 
 let component
 

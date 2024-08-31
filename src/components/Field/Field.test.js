@@ -1,19 +1,19 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { fieldMode } from '../../enums'
-import { testItem } from '../../test-utils'
+import { fieldMode } from '../../enums.js'
+import { testItem } from '../../test-utils/index.js'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
-import { noop } from '../../utils/noop'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { noop } from '../../utils/noop.js'
 
-import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field'
+import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field.js'
 
-vitest.mock('../../data/maps')
-vitest.mock('../../data/items')
-vitest.mock('../../data/levels', () => ({ levels: [] }))
-vitest.mock('../../data/shop-inventory')
-vitest.mock('../../img')
+vitest.mock('../../data/maps.js')
+vitest.mock('../../data/items.js')
+vitest.mock('../../data/levels.js', () => ({ levels: [] }))
+vitest.mock('../../data/shop-inventory.js')
+vitest.mock('../../img/index.js')
 
 let component
 

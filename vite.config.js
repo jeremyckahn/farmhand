@@ -5,7 +5,7 @@ import { defineConfig as vitestDefineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
-import { manifest } from './manifest'
+import { manifest } from './manifest.js'
 
 // NOTE: See:
 //   - https://stackoverflow.com/a/78012267/470685

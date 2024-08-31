@@ -1,10 +1,10 @@
-import { testCrop, testItem } from '../../test-utils'
-import { fertilizerType, fieldMode } from '../../enums'
-import { getPlotContentFromItemId } from '../../utils'
+import { testCrop, testItem } from '../../test-utils/index.js'
+import { fertilizerType, fieldMode } from '../../enums.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
 
-import { fertilizePlot } from './fertilizePlot'
+import { fertilizePlot } from './fertilizePlot.js'
 
-vitest.mock('../../data/maps')
+vitest.mock('../../data/maps.js')
 
 describe('fertilizePlot', () => {
   describe('no fertilizer in inventory', () => {

@@ -1,4 +1,4 @@
-import { updateFinancialRecords } from './updateFinancialRecords'
+import { updateFinancialRecords } from './updateFinancialRecords.js'
 
 describe('updateFinancialRecords', () => {
   test('updates financial records', () => {

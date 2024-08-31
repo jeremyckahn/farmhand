@@ -2,16 +2,16 @@ import {
   sampleItem1,
   sampleFieldTool1,
   sampleCropSeedsItem1,
-} from '../../data/items'
+} from '../../data/items.js'
 
 import {
   computePlayerInventory,
   getFieldToolInventory,
   getPlantableCropInventory,
-} from './Farmhand'
+} from './Farmhand.js'
 
-vitest.mock('../../data/maps')
-vitest.mock('../../data/items')
+vitest.mock('../../data/maps.js')
+vitest.mock('../../data/items.js')
 
 describe('private helpers', () => {
   describe('computePlayerInventory', () => {

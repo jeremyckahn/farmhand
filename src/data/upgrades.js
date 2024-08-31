@@ -1,7 +1,7 @@
-import { itemType, toolType, toolLevel } from '../enums'
+import { itemType, toolType, toolLevel } from '../enums.js'
 
-import * as items from './items'
-import * as recipes from './recipes'
+import * as items from './items.js'
+import * as recipes from './recipes.js'
 
 const coalNeededForIngots = (ingotId, amount = 1) => {
   switch (ingotId) {

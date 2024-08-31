@@ -1,21 +1,21 @@
 import React from 'react'
 import classNames from 'classnames'
-import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardActions from '@mui/material/CardActions'
+import Button from '@mui/material/Button/index.js'
+import Card from '@mui/material/Card/index.js'
+import CardHeader from '@mui/material/CardHeader/index.js'
+import CardActions from '@mui/material/CardActions/index.js'
 import { array, func, number, object } from 'prop-types'
 
-import IngredientsList from '../IngredientsList'
+import IngredientsList from '../IngredientsList/index.js'
 
-import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe'
-import { canMakeRecipe, doesInventorySpaceRemain } from '../../utils'
+import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe.js'
+import { canMakeRecipe, doesInventorySpaceRemain } from '../../utils/index.js'
 
-import { craftedItems } from '../../img'
+import { craftedItems } from '../../img/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import './UpgradePurchase.sass'
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
 export function UpgradePurchase({
   handleUpgradeTool,

@@ -1,6 +1,6 @@
-import { MAX_PENDING_PEER_MESSAGES } from '../../constants'
+import { MAX_PENDING_PEER_MESSAGES } from '../../constants.js'
 
-import { prependPendingPeerMessage } from './prependPendingPeerMessage'
+import { prependPendingPeerMessage } from './prependPendingPeerMessage.js'
 
 describe('prependPendingPeerMessage', () => {
   test('prepends a message', () => {

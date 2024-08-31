@@ -1,6 +1,6 @@
-import { testItem } from '../../test-utils'
+import { testItem } from '../../test-utils/index.js'
 
-import { decrementItemFromInventory } from './decrementItemFromInventory'
+import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 describe('decrementItemFromInventory', () => {
   let updatedState

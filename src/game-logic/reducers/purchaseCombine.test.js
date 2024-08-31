@@ -1,6 +1,6 @@
-import { PURCHASEABLE_COMBINES } from '../../constants'
+import { PURCHASEABLE_COMBINES } from '../../constants.js'
 
-import { purchaseCombine } from './purchaseCombine'
+import { purchaseCombine } from './purchaseCombine.js'
 
 describe('purchaseCombine', () => {
   test('updates purchasedCombine', () => {

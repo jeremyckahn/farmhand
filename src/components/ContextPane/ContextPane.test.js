@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { stageFocusType } from '../../../src/enums'
+import { stageFocusType } from '../../../src/enums.js'
 
-import { ContextPane, PlayerInventory } from './ContextPane'
+import { ContextPane, PlayerInventory } from './ContextPane.js'
 
 let component
 

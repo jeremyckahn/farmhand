@@ -2,9 +2,9 @@ import { screen } from '@testing-library/react'
 import { within } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 
-import { getItemByName } from '../test-utils/ui'
-import { farmhandStub } from '../test-utils/stubs/farmhandStub'
-import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory'
+import { getItemByName } from '../test-utils/ui.js'
+import { farmhandStub } from '../test-utils/stubs/farmhandStub.js'
+import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory.js'
 
 describe('notifications', () => {
   test('notification is shown when recipe is learned', async () => {

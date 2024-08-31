@@ -1,7 +1,7 @@
-import { moneyTotal } from '../../utils'
-import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates'
+import { moneyTotal } from '../../utils/index.js'
+import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates.js'
 
-import { showNotification } from './showNotification'
+import { showNotification } from './showNotification.js'
 
 /**
  * @param {farmhand.state} state

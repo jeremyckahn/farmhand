@@ -1,7 +1,7 @@
-import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants'
-import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings'
+import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.js'
+import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.js'
 
-import { purchaseForest } from './purchaseForest'
+import { purchaseForest } from './purchaseForest.js'
 
 const tree = () => {
   return {

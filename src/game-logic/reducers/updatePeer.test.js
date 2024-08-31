@@ -1,13 +1,13 @@
 /**
  * @typedef {import('../../index').farmhand.peerMetadata} farmhand.peerMetadata
  */
-import Farmhand from '../../components/Farmhand'
-import { MAX_LATEST_PEER_MESSAGES } from '../../constants'
-import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates'
-import { getCowStub } from '../../test-utils/stubs/cowStub'
-import { getPeerMetadataStub } from '../../test-utils/stubs/peerMetadataStub'
+import Farmhand from '../../components/Farmhand/index.js'
+import { MAX_LATEST_PEER_MESSAGES } from '../../constants.js'
+import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.js'
+import { getCowStub } from '../../test-utils/stubs/cowStub.js'
+import { getPeerMetadataStub } from '../../test-utils/stubs/peerMetadataStub.js'
 
-import { updatePeer } from './updatePeer'
+import { updatePeer } from './updatePeer.js'
 
 const stubPeerMetadata = getPeerMetadataStub()
 

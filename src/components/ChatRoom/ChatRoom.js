@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
 import { Helmet } from 'react-helmet'
 import classNames from 'classnames'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
+import Button from '@mui/material/Button/index.js'
+import Dialog from '@mui/material/Dialog/index.js'
+import DialogTitle from '@mui/material/DialogTitle/index.js'
+import DialogContent from '@mui/material/DialogContent/index.js'
+import DialogActions from '@mui/material/DialogActions/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import './ChatRoom.sass'
 

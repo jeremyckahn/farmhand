@@ -1,6 +1,6 @@
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
-import { addItemToInventory } from './addItemToInventory'
+import { addItemToInventory } from './addItemToInventory.js'
 
 describe('addItemToInventory', () => {
   test('creates a new item in the inventory', () => {

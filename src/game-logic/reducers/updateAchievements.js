@@ -1,7 +1,7 @@
-import achievements from '../../data/achievements'
-import { ACHIEVEMENT_COMPLETED } from '../../templates'
+import achievements from '../../data/achievements.js'
+import { ACHIEVEMENT_COMPLETED } from '../../templates.js'
 
-import { showNotification } from './showNotification'
+import { showNotification } from './showNotification.js'
 
 /**
  * @param {farmhand.state} state

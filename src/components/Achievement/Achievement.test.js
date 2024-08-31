@@ -1,9 +1,9 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import Achievement from './Achievement'
+import Achievement from './Achievement.js'
 
 describe('<Achievement />', () => {
   let achievementObject

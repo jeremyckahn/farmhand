@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import AchievementsView from './AchievementsView'
+import AchievementsView from './AchievementsView.js'
 
 let component
 

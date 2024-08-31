@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import { array } from 'prop-types'
-import Divider from '@mui/material/Divider'
+import Divider from '@mui/material/Divider/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import Item from '../Item'
-import { itemsMap } from '../../data/maps'
-import { enumify, itemType } from '../../enums'
-import { sortItems } from '../../utils'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import Item from '../Item/index.js'
+import { itemsMap } from '../../data/maps.js'
+import { enumify, itemType } from '../../enums.js'
+import { sortItems } from '../../utils/index.js'
 
 const {
   COW_FEED,

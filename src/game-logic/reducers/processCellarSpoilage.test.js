@@ -1,9 +1,9 @@
-import { randomNumberService } from '../../common/services/randomNumber'
-import { wineTempranillo } from '../../data/recipes'
-import { KEG_SPOILED_MESSAGE } from '../../templates'
-import { getKegStub } from '../../test-utils/stubs/getKegStub'
+import { randomNumberService } from '../../common/services/randomNumber.js'
+import { wineTempranillo } from '../../data/recipes.js'
+import { KEG_SPOILED_MESSAGE } from '../../templates.js'
+import { getKegStub } from '../../test-utils/stubs/getKegStub.js'
 
-import { processCellarSpoilage } from './processCellarSpoilage'
+import { processCellarSpoilage } from './processCellarSpoilage.js'
 
 describe('processCellarSpoilage', () => {
   test('does not remove kegs that have not spoiled', () => {

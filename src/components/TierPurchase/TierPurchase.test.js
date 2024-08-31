@@ -2,7 +2,7 @@ import React from 'react'
 import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { TierPurchase } from './TierPurchase'
+import { TierPurchase } from './TierPurchase.js'
 
 describe('<TierPurchase />', () => {
   let onBuyClick, props

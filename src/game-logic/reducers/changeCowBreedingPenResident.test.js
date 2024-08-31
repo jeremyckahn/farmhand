@@ -1,7 +1,7 @@
-import { COW_GESTATION_PERIOD_DAYS } from '../../constants'
-import { generateCow } from '../../utils'
+import { COW_GESTATION_PERIOD_DAYS } from '../../constants.js'
+import { generateCow } from '../../utils/index.js'
 
-import { changeCowBreedingPenResident } from './changeCowBreedingPenResident'
+import { changeCowBreedingPenResident } from './changeCowBreedingPenResident.js'
 
 const cowA = generateCow({ id: 'cow-a' })
 const cowB = generateCow({ id: 'cow-b' })

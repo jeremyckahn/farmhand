@@ -1,12 +1,12 @@
-import { testCrop } from '../../test-utils'
-import { toolType, toolLevel } from '../../enums'
-import { getPlotContentFromItemId } from '../../utils'
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
-import { randomNumberService } from '../../common/services/randomNumber'
+import { testCrop } from '../../test-utils/index.js'
+import { toolType, toolLevel } from '../../enums.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { randomNumberService } from '../../common/services/randomNumber.js'
 
-import { clearPlot } from './clearPlot'
+import { clearPlot } from './clearPlot.js'
 
-vitest.mock('../../data/maps')
+vitest.mock('../../data/maps.js')
 
 describe('clearPlot', () => {
   describe('plotContent is a crop', () => {

@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { string } from 'prop-types'
-import globalWindow from 'global/window'
-import TextField from '@mui/material/TextField'
+import globalWindow from 'global/window.js'
+import TextField from '@mui/material/TextField/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import './RandomSeedInput.sass'
 

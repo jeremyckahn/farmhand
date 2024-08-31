@@ -1,7 +1,7 @@
 /** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
-import { memoize } from './memoize'
+import { memoize } from './memoize.js'
 
-import { memoizationSerializer } from './'
+import { memoizationSerializer } from './index.js'
 
 export const findInField = memoize(
   /**

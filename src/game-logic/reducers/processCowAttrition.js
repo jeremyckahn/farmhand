@@ -1,7 +1,7 @@
-import { COW_WEIGHT_MULTIPLIER_MINIMUM } from '../../constants'
-import { COW_ATTRITION_MESSAGE } from '../../templates'
+import { COW_WEIGHT_MULTIPLIER_MINIMUM } from '../../constants.js'
+import { COW_ATTRITION_MESSAGE } from '../../templates.js'
 
-import { removeCowFromInventory } from './removeCowFromInventory'
+import { removeCowFromInventory } from './removeCowFromInventory.js'
 
 /**
  * @param {farmhand.state} state

@@ -1,7 +1,7 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
-import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores'
-import { Factory } from '../interfaces/Factory'
-import { randomChoice } from '../utils'
+import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores/index.js'
+import { Factory } from '../interfaces/Factory.js'
+import { randomChoice } from '../utils/index.js'
 
 const SPAWNABLE_ORES = [goldOre, ironOre, bronzeOre, silverOre]
 

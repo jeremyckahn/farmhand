@@ -1,1 +1,1 @@
-export { default } from './PriceEventView'
+export { default } from './PriceEventView.js'

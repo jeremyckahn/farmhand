@@ -1,8 +1,8 @@
-import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
-import { toolLevel } from '../../enums'
-import { experienceNeededForLevel } from '../../utils'
+import { LEVEL_GAINED_NOTIFICATION } from '../../templates.js'
+import { toolLevel } from '../../enums.js'
+import { experienceNeededForLevel } from '../../utils/index.js'
 
-import { processLevelUp } from './processLevelUp'
+import { processLevelUp } from './processLevelUp.js'
 
 describe('processLevelUp', () => {
   test('shows notifications for each level gained in the sale', async () => {

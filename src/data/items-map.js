@@ -1,6 +1,6 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 
-import * as items from '../data/items'
+import * as items from '../data/items.js'
 
 /**
  * ⚠️⚠️⚠️ This is a low-level object that is UNSAFE to use directly outside of

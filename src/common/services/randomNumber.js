@@ -1,5 +1,5 @@
 import seedrandom from 'seedrandom'
-import globalWindow from 'global/window'
+import globalWindow from 'global/window.js'
 
 export class RandomNumberService {
   /**

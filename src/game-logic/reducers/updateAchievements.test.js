@@ -1,11 +1,11 @@
-import { ACHIEVEMENT_COMPLETED } from '../../templates'
+import { ACHIEVEMENT_COMPLETED } from '../../templates.js'
 
 describe('updateAchievements', () => {
   let updateAchievements
 
   beforeAll(async () => {
     vitest.resetModules()
-    vitest.mock('../../data/achievements', () => {
+    vitest.mock('../../data/achievements.js', () => {
       return {
         default: [
           {
@@ -20,7 +20,7 @@ describe('updateAchievements', () => {
       }
     })
 
-    updateAchievements = (await vitest.importActual('./updateAchievements'))
+   updateAchievements = (await vitest.importActual('./updateAchievements.js'))
       .updateAchievements
   })
 

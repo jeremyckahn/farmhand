@@ -1,10 +1,10 @@
 import { act, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { farmhandStub } from '../../test-utils/stubs/farmhandStub'
-import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory'
-import { previousView } from '../../test-utils/ui'
-import { generateCow, getCowDisplayName } from '../../utils'
+import { farmhandStub } from '../../test-utils/stubs/farmhandStub.js'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
+import { previousView } from '../../test-utils/ui.js'
+import { generateCow, getCowDisplayName } from '../../utils/index.js'
 
 describe('cow selection', () => {
   let cowDisplayName1 = null

@@ -1,6 +1,6 @@
-import { itemType } from '../enums'
+import { itemType } from '../enums.js'
 
-import OreFactory from './OreFactory'
+import OreFactory from './OreFactory.js'
 
 describe('OreFactory', () => {
   beforeEach(() => {

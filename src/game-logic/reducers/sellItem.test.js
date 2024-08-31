@@ -1,10 +1,10 @@
-import { testItem } from '../../test-utils'
-import { LOAN_PAYOFF } from '../../templates'
-import { carrot, carrotSeed } from '../../data/crops'
-import { bronzeOre, coal, milk1, saltRock } from '../../data/items'
-import { carrotSoup } from '../../data/recipes'
+import { testItem } from '../../test-utils/index.js'
+import { LOAN_PAYOFF } from '../../templates.js'
+import { carrot, carrotSeed } from '../../data/crops/index.js'
+import { bronzeOre, coal, milk1, saltRock } from '../../data/items.js'
+import { carrotSoup } from '../../data/recipes.js'
 
-import { sellItem } from './sellItem'
+import { sellItem } from './sellItem.js'
 
 describe('sellItem', () => {
   test('sells item', () => {

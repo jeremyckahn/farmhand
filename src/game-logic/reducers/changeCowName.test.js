@@ -1,7 +1,7 @@
-import { MAX_ANIMAL_NAME_LENGTH } from '../../constants'
-import { generateCow } from '../../utils'
+import { MAX_ANIMAL_NAME_LENGTH } from '../../constants.js'
+import { generateCow } from '../../utils/index.js'
 
-import { changeCowName } from './changeCowName'
+import { changeCowName } from './changeCowName.js'
 
 describe('changeCowName', () => {
   test('updates cow name', () => {
