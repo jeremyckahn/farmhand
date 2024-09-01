@@ -39,7 +39,7 @@ const getRemainingOnboardingAchievements = memoize(completedAchievements =>
 )
 
 const environmentAllowsInstall = ['production', 'development'].includes(
-  import.meta.env.MODE
+  import.meta.env?.MODE
 )
 
 const VALID_ORIGINS = [

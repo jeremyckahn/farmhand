@@ -531,7 +531,7 @@ export default class Farmhand extends FarmhandReducers {
       },
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
-      version: import.meta.env.VITE_FARMHAND_PACKAGE_VERSION ?? '',
+      version: import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION ?? '',
     }
   }
 
@@ -607,7 +607,7 @@ export default class Farmhand extends FarmhandReducers {
       }
     })
 
-    if (import.meta.env.MODE === 'development') {
+    if (import.meta.env?.MODE === 'development') {
       Object.assign(this.keyMap, {
         clearPersistedData: 'shift+d',
         waterAllPlots: 'w',
@@ -937,7 +937,7 @@ export default class Farmhand extends FarmhandReducers {
         activePlayers: 1,
         peerRoom: joinRoom(
           {
-            appId: import.meta.env.VITE_NAME,
+            appId: import.meta.env?.VITE_NAME,
             trackerUrls,
             trackerRedundancy,
             rtcConfig,
@@ -1302,7 +1302,7 @@ export default class Farmhand extends FarmhandReducers {
                   >
                     <Navigation />
                     <ContextPane />
-                    {import.meta.env.MODE === 'development' && <DebugMenu />}
+                    {import.meta.env?.MODE === 'development' && <DebugMenu />}
                     <div {...{ className: 'spacer' }} />
                   </Drawer>
                   <Stage />

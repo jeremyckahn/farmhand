@@ -256,7 +256,7 @@ export const Navigation = ({
     <header className="Navigation">
       <h1>Farmhand</h1>
       <p className="version">
-        v{import.meta.env.VITE_FARMHAND_PACKAGE_VERSION}
+        v{import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION}
       </p>
       <FarmNameDisplay {...{ farmName, handleFarmNameUpdate }} />
       <DayAndProgressContainer />

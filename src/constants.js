@@ -4,7 +4,7 @@
  */
 
 /**
-* @typedef {import('./index.js').farmhand.purchaseableFieldSize} farmhand.purchaseableFieldSize
+ * @typedef {import('./index.js').farmhand.purchaseableFieldSize} farmhand.purchaseableFieldSize
  */
 
 import { cowColors, fieldMode, stageFocusType, toolLevel } from './enums.js'
@@ -135,7 +135,7 @@ export const COW_MAXIMUM_VALUE_MULTIPLIER = 1
 export const COW_GESTATION_PERIOD_DAYS = 3
 export const COW_MINIMUM_HAPPINESS_TO_BREED = 0.8
 
-export const NOTIFICATION_DURATION = import.meta.env.MODE === 'test' ? 1 : 6000
+export const NOTIFICATION_DURATION = import.meta.env?.MODE === 'test' ? 1 : 6000
 export const NOTIFICATION_LOG_SIZE = 14
 
 export const PRICE_EVENT_CHANCE = 0.2

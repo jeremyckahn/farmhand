@@ -1,8 +1,8 @@
 import globalWindow from 'global/window.js'
 
 export const endpoints = {
-  getMarketData: `${import.meta.env.VITE_API_ROOT}api/get-market-data`,
-  postDayResults: `${import.meta.env.VITE_API_ROOT}api/post-day-results`,
+  getMarketData: `${import.meta.env?.VITE_API_ROOT}api/get-market-data`,
+  postDayResults: `${import.meta.env?.VITE_API_ROOT}api/post-day-results`,
 }
 
 // Represents all of the features enabled for the current environment. Features
@@ -53,27 +53,27 @@ export const rtcConfig = {
     },
     {
       urls: 'turn:a.relay.metered.ca:80',
-      username: import.meta.env.VITE_TURN_USERNAME,
-      credential: import.meta.env.VITE_TURN_CREDENTIAL,
+      username: import.meta.env?.VITE_TURN_USERNAME,
+      credential: import.meta.env?.VITE_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:80?transport=tcp',
-      username: import.meta.env.VITE_TURN_USERNAME,
-      credential: import.meta.env.VITE_TURN_CREDENTIAL,
+      username: import.meta.env?.VITE_TURN_USERNAME,
+      credential: import.meta.env?.VITE_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:443',
-      username: import.meta.env.VITE_TURN_USERNAME,
-      credential: import.meta.env.VITE_TURN_CREDENTIAL,
+      username: import.meta.env?.VITE_TURN_USERNAME,
+      credential: import.meta.env?.VITE_TURN_CREDENTIAL,
     },
     {
       urls: 'turn:a.relay.metered.ca:443?transport=tcp',
-      username: import.meta.env.VITE_TURN_USERNAME,
-      credential: import.meta.env.VITE_TURN_CREDENTIAL,
+      username: import.meta.env?.VITE_TURN_USERNAME,
+      credential: import.meta.env?.VITE_TURN_CREDENTIAL,
     },
   ],
 }
 
-export const trackerUrls = import.meta.env.VITE_TRACKER_URL
-  ? [import.meta.env.VITE_TRACKER_URL]
+export const trackerUrls = import.meta.env?.VITE_TRACKER_URL
+  ? [import.meta.env?.VITE_TRACKER_URL]
   : undefined
