@@ -1,9 +1,9 @@
-import { testCrop } from '../../test-utils'
-import { getPlotContentFromItemId } from '../../utils'
+import { testCrop } from '../../test-utils/index.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
 
-import { waterPlot } from './waterPlot'
+import { waterPlot } from './waterPlot.js'
 
-jest.mock('../../data/maps')
+vitest.mock('../../data/maps.js')
 
 describe('waterPlot', () => {
   describe('non-crop plotContent', () => {

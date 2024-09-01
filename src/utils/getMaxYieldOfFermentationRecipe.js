@@ -1,11 +1,11 @@
 /** @typedef {import("../index").farmhand.item} item */
 /** @typedef {import("../index").farmhand.keg} keg */
 
-import { itemsMap } from '../data/maps'
+import { itemsMap } from '../data/maps.js'
 
-import { getInventoryQuantityMap } from './getInventoryQuantityMap'
+import { getInventoryQuantityMap } from './getInventoryQuantityMap.js'
 
-import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsForFermentationRecipe'
+import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsForFermentationRecipe.js'
 
 /**
  * @param {item} fermentationRecipe

@@ -1,24 +1,12 @@
-import { LEVEL_GAINED_NOTIFICATION } from '../../templates'
-import { toolLevel } from '../../enums'
-import { experienceNeededForLevel } from '../../utils'
+import { LEVEL_GAINED_NOTIFICATION } from '../../templates.js'
+import { toolLevel } from '../../enums.js'
+import { experienceNeededForLevel } from '../../utils/index.js'
 
-jest.mock('../../data/achievements')
-jest.mock('../../data/maps')
-jest.mock('../../data/levels', () => ({ levels: [], itemUnlockLevels: {} }))
+import { processLevelUp } from './processLevelUp.js'
 
 describe('processLevelUp', () => {
-  test('shows notifications for each level gained in the sale', () => {
-    jest.resetModules()
-    jest.mock('../../data/levels', () => ({
-      levels: [
-        {
-          id: 1,
-          unlocksShopItem: 'carrot',
-        },
-      ],
-      itemUnlockLevels: {},
-    }))
-    const { todaysNotifications } = jest.requireActual('./').processLevelUp(
+  test('shows notifications for each level gained in the sale', async () => {
+    const { todaysNotifications } = processLevelUp(
       {
         experience: experienceNeededForLevel(3),
         inventory: [],
@@ -39,35 +27,17 @@ describe('processLevelUp', () => {
     ])
   })
 
-  test('when sprinkler is selected when it gets a level up boost, hoveredPlotRangeSize increase', () => {
-    jest.resetModules()
-    jest.mock('../../data/levels', () => ({
-      levels: [
-        {
-          id: 0,
-        },
-        {
-          id: 1,
-        },
-        {
-          id: 2,
-          increasesSprinklerRange: true,
-        },
-      ],
-      itemUnlockLevels: {},
-    }))
-    jest.mock('../../constants', () => ({
-      ...jest.requireActual('../../constants'),
-      INITIAL_SPRINKLER_RANGE: 1,
-      SPRINKLER_ITEM_ID: 'sprinkler',
-    }))
-
-    const { hoveredPlotRangeSize } = jest.requireActual('./').processLevelUp(
+  test('when sprinkler is selected when it gets a level up boost, hoveredPlotRangeSize increase', async () => {
+    const { hoveredPlotRangeSize } = processLevelUp(
       {
-        experience: experienceNeededForLevel(2),
+        experience: experienceNeededForLevel(8),
         hoveredPlotRangeSize: 1,
         selectedItemId: 'sprinkler',
         todaysNotifications: [],
+        inventory: [],
+        toolLevels: {
+          SHOVEL: toolLevel.UNAVAILABLE,
+        },
       },
       1
     )
@@ -75,22 +45,10 @@ describe('processLevelUp', () => {
     expect(hoveredPlotRangeSize).toEqual(2)
   })
 
-  test('unlocksTool reward makes tool become available', () => {
-    jest.resetModules()
-    jest.mock('../../data/levels', () => ({
-      levels: [
-        {
-          id: 0,
-        },
-        {
-          id: 1,
-          unlocksTool: 'SHOVEL',
-        },
-      ],
-      itemUnlockLevels: {},
-    }))
-    const newState = jest.requireActual('./').processLevelUp(
+  test('unlocksTool reward makes tool become available', async () => {
+    const newState = processLevelUp(
       {
+        experience: experienceNeededForLevel(6),
         itemsSold: {},
         inventory: [],
         todaysNotifications: [],

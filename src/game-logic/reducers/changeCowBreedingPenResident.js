@@ -1,4 +1,4 @@
-import { COW_GESTATION_PERIOD_DAYS } from '../../constants'
+import { COW_GESTATION_PERIOD_DAYS } from '../../constants.js'
 
 /**
  * @param {farmhand.cow} cow

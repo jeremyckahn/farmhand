@@ -1,10 +1,10 @@
-import { moneyTotal, nullArray } from '../../utils'
-import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants'
-import { FOREST_EXPANDED } from '../../templates'
-import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings'
+import { moneyTotal, nullArray } from '../../utils/index.js'
+import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.js'
+import { FOREST_EXPANDED } from '../../templates.js'
+import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.js'
 
-import { addExperience } from './addExperience'
-import { showNotification } from './showNotification'
+import { addExperience } from './addExperience.js'
+import { showNotification } from './showNotification.js'
 
 /**
  * @param {farmhand.state} state
@@ -22,7 +22,7 @@ export const purchaseForest = (state, forestId) => {
   const { columns, price, rows } = PURCHASABLE_FOREST_SIZES.get(forestId)
 
   /*
-   * FIXME: using FOREST_AVAILABLE_NOTIFICATION here is temporary, this code path will
+   * TODO: using FOREST_AVAILABLE_NOTIFICATION here is temporary, this code path will
    * ultimately just be for expansion and availability will happen elsewhere, such as
    * through leveling up to a certain level
    */

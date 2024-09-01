@@ -1,13 +1,13 @@
 import React from 'react'
 import { number } from 'prop-types'
-import Divider from '@mui/material/Divider'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import Divider from '@mui/material/Divider/index.js'
+import Card from '@mui/material/Card/index.js'
+import CardContent from '@mui/material/CardContent/index.js'
 import ReactMarkdown from 'react-markdown'
 
-import { FermentationRecipeList } from '../FermentationRecipeList/FermentationRecipeList'
+import { FermentationRecipeList } from '../FermentationRecipeList/FermentationRecipeList.js'
 
-import { TabPanel } from './TabPanel'
+import { TabPanel } from './TabPanel/index.js'
 
 export const FermentationTabPanel = ({ index, currentTab }) => (
   <TabPanel value={currentTab} index={index}>

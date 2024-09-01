@@ -1,4 +1,4 @@
-import { cowColors } from './enums'
+import { cowColors } from './enums.js'
 
 export const PROGRESS_SAVED_MESSAGE = 'Progress saved!'
 export const RAIN_MESSAGE = 'It rained in the night!'

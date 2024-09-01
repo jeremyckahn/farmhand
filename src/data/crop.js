@@ -3,8 +3,8 @@
  * @typedef {import("../index").farmhand.cropVariety} farmhand.cropVariety
  */
 
-import { fieldMode, itemType } from '../enums'
-import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration'
+import { fieldMode, itemType } from '../enums.js'
+import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration.js'
 
 const { freeze } = Object
 

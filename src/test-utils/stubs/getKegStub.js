@@ -2,7 +2,7 @@
 
 import { v4 as uuid } from 'uuid'
 
-import { carrot } from '../../data/crops'
+import { carrot } from '../../data/crops/index.js'
 
 /**
  * @param {Partial<keg>} overrides

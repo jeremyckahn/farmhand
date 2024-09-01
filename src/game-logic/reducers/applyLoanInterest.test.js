@@ -1,4 +1,4 @@
-import { applyLoanInterest } from './applyLoanInterest'
+import { applyLoanInterest } from './applyLoanInterest.js'
 
 describe('applyLoanInterest', () => {
   test('applies loan interest', () => {

@@ -1,25 +1,25 @@
 // Dependencies required by ./utils (see below) need to be explicitly required
 // here to ensure that that they are included in serverless builds. Do NOT
 // remove them unless they are not needed by any upstream modules.
-require('redis')
-require('../src/common/utils')
-require('../src/common/constants')
-require('../api-etc/constants')
+import 'redis'
+import '../src/common/utils.js'
+import '../src/common/constants.js'
+import '../api-etc/constants.js'
 // End explicit requires for serverless builds
 
-const { promisify } = require('util')
+import { promisify } from 'util'
 
-const axios = require('axios')
+import axios from 'axios'
 
-const { MARKET_SUMMARY_FOR_DISCORD } = require('../api-etc/templates')
-const { allowCors, getRedisClient, getRoomData } = require('../api-etc/utils')
+import { MARKET_SUMMARY_FOR_DISCORD } from '../api-etc/templates.js'
+import { allowCors, getRedisClient, getRoomData } from '../api-etc/utils.js'
 
 const client = getRedisClient()
 
 const get = promisify(client.get).bind(client)
 const set = promisify(client.set).bind(client)
 
-module.exports = allowCors(async (req, res) => {
+export default allowCors(async (req, res) => {
   const { valueAdjustments } = await getRoomData('room-global', get, set)
   const content = MARKET_SUMMARY_FOR_DISCORD`${'global'}${valueAdjustments}`
   const { status } = await axios.post(

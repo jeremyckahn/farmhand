@@ -3,22 +3,22 @@
 
 import React, { useEffect, useState } from 'react'
 import { bool, func, number, object, string } from 'prop-types'
-import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip/index.js'
+import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { getCropLifeStage, getPlotContentType, getPlotImage } from '../../utils'
-import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration'
-import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps'
-import { pixel, plotStates } from '../../img'
-import { cropLifeStage, fertilizerType, itemType } from '../../enums'
-import { FERTILIZER_BONUS } from '../../constants'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { getCropLifeStage, getPlotContentType, getPlotImage } from '../../utils/index.js'
+import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
+import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps.js'
+import { pixel, plotStates } from '../../img/index.js'
+import { cropLifeStage, fertilizerType, itemType } from '../../enums.js'
+import { FERTILIZER_BONUS } from '../../constants.js'
 
-import { SHOVELED } from '../../strings'
+import { SHOVELED } from '../../strings.js'
 
 import './Plot.sass'
-import { SHOVELED_PLOT } from '../../templates'
+import { SHOVELED_PLOT } from '../../templates.js'
 
 /**
  * @param {farmhand.plotContent?} plotContent

@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { noop } from '../../utils/noop'
+import { noop } from '../../utils/noop.js'
 
-import QuantityInput from './QuantityInput'
+import QuantityInput from './QuantityInput.js'
 
 let component
 

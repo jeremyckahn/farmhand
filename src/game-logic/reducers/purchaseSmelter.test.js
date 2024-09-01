@@ -1,7 +1,7 @@
-import { EXPERIENCE_VALUES, PURCHASEABLE_SMELTERS } from '../../constants'
-import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings'
+import { EXPERIENCE_VALUES, PURCHASEABLE_SMELTERS } from '../../constants.js'
+import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings.js'
 
-import { purchaseSmelter } from './purchaseSmelter'
+import { purchaseSmelter } from './purchaseSmelter.js'
 
 describe('purchaseSmelter', () => {
   let gameState, newState

@@ -1,23 +1,21 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import Alert from '@mui/material/Alert'
-import Divider from '@mui/material/Divider'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import Alert from '@mui/material/Alert/index.js'
+import Divider from '@mui/material/Divider/index.js'
+import Card from '@mui/material/Card/index.js'
+import CardContent from '@mui/material/CardContent/index.js'
 import sortBy from 'lodash.sortby'
 import { array, number, object, string } from 'prop-types'
 
-import BailOutErrorBoundary from '../BailOutErrorBoundary'
+import BailOutErrorBoundary from '../BailOutErrorBoundary/index.js'
 
-import { levelAchieved } from '../../utils/levelAchieved'
-import { getPlayerName } from '../../utils'
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import { levelAchieved } from '../../utils/levelAchieved.js'
+import { getPlayerName } from '../../utils/index.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import CowCard from '../CowCard'
+import CowCard from '../CowCard/index.js'
 
-import OnlinePeer from './OnlinePeer'
-
-import './OnlinePeersView.sass'
+import OnlinePeer from './OnlinePeer/index.js'
 
 const OnlinePeersView = ({
   activePlayers,

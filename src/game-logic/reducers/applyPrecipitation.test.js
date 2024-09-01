@@ -1,17 +1,17 @@
-import { testCrop } from '../../test-utils'
+import { testCrop } from '../../test-utils/index.js'
 import {
   RAIN_MESSAGE,
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
-} from '../../strings'
-import { SCARECROW_ITEM_ID } from '../../constants'
-import { fertilizerType } from '../../enums'
-import { getPlotContentFromItemId } from '../../utils'
+} from '../../strings.js'
+import { SCARECROW_ITEM_ID } from '../../constants.js'
+import { fertilizerType } from '../../enums.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
 
-import { applyPrecipitation } from './applyPrecipitation'
+import { applyPrecipitation } from './applyPrecipitation.js'
 
-jest.mock('../../data/maps')
-jest.mock('../../data/items')
+vitest.mock('../../data/maps.js')
+vitest.mock('../../data/items.js')
 
 describe('applyPrecipitation', () => {
   test('waters all plots', () => {
@@ -36,7 +36,7 @@ describe('applyPrecipitation', () => {
 
   describe('rain shower', () => {
     test('waters all plots', () => {
-      jest.spyOn(Math, 'random').mockReturnValue(1)
+      vitest.spyOn(Math, 'random').mockReturnValue(1)
       const state = applyPrecipitation({
         field: [[]],
         inventory: [],
@@ -52,7 +52,7 @@ describe('applyPrecipitation', () => {
 
   describe('storm', () => {
     beforeEach(() => {
-      jest.spyOn(Math, 'random').mockReturnValue(0)
+      vitest.spyOn(Math, 'random').mockReturnValue(0)
     })
 
     describe('scarecrows are planted', () => {

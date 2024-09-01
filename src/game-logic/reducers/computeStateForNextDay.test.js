@@ -1,16 +1,16 @@
-import { shapeOf, testCrop } from '../../test-utils'
-import { generateCow } from '../../utils'
-import { EXPERIENCE_VALUES } from '../../constants'
+import { shapeOf, testCrop } from '../../test-utils/index.js'
+import { generateCow } from '../../utils/index.js'
+import { EXPERIENCE_VALUES } from '../../constants.js'
 
-import { computeStateForNextDay } from './computeStateForNextDay'
+import { computeStateForNextDay } from './computeStateForNextDay.js'
 
-jest.mock('../../data/maps')
+vitest.mock('../../data/maps.js')
 
 describe('computeStateForNextDay', () => {
   let state
 
   beforeEach(() => {
-    jest.spyOn(Math, 'random').mockReturnValue(0.75)
+    vitest.spyOn(Math, 'random').mockReturnValue(0.75)
 
     state = {
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
@@ -58,7 +58,7 @@ describe('computeStateForNextDay', () => {
     expect(firstRow[0].wasWateredToday).toBe(false)
     expect(firstRow[0].daysWatered).toBe(1)
     expect(firstRow[0].daysOld).toBe(1)
-    expect(todaysNotifications).toBeEmpty()
+    expect(todaysNotifications).toHaveLength(0)
   })
 
   describe('new year experience', () => {

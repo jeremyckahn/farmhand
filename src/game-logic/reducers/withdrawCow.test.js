@@ -1,4 +1,4 @@
-import { withdrawCow } from './withdrawCow'
+import { withdrawCow } from './withdrawCow.js'
 
 describe('withdrawCow', () => {
   test('makes specified cow unavailable for trade', () => {

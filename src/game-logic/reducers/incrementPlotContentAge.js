@@ -1,6 +1,6 @@
-import { fertilizerType, itemType } from '../../enums'
-import { getPlotContentType } from '../../utils'
-import { FERTILIZER_BONUS } from '../../constants'
+import { fertilizerType, itemType } from '../../enums.js'
+import { getPlotContentType } from '../../utils/index.js'
+import { FERTILIZER_BONUS } from '../../constants.js'
 
 /**
  * @param {?farmhand.crop} crop

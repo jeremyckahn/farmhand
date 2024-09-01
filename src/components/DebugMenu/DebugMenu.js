@@ -1,13 +1,13 @@
 import React from 'react'
 import { func } from 'prop-types'
-import Accordion from '@mui/material/Accordion'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import Button from '@mui/material/Button'
+import Accordion from '@mui/material/Accordion/index.js'
+import AccordionSummary from '@mui/material/AccordionSummary/index.js'
+import AccordionDetails from '@mui/material/AccordionDetails/index.js'
+import Button from '@mui/material/Button/index.js'
 
-import { carrot } from '../../data/items'
+import { carrot } from '../../data/items.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import './DebugMenu.sass'
 

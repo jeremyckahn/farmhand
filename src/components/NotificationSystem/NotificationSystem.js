@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { func, shape, string } from 'prop-types'
-import Alert from '@mui/material/Alert'
+import Alert from '@mui/material/Alert/index.js'
 import ReactMarkdown from 'react-markdown'
 import { withSnackbar } from 'notistack'
 
-import { NOTIFICATION_DURATION } from '../../constants'
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import { NOTIFICATION_DURATION } from '../../constants.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import './NotificationSystem.sass'
 
 export const snackbarProviderContentCallback = (

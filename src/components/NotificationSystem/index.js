@@ -1,1 +1,1 @@
-export { default, snackbarProviderContentCallback } from './NotificationSystem'
+export { default, snackbarProviderContentCallback } from './NotificationSystem.js'

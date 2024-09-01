@@ -1,10 +1,10 @@
-import { moneyTotal } from '../../utils'
-import { EXPERIENCE_VALUES, PURCHASEABLE_COMPOSTERS } from '../../constants'
-import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings'
+import { moneyTotal } from '../../utils/index.js'
+import { EXPERIENCE_VALUES, PURCHASEABLE_COMPOSTERS } from '../../constants.js'
+import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings.js'
 
-import { addExperience } from './addExperience'
-import { showNotification } from './showNotification'
-import { updateLearnedRecipes } from './updateLearnedRecipes'
+import { addExperience } from './addExperience.js'
+import { showNotification } from './showNotification.js'
+import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 
 /**
  * @param {farmhand.state} state

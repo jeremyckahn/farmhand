@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Bloodline from './Bloodline'
+import Bloodline from './Bloodline.js'
 
 let component
 

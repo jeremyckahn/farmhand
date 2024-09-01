@@ -1,7 +1,7 @@
 /** @typedef {import('../index').farmhand.item} farmhand.item */
-import { itemType } from '../enums'
+import { itemType } from '../enums.js'
 
-import { isItemAGrownCrop } from './isItemAGrownCrop'
+import { isItemAGrownCrop } from './isItemAGrownCrop.js'
 
 const FARM_PRODUCT_TYPES = [
   itemType.CRAFTED_ITEM,

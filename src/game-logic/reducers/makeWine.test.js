@@ -2,19 +2,19 @@
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
  */
 
-import { GRAPES_REQUIRED_FOR_WINE } from '../../constants'
-import { grapeChardonnay } from '../../data/crops'
-import { yeast, wineChardonnay } from '../../data/recipes'
-import { cellarService } from '../../services/cellar'
-import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
+import { GRAPES_REQUIRED_FOR_WINE } from '../../constants.js'
+import { grapeChardonnay } from '../../data/crops/index.js'
+import { yeast, wineChardonnay } from '../../data/recipes.js'
+import { cellarService } from '../../services/cellar.js'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
 
-import { makeWine } from './makeWine'
+import { makeWine } from './makeWine.js'
 
 const stubKegUuid = 'abc123'
 
 beforeEach(() => {
   // @ts-expect-error
-  jest.spyOn(cellarService, '_uuid').mockReturnValue(stubKegUuid)
+  vitest.spyOn(cellarService, '_uuid').mockReturnValue(stubKegUuid)
 })
 
 describe('makeWine', () => {

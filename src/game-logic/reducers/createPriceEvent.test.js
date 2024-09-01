@@ -1,8 +1,8 @@
-import { sampleCropItem1 } from '../../data/items'
+import { sampleCropItem1 } from '../../data/items.js'
 
-import { createPriceEvent } from './createPriceEvent'
+import { createPriceEvent } from './createPriceEvent.js'
 
-jest.mock('../../data/items')
+vitest.mock('../../data/items.js')
 
 describe('createPriceEvent', () => {
   test('creates priceCrashes data', () => {

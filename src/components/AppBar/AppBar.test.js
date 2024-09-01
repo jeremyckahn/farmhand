@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { noop } from '../../utils/noop'
+import { noop } from '../../utils/noop.js'
 
-import AppBar from './AppBar'
+import AppBar from './AppBar.js'
 
 let component
 

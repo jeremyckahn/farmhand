@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import Button from '@mui/material/Button'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardHeader from '@mui/material/CardHeader'
-import CardActions from '@mui/material/CardActions'
-import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button/index.js'
+import Select from '@mui/material/Select/index.js'
+import MenuItem from '@mui/material/MenuItem/index.js'
+import Card from '@mui/material/Card/index.js'
+import CardContent from '@mui/material/CardContent/index.js'
+import CardHeader from '@mui/material/CardHeader/index.js'
+import CardActions from '@mui/material/CardActions/index.js'
+import Typography from '@mui/material/Typography/index.js'
 import { func, instanceOf, node, number, string } from 'prop-types'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 export function TierPurchase({
   description,

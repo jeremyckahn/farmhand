@@ -4,20 +4,20 @@ import {
   itemType,
   toolLevel,
   toolType,
-} from '../../enums'
-import { itemsMap } from '../../data/maps'
+} from '../../enums.js'
+import { itemsMap } from '../../data/maps.js'
 import {
   doesInventorySpaceRemain,
   getCropLifeStage,
   getPlotContentType,
   getSeedItemIdFromFinalStageCropItemId,
-} from '../../utils'
-import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
+} from '../../utils/index.js'
+import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
 
-import { addItemToInventory } from './addItemToInventory'
-import { modifyFieldPlotAt } from './modifyFieldPlotAt'
-import { removeFieldPlotAt } from './removeFieldPlotAt'
-import { plantInPlot } from './plantInPlot'
+import { addItemToInventory } from './addItemToInventory.js'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
+import { removeFieldPlotAt } from './removeFieldPlotAt.js'
+import { plantInPlot } from './plantInPlot.js'
 
 const { GROWN } = cropLifeStage
 

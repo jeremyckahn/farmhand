@@ -1,8 +1,8 @@
-import { itemType } from '../../enums'
+import { itemType } from '../../enums.js'
 
-import { SCARECROW_ITEM_ID } from '../../constants'
-import { getPlotContentType } from '../../utils'
-import { findInField } from '../../utils/findInField'
+import { SCARECROW_ITEM_ID } from '../../constants.js'
+import { getPlotContentType } from '../../utils/index.js'
+import { findInField } from '../../utils/findInField.js'
 
 // This file is designed to contain common logic that is needed across multiple
 // reducers.

@@ -1,8 +1,8 @@
 /** @typedef {import("../index").farmhand.levelEntitlements} levelEntitlements */
-import { levels } from '../data/levels'
-import { INITIAL_SPRINKLER_RANGE } from '../constants'
+import { levels } from '../data/levels.js'
+import { INITIAL_SPRINKLER_RANGE } from '../constants.js'
 
-import { memoize } from './memoize'
+import { memoize } from './memoize.js'
 
 /**
  * @param {number} levelNumber

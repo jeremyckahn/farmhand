@@ -1,26 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { oneOf } from 'prop-types'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardActions from '@mui/material/CardActions'
-import Button from '@mui/material/Button'
+import Card from '@mui/material/Card/index.js'
+import CardHeader from '@mui/material/CardHeader/index.js'
+import CardActions from '@mui/material/CardActions/index.js'
+import Button from '@mui/material/Button/index.js'
 
 import {
   grapeVarietyNameMap,
   grapeVarietyToGrapeItemMap,
-} from '../../data/crops/grape'
-import { itemsMap } from '../../data/maps'
-import { wineService } from '../../services/wine'
-import { grapeVariety } from '../../enums'
-import { wines } from '../../img'
-import { integerString } from '../../utils'
-import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap'
-import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants'
-import { cellarService } from '../../services/cellar'
-import QuantityInput from '../QuantityInput'
-import { yeast } from '../../data/recipes'
+} from '../../data/crops/grape.js'
+import { itemsMap } from '../../data/maps.js'
+import { wineService } from '../../services/wine.js'
+import { grapeVariety } from '../../enums.js'
+import { wines } from '../../img/index.js'
+import { integerString } from '../../utils/index.js'
+import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import {
+  GRAPES_REQUIRED_FOR_WINE,
+  PURCHASEABLE_CELLARS,
+} from '../../constants.js'
+import { cellarService } from '../../services/cellar.js'
+import QuantityInput from '../QuantityInput/index.js'
+import { yeast } from '../../data/recipes.js'
 
 /**
  * @typedef {{

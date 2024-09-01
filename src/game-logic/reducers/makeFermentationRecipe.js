@@ -4,14 +4,14 @@
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
  */
 
-import { PURCHASEABLE_CELLARS } from '../../constants'
-import { itemsMap } from '../../data/maps'
-import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe'
-import { getMaxYieldOfFermentationRecipe } from '../../utils/getMaxYieldOfFermentationRecipe'
-import { cellarService } from '../../services/cellar'
+import { PURCHASEABLE_CELLARS } from '../../constants.js'
+import { itemsMap } from '../../data/maps.js'
+import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe.js'
+import { getMaxYieldOfFermentationRecipe } from '../../utils/getMaxYieldOfFermentationRecipe.js'
+import { cellarService } from '../../services/cellar.js'
 
-import { addKegToCellarInventory } from './addKegToCellarInventory'
-import { decrementItemFromInventory } from './decrementItemFromInventory'
+import { addKegToCellarInventory } from './addKegToCellarInventory.js'
+import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 /**
  * @param {state} state

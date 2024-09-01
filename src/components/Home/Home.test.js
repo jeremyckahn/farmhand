@@ -3,9 +3,9 @@ import React from 'react'
 import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import Home from './Home'
+import Home from './Home.js'
 
 describe('<Home />', () => {
   let handleViewChangeButtonClick
@@ -15,7 +15,7 @@ describe('<Home />', () => {
       completedAchievements: {},
     }
 
-    handleViewChangeButtonClick = jest.fn()
+    handleViewChangeButtonClick = vitest.fn()
 
     render(
       <FarmhandContext.Provider value={{ gameState, handlers: {} }}>

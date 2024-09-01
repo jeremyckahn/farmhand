@@ -1,7 +1,7 @@
-import { itemsMap } from '../data/maps'
+import { itemsMap } from '../data/maps.js'
 
-import { memoize } from './memoize'
-import { isItemAFarmProduct } from './isItemAFarmProduct'
+import { memoize } from './memoize.js'
+import { isItemAFarmProduct } from './isItemAFarmProduct.js'
 
 export const farmProductsSold = memoize(
   /**

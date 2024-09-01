@@ -1,9 +1,9 @@
-import { randomNumberService } from '../../common/services/randomNumber'
-import { goldOre } from '../../data/ores'
-import { ResourceFactory } from '../../factories'
-import { toolType, toolLevel } from '../../enums'
+import { randomNumberService } from '../../common/services/randomNumber.js'
+import { goldOre } from '../../data/ores/index.js'
+import { ResourceFactory } from '../../factories/index.js'
+import { toolType, toolLevel } from '../../enums.js'
 
-import { minePlot } from './minePlot'
+import { minePlot } from './minePlot.js'
 
 describe('minePlot', () => {
   let gameState
@@ -18,8 +18,8 @@ describe('minePlot', () => {
       },
     }
 
-    jest.spyOn(ResourceFactory, 'instance')
-    jest.spyOn(randomNumberService, 'generateRandomNumber').mockReturnValue(1)
+    vitest.spyOn(ResourceFactory, 'instance')
+    vitest.spyOn(randomNumberService, 'generateRandomNumber').mockReturnValue(1)
 
     ResourceFactory.instance.mockReturnValue({
       generateResources: () => [goldOre],

@@ -2,11 +2,11 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { STANDARD_LOAN_AMOUNT } from '../../constants'
+import { STANDARD_LOAN_AMOUNT } from '../../constants.js'
 
-import AccountingView from './AccountingView'
+import AccountingView from './AccountingView.js'
 
 describe('<AccountView />', () => {
   let handleClickLoanPaydownButton, handleClickTakeOutLoanButton
@@ -17,8 +17,8 @@ describe('<AccountView />', () => {
       handlers: {},
     }
 
-    handleClickLoanPaydownButton = jest.fn()
-    handleClickTakeOutLoanButton = jest.fn()
+    handleClickLoanPaydownButton = vitest.fn()
+    handleClickTakeOutLoanButton = vitest.fn()
 
     render(
       <FarmhandContext.Provider value={contextValue}>

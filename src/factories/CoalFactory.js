@@ -1,7 +1,7 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
-import { coal, stone } from '../data/ores'
-import { Factory } from '../interfaces/Factory'
-import { chooseRandom } from '../utils'
+import { coal, stone } from '../data/ores/index.js'
+import { Factory } from '../interfaces/Factory.js'
+import { chooseRandom } from '../utils/index.js'
 
 /**
  * Resource factory used for spawning coal

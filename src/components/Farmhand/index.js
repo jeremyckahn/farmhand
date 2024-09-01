@@ -1,1 +1,1 @@
-export { default } from './Farmhand'
+export { default } from './Farmhand.js'

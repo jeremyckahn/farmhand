@@ -1,6 +1,6 @@
 /**
  * @typedef {import('../Farmhand/Farmhand').farmhand.state} farmhand.state
- * @typedef {import('./WineRecipe').WineRecipeProps} WineRecipeProps
+ * @typedef {import('./WineRecipe.js').WineRecipeProps} WineRecipeProps
  */
 
 import React from 'react'
@@ -8,25 +8,25 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 // eslint-disable-next-line no-unused-vars
-import uiHandlers from '../../handlers/ui-events'
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { wineService } from '../../services/wine'
+import uiHandlers from '../../handlers/ui-events.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { wineService } from '../../services/wine.js'
 
 import {
   grapeChardonnay,
   grapeNebbiolo,
   grapeSauvignonBlanc,
-} from '../../data/crops'
-import { yeast } from '../../data/recipes'
-import { GRAPES_REQUIRED_FOR_WINE } from '../../constants'
-import { integerString } from '../../utils'
-import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
+} from '../../data/crops/index.js'
+import { yeast } from '../../data/recipes.js'
+import { GRAPES_REQUIRED_FOR_WINE } from '../../constants.js'
+import { integerString } from '../../utils/index.js'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
 
-import { getKegStub } from '../../test-utils/stubs/getKegStub'
+import { getKegStub } from '../../test-utils/stubs/getKegStub.js'
 
-import { QUANTITY_INPUT_PLACEHOLDER_TEXT } from '../QuantityInput/QuantityInput'
+import { QUANTITY_INPUT_PLACEHOLDER_TEXT } from '../QuantityInput/QuantityInput.js'
 
-import { WineRecipe } from './WineRecipe'
+import { WineRecipe } from './WineRecipe.js'
 
 /** @type {Pick<farmhand.state, 'cellarInventory' | 'inventory' | 'purchasedCellar'>} */
 const stubGameState = {
@@ -37,7 +37,7 @@ const stubGameState = {
 
 /** @type {Pick<uiHandlers, 'handleMakeWineClick'>} */
 const stubHandlers = {
-  handleMakeWineClick: jest.fn(),
+  handleMakeWineClick: vitest.fn(),
 }
 
 /**

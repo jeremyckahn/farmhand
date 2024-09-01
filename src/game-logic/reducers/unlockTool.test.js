@@ -1,6 +1,6 @@
-import { toolLevel, toolType } from '../../enums'
+import { toolLevel, toolType } from '../../enums.js'
 
-import { unlockTool } from './unlockTool'
+import { unlockTool } from './unlockTool.js'
 
 describe('unlockTool', () => {
   it('unlocks the specified tool', () => {
@@ -27,7 +27,7 @@ describe('unlockTool', () => {
     const { toolLevels } = unlockTool(state, toolType.SHOVEL)
 
     expect(toolLevels).toMatchInlineSnapshot(`
-      Object {
+      {
         "HOE": "DEFAULT",
         "SCYTHE": "GOLD",
         "SHOVEL": "DEFAULT",

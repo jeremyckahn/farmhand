@@ -1,6 +1,6 @@
 /** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
 
-import { processCellarSpoilage } from './processCellarSpoilage'
+import { processCellarSpoilage } from './processCellarSpoilage.js'
 
 /**
  * @param {state} state

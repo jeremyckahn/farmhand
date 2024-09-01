@@ -3,16 +3,16 @@
  * @typedef {import('../').farmhand.recipe} recipe
  * @typedef {import('../').farmhand.wine} wine
  * @typedef {import('../').farmhand.grape} grape
- * @typedef {import('../enums').grapeVariety} grapeVarietyEnum
+ * @typedef {import('../enums.js').grapeVariety} grapeVarietyEnum
  * @typedef {import('../').farmhand.keg} keg
  */
 
-import { GRAPES_REQUIRED_FOR_WINE } from '../constants'
-import { wineVarietyValueMap } from '../data/crops/grape'
-import { itemsMap } from '../data/maps'
-import { recipeType } from '../enums'
-import { getInventoryQuantityMap } from '../utils/getInventoryQuantityMap'
-import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine'
+import { GRAPES_REQUIRED_FOR_WINE } from '../constants.js'
+import { wineVarietyValueMap } from '../data/crops/grape.js'
+import { itemsMap } from '../data/maps.js'
+import { recipeType } from '../enums.js'
+import { getInventoryQuantityMap } from '../utils/getInventoryQuantityMap.js'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
 
 export class WineService {
   /**

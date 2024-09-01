@@ -1,5 +1,5 @@
-import toolUpgrades from '../../data/upgrades'
-import { recipesMap } from '../../data/maps'
+import toolUpgrades from '../../data/upgrades.js'
+import { recipesMap } from '../../data/maps.js'
 
 /**
  * Get available upgrades based on current tool levels and unlocked recipes

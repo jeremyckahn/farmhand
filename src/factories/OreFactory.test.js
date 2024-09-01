@@ -1,14 +1,14 @@
-import { itemType } from '../enums'
+import { itemType } from '../enums.js'
 
-import OreFactory from './OreFactory'
+import OreFactory from './OreFactory.js'
 
 describe('OreFactory', () => {
   beforeEach(() => {
-    jest.spyOn(global.Math, 'random')
+    vitest.spyOn(global.Math, 'random')
   })
 
   afterEach(() => {
-    jest.restoreAllMocks()
+    vitest.restoreAllMocks()
   })
 
   describe('generate', () => {

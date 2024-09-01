@@ -1,13 +1,13 @@
-import { randomNumberService } from '../../common/services/randomNumber'
-import { wineTempranillo } from '../../data/recipes'
-import { KEG_SPOILED_MESSAGE } from '../../templates'
-import { getKegStub } from '../../test-utils/stubs/getKegStub'
+import { randomNumberService } from '../../common/services/randomNumber.js'
+import { wineTempranillo } from '../../data/recipes.js'
+import { KEG_SPOILED_MESSAGE } from '../../templates.js'
+import { getKegStub } from '../../test-utils/stubs/getKegStub.js'
 
-import { processCellarSpoilage } from './processCellarSpoilage'
+import { processCellarSpoilage } from './processCellarSpoilage.js'
 
 describe('processCellarSpoilage', () => {
   test('does not remove kegs that have not spoiled', () => {
-    jest
+    vitest
       .spyOn(randomNumberService, 'isRandomNumberLessThan')
       .mockReturnValueOnce(false)
 
@@ -25,7 +25,7 @@ describe('processCellarSpoilage', () => {
   })
 
   test('removes kegs that have spoiled', () => {
-    jest
+    vitest
       .spyOn(randomNumberService, 'isRandomNumberLessThan')
       .mockReturnValueOnce(true)
 
@@ -43,7 +43,7 @@ describe('processCellarSpoilage', () => {
   })
 
   test('does not remove wine keg', () => {
-    jest
+    vitest
       .spyOn(randomNumberService, 'isRandomNumberLessThan')
       .mockReturnValueOnce(true)
 
@@ -61,7 +61,7 @@ describe('processCellarSpoilage', () => {
   })
 
   test('shows notification for kegs that have spoiled', () => {
-    jest
+    vitest
       .spyOn(randomNumberService, 'isRandomNumberLessThan')
       .mockReturnValueOnce(true)
 

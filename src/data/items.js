@@ -2,12 +2,12 @@
  * @module farmhand.items
  */
 
-import { fieldMode, itemType } from '../enums'
+import { fieldMode, itemType } from '../enums.js'
 import {
   COW_FEED_ITEM_ID,
   HUGGING_MACHINE_ITEM_ID,
   INITIAL_SPRINKLER_RANGE,
-} from '../constants'
+} from '../constants.js'
 
 const { freeze } = Object
 const {
@@ -72,7 +72,7 @@ export {
   watermelonSeed,
   wheat,
   wheatSeed,
-} from './crops'
+} from './crops/index.js'
 
 export const weed = freeze({
   id: 'weed',
@@ -90,7 +90,7 @@ export {
   silverOre,
   stone,
   saltRock,
-} from './ores'
+} from './ores/index.js'
 
 ////////////////////////////////////////
 //

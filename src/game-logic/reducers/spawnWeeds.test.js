@@ -1,9 +1,9 @@
-import { randomNumberService } from '../../common/services/randomNumber'
+import { randomNumberService } from '../../common/services/randomNumber.js'
 
-import { spawnWeeds } from './spawnWeeds'
+import { spawnWeeds } from './spawnWeeds.js'
 
 beforeEach(() => {
-  jest.spyOn(randomNumberService, 'isRandomNumberLessThan')
+  vitest.spyOn(randomNumberService, 'isRandomNumberLessThan')
 })
 
 describe('spawnWeeds', () => {

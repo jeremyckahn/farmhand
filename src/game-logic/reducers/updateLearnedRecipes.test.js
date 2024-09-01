@@ -1,6 +1,4 @@
-import { updateLearnedRecipes } from './updateLearnedRecipes'
-
-jest.mock('../../data/recipes')
+import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 
 describe('updateLearnedRecipes', () => {
   describe('recipe condition is not met', () => {
@@ -9,17 +7,17 @@ describe('updateLearnedRecipes', () => {
         itemsSold: {},
       })
 
-      expect(learnedRecipes['sample-recipe-1']).toBe(undefined)
+      expect(learnedRecipes['carrot-soup']).toBe(undefined)
     })
   })
 
   describe('recipe condition is met', () => {
     test('recipe is in the returned map', () => {
       const { learnedRecipes } = updateLearnedRecipes({
-        itemsSold: { 'sample-item-1': 3 },
+        itemsSold: { carrot: Number.MAX_SAFE_INTEGER },
       })
 
-      expect(learnedRecipes['sample-recipe-1']).toEqual(true)
+      expect(learnedRecipes['carrot-soup']).toEqual(true)
     })
   })
 })

@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import ReactMarkdown from 'react-markdown'
 
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button/index.js'
+import Tooltip from '@mui/material/Tooltip/index.js'
+import Typography from '@mui/material/Typography/index.js'
 
-import { toolLevel } from '../../enums'
-import { memoize } from '../../utils/memoize'
-import { noop } from '../../utils/noop'
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import toolsData from '../../data/tools'
+import { toolLevel } from '../../enums.js'
+import { memoize } from '../../utils/memoize.js'
+import { noop } from '../../utils/noop.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import toolsData from '../../data/tools.js'
 
-import { tools as toolImages, craftedItems, pixel } from '../../img'
+import { tools as toolImages, craftedItems, pixel } from '../../img/index.js'
 
 import './Toolbelt.sass'
 

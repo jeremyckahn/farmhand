@@ -2,10 +2,10 @@ import {
   doesInventorySpaceRemain,
   getCowFertilizerItem,
   getCowFertilizerProductionRate,
-} from '../../utils'
-import { FERTILIZERS_PRODUCED } from '../../templates'
+} from '../../utils/index.js'
+import { FERTILIZERS_PRODUCED } from '../../templates.js'
 
-import { addItemToInventory } from './addItemToInventory'
+import { addItemToInventory } from './addItemToInventory.js'
 
 /**
  * @param {farmhand.state} state

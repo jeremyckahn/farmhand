@@ -10,17 +10,17 @@
  * @ignore
  */
 
-import { FOREST_AVAILABLE_NOTIFICATION, SHOVEL_UNLOCKED } from './strings'
-import { itemUnlockLevels, levels } from './data/levels'
-import { itemsMap } from './data/maps'
-import { moneyString } from './utils/moneyString'
-import { stageFocusType, toolType } from './enums'
+import { FOREST_AVAILABLE_NOTIFICATION, SHOVEL_UNLOCKED } from './strings.js'
+import { itemUnlockLevels, levels } from './data/levels.js'
+import { itemsMap } from './data/maps.js'
+import { moneyString } from './utils/moneyString.js'
+import { stageFocusType, toolType } from './enums.js'
 import {
   getCowDisplayName,
   getPlayerName,
   getRandomLevelUpRewardQuantity,
   integerString,
-} from './utils'
+} from './utils/index.js'
 
 /**
  * @param {farmhand.crop} crop

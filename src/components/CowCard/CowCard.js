@@ -6,21 +6,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import { array, bool, func, number, object, string } from 'prop-types'
-import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardHeader from '@mui/material/CardHeader'
-import TextField from '@mui/material/TextField'
-import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button/index.js'
+import Card from '@mui/material/Card/index.js'
+import CardActions from '@mui/material/CardActions/index.js'
+import CardHeader from '@mui/material/CardHeader/index.js'
+import TextField from '@mui/material/TextField/index.js'
+import Tooltip from '@mui/material/Tooltip/index.js'
+import Typography from '@mui/material/Typography/index.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { pixel } from '../../img'
-import { genders } from '../../enums'
+import { pixel } from '../../img/index.js'
+import { genders } from '../../enums.js'
 import {
   areHuggingMachinesInInventory,
   getCowDisplayName,
@@ -28,12 +28,15 @@ import {
   getCowValue,
   isCowInBreedingPen,
   isInViewport,
-} from '../../utils'
-import { PURCHASEABLE_COW_PENS } from '../../constants'
-import { OFFER_COW_FOR_TRADE, WITHDRAW_COW_FROM_TRADE } from '../../templates'
-import { useMountState } from '../../hooks/useMountState'
+} from '../../utils/index.js'
+import { PURCHASEABLE_COW_PENS } from '../../constants.js'
+import {
+  OFFER_COW_FOR_TRADE,
+  WITHDRAW_COW_FROM_TRADE,
+} from '../../templates.js'
+import { useMountState } from '../../hooks/useMountState/index.js'
 
-import Subheader from './Subheader'
+import Subheader from './Subheader/index.js'
 
 import './CowCard.sass'
 

@@ -1,12 +1,12 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MenuItem from '@mui/material/MenuItem'
+import MenuItem from '@mui/material/MenuItem/index.js'
 
-import { dialogView, stageFocusType } from '../../enums'
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
-import { noop } from '../../utils/noop'
+import { dialogView, stageFocusType } from '../../enums.js'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { noop } from '../../utils/noop.js'
 
-import { Navigation } from './Navigation'
+import { Navigation } from './Navigation.js'
 
 let component
 

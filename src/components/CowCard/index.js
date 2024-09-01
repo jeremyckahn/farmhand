@@ -1,1 +1,1 @@
-export { default } from './CowCard'
+export { default } from './CowCard.js'

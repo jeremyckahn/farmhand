@@ -1,4 +1,4 @@
-import { itemsMap } from '../src/data/maps'
+import { itemsMap } from '../src/data/maps.js'
 
 export const MARKET_SUMMARY_FOR_DISCORD = (_, room, valueAdjustments) => {
   let string = `Current market values for the **${room}** room:\n`

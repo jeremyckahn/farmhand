@@ -2,20 +2,19 @@
  * @namespace farmhand
  */
 
-import './polyfills'
+import './polyfills.js'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route } from 'react-router-dom'
 
-import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import './index.sass'
-import Farmhand from './components/Farmhand'
-import { features } from './config'
+import Farmhand from './components/Farmhand/index.js'
+import { features } from './config.js'
 import 'typeface-francois-one'
 import 'typeface-public-sans'
 
 // eslint-disable-next-line no-unused-vars
-import { cropFamily, grapeVariety } from './enums'
+import { cropFamily, grapeVariety } from './enums.js'
 
 /**
  * @typedef {import("./components/Farmhand/Farmhand").farmhand.state} farmhand.state
@@ -289,5 +288,3 @@ ReactDOM.render(
   </Router>,
   document.getElementById('root')
 )
-
-serviceWorkerRegistration.register()

@@ -1,10 +1,10 @@
-import { moneyTotal } from '../../utils'
-import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants'
+import { moneyTotal } from '../../utils/index.js'
+import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants.js'
 
-import { CELLAR_PURCHASED } from '../../templates'
+import { CELLAR_PURCHASED } from '../../templates.js'
 
-import { addExperience } from './addExperience'
-import { showNotification } from './showNotification'
+import { addExperience } from './addExperience.js'
+import { showNotification } from './showNotification.js'
 
 /**
  * @param {farmhand.state} state

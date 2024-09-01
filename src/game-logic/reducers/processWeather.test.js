@@ -1,13 +1,13 @@
-import { testCrop } from '../../test-utils'
+import { testCrop } from '../../test-utils/index.js'
 
-import { shouldPrecipitateToday } from '../../utils'
+import { shouldPrecipitateToday } from '../../utils/index.js'
 
-import { processWeather } from './processWeather'
+import { processWeather } from './processWeather.js'
 
-jest.mock('../../data/maps')
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
-  shouldPrecipitateToday: jest.fn(),
+vitest.mock('../../data/maps.js')
+vitest.mock('../../utils/index.js', async () => ({
+  ...(await vitest.importActual('../../utils/index.js')),
+  shouldPrecipitateToday: vitest.fn(),
 }))
 
 describe('processWeather', () => {

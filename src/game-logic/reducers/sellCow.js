@@ -1,8 +1,8 @@
-import { getCowColorId, getCowValue } from '../../utils'
+import { getCowColorId, getCowValue } from '../../utils/index.js'
 
-import { addRevenue } from './addRevenue'
+import { addRevenue } from './addRevenue.js'
 
-import { removeCowFromInventory } from './removeCowFromInventory'
+import { removeCowFromInventory } from './removeCowFromInventory.js'
 
 /**
  * @param {farmhand.state} state

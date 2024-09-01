@@ -4,20 +4,20 @@
 import React from 'react'
 import { array, object, number, string } from 'prop-types'
 import classNames from 'classnames'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableRow from '@mui/material/TableRow'
-import Tooltip from '@mui/material/Tooltip'
-import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table/index.js'
+import TableBody from '@mui/material/TableBody/index.js'
+import TableCell from '@mui/material/TableCell/index.js'
+import TableContainer from '@mui/material/TableContainer/index.js'
+import TableRow from '@mui/material/TableRow/index.js'
+import Tooltip from '@mui/material/Tooltip/index.js'
+import Paper from '@mui/material/Paper/index.js'
 import sortBy from 'lodash.sortby'
 
-import { itemsMap } from '../../data/maps'
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { moneyString } from '../../utils/moneyString'
-import { farmProductsSold } from '../../utils/farmProductsSold'
-import { levelAchieved } from '../../utils/levelAchieved'
+import { itemsMap } from '../../data/maps.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { moneyString } from '../../utils/moneyString.js'
+import { farmProductsSold } from '../../utils/farmProductsSold.js'
+import { levelAchieved } from '../../utils/levelAchieved.js'
 import {
   experienceNeededForLevel,
   get7DayAverage,
@@ -25,12 +25,12 @@ import {
   getProfitRecord,
   integerString,
   moneyTotal,
-} from '../../utils'
+} from '../../utils/index.js'
 import {
   COW_SOLD_TOOLTIP_TEXT,
   FARM_PRODUCTS_TOOLTIP_TEXT,
-} from '../../strings'
-import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants'
+} from '../../strings.js'
+import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants.js'
 
 import './StatsView.sass'
 

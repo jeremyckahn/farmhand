@@ -1,25 +1,25 @@
 /** @typedef {import("../../index").farmhand.keg} keg */
 import React, { useContext } from 'react'
 import { object } from 'prop-types'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardActions from '@mui/material/CardActions'
-import Button from '@mui/material/Button'
+import Card from '@mui/material/Card/index.js'
+import CardHeader from '@mui/material/CardHeader/index.js'
+import CardActions from '@mui/material/CardActions/index.js'
+import Button from '@mui/material/Button/index.js'
 
-import { itemsMap } from '../../data/maps'
-import { items, wines } from '../../img'
+import { itemsMap } from '../../data/maps.js'
+import { items, wines } from '../../img/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { getKegValue } from '../../utils/getKegValue'
-import { moneyString } from '../../utils/moneyString'
-import { getSalePriceMultiplier } from '../../utils'
-import { FERMENTED_CROP_NAME } from '../../templates'
-import AnimatedNumber from '../AnimatedNumber'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { getKegValue } from '../../utils/getKegValue.js'
+import { moneyString } from '../../utils/moneyString.js'
+import { getSalePriceMultiplier } from '../../utils/index.js'
+import { FERMENTED_CROP_NAME } from '../../templates.js'
+import AnimatedNumber from '../AnimatedNumber/index.js'
 
 import './Keg.sass'
-import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate'
-import { wineService } from '../../services/wine'
-import { cellarService } from '../../services/cellar'
+import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
+import { wineService } from '../../services/wine.js'
+import { cellarService } from '../../services/cellar.js'
 
 /**
  * @param {Object} props

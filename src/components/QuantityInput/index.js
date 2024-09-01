@@ -1,1 +1,1 @@
-export { default } from './QuantityInput'
+export { default } from './QuantityInput.js'

@@ -1,12 +1,12 @@
-import { canMakeRecipe } from '../../utils'
+import { canMakeRecipe } from '../../utils/index.js'
 
-import { recipeType } from '../../enums'
+import { recipeType } from '../../enums.js'
 
-import { EXPERIENCE_VALUES } from '../../constants'
+import { EXPERIENCE_VALUES } from '../../constants.js'
 
-import { addItemToInventory } from './addItemToInventory'
-import { addExperience } from './addExperience'
-import { decrementItemFromInventory } from './decrementItemFromInventory'
+import { addItemToInventory } from './addItemToInventory.js'
+import { addExperience } from './addExperience.js'
+import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 const EXPERIENCE_FOR_RECIPE = {
   [recipeType.FERMENTATION]: EXPERIENCE_VALUES.FERMENTATION_RECIPE_MADE,

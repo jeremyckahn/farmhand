@@ -1,8 +1,8 @@
-/** @typedef {typeof import('./Farmhand').default.defaultProps} farmhand.props */
-/** @typedef {import('./Farmhand').farmhand.state} farmhand.state */
+/** @typedef {typeof import('./Farmhand.js').default.defaultProps} farmhand.props */
+/** @typedef {import('./Farmhand.js').farmhand.state} farmhand.state */
 import { Component } from 'react'
 
-import * as reducers from '../../game-logic/reducers'
+import * as reducers from '../../game-logic/reducers/index.js'
 
 /**
  * @callback BoundReducer
@@ -216,7 +216,7 @@ export class FarmhandReducers extends Component {
       const reducer = reducers[reducerName]
 
       if (
-        process.env.NODE_ENV === 'development' &&
+        import.meta.env?.MODE === 'development' &&
         typeof reducer === 'undefined'
       ) {
         throw new Error(

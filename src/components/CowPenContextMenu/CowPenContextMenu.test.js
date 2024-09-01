@@ -1,17 +1,17 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { generateCow } from '../../utils'
-import { noop } from '../../utils/noop'
+import { generateCow } from '../../utils/index.js'
+import { noop } from '../../utils/noop.js'
 
-import { CowPenContextMenu } from './CowPenContextMenu'
+import { CowPenContextMenu } from './CowPenContextMenu.js'
 
-jest.mock('../CowCard', () => ({
+vitest.mock('../CowCard', () => ({
   __esModule: true,
   default: () => <></>,
 }))
 
-jest.mock('../Item', () => ({
+vitest.mock('../Item', () => ({
   __esModule: true,
   default: () => <></>,
 }))

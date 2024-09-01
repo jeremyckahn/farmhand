@@ -1,22 +1,26 @@
-import { ACHIEVEMENT_COMPLETED } from '../../templates'
+import { ACHIEVEMENT_COMPLETED } from '../../templates.js'
 
 describe('updateAchievements', () => {
   let updateAchievements
 
-  beforeAll(() => {
-    jest.resetModules()
-    jest.mock('../../data/achievements', () => [
-      {
-        id: 'test-achievement',
-        name: 'Test Achievement',
-        description: '',
-        rewardDescription: '',
-        condition: state => !state.conditionSatisfied,
-        reward: state => ({ ...state, conditionSatisfied: true }),
-      },
-    ])
+  beforeAll(async () => {
+    vitest.resetModules()
+    vitest.mock('../../data/achievements.js', () => {
+      return {
+        default: [
+          {
+            id: 'test-achievement',
+            name: 'Test Achievement',
+            description: '',
+            rewardDescription: '',
+            condition: state => !state.conditionSatisfied,
+            reward: state => ({ ...state, conditionSatisfied: true }),
+          },
+        ],
+      }
+    })
 
-    updateAchievements = jest.requireActual('./updateAchievements')
+   updateAchievements = (await vitest.importActual('./updateAchievements.js'))
       .updateAchievements
   })
 

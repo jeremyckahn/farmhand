@@ -1,11 +1,11 @@
-import { testCrop } from '../../test-utils'
-import { FERTILIZER_BONUS } from '../../constants'
-import { fertilizerType } from '../../enums'
+import { testCrop } from '../../test-utils/index.js'
+import { FERTILIZER_BONUS } from '../../constants.js'
+import { fertilizerType } from '../../enums.js'
 
-import { incrementPlotContentAge } from './incrementPlotContentAge'
+import { incrementPlotContentAge } from './incrementPlotContentAge.js'
 
-jest.mock('../../data/maps')
-jest.mock('../../data/items')
+vitest.mock('../../data/maps.js')
+vitest.mock('../../data/items.js')
 
 describe('incrementPlotContentAge', () => {
   describe('plot contains a crop', () => {

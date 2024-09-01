@@ -1,4 +1,4 @@
-import { fertilizerType } from '../enums'
+import { fertilizerType } from '../enums.js'
 
 export const shapeOf = object =>
   Object.keys(object).reduce((acc, key) => {

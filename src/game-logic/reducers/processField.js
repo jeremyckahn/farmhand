@@ -1,7 +1,7 @@
-import { updateField, setWasWateredProperty } from './helpers'
-import { incrementPlotContentAge } from './incrementPlotContentAge'
-import { updatePlotShoveledState } from './updatePlotShoveledState'
-import { spawnWeeds } from './spawnWeeds'
+import { updateField, setWasWateredProperty } from './helpers.js'
+import { incrementPlotContentAge } from './incrementPlotContentAge.js'
+import { updatePlotShoveledState } from './updatePlotShoveledState.js'
+import { spawnWeeds } from './spawnWeeds.js'
 
 const fieldReducer = (acc, fn) => fn(acc)
 

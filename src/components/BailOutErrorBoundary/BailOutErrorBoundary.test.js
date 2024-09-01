@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import BailOutErrorBoundary from './BailOutErrorBoundary'
+import BailOutErrorBoundary from './BailOutErrorBoundary.js'
 
 let component
 

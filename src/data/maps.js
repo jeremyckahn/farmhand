@@ -1,13 +1,13 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
 
-import { cropType, recipeType } from '../enums'
+import { cropType, recipeType } from '../enums.js'
 
-import * as recipes from './recipes'
-import upgrades from './upgrades'
+import * as recipes from './recipes.js'
+import upgrades from './upgrades.js'
 
-import baseItemsMap from './items-map'
+import baseItemsMap from './items-map.js'
 
-import { grapeSeed } from './crops'
+import { grapeSeed } from './crops/index.js'
 
 const {
   ASPARAGUS,

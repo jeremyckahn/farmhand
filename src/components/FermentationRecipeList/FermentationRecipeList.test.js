@@ -5,16 +5,16 @@ import React from 'react'
 import { screen } from '@testing-library/dom'
 import { render } from '@testing-library/react'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
-import { getCropsAvailableToFerment } from '../../utils/getCropsAvailableToFerment'
-import { fermentableItemsMap } from '../../data/maps'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
+import { getCropsAvailableToFerment } from '../../utils/getCropsAvailableToFerment.js'
+import { fermentableItemsMap } from '../../data/maps.js'
 
-import { FermentationRecipeList } from './FermentationRecipeList'
+import { FermentationRecipeList } from './FermentationRecipeList.js'
 
 const totalFermentableItems = Object.keys(fermentableItemsMap).length
 
-jest.mock('./FermentationRecipe', () => ({
+vitest.mock('./FermentationRecipe.js', () => ({
   FermentationRecipe: () => <></>,
 }))
 

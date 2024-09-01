@@ -1,9 +1,9 @@
-import { testItem } from '../../test-utils'
-import { getCropFromItemId } from '../../utils'
+import { testItem } from '../../test-utils/index.js'
+import { getCropFromItemId } from '../../utils/index.js'
 
-import { plantInPlot } from './plantInPlot'
+import { plantInPlot } from './plantInPlot.js'
 
-jest.mock('../../data/items')
+vitest.mock('../../data/items.js')
 
 describe('plantInPlot', () => {
   describe('crop quantity > 1', () => {
@@ -78,7 +78,7 @@ describe('plantInPlot', () => {
 
   describe('crops with varieties', () => {
     test('plants a crop from a seed with varieties', () => {
-      jest.spyOn(Math, 'random').mockReturnValue(0)
+      vitest.spyOn(Math, 'random').mockReturnValue(0)
       const state = plantInPlot(
         {
           field: [[]],

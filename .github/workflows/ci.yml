@@ -23,15 +23,11 @@ jobs:
       - name: 'Install dependencies'
         run: npm ci
 
-      - name: 'Run tests'
-        run: npm test -- --reporters=default --reporters=jest-junit
+      - name: 'Lint code'
+        run: npm run lint
 
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        with:
-          name: Jest Tests # Name of the check run which will be created
-          path: reports/jest-*.xml # Path to test results
-          reporter: jest-junit # Format of test results
+      - name: 'Run tests'
+        run: npm test -- --coverage --run
 
       - name: 'Check types'
         # TODO: Change this to check:types when all type errors are fixed
@@ -44,4 +40,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: build-output
-          path: build
+          path: dist

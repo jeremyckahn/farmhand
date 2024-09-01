@@ -2,16 +2,16 @@ import React from 'react'
 import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { getUpgradesAvailable } from './getUpgradesAvailable'
+import { getUpgradesAvailable } from './getUpgradesAvailable.js'
 
-import Workshop from './Workshop'
+import Workshop from './Workshop.js'
 
-jest.mock('./getUpgradesAvailable')
+vitest.mock('./getUpgradesAvailable.js')
 
-jest.mock('../../data/maps', () => ({
-  ...jest.requireActual('../../data/maps'),
+vitest.mock('../../data/maps.js', async importOriginal => ({
+  ...(await importOriginal()),
   recipesMap: {
     'kitchen-recipe-1': {
       id: 'kitchen-recipe-1',
@@ -46,10 +46,14 @@ jest.mock('../../data/maps', () => ({
   },
 }))
 
-jest.mock('../Recipe', () => () => <div data-testid="Recipe">Recipe</div>)
-jest.mock('../UpgradePurchase', () => () => (
-  <div data-testid="UpgradePurchase">UpgradePurchase</div>
-))
+vitest.mock('../Recipe', () => {
+  return { default: () => <div data-testid="Recipe">Recipe</div> }
+})
+vitest.mock('../UpgradePurchase', () => {
+  return {
+    default: () => <div data-testid="UpgradePurchase">UpgradePurchase</div>,
+  }
+})
 
 describe('<Workshop />', () => {
   let gameState

@@ -2,27 +2,27 @@ import React from 'react'
 
 import { func, object } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
-import window from 'global/window'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Accordion from '@mui/material/Accordion'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import globalWindow from 'global/window.js'
+import Button from '@mui/material/Button/index.js'
+import Divider from '@mui/material/Divider/index.js'
+import Accordion from '@mui/material/Accordion/index.js'
+import AccordionSummary from '@mui/material/AccordionSummary/index.js'
+import AccordionDetails from '@mui/material/AccordionDetails/index.js'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
+import Card from '@mui/material/Card/index.js'
+import CardContent from '@mui/material/CardContent/index.js'
 
-import { items } from '../../img'
+import { items } from '../../img/index.js'
 
-import { achievementsMap } from '../../data/achievements'
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { STANDARD_LOAN_AMOUNT } from '../../constants'
-import { stageFocusType } from '../../enums'
-import { isDecember } from '../../utils'
-import { memoize } from '../../utils/memoize'
-import Achievement from '../Achievement'
+import { achievementsMap } from '../../data/achievements.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { STANDARD_LOAN_AMOUNT } from '../../constants.js'
+import { stageFocusType } from '../../enums.js'
+import { isDecember } from '../../utils/index.js'
+import { memoize } from '../../utils/memoize.js'
+import Achievement from '../Achievement/index.js'
 
-import { SnowBackground } from './SnowBackground'
+import { SnowBackground } from './SnowBackground.js'
 import './Home.sass'
 
 const onboardingAchievements = [
@@ -39,7 +39,7 @@ const getRemainingOnboardingAchievements = memoize(completedAchievements =>
 )
 
 const environmentAllowsInstall = ['production', 'development'].includes(
-  process.env.NODE_ENV
+  import.meta.env?.MODE
 )
 
 const VALID_ORIGINS = [
@@ -51,8 +51,8 @@ const VALID_ORIGINS = [
 // https://stackoverflow.com/questions/41742390/javascript-to-check-if-pwa-or-mobile-web/41749865#41749865
 const isInstallable =
   environmentAllowsInstall &&
-  !window.matchMedia('(display-mode: standalone)').matches &&
-  VALID_ORIGINS.includes(window.location.origin)
+  !globalWindow.matchMedia('(display-mode: standalone)').matches &&
+  VALID_ORIGINS.includes(globalWindow.location.origin)
 
 const Home = ({
   completedAchievements,

@@ -1,10 +1,10 @@
 import React from 'react'
 import { array } from 'prop-types'
-import Alert from '@mui/material/Alert'
+import Alert from '@mui/material/Alert/index.js'
 import ReactMarkdown from 'react-markdown'
-import Divider from '@mui/material/Divider'
+import Divider from '@mui/material/Divider/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import './LogView.sass'
 

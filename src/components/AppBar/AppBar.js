@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { tween } from 'shifty'
 import { array, bool, func, number, string } from 'prop-types'
 
-import { default as MuiAppBar } from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import StepIcon from '@mui/material/StepIcon'
+import { default as MuiAppBar } from '@mui/material/AppBar/index.js'
+import Toolbar from '@mui/material/Toolbar/index.js'
+import Typography from '@mui/material/Typography/index.js'
+import StepIcon from '@mui/material/StepIcon/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { moneyString } from '../../utils/moneyString'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { moneyString } from '../../utils/moneyString.js'
 import './AppBar.sass'
 
 const MoneyDisplay = ({ money }) => {

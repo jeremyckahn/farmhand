@@ -1,12 +1,12 @@
 /** @typedef {import("../index").farmhand.item} farmhand.item */
-import { randomNumberService } from '../common/services/randomNumber'
-import { Factory } from '../interfaces/Factory'
-import { coal, saltRock, stone } from '../data/ores'
+import { randomNumberService } from '../common/services/randomNumber.js'
+import { Factory } from '../interfaces/Factory.js'
+import { coal, saltRock, stone } from '../data/ores/index.js'
 import {
   COAL_SPAWN_CHANCE,
   SALT_ROCK_SPAWN_CHANCE,
   STONE_SPAWN_CHANCE,
-} from '../constants'
+} from '../constants.js'
 
 const spawnableResources = [
   [stone, STONE_SPAWN_CHANCE],

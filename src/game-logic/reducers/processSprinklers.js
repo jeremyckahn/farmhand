@@ -1,10 +1,10 @@
-import { itemType } from '../../enums'
-import { levelAchieved } from '../../utils/levelAchieved'
-import { getPlotContentType, getRangeCoords } from '../../utils'
-import { getLevelEntitlements } from '../../utils/getLevelEntitlements'
+import { itemType } from '../../enums.js'
+import { levelAchieved } from '../../utils/levelAchieved.js'
+import { getPlotContentType, getRangeCoords } from '../../utils/index.js'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 
-import { setWasWatered } from './helpers'
-import { modifyFieldPlotAt } from './modifyFieldPlotAt'
+import { setWasWatered } from './helpers.js'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 /**
  * @param {farmhand.state} state

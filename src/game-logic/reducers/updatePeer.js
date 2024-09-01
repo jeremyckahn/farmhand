@@ -3,11 +3,11 @@
  * @typedef {import('../../components/Farmhand/Farmhand').farmhand.state} farmhand.state
  * @typedef {import('../../index').farmhand.peerMetadata} farmhand.peerMetadata
  */
-import { MAX_LATEST_PEER_MESSAGES } from '../../constants'
-import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates'
-import { dialogView } from '../../enums'
+import { MAX_LATEST_PEER_MESSAGES } from '../../constants.js'
+import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.js'
+import { dialogView } from '../../enums.js'
 
-import { showNotification } from './showNotification'
+import { showNotification } from './showNotification.js'
 
 /**
  * @param {farmhand.state} state

@@ -2,9 +2,9 @@
  * @typedef {import("../components/Farmhand/Farmhand").farmhand.state['field']} farmhand.state.field
  */
 
-import { carrot, pumpkin } from '../data/crops'
+import { carrot, pumpkin } from '../data/crops/index.js'
 
-import { findInField } from './findInField'
+import { findInField } from './findInField.js'
 
 const carrotPlot = {
   itemId: carrot.id,

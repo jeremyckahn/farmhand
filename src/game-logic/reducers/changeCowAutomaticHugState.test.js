@@ -1,9 +1,9 @@
-import { huggingMachine } from '../../data/items'
-import { generateCow } from '../../utils'
+import { huggingMachine } from '../../data/items.js'
+import { generateCow } from '../../utils/index.js'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
-import { changeCowAutomaticHugState } from './changeCowAutomaticHugState'
+import { changeCowAutomaticHugState } from './changeCowAutomaticHugState.js'
 
 describe('changeCowAutomaticHugState', () => {
   describe('setting isUsingHuggingMachine to true', () => {

@@ -1,14 +1,14 @@
-import { MAX_CROWS, SCARECROW_ITEM_ID } from '../../constants'
-import { findInField } from '../../utils/findInField'
+import { MAX_CROWS, SCARECROW_ITEM_ID } from '../../constants.js'
+import { findInField } from '../../utils/findInField.js'
 
-import { randomNumberService } from '../../common/services/randomNumber'
+import { randomNumberService } from '../../common/services/randomNumber.js'
 
-import { applyCrows, forEachPlot } from './applyCrows'
+import { applyCrows, forEachPlot } from './applyCrows.js'
 
 const CARROT = 'carrot'
 
 beforeEach(() => {
-  jest.spyOn(randomNumberService, 'isRandomNumberLessThan')
+  vitest.spyOn(randomNumberService, 'isRandomNumberLessThan')
 })
 
 describe('applyCrows', () => {
@@ -26,7 +26,7 @@ describe('applyCrows', () => {
 
     addToField(CARROT)
 
-    jest.spyOn(Math, 'random')
+    vitest.spyOn(Math, 'random')
   })
 
   describe('no crows spawned', () => {

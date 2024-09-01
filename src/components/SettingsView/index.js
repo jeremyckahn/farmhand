@@ -1,1 +1,1 @@
-export { default } from './SettingsView'
+export { default } from './SettingsView.js'

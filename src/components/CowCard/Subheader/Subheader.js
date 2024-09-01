@@ -3,28 +3,28 @@
 /** @typedef {import('../CowCard').CowCardProps} CowCardProps */
 import React from 'react'
 import { array, bool, func, object, string } from 'prop-types'
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
+import Checkbox from '@mui/material/Checkbox/index.js'
+import FormControlLabel from '@mui/material/FormControlLabel/index.js'
+import Tooltip from '@mui/material/Tooltip/index.js'
+import Typography from '@mui/material/Typography/index.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { faHeart as faFullHeart } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons'
 
-import { COW_COLOR_NAMES } from '../../../strings'
-import { genders } from '../../../enums'
-import { moneyString } from '../../../utils/moneyString'
+import { COW_COLOR_NAMES } from '../../../strings.js'
+import { genders } from '../../../enums.js'
+import { moneyString } from '../../../utils/moneyString.js'
 import {
   getCowWeight,
   getPlayerName,
   integerString,
   isCowInBreedingPen,
   nullArray,
-} from '../../../utils'
-import { memoize } from '../../../utils/memoize'
-import { huggingMachine } from '../../../data/items'
-import Bloodline from '../Bloodline'
+} from '../../../utils/index.js'
+import { memoize } from '../../../utils/memoize.js'
+import { huggingMachine } from '../../../data/items.js'
+import Bloodline from '../Bloodline/index.js'
 
 import './Subheader.sass'
 

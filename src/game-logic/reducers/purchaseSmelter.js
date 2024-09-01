@@ -1,10 +1,10 @@
-import { moneyTotal } from '../../utils'
-import { EXPERIENCE_VALUES, PURCHASEABLE_SMELTERS } from '../../constants'
-import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings'
+import { moneyTotal } from '../../utils/index.js'
+import { EXPERIENCE_VALUES, PURCHASEABLE_SMELTERS } from '../../constants.js'
+import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings.js'
 
-import { addExperience } from './addExperience'
-import { showNotification } from './showNotification'
-import { updateLearnedRecipes } from './updateLearnedRecipes'
+import { addExperience } from './addExperience.js'
+import { showNotification } from './showNotification.js'
+import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 
 /**
  * @param {farmhand.state} state

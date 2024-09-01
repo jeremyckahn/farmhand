@@ -1,16 +1,12 @@
-import * as reducers from '../game-logic/reducers'
-import { testCrop } from '../test-utils'
+import * as reducers from '../game-logic/reducers/index.js'
+import { testCrop } from '../test-utils/index.js'
 
-import { toolLevel, toolType } from '../enums'
+import { toolLevel, toolType } from '../enums.js'
 
-import { INFINITE_STORAGE_LIMIT } from '../constants'
+import { INFINITE_STORAGE_LIMIT } from '../constants.js'
 
-import { achievementsMap } from './achievements'
-
-jest.mock('./items')
-jest.mock('./levels', () => ({ levels: [] }))
-jest.mock('./recipes')
-jest.mock('./shop-inventory')
+import { achievementsMap } from './achievements.js'
+import { carrot } from './crops/index.js'
 
 describe('harvest-crop', () => {
   describe('condition', () => {
@@ -19,9 +15,7 @@ describe('harvest-crop', () => {
     beforeEach(() => {
       inputState = {
         cropsHarvested: {},
-        field: [
-          [null, null, testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })],
-        ],
+        field: [[null, null, testCrop({ itemId: carrot.id, daysWatered: 5 })]],
         inventory: [],
         inventoryLimit: INFINITE_STORAGE_LIMIT,
         toolLevels: {

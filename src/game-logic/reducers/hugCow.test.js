@@ -1,7 +1,7 @@
-import { COW_HUG_BENEFIT } from '../../constants'
-import { generateCow } from '../../utils'
+import { COW_HUG_BENEFIT } from '../../constants.js'
+import { generateCow } from '../../utils/index.js'
 
-import { hugCow } from './hugCow'
+import { hugCow } from './hugCow.js'
 
 describe('hugCow', () => {
   describe('cow has not hit daily hug benefit limit', () => {

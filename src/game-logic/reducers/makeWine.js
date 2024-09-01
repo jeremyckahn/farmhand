@@ -5,14 +5,14 @@
  * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
  */
 
-import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants'
-import { itemsMap } from '../../data/maps'
-import { cellarService } from '../../services/cellar'
-import { wineService } from '../../services/wine'
-import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine'
+import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants.js'
+import { itemsMap } from '../../data/maps.js'
+import { cellarService } from '../../services/cellar.js'
+import { wineService } from '../../services/wine.js'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
 
-import { addKegToCellarInventory } from './addKegToCellarInventory'
-import { decrementItemFromInventory } from './decrementItemFromInventory'
+import { addKegToCellarInventory } from './addKegToCellarInventory.js'
+import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 /**
  * @param {state} state

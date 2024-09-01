@@ -2,8 +2,8 @@
 /** @typedef {import("../../index").farmhand.grape} farmhand.grape */
 /** @typedef {import("../../index").farmhand.cropVariety} farmhand.cropVariety */
 
-import { crop, fromSeed, cropVariety } from '../crop'
-import { cropFamily, cropType, grapeVariety } from '../../enums'
+import { crop, fromSeed, cropVariety } from '../crop.js'
+import { cropFamily, cropType, grapeVariety } from '../../enums.js'
 
 /**
  * @param {farmhand.item | farmhand.cropVariety} item

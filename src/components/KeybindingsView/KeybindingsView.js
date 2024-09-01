@@ -1,12 +1,10 @@
 import React from 'react'
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableRow from '@mui/material/TableRow'
-
-import './KeybindingsView.sass'
+import Paper from '@mui/material/Paper/index.js'
+import Table from '@mui/material/Table/index.js'
+import TableBody from '@mui/material/TableBody/index.js'
+import TableCell from '@mui/material/TableCell/index.js'
+import TableContainer from '@mui/material/TableContainer/index.js'
+import TableRow from '@mui/material/TableRow/index.js'
 
 const ElevatedPaper = props => (
   <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>

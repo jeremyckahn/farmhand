@@ -3,10 +3,10 @@
  * @typedef {import('../index').farmhand.item} item
  * @typedef {import('../index').farmhand.cropVariety} cropVariety
  * @typedef {import('../index').farmhand.grape} grape
- * @typedef {import('../enums').grapeVariety} grapeVariety
+ * @typedef {import('../enums.js').grapeVariety} grapeVariety
  */
-import { isGrape } from '../data/crops/grape'
-import { itemsMap } from '../data/maps'
+import { isGrape } from '../data/crops/grape.js'
+import { itemsMap } from '../data/maps.js'
 
 /**
  * @param {itemsSold} itemsSold

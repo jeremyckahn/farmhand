@@ -1,8 +1,8 @@
-import { applyCrows } from './applyCrows'
+import { applyCrows } from './applyCrows.js'
 
-import { processNerfs } from './processNerfs'
+import { processNerfs } from './processNerfs.js'
 
-jest.mock('./applyCrows')
+vitest.mock('./applyCrows.js')
 
 describe('processNerfs', () => {
   it('invokes applyCrows', () => {

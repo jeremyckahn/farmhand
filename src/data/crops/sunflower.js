@@ -1,7 +1,7 @@
 /** @typedef {import('../../components/Farmhand/Farmhand').farmhand.item} farmhand.item */
 
-import { crop, fromSeed } from '../crop'
-import { cropType } from '../../enums'
+import { crop, fromSeed } from '../crop.js'
+import { cropType } from '../../enums.js'
 
 /**
  * @property farmhand.module:items.sunflowerSeed

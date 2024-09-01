@@ -1,4 +1,4 @@
-import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay'
+import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay.js'
 
 describe('updateInventoryRecordsForNextDay', () => {
   test('records inventory records for next day', () => {

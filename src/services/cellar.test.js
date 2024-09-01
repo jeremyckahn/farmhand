@@ -1,15 +1,15 @@
-import { wineChardonnay } from '../data/recipes'
-import { pumpkin } from '../data/crops'
+import { wineChardonnay } from '../data/recipes.js'
+import { pumpkin } from '../data/crops/index.js'
 
-import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
 
-import { cellarService } from './cellar'
+import { cellarService } from './cellar.js'
 
 const mockUuid = 'abc123'
 
 beforeEach(() => {
   // @ts-expect-error
-  jest.spyOn(cellarService, '_uuid').mockReturnValue(mockUuid)
+  vitest.spyOn(cellarService, '_uuid').mockReturnValue(mockUuid)
 })
 
 describe('CellarService', () => {

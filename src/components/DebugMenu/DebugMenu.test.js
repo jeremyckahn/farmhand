@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { noop } from '../../utils/noop'
+import { noop } from '../../utils/noop.js'
 
-import { DebugMenu } from './DebugMenu'
+import { DebugMenu } from './DebugMenu.js'
 
 let component
 

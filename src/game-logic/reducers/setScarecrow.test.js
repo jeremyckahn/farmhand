@@ -1,9 +1,9 @@
-import { testCrop, testItem } from '../../test-utils'
-import { SCARECROW_ITEM_ID } from '../../constants'
-import { fieldMode } from '../../enums'
-import { getPlotContentFromItemId } from '../../utils'
+import { testCrop, testItem } from '../../test-utils/index.js'
+import { SCARECROW_ITEM_ID } from '../../constants.js'
+import { fieldMode } from '../../enums.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
 
-import { setScarecrow } from './setScarecrow'
+import { setScarecrow } from './setScarecrow.js'
 
 describe('setScarecrow', () => {
   let state

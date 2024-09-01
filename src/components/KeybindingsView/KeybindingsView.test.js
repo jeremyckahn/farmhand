@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import KeybindingsView from './KeybindingsView'
+import KeybindingsView from './KeybindingsView.js'
 
 let component
 

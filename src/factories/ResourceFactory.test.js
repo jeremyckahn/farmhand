@@ -1,20 +1,20 @@
-import { randomNumberService } from '../common/services/randomNumber'
-import { itemType, toolLevel } from '../enums'
-import { randomChoice } from '../utils'
+import { randomNumberService } from '../common/services/randomNumber.js'
+import { itemType, toolLevel } from '../enums.js'
+import { randomChoice } from '../utils/index.js'
 
-import ResourceFactory from './ResourceFactory'
+import ResourceFactory from './ResourceFactory.js'
 
-jest.mock('./CoalFactory')
-jest.mock('./OreFactory')
-jest.mock('./StoneFactory')
+vitest.mock('./CoalFactory.js')
+vitest.mock('./OreFactory.js')
+vitest.mock('./StoneFactory.js')
 
-jest.mock('../utils', () => ({
-  ...jest.requireActual('../utils'),
-  randomChoice: jest.fn(),
+vitest.mock('../utils/index.js', async () => ({
+  ...(await vitest.importActual('../utils/index.js')),
+  randomChoice: vitest.fn(),
 }))
 
 beforeEach(() => {
-  jest.spyOn(randomNumberService, 'isRandomNumberLessThan')
+  vitest.spyOn(randomNumberService, 'isRandomNumberLessThan')
 })
 
 describe('ResourceFactory', () => {

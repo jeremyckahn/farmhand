@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import PriceEventView from './PriceEventView'
+import PriceEventView from './PriceEventView.js'
 
 let component
 

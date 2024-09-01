@@ -1,8 +1,8 @@
 import React from 'react'
-import useWindowSize from 'react-use/lib/useWindowSize'
+import useWindowSize from 'react-use/lib/useWindowSize.js'
 import Confetti from 'react-confetti'
 
-import { random } from '../../common/utils'
+import { random } from '../../common/utils.js'
 
 const randomInt = (min, max) => {
   return Math.floor(min + random() * (max - min + 1))

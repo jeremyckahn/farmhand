@@ -1,7 +1,7 @@
 /**
  * @typedef {import('../../../').farmhand.item} farmhand.item
  */
-import { itemsMap } from '../../../data/maps'
+import { itemsMap } from '../../../data/maps.js'
 
 const itemIds = Object.keys(itemsMap)
 

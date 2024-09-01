@@ -1,11 +1,11 @@
-import { randomNumberService } from './randomNumber'
+import { randomNumberService } from './randomNumber.js'
 
 describe('RandomNumberService', () => {
   describe('isRandomNumberLessThan', () => {
     const chance = 0.6
 
     beforeEach(() => {
-      jest.spyOn(randomNumberService, 'generateRandomNumber')
+      vitest.spyOn(randomNumberService, 'generateRandomNumber')
     })
 
     test('it returns true when random number is below chance', () => {

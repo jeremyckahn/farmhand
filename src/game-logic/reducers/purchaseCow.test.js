@@ -1,8 +1,8 @@
-import { PURCHASEABLE_COW_PENS } from '../../constants'
-import { genders, standardCowColors } from '../../enums'
-import { generateCow, getCowValue } from '../../utils'
+import { PURCHASEABLE_COW_PENS } from '../../constants.js'
+import { genders, standardCowColors } from '../../enums.js'
+import { generateCow, getCowValue } from '../../utils/index.js'
 
-import { purchaseCow } from './purchaseCow'
+import { purchaseCow } from './purchaseCow.js'
 
 describe('purchaseCow', () => {
   const cow = Object.freeze(

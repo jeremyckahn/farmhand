@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import StatsView from './StatsView'
+import StatsView from './StatsView.js'
 
 let component
 

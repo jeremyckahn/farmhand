@@ -1,4 +1,4 @@
-import { showNotification } from './showNotification'
+import { showNotification } from './showNotification.js'
 
 describe('showNotification', () => {
   test('sets notification state', () => {

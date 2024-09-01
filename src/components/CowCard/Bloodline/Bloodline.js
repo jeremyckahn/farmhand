@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
 import { object } from 'prop-types'
-import Tooltip from '@mui/material/Tooltip'
+import Tooltip from '@mui/material/Tooltip/index.js'
 
-import { COW_COLOR_NAMES } from '../../../strings'
+import { COW_COLOR_NAMES } from '../../../strings.js'
 
 import './Bloodline.sass'
 

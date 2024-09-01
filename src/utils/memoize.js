@@ -2,7 +2,7 @@
 
 import fastMemoize from 'fast-memoize'
 
-import { MEMOIZE_CACHE_CLEAR_THRESHOLD } from '../constants'
+import { MEMOIZE_CACHE_CLEAR_THRESHOLD } from '../constants.js'
 
 // This is basically the same as fast-memoize's default cache, except that it
 // clears the cache once the size exceeds MEMOIZE_CACHE_CLEAR_THRESHOLD to

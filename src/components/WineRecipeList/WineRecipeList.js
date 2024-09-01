@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 
-import { getWineVarietiesAvailableToMake } from '../../utils/getWineVarietiesAvailableToMake'
-import FarmhandContext from '../Farmhand/Farmhand.context'
-import { grapeVariety } from '../../enums'
+import { getWineVarietiesAvailableToMake } from '../../utils/getWineVarietiesAvailableToMake.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { grapeVariety } from '../../enums.js'
 
-import { WineRecipe } from './WineRecipe'
+import { WineRecipe } from './WineRecipe.js'
 
 const totalGrapeVarieties = Object.keys(grapeVariety).length
 

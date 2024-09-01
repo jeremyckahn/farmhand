@@ -5,16 +5,16 @@
  * @typedef {import('../index').farmhand.grape} farmhand.grape
  * @typedef {import('../index').farmhand.wine} farmhand.wine
  */
-import { itemType, fieldMode, recipeType } from '../enums'
+import { itemType, fieldMode, recipeType } from '../enums.js'
 import {
   GRAPES_REQUIRED_FOR_WINE,
   RECIPE_INGREDIENT_VALUE_MULTIPLIER,
-} from '../constants'
-import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine'
+} from '../constants.js'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
 
-import * as items from './items'
-import baseItemsMap from './items-map'
-import { grapeVarietyNameMap } from './crops/grape'
+import * as items from './items.js'
+import baseItemsMap from './items-map.js'
+import { grapeVarietyNameMap } from './crops/grape.js'
 
 const itemsMap = { ...baseItemsMap }
 

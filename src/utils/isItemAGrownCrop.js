@@ -1,4 +1,4 @@
-import { itemType } from '../enums'
+import { itemType } from '../enums.js'
 
 /**
  * @param {farmhand.item} item

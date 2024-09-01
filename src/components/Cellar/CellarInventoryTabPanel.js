@@ -1,23 +1,23 @@
 /** @typedef {import("../../index").farmhand.keg} keg */
 import React, { useContext } from 'react'
 import { number } from 'prop-types'
-import Divider from '@mui/material/Divider'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import Divider from '@mui/material/Divider/index.js'
+import Card from '@mui/material/Card/index.js'
+import CardContent from '@mui/material/CardContent/index.js'
 import ReactMarkdown from 'react-markdown'
 
-import FarmhandContext from '../Farmhand/Farmhand.context'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import {
   KEG_INTEREST_RATE,
   PURCHASEABLE_CELLARS,
   WINE_GROWTH_TIMELINE_CAP,
   WINE_INTEREST_RATE,
-} from '../../constants'
+} from '../../constants.js'
 
-import { integerString } from '../../utils'
+import { integerString } from '../../utils/index.js'
 
-import { TabPanel } from './TabPanel'
-import { Keg } from './Keg'
+import { TabPanel } from './TabPanel/index.js'
+import { Keg } from './Keg.js'
 
 /**
  * @param {Object} props

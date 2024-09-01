@@ -1,12 +1,12 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { fieldMode, toolLevel, toolType } from '../../enums'
+import { fieldMode, toolLevel, toolType } from '../../enums.js'
 
-import { Toolbelt } from './Toolbelt'
+import { Toolbelt } from './Toolbelt.js'
 
-jest.mock('../../utils/memoize', () => ({
-  memoize: jest.fn(callback => {
+vitest.mock('../../utils/memoize.js', () => ({
+  memoize: vitest.fn(callback => {
     return (...args) => {
       return callback(...args)
     }

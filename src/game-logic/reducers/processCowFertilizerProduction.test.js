@@ -1,12 +1,12 @@
-import { FERTILIZERS_PRODUCED } from '../../templates'
+import { FERTILIZERS_PRODUCED } from '../../templates.js'
 import {
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
   INFINITE_STORAGE_LIMIT,
-} from '../../constants'
-import { genders, standardCowColors } from '../../enums'
-import { generateCow, getCowFertilizerItem } from '../../utils'
+} from '../../constants.js'
+import { genders, standardCowColors } from '../../enums.js'
+import { generateCow, getCowFertilizerItem } from '../../utils/index.js'
 
-import { processCowFertilizerProduction } from './processCowFertilizerProduction'
+import { processCowFertilizerProduction } from './processCowFertilizerProduction.js'
 
 describe('processCowFertilizerProduction', () => {
   let state

@@ -1,1 +1,1 @@
-export { default } from './QuickSelect'
+export { default } from './QuickSelect.js'

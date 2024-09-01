@@ -1,4 +1,4 @@
-import { updatePriceEvents } from './updatePriceEvents'
+import { updatePriceEvents } from './updatePriceEvents.js'
 
 describe('updatePriceEvents', () => {
   test('updates price events', () => {

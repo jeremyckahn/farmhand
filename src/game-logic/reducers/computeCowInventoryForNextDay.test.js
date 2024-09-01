@@ -1,6 +1,6 @@
-import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants'
+import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.js'
 
-import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay'
+import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay.js'
 
 describe('computeCowInventoryForNextDay', () => {
   test('ages cows', () => {

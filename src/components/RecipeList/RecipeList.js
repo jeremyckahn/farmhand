@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Recipe from '../Recipe'
+import Recipe from '../Recipe/index.js'
 
 export function RecipeList({ allRecipes, learnedRecipes }) {
   const numLearnedRecipes = learnedRecipes.length

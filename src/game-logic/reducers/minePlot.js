@@ -1,12 +1,12 @@
-import { toolType } from '../../enums'
-import { chooseRandom, doesInventorySpaceRemain } from '../../utils'
-import { INVENTORY_FULL_NOTIFICATION } from '../../strings'
-import { ResourceFactory } from '../../factories'
-import { random } from '../../common/utils'
+import { toolType } from '../../enums.js'
+import { chooseRandom, doesInventorySpaceRemain } from '../../utils/index.js'
+import { INVENTORY_FULL_NOTIFICATION } from '../../strings.js'
+import { ResourceFactory } from '../../factories/index.js'
+import { random } from '../../common/utils.js'
 
-import { addItemToInventory } from './addItemToInventory'
-import { showNotification } from './showNotification'
-import { modifyFieldPlotAt } from './modifyFieldPlotAt'
+import { addItemToInventory } from './addItemToInventory.js'
+import { showNotification } from './showNotification.js'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 const daysUntilClearPeriods = [1, 2, 2, 3]
 
