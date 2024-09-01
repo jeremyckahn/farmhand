@@ -112,7 +112,7 @@
     "compass-mixins": "^0.12.12",
     "dinero.js": "^1.7.0",
     "electron-is-dev": "^2.0.0",
-    "electron-updater": "^5.0.5",
+    "electron-updater": "^6.3.0",
     "fast-memoize": "^2.5.2",
     "file-saver": "^2.0.2",
     "fs": "npm:browserify-fs@^1.0.0",
