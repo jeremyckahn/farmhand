@@ -24,15 +24,18 @@ export const endpoints = {
  *   FOREST?: boolean
  * }}
  */
-export const features = Object.keys(import.meta.env).reduce((acc, key) => {
-  const matches = key.match(/VITE_ENABLE_(.*)/)
+export const features = Object.keys(import.meta.env ?? {}).reduce(
+  (acc, key) => {
+    const matches = key.match(/VITE_ENABLE_(.*)/)
 
-  if (matches) {
-    acc[matches[1]] = true
-  }
+    if (matches) {
+      acc[matches[1]] = true
+    }
 
-  return acc
-}, {})
+    return acc
+  },
+  {}
+)
 
 // Use optional chaining here because window.location will not be defined when
 // this is running in a Node.js context.
