@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react'
+// eslint-disable-next-line import/extensions
 import { useRegisterSW } from 'virtual:pwa-register/react'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
