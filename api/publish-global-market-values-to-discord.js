@@ -19,7 +19,7 @@ const client = getRedisClient()
 const get = promisify(client.get).bind(client)
 const set = promisify(client.set).bind(client)
 
-module.exports = allowCors(async (req, res) => {
+export default allowCors(async (req, res) => {
   const { valueAdjustments } = await getRoomData('room-global', get, set)
   const content = MARKET_SUMMARY_FOR_DISCORD`${'global'}${valueAdjustments}`
   const { status } = await axios.post(

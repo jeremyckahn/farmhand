@@ -1,11 +1,11 @@
-const redis = require('redis')
+import redis from 'redis'
 
-const { generateValueAdjustments } = require('../src/common/utils.js')
-const { MAX_ROOM_NAME_LENGTH } = require('../src/common/constants.js')
+import { generateValueAdjustments } from '../src/common/utils.js'
+import { MAX_ROOM_NAME_LENGTH } from '../src/common/constants.js'
 
-const { GLOBAL_ROOM_KEY, ACCEPTED_ORIGINS } = require('./constants.js')
+import { GLOBAL_ROOM_KEY, ACCEPTED_ORIGINS } from './constants.js'
 
-module.exports.getRedisClient = () => {
+export const getRedisClient = () => {
   const client = redis.createClient({
     host: process.env.REDIS_ENDPOINT,
     port: process.env.REDIS_PORT,
@@ -26,7 +26,7 @@ module.exports.getRedisClient = () => {
   return client
 }
 
-module.exports.getRoomData = async (roomKey, get, set) => {
+export const getRoomData = async (roomKey, get, set) => {
   let roomData = JSON.parse(await get(roomKey)) || {}
   let { valueAdjustments } = roomData
 
@@ -39,14 +39,14 @@ module.exports.getRoomData = async (roomKey, get, set) => {
   return roomData
 }
 
-module.exports.getRoomName = req =>
+export const getRoomName = req =>
   `room-${(req.query?.room || req.body?.room || GLOBAL_ROOM_KEY).slice(
     0,
     MAX_ROOM_NAME_LENGTH
   )}`
 
 // https://vercel.com/support/articles/how-to-enable-cors
-module.exports.allowCors = fn => async (req, res) => {
+export const allowCors = fn => async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true)
 
   // origin is not defined when the request is from the same domain as the

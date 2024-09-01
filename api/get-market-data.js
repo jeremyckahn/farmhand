@@ -19,7 +19,7 @@ const client = getRedisClient()
 const get = promisify(client.get).bind(client)
 const set = promisify(client.set).bind(client)
 
-module.exports = allowCors(async (req, res) => {
+export default allowCors(async (req, res) => {
   const roomKey = getRoomName(req)
 
   const roomData = await getRoomData(roomKey, get, set)

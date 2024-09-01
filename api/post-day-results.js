@@ -56,7 +56,7 @@ const applyPositionsToMarket = (valueAdjustments, positions) => {
   )
 }
 
-module.exports = allowCors(async (req, res) => {
+export default allowCors(async (req, res) => {
   const {
     body: { positions = {} },
   } = req
