@@ -53,7 +53,7 @@ export const INITIAL_FOREST_WIDTH = 4
 export const INITIAL_FOREST_HEIGHT = 1
 
 /**
- * @type Map<number, farmhand.purchasableFieldSize>
+ * @type Map<number, farmhand.purchaseableFieldSize>
  */
 export const PURCHASABLE_FOREST_SIZES = freeze(
   new Map([
