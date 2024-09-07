@@ -14,7 +14,10 @@ describe('purchaseCombine', () => {
   })
 
   test('deducts money', () => {
-    const { money } = purchaseCombine({ money: 500000 }, 1)
-    expect(money).toEqual(PURCHASEABLE_COMBINES.get(1).price - 500000)
+    const { money } = purchaseCombine(
+      { money: (PURCHASEABLE_COMBINES.get(1)?.price ?? 0) + 10 },
+      1
+    )
+    expect(money).toEqual(10)
   })
 })

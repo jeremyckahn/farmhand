@@ -44,8 +44,8 @@ export const INITIAL_FIELD_HEIGHT = 10
 export const PURCHASEABLE_FIELD_SIZES = freeze(
   new Map([
     [1, { columns: 8, rows: 12, price: 1_000 }],
-    [2, { columns: 10, rows: 16, price: 2_000 }],
-    [3, { columns: 12, rows: 18, price: 3_000 }],
+    [2, { columns: 10, rows: 16, price: 5_000 }],
+    [3, { columns: 12, rows: 18, price: 20_000 }],
   ])
 )
 
@@ -68,7 +68,7 @@ export const LARGEST_PURCHASABLE_FIELD_SIZE = /** @type {farmhand.purchaseableFi
 ))
 
 export const PURCHASEABLE_COMBINES = freeze(
-  new Map([[1, { type: 'Basic', price: 500_000 }]])
+  new Map([[1, { type: 'Basic', price: 250_000 }]])
 )
 
 export const PURCHASEABLE_COMPOSTERS = freeze(
@@ -76,22 +76,22 @@ export const PURCHASEABLE_COMPOSTERS = freeze(
 )
 
 export const PURCHASEABLE_SMELTERS = freeze(
-  new Map([[1, { type: 'Basic', price: 500_000 }]])
+  new Map([[1, { type: 'Basic', price: 250_000 }]])
 )
 
 export const PURCHASEABLE_COW_PENS = freeze(
   new Map([
-    [1, { cows: 10, price: 1500 }],
-    [2, { cows: 20, price: 2500 }],
-    [3, { cows: 30, price: 3500 }],
+    [1, { cows: 10, price: 1_500 }],
+    [2, { cows: 20, price: 10_000 }],
+    [3, { cows: 30, price: 50_000 }],
   ])
 )
 
 export const PURCHASEABLE_CELLARS = freeze(
   new Map([
     [1, { space: 10, price: 250_000 }],
-    [2, { space: 20, price: 400_000 }],
-    [3, { space: 30, price: 500_000 }],
+    [2, { space: 20, price: 750_000 }],
+    [3, { space: 30, price: 2_000_000 }],
   ])
 )
 
