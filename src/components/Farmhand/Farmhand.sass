@@ -260,6 +260,8 @@ body
   // interacting with the elements within them.
   .spacer
     min-height: 7.5em
+    @media (min-width: #{$break-md})
+      display: none
 
   .danger-text
     color: $error-color
