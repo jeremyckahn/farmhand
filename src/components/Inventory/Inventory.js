@@ -1,93 +1,71 @@
 import React, { Fragment, useState } from 'react'
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Checkbox,
+  FormControlLabel,
+} from '@mui/material'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
 import { array } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import Item from '../Item/index.js'
 import { itemsMap } from '../../data/maps.js'
-import { enumify, itemType } from '../../enums.js'
-import { sortItems } from '../../utils/index.js'
 import SearchBar from '../SearchBar/index.js'
 import './Inventory.sass'
 
-const {
-  COW_FEED,
-  CRAFTED_ITEM,
-  CROP,
-  FERTILIZER,
-  HUGGING_MACHINE,
-  MILK,
-  ORE,
-  SCARECROW,
-  SPRINKLER,
-  STONE,
-  FUEL,
-  TOOL_UPGRADE,
-  WEED,
-} = itemType
+export const categoryIds = {
+  CROPS: 'CROPS',
+  SEEDS: 'SEEDS',
+  FORAGED_ITEMS: 'FORAGED_ITEMS',
+  FIELD_TOOLS: 'FIELD_TOOLS',
+  ANIMAL_PRODUCTS: 'ANIMAL_PRODUCTS',
+  ANIMAL_SUPPLIES: 'ANIMAL_SUPPLIES',
+  CRAFTED_ITEMS: 'CRAFTED_ITEMS',
+  MINED_RESOURCES: 'MINED_RESOURCES',
+}
 
-export const categoryIds = enumify([
-  'ANIMAL_PRODUCTS',
-  'ANIMAL_SUPPLIES',
-  'CRAFTED_ITEMS',
-  'CROPS',
-  'FIELD_TOOLS',
-  'FORAGED_ITEMS',
-  'MINED_RESOURCES',
-  'SEEDS',
-  'UPGRADES',
-])
+const orderedCategoryIdKeys = Object.keys(categoryIds)
 
-const categoryIdKeys = Object.keys(categoryIds)
-const {
-  ANIMAL_PRODUCTS,
-  ANIMAL_SUPPLIES,
-  CRAFTED_ITEMS,
-  CROPS,
-  FIELD_TOOLS,
-  FORAGED_ITEMS,
-  MINED_RESOURCES,
-  SEEDS,
-  UPGRADES,
-} = categoryIds
+const itemTypeCategoryMap = {
+  SEEDS: categoryIds.SEEDS,
+  COW_FEED: categoryIds.ANIMAL_SUPPLIES,
+  CRAFTED_ITEM: categoryIds.CRAFTED_ITEMS,
+  CROP: categoryIds.CROPS,
+  FERTILIZER: categoryIds.FIELD_TOOLS,
+  FUEL: categoryIds.MINED_RESOURCES,
+  HUGGING_MACHINE: categoryIds.ANIMAL_SUPPLIES,
+  MILK: categoryIds.ANIMAL_PRODUCTS,
+  ORE: categoryIds.MINED_RESOURCES,
+  SCARECROW: categoryIds.FIELD_TOOLS,
+  SPRINKLER: categoryIds.FIELD_TOOLS,
+  STONE: categoryIds.MINED_RESOURCES,
+  WEED: categoryIds.FORAGED_ITEMS,
+}
 
-const itemTypeCategoryMap = Object.freeze({
-  SEEDS,
-  [COW_FEED]: ANIMAL_SUPPLIES,
-  [CRAFTED_ITEM]: CRAFTED_ITEMS,
-  [CROP]: CROPS,
-  [FERTILIZER]: FIELD_TOOLS,
-  [FUEL]: MINED_RESOURCES,
-  [HUGGING_MACHINE]: ANIMAL_SUPPLIES,
-  [MILK]: ANIMAL_PRODUCTS,
-  [ORE]: MINED_RESOURCES,
-  [SCARECROW]: FIELD_TOOLS,
-  [SPRINKLER]: FIELD_TOOLS,
-  [STONE]: MINED_RESOURCES,
-  [TOOL_UPGRADE]: UPGRADES,
-  [WEED]: FORAGED_ITEMS,
-})
+const separateItemsIntoCategories = items =>
+  items.reduce(
+    (acc, item) => {
+      const { type } = itemsMap[item.id] || {}
+      const category = itemTypeCategoryMap[type]
 
-const getItemCategories = () =>
-  categoryIdKeys.reduce((acc, key) => {
-    acc[key] = []
-    return acc
-  }, {})
+      if (category) {
+        acc[category] = acc[category] || []
+        acc[category].push(item)
+      }
+      return acc
+    },
+    orderedCategoryIdKeys.reduce((acc, key) => ({ ...acc, [key]: [] }), {})
+  )
 
-export const separateItemsIntoCategories = items =>
-  sortItems(items).reduce((acc, item) => {
-    const { type } = itemsMap[item.id]
-    const category = itemTypeCategoryMap[type]
+const formatCategoryName = key =>
+  key
+    .replace('_', ' ')
+    .toLowerCase()
+    .replace(/(?:^|\s)\S/g, match => match.toUpperCase())
 
-    if (category === CROPS) {
-      acc[item.isPlantableCrop ? SEEDS : CROPS].push(item)
-    } else if (acc[category]) {
-      acc[category].push(item)
-    }
-
-    return acc
-  }, getItemCategories())
-
-export const Inventory = ({
+const Inventory = ({
   items,
   playerInventory,
   shopInventory,
@@ -98,7 +76,6 @@ export const Inventory = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategories, setSelectedCategories] = useState([])
-  const [filterVisible, setFilterVisible] = useState(false)
   const toggleCategory = category => {
     setSelectedCategories(prev =>
       prev.includes(category)
@@ -127,53 +104,40 @@ export const Inventory = ({
 
   return (
     <div className="Inventory">
-      <SearchBar
-        placeholder={placeholder || 'Search inventory...'}
-        onSearch={setSearchQuery}
-      />
+      <SearchBar placeholder={placeholder} onSearch={setSearchQuery} />
       {!isPurchaseView && (
-        <>
-          <div
-            className="filter-toggle"
-            onClick={() => setFilterVisible(!filterVisible)}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="filter-content"
+            id="filter-header"
           >
-            {filterVisible ? '▼ Hide Filters' : '▲ Show Filters'}
-          </div>
-          <div
-            className={`filter-container ${
-              filterVisible ? 'visible' : 'hidden'
-            }`}
-          >
+            <h4>Filter by category</h4>
+          </AccordionSummary>
+          <AccordionDetails>
             <div className="filter-section">
-              <h4>Filter by category:</h4>
-              {categoryIdKeys.map(key => (
-                <label key={key} className="filter-checkbox">
-                  <input
-                    type="checkbox"
-                    disabled={isPurchaseView}
-                    checked={selectedCategories.includes(key)}
-                    onChange={() => toggleCategory(key)}
-                  />
-                  {key
-                    .replace('_', ' ')
-                    .toLowerCase()
-                    .replace(/(?:^|\s)\S/g, match => match.toUpperCase())}
-                </label>
+              {orderedCategoryIdKeys.map(key => (
+                <FormControlLabel
+                  key={key}
+                  control={
+                    <Checkbox
+                      disabled={isPurchaseView}
+                      checked={selectedCategories.includes(key)}
+                      onChange={() => toggleCategory(key)}
+                    />
+                  }
+                  label={formatCategoryName(key)}
+                />
               ))}
             </div>
-          </div>
-        </>
+          </AccordionDetails>
+        </Accordion>
       )}
-      {categoryIdKeys.map(category =>
+      {orderedCategoryIdKeys.map(category =>
         filteredCategories[category]?.length ? (
           <Fragment key={category}>
             <section>
-              <h3>
-                {category
-                  .replace('_', ' ')
-                  .toLowerCase()
-                  .replace(/(?:^|\s)\S/g, match => match.toUpperCase())}
-              </h3>
+              <h3>{formatCategoryName(category)}</h3>
               <ul className="card-list">
                 {filteredCategories[category].map(item => (
                   <li key={item.id}>

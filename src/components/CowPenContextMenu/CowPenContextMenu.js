@@ -122,7 +122,7 @@ export const CowPenContextMenu = ({
       </Tabs>
       <TabPanel value={currentTab} index={0}>
         <h3>
-          Capacity: {filteredCowInventory.length} /{' '}
+          Capacity: {cowInventory.length} /{' '}
           {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows}
         </h3>
 
@@ -218,7 +218,7 @@ export const CowPenContextMenu = ({
 
           return (
             <>
-              <h3>Capacity: {filteredCows.length} / 2</h3>
+              <h3>Capacity: {numberOfCowsBreeding(cowBreedingPen)} / 2</h3>
               {cowInventory.length > 0 && (
                 <SearchBar
                   placeholder="Search cows by name..."

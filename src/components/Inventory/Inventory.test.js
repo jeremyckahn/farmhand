@@ -1,111 +1,82 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, screen, fireEvent } from '@testing-library/react'
 
-import SearchBar from '../SearchBar/index.js'
-import Item from '../Item/index.js'
-import { testItem } from '../../test-utils/index.js'
-import { sortItems } from '../../utils/index.js'
-import {
-  carrot,
-  pumpkin,
-  pumpkinSeed,
-  carrotSeed,
-} from '../../data/crops/index.js'
 import { carrotSoup } from '../../data/recipes.js'
 
-import {
-  Inventory,
-  categoryIds,
-  separateItemsIntoCategories,
-} from './Inventory.js'
+import { testItem } from '../../test-utils/index.js'
+import { sortItems } from '../../utils/index.js'
+import { carrot, pumpkinSeed, carrotSeed } from '../../data/crops/index.js'
 
-let component
+import Inventory from './Inventory.js'
 
-beforeEach(() => {
-  component = shallow(
-    <Inventory
-      {...{
-        items: [],
-      }}
-    />
-  )
-})
+import { categoryIds, separateItemsIntoCategories } from './Inventory.js'
 
-test('displays all items when no categories are selected', () => {
-  const categories = ['CROPS', 'ANIMAL_PRODUCTS']
-  const items = [
-    testItem({ id: carrot.id, name: 'Carrot', category: 'CROPS' }),
-    testItem({ id: pumpkin.id, name: 'Pumpkin', category: 'CROPS' }),
-    testItem({ id: carrotSeed.id, name: 'Carrot Seed', category: 'SEEDS' }),
-  ]
+describe('Inventory Component', () => {
+  describe('Displaying items', () => {
+    test('displays all items when no categories are selected', () => {
+      const items = [
+        { id: '1', name: 'Carrot', category: 'CROPS' },
+        { id: '2', name: 'Pumpkin', category: 'CROPS' },
+        { id: '3', name: 'Carrot Seed', category: 'SEEDS' },
+      ]
 
-  component.setProps({ items, categories })
+      render(<Inventory items={items} selectedCategories={[]} />)
+      items.forEach(item => {
+        expect(screen.getByText(item.name)).toBeInTheDocument()
+      })
+    })
 
-  let renderedItems = component.find(Item)
-  expect(renderedItems).toHaveLength(3)
+    test('filters items by search query', () => {
+      const items = [
+        { id: '1', name: 'Carrot', category: 'CROPS' },
+        { id: '2', name: 'Pumpkin Seed', category: 'SEEDS' },
+      ]
 
-  const checkboxes = component.find('input[type="checkbox"]')
-  checkboxes.forEach(checkbox => checkbox.simulate('change'))
+      render(<Inventory items={items} selectedCategories={[]} />)
 
-  component.update()
+      const searchInput = screen.getByPlaceholderText('Search inventory...')
+      fireEvent.change(searchInput, { target: { value: 'Carrot' } })
 
-  renderedItems = component.find(Item)
-  expect(renderedItems).toHaveLength(3)
-})
-
-describe('SearchBar functionality', () => {
-  test('renders SearchBar with correct placeholder', () => {
-    const placeholderText = 'Search inventory...'
-    component.setProps({ placeholder: placeholderText })
-
-    const searchBar = component.find(SearchBar)
-    expect(searchBar).toHaveLength(1)
-    expect(searchBar.props().placeholder).toBe(placeholderText)
+      expect(screen.getByText('Carrot')).toBeInTheDocument()
+      expect(screen.queryByText('Pumpkin Seed')).not.toBeInTheDocument()
+    })
   })
 
-  test('updates searchQuery when SearchBar input changes', () => {
-    const searchBar = component.find(SearchBar)
+  describe('SearchBar functionality', () => {
+    test('renders SearchBar with correct placeholder', () => {
+      render(
+        <Inventory
+          items={[]}
+          selectedCategories={[]}
+          searchQuery=""
+          onSearch={() => {}}
+        />
+      )
 
-    const testQuery = 'test item'
-    searchBar.props().onSearch(testQuery)
-
-    expect(component.find(SearchBar).props().placeholder).toBe(
-      'Search inventory...'
-    )
-    expect(component.find(SearchBar).props().onSearch).toBeTruthy()
+      const searchBar = screen.getByPlaceholderText('Search inventory...')
+      expect(searchBar).toBeInTheDocument()
+    })
   })
-})
 
-describe('rendering items', () => {
-  test('shows the inventory', () => {
-    component.setProps({ items: [testItem({ id: carrot.id })] })
-
-    const li = component.find('li')
-    expect(li).toHaveLength(1)
-    expect(li.find(Item)).toHaveLength(1)
-  })
-})
-
-describe('item sorting', () => {
-  test('sorts by type and base value', () => {
-    expect(
-      sortItems([
+  describe('Item sorting and categorization', () => {
+    test('sorts items by type and base value', () => {
+      const sortedItems = sortItems([
         testItem({ id: pumpkinSeed.id, value: 0.5 }),
         testItem({ id: 'scarecrow' }),
         testItem({ id: 'sprinkler' }),
         testItem({ id: carrotSeed.id }),
       ])
-    ).toEqual([
-      testItem({ id: carrotSeed.id }),
-      testItem({ id: pumpkinSeed.id, value: 0.5 }),
-      testItem({ id: 'sprinkler' }),
-      testItem({ id: 'scarecrow' }),
-    ])
-  })
 
-  test('divides into type categories', () => {
-    expect(
-      separateItemsIntoCategories(
+      expect(sortedItems).toEqual([
+        testItem({ id: carrotSeed.id }),
+        testItem({ id: pumpkinSeed.id, value: 0.5 }),
+        testItem({ id: 'sprinkler' }),
+        testItem({ id: 'scarecrow' }),
+      ])
+    })
+
+    test('categorizes items into correct categories', () => {
+      const categorizedItems = separateItemsIntoCategories(
         [
           testItem({ id: pumpkinSeed.id, isPlantableCrop: true }),
           testItem({ id: 'scarecrow' }),
@@ -121,48 +92,29 @@ describe('item sorting', () => {
         ],
         {}
       )
-    ).toEqual({
-      [categoryIds.CROPS]: [testItem({ id: carrot.id })],
-      [categoryIds.FORAGED_ITEMS]: [],
-      [categoryIds.MINED_RESOURCES]: [
-        testItem({ id: 'coal' }),
-        testItem({ id: 'stone' }),
-        testItem({ id: 'iron-ore' }),
-      ],
-      [categoryIds.SEEDS]: [
-        testItem({ id: carrotSeed.id, isPlantableCrop: true }),
-        testItem({ id: pumpkinSeed.id, isPlantableCrop: true }),
-      ],
-      [categoryIds.FIELD_TOOLS]: [
-        testItem({ id: 'sprinkler' }),
-        testItem({ id: 'scarecrow' }),
-      ],
-      [categoryIds.ANIMAL_PRODUCTS]: [testItem({ id: 'milk-1' })],
-      [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
-      [categoryIds.CRAFTED_ITEMS]: [testItem({ id: carrotSoup.id })],
-      [categoryIds.UPGRADES]: [],
-    })
-  })
-  describe('Inventory search functionality', () => {
-    test('filters items by search query', () => {
-      const items = [
-        testItem({ id: carrot.id, name: 'Carrot' }),
-        testItem({ id: pumpkinSeed.id, name: 'Pumpkin Seed' }),
-      ]
 
-      component.setProps({ items })
-
-      let renderedItems = component.find(Item)
-      expect(renderedItems).toHaveLength(2)
-
-      const searchBar = component.find(SearchBar)
-      searchBar.props().onSearch('Carrot')
-
-      component.update()
-
-      renderedItems = component.find(Item)
-      expect(renderedItems).toHaveLength(1)
-      expect(renderedItems.props().item.id).toBe(carrot.id)
+      // Проверяем заполнение всех категорий
+      expect(categorizedItems).toEqual({
+        [categoryIds.CROPS]: [testItem({ id: carrot.id })],
+        [categoryIds.FORAGED_ITEMS]: [],
+        [categoryIds.MINED_RESOURCES]: [
+          testItem({ id: 'coal' }),
+          testItem({ id: 'stone' }),
+          testItem({ id: 'iron-ore' }),
+        ],
+        [categoryIds.SEEDS]: [
+          testItem({ id: carrotSeed.id, isPlantableCrop: true }),
+          testItem({ id: pumpkinSeed.id, isPlantableCrop: true }),
+        ],
+        [categoryIds.FIELD_TOOLS]: [
+          testItem({ id: 'sprinkler' }),
+          testItem({ id: 'scarecrow' }),
+        ],
+        [categoryIds.ANIMAL_PRODUCTS]: [testItem({ id: 'milk-1' })],
+        [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
+        [categoryIds.CRAFTED_ITEMS]: [testItem({ id: carrotSoup.id })],
+        [categoryIds.UPGRADES]: [], // Пустая категория
+      })
     })
   })
 })

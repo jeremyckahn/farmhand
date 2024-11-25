@@ -50,7 +50,7 @@ export const CellarInventoryTabPanel = ({ index, currentTab }) => {
   const filteredKegs = cellarInventory.filter(keg => {
     const item = itemsMap[keg.itemId]
     const itemName = item.name.toLowerCase()
-    const fermentationRecipeName = `${FERMENTED_CROP_NAME}${item.name}`.toLowerCase()
+    const fermentationRecipeName = `${FERMENTED_CROP_NAME}${itemName}`
 
     return searchTerms.every(
       term => fermentationRecipeName.includes(term) || itemName.includes(term)
@@ -60,7 +60,7 @@ export const CellarInventoryTabPanel = ({ index, currentTab }) => {
   return (
     <TabPanel value={currentTab} index={index}>
       <h3>
-        Capacity: {integerString(filteredKegs.length)} /{' '}
+        Capacity: {integerString(cellarInventory.length)} /{' '}
         {integerString(PURCHASEABLE_CELLARS.get(purchasedCellar).space)}
       </h3>
       {cellarInventory.length > 0 && (
