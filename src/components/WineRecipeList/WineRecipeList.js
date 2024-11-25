@@ -1,7 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 
+import SearchBar from '../SearchBar/index.js'
 import { getWineVarietiesAvailableToMake } from '../../utils/getWineVarietiesAvailableToMake.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+
 import { grapeVariety } from '../../enums.js'
 
 import { WineRecipe } from './WineRecipe.js'
@@ -17,8 +19,13 @@ export const WineRecipeList = () => {
     itemsSold
   )
 
-  const numberOfWineVarietiesAvailableToMake =
-    wineVarietiesAvailableToMake.length
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const filteredWineVarieties = wineVarietiesAvailableToMake.filter(
+    wineVariety => wineVariety.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+
+  const numberOfWineVarietiesAvailableToMake = filteredWineVarieties.length
 
   return (
     <>
@@ -26,8 +33,16 @@ export const WineRecipeList = () => {
         Available Wine Recipes ({numberOfWineVarietiesAvailableToMake} /{' '}
         {totalGrapeVarieties})
       </h3>
+
+      {wineVarietiesAvailableToMake.length > 0 && (
+        <SearchBar
+          placeholder="Search wine varieties..."
+          onSearch={setSearchQuery}
+        />
+      )}
+
       <ul className="card-list">
-        {wineVarietiesAvailableToMake.map(wineVariety => (
+        {filteredWineVarieties.map(wineVariety => (
           <li key={wineVariety}>
             <WineRecipe wineVariety={wineVariety} />
           </li>

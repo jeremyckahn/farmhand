@@ -1,11 +1,12 @@
 /** @typedef {import("../../index").farmhand.keg} keg */
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { number } from 'prop-types'
 import Divider from '@mui/material/Divider/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import ReactMarkdown from 'react-markdown'
 
+import SearchBar from '../SearchBar/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import {
   KEG_INTEREST_RATE,
@@ -15,6 +16,8 @@ import {
 } from '../../constants.js'
 
 import { integerString } from '../../utils/index.js'
+import { itemsMap } from '../../data/maps.js'
+import { FERMENTED_CROP_NAME } from '../../templates.js'
 
 import { TabPanel } from './TabPanel/index.js'
 import { Keg } from './Keg.js'
@@ -25,6 +28,8 @@ import { Keg } from './Keg.js'
  * @param {number} props.currentTab
  */
 export const CellarInventoryTabPanel = ({ index, currentTab }) => {
+  const [searchQuery, setSearchQuery] = useState('')
+
   /**
    * @type {{
    *   gameState: {
@@ -37,14 +42,32 @@ export const CellarInventoryTabPanel = ({ index, currentTab }) => {
     gameState: { cellarInventory, purchasedCellar },
   } = useContext(FarmhandContext)
 
+  const searchTerms = searchQuery
+    .toLowerCase()
+    .split(' ')
+    .filter(term => term.length > 0)
+
+  const filteredKegs = cellarInventory.filter(keg => {
+    const item = itemsMap[keg.itemId]
+    const itemName = item.name.toLowerCase()
+    const fermentationRecipeName = `${FERMENTED_CROP_NAME}${item.name}`.toLowerCase()
+
+    return searchTerms.every(
+      term => fermentationRecipeName.includes(term) || itemName.includes(term)
+    )
+  })
+
   return (
     <TabPanel value={currentTab} index={index}>
       <h3>
-        Capacity: {integerString(cellarInventory.length)} /{' '}
+        Capacity: {integerString(filteredKegs.length)} /{' '}
         {integerString(PURCHASEABLE_CELLARS.get(purchasedCellar).space)}
       </h3>
+      {cellarInventory.length > 0 && (
+        <SearchBar placeholder="Search kegs..." onSearch={setSearchQuery} />
+      )}
       <ul className="card-list">
-        {cellarInventory.map(keg => (
+        {filteredKegs.map(keg => (
           <li key={keg.id}>
             <Keg keg={keg} />
           </li>

@@ -1,8 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 
 import { fermentableItemsMap } from '../../data/maps.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { getCropsAvailableToFerment } from '../../utils/getCropsAvailableToFerment.js'
+
+import { FERMENTED_CROP_NAME } from '../../templates.js'
+
+import SearchBar from '../SearchBar/index.js'
 
 import { FermentationRecipe } from './FermentationRecipe.js'
 
@@ -15,8 +19,23 @@ export const FermentationRecipeList = () => {
 
   const cropsAvailableToFerment = getCropsAvailableToFerment(levelEntitlements)
 
-  const numberOfCropsAvailableToFerment = Object.keys(cropsAvailableToFerment)
-    .length
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const searchTerms = searchQuery
+    .toLowerCase()
+    .split(' ')
+    .filter(term => term.length > 0)
+
+  const filteredCrops = cropsAvailableToFerment.filter(item => {
+    const fermentationRecipeName = `${FERMENTED_CROP_NAME}${item.name}`.toLowerCase()
+    return searchTerms.every(
+      term =>
+        fermentationRecipeName.includes(term) ||
+        item.name.toLowerCase().includes(term)
+    )
+  })
+
+  const numberOfCropsAvailableToFerment = filteredCrops.length
 
   return (
     <>
@@ -24,13 +43,21 @@ export const FermentationRecipeList = () => {
         Available Fermentation Recipes ({numberOfCropsAvailableToFerment} /{' '}
         {totalFermentableItems})
       </h3>
-      <ul className="card-list">
-        {cropsAvailableToFerment.map(item => (
-          <li key={item.id}>
-            <FermentationRecipe item={item} />
-          </li>
-        ))}
-      </ul>
+      {cropsAvailableToFerment.length > 0 && (
+        <SearchBar
+          placeholder="Search fermentation recipes..."
+          onSearch={setSearchQuery}
+        />
+      )}
+      {filteredCrops.length > 0 && (
+        <ul className="card-list">
+          {filteredCrops.map(item => (
+            <li key={item.id}>
+              <FermentationRecipe item={item} />
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   )
 }

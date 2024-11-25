@@ -1,12 +1,13 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { array } from 'prop-types'
-import Divider from '@mui/material/Divider/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import Item from '../Item/index.js'
 import { itemsMap } from '../../data/maps.js'
 import { enumify, itemType } from '../../enums.js'
 import { sortItems } from '../../utils/index.js'
+import SearchBar from '../SearchBar/index.js'
+import './Inventory.sass'
 
 const {
   COW_FEED,
@@ -35,6 +36,7 @@ export const categoryIds = enumify([
   'SEEDS',
   'UPGRADES',
 ])
+
 const categoryIdKeys = Object.keys(categoryIds)
 const {
   ANIMAL_PRODUCTS,
@@ -89,48 +91,110 @@ export const Inventory = ({
   items,
   playerInventory,
   shopInventory,
-
   isPurchaseView = false,
   isSellView = false,
-
   itemCategories = separateItemsIntoCategories(items),
-}) => (
-  <div className="Inventory">
-    {[
-      [CROPS, 'Crops'],
-      [SEEDS, 'Seeds'],
-      [FORAGED_ITEMS, 'Foraged Items'],
-      [FIELD_TOOLS, 'Field Tools'],
-      [ANIMAL_PRODUCTS, 'Animal Products'],
-      [ANIMAL_SUPPLIES, 'Animal Supplies'],
-      [CRAFTED_ITEMS, 'Crafted Items'],
-      [MINED_RESOURCES, 'Mined Resources'],
-    ].map(([category, headerText]) =>
-      itemCategories[category].length ? (
-        <Fragment key={category}>
-          <section>
-            {isPurchaseView ? null : <h3>{headerText}</h3>}
-            <ul className="card-list">
-              {itemCategories[category].map(item => (
-                <li key={item.id}>
-                  <Item
-                    {...{
-                      isPurchaseView,
-                      isSellView,
-                      item,
-                      showQuantity: isPurchaseView,
-                    }}
+  placeholder = 'Search inventory...',
+}) => {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const [filterVisible, setFilterVisible] = useState(false)
+  const toggleCategory = category => {
+    setSelectedCategories(prev =>
+      prev.includes(category)
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    )
+  }
+
+  const filteredCategories = Object.keys(itemCategories).reduce(
+    (filtered, category) => {
+      if (
+        selectedCategories.length > 0 &&
+        !selectedCategories.includes(category)
+      ) {
+        return filtered
+      }
+      filtered[category] = itemCategories[category]?.filter(item =>
+        itemsMap[item.id]?.name
+          ?.toLowerCase()
+          ?.includes(searchQuery.toLowerCase())
+      )
+      return filtered
+    },
+    {}
+  )
+
+  return (
+    <div className="Inventory">
+      <SearchBar
+        placeholder={placeholder || 'Search inventory...'}
+        onSearch={setSearchQuery}
+      />
+      {!isPurchaseView && (
+        <>
+          <div
+            className="filter-toggle"
+            onClick={() => setFilterVisible(!filterVisible)}
+          >
+            {filterVisible ? '▼ Hide Filters' : '▲ Show Filters'}
+          </div>
+          <div
+            className={`filter-container ${
+              filterVisible ? 'visible' : 'hidden'
+            }`}
+          >
+            <div className="filter-section">
+              <h4>Filter by category:</h4>
+              {categoryIdKeys.map(key => (
+                <label key={key} className="filter-checkbox">
+                  <input
+                    type="checkbox"
+                    disabled={isPurchaseView}
+                    checked={selectedCategories.includes(key)}
+                    onChange={() => toggleCategory(key)}
                   />
-                </li>
+                  {key
+                    .replace('_', ' ')
+                    .toLowerCase()
+                    .replace(/(?:^|\s)\S/g, match => match.toUpperCase())}
+                </label>
               ))}
-            </ul>
-          </section>
-          {isPurchaseView ? null : <Divider />}
-        </Fragment>
-      ) : null
-    )}
-  </div>
-)
+            </div>
+          </div>
+        </>
+      )}
+      {categoryIdKeys.map(category =>
+        filteredCategories[category]?.length ? (
+          <Fragment key={category}>
+            <section>
+              <h3>
+                {category
+                  .replace('_', ' ')
+                  .toLowerCase()
+                  .replace(/(?:^|\s)\S/g, match => match.toUpperCase())}
+              </h3>
+              <ul className="card-list">
+                {filteredCategories[category].map(item => (
+                  <li key={item.id}>
+                    <Item
+                      {...{
+                        isPurchaseView,
+                        isSellView,
+                        item,
+                        showQuantity: isPurchaseView,
+                      }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </Fragment>
+        ) : null
+      )}
+    </div>
+  )
+}
 
 Inventory.propTypes = {
   items: array.isRequired,

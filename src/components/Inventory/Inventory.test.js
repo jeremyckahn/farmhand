@@ -1,10 +1,16 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import SearchBar from '../SearchBar/index.js'
 import Item from '../Item/index.js'
 import { testItem } from '../../test-utils/index.js'
 import { sortItems } from '../../utils/index.js'
-import { carrot, carrotSeed, pumpkinSeed } from '../../data/crops/index.js'
+import {
+  carrot,
+  pumpkin,
+  pumpkinSeed,
+  carrotSeed,
+} from '../../data/crops/index.js'
 import { carrotSoup } from '../../data/recipes.js'
 
 import {
@@ -23,6 +29,51 @@ beforeEach(() => {
       }}
     />
   )
+})
+
+test('displays all items when no categories are selected', () => {
+  const categories = ['CROPS', 'ANIMAL_PRODUCTS']
+  const items = [
+    testItem({ id: carrot.id, name: 'Carrot', category: 'CROPS' }),
+    testItem({ id: pumpkin.id, name: 'Pumpkin', category: 'CROPS' }),
+    testItem({ id: carrotSeed.id, name: 'Carrot Seed', category: 'SEEDS' }),
+  ]
+
+  component.setProps({ items, categories })
+
+  let renderedItems = component.find(Item)
+  expect(renderedItems).toHaveLength(3)
+
+  const checkboxes = component.find('input[type="checkbox"]')
+  checkboxes.forEach(checkbox => checkbox.simulate('change'))
+
+  component.update()
+
+  renderedItems = component.find(Item)
+  expect(renderedItems).toHaveLength(3)
+})
+
+describe('SearchBar functionality', () => {
+  test('renders SearchBar with correct placeholder', () => {
+    const placeholderText = 'Search inventory...'
+    component.setProps({ placeholder: placeholderText })
+
+    const searchBar = component.find(SearchBar)
+    expect(searchBar).toHaveLength(1)
+    expect(searchBar.props().placeholder).toBe(placeholderText)
+  })
+
+  test('updates searchQuery when SearchBar input changes', () => {
+    const searchBar = component.find(SearchBar)
+
+    const testQuery = 'test item'
+    searchBar.props().onSearch(testQuery)
+
+    expect(component.find(SearchBar).props().placeholder).toBe(
+      'Search inventory...'
+    )
+    expect(component.find(SearchBar).props().onSearch).toBeTruthy()
+  })
 })
 
 describe('rendering items', () => {
@@ -90,6 +141,28 @@ describe('item sorting', () => {
       [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
       [categoryIds.CRAFTED_ITEMS]: [testItem({ id: carrotSoup.id })],
       [categoryIds.UPGRADES]: [],
+    })
+  })
+  describe('Inventory search functionality', () => {
+    test('filters items by search query', () => {
+      const items = [
+        testItem({ id: carrot.id, name: 'Carrot' }),
+        testItem({ id: pumpkinSeed.id, name: 'Pumpkin Seed' }),
+      ]
+
+      component.setProps({ items })
+
+      let renderedItems = component.find(Item)
+      expect(renderedItems).toHaveLength(2)
+
+      const searchBar = component.find(SearchBar)
+      searchBar.props().onSearch('Carrot')
+
+      component.update()
+
+      renderedItems = component.find(Item)
+      expect(renderedItems).toHaveLength(1)
+      expect(renderedItems.props().item.id).toBe(carrot.id)
     })
   })
 })

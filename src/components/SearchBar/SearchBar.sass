@@ -1,0 +1,53 @@
+@import '../../styles/variables.sass'
+@import '../../styles/utils.sass'
+
+.search-bar
+  position: relative
+  max-width: 100%
+  padding: 0.5em
+  margin: 1em 0
+  display: flex
+  justify-content: center
+  align-items: center
+  background-color: #fff
+  border-radius: 1em
+  box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.1)
+
+  input
+    width: 100%
+    padding: 0.75em 1em
+    border: 1px solid #ddd
+    border-radius: 0.5em
+    font-size: 1em
+    color: #333
+    background-color: #f9f9f9
+    transition: all 0.3s ease
+
+    &:focus
+      border-color: #ffb913
+      outline: none
+      background-color: #fff
+
+  input::placeholder
+    color: #999
+
+  .MuiButton-root
+    background-color: transparent
+    padding: 0.5em
+    margin-left: 0.5em
+    min-width: 3em
+    font-size: 1em
+    color: #ffb913
+    border: 1px solid #ffb913
+    border-radius: 0.5em
+
+    &:hover
+      background-color: #ffb913
+      color: #fff
+
+  @media (max-width: 768px)
+    padding: 1em
+    margin: 0.5em 0
+    input
+      font-size: 0.9em
+      padding: 0.5em 1em
