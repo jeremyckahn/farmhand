@@ -1,15 +1,11 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 
-import { carrotSoup } from '../../data/recipes.js'
-
 import { testItem } from '../../test-utils/index.js'
 import { sortItems } from '../../utils/index.js'
-import { carrot, pumpkinSeed, carrotSeed } from '../../data/crops/index.js'
+import { pumpkinSeed, carrotSeed } from '../../data/crops/index.js'
 
 import Inventory from './Inventory.js'
-
-import { categoryIds, separateItemsIntoCategories } from './Inventory.js'
 
 describe('Inventory Component', () => {
   describe('Displaying items', () => {
