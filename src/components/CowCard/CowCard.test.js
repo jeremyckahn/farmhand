@@ -1,5 +1,6 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { generateCow } from '../../utils/index.js'
 import { noop } from '../../utils/noop.js'
@@ -339,6 +340,42 @@ describe('CowCard', () => {
 
         const selectedText = screen.queryByText(/is currently selected/)
         expect(selectedText).not.toBeNull()
+      })
+    })
+  })
+
+  describe('custom naming', () => {
+    // NOTE: Validates the fix for:
+    // https://github.com/jeremyckahn/farmhand/issues/527
+    test('cows orignally owned by the player can be renamed', async () => {
+      const renderComponent = () => {
+        render(
+          <CowCard
+            {...{
+              ...baseProps,
+              cowInventory: [{ ...cow }],
+              isSelected: true,
+              // NOTE: This simulates how CowCard is integrated into the rest of
+              // the component tree. It also effectively reproduces the scenario
+              // that caused https://github.com/jeremyckahn/farmhand/issues/527
+              debounced: {
+                handleCowNameInputChange: () => renderComponent(),
+              },
+            }}
+          />
+        )
+      }
+
+      renderComponent()
+
+      const nameInput = screen.getByPlaceholderText('Name')
+
+      const customName = 'Custom'
+      userEvent.clear(nameInput)
+      userEvent.type(nameInput, customName)
+
+      await waitFor(() => {
+        expect(nameInput).toHaveValue(customName)
       })
     })
   })

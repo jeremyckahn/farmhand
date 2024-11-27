@@ -187,10 +187,8 @@ export const CowCard = (
                     {...{
                       disabled: id !== cow.originalOwnerId,
                       onChange: e => {
-                        if (debounced) {
-                          setDisplayName(e.target.value)
-                          debounced.handleCowNameInputChange({ ...e }, cow)
-                        }
+                        setDisplayName(e.target.value)
+                        debounced?.handleCowNameInputChange({ ...e }, cow)
                       },
                       placeholder: 'Name',
                       value: displayName,
