@@ -73,6 +73,7 @@
     "eslint-plugin-react-hooks": "^2.5.0",
     "git-branch-is": "^4.0.0",
     "husky": "^4.2.3",
+    "jest": "^29.7.0",
     "jest-extended": "^0.11.5",
     "jimp": "^0.22.8",
     "jsdom": "^16.2.1",

@@ -1,11 +1,9 @@
 import React, { Fragment, useState } from 'react'
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Checkbox,
-  FormControlLabel,
-} from '@mui/material'
+import Accordion from '@mui/material/Accordion/index.js'
+import AccordionSummary from '@mui/material/AccordionSummary/index.js'
+import AccordionDetails from '@mui/material/AccordionDetails/index.js'
+import Checkbox from '@mui/material/Checkbox/index.js'
+import FormControlLabel from '@mui/material/FormControlLabel/index.js'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
 import { array } from 'prop-types'
 
@@ -15,33 +13,34 @@ import { itemsMap } from '../../data/maps.js'
 import SearchBar from '../SearchBar/index.js'
 import './Inventory.sass'
 
-export const categoryIds = {
-  CROPS: 'CROPS',
-  SEEDS: 'SEEDS',
-  FORAGED_ITEMS: 'FORAGED_ITEMS',
-  FIELD_TOOLS: 'FIELD_TOOLS',
-  ANIMAL_PRODUCTS: 'ANIMAL_PRODUCTS',
-  ANIMAL_SUPPLIES: 'ANIMAL_SUPPLIES',
-  CRAFTED_ITEMS: 'CRAFTED_ITEMS',
-  MINED_RESOURCES: 'MINED_RESOURCES',
-}
+// Using Map to preserve the key order
+export const categoryIds = new Map([
+  ['CROPS', 'CROPS'],
+  ['SEEDS', 'SEEDS'],
+  ['FORAGED_ITEMS', 'FORAGED_ITEMS'],
+  ['FIELD_TOOLS', 'FIELD_TOOLS'],
+  ['ANIMAL_PRODUCTS', 'ANIMAL_PRODUCTS'],
+  ['ANIMAL_SUPPLIES', 'ANIMAL_SUPPLIES'],
+  ['CRAFTED_ITEMS', 'CRAFTED_ITEMS'],
+  ['MINED_RESOURCES', 'MINED_RESOURCES'],
+])
 
-const orderedCategoryIdKeys = Object.keys(categoryIds)
+const orderedCategoryIdKeys = Array.from(categoryIds.keys())
 
 const itemTypeCategoryMap = {
-  SEEDS: categoryIds.SEEDS,
-  COW_FEED: categoryIds.ANIMAL_SUPPLIES,
-  CRAFTED_ITEM: categoryIds.CRAFTED_ITEMS,
-  CROP: categoryIds.CROPS,
-  FERTILIZER: categoryIds.FIELD_TOOLS,
-  FUEL: categoryIds.MINED_RESOURCES,
-  HUGGING_MACHINE: categoryIds.ANIMAL_SUPPLIES,
-  MILK: categoryIds.ANIMAL_PRODUCTS,
-  ORE: categoryIds.MINED_RESOURCES,
-  SCARECROW: categoryIds.FIELD_TOOLS,
-  SPRINKLER: categoryIds.FIELD_TOOLS,
-  STONE: categoryIds.MINED_RESOURCES,
-  WEED: categoryIds.FORAGED_ITEMS,
+  SEEDS: categoryIds.get('SEEDS'),
+  COW_FEED: categoryIds.get('ANIMAL_SUPPLIES'),
+  CRAFTED_ITEM: categoryIds.get('CRAFTED_ITEMS'),
+  CROP: categoryIds.get('CROPS'),
+  FERTILIZER: categoryIds.get('FIELD_TOOLS'),
+  FUEL: categoryIds.get('MINED_RESOURCES'),
+  HUGGING_MACHINE: categoryIds.get('ANIMAL_SUPPLIES'),
+  MILK: categoryIds.get('ANIMAL_PRODUCTS'),
+  ORE: categoryIds.get('MINED_RESOURCES'),
+  SCARECROW: categoryIds.get('FIELD_TOOLS'),
+  SPRINKLER: categoryIds.get('FIELD_TOOLS'),
+  STONE: categoryIds.get('MINED_RESOURCES'),
+  WEED: categoryIds.get('FORAGED_ITEMS'),
 }
 
 const separateItemsIntoCategories = items =>
@@ -56,7 +55,10 @@ const separateItemsIntoCategories = items =>
       }
       return acc
     },
-    orderedCategoryIdKeys.reduce((acc, key) => ({ ...acc, [key]: [] }), {})
+    Array.from(categoryIds.keys()).reduce(
+      (acc, key) => ({ ...acc, [key]: [] }),
+      {}
+    )
   )
 
 const formatCategoryName = key =>
@@ -119,6 +121,9 @@ const Inventory = ({
               {orderedCategoryIdKeys.map(key => (
                 <FormControlLabel
                   key={key}
+                  sx={{
+                    display: 'block',
+                  }}
                   control={
                     <Checkbox
                       disabled={isPurchaseView}

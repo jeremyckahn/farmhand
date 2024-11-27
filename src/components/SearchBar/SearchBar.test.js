@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event' // Правильный импорт
+import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi } from 'vitest'
 
 import SearchBar from './SearchBar.js'
@@ -25,9 +25,8 @@ describe('SearchBar Component', () => {
     render(<SearchBar placeholder="Type here" onSearch={onSearchMock} />)
 
     const inputElement = screen.getByPlaceholderText('Type here')
-    await userEvent.type(inputElement, 'test query') // Используем userEvent
+    await userEvent.type(inputElement, 'test query')
 
-    // Проверяем debounce
     await waitFor(() => {
       expect(onSearchMock).toHaveBeenCalledTimes(1)
       expect(onSearchMock).toHaveBeenCalledWith('test query')

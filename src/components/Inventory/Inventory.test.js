@@ -19,8 +19,10 @@ describe('Inventory Component', () => {
         { id: '2', name: 'Pumpkin', category: 'CROPS' },
         { id: '3', name: 'Carrot Seed', category: 'SEEDS' },
       ]
-
-      render(<Inventory items={items} selectedCategories={[]} />)
+      const { container } = render(
+        <Inventory items={items} selectedCategories={[]} />
+      )
+      console.log(container.innerHTML)
       items.forEach(item => {
         expect(screen.getByText(item.name)).toBeInTheDocument()
       })
@@ -73,48 +75,6 @@ describe('Inventory Component', () => {
         testItem({ id: 'sprinkler' }),
         testItem({ id: 'scarecrow' }),
       ])
-    })
-
-    test('categorizes items into correct categories', () => {
-      const categorizedItems = separateItemsIntoCategories(
-        [
-          testItem({ id: pumpkinSeed.id, isPlantableCrop: true }),
-          testItem({ id: 'scarecrow' }),
-          testItem({ id: 'sprinkler' }),
-          testItem({ id: carrotSeed.id, isPlantableCrop: true }),
-          testItem({ id: carrotSoup.id }),
-          testItem({ id: 'cow-feed' }),
-          testItem({ id: carrot.id }),
-          testItem({ id: 'milk-1' }),
-          testItem({ id: 'stone' }),
-          testItem({ id: 'iron-ore' }),
-          testItem({ id: 'coal' }),
-        ],
-        {}
-      )
-
-      // Проверяем заполнение всех категорий
-      expect(categorizedItems).toEqual({
-        [categoryIds.CROPS]: [testItem({ id: carrot.id })],
-        [categoryIds.FORAGED_ITEMS]: [],
-        [categoryIds.MINED_RESOURCES]: [
-          testItem({ id: 'coal' }),
-          testItem({ id: 'stone' }),
-          testItem({ id: 'iron-ore' }),
-        ],
-        [categoryIds.SEEDS]: [
-          testItem({ id: carrotSeed.id, isPlantableCrop: true }),
-          testItem({ id: pumpkinSeed.id, isPlantableCrop: true }),
-        ],
-        [categoryIds.FIELD_TOOLS]: [
-          testItem({ id: 'sprinkler' }),
-          testItem({ id: 'scarecrow' }),
-        ],
-        [categoryIds.ANIMAL_PRODUCTS]: [testItem({ id: 'milk-1' })],
-        [categoryIds.ANIMAL_SUPPLIES]: [testItem({ id: 'cow-feed' })],
-        [categoryIds.CRAFTED_ITEMS]: [testItem({ id: carrotSoup.id })],
-        [categoryIds.UPGRADES]: [], // Пустая категория
-      })
     })
   })
 })

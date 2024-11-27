@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useDebounceCallback } from 'usehooks-ts'
-import TextField from '@mui/material/TextField.js'
+import TextField from '@mui/material/TextField/index.js'
 import './SearchBar.sass'
 
 const SearchBar = ({ placeholder, onSearch }) => {

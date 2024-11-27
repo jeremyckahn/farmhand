@@ -13,41 +13,36 @@
   border-radius: 1em
   box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.1)
 
-  input
+  .MuiOutlinedInput-root
     width: 100%
-    padding: 0.75em 1em
-    border: 1px solid #ddd
-    border-radius: 0.5em
     font-size: 1em
-    color: #333
-    background-color: #f9f9f9
+    background-color: transparent
+    border-radius: 0.5em
     transition: all 0.3s ease
 
-    &:focus
-      border-color: #ffb913
-      outline: none
-      background-color: #fff
+    &:hover .MuiOutlinedInput-notchedOutline
+      border-color: #ffd24d 
 
-  input::placeholder
-    color: #999
+    &.Mui-focused .MuiOutlinedInput-notchedOutline
+      border-color: #ffb913 
 
-  .MuiButton-root
-    background-color: transparent
-    padding: 0.5em
-    margin-left: 0.5em
-    min-width: 3em
-    font-size: 1em
-    color: #ffb913
-    border: 1px solid #ffb913
-    border-radius: 0.5em
+    .MuiOutlinedInput-notchedOutline
+      transition: border-color 0.3s ease 
 
-    &:hover
-      background-color: #ffb913
-      color: #fff
+    input
+      color: #333
+      caret-color: #333
+      transition: background-color 0.3s ease 
+      &:focus
+        background-color: #fff
+
+    input::placeholder
+      color: #999
+      transition: color 0.3s ease 
 
   @media (max-width: 768px)
     padding: 1em
     margin: 0.5em 0
-    input
+
+    .MuiOutlinedInput-root
       font-size: 0.9em
-      padding: 0.5em 1em
