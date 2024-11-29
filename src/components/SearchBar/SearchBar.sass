@@ -1,0 +1,48 @@
+@import '../../styles/variables.sass'
+@import '../../styles/utils.sass'
+
+.search-bar
+  position: relative
+  max-width: 100%
+  padding: 0.5em
+  margin: 1em 0
+  display: flex
+  justify-content: center
+  align-items: center
+  background-color: #fff
+  border-radius: 1em
+  box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.1)
+
+  .MuiOutlinedInput-root
+    width: 100%
+    font-size: 1em
+    background-color: transparent
+    border-radius: 0.5em
+    transition: all 0.3s ease
+
+    &:hover .MuiOutlinedInput-notchedOutline
+      border-color: #ffd24d 
+
+    &.Mui-focused .MuiOutlinedInput-notchedOutline
+      border-color: #ffb913 
+
+    .MuiOutlinedInput-notchedOutline
+      transition: border-color 0.3s ease 
+
+    input
+      color: #333
+      caret-color: #333
+      transition: background-color 0.3s ease 
+      &:focus
+        background-color: #fff
+
+    input::placeholder
+      color: #999
+      transition: color 0.3s ease 
+
+  @media (max-width: 768px)
+    padding: 1em
+    margin: 0.5em 0
+
+    .MuiOutlinedInput-root
+      font-size: 0.9em
