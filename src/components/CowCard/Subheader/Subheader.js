@@ -150,7 +150,7 @@ const Subheader = (
               placement: 'top',
               title: (
                 <Typography>
-                  Check this box to put {cow.name} into a {huggingMachine.name}
+                  Check this box to put {cow.name} into a {huggingMachine.name}{' '}
                   and automatically hug them at the start of every day. Requires
                   a Hugging Machine in your inventory.
                 </Typography>
