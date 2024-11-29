@@ -6,6 +6,7 @@ import { sortItems } from '../../utils/index.js'
 import { generateValueAdjustments } from '../../common/utils.js'
 import { pumpkinSeed, carrotSeed } from '../../data/crops/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { separateItemsIntoCategories } from './Inventory'
 
 import Inventory from './Inventory.js'
 
@@ -68,6 +69,74 @@ describe('Inventory Component', () => {
 
       expect(screen.getByText('Carrot')).toBeInTheDocument()
       expect(screen.queryByText('Pumpkin Seed')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('Categorizing items', () => {
+    test('divides items into type categories', () => {
+      const items = [
+        testItem({
+          id: 'carrot-seed',
+          type: 'SEEDS',
+          name: 'Carrot Seed',
+          isPlantableCrop: true,
+        }),
+        testItem({
+          id: 'carrot',
+          type: 'CROP',
+          name: 'Carrot',
+          isPlantableCrop: false,
+        }),
+        testItem({
+          id: 'fertilizer',
+          type: 'FIELD_TOOLS',
+          name: 'Fertilizer',
+        }),
+      ]
+
+      const categorizedItems = separateItemsIntoCategories(items)
+
+      expect(categorizedItems).toEqual(
+        new Map([
+          [
+            'CROPS',
+            [
+              testItem({
+                id: 'carrot',
+                type: 'CROP',
+                name: 'Carrot',
+                isPlantableCrop: false,
+              }),
+            ],
+          ],
+          [
+            'SEEDS',
+            [
+              testItem({
+                id: 'carrot-seed',
+                type: 'SEEDS',
+                name: 'Carrot Seed',
+                isPlantableCrop: true,
+              }),
+            ],
+          ],
+          ['FORAGED_ITEMS', []],
+          [
+            'FIELD_TOOLS',
+            [
+              testItem({
+                id: 'fertilizer',
+                type: 'FIELD_TOOLS',
+                name: 'Fertilizer',
+              }),
+            ],
+          ],
+          ['ANIMAL_PRODUCTS', []],
+          ['ANIMAL_SUPPLIES', []],
+          ['CRAFTED_ITEMS', []],
+          ['MINED_RESOURCES', []],
+        ])
+      )
     })
   })
 
