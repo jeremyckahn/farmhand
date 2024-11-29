@@ -3,22 +3,47 @@ import { render, screen, fireEvent } from '@testing-library/react'
 
 import { testItem } from '../../test-utils/index.js'
 import { sortItems } from '../../utils/index.js'
+import { generateValueAdjustments } from '../../common/utils.js'
 import { pumpkinSeed, carrotSeed } from '../../data/crops/index.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import Inventory from './Inventory.js'
 
+const defaultGameState = {
+  valueAdjustments: generateValueAdjustments(),
+  historicalValueAdjustments: [],
+  inventory: [],
+  playerInventoryQuantities: {},
+  completedAchievements: {},
+  inventoryLimit: 100,
+  money: 500,
+}
+
+vitest.useFakeTimers()
+
+const StubInventory = ({ gameState = {}, ...overrides }) => {
+  return (
+    <FarmhandContext.Provider
+      value={{ gameState: { ...defaultGameState, ...gameState }, handlers: {} }}
+    >
+      <Inventory
+        items={[]}
+        playerInventory={[]}
+        shopInventory={[]}
+        {...overrides}
+      />
+    </FarmhandContext.Provider>
+  )
+}
 describe('Inventory Component', () => {
   describe('Displaying items', () => {
     test('displays all items when no categories are selected', () => {
       const items = [
-        { id: '1', name: 'Carrot', category: 'CROPS' },
-        { id: '2', name: 'Pumpkin', category: 'CROPS' },
-        { id: '3', name: 'Carrot Seed', category: 'SEEDS' },
+        testItem({ id: 'carrot', name: 'Carrot' }),
+        testItem({ id: 'pumpkin', name: 'Pumpkin' }),
+        testItem({ id: 'carrot-seed', name: 'Carrot Seed' }),
       ]
-      const { container } = render(
-        <Inventory items={items} selectedCategories={[]} />
-      )
-      console.log(container.innerHTML)
+      render(<StubInventory items={items} selectedCategories={[]} />)
       items.forEach(item => {
         expect(screen.getByText(item.name)).toBeInTheDocument()
       })
@@ -26,14 +51,20 @@ describe('Inventory Component', () => {
 
     test('filters items by search query', () => {
       const items = [
-        { id: '1', name: 'Carrot', category: 'CROPS' },
-        { id: '2', name: 'Pumpkin Seed', category: 'SEEDS' },
+        testItem({ id: 'carrot', name: 'Carrot', category: 'CROPS' }),
+        testItem({
+          id: 'pumpkin-seed',
+          name: 'Pumpkin Seed',
+          category: 'SEEDS',
+        }),
       ]
 
-      render(<Inventory items={items} selectedCategories={[]} />)
+      render(<StubInventory items={items} selectedCategories={[]} />)
 
       const searchInput = screen.getByPlaceholderText('Search inventory...')
       fireEvent.change(searchInput, { target: { value: 'Carrot' } })
+
+      vitest.runAllTimers()
 
       expect(screen.getByText('Carrot')).toBeInTheDocument()
       expect(screen.queryByText('Pumpkin Seed')).not.toBeInTheDocument()
@@ -43,7 +74,7 @@ describe('Inventory Component', () => {
   describe('SearchBar functionality', () => {
     test('renders SearchBar with correct placeholder', () => {
       render(
-        <Inventory
+        <StubInventory
           items={[]}
           selectedCategories={[]}
           searchQuery=""
