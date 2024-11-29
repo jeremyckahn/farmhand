@@ -1,11 +1,9 @@
 import React, { Fragment, useState } from 'react'
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Checkbox,
-  FormControlLabel,
-} from '@mui/material'
+import Accordion from '@mui/material/Accordion/index.js'
+import AccordionSummary from '@mui/material/AccordionSummary/index.js'
+import AccordionDetails from '@mui/material/AccordionDetails/index.js'
+import Checkbox from '@mui/material/Checkbox/index.js'
+import FormControlLabel from '@mui/material/FormControlLabel/index.js'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
 import { array } from 'prop-types'
 
