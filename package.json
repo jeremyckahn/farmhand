@@ -1,12 +1,12 @@
 {
   "name": "@jeremyckahn/farmhand",
-  "version": "1.18.22",
+  "version": "1.18.23",
   "publishConfig": {
     "access": "public"
   },
   "description": "A farming game",
   "main": "public/electron.js",
-  "unpkg": "build/index.html",
+  "unpkg": "dist/index.html",
   "homepage": "https://www.farmhand.life/",
   "type": "module",
   "scripts": {
