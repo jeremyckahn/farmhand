@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { generateCow } from '../../utils/index.js'
@@ -347,7 +347,7 @@ describe('CowCard', () => {
   describe('custom naming', () => {
     // NOTE: Validates the fix for:
     // https://github.com/jeremyckahn/farmhand/issues/527
-    test('cows orignally owned by the player can be renamed', async () => {
+    test('cows orignally owned by the player can be renamed', () => {
       const renderComponent = () => {
         render(
           <CowCard
@@ -374,9 +374,7 @@ describe('CowCard', () => {
       userEvent.clear(nameInput)
       userEvent.type(nameInput, customName)
 
-      await waitFor(() => {
-        expect(nameInput).toHaveValue(customName)
-      })
+      expect(nameInput).toHaveValue(customName)
     })
   })
 })
