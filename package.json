@@ -6,7 +6,7 @@
   },
   "description": "A farming game",
   "main": "public/electron.js",
-  "unpkg": "build/index.html",
+  "unpkg": "dist/index.html",
   "homepage": "https://www.farmhand.life/",
   "type": "module",
   "scripts": {
