@@ -66,7 +66,7 @@ describe('Inventory Component', () => {
       const searchInput = screen.getByPlaceholderText('Search inventory...')
       fireEvent.change(searchInput, { target: { value: 'Carrot' } })
 
-      vitest.runAllTimers()
+      vitest.advanceTimersByTime(1000)
 
       expect(screen.getByText('Carrot')).toBeInTheDocument()
       expect(screen.queryByText('Pumpkin Seed')).not.toBeInTheDocument()
