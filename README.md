@@ -12,7 +12,7 @@
 
 - [Latest release](https://github.com/jeremyckahn/farmhand/releases/latest)
   - Includes native app downloads for Linux, MacOS and Windows.
-- All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/build/)
+- All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/)
 - [Wiki](https://github.com/jeremyckahn/farmhand/wiki)
 - [API deployment logs](https://farmhand.vercel.app/_logs)
 
