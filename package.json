@@ -201,7 +201,7 @@
   },
   "files": [
     "src",
-    "build",
+    "dist",
     "public"
   ],
   "craGenerate": {
