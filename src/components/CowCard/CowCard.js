@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography/index.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+import { useIsMounted } from 'usehooks-ts'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
@@ -34,7 +35,6 @@ import {
   OFFER_COW_FOR_TRADE,
   WITHDRAW_COW_FROM_TRADE,
 } from '../../templates.js'
-import { useMountState } from '../../hooks/useMountState/index.js'
 
 import Subheader from './Subheader/index.js'
 
@@ -123,7 +123,7 @@ export const CowCard = (
     isCowOfferedForTradeByPeer && cowIdOfferedForTrade.length > 0
   )
 
-  const { isMounted } = useMountState()
+  const isMounted = useIsMounted()
 
   useEffect(() => {
     ;(async () => {
@@ -187,10 +187,8 @@ export const CowCard = (
                     {...{
                       disabled: id !== cow.originalOwnerId,
                       onChange: e => {
-                        if (debounced) {
-                          setDisplayName(e.target.value)
-                          debounced.handleCowNameInputChange({ ...e }, cow)
-                        }
+                        setDisplayName(e.target.value)
+                        debounced?.handleCowNameInputChange({ ...e }, cow)
                       },
                       placeholder: 'Name',
                       value: displayName,

@@ -1,136 +1,170 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
+import Accordion from '@mui/material/Accordion/index.js'
+import AccordionSummary from '@mui/material/AccordionSummary/index.js'
+import AccordionDetails from '@mui/material/AccordionDetails/index.js'
+import Checkbox from '@mui/material/Checkbox/index.js'
+import FormControlLabel from '@mui/material/FormControlLabel/index.js'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
 import { array } from 'prop-types'
-import Divider from '@mui/material/Divider/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import Item from '../Item/index.js'
 import { itemsMap } from '../../data/maps.js'
-import { enumify, itemType } from '../../enums.js'
 import { sortItems } from '../../utils/index.js'
+import SearchBar from '../SearchBar/index.js'
+import './Inventory.sass'
 
-const {
-  COW_FEED,
-  CRAFTED_ITEM,
-  CROP,
-  FERTILIZER,
-  HUGGING_MACHINE,
-  MILK,
-  ORE,
-  SCARECROW,
-  SPRINKLER,
-  STONE,
-  FUEL,
-  TOOL_UPGRADE,
-  WEED,
-} = itemType
-
-export const categoryIds = enumify([
-  'ANIMAL_PRODUCTS',
-  'ANIMAL_SUPPLIES',
-  'CRAFTED_ITEMS',
-  'CROPS',
-  'FIELD_TOOLS',
-  'FORAGED_ITEMS',
-  'MINED_RESOURCES',
-  'SEEDS',
-  'UPGRADES',
+// Using Map for categories to preserve key order and enable Map methods
+export const categoryIds = new Map([
+  ['CROPS', 'CROPS'],
+  ['SEEDS', 'SEEDS'],
+  ['FORAGED_ITEMS', 'FORAGED_ITEMS'],
+  ['FIELD_TOOLS', 'FIELD_TOOLS'],
+  ['ANIMAL_PRODUCTS', 'ANIMAL_PRODUCTS'],
+  ['ANIMAL_SUPPLIES', 'ANIMAL_SUPPLIES'],
+  ['CRAFTED_ITEMS', 'CRAFTED_ITEMS'],
+  ['MINED_RESOURCES', 'MINED_RESOURCES'],
 ])
-const categoryIdKeys = Object.keys(categoryIds)
-const {
-  ANIMAL_PRODUCTS,
-  ANIMAL_SUPPLIES,
-  CRAFTED_ITEMS,
-  CROPS,
-  FIELD_TOOLS,
-  FORAGED_ITEMS,
-  MINED_RESOURCES,
-  SEEDS,
-  UPGRADES,
-} = categoryIds
 
-const itemTypeCategoryMap = Object.freeze({
-  SEEDS,
-  [COW_FEED]: ANIMAL_SUPPLIES,
-  [CRAFTED_ITEM]: CRAFTED_ITEMS,
-  [CROP]: CROPS,
-  [FERTILIZER]: FIELD_TOOLS,
-  [FUEL]: MINED_RESOURCES,
-  [HUGGING_MACHINE]: ANIMAL_SUPPLIES,
-  [MILK]: ANIMAL_PRODUCTS,
-  [ORE]: MINED_RESOURCES,
-  [SCARECROW]: FIELD_TOOLS,
-  [SPRINKLER]: FIELD_TOOLS,
-  [STONE]: MINED_RESOURCES,
-  [TOOL_UPGRADE]: UPGRADES,
-  [WEED]: FORAGED_ITEMS,
-})
+const itemTypeCategoryMap = new Map([
+  ['SEEDS', 'SEEDS'],
+  ['COW_FEED', 'ANIMAL_SUPPLIES'],
+  ['CRAFTED_ITEM', 'CRAFTED_ITEMS'],
+  ['CROP', 'CROPS'],
+  ['FERTILIZER', 'FIELD_TOOLS'],
+  ['FUEL', 'MINED_RESOURCES'],
+  ['HUGGING_MACHINE', 'ANIMAL_SUPPLIES'],
+  ['MILK', 'ANIMAL_PRODUCTS'],
+  ['ORE', 'MINED_RESOURCES'],
+  ['SCARECROW', 'FIELD_TOOLS'],
+  ['SPRINKLER', 'FIELD_TOOLS'],
+  ['STONE', 'MINED_RESOURCES'],
+  ['WEED', 'FORAGED_ITEMS'],
+])
 
+// Initialize Map to group items into categories
 const getItemCategories = () =>
-  categoryIdKeys.reduce((acc, key) => {
-    acc[key] = []
-    return acc
-  }, {})
+  new Map(Array.from(categoryIds.keys()).map(key => [key, []]))
 
 export const separateItemsIntoCategories = items =>
-  sortItems(items).reduce((acc, item) => {
+  sortItems(items).reduce((categories, item) => {
     const { type } = itemsMap[item.id]
-    const category = itemTypeCategoryMap[type]
+    const category = itemTypeCategoryMap.get(type)
 
-    if (category === CROPS) {
-      acc[item.isPlantableCrop ? SEEDS : CROPS].push(item)
-    } else if (acc[category]) {
-      acc[category].push(item)
+    if (category === 'CROPS') {
+      const targetCategory = item.isPlantableCrop ? 'SEEDS' : 'CROPS'
+      categories.get(targetCategory)?.push(item)
+    } else if (categories.has(category)) {
+      categories.get(category)?.push(item)
     }
 
-    return acc
+    return categories
   }, getItemCategories())
 
-export const Inventory = ({
+const formatCategoryName = key =>
+  key
+    .replace(/_/g, ' ')
+    .toLowerCase()
+    .replace(/\b\w/g, char => char.toUpperCase())
+
+const Inventory = ({
   items,
   playerInventory,
   shopInventory,
-
   isPurchaseView = false,
   isSellView = false,
-
   itemCategories = separateItemsIntoCategories(items),
-}) => (
-  <div className="Inventory">
-    {[
-      [CROPS, 'Crops'],
-      [SEEDS, 'Seeds'],
-      [FORAGED_ITEMS, 'Foraged Items'],
-      [FIELD_TOOLS, 'Field Tools'],
-      [ANIMAL_PRODUCTS, 'Animal Products'],
-      [ANIMAL_SUPPLIES, 'Animal Supplies'],
-      [CRAFTED_ITEMS, 'Crafted Items'],
-      [MINED_RESOURCES, 'Mined Resources'],
-    ].map(([category, headerText]) =>
-      itemCategories[category].length ? (
-        <Fragment key={category}>
-          <section>
-            {isPurchaseView ? null : <h3>{headerText}</h3>}
-            <ul className="card-list">
-              {itemCategories[category].map(item => (
-                <li key={item.id}>
-                  <Item
-                    {...{
-                      isPurchaseView,
-                      isSellView,
-                      item,
-                      showQuantity: isPurchaseView,
-                    }}
-                  />
-                </li>
+  placeholder = 'Search inventory...',
+}) => {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const toggleCategory = category => {
+    setSelectedCategories(prev =>
+      prev.includes(category)
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    )
+  }
+
+  const filteredCategories = Array.from(itemCategories.entries()).reduce(
+    (filtered, [category, items]) => {
+      const matchingItems = items.filter(item =>
+        itemsMap[item.id]?.name
+          ?.toLowerCase()
+          ?.includes(searchQuery.toLowerCase())
+      )
+
+      if (
+        matchingItems.length &&
+        (!selectedCategories.length || selectedCategories.includes(category))
+      ) {
+        filtered.set(category, matchingItems)
+      }
+      return filtered
+    },
+    new Map()
+  )
+
+  return (
+    <div className="Inventory">
+      <SearchBar placeholder={placeholder} onSearch={setSearchQuery} />
+      {!isPurchaseView && (
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="filter-content"
+            id="filter-header"
+          >
+            <h4>Filter by category</h4>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className="filter-section">
+              {Array.from(categoryIds.keys()).map(key => (
+                <FormControlLabel
+                  key={key}
+                  sx={{
+                    display: 'block',
+                  }}
+                  control={
+                    <Checkbox
+                      disabled={isPurchaseView}
+                      checked={selectedCategories.includes(key)}
+                      onChange={() => toggleCategory(key)}
+                    />
+                  }
+                  label={formatCategoryName(key)}
+                />
               ))}
-            </ul>
-          </section>
-          {isPurchaseView ? null : <Divider />}
-        </Fragment>
-      ) : null
-    )}
-  </div>
-)
+            </div>
+          </AccordionDetails>
+        </Accordion>
+      )}
+      {Array.from(filteredCategories.entries()).map(([category, items]) =>
+        items.length ? (
+          <Fragment key={category}>
+            <section>
+              <h3>{formatCategoryName(category)}</h3>
+              <ul className="card-list">
+                {items.map(item => (
+                  <li key={item.id}>
+                    <Item
+                      {...{
+                        isPurchaseView,
+                        isSellView,
+                        item,
+                        showQuantity: isPurchaseView,
+                      }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </Fragment>
+        ) : null
+      )}
+    </div>
+  )
+}
 
 Inventory.propTypes = {
   items: array.isRequired,

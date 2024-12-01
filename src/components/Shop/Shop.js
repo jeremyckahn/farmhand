@@ -102,6 +102,7 @@ export const Shop = ({
           {...{
             items: seeds,
             isPurchaseView: true,
+            placeholder: 'Search seeds...',
           }}
         />
       </TabPanel>
@@ -110,6 +111,7 @@ export const Shop = ({
           {...{
             items: fieldTools,
             isPurchaseView: true,
+            placeholder: 'Search supplies...',
           }}
         />
       </TabPanel>
