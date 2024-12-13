@@ -95,6 +95,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fontsource/francois-one": "^5.1.0",
+    "@fontsource/public-sans": "^5.1.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-regular-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
@@ -144,8 +146,6 @@
     "shifty": "^3.0.1",
     "stream": "npm:stream-browserify@^3.0.0",
     "trystero": "^0.20.0",
-    "typeface-francois-one": "0.0.71",
-    "typeface-public-sans": "^1.1.4",
     "url": "^0.11.0",
     "usehooks-ts": "^3.1.0",
     "uuid": "^3.4.0",
