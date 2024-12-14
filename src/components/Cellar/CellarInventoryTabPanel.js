@@ -57,11 +57,17 @@ export const CellarInventoryTabPanel = ({ index, currentTab }) => {
     )
   })
 
+  const purchasedCellarData = PURCHASEABLE_CELLARS.get(purchasedCellar)
+
+  if (purchasedCellarData === undefined) {
+    throw new TypeError(`Invalid purchasedCellar value: ${purchasedCellar}`)
+  }
+
   return (
     <TabPanel value={currentTab} index={index}>
       <h3>
         Capacity: {integerString(cellarInventory.length)} /{' '}
-        {integerString(PURCHASEABLE_CELLARS.get(purchasedCellar).space)}
+        {integerString(purchasedCellarData.space)}
       </h3>
       {cellarInventory.length > 0 && (
         <SearchBar placeholder="Search kegs..." onSearch={setSearchQuery} />

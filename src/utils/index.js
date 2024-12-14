@@ -293,7 +293,7 @@ export const getPlotContentType = ({ itemId }) =>
 
 /**
  * @param {?farmhand.plotContent} plot
- * @returns {boolean}
+ * @returns {plot is farmhand.crop}
  */
 export const doesPlotContainCrop = plot =>
   plot !== null && getPlotContentType(plot) === itemType.CROP
