@@ -56,7 +56,7 @@ export const allowCors = fn => async (req, res) => {
 
   if (
     ACCEPTED_ORIGINS.has(origin) ||
-    origin.match(/https:\/\/farmhand-.*-jeremyckahn.vercel.app/)
+    origin.match(/https:\/\/farmhand-.*-jeremy-kahns-projects.*.vercel.app/)
   ) {
     res.setHeader('Access-Control-Allow-Origin', origin)
   }
