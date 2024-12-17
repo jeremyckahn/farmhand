@@ -34,6 +34,8 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft.js'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import MobileStepper from '@mui/material/MobileStepper/index.js'
+// NOTE: This path is aliased to tryster/torrent in vite.config.js. The actual
+// path can't be used here because it breaks either Vite or TypeScript.
 import { joinRoom } from 'trystero'
 import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
@@ -118,7 +120,7 @@ import {
   REQUESTED_COW_TRADE_UNAVAILABLE,
   SERVER_ERROR,
 } from '../../strings.js'
-import { endpoints, features, rtcConfig, trackerUrls } from '../../config.js'
+import { endpoints, features, rtcConfig, relayUrls } from '../../config.js'
 
 import { scarecrow } from '../../data/items.js'
 
@@ -938,15 +940,15 @@ export default class Farmhand extends FarmhandReducers {
 
       this.scheduleHeartbeat()
 
-      const trackerRedundancy = 4
+      const relayRedundancy = 4
 
       this.setState({
         activePlayers: 1,
         peerRoom: joinRoom(
           {
             appId: import.meta.env?.VITE_NAME,
-            trackerUrls,
-            trackerRedundancy,
+            relayUrls,
+            relayRedundancy,
             rtcConfig,
           },
           room
