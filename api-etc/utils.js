@@ -32,7 +32,7 @@ export const getRoomData = async (roomKey, get, set) => {
 
   if (!valueAdjustments) {
     valueAdjustments = generateValueAdjustments()
-    roomData = { activePlayers: {}, valueAdjustments }
+    roomData = { valueAdjustments }
     set(roomKey, JSON.stringify(roomData))
   }
 
