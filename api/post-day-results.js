@@ -62,13 +62,16 @@ export default allowCors(async (req, res) => {
   } = req
 
   const roomKey = getRoomName(req)
-  const { valueAdjustments } = await getRoomData(roomKey, get, set)
+  const { valueAdjustments, ...roomData } = await getRoomData(roomKey, get, set)
   const updatedValueAdjustments = applyPositionsToMarket(
     valueAdjustments,
     positions
   )
 
-  set(roomKey, JSON.stringify(updatedValueAdjustments))
+  set(
+    roomKey,
+    JSON.stringify({ ...roomData, valueAdjustments: updatedValueAdjustments })
+  )
 
   res.status(200).json({ valueAdjustments: updatedValueAdjustments })
 })

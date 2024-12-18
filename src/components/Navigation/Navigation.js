@@ -101,6 +101,18 @@ const OnlineControls = ({
     handleChatRoomOpenStateChange(true)
   }
 
+  const submitRoomNameChange = () => {
+    handleRoomChange(displayedRoom)
+  }
+
+  /**
+   * @param {boolean} checked
+   */
+  const handleSwitchChange = checked => {
+    submitRoomNameChange()
+    handleOnlineToggleChange(checked)
+  }
+
   return (
     <>
       <FormControl
@@ -113,7 +125,9 @@ const OnlineControls = ({
               <Switch
                 color="primary"
                 checked={isOnline}
-                onChange={handleOnlineToggleChange}
+                onChange={(_, checked) => {
+                  handleSwitchChange(checked)
+                }}
                 name="use-alternate-end-day-button-position"
               />
             }
@@ -121,7 +135,6 @@ const OnlineControls = ({
           />
         </FormGroup>
         <TextField
-          variant="standard"
           {...{
             className: 'room-name',
             inputProps: {
@@ -131,13 +144,9 @@ const OnlineControls = ({
             onChange: ({ target: { value } }) => {
               setDisplayedRoom(value)
             },
-            onBlur: ({ target: { value } }) => {
-              handleRoomChange(value)
-            },
-            onKeyUp: ({ target: { value }, which }) => {
-              // Enter
-              if (which === 13) {
-                handleRoomChange(value)
+            onKeyUp: ({ key }) => {
+              if (key === 'Enter') {
+                submitRoomNameChange()
               }
             },
             value: displayedRoom,

@@ -492,34 +492,29 @@ export default {
     this.openDialogView(dialogView.FARMERS_LOG)
   },
 
-  handleOnlineToggleChange(_e, goOnline) {
+  /**
+   * @param {boolean} goOnline
+   */
+  handleOnlineToggleChange(goOnline) {
     if (!goOnline) {
       this.showNotification(DISCONNECTING_FROM_SERVER, 'info')
     }
 
-    const { room } = this.state
-
-    // Defer this operation to the next thread to prevent this warning:
-    //
-    // "An update (setState, replaceState, or forceUpdate) was scheduled from
-    // inside an update function. Update functions should be pure, with zero
-    // side-effects. Consider using componentDidUpdate or a callback."
-    setTimeout(
-      () =>
-        this.setState(() =>
-          goOnline
-            ? {
-                redirect: `/online/${encodeURIComponent(room)}`,
-              }
-            : {
-                redirect: '/',
-                cowIdOfferedForTrade: '',
-              }
-        ),
-      1
+    this.setState(({ room }) =>
+      goOnline
+        ? {
+            redirect: `/online/${encodeURIComponent(room)}`,
+          }
+        : {
+            redirect: '/',
+            cowIdOfferedForTrade: '',
+          }
     )
   },
 
+  /**
+   * @param {string} room
+   */
   handleRoomChange(room) {
     this.setState(() => ({
       redirect: `/online/${encodeURIComponent(room.trim() || DEFAULT_ROOM)}`,
