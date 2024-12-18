@@ -68,6 +68,10 @@ const viteConfig = defineConfig({
   resolve: {
     alias: [
       {
+        find: /^trystero$/,
+        replacement: `trystero/torrent`,
+      },
+      {
         // NOTE: This is required for the SCSS modules
         find: /^~(.*)$/,
         replacement: '$1',

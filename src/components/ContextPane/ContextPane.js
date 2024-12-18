@@ -1,3 +1,4 @@
+/** @typedef {import('../../index.js').farmhand.item} farmhand.item */
 import React, { memo } from 'react'
 import { array, string } from 'prop-types'
 
@@ -9,6 +10,13 @@ import { stageFocusType } from '../../enums.js'
 import './ContextPane.sass'
 
 export const PlayerInventory = memo(
+  /**
+   * Renders an Inventory component with player's items and sell view enabled.
+   *
+   * @param {Object} props - The component props.
+   * @param {farmhand.item[]} props.playerInventory - The array of items in the
+   * player's inventory.
+   */
   ({ playerInventory }) => (
     <Inventory
       {...{
@@ -20,22 +28,28 @@ export const PlayerInventory = memo(
   (prev, next) => prev.playerInventory === next.playerInventory
 )
 
-export const ContextPane = ({ playerInventory, stageFocus }) => (
-  <div className="ContextPane">
-    {stageFocus === stageFocusType.COW_PEN ? (
-      <CowPenContextMenu />
-    ) : (
-      <>
-        <h2>Inventory</h2>
-        <PlayerInventory
-          {...{
-            playerInventory,
-          }}
-        />
-      </>
-    )}
-  </div>
-)
+export const ContextPane = ({ playerInventory, stageFocus }) => {
+  return (
+    <div className="ContextPane">
+      {stageFocus === stageFocusType.COW_PEN ? (
+        <CowPenContextMenu />
+      ) : (
+        <>
+          <h2>Inventory</h2>
+          {/*
+          // NOTE: Weird ignore comment syntax and formatting is needed here.
+          // See: https://stackoverflow.com/a/56913087/470685
+          // @ts-ignore Silence error 'Expression produces a union type that is too complex to represent.' ts-expect-error would be used here, but it doesn't seem to work as expected. */}
+          <PlayerInventory
+            {...{
+              playerInventory,
+            }}
+          />
+        </>
+      )}
+    </div>
+  )
+}
 
 ContextPane.propTypes = {
   playerInventory: array.isRequired,

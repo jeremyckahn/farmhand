@@ -1,3 +1,4 @@
+/** @typedef {import('../../index.js').farmhand.achievement} farmhand.achievement */
 import React from 'react'
 import Accordion from '@mui/material/Accordion/index.js'
 import AccordionSummary from '@mui/material/AccordionSummary/index.js'
@@ -22,7 +23,10 @@ const partitionAchievements = memoize(completedAchievements =>
 
       return acc
     },
-    { complete: [], incomplete: [] }
+    {
+      /** @type {farmhand.achievement[]} */ complete: [],
+      /** @type {farmhand.achievement[]} */ incomplete: [],
+    }
   )
 )
 

@@ -7,6 +7,8 @@ import { noop } from '../../utils/noop.js'
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import { cowColors, genders } from '../../enums.js'
 
+import uiEvents from '../../handlers/ui-events.js'
+
 import { CowCard } from './CowCard.js'
 
 describe('CowCard', () => {
@@ -15,6 +17,10 @@ describe('CowCard', () => {
     name: '',
     baseWeight: 100,
   })
+
+  /**
+   * @type {import('./CowCard.js').CowCardProps}
+   */
   const baseProps = {
     allowCustomPeerCowNames: false,
     cow,
@@ -25,24 +31,29 @@ describe('CowCard', () => {
       daysUntilBirth: -1,
     },
     cowIdOfferedForTrade: '',
-    handleCowSelect: noop,
-    handleCowNameInputChange: noop,
     handleCowPurchaseClick: noop,
     handleCowTradeClick: noop,
+    handleCowHugClick: noop,
+    handleCowSellClick: noop,
+    handleCowOfferClick: noop,
+    handleCowBreedChange: noop,
+    handleCowWithdrawClick: noop,
+    handleCowAutomaticHugChange: noop,
     id: '',
     isSelected: false,
+    isCowOfferedForTradeByPeer: false,
     isOnline: false,
     inventory: [],
     money: 0,
     purchasedCowPen: 1,
-    selectedCowId: '',
+    debounced: { ...uiEvents },
   }
 
   describe('cow purchase button', () => {
     describe('player does not have enough money', () => {
       describe('cow pen has no space', () => {
         test('button is disabled', () => {
-          const cowCapacity = PURCHASEABLE_COW_PENS.get(1).cows
+          const cowCapacity = PURCHASEABLE_COW_PENS.get(1)?.cows
           const testCow = generateCow({
             color: cowColors.WHITE,
             name: '',
@@ -96,7 +107,7 @@ describe('CowCard', () => {
     describe('player has enough money', () => {
       describe('cow pen has no space', () => {
         test('button is disabled', () => {
-          const cowCapacity = PURCHASEABLE_COW_PENS.get(1).cows
+          const cowCapacity = PURCHASEABLE_COW_PENS.get(1)?.cows
 
           render(
             <CowCard
@@ -150,7 +161,7 @@ describe('CowCard', () => {
       const button = screen
         .getByText('Breed')
         .closest('label')
-        .querySelector('[type=checkbox]')
+        ?.querySelector('[type=checkbox]')
       expect(button).not.toHaveAttribute('disabled')
     })
 
@@ -187,7 +198,7 @@ describe('CowCard', () => {
       const button = screen
         .getByText('Breed')
         .closest('label')
-        .querySelector('[type=checkbox]')
+        ?.querySelector('[type=checkbox]')
       expect(button).not.toHaveAttribute('disabled')
     })
 
@@ -224,7 +235,7 @@ describe('CowCard', () => {
       const button = screen
         .getByText('Breed')
         .closest('label')
-        .querySelector('[type=checkbox]')
+        ?.querySelector('[type=checkbox]')
       expect(button).not.toHaveAttribute('disabled')
     })
 
@@ -261,7 +272,7 @@ describe('CowCard', () => {
       const button = screen
         .getByText('Breed')
         .closest('label')
-        .querySelector('[type=checkbox]')
+        ?.querySelector('[type=checkbox]')
       expect(button).toHaveAttribute('disabled')
     })
 
@@ -303,7 +314,7 @@ describe('CowCard', () => {
       const button = screen
         .getByText('Breed')
         .closest('label')
-        .querySelector('[type=checkbox]')
+        ?.querySelector('[type=checkbox]')
       expect(button).toHaveAttribute('disabled')
     })
   })

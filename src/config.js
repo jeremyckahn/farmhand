@@ -77,6 +77,6 @@ export const rtcConfig = {
   ],
 }
 
-export const trackerUrls = import.meta.env?.VITE_TRACKER_URL
+export const relayUrls = import.meta.env?.VITE_TRACKER_URL
   ? [import.meta.env?.VITE_TRACKER_URL]
   : undefined

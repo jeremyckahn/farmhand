@@ -1,3 +1,4 @@
+/** @typedef {import('../index.js').farmhand.achievement} farmhand.achievement */
 import { addItemToInventory } from '../game-logic/reducers/index.js'
 import {
   doesPlotContainCrop,
@@ -37,6 +38,9 @@ const sumOfCropsHarvested = memoize(cropsHarvested =>
 
 const cowFeed = itemsMap[COW_FEED_ITEM_ID]
 
+/**
+ * @type {farmhand.achievement[]}
+ */
 const achievements = [
   ((reward = 100) => ({
     id: 'plant-crop',
@@ -44,9 +48,14 @@ const achievements = [
     description: 'Purchase a seed and plant it in the field.',
     rewardDescription: dollarString(reward),
     condition: state =>
-      findInField(
-        state.field,
-        plot => doesPlotContainCrop(plot) && getCropLifeStage(plot) === SEED
+      Boolean(
+        findInField(
+          state.field,
+          plotContent =>
+            plotContent !== null &&
+            doesPlotContainCrop(plotContent) &&
+            getCropLifeStage(plotContent) === SEED
+        )
       ),
     reward: state => addMoney(state, reward),
   }))(),
@@ -57,9 +66,11 @@ const achievements = [
     description: 'Water a crop that you planted.',
     rewardDescription: dollarString(reward),
     condition: state =>
-      findInField(
-        state.field,
-        plot => doesPlotContainCrop(plot) && plot.wasWateredToday
+      Boolean(
+        findInField(
+          state.field,
+          plot => doesPlotContainCrop(plot) && plot.wasWateredToday
+        )
       ),
     reward: state => addMoney(state, reward),
   }))(),

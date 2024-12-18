@@ -108,6 +108,8 @@ export const CowPenContextMenu = ({
       <CowCard
         {...{
           cow: cowForSale,
+          isSelected: false,
+          isCowOfferedForTradeByPeer: false,
         }}
       />
       <Tabs
@@ -123,7 +125,7 @@ export const CowPenContextMenu = ({
       <TabPanel value={currentTab} index={0}>
         <h3>
           Capacity: {cowInventory.length} /{' '}
-          {PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows}
+          {PURCHASEABLE_COW_PENS.get(purchasedCowPen)?.cows}
         </h3>
 
         {cowInventory.length > 0 && (
@@ -152,7 +154,8 @@ export const CowPenContextMenu = ({
                     className: 'sort-select',
                     displayEmpty: true,
                     value: sortType,
-                    onChange: ({ target: { value } }) => setSortType(value),
+                    onChange: ({ target: { value } }) =>
+                      setSortType(String(value)),
                   }}
                 >
                   <MenuItem {...{ value: VALUE }}>Sort by Value</MenuItem>
@@ -188,6 +191,7 @@ export const CowPenContextMenu = ({
                         handleCowSellClick,
                         handleCowWithdrawClick,
                         isCowPurchased: true,
+                        isCowOfferedForTradeByPeer: false,
                         isSelected: cow.id === selectedCowId,
                       }}
                     />
@@ -226,24 +230,31 @@ export const CowPenContextMenu = ({
                 />
               )}
               <ul className="card-list purchased-cows breeding-cows">
-                {filteredCows.map(cow => (
-                  <li key={cow.id}>
-                    <CowCard
-                      {...{
-                        cow,
-                        handleCowAutomaticHugChange,
-                        handleCowBreedChange,
-                        handleCowHugClick,
-                        handleCowNameInputChange,
-                        handleCowOfferClick,
-                        handleCowSellClick,
-                        handleCowWithdrawClick,
-                        isCowPurchased: true,
-                        isSelected: cow.id === selectedCowId,
-                      }}
-                    />
-                  </li>
-                ))}
+                {filteredCows.map(cow => {
+                  if (!cow) {
+                    throw new TypeError('cow is undefined')
+                  }
+
+                  return (
+                    <li key={cow.id}>
+                      <CowCard
+                        {...{
+                          cow,
+                          handleCowAutomaticHugChange,
+                          handleCowBreedChange,
+                          handleCowHugClick,
+                          handleCowNameInputChange,
+                          handleCowOfferClick,
+                          handleCowSellClick,
+                          handleCowWithdrawClick,
+                          isCowPurchased: true,
+                          isCowOfferedForTradeByPeer: false,
+                          isSelected: cow.id === selectedCowId,
+                        }}
+                      />
+                    </li>
+                  )
+                })}
               </ul>
             </>
           )

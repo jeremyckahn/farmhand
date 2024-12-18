@@ -10,10 +10,13 @@ import { Cow } from './CowPen.js'
 
 let component
 
+let setTimeoutSpy = vitest.spyOn(global, 'setTimeout')
+let clearTimeoutSpy = vitest.spyOn(global, 'clearTimeout')
+
 beforeEach(() => {
   vitest.useFakeTimers()
-  vitest.spyOn(global, 'setTimeout')
-  vitest.spyOn(global, 'clearTimeout')
+  setTimeoutSpy = vitest.spyOn(global, 'setTimeout')
+  clearTimeoutSpy = vitest.spyOn(global, 'clearTimeout')
 })
 
 describe('Cow', () => {
@@ -51,7 +54,7 @@ describe('Cow', () => {
 
     describe('cow is selected', () => {
       test('reposition is not scheduled', () => {
-        global.setTimeout.mockClear()
+        setTimeoutSpy.mockClear()
         component.setProps({ isSelected: true })
         component.instance().scheduleMove()
 
@@ -81,7 +84,7 @@ describe('Cow', () => {
           test('no-ops', () => {
             component.setProps({ isSelected: true })
             component.instance().scheduleMove()
-            global.clearTimeout.mockClear()
+            clearTimeoutSpy.mockClear()
             component.setProps({ isSelected: false })
             expect(global.clearTimeout).not.toHaveBeenCalled()
           })
