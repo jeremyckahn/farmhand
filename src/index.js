@@ -74,14 +74,13 @@ import { cropFamily, grapeVariety } from './enums.js'
  */
 
 /**
- * This is a minimalist base type to be inherited and expanded on by types like
+ * This is a base type to be inherited and expanded on by types like
  * farmhand.crop. This also represents non-crop plot content like scarecrows
  * and sprinklers.
- * @typedef farmhand.plotContentType
+ * @typedef farmhand.plotContent
  * @property {string} itemId
  * @property {boolean=} isFertilized Deprecated by fertilizerType.
  * @property {fertilizerType} fertilizerType
- * @typedef {farmhand.plotContentType} farmhand.plotContent
  */
 
 /**
@@ -175,9 +174,8 @@ import { cropFamily, grapeVariety } from './enums.js'
 
 /**
  * @typedef farmhand.priceEvent
- * @type {Object}
- * @property {string} itemId
- * @property {number} daysRemaining
+ * @type {Record<string, {itemId: string, daysRemaining: number}>}
+ * @description The top-level record key and itemId values must match.
  */
 
 /**
@@ -262,6 +260,7 @@ import { cropFamily, grapeVariety } from './enums.js'
  * @property {number} sprinklerRange
  * @property {Object.<string, boolean>} items
  * @property {Object.<string, boolean>} tools
+ * @property {Object.<string, boolean>} stageFocusType
  */
 
 /**

@@ -11,11 +11,20 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { moneyString } from '../../utils/moneyString.js'
 import './AppBar.sass'
 
+/**
+ * Displays formatted monetary value.
+ *
+ * @param {Object} props - The component props.
+ * @param {number} props.money - The amount of money to display.
+ */
 const MoneyDisplay = ({ money }) => {
   const idleColor = 'rgb(255, 255, 255)'
   const [displayedMoney, setDisplayedMoney] = useState(money)
   const [textColor, setTextColor] = useState(idleColor)
   const [previousMoney, setPreviousMoney] = useState(money)
+  /**
+   * @type {ReturnType<typeof useState<import('shifty').Tweenable | undefined>>}
+   */
   const [currentTweenable, setCurrentTweenable] = useState()
 
   useEffect(() => {
@@ -24,16 +33,14 @@ const MoneyDisplay = ({ money }) => {
 
   useEffect(() => {
     if (money !== previousMoney) {
-      if (currentTweenable) {
-        currentTweenable.cancel()
-      }
+      currentTweenable?.cancel()
 
       const tweenable = tween({
         easing: 'easeOutQuad',
         duration: 750,
         render: ({ color, money }) => {
-          setTextColor(color)
-          setDisplayedMoney(money)
+          setTextColor(String(color))
+          setDisplayedMoney(Number(money))
         },
         from: {
           color: money > previousMoney ? 'rgb(0, 255, 0)' : 'rgb(255, 0, 0)',
@@ -46,9 +53,7 @@ const MoneyDisplay = ({ money }) => {
     }
 
     return () => {
-      if (currentTweenable) {
-        currentTweenable.cancel()
-      }
+      currentTweenable?.cancel()
     }
   }, [currentTweenable, money, previousMoney])
 

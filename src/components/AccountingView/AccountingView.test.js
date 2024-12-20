@@ -2,7 +2,9 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, {
+  createContextData,
+} from '../Farmhand/Farmhand.context.js'
 
 import { STANDARD_LOAN_AMOUNT } from '../../constants.js'
 
@@ -12,10 +14,7 @@ describe('<AccountView />', () => {
   let handleClickLoanPaydownButton, handleClickTakeOutLoanButton
 
   beforeEach(() => {
-    const contextValue = {
-      gameState: {},
-      handlers: {},
-    }
+    const contextValue = createContextData()
 
     handleClickLoanPaydownButton = vitest.fn()
     handleClickTakeOutLoanButton = vitest.fn()

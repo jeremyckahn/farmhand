@@ -4,9 +4,20 @@ import { func, number } from 'prop-types'
 
 const defaultFormatter = (/** @type {number} */ number) => `${number}`
 
+/**
+ * AnimatedNumber component that displays a number with an animation effect.
+ *
+ * @param {Object} props - The component properties.
+ * @param {number} props.number - The number to display.
+ * @param {typeof defaultFormatter} [props.formatter=defaultFormatter] - A function to format the number before displaying it.
+ * @returns {JSX.Element} - The JSX element representing the animated number.
+ */
 const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
   const [displayedNumber, setDisplayedNumber] = useState(number)
   const [previousNumber, setPreviousNumber] = useState(number)
+  /**
+   * @type {[import('shifty').Tweenable | undefined, React.Dispatch<React.SetStateAction<import('shifty').Tweenable | undefined>>]}
+   */
   const [currentTweenable, setCurrentTweenable] = useState()
 
   useEffect(() => {
@@ -23,7 +34,7 @@ const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
         easing: 'easeOutQuad',
         duration: 750,
         render: ({ number }) => {
-          setDisplayedNumber(number)
+          setDisplayedNumber(Number(number))
         },
         from: {
           number: previousNumber,

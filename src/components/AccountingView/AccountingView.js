@@ -19,7 +19,19 @@ import {
 
 import './AccountingView.sass'
 
+/**
+ * @type {React.ElementType<import('@mui/material/InputBase').InputBaseComponentProps>}
+ */
+// @ts-expect-error Ignore legacy misuse of onChange type
 const MoneyNumberFormat = forwardRef(
+  /**
+   * @param {Object} props - Component properties
+   * @param {number} props.max - Maximum value allowed for the input
+   * @param {number} props.min - Minimum value allowed for the input
+   * @param {React.Dispatch<React.SetStateAction<number>>} props.onChange - Callback function to handle changes in the input value
+   * @param {React.Dispatch<React.SetStateAction<number>>} props.setLoanInputValue - Function to set the loan input value
+   * @param {React.ForwardedRef<unknown>} [ref] - Forwarded ref for the component
+   */
   ({ max, min, onChange, setLoanInputValue, ...rest }, ref) => (
     <NumberFormat
       fixedDecimalScale
@@ -77,7 +89,10 @@ const AccountingView = ({
                   pattern: '[0-9]*',
                 },
 
-                onChange: setLoanInputValue,
+                onChange: value => {
+                  // NOTE: value is naturally a number here, but it must be cast explicitly to work around an unhelpful type definition
+                  setLoanInputValue(Number(value))
+                },
                 InputProps: {
                   inputComponent: MoneyNumberFormat,
                 },

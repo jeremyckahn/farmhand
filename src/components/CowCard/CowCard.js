@@ -108,7 +108,7 @@ export const CowCard = (
   const [cowImage, setCowImage] = useState(pixel)
 
   // @see https://github.com/microsoft/TypeScript/issues/27387#issuecomment-659671940
-  const cardRef = useRef(/** @type {Element|null} */ (null))
+  const cardRef = useRef(/** @type {HTMLDivElement|null} */ (null))
   const scrollAnchorRef = useRef(/** @type {HTMLAnchorElement|null} */ (null))
 
   const isCowPurchased =
@@ -362,7 +362,7 @@ CowCard.propTypes = {
 }
 
 /**
- * @param {CowCardProps} props
+ * @param {Pick<CowCardProps, 'cow' | 'isCowOfferedForTradeByPeer' | 'isSelected'>} props
  */
 export default function Consumer(props) {
   return (

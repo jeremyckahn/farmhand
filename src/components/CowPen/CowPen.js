@@ -31,7 +31,9 @@ export class Cow extends Component {
     y: randomPosition(),
   }
 
+  /** @type {null | NodeJS.Timeout} */
   repositionTimeoutId = null
+  /** @type {null | NodeJS.Timeout} */
   animateHugTimeoutId = null
   tweenable = new Tweenable()
   isComponentMounted = false
@@ -84,6 +86,7 @@ export class Cow extends Component {
     })
 
     if (oldDirection !== newDirection) {
+      /** @type {import('shifty').RenderFunction} */
       const render = ({ rotate }) => {
         this.setState({ rotate })
       }
@@ -175,7 +178,9 @@ export class Cow extends Component {
   }
 
   componentWillUnmount() {
-    ;[this.repositionTimeoutId, this.animateHugTimeoutId].forEach(clearTimeout)
+    ;[this.repositionTimeoutId, this.animateHugTimeoutId].forEach(
+      id => typeof id === 'number' && clearTimeout(id)
+    )
 
     this.isComponentMounted = false
     this.tweenable.cancel()
@@ -236,15 +241,17 @@ export class Cow extends Component {
           </div>
         </Tooltip>
         <ol {...{ className: 'happiness-boosts-today' }}>
-          {new Array(this.props.cow.happinessBoostsToday).fill().map((_, i) => (
-            <li {...{ key: i }}>
-              <FontAwesomeIcon
-                {...{
-                  icon: faHeart,
-                }}
-              />
-            </li>
-          ))}
+          {new Array(this.props.cow.happinessBoostsToday)
+            .fill(undefined)
+            .map((_, i) => (
+              <li {...{ key: i }}>
+                <FontAwesomeIcon
+                  {...{
+                    icon: faHeart,
+                  }}
+                />
+              </li>
+            ))}
         </ol>
       </div>
     )

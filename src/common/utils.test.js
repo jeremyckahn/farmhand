@@ -13,8 +13,8 @@ describe('generateValueAdjustments', () => {
 
   describe('item has a fluctuating price', () => {
     test('updates valueAdjustments by random factor', () => {
-      expect(valueAdjustments['sample-crop-1']).toEqual(1.5)
-      expect(valueAdjustments['sample-crop-2']).toEqual(1.5)
+      expect(valueAdjustments['carrot']).toEqual(1.5)
+      expect(valueAdjustments['pumpkin']).toEqual(1.5)
     })
   })
 
@@ -26,19 +26,19 @@ describe('generateValueAdjustments', () => {
 
   test('factors in price crashes', () => {
     valueAdjustments = generateValueAdjustments(
-      { 'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 } },
+      { carrot: { itemId: 'carrot', daysRemaining: 1 } },
       {}
     )
 
-    expect(valueAdjustments['sample-crop-1']).toEqual(0.5)
+    expect(valueAdjustments['carrot']).toEqual(0.5)
   })
 
   test('factors in price surges', () => {
     valueAdjustments = generateValueAdjustments(
       {},
-      { 'sample-crop-1': { itemId: 'sample-crop-1', daysRemaining: 1 } }
+      { carrot: { itemId: 'carrot', daysRemaining: 1 } }
     )
 
-    expect(valueAdjustments['sample-crop-1']).toEqual(1.5)
+    expect(valueAdjustments['carrot']).toEqual(1.5)
   })
 })

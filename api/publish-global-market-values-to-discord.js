@@ -22,10 +22,15 @@ const set = promisify(client.set).bind(client)
 export default allowCors(async (req, res) => {
   const { valueAdjustments } = await getRoomData('room-global', get, set)
   const content = MARKET_SUMMARY_FOR_DISCORD`${'global'}${valueAdjustments}`
-  const { status } = await axios.post(
-    process.env.DISCORD_GLOBAL_MARKET_VALUES_WEBHOOK,
-    { content }
-  )
+  const { DISCORD_GLOBAL_MARKET_VALUES_WEBHOOK } = process.env
+
+  if (!DISCORD_GLOBAL_MARKET_VALUES_WEBHOOK) {
+    throw new TypeError('DISCORD_GLOBAL_MARKET_VALUES_WEBHOOK is not defined')
+  }
+
+  const { status } = await axios.post(DISCORD_GLOBAL_MARKET_VALUES_WEBHOOK, {
+    content,
+  })
 
   res.status(status).json({ content })
 })

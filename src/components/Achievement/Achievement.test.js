@@ -1,7 +1,9 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, {
+  createContextData,
+} from '../Farmhand/Farmhand.context.js'
 
 import Achievement from './Achievement.js'
 
@@ -16,10 +18,7 @@ describe('<Achievement />', () => {
       rewardDescription: 'the greatest reward',
     }
 
-    const farmhandContextValue = {
-      gameState: {},
-      handlers: {},
-    }
+    const farmhandContextValue = createContextData()
 
     render(
       <FarmhandContext.Provider value={farmhandContextValue}>

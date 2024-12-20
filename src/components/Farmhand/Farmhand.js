@@ -34,6 +34,8 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft.js'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import MobileStepper from '@mui/material/MobileStepper/index.js'
+// NOTE: This path is aliased to tryster/torrent in vite.config.js. The actual
+// path can't be used here because it breaks either Vite or TypeScript.
 import { joinRoom } from 'trystero'
 import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
@@ -118,7 +120,7 @@ import {
   REQUESTED_COW_TRADE_UNAVAILABLE,
   SERVER_ERROR,
 } from '../../strings.js'
-import { endpoints, features, rtcConfig, trackerUrls } from '../../config.js'
+import { endpoints, features, rtcConfig, relayUrls } from '../../config.js'
 
 import { scarecrow } from '../../data/items.js'
 
@@ -133,48 +135,46 @@ const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 // Utility object for reuse in no-ops to save on memory
 const emptyObject = Object.freeze({})
 
-/*!
- * @param {{ id: farmhand.item['id'], quantity: number }} inventory
- * @param {Record<string, number>} valueAdjustments
- * @returns {farmhand.item[]}
- */
-export const computePlayerInventory = memoize((
-  /** @type {{ id: farmhand.item['id'], quantity: number }[]}  */ inventory,
-  /** @type {Record<string, number>} */ valueAdjustments
-) =>
-  inventory.map(({ quantity, id }) => ({
-    quantity,
-    ...itemsMap[id],
-    value: getItemCurrentValue(itemsMap[id], valueAdjustments),
-  }))
+export const computePlayerInventory = memoize(
+  /**
+   * @param {{ id: farmhand.item['id'], quantity: number }[]} inventory
+   * @param {Record<string, number>} valueAdjustments
+   * @returns {farmhand.item[]}
+   */
+  (inventory, valueAdjustments) =>
+    inventory.map(({ quantity, id }) => ({
+      quantity,
+      ...itemsMap[id],
+      value: getItemCurrentValue(itemsMap[id], valueAdjustments),
+    }))
 )
 
-/*!
- * @param {farmhand.item[]} inventory
- * @returns {{ id: farmhand.item }[]}
- */
-export const getFieldToolInventory = memoize((
-  /** @type {Array.<farmhand.item>} */ inventory
-) =>
-  inventory
-    .filter(({ id }) => {
-      const { enablesFieldMode } = itemsMap[id]
+export const getFieldToolInventory = memoize(
+  /**
+   * @param {farmhand.state['inventory']} inventory
+   * @returns {farmhand.item[]}
+   */
+  inventory =>
+    inventory
+      .filter(({ id }) => {
+        const { enablesFieldMode } = itemsMap[id]
 
-      return typeof enablesFieldMode === 'string' && enablesFieldMode !== PLANT
-    })
-    .map(({ id }) => itemsMap[id])
+        return (
+          typeof enablesFieldMode === 'string' && enablesFieldMode !== PLANT
+        )
+      })
+      .map(({ id }) => itemsMap[id])
 )
 
-/*!
- * @param {farmhand.item[]} inventory
- * @returns {Array.<{ id: farmhand.item }>}
- */
-export const getPlantableCropInventory = memoize((
-  /** @type {farmhand.item[]} */ inventory
-) =>
-  inventory
-    .filter(({ id }) => itemsMap[id].isPlantableCrop)
-    .map(({ id }) => itemsMap[id])
+export const getPlantableCropInventory = memoize(
+  /**
+   * @param {farmhand.state['inventory']} inventory
+   * @returns {farmhand.item[]}
+   */
+  inventory =>
+    inventory
+      .filter(({ id }) => itemsMap[id].isPlantableCrop)
+      .map(({ id }) => itemsMap[id])
 )
 
 /**
@@ -322,7 +322,14 @@ export default class Farmhand extends FarmhandReducers {
    */
   state = this.createInitialState()
 
-  handlers = { debounced: {} }
+  // NOTE: This object construction is overwritten in initInputHandlers with
+  // properly-bound versions of each handler function. They are initially
+  // defined here as stubs in order to inform the type checker of the
+  // appropriate object structure.
+  handlers = {
+    ...eventHandlers,
+    debounced: { ...eventHandlers },
+  }
 
   /**
    * @type {Record<string, string>}
@@ -537,9 +544,11 @@ export default class Farmhand extends FarmhandReducers {
 
   async initializeNewGame() {
     await this.incrementDay(true)
+
     this.setState(() => ({
       historicalValueAdjustments: [],
     }))
+
     this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
   }
 
@@ -931,15 +940,15 @@ export default class Farmhand extends FarmhandReducers {
 
       this.scheduleHeartbeat()
 
-      const trackerRedundancy = 4
+      const relayRedundancy = 4
 
       this.setState({
         activePlayers: 1,
         peerRoom: joinRoom(
           {
             appId: import.meta.env?.VITE_NAME,
-            trackerUrls,
-            trackerRedundancy,
+            relayUrls,
+            relayRedundancy,
             rtcConfig,
           },
           room
