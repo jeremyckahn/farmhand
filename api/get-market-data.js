@@ -27,8 +27,5 @@ export default allowCors(async (req, res) => {
 
   set(roomKey, JSON.stringify(roomData))
 
-  res
-    .status(200)
-    // TODO: activePlayers: 1 is for legacy backwards compatibility. Remove it after 10/1/2024.
-    .json({ valueAdjustments, activePlayers: 1 })
+  res.status(200).json({ valueAdjustments })
 })
