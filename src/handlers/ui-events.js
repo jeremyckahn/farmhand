@@ -517,6 +517,7 @@ export default {
    */
   handleRoomChange(room) {
     this.setState(() => ({
+      room,
       redirect: `/online/${encodeURIComponent(room.trim() || DEFAULT_ROOM)}`,
     }))
   },
