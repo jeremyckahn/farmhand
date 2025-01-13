@@ -61,7 +61,6 @@ import Stage from '../Stage/index.js'
 import NotificationSystem, {
   snackbarProviderContentCallback,
 } from '../NotificationSystem/index.js'
-import DebugMenu from '../DebugMenu/index.js'
 import UpdateNotifier from '../UpdateNotifier/index.js'
 import theme from '../../mui-theme.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
@@ -1311,7 +1310,6 @@ export default class Farmhand extends FarmhandReducers {
                   >
                     <Navigation />
                     <ContextPane />
-                    {import.meta.env?.MODE === 'development' && <DebugMenu />}
                     <div {...{ className: 'spacer' }} />
                   </Drawer>
                   <Stage />
