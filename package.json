@@ -90,7 +90,7 @@
     "vite": "^5.0.8",
     "vite-plugin-pwa": "^0.20.1",
     "vitest": "^2.0.5",
-    "wait-on": "^6.0.1"
+    "wait-on": "^8.0.3"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
