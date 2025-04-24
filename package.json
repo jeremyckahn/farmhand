@@ -138,7 +138,7 @@
     "react-hotkeys": "^2.0.0",
     "react-markdown": "^4.3.1",
     "react-number-format": "^4.4.1",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^7.5.2",
     "react-use": "^17.4.0",
     "react-zoom-pan-pinch": "^1.6.1",
     "redis": "^3.0.2",
