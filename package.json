@@ -86,7 +86,7 @@
     "sass": "^1.69.5",
     "scss-reset": "^1.4.2",
     "serve": "^14.2.0",
-    "vercel": "^28.14.0",
+    "vercel": "^41.6.2",
     "vite": "^5.0.8",
     "vite-plugin-pwa": "^0.20.1",
     "vitest": "^2.0.5",
