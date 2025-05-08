@@ -1045,37 +1045,42 @@ export default class Farmhand extends FarmhandReducers {
     )
   }
 
-  /*!
-   * @param {boolean} [isFirstDay=false]
-   */
-  async incrementDay(isFirstDay = false) {
-    const {
-      inventory,
-      isCombineEnabled,
-      isOnline,
-      room,
-      stageFocus,
-      todaysPurchases,
-      todaysStartingInventory,
-    } = this.state
-    const nextDayState = reducers.computeStateForNextDay(this.state, isFirstDay)
+  async updateServerForNextDay() {
     const serverMessages = []
-    let broadcastedPositionMessage
 
-    if (isOnline) {
+    /**
+     * @type {string | null}
+     */
+    let broadcastedPositionMessage = null
+
+    this.setState(() => ({ isAwaitingNetworkRequest: true }))
+
+    /**
+     * @type {Record<string, number> | undefined}
+     */
+    let serverValueAdjustments
+
+    if (this.state.isOnline) {
+      const {
+        inventory,
+        room,
+        todaysPurchases,
+        todaysStartingInventory,
+      } = this.state
+
+      const positions = computeMarketPositions(
+        todaysStartingInventory,
+        todaysPurchases,
+        inventory
+      )
+
       try {
-        this.setState({ isAwaitingNetworkRequest: true })
-
-        const positions = computeMarketPositions(
-          todaysStartingInventory,
-          todaysPurchases,
-          inventory
-        )
-
-        const { valueAdjustments } = await postData(endpoints.postDayResults, {
-          positions,
-          room,
-        })
+        serverValueAdjustments = (
+          await postData(endpoints.postDayResults, {
+            positions,
+            room,
+          })
+        ).valueAdjustments
 
         if (Object.keys(positions).length) {
           serverMessages.push({
@@ -1085,12 +1090,6 @@ export default class Farmhand extends FarmhandReducers {
 
           broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION`${''}${positions}`
         }
-
-        nextDayState.valueAdjustments = applyPriceEvents(
-          valueAdjustments,
-          nextDayState.priceCrashes,
-          nextDayState.priceSurges
-        )
       } catch (e) {
         // NOTE: This will get reached when there's an issue posting data to the server.
         serverMessages.push({
@@ -1098,34 +1097,64 @@ export default class Farmhand extends FarmhandReducers {
           severity: 'error',
         })
 
-        // NOTE: Takes the user offline
-        this.setState({
+        this.setState(() => ({
           redirect: '/',
           cowIdOfferedForTrade: '',
-        })
+          isAwaitingNetworkRequest: false,
+        }))
 
         console.error(e)
       }
-
-      this.setState({ isAwaitingNetworkRequest: false })
     }
 
-    const pendingNotifications = [
-      ...serverMessages,
-      ...nextDayState.newDayNotifications,
-    ]
+    return {
+      broadcastedPositionMessage,
+      serverMessages,
+      serverValueAdjustments,
+    }
+  }
+
+  async incrementDay(isFirstDay = false) {
+    const {
+      broadcastedPositionMessage,
+      serverMessages,
+      serverValueAdjustments,
+    } = await this.updateServerForNextDay()
+
+    /** @type {farmhand.notification[]} */
+    let pendingNotifications = []
 
     // This would be cleaner if setState was called after localForage.setItem,
     // but updating the state first makes for a more responsive user
     // experience. The persisted state is computed post-update and stored
     // asynchronously, thus avoiding state changes from being blocked.
-
     this.setState(
-      {
-        ...nextDayState,
-        isWaitingForDayToCompleteIncrementing: true,
-        newDayNotifications: [],
-        todaysNotifications: [],
+      /**
+       * @param {farmhand.state} prev
+       * @return {Partial<farmhand.state>}
+       */
+      prev => {
+        const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
+
+        pendingNotifications = [
+          ...serverMessages,
+          ...nextDayState.newDayNotifications,
+        ]
+
+        nextDayState.valueAdjustments = applyPriceEvents(
+          serverValueAdjustments ?? nextDayState.valueAdjustments,
+          nextDayState.priceCrashes,
+          nextDayState.priceSurges
+        )
+
+        nextDayState.isAwaitingNetworkRequest = false
+
+        return {
+          ...nextDayState,
+          isWaitingForDayToCompleteIncrementing: true,
+          newDayNotifications: [],
+          todaysNotifications: [],
+        }
       },
       async () => {
         try {
@@ -1135,7 +1164,6 @@ export default class Farmhand extends FarmhandReducers {
             newDayNotifications: pendingNotifications,
           })
 
-          /** @type {farmhand.notification[]} */
           const notifications = [...pendingNotifications]
 
           notifications
@@ -1148,8 +1176,8 @@ export default class Farmhand extends FarmhandReducers {
               this.showNotification(message, severity)
             )
 
-          if (isCombineEnabled) {
-            if (stageFocus === stageFocusType.FIELD) {
+          if (this.state.isCombineEnabled) {
+            if (this.state.stageFocus === stageFocusType.FIELD) {
               // Allow the mature crops' animation to complete.
               await sleep(1000)
             }
