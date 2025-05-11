@@ -1,0 +1,65 @@
+# docker-compose.yml
+
+services:
+  # Your Farmhand application service
+  farmhand:
+    # Use the image you built and tagged as 'farmhand'
+    image: farmhand
+    # If you prefer to build it every time with compose, uncomment the next line
+    # build: .
+    container_name: farmhand_e2e
+    restart: unless-stopped
+    tty: true
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/']
+      interval: 2s
+      timeout: 5s
+      retries: 5
+
+    # ports:
+    #   # Expose port 3000 to the host for direct access if needed,
+    #   # but Puppeteer will access it via the internal network.
+    #   - '3000:3000'
+    networks:
+      - testnet # Connect to the custom network
+
+  # Puppeteer test runner service
+  puppeteer-tests:
+    # Use the official Puppeteer image
+    image: ghcr.io/puppeteer/puppeteer:latest
+    container_name: farmhand_puppeteer_tests
+    # Mount the local e2e-tests directory into the container
+    volumes:
+      - ./:/home/pptruser/tests
+      # You might need to mount your package.json and install dependencies
+      # if your tests have their own package.json with specific versions or test runners.
+      # For a simple script, just mounting the tests might be enough.
+      # - ./package.json:/usr/src/app/package.json
+      # - ./package-lock.json:/usr/src/app/package-lock.json # or yarn.lock
+    # Command to execute your test script.
+    # This assumes your test script is named run-tests.js inside the e2e-tests directory.
+    command: ['node', 'tests/run-tests.js']
+    # Pass the URL of the Farmhand app as an environment variable
+    environment:
+      - APP_URL=http://farmhand_e2e:3000
+      # Add any other environment variables your tests might need
+    networks:
+      - testnet # Connect to the custom network
+    # Depends on the farmhand service. This ensures farmhand is started before tests run.
+    # Note: depends_on only waits for the container to start, not for the app inside to be ready.
+    # Your test script should handle waiting for the app to be fully available.
+    depends_on:
+      farmhand: # Wait specifically for the 'farmhand' service
+        condition: service_healthy # Ensure 'farmhand' passes its health check before starting
+    # Recommended for Chrome/Puppeteer in Docker to prevent crashes
+    shm_size: '2gb'
+    # Keep the container running after the command finishes to inspect logs/output if needed.
+    # You might want to remove this for CI environments where you want it to exit.
+    # Or, ensure your test script exits with an appropriate code.
+    # If your test script exits, the container will stop.
+    # tty: true # Keeps the container running if the command exits quickly
+
+# Define the custom network
+networks:
+  testnet:
+    driver: bridge

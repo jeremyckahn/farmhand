@@ -1,0 +1,31 @@
+# .dockerignore
+# This file specifies intentionally untracked files that Docker should ignore.
+# Ignoring these files helps to keep the Docker build context small and speeds up builds.
+
+# Node.js dependencies - these will be installed inside the container
+node_modules
+
+# Build output directory - this will be generated inside the container during the build stage
+build
+dist
+
+# Git files
+.git
+.gitignore
+
+# Environment files - manage environment variables through Docker's mechanisms
+.env
+.env.*
+*.local
+
+# Docker files themselves (optional, but often ignored)
+Dockerfile
+docker-compose.yml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE and editor directories
+.vscode
+.idea

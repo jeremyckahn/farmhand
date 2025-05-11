@@ -27,7 +27,9 @@ jobs:
         run: npm run lint
 
       - name: 'Run tests'
-        run: npm test -- --coverage --run
+        run: |
+          npm test -- --coverage --run
+          npm run e2e
 
       - name: 'Check types'
         # TODO: Change this to check:types when all type errors are fixed

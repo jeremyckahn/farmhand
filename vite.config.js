@@ -35,6 +35,9 @@ const viteConfig = defineConfig({
   build: {
     sourcemap: true,
   },
+  preview: {
+    allowedHosts: true,
+  },
   plugins: [
     react(),
     VitePWA({
