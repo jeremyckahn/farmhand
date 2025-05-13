@@ -38,7 +38,7 @@ services:
       # - ./package-lock.json:/usr/src/app/package-lock.json # or yarn.lock
     # Command to execute your test script.
     # This assumes your test script is named run-tests.js inside the e2e-tests directory.
-    command: ['node', 'tests/run-tests.js']
+    command: ['node', 'index.js']
     # Pass the URL of the Farmhand app as an environment variable
     environment:
       - APP_URL=http://farmhand_e2e:3000
