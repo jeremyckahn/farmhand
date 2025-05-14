@@ -6,8 +6,6 @@ const { getByText } = queries
 
 // FIXME: Running the E2E tests seems to create an empty package.json file
 
-// FIXME: Failures in this file are not being propagated through Docker
-
 // prettier-disable
 ;(async () => {
   const browser = await puppeteer.launch({
