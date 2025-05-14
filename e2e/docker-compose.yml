@@ -5,8 +5,7 @@ services:
   farmhand:
     # Use the image you built and tagged as 'farmhand'
     image: farmhand
-    # If you prefer to build it every time with compose, uncomment the next line
-    # build: .
+    build: ../
     container_name: farmhand_e2e
     restart: unless-stopped
     tty: true
