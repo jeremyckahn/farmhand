@@ -4,8 +4,6 @@ import puppeteer from 'puppeteer'
 
 const { getByText } = queries
 
-// FIXME: Running the E2E tests seems to create an empty package.json file
-
 // prettier-disable
 ;(async () => {
   const browser = await puppeteer.launch({
