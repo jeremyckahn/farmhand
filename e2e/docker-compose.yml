@@ -31,6 +31,8 @@ services:
     # Mount the local e2e-tests directory into the container
     volumes:
       - ./:/home/pptruser/tests
+      - ../package.json/:/home/pptruser/tests/package.json
+      - ../node_modules/:/home/pptruser/tests/node_modules
       # You might need to mount your package.json and install dependencies
       # if your tests have their own package.json with specific versions or test runners.
       # For a simple script, just mounting the tests might be enough.

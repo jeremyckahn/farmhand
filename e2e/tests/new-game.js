@@ -1,5 +1,14 @@
-const puppeteer = require('puppeteer') // v23.0.0 or later
+import { expect } from 'expect'
+import { getDocument, queries } from 'pptr-testing-library'
+import puppeteer from 'puppeteer'
 
+const { getByText } = queries
+
+// FIXME: Running the E2E tests seems to create an empty package.json file
+
+// FIXME: Failures in this file are not being propagated through Docker
+
+// prettier-disable
 ;(async () => {
   const browser = await puppeteer.launch({
     headless: true, // Running headless is typical for CI
@@ -32,22 +41,42 @@ const puppeteer = require('puppeteer') // v23.0.0 or later
 
   {
     const targetPage = page
+    const $document = await getDocument(page)
 
-    try {
-      await puppeteer.Locator.race([
-        targetPage.locator('#root > div > button path'),
-      ])
-        .setTimeout(timeout)
-        .click({
-          offset: {
-            x: 15.5,
-            y: 6,
-          },
-        })
-    } catch (e) {
-      console.error(e)
-      throw e
-    }
+    await targetPage
+      .locator('#root > div > button path')
+      .setTimeout(timeout)
+      .click({
+        offset: {
+          x: 15.5,
+          y: 6,
+        },
+      })
+
+    await getByText($document, 'Your loan balance has grown to', {
+      exact: false,
+    })
+
+    await targetPage.reload()
+  }
+
+  {
+    const $document = await getDocument(page)
+
+    // FIXME: This should not be necessary, but it seems to make the following assertion succeed
+    await getByText($document, 'Day 2', {
+      exact: false,
+    })
+
+    const notification = await getByText(
+      $document,
+      'Your loan balance has grown to',
+      {
+        exact: false,
+      }
+    )
+
+    expect(notification).toBeTruthy()
   }
 
   await browser.close()
