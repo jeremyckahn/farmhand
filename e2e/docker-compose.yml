@@ -1,0 +1,106 @@
+services:
+  # Farmhand application service
+  farmhand:
+    image: ghcr.io/${GITHUB_REPOSITORY}/farmhand:${FARMHAND_IMAGE_TAG}
+    container_name: farmhand_e2e
+    restart: unless-stopped
+    tty: true
+    networks:
+      - farmhand_e2e_testnet
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/']
+      interval: 2s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      api:
+        condition: service_healthy
+      tracker:
+        condition: service_healthy
+
+  api:
+    image: ghcr.io/${GITHUB_REPOSITORY}/farmhand:${FARMHAND_IMAGE_TAG}
+    command: ['npm', 'run', 'start:api']
+    volumes:
+      - ../.vercel:/app/.vercel
+      - ../package.json:/app/package.json
+      - ../src:/app/src
+      - ../api:/app/api
+      - ../api-etc:/app/api-etc
+    container_name: farmhand_e2e_api
+    restart: unless-stopped
+    tty: true
+    env_file: .env
+    environment:
+      - REDIS_ENDPOINT=farmhand_e2e_redis
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3001/api/get-market-data']
+      interval: 2s
+      timeout: 5s
+      retries: 5
+    networks:
+      - farmhand_e2e_testnet
+    depends_on:
+      redis:
+        condition: service_started
+
+  tracker:
+    image: ghcr.io/${GITHUB_REPOSITORY}/farmhand:${FARMHAND_IMAGE_TAG}
+    command: ['npm', 'run', 'start:tracker']
+    volumes:
+      - ../package.json:/app/package.json
+    container_name: farmhand_e2e_tracker
+    restart: unless-stopped
+    tty: true
+    env_file: .env
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8000/stats']
+      interval: 2s
+      timeout: 5s
+      retries: 5
+    networks:
+      - farmhand_e2e_testnet
+
+  # https://github.com/voocel/docker-lnmp/blob/1441be394b880e36c2e1b675fb50a8067229c38a/docker-compose.yml#L58-L69
+  redis:
+    build: ../redis
+    image: redis
+    volumes:
+      - ../redis/redis.conf/:/usr/local/etc/redis.conf
+      - ../redis/data:/usr/local/redis/data
+      - ../redis/redis.log:/usr/local/redis/redis.log
+    networks:
+      - farmhand_e2e_testnet
+    restart: always
+    container_name: farmhand_e2e_redis
+
+  playwright-tests:
+    # GITHUB_REPOSITORY and PLAYWRIGHT_IMAGE_TAG are expected to be set in the environment running docker-compose
+    image: ghcr.io/${GITHUB_REPOSITORY}/playwright-tests:${PLAYWRIGHT_IMAGE_TAG}
+    container_name: farmhand_playwright_tests
+    volumes:
+      - ./tests:/home/pwuser/e2e/tests
+    # Use ipc: host as recommended by Playwright docs for Chromium
+    ipc: host
+    # Set the working directory explicitly to match the WORKDIR in the Dockerfile
+    working_dir: /home/pwuser/e2e
+    # Run as root to avoid permission issues
+    user: root
+    entrypoint: ['/bin/sh', '-c']
+    command: ["exec su root -c 'yes | npx playwright test tests'"]
+    environment:
+      - APP_URL=http://farmhand:3000
+      # Add any other environment variables your tests might need
+    networks:
+      - farmhand_e2e_testnet # Connect to the custom network
+    depends_on:
+      farmhand:
+        condition: service_healthy
+    # Recommended for Chrome/Playwright in Docker
+    shm_size: '2gb'
+    # tty: true # Keeps the container running if the command exits quickly
+
+# Define the custom network
+networks:
+  farmhand_e2e_testnet:
+    driver: bridge

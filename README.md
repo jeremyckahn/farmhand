@@ -117,6 +117,44 @@ All are welcome to help with smoke testing Farmhand to ensure the game is stable
 
 It would be a good idea to perform a smoke test whenever there is a significant change to the codebase (such as a major new feature or refactor). The process is intended to catch defects before making a Production release. If any issues are encountered during testing, please leave a comment on the Smoke Test Report issue explaining what you experienced. Non-trivial issues should be addressed by the dev team before releasing to the Production environment.
 
+### End-to-end (E2E) testing
+
+E2E tests are performed in a GitHub Actions job called `e2e` under [the CI workflow](https://github.com/jeremyckahn/farmhand/actions/workflows/ci.yml) upon push to GitHub. You can run the E2E tests locally with the following additional tools installed and set up in your environment:
+
+- [Docker](https://docs.docker.com/engine/install/)
+- [GitHub CLI](https://cli.github.com/)
+  - You MUST [be authenticated](https://cli.github.com/manual/gh_auth_login)
+- [nektos/act](https://github.com/nektos/act)
+  - This MUST [be installed as a GitHub CLI extension](https://nektosact.com/installation/gh.html)
+- [jq](https://jqlang.org/download/)
+
+Additionally, you MUST have a Vercel account and be logged into it locally. You can do that with:
+
+```sh
+npx vercel login
+```
+
+Once that's all set up, you can run the E2E tests with:
+
+```sh
+npm run e2e
+```
+
+Note that running tests locally involves downloading Docker images to your system. These images can accrue and take up space over time, but you can clear them out with:
+
+```sh
+npm run e2e:cleanup
+```
+
+#### Authoring new E2E tests
+
+Run this script to launch the [Playwright codegen tools](https://playwright.dev/docs/codegen-intro):
+
+```sh
+# Assumes you already have `npm run dev` running
+npm run e2e:create
+```
+
 ### Releasing updates
 
 Use this GitHub Action to deploy a new version of Farmhand: [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
@@ -154,3 +192,7 @@ In addition to enabling features via environment variables, players can manually
 ## License
 
 All Farmhand code and is licensed under [GNU GPL v2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html). All media assets (such as game art) are licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
+
+```
+
+```

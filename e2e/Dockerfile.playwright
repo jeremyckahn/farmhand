@@ -1,0 +1,16 @@
+FROM mcr.microsoft.com/playwright:v1.52.0-noble
+
+# Use pwuser's home directory as recommended by Playwright docs
+WORKDIR /home/pwuser/e2e
+
+# Copy package.json and package-lock.json first to leverage Docker cache
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy the rest of the project code
+COPY . .
+
+# Set user to run tests
+USER pwuser
