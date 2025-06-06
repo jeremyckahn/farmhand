@@ -7,12 +7,11 @@ on:
       - '!main'
 
 jobs:
-  test_and_build:
+  lint_test_type:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      # https://stackoverflow.com/a/69634516
       - name: Reconfigure git to use HTTP authentication
         run: >
           git config --global url."https://github.com/".insteadOf ssh://git@github.com/
@@ -26,12 +25,22 @@ jobs:
       - name: 'Lint code'
         run: npm run lint
 
-      - name: 'Run tests'
+      - name: 'Run unit tests'
         run: npm test -- --coverage --run
 
       - name: 'Check types'
-        # TODO: Change this to check:types when all type errors are fixed
         run: npm run check:types:noerror
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 'Install dependencies'
+        run: npm ci
 
       - name: 'Build web app artifacts'
         run: |
@@ -41,3 +50,132 @@ jobs:
         with:
           name: build-output
           path: dist
+
+  e2e:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    env:
+      # Define image name and tag based on repository and full SHA
+      PLAYWRIGHT_IMAGE_NAME: ghcr.io/${{ github.repository }}/playwright-tests
+      PLAYWRIGHT_IMAGE_TAG: ${{ github.sha }}
+      # Define Farmhand image name and tag based on repository and full SHA
+      FARMHAND_IMAGE_NAME: ghcr.io/${{ github.repository }}/farmhand
+      FARMHAND_IMAGE_TAG: ${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Reconfigure git to use HTTP authentication
+        run: >
+          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if Playwright image exists
+        id: check_playwright_image
+        run: |
+          FULL_IMAGE_REF="${{ env.PLAYWRIGHT_IMAGE_NAME }}:${{ env.PLAYWRIGHT_IMAGE_TAG }}"
+          echo "Checking for Playwright image: ${FULL_IMAGE_REF}"
+
+          if docker manifest inspect ${FULL_IMAGE_REF} > /dev/null 2>&1; then
+            echo "image_exists=true" >> "$GITHUB_OUTPUT"
+            echo "Playwright image found. Skipping build."
+          else
+            echo "image_exists=false" >> "$GITHUB_OUTPUT"
+            echo "Playwright image not found. Will build."
+          fi
+
+      # Build and push Playwright Docker image to GHCR only if it does not exist
+      - name: Build and push Playwright Docker image to GHCR
+        if: steps.check_playwright_image.outputs.image_exists == 'false'
+        run: |
+          FULL_IMAGE_REF="${{ env.PLAYWRIGHT_IMAGE_NAME }}:${{ env.PLAYWRIGHT_IMAGE_TAG }}"
+          echo "Building and pushing ${FULL_IMAGE_REF}"
+
+          docker buildx build --push \
+            --tag "${FULL_IMAGE_REF}" \
+            --cache-from type=registry,ref=${{ env.PLAYWRIGHT_IMAGE_NAME }}:latest \
+            --cache-to type=inline \
+            -f e2e/Dockerfile.playwright e2e
+
+      - name: Check if Farmhand image exists
+        id: check_farmhand_image
+        run: |
+          FULL_IMAGE_REF="${{ env.FARMHAND_IMAGE_NAME }}:${{ env.FARMHAND_IMAGE_TAG }}"
+          echo "Checking for Farmhand image: ${FULL_IMAGE_REF}"
+          if docker manifest inspect ${FULL_IMAGE_REF} > /dev/null 2>&1; then
+            echo "image_exists=true" >> "$GITHUB_OUTPUT"
+            echo "Farmhand image found. Skipping build."
+          else
+            echo "image_exists=false" >> "$GITHUB_OUTPUT"
+            echo "Farmhand image not found. Will build."
+          fi
+
+      # Build and push Farmhand Docker image to GHCR only if it does not exist
+      - name: Build and push Farmhand Docker image to GHCR
+        if: steps.check_farmhand_image.outputs.image_exists == 'false'
+        run: |
+          FULL_IMAGE_REF="${{ env.FARMHAND_IMAGE_NAME }}:${{ env.FARMHAND_IMAGE_TAG }}"
+          echo "Building and pushing ${FULL_IMAGE_REF}"
+          # Set context to the project root directory
+          docker buildx build --push \
+            --tag "${FULL_IMAGE_REF}" \
+            --cache-from type=registry,ref=${{ env.FARMHAND_IMAGE_NAME }}:latest \
+            --cache-to type=inline \
+            -f e2e/Dockerfile.farmhand . # Build context is the project root
+
+      - name: 'Run e2e tests using cached Docker images'
+        run: |
+          export GITHUB_REPOSITORY=${{ github.repository }}
+          export PLAYWRIGHT_IMAGE_TAG=${{ env.PLAYWRIGHT_IMAGE_TAG }}
+          export FARMHAND_IMAGE_TAG=${{ env.FARMHAND_IMAGE_TAG }}
+
+          echo "Pulling Playwright image: ${{ env.PLAYWRIGHT_IMAGE_NAME }}:${{ env.PLAYWRIGHT_IMAGE_TAG }}"
+          docker pull ${{ env.PLAYWRIGHT_IMAGE_NAME }}:${{ env.PLAYWRIGHT_IMAGE_TAG }}
+          echo "Pulling Farmhand image: ${{ env.FARMHAND_IMAGE_NAME }}:${{ env.FARMHAND_IMAGE_TAG }}"
+          docker pull ${{ env.FARMHAND_IMAGE_NAME }}:${{ env.FARMHAND_IMAGE_TAG }}
+
+          # Create the .env file for docker-compose
+          echo 'VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}' > e2e/.env
+
+          # Run docker compose, using the images defined in docker-compose.yml
+          # Has --abort-on-container-exit and --exit-code-from to correctly report test results
+          docker compose -f e2e/docker-compose.yml up \
+            --no-build \
+            --abort-on-container-exit \
+            --exit-code-from playwright-tests \
+            playwright-tests
+          docker compose -f e2e/docker-compose.yml down
+
+          # Clean up the generated .env file
+          rm e2e/.env
+
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Prune Farmhand images
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: 'farmhand/farmhand'
+          package-type: 'container'
+          # Effectively retains 4 images because each image is represented by 3 versioned files
+          min-versions-to-keep: 12
+
+      - name: Prune Playwright images
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: farmhand/playwright-tests
+          package-type: 'container'
+          # Effectively retains 4 images because each image is represented by 3 versioned files
+          min-versions-to-keep: 12
