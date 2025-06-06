@@ -35,6 +35,9 @@ const viteConfig = defineConfig({
   build: {
     sourcemap: true,
   },
+  preview: {
+    allowedHosts: true,
+  },
   plugins: [
     react(),
     VitePWA({
@@ -99,6 +102,7 @@ const vitestConfig = vitestDefineConfig({
     environment: 'jsdom',
     setupFiles: './src/setupTests.js',
     restoreMocks: true,
+    dir: 'src',
     coverage: {
       reporter: ['text', 'html'],
       exclude: ['node_modules', 'src/setupTests.js', 'dist', 'src/__mocks__'],

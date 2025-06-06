@@ -1,0 +1,457 @@
+{
+  "allowCustomPeerCowNames": false,
+  "cellarInventory": [],
+  "completedAchievements": {
+    "plant-crop": true,
+    "water-crop": true
+  },
+  "cowBreedingPen": {
+    "cowId1": null,
+    "cowId2": null,
+    "daysUntilBirth": -1
+  },
+  "cowColorsPurchased": {},
+  "cowForSale": {
+    "baseWeight": 1601,
+    "color": "GREEN",
+    "colorsInBloodline": {
+      "GREEN": true
+    },
+    "daysOld": 1,
+    "daysSinceMilking": 0,
+    "daysSinceProducingFertilizer": 0,
+    "gender": "FEMALE",
+    "happiness": 0,
+    "happinessBoostsToday": 0,
+    "id": "b93a9c59-f73f-4986-b44e-ffb422bcd4c2",
+    "isBred": false,
+    "isUsingHuggingMachine": false,
+    "name": "Guava",
+    "ownerId": "",
+    "originalOwnerId": "",
+    "timesTraded": 0,
+    "weightMultiplier": 1
+  },
+  "cowInventory": [],
+  "cowsSold": {},
+  "cowsTraded": 0,
+  "cropsHarvested": {},
+  "dayCount": 6,
+  "experience": 0,
+  "farmName": "Unnamed",
+  "field": [
+    [
+      {
+        "itemId": "carrot",
+        "fertilizerType": "NONE",
+        "daysOld": 5,
+        "daysWatered": 5,
+        "wasWateredToday": true
+      },
+      {
+        "itemId": "carrot",
+        "fertilizerType": "NONE",
+        "daysOld": 5,
+        "daysWatered": 5,
+        "wasWateredToday": true
+      },
+      {
+        "itemId": "carrot",
+        "fertilizerType": "NONE",
+        "daysOld": 5,
+        "daysWatered": 5,
+        "wasWateredToday": true
+      },
+      null,
+      null,
+      null
+    ],
+    [
+      {
+        "itemId": "carrot",
+        "fertilizerType": "NONE",
+        "daysOld": 5,
+        "daysWatered": 5,
+        "wasWateredToday": true
+      },
+      {
+        "itemId": "carrot",
+        "fertilizerType": "NONE",
+        "daysOld": 5,
+        "daysWatered": 5,
+        "wasWateredToday": true
+      },
+      {
+        "itemId": "carrot",
+        "fertilizerType": "NONE",
+        "daysOld": 5,
+        "daysWatered": 5,
+        "wasWateredToday": true
+      },
+      null,
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      }
+    ],
+    [
+      {
+        "itemId": "carrot",
+        "fertilizerType": "NONE",
+        "daysOld": 5,
+        "daysWatered": 5,
+        "wasWateredToday": true
+      },
+      {
+        "itemId": "carrot",
+        "fertilizerType": "NONE",
+        "daysOld": 5,
+        "daysWatered": 5,
+        "wasWateredToday": true
+      },
+      {
+        "itemId": "carrot",
+        "fertilizerType": "NONE",
+        "daysOld": 5,
+        "daysWatered": 5,
+        "wasWateredToday": true
+      },
+      null,
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      }
+    ],
+    [
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      null,
+      null,
+      {
+        "itemId": "scarecrow",
+        "fertilizerType": "NONE"
+      },
+      null,
+      null
+    ],
+    [
+      null,
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      null
+    ],
+    [null, null, null, null, null, null],
+    [
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      null,
+      null,
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      }
+    ],
+    [
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      null,
+      null
+    ],
+    [
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      null
+    ],
+    [
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      },
+      null,
+      {
+        "itemId": "weed",
+        "fertilizerType": "NONE"
+      }
+    ]
+  ],
+  "forest": [[null, null, null, null]],
+  "historicalDailyLosses": [0, 0, 0, 0, -143.7],
+  "historicalDailyRevenue": [0, 0, 0, 0, 0],
+  "historicalValueAdjustments": [
+    {
+      "asparagus": 1.254561372610583,
+      "asparagus-seed": 0.8845336867381606,
+      "bronze-ore": 0.8820993693168143,
+      "carrot": 0.5151057244898383,
+      "carrot-seed": 0.8007552689761459,
+      "corn": 1.0577673788621866,
+      "corn-seed": 0.8492871019468962,
+      "garlic": 0.6502095798811709,
+      "garlic-seed": 0.6776417342031218,
+      "gold-ore": 1.1584127926987628,
+      "grape-cabernet-sauvignon": 1.0811524144134221,
+      "grape-chardonnay": 0.9566018874265536,
+      "grape-nebbiolo": 1.038616184743502,
+      "grape-sauvignon-blanc": 0.8420890144753135,
+      "grape-seed": 0.8711888712889699,
+      "grape-tempranillo": 0.8417473069445603,
+      "iron-ore": 0.8565852787467081,
+      "jalapeno": 0.8938267219202933,
+      "jalapeno-seed": 1.2806755799922187,
+      "olive": 0.894838025775234,
+      "olive-seed": 0.5819676400592492,
+      "onion": 1.388841964280044,
+      "onion-seed": 0.5548354705668044,
+      "pea": 1.4270874498629684,
+      "pea-seed": 1.3014170459989431,
+      "potato": 1.198063016021274,
+      "potato-seed": 1.1227007201477113,
+      "pumpkin": 1.256866505382895,
+      "pumpkin-seed": 0.9762702998744324,
+      "salt-rock": 1.318355654482557,
+      "silver-ore": 0.8675044285411415,
+      "soybean": 0.5974111121058051,
+      "soybean-seed": 1.2994025472815358,
+      "spinach": 1.3888914334365705,
+      "spinach-seed": 0.6511206276246511,
+      "strawberry": 0.6648639912973919,
+      "strawberry-seed": 1.2151617642366415,
+      "sunflower": 0.6441195107880303,
+      "sunflower-seed": 1.088430125646544,
+      "sweet-potato": 0.6854892825193449,
+      "sweet-potato-seed": 0.993009857740943,
+      "tomato": 1.287432200495485,
+      "tomato-seed": 1.1243978023384449,
+      "watermelon": 1.0980278225758555,
+      "watermelon-seed": 1.1400979011983594,
+      "wheat": 0.8063919814881977,
+      "wheat-seed": 0.9399986471778438
+    }
+  ],
+  "hoveredPlotRangeSize": 7,
+  "id": "d7a1db57-f021-4ce5-b632-ad382789f4f1",
+  "inventory": [
+    {
+      "id": "carrot-seed",
+      "quantity": 1
+    },
+    {
+      "id": "weed",
+      "quantity": 1
+    }
+  ],
+  "inventoryLimit": 100,
+  "isCombineEnabled": false,
+  "itemsSold": {},
+  "cellarItemsSold": {},
+  "learnedRecipes": {},
+  "loanBalance": 552.03,
+  "loansTakenOut": 1,
+  "money": 100106.3,
+  "newDayNotifications": [],
+  "notificationLog": [
+    {
+      "day": 6,
+      "notifications": {
+        "error": [],
+        "info": ["It rained in the night!"],
+        "success": [],
+        "warning": ["Your loan balance has grown to $552.03."]
+      }
+    },
+    {
+      "day": 5,
+      "notifications": {
+        "error": [],
+        "info": [],
+        "success": [],
+        "warning": ["Your loan balance has grown to $541.21."]
+      }
+    },
+    {
+      "day": 4,
+      "notifications": {
+        "error": [],
+        "info": [],
+        "success": [],
+        "warning": ["Your loan balance has grown to $530.60."]
+      }
+    },
+    {
+      "day": 3,
+      "notifications": {
+        "error": [],
+        "info": [],
+        "success": [],
+        "warning": ["Your loan balance has grown to $520.20."]
+      }
+    },
+    {
+      "day": 2,
+      "notifications": {
+        "error": [],
+        "info": ["It rained in the night!"],
+        "success": [],
+        "warning": ["Your loan balance has grown to $510.00."]
+      }
+    }
+  ],
+  "priceCrashes": {},
+  "priceSurges": {},
+  "profitabilityStreak": 0,
+  "purchasedCombine": 0,
+  "purchasedComposter": 0,
+  "purchasedCowPen": 0,
+  "purchasedCellar": 0,
+  "purchasedField": 0,
+  "purchasedForest": 0,
+  "purchasedSmelter": 0,
+  "record7dayProfitAverage": 0,
+  "recordProfitabilityStreak": 0,
+  "recordSingleDayProfit": 0,
+  "revenue": 0,
+  "showHomeScreen": true,
+  "showNotifications": true,
+  "todaysLosses": 0,
+  "todaysPurchases": {},
+  "todaysRevenue": 0,
+  "todaysStartingInventory": {
+    "carrot-seed": 1,
+    "weed": 1
+  },
+  "toolLevels": {
+    "HOE": "DEFAULT",
+    "SCYTHE": "DEFAULT",
+    "SHOVEL": "UNAVAILABLE",
+    "WATERING_CAN": "DEFAULT"
+  },
+  "useAlternateEndDayButtonPosition": false,
+  "valueAdjustments": {
+    "asparagus": 0.7710329471429687,
+    "asparagus-seed": 0.6047945736371781,
+    "bronze-ore": 0.6523314669735881,
+    "carrot": 1.148946183956264,
+    "carrot-seed": 1.150865016558905,
+    "corn": 1.2916975621660312,
+    "corn-seed": 0.8194585108692283,
+    "garlic": 0.5890389828828759,
+    "garlic-seed": 1.0461378148234952,
+    "gold-ore": 1.1866263486101722,
+    "grape-cabernet-sauvignon": 0.9051176034381517,
+    "grape-chardonnay": 1.0449007660226393,
+    "grape-nebbiolo": 0.8715697232156476,
+    "grape-sauvignon-blanc": 0.6310523029050967,
+    "grape-seed": 0.9253596435820454,
+    "grape-tempranillo": 0.6756200431464858,
+    "iron-ore": 1.1565063783102898,
+    "jalapeno": 0.7091052379238315,
+    "jalapeno-seed": 1.132727916247675,
+    "olive": 1.311369163510936,
+    "olive-seed": 0.9192617853490546,
+    "onion": 0.7145057442803753,
+    "onion-seed": 0.6384400392400458,
+    "pea": 1.3438668707129882,
+    "pea-seed": 0.947899535167928,
+    "potato": 0.9114908865313538,
+    "potato-seed": 1.1068364751179312,
+    "pumpkin": 0.8377832985809028,
+    "pumpkin-seed": 1.4440859731959748,
+    "salt-rock": 1.3505767817681624,
+    "silver-ore": 0.9160677427267769,
+    "soybean": 0.7877249923876428,
+    "soybean-seed": 1.062021364573846,
+    "spinach": 1.2699413150967442,
+    "spinach-seed": 0.8490869162420625,
+    "strawberry": 1.41618172037454,
+    "strawberry-seed": 0.8777549220278436,
+    "sunflower": 0.5903344778618149,
+    "sunflower-seed": 0.974090939308244,
+    "sweet-potato": 0.5906894671175695,
+    "sweet-potato-seed": 0.6012857315253939,
+    "tomato": 1.1936926336320215,
+    "tomato-seed": 0.7109397222579946,
+    "watermelon": 0.666622692558885,
+    "watermelon-seed": 1.0104982645951823,
+    "wheat": 0.8632829757532291,
+    "wheat-seed": 0.7821587302079209
+  },
+  "version": "1.18.26"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@jeremyckahn/farmhand-e2e",
+  "version": "0.0.0",
+  "description": "End-to-end tests for Farmhand",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {},
+  "author": "jeremyckahn@gmail.com",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0"
+  }
+}

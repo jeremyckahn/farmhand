@@ -5,5 +5,6 @@ Session.vim
 .DS_Store
 .idea
 coverage
-
 .vercel
+e2e/test-results
+e2e/.env
