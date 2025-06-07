@@ -1086,8 +1086,6 @@ describe('transformStateDataForImport', () => {
   ])(
     'fixes corrupt cowBreedingPen if needed',
     ({ cowBreedingPen, cowInventory, expectedCowBreedingPen }) => {
-      state.cowBreedingPen = cowBreedingPen
-      state.cowInventory = cowInventory
       Object.assign(state, { cowBreedingPen, cowInventory })
 
       const sanitizedState = transformStateDataForImport(state)
