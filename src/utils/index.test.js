@@ -1,20 +1,5 @@
-import { testCrop } from '../test-utils/index.js'
-import { items as itemImages, animals } from '../img/index.js'
-import { cowColors, cropLifeStage, genders, standardCowColors } from '../enums.js'
-import {
-  rainbowFertilizer,
-  carrot,
-  carrotSeed,
-  milk1,
-  pumpkin,
-  spinach,
-  corn,
-  potato,
-  wheat,
-  scarecrow,
-  silverOre,
-} from '../data/items.js'
-import { carrotSoup } from '../data/recipes.js'
+/** @typedef {import('../components/Farmhand/Farmhand.js').farmhand.state} farmhand.state */
+
 import {
   COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
@@ -30,46 +15,69 @@ import {
   I_AM_RICH_BONUSES,
   MALE_COW_WEIGHT_MULTIPLIER,
 } from '../constants.js'
+import {
+  carrot,
+  carrotSeed,
+  corn,
+  milk1,
+  potato,
+  pumpkin,
+  rainbowFertilizer,
+  scarecrow,
+  silverOre,
+  spinach,
+  wheat,
+} from '../data/items.js'
+import { carrotSoup } from '../data/recipes.js'
+import {
+  cowColors,
+  cropLifeStage,
+  genders,
+  standardCowColors,
+} from '../enums.js'
+import { animals, items as itemImages } from '../img/index.js'
+import { testCrop } from '../test-utils/index.js'
+import { getCowStub } from '../test-utils/stubs/cowStub.js'
 
-import { levelAchieved } from './levelAchieved.js'
 import { farmProductsSold } from './farmProductsSold.js'
 import { isItemAFarmProduct } from './isItemAFarmProduct.js'
+import { levelAchieved } from './levelAchieved.js'
 
 import {
   canMakeRecipe,
   castToMoney,
-  computeMarketPositions,
   chooseRandom,
+  computeMarketPositions,
   dollarString,
   experienceNeededForLevel,
   generateCow,
   generateOffspringCow,
   get7DayAverage,
+  getAvailableShopInventory,
+  getCowFertilizerProductionRate,
   getCowImage,
   getCowMilkRate,
-  getCowFertilizerProductionRate,
   getCowValue,
   getCowWeight,
   getCropLifeStage,
   getFinalCropItemIdFromSeedItemId,
   getGrowingPhase,
-  getSeedItemIdFromFinalStageCropItemId,
   getItemCurrentValue,
   getLifeStageRange,
   getPlotContentFromItemId,
   getPlotImage,
-  getRandomUnlockedCrop,
   getPriceEventForCrop,
+  getRandomLevelUpReward,
+  getRandomUnlockedCrop,
   getRangeCoords,
   getSalePriceMultiplier,
+  getSeedItemIdFromFinalStageCropItemId,
   integerString,
   maxYieldOfRecipe,
   moneyTotal,
   percentageString,
   randomChoice,
   transformStateDataForImport,
-  getAvailableShopInventory,
-  getRandomLevelUpReward,
 } from './index.js'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
@@ -990,6 +998,9 @@ describe('getCowImage', () => {
 })
 
 describe('transformStateDataForImport', () => {
+  /**
+   * @type Partial<farmhand.state>
+   */
   let state
 
   beforeEach(() => {
@@ -999,20 +1010,17 @@ describe('transformStateDataForImport', () => {
       inventoryLimit: 1000,
       loanBalance: 100,
       money: 1234,
-      version: 1,
+      version: '1',
+      cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
+      cowInventory: [],
     }
   })
 
   test('it returns a sanitized state without version', () => {
     const sanitizedState = transformStateDataForImport(state)
+    const { version, ...stateWithoutVersion } = state
 
-    expect(sanitizedState).toEqual({
-      dayCount: 100,
-      experience: 10,
-      inventoryLimit: 1000,
-      loanBalance: 100,
-      money: 1234,
-    })
+    expect(sanitizedState).toEqual(stateWithoutVersion)
   })
 
   test('it calculates experience from itemsSold if experience is 0', () => {
@@ -1023,19 +1031,74 @@ describe('transformStateDataForImport', () => {
     }
 
     const sanitizedState = transformStateDataForImport(state)
+    const { version, ...stateWithoutVersion } = state
 
     expect(sanitizedState).toEqual({
-      dayCount: 100,
+      ...stateWithoutVersion,
       experience: 5,
-      inventoryLimit: 1000,
-      itemsSold: {
-        carrot: 5,
-        'carrot-seed': 10,
-      },
-      loanBalance: 100,
-      money: 1234,
     })
   })
+
+  test.each([
+    // Valid state, no cowBreedingPen changes needed
+    {
+      cowBreedingPen: { cowId1: 'abc', cowId2: null, daysUntilBirth: 2 },
+      cowInventory: [getCowStub({ id: 'abc' })],
+      expectedCowBreedingPen: {
+        cowId1: 'abc',
+        cowId2: null,
+        daysUntilBirth: 2,
+      },
+    },
+
+    // Valid state, no cowBreedingPen changes needed
+    {
+      cowBreedingPen: { cowId1: 'abc', cowId2: 'def', daysUntilBirth: 2 },
+      cowInventory: [getCowStub({ id: 'def' }), getCowStub({ id: 'abc' })],
+      expectedCowBreedingPen: {
+        cowId1: 'abc',
+        cowId2: 'def',
+        daysUntilBirth: 2,
+      },
+    },
+
+    // Invalid state, cowBreedingPen needs to be fixed
+    {
+      cowBreedingPen: { cowId1: 'abc', cowId2: 'def', daysUntilBirth: 2 },
+      cowInventory: [],
+      expectedCowBreedingPen: {
+        cowId1: null,
+        cowId2: null,
+        daysUntilBirth: -1,
+      },
+    },
+
+    // Invalid state, cowBreedingPen needs to be fixed
+    {
+      cowBreedingPen: { cowId1: 'abc', cowId2: null, daysUntilBirth: 2 },
+      cowInventory: [],
+      expectedCowBreedingPen: {
+        cowId1: null,
+        cowId2: null,
+        daysUntilBirth: -1,
+      },
+    },
+  ])(
+    'fixes corrupt cowBreedingPen if needed',
+    ({ cowBreedingPen, cowInventory, expectedCowBreedingPen }) => {
+      state.cowBreedingPen = cowBreedingPen
+      state.cowInventory = cowInventory
+      Object.assign(state, { cowBreedingPen, cowInventory })
+
+      const sanitizedState = transformStateDataForImport(state)
+      const { version, ...stateWithoutVersion } = state
+
+      expect(sanitizedState).toEqual({
+        ...stateWithoutVersion,
+        cowBreedingPen: expectedCowBreedingPen,
+      })
+    }
+  )
 })
 
 describe('getGrowingPhase', () => {
