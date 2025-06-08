@@ -1,3 +1,7 @@
+/** @typedef {import("../../index.js").farmhand.cow} farmhand.cow */
+/** @typedef {import("../../index.js").farmhand.cowBreedingPen} farmhand.cowBreedingPen */
+/** @typedef {import("../../index.js").farmhand.state} farmhand.state */
+
 import { COW_GESTATION_PERIOD_DAYS } from '../../constants.js'
 
 /**
