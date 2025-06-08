@@ -1007,17 +1007,20 @@ export const transformStateDataForImport = state => {
       {}
     )
 
-    ;[cowId1, cowId2].forEach(cowId => {
-      // If either cow is referenced in cowBreedingPen but not cowInventory,
-      // reset cowBreedingPen state
-      if (cowId && !(cowId in cowPenIdMap)) {
-        sanitizedState.cowBreedingPen = {
-          cowId1: null,
-          cowId2: null,
-          daysUntilBirth: -1,
-        }
+    const isCowInBreedingPenMissingFromInventory = [cowId1, cowId2].some(
+      cowId => {
+        return cowId && !(cowId in cowPenIdMap)
       }
-    })
+    )
+
+    if (isCowInBreedingPenMissingFromInventory) {
+      // Resets cowBreedingPen state
+      sanitizedState.cowBreedingPen = {
+        cowId1: null,
+        cowId2: null,
+        daysUntilBirth: -1,
+      }
+    }
   }
 
   return sanitizedState
