@@ -17,37 +17,14 @@
 
 import { Buffer } from 'buffer'
 
-import Dinero from 'dinero.js'
 import configureJimp from '@jimp/custom'
 import jimpPng from '@jimp/png'
+import Dinero from 'dinero.js'
+import { funAnimalName } from 'fun-animal-names'
 import sortBy from 'lodash.sortby'
 import { v4 as uuid } from 'uuid'
-import { funAnimalName } from 'fun-animal-names'
 
-import cowShopInventory from '../data/shop-inventory-cow.js'
-import shopInventory from '../data/shop-inventory.js'
-import fruitNames from '../data/fruit-names.js'
-import { cropItemIdToSeedItemMap, itemsMap } from '../data/maps.js'
-import {
-  chocolateMilk,
-  milk1,
-  milk2,
-  milk3,
-  rainbowMilk1,
-  rainbowMilk2,
-  rainbowMilk3,
-} from '../data/items.js'
-import { unlockableItems } from '../data/levels.js'
-import { items as itemImages, animals, pixel } from '../img/index.js'
-import {
-  cowColors,
-  cropLifeStage,
-  fertilizerType,
-  genders,
-  itemType,
-  stageFocusType,
-  standardCowColors,
-} from '../enums.js'
+import { random } from '../common/utils.js'
 import {
   BREAKPOINTS,
   COW_COLORS_HEX_MAP,
@@ -77,13 +54,36 @@ import {
   PERSISTED_STATE_KEYS,
   PRECIPITATION_CHANCE,
   PRICE_EVENT_STANDARD_DURATION_DECREASE,
+  STANDARD_VIEW_LIST,
   STORAGE_EXPANSION_AMOUNT,
   STORAGE_EXPANSION_BASE_PRICE,
-  STORM_CHANCE,
   STORAGE_EXPANSION_SCALE_PREMIUM,
-  STANDARD_VIEW_LIST,
+  STORM_CHANCE,
 } from '../constants.js'
-import { random } from '../common/utils.js'
+import fruitNames from '../data/fruit-names.js'
+import {
+  chocolateMilk,
+  milk1,
+  milk2,
+  milk3,
+  rainbowMilk1,
+  rainbowMilk2,
+  rainbowMilk3,
+} from '../data/items.js'
+import { unlockableItems } from '../data/levels.js'
+import { cropItemIdToSeedItemMap, itemsMap } from '../data/maps.js'
+import cowShopInventory from '../data/shop-inventory-cow.js'
+import shopInventory from '../data/shop-inventory.js'
+import {
+  cowColors,
+  cropLifeStage,
+  fertilizerType,
+  genders,
+  itemType,
+  stageFocusType,
+  standardCowColors,
+} from '../enums.js'
+import { animals, items as itemImages, pixel } from '../img/index.js'
 
 import { farmProductsSold } from './farmProductsSold.js'
 import { getCropLifecycleDuration } from './getCropLifecycleDuration.js'
@@ -984,6 +984,43 @@ export const transformStateDataForImport = state => {
     sanitizedState.stageFocus === stageFocusType.HOME
   ) {
     sanitizedState = { ...sanitizedState, stageFocus: STANDARD_VIEW_LIST[0] }
+  }
+
+  // NOTE: This is a mitigation for
+  // https://github.com/jeremyckahn/farmhand/issues/546. There's no expected
+  // scenario where a cow would be present in cowBreedingPen but not
+  // cowInventory, but at least one player's game somehow got into that state.
+  // This block detects such an invalid state and corrects it.
+  {
+    const { cowId1, cowId2 } = sanitizedState.cowBreedingPen
+
+    const cowPenIdMap = sanitizedState.cowInventory.reduce(
+      /**
+       * @param acc {Record<string, farmhand.cow>}
+       * @param cow {farmhand.cow}
+       */
+      (acc, cow) => {
+        acc[cow.id] = cow
+
+        return acc
+      },
+      {}
+    )
+
+    const isCowInBreedingPenMissingFromInventory = [cowId1, cowId2].some(
+      cowId => {
+        return cowId && !(cowId in cowPenIdMap)
+      }
+    )
+
+    if (isCowInBreedingPenMissingFromInventory) {
+      // Resets cowBreedingPen state
+      sanitizedState.cowBreedingPen = {
+        cowId1: null,
+        cowId2: null,
+        daysUntilBirth: -1,
+      }
+    }
   }
 
   return sanitizedState
