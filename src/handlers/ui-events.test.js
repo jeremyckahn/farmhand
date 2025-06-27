@@ -54,7 +54,9 @@ describe('handleMenuToggle', () => {
 
 describe('handleClickNextMenuButton', () => {
   test('calls focusNextView', () => {
-    vitest.spyOn(component.instance(), 'focusNextView').mockImplementation()
+    vitest
+      .spyOn(component.instance(), 'focusNextView')
+      .mockImplementation(() => {})
     handlers().handleClickNextMenuButton()
     expect(component.instance().focusNextView).toHaveBeenCalled()
   })
@@ -62,7 +64,9 @@ describe('handleClickNextMenuButton', () => {
 
 describe('handleClickPreviousMenuButton', () => {
   test('calls focusPreviousView', () => {
-    vitest.spyOn(component.instance(), 'focusPreviousView').mockImplementation()
+    vitest
+      .spyOn(component.instance(), 'focusPreviousView')
+      .mockImplementation(() => {})
     handlers().handleClickPreviousMenuButton()
     expect(component.instance().focusPreviousView).toHaveBeenCalled()
   })
@@ -70,7 +74,7 @@ describe('handleClickPreviousMenuButton', () => {
 
 describe('handleCowSelect', () => {
   test('calls selectCow', () => {
-    vitest.spyOn(component.instance(), 'selectCow').mockImplementation()
+    vitest.spyOn(component.instance(), 'selectCow').mockImplementation(() => {})
     handlers().handleCowSelect({ id: 'abc' })
     expect(component.instance().selectCow).toHaveBeenCalledWith({ id: 'abc' })
   })

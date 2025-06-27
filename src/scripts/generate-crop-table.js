@@ -1,6 +1,3 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
-/** @typedef {import("../index").farmhand.cropVariety} farmhand.cropVariety */
-
 // Must be invoked with babel: https://stackoverflow.com/a/51532127/470685
 import markdownTable from 'markdown-table'
 

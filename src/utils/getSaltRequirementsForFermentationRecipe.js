@@ -1,5 +1,3 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
-
 const saltRequirementMultiplier = 2 / 3
 
 /**

@@ -1,8 +1,5 @@
-import {
-  sampleItem1,
-  sampleFieldTool1,
-  sampleCropSeedsItem1,
-} from '../../data/items.js'
+import { sprinkler } from '../../data/items.js'
+import { carrotSeed } from '../../data/crops/carrot.js'
 
 import {
   computePlayerInventory,
@@ -15,21 +12,21 @@ vitest.mock('../../data/items.js')
 
 describe('private helpers', () => {
   describe('computePlayerInventory', () => {
-    const inventory = [{ quantity: 1, id: 'sample-item-1' }]
+    const inventory = [{ quantity: 1, id: 'carrot-seed' }]
 
     test('computes inventory with no value adjustments', () => {
       const playerInventory = computePlayerInventory(inventory, {})
 
-      expect(playerInventory).toEqual([{ quantity: 1, ...sampleItem1 }])
+      expect(playerInventory).toEqual([{ quantity: 1, ...carrotSeed }])
     })
 
     test('computes inventory with value adjustments', () => {
       const playerInventory = computePlayerInventory(inventory, {
-        'sample-item-1': 2,
+        'carrot-seed': 2,
       })
 
       expect(playerInventory).toEqual([
-        { ...sampleItem1, quantity: 1, value: 2 },
+        { ...carrotSeed, quantity: 1, value: 30 },
       ])
     })
   })
@@ -37,20 +34,23 @@ describe('private helpers', () => {
   describe('getFieldToolInventory', () => {
     test('selects field tools from inventory', () => {
       const fieldToolInventory = getFieldToolInventory([
-        sampleFieldTool1,
-        sampleCropSeedsItem1,
+        { ...sprinkler, quantity: 1 },
+        { ...carrotSeed, quantity: 1 },
       ])
 
-      expect(fieldToolInventory).toEqual([sampleFieldTool1])
+      expect(fieldToolInventory).toEqual([{ ...sprinkler, quantity: 1 }])
     })
   })
 
   describe('getPlantableCropInventory', () => {
     test('selects plantable crop items from inventory', () => {
-      const inventory = [{ id: 'sample-crop-1-seed' }, { id: 'sample-item-1' }]
+      const inventory = [
+        { id: 'carrot-seed', quantity: 1 },
+        { id: 'weed', quantity: 1 },
+      ]
       const plantableCropInventory = getPlantableCropInventory(inventory)
 
-      expect(plantableCropInventory).toEqual([sampleCropSeedsItem1])
+      expect(plantableCropInventory).toEqual([{ ...carrotSeed, quantity: 1 }])
     })
   })
 })

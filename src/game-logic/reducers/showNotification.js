@@ -1,7 +1,7 @@
 /**
- * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
- * @typedef {import('@material-ui/lab/Alert').Color} alertSeverity
- * @typedef {import('@material-ui/lab/Alert').AlertProps} AlertProps
+ * @typedef {farmhand.state} state
+ * @typedef {Color} alertSeverity
+ * @typedef {AlertProps} AlertProps
  */
 
 // TODO: Change showNotification to accept a configuration object instead of so

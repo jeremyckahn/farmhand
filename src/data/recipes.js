@@ -1,9 +1,5 @@
 /**
  * @module farmhand.recipes
- * @typedef {import('../index').farmhand.item} farmhand.item
- * @typedef {import('../index').farmhand.recipe} farmhand.recipe
- * @typedef {import('../index').farmhand.grape} farmhand.grape
- * @typedef {import('../index').farmhand.wine} farmhand.wine
  */
 import { itemType, fieldMode, recipeType } from '../enums.js'
 import {
@@ -53,7 +49,7 @@ export const salt = itemify({
   },
   condition: state => state.itemsSold[items.saltRock.id] >= 30,
   description: 'Useful for seasoning food and fermentation.',
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -67,7 +63,7 @@ export const flour = itemify({
     [items.wheat.id]: 10,
   },
   condition: state => state.itemsSold[items.wheat.id] >= 20,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -81,7 +77,7 @@ export const yeast = itemify({
     [flour.id]: 5,
   },
   condition: state => state.itemsSold[flour.id] >= 25,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -98,7 +94,7 @@ const getWineRecipeFromGrape = grape => {
         [grape.id]: GRAPES_REQUIRED_FOR_WINE,
         [yeast.id]: getYeastRequiredForWine(grape.variety),
       },
-      recipeType: recipeType.WINE,
+      recipeType: /** @type {farmhand.recipeType} */ (recipeType.WINE),
       // NOTE: This prevents wines from appearing in the Learned Recipes list in the Workshop
       condition: () => false,
     }),
@@ -119,7 +115,7 @@ export const bread = itemify({
   },
   condition: state =>
     state.itemsSold[flour.id] >= 30 && state.itemsSold[yeast.id] >= 15,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -133,7 +129,7 @@ export const butter = itemify({
     [items.milk3.id]: 5,
   },
   condition: state => state.itemsSold[items.milk3.id] >= 30,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -147,7 +143,7 @@ export const sunButter = itemify({
     [items.sunflower.id]: 25,
   },
   condition: state => state.itemsSold[items.sunflower.id] >= 200,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /*
@@ -161,7 +157,7 @@ export const oliveOil = itemify({
     [items.olive.id]: 250,
   },
   condition: state => state.itemsSold[items.olive.id] >= 500,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -175,7 +171,7 @@ export const cheese = itemify({
     [items.milk3.id]: 8,
   },
   condition: state => (state.itemsSold[items.milk3.id] || 0) >= 20,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -189,7 +185,7 @@ export const rainbowCheese = itemify({
     [items.rainbowMilk3.id]: 10,
   },
   condition: state => (state.itemsSold[items.rainbowMilk3.id] || 0) >= 30,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -203,7 +199,7 @@ export const chocolate = itemify({
     [items.chocolateMilk.id]: 10,
   },
   condition: state => (state.itemsSold[items.chocolateMilk.id] || 0) >= 25,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -217,7 +213,7 @@ export const carrotSoup = itemify({
     [items.carrot.id]: 4,
   },
   condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -231,7 +227,7 @@ export const jackolantern = itemify({
     [items.pumpkin.id]: 1,
   },
   condition: state => (state.itemsSold[items.pumpkin.id] || 0) >= 50,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -248,7 +244,7 @@ export const spaghetti = itemify({
   condition: state =>
     state.itemsSold[items.wheat.id] >= 20 &&
     state.itemsSold[items.tomato.id] >= 5,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -265,7 +261,7 @@ export const frenchOnionSoup = itemify({
   },
   condition: state =>
     state.itemsSold[items.onion.id] >= 15 && state.itemsSold[cheese.id] >= 10,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -290,7 +286,7 @@ export const burger = itemify({
     state.itemsSold[items.soybean.id] >= 25 &&
     state.itemsSold[items.spinach.id] >= 5 &&
     state.itemsSold[items.tomato.id] >= 5,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -309,7 +305,7 @@ export const summerSalad = itemify({
     state.itemsSold[items.spinach.id] >= 30 &&
     state.itemsSold[items.corn.id] > 5 &&
     state.itemsSold[items.carrot.id] > 5,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -323,7 +319,7 @@ export const soyMilk = itemify({
     [items.soybean.id]: 20,
   },
   condition: state => state.itemsSold[items.soybean.id] >= 100,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -339,7 +335,7 @@ export const chocolateSoyMilk = itemify({
   },
   condition: state =>
     state.itemsSold[soyMilk.id] >= 5 && state.itemsSold[chocolate.id] >= 5,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -353,7 +349,7 @@ export const tofu = itemify({
     [soyMilk.id]: 4,
   },
   condition: state => state.itemsSold[soyMilk.id] >= 20,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -376,7 +372,7 @@ export const chicknPotPie = itemify({
     state.itemsSold[items.carrot.id] >= 300 &&
     state.itemsSold[items.wheat.id] >= 425 &&
     state.itemsSold[soyMilk.id] >= 15,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -391,7 +387,7 @@ export const hotSauce = itemify({
     [salt.id]: 1,
   },
   condition: state => state.itemsSold[items.jalapeno.id] >= 50,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -412,7 +408,7 @@ export const salsa = itemify({
     state.itemsSold[items.onion.id] >= 5 &&
     state.itemsSold[items.tomato.id] >= 5 &&
     state.itemsSold[items.corn.id] >= 5,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -429,7 +425,7 @@ export const spicyCheese = itemify({
   condition: state =>
     state.itemsSold[items.jalapeno.id] >= 20 &&
     state.itemsSold[items.milk3.id] >= 50,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -443,7 +439,7 @@ export const vegetableOil = itemify({
     [items.soybean.id]: 350,
   },
   condition: state => state.itemsSold[items.soybean.id] >= 900,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -459,7 +455,7 @@ export const friedTofu = itemify({
   },
   condition: state =>
     state.itemsSold[tofu.id] >= 50 && state.itemsSold[vegetableOil.id] >= 50,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -476,7 +472,7 @@ export const spicyPickledGarlic = itemify({
   condition: state =>
     state.itemsSold[items.jalapeno.id] >= 12 &&
     state.itemsSold[items.garlic.id] >= 25,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -495,7 +491,7 @@ export const garlicFries = itemify({
   condition: state =>
     state.itemsSold[items.potato.id] >= 50 &&
     state.itemsSold[items.garlic.id] >= 30,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -514,7 +510,7 @@ export const garlicBread = itemify({
     state.itemsSold[bread.id] >= 30 &&
     state.itemsSold[oliveOil.id] >= 20 &&
     state.itemsSold[items.garlic.id] >= 50,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -528,7 +524,7 @@ export const strawberryJam = itemify({
     [items.strawberry.id]: 10,
   },
   condition: state => state.itemsSold[items.strawberry.id] >= 60,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -544,7 +540,7 @@ export const popcorn = itemify({
   },
   condition: state =>
     state.itemsSold[items.corn.id] >= 12 && state.itemsSold[butter.id] >= 6,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -563,7 +559,7 @@ export const pumpkinPie = itemify({
     state.itemsSold[items.pumpkin.id] >= 200 &&
     state.itemsSold[items.wheat.id] >= 250 &&
     state.itemsSold[butter.id] >= 75,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -582,7 +578,7 @@ export const sweetPotatoPie = itemify({
     state.itemsSold[items.sweetPotato.id] >= 200 &&
     state.itemsSold[items.wheat.id] >= 250 &&
     state.itemsSold[butter.id] >= 75,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -598,7 +594,7 @@ export const sweetPotatoFries = itemify({
     [salt.id]: 1,
   },
   condition: state => state.itemsSold[items.sweetPotato.id] >= 100,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
@@ -620,7 +616,7 @@ export const onionRings = itemify({
     state.itemsSold[vegetableOil.id] > 20 &&
     state.itemsSold[soyMilk.id] > 20 &&
     state.itemsSold[items.wheat.id] > 30,
-  recipeType: recipeType.KITCHEN,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.FORGE),
 })
 
 /**
@@ -636,7 +632,7 @@ export const bronzeIngot = itemify({
   },
   condition: state =>
     state.purchasedSmelter > 0 && state.itemsSold[items.bronzeOre.id] >= 50,
-  recipeType: recipeType.FORGE,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.FORGE),
 })
 
 /**
@@ -652,7 +648,7 @@ export const ironIngot = itemify({
   },
   condition: state =>
     state.purchasedSmelter > 0 && state.itemsSold[items.ironOre.id] >= 50,
-  recipeType: recipeType.FORGE,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.FORGE),
 })
 
 /**
@@ -668,7 +664,7 @@ export const silverIngot = itemify({
   },
   condition: state =>
     state.purchasedSmelter > 0 && state.itemsSold[items.silverOre.id] >= 50,
-  recipeType: recipeType.FORGE,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.FORGE),
 })
 
 /**
@@ -684,7 +680,7 @@ export const goldIngot = itemify({
   },
   condition: state =>
     state.purchasedSmelter > 0 && state.itemsSold[items.goldOre.id] >= 50,
-  recipeType: recipeType.FORGE,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.FORGE),
 })
 
 export const compost = itemify({
@@ -696,7 +692,7 @@ export const compost = itemify({
   condition: state =>
     state.purchasedComposter > 0 && state.itemsSold[items.weed.id] >= 100,
   description: 'Can be used to make fertilizer.',
-  recipeType: recipeType.RECYCLING,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.RECYCLING),
   type: itemType.CRAFTED_ITEM,
 })
 
@@ -714,7 +710,7 @@ export const fertilizer = itemify({
     state.purchasedComposter > 0 && state.itemsSold[compost.id] >= 10,
   description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,
-  recipeType: recipeType.RECYCLING,
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.RECYCLING),
   type: itemType.FERTILIZER,
   value: 25,
 })

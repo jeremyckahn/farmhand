@@ -1,6 +1,6 @@
 /**
- * @typedef {import('../index').farmhand.levelEntitlements} levelEntitlements
- * @typedef {import('../index').farmhand.item} item
+ * @typedef {farmhand.levelEntitlements} levelEntitlements
+ * @typedef {farmhand.item} item
  */
 import { itemsMap } from '../data/maps.js'
 

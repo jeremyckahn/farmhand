@@ -1,9 +1,3 @@
-/**
- * @typedef {import("../../index").farmhand.item} item
- * @typedef {import("../../index").farmhand.keg} keg
- * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
- */
-
 import { PURCHASEABLE_CELLARS } from '../../constants.js'
 import { itemsMap } from '../../data/maps.js'
 import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe.js'

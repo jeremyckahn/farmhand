@@ -1,5 +1,3 @@
-/** @typedef {typeof import('./Farmhand.js').default.defaultProps} farmhand.props */
-/** @typedef {import('./Farmhand.js').farmhand.state} farmhand.state */
 import { Component } from 'react'
 
 import * as reducers from '../../game-logic/reducers/index.js'
@@ -203,7 +201,7 @@ export class FarmhandReducers extends Component {
   }
 
   /**
-   * @param {farmhand.props} props
+   * @param {Object} props
    */
   constructor(props) {
     super(props)

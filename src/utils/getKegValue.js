@@ -1,4 +1,4 @@
-/** @typedef {import("../index").farmhand.keg} keg */
+/** @typedef {farmhand.keg} keg */
 
 import {
   KEG_INTEREST_RATE,

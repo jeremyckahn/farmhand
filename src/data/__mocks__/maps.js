@@ -1,5 +1,3 @@
-/** @typedef {import("../../index").farmhand.item} farmhand.item */
-
 import { recipeType } from '../../enums.js'
 import * as actualMaps from '../maps.js'
 

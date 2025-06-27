@@ -1,9 +1,9 @@
 /**
- * @typedef {import('../index').farmhand.state['itemsSold']} itemsSold
- * @typedef {import('../index').farmhand.item} item
- * @typedef {import('../index').farmhand.cropVariety} cropVariety
- * @typedef {import('../index').farmhand.grape} grape
- * @typedef {import('../enums.js').grapeVariety} grapeVariety
+ * @typedef {farmhand.state['itemsSold']} itemsSold
+ * @typedef {farmhand.item} item
+ * @typedef {farmhand.cropVariety} cropVariety
+ * @typedef {farmhand.grape} grape
+ * @typedef {grapeVariety} grapeVariety
  */
 import { isGrape } from '../data/crops/grape.js'
 import { itemsMap } from '../data/maps.js'

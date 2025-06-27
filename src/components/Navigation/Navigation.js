@@ -400,7 +400,14 @@ export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Navigation {...{ ...gameState, ...handlers, ...props }} />
+        <Navigation
+          {...{
+            // eslint-disable-next-line
+            .../** @type {farmhand.state} */ (gameState),
+            ...handlers,
+            ...props,
+          }}
+        />
       )}
     </FarmhandContext.Consumer>
   )

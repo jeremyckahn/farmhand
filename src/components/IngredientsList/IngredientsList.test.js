@@ -17,7 +17,7 @@ describe('<IngredientsList />', () => {
 
     render(<IngredientsList {...props} />)
     const ingredients = screen.getAllByTestId('ingredient')
-    ingredientsString = ingredients[0].textContent
+    ingredientsString = ingredients[0].textContent || ''
   })
 
   test('it renders all ingredients', () => {

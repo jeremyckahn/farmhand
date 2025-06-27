@@ -1,6 +1,3 @@
-/** @typedef {import("../../index").farmhand.item} farmhand.item */
-/** @typedef {import("../../index").farmhand.plotContent} farmhand.plotContent */
-
 import React, { useEffect, useState } from 'react'
 import { bool, func, number, object, string } from 'prop-types'
 import Tooltip from '@mui/material/Tooltip/index.js'
@@ -8,7 +5,11 @@ import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import { getCropLifeStage, getPlotContentType, getPlotImage } from '../../utils/index.js'
+import {
+  getCropLifeStage,
+  getPlotContentType,
+  getPlotImage,
+} from '../../utils/index.js'
 import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
 import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps.js'
 import { pixel, plotStates } from '../../img/index.js'
@@ -22,7 +23,7 @@ import { SHOVELED_PLOT } from '../../templates.js'
 
 /**
  * @param {farmhand.plotContent?} plotContent
- * @returns {string}
+ * @returns {string | null}
  */
 export const getBackgroundStyles = plotContent => {
   if (!plotContent) {
@@ -37,13 +38,13 @@ export const getBackgroundStyles = plotContent => {
     backgroundImages.push(`url(${plotStates['rainbow-fertilized-plot']})`)
   }
 
-  if (plotContent.wasWateredToday) {
+  if ('wasWateredToday' in plotContent && plotContent.wasWateredToday) {
     backgroundImages.push(`url(${plotStates['watered-plot']})`)
-  } else if (plotContent.isShoveled) {
+  } else if ('isShoveled' in plotContent && plotContent.isShoveled) {
     backgroundImages.push(`url(${plotStates['shoveled-plot']})`)
   }
 
-  return backgroundImages.join(', ')
+  return backgroundImages.length > 0 ? backgroundImages.join(', ') : null
 }
 
 /*!
@@ -53,7 +54,9 @@ export const getBackgroundStyles = plotContent => {
 export const getDaysLeftToMature = plotContent =>
   // Need to check that daysWatered is > -1 here because it may be NaN (in the
   // case of non-crop items).
-  plotContent && plotContent.daysWatered > -1
+  plotContent &&
+  plotContent.daysWatered > -1 &&
+  getPlotContentType(plotContent) === itemType.CROP
     ? Math.max(
         0,
         Math.ceil(

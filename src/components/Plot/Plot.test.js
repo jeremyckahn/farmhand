@@ -190,34 +190,46 @@ describe('background image', () => {
 
 describe('getBackgroundStyles', () => {
   test('returns null for !plotContent', () => {
-    expect(getBackgroundStyles()).toBe(null)
+    expect(getBackgroundStyles(null)).toBe(null)
   })
 
   test('constructs style for fertilizerType === fertilizerType.STANDARD', () => {
     expect(
-      getBackgroundStyles(testCrop({ fertilizerType: fertilizerType.STANDARD }))
+      getBackgroundStyles(
+        /** @type {globalThis.farmhand.plotContent} */ (testCrop({
+          fertilizerType: fertilizerType.STANDARD,
+        }))
+      )
     ).toBe(`url(${plotStates['fertilized-plot']})`)
   })
 
   test('constructs style for fertilizerType === fertilizerType.RAINBOW', () => {
     expect(
-      getBackgroundStyles(testCrop({ fertilizerType: fertilizerType.RAINBOW }))
+      getBackgroundStyles(
+        /** @type {globalThis.farmhand.plotContent} */ (testCrop({
+          fertilizerType: fertilizerType.RAINBOW,
+        }))
+      )
     ).toBe(`url(${plotStates['rianbow-fertilized-plot']})`)
   })
 
   test('constructs style for wasWateredToday', () => {
-    expect(getBackgroundStyles(testCrop({ wasWateredToday: true }))).toBe(
-      `url(${plotStates['watered-plot']})`
-    )
+    expect(
+      getBackgroundStyles(
+        /** @type {globalThis.farmhand.plotContent} */ (testCrop({
+          wasWateredToday: true,
+        }))
+      )
+    ).toBe(`url(${plotStates['watered-plot']})`)
   })
 
   test('constructs style for fertilizerType === fertilizerType.STANDARD and wasWateredToday', () => {
     expect(
       getBackgroundStyles(
-        testCrop({
+        /** @type {globalThis.farmhand.plotContent} */ (testCrop({
           fertilizerType: fertilizerType.STANDARD,
           wasWateredToday: true,
-        })
+        }))
       )
     ).toBe(
       `url(${plotStates['fertilized-plot']}), url(${plotStates['watered-plot']})`

@@ -1,4 +1,3 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
 import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores/index.js'
 import { Factory } from '../interfaces/Factory.js'
 import { randomChoice } from '../utils/index.js'

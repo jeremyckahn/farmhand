@@ -6,7 +6,15 @@ import { NotificationSystem } from './NotificationSystem.js'
 let component
 
 beforeEach(() => {
-  component = shallow(<NotificationSystem {...{}} />)
+  component = shallow(
+    <NotificationSystem
+      {...{
+        closeSnackbar: () => {},
+        enqueueSnackbar: () => {},
+        latestNotification: null,
+      }}
+    />
+  )
 })
 
 test('renders', () => {

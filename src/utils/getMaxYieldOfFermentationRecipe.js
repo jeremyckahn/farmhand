@@ -1,5 +1,5 @@
-/** @typedef {import("../index").farmhand.item} item */
-/** @typedef {import("../index").farmhand.keg} keg */
+/** @typedef {farmhand.item} item */
+/** @typedef {farmhand.keg} keg */
 
 import { itemsMap } from '../data/maps.js'
 

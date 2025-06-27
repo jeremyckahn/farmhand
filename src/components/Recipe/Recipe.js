@@ -83,7 +83,12 @@ const Recipe = ({
               <p>
                 In Inventory: {integerString(playerInventoryQuantities[id])}
               </p>
-              <IngredientsList {...{ playerInventoryQuantities, recipe }} />
+              <IngredientsList
+                {...{
+                  playerInventoryQuantities,
+                  recipe: /** @type {globalThis.farmhand.recipe} */ (recipe),
+                }}
+              />
             </>
           ),
         }}

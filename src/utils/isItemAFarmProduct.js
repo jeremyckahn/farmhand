@@ -1,4 +1,3 @@
-/** @typedef {import('../index').farmhand.item} farmhand.item */
 import { itemType } from '../enums.js'
 
 import { isItemAGrownCrop } from './isItemAGrownCrop.js'

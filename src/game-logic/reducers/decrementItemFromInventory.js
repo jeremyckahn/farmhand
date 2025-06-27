@@ -1,5 +1,3 @@
-/** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
-
 /**
  * @param {state} state
  * @param {string} itemId

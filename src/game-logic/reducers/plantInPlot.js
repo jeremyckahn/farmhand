@@ -1,5 +1,3 @@
-/** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
-
 import {
   chooseRandomIndex,
   getCropFromItemId,

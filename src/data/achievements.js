@@ -1,4 +1,3 @@
-/** @typedef {import('../index.js').farmhand.achievement} farmhand.achievement */
 import { addItemToInventory } from '../game-logic/reducers/index.js'
 import {
   doesPlotContainCrop,

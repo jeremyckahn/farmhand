@@ -86,7 +86,9 @@ export class Cow extends Component {
     })
 
     if (oldDirection !== newDirection) {
-      /** @type {import('shifty').RenderFunction} */
+      /**
+       * @param {{ rotate: number }} param0
+       */
       const render = ({ rotate }) => {
         this.setState({ rotate })
       }
@@ -105,6 +107,7 @@ export class Cow extends Component {
             },
             easing,
             duration,
+            // @ts-ignore
             render,
           })
         } else {
@@ -117,6 +120,7 @@ export class Cow extends Component {
             },
             easing,
             duration,
+            // @ts-ignore
             render,
           })
         }
