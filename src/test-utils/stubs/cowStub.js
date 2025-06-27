@@ -1,4 +1,4 @@
-/** @typedef {import('../../index').farmhand.cow} farmhand.cow */
+/** @typedef {farmhand.cow} farmhand.cow */
 
 import { generateCow } from '../../utils/index.js'
 

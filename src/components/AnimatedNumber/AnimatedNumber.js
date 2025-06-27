@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { tween } from 'shifty'
+// eslint-disable-next-line no-unused-vars
+import { tween, Tweenable } from 'shifty'
 import { func, number } from 'prop-types'
 
 const defaultFormatter = (/** @type {number} */ number) => `${number}`
@@ -16,7 +17,7 @@ const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
   const [displayedNumber, setDisplayedNumber] = useState(number)
   const [previousNumber, setPreviousNumber] = useState(number)
   /**
-   * @type {[import('shifty').Tweenable | undefined, React.Dispatch<React.SetStateAction<import('shifty').Tweenable | undefined>>]}
+   * @type {[Tweenable | undefined, React.Dispatch<React.SetStateAction<Tweenable | undefined>>]}
    */
   const [currentTweenable, setCurrentTweenable] = useState()
 

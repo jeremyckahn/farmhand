@@ -99,6 +99,17 @@ export const isInHoverRange = ({
 }
 
 export const MemoPlot = memo(
+  /**
+   * @param {object} props
+   * @param {number} props.experience
+   * @param {string} props.fieldMode
+   * @param {object} props.hoveredPlot
+   * @param {number} props.hoveredPlotRangeSize
+   * @param {object} props.plotContent
+   * @param {function} props.setHoveredPlot
+   * @param {number} props.x
+   * @param {number} props.y
+   */
   props => {
     const { hoveredPlot, plotContent, setHoveredPlot, x, y } = props
 
@@ -127,6 +138,7 @@ export const MemoPlot = memo(
   }
 )
 
+// @ts-ignore
 MemoPlot.propTypes = {
   experience: number.isRequired,
   fieldMode: string.isRequired,

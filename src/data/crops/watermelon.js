@@ -1,4 +1,4 @@
-/** @typedef {import("../../index").farmhand.item} item */
+/** @typedef {farmhand.item} item */
 
 import { crop, fromSeed } from '../crop.js'
 import { cropType } from '../../enums.js'

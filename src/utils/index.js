@@ -1,14 +1,4 @@
-/** @typedef {import("../index").farmhand.crop} farmhand.crop */
-/** @typedef {import("../index").farmhand.item} farmhand.item */
-/** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
-/** @typedef {import("../index").farmhand.shoveledPlot} farmhand.shoveledPlot */
-/** @typedef {import("../index").farmhand.cow} farmhand.cow */
-/** @typedef {import("../index").farmhand.recipe} farmhand.recipe */
-/** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
-/** @typedef {import("../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen */
-/** @typedef {import("../enums").cropLifeStage} farmhand.cropLifeStage */
-/** @typedef {import("../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
-/** @typedef {import("../index").farmhand.levelEntitlements} farmhand.levelEntitlements */
+/** @typedef {cropLifeStage} farmhand.cropLifeStage */
 
 /**
  * @module farmhand.utils

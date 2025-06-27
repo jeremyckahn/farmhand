@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../../index').farmhand.peerMetadata} farmhand.peerMetadata
+ * @typedef {farmhand.peerMetadata} farmhand.peerMetadata
  */
 import Farmhand from '../../components/Farmhand/index.js'
 import { MAX_LATEST_PEER_MESSAGES } from '../../constants.js'

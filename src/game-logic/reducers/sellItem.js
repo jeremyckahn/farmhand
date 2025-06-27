@@ -1,8 +1,3 @@
-/**
- * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} farmhand.state
- * @typedef {import("../../").farmhand.item} farmhand.item
- */
-
 import { itemsMap } from '../../data/maps.js'
 import { isItemAFarmProduct } from '../../utils/isItemAFarmProduct.js'
 import {

@@ -1,8 +1,3 @@
-/**
- * @typedef {import("../index").farmhand.item} farmhand.item
- * @typedef {import("../index").farmhand.cropVariety} farmhand.cropVariety
- */
-
 import { fieldMode, itemType } from '../enums.js'
 import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration.js'
 

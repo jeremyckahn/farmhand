@@ -1,21 +1,3 @@
-/**
- * @typedef {import("../../index").farmhand.item} farmhand.item
- * @typedef {import("../../index").farmhand.cow} farmhand.cow
- * @typedef {import("../../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen
- * @typedef {import("../../index").farmhand.forestForageable} farmhand.forestForageable
- * @typedef {import("../../index").farmhand.keg} farmhand.keg
- * @typedef {import("../../index").farmhand.plantedTree} farmhand.plantedTree
- * @typedef {import("../../index").farmhand.plotContent} farmhand.plotContent
- * @typedef {import("../../index").farmhand.peerMessage} farmhand.peerMessage
- * @typedef {import("../../index").farmhand.peerMetadata} farmhand.peerMetadata
- * @typedef {import("../../index").farmhand.priceEvent} farmhand.priceEvent
- * @typedef {import("../../index").farmhand.notification} farmhand.notification
- * @typedef {import("../../enums").cowColors} farmhand.cowColors
- * @typedef {import("../../enums").cropType} farmhand.cropType
- * @typedef {import("../../enums").dialogView} farmhand.dialogView
- * @typedef {import("../../enums").fieldMode} farmhand.fieldMode
- * @typedef {import("../../enums").stageFocusType} farmhand.stageFocusType
- */
 import React from 'react'
 import window from 'global/window.js'
 import { Redirect } from 'react-router-dom'
@@ -136,9 +118,9 @@ const emptyObject = Object.freeze({})
 
 export const computePlayerInventory = memoize(
   /**
-   * @param {{ id: farmhand.item['id'], quantity: number }[]} inventory
+   * @param {{ id: globalThis.farmhand.item['id'], quantity: number }[]} inventory
    * @param {Record<string, number>} valueAdjustments
-   * @returns {farmhand.item[]}
+   * @returns {globalThis.farmhand.item[]}
    */
   (inventory, valueAdjustments) =>
     inventory.map(({ quantity, id }) => ({
@@ -150,8 +132,8 @@ export const computePlayerInventory = memoize(
 
 export const getFieldToolInventory = memoize(
   /**
-   * @param {farmhand.state['inventory']} inventory
-   * @returns {farmhand.item[]}
+   * @param {globalThis.farmhand.state['inventory']} inventory
+   * @returns {globalThis.farmhand.item[]}
    */
   inventory =>
     inventory
@@ -162,24 +144,24 @@ export const getFieldToolInventory = memoize(
           typeof enablesFieldMode === 'string' && enablesFieldMode !== PLANT
         )
       })
-      .map(({ id }) => itemsMap[id])
+      .map(({ id, quantity }) => ({ ...itemsMap[id], quantity }))
 )
 
 export const getPlantableCropInventory = memoize(
   /**
-   * @param {farmhand.state['inventory']} inventory
-   * @returns {farmhand.item[]}
+   * @param {globalThis.farmhand.state['inventory']} inventory
+   * @returns {globalThis.farmhand.item[]}
    */
   inventory =>
     inventory
       .filter(({ id }) => itemsMap[id].isPlantableCrop)
-      .map(({ id }) => itemsMap[id])
+      .map(({ id, quantity }) => ({ ...itemsMap[id], quantity }))
 )
 
 /**
  * @param {Record<string, number>} valueAdjustments
- * @param {Record<string, farmhand.priceEvent>} priceCrashes
- * @param {Record<string, farmhand.priceEvent>} priceSurges
+ * @param {Record<string, globalThis.farmhand.priceEvent>} priceCrashes
+ * @param {Record<string, globalThis.farmhand.priceEvent>} priceSurges
  * @returns {Record<string, number>}
  */
 const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
@@ -200,14 +182,14 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @type {Object}
  * @property {number?} activePlayers
  * @property {boolean} allowCustomPeerCowNames
- * @property {Array.<farmhand.keg>} cellarInventory
- * @property {farmhand.dialogView} currentDialogView
+ * @property {Array.<globalThis.farmhand.keg>} cellarInventory
+ * @property {globalThis.farmhand.dialogView} currentDialogView
  * @property {Object.<string, boolean>} completedAchievements Keys are
  * achievement ids.
- * @property {farmhand.cow} cowForSale
- * @property {farmhand.cowBreedingPen} cowBreedingPen
- * @property {Array.<farmhand.cow>} cowInventory
- * @property {Object.<farmhand.cowColors, number>} cowColorsPurchased Keys are
+ * @property {globalThis.farmhand.cow} cowForSale
+ * @property {globalThis.farmhand.cowBreedingPen} cowBreedingPen
+ * @property {Array.<globalThis.farmhand.cow>} cowInventory
+ * @property {Object.<globalThis.farmhand.cowColors, number>} cowColorsPurchased Keys are
  * color enums, values are the number of that color of cow purchased.
  * @property {string} cowIdOfferedForTrade The ID of the cow that is currently
  * set to be traded with online peers.
@@ -215,15 +197,15 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * of cow colors (rainbow-cow, etc.).
  * @property {number} cowsTraded
  * @property {number?} cowTradeTimeoutId
- * @property {Object.<farmhand.cropType, number>} cropsHarvested A map of
+ * @property {Object.<globalThis.farmhand.cropType, number>} cropsHarvested A map of
  * totals of crops harvested. Keys are crop type IDs, values are the number of
  * that crop harvested.
  * @property {number} dayCount
  * @property {number} experience
  * @property {string} farmName
- * @property {(?farmhand.plotContent)[][]} field
- * @property {(farmhand.plantedTree | farmhand.forestForageable | null)[][]} forest
- * @property {farmhand.fieldMode} fieldMode
+ * @property {(?globalThis.farmhand.plotContent)[][]} field
+ * @property {(globalThis.farmhand.plantedTree | globalThis.farmhand.forestForageable | null)[][]} forest
+ * @property {globalThis.farmhand.fieldMode} fieldMode
  * @property {Function?} getCowAccept https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowReject https://github.com/dmotz/trystero#receiver
  * @property {Function?} getCowTradeRequest https://github.com/dmotz/trystero#receiver
@@ -238,13 +220,13 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * future-facing flexibility.
  * @property {number} hoveredPlotRangeSize
  * @property {string} id
- * @property {{ id: farmhand.item['id'], quantity: number }[]} inventory
+ * @property {{ id: globalThis.farmhand.item['id'], quantity: number }[]} inventory
  * @property {number} inventoryLimit Is -1 if inventory is unlimited.
  * @property {boolean} isAwaitingCowTradeRequest
  * @property {boolean} isAwaitingNetworkRequest
  * @property {boolean} isCombineEnabled
  * @property {boolean} isMenuOpen
- * @property {Record<farmhand.item['id'], number>} itemsSold Keys are items
+ * @property {Record<globalThis.farmhand.item['id'], number>} itemsSold Keys are items
  * IDs, values are the number of that item sold. The numbers in this map are
  * inclusive of the corresponding ones in cellarItemsSold and represent the
  * grand total of each item sold.
@@ -260,22 +242,22 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {number} loanBalance
  * @property {number} loansTakenOut
  * @property {number} money
- * @property {farmhand.notification?} latestNotification
- * @property {Array.<farmhand.notification>} newDayNotifications
- * @property {Array.<farmhand.notification>} notificationLog
- * @property {Record<string, farmhand.peerMetadata?>} peers Keys are (Trystero)
+ * @property {globalThis.farmhand.notification?} latestNotification
+ * @property {Array.<globalThis.farmhand.notification>} newDayNotifications
+ * @property {Array.<globalThis.farmhand.notification>} notificationLog
+ * @property {Record<string, globalThis.farmhand.peerMetadata?>} peers Keys are (Trystero)
  * peer ids, values are their respective metadata or null.
  * @property {Object?} peerRoom See https://github.com/dmotz/trystero
- * @property {farmhand.peerMessage[]} pendingPeerMessages An array of messages
+ * @property {globalThis.farmhand.peerMessage[]} pendingPeerMessages An array of messages
  * to be sent to the Trystero peer room upon the next broadcast.
- * @property {farmhand.peerMessage[]} latestPeerMessages An array of messages
+ * @property {globalThis.farmhand.peerMessage[]} latestPeerMessages An array of messages
  * that have been received from peers.
  * @property {function?} sendPeerMetadata See https://github.com/dmotz/trystero
  * @property {string} selectedCowId
  * @property {string} selectedItemId
- * @property {Object.<string, farmhand.priceEvent>} priceCrashes Keys are
+ * @property {Object.<string, globalThis.farmhand.priceEvent>} priceCrashes Keys are
  * itemIds.
- * @property {Object.<string, farmhand.priceEvent>} priceSurges Keys are
+ * @property {Object.<string, globalThis.farmhand.priceEvent>} priceSurges Keys are
  * itemIds.
  * @property {number} purchasedCombine
  * @property {number} purchasedComposter
@@ -297,14 +279,14 @@ const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
  * @property {Function?} sendPeerMetadata https://github.com/dmotz/trystero#sender
  * @property {boolean} showHomeScreen Option to show the Home Screen
  * @property {boolean} showNotifications
- * @property {farmhand.stageFocusType} stageFocus
+ * @property {globalThis.farmhand.stageFocusType} stageFocus
  * indicating if the stage has been unlocked
- * @property {Array.<farmhand.notification>} todaysNotifications
+ * @property {Array.<globalThis.farmhand.notification>} todaysNotifications
  * @property {number} todaysLosses Should always be a negative number.
  * @property {Object} todaysPurchases Keys are item names, values are their
  * respective quantities.
  * @property {number} todaysRevenue Should always be a positive number.
- * @property {Record<farmhand.item['id'], number>} todaysStartingInventory Keys
+ * @property {Record<globalThis.farmhand.item['id'], number>} todaysStartingInventory Keys
  * are item names, values are their respective quantities.
  * @property {Record<toolType, toolLevel>} toolLevels
  * @property {boolean} useAlternateEndDayButtonPosition Option to display the
@@ -444,7 +426,8 @@ export default class Farmhand extends FarmhandReducers {
       activePlayers: null,
       allowCustomPeerCowNames: false,
       cellarInventory: [],
-      currentDialogView: dialogView.NONE,
+      currentDialogView:
+        /** @type {globalThis.farmhand.dialogView} */ (dialogView.NONE),
       completedAchievements: {},
       cowForSale: generateCow(),
       cowBreedingPen: {
@@ -463,7 +446,7 @@ export default class Farmhand extends FarmhandReducers {
       experience: 0,
       farmName: 'Unnamed',
       field: createNewField(),
-      fieldMode: OBSERVE,
+      fieldMode: /** @type {globalThis.farmhand.fieldMode} */ (OBSERVE),
       forest: createNewForest(),
       getCowAccept: noop,
       getCowReject: noop,
@@ -523,18 +506,19 @@ export default class Farmhand extends FarmhandReducers {
       sendCowTradeRequest: noop,
       showHomeScreen: true,
       showNotifications: true,
-      stageFocus: stageFocusType.HOME,
+      stageFocus:
+        /** @type {globalThis.farmhand.stageFocusType} */ (stageFocusType.HOME),
       todaysNotifications: [],
       todaysLosses: 0,
       todaysPurchases: {},
       todaysRevenue: 0,
       todaysStartingInventory: {},
-      toolLevels: {
+      toolLevels: /** @type {Record<globalThis.farmhand.toolType, globalThis.farmhand.toolLevel>} */ ({
         [toolType.HOE]: toolLevel.DEFAULT,
         [toolType.SCYTHE]: toolLevel.DEFAULT,
         [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
         [toolType.WATERING_CAN]: toolLevel.DEFAULT,
-      },
+      }),
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
       version: import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION ?? '',
@@ -718,7 +702,7 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     const updatedAchievementsState = reducers.updateAchievements(
-      this.state,
+      /** @type {globalThis.farmhand.state} */ (this.state),
       prevState
     )
 
@@ -837,7 +821,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /**
-   * @param {farmhand.cow} peerPlayerCow
+   * @param {globalThis.farmhand.cow} peerPlayerCow
    */
   tradeForPeerCow(peerPlayerCow) {
     this.setState(state => {
@@ -1046,6 +1030,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   async updateServerForNextDay() {
+    /** @type {globalThis.farmhand.notification[]} */
     const serverMessages = []
 
     /**
@@ -1121,7 +1106,7 @@ export default class Farmhand extends FarmhandReducers {
       serverValueAdjustments,
     } = await this.updateServerForNextDay()
 
-    /** @type {farmhand.notification[]} */
+    /** @type {globalThis.farmhand.notification[]} */
     let pendingNotifications = []
 
     // This would be cleaner if setState was called after localForage.setItem,
@@ -1134,7 +1119,10 @@ export default class Farmhand extends FarmhandReducers {
        * @return {Partial<farmhand.state>}
        */
       prev => {
-        const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
+        const nextDayState = reducers.computeStateForNextDay(
+          /** @type {globalThis.farmhand.state} */ (prev),
+          isFirstDay
+        )
 
         pendingNotifications = [
           ...serverMessages,
@@ -1272,7 +1260,19 @@ export default class Farmhand extends FarmhandReducers {
 
     // Bundle up the raw state and the computed state into one object to be
     // passed down through the component tree.
-    const gameState = {
+    const gameState = /** @type {globalThis.farmhand.state & {
+      blockInput: boolean,
+      features: Record<string, boolean>,
+      fieldToolInventory: globalThis.farmhand.item[],
+      isChatAvailable: boolean,
+      levelEntitlements: globalThis.farmhand.levelEntitlements,
+      plantableCropInventory: globalThis.farmhand.item[],
+      playerInventory: globalThis.farmhand.item[],
+      playerInventoryQuantities: Record<string, number>,
+      shopInventory: globalThis.farmhand.item[],
+      viewList: string[],
+      viewTitle: string,
+    }} */ ({
       ...this.state,
       blockInput,
       features,
@@ -1285,7 +1285,7 @@ export default class Farmhand extends FarmhandReducers {
       shopInventory,
       viewList,
       viewTitle,
-    }
+    })
 
     return (
       <GlobalHotKeys

@@ -1,9 +1,9 @@
 /**
- * @typedef {import("../index").farmhand.item} item
- * @typedef {import("../index").farmhand.keg} keg
- * @typedef {import("../index").farmhand.cow} farmhand.cow
- * @typedef {import("../index").farmhand.recipe} farmhand.recipe
- * @typedef {import("../index").farmhand.grape} grape
+ * @typedef {farmhand.item} item
+ * @typedef {farmhand.keg} keg
+ * @typedef {farmhand.cow} farmhand.cow
+ * @typedef {farmhand.recipe} farmhand.recipe
+ * @typedef {farmhand.grape} grape
  */
 import { saveAs } from 'file-saver'
 import globalWindow from 'global/window.js'

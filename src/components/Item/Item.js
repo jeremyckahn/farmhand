@@ -280,12 +280,15 @@ export const Item = ({
                   />
                 </p>
               )}
-              {isPurchaseView && item.growsInto && (
-                <p>
-                  Days to mature:{' '}
-                  {getCropLifecycleDuration(getFinalCropItemFromSeedItem(item))}
-                </p>
-              )}
+              {isPurchaseView &&
+                /** @type {globalThis.farmhand.item} */ (item).growsInto && (
+                  <p>
+                    Days to mature:{' '}
+                    {getCropLifecycleDuration(
+                      getFinalCropItemFromSeedItem(item)
+                    )}
+                  </p>
+                )}
             </div>
           ),
         }}

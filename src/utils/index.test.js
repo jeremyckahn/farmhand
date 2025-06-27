@@ -1,4 +1,4 @@
-/** @typedef {import('../components/Farmhand/Farmhand.js').farmhand.state} farmhand.state */
+/** @typedef {farmhand.state} farmhand.state */
 
 import {
   COW_FERTILIZER_PRODUCTION_RATE_FASTEST,

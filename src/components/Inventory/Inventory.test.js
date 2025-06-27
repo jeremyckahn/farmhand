@@ -26,6 +26,7 @@ vitest.useFakeTimers()
 const StubInventory = ({ gameState = {}, ...overrides }) => {
   return (
     <FarmhandContext.Provider
+      // @ts-ignore
       value={{ gameState: { ...defaultGameState, ...gameState }, handlers: {} }}
     >
       <Inventory

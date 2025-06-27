@@ -1,7 +1,7 @@
 /**
- * @typedef {import("../../index").farmhand.item} item
- * @typedef {import("../../index").farmhand.keg} keg
- * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
+ * @typedef {farmhand.item} item
+ * @typedef {farmhand.keg} keg
+ * @typedef {farmhand.state} state
  */
 
 import { itemsMap } from '../../data/maps.js'

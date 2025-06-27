@@ -1,8 +1,8 @@
 /**
- * @typedef {import("./index").farmhand.item} farmhand.item
- * @typedef {import("./index").farmhand.crop} farmhand.crop
- * @typedef {import("./index").farmhand.keg} keg
- * @typedef {import("./index").farmhand.peerMetadata} farmhand.peerMetadata
+ * @typedef {farmhand.item} farmhand.item
+ * @typedef {farmhand.crop} farmhand.crop
+ * @typedef {farmhand.keg} farmhand.keg
+ * @typedef {farmhand.peerMetadata} farmhand.peerMetadata
  */
 
 /**
@@ -99,8 +99,8 @@ export const FERTILIZERS_PRODUCED = (_, fertilizersProduced) => {
  * @param {farmhand.cow} cow
  * @returns {string}
  */
-export const COW_ATTRITION_MESSAGE = (_, { name }) =>
-  `${name} got hungry from being underfed and ran away!`
+export const COW_ATTRITION_MESSAGE = (_, cow) =>
+  `${cow.name} got hungry from being underfed and ran away!`
 
 /**
  * @param {farmhand.cow} parentCow1
@@ -134,21 +134,21 @@ export const RECIPES_LEARNED = (_, learnedRecipes) => {
 }
 
 /**
- * @param {farmhand.item} cropItem
+ * @param {{ name: string }} item
  * @returns {string}
  */
 export const PRICE_CRASH = (_, { name }) =>
   `${name} prices have bottomed out! Avoid selling them until prices return to normal.`
 
 /**
- * @param {farmhand.item} cropItem
+ * @param {{ name: string }} item
  * @returns {string}
  */
 export const PRICE_SURGE = (_, { name }) =>
   `${name} prices are at their peak! Now is the time to sell!`
 
 /**
- * @param {farmhand.achievement} achievement
+ * @param {{ name: string, rewardDescription: string }} achievement
  * @returns {string}
  */
 export const ACHIEVEMENT_COMPLETED = (_, { name, rewardDescription }) =>
@@ -374,7 +374,7 @@ export const NEW_COW_OFFERED_FOR_TRADE = (_, peerMetadata) =>
   `A new cow is being offered for trade by ${getPlayerName(peerMetadata.id)}!`
 
 /**
- * @param {TemplatesStringsArray}
+ * @param {TemplateStringsArray} _
  * @param {number} numTrees
  * @returns {string}
  */
@@ -382,7 +382,7 @@ export const FOREST_EXPANDED = (_, numTrees) =>
   `The Forest has expanded! You can now plant up to ${numTrees} trees.`
 
 /**
- * @param {TemplatesStringsArray} _
+ * @param {TemplateStringsArray} _
  * @param {number} experiencePointsToNextLevel
  * @param {number} nextLevel
  * @returns {string}

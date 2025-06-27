@@ -1,6 +1,3 @@
-/**
- * @typedef {import('../Farmhand/Farmhand').farmhand.state} farmhand.state
- */
 import React from 'react'
 import { array, object, number, string } from 'prop-types'
 import classNames from 'classnames'

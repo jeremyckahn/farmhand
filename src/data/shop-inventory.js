@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../index').farmhand.item} farmhand.item
+ * @typedef {farmhand.item} farmhand.item
  */
 
 import {

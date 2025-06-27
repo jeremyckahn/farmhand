@@ -1,4 +1,4 @@
-/** @typedef {import('../../index').farmhand.peerMetadata} farmhand.peerMetadata */
+/** @typedef {farmhand.peerMetadata} farmhand.peerMetadata */
 
 import { v4 as uuid } from 'uuid'
 

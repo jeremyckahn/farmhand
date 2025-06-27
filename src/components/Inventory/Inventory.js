@@ -77,7 +77,9 @@ const Inventory = ({
   placeholder = 'Search inventory...',
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategories, setSelectedCategories] = useState([])
+  const [selectedCategories, setSelectedCategories] = useState(
+    /** @type {string[]} */ ([])
+  )
   const toggleCategory = category => {
     setSelectedCategories(prev =>
       prev.includes(category)

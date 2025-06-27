@@ -1,6 +1,6 @@
-/** @typedef {import("../../enums").toolLevel} farmhand.toolLevel */
-/** @typedef {import("../../enums").toolType} farmhand.toolType */
-/** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
+/** @typedef {toolLevel} farmhand.toolLevel */
+/** @typedef {toolType} farmhand.toolType */
+/** @typedef {farmhand.state} farmhand.state */
 
 import { toolLevel } from '../../enums.js'
 

@@ -19,16 +19,16 @@ export const Stage = ({ field, stageFocus, viewTitle }) => {
   const ref = useRef(null)
 
   useEffect(() => {
-    const {
-      current,
-      current: { style },
-    } = ref
-    // Set scroll position to the top
-    current.scrollTop = 0
+    if (ref.current) {
+      const { current } = ref
+      const { style } = current
+      // Set scroll position to the top
+      current.scrollTop = 0
 
-    // Stop any intertial scrolling
-    style.overflow = 'hidden'
-    setTimeout(() => (style.overflow = ''), 0)
+      // Stop any intertial scrolling
+      style.overflow = 'hidden'
+      setTimeout(() => (style.overflow = ''), 0)
+    }
   }, [stageFocus])
 
   return (

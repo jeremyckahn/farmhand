@@ -1,4 +1,4 @@
-/** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
+/** @typedef {farmhand.state} farmhand.state */
 
 import {
   chooseRandomIndex,

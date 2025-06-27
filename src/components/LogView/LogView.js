@@ -36,7 +36,13 @@ export const LogView = ({ notificationLog, todaysNotifications }) => (
           <h3>Day {day}</h3>
           {['success', 'info', 'warning', 'error'].map((severity, i) =>
             notifications[severity].length ? (
-              <Alert {...{ elevation: 3, key: `${severity}_${i}`, severity }}>
+              <Alert
+                {...{
+                  elevation: 3,
+                  key: `${severity}_${i}`,
+                  severity: /** @type {'success' | 'info' | 'warning' | 'error'} */ (severity),
+                }}
+              >
                 {notifications[severity].map((message, j) => (
                   <ReactMarkdown
                     {...{ key: `${j}_${message}`, source: message }}

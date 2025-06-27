@@ -1,11 +1,14 @@
 /**
- * @typedef {import("../../index").farmhand.item} item
- * @typedef {import("../../index").farmhand.keg} keg
- * @typedef {import("../../index").farmhand.grape} grape
- * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
+ * @typedef {farmhand.item} item
+ * @typedef {farmhand.keg} keg
+ * @typedef {farmhand.grape} grape
+ * @typedef {farmhand.state} state
  */
 
-import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants.js'
+import {
+  GRAPES_REQUIRED_FOR_WINE,
+  PURCHASEABLE_CELLARS,
+} from '../../constants.js'
 import { itemsMap } from '../../data/maps.js'
 import { cellarService } from '../../services/cellar.js'
 import { wineService } from '../../services/wine.js'
