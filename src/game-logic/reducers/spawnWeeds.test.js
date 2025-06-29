@@ -19,6 +19,8 @@ describe('spawnWeeds', () => {
     expect(spawnWeeds(null)).toEqual({
       itemId: 'weed',
       fertilizerType: 'NONE',
+      daysOld: 0,
+      wasWateredToday: false,
     })
   })
 
