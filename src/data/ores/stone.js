@@ -13,6 +13,6 @@ export const stone = freeze({
   id: 'stone',
   name: 'Stone',
   spawnChance: STONE_SPAWN_CHANCE,
-  type: itemType.STONE,
+  type: /** @type {farmhand.itemType} */ (itemType.STONE),
   value: 10,
 })

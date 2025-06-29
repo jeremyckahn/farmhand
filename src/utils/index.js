@@ -226,7 +226,6 @@ export const getItemCurrentValue = ({ id }, valueAdjustments) =>
     amount: Math.round(
       (valueAdjustments[id]
         ? getItemBaseValue(id) *
-          // @ts-expect-error
           (itemsMap[id].doesPriceFluctuate ? valueAdjustments[id] : 1)
         : getItemBaseValue(id)) * 100
     ),
@@ -239,7 +238,6 @@ export const getItemCurrentValue = ({ id }, valueAdjustments) =>
  * @returns {number} Rounded to a money value.
  */
 export const getAdjustedItemValue = (valueAdjustments, itemId) =>
-  // @ts-expect-error
   Number(((valueAdjustments[itemId] || 1) * itemsMap[itemId].value).toFixed(2))
 
 /**
@@ -260,8 +258,7 @@ export const getResaleValue = ({ id }) => itemsMap[id].value / 2
  */
 export const getPlotContentFromItemId = itemId => ({
   itemId,
-  fertilizerType: fertilizerType.NONE,
-  // @ts-expect-error
+  fertilizerType: /** @type {farmhand.fertilizerType} */ (fertilizerType.NONE),
   daysOld: 0,
   wasWateredToday: false,
 })
