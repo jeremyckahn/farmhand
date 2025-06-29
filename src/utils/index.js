@@ -1,5 +1,3 @@
-/** @typedef {cropLifeStage} farmhand.cropLifeStage */
-
 /**
  * @module farmhand.utils
  * @ignore
@@ -89,14 +87,14 @@ const Jimp = configureJimp({
 const { SEED, GROWING, GROWN } = cropLifeStage
 
 /**
- * @param {unknown} obj
+ * @param {any} obj
  * @returns {obj is farmhand.plotContent}
  */
 const isPlotContent = (obj = {}) =>
   Boolean(obj && obj['itemId'] && obj['fertilizerType'])
 
 /**
- * @param {unknown} obj
+ * @param {any} obj
  * @returns {obj is farmhand.shoveledPlot}
  */
 const isShoveledPlot = (obj = {}) =>
@@ -228,6 +226,7 @@ export const getItemCurrentValue = ({ id }, valueAdjustments) =>
     amount: Math.round(
       (valueAdjustments[id]
         ? getItemBaseValue(id) *
+          // @ts-expect-error
           (itemsMap[id].doesPriceFluctuate ? valueAdjustments[id] : 1)
         : getItemBaseValue(id)) * 100
     ),
@@ -240,6 +239,7 @@ export const getItemCurrentValue = ({ id }, valueAdjustments) =>
  * @returns {number} Rounded to a money value.
  */
 export const getAdjustedItemValue = (valueAdjustments, itemId) =>
+  // @ts-expect-error
   Number(((valueAdjustments[itemId] || 1) * itemsMap[itemId].value).toFixed(2))
 
 /**
@@ -261,13 +261,16 @@ export const getResaleValue = ({ id }) => itemsMap[id].value / 2
 export const getPlotContentFromItemId = itemId => ({
   itemId,
   fertilizerType: fertilizerType.NONE,
+  // @ts-expect-error
+  daysOld: 0,
+  wasWateredToday: false,
 })
 
 /**
  * @param {string} itemId
  * @returns {farmhand.crop}
  */
-export const getCropFromItemId = itemId => /** @type farmhand.crop */ ({
+export const getCropFromItemId = itemId => ({
   ...getPlotContentFromItemId(itemId),
   daysOld: 0,
   daysWatered: 0,
@@ -279,6 +282,7 @@ export const getCropFromItemId = itemId => /** @type farmhand.crop */ ({
  * @returns {?string}
  */
 export const getPlotContentType = ({ itemId }) =>
+  // @ts-expect-error
   itemId ? itemsMap[itemId].type : null
 
 /**
@@ -313,6 +317,7 @@ export const getLifeStageRange = memoize((
 export const getGrowingPhase = memoize(
   crop => {
     const { itemId, daysWatered } = crop
+    // @ts-expect-error
     const { cropTimeline = [] } = itemsMap[itemId]
 
     let daysGrowing = daysWatered + 1
@@ -340,6 +345,7 @@ export const getGrowingPhase = memoize(
  */
 export const getCropLifeStage = crop => {
   const { itemId, daysWatered } = crop
+  // @ts-expect-error
   const { cropTimeline } = itemsMap[itemId]
 
   if (!cropTimeline) {
@@ -385,8 +391,12 @@ export const getPlotImage = (plotContents, x, y) => {
     }
   }
 
-  if (isShoveledPlot(plotContents) && plotContents?.oreId) {
-    return itemImages[plotContents.oreId]
+  if (isShoveledPlot(plotContents)) {
+    // @ts-expect-error
+    if (plotContents?.oreId) {
+      // @ts-expect-error
+      return itemImages[plotContents.oreId]
+    }
   } else if (isPlotContent(plotContents)) {
     return itemImages[plotContents.itemId]
   }
@@ -417,6 +427,7 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
 /**
  * @param {farmhand.item} item
  * @param {number} [variantIdx]
+ * @returns {farmhand.item | undefined}
  */
 export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) => {
   const itemId = getFinalCropItemIdFromSeedItemId(id, variantIdx)
@@ -433,6 +444,7 @@ export const getFinalCropItemIdFromSeedItemId = (
   seedItemId,
   variationIdx = 0
 ) => {
+  // @ts-expect-error
   const { growsInto } = itemsMap[seedItemId]
 
   if (Array.isArray(growsInto)) {
@@ -443,7 +455,7 @@ export const getFinalCropItemIdFromSeedItemId = (
 }
 
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
-  (/** @type {string} */ cropItemId) => {
+  /** @type {string} */ cropItemId => {
     const seedItemId = Object.values(itemsMap).find(({ growsInto }) => {
       if (Array.isArray(growsInto)) {
         return growsInto.includes(cropItemId)
@@ -694,7 +706,7 @@ export const canMakeRecipe = (recipe, inventory, howMany) =>
  * @returns {string[]}
  */
 export const filterItemIdsToSeeds = itemsIds =>
-  itemsIds.filter(id => itemsMap[id].type === itemType.CROP)
+  itemsIds.filter(id => itemsMap[id]?.type === itemType.CROP)
 
 /**
  * @param {Array.<string>} unlockedSeedItemIds
@@ -703,8 +715,10 @@ export const filterItemIdsToSeeds = itemsIds =>
 export const getRandomUnlockedCrop = unlockedSeedItemIds => {
   const seedItemId = chooseRandom(unlockedSeedItemIds)
   const seedItem = itemsMap[seedItemId]
+  // @ts-expect-error
   const variationIdx = Array.isArray(seedItem.growsInto)
-    ? chooseRandomIndex(seedItem.growsInto)
+    ? // @ts-expect-error
+      chooseRandomIndex(seedItem.growsInto)
     : 0
 
   const finalCropItemId = getFinalCropItemIdFromSeedItemId(
@@ -736,8 +750,10 @@ const itemTypesToShowInReverse = new Set([itemType.MILK])
 
 const sortItemIdsByTypeAndValue = memoize(itemIds =>
   sortBy(itemIds, [
+    // @ts-expect-error
     id => Number(itemsMap[id].type !== itemType.CROP),
     id => {
+      // @ts-expect-error
       const { type, value } = itemsMap[id]
       return itemTypesToShowInReverse.has(type) ? -value : value
     },
@@ -934,6 +950,7 @@ export const computeMarketPositions = (
     const startingInventory = todaysStartingInventory[id] || 0
     const purchaseQuantity = todaysPurchases[id] || 0
 
+    // @ts-expect-error
     if (!itemsMap[id].doesPriceFluctuate) {
       return acc
     }

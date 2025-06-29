@@ -1,5 +1,3 @@
-/** @typedef {farmhand.state} state */
-
 /**
  * @param {state} state
  * @param {string} itemId

@@ -1,7 +1,3 @@
-/** @typedef {farmhand.cow} farmhand.cow */
-/** @typedef {farmhand.cowBreedingPen} farmhand.cowBreedingPen */
-/** @typedef {farmhand.state} farmhand.state */
-
 import { COW_GESTATION_PERIOD_DAYS } from '../../constants.js'
 
 /**

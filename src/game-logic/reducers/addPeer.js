@@ -1,7 +1,3 @@
-/**
- * @typedef {farmhand.state} farmhand.state
- */
-
 // TODO: Add tests for this reducer
 /**
  * @param {farmhand.state} state

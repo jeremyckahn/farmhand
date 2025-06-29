@@ -2,7 +2,6 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
-import { noop } from '../../utils/noop.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
@@ -23,14 +22,6 @@ beforeEach(() => {
     shopInventory: [],
     toolLevels: {},
     valueAdjustments: {},
-  }
-
-  const handlers = {
-    handleCombinePurchase: noop,
-    handleCowPenPurchase: noop,
-    handleCellarPurchase: noop,
-    handleFieldPurchase: noop,
-    handleStorageExpansionPurchase: noop,
   }
 
   render(
