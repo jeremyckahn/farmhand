@@ -1,5 +1,3 @@
-/** @typedef {farmhand.state} farmhand.state */
-
 import {
   chooseRandomIndex,
   getCropFromItemId,

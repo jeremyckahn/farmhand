@@ -1,5 +1,3 @@
-/** @typedef {farmhand.cow} farmhand.cow */
-
 import { generateCow } from '../../utils/index.js'
 
 /**

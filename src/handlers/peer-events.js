@@ -1,5 +1,4 @@
 /** @typedef {Farmhand} Farmhand */
-/** @typedef {farmhand.peerMetadata} farmhand.peerMetadata */
 import { cowTradeRejectionReason } from '../enums.js'
 import { EXPERIENCE_VALUES } from '../constants.js'
 import { COW_TRADED_NOTIFICATION } from '../templates.js'

@@ -1,8 +1,6 @@
 /**
  * @typedef {farmhand.item} item
  * @typedef {farmhand.keg} keg
- * @typedef {farmhand.cow} farmhand.cow
- * @typedef {farmhand.recipe} farmhand.recipe
  * @typedef {farmhand.grape} grape
  */
 import { saveAs } from 'file-saver'

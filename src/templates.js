@@ -1,8 +1,4 @@
 /**
- * @typedef {farmhand.item} farmhand.item
- * @typedef {farmhand.crop} farmhand.crop
- * @typedef {farmhand.keg} farmhand.keg
- * @typedef {farmhand.peerMetadata} farmhand.peerMetadata
  */
 
 /**

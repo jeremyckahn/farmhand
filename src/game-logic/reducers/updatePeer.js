@@ -1,7 +1,5 @@
 /**
  * @typedef {Farmhand} Farmhand
- * @typedef {farmhand.state} farmhand.state
- * @typedef {farmhand.peerMetadata} farmhand.peerMetadata
  */
 import { MAX_LATEST_PEER_MESSAGES } from '../../constants.js'
 import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.js'

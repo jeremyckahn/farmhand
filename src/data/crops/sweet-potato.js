@@ -1,5 +1,3 @@
-/** @typedef {farmhand.item} farmhand.item */
-
 import { crop, fromSeed } from '../crop.js'
 import { cropType } from '../../enums.js'
 

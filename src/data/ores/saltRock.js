@@ -1,4 +1,3 @@
-/** @typedef {farmhand.item} farmhand.item */
 import { itemType } from '../../enums.js'
 import { SALT_ROCK_SPAWN_CHANCE } from '../../constants.js'
 

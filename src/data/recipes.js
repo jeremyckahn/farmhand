@@ -1,9 +1,5 @@
 /**
  * @module farmhand.recipes
- * @typedef {farmhand.item} farmhand.item
- * @typedef {farmhand.recipe} farmhand.recipe
- * @typedef {farmhand.grape} farmhand.grape
- * @typedef {farmhand.wine} farmhand.wine
  */
 import { itemType, fieldMode, recipeType } from '../enums.js'
 import {

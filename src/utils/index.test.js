@@ -1,5 +1,3 @@
-/** @typedef {farmhand.state} farmhand.state */
-
 import {
   COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,

@@ -1,5 +1,4 @@
 /**
- * @typedef {farmhand.item} farmhand.item
  */
 
 import {

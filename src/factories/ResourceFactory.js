@@ -1,5 +1,3 @@
-
-/** @typedef {farmhand.itemType} farmhand.itemType */
 import { itemType, toolLevel } from '../enums.js'
 import {
   RESOURCE_SPAWN_CHANCE,
