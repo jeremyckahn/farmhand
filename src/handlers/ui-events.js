@@ -259,11 +259,12 @@ export default {
   },
 
   handleClickEndDayButton() {
-    this.incrementDay()(
-      // Prevent the player from spamming the End Day button
-      // https://www.reddit.com/r/incremental_games/comments/jusn9i/farmhand_updates_for_november_2020/gcmi6x6/?context=3
-      /** @type {HTMLElement} */ document.activeElement
-    )?.blur()
+    this.incrementDay()
+
+    // Prevent the player from spamming the End Day button
+    // https://www.reddit.com/r/incremental_games/comments/jusn9i/farmhand_updates_for_November_2020/gcmi6x6/?context=3
+    const activeElement = /** @type {HTMLElement} */ (document.activeElement)
+    activeElement.blur()
   },
 
   /**

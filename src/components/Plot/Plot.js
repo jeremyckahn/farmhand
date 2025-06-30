@@ -54,7 +54,9 @@ export const getBackgroundStyles = plotContent => {
 export const getDaysLeftToMature = plotContent =>
   // Need to check that daysWatered is > -1 here because it may be NaN (in the
   // case of non-crop items).
-  plotContent && plotContent.daysWatered > -1
+  plotContent &&
+  plotContent.daysWatered > -1 &&
+  getPlotContentType(plotContent) === itemType.CROP
     ? Math.max(
         0,
         Math.ceil(

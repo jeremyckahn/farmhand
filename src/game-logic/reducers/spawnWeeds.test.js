@@ -20,6 +20,7 @@ describe('spawnWeeds', () => {
       itemId: 'weed',
       fertilizerType: 'NONE',
       daysOld: 0,
+      daysWatered: 0,
       wasWateredToday: false,
     })
   })
