@@ -513,12 +513,16 @@ export default class Farmhand extends FarmhandReducers {
       todaysPurchases: {},
       todaysRevenue: 0,
       todaysStartingInventory: {},
-      toolLevels: /** @type {Record<globalThis.farmhand.toolType, globalThis.farmhand.toolLevel>} */ ({
-        [toolType.HOE]: toolLevel.DEFAULT,
-        [toolType.SCYTHE]: toolLevel.DEFAULT,
-        [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
-        [toolType.WATERING_CAN]: toolLevel.DEFAULT,
-      }),
+      toolLevels: {
+        [toolType.HOE]:
+          /** @type {globalThis.farmhand.toolLevel} */ (toolLevel.DEFAULT),
+        [toolType.SCYTHE]:
+          /** @type {globalThis.farmhand.toolLevel} */ (toolLevel.DEFAULT),
+        [toolType.SHOVEL]:
+          /** @type {globalThis.farmhand.toolLevel} */ (toolLevel.UNAVAILABLE),
+        [toolType.WATERING_CAN]:
+          /** @type {globalThis.farmhand.toolLevel} */ (toolLevel.DEFAULT),
+      },
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
       version: import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION ?? '',
@@ -575,12 +579,23 @@ export default class Farmhand extends FarmhandReducers {
       openSettings: () => this.openDialogView(dialogView.SETTINGS),
       openKeybindings: () => this.openDialogView(dialogView.KEYBINDINGS),
       previousView: this.focusPreviousView.bind(this),
-      selectHoe: () => this.handlers.handleFieldModeSelect(CLEANUP),
-      selectScythe: () => this.handlers.handleFieldModeSelect(HARVEST),
-      selectWateringCan: () => this.handlers.handleFieldModeSelect(WATER),
+      selectHoe: () =>
+        this.handlers.handleFieldModeSelect(
+          /** @type {globalThis.farmhand.fieldMode} */ (CLEANUP)
+        ),
+      selectScythe: () =>
+        this.handlers.handleFieldModeSelect(
+          /** @type {globalThis.farmhand.fieldMode} */ (HARVEST)
+        ),
+      selectWateringCan: () =>
+        this.handlers.handleFieldModeSelect(
+          /** @type {globalThis.farmhand.fieldMode} */ (WATER)
+        ),
       selectShovel: () => {
         if (this.state.toolLevels[toolType.SHOVEL] !== toolLevel.UNAVAILABLE) {
-          this.handlers.handleFieldModeSelect(MINE)
+          this.handlers.handleFieldModeSelect(
+            /** @type {globalThis.farmhand.fieldMode} */ (MINE)
+          )
         }
       },
       toggleMenu: () => this.handlers.handleMenuToggle(),
@@ -618,7 +633,8 @@ export default class Farmhand extends FarmhandReducers {
     if (state) {
       const sanitizedState = transformStateDataForImport({
         ...this.createInitialState(),
-        ...state,
+        // eslint-disable-next-line
+        .../** @type {Partial<farmhand.state>} */ (state),
       })
       const { isCombineEnabled, newDayNotifications } = sanitizedState
 

@@ -868,12 +868,12 @@ export const getPeerMetadata = state => {
 }
 
 /**
- * @param {Object} state
- * @returns {Object} A version of `state` that only contains keys of
+ * @param {Partial<farmhand.state>} state
+ * @returns {farmhand.state} A version of `state` that only contains keys of
  * farmhand.state data that should be persisted.
  */
 export const reduceByPersistedKeys = state =>
-  PERSISTED_STATE_KEYS.reduce((acc, key) => {
+  /** @type {farmhand.state} */ (PERSISTED_STATE_KEYS.reduce((acc, key) => {
     // This check prevents old exports from corrupting game state when
     // imported.
     if (typeof state[key] !== 'undefined') {
@@ -881,7 +881,7 @@ export const reduceByPersistedKeys = state =>
     }
 
     return acc
-  }, {})
+  }, {}))
 
 /**
  * @param {Array.<number>} historicalData Must be no longer than 7 numbers long.
