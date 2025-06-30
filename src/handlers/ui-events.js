@@ -98,7 +98,7 @@ export default {
   },
 
   /**
-   * @param {farmhand.upgrade} upgrade
+   * @param {farmhand.upgradesMetadatum} upgrade
    */
   handleUpgradeTool(upgrade) {
     this.upgradeTool(upgrade)
@@ -138,7 +138,8 @@ export default {
    * @param {React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
-  handleCowBreedChange({ target: { checked } }, cow) {
+  handleCowBreedChange({ target }, cow) {
+    const { checked } = /** @type {HTMLInputElement} */ (target)
     this.changeCowBreedingPenResident(cow, checked)
   },
 
@@ -167,7 +168,8 @@ export default {
    * @param {React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
-  handleCowNameInputChange({ target: { value } }, cow) {
+  handleCowNameInputChange({ target }, cow) {
+    const { value } = /** @type {HTMLInputElement} */ (target)
     this.changeCowName(cow.id, value)
   },
 
@@ -182,19 +184,22 @@ export default {
   /**
    * @param {React.SyntheticEvent} e
    */
-  handleViewChange({ target: { value } }) {
-    this.setState({ stageFocus: value })
+  handleViewChange({ target }) {
+    const { value } = /** @type {HTMLSelectElement} */ (target)
+    this.setState({
+      stageFocus: /** @type {farmhand.stageFocusType} */ (value),
+    })
   },
 
   /**
-   * @param {farmhand.module:enums.stageFocusType} stageFocus
+   * @param {farmhand.stageFocusType} stageFocus
    */
   handleViewChangeButtonClick(stageFocus) {
     this.setState({ stageFocus })
   },
 
   /**
-   * @param {farmhand.module:enums.fieldMode} fieldMode
+   * @param {farmhand.fieldMode} fieldMode
    */
   handleFieldModeSelect(fieldMode) {
     this.setState(({ selectedItemId }) => ({
@@ -254,11 +259,11 @@ export default {
   },
 
   handleClickEndDayButton() {
-    this.incrementDay()
-
-    // Prevent the player from spamming the End Day button
-    // https://www.reddit.com/r/incremental_games/comments/jusn9i/farmhand_updates_for_november_2020/gcmi6x6/?context=3
-    document.activeElement.blur()
+    this.incrementDay()(
+      // Prevent the player from spamming the End Day button
+      // https://www.reddit.com/r/incremental_games/comments/jusn9i/farmhand_updates_for_november_2020/gcmi6x6/?context=3
+      /** @type {HTMLElement} */ document.activeElement
+    )?.blur()
   },
 
   /**
@@ -347,14 +352,14 @@ export default {
   },
 
   /**
-   * @param {farmhand.cow}
+   * @param {farmhand.cow} cow
    */
   handleCowSelect(cow) {
     this.selectCow(cow)
   },
 
   /**
-   * @param {farmhand.cow}
+   * @param {farmhand.cow} cow
    */
   handleCowClick(cow) {
     this.selectCow(cow)
