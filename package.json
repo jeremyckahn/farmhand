@@ -65,7 +65,7 @@
     "browserslist": "^4.21.9",
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^7.0.2",
-    "electron": "^22.1.0",
+    "electron": "^28.3.2",
     "electron-builder": "^24.13.3",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
