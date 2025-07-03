@@ -135,37 +135,42 @@ describe('reducerName', () => {
 
 ## Validation Requirements
 
-**MANDATORY before submitting any changes:**
+**MANDATORY after every code change that affects functionality:**
 
 ### 1. Test Validation
-All tests must pass after every complete change:
+All tests must pass after every change that affects functionality:
 ```bash
 CI=true npm test
 ```
 
-- Run this command after implementing any feature or bug fix
+- **REQUIRED**: Run this command immediately after implementing any feature, bug fix, or code change
 - All existing tests must continue to pass
 - New functionality should include appropriate test coverage
+- Do not proceed with additional changes if tests are failing
 - Do not submit code that breaks existing tests
 
 ### 2. Lint Validation
-Code must have no lint violations:
+Code must have no lint violations after every change:
 ```bash
 npm run lint
 ```
 
-- Fix all ESLint errors and warnings
+- **REQUIRED**: Run this command immediately after making any code changes
+- Fix all ESLint errors and warnings before proceeding
 - Follow the project's coding standards
 - Use `npm run lint -- --fix` to automatically fix fixable issues
 - Do not ignore or suppress lint rules without justification
 
 ### 3. Complete Validation Workflow
-Before submitting changes, run both commands in sequence:
+After every code change that affects functionality, run both commands in sequence:
 ```bash
 npm run lint && CI=true npm test
 ```
 
-This ensures your code meets both style standards and functionality requirements.
+- **REQUIRED**: Run this workflow immediately after completing any functional change
+- This ensures your code meets both style standards and functionality requirements
+- Do not proceed with additional changes if either command fails
+- Address any failures before continuing development
 
 ### 4. Continuous Integration
 - These same checks run in CI/CD

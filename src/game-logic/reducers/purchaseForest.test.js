@@ -62,11 +62,15 @@ describe('purchaseForest', () => {
 
   describe('forest expansion', () => {
     test('forest expands without destroying existing data', () => {
-      const expectedForest = []
+      const expectedForest = /** @type {Array<Array<any>>} */ ([])
       const forestSize = PURCHASABLE_FOREST_SIZES.get(1)
 
+      if (!forestSize) {
+        throw new Error('Forest size not found')
+      }
+
       for (let y = 0; y < forestSize.rows; y++) {
-        const row = []
+        const row = /** @type {Array<any>} */ ([])
         for (let x = 0; x < forestSize.columns; x++) {
           row.push(null)
         }
