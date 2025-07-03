@@ -129,7 +129,7 @@ describe('reducerName', () => {
 ```
 
 ### 5. Type Safety Guidelines
-- Run `npm run type-check` or equivalent before submitting
+- Run `npm run check:types` or equivalent before submitting
 - Fix TypeScript errors by using proper utilities, not by ignoring them
 - Ensure all required properties are present in test objects
 
