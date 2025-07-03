@@ -22,6 +22,12 @@ export const testCrop = (item = {}) => ({
   ...item,
 })
 
+export const testTree = (item = {}) => ({
+  daysOld: 0,
+  itemId: 'test-tree',
+  ...item,
+})
+
 /**
  * @param {Omit<farmhand.shoveledPlot, 'isShoveled' | 'daysUntilClear'>} plotProps
  */
