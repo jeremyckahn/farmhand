@@ -5,58 +5,42 @@ import { purchaseItem } from './purchaseItem.js'
 vitest.mock('../../data/maps.js')
 
 describe('purchaseItem', () => {
+  /** @type {farmhand.state} */
+  let state
+
+  beforeEach(() => {
+    // @ts-expect-error
+    state = {
+      inventory: [],
+      inventoryLimit: INFINITE_STORAGE_LIMIT,
+      money: 10,
+      pendingPeerMessages: [],
+      todaysPurchases: {},
+      valueAdjustments: { 'sample-item-1': 1 },
+    }
+  })
+
   describe('howMany === 0', () => {
     test('no-ops', () => {
-      expect(
-        purchaseItem(
-          {
-            inventory: [],
-            inventoryLimit: INFINITE_STORAGE_LIMIT,
-            money: 0,
-            todaysPurchases: {},
-            valueAdjustments: { 'sample-item-1': 1 },
-          },
-          { id: 'sample-item-1' },
-          0
-        )
-      ).toMatchObject({ inventory: [] })
+      state.money = 0
+      expect(purchaseItem(state, { id: 'sample-item-1' }, 0)).toMatchObject({
+        inventory: [],
+      })
     })
   })
 
   describe('user does not have enough money', () => {
     test('no-ops', () => {
-      expect(
-        purchaseItem(
-          {
-            inventory: [],
-            inventoryLimit: INFINITE_STORAGE_LIMIT,
-            money: 0,
-            todaysPurchases: {},
-            valueAdjustments: { 'sample-item-1': 1 },
-          },
-          { id: 'sample-item-1' },
-          1
-        )
-      ).toMatchObject({ inventory: [] })
+      state.money = 0
+      expect(purchaseItem(state, { id: 'sample-item-1' }, 1)).toMatchObject({
+        inventory: [],
+      })
     })
   })
 
   describe('user has enough money', () => {
     test('purchases item', () => {
-      expect(
-        purchaseItem(
-          {
-            inventory: [],
-            inventoryLimit: INFINITE_STORAGE_LIMIT,
-            money: 10,
-            pendingPeerMessages: [],
-            todaysPurchases: {},
-            valueAdjustments: { 'sample-item-1': 1 },
-          },
-          { id: 'sample-item-1' },
-          2
-        )
-      ).toMatchObject({
+      expect(purchaseItem(state, { id: 'sample-item-1' }, 2)).toMatchObject({
         inventory: [{ id: 'sample-item-1', quantity: 2 }],
         todaysPurchases: { 'sample-item-1': 2 },
         money: 8,
@@ -65,20 +49,10 @@ describe('purchaseItem', () => {
 
     describe('there is no room for any of the items being purchased', () => {
       test('no items are purchased', () => {
-        expect(
-          purchaseItem(
-            {
-              inventory: [{ id: 'sample-item-1', quantity: 3 }],
-              inventoryLimit: 3,
-              money: 10,
-              pendingPeerMessages: [],
-              todaysPurchases: {},
-              valueAdjustments: { 'sample-item-1': 1 },
-            },
-            { id: 'sample-item-1' },
-            1
-          )
-        ).toMatchObject({
+        state.inventory = [{ id: 'sample-item-1', quantity: 3 }]
+        state.inventoryLimit = 3
+
+        expect(purchaseItem(state, { id: 'sample-item-1' }, 1)).toMatchObject({
           inventory: [{ id: 'sample-item-1', quantity: 3 }],
           todaysPurchases: {},
           money: 10,
@@ -88,20 +62,10 @@ describe('purchaseItem', () => {
 
     describe('there is only room for some of the items being purchased', () => {
       test('a reduced amount of items are purchased', () => {
-        expect(
-          purchaseItem(
-            {
-              inventory: [{ id: 'sample-item-1', quantity: 2 }],
-              inventoryLimit: 3,
-              money: 10,
-              pendingPeerMessages: [],
-              todaysPurchases: {},
-              valueAdjustments: { 'sample-item-1': 1 },
-            },
-            { id: 'sample-item-1' },
-            10
-          )
-        ).toMatchObject({
+        state.inventory = [{ id: 'sample-item-1', quantity: 2 }]
+        state.inventoryLimit = 3
+
+        expect(purchaseItem(state, { id: 'sample-item-1' }, 10)).toMatchObject({
           inventory: [{ id: 'sample-item-1', quantity: 3 }],
           todaysPurchases: { 'sample-item-1': 1 },
           money: 9,

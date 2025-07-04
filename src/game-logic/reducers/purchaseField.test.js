@@ -4,23 +4,37 @@ import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
 import { purchaseField } from './purchaseField.js'
 
 describe('purchaseField', () => {
+  /** @type {farmhand.state} */
+  let state
+
+  beforeEach(() => {
+    // @ts-expect-error
+    state = {
+      purchasedField: 0,
+      money: 1500,
+      experience: 0,
+      field: [[]],
+    }
+  })
+
   test('updates purchasedField', () => {
-    const { purchasedField } = purchaseField({ purchasedField: 0 }, 0)
+    const { purchasedField } = purchaseField(state, 0)
     expect(purchasedField).toEqual(0)
   })
 
   test('prevents repurchasing options', () => {
-    const { purchasedField } = purchaseField({ purchasedField: 2 }, 1)
+    state.purchasedField = 2
+    const { purchasedField } = purchaseField(state, 1)
     expect(purchasedField).toEqual(2)
   })
 
   test('deducts money', () => {
-    const { money } = purchaseField({ money: 1500, field: [[]] }, 1)
+    const { money } = purchaseField(state, 1)
     expect(money).toEqual(500)
   })
 
   test('adds experience', () => {
-    const { experience } = purchaseField({ experience: 0, field: [[]] }, 1)
+    const { experience } = purchaseField(state, 1)
 
     expect(experience).toEqual(EXPERIENCE_VALUES.FIELD_EXPANDED)
   })
@@ -38,15 +52,12 @@ describe('purchaseField', () => {
         expectedField.push(row)
       }
 
-      const { field } = purchaseField(
-        {
-          field: [
-            [testCrop(), null],
-            [null, testCrop()],
-          ],
-        },
-        1
-      )
+      state.field = [
+        [testCrop(), null],
+        [null, testCrop()],
+      ]
+
+      const { field } = purchaseField(state, 1)
 
       expectedField[0][0] = testCrop()
       expectedField[1][1] = testCrop()
