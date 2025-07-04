@@ -21,7 +21,6 @@ describe('purchaseCow', () => {
   )
 
   beforeEach(() => {
-    // @ts-expect-error
     state = {
       cowForSale: utils.generateCow(),
       cowInventory: [],
@@ -42,7 +41,6 @@ describe('purchaseCow', () => {
     })
 
     expect(newState.cowForSale).not.toBe(state.cowForSale)
-    // @ts-expect-error
     expect(newState.cowColorsPurchased.WHITE).toEqual(1)
   })
 
