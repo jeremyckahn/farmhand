@@ -347,7 +347,7 @@ export const getCropLifeStage = crop => {
     throw new Error(`${itemId} has no cropTimeline`)
   }
 
-  return getLifeStageRange(cropTimeline)[Math.floor(daysWatered)] || GROWN
+  return getLifeStageRange(cropTimeline)[Math.floor(daysWatered || 0)] || GROWN
 }
 
 /**
@@ -384,14 +384,15 @@ export const getPlotImage = (plotContents, x, y) => {
 
       return itemImages[`weed-${color}`]
     }
+
+    // Handle other plot content (non-crop, non-weed)
+    return itemImages[/** @type {farmhand.plotContent} */ (plotContents).itemId]
   }
 
   if (isShoveledPlot(plotContents)) {
     if (plotContents?.oreId) {
       return itemImages[plotContents.oreId]
     }
-  } else if (isPlotContent(plotContents)) {
-    return itemImages[plotContents.itemId]
   }
 
   return null
@@ -860,11 +861,14 @@ export const getRandomLevelUpRewardQuantity = level => level * 10
  * @returns {farmhand.peerMetadata}
  */
 export const getPeerMetadata = state => {
-  const reducedState = PEER_METADATA_STATE_KEYS.reduce((acc, key) => {
-    acc[key] = state[key]
+  const reducedState = PEER_METADATA_STATE_KEYS.reduce(
+    (acc, key) => {
+      acc[key] = state[key]
 
-    return acc
-  }, {})
+      return acc
+    },
+    /** @type {Partial<farmhand.peerMetadata>} */ ({})
+  )
 
   Object.assign(reducedState, {
     cowOfferedForTrade: state.cowInventory.find(
@@ -872,7 +876,7 @@ export const getPeerMetadata = state => {
     ),
   })
 
-  return reducedState
+  return /** @type {farmhand.peerMetadata} */ (reducedState)
 }
 
 /**
@@ -1120,6 +1124,9 @@ export function randomChoice(weightedOptions) {
 
     runningTotal += option.weight
   }
+
+  // Fallback to the last option if no match found
+  return sortedOptions[sortedOptions.length - 1]
 }
 
 const colorizeCowTemplate = (() => {

@@ -80,7 +80,7 @@ export const processCowBreeding = state => {
       ? [
           ...newDayNotifications,
           {
-            message: COW_BORN_MESSAGE`${cow1}${cow2}${offspringCow}`,
+            message: COW_BORN_MESSAGE('', cow1, cow2, offspringCow),
             severity: 'success',
           },
         ]

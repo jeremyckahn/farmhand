@@ -8,9 +8,9 @@ import {
 } from '../constants.js'
 
 const spawnableResources = [
-  [stone, STONE_SPAWN_CHANCE],
-  [saltRock, SALT_ROCK_SPAWN_CHANCE],
-  [coal, COAL_SPAWN_CHANCE],
+  { resource: stone, spawnChance: STONE_SPAWN_CHANCE },
+  { resource: saltRock, spawnChance: SALT_ROCK_SPAWN_CHANCE },
+  { resource: coal, spawnChance: COAL_SPAWN_CHANCE },
 ]
 
 /**
@@ -25,7 +25,7 @@ export default class StoneFactory extends Factory {
   generate() {
     let resources = []
 
-    for (const [resource, spawnChance] of spawnableResources) {
+    for (const { resource, spawnChance } of spawnableResources) {
       if (randomNumberService.isRandomNumberLessThan(spawnChance)) {
         resources.push(resource)
       }

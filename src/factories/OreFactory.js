@@ -16,7 +16,7 @@ export default class OreFactory extends Factory {
     for (let o of SPAWNABLE_ORES) {
       this.oreOptions.push({
         ore: o,
-        weight: o.spawnChance,
+        weight: o.spawnChance || 0,
       })
     }
   }

@@ -235,7 +235,7 @@ describe('sellKeg', () => {
 
         expect(state).toMatchObject({
           todaysNotifications: [
-            { message: LOAN_PAYOFF``, severity: 'success' },
+            { message: LOAN_PAYOFF(), severity: 'success' },
           ],
         })
       })
