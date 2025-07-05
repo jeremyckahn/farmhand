@@ -129,40 +129,26 @@ It would be a good idea to perform a smoke test whenever there is a significant 
 
 ### End-to-end (E2E) testing
 
-E2E tests are performed in a GitHub Actions job called `e2e` under [the CI workflow](https://github.com/jeremyckahn/farmhand/actions/workflows/ci.yml) upon push to GitHub. You can run the E2E tests locally with the following additional tools installed and set up in your environment:
+Farmhand uses [Playwright](https://playwright.dev/) for end-to-end testing. E2E tests are performed in a GitHub Actions job called `e2e` under [the CI workflow](https://github.com/jeremyckahn/farmhand/actions/workflows/ci.yml) upon push to GitHub.
 
-- [Docker](https://docs.docker.com/engine/install/)
-- [GitHub CLI](https://cli.github.com/)
-  - You MUST [be authenticated](https://cli.github.com/manual/gh_auth_login)
-- [nektos/act](https://github.com/nektos/act)
-  - This MUST [be installed as a GitHub CLI extension](https://nektosact.com/installation/gh.html)
-- [jq](https://jqlang.org/download/)
+#### Quick Setup Guide
 
-Additionally, you MUST have a Vercel account and be logged into it locally. You can do that with:
+For detailed instructions on running E2E tests locally, including setup, available commands, and troubleshooting, please see the [`e2e/README.md`](e2e/README.md) file.
+
+**Quick start:**
 
 ```sh
-npx vercel login
-```
+# Navigate to the e2e directory
+cd e2e
 
-Once that's all set up, you can run the E2E tests with:
+# Run automated setup (first time only)
+npm run setup
 
-```sh
-npm run e2e
-```
+# Start the dev server (from project root)
+cd .. && npm run dev
 
-Note that running tests locally involves downloading Docker images to your system. These images can accrue and take up space over time, but you can clear them out with:
-
-```sh
-npm run e2e:cleanup
-```
-
-#### Authoring new E2E tests
-
-Run this script to launch the [Playwright codegen tools](https://playwright.dev/docs/codegen-intro):
-
-```sh
-# Assumes you already have `npm run dev` running
-npm run e2e:create
+# Run tests (from e2e directory)
+cd e2e && npm run test
 ```
 
 ### Releasing updates

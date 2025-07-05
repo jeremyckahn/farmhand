@@ -3,13 +3,24 @@
   "version": "0.0.0",
   "description": "End-to-end tests for Farmhand",
   "main": "index.js",
+  "type": "module",
   "directories": {
     "test": "tests"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "test:install": "playwright install",
+    "validate": "node validate-setup.js",
+    "setup": "node setup.js"
+  },
   "author": "jeremyckahn@gmail.com",
   "license": "GPL-2.0-or-later",
   "devDependencies": {
-    "@playwright/test": "^1.52.0"
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^24.0.10"
   }
 }

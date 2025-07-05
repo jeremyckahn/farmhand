@@ -1,0 +1,53 @@
+# Test results
+test-results/
+test-results-*/
+reports/
+playwright-report/
+playwright/.cache/
+
+# Screenshots and videos
+screenshots/
+videos/
+traces/
+
+# HTML reports
+html-report/
+
+# Node modules
+node_modules/
+
+# Playwright cache
+.playwright/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+*.tmp
+*.temp
