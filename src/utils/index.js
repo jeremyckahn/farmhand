@@ -672,7 +672,7 @@ export const getCowSellValue = cow => getCowValue(cow, true)
 
 /**
  * @param {farmhand.recipe} recipe
- * @param {Array.<farmhand.item>} inventory
+ * @param {{id: string, quantity: number}[]} inventory
  * @returns {number}
  */
 export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
@@ -689,7 +689,7 @@ export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
 
 /**
  * @param {farmhand.recipe} recipe
- * @param {farmhand.item[]} inventory
+ * @param {{id: string, quantity: number}[]} inventory
  * @param {number} howMany
  * @returns {boolean}
  */

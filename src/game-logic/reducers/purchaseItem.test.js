@@ -1,4 +1,5 @@
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { testState, testItem } from '../../test-utils/index.js'
 
 import { purchaseItem } from './purchaseItem.js'
 
@@ -9,21 +10,22 @@ describe('purchaseItem', () => {
   let state
 
   beforeEach(() => {
-    // @ts-expect-error
-    state = {
+    state = testState({
       inventory: [],
       inventoryLimit: INFINITE_STORAGE_LIMIT,
       money: 10,
       pendingPeerMessages: [],
       todaysPurchases: {},
       valueAdjustments: { 'sample-item-1': 1 },
-    }
+    })
   })
 
   describe('howMany === 0', () => {
     test('no-ops', () => {
       state.money = 0
-      expect(purchaseItem(state, { id: 'sample-item-1' }, 0)).toMatchObject({
+      expect(
+        purchaseItem(state, testItem({ id: 'sample-item-1' }), 0)
+      ).toMatchObject({
         inventory: [],
       })
     })
@@ -32,7 +34,9 @@ describe('purchaseItem', () => {
   describe('user does not have enough money', () => {
     test('no-ops', () => {
       state.money = 0
-      expect(purchaseItem(state, { id: 'sample-item-1' }, 1)).toMatchObject({
+      expect(
+        purchaseItem(state, testItem({ id: 'sample-item-1' }), 1)
+      ).toMatchObject({
         inventory: [],
       })
     })
@@ -52,7 +56,9 @@ describe('purchaseItem', () => {
         state.inventory = [{ id: 'sample-item-1', quantity: 3 }]
         state.inventoryLimit = 3
 
-        expect(purchaseItem(state, { id: 'sample-item-1' }, 1)).toMatchObject({
+        expect(
+          purchaseItem(state, testItem({ id: 'sample-item-1' }), 1)
+        ).toMatchObject({
           inventory: [{ id: 'sample-item-1', quantity: 3 }],
           todaysPurchases: {},
           money: 10,

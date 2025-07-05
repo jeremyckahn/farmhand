@@ -534,7 +534,7 @@ export default class Farmhand extends FarmhandReducers {
       historicalValueAdjustments: [],
     }))
 
-    this.showNotification(LOAN_INCREASED`${STANDARD_LOAN_AMOUNT}`, 'info')
+    this.showNotification(LOAN_INCREASED('', STANDARD_LOAN_AMOUNT), 'info')
   }
 
   initInputHandlers() {
@@ -957,7 +957,7 @@ export default class Farmhand extends FarmhandReducers {
         ),
       })
 
-      this.showNotification(CONNECTED_TO_ROOM`${room}`, 'success')
+      this.showNotification(CONNECTED_TO_ROOM(room), 'success')
     } catch (e) {
       // TODO: Add some reasonable fallback behavior in case the server request
       // fails. Possibility: Regenerate valueAdjustments and notify the user
@@ -1023,9 +1023,9 @@ export default class Farmhand extends FarmhandReducers {
     })
 
     if (learnedRecipes.length > 1) {
-      this.showNotification(RECIPES_LEARNED`${learnedRecipes}`)
+      this.showNotification(RECIPES_LEARNED(null, learnedRecipes))
     } else if (learnedRecipes.length === 1) {
-      this.showNotification(RECIPE_LEARNED`${learnedRecipes[0]}`)
+      this.showNotification(RECIPE_LEARNED(null, learnedRecipes[0]))
     }
   }
 
@@ -1084,11 +1084,14 @@ export default class Farmhand extends FarmhandReducers {
 
         if (Object.keys(positions).length) {
           serverMessages.push({
-            message: POSITIONS_POSTED_NOTIFICATION`${'You'}${positions}`,
+            message: POSITIONS_POSTED_NOTIFICATION('You', positions),
             severity: 'info',
           })
 
-          broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION`${''}${positions}`
+          broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION(
+            '',
+            positions
+          )
         }
       } catch (e) {
         // NOTE: This will get reached when there's an issue posting data to the server.

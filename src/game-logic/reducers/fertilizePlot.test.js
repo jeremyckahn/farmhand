@@ -1,4 +1,4 @@
-import { testCrop, testItem, testState } from '../../test-utils/index.js'
+import { testCrop, testState } from '../../test-utils/index.js'
 import { fertilizerType, fieldMode } from '../../enums.js'
 import { getPlotContentFromItemId } from '../../utils/index.js'
 
@@ -24,7 +24,7 @@ describe('fertilizePlot', () => {
       test('no-ops with standard fertilizer', () => {
         const oldState = testState({
           field: [[getPlotContentFromItemId('sprinkler')]],
-          inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+          inventory: [{ id: 'fertilizer', quantity: 1 }],
           selectedItemId: 'fertilizer',
         })
         const state = fertilizePlot(oldState, 0, 0)
@@ -34,7 +34,7 @@ describe('fertilizePlot', () => {
       test('no-ops with rainbow fertilizer', () => {
         const oldState = testState({
           field: [[getPlotContentFromItemId('sprinkler')]],
-          inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
+          inventory: [{ id: 'rainbow-fertilizer', quantity: 1 }],
           selectedItemId: 'rainbow-fertilizer',
         })
         const state = fertilizePlot(oldState, 0, 0)
@@ -57,7 +57,7 @@ describe('fertilizePlot', () => {
         const state = fertilizePlot(
           testState({
             field: [[getPlotContentFromItemId('scarecrow')]],
-            inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
+            inventory: [{ id: 'rainbow-fertilizer', quantity: 1 }],
             selectedItemId: 'rainbow-fertilizer',
           }),
           0,
@@ -79,7 +79,7 @@ describe('fertilizePlot', () => {
         const state = fertilizePlot(
           testState({
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
-            inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+            inventory: [{ id: 'fertilizer', quantity: 1 }],
             selectedItemId: 'fertilizer',
           }),
           0,
@@ -99,7 +99,7 @@ describe('fertilizePlot', () => {
         const state = fertilizePlot(
           testState({
             field: [[testCrop({ itemId: 'sample-crop-1' })]],
-            inventory: [testItem({ id: 'rainbow-fertilizer', quantity: 1 })],
+            inventory: [{ id: 'rainbow-fertilizer', quantity: 1 }],
             selectedItemId: 'rainbow-fertilizer',
           }),
           0,
@@ -122,7 +122,7 @@ describe('fertilizePlot', () => {
           const state = fertilizePlot(
             testState({
               field: [[testCrop({ itemId: 'sample-crop-1' })]],
-              inventory: [testItem({ id: 'fertilizer', quantity: 2 })],
+              inventory: [{ id: 'fertilizer', quantity: 2 }],
               selectedItemId: 'fertilizer',
             }),
             0,
@@ -139,7 +139,7 @@ describe('fertilizePlot', () => {
           const state = fertilizePlot(
             testState({
               field: [[testCrop({ itemId: 'sample-crop-1' })]],
-              inventory: [testItem({ id: 'fertilizer', quantity: 1 })],
+              inventory: [{ id: 'fertilizer', quantity: 1 }],
               selectedItemId: 'fertilizer',
             }),
             0,

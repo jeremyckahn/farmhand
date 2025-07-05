@@ -8,10 +8,10 @@ import { addKegToCellarInventory } from './addKegToCellarInventory.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 /**
- * @param {state} state
- * @param {item} fermentationRecipe
+ * @param {farmhand.state} state
+ * @param {farmhand.item} fermentationRecipe
  * @param {number} [howMany=1]
- * @returns {state}
+ * @returns {farmhand.state}
  */
 export const makeFermentationRecipe = (
   state,

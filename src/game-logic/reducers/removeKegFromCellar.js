@@ -1,9 +1,5 @@
 /**
- * @typedef {farmhand.state} state
- */
-
-/**
- * @param {state} state
+ * @param {farmhand.state} state
  * @param {string} kegId
  */
 export const removeKegFromCellar = (state, kegId) => {
