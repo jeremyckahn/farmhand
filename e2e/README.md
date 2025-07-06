@@ -97,6 +97,7 @@ The recommended way to run E2E tests locally is using the Playwright test runner
    ```
 
 4. **Run the E2E tests**:
+
    ```bash
    npm run test
    ```
@@ -175,7 +176,7 @@ npx playwright codegen localhost:3000?seed=0.5
 
 The Playwright configuration is in `playwright.config.js` and includes:
 
-- **Browsers**: Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari
+- **Browsers**: Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari (only Chromium is enabled by default)
 - **Parallel execution**: Tests run in parallel for faster execution
 - **Retries**: Automatic retry on CI environments
 - **Screenshots**: Captured on test failure
@@ -184,7 +185,6 @@ The Playwright configuration is in `playwright.config.js` and includes:
 
 **Test Configuration:**
 
-- Tests run across multiple browsers: Chrome, Firefox, Safari, and mobile variants
 - Tests are configured to run in parallel for faster execution
 - Failed tests automatically capture screenshots and videos
 - Test results are saved in the `test-results/` directory
@@ -287,7 +287,6 @@ Tests run automatically in GitHub Actions on every push. The CI environment:
 - Uses Docker containers for consistency
 - Runs tests with retries enabled
 - Generates test reports and artifacts
-- Runs against multiple browser engines
 
 For more details, see the main project's CI workflow configuration.
 
