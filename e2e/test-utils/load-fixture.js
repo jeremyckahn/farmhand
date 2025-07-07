@@ -1,6 +1,14 @@
+import path from 'node:path'
+
 import { expect } from '@playwright/test'
 
 import { openPage } from './open-page.js'
+
+const isCiEnvironment = Boolean(process.env.CI)
+
+const projectDirectoryRoot = isCiEnvironment
+  ? '/home/pwuser'
+  : path.join(process.cwd(), '..')
 
 /**
  * @param {import('@playwright/test').Page} page
@@ -13,7 +21,7 @@ export async function loadFixture(page, fixtureName) {
   await page.getByRole('button', { name: 'Load game data that was' }).click()
   await page
     .locator('input[type=file]')
-    .setInputFiles(`/home/pwuser/e2e/fixtures/${fixtureName}.json`)
+    .setInputFiles(`${projectDirectoryRoot}/e2e/fixtures/${fixtureName}.json`)
 
   await expect(page.getByText('Data loaded!')).toBeVisible()
 }
