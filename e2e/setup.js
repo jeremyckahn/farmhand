@@ -8,7 +8,7 @@
 import { execSync } from 'child_process'
 import { readFileSync } from 'fs'
 import { dirname, join } from 'path'
-import { fileURLToPath } from 'url'
+import { fileURLToPath, pathToFileURL } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -145,7 +145,7 @@ async function setupE2E() {
 }
 
 // Run setup if this script is executed directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   setupE2E().catch(error => {
     log(`Setup failed: ${error.message}`, 'error')
     process.exit(1)

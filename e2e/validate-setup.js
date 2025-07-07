@@ -6,8 +6,9 @@
  */
 
 import { readFileSync } from 'fs'
+import { readdir } from 'fs/promises'
 import { dirname, join } from 'path'
-import { fileURLToPath } from 'url'
+import { fileURLToPath, pathToFileURL } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -43,9 +44,7 @@ async function validateSetup() {
   // Check if test directory exists
   try {
     const testDir = join(__dirname, 'tests')
-    const testFiles = await import('fs').then(fs =>
-      fs.promises.readdir(testDir, { withFileTypes: true })
-    )
+    const testFiles = await readdir(testDir, { withFileTypes: true })
     const testCount = testFiles.filter(
       file => file.isFile() && file.name.endsWith('.test.js')
     ).length
@@ -93,7 +92,7 @@ async function validateSetup() {
 }
 
 // Run validation if this script is executed directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   validateSetup().catch(error => {
     console.error('❌ Validation failed:', error.message)
     process.exit(1)
