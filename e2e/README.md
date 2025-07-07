@@ -183,12 +183,6 @@ The Playwright configuration is in `playwright.config.js` and includes:
 - **Video recording**: Retained on test failure
 - **Trace collection**: Available for debugging failed tests
 
-**Test Configuration:**
-
-- Tests are configured to run in parallel for faster execution
-- Failed tests automatically capture screenshots and videos
-- Test results are saved in the `test-results/` directory
-
 ### Environment Variables
 
 - `APP_URL` - The base URL for the application (default: `http://localhost:3000`)
@@ -307,7 +301,7 @@ If port 3000 is occupied by another process, you can change the port:
 
 ```bash
 # Set a different port
-APP_URL=http://localhost:3001 npm run e2e:test
+APP_URL=http://localhost:3001 npm run test
 ```
 
 #### "Playwright browsers not found"
@@ -316,8 +310,6 @@ Install the browsers:
 
 ```bash
 npm run test:install
-# or from main project
-npm run e2e:install
 ```
 
 #### "Cannot connect to <http://localhost:3000>"
