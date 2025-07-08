@@ -1,5 +1,3 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
-
 import { cropType, recipeType } from '../enums.js'
 
 import * as recipes from './recipes.js'
@@ -77,7 +75,7 @@ export const fermentableItemsMap = Object.fromEntries(
 )
 
 /**
- * @type {Object.<string, farmhand.item>}
+ * @type {Object.<string, farmhand.seedItem>}
  */
 export const cropItemIdToSeedItemMap = Object.entries(baseItemsMap).reduce(
   (acc, [itemId, item]) => {
@@ -103,7 +101,7 @@ export const cropTypeToIdMap = {
   [CARROT]: 'carrot',
   [CORN]: 'corn',
   [GARLIC]: 'garlic',
-  [GRAPE]: grapeSeed.growsInto,
+  [GRAPE]: /** @type {string | string[]} */ (grapeSeed.growsInto),
   [JALAPENO]: 'jalapeno',
   [OLIVE]: 'olive',
   [ONION]: 'onion',

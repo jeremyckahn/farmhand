@@ -1,4 +1,4 @@
-import { testItem } from '../../test-utils/index.js'
+import { testItem, testState } from '../../test-utils/index.js'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
@@ -8,7 +8,9 @@ describe('decrementItemFromInventory', () => {
   describe('item is not in inventory', () => {
     beforeEach(() => {
       updatedState = decrementItemFromInventory(
-        { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
+        testState({
+          inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+        }),
         'nonexistent-item'
       )
     })
@@ -24,7 +26,9 @@ describe('decrementItemFromInventory', () => {
     describe('single instance of item in inventory', () => {
       beforeEach(() => {
         updatedState = decrementItemFromInventory(
-          { inventory: [testItem({ id: 'sample-item-1', quantity: 1 })] },
+          testState({
+            inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+          }),
           'sample-item-1'
         )
       })
@@ -37,7 +41,9 @@ describe('decrementItemFromInventory', () => {
     describe('multiple instances of item in inventory', () => {
       beforeEach(() => {
         updatedState = decrementItemFromInventory(
-          { inventory: [testItem({ id: 'sample-item-1', quantity: 2 })] },
+          testState({
+            inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
+          }),
           'sample-item-1'
         )
       })

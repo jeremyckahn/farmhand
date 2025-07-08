@@ -1,11 +1,12 @@
 /**
- * @typedef {import("../../index").farmhand.keg} keg
+ * @typedef {farmhand.keg} keg
  */
 import { LOAN_GARNISHMENT_RATE } from '../../constants.js'
 import { carrot } from '../../data/crops/index.js'
 import { LOAN_PAYOFF } from '../../templates.js'
 import { castToMoney } from '../../utils/index.js'
 import { getKegValue } from '../../utils/getKegValue.js'
+import { testState } from '../../test-utils/index.js'
 
 import { sellKeg } from './sellKeg.js'
 
@@ -17,7 +18,7 @@ const stubKegValue = getKegValue(stubKeg)
 describe('sellKeg', () => {
   test('updates inventory', () => {
     const state = sellKeg(
-      {
+      testState({
         id: 'abc123',
         cellarInventory: [stubKeg],
         cellarItemsSold: {},
@@ -29,7 +30,7 @@ describe('sellKeg', () => {
         pendingPeerMessages: [],
         revenue: 0,
         todaysRevenue: 0,
-      },
+      }),
       stubKeg
     )
 
@@ -40,7 +41,7 @@ describe('sellKeg', () => {
 
   test('updates sales records', () => {
     const state = sellKeg(
-      {
+      testState({
         id: 'abc123',
         cellarInventory: [stubKeg],
         cellarItemsSold: {},
@@ -52,7 +53,7 @@ describe('sellKeg', () => {
         pendingPeerMessages: [],
         revenue: 0,
         todaysRevenue: 0,
-      },
+      }),
       stubKeg
     )
 
@@ -71,7 +72,7 @@ describe('sellKeg', () => {
 
   test('applies achievement bonus', () => {
     const state = sellKeg(
-      {
+      testState({
         id: 'abc123',
         cellarInventory: [stubKeg],
         cellarItemsSold: {},
@@ -83,7 +84,7 @@ describe('sellKeg', () => {
         pendingPeerMessages: [],
         revenue: 0,
         todaysRevenue: 0,
-      },
+      }),
       stubKeg
     )
 
@@ -105,7 +106,7 @@ describe('sellKeg', () => {
 
   test('updates learnedRecipes', () => {
     const state = sellKeg(
-      {
+      testState({
         id: 'abc123',
         cellarInventory: [stubKeg],
         cellarItemsSold: {},
@@ -117,7 +118,7 @@ describe('sellKeg', () => {
         pendingPeerMessages: [],
         revenue: 0,
         todaysRevenue: 0,
-      },
+      }),
       stubKeg
     )
 
@@ -131,7 +132,7 @@ describe('sellKeg', () => {
     describe('loan is greater than garnishment', () => {
       test('sale is garnished', () => {
         const state = sellKeg(
-          {
+          testState({
             id: 'abc123',
             cellarInventory: [stubKeg],
             cellarItemsSold: {},
@@ -143,7 +144,7 @@ describe('sellKeg', () => {
             pendingPeerMessages: [],
             revenue: 0,
             todaysRevenue: 0,
-          },
+          }),
           stubKeg
         )
 
@@ -165,7 +166,7 @@ describe('sellKeg', () => {
     describe('loan is less than garnishment', () => {
       test('loan is payed off', () => {
         const state = sellKeg(
-          {
+          testState({
             id: 'abc123',
             cellarInventory: [stubKeg],
             cellarItemsSold: {},
@@ -178,7 +179,7 @@ describe('sellKeg', () => {
             revenue: 0,
             todaysRevenue: 0,
             todaysNotifications: [],
-          },
+          }),
           stubKeg
         )
 
@@ -189,7 +190,7 @@ describe('sellKeg', () => {
 
       test('sale is reduced by remaining loan balance', () => {
         const state = sellKeg(
-          {
+          testState({
             id: 'abc123',
             cellarInventory: [stubKeg],
             cellarItemsSold: {},
@@ -202,7 +203,7 @@ describe('sellKeg', () => {
             revenue: 0,
             todaysRevenue: 0,
             todaysNotifications: [],
-          },
+          }),
           stubKeg
         )
 
@@ -215,7 +216,7 @@ describe('sellKeg', () => {
 
       test('payoff notification is shown', () => {
         const state = sellKeg(
-          {
+          testState({
             id: 'abc123',
             cellarInventory: [stubKeg],
             cellarItemsSold: {},
@@ -228,13 +229,13 @@ describe('sellKeg', () => {
             revenue: 0,
             todaysRevenue: 0,
             todaysNotifications: [],
-          },
+          }),
           stubKeg
         )
 
         expect(state).toMatchObject({
           todaysNotifications: [
-            { message: LOAN_PAYOFF``, severity: 'success' },
+            { message: LOAN_PAYOFF(), severity: 'success' },
           ],
         })
       })
@@ -244,7 +245,7 @@ describe('sellKeg', () => {
   describe('there is not an outstanding loan', () => {
     test('sale is not garnished', () => {
       const state = sellKeg(
-        {
+        testState({
           id: 'abc123',
           cellarInventory: [stubKeg],
           cellarItemsSold: {},
@@ -256,7 +257,7 @@ describe('sellKeg', () => {
           pendingPeerMessages: [],
           revenue: 0,
           todaysRevenue: 0,
-        },
+        }),
         stubKeg
       )
 

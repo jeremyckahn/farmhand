@@ -5,6 +5,7 @@
  * @returns {farmhand.state}
  */
 export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
+  ...state,
   [priceEventKey]: {
     ...state[priceEventKey],
     [priceEvent.itemId]: priceEvent,

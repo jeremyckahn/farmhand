@@ -34,10 +34,10 @@ export const setWasWatered = plotContent =>
  * @returns {boolean}
  */
 export const fieldHasScarecrow = field =>
-  findInField(field, plotContainsScarecrow)
+  !!findInField(field, plotContainsScarecrow)
 
 /**
- * @param {Array.<function>} chancesAndEvents An array of arrays in which the
+ * @param {Array.<Array.<function>>} chancesAndEvents An array of arrays in which the
  * first element is a function that determines whether to trigger an event, and
  * the second function which is a reducer that implements the event.
  * @param {farmhand.state} state
@@ -53,12 +53,12 @@ export const applyChanceEvent = (chancesAndEvents, state) =>
  * @returns {boolean}
  */
 export const plotContainsScarecrow = plot =>
-  plot && plot.itemId === SCARECROW_ITEM_ID
+  !!(plot && plot.itemId === SCARECROW_ITEM_ID)
 
 /**
  * Invokes a function on every plot in a field.
  * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @param {Function(?farmhand.plotContent)} modifierFn
+ * @param {function(?farmhand.plotContent, number, number): *} modifierFn
  * @returns {Array.<Array.<?farmhand.plotContent>>}
  */
 export const updateField = (field, modifierFn) =>

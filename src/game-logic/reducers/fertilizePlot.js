@@ -53,10 +53,16 @@ export const fertilizePlot = (state, x, y) => {
   state = decrementItemFromInventory(state, fertilizerItemId)
   const doFertilizersRemain = initialFertilizerQuantity > 1
 
-  state = modifyFieldPlotAt(state, x, y, crop => ({
-    ...crop,
-    fertilizerType: fertilizerItemIdToTypeMap[fertilizerItemId],
-  }))
+  state = modifyFieldPlotAt(state, x, y, crop => {
+    if (!crop) {
+      return crop
+    }
+
+    return {
+      ...crop,
+      fertilizerType: fertilizerItemIdToTypeMap[fertilizerItemId],
+    }
+  })
 
   return {
     ...state,

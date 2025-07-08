@@ -1,15 +1,3 @@
-/** @typedef {import("../index").farmhand.crop} farmhand.crop */
-/** @typedef {import("../index").farmhand.item} farmhand.item */
-/** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
-/** @typedef {import("../index").farmhand.shoveledPlot} farmhand.shoveledPlot */
-/** @typedef {import("../index").farmhand.cow} farmhand.cow */
-/** @typedef {import("../index").farmhand.recipe} farmhand.recipe */
-/** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
-/** @typedef {import("../index").farmhand.cowBreedingPen} farmhand.cowBreedingPen */
-/** @typedef {import("../enums").cropLifeStage} farmhand.cropLifeStage */
-/** @typedef {import("../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
-/** @typedef {import("../index").farmhand.levelEntitlements} farmhand.levelEntitlements */
-
 /**
  * @module farmhand.utils
  * @ignore
@@ -99,14 +87,14 @@ const Jimp = configureJimp({
 const { SEED, GROWING, GROWN } = cropLifeStage
 
 /**
- * @param {unknown} obj
+ * @param {any} obj
  * @returns {obj is farmhand.plotContent}
  */
 const isPlotContent = (obj = {}) =>
   Boolean(obj && obj['itemId'] && obj['fertilizerType'])
 
 /**
- * @param {unknown} obj
+ * @param {any} obj
  * @returns {obj is farmhand.shoveledPlot}
  */
 const isShoveledPlot = (obj = {}) =>
@@ -266,18 +254,21 @@ export const getResaleValue = ({ id }) => itemsMap[id].value / 2
 
 /**
  * @param {string} itemId
- * @returns {farmhand.plotContent}
+ * @returns {farmhand.crop}
  */
 export const getPlotContentFromItemId = itemId => ({
   itemId,
-  fertilizerType: fertilizerType.NONE,
+  fertilizerType: /** @type {farmhand.fertilizerType} */ (fertilizerType.NONE),
+  daysOld: 0,
+  daysWatered: 0,
+  wasWateredToday: false,
 })
 
 /**
  * @param {string} itemId
  * @returns {farmhand.crop}
  */
-export const getCropFromItemId = itemId => /** @type farmhand.crop */ ({
+export const getCropFromItemId = itemId => ({
   ...getPlotContentFromItemId(itemId),
   daysOld: 0,
   daysWatered: 0,
@@ -356,7 +347,7 @@ export const getCropLifeStage = crop => {
     throw new Error(`${itemId} has no cropTimeline`)
   }
 
-  return getLifeStageRange(cropTimeline)[Math.floor(daysWatered)] || GROWN
+  return getLifeStageRange(cropTimeline)[Math.floor(daysWatered || 0)] || GROWN
 }
 
 /**
@@ -393,12 +384,15 @@ export const getPlotImage = (plotContents, x, y) => {
 
       return itemImages[`weed-${color}`]
     }
+
+    // Handle other plot content (non-crop, non-weed)
+    return itemImages[/** @type {farmhand.plotContent} */ (plotContents).itemId]
   }
 
-  if (isShoveledPlot(plotContents) && plotContents?.oreId) {
-    return itemImages[plotContents.oreId]
-  } else if (isPlotContent(plotContents)) {
-    return itemImages[plotContents.itemId]
+  if (isShoveledPlot(plotContents)) {
+    if (plotContents?.oreId) {
+      return itemImages[plotContents.oreId]
+    }
   }
 
   return null
@@ -427,6 +421,7 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
 /**
  * @param {farmhand.item} item
  * @param {number} [variantIdx]
+ * @returns {farmhand.item | undefined}
  */
 export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) => {
   const itemId = getFinalCropItemIdFromSeedItemId(id, variantIdx)
@@ -453,7 +448,7 @@ export const getFinalCropItemIdFromSeedItemId = (
 }
 
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
-  (/** @type {string} */ cropItemId) => {
+  /** @type {string} */ cropItemId => {
     const seedItemId = Object.values(itemsMap).find(({ growsInto }) => {
       if (Array.isArray(growsInto)) {
         return growsInto.includes(cropItemId)
@@ -564,7 +559,9 @@ export const generateOffspringCow = (cow1, cow2, ownerId, customProps = {}) => {
     ...femaleCow.colorsInBloodline,
   }
 
-  delete colorsInBloodline[cowColors.RAINBOW]
+  delete colorsInBloodline[
+    /** @type {keyof typeof colorsInBloodline} */ (cowColors.RAINBOW)
+  ]
 
   const isRainbowCow =
     Object.keys(colorsInBloodline).length ===
@@ -675,7 +672,7 @@ export const getCowSellValue = cow => getCowValue(cow, true)
 
 /**
  * @param {farmhand.recipe} recipe
- * @param {Array.<farmhand.item>} inventory
+ * @param {{id: string, quantity: number}[]} inventory
  * @returns {number}
  */
 export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
@@ -692,7 +689,7 @@ export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
 
 /**
  * @param {farmhand.recipe} recipe
- * @param {farmhand.item[]} inventory
+ * @param {{id: string, quantity: number}[]} inventory
  * @param {number} howMany
  * @returns {boolean}
  */
@@ -704,7 +701,7 @@ export const canMakeRecipe = (recipe, inventory, howMany) =>
  * @returns {string[]}
  */
 export const filterItemIdsToSeeds = itemsIds =>
-  itemsIds.filter(id => itemsMap[id].type === itemType.CROP)
+  itemsIds.filter(id => itemsMap[id]?.type === itemType.CROP)
 
 /**
  * @param {Array.<string>} unlockedSeedItemIds
@@ -742,6 +739,7 @@ export const getPriceEventForCrop = cropItem => ({
 
 export const doesMenuObstructStage = () => window.innerWidth < BREAKPOINTS.MD
 
+/** @type {Set<farmhand.itemType>} */
 const itemTypesToShowInReverse = new Set([itemType.MILK])
 
 const sortItemIdsByTypeAndValue = memoize(itemIds =>
@@ -774,7 +772,7 @@ export const inventorySpaceConsumed = memoize(
 )
 
 /**
- * @param {farmhand.state} state
+ * @param {{ inventory: farmhand.state['inventory'], inventoryLimit: farmhand.state['inventoryLimit'] }} state
  * @returns {number}
  */
 export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
@@ -857,12 +855,19 @@ export const getRandomLevelUpRewardQuantity = level => level * 10
  * @param {farmhand.state} state
  * @returns {Object} Data that is meant to be shared with Trystero peers.
  */
+/**
+ * @param {farmhand.state} state
+ * @returns {farmhand.peerMetadata}
+ */
 export const getPeerMetadata = state => {
-  const reducedState = PEER_METADATA_STATE_KEYS.reduce((acc, key) => {
-    acc[key] = state[key]
+  const reducedState = PEER_METADATA_STATE_KEYS.reduce(
+    (acc, key) => {
+      acc[key] = state[key]
 
-    return acc
-  }, {})
+      return acc
+    },
+    /** @type {Partial<farmhand.peerMetadata>} */ ({})
+  )
 
   Object.assign(reducedState, {
     cowOfferedForTrade: state.cowInventory.find(
@@ -870,16 +875,19 @@ export const getPeerMetadata = state => {
     ),
   })
 
-  return reducedState
+  return /** @type {farmhand.peerMetadata} */ (reducedState)
 }
 
 /**
- * @param {Object} state
- * @returns {Object} A version of `state` that only contains keys of
+ * @param {Partial<farmhand.state>} state
+ * @returns {farmhand.state} A version of `state` that only contains keys of
  * farmhand.state data that should be persisted.
  */
 export const reduceByPersistedKeys = state =>
-  PERSISTED_STATE_KEYS.reduce((acc, key) => {
+  /** @type {farmhand.state} */ (PERSISTED_STATE_KEYS.reduce((
+    /** @type {Partial<farmhand.state>} */ acc,
+    key
+  ) => {
     // This check prevents old exports from corrupting game state when
     // imported.
     if (typeof state[key] !== 'undefined') {
@@ -887,7 +895,7 @@ export const reduceByPersistedKeys = state =>
     }
 
     return acc
-  }, {})
+  }, {}))
 
 /**
  * @param {Array.<number>} historicalData Must be no longer than 7 numbers long.
@@ -969,21 +977,25 @@ export const computeMarketPositions = (
  * @param {farmhand.state} state
  * @return {farmhand.state}
  */
-export const transformStateDataForImport = state => {
+export const transformStateDataForImport = /** @type {(state: any) => farmhand.state} */ state => {
   let sanitizedState = { ...state }
 
   const rejectedKeys = ['version']
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
 
   if (sanitizedState.experience === 0) {
-    sanitizedState.experience = farmProductsSold(sanitizedState.itemsSold)
+    sanitizedState.experience = farmProductsSold(sanitizedState.itemsSold || {})
   }
 
   if (
     sanitizedState.showHomeScreen === false &&
     sanitizedState.stageFocus === stageFocusType.HOME
   ) {
-    sanitizedState = { ...sanitizedState, stageFocus: STANDARD_VIEW_LIST[0] }
+    sanitizedState = {
+      ...sanitizedState,
+      stageFocus:
+        /** @type {farmhand.stageFocusType} */ (STANDARD_VIEW_LIST[0]),
+    }
   }
 
   // NOTE: This is a mitigation for
@@ -1083,8 +1095,9 @@ const isPlotContentACrop = plotContents =>
   getPlotContentType(plotContents) === itemType.CROP
 
 /**
- * @param {Array} weightedOptions an array of objects each containing a `weight` property
- * @returns {Object} one of the items from weightedOptions
+ * @template T
+ * @param {Array.<T & { weight: number }>} weightedOptions an array of objects each containing a `weight` property
+ * @returns {T} one of the items from weightedOptions
  */
 export function randomChoice(weightedOptions) {
   let totalWeight = 0
@@ -1110,6 +1123,9 @@ export function randomChoice(weightedOptions) {
 
     runningTotal += option.weight
   }
+
+  // Fallback to the last option if no match found
+  return sortedOptions[sortedOptions.length - 1]
 }
 
 const colorizeCowTemplate = (() => {

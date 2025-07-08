@@ -61,7 +61,13 @@ function getHarvestedQuantity(state) {
 function harvestCrops(state, x, y) {
   const row = state.field[y]
   const crop = row[x]
+
+  if (!crop) return state
+
   const item = itemsMap[crop.itemId]
+
+  if (!item) return state
+
   const seedItemIdForCrop = getSeedItemIdFromFinalStageCropItemId(item.id)
   const plotWasRainbowFertilized =
     crop.fertilizerType === fertilizerType.RAINBOW
@@ -73,16 +79,24 @@ function harvestCrops(state, x, y) {
 
   const { cropType } = item
 
+  if (!cropType) return state
+
   if (plotWasRainbowFertilized) {
     const seedsForHarvestedCropAreAvailable =
       getInventoryQuantityMap(state.inventory)[seedItemIdForCrop] > 0
 
     if (seedsForHarvestedCropAreAvailable) {
       state = plantInPlot(state, x, y, seedItemIdForCrop)
-      state = modifyFieldPlotAt(state, x, y, crop => ({
-        ...crop,
-        fertilizerType: fertilizerType.RAINBOW,
-      }))
+      state = modifyFieldPlotAt(state, x, y, crop => {
+        if (!crop) {
+          return crop
+        }
+
+        return {
+          ...crop,
+          fertilizerType: fertilizerType.RAINBOW,
+        }
+      })
     }
   }
 
@@ -106,6 +120,9 @@ function harvestCrops(state, x, y) {
 function harvestWeed(state, x, y) {
   const row = state.field[y]
   const crop = row[x]
+
+  if (!crop) return state
+
   const item = itemsMap[crop.itemId]
   const harvestedQuantity = getHarvestedQuantity(state)
 

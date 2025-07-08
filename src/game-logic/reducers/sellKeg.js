@@ -1,9 +1,3 @@
-/**
- * @typedef {import("../../index").farmhand.item} item
- * @typedef {import("../../index").farmhand.keg} keg
- * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
- */
-
 import { itemsMap } from '../../data/maps.js'
 import {
   castToMoney,
@@ -23,9 +17,9 @@ import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 import { prependPendingPeerMessage } from './index.js'
 
 /**
- * @param {state} state
- * @param {keg} keg
- * @returns {state}
+ * @param {farmhand.state} state
+ * @param {farmhand.keg} keg
+ * @returns {farmhand.state}
  */
 export const sellKeg = (state, keg) => {
   const { itemId } = keg

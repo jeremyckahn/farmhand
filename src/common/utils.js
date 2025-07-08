@@ -1,4 +1,3 @@
-/** @typedef {import("../index").farmhand.priceEvent} farmhand.priceEvent */
 import { itemsMap } from '../data/maps.js'
 
 import { randomNumberService } from './services/randomNumber.js'
@@ -8,9 +7,9 @@ export const random = () => {
 }
 
 /**
- * @param {farmhand.priceEvent} [priceCrashes]
- * @param {farmhand.priceEvent} [priceSurges]
- * @returns {Object}
+ * @param {Partial<Record<string, farmhand.priceEvent>>} priceCrashes
+ * @param {Partial<Record<string, farmhand.priceEvent>>} priceSurges
+ * @returns {Record<string, number>}
  */
 export const generateValueAdjustments = (priceCrashes = {}, priceSurges = {}) =>
   Object.keys(itemsMap).reduce((acc, key) => {

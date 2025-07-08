@@ -7,6 +7,11 @@ declare module 'global/window.js' {
   export default window as Window
 }
 
+declare module '*.png?dataUri' {
+  const value: string
+  export default value
+}
+
 declare global {
   interface Window {
     farmhand?: typeof Farmhand
