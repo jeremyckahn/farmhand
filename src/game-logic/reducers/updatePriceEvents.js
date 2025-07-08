@@ -1,6 +1,6 @@
 /**
- * @param {Object.<farmhand.priceEvent>} priceEvents
- * @returns {Object.<farmhand.priceEvent>}
+ * @param {Record<string, farmhand.priceEvent>} priceEvents
+ * @returns {Record<string, farmhand.priceEvent>}
  */
 const decrementPriceEventDays = priceEvents =>
   Object.keys(priceEvents).reduce((acc, key) => {

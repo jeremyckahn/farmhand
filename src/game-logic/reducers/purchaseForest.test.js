@@ -1,29 +1,33 @@
 import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.js'
 import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.js'
+import { testState, testTree } from '../../test-utils/index.js'
 
 import { purchaseForest } from './purchaseForest.js'
 
-const tree = () => {
-  return {
-    daysOld: 0,
-    itemId: 'test-tree',
-  }
-}
-
 describe('purchaseForest', () => {
   test('updates purchasedForest', () => {
-    const { purchasedForest } = purchaseForest({ purchasedForest: 0 }, 0)
+    const { purchasedForest } = purchaseForest(
+      testState({ purchasedForest: 0 }),
+      0
+    )
     expect(purchasedForest).toEqual(0)
   })
 
   test('prevents repurchasing options', () => {
-    const { purchasedForest } = purchaseForest({ purchasedForest: 2 }, 1)
+    const { purchasedForest } = purchaseForest(
+      testState({ purchasedForest: 2 }),
+      1
+    )
     expect(purchasedForest).toEqual(2)
   })
 
   test('deducts money', () => {
     const { money } = purchaseForest(
-      { todaysNotifications: [], money: 101_000, forest: [[]] },
+      testState({
+        todaysNotifications: [],
+        money: 101_000,
+        forest: [[]],
+      }),
       1
     )
     expect(money).toEqual(1_000)
@@ -31,7 +35,11 @@ describe('purchaseForest', () => {
 
   test('adds experience', () => {
     const { experience } = purchaseForest(
-      { experience: 0, todaysNotifications: [], forest: [[]] },
+      testState({
+        experience: 0,
+        todaysNotifications: [],
+        forest: [[]],
+      }),
       1
     )
 
@@ -40,7 +48,10 @@ describe('purchaseForest', () => {
 
   test('shows notification', () => {
     const { todaysNotifications } = purchaseForest(
-      { todaysNotifications: [], forest: [[]] },
+      testState({
+        todaysNotifications: [],
+        forest: [[]],
+      }),
       1
     )
 
@@ -51,11 +62,15 @@ describe('purchaseForest', () => {
 
   describe('forest expansion', () => {
     test('forest expands without destroying existing data', () => {
-      const expectedForest = []
+      const expectedForest = /** @type {Array<Array<any>>} */ ([])
       const forestSize = PURCHASABLE_FOREST_SIZES.get(1)
 
+      if (!forestSize) {
+        throw new Error('Forest size not found')
+      }
+
       for (let y = 0; y < forestSize.rows; y++) {
-        const row = []
+        const row = /** @type {Array<any>} */ ([])
         for (let x = 0; x < forestSize.columns; x++) {
           row.push(null)
         }
@@ -63,18 +78,18 @@ describe('purchaseForest', () => {
       }
 
       const { forest } = purchaseForest(
-        {
+        testState({
           todaysNotifications: [],
           forest: [
-            [tree(), null],
-            [null, tree()],
+            [testTree(), null],
+            [null, testTree()],
           ],
-        },
+        }),
         1
       )
 
-      expectedForest[0][0] = tree()
-      expectedForest[1][1] = tree()
+      expectedForest[0][0] = testTree()
+      expectedForest[1][1] = testTree()
 
       expect(forest).toEqual(expectedForest)
     })

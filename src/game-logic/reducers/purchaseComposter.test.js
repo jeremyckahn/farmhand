@@ -9,6 +9,7 @@ describe('purchaseComposter', () => {
   beforeEach(() => {
     gameState = {
       experience: 0,
+      // @ts-expect-error
       money: PURCHASEABLE_COMPOSTERS.get(1).price,
       purchasedComposter: 0,
       todaysNotifications: [],

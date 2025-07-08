@@ -19,6 +19,7 @@ export const purchaseSmelter = (state, smelterId) => {
   state = {
     ...state,
     purchasedSmelter: smelterId,
+    // @ts-expect-error
     money: moneyTotal(money, -PURCHASEABLE_SMELTERS.get(smelterId).price),
   }
 

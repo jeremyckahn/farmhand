@@ -1,4 +1,4 @@
-/** @typedef {import("../../index").farmhand.item} item */
+/** @typedef {farmhand.item} item */
 
 import { crop, fromSeed } from '../crop.js'
 import { cropType } from '../../enums.js'
@@ -21,6 +21,6 @@ export const watermelonSeed = crop({
  * @type {farmhand.item}
  */
 export const watermelon = crop({
-  ...fromSeed(watermelonSeed),
+  ...fromSeed(/** @type {farmhand.seedItem} */ (watermelonSeed)),
   name: 'Watermelon',
 })

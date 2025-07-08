@@ -99,7 +99,7 @@ export const WineRecipe = ({ wineVariety }) => {
         subheader={
           <>
             <p>
-              Days to mature:{' '}
+              Days to mature: {/* @ts-expect-error */}
               {integerString(wineService.getDaysToMature(wineVariety))}
             </p>
             <p>

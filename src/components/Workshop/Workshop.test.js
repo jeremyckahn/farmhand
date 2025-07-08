@@ -69,7 +69,9 @@ describe('<Workshop />', () => {
 
   const renderWorkshop = gameState => {
     render(
-      <FarmhandContext.Provider value={{ gameState, handlers: {} }}>
+      <FarmhandContext.Provider
+        value={{ gameState, handlers: /** @type {any} */ ({}) }}
+      >
         <Workshop />
       </FarmhandContext.Provider>
     )
@@ -118,7 +120,8 @@ describe('<Workshop />', () => {
 
     describe('player has purchased the smelter', () => {
       beforeEach(() => {
-        getUpgradesAvailable.mockReturnValue([])
+        // @ts-expect-error - Mock function type assertion
+        /** @type {any} */ ;(getUpgradesAvailable).mockReturnValue([])
 
         gameState.purchasedSmelter = 1
         gameState.learnedRecipes = {
@@ -147,8 +150,10 @@ describe('<Workshop />', () => {
     describe('has upgrades available', () => {
       beforeEach(() => {
         const availableUpgrades = [{ id: 'upgrade-1' }, { id: 'upgrade-2' }]
-
-        getUpgradesAvailable.mockReturnValue(availableUpgrades)
+        // @ts-expect-error - Mock function type assertion
+        /** @type {any} */ ;(getUpgradesAvailable).mockReturnValue(
+          availableUpgrades
+        )
         gameState.purchasedSmelter = 1
 
         renderWorkshop(gameState)

@@ -1,9 +1,8 @@
-import { testCrop, testItem } from '../../test-utils/index.js'
+import { testCrop, testState } from '../../test-utils/index.js'
 import { fertilizerType, toolType, toolLevel } from '../../enums.js'
 import { getPlotContentFromItemId } from '../../utils/index.js'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
-import { itemType } from '../../enums.js'
 
 import { harvestPlot } from './harvestPlot.js'
 
@@ -11,21 +10,25 @@ vitest.mock('../../data/maps.js')
 
 describe('harvestPlot', () => {
   const toolLevelsDefault = {
+    [toolType.HOE]: toolLevel.DEFAULT,
     [toolType.SCYTHE]: toolLevel.DEFAULT,
+    [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
+    [toolType.WATERING_CAN]: toolLevel.DEFAULT,
   }
 
   const toolLevelsBronze = {
+    [toolType.HOE]: toolLevel.DEFAULT,
     [toolType.SCYTHE]: toolLevel.BRONZE,
+    [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
+    [toolType.WATERING_CAN]: toolLevel.DEFAULT,
   }
 
   describe('non-crop plotContent', () => {
     test('no-ops', () => {
-      const inputState = {
-        cropsHarvested: {},
+      const inputState = testState({
         field: [[getPlotContentFromItemId('sprinkler')]],
-        inventory: [],
         toolLevels: toolLevelsDefault,
-      }
+      })
       const state = harvestPlot(inputState, 0, 0)
       expect(state).toEqual(inputState)
     })
@@ -33,12 +36,10 @@ describe('harvestPlot', () => {
 
   describe('unripe crops', () => {
     test('no-ops', () => {
-      const inputState = {
-        cropsHarvested: {},
+      const inputState = testState({
         field: [[testCrop({ itemId: 'sample-crop-1' })]],
-        inventory: [],
         toolLevels: toolLevelsDefault,
-      }
+      })
       const state = harvestPlot(inputState, 0, 0)
       expect(state).toEqual(inputState)
     })
@@ -47,13 +48,11 @@ describe('harvestPlot', () => {
   describe('ripe crops', () => {
     test('harvests the plot', () => {
       const { cropsHarvested, field, inventory } = harvestPlot(
-        {
-          cropsHarvested: {},
+        testState({
           field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
-          inventory: [],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
           toolLevels: toolLevelsDefault,
-        },
+        }),
         0,
         0
       )
@@ -67,13 +66,11 @@ describe('harvestPlot', () => {
       let farmhandState
 
       beforeEach(() => {
-        farmhandState = {
-          cropsHarvested: {},
+        farmhandState = testState({
           field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
-          inventory: [],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
           toolLevels: toolLevelsBronze,
-        }
+        })
       })
 
       test('harvests the plot', () => {
@@ -92,13 +89,12 @@ describe('harvestPlot', () => {
 
     describe('there is insufficient inventory space', () => {
       test('no-ops', () => {
-        const inputState = {
-          cropsHarvested: {},
+        const inputState = testState({
           field: [[testCrop({ itemId: 'sample-crop-1', daysWatered: 4 })]],
           inventory: [{ id: 'sample-crop-1', quantity: 5 }],
           inventoryLimit: 5,
           toolLevels: toolLevelsDefault,
-        }
+        })
         const state = harvestPlot(inputState, 0, 0)
 
         expect(state).toEqual(inputState)
@@ -113,8 +109,7 @@ describe('harvestPlot', () => {
           field: [[plotContent]],
           inventory: [{ quantity }],
         } = harvestPlot(
-          {
-            cropsHarvested: {},
+          testState({
             toolLevels: toolLevelsDefault,
             field: [
               [
@@ -128,8 +123,7 @@ describe('harvestPlot', () => {
             ],
             inventory: [{ id: 'sample-crop-1-seed', quantity: 2 }],
             inventoryLimit: INFINITE_STORAGE_LIMIT,
-            itemsSold: {},
-          },
+          }),
           0,
           0
         )
@@ -150,8 +144,7 @@ describe('harvestPlot', () => {
         const {
           field: [[plotContent]],
         } = harvestPlot(
-          {
-            cropsHarvested: {},
+          testState({
             toolLevels: toolLevelsDefault,
             field: [
               [
@@ -165,8 +158,7 @@ describe('harvestPlot', () => {
             ],
             inventory: [],
             inventoryLimit: INFINITE_STORAGE_LIMIT,
-            itemsSold: {},
-          },
+          }),
           0,
           0
         )
@@ -181,13 +173,11 @@ describe('harvestPlot', () => {
 
     beforeEach(() => {
       harvest = harvestPlot(
-        {
-          cropsHarvested: {},
-          field: [[testItem({ itemId: 'weed', type: itemType.WEED })]],
-          inventory: [],
+        testState({
+          field: [[testCrop({ itemId: 'weed' })]],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
           toolLevels: toolLevelsDefault,
-        },
+        }),
         0,
         0
       )

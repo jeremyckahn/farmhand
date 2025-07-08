@@ -1,4 +1,3 @@
-/** @typedef {import('../../index.js').farmhand.item} farmhand.item */
 import React, { memo } from 'react'
 import { array, string } from 'prop-types'
 

@@ -29,7 +29,7 @@ jobs:
         run: npm test -- --coverage --run
 
       - name: 'Check types'
-        run: npm run check:types:noerror
+        run: npm run check:types
 
   build:
     runs-on: ubuntu-latest

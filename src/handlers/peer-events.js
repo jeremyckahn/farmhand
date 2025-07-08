@@ -1,5 +1,5 @@
-/** @typedef {import('../components/Farmhand/Farmhand').default} Farmhand */
-/** @typedef {import('../index').farmhand.peerMetadata} farmhand.peerMetadata */
+// @ts-expect-error - Circular typedef
+/** @typedef {Farmhand} Farmhand */
 import { cowTradeRejectionReason } from '../enums.js'
 import { EXPERIENCE_VALUES } from '../constants.js'
 import { COW_TRADED_NOTIFICATION } from '../templates.js'
@@ -107,7 +107,13 @@ export const handleCowTradeRequest = async (
       })
       state = showNotification(
         state,
-        COW_TRADED_NOTIFICATION`${cowToTradeAway}${cowOffered}${id}${allowCustomPeerCowNames}`,
+        COW_TRADED_NOTIFICATION(
+          '',
+          cowToTradeAway,
+          cowOffered,
+          id,
+          allowCustomPeerCowNames
+        ),
         'success'
       )
 
@@ -187,9 +193,10 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
         }
       }
 
-      const [, peerMetadata] = Object.entries(peers).find(
+      const peerEntry = Object.entries(peers).find(
         ([, { id }]) => id === cowReceived.ownerId
       )
+      const [, peerMetadata] = peerEntry || []
 
       const didOriginallyOwnReceivedCow = cowReceived.originalOwnerId === id
 
@@ -207,7 +214,13 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
       })
       state = showNotification(
         state,
-        COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${id}${allowCustomPeerCowNames}`,
+        COW_TRADED_NOTIFICATION(
+          '',
+          cowTradedAway,
+          updatedCowReceived,
+          id,
+          allowCustomPeerCowNames
+        ),
         'success'
       )
 
