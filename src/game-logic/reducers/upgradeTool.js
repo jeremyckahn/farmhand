@@ -3,7 +3,7 @@ import { TOOL_UPGRADED_NOTIFICATION } from '../../templates.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'
 
 import { showNotification } from './showNotification.js'
-import { processIngredients } from './makeRecipe.js'
+import { processIngredients } from './processIngredients.js'
 import { addItemToInventory } from './addItemToInventory.js'
 
 /**
