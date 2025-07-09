@@ -158,6 +158,7 @@ Execute the following command sequence from the project root:
 npm run lint && CI=true npm test
 ```
 
+-   **Always** run tests with the `CI=true` environment variable set.
 -   Run this immediately after making any code changes.
 -   Address all ESLint errors and warnings before proceeding. Use `npm run lint -- --fix` to automatically fix fixable issues.
 -   All existing tests must continue to pass. New functionality should include appropriate test coverage.
