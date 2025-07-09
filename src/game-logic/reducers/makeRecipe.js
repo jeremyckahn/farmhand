@@ -1,7 +1,5 @@
 import { canMakeRecipe } from '../../utils/index.js'
-
 import { recipeType } from '../../enums.js'
-
 import { EXPERIENCE_VALUES } from '../../constants.js'
 
 import { addItemToInventory } from './addItemToInventory.js'
@@ -16,19 +14,27 @@ const EXPERIENCE_FOR_RECIPE = {
 }
 
 /**
+ * Process ingredients - validate, add experience, and decrement ingredients
  * @param {farmhand.state} state
- * @param {farmhand.recipe} recipe
+ * @param {object} recipe - Recipe or upgrade object with ingredients
  * @param {number} [howMany=1]
+ * @param {number} [experiencePoints=0] - Experience points to award
  * @returns {farmhand.state}
  */
-export const makeRecipe = (state, recipe, howMany = 1) => {
-  if (!canMakeRecipe(recipe, state.inventory, howMany)) {
+export const processIngredients = (
+  state,
+  recipe,
+  howMany = 1,
+  experiencePoints = 0
+) => {
+  // Skip validation if there are no ingredients
+  if (recipe.ingredients && !canMakeRecipe(recipe, state.inventory, howMany)) {
     return state
   }
 
-  state = addExperience(state, EXPERIENCE_FOR_RECIPE[recipe.recipeType] || 0)
+  state = addExperience(state, experiencePoints)
 
-  state = Object.keys(recipe.ingredients).reduce(
+  return Object.keys(recipe.ingredients || {}).reduce(
     (state, ingredientId) =>
       decrementItemFromInventory(
         state,
@@ -37,6 +43,27 @@ export const makeRecipe = (state, recipe, howMany = 1) => {
       ),
     state
   )
+}
+
+/**
+ * @param {farmhand.state} state
+ * @param {farmhand.recipe} recipe
+ * @param {number} [howMany=1]
+ * @returns {farmhand.state}
+ */
+export const makeRecipe = (state, recipe, howMany = 1) => {
+  const originalState = state
+  state = processIngredients(
+    state,
+    recipe,
+    howMany,
+    EXPERIENCE_FOR_RECIPE[recipe.recipeType] || 0
+  )
+
+  // Only add to inventory if ingredient processing was successful
+  if (state === originalState) {
+    return state
+  }
 
   return addItemToInventory(state, recipe, howMany)
 }

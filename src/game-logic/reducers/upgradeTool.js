@@ -1,10 +1,11 @@
 import upgrades from '../../data/upgrades.js'
 import { TOOL_UPGRADED_NOTIFICATION } from '../../templates.js'
+import { EXPERIENCE_VALUES } from '../../constants.js'
 
 import { showNotification } from './showNotification.js'
-import { decrementItemFromInventory } from './decrementItemFromInventory.js'
+import { processIngredients } from './makeRecipe.js'
+import { addItemToInventory } from './addItemToInventory.js'
 
-// TODO: Add tests for this reducer
 /**
  * @param {farmhand.state} state
  * @param {farmhand.upgradesMetadatum} upgrade
@@ -15,19 +16,22 @@ export const upgradeTool = (state, upgrade) => {
     return state
   }
 
-  // Decrement ingredients from inventory
-  if (upgrade.ingredients) {
-    const ingredients = upgrade.ingredients
-    state = Object.keys(ingredients).reduce(
-      (state, ingredientId) =>
-        decrementItemFromInventory(
-          state,
-          ingredientId,
-          ingredients[ingredientId]
-        ),
-      state
-    )
+  // Process ingredients (validation, experience, decrement ingredients)
+  const originalState = state
+  state = processIngredients(
+    state,
+    upgrade,
+    1,
+    EXPERIENCE_VALUES.FORGE_RECIPE_MADE
+  )
+
+  // If ingredient processing failed, return original state
+  if (state === originalState) {
+    return state
   }
+
+  // Add the upgrade object to inventory
+  state = addItemToInventory(state, /** @type {farmhand.item} */ (upgrade), 1)
 
   const currentName =
     upgrades[upgrade.toolType][state.toolLevels[upgrade.toolType]].name
