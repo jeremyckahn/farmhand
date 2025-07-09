@@ -45,10 +45,34 @@ describe('handleClickEndDayButton', () => {
 })
 
 describe('handleMenuToggle', () => {
-  test('toggle menu state', () => {
+  test('toggle menu state when called without arguments', () => {
     const { isMenuOpen } = component.state()
     handlers().handleMenuToggle()
     expect(component.state().isMenuOpen).toEqual(!isMenuOpen)
+  })
+
+  test('toggle menu state when called with null', () => {
+    const { isMenuOpen } = component.state()
+    handlers().handleMenuToggle(null)
+    expect(component.state().isMenuOpen).toEqual(!isMenuOpen)
+  })
+
+  test('toggle menu state when called with undefined', () => {
+    const { isMenuOpen } = component.state()
+    handlers().handleMenuToggle(undefined)
+    expect(component.state().isMenuOpen).toEqual(!isMenuOpen)
+  })
+
+  test('set menu to open when called with true', () => {
+    component.setState({ isMenuOpen: false })
+    handlers().handleMenuToggle(true)
+    expect(component.state().isMenuOpen).toEqual(true)
+  })
+
+  test('set menu to closed when called with false', () => {
+    component.setState({ isMenuOpen: true })
+    handlers().handleMenuToggle(false)
+    expect(component.state().isMenuOpen).toEqual(false)
   })
 })
 

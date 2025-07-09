@@ -340,9 +340,8 @@ export default {
    * @param {boolean} [setOpen]
    */
   handleMenuToggle(setOpen = /** @type {boolean | undefined} */ (undefined)) {
-    if (setOpen === null) setOpen = undefined
     this.setState(({ isMenuOpen }) => ({
-      isMenuOpen: setOpen ? setOpen : !isMenuOpen,
+      isMenuOpen: setOpen == null ? !isMenuOpen : setOpen,
     }))
   },
 
