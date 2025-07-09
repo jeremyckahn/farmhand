@@ -109,7 +109,6 @@ When writing tests for Farmhand, please follow the guidelines documented in [`.r
 
 - **Always use `testState()`** when creating state objects for tests to ensure type safety
 - **Use test utilities** like `testCrop()`, `testItem()`, and `testShoveledPlot()` for consistent test data
-- **Complete `toolLevels` objects** - include all tool types when overriding toolLevels
 - **Import from centralized location**: `import { testState, testCrop, testItem } from '../../test-utils/index.js'`
 
 These utilities prevent TypeScript errors and ensure tests remain maintainable as the codebase evolves.

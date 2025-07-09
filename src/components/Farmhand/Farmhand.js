@@ -716,11 +716,13 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     const updatedAchievementsState = reducers.updateAchievements(
-      /** @type {any} */ (this.state),
+      // @ts-expect-error
+      this.state,
       prevState
     )
 
-    if (updatedAchievementsState !== /** @type {any} */ (this.state)) {
+    // @ts-expect-error
+    if (updatedAchievementsState !== this.state) {
       this.setState(() => updatedAchievementsState)
     }
 
@@ -1139,7 +1141,8 @@ export default class Farmhand extends FarmhandReducers {
        */
       prev => {
         const nextDayState = reducers.computeStateForNextDay(
-          /** @type {any} */ (prev),
+          // @ts-expect-error
+          prev,
           isFirstDay
         )
 
@@ -1156,12 +1159,13 @@ export default class Farmhand extends FarmhandReducers {
 
         nextDayState.isAwaitingNetworkRequest = false
 
-        return /** @type {any} */ ({
+        // @ts-expect-error
+        return {
           ...nextDayState,
           isWaitingForDayToCompleteIncrementing: true,
           newDayNotifications: [],
           todaysNotifications: [],
-        })
+        }
       },
       async () => {
         try {
@@ -1279,7 +1283,7 @@ export default class Farmhand extends FarmhandReducers {
 
     // Bundle up the raw state and the computed state into one object to be
     // passed down through the component tree.
-    const gameState = /** @type {any} */ ({
+    const gameState = {
       ...this.state,
       blockInput,
       features,
@@ -1292,7 +1296,7 @@ export default class Farmhand extends FarmhandReducers {
       shopInventory,
       viewList,
       viewTitle,
-    })
+    }
 
     return (
       <GlobalHotKeys
@@ -1315,7 +1319,13 @@ export default class Farmhand extends FarmhandReducers {
               }}
             >
               {redirect && <Redirect {...{ to: redirect }} />}
-              <FarmhandContext.Provider value={{ gameState, handlers }}>
+              <FarmhandContext.Provider
+                value={{
+                  // @ts-expect-error
+                  gameState,
+                  handlers,
+                }}
+              >
                 <div
                   {...{
                     className: classNames(

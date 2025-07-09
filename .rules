@@ -168,4 +168,4 @@ npm run lint && CI=true npm test
 
 -   When the `farmhand.state` interface changes, update `testState()` accordingly.
 -   Add new test utilities for commonly created objects, keeping them minimal but complete (including all required properties).
--   Document new utilities in this file.
+-   Document new utilities in this file (.rules in the project root).
