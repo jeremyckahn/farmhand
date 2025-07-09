@@ -31,7 +31,7 @@ export const upgradeTool = (state, upgrade) => {
   }
 
   // Add the upgrade object to inventory
-  state = addItemToInventory(state, /** @type {farmhand.item} */ (upgrade), 1)
+  state = addItemToInventory(state, upgrade, 1)
 
   const currentName =
     upgrades[upgrade.toolType][state.toolLevels[upgrade.toolType]].name

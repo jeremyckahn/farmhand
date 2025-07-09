@@ -1,5 +1,5 @@
 import { EXPERIENCE_VALUES } from '../../constants.js'
-import { toolLevel, toolType } from '../../enums.js'
+import { itemType, toolLevel, toolType } from '../../enums.js'
 import { testState } from '../../test-utils/index.js'
 import upgrades from '../../data/upgrades.js'
 
@@ -26,13 +26,27 @@ describe('upgradeTool', () => {
 
   describe('validation', () => {
     test('returns state unchanged when upgrade lacks toolType', () => {
-      const upgrade = { id: 'test', name: 'Test', level: toolLevel.BRONZE }
+      const upgrade = {
+        id: 'test',
+        name: 'Test',
+        level: toolLevel.BRONZE,
+        type: itemType.TOOL_UPGRADE,
+        value: 0,
+        doesPriceFluctuate: false,
+      }
       const result = upgradeTool(state, upgrade)
       expect(result).toBe(state)
     })
 
     test('returns state unchanged when upgrade lacks level', () => {
-      const upgrade = { id: 'test', name: 'Test', toolType: toolType.HOE }
+      const upgrade = {
+        id: 'test',
+        name: 'Test',
+        toolType: toolType.HOE,
+        type: itemType.TOOL_UPGRADE,
+        value: 0,
+        doesPriceFluctuate: false,
+      }
       const result = upgradeTool(state, upgrade)
       expect(result).toBe(state)
     })
@@ -117,6 +131,9 @@ describe('upgradeTool', () => {
         toolType: toolType.HOE,
         level: toolLevel.BRONZE,
         name: 'Test Upgrade',
+        type: itemType.TOOL_UPGRADE,
+        value: 0,
+        doesPriceFluctuate: false,
       }
 
       const result = upgradeTool(state, upgradeWithoutIngredients)

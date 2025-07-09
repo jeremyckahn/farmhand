@@ -280,6 +280,9 @@ declare namespace farmhand {
     isMaxLevel?: boolean
     toolType?: toolType
     level?: toolLevel
+    type: itemType
+    value: number
+    doesPriceFluctuate: boolean
   }
 
   interface upgradesMetadata {
