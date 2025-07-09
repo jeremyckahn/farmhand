@@ -616,7 +616,7 @@ export const onionRings = itemify({
     state.itemsSold[vegetableOil.id] > 20 &&
     state.itemsSold[soyMilk.id] > 20 &&
     state.itemsSold[items.wheat.id] > 30,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.FORGE),
+  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
 })
 
 /**
