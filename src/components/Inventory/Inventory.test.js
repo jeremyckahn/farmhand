@@ -168,8 +168,8 @@ describe('Inventory Component', () => {
       ])
 
       expect(sortedItems).toEqual([
-        testItem({ id: pumpkinSeed.id, value: 0.5 }),
         testItem({ id: carrotSeed.id }),
+        testItem({ id: pumpkinSeed.id, value: 0.5 }),
         testItem({ id: 'sprinkler' }),
         testItem({ id: 'scarecrow' }),
       ])

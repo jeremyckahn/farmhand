@@ -14,7 +14,6 @@ export const pumpkinSeed = crop(
     name: 'Pumpkin Seed',
     tier: 1,
     type: itemType.CROP,
-    value: 10,
   })
 )
 

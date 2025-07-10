@@ -61,7 +61,7 @@ export const separateItemsIntoCategories = (
       if (category === 'CROPS') {
         const targetCategory = item.isPlantableCrop ? 'SEEDS' : 'CROPS'
         categories.get(targetCategory)?.push(item)
-      } else if (category && categories.has(category)) {
+      } else if (category != null && categories.has(category)) {
         categories.get(category)?.push(item)
       }
 
