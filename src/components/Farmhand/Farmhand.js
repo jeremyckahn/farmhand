@@ -399,7 +399,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   get peerMetadata() {
-    // @ts-ignore - toolLevels type inference issue, but functionality works correctly
+    // @ts-expect-error - toolLevels type inference issue, but functionality works correctly
     return getPeerMetadata(this.state)
   }
 
@@ -1038,7 +1038,7 @@ export default class Farmhand extends FarmhandReducers {
   persistState(overrides = {}) {
     return this.props.localforage.setItem(
       'state',
-      // @ts-ignore - toolLevels type inference issue, but functionality works correctly
+      // @ts-expect-error - toolLevels type inference issue, but functionality works correctly
       reduceByPersistedKeys({
         ...this.state,
         ...overrides,

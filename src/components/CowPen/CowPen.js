@@ -107,7 +107,7 @@ export class Cow extends Component {
             },
             easing,
             duration,
-            // @ts-ignore
+            // @ts-expect-error
             render,
           })
         } else {
@@ -120,7 +120,7 @@ export class Cow extends Component {
             },
             easing,
             duration,
-            // @ts-ignore
+            // @ts-expect-error
             render,
           })
         }

@@ -58,7 +58,7 @@ export default withSnackbar(function Consumer(props) {
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => {
         return (
-          // @ts-ignore - Complex prop spreading creates type mismatch with PropTypes
+          // @ts-expect-error - Complex prop spreading creates type mismatch with PropTypes
           <NotificationSystem {...{ ...gameState, ...handlers, ...props }} />
         )
       }}

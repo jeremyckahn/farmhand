@@ -73,7 +73,7 @@ const AccountingView = ({
         />
         <CardContent>
           <div className="loan-container">
-            {/* @ts-ignore */}
+            {/* @ts-expect-error */}
             <TextField
               variant="standard"
               {...{

@@ -47,7 +47,7 @@ const QuantityTextInput = ({
   value,
 }) => {
   return (
-    // @ts-ignore
+    // @ts-expect-error
     <TextField
       variant="standard"
       {...{
@@ -73,7 +73,6 @@ const QuantityTextInput = ({
         },
 
         InputProps: {
-          // @ts-ignore
           inputComponent: QuantityNumberFormat,
           endAdornment: (
             <>

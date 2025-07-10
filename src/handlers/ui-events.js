@@ -129,7 +129,7 @@ export default {
    * @param {React.SyntheticEvent} e
    * @param {farmhand.cow} cow
    */
-  // @ts-ignore
+  // @ts-expect-error
   handleCowAutomaticHugChange({ target: { checked } }, cow) {
     this.changeCowAutomaticHugState(cow, checked)
   },

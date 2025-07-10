@@ -16,7 +16,7 @@ describe('StoneFactory', () => {
     })
 
     test('it generates resources', () => {
-      // @ts-ignore
+      // @ts-expect-error
       randomNumberService.isRandomNumberLessThan.mockReturnValue(true)
 
       const resources = stoneFactory.generate()

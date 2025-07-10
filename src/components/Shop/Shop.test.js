@@ -26,7 +26,7 @@ beforeEach(() => {
 
   render(
     <FarmhandContext.Provider
-      // @ts-ignore
+      // @ts-expect-error
       value={{ gameState, handlers: {} }}
     >
       <Shop />
