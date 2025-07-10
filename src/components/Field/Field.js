@@ -138,7 +138,7 @@ export const MemoPlot = memo(
   }
 )
 
-// @ts-ignore
+// @ts-expect-error
 MemoPlot.propTypes = {
   experience: number.isRequired,
   fieldMode: string.isRequired,

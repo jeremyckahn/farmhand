@@ -19,7 +19,7 @@ describe('<Home />', () => {
 
     render(
       <FarmhandContext.Provider
-        // @ts-ignore
+        // @ts-expect-error
         value={{ gameState, handlers: {} }}
       >
         <Home handleViewChangeButtonClick={handleViewChangeButtonClick} />

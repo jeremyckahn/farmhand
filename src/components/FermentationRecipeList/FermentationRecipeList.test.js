@@ -25,13 +25,12 @@ const FermentationRecipeListStub = ({
   },
 } = {}) => (
   <FarmhandContext.Provider
-    // @ts-ignore
     value={{
-      // @ts-ignore
+      // @ts-expect-error
       gameState: {
         levelEntitlements,
       },
-      // @ts-ignore
+      // @ts-expect-error
       handlers: {},
     }}
   >
