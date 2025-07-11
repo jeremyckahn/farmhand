@@ -22,7 +22,7 @@ const ProgressBar = ({ percent }) => {
         from: { currentPercent: 0 },
         to: { currentPercent: percent },
         render: ({ currentPercent }) => {
-          setDisplayedProgress(Number(currentPercent))
+          setDisplayedProgress(Number(Number(currentPercent).toFixed(2)))
           setDisplayedColor(
             interpolate(
               { color: incompleteColor },
