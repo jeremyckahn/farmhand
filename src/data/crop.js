@@ -11,24 +11,22 @@ export const crop = ({
   cropTimeline,
   growsInto,
   tier = 1,
-  type,
-  value,
+  isSeed = Boolean(growsInto),
+  cropLifecycleDuration = getCropLifecycleDuration({ cropTimeline }),
+  id = '',
+  name = '',
   ...rest
 }) =>
   freeze(
     /** @type {farmhand.item} */ ({
+      id,
+      name,
       cropTimeline,
       doesPriceFluctuate: true,
       tier,
-      type: type || itemType.CROP,
-      value:
-        value ||
-        10 +
-          getCropLifecycleDuration({ cropTimeline }) *
-            tier *
-            (Boolean(growsInto) ? 1 : 3),
-      ...(Boolean(growsInto) && {
-        isSeed: true,
+      type: itemType.CROP,
+      value: 10 + cropLifecycleDuration * tier * (isSeed ? 1 : 3),
+      ...(isSeed && {
         enablesFieldMode: fieldMode.PLANT,
         growsInto,
         isPlantableCrop: true,
@@ -38,11 +36,11 @@ export const crop = ({
   )
 
 /**
- * @param {farmhand.seedItem} item
+ * @param {farmhand.item} item
  * @param {Object} [config]
  * @param {number} [config.variantIdx]
  * @param {boolean} [config.canBeFermented]
- * @returns {Partial<farmhand.item>}
+ * @returns {farmhand.item}
  */
 export const fromSeed = (
   { cropTimeline, cropType, growsInto, tier = 1 },
@@ -50,15 +48,18 @@ export const fromSeed = (
 ) => {
   const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 
-  return {
-    id: variants[variantIdx],
+  return /** @type {farmhand.item} */ ({
+    id: variants[variantIdx] || '',
+    name: '',
     cropTimeline,
     cropType,
+    doesPriceFluctuate: true,
     tier,
+    type: itemType.CROP,
     ...(canBeFermented && {
       daysToFerment: getCropLifecycleDuration({ cropTimeline }) * tier,
     }),
-  }
+  })
 }
 
 /**
@@ -71,10 +72,5 @@ export const cropVariety = ({
   variety,
   ...cropVarietyProperties
 }) => {
-  return {
-    imageId,
-    cropFamily,
-    variety,
-    ...crop(/** @type {farmhand.item} */ ({ ...cropVarietyProperties })),
-  }
+  return { imageId, cropFamily, variety, ...crop({ ...cropVarietyProperties }) }
 }
