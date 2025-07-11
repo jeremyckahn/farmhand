@@ -32,7 +32,7 @@ export const purchaseItem = (state, item, howMany = 1) => {
 
   state = prependPendingPeerMessage(
     state,
-    PURCHASED_ITEM_PEER_NOTIFICATION`${howMany}${item}`
+    PURCHASED_ITEM_PEER_NOTIFICATION('', howMany, item)
   )
 
   return addItemToInventory(

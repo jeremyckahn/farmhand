@@ -1,9 +1,3 @@
-/**
- * @typedef {import("../../index").farmhand.item} item
- * @typedef {import("../../index").farmhand.keg} keg
- * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
- */
-
 import { PURCHASEABLE_CELLARS } from '../../constants.js'
 import { itemsMap } from '../../data/maps.js'
 import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe.js'
@@ -14,10 +8,10 @@ import { addKegToCellarInventory } from './addKegToCellarInventory.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 /**
- * @param {state} state
- * @param {item} fermentationRecipe
+ * @param {farmhand.state} state
+ * @param {farmhand.item} fermentationRecipe
  * @param {number} [howMany=1]
- * @returns {state}
+ * @returns {farmhand.state}
  */
 export const makeFermentationRecipe = (
   state,

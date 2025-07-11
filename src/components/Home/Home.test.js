@@ -18,7 +18,10 @@ describe('<Home />', () => {
     handleViewChangeButtonClick = vitest.fn()
 
     render(
-      <FarmhandContext.Provider value={{ gameState, handlers: {} }}>
+      <FarmhandContext.Provider
+        // @ts-expect-error
+        value={{ gameState, handlers: {} }}
+      >
         <Home handleViewChangeButtonClick={handleViewChangeButtonClick} />
       </FarmhandContext.Provider>
     )

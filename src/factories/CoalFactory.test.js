@@ -16,14 +16,16 @@ describe('CoalFactory', () => {
     })
 
     test('it produces at least one coal and one stone', () => {
-      utils.chooseRandom.mockReturnValueOnce(1)
+      // @ts-expect-error - Mock function type assertion
+      /** @type {any} */ ;(utils.chooseRandom).mockReturnValueOnce(1)
       const resources = coalFactory.generate()
 
       expect(resources).toEqual([coal, stone])
     })
 
     test('can produce more than one coal and stone', () => {
-      utils.chooseRandom.mockReturnValueOnce(3)
+      // @ts-expect-error - Mock function type assertion
+      /** @type {any} */ ;(utils.chooseRandom).mockReturnValueOnce(3)
       const resources = coalFactory.generate()
 
       expect(resources.length > 2).toEqual(true)

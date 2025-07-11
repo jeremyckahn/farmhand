@@ -2,7 +2,6 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
-import { noop } from '../../utils/noop.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
@@ -25,16 +24,11 @@ beforeEach(() => {
     valueAdjustments: {},
   }
 
-  const handlers = {
-    handleCombinePurchase: noop,
-    handleCowPenPurchase: noop,
-    handleCellarPurchase: noop,
-    handleFieldPurchase: noop,
-    handleStorageExpansionPurchase: noop,
-  }
-
   render(
-    <FarmhandContext.Provider value={{ gameState, handlers }}>
+    <FarmhandContext.Provider
+      // @ts-expect-error
+      value={{ gameState, handlers: {} }}
+    >
       <Shop />
     </FarmhandContext.Provider>
   )

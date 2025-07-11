@@ -1,8 +1,3 @@
-/** @typedef {import('../../handlers/ui-events')['default']} farmhand.uiHandlers */
-/** @typedef {import('../../components/Farmhand/Farmhand').farmhand.state} farmhand.state */
-/** @typedef {import('../../components/Farmhand/Farmhand').default} Farmhand */
-/** @typedef {import('../../index').farmhand.cow} farmhand.cow */
-/** @typedef {import('../../index').farmhand.cowBreedingPen} farmhand.cowBreedingPen */
 import React, { useEffect, useRef, useState } from 'react'
 
 import { array, bool, func, number, object, string } from 'prop-types'
@@ -48,26 +43,26 @@ const genderIcons = {
 /**
  * @typedef {{
  *   allowCustomPeerCowNames: boolean,
- *   cow: farmhand.cow,
- *   cowBreedingPen: farmhand.cowBreedingPen,
- *   cowInventory: farmhand.state['cowInventory'],
- *   cowIdOfferedForTrade: farmhand.cow['id'],
- *   debounced: Farmhand['handlers']['debounced'],
- *   handleCowAutomaticHugChange: farmhand.uiHandlers['handleCowAutomaticHugChange'],
- *   handleCowBreedChange: farmhand.uiHandlers['handleCowBreedChange'],
- *   handleCowHugClick: farmhand.uiHandlers['handleCowHugClick'],
- *   handleCowOfferClick: farmhand.uiHandlers['handleCowOfferClick'],
- *   handleCowPurchaseClick: farmhand.uiHandlers['handleCowPurchaseClick'],
- *   handleCowWithdrawClick: farmhand.uiHandlers['handleCowWithdrawClick'],
- *   handleCowSellClick: farmhand.uiHandlers['handleCowSellClick'],
- *   handleCowTradeClick: farmhand.uiHandlers['handleCowTradeClick'],
- *   id: farmhand.state['id'],
- *   inventory: farmhand.state['inventory'],
+ *   cow: globalThis.farmhand.cow,
+ *   cowBreedingPen: globalThis.farmhand.cowBreedingPen,
+ *   cowInventory: globalThis.farmhand.state['cowInventory'],
+ *   cowIdOfferedForTrade: globalThis.farmhand.cow['id'],
+ *   debounced: import('../../handlers/ui-events.js').default['debounced'],
+ *   handleCowAutomaticHugChange: import('../../handlers/ui-events.js').default['handleCowAutomaticHugChange'],
+ *   handleCowBreedChange: import('../../handlers/ui-events.js').default['handleCowBreedChange'],
+ *   handleCowHugClick: import('../../handlers/ui-events.js').default['handleCowHugClick'],
+ *   handleCowOfferClick: import('../../handlers/ui-events.js').default['handleCowOfferClick'],
+ *   handleCowPurchaseClick: import('../../handlers/ui-events.js').default['handleCowPurchaseClick'],
+ *   handleCowWithdrawClick: import('../../handlers/ui-events.js').default['handleCowWithdrawClick'],
+ *   handleCowSellClick: import('../../handlers/ui-events.js').default['handleCowSellClick'],
+ *   handleCowTradeClick: import('../../handlers/ui-events.js').default['handleCowTradeClick'],
+ *   id: globalThis.farmhand.state['id'],
+ *   inventory: globalThis.farmhand.state['inventory'],
  *   isCowOfferedForTradeByPeer: boolean,
  *   isSelected: boolean,
  *   isOnline: boolean,
- *   money: farmhand.state['money'],
- *   purchasedCowPen: farmhand.state['purchasedCowPen'],
+ *   money: globalThis.farmhand.state['money'],
+ *   purchasedCowPen: globalThis.farmhand.state['purchasedCowPen'],
  *   huggingMachinesRemain?: boolean,
  * }} CowCardProps
  */
@@ -278,7 +273,7 @@ export const CowCard = (
                     {...{
                       arrow: true,
                       placement: 'top',
-                      title: WITHDRAW_COW_FROM_TRADE`${cowDisplayName}`,
+                      title: WITHDRAW_COW_FROM_TRADE('', cowDisplayName),
                     }}
                   >
                     <Button
@@ -300,7 +295,9 @@ export const CowCard = (
                       arrow: true,
                       placement: 'top',
                       title: (
-                        <Typography>{OFFER_COW_FOR_TRADE`${cowDisplayName}`}</Typography>
+                        <Typography>
+                          {OFFER_COW_FOR_TRADE('', cowDisplayName)}
+                        </Typography>
                       ),
                     }}
                   >

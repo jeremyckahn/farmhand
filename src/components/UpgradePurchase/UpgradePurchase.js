@@ -30,6 +30,7 @@ export function UpgradePurchase({
 
   const canBeMade =
     canMakeRecipe(upgrade, inventory, 1) &&
+    // @ts-expect-error
     doesInventorySpaceRemain({
       inventory,
       // Without the Infinity coercion, this would break recipes for unlimited

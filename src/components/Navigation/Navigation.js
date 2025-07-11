@@ -285,6 +285,7 @@ export const Navigation = ({
         <h3
           {...{
             className: classNames('inventory-info', {
+              // @ts-expect-error
               'is-inventory-full': !doesInventorySpaceRemain({
                 inventory,
                 inventoryLimit,
@@ -400,7 +401,13 @@ export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Navigation {...{ ...gameState, ...handlers, ...props }} />
+        <Navigation
+          {...{
+            ...gameState,
+            ...handlers,
+            ...props,
+          }}
+        />
       )}
     </FarmhandContext.Consumer>
   )

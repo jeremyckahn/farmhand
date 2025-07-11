@@ -1,4 +1,3 @@
-/** @typedef {import('../index.js').farmhand.achievement} farmhand.achievement */
 import { addItemToInventory } from '../game-logic/reducers/index.js'
 import {
   doesPlotContainCrop,
@@ -69,7 +68,7 @@ const achievements = [
       Boolean(
         findInField(
           state.field,
-          plot => doesPlotContainCrop(plot) && plot.wasWateredToday
+          plot => doesPlotContainCrop(plot) && Boolean(plot.wasWateredToday)
         )
       ),
     reward: state => addMoney(state, reward),

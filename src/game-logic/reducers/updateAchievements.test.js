@@ -20,7 +20,7 @@ describe('updateAchievements', () => {
       }
     })
 
-   updateAchievements = (await vitest.importActual('./updateAchievements.js'))
+    updateAchievements = (await vitest.importActual('./updateAchievements.js'))
       .updateAchievements
   })
 
@@ -54,6 +54,7 @@ describe('updateAchievements', () => {
           conditionSatisfied: true,
           todaysNotifications: [
             {
+              // @ts-expect-error
               message: ACHIEVEMENT_COMPLETED`${{
                 name: 'Test Achievement',
                 rewardDescription: '',

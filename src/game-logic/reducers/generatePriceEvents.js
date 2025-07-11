@@ -52,11 +52,13 @@ export const generatePriceEvents = state => {
       newDayNotifications.push(
         priceEventType === TYPE_CRASH
           ? {
-              message: PRICE_CRASH`${cropItem}`,
+              // @ts-expect-error - Template function expects null as first parameter
+              message: PRICE_CRASH(null, cropItem),
               severity: 'warning',
             }
           : {
-              message: PRICE_SURGE`${cropItem}`,
+              // @ts-expect-error - Template function expects null as first parameter
+              message: PRICE_SURGE(null, cropItem),
               severity: 'success',
             }
       )

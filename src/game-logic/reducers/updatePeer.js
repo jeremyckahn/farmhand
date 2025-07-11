@@ -1,8 +1,3 @@
-/**
- * @typedef {import('../../components/Farmhand/Farmhand').default} Farmhand
- * @typedef {import('../../components/Farmhand/Farmhand').farmhand.state} farmhand.state
- * @typedef {import('../../index').farmhand.peerMetadata} farmhand.peerMetadata
- */
 import { MAX_LATEST_PEER_MESSAGES } from '../../constants.js'
 import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.js'
 import { dialogView } from '../../enums.js'
@@ -11,7 +6,7 @@ import { showNotification } from './showNotification.js'
 
 /**
  * @param {farmhand.state} state
- * @param {Farmhand} farmhand
+ * @param {any} farmhand
  * @param {farmhand.peerMetadata} peerMetadata
  * @param {string} peerId The peer to update
  * @returns {farmhand.state}

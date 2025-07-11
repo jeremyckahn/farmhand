@@ -1,4 +1,4 @@
-/** @typedef {import("../../index").farmhand.keg} keg */
+/** @typedef {farmhand.keg} keg */
 import React, { useContext } from 'react'
 import { object } from 'prop-types'
 import Card from '@mui/material/Card/index.js'

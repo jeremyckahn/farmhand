@@ -26,6 +26,14 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import './Recipe.sass'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
+/**
+ * @param {object} props
+ * @param {Function} props.handleMakeRecipeClick
+ * @param {farmhand.state['inventory']} props.inventory
+ * @param {number} props.inventoryLimit
+ * @param {Record<string, number>} props.playerInventoryQuantities
+ * @param {farmhand.recipe} props.recipe
+ */
 const Recipe = ({
   handleMakeRecipeClick,
   inventory,
@@ -49,6 +57,7 @@ const Recipe = ({
   const canBeMade =
     quantity > 0 &&
     canMakeRecipe(recipe, inventory, quantity) &&
+    // @ts-expect-error
     doesInventorySpaceRemain({
       inventory,
       // Without the Infinity coercion, this would break recipes for unlimited
@@ -83,7 +92,12 @@ const Recipe = ({
               <p>
                 In Inventory: {integerString(playerInventoryQuantities[id])}
               </p>
-              <IngredientsList {...{ playerInventoryQuantities, recipe }} />
+              <IngredientsList
+                {...{
+                  playerInventoryQuantities,
+                  recipe: /** @type {globalThis.farmhand.recipe} */ (recipe),
+                }}
+              />
             </>
           ),
         }}

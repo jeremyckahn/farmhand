@@ -1,26 +1,31 @@
-/** @typedef {import('../../components/Farmhand/Farmhand').farmhand.item} farmhand.item */
-
 import { crop, fromSeed } from '../crop.js'
-import { cropType } from '../../enums.js'
+import { cropType, itemType } from '../../enums.js'
 
 /**
  * @property farmhand.module:items.sweetPotatoSeed
  * @type {farmhand.item}
  */
-export const sweetPotatoSeed = crop({
-  cropType: cropType.SWEET_POTATO,
-  cropTimeline: [2, 1, 1, 2, 2],
-  growsInto: 'sweet-potato',
-  id: 'sweet-potato-seed',
-  name: 'Sweet Potato Slip',
-  tier: 6,
-})
+export const sweetPotatoSeed = crop(
+  /** @type {farmhand.item} */ ({
+    cropType: cropType.SWEET_POTATO,
+    cropTimeline: [2, 1, 1, 2, 2],
+    growsInto: 'sweet-potato',
+    id: 'sweet-potato-seed',
+    name: 'Sweet Potato Slip',
+    tier: 6,
+    type: itemType.CROP,
+  })
+)
 
 /**
  * @property farmhand.module:items.sweetPotato
  * @type {farmhand.item}
  */
-export const sweetPotato = crop({
-  ...fromSeed(sweetPotatoSeed, { canBeFermented: true }),
-  name: 'Sweet Potato',
-})
+export const sweetPotato = crop(
+  /** @type {farmhand.item} */ ({
+    ...fromSeed(/** @type {farmhand.seedItem} */ (sweetPotatoSeed), {
+      canBeFermented: true,
+    }),
+    name: 'Sweet Potato',
+  })
+)

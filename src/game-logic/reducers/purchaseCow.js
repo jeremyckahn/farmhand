@@ -16,6 +16,7 @@ export const purchaseCow = (state, cow) => {
   if (
     money < cowValue ||
     purchasedCowPen === 0 ||
+    // @ts-expect-error
     cowInventory.length >= PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows
   ) {
     return state

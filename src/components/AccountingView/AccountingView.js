@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField/index.js'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance.js'
 import NumberFormat from 'react-number-format'
 import { func, number } from 'prop-types'
+/** @typedef {import('@mui/material/InputBase/index.js').InputBaseComponentProps} InputBaseComponentProps */
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { moneyString } from '../../utils/moneyString.js'
@@ -19,16 +20,12 @@ import {
 
 import './AccountingView.sass'
 
-/**
- * @type {React.ElementType<import('@mui/material/InputBase').InputBaseComponentProps>}
- */
-// @ts-expect-error Ignore legacy misuse of onChange type
 const MoneyNumberFormat = forwardRef(
   /**
    * @param {Object} props - Component properties
    * @param {number} props.max - Maximum value allowed for the input
    * @param {number} props.min - Minimum value allowed for the input
-   * @param {React.Dispatch<React.SetStateAction<number>>} props.onChange - Callback function to handle changes in the input value
+   * @param {(value: number) => void} props.onChange - Callback function to handle changes in the input value
    * @param {React.Dispatch<React.SetStateAction<number>>} props.setLoanInputValue - Function to set the loan input value
    * @param {React.ForwardedRef<unknown>} [ref] - Forwarded ref for the component
    */
@@ -76,6 +73,7 @@ const AccountingView = ({
         />
         <CardContent>
           <div className="loan-container">
+            {/* @ts-expect-error */}
             <TextField
               variant="standard"
               {...{

@@ -1,4 +1,3 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
 import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores/index.js'
 import { Factory } from '../interfaces/Factory.js'
 import { randomChoice } from '../utils/index.js'
@@ -17,7 +16,7 @@ export default class OreFactory extends Factory {
     for (let o of SPAWNABLE_ORES) {
       this.oreOptions.push({
         ore: o,
-        weight: o.spawnChance,
+        weight: o.spawnChance || 0,
       })
     }
   }

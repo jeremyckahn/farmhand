@@ -1,0 +1,170 @@
+# Farmhand Project Rules and Guidelines
+
+This file outlines the essential rules and guidelines for contributing to the Farmhand project. Adhering to these guidelines helps ensure type safety, consistency, and maintainability across the codebase.
+
+## Testing Guidelines
+
+The project provides several test utilities in `src/test-utils/index.js` to help create consistent, type-safe test data. Always import these utilities from this centralized location:
+
+```javascript
+import { testState, testCrop, testItem, testShoveledPlot } from '../../test-utils/index.js'
+```
+
+### 1. `testState(overrides = {})`
+
+This utility creates a complete `farmhand.state` object with all required properties. It is the primary utility for avoiding TypeScript errors when testing reducers or components that expect full state objects.
+
+-   **Always** use `testState()` when creating state objects for tests.
+-   **Never** create partial state objects manually, as this will cause TypeScript errors.
+-   Use the `overrides` parameter to customize only the properties relevant to your test scenario.
+
+```javascript
+// Basic usage
+const state = testState()
+
+// With overrides
+const state = testState({
+  field: [[testCrop({ itemId: 'carrot-seed' })]],
+  money: 1000,
+  inventory: [{ id: 'sample-item', quantity: 5 }]
+})
+
+// ❌ WRONG - causes type errors
+const wrongState = {
+  field: [[]],
+  inventory: [],
+  money: 500
+}
+
+// ✅ CORRECT - use testState with overrides
+const correctState = testState({
+  field: [[]],
+  inventory: [],
+  money: 500
+})
+```
+
+When overriding `toolLevels` within `testState`, ensure you provide a complete object with all tool types to prevent type errors:
+
+```javascript
+// ✅ CORRECT - complete toolLevels object
+const toolLevelsDefault = {
+  [toolType.HOE]: toolLevel.DEFAULT,
+  [toolType.SCYTHE]: toolLevel.DEFAULT,
+  [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
+  [toolType.WATERING_CAN]: toolLevel.DEFAULT,
+}
+
+// ❌ WRONG - partial object causes type errors
+const partialToolLevels = {
+  [toolType.SCYTHE]: toolLevel.DEFAULT,
+}
+```
+
+**Common Development Patterns with `testState`:**
+
+-   **Testing Reducer Functions:**
+    ```javascript
+    const result = harvestPlot(
+      testState({
+        field: [[testCrop({ itemId: 'carrot', daysWatered: 4 })]],
+        inventory: [],
+        toolLevels: completeToolLevelsObject // Ensure this is a complete object
+      }),
+      x,
+      y
+    )
+    ```
+
+-   **Testing Components with State:**
+    ```javascript
+    const props = {
+      ...testState({
+        money: 1000,
+        inventory: [testItem({ id: 'carrot', quantity: 5 })]
+      }),
+      // Additional component-specific props can be added here
+    }
+    ```
+
+### 2. `testCrop(overrides = {})`
+
+Creates crop/plot content objects for field testing. Use this when setting up specific crop states within a `testState`'s `field` override.
+
+```javascript
+// Basic crop
+testCrop()
+
+// Mature crop ready for harvest
+testCrop({ itemId: 'carrot', daysWatered: 4 })
+
+// Fertilized crop
+testCrop({
+  itemId: 'corn-seed',
+  fertilizerType: fertilizerType.RAINBOW,
+  daysOld: 5
+})
+```
+
+### 3. `testItem(overrides = {})`
+
+Creates item objects for inventory or shop testing.
+
+```javascript
+testItem({ id: 'carrot', name: 'Carrot', value: 10 })
+```
+
+### 4. `testShoveledPlot(overrides = {})`
+
+Creates shoveled plot objects for mining scenarios.
+
+```javascript
+testShoveledPlot({ oreId: 'coal' })
+```
+
+### 5. Test Structure and Type Safety
+
+-   Organize tests consistently within `describe` blocks.
+-   Run `npm run check:types` or equivalent before submitting to ensure type safety. Fix TypeScript errors by using proper utilities rather than ignoring them.
+
+```javascript
+describe('reducerName', () => {
+  describe('scenario description', () => {
+    test('specific behavior', () => {
+      const inputState = testState({
+        // Only override properties relevant to this test
+        field: [[testCrop({ itemId: 'test-crop' })]],
+        inventory: []
+      })
+
+      const result = reducerFunction(inputState, ...args)
+
+      // Assertions
+      expect(result.field[0][0]).toBe(null)
+    })
+  })
+})
+```
+
+## Code Validation
+
+After every code change that affects functionality, you **must** validate your changes by ensuring all tests pass and there are no lint violations. These checks run in CI/CD and will block pull request merging if they fail.
+
+### 1. Run Lint and Tests
+
+Execute the following command sequence from the project root:
+
+```bash
+npm run lint && npm run check:types && npm test
+```
+
+-   Run this immediately after making any code changes.
+-   Address all ESLint errors and warnings before proceeding. Use `npm run lint -- --fix` to automatically fix fixable issues.
+-   All existing tests must continue to pass. New functionality should include appropriate test coverage.
+-   Do not proceed with additional changes or submit code if either command fails.
+
+## Maintenance Notes
+
+-   When the `farmhand.state` interface changes, update `testState()` accordingly.
+-   Add new test utilities for commonly created objects, keeping them minimal but complete (including all required properties).
+-   Document new utilities in this file (.rules in the project root).

@@ -49,7 +49,13 @@ const OnlinePeersView = ({
         <>
           <Divider />
           <h3>You are offering to trade away</h3>
-          <CowCard {...{ cow: cowOfferedForTrade }} />
+          <CowCard
+            {...{
+              cow: cowOfferedForTrade,
+              isCowOfferedForTradeByPeer: false,
+              isSelected: false,
+            }}
+          />
         </>
       )}
       {populatedPeers.length > 0 && (
@@ -74,7 +80,12 @@ const OnlinePeersView = ({
           <ul>
             {latestPeerMessages.map(({ id, message, severity = 'info' }, i) => (
               <li {...{ key: i }}>
-                <Alert {...{ elevation: 3, severity }}>
+                <Alert
+                  {...{
+                    elevation: 3,
+                    severity: /** @type {'success' | 'info' | 'warning' | 'error'} */ (severity),
+                  }}
+                >
                   <ReactMarkdown
                     {...{ source: `**${getPlayerName(id)}** ${message}` }}
                   />

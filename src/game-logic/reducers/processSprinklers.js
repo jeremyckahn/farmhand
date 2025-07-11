@@ -23,11 +23,9 @@ export const processSprinklers = state => {
         return
       }
 
-      ;[]
-        .concat(
-          // Flatten this 2D array for less iteration below
-          ...getRangeCoords(sprinklerRange, plotX, plotY)
-        )
+      // Flatten this 2D array for less iteration below
+      getRangeCoords(sprinklerRange, plotX, plotY)
+        .flat()
         .forEach(({ x, y }) => {
           const fieldRow = field[y]
 

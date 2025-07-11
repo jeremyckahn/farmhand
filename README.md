@@ -103,6 +103,16 @@ In this case, the local app will be using the Production API, database, and pair
   - Any pre-existing code that does not adhere to this convention should be updated to do so.
 - Regarding automated tests: [Write tests. Not too many. Mostly integration.](https://kentcdodds.com/blog/write-tests)
 
+### Testing Guidelines
+
+When writing tests for Farmhand, please follow the guidelines documented in [`.rules`](.rules). Key points:
+
+- **Always use `testState()`** when creating state objects for tests to ensure type safety
+- **Use test utilities** like `testCrop()`, `testItem()`, and `testShoveledPlot()` for consistent test data
+- **Import from centralized location**: `import { testState, testCrop, testItem } from '../../test-utils/index.js'`
+
+These utilities prevent TypeScript errors and ensure tests remain maintainable as the codebase evolves.
+
 ### Multiplayer system architecture
 
 The system design for Farmhand's multiplayer functionality has been [detailed in this blog post](https://dev.to/jeremyckahn/how-i-designed-an-abuse-resistant-fault-tolerant-zero-cost-multiplayer-online-game-140g).

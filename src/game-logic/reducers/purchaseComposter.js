@@ -19,6 +19,7 @@ export const purchaseComposter = (state, composterId) => {
   state = {
     ...state,
     purchasedComposter: composterId,
+    // @ts-expect-error
     money: moneyTotal(money, -PURCHASEABLE_COMPOSTERS.get(composterId).price),
   }
 

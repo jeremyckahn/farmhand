@@ -61,14 +61,15 @@ export const computeStateForNextDay = (state, isFirstDay = false) => {
         rotateNotificationLogs,
       ]
 
-  state = reducers
-    .concat([adjustItemValues])
-    .reduce((acc, fn) => fn({ ...acc }), {
+  state = reducers.concat([adjustItemValues]).reduce(
+    (acc, fn) => fn({ ...acc }),
+    /** @type {farmhand.state} */ ({
       ...state,
       cowForSale: generateCow(),
       dayCount: state.dayCount + 1,
       todaysNotifications: [],
     })
+  )
 
   if (state.dayCount % 365 === 0) {
     state = addExperience(state, EXPERIENCE_VALUES.NEW_YEAR)
