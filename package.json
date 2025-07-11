@@ -30,7 +30,7 @@
     "start:api": "NODE_OPTIONS=--openssl-legacy-provider vercel dev --token=$VERCEL_TOKEN --listen=0.0.0.0:3001 --yes",
     "start:backend": "docker compose up",
     "start:tracker": "bittorrent-tracker",
-    "test": "vitest",
+    "test": "vitest --run",
     "test:debug": "vitest --inspect-brk --no-file-parallelism --run",
     "update-images": "bash update-images.sh"
   },
