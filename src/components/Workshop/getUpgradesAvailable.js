@@ -27,11 +27,7 @@ export function getUpgradesAvailable({ learnedForgeRecipes, toolLevels }) {
       }
 
       if (allIngredientsUnlocked) {
-        upgradesAvailable.push({
-          ...nextLevelUpgrade,
-          toolType: type,
-          level: upgrade.nextLevel,
-        })
+        upgradesAvailable.push(nextLevelUpgrade)
       }
     }
   }
