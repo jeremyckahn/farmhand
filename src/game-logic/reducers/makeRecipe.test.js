@@ -56,13 +56,11 @@ describe('makeRecipe', () => {
       [recipeType.KITCHEN, EXPERIENCE_VALUES.KITCHEN_RECIPE_MADE],
       [recipeType.RECYCLING, EXPERIENCE_VALUES.RECYCLING_RECIPE_MADE],
     ])('adds experience for a %s recipe', (recipeType, experienceValue) => {
-      const { experience } = makeRecipe(
-        state,
-        Object.assign({}, carrotSoup, {
-          ingredients: {},
-          recipeType,
-        })
-      )
+      const { experience } = makeRecipe(state, {
+        ...carrotSoup,
+        ingredients: {},
+        recipeType,
+      })
 
       expect(experience).toEqual(experienceValue)
     })
