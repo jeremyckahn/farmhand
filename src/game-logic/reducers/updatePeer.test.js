@@ -1,5 +1,3 @@
-/**
- */
 import Farmhand from '../../components/Farmhand/index.js'
 import { MAX_LATEST_PEER_MESSAGES } from '../../constants.js'
 import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.js'
@@ -18,8 +16,8 @@ describe('updatePeer', () => {
         latestPeerMessages: [],
         peers: { abc123: stubPeerMetadata },
       }),
-      Farmhand,
       // @ts-expect-error
+      Farmhand,
       { foo: false },
       'abc123'
     )
@@ -34,8 +32,8 @@ describe('updatePeer', () => {
         latestPeerMessages: new Array(50).fill('message'),
         peers: { abc123: stubPeerMetadata },
       }),
-      Farmhand,
       // @ts-expect-error
+      Farmhand,
       { foo: false },
       'abc123'
     )
@@ -52,6 +50,7 @@ describe('updatePeer', () => {
           abc123: stubPeerMetadata,
         },
       }),
+      // @ts-expect-error
       Farmhand,
       { ...stubPeerMetadata, cowOfferedForTrade: getCowStub() },
       'abc123'
@@ -73,6 +72,7 @@ describe('updatePeer', () => {
           abc123: { ...stubPeerMetadata, cowOfferedForTrade: getCowStub() },
         },
       }),
+      // @ts-expect-error
       Farmhand,
       stubPeerMetadata,
       'abc123'

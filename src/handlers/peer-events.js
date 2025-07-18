@@ -1,5 +1,4 @@
-// @ts-expect-error - Circular typedef
-/** @typedef {Farmhand} Farmhand */
+/** @typedef {import('../components/Farmhand/Farmhand.js').default} Farmhand */
 import { cowTradeRejectionReason } from '../enums.js'
 import { EXPERIENCE_VALUES } from '../constants.js'
 import { COW_TRADED_NOTIFICATION } from '../templates.js'
@@ -20,7 +19,7 @@ import {
 import { addExperience } from '../game-logic/reducers/addExperience.js'
 
 /**
- * @param {Farmhand} farmhand
+ * @param {import('../components/Farmhand/Farmhand.js').default} farmhand
  * @param {farmhand.peerMetadata} peerMetadata
  * @param {string} peerId
  */
@@ -269,7 +268,9 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
 export const handleCowTradeRequestReject = (farmhand, { reason }) => {
   const { cowTradeTimeoutId } = farmhand.state
 
-  clearTimeout(cowTradeTimeoutId)
+  if (typeof cowTradeTimeoutId === 'number') {
+    clearTimeout(cowTradeTimeoutId)
+  }
 
   farmhand.setState({
     cowTradeTimeoutId: null,
