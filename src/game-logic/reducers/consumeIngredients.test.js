@@ -1,8 +1,8 @@
 import { testState, testItem } from '../../test-utils/index.js'
 
-import { processIngredients } from './processIngredients.js'
+import { consumeIngredients } from './consumeIngredients.js'
 
-describe('processIngredients', () => {
+describe('consumeIngredients', () => {
   describe('recipe with no ingredients', () => {
     test('returns state unchanged when recipe has no ingredients property', () => {
       const recipe = { id: 'test-recipe', name: 'Test Recipe' }
@@ -11,7 +11,7 @@ describe('processIngredients', () => {
         experience: 100,
       })
 
-      const result = processIngredients(state, recipe, 1, 50)
+      const result = consumeIngredients(state, recipe, 1, 50)
 
       expect(result).toEqual({
         ...state,
@@ -26,7 +26,7 @@ describe('processIngredients', () => {
         experience: 100,
       })
 
-      const result = processIngredients(state, recipe, 1, 50)
+      const result = consumeIngredients(state, recipe, 1, 50)
 
       expect(result).toEqual({
         ...state,
@@ -54,7 +54,7 @@ describe('processIngredients', () => {
           experience: 100,
         })
 
-        const result = processIngredients(state, recipe, 1, 50)
+        const result = consumeIngredients(state, recipe, 1, 50)
 
         expect(result).toBe(state)
       })
@@ -76,7 +76,7 @@ describe('processIngredients', () => {
           experience: 100,
         })
 
-        const result = processIngredients(state, recipe, 3, 50)
+        const result = consumeIngredients(state, recipe, 3, 50)
 
         expect(result).toBe(state)
       })
@@ -101,7 +101,7 @@ describe('processIngredients', () => {
           experience: 100,
         })
 
-        const result = processIngredients(state, recipe, 1, 50)
+        const result = consumeIngredients(state, recipe, 1, 50)
 
         expect(result).toEqual({
           ...state,
@@ -131,7 +131,7 @@ describe('processIngredients', () => {
           experience: 100,
         })
 
-        const result = processIngredients(state, recipe, 3, 75)
+        const result = consumeIngredients(state, recipe, 3, 75)
 
         expect(result).toEqual({
           ...state,
@@ -161,7 +161,7 @@ describe('processIngredients', () => {
           experience: 100,
         })
 
-        const result = processIngredients(state, recipe, 1, 25)
+        const result = consumeIngredients(state, recipe, 1, 25)
 
         expect(result).toEqual({
           ...state,
@@ -186,7 +186,7 @@ describe('processIngredients', () => {
           experience: 10,
         })
 
-        const result = processIngredients(state, recipe, 2, 25)
+        const result = consumeIngredients(state, recipe, 2, 25)
 
         expect(result).toEqual({
           ...state,
@@ -214,7 +214,7 @@ describe('processIngredients', () => {
         experience: 100,
       })
 
-      const result = processIngredients(state, recipe)
+      const result = consumeIngredients(state, recipe)
 
       expect(result).toEqual({
         ...state,
@@ -236,7 +236,7 @@ describe('processIngredients', () => {
         experience: 100,
       })
 
-      const result = processIngredients(state, recipe, 2)
+      const result = consumeIngredients(state, recipe, 2)
 
       expect(result).toEqual({
         ...state,
@@ -251,7 +251,7 @@ describe('processIngredients', () => {
       const recipe = { id: 'test-recipe', name: 'Test Recipe' }
       const state = testState({ experience: 0 })
 
-      const result = processIngredients(state, recipe, 1, 100)
+      const result = consumeIngredients(state, recipe, 1, 100)
 
       expect(result.experience).toBe(100)
     })
@@ -267,7 +267,7 @@ describe('processIngredients', () => {
         experience: 50,
       })
 
-      const result = processIngredients(state, recipe, 1, 75)
+      const result = consumeIngredients(state, recipe, 1, 75)
 
       expect(result.experience).toBe(125)
     })
@@ -283,7 +283,7 @@ describe('processIngredients', () => {
         experience: 50,
       })
 
-      const result = processIngredients(state, recipe, 1, 75)
+      const result = consumeIngredients(state, recipe, 1, 75)
 
       expect(result.experience).toBe(50)
     })
@@ -301,7 +301,7 @@ describe('processIngredients', () => {
         experience: 100,
       })
 
-      const result = processIngredients(state, recipe, 1, 50)
+      const result = consumeIngredients(state, recipe, 1, 50)
 
       expect(result).toBe(state)
     })
@@ -317,7 +317,7 @@ describe('processIngredients', () => {
         experience: 100,
       })
 
-      const result = processIngredients(state, recipe, 1, 50)
+      const result = consumeIngredients(state, recipe, 1, 50)
 
       expect(result).toBe(state)
     })
@@ -333,7 +333,7 @@ describe('processIngredients', () => {
         experience: 100,
       })
 
-      const result = processIngredients(state, recipe, 0, 50)
+      const result = consumeIngredients(state, recipe, 0, 50)
 
       expect(result).toEqual({
         ...state,
@@ -352,7 +352,7 @@ describe('processIngredients', () => {
         experience: 100,
       })
 
-      const result = processIngredients(state, recipe, 1, -25)
+      const result = consumeIngredients(state, recipe, 1, -25)
 
       expect(result).toEqual({
         ...state,

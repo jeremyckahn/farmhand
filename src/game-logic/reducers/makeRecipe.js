@@ -2,7 +2,7 @@ import { recipeType } from '../../enums.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'
 
 import { addItemToInventory } from './addItemToInventory.js'
-import { processIngredients } from './processIngredients.js'
+import { consumeIngredients } from './consumeIngredients.js'
 
 const EXPERIENCE_FOR_RECIPE = {
   [recipeType.FERMENTATION]: EXPERIENCE_VALUES.FERMENTATION_RECIPE_MADE,
@@ -19,7 +19,7 @@ const EXPERIENCE_FOR_RECIPE = {
  */
 export const makeRecipe = (state, recipe, howMany = 1) => {
   const originalState = state
-  state = processIngredients(
+  state = consumeIngredients(
     state,
     recipe,
     howMany,

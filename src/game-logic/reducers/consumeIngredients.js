@@ -4,7 +4,7 @@ import { addExperience } from './addExperience.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 /**
- * Process ingredients - validate, add experience, and decrement ingredients
+ * Consume ingredients - validate, add experience, and decrement ingredients
  * @param {farmhand.state} state
  * @param {object} recipe - Recipe or upgrade object with ingredients
  * @param {number} [howMany=1]
@@ -12,13 +12,12 @@ import { decrementItemFromInventory } from './decrementItemFromInventory.js'
  * @returns {farmhand.state}
  */
 
-export const processIngredients = (
+export const consumeIngredients = (
   state,
   recipe,
   howMany = 1,
   experiencePoints = 0
 ) => {
-  // Skip validation if there are no ingredients
   if (recipe.ingredients && !canMakeRecipe(recipe, state.inventory, howMany)) {
     return state
   }
