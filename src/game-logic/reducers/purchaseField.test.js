@@ -1,4 +1,4 @@
-import { testCrop } from '../../test-utils/index.js'
+import { testCrop, testState } from '../../test-utils/index.js'
 import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
 
 import { purchaseField } from './purchaseField.js'
@@ -8,13 +8,12 @@ describe('purchaseField', () => {
   let state
 
   beforeEach(() => {
-    // @ts-expect-error
-    state = {
+    state = testState({
       purchasedField: 0,
       money: 1500,
       experience: 0,
       field: [[]],
-    }
+    })
   })
 
   test('updates purchasedField', () => {
