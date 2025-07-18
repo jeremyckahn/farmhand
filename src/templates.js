@@ -131,7 +131,7 @@ export const RECIPES_LEARNED = (_, learnedRecipes) => {
 
 /**
  * @param {string} _
- * @param {{ name: string }} item
+ * @param {farmhand.item} item
  * @returns {string}
  */
 export const PRICE_CRASH = (_, { name }) =>
