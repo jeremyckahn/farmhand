@@ -15,7 +15,7 @@ export const processMilkingCows = state => {
   const cowInventory = [...state.cowInventory]
   const newDayNotifications = [...state.newDayNotifications]
   const { length: cowInventoryLength } = cowInventory
-  const milksProduced = {}
+  /** @type {Record<string, number>} */ const milksProduced = {}
 
   for (let i = 0; i < cowInventoryLength; i++) {
     const cow = cowInventory[i]
@@ -37,7 +37,7 @@ export const processMilkingCows = state => {
 
   if (Object.keys(milksProduced).length) {
     newDayNotifications.push({
-      message: MILKS_PRODUCED`${milksProduced}`,
+      message: MILKS_PRODUCED('', milksProduced),
       severity: 'success',
     })
   }

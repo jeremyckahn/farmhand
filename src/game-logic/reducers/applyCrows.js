@@ -65,7 +65,7 @@ export const applyCrows = state => {
   }
 
   if (numCropsDestroyed > 0) {
-    notificationMessages.push(CROWS_DESTROYED`${numCropsDestroyed}`)
+    notificationMessages.push(CROWS_DESTROYED('', numCropsDestroyed))
   }
 
   if (notificationMessages.length) {

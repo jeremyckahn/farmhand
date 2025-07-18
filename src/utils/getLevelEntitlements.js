@@ -1,4 +1,4 @@
-/** @typedef {import("../index").farmhand.levelEntitlements} levelEntitlements */
+/** @typedef {farmhand.levelEntitlements} levelEntitlements */
 import { levels } from '../data/levels.js'
 import { INITIAL_SPRINKLER_RANGE } from '../constants.js'
 

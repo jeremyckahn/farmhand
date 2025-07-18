@@ -1,5 +1,3 @@
-/** @typedef {import('../../components/Farmhand/Farmhand').farmhand.item} farmhand.item */
-
 import { crop, fromSeed } from '../crop.js'
 import { cropType } from '../../enums.js'
 
@@ -21,6 +19,8 @@ export const asparagusSeed = crop({
  * @type {farmhand.item}
  */
 export const asparagus = crop({
-  ...fromSeed(asparagusSeed, { canBeFermented: true }),
+  ...fromSeed(asparagusSeed, {
+    canBeFermented: true,
+  }),
   name: 'Asparagus',
 })

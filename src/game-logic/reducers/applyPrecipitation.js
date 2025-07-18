@@ -26,10 +26,10 @@ export const applyPrecipitation = state => {
 
   if (shouldStormToday()) {
     if (fieldHasScarecrow(field)) {
-      notification = {
+      notification = /** @type {farmhand.notification} */ ({
         message: STORM_DESTROYS_SCARECROWS_MESSAGE,
         severity: 'error',
-      }
+      })
 
       let { scarecrow: scarecrowsInInventory = 0 } = getInventoryQuantityMap(
         state.inventory
@@ -42,6 +42,7 @@ export const applyPrecipitation = state => {
 
         if (
           scarecrowsInInventory &&
+          plot &&
           plot.fertilizerType === fertilizerType.RAINBOW
         ) {
           scarecrowsInInventory--
@@ -53,10 +54,16 @@ export const applyPrecipitation = state => {
         return null
       })
     } else {
-      notification = { message: STORM_MESSAGE, severity: 'info' }
+      notification = /** @type {farmhand.notification} */ ({
+        message: STORM_MESSAGE,
+        severity: 'info',
+      })
     }
   } else {
-    notification = { message: RAIN_MESSAGE, severity: 'info' }
+    notification = /** @type {farmhand.notification} */ ({
+      message: RAIN_MESSAGE,
+      severity: 'info',
+    })
   }
 
   state = decrementItemFromInventory(

@@ -1,4 +1,5 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+/** @type {RequestInit} */
 const commonFetchConfig = {
   mode: 'cors', // no-cors, *cors, same-origin
   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

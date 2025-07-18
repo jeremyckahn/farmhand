@@ -50,9 +50,9 @@ const ValueIndicator = ({ poorValue }) => (
 )
 
 const PurchaseValueIndicator = ({
-  id,
-  value,
-  valueAdjustments,
+  /** @type {farmhand.item['id']} */ id,
+  /** @type {farmhand.item['value']} */ value,
+  /** @type {farmhand.state['valueAdjustments']} */ valueAdjustments,
 
   poorValue = value > itemsMap[id].value,
 }) => (
@@ -95,8 +95,16 @@ export const Item = ({
   isSelectView,
   isSelected,
   isSellView,
-  item,
-  item: { description, doesPriceFluctuate, id, isReplantable, name },
+  /** @type {farmhand.item} */ item,
+  item: {
+    description,
+    doesPriceFluctuate,
+    id,
+    isReplantable,
+    name,
+    type,
+    value,
+  },
   money,
   playerInventoryQuantities,
   showQuantity,
@@ -280,12 +288,15 @@ export const Item = ({
                   />
                 </p>
               )}
-              {isPurchaseView && item.growsInto && (
-                <p>
-                  Days to mature:{' '}
-                  {getCropLifecycleDuration(getFinalCropItemFromSeedItem(item))}
-                </p>
-              )}
+              {isPurchaseView &&
+                /** @type {globalThis.farmhand.item} */ (item).growsInto && (
+                  <p>
+                    Days to mature:{' '}
+                    {getCropLifecycleDuration(
+                      getFinalCropItemFromSeedItem(item)
+                    )}
+                  </p>
+                )}
             </div>
           ),
         }}

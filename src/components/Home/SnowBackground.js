@@ -13,7 +13,9 @@ const randomInt = (min, max) => {
 const drawSnowflake = function(ctx) {
   const numPoints = this.numPoints || randomInt(3, 4) * 2
   this.numPoints = numPoints
+  // @ts-expect-error
   const innerRadius = this.radius * 0.2
+  // @ts-expect-error
   const outerRadius = this.radius * 0.8
   ctx.beginPath()
   ctx.moveTo(0, 0 - outerRadius)

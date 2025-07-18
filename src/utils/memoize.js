@@ -1,4 +1,4 @@
-/** @typedef {import("fast-memoize").Options} MemoizeOptions */
+/** @typedef {object} MemoizeOptions */
 
 import fastMemoize from 'fast-memoize'
 

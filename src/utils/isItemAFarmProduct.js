@@ -1,4 +1,3 @@
-/** @typedef {import('../index').farmhand.item} farmhand.item */
 import { itemType } from '../enums.js'
 
 import { isItemAGrownCrop } from './isItemAGrownCrop.js'
@@ -16,4 +15,5 @@ const FARM_PRODUCT_TYPES = [
  * @returns {boolean}
  */
 export const isItemAFarmProduct = item =>
+  // @ts-expect-error
   Boolean(isItemAGrownCrop(item) || FARM_PRODUCT_TYPES.includes(item.type))

@@ -1,4 +1,3 @@
-/** @typedef {import("../../index").farmhand.item} farmhand.item */
 import { itemType } from '../../enums.js'
 import { STONE_SPAWN_CHANCE } from '../../constants.js'
 
@@ -14,6 +13,6 @@ export const stone = freeze({
   id: 'stone',
   name: 'Stone',
   spawnChance: STONE_SPAWN_CHANCE,
-  type: itemType.STONE,
+  type: /** @type {farmhand.itemType} */ (itemType.STONE),
   value: 10,
 })

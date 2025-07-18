@@ -58,14 +58,12 @@ const Workshop = ({
         currentTab={currentTab}
         index={0}
         learnedKitchenRecipes={learnedKitchenRecipes}
-        setCurrentTab={setCurrentTab}
       />
       {showForge ? (
         <ForgeTabPanel
           currentTab={currentTab}
           index={1}
           learnedForgeRecipes={learnedForgeRecipes}
-          setCurrentTab={setCurrentTab}
           toolLevels={toolLevels}
         />
       ) : null}
@@ -74,7 +72,6 @@ const Workshop = ({
           currentTab={currentTab}
           index={recyclingTabIndex}
           learnedRecipes={learnedRecyclingRecipes}
-          setCurrentTab={setCurrentTab}
         />
       ) : null}
     </div>

@@ -1,5 +1,6 @@
 import { carrotSoup } from '../../data/recipes.js'
 import { carrot } from '../../data/crops/index.js'
+import { testState } from '../../test-utils/index.js'
 
 import { EXPERIENCE_VALUES, INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
@@ -11,10 +12,10 @@ describe('makeRecipe', () => {
   describe('there are insufficient ingredients for recipe', () => {
     test('the recipe is not made', () => {
       const { inventory } = makeRecipe(
-        {
+        testState({
           inventory: [{ id: 'carrot', quantity: 1 }],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
-        },
+        }),
         carrotSoup
       )
 
@@ -25,10 +26,10 @@ describe('makeRecipe', () => {
   describe('there are sufficient ingredients for recipe', () => {
     test('consumes ingredients and adds recipe item to inventory', () => {
       const { inventory } = makeRecipe(
-        {
+        testState({
           inventory: [{ id: carrot.id, quantity: 5 }],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
-        },
+        }),
         carrotSoup
       )
 
@@ -43,10 +44,10 @@ describe('makeRecipe', () => {
     let state
 
     beforeEach(() => {
-      state = {
+      state = testState({
         experience: 0,
         inventory: [],
-      }
+      })
     })
 
     test.each([
@@ -56,6 +57,7 @@ describe('makeRecipe', () => {
       [recipeType.RECYCLING, EXPERIENCE_VALUES.RECYCLING_RECIPE_MADE],
     ])('adds experience for a %s recipe', (recipeType, experienceValue) => {
       const { experience } = makeRecipe(state, {
+        ...carrotSoup,
         ingredients: {},
         recipeType,
       })

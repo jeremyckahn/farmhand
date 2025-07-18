@@ -24,7 +24,10 @@ export const updateAchievements = (state, prevState) =>
 
       state = showNotification(
         state,
-        ACHIEVEMENT_COMPLETED`${achievement}`,
+        ACHIEVEMENT_COMPLETED('', {
+          name: achievement.name,
+          rewardDescription: achievement.rewardDescription,
+        }),
         'success'
       )
     }

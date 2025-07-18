@@ -18,9 +18,15 @@ export const purchaseCellar = (state, cellarId) => {
     return state
   }
 
-  const { price, space } = PURCHASEABLE_CELLARS.get(cellarId)
+  const cellarData = PURCHASEABLE_CELLARS.get(cellarId)
 
-  state = showNotification(state, CELLAR_PURCHASED`${space}`, 'success')
+  if (!cellarData) {
+    return state
+  }
+
+  const { price, space } = cellarData
+
+  state = showNotification(state, CELLAR_PURCHASED('', space), 'success')
 
   const experienceEarned =
     cellarId > 1
