@@ -26,8 +26,7 @@ export const purchaseCellar = (state, cellarId) => {
 
   const { price, space } = cellarData
 
-  // @ts-expect-error
-  state = showNotification(state, CELLAR_PURCHASED(null, space), 'success')
+  state = showNotification(state, CELLAR_PURCHASED('', space), 'success')
 
   const experienceEarned =
     cellarId > 1

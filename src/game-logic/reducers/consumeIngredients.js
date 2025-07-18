@@ -7,7 +7,7 @@ import { decrementItemFromInventory } from './decrementItemFromInventory.js'
  * Consume ingredients - validate, add experience, and decrement ingredients
  * @param {farmhand.state} state
  * @param {object} recipe - Recipe or upgrade object with ingredients
- * @param {number} [howMany=1] - How manu units of the recipe to consume ingredients for
+ * @param {number} [recipeYield=1] - How many units of the recipe to consume ingredients for
  * @param {number} [experiencePoints=0] - Experience points to award
  * @returns {farmhand.state}
  */
@@ -15,10 +15,13 @@ import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 export const consumeIngredients = (
   state,
   recipe,
-  howMany = 1,
+  recipeYield = 1,
   experiencePoints = 0
 ) => {
-  if (recipe.ingredients && !canMakeRecipe(recipe, state.inventory, howMany)) {
+  if (
+    recipe.ingredients &&
+    !canMakeRecipe(recipe, state.inventory, recipeYield)
+  ) {
     return state
   }
 
@@ -29,7 +32,7 @@ export const consumeIngredients = (
       decrementItemFromInventory(
         state,
         ingredientId,
-        recipe.ingredients[ingredientId] * howMany
+        recipe.ingredients[ingredientId] * recipeYield
       ),
     state
   )
