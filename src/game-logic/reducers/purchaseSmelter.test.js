@@ -9,8 +9,7 @@ describe('purchaseSmelter', () => {
   beforeEach(() => {
     gameState = {
       experience: 0,
-      // @ts-expect-error
-      money: PURCHASEABLE_SMELTERS.get(1).price,
+      money: PURCHASEABLE_SMELTERS.get(1)?.price ?? 0,
       purchasedSmelter: 0,
       todaysNotifications: [],
       itemsSold: [],

@@ -19,8 +19,10 @@ export const purchaseSmelter = (state, smelterId) => {
   state = {
     ...state,
     purchasedSmelter: smelterId,
-    // @ts-expect-error
-    money: moneyTotal(money, -PURCHASEABLE_SMELTERS.get(smelterId).price),
+    money: moneyTotal(
+      money,
+      -(PURCHASEABLE_SMELTERS.get(smelterId)?.price ?? 0)
+    ),
   }
 
   state = showNotification(state, FORGE_AVAILABLE_NOTIFICATION)
