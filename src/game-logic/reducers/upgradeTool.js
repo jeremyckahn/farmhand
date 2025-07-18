@@ -16,7 +16,6 @@ export const upgradeTool = (state, upgrade) => {
     return state
   }
 
-  // Process ingredients (validation, experience, decrement ingredients)
   const originalState = state
   state = consumeIngredients(
     state,
@@ -25,7 +24,7 @@ export const upgradeTool = (state, upgrade) => {
     EXPERIENCE_VALUES.FORGE_RECIPE_MADE
   )
 
-  // If ingredient processing failed, return original state
+  // If ingredient consumption failed, return original state
   if (state === originalState) {
     return state
   }

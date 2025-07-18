@@ -126,20 +126,19 @@ export default {
   },
 
   /**
-   * @param {React.SyntheticEvent} e
+   * @param {React.ChangeEvent<HTMLInputElement>} e
    * @param {farmhand.cow} cow
    */
-  // @ts-expect-error
   handleCowAutomaticHugChange({ target: { checked } }, cow) {
     this.changeCowAutomaticHugState(cow, checked)
   },
 
   /**
-   * @param {React.SyntheticEvent} e
+   * @param {React.ChangeEvent<HTMLInputElement>} e
    * @param {farmhand.cow} cow
    */
   handleCowBreedChange({ target }, cow) {
-    const { checked } = /** @type {HTMLInputElement} */ (target)
+    const { checked } = target
     this.changeCowBreedingPenResident(cow, checked)
   },
 
@@ -165,11 +164,11 @@ export default {
   },
 
   /**
-   * @param {React.SyntheticEvent} e
+   * @param {React.ChangeEvent<HTMLInputElement>} e
    * @param {farmhand.cow} cow
    */
   handleCowNameInputChange({ target }, cow) {
-    const { value } = /** @type {HTMLInputElement} */ (target)
+    const { value } = target
     this.changeCowName(cow.id, value)
   },
 
@@ -182,10 +181,10 @@ export default {
   },
 
   /**
-   * @param {React.SyntheticEvent} e
+   * @param {React.ChangeEvent<HTMLSelectElement>} e
    */
   handleViewChange({ target }) {
-    const { value } = /** @type {HTMLSelectElement} */ (target)
+    const { value } = target
     this.setState({
       stageFocus: /** @type {farmhand.stageFocusType} */ (value),
     })
@@ -427,7 +426,7 @@ export default {
     fileReader.addEventListener('loadend', e => {
       try {
         const { result } = /** @type {FileReader} */ (e.target)
-        const json = /** @type {string} */ (result)
+        const json = String(result)
         const state = reduceByPersistedKeys(JSON.parse(json))
 
         if (
