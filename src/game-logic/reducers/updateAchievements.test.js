@@ -54,11 +54,10 @@ describe('updateAchievements', () => {
           conditionSatisfied: true,
           todaysNotifications: [
             {
-              // @ts-expect-error
-              message: ACHIEVEMENT_COMPLETED`${{
+              message: ACHIEVEMENT_COMPLETED('', {
                 name: 'Test Achievement',
                 rewardDescription: '',
-              }}`,
+              }),
               severity: 'success',
             },
           ],

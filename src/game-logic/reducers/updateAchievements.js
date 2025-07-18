@@ -24,11 +24,10 @@ export const updateAchievements = (state, prevState) =>
 
       state = showNotification(
         state,
-        // @ts-expect-error
-        ACHIEVEMENT_COMPLETED`${{
+        ACHIEVEMENT_COMPLETED('', {
           name: achievement.name,
           rewardDescription: achievement.rewardDescription,
-        }}`,
+        }),
         'success'
       )
     }
