@@ -7,7 +7,7 @@ import { decrementItemFromInventory } from './decrementItemFromInventory.js'
  * Consume ingredients - validate, add experience, and decrement ingredients
  * @param {farmhand.state} state
  * @param {object} recipe - Recipe or upgrade object with ingredients
- * @param {number} [howMany=1]
+ * @param {number} [howMany=1] - How manu units of the recipe to consume ingredients for
  * @param {number} [experiencePoints=0] - Experience points to award
  * @returns {farmhand.state}
  */

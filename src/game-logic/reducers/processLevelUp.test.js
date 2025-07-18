@@ -1,7 +1,7 @@
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates.js'
 import { toolLevel, toolType } from '../../enums.js'
 import { experienceNeededForLevel } from '../../utils/index.js'
-import { testState } from '../../test-utils/index.js'
+import { testItem, testState } from '../../test-utils/index.js'
 
 import { processLevelUp } from './processLevelUp.js'
 
@@ -18,13 +18,11 @@ describe('processLevelUp', () => {
 
     expect(todaysNotifications).toEqual([
       {
-        // @ts-expect-error - Template function expects null as first parameter
-        message: LEVEL_GAINED_NOTIFICATION(null, 3, { name: 'Carrot' }),
+        message: LEVEL_GAINED_NOTIFICATION('', 3, testItem({ id: 'carrot' })),
         severity: 'success',
       },
       {
-        // @ts-expect-error - Template function expects null as first parameter
-        message: LEVEL_GAINED_NOTIFICATION(null, 2, { name: 'Carrot' }),
+        message: LEVEL_GAINED_NOTIFICATION('', 2, testItem({ id: 'carrot' })),
         severity: 'success',
       },
     ])
