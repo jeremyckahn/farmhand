@@ -25,8 +25,7 @@ export const purchaseCowPen = (state, cowPenId) => {
 
   const { cows, price } = cowPenData
 
-  // @ts-expect-error
-  state = showNotification(state, COW_PEN_PURCHASED(null, cows), 'success')
+  state = showNotification(state, COW_PEN_PURCHASED('', cows), 'success')
 
   const experienceEarned =
     cowPenId > 1

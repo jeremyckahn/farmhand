@@ -19,8 +19,7 @@ describe('purchaseCowPen', () => {
 
   test('deducts money', () => {
     const { money } = purchaseCowPen(testState({ money: 1500 }), 1)
-    // @ts-expect-error
-    expect(money).toEqual(1500 - PURCHASEABLE_COW_PENS.get(1).price)
+    expect(money).toEqual(1500 - (PURCHASEABLE_COW_PENS.get(1)?.price ?? 0))
   })
 
   test('shows notification of purchase', () => {
