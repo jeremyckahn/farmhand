@@ -1,4 +1,4 @@
-import { testItem } from '../../test-utils/index.js'
+import { testState } from '../../test-utils/index.js'
 import { LOAN_PAYOFF } from '../../templates.js'
 import { carrot, carrotSeed } from '../../data/crops/index.js'
 import { bronzeOre, coal, milk1, saltRock } from '../../data/items.js'
@@ -9,8 +9,8 @@ import { sellItem } from './sellItem.js'
 describe('sellItem', () => {
   test('sells item', () => {
     const state = sellItem(
-      {
-        inventory: [testItem({ id: carrot.id, quantity: 1 })],
+      testState({
+        inventory: [{ id: carrot.id, quantity: 1 }],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -19,8 +19,8 @@ describe('sellItem', () => {
         revenue: 0,
         todaysRevenue: 0,
         valueAdjustments: { [carrotSeed.id]: 1 },
-      },
-      testItem({ id: carrot.id })
+      }),
+      carrot
     )
 
     expect(state.inventory).toEqual([])
@@ -32,8 +32,8 @@ describe('sellItem', () => {
 
   test('does not change revenue for seed sales', () => {
     const state = sellItem(
-      {
-        inventory: [testItem({ id: carrotSeed.id, quantity: 1 })],
+      testState({
+        inventory: [{ id: carrotSeed.id, quantity: 1 }],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -42,8 +42,8 @@ describe('sellItem', () => {
         revenue: 0,
         todaysRevenue: 0,
         valueAdjustments: { [carrotSeed.id]: 1 },
-      },
-      testItem({ id: carrotSeed.id })
+      }),
+      carrotSeed
     )
 
     expect(state.inventory).toEqual([])
@@ -55,8 +55,8 @@ describe('sellItem', () => {
 
   test('applies achievement bonus to farm products', () => {
     const state = sellItem(
-      {
-        inventory: [testItem({ id: carrot.id, quantity: 1 })],
+      testState({
+        inventory: [{ id: carrot.id, quantity: 1 }],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -68,8 +68,8 @@ describe('sellItem', () => {
         completedAchievements: {
           'i-am-rich-3': true,
         },
-      },
-      testItem({ id: carrot.id })
+      }),
+      carrot
     )
 
     expect(state.inventory).toEqual([])
@@ -81,8 +81,8 @@ describe('sellItem', () => {
 
   test('does not apply achievement bonus to seeds', () => {
     const state = sellItem(
-      {
-        inventory: [testItem({ id: carrotSeed.id, quantity: 1 })],
+      testState({
+        inventory: [{ id: carrotSeed.id, quantity: 1 }],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -94,8 +94,8 @@ describe('sellItem', () => {
         completedAchievements: {
           'i-am-rich-3': true,
         },
-      },
-      testItem({ id: carrotSeed.id })
+      }),
+      carrotSeed
     )
 
     expect(state.inventory).toEqual([])
@@ -107,8 +107,8 @@ describe('sellItem', () => {
 
   test('updates learnedRecipes', () => {
     const { learnedRecipes } = sellItem(
-      {
-        inventory: [testItem({ id: carrot.id, quantity: 2 })],
+      testState({
+        inventory: [{ id: carrot.id, quantity: 2 }],
         itemsSold: {},
         loanBalance: 0,
         money: 100,
@@ -117,8 +117,8 @@ describe('sellItem', () => {
         revenue: 0,
         todaysRevenue: 0,
         valueAdjustments: { [carrot.id]: 1 },
-      },
-      testItem({ id: carrot.id }),
+      }),
+      carrot,
       15
     )
 
@@ -131,9 +131,9 @@ describe('sellItem', () => {
     describe('item is not a farm product', () => {
       beforeEach(() => {
         state = sellItem(
-          {
+          testState({
             experience: 0,
-            inventory: [testItem({ id: carrotSeed.id, quantity: 3 })],
+            inventory: [{ id: carrotSeed.id, quantity: 3 }],
             itemsSold: {},
             loanBalance: 100,
             money: 100,
@@ -142,8 +142,8 @@ describe('sellItem', () => {
             revenue: 0,
             todaysRevenue: 0,
             valueAdjustments: { [carrotSeed.id]: 1 },
-          },
-          testItem({ id: carrotSeed.id }),
+          }),
+          carrotSeed,
           3
         )
       })
@@ -164,8 +164,8 @@ describe('sellItem', () => {
       describe('loan is greater than garnishment', () => {
         test('sale is garnished', () => {
           state = sellItem(
-            {
-              inventory: [testItem({ id: carrot.id, quantity: 3 })],
+            testState({
+              inventory: [{ id: carrot.id, quantity: 3 }],
               itemsSold: {},
               loanBalance: 100,
               money: 100,
@@ -174,8 +174,8 @@ describe('sellItem', () => {
               revenue: 0,
               todaysRevenue: 0,
               valueAdjustments: { [carrot.id]: 1 },
-            },
-            testItem({ id: carrot.id }),
+            }),
+            carrot,
             3
           )
 
@@ -189,9 +189,9 @@ describe('sellItem', () => {
       describe('loan is less than garnishment', () => {
         beforeEach(() => {
           state = sellItem(
-            {
+            testState({
               experience: 0,
-              inventory: [testItem({ id: carrot.id, quantity: 3 })],
+              inventory: [{ id: carrot.id, quantity: 3 }],
               itemsSold: {},
               loanBalance: 1.5,
               money: 100,
@@ -200,8 +200,8 @@ describe('sellItem', () => {
               revenue: 0,
               todaysRevenue: 0,
               valueAdjustments: { [carrot.id]: 1 },
-            },
-            testItem({ id: carrot.id }),
+            }),
+            carrot,
             3
           )
         })
@@ -241,10 +241,13 @@ describe('sellItem', () => {
   test.each(experienceTestArgs)(
     'selling item of type %s gives experience',
     (_, item) => {
+      // Cast item to ensure TypeScript recognizes it as an item object
+      const itemObj = item
       const state = sellItem(
-        {
+        testState({
           experience: 0,
-          inventory: [testItem({ id: item.id, quantity: 1 })],
+          // @ts-expect-error
+          inventory: [{ id: itemObj.id, quantity: 1 }],
           itemsSold: {},
           loanBalance: 0,
           money: 100,
@@ -252,9 +255,11 @@ describe('sellItem', () => {
           todaysNotifications: [],
           revenue: 0,
           todaysRevenue: 0,
-          valueAdjustments: { [item.id]: 1 },
-        },
-        testItem({ id: item.id }),
+          // @ts-expect-error
+          valueAdjustments: { [itemObj.id]: 1 },
+        }),
+        // @ts-expect-error
+        itemObj,
         1
       )
 

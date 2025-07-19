@@ -10,9 +10,9 @@ export const incrementPlotContentAge = crop =>
   crop && getPlotContentType(crop) === itemType.CROP
     ? {
         ...crop,
-        daysOld: crop.daysOld + 1,
+        daysOld: (crop.daysOld || 0) + 1,
         daysWatered:
-          crop.daysWatered +
+          (crop.daysWatered || 0) +
           (crop.wasWateredToday
             ? 1 +
               (crop.fertilizerType === fertilizerType.NONE

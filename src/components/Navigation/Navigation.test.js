@@ -34,6 +34,7 @@ beforeEach(() => {
         isChatAvailable: false,
         isDialogViewOpen: false,
         isOnline: false,
+        room: '',
         stageFocus: stageFocusType.FIELD,
         viewList: ['HOME', 'FIELD', 'SHOP', 'WORKSHOP'],
       }}

@@ -17,10 +17,10 @@ export const RandomSeedInput = ({ search = globalWindow.location.search }) => {
   )
 
   /**
-   * @param {React.SyntheticEvent<HTMLInputElement>} e
+   * @param {React.ChangeEvent<HTMLInputElement>} e
    */
   const handleChange = e => {
-    setSeed(e.target.value)
+    setSeed(/** @type {HTMLInputElement} */ (e.target).value)
   }
 
   /**

@@ -1,6 +1,6 @@
 /**
  * @param {farmhand.state} state
- * @param {function(farmhand.state, number, number, ...any)} fieldFn Performs an operation on each plot within the range.
+ * @param {function(farmhand.state, number, number, ...any): farmhand.state} fieldFn Performs an operation on each plot within the range.
  * @param {number} rangeRadius
  * @param {number} plotX
  * @param {number} plotY

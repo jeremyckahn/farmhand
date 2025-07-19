@@ -19,7 +19,7 @@ describe('CowCard', () => {
   })
 
   /**
-   * @type {import('./CowCard.js').CowCardProps}
+   * @type {import("./CowCard.js").CowCardProps}
    */
   const baseProps = {
     allowCustomPeerCowNames: false,

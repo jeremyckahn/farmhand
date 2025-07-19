@@ -19,8 +19,14 @@ export const waterPlot = (state, x, y) => {
     return state
   }
 
-  return modifyFieldPlotAt(state, x, y, crop => ({
-    ...crop,
-    wasWateredToday: true,
-  }))
+  return modifyFieldPlotAt(state, x, y, crop => {
+    if (!crop) {
+      return crop
+    }
+
+    return {
+      ...crop,
+      wasWateredToday: true,
+    }
+  })
 }

@@ -7,6 +7,7 @@ import {
 import { SCARECROW_ITEM_ID } from '../../constants.js'
 import { fertilizerType } from '../../enums.js'
 import { getPlotContentFromItemId } from '../../utils/index.js'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
 import { applyPrecipitation } from './applyPrecipitation.js'
 
@@ -15,33 +16,37 @@ vitest.mock('../../data/items.js')
 
 describe('applyPrecipitation', () => {
   test('waters all plots', () => {
-    const state = applyPrecipitation({
-      field: [
-        [
-          testCrop({
-            wasWateredToday: false,
-          }),
-          testCrop({
-            wasWateredToday: false,
-          }),
+    const state = applyPrecipitation(
+      saveDataStubFactory({
+        field: [
+          [
+            testCrop({
+              wasWateredToday: false,
+            }),
+            testCrop({
+              wasWateredToday: false,
+            }),
+          ],
         ],
-      ],
-      inventory: [],
-      newDayNotifications: [],
-    })
+        inventory: [],
+        newDayNotifications: [],
+      })
+    )
 
-    expect(state.field[0][0].wasWateredToday).toBe(true)
-    expect(state.field[0][1].wasWateredToday).toBe(true)
+    expect(state.field[0][0]?.wasWateredToday).toBe(true)
+    expect(state.field[0][1]?.wasWateredToday).toBe(true)
   })
 
   describe('rain shower', () => {
     test('waters all plots', () => {
       vitest.spyOn(Math, 'random').mockReturnValue(1)
-      const state = applyPrecipitation({
-        field: [[]],
-        inventory: [],
-        newDayNotifications: [],
-      })
+      const state = applyPrecipitation(
+        saveDataStubFactory({
+          field: [[]],
+          inventory: [],
+          newDayNotifications: [],
+        })
+      )
 
       expect(state.newDayNotifications[0]).toEqual({
         message: RAIN_MESSAGE,
@@ -57,11 +62,13 @@ describe('applyPrecipitation', () => {
 
     describe('scarecrows are planted', () => {
       test('scarecrows are destroyed', () => {
-        const state = applyPrecipitation({
-          field: [[getPlotContentFromItemId(SCARECROW_ITEM_ID)]],
-          inventory: [],
-          newDayNotifications: [],
-        })
+        const state = applyPrecipitation(
+          saveDataStubFactory({
+            field: [[getPlotContentFromItemId(SCARECROW_ITEM_ID)]],
+            inventory: [],
+            newDayNotifications: [],
+          })
+        )
 
         expect(state.field[0][0]).toBe(null)
         expect(state.newDayNotifications[0]).toEqual({
@@ -72,22 +79,24 @@ describe('applyPrecipitation', () => {
 
       describe('scarecows are rainbow fertilized', () => {
         test('scarecrows are replaced based on available inventory', () => {
-          const { field, inventory } = applyPrecipitation({
-            field: [
-              [
-                {
-                  ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
-                  fertilizerType: fertilizerType.RAINBOW,
-                },
-                {
-                  ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
-                  fertilizerType: fertilizerType.RAINBOW,
-                },
+          const { field, inventory } = applyPrecipitation(
+            saveDataStubFactory({
+              field: [
+                [
+                  {
+                    ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
+                    fertilizerType: fertilizerType.RAINBOW,
+                  },
+                  {
+                    ...getPlotContentFromItemId(SCARECROW_ITEM_ID),
+                    fertilizerType: fertilizerType.RAINBOW,
+                  },
+                ],
               ],
-            ],
-            inventory: [{ id: 'scarecrow', quantity: 1 }],
-            newDayNotifications: [],
-          })
+              inventory: [{ id: 'scarecrow', quantity: 1 }],
+              newDayNotifications: [],
+            })
+          )
 
           // Scarecrow is replanted from inventory
           expect(field[0][0]).toEqual({
@@ -106,11 +115,13 @@ describe('applyPrecipitation', () => {
 
     describe('scarecrows are not planted', () => {
       test('shows appropriate message', () => {
-        const state = applyPrecipitation({
-          field: [[]],
-          inventory: [],
-          newDayNotifications: [],
-        })
+        const state = applyPrecipitation(
+          saveDataStubFactory({
+            field: [[]],
+            inventory: [],
+            newDayNotifications: [],
+          })
+        )
 
         expect(state.newDayNotifications[0]).toEqual({
           message: STORM_MESSAGE,

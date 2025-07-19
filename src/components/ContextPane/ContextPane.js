@@ -1,4 +1,3 @@
-/** @typedef {import('../../index.js').farmhand.item} farmhand.item */
 import React, { memo } from 'react'
 import { array, string } from 'prop-types'
 
@@ -38,8 +37,7 @@ export const ContextPane = ({ playerInventory, stageFocus }) => {
           <h2>Inventory</h2>
           {/*
           // NOTE: Weird ignore comment syntax and formatting is needed here.
-          // See: https://stackoverflow.com/a/56913087/470685
-          // @ts-ignore Silence error 'Expression produces a union type that is too complex to represent.' ts-expect-error would be used here, but it doesn't seem to work as expected. */}
+          // See: https://stackoverflow.com/a/56913087/470685 */}
           <PlayerInventory
             {...{
               playerInventory,

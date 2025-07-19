@@ -10,6 +10,7 @@ const completeColor = '#00e500'
 const ProgressBar = ({ percent }) => {
   const [displayedProgress, setDisplayedProgress] = useState(0)
   const [displayedColor, setDisplayedColor] = useState(incompleteColor)
+  /** @type {[import('shifty').Tweenable | undefined, React.Dispatch<React.SetStateAction<import('shifty').Tweenable | undefined>>]} */
   const [currentTweenable, setCurrentTweenable] = useState()
 
   useEffect(() => {
@@ -21,12 +22,14 @@ const ProgressBar = ({ percent }) => {
         from: { currentPercent: 0 },
         to: { currentPercent: percent },
         render: ({ currentPercent }) => {
-          setDisplayedProgress(currentPercent.toFixed(2))
+          const currentPercentNumber = Number(currentPercent)
+
+          setDisplayedProgress(Number(currentPercentNumber.toFixed(2)))
           setDisplayedColor(
             interpolate(
               { color: incompleteColor },
               { color: completeColor },
-              currentPercent / 100
+              currentPercentNumber / 100
             ).color
           )
         },

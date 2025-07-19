@@ -22,6 +22,7 @@ describe('item selling', () => {
     const carrotSeedMenuItem = within(menu)
       .getByText('Carrot Seed')
       .closest('.Item')
+    // @ts-expect-error
     const sellButton = within(carrotSeedMenuItem).getByText('Sell')
     userEvent.click(sellButton)
 

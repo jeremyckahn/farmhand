@@ -1,18 +1,15 @@
-/**
- * @typedef {import("../components/Farmhand/Farmhand").farmhand.state['field']} farmhand.state.field
- */
-
 import { carrot, pumpkin } from '../data/crops/index.js'
+import { fertilizerType } from '../enums.js'
 
 import { findInField } from './findInField.js'
 
 const carrotPlot = {
   itemId: carrot.id,
-  fertilizerType: 'NONE',
+  fertilizerType: fertilizerType.NONE,
 }
 
 describe('findInField', () => {
-  /** @type farmhand.state.field} */
+  /** @type {farmhand.state['field']} */
   const field = [[null, carrotPlot, null]]
 
   test('returns the desired plot from the field', () => {

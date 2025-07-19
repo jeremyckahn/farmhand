@@ -1,4 +1,3 @@
-/** @typedef {import("../../index").farmhand.item} farmhand.item */
 import { itemType } from '../../enums.js'
 import { GOLD_SPAWN_CHANCE } from '../../constants.js'
 
@@ -13,7 +12,7 @@ export const goldOre = freeze({
   doesPriceFluctuate: true,
   id: 'gold-ore',
   name: 'Gold Ore',
-  type: itemType.ORE,
+  type: /** @type {farmhand.itemType} */ (itemType.ORE),
   value: 500,
   spawnChance: GOLD_SPAWN_CHANCE,
 })

@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "dom"],
+    "checkJs": true,
+    "jsx": "preserve",
+    "noEmit": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "types": [
+      "vitest/globals",
+      "vite-plugin-pwa/client",
+      "vite/client",
+      "@playwright/test"
+    ],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["**/*.js"],
+  "exclude": ["node_modules"]
+}

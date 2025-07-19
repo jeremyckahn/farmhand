@@ -21,7 +21,7 @@ export const processCowAttrition = state => {
       state = removeCowFromInventory(state, cow)
 
       newDayNotifications.push({
-        message: COW_ATTRITION_MESSAGE`${cow}`,
+        message: COW_ATTRITION_MESSAGE('', cow),
         severity: 'error',
       })
     }

@@ -19,7 +19,11 @@ export const purchaseForest = (state, forestId) => {
 
   state = addExperience(state, EXPERIENCE_VALUES.FOREST_EXPANDED)
 
-  const { columns, price, rows } = PURCHASABLE_FOREST_SIZES.get(forestId)
+  const forestSize = PURCHASABLE_FOREST_SIZES.get(forestId)
+  if (!forestSize) {
+    return state
+  }
+  const { columns, price, rows } = forestSize
 
   /*
    * TODO: using FOREST_AVAILABLE_NOTIFICATION here is temporary, this code path will

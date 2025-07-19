@@ -1,3 +1,5 @@
+import { testState } from '../../test-utils/index.js'
+
 import { withdrawCow } from './withdrawCow.js'
 
 describe('withdrawCow', () => {
@@ -5,14 +7,16 @@ describe('withdrawCow', () => {
     const cowId = 'abc123'
 
     let { cowIdOfferedForTrade } = withdrawCow(
-      { cowIdOfferedForTrade: cowId },
+      testState({ cowIdOfferedForTrade: cowId }),
       'some-other-cow'
     )
 
     expect(cowIdOfferedForTrade).toEqual(cowId)
 
-    cowIdOfferedForTrade = withdrawCow({ cowIdOfferedForTrade: cowId }, cowId)
-      .cowIdOfferedForTrade
+    cowIdOfferedForTrade = withdrawCow(
+      testState({ cowIdOfferedForTrade: cowId }),
+      cowId
+    ).cowIdOfferedForTrade
 
     expect(cowIdOfferedForTrade).toEqual('')
   })

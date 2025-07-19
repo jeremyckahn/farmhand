@@ -28,8 +28,13 @@ export const processCowBreeding = state => {
     return state
   }
 
-  const cow1 = findCowById(cowInventory, cowId1)
-  const cow2 = findCowById(cowInventory, cowId2)
+  const cow1 = cowId1 ? findCowById(cowInventory, cowId1) : null
+  const cow2 = cowId2 ? findCowById(cowInventory, cowId2) : null
+
+  // If either cow is not found, return state unchanged
+  if (!cow1 || !cow2) {
+    return state
+  }
 
   // Same-sex couples are as valid and wonderful as any, but in this game they
   // cannot naturally produce offspring.
@@ -43,12 +48,13 @@ export const processCowBreeding = state => {
       ? cowBreedingPen.daysUntilBirth - 1
       : COW_GESTATION_PERIOD_DAYS
 
+  const cowPenData = PURCHASEABLE_COW_PENS.get(purchasedCowPen)
   const shouldGenerateOffspring =
-    cowInventory.length < PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows &&
-    daysUntilBirth === 0
+    cowPenData && cowInventory.length < cowPenData.cows && daysUntilBirth === 0
 
-  const offspringCow =
-    shouldGenerateOffspring && generateOffspringCow(cow1, cow2, id)
+  const offspringCow = shouldGenerateOffspring
+    ? generateOffspringCow(cow1, cow2, id)
+    : null
 
   if (offspringCow) {
     const experienceGained =
@@ -60,9 +66,10 @@ export const processCowBreeding = state => {
 
   return {
     ...state,
-    cowInventory: shouldGenerateOffspring
-      ? [...cowInventory, offspringCow]
-      : cowInventory,
+    cowInventory:
+      shouldGenerateOffspring && offspringCow
+        ? [...cowInventory, offspringCow]
+        : cowInventory,
     cowBreedingPen: {
       ...cowBreedingPen,
       daysUntilBirth: shouldGenerateOffspring
@@ -73,7 +80,7 @@ export const processCowBreeding = state => {
       ? [
           ...newDayNotifications,
           {
-            message: COW_BORN_MESSAGE`${cow1}${cow2}${offspringCow}`,
+            message: COW_BORN_MESSAGE('', cow1, cow2, offspringCow),
             severity: 'success',
           },
         ]

@@ -1,12 +1,8 @@
-import { canMakeRecipe } from '../../utils/index.js'
-
 import { recipeType } from '../../enums.js'
-
 import { EXPERIENCE_VALUES } from '../../constants.js'
 
 import { addItemToInventory } from './addItemToInventory.js'
-import { addExperience } from './addExperience.js'
-import { decrementItemFromInventory } from './decrementItemFromInventory.js'
+import { consumeIngredients } from './consumeIngredients.js'
 
 const EXPERIENCE_FOR_RECIPE = {
   [recipeType.FERMENTATION]: EXPERIENCE_VALUES.FERMENTATION_RECIPE_MADE,
@@ -22,21 +18,18 @@ const EXPERIENCE_FOR_RECIPE = {
  * @returns {farmhand.state}
  */
 export const makeRecipe = (state, recipe, howMany = 1) => {
-  if (!canMakeRecipe(recipe, state.inventory, howMany)) {
+  const originalState = state
+  state = consumeIngredients(
+    state,
+    recipe,
+    howMany,
+    EXPERIENCE_FOR_RECIPE[recipe.recipeType] || 0
+  )
+
+  // Only add to inventory if ingredient processing was successful
+  if (state === originalState) {
     return state
   }
-
-  state = addExperience(state, EXPERIENCE_FOR_RECIPE[recipe.recipeType] || 0)
-
-  state = Object.keys(recipe.ingredients).reduce(
-    (state, ingredientId) =>
-      decrementItemFromInventory(
-        state,
-        ingredientId,
-        recipe.ingredients[ingredientId] * howMany
-      ),
-    state
-  )
 
   return addItemToInventory(state, recipe, howMany)
 }

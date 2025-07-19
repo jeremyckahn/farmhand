@@ -1,3 +1,5 @@
+import { testState } from '../../test-utils/index.js'
+
 import { updateFinancialRecords } from './updateFinancialRecords.js'
 
 describe('updateFinancialRecords', () => {
@@ -11,16 +13,18 @@ describe('updateFinancialRecords', () => {
       recordSingleDayProfit,
       todaysLosses,
       todaysRevenue,
-    } = updateFinancialRecords({
-      historicalDailyLosses: [],
-      historicalDailyRevenue: [],
-      profitabilityStreak: 0,
-      record7dayProfitAverage: 0,
-      recordProfitabilityStreak: 0,
-      recordSingleDayProfit: 0,
-      todaysLosses: -10,
-      todaysRevenue: 15,
-    })
+    } = updateFinancialRecords(
+      testState({
+        historicalDailyLosses: [],
+        historicalDailyRevenue: [],
+        profitabilityStreak: 0,
+        record7dayProfitAverage: 0,
+        recordProfitabilityStreak: 0,
+        recordSingleDayProfit: 0,
+        todaysLosses: -10,
+        todaysRevenue: 15,
+      })
+    )
 
     expect(historicalDailyLosses).toEqual([-10])
     expect(historicalDailyRevenue).toEqual([15])
@@ -36,12 +40,14 @@ describe('updateFinancialRecords', () => {
     const {
       historicalDailyLosses,
       historicalDailyRevenue,
-    } = updateFinancialRecords({
-      historicalDailyLosses: [-1, -2, -3, -4, -5, -6, -7],
-      historicalDailyRevenue: [1, 2, 3, 4, 5, 6, 7],
-      todaysLosses: -5,
-      todaysRevenue: 10,
-    })
+    } = updateFinancialRecords(
+      testState({
+        historicalDailyLosses: [-1, -2, -3, -4, -5, -6, -7],
+        historicalDailyRevenue: [1, 2, 3, 4, 5, 6, 7],
+        todaysLosses: -5,
+        todaysRevenue: 10,
+      })
+    )
 
     expect(historicalDailyLosses).toEqual([-5, -1, -2, -3, -4, -5, -6])
     expect(historicalDailyRevenue).toEqual([10, 1, 2, 3, 4, 5, 6])
@@ -52,15 +58,17 @@ describe('updateFinancialRecords', () => {
       const {
         profitabilityStreak,
         recordProfitabilityStreak,
-      } = updateFinancialRecords({
-        historicalDailyLosses: [],
-        historicalDailyRevenue: [],
-        profitabilityStreak: 10,
-        record7dayProfitAverage: 0,
-        recordProfitabilityStreak: 10,
-        todaysLosses: -10,
-        todaysRevenue: 10,
-      })
+      } = updateFinancialRecords(
+        testState({
+          historicalDailyLosses: [],
+          historicalDailyRevenue: [],
+          profitabilityStreak: 10,
+          record7dayProfitAverage: 0,
+          recordProfitabilityStreak: 10,
+          todaysLosses: -10,
+          todaysRevenue: 10,
+        })
+      )
 
       expect(profitabilityStreak).toEqual(0)
       expect(recordProfitabilityStreak).toEqual(10)

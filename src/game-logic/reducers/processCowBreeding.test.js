@@ -5,6 +5,7 @@ import {
 } from '../../constants.js'
 import { genders } from '../../enums.js'
 import { generateCow } from '../../utils/index.js'
+import { testState } from '../../test-utils/index.js'
 
 import { processCowBreeding } from './processCowBreeding.js'
 
@@ -15,7 +16,7 @@ describe('processCowBreeding', () => {
 
   describe('there are less than two cows in breeding pen', () => {
     test('no-ops', () => {
-      const inputState = {
+      const inputState = testState({
         cowBreedingPen: {
           cowId1: maleCow1.id,
           cowId2: null,
@@ -24,7 +25,7 @@ describe('processCowBreeding', () => {
         cowInventory: [maleCow1],
         newDayNotifications: [],
         purchasedCowPen: 1,
-      }
+      })
 
       const state = processCowBreeding(inputState)
 
@@ -35,7 +36,7 @@ describe('processCowBreeding', () => {
   describe('there are two cows in breeding pen', () => {
     describe('cows are same gender', () => {
       test('no-ops', () => {
-        const inputState = {
+        const inputState = testState({
           cowBreedingPen: {
             cowId1: maleCow1.id,
             cowId2: maleCow2.id,
@@ -44,7 +45,7 @@ describe('processCowBreeding', () => {
           cowInventory: [maleCow1, maleCow2],
           newDayNotifications: [],
           purchasedCowPen: 1,
-        }
+        })
 
         const state = processCowBreeding(inputState)
 
@@ -57,19 +58,21 @@ describe('processCowBreeding', () => {
         test('resets daysUntilBirth', () => {
           const {
             cowBreedingPen: { daysUntilBirth },
-          } = processCowBreeding({
-            cowBreedingPen: {
-              cowId1: maleCow1.id,
-              cowId2: femaleCow.id,
-              daysUntilBirth: COW_GESTATION_PERIOD_DAYS - 1,
-            },
-            cowInventory: [
-              generateCow({ ...maleCow1, happiness: 0 }),
-              femaleCow,
-            ],
-            newDayNotifications: [],
-            purchasedCowPen: 1,
-          })
+          } = processCowBreeding(
+            testState({
+              cowBreedingPen: {
+                cowId1: maleCow1.id,
+                cowId2: femaleCow.id,
+                daysUntilBirth: COW_GESTATION_PERIOD_DAYS - 1,
+              },
+              cowInventory: [
+                generateCow({ ...maleCow1, happiness: 0 }),
+                femaleCow,
+              ],
+              newDayNotifications: [],
+              purchasedCowPen: 1,
+            })
+          )
 
           expect(daysUntilBirth).toEqual(COW_GESTATION_PERIOD_DAYS)
         })
@@ -80,16 +83,18 @@ describe('processCowBreeding', () => {
           test('decrements daysUntilBirth', () => {
             const {
               cowBreedingPen: { daysUntilBirth },
-            } = processCowBreeding({
-              cowBreedingPen: {
-                cowId1: maleCow1.id,
-                cowId2: femaleCow.id,
-                daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
-              },
-              cowInventory: [maleCow1, femaleCow],
-              newDayNotifications: [],
-              purchasedCowPen: 1,
-            })
+            } = processCowBreeding(
+              testState({
+                cowBreedingPen: {
+                  cowId1: maleCow1.id,
+                  cowId2: femaleCow.id,
+                  daysUntilBirth: COW_GESTATION_PERIOD_DAYS,
+                },
+                cowInventory: [maleCow1, femaleCow],
+                newDayNotifications: [],
+                purchasedCowPen: 1,
+              })
+            )
 
             expect(daysUntilBirth).toEqual(COW_GESTATION_PERIOD_DAYS - 1)
           })
@@ -100,17 +105,19 @@ describe('processCowBreeding', () => {
             let newState
 
             beforeEach(() => {
-              newState = processCowBreeding({
-                cowBreedingPen: {
-                  cowId1: maleCow1.id,
-                  cowId2: femaleCow.id,
-                  daysUntilBirth: 1,
-                },
-                cowInventory: [maleCow1, femaleCow],
-                experience: 0,
-                newDayNotifications: [],
-                purchasedCowPen: 1,
-              })
+              newState = processCowBreeding(
+                testState({
+                  cowBreedingPen: {
+                    cowId1: maleCow1.id,
+                    cowId2: femaleCow.id,
+                    daysUntilBirth: 1,
+                  },
+                  cowInventory: [maleCow1, femaleCow],
+                  experience: 0,
+                  newDayNotifications: [],
+                  purchasedCowPen: 1,
+                })
+              )
             })
 
             test('adds offspring cow to cowInventory', () => {
@@ -124,25 +131,29 @@ describe('processCowBreeding', () => {
 
           describe('there is no space in cowInventory', () => {
             test('offspring cow is not added to cowInventory', () => {
-              const { cowInventory } = processCowBreeding({
-                cowBreedingPen: {
-                  cowId1: maleCow1.id,
-                  cowId2: femaleCow.id,
-                  daysUntilBirth: 1,
-                },
-                cowInventory: [
-                  maleCow1,
-                  femaleCow,
-                  ...new Array(PURCHASEABLE_COW_PENS.get(1).cows - 2)
-                    .fill(null)
-                    .map(() => generateCow()),
-                ],
-                newDayNotifications: [],
-                purchasedCowPen: 1,
-              })
+              const { cowInventory } = processCowBreeding(
+                testState({
+                  cowBreedingPen: {
+                    cowId1: maleCow1.id,
+                    cowId2: femaleCow.id,
+                    daysUntilBirth: 1,
+                  },
+                  cowInventory: [
+                    maleCow1,
+                    femaleCow,
+                    ...new Array(
+                      (PURCHASEABLE_COW_PENS.get(1) || { cows: 10 }).cows - 2
+                    )
+                      .fill(null)
+                      .map(() => generateCow()),
+                  ],
+                  newDayNotifications: [],
+                  purchasedCowPen: 1,
+                })
+              )
 
               expect(cowInventory).toHaveLength(
-                PURCHASEABLE_COW_PENS.get(1).cows
+                (PURCHASEABLE_COW_PENS.get(1) || { cows: 10 }).cows
               )
             })
           })
@@ -150,16 +161,18 @@ describe('processCowBreeding', () => {
           test('resets daysUntilBirth', () => {
             const {
               cowBreedingPen: { daysUntilBirth },
-            } = processCowBreeding({
-              cowBreedingPen: {
-                cowId1: maleCow1.id,
-                cowId2: femaleCow.id,
-                daysUntilBirth: 1,
-              },
-              cowInventory: [maleCow1, femaleCow],
-              newDayNotifications: [],
-              purchasedCowPen: 1,
-            })
+            } = processCowBreeding(
+              testState({
+                cowBreedingPen: {
+                  cowId1: maleCow1.id,
+                  cowId2: femaleCow.id,
+                  daysUntilBirth: 1,
+                },
+                cowInventory: [maleCow1, femaleCow],
+                newDayNotifications: [],
+                purchasedCowPen: 1,
+              })
+            )
 
             expect(daysUntilBirth).toEqual(COW_GESTATION_PERIOD_DAYS)
           })

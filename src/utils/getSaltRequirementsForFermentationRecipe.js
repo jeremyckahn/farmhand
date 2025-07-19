@@ -1,5 +1,3 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
-
 const saltRequirementMultiplier = 2 / 3
 
 /**
@@ -9,5 +7,5 @@ const saltRequirementMultiplier = 2 / 3
 export const getSaltRequirementsForFermentationRecipe = fermentationRecipe => {
   const { daysToFerment = 0, tier = 1 } = fermentationRecipe
 
-  return Math.ceil(daysToFerment * saltRequirementMultiplier) * tier
+  return Math.ceil((daysToFerment ?? 0) * saltRequirementMultiplier) * tier
 }

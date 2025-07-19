@@ -1,4 +1,4 @@
-/** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
+/** @typedef {farmhand.state} state */
 
 import { randomNumberService } from '../../common/services/randomNumber.js'
 import { itemsMap } from '../../data/maps.js'

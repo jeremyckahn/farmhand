@@ -13,7 +13,6 @@
     "build": "vite build",
     "build:native": "npm run build -- --base='./' && electron-builder --publish=always",
     "check:types": "tsc",
-    "check:types:noerror": "tsc; exit 0",
     "dev": "mprocs \"cross-env VITE_TRACKER_URL='ws://localhost:8000' npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run start:tracker\"",
     "dev:native": "mprocs \"BROWSER=none npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run electron\"",
     "e2e": "gh act --secret GITHUB_TOKEN=\"$(gh auth token)\" --secret VERCEL_TOKEN=\"$(jq .token ~/.local/share/com.vercel.cli/auth.json)\" -j e2e",
@@ -31,7 +30,7 @@
     "start:api": "NODE_OPTIONS=--openssl-legacy-provider vercel dev --token=$VERCEL_TOKEN --listen=0.0.0.0:3001 --yes",
     "start:backend": "docker compose up",
     "start:tracker": "bittorrent-tracker",
-    "test": "vitest",
+    "test": "vitest --run",
     "test:debug": "vitest --inspect-brk --no-file-parallelism --run",
     "update-images": "bash update-images.sh"
   },
@@ -201,7 +200,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run lint && if git-branch-is develop; then npm test -- --run; fi"
+      "pre-commit": "pretty-quick --staged && npm run lint && npm run check:types && if git-branch-is develop; then npm test -- --run; fi"
     }
   },
   "files": [

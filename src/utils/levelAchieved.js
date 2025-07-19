@@ -1,7 +1,5 @@
 /**
- * @param {{
- *   experience?: number,
- * }} props
+ * @param {number} [experience]
  * @returns {number}
  */
 export function levelAchieved(experience = 0) {

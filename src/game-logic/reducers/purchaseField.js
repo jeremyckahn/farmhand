@@ -16,7 +16,11 @@ export const purchaseField = (state, fieldId) => {
 
   state = addExperience(state, EXPERIENCE_VALUES.FIELD_EXPANDED)
 
-  const { columns, price, rows } = PURCHASEABLE_FIELD_SIZES.get(fieldId)
+  const fieldSize = PURCHASEABLE_FIELD_SIZES.get(fieldId)
+  if (!fieldSize) {
+    return state
+  }
+  const { columns, price, rows } = fieldSize
 
   return {
     ...state,

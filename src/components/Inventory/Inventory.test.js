@@ -26,6 +26,7 @@ vitest.useFakeTimers()
 const StubInventory = ({ gameState = {}, ...overrides }) => {
   return (
     <FarmhandContext.Provider
+      // @ts-expect-error
       value={{ gameState: { ...defaultGameState, ...gameState }, handlers: {} }}
     >
       <Inventory
@@ -41,9 +42,9 @@ describe('Inventory Component', () => {
   describe('Displaying items', () => {
     test('displays all items when no categories are selected', () => {
       const items = [
-        testItem({ id: 'carrot', name: 'Carrot' }),
-        testItem({ id: 'pumpkin', name: 'Pumpkin' }),
-        testItem({ id: 'carrot-seed', name: 'Carrot Seed' }),
+        testItem({ id: 'carrot', name: 'Carrot', type: 'CROP' }),
+        testItem({ id: 'pumpkin', name: 'Pumpkin', type: 'CROP' }),
+        testItem({ id: 'carrot-seed', name: 'Carrot Seed', type: 'SEEDS' }),
       ]
       render(<StubInventory items={items} selectedCategories={[]} />)
       items.forEach(item => {
@@ -53,11 +54,11 @@ describe('Inventory Component', () => {
 
     test('filters items by search query', () => {
       const items = [
-        testItem({ id: 'carrot', name: 'Carrot', category: 'CROPS' }),
+        testItem({ id: 'carrot', name: 'Carrot', type: 'CROP' }),
         testItem({
           id: 'pumpkin-seed',
           name: 'Pumpkin Seed',
-          category: 'SEEDS',
+          type: 'SEEDS',
         }),
       ]
 

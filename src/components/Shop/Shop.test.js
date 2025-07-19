@@ -34,7 +34,14 @@ beforeEach(() => {
   }
 
   render(
-    <FarmhandContext.Provider value={{ gameState, handlers }}>
+    <FarmhandContext.Provider
+      value={{
+        // @ts-expect-error
+        gameState,
+        // @ts-expect-error
+        handlers,
+      }}
+    >
       <Shop />
     </FarmhandContext.Provider>
   )

@@ -16,6 +16,7 @@ describe('CoalFactory', () => {
     })
 
     test('it produces at least one coal and one stone', () => {
+      // @ts-expect-error - Mock function type assertion
       utils.chooseRandom.mockReturnValueOnce(1)
       const resources = coalFactory.generate()
 
@@ -23,6 +24,7 @@ describe('CoalFactory', () => {
     })
 
     test('can produce more than one coal and stone', () => {
+      // @ts-expect-error - Mock function type assertion
       utils.chooseRandom.mockReturnValueOnce(3)
       const resources = coalFactory.generate()
 

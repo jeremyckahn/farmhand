@@ -1,5 +1,5 @@
 /**
- * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
+ * @typedef {farmhand.state} state
  */
 
 import { GRAPES_REQUIRED_FOR_WINE } from '../../constants.js'

@@ -11,7 +11,7 @@ import sortBy from 'lodash.sortby'
 
 import Item from '../Item/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import { enumify } from '../../enums.js'
+
 import {
   findCowById,
   getCowSellValue,
@@ -28,14 +28,14 @@ import SearchBar from '../SearchBar/index.js'
 import { TabPanel, a11yProps } from './TabPanel/index.js'
 import './CowPenContextMenu.sass'
 
-const { AGE, COLOR, GENDER, HAPPINESS, VALUE, WEIGHT } = enumify([
-  'AGE',
-  'COLOR',
-  'GENDER',
-  'HAPPINESS',
-  'VALUE',
-  'WEIGHT',
-])
+const { AGE, COLOR, GENDER, HAPPINESS, VALUE, WEIGHT } = {
+  AGE: 'AGE',
+  COLOR: 'COLOR',
+  GENDER: 'GENDER',
+  HAPPINESS: 'HAPPINESS',
+  VALUE: 'VALUE',
+  WEIGHT: 'WEIGHT',
+}
 
 const sortCows = (cows, sortType, isAscending) => {
   let sorter = _ => _

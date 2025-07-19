@@ -5,7 +5,7 @@ import { weed } from '../../data/items.js'
 import { getPlotContentFromItemId } from '../../utils/index.js'
 
 /**
- * @param {?farmhand.plotContent} plotContent
+ * @param {?farmhand.plotContent} plotContents
  * @returns {?farmhand.plotContent}
  */
 export function spawnWeeds(plotContents) {

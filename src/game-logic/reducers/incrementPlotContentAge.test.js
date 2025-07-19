@@ -11,29 +11,31 @@ describe('incrementPlotContentAge', () => {
   describe('plot contains a crop', () => {
     describe('crop is not watered', () => {
       test('updates daysOld', () => {
-        const { daysOld, daysWatered } = incrementPlotContentAge(
+        const result = incrementPlotContentAge(
           testCrop({ itemId: 'sample-crop-1' })
         )
 
-        expect(daysOld).toBe(1)
-        expect(daysWatered).toBe(0)
+        expect(result).not.toBeNull()
+        expect(result?.daysOld).toBe(1)
+        expect(result?.daysWatered).toBe(0)
       })
     })
 
     describe('crop is watered', () => {
       test('updates daysOld and daysWatered', () => {
-        const { daysOld, daysWatered } = incrementPlotContentAge(
+        const result = incrementPlotContentAge(
           testCrop({ itemId: 'sample-crop-1', wasWateredToday: true })
         )
 
-        expect(daysOld).toBe(1)
-        expect(daysWatered).toBe(1)
+        expect(result).not.toBeNull()
+        expect(result?.daysOld).toBe(1)
+        expect(result?.daysWatered).toBe(1)
       })
     })
 
     describe('crop is fertilized', () => {
       test('updates daysOld with bonus', () => {
-        const { daysWatered } = incrementPlotContentAge(
+        const result = incrementPlotContentAge(
           testCrop({
             itemId: 'sample-crop-1',
             fertilizerType: fertilizerType.STANDARD,
@@ -41,7 +43,8 @@ describe('incrementPlotContentAge', () => {
           })
         )
 
-        expect(daysWatered).toBe(1 + FERTILIZER_BONUS)
+        expect(result).not.toBeNull()
+        expect(result?.daysWatered).toBe(1 + FERTILIZER_BONUS)
       })
     })
   })

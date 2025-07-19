@@ -68,9 +68,9 @@ describe('processCowFertilizerProduction', () => {
         expect(inventory).toEqual([{ id: 'fertilizer', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
-            message: FERTILIZERS_PRODUCED`${{
+            message: FERTILIZERS_PRODUCED('', {
               [getCowFertilizerItem(cow).name]: 1,
-            }}`,
+            }),
             severity: 'success',
           },
         ])
@@ -105,9 +105,9 @@ describe('processCowFertilizerProduction', () => {
         expect(inventory).toEqual([{ id: 'fertilizer', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
-            message: FERTILIZERS_PRODUCED`${{
+            message: FERTILIZERS_PRODUCED('', {
               [getCowFertilizerItem(cow).name]: 1,
-            }}`,
+            }),
             severity: 'success',
           },
         ])

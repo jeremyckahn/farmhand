@@ -1,12 +1,17 @@
+import { vi } from 'vitest'
+
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import { genders, standardCowColors } from '../../enums.js'
-import { generateCow, getCowValue } from '../../utils/index.js'
+import { testState } from '../../test-utils/index.js'
+import * as utils from '../../utils/index.js'
 
 import { purchaseCow } from './purchaseCow.js'
 
 describe('purchaseCow', () => {
+  /** @type {farmhand.state} */
+  let state
   const cow = Object.freeze(
-    generateCow({
+    utils.generateCow({
       baseWeight: 1000,
       color: standardCowColors.WHITE,
       daysOld: 1,
@@ -16,76 +21,55 @@ describe('purchaseCow', () => {
     })
   )
 
+  beforeEach(() => {
+    state = testState({
+      cowForSale: utils.generateCow(),
+      cowInventory: [],
+      id: 'abc123',
+      money: 5000,
+      purchasedCowPen: 1,
+    })
+    vi.spyOn(utils, 'generateCow').mockReturnValue(utils.generateCow())
+  })
+
   test('purchases a cow', () => {
-    const playerId = 'abc123'
-    const oldCowForSale = generateCow()
+    const newState = purchaseCow(state, cow)
 
-    const state = purchaseCow(
-      {
-        cowForSale: oldCowForSale,
-        cowInventory: [],
-        cowColorsPurchased: {},
-        id: playerId,
-        money: 5000,
-        purchasedCowPen: 1,
-      },
-      cow
-    )
-
-    expect(state).toMatchObject({
-      cowInventory: [{ ...cow, ownerId: playerId, originalOwnerId: playerId }],
-      money: 5000 - getCowValue(cow, false),
+    expect(newState).toMatchObject({
+      cowInventory: [{ ...cow, ownerId: 'abc123', originalOwnerId: 'abc123' }],
+      money: 5000 - utils.getCowValue(cow, false),
     })
 
-    expect(state.cowForSale).not.toBe(oldCowForSale)
-    expect(state.cowColorsPurchased.WHITE).toEqual(1)
+    expect(newState.cowForSale).not.toBe(state.cowForSale)
+    expect(newState.cowColorsPurchased.WHITE).toEqual(1)
   })
 
   describe('is unsufficient room in cow pen', () => {
     test('cow is not purchased', () => {
-      const oldCowForSale = generateCow()
-      const cowCapacity = PURCHASEABLE_COW_PENS.get(1).cows
+      const cowCapacity = PURCHASEABLE_COW_PENS.get(1)?.cows || 0
+      state.cowInventory = Array(cowCapacity)
+        .fill(null)
+        .map(() => utils.generateCow())
 
-      const { cowInventory, cowForSale, money } = purchaseCow(
-        {
-          cowForSale: oldCowForSale,
-          cowInventory: Array(cowCapacity)
-            .fill(null)
-            .map(() => generateCow()),
-          cowColorsPurchased: {},
-          money: 5000,
-          purchasedCowPen: 1,
-        },
-        cow
-      )
+      const { cowInventory, cowForSale, money } = purchaseCow(state, cow)
 
       expect(cowInventory).toHaveLength(cowCapacity)
-      expect(cowForSale).toBe(oldCowForSale)
+      expect(cowForSale).toBe(state.cowForSale)
       expect(money).toBe(5000)
     })
   })
 
   describe('player does not have enough money', () => {
-    const oldCowForSale = generateCow()
-
     test('cow is not purchased', () => {
-      const state = purchaseCow(
-        {
-          cowForSale: oldCowForSale,
-          cowInventory: [],
-          cowColorsPurchased: {},
-          money: 500,
-          purchasedCowPen: 1,
-        },
-        cow
-      )
+      state.money = 500
+      const newState = purchaseCow(state, cow)
 
-      expect(state).toMatchObject({
+      expect(newState).toMatchObject({
         cowInventory: [],
         money: 500,
       })
 
-      expect(state.cowForSale).toBe(oldCowForSale)
+      expect(newState.cowForSale).toBe(state.cowForSale)
     })
   })
 })

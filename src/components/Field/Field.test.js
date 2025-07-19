@@ -108,6 +108,7 @@ describe('isInHoverRange', () => {
     expect(
       isInHoverRange({
         experience: 0,
+        fieldMode: 'OBSERVE',
         hoveredPlotRangeSize: 2,
         hoveredPlot: { x: 1, y: 1 },
         x: 4,
@@ -120,6 +121,7 @@ describe('isInHoverRange', () => {
     expect(
       isInHoverRange({
         experience: 0,
+        fieldMode: fieldMode.PLANT, // Changed from OBSERVE to PLANT
         hoveredPlotRangeSize: 2,
         hoveredPlot: { x: 1, y: 1 },
         x: 0,

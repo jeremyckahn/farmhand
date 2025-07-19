@@ -20,5 +20,9 @@ export const nextView = async () => {
 
 export const getItemByName = async itemName => {
   const header = await screen.findByText(itemName)
-  return header.closest('.Item')
+  const item = header.closest('.Item')
+  if (!item) {
+    throw new Error(`Could not find item with name: ${itemName}`)
+  }
+  return item
 }

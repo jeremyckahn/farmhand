@@ -16,12 +16,21 @@ vitest.mock('./FermentationRecipe.js', () => ({
   FermentationRecipe: ({ item }) => <div>{item.name}</div>,
 }))
 
-const FermentationRecipeListStub = ({ levelEntitlements } = {}) => (
+const FermentationRecipeListStub = ({
+  levelEntitlements = {
+    sprinklerRange: 0,
+    items: {},
+    tools: {},
+    stageFocusType: {},
+  },
+} = {}) => (
   <FarmhandContext.Provider
     value={{
+      // @ts-expect-error
       gameState: {
         levelEntitlements,
       },
+      // @ts-expect-error
       handlers: {},
     }}
   >

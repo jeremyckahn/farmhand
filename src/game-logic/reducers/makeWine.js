@@ -1,11 +1,7 @@
-/**
- * @typedef {import("../../index").farmhand.item} item
- * @typedef {import("../../index").farmhand.keg} keg
- * @typedef {import("../../index").farmhand.grape} grape
- * @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state
- */
-
-import { GRAPES_REQUIRED_FOR_WINE, PURCHASEABLE_CELLARS } from '../../constants.js'
+import {
+  GRAPES_REQUIRED_FOR_WINE,
+  PURCHASEABLE_CELLARS,
+} from '../../constants.js'
 import { itemsMap } from '../../data/maps.js'
 import { cellarService } from '../../services/cellar.js'
 import { wineService } from '../../services/wine.js'
@@ -15,10 +11,10 @@ import { addKegToCellarInventory } from './addKegToCellarInventory.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 /**
- * @param {state} state
- * @param {grape} grape
+ * @param {farmhand.state} state
+ * @param {farmhand.grape} grape
  * @param {number} [howMany=1]
- * @returns {state}
+ * @returns {farmhand.state}
  */
 export const makeWine = (state, grape, howMany = 1) => {
   const { inventory, cellarInventory, purchasedCellar } = state

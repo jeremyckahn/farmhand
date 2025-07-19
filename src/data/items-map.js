@@ -1,5 +1,3 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
-
 import * as items from '../data/items.js'
 
 /**
@@ -10,10 +8,12 @@ import * as items from '../data/items.js'
  * make it more obvious during development that this should generally not be
  * used directly.
  */
-export default {
+const itemsMap = {
   ...Object.keys(items).reduce((acc, itemName) => {
     const item = items[itemName]
     acc[item.id] = item
     return acc
   }, {}),
 }
+
+export default itemsMap

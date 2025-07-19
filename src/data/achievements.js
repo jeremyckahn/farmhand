@@ -1,4 +1,3 @@
-/** @typedef {import('../index.js').farmhand.achievement} farmhand.achievement */
 import { addItemToInventory } from '../game-logic/reducers/index.js'
 import {
   doesPlotContainCrop,
@@ -69,7 +68,7 @@ const achievements = [
       Boolean(
         findInField(
           state.field,
-          plot => doesPlotContainCrop(plot) && plot.wasWateredToday
+          plot => doesPlotContainCrop(plot) && Boolean(plot.wasWateredToday)
         )
       ),
     reward: state => addMoney(state, reward),
@@ -125,7 +124,7 @@ const achievements = [
     rewardDescription: `${reward} units of ${cowFeed.name}`,
     condition: state =>
       Object.values(standardCowColors).every(
-        color => state.cowColorsPurchased[color] > 0
+        color => (state.cowColorsPurchased[color] || 0) > 0
       ),
     reward: state => addItemToInventory(state, cowFeed, reward, true),
   }))(),
@@ -147,7 +146,7 @@ const achievements = [
       itemsMap.jackolantern.name
     }. That's enough to fill a whole pumpkin patch!`,
     rewardDescription: `${reward} units of ${itemsMap.scarecrow.name}`,
-    condition: state => state.itemsSold.jackolantern >= goal,
+    condition: state => (state.itemsSold.jackolantern || 0) >= goal,
     reward: state =>
       addItemToInventory(state, itemsMap.scarecrow, reward, true),
   }))(),
@@ -261,7 +260,7 @@ const achievements = [
     name: `Dairy Master`,
     description: `Sell ${integerString(goal)} units of ${goalItem.name}.`,
     rewardDescription: `${integerString(reward)} ${rewardItem.name} units`,
-    condition: state => state.itemsSold[goalItem.id] >= goal,
+    condition: state => (state.itemsSold[goalItem.id] || 0) >= goal,
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -275,7 +274,7 @@ const achievements = [
     name: `A Big Average Rainbow`,
     description: `Sell ${integerString(goal)} units of ${goalItem.name}.`,
     rewardDescription: `${integerString(reward)} ${rewardItem.name} units`,
-    condition: state => state.itemsSold[goalItem.id] >= goal,
+    condition: state => (state.itemsSold[goalItem.id] || 0) >= goal,
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -284,7 +283,7 @@ const achievements = [
     name: `Burger Master`,
     description: `Sell ${integerString(goal)} ${goalItem.name} units.`,
     rewardDescription: `${integerString(reward)} additional inventory spaces`,
-    condition: state => state.itemsSold[goalItem.id] >= goal,
+    condition: state => (state.itemsSold[goalItem.id] || 0) >= goal,
     reward: state => ({
       ...state,
       inventoryLimit: state.inventoryLimit + reward,

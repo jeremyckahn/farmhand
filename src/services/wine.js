@@ -1,10 +1,10 @@
 /**
- * @typedef {import('../').farmhand.item} item
- * @typedef {import('../').farmhand.recipe} recipe
- * @typedef {import('../').farmhand.wine} wine
- * @typedef {import('../').farmhand.grape} grape
- * @typedef {import('../enums.js').grapeVariety} grapeVarietyEnum
- * @typedef {import('../').farmhand.keg} keg
+ * @typedef {farmhand.item} item
+ * @typedef {farmhand.recipe} recipe
+ * @typedef {farmhand.wine} wine
+ * @typedef {farmhand.grape} grape
+ * @typedef {farmhand.grapeVariety} grapeVarietyEnum
+ * @typedef {farmhand.keg} keg
  */
 
 import { GRAPES_REQUIRED_FOR_WINE } from '../constants.js'
