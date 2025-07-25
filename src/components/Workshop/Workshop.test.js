@@ -123,7 +123,7 @@ describe('<Workshop />', () => {
     })
 
     describe('player has purchased the smelter', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         // @ts-expect-error - Mock function type assertion
         getUpgradesAvailable.mockReturnValue([])
 
@@ -135,7 +135,7 @@ describe('<Workshop />', () => {
 
         renderWorkshop(gameState)
 
-        userEvent.click(screen.getByText('Forge'))
+        await userEvent.click(screen.getByText('Forge'))
       })
 
       test('is rendered', () => {
@@ -152,7 +152,7 @@ describe('<Workshop />', () => {
     })
 
     describe('has upgrades available', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         const availableUpgrades = [{ id: 'upgrade-1' }, { id: 'upgrade-2' }]
         // @ts-expect-error - Mock function type assertion
         getUpgradesAvailable.mockReturnValue(availableUpgrades)
@@ -160,7 +160,7 @@ describe('<Workshop />', () => {
 
         renderWorkshop(gameState)
 
-        userEvent.click(screen.getByText('Forge'))
+        await userEvent.click(screen.getByText('Forge'))
       })
 
       test('renders upgrades heading', () => {
@@ -183,7 +183,7 @@ describe('<Workshop />', () => {
     })
 
     describe('player has purchased the composter', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         gameState.purchasedComposter = 1
         gameState.learnedRecipes = {
           'recycling-recipe-1': true,
@@ -191,7 +191,7 @@ describe('<Workshop />', () => {
 
         renderWorkshop(gameState)
 
-        userEvent.click(screen.getByText('Recycling'))
+        await userEvent.click(screen.getByText('Recycling'))
       })
 
       test('is rendered', () => {

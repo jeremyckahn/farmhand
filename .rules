@@ -146,6 +146,39 @@ describe('reducerName', () => {
 })
 ```
 
+### 6. Test Description Guidelines
+
+Write test descriptions that focus on user behavior and outcomes rather than implementation details. Descriptions should be understandable to users, not just developers.
+
+**✅ GOOD - Behavior-focused descriptions:**
+```javascript
+test('switches to selected field mode and clears item selection', () => {})
+test('keeps selected item when switching to plant mode', () => {})
+test('navigates to selected view', () => {})
+test('buys multiple items when quantity specified', () => {})
+test('expands farm with new field', () => {})
+test('reduces debt by payment amount', () => {})
+test('waters entire field at once', () => {})
+```
+
+**❌ BAD - Implementation-focused descriptions:**
+```javascript
+test('updates field mode', () => {})
+test('preserves selectedItemId when switching to PLANT mode', () => {})
+test('updates stage focus', () => {})
+test('purchases item with specified quantity', () => {})
+test('calls purchaseField', () => {})
+test('adjusts loan negatively', () => {})
+test('calls waterAllPlots', () => {})
+```
+
+**Guidelines for writing behavior-focused descriptions:**
+- Start with what the user does or experiences
+- Describe the outcome or result, not the mechanism
+- Use domain language (farm, crop, money) rather than technical terms (state, props, functions)
+- Focus on intent and purpose rather than implementation details
+- Make descriptions readable as feature specifications
+
 ## Code Validation
 
 After every code change that affects functionality, you **must** validate your changes by ensuring all tests pass and there are no lint violations. These checks run in CI/CD and will block pull request merging if they fail.

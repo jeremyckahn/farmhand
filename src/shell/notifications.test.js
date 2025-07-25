@@ -23,11 +23,11 @@ describe('notifications', () => {
     const carrotInput = within(
       /** @type {HTMLElement} */ (carrotItem)
     ).getByDisplayValue('1')
-    userEvent.type(carrotInput, '10')
+    await userEvent.type(carrotInput, '10')
     const carrotSellButton = within(
       /** @type {HTMLElement} */ (carrotItem)
     ).getByText('Sell')
-    userEvent.click(carrotSellButton)
+    await userEvent.click(carrotSellButton)
     const notification = await screen.findByRole('alert')
 
     expect(
@@ -75,17 +75,17 @@ describe('notifications', () => {
       /** @type {HTMLElement} */ (carrotItem)
     ).getByText('Sell')
 
-    userEvent.type(cornInput, '6')
-    userEvent.click(cornSellButton)
+    await userEvent.type(cornInput, '6')
+    await userEvent.click(cornSellButton)
 
-    userEvent.type(spinachInput, '30')
-    userEvent.click(spinachSellButton)
+    await userEvent.type(spinachInput, '30')
+    await userEvent.click(spinachSellButton)
 
     // Both Carrot Soup and Summer Salad have Carrot as an ingredient (as well
     // as various other constituent ingredients for Summer Salad). By selling
     // 10 Carrots here, both recipes are unlocked at the same time.
-    userEvent.type(carrotInput, '10')
-    userEvent.click(carrotSellButton)
+    await userEvent.type(carrotInput, '10')
+    await userEvent.click(carrotSellButton)
 
     const notification = await screen.findByRole('alert')
     expect(

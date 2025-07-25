@@ -39,8 +39,8 @@ describe('<Home />', () => {
       expect(shopButton()).toBeInTheDocument()
     })
 
-    test('calls to change view when shop button is clicked', () => {
-      userEvent.click(shopButton())
+    test('calls to change view when shop button is clicked', async () => {
+      await userEvent.click(shopButton())
 
       expect(handleViewChangeButtonClick).toHaveBeenCalledWith('SHOP')
     })

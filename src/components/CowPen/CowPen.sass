@@ -1,4 +1,4 @@
-@import ../../styles/variables.sass
+@use "../../styles/variables.sass"
 
 .CowPen
   overflow: hidden
@@ -10,7 +10,7 @@
     opacity: 0
     position: absolute
     z-index: 20
-    transition: opacity $duration-entering-screen $easing-ease-out
+    transition: opacity variables.$duration-entering-screen variables.$easing-ease-out
 
     &:hover
       cursor: pointer
@@ -38,10 +38,10 @@
 
     img
       width: 100px
-      transition: filter $duration-entering-screen $easing-ease-out
+      transition: filter variables.$duration-entering-screen variables.$easing-ease-out
 
     .fa-heart
-      color: $heart-color
+      color: variables.$heart-color
 
       &.animation
         opacity: 0

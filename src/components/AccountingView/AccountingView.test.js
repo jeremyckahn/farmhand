@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { vi } from 'vitest'
 
 import FarmhandContext, {
   createContextData,
@@ -16,8 +17,8 @@ describe('<AccountView />', () => {
   beforeEach(() => {
     const contextValue = createContextData()
 
-    handleClickLoanPaydownButton = vitest.fn()
-    handleClickTakeOutLoanButton = vitest.fn()
+    handleClickLoanPaydownButton = vi.fn()
+    handleClickTakeOutLoanButton = vi.fn()
 
     render(
       <FarmhandContext.Provider value={contextValue}>
@@ -58,14 +59,16 @@ describe('<AccountView />', () => {
   })
 
   describe('interactions', () => {
-    it('calls the pay loan callback when pay loan is clicked', () => {
-      userEvent.click(getPayLoanButton())
+    it('calls the pay loan callback when pay loan is clicked', async () => {
+      const user = userEvent.setup()
+      await user.click(getPayLoanButton())
 
       expect(handleClickLoanPaydownButton).toHaveBeenCalledWith(1)
     })
 
-    it('calls the take out loan callback when take out loan is pressed', () => {
-      userEvent.click(getTakeOutLoanButton())
+    it('calls the take out loan callback when take out loan is pressed', async () => {
+      const user = userEvent.setup()
+      await user.click(getTakeOutLoanButton())
 
       expect(handleClickTakeOutLoanButton).toHaveBeenCalledWith(
         STANDARD_LOAN_AMOUNT

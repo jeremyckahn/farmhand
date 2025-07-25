@@ -1,11 +1,15 @@
-import React from 'react'
-import { shallow } from 'enzyme'
+import React, { useState } from 'react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
-import { getPlotContentFromItemId } from '../../utils/index.js'
-import { noop } from '../../utils/noop.js'
-import { testCrop } from '../../test-utils/index.js'
-import { pixel, plotStates } from '../../img/index.js'
 import { cropLifeStage, fertilizerType } from '../../enums.js'
+import { testCrop, testShoveledPlot } from '../../test-utils/index.js'
+import {
+  getCropFromItemId,
+  getPlotContentFromItemId,
+} from '../../utils/index.js'
+import { noop } from '../../utils/noop.js'
+import { items, pixel, plotStates } from '../../img/index.js'
 import { FERTILIZER_BONUS } from '../../constants.js'
 
 import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot.js'
@@ -16,182 +20,343 @@ vitest.mock('../../data/levels.js', () => ({ levels: [] }))
 vitest.mock('../../data/shop-inventory.js')
 vitest.mock('../../img/index.js')
 
-let component
+describe('Plot component', () => {
+  const defaultProps = {
+    handlePlotClick: noop,
+    isInHoverRange: false,
+    lifeStage: cropLifeStage.SEED,
+    selectedItemId: '',
+    setHoveredPlot: noop,
+    x: 0,
+    y: 0,
+  }
 
-beforeEach(() => {
-  component = shallow(
-    <Plot
-      {...{
-        handlePlotClick: noop,
-        isInHoverRange: false,
-        lifeStage: cropLifeStage.SEED,
-        selectedItemId: '',
-        setHoveredPlot: noop,
-        x: 0,
-        y: 0,
-      }}
-    />
-  )
-})
+  describe('empty plot', () => {
+    test('defaults to rendering a pixel', () => {
+      render(<Plot {...defaultProps} />)
+      const img = screen.getByAltText('Empty plot')
+      expect(img).toHaveAttribute('src', pixel)
+    })
 
-test('defaults to rending a pixel', () => {
-  expect(component.find('img').props().src).toBe(pixel)
-})
+    test('renders standard classes', () => {
+      render(<Plot {...defaultProps} />)
+      const img = screen.getByAltText('Empty plot')
+      const plotElement = img.closest('.Plot')
+      const { classList } = plotElement || { classList: new DOMTokenList() }
 
-test('renders crop class', () => {
-  component.setProps({ plotContent: testCrop({ itemId: 'sample-crop-1' }) })
-  expect(component.find('.Plot').hasClass('crop')).toBeTruthy()
-})
-
-test('renders is-replantable class', () => {
-  component.setProps({
-    plotContent: getPlotContentFromItemId('replantable-item'),
-  })
-  expect(component.find('.Plot').hasClass('is-replantable')).toBeTruthy()
-})
-
-test('renders "can-be-harvested" class', () => {
-  component.setProps({ lifeStage: cropLifeStage.GROWN })
-  expect(component.find('.Plot').hasClass('can-be-harvested')).toBeTruthy()
-})
-
-describe('"can-be-fertilized" class', () => {
-  describe('plot is empty', () => {
-    test('renders class', () => {
-      component.setProps({
-        plotContent: null,
-      })
-
-      expect(component.find('.Plot').hasClass('can-be-fertilized')).toBeFalsy()
+      expect(classList).toContain('is-empty')
     })
   })
 
-  describe('plot contains unfertilized crop', () => {
-    describe('crop is fertilized', () => {
-      test('renders class', () => {
-        component.setProps({
-          plotContent: testCrop({
-            itemId: 'sample-crop-1',
-            fertilizerType: fertilizerType.NONE,
-          }),
-        })
+  describe('crop rendering', () => {
+    test('renders crop class', () => {
+      render(
+        <Plot
+          {...defaultProps}
+          plotContent={testCrop({ itemId: 'sample-crop-1' })}
+        />
+      )
+      const img = screen.getByRole('img')
+      const plotElement = img.closest('.Plot')
+      expect(plotElement).toHaveClass('crop')
+    })
 
-        expect(
-          component.find('.Plot').hasClass('can-be-fertilized')
-        ).toBeTruthy()
-      })
+    test('renders is-replantable class', () => {
+      render(
+        <Plot
+          {...defaultProps}
+          plotContent={getPlotContentFromItemId('replantable-item')}
+        />
+      )
+      const img = screen.getByRole('img')
+      const plotElement = img.closest('.Plot')
+      expect(plotElement).toHaveClass('is-replantable')
+    })
+
+    test('renders "can-be-harvested" class', () => {
+      render(
+        <Plot
+          {...defaultProps}
+          lifeStage={cropLifeStage.GROWN}
+          plotContent={testCrop({ itemId: 'sample-crop-1' })}
+        />
+      )
+      const img = screen.getByRole('img')
+      const plotElement = img.closest('.Plot')
+      expect(plotElement).toHaveClass('can-be-harvested')
+    })
+
+    test('renders crop classes with animation', () => {
+      render(
+        <Plot
+          {...defaultProps}
+          lifeStage={cropLifeStage.GROWN}
+          plotContent={testCrop({ itemId: 'carrot' })}
+        />
+      )
+      const img = screen.getByAltText('Carrot Seed')
+      expect(img).toHaveClass('animated')
+      expect(img).toHaveClass('heartBeat')
     })
   })
 
-  describe('plot contains fertilized crop', () => {
-    describe('crop is fertilized', () => {
+  describe('"can-be-fertilized" class', () => {
+    describe('plot is empty', () => {
       test('does not render class', () => {
-        component.setProps({
-          plotContent: testCrop({
-            itemId: 'sample-crop-1',
-            fertilizerType: fertilizerType.STANDARD,
-          }),
-        })
-
-        expect(
-          component.find('.Plot').hasClass('can-be-fertilized')
-        ).toBeFalsy()
+        render(<Plot {...defaultProps} plotContent={null} />)
+        const img = screen.getByRole('img')
+        const plotElement = img.closest('.Plot')
+        expect(plotElement).not.toHaveClass('can-be-fertilized')
       })
     })
-  })
 
-  describe('plot contains scarecrow', () => {
-    beforeEach(() => {
-      component.setProps({
+    describe('plot contains unfertilized crop', () => {
+      test('renders class', () => {
+        render(
+          <Plot
+            {...defaultProps}
+            plotContent={testCrop({
+              itemId: 'sample-crop-1',
+              fertilizerType: fertilizerType.NONE,
+            })}
+          />
+        )
+        const img = screen.getByRole('img')
+        const plotElement = img.closest('.Plot')
+        expect(plotElement).toHaveClass('can-be-fertilized')
+      })
+    })
+
+    describe('plot contains fertilized crop', () => {
+      test('does not render class', () => {
+        render(
+          <Plot
+            {...defaultProps}
+            plotContent={testCrop({
+              itemId: 'sample-crop-1',
+              fertilizerType: fertilizerType.STANDARD,
+            })}
+          />
+        )
+        const img = screen.getByRole('img')
+        const plotElement = img.closest('.Plot')
+        expect(plotElement).not.toHaveClass('can-be-fertilized')
+      })
+    })
+
+    describe('plot contains scarecrow', () => {
+      const scarecrowProps = {
+        ...defaultProps,
         plotContent: {
           ...getPlotContentFromItemId('scarecrow'),
         },
-      })
-    })
+      }
 
-    describe('selectedItemId === fertilizer', () => {
-      beforeEach(() => {
-        component.setProps({
-          selectedItemId: 'fertilizer',
-        })
-      })
-
-      test('does not render class', () => {
-        expect(
-          component.find('.Plot').hasClass('can-be-fertilized')
-        ).toBeFalsy()
-      })
-    })
-
-    describe('selectedItemId === rainbow-fertilizer', () => {
-      beforeEach(() => {
-        component.setProps({
-          selectedItemId: 'rainbow-fertilizer',
-        })
-      })
-
-      describe('plot is not rainbow-fertilized', () => {
-        test('renders class', () => {
-          expect(
-            component.find('.Plot').hasClass('can-be-fertilized')
-          ).toBeTruthy()
-        })
-      })
-
-      describe('plot is rainbow-fertilized', () => {
+      describe('selectedItemId === fertilizer', () => {
         test('does not render class', () => {
-          component.setProps({
-            plotContent: {
-              ...getPlotContentFromItemId('scarecrow'),
-              fertilizerType: fertilizerType.RAINBOW,
-            },
-          })
+          render(<Plot {...scarecrowProps} selectedItemId="fertilizer" />)
+          const img = screen.getByRole('img')
+          const plotElement = img.closest('.Plot')
+          expect(plotElement).not.toHaveClass('can-be-fertilized')
+        })
+      })
 
-          expect(
-            component.find('.Plot').hasClass('can-be-fertilized')
-          ).toBeFalsy()
+      describe('selectedItemId === rainbow-fertilizer', () => {
+        describe('plot is not rainbow-fertilized', () => {
+          test('renders class', () => {
+            render(
+              <Plot {...scarecrowProps} selectedItemId="rainbow-fertilizer" />
+            )
+            const img = screen.getByRole('img')
+            const plotElement = img.closest('.Plot')
+            expect(plotElement).toHaveClass('can-be-fertilized')
+          })
+        })
+
+        describe('plot is rainbow-fertilized', () => {
+          test('does not render class', () => {
+            render(
+              <Plot
+                {...defaultProps}
+                selectedItemId="rainbow-fertilizer"
+                plotContent={{
+                  ...getPlotContentFromItemId('scarecrow'),
+                  fertilizerType: fertilizerType.RAINBOW,
+                }}
+              />
+            )
+            const img = screen.getByRole('img')
+            const plotElement = img.closest('.Plot')
+            expect(plotElement).not.toHaveClass('can-be-fertilized')
+          })
         })
       })
     })
   })
-})
 
-test('renders provided image data', () => {
-  const image = 'data:image/png;base64,some-other-image'
-
-  component.setProps({
-    image,
-    plotContent: testCrop({ itemId: 'sample-crop-1' }),
-  })
-
-  expect(component.find('img').props().style.backgroundImage).toBe(
-    `url(${image})`
-  )
-})
-
-describe('background image', () => {
-  test('renders pixel', () => {
-    expect(component.find('.Plot').props().style.backgroundImage).toBe(
-      undefined
-    )
-  })
-
-  test('renders wateredPlot image', () => {
-    component.setProps({
-      plotContent: testCrop({
-        itemId: 'sample-crop-1',
-        wasWateredToday: true,
-      }),
+  describe('plot label', () => {
+    test('renders label for seed', () => {
+      render(
+        <Plot {...defaultProps} plotContent={getCropFromItemId('carrot')} />
+      )
+      const plantedCrop = screen.getByAltText('Carrot Seed')
+      expect(plantedCrop).toBeInTheDocument()
     })
 
-    expect(component.find('.Plot').props().style.backgroundImage).toBe(
-      `url(${plotStates['watered-plot']})`
-    )
+    test('renders label for seed of crop with varieties', () => {
+      render(
+        <Plot
+          {...defaultProps}
+          plotContent={getCropFromItemId('grape-chardonnay')}
+        />
+      )
+      const plantedCrop = screen.getByAltText('Grape Seed')
+      expect(plantedCrop).toBeInTheDocument()
+    })
+
+    test('renders label for crop', () => {
+      render(
+        <Plot
+          {...defaultProps}
+          plotContent={{
+            ...getCropFromItemId('carrot'),
+            daysOld: 9,
+            daysWatered: 9,
+          }}
+        />
+      )
+      const plantedCrop = screen.getByAltText('Carrot')
+      expect(plantedCrop).toBeInTheDocument()
+    })
+  })
+
+  describe('image rendering', () => {
+    test('renders provided image data', () => {
+      const image = 'data:image/png;base64,some-other-image'
+      render(
+        <Plot
+          {...defaultProps}
+          image={image}
+          plotContent={testCrop({ itemId: 'sample-crop-1' })}
+        />
+      )
+      const img = screen.getByRole('img')
+      expect(img.style.backgroundImage).toBe(`url(${image})`)
+    })
+  })
+
+  describe('background image', () => {
+    describe('empty plot', () => {
+      test('renders no background image', () => {
+        render(<Plot {...defaultProps} />)
+        const img = screen.getByRole('img')
+        const plotElement = img.closest('.Plot')
+        expect(plotElement).toHaveStyle('background-image: ""')
+      })
+    })
+
+    describe('watered plot', () => {
+      test('renders wateredPlot image', () => {
+        render(
+          <Plot
+            {...defaultProps}
+            plotContent={testCrop({
+              itemId: 'sample-crop-1',
+              wasWateredToday: true,
+            })}
+          />
+        )
+        const img = screen.getByRole('img')
+        const plotElement = img.closest('.Plot')
+        expect(plotElement).toHaveStyle(
+          `background-image: url(${plotStates['watered-plot']})`
+        )
+      })
+    })
+
+    describe('ores', () => {
+      test('renders bare plot classes and newly-mined ore classes', async () => {
+        const PlotTestHarness = ({ plotProps }) => {
+          const [isShoveled, setIsShoveled] = useState(false)
+
+          return (
+            <div>
+              <Plot
+                {...{
+                  ...plotProps,
+                  plotContent: testShoveledPlot({
+                    oreId: 'stone',
+                    isShoveled,
+                    daysUntilClear: 5,
+                  }),
+                  handlePlotClick: () => setIsShoveled(true),
+                }}
+              />
+            </div>
+          )
+        }
+
+        render(
+          <PlotTestHarness
+            plotProps={{
+              isInHoverRange: false,
+              selectedItemId: '',
+              setHoveredPlot: noop,
+              x: 0,
+              y: 0,
+            }}
+          />
+        )
+
+        const img = screen.getByAltText('Empty plot')
+        expect(img).not.toHaveClass('animated')
+        expect(img).not.toHaveClass('was-just-shoveled')
+
+        await userEvent.click(img)
+
+        // Verify that the classes are applied correctly after clicking
+        await waitFor(() => {
+          const updatedImg = screen.getByAltText('Empty plot')
+          expect(updatedImg).toHaveClass('animated')
+          expect(updatedImg).toHaveClass('was-just-shoveled')
+        })
+      })
+    })
+
+    describe('scarecrows', () => {
+      test('renders scarecrow image', async () => {
+        render(
+          <Plot
+            {...defaultProps}
+            plotContent={{
+              ...getPlotContentFromItemId('scarecrow'),
+            }}
+          />
+        )
+        const img = await screen.findByAltText('Scarecrow')
+        expect(img.style.backgroundImage).toMatch(items.scarecrow)
+      })
+    })
+
+    describe('sprinklers', () => {
+      test('renders sprinkler image', async () => {
+        render(
+          <Plot
+            {...defaultProps}
+            plotContent={{
+              ...getPlotContentFromItemId('sprinkler'),
+            }}
+          />
+        )
+        const img = await screen.findByAltText('Sprinkler')
+        expect(img.style.backgroundImage).toMatch(items.sprinkler)
+      })
+    })
   })
 })
 
 describe('getBackgroundStyles', () => {
-  test('returns null for !plotContent', () => {
+  test('returns undefined for !plotContent', () => {
     expect(getBackgroundStyles(null)).toBe(undefined)
   })
 

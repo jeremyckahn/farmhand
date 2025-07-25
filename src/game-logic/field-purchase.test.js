@@ -22,23 +22,25 @@ describe('field expansion purchasing', () => {
     await nextView()
 
     const upgradesTab = screen.getByText('Upgrades')
-    userEvent.click(upgradesTab)
+    await userEvent.click(upgradesTab)
 
     const expandFieldContainer = screen
       .getByText('Expand field')
       .closest('.TierPurchase')
 
     // Open the list of field options
-    userEvent.click(
+    await userEvent.click(
       within(/** @type {HTMLElement} */ (expandFieldContainer)).getByRole(
         'combobox'
       )
     )
 
-    userEvent.click(screen.getByRole('option', { name: '$1,000: 8 x 12' }))
+    await userEvent.click(
+      screen.getByRole('option', { name: '$1,000: 8 x 12' })
+    )
 
     // Make the purchase
-    userEvent.click(
+    await userEvent.click(
       within(/** @type {HTMLElement} */ (expandFieldContainer)).getByRole(
         'button'
       )
