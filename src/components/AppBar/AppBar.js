@@ -101,9 +101,7 @@ export const AppBar = ({
           }}
         >
           <Typography>
-            <StepIcon
-              {...{ icon: Math.max(0, todaysNotifications.length - 1) }}
-            />
+            <StepIcon {...{ icon: todaysNotifications.length }} />
           </Typography>
           {areAnyNotificationsErrors && (
             <Typography

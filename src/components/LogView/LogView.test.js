@@ -1,51 +1,130 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import Alert from '@mui/material/Alert/index.js'
-import ReactMarkdown from 'react-markdown'
+import { render, screen } from '@testing-library/react'
 
 import { LogView } from './LogView.js'
 
-let component
-
-beforeEach(() => {
-  component = shallow(
-    <LogView
-      {...{
-        notificationLog: [],
-        todaysNotifications: [],
-      }}
-    />
-  )
-})
+const defaultProps = {
+  notificationLog: [],
+  todaysNotifications: [],
+}
 
 test('renders', () => {
-  expect(component).toHaveLength(1)
+  render(<LogView {...defaultProps} />)
+  expect(screen.getByText('Today')).toBeInTheDocument()
+})
+
+test("displays today's notifications", () => {
+  const todaysNotifications = [
+    {
+      message: 'Test success message',
+      severity: 'success',
+    },
+    {
+      message: 'Test error message',
+      severity: 'error',
+    },
+  ]
+
+  render(
+    <LogView {...defaultProps} todaysNotifications={todaysNotifications} />
+  )
+
+  expect(screen.getByText('Test success message')).toBeInTheDocument()
+  expect(screen.getByText('Test error message')).toBeInTheDocument()
+})
+
+test('displays notification log for past days', () => {
+  const notificationLog = [
+    {
+      day: 1,
+      notifications: {
+        error: ['Day 1 error'],
+        info: ['Day 1 info'],
+        success: [],
+        warning: [],
+      },
+    },
+    {
+      day: 2,
+      notifications: {
+        error: [],
+        info: [],
+        success: ['Day 2 success'],
+        warning: ['Day 2 warning'],
+      },
+    },
+  ]
+
+  render(<LogView {...defaultProps} notificationLog={notificationLog} />)
+
+  expect(screen.getByText('Day 1')).toBeInTheDocument()
+  expect(screen.getByText('Day 2')).toBeInTheDocument()
+  expect(screen.getByText('Day 1 error')).toBeInTheDocument()
+  expect(screen.getByText('Day 1 info')).toBeInTheDocument()
+  expect(screen.getByText('Day 2 success')).toBeInTheDocument()
+  expect(screen.getByText('Day 2 warning')).toBeInTheDocument()
 })
 
 describe('severity grouping', () => {
   test('filters and groups notifications by severity level', () => {
-    component.setProps({
-      notificationLog: [
-        {
-          day: 1,
-          notifications: {
-            error: ['oh no'],
-            info: [],
-            success: ['yay'],
-            warning: [],
-          },
+    const notificationLog = [
+      {
+        day: 1,
+        notifications: {
+          error: ['oh no'],
+          info: [],
+          success: ['yay'],
+          warning: [],
         },
-      ],
-    })
+      },
+    ]
 
-    const alerts = component.find(Alert)
+    render(<LogView {...defaultProps} notificationLog={notificationLog} />)
+
+    const alerts = document.querySelectorAll('[role="alert"]')
     expect(alerts).toHaveLength(2)
 
-    const successAlert = alerts.at(0)
-    const errorAlert = alerts.at(1)
-    expect(successAlert.props().severity).toEqual('success')
-    expect(successAlert.find(ReactMarkdown).props().source).toEqual('yay')
-    expect(errorAlert.props().severity).toEqual('error')
-    expect(errorAlert.find(ReactMarkdown).props().source).toEqual('oh no')
+    expect(screen.getByText('yay')).toBeInTheDocument()
+    expect(screen.getByText('oh no')).toBeInTheDocument()
   })
+
+  test('does not render empty severity groups', () => {
+    const notificationLog = [
+      {
+        day: 1,
+        notifications: {
+          error: [],
+          info: ['info message'],
+          success: [],
+          warning: [],
+        },
+      },
+    ]
+
+    render(<LogView {...defaultProps} notificationLog={notificationLog} />)
+
+    // Only one alert should be rendered (for info message)
+    const alerts = document.querySelectorAll('[role="alert"]')
+    expect(alerts).toHaveLength(1)
+    expect(screen.getByText('info message')).toBeInTheDocument()
+  })
+})
+
+test('renders multiple messages within same severity group', () => {
+  const notificationLog = [
+    {
+      day: 1,
+      notifications: {
+        error: [],
+        info: ['First info', 'Second info'],
+        success: [],
+        warning: [],
+      },
+    },
+  ]
+
+  render(<LogView {...defaultProps} notificationLog={notificationLog} />)
+
+  expect(screen.getByText('First info')).toBeInTheDocument()
+  expect(screen.getByText('Second info')).toBeInTheDocument()
 })

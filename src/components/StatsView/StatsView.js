@@ -35,7 +35,7 @@ const ElevatedPaper = props => (
   <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
 )
 
-const StatsView = (
+export const StatsView = (
   /**
    * @type {farmhand.state &
    *   {totalFarmProductsSold?: number, currentLevel?: number}

@@ -39,7 +39,7 @@ describe('field interaction', () => {
     const wateringCanButton = screen.getByAltText(WATERING_CAN_ALT_TEXT)
 
     expect(field).not.toHaveClass('water-mode')
-    userEvent.click(wateringCanButton)
+    await userEvent.click(wateringCanButton)
     expect(field).toHaveClass('water-mode')
   })
 
@@ -48,7 +48,7 @@ describe('field interaction', () => {
     const hoeButton = screen.getByAltText(HOE_ALT_TEXT)
 
     expect(field).not.toHaveClass('cleanup-mode')
-    userEvent.click(hoeButton)
+    await userEvent.click(hoeButton)
     expect(field).toHaveClass('cleanup-mode')
   })
 
@@ -57,7 +57,7 @@ describe('field interaction', () => {
     const scytheButton = screen.getByAltText(SCYTHE_ALT_TEXT)
 
     expect(field).not.toHaveClass('harvest-mode')
-    userEvent.click(scytheButton)
+    await userEvent.click(scytheButton)
     expect(field).toHaveClass('harvest-mode')
   })
 
@@ -66,7 +66,7 @@ describe('field interaction', () => {
     const [, carrotSeedButton] = screen.getAllByAltText(carrotSeed.name)
 
     expect(field).not.toHaveClass('plant-mode')
-    userEvent.click(carrotSeedButton)
+    await userEvent.click(carrotSeedButton)
     expect(field).toHaveClass('plant-mode')
   })
 
@@ -75,7 +75,7 @@ describe('field interaction', () => {
     const [, fertilizerButton] = screen.getAllByAltText(fertilizer.name)
 
     expect(field).not.toHaveClass('fertilize-mode')
-    userEvent.click(fertilizerButton)
+    await userEvent.click(fertilizerButton)
     expect(field).toHaveClass('fertilize-mode')
   })
 })

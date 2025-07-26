@@ -358,7 +358,9 @@ describe('CowCard', () => {
   describe('custom naming', () => {
     // NOTE: Validates the fix for:
     // https://github.com/jeremyckahn/farmhand/issues/527
-    test('cows orignally owned by the player can be renamed', () => {
+    test('cows orignally owned by the player can be renamed', async () => {
+      const user = userEvent.setup()
+
       const renderComponent = () => {
         render(
           <CowCard
@@ -382,8 +384,8 @@ describe('CowCard', () => {
       const nameInput = screen.getByPlaceholderText('Name')
 
       const customName = 'Custom'
-      userEvent.clear(nameInput)
-      userEvent.type(nameInput, customName)
+      await user.clear(nameInput)
+      await user.type(nameInput, customName)
 
       expect(nameInput).toHaveValue(customName)
     })

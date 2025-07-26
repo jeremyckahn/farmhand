@@ -141,6 +141,8 @@ Recipe.propTypes = {
   recipe: object.isRequired,
 }
 
+export { Recipe }
+
 export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>

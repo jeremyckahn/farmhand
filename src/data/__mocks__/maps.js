@@ -29,6 +29,8 @@ export const itemsMap = {
     return acc
   }, {}),
   ...recipesMap,
+  // Ensure sample-recipe-1 is available for tests
+  'sample-recipe-1': recipes.sampleRecipe1,
 }
 
 export const cropTypeToIdMap = {

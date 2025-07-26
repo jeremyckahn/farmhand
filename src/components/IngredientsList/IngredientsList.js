@@ -21,7 +21,7 @@ export default function IngredientsList({
           <p
             {...{
               className: classNames(
-                playerInventoryQuantities[itemId] >= ingredients[itemId]
+                (playerInventoryQuantities[itemId] || 0) >= ingredients[itemId]
                   ? 'in-stock'
                   : 'out-of-stock'
               ),
@@ -29,7 +29,7 @@ export default function IngredientsList({
           >
             {INGREDIENTS_LIST_ITEM`${ingredients[itemId]}${
               itemsMap[itemId].name
-            }${integerString(playerInventoryQuantities[itemId])}
+            }${integerString(playerInventoryQuantities[itemId] || 0)}
             `}
           </p>
         </li>

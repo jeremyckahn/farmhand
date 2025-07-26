@@ -87,7 +87,7 @@ services:
     # Run as root to avoid permission issues
     user: root
     entrypoint: ['/bin/sh', '-c']
-    command: ["exec su root -c 'yes | npx playwright test tests'"]
+    command: ["exec su root -c 'yes | CI=true npx playwright test tests'"]
     environment:
       - APP_URL=http://farmhand:3000
       # Add any other environment variables your tests might need

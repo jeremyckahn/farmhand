@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "playwright test",
+    "test": "CI=true playwright test",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:ui": "playwright test --ui",

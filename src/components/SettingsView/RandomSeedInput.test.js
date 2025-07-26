@@ -24,12 +24,12 @@ describe('RandomSeedInput', () => {
     expect(screen.getByDisplayValue('123')).toBeInTheDocument()
   })
 
-  test('updates query param', () => {
+  test('updates query param', async () => {
     render(<MockRandomSeedInput search="?seed=123" />)
 
     const input = screen.getByDisplayValue('123')
 
-    userEvent.type(input, '[Backspace][Backspace][Backspace]456[Enter]')
+    await userEvent.type(input, '[Backspace][Backspace][Backspace]456[Enter]')
 
     expect(mockHandleRNGSeedChange).toHaveBeenCalledWith('456')
   })

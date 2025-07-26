@@ -1,14 +1,9 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, screen } from '@testing-library/react'
 
 import AchievementsView from './AchievementsView.js'
 
-let component
-
-beforeEach(() => {
-  component = shallow(<AchievementsView {...{}} />)
-})
-
 test('renders', () => {
-  expect(component).toHaveLength(1)
+  render(<AchievementsView {...{}} />)
+  expect(screen.getByText('Not Completed')).toBeInTheDocument()
 })

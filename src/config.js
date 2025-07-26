@@ -49,31 +49,37 @@ for (const key of searchParams.keys()) {
   }
 }
 
+const turnUsername = import.meta.env?.VITE_TURN_USERNAME
+const turnCredential = import.meta.env?.VITE_TURN_CREDENTIAL
+
 export const rtcConfig = {
   iceServers: [
     {
       urls: 'stun:stun.relay.metered.ca:80',
     },
-    {
-      urls: 'turn:a.relay.metered.ca:80',
-      username: import.meta.env?.VITE_TURN_USERNAME,
-      credential: import.meta.env?.VITE_TURN_CREDENTIAL,
-    },
-    {
-      urls: 'turn:a.relay.metered.ca:80?transport=tcp',
-      username: import.meta.env?.VITE_TURN_USERNAME,
-      credential: import.meta.env?.VITE_TURN_CREDENTIAL,
-    },
-    {
-      urls: 'turn:a.relay.metered.ca:443',
-      username: import.meta.env?.VITE_TURN_USERNAME,
-      credential: import.meta.env?.VITE_TURN_CREDENTIAL,
-    },
-    {
-      urls: 'turn:a.relay.metered.ca:443?transport=tcp',
-      username: import.meta.env?.VITE_TURN_USERNAME,
-      credential: import.meta.env?.VITE_TURN_CREDENTIAL,
-    },
+    ...(turnUsername &&
+      turnCredential && [
+        {
+          urls: 'turn:a.relay.metered.ca:80',
+          username: turnUsername,
+          credential: turnCredential,
+        },
+        {
+          urls: 'turn:a.relay.metered.ca:80?transport=tcp',
+          username: turnUsername,
+          credential: turnCredential,
+        },
+        {
+          urls: 'turn:a.relay.metered.ca:443',
+          username: turnUsername,
+          credential: turnCredential,
+        },
+        {
+          urls: 'turn:a.relay.metered.ca:443?transport=tcp',
+          username: turnUsername,
+          credential: turnCredential,
+        },
+      ]),
   ],
 }
 

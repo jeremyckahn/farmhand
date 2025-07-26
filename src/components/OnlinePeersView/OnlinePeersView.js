@@ -108,6 +108,8 @@ OnlinePeersView.propTypes = {
   peers: object.isRequired,
 }
 
+export { OnlinePeersView }
+
 export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>

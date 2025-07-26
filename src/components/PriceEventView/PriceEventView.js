@@ -43,6 +43,8 @@ PriceEventView.propTypes = {
   priceSurges: object.isRequired,
 }
 
+export { PriceEventView }
+
 export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>

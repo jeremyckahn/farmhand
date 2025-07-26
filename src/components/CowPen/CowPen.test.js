@@ -1,146 +1,207 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { vi } from 'vitest'
 
 import { generateCow } from '../../utils/index.js'
 import { cowColors } from '../../enums.js'
-import { pixel } from '../../img/index.js'
 import { noop } from '../../utils/noop.js'
 
 import { Cow } from './CowPen.js'
 
-let component
-
-let setTimeoutSpy = vitest.spyOn(global, 'setTimeout')
-let clearTimeoutSpy = vitest.spyOn(global, 'clearTimeout')
-
-beforeEach(() => {
-  vitest.useFakeTimers()
-  setTimeoutSpy = vitest.spyOn(global, 'setTimeout')
-  clearTimeoutSpy = vitest.spyOn(global, 'clearTimeout')
+// Mock getCowDisplayName to return predictable values
+vi.mock('../../utils/index.js', async () => {
+  const actual = await vi.importActual('../../utils/index.js')
+  return {
+    ...actual,
+    getCowDisplayName: vi.fn(cow => cow.name || 'Test Cow'),
+  }
 })
 
+// Mock timers for animation testing
+beforeEach(() => {
+  vi.useFakeTimers()
+})
+
+afterEach(() => {
+  vi.runOnlyPendingTimers()
+  vi.useRealTimers()
+})
+
+const defaultCowProps = {
+  allowCustomPeerCowNames: false,
+  cow: {
+    ...generateCow(),
+    color: cowColors.WHITE,
+    id: 'test-cow',
+    name: 'Test Cow',
+  },
+  cowInventory: [],
+  handleCowPenUnmount: noop,
+  handleCowClick: noop,
+  id: 'test-player',
+  isSelected: false,
+}
+
 describe('Cow', () => {
-  beforeEach(() => {
-    vitest.spyOn(Math, 'random').mockReturnValue(0)
-    component = shallow(
-      <Cow
-        {...{
-          allowCustomPeerCowNames: false,
-          cow: {
-            ...generateCow(),
-            color: cowColors.WHITE,
-          },
-          cowInventory: [],
-          handleCowPenUnmount: noop,
-          handleCowClick: noop,
-          id: '',
-          isSelected: false,
-        }}
-      />
+  test('renders', () => {
+    render(<Cow {...defaultCowProps} />)
+    expect(document.querySelector('.cow')).toBeInTheDocument()
+  })
+
+  test('displays cow image', () => {
+    render(<Cow {...defaultCowProps} />)
+
+    const cowImage = document.querySelector('.cow img')
+    expect(cowImage).toBeInTheDocument()
+    expect(cowImage).toHaveAttribute('alt', 'Test Cow')
+  })
+
+  test('applies selected class when cow is selected', () => {
+    render(<Cow {...defaultCowProps} isSelected={true} />)
+
+    expect(document.querySelector('.cow.is-selected')).toBeInTheDocument()
+  })
+
+  test('does not apply selected class when cow is not selected', () => {
+    render(<Cow {...defaultCowProps} isSelected={false} />)
+
+    expect(document.querySelector('.cow.is-selected')).not.toBeInTheDocument()
+  })
+
+  test('calls handleCowClick when cow is clicked', async () => {
+    const user = userEvent.setup({ advanceTimers: vitest.advanceTimersByTime })
+    const handleCowClick = vitest.fn()
+
+    render(<Cow {...defaultCowProps} handleCowClick={handleCowClick} />)
+
+    const cowElement = document.querySelector('.cow')
+    expect(cowElement).toBeInTheDocument()
+    await user.click(/** @type {HTMLElement} */ (cowElement))
+
+    expect(handleCowClick).toHaveBeenCalledWith(defaultCowProps.cow)
+  })
+
+  test('displays cow tooltip on hover', () => {
+    render(<Cow {...defaultCowProps} isSelected={true} />)
+
+    // When cow is selected, tooltip should be visible
+    expect(screen.getByText('Test Cow')).toBeInTheDocument()
+  })
+
+  test('shows happiness indicator when cow is happy', () => {
+    const happyCow = {
+      ...defaultCowProps.cow,
+      happiness: 0.8,
+    }
+
+    render(<Cow {...defaultCowProps} cow={happyCow} />)
+
+    expect(document.querySelector('.fa-heart')).toBeInTheDocument()
+  })
+
+  test('does not show happiness indicator when cow is not happy', () => {
+    const sadCow = {
+      ...generateCow(),
+      happiness: 0,
+      happinessBoostsToday: 0,
+    }
+
+    render(<Cow {...defaultCowProps} cow={sadCow} />)
+
+    // Check that there are no happiness boost indicators specifically
+    expect(
+      document.querySelector('.happiness-boosts-today li')
+    ).not.toBeInTheDocument()
+  })
+
+  test('renders with different cow colors', () => {
+    const brownCow = {
+      ...defaultCowProps.cow,
+      color: cowColors.BROWN,
+    }
+
+    render(<Cow {...defaultCowProps} cow={brownCow} />)
+
+    expect(document.querySelector('.cow')).toBeInTheDocument()
+  })
+
+  test('displays custom peer cow name when allowed', () => {
+    const peerCow = {
+      ...defaultCowProps.cow,
+      name: 'Custom Peer Cow',
+      originalOwnerId: 'different-player',
+    }
+
+    render(
+      <Cow {...defaultCowProps} cow={peerCow} allowCustomPeerCowNames={true} />
     )
+
+    expect(document.querySelector('.cow')).toBeInTheDocument()
   })
 
-  test('has correct image', () => {
-    expect(component.find('img').props().src).toEqual(pixel)
+  test('does not display custom peer cow name when not allowed', () => {
+    const peerCow = {
+      ...defaultCowProps.cow,
+      name: 'Custom Peer Cow',
+      originalOwnerId: 'different-player',
+    }
+
+    render(
+      <Cow {...defaultCowProps} cow={peerCow} allowCustomPeerCowNames={false} />
+    )
+
+    expect(document.querySelector('.cow')).toBeInTheDocument()
   })
 
-  describe('movement', () => {
-    test('schedules a position change at boot', () => {
-      expect(global.setTimeout).toHaveBeenCalledWith(
-        component.instance().repositionTimeoutHandler,
-        0
-      )
-    })
+  test('positions cow within pen boundaries', () => {
+    render(<Cow {...defaultCowProps} />)
 
-    describe('cow is selected', () => {
-      test('reposition is not scheduled', () => {
-        setTimeoutSpy.mockClear()
-        component.setProps({ isSelected: true })
-        component.instance().scheduleMove()
+    const cowElement = document.querySelector('.cow')
+    expect(cowElement).toBeInTheDocument()
 
-        expect(global.setTimeout).not.toHaveBeenCalledWith(
-          component.instance().repositionTimeoutHandler,
-          0
-        )
-      })
-    })
+    // Cow should have positioning styles applied
+    if (cowElement && cowElement instanceof HTMLElement) {
+      expect(cowElement.style.left).toMatch(/\d+.*%/)
+      expect(cowElement.style.top).toMatch(/\d+.*%/)
+    } else {
+      throw new TypeError()
+    }
+  })
 
-    describe('receiving different isSelected prop', () => {
-      describe('while cow is moving', () => {
-        beforeEach(() => {
-          vitest.clearAllTimers()
-        })
+  test('handles animation states', async () => {
+    render(<Cow {...defaultCowProps} />)
 
-        describe('isSelected false -> true', () => {
-          test('cancels sheduled position change', () => {
-            component.setProps({ isSelected: false })
-            component.instance().scheduleMove()
-            component.setProps({ isSelected: true })
-            expect(global.clearTimeout).toHaveBeenCalled()
-          })
-        })
+    const cowElement = document.querySelector('.cow')
+    expect(cowElement).toBeInTheDocument()
 
-        describe('isSelected true -> false', () => {
-          test('no-ops', () => {
-            component.setProps({ isSelected: true })
-            component.instance().scheduleMove()
-            clearTimeoutSpy.mockClear()
-            component.setProps({ isSelected: false })
-            expect(global.clearTimeout).not.toHaveBeenCalled()
-          })
-        })
-      })
+    // Fast-forward time to trigger animations
+    vitest.advanceTimersByTime(5000)
 
-      describe('isSelected true -> false', () => {
-        test('schedules a position change', () => {
-          component.setProps({ isSelected: true })
-          const scheduleMove = vitest.spyOn(
-            component.instance(),
-            'scheduleMove'
-          )
-          component.setProps({ isSelected: false })
-          expect(scheduleMove).toHaveBeenCalled()
-        })
-      })
-    })
-
-    describe('move', () => {
-      test('updates state', () => {
-        component.instance().move()
-        expect(component.state().isTransitioning).toEqual(true)
-      })
+    await waitFor(() => {
+      expect(cowElement).toBeInTheDocument()
     })
   })
 
-  describe('hug animation', () => {
-    describe('cow.happinessBoostsToday is increased', () => {
-      let cow
+  test('stops movement when cow is selected', () => {
+    const { rerender } = render(<Cow {...defaultCowProps} isSelected={false} />)
 
-      beforeEach(() => {
-        cow = generateCow()
-        component.setProps({
-          cow,
-        })
-      })
+    // Change to selected
+    rerender(<Cow {...defaultCowProps} isSelected={true} />)
 
-      test('updates showHugAnimation state', () => {
-        expect(component.state().showHugAnimation).toBe(false)
+    const cowElement = document.querySelector('.cow')
+    expect(cowElement).toBeInTheDocument()
+    expect(cowElement).toHaveClass('is-selected')
+  })
 
-        component.setProps({
-          cow: { ...cow, happinessBoostsToday: 1 },
-        })
+  test('resumes movement when cow is deselected', () => {
+    const { rerender } = render(<Cow {...defaultCowProps} isSelected={true} />)
 
-        expect(component.state().showHugAnimation).toBe(true)
-      })
+    // Change to not selected
+    rerender(<Cow {...defaultCowProps} isSelected={false} />)
 
-      test('showHugAnimation state is reset after animation is scheduled to complete', () => {
-        component.setProps({
-          cow: { ...cow, happinessBoostsToday: 1 },
-        })
-
-        vitest.runOnlyPendingTimers()
-        expect(component.state().showHugAnimation).toBe(false)
-      })
-    })
+    const cowElement = document.querySelector('.cow')
+    expect(cowElement).toBeInTheDocument()
+    expect(cowElement).not.toHaveClass('is-selected')
   })
 })

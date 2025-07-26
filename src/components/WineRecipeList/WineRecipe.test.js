@@ -252,7 +252,7 @@ describe('WineRecipe', () => {
 
   test.each([{ wineYield: 1 }, { wineYield: 2 }])(
     'shows yeast requirements for $wineYield wines',
-    ({ wineYield }) => {
+    async ({ wineYield }) => {
       const grape = grapeChardonnay
 
       const yeastQuantity = getYeastRequiredForWine(grape.variety) * wineYield
@@ -275,7 +275,8 @@ describe('WineRecipe', () => {
 
       const input = screen.getByPlaceholderText(QUANTITY_INPUT_PLACEHOLDER_TEXT)
 
-      userEvent.type(input, String(wineYield))
+      await userEvent.clear(input)
+      await userEvent.type(input, String(wineYield))
 
       const label = screen.getByText(
         `Units of ${yeast.name} required: ${integerString(
