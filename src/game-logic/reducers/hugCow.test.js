@@ -1,5 +1,6 @@
 import { COW_HUG_BENEFIT } from '../../constants.js'
 import { generateCow } from '../../utils/index.js'
+import { testState } from '../../test-utils/index.js'
 
 import { hugCow } from './hugCow.js'
 
@@ -10,9 +11,9 @@ describe('hugCow', () => {
       const {
         cowInventory: [{ happiness, happinessBoostsToday }],
       } = hugCow(
-        {
+        testState({
           cowInventory: [cow],
-        },
+        }),
         cow.id
       )
 
@@ -24,9 +25,9 @@ describe('hugCow', () => {
       test('does not increase cow happiness', () => {
         const cow = generateCow({ happiness: 1 })
         const { cowInventory } = hugCow(
-          {
+          testState({
             cowInventory: [cow],
-          },
+          }),
           cow.id
         )
 
@@ -41,9 +42,9 @@ describe('hugCow', () => {
       const {
         cowInventory: [{ happiness, happinessBoostsToday }],
       } = hugCow(
-        {
+        testState({
           cowInventory: [cow],
-        },
+        }),
         cow.id
       )
 

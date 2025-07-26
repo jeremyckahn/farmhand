@@ -1,4 +1,4 @@
-/** @typedef {import("../../index").farmhand.keg} keg */
+/** @typedef {farmhand.keg} keg */
 import React, { useContext } from 'react'
 import { object } from 'prop-types'
 import Card from '@mui/material/Card/index.js'
@@ -33,7 +33,7 @@ export function Keg({ keg }) {
    *     handleThrowAwayKegClick: function(keg): void
    *   },
    *   gameState: {
-   *     completedAchievements: Object.<string, boolean>
+   *     completedAchievements: Partial<Record<string, boolean>>
    *   }
    * }}
    */

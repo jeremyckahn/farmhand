@@ -1,5 +1,5 @@
 /**
- * @typedef {import("../index").farmhand.item} item
+ * @typedef {farmhand.item} item
  */
 import { memoize } from './memoize.js'
 

@@ -1,4 +1,4 @@
-/** @typedef {import("../../index").farmhand.keg} keg */
+/** @typedef {farmhand.keg} keg */
 
 import { v4 as uuid } from 'uuid'
 

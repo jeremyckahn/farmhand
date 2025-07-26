@@ -1,5 +1,4 @@
-/** @typedef {import('../components/Farmhand/Farmhand').default} Farmhand */
-/** @typedef {import('../index').farmhand.peerMetadata} farmhand.peerMetadata */
+/** @typedef {import('../components/Farmhand/Farmhand.js').default} Farmhand */
 import { cowTradeRejectionReason } from '../enums.js'
 import { EXPERIENCE_VALUES } from '../constants.js'
 import { COW_TRADED_NOTIFICATION } from '../templates.js'
@@ -20,7 +19,7 @@ import {
 import { addExperience } from '../game-logic/reducers/addExperience.js'
 
 /**
- * @param {Farmhand} farmhand
+ * @param {import('../components/Farmhand/Farmhand.js').default} farmhand
  * @param {farmhand.peerMetadata} peerMetadata
  * @param {string} peerId
  */
@@ -107,7 +106,13 @@ export const handleCowTradeRequest = async (
       })
       state = showNotification(
         state,
-        COW_TRADED_NOTIFICATION`${cowToTradeAway}${cowOffered}${id}${allowCustomPeerCowNames}`,
+        COW_TRADED_NOTIFICATION(
+          '',
+          cowToTradeAway,
+          cowOffered,
+          id,
+          allowCustomPeerCowNames
+        ),
         'success'
       )
 
@@ -187,9 +192,10 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
         }
       }
 
-      const [, peerMetadata] = Object.entries(peers).find(
+      const peerEntry = Object.entries(peers).find(
         ([, { id }]) => id === cowReceived.ownerId
       )
+      const [, peerMetadata] = peerEntry || []
 
       const didOriginallyOwnReceivedCow = cowReceived.originalOwnerId === id
 
@@ -207,7 +213,13 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
       })
       state = showNotification(
         state,
-        COW_TRADED_NOTIFICATION`${cowTradedAway}${updatedCowReceived}${id}${allowCustomPeerCowNames}`,
+        COW_TRADED_NOTIFICATION(
+          '',
+          cowTradedAway,
+          updatedCowReceived,
+          id,
+          allowCustomPeerCowNames
+        ),
         'success'
       )
 
@@ -256,7 +268,9 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
 export const handleCowTradeRequestReject = (farmhand, { reason }) => {
   const { cowTradeTimeoutId } = farmhand.state
 
-  clearTimeout(cowTradeTimeoutId)
+  if (typeof cowTradeTimeoutId === 'number') {
+    clearTimeout(cowTradeTimeoutId)
+  }
 
   farmhand.setState({
     cowTradeTimeoutId: null,

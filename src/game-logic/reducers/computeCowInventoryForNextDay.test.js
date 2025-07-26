@@ -1,16 +1,24 @@
 import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.js'
+import { generateCow } from '../../utils/index.js'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
 import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay.js'
 
 describe('computeCowInventoryForNextDay', () => {
   test('ages cows', () => {
     expect(
-      computeCowInventoryForNextDay({
-        cowInventory: [
-          { daysOld: 0 },
-          { daysOld: 5, happiness: 0.5, happinessBoostsToday: 3 },
-        ],
-      })
+      computeCowInventoryForNextDay(
+        saveDataStubFactory({
+          cowInventory: [
+            generateCow({ daysOld: 0 }),
+            generateCow({
+              daysOld: 5,
+              happiness: 0.5,
+              happinessBoostsToday: 3,
+            }),
+          ],
+        })
+      )
     ).toMatchObject({
       cowInventory: [
         { daysOld: 1, happinessBoostsToday: 0 },
@@ -27,16 +35,18 @@ describe('computeCowInventoryForNextDay', () => {
     describe('has a hugging machine', () => {
       test('happiness is pre-maxed for the day', () => {
         expect(
-          computeCowInventoryForNextDay({
-            cowInventory: [
-              {
-                daysOld: 5,
-                happiness: 0,
-                happinessBoostsToday: 0,
-                isUsingHuggingMachine: true,
-              },
-            ],
-          })
+          computeCowInventoryForNextDay(
+            saveDataStubFactory({
+              cowInventory: [
+                generateCow({
+                  daysOld: 5,
+                  happiness: 0,
+                  happinessBoostsToday: 0,
+                  isUsingHuggingMachine: true,
+                }),
+              ],
+            })
+          )
         ).toMatchObject({
           cowInventory: [
             {

@@ -45,16 +45,42 @@ describe('handleClickEndDayButton', () => {
 })
 
 describe('handleMenuToggle', () => {
-  test('toggle menu state', () => {
+  test('toggle menu state when called without arguments', () => {
     const { isMenuOpen } = component.state()
     handlers().handleMenuToggle()
     expect(component.state().isMenuOpen).toEqual(!isMenuOpen)
+  })
+
+  test('toggle menu state when called with null', () => {
+    const { isMenuOpen } = component.state()
+    handlers().handleMenuToggle(null)
+    expect(component.state().isMenuOpen).toEqual(!isMenuOpen)
+  })
+
+  test('toggle menu state when called with undefined', () => {
+    const { isMenuOpen } = component.state()
+    handlers().handleMenuToggle(undefined)
+    expect(component.state().isMenuOpen).toEqual(!isMenuOpen)
+  })
+
+  test('set menu to open when called with true', () => {
+    component.setState({ isMenuOpen: false })
+    handlers().handleMenuToggle(true)
+    expect(component.state().isMenuOpen).toEqual(true)
+  })
+
+  test('set menu to closed when called with false', () => {
+    component.setState({ isMenuOpen: true })
+    handlers().handleMenuToggle(false)
+    expect(component.state().isMenuOpen).toEqual(false)
   })
 })
 
 describe('handleClickNextMenuButton', () => {
   test('calls focusNextView', () => {
-    vitest.spyOn(component.instance(), 'focusNextView').mockImplementation()
+    vitest
+      .spyOn(component.instance(), 'focusNextView')
+      .mockImplementation(() => {})
     handlers().handleClickNextMenuButton()
     expect(component.instance().focusNextView).toHaveBeenCalled()
   })
@@ -62,7 +88,9 @@ describe('handleClickNextMenuButton', () => {
 
 describe('handleClickPreviousMenuButton', () => {
   test('calls focusPreviousView', () => {
-    vitest.spyOn(component.instance(), 'focusPreviousView').mockImplementation()
+    vitest
+      .spyOn(component.instance(), 'focusPreviousView')
+      .mockImplementation(() => {})
     handlers().handleClickPreviousMenuButton()
     expect(component.instance().focusPreviousView).toHaveBeenCalled()
   })
@@ -70,7 +98,7 @@ describe('handleClickPreviousMenuButton', () => {
 
 describe('handleCowSelect', () => {
   test('calls selectCow', () => {
-    vitest.spyOn(component.instance(), 'selectCow').mockImplementation()
+    vitest.spyOn(component.instance(), 'selectCow').mockImplementation(() => {})
     handlers().handleCowSelect({ id: 'abc' })
     expect(component.instance().selectCow).toHaveBeenCalledWith({ id: 'abc' })
   })

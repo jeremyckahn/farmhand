@@ -26,7 +26,7 @@ const getTools = memoize(toolLevels => {
     }
   }
 
-  return tools.sort((a, b) => a.order > b.order)
+  return tools.sort((a, b) => a.order - b.order)
 })
 
 const getToolImage = tool => {

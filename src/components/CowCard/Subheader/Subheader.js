@@ -1,6 +1,3 @@
-/** @typedef {import('../../../components/Farmhand/Farmhand').farmhand.state} farmhand.state */
-/** @typedef {import('../../../index').farmhand.cow} farmhand.cow */
-/** @typedef {import('../CowCard').CowCardProps} CowCardProps */
 import React from 'react'
 import { array, bool, func, object, string } from 'prop-types'
 import Checkbox from '@mui/material/Checkbox/index.js'
@@ -50,7 +47,7 @@ const getCowMapById = memoize(
 
 /**
  * @typedef {Pick<
- *    CowCardProps,
+ *    import("../CowCard.js").CowCardProps,
  *    'cow' |
  *    'cowBreedingPen' |
  *    'cowIdOfferedForTrade' |

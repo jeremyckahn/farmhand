@@ -80,7 +80,7 @@ describe.each(iAmRichVariants)(
       test(`is not achieved when revenue is less than ${goal}`, () => {
         const achievement = achievementsMap[id]
         const state = {
-          revenue: goal - 1,
+          revenue: /** @type {number} */ (goal) - 1,
         }
 
         expect(achievement.condition(state)).toEqual(false)

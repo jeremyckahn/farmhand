@@ -2,6 +2,7 @@ import { randomNumberService } from '../../common/services/randomNumber.js'
 import { goldOre } from '../../data/ores/index.js'
 import { ResourceFactory } from '../../factories/index.js'
 import { toolType, toolLevel } from '../../enums.js'
+import { testState, testCrop } from '../../test-utils/index.js'
 
 import { minePlot } from './minePlot.js'
 
@@ -9,23 +10,29 @@ describe('minePlot', () => {
   let gameState
 
   beforeAll(() => {
-    gameState = {
-      field: [[null, 'crop']],
-      inventory: [],
-      inventoryLimit: 99,
-      toolLevels: {
-        [toolType.SHOVEL]: toolLevel.DEFAULT,
-      },
-    }
-
     vitest.spyOn(ResourceFactory, 'instance')
     vitest.spyOn(randomNumberService, 'generateRandomNumber').mockReturnValue(1)
 
+    // @ts-expect-error - Mock function type assertion
     ResourceFactory.instance.mockReturnValue({
       generateResources: () => [goldOre],
     })
 
-    gameState = minePlot(gameState, 0, 0)
+    gameState = minePlot(
+      testState({
+        field: [[null, testCrop()]],
+        inventory: [],
+        inventoryLimit: 50,
+        toolLevels: {
+          [toolType.HOE]: toolLevel.DEFAULT,
+          [toolType.SCYTHE]: toolLevel.DEFAULT,
+          [toolType.SHOVEL]: toolLevel.DEFAULT,
+          [toolType.WATERING_CAN]: toolLevel.DEFAULT,
+        },
+      }),
+      0,
+      0
+    )
   })
 
   test('updates the plot to be shoveled if the plot is empty', () => {
@@ -54,7 +61,7 @@ describe('minePlot', () => {
   })
 
   test('does not alter the plot if something is already there', () => {
-    expect(gameState.field[0][1]).toEqual('crop')
+    expect(gameState.field[0][1]).toEqual(testCrop())
   })
 
   test('shows a notification if there is no room in the inventory', () => {

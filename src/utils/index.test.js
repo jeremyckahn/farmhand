@@ -1,5 +1,3 @@
-/** @typedef {import('../components/Farmhand/Farmhand.js').farmhand.state} farmhand.state */
-
 import {
   COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
@@ -141,7 +139,7 @@ describe('getItemCurrentValue', () => {
 
   describe('stable value item', () => {
     test('computes value', () => {
-      expect(getItemCurrentValue({ id: 'carrot' }, valueAdjustments)).toEqual(
+      expect(getItemCurrentValue(carrot, valueAdjustments)).toEqual(
         carrot.value * 1.5
       )
     })
@@ -149,9 +147,9 @@ describe('getItemCurrentValue', () => {
 
   describe('fluctuating value item', () => {
     test('computes value', () => {
-      expect(
-        getItemCurrentValue({ id: 'rainbow-fertilizer' }, valueAdjustments)
-      ).toEqual(rainbowFertilizer.value)
+      expect(getItemCurrentValue(rainbowFertilizer, valueAdjustments)).toEqual(
+        rainbowFertilizer.value
+      )
     })
   })
 })
@@ -208,7 +206,9 @@ describe('generateCow', () => {
     })
 
     test('generates a cow', () => {
-      const baseWeight = COW_STARTING_WEIGHT_BASE + COW_STARTING_WEIGHT_VARIANCE
+      const baseWeight =
+        COW_STARTING_WEIGHT_BASE * MALE_COW_WEIGHT_MULTIPLIER +
+        COW_STARTING_WEIGHT_VARIANCE
 
       expect(generateCow({ id: '123' })).toMatchObject({
         baseWeight,
@@ -542,41 +542,50 @@ describe('getCropLifeStage', () => {
   test('maps a life cycle label to an image name chunk', () => {
     const itemId = 'carrot'
 
-    expect(getCropLifeStage({ itemId, daysWatered: 0 })).toBe(SEED)
-    expect(getCropLifeStage({ itemId, daysWatered: 2.5 })).toBe(GROWING)
-    expect(getCropLifeStage({ itemId, daysWatered: 5 })).toBe(GROWN)
+    expect(getCropLifeStage(testCrop({ itemId, daysWatered: 0 }))).toBe(SEED)
+    expect(getCropLifeStage(testCrop({ itemId, daysWatered: 2.5 }))).toBe(
+      GROWING
+    )
+    expect(getCropLifeStage(testCrop({ itemId, daysWatered: 5 }))).toBe(GROWN)
   })
 })
 
 describe('getPlotImage', () => {
   test('returns null when no plotContent is provided', () => {
+    // @ts-expect-error
     expect(getPlotImage(null)).toBe(null)
   })
 
   test('returns plot images for a crop', () => {
     const itemId = 'carrot'
 
+    // @ts-expect-error
     expect(getPlotImage(testCrop({ itemId, daysWatered: 0 }))).toBe(
       itemImages['carrot-seed']
     )
+    // @ts-expect-error
     expect(getPlotImage(testCrop({ itemId, daysWatered: 1 }))).toBe(
       itemImages['carrot-seed']
     )
+    // @ts-expect-error
     expect(getPlotImage(testCrop({ itemId, daysWatered: 3 }))).toBe(
       itemImages['carrot-growing-2']
     )
+    // @ts-expect-error
     expect(getPlotImage(testCrop({ itemId, daysWatered: 5 }))).toBe(
       itemImages['carrot']
     )
   })
 
   test('returns item image for oreId', () => {
+    // @ts-expect-error
     expect(getPlotImage(getPlotContentFromItemId(silverOre.id))).toBe(
       itemImages[silverOre.id]
     )
   })
 
   test('returns item image for other content', () => {
+    // @ts-expect-error
     expect(getPlotImage(getPlotContentFromItemId('sprinkler'))).toBe(
       itemImages['sprinkler']
     )
@@ -720,6 +729,7 @@ describe('canMakeRecipe', () => {
     test('evaluates inventory correctly', () => {
       expect(
         canMakeRecipe(
+          // @ts-expect-error
           { ingredients: { 'sample-item-1': 2 } },
           [{ id: 'sample-item-1', quantity: 1 }],
           1
@@ -732,6 +742,7 @@ describe('canMakeRecipe', () => {
     test('evaluates inventory correctly', () => {
       expect(
         canMakeRecipe(
+          // @ts-expect-error
           { ingredients: { 'sample-item-1': 2 } },
           [{ id: 'sample-item-1', quantity: 2 }],
           1
@@ -806,7 +817,12 @@ describe('experienceNeededForLevel', () => {
 describe('getAvailableShopInventory', () => {
   test('computes shop inventory that has been unlocked', async () => {
     expect(
-      getAvailableShopInventory({ items: {}, sprinklerRange: 0, tools: {} })
+      getAvailableShopInventory({
+        items: {},
+        sprinklerRange: 0,
+        tools: {},
+        stageFocusType: {},
+      })
     ).toEqual([scarecrow])
   })
 })
@@ -910,7 +926,7 @@ describe.each(percentageStringTests)(
   'percentageString',
   (percent, expectedString) => {
     test(`it converts ${percent} to a ${expectedString}`, () => {
-      expect(percentageString(percent)).toEqual(expectedString)
+      expect(percentageString(Number(percent))).toEqual(expectedString)
     })
   }
 )
@@ -968,12 +984,14 @@ describe('randomChoice', () => {
   })
 
   test('it can handle the lower bound of Math.random', () => {
+    // @ts-expect-error
     global.Math.random.mockReturnValueOnce(0)
     const choice = randomChoice(choices)
     expect(choice).toEqual(choices[0])
   })
 
   test('it can handle the upper bound of Math.random', () => {
+    // @ts-expect-error
     global.Math.random.mockReturnValueOnce(0.99)
     const choice = randomChoice(choices)
     expect(choice).toEqual(choices[2])

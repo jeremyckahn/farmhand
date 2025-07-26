@@ -20,13 +20,19 @@ describe('notifications', () => {
     })
 
     const carrotItem = await getItemByName('Carrot')
-    const carrotInput = within(carrotItem).getByDisplayValue('1')
+    const carrotInput = within(
+      /** @type {HTMLElement} */ (carrotItem)
+    ).getByDisplayValue('1')
     userEvent.type(carrotInput, '10')
-    const carrotSellButton = within(carrotItem).getByText('Sell')
+    const carrotSellButton = within(
+      /** @type {HTMLElement} */ (carrotItem)
+    ).getByText('Sell')
     userEvent.click(carrotSellButton)
     const notification = await screen.findByRole('alert')
 
-    expect(within(notification).getByText('Carrot Soup')).toBeInTheDocument()
+    expect(
+      within(/** @type {HTMLElement} */ (notification)).getByText('Carrot Soup')
+    ).toBeInTheDocument()
   })
 
   test('multiple notifications are shown when multiple recipes are learned', async () => {
@@ -49,13 +55,25 @@ describe('notifications', () => {
     const spinachItem = await getItemByName('Spinach')
     const carrotItem = await getItemByName('Carrot')
 
-    const cornInput = within(cornItem).getByDisplayValue('1')
-    const spinachInput = within(spinachItem).getByDisplayValue('1')
-    const carrotInput = within(carrotItem).getByDisplayValue('1')
+    const cornInput = within(
+      /** @type {HTMLElement} */ (cornItem)
+    ).getByDisplayValue('1')
+    const spinachInput = within(
+      /** @type {HTMLElement} */ (spinachItem)
+    ).getByDisplayValue('1')
+    const carrotInput = within(
+      /** @type {HTMLElement} */ (carrotItem)
+    ).getByDisplayValue('1')
 
-    const cornSellButton = within(cornItem).getByText('Sell')
-    const spinachSellButton = within(spinachItem).getByText('Sell')
-    const carrotSellButton = within(carrotItem).getByText('Sell')
+    const cornSellButton = within(
+      /** @type {HTMLElement} */ (cornItem)
+    ).getByText('Sell')
+    const spinachSellButton = within(
+      /** @type {HTMLElement} */ (spinachItem)
+    ).getByText('Sell')
+    const carrotSellButton = within(
+      /** @type {HTMLElement} */ (carrotItem)
+    ).getByText('Sell')
 
     userEvent.type(cornInput, '6')
     userEvent.click(cornSellButton)
@@ -70,7 +88,13 @@ describe('notifications', () => {
     userEvent.click(carrotSellButton)
 
     const notification = await screen.findByRole('alert')
-    expect(within(notification).getByText('Carrot Soup')).toBeInTheDocument()
-    expect(within(notification).getByText('Summer Salad')).toBeInTheDocument()
+    expect(
+      within(/** @type {HTMLElement} */ (notification)).getByText('Carrot Soup')
+    ).toBeInTheDocument()
+    expect(
+      within(/** @type {HTMLElement} */ (notification)).getByText(
+        'Summer Salad'
+      )
+    ).toBeInTheDocument()
   })
 })

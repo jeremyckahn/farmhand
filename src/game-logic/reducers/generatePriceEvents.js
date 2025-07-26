@@ -52,11 +52,11 @@ export const generatePriceEvents = state => {
       newDayNotifications.push(
         priceEventType === TYPE_CRASH
           ? {
-              message: PRICE_CRASH`${cropItem}`,
+              message: PRICE_CRASH('', cropItem),
               severity: 'warning',
             }
           : {
-              message: PRICE_SURGE`${cropItem}`,
+              message: PRICE_SURGE('', cropItem),
               severity: 'success',
             }
       )

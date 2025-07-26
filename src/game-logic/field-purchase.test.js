@@ -29,12 +29,20 @@ describe('field expansion purchasing', () => {
       .closest('.TierPurchase')
 
     // Open the list of field options
-    userEvent.click(within(expandFieldContainer).getByRole('combobox'))
+    userEvent.click(
+      within(/** @type {HTMLElement} */ (expandFieldContainer)).getByRole(
+        'combobox'
+      )
+    )
 
     userEvent.click(screen.getByRole('option', { name: '$1,000: 8 x 12' }))
 
     // Make the purchase
-    userEvent.click(within(expandFieldContainer).getByRole('button'))
+    userEvent.click(
+      within(/** @type {HTMLElement} */ (expandFieldContainer)).getByRole(
+        'button'
+      )
+    )
 
     await nextView()
 

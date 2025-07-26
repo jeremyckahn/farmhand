@@ -15,6 +15,13 @@ import './QuantityInput.sass'
 export const QUANTITY_INPUT_PLACEHOLDER_TEXT = '0'
 
 const QuantityNumberFormat = forwardRef(
+  /**
+   * @param {Object} props
+   * @param {number} props.min
+   * @param {number} props.max
+   * @param {(value: number) => void} props.onChange
+   * @param {React.ForwardedRef<any>} ref
+   */
   ({ min, max, onChange, ...rest }, ref) => (
     <NumberFormat
       isNumericString
@@ -38,48 +45,51 @@ const QuantityTextInput = ({
   handleUpdateNumber,
   maxQuantity,
   value,
-}) => (
-  <TextField
-    variant="standard"
-    {...{
-      value,
-      placeholder: QUANTITY_INPUT_PLACEHOLDER_TEXT,
-      inputProps: {
-        pattern: '[0-9]*',
-        min: 0,
-        max: maxQuantity,
-      },
-      onChange: handleUpdateNumber,
-      onFocus: event => {
-        // NOTE: This highlights the contents of the input so the user
-        // doesn't have to fight with clearing out the default value.
-        event.target.select()
-      },
-      // Bind to keyup to prevent spamming the event handler.
-      onKeyUp: ({ which }) => {
-        // Enter
-        if (which === 13) {
-          handleSubmit()
-        }
-      },
+}) => {
+  return (
+    // @ts-expect-error
+    <TextField
+      variant="standard"
+      {...{
+        value,
+        placeholder: QUANTITY_INPUT_PLACEHOLDER_TEXT,
+        inputProps: {
+          pattern: '[0-9]*',
+          min: 0,
+          max: maxQuantity,
+        },
+        onChange: handleUpdateNumber,
+        onFocus: event => {
+          // NOTE: This highlights the contents of the input so the user
+          // doesn't have to fight with clearing out the default value.
+          event.target.select()
+        },
+        // Bind to keyup to prevent spamming the event handler.
+        onKeyUp: ({ which }) => {
+          // Enter
+          if (which === 13) {
+            handleSubmit()
+          }
+        },
 
-      InputProps: {
-        inputComponent: QuantityNumberFormat,
-        endAdornment: (
-          <>
-            <Span sx={{ px: 1 }}>/</Span>
-            <AnimatedNumber
-              {...{
-                number: maxQuantity,
-                formatter: integerString,
-              }}
-            />
-          </>
-        ),
-      },
-    }}
-  />
-)
+        InputProps: {
+          inputComponent: QuantityNumberFormat,
+          endAdornment: (
+            <>
+              <Span sx={{ px: 1 }}>/</Span>
+              <AnimatedNumber
+                {...{
+                  number: maxQuantity,
+                  formatter: integerString,
+                }}
+              />
+            </>
+          ),
+        },
+      }}
+    />
+  )
+}
 
 const QuantityInput = ({
   handleSubmit,

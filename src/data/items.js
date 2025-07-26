@@ -108,7 +108,7 @@ export const rainbowFertilizer = freeze({
   enablesFieldMode: fieldMode.FERTILIZE,
   id: 'rainbow-fertilizer',
   name: 'Rainbow Fertilizer',
-  type: FERTILIZER,
+  type: /** @type {farmhand.itemType} */ (FERTILIZER),
   // Rainbow Fertilizer is worth less than regular Fertilizer because it is not
   // sold in the shop. Items that are sold in the shop have automatically
   // reduced resale value, but since that would not apply to Rainbow
@@ -129,7 +129,7 @@ export const sprinkler = freeze({
   id: 'sprinkler',
   isReplantable: true,
   name: 'Sprinkler',
-  type: SPRINKLER,
+  type: /** @type {farmhand.itemType} */ (SPRINKLER),
   value: 120,
 })
 
@@ -148,7 +148,7 @@ export const scarecrow = freeze({
   id: 'scarecrow',
   isReplantable: true,
   name: 'Scarecrow',
-  type: SCARECROW,
+  type: /** @type {farmhand.itemType} */ (SCARECROW),
   value: 160,
 })
 
@@ -167,7 +167,7 @@ export const cowFeed = freeze({
   description:
     'Each cow automatically consumes one unit of Cow Feed per day. Fed cows gain and maintain weight.',
   name: 'Cow Feed',
-  type: COW_FEED,
+  type: /** @type {farmhand.itemType} */ (COW_FEED),
   value: 5,
 })
 
@@ -179,7 +179,7 @@ export const huggingMachine = freeze({
   id: HUGGING_MACHINE_ITEM_ID,
   description: 'Automatically hugs one cow three times every day.',
   name: 'Hugging Machine',
-  type: HUGGING_MACHINE,
+  type: /** @type {farmhand.itemType} */ (HUGGING_MACHINE),
   value: 500,
 })
 
@@ -190,7 +190,7 @@ export const huggingMachine = freeze({
 export const milk1 = freeze({
   id: 'milk-1',
   name: 'Grade C Milk',
-  type: MILK,
+  type: /** @type {farmhand.itemType} */ (MILK),
   value: 40,
 })
 
@@ -201,7 +201,7 @@ export const milk1 = freeze({
 export const milk2 = freeze({
   id: 'milk-2',
   name: 'Grade B Milk',
-  type: MILK,
+  type: /** @type {farmhand.itemType} */ (MILK),
   value: 80,
 })
 
@@ -212,7 +212,7 @@ export const milk2 = freeze({
 export const milk3 = freeze({
   id: 'milk-3',
   name: 'Grade A Milk',
-  type: MILK,
+  type: /** @type {farmhand.itemType} */ (MILK),
   value: 120,
 })
 
@@ -223,7 +223,7 @@ export const milk3 = freeze({
 export const rainbowMilk1 = freeze({
   id: 'rainbow-milk-1',
   name: 'Grade C Rainbow Milk',
-  type: MILK,
+  type: /** @type {farmhand.itemType} */ (MILK),
   value: 60,
 })
 
@@ -234,7 +234,7 @@ export const rainbowMilk1 = freeze({
 export const rainbowMilk2 = freeze({
   id: 'rainbow-milk-2',
   name: 'Grade B Rainbow Milk',
-  type: MILK,
+  type: /** @type {farmhand.itemType} */ (MILK),
   value: 120,
 })
 
@@ -245,7 +245,7 @@ export const rainbowMilk2 = freeze({
 export const rainbowMilk3 = freeze({
   id: 'rainbow-milk-3',
   name: 'Grade A Rainbow Milk',
-  type: MILK,
+  type: /** @type {farmhand.itemType} */ (MILK),
   value: 180,
 })
 
@@ -256,6 +256,6 @@ export const rainbowMilk3 = freeze({
 export const chocolateMilk = freeze({
   id: 'chocolate-milk',
   name: 'Chocolate Milk',
-  type: MILK,
+  type: /** @type {farmhand.itemType} */ (MILK),
   value: 80,
 })

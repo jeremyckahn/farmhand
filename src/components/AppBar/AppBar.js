@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { tween } from 'shifty'
+// eslint-disable-next-line no-unused-vars
+import { tween, Tweenable } from 'shifty'
 import { array, bool, func, number, string } from 'prop-types'
 
 import { default as MuiAppBar } from '@mui/material/AppBar/index.js'
@@ -23,7 +24,7 @@ const MoneyDisplay = ({ money }) => {
   const [textColor, setTextColor] = useState(idleColor)
   const [previousMoney, setPreviousMoney] = useState(money)
   /**
-   * @type {ReturnType<typeof useState<import('shifty').Tweenable | undefined>>}
+   * @type {ReturnType<typeof useState<Tweenable | undefined>>}
    */
   const [currentTweenable, setCurrentTweenable] = useState()
 

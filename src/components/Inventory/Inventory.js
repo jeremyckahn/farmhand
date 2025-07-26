@@ -46,20 +46,29 @@ const itemTypeCategoryMap = new Map([
 const getItemCategories = () =>
   new Map(Array.from(categoryIds.keys()).map(key => [key, []]))
 
-export const separateItemsIntoCategories = items =>
-  sortItems(items).reduce((categories, item) => {
-    const { type } = itemsMap[item.id]
-    const category = itemTypeCategoryMap.get(type)
+export const separateItemsIntoCategories = (
+  /** @type {farmhand.item[]} */ items
+) =>
+  sortItems(items).reduce(
+    /**
+     * @param {Map<string, farmhand.item[]>} categories
+     * @param {farmhand.item} item
+     */
+    (categories, item) => {
+      const { type } = itemsMap[item.id]
+      const category = itemTypeCategoryMap.get(type)
 
-    if (category === 'CROPS') {
-      const targetCategory = item.isPlantableCrop ? 'SEEDS' : 'CROPS'
-      categories.get(targetCategory)?.push(item)
-    } else if (categories.has(category)) {
-      categories.get(category)?.push(item)
-    }
+      if (category === 'CROPS') {
+        const targetCategory = item.isPlantableCrop ? 'SEEDS' : 'CROPS'
+        categories.get(targetCategory)?.push(item)
+      } else if (category != null && categories.has(category)) {
+        categories.get(category)?.push(item)
+      }
 
-    return categories
-  }, getItemCategories())
+      return categories
+    },
+    getItemCategories()
+  )
 
 const formatCategoryName = key =>
   key
@@ -68,7 +77,7 @@ const formatCategoryName = key =>
     .replace(/\b\w/g, char => char.toUpperCase())
 
 const Inventory = ({
-  items,
+  /** @type {farmhand.item[]} */ items,
   playerInventory,
   shopInventory,
   isPurchaseView = false,
@@ -77,7 +86,9 @@ const Inventory = ({
   placeholder = 'Search inventory...',
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategories, setSelectedCategories] = useState([])
+  const [selectedCategories, setSelectedCategories] = useState(
+    /** @type {string[]} */ ([])
+  )
   const toggleCategory = category => {
     setSelectedCategories(prev =>
       prev.includes(category)
@@ -88,11 +99,14 @@ const Inventory = ({
 
   const filteredCategories = Array.from(itemCategories.entries()).reduce(
     (filtered, [category, items]) => {
-      const matchingItems = items.filter(item =>
-        itemsMap[item.id]?.name
-          ?.toLowerCase()
-          ?.includes(searchQuery.toLowerCase())
-      )
+      const matchingItems = items.filter(item => {
+        const mappedItem = itemsMap[item.id]
+        return (
+          mappedItem &&
+          mappedItem.name &&
+          mappedItem.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      })
 
       if (
         matchingItems.length &&

@@ -7,7 +7,7 @@ import { nextView, previousView } from '../test-utils/ui.js'
 describe('navigation', () => {
   test('cycles forwards through the standard views', async () => {
     await farmhandStub()
-    const [header] = document.getElementsByTagName('header')
+    const [header] = Array.from(document.getElementsByTagName('header'))
 
     for (const viewName of ['Shop', 'Field', 'Workshop', 'Home']) {
       await nextView()
@@ -17,7 +17,7 @@ describe('navigation', () => {
 
   test('cycles backwards through the standard views', async () => {
     await farmhandStub()
-    const [header] = document.getElementsByTagName('header')
+    const [header] = Array.from(document.getElementsByTagName('header'))
 
     for (const viewName of ['Workshop', 'Field', 'Shop', 'Home']) {
       await previousView()
@@ -37,7 +37,7 @@ describe('navigation', () => {
       },
     })
 
-    const [header] = document.getElementsByTagName('header')
+    const [header] = Array.from(document.getElementsByTagName('header'))
 
     for (const viewName of ['Shop', 'Field', 'Cows', 'Workshop', 'Home']) {
       await nextView()
@@ -57,7 +57,7 @@ describe('navigation', () => {
       },
     })
 
-    const [header] = document.getElementsByTagName('header')
+    const [header] = Array.from(document.getElementsByTagName('header'))
 
     for (const viewName of ['Workshop', 'Cows', 'Field', 'Shop', 'Home']) {
       await previousView()

@@ -3,7 +3,7 @@
  * @param {farmhand.state} state
  * @param {number} x
  * @param {number} y
- * @param {Function(?farmhand.plotContent)} modifierFn
+ * @param {function(?farmhand.plotContent): ?farmhand.plotContent} modifierFn
  * @returns {farmhand.state}
  */
 export const modifyFieldPlotAt = (state, x, y, modifierFn) => {

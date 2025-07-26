@@ -1,11 +1,12 @@
 import { MAX_PENDING_PEER_MESSAGES } from '../../constants.js'
+import { testState } from '../../test-utils/index.js'
 
 import { prependPendingPeerMessage } from './prependPendingPeerMessage.js'
 
 describe('prependPendingPeerMessage', () => {
   test('prepends a message', () => {
     const { pendingPeerMessages } = prependPendingPeerMessage(
-      { id: 'abc123', pendingPeerMessages: [] },
+      testState({ id: 'abc123', pendingPeerMessages: [] }),
       'hello world'
     )
 
@@ -16,14 +17,14 @@ describe('prependPendingPeerMessage', () => {
 
   test('limits the amount of stored messages', () => {
     const { pendingPeerMessages } = prependPendingPeerMessage(
-      {
+      testState({
         id: 'abc123',
         pendingPeerMessages: new Array(50).fill({
           id: 'abc123',
           message: 'some other message',
           severity: 'info',
         }),
-      },
+      }),
       'hello world'
     )
 

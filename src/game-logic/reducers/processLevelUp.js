@@ -58,7 +58,7 @@ export const processLevelUp = (state, oldLevel) => {
 
     state = showNotification(
       state,
-      LEVEL_GAINED_NOTIFICATION`${i}${randomCropSeed}`,
+      LEVEL_GAINED_NOTIFICATION('', i, randomCropSeed),
       'success'
     )
   }

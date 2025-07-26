@@ -58,7 +58,7 @@ describe('<ToolBelt />', () => {
       render(<Toolbelt fieldMode={fieldMode.WATER} toolLevels={toolLevels} />)
       const label = screen.getByText(/Select the watering can/)
 
-      expect(label.closest('button').classList.contains('selected')).toEqual(
+      expect(label.closest('button')?.classList.contains('selected')).toEqual(
         true
       )
     })
@@ -67,7 +67,7 @@ describe('<ToolBelt />', () => {
       render(<Toolbelt fieldMode={fieldMode.HARVEST} toolLevels={toolLevels} />)
       const label = screen.getByText(/Select the scythe/)
 
-      expect(label.closest('button').classList.contains('selected')).toEqual(
+      expect(label.closest('button')?.classList.contains('selected')).toEqual(
         true
       )
     })
@@ -76,7 +76,7 @@ describe('<ToolBelt />', () => {
       render(<Toolbelt fieldMode={fieldMode.CLEANUP} toolLevels={toolLevels} />)
       const label = screen.getByText(/Select the hoe/)
 
-      expect(label.closest('button').classList.contains('selected')).toEqual(
+      expect(label.closest('button')?.classList.contains('selected')).toEqual(
         true
       )
     })
@@ -85,7 +85,7 @@ describe('<ToolBelt />', () => {
       render(<Toolbelt fieldMode={fieldMode.MINE} toolLevels={toolLevels} />)
       const label = screen.getByText(/Select the shovel/)
 
-      expect(label.closest('button').classList.contains('selected')).toEqual(
+      expect(label.closest('button')?.classList.contains('selected')).toEqual(
         true
       )
     })

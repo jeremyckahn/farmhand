@@ -1,5 +1,3 @@
-/** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} farmhand.state */
-
 import {
   chooseRandomIndex,
   getCropFromItemId,
@@ -44,6 +42,10 @@ export const plantInPlot = (state, x, y, plantableItemId) => {
     plantableItemId,
     variationIdx
   )
+
+  if (!finalCropItemId) {
+    return state
+  }
 
   state = modifyFieldPlotAt(state, x, y, () =>
     getCropFromItemId(finalCropItemId)

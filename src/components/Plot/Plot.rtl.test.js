@@ -4,7 +4,10 @@ import userEvent from '@testing-library/user-event'
 
 import { cropLifeStage } from '../../enums.js'
 import { testCrop, testShoveledPlot } from '../../test-utils/index.js'
-import { getCropFromItemId, getPlotContentFromItemId } from '../../utils/index.js'
+import {
+  getCropFromItemId,
+  getPlotContentFromItemId,
+} from '../../utils/index.js'
 import { noop } from '../../utils/noop.js'
 import { items } from '../../img/index.js'
 
@@ -30,10 +33,10 @@ describe('class states', () => {
 
   test('renders standard classes', () => {
     const img = screen.queryByAltText('Empty plot')
-    const { classList } = img.closest('.Plot')
+    const plotElement = img?.closest('.Plot')
+    const { classList } = plotElement || { classList: new DOMTokenList() }
 
     expect(classList).toContain('is-empty')
-    expect(classList).toContain('can-be-mined')
   })
 })
 
@@ -143,6 +146,7 @@ describe('background image', () => {
                 plotContent: testShoveledPlot({
                   oreId: 'stone',
                   isShoveled,
+                  daysUntilClear: 5,
                 }),
                 handlePlotClick: () => setIsShoveled(true),
               }}

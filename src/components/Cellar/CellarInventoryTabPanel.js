@@ -1,4 +1,4 @@
-/** @typedef {import("../../index").farmhand.keg} keg */
+/** @typedef {farmhand.keg} keg */
 import React, { useContext, useState } from 'react'
 import { number } from 'prop-types'
 import Divider from '@mui/material/Divider/index.js'

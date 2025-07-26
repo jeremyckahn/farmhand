@@ -1,17 +1,21 @@
 import { PRICE_CRASH, PRICE_SURGE } from '../../templates.js'
-import { sampleCropItem1 } from '../../data/items.js'
+import { sampleCropItem1 } from '../../data/__mocks__/items.js'
 import { getPriceEventForCrop } from '../../utils/index.js'
+import { testState } from '../../test-utils/index.js'
 
 import { generatePriceEvents } from './generatePriceEvents.js'
 
-vitest.mock('../../data/levels.js', () => ({ levels: [], itemUnlockLevels: {} }))
+vitest.mock('../../data/levels.js', () => ({
+  levels: [],
+  itemUnlockLevels: {},
+}))
 vitest.mock('../../data/items.js')
 
 describe('generatePriceEvents', () => {
   describe('price event already exists', () => {
     test('no-ops', () => {
       vitest.spyOn(Math, 'random').mockReturnValue(1)
-      const inputState = {
+      const inputState = testState({
         newDayNotifications: [],
         priceCrashes: {
           [sampleCropItem1.id]: {
@@ -20,7 +24,7 @@ describe('generatePriceEvents', () => {
           },
         },
         priceSurges: {},
-      }
+      })
       const { priceCrashes, priceSurges } = generatePriceEvents(inputState)
 
       expect(priceCrashes).toEqual(inputState.priceCrashes)
@@ -31,7 +35,7 @@ describe('generatePriceEvents', () => {
   describe('price event does not already exist', () => {
     let state
 
-    beforeEach(async () => {
+    beforeEach(() => {
       vitest.spyOn(Math, 'random').mockReturnValue(0)
 
       vitest.resetModules()
@@ -47,13 +51,14 @@ describe('generatePriceEvents', () => {
         ],
         itemUnlockLevels: {},
       }))
-      const { generatePriceEvents } = await vitest.importActual('./')
-      state = generatePriceEvents({
-        newDayNotifications: [],
-        priceCrashes: {},
-        priceSurges: {},
-        itemsSold: { 'sample-crop-1': Infinity },
-      })
+      state = generatePriceEvents(
+        testState({
+          newDayNotifications: [],
+          priceCrashes: {},
+          priceSurges: {},
+          itemsSold: { 'sample-crop-1': Infinity },
+        })
+      )
     })
 
     test('generates a price event', () => {
@@ -70,11 +75,11 @@ describe('generatePriceEvents', () => {
     test('shows notification', () => {
       expect(state.newDayNotifications).toIncludeAnyMembers([
         {
-          message: PRICE_CRASH`${sampleCropItem1}`,
+          message: PRICE_CRASH('', sampleCropItem1),
           severity: 'warning',
         },
         {
-          message: PRICE_SURGE`${sampleCropItem1}`,
+          message: PRICE_SURGE('', sampleCropItem1),
           severity: 'success',
         },
       ])

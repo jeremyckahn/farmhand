@@ -99,6 +99,17 @@ export const isInHoverRange = ({
 }
 
 export const MemoPlot = memo(
+  /**
+   * @param {object} props
+   * @param {number} props.experience
+   * @param {string} props.fieldMode
+   * @param {object} props.hoveredPlot
+   * @param {number} props.hoveredPlotRangeSize
+   * @param {object} props.plotContent
+   * @param {function} props.setHoveredPlot
+   * @param {number} props.x
+   * @param {number} props.y
+   */
   props => {
     const { hoveredPlot, plotContent, setHoveredPlot, x, y } = props
 
@@ -127,6 +138,7 @@ export const MemoPlot = memo(
   }
 )
 
+// @ts-expect-error
 MemoPlot.propTypes = {
   experience: number.isRequired,
   fieldMode: string.isRequired,
@@ -349,6 +361,7 @@ export const Field = props => {
             'fertilize-mode': fieldMode === FERTILIZE,
             'harvest-mode': fieldMode === HARVEST,
             'mine-mode': fieldMode === MINE,
+            // @ts-expect-error - Unnecessary properties are omitted out of convenience
             'is-inventory-full': !doesInventorySpaceRemain({
               inventory,
               inventoryLimit,

@@ -10,6 +10,7 @@ const mockHandleRNGSeedChange = vitest.fn()
 
 const MockRandomSeedInput = props => (
   <FarmhandContext.Provider
+    // @ts-expect-error
     value={{ handlers: { handleRNGSeedChange: mockHandleRNGSeedChange } }}
   >
     <RandomSeedInput {...props} />

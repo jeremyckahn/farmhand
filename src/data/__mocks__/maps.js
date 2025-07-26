@@ -1,5 +1,3 @@
-/** @typedef {import("../../index").farmhand.item} farmhand.item */
-
 import { recipeType } from '../../enums.js'
 import * as actualMaps from '../maps.js'
 
@@ -15,10 +13,13 @@ export const recipeCategories = {
 
 export const recipesMap = {}
 
-for (const recipeId of Object.keys(recipes.default)) {
-  const recipe = recipes.default[recipeId]
-  recipeCategories[recipe.recipeType][recipe.id] = recipe
-  recipesMap[recipe.id] = recipe
+for (const recipeId of Object.keys(recipes)) {
+  const recipe = recipes[recipeId]
+  // Only process objects that have recipe properties
+  if (recipe && typeof recipe === 'object' && recipe.recipeType && recipe.id) {
+    recipeCategories[recipe.recipeType][recipe.id] = recipe
+    recipesMap[recipe.id] = recipe
+  }
 }
 
 export const itemsMap = {

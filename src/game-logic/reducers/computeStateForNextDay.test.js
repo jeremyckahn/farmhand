@@ -55,9 +55,9 @@ describe('computeStateForNextDay', () => {
     expect(dayCount).toEqual(2)
     expect(valueAdjustments['sample-crop-1']).toEqual(1.25)
     expect(valueAdjustments['sample-crop-2']).toEqual(1.25)
-    expect(firstRow[0].wasWateredToday).toBe(false)
-    expect(firstRow[0].daysWatered).toBe(1)
-    expect(firstRow[0].daysOld).toBe(1)
+    expect(firstRow[0]?.wasWateredToday).toBe(false)
+    expect(firstRow[0]?.daysWatered).toBe(1)
+    expect(firstRow[0]?.daysOld).toBe(1)
     expect(todaysNotifications).toHaveLength(0)
   })
 

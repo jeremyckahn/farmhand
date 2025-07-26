@@ -39,6 +39,7 @@ describe('applyCrows', () => {
     })
 
     it('does not modify plots if rng fails', () => {
+      // @ts-expect-error - Mock function
       randomNumberService.isRandomNumberLessThan.mockReturnValue(true)
       const newState = applyCrows(state)
 
@@ -55,7 +56,9 @@ describe('applyCrows', () => {
 
   describe('crows spawned', () => {
     beforeEach(() => {
+      // @ts-expect-error - Mock function
       randomNumberService.isRandomNumberLessThan.mockReturnValue(false)
+      // @ts-expect-error - Mock function
       Math.random.mockReturnValueOnce(1) // spawn max amount of crows
     })
 

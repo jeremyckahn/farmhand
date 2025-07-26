@@ -1,9 +1,5 @@
-/** @typedef {import("../../index").farmhand.item} farmhand.item */
-/** @typedef {import("../../index").farmhand.grape} farmhand.grape */
-/** @typedef {import("../../index").farmhand.cropVariety} farmhand.cropVariety */
-
-import { crop, fromSeed, cropVariety } from '../crop.js'
 import { cropFamily, cropType, grapeVariety } from '../../enums.js'
+import { crop, cropVariety, fromSeed } from '../crop.js'
 
 /**
  * @param {farmhand.item | farmhand.cropVariety} item
@@ -19,7 +15,10 @@ export const isGrape = item => {
  */
 const grape = grapeProps => {
   const newGrape = {
-    ...cropVariety({ ...grapeProps, cropFamily: cropFamily.GRAPE }),
+    ...cropVariety({
+      ...grapeProps,
+      cropFamily: /** @type {'GRAPE'} */ (cropFamily.GRAPE),
+    }),
   }
 
   if (!isGrape(newGrape)) {
@@ -96,7 +95,7 @@ export const grapeChardonnay = grape({
   }),
   name: 'Chardonnay Grape',
   imageId: 'grape-green',
-  variety: grapeVariety.CHARDONNAY,
+  variety: /** @type {'CHARDONNAY'} */ (grapeVariety.CHARDONNAY),
   wineId: 'wine-chardonnay',
 })
 
@@ -110,7 +109,7 @@ export const grapeSauvignonBlanc = grape({
   }),
   name: 'Sauvignon Blanc Grape',
   imageId: 'grape-green',
-  variety: grapeVariety.SAUVIGNON_BLANC,
+  variety: /** @type {'SAUVIGNON_BLANC'} */ (grapeVariety.SAUVIGNON_BLANC),
   wineId: 'wine-sauvignon-blanc',
 })
 
@@ -172,7 +171,8 @@ export const grapeCabernetSauvignon = grape({
   }),
   name: 'Cabernet Sauvignon Grape',
   imageId: 'grape-purple',
-  variety: grapeVariety.CABERNET_SAUVIGNON,
+  variety:
+    /** @type {'CABERNET_SAUVIGNON'} */ (grapeVariety.CABERNET_SAUVIGNON),
   wineId: 'wine-cabernet-sauvignon',
 })
 
@@ -198,7 +198,7 @@ export const grapeTempranillo = grape({
   }),
   name: 'Tempranillo Grape',
   imageId: 'grape-purple',
-  variety: grapeVariety.TEMPRANILLO,
+  variety: /** @type {'TEMPRANILLO'} */ (grapeVariety.TEMPRANILLO),
   wineId: 'wine-tempranillo',
 })
 
@@ -212,7 +212,7 @@ export const grapeNebbiolo = grape({
   }),
   name: 'Nebbiolo Grape',
   imageId: 'grape-purple',
-  variety: grapeVariety.NEBBIOLO,
+  variety: /** @type {'NEBBIOLO'} */ (grapeVariety.NEBBIOLO),
   wineId: 'wine-nebbiolo',
 })
 

@@ -42,7 +42,10 @@ export const processCowFertilizerProduction = state => {
 
   if (Object.keys(fertilizersProduced).length) {
     newDayNotifications.push({
-      message: FERTILIZERS_PRODUCED`${fertilizersProduced}`,
+      message: FERTILIZERS_PRODUCED(
+        '',
+        /** @type {Record<string, number>} */ (fertilizersProduced)
+      ),
       severity: 'success',
     })
   }

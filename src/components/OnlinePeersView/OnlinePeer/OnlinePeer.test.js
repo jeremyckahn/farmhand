@@ -10,6 +10,7 @@ beforeEach(() => {
     <OnlinePeer
       {...{
         peer: {
+          cowOfferedForTrade: null,
           dayCount: 0,
           id: '',
           experience: 1,

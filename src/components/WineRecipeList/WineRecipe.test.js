@@ -1,8 +1,3 @@
-/**
- * @typedef {import('../Farmhand/Farmhand').farmhand.state} farmhand.state
- * @typedef {import('./WineRecipe.js').WineRecipeProps} WineRecipeProps
- */
-
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -42,7 +37,7 @@ const stubHandlers = {
 
 /**
  * @param {Partial<{
- *   props: Partial<WineRecipeProps>,
+ *   props: Partial<{wineVariety: import('../../enums.js').grapeVariety}>,
  *   state: Partial<typeof stubGameState>,
  *   handlers: Partial<typeof stubHandlers>
  * }>} props

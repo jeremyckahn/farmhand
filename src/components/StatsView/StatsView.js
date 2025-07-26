@@ -1,6 +1,3 @@
-/**
- * @typedef {import('../Farmhand/Farmhand').farmhand.state} farmhand.state
- */
 import React from 'react'
 import { array, object, number, string } from 'prop-types'
 import classNames from 'classnames'
@@ -248,7 +245,9 @@ const StatsView = (
                   <TableCell {...{ component: 'th', scope: 'row' }}>
                     {itemsMap[itemId].name}
                   </TableCell>
-                  <TableCell align="right">{integerString(quantity)}</TableCell>
+                  <TableCell align="right">
+                    {integerString(quantity || 0)}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

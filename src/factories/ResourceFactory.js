@@ -1,5 +1,3 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
-/** @typedef {import("../enums").itemType} farmhand.itemType */
 import { itemType, toolLevel } from '../enums.js'
 import {
   RESOURCE_SPAWN_CHANCE,
@@ -18,7 +16,7 @@ import StoneFactory from './StoneFactory.js'
 
 /**
  * Object for private cache of factory instances
- * @type {Record.<string, Factory>}
+ * @type {Record.<string, Factory | null>}
  */
 const factoryInstances = {}
 
@@ -123,7 +121,8 @@ export default class ResourceFactory {
       const factory = ResourceFactory.getFactoryForItemType(opt.itemType)
 
       if (factory) {
-        resources = factory.generate()
+        const generated = factory.generate()
+        resources = Array.isArray(generated) ? generated : [generated]
       }
     }
 

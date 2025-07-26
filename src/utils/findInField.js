@@ -1,4 +1,3 @@
-/** @typedef {import("../index").farmhand.plotContent} farmhand.plotContent */
 import { memoize } from './memoize.js'
 
 import { memoizationSerializer } from './index.js'
