@@ -1,9 +1,7 @@
 /**
- * @typedef {import("../index").farmhand.item} item
- * @typedef {import("../index").farmhand.keg} keg
- * @typedef {import("../index").farmhand.cow} farmhand.cow
- * @typedef {import("../index").farmhand.recipe} farmhand.recipe
- * @typedef {import("../index").farmhand.grape} grape
+ * @typedef {farmhand.item} item
+ * @typedef {farmhand.keg} keg
+ * @typedef {farmhand.grape} grape
  */
 import { saveAs } from 'file-saver'
 import globalWindow from 'global/window.js'
@@ -100,7 +98,7 @@ export default {
   },
 
   /**
-   * @param {farmhand.upgrade} upgrade
+   * @param {farmhand.upgradesMetadatum} upgrade
    */
   handleUpgradeTool(upgrade) {
     this.upgradeTool(upgrade)
@@ -128,19 +126,19 @@ export default {
   },
 
   /**
-   * @param {React.SyntheticEvent} e
+   * @param {React.ChangeEvent<HTMLInputElement>} e
    * @param {farmhand.cow} cow
    */
-  // @ts-ignore
   handleCowAutomaticHugChange({ target: { checked } }, cow) {
     this.changeCowAutomaticHugState(cow, checked)
   },
 
   /**
-   * @param {React.SyntheticEvent} e
+   * @param {React.ChangeEvent<HTMLInputElement>} e
    * @param {farmhand.cow} cow
    */
-  handleCowBreedChange({ target: { checked } }, cow) {
+  handleCowBreedChange({ target }, cow) {
+    const { checked } = target
     this.changeCowBreedingPenResident(cow, checked)
   },
 
@@ -166,10 +164,11 @@ export default {
   },
 
   /**
-   * @param {React.SyntheticEvent} e
+   * @param {React.ChangeEvent<HTMLInputElement>} e
    * @param {farmhand.cow} cow
    */
-  handleCowNameInputChange({ target: { value } }, cow) {
+  handleCowNameInputChange({ target }, cow) {
+    const { value } = target
     this.changeCowName(cow.id, value)
   },
 
@@ -182,26 +181,31 @@ export default {
   },
 
   /**
-   * @param {React.SyntheticEvent} e
+   * @param {React.ChangeEvent<HTMLSelectElement>} e
    */
-  handleViewChange({ target: { value } }) {
-    this.setState({ stageFocus: value })
+  handleViewChange({ target }) {
+    const { value } = target
+    this.setState({
+      stageFocus: /** @type {farmhand.stageFocusType} */ (value),
+    })
   },
 
   /**
-   * @param {farmhand.module:enums.stageFocusType} stageFocus
+   * @param {farmhand.stageFocusType} stageFocus
    */
   handleViewChangeButtonClick(stageFocus) {
     this.setState({ stageFocus })
   },
 
   /**
-   * @param {farmhand.module:enums.fieldMode} fieldMode
+   * @param {farmhand.fieldMode} fieldMode
    */
   handleFieldModeSelect(fieldMode) {
     this.setState(({ selectedItemId }) => ({
       selectedItemId:
-        fieldMode !== PLANT || TOOLBELT_FIELD_MODES.has(fieldMode)
+        fieldMode !== PLANT ||
+        // @ts-expect-error
+        TOOLBELT_FIELD_MODES.has(fieldMode)
           ? ''
           : selectedItemId,
       fieldMode,
@@ -259,8 +263,9 @@ export default {
     this.incrementDay()
 
     // Prevent the player from spamming the End Day button
-    // https://www.reddit.com/r/incremental_games/comments/jusn9i/farmhand_updates_for_november_2020/gcmi6x6/?context=3
-    document.activeElement.blur()
+    // https://www.reddit.com/r/incremental_games/comments/jusn9i/farmhand_updates_for_November_2020/gcmi6x6/?context=3
+    const activeElement = /** @type {HTMLElement} */ (document.activeElement)
+    activeElement.blur()
   },
 
   /**
@@ -334,9 +339,9 @@ export default {
   /**
    * @param {boolean} [setOpen]
    */
-  handleMenuToggle(setOpen = null) {
+  handleMenuToggle(setOpen = /** @type {boolean | undefined} */ (undefined)) {
     this.setState(({ isMenuOpen }) => ({
-      isMenuOpen: setOpen === null ? !isMenuOpen : setOpen,
+      isMenuOpen: setOpen == null ? !isMenuOpen : setOpen,
     }))
   },
 
@@ -349,14 +354,14 @@ export default {
   },
 
   /**
-   * @param {farmhand.cow}
+   * @param {farmhand.cow} cow
    */
   handleCowSelect(cow) {
     this.selectCow(cow)
   },
 
   /**
-   * @param {farmhand.cow}
+   * @param {farmhand.cow} cow
    */
   handleCowClick(cow) {
     this.selectCow(cow)
@@ -368,7 +373,7 @@ export default {
   },
 
   /**
-   * @param {farmhand.module:enums.dialogView} dialogView
+   * @param {farmhand.dialogView} dialogView
    */
   handleClickDialogViewButton(dialogView) {
     this.openDialogView(dialogView)
@@ -420,7 +425,8 @@ export default {
 
     fileReader.addEventListener('loadend', e => {
       try {
-        const { result: json } = e.srcElement
+        const { result } = /** @type {FileReader} */ (e.target)
+        const json = String(result)
         const state = reduceByPersistedKeys(JSON.parse(json))
 
         if (
@@ -442,7 +448,7 @@ export default {
         this.showNotification('Data loaded!', 'success')
       } catch (e) {
         console.error(e)
-        this.showNotification(e.message, 'error')
+        this.showNotification(/** @type {Error} */ (e).message, 'error')
       }
     })
 

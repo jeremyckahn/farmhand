@@ -1,6 +1,3 @@
-/** @typedef {import("../index").farmhand.item} farmhand.item */
-/** @typedef {import("../index").farmhand.cropVariety} farmhand.cropVariety */
-
 // Must be invoked with babel: https://stackoverflow.com/a/51532127/470685
 import markdownTable from 'markdown-table'
 
@@ -18,7 +15,12 @@ const getDaysToMature = seedItem => {
  */
 function getCropImage(seedItem, cropItem) {
   if (Array.isArray(seedItem.growsInto)) {
-    return `![${cropItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${cropItem.imageId}.png)`
+    return `![${
+      cropItem.name
+    }](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${
+      // @ts-expect-error
+      cropItem.imageId || cropItem.id
+    }.png)`
   } else {
     return `![${cropItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${cropItem.id}.png)`
   }

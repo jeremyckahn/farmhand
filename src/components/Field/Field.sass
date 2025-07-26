@@ -1,4 +1,4 @@
-@import ../../styles/variables.sass
+@use "../../styles/variables.sass"
 
 $appBarOffset: 135px
 $bottomControlsOffset: 260px
@@ -12,7 +12,7 @@ $obscuringLandscapeUiVerticalOffset: $appBarOffset + $bottomControlsOffset
   @media (orientation: portrait)
     margin-bottom: 10.5em
 
-    @media (min-width: #{$break-sm})
+    @media (min-width: #{variables.$break-sm})
       &[data-purchased-field="0"]
         max-width: calc(100vh * (6/10) - #{$obscuringPortraitUiVerticalOffset})
 
@@ -28,10 +28,10 @@ $obscuringLandscapeUiVerticalOffset: $appBarOffset + $bottomControlsOffset
   @media (orientation: landscape)
     margin: 5em auto
 
-    @media (min-height: #{$break-large-phone})
+    @media (min-height: #{variables.$break-large-phone})
       margin-top: auto
 
-    @media (min-height: #{$break-sm})
+    @media (min-height: #{variables.$break-sm})
       &[data-purchased-field="0"]
         max-width: calc(100vh * (10/6) - #{$obscuringLandscapeUiVerticalOffset})
 
@@ -76,7 +76,7 @@ $obscuringLandscapeUiVerticalOffset: $appBarOffset + $bottomControlsOffset
 
       @media (orientation: landscape)
         flex-direction: row
-        margin-right: $field-space-for-right-side-controls
+        margin-right: variables.$field-space-for-right-side-controls
 
   &[data-purchased-field="1"]
     .react-transform-element
@@ -98,7 +98,7 @@ $obscuringLandscapeUiVerticalOffset: $appBarOffset + $bottomControlsOffset
     padding: 0 1em
     position: fixed
     transform: translateX(-50%)
-    transition: left $duration-entering-screen $easing-ease-out
+    transition: left variables.$duration-entering-screen variables.$easing-ease-out
     width: 250px
 
     @media (orientation: portrait)
@@ -108,7 +108,7 @@ $obscuringLandscapeUiVerticalOffset: $appBarOffset + $bottomControlsOffset
         display: none
 
     .menu-open &
-      left: calc(50vw + $sidebar-width / 2)
+      left: calc(50vw + variables.$sidebar-width / 2)
 
   .zoom-controls
     position: fixed
@@ -136,7 +136,7 @@ $obscuringLandscapeUiVerticalOffset: $appBarOffset + $bottomControlsOffset
       @media (orientation: landscape)
         right: 0.5em
 
-    @media (max-width: #{$break-medium-phone})
+    @media (max-width: #{variables.$break-medium-phone})
       bottom: 0.25em
 
     button

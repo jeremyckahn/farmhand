@@ -13,8 +13,12 @@ export const purchaseCombine = (state, combineId) => {
     return state
   }
 
+  const combine = PURCHASEABLE_COMBINES.get(combineId)
+  const price = combine?.price || 0
+
   return {
+    ...state,
     purchasedCombine: combineId,
-    money: moneyTotal(money, -PURCHASEABLE_COMBINES.get(combineId).price),
+    money: moneyTotal(money, -price),
   }
 }

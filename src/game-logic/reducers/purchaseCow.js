@@ -16,7 +16,8 @@ export const purchaseCow = (state, cow) => {
   if (
     money < cowValue ||
     purchasedCowPen === 0 ||
-    cowInventory.length >= PURCHASEABLE_COW_PENS.get(purchasedCowPen).cows
+    cowInventory.length >=
+      (PURCHASEABLE_COW_PENS.get(purchasedCowPen)?.cows ?? 0)
   ) {
     return state
   }

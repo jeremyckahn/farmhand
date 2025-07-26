@@ -1,8 +1,3 @@
-/**
- * @typedef {import("../index").farmhand.item} farmhand.item
- * @typedef {import("../index").farmhand.cropVariety} farmhand.cropVariety
- */
-
 import { fieldMode, itemType } from '../enums.js'
 import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration.js'
 
@@ -16,25 +11,29 @@ export const crop = ({
   cropTimeline,
   growsInto,
   tier = 1,
-
   isSeed = Boolean(growsInto),
   cropLifecycleDuration = getCropLifecycleDuration({ cropTimeline }),
-
+  id = '',
+  name = '',
   ...rest
 }) =>
-  freeze({
-    cropTimeline,
-    doesPriceFluctuate: true,
-    tier,
-    type: itemType.CROP,
-    value: 10 + cropLifecycleDuration * tier * (isSeed ? 1 : 3),
-    ...(isSeed && {
-      enablesFieldMode: fieldMode.PLANT,
-      growsInto,
-      isPlantableCrop: true,
-    }),
-    ...rest,
-  })
+  freeze(
+    /** @type {farmhand.item} */ ({
+      id,
+      name,
+      cropTimeline,
+      doesPriceFluctuate: true,
+      tier,
+      type: itemType.CROP,
+      value: 10 + cropLifecycleDuration * tier * (isSeed ? 1 : 3),
+      ...(isSeed && {
+        enablesFieldMode: fieldMode.PLANT,
+        growsInto,
+        isPlantableCrop: true,
+      }),
+      ...rest,
+    })
+  )
 
 /**
  * @param {farmhand.item} item
@@ -44,22 +43,22 @@ export const crop = ({
  * @returns {farmhand.item}
  */
 export const fromSeed = (
-  { cropTimeline, cropType, growsInto, tier },
+  { cropTimeline, cropType, growsInto, tier = 1 },
   { variantIdx = 0, canBeFermented = false } = {}
 ) => {
   const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 
-  return {
+  return /** @type {farmhand.item} */ ({
+    id: variants[variantIdx] || '',
     cropTimeline,
     cropType,
     doesPriceFluctuate: true,
-    id: variants[variantIdx],
     tier,
     type: itemType.CROP,
     ...(canBeFermented && {
       daysToFerment: getCropLifecycleDuration({ cropTimeline }) * tier,
     }),
-  }
+  })
 }
 
 /**

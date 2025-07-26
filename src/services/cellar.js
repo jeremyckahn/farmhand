@@ -1,6 +1,6 @@
 /**
- * @typedef {import("..").farmhand.item} item
- * @typedef {import("..").farmhand.keg} keg
+ * @typedef {farmhand.item} item
+ * @typedef {farmhand.keg} keg
  */
 
 import { v4 as uuid } from 'uuid'

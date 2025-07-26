@@ -18,7 +18,10 @@ describe('<Home />', () => {
     handleViewChangeButtonClick = vitest.fn()
 
     render(
-      <FarmhandContext.Provider value={{ gameState, handlers: {} }}>
+      <FarmhandContext.Provider
+        // @ts-expect-error
+        value={{ gameState, handlers: {} }}
+      >
         <Home handleViewChangeButtonClick={handleViewChangeButtonClick} />
       </FarmhandContext.Provider>
     )
@@ -36,8 +39,8 @@ describe('<Home />', () => {
       expect(shopButton()).toBeInTheDocument()
     })
 
-    test('calls to change view when shop button is clicked', () => {
-      userEvent.click(shopButton())
+    test('calls to change view when shop button is clicked', async () => {
+      await userEvent.click(shopButton())
 
       expect(handleViewChangeButtonClick).toHaveBeenCalledWith('SHOP')
     })

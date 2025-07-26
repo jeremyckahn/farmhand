@@ -1,5 +1,5 @@
-@import ../../styles/variables.sass
-@import ../../styles/utils.sass
+@use "../../styles/variables.sass"
+@use "../../styles/utils.sass"
 
 .QuickSelect
   bottom: 7.5em
@@ -9,17 +9,17 @@
   transform: translateX(-50%)
 
   &.MuiPaper-root // Specificity is needed for card-style overrides
-    @include card-style
+    @include utils.card-style
 
   @media (orientation: landscape)
     bottom: auto
 
-    @media (max-height: #{$break-large-phone})
+    @media (max-height: #{variables.$break-large-phone})
       top: 5em
       max-width: calc(100% - 12em)
-      left: calc(50% - (#{$field-space-for-right-side-controls} / 2))
+      left: calc(50% - (#{variables.$field-space-for-right-side-controls} / 2))
 
-    @media (min-height: #{$break-large-phone})
+    @media (min-height: #{variables.$break-large-phone})
       left: auto
       max-height: calc(100vh - 20em)
       min-width: 4em
@@ -28,7 +28,7 @@
       top: 9em
       transform: none
 
-    @media (max-width:  #{$break-md})
+    @media (max-width:  #{variables.$break-md})
       .menu-open &
         display: none
 
@@ -36,10 +36,10 @@
     display: flex
     flex-flow: row
 
-    @media (orientation: landscape) and (min-height: #{$break-large-phone})
+    @media (orientation: landscape) and (min-height: #{variables.$break-large-phone})
       flex-flow: column
 
-  @media (orientation: landscape) and (min-height: #{$break-large-phone})
+  @media (orientation: landscape) and (min-height: #{variables.$break-large-phone})
     bottom: 8em
 
   @media (orientation: portrait)
@@ -53,15 +53,15 @@
     padding: .5em
     position: relative
 
-    @media (orientation: landscape) and (min-height: #{$break-large-phone})
+    @media (orientation: landscape) and (min-height: #{variables.$break-large-phone})
       overflow-x: hidden
 
     > *
-      @media (orientation: landscape) and (min-height: #{$break-large-phone})
+      @media (orientation: landscape) and (min-height: #{variables.$break-large-phone})
         align-items: center
         width: 3em
 
-    @media (orientation: landscape) and (min-height: #{$break-large-phone})
+    @media (orientation: landscape) and (min-height: #{variables.$break-large-phone})
       flex-direction: column
 
   .Toolbelt
@@ -75,12 +75,12 @@
     margin: 0 0.25em
 
     img
-      @include sprite-shadow
+      @include utils.sprite-shadow
 
   .MuiDivider-root
     margin: 0 0.5em
 
-    @media (orientation: landscape) and (min-height: #{$break-large-phone})
+    @media (orientation: landscape) and (min-height: #{variables.$break-large-phone})
       margin: 0 0 1em 0
       height: 1px
       width: 100%

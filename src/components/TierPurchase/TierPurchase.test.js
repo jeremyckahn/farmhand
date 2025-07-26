@@ -43,8 +43,8 @@ describe('<TierPurchase />', () => {
       expect(buyButton()).toBeInTheDocument()
     })
 
-    test('contains the tiers select', () => {
-      openSelect()
+    test('contains the tiers select', async () => {
+      await openSelect()
 
       expect(screen.getByRole('listbox')).toBeInTheDocument()
     })
@@ -55,9 +55,9 @@ describe('<TierPurchase />', () => {
   })
 
   describe('tiers', () => {
-    test('it contains an option for each tier', () => {
+    test('it contains an option for each tier', async () => {
       render(<TierPurchase {...props} />)
-      openSelect()
+      await openSelect()
 
       expect(screen.getAllByRole('option')).toHaveLength(3)
     })
@@ -70,34 +70,34 @@ describe('<TierPurchase />', () => {
       expect(screen.getByText('at max')).toBeInTheDocument()
     })
 
-    test('it calls onBuyClick if the selected tier can be purchased', () => {
+    test('it calls onBuyClick if the selected tier can be purchased', async () => {
       props.purchasedTier = 1
       props.money = 2000
 
       render(<TierPurchase {...props} />)
-      openSelect()
-      userEvent.click(screen.getByRole('option', { name: 'bar' }))
-      userEvent.click(buyButton())
+      await openSelect()
+      await userEvent.click(screen.getByRole('option', { name: 'bar' }))
+      await userEvent.click(buyButton())
 
       expect(onBuyClick).toHaveBeenCalledWith(2)
     })
 
-    test('tiers that can be afforded can be selected', () => {
+    test('tiers that can be afforded can be selected', async () => {
       props.money = 2000
 
       render(<TierPurchase {...props} />)
-      openSelect()
+      await openSelect()
 
       expect(screen.getByRole('option', { name: 'foo' })).not.toHaveAttribute(
         'aria-disabled'
       )
     })
 
-    test('tiers that are too expensive cannot be selected', () => {
+    test('tiers that are too expensive cannot be selected', async () => {
       props.money = 2000
 
       render(<TierPurchase {...props} />)
-      openSelect()
+      await openSelect()
 
       expect(screen.getByRole('option', { name: 'baz' })).toHaveAttribute(
         'aria-disabled',
@@ -105,12 +105,12 @@ describe('<TierPurchase />', () => {
       )
     })
 
-    test('tiers that that have already been purchased cannot be selected', () => {
+    test('tiers that that have already been purchased cannot be selected', async () => {
       props.money = 2000
       props.purchasedTier = 1
 
       render(<TierPurchase {...props} />)
-      openSelect()
+      await openSelect()
 
       expect(screen.getByRole('option', { name: 'foo' })).toHaveAttribute(
         'aria-disabled',
@@ -118,12 +118,12 @@ describe('<TierPurchase />', () => {
       )
     })
 
-    test('it has the next available tier selected', () => {
+    test('it has the next available tier selected', async () => {
       props.money = 2000
       props.purchasedTier = 1
 
       render(<TierPurchase {...props} />)
-      openSelect()
+      await openSelect()
 
       expect(screen.getByRole('option', { name: 'bar' })).toHaveAttribute(
         'aria-selected',

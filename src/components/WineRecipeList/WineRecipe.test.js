@@ -1,8 +1,3 @@
-/**
- * @typedef {import('../Farmhand/Farmhand').farmhand.state} farmhand.state
- * @typedef {import('./WineRecipe.js').WineRecipeProps} WineRecipeProps
- */
-
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -42,7 +37,7 @@ const stubHandlers = {
 
 /**
  * @param {Partial<{
- *   props: Partial<WineRecipeProps>,
+ *   props: Partial<{wineVariety: import('../../enums.js').grapeVariety}>,
  *   state: Partial<typeof stubGameState>,
  *   handlers: Partial<typeof stubHandlers>
  * }>} props
@@ -257,7 +252,7 @@ describe('WineRecipe', () => {
 
   test.each([{ wineYield: 1 }, { wineYield: 2 }])(
     'shows yeast requirements for $wineYield wines',
-    ({ wineYield }) => {
+    async ({ wineYield }) => {
       const grape = grapeChardonnay
 
       const yeastQuantity = getYeastRequiredForWine(grape.variety) * wineYield
@@ -280,7 +275,8 @@ describe('WineRecipe', () => {
 
       const input = screen.getByPlaceholderText(QUANTITY_INPUT_PLACEHOLDER_TEXT)
 
-      userEvent.type(input, String(wineYield))
+      await userEvent.clear(input)
+      await userEvent.type(input, String(wineYield))
 
       const label = screen.getByText(
         `Units of ${yeast.name} required: ${integerString(

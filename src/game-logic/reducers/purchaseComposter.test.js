@@ -9,7 +9,7 @@ describe('purchaseComposter', () => {
   beforeEach(() => {
     gameState = {
       experience: 0,
-      money: PURCHASEABLE_COMPOSTERS.get(1).price,
+      money: PURCHASEABLE_COMPOSTERS.get(1)?.price ?? 0,
       purchasedComposter: 0,
       todaysNotifications: [],
       itemsSold: [],

@@ -1,6 +1,7 @@
-@import '~compass-mixins/lib/compass/css3/transform'
-@import ../../styles/variables.sass
-@import ../../styles/utils.sass
+@use "sass:color"
+
+@use "../../styles/variables.sass"
+@use "../../styles/utils.sass"
 
 // Needed to prevent pull-to-refresh on Android
 // https://stackoverflow.com/a/47709903/470685
@@ -39,10 +40,10 @@ body
   &.farmhand-root
     opacity: 0
     transition: opacity, transform 200ms
-    +transform(scale(0))
+    transform: scale(0)
 
     &.has-booted
-      +transform(scale(1))
+      transform: scale(1)
       opacity: 1
 
   &.block-input
@@ -60,10 +61,10 @@ body
   .MuiTypography-root
     font-family: "Public Sans", sans-serif
 
-  @media (min-width: #{$break-xs}) and (orientation: landscape)
+  @media (min-width: #{variables.$break-xs}) and (orientation: landscape)
     padding-top: 3em
 
-  @media (min-width: #{$break-sm})
+  @media (min-width: #{variables.$break-sm})
     padding-top: 4em
 
   img
@@ -89,14 +90,14 @@ body
 
   .MuiCard-root,
   .MuiTableContainer-root
-    @include card-style
+    @include utils.card-style
 
     .MuiCard-root
-      background: darken($card-background, 10%)
+      background: color.adjust(variables.$card-background, $lightness: -10%)
 
   .MuiCardHeader-avatar
     img
-      @include sprite-shadow
+      @include utils.sprite-shadow
 
   .MuiTableCell-root
     border-color: #e9c777
@@ -110,11 +111,11 @@ body
     overflow: auto
     padding: 1em 1em 0
     position: relative
-    width: $sidebar-width
+    width: variables.$sidebar-width
     z-index: 20
 
-    @media (max-width: #{$break-small-phone})
-      width: $narrow-sidebar-width
+    @media (max-width: #{variables.$break-small-phone})
+      width: variables.$narrow-sidebar-width
 
     .button-array
       display: flex
@@ -130,11 +131,11 @@ body
     left: 50%
     opacity: 0.85
     position: fixed
-    transition: left $duration-entering-screen $easing-ease-out
+    transition: left variables.$duration-entering-screen variables.$easing-ease-out
     width: 0
     z-index: 20
 
-    @media (max-width: #{$break-medium-phone})
+    @media (max-width: #{variables.$break-medium-phone})
       bottom: 0.5em
 
     .MuiMobileStepper-root
@@ -148,7 +149,7 @@ body
         margin: 0.5em
         position: relative
 
-        @media (max-width: #{$break-medium-phone})
+        @media (max-width: #{variables.$break-medium-phone})
           margin: 0.25em 0.5em
 
         @media (max-width: 320px)
@@ -156,14 +157,14 @@ body
 
   @media (orientation: landscape)
     &.menu-open .bottom-controls
-      left: calc(50vw + $sidebar-width / 2)
+      left: calc(50vw + variables.$sidebar-width / 2)
 
   .end-day
     position: fixed
     top: 5em
     right: 1em
 
-    @media (min-width: #{$break-sm})
+    @media (min-width: #{variables.$break-sm})
       right: 1.25em
       top: 5.5em
 
@@ -172,13 +173,13 @@ body
       right: auto
       left: 1em
 
-      @media (min-width: #{$break-sm})
+      @media (min-width: #{variables.$break-sm})
         &.use-alternate-end-day-button-position
           right: auto
           left: 1em
 
   .menu-button
-    transition: transform $duration-shorter
+    transition: transform variables.$duration-shorter
     transform: rotate(0deg)
 
     &.is-open
@@ -220,7 +221,7 @@ body
 
       > li
         margin: 1em auto
-        max-width: $card-max-width
+        max-width: variables.$card-max-width
 
   input
 
@@ -262,7 +263,7 @@ body
     min-height: 7.5em
 
   .danger-text
-    color: $error-color
+    color: variables.$error-color
 
   .MuiTooltip-popper
     p
@@ -274,10 +275,10 @@ body
   .MuiAlert-root
     margin-bottom: 1em
 
-    @media (min-width: #{$break-xs}) and (orientation: landscape)
+    @media (min-width: #{variables.$break-xs}) and (orientation: landscape)
       top: 3.5em
 
-    @media (min-width: #{$break-sm})
+    @media (min-width: #{variables.$break-sm})
       top: 4.5em
 
     p
@@ -315,7 +316,7 @@ body
   margin-top: 8em
   padding-top: 0
 
-  @media (min-width: #{$break-md})
+  @media (min-width: #{variables.$break-md})
     margin-top: 4em
     margin-right: 4em
 

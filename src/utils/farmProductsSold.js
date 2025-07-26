@@ -5,13 +5,13 @@ import { isItemAFarmProduct } from './isItemAFarmProduct.js'
 
 export const farmProductsSold = memoize(
   /**
-   * @param {Record<string, number>} itemsSold
+   * @param {Partial<Record<string, number>>} itemsSold
    * @returns {number}
    */
   itemsSold =>
     Object.entries(itemsSold).reduce(
       (sum, [itemId, numberSold]) =>
-        sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold : 0),
+        sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold || 0 : 0),
       0
     )
 )

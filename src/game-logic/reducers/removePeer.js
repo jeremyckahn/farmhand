@@ -1,5 +1,4 @@
 /**
- * @typedef {import('../../components/Farmhand/Farmhand').farmhand.state} farmhand.state
  */
 
 // TODO: Add tests for this reducer

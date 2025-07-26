@@ -68,10 +68,11 @@ export class Cow extends Component {
     ) {
       this.setState({ showHugAnimation: true })
 
-      this.animateHugTimeoutId = setTimeout(
-        () => this.setState({ showHugAnimation: false }),
-        Cow.hugAnimationDuration
-      )
+      this.animateHugTimeoutId = setTimeout(() => {
+        if (this.isComponentMounted) {
+          this.setState({ showHugAnimation: false })
+        }
+      }, Cow.hugAnimationDuration)
     }
   }
 
@@ -81,14 +82,20 @@ export class Cow extends Component {
     const { moveDirection: oldDirection, x, y } = this.state
     const newDirection = newX < this.state.x ? LEFT : RIGHT
 
-    this.setState({
-      moveDirection: newDirection,
-    })
+    if (this.isComponentMounted) {
+      this.setState({
+        moveDirection: newDirection,
+      })
+    }
 
     if (oldDirection !== newDirection) {
-      /** @type {import('shifty').RenderFunction} */
+      /**
+       * @param {{ rotate: number }} param0
+       */
       const render = ({ rotate }) => {
-        this.setState({ rotate })
+        if (this.isComponentMounted) {
+          this.setState({ rotate })
+        }
       }
 
       try {
@@ -105,6 +112,7 @@ export class Cow extends Component {
             },
             easing,
             duration,
+            // @ts-expect-error
             render,
           })
         } else {
@@ -117,6 +125,7 @@ export class Cow extends Component {
             },
             easing,
             duration,
+            // @ts-expect-error
             render,
           })
         }
@@ -126,9 +135,11 @@ export class Cow extends Component {
       }
     }
 
-    this.setState({
-      isTransitioning: true,
-    })
+    if (this.isComponentMounted) {
+      this.setState({
+        isTransitioning: true,
+      })
+    }
 
     try {
       await this.tweenable.tween({
@@ -136,7 +147,9 @@ export class Cow extends Component {
         to: { x: newX, y: randomPosition() },
         duration: Cow.transitionAnimationDuration,
         render: ({ x, y }) => {
-          this.setState({ x, y })
+          if (this.isComponentMounted) {
+            this.setState({ x, y })
+          }
         },
         easing: 'linear',
       })
@@ -145,7 +158,9 @@ export class Cow extends Component {
       return
     }
 
-    this.setState({ isTransitioning: false })
+    if (this.isComponentMounted) {
+      this.setState({ isTransitioning: false })
+    }
     this.scheduleMove()
   }
 

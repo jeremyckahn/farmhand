@@ -193,14 +193,22 @@ import goldIngot from './ores/gold-ingot.png'
 import rainbowCow from './animals/cows/rainbow-cow.png'
 // NOTE: These need to be imported as dataUri strings because the image data is
 // programmatically manipulated by the getCowImage utility function.
+// @ts-expect-error
 import cowVariation1 from './animals/cows/cow-variation-1.png?dataUri'
+// @ts-expect-error
 import cowVariation2 from './animals/cows/cow-variation-2.png?dataUri'
+// @ts-expect-error
 import cowVariation3 from './animals/cows/cow-variation-3.png?dataUri'
+// @ts-expect-error
 import cowVariation4 from './animals/cows/cow-variation-4.png?dataUri'
+// @ts-expect-error
 import cowVariation5 from './animals/cows/cow-variation-5.png?dataUri'
+// @ts-expect-error
 import cowVariation6 from './animals/cows/cow-variation-6.png?dataUri'
+// @ts-expect-error
 import cowVariation7 from './animals/cows/cow-variation-7.png?dataUri'
 
+// @ts-expect-error
 export { default as pixel } from './pixel.png?dataUri'
 
 export const plotStates = {

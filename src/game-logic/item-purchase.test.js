@@ -14,8 +14,9 @@ describe('item purchasing', () => {
     const carrotSeedShopItem = within(main)
       .getByText('Carrot Seed')
       .closest('.Item')
+    // @ts-expect-error
     const buyButton = within(carrotSeedShopItem).getByText('Buy')
-    userEvent.click(buyButton)
+    await userEvent.click(buyButton)
 
     const menu = screen.getByRole('complementary')
     expect(within(menu).getByText('Carrot Seed')).toBeInTheDocument()

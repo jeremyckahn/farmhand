@@ -1,5 +1,8 @@
 import { MILKS_PRODUCED } from '../../templates.js'
-import { COW_MILK_RATE_SLOWEST, INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import {
+  COW_MILK_RATE_SLOWEST,
+  INFINITE_STORAGE_LIMIT,
+} from '../../constants.js'
 import { genders, standardCowColors } from '../../enums.js'
 import { generateCow, getCowMilkItem } from '../../utils/index.js'
 
@@ -63,7 +66,7 @@ describe('processMilkingCows', () => {
         expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
-            message: MILKS_PRODUCED`${{ [getCowMilkItem(cow).name]: 1 }}`,
+            message: MILKS_PRODUCED('', { [getCowMilkItem(cow).name]: 1 }),
             severity: 'success',
           },
         ])
@@ -98,7 +101,7 @@ describe('processMilkingCows', () => {
         expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
-            message: MILKS_PRODUCED`${{ [getCowMilkItem(cow).name]: 1 }}`,
+            message: MILKS_PRODUCED('', { [getCowMilkItem(cow).name]: 1 }),
             severity: 'success',
           },
         ])

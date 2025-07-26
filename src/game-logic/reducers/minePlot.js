@@ -1,4 +1,4 @@
-import { toolType } from '../../enums.js'
+import { toolType, fertilizerType } from '../../enums.js'
 import { chooseRandom, doesInventorySpaceRemain } from '../../utils/index.js'
 import { INVENTORY_FULL_NOTIFICATION } from '../../strings.js'
 import { ResourceFactory } from '../../factories/index.js'
@@ -37,7 +37,9 @@ export const minePlot = (state, x, y) => {
   let daysUntilClear = chooseRandom(daysUntilClearPeriods)
 
   if (spawnedResource) {
-    const spawnChances = spawnedResources.map(({ spawnChance }) => spawnChance)
+    const spawnChances = spawnedResources
+      .map(({ spawnChance }) => spawnChance)
+      .filter(chance => chance != null)
     const minSpawnChance = Math.min(...spawnChances)
 
     // if a resource was spawned, add up to 10 days to the time to clear at
@@ -52,6 +54,8 @@ export const minePlot = (state, x, y) => {
 
   state = modifyFieldPlotAt(state, x, y, () => {
     return {
+      itemId: '',
+      fertilizerType: fertilizerType.NONE,
       isShoveled: true,
       daysUntilClear,
       oreId: spawnedResource?.id ?? null,

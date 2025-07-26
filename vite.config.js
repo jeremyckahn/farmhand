@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 
 import { defineConfig, transformWithEsbuild, mergeConfig } from 'vite'
-import { defineConfig as vitestDefineConfig } from 'vitest/config'
+import { defineConfig as vitestDefineConfig } from 'vitest/dist/config.js'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
@@ -94,10 +94,18 @@ const viteConfig = defineConfig({
       },
     },
   },
+  css: {
+    preprocessorOptions: {
+      sass: {
+        api: 'modern-compiler', // or "modern"
+      },
+    },
+  },
 })
 
 const vitestConfig = vitestDefineConfig({
   test: {
+    watch: false,
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.js',

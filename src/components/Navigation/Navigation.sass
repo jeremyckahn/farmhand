@@ -1,4 +1,4 @@
-@import ../../styles/variables.sass
+@use "../../styles/variables.sass"
 
 .Navigation
   flex-direction: column
@@ -37,7 +37,7 @@
       margin-left: 3em
       margin-right: 3em
 
-      @media (max-width: #{$break-small-phone})
+      @media (max-width: #{variables.$break-small-phone})
         margin-left: 2em
         margin-right: 2em
 
@@ -56,7 +56,7 @@
     font-size: 3em
     font-weight: bold
 
-    @media (max-width: #{$break-small-phone})
+    @media (max-width: #{variables.$break-small-phone})
       font-size: 2.5em
 
   button
@@ -83,7 +83,7 @@
     font-size: 1em
 
     &.is-inventory-full
-      color: $error-color
+      color: variables.$error-color
 
   .MuiSelect-select.MuiSelect-select
     padding: 1em

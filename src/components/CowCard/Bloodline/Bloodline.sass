@@ -1,4 +1,4 @@
-@import ../../../styles/variables.sass
+@use "../../../styles/variables.sass"
 
 .CowCard
   .Bloodline,
@@ -19,19 +19,19 @@
       width: $indicator-size
 
       &.blue
-        background: $cow-color-blue
+        background: variables.$cow-color-blue
       &.brown
-        background: $cow-color-brown
+        background: variables.$cow-color-brown
       &.green
-        background: $cow-color-green
+        background: variables.$cow-color-green
       &.orange
-        background: $cow-color-orange
+        background: variables.$cow-color-orange
       &.purple
-        background: $cow-color-purple
+        background: variables.$cow-color-purple
       &.white
-        background: $cow-color-white
+        background: variables.$cow-color-white
       &.yellow
-        background: $cow-color-yellow
+        background: variables.$cow-color-yellow
 
   &.is-purchased
     ul.Bloodline

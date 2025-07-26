@@ -212,6 +212,8 @@ SettingsView.propTypes = {
   useAlternateEndDayButtonPosition: bool.isRequired,
 }
 
+export { SettingsView }
+
 export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>

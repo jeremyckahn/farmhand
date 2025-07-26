@@ -1,10 +1,13 @@
 /**
- * @param {Object.<farmhand.priceEvent>} priceEvents
- * @returns {Object.<farmhand.priceEvent>}
+ * @param {Partial<Record<string, farmhand.priceEvent>>} priceEvents
+ * @returns {Partial<Record<string, farmhand.priceEvent>>}
  */
 const decrementPriceEventDays = priceEvents =>
   Object.keys(priceEvents).reduce((acc, key) => {
-    const { itemId, daysRemaining } = priceEvents[key]
+    const priceEvent = priceEvents[key]
+    if (!priceEvent) return acc
+
+    const { itemId, daysRemaining } = priceEvent
 
     if (daysRemaining > 1) {
       acc[key] = { itemId, daysRemaining: daysRemaining - 1 }

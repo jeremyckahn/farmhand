@@ -1,3 +1,6 @@
+@use "variables"
+
+@use "sass:color"
 .fill
   bottom: 0
   left: 0
@@ -13,12 +16,12 @@ img
     width: 100%
 
 @mixin card-style
-  background: $card-background
+  background: variables.$card-background
   border: solid 2px #b68000
-  transition: background $duration-entering-screen $easing-ease-out
+  transition: background variables.$duration-entering-screen variables.$easing-ease-out
 
   &.is-selected
-    background: scale-color($card-background, $lightness: 40%)
+    background: color.scale(variables.$card-background, $lightness: 40%)
 
 @mixin center-tabs
   margin: 0 auto

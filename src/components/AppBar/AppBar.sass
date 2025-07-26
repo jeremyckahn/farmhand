@@ -1,4 +1,4 @@
-@import ../../styles/variables.sass
+@use "../../styles/variables.sass"
 
 .AppBar
 
@@ -14,7 +14,7 @@
       display: none
       margin-left: 1em
 
-      @media (min-width: #{$break-medium-phone})
+      @media (min-width: #{variables.$break-medium-phone})
         display: block
 
     .money-display

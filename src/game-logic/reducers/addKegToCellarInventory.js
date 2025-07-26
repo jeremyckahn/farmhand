@@ -1,5 +1,5 @@
-/** @typedef {import("../../index").farmhand.keg} keg */
-/** @typedef {import("../../components/Farmhand/Farmhand").farmhand.state} state */
+/** @typedef {farmhand.keg} keg */
+/** @typedef {farmhand.state} state */
 
 /**
  * ⚠️ It is the responsibility of the consumer of this reducer to ensure that

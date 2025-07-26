@@ -1,11 +1,11 @@
-@import ../../styles/variables.sass
+@use "../../styles/variables.sass"
 
 .QuantityInput
 
   .MuiInput-root
     margin: 1px 0.25em 0
 
-    @media (max-width: #{$break-medium-phone})
+    @media (max-width: #{variables.$break-medium-phone})
       margin: 0 0.25em 0 0.5em
 
     input

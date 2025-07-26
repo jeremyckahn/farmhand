@@ -1,4 +1,4 @@
-import { testCrop } from '../../test-utils/index.js'
+import { testCrop, testState } from '../../test-utils/index.js'
 import { getPlotContentFromItemId } from '../../utils/index.js'
 
 import { processSprinklers } from './processSprinklers.js'
@@ -9,7 +9,7 @@ describe('processSprinklers', () => {
   let computedState
 
   beforeEach(() => {
-    const field = new Array(8).fill().map(() => new Array(8).fill(null))
+    const field = new Array(8).fill(null).map(() => new Array(8).fill(null))
     field[0][0] = getPlotContentFromItemId('sprinkler')
     field[1][1] = getPlotContentFromItemId('sprinkler')
     field[6][5] = getPlotContentFromItemId('sprinkler')
@@ -17,10 +17,12 @@ describe('processSprinklers', () => {
     field[2][2] = testCrop()
     field[3][3] = testCrop()
 
-    computedState = processSprinklers({
-      field,
-      itemsSold: {},
-    })
+    computedState = processSprinklers(
+      testState({
+        field,
+        itemsSold: {},
+      })
+    )
   })
 
   test('waters crops within range', () => {
