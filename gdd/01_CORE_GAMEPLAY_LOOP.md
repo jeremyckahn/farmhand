@@ -21,7 +21,7 @@ Based on their market analysis, the player should adopt a strategy of investing 
 
 Once an investment is made, a player's strategy may involve waiting for it to mature and for market conditions to become favorable.
 
-*   **Nurture Assets:** The player continues to care for their crops and animals.
+*   **Nurture Assets:** The player continues to care for their crops and cows.
 *   **Monitor the Market:** The player keeps a close eye on the market, waiting for the optimal moment to sell. This approach is a test of patience and risk management.
 
 ## 4. Selling High: The Profit-Taking Strategy
@@ -37,6 +37,6 @@ A forward-thinking player will adopt a strategy of using profits from successful
 
 *   **Increase Production Capacity:** The player can purchase more land, allowing them to produce more commodities at once.
 *   **Improve Efficiency:** The player can upgrade their tools and infrastructure (like sprinklers) to reduce the labor cost of producing goods, increasing their profit margins.
-*   **Diversify Portfolio:** The player can unlock new types of crops and animals, allowing them to diversify their "portfolio" and mitigate risk.
+*   **Diversify Portfolio:** The player can unlock new types of crops and upgrade their cows, allowing them to diversify their "portfolio" and mitigate risk.
 
 This strategic cycle repeats, with the player using their growing knowledge of the market and their expanding farm to generate ever-increasing profits.

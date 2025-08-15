@@ -54,7 +54,7 @@ Based on their market analysis, the player should adopt a strategy of investing 
 
 Once an investment is made, a player's strategy may involve waiting for it to mature and for market conditions to become favorable.
 
-*   **Nurture Assets:** The player continues to care for their crops and animals.
+*   **Nurture Assets:** The player continues to care for their crops and cows.
 *   **Monitor the Market:** The player keeps a close eye on the market, waiting for the optimal moment to sell. This approach is a test of patience and risk management.
 
 ## 4. Selling High: The Profit-Taking Strategy
@@ -70,7 +70,7 @@ A forward-thinking player will adopt a strategy of using profits from successful
 
 *   **Increase Production Capacity:** The player can purchase more land, allowing them to produce more commodities at once.
 *   **Improve Efficiency:** The player can upgrade their tools and infrastructure (like sprinklers) to reduce the labor cost of producing goods, increasing their profit margins.
-*   **Diversify Portfolio:** The player can unlock new types of crops and animals, allowing them to diversify their "portfolio" and mitigate risk.
+*   **Diversify Portfolio:** The player can unlock new types of crops and upgrade their cows, allowing them to diversify their "portfolio" and mitigate risk.
 
 This strategic cycle repeats, with the player using their growing knowledge of the market and their expanding farm to generate ever-increasing profits.
 # Game Mechanics
@@ -94,7 +94,7 @@ The market is where all buying and selling takes place. It is the central hub of
 
 The shop is not just a place to buy things; it's where you make your initial investments.
 
-*   **Buying "Stock":** Purchasing seeds and animals is the primary way to invest in future production. The cost of these items is fixed, but the potential return is variable, depending on when you sell the resulting products.
+*   **Buying "Stock":** Purchasing seeds and cows is the primary way to invest in future production. The cost of these items is fixed, but the potential return is variable, depending on when you sell the resulting products.
 *   **Capital Expenditures:** Purchasing tools, upgrades, and land are capital expenditures designed to increase the efficiency and scale of your production engine.
 
 ### 1.3. Loans: High-Risk Capital
@@ -114,7 +114,7 @@ Farming is the primary method for producing the commodities you will trade on th
 
 ## 3. Animal Husbandry: Long-Term Investments
 
-Animals are another class of asset that players can invest in.
+Cows are another class of asset that players can invest in.
 
 *   **Cows as Bonds:** Compared to crops, cows are a more stable, long-term investment. They have a higher initial cost but provide a steady stream of daily revenue (milk).
 *   **Improving Asset Value:** The value of a cow's output can be increased through care (hugging) and proper feeding. Breeding allows for the creation of "blue-chip" assets that produce higher-quality goods.
