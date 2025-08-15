@@ -2,34 +2,32 @@
 
 ## 1. High-Level Overview
 
-**Farmhand** is a charming and accessible farming simulation game where players take on the role of a modern farmer, building a thriving agricultural enterprise from the ground up. It combines classic resource management with a relaxed, player-driven pace, making it suitable for both quick check-ins and longer play sessions. The game is designed to be cross-platform, with a responsive UI that works equally well on desktop and mobile devices.
+**Farmhand** is a unique market simulation game with a charming farming aesthetic. At its core, it is a "buy low, sell high" stock market simulator where the commodities are agricultural products. Players engage in farming activities to produce "stock," which they then trade on a dynamic, fluctuating market. The game is designed to be a compelling economic challenge, wrapped in the accessible and relaxing visuals of a farming game.
 
 ## 2. Game Concept
 
-The core concept of Farmhand is to provide a satisfying and engaging farming experience that is both deep and approachable. Players start with a small, humble plot of land and a handful of tools. Through careful planning, hard work, and smart business decisions, they can expand their farm, unlock new crops and animals, and become a successful agriculturalist. The game emphasizes a sense of progression and accomplishment, with a clear path from a small-time farmer to a farming tycoon.
+The core concept of Farmhand is to master a simulated economy. Players don't just grow crops; they play the market. The central challenge is to anticipate price shifts, decide when to invest in production (planting), and, most importantly, when to sell for maximum profit. Farming and crafting are the means to an end: generating assets to trade. Success is measured not just by the size of the farm, but by the player's wealth and their ability to outsmart the market.
 
 ## 3. Genre
 
-*   **Primary Genre:** Farming Simulation
-*   **Secondary Genres:** Resource Management, Casual Game
+*   **Primary Genre:** Economic Simulation
+*   **Secondary Genres:** Trading Game, Resource Management
 
 ## 4. Target Audience
 
-Farmhand is aimed at a broad audience of players who enjoy relaxing, creative, and rewarding games. The primary target audience includes:
+Farmhand is aimed at players who enjoy strategic thinking and economic challenges, presented in an approachable format.
 
-*   Fans of classic farming simulation games like *Stardew Valley*, *Harvest Moon*, and *Animal Crossing*.
-*   Casual gamers looking for a game that can be played in short bursts.
-*   Players who enjoy resource management and optimization challenges.
-*   Mobile gamers looking for a deep and engaging experience on their phone or tablet.
-
-The game's charming pixel art style and non-violent gameplay make it suitable for all ages.
+*   Players who enjoy "buy low, sell high" mechanics and market dynamics.
+*   Fans of simulation and tycoon games who are looking for a new twist on the genre.
+*   Strategic players who enjoy optimizing systems and finding the most profitable path.
+*   The farming aesthetic makes it accessible to a broader audience that might be intimidated by traditional stock market simulators.
 
 ## 5. What Makes it Fun? (The Core Fantasy)
 
-The fun in Farmhand comes from several key elements:
+The fun in Farmhand is centered on the thrill of playing the market and the satisfaction of seeing a well-timed trade pay off.
 
-*   **The Joy of Cultivation:** The simple, satisfying loop of tilling the soil, planting seeds, watering crops, and watching them grow is a core part of the game's appeal.
-*   **A Sense of Ownership and Accomplishment:** Players have a high degree of control over their farm's layout and development. Seeing their farm grow from a small plot to a large, bustling enterprise is a powerful motivator.
-*   **Economic Strategy:** The game isn't just about farming; it's also about business. Players must make smart decisions about what to plant, when to sell, and how to invest their earnings. The dynamic market and loan system add a layer of strategic depth.
-*   **Constant Progression:** There's always something new to unlock or upgrade in Farmhand. Whether it's a new crop, a better tool, or a new crafting recipe, the game constantly rewards players with new content and goals.
-*   **Social Interaction:** The multiplayer system allows players to connect with friends, visit each other's farms, and even influence the global market. This adds a social dimension to the game that enhances its longevity.
+*   **The Thrill of the Trade:** The core loop is not about farming, but about wealth generation. The excitement comes from watching the market, predicting trends, and making the decision to sell at the perfect moment.
+*   **Strategic Depth:** The game is a puzzle of resource allocation and timing. Should you invest in cheap, fast-growing crops for a quick return, or expensive, slow-growing crops for a larger payoff? Should you sell now, or hold your inventory in the hope of a price surge? These are the questions that drive the gameplay.
+*   **Beating the System:** The ultimate fantasy is to master the game's economy. Players feel a sense of accomplishment when they successfully predict a price event, corner the market on a particular commodity, or build a vast fortune through shrewd trading.
+*   **Tangible Results:** Unlike abstract numbers in a traditional stock market game, the player's "stock" is tangible—it's a field of ripe tomatoes or a cellar full of aged wine. This provides a unique and satisfying connection to the economic simulation.
+*   **Social Economics:** In multiplayer, the market becomes a shared battleground of wits. Players must not only account for the game's random fluctuations but also the actions of other players, adding a layer of competitive and cooperative economic gameplay.

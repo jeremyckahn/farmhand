@@ -2,253 +2,137 @@
 
 ## 1. High-Level Overview
 
-**Farmhand** is a charming and accessible farming simulation game where players take on the role of a modern farmer, building a thriving agricultural enterprise from the ground up. It combines classic resource management with a relaxed, player-driven pace, making it suitable for both quick check-ins and longer play sessions. The game is designed to be cross-platform, with a responsive UI that works equally well on desktop and mobile devices.
+**Farmhand** is a unique market simulation game with a charming farming aesthetic. At its core, it is a "buy low, sell high" stock market simulator where the commodities are agricultural products. Players engage in farming activities to produce "stock," which they then trade on a dynamic, fluctuating market. The game is designed to be a compelling economic challenge, wrapped in the accessible and relaxing visuals of a farming game.
 
 ## 2. Game Concept
 
-The core concept of Farmhand is to provide a satisfying and engaging farming experience that is both deep and approachable. Players start with a small, humble plot of land and a handful of tools. Through careful planning, hard work, and smart business decisions, they can expand their farm, unlock new crops and animals, and become a successful agriculturalist. The game emphasizes a sense of progression and accomplishment, with a clear path from a small-time farmer to a farming tycoon.
+The core concept of Farmhand is to master a simulated economy. Players don't just grow crops; they play the market. The central challenge is to anticipate price shifts, decide when to invest in production (planting), and, most importantly, when to sell for maximum profit. Farming and crafting are the means to an end: generating assets to trade. Success is measured not just by the size of the farm, but by the player's wealth and their ability to outsmart the market.
 
 ## 3. Genre
 
-*   **Primary Genre:** Farming Simulation
-*   **Secondary Genres:** Resource Management, Casual Game
+*   **Primary Genre:** Economic Simulation
+*   **Secondary Genres:** Trading Game, Resource Management
 
 ## 4. Target Audience
 
-Farmhand is aimed at a broad audience of players who enjoy relaxing, creative, and rewarding games. The primary target audience includes:
+Farmhand is aimed at players who enjoy strategic thinking and economic challenges, presented in an approachable format.
 
-*   Fans of classic farming simulation games like *Stardew Valley*, *Harvest Moon*, and *Animal Crossing*.
-*   Casual gamers looking for a game that can be played in short bursts.
-*   Players who enjoy resource management and optimization challenges.
-*   Mobile gamers looking for a deep and engaging experience on their phone or tablet.
-
-The game's charming pixel art style and non-violent gameplay make it suitable for all ages.
+*   Players who enjoy "buy low, sell high" mechanics and market dynamics.
+*   Fans of simulation and tycoon games who are looking for a new twist on the genre.
+*   Strategic players who enjoy optimizing systems and finding the most profitable path.
+*   The farming aesthetic makes it accessible to a broader audience that might be intimidated by traditional stock market simulators.
 
 ## 5. What Makes it Fun? (The Core Fantasy)
 
-The fun in Farmhand comes from several key elements:
+The fun in Farmhand is centered on the thrill of playing the market and the satisfaction of seeing a well-timed trade pay off.
 
-*   **The Joy of Cultivation:** The simple, satisfying loop of tilling the soil, planting seeds, watering crops, and watching them grow is a core part of the game's appeal.
-*   **A Sense of Ownership and Accomplishment:** Players have a high degree of control over their farm's layout and development. Seeing their farm grow from a small plot to a large, bustling enterprise is a powerful motivator.
-*   **Economic Strategy:** The game isn't just about farming; it's also about business. Players must make smart decisions about what to plant, when to sell, and how to invest their earnings. The dynamic market and loan system add a layer of strategic depth.
-*   **Constant Progression:** There's always something new to unlock or upgrade in Farmhand. Whether it's a new crop, a better tool, or a new crafting recipe, the game constantly rewards players with new content and goals.
-*   **Social Interaction:** The multiplayer system allows players to connect with friends, visit each other's farms, and even influence the global market. This adds a social dimension to the game that enhances its longevity.
+*   **The Thrill of the Trade:** The core loop is not about farming, but about wealth generation. The excitement comes from watching the market, predicting trends, and making the decision to sell at the perfect moment.
+*   **Strategic Depth:** The game is a puzzle of resource allocation and timing. Should you invest in cheap, fast-growing crops for a quick return, or expensive, slow-growing crops for a larger payoff? Should you sell now, or hold your inventory in the hope of a price surge? These are the questions that drive the gameplay.
+*   **Beating the System:** The ultimate fantasy is to master the game's economy. Players feel a sense of accomplishment when they successfully predict a price event, corner the market on a particular commodity, or build a vast fortune through shrewd trading.
+*   **Tangible Results:** Unlike abstract numbers in a traditional stock market game, the player's "stock" is tangible—it's a field of ripe tomatoes or a cellar full of aged wine. This provides a unique and satisfying connection to the economic simulation.
+*   **Social Economics:** In multiplayer, the market becomes a shared battleground of wits. Players must not only account for the game's random fluctuations but also the actions of other players, adding a layer of competitive and cooperative economic gameplay.
 # Core Gameplay Loop
 
-The gameplay in Farmhand is built around a simple yet addictive core loop. This loop is designed to be easy to understand for new players, while also offering enough depth to keep experienced players engaged. The loop can be broken down into the following stages:
+The gameplay in Farmhand is a cycle of strategic economic decisions, with farming as the primary means of executing those decisions. The loop is focused on the "buy low, sell high" principle.
 
-## 1. Plant & Grow (The Work Phase)
+## 1. Analyze the Market (The Strategy Phase)
 
-This is the foundation of the game. In this phase, the player performs the essential tasks of a farmer:
+The first and most important step in the loop is to analyze the market.
 
-*   **Prepare the Land:** The player uses tools like the hoe and shovel to till the soil and prepare it for planting.
-*   **Plant Seeds:** The player purchases or uses seeds from their inventory to plant crops in their fields.
-*   **Nurture the Crops:** The player must water their crops daily to ensure they grow. They can also use fertilizers to speed up growth or gain other benefits.
-*   **Protect the Farm:** The player must deal with threats like weeds, which can choke out crops, and crows, which can eat them. Tools like the scythe and scarecrows are used to mitigate these threats.
+*   **Check Prices:** The player reviews the current market prices for all commodities.
+*   **Identify Opportunities:** The player looks for goods with low prices (a good time to "buy" or produce) and goods with high prices (a good time to sell).
+*   **Anticipate Events:** The player is informed of any upcoming price events, which can drastically change the value of certain goods. This information is crucial for planning.
 
-## 2. Harvest & Collect (The Reward Phase)
+## 2. Invest & Produce (The "Buy Low" Phase)
 
-After a certain number of in-game days, the player's crops will be ready for harvest. This is the payoff for their hard work:
+Based on their market analysis, the player invests their capital in producing commodities they believe will be profitable.
 
-*   **Harvesting:** The player uses a scythe to harvest their mature crops, which are then added to their inventory. The yield of the harvest can be increased by upgrading the scythe.
-*   **Collecting Animal Products:** If the player owns cows, they can collect milk from them daily. The quality and quantity of milk can be influenced by how well the cows are cared for.
+*   **Purchase Seeds:** The player buys seeds for crops that are either currently undervalued or are expected to rise in price. This is the equivalent of buying a low-cost stock.
+*   **Manage Production:** The player engages in the farming activities required to grow their "stock": tilling, planting, watering, and protecting their crops. This is the "work" required to mature their investment.
 
-## 3. Sell & Earn (The Economic Phase)
+## 3. Hold & Wait (The "Holding" Phase)
 
-Once the player has a collection of goods, they can sell them to earn money:
+Once an investment is made, the player must wait for it to mature and for the market conditions to be favorable.
 
-*   **The Market:** The player can sell their crops, animal products, and other items at the in-game market.
-*   **Price Fluctuations:** The market is dynamic, with prices for goods changing daily. There are also random price events that can dramatically increase or decrease the value of certain items. This encourages players to be strategic about when they sell their goods.
-*   **Multiplayer Impact:** In multiplayer games, the collective actions of all players can influence the market, creating a shared economic environment.
+*   **Nurture Assets:** The player continues to care for their crops and animals.
+*   **Monitor the Market:** The player keeps a close eye on the market, waiting for the optimal moment to sell. This phase is a test of patience and risk management.
 
-## 4. Upgrade & Expand (The Progression Phase)
+## 4. Sell High (The "Sell High" Phase)
 
-The money earned from selling goods is used to improve and expand the farm:
+This is the payoff. The player sells their commodities when the price is high to maximize their return on investment.
 
-*   **Buying New Seeds and Items:** The player can purchase a wide variety of new seeds and items from the shop, allowing them to grow different crops and access new gameplay mechanics.
-*   **Upgrading Tools:** The player can upgrade their tools at the workshop, making them more efficient. For example, an upgraded watering can can water multiple plots at once.
-*   **Expanding the Farm:** The player can purchase new fields to expand their farming operations.
-*   **Investing in Infrastructure:** The player can purchase items like sprinklers to automate watering, or hugging machines to improve cow happiness.
+*   **Timing the Sale:** The player must decide on the best day to sell. Do they sell now for a guaranteed profit, or risk waiting another day in the hopes of an even higher price?
+*   **Liquidate Assets:** The player sells their harvested crops and other goods, converting their tangible assets back into cash.
 
-## 5. The Loop Repeats
+## 5. Re-invest & Grow (The "Growth" Phase)
 
-This core loop forms the backbone of the Farmhand experience. Each cycle of the loop allows the player to become more efficient, unlock new possibilities, and grow their farm into a larger and more impressive enterprise. The game's day/night cycle and seasonal changes add variety to this loop, ensuring that there's always something new to do and see.
+The profits from successful sales are used to expand the player's economic engine.
+
+*   **Increase Production Capacity:** The player can purchase more land, allowing them to produce more commodities at once.
+*   **Improve Efficiency:** The player can upgrade their tools and infrastructure (like sprinklers) to reduce the labor cost of producing goods, increasing their profit margins.
+*   **Diversify Portfolio:** The player can unlock new types of crops and animals, allowing them to diversify their "portfolio" and mitigate risk.
+
+This loop repeats, with the player using their growing knowledge of the market and their expanding farm to generate ever-increasing profits.
 # Game Mechanics
 
-This section details the various systems and mechanics that make up the core gameplay of Farmhand.
+This section details the various systems and mechanics that make up the gameplay of Farmhand. The primary mechanic is the economy, with all other systems serving as a means to interact with it.
 
-## 1. Farming
+## 1. The Economy: Your Battlefield
 
-Farming is the heart of Farmhand. It involves planting and harvesting crops for profit.
+The economy is the core of the game. It is a living system that players must learn to master.
 
-### 1.1. Crops
+### 1.1. The Market
 
-The game features a wide variety of crops that the player can grow. Each crop has a unique set of properties:
+The market is where all buying and selling takes place. It is the central hub of the game's economic activity.
 
-*   **Growth Time:** The number of in-game days it takes for a crop to mature. This is defined by a `cropTimeline` array, which specifies the duration of each growth stage.
-*   **Seed Cost:** The price to purchase the crop's seeds from the shop.
-*   **Base Value:** The base price for which the mature crop can be sold. This value can be affected by market fluctuations.
-*   **Tiers:** Crops are categorized into tiers, with higher-tier crops generally being more profitable but also more difficult or expensive to grow.
-*   **Watering:** All crops must be watered daily. A crop that is not watered will not advance to its next growth stage.
-*   **Regrowth:** Some crops, like corn and tomatoes, can be harvested multiple times. After the first harvest, they will return to an earlier growth stage and produce more crops after a few more days.
-*   **Special Properties:** Some crops have special properties. For example, grapes can be used to make wine, and some crops can be used in cooking recipes.
+*   **Commodities:** Every sellable item in the game is treated as a commodity with a fluctuating price.
+*   **Price Fluctuations:** Prices change daily based on a randomized algorithm. The key to success is buying the means of production when prices are low and selling the resulting goods when prices are high.
+*   **Price Events:** The game will announce special price events at the start of a day. These are significant, temporary shifts in the value of a commodity (e.g., "Tomato prices are skyrocketing!"). These events are major opportunities for profit or loss.
+*   **Multiplayer Market Dynamics:** In multiplayer, the market is a shared entity. When one player sells a large volume of a commodity, it drives the price down for everyone. This creates a competitive and collaborative economic environment where players must react to each other's strategies.
 
-### 1.2. The Field
+### 1.2. The Shop: Investing in Production
 
-The player's farm is represented by a grid of plots. This is where all planting and growing takes place.
+The shop is not just a place to buy things; it's where you make your initial investments.
 
-*   **Plots:** Each square in the grid is a plot. A plot can be in several states:
-    *   **Fallow:** An empty, unprepared plot.
-    *   **Tilled:** A plot that has been prepared with a hoe and is ready for planting.
-    *   **Planted:** A plot that has a seed planted in it.
-    *   **Watered:** A planted plot that has been watered for the day.
-    *   **Fertilized:** A plot that has had fertilizer applied to it.
-*   **Expansion:** The player starts with a single field. They can purchase additional fields to expand their farm and increase their planting capacity.
-*   **Field Items:** Players can place special items on their fields to help with farming:
-    *   **Sprinklers:** Automatically water adjacent plots every day.
-    *   **Scarecrows:** Prevent crows from eating crops. A single scarecrow protects an entire field.
+*   **Buying "Stock":** Purchasing seeds and animals is the primary way to invest in future production. The cost of these items is fixed, but the potential return is variable, depending on when you sell the resulting products.
+*   **Capital Expenditures:** Purchasing tools, upgrades, and land are capital expenditures designed to increase the efficiency and scale of your production engine.
 
-### 1.3. Tools
+### 1.3. Loans: High-Risk Capital
 
-The player has a set of tools to help them with their farming tasks. Each tool can be upgraded to improve its efficiency.
+Players can take out loans for a quick influx of cash.
 
-*   **Hoe:** Used to till the soil and prepare it for planting. Upgrading the hoe allows the player to till multiple plots at once.
-*   **Watering Can:** Used to water crops. Upgrading the watering can increases its water capacity and allows the player to water multiple plots at once.
-*   **Scythe:** Used to harvest mature crops and clear weeds. Upgrading the scythe increases the number of crops harvested from a single plot.
-*   **Shovel:** Used to clear plots of unwanted crops or items. Upgrading the shovel allows the player to clear multiple plots at once.
+*   **Leverage:** Loans allow players to leverage their capital, enabling them to make larger investments than they could otherwise afford.
+*   **Interest:** Loans come with daily interest payments, adding a layer of risk. A poorly timed investment made with a loan can lead to significant debt.
 
-### 1.4. Threats
+## 2. Farming: Your Production Engine
 
-*   **Weeds:** Weeds can randomly appear in empty plots. If not cleared, they can spread to adjacent plots.
-*   **Crows:** Crows can randomly appear and eat crops. They can be prevented by placing a scarecrow in the field.
-*   **Storms:** Storms are random weather events that can damage crops and disable scarecrows for a day.
+Farming is the primary method for producing the commodities you will trade on the market. It is a system to be optimized for maximum efficiency and profit.
 
-## 2. Animal Husbandry
+*   **Crops as Assets:** Each crop is an asset with a cost to produce (seed price, time, and labor) and a variable sale price. Players must choose which crops to invest in based on their analysis of the market.
+*   **The Field as a Factory:** The farm is the player's factory floor. Expanding the farm and optimizing its layout is key to scaling up production.
+*   **Tools for Efficiency:** Upgrading tools is not just about making farming easier; it's about increasing the return on investment. An upgraded scythe harvests more from a single plot, directly increasing the yield of an investment. An upgraded watering can reduces the time-cost of production.
 
-In addition to growing crops, players can also raise animals on their farm. Currently, the only available animal is the cow.
+## 3. Animal Husbandry: Long-Term Investments
 
-### 2.1. Cows
+Animals are another class of asset that players can invest in.
 
-Cows are a valuable source of daily income and add another layer of activity to the game.
+*   **Cows as Bonds:** Compared to crops, cows are a more stable, long-term investment. They have a higher initial cost but provide a steady stream of daily revenue (milk).
+*   **Improving Asset Value:** The value of a cow's output can be increased through care (hugging) and proper feeding. Breeding allows for the creation of "blue-chip" assets that produce higher-quality goods.
 
-*   **Acquisition:** Players can purchase cows from the shop. Each cow has a unique, randomly generated name.
-*   **Housing:** Cows are kept in a cow pen, which can be accessed from the main farm view.
-*   **Feeding:** Cows must be fed daily with cow feed, which can be purchased from the shop. A cow that is not fed may lose weight and produce lower-quality milk.
-*   **Happiness:** Each cow has a happiness level, which can be increased by hugging it daily. Happier cows produce better milk.
-*   **Milk Production:** Cows produce milk every day. The type and quality of the milk depends on several factors, including the cow's happiness, weight, and breed. There are several grades of milk (C, B, and A), as well as special types like "Rainbow Milk" and "Chocolate Milk."
-*   **Automation:** Players can purchase a "Hugging Machine" to automatically hug their cows, ensuring their happiness level stays high.
-*   **Breeding:** Players can breed their cows to produce offspring. The breeding system allows for the possibility of creating cows with better traits, such as higher-quality milk production.
+## 4. Crafting: Creating High-Value Goods
 
-## 3. Economy
+Crafting is the process of turning basic commodities into more advanced, higher-value products. This is analogous to creating complex financial instruments.
 
-The economy is a central part of Farmhand. Managing finances effectively is key to building a successful farm.
+*   **The Workshop & Cellar:** These are the player's R&D labs and finishing factories.
+*   **Value-Added Products:** A bottle of wine is worth more than the grapes and yeast used to make it. Cooking recipes turn basic crops into more valuable dishes. Crafting allows players to access higher tiers of the market.
+*   **Risk and Reward:** Crafting requires a larger upfront investment of time and resources. However, the potential payoff from selling artisanal goods is much higher than selling raw commodities.
 
-### 3.1. Currency
+## 5. Progression: Your Economic Reputation
 
-The game uses a single, unnamed currency for all transactions. All monetary values are handled by the `Dinero.js` library to ensure precision and avoid floating-point errors.
+The progression system reflects the player's growth as a market tycoon.
 
-### 3.2. The Shop
-
-The shop is where players can spend their money to purchase items that will help them grow their farm. The shop's inventory includes:
-
-*   **Seeds:** A variety of crop seeds. More seeds are unlocked as the player levels up.
-*   **Tools:** Basic farming tools.
-*   **Field Items:** Sprinklers, scarecrows, and other items that can be placed on the field.
-*   **Animals:** Cows and other animals.
-*   **Consumables:** Cow feed, fertilizers, etc.
-
-### 3.3. The Market
-
-The market is where players sell their goods to earn money.
-
-*   **Selling:** Players can sell any item from their inventory at the market.
-*   **Price Fluctuations:** The prices of most goods fluctuate on a daily basis. This is determined by a random algorithm.
-*   **Price Events:** The game features random price events that can cause a dramatic, temporary increase or decrease in the value of a specific item. These events are announced to the player at the start of the day.
-*   **Multiplayer Market:** In a multiplayer game, the market is shared among all players. The collective selling of a particular item can drive its price down, creating a more dynamic and realistic economic simulation.
-
-### 3.4. Loans
-
-Players who are short on cash can take out a loan from the bank.
-
-*   **Borrowing:** Players can borrow a certain amount of money, which is instantly added to their balance.
-*   **Interest:** Loans accrue interest at the end of each day. The interest rate is fixed.
-*   **Repayment:** Players can repay their loan at any time. The loan must be fully repaid before another loan can be taken out.
-
-## 4. Crafting
-
-Crafting allows players to turn their raw materials into more valuable items and upgrade their equipment.
-
-### 4.1. The Workshop
-
-The workshop is the main hub for crafting and upgrading. It is divided into several tabs:
-
-*   **Forge:** This is where players can upgrade their tools. Upgrading a tool requires specific materials (like bronze, iron, gold, or silver ingots) and a certain amount of money. Ingots can be crafted from ore, which is found in the mine.
-*   **Kitchen:** The kitchen allows players to cook dishes using the crops they've grown. Cooked dishes are generally more valuable than their individual ingredients and can provide special buffs or effects when consumed (though this mechanic is not yet fully implemented).
-*   **Recycling:** The recycling tab allows players to break down unwanted items into their component parts. This is a good way to recover some value from obsolete equipment or excess materials.
-
-### 4.2. The Cellar
-
-The cellar is used for aging and fermenting goods, which significantly increases their value.
-
-*   **Winemaking:** Players can use grapes to produce wine. The process involves:
-    1.  Crushing grapes into juice.
-    2.  Adding yeast to the juice.
-    3.  Aging the wine in kegs.
-    The final value of the wine is determined by the type of grape used, the quality of the ingredients, and the length of the aging process.
-*   **Fermentation:** Other crops can be fermented in kegs to create artisanal products. For example, cucumbers can be turned into pickles, and cabbage can be turned into kimchi. Each fermentation recipe requires specific ingredients and a certain amount of time to complete.
-
-## 5. Progression
-
-Farmhand features a robust progression system that keeps players engaged and motivated.
-
-### 5.1. Experience and Levels
-
-*   **Gaining Experience:** Players earn experience points (XP) for almost every action they take, including:
-    *   Harvesting crops
-    *   Collecting animal products
-    *   Crafting items
-    *   Completing achievements
-*   **Leveling Up:** When a player accumulates enough XP, they level up. The amount of XP required to reach the next level increases with each level.
-*   **Level Unlocks:** Each new level unlocks new content for the player, such as:
-    *   New seeds in the shop
-    *   New crafting recipes
-    *   Upgrades for tools and buildings
-    *   Increased sprinkler range
-
-### 5.2. Achievements
-
-The game features an achievement system that provides players with long-term goals and rewards.
-
-*   **Milestones:** Achievements are awarded for reaching specific milestones, such as:
-    *   Harvesting a certain number of a specific crop.
-    *   Earning a certain amount of money.
-    *   Reaching a certain level.
-    *   Crafting a certain number of items.
-*   **Rewards:** Completing an achievement rewards the player with a significant amount of XP and sometimes a special item or unlock.
-
-## 6. Multiplayer
-
-Farmhand includes a multiplayer mode that allows players to connect and play together.
-
-### 6.1. Peer-to-Peer Networking
-
-The multiplayer system is built on a peer-to-peer (P2P) architecture using WebRTC. This means that players connect directly to each other, rather than through a central server. This approach is cost-effective and resilient.
-
-### 6.2. Shared Market
-
-In a multiplayer session, all players share the same market. This creates a dynamic, shared economy where the actions of one player can affect all others. For example, if one player sells a large quantity of a certain crop, the price of that crop will go down for everyone in the session.
-
-### 6.3. Farm Visitation (Future Feature)
-
-The P2P architecture lays the groundwork for players to visit each other's farms. While not fully implemented, the vision for this feature includes:
-
-*   Viewing other players' farm layouts.
-*   Trading items directly with other players.
-*   Collaborative farming projects.
-
-### 6.4. Chat
-
-Players in a multiplayer session can communicate with each other using the in-game chat system.
+*   **Experience as Market Clout:** Gaining experience and leveling up unlocks access to new markets (new seeds and recipes) and more advanced production techniques (tool upgrades).
+*   **Achievements as Trophies:** Achievements mark significant economic milestones, celebrating the player's successes as a trader.
 # Game Assets
 
 This section provides an overview of the art and audio assets used in Farmhand.
