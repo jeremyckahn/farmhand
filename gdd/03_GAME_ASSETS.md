@@ -23,20 +23,3 @@ The UI is designed to be clean, intuitive, and mobile-friendly. It uses a combin
 *   **Icons:** The UI makes extensive use of icons to represent actions, items, and information in a clear and concise way.
 *   **Windows and Menus:** The game's menus and windows have a consistent design, with a simple, flat aesthetic and a clear visual hierarchy.
 *   **Backgrounds:** Different screens and areas of the game have unique background images to give them a distinct look and feel.
-
-## 4. Audio (Sound Effects and Music)
-
-(Note: This section is based on the assumption of a complete GDD. The actual implementation of audio in the codebase has not been fully explored.)
-
-Audio plays a crucial role in creating an immersive and satisfying gameplay experience.
-
-*   **Sound Effects (SFX):** The game will feature a variety of sound effects to provide feedback for player actions, such as:
-    *   The "swoosh" of a scythe.
-    *   The "glug" of a watering can.
-    *   The "cha-ching" of a sale.
-    *   The "moo" of a cow.
-*   **Background Music (BGM):** Each area of the game will have its own unique background music to set the mood:
-    *   A relaxing, pastoral theme for the farm.
-    *   An upbeat, bustling theme for the shop.
-    *   A mysterious, ambient theme for the mine.
-*   **UI Sounds:** The UI will have a set of sounds for common interactions, such as button clicks, notifications, and achievements.
