@@ -6,18 +6,19 @@ This section details the various systems and mechanics that make up the gameplay
 
 The economy is the core of the game. It is a living system that players must learn to master.
 
-### 1.1. The Market
+### 1.1. The Commodities Market & Selling
 
-The market is where all buying and selling takes place. It is the central hub of the game's economic activity.
+In Farmhand, there is no physical "market" location. Instead, the "market" is an abstract economic system that governs the value of goods. Selling is a direct UI action.
 
-*   **Commodities:** Every sellable item in the game is treated as a commodity with a fluctuating price.
-*   **Price Fluctuations:** Prices change daily based on a randomized algorithm. The key to success is buying the means of production when prices are low and selling the resulting goods when prices are high.
-*   **Price Events:** The game will announce special price events at the start of a day. These are significant, temporary shifts in the value of a commodity (e.g., "Tomato prices are skyrocketing!"). These events are major opportunities for profit or loss.
-*   **Multiplayer Market Dynamics:** In multiplayer, the market is a shared entity. When one player sells a large volume of a commodity, it drives the price down for everyone. This creates a competitive and collaborative economic environment where players must react to each other's strategies.
+*   **The Selling Process:** To sell an item, the player selects it from their inventory. A pop-up appears showing the current price, and allows the player to select a quantity and confirm the sale. The money is instantly added to their account.
+*   **The Commodities Market:** This is the system of fluctuating prices.
+    *   **Price Fluctuations:** Prices for all sellable goods change daily based on a randomized algorithm. The key to success is buying the means of production when prices are low and selling the resulting goods when prices are high.
+    *   **Price Events:** The game will announce special price events at the start of a day. These are significant, temporary shifts in the value of a commodity (e.g., "Tomato prices are skyrocketing!"). These events are major opportunities for profit or loss.
+    *   **Multiplayer Market Dynamics:** In multiplayer, the commodities market is a shared entity. When one player sells a large volume of a commodity, it drives the price down for everyone. This creates a competitive and collaborative economic environment where players must react to each other's strategies.
 
-### 1.2. The Shop: Investing in Production
+### 1.2. The Shop: A Place to Buy
 
-The shop is not just a place to buy things; it's where you make your initial investments.
+The Shop is a dedicated location in the game where players go to purchase items. It is a one-way transaction; no selling can be done here. The Shop is where players make their initial investments.
 
 *   **Buying "Stock":** Purchasing seeds and cows is the primary way to invest in future production. The cost of these items is fixed, but the potential return is variable, depending on when you sell the resulting products.
 *   **Capital Expenditures:** Purchasing tools, upgrades, and land are capital expenditures designed to increase the efficiency and scale of your production engine.
