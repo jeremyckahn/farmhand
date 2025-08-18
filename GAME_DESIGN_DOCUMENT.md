@@ -4,6 +4,8 @@
 
 **Farmhand** is a unique market simulation game with a charming farming aesthetic. At its core, it is a "buy low, sell high" stock market simulator where the commodities are agricultural products. Players engage in farming activities to produce "stock," which they then trade on a dynamic, fluctuating market. The game is designed to be a compelling economic challenge, wrapped in the accessible and relaxing visuals of a farming game.
 
+Fundamentally, Farmhand is a single-player, turn-based game. Each "day" on the farm represents a single turn, which is only advanced when the player chooses to end their day. This self-paced design allows players to take as much time as they need to analyze the market, plan their actions, and optimize their farm without the pressure of a real-time clock.
+
 ## 2. Game Concept
 
 The core concept of Farmhand is to master a simulated economy. Players don't just grow crops; they play the market. The central challenge is to anticipate price shifts, decide when to invest in production (planting), and, most importantly, when to sell for maximum profit. Farming and crafting are the means to an end: generating assets to trade. Success is measured not just by the size of the farm, but by the player's wealth and their ability to outsmart the market.
