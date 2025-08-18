@@ -37,6 +37,6 @@ A forward-thinking player will adopt a strategy of using profits from successful
 
 *   **Increase Production Capacity:** The player can purchase more land, allowing them to produce more commodities at once.
 *   **Improve Efficiency:** The player can upgrade their tools and infrastructure (like sprinklers) to reduce the labor cost of producing goods, increasing their profit margins.
-*   **Diversify Portfolio:** The player can unlock new types of crops and upgrade their cows, allowing them to diversify their "portfolio" and mitigate risk.
+*   **Diversify Portfolio:** The player can unlock new types of crops and breed better cows, allowing them to diversify their "portfolio" and mitigate risk.
 
 This strategic cycle repeats, with the player using their growing knowledge of the market and their expanding farm to generate ever-increasing profits.

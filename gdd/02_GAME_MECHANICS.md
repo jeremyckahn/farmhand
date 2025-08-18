@@ -13,7 +13,10 @@ In Farmhand, there is no physical "market" location. Instead, the "market" is an
 *   **The Selling Process:** To sell an item, the player selects it from their inventory. A pop-up appears showing the current price, and allows the player to select a quantity and confirm the sale. The money is instantly added to their account.
 *   **The Commodities Market:** This is the system of fluctuating prices.
     *   **Price Fluctuations:** Prices for all sellable goods change daily based on a randomized algorithm. The key to success is buying the means of production when prices are low and selling the resulting goods when prices are high.
-    *   **Price Events:** The game will announce special price events at the start of a day. These are significant, temporary shifts in the value of a commodity (e.g., "Tomato prices are skyrocketing!"). These events are major opportunities for profit or loss.
+    *   **Price Events (Surges and Crashes):** The game will announce special price events at the start of a day. These are significant, multi-day shifts in a commodity's value, creating windows of opportunity and risk.
+        *   **Mechanism:** An event (like "Tomato prices are skyrocketing!") locks the price of that commodity to its maximum (for a surge) or minimum (for a crash) value.
+        *   **Duration:** The duration of an event is tied to the crop's growth cycle. It lasts for the number of days it takes the crop to grow, minus one. For example, a price surge for a 5-day crop will last for 4 days.
+        *   **Strategic Importance:** These multi-day events are a core part of the economic strategy. Players can plan their planting and harvesting schedules around upcoming surges to guarantee a high return, or hold onto stock during a crash, waiting for the price to recover.
     *   **Multiplayer Market Dynamics:** In multiplayer, the commodities market is a shared entity. When one player sells a large volume of a commodity, it drives the price down for everyone. This creates a competitive and collaborative economic environment where players must react to each other's strategies.
 
 ### 1.2. The Shop: A Place to Buy
