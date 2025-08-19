@@ -126,7 +126,7 @@ Cows are a special class of asset that players can invest in for long-term, high
 *   **Cows as Bonds:** Compared to crops, cows are a more stable investment. They have a higher initial cost but provide a steady stream of daily revenue (milk). The value of their output can be increased through care (hugging) and proper feeding.
 *   **The Breeding System:** The core of animal husbandry is the breeding system.
     *   **Colors and Bloodlines:** Cows come in a variety of standard colors (e.g., white, brown, blue, etc.). Each cow has a "bloodline" that genetically tracks all the colors of its ancestors.
-    *   **Inheritance:** When two cows of opposite genders are placed in the breeding pen, they will eventually produce an offspring. This new cow inherits the combined bloodlines of both its parents.
+    *   **Inheritance:** When two cows of opposite genders and sufficient happiness are placed in the breeding pen, they will produce an offspring after a set gestation period. This new cow inherits the combined bloodlines of both its parents.
     *   **The Rainbow Cow:** The ultimate goal of the breeding system is to create a "Rainbow Cow." This is achieved by strategically breeding cows together to create a single cow that has every standard color in its bloodline.
     *   **Rainbow Milk:** Rainbow Cows are extremely valuable because they produce "Rainbow Milk," a premium commodity that sells for a very high price. Achieving a Rainbow Cow provides a significant and steady source of income, representing the ultimate payoff for a long-term investment strategy.
 
