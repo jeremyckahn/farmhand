@@ -33,6 +33,7 @@ The fun in Farmhand is centered on the thrill of playing the market and the sati
 *   **Beating the System:** The ultimate fantasy is to master the game's economy. Players feel a sense of accomplishment when they successfully predict a price event, corner the market on a particular commodity, or build a vast fortune through shrewd trading.
 *   **Tangible Results:** Unlike abstract numbers in a traditional stock market game, the player's "stock" is tangible—it's a field of ripe tomatoes or a cellar full of aged wine. This provides a unique and satisfying connection to the economic simulation.
 *   **Social Economics:** In multiplayer, the market becomes a shared battleground of wits. Players must not only account for the game's random fluctuations but also the actions of other players, adding a layer of competitive and cooperative economic gameplay.
+
 # Core Gameplay Loop
 
 The gameplay in Farmhand is a cycle of strategic economic decisions, with farming as the primary means of executing those decisions. A successful player will internalize the "buy low, sell high" principle and adopt a strategic mindset that can be broken down into several approaches:
