@@ -158,7 +158,7 @@ The game uses a variety of sprites to represent the different objects and charac
 *   **Crops:** Each crop has a set of sprites to represent its different stages of growth, from a small sprout to a fully mature plant.
 *   **Items:** Every item in the game has a unique sprite that is displayed in the inventory, shop, and other UI elements. This includes raw materials, crafted goods, tools, and special items.
 *   **Animals:** The cows have a set of sprites for different poses and actions, such as walking, eating, and sleeping. There are also different color variations for different breeds of cows.
-*   **Characters:** While the player is represented by a first-person perspective, future updates may include player avatars and non-player characters (NPCs) with their own unique sprites.
+*   **Characters:** The player is represented by a first-person perspective. There are no NPCs aside from farm animals.
 *   **Environmental Details:** The game world is decorated with various environmental sprites, such as trees, rocks, and flowers, to make it feel more alive.
 
 ## 3. User Interface (UI)
