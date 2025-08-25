@@ -109,7 +109,7 @@ export const createContextData = () => {
       historicalDailyRevenue: [],
       historicalValueAdjustments: [], // empty array for now
       hoveredPlotRangeSize: 0,
-      id: '',
+      playerId: '',
       inventory: [{ id: '', quantity: 0 }],
       inventoryLimit: -1,
       isAwaitingCowTradeRequest: false,

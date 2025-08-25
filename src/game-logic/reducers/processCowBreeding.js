@@ -18,7 +18,7 @@ export const processCowBreeding = state => {
   const {
     cowBreedingPen,
     cowInventory,
-    id,
+    playerId,
     newDayNotifications,
     purchasedCowPen,
   } = state
@@ -53,7 +53,7 @@ export const processCowBreeding = state => {
     cowPenData && cowInventory.length < cowPenData.cows && daysUntilBirth === 0
 
   const offspringCow = shouldGenerateOffspring
-    ? generateOffspringCow(cow1, cow2, id)
+    ? generateOffspringCow(cow1, cow2, playerId)
     : null
 
   if (offspringCow) {

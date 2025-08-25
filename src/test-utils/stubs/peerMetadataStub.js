@@ -7,7 +7,7 @@ export const getPeerMetadataStub = () => {
     cropsHarvested: {},
     dayCount: 0,
     experience: 0,
-    id: uuid(),
+    playerId: uuid(),
     money: 0,
     pendingPeerMessages: [],
     version: '0.0.0',

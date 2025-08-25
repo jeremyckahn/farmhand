@@ -39,7 +39,7 @@ const defaultCowProps = {
   cowInventory: [],
   handleCowPenUnmount: noop,
   handleCowClick: noop,
-  id: 'test-player',
+  playerId: 'test-player',
   isSelected: false,
 }
 

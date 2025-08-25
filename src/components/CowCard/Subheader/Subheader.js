@@ -55,7 +55,7 @@ const getCowMapById = memoize(
  *    'handleCowAutomaticHugChange' |
  *    'handleCowBreedChange' |
  *    'huggingMachinesRemain' |
- *    'id'
+ *    'playerId'
  *  > & {
  *    canCowBeTradedFor: boolean,
  *    cowValue: number,
@@ -75,7 +75,7 @@ const Subheader = (
     handleCowAutomaticHugChange,
     handleCowBreedChange,
     huggingMachinesRemain,
-    id: playerId,
+    playerId,
     isCowPurchased,
   }
 ) => {
@@ -226,6 +226,6 @@ Subheader.propTypes = {
   handleCowAutomaticHugChange: func,
   handleCowBreedChange: func,
   huggingMachinesRemain: bool.isRequired,
-  id: string.isRequired,
+  playerId: string.isRequired,
   isCowPurchased: bool,
 }

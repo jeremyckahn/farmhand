@@ -340,7 +340,7 @@ export default class Farmhand extends FarmhandReducers {
       historicalDailyRevenue: [],
       historicalValueAdjustments: [],
       hoveredPlotRangeSize: 0,
-      id: uuid(),
+      playerId: uuid(),
       inventory: [{ id: scarecrow.id, quantity: 1 }],
       inventoryLimit: INITIAL_STORAGE_LIMIT,
       isAwaitingCowTradeRequest: false,
@@ -731,7 +731,8 @@ export default class Farmhand extends FarmhandReducers {
       const { ownerId } = peerPlayerCow
 
       const [peerId] =
-        Object.entries(peers).find(([, peer]) => peer?.id === ownerId) ?? []
+        Object.entries(peers).find(([, peer]) => peer?.playerId === ownerId) ??
+        []
 
       if (!peerId) {
         console.error(
@@ -811,7 +812,7 @@ export default class Farmhand extends FarmhandReducers {
       this.state.peerRoom?.leave()
 
       const { valueAdjustments } = await getData(endpoints.getMarketData, {
-        farmId: this.state.id,
+        farmId: this.state.playerId,
         room: room,
       })
 

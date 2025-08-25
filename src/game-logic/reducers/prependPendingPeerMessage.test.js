@@ -6,21 +6,21 @@ import { prependPendingPeerMessage } from './prependPendingPeerMessage.js'
 describe('prependPendingPeerMessage', () => {
   test('prepends a message', () => {
     const { pendingPeerMessages } = prependPendingPeerMessage(
-      testState({ id: 'abc123', pendingPeerMessages: [] }),
+      testState({ playerId: 'abc123', pendingPeerMessages: [] }),
       'hello world'
     )
 
     expect(pendingPeerMessages).toEqual([
-      { id: 'abc123', message: 'hello world', severity: 'info' },
+      { playerId: 'abc123', message: 'hello world', severity: 'info' },
     ])
   })
 
   test('limits the amount of stored messages', () => {
     const { pendingPeerMessages } = prependPendingPeerMessage(
       testState({
-        id: 'abc123',
+        playerId: 'abc123',
         pendingPeerMessages: new Array(50).fill({
-          id: 'abc123',
+          playerId: 'abc123',
           message: 'some other message',
           severity: 'info',
         }),
@@ -29,7 +29,7 @@ describe('prependPendingPeerMessage', () => {
     )
 
     expect(pendingPeerMessages[0]).toEqual({
-      id: 'abc123',
+      playerId: 'abc123',
       message: 'hello world',
       severity: 'info',
     })

@@ -17,7 +17,7 @@ const defaultProps = {
   activePlayers: 1,
   cowIdOfferedForTrade: '',
   cowInventory: [],
-  id: 'test-player-123',
+  playerId: 'test-player-123',
   latestPeerMessages: [],
   peers: {},
 }
@@ -28,7 +28,7 @@ test('renders', () => {
 })
 
 test('displays player name', () => {
-  render(<OnlinePeersView {...defaultProps} id="my-player-id" />)
+  render(<OnlinePeersView {...defaultProps} playerId="my-player-id" />)
 
   expect(screen.getByText('Your player name')).toBeInTheDocument()
   expect(screen.getByText('my-player-id')).toBeInTheDocument()
@@ -38,7 +38,9 @@ test('shows loading message when there are more active players than populated pe
   const props = {
     ...defaultProps,
     activePlayers: 3,
-    peers: { peer1: { id: 'peer1', dayCount: 1, experience: 100, money: 500 } },
+    peers: {
+      peer1: { playerId: 'peer1', dayCount: 1, experience: 100, money: 500 },
+    },
   }
 
   render(<OnlinePeersView {...props} />)
@@ -50,7 +52,9 @@ test('does not show loading message when active players match populated peers', 
   const props = {
     ...defaultProps,
     activePlayers: 2, // 1 current player + 1 peer
-    peers: { peer1: { id: 'peer1', dayCount: 1, experience: 100, money: 500 } },
+    peers: {
+      peer1: { playerId: 'peer1', dayCount: 1, experience: 100, money: 500 },
+    },
   }
 
   render(<OnlinePeersView {...props} />)
@@ -104,14 +108,14 @@ test('does not display trade section when no cow is offered', () => {
 test('displays list of peers when present', () => {
   const peers = {
     peer1: {
-      id: 'peer1',
+      playerId: 'peer1',
       dayCount: 5,
       experience: 100,
       money: 1000,
       cowOfferedForTrade: null,
     },
     peer2: {
-      id: 'peer2',
+      playerId: 'peer2',
       dayCount: 10,
       experience: 500,
       money: 2000,
@@ -128,14 +132,14 @@ test('displays list of peers when present', () => {
 test('sorts peers by experience level (highest first)', () => {
   const peers = {
     'low-level': {
-      id: 'low-level',
+      playerId: 'low-level',
       dayCount: 1,
       experience: 50,
       money: 500,
       cowOfferedForTrade: null,
     },
     'high-level': {
-      id: 'high-level',
+      playerId: 'high-level',
       dayCount: 20,
       experience: 2000,
       money: 5000,
@@ -160,7 +164,7 @@ test('sorts peers by experience level (highest first)', () => {
 test('filters out empty peer objects', () => {
   const peers = {
     'valid-peer': {
-      id: 'valid-peer',
+      playerId: 'valid-peer',
       dayCount: 5,
       experience: 100,
       money: 1000,
@@ -178,12 +182,12 @@ test('filters out empty peer objects', () => {
 test('displays latest peer messages when present', () => {
   const latestPeerMessages = [
     {
-      id: 'peer1',
+      playerId: 'peer1',
       message: 'has joined the game',
       severity: 'info',
     },
     {
-      id: 'peer2',
+      playerId: 'peer2',
       message: 'offered a cow for trade',
       severity: 'success',
     },
@@ -212,7 +216,7 @@ test('does not display peer messages section when empty', () => {
 test('uses default severity for peer messages when not specified', () => {
   const latestPeerMessages = [
     {
-      id: 'peer1',
+      playerId: 'peer1',
       message: 'did something',
     },
   ]
@@ -251,7 +255,7 @@ test('displays dividers between sections when content is present', () => {
 
   const peers = {
     peer1: {
-      id: 'peer1',
+      playerId: 'peer1',
       dayCount: 5,
       experience: 100,
       money: 1000,
@@ -261,7 +265,7 @@ test('displays dividers between sections when content is present', () => {
 
   const latestPeerMessages = [
     {
-      id: 'peer1',
+      playerId: 'peer1',
       message: 'test message',
       severity: 'info',
     },

@@ -11,14 +11,14 @@ import { levelAchieved } from '../../../utils/levelAchieved.js'
 import { getPlayerName, integerString } from '../../../utils/index.js'
 
 const OnlinePeer = ({
-  peer: { cowOfferedForTrade, dayCount, id, experience, money },
+  peer: { cowOfferedForTrade, dayCount, playerId, experience, money },
 }) => {
   return (
     <li>
       <Card>
         <CardHeader
           {...{
-            title: getPlayerName(id),
+            title: getPlayerName(playerId),
             subheader: (
               <div>
                 <p>Day: {integerString(dayCount)}</p>
@@ -50,7 +50,7 @@ OnlinePeer.propTypes = {
     cowOfferedForTrade: object,
     dayCount: number.isRequired,
     experience: number.isRequired,
-    id: string.isRequired,
+    playerId: string.isRequired,
     money: number.isRequired,
   }).isRequired,
 }

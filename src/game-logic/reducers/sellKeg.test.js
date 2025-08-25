@@ -19,7 +19,7 @@ describe('sellKeg', () => {
   test('updates inventory', () => {
     const state = sellKeg(
       testState({
-        id: 'abc123',
+        playerId: 'abc123',
         cellarInventory: [stubKeg],
         cellarItemsSold: {},
         completedAchievements: {},
@@ -42,7 +42,7 @@ describe('sellKeg', () => {
   test('updates sales records', () => {
     const state = sellKeg(
       testState({
-        id: 'abc123',
+        playerId: 'abc123',
         cellarInventory: [stubKeg],
         cellarItemsSold: {},
         completedAchievements: {},
@@ -62,7 +62,7 @@ describe('sellKeg', () => {
       itemsSold: { carrot: 1 },
       pendingPeerMessages: [
         {
-          id: 'abc123',
+          playerId: 'abc123',
           message: 'sold one unit of Fermented Carrot.',
           severity: 'warning',
         },
@@ -73,7 +73,7 @@ describe('sellKeg', () => {
   test('applies achievement bonus', () => {
     const state = sellKeg(
       testState({
-        id: 'abc123',
+        playerId: 'abc123',
         cellarInventory: [stubKeg],
         cellarItemsSold: {},
         completedAchievements: { 'i-am-rich-1': true },
@@ -107,7 +107,7 @@ describe('sellKeg', () => {
   test('updates learnedRecipes', () => {
     const state = sellKeg(
       testState({
-        id: 'abc123',
+        playerId: 'abc123',
         cellarInventory: [stubKeg],
         cellarItemsSold: {},
         completedAchievements: {},
@@ -133,7 +133,7 @@ describe('sellKeg', () => {
       test('sale is garnished', () => {
         const state = sellKeg(
           testState({
-            id: 'abc123',
+            playerId: 'abc123',
             cellarInventory: [stubKeg],
             cellarItemsSold: {},
             completedAchievements: {},
@@ -167,7 +167,7 @@ describe('sellKeg', () => {
       test('loan is payed off', () => {
         const state = sellKeg(
           testState({
-            id: 'abc123',
+            playerId: 'abc123',
             cellarInventory: [stubKeg],
             cellarItemsSold: {},
             completedAchievements: {},
@@ -191,7 +191,7 @@ describe('sellKeg', () => {
       test('sale is reduced by remaining loan balance', () => {
         const state = sellKeg(
           testState({
-            id: 'abc123',
+            playerId: 'abc123',
             cellarInventory: [stubKeg],
             cellarItemsSold: {},
             completedAchievements: {},
@@ -217,7 +217,7 @@ describe('sellKeg', () => {
       test('payoff notification is shown', () => {
         const state = sellKeg(
           testState({
-            id: 'abc123',
+            playerId: 'abc123',
             cellarInventory: [stubKeg],
             cellarItemsSold: {},
             completedAchievements: {},
@@ -246,7 +246,7 @@ describe('sellKeg', () => {
     test('sale is not garnished', () => {
       const state = sellKeg(
         testState({
-          id: 'abc123',
+          playerId: 'abc123',
           cellarInventory: [stubKeg],
           cellarItemsSold: {},
           completedAchievements: {},

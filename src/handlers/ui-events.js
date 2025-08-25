@@ -427,7 +427,9 @@ export default {
       try {
         const { result } = /** @type {FileReader} */ (e.target)
         const json = String(result)
-        const state = reduceByPersistedKeys(JSON.parse(json))
+        const parsedJson = JSON.parse(json)
+        const transformedStateData = transformStateDataForImport(parsedJson)
+        const state = reduceByPersistedKeys(transformedStateData)
 
         if (
           Object.keys(state).some(
