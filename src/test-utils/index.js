@@ -165,7 +165,7 @@ export const testState = (overrides = {}) => ({
   historicalDailyRevenue: [],
   historicalValueAdjustments: [],
   hoveredPlotRangeSize: 0,
-  id: 'test-id',
+  playerId: 'test-id',
   inventory: [],
   inventoryLimit: 50,
   isAwaitingCowTradeRequest: false,

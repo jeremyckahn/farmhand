@@ -14,7 +14,7 @@ export const prependPendingPeerMessage = (
   return {
     ...state,
     pendingPeerMessages: [
-      { id: state.id, message, severity },
+      { playerId: state.playerId, message, severity },
       ...state.pendingPeerMessages,
     ].slice(0, MAX_PENDING_PEER_MESSAGES),
   }

@@ -49,7 +49,7 @@ export const handleCowTradeRequest = async (
         cowIdOfferedForTrade,
         cowsTraded,
         cowInventory,
-        id,
+        playerId,
         isAwaitingCowTradeRequest,
         peers,
         sendCowAccept,
@@ -83,14 +83,14 @@ export const handleCowTradeRequest = async (
       const updatedCowOffered = {
         ...cowOffered,
         timesTraded:
-          cowOffered.originalOwnerId === id
+          cowOffered.originalOwnerId === playerId
             ? cowOffered.timesTraded
             : cowOffered.timesTraded + 1,
       }
 
       const [, peerMetadata] =
         Object.entries(peers).find(
-          ([, peer]) => peer?.id === updatedCowOffered.ownerId
+          ([, peer]) => peer?.playerId === updatedCowOffered.ownerId
         ) ?? []
 
       if (!peerMetadata) {
@@ -102,7 +102,7 @@ export const handleCowTradeRequest = async (
       state = removeCowFromInventory(state, cowToTradeAway)
       state = addCowToInventory(state, {
         ...updatedCowOffered,
-        ownerId: id,
+        ownerId: playerId,
       })
       state = showNotification(
         state,
@@ -110,7 +110,7 @@ export const handleCowTradeRequest = async (
           '',
           cowToTradeAway,
           cowOffered,
-          id,
+          playerId,
           allowCustomPeerCowNames
         ),
         'success'
@@ -124,7 +124,7 @@ export const handleCowTradeRequest = async (
         ...state,
         cowIdOfferedForTrade: updatedCowOffered.id,
         cowsTraded:
-          updatedCowOffered.originalOwnerId === id
+          updatedCowOffered.originalOwnerId === playerId
             ? cowsTraded
             : cowsTraded + 1,
         isAwaitingCowTradeRequest: true,
@@ -133,7 +133,10 @@ export const handleCowTradeRequest = async (
           ...peers,
           [peerId]: {
             ...peerMetadata,
-            cowOfferedForTrade: { ...cowToTradeAway, ownerId: peerMetadata.id },
+            cowOfferedForTrade: {
+              ...cowToTradeAway,
+              ownerId: peerMetadata.playerId,
+            },
           },
         },
       }
@@ -171,7 +174,7 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
         cowInventory,
         cowsTraded,
         cowTradeTimeoutId,
-        id,
+        playerId,
         peers,
       } = state
 
@@ -193,11 +196,12 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
       }
 
       const peerEntry = Object.entries(peers).find(
-        ([, { id }]) => id === cowReceived.ownerId
+        ([, { playerId }]) => playerId === cowReceived.ownerId
       )
       const [, peerMetadata] = peerEntry || []
 
-      const didOriginallyOwnReceivedCow = cowReceived.originalOwnerId === id
+      const didOriginallyOwnReceivedCow =
+        cowReceived.originalOwnerId === playerId
 
       const updatedCowReceived = {
         ...cowReceived,
@@ -209,7 +213,7 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
       state = removeCowFromInventory(state, cowTradedAway)
       state = addCowToInventory(state, {
         ...updatedCowReceived,
-        ownerId: id,
+        ownerId: playerId,
       })
       state = showNotification(
         state,
@@ -217,7 +221,7 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
           '',
           cowTradedAway,
           updatedCowReceived,
-          id,
+          playerId,
           allowCustomPeerCowNames
         ),
         'success'
@@ -234,7 +238,7 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
       return {
         ...state,
         cowsTraded:
-          updatedCowReceived.originalOwnerId === id
+          updatedCowReceived.originalOwnerId === playerId
             ? cowsTraded
             : cowsTraded + 1,
         cowTradeTimeoutId: null,
@@ -245,7 +249,10 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
           ...peers,
           [peerId]: {
             ...peerMetadata,
-            cowOfferedForTrade: { ...cowTradedAway, ownerId: peerMetadata.id },
+            cowOfferedForTrade: {
+              ...cowTradedAway,
+              ownerId: peerMetadata.playerId,
+            },
           },
         },
       }

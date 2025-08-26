@@ -9,7 +9,13 @@ import { addCowToInventory } from './addCowToInventory.js'
  * @returns {farmhand.state}
  */
 export const purchaseCow = (state, cow) => {
-  const { cowInventory, cowColorsPurchased, id, money, purchasedCowPen } = state
+  const {
+    cowInventory,
+    cowColorsPurchased,
+    playerId,
+    money,
+    purchasedCowPen,
+  } = state
   const { color } = cow
   const cowValue = getCowValue(cow, false)
 
@@ -22,7 +28,11 @@ export const purchaseCow = (state, cow) => {
     return state
   }
 
-  state = addCowToInventory(state, { ...cow, ownerId: id, originalOwnerId: id })
+  state = addCowToInventory(state, {
+    ...cow,
+    ownerId: playerId,
+    originalOwnerId: playerId,
+  })
 
   return {
     ...state,

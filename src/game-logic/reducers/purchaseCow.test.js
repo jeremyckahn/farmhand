@@ -25,7 +25,7 @@ describe('purchaseCow', () => {
     state = testState({
       cowForSale: utils.generateCow(),
       cowInventory: [],
-      id: 'abc123',
+      playerId: 'abc123',
       money: 5000,
       purchasedCowPen: 1,
     })

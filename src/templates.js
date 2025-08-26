@@ -383,7 +383,9 @@ export const KEG_SPOILED_MESSAGE = (_, keg) =>
  * @returns {string}
  */
 export const NEW_COW_OFFERED_FOR_TRADE = (_, peerMetadata) =>
-  `A new cow is being offered for trade by ${getPlayerName(peerMetadata.id)}!`
+  `A new cow is being offered for trade by ${getPlayerName(
+    peerMetadata.playerId
+  )}!`
 
 /**
  * @param {TemplateStringsArray} _

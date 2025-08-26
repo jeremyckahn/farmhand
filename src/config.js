@@ -57,29 +57,30 @@ export const rtcConfig = {
     {
       urls: 'stun:stun.relay.metered.ca:80',
     },
-    ...(turnUsername &&
-      turnCredential && [
-        {
-          urls: 'turn:a.relay.metered.ca:80',
-          username: turnUsername,
-          credential: turnCredential,
-        },
-        {
-          urls: 'turn:a.relay.metered.ca:80?transport=tcp',
-          username: turnUsername,
-          credential: turnCredential,
-        },
-        {
-          urls: 'turn:a.relay.metered.ca:443',
-          username: turnUsername,
-          credential: turnCredential,
-        },
-        {
-          urls: 'turn:a.relay.metered.ca:443?transport=tcp',
-          username: turnUsername,
-          credential: turnCredential,
-        },
-      ]),
+    ...(turnUsername && turnCredential
+      ? [
+          {
+            urls: 'turn:a.relay.metered.ca:80',
+            username: turnUsername,
+            credential: turnCredential,
+          },
+          {
+            urls: 'turn:a.relay.metered.ca:80?transport=tcp',
+            username: turnUsername,
+            credential: turnCredential,
+          },
+          {
+            urls: 'turn:a.relay.metered.ca:443',
+            username: turnUsername,
+            credential: turnCredential,
+          },
+          {
+            urls: 'turn:a.relay.metered.ca:443?transport=tcp',
+            username: turnUsername,
+            credential: turnCredential,
+          },
+        ]
+      : []),
   ],
 }
 

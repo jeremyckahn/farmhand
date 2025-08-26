@@ -39,7 +39,7 @@ describe('CowCard', () => {
     handleCowBreedChange: noop,
     handleCowWithdrawClick: noop,
     handleCowAutomaticHugChange: noop,
-    id: '',
+    playerId: '',
     isSelected: false,
     isCowOfferedForTradeByPeer: false,
     isOnline: false,
@@ -366,8 +366,13 @@ describe('CowCard', () => {
           <CowCard
             {...{
               ...baseProps,
+              cow: {
+                ...cow,
+                originalOwnerId: 'player-id',
+              },
               cowInventory: [{ ...cow }],
               isSelected: true,
+              playerId: 'player-id',
               // NOTE: This simulates how CowCard is integrated into the rest of
               // the component tree. It also effectively reproduces the scenario
               // that caused https://github.com/jeremyckahn/farmhand/issues/527

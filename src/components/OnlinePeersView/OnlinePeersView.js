@@ -21,7 +21,7 @@ const OnlinePeersView = ({
   activePlayers,
   cowIdOfferedForTrade,
   cowInventory,
-  id,
+  playerId,
   latestPeerMessages,
   peers,
 }) => {
@@ -42,7 +42,7 @@ const OnlinePeersView = ({
       <h3>Your player name</h3>
       <Card>
         <CardContent>
-          <strong>{getPlayerName(id)}</strong>
+          <strong>{getPlayerName(playerId)}</strong>
         </CardContent>
       </Card>
       {cowOfferedForTrade && (
@@ -78,20 +78,24 @@ const OnlinePeersView = ({
         <>
           <Divider />
           <ul>
-            {latestPeerMessages.map(({ id, message, severity = 'info' }, i) => (
-              <li {...{ key: i }}>
-                <Alert
-                  {...{
-                    elevation: 3,
-                    severity: /** @type {'success' | 'info' | 'warning' | 'error'} */ (severity),
-                  }}
-                >
-                  <ReactMarkdown
-                    {...{ source: `**${getPlayerName(id)}** ${message}` }}
-                  />
-                </Alert>
-              </li>
-            ))}
+            {latestPeerMessages.map(
+              ({ playerId, message, severity = 'info' }, i) => (
+                <li {...{ key: i }}>
+                  <Alert
+                    {...{
+                      elevation: 3,
+                      severity: /** @type {'success' | 'info' | 'warning' | 'error'} */ (severity),
+                    }}
+                  >
+                    <ReactMarkdown
+                      {...{
+                        source: `**${getPlayerName(playerId)}** ${message}`,
+                      }}
+                    />
+                  </Alert>
+                </li>
+              )
+            )}
           </ul>
         </>
       )}
@@ -103,7 +107,7 @@ OnlinePeersView.propTypes = {
   activePlayers: number.isRequired,
   cowIdOfferedForTrade: string.isRequired,
   cowInventory: array.isRequired,
-  id: string.isRequired,
+  playerId: string.isRequired,
   latestPeerMessages: array.isRequired,
   peers: object.isRequired,
 }
