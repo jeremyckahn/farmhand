@@ -8,7 +8,7 @@ import OnlinePeer from './OnlinePeer.js'
 const defaultPeer = {
   cowOfferedForTrade: null,
   dayCount: 5,
-  id: 'test-peer-123',
+  playerId: 'test-peer-123',
   experience: 100,
   money: 1500,
 }

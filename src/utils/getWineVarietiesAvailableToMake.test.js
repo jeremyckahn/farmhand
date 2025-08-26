@@ -1,4 +1,8 @@
-import { carrot, grapeChardonnay, grapeTempranillo } from '../data/crops/index.js'
+import {
+  carrot,
+  grapeChardonnay,
+  grapeTempranillo,
+} from '../data/crops/index.js'
 import { grapeVariety } from '../enums.js'
 
 import { getWineVarietiesAvailableToMake } from './getWineVarietiesAvailableToMake.js'

@@ -249,7 +249,7 @@ declare namespace farmhand {
   }
 
   interface peerMessage {
-    id: string
+    playerId: string
     severity: notificationSeverity
     message: string
   }
@@ -263,7 +263,7 @@ declare namespace farmhand {
     cropsHarvested: Record<string, number>
     dayCount: number
     experience: number
-    id: string
+    playerId: string
     money: number
     pendingPeerMessages: peerMessage[]
     version: string
@@ -346,7 +346,7 @@ declare namespace farmhand {
     /** Currently there is only one element in this array, but it will be used for more historical price data analysis in the future. It is an array for future-facing flexibility. */
     historicalValueAdjustments: Record<string, number>[]
     hoveredPlotRangeSize: number
-    id: string
+    playerId: string
     inventory: { id: item['id']; quantity: number }[]
     /** Is -1 if inventory is unlimited. */
     inventoryLimit: number

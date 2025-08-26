@@ -19,7 +19,7 @@ export const ChatRoom = () => {
 
   const {
     handlers: { handleChatRoomOpenStateChange },
-    gameState: { id, isChatOpen, room },
+    gameState: { playerId, isChatOpen, room },
   } = useContext(FarmhandContext)
 
   const handleChatRoomClose = () => {
@@ -31,7 +31,7 @@ export const ChatRoom = () => {
     <chat-room
       root-url={chitchatterDomain}
       room={`__farmhand__${room}`}
-      user-id={id}
+      user-id={playerId}
       style={{ height: '100%', width: '100%', border: 'none' }}
       color-mode="light"
     />

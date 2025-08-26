@@ -56,7 +56,7 @@ const genderIcons = {
  *   handleCowWithdrawClick: import('../../handlers/ui-events.js').default['handleCowWithdrawClick'],
  *   handleCowSellClick: import('../../handlers/ui-events.js').default['handleCowSellClick'],
  *   handleCowTradeClick: import('../../handlers/ui-events.js').default['handleCowTradeClick'],
- *   id: globalThis.farmhand.state['id'],
+ *   playerId: globalThis.farmhand.state['playerId'],
  *   inventory: globalThis.farmhand.state['inventory'],
  *   isCowOfferedForTradeByPeer: boolean,
  *   isSelected: boolean,
@@ -86,7 +86,7 @@ export const CowCard = (
     handleCowWithdrawClick,
     handleCowSellClick,
     handleCowTradeClick,
-    id,
+    playerId,
     inventory,
     isCowOfferedForTradeByPeer,
     isSelected,
@@ -97,7 +97,11 @@ export const CowCard = (
     huggingMachinesRemain = areHuggingMachinesInInventory(inventory),
   }
 ) => {
-  const cowDisplayName = getCowDisplayName(cow, id, allowCustomPeerCowNames)
+  const cowDisplayName = getCowDisplayName(
+    cow,
+    playerId,
+    allowCustomPeerCowNames
+  )
 
   const [displayName, setDisplayName] = useState(cowDisplayName)
   const [cowImage, setCowImage] = useState(pixel)
@@ -129,8 +133,8 @@ export const CowCard = (
       setCowImage(cowImage)
     })()
 
-    setDisplayName(getCowDisplayName(cow, id, allowCustomPeerCowNames))
-  }, [cow, id, allowCustomPeerCowNames, isMounted])
+    setDisplayName(getCowDisplayName(cow, playerId, allowCustomPeerCowNames))
+  }, [cow, playerId, allowCustomPeerCowNames, isMounted])
 
   useEffect(() => {
     if (isSelected) {
@@ -180,7 +184,7 @@ export const CowCard = (
                   <TextField
                     variant="standard"
                     {...{
-                      disabled: id !== cow.originalOwnerId,
+                      disabled: playerId !== cow.originalOwnerId,
                       onChange: e => {
                         setDisplayName(e.target.value)
                         debounced?.handleCowNameInputChange({ ...e }, cow)
@@ -211,7 +215,7 @@ export const CowCard = (
                   handleCowBreedChange,
                   handleCowAutomaticHugChange,
                   huggingMachinesRemain,
-                  id,
+                  playerId,
                   isCowPurchased,
                 }}
               />
@@ -349,7 +353,7 @@ CowCard.propTypes = {
   handleCowWithdrawClick: func,
   handleCowSellClick: func,
   handleCowTradeClick: func,
-  id: string.isRequired,
+  playerId: string.isRequired,
   inventory: array.isRequired,
   isCowOfferedForTradeByPeer: bool,
   isOnline: bool.isRequired,

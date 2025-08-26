@@ -6,7 +6,6 @@
  */
 
 import { execSync } from 'child_process'
-import { readFileSync } from 'fs'
 import { dirname, join } from 'path'
 import { fileURLToPath, pathToFileURL } from 'url'
 

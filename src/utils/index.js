@@ -1032,6 +1032,15 @@ export const transformStateDataForImport = /** @type {(state: any) => farmhand.s
     }
   }
 
+  // NOTE: Legacy data trasformation for https://github.com/jeremyckahn/farmhand/issues/387
+  // @ts-expect-error
+  if (sanitizedState.id) {
+    // @ts-expect-error
+    sanitizedState.playerId = sanitizedState.id
+    // @ts-expect-error
+    delete sanitizedState.id
+  }
+
   return sanitizedState
 }
 
