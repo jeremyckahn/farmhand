@@ -64,7 +64,7 @@
     "browserslist": "^4.21.9",
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^7.0.2",
-    "electron": "^22.1.0",
+    "electron": "^35.7.5",
     "electron-builder": "^24.13.3",
     "eslint": "^7.13.0",
     "eslint-config-react-app": "^5.2.0",
