@@ -1,5 +1,7 @@
 [![Farmhand](public/farmhand-logo-kairi-large.png)](https://www.farmhand.life)
 
+.
+
 <sub>_Logo art by [Kairi](https://discord.com/channels/714539345050075176/714539345637408793/859622159176302625)_</sub>
 
 [![Current Farmhand version](https://badgen.net/npm/v/@jeremyckahn/farmhand)](https://www.npmjs.com/package/@jeremyckahn/farmhand) [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/jeremyckahn/farmhand)
