@@ -88,7 +88,7 @@
     "scss-reset": "^1.4.2",
     "serve": "^14.2.0",
     "vercel": "^41.6.2",
-    "vite": "^5.0.8",
+    "vite": "^5.4.19",
     "vite-plugin-pwa": "^0.20.1",
     "vitest": "^2.0.5",
     "wait-on": "^8.0.3"
