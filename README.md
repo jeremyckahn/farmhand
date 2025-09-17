@@ -24,9 +24,9 @@ Community links:
 
 Storefront links:
 
-- https://jeremyckahn.itch.io/farmhand
-- https://plaza.dsolver.ca/games/farmhand
-- https://www.appimagehub.com/p/1859153
+- <https://jeremyckahn.itch.io/farmhand>
+- <https://plaza.dsolver.ca/games/farmhand>
+- <https://www.appimagehub.com/p/1859153>
 
 Farmhand is a resource management game that puts a farm in your hand. It is designed to be both desktop and mobile-friendly and fun for 30 seconds or 30 minutes at a time. Can you build a thriving farming business? Give it a try and find out!
 
@@ -84,6 +84,14 @@ npm run dev
 
 To run the native app locally, run:
 
+> [!NOTE]
+> If you are developing on Linux, you will need to run the following commands first:
+>
+> ```sh
+> sudo chown root node_modules/electron/dist/chrome-sandbox
+> sudo chmod 4755 node_modules/electron/dist/chrome-sandbox
+> ```
+
 ```sh
 npm run dev:native
 ```
@@ -94,7 +102,7 @@ Note that you will need a Vercel account and be logged into locally for this to 
 npm start
 ```
 
-In this case, the local app will be using the Production API, database, and pairing server. However you boot, Farmhand will be accessible from http://localhost:3000/.
+In this case, the local app will be using the Production API, database, and pairing server. However you boot, Farmhand will be accessible from <http://localhost:3000/>.
 
 ### Coding conventions
 
@@ -157,11 +165,11 @@ Use this GitHub Action to deploy a new version of Farmhand: [![Release New Versi
 
 As an authenticated repo owner or collaborator, click "Run workflow" and enter the argument to be passed to [`npm version`](https://docs.npmjs.com/cli/v7/commands/npm-version) and press the green "Run workflow". For updates that do not change [`farmhand.state`](https://jeremyckahn.github.io/farmhand/docs/farmhand.html#.state) (which is most of them), use the default `patch` version. This workflow will deploy Farmhand to:
 
-- https://www.farmhand.life/
-- https://jeremyckahn.github.io/farmhand/
-- https://jeremyckahn.itch.io/farmhand
-- https://www.npmjs.com/package/@jeremyckahn/farmhand
-  - Playable from https://unpkg.com/browse/@jeremyckahn/farmhand/build/
+- <https://www.farmhand.life/>
+- <https://jeremyckahn.github.io/farmhand/>
+- <https://jeremyckahn.itch.io/farmhand>
+- <https://www.npmjs.com/package/@jeremyckahn/farmhand>
+  - Playable from <https://unpkg.com/browse/@jeremyckahn/farmhand/build/>
 
 The Action will also publish [the latest release to GitHub](https://github.com/jeremyckahn/farmhand/releases/latest).
 
@@ -183,7 +191,7 @@ VITE_ENABLE_MINING=true
 
 Would enable the `MINING` feature only for the local development environment. You can access the enabled feature flags at runtime by `import`ing the `features` Object from [`config.js`](https://github.com/jeremyckahn/farmhand/blob/develop/src/config.js). See [Adding Custom Environment Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/) for more information on how to use environment variables.
 
-In addition to enabling features via environment variables, players can manually enable them in the browser (such as for beta testing). This can be done by manually constructing a URL query parameter that looks like `?enable_[FEATURE_NAME]=true`. For example, to enable the `MINING` feature, players could use the URL https://www.farmhand.life?enable_MINING=true.
+In addition to enabling features via environment variables, players can manually enable them in the browser (such as for beta testing). This can be done by manually constructing a URL query parameter that looks like `?enable_[FEATURE_NAME]=true`. For example, to enable the `MINING` feature, players could use the URL <https://www.farmhand.life?enable_MINING=true>.
 
 ## License
 
