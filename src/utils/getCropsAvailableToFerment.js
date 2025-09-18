@@ -21,7 +21,10 @@ export function getCropsAvailableToFerment(levelEntitlements) {
         itemsMap[itemId]
       )
 
-      if (finalCropItemFromSeedItem) {
+      if (
+        finalCropItemFromSeedItem &&
+        Number.isFinite(finalCropItemFromSeedItem.daysToFerment)
+      ) {
         acc.push(finalCropItemFromSeedItem)
       }
 
