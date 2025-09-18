@@ -1,4 +1,4 @@
-import { carrot, pumpkin, spinach } from '../data/crops/index.js'
+import { carrot, pumpkin, spinach, watermelon } from '../data/crops/index.js'
 
 import { getCropsAvailableToFerment } from './getCropsAvailableToFerment.js'
 import { getLevelEntitlements } from './getLevelEntitlements.js'
@@ -17,4 +17,12 @@ describe('getCropsAvailableToFerment', () => {
       expect(cropsAvailableToFerment).toEqual(expectedCropsAvailableToFerment)
     }
   )
+
+  test('should not return unfermentable crops', () => {
+    const cropsAvailableToFerment = getCropsAvailableToFerment(
+      getLevelEntitlements(Infinity)
+    )
+
+    expect(cropsAvailableToFerment).not.toContain(watermelon)
+  })
 })
