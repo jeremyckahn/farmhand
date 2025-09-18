@@ -91,6 +91,8 @@ To run the native app locally, run:
 > sudo chown root node_modules/electron/dist/chrome-sandbox
 > sudo chmod 4755 node_modules/electron/dist/chrome-sandbox
 > ```
+>
+> This is a [safe best practice](https://g.co/gemini/share/36d2d91e3031) for working with Electron on Linux.
 
 ```sh
 npm run dev:native
