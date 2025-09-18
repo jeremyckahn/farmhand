@@ -1,10 +1,15 @@
 // From: https://www.section.io/engineering-education/desktop-application-with-react/
-const path = require('path')
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
 
-const { app, BrowserWindow } = require('electron')
-const isDev = require('electron-is-dev')
+import { app, BrowserWindow } from 'electron'
+import isDev from 'electron-is-dev'
 
-const { autoUpdater } = require('electron-updater')
+import electronUpdater from 'electron-updater'
+const { autoUpdater } = electronUpdater
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 function createWindow() {
   // Create the browser window.
@@ -14,16 +19,16 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
-    icon: path.join(__dirname, './app-icons/Icon-512x512.png'),
+    icon: join(__dirname, './app-icons/Icon-512x512.png'),
   })
 
   // and load the index.html of the app.
   // win.loadFile("index.html");
-  const hostUrl = isDev
-    ? 'http://localhost:3000'
-    : `file://${path.join(__dirname, '../build/index.html')}`
-
-  win.loadURL(hostUrl)
+  if (isDev) {
+    win.loadURL('http://localhost:3000')
+  } else {
+    win.loadFile(join(__dirname, '../dist/index.html'))
+  }
 
   // Open the DevTools.
   if (isDev) {
