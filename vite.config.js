@@ -32,6 +32,8 @@ const dataUriLoader = {
 }
 
 const viteConfig = defineConfig({
+  // FIXME: This may break some environments
+  base: '/',
   build: {
     sourcemap: true,
   },
