@@ -39,8 +39,10 @@ jobs:
       - name: Tag release
         run: npm version ${{ github.event.inputs.releaseType }}
 
-        # Sets new package version as ${{ env.PACKAGE_VERSION }}
-      - uses: jozsefsallai/node-package-version@v1.0.4
+        # Get new package version from package.json
+      - name: Get package version
+        id: package_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Check out main
         uses: actions/checkout@v3
@@ -67,7 +69,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Prepare Web Artifacts
-        run: zip farmhand-web-${{ env.PACKAGE_VERSION }}.zip -r dist/*
+        run: zip farmhand-web-${{ steps.package_version.outputs.version }}.zip -r dist/*
 
       - name: Create Release
         id: create_release
@@ -75,12 +77,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.PACKAGE_VERSION }}
-          name: ${{ env.PACKAGE_VERSION }}
+          tag_name: ${{ steps.package_version.outputs.version }}
+          name: ${{ steps.package_version.outputs.version }}
           draft: false
           prerelease: false
           files: |
-            ./farmhand-web-${{ env.PACKAGE_VERSION }}.zip
+            ./farmhand-web-${{ steps.package_version.outputs.version }}.zip
 
       - run: node -e "console.log(require('./package.json').version)" > dist/version.txt
       - name: Publish itch.io build
