@@ -19,7 +19,10 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
-    icon: join(__dirname, './app-icons/Icon-512x512.png'),
+    icon: join(
+      isDev ? join(__dirname) : app.getAppPath(),
+      './app-icons/Icon-512x512.png'
+    ),
   })
 
   // and load the index.html of the app.
@@ -27,7 +30,7 @@ function createWindow() {
   if (isDev) {
     win.loadURL('http://localhost:3000')
   } else {
-    win.loadFile(join(__dirname, '../dist/index.html'))
+    win.loadFile(join(app.getAppPath(), 'dist/index.html'))
   }
 
   // Open the DevTools.
