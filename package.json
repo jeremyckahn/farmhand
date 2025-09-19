@@ -166,14 +166,6 @@
       "buildResources": "public",
       "output": "dist/native"
     },
-    "mac": {
-      "target": {
-        "target": "dmg",
-        "arch": "universal"
-      },
-      "mergeASARs": false,
-      "icon": "./public/app-icons/Icon-512x512.png"
-    },
     "linux": {
       "target": [
         {
