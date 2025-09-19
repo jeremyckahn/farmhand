@@ -11,7 +11,7 @@
 [![CI](https://github.com/jeremyckahn/farmhand/workflows/CI/badge.svg)](https://github.com/jeremyckahn/farmhand/actions?query=workflow%3ACI) [![Release New Version](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml/badge.svg)](https://github.com/jeremyckahn/farmhand/actions/workflows/run-release.yml)
 
 - [Latest release](https://github.com/jeremyckahn/farmhand/releases/latest)
-  - Includes native app downloads for Linux, MacOS and Windows.
+  - Includes native app downloads for Linux.
 - All versioned releases available at [unpkg](https://unpkg.com/browse/@jeremyckahn/farmhand/)
 - [Wiki](https://github.com/jeremyckahn/farmhand/wiki)
 - [API deployment logs](https://farmhand.vercel.app/_logs)
