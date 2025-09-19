@@ -32,8 +32,6 @@ const dataUriLoader = {
 }
 
 const viteConfig = defineConfig({
-  // FIXME: This may break some environments
-  base: '/',
   build: {
     sourcemap: true,
   },
@@ -42,15 +40,17 @@ const viteConfig = defineConfig({
   },
   plugins: [
     react(),
-    VitePWA({
-      registerType: 'prompt',
-      devOptions: {
-        enabled: false,
-      },
-      injectRegister: 'auto',
-      filename: 'service-worker.js',
-      manifest,
-    }),
+    // FIXME: Don't merge this. It's an experimental fix.
+    //
+    // VitePWA({
+    //   registerType: 'prompt',
+    //   devOptions: {
+    //     enabled: false,
+    //   },
+    //   injectRegister: 'auto',
+    //   filename: 'service-worker.js',
+    //   manifest,
+    // }),
     // NOTE: This makes Vite treat .js files as .jsx (for legacy support)
     // See: https://stackoverflow.com/a/76458411/470685
     {
