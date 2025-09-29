@@ -8,6 +8,7 @@
       "error",
       { "newlines-between": "always-and-inside-groups" }
     ],
-    "import/extensions": ["error", "always"]
+    "import/extensions": ["error", "always"],
+    "react/react-in-jsx-scope": ["off"]
   }
 }
