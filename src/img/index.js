@@ -142,7 +142,6 @@ import tomatoSeed from './items/tomato-seed.png'
 import fertilizer from './items/fertilizer.png'
 import rainbowFertilizer from './items/rainbow-fertilizer.png'
 import scarecrow from './items/scarecrow.png'
-import scarecrowAnimated from './items/scarecrow-animated.gif'
 import sprinkler from './items/sprinkler.png'
 import cowFeed from './items/cow-feed.png'
 import huggingMachine from './items/hugging-machine.png'
@@ -153,10 +152,14 @@ import rainbowMilk1 from './items/rainbow-milk-1.png'
 import rainbowMilk2 from './items/rainbow-milk-2.png'
 import rainbowMilk3 from './items/rainbow-milk-3.png'
 import chocolateMilk from './items/chocolate-milk.png'
-import inventoryBox from './items/inventory-box.png'
 import weedYellow from './items/weed-yellow.png'
 import weedOrange from './items/weed-orange.png'
 import weedPink from './items/weed-pink.png'
+
+// Misc
+import inventoryBox from './items/inventory-box.png'
+import scarecrowAnimated from './items/scarecrow-animated.gif'
+import tumbleweed from './items/tumbleweed.gif'
 
 // Tools
 import hoe from './tools/hoe.png'
@@ -430,6 +433,7 @@ export const items = {
 
   // Miscellaneous
   'scarecrow-animated': scarecrowAnimated,
+  tumbleweed,
   'inventory-box': inventoryBox,
 
   ...craftedItems,
