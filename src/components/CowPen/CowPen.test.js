@@ -7,7 +7,7 @@ import { generateCow } from '../../utils/index.js'
 import { cowColors } from '../../enums.js'
 import { noop } from '../../utils/noop.js'
 
-import { Cow } from './Cow.js'
+import { Cow } from './CowPen.js'
 
 // Mock getCowDisplayName to return predictable values
 vi.mock('../../utils/index.js', async () => {

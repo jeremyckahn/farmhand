@@ -12,7 +12,13 @@ import {
   transformStateDataForImport,
 } from '../utils/index.js'
 import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants.js'
-import { dialogView, fieldMode, stageFocusType } from '../enums.js'
+import {
+  dialogView,
+  fieldMode,
+  // eslint-disable-next-line no-unused-vars
+  grapeVariety,
+  stageFocusType,
+} from '../enums.js'
 import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
