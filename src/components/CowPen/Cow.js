@@ -216,18 +216,16 @@ export class Cow extends Component {
 
     return (
       <div
-        {...{
-          className: classNames('cow', {
+          className={classNames('cow', {
             'is-transitioning': isTransitioning,
             'is-selected': isSelected,
             'is-loaded': cowImage !== pixel,
-          }),
-          onClick: () => handleCowClick(cow),
-          style: {
+          })}
+          onClick={() => handleCowClick(cow)}
+          style={{
             left: `${x}%`,
             top: `${y}%`,
-          },
-        }}
+          }}
       >
         {isSelected && (
           <p className="visually_hidden">{cowDisplayName} is selected</p>
