@@ -51,7 +51,9 @@ COPY --from=builder /app/node_modules ./node_modules
 
 # Install curl for the health check
 # The health check uses 'curl', which is not included in the base alpine image by default.
-RUN apk add --no-cache curl=8.14.1-r1
+# We don't pin the curl version to avoid build failures when older versions are removed from Alpine repositories.
+# hadolint ignore=DL3018
+RUN apk add --no-cache curl
 
 # Expose the port the application will run on.
 EXPOSE 3000
