@@ -119,18 +119,18 @@ export const Tumbleweeds = ({ doSpawn }) => {
       setTumbleweeds(prev => {
         const idxTumbleweed = prev.indexOf(tumbleweedUuid)
 
-        const reducedTumbleweeds = [
+        const tumbleweedsWithCompletedElementRemoved = [
           ...prev.slice(0, idxTumbleweed),
           ...prev.slice(idxTumbleweed + 1),
         ]
 
-        // If spawning is still active, schedule a new tumbleweed to maintain a constant stream.
-        if (doSpawn) {
-          scheduleSpawn()
-        }
-
-        return reducedTumbleweeds
+        return tumbleweedsWithCompletedElementRemoved
       })
+
+      // If spawning is still active, schedule a new tumbleweed to maintain a constant stream.
+      if (doSpawn) {
+        scheduleSpawn()
+      }
     },
     [doSpawn, scheduleSpawn]
   )
