@@ -76,7 +76,19 @@ export const Tumbleweeds = ({ doSpawn }) => {
     setTumbleweeds(oldTumbleweeds => [...oldTumbleweeds, v4()])
   }
 
-  const scheduleSpawn = useDebounceCallback(spawnTumbleweed, spawnIntervalMs, {
+  // Randomize the spawn time a bit to prevent unnatural bunching of
+  // tumbleweeds that can occur when the page loses focus due the behavior of
+  // CSS animation timers in unfocused pages:
+  // https://g.co/gemini/share/ff1ee997e30c
+  const scheduleSpawnMs = scaleNumber(
+    randomNumberService.generateRandomNumber(),
+    0,
+    1,
+    0,
+    spawnIntervalMs
+  )
+
+  const scheduleSpawn = useDebounceCallback(spawnTumbleweed, scheduleSpawnMs, {
     trailing: true,
   })
 
