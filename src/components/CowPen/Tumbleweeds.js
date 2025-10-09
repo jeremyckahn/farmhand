@@ -5,6 +5,7 @@ import { v4 } from 'uuid'
 
 import { items } from '../../img/index.js'
 import { scaleNumber } from '../../utils/index.js'
+import { randomNumberService } from '../../common/services/randomNumber.js'
 
 // The initial interval between tumbleweed spawns.
 const initialSpawnIntervalMs = 3000
@@ -24,8 +25,8 @@ const tumbleweedSize = 48
  */
 const Tumbleweed = ({ onAnimationComplete }) => {
   // Randomize the vertical position of the tumbleweed.
-  const [yPercent] = useState(Math.random())
-  const top = scaleNumber(yPercent, 0, 1, 0, 100)
+  const [yPosition] = useState(randomNumberService.generateRandomNumber())
+  const top = scaleNumber(yPosition, 0, 1, 0, 100)
 
   return (
     <Box
