@@ -130,14 +130,7 @@ export const Tumbleweeds = ({ doSpawn }) => {
   const handleTumbleweedAnimationComplete = useCallback(
     tumbleweedUuid => {
       setTumbleweeds(prev => {
-        const idxTumbleweed = prev.indexOf(tumbleweedUuid)
-
-        const tumbleweedsWithCompletedElementRemoved = [
-          ...prev.slice(0, idxTumbleweed),
-          ...prev.slice(idxTumbleweed + 1),
-        ]
-
-        return tumbleweedsWithCompletedElementRemoved
+        return prev.filter(id => id !== tumbleweedUuid)
       })
 
       // If spawning is still active, schedule a new tumbleweed to maintain a constant stream.
