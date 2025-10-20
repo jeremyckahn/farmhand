@@ -20,7 +20,7 @@
   "author": "jeremyckahn@gmail.com",
   "license": "GPL-2.0-or-later",
   "devDependencies": {
-    "@playwright/test": "^1.52.0",
+    "@playwright/test": "^1.56.1",
     "@types/node": "^24.0.10"
   }
 }
