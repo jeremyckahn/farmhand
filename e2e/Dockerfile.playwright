@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.52.0-noble
+FROM mcr.microsoft.com/playwright:v1.56.1-noble
 
 # Use pwuser's home directory as recommended by Playwright docs
 WORKDIR /home/pwuser/e2e
