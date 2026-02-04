@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 
 import { defineConfig, transformWithEsbuild, mergeConfig } from 'vite'
-import { defineConfig as vitestDefineConfig } from 'vitest/dist/config.js'
+import { defineConfig as vitestDefineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
