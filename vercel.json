@@ -10,10 +10,6 @@
     {
       "source": "/api/post-day-results",
       "destination": "/api/post-day-results.js"
-    },
-    {
-      "source": "/api/publish-global-market-values-to-discord",
-      "destination": "/api/publish-global-market-values-to-discord.js"
     }
   ]
 }
