@@ -31,7 +31,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 22
           registry-url: 'https://registry.npmjs.org'
 
       - run: npm ci
@@ -125,7 +125,7 @@ jobs:
           git config --global url."https://github.com/".insteadOf ssh://git@github.com/
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 22
       - run: npm ci
       - name: 'Build and Release Electron App'
         env:
