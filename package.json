@@ -146,7 +146,7 @@
     "seedrandom": "^3.0.5",
     "shifty": "^3.0.1",
     "stream": "npm:stream-browserify@^3.0.0",
-    "trystero": "^0.21.6",
+    "trystero": "^0.22.0",
     "url": "^0.11.0",
     "usehooks-ts": "^3.1.0",
     "uuid": "^3.4.0",
