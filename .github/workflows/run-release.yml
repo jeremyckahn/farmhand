@@ -16,9 +16,12 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
     steps:
       - name: Check out develop
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: true
@@ -37,6 +40,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
       - run: npm ci
 
       - name: Tag release
@@ -48,7 +54,7 @@ jobs:
         run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Check out main
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           clean: false
           fetch-depth: 0
@@ -67,7 +73,9 @@ jobs:
           branch: main
 
       - run: npm run build -- --base="./"
-      - run: npm publish --provenance
+      - run: npm publish --provenance --access public
+        env:
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Prepare Web Artifacts
         run: zip farmhand-web-${{ steps.package_version.outputs.version }}.zip -r dist/*
@@ -115,7 +123,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: true
