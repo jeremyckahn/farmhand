@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="theme-color" content="#ffe3a1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="shortcut icon" href="/farmhand/favicon.ico" />
+    <!--
+      Notice the use of  in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <link rel="apple-touch-icon" href="/farmhand/app-icons/ios-appicon-76-76.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/farmhand/app-icons/ios-appicon-120-120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/farmhand/app-icons/ios-appicon-152-152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/farmhand/app-icons/ios-appicon-180-180.png"
+    />
+    <title>Farmhand</title>
+    <style>
+      html {
+        background-color: #666;
+        /* This is the data URI for the Rainbow Cow. 🌈🐮 */
+        background-image: url('data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACNUlEQVRoge2YPW7CMBTH/w+hIgTXQB1yCy6R3oA5GwzpwsIWqVtvUE7QjVtk4B4smV6HxE7i70BIK9U/yRLE9vuwn99zAkQikUgkEolEIr8FTaCDR9BplfGoA6rgUIRe33zyjKGhDvSE7XmnDTjhoxG98Au7bQEAh9VGnx8mg2ZeLY0u3L/aZoGN8U5yv0qfA1bDgwywCS0S0PoimwYt6nYklxMEAHOXnrstBACuWmO6j4sElJVgbsUTURuOtND6kHPtjOHM2nbAafyg1edKriIXSa+LHEfQ1dfF5MB4xk+A6sAkxnORyBXuhQ8AcNXr8x3k7hkYx3g19Ymz4JB30DqbOe8vXnXCAYalaKhx6+JEn/rDgHrwCNYsNMRwwGL8BGiHmItksPGhUFaOLjO0Ev9ZXIVsMvrh1/ktMpCliAG6A0RZyc8KIaAOIyFfXCP4fDaPTf3FbA6A+bYFrS8iEz2XnEEZAVkpDac0BQDvfxMzAKDV98N2ma7WPXLuFSXbqptoxhrrVB1CtPC9OASx5119n1dzv6eaqs4McW6GNmy08KGsvC/1cdVvHkwh4gqbLt4sxOdzLSwrx7vI5QxKSa601KHoFTR9QVnIiFCgvnzseWOZYeHY2rDEFZS+SvmmsOk4NSi5MBcJc5GItzHZOs/k2IFNzlviyktcQ8dbCdkBaoy39Y0BAeCvxuY32AuXyv+5SjzjIqbydseGmmaYvoKN8XXtKTpCd2CKT5BT6IhEIpGR+QG4Bej6ikQYYQAAAABJRU5ErkJggg==');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 200px;
+        height: 100vh;
+        image-rendering: pixelated;
+      }
+    </style>
+    <script>
+      ;(function() {
+        const analyticsID = {
+          'jeremyckahn.github.io': 'G-SH37EG4NP9',
+          'www.farmhand.life': 'G-3KRQX38CYH',
+        }[window.location.host]
+
+        if (!analyticsID) {
+          console.warn('Unrecognized domain. No analytics will be recorded.')
+          return
+        }
+
+        const script = document.createElement('script')
+        script.setAttribute('async', '')
+        script.setAttribute(
+          'src',
+          `https://www.googletagmanager.com/gtag/js?id=${analyticsID}`
+        )
+
+        document.head.appendChild(script)
+        window.dataLayer = window.dataLayer || []
+
+        function gtag() {
+          dataLayer.push(arguments)
+        }
+
+        gtag('js', new Date())
+        gtag('config', analyticsID)
+      })()
+    </script>
+    <script type="module" crossorigin src="/farmhand/assets/index-TgVIELUp.js"></script>
+    <link rel="stylesheet" crossorigin href="/farmhand/assets/index-BsgkDovy.css">
+  <link rel="manifest" href="/farmhand/manifest.webmanifest"></head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
