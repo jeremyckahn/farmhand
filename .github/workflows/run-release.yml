@@ -36,7 +36,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: 'https://registry.npmjs.org'
 
       - run: npm ci
 
@@ -68,7 +67,7 @@ jobs:
           branch: main
 
       - run: npm run build -- --base="./"
-      - run: npm publish
+      - run: npm publish --provenance
 
       - name: Prepare Web Artifacts
         run: zip farmhand-web-${{ steps.package_version.outputs.version }}.zip -r dist/*
