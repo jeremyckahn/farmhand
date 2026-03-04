@@ -1,4 +1,4 @@
-import Dinero from 'dinero.js'
+import { dinero, toDecimal, USD } from 'dinero.js'
 
 /**
  * @param {number} number
@@ -6,4 +6,11 @@ import Dinero from 'dinero.js'
  */
 
 export const moneyString = number =>
-  Dinero({ amount: Math.round(number * 100) }).toFormat()
+  toDecimal(
+    dinero({ amount: Math.round(number * 100), currency: USD }),
+    ({ value }) =>
+      Number(value).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      })
+  )
