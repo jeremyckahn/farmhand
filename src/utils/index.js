@@ -192,19 +192,26 @@ export const createNewForest = () => {
  * rounded off.
  */
 export const dollarString = number =>
-  Math.round(number).toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  })
+  toDecimal(
+    dinero({ amount: Math.round(number), currency: USD, scale: 0 }),
+    ({ value }) =>
+      Number(value).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      })
+  )
 
 /**
  * @param {number} number
  * @returns {string} Number string with commas.
  */
 export const integerString = number =>
-  Math.round(number).toLocaleString('en-US')
+  toDecimal(
+    dinero({ amount: Math.round(number), currency: USD, scale: 0 }),
+    ({ value }) => Number(value).toLocaleString('en-US')
+  )
 
 /**
  * @param {number} number A float
