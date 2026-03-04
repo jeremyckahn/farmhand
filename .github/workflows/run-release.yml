@@ -100,7 +100,11 @@ jobs:
 
       - run: node -e "console.log(require('./package.json').version)" > dist/version.txt
       - name: Publish itch.io build
-        uses: josephbmanley/butler-publish-itchio-action@master
+
+        # TODO: Use the yeslayla package once https://github.com/yeslayla/butler-publish-itchio-action/pull/17 is merged
+        #
+        # uses: yeslayla/butler-publish-itchio-action@master
+        uses: XanatosX/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.ITCH_TOKEN }}
           CHANNEL: html5
