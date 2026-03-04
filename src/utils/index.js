@@ -7,7 +7,7 @@ import { Buffer } from 'buffer'
 
 import configureJimp from '@jimp/custom'
 import jimpPng from '@jimp/png'
-import Dinero from 'dinero.js'
+import { dinero, toDecimal, USD } from 'dinero.js'
 import { funAnimalName } from 'fun-animal-names'
 import sortBy from 'lodash.sortby'
 import { v4 as uuid } from 'uuid'
@@ -188,27 +188,30 @@ export const createNewForest = () => {
 
 /**
  * @param {number} number
- * @param {string} format
- * @see https://dinerojs.com/module-dinero#~toFormat
- * @returns {string}
- */
-const formatNumber = (number, format) =>
-  Dinero({ amount: Math.round(number * 100), precision: 2 })
-    .convertPrecision(0)
-    .toFormat(format)
-
-/**
- * @param {number} number
  * @returns {string} Include dollar sign and other formatting. Cents are
  * rounded off.
  */
-export const dollarString = number => formatNumber(number, '$0,0')
+export const dollarString = number =>
+  toDecimal(
+    dinero({ amount: Math.round(number), currency: USD, scale: 0 }),
+    ({ value }) =>
+      Number(value).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      })
+  )
 
 /**
  * @param {number} number
  * @returns {string} Number string with commas.
  */
-export const integerString = number => formatNumber(number, '0,0')
+export const integerString = number =>
+  toDecimal(
+    dinero({ amount: Math.round(number), currency: USD, scale: 0 }),
+    ({ value }) => Number(value).toLocaleString('en-US')
+  )
 
 /**
  * @param {number} number A float
@@ -221,16 +224,16 @@ export const percentageString = number => `${Math.round(number * 100)}%`
  * @param {Record<string, number>} valueAdjustments
  * @returns {number}
  */
-export const getItemCurrentValue = ({ id }, valueAdjustments) =>
-  Dinero({
-    amount: Math.round(
-      (valueAdjustments[id]
-        ? getItemBaseValue(id) *
-          (itemsMap[id].doesPriceFluctuate ? valueAdjustments[id] : 1)
-        : getItemBaseValue(id)) * 100
-    ),
-    precision: 2,
-  }).toUnit()
+export const getItemCurrentValue = ({ id }, valueAdjustments) => {
+  const amount = Math.round(
+    (valueAdjustments[id]
+      ? getItemBaseValue(id) *
+        (itemsMap[id].doesPriceFluctuate ? valueAdjustments[id] : 1)
+      : getItemBaseValue(id)) * 100
+  )
+
+  return Number(toDecimal(dinero({ amount, currency: USD })))
+}
 
 /**
  * @param {Record<string, number>} valueAdjustments
