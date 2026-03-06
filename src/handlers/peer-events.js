@@ -195,13 +195,16 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
         }
       }
 
-      const peerEntry = Object.entries(peers).find(
-        ([, { playerId }]) => playerId === cowReceived.ownerId
-      )
+      const peerEntry = Object.entries(peers).find(([, peer]) => {
+        const { playerId: peerPlayerId } = peer
+        return peerPlayerId === cowReceived.ownerId
+      })
       const [, peerMetadata] = peerEntry || []
 
+      const peerPlayerId = peerEntry?.[1]?.playerId
+
       const didOriginallyOwnReceivedCow =
-        cowReceived.originalOwnerId === playerId
+        cowReceived.originalOwnerId === peerPlayerId
 
       const updatedCowReceived = {
         ...cowReceived,

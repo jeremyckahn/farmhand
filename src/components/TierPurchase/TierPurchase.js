@@ -40,12 +40,12 @@ export function TierPurchase({
   }
 
   const canPlayerBuySelectedTier = () => {
-    const selectedTier = tiers.get(selectedTierNumber)
+    const tierToBuy = tiers.get(selectedTierNumber)
 
     return (
-      !!selectedTier &&
+      !!tierToBuy &&
       !hasPurchasedTier(selectedTierNumber) &&
-      money >= selectedTier.price
+      money >= tierToBuy.price
     )
   }
 

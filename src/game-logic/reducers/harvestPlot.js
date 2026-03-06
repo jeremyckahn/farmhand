@@ -87,13 +87,13 @@ function harvestCrops(state, x, y) {
 
     if (seedsForHarvestedCropAreAvailable) {
       state = plantInPlot(state, x, y, seedItemIdForCrop)
-      state = modifyFieldPlotAt(state, x, y, crop => {
-        if (!crop) {
-          return crop
+      state = modifyFieldPlotAt(state, x, y, updatedCrop => {
+        if (!updatedCrop) {
+          return updatedCrop
         }
 
         return {
-          ...crop,
+          ...updatedCrop,
           fertilizerType: fertilizerType.RAINBOW,
         }
       })

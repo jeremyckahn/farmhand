@@ -31,25 +31,29 @@ export const LogView = ({ notificationLog, todaysNotifications }) => (
     </ul>
     <Divider />
     <ul>
-      {notificationLog.map(({ day, notifications }, i) => (
-        <li key={`${i}_${notifications.info.join()}`}>
+      {notificationLog.map(({ day, notifications }, dayIndex) => (
+        <li key={`${dayIndex}_${notifications.info.join()}`}>
           <h3>Day {day}</h3>
-          {['success', 'info', 'warning', 'error'].map((severity, i) =>
-            notifications[severity].length ? (
-              <Alert
-                {...{
-                  elevation: 3,
-                  key: `${severity}_${i}`,
-                  severity: /** @type {'success' | 'info' | 'warning' | 'error'} */ (severity),
-                }}
-              >
-                {notifications[severity].map((message, j) => (
-                  <ReactMarkdown
-                    {...{ key: `${j}_${message}`, source: message }}
-                  />
-                ))}
-              </Alert>
-            ) : null
+          {['success', 'info', 'warning', 'error'].map(
+            (severityLevel, severityIndex) =>
+              notifications[severityLevel].length ? (
+                <Alert
+                  {...{
+                    elevation: 3,
+                    key: `${severityLevel}_${severityIndex}`,
+                    severity: /** @type {'success' | 'info' | 'warning' | 'error'} */ (severityLevel),
+                  }}
+                >
+                  {notifications[severityLevel].map((message, messageIndex) => (
+                    <ReactMarkdown
+                      {...{
+                        key: `${messageIndex}_${message}`,
+                        source: message,
+                      }}
+                    />
+                  ))}
+                </Alert>
+              ) : null
           )}
         </li>
       ))}

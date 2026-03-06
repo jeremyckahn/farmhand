@@ -67,11 +67,11 @@ describe('<Workshop />', () => {
     }
   })
 
-  const renderWorkshop = gameState => {
+  const renderWorkshop = gameStateParam => {
     render(
       <FarmhandContext.Provider
         value={{
-          gameState,
+          gameState: gameStateParam,
           // @ts-expect-error
           handlers: {},
         }}

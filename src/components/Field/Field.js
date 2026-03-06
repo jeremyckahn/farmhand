@@ -54,7 +54,7 @@ if (tools.shovel) {
 
 export const isInHoverRange = ({
   experience,
-  fieldMode,
+  fieldMode: propsFieldMode,
   hoveredPlotRangeSize,
   hoveredPlot: { x: hoveredPlotX, y: hoveredPlotY },
   x,
@@ -62,13 +62,13 @@ export const isInHoverRange = ({
 }) => {
   // If hoveredPlotX is null, assume that hoveredPlotY is as well.
   // If fieldMode === OBSERVE, nothing is in hover range.
-  if (hoveredPlotX == null || fieldMode === OBSERVE) {
+  if (hoveredPlotX == null || propsFieldMode === OBSERVE) {
     return false
   }
 
   let hoveredPlotRangeSizeToRender = hoveredPlotRangeSize
 
-  switch (fieldMode) {
+  switch (propsFieldMode) {
     case SET_SPRINKLER:
       hoveredPlotRangeSizeToRender = getLevelEntitlements(
         levelAchieved(experience)
@@ -225,7 +225,7 @@ export const FieldContent = ({
   columns,
   experience,
   field,
-  fieldMode,
+  fieldMode: propsFieldMode,
   handleCombineEnabledChange,
   hoveredPlot,
   hoveredPlotRangeSize,
@@ -241,15 +241,15 @@ export const FieldContent = ({
         onMouseLeave: () => setHoveredPlot({ x: null, y: null }),
       }}
     >
-      {nullArray(rows).map((_null, y) => (
+      {nullArray(rows).map((_rowIndex, y) => (
         <div className="row" key={y}>
           {nullArray(columns).map(
-            (_null, x, arr, plotContent = field[y][x]) => (
+            (_colIndex, x, arr, plotContent = field[y][x]) => (
               <MemoPlot
                 key={x}
                 {...{
                   experience,
-                  fieldMode,
+                  fieldMode: propsFieldMode,
                   hoveredPlot,
                   hoveredPlotRangeSize,
                   plotContent,
@@ -325,7 +325,7 @@ const RangeSliderValueLabelComponent = ({ children, open, value }) => (
 export const Field = props => {
   const {
     field,
-    fieldMode,
+    fieldMode: propsFieldMode,
     handleFieldActionRangeChange,
     hoveredPlotRangeSize,
     inventory,
@@ -357,19 +357,19 @@ export const Field = props => {
       <div
         {...{
           className: classNames('Field', {
-            'cleanup-mode': fieldMode === CLEANUP,
-            'fertilize-mode': fieldMode === FERTILIZE,
-            'harvest-mode': fieldMode === HARVEST,
-            'mine-mode': fieldMode === MINE,
+            'cleanup-mode': propsFieldMode === CLEANUP,
+            'fertilize-mode': propsFieldMode === FERTILIZE,
+            'harvest-mode': propsFieldMode === HARVEST,
+            'mine-mode': propsFieldMode === MINE,
             // @ts-expect-error - Unnecessary properties are omitted out of convenience
             'is-inventory-full': !doesInventorySpaceRemain({
               inventory,
               inventoryLimit,
             }),
-            'plant-mode': fieldMode === PLANT,
-            'set-scarecrow-mode': fieldMode === SET_SCARECROW,
-            'set-sprinkler-mode': fieldMode === SET_SPRINKLER,
-            'water-mode': fieldMode === WATER,
+            'plant-mode': propsFieldMode === PLANT,
+            'set-scarecrow-mode': propsFieldMode === SET_SCARECROW,
+            'set-sprinkler-mode': propsFieldMode === SET_SPRINKLER,
+            'water-mode': propsFieldMode === WATER,
           }),
           'data-purchased-field': purchasedField,
           'data-testid': 'field',
@@ -420,7 +420,7 @@ export const Field = props => {
             />
           )}
         </TransformWrapper>
-        {adjustableRangeFieldModes.has(fieldMode) && (
+        {adjustableRangeFieldModes.has(propsFieldMode) && (
           <div className="slider-wrapper">
             <Slider
               {...{

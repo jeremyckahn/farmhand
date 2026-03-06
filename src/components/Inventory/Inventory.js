@@ -98,8 +98,8 @@ const Inventory = ({
   }
 
   const filteredCategories = Array.from(itemCategories.entries()).reduce(
-    (filtered, [category, items]) => {
-      const matchingItems = items.filter(item => {
+    (filtered, [category, categoryItems]) => {
+      const matchingItems = categoryItems.filter(item => {
         const mappedItem = itemsMap[item.id]
         return (
           mappedItem &&
@@ -153,28 +153,29 @@ const Inventory = ({
           </AccordionDetails>
         </Accordion>
       )}
-      {Array.from(filteredCategories.entries()).map(([category, items]) =>
-        items.length ? (
-          <Fragment key={category}>
-            <section>
-              <h3>{formatCategoryName(category)}</h3>
-              <ul className="card-list">
-                {items.map(item => (
-                  <li key={item.id}>
-                    <Item
-                      {...{
-                        isPurchaseView,
-                        isSellView,
-                        item,
-                        showQuantity: isPurchaseView,
-                      }}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </Fragment>
-        ) : null
+      {Array.from(filteredCategories.entries()).map(
+        ([category, categoryItems]) =>
+          categoryItems.length ? (
+            <Fragment key={category}>
+              <section>
+                <h3>{formatCategoryName(category)}</h3>
+                <ul className="card-list">
+                  {categoryItems.map(item => (
+                    <li key={item.id}>
+                      <Item
+                        {...{
+                          isPurchaseView,
+                          isSellView,
+                          item,
+                          showQuantity: isPurchaseView,
+                        }}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </Fragment>
+          ) : null
       )}
     </div>
   )

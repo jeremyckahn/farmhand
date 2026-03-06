@@ -192,17 +192,17 @@ export default {
   },
 
   /**
-   * @param {farmhand.fieldMode} fieldMode
+   * @param {farmhand.fieldMode} selectedFieldMode
    */
-  handleFieldModeSelect(fieldMode) {
+  handleFieldModeSelect(selectedFieldMode) {
     this.setState(({ selectedItemId }) => ({
       selectedItemId:
-        fieldMode !== PLANT ||
+        selectedFieldMode !== PLANT ||
         // @ts-expect-error
-        TOOLBELT_FIELD_MODES.has(fieldMode)
+        TOOLBELT_FIELD_MODES.has(selectedFieldMode)
           ? ''
           : selectedItemId,
-      fieldMode,
+      fieldMode: selectedFieldMode,
     }))
   },
 
@@ -222,26 +222,26 @@ export default {
    */
   handlePlotClick(x, y) {
     const {
-      fieldMode,
+      fieldMode: fieldModeValue,
       hoveredPlotRangeSize: rangeRadius,
       selectedItemId,
     } = this.state
 
-    if (fieldMode === PLANT) {
+    if (fieldModeValue === PLANT) {
       this.forRange(plantInPlot, rangeRadius, x, y, selectedItemId)
-    } else if (fieldMode === HARVEST) {
+    } else if (fieldModeValue === HARVEST) {
       this.forRange(harvestPlot, rangeRadius, x, y)
-    } else if (fieldMode === MINE) {
+    } else if (fieldModeValue === MINE) {
       this.forRange(minePlot, rangeRadius, x, y)
-    } else if (fieldMode === CLEANUP) {
+    } else if (fieldModeValue === CLEANUP) {
       this.forRange(clearPlot, rangeRadius, x, y)
-    } else if (fieldMode === WATER) {
+    } else if (fieldModeValue === WATER) {
       this.forRange(waterPlot, rangeRadius, x, y)
-    } else if (fieldMode === FERTILIZE) {
+    } else if (fieldModeValue === FERTILIZE) {
       this.forRange(fertilizePlot, rangeRadius, x, y)
-    } else if (fieldMode === SET_SPRINKLER) {
+    } else if (fieldModeValue === SET_SPRINKLER) {
       this.setSprinkler(x, y)
-    } else if (fieldMode === SET_SCARECROW) {
+    } else if (fieldModeValue === SET_SCARECROW) {
       this.setScarecrow(x, y)
     }
   },
@@ -367,10 +367,10 @@ export default {
   },
 
   /**
-   * @param {farmhand.dialogView} dialogView
+   * @param {farmhand.dialogView} selectedDialogView
    */
-  handleClickDialogViewButton(dialogView) {
-    this.openDialogView(dialogView)
+  handleClickDialogViewButton(selectedDialogView) {
+    this.openDialogView(selectedDialogView)
   },
 
   handleCloseDialogView() {
@@ -417,10 +417,10 @@ export default {
     const [, file] = data
     const fileReader = new FileReader()
 
-    fileReader.addEventListener('loadend', e => {
+    fileReader.addEventListener('loadend', eImport => {
       try {
-        const { result } = /** @type {FileReader} */ (e.target)
-        const json = String(result)
+        const target = /** @type {FileReader} */ (eImport.target)
+        const json = String(target.result)
         const parsedJson = JSON.parse(json)
         const transformedStateData = transformStateDataForImport(parsedJson)
         const state = reduceByPersistedKeys(transformedStateData)

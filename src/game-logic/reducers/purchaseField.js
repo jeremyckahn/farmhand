@@ -25,9 +25,10 @@ export const purchaseField = (state, fieldId) => {
   return {
     ...state,
     purchasedField: fieldId,
-    field: nullArray(rows).map((_, row) =>
+    field: nullArray(rows).map((_, rowIndex) =>
       nullArray(columns).map(
-        (_, column) => (field[row] && field[row][column]) || null
+        (__, columnIdx) =>
+          (field[rowIndex] && field[rowIndex][columnIdx]) || null
       )
     ),
     money: moneyTotal(money, -price),

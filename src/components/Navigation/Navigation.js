@@ -320,20 +320,20 @@ export const Navigation = ({
           { dialogView: ACHIEVEMENTS, Icon: BeenhereIcon },
           { dialogView: ACCOUNTING, Icon: AccountBalanceIcon },
           { dialogView: SETTINGS, Icon: SettingsIcon },
-        ].map(({ dialogView, Icon }) => (
+        ].map(({ dialogView: dialogViewType, Icon }) => (
           <Tooltip
             {...{
               arrow: true,
-              key: dialogView,
+              key: dialogViewType,
               placement: 'top',
-              title: dialogTriggerTextMap[dialogView],
+              title: dialogTriggerTextMap[dialogViewType],
             }}
           >
             <Fab
               {...{
-                'aria-label': dialogTriggerTextMap[dialogView],
+                'aria-label': dialogTriggerTextMap[dialogViewType],
                 color: 'primary',
-                onClick: () => handleClickDialogViewButton(dialogView),
+                onClick: () => handleClickDialogViewButton(dialogViewType),
               }}
             >
               <Icon />

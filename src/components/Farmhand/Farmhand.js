@@ -633,11 +633,11 @@ export default class Farmhand extends FarmhandReducers {
           this.removePeer(id)
         })
 
-        const [sendPeerMetadata, getPeerMetadata] = peerRoom.makeAction(
+        const [sendPeerMetadata, getPeerMetadataFunc] = peerRoom.makeAction(
           'peerMetadata'
         )
 
-        getPeerMetadata((
+        getPeerMetadataFunc((
           /** @type {[object, string]} */
           ...args
         ) => handlePeerMetadataRequest(this, ...args))
@@ -669,7 +669,7 @@ export default class Farmhand extends FarmhandReducers {
           getCowAccept,
           getCowReject,
           getCowTradeRequest,
-          getPeerMetadata,
+          getPeerMetadata: getPeerMetadataFunc,
           pendingPeerMessages: [],
           sendCowAccept,
           sendCowReject,
@@ -1086,10 +1086,10 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /*!
-   * @param {farmhand.module:enums.dialogView} dialogView
+   * @param {farmhand.module:enums.dialogView} dialogViewName
    */
-  openDialogView(dialogView) {
-    this.setState({ currentDialogView: dialogView, isDialogViewOpen: true })
+  openDialogView(dialogViewName) {
+    this.setState({ currentDialogView: dialogViewName, isDialogViewOpen: true })
   }
 
   closeDialogView() {
@@ -1137,7 +1137,7 @@ export default class Farmhand extends FarmhandReducers {
 
   render() {
     const {
-      props: { features },
+      props: { features: propsFeatures },
       state: { redirect },
       fieldToolInventory,
       handlers,
@@ -1159,7 +1159,7 @@ export default class Farmhand extends FarmhandReducers {
     const gameState = {
       ...this.state,
       blockInput,
-      features,
+      features: propsFeatures,
       fieldToolInventory,
       isChatAvailable,
       levelEntitlements,

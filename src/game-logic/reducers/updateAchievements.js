@@ -9,21 +9,21 @@ import { showNotification } from './showNotification.js'
  * @returns {farmhand.state}
  */
 export const updateAchievements = (state, prevState) =>
-  achievements.reduce((state, achievement) => {
+  achievements.reduce((reducerState, achievement) => {
     if (
-      !state.completedAchievements[achievement.id] &&
-      achievement.condition(state, prevState)
+      !reducerState.completedAchievements[achievement.id] &&
+      achievement.condition(reducerState, prevState)
     ) {
-      state = {
-        ...achievement.reward(state),
+      reducerState = {
+        ...achievement.reward(reducerState),
         completedAchievements: {
-          ...state.completedAchievements,
+          ...reducerState.completedAchievements,
           [achievement.id]: true,
         },
       }
 
-      state = showNotification(
-        state,
+      reducerState = showNotification(
+        reducerState,
         ACHIEVEMENT_COMPLETED('', {
           name: achievement.name,
           rewardDescription: achievement.rewardDescription,
@@ -32,5 +32,5 @@ export const updateAchievements = (state, prevState) =>
       )
     }
 
-    return state
+    return reducerState
   }, state)
