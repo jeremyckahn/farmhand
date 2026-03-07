@@ -39,9 +39,10 @@ export const purchaseForest = (state, forestId) => {
   return {
     ...state,
     purchasedForest: forestId,
-    forest: nullArray(rows).map((_, row) =>
+    forest: nullArray(rows).map((_, rowIndex) =>
       nullArray(columns).map(
-        (_, column) => (forest[row] && forest[row][column]) || null
+        (__, columnIdx) =>
+          (forest[rowIndex] && forest[rowIndex][columnIdx]) || null
       )
     ),
     money: moneyTotal(money, -price),

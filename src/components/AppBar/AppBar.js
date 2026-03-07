@@ -39,9 +39,9 @@ const MoneyDisplay = ({ money }) => {
       const tweenable = tween({
         easing: 'easeOutQuad',
         duration: 750,
-        render: ({ color, money }) => {
+        render: ({ color, money: currentMoney }) => {
           setTextColor(String(color))
-          setDisplayedMoney(Number(money))
+          setDisplayedMoney(Number(currentMoney))
         },
         from: {
           color: money > previousMoney ? 'rgb(0, 255, 0)' : 'rgb(255, 0, 0)',

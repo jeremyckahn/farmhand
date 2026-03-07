@@ -10,12 +10,12 @@ import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field.js'
 
 // Mock Plot component to test MemoPlot memoization behavior
 vitest.mock('../Plot/index.js', () => {
-  const mockPlot = vitest.fn(({ x, y, isInHoverRange }) => (
+  const mockPlot = vitest.fn(({ x, y, isInHoverRange: isInRange }) => (
     <div
       className="Plot"
       data-x={x}
       data-y={y}
-      data-in-hover-range={isInHoverRange}
+      data-in-hover-range={isInRange}
     />
   ))
   return { default: mockPlot }

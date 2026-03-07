@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { tween, Tweenable } from 'shifty'
-import { func, number } from 'prop-types'
+import { func as funcProp, number as numberProp } from 'prop-types'
 
-const defaultFormatter = (/** @type {number} */ number) => `${number}`
+const defaultFormatter = (/** @type {number} */ num) => `${num}`
 
 /**
  * AnimatedNumber component that displays a number with an animation effect.
@@ -34,8 +34,8 @@ const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
       const tweenable = tween({
         easing: 'easeOutQuad',
         duration: 750,
-        render: ({ number }) => {
-          setDisplayedNumber(Number(number))
+        render: ({ number: tweenedNumber }) => {
+          setDisplayedNumber(Number(tweenedNumber))
         },
         from: {
           number: previousNumber,
@@ -57,8 +57,8 @@ const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
 }
 
 AnimatedNumber.propTypes = {
-  formatter: func,
-  number: number.isRequired,
+  formatter: funcProp,
+  number: numberProp.isRequired,
 }
 
 export default AnimatedNumber

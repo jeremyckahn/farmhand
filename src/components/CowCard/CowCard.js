@@ -126,11 +126,11 @@ export const CowCard = (
 
   useEffect(() => {
     ;(async () => {
-      const cowImage = await getCowImage(cow)
+      const fetchedCowImage = await getCowImage(cow)
 
       if (isMounted() === false) return
 
-      setCowImage(cowImage)
+      setCowImage(fetchedCowImage)
     })()
 
     setDisplayName(getCowDisplayName(cow, playerId, allowCustomPeerCowNames))

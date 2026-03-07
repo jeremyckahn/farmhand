@@ -79,8 +79,11 @@ const OnlinePeersView = ({
           <Divider />
           <ul>
             {latestPeerMessages.map(
-              ({ playerId, message, severity = 'info' }, i) => (
-                <li {...{ key: i }}>
+              (
+                { playerId: peerPlayerId, message, severity = 'info' },
+                messageIndex
+              ) => (
+                <li {...{ key: messageIndex }}>
                   <Alert
                     {...{
                       elevation: 3,
@@ -89,7 +92,7 @@ const OnlinePeersView = ({
                   >
                     <ReactMarkdown
                       {...{
-                        source: `**${getPlayerName(playerId)}** ${message}`,
+                        source: `**${getPlayerName(peerPlayerId)}** ${message}`,
                       }}
                     />
                   </Alert>

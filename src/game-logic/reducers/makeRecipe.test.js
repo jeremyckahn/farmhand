@@ -55,14 +55,17 @@ describe('makeRecipe', () => {
       [recipeType.FORGE, EXPERIENCE_VALUES.FORGE_RECIPE_MADE],
       [recipeType.KITCHEN, EXPERIENCE_VALUES.KITCHEN_RECIPE_MADE],
       [recipeType.RECYCLING, EXPERIENCE_VALUES.RECYCLING_RECIPE_MADE],
-    ])('adds experience for a %s recipe', (recipeType, experienceValue) => {
-      const { experience } = makeRecipe(state, {
-        ...carrotSoup,
-        ingredients: {},
-        recipeType,
-      })
+    ])(
+      'adds experience for a %s recipe',
+      (recipeTypeLabel, experienceValue) => {
+        const { experience } = makeRecipe(state, {
+          ...carrotSoup,
+          ingredients: {},
+          recipeType: recipeTypeLabel,
+        })
 
-      expect(experience).toEqual(experienceValue)
-    })
+        expect(experience).toEqual(experienceValue)
+      }
+    )
   })
 })

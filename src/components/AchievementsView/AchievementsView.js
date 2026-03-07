@@ -29,10 +29,10 @@ const partitionAchievements = memoize(completedAchievements =>
   )
 )
 
-const AchievementsList = ({ achievements }) => (
+const AchievementsList = ({ unpartitionedAchievements }) => (
   <AccordionDetails>
     <ul className="card-list">
-      {achievements.map(achievement => (
+      {unpartitionedAchievements.map(achievement => (
         <li {...{ key: achievement.id }}>
           <Achievement {...{ achievement }} />
         </li>
@@ -57,7 +57,7 @@ const AchievementsView = ({
           <AccordionSummary>
             <h3>Completed</h3>
           </AccordionSummary>
-          <AchievementsList {...{ achievements: complete }} />
+          <AchievementsList {...{ unpartitionedAchievements: complete }} />
         </Accordion>
         <Divider />
       </>
@@ -66,7 +66,7 @@ const AchievementsView = ({
       <AccordionSummary>
         <h3>Not Completed</h3>
       </AccordionSummary>
-      <AchievementsList {...{ achievements: incomplete }} />
+      <AchievementsList {...{ unpartitionedAchievements: incomplete }} />
     </Accordion>
   </div>
 )

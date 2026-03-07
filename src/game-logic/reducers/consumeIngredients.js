@@ -28,9 +28,9 @@ export const consumeIngredients = (
   state = addExperience(state, experiencePoints)
 
   return Object.keys(recipe.ingredients || {}).reduce(
-    (state, ingredientId) =>
+    (reducerState, ingredientId) =>
       decrementItemFromInventory(
-        state,
+        reducerState,
         ingredientId,
         recipe.ingredients[ingredientId] * recipeYield
       ),

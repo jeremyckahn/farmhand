@@ -64,19 +64,19 @@ describe('sellCow', () => {
 
   describe('cow has hugging machine', () => {
     test('returns hugging machine to inventory', () => {
-      const cow = generateCow({
+      const cowWithHuggingMachine = generateCow({
         isUsingHuggingMachine: true,
       })
       const { inventory } = sellCow(
         testState({
           cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
-          cowInventory: [cow],
+          cowInventory: [cowWithHuggingMachine],
           cowsSold: {},
           inventory: [],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
           money: 0,
         }),
-        cow
+        cowWithHuggingMachine
       )
 
       expect(inventory).toEqual([{ id: huggingMachine.id, quantity: 1 }])

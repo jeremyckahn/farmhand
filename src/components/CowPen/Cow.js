@@ -141,9 +141,9 @@ export class Cow extends Component {
         from: { x, y },
         to: { x: newX, y: randomPosition() },
         duration: Cow.transitionAnimationDuration,
-        render: ({ x, y }) => {
+        render: ({ x: newXValue, y: newYValue }) => {
           if (this.isComponentMounted) {
-            this.setState({ x, y })
+            this.setState({ x: newXValue, y: newYValue })
           }
         },
         easing: 'linear',
@@ -216,16 +216,16 @@ export class Cow extends Component {
 
     return (
       <div
-          className={classNames('cow', {
-            'is-transitioning': isTransitioning,
-            'is-selected': isSelected,
-            'is-loaded': cowImage !== pixel,
-          })}
-          onClick={() => handleCowClick(cow)}
-          style={{
-            left: `${x}%`,
-            top: `${y}%`,
-          }}
+        className={classNames('cow', {
+          'is-transitioning': isTransitioning,
+          'is-selected': isSelected,
+          'is-loaded': cowImage !== pixel,
+        })}
+        onClick={() => handleCowClick(cow)}
+        style={{
+          left: `${x}%`,
+          top: `${y}%`,
+        }}
       >
         {isSelected && (
           <p className="visually_hidden">{cowDisplayName} is selected</p>
