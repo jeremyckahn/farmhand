@@ -201,10 +201,8 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
       })
       const [, peerMetadata] = peerEntry || []
 
-      const peerPlayerId = peerEntry?.[1]?.playerId
-
       const didOriginallyOwnReceivedCow =
-        cowReceived.originalOwnerId === peerPlayerId
+        cowReceived.originalOwnerId === playerId
 
       const updatedCowReceived = {
         ...cowReceived,
