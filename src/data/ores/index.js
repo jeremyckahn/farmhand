@@ -1,7 +1,0 @@
-export { bronzeOre } from './bronzeOre.js'
-export { coal } from './coal.js'
-export { goldOre } from './goldOre.js'
-export { ironOre } from './ironOre.js'
-export { silverOre } from './silverOre.js'
-export { stone } from './stone.js'
-export { saltRock } from './saltRock.js'
