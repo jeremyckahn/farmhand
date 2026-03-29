@@ -86,7 +86,8 @@
     "src/**/*.tsx",
     "src/farmhand.d.ts",
     "api/**/*.ts",
-    "api/**/*.tsx"
+    "api/**/*.tsx",
+    "api-etc/**/*.ts"
   ],
   "exclude": ["dist", "coverage", "e2e"]
 }
