@@ -78,16 +78,8 @@
 
     /* Advanced Options */
     "skipLibCheck": true /* Skip type checking of declaration files. */,
-    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
-    "allowImportingTsExtensions": true
+    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/farmhand.d.ts",
-    "api/**/*.ts",
-    "api/**/*.tsx",
-    "api-etc/**/*.ts"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/farmhand.d.ts", "api/**/*.ts", "api/**/*.tsx"],
   "exclude": ["dist", "coverage", "e2e"]
 }

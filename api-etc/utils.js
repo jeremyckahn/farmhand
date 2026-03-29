@@ -1,9 +1,9 @@
 import redis from 'redis'
 
-import { generateValueAdjustments } from '../src/common/utils.ts'
-import { MAX_ROOM_NAME_LENGTH } from '../src/common/constants.ts'
+import { generateValueAdjustments } from '../src/common/utils.js'
+import { MAX_ROOM_NAME_LENGTH } from '../src/common/constants.js'
 
-import { GLOBAL_ROOM_KEY, ACCEPTED_ORIGINS } from './constants.ts'
+import { GLOBAL_ROOM_KEY, ACCEPTED_ORIGINS } from './constants.js'
 
 export const getRedisClient = () => {
   const client = redis.createClient({
@@ -11,6 +11,7 @@ export const getRedisClient = () => {
     port: process.env.REDIS_PORT,
     password: process.env.REDIS_PASSWORD,
   })
+
   ;['connect', 'ready', 'reconnecting'].forEach(event =>
     client.on(event, () => {
       console.log(`[REDIS] ${event}`)

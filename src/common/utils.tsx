@@ -1,6 +1,6 @@
 import { itemsMap } from '../data/maps.js'
 
-import { randomNumberService } from './services/randomNumber.ts'
+import { randomNumberService } from './services/randomNumber.js'
 
 export const random = () => {
   return randomNumberService.generateRandomNumber()

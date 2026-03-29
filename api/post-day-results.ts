@@ -2,9 +2,9 @@
 // here to ensure that that they are included in serverless builds. Do NOT
 // remove them unless they are not needed by any upstream modules.
 import 'redis'
-import '../src/common/utils.ts'
-import '../src/common/constants.ts'
-import '../api-etc/constants.ts'
+import '../src/common/utils.js'
+import '../src/common/constants.js'
+import '../api-etc/constants.js'
 // End explicit requires for serverless builds
 
 import { promisify } from 'util'
@@ -14,8 +14,8 @@ import {
   getRedisClient,
   getRoomData,
   getRoomName,
-} from '../api-etc/utils.ts'
-import { random } from '../src/common/utils.ts'
+} from '../api-etc/utils.js'
+import { random } from '../src/common/utils.js'
 
 const client = getRedisClient()
 
