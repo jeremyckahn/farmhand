@@ -108,12 +108,12 @@ const vitestConfig = vitestDefineConfig({
     watch: false,
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
+    setupFiles: './src/setupTests.js',
     restoreMocks: true,
     dir: 'src',
     coverage: {
       reporter: ['text', 'html'],
-      exclude: ['node_modules', 'src/setupTests.ts', 'dist', 'src/__mocks__'],
+      exclude: ['node_modules', 'src/setupTests.js', 'dist', 'src/__mocks__'],
     },
   },
 })
