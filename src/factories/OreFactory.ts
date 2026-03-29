@@ -1,0 +1,44 @@
+import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores/index.js'
+import { Factory } from '../interfaces/Factory.js'
+import { randomChoice } from '../utils/index.js'
+
+const SPAWNABLE_ORES = [goldOre, ironOre, bronzeOre, silverOre]
+
+/**
+ * Resource factory used for spawning ores
+ * @constructor
+ */
+export default class OreFactory extends Factory {
+  constructor() {
+    super()
+
+    // @ts-expect-error
+    this.oreOptions = []
+    for (let o of SPAWNABLE_ORES) {
+      // @ts-expect-error
+      this.oreOptions.push({
+        ore: o,
+        weight: o.spawnChance || 0,
+      })
+    }
+  }
+
+  /**
+   * Generate resources
+   * @returns {Array.<farmhand.item>} an array of ore resources
+   */
+  generate() {
+    return [this.spawn()]
+  }
+
+  /**
+   * Spawn a random ore
+   * @returns {Object} an object representing an ore
+   * @private
+   **/
+  spawn() {
+    // @ts-expect-error
+    const spawnedOption = randomChoice(this.oreOptions)
+    return spawnedOption.ore
+  }
+}
