@@ -84,7 +84,7 @@ describe('WineRecipe', () => {
       render(
         <WineRecipeStub
           props={{ wineVariety: grape.variety }}
-// @ts-expect-error
+          // @ts-expect-error
           state={{ inventory: [{ id: grape.id, quantity: 1 }] }}
         />
       )
@@ -112,7 +112,7 @@ describe('WineRecipe', () => {
     render(
       <WineRecipeStub
         props={{ wineVariety: grape.variety }}
-// @ts-expect-error
+        // @ts-expect-error
         state={{ inventory: [{ id: grape.id, quantity }] }}
       />
     )
@@ -142,7 +142,7 @@ describe('WineRecipe', () => {
     render(
       <WineRecipeStub
         props={{ wineVariety: grape.variety }}
-// @ts-expect-error
+        // @ts-expect-error
         state={{
           inventory: [
             { id: grape.id, quantity: GRAPES_REQUIRED_FOR_WINE },
@@ -181,9 +181,9 @@ describe('WineRecipe', () => {
         <WineRecipeStub
           props={{ wineVariety: grape.variety }}
           state={{
-// @ts-expect-error
+            // @ts-expect-error
             cellarInventory: new Array(quantity).fill(
-// @ts-expect-error
+              // @ts-expect-error
               getKegStub({ itemId: grape.wineId })
             ),
           }}
@@ -214,7 +214,7 @@ describe('WineRecipe', () => {
       render(
         <WineRecipeStub
           props={{ wineVariety: grape.variety }}
-// @ts-expect-error
+          // @ts-expect-error
           state={{
             inventory: [
               { id: grape.id, quantity: grapeQuantity },
@@ -242,7 +242,7 @@ describe('WineRecipe', () => {
       render(
         <WineRecipeStub
           props={{ wineVariety: grape.variety }}
-// @ts-expect-error
+          // @ts-expect-error
           state={{
             inventory: [
               { id: grape.id, quantity: grapeQuantity },
@@ -269,7 +269,7 @@ describe('WineRecipe', () => {
       render(
         <WineRecipeStub
           props={{ wineVariety: grape.variety }}
-// @ts-expect-error
+          // @ts-expect-error
           state={{
             inventory: [
               { id: grape.id, quantity: grapeQuantity },

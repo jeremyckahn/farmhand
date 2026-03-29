@@ -40,7 +40,7 @@ export const testShoveledPlot = plotProps => ({
 export const testItem = (item = {}) => ({
   id: '',
   name: '',
-  type: /** @type {farmhand.itemType} */ ('CRAFTED_ITEM'),
+  type: /** @type {farmhand.itemType} */ 'CRAFTED_ITEM',
   value: 0,
   description: '',
   doesPriceFluctuate: false,
@@ -62,8 +62,8 @@ export const testRecipe = (overrides = {}) => ({
     'sample-item-1': 1,
   },
   condition: () => true,
-  recipeType: /** @type {farmhand.recipeType} */ ('KITCHEN'),
-  type: /** @type {farmhand.itemType} */ ('CRAFTED_ITEM'),
+  recipeType: /** @type {farmhand.recipeType} */ 'KITCHEN',
+  type: /** @type {farmhand.itemType} */ 'CRAFTED_ITEM',
   value: 100,
   ...overrides,
 })

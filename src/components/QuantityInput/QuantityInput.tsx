@@ -22,7 +22,7 @@ const QuantityNumberFormat = forwardRef(
    * @param {(value: number) => void} props.onChange
    * @param {React.ForwardedRef<any>} ref
    */
-// @ts-expect-error
+  // @ts-expect-error
   ({ min, max, onChange, ...rest }, ref) => (
     <NumberFormat
       isNumericString

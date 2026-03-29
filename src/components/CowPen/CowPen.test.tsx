@@ -58,14 +58,14 @@ describe('Cow', () => {
   })
 
   test('applies selected class when cow is selected', () => {
-// @ts-expect-error
+    // @ts-expect-error
     render(<Cow {...defaultCowProps} isSelected={true} />)
 
     expect(document.querySelector('.cow.is-selected')).toBeInTheDocument()
   })
 
   test('does not apply selected class when cow is not selected', () => {
-// @ts-expect-error
+    // @ts-expect-error
     render(<Cow {...defaultCowProps} isSelected={false} />)
 
     expect(document.querySelector('.cow.is-selected')).not.toBeInTheDocument()
@@ -75,19 +75,19 @@ describe('Cow', () => {
     const user = userEvent.setup({ advanceTimers: vitest.advanceTimersByTime })
     const handleCowClick = vitest.fn()
 
-// @ts-expect-error
+    // @ts-expect-error
     render(<Cow {...defaultCowProps} handleCowClick={handleCowClick} />)
 
     const cowElement = document.querySelector('.cow')
     expect(cowElement).toBeInTheDocument()
-// @ts-expect-error
-    await user.click(/** @type {HTMLElement} */ (cowElement))
+    // @ts-expect-error
+    await user.click(/** @type {HTMLElement} */ cowElement)
 
     expect(handleCowClick).toHaveBeenCalledWith(defaultCowProps.cow)
   })
 
   test('displays cow tooltip on hover', () => {
-// @ts-expect-error
+    // @ts-expect-error
     render(<Cow {...defaultCowProps} isSelected={true} />)
 
     // When cow is selected, tooltip should be visible
@@ -100,7 +100,7 @@ describe('Cow', () => {
       happiness: 0.8,
     }
 
-// @ts-expect-error
+    // @ts-expect-error
     render(<Cow {...defaultCowProps} cow={happyCow} />)
 
     expect(document.querySelector('.fa-heart')).toBeInTheDocument()
@@ -113,7 +113,7 @@ describe('Cow', () => {
       happinessBoostsToday: 0,
     }
 
-// @ts-expect-error
+    // @ts-expect-error
     render(<Cow {...defaultCowProps} cow={sadCow} />)
 
     // Check that there are no happiness boost indicators specifically
@@ -128,7 +128,7 @@ describe('Cow', () => {
       color: cowColors.BROWN,
     }
 
-// @ts-expect-error
+    // @ts-expect-error
     render(<Cow {...defaultCowProps} cow={brownCow} />)
 
     expect(document.querySelector('.cow')).toBeInTheDocument()
@@ -142,7 +142,7 @@ describe('Cow', () => {
     }
 
     render(
-// @ts-expect-error
+      // @ts-expect-error
       <Cow {...defaultCowProps} cow={peerCow} allowCustomPeerCowNames={true} />
     )
 
@@ -157,7 +157,7 @@ describe('Cow', () => {
     }
 
     render(
-// @ts-expect-error
+      // @ts-expect-error
       <Cow {...defaultCowProps} cow={peerCow} allowCustomPeerCowNames={false} />
     )
 
@@ -194,11 +194,11 @@ describe('Cow', () => {
   })
 
   test('stops movement when cow is selected', () => {
-// @ts-expect-error
+    // @ts-expect-error
     const { rerender } = render(<Cow {...defaultCowProps} isSelected={false} />)
 
     // Change to selected
-// @ts-expect-error
+    // @ts-expect-error
     rerender(<Cow {...defaultCowProps} isSelected={true} />)
 
     const cowElement = document.querySelector('.cow')
@@ -207,11 +207,11 @@ describe('Cow', () => {
   })
 
   test('resumes movement when cow is deselected', () => {
-// @ts-expect-error
+    // @ts-expect-error
     const { rerender } = render(<Cow {...defaultCowProps} isSelected={true} />)
 
     // Change to not selected
-// @ts-expect-error
+    // @ts-expect-error
     rerender(<Cow {...defaultCowProps} isSelected={false} />)
 
     const cowElement = document.querySelector('.cow')

@@ -20,7 +20,7 @@ export const sweetPotatoSeed = crop({
  */
 // @ts-expect-error
 export const sweetPotato = crop({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(sweetPotatoSeed, {
     canBeFermented: true,
   }),

@@ -7,7 +7,7 @@
  * @property farmhand.module:enums.cropType
  * @enum {string}
  */
-export const cropType = /** @type {const} */ ({
+export const cropType = /** @type {const} */ {
   ASPARAGUS: 'ASPARAGUS',
   CARROT: 'CARROT',
   CORN: 'CORN',
@@ -28,25 +28,25 @@ export const cropType = /** @type {const} */ ({
   WATERMELON: 'WATERMELON',
   WHEAT: 'WHEAT',
   WEED: 'WEED',
-})
+}
 
 /**
  * @property farmhand.module:enums.recipeType
  * @enum {string}
  */
-export const recipeType = /** @type {const} */ ({
+export const recipeType = /** @type {const} */ {
   FERMENTATION: 'FERMENTATION',
   FORGE: 'FORGE',
   KITCHEN: 'KITCHEN',
   RECYCLING: 'RECYCLING',
   WINE: 'WINE',
-})
+}
 
 /**
  * @property farmhand.module:enums.fieldMode
  * @enum {string}
  */
-export const fieldMode = /** @type {const} */ ({
+export const fieldMode = /** @type {const} */ {
   CLEANUP: 'CLEANUP',
   FERTILIZE: 'FERTILIZE',
   HARVEST: 'HARVEST',
@@ -56,13 +56,13 @@ export const fieldMode = /** @type {const} */ ({
   SET_SPRINKLER: 'SET_SPRINKLER',
   SET_SCARECROW: 'SET_SCARECROW',
   WATER: 'WATER',
-})
+}
 
 /**
  * @property farmhand.module:enums.stageFocusType
  * @enum {string}
  */
-export const stageFocusType = /** @type {const} */ ({
+export const stageFocusType = /** @type {const} */ {
   NONE: 'NONE', // Used for testing
   HOME: 'HOME',
   FIELD: 'FIELD',
@@ -72,23 +72,23 @@ export const stageFocusType = /** @type {const} */ ({
   INVENTORY: 'INVENTORY',
   WORKSHOP: 'WORKSHOP',
   CELLAR: 'CELLAR',
-})
+}
 
 /**
  * @property farmhand.module:enums.cropLifeStage
  * @enum {string}
  */
-export const cropLifeStage = /** @type {const} */ ({
+export const cropLifeStage = /** @type {const} */ {
   SEED: 'SEED',
   GROWING: 'GROWING',
   GROWN: 'GROWN',
-})
+}
 
 /**
  * @property farmhand.module:enums.itemType
  * @enum {string}
  */
-export const itemType = /** @type {const} */ ({
+export const itemType = /** @type {const} */ {
   COW_FEED: 'COW_FEED',
   CRAFTED_ITEM: 'CRAFTED_ITEM',
   CROP: 'CROP',
@@ -102,32 +102,32 @@ export const itemType = /** @type {const} */ ({
   STONE: 'STONE',
   TOOL_UPGRADE: 'TOOL_UPGRADE',
   WEED: 'WEED',
-})
+}
 
 /**
  * @property farmhand.module:enums.fertilizerType
  * @enum {string}
  */
-export const fertilizerType = /** @type {const} */ ({
+export const fertilizerType = /** @type {const} */ {
   NONE: 'NONE',
   STANDARD: 'STANDARD',
   RAINBOW: 'RAINBOW',
-})
+}
 
 /**
  * @property farmhand.module:enums.genders
  * @enum {string}
  */
-export const genders = /** @type {const} */ ({
+export const genders = /** @type {const} */ {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
-})
+}
 
 /**
  * @property farmhand.module:enums.cowColors
  * @enum {string}
  */
-export const cowColors = /** @type {const} */ ({
+export const cowColors = /** @type {const} */ {
   BLUE: 'BLUE',
   BROWN: 'BROWN',
   GREEN: 'GREEN',
@@ -136,7 +136,7 @@ export const cowColors = /** @type {const} */ ({
   RAINBOW: 'RAINBOW',
   WHITE: 'WHITE',
   YELLOW: 'YELLOW',
-})
+}
 
 const { RAINBOW, ...standardCowColors } = cowColors
 export { standardCowColors }
@@ -145,7 +145,7 @@ export { standardCowColors }
  * @property farmhand.module:enums.dialogView
  * @enum {string}
  */
-export const dialogView = /** @type {const} */ ({
+export const dialogView = /** @type {const} */ {
   NONE: 'NONE',
   ACCOUNTING: 'ACCOUNTING',
   ACHIEVEMENTS: 'ACHIEVEMENTS',
@@ -155,50 +155,50 @@ export const dialogView = /** @type {const} */ ({
   PRICE_EVENTS: 'PRICE_EVENTS',
   SETTINGS: 'SETTINGS',
   STATS: 'STATS',
-})
+}
 
 /**
  * @property farmhand.module:enums.toolType
  * @enum {string}
  */
-export const toolType = /** @type {const} */ ({
+export const toolType = /** @type {const} */ {
   SCYTHE: 'SCYTHE',
   SHOVEL: 'SHOVEL',
   HOE: 'HOE',
   WATERING_CAN: 'WATERING_CAN',
-})
+}
 
 /**
  * @property farmhand.module:enums.toolLevel
  * @enum {string}
  */
-export const toolLevel = /** @type {const} */ ({
+export const toolLevel = /** @type {const} */ {
   UNAVAILABLE: 'UNAVAILABLE',
   DEFAULT: 'DEFAULT',
   BRONZE: 'BRONZE',
   IRON: 'IRON',
   SILVER: 'SILVER',
   GOLD: 'GOLD',
-})
+}
 
 /**
  * @property farmhand.module:enums.notificationSeverity
  * @enum {string}
  */
-export const notificationSeverity = /** @type {const} */ ({
+export const notificationSeverity = /** @type {const} */ {
   INFO: 'INFO',
   SUCCESS: 'SUCCESS',
   WARNING: 'WARNING',
   ERROR: 'ERROR',
-})
+}
 
 /**
  * @property farmhand.module:enums.cowTradeRejectionReason
  * @enum {string}
  */
-export const cowTradeRejectionReason = /** @type {const} */ ({
+export const cowTradeRejectionReason = /** @type {const} */ {
   REQUESTED_COW_UNAVAILABLE: 'REQUESTED_COW_UNAVAILABLE',
-})
+}
 
 /**
  * @property farmhand.module:enums.cropFamily

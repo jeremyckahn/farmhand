@@ -22,7 +22,7 @@ export const getMaxYieldOfFermentationRecipe = (
 ) => {
   const {
     [fermentationRecipe.id]: itemQuantityInInventory = 0,
-// @ts-expect-error
+    // @ts-expect-error
     [itemsMap.salt.id]: saltQuantityInInventory = 0,
   } = getInventoryQuantityMap(inventory)
 

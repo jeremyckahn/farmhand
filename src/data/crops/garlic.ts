@@ -20,7 +20,7 @@ export const garlicSeed = crop({
  */
 // @ts-expect-error
 export const garlic = crop({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(garlicSeed, {
     canBeFermented: true,
   }),

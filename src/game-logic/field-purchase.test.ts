@@ -30,8 +30,8 @@ describe('field expansion purchasing', () => {
 
     // Open the list of field options
     await userEvent.click(
-// @ts-expect-error
-      within(/** @type {HTMLElement} */ (expandFieldContainer)).getByRole(
+      // @ts-expect-error
+      within(/** @type {HTMLElement} */ expandFieldContainer).getByRole(
         'combobox'
       )
     )
@@ -42,8 +42,8 @@ describe('field expansion purchasing', () => {
 
     // Make the purchase
     await userEvent.click(
-// @ts-expect-error
-      within(/** @type {HTMLElement} */ (expandFieldContainer)).getByRole(
+      // @ts-expect-error
+      within(/** @type {HTMLElement} */ expandFieldContainer).getByRole(
         'button'
       )
     )

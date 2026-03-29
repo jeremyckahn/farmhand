@@ -35,9 +35,9 @@ export const processLevelUp = (state, oldLevel) => {
         getRandomLevelUpRewardQuantity(i),
         true
       )
-// @ts-expect-error
+      // @ts-expect-error
     } else if (levelObject?.unlocksTool) {
-// @ts-expect-error
+      // @ts-expect-error
       state = unlockTool(state, levelObject.unlocksTool)
     }
     // This handles an edge case where the player levels up to level that
@@ -45,7 +45,7 @@ export const processLevelUp = (state, oldLevel) => {
     // selected. In that case, update the hoveredPlotRangeSize state.
     else if (
       levelObject &&
-// @ts-expect-error
+      // @ts-expect-error
       levelObject.increasesSprinklerRange &&
       selectedItemId === SPRINKLER_ITEM_ID
     ) {

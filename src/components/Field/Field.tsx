@@ -49,7 +49,7 @@ const fieldKeyMap = {
 }
 
 if (tools.shovel) {
-// @ts-expect-error
+  // @ts-expect-error
   fieldKeyMap.selectShovel = tools.shovel.fieldKey
 }
 
@@ -112,14 +112,14 @@ export const MemoPlot = memo(
    * @param {number} props.y
    */
   props => {
-// @ts-expect-error
+    // @ts-expect-error
     const { hoveredPlot, plotContent, setHoveredPlot, x, y } = props
 
     return (
       <Plot
         {...{
           hoveredPlot,
-// @ts-expect-error
+          // @ts-expect-error
           isInHoverRange: isInHoverRange(props),
           plotContent,
           setHoveredPlot,
@@ -130,15 +130,15 @@ export const MemoPlot = memo(
     )
   },
   (prev, next) => {
-// @ts-expect-error
+    // @ts-expect-error
     if (isInHoverRange(prev) !== isInHoverRange(next)) {
       return false
     }
 
     return (
-// @ts-expect-error
+      // @ts-expect-error
       prev.plotContent === next.plotContent &&
-// @ts-expect-error
+      // @ts-expect-error
       prev.hoveredPlotRangeSize === next.hoveredPlotRangeSize
     )
   }

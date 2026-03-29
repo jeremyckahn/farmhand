@@ -58,7 +58,7 @@ levels[14] = {
 
 // @ts-expect-error
 if (features.FOREST) {
-// @ts-expect-error
+  // @ts-expect-error
   levels[15] = {
     unlocksStageFocusType: stageFocusType.FOREST,
   }
@@ -135,7 +135,7 @@ levels[42] = {
 }
 
 for (let i = 0; i < levels.length; i++) {
-// @ts-expect-error
+  // @ts-expect-error
   levels[i] = { id: i, ...levels[i] }
 }
 
@@ -151,7 +151,7 @@ export const unlockableItems = levels.reduce((acc, { id, unlocksShopItem }) => {
 
 export const itemUnlockLevels = Object.entries(unlockableItems).reduce(
   (acc, [itemId, level]) => {
-// @ts-expect-error
+    // @ts-expect-error
     acc[level] = itemId
     return acc
   },

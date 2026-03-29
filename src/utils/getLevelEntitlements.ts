@@ -38,17 +38,17 @@ export const getLevelEntitlements = memoize(
         }
 
         if (unlocksShopItem) {
-// @ts-expect-error
+          // @ts-expect-error
           acc.items[unlocksShopItem] = true
         }
 
         if (unlocksTool) {
-// @ts-expect-error
+          // @ts-expect-error
           acc.tools[unlocksTool] = true
         }
 
         if (unlocksStageFocusType) {
-// @ts-expect-error
+          // @ts-expect-error
           acc.stageFocusType[unlocksStageFocusType] = true
         }
 

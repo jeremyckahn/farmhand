@@ -23,12 +23,12 @@ const getTools = memoize(toolLevels => {
 
   for (let tool of Object.values(toolsData)) {
     if (toolLevels[tool.type] !== toolLevel.UNAVAILABLE) {
-// @ts-expect-error
+      // @ts-expect-error
       tools.push(tool)
     }
   }
 
-// @ts-expect-error
+  // @ts-expect-error
   return tools.sort((a, b) => a.order - b.order)
 })
 

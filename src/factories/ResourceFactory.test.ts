@@ -28,7 +28,7 @@ describe('ResourceFactory', () => {
         false
       )
 
-// @ts-expect-error
+      // @ts-expect-error
       expect(ResourceFactory.instance().generateResources(shovelLevel)).toEqual(
         []
       )
@@ -40,7 +40,7 @@ describe('ResourceFactory', () => {
       )
       vi.mocked(randomChoice).mockReturnValueOnce({ itemType: itemType.ORE })
 
-// @ts-expect-error
+      // @ts-expect-error
       ResourceFactory.instance().generateResources(shovelLevel)
       const factory = ResourceFactory.getFactoryForItemType(itemType.ORE)
 
@@ -54,7 +54,7 @@ describe('ResourceFactory', () => {
       )
       vi.mocked(randomChoice).mockReturnValueOnce({ itemType: itemType.FUEL })
 
-// @ts-expect-error
+      // @ts-expect-error
       ResourceFactory.instance().generateResources(shovelLevel)
       const factory = ResourceFactory.getFactoryForItemType(itemType.FUEL)
 
@@ -68,7 +68,7 @@ describe('ResourceFactory', () => {
       )
       vi.mocked(randomChoice).mockReturnValueOnce({ itemType: itemType.STONE })
 
-// @ts-expect-error
+      // @ts-expect-error
       ResourceFactory.instance().generateResources(shovelLevel)
       const factory = ResourceFactory.getFactoryForItemType(itemType.STONE)
 

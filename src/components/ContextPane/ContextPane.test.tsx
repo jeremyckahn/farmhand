@@ -152,7 +152,7 @@ describe('PlayerInventory', () => {
     ]
 
     render(
-// @ts-expect-error
+      // @ts-expect-error
       <PlayerInventory {...baseItemProps} playerInventory={playerInventory} />
     )
 
@@ -163,7 +163,7 @@ describe('PlayerInventory', () => {
   })
 
   test('shows empty inventory when no items present', () => {
-// @ts-expect-error
+    // @ts-expect-error
     render(<PlayerInventory {...baseItemProps} playerInventory={[]} />)
 
     expect(screen.getByTestId('mocked-inventory')).toBeInTheDocument()
@@ -179,7 +179,7 @@ describe('PlayerInventory', () => {
     ]
 
     render(
-// @ts-expect-error
+      // @ts-expect-error
       <PlayerInventory {...baseItemProps} playerInventory={playerInventory} />
     )
 

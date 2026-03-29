@@ -34,7 +34,7 @@ const MoneyDisplay = ({ money }) => {
 
   useEffect(() => {
     if (money !== previousMoney) {
-// @ts-expect-error
+      // @ts-expect-error
       currentTweenable?.cancel()
 
       const tweenable = tween({
@@ -51,12 +51,12 @@ const MoneyDisplay = ({ money }) => {
         to: { color: idleColor, money },
       })
 
-// @ts-expect-error
+      // @ts-expect-error
       setCurrentTweenable(tweenable)
     }
 
     return () => {
-// @ts-expect-error
+      // @ts-expect-error
       currentTweenable?.cancel()
     }
   }, [currentTweenable, money, previousMoney])

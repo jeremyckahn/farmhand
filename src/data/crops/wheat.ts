@@ -20,7 +20,7 @@ export const wheatSeed = crop({
  */
 // @ts-expect-error
 export const wheat = crop({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(wheatSeed),
   name: 'Wheat',
 })

@@ -331,9 +331,9 @@ export const getGrowingPhase = memoize(
   },
   {
     cacheSize:
-// @ts-expect-error
+      // @ts-expect-error
       LARGEST_PURCHASABLE_FIELD_SIZE.columns *
-// @ts-expect-error
+      // @ts-expect-error
       LARGEST_PURCHASABLE_FIELD_SIZE.rows,
   }
 )
@@ -389,7 +389,7 @@ export const getPlotImage = (plotContents, x, y) => {
     }
 
     // Handle other plot content (non-crop, non-weed)
-    return itemImages[/** @type {farmhand.plotContent} */ (plotContents).itemId]
+    return itemImages[/** @type {farmhand.plotContent} */ plotContents.itemId]
   }
 
   if (isShoveledPlot(plotContents)) {
@@ -451,14 +451,14 @@ export const getFinalCropItemIdFromSeedItemId = (
 
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
   /** @type {string} */ cropItemId => {
-// @ts-expect-error
+    // @ts-expect-error
     const seedItemId = Object.values(itemsMap).find(({ growsInto }) => {
       if (Array.isArray(growsInto)) {
         return growsInto.includes(cropItemId)
       } else {
         return growsInto === cropItemId
       }
-// @ts-expect-error
+      // @ts-expect-error
     })?.id
 
     if (!seedItemId)
@@ -498,11 +498,11 @@ export const getCowDisplayName = (cow, playerId, allowCustomPeerCowNames) => {
  * @returns {farmhand.cow}
  */
 export const generateCow = (options = {}) => {
-// @ts-expect-error
+  // @ts-expect-error
   const gender = options.gender || chooseRandom(Object.values(genders))
-// @ts-expect-error
+  // @ts-expect-error
   const color = options.color || chooseRandom(Object.values(standardCowColors))
-// @ts-expect-error
+  // @ts-expect-error
   const id = options.id || uuid()
 
   const baseWeight = Math.round(
@@ -567,7 +567,7 @@ export const generateOffspringCow = (cow1, cow2, ownerId, customProps = {}) => {
   }
 
   delete colorsInBloodline[
-    /** @type {keyof typeof colorsInBloodline} */ (cowColors.RAINBOW)
+    /** @type {keyof typeof colorsInBloodline} */ cowColors.RAINBOW
   ]
 
   const isRainbowCow =
@@ -879,7 +879,7 @@ export const getPeerMetadata = state => {
 
       return acc
     },
-    /** @type {Partial<farmhand.peerMetadata>} */ ({})
+    /** @type {Partial<farmhand.peerMetadata>} */ {}
   )
 
   Object.assign(reducedState, {
@@ -888,7 +888,7 @@ export const getPeerMetadata = state => {
     ),
   })
 
-  return /** @type {farmhand.peerMetadata} */ (reducedState)
+  return /** @type {farmhand.peerMetadata} */ reducedState
 }
 
 /**
@@ -897,7 +897,7 @@ export const getPeerMetadata = state => {
  * farmhand.state data that should be persisted.
  */
 export const reduceByPersistedKeys = state =>
-  /** @type {farmhand.state} */ (PERSISTED_STATE_KEYS.reduce((
+  /** @type {farmhand.state} */ PERSISTED_STATE_KEYS.reduce((
     /** @type {Partial<farmhand.state>} */ acc,
     key
   ) => {
@@ -908,7 +908,7 @@ export const reduceByPersistedKeys = state =>
     }
 
     return acc
-  }, {}))
+  }, {})
 
 /**
  * @param {Array.<number>} historicalData Must be no longer than 7 numbers long.
@@ -1006,8 +1006,7 @@ export const transformStateDataForImport = /** @type {(state: any) => farmhand.s
   ) {
     sanitizedState = {
       ...sanitizedState,
-      stageFocus:
-        /** @type {farmhand.stageFocusType} */ (STANDARD_VIEW_LIST[0]),
+      stageFocus: /** @type {farmhand.stageFocusType} */ STANDARD_VIEW_LIST[0],
     }
   }
 
@@ -1125,11 +1124,11 @@ export function randomChoice(weightedOptions) {
 
   for (let option of weightedOptions) {
     totalWeight += option.weight
-// @ts-expect-error
+    // @ts-expect-error
     sortedOptions.push(option)
   }
 
-// @ts-expect-error
+  // @ts-expect-error
   sortedOptions.sort(o => o.weight)
 
   let diceRoll = random() * totalWeight
@@ -1160,7 +1159,7 @@ const colorizeCowTemplate = (() => {
   const cachedCowImages = {}
 
   // https://stackoverflow.com/a/5624139
-// @ts-expect-error
+  // @ts-expect-error
   const hexToRgb = memoize(hex => {
     const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
       hex

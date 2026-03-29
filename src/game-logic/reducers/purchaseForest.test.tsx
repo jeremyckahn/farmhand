@@ -62,7 +62,7 @@ describe('purchaseForest', () => {
 
   describe('forest expansion', () => {
     test('forest expands without destroying existing data', () => {
-      const expectedForest = /** @type {Array<Array<any>>} */ ([])
+      const expectedForest = /** @type {Array<Array<any>>} */ []
       const forestSize = PURCHASABLE_FOREST_SIZES.get(1)
 
       if (!forestSize) {
@@ -70,12 +70,12 @@ describe('purchaseForest', () => {
       }
 
       for (let y = 0; y < forestSize.rows; y++) {
-        const row = /** @type {Array<any>} */ ([])
+        const row = /** @type {Array<any>} */ []
         for (let x = 0; x < forestSize.columns; x++) {
-// @ts-expect-error
+          // @ts-expect-error
           row.push(null)
         }
-// @ts-expect-error
+        // @ts-expect-error
         expectedForest.push(row)
       }
 
@@ -90,9 +90,9 @@ describe('purchaseForest', () => {
         1
       )
 
-// @ts-expect-error
+      // @ts-expect-error
       expectedForest[0][0] = testTree()
-// @ts-expect-error
+      // @ts-expect-error
       expectedForest[1][1] = testTree()
 
       expect(forest).toEqual(expectedForest)

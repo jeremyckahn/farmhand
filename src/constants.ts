@@ -59,9 +59,9 @@ export const PURCHASABLE_FOREST_SIZES = freeze(
   ])
 )
 
-export const LARGEST_PURCHASABLE_FIELD_SIZE = /** @type {farmhand.purchaseableFieldSize} */ (PURCHASEABLE_FIELD_SIZES.get(
+export const LARGEST_PURCHASABLE_FIELD_SIZE = /** @type {farmhand.purchaseableFieldSize} */ PURCHASEABLE_FIELD_SIZES.get(
   PURCHASEABLE_FIELD_SIZES.size
-))
+)
 
 export const PURCHASEABLE_COMBINES = freeze(
   new Map([[1, { type: 'Basic', price: 250_000 }]])

@@ -12,7 +12,7 @@ export const updateAchievements = (state, prevState) =>
   achievements.reduce((reducerState, achievement) => {
     if (
       !reducerState.completedAchievements[achievement.id] &&
-// @ts-expect-error
+      // @ts-expect-error
       achievement.condition(reducerState, prevState)
     ) {
       reducerState = {

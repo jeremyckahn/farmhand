@@ -65,7 +65,7 @@ const Tumbleweed = ({ onAnimationComplete }) => {
  */
 export const Tumbleweeds = ({ doSpawn }) => {
   // A list of UUIDs, each representing a Tumbleweed component.
-  const [tumbleweeds, setTumbleweeds] = useState(/** @type {string[]} */ ([]))
+  const [tumbleweeds, setTumbleweeds] = useState(/** @type {string[]} */ [])
   // The current interval between tumbleweed spawns.
   const [spawnIntervalMs, setSpawnIntervalMs] = useState(initialSpawnIntervalMs)
   // The timestamp of the last scheduled tumbleweed spawn.
@@ -73,7 +73,7 @@ export const Tumbleweeds = ({ doSpawn }) => {
 
   // Adds a new tumbleweed to the list.
   const spawnTumbleweed = () => {
-// @ts-expect-error
+    // @ts-expect-error
     setTumbleweeds(oldTumbleweeds => [...oldTumbleweeds, v4()])
   }
 

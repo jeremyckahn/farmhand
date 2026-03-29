@@ -63,12 +63,12 @@ export const computeStateForNextDay = (state, isFirstDay = false) => {
 
   state = reducers.concat([adjustItemValues]).reduce(
     (acc, fn) => fn({ ...acc }),
-    /** @type {farmhand.state} */ ({
+    /** @type {farmhand.state} */ {
       ...state,
       cowForSale: generateCow(),
       dayCount: state.dayCount + 1,
       todaysNotifications: [],
-    })
+    }
   )
 
   if (state.dayCount % 365 === 0) {

@@ -90,7 +90,7 @@ export const handleCowTradeRequest = async (
 
       const [, peerMetadata] =
         Object.entries(peers).find(
-// @ts-expect-error
+          // @ts-expect-error
           ([, peer]) => peer?.playerId === updatedCowOffered.ownerId
         ) ?? []
 
@@ -136,7 +136,7 @@ export const handleCowTradeRequest = async (
             ...peerMetadata,
             cowOfferedForTrade: {
               ...cowToTradeAway,
-// @ts-expect-error
+              // @ts-expect-error
               ownerId: peerMetadata.playerId,
             },
           },
@@ -198,7 +198,7 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
       }
 
       const peerEntry = Object.entries(peers).find(([, peer]) => {
-// @ts-expect-error
+        // @ts-expect-error
         const { playerId: peerPlayerId } = peer
         return peerPlayerId === cowReceived.ownerId
       })
@@ -252,11 +252,11 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
         peers: {
           ...peers,
           [peerId]: {
-// @ts-expect-error
+            // @ts-expect-error
             ...peerMetadata,
             cowOfferedForTrade: {
               ...cowTradedAway,
-// @ts-expect-error
+              // @ts-expect-error
               ownerId: peerMetadata.playerId,
             },
           },

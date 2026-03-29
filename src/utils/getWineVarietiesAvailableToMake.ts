@@ -18,9 +18,9 @@ const getGrapesSold = itemsSold => {
   ) => {
     const item = itemsMap[itemId]
 
-// @ts-expect-error
+    // @ts-expect-error
     if ((quantity || 0) > 0 && isGrape(item)) {
-// @ts-expect-error
+      // @ts-expect-error
       acc.push(item)
     }
 

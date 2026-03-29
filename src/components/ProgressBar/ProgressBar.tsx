@@ -35,13 +35,13 @@ const ProgressBar = ({ percent }) => {
         },
       })
 
-// @ts-expect-error
+      // @ts-expect-error
       setCurrentTweenable(tweenable)
     }
 
     return () => {
       if (currentTweenable) {
-// @ts-expect-error
+        // @ts-expect-error
         currentTweenable.cancel()
       }
     }

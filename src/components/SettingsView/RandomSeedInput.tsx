@@ -20,7 +20,7 @@ export const RandomSeedInput = ({ search = globalWindow.location.search }) => {
    * @param {React.ChangeEvent<HTMLInputElement>} e
    */
   const handleChange = e => {
-    setSeed(/** @type {HTMLInputElement} */ (e.target).value)
+    setSeed(/** @type {HTMLInputElement} */ e.target.value)
   }
 
   /**

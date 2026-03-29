@@ -21,7 +21,7 @@ export class MemoizeCache {
    * @see https://github.com/caiogondim/fast-memoize.js
    */
   constructor({ cacheSize = MEMOIZE_CACHE_CLEAR_THRESHOLD } = {}) {
-// @ts-expect-error
+    // @ts-expect-error
     this.cacheSize = cacheSize
   }
 
@@ -34,7 +34,7 @@ export class MemoizeCache {
   }
 
   set(key, value) {
-// @ts-expect-error
+    // @ts-expect-error
     if (Object.keys(this.cache).length > this.cacheSize) {
       this.cache = {}
     }

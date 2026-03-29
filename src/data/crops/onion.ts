@@ -20,7 +20,7 @@ export const onionSeed = crop({
  */
 // @ts-expect-error
 export const onion = crop({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(onionSeed, {
     canBeFermented: true,
   }),

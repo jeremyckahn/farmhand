@@ -29,7 +29,7 @@ const MoneyNumberFormat = forwardRef(
    * @param {React.Dispatch<React.SetStateAction<number>>} props.setLoanInputValue - Function to set the loan input value
    * @param {React.ForwardedRef<unknown>} [ref] - Forwarded ref for the component
    */
-// @ts-expect-error
+  // @ts-expect-error
   ({ max, min, onChange, setLoanInputValue, ...rest }, ref) => (
     <NumberFormat
       fixedDecimalScale

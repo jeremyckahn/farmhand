@@ -32,7 +32,7 @@ let instance = null
  */
 export default class ResourceFactory {
   constructor() {
-// @ts-expect-error
+    // @ts-expect-error
     this.resourceOptions = [
       { weight: ORE_SPAWN_CHANCE, itemType: itemType.ORE },
       { weight: COAL_SPAWN_CHANCE, itemType: itemType.FUEL },
@@ -47,7 +47,7 @@ export default class ResourceFactory {
    */
   static instance() {
     if (!instance) {
-// @ts-expect-error
+      // @ts-expect-error
       instance = new ResourceFactory()
     }
 
@@ -119,13 +119,13 @@ export default class ResourceFactory {
     }
 
     if (randomNumberService.isRandomNumberLessThan(spawnChance)) {
-// @ts-expect-error
+      // @ts-expect-error
       const opt = randomChoice(this.resourceOptions)
       const factory = ResourceFactory.getFactoryForItemType(opt.itemType)
 
       if (factory) {
         const generated = factory.generate()
-// @ts-expect-error
+        // @ts-expect-error
         resources = Array.isArray(generated) ? generated : [generated]
       }
     }

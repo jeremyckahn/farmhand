@@ -30,7 +30,7 @@ export const minePlot = (state, x, y) => {
   }
 
   const shovelLevel = state.toolLevels[toolType.SHOVEL]
-// @ts-expect-error
+  // @ts-expect-error
   const spawnedResources = ResourceFactory.instance().generateResources(
     shovelLevel
   )

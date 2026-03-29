@@ -20,7 +20,7 @@ export const asparagusSeed = crop({
  */
 // @ts-expect-error
 export const asparagus = crop({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(asparagusSeed, {
     canBeFermented: true,
   }),

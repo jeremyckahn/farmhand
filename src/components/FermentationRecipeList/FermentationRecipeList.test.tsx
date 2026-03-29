@@ -82,17 +82,17 @@ describe('FermentationRecipeList', () => {
     await userEvent.type(searchBar, 'apple')
 
     const filteredCrops = cropsAvailableToFerment.filter(item => {
-// @ts-expect-error
+      // @ts-expect-error
       const fermentationRecipeName = `Fermented ${item.name}`.toLowerCase()
       return (
         fermentationRecipeName.includes('apple') ||
-// @ts-expect-error
+        // @ts-expect-error
         item.name.toLowerCase().includes('apple')
       )
     })
 
     filteredCrops.forEach(crop => {
-// @ts-expect-error
+      // @ts-expect-error
       expect(screen.getByText(crop.name)).toBeInTheDocument()
     })
 
@@ -101,7 +101,7 @@ describe('FermentationRecipeList', () => {
     )
 
     nonMatchingCrops.forEach(crop => {
-// @ts-expect-error
+      // @ts-expect-error
       const nonMatchingElements = screen.queryAllByText(crop.name)
       expect(nonMatchingElements).toHaveLength(1)
     })
@@ -123,7 +123,7 @@ describe('FermentationRecipeList', () => {
     await userEvent.clear(searchBar)
 
     cropsAvailableToFerment.forEach(crop => {
-// @ts-expect-error
+      // @ts-expect-error
       expect(screen.getByText(crop.name)).toBeInTheDocument()
     })
   })

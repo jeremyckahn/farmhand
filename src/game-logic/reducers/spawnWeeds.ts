@@ -14,7 +14,7 @@ export function spawnWeeds(plotContents) {
   let contents = null
 
   if (randomNumberService.isRandomNumberLessThan(WEEDS_SPAWN_CHANCE)) {
-// @ts-expect-error
+    // @ts-expect-error
     contents = getPlotContentFromItemId(weed.id)
   }
 

@@ -18,7 +18,7 @@ export function getUpgradesAvailable({ learnedForgeRecipes, toolLevels }) {
       const nextLevelUpgrade = toolUpgrades[type][upgrade.nextLevel]
       let allIngredientsUnlocked = true
 
-// @ts-expect-error
+      // @ts-expect-error
       for (let ingredient of Object.keys(nextLevelUpgrade.ingredients)) {
         allIngredientsUnlocked =
           allIngredientsUnlocked &&
@@ -28,7 +28,7 @@ export function getUpgradesAvailable({ learnedForgeRecipes, toolLevels }) {
       }
 
       if (allIngredientsUnlocked) {
-// @ts-expect-error
+        // @ts-expect-error
         upgradesAvailable.push(nextLevelUpgrade)
       }
     }

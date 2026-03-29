@@ -49,7 +49,7 @@ export const makeFermentationRecipe = (
 
   state = decrementItemFromInventory(
     state,
-// @ts-expect-error
+    // @ts-expect-error
     itemsMap.salt.id,
     howMany * saltRequirements
   )

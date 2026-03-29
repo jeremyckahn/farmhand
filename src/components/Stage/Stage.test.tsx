@@ -47,7 +47,7 @@ const defaultProps = {
 
 const renderWithContext = (props = {}, gameState = {}, handlers = {}) => {
   const contextValue = createContextData()
-// @ts-expect-error
+  // @ts-expect-error
   contextValue.gameState = {
     ...contextValue.gameState,
     ...testState(gameState),

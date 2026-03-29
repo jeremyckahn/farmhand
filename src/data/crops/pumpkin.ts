@@ -20,7 +20,7 @@ export const pumpkinSeed = crop({
  */
 // @ts-expect-error
 export const pumpkin = crop({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(pumpkinSeed, {
     canBeFermented: true,
   }),

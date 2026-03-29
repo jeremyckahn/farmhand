@@ -20,7 +20,7 @@ export const tomatoSeed = crop({
  */
 // @ts-expect-error
 export const tomato = crop({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(tomatoSeed, {
     canBeFermented: true,
   }),

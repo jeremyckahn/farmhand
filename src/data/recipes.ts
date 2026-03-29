@@ -32,9 +32,9 @@ const convertToRecipe = partialRecipe => {
     ...partialRecipe,
   })
 
-  itemsMap[partialRecipe.id] = /** @type {farmhand.item} */ (recipe)
+  itemsMap[partialRecipe.id] = /** @type {farmhand.item} */ recipe
 
-  return /** @type {farmhand.recipe} */ (recipe)
+  return /** @type {farmhand.recipe} */ recipe
 }
 
 /**
@@ -49,7 +49,7 @@ export const salt = convertToRecipe({
   },
   condition: state => (state.itemsSold[items.saltRock.id] || 0) >= 30,
   description: 'Useful for seasoning food and fermentation.',
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -63,7 +63,7 @@ export const flour = convertToRecipe({
     [items.wheat.id]: 10,
   },
   condition: state => (state.itemsSold[items.wheat.id] || 0) >= 20,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -77,7 +77,7 @@ export const yeast = convertToRecipe({
     [flour.id]: 5,
   },
   condition: state => (state.itemsSold[flour.id] || 0) >= 25,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -94,7 +94,7 @@ const getWineRecipeFromGrape = grape => {
         [grape.id]: GRAPES_REQUIRED_FOR_WINE,
         [yeast.id]: getYeastRequiredForWine(grape.variety),
       },
-      recipeType: /** @type {farmhand.recipeType} */ (recipeType.WINE),
+      recipeType: /** @type {farmhand.recipeType} */ recipeType.WINE,
       // NOTE: This prevents wines from appearing in the Learned Recipes list in the Workshop
       condition: () => false,
     }),
@@ -116,7 +116,7 @@ export const bread = convertToRecipe({
   condition: state =>
     (state.itemsSold[flour.id] || 0) >= 30 &&
     (state.itemsSold[yeast.id] || 0) >= 15,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -130,7 +130,7 @@ export const butter = convertToRecipe({
     [items.milk3.id]: 5,
   },
   condition: state => (state.itemsSold[items.milk3.id] || 0) >= 30,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -144,7 +144,7 @@ export const sunButter = convertToRecipe({
     [items.sunflower.id]: 25,
   },
   condition: state => (state.itemsSold[items.sunflower.id] || 0) >= 200,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /*
@@ -158,7 +158,7 @@ export const oliveOil = convertToRecipe({
     [items.olive.id]: 250,
   },
   condition: state => (state.itemsSold[items.olive.id] || 0) >= 500,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -172,7 +172,7 @@ export const cheese = convertToRecipe({
     [items.milk3.id]: 8,
   },
   condition: state => (state.itemsSold[items.milk3.id] || 0) >= 20,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -186,7 +186,7 @@ export const rainbowCheese = convertToRecipe({
     [items.rainbowMilk3.id]: 10,
   },
   condition: state => (state.itemsSold[items.rainbowMilk3.id] || 0) >= 30,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -200,7 +200,7 @@ export const chocolate = convertToRecipe({
     [items.chocolateMilk.id]: 10,
   },
   condition: state => (state.itemsSold[items.chocolateMilk.id] || 0) >= 25,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -214,7 +214,7 @@ export const carrotSoup = convertToRecipe({
     [items.carrot.id]: 4,
   },
   condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -228,7 +228,7 @@ export const jackolantern = convertToRecipe({
     [items.pumpkin.id]: 1,
   },
   condition: state => (state.itemsSold[items.pumpkin.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -245,7 +245,7 @@ export const spaghetti = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.wheat.id] || 0) >= 20 &&
     (state.itemsSold[items.tomato.id] || 0) >= 5,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -263,7 +263,7 @@ export const frenchOnionSoup = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.onion.id] || 0) >= 15 &&
     (state.itemsSold[cheese.id] || 0) >= 10,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -288,7 +288,7 @@ export const burger = convertToRecipe({
     (state.itemsSold[items.soybean.id] || 0) >= 25 &&
     (state.itemsSold[items.spinach.id] || 0) >= 5 &&
     (state.itemsSold[items.tomato.id] || 0) >= 5,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -307,7 +307,7 @@ export const summerSalad = convertToRecipe({
     (state.itemsSold[items.spinach.id] || 0) >= 30 &&
     (state.itemsSold[items.corn.id] || 0) > 5 &&
     (state.itemsSold[items.carrot.id] || 0) > 5,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -321,7 +321,7 @@ export const soyMilk = convertToRecipe({
     [items.soybean.id]: 20,
   },
   condition: state => (state.itemsSold[items.soybean.id] || 0) >= 100,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -338,7 +338,7 @@ export const chocolateSoyMilk = convertToRecipe({
   condition: state =>
     (state.itemsSold[soyMilk.id] || 0) >= 5 &&
     (state.itemsSold[chocolate.id] || 0) >= 5,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -352,7 +352,7 @@ export const tofu = convertToRecipe({
     [soyMilk.id]: 4,
   },
   condition: state => (state.itemsSold[soyMilk.id] || 0) >= 20,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -375,7 +375,7 @@ export const chicknPotPie = convertToRecipe({
     (state.itemsSold[items.carrot.id] || 0) >= 300 &&
     (state.itemsSold[items.wheat.id] || 0) >= 425 &&
     (state.itemsSold[soyMilk.id] || 0) >= 15,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -390,7 +390,7 @@ export const hotSauce = convertToRecipe({
     [salt.id]: 1,
   },
   condition: state => (state.itemsSold[items.jalapeno.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -411,7 +411,7 @@ export const salsa = convertToRecipe({
     (state.itemsSold[items.onion.id] || 0) >= 5 &&
     (state.itemsSold[items.tomato.id] || 0) >= 5 &&
     (state.itemsSold[items.corn.id] || 0) >= 5,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -428,7 +428,7 @@ export const spicyCheese = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.jalapeno.id] || 0) >= 20 &&
     (state.itemsSold[items.milk3.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -442,7 +442,7 @@ export const vegetableOil = convertToRecipe({
     [items.soybean.id]: 350,
   },
   condition: state => (state.itemsSold[items.soybean.id] || 0) >= 900,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -459,7 +459,7 @@ export const friedTofu = convertToRecipe({
   condition: state =>
     (state.itemsSold[tofu.id] || 0) >= 50 &&
     (state.itemsSold[vegetableOil.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -476,7 +476,7 @@ export const spicyPickledGarlic = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.jalapeno.id] || 0) >= 12 &&
     (state.itemsSold[items.garlic.id] || 0) >= 25,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -495,7 +495,7 @@ export const garlicFries = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.potato.id] || 0) >= 50 &&
     (state.itemsSold[items.garlic.id] || 0) >= 30,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -514,7 +514,7 @@ export const garlicBread = convertToRecipe({
     (state.itemsSold[bread.id] || 0) >= 30 &&
     (state.itemsSold[oliveOil.id] || 0) >= 20 &&
     (state.itemsSold[items.garlic.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -528,7 +528,7 @@ export const strawberryJam = convertToRecipe({
     [items.strawberry.id]: 10,
   },
   condition: state => (state.itemsSold[items.strawberry.id] || 0) >= 60,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -545,7 +545,7 @@ export const popcorn = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.corn.id] || 0) >= 12 &&
     (state.itemsSold[butter.id] || 0) >= 6,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -564,7 +564,7 @@ export const pumpkinPie = convertToRecipe({
     (state.itemsSold[items.pumpkin.id] || 0) >= 200 &&
     (state.itemsSold[items.wheat.id] || 0) >= 250 &&
     (state.itemsSold[butter.id] || 0) >= 75,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -583,7 +583,7 @@ export const sweetPotatoPie = convertToRecipe({
     (state.itemsSold[items.sweetPotato.id] || 0) >= 200 &&
     (state.itemsSold[items.wheat.id] || 0) >= 250 &&
     (state.itemsSold[butter.id] || 0) >= 75,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -599,7 +599,7 @@ export const sweetPotatoFries = convertToRecipe({
     [salt.id]: 1,
   },
   condition: state => (state.itemsSold[items.sweetPotato.id] || 0) >= 100,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -621,7 +621,7 @@ export const onionRings = convertToRecipe({
     (state.itemsSold[vegetableOil.id] || 0) > 20 &&
     (state.itemsSold[soyMilk.id] || 0) > 20 &&
     (state.itemsSold[items.wheat.id] || 0) > 30,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.KITCHEN),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
 /**
@@ -638,7 +638,7 @@ export const bronzeIngot = convertToRecipe({
   condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.bronzeOre.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.FORGE),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.FORGE,
 })
 
 /**
@@ -655,7 +655,7 @@ export const ironIngot = convertToRecipe({
   condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.ironOre.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.FORGE),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.FORGE,
 })
 
 /**
@@ -672,7 +672,7 @@ export const silverIngot = convertToRecipe({
   condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.silverOre.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.FORGE),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.FORGE,
 })
 
 /**
@@ -689,7 +689,7 @@ export const goldIngot = convertToRecipe({
   condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.goldOre.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.FORGE),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.FORGE,
 })
 
 export const compost = convertToRecipe({
@@ -702,7 +702,7 @@ export const compost = convertToRecipe({
     state.purchasedComposter > 0 &&
     (state.itemsSold[items.weed.id] || 0) >= 100,
   description: 'Can be used to make fertilizer.',
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.RECYCLING),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.RECYCLING,
   type: itemType.CRAFTED_ITEM,
 })
 
@@ -720,7 +720,7 @@ export const fertilizer = convertToRecipe({
     state.purchasedComposter > 0 && (state.itemsSold[compost.id] || 0) >= 10,
   description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,
-  recipeType: /** @type {farmhand.recipeType} */ (recipeType.RECYCLING),
+  recipeType: /** @type {farmhand.recipeType} */ recipeType.RECYCLING,
   type: itemType.FERTILIZER,
   value: 25,
 })

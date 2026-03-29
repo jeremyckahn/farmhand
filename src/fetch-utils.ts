@@ -19,7 +19,7 @@ export async function getData(url = '', data = {}) {
   )
 
   // Default options are marked with *
-// @ts-expect-error
+  // @ts-expect-error
   const response = await fetch(`${url}?${params}`, {
     ...commonFetchConfig,
     method: 'GET',
@@ -30,7 +30,7 @@ export async function getData(url = '', data = {}) {
 
 export async function postData(url = '', data = {}) {
   // Default options are marked with *
-// @ts-expect-error
+  // @ts-expect-error
   const response = await fetch(url, {
     ...commonFetchConfig,
     method: 'POST',

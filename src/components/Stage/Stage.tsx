@@ -16,22 +16,22 @@ import { isOctober, isDecember } from '../../utils/index.js'
 import './Stage.sass'
 
 export const Stage = ({ field, stageFocus, viewTitle }) => {
-  const ref = /** @type {React.MutableRefObject<HTMLDivElement | null>} */ (useRef(
+  const ref = /** @type {React.MutableRefObject<HTMLDivElement | null>} */ useRef(
     null
-  ))
+  )
 
   useEffect(() => {
     if (ref.current) {
-      const current = /** @type {HTMLElement} */ (ref.current)
+      const current = /** @type {HTMLElement} */ ref.current
       const { style } = current
       // Set scroll position to the top
-// @ts-expect-error
+      // @ts-expect-error
       current.scrollTop = 0
 
       // Stop any intertial scrolling
-// @ts-expect-error
+      // @ts-expect-error
       style.overflow = 'hidden'
-// @ts-expect-error
+      // @ts-expect-error
       setTimeout(() => (style.overflow = ''), 0)
     }
   }, [stageFocus])

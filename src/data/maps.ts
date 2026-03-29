@@ -79,7 +79,7 @@ export const fermentableItemsMap = Object.fromEntries(
  */
 export const cropItemIdToSeedItemMap = Object.entries(baseItemsMap).reduce(
   (acc, [itemId, item]) => {
-// @ts-expect-error
+    // @ts-expect-error
     const { growsInto } = item
     if (growsInto) {
       const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
@@ -102,7 +102,7 @@ export const cropTypeToIdMap = {
   [CARROT]: 'carrot',
   [CORN]: 'corn',
   [GARLIC]: 'garlic',
-  [GRAPE]: /** @type {string | string[]} */ (grapeSeed.growsInto),
+  [GRAPE /** @type {string | string[]} */]: grapeSeed.growsInto,
   [JALAPENO]: 'jalapeno',
   [OLIVE]: 'olive',
   [ONION]: 'onion',

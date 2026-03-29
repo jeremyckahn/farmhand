@@ -17,7 +17,7 @@ const grape = grapeProps => {
   const newGrape = {
     ...cropVariety({
       ...grapeProps,
-      cropFamily: /** @type {'GRAPE'} */ (cropFamily.GRAPE),
+      cropFamily: /** @type {'GRAPE'} */ cropFamily.GRAPE,
     }),
   }
 
@@ -90,13 +90,13 @@ export const wineVarietyValueMap = {
  * @type {farmhand.grape}
  */
 export const grapeChardonnay = grape({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-chardonnay'),
   }),
   name: 'Chardonnay Grape',
   imageId: 'grape-green',
-  variety: /** @type {'CHARDONNAY'} */ (grapeVariety.CHARDONNAY),
+  variety: /** @type {'CHARDONNAY'} */ grapeVariety.CHARDONNAY,
   wineId: 'wine-chardonnay',
 })
 
@@ -105,13 +105,13 @@ export const grapeChardonnay = grape({
  * @type {farmhand.grape}
  */
 export const grapeSauvignonBlanc = grape({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-sauvignon-blanc'),
   }),
   name: 'Sauvignon Blanc Grape',
   imageId: 'grape-green',
-  variety: /** @type {'SAUVIGNON_BLANC'} */ (grapeVariety.SAUVIGNON_BLANC),
+  variety: /** @type {'SAUVIGNON_BLANC'} */ grapeVariety.SAUVIGNON_BLANC,
   wineId: 'wine-sauvignon-blanc',
 })
 
@@ -168,14 +168,13 @@ export const grapeSauvignonBlanc = grape({
  * @type {farmhand.grape}
  */
 export const grapeCabernetSauvignon = grape({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-cabernet-sauvignon'),
   }),
   name: 'Cabernet Sauvignon Grape',
   imageId: 'grape-purple',
-  variety:
-    /** @type {'CABERNET_SAUVIGNON'} */ (grapeVariety.CABERNET_SAUVIGNON),
+  variety: /** @type {'CABERNET_SAUVIGNON'} */ grapeVariety.CABERNET_SAUVIGNON,
   wineId: 'wine-cabernet-sauvignon',
 })
 
@@ -196,13 +195,13 @@ export const grapeCabernetSauvignon = grape({
  * @type {farmhand.grape}
  */
 export const grapeTempranillo = grape({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-tempranillo'),
   }),
   name: 'Tempranillo Grape',
   imageId: 'grape-purple',
-  variety: /** @type {'TEMPRANILLO'} */ (grapeVariety.TEMPRANILLO),
+  variety: /** @type {'TEMPRANILLO'} */ grapeVariety.TEMPRANILLO,
   wineId: 'wine-tempranillo',
 })
 
@@ -211,13 +210,13 @@ export const grapeTempranillo = grape({
  * @type {farmhand.grape}
  */
 export const grapeNebbiolo = grape({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-nebbiolo'),
   }),
   name: 'Nebbiolo Grape',
   imageId: 'grape-purple',
-  variety: /** @type {'NEBBIOLO'} */ (grapeVariety.NEBBIOLO),
+  variety: /** @type {'NEBBIOLO'} */ grapeVariety.NEBBIOLO,
   wineId: 'wine-nebbiolo',
 })
 

@@ -12,10 +12,10 @@ export default class OreFactory extends Factory {
   constructor() {
     super()
 
-// @ts-expect-error
+    // @ts-expect-error
     this.oreOptions = []
     for (let o of SPAWNABLE_ORES) {
-// @ts-expect-error
+      // @ts-expect-error
       this.oreOptions.push({
         ore: o,
         weight: o.spawnChance || 0,
@@ -37,7 +37,7 @@ export default class OreFactory extends Factory {
    * @private
    **/
   spawn() {
-// @ts-expect-error
+    // @ts-expect-error
     const spawnedOption = randomChoice(this.oreOptions)
     return spawnedOption.ore
   }

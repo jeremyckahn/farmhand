@@ -50,10 +50,10 @@ describe('purchaseField', () => {
       for (let y = 0; y < fieldSize.rows; y++) {
         const row = []
         for (let x = 0; x < fieldSize.columns; x++) {
-// @ts-expect-error
+          // @ts-expect-error
           row.push(null)
         }
-// @ts-expect-error
+        // @ts-expect-error
         expectedField.push(row)
       }
 

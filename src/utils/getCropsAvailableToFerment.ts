@@ -25,7 +25,7 @@ export function getCropsAvailableToFerment(levelEntitlements) {
         finalCropItemFromSeedItem &&
         Number.isFinite(finalCropItemFromSeedItem.daysToFerment)
       ) {
-// @ts-expect-error
+        // @ts-expect-error
         acc.push(finalCropItemFromSeedItem)
       }
 

@@ -19,7 +19,7 @@ const partitionAchievements = memoize(completedAchievements =>
     (acc, achievement) => {
       acc[
         completedAchievements[achievement.id] ? 'complete' : 'incomplete'
-// @ts-expect-error
+        // @ts-expect-error
       ].push(achievement)
 
       return acc

@@ -16,7 +16,7 @@ export const PlayerInventory = memo(
    * @param {farmhand.item[]} props.playerInventory - The array of items in the
    * player's inventory.
    */
-// @ts-expect-error
+  // @ts-expect-error
   ({ playerInventory }) => (
     <Inventory
       {...{
@@ -25,7 +25,7 @@ export const PlayerInventory = memo(
       }}
     />
   ),
-// @ts-expect-error
+  // @ts-expect-error
   (prev, next) => prev.playerInventory === next.playerInventory
 )
 

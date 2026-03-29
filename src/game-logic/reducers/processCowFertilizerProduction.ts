@@ -44,7 +44,7 @@ export const processCowFertilizerProduction = state => {
     newDayNotifications.push({
       message: FERTILIZERS_PRODUCED(
         '',
-        /** @type {Record<string, number>} */ (fertilizersProduced)
+        /** @type {Record<string, number>} */ fertilizersProduced
       ),
       severity: 'success',
     })

@@ -162,12 +162,12 @@ export const createContextData = () => {
       todaysPurchases: {},
       todaysRevenue: 0,
       todaysStartingInventory: {},
-      toolLevels: /** @type {Record<globalThis.farmhand.toolType, globalThis.farmhand.toolLevel>} */ ({
+      toolLevels: /** @type {Record<globalThis.farmhand.toolType, globalThis.farmhand.toolLevel>} */ {
         SCYTHE: 'DEFAULT',
         SHOVEL: 'DEFAULT',
         HOE: 'DEFAULT',
         WATERING_CAN: 'DEFAULT',
-      }),
+      },
       valueAdjustments: {},
       version: '1.0.0',
       todaysNotifications: [],

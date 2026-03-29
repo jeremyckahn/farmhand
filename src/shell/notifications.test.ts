@@ -21,19 +21,19 @@ describe('notifications', () => {
 
     const carrotItem = await getItemByName('Carrot')
     const carrotInput = within(
-// @ts-expect-error
-      /** @type {HTMLElement} */ (carrotItem)
+      // @ts-expect-error
+      /** @type {HTMLElement} */ carrotItem
     ).getByDisplayValue('1')
     await userEvent.type(carrotInput, '10')
     const carrotSellButton = within(
-// @ts-expect-error
-      /** @type {HTMLElement} */ (carrotItem)
+      // @ts-expect-error
+      /** @type {HTMLElement} */ carrotItem
     ).getByText('Sell')
     await userEvent.click(carrotSellButton)
     const notification = await screen.findByRole('alert')
 
     expect(
-      within(/** @type {HTMLElement} */ (notification)).getByText('Carrot Soup')
+      within(/** @type {HTMLElement} */ notification).getByText('Carrot Soup')
     ).toBeInTheDocument()
   })
 
@@ -58,29 +58,29 @@ describe('notifications', () => {
     const carrotItem = await getItemByName('Carrot')
 
     const cornInput = within(
-// @ts-expect-error
-      /** @type {HTMLElement} */ (cornItem)
+      // @ts-expect-error
+      /** @type {HTMLElement} */ cornItem
     ).getByDisplayValue('1')
     const spinachInput = within(
-// @ts-expect-error
-      /** @type {HTMLElement} */ (spinachItem)
+      // @ts-expect-error
+      /** @type {HTMLElement} */ spinachItem
     ).getByDisplayValue('1')
     const carrotInput = within(
-// @ts-expect-error
-      /** @type {HTMLElement} */ (carrotItem)
+      // @ts-expect-error
+      /** @type {HTMLElement} */ carrotItem
     ).getByDisplayValue('1')
 
     const cornSellButton = within(
-// @ts-expect-error
-      /** @type {HTMLElement} */ (cornItem)
+      // @ts-expect-error
+      /** @type {HTMLElement} */ cornItem
     ).getByText('Sell')
     const spinachSellButton = within(
-// @ts-expect-error
-      /** @type {HTMLElement} */ (spinachItem)
+      // @ts-expect-error
+      /** @type {HTMLElement} */ spinachItem
     ).getByText('Sell')
     const carrotSellButton = within(
-// @ts-expect-error
-      /** @type {HTMLElement} */ (carrotItem)
+      // @ts-expect-error
+      /** @type {HTMLElement} */ carrotItem
     ).getByText('Sell')
 
     await userEvent.type(cornInput, '6')
@@ -97,12 +97,10 @@ describe('notifications', () => {
 
     const notification = await screen.findByRole('alert')
     expect(
-      within(/** @type {HTMLElement} */ (notification)).getByText('Carrot Soup')
+      within(/** @type {HTMLElement} */ notification).getByText('Carrot Soup')
     ).toBeInTheDocument()
     expect(
-      within(/** @type {HTMLElement} */ (notification)).getByText(
-        'Summer Salad'
-      )
+      within(/** @type {HTMLElement} */ notification).getByText('Summer Salad')
     ).toBeInTheDocument()
   })
 })

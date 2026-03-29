@@ -17,5 +17,5 @@ const FARM_PRODUCT_TYPES = [
 export const isItemAFarmProduct = item =>
   Boolean(
     isItemAGrownCrop(item) ||
-      FARM_PRODUCT_TYPES.includes(/** @type {any} */ (item.type))
+      FARM_PRODUCT_TYPES.includes(/** @type {any} */ item.type)
   )

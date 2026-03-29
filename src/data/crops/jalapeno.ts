@@ -20,7 +20,7 @@ export const jalapenoSeed = crop({
  */
 // @ts-expect-error
 export const jalapeno = crop({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(jalapenoSeed, {
     canBeFermented: true,
   }),

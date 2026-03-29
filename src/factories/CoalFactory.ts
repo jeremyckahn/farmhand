@@ -17,11 +17,11 @@ export default class CoalFactory extends Factory {
     const amount = chooseRandom([1, 1, 1, 2, 3])
 
     for (let i = 0; i < amount; i++) {
-// @ts-expect-error
+      // @ts-expect-error
       spawns.push(this.spawnCoal())
     }
 
-// @ts-expect-error
+    // @ts-expect-error
     spawns.push(this.spawnStone())
 
     return spawns

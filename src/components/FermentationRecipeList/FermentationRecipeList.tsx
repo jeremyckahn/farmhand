@@ -27,12 +27,12 @@ export const FermentationRecipeList = () => {
     .filter(term => term.length > 0)
 
   const filteredCrops = cropsAvailableToFerment.filter(item => {
-// @ts-expect-error
+    // @ts-expect-error
     const fermentationRecipeName = `${FERMENTED_CROP_NAME}${item.name}`.toLowerCase()
     return searchTerms.every(
       term =>
         fermentationRecipeName.includes(term) ||
-// @ts-expect-error
+        // @ts-expect-error
         item.name.toLowerCase().includes(term)
     )
   })
@@ -54,7 +54,7 @@ export const FermentationRecipeList = () => {
       {filteredCrops.length > 0 && (
         <ul className="card-list">
           {filteredCrops.map(item => (
-// @ts-expect-error
+            // @ts-expect-error
             <li key={item.id}>
               <FermentationRecipe item={item} />
             </li>

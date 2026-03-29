@@ -18,7 +18,7 @@ export const crop = ({
   ...rest
 }) =>
   freeze(
-    /** @type {farmhand.item} */ ({
+    /** @type {farmhand.item} */ {
       id,
       name,
       cropTimeline,
@@ -32,7 +32,7 @@ export const crop = ({
         isPlantableCrop: true,
       }),
       ...rest,
-    })
+    }
   )
 
 /**
@@ -48,7 +48,7 @@ export const fromSeed = (
 ) => {
   const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 
-  return /** @type {farmhand.item} */ ({
+  return /** @type {farmhand.item} */ {
     id: variants[variantIdx] || '',
     cropTimeline,
     cropType,
@@ -58,7 +58,7 @@ export const fromSeed = (
     ...(canBeFermented && {
       daysToFerment: getCropLifecycleDuration({ cropTimeline }) * tier,
     }),
-  })
+  }
 }
 
 /**
@@ -71,6 +71,6 @@ export const cropVariety = ({
   variety,
   ...cropVarietyProperties
 }) => {
-// @ts-expect-error
+  // @ts-expect-error
   return { imageId, cropFamily, variety, ...crop({ ...cropVarietyProperties }) }
 }

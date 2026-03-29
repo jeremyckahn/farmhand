@@ -20,7 +20,7 @@ export const peaSeed = crop({
  */
 // @ts-expect-error
 export const pea = crop({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(peaSeed, {
     canBeFermented: true,
   }),

@@ -31,7 +31,7 @@ const addMoney = (state, reward) => ({
 // @ts-expect-error
 const sumOfCropsHarvested = memoize(cropsHarvested =>
   Object.values(cropsHarvested).reduce(
-// @ts-expect-error
+    // @ts-expect-error
     (sum, cropHarvested) => sum + cropHarvested,
     0
   )
@@ -135,11 +135,11 @@ const achievements = [
     id: 'play-during-october',
     name: 'Halloween Harvest',
     description: 'Play Farmhand in October and get the gift of the season.',
-// @ts-expect-error
+    // @ts-expect-error
     rewardDescription: `${reward} units of ${itemsMap.jackolantern.name}`,
     condition: () => isOctober(),
     reward: state =>
-// @ts-expect-error
+      // @ts-expect-error
       addItemToInventory(state, itemsMap.jackolantern, reward, true),
   }))(),
 
@@ -147,14 +147,14 @@ const achievements = [
     id: 'sell-10000-jack-o-lanterns',
     name: 'Spooky Pumpkin Patch',
     description: `Sell ${integerString(goal)} units of ${
-// @ts-expect-error
+      // @ts-expect-error
       itemsMap.jackolantern.name
     }. That's enough to fill a whole pumpkin patch!`,
-// @ts-expect-error
+    // @ts-expect-error
     rewardDescription: `${reward} units of ${itemsMap.scarecrow.name}`,
     condition: state => (state.itemsSold.jackolantern || 0) >= goal,
     reward: state =>
-// @ts-expect-error
+      // @ts-expect-error
       addItemToInventory(state, itemsMap.scarecrow, reward, true),
   }))(),
 
@@ -162,7 +162,7 @@ const achievements = [
     id: 'daily-profit-1',
     name: `Daily profit: ${dollarString(goal)}`,
     description: `Earn ${dollarString(goal)} of profit in a single day.`,
-// @ts-expect-error
+    // @ts-expect-error
     rewardDescription: `${reward} units of ${itemsMap.fertilizer.name}`,
     condition: state =>
       getProfitRecord(
@@ -171,7 +171,7 @@ const achievements = [
         state.todaysLosses
       ) >= goal,
     reward: state =>
-// @ts-expect-error
+      // @ts-expect-error
       addItemToInventory(state, itemsMap.fertilizer, reward, true),
   }))(),
 

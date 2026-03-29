@@ -22,7 +22,7 @@ export const WineRecipeList = () => {
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredWineVarieties = wineVarietiesAvailableToMake.filter(
-// @ts-expect-error
+    // @ts-expect-error
     wineVariety => wineVariety.toLowerCase().includes(searchQuery.toLowerCase())
   )
 

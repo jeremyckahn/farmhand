@@ -27,7 +27,7 @@ export default class StoneFactory extends Factory {
 
     for (const { resource, spawnChance } of spawnableResources) {
       if (randomNumberService.isRandomNumberLessThan(spawnChance)) {
-// @ts-expect-error
+        // @ts-expect-error
         resources.push(resource)
       }
     }

@@ -289,8 +289,8 @@ export const Item = ({
                 </p>
               )}
               {isPurchaseView &&
-// @ts-expect-error
-                /** @type {globalThis.farmhand.item} */ (item).growsInto && (
+                // @ts-expect-error
+                /** @type {globalThis.farmhand.item} */ item.growsInto && (
                   <p>
                     Days to mature:{' '}
                     {getCropLifecycleDuration(

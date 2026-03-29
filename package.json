@@ -23,7 +23,7 @@
     "electron": "wait-on tcp:3000 && electron .",
     "print:crops": "npx babel-node --presets @babel/preset-env --presets babel-preset-vite src/scripts/generate-crop-table.js",
     "lint": "eslint src --max-warnings=0",
-    "prettier": "prettier 'src/**/*.js' --write",
+    "prettier": "prettier 'src/**/*.{js,ts,tsx}' --write",
     "preversion": "npm test",
     "postversion": "git push && git push --tags",
     "start": "vite --port=3000",

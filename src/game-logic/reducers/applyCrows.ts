@@ -46,7 +46,7 @@ export const applyCrows = state => {
 
   forEachPlot(state, (_plotContents, x, y) => {
     if (doesPlotContainCrop(state.field[y][x])) {
-// @ts-expect-error
+      // @ts-expect-error
       plotsWithCrops.push({ x, y })
     }
   })
@@ -61,13 +61,13 @@ export const applyCrows = state => {
     const attackPlotId = Math.floor(random() * plotsWithCrops.length)
     const target = plotsWithCrops.splice(attackPlotId, 1)[0]
 
-// @ts-expect-error
+    // @ts-expect-error
     state = modifyFieldPlotAt(state, target.x, target.y, () => null)
     numCropsDestroyed += 1
   }
 
   if (numCropsDestroyed > 0) {
-// @ts-expect-error
+    // @ts-expect-error
     notificationMessages.push(CROWS_DESTROYED('', numCropsDestroyed))
   }
 

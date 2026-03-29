@@ -33,18 +33,18 @@ export const getBackgroundStyles = plotContent => {
   const backgroundImages = []
 
   if (plotContent.fertilizerType === fertilizerType.STANDARD) {
-// @ts-expect-error
+    // @ts-expect-error
     backgroundImages.push(`url(${plotStates['fertilized-plot']})`)
   } else if (plotContent.fertilizerType === fertilizerType.RAINBOW) {
-// @ts-expect-error
+    // @ts-expect-error
     backgroundImages.push(`url(${plotStates['rainbow-fertilized-plot']})`)
   }
 
   if ('wasWateredToday' in plotContent && plotContent.wasWateredToday) {
-// @ts-expect-error
+    // @ts-expect-error
     backgroundImages.push(`url(${plotStates['watered-plot']})`)
   } else if ('isShoveled' in plotContent && plotContent.isShoveled) {
-// @ts-expect-error
+    // @ts-expect-error
     backgroundImages.push(`url(${plotStates['shoveled-plot']})`)
   }
 
@@ -137,7 +137,7 @@ export const Plot = ({
   } else if (wasJustShoveled || plotContent?.isShoveled) {
     const oreItem = itemsMap[plotContent?.oreId]
 
-// @ts-expect-error
+    // @ts-expect-error
     plotLabelText = oreItem ? SHOVELED_PLOT('', oreItem) : SHOVELED
   }
 

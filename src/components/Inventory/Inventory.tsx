@@ -87,12 +87,12 @@ const Inventory = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategories, setSelectedCategories] = useState(
-    /** @type {string[]} */ ([])
+    /** @type {string[]} */ []
   )
   const toggleCategory = category => {
-// @ts-expect-error
+    // @ts-expect-error
     setSelectedCategories(prev =>
-// @ts-expect-error
+      // @ts-expect-error
       prev.includes(category)
         ? prev.filter(c => c !== category)
         : [...prev, category]
@@ -100,7 +100,7 @@ const Inventory = ({
   }
 
   const filteredCategories = Array.from(itemCategories.entries()).reduce(
-// @ts-expect-error
+    // @ts-expect-error
     (filtered, [category, categoryItems]) => {
       const matchingItems = categoryItems.filter(item => {
         const mappedItem = itemsMap[item.id]
@@ -113,10 +113,10 @@ const Inventory = ({
 
       if (
         matchingItems.length &&
-// @ts-expect-error
+        // @ts-expect-error
         (!selectedCategories.length || selectedCategories.includes(category))
       ) {
-// @ts-expect-error
+        // @ts-expect-error
         filtered.set(category, matchingItems)
       }
       return filtered
@@ -147,7 +147,7 @@ const Inventory = ({
                   control={
                     <Checkbox
                       disabled={isPurchaseView}
-// @ts-expect-error
+                      // @ts-expect-error
                       checked={selectedCategories.includes(key)}
                       onChange={() => toggleCategory(key)}
                     />
@@ -160,7 +160,7 @@ const Inventory = ({
         </Accordion>
       )}
       {Array.from((filteredCategories as any).entries()).map(
-// @ts-expect-error
+        // @ts-expect-error
         ([category, categoryItems]) =>
           categoryItems.length ? (
             <Fragment key={category}>

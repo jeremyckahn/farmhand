@@ -49,7 +49,7 @@ export const makeWine = (state, grape, howMany = 1) => {
 
   state = decrementItemFromInventory(
     state,
-// @ts-expect-error
+    // @ts-expect-error
     itemsMap.yeast.id,
     wineYield * yeastRequirements
   )

@@ -43,7 +43,7 @@ export const WineRecipe = ({ wineVariety }) => {
   const [quantity, setQuantity] = useState(1)
   const wineName = grapeVarietyNameMap[wineVariety]
   const grape = grapeVarietyToGrapeItemMap[wineVariety]
-// @ts-expect-error
+  // @ts-expect-error
   const wine = itemsMap[grape.wineId]
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
     space: 0,

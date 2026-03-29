@@ -12,7 +12,7 @@ export const farmProductsSold = memoize(
   itemsSold =>
     Object.entries(itemsSold).reduce(
       (sum, [itemId, numberSold]) =>
-// @ts-expect-error
+        // @ts-expect-error
         sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold || 0 : 0),
       0
     )

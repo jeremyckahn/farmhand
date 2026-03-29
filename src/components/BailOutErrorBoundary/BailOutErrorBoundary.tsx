@@ -19,7 +19,7 @@ class BailOutErrorBoundary extends React.Component {
   }
 
   render() {
-// @ts-expect-error
+    // @ts-expect-error
     if (this.state.hasError) {
       return null
     }

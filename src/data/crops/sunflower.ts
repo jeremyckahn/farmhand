@@ -20,7 +20,7 @@ export const sunflowerSeed = crop({
  */
 // @ts-expect-error
 export const sunflower = crop({
-// @ts-expect-error
+  // @ts-expect-error
   ...fromSeed(sunflowerSeed, {
     canBeFermented: true,
   }),
