@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { moneyTotal, nullArray } from '../../utils/index.js'
 import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.js'
 import { FOREST_EXPANDED } from '../../templates.js'

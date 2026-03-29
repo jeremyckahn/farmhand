@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { ACHIEVEMENT_COMPLETED } from '../../templates.js'
 
 describe('updateAchievements', () => {

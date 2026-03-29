@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { cowColors } from './enums.js'
 
 export const PROGRESS_SAVED_MESSAGE = 'Progress saved!'

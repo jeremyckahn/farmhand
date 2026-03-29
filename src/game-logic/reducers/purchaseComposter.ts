@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { moneyTotal } from '../../utils/index.js'
 import { EXPERIENCE_VALUES, PURCHASEABLE_COMPOSTERS } from '../../constants.js'
 import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState } from 'react'
 import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'

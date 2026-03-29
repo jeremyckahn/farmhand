@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { moneyTotal } from '../../utils/index.js'
 import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates.js'
 

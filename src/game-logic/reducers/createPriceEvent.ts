@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @param {farmhand.state} state
  * @param {farmhand.priceEvent} priceEvent

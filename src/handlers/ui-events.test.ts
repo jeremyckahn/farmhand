@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { vi } from 'vitest'
 
 import { dialogView, fieldMode, stageFocusType } from '../enums.js'
@@ -157,6 +156,7 @@ describe('UI Event Handlers', () => {
         enablesFieldMode: fieldMode.PLANT,
       })
 
+// @ts-expect-error
       handler(mockItem)
 
       expect(mockContext.setState).toHaveBeenCalledWith({
@@ -184,6 +184,7 @@ describe('UI Event Handlers', () => {
     test('opens menu when explicitly requested', () => {
       const handler = uiEventHandlers.handleMenuToggle.bind(mockContext)
 
+// @ts-expect-error
       handler(true)
 
       const stateUpdater = mockContext.setState.mock.calls[0][0]

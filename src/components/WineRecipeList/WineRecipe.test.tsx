@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -59,7 +58,8 @@ const WineRecipeStub = (
         handlers: { ...stubHandlers, ...handlers },
       }}
     >
-      <WineRecipe wineVariety={grapeChardonnay.variety} {...props} />
+      {/* @ts-expect-error */}
+      <WineRecipe wineVariety={grapeChardonnay.variety as any} {...props} />
     </FarmhandContext.Provider>
   )
 }
@@ -84,6 +84,7 @@ describe('WineRecipe', () => {
       render(
         <WineRecipeStub
           props={{ wineVariety: grape.variety }}
+// @ts-expect-error
           state={{ inventory: [{ id: grape.id, quantity: 1 }] }}
         />
       )
@@ -111,6 +112,7 @@ describe('WineRecipe', () => {
     render(
       <WineRecipeStub
         props={{ wineVariety: grape.variety }}
+// @ts-expect-error
         state={{ inventory: [{ id: grape.id, quantity }] }}
       />
     )
@@ -140,6 +142,7 @@ describe('WineRecipe', () => {
     render(
       <WineRecipeStub
         props={{ wineVariety: grape.variety }}
+// @ts-expect-error
         state={{
           inventory: [
             { id: grape.id, quantity: GRAPES_REQUIRED_FOR_WINE },
@@ -178,7 +181,9 @@ describe('WineRecipe', () => {
         <WineRecipeStub
           props={{ wineVariety: grape.variety }}
           state={{
+// @ts-expect-error
             cellarInventory: new Array(quantity).fill(
+// @ts-expect-error
               getKegStub({ itemId: grape.wineId })
             ),
           }}
@@ -209,6 +214,7 @@ describe('WineRecipe', () => {
       render(
         <WineRecipeStub
           props={{ wineVariety: grape.variety }}
+// @ts-expect-error
           state={{
             inventory: [
               { id: grape.id, quantity: grapeQuantity },
@@ -236,6 +242,7 @@ describe('WineRecipe', () => {
       render(
         <WineRecipeStub
           props={{ wineVariety: grape.variety }}
+// @ts-expect-error
           state={{
             inventory: [
               { id: grape.id, quantity: grapeQuantity },
@@ -262,6 +269,7 @@ describe('WineRecipe', () => {
       render(
         <WineRecipeStub
           props={{ wineVariety: grape.variety }}
+// @ts-expect-error
           state={{
             inventory: [
               { id: grape.id, quantity: grapeQuantity },

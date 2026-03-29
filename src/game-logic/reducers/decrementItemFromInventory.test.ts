@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testItem, testState } from '../../test-utils/index.js'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'

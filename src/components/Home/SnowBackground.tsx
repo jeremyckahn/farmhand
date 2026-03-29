@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import useWindowSize from 'react-use/lib/useWindowSize.js'
 import Confetti from 'react-confetti'
@@ -12,7 +11,9 @@ const randomInt = (min, max) => {
 // Taken from:
 // https://github.com/alampros/react-confetti/blob/484bad0a0aaddbcfcc2fb4c1a4a7eeceaa6d4879/stories/snow.story.jsx#L7-L24
 const drawSnowflake = function(ctx) {
+// @ts-expect-error
   const numPoints = this.numPoints || randomInt(3, 4) * 2
+// @ts-expect-error
   this.numPoints = numPoints
   // @ts-expect-error
   const innerRadius = this.radius * 0.2

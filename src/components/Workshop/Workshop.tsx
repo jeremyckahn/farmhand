@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState } from 'react'
 import { number, object } from 'prop-types'
 import Tab from '@mui/material/Tab/index.js'

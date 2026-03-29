@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { generateCow } from '../../utils/index.js'
 import { generateValueAdjustments } from '../../common/utils.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.js'
 
 import { modifyCow } from './modifyCow.js'

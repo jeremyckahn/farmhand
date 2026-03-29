@@ -1,4 +1,3 @@
-// @ts-nocheck
 export { bronzeOre } from './bronzeOre.js'
 export { coal } from './coal.js'
 export { goldOre } from './goldOre.js'

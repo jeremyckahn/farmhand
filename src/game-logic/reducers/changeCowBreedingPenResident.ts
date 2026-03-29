@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { COW_GESTATION_PERIOD_DAYS } from '../../constants.js'
 
 /**

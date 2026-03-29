@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { PURCHASEABLE_COMBINES } from '../../constants.js'
 import { testState } from '../../test-utils/index.js'
 

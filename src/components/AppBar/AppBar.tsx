@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { tween, Tweenable } from 'shifty'
@@ -35,6 +34,7 @@ const MoneyDisplay = ({ money }) => {
 
   useEffect(() => {
     if (money !== previousMoney) {
+// @ts-expect-error
       currentTweenable?.cancel()
 
       const tweenable = tween({
@@ -51,10 +51,12 @@ const MoneyDisplay = ({ money }) => {
         to: { color: idleColor, money },
       })
 
+// @ts-expect-error
       setCurrentTweenable(tweenable)
     }
 
     return () => {
+// @ts-expect-error
       currentTweenable?.cancel()
     }
   }, [currentTweenable, money, previousMoney])

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { number, object, shape, string } from 'prop-types'
 import Card from '@mui/material/Card/index.js'

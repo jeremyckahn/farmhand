@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { WEEDS_SPAWN_CHANCE } from '../../constants.js'
 
 import { randomNumberService } from '../../common/services/randomNumber.js'
@@ -15,6 +14,7 @@ export function spawnWeeds(plotContents) {
   let contents = null
 
   if (randomNumberService.isRandomNumberLessThan(WEEDS_SPAWN_CHANCE)) {
+// @ts-expect-error
     contents = getPlotContentFromItemId(weed.id)
   }
 

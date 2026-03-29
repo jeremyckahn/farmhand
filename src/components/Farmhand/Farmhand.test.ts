@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { sprinkler } from '../../data/items.js'
 import { carrotSeed } from '../../data/crops/carrot.js'
 

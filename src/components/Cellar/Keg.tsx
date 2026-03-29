@@ -1,4 +1,3 @@
-// @ts-nocheck
 /** @typedef {farmhand.keg} keg */
 import React, { useContext } from 'react'
 import { object } from 'prop-types'
@@ -47,7 +46,6 @@ export function Keg({ keg }) {
 
   let imageSrc = items[item.id]
 
-  // @ts-expect-error
   let recipeName = FERMENTED_CROP_NAME`${item}`
 
   const handleSellClick = () => {

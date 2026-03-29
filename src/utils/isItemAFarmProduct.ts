@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { itemType } from '../enums.js'
 
 import { isItemAGrownCrop } from './isItemAGrownCrop.js'

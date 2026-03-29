@@ -1,4 +1,3 @@
-// @ts-nocheck
 import toolUpgrades from '../../data/upgrades.js'
 import { recipesMap } from '../../data/maps.js'
 
@@ -19,6 +18,7 @@ export function getUpgradesAvailable({ learnedForgeRecipes, toolLevels }) {
       const nextLevelUpgrade = toolUpgrades[type][upgrade.nextLevel]
       let allIngredientsUnlocked = true
 
+// @ts-expect-error
       for (let ingredient of Object.keys(nextLevelUpgrade.ingredients)) {
         allIngredientsUnlocked =
           allIngredientsUnlocked &&
@@ -28,6 +28,7 @@ export function getUpgradesAvailable({ learnedForgeRecipes, toolLevels }) {
       }
 
       if (allIngredientsUnlocked) {
+// @ts-expect-error
         upgradesAvailable.push(nextLevelUpgrade)
       }
     }

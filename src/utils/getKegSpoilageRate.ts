@@ -1,4 +1,3 @@
-// @ts-nocheck
 /** @typedef {farmhand.keg} keg */
 
 import { KEG_SPOILAGE_RATE_MULTIPLIER } from '../constants.js'

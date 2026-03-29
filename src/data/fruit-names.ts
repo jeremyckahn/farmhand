@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Adapted from https://simple.wikipedia.org/wiki/List_of_fruits
 export default [
   'Akee',

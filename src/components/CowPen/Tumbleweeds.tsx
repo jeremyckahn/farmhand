@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Box } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
@@ -74,6 +73,7 @@ export const Tumbleweeds = ({ doSpawn }) => {
 
   // Adds a new tumbleweed to the list.
   const spawnTumbleweed = () => {
+// @ts-expect-error
     setTumbleweeds(oldTumbleweeds => [...oldTumbleweeds, v4()])
   }
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { EXPERIENCE_VALUES, PURCHASEABLE_COW_PENS } from '../../constants.js'
 import { testState } from '../../test-utils/index.js'
 

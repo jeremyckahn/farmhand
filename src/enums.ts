@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @module farmhand.enums
  * @ignore

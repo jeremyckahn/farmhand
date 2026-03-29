@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { levelAchieved } from '../../utils/levelAchieved.js'
 import {
   filterItemIdsToSeeds,

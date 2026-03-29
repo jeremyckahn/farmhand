@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { experienceNeededForLevel } from '../../utils/index.js'
 
 import { addExperience } from './addExperience.js'

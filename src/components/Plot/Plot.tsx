@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react'
 import { bool, func, number, object, string } from 'prop-types'
 import Tooltip from '@mui/material/Tooltip/index.js'
@@ -34,14 +33,18 @@ export const getBackgroundStyles = plotContent => {
   const backgroundImages = []
 
   if (plotContent.fertilizerType === fertilizerType.STANDARD) {
+// @ts-expect-error
     backgroundImages.push(`url(${plotStates['fertilized-plot']})`)
   } else if (plotContent.fertilizerType === fertilizerType.RAINBOW) {
+// @ts-expect-error
     backgroundImages.push(`url(${plotStates['rainbow-fertilized-plot']})`)
   }
 
   if ('wasWateredToday' in plotContent && plotContent.wasWateredToday) {
+// @ts-expect-error
     backgroundImages.push(`url(${plotStates['watered-plot']})`)
   } else if ('isShoveled' in plotContent && plotContent.isShoveled) {
+// @ts-expect-error
     backgroundImages.push(`url(${plotStates['shoveled-plot']})`)
   }
 
@@ -134,6 +137,7 @@ export const Plot = ({
   } else if (wasJustShoveled || plotContent?.isShoveled) {
     const oreItem = itemsMap[plotContent?.oreId]
 
+// @ts-expect-error
     plotLabelText = oreItem ? SHOVELED_PLOT('', oreItem) : SHOVELED
   }
 

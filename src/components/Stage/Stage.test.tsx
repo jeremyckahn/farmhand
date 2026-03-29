@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
@@ -48,6 +47,7 @@ const defaultProps = {
 
 const renderWithContext = (props = {}, gameState = {}, handlers = {}) => {
   const contextValue = createContextData()
+// @ts-expect-error
   contextValue.gameState = {
     ...contextValue.gameState,
     ...testState(gameState),

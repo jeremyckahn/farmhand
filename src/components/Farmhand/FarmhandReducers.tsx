@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Component } from 'react'
 
 import * as reducers from '../../game-logic/reducers/index.js'

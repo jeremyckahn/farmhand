@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { screen } from '@testing-library/react'
 
 import { endDay } from '../test-utils/ui.js'

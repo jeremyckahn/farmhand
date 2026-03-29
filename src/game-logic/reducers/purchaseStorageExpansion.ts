@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getCostOfNextStorageExpansion, moneyTotal } from '../../utils/index.js'
 import {
   INFINITE_STORAGE_LIMIT,

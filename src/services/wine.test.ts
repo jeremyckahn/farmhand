@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { GRAPES_REQUIRED_FOR_WINE } from '../constants.js'
 import { grapeChardonnay, grapeNebbiolo } from '../data/crops/index.js'
 import { yeast } from '../data/recipes.js'

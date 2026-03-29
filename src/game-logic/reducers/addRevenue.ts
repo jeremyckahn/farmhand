@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { moneyTotal } from '../../utils/index.js'
 
 // TODO: Add tests for this reducer

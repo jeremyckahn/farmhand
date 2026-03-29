@@ -1,4 +1,3 @@
-// @ts-nocheck
 const saltRequirementMultiplier = 2 / 3
 
 /**

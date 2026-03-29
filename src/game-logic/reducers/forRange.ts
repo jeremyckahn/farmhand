@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @param {farmhand.state} state
  * @param {function(farmhand.state, number, number, ...any): farmhand.state} fieldFn Performs an operation on each plot within the range.

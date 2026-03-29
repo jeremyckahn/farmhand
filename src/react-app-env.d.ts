@@ -1,4 +1,3 @@
-// @ts-nocheck
 import Farmhand from './components/Farmhand/index.js'
 
 // TODO: Contribute type definitions for 'global' package to

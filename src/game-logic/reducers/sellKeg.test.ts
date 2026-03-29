@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @typedef {farmhand.keg} keg
  */

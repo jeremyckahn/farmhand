@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { fieldMode, itemType } from '../enums.js'
 import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration.js'
 
@@ -72,5 +71,6 @@ export const cropVariety = ({
   variety,
   ...cropVarietyProperties
 }) => {
+// @ts-expect-error
   return { imageId, cropFamily, variety, ...crop({ ...cropVarietyProperties }) }
 }

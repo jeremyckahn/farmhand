@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { recipeType } from '../../enums.js'
 import * as actualMaps from '../maps.js'
 

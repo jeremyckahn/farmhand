@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testState } from '../../test-utils/index.js'
 import { selectCow } from '../reducers/selectCow.js'
 import { generateCow, getCowDisplayName } from '../../utils/index.js'

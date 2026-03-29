@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { randomNumberService } from '../../common/services/randomNumber.js'
 import { testCrop } from '../../test-utils/index.js'
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { crop, fromSeed } from '../crop.js'
 import { cropType } from '../../enums.js'
 
@@ -19,7 +18,9 @@ export const soybeanSeed = crop({
  * @property farmhand.module:items.soybean
  * @type {farmhand.item}
  */
+// @ts-expect-error
 export const soybean = crop({
+// @ts-expect-error
   ...fromSeed(soybeanSeed, {
     canBeFermented: true,
   }),

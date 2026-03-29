@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, useEffect } from 'react'
 import { number } from 'prop-types'
 import { interpolate, tween } from 'shifty'
@@ -36,11 +35,13 @@ const ProgressBar = ({ percent }) => {
         },
       })
 
+// @ts-expect-error
       setCurrentTweenable(tweenable)
     }
 
     return () => {
       if (currentTweenable) {
+// @ts-expect-error
         currentTweenable.cancel()
       }
     }

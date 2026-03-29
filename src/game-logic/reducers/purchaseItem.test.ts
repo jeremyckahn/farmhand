@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { testItem, testState } from '../../test-utils/index.js'
 

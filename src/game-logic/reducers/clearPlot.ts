@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { cropLifeStage, itemType, toolType } from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
 import {

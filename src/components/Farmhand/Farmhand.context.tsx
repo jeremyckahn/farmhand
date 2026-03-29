@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createContext } from 'react'
 
 // eslint-disable-next-line no-unused-vars

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { dinero, toDecimal, USD } from 'dinero.js'
 
 /**

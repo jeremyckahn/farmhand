@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { randomNumberService } from '../common/services/randomNumber.js'
 import { Factory } from '../interfaces/Factory.js'
 import { coal, saltRock, stone } from '../data/ores/index.js'
@@ -28,6 +27,7 @@ export default class StoneFactory extends Factory {
 
     for (const { resource, spawnChance } of spawnableResources) {
       if (randomNumberService.isRandomNumberLessThan(spawnChance)) {
+// @ts-expect-error
         resources.push(resource)
       }
     }

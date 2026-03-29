@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { clampNumber } from '../../utils/index.js'
 import {
   COW_FEED_ITEM_ID,

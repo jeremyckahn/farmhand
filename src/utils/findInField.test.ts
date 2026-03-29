@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { carrot, pumpkin } from '../data/crops/index.js'
 import { fertilizerType } from '../enums.js'
 

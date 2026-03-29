@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import classNames from 'classnames'
 import Button from '@mui/material/Button/index.js'
@@ -31,7 +30,6 @@ export function UpgradePurchase({
 
   const canBeMade =
     canMakeRecipe(upgrade, inventory, 1) &&
-    // @ts-expect-error
     doesInventorySpaceRemain({
       inventory,
       // Without the Infinity coercion, this would break recipes for unlimited

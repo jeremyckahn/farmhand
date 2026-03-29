@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { number, array } from 'prop-types'
 

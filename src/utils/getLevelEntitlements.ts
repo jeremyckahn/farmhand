@@ -1,4 +1,3 @@
-// @ts-nocheck
 /** @typedef {farmhand.levelEntitlements} levelEntitlements */
 import { levels } from '../data/levels.js'
 import { INITIAL_SPRINKLER_RANGE } from '../constants.js'
@@ -10,6 +9,7 @@ import { memoize } from './memoize.js'
  * @returns {levelEntitlements} Contains `sprinklerRange` and keys that correspond to
  * unlocked items.
  */
+// @ts-expect-error
 export const getLevelEntitlements = memoize(
   /**
    * @param {number} levelNumber
@@ -38,14 +38,17 @@ export const getLevelEntitlements = memoize(
         }
 
         if (unlocksShopItem) {
+// @ts-expect-error
           acc.items[unlocksShopItem] = true
         }
 
         if (unlocksTool) {
+// @ts-expect-error
           acc.tools[unlocksTool] = true
         }
 
         if (unlocksStageFocusType) {
+// @ts-expect-error
           acc.stageFocusType[unlocksStageFocusType] = true
         }
 

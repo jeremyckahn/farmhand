@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @typedef {farmhand.state['itemsSold']} itemsSold
  * @typedef {farmhand.item} item
@@ -19,7 +18,9 @@ const getGrapesSold = itemsSold => {
   ) => {
     const item = itemsMap[itemId]
 
+// @ts-expect-error
     if ((quantity || 0) > 0 && isGrape(item)) {
+// @ts-expect-error
       acc.push(item)
     }
 

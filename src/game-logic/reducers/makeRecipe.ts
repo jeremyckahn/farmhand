@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { recipeType } from '../../enums.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'
 

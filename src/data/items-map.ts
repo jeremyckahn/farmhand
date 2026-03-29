@@ -1,4 +1,3 @@
-// @ts-nocheck
 import * as items from '../data/items.js'
 
 /**

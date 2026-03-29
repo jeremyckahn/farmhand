@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getLevelEntitlements } from './getLevelEntitlements.js'
 
 describe('getLevelEntitlements', () => {

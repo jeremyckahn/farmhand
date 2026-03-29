@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import Paper from '@mui/material/Paper/index.js'
 import Table from '@mui/material/Table/index.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { moneyTotal } from '../../utils/index.js'
 import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants.js'
 

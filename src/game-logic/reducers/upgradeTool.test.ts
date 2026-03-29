@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { EXPERIENCE_VALUES } from '../../constants.js'
 import { itemType, toolLevel, toolType } from '../../enums.js'
 import { testState } from '../../test-utils/index.js'

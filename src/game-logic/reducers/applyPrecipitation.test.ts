@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testCrop } from '../../test-utils/index.js'
 import {
   RAIN_MESSAGE,

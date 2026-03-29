@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { array, func, object, string } from 'prop-types'
 import Button from '@mui/material/Button/index.js'

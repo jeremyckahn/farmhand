@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { itemType } from '../../enums.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
 import { getPlotContentType, getRangeCoords } from '../../utils/index.js'

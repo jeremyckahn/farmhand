@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { computeStateForNextDay } from '../../game-logic/reducers/index.js'
 import { testState } from '../index.js'
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 /** @typedef {farmhand.item} item */
 /** @typedef {farmhand.keg} keg */
 
@@ -23,6 +22,7 @@ export const getMaxYieldOfFermentationRecipe = (
 ) => {
   const {
     [fermentationRecipe.id]: itemQuantityInInventory = 0,
+// @ts-expect-error
     [itemsMap.salt.id]: saltQuantityInInventory = 0,
   } = getInventoryQuantityMap(inventory)
 

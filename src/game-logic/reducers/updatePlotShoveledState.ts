@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @param {?farmhand.plotContent} plotContent
  * @returns {?farmhand.plotContent}

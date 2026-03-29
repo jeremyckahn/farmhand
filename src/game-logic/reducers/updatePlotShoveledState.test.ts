@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { fertilizerType } from '../../enums.js'
 
 import { updatePlotShoveledState } from './updatePlotShoveledState.js'
@@ -32,7 +31,6 @@ describe('updatePlotShoveledState', () => {
   })
 
   test('will return the plot contents if it is anything else', () => {
-    // @ts-expect-error - Testing with string type to verify non-shoveled plot handling
     const plotContents = updatePlotShoveledState('sprinkler')
 
     expect(plotContents).toEqual('sprinkler')

@@ -1,9 +1,9 @@
-// @ts-nocheck
 /**
  * @typedef {farmhand.item} item
  */
 import { memoize } from './memoize.js'
 
+// @ts-expect-error
 export const getInventoryQuantityMap = memoize(
   /**
    * @param {{ id: item['id'], quantity: number }[]} inventory

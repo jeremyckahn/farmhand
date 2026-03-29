@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.js'
 import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.js'
 import { testState, testTree } from '../../test-utils/index.js'
@@ -73,8 +72,10 @@ describe('purchaseForest', () => {
       for (let y = 0; y < forestSize.rows; y++) {
         const row = /** @type {Array<any>} */ ([])
         for (let x = 0; x < forestSize.columns; x++) {
+// @ts-expect-error
           row.push(null)
         }
+// @ts-expect-error
         expectedForest.push(row)
       }
 
@@ -89,7 +90,9 @@ describe('purchaseForest', () => {
         1
       )
 
+// @ts-expect-error
       expectedForest[0][0] = testTree()
+// @ts-expect-error
       expectedForest[1][1] = testTree()
 
       expect(forest).toEqual(expectedForest)

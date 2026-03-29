@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { grapeVariety } from '../enums.js'
 
 // Plot states

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState } from 'react'
 import Button from '@mui/material/Button/index.js'
 import Select from '@mui/material/Select/index.js'

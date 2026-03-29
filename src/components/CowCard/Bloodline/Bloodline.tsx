@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { memo } from 'react'
 import { object } from 'prop-types'
 import Tooltip from '@mui/material/Tooltip/index.js'

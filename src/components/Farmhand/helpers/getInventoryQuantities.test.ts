@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getInventoryQuantities } from './getInventoryQuantities.js'
 
 vitest.mock('../../../data/maps.js')

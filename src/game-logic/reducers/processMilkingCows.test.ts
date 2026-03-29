@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { MILKS_PRODUCED } from '../../templates.js'
 import {
   COW_MILK_RATE_SLOWEST,

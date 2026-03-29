@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { fieldMode, fertilizerType, itemType } from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
 import { getPlotContentType } from '../../utils/index.js'

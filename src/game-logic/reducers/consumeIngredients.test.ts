@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testState, testItem } from '../../test-utils/index.js'
 
 import { consumeIngredients } from './consumeIngredients.js'

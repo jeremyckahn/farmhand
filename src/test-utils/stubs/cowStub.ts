@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { generateCow } from '../../utils/index.js'
 
 /**

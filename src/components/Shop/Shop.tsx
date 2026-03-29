@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState } from 'react'
 import { array, func, number, object } from 'prop-types'
 import Button from '@mui/material/Button/index.js'
@@ -43,6 +42,7 @@ import './Shop.sass'
  * @param {Array.<farmhand.item>} shopInventory
  * @returns {Object.<'seeds' | 'fieldTools', Array.<farmhand.item>>}
  */
+// @ts-expect-error
 const categorizeShopInventory = memoize(shopInventory =>
   shopInventory.reduce(
     (acc, inventoryItem) => {
@@ -205,7 +205,7 @@ export const Shop = ({
               }}
             />
           </li>
-          {features.FOREST && isForestUnlocked ? (
+          {(features as any).FOREST && isForestUnlocked ? (
             <li>
               <TierPurchase
                 {...{

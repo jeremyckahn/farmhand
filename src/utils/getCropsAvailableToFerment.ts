@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @typedef {farmhand.levelEntitlements} levelEntitlements
  * @typedef {farmhand.item} item
@@ -26,6 +25,7 @@ export function getCropsAvailableToFerment(levelEntitlements) {
         finalCropItemFromSeedItem &&
         Number.isFinite(finalCropItemFromSeedItem.daysToFerment)
       ) {
+// @ts-expect-error
         acc.push(finalCropItemFromSeedItem)
       }
 

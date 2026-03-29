@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @param {number} [experience]
  * @returns {number}

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { itemsMap } from '../../data/maps.js'
 import {
   castToMoney,
@@ -77,7 +76,6 @@ export const sellKeg = (state, keg) => {
   // NOTE: This notification will need to be revisited to support Wine sales.
   state = prependPendingPeerMessage(
     state,
-    // @ts-expect-error
     SOLD_FERMENTED_ITEM_PEER_NOTIFICATION`${item}`,
     'warning'
   )

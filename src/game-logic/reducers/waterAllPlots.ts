@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { waterField } from './waterField.js'
 
 // TODO: Remove this and just use waterField directly.

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testItem } from '../../test-utils/index.js'
 import { itemType } from '../../enums.js'
 import * as actualItems from '../items.js'

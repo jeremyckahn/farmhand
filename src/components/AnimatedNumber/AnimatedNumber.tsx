@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { tween, Tweenable } from 'shifty'
@@ -29,6 +28,7 @@ const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
   useEffect(() => {
     if (number !== previousNumber) {
       if (currentTweenable) {
+// @ts-expect-error
         currentTweenable.cancel()
       }
 
@@ -44,11 +44,13 @@ const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
         to: { number },
       })
 
+// @ts-expect-error
       setCurrentTweenable(tweenable)
     }
 
     return () => {
       if (currentTweenable) {
+// @ts-expect-error
         currentTweenable.cancel()
       }
     }

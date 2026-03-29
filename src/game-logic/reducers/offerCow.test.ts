@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testState } from '../../test-utils/index.js'
 
 import { offerCow } from './offerCow.js'

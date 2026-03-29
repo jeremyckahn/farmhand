@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { array } from 'prop-types'
 import Alert from '@mui/material/Alert/index.js'
@@ -38,6 +37,7 @@ export const LogView = ({ notificationLog, todaysNotifications }) => (
           {['success', 'info', 'warning', 'error'].map(
             (severityLevel, severityIndex) =>
               notifications[severityLevel].length ? (
+// @ts-expect-error
                 <Alert
                   {...{
                     elevation: 3,

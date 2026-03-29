@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @typedef {farmhand.state} state
  */
@@ -14,7 +13,6 @@ import { makeWine } from './makeWine.js'
 const stubKegUuid = 'abc123'
 
 beforeEach(() => {
-  // @ts-expect-error
   vitest.spyOn(cellarService, '_uuid').mockReturnValue(stubKegUuid)
 })
 
@@ -170,7 +168,6 @@ describe('makeWine', () => {
   ])(
     'makes $expected.cellarInventory.length wine unit(s) based on $state.inventory.0.id: $state.inventory.0.quantity, $state.inventory.1.id: $state.inventory.1.quantity',
     ({ state, grape, howMany, expected }) => {
-      // @ts-expect-error
       const result = makeWine(state, grape, howMany)
 
       expect(result).toEqual(expected)

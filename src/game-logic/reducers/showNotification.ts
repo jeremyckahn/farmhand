@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @typedef {farmhand.state} state
  * @typedef {farmhand.notificationSeverity} alertSeverity

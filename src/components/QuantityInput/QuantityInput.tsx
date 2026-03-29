@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { forwardRef } from 'react'
 import { func, number } from 'prop-types'
 import Fab from '@mui/material/Fab/index.js'
@@ -23,6 +22,7 @@ const QuantityNumberFormat = forwardRef(
    * @param {(value: number) => void} props.onChange
    * @param {React.ForwardedRef<any>} ref
    */
+// @ts-expect-error
   ({ min, max, onChange, ...rest }, ref) => (
     <NumberFormat
       isNumericString

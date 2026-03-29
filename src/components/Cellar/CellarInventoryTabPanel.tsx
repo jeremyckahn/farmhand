@@ -1,4 +1,3 @@
-// @ts-nocheck
 /** @typedef {farmhand.keg} keg */
 import React, { useContext, useState } from 'react'
 import { number } from 'prop-types'
@@ -49,6 +48,7 @@ export const CellarInventoryTabPanel = ({ index, currentTab }) => {
     .filter(term => term.length > 0)
 
   const filteredKegs = cellarInventory.filter(keg => {
+// @ts-expect-error
     const item = itemsMap[keg.itemId]
     const itemName = item.name.toLowerCase()
     const fermentationRecipeName = `${FERMENTED_CROP_NAME}${itemName}`
@@ -75,6 +75,7 @@ export const CellarInventoryTabPanel = ({ index, currentTab }) => {
       )}
       <ul className="card-list">
         {filteredKegs.map(keg => (
+// @ts-expect-error
           <li key={keg.id}>
             <Keg keg={keg} />
           </li>

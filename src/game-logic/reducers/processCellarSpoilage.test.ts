@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { randomNumberService } from '../../common/services/randomNumber.js'
 import { wineTempranillo } from '../../data/recipes.js'
 import { KEG_SPOILED_MESSAGE } from '../../templates.js'
@@ -16,7 +15,6 @@ describe('processCellarSpoilage', () => {
     const cellarInventory = [keg]
     const newDayNotifications = []
 
-    // @ts-expect-error
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
@@ -34,7 +32,6 @@ describe('processCellarSpoilage', () => {
     const cellarInventory = [keg]
     const newDayNotifications = []
 
-    // @ts-expect-error
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
@@ -52,7 +49,6 @@ describe('processCellarSpoilage', () => {
     const cellarInventory = [keg]
     const newDayNotifications = []
 
-    // @ts-expect-error
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
@@ -70,7 +66,6 @@ describe('processCellarSpoilage', () => {
     const cellarInventory = [keg]
     const newDayNotifications = []
 
-    // @ts-expect-error
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
@@ -78,7 +73,6 @@ describe('processCellarSpoilage', () => {
 
     expect(expectedState.newDayNotifications).toEqual([
       {
-        // @ts-expect-error
         message: KEG_SPOILED_MESSAGE`${keg}`,
         severity: 'error',
       },

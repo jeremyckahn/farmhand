@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState } from 'react'
 import { bool, func } from 'prop-types'
 import Button from '@mui/material/Button/index.js'

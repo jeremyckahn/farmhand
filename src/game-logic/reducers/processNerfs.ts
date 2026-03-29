@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { applyChanceEvent } from './helpers.js'
 import { applyCrows } from './applyCrows.js'
 

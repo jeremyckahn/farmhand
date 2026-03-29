@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useContext, useEffect, useState } from 'react'
 import { oneOf } from 'prop-types'
 import Card from '@mui/material/Card/index.js'
@@ -44,6 +43,7 @@ export const WineRecipe = ({ wineVariety }) => {
   const [quantity, setQuantity] = useState(1)
   const wineName = grapeVarietyNameMap[wineVariety]
   const grape = grapeVarietyToGrapeItemMap[wineVariety]
+// @ts-expect-error
   const wine = itemsMap[grape.wineId]
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
     space: 0,
@@ -100,7 +100,7 @@ export const WineRecipe = ({ wineVariety }) => {
         subheader={
           <>
             <p>
-              Days to mature: {/* @ts-expect-error */}
+              Days to mature:{' '}
               {integerString(wineService.getDaysToMature(wineVariety))}
             </p>
             <p>

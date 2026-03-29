@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
@@ -18,15 +17,18 @@ import { tools as toolImages, craftedItems, pixel } from '../../img/index.js'
 
 import './Toolbelt.sass'
 
+// @ts-expect-error
 const getTools = memoize(toolLevels => {
   const tools = []
 
   for (let tool of Object.values(toolsData)) {
     if (toolLevels[tool.type] !== toolLevel.UNAVAILABLE) {
+// @ts-expect-error
       tools.push(tool)
     }
   }
 
+// @ts-expect-error
   return tools.sort((a, b) => a.order - b.order)
 })
 

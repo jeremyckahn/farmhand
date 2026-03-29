@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testCrop, testState } from '../../test-utils/index.js'
 import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
 
@@ -51,8 +50,10 @@ describe('purchaseField', () => {
       for (let y = 0; y < fieldSize.rows; y++) {
         const row = []
         for (let x = 0; x < fieldSize.columns; x++) {
+// @ts-expect-error
           row.push(null)
         }
+// @ts-expect-error
         expectedField.push(row)
       }
 

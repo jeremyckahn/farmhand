@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { fertilizerType } from '../../enums.js'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
 import {

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import '@testing-library/jest-dom'
 import 'jest-extended'
 import { cleanup } from '@testing-library/react'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { memo, useEffect, useState } from 'react'
 import { array, bool, element, func, number, object, string } from 'prop-types'
 import Fab from '@mui/material/Fab/index.js'
@@ -50,6 +49,7 @@ const fieldKeyMap = {
 }
 
 if (tools.shovel) {
+// @ts-expect-error
   fieldKeyMap.selectShovel = tools.shovel.fieldKey
 }
 
@@ -112,12 +112,14 @@ export const MemoPlot = memo(
    * @param {number} props.y
    */
   props => {
+// @ts-expect-error
     const { hoveredPlot, plotContent, setHoveredPlot, x, y } = props
 
     return (
       <Plot
         {...{
           hoveredPlot,
+// @ts-expect-error
           isInHoverRange: isInHoverRange(props),
           plotContent,
           setHoveredPlot,
@@ -128,12 +130,15 @@ export const MemoPlot = memo(
     )
   },
   (prev, next) => {
+// @ts-expect-error
     if (isInHoverRange(prev) !== isInHoverRange(next)) {
       return false
     }
 
     return (
+// @ts-expect-error
       prev.plotContent === next.plotContent &&
+// @ts-expect-error
       prev.hoveredPlotRangeSize === next.hoveredPlotRangeSize
     )
   }
@@ -362,7 +367,6 @@ export const Field = props => {
             'fertilize-mode': propsFieldMode === FERTILIZE,
             'harvest-mode': propsFieldMode === HARVEST,
             'mine-mode': propsFieldMode === MINE,
-            // @ts-expect-error - Unnecessary properties are omitted out of convenience
             'is-inventory-full': !doesInventorySpaceRemain({
               inventory,
               inventoryLimit,

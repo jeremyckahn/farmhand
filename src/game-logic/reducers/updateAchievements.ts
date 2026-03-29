@@ -1,4 +1,3 @@
-// @ts-nocheck
 import achievements from '../../data/achievements.js'
 import { ACHIEVEMENT_COMPLETED } from '../../templates.js'
 
@@ -13,6 +12,7 @@ export const updateAchievements = (state, prevState) =>
   achievements.reduce((reducerState, achievement) => {
     if (
       !reducerState.completedAchievements[achievement.id] &&
+// @ts-expect-error
       achievement.condition(reducerState, prevState)
     ) {
       reducerState = {

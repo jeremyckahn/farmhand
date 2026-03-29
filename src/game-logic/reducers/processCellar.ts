@@ -1,4 +1,3 @@
-// @ts-nocheck
 /** @typedef {farmhand.state} state */
 
 import { processCellarSpoilage } from './processCellarSpoilage.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { fieldMode } from '../../enums.js'
 import { getPlotContentFromItemId } from '../../utils/index.js'
 import { SCARECROW_ITEM_ID } from '../../constants.js'

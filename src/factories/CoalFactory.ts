@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { coal, stone } from '../data/ores/index.js'
 import { Factory } from '../interfaces/Factory.js'
 import { chooseRandom } from '../utils/index.js'
@@ -18,9 +17,11 @@ export default class CoalFactory extends Factory {
     const amount = chooseRandom([1, 1, 1, 2, 3])
 
     for (let i = 0; i < amount; i++) {
+// @ts-expect-error
       spawns.push(this.spawnCoal())
     }
 
+// @ts-expect-error
     spawns.push(this.spawnStone())
 
     return spawns

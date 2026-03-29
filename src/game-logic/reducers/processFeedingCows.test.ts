@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { OUT_OF_COW_FEED_NOTIFICATION } from '../../strings.js'
 import {
   COW_FEED_ITEM_ID,

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { cropFamily, cropType, grapeVariety } from '../../enums.js'
 import { crop, cropVariety, fromSeed } from '../crop.js'
 
@@ -91,6 +90,7 @@ export const wineVarietyValueMap = {
  * @type {farmhand.grape}
  */
 export const grapeChardonnay = grape({
+// @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-chardonnay'),
   }),
@@ -105,6 +105,7 @@ export const grapeChardonnay = grape({
  * @type {farmhand.grape}
  */
 export const grapeSauvignonBlanc = grape({
+// @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-sauvignon-blanc'),
   }),
@@ -167,6 +168,7 @@ export const grapeSauvignonBlanc = grape({
  * @type {farmhand.grape}
  */
 export const grapeCabernetSauvignon = grape({
+// @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-cabernet-sauvignon'),
   }),
@@ -194,6 +196,7 @@ export const grapeCabernetSauvignon = grape({
  * @type {farmhand.grape}
  */
 export const grapeTempranillo = grape({
+// @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-tempranillo'),
   }),
@@ -208,6 +211,7 @@ export const grapeTempranillo = grape({
  * @type {farmhand.grape}
  */
 export const grapeNebbiolo = grape({
+// @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-nebbiolo'),
   }),

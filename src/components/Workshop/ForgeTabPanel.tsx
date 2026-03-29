@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { number, array, object } from 'prop-types'
 
@@ -41,6 +40,7 @@ export function ForgeTabPanel({
               <h4>Tool Upgrades</h4>
             </li>
             {upgradesAvailable.map(upgrade => (
+// @ts-expect-error
               <li key={upgrade.id}>
                 <UpgradePurchase upgrade={upgrade} />
               </li>

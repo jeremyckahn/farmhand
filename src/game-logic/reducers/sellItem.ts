@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { itemsMap } from '../../data/maps.js'
 import { isItemAFarmProduct } from '../../utils/isItemAFarmProduct.js'
 import {

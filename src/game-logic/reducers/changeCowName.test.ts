@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { MAX_ANIMAL_NAME_LENGTH } from '../../constants.js'
 import { generateCow } from '../../utils/index.js'
 import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'

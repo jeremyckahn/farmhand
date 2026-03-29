@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {
   EXPERIENCE_VALUES,
   COW_GESTATION_PERIOD_DAYS,

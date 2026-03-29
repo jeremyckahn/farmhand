@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import Button from '@mui/material/Button/index.js'
@@ -58,7 +57,6 @@ const Recipe = ({
   const canBeMade =
     quantity > 0 &&
     canMakeRecipe(recipe, inventory, quantity) &&
-    // @ts-expect-error
     doesInventorySpaceRemain({
       inventory,
       // Without the Infinity coercion, this would break recipes for unlimited
@@ -96,7 +94,7 @@ const Recipe = ({
               <IngredientsList
                 {...{
                   playerInventoryQuantities,
-                  recipe: /** @type {globalThis.farmhand.recipe} */ (recipe),
+                  recipe: recipe as any,
                 }}
               />
             </>

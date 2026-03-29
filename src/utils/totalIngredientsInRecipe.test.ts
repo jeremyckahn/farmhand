@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { totalIngredientsInRecipe } from './totalIngredientsInRecipe.js'
 
 describe('totalIngredientsInRecipe', () => {

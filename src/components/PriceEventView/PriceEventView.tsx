@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { object } from 'prop-types'
 import Divider from '@mui/material/Divider/index.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {
   GRAPES_REQUIRED_FOR_WINE,
   PURCHASEABLE_CELLARS,
@@ -50,6 +49,7 @@ export const makeWine = (state, grape, howMany = 1) => {
 
   state = decrementItemFromInventory(
     state,
+// @ts-expect-error
     itemsMap.yeast.id,
     wineYield * yeastRequirements
   )

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { randomNumberService } from './randomNumber.js'
 
 const chance = 0.6

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { MAX_PENDING_PEER_MESSAGES } from '../../constants.js'
 import { testState } from '../../test-utils/index.js'
 

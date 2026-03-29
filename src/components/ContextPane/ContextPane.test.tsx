@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
@@ -153,6 +152,7 @@ describe('PlayerInventory', () => {
     ]
 
     render(
+// @ts-expect-error
       <PlayerInventory {...baseItemProps} playerInventory={playerInventory} />
     )
 
@@ -163,6 +163,7 @@ describe('PlayerInventory', () => {
   })
 
   test('shows empty inventory when no items present', () => {
+// @ts-expect-error
     render(<PlayerInventory {...baseItemProps} playerInventory={[]} />)
 
     expect(screen.getByTestId('mocked-inventory')).toBeInTheDocument()
@@ -178,6 +179,7 @@ describe('PlayerInventory', () => {
     ]
 
     render(
+// @ts-expect-error
       <PlayerInventory {...baseItemProps} playerInventory={playerInventory} />
     )
 

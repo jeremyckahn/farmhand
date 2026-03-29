@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { shouldPrecipitateToday } from '../../utils/index.js'
 
 import { applyChanceEvent } from './helpers.js'

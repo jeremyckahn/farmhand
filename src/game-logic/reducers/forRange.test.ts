@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testCrop, testState } from '../../test-utils/index.js'
 
 import { waterPlot } from './waterPlot.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import * as utils from '../utils/index.js'
 import { coal, stone } from '../data/ores/index.js'
 

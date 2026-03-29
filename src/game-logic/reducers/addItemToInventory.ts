@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { inventorySpaceRemaining } from '../../utils/index.js'
 
 /**

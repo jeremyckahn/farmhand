@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { screen } from '@testing-library/dom'
 import { render } from '@testing-library/react'
@@ -83,14 +82,17 @@ describe('FermentationRecipeList', () => {
     await userEvent.type(searchBar, 'apple')
 
     const filteredCrops = cropsAvailableToFerment.filter(item => {
+// @ts-expect-error
       const fermentationRecipeName = `Fermented ${item.name}`.toLowerCase()
       return (
         fermentationRecipeName.includes('apple') ||
+// @ts-expect-error
         item.name.toLowerCase().includes('apple')
       )
     })
 
     filteredCrops.forEach(crop => {
+// @ts-expect-error
       expect(screen.getByText(crop.name)).toBeInTheDocument()
     })
 
@@ -99,6 +101,7 @@ describe('FermentationRecipeList', () => {
     )
 
     nonMatchingCrops.forEach(crop => {
+// @ts-expect-error
       const nonMatchingElements = screen.queryAllByText(crop.name)
       expect(nonMatchingElements).toHaveLength(1)
     })
@@ -120,6 +123,7 @@ describe('FermentationRecipeList', () => {
     await userEvent.clear(searchBar)
 
     cropsAvailableToFerment.forEach(crop => {
+// @ts-expect-error
       expect(screen.getByText(crop.name)).toBeInTheDocument()
     })
   })

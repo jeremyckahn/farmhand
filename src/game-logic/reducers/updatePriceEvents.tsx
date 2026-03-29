@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @param {Partial<Record<string, farmhand.priceEvent>>} priceEvents
  * @returns {Partial<Record<string, farmhand.priceEvent>>}

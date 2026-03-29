@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { MAX_CROWS, SCARECROW_ITEM_ID } from '../../constants.js'
 import { findInField } from '../../utils/findInField.js'
 

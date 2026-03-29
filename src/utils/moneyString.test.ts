@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { moneyString } from './moneyString.js'
 
 describe('moneyString.js', () => {

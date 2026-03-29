@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { recipesMap } from '../../data/maps.js'
 
 /**

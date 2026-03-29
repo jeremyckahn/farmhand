@@ -1,4 +1,3 @@
-// @ts-nocheck
 /** @typedef {farmhand.state} state */
 
 import { randomNumberService } from '../../common/services/randomNumber.js'
@@ -33,7 +32,6 @@ export const processCellarSpoilage = state => {
         newDayNotifications: [
           ...state.newDayNotifications,
           {
-            // @ts-expect-error
             message: KEG_SPOILED_MESSAGE`${keg}`,
             severity: 'error',
           },

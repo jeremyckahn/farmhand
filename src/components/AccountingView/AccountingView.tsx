@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useState, forwardRef } from 'react'
 import Card from '@mui/material/Card/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
@@ -30,6 +29,7 @@ const MoneyNumberFormat = forwardRef(
    * @param {React.Dispatch<React.SetStateAction<number>>} props.setLoanInputValue - Function to set the loan input value
    * @param {React.ForwardedRef<unknown>} [ref] - Forwarded ref for the component
    */
+// @ts-expect-error
   ({ max, min, onChange, setLoanInputValue, ...rest }, ref) => (
     <NumberFormat
       fixedDecimalScale

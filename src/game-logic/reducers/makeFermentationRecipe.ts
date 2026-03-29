@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { PURCHASEABLE_CELLARS } from '../../constants.js'
 import { itemsMap } from '../../data/maps.js'
 import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe.js'
@@ -50,6 +49,7 @@ export const makeFermentationRecipe = (
 
   state = decrementItemFromInventory(
     state,
+// @ts-expect-error
     itemsMap.salt.id,
     howMany * saltRequirements
   )

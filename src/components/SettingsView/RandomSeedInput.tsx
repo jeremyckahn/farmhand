@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useContext, useState } from 'react'
 import { string } from 'prop-types'
 import globalWindow from 'global/window.js'

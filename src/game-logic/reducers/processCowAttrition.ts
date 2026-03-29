@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { COW_WEIGHT_MULTIPLIER_MINIMUM } from '../../constants.js'
 import { COW_ATTRITION_MESSAGE } from '../../templates.js'
 

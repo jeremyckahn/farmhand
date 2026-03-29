@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { FERTILIZERS_PRODUCED } from '../../templates.js'
 import {
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,

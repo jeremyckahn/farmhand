@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates.js'
 import { toolLevel, toolType } from '../../enums.js'
 import { experienceNeededForLevel } from '../../utils/index.js'

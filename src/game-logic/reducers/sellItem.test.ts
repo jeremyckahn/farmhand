@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testState } from '../../test-utils/index.js'
 import { LOAN_PAYOFF } from '../../templates.js'
 import { carrot, carrotSeed } from '../../data/crops/index.js'
@@ -247,7 +246,6 @@ describe('sellItem', () => {
       const state = sellItem(
         testState({
           experience: 0,
-          // @ts-expect-error
           inventory: [{ id: itemObj.id, quantity: 1 }],
           itemsSold: {},
           loanBalance: 0,
@@ -256,10 +254,8 @@ describe('sellItem', () => {
           todaysNotifications: [],
           revenue: 0,
           todaysRevenue: 0,
-          // @ts-expect-error
           valueAdjustments: { [itemObj.id]: 1 },
         }),
-        // @ts-expect-error
         itemObj,
         1
       )

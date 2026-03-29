@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { randomNumberService } from '../../common/services/randomNumber.js'
 import { goldOre } from '../../data/ores/index.js'
 import { ResourceFactory } from '../../factories/index.js'

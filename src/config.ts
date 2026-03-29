@@ -1,4 +1,3 @@
-// @ts-nocheck
 import globalWindow from 'global/window.js'
 
 export const endpoints = {

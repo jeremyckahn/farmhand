@@ -1,4 +1,3 @@
-// @ts-nocheck
 export { asparagus, asparagusSeed } from './asparagus.js'
 export { carrot, carrotSeed } from './carrot.js'
 export { corn, cornSeed } from './corn.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testCrop } from '../../test-utils/index.js'
 import { toolType, toolLevel } from '../../enums.js'
 import { getPlotContentFromItemId } from '../../utils/index.js'

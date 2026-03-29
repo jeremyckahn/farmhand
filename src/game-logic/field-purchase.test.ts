@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { screen } from '@testing-library/react'
 import { within } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
@@ -31,6 +30,7 @@ describe('field expansion purchasing', () => {
 
     // Open the list of field options
     await userEvent.click(
+// @ts-expect-error
       within(/** @type {HTMLElement} */ (expandFieldContainer)).getByRole(
         'combobox'
       )
@@ -42,6 +42,7 @@ describe('field expansion purchasing', () => {
 
     // Make the purchase
     await userEvent.click(
+// @ts-expect-error
       within(/** @type {HTMLElement} */ (expandFieldContainer)).getByRole(
         'button'
       )

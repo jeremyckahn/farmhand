@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @module farmhand.utils
  * @ignore
@@ -290,6 +289,7 @@ export const getPlotContentType = ({ itemId }) =>
 export const doesPlotContainCrop = plot =>
   plot !== null && getPlotContentType(plot) === itemType.CROP
 
+// @ts-expect-error
 export const getLifeStageRange = memoize((
   /** @type {number[]} */ cropTimeline
 ) => {
@@ -331,7 +331,9 @@ export const getGrowingPhase = memoize(
   },
   {
     cacheSize:
+// @ts-expect-error
       LARGEST_PURCHASABLE_FIELD_SIZE.columns *
+// @ts-expect-error
       LARGEST_PURCHASABLE_FIELD_SIZE.rows,
   }
 )
@@ -449,12 +451,14 @@ export const getFinalCropItemIdFromSeedItemId = (
 
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
   /** @type {string} */ cropItemId => {
+// @ts-expect-error
     const seedItemId = Object.values(itemsMap).find(({ growsInto }) => {
       if (Array.isArray(growsInto)) {
         return growsInto.includes(cropItemId)
       } else {
         return growsInto === cropItemId
       }
+// @ts-expect-error
     })?.id
 
     if (!seedItemId)
@@ -494,8 +498,11 @@ export const getCowDisplayName = (cow, playerId, allowCustomPeerCowNames) => {
  * @returns {farmhand.cow}
  */
 export const generateCow = (options = {}) => {
+// @ts-expect-error
   const gender = options.gender || chooseRandom(Object.values(genders))
+// @ts-expect-error
   const color = options.color || chooseRandom(Object.values(standardCowColors))
+// @ts-expect-error
   const id = options.id || uuid()
 
   const baseWeight = Math.round(
@@ -675,6 +682,7 @@ export const getCowSellValue = cow => getCowValue(cow, true)
  * @param {{id: string, quantity: number}[]} inventory
  * @returns {number}
  */
+// @ts-expect-error
 export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
   const inventoryQuantityMap = getInventoryQuantityMap(inventory)
 
@@ -742,6 +750,7 @@ export const doesMenuObstructStage = () => window.innerWidth < BREAKPOINTS.MD
 /** @type {Set<farmhand.itemType>} */
 const itemTypesToShowInReverse = new Set([itemType.MILK])
 
+// @ts-expect-error
 const sortItemIdsByTypeAndValue = memoize(itemIds =>
   sortBy(itemIds, [
     id => Number(itemsMap[id].type !== itemType.CROP),
@@ -763,6 +772,7 @@ export const sortItems = items => {
   return sortItemIdsByTypeAndValue(items.map(({ id }) => id)).map(id => map[id])
 }
 
+// @ts-expect-error
 export const inventorySpaceConsumed = memoize(
   /**
    * @param {farmhand.state['inventory']} inventory
@@ -787,6 +797,7 @@ export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
 export const doesInventorySpaceRemain = state =>
   inventorySpaceRemaining(state) > 0
 
+// @ts-expect-error
 export const areHuggingMachinesInInventory = memoize(
   /**
    * @param {farmhand.state['inventory']} inventory
@@ -806,6 +817,7 @@ export const nullArray = memoize(
   }
 )
 
+// @ts-expect-error
 export const findCowById = memoize(
   /**
    * @param {Array.<farmhand.cow>} cowInventory
@@ -822,6 +834,7 @@ export const findCowById = memoize(
 export const experienceNeededForLevel = targetLevel =>
   ((targetLevel - 1) * 10) ** 2
 
+// @ts-expect-error
 export const getAvailableShopInventory = memoize((
   /** @type {farmhand.levelEntitlements} */ levelEntitlements
 ) =>
@@ -1036,17 +1049,15 @@ export const transformStateDataForImport = /** @type {(state: any) => farmhand.s
   }
 
   // NOTE: Legacy data trasformation for https://github.com/jeremyckahn/farmhand/issues/387
-  // @ts-expect-error
   if (sanitizedState.id) {
-    // @ts-expect-error
     sanitizedState.playerId = sanitizedState.id
-    // @ts-expect-error
     delete sanitizedState.id
   }
 
   return sanitizedState
 }
 
+// @ts-expect-error
 export const getPlayerName = memoize(
   /**
    * @param {string} playerId
@@ -1114,9 +1125,11 @@ export function randomChoice(weightedOptions) {
 
   for (let option of weightedOptions) {
     totalWeight += option.weight
+// @ts-expect-error
     sortedOptions.push(option)
   }
 
+// @ts-expect-error
   sortedOptions.sort(o => o.weight)
 
   let diceRoll = random() * totalWeight
@@ -1147,6 +1160,7 @@ const colorizeCowTemplate = (() => {
   const cachedCowImages = {}
 
   // https://stackoverflow.com/a/5624139
+// @ts-expect-error
   const hexToRgb = memoize(hex => {
     const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
       hex

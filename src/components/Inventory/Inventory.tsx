@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { Fragment, useState } from 'react'
 import Accordion from '@mui/material/Accordion/index.js'
 import AccordionSummary from '@mui/material/AccordionSummary/index.js'
@@ -91,7 +90,9 @@ const Inventory = ({
     /** @type {string[]} */ ([])
   )
   const toggleCategory = category => {
+// @ts-expect-error
     setSelectedCategories(prev =>
+// @ts-expect-error
       prev.includes(category)
         ? prev.filter(c => c !== category)
         : [...prev, category]
@@ -99,6 +100,7 @@ const Inventory = ({
   }
 
   const filteredCategories = Array.from(itemCategories.entries()).reduce(
+// @ts-expect-error
     (filtered, [category, categoryItems]) => {
       const matchingItems = categoryItems.filter(item => {
         const mappedItem = itemsMap[item.id]
@@ -111,8 +113,10 @@ const Inventory = ({
 
       if (
         matchingItems.length &&
+// @ts-expect-error
         (!selectedCategories.length || selectedCategories.includes(category))
       ) {
+// @ts-expect-error
         filtered.set(category, matchingItems)
       }
       return filtered
@@ -143,6 +147,7 @@ const Inventory = ({
                   control={
                     <Checkbox
                       disabled={isPurchaseView}
+// @ts-expect-error
                       checked={selectedCategories.includes(key)}
                       onChange={() => toggleCategory(key)}
                     />
@@ -154,7 +159,8 @@ const Inventory = ({
           </AccordionDetails>
         </Accordion>
       )}
-      {Array.from(filteredCategories.entries()).map(
+      {Array.from((filteredCategories as any).entries()).map(
+// @ts-expect-error
         ([category, categoryItems]) =>
           categoryItems.length ? (
             <Fragment key={category}>

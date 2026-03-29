@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { itemType, toolType, toolLevel } from '../enums.js'
 
 import * as items from './items.js'

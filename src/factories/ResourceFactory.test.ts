@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { vi } from 'vitest'
 
 import { randomNumberService } from '../common/services/randomNumber.js'
@@ -29,6 +28,7 @@ describe('ResourceFactory', () => {
         false
       )
 
+// @ts-expect-error
       expect(ResourceFactory.instance().generateResources(shovelLevel)).toEqual(
         []
       )
@@ -40,6 +40,7 @@ describe('ResourceFactory', () => {
       )
       vi.mocked(randomChoice).mockReturnValueOnce({ itemType: itemType.ORE })
 
+// @ts-expect-error
       ResourceFactory.instance().generateResources(shovelLevel)
       const factory = ResourceFactory.getFactoryForItemType(itemType.ORE)
 
@@ -53,6 +54,7 @@ describe('ResourceFactory', () => {
       )
       vi.mocked(randomChoice).mockReturnValueOnce({ itemType: itemType.FUEL })
 
+// @ts-expect-error
       ResourceFactory.instance().generateResources(shovelLevel)
       const factory = ResourceFactory.getFactoryForItemType(itemType.FUEL)
 
@@ -66,6 +68,7 @@ describe('ResourceFactory', () => {
       )
       vi.mocked(randomChoice).mockReturnValueOnce({ itemType: itemType.STONE })
 
+// @ts-expect-error
       ResourceFactory.instance().generateResources(shovelLevel)
       const factory = ResourceFactory.getFactoryForItemType(itemType.STONE)
 

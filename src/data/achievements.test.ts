@@ -1,4 +1,3 @@
-// @ts-nocheck
 import * as reducers from '../game-logic/reducers/index.js'
 import { testCrop } from '../test-utils/index.js'
 
@@ -81,6 +80,7 @@ describe.each(iAmRichVariants)(
       test(`is not achieved when revenue is less than ${goal}`, () => {
         const achievement = achievementsMap[id]
         const state = {
+// @ts-expect-error
           revenue: /** @type {number} */ (goal) - 1,
         }
 

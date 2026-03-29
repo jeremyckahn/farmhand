@@ -1,4 +1,3 @@
-// @ts-nocheck
 import upgrades from '../../data/upgrades.js'
 import { TOOL_UPGRADED_NOTIFICATION } from '../../templates.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'

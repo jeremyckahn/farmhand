@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, useEffect } from 'react'
 import { array, func, number, object, string } from 'prop-types'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward.js'

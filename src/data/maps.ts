@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { cropType, recipeType } from '../enums.js'
 
 import * as recipes from './recipes.js'
@@ -80,6 +79,7 @@ export const fermentableItemsMap = Object.fromEntries(
  */
 export const cropItemIdToSeedItemMap = Object.entries(baseItemsMap).reduce(
   (acc, [itemId, item]) => {
+// @ts-expect-error
     const { growsInto } = item
     if (growsInto) {
       const variants = Array.isArray(growsInto) ? growsInto : [growsInto]

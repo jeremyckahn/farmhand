@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import Accordion from '@mui/material/Accordion/index.js'
 import AccordionSummary from '@mui/material/AccordionSummary/index.js'
@@ -14,11 +13,13 @@ import { memoize } from '../../utils/memoize.js'
 
 import './AchievementsView.sass'
 
+// @ts-expect-error
 const partitionAchievements = memoize(completedAchievements =>
   achievements.reduce(
     (acc, achievement) => {
       acc[
         completedAchievements[achievement.id] ? 'complete' : 'incomplete'
+// @ts-expect-error
       ].push(achievement)
 
       return acc

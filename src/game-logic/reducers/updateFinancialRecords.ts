@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { get7DayAverage, getProfit, moneyTotal } from '../../utils/index.js'
 import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants.js'
 

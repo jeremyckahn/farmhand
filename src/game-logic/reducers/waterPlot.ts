@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getPlotContentType } from '../../utils/index.js'
 import { itemType } from '../../enums.js'
 

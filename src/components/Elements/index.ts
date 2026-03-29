@@ -1,4 +1,3 @@
-// @ts-nocheck
 import styled from '@mui/material/styles/styled.js'
 
 // NOTE: Elements in this file are intended to make standard DOM elements easy

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { generateCow, getCowValue, moneyTotal } from '../../utils/index.js'
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 

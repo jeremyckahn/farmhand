@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 
 import { func, object } from 'prop-types'
@@ -33,6 +32,7 @@ const onboardingAchievements = [
   achievementsMap['purchase-cow-pen'],
 ]
 
+// @ts-expect-error
 const getRemainingOnboardingAchievements = memoize(completedAchievements =>
   onboardingAchievements.filter(
     achievement => achievement && !completedAchievements[achievement.id]

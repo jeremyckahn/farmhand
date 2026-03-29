@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { itemStub } from '../../test-utils/stubs/itemStub.js'
 import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @typedef {farmhand.item} item
  * @typedef {farmhand.keg} keg
@@ -39,7 +38,6 @@ export const FermentationRecipe = ({ item }) => {
   const [quantity, setQuantity] = useState(1)
 
   const inventoryQuantityMap = getInventoryQuantityMap(inventory)
-  // @ts-expect-error
   const fermentationRecipeName = FERMENTED_CROP_NAME`${item}`
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
     space: 0,
@@ -101,10 +99,11 @@ export const FermentationRecipe = ({ item }) => {
               {integerString(inventoryQuantityMap[item.id] ?? 0)}
             </p>
             <p>
-              Units of {itemsMap.salt.name} required:{' '}
-              {getSaltRequirementsForFermentationRecipe(item)} (available:{' '}
+              Units of {(itemsMap as any).salt.name} required:{' '}
+              {getSaltRequirementsForFermentationRecipe(item as any)} (available:{' '}
               <AnimatedNumber
                 {...{
+// @ts-expect-error
                   number: inventoryQuantityMap[itemsMap.salt.id] ?? 0,
                   formatter: integerString,
                 }}

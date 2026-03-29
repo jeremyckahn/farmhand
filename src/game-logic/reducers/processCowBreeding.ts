@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { findCowById, generateOffspringCow } from '../../utils/index.js'
 import { cowColors } from '../../enums.js'
 import {

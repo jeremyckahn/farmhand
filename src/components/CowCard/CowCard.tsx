@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useRef, useState } from 'react'
 
 import { array, bool, func, number, object, string } from 'prop-types'
@@ -144,7 +143,9 @@ export const CowCard = (
       if (!scrollAnchor || !card) return
 
       // scrollIntoView is not defined in the unit test environment.
+// @ts-expect-error
       if (scrollAnchor.scrollIntoView && !isInViewport(card)) {
+// @ts-expect-error
         scrollAnchor.scrollIntoView({ behavior: 'smooth' })
       }
     }

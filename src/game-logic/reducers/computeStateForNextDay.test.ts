@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { shapeOf, testCrop } from '../../test-utils/index.js'
 import { generateCow } from '../../utils/index.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'

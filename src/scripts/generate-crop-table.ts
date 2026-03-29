@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Must be invoked with babel: https://stackoverflow.com/a/51532127/470685
 import markdownTable from 'markdown-table'
 
@@ -19,7 +18,6 @@ function getCropImage(seedItem, cropItem) {
     return `![${
       cropItem.name
     }](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${
-      // @ts-expect-error
       cropItem.imageId || cropItem.id
     }.png)`
   } else {
@@ -72,14 +70,17 @@ for (const level of levels) {
     if (growsInto) {
       const seedItem = item
       if (Array.isArray(growsInto)) {
+// @ts-expect-error
         for (const cropItemId of growsInto) {
           const cropItem = itemsMap[cropItemId]
 
+// @ts-expect-error
           rows.push(getCropRow(id, seedItem, cropItem))
         }
       } else {
         const cropItem = itemsMap[growsInto]
 
+// @ts-expect-error
         rows.push(getCropRow(id, seedItem, cropItem))
       }
     }

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testCrop, testItem } from '../../test-utils/index.js'
 import { SCARECROW_ITEM_ID } from '../../constants.js'
 import { fieldMode } from '../../enums.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import { array, arrayOf, string } from 'prop-types'
@@ -26,10 +25,13 @@ export const Stage = ({ field, stageFocus, viewTitle }) => {
       const current = /** @type {HTMLElement} */ (ref.current)
       const { style } = current
       // Set scroll position to the top
+// @ts-expect-error
       current.scrollTop = 0
 
       // Stop any intertial scrolling
+// @ts-expect-error
       style.overflow = 'hidden'
+// @ts-expect-error
       setTimeout(() => (style.overflow = ''), 0)
     }
   }, [stageFocus])

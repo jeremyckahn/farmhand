@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 
 // This is a general-use error boundary component that will simply not render
@@ -20,6 +19,7 @@ class BailOutErrorBoundary extends React.Component {
   }
 
   render() {
+// @ts-expect-error
     if (this.state.hasError) {
       return null
     }
@@ -28,6 +28,7 @@ class BailOutErrorBoundary extends React.Component {
   }
 }
 
+// @ts-expect-error
 BailOutErrorBoundary.propTypes = {}
 
 export default BailOutErrorBoundary

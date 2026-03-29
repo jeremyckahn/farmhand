@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { itemType } from '../../enums.js'
 
 import { SCARECROW_ITEM_ID } from '../../constants.js'

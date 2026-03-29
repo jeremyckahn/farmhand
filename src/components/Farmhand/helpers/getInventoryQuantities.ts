@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { itemsMap } from '../../../data/maps.js'
 
 const itemIds = Object.keys(itemsMap)

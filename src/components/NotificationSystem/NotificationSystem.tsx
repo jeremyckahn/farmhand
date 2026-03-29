@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect } from 'react'
 import { func, shape, string } from 'prop-types'
 import Alert from '@mui/material/Alert/index.js'
@@ -59,7 +58,6 @@ export default withSnackbar(function Consumer(props) {
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => {
         return (
-          // @ts-expect-error - Complex prop spreading creates type mismatch with PropTypes
           <NotificationSystem {...{ ...gameState, ...handlers, ...props }} />
         )
       }}

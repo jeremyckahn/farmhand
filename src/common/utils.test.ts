@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { generateValueAdjustments } from './utils.js'
 
 vitest.mock('../data/maps.js')

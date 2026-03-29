@@ -1,4 +1,3 @@
-// @ts-nocheck
 import seedrandom from 'seedrandom'
 import globalWindow from 'global/window.js'
 
@@ -32,6 +31,7 @@ export class RandomNumberService {
    * @returns {number}
    */
   generateRandomNumber() {
+// @ts-expect-error
     return this.seededRandom ? this.seededRandom() : Math.random()
   }
 

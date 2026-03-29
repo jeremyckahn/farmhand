@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { vi } from 'vitest'
 
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'

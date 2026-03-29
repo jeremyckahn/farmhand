@@ -1,4 +1,3 @@
-// @ts-nocheck
 export const items = {
   'sample-crop-1': 'data:image/png;base64,sample-crop-1',
   'sample-crop-1-growing': 'data:image/png;base64,sample-crop-1-growing',

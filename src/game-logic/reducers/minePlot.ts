@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { toolType, fertilizerType } from '../../enums.js'
 import { chooseRandom, doesInventorySpaceRemain } from '../../utils/index.js'
 import { INVENTORY_FULL_NOTIFICATION } from '../../strings.js'
@@ -31,6 +30,7 @@ export const minePlot = (state, x, y) => {
   }
 
   const shovelLevel = state.toolLevels[toolType.SHOVEL]
+// @ts-expect-error
   const spawnedResources = ResourceFactory.instance().generateResources(
     shovelLevel
   )

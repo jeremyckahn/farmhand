@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { cowFeed, huggingMachine } from './items.js'
 
 const inventory = [cowFeed, huggingMachine]

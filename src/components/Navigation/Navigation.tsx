@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 
@@ -286,7 +285,6 @@ export const Navigation = ({
         <h3
           {...{
             className: classNames('inventory-info', {
-              // @ts-expect-error
               'is-inventory-full': !doesInventorySpaceRemain({
                 inventory,
                 inventoryLimit,

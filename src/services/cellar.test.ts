@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { wineChardonnay } from '../data/recipes.js'
 import { pumpkin } from '../data/crops/index.js'
 
@@ -9,7 +8,6 @@ import { cellarService } from './cellar.js'
 const mockUuid = 'abc123'
 
 beforeEach(() => {
-  // @ts-expect-error
   vitest.spyOn(cellarService, '_uuid').mockReturnValue(mockUuid)
 })
 
@@ -19,6 +17,7 @@ describe('CellarService', () => {
       const keg = cellarService.generateKeg(pumpkin)
 
       expect(keg).toEqual({
+// @ts-expect-error
         daysUntilMature: pumpkin.daysToFerment,
         itemId: pumpkin.id,
         id: mockUuid,

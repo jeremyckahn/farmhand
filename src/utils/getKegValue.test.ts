@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { carrot, sunflower } from '../data/crops/index.js'
 import { wineChardonnay, wineNebbiolo } from '../data/recipes.js'
 import { getKegStub } from '../test-utils/stubs/getKegStub.js'

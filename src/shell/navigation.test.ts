@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { within } from '@testing-library/dom'
 
 import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { carrotSoup } from '../../data/recipes.js'
 import { carrot } from '../../data/crops/index.js'
 import { testState } from '../../test-utils/index.js'

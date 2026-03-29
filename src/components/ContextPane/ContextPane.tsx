@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { memo } from 'react'
 import { array, string } from 'prop-types'
 
@@ -17,6 +16,7 @@ export const PlayerInventory = memo(
    * @param {farmhand.item[]} props.playerInventory - The array of items in the
    * player's inventory.
    */
+// @ts-expect-error
   ({ playerInventory }) => (
     <Inventory
       {...{
@@ -25,6 +25,7 @@ export const PlayerInventory = memo(
       }}
     />
   ),
+// @ts-expect-error
   (prev, next) => prev.playerInventory === next.playerInventory
 )
 

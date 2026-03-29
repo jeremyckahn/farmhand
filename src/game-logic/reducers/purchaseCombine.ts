@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { moneyTotal } from '../../utils/index.js'
 import { PURCHASEABLE_COMBINES } from '../../constants.js'
 

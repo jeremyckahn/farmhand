@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { EXPERIENCE_VALUES, PURCHASEABLE_SMELTERS } from '../../constants.js'
 import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings.js'
 

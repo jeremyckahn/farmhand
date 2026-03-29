@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { fieldMode, toolType } from '../enums.js'
 
 import {

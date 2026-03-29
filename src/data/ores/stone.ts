@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { itemType } from '../../enums.js'
 import { STONE_SPAWN_CHANCE } from '../../constants.js'
 

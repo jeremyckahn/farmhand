@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { NOTIFICATION_LOG_SIZE } from '../../constants.js'
 import { testState } from '../../test-utils/index.js'
 

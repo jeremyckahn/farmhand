@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { screen, waitFor } from '@testing-library/react'
 
 import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 declare namespace farmhand {
   // Enums from src/enums.js
   type cropType =

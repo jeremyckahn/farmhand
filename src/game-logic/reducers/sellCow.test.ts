@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { huggingMachine } from '../../data/items.js'
 import { standardCowColors } from '../../enums.js'
 import { getCowValue, generateCow } from '../../utils/index.js'

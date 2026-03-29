@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { testCrop } from '../../test-utils/index.js'
 import { FERTILIZER_BONUS } from '../../constants.js'
 import { fertilizerType } from '../../enums.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {
   COW_FERTILIZER_PRODUCTION_RATE_FASTEST,
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
@@ -730,7 +729,6 @@ describe('canMakeRecipe', () => {
     test('evaluates inventory correctly', () => {
       expect(
         canMakeRecipe(
-          // @ts-expect-error
           { ingredients: { 'sample-item-1': 2 } },
           [{ id: 'sample-item-1', quantity: 1 }],
           1
@@ -743,7 +741,6 @@ describe('canMakeRecipe', () => {
     test('evaluates inventory correctly', () => {
       expect(
         canMakeRecipe(
-          // @ts-expect-error
           { ingredients: { 'sample-item-1': 2 } },
           [{ id: 'sample-item-1', quantity: 2 }],
           1

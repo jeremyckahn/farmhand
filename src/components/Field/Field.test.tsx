@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { render } from '@testing-library/react'
 
@@ -204,7 +203,6 @@ describe('MemoPlot', () => {
   beforeEach(async () => {
     const PlotModule = await import('../Plot/index.js')
     MockedPlot = PlotModule.default
-    // @ts-expect-error - MockedPlot is a vitest mock function
     MockedPlot.mockClear()
   })
 

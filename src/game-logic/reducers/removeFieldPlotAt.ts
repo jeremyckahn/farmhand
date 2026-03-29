@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 /**

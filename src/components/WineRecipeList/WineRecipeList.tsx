@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, useContext } from 'react'
 
 import SearchBar from '../SearchBar/index.js'
@@ -23,6 +22,7 @@ export const WineRecipeList = () => {
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredWineVarieties = wineVarietiesAvailableToMake.filter(
+// @ts-expect-error
     wineVariety => wineVariety.toLowerCase().includes(searchQuery.toLowerCase())
   )
 

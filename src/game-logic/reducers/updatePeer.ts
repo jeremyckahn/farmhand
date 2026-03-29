@@ -1,4 +1,3 @@
-// @ts-nocheck
 /** @typedef {import('../../components/Farmhand/Farmhand.js').default} Farmhand */
 import { MAX_LATEST_PEER_MESSAGES } from '../../constants.js'
 import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.js'
@@ -34,6 +33,7 @@ export const updatePeer = (state, farmhand, peerMetadata, peerId) => {
       state,
       NEW_COW_OFFERED_FOR_TRADE`${peerMetadata}`,
       'info',
+// @ts-expect-error
       () => {
         farmhand.openDialogView(dialogView.ONLINE_PEERS)
       }

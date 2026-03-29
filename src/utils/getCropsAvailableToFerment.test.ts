@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { carrot, pumpkin, spinach, watermelon } from '../data/crops/index.js'
 
 import { getCropsAvailableToFerment } from './getCropsAvailableToFerment.js'

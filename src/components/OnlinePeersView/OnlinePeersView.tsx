@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import Alert from '@mui/material/Alert/index.js'
@@ -88,7 +87,7 @@ const OnlinePeersView = ({
                   <Alert
                     {...{
                       elevation: 3,
-                      severity: /** @type {'success' | 'info' | 'warning' | 'error'} */ (severity),
+                      severity: severity as any,
                     }}
                   >
                     <ReactMarkdown

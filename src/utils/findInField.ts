@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { memoize } from './memoize.js'
 
 import { memoizationSerializer } from './index.js'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { toolLevel, toolType } from '../../enums.js'
 import { testState } from '../../test-utils/index.js'
 

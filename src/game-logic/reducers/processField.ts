@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { updateField, setWasWateredProperty } from './helpers.js'
 import { incrementPlotContentAge } from './incrementPlotContentAge.js'
 import { updatePlotShoveledState } from './updatePlotShoveledState.js'

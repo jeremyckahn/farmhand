@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { array, bool, func, string } from 'prop-types'
 import React, { useEffect } from 'react'
 

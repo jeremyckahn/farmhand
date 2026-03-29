@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getCowColorId, getCowValue } from '../../utils/index.js'
 
 import { addRevenue } from './addRevenue.js'

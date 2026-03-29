@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react'
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp.js'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown.js'
@@ -290,6 +289,7 @@ export const Item = ({
                 </p>
               )}
               {isPurchaseView &&
+// @ts-expect-error
                 /** @type {globalThis.farmhand.item} */ (item).growsInto && (
                   <p>
                     Days to mature:{' '}

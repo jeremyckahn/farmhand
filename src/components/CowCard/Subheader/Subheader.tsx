@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react'
 import { array, bool, func, object, string } from 'prop-types'
 import Checkbox from '@mui/material/Checkbox/index.js'
@@ -35,6 +34,7 @@ import './Subheader.sass'
 const isHeartFull = (heartIndex, numberOfFullHearts) =>
   heartIndex + 0.5 < numberOfFullHearts
 
+// @ts-expect-error
 const getCowMapById = memoize(
   /**
    * @param {farmhand.state['cowInventory']} cowInventory

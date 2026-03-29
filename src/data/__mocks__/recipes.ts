@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { itemType, recipeType } from '../../enums.js'
 import * as actualRecipes from '../recipes.js'
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { itemsMap } from '../../data/maps.js'
 import { HUGGING_MACHINE_ITEM_ID } from '../../constants.js'
 

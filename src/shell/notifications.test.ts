@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { screen } from '@testing-library/react'
 import { within } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
@@ -22,10 +21,12 @@ describe('notifications', () => {
 
     const carrotItem = await getItemByName('Carrot')
     const carrotInput = within(
+// @ts-expect-error
       /** @type {HTMLElement} */ (carrotItem)
     ).getByDisplayValue('1')
     await userEvent.type(carrotInput, '10')
     const carrotSellButton = within(
+// @ts-expect-error
       /** @type {HTMLElement} */ (carrotItem)
     ).getByText('Sell')
     await userEvent.click(carrotSellButton)
@@ -57,22 +58,28 @@ describe('notifications', () => {
     const carrotItem = await getItemByName('Carrot')
 
     const cornInput = within(
+// @ts-expect-error
       /** @type {HTMLElement} */ (cornItem)
     ).getByDisplayValue('1')
     const spinachInput = within(
+// @ts-expect-error
       /** @type {HTMLElement} */ (spinachItem)
     ).getByDisplayValue('1')
     const carrotInput = within(
+// @ts-expect-error
       /** @type {HTMLElement} */ (carrotItem)
     ).getByDisplayValue('1')
 
     const cornSellButton = within(
+// @ts-expect-error
       /** @type {HTMLElement} */ (cornItem)
     ).getByText('Sell')
     const spinachSellButton = within(
+// @ts-expect-error
       /** @type {HTMLElement} */ (spinachItem)
     ).getByText('Sell')
     const carrotSellButton = within(
+// @ts-expect-error
       /** @type {HTMLElement} */ (carrotItem)
     ).getByText('Sell')
 
