@@ -990,7 +990,7 @@ export const computeMarketPositions = (
  * @param {farmhand.state} state
  * @return {farmhand.state}
  */
-export const transformStateDataForImport = /** @type {(state: any) => farmhand.state} */ state => {
+export const transformStateDataForImport = (state: any): farmhand.state => {
   let sanitizedState = { ...state }
 
   const rejectedKeys = ['version']
