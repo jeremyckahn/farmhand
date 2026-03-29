@@ -10,7 +10,6 @@
     ],
     "import/extensions": ["error", "always"],
     "react/react-in-jsx-scope": ["off"],
-    "no-shadow": ["error"],
-    "@typescript-eslint/no-unused-vars": "off"
+    "no-shadow": ["error"]
   }
 }

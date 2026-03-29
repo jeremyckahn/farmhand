@@ -49,7 +49,6 @@
 
     /* Module Resolution Options */
     "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
-    "ignoreDeprecations": "6.0",
     // "baseUrl": "./",                             /* Base directory to resolve non-absolute module names. */
     // "paths": {},                                 /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                              /* List of root folders whose combined content represents the structure of the project at runtime. */
@@ -78,16 +77,8 @@
 
     /* Advanced Options */
     "skipLibCheck": true /* Skip type checking of declaration files. */,
-    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
-    "allowImportingTsExtensions": true
+    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/farmhand.d.ts",
-    "api/**/*.ts",
-    "api/**/*.tsx",
-    "api-etc/**/*.ts"
-  ],
+  "include": ["src/**/*.js", "src/farmhand.d.ts"],
   "exclude": ["dist", "coverage", "e2e"]
 }
