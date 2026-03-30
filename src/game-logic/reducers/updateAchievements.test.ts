@@ -1,4 +1,4 @@
-import { ACHIEVEMENT_COMPLETED } from '../../templates.js'
+import { ACHIEVEMENT_COMPLETED } from '../../templates.ts'
 
 describe('updateAchievements', () => {
   let updateAchievements

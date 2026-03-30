@@ -1,7 +1,7 @@
-import { testCrop, testState } from '../../test-utils/index.js'
+import { testCrop, testState } from '../../test-utils/index.ts'
 
-import { waterPlot } from './waterPlot.js'
-import { forRange } from './forRange.js'
+import { waterPlot } from './waterPlot.ts'
+import { forRange } from './forRange.ts'
 
 vitest.mock('../../data/maps.js')
 

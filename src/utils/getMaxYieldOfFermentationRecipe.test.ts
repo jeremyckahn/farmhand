@@ -1,9 +1,9 @@
 import { v4 as uuid } from 'uuid'
 
-import { carrot } from '../data/crops/index.js'
-import { salt } from '../data/recipes.js'
+import { carrot } from '../data/crops/index.ts'
+import { salt } from '../data/recipes.ts'
 
-import { getMaxYieldOfFermentationRecipe } from './getMaxYieldOfFermentationRecipe.js'
+import { getMaxYieldOfFermentationRecipe } from './getMaxYieldOfFermentationRecipe.ts'
 
 describe('getMaxYieldOfFermentationRecipe', () => {
   test.each([

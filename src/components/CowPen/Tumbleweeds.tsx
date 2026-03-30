@@ -3,9 +3,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
 import { v4 } from 'uuid'
 
-import { items } from '../../img/index.js'
-import { scaleNumber } from '../../utils/index.js'
-import { randomNumberService } from '../../common/services/randomNumber.js'
+import { items } from '../../img/index.ts'
+import { scaleNumber } from '../../utils/index.tsx'
+import { randomNumberService } from '../../common/services/randomNumber.ts'
 
 // The initial interval between tumbleweed spawns.
 const initialSpawnIntervalMs = 3000

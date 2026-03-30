@@ -1,7 +1,7 @@
 /** @typedef {farmhand.keg} keg */
 
-import { KEG_SPOILAGE_RATE_MULTIPLIER } from '../constants.js'
-import { cellarService } from '../services/cellar.js'
+import { KEG_SPOILAGE_RATE_MULTIPLIER } from '../constants.ts'
+import { cellarService } from '../services/cellar.ts'
 
 /**
  * @param {keg} keg

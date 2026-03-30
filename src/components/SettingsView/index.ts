@@ -1,1 +1,1 @@
-export { default } from './SettingsView.js'
+export { default } from './SettingsView.tsx'

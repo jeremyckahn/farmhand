@@ -2,11 +2,11 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
-import { stageFocusType } from '../../../src/enums.js'
-import { testItem } from '../../test-utils/index.js'
-import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { stageFocusType } from '../../../src/enums.ts'
+import { testItem } from '../../test-utils/index.ts'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
 
-import { ContextPane, PlayerInventory } from './ContextPane.js'
+import { ContextPane, PlayerInventory } from './ContextPane.tsx'
 
 // Mock the Inventory component to avoid complex Item rendering
 vi.mock('../Inventory/index.js', () => ({

@@ -1,19 +1,19 @@
-import { fertilizerType } from '../../enums.js'
-import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
+import { fertilizerType } from '../../enums.ts'
+import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.ts'
 import {
   RAIN_MESSAGE,
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
-} from '../../strings.js'
-import { shouldStormToday } from '../../utils/index.js'
+} from '../../strings.ts'
+import { shouldStormToday } from '../../utils/index.tsx'
 
 import {
   fieldHasScarecrow,
   plotContainsScarecrow,
   updateField,
-} from './helpers.js'
-import { decrementItemFromInventory } from './decrementItemFromInventory.js'
-import { waterField } from './waterField.js'
+} from './helpers.tsx'
+import { decrementItemFromInventory } from './decrementItemFromInventory.ts'
+import { waterField } from './waterField.ts'
 
 /**
  * @param {farmhand.state} state

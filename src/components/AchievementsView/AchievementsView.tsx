@@ -5,11 +5,11 @@ import AccordionDetails from '@mui/material/AccordionDetails/index.js'
 import { object } from 'prop-types'
 import Divider from '@mui/material/Divider/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import ProgressBar from '../ProgressBar/index.js'
-import Achievement from '../Achievement/index.js'
-import achievements from '../../data/achievements.js'
-import { memoize } from '../../utils/memoize.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import ProgressBar from '../ProgressBar/index.ts'
+import Achievement from '../Achievement/index.ts'
+import achievements from '../../data/achievements.ts'
+import { memoize } from '../../utils/memoize.ts'
 
 import './AchievementsView.sass'
 

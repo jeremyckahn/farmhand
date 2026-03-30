@@ -1,8 +1,8 @@
 import { screen } from '@testing-library/react'
 
-import { endDay } from '../test-utils/ui.js'
-import { PROGRESS_SAVED_MESSAGE } from '../strings.js'
-import { farmhandStub } from '../test-utils/stubs/farmhandStub.js'
+import { endDay } from '../test-utils/ui.ts'
+import { PROGRESS_SAVED_MESSAGE } from '../strings.ts'
+import { farmhandStub } from '../test-utils/stubs/farmhandStub.tsx'
 
 describe('game saving', () => {
   test('saves the game when the day is ended', async () => {

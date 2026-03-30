@@ -1,4 +1,4 @@
-import { toolLevel } from '../../enums.js'
+import { toolLevel } from '../../enums.ts'
 
 /**
  * @param {farmhand.state} state

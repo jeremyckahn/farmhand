@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import AchievementsView from './AchievementsView.js'
+import AchievementsView from './AchievementsView.tsx'
 
 test('renders', () => {
   render(<AchievementsView {...{}} />)

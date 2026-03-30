@@ -1,4 +1,4 @@
-import { itemsMap } from '../../../data/maps.js'
+import { itemsMap } from '../../../data/maps.ts'
 
 const itemIds = Object.keys(itemsMap)
 

@@ -1,11 +1,11 @@
-import { randomNumberService } from '../common/services/randomNumber.js'
-import { Factory } from '../interfaces/Factory.js'
-import { coal, saltRock, stone } from '../data/ores/index.js'
+import { randomNumberService } from '../common/services/randomNumber.ts'
+import { Factory } from '../interfaces/Factory.ts'
+import { coal, saltRock, stone } from '../data/ores/index.ts'
 import {
   COAL_SPAWN_CHANCE,
   SALT_ROCK_SPAWN_CHANCE,
   STONE_SPAWN_CHANCE,
-} from '../constants.js'
+} from '../constants.ts'
 
 const spawnableResources = [
   { resource: stone, spawnChance: STONE_SPAWN_CHANCE },

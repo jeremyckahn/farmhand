@@ -1,9 +1,9 @@
-import { EXPERIENCE_VALUES } from '../../constants.js'
-import { itemType, toolLevel, toolType } from '../../enums.js'
-import { testState } from '../../test-utils/index.js'
-import upgrades from '../../data/upgrades.js'
+import { EXPERIENCE_VALUES } from '../../constants.ts'
+import { itemType, toolLevel, toolType } from '../../enums.ts'
+import { testState } from '../../test-utils/index.ts'
+import upgrades from '../../data/upgrades.ts'
 
-import { upgradeTool } from './upgradeTool.js'
+import { upgradeTool } from './upgradeTool.ts'
 
 describe('upgradeTool', () => {
   let state

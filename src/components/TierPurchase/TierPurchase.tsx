@@ -9,7 +9,7 @@ import CardActions from '@mui/material/CardActions/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import { func, instanceOf, node, number, string } from 'prop-types'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
 
 export function TierPurchase({
   description,

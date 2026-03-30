@@ -2,11 +2,11 @@ import { array, bool, func, string } from 'prop-types'
 import React, { useEffect } from 'react'
 
 // eslint-disable-next-line no-unused-vars
-import uiEvents from '../../handlers/ui-events.js'
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import uiEvents from '../../handlers/ui-events.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
 
-import { Cow } from './Cow.js'
-import { Tumbleweeds } from './Tumbleweeds.js'
+import { Cow } from './Cow.tsx'
+import { Tumbleweeds } from './Tumbleweeds.tsx'
 
 import './CowPen.sass'
 

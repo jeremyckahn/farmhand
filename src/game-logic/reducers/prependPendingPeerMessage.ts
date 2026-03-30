@@ -1,4 +1,4 @@
-import { MAX_PENDING_PEER_MESSAGES } from '../../constants.js'
+import { MAX_PENDING_PEER_MESSAGES } from '../../constants.ts'
 
 /**
  * @param {farmhand.state} state

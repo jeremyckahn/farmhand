@@ -1,6 +1,6 @@
-import { experienceNeededForLevel } from '../../utils/index.js'
+import { experienceNeededForLevel } from '../../utils/index.tsx'
 
-import { addExperience } from './addExperience.js'
+import { addExperience } from './addExperience.ts'
 
 describe('addExperience', () => {
   let gameState

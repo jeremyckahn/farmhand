@@ -2,23 +2,23 @@ import React, { useState } from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { cropLifeStage, fertilizerType } from '../../enums.js'
-import { testCrop, testShoveledPlot } from '../../test-utils/index.js'
+import { cropLifeStage, fertilizerType } from '../../enums.ts'
+import { testCrop, testShoveledPlot } from '../../test-utils/index.ts'
 import {
   getCropFromItemId,
   getPlotContentFromItemId,
-} from '../../utils/index.js'
-import { noop } from '../../utils/noop.js'
-import { items, pixel, plotStates } from '../../img/index.js'
-import { FERTILIZER_BONUS } from '../../constants.js'
+} from '../../utils/index.tsx'
+import { noop } from '../../utils/noop.ts'
+import { items, pixel, plotStates } from '../../img/index.ts'
+import { FERTILIZER_BONUS } from '../../constants.ts'
 
-import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot.js'
+import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot.tsx'
 
 vitest.mock('../../data/maps.js')
 vitest.mock('../../data/items.js')
 vitest.mock('../../data/levels.js', () => ({ levels: [] }))
 vitest.mock('../../data/shop-inventory.js')
-vitest.mock('../../img/index.js')
+vitest.mock('../../img/index.ts')
 
 describe('Plot component', () => {
   const defaultProps = {

@@ -1,11 +1,11 @@
-import Farmhand from '../../components/Farmhand/index.js'
-import { MAX_LATEST_PEER_MESSAGES } from '../../constants.js'
-import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.js'
-import { getCowStub } from '../../test-utils/stubs/cowStub.js'
-import { getPeerMetadataStub } from '../../test-utils/stubs/peerMetadataStub.js'
-import { testState } from '../../test-utils/index.js'
+import Farmhand from '../../components/Farmhand/index.ts'
+import { MAX_LATEST_PEER_MESSAGES } from '../../constants.ts'
+import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.ts'
+import { getCowStub } from '../../test-utils/stubs/cowStub.ts'
+import { getPeerMetadataStub } from '../../test-utils/stubs/peerMetadataStub.ts'
+import { testState } from '../../test-utils/index.ts'
 
-import { updatePeer } from './updatePeer.js'
+import { updatePeer } from './updatePeer.ts'
 
 const stubPeerMetadata = getPeerMetadataStub()
 

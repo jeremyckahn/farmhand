@@ -1,7 +1,7 @@
-import { testCrop, testState } from '../../test-utils/index.js'
-import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
+import { testCrop, testState } from '../../test-utils/index.ts'
+import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.ts'
 
-import { purchaseField } from './purchaseField.js'
+import { purchaseField } from './purchaseField.ts'
 
 describe('purchaseField', () => {
   /** @type {farmhand.state} */

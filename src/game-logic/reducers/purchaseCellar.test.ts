@@ -1,7 +1,7 @@
-import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants.js'
-import { testState } from '../../test-utils/index.js'
+import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants.ts'
+import { testState } from '../../test-utils/index.ts'
 
-import { purchaseCellar } from './purchaseCellar.js'
+import { purchaseCellar } from './purchaseCellar.ts'
 
 describe('purchaseCellar', () => {
   test('updates purchasedCellar', () => {

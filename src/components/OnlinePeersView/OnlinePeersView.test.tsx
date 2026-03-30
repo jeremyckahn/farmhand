@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
-import { OnlinePeersView } from './OnlinePeersView.js'
+import { OnlinePeersView } from './OnlinePeersView.tsx'
 
 // Mock getPlayerName to return predictable values
 vi.mock('../../utils/index.js', async () => {

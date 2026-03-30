@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import AnimatedNumber from './AnimatedNumber.js'
+import AnimatedNumber from './AnimatedNumber.tsx'
 
 test('renders', () => {
   render(<AnimatedNumber {...{ number: 0 }} />)

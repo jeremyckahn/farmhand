@@ -4,11 +4,11 @@ import {
   KEG_INTEREST_RATE,
   WINE_GROWTH_TIMELINE_CAP,
   WINE_INTEREST_RATE,
-} from '../constants.js'
-import { itemsMap } from '../data/maps.js'
-import { wineService } from '../services/wine.js'
+} from '../constants.ts'
+import { itemsMap } from '../data/maps.ts'
+import { wineService } from '../services/wine.ts'
 
-import { getItemBaseValue } from './getItemBaseValue.js'
+import { getItemBaseValue } from './getItemBaseValue.ts'
 
 /**
  * @param {keg} keg

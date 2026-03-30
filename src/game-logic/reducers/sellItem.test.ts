@@ -1,10 +1,10 @@
-import { testState } from '../../test-utils/index.js'
-import { LOAN_PAYOFF } from '../../templates.js'
-import { carrot, carrotSeed } from '../../data/crops/index.js'
-import { bronzeOre, coal, milk1, saltRock } from '../../data/items.js'
-import { carrotSoup } from '../../data/recipes.js'
+import { testState } from '../../test-utils/index.ts'
+import { LOAN_PAYOFF } from '../../templates.ts'
+import { carrot, carrotSeed } from '../../data/crops/index.ts'
+import { bronzeOre, coal, milk1, saltRock } from '../../data/items.ts'
+import { carrotSoup } from '../../data/recipes.ts'
 
-import { sellItem } from './sellItem.js'
+import { sellItem } from './sellItem.ts'
 
 describe('sellItem', () => {
   test('sells item', () => {

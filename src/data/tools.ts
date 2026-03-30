@@ -1,4 +1,4 @@
-import { fieldMode, toolType } from '../enums.js'
+import { fieldMode, toolType } from '../enums.ts'
 
 import {
   HOE_ALT_TEXT,
@@ -10,7 +10,7 @@ import {
   TOOL_LEVEL_INFO,
   WATERING_CAN_ALT_TEXT,
   WATERING_CAN_HIDDEN_TEXT,
-} from '../strings.js'
+} from '../strings.ts'
 
 const { CLEANUP, HARVEST, MINE, WATER } = fieldMode
 

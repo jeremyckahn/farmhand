@@ -1,6 +1,6 @@
-import { itemType } from '../enums.js'
+import { itemType } from '../enums.ts'
 
-import { isItemAGrownCrop } from './isItemAGrownCrop.js'
+import { isItemAGrownCrop } from './isItemAGrownCrop.ts'
 
 const FARM_PRODUCT_TYPES = [
   itemType.CRAFTED_ITEM,

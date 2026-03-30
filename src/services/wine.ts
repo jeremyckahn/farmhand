@@ -7,12 +7,12 @@
  * @typedef {farmhand.keg} keg
  */
 
-import { GRAPES_REQUIRED_FOR_WINE } from '../constants.js'
-import { wineVarietyValueMap } from '../data/crops/grape.js'
-import { itemsMap } from '../data/maps.js'
-import { recipeType } from '../enums.js'
-import { getInventoryQuantityMap } from '../utils/getInventoryQuantityMap.js'
-import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
+import { GRAPES_REQUIRED_FOR_WINE } from '../constants.ts'
+import { wineVarietyValueMap } from '../data/crops/grape.ts'
+import { itemsMap } from '../data/maps.ts'
+import { recipeType } from '../enums.ts'
+import { getInventoryQuantityMap } from '../utils/getInventoryQuantityMap.ts'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.ts'
 
 export class WineService {
   /**

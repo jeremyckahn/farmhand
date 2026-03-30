@@ -1,8 +1,8 @@
-import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.js'
-import { generateCow } from '../../utils/index.js'
-import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
+import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.ts'
+import { generateCow } from '../../utils/index.tsx'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.ts'
 
-import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay.js'
+import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay.ts'
 
 describe('computeCowInventoryForNextDay', () => {
   test('ages cows', () => {

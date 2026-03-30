@@ -12,7 +12,7 @@ import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   I_AM_RICH_BONUSES,
   MALE_COW_WEIGHT_MULTIPLIER,
-} from '../constants.js'
+} from '../constants.ts'
 import {
   carrot,
   carrotSeed,
@@ -25,21 +25,21 @@ import {
   silverOre,
   spinach,
   wheat,
-} from '../data/items.js'
-import { carrotSoup } from '../data/recipes.js'
+} from '../data/items.ts'
+import { carrotSoup } from '../data/recipes.ts'
 import {
   cowColors,
   cropLifeStage,
   genders,
   standardCowColors,
-} from '../enums.js'
-import { animals, items as itemImages } from '../img/index.js'
-import { testCrop } from '../test-utils/index.js'
-import { getCowStub } from '../test-utils/stubs/cowStub.js'
+} from '../enums.ts'
+import { animals, items as itemImages } from '../img/index.ts'
+import { testCrop } from '../test-utils/index.ts'
+import { getCowStub } from '../test-utils/stubs/cowStub.ts'
 
-import { farmProductsSold } from './farmProductsSold.js'
-import { isItemAFarmProduct } from './isItemAFarmProduct.js'
-import { levelAchieved } from './levelAchieved.js'
+import { farmProductsSold } from './farmProductsSold.tsx'
+import { isItemAFarmProduct } from './isItemAFarmProduct.ts'
+import { levelAchieved } from './levelAchieved.ts'
 
 import {
   canMakeRecipe,
@@ -76,7 +76,7 @@ import {
   percentageString,
   randomChoice,
   transformStateDataForImport,
-} from './index.js'
+} from './index.tsx'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 

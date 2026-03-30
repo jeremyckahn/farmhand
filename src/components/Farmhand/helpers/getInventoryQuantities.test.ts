@@ -1,4 +1,4 @@
-import { getInventoryQuantities } from './getInventoryQuantities.js'
+import { getInventoryQuantities } from './getInventoryQuantities.ts'
 
 vitest.mock('../../../data/maps.js')
 

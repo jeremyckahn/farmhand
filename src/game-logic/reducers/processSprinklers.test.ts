@@ -1,7 +1,7 @@
-import { testCrop, testState } from '../../test-utils/index.js'
-import { getPlotContentFromItemId } from '../../utils/index.js'
+import { testCrop, testState } from '../../test-utils/index.ts'
+import { getPlotContentFromItemId } from '../../utils/index.tsx'
 
-import { processSprinklers } from './processSprinklers.js'
+import { processSprinklers } from './processSprinklers.ts'
 
 vitest.mock('../../data/items.js')
 

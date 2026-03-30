@@ -25,27 +25,27 @@ import throttle from 'lodash.throttle'
 import classNames from 'classnames'
 import { object } from 'prop-types'
 
-import eventHandlers from '../../handlers/ui-events.js'
+import eventHandlers from '../../handlers/ui-events.tsx'
 import {
   handlePeerMetadataRequest,
   handleCowTradeRequest,
   handleCowTradeRequestAccept,
   handleCowTradeRequestReject,
-} from '../../handlers/peer-events.js'
-import * as reducers from '../../game-logic/reducers/index.js'
+} from '../../handlers/peer-events.ts'
+import * as reducers from '../../game-logic/reducers/index.ts'
 // This must be imported here so that it can be overridden by component styles.
 import './Farmhand.sass'
 
-import AppBar from '../AppBar/index.js'
-import Navigation from '../Navigation/index.js'
-import ContextPane from '../ContextPane/index.js'
-import Stage from '../Stage/index.js'
+import AppBar from '../AppBar/index.ts'
+import Navigation from '../Navigation/index.ts'
+import ContextPane from '../ContextPane/index.ts'
+import Stage from '../Stage/index.ts'
 import NotificationSystem, {
   snackbarProviderContentCallback,
-} from '../NotificationSystem/index.js'
-import UpdateNotifier from '../UpdateNotifier/index.js'
-import theme from '../../mui-theme.js'
-import { levelAchieved } from '../../utils/levelAchieved.js'
+} from '../NotificationSystem/index.ts'
+import UpdateNotifier from '../UpdateNotifier/index.ts'
+import theme from '../../mui-theme.ts'
+import { levelAchieved } from '../../utils/levelAchieved.ts'
 import {
   computeMarketPositions,
   createNewField,
@@ -61,19 +61,19 @@ import {
   reduceByPersistedKeys,
   sleep,
   transformStateDataForImport,
-} from '../../utils/index.js'
-import { noop } from '../../utils/noop.js'
-import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
-import { memoize } from '../../utils/memoize.js'
-import { getData, postData } from '../../fetch-utils.js'
-import { itemsMap, recipesMap } from '../../data/maps.js'
+} from '../../utils/index.tsx'
+import { noop } from '../../utils/noop.ts'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements.ts'
+import { memoize } from '../../utils/memoize.ts'
+import { getData, postData } from '../../fetch-utils.ts'
+import { itemsMap, recipesMap } from '../../data/maps.ts'
 import {
   dialogView,
   fieldMode,
   stageFocusType,
   toolLevel,
   toolType,
-} from '../../enums.js'
+} from '../../enums.ts'
 import {
   COW_TRADE_TIMEOUT,
   DEFAULT_ROOM,
@@ -83,14 +83,14 @@ import {
   STANDARD_LOAN_AMOUNT,
   Z_INDEX,
   STANDARD_VIEW_LIST,
-} from '../../constants.js'
+} from '../../constants.ts'
 import {
   CONNECTED_TO_ROOM,
   LOAN_INCREASED,
   POSITIONS_POSTED_NOTIFICATION,
   RECIPE_LEARNED,
   RECIPES_LEARNED,
-} from '../../templates.js'
+} from '../../templates.ts'
 import {
   CONNECTING_TO_SERVER,
   COW_ALREADY_OWNED,
@@ -100,16 +100,16 @@ import {
   PROGRESS_SAVED_MESSAGE,
   REQUESTED_COW_TRADE_UNAVAILABLE,
   SERVER_ERROR,
-} from '../../strings.js'
-import { endpoints, features, rtcConfig, relayUrls } from '../../config.js'
+} from '../../strings.ts'
+import { endpoints, features, rtcConfig, relayUrls } from '../../config.ts'
 
-import { scarecrow } from '../../data/items.js'
+import { scarecrow } from '../../data/items.ts'
 
-import { ChatRoom } from '../ChatRoom/index.js'
+import { ChatRoom } from '../ChatRoom/index.ts'
 
-import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
-import FarmhandContext from './Farmhand.context.js'
-import { FarmhandReducers } from './FarmhandReducers.js'
+import { getInventoryQuantities } from './helpers/getInventoryQuantities.ts'
+import FarmhandContext from './Farmhand.context.tsx'
+import { FarmhandReducers } from './FarmhandReducers.tsx'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 
@@ -401,7 +401,7 @@ export default class Farmhand extends FarmhandReducers {
       todaysPurchases: {},
       todaysRevenue: 0,
       todaysStartingInventory: {},
-      toolLevels: /** @type {Record<import('../../enums.js').toolType, import('../../enums.js').toolLevel>} */ {
+      toolLevels: /** @type {Record<import('../../enums.ts').toolType, import('../../enums.ts').toolLevel>} */ {
         [toolType.HOE]: toolLevel.DEFAULT,
         [toolType.SCYTHE]: toolLevel.DEFAULT,
         [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
