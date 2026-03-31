@@ -1,5 +1,5 @@
 import React from 'react'
-import window from 'global/window.js'
+import window from 'global/window.js' // eslint-disable-line import/extensions
 import { Redirect } from 'react-router-dom'
 import { GlobalHotKeys } from 'react-hotkeys'
 import localforage from 'localforage'
