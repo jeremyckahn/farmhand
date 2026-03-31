@@ -2,15 +2,39 @@
   "globals": {
     "vitest": true
   },
-  "extends": ["react-app"],
+  "extends": [
+    "react-app"
+  ],
   "rules": {
     "import/order": [
       "error",
-      { "newlines-between": "always-and-inside-groups" }
+      {
+        "newlines-between": "always-and-inside-groups"
+      }
     ],
-    "import/extensions": ["error", "always"],
-    "react/react-in-jsx-scope": ["off"],
-    "no-shadow": ["error"],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "always",
+        "tsx": "always"
+      }
+    ],
+    "react/react-in-jsx-scope": [
+      "off"
+    ],
+    "no-shadow": [
+      "error"
+    ],
     "@typescript-eslint/no-unused-vars": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
   }
 }
