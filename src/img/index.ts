@@ -1,4 +1,4 @@
-import { grapeVariety } from '../enums.ts'
+import { grapeVariety } from '../enums.js'
 
 // Plot states
 import wateredPlot from './plot-states/watered-plot.png'

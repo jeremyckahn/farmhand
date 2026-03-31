@@ -3,9 +3,9 @@ import React from 'react'
 import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import Home from './Home.tsx'
+import Home from './Home.js'
 
 describe('<Home />', () => {
   let handleViewChangeButtonClick

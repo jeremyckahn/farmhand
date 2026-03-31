@@ -1,10 +1,10 @@
-import { testCrop, testState } from '../../test-utils/index.ts'
-import { fertilizerType, toolType, toolLevel } from '../../enums.ts'
-import { getPlotContentFromItemId } from '../../utils/index.tsx'
+import { testCrop, testState } from '../../test-utils/index.js'
+import { fertilizerType, toolType, toolLevel } from '../../enums.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
-import { harvestPlot } from './harvestPlot.ts'
+import { harvestPlot } from './harvestPlot.js'
 
 vitest.mock('../../data/maps.js')
 

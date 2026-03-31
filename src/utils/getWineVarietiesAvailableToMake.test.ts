@@ -2,10 +2,10 @@ import {
   carrot,
   grapeChardonnay,
   grapeTempranillo,
-} from '../data/crops/index.ts'
-import { grapeVariety } from '../enums.ts'
+} from '../data/crops/index.js'
+import { grapeVariety } from '../enums.js'
 
-import { getWineVarietiesAvailableToMake } from './getWineVarietiesAvailableToMake.ts'
+import { getWineVarietiesAvailableToMake } from './getWineVarietiesAvailableToMake.js'
 
 describe('getWineVarietiesAvailableToMake', () => {
   test.each([

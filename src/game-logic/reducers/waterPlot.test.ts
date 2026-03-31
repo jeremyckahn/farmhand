@@ -1,7 +1,7 @@
-import { testCrop, testState } from '../../test-utils/index.ts'
-import { getPlotContentFromItemId } from '../../utils/index.tsx'
+import { testCrop, testState } from '../../test-utils/index.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
 
-import { waterPlot } from './waterPlot.ts'
+import { waterPlot } from './waterPlot.js'
 
 vitest.mock('../../data/maps.js')
 

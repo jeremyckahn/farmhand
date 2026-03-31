@@ -1,1 +1,1 @@
-export { default } from './Stage.tsx'
+export { default } from './Stage.js'

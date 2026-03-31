@@ -1,4 +1,4 @@
-import { getLevelEntitlements } from './getLevelEntitlements.ts'
+import { getLevelEntitlements } from './getLevelEntitlements.js'
 
 describe('getLevelEntitlements', () => {
   test('calculates level entitlements', () => {

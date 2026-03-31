@@ -2,10 +2,10 @@ import {
   doesInventorySpaceRemain,
   getCowMilkItem,
   getCowMilkRate,
-} from '../../utils/index.tsx'
-import { MILKS_PRODUCED } from '../../templates.ts'
+} from '../../utils/index.js'
+import { MILKS_PRODUCED } from '../../templates.js'
 
-import { addItemToInventory } from './addItemToInventory.ts'
+import { addItemToInventory } from './addItemToInventory.js'
 
 /**
  * @param {farmhand.state} state

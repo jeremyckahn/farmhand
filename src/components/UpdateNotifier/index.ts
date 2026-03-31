@@ -1,1 +1,1 @@
-export { default } from './UpdateNotifier.tsx'
+export { default } from './UpdateNotifier.js'

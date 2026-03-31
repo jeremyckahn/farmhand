@@ -1,7 +1,7 @@
-import { randomNumberService } from '../common/services/randomNumber.ts'
-import { coal, stone, saltRock } from '../data/ores/index.ts'
+import { randomNumberService } from '../common/services/randomNumber.js'
+import { coal, stone, saltRock } from '../data/ores/index.js'
 
-import StoneFactory from './StoneFactory.ts'
+import StoneFactory from './StoneFactory.js'
 
 beforeEach(() => {
   vitest.spyOn(randomNumberService, 'isRandomNumberLessThan')

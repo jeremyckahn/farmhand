@@ -1,1 +1,1 @@
-export { default } from './AnimatedNumber.tsx'
+export { default } from './AnimatedNumber.js'

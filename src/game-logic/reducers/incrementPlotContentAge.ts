@@ -1,6 +1,6 @@
-import { fertilizerType, itemType } from '../../enums.ts'
-import { getPlotContentType } from '../../utils/index.tsx'
-import { FERTILIZER_BONUS } from '../../constants.ts'
+import { fertilizerType, itemType } from '../../enums.js'
+import { getPlotContentType } from '../../utils/index.js'
+import { FERTILIZER_BONUS } from '../../constants.js'
 
 /**
  * @param {?farmhand.crop} crop

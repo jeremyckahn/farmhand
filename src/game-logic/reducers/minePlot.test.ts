@@ -1,10 +1,10 @@
-import { randomNumberService } from '../../common/services/randomNumber.ts'
-import { goldOre } from '../../data/ores/index.ts'
-import { ResourceFactory } from '../../factories/index.ts'
-import { toolType, toolLevel } from '../../enums.ts'
-import { testState, testCrop } from '../../test-utils/index.ts'
+import { randomNumberService } from '../../common/services/randomNumber.js'
+import { goldOre } from '../../data/ores/index.js'
+import { ResourceFactory } from '../../factories/index.js'
+import { toolType, toolLevel } from '../../enums.js'
+import { testState, testCrop } from '../../test-utils/index.js'
 
-import { minePlot } from './minePlot.ts'
+import { minePlot } from './minePlot.js'
 
 describe('minePlot', () => {
   let gameState

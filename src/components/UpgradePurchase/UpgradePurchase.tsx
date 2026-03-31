@@ -6,16 +6,16 @@ import CardHeader from '@mui/material/CardHeader/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
 import { array, func, number, object } from 'prop-types'
 
-import IngredientsList from '../IngredientsList/index.ts'
+import IngredientsList from '../IngredientsList/index.js'
 
-import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe.ts'
-import { canMakeRecipe, doesInventorySpaceRemain } from '../../utils/index.tsx'
+import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe.js'
+import { canMakeRecipe, doesInventorySpaceRemain } from '../../utils/index.js'
 
-import { craftedItems } from '../../img/index.ts'
+import { craftedItems } from '../../img/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import './UpgradePurchase.sass'
-import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
 export function UpgradePurchase({
   handleUpgradeTool,

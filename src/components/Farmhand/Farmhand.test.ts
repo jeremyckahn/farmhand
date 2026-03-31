@@ -1,14 +1,14 @@
-import { sprinkler } from '../../data/items.ts'
-import { carrotSeed } from '../../data/crops/carrot.ts'
+import { sprinkler } from '../../data/items.js'
+import { carrotSeed } from '../../data/crops/carrot.js'
 
 import {
   computePlayerInventory,
   getFieldToolInventory,
   getPlantableCropInventory,
-} from './Farmhand.tsx'
+} from './Farmhand.js'
 
 vitest.mock('../../data/maps.js')
-vitest.mock('../../data/items.ts')
+vitest.mock('../../data/items.js')
 
 describe('private helpers', () => {
   describe('computePlayerInventory', () => {

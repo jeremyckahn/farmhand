@@ -5,7 +5,7 @@ import {
   stageFocusType,
   toolLevel,
   toolType,
-} from '../enums.ts'
+} from '../enums.js'
 
 export const shapeOf = object =>
   Object.keys(object).reduce((acc, key) => {

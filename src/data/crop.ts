@@ -1,5 +1,5 @@
-import { fieldMode, itemType } from '../enums.ts'
-import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration.ts'
+import { fieldMode, itemType } from '../enums.js'
+import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration.js'
 
 const { freeze } = Object
 

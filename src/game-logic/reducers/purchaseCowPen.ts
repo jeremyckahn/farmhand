@@ -1,9 +1,9 @@
-import { moneyTotal } from '../../utils/index.tsx'
-import { EXPERIENCE_VALUES, PURCHASEABLE_COW_PENS } from '../../constants.ts'
-import { COW_PEN_PURCHASED } from '../../templates.ts'
+import { moneyTotal } from '../../utils/index.js'
+import { EXPERIENCE_VALUES, PURCHASEABLE_COW_PENS } from '../../constants.js'
+import { COW_PEN_PURCHASED } from '../../templates.js'
 
-import { addExperience } from './addExperience.ts'
-import { showNotification } from './showNotification.ts'
+import { addExperience } from './addExperience.js'
+import { showNotification } from './showNotification.js'
 
 /**
  * @param {farmhand.state} state

@@ -1,8 +1,8 @@
-import { testCrop } from '../../test-utils/index.ts'
-import { FERTILIZER_BONUS } from '../../constants.ts'
-import { fertilizerType } from '../../enums.ts'
+import { testCrop } from '../../test-utils/index.js'
+import { FERTILIZER_BONUS } from '../../constants.js'
+import { fertilizerType } from '../../enums.js'
 
-import { incrementPlotContentAge } from './incrementPlotContentAge.ts'
+import { incrementPlotContentAge } from './incrementPlotContentAge.js'
 
 vitest.mock('../../data/maps.js')
 vitest.mock('../../data/items.js')

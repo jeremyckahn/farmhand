@@ -1,4 +1,4 @@
-import { generateValueAdjustments } from './utils.ts'
+import { generateValueAdjustments } from './utils.js'
 
 vitest.mock('../data/maps.js')
 vitest.mock('../data/items.js')

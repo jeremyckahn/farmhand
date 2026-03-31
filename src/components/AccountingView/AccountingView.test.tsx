@@ -5,11 +5,11 @@ import { vi } from 'vitest'
 
 import FarmhandContext, {
   createContextData,
-} from '../Farmhand/Farmhand.context.tsx'
+} from '../Farmhand/Farmhand.context.js'
 
-import { STANDARD_LOAN_AMOUNT } from '../../constants.ts'
+import { STANDARD_LOAN_AMOUNT } from '../../constants.js'
 
-import AccountingView from './AccountingView.tsx'
+import AccountingView from './AccountingView.js'
 
 describe('<AccountView />', () => {
   let handleClickLoanPaydownButton, handleClickTakeOutLoanButton

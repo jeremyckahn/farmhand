@@ -3,12 +3,12 @@ import { screen } from '@testing-library/dom'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
-import { getLevelEntitlements } from '../../utils/getLevelEntitlements.ts'
-import { getCropsAvailableToFerment } from '../../utils/getCropsAvailableToFerment.ts'
-import { fermentableItemsMap } from '../../data/maps.ts'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
+import { getCropsAvailableToFerment } from '../../utils/getCropsAvailableToFerment.js'
+import { fermentableItemsMap } from '../../data/maps.js'
 
-import { FermentationRecipeList } from './FermentationRecipeList.tsx'
+import { FermentationRecipeList } from './FermentationRecipeList.js'
 
 const totalFermentableItems = Object.keys(fermentableItemsMap).length
 

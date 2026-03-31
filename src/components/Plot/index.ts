@@ -1,1 +1,1 @@
-export { default } from './Plot.tsx'
+export { default } from './Plot.js'

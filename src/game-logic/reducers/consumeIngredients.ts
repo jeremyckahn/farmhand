@@ -1,7 +1,7 @@
-import { canMakeRecipe } from '../../utils/index.tsx'
+import { canMakeRecipe } from '../../utils/index.js'
 
-import { addExperience } from './addExperience.ts'
-import { decrementItemFromInventory } from './decrementItemFromInventory.ts'
+import { addExperience } from './addExperience.js'
+import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 /**
  * Consume ingredients - validate, add experience, and decrement ingredients

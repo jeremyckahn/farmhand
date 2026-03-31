@@ -2,14 +2,14 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { generateCow } from '../../utils/index.tsx'
-import { noop } from '../../utils/noop.ts'
-import { PURCHASEABLE_COW_PENS } from '../../constants.ts'
-import { cowColors, genders } from '../../enums.ts'
+import { generateCow } from '../../utils/index.js'
+import { noop } from '../../utils/noop.js'
+import { PURCHASEABLE_COW_PENS } from '../../constants.js'
+import { cowColors, genders } from '../../enums.js'
 
-import uiEvents from '../../handlers/ui-events.tsx'
+import uiEvents from '../../handlers/ui-events.js'
 
-import { CowCard } from './CowCard.tsx'
+import { CowCard } from './CowCard.js'
 
 describe('CowCard', () => {
   const cow = generateCow({
@@ -19,7 +19,7 @@ describe('CowCard', () => {
   })
 
   /**
-   * @type {import("./CowCard.tsx").CowCardProps}
+   * @type {import("./CowCard.js").CowCardProps}
    */
   const baseProps = {
     allowCustomPeerCowNames: false,

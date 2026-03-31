@@ -2,9 +2,9 @@ import React from 'react'
 
 import { render, screen } from '@testing-library/react'
 
-import { toolLevel, toolType } from '../../enums.ts'
+import { toolLevel, toolType } from '../../enums.js'
 
-import { UpgradePurchase } from './UpgradePurchase.tsx'
+import { UpgradePurchase } from './UpgradePurchase.js'
 
 describe('<UpgradePurchase />', () => {
   let upgrade, props, toolLevels

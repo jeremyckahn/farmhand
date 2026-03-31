@@ -1,12 +1,12 @@
-import { testCrop, testState } from '../../test-utils/index.ts'
+import { testCrop, testState } from '../../test-utils/index.js'
 
-import { shouldPrecipitateToday } from '../../utils/index.tsx'
+import { shouldPrecipitateToday } from '../../utils/index.js'
 
-import { processWeather } from './processWeather.ts'
+import { processWeather } from './processWeather.js'
 
 vitest.mock('../../data/maps.js')
-vitest.mock('../../utils/index.tsx', async () => ({
-  ...(await vitest.importActual('../../utils/index.tsx')),
+vitest.mock('../../utils/index.js', async () => ({
+  ...(await vitest.importActual('../../utils/index.js')),
   shouldPrecipitateToday: vitest.fn(),
 }))
 

@@ -3,25 +3,25 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 // eslint-disable-next-line no-unused-vars
-import uiHandlers from '../../handlers/ui-events.tsx'
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
-import { wineService } from '../../services/wine.ts'
+import uiHandlers from '../../handlers/ui-events.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { wineService } from '../../services/wine.js'
 
 import {
   grapeChardonnay,
   grapeNebbiolo,
   grapeSauvignonBlanc,
-} from '../../data/crops/index.ts'
-import { yeast } from '../../data/recipes.ts'
-import { GRAPES_REQUIRED_FOR_WINE } from '../../constants.ts'
-import { integerString } from '../../utils/index.tsx'
-import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.ts'
+} from '../../data/crops/index.js'
+import { yeast } from '../../data/recipes.js'
+import { GRAPES_REQUIRED_FOR_WINE } from '../../constants.js'
+import { integerString } from '../../utils/index.js'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
 
-import { getKegStub } from '../../test-utils/stubs/getKegStub.ts'
+import { getKegStub } from '../../test-utils/stubs/getKegStub.js'
 
-import { QUANTITY_INPUT_PLACEHOLDER_TEXT } from '../QuantityInput/QuantityInput.tsx'
+import { QUANTITY_INPUT_PLACEHOLDER_TEXT } from '../QuantityInput/QuantityInput.js'
 
-import { WineRecipe } from './WineRecipe.tsx'
+import { WineRecipe } from './WineRecipe.js'
 
 /** @type {Pick<farmhand.state, 'cellarInventory' | 'inventory' | 'purchasedCellar'>} */
 const stubGameState = {

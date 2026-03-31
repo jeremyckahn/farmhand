@@ -9,14 +9,14 @@ import NumberFormat from 'react-number-format'
 import { func, number } from 'prop-types'
 /** @typedef {import('@mui/material/InputBase/index.js').InputBaseComponentProps} InputBaseComponentProps */
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
-import { moneyString } from '../../utils/moneyString.ts'
-import { dollarString, moneyTotal } from '../../utils/index.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { moneyString } from '../../utils/moneyString.js'
+import { dollarString, moneyTotal } from '../../utils/index.js'
 import {
   STANDARD_LOAN_AMOUNT,
   LOAN_INTEREST_RATE,
   LOAN_GARNISHMENT_RATE,
-} from '../../constants.ts'
+} from '../../constants.js'
 
 import './AccountingView.sass'
 

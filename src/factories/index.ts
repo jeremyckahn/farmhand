@@ -1,1 +1,1 @@
-export { default as ResourceFactory } from './ResourceFactory.ts'
+export { default as ResourceFactory } from './ResourceFactory.js'

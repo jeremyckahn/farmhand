@@ -1,4 +1,4 @@
-import { inventorySpaceRemaining } from '../../utils/index.tsx'
+import { inventorySpaceRemaining } from '../../utils/index.js'
 
 /**
  * Only adds as many items as there is room in the inventory for unless

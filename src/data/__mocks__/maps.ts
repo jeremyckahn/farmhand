@@ -1,8 +1,8 @@
-import { recipeType } from '../../enums.ts'
-import * as actualMaps from '../maps.ts'
+import { recipeType } from '../../enums.js'
+import * as actualMaps from '../maps.js'
 
-import * as items from './items.ts'
-import * as recipes from './recipes.ts'
+import * as items from './items.js'
+import * as recipes from './recipes.js'
 
 export const recipeCategories = {
   [recipeType.KITCHEN]: {},

@@ -10,11 +10,11 @@ import Tooltip from '@mui/material/Tooltip/index.js'
 import Paper from '@mui/material/Paper/index.js'
 import sortBy from 'lodash.sortby'
 
-import { itemsMap } from '../../data/maps.ts'
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
-import { moneyString } from '../../utils/moneyString.ts'
-import { farmProductsSold } from '../../utils/farmProductsSold.tsx'
-import { levelAchieved } from '../../utils/levelAchieved.ts'
+import { itemsMap } from '../../data/maps.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { moneyString } from '../../utils/moneyString.js'
+import { farmProductsSold } from '../../utils/farmProductsSold.js'
+import { levelAchieved } from '../../utils/levelAchieved.js'
 import {
   experienceNeededForLevel,
   get7DayAverage,
@@ -22,12 +22,12 @@ import {
   getProfitRecord,
   integerString,
   moneyTotal,
-} from '../../utils/index.tsx'
+} from '../../utils/index.js'
 import {
   COW_SOLD_TOOLTIP_TEXT,
   FARM_PRODUCTS_TOOLTIP_TEXT,
-} from '../../strings.ts'
-import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants.ts'
+} from '../../strings.js'
+import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants.js'
 
 import './StatsView.sass'
 

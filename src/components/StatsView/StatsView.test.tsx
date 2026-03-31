@@ -1,9 +1,9 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { testState } from '../../test-utils/index.ts'
+import { testState } from '../../test-utils/index.js'
 
-import { StatsView } from './StatsView.tsx'
+import { StatsView } from './StatsView.js'
 
 vitest.mock('../../data/maps.js')
 

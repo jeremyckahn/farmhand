@@ -1,12 +1,12 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 
-import { fieldMode } from '../../enums.ts'
-import { testItem, testCrop } from '../../test-utils/index.ts'
-import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
-import { noop } from '../../utils/noop.ts'
+import { fieldMode } from '../../enums.js'
+import { testItem, testCrop } from '../../test-utils/index.js'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { noop } from '../../utils/noop.js'
 
-import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field.tsx'
+import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field.js'
 
 // Mock Plot component to test MemoPlot memoization behavior
 vitest.mock('../Plot/index.js', () => {
