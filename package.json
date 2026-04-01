@@ -10,7 +10,7 @@
   "homepage": "https://www.farmhand.life/",
   "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "npm run build:api && vite build",
     "build:native": "npm run build -- --base='./' && electron-builder --publish=always",
     "check:types": "tsc",
     "dev": "mprocs \"cross-env VITE_TRACKER_URL='ws://localhost:8000' npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run start:tracker\"",
@@ -32,7 +32,8 @@
     "start:tracker": "bittorrent-tracker",
     "test": "vitest",
     "test:debug": "vitest --inspect-brk --no-file-parallelism --run",
-    "update-images": "bash update-images.sh"
+    "update-images": "bash update-images.sh",
+    "build:api": "esbuild api-src/get-market-data.ts api-src/post-day-results.ts --bundle --platform=node --format=esm --out-extension:.js=.mjs --outdir=api"
   },
   "author": "Jeremy Kahn <jeremyckahn@gmail.com>",
   "license": "GPL-2.0-or-later",
@@ -66,6 +67,7 @@
     "cross-env": "^7.0.2",
     "electron": "^35.7.5",
     "electron-builder": "^26.0.12",
+    "esbuild": "^0.27.4",
     "eslint": "^7.13.0",
     "eslint-config-react-app": "^5.2.0",
     "eslint-plugin-flowtype": "^4.6.0",
