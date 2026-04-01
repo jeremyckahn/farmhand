@@ -6,21 +6,21 @@ import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import ReactMarkdown from 'react-markdown'
 
-import SearchBar from '../SearchBar/index.js'
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import SearchBar from '../SearchBar/index.ts'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
 import {
   KEG_INTEREST_RATE,
   PURCHASEABLE_CELLARS,
   WINE_GROWTH_TIMELINE_CAP,
   WINE_INTEREST_RATE,
-} from '../../constants.js'
+} from '../../constants.ts'
 
-import { integerString } from '../../utils/index.js'
-import { itemsMap } from '../../data/maps.js'
-import { FERMENTED_CROP_NAME } from '../../templates.js'
+import { integerString } from '../../utils/index.tsx'
+import { itemsMap } from '../../data/maps.ts'
+import { FERMENTED_CROP_NAME } from '../../templates.ts'
 
-import { TabPanel } from './TabPanel/index.js'
-import { Keg } from './Keg.js'
+import { TabPanel } from './TabPanel/index.tsx'
+import { Keg } from './Keg.tsx'
 
 /**
  * @param {Object} props

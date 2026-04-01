@@ -1,8 +1,8 @@
-import { testState } from '../../test-utils/index.js'
+import { testState } from '../../test-utils/index.ts'
 
-import { createPriceEvent } from './createPriceEvent.js'
+import { createPriceEvent } from './createPriceEvent.ts'
 
-vitest.mock('../../data/items.js')
+vitest.mock('../../data/items.ts')
 
 describe('createPriceEvent', () => {
   test('creates priceCrashes data', () => {

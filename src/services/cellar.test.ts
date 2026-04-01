@@ -1,9 +1,9 @@
-import { wineChardonnay } from '../data/recipes.js'
-import { pumpkin } from '../data/crops/index.js'
+import { wineChardonnay } from '../data/recipes.ts'
+import { pumpkin } from '../data/crops/index.ts'
 
-import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.ts'
 
-import { cellarService } from './cellar.js'
+import { cellarService } from './cellar.ts'
 
 const mockUuid = 'abc123'
 

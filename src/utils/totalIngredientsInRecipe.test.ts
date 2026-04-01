@@ -1,4 +1,4 @@
-import { totalIngredientsInRecipe } from './totalIngredientsInRecipe.js'
+import { totalIngredientsInRecipe } from './totalIngredientsInRecipe.ts'
 
 describe('totalIngredientsInRecipe', () => {
   test('it can total a single ingredient upgrade', () => {

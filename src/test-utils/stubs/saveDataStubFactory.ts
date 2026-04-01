@@ -1,5 +1,5 @@
-import { computeStateForNextDay } from '../../game-logic/reducers/index.js'
-import { testState } from '../index.js'
+import { computeStateForNextDay } from '../../game-logic/reducers/index.ts'
+import { testState } from '../index.ts'
 
 /**
  * @param {Partial<farmhand.state>} state

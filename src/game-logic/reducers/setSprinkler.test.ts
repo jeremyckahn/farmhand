@@ -1,9 +1,9 @@
-import { testCrop, testItem } from '../../test-utils/index.js'
-import { SPRINKLER_ITEM_ID } from '../../constants.js'
-import { fieldMode } from '../../enums.js'
-import { getPlotContentFromItemId } from '../../utils/index.js'
+import { testCrop, testItem } from '../../test-utils/index.ts'
+import { SPRINKLER_ITEM_ID } from '../../constants.ts'
+import { fieldMode } from '../../enums.ts'
+import { getPlotContentFromItemId } from '../../utils/index.tsx'
 
-import { setSprinkler } from './setSprinkler.js'
+import { setSprinkler } from './setSprinkler.ts'
 
 describe('setSprinkler', () => {
   let state

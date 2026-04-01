@@ -1,9 +1,9 @@
 import { vi } from 'vitest'
 
-import { dialogView, fieldMode, stageFocusType } from '../enums.js'
-import { testItem, testRecipe, testState } from '../test-utils/index.js'
+import { dialogView, fieldMode, stageFocusType } from '../enums.ts'
+import { testItem, testRecipe, testState } from '../test-utils/index.ts'
 
-import uiEventHandlers from './ui-events.js'
+import uiEventHandlers from './ui-events.tsx'
 
 // Mock external dependencies
 vi.mock('file-saver', () => ({
@@ -24,7 +24,7 @@ vi.mock('global/window.js', () => ({
   },
 }))
 
-vi.mock('../common/services/randomNumber.js', () => ({
+vi.mock('../common/services/randomNumber.ts', () => ({
   randomNumberService: {
     seedRandomNumber: vi.fn(),
     unseedRandomNumber: vi.fn(),

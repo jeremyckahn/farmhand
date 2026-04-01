@@ -1,7 +1,7 @@
-import { testState } from '../../test-utils/index.js'
-import { selectCow } from '../reducers/selectCow.js'
-import { generateCow, getCowDisplayName } from '../../utils/index.js'
-import { stageFocusType } from '../../enums.js'
+import { testState } from '../../test-utils/index.ts'
+import { selectCow } from '../reducers/selectCow.ts'
+import { generateCow, getCowDisplayName } from '../../utils/index.tsx'
+import { stageFocusType } from '../../enums.ts'
 
 describe('cow selection logic', () => {
   describe('selectCow reducer', () => {

@@ -1,14 +1,14 @@
-import { findCowById, generateOffspringCow } from '../../utils/index.js'
-import { cowColors } from '../../enums.js'
+import { findCowById, generateOffspringCow } from '../../utils/index.tsx'
+import { cowColors } from '../../enums.ts'
 import {
   EXPERIENCE_VALUES,
   COW_GESTATION_PERIOD_DAYS,
   COW_MINIMUM_HAPPINESS_TO_BREED,
   PURCHASEABLE_COW_PENS,
-} from '../../constants.js'
-import { COW_BORN_MESSAGE } from '../../templates.js'
+} from '../../constants.ts'
+import { COW_BORN_MESSAGE } from '../../templates.ts'
 
-import { addExperience } from './addExperience.js'
+import { addExperience } from './addExperience.ts'
 
 /**
  * @param {farmhand.state} state

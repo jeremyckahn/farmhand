@@ -1,9 +1,9 @@
 import redis from 'redis'
 
-import { generateValueAdjustments } from '../src/common/utils'
-import { MAX_ROOM_NAME_LENGTH } from '../src/common/constants'
+import { generateValueAdjustments } from '../src/common/utils.ts'
+import { MAX_ROOM_NAME_LENGTH } from '../src/common/constants.ts'
 
-import { GLOBAL_ROOM_KEY, ACCEPTED_ORIGINS } from './constants'
+import { GLOBAL_ROOM_KEY, ACCEPTED_ORIGINS } from './constants.ts'
 
 export const getRedisClient = () => {
   const client = redis.createClient({

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import IngredientsList from './IngredientsList.js'
+import IngredientsList from './IngredientsList.tsx'
 
 describe('<IngredientsList />', () => {
   let ingredientsString = ''

@@ -1,8 +1,8 @@
-import { MAX_ANIMAL_NAME_LENGTH } from '../../constants.js'
-import { generateCow } from '../../utils/index.js'
-import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
+import { MAX_ANIMAL_NAME_LENGTH } from '../../constants.ts'
+import { generateCow } from '../../utils/index.tsx'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.ts'
 
-import { changeCowName } from './changeCowName.js'
+import { changeCowName } from './changeCowName.ts'
 
 describe('changeCowName', () => {
   test('updates cow name', () => {

@@ -2,8 +2,8 @@ import { screen } from '@testing-library/react'
 import { within } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 
-import { farmhandStub } from '../test-utils/stubs/farmhandStub.js'
-import { nextView } from '../test-utils/ui.js'
+import { farmhandStub } from '../test-utils/stubs/farmhandStub.tsx'
+import { nextView } from '../test-utils/ui.ts'
 
 describe('item purchasing', () => {
   test('item can be purchased and added to the inventory', async () => {

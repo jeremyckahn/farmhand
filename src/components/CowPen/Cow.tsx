@@ -7,10 +7,10 @@ import { array, bool, func, object, string } from 'prop-types'
 import React, { Component } from 'react'
 import { Tweenable } from 'shifty'
 
-import { random } from '../../common/utils.js'
-import { LEFT, RIGHT } from '../../constants.js'
-import { pixel } from '../../img/index.js'
-import { getCowDisplayName, getCowImage } from '../../utils/index.js'
+import { random } from '../../common/utils.ts'
+import { LEFT, RIGHT } from '../../constants.ts'
+import { pixel } from '../../img/index.ts'
+import { getCowDisplayName, getCowImage } from '../../utils/index.tsx'
 
 // Only moves the cow within the middle 80% of the pen
 const randomPosition = () => 10 + random() * 80

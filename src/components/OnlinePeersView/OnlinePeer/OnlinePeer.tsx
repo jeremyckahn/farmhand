@@ -4,11 +4,11 @@ import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
 
-import CowCard from '../../CowCard/index.js'
+import CowCard from '../../CowCard/index.ts'
 
-import { moneyString } from '../../../utils/moneyString.js'
-import { levelAchieved } from '../../../utils/levelAchieved.js'
-import { getPlayerName, integerString } from '../../../utils/index.js'
+import { moneyString } from '../../../utils/moneyString.ts'
+import { levelAchieved } from '../../../utils/levelAchieved.ts'
+import { getPlayerName, integerString } from '../../../utils/index.tsx'
 
 const OnlinePeer = ({
   peer: { cowOfferedForTrade, dayCount, playerId, experience, money },

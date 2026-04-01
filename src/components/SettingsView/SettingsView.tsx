@@ -14,9 +14,9 @@ import Switch from '@mui/material/Switch/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import FileReaderInput from 'react-file-reader-input'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
 
-import { RandomSeedInput } from './RandomSeedInput.js'
+import { RandomSeedInput } from './RandomSeedInput.tsx'
 import './SettingsView.sass'
 
 const SettingsView = ({

@@ -1,1 +1,1 @@
-export { default } from './Shop.js'
+export { default } from './Shop.tsx'

@@ -1,11 +1,11 @@
-import { huggingMachine } from '../../data/items.js'
-import { standardCowColors } from '../../enums.js'
-import { getCowValue, generateCow } from '../../utils/index.js'
-import { testState } from '../../test-utils/index.js'
+import { huggingMachine } from '../../data/items.ts'
+import { standardCowColors } from '../../enums.ts'
+import { getCowValue, generateCow } from '../../utils/index.tsx'
+import { testState } from '../../test-utils/index.ts'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
 
-import { sellCow } from './sellCow.js'
+import { sellCow } from './sellCow.ts'
 
 describe('sellCow', () => {
   let cow

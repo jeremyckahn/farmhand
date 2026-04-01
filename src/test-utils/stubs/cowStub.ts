@@ -1,4 +1,4 @@
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from '../../utils/index.tsx'
 
 /**
  * @param {Partial<farmhand.cow>?} overrides

@@ -1,1 +1,1 @@
-export { default } from './OnlinePeersView.js'
+export { default } from './OnlinePeersView.tsx'

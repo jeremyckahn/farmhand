@@ -8,15 +8,15 @@ import ReactDOM from 'react-dom'
 import { HashRouter as Router, Route } from 'react-router-dom'
 
 import './index.sass'
-import Farmhand from './components/Farmhand/index.js'
-import { features } from './config.js'
+import Farmhand from './components/Farmhand/index.ts'
+import { features } from './config.ts'
 // @ts-expect-error
 import '@fontsource/francois-one'
 // @ts-expect-error
 import '@fontsource/public-sans'
 
 // eslint-disable-next-line no-unused-vars
-import { cropFamily, grapeVariety } from './enums.js'
+import { cropFamily, grapeVariety } from './enums.ts'
 
 const FarmhandRoute = props => <Farmhand {...{ ...props, features }} />
 

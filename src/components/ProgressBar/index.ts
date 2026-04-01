@@ -1,1 +1,1 @@
-export { default } from './ProgressBar.js'
+export { default } from './ProgressBar.tsx'

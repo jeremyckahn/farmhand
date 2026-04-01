@@ -5,11 +5,11 @@
   "rewrites": [
     {
       "source": "/api/get-market-data",
-      "destination": "/api/get-market-data.js"
+      "destination": "/api/get-market-data.ts"
     },
     {
       "source": "/api/post-day-results",
-      "destination": "/api/post-day-results.js"
+      "destination": "/api/post-day-results.ts"
     }
   ]
 }

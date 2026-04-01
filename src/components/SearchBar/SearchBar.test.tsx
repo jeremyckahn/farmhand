@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi } from 'vitest'
 
-import SearchBar from './SearchBar.js'
+import SearchBar from './SearchBar.tsx'
 
 describe('SearchBar Component', () => {
   it('renders correctly with placeholder', () => {

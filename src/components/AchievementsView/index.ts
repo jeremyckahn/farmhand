@@ -1,1 +1,1 @@
-export { default } from './AchievementsView.js'
+export { default } from './AchievementsView.tsx'

@@ -1,1 +1,1 @@
-export { default } from './AccountingView.js'
+export { default } from './AccountingView.tsx'

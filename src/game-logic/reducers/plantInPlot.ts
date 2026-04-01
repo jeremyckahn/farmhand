@@ -2,12 +2,12 @@ import {
   chooseRandomIndex,
   getCropFromItemId,
   getFinalCropItemIdFromSeedItemId,
-} from '../../utils/index.js'
-import { itemsMap } from '../../data/maps.js'
+} from '../../utils/index.tsx'
+import { itemsMap } from '../../data/maps.ts'
 
-import { decrementItemFromInventory } from './decrementItemFromInventory.js'
-import { processSprinklers } from './processSprinklers.js'
-import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
+import { decrementItemFromInventory } from './decrementItemFromInventory.ts'
+import { processSprinklers } from './processSprinklers.ts'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.ts'
 
 /**
  * @param {farmhand.state} state

@@ -1,1 +1,1 @@
-export { default } from './LogView.js'
+export { default } from './LogView.tsx'

@@ -1,6 +1,6 @@
-import { MAX_ANIMAL_NAME_LENGTH } from '../../constants.js'
+import { MAX_ANIMAL_NAME_LENGTH } from '../../constants.ts'
 
-import { modifyCow } from './modifyCow.js'
+import { modifyCow } from './modifyCow.ts'
 
 /**
  * @param {farmhand.state} state

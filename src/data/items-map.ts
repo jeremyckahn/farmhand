@@ -1,4 +1,4 @@
-import * as items from '../data/items.js'
+import * as items from '../data/items.ts'
 
 /**
  * ⚠️⚠️⚠️ This is a low-level object that is UNSAFE to use directly outside of

@@ -26,9 +26,9 @@ import {
   // Field items
   scarecrow,
   sprinkler,
-} from './items.js'
+} from './items.ts'
 
-import { fertilizer } from './recipes.js'
+import { fertilizer } from './recipes.ts'
 
 /** @type {farmhand.item[]} */
 const inventory = [
