@@ -6,9 +6,9 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown.js'
 import NumberFormat from 'react-number-format'
 import TextField from '@mui/material/TextField/index.js'
 
-import { integerString } from '../../utils/index.tsx'
-import AnimatedNumber from '../AnimatedNumber/index.ts'
-import { Span } from '../Elements/index.ts'
+import { integerString } from '../../utils/index.js'
+import AnimatedNumber from '../AnimatedNumber/index.js'
+import { Span } from '../Elements/index.js'
 
 import './QuantityInput.sass'
 

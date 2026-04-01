@@ -1,7 +1,7 @@
-import { shouldPrecipitateToday } from '../../utils/index.tsx'
+import { shouldPrecipitateToday } from '../../utils/index.js'
 
-import { applyChanceEvent } from './helpers.tsx'
-import { applyPrecipitation } from './applyPrecipitation.ts'
+import { applyChanceEvent } from './helpers.js'
+import { applyPrecipitation } from './applyPrecipitation.js'
 
 /**
  * @param {farmhand.state} state

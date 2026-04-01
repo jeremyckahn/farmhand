@@ -1,6 +1,6 @@
-import { testState } from '../../test-utils/index.ts'
+import { testState } from '../../test-utils/index.js'
 
-import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay.ts'
+import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay.js'
 
 describe('updateInventoryRecordsForNextDay', () => {
   test('records inventory records for next day', () => {

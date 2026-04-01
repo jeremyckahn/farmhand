@@ -1,18 +1,18 @@
-import { testCrop } from '../../test-utils/index.ts'
+import { testCrop } from '../../test-utils/index.js'
 import {
   RAIN_MESSAGE,
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
-} from '../../strings.ts'
-import { SCARECROW_ITEM_ID } from '../../constants.ts'
-import { fertilizerType } from '../../enums.ts'
-import { getPlotContentFromItemId } from '../../utils/index.tsx'
-import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.ts'
+} from '../../strings.js'
+import { SCARECROW_ITEM_ID } from '../../constants.js'
+import { fertilizerType } from '../../enums.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
-import { applyPrecipitation } from './applyPrecipitation.ts'
+import { applyPrecipitation } from './applyPrecipitation.js'
 
-vitest.mock('../../data/maps.ts')
-vitest.mock('../../data/items.ts')
+vitest.mock('../../data/maps.js')
+vitest.mock('../../data/items.js')
 
 describe('applyPrecipitation', () => {
   test('waters all plots', () => {

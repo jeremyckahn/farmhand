@@ -2,12 +2,12 @@ import {
   EXPERIENCE_VALUES,
   COW_GESTATION_PERIOD_DAYS,
   PURCHASEABLE_COW_PENS,
-} from '../../constants.ts'
-import { genders } from '../../enums.ts'
-import { generateCow } from '../../utils/index.tsx'
-import { testState } from '../../test-utils/index.ts'
+} from '../../constants.js'
+import { genders } from '../../enums.js'
+import { generateCow } from '../../utils/index.js'
+import { testState } from '../../test-utils/index.js'
 
-import { processCowBreeding } from './processCowBreeding.ts'
+import { processCowBreeding } from './processCowBreeding.js'
 
 describe('processCowBreeding', () => {
   const maleCow1 = generateCow({ gender: genders.MALE, happiness: 1 })

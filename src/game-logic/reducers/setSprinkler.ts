@@ -1,10 +1,10 @@
-import { fieldMode } from '../../enums.ts'
-import { getPlotContentFromItemId } from '../../utils/index.tsx'
-import { SPRINKLER_ITEM_ID } from '../../constants.ts'
+import { fieldMode } from '../../enums.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
+import { SPRINKLER_ITEM_ID } from '../../constants.js'
 
-import { decrementItemFromInventory } from './decrementItemFromInventory.ts'
-import { processSprinklers } from './processSprinklers.ts'
-import { modifyFieldPlotAt } from './modifyFieldPlotAt.ts'
+import { decrementItemFromInventory } from './decrementItemFromInventory.js'
+import { processSprinklers } from './processSprinklers.js'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 const { OBSERVE, SET_SPRINKLER } = fieldMode
 

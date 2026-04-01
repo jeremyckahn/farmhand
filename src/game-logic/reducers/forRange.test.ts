@@ -1,9 +1,9 @@
-import { testCrop, testState } from '../../test-utils/index.ts'
+import { testCrop, testState } from '../../test-utils/index.js'
 
-import { waterPlot } from './waterPlot.ts'
-import { forRange } from './forRange.ts'
+import { waterPlot } from './waterPlot.js'
+import { forRange } from './forRange.js'
 
-vitest.mock('../../data/maps.ts')
+vitest.mock('../../data/maps.js')
 
 describe('forRange', () => {
   test('calls given reducer on range of plots', () => {

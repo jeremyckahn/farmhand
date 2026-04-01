@@ -2,12 +2,12 @@ import {
   getAdjustedItemValue,
   inventorySpaceRemaining,
   moneyTotal,
-} from '../../utils/index.tsx'
-import { PURCHASED_ITEM_PEER_NOTIFICATION } from '../../templates.ts'
+} from '../../utils/index.js'
+import { PURCHASED_ITEM_PEER_NOTIFICATION } from '../../templates.js'
 
-import { addItemToInventory } from './addItemToInventory.ts'
+import { addItemToInventory } from './addItemToInventory.js'
 
-import { prependPendingPeerMessage } from './index.ts'
+import { prependPendingPeerMessage } from './index.js'
 
 /**
  * @param {farmhand.state} state

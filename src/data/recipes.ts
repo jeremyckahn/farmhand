@@ -1,16 +1,16 @@
 /**
  * @module farmhand.recipes
  */
-import { itemType, fieldMode, recipeType } from '../enums.ts'
+import { itemType, fieldMode, recipeType } from '../enums.js'
 import {
   GRAPES_REQUIRED_FOR_WINE,
   RECIPE_INGREDIENT_VALUE_MULTIPLIER,
-} from '../constants.ts'
-import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.ts'
+} from '../constants.js'
+import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
 
-import * as items from './items.ts'
-import baseItemsMap from './items-map.ts'
-import { grapeVarietyNameMap } from './crops/grape.ts'
+import * as items from './items.js'
+import baseItemsMap from './items-map.js'
+import { grapeVarietyNameMap } from './crops/grape.js'
 
 const itemsMap = { ...baseItemsMap }
 

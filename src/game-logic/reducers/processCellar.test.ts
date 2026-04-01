@@ -1,7 +1,7 @@
-import { testState } from '../../test-utils/index.ts'
-import { carrot, garlic } from '../../data/items.ts'
+import { testState } from '../../test-utils/index.js'
+import { carrot, garlic } from '../../data/items.js'
 
-import { processCellar } from './processCellar.ts'
+import { processCellar } from './processCellar.js'
 
 describe('processCellar', () => {
   test('kegs are updated', () => {

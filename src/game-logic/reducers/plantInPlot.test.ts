@@ -1,9 +1,9 @@
-import { testState } from '../../test-utils/index.ts'
-import { getCropFromItemId } from '../../utils/index.tsx'
+import { testState } from '../../test-utils/index.js'
+import { getCropFromItemId } from '../../utils/index.js'
 
-import { plantInPlot } from './plantInPlot.ts'
+import { plantInPlot } from './plantInPlot.js'
 
-vitest.mock('../../data/items.ts')
+vitest.mock('../../data/items.js')
 
 describe('plantInPlot', () => {
   describe('crop quantity > 1', () => {

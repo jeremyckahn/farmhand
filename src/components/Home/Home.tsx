@@ -12,17 +12,17 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 
-import { items } from '../../img/index.ts'
+import { items } from '../../img/index.js'
 
-import { achievementsMap } from '../../data/achievements.ts'
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
-import { STANDARD_LOAN_AMOUNT } from '../../constants.ts'
-import { stageFocusType } from '../../enums.ts'
-import { isDecember } from '../../utils/index.tsx'
-import { memoize } from '../../utils/memoize.ts'
-import Achievement from '../Achievement/index.ts'
+import { achievementsMap } from '../../data/achievements.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { STANDARD_LOAN_AMOUNT } from '../../constants.js'
+import { stageFocusType } from '../../enums.js'
+import { isDecember } from '../../utils/index.js'
+import { memoize } from '../../utils/memoize.js'
+import Achievement from '../Achievement/index.js'
 
-import { SnowBackground } from './SnowBackground.tsx'
+import { SnowBackground } from './SnowBackground.js'
 import './Home.sass'
 
 const onboardingAchievements = [

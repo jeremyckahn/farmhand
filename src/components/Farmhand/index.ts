@@ -1,1 +1,1 @@
-export { default } from './Farmhand.tsx'
+export { default } from './Farmhand.js'

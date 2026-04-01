@@ -1,8 +1,8 @@
-import { WEEDS_SPAWN_CHANCE } from '../../constants.ts'
+import { WEEDS_SPAWN_CHANCE } from '../../constants.js'
 
-import { randomNumberService } from '../../common/services/randomNumber.ts'
-import { weed } from '../../data/items.ts'
-import { getPlotContentFromItemId } from '../../utils/index.tsx'
+import { randomNumberService } from '../../common/services/randomNumber.js'
+import { weed } from '../../data/items.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
 
 /**
  * @param {?farmhand.plotContent} plotContents

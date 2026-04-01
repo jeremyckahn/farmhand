@@ -3,17 +3,17 @@ import { number, object } from 'prop-types'
 import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'
 
-import { recipeType } from '../../enums.ts'
+import { recipeType } from '../../enums.js'
 
-import { recipesMap } from '../../data/maps.ts'
+import { recipesMap } from '../../data/maps.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { a11yProps } from './TabPanel/index.tsx'
+import { a11yProps } from './TabPanel/index.js'
 
-import { ForgeTabPanel } from './ForgeTabPanel.tsx'
-import { KitchenTabPanel } from './KitchenTabPanel.tsx'
-import { RecyclingTabPanel } from './RecyclingTabPanel.tsx'
+import { ForgeTabPanel } from './ForgeTabPanel.js'
+import { KitchenTabPanel } from './KitchenTabPanel.js'
+import { RecyclingTabPanel } from './RecyclingTabPanel.js'
 
 import './Workshop.sass'
 

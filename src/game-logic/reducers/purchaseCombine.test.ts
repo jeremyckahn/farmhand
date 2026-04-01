@@ -1,7 +1,7 @@
-import { PURCHASEABLE_COMBINES } from '../../constants.ts'
-import { testState } from '../../test-utils/index.ts'
+import { PURCHASEABLE_COMBINES } from '../../constants.js'
+import { testState } from '../../test-utils/index.js'
 
-import { purchaseCombine } from './purchaseCombine.ts'
+import { purchaseCombine } from './purchaseCombine.js'
 
 describe('purchaseCombine', () => {
   test('updates purchasedCombine', () => {

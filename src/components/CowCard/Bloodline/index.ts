@@ -1,1 +1,1 @@
-export { default } from './Bloodline.tsx'
+export { default } from './Bloodline.js'

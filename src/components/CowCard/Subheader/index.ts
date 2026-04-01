@@ -1,1 +1,1 @@
-export { default } from './Subheader.tsx'
+export { default } from './Subheader.js'

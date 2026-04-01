@@ -1,7 +1,7 @@
 /**
  * @typedef {farmhand.item} item
  */
-import { memoize } from './memoize.ts'
+import { memoize } from './memoize.js'
 
 // @ts-expect-error
 export const getInventoryQuantityMap = memoize(

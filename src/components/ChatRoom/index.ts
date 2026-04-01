@@ -1,1 +1,1 @@
-export * from './ChatRoom.tsx'
+export * from './ChatRoom.js'

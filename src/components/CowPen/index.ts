@@ -1,1 +1,1 @@
-export { default } from './CowPen.tsx'
+export { default } from './CowPen.js'

@@ -1,7 +1,7 @@
-import { carrot, pumpkin } from '../data/crops/index.ts'
-import { fertilizerType } from '../enums.ts'
+import { carrot, pumpkin } from '../data/crops/index.js'
+import { fertilizerType } from '../enums.js'
 
-import { findInField } from './findInField.ts'
+import { findInField } from './findInField.js'
 
 const carrotPlot = {
   itemId: carrot.id,

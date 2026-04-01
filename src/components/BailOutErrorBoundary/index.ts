@@ -1,1 +1,1 @@
-export { default } from './BailOutErrorBoundary.tsx'
+export { default } from './BailOutErrorBoundary.js'

@@ -1,6 +1,6 @@
-import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores/index.ts'
-import { Factory } from '../interfaces/Factory.ts'
-import { randomChoice } from '../utils/index.tsx'
+import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores/index.js'
+import { Factory } from '../interfaces/Factory.js'
+import { randomChoice } from '../utils/index.js'
 
 const SPAWNABLE_ORES = [goldOre, ironOre, bronzeOre, silverOre]
 

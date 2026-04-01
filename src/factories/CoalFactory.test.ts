@@ -1,7 +1,7 @@
-import * as utils from '../utils/index.tsx'
-import { coal, stone } from '../data/ores/index.ts'
+import * as utils from '../utils/index.js'
+import { coal, stone } from '../data/ores/index.js'
 
-import CoalFactory from './CoalFactory.ts'
+import CoalFactory from './CoalFactory.js'
 
 describe('CoalFactory', () => {
   beforeEach(() => {

@@ -6,20 +6,20 @@ import CardHeader from '@mui/material/CardHeader/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
 import Button from '@mui/material/Button/index.js'
 
-import { itemsMap } from '../../data/maps.ts'
-import { items, wines } from '../../img/index.ts'
+import { itemsMap } from '../../data/maps.js'
+import { items, wines } from '../../img/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
-import { getKegValue } from '../../utils/getKegValue.ts'
-import { moneyString } from '../../utils/moneyString.ts'
-import { getSalePriceMultiplier } from '../../utils/index.tsx'
-import { FERMENTED_CROP_NAME } from '../../templates.ts'
-import AnimatedNumber from '../AnimatedNumber/index.ts'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { getKegValue } from '../../utils/getKegValue.js'
+import { moneyString } from '../../utils/moneyString.js'
+import { getSalePriceMultiplier } from '../../utils/index.js'
+import { FERMENTED_CROP_NAME } from '../../templates.js'
+import AnimatedNumber from '../AnimatedNumber/index.js'
 
 import './Keg.sass'
-import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.ts'
-import { wineService } from '../../services/wine.ts'
-import { cellarService } from '../../services/cellar.ts'
+import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
+import { wineService } from '../../services/wine.js'
+import { cellarService } from '../../services/cellar.js'
 
 /**
  * @param {Object} props

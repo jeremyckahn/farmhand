@@ -1,9 +1,9 @@
-import { itemsMap } from '../../data/maps.ts'
-import { HUGGING_MACHINE_ITEM_ID } from '../../constants.ts'
+import { itemsMap } from '../../data/maps.js'
+import { HUGGING_MACHINE_ITEM_ID } from '../../constants.js'
 
-import { addItemToInventory } from './addItemToInventory.ts'
+import { addItemToInventory } from './addItemToInventory.js'
 
-import { changeCowBreedingPenResident } from './changeCowBreedingPenResident.ts'
+import { changeCowBreedingPenResident } from './changeCowBreedingPenResident.js'
 
 // TODO: Add tests for this reducer
 /**

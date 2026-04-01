@@ -4,8 +4,8 @@ import Alert from '@mui/material/Alert/index.js'
 import ReactMarkdown from 'react-markdown'
 import { withSnackbar } from 'notistack'
 
-import { NOTIFICATION_DURATION } from '../../constants.ts'
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import { NOTIFICATION_DURATION } from '../../constants.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import './NotificationSystem.sass'
 
 export const snackbarProviderContentCallback = (

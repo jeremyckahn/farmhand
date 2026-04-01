@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle/index.js'
 import DialogContent from '@mui/material/DialogContent/index.js'
 import DialogActions from '@mui/material/DialogActions/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import './ChatRoom.sass'
 

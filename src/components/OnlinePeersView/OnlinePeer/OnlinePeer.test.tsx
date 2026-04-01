@@ -1,9 +1,9 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { levelAchieved } from '../../../utils/levelAchieved.ts'
+import { levelAchieved } from '../../../utils/levelAchieved.js'
 
-import OnlinePeer from './OnlinePeer.tsx'
+import OnlinePeer from './OnlinePeer.js'
 
 const defaultPeer = {
   cowOfferedForTrade: null,

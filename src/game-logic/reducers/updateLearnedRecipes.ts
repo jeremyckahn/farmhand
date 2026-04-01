@@ -1,4 +1,4 @@
-import { recipesMap } from '../../data/maps.ts'
+import { recipesMap } from '../../data/maps.js'
 
 /**
  * @param {farmhand.state} state

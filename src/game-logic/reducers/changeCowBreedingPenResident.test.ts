@@ -1,8 +1,8 @@
-import { COW_GESTATION_PERIOD_DAYS } from '../../constants.ts'
-import { generateCow } from '../../utils/index.tsx'
-import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.ts'
+import { COW_GESTATION_PERIOD_DAYS } from '../../constants.js'
+import { generateCow } from '../../utils/index.js'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
-import { changeCowBreedingPenResident } from './changeCowBreedingPenResident.ts'
+import { changeCowBreedingPenResident } from './changeCowBreedingPenResident.js'
 
 const cowA = generateCow({ id: 'cow-a' })
 const cowB = generateCow({ id: 'cow-b' })

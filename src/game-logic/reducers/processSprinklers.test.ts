@@ -1,9 +1,9 @@
-import { testCrop, testState } from '../../test-utils/index.ts'
-import { getPlotContentFromItemId } from '../../utils/index.tsx'
+import { testCrop, testState } from '../../test-utils/index.js'
+import { getPlotContentFromItemId } from '../../utils/index.js'
 
-import { processSprinklers } from './processSprinklers.ts'
+import { processSprinklers } from './processSprinklers.js'
 
-vitest.mock('../../data/items.ts')
+vitest.mock('../../data/items.js')
 
 describe('processSprinklers', () => {
   let computedState

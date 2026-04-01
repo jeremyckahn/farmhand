@@ -1,6 +1,6 @@
-import { levelAchieved } from '../../utils/levelAchieved.ts'
+import { levelAchieved } from '../../utils/levelAchieved.js'
 
-import { processLevelUp } from './processLevelUp.ts'
+import { processLevelUp } from './processLevelUp.js'
 
 /**
  * @param {farmhand.state} state

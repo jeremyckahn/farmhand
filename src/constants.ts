@@ -3,7 +3,7 @@
  * @ignore
  */
 
-import { cowColors, fieldMode, stageFocusType, toolLevel } from './enums.ts'
+import { cowColors, fieldMode, stageFocusType, toolLevel } from './enums.js'
 
 const { freeze } = Object
 

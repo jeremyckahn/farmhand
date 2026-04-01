@@ -1,12 +1,12 @@
-import { toolType, fertilizerType } from '../../enums.ts'
-import { chooseRandom, doesInventorySpaceRemain } from '../../utils/index.tsx'
-import { INVENTORY_FULL_NOTIFICATION } from '../../strings.ts'
-import { ResourceFactory } from '../../factories/index.ts'
-import { random } from '../../common/utils.ts'
+import { toolType, fertilizerType } from '../../enums.js'
+import { chooseRandom, doesInventorySpaceRemain } from '../../utils/index.js'
+import { INVENTORY_FULL_NOTIFICATION } from '../../strings.js'
+import { ResourceFactory } from '../../factories/index.js'
+import { random } from '../../common/utils.js'
 
-import { addItemToInventory } from './addItemToInventory.ts'
-import { showNotification } from './showNotification.ts'
-import { modifyFieldPlotAt } from './modifyFieldPlotAt.ts'
+import { addItemToInventory } from './addItemToInventory.js'
+import { showNotification } from './showNotification.js'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 const daysUntilClearPeriods = [1, 2, 2, 3]
 

@@ -2,11 +2,11 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
-import { OnlinePeersView } from './OnlinePeersView.tsx'
+import { OnlinePeersView } from './OnlinePeersView.js'
 
 // Mock getPlayerName to return predictable values
-vi.mock('../../utils/index.tsx', async () => {
-  const actual = await vi.importActual('../../utils/index.tsx')
+vi.mock('../../utils/index.js', async () => {
+  const actual = await vi.importActual('../../utils/index.js')
   return {
     ...actual,
     getPlayerName: vi.fn(id => id), // Return the ID as-is for testing
