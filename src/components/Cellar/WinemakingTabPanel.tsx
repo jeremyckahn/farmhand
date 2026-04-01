@@ -5,9 +5,9 @@ import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import ReactMarkdown from 'react-markdown'
 
-import { WineRecipeList } from '../WineRecipeList/WineRecipeList.tsx'
+import { WineRecipeList } from '../WineRecipeList/WineRecipeList.js'
 
-import { TabPanel } from './TabPanel/index.tsx'
+import { TabPanel } from './TabPanel/index.js'
 
 export const WinemakingTabPanel = ({ index, currentTab }) => (
   <TabPanel value={currentTab} index={index}>

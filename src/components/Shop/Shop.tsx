@@ -9,17 +9,17 @@ import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'
 import Typography from '@mui/material/Typography/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
-import { features } from '../../config.ts'
-import { moneyString } from '../../utils/moneyString.ts'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { features } from '../../config.js'
+import { moneyString } from '../../utils/moneyString.js'
 import {
   dollarString,
   getCostOfNextStorageExpansion,
   integerString,
-} from '../../utils/index.tsx'
-import { memoize } from '../../utils/memoize.ts'
-import { items } from '../../img/index.ts'
-import { itemType, stageFocusType, toolType } from '../../enums.ts'
+} from '../../utils/index.js'
+import { memoize } from '../../utils/memoize.js'
+import { items } from '../../img/index.js'
+import { itemType, stageFocusType, toolType } from '../../enums.js'
 import {
   INFINITE_STORAGE_LIMIT,
   PURCHASEABLE_CELLARS,
@@ -30,11 +30,11 @@ import {
   PURCHASABLE_FOREST_SIZES,
   PURCHASEABLE_SMELTERS,
   STORAGE_EXPANSION_AMOUNT,
-} from '../../constants.ts'
-import Inventory from '../Inventory/index.ts'
-import TierPurchase from '../TierPurchase/index.ts'
+} from '../../constants.js'
+import Inventory from '../Inventory/index.js'
+import TierPurchase from '../TierPurchase/index.js'
 
-import { TabPanel, a11yProps } from './TabPanel/index.tsx'
+import { TabPanel, a11yProps } from './TabPanel/index.js'
 
 import './Shop.sass'
 

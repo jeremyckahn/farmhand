@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { LogView } from './LogView.tsx'
+import { LogView } from './LogView.js'
 
 const defaultProps = {
   notificationLog: [],

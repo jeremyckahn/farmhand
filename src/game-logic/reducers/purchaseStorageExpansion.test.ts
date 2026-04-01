@@ -1,8 +1,8 @@
-import { STORAGE_EXPANSION_AMOUNT } from '../../constants.ts'
-import { getCostOfNextStorageExpansion } from '../../utils/index.tsx'
-import { testState } from '../../test-utils/index.ts'
+import { STORAGE_EXPANSION_AMOUNT } from '../../constants.js'
+import { getCostOfNextStorageExpansion } from '../../utils/index.js'
+import { testState } from '../../test-utils/index.js'
 
-import { purchaseStorageExpansion } from './purchaseStorageExpansion.ts'
+import { purchaseStorageExpansion } from './purchaseStorageExpansion.js'
 
 describe('purchaseStorageExpansion', () => {
   describe('player does not have enough money', () => {

@@ -1,8 +1,8 @@
-import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.ts'
-import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.ts'
-import { testState, testTree } from '../../test-utils/index.ts'
+import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.js'
+import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.js'
+import { testState, testTree } from '../../test-utils/index.js'
 
-import { purchaseForest } from './purchaseForest.ts'
+import { purchaseForest } from './purchaseForest.js'
 
 describe('purchaseForest', () => {
   test('updates purchasedForest', () => {

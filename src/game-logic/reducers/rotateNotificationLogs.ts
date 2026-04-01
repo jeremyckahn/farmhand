@@ -1,4 +1,4 @@
-import { NOTIFICATION_LOG_SIZE } from '../../constants.ts'
+import { NOTIFICATION_LOG_SIZE } from '../../constants.js'
 
 /**
  * @param {farmhand.state} state

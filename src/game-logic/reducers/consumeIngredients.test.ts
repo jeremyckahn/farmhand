@@ -1,6 +1,6 @@
-import { testState, testItem } from '../../test-utils/index.ts'
+import { testState, testItem } from '../../test-utils/index.js'
 
-import { consumeIngredients } from './consumeIngredients.ts'
+import { consumeIngredients } from './consumeIngredients.js'
 
 describe('consumeIngredients', () => {
   describe('recipe with no ingredients', () => {

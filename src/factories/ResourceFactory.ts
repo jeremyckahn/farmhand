@@ -1,18 +1,18 @@
-import { itemType, toolLevel } from '../enums.ts'
+import { itemType, toolLevel } from '../enums.js'
 import {
   RESOURCE_SPAWN_CHANCE,
   ORE_SPAWN_CHANCE,
   COAL_SPAWN_CHANCE,
   STONE_SPAWN_CHANCE,
-} from '../constants.ts'
-import { randomChoice } from '../utils/index.tsx'
-import { randomNumberService } from '../common/services/randomNumber.ts'
+} from '../constants.js'
+import { randomChoice } from '../utils/index.js'
+import { randomNumberService } from '../common/services/randomNumber.js'
 // eslint-disable-next-line no-unused-vars
-import { Factory } from '../interfaces/Factory.ts'
+import { Factory } from '../interfaces/Factory.js'
 
-import OreFactory from './OreFactory.ts'
-import CoalFactory from './CoalFactory.ts'
-import StoneFactory from './StoneFactory.ts'
+import OreFactory from './OreFactory.js'
+import CoalFactory from './CoalFactory.js'
+import StoneFactory from './StoneFactory.js'
 
 /**
  * Object for private cache of factory instances

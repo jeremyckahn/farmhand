@@ -1,6 +1,6 @@
-import { getInventoryQuantities } from './getInventoryQuantities.ts'
+import { getInventoryQuantities } from './getInventoryQuantities.js'
 
-vitest.mock('../../../data/maps.ts')
+vitest.mock('../../../data/maps.js')
 
 describe('playerInventoryQuantities', () => {
   test('computes a map of item IDs to their quantity in the inventory', () => {

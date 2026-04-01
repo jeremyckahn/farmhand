@@ -8,22 +8,22 @@ import Button from '@mui/material/Button/index.js'
 import {
   grapeVarietyNameMap,
   grapeVarietyToGrapeItemMap,
-} from '../../data/crops/grape.ts'
-import { itemsMap } from '../../data/maps.ts'
-import { wineService } from '../../services/wine.ts'
-import { grapeVariety } from '../../enums.ts'
-import { wines } from '../../img/index.ts'
-import { integerString } from '../../utils/index.tsx'
-import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.ts'
-import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.ts'
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+} from '../../data/crops/grape.js'
+import { itemsMap } from '../../data/maps.js'
+import { wineService } from '../../services/wine.js'
+import { grapeVariety } from '../../enums.js'
+import { wines } from '../../img/index.js'
+import { integerString } from '../../utils/index.js'
+import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import {
   GRAPES_REQUIRED_FOR_WINE,
   PURCHASEABLE_CELLARS,
-} from '../../constants.ts'
-import { cellarService } from '../../services/cellar.ts'
-import QuantityInput from '../QuantityInput/index.ts'
-import { yeast } from '../../data/recipes.ts'
+} from '../../constants.js'
+import { cellarService } from '../../services/cellar.js'
+import QuantityInput from '../QuantityInput/index.js'
+import { yeast } from '../../data/recipes.js'
 
 /**
  * @typedef {{

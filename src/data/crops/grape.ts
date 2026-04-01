@@ -1,5 +1,5 @@
-import { cropFamily, cropType, grapeVariety } from '../../enums.ts'
-import { crop, cropVariety, fromSeed } from '../crop.ts'
+import { cropFamily, cropType, grapeVariety } from '../../enums.js'
+import { crop, cropVariety, fromSeed } from '../crop.js'
 
 /**
  * @param {farmhand.item | farmhand.cropVariety} item

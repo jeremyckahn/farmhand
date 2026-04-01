@@ -1,1 +1,1 @@
-export { default } from './Navigation.tsx'
+export { default } from './Navigation.js'

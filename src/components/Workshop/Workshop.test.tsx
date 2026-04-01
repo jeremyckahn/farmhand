@@ -2,15 +2,15 @@ import React from 'react'
 import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { getUpgradesAvailable } from './getUpgradesAvailable.ts'
+import { getUpgradesAvailable } from './getUpgradesAvailable.js'
 
-import Workshop from './Workshop.tsx'
+import Workshop from './Workshop.js'
 
-vitest.mock('./getUpgradesAvailable.ts')
+vitest.mock('./getUpgradesAvailable.js')
 
-vitest.mock('../../data/maps.ts', async importOriginal => ({
+vitest.mock('../../data/maps.js', async importOriginal => ({
   ...(await importOriginal()),
   recipesMap: {
     'kitchen-recipe-1': {
@@ -46,10 +46,10 @@ vitest.mock('../../data/maps.ts', async importOriginal => ({
   },
 }))
 
-vitest.mock('../Recipe/index.ts', () => {
+vitest.mock('../Recipe', () => {
   return { default: () => <div data-testid="Recipe">Recipe</div> }
 })
-vitest.mock('../UpgradePurchase/index.ts', () => {
+vitest.mock('../UpgradePurchase', () => {
   return {
     default: () => <div data-testid="UpgradePurchase">UpgradePurchase</div>,
   }

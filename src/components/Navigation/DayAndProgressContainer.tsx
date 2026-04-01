@@ -5,15 +5,15 @@ import Box from '@mui/material/Box/index.js'
 import CircularProgress from '@mui/material/CircularProgress/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { levelAchieved } from '../../utils/levelAchieved.ts'
+import { levelAchieved } from '../../utils/levelAchieved.js'
 import {
   experienceNeededForLevel,
   integerString,
   scaleNumber,
-} from '../../utils/index.tsx'
-import { EXPERIENCE_GAUGE_TOOLTIP_LABEL } from '../../templates.ts'
+} from '../../utils/index.js'
+import { EXPERIENCE_GAUGE_TOOLTIP_LABEL } from '../../templates.js'
 
 export function DayAndProgressContainer({ dayCount, experience, itemsSold }) {
   const currentLevel = levelAchieved(experience)

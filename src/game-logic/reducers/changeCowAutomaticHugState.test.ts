@@ -1,10 +1,10 @@
-import { huggingMachine } from '../../data/items.ts'
-import { generateCow } from '../../utils/index.tsx'
-import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.ts'
+import { huggingMachine } from '../../data/items.js'
+import { generateCow } from '../../utils/index.js'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
-import { changeCowAutomaticHugState } from './changeCowAutomaticHugState.ts'
+import { changeCowAutomaticHugState } from './changeCowAutomaticHugState.js'
 
 describe('changeCowAutomaticHugState', () => {
   describe('setting isUsingHuggingMachine to true', () => {

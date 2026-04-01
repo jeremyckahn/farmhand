@@ -1,4 +1,4 @@
 export {
   default,
   snackbarProviderContentCallback,
-} from './NotificationSystem.tsx'
+} from './NotificationSystem.js'

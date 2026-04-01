@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { SnackbarProvider } from 'notistack'
 
-import { NotificationSystem } from './NotificationSystem.tsx'
+import { NotificationSystem } from './NotificationSystem.js'
 
 const defaultProps = {
   closeSnackbar: vitest.fn(),

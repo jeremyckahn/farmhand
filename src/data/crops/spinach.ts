@@ -1,5 +1,5 @@
-import { crop, fromSeed } from '../crop.ts'
-import { cropType } from '../../enums.ts'
+import { crop, fromSeed } from '../crop.js'
+import { cropType } from '../../enums.js'
 
 /**
  * @property farmhand.module:items.spinachSeed

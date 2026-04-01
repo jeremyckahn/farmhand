@@ -5,9 +5,9 @@ import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import ReactMarkdown from 'react-markdown'
 
-import { FermentationRecipeList } from '../FermentationRecipeList/FermentationRecipeList.tsx'
+import { FermentationRecipeList } from '../FermentationRecipeList/FermentationRecipeList.js'
 
-import { TabPanel } from './TabPanel/index.tsx'
+import { TabPanel } from './TabPanel/index.js'
 
 export const FermentationTabPanel = ({ index, currentTab }) => (
   <TabPanel value={currentTab} index={index}>

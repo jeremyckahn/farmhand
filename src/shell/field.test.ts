@@ -1,16 +1,16 @@
 import { screen } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 
-import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory.ts'
-import { farmhandStub } from '../test-utils/stubs/farmhandStub.tsx'
-import { nextView } from '../test-utils/ui.ts'
+import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory.js'
+import { farmhandStub } from '../test-utils/stubs/farmhandStub.js'
+import { nextView } from '../test-utils/ui.js'
 import {
   HOE_ALT_TEXT,
   SCYTHE_ALT_TEXT,
   WATERING_CAN_ALT_TEXT,
-} from '../strings.ts'
-import { carrotSeed } from '../data/crops/index.ts'
-import { fertilizer } from '../data/recipes.ts'
+} from '../strings.js'
+import { carrotSeed } from '../data/crops/index.js'
+import { fertilizer } from '../data/recipes.js'
 
 describe('field interaction', () => {
   beforeEach(async () => {

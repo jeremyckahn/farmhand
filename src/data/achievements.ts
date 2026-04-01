@@ -1,4 +1,4 @@
-import { addItemToInventory } from '../game-logic/reducers/index.ts'
+import { addItemToInventory } from '../game-logic/reducers/index.js'
 import {
   doesPlotContainCrop,
   dollarString,
@@ -8,18 +8,18 @@ import {
   isOctober,
   moneyTotal,
   percentageString,
-} from '../utils/index.tsx'
-import { memoize } from '../utils/memoize.ts'
-import { findInField } from '../utils/findInField.ts'
-import { addExperience } from '../game-logic/reducers/index.ts'
-import { cropLifeStage, standardCowColors } from '../enums.ts'
+} from '../utils/index.js'
+import { memoize } from '../utils/memoize.js'
+import { findInField } from '../utils/findInField.js'
+import { addExperience } from '../game-logic/reducers/index.js'
+import { cropLifeStage, standardCowColors } from '../enums.js'
 import {
   COW_FEED_ITEM_ID,
   EXPERIENCE_VALUES,
   I_AM_RICH_BONUSES,
-} from '../constants.ts'
+} from '../constants.js'
 
-import { itemsMap } from './maps.ts'
+import { itemsMap } from './maps.js'
 
 const { SEED } = cropLifeStage
 

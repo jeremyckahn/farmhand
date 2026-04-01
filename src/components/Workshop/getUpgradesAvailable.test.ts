@@ -1,6 +1,6 @@
-import { toolLevel, toolType } from '../../enums.ts'
+import { toolLevel, toolType } from '../../enums.js'
 
-import { getUpgradesAvailable } from './getUpgradesAvailable.ts'
+import { getUpgradesAvailable } from './getUpgradesAvailable.js'
 
 describe('getUpgradesAvailable', () => {
   const toolLevels = {

@@ -1,11 +1,11 @@
-import { cropType, recipeType } from '../enums.ts'
+import { cropType, recipeType } from '../enums.js'
 
-import * as recipes from './recipes.ts'
-import upgrades from './upgrades.ts'
+import * as recipes from './recipes.js'
+import upgrades from './upgrades.js'
 
-import baseItemsMap from './items-map.ts'
+import baseItemsMap from './items-map.js'
 
-import { grapeSeed } from './crops/index.ts'
+import { grapeSeed } from './crops/index.js'
 
 const {
   ASPARAGUS,

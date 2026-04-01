@@ -1,8 +1,8 @@
-import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
-import { itemStub } from '../../test-utils/stubs/itemStub.ts'
-import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.ts'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { itemStub } from '../../test-utils/stubs/itemStub.js'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
-import { addItemToInventory } from './addItemToInventory.ts'
+import { addItemToInventory } from './addItemToInventory.js'
 
 const sampleItem1 = itemStub({ id: 'sample-item-1' })
 const sampleItem2 = itemStub({ id: 'sample-item-2' })

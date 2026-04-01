@@ -1,10 +1,10 @@
-import { moneyTotal, nullArray } from '../../utils/index.tsx'
-import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.ts'
-import { FOREST_EXPANDED } from '../../templates.ts'
-import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.ts'
+import { moneyTotal, nullArray } from '../../utils/index.js'
+import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.js'
+import { FOREST_EXPANDED } from '../../templates.js'
+import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.js'
 
-import { addExperience } from './addExperience.ts'
-import { showNotification } from './showNotification.ts'
+import { addExperience } from './addExperience.js'
+import { showNotification } from './showNotification.js'
 
 /**
  * @param {farmhand.state} state

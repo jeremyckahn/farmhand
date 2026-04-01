@@ -2,13 +2,13 @@
  * @typedef {farmhand.state} state
  */
 
-import { GRAPES_REQUIRED_FOR_WINE } from '../../constants.ts'
-import { grapeChardonnay } from '../../data/crops/index.ts'
-import { yeast, wineChardonnay } from '../../data/recipes.ts'
-import { cellarService } from '../../services/cellar.ts'
-import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.ts'
+import { GRAPES_REQUIRED_FOR_WINE } from '../../constants.js'
+import { grapeChardonnay } from '../../data/crops/index.js'
+import { yeast, wineChardonnay } from '../../data/recipes.js'
+import { cellarService } from '../../services/cellar.js'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
 
-import { makeWine } from './makeWine.ts'
+import { makeWine } from './makeWine.js'
 
 const stubKegUuid = 'abc123'
 
