@@ -1,7 +1,7 @@
-import { generateValueAdjustments } from './utils.js'
+import { generateValueAdjustments } from './utils.ts'
 
-vitest.mock('../data/maps.js')
-vitest.mock('../data/items.js')
+vitest.mock('../data/maps.ts')
+vitest.mock('../data/items.ts')
 
 describe('generateValueAdjustments', () => {
   let valueAdjustments

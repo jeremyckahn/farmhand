@@ -1,11 +1,11 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { testState } from '../../test-utils/index.js'
+import { testState } from '../../test-utils/index.ts'
 
-import { StatsView } from './StatsView.js'
+import { StatsView } from './StatsView.tsx'
 
-vitest.mock('../../data/maps.js')
+vitest.mock('../../data/maps.ts')
 
 const defaultProps = testState({
   cowsTraded: 5,

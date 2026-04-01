@@ -2,12 +2,12 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
-import { testItem, testRecipe } from '../../test-utils/index.js'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
+import { testItem, testRecipe } from '../../test-utils/index.ts'
 
-import { Recipe } from './Recipe.js'
+import { Recipe } from './Recipe.tsx'
 
-vitest.mock('../../data/maps.js', async importOriginal => {
+vitest.mock('../../data/maps.ts', async importOriginal => {
   const actual = await importOriginal()
   return {
     // @ts-ignore - vitest mock typing issue
@@ -48,8 +48,8 @@ vitest.mock('../../data/maps.js', async importOriginal => {
     },
   }
 })
-vitest.mock('../../data/items.js')
-vitest.mock('../../img/index.js', () => ({
+vitest.mock('../../data/items.ts')
+vitest.mock('../../img/index.ts', () => ({
   craftedItems: {
     'sample-recipe-1': 'recipe-image.png',
     'test-item': 'test-item-image.png',

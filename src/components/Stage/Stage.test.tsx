@@ -2,40 +2,40 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
-import { stageFocusType } from '../../../src/enums.js'
-import { testState } from '../../test-utils/index.js'
+import { stageFocusType } from '../../../src/enums.ts'
+import { testState } from '../../test-utils/index.ts'
 import FarmhandContext, {
   createContextData,
-} from '../Farmhand/Farmhand.context.js'
+} from '../Farmhand/Farmhand.context.tsx'
 
-import { Stage } from './Stage.js'
+import { Stage } from './Stage.tsx'
 
 // Mock child components to avoid their complex dependencies
-vi.mock('../Field/index.js', () => ({
+vi.mock('../Field/index.ts', () => ({
   default: () => <div className="Field">Field</div>,
 }))
 
-vi.mock('../Forest/index.js', () => ({
+vi.mock('../Forest/index.ts', () => ({
   Forest: () => <div className="Forest">Forest</div>,
 }))
 
-vi.mock('../Home/index.js', () => ({
+vi.mock('../Home/index.ts', () => ({
   default: () => <div className="Home">Home</div>,
 }))
 
-vi.mock('../CowPen/index.js', () => ({
+vi.mock('../CowPen/index.ts', () => ({
   default: () => <div className="CowPen">CowPen</div>,
 }))
 
-vi.mock('../Shop/index.js', () => ({
+vi.mock('../Shop/index.ts', () => ({
   default: () => <div className="Shop">Shop</div>,
 }))
 
-vi.mock('../Workshop/index.js', () => ({
+vi.mock('../Workshop/index.ts', () => ({
   default: () => <div className="Workshop">Workshop</div>,
 }))
 
-vi.mock('../Cellar/index.js', () => ({
+vi.mock('../Cellar/index.ts', () => ({
   Cellar: () => <div className="Cellar">Cellar</div>,
 }))
 

@@ -1,10 +1,10 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { getCowStub } from '../../../test-utils/stubs/cowStub.js'
-import { moneyString } from '../../../utils/moneyString.js'
+import { getCowStub } from '../../../test-utils/stubs/cowStub.ts'
+import { moneyString } from '../../../utils/moneyString.ts'
 
-import Subheader from './Subheader.js'
+import Subheader from './Subheader.tsx'
 
 const COW_VALUE = 1000
 

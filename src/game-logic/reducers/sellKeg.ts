@@ -1,20 +1,20 @@
-import { itemsMap } from '../../data/maps.js'
+import { itemsMap } from '../../data/maps.ts'
 import {
   castToMoney,
   getSalePriceMultiplier,
   moneyTotal,
-} from '../../utils/index.js'
-import { EXPERIENCE_VALUES, LOAN_GARNISHMENT_RATE } from '../../constants.js'
-import { SOLD_FERMENTED_ITEM_PEER_NOTIFICATION } from '../../templates.js'
-import { getKegValue } from '../../utils/getKegValue.js'
+} from '../../utils/index.tsx'
+import { EXPERIENCE_VALUES, LOAN_GARNISHMENT_RATE } from '../../constants.ts'
+import { SOLD_FERMENTED_ITEM_PEER_NOTIFICATION } from '../../templates.ts'
+import { getKegValue } from '../../utils/getKegValue.ts'
 
-import { addExperience } from './addExperience.js'
-import { addRevenue } from './addRevenue.js'
-import { adjustLoan } from './adjustLoan.js'
-import { removeKegFromCellar } from './removeKegFromCellar.js'
-import { updateLearnedRecipes } from './updateLearnedRecipes.js'
+import { addExperience } from './addExperience.ts'
+import { addRevenue } from './addRevenue.ts'
+import { adjustLoan } from './adjustLoan.ts'
+import { removeKegFromCellar } from './removeKegFromCellar.ts'
+import { updateLearnedRecipes } from './updateLearnedRecipes.ts'
 
-import { prependPendingPeerMessage } from './index.js'
+import { prependPendingPeerMessage } from './index.ts'
 
 /**
  * @param {farmhand.state} state

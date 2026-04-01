@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react'
 
 import FarmhandContext, {
   createContextData,
-} from '../Farmhand/Farmhand.context.js'
+} from '../Farmhand/Farmhand.context.tsx'
 
-import Achievement from './Achievement.js'
+import Achievement from './Achievement.tsx'
 
 describe('<Achievement />', () => {
   let achievementObject

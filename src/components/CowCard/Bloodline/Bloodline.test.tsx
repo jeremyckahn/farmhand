@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import Bloodline from './Bloodline.js'
+import Bloodline from './Bloodline.tsx'
 
 const defaultProps = {
   colorsInBloodline: {},

@@ -1,6 +1,6 @@
-import { testState } from '../../test-utils/index.js'
+import { testState } from '../../test-utils/index.ts'
 
-import { showNotification } from './showNotification.js'
+import { showNotification } from './showNotification.ts'
 
 describe('showNotification', () => {
   test('sets notification state', () => {

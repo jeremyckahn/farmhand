@@ -1,11 +1,11 @@
-import { PURCHASEABLE_CELLARS } from '../../constants.js'
-import { itemsMap } from '../../data/maps.js'
-import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe.js'
-import { getMaxYieldOfFermentationRecipe } from '../../utils/getMaxYieldOfFermentationRecipe.js'
-import { cellarService } from '../../services/cellar.js'
+import { PURCHASEABLE_CELLARS } from '../../constants.ts'
+import { itemsMap } from '../../data/maps.ts'
+import { getSaltRequirementsForFermentationRecipe } from '../../utils/getSaltRequirementsForFermentationRecipe.ts'
+import { getMaxYieldOfFermentationRecipe } from '../../utils/getMaxYieldOfFermentationRecipe.ts'
+import { cellarService } from '../../services/cellar.ts'
 
-import { addKegToCellarInventory } from './addKegToCellarInventory.js'
-import { decrementItemFromInventory } from './decrementItemFromInventory.js'
+import { addKegToCellarInventory } from './addKegToCellarInventory.ts'
+import { decrementItemFromInventory } from './decrementItemFromInventory.ts'
 
 /**
  * @param {farmhand.state} state

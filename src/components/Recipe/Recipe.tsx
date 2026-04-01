@@ -8,23 +8,23 @@ import CardActions from '@mui/material/CardActions/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import { array, func, number, object } from 'prop-types'
 
-import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe.js'
+import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe.ts'
 import {
   canMakeRecipe,
   doesInventorySpaceRemain,
   dollarString,
   maxYieldOfRecipe,
   integerString,
-} from '../../utils/index.js'
-import { itemsMap } from '../../data/maps.js'
-import { craftedItems } from '../../img/index.js'
-import QuantityInput from '../QuantityInput/index.js'
-import IngredientsList from '../IngredientsList/index.js'
+} from '../../utils/index.tsx'
+import { itemsMap } from '../../data/maps.ts'
+import { craftedItems } from '../../img/index.ts'
+import QuantityInput from '../QuantityInput/index.ts'
+import IngredientsList from '../IngredientsList/index.ts'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
 
 import './Recipe.sass'
-import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
 
 /**
  * @param {object} props

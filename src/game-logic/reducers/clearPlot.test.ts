@@ -1,13 +1,13 @@
-import { testCrop } from '../../test-utils/index.js'
-import { toolType, toolLevel } from '../../enums.js'
-import { getPlotContentFromItemId } from '../../utils/index.js'
-import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
-import { randomNumberService } from '../../common/services/randomNumber.js'
-import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
+import { testCrop } from '../../test-utils/index.ts'
+import { toolType, toolLevel } from '../../enums.ts'
+import { getPlotContentFromItemId } from '../../utils/index.tsx'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
+import { randomNumberService } from '../../common/services/randomNumber.ts'
+import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.ts'
 
-import { clearPlot } from './clearPlot.js'
+import { clearPlot } from './clearPlot.ts'
 
-vitest.mock('../../data/maps.js')
+vitest.mock('../../data/maps.ts')
 
 const toolLevels = {
   [toolType.HOE]: toolLevel.DEFAULT,

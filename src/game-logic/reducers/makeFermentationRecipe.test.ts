@@ -1,8 +1,8 @@
-import { carrot } from '../../data/crops/index.js'
-import { salt } from '../../data/recipes.js'
-import { testState } from '../../test-utils/index.js'
+import { carrot } from '../../data/crops/index.ts'
+import { salt } from '../../data/recipes.ts'
+import { testState } from '../../test-utils/index.ts'
 
-import { makeFermentationRecipe } from './makeFermentationRecipe.js'
+import { makeFermentationRecipe } from './makeFermentationRecipe.ts'
 
 describe('makeFermentationRecipe', () => {
   test.each([

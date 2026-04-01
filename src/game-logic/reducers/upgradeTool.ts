@@ -1,10 +1,10 @@
-import upgrades from '../../data/upgrades.js'
-import { TOOL_UPGRADED_NOTIFICATION } from '../../templates.js'
-import { EXPERIENCE_VALUES } from '../../constants.js'
+import upgrades from '../../data/upgrades.ts'
+import { TOOL_UPGRADED_NOTIFICATION } from '../../templates.ts'
+import { EXPERIENCE_VALUES } from '../../constants.ts'
 
-import { showNotification } from './showNotification.js'
-import { consumeIngredients } from './consumeIngredients.js'
-import { addItemToInventory } from './addItemToInventory.js'
+import { showNotification } from './showNotification.ts'
+import { consumeIngredients } from './consumeIngredients.ts'
+import { addItemToInventory } from './addItemToInventory.ts'
 
 /**
  * @param {farmhand.state} state

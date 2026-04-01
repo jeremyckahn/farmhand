@@ -1,7 +1,7 @@
-import { carrot, pumpkin, spinach, watermelon } from '../data/crops/index.js'
+import { carrot, pumpkin, spinach, watermelon } from '../data/crops/index.ts'
 
-import { getCropsAvailableToFerment } from './getCropsAvailableToFerment.js'
-import { getLevelEntitlements } from './getLevelEntitlements.js'
+import { getCropsAvailableToFerment } from './getCropsAvailableToFerment.ts'
+import { getLevelEntitlements } from './getLevelEntitlements.ts'
 
 describe('getCropsAvailableToFerment', () => {
   test.each([

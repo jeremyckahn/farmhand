@@ -1,13 +1,13 @@
-import { COW_ATTRITION_MESSAGE } from '../../templates.js'
+import { COW_ATTRITION_MESSAGE } from '../../templates.ts'
 import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
   INFINITE_STORAGE_LIMIT,
-} from '../../constants.js'
-import { huggingMachine } from '../../data/items.js'
-import { generateCow } from '../../utils/index.js'
-import { testState } from '../../test-utils/index.js'
+} from '../../constants.ts'
+import { huggingMachine } from '../../data/items.ts'
+import { generateCow } from '../../utils/index.tsx'
+import { testState } from '../../test-utils/index.ts'
 
-import { processCowAttrition } from './processCowAttrition.js'
+import { processCowAttrition } from './processCowAttrition.ts'
 
 describe('processCowAttrition', () => {
   test('unfed cows leave', () => {

@@ -3,14 +3,14 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
-import { dialogView, stageFocusType } from '../../enums.js'
-import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
-import { noop } from '../../utils/noop.js'
+import { dialogView, stageFocusType } from '../../enums.ts'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
+import { noop } from '../../utils/noop.ts'
 import FarmhandContext, {
   createContextData,
-} from '../Farmhand/Farmhand.context.js'
+} from '../Farmhand/Farmhand.context.tsx'
 
-import { Navigation } from './Navigation.js'
+import { Navigation } from './Navigation.tsx'
 
 const defaultProps = {
   activePlayers: null,

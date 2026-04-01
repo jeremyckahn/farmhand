@@ -1,1 +1,1 @@
-export { default } from './KeybindingsView.js'
+export { default } from './KeybindingsView.tsx'

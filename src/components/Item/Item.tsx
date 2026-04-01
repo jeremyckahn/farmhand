@@ -12,12 +12,12 @@ import Typography from '@mui/material/Typography/index.js'
 import { array, bool, func, number, object } from 'prop-types'
 import classNames from 'classnames'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import { items } from '../../img/index.js'
-import { itemsMap } from '../../data/maps.js'
-import { itemIds as shopItemIds } from '../../data/shop-inventory.js'
-import { noop } from '../../utils/noop.js'
-import { moneyString } from '../../utils/moneyString.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import { items } from '../../img/index.ts'
+import { itemsMap } from '../../data/maps.ts'
+import { itemIds as shopItemIds } from '../../data/shop-inventory.ts'
+import { noop } from '../../utils/noop.ts'
+import { moneyString } from '../../utils/moneyString.ts'
 import {
   inventorySpaceRemaining,
   isItemSoldInShop,
@@ -26,10 +26,10 @@ import {
   getResaleValue,
   getSalePriceMultiplier,
   integerString,
-} from '../../utils/index.js'
-import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
-import QuantityInput from '../QuantityInput/index.js'
-import AnimatedNumber from '../AnimatedNumber/index.js'
+} from '../../utils/index.tsx'
+import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.ts'
+import QuantityInput from '../QuantityInput/index.ts'
+import AnimatedNumber from '../AnimatedNumber/index.ts'
 
 import './Item.sass'
 

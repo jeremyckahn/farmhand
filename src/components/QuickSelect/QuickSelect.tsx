@@ -8,10 +8,10 @@ import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import { items as itemImages, pixel } from '../../img/index.js'
-import { integerString, sortItems } from '../../utils/index.js'
-import Toolbelt from '../Toolbelt/index.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import { items as itemImages, pixel } from '../../img/index.ts'
+import { integerString, sortItems } from '../../utils/index.tsx'
+import Toolbelt from '../Toolbelt/index.ts'
 
 import './QuickSelect.sass'
 

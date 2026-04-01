@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import SearchBar from '../SearchBar/index.js'
-import Recipe from '../Recipe/index.js'
+import SearchBar from '../SearchBar/index.ts'
+import Recipe from '../Recipe/index.ts'
 
 export function RecipeList({ allRecipes, learnedRecipes }) {
   const [searchQuery, setSearchQuery] = useState('')

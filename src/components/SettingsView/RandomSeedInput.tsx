@@ -3,7 +3,7 @@ import { string } from 'prop-types'
 import globalWindow from 'global/window.js'
 import TextField from '@mui/material/TextField/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
 
 import './RandomSeedInput.sass'
 

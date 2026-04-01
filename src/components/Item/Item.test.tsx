@@ -2,13 +2,13 @@ import React from 'react'
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { testItem } from '../../test-utils/index.js'
+import { testItem } from '../../test-utils/index.ts'
 
-import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
 
-import { Item } from './Item.js'
+import { Item } from './Item.tsx'
 
-vitest.mock('../../data/maps.js')
+vitest.mock('../../data/maps.ts')
 
 describe('Item', () => {
   const baseProps = {

@@ -1,9 +1,9 @@
-import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
-import { testItem, testState } from '../../test-utils/index.js'
+import { INFINITE_STORAGE_LIMIT } from '../../constants.ts'
+import { testItem, testState } from '../../test-utils/index.ts'
 
-import { purchaseItem } from './purchaseItem.js'
+import { purchaseItem } from './purchaseItem.ts'
 
-vitest.mock('../../data/maps.js')
+vitest.mock('../../data/maps.ts')
 
 describe('purchaseItem', () => {
   /** @type {farmhand.state} */

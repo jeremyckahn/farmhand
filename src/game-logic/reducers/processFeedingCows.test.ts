@@ -1,13 +1,13 @@
-import { OUT_OF_COW_FEED_NOTIFICATION } from '../../strings.js'
+import { OUT_OF_COW_FEED_NOTIFICATION } from '../../strings.ts'
 import {
   COW_FEED_ITEM_ID,
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
-} from '../../constants.js'
+} from '../../constants.ts'
 
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from '../../utils/index.tsx'
 
-import { processFeedingCows } from './processFeedingCows.js'
+import { processFeedingCows } from './processFeedingCows.ts'
 
 describe('processFeedingCows', () => {
   let state

@@ -1,4 +1,4 @@
-import { itemsMap } from '../data/maps.js'
+import { itemsMap } from '../data/maps.ts'
 
 /**
  * @param {string} itemId

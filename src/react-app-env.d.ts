@@ -1,4 +1,4 @@
-import Farmhand from './components/Farmhand/index.js'
+import Farmhand from './components/Farmhand/index.ts'
 
 // TODO: Contribute type definitions for 'global' package to
 // https://github.com/DefinitelyTyped/DefinitelyTyped

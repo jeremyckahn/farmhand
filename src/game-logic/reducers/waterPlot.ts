@@ -1,7 +1,7 @@
-import { getPlotContentType } from '../../utils/index.js'
-import { itemType } from '../../enums.js'
+import { getPlotContentType } from '../../utils/index.tsx'
+import { itemType } from '../../enums.ts'
 
-import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.ts'
 
 /**
  * @param {farmhand.state} state

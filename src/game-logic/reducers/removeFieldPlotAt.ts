@@ -1,4 +1,4 @@
-import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.ts'
 
 /**
  * @param {farmhand.state} state

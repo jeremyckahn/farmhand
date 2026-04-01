@@ -1,4 +1,4 @@
-import { waterField } from './waterField.js'
+import { waterField } from './waterField.ts'
 
 // TODO: Remove this and just use waterField directly.
 /**
