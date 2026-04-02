@@ -1,5 +1,5 @@
-import { moneyTotal } from '../../utils/index.js'
-import { PURCHASEABLE_COMBINES } from '../../constants.js'
+import { moneyTotal } from '../../utils/index.tsx'
+import { PURCHASEABLE_COMBINES } from '../../constants.ts'
 
 /**
  * @param {farmhand.state} state

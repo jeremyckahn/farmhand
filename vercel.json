@@ -1,5 +1,15 @@
 {
   "ignoreCommand": "stat static || (git log -1 --pretty=oneline --abbrev-commit | grep -w \"\\[skip deploy\\]\" && exit 0 || exit 1)",
   "framework": "vite",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/get-market-data",
+      "destination": "/api/get-market-data.js"
+    },
+    {
+      "source": "/api/post-day-results",
+      "destination": "/api/post-day-results.js"
+    }
+  ]
 }

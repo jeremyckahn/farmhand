@@ -1,14 +1,14 @@
 import {
   GRAPES_REQUIRED_FOR_WINE,
   PURCHASEABLE_CELLARS,
-} from '../../constants.js'
-import { itemsMap } from '../../data/maps.js'
-import { cellarService } from '../../services/cellar.js'
-import { wineService } from '../../services/wine.js'
-import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
+} from '../../constants.ts'
+import { itemsMap } from '../../data/maps.ts'
+import { cellarService } from '../../services/cellar.ts'
+import { wineService } from '../../services/wine.ts'
+import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.ts'
 
-import { addKegToCellarInventory } from './addKegToCellarInventory.js'
-import { decrementItemFromInventory } from './decrementItemFromInventory.js'
+import { addKegToCellarInventory } from './addKegToCellarInventory.ts'
+import { decrementItemFromInventory } from './decrementItemFromInventory.ts'
 
 /**
  * @param {farmhand.state} state

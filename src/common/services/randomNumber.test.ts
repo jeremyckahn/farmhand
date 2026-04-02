@@ -1,4 +1,4 @@
-import { randomNumberService } from './randomNumber.js'
+import { randomNumberService } from './randomNumber.ts'
 
 const chance = 0.6
 

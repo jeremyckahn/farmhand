@@ -4,8 +4,8 @@
  * @typedef {farmhand.cropVariety} cropVariety
  * @typedef {farmhand.grape} grape
  */
-import { isGrape } from '../data/crops/grape.js'
-import { itemsMap } from '../data/maps.js'
+import { isGrape } from '../data/crops/grape.ts'
+import { itemsMap } from '../data/maps.ts'
 
 /**
  * @param {itemsSold} itemsSold

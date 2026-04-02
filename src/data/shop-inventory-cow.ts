@@ -1,4 +1,4 @@
-import { cowFeed, huggingMachine } from './items.js'
+import { cowFeed, huggingMachine } from './items.ts'
 
 const inventory = [cowFeed, huggingMachine]
 

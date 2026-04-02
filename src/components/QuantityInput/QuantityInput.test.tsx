@@ -2,9 +2,9 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { noop } from '../../utils/noop.js'
+import { noop } from '../../utils/noop.ts'
 
-import QuantityInput from './QuantityInput.js'
+import QuantityInput from './QuantityInput.tsx'
 
 const defaultProps = {
   handleSubmit: noop,

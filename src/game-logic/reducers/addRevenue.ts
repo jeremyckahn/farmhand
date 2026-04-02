@@ -1,4 +1,4 @@
-import { moneyTotal } from '../../utils/index.js'
+import { moneyTotal } from '../../utils/index.tsx'
 
 // TODO: Add tests for this reducer
 /**

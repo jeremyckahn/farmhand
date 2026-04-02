@@ -1,1 +1,1 @@
-export { default } from './StatsView.js'
+export { default } from './StatsView.tsx'

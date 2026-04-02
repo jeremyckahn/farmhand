@@ -1,1 +1,1 @@
-export { default } from './TierPurchase.js'
+export { default } from './TierPurchase.tsx'

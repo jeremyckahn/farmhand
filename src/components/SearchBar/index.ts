@@ -1,1 +1,1 @@
-export { default } from './SearchBar.js'
+export { default } from './SearchBar.tsx'

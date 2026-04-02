@@ -1,8 +1,8 @@
-import { carrot, sunflower } from '../data/crops/index.js'
-import { wineChardonnay, wineNebbiolo } from '../data/recipes.js'
-import { getKegStub } from '../test-utils/stubs/getKegStub.js'
+import { carrot, sunflower } from '../data/crops/index.ts'
+import { wineChardonnay, wineNebbiolo } from '../data/recipes.ts'
+import { getKegStub } from '../test-utils/stubs/getKegStub.ts'
 
-import { getKegValue } from './getKegValue.js'
+import { getKegValue } from './getKegValue.ts'
 
 describe('getKegValue', () => {
   test.each([

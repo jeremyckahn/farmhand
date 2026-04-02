@@ -1,1 +1,1 @@
-export { default } from './CowPenContextMenu.js'
+export { default } from './CowPenContextMenu.tsx'

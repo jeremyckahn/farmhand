@@ -4,7 +4,7 @@ import Alert from '@mui/material/Alert/index.js'
 import ReactMarkdown from 'react-markdown'
 import Divider from '@mui/material/Divider/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
 
 import './LogView.sass'
 

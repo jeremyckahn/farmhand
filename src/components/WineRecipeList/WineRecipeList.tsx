@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react'
 
-import SearchBar from '../SearchBar/index.js'
-import { getWineVarietiesAvailableToMake } from '../../utils/getWineVarietiesAvailableToMake.js'
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import SearchBar from '../SearchBar/index.ts'
+import { getWineVarietiesAvailableToMake } from '../../utils/getWineVarietiesAvailableToMake.ts'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
 
-import { grapeVariety } from '../../enums.js'
+import { grapeVariety } from '../../enums.ts'
 
-import { WineRecipe } from './WineRecipe.js'
+import { WineRecipe } from './WineRecipe.tsx'
 
 const totalGrapeVarieties = Object.keys(grapeVariety).length
 

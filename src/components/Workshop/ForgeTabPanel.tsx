@@ -6,14 +6,14 @@ import CardContent from '@mui/material/CardContent/index.js'
 import Divider from '@mui/material/Divider/index.js'
 import ReactMarkdown from 'react-markdown'
 
-import { recipeType } from '../../enums.js'
-import { recipeCategories } from '../../data/maps.js'
-import UpgradePurchase from '../UpgradePurchase/index.js'
-import { RecipeList } from '../RecipeList/RecipeList.js'
+import { recipeType } from '../../enums.ts'
+import { recipeCategories } from '../../data/maps.ts'
+import UpgradePurchase from '../UpgradePurchase/index.ts'
+import { RecipeList } from '../RecipeList/RecipeList.tsx'
 
-import { TabPanel } from './TabPanel/index.js'
+import { TabPanel } from './TabPanel/index.tsx'
 
-import { getUpgradesAvailable } from './getUpgradesAvailable.js'
+import { getUpgradesAvailable } from './getUpgradesAvailable.ts'
 
 export function ForgeTabPanel({
   currentTab,

@@ -10,15 +10,15 @@ import {
   moneyTotal,
   reduceByPersistedKeys,
   transformStateDataForImport,
-} from '../utils/index.js'
-import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants.js'
-import { dialogView, fieldMode, stageFocusType } from '../enums.js'
+} from '../utils/index.tsx'
+import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants.ts'
+import { dialogView, fieldMode, stageFocusType } from '../enums.ts'
 import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
   PROGRESS_SAVED_MESSAGE,
   UPDATE_AVAILABLE,
-} from '../strings.js'
+} from '../strings.ts'
 
 import {
   clearPlot,
@@ -27,8 +27,8 @@ import {
   minePlot,
   plantInPlot,
   waterPlot,
-} from '../game-logic/reducers/index.js'
-import { randomNumberService } from '../common/services/randomNumber.js'
+} from '../game-logic/reducers/index.ts'
+import { randomNumberService } from '../common/services/randomNumber.ts'
 
 const {
   CLEANUP,

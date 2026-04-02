@@ -1,7 +1,7 @@
-import { EXPERIENCE_VALUES, PURCHASEABLE_COMPOSTERS } from '../../constants.js'
-import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings.js'
+import { EXPERIENCE_VALUES, PURCHASEABLE_COMPOSTERS } from '../../constants.ts'
+import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings.ts'
 
-import { purchaseComposter } from './purchaseComposter.js'
+import { purchaseComposter } from './purchaseComposter.ts'
 
 describe('purchaseComposter', () => {
   let gameState, newState

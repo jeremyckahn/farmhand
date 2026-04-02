@@ -4,22 +4,22 @@ import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
 import {
   getCropLifeStage,
   getPlotContentType,
   getPlotImage,
-} from '../../utils/index.js'
-import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
-import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps.js'
-import { pixel, plotStates } from '../../img/index.js'
-import { cropLifeStage, fertilizerType, itemType } from '../../enums.js'
-import { FERTILIZER_BONUS } from '../../constants.js'
+} from '../../utils/index.tsx'
+import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.ts'
+import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps.ts'
+import { pixel, plotStates } from '../../img/index.ts'
+import { cropLifeStage, fertilizerType, itemType } from '../../enums.ts'
+import { FERTILIZER_BONUS } from '../../constants.ts'
 
-import { SHOVELED } from '../../strings.js'
+import { SHOVELED } from '../../strings.ts'
 
 import './Plot.sass'
-import { SHOVELED_PLOT } from '../../templates.js'
+import { SHOVELED_PLOT } from '../../templates.ts'
 
 /**
  * @param {farmhand.plotContent?} plotContent

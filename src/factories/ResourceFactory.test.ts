@@ -1,17 +1,17 @@
 import { vi } from 'vitest'
 
-import { randomNumberService } from '../common/services/randomNumber.js'
-import { itemType, toolLevel } from '../enums.js'
-import { randomChoice } from '../utils/index.js'
+import { randomNumberService } from '../common/services/randomNumber.ts'
+import { itemType, toolLevel } from '../enums.ts'
+import { randomChoice } from '../utils/index.tsx'
 
-import ResourceFactory from './ResourceFactory.js'
+import ResourceFactory from './ResourceFactory.ts'
 
-vitest.mock('./CoalFactory.js')
-vitest.mock('./OreFactory.js')
-vitest.mock('./StoneFactory.js')
+vitest.mock('./CoalFactory.ts')
+vitest.mock('./OreFactory.ts')
+vitest.mock('./StoneFactory.ts')
 
-vitest.mock('../utils/index.js', async () => ({
-  ...(await vitest.importActual('../utils/index.js')),
+vitest.mock('../utils/index.tsx', async () => ({
+  ...(await vitest.importActual('../utils/index.tsx')),
   randomChoice: vitest.fn(),
 }))
 

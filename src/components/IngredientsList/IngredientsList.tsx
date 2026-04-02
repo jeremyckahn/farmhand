@@ -2,10 +2,10 @@ import React from 'react'
 import classNames from 'classnames'
 import { object, shape, string } from 'prop-types'
 
-import { INGREDIENTS_LIST_ITEM } from '../../templates.js'
+import { INGREDIENTS_LIST_ITEM } from '../../templates.ts'
 
-import { integerString } from '../../utils/index.js'
-import { itemsMap } from '../../data/maps.js'
+import { integerString } from '../../utils/index.tsx'
+import { itemsMap } from '../../data/maps.ts'
 
 export default function IngredientsList({
   playerInventoryQuantities,

@@ -1,4 +1,4 @@
-import { moneyString } from './moneyString.js'
+import { moneyString } from './moneyString.ts'
 
 describe('moneyString.js', () => {
   test('formats number to dollar string', () => {

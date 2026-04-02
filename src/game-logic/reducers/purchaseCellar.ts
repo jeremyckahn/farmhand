@@ -1,10 +1,10 @@
-import { moneyTotal } from '../../utils/index.js'
-import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants.js'
+import { moneyTotal } from '../../utils/index.tsx'
+import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants.ts'
 
-import { CELLAR_PURCHASED } from '../../templates.js'
+import { CELLAR_PURCHASED } from '../../templates.ts'
 
-import { addExperience } from './addExperience.js'
-import { showNotification } from './showNotification.js'
+import { addExperience } from './addExperience.ts'
+import { showNotification } from './showNotification.ts'
 
 /**
  * @param {farmhand.state} state

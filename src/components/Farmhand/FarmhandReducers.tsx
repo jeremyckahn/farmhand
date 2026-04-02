@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-import * as reducers from '../../game-logic/reducers/index.js'
+import * as reducers from '../../game-logic/reducers/index.ts'
 
 /**
  * @callback BoundReducer

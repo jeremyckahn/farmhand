@@ -6,17 +6,17 @@
  * @ignore
  */
 
-import { FOREST_AVAILABLE_NOTIFICATION, SHOVEL_UNLOCKED } from './strings.js'
-import { itemUnlockLevels, levels } from './data/levels.js'
-import { itemsMap } from './data/maps.js'
-import { moneyString } from './utils/moneyString.js'
-import { stageFocusType, toolType } from './enums.js'
+import { FOREST_AVAILABLE_NOTIFICATION, SHOVEL_UNLOCKED } from './strings.ts'
+import { itemUnlockLevels, levels } from './data/levels.ts'
+import { itemsMap } from './data/maps.ts'
+import { moneyString } from './utils/moneyString.ts'
+import { stageFocusType, toolType } from './enums.ts'
 import {
   getCowDisplayName,
   getPlayerName,
   getRandomLevelUpRewardQuantity,
   integerString,
-} from './utils/index.js'
+} from './utils/index.tsx'
 
 /**
  * @param {string} _

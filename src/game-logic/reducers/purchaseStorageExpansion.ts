@@ -1,8 +1,8 @@
-import { getCostOfNextStorageExpansion, moneyTotal } from '../../utils/index.js'
+import { getCostOfNextStorageExpansion, moneyTotal } from '../../utils/index.tsx'
 import {
   INFINITE_STORAGE_LIMIT,
   STORAGE_EXPANSION_AMOUNT,
-} from '../../constants.js'
+} from '../../constants.ts'
 
 /**
  * @param {farmhand.state} state

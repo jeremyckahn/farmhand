@@ -1,7 +1,7 @@
-import { wineVarietyValueMap } from '../data/crops/grape.js'
-import { YEAST_REQUIREMENT_FOR_WINE_MULTIPLIER } from '../constants.js'
+import { wineVarietyValueMap } from '../data/crops/grape.ts'
+import { YEAST_REQUIREMENT_FOR_WINE_MULTIPLIER } from '../constants.ts'
 // eslint-disable-next-line no-unused-vars
-import { grapeVariety as grapeVarietyEnum } from '../enums.js'
+import { grapeVariety as grapeVarietyEnum } from '../enums.ts'
 
 /**
  * @param {grapeVarietyEnum} grapeVariety

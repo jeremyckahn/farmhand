@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import KeybindingsView from './KeybindingsView.js'
+import KeybindingsView from './KeybindingsView.tsx'
 
 test('renders', () => {
   render(<KeybindingsView />)

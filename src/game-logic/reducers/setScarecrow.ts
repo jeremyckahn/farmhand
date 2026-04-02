@@ -1,9 +1,9 @@
-import { fieldMode } from '../../enums.js'
-import { getPlotContentFromItemId } from '../../utils/index.js'
-import { SCARECROW_ITEM_ID } from '../../constants.js'
+import { fieldMode } from '../../enums.ts'
+import { getPlotContentFromItemId } from '../../utils/index.tsx'
+import { SCARECROW_ITEM_ID } from '../../constants.ts'
 
-import { decrementItemFromInventory } from './decrementItemFromInventory.js'
-import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
+import { decrementItemFromInventory } from './decrementItemFromInventory.ts'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.ts'
 
 const { OBSERVE, SET_SCARECROW } = fieldMode
 

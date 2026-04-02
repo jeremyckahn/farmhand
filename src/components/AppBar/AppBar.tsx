@@ -8,8 +8,8 @@ import Toolbar from '@mui/material/Toolbar/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import StepIcon from '@mui/material/StepIcon/index.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import { moneyString } from '../../utils/moneyString.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import { moneyString } from '../../utils/moneyString.ts'
 import './AppBar.sass'
 
 /**

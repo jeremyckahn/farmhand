@@ -1,5 +1,5 @@
-import { itemType } from '../../enums.js'
-import { STONE_SPAWN_CHANCE } from '../../constants.js'
+import { itemType } from '../../enums.ts'
+import { STONE_SPAWN_CHANCE } from '../../constants.ts'
 
 const { freeze } = Object
 

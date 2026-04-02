@@ -1,1 +1,1 @@
-export { Forest } from './Forest.js'
+export { Forest } from './Forest.tsx'

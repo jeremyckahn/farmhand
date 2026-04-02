@@ -1,9 +1,9 @@
-import { fieldMode, fertilizerType, itemType } from '../../enums.js'
-import { itemsMap } from '../../data/maps.js'
-import { getPlotContentType } from '../../utils/index.js'
+import { fieldMode, fertilizerType, itemType } from '../../enums.ts'
+import { itemsMap } from '../../data/maps.ts'
+import { getPlotContentType } from '../../utils/index.tsx'
 
-import { decrementItemFromInventory } from './decrementItemFromInventory.js'
-import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
+import { decrementItemFromInventory } from './decrementItemFromInventory.ts'
+import { modifyFieldPlotAt } from './modifyFieldPlotAt.ts'
 
 const { FERTILIZE, OBSERVE } = fieldMode
 

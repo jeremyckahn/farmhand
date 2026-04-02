@@ -1,7 +1,7 @@
-import { testState } from '../../test-utils/index.js'
-import { generateCow } from '../../utils/index.js'
+import { testState } from '../../test-utils/index.ts'
+import { generateCow } from '../../utils/index.tsx'
 
-import { selectCow } from './selectCow.js'
+import { selectCow } from './selectCow.ts'
 
 describe('selectCow', () => {
   test('updates selectedCowId', () => {
