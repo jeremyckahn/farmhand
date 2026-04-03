@@ -1,1 +1,1 @@
-export { default } from './QuickSelect.tsx'
+export { default } from './QuickSelect.js'

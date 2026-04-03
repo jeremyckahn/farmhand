@@ -9,8 +9,8 @@ import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'
 import sortBy from 'lodash.sortby'
 
-import Item from '../Item/index.ts'
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import Item from '../Item/index.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import {
   findCowById,
@@ -18,14 +18,14 @@ import {
   getCowWeight,
   isCowInBreedingPen,
   nullArray,
-} from '../../utils/index.tsx'
-import { PURCHASEABLE_COW_PENS } from '../../constants.ts'
-import cowShopInventory from '../../data/shop-inventory-cow.ts'
+} from '../../utils/index.js'
+import { PURCHASEABLE_COW_PENS } from '../../constants.js'
+import cowShopInventory from '../../data/shop-inventory-cow.js'
 
-import CowCard from '../CowCard/index.ts'
-import SearchBar from '../SearchBar/index.ts'
+import CowCard from '../CowCard/index.js'
+import SearchBar from '../SearchBar/index.js'
 
-import { TabPanel, a11yProps } from './TabPanel/index.tsx'
+import { TabPanel, a11yProps } from './TabPanel/index.js'
 import './CowPenContextMenu.sass'
 
 const { AGE, COLOR, GENDER, HAPPINESS, VALUE, WEIGHT } = {

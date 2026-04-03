@@ -1,6 +1,6 @@
-import { castToMoney, moneyTotal } from '../../utils/index.tsx'
-import { LOAN_INTEREST_RATE } from '../../constants.ts'
-import { LOAN_BALANCE_NOTIFICATION } from '../../templates.ts'
+import { castToMoney, moneyTotal } from '../../utils/index.js'
+import { LOAN_INTEREST_RATE } from '../../constants.js'
+import { LOAN_BALANCE_NOTIFICATION } from '../../templates.js'
 
 /**
  * @param {farmhand.state} state

@@ -1,1 +1,1 @@
-export { default } from './Achievement.tsx'
+export { default } from './Achievement.js'

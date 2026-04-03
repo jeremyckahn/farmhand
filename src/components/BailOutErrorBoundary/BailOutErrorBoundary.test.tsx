@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import BailOutErrorBoundary from './BailOutErrorBoundary.tsx'
+import BailOutErrorBoundary from './BailOutErrorBoundary.js'
 
 const ThrowError = ({ shouldThrow }) => {
   if (shouldThrow) {

@@ -1,6 +1,6 @@
-import { carrot } from '../data/items.ts'
+import { carrot } from '../data/items.js'
 
-import { getCropLifecycleDuration } from './getCropLifecycleDuration.ts'
+import { getCropLifecycleDuration } from './getCropLifecycleDuration.js'
 
 describe('getCropLifecycleDuration', () => {
   test('computes lifecycle duration', () => {

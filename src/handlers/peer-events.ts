@@ -1,22 +1,22 @@
 /** @typedef {import('../components/Farmhand/Farmhand.js').default} Farmhand */
-import { cowTradeRejectionReason } from '../enums.ts'
-import { EXPERIENCE_VALUES } from '../constants.ts'
-import { COW_TRADED_NOTIFICATION } from '../templates.ts'
+import { cowTradeRejectionReason } from '../enums.js'
+import { EXPERIENCE_VALUES } from '../constants.js'
+import { COW_TRADED_NOTIFICATION } from '../templates.js'
 import {
   PROGRESS_SAVED_MESSAGE,
   REQUESTED_COW_TRADE_UNAVAILABLE,
   UNKNOWN_COW_TRADE_FAILURE,
-} from '../strings.ts'
-import { sleep } from '../utils/index.tsx'
+} from '../strings.js'
+import { sleep } from '../utils/index.js'
 
 import {
   addCowToInventory,
   changeCowAutomaticHugState,
   removeCowFromInventory,
   showNotification,
-} from '../game-logic/reducers/index.ts'
+} from '../game-logic/reducers/index.js'
 
-import { addExperience } from '../game-logic/reducers/addExperience.ts'
+import { addExperience } from '../game-logic/reducers/addExperience.js'
 
 /**
  * @param {import('../components/Farmhand/Farmhand.js').default} farmhand

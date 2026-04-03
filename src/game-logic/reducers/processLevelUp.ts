@@ -1,16 +1,16 @@
-import { levels } from '../../data/levels.ts'
-import { levelAchieved } from '../../utils/levelAchieved.ts'
+import { levels } from '../../data/levels.js'
+import { levelAchieved } from '../../utils/levelAchieved.js'
 import {
   getRandomLevelUpReward,
   getRandomLevelUpRewardQuantity,
-} from '../../utils/index.tsx'
-import { getLevelEntitlements } from '../../utils/getLevelEntitlements.ts'
-import { SPRINKLER_ITEM_ID } from '../../constants.ts'
-import { LEVEL_GAINED_NOTIFICATION } from '../../templates.ts'
+} from '../../utils/index.js'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
+import { SPRINKLER_ITEM_ID } from '../../constants.js'
+import { LEVEL_GAINED_NOTIFICATION } from '../../templates.js'
 
-import { addItemToInventory } from './addItemToInventory.ts'
-import { showNotification } from './showNotification.ts'
-import { unlockTool } from './unlockTool.ts'
+import { addItemToInventory } from './addItemToInventory.js'
+import { showNotification } from './showNotification.js'
+import { unlockTool } from './unlockTool.js'
 
 /**
  * @param {farmhand.state} state

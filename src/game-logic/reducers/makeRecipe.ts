@@ -1,8 +1,8 @@
-import { recipeType } from '../../enums.ts'
-import { EXPERIENCE_VALUES } from '../../constants.ts'
+import { recipeType } from '../../enums.js'
+import { EXPERIENCE_VALUES } from '../../constants.js'
 
-import { addItemToInventory } from './addItemToInventory.ts'
-import { consumeIngredients } from './consumeIngredients.ts'
+import { addItemToInventory } from './addItemToInventory.js'
+import { consumeIngredients } from './consumeIngredients.js'
 
 const EXPERIENCE_FOR_RECIPE = {
   [recipeType.FERMENTATION]: EXPERIENCE_VALUES.FERMENTATION_RECIPE_MADE,

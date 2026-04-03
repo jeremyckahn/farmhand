@@ -1,9 +1,9 @@
 // Must be invoked with babel: https://stackoverflow.com/a/51532127/470685
 import markdownTable from 'markdown-table'
 
-import { levels } from '../data/levels.ts'
-import { itemsMap } from '../data/maps.ts'
-import { moneyString } from '../utils/moneyString.ts'
+import { levels } from '../data/levels.js'
+import { itemsMap } from '../data/maps.js'
+import { moneyString } from '../utils/moneyString.js'
 
 const getDaysToMature = seedItem => {
   return seedItem.cropTimeline.reduce((days, acc) => days + acc)

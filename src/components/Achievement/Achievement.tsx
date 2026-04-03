@@ -8,7 +8,7 @@ import CardContent from '@mui/material/CardContent/index.js'
 import BeenhereIcon from '@mui/icons-material/Beenhere.js'
 import { bool, object, shape, string } from 'prop-types'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import './Achievement.sass'
 

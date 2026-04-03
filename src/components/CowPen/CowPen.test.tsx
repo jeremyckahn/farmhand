@@ -3,15 +3,15 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
-import { generateCow } from '../../utils/index.tsx'
-import { cowColors } from '../../enums.ts'
-import { noop } from '../../utils/noop.ts'
+import { generateCow } from '../../utils/index.js'
+import { cowColors } from '../../enums.js'
+import { noop } from '../../utils/noop.js'
 
-import { Cow } from './Cow.tsx'
+import { Cow } from './Cow.js'
 
 // Mock getCowDisplayName to return predictable values
-vi.mock('../../utils/index.tsx', async () => {
-  const actual = await vi.importActual('../../utils/index.tsx')
+vi.mock('../../utils/index.js', async () => {
+  const actual = await vi.importActual('../../utils/index.js')
   return {
     ...actual,
     getCowDisplayName: vi.fn(cow => cow.name || 'Test Cow'),

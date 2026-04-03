@@ -1,16 +1,16 @@
-import { cropLifeStage, itemType, toolType } from '../../enums.ts'
-import { itemsMap } from '../../data/maps.ts'
+import { cropLifeStage, itemType, toolType } from '../../enums.js'
+import { itemsMap } from '../../data/maps.js'
 import {
   doesInventorySpaceRemain,
   getCropLifeStage,
   getPlotContentType,
   getSeedItemIdFromFinalStageCropItemId,
-} from '../../utils/index.tsx'
-import { HOE_LEVEL_TO_SEED_RECLAIM_RATE } from '../../constants.ts'
-import { randomNumberService } from '../../common/services/randomNumber.ts'
+} from '../../utils/index.js'
+import { HOE_LEVEL_TO_SEED_RECLAIM_RATE } from '../../constants.js'
+import { randomNumberService } from '../../common/services/randomNumber.js'
 
-import { addItemToInventory } from './addItemToInventory.ts'
-import { removeFieldPlotAt } from './removeFieldPlotAt.ts'
+import { addItemToInventory } from './addItemToInventory.js'
+import { removeFieldPlotAt } from './removeFieldPlotAt.js'
 
 const { GROWN } = cropLifeStage
 

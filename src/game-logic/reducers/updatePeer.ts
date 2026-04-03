@@ -1,9 +1,9 @@
 /** @typedef {import('../../components/Farmhand/Farmhand.js').default} Farmhand */
-import { MAX_LATEST_PEER_MESSAGES } from '../../constants.ts'
-import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.ts'
-import { dialogView } from '../../enums.ts'
+import { MAX_LATEST_PEER_MESSAGES } from '../../constants.js'
+import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.js'
+import { dialogView } from '../../enums.js'
 
-import { showNotification } from './showNotification.ts'
+import { showNotification } from './showNotification.js'
 
 /**
  * @param {farmhand.state} state

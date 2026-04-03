@@ -1,11 +1,11 @@
 import { vi } from 'vitest'
 
-import { PURCHASEABLE_COW_PENS } from '../../constants.ts'
-import { genders, standardCowColors } from '../../enums.ts'
-import { testState } from '../../test-utils/index.ts'
-import * as utils from '../../utils/index.tsx'
+import { PURCHASEABLE_COW_PENS } from '../../constants.js'
+import { genders, standardCowColors } from '../../enums.js'
+import { testState } from '../../test-utils/index.js'
+import * as utils from '../../utils/index.js'
 
-import { purchaseCow } from './purchaseCow.ts'
+import { purchaseCow } from './purchaseCow.js'
 
 describe('purchaseCow', () => {
   /** @type {farmhand.state} */

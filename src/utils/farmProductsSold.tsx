@@ -1,7 +1,7 @@
-import { itemsMap } from '../data/maps.ts'
+import { itemsMap } from '../data/maps.js'
 
-import { memoize } from './memoize.ts'
-import { isItemAFarmProduct } from './isItemAFarmProduct.ts'
+import { memoize } from './memoize.js'
+import { isItemAFarmProduct } from './isItemAFarmProduct.js'
 
 // @ts-expect-error
 export const farmProductsSold = memoize(

@@ -7,13 +7,13 @@ import Button from '@mui/material/Button/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 
-import { toolLevel } from '../../enums.ts'
-import { memoize } from '../../utils/memoize.ts'
-import { noop } from '../../utils/noop.ts'
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
-import toolsData from '../../data/tools.ts'
+import { toolLevel } from '../../enums.js'
+import { memoize } from '../../utils/memoize.js'
+import { noop } from '../../utils/noop.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import toolsData from '../../data/tools.js'
 
-import { tools as toolImages, craftedItems, pixel } from '../../img/index.ts'
+import { tools as toolImages, craftedItems, pixel } from '../../img/index.js'
 
 import './Toolbelt.sass'
 

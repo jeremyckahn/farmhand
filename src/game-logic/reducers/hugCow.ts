@@ -1,6 +1,6 @@
-import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.ts'
+import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.js'
 
-import { modifyCow } from './modifyCow.ts'
+import { modifyCow } from './modifyCow.js'
 
 /**
  * @param {farmhand.state} state

@@ -24,30 +24,30 @@ import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import { array, bool, func, number, string } from 'prop-types'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import {
   doesInventorySpaceRemain,
   integerString,
   inventorySpaceConsumed,
-} from '../../utils/index.tsx'
-import { dialogView } from '../../enums.ts'
+} from '../../utils/index.js'
+import { dialogView } from '../../enums.js'
 import {
   DEFAULT_ROOM,
   INFINITE_STORAGE_LIMIT,
   STAGE_TITLE_MAP,
-} from '../../constants.ts'
-import { MAX_ROOM_NAME_LENGTH } from '../../common/constants.ts'
+} from '../../constants.js'
+import { MAX_ROOM_NAME_LENGTH } from '../../common/constants.js'
 
-import AccountingView from '../AccountingView/index.ts'
-import AchievementsView from '../AchievementsView/index.ts'
-import LogView from '../LogView/index.ts'
-import OnlinePeersView from '../OnlinePeersView/index.ts'
-import PriceEventView from '../PriceEventView/index.ts'
-import SettingsView from '../SettingsView/index.ts'
-import StatsView from '../StatsView/index.ts'
-import KeybindingsView from '../KeybindingsView/index.ts'
+import AccountingView from '../AccountingView/index.js'
+import AchievementsView from '../AchievementsView/index.js'
+import LogView from '../LogView/index.js'
+import OnlinePeersView from '../OnlinePeersView/index.js'
+import PriceEventView from '../PriceEventView/index.js'
+import SettingsView from '../SettingsView/index.js'
+import StatsView from '../StatsView/index.js'
+import KeybindingsView from '../KeybindingsView/index.js'
 
-import DayAndProgressContainer from './DayAndProgressContainer.tsx'
+import DayAndProgressContainer from './DayAndProgressContainer.js'
 
 import './Navigation.sass'
 

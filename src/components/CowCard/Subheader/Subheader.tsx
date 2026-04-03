@@ -9,19 +9,19 @@ import classNames from 'classnames'
 import { faHeart as faFullHeart } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faEmptyHeart } from '@fortawesome/free-regular-svg-icons'
 
-import { COW_COLOR_NAMES } from '../../../strings.ts'
-import { genders } from '../../../enums.ts'
-import { moneyString } from '../../../utils/moneyString.ts'
+import { COW_COLOR_NAMES } from '../../../strings.js'
+import { genders } from '../../../enums.js'
+import { moneyString } from '../../../utils/moneyString.js'
 import {
   getCowWeight,
   getPlayerName,
   integerString,
   isCowInBreedingPen,
   nullArray,
-} from '../../../utils/index.tsx'
-import { memoize } from '../../../utils/memoize.ts'
-import { huggingMachine } from '../../../data/items.ts'
-import Bloodline from '../Bloodline/index.ts'
+} from '../../../utils/index.js'
+import { memoize } from '../../../utils/memoize.js'
+import { huggingMachine } from '../../../data/items.js'
+import Bloodline from '../Bloodline/index.js'
 
 import './Subheader.sass'
 

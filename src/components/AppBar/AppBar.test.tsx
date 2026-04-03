@@ -2,9 +2,9 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { noop } from '../../utils/noop.ts'
+import { noop } from '../../utils/noop.js'
 
-import { AppBar } from './AppBar.tsx'
+import { AppBar } from './AppBar.js'
 
 const defaultProps = {
   handleClickNotificationIndicator: noop,

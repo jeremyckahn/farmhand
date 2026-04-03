@@ -2,9 +2,9 @@
  * @typedef {farmhand.levelEntitlements} levelEntitlements
  * @typedef {farmhand.item} item
  */
-import { itemsMap } from '../data/maps.ts'
+import { itemsMap } from '../data/maps.js'
 
-import { getFinalCropItemFromSeedItem } from './index.tsx'
+import { getFinalCropItemFromSeedItem } from './index.js'
 
 /**
  * @param {levelEntitlements} levelEntitlements

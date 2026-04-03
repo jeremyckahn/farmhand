@@ -1,1 +1,1 @@
-export * from './Cellar.tsx'
+export * from './Cellar.js'

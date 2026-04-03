@@ -1,6 +1,6 @@
-import { testState } from '../../test-utils/index.ts'
+import { testState } from '../../test-utils/index.js'
 
-import { updateLearnedRecipes } from './updateLearnedRecipes.ts'
+import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 
 describe('updateLearnedRecipes', () => {
   describe('recipe condition is not met', () => {

@@ -1,12 +1,12 @@
-import { MILKS_PRODUCED } from '../../templates.ts'
+import { MILKS_PRODUCED } from '../../templates.js'
 import {
   COW_MILK_RATE_SLOWEST,
   INFINITE_STORAGE_LIMIT,
-} from '../../constants.ts'
-import { genders, standardCowColors } from '../../enums.ts'
-import { generateCow, getCowMilkItem } from '../../utils/index.tsx'
+} from '../../constants.js'
+import { genders, standardCowColors } from '../../enums.js'
+import { generateCow, getCowMilkItem } from '../../utils/index.js'
 
-import { processMilkingCows } from './processMilkingCows.ts'
+import { processMilkingCows } from './processMilkingCows.js'
 
 describe('processMilkingCows', () => {
   let state

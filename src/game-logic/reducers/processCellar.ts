@@ -1,6 +1,6 @@
 /** @typedef {farmhand.state} state */
 
-import { processCellarSpoilage } from './processCellarSpoilage.ts'
+import { processCellarSpoilage } from './processCellarSpoilage.js'
 
 /**
  * @param {state} state

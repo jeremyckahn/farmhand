@@ -1,5 +1,5 @@
-import { itemType } from '../../enums.ts'
-import { SALT_ROCK_SPAWN_CHANCE } from '../../constants.ts'
+import { itemType } from '../../enums.js'
+import { SALT_ROCK_SPAWN_CHANCE } from '../../constants.js'
 
 const { freeze } = Object
 

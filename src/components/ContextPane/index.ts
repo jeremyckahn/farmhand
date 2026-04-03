@@ -1,1 +1,1 @@
-export { default } from './ContextPane.tsx'
+export { default } from './ContextPane.js'

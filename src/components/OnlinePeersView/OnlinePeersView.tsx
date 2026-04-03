@@ -7,15 +7,15 @@ import CardContent from '@mui/material/CardContent/index.js'
 import sortBy from 'lodash.sortby'
 import { array, number, object, string } from 'prop-types'
 
-import BailOutErrorBoundary from '../BailOutErrorBoundary/index.ts'
+import BailOutErrorBoundary from '../BailOutErrorBoundary/index.js'
 
-import { levelAchieved } from '../../utils/levelAchieved.ts'
-import { getPlayerName } from '../../utils/index.tsx'
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import { levelAchieved } from '../../utils/levelAchieved.js'
+import { getPlayerName } from '../../utils/index.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import CowCard from '../CowCard/index.ts'
+import CowCard from '../CowCard/index.js'
 
-import OnlinePeer from './OnlinePeer/index.ts'
+import OnlinePeer from './OnlinePeer/index.js'
 
 const OnlinePeersView = ({
   activePlayers,

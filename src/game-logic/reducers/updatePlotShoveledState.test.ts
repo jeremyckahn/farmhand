@@ -1,6 +1,6 @@
-import { fertilizerType } from '../../enums.ts'
+import { fertilizerType } from '../../enums.js'
 
-import { updatePlotShoveledState } from './updatePlotShoveledState.ts'
+import { updatePlotShoveledState } from './updatePlotShoveledState.js'
 
 describe('updatePlotShoveledState', () => {
   test('it decrements daysUntilClear if value is above 1', () => {

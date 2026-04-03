@@ -1,10 +1,10 @@
-import { shapeOf, testCrop } from '../../test-utils/index.ts'
-import { generateCow } from '../../utils/index.tsx'
-import { EXPERIENCE_VALUES } from '../../constants.ts'
+import { shapeOf, testCrop } from '../../test-utils/index.js'
+import { generateCow } from '../../utils/index.js'
+import { EXPERIENCE_VALUES } from '../../constants.js'
 
-import { computeStateForNextDay } from './computeStateForNextDay.ts'
+import { computeStateForNextDay } from './computeStateForNextDay.js'
 
-vitest.mock('../../data/maps.ts')
+vitest.mock('../../data/maps.js')
 
 describe('computeStateForNextDay', () => {
   let state

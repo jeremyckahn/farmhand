@@ -1,10 +1,10 @@
-import { testState } from '../../test-utils/index.ts'
+import { testState } from '../../test-utils/index.js'
 
-import { applyCrows } from './applyCrows.ts'
+import { applyCrows } from './applyCrows.js'
 
-import { processNerfs } from './processNerfs.ts'
+import { processNerfs } from './processNerfs.js'
 
-vitest.mock('./applyCrows.ts')
+vitest.mock('./applyCrows.js')
 
 describe('processNerfs', () => {
   it('invokes applyCrows', () => {

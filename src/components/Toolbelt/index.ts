@@ -1,1 +1,1 @@
-export { default } from './Toolbelt.tsx'
+export { default } from './Toolbelt.js'

@@ -7,11 +7,11 @@ import FormControlLabel from '@mui/material/FormControlLabel/index.js'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
 import { array } from 'prop-types'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
-import Item from '../Item/index.ts'
-import { itemsMap } from '../../data/maps.ts'
-import { sortItems } from '../../utils/index.tsx'
-import SearchBar from '../SearchBar/index.ts'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import Item from '../Item/index.js'
+import { itemsMap } from '../../data/maps.js'
+import { sortItems } from '../../utils/index.js'
+import SearchBar from '../SearchBar/index.js'
 import './Inventory.sass'
 
 // Using Map for categories to preserve key order and enable Map methods

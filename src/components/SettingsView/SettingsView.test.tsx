@@ -6,9 +6,9 @@ import {
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { noop } from '../../utils/noop.ts'
+import { noop } from '../../utils/noop.js'
 
-import { SettingsView } from './SettingsView.tsx'
+import { SettingsView } from './SettingsView.js'
 
 const defaultProps = {
   allowCustomPeerCowNames: false,

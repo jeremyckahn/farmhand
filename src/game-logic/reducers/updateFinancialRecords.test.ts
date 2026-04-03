@@ -1,6 +1,6 @@
-import { testState } from '../../test-utils/index.ts'
+import { testState } from '../../test-utils/index.js'
 
-import { updateFinancialRecords } from './updateFinancialRecords.ts'
+import { updateFinancialRecords } from './updateFinancialRecords.js'
 
 describe('updateFinancialRecords', () => {
   test('updates financial records', () => {

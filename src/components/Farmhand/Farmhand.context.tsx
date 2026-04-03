@@ -1,8 +1,8 @@
 import { createContext } from 'react'
 
 // eslint-disable-next-line no-unused-vars
-import uiEventHandlers from '../../handlers/ui-events.tsx'
-import { generateCow } from '../../utils/index.tsx'
+import uiEventHandlers from '../../handlers/ui-events.js'
+import { generateCow } from '../../utils/index.js'
 
 /**
  * @typedef {{

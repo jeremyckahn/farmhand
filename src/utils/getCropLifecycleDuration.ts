@@ -1,4 +1,4 @@
-import { memoize } from './memoize.ts'
+import { memoize } from './memoize.js'
 
 /**
  * @param {{ cropTimeline: number[] }} crop

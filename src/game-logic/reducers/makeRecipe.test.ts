@@ -1,12 +1,12 @@
-import { carrotSoup } from '../../data/recipes.ts'
-import { carrot } from '../../data/crops/index.ts'
-import { testState } from '../../test-utils/index.ts'
+import { carrotSoup } from '../../data/recipes.js'
+import { carrot } from '../../data/crops/index.js'
+import { testState } from '../../test-utils/index.js'
 
-import { EXPERIENCE_VALUES, INFINITE_STORAGE_LIMIT } from '../../constants.ts'
+import { EXPERIENCE_VALUES, INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
-import { recipeType } from '../../enums.ts'
+import { recipeType } from '../../enums.js'
 
-import { makeRecipe } from './makeRecipe.ts'
+import { makeRecipe } from './makeRecipe.js'
 
 describe('makeRecipe', () => {
   describe('there are insufficient ingredients for recipe', () => {

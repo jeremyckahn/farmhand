@@ -1,10 +1,10 @@
-import { itemsMap } from '../../data/maps.ts'
-import { areHuggingMachinesInInventory } from '../../utils/index.tsx'
-import { HUGGING_MACHINE_ITEM_ID } from '../../constants.ts'
+import { itemsMap } from '../../data/maps.js'
+import { areHuggingMachinesInInventory } from '../../utils/index.js'
+import { HUGGING_MACHINE_ITEM_ID } from '../../constants.js'
 
-import { addItemToInventory } from './addItemToInventory.ts'
-import { decrementItemFromInventory } from './decrementItemFromInventory.ts'
-import { modifyCow } from './modifyCow.ts'
+import { addItemToInventory } from './addItemToInventory.js'
+import { decrementItemFromInventory } from './decrementItemFromInventory.js'
+import { modifyCow } from './modifyCow.js'
 
 /**
  * @param {farmhand.state} state

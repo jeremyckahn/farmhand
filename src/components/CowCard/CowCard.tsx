@@ -13,10 +13,10 @@ import classNames from 'classnames'
 import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
 import { useIsMounted } from 'usehooks-ts'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.tsx'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { pixel } from '../../img/index.ts'
-import { genders } from '../../enums.ts'
+import { pixel } from '../../img/index.js'
+import { genders } from '../../enums.js'
 import {
   areHuggingMachinesInInventory,
   getCowDisplayName,
@@ -24,14 +24,14 @@ import {
   getCowValue,
   isCowInBreedingPen,
   isInViewport,
-} from '../../utils/index.tsx'
-import { PURCHASEABLE_COW_PENS } from '../../constants.ts'
+} from '../../utils/index.js'
+import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import {
   OFFER_COW_FOR_TRADE,
   WITHDRAW_COW_FROM_TRADE,
-} from '../../templates.ts'
+} from '../../templates.js'
 
-import Subheader from './Subheader/index.ts'
+import Subheader from './Subheader/index.js'
 
 import './CowCard.sass'
 
