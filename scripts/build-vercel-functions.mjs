@@ -34,7 +34,9 @@ fs.writeFileSync(
 );
 
 // We need to build the API endpoints directly into `.vercel/output/functions/api/name.func/`
-const apis = ['get-market-data', 'post-day-results'];
+const apis = fs.readdirSync(path.join(rootDir, 'api-src'))
+  .filter(file => file.endsWith('.ts'))
+  .map(file => path.parse(file).name);
 
 for (const api of apis) {
   const funcDir = path.join(vercelOutputFunctions, 'api', `${api}.func`);
