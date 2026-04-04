@@ -26,6 +26,7 @@
     "prettier": "prettier 'src/**/*.{js,ts,tsx}' --write",
     "preversion": "npm test",
     "postversion": "git push && git push --tags",
+    "postinstall": "npm run build:api",
     "start": "vite --port=3000",
     "start:api": "NODE_OPTIONS=--openssl-legacy-provider vercel dev --token=$VERCEL_TOKEN --listen=0.0.0.0:3001 --yes",
     "start:backend": "docker compose up",
