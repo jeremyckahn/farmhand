@@ -43,7 +43,7 @@ for (const api of apis) {
   // 1. Write the .vc-config.json for the function
   const vcConfig = {
     runtime: 'nodejs22.x',
-    handler: `${api}.mjs`,
+    handler: `${api}.js`,
     launcherType: 'Nodejs',
     shouldAddHelpers: true,
   };
@@ -58,8 +58,10 @@ for (const api of apis) {
     `api-src/${api}.ts`,
     '--bundle',
     '--platform=node',
-    '--format=esm',
-    `--outfile=${path.join(funcDir, `${api}.mjs`)}`
+    '--format=cjs',
+    '--define:import.meta.env.MODE=\'"production"\'',
+    '--define:import.meta.env=\'{"MODE":"production"}\'',
+    `--outfile=${path.join(funcDir, `${api}.js`)}`
   ], { stdio: 'inherit', cwd: rootDir });
 
   if (result.status !== 0) {
