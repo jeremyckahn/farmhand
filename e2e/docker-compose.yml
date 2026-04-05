@@ -20,11 +20,12 @@ services:
 
   api:
     image: ghcr.io/${GITHUB_REPOSITORY}/farmhand:${FARMHAND_IMAGE_TAG}
-    command: ['npm', 'run', 'start:api']
+    command: ['/bin/sh', '-c', 'npm run build:api && npm run start:api']
     volumes:
       - ../.vercel:/app/.vercel
       - ../package.json:/app/package.json
       - ../src:/app/src
+      - ../api-src:/app/api-src
       - ../api:/app/api
       - ../api-etc:/app/api-etc
     container_name: farmhand_e2e_api
