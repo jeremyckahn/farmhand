@@ -52,13 +52,7 @@ for (const api of apis) {
     JSON.stringify(vcConfig, null, 2)
   )
 
-  // 2. Write package.json to force CommonJS
-  fs.writeFileSync(
-    path.join(funcDir, 'package.json'),
-    JSON.stringify({ type: 'commonjs' }, null, 2)
-  )
-
-  // 3. Build the function into the folder using esbuild
+  // 2. Build the function into the folder using esbuild
   const result = spawnSync(
     'npx',
     [

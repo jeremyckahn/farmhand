@@ -34,7 +34,7 @@
     "test": "vitest",
     "test:debug": "vitest --inspect-brk --no-file-parallelism --run",
     "update-images": "bash update-images.sh",
-    "build:api": "esbuild api-src/get-market-data.ts api-src/post-day-results.ts --bundle --packages=external --platform=node --format=cjs --define:import.meta.env.MODE='\"production\"' --define:import.meta.env='{\"MODE\":\"production\"}' --outdir=api && echo '{\"type\": \"commonjs\"}' > api/package.json",
+    "build:api": "esbuild api-src/get-market-data.ts api-src/post-day-results.ts --bundle --packages=external --platform=node --format=esm --out-extension:.js=.mjs --outdir=api",
     "build:vercel-functions": "node scripts/build-vercel-functions.mjs"
   },
   "author": "Jeremy Kahn <jeremyckahn@gmail.com>",
