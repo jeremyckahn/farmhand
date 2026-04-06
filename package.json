@@ -21,7 +21,7 @@
     "e2e:serve-app": "npx vite preview --port 3000 --host",
     "e2e:create": "npx playwright codegen localhost:3000?seed=0.5",
     "electron": "wait-on tcp:3000 && electron .",
-    "print:crops": "npx babel-node --presets @babel/preset-env --presets babel-preset-vite src/scripts/generate-crop-table.js",
+    "print:crops": "npx vite-node src/scripts/generate-crop-table.ts",
     "lint": "eslint src --max-warnings=0",
     "prettier": "prettier 'src/**/*.{js,ts,tsx}' --write",
     "preversion": "npm test",
@@ -94,6 +94,7 @@
     "typescript": "^6.0.2",
     "vercel": "^50.10.1",
     "vite": "^7.3.1",
+    "vite-node": "^6.0.0",
     "vite-plugin-pwa": "^1.2.0",
     "vitest": "^4.0.18",
     "wait-on": "^8.0.3"
