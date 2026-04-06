@@ -21,7 +21,7 @@
     "e2e:serve-app": "npx vite preview --port 3000 --host",
     "e2e:create": "npx playwright codegen localhost:3000?seed=0.5",
     "electron": "wait-on tcp:3000 && electron .",
-    "print:crops": "npx vite-node src/scripts/generate-crop-table.ts",
+    "print:crops": "vite-node src/scripts/generate-crop-table.ts",
     "lint": "eslint src --max-warnings=0",
     "prettier": "prettier 'src/**/*.{js,ts,tsx}' --write",
     "preversion": "npm test",
