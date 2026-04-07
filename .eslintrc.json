@@ -3,6 +3,7 @@
     "vitest": true
   },
   "extends": ["react-app"],
+  "parser": "@typescript-eslint/parser",
   "rules": {
     "import/order": [
       "error",
