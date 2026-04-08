@@ -3,6 +3,7 @@
     "vitest": true
   },
   "extends": ["react-app"],
+  "parser": "@typescript-eslint/parser",
   "rules": {
     "import/order": [
       "error",
@@ -10,6 +11,8 @@
     ],
     "import/extensions": ["error", "always"],
     "react/react-in-jsx-scope": ["off"],
-    "no-shadow": ["error"]
+    "no-shadow": ["error"],
+    "@typescript-eslint/no-unused-vars": "off",
+    "import/no-anonymous-default-export": "off"
   }
 }
