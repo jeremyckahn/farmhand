@@ -43,8 +43,10 @@ jobs:
           # legacy .npmrc that expects NODE_AUTH_TOKEN, which conflicts with OIDC.
 
       - name: Upgrade npm
-        # Ensure latest npm for reliable Trusted Publisher (OIDC) support
-        run: npm install -g npm@latest
+        # Ensure latest npm for reliable Trusted Publisher (OIDC) support.
+        # Upgrading incrementally avoids a known issue in Node 22.22.2 with promise-retry.
+        # See: https://github.com/nodejs/node/issues/62425
+        run: npm install -g npm@^10 && npm install -g npm@latest
 
       - run: npm ci
 
