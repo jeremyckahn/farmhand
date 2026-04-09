@@ -198,7 +198,7 @@ export default {
     const { value } = target
     // @ts-expect-error
     this.setState({
-      stageFocus: /** @type {farmhand.stageFocusType} */ value,
+      stageFocus: value as farmhand.stageFocusType,
     })
   },
 

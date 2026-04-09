@@ -17,7 +17,7 @@ const grape = grapeProps => {
   const newGrape = {
     ...cropVariety({
       ...grapeProps,
-      cropFamily: /** @type {'GRAPE'} */ cropFamily.GRAPE,
+      cropFamily: cropFamily.GRAPE as 'GRAPE',
     }),
   }
 
@@ -96,7 +96,7 @@ export const grapeChardonnay = grape({
   }),
   name: 'Chardonnay Grape',
   imageId: 'grape-green',
-  variety: /** @type {'CHARDONNAY'} */ grapeVariety.CHARDONNAY,
+  variety: grapeVariety.CHARDONNAY as 'CHARDONNAY',
   wineId: 'wine-chardonnay',
 })
 
@@ -111,7 +111,7 @@ export const grapeSauvignonBlanc = grape({
   }),
   name: 'Sauvignon Blanc Grape',
   imageId: 'grape-green',
-  variety: /** @type {'SAUVIGNON_BLANC'} */ grapeVariety.SAUVIGNON_BLANC,
+  variety: grapeVariety.SAUVIGNON_BLANC as 'SAUVIGNON_BLANC',
   wineId: 'wine-sauvignon-blanc',
 })
 
@@ -174,7 +174,7 @@ export const grapeCabernetSauvignon = grape({
   }),
   name: 'Cabernet Sauvignon Grape',
   imageId: 'grape-purple',
-  variety: /** @type {'CABERNET_SAUVIGNON'} */ grapeVariety.CABERNET_SAUVIGNON,
+  variety: grapeVariety.CABERNET_SAUVIGNON as 'CABERNET_SAUVIGNON',
   wineId: 'wine-cabernet-sauvignon',
 })
 
@@ -201,7 +201,7 @@ export const grapeTempranillo = grape({
   }),
   name: 'Tempranillo Grape',
   imageId: 'grape-purple',
-  variety: /** @type {'TEMPRANILLO'} */ grapeVariety.TEMPRANILLO,
+  variety: grapeVariety.TEMPRANILLO as 'TEMPRANILLO',
   wineId: 'wine-tempranillo',
 })
 
@@ -216,7 +216,7 @@ export const grapeNebbiolo = grape({
   }),
   name: 'Nebbiolo Grape',
   imageId: 'grape-purple',
-  variety: /** @type {'NEBBIOLO'} */ grapeVariety.NEBBIOLO,
+  variety: grapeVariety.NEBBIOLO as 'NEBBIOLO',
   wineId: 'wine-nebbiolo',
 })
 

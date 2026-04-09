@@ -12,7 +12,7 @@ export const coal = freeze({
   doesPriceFluctuate: false,
   id: 'coal',
   name: 'Coal',
-  type: /** @type {farmhand.itemType} */ itemType.FUEL,
+  type: itemType.FUEL as farmhand.itemType,
   spawnChance: COAL_SPAWN_CHANCE,
   value: 2,
 })

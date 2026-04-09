@@ -12,7 +12,7 @@ export const bronzeOre = freeze({
   doesPriceFluctuate: true,
   id: 'bronze-ore',
   name: 'Bronze Ore',
-  type: /** @type {farmhand.itemType} */ itemType.ORE,
+  type: itemType.ORE as farmhand.itemType,
   value: 25,
   spawnChance: BRONZE_SPAWN_CHANCE,
 })

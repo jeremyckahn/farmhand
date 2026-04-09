@@ -312,8 +312,7 @@ export default class Farmhand extends FarmhandReducers {
       activePlayers: null,
       allowCustomPeerCowNames: false,
       cellarInventory: [],
-      currentDialogView:
-        /** @type {globalThis.farmhand.dialogView} */ dialogView.NONE,
+      currentDialogView: dialogView.NONE as globalThis.farmhand.dialogView,
       completedAchievements: {},
       cowForSale: generateCow(),
       cowBreedingPen: {
@@ -332,7 +331,7 @@ export default class Farmhand extends FarmhandReducers {
       experience: 0,
       farmName: 'Unnamed',
       field: createNewField(),
-      fieldMode: /** @type {globalThis.farmhand.fieldMode} */ OBSERVE,
+      fieldMode: OBSERVE as globalThis.farmhand.fieldMode,
       forest: createNewForest(),
       getCowAccept: noop,
       getCowReject: noop,
@@ -394,8 +393,7 @@ export default class Farmhand extends FarmhandReducers {
       sendCowTradeRequest: noop,
       showHomeScreen: true,
       showNotifications: true,
-      stageFocus:
-        /** @type {globalThis.farmhand.stageFocusType} */ stageFocusType.HOME,
+      stageFocus: stageFocusType.HOME as globalThis.farmhand.stageFocusType,
       todaysNotifications: [],
       todaysLosses: 0,
       todaysPurchases: {},
