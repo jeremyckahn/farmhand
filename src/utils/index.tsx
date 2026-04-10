@@ -1006,7 +1006,7 @@ export const transformStateDataForImport = /** @type {(state: any) => farmhand.s
   ) {
     sanitizedState = {
       ...sanitizedState,
-      stageFocus: STANDARD_VIEW_LIST[0] as farmhand.stageFocusType,
+      stageFocus: /** @type {farmhand.stageFocusType} */ STANDARD_VIEW_LIST[0],
     }
   }
 

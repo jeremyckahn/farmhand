@@ -32,9 +32,9 @@ const convertToRecipe = partialRecipe => {
     ...partialRecipe,
   })
 
-  itemsMap[partialRecipe.id] = /** @type {farmhand.item} */ recipe
+  itemsMap[partialRecipe.id] = recipe as farmhand.item
 
-  return /** @type {farmhand.recipe} */ recipe
+  return recipe as farmhand.recipe
 }
 
 /**
