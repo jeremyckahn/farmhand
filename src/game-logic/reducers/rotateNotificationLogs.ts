@@ -17,7 +17,7 @@ export const rotateNotificationLogs = state => {
   }
 
   newDayNotifications.forEach(({ message, severity }) =>
-    notifications[/** @type {string} */ severity].push(message)
+    notifications[severity as string].push(message)
   )
 
   if (newDayNotifications.length) {

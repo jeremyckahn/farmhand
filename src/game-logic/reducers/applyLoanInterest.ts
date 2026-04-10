@@ -17,7 +17,7 @@ export const applyLoanInterest = state => {
       ? [
           ...state.newDayNotifications,
           {
-            severity: /** @type {farmhand.notificationSeverity} */ 'warning',
+            severity: 'warning' as farmhand.notificationSeverity,
             message: LOAN_BALANCE_NOTIFICATION('', newLoanBalance),
           },
         ]

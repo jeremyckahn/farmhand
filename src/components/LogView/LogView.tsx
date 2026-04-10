@@ -37,12 +37,12 @@ export const LogView = ({ notificationLog, todaysNotifications }) => (
           {['success', 'info', 'warning', 'error'].map(
             (severityLevel, severityIndex) =>
               notifications[severityLevel].length ? (
-                // @ts-expect-error
+
                 <Alert
                   {...{
                     elevation: 3,
                     key: `${severityLevel}_${severityIndex}`,
-                    severity: /** @type {'success' | 'info' | 'warning' | 'error'} */ severityLevel,
+                    severity: severityLevel as 'success' | 'info' | 'warning' | 'error',
                   }}
                 >
                   {notifications[severityLevel].map((message, messageIndex) => (

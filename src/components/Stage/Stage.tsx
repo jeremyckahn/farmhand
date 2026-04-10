@@ -22,16 +22,13 @@ export const Stage = ({ field, stageFocus, viewTitle }) => {
 
   useEffect(() => {
     if (ref.current) {
-      const current = /** @type {HTMLElement} */ ref.current
+      const current = ref.current as HTMLElement
       const { style } = current
       // Set scroll position to the top
-      // @ts-expect-error
       current.scrollTop = 0
 
       // Stop any intertial scrolling
-      // @ts-expect-error
       style.overflow = 'hidden'
-      // @ts-expect-error
       setTimeout(() => (style.overflow = ''), 0)
     }
   }, [stageFocus])

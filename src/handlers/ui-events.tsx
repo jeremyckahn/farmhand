@@ -198,7 +198,7 @@ export default {
     const { value } = target
     // @ts-expect-error
     this.setState({
-      stageFocus: /** @type {farmhand.stageFocusType} */ value,
+      stageFocus: value as farmhand.stageFocusType,
     })
   },
 
@@ -289,8 +289,7 @@ export default {
 
     // Prevent the player from spamming the End Day button
     // https://www.reddit.com/r/incremental_games/comments/jusn9i/farmhand_updates_for_November_2020/gcmi6x6/?context=3
-    const activeElement = /** @type {HTMLElement} */ document.activeElement
-    // @ts-expect-error
+    const activeElement = document.activeElement as HTMLElement
     activeElement.blur()
   },
 
@@ -476,8 +475,7 @@ export default {
 
     fileReader.addEventListener('loadend', eImport => {
       try {
-        const target = /** @type {FileReader} */ eImport.target
-        // @ts-expect-error
+        const target = eImport.target as FileReader
         const json = String(target.result)
         const parsedJson = JSON.parse(json)
         const transformedStateData = transformStateDataForImport(parsedJson)
