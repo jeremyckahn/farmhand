@@ -34,18 +34,17 @@ export const LogView = ({ notificationLog, todaysNotifications }) => (
       {notificationLog.map(({ day, notifications }, dayIndex) => (
         <li key={`${dayIndex}_${notifications.info.join()}`}>
           <h3>Day {day}</h3>
-          {['success', 'info', 'warning', 'error'].map(
+          {(['success', 'info', 'warning', 'error'] as const).map(
             (severityLevel, severityIndex) =>
               notifications[severityLevel].length ? (
-                // @ts-expect-error
                 <Alert
                   {...{
                     elevation: 3,
                     key: `${severityLevel}_${severityIndex}`,
-                    severity: /** @type {'success' | 'info' | 'warning' | 'error'} */ severityLevel,
+                    severity: severityLevel,
                   }}
                 >
-                  {notifications[severityLevel].map((message, messageIndex) => (
+                  {notifications[severityLevel].map((message: any, messageIndex: any) => (
                     <ReactMarkdown
                       {...{
                         key: `${messageIndex}_${message}`,

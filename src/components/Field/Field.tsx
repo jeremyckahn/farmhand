@@ -42,14 +42,13 @@ const zoomKeyMap = {
   zoomOut: '-',
 }
 
-const fieldKeyMap = {
+const fieldKeyMap: Record<string, string> = {
   selectWateringCan: tools.wateringCan.fieldKey,
   selectScythe: tools.scythe.fieldKey,
   selectHoe: tools.hoe.fieldKey,
 }
 
 if (tools.shovel) {
-  // @ts-expect-error
   fieldKeyMap.selectShovel = tools.shovel.fieldKey
 }
 
@@ -111,15 +110,13 @@ export const MemoPlot = memo(
    * @param {number} props.x
    * @param {number} props.y
    */
-  props => {
-    // @ts-expect-error
+  (props: any) => {
     const { hoveredPlot, plotContent, setHoveredPlot, x, y } = props
 
     return (
       <Plot
         {...{
           hoveredPlot,
-          // @ts-expect-error
           isInHoverRange: isInHoverRange(props),
           plotContent,
           setHoveredPlot,
@@ -129,16 +126,13 @@ export const MemoPlot = memo(
       />
     )
   },
-  (prev, next) => {
-    // @ts-expect-error
+  (prev: any, next: any) => {
     if (isInHoverRange(prev) !== isInHoverRange(next)) {
       return false
     }
 
     return (
-      // @ts-expect-error
       prev.plotContent === next.plotContent &&
-      // @ts-expect-error
       prev.hoveredPlotRangeSize === next.hoveredPlotRangeSize
     )
   }

@@ -42,12 +42,11 @@ export class WineService {
    * @param {keg[]} props.cellarInventory
    * @param {number} props.cellarSize
    */
-  getMaxWineYield = ({ grape, inventory, cellarInventory, cellarSize }) => {
+  getMaxWineYield = ({ grape, inventory, cellarInventory, cellarSize }: any) => {
     const {
       [grape.id]: grapeQuantityInInventory = 0,
-      // @ts-expect-error
-      [itemsMap.yeast.id]: yeastQuantityInInventory = 0,
-    } = getInventoryQuantityMap(inventory)
+      [(itemsMap as any).yeast.id]: yeastQuantityInInventory = 0,
+    } = getInventoryQuantityMap(inventory) as any
 
     const availableCellarSpace = cellarSize - cellarInventory.length
 

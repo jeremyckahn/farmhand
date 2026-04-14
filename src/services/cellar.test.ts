@@ -17,8 +17,7 @@ describe('CellarService', () => {
       const keg = cellarService.generateKeg(pumpkin)
 
       expect(keg).toEqual({
-        // @ts-expect-error
-        daysUntilMature: pumpkin.daysToFerment,
+        daysUntilMature: (pumpkin as any).daysToFerment,
         itemId: pumpkin.id,
         id: mockUuid,
       })

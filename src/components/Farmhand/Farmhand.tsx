@@ -116,50 +116,47 @@ const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 // Utility object for reuse in no-ops to save on memory
 const emptyObject = Object.freeze({})
 
-// @ts-expect-error
 export const computePlayerInventory = memoize(
   /**
    * @param {{ id: globalThis.farmhand.item['id'], quantity: number }[]} inventory
    * @param {Record<string, number>} valueAdjustments
    * @returns {globalThis.farmhand.item[]}
    */
-  (inventory, valueAdjustments) =>
-    inventory.map(({ quantity, id }) => ({
+  (inventory: any, valueAdjustments?: any) =>
+    inventory.map(({ quantity, id }: any) => ({
       quantity,
       ...itemsMap[id],
       value: getItemCurrentValue(itemsMap[id], valueAdjustments),
     }))
-)
+, {}) as any
 
-// @ts-expect-error
 export const getFieldToolInventory = memoize(
   /**
    * @param {globalThis.farmhand.state['inventory']} inventory
    * @returns {globalThis.farmhand.item[]}
    */
-  inventory =>
+  (inventory: any) =>
     inventory
-      .filter(({ id }) => {
+      .filter(({ id }: any) => {
         const { enablesFieldMode } = itemsMap[id]
 
         return (
           typeof enablesFieldMode === 'string' && enablesFieldMode !== PLANT
         )
       })
-      .map(({ id, quantity }) => ({ ...itemsMap[id], quantity }))
-)
+      .map(({ id, quantity }: any) => ({ ...itemsMap[id], quantity }))
+, {}) as any
 
-// @ts-expect-error
 export const getPlantableCropInventory = memoize(
   /**
    * @param {globalThis.farmhand.state['inventory']} inventory
    * @returns {globalThis.farmhand.item[]}
    */
-  inventory =>
+  (inventory: any) =>
     inventory
-      .filter(({ id }) => itemsMap[id].isPlantableCrop)
-      .map(({ id, quantity }) => ({ ...itemsMap[id], quantity }))
-)
+      .filter(({ id }: any) => itemsMap[id].isPlantableCrop)
+      .map(({ id, quantity }: any) => ({ ...itemsMap[id], quantity }))
+, {}) as any
 
 /**
  * @param {Record<string, number>} valueAdjustments
@@ -257,8 +254,7 @@ export default class Farmhand extends FarmhandReducers {
       viewList.unshift(HOME)
     }
 
-    // @ts-expect-error
-    if (this.isForestUnlocked && features.FOREST) {
+    if (this.isForestUnlocked && (features as any).FOREST) {
       viewList.push(FOREST)
     }
 
@@ -355,8 +351,7 @@ export default class Farmhand extends FarmhandReducers {
       cellarItemsSold: {},
       isChatOpen: false,
       isDialogViewOpen: false,
-      // @ts-expect-error
-      isOnline: this.props.match.path.startsWith('/online'),
+      isOnline: (this.props as any).match.path.startsWith('/online'),
       isWaitingForDayToCompleteIncrementing: false,
       learnedRecipes: {},
       loanBalance: STANDARD_LOAN_AMOUNT,
@@ -380,8 +375,7 @@ export default class Farmhand extends FarmhandReducers {
       recordSingleDayProfit: 0,
       revenue: 0,
       redirect: '',
-      // @ts-expect-error
-      room: decodeURIComponent(this.props.match.params.room || DEFAULT_ROOM),
+      room: decodeURIComponent((this.props as any).match.params.room || DEFAULT_ROOM),
       sendCowAccept: noop,
       sendCowReject: noop,
       purchasedCombine: 0,
@@ -420,8 +414,7 @@ export default class Farmhand extends FarmhandReducers {
       historicalValueAdjustments: [],
     }))
 
-    // @ts-expect-error
-    this.showNotification(LOAN_INCREASED('', STANDARD_LOAN_AMOUNT), 'info')
+    ;(this as any).showNotification(LOAN_INCREASED('', STANDARD_LOAN_AMOUNT), 'info')
   }
 
   initInputHandlers() {
@@ -513,8 +506,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   async componentDidMount() {
-    // @ts-expect-error
-    const state = await this.props.localforage.getItem('state')
+    const state = await (this.props as any).localforage.getItem('state')
 
     if (state) {
       const sanitizedState = transformStateDataForImport({
@@ -525,15 +517,13 @@ export default class Farmhand extends FarmhandReducers {
       const { isCombineEnabled, newDayNotifications } = sanitizedState
 
       this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {
-        newDayNotifications.forEach(({ message, severity }) => {
+        newDayNotifications.forEach(({ message, severity }: any) => {
           // Defer these notifications so that notistack doesn't swallow all
           // but the last one.
-          // @ts-expect-error
-          setTimeout(() => this.showNotification(message, severity), 0)
+          setTimeout(() => (this as any).showNotification(message, severity), 0)
 
           if (isCombineEnabled) {
-            // @ts-expect-error
-            this.forRange(reducers.harvestPlot, Infinity, 0, 0)
+            (this as any).forRange(reducers.harvestPlot, Infinity, 0, 0)
           }
         })
       })
@@ -567,12 +557,11 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     const {
-      // @ts-expect-error
       match: {
         path,
         params: { room: newRoom = room },
       },
-    } = this.props
+    } = this.props as any
 
     const decodedRoom = decodeURIComponent(newRoom)
 
@@ -603,8 +592,7 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     if (isOnline === false && prevState.isOnline === true) {
-      // @ts-expect-error
-      this.showNotification(DISCONNECTED_FROM_SERVER, 'info')
+      (this as any).showNotification(DISCONNECTED_FROM_SERVER, 'info')
     }
 
     const updatedAchievementsState = reducers.updateAchievements(
@@ -630,72 +618,59 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     if (money < prevState.money) {
-      // @ts-expect-error
-      this.setState(({ todaysLosses }) => ({
+      this.setState(({ todaysLosses }: any) => ({
         todaysLosses: moneyTotal(todaysLosses, money - prevState.money),
       }))
     }
 
     if (peerRoom !== prevState.peerRoom) {
       if (peerRoom) {
-        // @ts-expect-error
-        peerRoom.onPeerJoin(id => {
-          // @ts-expect-error
-          this.addPeer(id)
+        (peerRoom as any).onPeerJoin((id: any) => {
+          (this as any).addPeer(id)
         })
 
-        // @ts-expect-error
-        peerRoom.onPeerLeave(id => {
-          // @ts-expect-error
-          this.removePeer(id)
+        ;(peerRoom as any).onPeerLeave((id: any) => {
+          (this as any).removePeer(id)
         })
 
-        // @ts-expect-error
-        const [sendPeerMetadata, getPeerMetadataFunc] = peerRoom.makeAction(
+        const [sendPeerMetadata, getPeerMetadataFunc] = (peerRoom as any).makeAction(
           'peerMetadata'
         )
 
         getPeerMetadataFunc((
           /** @type {[object, string]} */
-          ...args
+          ...args: any[]
         ) =>
-          // @ts-expect-error
-          handlePeerMetadataRequest(this, ...args)
+          (handlePeerMetadataRequest as any)(this, ...args)
         )
 
-        // @ts-expect-error
-        const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
+        const [sendCowTradeRequest, getCowTradeRequest] = (peerRoom as any).makeAction(
           'cowTrade'
         )
 
         getCowTradeRequest((
           /** @type {[object, string]} */
-          ...args
+          ...args: any[]
         ) =>
-          // @ts-expect-error
-          handleCowTradeRequest(this, ...args)
+          (handleCowTradeRequest as any)(this, ...args)
         )
 
-        // @ts-expect-error
-        const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
+        const [sendCowAccept, getCowAccept] = (peerRoom as any).makeAction('cowAccept')
 
         getCowAccept((
           /** @type {[object, string]} */
-          ...args
+          ...args: any[]
         ) =>
-          // @ts-expect-error
-          handleCowTradeRequestAccept(this, ...args)
+          (handleCowTradeRequestAccept as any)(this, ...args)
         )
 
-        // @ts-expect-error
-        const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
+        const [sendCowReject, getCowReject] = (peerRoom as any).makeAction('cowReject')
 
         getCowReject((
           /** @type {[object]} */
-          ...args
+          ...args: any[]
         ) =>
-          // @ts-expect-error
-          handleCowTradeRequestReject(this, ...args)
+          (handleCowTradeRequestReject as any)(this, ...args)
         )
 
         this.setState({
@@ -718,13 +693,14 @@ export default class Farmhand extends FarmhandReducers {
       }
     }
 
-    ;[
+    const methods = [
       'showInventoryFullNotifications',
       'showRecipeLearnedNotifications',
-    ].forEach(fn => this[fn](prevState))
+    ] as const;
 
-    // @ts-expect-error
-    this.state.sendPeerMetadata?.(this.peerMetadata)
+    methods.forEach(fn => (this as any)[fn](prevState));
+
+    (this.state as any).sendPeerMetadata?.(this.peerMetadata)
   }
 
   /**
@@ -732,9 +708,9 @@ export default class Farmhand extends FarmhandReducers {
    * Trystero's makeAction function.
    * @return {Function}
    */
-  wrapSendPeerMetadata(sendPeerMetadata) {
+  wrapSendPeerMetadata(sendPeerMetadata: any) {
     return throttle(
-      (...args) => {
+      (...args: any[]) => {
         sendPeerMetadata(...args)
 
         this.setState(() => ({
@@ -751,16 +727,12 @@ export default class Farmhand extends FarmhandReducers {
   /**
    * @param {globalThis.farmhand.cow} peerPlayerCow
    */
-  tradeForPeerCow(peerPlayerCow) {
-    this.setState(state => {
+  tradeForPeerCow(peerPlayerCow: any) {
+    this.setState((state: any) => {
       const {
-        // @ts-expect-error
         cowIdOfferedForTrade,
-        // @ts-expect-error
         cowInventory,
-        // @ts-expect-error
         peers,
-        // @ts-expect-error
         sendCowTradeRequest,
       } = state
 
@@ -769,8 +741,7 @@ export default class Farmhand extends FarmhandReducers {
       const { ownerId } = peerPlayerCow
 
       const [peerId] =
-        // @ts-expect-error
-        Object.entries(peers).find(([, peer]) => peer?.playerId === ownerId) ??
+        Object.entries(peers).find(([, peer]: any) => peer?.playerId === ownerId) ??
         []
 
       if (!peerId) {

@@ -239,13 +239,12 @@ export const CONNECTED_TO_ROOM = (_, room) => `Connected to room **${room}**!`
  * @param {Object} positions
  * @returns {string}
  */
-export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
-  const positivePositions = []
-  const negativePositions = []
+export const POSITIONS_POSTED_NOTIFICATION = (_: any, who: string, positions: Record<string, number>) => {
+  const positivePositions: string[] = []
+  const negativePositions: string[] = []
   const positionKeys = Object.keys(positions)
 
   positionKeys.forEach(itemId =>
-    // @ts-expect-error
     (positions[itemId] > 0 ? positivePositions : negativePositions).push(itemId)
   )
 
@@ -254,8 +253,7 @@ export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
   if (positivePositions.length) {
     chunks.push('Values raised:')
     positivePositions.forEach(itemId =>
-      // @ts-expect-error
-      chunks.push(`  - ${itemsMap[itemId].name}`)
+      chunks.push(`  - ${(itemsMap as any)[itemId].name}`)
     )
   }
 
@@ -266,8 +264,7 @@ export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
 
     chunks.push('Values lowered:')
     negativePositions.forEach(itemId =>
-      // @ts-expect-error
-      chunks.push(`  - ${itemsMap[itemId].name}`)
+      chunks.push(`  - ${(itemsMap as any)[itemId].name}`)
     )
   }
 
