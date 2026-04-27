@@ -13,7 +13,7 @@ import { makeWine } from './makeWine.js'
 const stubKegUuid = 'abc123'
 
 beforeEach(() => {
-  vitest.spyOn(cellarService, '_uuid').mockReturnValue(stubKegUuid)
+  vitest.spyOn(cellarService, '_uuid').mockReturnValue(stubKegUuid as any)
 })
 
 describe('makeWine', () => {
