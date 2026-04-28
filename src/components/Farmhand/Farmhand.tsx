@@ -16,9 +16,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft.js'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import MobileStepper from '@mui/material/MobileStepper/index.js'
-// NOTE: This path is aliased to tryster/torrent in vite.config.js. The actual
-// path can't be used here because it breaks either Vite or TypeScript.
-import { joinRoom } from 'trystero'
+import { joinRoom } from '@trystero-p2p/torrent'
 import { SnackbarProvider } from 'notistack'
 import debounce from 'lodash.debounce'
 import throttle from 'lodash.throttle'
