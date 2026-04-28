@@ -8,7 +8,7 @@ import { cellarService } from './cellar.js'
 const mockUuid = 'abc123'
 
 beforeEach(() => {
-  vitest.spyOn(cellarService, '_uuid').mockReturnValue(mockUuid as any)
+  vitest.spyOn(cellarService, '_uuid').mockReturnValue(mockUuid as string)
 })
 
 describe('CellarService', () => {
