@@ -867,11 +867,13 @@ export default class Farmhand extends FarmhandReducers {
         peerRoom: joinRoom(
           {
             appId: import.meta.env?.VITE_NAME,
-            relayConfig: {
-              urls: relayUrls,
-              redundancy: relayRedundancy,
-            },
             rtcConfig,
+            ...(relayUrls && {
+              relayConfig: {
+                urls: relayUrls,
+                redundancy: relayRedundancy,
+              },
+            }),
           },
           room
         ),
