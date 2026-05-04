@@ -34,7 +34,11 @@ import { yeast } from '../../data/recipes.js'
 /**
  * @param {WineRecipeProps} props
  */
-export const WineRecipe = ({ wineVariety }) => {
+export const WineRecipe = ({
+  wineVariety,
+}: {
+  wineVariety: farmhand.grapeVariety
+}) => {
   const {
     gameState: { cellarInventory, inventory, purchasedCellar },
     handlers: { handleMakeWineClick },
@@ -43,17 +47,18 @@ export const WineRecipe = ({ wineVariety }) => {
   const [quantity, setQuantity] = useState(1)
   const wineName = grapeVarietyNameMap[wineVariety]
   const grape = grapeVarietyToGrapeItemMap[wineVariety]
-  // @ts-expect-error
-  const wine = itemsMap[grape.wineId]
+
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {
     space: 0,
   }
 
   const inventoryQuantityMap = getInventoryQuantityMap(inventory)
-  const quantityOfGrape = inventoryQuantityMap[grape.id] ?? 0
-  const quantityOfYeast = inventoryQuantityMap[yeast.id] ?? 0
 
   useEffect(() => {
+    if (!grape) {
+      return
+    }
+
     setQuantity(
       Math.min(
         wineService.getMaxWineYield({
@@ -66,6 +71,19 @@ export const WineRecipe = ({ wineVariety }) => {
       )
     )
   }, [cellarInventory, cellarSize, grape, inventory, quantity, wineVariety])
+
+  if (!grape) {
+    return null
+  }
+
+  const wine = itemsMap[grape.wineId]
+
+  if (!wine) {
+    return null
+  }
+
+  const quantityOfGrape = inventoryQuantityMap[grape.id] ?? 0
+  const quantityOfYeast = inventoryQuantityMap[yeast.id] ?? 0
 
   const canBeMade =
     quantity > 0 &&

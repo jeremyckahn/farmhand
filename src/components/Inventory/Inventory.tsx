@@ -86,22 +86,23 @@ const Inventory = ({
   placeholder = 'Search inventory...',
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategories, setSelectedCategories] = useState(
-    /** @type {string[]} */ []
-  )
-  const toggleCategory = category => {
-    // @ts-expect-error
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+  const toggleCategory = (category: string) => {
     setSelectedCategories(prev =>
-      // @ts-expect-error
       prev.includes(category)
         ? prev.filter(c => c !== category)
         : [...prev, category]
     )
   }
 
-  const filteredCategories = Array.from(itemCategories.entries()).reduce(
-    // @ts-expect-error
-    (filtered, [category, categoryItems]) => {
+  const filteredCategories = (Array.from(itemCategories.entries()) as [
+    string,
+    farmhand.item[]
+  ][]).reduce(
+    (
+      filtered: Map<string, farmhand.item[]>,
+      [category, categoryItems]: [string, farmhand.item[]]
+    ) => {
       const matchingItems = categoryItems.filter(item => {
         const mappedItem = itemsMap[item.id]
         return (
@@ -113,10 +114,8 @@ const Inventory = ({
 
       if (
         matchingItems.length &&
-        // @ts-expect-error
         (!selectedCategories.length || selectedCategories.includes(category))
       ) {
-        // @ts-expect-error
         filtered.set(category, matchingItems)
       }
       return filtered
@@ -147,7 +146,6 @@ const Inventory = ({
                   control={
                     <Checkbox
                       disabled={isPurchaseView}
-                      // @ts-expect-error
                       checked={selectedCategories.includes(key)}
                       onChange={() => toggleCategory(key)}
                     />
@@ -159,30 +157,30 @@ const Inventory = ({
           </AccordionDetails>
         </Accordion>
       )}
-      {Array.from((filteredCategories as any).entries()).map(
-        // @ts-expect-error
-        ([category, categoryItems]) =>
-          categoryItems.length ? (
-            <Fragment key={category}>
-              <section>
-                <h3>{formatCategoryName(category)}</h3>
-                <ul className="card-list">
-                  {categoryItems.map(item => (
-                    <li key={item.id}>
-                      <Item
-                        {...{
-                          isPurchaseView,
-                          isSellView,
-                          item,
-                          showQuantity: isPurchaseView,
-                        }}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            </Fragment>
-          ) : null
+      {Array.from(
+        (filteredCategories as Map<string, farmhand.item[]>).entries()
+      ).map(([category, categoryItems]: [string, farmhand.item[]]) =>
+        categoryItems.length ? (
+          <Fragment key={category}>
+            <section>
+              <h3>{formatCategoryName(category)}</h3>
+              <ul className="card-list">
+                {categoryItems.map(item => (
+                  <li key={item.id}>
+                    <Item
+                      {...{
+                        isPurchaseView,
+                        isSellView,
+                        item,
+                        showQuantity: isPurchaseView,
+                      }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </Fragment>
+        ) : null
       )}
     </div>
   )

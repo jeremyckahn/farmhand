@@ -552,43 +552,78 @@ describe('getCropLifeStage', () => {
 
 describe('getPlotImage', () => {
   test('returns null when no plotContent is provided', () => {
-    // @ts-expect-error
-    expect(getPlotImage(null)).toBe(null)
+    expect(getPlotImage((null as unknown) as farmhand.plotContent, 0, 0)).toBe(
+      null
+    )
   })
 
   test('returns plot images for a crop', () => {
     const itemId = 'carrot'
 
-    // @ts-expect-error
-    expect(getPlotImage(testCrop({ itemId, daysWatered: 0 }))).toBe(
-      itemImages['carrot-seed']
-    )
-    // @ts-expect-error
-    expect(getPlotImage(testCrop({ itemId, daysWatered: 1 }))).toBe(
-      itemImages['carrot-seed']
-    )
-    // @ts-expect-error
-    expect(getPlotImage(testCrop({ itemId, daysWatered: 3 }))).toBe(
-      itemImages['carrot-growing-2']
-    )
-    // @ts-expect-error
-    expect(getPlotImage(testCrop({ itemId, daysWatered: 5 }))).toBe(
-      itemImages['carrot']
-    )
+    expect(
+      getPlotImage(
+        (testCrop({
+          itemId,
+          daysWatered: 0,
+        }) as unknown) as farmhand.plotContent,
+        0,
+        0
+      )
+    ).toBe(itemImages['carrot-seed'])
+    expect(
+      getPlotImage(
+        (testCrop({
+          itemId,
+          daysWatered: 1,
+        }) as unknown) as farmhand.plotContent,
+        0,
+        0
+      )
+    ).toBe(itemImages['carrot-seed'])
+    expect(
+      getPlotImage(
+        (testCrop({
+          itemId,
+          daysWatered: 3,
+        }) as unknown) as farmhand.plotContent,
+        0,
+        0
+      )
+    ).toBe(itemImages['carrot-growing-2'])
+    expect(
+      getPlotImage(
+        (testCrop({
+          itemId,
+          daysWatered: 5,
+        }) as unknown) as farmhand.plotContent,
+        0,
+        0
+      )
+    ).toBe(itemImages['carrot'])
   })
 
   test('returns item image for oreId', () => {
-    // @ts-expect-error
-    expect(getPlotImage(getPlotContentFromItemId(silverOre.id))).toBe(
-      itemImages[silverOre.id]
-    )
+    expect(
+      getPlotImage(
+        (getPlotContentFromItemId(
+          silverOre.id
+        ) as unknown) as farmhand.plotContent,
+        0,
+        0
+      )
+    ).toBe(itemImages[silverOre.id])
   })
 
   test('returns item image for other content', () => {
-    // @ts-expect-error
-    expect(getPlotImage(getPlotContentFromItemId('sprinkler'))).toBe(
-      itemImages['sprinkler']
-    )
+    expect(
+      getPlotImage(
+        (getPlotContentFromItemId(
+          'sprinkler'
+        ) as unknown) as farmhand.plotContent,
+        0,
+        0
+      )
+    ).toBe(itemImages['sprinkler'])
   })
 })
 
@@ -982,15 +1017,13 @@ describe('randomChoice', () => {
   })
 
   test('it can handle the lower bound of Math.random', () => {
-    // @ts-expect-error
-    global.Math.random.mockReturnValueOnce(0)
+    ;(global.Math.random as import('vitest').Mock).mockReturnValueOnce(0)
     const choice = randomChoice(choices)
     expect(choice).toEqual(choices[0])
   })
 
   test('it can handle the upper bound of Math.random', () => {
-    // @ts-expect-error
-    global.Math.random.mockReturnValueOnce(0.99)
+    ;(global.Math.random as import('vitest').Mock).mockReturnValueOnce(0.99)
     const choice = randomChoice(choices)
     expect(choice).toEqual(choices[2])
   })

@@ -1,202 +1,171 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
+import localforage from 'localforage'
+import { match, History, Location } from 'react-router-dom'
 
 import * as reducers from '../../game-logic/reducers/index.js'
 
-/**
- * @callback BoundReducer
- * @param {...any} rest
- * @returns {farmhand.state}
- */
+interface Features {
+  FOREST?: boolean
+  [key: string]: boolean | undefined
+}
+
+export interface FarmhandProps {
+  features?: Features
+  localforage?: typeof localforage
+  match?: match<{ room?: string }>
+  history?: History
+  location?: Location
+}
+
+export type FarmhandState = farmhand.state
 
 /**
- * This class serves as a sort of middleware for the main Farmhand component.
- * It defines stub methods with names that correspond to various reducer
- * functions. At the time of instantiation, it implements the methods with the
- * matching reducer function and binds it to the class instance.
+ * This class serves as a sort of (legacy) middleware for the main Farmhand
+ * component. It defines stub methods with names that correspond to various
+ * reducer functions. At the time of instantiation, it implements the methods
+ * with the matching reducer function and binds it to the class instance.
  *
  * This is done in the interest of coding convenience and decentralization of
  * core game logic. It is implemented as a class so that the methods can be
  * statically analyzed by the TypeScript compiler.
+ *
+ * TODO: Replace this with a TypeScript interface
  */
-export class FarmhandReducers extends Component {
+export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
   /** @type BoundReducer */
-  addCowToInventory() {
+  addCowToInventory(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  addPeer() {
+  addPeer(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  adjustLoan() {
+  adjustLoan(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  changeCowAutomaticHugState() {
+  changeCowAutomaticHugState(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  changeCowBreedingPenResident() {
+  changeCowBreedingPenResident(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  changeCowName() {
+  changeCowName(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  clearPlot() {
+  clearPlot(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  computeStateForNextDay() {
+  computeStateForNextDay(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  fertilizePlot() {
+  fertilizePlot(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  forRange() {
+  forRange(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  harvestPlot() {
+  harvestPlot(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  hugCow() {
+  hugCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  makeRecipe() {
+  makeRecipe(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  makeFermentationRecipe() {
+  makeFermentationRecipe(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  makeWine() {
+  makeWine(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  modifyCow() {
+  modifyCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  offerCow() {
+  offerCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  plantInPlot() {
+  plantInPlot(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  prependPendingPeerMessage() {
+  prependPendingPeerMessage(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  purchaseCombine() {
+  purchaseCombine(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  purchaseComposter() {
+  purchaseComposter(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  purchaseCow() {
+  purchaseCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  purchaseCowPen() {
+  purchaseCowPen(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  purchaseCellar() {
+  purchaseCellar(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  purchaseField() {
+  purchaseField(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  purchaseForest() {
+  purchaseForest(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  purchaseItem() {
+  purchaseItem(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  purchaseSmelter() {
+  purchaseSmelter(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  purchaseStorageExpansion() {
+  purchaseStorageExpansion(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  removeCowFromInventory() {
+  removeCowFromInventory(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  removeKegFromCellar() {
+  removeKegFromCellar(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  removePeer() {
+  removePeer(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  selectCow() {
+  selectCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  sellCow() {
+  sellCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  sellItem() {
+  sellItem(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  sellKeg() {
+  sellKeg(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  setScarecrow() {
+  setScarecrow(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  setSprinkler() {
+  setSprinkler(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  showNotification() {
+  showNotification(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  updatePeer() {
+  updatePeer(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  upgradeTool() {
+  upgradeTool(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  waterAllPlots() {
+  waterAllPlots(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  waterField() {
+  waterField(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  waterPlot() {
+  waterPlot(...args: any[]) {
     throw new Error('Unimplemented')
   }
-  /** @type BoundReducer */
-  withdrawCow() {
+  withdrawCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
 

@@ -99,13 +99,16 @@ export const FermentationRecipe = ({ item }) => {
               {integerString(inventoryQuantityMap[item.id] ?? 0)}
             </p>
             <p>
-              Units of {(itemsMap as any).salt.name} required:{' '}
-              {getSaltRequirementsForFermentationRecipe(item as any)}{' '}
+              Units of{' '}
+              {(itemsMap as Record<string, farmhand.item>)['salt'].name}{' '}
+              required: {getSaltRequirementsForFermentationRecipe(item as any)}{' '}
               (available:{' '}
               <AnimatedNumber
                 {...{
-                  // @ts-expect-error
-                  number: inventoryQuantityMap[itemsMap.salt.id] ?? 0,
+                  number:
+                    inventoryQuantityMap[
+                      (itemsMap as Record<string, farmhand.item>)['salt'].id
+                    ] ?? 0,
                   formatter: integerString,
                 }}
               />

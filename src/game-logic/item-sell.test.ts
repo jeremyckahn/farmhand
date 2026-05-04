@@ -22,8 +22,9 @@ describe('item selling', () => {
     const carrotSeedMenuItem = within(menu)
       .getByText('Carrot Seed')
       .closest('.Item')
-    // @ts-expect-error
-    const sellButton = within(carrotSeedMenuItem).getByText('Sell')
+    const sellButton = within(carrotSeedMenuItem as HTMLElement).getByText(
+      'Sell'
+    )
     await userEvent.click(sellButton)
 
     expect(within(menu).queryByText('Carrot Seed')).not.toBeInTheDocument()

@@ -13,20 +13,18 @@ import { memoize } from '../../utils/memoize.js'
 
 import './AchievementsView.sass'
 
-// @ts-expect-error
 const partitionAchievements = memoize(completedAchievements =>
   achievements.reduce(
     (acc, achievement) => {
       acc[
         completedAchievements[achievement.id] ? 'complete' : 'incomplete'
-        // @ts-expect-error
       ].push(achievement)
 
       return acc
     },
     {
-      /** @type {farmhand.achievement[]} */ complete: [],
-      /** @type {farmhand.achievement[]} */ incomplete: [],
+      complete: [] as typeof achievements[number][],
+      incomplete: [] as typeof achievements[number][],
     }
   )
 )

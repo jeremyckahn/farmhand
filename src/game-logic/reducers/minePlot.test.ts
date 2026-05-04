@@ -10,13 +10,10 @@ describe('minePlot', () => {
   let gameState
 
   beforeAll(() => {
-    vitest.spyOn(ResourceFactory, 'instance')
     vitest.spyOn(randomNumberService, 'generateRandomNumber').mockReturnValue(1)
-
-    // @ts-expect-error - Mock function type assertion
-    ResourceFactory.instance.mockReturnValue({
+    vitest.spyOn(ResourceFactory, 'instance').mockReturnValue(({
       generateResources: () => [goldOre],
-    })
+    } as unknown) as typeof ResourceFactory.prototype)
 
     gameState = minePlot(
       testState({

@@ -25,14 +25,13 @@ export function getCropsAvailableToFerment(levelEntitlements) {
         finalCropItemFromSeedItem &&
         Number.isFinite(finalCropItemFromSeedItem.daysToFerment)
       ) {
-        // @ts-expect-error
         acc.push(finalCropItemFromSeedItem)
       }
 
       return acc
     },
 
-    []
+    [] as Array<farmhand.item>
   )
 
   return cropsAvailableToFerment

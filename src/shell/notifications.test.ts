@@ -20,20 +20,14 @@ describe('notifications', () => {
     })
 
     const carrotItem = await getItemByName('Carrot')
-    const carrotInput = within(
-      // @ts-expect-error
-      /** @type {HTMLElement} */ carrotItem
-    ).getByDisplayValue('1')
+    const carrotInput = within(carrotItem as HTMLElement).getByDisplayValue('1')
     await userEvent.type(carrotInput, '10')
-    const carrotSellButton = within(
-      // @ts-expect-error
-      /** @type {HTMLElement} */ carrotItem
-    ).getByText('Sell')
+    const carrotSellButton = within(carrotItem as HTMLElement).getByText('Sell')
     await userEvent.click(carrotSellButton)
     const notification = await screen.findByRole('alert')
 
     expect(
-      within(/** @type {HTMLElement} */ notification).getByText('Carrot Soup')
+      within(notification as HTMLElement).getByText('Carrot Soup')
     ).toBeInTheDocument()
   })
 
@@ -57,31 +51,17 @@ describe('notifications', () => {
     const spinachItem = await getItemByName('Spinach')
     const carrotItem = await getItemByName('Carrot')
 
-    const cornInput = within(
-      // @ts-expect-error
-      /** @type {HTMLElement} */ cornItem
-    ).getByDisplayValue('1')
-    const spinachInput = within(
-      // @ts-expect-error
-      /** @type {HTMLElement} */ spinachItem
-    ).getByDisplayValue('1')
-    const carrotInput = within(
-      // @ts-expect-error
-      /** @type {HTMLElement} */ carrotItem
-    ).getByDisplayValue('1')
+    const cornInput = within(cornItem as HTMLElement).getByDisplayValue('1')
+    const spinachInput = within(spinachItem as HTMLElement).getByDisplayValue(
+      '1'
+    )
+    const carrotInput = within(carrotItem as HTMLElement).getByDisplayValue('1')
 
-    const cornSellButton = within(
-      // @ts-expect-error
-      /** @type {HTMLElement} */ cornItem
-    ).getByText('Sell')
-    const spinachSellButton = within(
-      // @ts-expect-error
-      /** @type {HTMLElement} */ spinachItem
-    ).getByText('Sell')
-    const carrotSellButton = within(
-      // @ts-expect-error
-      /** @type {HTMLElement} */ carrotItem
-    ).getByText('Sell')
+    const cornSellButton = within(cornItem as HTMLElement).getByText('Sell')
+    const spinachSellButton = within(spinachItem as HTMLElement).getByText(
+      'Sell'
+    )
+    const carrotSellButton = within(carrotItem as HTMLElement).getByText('Sell')
 
     await userEvent.type(cornInput, '6')
     await userEvent.click(cornSellButton)
@@ -97,10 +77,10 @@ describe('notifications', () => {
 
     const notification = await screen.findByRole('alert')
     expect(
-      within(/** @type {HTMLElement} */ notification).getByText('Carrot Soup')
+      within(notification as HTMLElement).getByText('Carrot Soup')
     ).toBeInTheDocument()
     expect(
-      within(/** @type {HTMLElement} */ notification).getByText('Summer Salad')
+      within(notification as HTMLElement).getByText('Summer Salad')
     ).toBeInTheDocument()
   })
 })

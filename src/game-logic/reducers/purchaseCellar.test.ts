@@ -19,8 +19,7 @@ describe('purchaseCellar', () => {
 
   test('deducts money', () => {
     const { money } = purchaseCellar(testState({ money: 1_000_000 }), 1)
-    // @ts-expect-error
-    expect(money).toEqual(1_000_000 - PURCHASEABLE_CELLARS.get(1).price)
+    expect(money).toEqual(1_000_000 - PURCHASEABLE_CELLARS.get(1)!.price)
   })
 
   test('shows notification of purchase', () => {

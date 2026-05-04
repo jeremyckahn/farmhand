@@ -12,7 +12,8 @@ import { MEMOIZE_CACHE_CLEAR_THRESHOLD } from '../constants.js'
  * @ignore
  */
 export class MemoizeCache {
-  cache = {}
+  cache: Record<string, any> = {}
+  cacheSize: number
 
   /**
    * @param {Object} [config] Can also contain the config options used to
@@ -21,7 +22,6 @@ export class MemoizeCache {
    * @see https://github.com/caiogondim/fast-memoize.js
    */
   constructor({ cacheSize = MEMOIZE_CACHE_CLEAR_THRESHOLD } = {}) {
-    // @ts-expect-error
     this.cacheSize = cacheSize
   }
 
@@ -34,7 +34,6 @@ export class MemoizeCache {
   }
 
   set(key, value) {
-    // @ts-expect-error
     if (Object.keys(this.cache).length > this.cacheSize) {
       this.cache = {}
     }
@@ -50,7 +49,7 @@ export class MemoizeCache {
  * @returns T
  * @see https://github.com/caiogondim/fast-memoize.js
  */
-export const memoize = (fn, config) =>
+export const memoize = (fn, config = {}) =>
   fastMemoize(fn, {
     cache: { create: () => new MemoizeCache(config) },
     ...config,

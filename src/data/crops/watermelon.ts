@@ -18,9 +18,7 @@ export const watermelonSeed = crop({
  * @property farmhand.module:items.watermelon
  * @type {farmhand.item}
  */
-// @ts-expect-error
 export const watermelon = crop({
-  // @ts-expect-error
   ...fromSeed(watermelonSeed),
   name: 'Watermelon',
 })

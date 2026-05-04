@@ -1,6 +1,7 @@
 import React from 'react'
 import { array } from 'prop-types'
 import Alert from '@mui/material/Alert/index.js'
+import { AlertColor } from '@mui/material'
 import ReactMarkdown from 'react-markdown'
 import Divider from '@mui/material/Divider/index.js'
 
@@ -37,12 +38,11 @@ export const LogView = ({ notificationLog, todaysNotifications }) => (
           {['success', 'info', 'warning', 'error'].map(
             (severityLevel, severityIndex) =>
               notifications[severityLevel].length ? (
-                // @ts-expect-error
                 <Alert
                   {...{
                     elevation: 3,
                     key: `${severityLevel}_${severityIndex}`,
-                    severity: /** @type {'success' | 'info' | 'warning' | 'error'} */ severityLevel,
+                    severity: severityLevel as AlertColor,
                   }}
                 >
                   {notifications[severityLevel].map((message, messageIndex) => (

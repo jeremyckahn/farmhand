@@ -289,24 +289,21 @@ export const getPlotContentType = ({ itemId }) =>
 export const doesPlotContainCrop = plot =>
   plot !== null && getPlotContentType(plot) === itemType.CROP
 
-// @ts-expect-error
-export const getLifeStageRange = memoize((
-  /** @type {number[]} */ cropTimeline
-) => {
+export const getLifeStageRange = memoize((cropTimeline: number[]) => {
   let lifeStageRange = Array(cropTimeline[0]).fill(SEED)
 
   lifeStageRange = lifeStageRange.concat(
     cropTimeline
       .slice(1)
       .reduce(
-        (/** @type {number[]} */ acc, value) =>
+        (acc: Array<string | number>, value) =>
           acc.concat(Array(value).fill(GROWING)),
         []
       )
   )
 
   return lifeStageRange
-})
+}, {})
 
 /**
  * @param {farmhand.crop} crop
@@ -331,10 +328,8 @@ export const getGrowingPhase = memoize(
   },
   {
     cacheSize:
-      // @ts-expect-error
-      LARGEST_PURCHASABLE_FIELD_SIZE.columns *
-      // @ts-expect-error
-      LARGEST_PURCHASABLE_FIELD_SIZE.rows,
+      (LARGEST_PURCHASABLE_FIELD_SIZE as { columns: number }).columns *
+      (LARGEST_PURCHASABLE_FIELD_SIZE as { rows: number }).rows,
   }
 )
 
@@ -450,15 +445,16 @@ export const getFinalCropItemIdFromSeedItemId = (
 }
 
 export const getSeedItemIdFromFinalStageCropItemId = memoize(
-  /** @type {string} */ cropItemId => {
-    // @ts-expect-error
-    const seedItemId = Object.values(itemsMap).find(({ growsInto }) => {
+  (cropItemId: string) => {
+    const seedItemId = Object.values(
+      itemsMap as Record<string, { id?: string; growsInto?: string | string[] }>
+    ).find(item => {
+      const { growsInto } = item as { growsInto?: string | string[] }
       if (Array.isArray(growsInto)) {
         return growsInto.includes(cropItemId)
       } else {
         return growsInto === cropItemId
       }
-      // @ts-expect-error
     })?.id
 
     if (!seedItemId)
@@ -497,13 +493,21 @@ export const getCowDisplayName = (cow, playerId, allowCustomPeerCowNames) => {
  * @param {Object} [options]
  * @returns {farmhand.cow}
  */
-export const generateCow = (options = {}) => {
-  // @ts-expect-error
-  const gender = options.gender || chooseRandom(Object.values(genders))
-  // @ts-expect-error
-  const color = options.color || chooseRandom(Object.values(standardCowColors))
-  // @ts-expect-error
-  const id = options.id || uuid()
+export const generateCow = (
+  options: {
+    gender?: farmhand.cow['gender']
+    color?: farmhand.cow['color']
+    id?: farmhand.cow['id']
+    [key: string]: any
+  } = {}
+): farmhand.cow => {
+  const gender =
+    (options.gender as farmhand.cow['gender']) ||
+    chooseRandom(Object.values(genders))
+  const color =
+    (options.color as farmhand.cow['color']) ||
+    chooseRandom(Object.values(standardCowColors))
+  const id = (options.id as farmhand.cow['id']) || uuid()
 
   const baseWeight = Math.round(
     COW_STARTING_WEIGHT_BASE *
@@ -512,10 +516,12 @@ export const generateCow = (options = {}) => {
       random() * (COW_STARTING_WEIGHT_VARIANCE * 2)
   )
 
-  const cow = {
+  const cow: farmhand.cow = {
     baseWeight,
     color,
-    colorsInBloodline: { [color]: true },
+    colorsInBloodline: {
+      [color]: true,
+    } as Record<farmhand.cowColors, boolean>,
     daysOld: 1,
     daysSinceMilking: 0,
     daysSinceProducingFertilizer: 0,
@@ -682,18 +688,23 @@ export const getCowSellValue = cow => getCowValue(cow, true)
  * @param {{id: string, quantity: number}[]} inventory
  * @returns {number}
  */
-// @ts-expect-error
-export const maxYieldOfRecipe = memoize(({ ingredients }, inventory) => {
-  const inventoryQuantityMap = getInventoryQuantityMap(inventory)
+export const maxYieldOfRecipe = memoize(
+  (
+    { ingredients }: farmhand.recipe,
+    inventory: Array<{ id: string; quantity: number }>
+  ) => {
+    const inventoryQuantityMap = getInventoryQuantityMap(inventory)
 
-  return (
-    Math.min(
-      ...Object.keys(ingredients).map(itemId =>
-        Math.floor(inventoryQuantityMap[itemId] / ingredients[itemId])
-      )
-    ) || 0
-  )
-})
+    return (
+      Math.min(
+        ...Object.keys(ingredients).map(itemId =>
+          Math.floor(inventoryQuantityMap[itemId] / ingredients[itemId])
+        )
+      ) || 0
+    )
+  },
+  {}
+)
 
 /**
  * @param {farmhand.recipe} recipe
@@ -750,15 +761,16 @@ export const doesMenuObstructStage = () => window.innerWidth < BREAKPOINTS.MD
 /** @type {Set<farmhand.itemType>} */
 const itemTypesToShowInReverse = new Set([itemType.MILK])
 
-// @ts-expect-error
-const sortItemIdsByTypeAndValue = memoize(itemIds =>
-  sortBy(itemIds, [
-    id => Number(itemsMap[id].type !== itemType.CROP),
-    id => {
-      const { type, value } = itemsMap[id]
-      return itemTypesToShowInReverse.has(type) ? -value : value
-    },
-  ])
+const sortItemIdsByTypeAndValue = memoize(
+  (itemIds: string[]) =>
+    sortBy(itemIds, [
+      id => Number(itemsMap[id].type !== itemType.CROP),
+      id => {
+        const { type, value } = itemsMap[id]
+        return itemTypesToShowInReverse.has(type) ? -value : value
+      },
+    ]),
+  {}
 )
 
 /**
@@ -772,13 +784,14 @@ export const sortItems = items => {
   return sortItemIdsByTypeAndValue(items.map(({ id }) => id)).map(id => map[id])
 }
 
-// @ts-expect-error
 export const inventorySpaceConsumed = memoize(
   /**
    * @param {farmhand.state['inventory']} inventory
    * @returns {number}
    */
-  inventory => inventory.reduce((sum, { quantity = 0 }) => sum + quantity, 0)
+  (inventory: Array<{ quantity?: number }>) =>
+    inventory.reduce((sum, { quantity = 0 }) => sum + quantity, 0),
+  {}
 )
 
 /**
@@ -797,7 +810,6 @@ export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
 export const doesInventorySpaceRemain = state =>
   inventorySpaceRemaining(state) > 0
 
-// @ts-expect-error
 export const areHuggingMachinesInInventory = memoize(
   /**
    * @param {farmhand.state['inventory']} inventory
@@ -817,7 +829,6 @@ export const nullArray = memoize(
   }
 )
 
-// @ts-expect-error
 export const findCowById = memoize(
   /**
    * @param {Array.<farmhand.cow>} cowInventory
@@ -834,7 +845,6 @@ export const findCowById = memoize(
 export const experienceNeededForLevel = targetLevel =>
   ((targetLevel - 1) * 10) ** 2
 
-// @ts-expect-error
 export const getAvailableShopInventory = memoize((
   /** @type {farmhand.levelEntitlements} */ levelEntitlements
 ) =>
@@ -1056,7 +1066,6 @@ export const transformStateDataForImport = /** @type {(state: any) => farmhand.s
   return sanitizedState
 }
 
-// @ts-expect-error
 export const getPlayerName = memoize(
   /**
    * @param {string} playerId
@@ -1118,24 +1127,24 @@ const isPlotContentACrop = plotContents =>
  * @param {Array.<T & { weight: number }>} weightedOptions an array of objects each containing a `weight` property
  * @returns {T} one of the items from weightedOptions
  */
-export function randomChoice(weightedOptions) {
+export function randomChoice<T extends { weight: number }>(
+  weightedOptions: T[]
+): T {
   let totalWeight = 0
-  let sortedOptions = []
+  const sortedOptions: T[] = []
 
-  for (let option of weightedOptions) {
+  for (const option of weightedOptions) {
     totalWeight += option.weight
-    // @ts-expect-error
     sortedOptions.push(option)
   }
 
-  // @ts-expect-error
   sortedOptions.sort(o => o.weight)
 
   let diceRoll = random() * totalWeight
-  let option
+  let option: T | undefined
   let runningTotal = 0
 
-  for (let i in sortedOptions) {
+  for (const i in sortedOptions) {
     option = sortedOptions[i]
 
     if (diceRoll < option.weight + runningTotal) {
@@ -1159,7 +1168,6 @@ const colorizeCowTemplate = (() => {
   const cachedCowImages = {}
 
   // https://stackoverflow.com/a/5624139
-  // @ts-expect-error
   const hexToRgb = memoize(hex => {
     const [, r, g, b] = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
       hex

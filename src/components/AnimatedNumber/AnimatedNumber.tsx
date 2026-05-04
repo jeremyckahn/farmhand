@@ -16,10 +16,9 @@ const defaultFormatter = (/** @type {number} */ num) => `${num}`
 const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
   const [displayedNumber, setDisplayedNumber] = useState(number)
   const [previousNumber, setPreviousNumber] = useState(number)
-  /**
-   * @type {[Tweenable | undefined, React.Dispatch<React.SetStateAction<Tweenable | undefined>>]}
-   */
-  const [currentTweenable, setCurrentTweenable] = useState()
+  const [currentTweenable, setCurrentTweenable] = useState<
+    Tweenable | undefined
+  >()
 
   useEffect(() => {
     setPreviousNumber(number)
@@ -28,7 +27,6 @@ const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
   useEffect(() => {
     if (number !== previousNumber) {
       if (currentTweenable) {
-        // @ts-expect-error
         currentTweenable.cancel()
       }
 
@@ -44,13 +42,11 @@ const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
         to: { number },
       })
 
-      // @ts-expect-error
       setCurrentTweenable(tweenable)
     }
 
     return () => {
       if (currentTweenable) {
-        // @ts-expect-error
         currentTweenable.cancel()
       }
     }

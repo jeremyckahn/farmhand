@@ -30,7 +30,10 @@ const {
   WEED,
 } = cropType
 
-export const recipeCategories = {
+export const recipeCategories: Record<
+  string,
+  Record<string, farmhand.recipe>
+> = {
   [recipeType.KITCHEN]: {},
   [recipeType.FORGE]: {},
   [recipeType.FERMENTATION]: {},
@@ -38,18 +41,23 @@ export const recipeCategories = {
   [recipeType.WINE]: {},
 }
 
-export const recipesMap = {}
+export const recipesMap: Record<string, farmhand.recipe> = {}
 
 for (const recipeId of Object.keys(recipes)) {
-  const recipe = recipes[recipeId]
+  const recipe = (recipes as Record<string, farmhand.recipe>)[recipeId]
   recipeCategories[recipe.recipeType][recipe.id] = recipe
   recipesMap[recipe.id] = recipe
 }
 
-export const upgradesMap = {}
+export const upgradesMap: Record<string, farmhand.upgradesMetadatum> = {}
 
 for (let toolType of Object.keys(upgrades)) {
-  for (let upgrade of Object.values(upgrades[toolType])) {
+  for (let upgrade of Object.values(
+    ((upgrades as unknown) as Record<
+      string,
+      Record<string, farmhand.upgradesMetadatum>
+    >)[toolType]
+  )) {
     upgradesMap[upgrade.id] = upgrade
   }
 }
@@ -79,8 +87,7 @@ export const fermentableItemsMap = Object.fromEntries(
  */
 export const cropItemIdToSeedItemMap = Object.entries(baseItemsMap).reduce(
   (acc, [itemId, item]) => {
-    // @ts-expect-error
-    const { growsInto } = item
+    const { growsInto } = item as { growsInto?: string | string[] }
     if (growsInto) {
       const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 

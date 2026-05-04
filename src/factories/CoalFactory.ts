@@ -11,17 +11,15 @@ export default class CoalFactory extends Factory {
    * Generate resources
    * @returns {Array.<farmhand.item>} an array of coal and stone resources
    */
-  generate() {
-    let spawns = []
+  generate(): farmhand.item[] {
+    const spawns: farmhand.item[] = []
 
     const amount = chooseRandom([1, 1, 1, 2, 3])
 
     for (let i = 0; i < amount; i++) {
-      // @ts-expect-error
       spawns.push(this.spawnCoal())
     }
 
-    // @ts-expect-error
     spawns.push(this.spawnStone())
 
     return spawns

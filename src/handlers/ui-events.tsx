@@ -1,16 +1,6 @@
-/**
- * @typedef {farmhand.item} item
- * @typedef {farmhand.keg} keg
- * @typedef {farmhand.grape} grape
- */
 import { saveAs } from 'file-saver'
 import globalWindow from 'global/window.js'
 
-import {
-  moneyTotal,
-  reduceByPersistedKeys,
-  transformStateDataForImport,
-} from '../utils/index.js'
 import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants.js'
 import { dialogView, fieldMode, stageFocusType } from '../enums.js'
 import {
@@ -19,7 +9,14 @@ import {
   PROGRESS_SAVED_MESSAGE,
   UPDATE_AVAILABLE,
 } from '../strings.js'
+import {
+  moneyTotal,
+  reduceByPersistedKeys,
+  transformStateDataForImport,
+} from '../utils/index.js'
 
+import { randomNumberService } from '../common/services/randomNumber.js'
+import Farmhand from '../components/Farmhand/Farmhand.js'
 import {
   clearPlot,
   fertilizePlot,
@@ -28,7 +25,6 @@ import {
   plantInPlot,
   waterPlot,
 } from '../game-logic/reducers/index.js'
-import { randomNumberService } from '../common/services/randomNumber.js'
 
 const {
   CLEANUP,
@@ -45,417 +41,267 @@ const {
 // class. See the definition of initInputHandlers:
 // https://github.com/search?q=repo%3Ajeremyckahn%2Ffarmhand+path%3A**%2FFarmhand.js+%2FeventHandlers.*bind%2F&type=code
 export default {
-  /**
-   * @param {item} item
-   * @param {number} [howMany=1]
-   */
-  handleItemPurchaseClick(item, howMany = 1) {
-    // @ts-expect-error
+  handleItemPurchaseClick(this: Farmhand, item: farmhand.item, howMany = 1) {
     this.purchaseItem(item, howMany)
   },
 
-  /**
-   * @param {farmhand.recipe} recipe
-   * @param {number} [howMany=1]
-   */
-  handleMakeRecipeClick(recipe, howMany = 1) {
-    // @ts-expect-error
+  handleMakeRecipeClick(this: Farmhand, recipe: farmhand.recipe, howMany = 1) {
     this.makeRecipe(recipe, howMany)
   },
 
-  /**
-   * @param {item} fermentationRecipe
-   * @param {number} [howMany=1]
-   */
-  handleMakeFermentationRecipeClick(fermentationRecipe, howMany = 1) {
-    // @ts-expect-error
+  handleMakeFermentationRecipeClick(
+    this: Farmhand,
+    fermentationRecipe: farmhand.item,
+    howMany = 1
+  ) {
     this.makeFermentationRecipe(fermentationRecipe, howMany)
   },
 
-  /**
-   * @param {grape} grape
-   * @param {number} [howMany=1]
-   */
-  handleMakeWineClick(grape, howMany = 1) {
-    // @ts-expect-error
+  handleMakeWineClick(this: Farmhand, grape: farmhand.grape, howMany = 1) {
     this.makeWine(grape, howMany)
   },
 
-  /**
-   * @param {keg} keg
-   */
-  handleSellKegClick(keg) {
-    // @ts-expect-error
+  handleSellKegClick(this: Farmhand, keg: farmhand.keg) {
     this.sellKeg(keg)
   },
 
-  /**
-   * @param {keg} keg
-   */
-  handleThrowAwayKegClick(keg) {
-    // @ts-expect-error
+  handleThrowAwayKegClick(this: Farmhand, keg: farmhand.keg) {
     this.removeKegFromCellar(keg.id)
   },
 
-  /**
-   * @param {farmhand.upgradesMetadatum} upgrade
-   */
-  handleUpgradeTool(upgrade) {
-    // @ts-expect-error
+  handleUpgradeTool(this: Farmhand, upgrade: farmhand.upgradesMetadatum) {
     this.upgradeTool(upgrade)
   },
 
-  /**
-   * @param {farmhand.cow} cow
-   */
-  handleCowPurchaseClick(cow) {
-    // @ts-expect-error
+  handleCowPurchaseClick(this: Farmhand, cow: farmhand.cow) {
     this.purchaseCow(cow)
   },
 
-  /**
-   * @param {farmhand.cow} cow
-   */
-  handleCowSellClick(cow) {
-    // @ts-expect-error
+  handleCowSellClick(this: Farmhand, cow: farmhand.cow) {
     this.sellCow(cow)
   },
 
-  /**
-   * @param {farmhand.cow} cow
-   */
-  handleCowTradeClick(cow) {
-    // @ts-expect-error
+  handleCowTradeClick(this: Farmhand, cow: farmhand.cow) {
     this.tradeForPeerCow(cow)
   },
 
-  /**
-   * @param {React.ChangeEvent<HTMLInputElement>} e
-   * @param {farmhand.cow} cow
-   */
-  handleCowAutomaticHugChange({ target: { checked } }, cow) {
-    // @ts-expect-error
+  handleCowAutomaticHugChange(
+    this: Farmhand,
+    { target: { checked } }: React.ChangeEvent<HTMLInputElement>,
+    cow: farmhand.cow
+  ) {
     this.changeCowAutomaticHugState(cow, checked)
   },
 
-  /**
-   * @param {React.ChangeEvent<HTMLInputElement>} e
-   * @param {farmhand.cow} cow
-   */
-  handleCowBreedChange({ target }, cow) {
+  handleCowBreedChange(
+    this: Farmhand,
+    { target }: React.ChangeEvent<HTMLInputElement>,
+    cow: farmhand.cow
+  ) {
     const { checked } = target
-    // @ts-expect-error
     this.changeCowBreedingPenResident(cow, checked)
   },
 
-  /**
-   * @param {farmhand.cow} cow
-   */
-  handleCowHugClick(cow) {
-    // @ts-expect-error
+  handleCowHugClick(this: Farmhand, cow: farmhand.cow) {
     this.hugCow(cow.id)
   },
 
-  /**
-   * @param {farmhand.cow} cow
-   */
-  handleCowOfferClick(cow) {
-    // @ts-expect-error
+  handleCowOfferClick(this: Farmhand, cow: farmhand.cow) {
     this.offerCow(cow.id)
   },
 
-  /**
-   * @param {farmhand.cow} cow
-   */
-  handleCowWithdrawClick(cow) {
-    // @ts-expect-error
+  handleCowWithdrawClick(this: Farmhand, cow: farmhand.cow) {
     this.withdrawCow(cow.id)
   },
 
-  /**
-   * @param {React.ChangeEvent<HTMLInputElement>} e
-   * @param {farmhand.cow} cow
-   */
-  handleCowNameInputChange({ target }, cow) {
+  handleCowNameInputChange(
+    this: Farmhand,
+    { target }: React.ChangeEvent<HTMLInputElement>,
+    cow: farmhand.cow
+  ) {
     const { value } = target
-    // @ts-expect-error
     this.changeCowName(cow.id, value)
   },
 
-  /**
-   * @param {item} item
-   * @param {number} [howMany=1]
-   */
-  handleItemSellClick(item, howMany = 1) {
-    // @ts-expect-error
+  handleItemSellClick(this: Farmhand, item: farmhand.item, howMany = 1) {
     this.sellItem(item, howMany)
   },
 
-  /**
-   * @param {React.ChangeEvent<HTMLSelectElement>} e
-   */
-  handleViewChange({ target }) {
+  handleViewChange(
+    this: Farmhand,
+    { target }: React.ChangeEvent<HTMLSelectElement>
+  ) {
     const { value } = target
-    // @ts-expect-error
     this.setState({
-      stageFocus: /** @type {farmhand.stageFocusType} */ value,
+      stageFocus: value as farmhand.stageFocusType,
     })
   },
 
-  /**
-   * @param {farmhand.stageFocusType} stageFocus
-   */
-  handleViewChangeButtonClick(stageFocus) {
-    // @ts-expect-error
+  handleViewChangeButtonClick(
+    this: Farmhand,
+    stageFocus: farmhand.stageFocusType
+  ) {
     this.setState({ stageFocus })
   },
 
-  /**
-   * @param {farmhand.fieldMode} selectedFieldMode
-   */
-  handleFieldModeSelect(selectedFieldMode) {
-    // @ts-expect-error
+  handleFieldModeSelect(this: Farmhand, selectedFieldMode: farmhand.fieldMode) {
     this.setState(({ selectedItemId }) => ({
       selectedItemId:
         selectedFieldMode !== PLANT ||
-        TOOLBELT_FIELD_MODES.has(selectedFieldMode)
+        (TOOLBELT_FIELD_MODES as Set<farmhand.fieldMode>).has(selectedFieldMode)
           ? ''
           : selectedItemId,
       fieldMode: selectedFieldMode,
     }))
   },
 
-  /**
-   * @param {item} item
-   */
-  handleItemSelectClick({ id, enablesFieldMode }) {
-    // @ts-expect-error
+  handleItemSelectClick(
+    this: Farmhand,
+    { id, enablesFieldMode }: farmhand.item
+  ) {
     this.setState({
-      fieldMode: enablesFieldMode,
+      fieldMode: enablesFieldMode as farmhand.fieldMode,
       selectedItemId: id,
     })
   },
 
-  /**
-   * @param {number} x
-   * @param {number} y
-   */
-  handlePlotClick(x, y) {
+  handlePlotClick(this: Farmhand, x: number, y: number) {
     const {
       fieldMode: fieldModeValue,
       hoveredPlotRangeSize: rangeRadius,
       selectedItemId,
-      // @ts-expect-error
     } = this.state
 
     if (fieldModeValue === PLANT) {
-      // @ts-expect-error
       this.forRange(plantInPlot, rangeRadius, x, y, selectedItemId)
     } else if (fieldModeValue === HARVEST) {
-      // @ts-expect-error
       this.forRange(harvestPlot, rangeRadius, x, y)
     } else if (fieldModeValue === MINE) {
-      // @ts-expect-error
       this.forRange(minePlot, rangeRadius, x, y)
     } else if (fieldModeValue === CLEANUP) {
-      // @ts-expect-error
       this.forRange(clearPlot, rangeRadius, x, y)
     } else if (fieldModeValue === WATER) {
-      // @ts-expect-error
       this.forRange(waterPlot, rangeRadius, x, y)
     } else if (fieldModeValue === FERTILIZE) {
-      // @ts-expect-error
       this.forRange(fertilizePlot, rangeRadius, x, y)
     } else if (fieldModeValue === SET_SPRINKLER) {
-      // @ts-expect-error
       this.setSprinkler(x, y)
     } else if (fieldModeValue === SET_SCARECROW) {
-      // @ts-expect-error
       this.setScarecrow(x, y)
     }
   },
 
-  /**
-   * @param {number} range
-   */
-  handleFieldActionRangeChange(range) {
-    // @ts-expect-error
+  handleFieldActionRangeChange(this: Farmhand, range: number) {
     this.setState(() => ({ hoveredPlotRangeSize: range }))
   },
 
-  handleClickEndDayButton() {
-    // @ts-expect-error
+  handleClickEndDayButton(this: Farmhand) {
     this.incrementDay()
 
     // Prevent the player from spamming the End Day button
     // https://www.reddit.com/r/incremental_games/comments/jusn9i/farmhand_updates_for_November_2020/gcmi6x6/?context=3
-    const activeElement = /** @type {HTMLElement} */ document.activeElement
-    // @ts-expect-error
-    activeElement.blur()
+    const activeElement = document.activeElement as HTMLElement
+    activeElement?.blur()
   },
 
-  /**
-   * @param {number} amount
-   */
-  handleAddMoneyClick(amount) {
-    // @ts-expect-error
+  handleAddMoneyClick(this: Farmhand, amount: number) {
     this.setState(({ money }) => ({ money: moneyTotal(money, amount) }))
   },
 
-  handleClearPersistedDataClick() {
-    // @ts-expect-error
+  handleClearPersistedDataClick(this: Farmhand) {
     this.clearPersistedData()
   },
 
-  handleWaterAllPlotsClick() {
-    // @ts-expect-error
+  handleWaterAllPlotsClick(this: Farmhand) {
     this.waterAllPlots(this.state)
   },
 
-  /**
-   * @param {number} fieldId
-   */
-  handleFieldPurchase(fieldId) {
-    // @ts-expect-error
+  handleFieldPurchase(this: Farmhand, fieldId: number) {
     this.purchaseField(fieldId)
   },
 
-  /**
-   * @param {number} forestId
-   */
-  handleForestPurchase(forestId) {
-    // @ts-expect-error
+  handleForestPurchase(this: Farmhand, forestId: number) {
     this.purchaseForest(forestId)
   },
 
-  /**
-   * @param {number} combineId
-   */
-  handleCombinePurchase(combineId) {
-    // @ts-expect-error
+  handleCombinePurchase(this: Farmhand, combineId: number) {
     this.purchaseCombine(combineId)
   },
 
-  /**
-   * @param {number} composterId
-   */
-  handleComposterPurchase(composterId) {
-    // @ts-expect-error
+  handleComposterPurchase(this: Farmhand, composterId: number) {
     this.purchaseComposter(composterId)
   },
 
-  /**
-   * @param {number} smelterId
-   */
-  handleSmelterPurchase(smelterId) {
-    // @ts-expect-error
+  handleSmelterPurchase(this: Farmhand, smelterId: number) {
     this.purchaseSmelter(smelterId)
   },
 
-  /**
-   * @param {number} cowPenId
-   */
-  handleCowPenPurchase(cowPenId) {
-    // @ts-expect-error
+  handleCowPenPurchase(this: Farmhand, cowPenId: number) {
     this.purchaseCowPen(cowPenId)
   },
 
-  /**
-   * @param {number} cellarId
-   */
-  handleCellarPurchase(cellarId) {
-    // @ts-expect-error
+  handleCellarPurchase(this: Farmhand, cellarId: number) {
     this.purchaseCellar(cellarId)
   },
 
-  handleStorageExpansionPurchase() {
-    // @ts-expect-error
+  handleStorageExpansionPurchase(this: Farmhand) {
     this.purchaseStorageExpansion()
   },
 
-  /**
-   * @param {boolean} [setOpen]
-   */
-  handleMenuToggle(setOpen = /** @type {boolean | undefined} */ undefined) {
-    // @ts-expect-error
+  handleMenuToggle(this: Farmhand, setOpen: boolean | undefined = undefined) {
     this.setState(({ isMenuOpen }) => ({
       isMenuOpen: setOpen == null ? !isMenuOpen : setOpen,
     }))
   },
 
-  handleClickNextMenuButton() {
-    // @ts-expect-error
+  handleClickNextMenuButton(this: Farmhand) {
     this.focusNextView()
   },
 
-  handleClickPreviousMenuButton() {
-    // @ts-expect-error
+  handleClickPreviousMenuButton(this: Farmhand) {
     this.focusPreviousView()
   },
 
-  /**
-   * @param {farmhand.cow} cow
-   */
-  handleCowSelect(cow) {
-    // @ts-expect-error
+  handleCowSelect(this: Farmhand, cow: farmhand.cow) {
     this.selectCow(cow)
   },
 
-  /**
-   * @param {farmhand.cow} cow
-   */
-  handleCowClick(cow) {
-    // @ts-expect-error
+  handleCowClick(this: Farmhand, cow: farmhand.cow) {
     this.selectCow(cow)
-    // @ts-expect-error
     this.hugCow(cow.id)
   },
 
-  handleCowPenUnmount() {
-    // @ts-expect-error
+  handleCowPenUnmount(this: Farmhand) {
     this.setState({ selectedCowId: '' })
   },
 
-  /**
-   * @param {farmhand.dialogView} selectedDialogView
-   */
-  handleClickDialogViewButton(selectedDialogView) {
-    // @ts-expect-error
+  handleClickDialogViewButton(
+    this: Farmhand,
+    selectedDialogView: farmhand.dialogView
+  ) {
     this.openDialogView(selectedDialogView)
   },
 
-  handleCloseDialogView() {
-    // @ts-expect-error
+  handleCloseDialogView(this: Farmhand) {
     if (this.state.isAwaitingCowTradeRequest) return
 
-    // @ts-expect-error
     this.closeDialogView()
   },
 
-  handleDialogViewExited() {
-    // @ts-expect-error
+  handleDialogViewExited(this: Farmhand) {
     this.setState({ currentDialogView: dialogView.NONE })
   },
 
-  /**
-   * @param {number} paydownAmount
-   */
-  handleClickLoanPaydownButton(paydownAmount) {
-    // @ts-expect-error
+  handleClickLoanPaydownButton(this: Farmhand, paydownAmount: number) {
     this.adjustLoan(-paydownAmount)
   },
 
-  /**
-   * @param {number} loanAmount
-   */
-  handleClickTakeOutLoanButton(loanAmount) {
-    // @ts-expect-error
+  handleClickTakeOutLoanButton(this: Farmhand, loanAmount: number) {
     this.adjustLoan(loanAmount)
   },
 
-  handleExportDataClick() {
+  handleExportDataClick(this: Farmhand) {
     const blob = new Blob(
-      // @ts-expect-error
       [JSON.stringify(reduceByPersistedKeys(this.state), null, 2)],
       {
         type: 'application/json;charset=utf-8',
@@ -467,121 +313,102 @@ export default {
     saveAs(blob, `farmhand-${date}.json`)
   },
 
-  /**
-   *
-   */
-  handleImportDataClick([data]) {
+  handleImportDataClick(this: Farmhand, [data]: any[]) {
     const [, file] = data
     const fileReader = new FileReader()
 
     fileReader.addEventListener('loadend', eImport => {
       try {
-        const target = /** @type {FileReader} */ eImport.target
-        // @ts-expect-error
-        const json = String(target.result)
+        const target = eImport.target as FileReader
+        const json = String(target?.result)
         const parsedJson = JSON.parse(json)
         const transformedStateData = transformStateDataForImport(parsedJson)
         const state = reduceByPersistedKeys(transformedStateData)
 
         if (
           Object.keys(state).some(
-            // @ts-expect-error
             key => typeof this.state[key] !== typeof state[key]
           )
         ) {
           throw new Error(INVALID_DATA_PROVIDED)
         }
 
-        // @ts-expect-error
         this.setState({
           ...transformStateDataForImport({
-            // @ts-expect-error
             ...this.createInitialState(),
             ...state,
           }),
           hasBooted: true,
         })
 
-        // @ts-expect-error
         this.showNotification('Data loaded!', 'success')
       } catch (e) {
         console.error(e)
-        // @ts-expect-error
-        this.showNotification(/** @type {Error} */ e.message, 'error')
+        this.showNotification((e as Error).message, 'error')
       }
     })
 
     fileReader.readAsText(file.slice())
   },
 
-  async handleSaveButtonClick() {
-    // @ts-expect-error
+  async handleSaveButtonClick(this: Farmhand) {
     await this.persistState()
-    // @ts-expect-error
     this.showNotification(PROGRESS_SAVED_MESSAGE, 'info')
   },
 
-  /**
-   * @param {string} farmName
-   */
-  handleFarmNameUpdate(farmName) {
-    // @ts-expect-error
+  handleFarmNameUpdate(this: Farmhand, farmName: string) {
     this.setState({ farmName })
   },
 
-  handleCombineEnabledChange(_e, enableCombine) {
-    // @ts-expect-error
+  handleCombineEnabledChange(this: Farmhand, _e: any, enableCombine: boolean) {
     this.setState({ isCombineEnabled: enableCombine })
   },
 
   handleUseAlternateEndDayButtonPositionChange(
-    _e,
-    useAlternateEndDayButtonPosition
+    this: Farmhand,
+    _e: any,
+    useAlternateEndDayButtonPosition: boolean
   ) {
-    // @ts-expect-error
     this.setState({ useAlternateEndDayButtonPosition })
   },
 
-  handleAllowCustomPeerCowNamesChange(_e, allowCustomPeerCowNames) {
-    // @ts-expect-error
+  handleAllowCustomPeerCowNamesChange(
+    this: Farmhand,
+    _e: any,
+    allowCustomPeerCowNames: boolean
+  ) {
     this.setState({ allowCustomPeerCowNames })
   },
 
-  handleShowHomeScreenChange(_e, showHomeScreen) {
-    // @ts-expect-error
+  handleShowHomeScreenChange(this: Farmhand, _e: any, showHomeScreen: boolean) {
     if (this.state.stageFocus === stageFocusType.HOME && !showHomeScreen) {
-      // @ts-expect-error
       this.focusNextView()
     }
 
-    // @ts-expect-error
     this.setState({ showHomeScreen })
   },
 
-  handleShowNotificationsChange({ target: { checked } }) {
-    // @ts-expect-error
+  handleShowNotificationsChange(
+    this: Farmhand,
+    { target: { checked } }: React.ChangeEvent<HTMLInputElement>
+  ) {
     this.setState({ showNotifications: checked })
   },
 
-  handleClickNotificationIndicator() {
-    // @ts-expect-error
+  handleClickNotificationIndicator(this: Farmhand) {
     this.openDialogView(dialogView.FARMERS_LOG)
   },
 
-  /**
-   * @param {boolean} goOnline
-   */
-  handleOnlineToggleChange(goOnline) {
+  handleOnlineToggleChange(this: Farmhand, goOnline: boolean) {
     if (!goOnline) {
-      // @ts-expect-error
       this.showNotification(DISCONNECTING_FROM_SERVER, 'info')
     }
 
-    // @ts-expect-error
-    this.setState(({ room }) =>
+    this.setState(({ room, cowIdOfferedForTrade }) =>
       goOnline
         ? {
             redirect: `/online/${encodeURIComponent(room)}`,
+            cowIdOfferedForTrade,
           }
         : {
             redirect: '/',
@@ -590,26 +417,18 @@ export default {
     )
   },
 
-  /**
-   * @param {string} room
-   */
-  handleRoomChange(room) {
-    // @ts-expect-error
+  handleRoomChange(this: Farmhand, room: string) {
     this.setState(() => ({
       room,
       redirect: `/online/${encodeURIComponent(room.trim() || DEFAULT_ROOM)}`,
     }))
   },
 
-  handleActivePlayerButtonClick() {
-    // @ts-expect-error
+  handleActivePlayerButtonClick(this: Farmhand) {
     this.openDialogView(dialogView.ONLINE_PEERS)
   },
 
-  /**
-   * @param {string} seed
-   */
-  handleRNGSeedChange(seed) {
+  handleRNGSeedChange(this: Farmhand, seed: string) {
     const { origin, pathname, search, hash } = globalWindow.location
     const queryParams = new URLSearchParams(search)
     const trimmedSeed = seed.trim()
@@ -618,13 +437,11 @@ export default {
       randomNumberService.unseedRandomNumber()
       queryParams.delete('seed')
 
-      // @ts-expect-error
       this.showNotification('Random seed reset', 'info')
     } else {
       randomNumberService.seedRandomNumber(trimmedSeed)
       queryParams.set('seed', trimmedSeed)
 
-      // @ts-expect-error
       this.showNotification(`Random seed set to "${trimmedSeed}"`, 'success')
     }
 
@@ -635,19 +452,14 @@ export default {
     globalWindow.history.replaceState({}, '', newUrl)
   },
 
-  /**
-   * @param {boolean} isChatOpen
-   */
-  handleChatRoomOpenStateChange(isChatOpen) {
-    // @ts-expect-error
+  handleChatRoomOpenStateChange(this: Farmhand, isChatOpen: boolean) {
     this.setState({ isChatOpen })
   },
 
-  /**
-   * @param {(reloadPage?: boolean) => Promise<void>} updateServiceWorker
-   */
-  handleGameUpdateAvailable(updateServiceWorker) {
-    // @ts-expect-error
+  handleGameUpdateAvailable(
+    this: Farmhand,
+    updateServiceWorker: (reloadPage?: boolean) => Promise<void>
+  ) {
     this.showNotification(UPDATE_AVAILABLE, 'success', () => {
       updateServiceWorker(true)
     })

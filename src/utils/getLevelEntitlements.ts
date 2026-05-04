@@ -9,15 +9,13 @@ import { memoize } from './memoize.js'
  * @returns {levelEntitlements} Contains `sprinklerRange` and keys that correspond to
  * unlocked items.
  */
-// @ts-expect-error
 export const getLevelEntitlements = memoize(
   /**
    * @param {number} levelNumber
    * @returns {levelEntitlements}
    */
   levelNumber => {
-    /** @type levelEntitlements */
-    const acc = {
+    const acc: farmhand.levelEntitlements = {
       sprinklerRange: INITIAL_SPRINKLER_RANGE,
       items: {},
       tools: {},
@@ -38,18 +36,17 @@ export const getLevelEntitlements = memoize(
         }
 
         if (unlocksShopItem) {
-          // @ts-expect-error
-          acc.items[unlocksShopItem] = true
+          acc.items[unlocksShopItem as keyof typeof acc.items] = true
         }
 
         if (unlocksTool) {
-          // @ts-expect-error
-          acc.tools[unlocksTool] = true
+          acc.tools[unlocksTool as keyof typeof acc.tools] = true
         }
 
         if (unlocksStageFocusType) {
-          // @ts-expect-error
-          acc.stageFocusType[unlocksStageFocusType] = true
+          acc.stageFocusType[
+            unlocksStageFocusType as keyof typeof acc.stageFocusType
+          ] = true
         }
 
         return id === levelNumber

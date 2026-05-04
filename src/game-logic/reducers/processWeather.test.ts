@@ -12,8 +12,7 @@ vitest.mock('../../utils/index.js', async () => ({
 
 describe('processWeather', () => {
   test('does not water plants when there is no precipitation', () => {
-    // @ts-expect-error - Mock function type assertion
-    shouldPrecipitateToday.mockReturnValue(false)
+    vitest.mocked(shouldPrecipitateToday).mockReturnValue(false)
 
     const state = processWeather(
       testState({
@@ -26,8 +25,7 @@ describe('processWeather', () => {
   })
 
   test('does water plants on a rainy day', () => {
-    // @ts-expect-error - Mock function type assertion
-    shouldPrecipitateToday.mockReturnValue(true)
+    vitest.mocked(shouldPrecipitateToday).mockReturnValue(true)
 
     const state = processWeather(
       testState({

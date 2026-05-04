@@ -17,18 +17,15 @@ import { tools as toolImages, craftedItems, pixel } from '../../img/index.js'
 
 import './Toolbelt.sass'
 
-// @ts-expect-error
 const getTools = memoize(toolLevels => {
-  const tools = []
+  const tools: typeof toolsData[keyof typeof toolsData][] = []
 
   for (let tool of Object.values(toolsData)) {
     if (toolLevels[tool.type] !== toolLevel.UNAVAILABLE) {
-      // @ts-expect-error
       tools.push(tool)
     }
   }
 
-  // @ts-expect-error
   return tools.sort((a, b) => a.order - b.order)
 })
 

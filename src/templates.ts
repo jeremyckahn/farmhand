@@ -192,7 +192,11 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
 `,
   ]
 
-  const levelObject = levels[newLevel]
+  const levelObject = levels[newLevel] as {
+    increasesSprinklerRange?: boolean
+    unlocksTool?: farmhand.toolType
+    unlocksStageFocusType?: farmhand.stageFocusType
+  }
 
   if (itemUnlockLevels[newLevel]) {
     chunks.push(
@@ -200,7 +204,6 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
         itemsMap[itemUnlockLevels[newLevel]].name
       }**.`
     )
-    // @ts-expect-error
   } else if (levelObject && levelObject.increasesSprinklerRange) {
     chunks.push(`Sprinkler range has increased.`)
   } else if (randomCropSeed) {
@@ -209,15 +212,11 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
         randomCropSeed.name
       }** as a reward!`
     )
-    // @ts-expect-error
   } else if (levelObject && levelObject.unlocksTool) {
-    // @ts-expect-error
     if (levelObject.unlocksTool === toolType.SHOVEL) {
       chunks.push(SHOVEL_UNLOCKED)
     }
-    // @ts-expect-error
   } else if (levelObject && levelObject.unlocksStageFocusType) {
-    // @ts-expect-error
     if (levelObject.unlocksStageFocusType === stageFocusType.FOREST) {
       chunks.push(FOREST_AVAILABLE_NOTIFICATION)
     }
@@ -240,13 +239,15 @@ export const CONNECTED_TO_ROOM = (_, room) => `Connected to room **${room}**!`
  * @returns {string}
  */
 export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
-  const positivePositions = []
-  const negativePositions = []
+  const positivePositions: string[] = []
+  const negativePositions: string[] = []
   const positionKeys = Object.keys(positions)
 
   positionKeys.forEach(itemId =>
-    // @ts-expect-error
-    (positions[itemId] > 0 ? positivePositions : negativePositions).push(itemId)
+    (positions[itemId as keyof typeof positions] > 0
+      ? positivePositions
+      : negativePositions
+    ).push(itemId)
   )
 
   const chunks = positionKeys.length ? [`${who} impacted the market!\n`] : []
@@ -254,8 +255,7 @@ export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
   if (positivePositions.length) {
     chunks.push('Values raised:')
     positivePositions.forEach(itemId =>
-      // @ts-expect-error
-      chunks.push(`  - ${itemsMap[itemId].name}`)
+      chunks.push(`  - ${(itemsMap[itemId] as farmhand.item).name}`)
     )
   }
 
@@ -266,8 +266,7 @@ export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
 
     chunks.push('Values lowered:')
     negativePositions.forEach(itemId =>
-      // @ts-expect-error
-      chunks.push(`  - ${itemsMap[itemId].name}`)
+      chunks.push(`  - ${(itemsMap[itemId] as farmhand.item).name}`)
     )
   }
 

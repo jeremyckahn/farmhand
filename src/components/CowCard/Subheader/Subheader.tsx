@@ -34,7 +34,6 @@ import './Subheader.sass'
 const isHeartFull = (heartIndex, numberOfFullHearts) =>
   heartIndex + 0.5 < numberOfFullHearts
 
-// @ts-expect-error
 const getCowMapById = memoize(
   /**
    * @param {farmhand.state['cowInventory']} cowInventory

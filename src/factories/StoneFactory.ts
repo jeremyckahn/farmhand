@@ -23,12 +23,11 @@ export default class StoneFactory extends Factory {
    * @returns {Array.<farmhand.item>} an array of stone and coal resources
    */
   generate() {
-    let resources = []
+    const resources: farmhand.item[] = []
 
     for (const { resource, spawnChance } of spawnableResources) {
       if (randomNumberService.isRandomNumberLessThan(spawnChance)) {
-        // @ts-expect-error
-        resources.push(resource)
+        resources.push(resource as farmhand.item)
       }
     }
 

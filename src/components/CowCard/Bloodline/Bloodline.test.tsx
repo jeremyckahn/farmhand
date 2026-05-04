@@ -70,8 +70,7 @@ test('displays tooltips on hover', async () => {
 
   const brownElement = document.querySelector('.brown')
   expect(brownElement).toBeInTheDocument()
-  // @ts-expect-error
-  await userEvent.hover(/** @type {Element} */ brownElement)
+  await userEvent.hover(brownElement!)
 
   expect(await screen.findByText('Brown')).toBeInTheDocument()
 })
@@ -87,14 +86,12 @@ test('handles multiple color tooltips', async () => {
 
   const blueElement = document.querySelector('.blue')
   expect(blueElement).toBeInTheDocument()
-  // @ts-expect-error
-  await userEvent.hover(/** @type {Element} */ blueElement)
+  await userEvent.hover(blueElement!)
   expect(await screen.findByText('Blue')).toBeInTheDocument()
 
   const whiteElement = document.querySelector('.white')
   expect(whiteElement).toBeInTheDocument()
-  // @ts-expect-error
-  await userEvent.hover(/** @type {Element} */ whiteElement)
+  await userEvent.hover(whiteElement!)
   expect(await screen.findByText('White')).toBeInTheDocument()
 })
 

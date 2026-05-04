@@ -12,3 +12,8 @@ declare global {
     farmhand?: typeof Farmhand
   }
 }
+
+declare module '*?dataUri' {
+  const content: string
+  export default content
+}

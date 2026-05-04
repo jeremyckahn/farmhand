@@ -2,10 +2,7 @@ import seedrandom from 'seedrandom'
 import globalWindow from 'global/window.js'
 
 export class RandomNumberService {
-  /**
-   * @type {Function?}
-   */
-  seededRandom = null
+  seededRandom: (() => number) | null = null
 
   constructor() {
     // The availability of window.location needs to be checked before accessing
@@ -31,7 +28,6 @@ export class RandomNumberService {
    * @returns {number}
    */
   generateRandomNumber() {
-    // @ts-expect-error
     return this.seededRandom ? this.seededRandom() : Math.random()
   }
 

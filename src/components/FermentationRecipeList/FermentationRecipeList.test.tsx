@@ -3,7 +3,9 @@ import { screen } from '@testing-library/dom'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, {
+  createContextData,
+} from '../Farmhand/Farmhand.context.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { getCropsAvailableToFerment } from '../../utils/getCropsAvailableToFerment.js'
 import { fermentableItemsMap } from '../../data/maps.js'
@@ -23,20 +25,15 @@ const FermentationRecipeListStub = ({
     tools: {},
     stageFocusType: {},
   },
-} = {}) => (
-  <FarmhandContext.Provider
-    value={{
-      // @ts-expect-error
-      gameState: {
-        levelEntitlements,
-      },
-      // @ts-expect-error
-      handlers: {},
-    }}
-  >
-    <FermentationRecipeList />
-  </FarmhandContext.Provider>
-)
+} = {}) => {
+  const contextValue = createContextData()
+  contextValue.gameState.levelEntitlements = levelEntitlements as farmhand.levelEntitlements
+  return (
+    <FarmhandContext.Provider value={contextValue}>
+      <FermentationRecipeList />
+    </FarmhandContext.Provider>
+  )
+}
 
 describe('FermentationRecipeList', () => {
   test('displays unlearned recipes', () => {
@@ -82,18 +79,18 @@ describe('FermentationRecipeList', () => {
     await userEvent.type(searchBar, 'apple')
 
     const filteredCrops = cropsAvailableToFerment.filter(item => {
-      // @ts-expect-error
-      const fermentationRecipeName = `Fermented ${item.name}`.toLowerCase()
+      const itemWithName = item as farmhand.item & { name: string }
+      const fermentationRecipeName = `Fermented ${itemWithName.name}`.toLowerCase()
       return (
         fermentationRecipeName.includes('apple') ||
-        // @ts-expect-error
-        item.name.toLowerCase().includes('apple')
+        itemWithName.name.toLowerCase().includes('apple')
       )
     })
 
     filteredCrops.forEach(crop => {
-      // @ts-expect-error
-      expect(screen.getByText(crop.name)).toBeInTheDocument()
+      expect(
+        screen.getByText((crop as farmhand.item & { name: string }).name)
+      ).toBeInTheDocument()
     })
 
     const nonMatchingCrops = cropsAvailableToFerment.filter(
@@ -101,8 +98,9 @@ describe('FermentationRecipeList', () => {
     )
 
     nonMatchingCrops.forEach(crop => {
-      // @ts-expect-error
-      const nonMatchingElements = screen.queryAllByText(crop.name)
+      const nonMatchingElements = screen.queryAllByText(
+        (crop as farmhand.item & { name: string }).name
+      )
       expect(nonMatchingElements).toHaveLength(1)
     })
   })
@@ -123,8 +121,9 @@ describe('FermentationRecipeList', () => {
     await userEvent.clear(searchBar)
 
     cropsAvailableToFerment.forEach(crop => {
-      // @ts-expect-error
-      expect(screen.getByText(crop.name)).toBeInTheDocument()
+      expect(
+        screen.getByText((crop as farmhand.item & { name: string }).name)
+      ).toBeInTheDocument()
     })
   })
 })

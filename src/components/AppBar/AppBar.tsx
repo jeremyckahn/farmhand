@@ -23,10 +23,9 @@ const MoneyDisplay = ({ money }) => {
   const [displayedMoney, setDisplayedMoney] = useState(money)
   const [textColor, setTextColor] = useState(idleColor)
   const [previousMoney, setPreviousMoney] = useState(money)
-  /**
-   * @type {ReturnType<typeof useState<Tweenable | undefined>>}
-   */
-  const [currentTweenable, setCurrentTweenable] = useState()
+  const [currentTweenable, setCurrentTweenable] = useState<
+    Tweenable | undefined
+  >()
 
   useEffect(() => {
     setPreviousMoney(money)
@@ -34,7 +33,6 @@ const MoneyDisplay = ({ money }) => {
 
   useEffect(() => {
     if (money !== previousMoney) {
-      // @ts-expect-error
       currentTweenable?.cancel()
 
       const tweenable = tween({
@@ -51,12 +49,10 @@ const MoneyDisplay = ({ money }) => {
         to: { color: idleColor, money },
       })
 
-      // @ts-expect-error
       setCurrentTweenable(tweenable)
     }
 
     return () => {
-      // @ts-expect-error
       currentTweenable?.cancel()
     }
   }, [currentTweenable, money, previousMoney])

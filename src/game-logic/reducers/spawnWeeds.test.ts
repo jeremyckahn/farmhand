@@ -15,8 +15,9 @@ describe('spawnWeeds', () => {
   })
 
   it('will spawn weeds if the plot is empty and the random chance event succeeds', () => {
-    // @ts-expect-error
-    randomNumberService.isRandomNumberLessThan.mockReturnValue(true)
+    vitest
+      .mocked(randomNumberService.isRandomNumberLessThan)
+      .mockReturnValue(true)
 
     expect(spawnWeeds(null)).toEqual({
       itemId: 'weed',
@@ -25,8 +26,9 @@ describe('spawnWeeds', () => {
   })
 
   it('will not spawn weeds if the random chance fails', () => {
-    // @ts-expect-error
-    randomNumberService.isRandomNumberLessThan.mockReturnValue(false)
+    vitest
+      .mocked(randomNumberService.isRandomNumberLessThan)
+      .mockReturnValue(false)
 
     expect(spawnWeeds(null)).toEqual(null)
   })

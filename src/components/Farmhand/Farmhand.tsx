@@ -1,49 +1,76 @@
-import React from 'react'
-import window from 'global/window.js'
-import { Redirect } from 'react-router-dom'
-import { GlobalHotKeys } from 'react-hotkeys'
-import localforage from 'localforage'
-import { v4 as uuid } from 'uuid'
-import {
-  ThemeProvider,
-  StyledEngineProvider,
-} from '@mui/material/styles/index.js'
-import Drawer from '@mui/material/Drawer/index.js'
-import Fab from '@mui/material/Fab/index.js'
-import MenuIcon from '@mui/icons-material/Menu.js'
 import HotelIcon from '@mui/icons-material/Hotel.js'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft.js'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight.js'
-import Tooltip from '@mui/material/Tooltip/index.js'
+import MenuIcon from '@mui/icons-material/Menu.js'
+import Drawer from '@mui/material/Drawer/index.js'
+import Fab from '@mui/material/Fab/index.js'
 import MobileStepper from '@mui/material/MobileStepper/index.js'
+import {
+  StyledEngineProvider,
+  ThemeProvider,
+} from '@mui/material/styles/index.js'
+import Tooltip from '@mui/material/Tooltip/index.js'
 import { joinRoom } from '@trystero-p2p/torrent'
-import { SnackbarProvider } from 'notistack'
+import classNames from 'classnames'
+import window from 'global/window.js'
+import localforage from 'localforage'
 import debounce from 'lodash.debounce'
 import throttle from 'lodash.throttle'
-import classNames from 'classnames'
+import { SnackbarProvider } from 'notistack'
 import { object } from 'prop-types'
+import { GlobalHotKeys } from 'react-hotkeys'
+import { Redirect } from 'react-router-dom'
+import { v4 as uuid } from 'uuid'
 
-import eventHandlers from '../../handlers/ui-events.js'
+import * as reducers from '../../game-logic/reducers/index.js'
 import {
-  handlePeerMetadataRequest,
   handleCowTradeRequest,
   handleCowTradeRequestAccept,
   handleCowTradeRequestReject,
+  handlePeerMetadataRequest,
 } from '../../handlers/peer-events.js'
-import * as reducers from '../../game-logic/reducers/index.js'
-// This must be imported here so that it can be overridden by component styles.
-import './Farmhand.sass'
+import eventHandlers from '../../handlers/ui-events.js'
 
-import AppBar from '../AppBar/index.js'
-import Navigation from '../Navigation/index.js'
-import ContextPane from '../ContextPane/index.js'
-import Stage from '../Stage/index.js'
-import NotificationSystem, {
-  snackbarProviderContentCallback,
-} from '../NotificationSystem/index.js'
-import UpdateNotifier from '../UpdateNotifier/index.js'
+import { endpoints, features, relayUrls, rtcConfig } from '../../config.js'
+import {
+  COW_TRADE_TIMEOUT,
+  DEFAULT_ROOM,
+  HEARTBEAT_INTERVAL_PERIOD,
+  INITIAL_STORAGE_LIMIT,
+  STAGE_TITLE_MAP,
+  STANDARD_LOAN_AMOUNT,
+  STANDARD_VIEW_LIST,
+  Z_INDEX,
+} from '../../constants.js'
+import { scarecrow } from '../../data/items.js'
+import { itemsMap, recipesMap } from '../../data/maps.js'
+import {
+  dialogView,
+  fieldMode,
+  stageFocusType,
+  toolLevel,
+  toolType,
+} from '../../enums.js'
+import { getData, postData } from '../../fetch-utils.js'
 import theme from '../../mui-theme.js'
-import { levelAchieved } from '../../utils/levelAchieved.js'
+import {
+  CONNECTING_TO_SERVER,
+  COW_ALREADY_OWNED,
+  DATA_DELETED,
+  DISCONNECTED_FROM_SERVER,
+  INVENTORY_FULL_NOTIFICATION,
+  PROGRESS_SAVED_MESSAGE,
+  REQUESTED_COW_TRADE_UNAVAILABLE,
+  SERVER_ERROR,
+} from '../../strings.js'
+import {
+  CONNECTED_TO_ROOM,
+  LOAN_INCREASED,
+  POSITIONS_POSTED_NOTIFICATION,
+  RECIPE_LEARNED,
+  RECIPES_LEARNED,
+} from '../../templates.js'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import {
   computeMarketPositions,
   createNewField,
@@ -60,61 +87,34 @@ import {
   sleep,
   transformStateDataForImport,
 } from '../../utils/index.js'
-import { noop } from '../../utils/noop.js'
-import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
+
+// NOTE: This must be imported here so that it can be overridden by component
+// styles. The newlines before and after are intentional to prevent imports
+// from being automatically reordered in a way that would break styles.
+import './Farmhand.sass'
+
+import { levelAchieved } from '../../utils/levelAchieved.js'
 import { memoize } from '../../utils/memoize.js'
-import { getData, postData } from '../../fetch-utils.js'
-import { itemsMap, recipesMap } from '../../data/maps.js'
-import {
-  dialogView,
-  fieldMode,
-  stageFocusType,
-  toolLevel,
-  toolType,
-} from '../../enums.js'
-import {
-  COW_TRADE_TIMEOUT,
-  DEFAULT_ROOM,
-  HEARTBEAT_INTERVAL_PERIOD,
-  INITIAL_STORAGE_LIMIT,
-  STAGE_TITLE_MAP,
-  STANDARD_LOAN_AMOUNT,
-  Z_INDEX,
-  STANDARD_VIEW_LIST,
-} from '../../constants.js'
-import {
-  CONNECTED_TO_ROOM,
-  LOAN_INCREASED,
-  POSITIONS_POSTED_NOTIFICATION,
-  RECIPE_LEARNED,
-  RECIPES_LEARNED,
-} from '../../templates.js'
-import {
-  CONNECTING_TO_SERVER,
-  COW_ALREADY_OWNED,
-  DATA_DELETED,
-  DISCONNECTED_FROM_SERVER,
-  INVENTORY_FULL_NOTIFICATION,
-  PROGRESS_SAVED_MESSAGE,
-  REQUESTED_COW_TRADE_UNAVAILABLE,
-  SERVER_ERROR,
-} from '../../strings.js'
-import { endpoints, features, rtcConfig, relayUrls } from '../../config.js'
-
-import { scarecrow } from '../../data/items.js'
-
+import { noop } from '../../utils/noop.js'
+import AppBar from '../AppBar/index.js'
 import { ChatRoom } from '../ChatRoom/index.js'
+import ContextPane from '../ContextPane/index.js'
+import Navigation from '../Navigation/index.js'
+import NotificationSystem, {
+  snackbarProviderContentCallback,
+} from '../NotificationSystem/index.js'
+import Stage from '../Stage/index.js'
+import UpdateNotifier from '../UpdateNotifier/index.js'
 
-import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
-import FarmhandContext from './Farmhand.context.js'
+import FarmhandContext, { BoundHandlers } from './Farmhand.context.js'
 import { FarmhandReducers } from './FarmhandReducers.js'
+import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 
 // Utility object for reuse in no-ops to save on memory
 const emptyObject = Object.freeze({})
 
-// @ts-expect-error
 export const computePlayerInventory = memoize(
   /**
    * @param {{ id: globalThis.farmhand.item['id'], quantity: number }[]} inventory
@@ -129,7 +129,6 @@ export const computePlayerInventory = memoize(
     }))
 )
 
-// @ts-expect-error
 export const getFieldToolInventory = memoize(
   /**
    * @param {globalThis.farmhand.state['inventory']} inventory
@@ -147,7 +146,6 @@ export const getFieldToolInventory = memoize(
       .map(({ id, quantity }) => ({ ...itemsMap[id], quantity }))
 )
 
-// @ts-expect-error
 export const getPlantableCropInventory = memoize(
   /**
    * @param {globalThis.farmhand.state['inventory']} inventory
@@ -183,15 +181,15 @@ export default class Farmhand extends FarmhandReducers {
    * @member farmhand.Farmhand#state
    * @type {farmhand.state}
    */
-  state = this.createInitialState()
+  state: farmhand.state = this.createInitialState()
 
-  // NOTE: This object construction is overwritten in initInputHandlers with
-  // properly-bound versions of each handler function. They are initially
-  // defined here as stubs in order to inform the type checker of the
-  // appropriate object structure.
-  handlers = {
+  handlers: BoundHandlers<typeof eventHandlers> & {
+    debounced: BoundHandlers<typeof eventHandlers>
+  } = {
     ...eventHandlers,
     debounced: { ...eventHandlers },
+  } as BoundHandlers<typeof eventHandlers> & {
+    debounced: BoundHandlers<typeof eventHandlers>
   }
 
   /**
@@ -248,14 +246,12 @@ export default class Farmhand extends FarmhandReducers {
 
   get viewList() {
     const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
-    /** @type (keyof typeof stageFocusType)[] */
-    const viewList = [...STANDARD_VIEW_LIST]
+    const viewList: farmhand.stageFocusType[] = [...STANDARD_VIEW_LIST]
 
     if (this.state.showHomeScreen) {
       viewList.unshift(HOME)
     }
 
-    // @ts-expect-error
     if (this.isForestUnlocked && features.FOREST) {
       viewList.push(FOREST)
     }
@@ -305,15 +301,14 @@ export default class Farmhand extends FarmhandReducers {
   /**
    * @returns {farmhand.state}
    */
-  createInitialState() {
-    return /** @type {farmhand.state} */ {
+  createInitialState(): farmhand.state {
+    return {
       activePlayers: null,
       allowCustomPeerCowNames: false,
       cellarInventory: [],
-      currentDialogView:
-        /** @type {globalThis.farmhand.dialogView} */ dialogView.NONE,
+      currentDialogView: dialogView.NONE as farmhand.dialogView,
       completedAchievements: {},
-      cowForSale: generateCow(),
+      cowForSale: generateCow() as farmhand.cow,
       cowBreedingPen: {
         cowId1: null,
         cowId2: null,
@@ -330,7 +325,7 @@ export default class Farmhand extends FarmhandReducers {
       experience: 0,
       farmName: 'Unnamed',
       field: createNewField(),
-      fieldMode: /** @type {globalThis.farmhand.fieldMode} */ OBSERVE,
+      fieldMode: OBSERVE as farmhand.fieldMode,
       forest: createNewForest(),
       getCowAccept: noop,
       getCowReject: noop,
@@ -353,8 +348,7 @@ export default class Farmhand extends FarmhandReducers {
       cellarItemsSold: {},
       isChatOpen: false,
       isDialogViewOpen: false,
-      // @ts-expect-error
-      isOnline: this.props.match.path.startsWith('/online'),
+      isOnline: this.props.match?.path.startsWith('/online') ?? false,
       isWaitingForDayToCompleteIncrementing: false,
       learnedRecipes: {},
       loanBalance: STANDARD_LOAN_AMOUNT,
@@ -378,8 +372,7 @@ export default class Farmhand extends FarmhandReducers {
       recordSingleDayProfit: 0,
       revenue: 0,
       redirect: '',
-      // @ts-expect-error
-      room: decodeURIComponent(this.props.match.params.room || DEFAULT_ROOM),
+      room: decodeURIComponent(this.props.match?.params.room || DEFAULT_ROOM),
       sendCowAccept: noop,
       sendCowReject: noop,
       purchasedCombine: 0,
@@ -392,19 +385,18 @@ export default class Farmhand extends FarmhandReducers {
       sendCowTradeRequest: noop,
       showHomeScreen: true,
       showNotifications: true,
-      stageFocus:
-        /** @type {globalThis.farmhand.stageFocusType} */ stageFocusType.HOME,
+      stageFocus: stageFocusType.HOME as farmhand.stageFocusType,
       todaysNotifications: [],
       todaysLosses: 0,
       todaysPurchases: {},
       todaysRevenue: 0,
       todaysStartingInventory: {},
-      toolLevels: /** @type {Record<import('../../enums.js').toolType, import('../../enums.js').toolLevel>} */ {
-        [toolType.HOE]: toolLevel.DEFAULT,
-        [toolType.SCYTHE]: toolLevel.DEFAULT,
-        [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
-        [toolType.WATERING_CAN]: toolLevel.DEFAULT,
-      },
+      toolLevels: {
+        [toolType.HOE as farmhand.toolType]: toolLevel.DEFAULT as farmhand.toolLevel,
+        [toolType.SCYTHE as farmhand.toolType]: toolLevel.DEFAULT as farmhand.toolLevel,
+        [toolType.SHOVEL as farmhand.toolType]: toolLevel.UNAVAILABLE as farmhand.toolLevel,
+        [toolType.WATERING_CAN as farmhand.toolType]: toolLevel.DEFAULT as farmhand.toolLevel,
+      } as Record<farmhand.toolType, farmhand.toolLevel>,
       useAlternateEndDayButtonPosition: false,
       valueAdjustments: {},
       version: import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION ?? '',
@@ -418,7 +410,6 @@ export default class Farmhand extends FarmhandReducers {
       historicalValueAdjustments: [],
     }))
 
-    // @ts-expect-error
     this.showNotification(LOAN_INCREASED('', STANDARD_LOAN_AMOUNT), 'info')
   }
 
@@ -511,8 +502,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   async componentDidMount() {
-    // @ts-expect-error
-    const state = await this.props.localforage.getItem('state')
+    const state = await this.props.localforage?.getItem('state')
 
     if (state) {
       const sanitizedState = transformStateDataForImport({
@@ -526,11 +516,9 @@ export default class Farmhand extends FarmhandReducers {
         newDayNotifications.forEach(({ message, severity }) => {
           // Defer these notifications so that notistack doesn't swallow all
           // but the last one.
-          // @ts-expect-error
           setTimeout(() => this.showNotification(message, severity), 0)
 
           if (isCombineEnabled) {
-            // @ts-expect-error
             this.forRange(reducers.harvestPlot, Infinity, 0, 0)
           }
         })
@@ -565,7 +553,6 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     const {
-      // @ts-expect-error
       match: {
         path,
         params: { room: newRoom = room },
@@ -601,7 +588,6 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     if (isOnline === false && prevState.isOnline === true) {
-      // @ts-expect-error
       this.showNotification(DISCONNECTED_FROM_SERVER, 'info')
     }
 
@@ -628,7 +614,6 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     if (money < prevState.money) {
-      // @ts-expect-error
       this.setState(({ todaysLosses }) => ({
         todaysLosses: moneyTotal(todaysLosses, money - prevState.money),
       }))
@@ -636,19 +621,14 @@ export default class Farmhand extends FarmhandReducers {
 
     if (peerRoom !== prevState.peerRoom) {
       if (peerRoom) {
-        // @ts-expect-error
         peerRoom.onPeerJoin(id => {
-          // @ts-expect-error
           this.addPeer(id)
         })
 
-        // @ts-expect-error
         peerRoom.onPeerLeave(id => {
-          // @ts-expect-error
           this.removePeer(id)
         })
 
-        // @ts-expect-error
         const [sendPeerMetadata, getPeerMetadataFunc] = peerRoom.makeAction(
           'peerMetadata'
         )
@@ -656,12 +636,8 @@ export default class Farmhand extends FarmhandReducers {
         getPeerMetadataFunc((
           /** @type {[object, string]} */
           ...args
-        ) =>
-          // @ts-expect-error
-          handlePeerMetadataRequest(this, ...args)
-        )
+        ) => handlePeerMetadataRequest(this, args[0], args[1]))
 
-        // @ts-expect-error
         const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
           'cowTrade'
         )
@@ -669,32 +645,21 @@ export default class Farmhand extends FarmhandReducers {
         getCowTradeRequest((
           /** @type {[object, string]} */
           ...args
-        ) =>
-          // @ts-expect-error
-          handleCowTradeRequest(this, ...args)
-        )
+        ) => handleCowTradeRequest(this, args[0], args[1]))
 
-        // @ts-expect-error
         const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
 
         getCowAccept((
           /** @type {[object, string]} */
           ...args
-        ) =>
-          // @ts-expect-error
-          handleCowTradeRequestAccept(this, ...args)
-        )
+        ) => handleCowTradeRequestAccept(this, args[0], args[1]))
 
-        // @ts-expect-error
         const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
 
         getCowReject((
           /** @type {[object]} */
           ...args
-        ) =>
-          // @ts-expect-error
-          handleCowTradeRequestReject(this, ...args)
-        )
+        ) => handleCowTradeRequestReject(this, args[0]))
 
         this.setState({
           getCowAccept,
@@ -721,7 +686,6 @@ export default class Farmhand extends FarmhandReducers {
       'showRecipeLearnedNotifications',
     ].forEach(fn => this[fn](prevState))
 
-    // @ts-expect-error
     this.state.sendPeerMetadata?.(this.peerMetadata)
   }
 
@@ -752,13 +716,9 @@ export default class Farmhand extends FarmhandReducers {
   tradeForPeerCow(peerPlayerCow) {
     this.setState(state => {
       const {
-        // @ts-expect-error
         cowIdOfferedForTrade,
-        // @ts-expect-error
         cowInventory,
-        // @ts-expect-error
         peers,
-        // @ts-expect-error
         sendCowTradeRequest,
       } = state
 
@@ -767,7 +727,6 @@ export default class Farmhand extends FarmhandReducers {
       const { ownerId } = peerPlayerCow
 
       const [peerId] =
-        // @ts-expect-error
         Object.entries(peers).find(([, peer]) => peer?.playerId === ownerId) ??
         []
 
@@ -815,7 +774,6 @@ export default class Farmhand extends FarmhandReducers {
 
   handleCowTradeTimeout = () => {
     if (typeof this.state.cowTradeTimeoutId === 'number') {
-      // @ts-expect-error
       this.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error')
       this.setState({
         cowTradeTimeoutId: null,
@@ -827,10 +785,8 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   async clearPersistedData() {
-    // @ts-expect-error
-    await this.props.localforage.clear()
+    await this.props.localforage?.clear()
 
-    // @ts-expect-error
     this.showNotification(DATA_DELETED)
   }
 
@@ -841,7 +797,6 @@ export default class Farmhand extends FarmhandReducers {
       return
     }
 
-    // @ts-expect-error
     this.showNotification(CONNECTING_TO_SERVER, 'info')
 
     try {
@@ -850,7 +805,6 @@ export default class Farmhand extends FarmhandReducers {
         peers: {},
       })
 
-      // @ts-expect-error
       this.state.peerRoom?.leave()
 
       const { valueAdjustments } = await getData(endpoints.getMarketData, {
@@ -884,14 +838,12 @@ export default class Farmhand extends FarmhandReducers {
         ),
       })
 
-      // @ts-expect-error
       this.showNotification(CONNECTED_TO_ROOM('', room), 'success')
     } catch (e) {
       // TODO: Add some reasonable fallback behavior in case the server request
       // fails. Possibility: Regenerate valueAdjustments and notify the user
       // they are offline.
 
-      // @ts-expect-error
       this.showNotification(SERVER_ERROR, 'error')
 
       console.error(e)
@@ -916,15 +868,14 @@ export default class Farmhand extends FarmhandReducers {
     clearTimeout(heartbeatTimeoutId ?? -1)
 
     this.setState(() => ({
-      heartbeatTimeoutId: setTimeout(async () => {
-        // @ts-expect-error
+      heartbeatTimeoutId: (window.setTimeout(async () => {
         this.setState(({ money, activePlayers }) => ({
           activePlayers,
           money: moneyTotal(money, activePlayers),
         }))
 
         this.scheduleHeartbeat()
-      }, HEARTBEAT_INTERVAL_PERIOD),
+      }, HEARTBEAT_INTERVAL_PERIOD) as unknown) as number,
     }))
   }
 
@@ -936,7 +887,6 @@ export default class Farmhand extends FarmhandReducers {
       inventorySpaceRemaining(prevState) > 0 &&
       inventorySpaceRemaining(this.state) <= 0
     ) {
-      // @ts-expect-error
       this.showNotification(INVENTORY_FULL_NOTIFICATION, 'warning')
     }
   }
@@ -945,20 +895,17 @@ export default class Farmhand extends FarmhandReducers {
    * @param {farmhand.state} prevState
    */
   showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
-    let learnedRecipes = []
+    let learnedRecipes: farmhand.recipe[] = []
 
     Object.keys(this.state.learnedRecipes).forEach(recipeId => {
       if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
-        // @ts-expect-error
         learnedRecipes.push(recipesMap[recipeId])
       }
     })
 
     if (learnedRecipes.length > 1) {
-      // @ts-expect-error
       this.showNotification(RECIPES_LEARNED('', learnedRecipes))
     } else if (learnedRecipes.length === 1) {
-      // @ts-expect-error
       this.showNotification(RECIPE_LEARNED('', learnedRecipes[0]))
     }
   }
@@ -968,8 +915,7 @@ export default class Farmhand extends FarmhandReducers {
    * @return {Promise}
    */
   persistState(overrides = {}) {
-    // @ts-expect-error
-    return this.props.localforage.setItem(
+    return this.props.localforage?.setItem(
       'state',
       reduceByPersistedKeys({
         ...this.state,
@@ -980,12 +926,12 @@ export default class Farmhand extends FarmhandReducers {
 
   async updateServerForNextDay() {
     /** @type {globalThis.farmhand.notification[]} */
-    const serverMessages = []
+    const serverMessages: { message: string; severity: string }[] = []
 
     /**
      * @type {string | null}
      */
-    let broadcastedPositionMessage = null
+    let broadcastedPositionMessage: string | null = null
 
     this.setState(() => ({ isAwaitingNetworkRequest: true }))
 
@@ -1017,13 +963,11 @@ export default class Farmhand extends FarmhandReducers {
         ).valueAdjustments
 
         if (Object.keys(positions).length) {
-          // @ts-expect-error
           serverMessages.push({
             message: POSITIONS_POSTED_NOTIFICATION('', 'You', positions),
             severity: 'info',
           })
 
-          // @ts-expect-error
           broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION(
             '',
             '',
@@ -1032,7 +976,6 @@ export default class Farmhand extends FarmhandReducers {
         }
       } catch (e) {
         // NOTE: This will get reached when there's an issue posting data to the server.
-        // @ts-expect-error
         serverMessages.push({
           message: SERVER_ERROR,
           severity: 'error',
@@ -1063,7 +1006,7 @@ export default class Farmhand extends FarmhandReducers {
     } = await this.updateServerForNextDay()
 
     /** @type {globalThis.farmhand.notification[]} */
-    let pendingNotifications = []
+    let pendingNotifications: { message: string; severity: string }[] = []
 
     // This would be cleaner if setState was called after localForage.setItem,
     // but updating the state first makes for a more responsive user
@@ -1077,7 +1020,6 @@ export default class Farmhand extends FarmhandReducers {
       prev => {
         const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
 
-        // @ts-expect-error
         pendingNotifications = [
           ...serverMessages,
           ...nextDayState.newDayNotifications,
@@ -1110,13 +1052,11 @@ export default class Farmhand extends FarmhandReducers {
 
           notifications
             .concat(
-              // @ts-expect-error
               isFirstDay
                 ? []
                 : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
             )
             .forEach(({ message, severity }) =>
-              // @ts-expect-error
               this.showNotification(message, severity)
             )
 
@@ -1126,13 +1066,11 @@ export default class Farmhand extends FarmhandReducers {
               await sleep(1000)
             }
 
-            // @ts-expect-error
             this.forRange(reducers.harvestPlot, Infinity, 0, 0)
           }
         } catch (e) {
           console.error(e)
 
-          // @ts-expect-error
           this.showNotification(JSON.stringify(e), 'error')
         } finally {
           this.setState(() => ({
@@ -1140,7 +1078,6 @@ export default class Farmhand extends FarmhandReducers {
           }))
 
           if (broadcastedPositionMessage) {
-            // @ts-expect-error
             this.messagePeers(broadcastedPositionMessage)
           }
         }
@@ -1164,7 +1101,6 @@ export default class Farmhand extends FarmhandReducers {
 
     const { viewList } = this
 
-    // @ts-expect-error
     this.setState(({ stageFocus }) => {
       const currentViewIndex = viewList.indexOf(stageFocus)
 
@@ -1177,7 +1113,6 @@ export default class Farmhand extends FarmhandReducers {
 
     const { viewList } = this
 
-    // @ts-expect-error
     this.setState(({ stageFocus }) => {
       const currentViewIndex = viewList.indexOf(stageFocus)
 
@@ -1192,18 +1127,12 @@ export default class Farmhand extends FarmhandReducers {
     })
   }
 
-  /**
-   * @param {string} message
-   * @param {string?} [severity]
-   */
-  messagePeers(message, severity) {
-    // @ts-expect-error
+  messagePeers(message: string, severity?: string) {
     this.prependPendingPeerMessage(message, severity)
   }
 
   render() {
     const {
-      // @ts-expect-error
       props: { features: propsFeatures },
       state: { redirect },
       fieldToolInventory,
@@ -1226,7 +1155,7 @@ export default class Farmhand extends FarmhandReducers {
     const gameState = {
       ...this.state,
       blockInput,
-      features: propsFeatures,
+      features: propsFeatures ?? {},
       fieldToolInventory,
       isChatAvailable,
       levelEntitlements,
@@ -1261,7 +1190,6 @@ export default class Farmhand extends FarmhandReducers {
               {redirect && <Redirect {...{ to: redirect }} />}
               <FarmhandContext.Provider
                 value={{
-                  // @ts-expect-error
                   gameState,
                   handlers,
                 }}
@@ -1385,12 +1313,11 @@ export default class Farmhand extends FarmhandReducers {
       </GlobalHotKeys>
     )
   }
-}
 
-// @ts-expect-error
-Farmhand.propTypes = {
-  features: object,
-  history: object,
-  location: object,
-  match: object.isRequired,
+  static propTypes = {
+    features: object,
+    history: object,
+    location: object,
+    match: object.isRequired,
+  }
 }

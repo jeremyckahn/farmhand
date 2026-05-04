@@ -7,8 +7,16 @@ const { freeze } = Object
  * @param {Partial<farmhand.item>} item
  * @returns {farmhand.item}
  */
+interface CropArgs extends Partial<farmhand.item> {
+  cropTimeline?: number[]
+}
+
+/**
+ * @param {CropArgs} item
+ * @returns {farmhand.item}
+ */
 export const crop = ({
-  cropTimeline,
+  cropTimeline = [],
   growsInto,
   tier = 1,
   isSeed = Boolean(growsInto),
@@ -16,53 +24,55 @@ export const crop = ({
   id = '',
   name = '',
   ...rest
-}) =>
-  freeze(
-    /** @type {farmhand.item} */ {
-      id,
-      name,
-      cropTimeline,
-      doesPriceFluctuate: true,
-      tier,
-      type: itemType.CROP,
-      value: 10 + cropLifecycleDuration * tier * (isSeed ? 1 : 3),
-      ...(isSeed && {
-        enablesFieldMode: fieldMode.PLANT,
-        growsInto,
-        isPlantableCrop: true,
-      }),
-      ...rest,
-    }
-  )
+}: CropArgs): farmhand.item =>
+  freeze({
+    id,
+    name,
+    cropTimeline,
+    doesPriceFluctuate: true,
+    tier,
+    type: itemType.CROP,
+    value: 10 + cropLifecycleDuration * tier * (isSeed ? 1 : 3),
+    ...(isSeed && {
+      enablesFieldMode: fieldMode.PLANT,
+      growsInto,
+      isPlantableCrop: true,
+    }),
+    ...rest,
+  })
+
+interface FromSeedConfig {
+  variantIdx?: number
+  canBeFermented?: boolean
+}
 
 /**
  * @param {farmhand.item} item
- * @param {Object} [config]
- * @param {number} [config.variantIdx]
- * @param {boolean} [config.canBeFermented]
- * @returns {farmhand.item}
+ * @param {FromSeedConfig} [config]
+ * @returns {Partial<farmhand.item>}
  */
 export const fromSeed = (
-  { cropTimeline, cropType, growsInto, tier = 1 },
-  { variantIdx = 0, canBeFermented = false } = {}
-) => {
+  { cropTimeline, cropType, growsInto, tier = 1 }: farmhand.item,
+  { variantIdx = 0, canBeFermented = false }: FromSeedConfig = {}
+): Partial<farmhand.item> => {
   const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 
-  return /** @type {farmhand.item} */ {
+  return {
     id: variants[variantIdx] || '',
-    cropTimeline,
+    cropTimeline: cropTimeline || [],
     cropType,
     doesPriceFluctuate: true,
     tier,
     type: itemType.CROP,
-    ...(canBeFermented && {
-      daysToFerment: getCropLifecycleDuration({ cropTimeline }) * tier,
-    }),
+    ...(canBeFermented &&
+      cropTimeline && {
+        daysToFerment: getCropLifecycleDuration({ cropTimeline }) * tier,
+      }),
   }
 }
 
 /**
- * @param {farmhand.cropVariety} cropVariety
+ * @param {farmhand.cropVariety} cropVarietyArgs
  * @returns {farmhand.cropVariety}
  */
 export const cropVariety = ({
@@ -70,7 +80,15 @@ export const cropVariety = ({
   cropFamily,
   variety,
   ...cropVarietyProperties
-}) => {
-  // @ts-expect-error
-  return { imageId, cropFamily, variety, ...crop({ ...cropVarietyProperties }) }
+}: {
+  imageId: string
+  cropFamily: farmhand.cropFamily
+  variety: farmhand.grapeVariety
+} & Partial<farmhand.item>): farmhand.cropVariety => {
+  return {
+    imageId,
+    cropFamily,
+    variety,
+    ...crop({ ...cropVarietyProperties }),
+  }
 }

@@ -9,11 +9,11 @@ import { carrot } from '../../data/crops/index.js'
  * @returns {keg}
  */
 export const getKegStub = (overrides = {}) => {
+  const carrotItem = carrot as farmhand.item
   return {
     id: uuid(),
-    itemId: carrot.id,
-    // @ts-expect-error
-    daysUntilMature: carrot.daysToFerment ?? 0,
+    itemId: carrotItem.id,
+    daysUntilMature: carrotItem.daysToFerment ?? 0,
     ...overrides,
   }
 }

@@ -1,5 +1,7 @@
-import * as utils from '../utils/index.js'
+import { vi } from 'vitest'
+
 import { coal, stone } from '../data/ores/index.js'
+import * as utils from '../utils/index.js'
 
 import CoalFactory from './CoalFactory.js'
 
@@ -16,16 +18,14 @@ describe('CoalFactory', () => {
     })
 
     test('it produces at least one coal and one stone', () => {
-      // @ts-expect-error - Mock function type assertion
-      utils.chooseRandom.mockReturnValueOnce(1)
+      vi.mocked(utils.chooseRandom).mockReturnValueOnce(1)
       const resources = coalFactory.generate()
 
       expect(resources).toEqual([coal, stone])
     })
 
     test('can produce more than one coal and stone', () => {
-      // @ts-expect-error - Mock function type assertion
-      utils.chooseRandom.mockReturnValueOnce(3)
+      vi.mocked(utils.chooseRandom).mockReturnValueOnce(3)
       const resources = coalFactory.generate()
 
       expect(resources.length > 2).toEqual(true)

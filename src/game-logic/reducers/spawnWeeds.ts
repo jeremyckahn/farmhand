@@ -11,11 +11,12 @@ import { getPlotContentFromItemId } from '../../utils/index.js'
 export function spawnWeeds(plotContents) {
   if (plotContents) return plotContents
 
-  let contents = null
+  let contents: farmhand.plotContent | null = null
 
   if (randomNumberService.isRandomNumberLessThan(WEEDS_SPAWN_CHANCE)) {
-    // @ts-expect-error
-    contents = getPlotContentFromItemId(weed.id)
+    contents = getPlotContentFromItemId(
+      (weed as farmhand.item).id
+    ) as farmhand.plotContent
   }
 
   return contents

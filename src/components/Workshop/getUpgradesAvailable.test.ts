@@ -25,7 +25,6 @@ describe('getUpgradesAvailable', () => {
     const availableUpgrades = getUpgradesAvailable({
       toolLevels,
       learnedForgeRecipes,
-      // @ts-expect-error
     }).map(item => item.id)
 
     expect(availableUpgrades).toEqual(['hoe-bronze', 'scythe-bronze'])

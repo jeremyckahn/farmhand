@@ -3,54 +3,58 @@ import { createContext } from 'react'
 // eslint-disable-next-line no-unused-vars
 import uiEventHandlers from '../../handlers/ui-events.js'
 import { generateCow } from '../../utils/index.js'
+import { scarecrow } from '../../data/items.js'
 
-/**
- * @typedef {{
- *   gameState: farmhand.state & {
- *     blockInput: boolean,
- *     features: Record<string, boolean>,
- *     fieldToolInventory: farmhand.item[],
- *     isChatAvailable: boolean,
- *     levelEntitlements: farmhand.levelEntitlements,
- *     plantableCropInventory: farmhand.item[],
- *     playerInventory: farmhand.item[],
- *     playerInventoryQuantities: Record<string, number>,
- *     shopInventory: farmhand.item[],
- *     viewList: string[],
- *     viewTitle: string,
- *   }
- *   handlers: uiEventHandlers & { debounced: uiEventHandlers }
- * }} contextData
- */
+export type BoundHandlers<T> = {
+  [K in keyof T]: T[K] extends (this: any, ...args: infer A) => infer R
+    ? (...args: A) => R
+    : T[K]
+}
 
-/**
- * @returns {contextData}
- */
-export const createContextData = () => {
+export interface ContextData {
+  gameState: farmhand.state & {
+    blockInput: boolean
+    features: Record<string, boolean | undefined>
+    fieldToolInventory: farmhand.item[]
+    isChatAvailable: boolean
+    levelEntitlements: farmhand.levelEntitlements
+    plantableCropInventory: farmhand.item[]
+    playerInventory: farmhand.item[]
+    playerInventoryQuantities: Record<string, number>
+    shopInventory: farmhand.item[]
+    viewList: farmhand.stageFocusType[]
+    viewTitle: string
+  }
+  handlers: BoundHandlers<typeof uiEventHandlers> & {
+    debounced: BoundHandlers<typeof uiEventHandlers>
+  }
+}
+
+export const createContextData = (): ContextData => {
   return {
     gameState: {
       viewTitle: '',
-      viewList: [],
+      viewList: [] as farmhand.stageFocusType[],
       features: {},
       blockInput: false,
-      shopInventory: [],
+      shopInventory: [] as farmhand.item[],
       isChatAvailable: false,
-      playerInventory: [],
+      playerInventory: [] as farmhand.item[],
       levelEntitlements: {
         items: {},
         tools: {},
         sprinklerRange: 0,
         stageFocusType: {},
       },
-      fieldToolInventory: [],
-      plantableCropInventory: [],
+      fieldToolInventory: [] as farmhand.item[],
+      plantableCropInventory: [] as farmhand.item[],
       playerInventoryQuantities: {},
       activePlayers: null,
       allowCustomPeerCowNames: false,
       cellarInventory: [],
-      currentDialogView: 'NONE',
+      currentDialogView: 'NONE' as farmhand.dialogView,
       completedAchievements: {},
-      cowForSale: generateCow(),
+      cowForSale: generateCow() as farmhand.cow,
       cowBreedingPen: {
         cowId1: null,
         cowId2: null,
@@ -98,19 +102,19 @@ export const createContextData = () => {
       farmName: '',
       field: [[]],
       forest: [[]],
-      fieldMode: 'OBSERVE',
+      fieldMode: 'OBSERVE' as farmhand.fieldMode,
       getCowAccept: () => {},
       getCowReject: () => {},
       getCowTradeRequest: () => {},
       getPeerMetadata: () => {},
       hasBooted: true,
-      heartbeatTimeoutId: null,
+      heartbeatTimeoutId: -1,
       historicalDailyLosses: [],
       historicalDailyRevenue: [],
       historicalValueAdjustments: [], // empty array for now
       hoveredPlotRangeSize: 0,
       playerId: '',
-      inventory: [{ id: '', quantity: 0 }],
+      inventory: [{ id: scarecrow.id, quantity: 1 }],
       inventoryLimit: -1,
       isAwaitingCowTradeRequest: false,
       isAwaitingNetworkRequest: false,
@@ -157,17 +161,17 @@ export const createContextData = () => {
       room: '',
       showHomeScreen: true,
       showNotifications: true,
-      stageFocus: 'HOME',
+      stageFocus: 'HOME' as farmhand.stageFocusType,
       todaysLosses: 0,
       todaysPurchases: {},
       todaysRevenue: 0,
       todaysStartingInventory: {},
-      toolLevels: /** @type {Record<globalThis.farmhand.toolType, globalThis.farmhand.toolLevel>} */ {
+      toolLevels: {
         SCYTHE: 'DEFAULT',
         SHOVEL: 'DEFAULT',
         HOE: 'DEFAULT',
         WATERING_CAN: 'DEFAULT',
-      },
+      } as Record<farmhand.toolType, farmhand.toolLevel>,
       valueAdjustments: {},
       version: '1.0.0',
       todaysNotifications: [],
@@ -183,8 +187,8 @@ export const createContextData = () => {
 }
 
 /**
- * @type {import('react').Context<contextData>}
+ * @type {import('react').Context<ContextData>}
  */
-const FarmhandContext = createContext(createContextData())
+const FarmhandContext = createContext<ContextData>(createContextData())
 
 export default FarmhandContext

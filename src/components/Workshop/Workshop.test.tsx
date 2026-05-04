@@ -2,7 +2,11 @@ import React from 'react'
 import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { Mock } from 'vitest'
+
+import FarmhandContext, {
+  createContextData,
+} from '../Farmhand/Farmhand.context.js'
 
 import { getUpgradesAvailable } from './getUpgradesAvailable.js'
 
@@ -68,14 +72,11 @@ describe('<Workshop />', () => {
   })
 
   const renderWorkshop = gameStateParam => {
+    const contextValue = createContextData()
+    contextValue.gameState = { ...contextValue.gameState, ...gameStateParam }
+
     render(
-      <FarmhandContext.Provider
-        value={{
-          gameState: gameStateParam,
-          // @ts-expect-error
-          handlers: {},
-        }}
-      >
+      <FarmhandContext.Provider value={contextValue}>
         <Workshop />
       </FarmhandContext.Provider>
     )
@@ -124,8 +125,7 @@ describe('<Workshop />', () => {
 
     describe('player has purchased the smelter', () => {
       beforeEach(async () => {
-        // @ts-expect-error - Mock function type assertion
-        getUpgradesAvailable.mockReturnValue([])
+        ;(getUpgradesAvailable as Mock).mockReturnValue([])
 
         gameState.purchasedSmelter = 1
         gameState.learnedRecipes = {
@@ -154,8 +154,7 @@ describe('<Workshop />', () => {
     describe('has upgrades available', () => {
       beforeEach(async () => {
         const availableUpgrades = [{ id: 'upgrade-1' }, { id: 'upgrade-2' }]
-        // @ts-expect-error - Mock function type assertion
-        getUpgradesAvailable.mockReturnValue(availableUpgrades)
+        ;(getUpgradesAvailable as Mock).mockReturnValue(availableUpgrades)
         gameState.purchasedSmelter = 1
 
         renderWorkshop(gameState)

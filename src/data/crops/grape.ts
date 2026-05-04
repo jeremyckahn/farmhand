@@ -10,22 +10,23 @@ export const isGrape = item => {
 }
 
 /**
- * @param {Omit<farmhand.cropVariety, 'cropFamily'> & { wineId: string }} grapeProps
+ * @param {Partial<farmhand.grape> & { imageId: string; variety: farmhand.grapeVariety; wineId: string }} grapeProps
  * @returns {farmhand.grape}
  */
-const grape = grapeProps => {
-  const newGrape = {
+const grape = (
+  grapeProps: Partial<farmhand.grape> & {
+    imageId: string
+    variety: farmhand.grapeVariety
+    wineId: string
+  }
+): farmhand.grape => {
+  return {
+    ...grapeProps,
     ...cropVariety({
       ...grapeProps,
-      cropFamily: /** @type {'GRAPE'} */ cropFamily.GRAPE,
+      cropFamily: cropFamily.GRAPE as 'GRAPE',
     }),
-  }
-
-  if (!isGrape(newGrape)) {
-    throw new Error(`Invalid cropVariety props`)
-  }
-
-  return newGrape
+  } as farmhand.grape
 }
 
 /**
@@ -90,7 +91,6 @@ export const wineVarietyValueMap = {
  * @type {farmhand.grape}
  */
 export const grapeChardonnay = grape({
-  // @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-chardonnay'),
   }),
@@ -105,7 +105,6 @@ export const grapeChardonnay = grape({
  * @type {farmhand.grape}
  */
 export const grapeSauvignonBlanc = grape({
-  // @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-sauvignon-blanc'),
   }),
@@ -168,7 +167,6 @@ export const grapeSauvignonBlanc = grape({
  * @type {farmhand.grape}
  */
 export const grapeCabernetSauvignon = grape({
-  // @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-cabernet-sauvignon'),
   }),
@@ -195,7 +193,6 @@ export const grapeCabernetSauvignon = grape({
  * @type {farmhand.grape}
  */
 export const grapeTempranillo = grape({
-  // @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-tempranillo'),
   }),
@@ -210,7 +207,6 @@ export const grapeTempranillo = grape({
  * @type {farmhand.grape}
  */
 export const grapeNebbiolo = grape({
-  // @ts-expect-error
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-nebbiolo'),
   }),
