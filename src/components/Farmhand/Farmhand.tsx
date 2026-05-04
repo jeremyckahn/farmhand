@@ -87,15 +87,15 @@ import {
   sleep,
   transformStateDataForImport,
 } from '../../utils/index.js'
+import { levelAchieved } from '../../utils/levelAchieved.js'
+import { memoize } from '../../utils/memoize.js'
+import { noop } from '../../utils/noop.js'
 
 // NOTE: This must be imported here so that it can be overridden by component
 // styles. The newlines before and after are intentional to prevent imports
 // from being automatically reordered in a way that would break styles.
 import './Farmhand.sass'
 
-import { levelAchieved } from '../../utils/levelAchieved.js'
-import { memoize } from '../../utils/memoize.js'
-import { noop } from '../../utils/noop.js'
 import AppBar from '../AppBar/index.js'
 import { ChatRoom } from '../ChatRoom/index.js'
 import ContextPane from '../ContextPane/index.js'
