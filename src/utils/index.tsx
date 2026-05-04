@@ -1138,7 +1138,7 @@ export function randomChoice<T extends { weight: number }>(
     sortedOptions.push(option)
   }
 
-  sortedOptions.sort(o => o.weight)
+  sortedOptions.sort((a, b) => a.weight - b.weight)
 
   let diceRoll = random() * totalWeight
   let option: T | undefined

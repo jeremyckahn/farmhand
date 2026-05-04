@@ -1025,7 +1025,7 @@ describe('randomChoice', () => {
   test('it can handle the upper bound of Math.random', () => {
     ;(global.Math.random as import('vitest').Mock).mockReturnValueOnce(0.99)
     const choice = randomChoice(choices)
-    expect(choice).toEqual(choices[2])
+    expect(choice).toEqual(choices[1])
   })
 })
 
