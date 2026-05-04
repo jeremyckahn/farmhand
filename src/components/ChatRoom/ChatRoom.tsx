@@ -11,22 +11,6 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import './ChatRoom.sass'
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'chat-room': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      > & {
-        'root-url'?: string
-        room?: string
-        'user-id'?: string
-        'color-mode'?: string
-      }
-    }
-  }
-}
-
 const chitchatterDomain = 'https://chitchatter.im'
 
 export const ChatRoom = () => {

@@ -11,6 +11,20 @@ declare global {
   interface Window {
     farmhand?: typeof Farmhand
   }
+
+  namespace JSX {
+    interface IntrinsicElements {
+      'chat-room': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      > & {
+        'root-url'?: string
+        room?: string
+        'user-id'?: string
+        'color-mode'?: string
+      }
+    }
+  }
 }
 
 declare module '*?dataUri' {
