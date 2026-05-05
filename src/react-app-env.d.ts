@@ -26,8 +26,3 @@ declare global {
     }
   }
 }
-
-declare module '*?dataUri' {
-  const content: string
-  export default content
-}
