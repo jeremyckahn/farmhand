@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen, act } from '@testing-library/react'
-import { vi } from 'vitest'
+import { vi, Mock } from 'vitest'
 
 import ProgressBar from './ProgressBar.js'
 
@@ -53,8 +53,7 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    // @ts-expect-error - Mock function type assertion
-    tween.mockReturnValue(mockTweenInstance)
+    ;(tween as Mock).mockReturnValue(mockTweenInstance)
 
     render(<ProgressBar {...{ percent: 75 }} />)
 
@@ -73,8 +72,7 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    // @ts-expect-error - Mock function type assertion
-    tween.mockImplementation(config => {
+    ;(tween as Mock).mockImplementation(config => {
       renderCallback = config.render
       return mockTweenInstance
     })
@@ -103,8 +101,7 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    // @ts-expect-error - Mock function type assertion
-    tween.mockImplementation(config => {
+    ;(tween as Mock).mockImplementation(config => {
       renderCallback = config.render
       return mockTweenInstance
     })
@@ -124,15 +121,13 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    // @ts-expect-error - Mock function type assertion
-    tween.mockImplementation(config => {
+    ;(tween as Mock).mockImplementation(config => {
       renderCallback = config.render
       return mockTweenInstance
     })
 
     const mockInterpolatedColor = '#7fa200'
-    // @ts-expect-error - Mock function type assertion
-    interpolate.mockReturnValue({ color: mockInterpolatedColor })
+    ;(interpolate as Mock).mockReturnValue({ color: mockInterpolatedColor })
 
     render(<ProgressBar {...{ percent: 50 }} />)
 
@@ -155,8 +150,7 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    // @ts-expect-error - Mock function type assertion
-    tween.mockReturnValue(mockTweenInstance)
+    ;(tween as Mock).mockReturnValue(mockTweenInstance)
 
     const { unmount } = render(<ProgressBar {...{ percent: 50 }} />)
 
@@ -169,9 +163,7 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-
-    // @ts-expect-error - Mock function type assertion
-    tween.mockReturnValue(mockTweenInstance)
+    ;(tween as Mock).mockReturnValue(mockTweenInstance)
 
     const { rerender } = render(<ProgressBar {...{ percent: 25 }} />)
 
@@ -202,8 +194,7 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    // @ts-expect-error - Mock function type assertion
-    tween.mockImplementation(config => {
+    ;(tween as Mock).mockImplementation(config => {
       renderCallback = config.render
       return mockTweenInstance
     })
@@ -211,8 +202,7 @@ describe('ProgressBar', () => {
     render(<ProgressBar {...{ percent: 100 }} />)
 
     // Test at 0% progress
-    // @ts-expect-error - Mock function type assertion
-    interpolate.mockReturnValue({ color: '#ff9f00' })
+    ;(interpolate as Mock).mockReturnValue({ color: '#ff9f00' })
     act(() => {
       renderCallback({ currentPercent: 0 })
     })
@@ -223,8 +213,7 @@ describe('ProgressBar', () => {
     )
 
     // Test at 100% progress
-    // @ts-expect-error - Mock function type assertion
-    interpolate.mockReturnValue({ color: '#00e500' })
+    ;(interpolate as Mock).mockReturnValue({ color: '#00e500' })
     act(() => {
       renderCallback({ currentPercent: 100 })
     })

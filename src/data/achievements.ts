@@ -28,13 +28,13 @@ const addMoney = (state, reward) => ({
   money: moneyTotal(state.money, reward),
 })
 
-// @ts-expect-error
-const sumOfCropsHarvested = memoize(cropsHarvested =>
-  Object.values(cropsHarvested).reduce(
-    // @ts-expect-error
-    (sum, cropHarvested) => sum + cropHarvested,
-    0
-  )
+const sumOfCropsHarvested = memoize(
+  (cropsHarvested: Record<string, number>) =>
+    Object.values(cropsHarvested).reduce(
+      (sum: number, cropHarvested: number) => sum + cropHarvested,
+      0
+    ),
+  {}
 )
 
 const cowFeed = itemsMap[COW_FEED_ITEM_ID]
@@ -135,35 +135,29 @@ const achievements = [
     id: 'play-during-october',
     name: 'Halloween Harvest',
     description: 'Play Farmhand in October and get the gift of the season.',
-    // @ts-expect-error
-    rewardDescription: `${reward} units of ${itemsMap.jackolantern.name}`,
+    rewardDescription: `${reward} units of ${itemsMap['jackolantern'].name}`,
     condition: () => isOctober(),
     reward: state =>
-      // @ts-expect-error
-      addItemToInventory(state, itemsMap.jackolantern, reward, true),
+      addItemToInventory(state, itemsMap['jackolantern'], reward, true),
   }))(),
 
   ((reward = 100, goal = 10_000) => ({
     id: 'sell-10000-jack-o-lanterns',
     name: 'Spooky Pumpkin Patch',
     description: `Sell ${integerString(goal)} units of ${
-      // @ts-expect-error
-      itemsMap.jackolantern.name
+      itemsMap['jackolantern'].name
     }. That's enough to fill a whole pumpkin patch!`,
-    // @ts-expect-error
-    rewardDescription: `${reward} units of ${itemsMap.scarecrow.name}`,
+    rewardDescription: `${reward} units of ${itemsMap['scarecrow'].name}`,
     condition: state => (state.itemsSold.jackolantern || 0) >= goal,
     reward: state =>
-      // @ts-expect-error
-      addItemToInventory(state, itemsMap.scarecrow, reward, true),
+      addItemToInventory(state, itemsMap['scarecrow'], reward, true),
   }))(),
 
   ((goal = 5000, reward = 25) => ({
     id: 'daily-profit-1',
     name: `Daily profit: ${dollarString(goal)}`,
     description: `Earn ${dollarString(goal)} of profit in a single day.`,
-    // @ts-expect-error
-    rewardDescription: `${reward} units of ${itemsMap.fertilizer.name}`,
+    rewardDescription: `${reward} units of ${itemsMap['fertilizer'].name}`,
     condition: state =>
       getProfitRecord(
         state.recordSingleDayProfit,
@@ -171,8 +165,7 @@ const achievements = [
         state.todaysLosses
       ) >= goal,
     reward: state =>
-      // @ts-expect-error
-      addItemToInventory(state, itemsMap.fertilizer, reward, true),
+      addItemToInventory(state, itemsMap['fertilizer'], reward, true),
   }))(),
 
   ((goal = 15000, reward = 50) => ({

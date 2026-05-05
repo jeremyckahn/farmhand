@@ -1,10 +1,8 @@
 export function totalIngredientsInRecipe(recipe, amount = 1) {
   return (
     amount *
-    // @ts-expect-error
-    Object.values(recipe.ingredients).reduce(
-      // @ts-expect-error
-      (acc, quantity) => acc + quantity,
+    Object.values(recipe.ingredients as Record<string, number>).reduce(
+      (acc: number, quantity: number) => acc + quantity,
       0
     )
   )

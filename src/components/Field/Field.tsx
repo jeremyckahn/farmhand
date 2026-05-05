@@ -42,15 +42,25 @@ const zoomKeyMap = {
   zoomOut: '-',
 }
 
-const fieldKeyMap = {
+const fieldKeyMap: Record<string, string> = {
   selectWateringCan: tools.wateringCan.fieldKey,
   selectScythe: tools.scythe.fieldKey,
   selectHoe: tools.hoe.fieldKey,
 }
 
 if (tools.shovel) {
-  // @ts-expect-error
   fieldKeyMap.selectShovel = tools.shovel.fieldKey
+}
+
+export interface MemoPlotProps {
+  experience: number
+  fieldMode: farmhand.fieldMode
+  hoveredPlot: { x: number | null; y: number | null }
+  hoveredPlotRangeSize: number
+  plotContent?: farmhand.plotContent | null
+  setHoveredPlot?: (plot: { x: number | null; y: number | null }) => void
+  x: number
+  y: number
 }
 
 export const isInHoverRange = ({
@@ -60,10 +70,14 @@ export const isInHoverRange = ({
   hoveredPlot: { x: hoveredPlotX, y: hoveredPlotY },
   x,
   y,
-}) => {
+}: MemoPlotProps) => {
   // If hoveredPlotX is null, assume that hoveredPlotY is as well.
   // If fieldMode === OBSERVE, nothing is in hover range.
-  if (hoveredPlotX == null || propsFieldMode === OBSERVE) {
+  if (
+    hoveredPlotX == null ||
+    hoveredPlotY == null ||
+    propsFieldMode === OBSERVE
+  ) {
     return false
   }
 
@@ -101,25 +115,15 @@ export const isInHoverRange = ({
 
 export const MemoPlot = memo(
   /**
-   * @param {object} props
-   * @param {number} props.experience
-   * @param {string} props.fieldMode
-   * @param {object} props.hoveredPlot
-   * @param {number} props.hoveredPlotRangeSize
-   * @param {object} props.plotContent
-   * @param {function} props.setHoveredPlot
-   * @param {number} props.x
-   * @param {number} props.y
+   * @param {MemoPlotProps} props
    */
-  props => {
-    // @ts-expect-error
+  (props: MemoPlotProps) => {
     const { hoveredPlot, plotContent, setHoveredPlot, x, y } = props
 
     return (
       <Plot
         {...{
           hoveredPlot,
-          // @ts-expect-error
           isInHoverRange: isInHoverRange(props),
           plotContent,
           setHoveredPlot,
@@ -129,32 +133,17 @@ export const MemoPlot = memo(
       />
     )
   },
-  (prev, next) => {
-    // @ts-expect-error
+  (prev: MemoPlotProps, next: MemoPlotProps) => {
     if (isInHoverRange(prev) !== isInHoverRange(next)) {
       return false
     }
 
     return (
-      // @ts-expect-error
       prev.plotContent === next.plotContent &&
-      // @ts-expect-error
       prev.hoveredPlotRangeSize === next.hoveredPlotRangeSize
     )
   }
 )
-
-// @ts-expect-error
-MemoPlot.propTypes = {
-  experience: number.isRequired,
-  fieldMode: string.isRequired,
-  hoveredPlot: object.isRequired,
-  hoveredPlotRangeSize: number.isRequired,
-  plotContent: object,
-  setHoveredPlot: func.isRequired,
-  x: number.isRequired,
-  y: number.isRequired,
-}
 
 export const FieldContentWrapper = ({
   fieldContent,

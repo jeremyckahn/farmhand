@@ -107,8 +107,8 @@ export const CowCard = (
   const [cowImage, setCowImage] = useState(pixel)
 
   // @see https://github.com/microsoft/TypeScript/issues/27387#issuecomment-659671940
-  const cardRef = useRef(/** @type {HTMLDivElement|null} */ null)
-  const scrollAnchorRef = useRef(/** @type {HTMLAnchorElement|null} */ null)
+  const cardRef = useRef<HTMLDivElement>(null)
+  const scrollAnchorRef = useRef<HTMLAnchorElement>(null)
 
   const isCowPurchased =
     !!cowInventory.find(({ id }) => id === cow.id) &&
@@ -143,9 +143,7 @@ export const CowCard = (
       if (!scrollAnchor || !card) return
 
       // scrollIntoView is not defined in the unit test environment.
-      // @ts-expect-error
       if (scrollAnchor.scrollIntoView && !isInViewport(card)) {
-        // @ts-expect-error
         scrollAnchor.scrollIntoView({ behavior: 'smooth' })
       }
     }

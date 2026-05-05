@@ -3,17 +3,18 @@ import { itemsMap } from '../data/maps.js'
 import { memoize } from './memoize.js'
 import { isItemAFarmProduct } from './isItemAFarmProduct.js'
 
-// @ts-expect-error
 export const farmProductsSold = memoize(
   /**
    * @param {Partial<Record<string, number>>} itemsSold
    * @returns {number}
    */
-  itemsSold =>
+  (itemsSold: Partial<Record<string, number>>) =>
     Object.entries(itemsSold).reduce(
       (sum, [itemId, numberSold]) =>
-        // @ts-expect-error
-        sum + (isItemAFarmProduct(itemsMap[itemId]) ? numberSold || 0 : 0),
+        sum +
+        (isItemAFarmProduct(itemsMap[itemId] as farmhand.item)
+          ? numberSold || 0
+          : 0),
       0
     )
 )

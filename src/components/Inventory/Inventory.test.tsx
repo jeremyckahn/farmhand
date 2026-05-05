@@ -5,7 +5,9 @@ import { testItem } from '../../test-utils/index.js'
 import { sortItems } from '../../utils/index.js'
 import { generateValueAdjustments } from '../../common/utils.js'
 import { pumpkinSeed, carrotSeed } from '../../data/crops/index.js'
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, {
+  createContextData,
+} from '../Farmhand/Farmhand.context.js'
 
 import { separateItemsIntoCategories } from './Inventory.js'
 
@@ -24,11 +26,11 @@ const defaultGameState = {
 vitest.useFakeTimers()
 
 const StubInventory = ({ gameState = {}, ...overrides }) => {
+  const contextValue = createContextData()
+  contextValue.gameState = { ...contextValue.gameState, ...gameState }
+
   return (
-    <FarmhandContext.Provider
-      // @ts-expect-error
-      value={{ gameState: { ...defaultGameState, ...gameState }, handlers: {} }}
-    >
+    <FarmhandContext.Provider value={contextValue}>
       <Inventory
         items={[]}
         playerInventory={[]}

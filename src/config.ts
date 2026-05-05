@@ -19,13 +19,13 @@ export const endpoints = {
 // parameter that looks like:
 //
 //   ?enable_FOREST=true
-/**
- * @type {{
- *   FOREST?: boolean
- * }}
- */
-export const features = Object.keys(import.meta.env ?? {}).reduce(
-  (acc, key) => {
+interface Features {
+  FOREST?: boolean
+  [key: string]: boolean | undefined
+}
+
+export const features: Features = Object.keys(import.meta.env ?? {}).reduce(
+  (acc: Features, key) => {
     const matches = key.match(/VITE_ENABLE_(.*)/)
 
     if (matches) {

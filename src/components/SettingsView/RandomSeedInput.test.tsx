@@ -2,20 +2,24 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, {
+  createContextData,
+} from '../Farmhand/Farmhand.context.js'
 
 import { RandomSeedInput } from './RandomSeedInput.js'
 
 const mockHandleRNGSeedChange = vitest.fn()
 
-const MockRandomSeedInput = props => (
-  <FarmhandContext.Provider
-    // @ts-expect-error
-    value={{ handlers: { handleRNGSeedChange: mockHandleRNGSeedChange } }}
-  >
-    <RandomSeedInput {...props} />
-  </FarmhandContext.Provider>
-)
+const MockRandomSeedInput = props => {
+  const contextValue = createContextData()
+  contextValue.handlers.handleRNGSeedChange = mockHandleRNGSeedChange
+
+  return (
+    <FarmhandContext.Provider value={contextValue}>
+      <RandomSeedInput {...props} />
+    </FarmhandContext.Provider>
+  )
+}
 
 describe('RandomSeedInput', () => {
   test('gets initial value from query param', () => {

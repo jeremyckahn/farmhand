@@ -33,7 +33,6 @@ export const updatePeer = (state, farmhand, peerMetadata, peerId) => {
       state,
       NEW_COW_OFFERED_FOR_TRADE`${peerMetadata}`,
       'info',
-      // @ts-expect-error
       () => {
         farmhand.openDialogView(dialogView.ONLINE_PEERS)
       }

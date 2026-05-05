@@ -52,7 +52,7 @@ describe('ContextPane', () => {
     const playerInventory = [
       testItem({ id: 'carrot', name: 'Carrot', quantity: 5 }),
       testItem({ id: 'corn', name: 'Corn', quantity: 3 }),
-    ]
+    ] as farmhand.item[]
 
     render(
       <ContextPane
@@ -73,7 +73,7 @@ describe('ContextPane', () => {
     test('shows inventory view when stageFocus is SHOP', () => {
       const playerInventory = [
         testItem({ id: 'apple', name: 'Apple', quantity: 2 }),
-      ]
+      ] as farmhand.item[]
 
       render(
         <ContextPane
@@ -92,7 +92,7 @@ describe('ContextPane', () => {
     test('shows inventory view when stageFocus is FIELD', () => {
       const playerInventory = [
         testItem({ id: 'seed', name: 'Seed', quantity: 10 }),
-      ]
+      ] as farmhand.item[]
 
       render(
         <ContextPane
@@ -124,7 +124,7 @@ describe('ContextPane', () => {
       testItem({ id: 'carrot', name: 'Carrot', quantity: 5 }),
       testItem({ id: 'corn', name: 'Corn', quantity: 3 }),
       testItem({ id: 'wheat', name: 'Wheat', quantity: 7 }),
-    ]
+    ] as farmhand.item[]
 
     render(
       <ContextPane
@@ -149,12 +149,9 @@ describe('PlayerInventory', () => {
     const playerInventory = [
       testItem({ id: 'carrot', name: 'Carrot', quantity: 5 }),
       testItem({ id: 'potato', name: 'Potato', quantity: 2 }),
-    ]
+    ] as farmhand.item[]
 
-    render(
-      // @ts-expect-error
-      <PlayerInventory {...baseItemProps} playerInventory={playerInventory} />
-    )
+    render(<PlayerInventory playerInventory={playerInventory} />)
 
     expect(screen.getByTestId('inventory-item-carrot')).toBeInTheDocument()
     expect(screen.getByTestId('inventory-item-potato')).toBeInTheDocument()
@@ -163,7 +160,6 @@ describe('PlayerInventory', () => {
   })
 
   test('shows empty inventory when no items present', () => {
-    // @ts-expect-error
     render(<PlayerInventory {...baseItemProps} playerInventory={[]} />)
 
     expect(screen.getByTestId('mocked-inventory')).toBeInTheDocument()
@@ -176,12 +172,9 @@ describe('PlayerInventory', () => {
       testItem({ id: 'carrot', name: 'Carrot', quantity: 5 }),
       testItem({ id: 'corn', name: 'Corn', quantity: 3 }),
       testItem({ id: 'tomato', name: 'Tomato', quantity: 8 }),
-    ]
+    ] as farmhand.item[]
 
-    render(
-      // @ts-expect-error
-      <PlayerInventory {...baseItemProps} playerInventory={playerInventory} />
-    )
+    render(<PlayerInventory playerInventory={playerInventory} />)
 
     // Verify all items are rendered with their correct names
     expect(screen.getByTestId('inventory-item-carrot')).toBeInTheDocument()

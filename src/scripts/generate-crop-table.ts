@@ -40,7 +40,7 @@ const headers = [
   'Tier',
 ]
 
-const rows = []
+const rows: (string | number)[][] = []
 
 /**
  * @param {number} level
@@ -69,23 +69,20 @@ for (const level of levels) {
     if (growsInto) {
       const seedItem = item
       if (Array.isArray(growsInto)) {
-        // @ts-expect-error
         for (const cropItemId of growsInto) {
           const cropItem = itemsMap[cropItemId]
 
-          // @ts-expect-error
           rows.push(getCropRow(id, seedItem, cropItem))
         }
       } else {
         const cropItem = itemsMap[growsInto]
 
-        // @ts-expect-error
         rows.push(getCropRow(id, seedItem, cropItem))
       }
     }
   }
 }
 
-const table = markdownTable([headers, ...rows])
+const table = markdownTable([headers, ...rows.map(row => row.map(String))])
 
 console.log(table)

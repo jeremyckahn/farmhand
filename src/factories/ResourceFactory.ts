@@ -16,27 +16,32 @@ import StoneFactory from './StoneFactory.js'
 
 /**
  * Object for private cache of factory instances
- * @type {Record.<string, Factory | null>}
  */
-const factoryInstances = {}
+const factoryInstances: Record<string, Factory | null> = {}
 
 /**
  * Var for caching reference to instance of ResourceFactory
- * @type {?ResourceFactory}
  */
-let instance = null
+let instance: ResourceFactory | null = null
 
 /**
  * Used for spawning mined resources
  * @constructor
  */
 export default class ResourceFactory {
+  resourceOptions: { weight: number; itemType: farmhand.itemType }[]
+
   constructor() {
-    // @ts-expect-error
     this.resourceOptions = [
-      { weight: ORE_SPAWN_CHANCE, itemType: itemType.ORE },
-      { weight: COAL_SPAWN_CHANCE, itemType: itemType.FUEL },
-      { weight: STONE_SPAWN_CHANCE, itemType: itemType.STONE },
+      { weight: ORE_SPAWN_CHANCE, itemType: itemType.ORE as farmhand.itemType },
+      {
+        weight: COAL_SPAWN_CHANCE,
+        itemType: itemType.FUEL as farmhand.itemType,
+      },
+      {
+        weight: STONE_SPAWN_CHANCE,
+        itemType: itemType.STONE as farmhand.itemType,
+      },
     ]
   }
 
@@ -47,7 +52,6 @@ export default class ResourceFactory {
    */
   static instance() {
     if (!instance) {
-      // @ts-expect-error
       instance = new ResourceFactory()
     }
 
@@ -93,8 +97,7 @@ export default class ResourceFactory {
    * @returns {Array.<farmhand.item>} array of resource objects
    */
   generateResources(shovelLevel) {
-    /** @type {Array.<farmhand.item>} */
-    let resources = []
+    let resources: farmhand.item[] = []
 
     let spawnChance = RESOURCE_SPAWN_CHANCE
 
@@ -119,13 +122,11 @@ export default class ResourceFactory {
     }
 
     if (randomNumberService.isRandomNumberLessThan(spawnChance)) {
-      // @ts-expect-error
       const opt = randomChoice(this.resourceOptions)
       const factory = ResourceFactory.getFactoryForItemType(opt.itemType)
 
       if (factory) {
         const generated = factory.generate()
-        // @ts-expect-error
         resources = Array.isArray(generated) ? generated : [generated]
       }
     }

@@ -22,8 +22,19 @@ const QuantityNumberFormat = forwardRef(
    * @param {(value: number) => void} props.onChange
    * @param {React.ForwardedRef<any>} ref
    */
-  // @ts-expect-error
-  ({ min, max, onChange, ...rest }, ref) => (
+  (
+    {
+      min,
+      max,
+      onChange,
+      ...rest
+    }: {
+      min?: number
+      max: number
+      onChange: (value: number) => void
+    } & Record<string, unknown>,
+    ref: React.ForwardedRef<HTMLInputElement>
+  ) => (
     <NumberFormat
       isNumericString
       thousandSeparator
@@ -48,7 +59,6 @@ const QuantityTextInput = ({
   value,
 }) => {
   return (
-    // @ts-expect-error
     <TextField
       variant="standard"
       {...{

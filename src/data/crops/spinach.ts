@@ -18,9 +18,7 @@ export const spinachSeed = crop({
  * @property farmhand.module:items.spinach
  * @type {farmhand.item}
  */
-// @ts-expect-error
 export const spinach = crop({
-  // @ts-expect-error
   ...fromSeed(spinachSeed, {
     canBeFermented: true,
   }),

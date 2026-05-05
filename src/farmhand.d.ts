@@ -1,3 +1,8 @@
+declare module '*?dataUri' {
+  const content: string
+  export default content
+}
+
 declare namespace farmhand {
   // Enums from src/enums.js
   type cropType =
@@ -234,7 +239,7 @@ declare namespace farmhand {
 
   interface notification {
     severity: notificationSeverity
-    onClick?: Function
+    onClick?: (...args: any[]) => any
     message: string
   }
 

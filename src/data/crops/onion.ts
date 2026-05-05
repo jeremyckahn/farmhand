@@ -18,9 +18,7 @@ export const onionSeed = crop({
  * @property farmhand.module:items.onion
  * @type {farmhand.item}
  */
-// @ts-expect-error
 export const onion = crop({
-  // @ts-expect-error
   ...fromSeed(onionSeed, {
     canBeFermented: true,
   }),

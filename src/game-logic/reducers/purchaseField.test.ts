@@ -40,7 +40,7 @@ describe('purchaseField', () => {
 
   describe('field expansion', () => {
     test('field expands without destroying existing data', () => {
-      const expectedField = []
+      const expectedField: Array<Array<unknown>> = []
       const fieldSize = PURCHASEABLE_FIELD_SIZES.get(1)
 
       if (!fieldSize) {
@@ -48,12 +48,10 @@ describe('purchaseField', () => {
       }
 
       for (let y = 0; y < fieldSize.rows; y++) {
-        const row = []
+        const row: Array<unknown> = []
         for (let x = 0; x < fieldSize.columns; x++) {
-          // @ts-expect-error
           row.push(null)
         }
-        // @ts-expect-error
         expectedField.push(row)
       }
 
@@ -64,9 +62,7 @@ describe('purchaseField', () => {
 
       const { field } = purchaseField(state, 1)
 
-      // @ts-expect-error - We know these positions exist and can hold crop data
       expectedField[0][0] = testCrop()
-      // @ts-expect-error - We know these positions exist and can hold crop data
       expectedField[1][1] = testCrop()
 
       expect(field).toEqual(expectedField)

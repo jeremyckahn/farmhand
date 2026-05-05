@@ -32,7 +32,6 @@ const onboardingAchievements = [
   achievementsMap['purchase-cow-pen'],
 ]
 
-// @ts-expect-error
 const getRemainingOnboardingAchievements = memoize(completedAchievements =>
   onboardingAchievements.filter(
     achievement => achievement && !completedAchievements[achievement.id]

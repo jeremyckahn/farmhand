@@ -156,8 +156,7 @@ describe('UI Event Handlers', () => {
         enablesFieldMode: fieldMode.PLANT,
       })
 
-      // @ts-expect-error
-      handler(mockItem)
+      handler((mockItem as unknown) as Parameters<typeof handler>[0])
 
       expect(mockContext.setState).toHaveBeenCalledWith({
         fieldMode: fieldMode.PLANT,
@@ -184,8 +183,7 @@ describe('UI Event Handlers', () => {
     test('opens menu when explicitly requested', () => {
       const handler = uiEventHandlers.handleMenuToggle.bind(mockContext)
 
-      // @ts-expect-error
-      handler(true)
+      handler((true as unknown) as Parameters<typeof handler>[0])
 
       const stateUpdater = mockContext.setState.mock.calls[0][0]
       const newState = stateUpdater({ isMenuOpen: false })
@@ -211,7 +209,7 @@ describe('UI Event Handlers', () => {
       const handler = uiEventHandlers.handleItemPurchaseClick.bind(mockContext)
       const mockItem = testItem({ id: 'test-item' })
 
-      handler(mockItem)
+      handler(mockItem as farmhand.item)
 
       expect(mockContext.purchaseItem).toHaveBeenCalledWith(mockItem, 1)
     })
@@ -220,7 +218,7 @@ describe('UI Event Handlers', () => {
       const handler = uiEventHandlers.handleItemPurchaseClick.bind(mockContext)
       const mockItem = testItem({ id: 'test-item' })
 
-      handler(mockItem, 5)
+      handler(mockItem as farmhand.item, 5)
 
       expect(mockContext.purchaseItem).toHaveBeenCalledWith(mockItem, 5)
     })
@@ -231,7 +229,7 @@ describe('UI Event Handlers', () => {
       const handler = uiEventHandlers.handleMakeRecipeClick.bind(mockContext)
       const mockRecipe = testRecipe({ id: 'test-recipe' })
 
-      handler(mockRecipe)
+      handler(mockRecipe as farmhand.recipe)
 
       expect(mockContext.makeRecipe).toHaveBeenCalledWith(mockRecipe, 1)
     })
@@ -240,7 +238,7 @@ describe('UI Event Handlers', () => {
       const handler = uiEventHandlers.handleMakeRecipeClick.bind(mockContext)
       const mockRecipe = testRecipe({ id: 'test-recipe' })
 
-      handler(mockRecipe, 3)
+      handler(mockRecipe as farmhand.recipe, 3)
 
       expect(mockContext.makeRecipe).toHaveBeenCalledWith(mockRecipe, 3)
     })

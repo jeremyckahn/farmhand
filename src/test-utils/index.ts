@@ -73,11 +73,13 @@ export const testRecipe = (overrides = {}) => ({
  * @param {Partial<farmhand.state>} overrides - Properties to override in the test state
  * @returns {farmhand.state}
  */
-export const testState = (overrides = {}) => ({
+export const testState = (
+  overrides: Partial<farmhand.state> = {}
+): farmhand.state => ({
   activePlayers: null,
   allowCustomPeerCowNames: false,
   cellarInventory: [],
-  currentDialogView: dialogView.NONE,
+  currentDialogView: dialogView.NONE as farmhand.dialogView,
   completedAchievements: {},
   cowForSale: {
     baseWeight: 1000,
@@ -153,7 +155,7 @@ export const testState = (overrides = {}) => ({
   experience: 0,
   farmName: 'Test Farm',
   field: [[]],
-  fieldMode: fieldMode.OBSERVE,
+  fieldMode: fieldMode.OBSERVE as farmhand.fieldMode,
   forest: [[]],
   getCowAccept: null,
   getCowReject: null,
@@ -213,17 +215,17 @@ export const testState = (overrides = {}) => ({
   sendCowTradeRequest: null,
   showHomeScreen: true,
   showNotifications: true,
-  stageFocus: stageFocusType.HOME,
+  stageFocus: stageFocusType.HOME as farmhand.stageFocusType,
   todaysNotifications: [],
   todaysLosses: 0,
   todaysPurchases: {},
   todaysRevenue: 0,
   todaysStartingInventory: {},
   toolLevels: {
-    [toolType.HOE]: toolLevel.DEFAULT,
-    [toolType.SCYTHE]: toolLevel.DEFAULT,
-    [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
-    [toolType.WATERING_CAN]: toolLevel.DEFAULT,
+    HOE: toolLevel.DEFAULT as farmhand.toolLevel,
+    SCYTHE: toolLevel.DEFAULT as farmhand.toolLevel,
+    SHOVEL: toolLevel.UNAVAILABLE as farmhand.toolLevel,
+    WATERING_CAN: toolLevel.DEFAULT as farmhand.toolLevel,
   },
   useAlternateEndDayButtonPosition: false,
   valueAdjustments: {},

@@ -39,8 +39,9 @@ describe('applyCrows', () => {
     })
 
     it('does not modify plots if rng fails', () => {
-      // @ts-expect-error - Mock function
-      randomNumberService.isRandomNumberLessThan.mockReturnValue(true)
+      vitest
+        .mocked(randomNumberService.isRandomNumberLessThan)
+        .mockReturnValue(true)
       const newState = applyCrows(state)
 
       expect(newState.field).toEqual(state.field)
@@ -56,10 +57,10 @@ describe('applyCrows', () => {
 
   describe('crows spawned', () => {
     beforeEach(() => {
-      // @ts-expect-error - Mock function
-      randomNumberService.isRandomNumberLessThan.mockReturnValue(false)
-      // @ts-expect-error - Mock function
-      Math.random.mockReturnValueOnce(1) // spawn max amount of crows
+      vitest
+        .mocked(randomNumberService.isRandomNumberLessThan)
+        .mockReturnValue(false)
+      vitest.mocked(Math.random).mockReturnValueOnce(1) // spawn max amount of crows
     })
 
     it('destroys a crop for every crow spawned', () => {

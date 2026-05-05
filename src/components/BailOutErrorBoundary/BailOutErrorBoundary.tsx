@@ -4,8 +4,11 @@ import React from 'react'
 // its children if there is an error within its tree.
 
 // Adapted from https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries
-class BailOutErrorBoundary extends React.Component {
-  constructor(props) {
+class BailOutErrorBoundary extends React.Component<
+  React.PropsWithChildren<{}>,
+  { hasError: boolean }
+> {
+  constructor(props: React.PropsWithChildren<{}>) {
     super(props)
     this.state = { hasError: false }
   }
@@ -19,7 +22,6 @@ class BailOutErrorBoundary extends React.Component {
   }
 
   render() {
-    // @ts-expect-error
     if (this.state.hasError) {
       return null
     }
@@ -27,8 +29,5 @@ class BailOutErrorBoundary extends React.Component {
     return this.props.children
   }
 }
-
-// @ts-expect-error
-BailOutErrorBoundary.propTypes = {}
 
 export default BailOutErrorBoundary

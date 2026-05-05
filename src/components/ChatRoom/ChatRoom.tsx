@@ -27,7 +27,6 @@ export const ChatRoom = () => {
   }
 
   const chatRoomComponent = (
-    // @ts-expect-error
     <chat-room
       root-url={chitchatterDomain}
       room={`__farmhand__${room}`}

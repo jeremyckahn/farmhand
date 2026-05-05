@@ -3,14 +3,13 @@
  */
 import { memoize } from './memoize.js'
 
-// @ts-expect-error
 export const getInventoryQuantityMap = memoize(
   /**
    * @param {{ id: item['id'], quantity: number }[]} inventory
    * @returns {Record<item['id'], number>}
    */
-  inventory =>
-    inventory.reduce((acc, { id, quantity }) => {
+  (inventory: { id: string; quantity: number }[]) =>
+    inventory.reduce((acc: Record<string, number>, { id, quantity }) => {
       acc[id] = quantity
 
       return acc

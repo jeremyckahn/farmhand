@@ -30,21 +30,17 @@ export const getBackgroundStyles = plotContent => {
     return undefined
   }
 
-  const backgroundImages = []
+  const backgroundImages: string[] = []
 
   if (plotContent.fertilizerType === fertilizerType.STANDARD) {
-    // @ts-expect-error
     backgroundImages.push(`url(${plotStates['fertilized-plot']})`)
   } else if (plotContent.fertilizerType === fertilizerType.RAINBOW) {
-    // @ts-expect-error
     backgroundImages.push(`url(${plotStates['rainbow-fertilized-plot']})`)
   }
 
   if ('wasWateredToday' in plotContent && plotContent.wasWateredToday) {
-    // @ts-expect-error
     backgroundImages.push(`url(${plotStates['watered-plot']})`)
   } else if ('isShoveled' in plotContent && plotContent.isShoveled) {
-    // @ts-expect-error
     backgroundImages.push(`url(${plotStates['shoveled-plot']})`)
   }
 
@@ -126,7 +122,7 @@ export const Plot = ({
         getPlotContentType(plotContent) === itemType.CROP)
   )
 
-  let plotLabelText = null
+  let plotLabelText: string | null = null
   if (item) {
     const isPlotContentACropSeed =
       item.type === itemType.CROP &&
@@ -137,8 +133,9 @@ export const Plot = ({
   } else if (wasJustShoveled || plotContent?.isShoveled) {
     const oreItem = itemsMap[plotContent?.oreId]
 
-    // @ts-expect-error
-    plotLabelText = oreItem ? SHOVELED_PLOT('', oreItem) : SHOVELED
+    plotLabelText = oreItem
+      ? SHOVELED_PLOT('', oreItem as farmhand.item)
+      : SHOVELED
   }
 
   const plot = (

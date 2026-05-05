@@ -18,9 +18,7 @@ export const jalapenoSeed = crop({
  * @property farmhand.module:items.jalapeno
  * @type {farmhand.item}
  */
-// @ts-expect-error
 export const jalapeno = crop({
-  // @ts-expect-error
   ...fromSeed(jalapenoSeed, {
     canBeFermented: true,
   }),

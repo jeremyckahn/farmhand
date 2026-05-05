@@ -4,16 +4,16 @@ import { render, screen } from '@testing-library/react'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { noop } from '../../utils/noop.js'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, {
+  createContextData,
+} from '../Farmhand/Farmhand.context.js'
 
 import Shop from './Shop.js'
 
 beforeEach(() => {
   const gameState = {
     inventoryLimit: INFINITE_STORAGE_LIMIT,
-    levelEntitlements: {
-      stageFocusType: {},
-    },
+
     money: 0,
     purchasedCombine: 0,
     purchasedCowPen: 0,
@@ -21,7 +21,6 @@ beforeEach(() => {
     purchasedSmelter: 0,
     purchasedField: 0,
     shopInventory: [],
-    toolLevels: {},
     valueAdjustments: {},
   }
 
@@ -33,15 +32,12 @@ beforeEach(() => {
     handleStorageExpansionPurchase: noop,
   }
 
+  const contextValue = createContextData()
+  contextValue.gameState = { ...contextValue.gameState, ...gameState }
+  contextValue.handlers = { ...contextValue.handlers, ...handlers }
+
   render(
-    <FarmhandContext.Provider
-      value={{
-        // @ts-expect-error
-        gameState,
-        // @ts-expect-error
-        handlers,
-      }}
-    >
+    <FarmhandContext.Provider value={contextValue}>
       <Shop />
     </FarmhandContext.Provider>
   )

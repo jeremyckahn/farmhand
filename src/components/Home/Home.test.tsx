@@ -3,7 +3,9 @@ import React from 'react'
 import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, {
+  createContextData,
+} from '../Farmhand/Farmhand.context.js'
 
 import Home from './Home.js'
 
@@ -11,17 +13,13 @@ describe('<Home />', () => {
   let handleViewChangeButtonClick
 
   beforeEach(() => {
-    const gameState = {
-      completedAchievements: {},
-    }
+    const contextValue = createContextData()
+    contextValue.gameState.completedAchievements = {}
 
     handleViewChangeButtonClick = vitest.fn()
 
     render(
-      <FarmhandContext.Provider
-        // @ts-expect-error
-        value={{ gameState, handlers: {} }}
-      >
+      <FarmhandContext.Provider value={contextValue}>
         <Home handleViewChangeButtonClick={handleViewChangeButtonClick} />
       </FarmhandContext.Provider>
     )

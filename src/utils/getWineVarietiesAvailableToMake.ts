@@ -11,21 +11,19 @@ import { itemsMap } from '../data/maps.js'
  * @param {itemsSold} itemsSold
  * @returns {grape[]}
  */
-const getGrapesSold = itemsSold => {
-  const grapesSold = Object.entries(itemsSold).reduce((
-    /** @type {grape[]} */ acc,
-    [itemId, quantity]
-  ) => {
-    const item = itemsMap[itemId]
+const getGrapesSold = (itemsSold: farmhand.state['itemsSold']) => {
+  const grapesSold = Object.entries(itemsSold).reduce(
+    (acc: farmhand.grape[], [itemId, quantity]) => {
+      const item = itemsMap[itemId]
 
-    // @ts-expect-error
-    if ((quantity || 0) > 0 && isGrape(item)) {
-      // @ts-expect-error
-      acc.push(item)
-    }
+      if ((quantity || 0) > 0 && isGrape(item)) {
+        acc.push(item)
+      }
 
-    return acc
-  }, [])
+      return acc
+    },
+    []
+  )
 
   return grapesSold
 }
@@ -34,7 +32,9 @@ const getGrapesSold = itemsSold => {
  * @param {itemsSold} itemsSold
  * @returns {farmhand.grapeVariety[]}
  */
-export function getWineVarietiesAvailableToMake(itemsSold) {
+export function getWineVarietiesAvailableToMake(
+  itemsSold: farmhand.state['itemsSold']
+) {
   const grapesSold = getGrapesSold(itemsSold)
 
   const winesVarietiesAvailableToMake = grapesSold.map(({ variety }) => variety)

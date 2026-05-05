@@ -8,15 +8,14 @@ import { stageFocusType } from '../../enums.js'
 
 import './ContextPane.sass'
 
-export const PlayerInventory = memo(
+export const PlayerInventory = memo<{ playerInventory: farmhand.item[] }>(
   /**
    * Renders an Inventory component with player's items and sell view enabled.
    *
-   * @param {Object} props - The component props.
-   * @param {farmhand.item[]} props.playerInventory - The array of items in the
+   * @param props - The component props.
+   * @param props.playerInventory - The array of items in the
    * player's inventory.
    */
-  // @ts-expect-error
   ({ playerInventory }) => (
     <Inventory
       {...{
@@ -25,7 +24,6 @@ export const PlayerInventory = memo(
       }}
     />
   ),
-  // @ts-expect-error
   (prev, next) => prev.playerInventory === next.playerInventory
 )
 

@@ -8,27 +8,46 @@ import { recipesMap } from '../../data/maps.js'
  * @param {object} params.toolLevels - the current level of each tool
  * @returns {array} a list of all applicable upgrades
  */
-export function getUpgradesAvailable({ learnedForgeRecipes, toolLevels }) {
-  let upgradesAvailable = []
+interface GetUpgradesAvailableArgs {
+  learnedForgeRecipes: string[]
+  toolLevels: Record<string, string>
+}
 
-  for (let type of Object.keys(toolUpgrades)) {
-    const upgrade = toolUpgrades[type][toolLevels[type]]
+export function getUpgradesAvailable({
+  learnedForgeRecipes,
+  toolLevels,
+}: GetUpgradesAvailableArgs): farmhand.upgradesMetadatum[] {
+  let upgradesAvailable: farmhand.upgradesMetadatum[] = []
+
+  const typedToolUpgrades = (toolUpgrades as unknown) as Record<
+    string,
+    Record<string, farmhand.upgradesMetadatum>
+  >
+
+  for (let type of Object.keys(typedToolUpgrades)) {
+    const upgrade = typedToolUpgrades[type][toolLevels[type]]
 
     if (upgrade && !upgrade.isMaxLevel && upgrade.nextLevel) {
-      const nextLevelUpgrade = toolUpgrades[type][upgrade.nextLevel]
+      const nextLevelUpgrade = typedToolUpgrades[type][upgrade.nextLevel]
+
+      if (!nextLevelUpgrade) {
+        continue
+      }
+
       let allIngredientsUnlocked = true
 
-      // @ts-expect-error
-      for (let ingredient of Object.keys(nextLevelUpgrade.ingredients)) {
-        allIngredientsUnlocked =
-          allIngredientsUnlocked &&
-          !!(
-            !recipesMap[ingredient] || learnedForgeRecipes.includes(ingredient)
-          )
+      if (nextLevelUpgrade.ingredients) {
+        for (let ingredient of Object.keys(nextLevelUpgrade.ingredients)) {
+          allIngredientsUnlocked =
+            allIngredientsUnlocked &&
+            !!(
+              !recipesMap[ingredient] ||
+              learnedForgeRecipes.includes(ingredient)
+            )
+        }
       }
 
       if (allIngredientsUnlocked) {
-        // @ts-expect-error
         upgradesAvailable.push(nextLevelUpgrade)
       }
     }

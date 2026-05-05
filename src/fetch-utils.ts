@@ -1,6 +1,5 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-/** @type {RequestInit} */
-const commonFetchConfig = {
+const commonFetchConfig: RequestInit = {
   mode: 'cors', // no-cors, *cors, same-origin
   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
   credentials: 'same-origin', // include, *same-origin, omit
@@ -19,7 +18,6 @@ export async function getData(url = '', data = {}) {
   )
 
   // Default options are marked with *
-  // @ts-expect-error
   const response = await fetch(`${url}?${params}`, {
     ...commonFetchConfig,
     method: 'GET',
@@ -30,7 +28,6 @@ export async function getData(url = '', data = {}) {
 
 export async function postData(url = '', data = {}) {
   // Default options are marked with *
-  // @ts-expect-error
   const response = await fetch(url, {
     ...commonFetchConfig,
     method: 'POST',

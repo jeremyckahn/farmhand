@@ -18,7 +18,7 @@ export const showNotification = (
   state,
   message,
   severity = 'info',
-  onClick = undefined
+  onClick: import('@mui/material/Alert').AlertProps['onClick'] = undefined
 ) => {
   const { showNotifications, todaysNotifications } = state
 

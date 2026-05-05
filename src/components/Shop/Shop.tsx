@@ -42,7 +42,6 @@ import './Shop.sass'
  * @param {Array.<farmhand.item>} shopInventory
  * @returns {Object.<'seeds' | 'fieldTools', Array.<farmhand.item>>}
  */
-// @ts-expect-error
 const categorizeShopInventory = memoize(shopInventory =>
   shopInventory.reduce(
     (acc, inventoryItem) => {

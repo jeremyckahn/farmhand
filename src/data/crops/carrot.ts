@@ -16,9 +16,7 @@ export const carrotSeed = crop({
 /**
  * @type {farmhand.item}
  */
-// @ts-expect-error
 export const carrot = crop({
-  // @ts-expect-error
   ...fromSeed(carrotSeed, {
     canBeFermented: true,
   }),

@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
-import { array, bool, func, object, string } from 'prop-types'
 import React, { Component } from 'react'
 import { Tweenable } from 'shifty'
 
@@ -15,7 +14,14 @@ import { getCowDisplayName, getCowImage } from '../../utils/index.js'
 // Only moves the cow within the middle 80% of the pen
 const randomPosition = () => 10 + random() * 80
 
-export class Cow extends Component {
+export class Cow extends Component<{
+  allowCustomPeerCowNames: boolean
+  cow: farmhand.cow
+  cowInventory: farmhand.cow[]
+  handleCowClick: (cow: farmhand.cow) => void
+  playerId: string
+  isSelected: boolean
+}> {
   state = {
     cowImage: pixel,
     isTransitioning: false,
@@ -26,10 +32,8 @@ export class Cow extends Component {
     y: randomPosition(),
   }
 
-  /** @type {null | NodeJS.Timeout} */
-  repositionTimeoutId = null
-  /** @type {null | NodeJS.Timeout} */
-  animateHugTimeoutId = null
+  repositionTimeoutId: number | NodeJS.Timeout | null = null
+  animateHugTimeoutId: number | NodeJS.Timeout | null = null
   tweenable = new Tweenable()
   isComponentMounted = false
 
@@ -40,13 +44,11 @@ export class Cow extends Component {
   static hugAnimationDuration = 750
 
   get waitVariance() {
-    // @ts-expect-error
     return 2000 * this.props.cowInventory.length
   }
 
   componentDidUpdate(prevProps) {
     if (
-      // @ts-expect-error
       this.props.isSelected &&
       !prevProps.isSelected &&
       this.repositionTimeoutId !== null
@@ -54,20 +56,17 @@ export class Cow extends Component {
       clearTimeout(this.repositionTimeoutId)
     }
 
-    // @ts-expect-error
     if (!this.props.isSelected && prevProps.isSelected) {
       this.scheduleMove()
     }
 
     if (
-      // @ts-expect-error
       this.props.cow.happinessBoostsToday >
         prevProps.cow.happinessBoostsToday &&
       !this.state.showHugAnimation
     ) {
       this.setState({ showHugAnimation: true })
 
-      // @ts-expect-error
       this.animateHugTimeoutId = setTimeout(() => {
         if (this.isComponentMounted) {
           this.setState({ showHugAnimation: false })
@@ -89,10 +88,7 @@ export class Cow extends Component {
     }
 
     if (oldDirection !== newDirection) {
-      /**
-       * @param {{ rotate: number }} param0
-       */
-      const render = ({ rotate }) => {
+      const render = ({ rotate }: { rotate?: number | string }) => {
         if (this.isComponentMounted) {
           this.setState({ rotate })
         }
@@ -112,7 +108,6 @@ export class Cow extends Component {
             },
             easing,
             duration,
-            // @ts-expect-error
             render,
           })
         } else {
@@ -125,7 +120,6 @@ export class Cow extends Component {
             },
             easing,
             duration,
-            // @ts-expect-error
             render,
           })
         }
@@ -170,12 +164,10 @@ export class Cow extends Component {
   }
 
   scheduleMove = () => {
-    // @ts-expect-error
     if (this.props.isSelected) {
       return
     }
 
-    // @ts-expect-error
     this.repositionTimeoutId = setTimeout(
       this.repositionTimeoutHandler,
       random() * this.waitVariance
@@ -186,7 +178,6 @@ export class Cow extends Component {
     this.isComponentMounted = true
     this.scheduleMove()
     ;(async () => {
-      // @ts-expect-error
       const cowImage = await getCowImage(this.props.cow)
 
       if (!this.isComponentMounted) return
@@ -207,15 +198,10 @@ export class Cow extends Component {
   render() {
     const {
       props: {
-        // @ts-expect-error
         allowCustomPeerCowNames,
-        // @ts-expect-error
         cow,
-        // @ts-expect-error
         handleCowClick,
-        // @ts-expect-error
         playerId,
-        // @ts-expect-error
         isSelected,
       },
       state: { cowImage, isTransitioning, rotate, showHugAnimation, x, y },
@@ -272,7 +258,7 @@ export class Cow extends Component {
           </div>
         </Tooltip>
         <ol {...{ className: 'happiness-boosts-today' }}>
-          {new Array((this.props as any).cow.happinessBoostsToday)
+          {new Array(this.props.cow.happinessBoostsToday)
             .fill(undefined)
             .map((_, i) => (
               <li {...{ key: i }}>
@@ -287,14 +273,4 @@ export class Cow extends Component {
       </div>
     )
   }
-}
-
-// @ts-expect-error
-Cow.propTypes = {
-  allowCustomPeerCowNames: bool.isRequired,
-  cow: object.isRequired,
-  cowInventory: array.isRequired,
-  handleCowClick: func.isRequired,
-  playerId: string.isRequired,
-  isSelected: bool.isRequired,
 }

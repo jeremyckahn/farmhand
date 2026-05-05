@@ -6,6 +6,7 @@ import { randomChoice } from '../utils/index.js'
 
 import ResourceFactory from './ResourceFactory.js'
 
+type ResourceOption = { weight: number; itemType: farmhand.itemType }
 vitest.mock('./CoalFactory.js')
 vitest.mock('./OreFactory.js')
 vitest.mock('./StoneFactory.js')
@@ -28,7 +29,6 @@ describe('ResourceFactory', () => {
         false
       )
 
-      // @ts-expect-error
       expect(ResourceFactory.instance().generateResources(shovelLevel)).toEqual(
         []
       )
@@ -38,9 +38,11 @@ describe('ResourceFactory', () => {
       vi.mocked(randomNumberService.isRandomNumberLessThan).mockReturnValue(
         true
       )
-      vi.mocked(randomChoice).mockReturnValueOnce({ itemType: itemType.ORE })
+      vi.mocked(randomChoice).mockReturnValueOnce({
+        itemType: itemType.ORE as farmhand.itemType,
+        weight: 0,
+      } as ResourceOption)
 
-      // @ts-expect-error
       ResourceFactory.instance().generateResources(shovelLevel)
       const factory = ResourceFactory.getFactoryForItemType(itemType.ORE)
 
@@ -52,9 +54,11 @@ describe('ResourceFactory', () => {
       vi.mocked(randomNumberService.isRandomNumberLessThan).mockReturnValue(
         true
       )
-      vi.mocked(randomChoice).mockReturnValueOnce({ itemType: itemType.FUEL })
+      vi.mocked(randomChoice).mockReturnValueOnce({
+        itemType: itemType.FUEL as farmhand.itemType,
+        weight: 0,
+      } as ResourceOption)
 
-      // @ts-expect-error
       ResourceFactory.instance().generateResources(shovelLevel)
       const factory = ResourceFactory.getFactoryForItemType(itemType.FUEL)
 
@@ -66,9 +70,11 @@ describe('ResourceFactory', () => {
       vi.mocked(randomNumberService.isRandomNumberLessThan).mockReturnValue(
         true
       )
-      vi.mocked(randomChoice).mockReturnValueOnce({ itemType: itemType.STONE })
+      vi.mocked(randomChoice).mockReturnValueOnce({
+        itemType: itemType.STONE as farmhand.itemType,
+        weight: 0,
+      } as ResourceOption)
 
-      // @ts-expect-error
       ResourceFactory.instance().generateResources(shovelLevel)
       const factory = ResourceFactory.getFactoryForItemType(itemType.STONE)
 
