@@ -35,15 +35,16 @@ const stubHandlers = {
   handleMakeWineClick: vitest.fn(),
 }
 
-/**
- * @param {Partial<{
- *   props: Partial<{wineVariety: import('../../enums.js').grapeVariety}>,
- *   state: Partial<typeof stubGameState>,
- *   handlers: Partial<typeof stubHandlers>
- * }>} props
- */
+interface WineRecipeStubArgs {
+  props?: Partial<{ wineVariety: farmhand.grapeVariety }>
+  state?: Partial<
+    Pick<farmhand.state, 'cellarInventory' | 'inventory' | 'purchasedCellar'>
+  >
+  handlers?: Partial<typeof stubHandlers>
+}
+
 const WineRecipeStub = (
-  { props, state, handlers }: any = {
+  { props, state, handlers }: WineRecipeStubArgs = {
     props: { wineVariety: grapeChardonnay.variety },
     state: stubGameState,
     handlers: stubHandlers,
