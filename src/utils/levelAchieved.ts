@@ -1,7 +1,4 @@
-/**
- * @param {number} [experience]
- * @returns {number}
- */
-export function levelAchieved(experience = 0) {
+
+export function levelAchieved(experience?: number = 0): number {
   return Math.floor(Math.sqrt(experience) / 10) + 1
 }

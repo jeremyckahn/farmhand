@@ -3,12 +3,8 @@ import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 
 import { addCowToInventory } from './addCowToInventory.js'
 
-/**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @returns {farmhand.state}
- */
-export const purchaseCow = (state, cow) => {
+
+export const purchaseCow = (state: any, cow: any): any => {
   const {
     cowInventory,
     cowColorsPurchased,

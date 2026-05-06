@@ -7,11 +7,8 @@
 import { isGrape } from '../data/crops/grape.js'
 import { itemsMap } from '../data/maps.js'
 
-/**
- * @param {itemsSold} itemsSold
- * @returns {grape[]}
- */
-const getGrapesSold = (itemsSold: farmhand.state['itemsSold']) => {
+
+const getGrapesSold = (itemsSold: farmhand.state['itemsSold']): grape[] => {
   const grapesSold = Object.entries(itemsSold).reduce(
     (acc: farmhand.grape[], [itemId, quantity]) => {
       const item = itemsMap[itemId]
@@ -28,13 +25,10 @@ const getGrapesSold = (itemsSold: farmhand.state['itemsSold']) => {
   return grapesSold
 }
 
-/**
- * @param {itemsSold} itemsSold
- * @returns {farmhand.grapeVariety[]}
- */
+
 export function getWineVarietiesAvailableToMake(
   itemsSold: farmhand.state['itemsSold']
-) {
+): any {
   const grapesSold = getGrapesSold(itemsSold)
 
   const winesVarietiesAvailableToMake = grapesSold.map(({ variety }) => variety)

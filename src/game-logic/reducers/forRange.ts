@@ -1,20 +1,20 @@
 /**
- * @param {farmhand.state} state
- * @param {function(farmhand.state, number, number, ...any): farmhand.state} fieldFn Performs an operation on each plot within the range.
- * @param {number} rangeRadius
- * @param {number} plotX
- * @param {number} plotY
- * @param {...any} args Passed as arguments to fieldFn.
- * @returns {farmhand.state}
+
+ * @param fieldFn Performs an operation on each plot within the range.
+
+
+
+ * @param args Passed as arguments to fieldFn.
+
  */
 export const forRange = (
-  state,
-  fieldFn,
-  rangeRadius,
-  plotX,
-  plotY,
+  state: any,
+  fieldFn: function(farmhand.state, number, number, ...any): farmhand.state,
+  rangeRadius: number,
+  plotX: number,
+  plotY: number,
   ...args
-) => {
+): any => {
   const startX = Math.max(plotX - rangeRadius, 0)
   const endX = Math.min(plotX + rangeRadius, state.field[0].length - 1)
   const startY = Math.max(plotY - rangeRadius, 0)

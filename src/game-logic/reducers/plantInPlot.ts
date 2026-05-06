@@ -9,14 +9,8 @@ import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { processSprinklers } from './processSprinklers.js'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @param {string} plantableItemId
- * @returns {farmhand.state}
- */
-export const plantInPlot = (state, x, y, plantableItemId) => {
+
+export const plantInPlot = (state: any, x: number, y: number, plantableItemId: string): any => {
   if (
     !plantableItemId ||
     !state.inventory.some(({ id }) => id === plantableItemId)

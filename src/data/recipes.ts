@@ -15,8 +15,8 @@ import { grapeVarietyNameMap } from './crops/grape.js'
 const itemsMap = { ...baseItemsMap }
 
 /**
- * @param {Omit<farmhand.recipe, 'type' | 'value'> & { type?: string, value?: number }} partialRecipe
- * @returns {farmhand.recipe}
+ * @param } partialRecipe
+
  */
 const convertToRecipe = partialRecipe => {
   const recipe = Object.freeze({
@@ -39,9 +39,9 @@ const convertToRecipe = partialRecipe => {
 
 /**
  * @property farmhand.module:recipes.salt
- * @type {farmhand.recipe}
+
  */
-export const salt = convertToRecipe({
+export const salt: any = convertToRecipe({
   id: 'salt',
   name: 'Salt',
   ingredients: {
@@ -54,9 +54,9 @@ export const salt = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.flour
- * @type {farmhand.recipe}
+
  */
-export const flour = convertToRecipe({
+export const flour: any = convertToRecipe({
   id: 'flour',
   name: 'Flour',
   ingredients: {
@@ -68,9 +68,9 @@ export const flour = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.yeast
- * @type {farmhand.recipe}
+
  */
-export const yeast = convertToRecipe({
+export const yeast: any = convertToRecipe({
   id: 'yeast',
   name: 'Yeast',
   ingredients: {
@@ -80,10 +80,7 @@ export const yeast = convertToRecipe({
   recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
 })
 
-/**
- * @param {farmhand.grape} grape
- * @returns {farmhand.wine}
- */
+
 const getWineRecipeFromGrape = grape => {
   return {
     ...convertToRecipe({
@@ -104,9 +101,9 @@ const getWineRecipeFromGrape = grape => {
 
 /**
  * @property farmhand.module:recipes.bread
- * @type {farmhand.recipe}
+
  */
-export const bread = convertToRecipe({
+export const bread: any = convertToRecipe({
   id: 'bread',
   name: 'Bread',
   ingredients: {
@@ -121,9 +118,9 @@ export const bread = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.butter
- * @type {farmhand.recipe}
+
  */
-export const butter = convertToRecipe({
+export const butter: any = convertToRecipe({
   id: 'butter',
   name: 'Butter',
   ingredients: {
@@ -135,9 +132,9 @@ export const butter = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.sunButter
- * @type {farmhand.recipe}
+
  */
-export const sunButter = convertToRecipe({
+export const sunButter: any = convertToRecipe({
   id: 'sun-butter',
   name: 'Sun Butter',
   ingredients: {
@@ -163,9 +160,9 @@ export const oliveOil = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.cheese
- * @type {farmhand.recipe}
+
  */
-export const cheese = convertToRecipe({
+export const cheese: any = convertToRecipe({
   id: 'cheese',
   name: 'Cheese',
   ingredients: {
@@ -177,9 +174,9 @@ export const cheese = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.rainbowCheese
- * @type {farmhand.recipe}
+
  */
-export const rainbowCheese = convertToRecipe({
+export const rainbowCheese: any = convertToRecipe({
   id: 'rainbowCheese',
   name: 'Rainbow Cheese',
   ingredients: {
@@ -191,9 +188,9 @@ export const rainbowCheese = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.chocolate
- * @type {farmhand.recipe}
+
  */
-export const chocolate = convertToRecipe({
+export const chocolate: any = convertToRecipe({
   id: 'chocolate',
   name: 'Chocolate',
   ingredients: {
@@ -205,9 +202,9 @@ export const chocolate = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.carrotSoup
- * @type {farmhand.recipe}
+
  */
-export const carrotSoup = convertToRecipe({
+export const carrotSoup: any = convertToRecipe({
   id: 'carrot-soup',
   name: 'Carrot Soup',
   ingredients: {
@@ -219,9 +216,9 @@ export const carrotSoup = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.jackolantern
- * @type {farmhand.recipe}
+
  */
-export const jackolantern = convertToRecipe({
+export const jackolantern: any = convertToRecipe({
   id: 'jackolantern',
   name: "Jack-o'-lantern",
   ingredients: {
@@ -233,9 +230,9 @@ export const jackolantern = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.spaghetti
- * @type {farmhand.recipe}
+
  */
-export const spaghetti = convertToRecipe({
+export const spaghetti: any = convertToRecipe({
   id: 'spaghetti',
   name: 'Spaghetti',
   ingredients: {
@@ -250,9 +247,9 @@ export const spaghetti = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.frenchOnionSoup
- * @type {farmhand.recipe}
+
  */
-export const frenchOnionSoup = convertToRecipe({
+export const frenchOnionSoup: any = convertToRecipe({
   id: 'french-onion-soup',
   name: 'French Onion Soup',
   ingredients: {
@@ -268,9 +265,9 @@ export const frenchOnionSoup = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.burger
- * @type {farmhand.recipe}
+
  */
-export const burger = convertToRecipe({
+export const burger: any = convertToRecipe({
   id: 'burger',
   name: 'Burger',
   ingredients: {
@@ -293,9 +290,9 @@ export const burger = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.summerSalad
- * @type {farmhand.recipe}
+
  */
-export const summerSalad = convertToRecipe({
+export const summerSalad: any = convertToRecipe({
   id: 'summer-salad',
   name: 'Summer Salad',
   ingredients: {
@@ -312,9 +309,9 @@ export const summerSalad = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.soyMilk
- * @type {farmhand.recipe}
+
  */
-export const soyMilk = convertToRecipe({
+export const soyMilk: any = convertToRecipe({
   id: 'soy-milk',
   name: 'Soy Milk',
   ingredients: {
@@ -326,9 +323,9 @@ export const soyMilk = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.chocolateSoyMilk
- * @type {farmhand.recipe}
+
  */
-export const chocolateSoyMilk = convertToRecipe({
+export const chocolateSoyMilk: any = convertToRecipe({
   id: 'chocolate-soy-milk',
   name: 'Chocolate Soy Milk',
   ingredients: {
@@ -343,9 +340,9 @@ export const chocolateSoyMilk = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.tofu
- * @type {farmhand.recipe}
+
  */
-export const tofu = convertToRecipe({
+export const tofu: any = convertToRecipe({
   id: 'tofu',
   name: 'Tofu',
   ingredients: {
@@ -357,9 +354,9 @@ export const tofu = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.chicknPotPie
- * @type {farmhand.recipe}
+
  */
-export const chicknPotPie = convertToRecipe({
+export const chicknPotPie: any = convertToRecipe({
   id: 'chickn-pot-pie',
   name: "Chick'n Pot Pie",
   ingredients: {
@@ -380,9 +377,9 @@ export const chicknPotPie = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.hotSauce
- * @type {farmhand.recipe}
+
  */
-export const hotSauce = convertToRecipe({
+export const hotSauce: any = convertToRecipe({
   id: 'hot-sauce',
   name: 'Hot Sauce',
   ingredients: {
@@ -395,9 +392,9 @@ export const hotSauce = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.salsa
- * @type {farmhand.recipe}
+
  */
-export const salsa = convertToRecipe({
+export const salsa: any = convertToRecipe({
   id: 'salsa',
   name: 'Salsa',
   ingredients: {
@@ -416,9 +413,9 @@ export const salsa = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.spicyCheese
- * @type {farmhand.recipe}
+
  */
-export const spicyCheese = convertToRecipe({
+export const spicyCheese: any = convertToRecipe({
   id: 'spicy-cheese',
   name: 'Spicy Cheese',
   ingredients: {
@@ -433,9 +430,9 @@ export const spicyCheese = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.vegetableOil
- * @type {farmhand.recipe}
+
  */
-export const vegetableOil = convertToRecipe({
+export const vegetableOil: any = convertToRecipe({
   id: 'vegetable-oil',
   name: 'Vegetable Oil',
   ingredients: {
@@ -447,9 +444,9 @@ export const vegetableOil = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.friedTofu
- * @type {farmhand.recipe}
+
  */
-export const friedTofu = convertToRecipe({
+export const friedTofu: any = convertToRecipe({
   id: 'fried-tofu',
   name: 'Deep Fried Tofu',
   ingredients: {
@@ -464,9 +461,9 @@ export const friedTofu = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.spicyPickledGarlic
- * @type {farmhand.recipe}
+
  */
-export const spicyPickledGarlic = convertToRecipe({
+export const spicyPickledGarlic: any = convertToRecipe({
   id: 'spicy-pickled-garlic',
   name: 'Spicy Pickled Garlic',
   ingredients: {
@@ -481,9 +478,9 @@ export const spicyPickledGarlic = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.garlicFries
- * @type {farmhand.recipe}
+
  */
-export const garlicFries = convertToRecipe({
+export const garlicFries: any = convertToRecipe({
   id: 'garlic-fries',
   name: 'Garlic Fries',
   ingredients: {
@@ -500,9 +497,9 @@ export const garlicFries = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.garlicBread
- * @type {farmhand.recipe}
+
  */
-export const garlicBread = convertToRecipe({
+export const garlicBread: any = convertToRecipe({
   id: 'garlic-bread',
   name: 'Garlic Bread',
   ingredients: {
@@ -519,9 +516,9 @@ export const garlicBread = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.strawberryJam
- * @type {farmhand.recipe}
+
  */
-export const strawberryJam = convertToRecipe({
+export const strawberryJam: any = convertToRecipe({
   id: 'strawberry-jam',
   name: 'Strawberry Jam',
   ingredients: {
@@ -533,9 +530,9 @@ export const strawberryJam = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.popcorn
- * @type {farmhand.recipe}
+
  */
-export const popcorn = convertToRecipe({
+export const popcorn: any = convertToRecipe({
   id: 'popcorn',
   name: 'Popcorn',
   ingredients: {
@@ -550,9 +547,9 @@ export const popcorn = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.pumpkinPie
- * @type {farmhand.recipe}
+
  */
-export const pumpkinPie = convertToRecipe({
+export const pumpkinPie: any = convertToRecipe({
   id: 'pumpkin-pie',
   name: 'Pumpkin Pie',
   ingredients: {
@@ -569,9 +566,9 @@ export const pumpkinPie = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.sweetPotatoPie
- * @type {farmhand.recipe}
+
  */
-export const sweetPotatoPie = convertToRecipe({
+export const sweetPotatoPie: any = convertToRecipe({
   id: 'sweet-potato-pie',
   name: 'Sweet Potato Pie',
   ingredients: {
@@ -588,9 +585,9 @@ export const sweetPotatoPie = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.sweetPotatoFries
- * @type {farmhand.recipe}
+
  */
-export const sweetPotatoFries = convertToRecipe({
+export const sweetPotatoFries: any = convertToRecipe({
   id: 'sweet-potato-fries',
   name: 'Sweet Potato Fries',
   ingredients: {
@@ -604,9 +601,9 @@ export const sweetPotatoFries = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.onionRings
- * @type {farmhand.recipe}
+
  */
-export const onionRings = convertToRecipe({
+export const onionRings: any = convertToRecipe({
   id: 'onion-rings',
   name: 'Onion Rings',
   ingredients: {
@@ -626,9 +623,9 @@ export const onionRings = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.bronzeIngot
- * @type {farmhand.recipe}
+
  */
-export const bronzeIngot = convertToRecipe({
+export const bronzeIngot: any = convertToRecipe({
   id: 'bronze-ingot',
   name: 'Bronze Ingot',
   ingredients: {
@@ -643,9 +640,9 @@ export const bronzeIngot = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.ironIngot
- * @type {farmhand.recipe}
+
  */
-export const ironIngot = convertToRecipe({
+export const ironIngot: any = convertToRecipe({
   id: 'iron-ingot',
   name: 'Iron Ingot',
   ingredients: {
@@ -660,9 +657,9 @@ export const ironIngot = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.silverIngot
- * @type {farmhand.recipe}
+
  */
-export const silverIngot = convertToRecipe({
+export const silverIngot: any = convertToRecipe({
   id: 'silver-ingot',
   name: 'Silver Ingot',
   ingredients: {
@@ -677,9 +674,9 @@ export const silverIngot = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.goldIngot
- * @type {farmhand.recipe}
+
  */
-export const goldIngot = convertToRecipe({
+export const goldIngot: any = convertToRecipe({
   id: 'gold-ingot',
   name: 'Gold Ingot',
   ingredients: {
@@ -708,9 +705,9 @@ export const compost = convertToRecipe({
 
 /**
  * @property farmhand.module:recipes.fertilizer
- * @type {farmhand.item}
+
  */
-export const fertilizer = convertToRecipe({
+export const fertilizer: any = convertToRecipe({
   id: 'fertilizer',
   name: 'Fertilizer',
   ingredients: {

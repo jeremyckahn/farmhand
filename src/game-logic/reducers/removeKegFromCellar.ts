@@ -1,8 +1,5 @@
-/**
- * @param {farmhand.state} state
- * @param {string} kegId
- */
-export const removeKegFromCellar = (state, kegId) => {
+
+export const removeKegFromCellar = (state: any, kegId: string) => {
   const { cellarInventory } = state
 
   const kegIdx = cellarInventory.findIndex(({ id }) => {

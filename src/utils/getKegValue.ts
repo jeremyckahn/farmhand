@@ -10,9 +10,7 @@ import { wineService } from '../services/wine.js'
 
 import { getItemBaseValue } from './getItemBaseValue.js'
 
-/**
- * @param {keg} keg
- */
+
 export const getKegValue = keg => {
   const { itemId, daysUntilMature } = keg
   const kegItem = itemsMap[itemId]

@@ -6,12 +6,8 @@ import { addExperience } from './addExperience.js'
 import { showNotification } from './showNotification.js'
 import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 
-/**
- * @param {farmhand.state} state
- * @param {number} smelterId
- * @returns {farmhand.state}
- */
-export const purchaseSmelter = (state, smelterId) => {
+
+export const purchaseSmelter = (state: any, smelterId: number): any => {
   const { money, purchasedSmelter } = state
 
   if (purchasedSmelter >= smelterId) return state

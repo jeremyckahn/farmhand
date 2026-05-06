@@ -1,7 +1,4 @@
-/**
- * @param {?farmhand.plotContent} plotContent
- * @returns {?farmhand.plotContent}
- */
+
 export const updatePlotShoveledState = plotContent => {
   if (
     plotContent &&

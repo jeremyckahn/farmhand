@@ -1,11 +1,10 @@
-/**
- */
+
 
 // TODO: Add tests for this reducer
 /**
- * @param {farmhand.state} state
- * @param {string} peerId The peer to remove
- * @returns {farmhand.state}
+
+ * @param peerId The peer to remove
+
  */
 export const removePeer = (state, peerId) => {
   const peers = { ...state.peers }

@@ -5,12 +5,8 @@ import { COW_PEN_PURCHASED } from '../../templates.js'
 import { addExperience } from './addExperience.js'
 import { showNotification } from './showNotification.js'
 
-/**
- * @param {farmhand.state} state
- * @param {number} cowPenId
- * @returns {farmhand.state}
- */
-export const purchaseCowPen = (state, cowPenId) => {
+
+export const purchaseCowPen = (state: any, cowPenId: number): any => {
   const { money, purchasedCowPen } = state
 
   if (purchasedCowPen >= cowPenId) {

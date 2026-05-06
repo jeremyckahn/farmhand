@@ -3,7 +3,7 @@
 import { processCellarSpoilage } from './processCellarSpoilage.js'
 
 /**
- * @param {state} state
+
  * @returns state
  */
 export const processCellar = state => {

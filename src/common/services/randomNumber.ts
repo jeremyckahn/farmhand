@@ -17,17 +17,13 @@ export class RandomNumberService {
     }
   }
 
-  /**
-   * @param {string} seed
-   */
-  seedRandomNumber(seed) {
+
+  seedRandomNumber(seed: string) {
     this.seededRandom = seedrandom(seed)
   }
 
-  /**
-   * @returns {number}
-   */
-  generateRandomNumber() {
+
+  generateRandomNumber(): number {
     return this.seededRandom ? this.seededRandom() : Math.random()
   }
 
@@ -37,11 +33,11 @@ export class RandomNumberService {
 
   /**
    * Compares given number against a randomly generated number.
-   * @param {number} chance Float between 0-1 to compare dice roll against.
-   * @returns {boolean} True if the dice roll was equal to or lower than the
+   * @param chance Float between 0-1 to compare dice roll against.
+   * @returns True if the dice roll was equal to or lower than the
    * given chance, false otherwise.
    */
-  isRandomNumberLessThan(chance) {
+  isRandomNumberLessThan(chance: number): boolean {
     return this.generateRandomNumber() <= chance
   }
 }

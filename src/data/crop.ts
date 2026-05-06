@@ -3,18 +3,12 @@ import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration.js'
 
 const { freeze } = Object
 
-/**
- * @param {Partial<farmhand.item>} item
- * @returns {farmhand.item}
- */
+
 interface CropArgs extends Partial<farmhand.item> {
   cropTimeline?: number[]
 }
 
-/**
- * @param {CropArgs} item
- * @returns {farmhand.item}
- */
+
 export const crop = ({
   cropTimeline = [],
   growsInto,
@@ -46,11 +40,7 @@ interface FromSeedConfig {
   canBeFermented?: boolean
 }
 
-/**
- * @param {farmhand.item} item
- * @param {FromSeedConfig} [config]
- * @returns {Partial<farmhand.item>}
- */
+
 export const fromSeed = (
   { cropTimeline, cropType, growsInto, tier = 1 }: farmhand.item,
   { variantIdx = 0, canBeFermented = false }: FromSeedConfig = {}
@@ -71,10 +61,7 @@ export const fromSeed = (
   }
 }
 
-/**
- * @param {farmhand.cropVariety} cropVarietyArgs
- * @returns {farmhand.cropVariety}
- */
+
 export const cropVariety = ({
   imageId,
   cropFamily,

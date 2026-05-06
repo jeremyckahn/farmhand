@@ -1,11 +1,11 @@
 // TODO: Add tests for this reducer
 /**
- * @param {farmhand.state} state
- * @param {string} cowId
- * @param {Function} fn Function that takes a cow and returns the modified cow or undefined.
- * @returns {farmhand.state}
+
+
+ * @param fn Function that takes a cow and returns the modified cow or undefined.
+
  */
-export const modifyCow = (state, cowId, fn) => {
+export const modifyCow = (state: any, cowId: string, fn: Function): any => {
   const cowInventory = [...state.cowInventory]
 
   // TODO: Use the findCowById util here.

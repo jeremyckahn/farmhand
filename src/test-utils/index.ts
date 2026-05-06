@@ -28,9 +28,7 @@ export const testTree = (item = {}) => ({
   ...item,
 })
 
-/**
- * @param {Partial<farmhand.shoveledPlot>} plotProps
- */
+
 export const testShoveledPlot = plotProps => ({
   isShoveled: true,
   daysUntilClear: 5,
@@ -51,10 +49,10 @@ export const testItem = (item = {}) => ({
 
 /**
  * Creates a minimal but complete farmhand.recipe object for testing
- * @param {Partial<farmhand.recipe>} overrides - Properties to override in the test recipe
- * @returns {farmhand.recipe}
+ * @param overrides - Properties to override in the test recipe
+
  */
-export const testRecipe = (overrides = {}) => ({
+export const testRecipe = (overrides: Partial<farmhand.recipe> = {}): any => ({
   id: 'sample-recipe-1',
   name: 'Test Recipe',
   description: 'A test recipe',
@@ -70,8 +68,8 @@ export const testRecipe = (overrides = {}) => ({
 
 /**
  * Creates a minimal but complete farmhand.state object for testing
- * @param {Partial<farmhand.state>} overrides - Properties to override in the test state
- * @returns {farmhand.state}
+ * @param overrides - Properties to override in the test state
+
  */
 export const testState = (
   overrides: Partial<farmhand.state> = {}

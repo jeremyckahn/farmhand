@@ -39,10 +39,8 @@ const sumOfCropsHarvested = memoize(
 
 const cowFeed = itemsMap[COW_FEED_ITEM_ID]
 
-/**
- * @type {farmhand.achievement[]}
- */
-const achievements = [
+
+const achievements: any = [
   ((reward = 100) => ({
     id: 'plant-crop',
     name: 'Plant a Crop',

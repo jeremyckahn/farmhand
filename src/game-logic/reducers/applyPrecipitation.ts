@@ -15,10 +15,7 @@ import {
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { waterField } from './waterField.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
+
 export const applyPrecipitation = state => {
   let { field } = state
   let scarecrowsConsumedByReplanting = 0

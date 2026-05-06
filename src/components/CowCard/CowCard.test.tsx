@@ -18,9 +18,7 @@ describe('CowCard', () => {
     baseWeight: 100,
   })
 
-  /**
-   * @type {import("./CowCard.js").CowCardProps}
-   */
+
   const baseProps = {
     allowCustomPeerCowNames: false,
     cow,

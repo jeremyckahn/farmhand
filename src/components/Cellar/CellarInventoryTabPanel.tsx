@@ -23,9 +23,9 @@ import { TabPanel } from './TabPanel/index.js'
 import { Keg } from './Keg.js'
 
 /**
- * @param {Object} props
- * @param {number} props.index
- * @param {number} props.currentTab
+
+ * @param props.index
+ * @param props.currentTab
  */
 export const CellarInventoryTabPanel = ({ index, currentTab }) => {
   const [searchQuery, setSearchQuery] = useState('')

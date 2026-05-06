@@ -16,11 +16,11 @@ export const QUANTITY_INPUT_PLACEHOLDER_TEXT = '0'
 
 const QuantityNumberFormat = forwardRef(
   /**
-   * @param {Object} props
-   * @param {number} props.min
-   * @param {number} props.max
-   * @param {(value: number) => void} props.onChange
-   * @param {React.ForwardedRef<any>} ref
+
+   * @param props.min
+   * @param props.max
+   * @param props.onChange
+
    */
   (
     {

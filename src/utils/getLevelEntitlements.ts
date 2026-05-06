@@ -5,15 +5,12 @@ import { INITIAL_SPRINKLER_RANGE } from '../constants.js'
 import { memoize } from './memoize.js'
 
 /**
- * @param {number} levelNumber
- * @returns {levelEntitlements} Contains `sprinklerRange` and keys that correspond to
+
+ * @returns Contains `sprinklerRange` and keys that correspond to
  * unlocked items.
  */
 export const getLevelEntitlements = memoize(
-  /**
-   * @param {number} levelNumber
-   * @returns {levelEntitlements}
-   */
+
   levelNumber => {
     const acc: farmhand.levelEntitlements = {
       sprinklerRange: INITIAL_SPRINKLER_RANGE,

@@ -6,13 +6,13 @@ import { dialogView } from '../../enums.js'
 import { showNotification } from './showNotification.js'
 
 /**
- * @param {farmhand.state} state
- * @param {Farmhand} farmhand
- * @param {farmhand.peerMetadata} peerMetadata
- * @param {string} peerId The peer to update
- * @returns {farmhand.state}
+
+
+
+ * @param peerId The peer to update
+
  */
-export const updatePeer = (state, farmhand, peerMetadata, peerId) => {
+export const updatePeer = (state: any, farmhand: Farmhand, peerMetadata: any, peerId: string): any => {
   const peers = { ...state.peers }
 
   const previousPeerMetadata = peers[peerId]

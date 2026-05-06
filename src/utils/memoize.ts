@@ -16,9 +16,9 @@ export class MemoizeCache {
   cacheSize: number
 
   /**
-   * @param {Object} [config] Can also contain the config options used to
+   * @param [config] Can also contain the config options used to
    * configure fast-memoize.
-   * @param {number} [config.cacheSize]
+   * @param [config.cacheSize]
    * @see https://github.com/caiogondim/fast-memoize.js
    */
   constructor({ cacheSize = MEMOIZE_CACHE_CLEAR_THRESHOLD } = {}) {
@@ -44,12 +44,12 @@ export class MemoizeCache {
 
 /**
  * @template {(...args: any[]) => any} T Copied from https://github.com/caiogondim/fast-memoize.js/blob/5cdfc8dde23d86b16e0104bae1b04cd447b98c63/typings/fast-memoize.d.ts#L1
- * @param {T} fn
- * @param {MemoizeOptions & Partial<{ cacheSize: number }>} [config]
+
+ * @param >} [config]
  * @returns T
  * @see https://github.com/caiogondim/fast-memoize.js
  */
-export const memoize = (fn, config = {}) =>
+export const memoize = (fn: T, config = {}) =>
   fastMemoize(fn, {
     cache: { create: () => new MemoizeCache(config) },
     ...config,

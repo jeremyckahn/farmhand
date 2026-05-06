@@ -21,10 +21,7 @@ import { SHOVELED } from '../../strings.js'
 import './Plot.sass'
 import { SHOVELED_PLOT } from '../../templates.js'
 
-/**
- * @param {farmhand.plotContent?} plotContent
- * @returns {string | undefined}
- */
+
 export const getBackgroundStyles = plotContent => {
   if (!plotContent) {
     return undefined

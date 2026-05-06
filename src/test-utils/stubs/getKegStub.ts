@@ -4,11 +4,8 @@ import { v4 as uuid } from 'uuid'
 
 import { carrot } from '../../data/crops/index.js'
 
-/**
- * @param {Partial<keg>} overrides
- * @returns {keg}
- */
-export const getKegStub = (overrides = {}) => {
+
+export const getKegStub = (overrides: Partial<keg> = {}): keg => {
   const carrotItem = carrot as farmhand.item
   return {
     id: uuid(),

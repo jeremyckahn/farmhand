@@ -20,9 +20,9 @@ const spawnableResources = [
 export default class StoneFactory extends Factory {
   /**
    * Generate resources
-   * @returns {Array.<farmhand.item>} an array of stone and coal resources
+   * @returns an array of stone and coal resources
    */
-  generate() {
+  generate(): any {
     const resources: farmhand.item[] = []
 
     for (const { resource, spawnChance } of spawnableResources) {

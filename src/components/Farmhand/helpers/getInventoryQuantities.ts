@@ -3,7 +3,7 @@ import { itemsMap } from '../../../data/maps.js'
 const itemIds = Object.keys(itemsMap)
 
 /**
- * @param {Array.<{ id: farmhand.item['id'], quantity: number }>} inventory
+ * @param >} inventory
  */
 export const getInventoryQuantities = inventory => {
   /** @type {Record<string, number>} */

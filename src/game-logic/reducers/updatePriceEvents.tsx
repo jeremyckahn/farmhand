@@ -1,7 +1,4 @@
-/**
- * @param {Partial<Record<string, farmhand.priceEvent>>} priceEvents
- * @returns {Partial<Record<string, farmhand.priceEvent>>}
- */
+
 const decrementPriceEventDays = priceEvents =>
   Object.keys(priceEvents).reduce((acc, key) => {
     const priceEvent = priceEvents[key]
@@ -16,10 +13,7 @@ const decrementPriceEventDays = priceEvents =>
     return acc
   }, {})
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
+
 
 export const updatePriceEvents = state => {
   const { priceCrashes, priceSurges } = state

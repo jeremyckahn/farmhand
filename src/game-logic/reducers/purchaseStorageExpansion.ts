@@ -4,10 +4,7 @@ import {
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
+
 export const purchaseStorageExpansion = state => {
   const { money, inventoryLimit } = state
   const storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit)

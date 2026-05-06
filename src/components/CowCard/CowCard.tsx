@@ -362,10 +362,8 @@ CowCard.propTypes = {
   purchasedCowPen: number.isRequired,
 }
 
-/**
- * @param {Pick<CowCardProps, 'cow' | 'isCowOfferedForTradeByPeer' | 'isSelected'>} props
- */
-export default function Consumer(props) {
+
+export default function Consumer(props: Pick<CowCardProps, 'cow' | 'isCowOfferedForTradeByPeer' | 'isSelected'>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

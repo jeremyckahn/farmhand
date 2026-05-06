@@ -1,10 +1,10 @@
 // TODO: Add tests for this reducer
 /**
- * @param {farmhand.state} state
- * @param {string} peerId The peer to add
- * @returns {farmhand.state}
+
+ * @param peerId The peer to add
+
  */
-export const addPeer = (state, peerId) => {
+export const addPeer = (state: any, peerId: string): any => {
   const peers = { ...state.peers }
   peers[peerId] = null
 

@@ -1,9 +1,6 @@
 import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
+
 export const computeCowInventoryForNextDay = state => ({
   ...state,
   cowInventory: state.cowInventory.map(cow => ({

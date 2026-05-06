@@ -9,10 +9,7 @@ import { OUT_OF_COW_FEED_NOTIFICATION } from '../../strings.js'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
+
 export const processFeedingCows = state => {
   const cowInventory = [...state.cowInventory]
   const { length: cowInventoryLength } = cowInventory

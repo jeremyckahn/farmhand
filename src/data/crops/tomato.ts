@@ -3,9 +3,9 @@ import { cropType } from '../../enums.js'
 
 /**
  * @property farmhand.module:items.tomatoSeed
- * @type {farmhand.item}
+
  */
-export const tomatoSeed = crop({
+export const tomatoSeed: any = crop({
   cropType: cropType.TOMATO,
   cropTimeline: [2, 1, 1, 1, 2, 2, 2],
   growsInto: 'tomato',
@@ -16,9 +16,9 @@ export const tomatoSeed = crop({
 
 /**
  * @property farmhand.module:items.tomato
- * @type {farmhand.item}
+
  */
-export const tomato = crop({
+export const tomato: any = crop({
   ...fromSeed(tomatoSeed, {
     canBeFermented: true,
   }),

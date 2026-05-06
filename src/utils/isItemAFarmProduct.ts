@@ -10,10 +10,7 @@ const FARM_PRODUCT_TYPES = [
   itemType.STONE,
 ]
 
-/**
- * @param {farmhand.item} item
- * @returns {boolean}
- */
+
 export const isItemAFarmProduct = item =>
   Boolean(
     isItemAGrownCrop(item) ||

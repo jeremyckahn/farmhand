@@ -14,13 +14,8 @@ import { removeFieldPlotAt } from './removeFieldPlotAt.js'
 
 const { GROWN } = cropLifeStage
 
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-export const clearPlot = (state, x, y) => {
+
+export const clearPlot = (state: any, x: number, y: number): any => {
   const plotContent = state.field[y][x]
   const hoeLevel = state.toolLevels[toolType.HOE]
 

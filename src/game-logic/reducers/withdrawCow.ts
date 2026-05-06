@@ -1,9 +1,5 @@
-/**
- * @param {farmhand.state} state
- * @param {string} cowId
- * @returns {farmhand.state}
- */
-export const withdrawCow = (state, cowId) => {
+
+export const withdrawCow = (state: any, cowId: string): any => {
   const { cowIdOfferedForTrade } = state
 
   if (cowId === cowIdOfferedForTrade) {

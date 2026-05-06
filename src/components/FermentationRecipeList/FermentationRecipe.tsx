@@ -26,8 +26,8 @@ import AnimatedNumber from '../AnimatedNumber/index.js'
 import './FermentationRecipe.sass'
 
 /**
- * @param {Object} props
- * @param {item} props.item
+
+ * @param props.item
  */
 export const FermentationRecipe = ({ item }) => {
   const {

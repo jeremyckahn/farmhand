@@ -86,18 +86,12 @@ const Jimp = configureJimp({
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
-/**
- * @param {unknown} obj
- * @returns {obj is farmhand.plotContent}
- */
-const isPlotContent = (obj = {}) =>
+
+const isPlotContent = (obj: unknown = {}): obj is farmhand.plotContent =>
   Boolean(obj && obj['itemId'] && obj['fertilizerType'])
 
-/**
- * @param {unknown} obj
- * @returns {obj is farmhand.shoveledPlot}
- */
-const isShoveledPlot = (obj = {}) =>
+
+const isShoveledPlot = (obj: unknown = {}): obj is farmhand.shoveledPlot =>
   Boolean(obj && obj['isShoveled'] && obj['daysUntilClear'])
 
 const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
@@ -108,17 +102,11 @@ const purchasableItemMap = [...cowShopInventory, ...shopInventory].reduce(
   {}
 )
 
-/**
- * @param {Array.<*>} list
- * @return {number}
- */
+
 export const chooseRandomIndex = list =>
   Math.round(random() * (list.length - 1))
 
-/**
- * @param {Array.<*>} list
- * @return {*}
- */
+
 export const chooseRandom = list => list[chooseRandomIndex(list)]
 
 /**
@@ -127,51 +115,42 @@ export const chooseRandom = list => list[chooseRandomIndex(list)]
  *
  * Pass this is the `serializer` option to any memoize()-ed functions that
  * accept function arguments.
- * @param {any[]} args
+
  */
 export const memoizationSerializer = args =>
   JSON.stringify(
     [...args].map(arg => (typeof arg === 'function' ? arg.toString() : arg))
   )
 
-/**
- * @param {number} num
- * @param {number} min
- * @param {number} max
- */
-export const clampNumber = (num, min, max) =>
+
+export const clampNumber = (num: number, min: number, max: number) =>
   num <= min ? min : num >= max ? max : num
 
-/**
- * @param {number} num
- */
+
 export const castToMoney = num => Math.round(num * 100) / 100
 
 /**
  * Safely adds dollar figures to avoid IEEE 754 rounding errors.
- * @param {...number} args Numbers that represent money values.
- * @returns {number}
+ * @param args Numbers that represent money values.
+
  * @see http://adripofjavascript.com/blog/drips/avoiding-problems-with-decimal-math-in-javascript.html
  */
-export const moneyTotal = (...args) =>
+export const moneyTotal = (...args): number =>
   args.reduce((sum, num) => (sum += Math.round(num * 100)), 0) / 100
 
 /**
  * Based on https://stackoverflow.com/a/14224813/470685
- * @param {number} value Number to scale
- * @param {number} min Non-standard minimum
- * @param {number} max Non-standard maximum
- * @param {number} baseMin Standard minimum
- * @param {number} baseMax Standard maximum
- * @returns {number}
+ * @param value Number to scale
+ * @param min Non-standard minimum
+ * @param max Non-standard maximum
+ * @param baseMin Standard minimum
+ * @param baseMax Standard maximum
+
  */
-export const scaleNumber = (value, min, max, baseMin, baseMax) =>
+export const scaleNumber = (value: number, min: number, max: number, baseMin: number, baseMax: number): number =>
   ((value - min) * (baseMax - baseMin)) / (max - min) + baseMin
 
-/**
- * @param {string} string
- * @returns {number}
- */
+
 const convertStringToInteger = string =>
   string.split('').reduce((acc, char, i) => acc + char.charCodeAt(0) * i, 0)
 
@@ -187,8 +166,8 @@ export const createNewForest = () => {
 }
 
 /**
- * @param {number} number
- * @returns {string} Include dollar sign and other formatting. Cents are
+
+ * @returns Include dollar sign and other formatting. Cents are
  * rounded off.
  */
 export const dollarString = number =>
@@ -204,8 +183,8 @@ export const dollarString = number =>
   )
 
 /**
- * @param {number} number
- * @returns {string} Number string with commas.
+
+ * @returns Number string with commas.
  */
 export const integerString = number =>
   toDecimal(
@@ -214,17 +193,13 @@ export const integerString = number =>
   )
 
 /**
- * @param {number} number A float
- * @returns {string} the float converted to a full number with a % added
+ * @param number A float
+ * @returns the float converted to a full number with a % added
  */
 export const percentageString = number => `${Math.round(number * 100)}%`
 
-/**
- * @param {farmhand.item} item
- * @param {Record<string, number>} valueAdjustments
- * @returns {number}
- */
-export const getItemCurrentValue = ({ id }, valueAdjustments) => {
+
+export const getItemCurrentValue = ({ id }, valueAdjustments: Record<string, number>): number => {
   const amount = Math.round(
     (valueAdjustments[id]
       ? getItemBaseValue(id) *
@@ -236,38 +211,26 @@ export const getItemCurrentValue = ({ id }, valueAdjustments) => {
 }
 
 /**
- * @param {Record<string, number>} valueAdjustments
- * @param {string} itemId
- * @returns {number} Rounded to a money value.
+
+
+ * @returns Rounded to a money value.
  */
-export const getAdjustedItemValue = (valueAdjustments, itemId) =>
+export const getAdjustedItemValue = (valueAdjustments: Record<string, number>, itemId: string): number =>
   Number(((valueAdjustments[itemId] || 1) * itemsMap[itemId].value).toFixed(2))
 
-/**
- * @param {farmhand.item} item
- * @returns {boolean}
- */
-export const isItemSoldInShop = ({ id }) => Boolean(purchasableItemMap[id])
 
-/**
- * @param {farmhand.item} item
- * @returns {number}
- */
-export const getResaleValue = ({ id }) => itemsMap[id].value / 2
+export const isItemSoldInShop = ({ id }): boolean => Boolean(purchasableItemMap[id])
 
-/**
- * @param {string} itemId
- * @returns {farmhand.plotContent}
- */
+
+export const getResaleValue = ({ id }): number => itemsMap[id].value / 2
+
+
 export const getPlotContentFromItemId = itemId => ({
   itemId,
   fertilizerType: fertilizerType.NONE,
 })
 
-/**
- * @param {string} itemId
- * @returns {farmhand.crop}
- */
+
 export const getCropFromItemId = itemId => ({
   ...getPlotContentFromItemId(itemId),
   daysOld: 0,
@@ -275,17 +238,11 @@ export const getCropFromItemId = itemId => ({
   wasWateredToday: false,
 })
 
-/**
- * @param {farmhand.plotContent} plotContent
- * @returns {?string}
- */
-export const getPlotContentType = ({ itemId }) =>
+
+export const getPlotContentType = ({ itemId }): string =>
   itemId ? itemsMap[itemId].type : null
 
-/**
- * @param {?farmhand.plotContent} plot
- * @returns {plot is farmhand.crop}
- */
+
 export const doesPlotContainCrop = plot =>
   plot !== null && getPlotContentType(plot) === itemType.CROP
 
@@ -305,10 +262,7 @@ export const getLifeStageRange = memoize((cropTimeline: number[]) => {
   return lifeStageRange
 }, {})
 
-/**
- * @param {farmhand.crop} crop
- * @returns {number}
- */
+
 export const getGrowingPhase = memoize(
   crop => {
     const { itemId, daysWatered } = crop
@@ -333,10 +287,7 @@ export const getGrowingPhase = memoize(
   }
 )
 
-/**
- * @param {farmhand.crop} crop
- * @returns {farmhand.cropLifeStage}
- */
+
 export const getCropLifeStage = crop => {
   const { itemId, daysWatered } = crop
   const { cropTimeline } = itemsMap[itemId]
@@ -348,13 +299,8 @@ export const getCropLifeStage = crop => {
   return getLifeStageRange(cropTimeline)[Math.floor(daysWatered || 0)] || GROWN
 }
 
-/**
- * @param {farmhand.plotContent | farmhand.shoveledPlot | null} plotContents
- * @param {number} x
- * @param {number} y
- * @returns {?string}
- */
-export const getPlotImage = (plotContents, x, y) => {
+
+export const getPlotImage = (plotContents: any, x: number, y: number): string => {
   if (isPlotContent(plotContents)) {
     if (isPlotContentACrop(plotContents)) {
       let itemImageId
@@ -396,13 +342,8 @@ export const getPlotImage = (plotContents, x, y) => {
   return null
 }
 
-/**
- * @param {number} rangeSize
- * @param {number} centerX
- * @param {number} centerY
- * @returns {{x: number, y: number}[][]}
- */
-export const getRangeCoords = (rangeSize, centerX, centerY) => {
+
+export const getRangeCoords = (rangeSize: number, centerX: number, centerY: number): {x: number, y: number => {
   const squareSize = 2 * rangeSize + 1
   const rangeStartX = centerX - rangeSize
   const rangeStartY = centerY - rangeSize
@@ -415,26 +356,18 @@ export const getRangeCoords = (rangeSize, centerX, centerY) => {
   )
 }
 
-/**
- * @param {farmhand.item} item
- * @param {number} [variantIdx]
- * @returns {farmhand.item | undefined}
- */
-export const getFinalCropItemFromSeedItem = ({ id }, variantIdx = 0) => {
+
+export const getFinalCropItemFromSeedItem = ({ id }, variantIdx?: number = 0): any => {
   const itemId = getFinalCropItemIdFromSeedItemId(id, variantIdx)
 
   if (itemId) return itemsMap[itemId]
 }
 
-/**
- * @param {string} seedItemId
- * @param {number} [variationIdx]
- * @returns {string=}
- */
+
 export const getFinalCropItemIdFromSeedItemId = (
-  seedItemId,
-  variationIdx = 0
-) => {
+  seedItemId: string,
+  variationIdx?: number = 0
+): string => {
   const { growsInto } = itemsMap[seedItemId]
 
   if (Array.isArray(growsInto)) {
@@ -469,20 +402,12 @@ export const getSeedItemIdFromFinalStageCropItemId = memoize(
   }
 )
 
-/**
- * @param {farmhand.cow} cow
- * @returns {string}
- */
-const getDefaultCowName = ({ id }) =>
+
+const getDefaultCowName = ({ id }): string =>
   fruitNames[convertStringToInteger(id) % fruitNames.length]
 
-/**
- * @param {farmhand.cow} cow
- * @param {string} playerId
- * @param {boolean} allowCustomPeerCowNames
- * @returns {string}
- */
-export const getCowDisplayName = (cow, playerId, allowCustomPeerCowNames) => {
+
+export const getCowDisplayName = (cow: any, playerId: string, allowCustomPeerCowNames: boolean): string => {
   return cow.originalOwnerId !== playerId && !allowCustomPeerCowNames
     ? getDefaultCowName(cow)
     : cow.name
@@ -490,8 +415,8 @@ export const getCowDisplayName = (cow, playerId, allowCustomPeerCowNames) => {
 
 /**
  * Generates a friendly cow.
- * @param {Object} [options]
- * @returns {farmhand.cow}
+
+
  */
 export const generateCow = (
   options: {
@@ -546,13 +471,13 @@ export const generateCow = (
 
 /**
  * Generates a cow based on two parents.
- * @param {farmhand.cow} cow1
- * @param {farmhand.cow} cow2
- * @param {string} ownerId
- * @param {Partial<farmhand.cow>?} customProps
- * @returns {farmhand.cow}
+
+
+
+
+
  */
-export const generateOffspringCow = (cow1, cow2, ownerId, customProps = {}) => {
+export const generateOffspringCow = (cow1: any, cow2: any, ownerId: string, customProps: Partial<farmhand.cow>? = {}): any => {
   if (cow1.gender === cow2.gender) {
     throw new Error(
       `${JSON.stringify(cow1)} ${JSON.stringify(
@@ -593,11 +518,8 @@ export const generateOffspringCow = (cow1, cow2, ownerId, customProps = {}) => {
   })
 }
 
-/**
- * @param {farmhand.cow} cow
- * @returns {farmhand.item}
- */
-export const getCowMilkItem = ({ color, happiness }) => {
+
+export const getCowMilkItem = ({ color, happiness }): any => {
   if (color === cowColors.BROWN) {
     return chocolateMilk
   }
@@ -613,17 +535,11 @@ export const getCowMilkItem = ({ color, happiness }) => {
   return isRainbowCow ? rainbowMilk3 : milk3
 }
 
-/**
- * @param {farmhand.cow} cow
- * @returns {farmhand.item}
- */
-export const getCowFertilizerItem = ({ color }) =>
+
+export const getCowFertilizerItem = ({ color }): any =>
   itemsMap[color === cowColors.RAINBOW ? 'rainbow-fertilizer' : 'fertilizer']
 
-/**
- * @param {farmhand.cow} cow
- * @returns {number}
- */
+
 export const getCowMilkRate = cow =>
   cow.gender === genders.FEMALE
     ? scaleNumber(
@@ -635,10 +551,7 @@ export const getCowMilkRate = cow =>
       )
     : Infinity
 
-/**
- * @param {farmhand.cow} cow
- * @returns {number}
- */
+
 export const getCowFertilizerProductionRate = cow =>
   cow.gender === genders.MALE
     ? scaleNumber(
@@ -650,19 +563,16 @@ export const getCowFertilizerProductionRate = cow =>
       )
     : Infinity
 
-/**
- * @param {farmhand.cow} cow
- * @returns {number}
- */
-export const getCowWeight = ({ baseWeight, weightMultiplier }) =>
+
+export const getCowWeight = ({ baseWeight, weightMultiplier }): number =>
   Math.round(baseWeight * weightMultiplier)
 
 /**
- * @param {farmhand.cow} cow
- * @param {boolean} [computeSaleValue=false]
- * @returns {number}
+
+ * @param [computeSaleValue=false]
+
  */
-export const getCowValue = (cow, computeSaleValue = false) =>
+export const getCowValue = (cow: any, computeSaleValue?: boolean = false): number =>
   computeSaleValue
     ? getCowWeight(cow) *
       clampNumber(
@@ -678,15 +588,13 @@ export const getCowValue = (cow, computeSaleValue = false) =>
       )
     : getCowWeight(cow) * 1.5
 
-/**
- * @param {farmhand.cow} cow
- */
+
 export const getCowSellValue = cow => getCowValue(cow, true)
 
 /**
- * @param {farmhand.recipe} recipe
- * @param {{id: string, quantity: number}[]} inventory
- * @returns {number}
+
+ * @param []} inventory
+
  */
 export const maxYieldOfRecipe = memoize(
   (
@@ -707,25 +615,19 @@ export const maxYieldOfRecipe = memoize(
 )
 
 /**
- * @param {farmhand.recipe} recipe
- * @param {{id: string, quantity: number}[]} inventory
- * @param {number} howMany
- * @returns {boolean}
+
+ * @param []} inventory
+
+
  */
-export const canMakeRecipe = (recipe, inventory, howMany) =>
+export const canMakeRecipe = (recipe: any, inventory, howMany: number): boolean =>
   maxYieldOfRecipe(recipe, inventory) >= howMany
 
-/**
- * @param {string[]} itemsIds
- * @returns {string[]}
- */
+
 export const filterItemIdsToSeeds = itemsIds =>
   itemsIds.filter(id => itemsMap[id]?.type === itemType.CROP)
 
-/**
- * @param {Array.<string>} unlockedSeedItemIds
- * @returns {farmhand.item}
- */
+
 export const getRandomUnlockedCrop = unlockedSeedItemIds => {
   const seedItemId = chooseRandom(unlockedSeedItemIds)
   const seedItem = itemsMap[seedItemId]
@@ -746,10 +648,7 @@ export const getRandomUnlockedCrop = unlockedSeedItemIds => {
   return itemsMap[finalCropItemId]
 }
 
-/**
- * @param {farmhand.item} cropItem
- * @returns {farmhand.priceEvent}
- */
+
 export const getPriceEventForCrop = cropItem => ({
   itemId: cropItem.id,
   daysRemaining:
@@ -759,7 +658,7 @@ export const getPriceEventForCrop = cropItem => ({
 export const doesMenuObstructStage = () => window.innerWidth < BREAKPOINTS.MD
 
 /** @type {Set<farmhand.itemType>} */
-const itemTypesToShowInReverse = new Set([itemType.MILK])
+const itemTypesToShowInReverse: Set<farmhand.itemType> = new Set([itemType.MILK])
 
 const sortItemIdsByTypeAndValue = memoize(
   (itemIds: string[]) =>
@@ -773,10 +672,7 @@ const sortItemIdsByTypeAndValue = memoize(
   {}
 )
 
-/**
- * @param {Array.<farmhand.item>} items
- * @return {Array.<farmhand.item>}
- */
+
 export const sortItems = items => {
   const map = {}
   items.forEach(item => (map[item.id] = item))
@@ -785,43 +681,31 @@ export const sortItems = items => {
 }
 
 export const inventorySpaceConsumed = memoize(
-  /**
-   * @param {farmhand.state['inventory']} inventory
-   * @returns {number}
-   */
+
   (inventory: Array<{ quantity?: number }>) =>
     inventory.reduce((sum, { quantity = 0 }) => sum + quantity, 0),
   {}
 )
 
 /**
- * @param {{ inventory: farmhand.state['inventory'], inventoryLimit: farmhand.state['inventoryLimit'] }} state
- * @returns {number}
+ * @param } state
+
  */
-export const inventorySpaceRemaining = ({ inventory, inventoryLimit }) =>
+export const inventorySpaceRemaining = ({ inventory, inventoryLimit }): number =>
   inventoryLimit === INFINITE_STORAGE_LIMIT
     ? Infinity
     : Math.max(0, inventoryLimit - inventorySpaceConsumed(inventory))
 
-/**
- * @param {farmhand.state} state
- * @returns {boolean}
- */
+
 export const doesInventorySpaceRemain = state =>
   inventorySpaceRemaining(state) > 0
 
 export const areHuggingMachinesInInventory = memoize(
-  /**
-   * @param {farmhand.state['inventory']} inventory
-   * @return {boolean}
-   */
+
   inventory => inventory.some(({ id }) => id === HUGGING_MACHINE_ITEM_ID)
 )
 
-/**
- * @param {number} arraySize
- * @returns {Array.<null>}
- */
+
 export const nullArray = memoize(
   arraySize => Object.freeze(new Array(arraySize).fill(null)),
   {
@@ -830,18 +714,11 @@ export const nullArray = memoize(
 )
 
 export const findCowById = memoize(
-  /**
-   * @param {Array.<farmhand.cow>} cowInventory
-   * @param {string} id
-   * @returns {farmhand.cow|undefined}
-   */
+
   (cowInventory, id) => cowInventory.find(cow => id === cow.id)
 )
 
-/**
- * @param {number} targetLevel
- * @returns {number}
- */
+
 export const experienceNeededForLevel = targetLevel =>
   ((targetLevel - 1) * 10) ** 2
 
@@ -858,8 +735,8 @@ export const getAvailableShopInventory = memoize((
 )
 
 /**
- * @param {number} level
- * @returns {farmhand.item} Will always be a crop seed item.
+
+ * @returns Will always be a crop seed item.
  */
 export const getRandomLevelUpReward = level =>
   itemsMap[
@@ -868,20 +745,14 @@ export const getRandomLevelUpReward = level =>
     )
   ]
 
-/**
- * @param {number} level
- * @returns {number}
- */
+
 export const getRandomLevelUpRewardQuantity = level => level * 10
 
 /**
- * @param {farmhand.state} state
- * @returns {Object} Data that is meant to be shared with Trystero peers.
+
+ * @returns Data that is meant to be shared with Trystero peers.
  */
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.peerMetadata}
- */
+
 export const getPeerMetadata = state => {
   const reducedState = PEER_METADATA_STATE_KEYS.reduce(
     (acc, key) => {
@@ -902,8 +773,8 @@ export const getPeerMetadata = state => {
 }
 
 /**
- * @param {Partial<farmhand.state>} state
- * @returns {farmhand.state} A version of `state` that only contains keys of
+
+ * @returns A version of `state` that only contains keys of
  * farmhand.state data that should be persisted.
  */
 export const reduceByPersistedKeys = state =>
@@ -921,8 +792,8 @@ export const reduceByPersistedKeys = state =>
   }, {})
 
 /**
- * @param {Array.<number>} historicalData Must be no longer than 7 numbers long.
- * @return {number}
+ * @param historicalData Must be no longer than 7 numbers long.
+
  */
 export const get7DayAverage = historicalData =>
   historicalData.reduce((sum, revenue) => moneyTotal(sum, revenue), 0) /
@@ -941,36 +812,27 @@ const cowColorToIdMap = {
 
 export const getCowColorId = ({ color }) => `${cowColorToIdMap[color]}-cow`
 
-/**
- * @param {number} revenue
- * @param {number} losses
- * @return {number}
- */
-export const getProfit = (revenue, losses) => moneyTotal(revenue, losses)
 
-/**
- * @param {number} recordSingleDayProfit
- * @param {number} todaysRevenue
- * @param {number} todaysLosses
- * @returns {number}
- */
+export const getProfit = (revenue: number, losses: number): number => moneyTotal(revenue, losses)
+
+
 export const getProfitRecord = (
-  recordSingleDayProfit,
-  todaysRevenue,
-  todaysLosses
-) => Math.max(recordSingleDayProfit, getProfit(todaysRevenue, todaysLosses))
+  recordSingleDayProfit: number,
+  todaysRevenue: number,
+  todaysLosses: number
+): number => Math.max(recordSingleDayProfit, getProfit(todaysRevenue, todaysLosses))
 
 /**
- * @param {farmhand.state['todaysStartingInventory']} todaysStartingInventory
- * @param {farmhand.state['todaysPurchases']} todaysPurchases
- * @param {{ id: farmhand.item['id'], quantity: number }[]} inventory
- * @return {Object} Keys are item IDs, values are either 1 or -1.
+
+
+ * @param []} inventory
+ * @return Keys are item IDs, values are either 1 or -1.
  */
 export const computeMarketPositions = (
-  todaysStartingInventory,
-  todaysPurchases,
+  todaysStartingInventory: any,
+  todaysPurchases: any,
   inventory
-) =>
+): Object =>
   inventory.reduce((acc, { id, quantity: endingPosition }) => {
     const startingInventory = todaysStartingInventory[id] || 0
     const purchaseQuantity = todaysPurchases[id] || 0
@@ -996,10 +858,7 @@ export const computeMarketPositions = (
     return acc
   }, {})
 
-/**
- * @param {farmhand.state} state
- * @return {farmhand.state}
- */
+
 export const transformStateDataForImport = /** @type {(state: any) => farmhand.state} */ state => {
   let sanitizedState = { ...state }
 
@@ -1067,19 +926,13 @@ export const transformStateDataForImport = /** @type {(state: any) => farmhand.s
 }
 
 export const getPlayerName = memoize(
-  /**
-   * @param {string} playerId
-   * @returns {string}
-   */
+
   playerId => {
     return funAnimalName(playerId)
   }
 )
 
-/**
- * @param {number} currentInventoryLimit
- * @returns {number}
- */
+
 export const getCostOfNextStorageExpansion = currentInventoryLimit => {
   const upgradesPurchased =
     (currentInventoryLimit - INITIAL_STORAGE_LIMIT) / STORAGE_EXPANSION_AMOUNT
@@ -1092,16 +945,16 @@ export const getCostOfNextStorageExpansion = currentInventoryLimit => {
 
 /**
  * Create a no-op Promise that resolves in a specified amount of time.
- * @param {number} ms
- * @returns {Promise<void>}
+
+
  */
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 /**
- * @param {object} completedAchievements from game state
- * @returns {number} multiplier to be used for sales price adjustments based on completedAchievements
+ * @param completedAchievements from game state
+ * @returns multiplier to be used for sales price adjustments based on completedAchievements
  */
-export const getSalePriceMultiplier = (completedAchievements = {}) => {
+export const getSalePriceMultiplier = (completedAchievements: object = {}): number => {
   let salePriceMultiplier = 1
 
   if (completedAchievements['i-am-rich-3']) {
@@ -1115,17 +968,14 @@ export const getSalePriceMultiplier = (completedAchievements = {}) => {
   return salePriceMultiplier
 }
 
-/**
- * @param {farmhand.plotContent} plotContents
- * @returns {plotContents is farmhand.crop}
- */
+
 const isPlotContentACrop = plotContents =>
   getPlotContentType(plotContents) === itemType.CROP
 
 /**
  * @template T
- * @param {Array.<T & { weight: number }>} weightedOptions an array of objects each containing a `weight` property
- * @returns {T} one of the items from weightedOptions
+ * @param >} weightedOptions an array of objects each containing a `weight` property
+ * @returns one of the items from weightedOptions
  */
 export function randomChoice<T extends { weight: number }>(
   weightedOptions: T[]
@@ -1181,9 +1031,9 @@ const colorizeCowTemplate = (() => {
   })
 
   /**
-   * @param {string} cowTemplate Base64 representation of an image
-   * @param {string} color
-   * @returns {Promise.<string>} Base64 representation of an image
+   * @param cowTemplate Base64 representation of an image
+
+   * @returns Base64 representation of an image
    */
   return async (cowTemplate, color) => {
     if (color === cowColors.RAINBOW) return animals.cow.rainbow
@@ -1236,8 +1086,8 @@ const colorizeCowTemplate = (() => {
 })()
 
 /**
- * @param {farmhand.cow} cow
- * @returns {Promise<string>} Base64 representation of an image
+
+ * @returns Base64 representation of an image
  */
 export const getCowImage = async cow => {
   const cowIdNumber = convertStringToInteger(cow.id)
@@ -1249,8 +1099,8 @@ export const getCowImage = async cow => {
 
 /**
  * Adapted from https://www.javascripttutorial.net/dom/css/check-if-an-element-is-visible-in-the-viewport/
- * @param {Element} element
- * @returns {boolean}
+
+
  */
 export const isInViewport = element => {
   const { top, left, bottom, right } = element.getBoundingClientRect()
@@ -1266,20 +1116,12 @@ export const isInViewport = element => {
 export const shouldPrecipitateToday = () => random() < PRECIPITATION_CHANCE
 export const shouldStormToday = () => random() < STORM_CHANCE
 
-/**
- * @param {farmhand.cow} cow
- * @param {farmhand.cowBreedingPen} cowBreedingPen
- * @returns {boolean}
- */
-export const isCowInBreedingPen = (cow, cowBreedingPen) =>
+
+export const isCowInBreedingPen = (cow: any, cowBreedingPen: any): boolean =>
   cowBreedingPen.cowId1 === cow.id || cowBreedingPen.cowId2 === cow.id
 
-/**
- * @returns {boolean}
- */
-export const isOctober = () => new Date().getMonth() === 9
 
-/**
- * @returns {boolean}
- */
-export const isDecember = () => new Date().getMonth() === 11
+export const isOctober = (): boolean => new Date().getMonth() === 9
+
+
+export const isDecember = (): boolean => new Date().getMonth() === 11

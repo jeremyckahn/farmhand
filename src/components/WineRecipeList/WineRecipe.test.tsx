@@ -24,14 +24,14 @@ import { QUANTITY_INPUT_PLACEHOLDER_TEXT } from '../QuantityInput/QuantityInput.
 import { WineRecipe } from './WineRecipe.js'
 
 /** @type {Pick<farmhand.state, 'cellarInventory' | 'inventory' | 'purchasedCellar'>} */
-const stubGameState = {
+const stubGameState: Pick<farmhand.state, 'cellarInventory' | 'inventory' | 'purchasedCellar'> = {
   cellarInventory: [],
   inventory: [{ id: grapeChardonnay.id, quantity: 1 }],
   purchasedCellar: 1,
 }
 
 /** @type {Pick<uiHandlers, 'handleMakeWineClick'>} */
-const stubHandlers = {
+const stubHandlers: Pick<uiHandlers, 'handleMakeWineClick'> = {
   handleMakeWineClick: vitest.fn(),
 }
 

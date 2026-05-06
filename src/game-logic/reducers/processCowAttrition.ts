@@ -3,10 +3,7 @@ import { COW_ATTRITION_MESSAGE } from '../../templates.js'
 
 import { removeCowFromInventory } from './removeCowFromInventory.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
+
 export const processCowAttrition = state => {
   const newDayNotifications = [...state.newDayNotifications]
   const oldCowInventory = [...state.cowInventory]

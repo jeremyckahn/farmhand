@@ -62,19 +62,15 @@ for (let toolType of Object.keys(upgrades)) {
   }
 }
 
-/**
- * @type {Object.<string, farmhand.item>}
- */
-export const itemsMap = {
+
+export const itemsMap: Record<string, farmhand.item> = {
   ...baseItemsMap,
   ...recipesMap,
   ...upgradesMap,
 }
 
-/**
- * @type {Object.<string, farmhand.item>}
- */
-export const fermentableItemsMap = Object.fromEntries(
+
+export const fermentableItemsMap: Record<string, farmhand.item> = Object.fromEntries(
   Object.entries(itemsMap).filter(([itemId]) => {
     const item = itemsMap[itemId]
 
@@ -82,10 +78,8 @@ export const fermentableItemsMap = Object.fromEntries(
   })
 )
 
-/**
- * @type {Object.<string, farmhand.seedItem>}
- */
-export const cropItemIdToSeedItemMap = Object.entries(baseItemsMap).reduce(
+
+export const cropItemIdToSeedItemMap: Record<string, farmhand.seedItem> = Object.entries(baseItemsMap).reduce(
   (acc, [itemId, item]) => {
     const { growsInto } = item as { growsInto?: string | string[] }
     if (growsInto) {
@@ -101,10 +95,8 @@ export const cropItemIdToSeedItemMap = Object.entries(baseItemsMap).reduce(
   {}
 )
 
-/**
- * @type {Object.<string, string|Array.<string>>}
- */
-export const cropTypeToIdMap = {
+
+export const cropTypeToIdMap: Record<string, string|string[]> = {
   [ASPARAGUS]: 'asparagus',
   [CARROT]: 'carrot',
   [CORN]: 'corn',

@@ -8,12 +8,12 @@ const defaultFormatter = (/** @type {number} */ num) => `${num}`
 /**
  * AnimatedNumber component that displays a number with an animation effect.
  *
- * @param {Object} props - The component properties.
- * @param {number} props.number - The number to display.
- * @param {typeof defaultFormatter} [props.formatter=defaultFormatter] - A function to format the number before displaying it.
- * @returns {JSX.Element} - The JSX element representing the animated number.
+ * @param props - The component properties.
+ * @param props.number - The number to display.
+ * @param [props.formatter=defaultFormatter] - A function to format the number before displaying it.
+ * @returns - The JSX element representing the animated number.
  */
-const AnimatedNumber = ({ number, formatter = defaultFormatter }) => {
+const AnimatedNumber = ({ number, formatter = defaultFormatter }): JSX.Element => {
   const [displayedNumber, setDisplayedNumber] = useState(number)
   const [previousNumber, setPreviousNumber] = useState(number)
   const [currentTweenable, setCurrentTweenable] = useState<

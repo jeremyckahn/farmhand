@@ -1,10 +1,6 @@
 // TODO: Add tests for this reducer
-/**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @returns {farmhand.state}
- */
-export const addCowToInventory = (state, cow) => {
+
+export const addCowToInventory = (state: any, cow: any): any => {
   const { cowInventory } = state
 
   return {

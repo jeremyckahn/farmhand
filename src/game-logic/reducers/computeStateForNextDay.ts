@@ -21,10 +21,7 @@ import { updateFinancialRecords } from './updateFinancialRecords.js'
 import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay.js'
 import { updatePriceEvents } from './updatePriceEvents.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
+
 const adjustItemValues = state => ({
   ...state,
   historicalValueAdjustments: [state.valueAdjustments],
@@ -34,11 +31,8 @@ const adjustItemValues = state => ({
   ),
 })
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const computeStateForNextDay = (state, isFirstDay = false) => {
+
+export const computeStateForNextDay = (state: any, isFirstDay = false): any => {
   const reducers = isFirstDay
     ? [processField]
     : [

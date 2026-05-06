@@ -1,10 +1,10 @@
 /**
- * @param {farmhand.state} state
- * @param {string} itemId
- * @param {number} [howMany=1]
- * @returns {farmhand.state}
+
+
+ * @param [howMany=1]
+
  */
-export const decrementItemFromInventory = (state, itemId, howMany = 1) => {
+export const decrementItemFromInventory = (state: any, itemId: string, howMany?: number = 1): any => {
   const inventory = [...state.inventory]
   const itemInventoryIndex = inventory.findIndex(({ id }) => id === itemId)
 

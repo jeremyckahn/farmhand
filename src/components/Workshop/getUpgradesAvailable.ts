@@ -3,10 +3,10 @@ import { recipesMap } from '../../data/maps.js'
 
 /**
  * Get available upgrades based on current tool levels and unlocked recipes
- * @param {object} params - the parameters object
- * @param {array} params.learnedForgeRecipes - list of learned forge recipes from farmhand state
- * @param {object} params.toolLevels - the current level of each tool
- * @returns {array} a list of all applicable upgrades
+ * @param params - the parameters object
+ * @param params.learnedForgeRecipes - list of learned forge recipes from farmhand state
+ * @param params.toolLevels - the current level of each tool
+ * @returns a list of all applicable upgrades
  */
 interface GetUpgradesAvailableArgs {
   learnedForgeRecipes: string[]

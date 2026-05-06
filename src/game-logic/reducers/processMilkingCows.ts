@@ -7,10 +7,7 @@ import { MILKS_PRODUCED } from '../../templates.js'
 
 import { addItemToInventory } from './addItemToInventory.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
+
 export const processMilkingCows = state => {
   const cowInventory = [...state.cowInventory]
   const newDayNotifications = [...state.newDayNotifications]

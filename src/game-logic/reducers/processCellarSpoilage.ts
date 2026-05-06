@@ -8,10 +8,7 @@ import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
 
 import { removeKegFromCellar } from './removeKegFromCellar.js'
 
-/**
- * @param {state} state
- * @returns {state}
- */
+
 export const processCellarSpoilage = state => {
   const { cellarInventory } = state
 

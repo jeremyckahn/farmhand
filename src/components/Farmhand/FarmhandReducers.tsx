@@ -169,9 +169,7 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
     throw new Error('Unimplemented')
   }
 
-  /**
-   * @param {Object} props
-   */
+
   constructor(props) {
     super(props)
 

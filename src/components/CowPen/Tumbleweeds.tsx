@@ -21,7 +21,7 @@ const tumbleweedSize = 48
 
 /**
  * A single tumbleweed that animates across the screen.
- * @type {React.FC<{onAnimationComplete: () => void}>}
+
  */
 const Tumbleweed = ({ onAnimationComplete }) => {
   // Randomize the vertical position of the tumbleweed.
@@ -61,7 +61,7 @@ const Tumbleweed = ({ onAnimationComplete }) => {
 
 /**
  * Manages the spawning of multiple Tumbleweed components.
- * @type {React.FC<{doSpawn: boolean}>}
+
  */
 export const Tumbleweeds = ({ doSpawn }) => {
   // A list of UUIDs, each representing a Tumbleweed component.
@@ -125,7 +125,7 @@ export const Tumbleweeds = ({ doSpawn }) => {
 
   /**
    * Removes a tumbleweed from the list after its animation is complete.
-   * @param {string} tumbleweedUuid
+
    */
   const handleTumbleweedAnimationComplete = useCallback(
     tumbleweedUuid => {

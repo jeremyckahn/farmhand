@@ -117,9 +117,9 @@ const emptyObject = Object.freeze({})
 
 export const computePlayerInventory = memoize(
   /**
-   * @param {{ id: globalThis.farmhand.item['id'], quantity: number }[]} inventory
-   * @param {Record<string, number>} valueAdjustments
-   * @returns {globalThis.farmhand.item[]}
+   * @param []} inventory
+
+
    */
   (inventory, valueAdjustments) =>
     inventory.map(({ quantity, id }) => ({
@@ -130,10 +130,7 @@ export const computePlayerInventory = memoize(
 )
 
 export const getFieldToolInventory = memoize(
-  /**
-   * @param {globalThis.farmhand.state['inventory']} inventory
-   * @returns {globalThis.farmhand.item[]}
-   */
+
   inventory =>
     inventory
       .filter(({ id }) => {
@@ -147,23 +144,15 @@ export const getFieldToolInventory = memoize(
 )
 
 export const getPlantableCropInventory = memoize(
-  /**
-   * @param {globalThis.farmhand.state['inventory']} inventory
-   * @returns {globalThis.farmhand.item[]}
-   */
+
   inventory =>
     inventory
       .filter(({ id }) => itemsMap[id].isPlantableCrop)
       .map(({ id, quantity }) => ({ ...itemsMap[id], quantity }))
 )
 
-/**
- * @param {Record<string, number>} valueAdjustments
- * @param {Partial<Record<string, globalThis.farmhand.priceEvent>>} priceCrashes
- * @param {Partial<Record<string, globalThis.farmhand.priceEvent>>} priceSurges
- * @returns {Record<string, number>}
- */
-const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
+
+const applyPriceEvents = (valueAdjustments: Record<string, number>, priceCrashes: Partial<Record<string, globalThis.farmhand.priceEvent>>, priceSurges: Partial<Record<string, globalThis.farmhand.priceEvent>>): Record<string, number> => {
   const patchedValueAdjustments = { ...valueAdjustments }
 
   Object.keys(priceCrashes).forEach(itemId => {
@@ -192,14 +181,10 @@ export default class Farmhand extends FarmhandReducers {
     debounced: BoundHandlers<typeof eventHandlers>
   }
 
-  /**
-   * @type {Record<string, string>}
-   */
+
   keyMap = {}
 
-  /**
-   * @type {Record<string, () => void>}
-   */
+
   keyHandlers = {}
 
   static defaultProps = {
@@ -211,9 +196,7 @@ export default class Farmhand extends FarmhandReducers {
     match: { path: '', params: {} },
   }
 
-  /**
-   * @param {typeof Farmhand.defaultProps} props
-   */
+
   constructor(props) {
     super(props)
 
@@ -298,9 +281,7 @@ export default class Farmhand extends FarmhandReducers {
     return this.levelEntitlements.stageFocusType[stageFocusType.FOREST]
   }
 
-  /**
-   * @returns {farmhand.state}
-   */
+
   createInitialState(): farmhand.state {
     return {
       activePlayers: null,
@@ -690,11 +671,11 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /**
-   * @param {Function} sendPeerMetadata Raw send action callback created by
+   * @param sendPeerMetadata Raw send action callback created by
    * Trystero's makeAction function.
-   * @return {Function}
+
    */
-  wrapSendPeerMetadata(sendPeerMetadata) {
+  wrapSendPeerMetadata(sendPeerMetadata: Function): Function {
     return throttle(
       (...args) => {
         sendPeerMetadata(...args)
@@ -710,10 +691,8 @@ export default class Farmhand extends FarmhandReducers {
     )
   }
 
-  /**
-   * @param {globalThis.farmhand.cow} peerPlayerCow
-   */
-  tradeForPeerCow(peerPlayerCow) {
+
+  tradeForPeerCow(peerPlayerCow: globalThis.farmhand.cow) {
     this.setState(state => {
       const {
         cowIdOfferedForTrade,
@@ -879,10 +858,8 @@ export default class Farmhand extends FarmhandReducers {
     }))
   }
 
-  /**
-   * @param {farmhand.state} prevState
-   */
-  showInventoryFullNotifications(prevState) {
+
+  showInventoryFullNotifications(prevState: any) {
     if (
       inventorySpaceRemaining(prevState) > 0 &&
       inventorySpaceRemaining(this.state) <= 0
@@ -928,16 +905,12 @@ export default class Farmhand extends FarmhandReducers {
     /** @type {globalThis.farmhand.notification[]} */
     const serverMessages: { message: string; severity: string }[] = []
 
-    /**
-     * @type {string | null}
-     */
+
     let broadcastedPositionMessage: string | null = null
 
     this.setState(() => ({ isAwaitingNetworkRequest: true }))
 
-    /**
-     * @type {Record<string, number> | undefined}
-     */
+
     let serverValueAdjustments
 
     if (this.state.isOnline) {
@@ -1013,10 +986,7 @@ export default class Farmhand extends FarmhandReducers {
     // experience. The persisted state is computed post-update and stored
     // asynchronously, thus avoiding state changes from being blocked.
     this.setState(
-      /**
-       * @param {farmhand.state} prev
-       * @return {Partial<farmhand.state>}
-       */
+
       prev => {
         const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
 

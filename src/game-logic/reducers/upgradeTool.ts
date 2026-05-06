@@ -6,11 +6,8 @@ import { showNotification } from './showNotification.js'
 import { consumeIngredients } from './consumeIngredients.js'
 import { addItemToInventory } from './addItemToInventory.js'
 
-/**
- * @param {farmhand.state} state
- * @param {farmhand.upgradesMetadatum} upgrade
- */
-export const upgradeTool = (state, upgrade) => {
+
+export const upgradeTool = (state: any, upgrade: any) => {
   // Validate required properties
   if (!upgrade.toolType || !upgrade.level) {
     return state

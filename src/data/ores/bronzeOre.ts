@@ -5,9 +5,9 @@ const { freeze } = Object
 
 /**
  * @property farmhand.module:items.bronzeOre
- * @type {farmhand.item}
+
  */
-export const bronzeOre = freeze({
+export const bronzeOre: any = freeze({
   description: 'A piece of bronze ore.',
   doesPriceFluctuate: true,
   id: 'bronze-ore',

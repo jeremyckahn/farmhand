@@ -8,18 +8,18 @@ import { getInventoryQuantityMap } from './getInventoryQuantityMap.js'
 import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsForFermentationRecipe.js'
 
 /**
- * @param {item} fermentationRecipe
- * @param {{ id: string, quantity: number }[]} inventory
- * @param {Array.<keg>} cellarInventory
- * @param {number} cellarSize
- * @returns {number}
+
+ * @param []} inventory
+
+
+
  */
 export const getMaxYieldOfFermentationRecipe = (
-  fermentationRecipe,
+  fermentationRecipe: item,
   inventory,
-  cellarInventory,
-  cellarSize
-) => {
+  cellarInventory: keg[],
+  cellarSize: number
+): number => {
   const {
     [fermentationRecipe.id]: itemQuantityInInventory = 0,
     [(itemsMap as Record<string, farmhand.item>).salt

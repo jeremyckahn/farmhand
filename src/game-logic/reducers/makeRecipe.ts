@@ -12,12 +12,12 @@ const EXPERIENCE_FOR_RECIPE = {
 }
 
 /**
- * @param {farmhand.state} state
- * @param {farmhand.recipe} recipe
- * @param {number} [howMany=1]
- * @returns {farmhand.state}
+
+
+ * @param [howMany=1]
+
  */
-export const makeRecipe = (state, recipe, howMany = 1) => {
+export const makeRecipe = (state: any, recipe: any, howMany?: number = 1): any => {
   const originalState = state
   state = consumeIngredients(
     state,

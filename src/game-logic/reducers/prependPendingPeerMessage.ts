@@ -1,16 +1,16 @@
 import { MAX_PENDING_PEER_MESSAGES } from '../../constants.js'
 
 /**
- * @param {farmhand.state} state
- * @param {string} message
- * @param {farmhand.notificationSeverity} [severity='info']
- * @returns {farmhand.state}
+
+
+ * @param [severity='info']
+
  */
 export const prependPendingPeerMessage = (
-  state,
-  message,
-  severity = 'info'
-) => {
+  state: any,
+  message: string,
+  severity?: any = 'info'
+): any => {
   return {
     ...state,
     pendingPeerMessages: [

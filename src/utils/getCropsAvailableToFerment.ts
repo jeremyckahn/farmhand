@@ -6,16 +6,10 @@ import { itemsMap } from '../data/maps.js'
 
 import { getFinalCropItemFromSeedItem } from './index.js'
 
-/**
- * @param {levelEntitlements} levelEntitlements
- * @returns {item[]}
- */
-export function getCropsAvailableToFerment(levelEntitlements) {
+
+export function getCropsAvailableToFerment(levelEntitlements: levelEntitlements): item[] {
   const cropsAvailableToFerment = Object.keys(levelEntitlements.items).reduce(
-    /**
-     * @param {farmhand.item[]} acc
-     * @param {string} itemId
-     */
+
     (acc, itemId) => {
       const finalCropItemFromSeedItem = getFinalCropItemFromSeedItem(
         itemsMap[itemId]

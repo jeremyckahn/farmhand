@@ -1,8 +1,8 @@
 import { dinero, toDecimal, USD } from 'dinero.js'
 
 /**
- * @param {number} number
- * @returns {string} Include dollar sign and other formatting, as well as cents.
+
+ * @returns Include dollar sign and other formatting, as well as cents.
  */
 
 export const moneyString = number =>

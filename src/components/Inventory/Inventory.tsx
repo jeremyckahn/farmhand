@@ -50,10 +50,7 @@ export const separateItemsIntoCategories = (
   /** @type {farmhand.item[]} */ items
 ) =>
   sortItems(items).reduce(
-    /**
-     * @param {Map<string, farmhand.item[]>} categories
-     * @param {farmhand.item} item
-     */
+
     (categories, item) => {
       const { type } = itemsMap[item.id]
       const category = itemTypeCategoryMap.get(type)

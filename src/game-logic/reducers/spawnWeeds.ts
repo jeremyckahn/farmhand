@@ -4,11 +4,8 @@ import { randomNumberService } from '../../common/services/randomNumber.js'
 import { weed } from '../../data/items.js'
 import { getPlotContentFromItemId } from '../../utils/index.js'
 
-/**
- * @param {?farmhand.plotContent} plotContents
- * @returns {?farmhand.plotContent}
- */
-export function spawnWeeds(plotContents) {
+
+export function spawnWeeds(plotContents: any): any {
   if (plotContents) return plotContents
 
   let contents: farmhand.plotContent | null = null

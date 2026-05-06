@@ -4,12 +4,8 @@ import { addRevenue } from './addRevenue.js'
 
 import { removeCowFromInventory } from './removeCowFromInventory.js'
 
-/**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @returns {farmhand.state}
- */
-export const sellCow = (state, cow) => {
+
+export const sellCow = (state: any, cow: any): any => {
   const { cowsSold } = state
   const cowColorId = getCowColorId(cow)
   const cowValue = getCowValue(cow, true)

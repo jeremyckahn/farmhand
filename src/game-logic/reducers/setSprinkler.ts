@@ -8,13 +8,8 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 const { OBSERVE, SET_SPRINKLER } = fieldMode
 
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-export const setSprinkler = (state, x, y) => {
+
+export const setSprinkler = (state: any, x: number, y: number): any => {
   const { field } = state
   const plot = field[y][x]
 

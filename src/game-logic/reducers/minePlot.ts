@@ -10,13 +10,8 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 const daysUntilClearPeriods = [1, 2, 2, 3]
 
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-export const minePlot = (state, x, y) => {
+
+export const minePlot = (state: any, x: number, y: number): any => {
   const { field } = state
   const row = field[y]
 
