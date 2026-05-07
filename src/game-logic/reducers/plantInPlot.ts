@@ -10,10 +10,10 @@ import { processSprinklers } from './processSprinklers.js'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 /**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @param {string} plantableItemId
+ * @param state
+ * @param x
+ * @param y
+ * @param plantableItemId
  * @returns {farmhand.state}
  */
 export const plantInPlot = (state, x, y, plantableItemId) => {

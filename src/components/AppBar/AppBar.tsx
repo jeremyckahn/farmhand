@@ -15,8 +15,8 @@ import './AppBar.sass'
 /**
  * Displays formatted monetary value.
  *
- * @param {Object} props - The component props.
- * @param {number} props.money - The amount of money to display.
+ * @param props - The component props.
+ * @param props.money - The amount of money to display.
  */
 const MoneyDisplay = ({ money }) => {
   const idleColor = 'rgb(255, 255, 255)'

@@ -11,7 +11,7 @@ const FARM_PRODUCT_TYPES = [
 ]
 
 /**
- * @param {farmhand.item} item
+ * @param item
  * @returns {boolean}
  */
 export const isItemAFarmProduct = item =>

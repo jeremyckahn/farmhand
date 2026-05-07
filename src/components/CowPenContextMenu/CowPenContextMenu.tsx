@@ -60,7 +60,7 @@ const sortCows = (cows, sortType, isAscending) => {
 }
 
 /*!
- * @param {farmhand.cowBreedingPen} cowBreedingPen
+ * @param cowBreedingPen
  * @returns {number}
  */
 const numberOfCowsBreeding = ({ cowId1, cowId2 }) =>

@@ -1,4 +1,3 @@
-/** @typedef {import('../components/Farmhand/Farmhand.js').default} Farmhand */
 import { cowTradeRejectionReason } from '../enums.js'
 import { EXPERIENCE_VALUES } from '../constants.js'
 import { COW_TRADED_NOTIFICATION } from '../templates.js'
@@ -19,9 +18,9 @@ import {
 import { addExperience } from '../game-logic/reducers/addExperience.js'
 
 /**
- * @param {import('../components/Farmhand/Farmhand.js').default} farmhand
- * @param {farmhand.peerMetadata} peerMetadata
- * @param {string} peerId
+ * @param farmhand
+ * @param peerMetadata
+ * @param peerId
  */
 export const handlePeerMetadataRequest = (farmhand, peerMetadata, peerId) => {
   farmhand.updatePeer(farmhand, peerMetadata, peerId)
@@ -29,11 +28,11 @@ export const handlePeerMetadataRequest = (farmhand, peerMetadata, peerId) => {
 
 /**
  * Handles another player's initiation of a cow trade request.
- * @param {Farmhand} farmhand
- * @param {Object} cowTradeRequestPayload
- * @param {farmhand.cow} cowTradeRequestPayload.cowOffered
- * @param {farmhand.cow} cowTradeRequestPayload.cowRequested
- * @param {string} peerId
+ * @param farmhand
+ * @param cowTradeRequestPayload
+ * @param cowTradeRequestPayload.cowOffered
+ * @param cowTradeRequestPayload.cowRequested
+ * @param peerId
  */
 export const handleCowTradeRequest = async (
   farmhand,
@@ -159,9 +158,9 @@ export const handleCowTradeRequest = async (
 }
 
 /**
- * @param {Farmhand} farmhand
- * @param {farmhand.cow} cowReceived
- * @param {string} peerId
+ * @param farmhand
+ * @param cowReceived
+ * @param peerId
  */
 export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
   let wasTradeSuccessful = false
@@ -269,9 +268,9 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
 }
 
 /**
- * @param {Farmhand} farmhand
- * @param {Object} cowTradeRejectionPayload
- * @param {string} cowTradeRejectionPayload.reason
+ * @param farmhand
+ * @param cowTradeRejectionPayload
+ * @param cowTradeRejectionPayload.reason
  */
 export const handleCowTradeRequestReject = (farmhand, { reason }) => {
   const { cowTradeTimeoutId } = farmhand.state

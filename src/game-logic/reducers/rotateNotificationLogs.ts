@@ -1,7 +1,7 @@
 import { NOTIFICATION_LOG_SIZE } from '../../constants.js'
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const rotateNotificationLogs = state => {

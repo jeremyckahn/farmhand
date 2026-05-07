@@ -3,8 +3,8 @@ import { levelAchieved } from '../../utils/levelAchieved.js'
 import { processLevelUp } from './processLevelUp.js'
 
 /**
- * @param {farmhand.state} state
- * @param {number} amount
+ * @param state
+ * @param amount
  * @returns {farmhand.state}
  */
 export const addExperience = (state, amount) => {

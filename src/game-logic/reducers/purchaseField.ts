@@ -4,8 +4,8 @@ import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
 import { addExperience } from './addExperience.js'
 
 /**
- * @param {farmhand.state} state
- * @param {number} fieldId
+ * @param state
+ * @param fieldId
  * @returns {farmhand.state}
  */
 export const purchaseField = (state, fieldId) => {

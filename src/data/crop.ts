@@ -4,7 +4,7 @@ import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration.js'
 const { freeze } = Object
 
 /**
- * @param {Partial<farmhand.item>} item
+ * @param item
  * @returns {farmhand.item}
  */
 interface CropArgs extends Partial<farmhand.item> {
@@ -12,7 +12,7 @@ interface CropArgs extends Partial<farmhand.item> {
 }
 
 /**
- * @param {CropArgs} item
+ * @param item
  * @returns {farmhand.item}
  */
 export const crop = ({
@@ -47,8 +47,8 @@ interface FromSeedConfig {
 }
 
 /**
- * @param {farmhand.item} item
- * @param {FromSeedConfig} [config]
+ * @param item
+ * @param [config]
  * @returns {Partial<farmhand.item>}
  */
 export const fromSeed = (
@@ -72,7 +72,7 @@ export const fromSeed = (
 }
 
 /**
- * @param {farmhand.cropVariety} cropVarietyArgs
+ * @param cropVarietyArgs
  * @returns {farmhand.cropVariety}
  */
 export const cropVariety = ({

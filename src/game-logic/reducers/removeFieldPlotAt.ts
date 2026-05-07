@@ -1,9 +1,9 @@
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 /**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
+ * @param state
+ * @param x
+ * @param y
  * @returns {farmhand.state}
  */
 export const removeFieldPlotAt = (state, x, y) =>

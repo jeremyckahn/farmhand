@@ -12,9 +12,9 @@ const EXPERIENCE_FOR_RECIPE = {
 }
 
 /**
- * @param {farmhand.state} state
- * @param {farmhand.recipe} recipe
- * @param {number} [howMany=1]
+ * @param state
+ * @param recipe
+ * @param [howMany=1]
  * @returns {farmhand.state}
  */
 export const makeRecipe = (state, recipe, howMany = 1) => {

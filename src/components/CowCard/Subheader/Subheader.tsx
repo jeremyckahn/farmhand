@@ -28,15 +28,15 @@ import './Subheader.sass'
 // The extra 0.5 is for rounding up to the next full heart. This allows a fully
 // happy cow to have full hearts on the beginning of a new day.
 /**
- * @param {number} heartIndex
- * @param {number} numberOfFullHearts
+ * @param heartIndex
+ * @param numberOfFullHearts
  */
 const isHeartFull = (heartIndex, numberOfFullHearts) =>
   heartIndex + 0.5 < numberOfFullHearts
 
 const getCowMapById = memoize(
   /**
-   * @param {farmhand.state['cowInventory']} cowInventory
+   * @param cowInventory
    */
   cowInventory =>
     cowInventory.reduce((acc, cow) => {

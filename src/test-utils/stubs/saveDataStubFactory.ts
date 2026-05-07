@@ -2,7 +2,7 @@ import { computeStateForNextDay } from '../../game-logic/reducers/index.js'
 import { testState } from '../index.js'
 
 /**
- * @param {Partial<farmhand.state>} state
+ * @param state
  */
 export const saveDataStubFactory = ({ dayCount = 1, ...restOverrides }) =>
   computeStateForNextDay(

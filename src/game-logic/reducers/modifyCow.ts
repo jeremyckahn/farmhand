@@ -1,8 +1,8 @@
 // TODO: Add tests for this reducer
 /**
- * @param {farmhand.state} state
- * @param {string} cowId
- * @param {Function} fn Function that takes a cow and returns the modified cow or undefined.
+ * @param state
+ * @param cowId
+ * @param fn Function that takes a cow and returns the modified cow or undefined.
  * @returns {farmhand.state}
  */
 export const modifyCow = (state, cowId, fn) => {

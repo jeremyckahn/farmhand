@@ -1,6 +1,3 @@
-/**
- * @typedef {farmhand.state} state
- */
 
 import { GRAPES_REQUIRED_FOR_WINE } from '../../constants.js'
 import { grapeChardonnay } from '../../data/crops/index.js'

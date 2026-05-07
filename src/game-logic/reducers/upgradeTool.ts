@@ -7,8 +7,8 @@ import { consumeIngredients } from './consumeIngredients.js'
 import { addItemToInventory } from './addItemToInventory.js'
 
 /**
- * @param {farmhand.state} state
- * @param {farmhand.upgradesMetadatum} upgrade
+ * @param state
+ * @param upgrade
  */
 export const upgradeTool = (state, upgrade) => {
   // Validate required properties

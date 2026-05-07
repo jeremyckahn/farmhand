@@ -7,8 +7,8 @@ import { changeCowBreedingPenResident } from './changeCowBreedingPenResident.js'
 
 // TODO: Add tests for this reducer
 /**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
+ * @param state
+ * @param cow
  * @returns {farmhand.state}
  */
 export const removeCowFromInventory = (state, cow) => {

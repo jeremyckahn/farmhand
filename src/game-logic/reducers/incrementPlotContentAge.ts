@@ -3,7 +3,7 @@ import { getPlotContentType } from '../../utils/index.js'
 import { FERTILIZER_BONUS } from '../../constants.js'
 
 /**
- * @param {?farmhand.crop} crop
+ * @param crop
  * @returns {?farmhand.crop}
  */
 export const incrementPlotContentAge = crop =>

@@ -1,6 +1,3 @@
-/**
- * @typedef {farmhand.keg} keg
- */
 import { LOAN_GARNISHMENT_RATE } from '../../constants.js'
 import { carrot } from '../../data/crops/index.js'
 import { LOAN_PAYOFF } from '../../templates.js'

@@ -6,8 +6,8 @@ import { addExperience } from './addExperience.js'
 import { showNotification } from './showNotification.js'
 
 /**
- * @param {farmhand.state} state
- * @param {number} cowPenId
+ * @param state
+ * @param cowPenId
  * @returns {farmhand.state}
  */
 export const purchaseCowPen = (state, cowPenId) => {

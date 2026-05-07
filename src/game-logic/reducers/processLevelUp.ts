@@ -13,8 +13,8 @@ import { showNotification } from './showNotification.js'
 import { unlockTool } from './unlockTool.js'
 
 /**
- * @param {farmhand.state} state
- * @param {number} oldLevel
+ * @param state
+ * @param oldLevel
  * @returns {farmhand.state}
  */
 export const processLevelUp = (state, oldLevel) => {

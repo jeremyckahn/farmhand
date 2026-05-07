@@ -17,8 +17,8 @@ import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 import { prependPendingPeerMessage } from './index.js'
 
 /**
- * @param {farmhand.state} state
- * @param {farmhand.keg} keg
+ * @param state
+ * @param keg
  * @returns {farmhand.state}
  */
 export const sellKeg = (state, keg) => {

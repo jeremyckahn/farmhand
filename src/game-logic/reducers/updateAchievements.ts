@@ -4,8 +4,8 @@ import { ACHIEVEMENT_COMPLETED } from '../../templates.js'
 import { showNotification } from './showNotification.js'
 
 /**
- * @param {farmhand.state} state
- * @param {farmhand.state} prevState
+ * @param state
+ * @param prevState
  * @returns {farmhand.state}
  */
 export const updateAchievements = (state, prevState) =>

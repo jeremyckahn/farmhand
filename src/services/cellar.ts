@@ -21,8 +21,8 @@ export class CellarService {
 
   getItemInstancesInCellar = memoize(
     /**
-     * @param {keg[]} cellarInventory
-     * @param {item} item
+     * @param cellarInventory
+     * @param item
      */
     (cellarInventory, item) => {
       return cellarInventory.filter(keg => keg.itemId === item.id).length
@@ -31,7 +31,7 @@ export class CellarService {
   )
 
   /**
-   * @param {item} item
+   * @param item
    */
   generateKeg = item => {
     /** @type {keg} */
@@ -49,8 +49,8 @@ export class CellarService {
   }
 
   /**
-   * @param {keg[]} cellarInventory
-   * @param {number} purchasedCellar
+   * @param cellarInventory
+   * @param purchasedCellar
    */
   doesCellarSpaceRemain = (cellarInventory, purchasedCellar) => {
     return (
@@ -60,7 +60,7 @@ export class CellarService {
   }
 
   /**
-   * @param {keg} keg
+   * @param keg
    */
   doesKegSpoil = keg => {
     const item = itemsMap[keg.itemId]

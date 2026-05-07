@@ -170,7 +170,7 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
   }
 
   /**
-   * @param {Object} props
+   * @param props
    */
   constructor(props) {
     super(props)

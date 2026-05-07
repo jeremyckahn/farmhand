@@ -1,7 +1,7 @@
 import { itemType } from '../enums.js'
 
 /**
- * @param {farmhand.item} item
+ * @param item
  * @returns {boolean}
  */
 export const isItemAGrownCrop = item =>

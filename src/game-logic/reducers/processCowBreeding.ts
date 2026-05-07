@@ -11,7 +11,7 @@ import { COW_BORN_MESSAGE } from '../../templates.js'
 import { addExperience } from './addExperience.js'
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const processCowBreeding = state => {

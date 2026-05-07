@@ -60,7 +60,7 @@ export default class ResourceFactory {
 
   /**
    * Generate an instance for specific factory
-   * @param {farmhand.itemType} type
+   * @param type
    * @returns {?Factory} A factory if one exists for type, default return is null
    */
   static generateFactoryInstance(type) {

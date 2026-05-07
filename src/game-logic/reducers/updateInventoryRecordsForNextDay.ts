@@ -1,5 +1,5 @@
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const updateInventoryRecordsForNextDay = state => ({

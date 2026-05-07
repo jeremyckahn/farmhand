@@ -22,7 +22,7 @@ import { plantInPlot } from './plantInPlot.js'
 const { GROWN } = cropLifeStage
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {number}
  */
 function getHarvestedQuantity(state) {
@@ -53,9 +53,9 @@ function getHarvestedQuantity(state) {
 }
 
 /**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
+ * @param state
+ * @param x
+ * @param y
  * @returns {farmhand.state}
  */
 function harvestCrops(state, x, y) {
@@ -112,9 +112,9 @@ function harvestCrops(state, x, y) {
 }
 
 /**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
+ * @param state
+ * @param x
+ * @param y
  * @returns {farmhand.state}
  */
 function harvestWeed(state, x, y) {
@@ -133,9 +133,9 @@ function harvestWeed(state, x, y) {
 }
 
 /**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
+ * @param state
+ * @param x
+ * @param y
  * @returns {farmhand.state}
  */
 export const harvestPlot = (state, x, y) => {

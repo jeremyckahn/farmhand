@@ -18,7 +18,7 @@ export class RandomNumberService {
   }
 
   /**
-   * @param {string} seed
+   * @param seed
    */
   seedRandomNumber(seed) {
     this.seededRandom = seedrandom(seed)
@@ -37,7 +37,7 @@ export class RandomNumberService {
 
   /**
    * Compares given number against a randomly generated number.
-   * @param {number} chance Float between 0-1 to compare dice roll against.
+   * @param chance Float between 0-1 to compare dice roll against.
    * @returns {boolean} True if the dice roll was equal to or lower than the
    * given chance, false otherwise.
    */

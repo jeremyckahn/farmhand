@@ -27,12 +27,12 @@ import './Recipe.sass'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
 /**
- * @param {object} props
- * @param {Function} props.handleMakeRecipeClick
- * @param {farmhand.state['inventory']} props.inventory
- * @param {number} props.inventoryLimit
- * @param {Record<string, number>} props.playerInventoryQuantities
- * @param {farmhand.recipe} props.recipe
+ * @param props
+ * @param props.handleMakeRecipeClick
+ * @param props.inventory
+ * @param props.inventoryLimit
+ * @param props.playerInventoryQuantities
+ * @param props.recipe
  */
 const Recipe = ({
   handleMakeRecipeClick,

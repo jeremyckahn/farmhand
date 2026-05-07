@@ -3,9 +3,9 @@ import { MAX_ANIMAL_NAME_LENGTH } from '../../constants.js'
 import { modifyCow } from './modifyCow.js'
 
 /**
- * @param {farmhand.state} state
- * @param {string} newName
- * @param {string} cowId
+ * @param state
+ * @param newName
+ * @param cowId
  * @returns {farmhand.state}
  */
 export const changeCowName = (state, cowId, newName) =>

@@ -8,8 +8,8 @@ import { findInField } from '../../utils/findInField.js'
 // reducers.
 
 /**
- * @param {?farmhand.plotContent} plotContent
- * @param {boolean} wasWateredToday
+ * @param plotContent
+ * @param wasWateredToday
  * @returns {?farmhand.plotContent}
  */
 export const setWasWateredProperty = (plotContent, wasWateredToday) => {
@@ -23,24 +23,24 @@ export const setWasWateredProperty = (plotContent, wasWateredToday) => {
 }
 
 /**
- * @param {?farmhand.plotContent} plotContent
+ * @param plotContent
  * @returns {?farmhand.plotContent}
  */
 export const setWasWatered = plotContent =>
   setWasWateredProperty(plotContent, true)
 
 /**
- * @param {Array.<Array.<?farmhand.plotContent>>} field
+ * @param field
  * @returns {boolean}
  */
 export const fieldHasScarecrow = field =>
   !!findInField(field, plotContainsScarecrow)
 
 /**
- * @param {Array.<Array.<function>>} chancesAndEvents An array of arrays in which the
+ * @param chancesAndEvents An array of arrays in which the
  * first element is a function that determines whether to trigger an event, and
  * the second function which is a reducer that implements the event.
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const applyChanceEvent = (chancesAndEvents, state) =>
@@ -49,7 +49,7 @@ export const applyChanceEvent = (chancesAndEvents, state) =>
   }, state)
 
 /**
- * @param {?farmhand.plotContent} plot
+ * @param plot
  * @returns {boolean}
  */
 export const plotContainsScarecrow = plot =>
@@ -57,8 +57,8 @@ export const plotContainsScarecrow = plot =>
 
 /**
  * Invokes a function on every plot in a field.
- * @param {Array.<Array.<?farmhand.plotContent>>} field
- * @param {function(?farmhand.plotContent, number, number): *} modifierFn
+ * @param field
+ * @param modifierFn
  * @returns {Array.<Array.<?farmhand.plotContent>>}
  */
 export const updateField = (field, modifierFn) =>

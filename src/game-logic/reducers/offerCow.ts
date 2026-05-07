@@ -1,6 +1,6 @@
 /**
- * @param {farmhand.state} state
- * @param {string} cowId
+ * @param state
+ * @param cowId
  * @returns {farmhand.state}
  */
 export const offerCow = (state, cowId) => {

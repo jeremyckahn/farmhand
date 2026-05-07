@@ -1,9 +1,9 @@
 import { COW_GESTATION_PERIOD_DAYS } from '../../constants.js'
 
 /**
- * @param {farmhand.cow} cow
- * @param {farmhand.cowBreedingPen} cowBreedingPen
- * @param {Array.<farmhand.cow>} cowInventory
+ * @param cow
+ * @param cowBreedingPen
+ * @param cowInventory
  * @return {boolean}
  */
 const cowCanBeAdded = (cow, cowBreedingPen, cowInventory) => {
@@ -19,9 +19,9 @@ const cowCanBeAdded = (cow, cowBreedingPen, cowInventory) => {
 }
 
 /**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @param {boolean} isAdding If true, cow will be added to the breeding pen. If
+ * @param state
+ * @param cow
+ * @param isAdding If true, cow will be added to the breeding pen. If
  * false, they will be removed.
  * @returns {farmhand.state}
  */

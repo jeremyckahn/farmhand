@@ -363,7 +363,7 @@ CowCard.propTypes = {
 }
 
 /**
- * @param {Pick<CowCardProps, 'cow' | 'isCowOfferedForTradeByPeer' | 'isSelected'>} props
+ * @param props
  */
 export default function Consumer(props) {
   return (

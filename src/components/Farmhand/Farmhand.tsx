@@ -118,7 +118,7 @@ const emptyObject = Object.freeze({})
 export const computePlayerInventory = memoize(
   /**
    * @param {{ id: globalThis.farmhand.item['id'], quantity: number }[]} inventory
-   * @param {Record<string, number>} valueAdjustments
+   * @param valueAdjustments
    * @returns {globalThis.farmhand.item[]}
    */
   (inventory, valueAdjustments) =>
@@ -131,7 +131,7 @@ export const computePlayerInventory = memoize(
 
 export const getFieldToolInventory = memoize(
   /**
-   * @param {globalThis.farmhand.state['inventory']} inventory
+   * @param inventory
    * @returns {globalThis.farmhand.item[]}
    */
   inventory =>
@@ -148,7 +148,7 @@ export const getFieldToolInventory = memoize(
 
 export const getPlantableCropInventory = memoize(
   /**
-   * @param {globalThis.farmhand.state['inventory']} inventory
+   * @param inventory
    * @returns {globalThis.farmhand.item[]}
    */
   inventory =>
@@ -158,9 +158,9 @@ export const getPlantableCropInventory = memoize(
 )
 
 /**
- * @param {Record<string, number>} valueAdjustments
- * @param {Partial<Record<string, globalThis.farmhand.priceEvent>>} priceCrashes
- * @param {Partial<Record<string, globalThis.farmhand.priceEvent>>} priceSurges
+ * @param valueAdjustments
+ * @param priceCrashes
+ * @param priceSurges
  * @returns {Record<string, number>}
  */
 const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
@@ -212,7 +212,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /**
-   * @param {typeof Farmhand.defaultProps} props
+   * @param props
    */
   constructor(props) {
     super(props)
@@ -690,7 +690,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /**
-   * @param {Function} sendPeerMetadata Raw send action callback created by
+   * @param sendPeerMetadata Raw send action callback created by
    * Trystero's makeAction function.
    * @return {Function}
    */
@@ -711,7 +711,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /**
-   * @param {globalThis.farmhand.cow} peerPlayerCow
+   * @param peerPlayerCow
    */
   tradeForPeerCow(peerPlayerCow) {
     this.setState(state => {
@@ -880,7 +880,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /**
-   * @param {farmhand.state} prevState
+   * @param prevState
    */
   showInventoryFullNotifications(prevState) {
     if (
@@ -892,7 +892,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /*!
-   * @param {farmhand.state} prevState
+   * @param prevState
    */
   showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
     let learnedRecipes: farmhand.recipe[] = []
@@ -911,7 +911,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /*!
-   * @param {Object} [overrides] Data to patch into this.state when persisting.
+   * @param [overrides] Data to patch into this.state when persisting.
    * @return {Promise}
    */
   persistState(overrides = {}) {
@@ -1014,7 +1014,7 @@ export default class Farmhand extends FarmhandReducers {
     // asynchronously, thus avoiding state changes from being blocked.
     this.setState(
       /**
-       * @param {farmhand.state} prev
+       * @param prev
        * @return {Partial<farmhand.state>}
        */
       prev => {
@@ -1086,7 +1086,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /*!
-   * @param {farmhand.module:enums.dialogView} dialogViewName
+   * @param dialogViewName
    */
   openDialogView(dialogViewName) {
     this.setState({ currentDialogView: dialogViewName, isDialogViewOpen: true })

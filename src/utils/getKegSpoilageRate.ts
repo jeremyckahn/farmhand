@@ -1,10 +1,9 @@
-/** @typedef {farmhand.keg} keg */
 
 import { KEG_SPOILAGE_RATE_MULTIPLIER } from '../constants.js'
 import { cellarService } from '../services/cellar.js'
 
 /**
- * @param {keg} keg
+ * @param keg
  * @returns number
  */
 export const getKegSpoilageRate = keg => {

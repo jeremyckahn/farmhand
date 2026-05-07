@@ -20,9 +20,9 @@ import { adjustLoan } from './adjustLoan.js'
 import { prependPendingPeerMessage } from './index.js'
 
 /**
- * @param {farmhand.state} state
- * @param {farmhand.item} item
- * @param {number} [howMany=1]
+ * @param state
+ * @param item
+ * @param [howMany=1]
  * @returns {farmhand.state}
  */
 export const sellItem = (state, { id }, howMany = 1) => {

@@ -1,5 +1,5 @@
 /**
- * @param {?farmhand.plotContent} plotContent
+ * @param plotContent
  * @returns {?farmhand.plotContent}
  */
 export const updatePlotShoveledState = plotContent => {

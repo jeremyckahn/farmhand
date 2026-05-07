@@ -1,9 +1,9 @@
 // TODO: Add tests for this reducer.
 /**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @param {function(?farmhand.plotContent): ?farmhand.plotContent} modifierFn
+ * @param state
+ * @param x
+ * @param y
+ * @param modifierFn
  * @returns {farmhand.state}
  */
 export const modifyFieldPlotAt = (state, x, y, modifierFn) => {

@@ -1,7 +1,7 @@
 import { generateCow } from '../../utils/index.js'
 
 /**
- * @param {Partial<farmhand.cow>?} overrides
+ * @param overrides
  */
 export const getCowStub = (overrides = {}) => {
   const cow = generateCow({

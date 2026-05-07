@@ -22,12 +22,12 @@ import './AccountingView.sass'
 
 const MoneyNumberFormat = forwardRef(
   /**
-   * @param {Object} props - Component properties
-   * @param {number} props.max - Maximum value allowed for the input
-   * @param {number} props.min - Minimum value allowed for the input
-   * @param {(value: number) => void} props.onChange - Callback function to handle changes in the input value
-   * @param {React.Dispatch<React.SetStateAction<number>>} props.setLoanInputValue - Function to set the loan input value
-   * @param {React.ForwardedRef<unknown>} [ref] - Forwarded ref for the component
+   * @param props - Component properties
+   * @param props.max - Maximum value allowed for the input
+   * @param props.min - Minimum value allowed for the input
+   * @param props.onChange - Callback function to handle changes in the input value
+   * @param props.setLoanInputValue - Function to set the loan input value
+   * @param [ref] - Forwarded ref for the component
    */
   (
     {

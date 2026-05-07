@@ -19,8 +19,8 @@ import {
 } from './utils/index.js'
 
 /**
- * @param {string} _
- * @param {number} numCropsDestroyed
+ * @param _
+ * @param numCropsDestroyed
  * @returns {string}
  */
 export const CROWS_DESTROYED = (_, numCropsDestroyed) =>
@@ -29,24 +29,24 @@ export const CROWS_DESTROYED = (_, numCropsDestroyed) =>
   }!`
 
 /**
- * @param {string} _
- * @param {number} cows
+ * @param _
+ * @param cows
  * @returns {string}
  */
 export const COW_PEN_PURCHASED = (_, cows) =>
   `Purchased a cow pen with capacity for ${cows} cows! You can visit your cow pen by going to the "Cows" page.`
 
 /**
- * @param {string} _
- * @param {number} kegCapacity
+ * @param _
+ * @param kegCapacity
  * @returns {string}
  */
 export const CELLAR_PURCHASED = (_, kegCapacity) =>
   `Purchased a cellar with capacity for ${kegCapacity} kegs! View your keg inventory by going to the "Cellar" page.`
 
 /**
- * @param {string} _
- * @param {Object.<string, number>} milksProduced
+ * @param _
+ * @param milksProduced
  * @returns {string}
  */
 export const MILKS_PRODUCED = (_, milksProduced) => {
@@ -67,8 +67,8 @@ export const MILKS_PRODUCED = (_, milksProduced) => {
 }
 
 /**
- * @param {string} _
- * @param {Object.<string, number>} fertilizersProduced
+ * @param _
+ * @param fertilizersProduced
  * @returns {string}
  */
 export const FERTILIZERS_PRODUCED = (_, fertilizersProduced) => {
@@ -89,26 +89,26 @@ export const FERTILIZERS_PRODUCED = (_, fertilizersProduced) => {
 }
 
 /**
- * @param {string} _
- * @param {farmhand.cow} cow
+ * @param _
+ * @param cow
  * @returns {string}
  */
 export const COW_ATTRITION_MESSAGE = (_, cow) =>
   `${cow.name} got hungry from being underfed and ran away!`
 
 /**
- * @param {string} _
- * @param {farmhand.cow} parentCow1
- * @param {farmhand.cow} parentCow2
- * @param {farmhand.cow} offspringCow
+ * @param _
+ * @param parentCow1
+ * @param parentCow2
+ * @param offspringCow
  * @returns {string}
  */
 export const COW_BORN_MESSAGE = (_, parentCow1, parentCow2, offspringCow) =>
   `${parentCow1.name} and ${parentCow2.name} had a baby: ${offspringCow.name}! Welcome to the world, ${offspringCow.name}!`
 
 /**
- * @param {string} _
- * @param {farmhand.recipe} recipe
+ * @param _
+ * @param recipe
  * @returns {string}
  */
 export const RECIPE_LEARNED = (_, recipe) =>
@@ -130,15 +130,15 @@ export const RECIPES_LEARNED = (_, learnedRecipes) => {
 }
 
 /**
- * @param {string} _
- * @param {farmhand.item} item
+ * @param _
+ * @param item
  * @returns {string}
  */
 export const PRICE_CRASH = (_, { name }) =>
   `${name} prices have bottomed out! Avoid selling them until prices return to normal.`
 
 /**
- * @param {string} _
+ * @param _
  * @param {{ name: string }} item
  * @returns {string}
  */
@@ -146,7 +146,7 @@ export const PRICE_SURGE = (_, { name }) =>
   `${name} prices are at their peak! Now is the time to sell!`
 
 /**
- * @param {string} _
+ * @param _
  * @param {{ name: string, rewardDescription: string }} achievement
  * @returns {string}
  */
@@ -162,8 +162,8 @@ export const LOAN_PAYOFF = () =>
   `You paid off your loan to the bank! You're finally free!`
 
 /**
- * @param {string} _
- * @param {number} loanBalance
+ * @param _
+ * @param loanBalance
  * @returns {string}
  */
 export const LOAN_INCREASED = (_, loanBalance) =>
@@ -172,17 +172,17 @@ export const LOAN_INCREASED = (_, loanBalance) =>
   )}.`
 
 /**
- * @param {string} _
- * @param {number} loanBalance
+ * @param _
+ * @param loanBalance
  * @returns {string}
  */
 export const LOAN_BALANCE_NOTIFICATION = (_, loanBalance) =>
   `Your loan balance has grown to ${moneyString(loanBalance)}.`
 
 /**
- * @param {string} _
- * @param {number} newLevel
- * @param {farmhand.item} [randomCropSeed]
+ * @param _
+ * @param newLevel
+ * @param [randomCropSeed]
  * @returns {string}
  */
 export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
@@ -226,16 +226,16 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
 }
 
 /**
- * @param {string} _
- * @param {string} room
+ * @param _
+ * @param room
  * @returns {string}
  */
 export const CONNECTED_TO_ROOM = (_, room) => `Connected to room **${room}**!`
 
 /**
- * @param {string} _
- * @param {string} who
- * @param {Object} positions
+ * @param _
+ * @param who
+ * @param positions
  * @returns {string}
  */
 export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
@@ -274,18 +274,18 @@ export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
 }
 
 /**
- * @param {string} _
- * @param {string} room
- * @param {string} nextRoom
+ * @param _
+ * @param room
+ * @param nextRoom
  * @returns {string}
  */
 export const ROOM_FULL_NOTIFICATION = (_, room, nextRoom) =>
   `Room **${room}** is full! Trying room **${nextRoom}**...`
 
 /**
- * @param {string} _
- * @param {number} quantity
- * @param {farmhand.item} item
+ * @param _
+ * @param quantity
+ * @param item
  * @returns {string}
  */
 export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
@@ -294,26 +294,26 @@ export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
   } of ${name}.`
 
 /**
- * @param {string} _
- * @param {number} quantity
- * @param {farmhand.item} item
+ * @param _
+ * @param quantity
+ * @param item
  * @returns {string}
  */
 export const SOLD_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
   `sold ${integerString(quantity)} unit${quantity > 1 ? 's' : ''} of ${name}.`
 
 /**
- * @param {string} _
- * @param {farmhand.item} item
+ * @param _
+ * @param item
  * @returns {string}
  */
 export const SOLD_FERMENTED_ITEM_PEER_NOTIFICATION = (_, item) =>
   `sold one unit of ${FERMENTED_CROP_NAME(_, item)}.`
 
 /**
- * @param {string} _
- * @param {string} toolName - the name of the tool being replaced
- * @param {string} upgradedName - the new name of the tool
+ * @param _
+ * @param toolName - the name of the tool being replaced
+ * @param upgradedName - the new name of the tool
  */
 export const TOOL_UPGRADED_NOTIFICATION = (_, toolName, upgradedName) =>
   `Your ${toolName} has been upgraded to a **${upgradedName}**!`
@@ -326,27 +326,27 @@ export const INGREDIENTS_LIST_ITEM = (
 ) => `${ingredientName} x ${quantityNeeded} (On hand: ${quantityAvailable})`
 
 /**
- * @param {string} _
- * @param {string} cowDisplayName
+ * @param _
+ * @param cowDisplayName
  * @returns {string}
  */
 export const OFFER_COW_FOR_TRADE = (_, cowDisplayName) =>
   `Offer ${cowDisplayName} for trade with online players`
 
 /**
- * @param {string} _
- * @param {string} cowDisplayName
+ * @param _
+ * @param cowDisplayName
  * @returns {string}
  */
 export const WITHDRAW_COW_FROM_TRADE = (_, cowDisplayName) =>
   `Keep ${cowDisplayName} from being traded`
 
 /**
- * @param {string} _
- * @param {farmhand.cow} cowTradedAway
- * @param {farmhand.cow} cowReceived
- * @param {string} playerId
- * @param {boolean} allowCustomPeerCowNames
+ * @param _
+ * @param cowTradedAway
+ * @param cowReceived
+ * @param playerId
+ * @param allowCustomPeerCowNames
  * @returns {string}
  */
 export const COW_TRADED_NOTIFICATION = (
@@ -363,30 +363,30 @@ export const COW_TRADED_NOTIFICATION = (
   )} for ${getCowDisplayName(cowReceived, playerId, allowCustomPeerCowNames)}!`
 
 /**
- * @param {string} _
- * @param {farmhand.item} item
+ * @param _
+ * @param item
  * @returns {string}
  */
 export const SHOVELED_PLOT = (_, item) => `Shoveled plot of ${item.name}`
 
 /**
- * @param {string} _
- * @param {farmhand.item} item
+ * @param _
+ * @param item
  * @returns {string}
  */
 export const FERMENTED_CROP_NAME = (_, item) => `Fermented ${item.name}`
 
 /**
- * @param {string} _
- * @param {farmhand.keg} keg
+ * @param _
+ * @param keg
  * @returns {string}
  */
 export const KEG_SPOILED_MESSAGE = (_, keg) =>
   `Oh no! Your ${FERMENTED_CROP_NAME(_, itemsMap[keg.itemId])} has spoiled!`
 
 /**
- * @param {TemplateStringsArray} _
- * @param {farmhand.peerMetadata} peerMetadata
+ * @param _
+ * @param peerMetadata
  * @returns {string}
  */
 export const NEW_COW_OFFERED_FOR_TRADE = (_, peerMetadata) =>
@@ -395,17 +395,17 @@ export const NEW_COW_OFFERED_FOR_TRADE = (_, peerMetadata) =>
   )}!`
 
 /**
- * @param {TemplateStringsArray} _
- * @param {number} numTrees
+ * @param _
+ * @param numTrees
  * @returns {string}
  */
 export const FOREST_EXPANDED = (_, numTrees) =>
   `The Forest has expanded! You can now plant up to ${numTrees} trees.`
 
 /**
- * @param {TemplateStringsArray} _
- * @param {number} experiencePointsToNextLevel
- * @param {number} nextLevel
+ * @param _
+ * @param experiencePointsToNextLevel
+ * @param nextLevel
  * @returns {string}
  */
 export const EXPERIENCE_GAUGE_TOOLTIP_LABEL = (

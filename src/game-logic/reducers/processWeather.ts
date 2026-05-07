@@ -4,7 +4,7 @@ import { applyChanceEvent } from './helpers.js'
 import { applyPrecipitation } from './applyPrecipitation.js'
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const processWeather = state =>

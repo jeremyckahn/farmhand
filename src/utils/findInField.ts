@@ -4,8 +4,8 @@ import { memoizationSerializer } from './index.js'
 
 export const findInField = memoize(
   /**
-   * @param {(?farmhand.plotContent)[][]} field
-   * @param {function(?farmhand.plotContent): boolean} condition
+   * @param field
+   * @param condition
    * @returns {?farmhand.plotContent}
    */
   (field, condition) => {

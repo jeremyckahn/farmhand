@@ -1,9 +1,8 @@
-/** @typedef {farmhand.state} state */
 
 import { processCellarSpoilage } from './processCellarSpoilage.js'
 
 /**
- * @param {state} state
+ * @param state
  * @returns state
  */
 export const processCellar = state => {

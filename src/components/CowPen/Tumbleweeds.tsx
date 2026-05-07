@@ -125,7 +125,7 @@ export const Tumbleweeds = ({ doSpawn }) => {
 
   /**
    * Removes a tumbleweed from the list after its animation is complete.
-   * @param {string} tumbleweedUuid
+   * @param tumbleweedUuid
    */
   const handleTumbleweedAnimationComplete = useCallback(
     tumbleweedUuid => {

@@ -1,7 +1,7 @@
 const saltRequirementMultiplier = 2 / 3
 
 /**
- * @param {farmhand.item} fermentationRecipe
+ * @param fermentationRecipe
  * @returns {number}
  */
 export const getSaltRequirementsForFermentationRecipe = fermentationRecipe => {

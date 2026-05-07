@@ -7,7 +7,7 @@ const fieldReducer = (acc, fn) => fn(acc)
 
 // TODO: Add tests for this reducer.
 /**
- * @param {?farmhand.plotContent} plotContent
+ * @param plotContent
  * @returns {?farmhand.plotContent}
  */
 const resetWasWatered = plotContent => setWasWateredProperty(plotContent, false)
@@ -20,7 +20,7 @@ const fieldUpdaters = [
 ]
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const processField = state => ({

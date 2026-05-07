@@ -5,7 +5,7 @@ import {
 } from '../../constants.js'
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const purchaseStorageExpansion = state => {

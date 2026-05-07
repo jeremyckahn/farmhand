@@ -1,14 +1,8 @@
-/**
- * @typedef {farmhand.state['itemsSold']} itemsSold
- * @typedef {farmhand.item} item
- * @typedef {farmhand.cropVariety} cropVariety
- * @typedef {farmhand.grape} grape
- */
 import { isGrape } from '../data/crops/grape.js'
 import { itemsMap } from '../data/maps.js'
 
 /**
- * @param {itemsSold} itemsSold
+ * @param itemsSold
  * @returns {grape[]}
  */
 const getGrapesSold = (itemsSold: farmhand.state['itemsSold']) => {
@@ -29,7 +23,7 @@ const getGrapesSold = (itemsSold: farmhand.state['itemsSold']) => {
 }
 
 /**
- * @param {itemsSold} itemsSold
+ * @param itemsSold
  * @returns {farmhand.grapeVariety[]}
  */
 export function getWineVarietiesAvailableToMake(

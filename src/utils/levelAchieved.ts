@@ -1,5 +1,5 @@
 /**
- * @param {number} [experience]
+ * @param [experience]
  * @returns {number}
  */
 export function levelAchieved(experience = 0) {

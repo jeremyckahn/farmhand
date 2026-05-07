@@ -22,8 +22,8 @@ import { wineService } from '../../services/wine.js'
 import { cellarService } from '../../services/cellar.js'
 
 /**
- * @param {Object} props
- * @param {keg} props.keg
+ * @param props
+ * @param props.keg
  */
 export function Keg({ keg }) {
   /**

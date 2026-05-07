@@ -2,8 +2,8 @@ import { moneyTotal } from '../../utils/index.js'
 
 // TODO: Add tests for this reducer
 /**
- * @param {farmhand.state} state
- * @param {number} revenueToAdd
+ * @param state
+ * @param revenueToAdd
  * @returns {farmhand.state}
  */
 export const addRevenue = (state, revenueToAdd) => {

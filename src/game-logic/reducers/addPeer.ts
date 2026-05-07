@@ -1,7 +1,7 @@
 // TODO: Add tests for this reducer
 /**
- * @param {farmhand.state} state
- * @param {string} peerId The peer to add
+ * @param state
+ * @param peerId The peer to add
  * @returns {farmhand.state}
  */
 export const addPeer = (state, peerId) => {

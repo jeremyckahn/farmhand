@@ -3,8 +3,8 @@ import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.js'
 import { modifyCow } from './modifyCow.js'
 
 /**
- * @param {farmhand.state} state
- * @param {string} cowId
+ * @param state
+ * @param cowId
  * @returns {farmhand.state}
  */
 export const hugCow = (state, cowId) =>

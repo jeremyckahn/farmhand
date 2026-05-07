@@ -1,9 +1,9 @@
 import { MAX_PENDING_PEER_MESSAGES } from '../../constants.js'
 
 /**
- * @param {farmhand.state} state
- * @param {string} message
- * @param {farmhand.notificationSeverity} [severity='info']
+ * @param state
+ * @param message
+ * @param [severity='info']
  * @returns {farmhand.state}
  */
 export const prependPendingPeerMessage = (

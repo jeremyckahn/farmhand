@@ -7,8 +7,8 @@ export const random = () => {
 }
 
 /**
- * @param {Partial<Record<string, farmhand.priceEvent>>} priceCrashes
- * @param {Partial<Record<string, farmhand.priceEvent>>} priceSurges
+ * @param priceCrashes
+ * @param priceSurges
  * @returns {Record<string, number>}
  */
 export const generateValueAdjustments = (priceCrashes = {}, priceSurges = {}) =>

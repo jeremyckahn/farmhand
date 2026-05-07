@@ -4,7 +4,7 @@ import { COW_ATTRITION_MESSAGE } from '../../templates.js'
 import { removeCowFromInventory } from './removeCowFromInventory.js'
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const processCowAttrition = state => {

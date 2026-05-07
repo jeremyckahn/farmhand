@@ -1,7 +1,7 @@
 /**
- * @param {farmhand.state} state
- * @param {string} itemId
- * @param {number} [howMany=1]
+ * @param state
+ * @param itemId
+ * @param [howMany=1]
  * @returns {farmhand.state}
  */
 export const decrementItemFromInventory = (state, itemId, howMany = 1) => {

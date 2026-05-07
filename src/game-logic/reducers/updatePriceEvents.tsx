@@ -1,5 +1,5 @@
 /**
- * @param {Partial<Record<string, farmhand.priceEvent>>} priceEvents
+ * @param priceEvents
  * @returns {Partial<Record<string, farmhand.priceEvent>>}
  */
 const decrementPriceEventDays = priceEvents =>
@@ -17,7 +17,7 @@ const decrementPriceEventDays = priceEvents =>
   }, {})
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 

@@ -1,6 +1,6 @@
 /**
- * @param {farmhand.state} state
- * @param {string} kegId
+ * @param state
+ * @param kegId
  */
 export const removeKegFromCellar = (state, kegId) => {
   const { cellarInventory } = state

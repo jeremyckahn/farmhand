@@ -1,17 +1,16 @@
-/** @typedef {farmhand.levelEntitlements} levelEntitlements */
 import { levels } from '../data/levels.js'
 import { INITIAL_SPRINKLER_RANGE } from '../constants.js'
 
 import { memoize } from './memoize.js'
 
 /**
- * @param {number} levelNumber
+ * @param levelNumber
  * @returns {levelEntitlements} Contains `sprinklerRange` and keys that correspond to
  * unlocked items.
  */
 export const getLevelEntitlements = memoize(
   /**
-   * @param {number} levelNumber
+   * @param levelNumber
    * @returns {levelEntitlements}
    */
   levelNumber => {

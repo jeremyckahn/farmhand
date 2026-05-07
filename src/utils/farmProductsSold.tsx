@@ -5,7 +5,7 @@ import { isItemAFarmProduct } from './isItemAFarmProduct.js'
 
 export const farmProductsSold = memoize(
   /**
-   * @param {Partial<Record<string, number>>} itemsSold
+   * @param itemsSold
    * @returns {number}
    */
   (itemsSold: Partial<Record<string, number>>) =>

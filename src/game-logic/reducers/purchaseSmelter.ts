@@ -7,8 +7,8 @@ import { showNotification } from './showNotification.js'
 import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 
 /**
- * @param {farmhand.state} state
- * @param {number} smelterId
+ * @param state
+ * @param smelterId
  * @returns {farmhand.state}
  */
 export const purchaseSmelter = (state, smelterId) => {

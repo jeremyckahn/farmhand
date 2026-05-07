@@ -8,9 +8,9 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 const { OBSERVE, SET_SCARECROW } = fieldMode
 
 /**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
+ * @param state
+ * @param x
+ * @param y
  * @returns {farmhand.state}
  */
 export const setScarecrow = (state, x, y) => {

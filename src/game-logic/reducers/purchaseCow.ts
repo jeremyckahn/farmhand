@@ -4,8 +4,8 @@ import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import { addCowToInventory } from './addCowToInventory.js'
 
 /**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
+ * @param state
+ * @param cow
  * @returns {farmhand.state}
  */
 export const purchaseCow = (state, cow) => {

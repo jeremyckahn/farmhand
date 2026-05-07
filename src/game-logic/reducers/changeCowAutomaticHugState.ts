@@ -7,9 +7,9 @@ import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { modifyCow } from './modifyCow.js'
 
 /**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @param {boolean} doUseHuggingMachine
+ * @param state
+ * @param cow
+ * @param doUseHuggingMachine
  * @returns {farmhand.state}
  */
 export const changeCowAutomaticHugState = (state, cow, doUseHuggingMachine) => {

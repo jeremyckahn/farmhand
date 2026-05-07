@@ -106,7 +106,7 @@ const OnlineControls = ({
   }
 
   /**
-   * @param {boolean} checked
+   * @param checked
    */
   const handleSwitchChange = checked => {
     submitRoomNameChange()

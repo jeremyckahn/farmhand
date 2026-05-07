@@ -2,8 +2,8 @@ import { moneyTotal } from '../../utils/index.js'
 import { PURCHASEABLE_COMBINES } from '../../constants.js'
 
 /**
- * @param {farmhand.state} state
- * @param {number} combineId
+ * @param state
+ * @param combineId
  * @returns {farmhand.state}
  */
 export const purchaseCombine = (state, combineId) => {

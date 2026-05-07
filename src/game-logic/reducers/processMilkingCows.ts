@@ -8,7 +8,7 @@ import { MILKS_PRODUCED } from '../../templates.js'
 import { addItemToInventory } from './addItemToInventory.js'
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const processMilkingCows = state => {

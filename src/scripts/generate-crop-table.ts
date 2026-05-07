@@ -10,8 +10,8 @@ const getDaysToMature = seedItem => {
 }
 
 /**
- * @param {farmhand.item} seedItem
- * @param {(farmhand.item|farmhand.cropVariety)} cropItem
+ * @param seedItem
+ * @param cropItem
  */
 function getCropImage(seedItem, cropItem) {
   if (Array.isArray(seedItem.growsInto)) {
@@ -25,7 +25,7 @@ function getCropImage(seedItem, cropItem) {
 }
 
 /**
- * @param {farmhand.item} seedItem
+ * @param seedItem
  */
 function getSeedImage(seedItem) {
   return `![${seedItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${seedItem.id}.png)`
@@ -43,9 +43,9 @@ const headers = [
 const rows: (string | number)[][] = []
 
 /**
- * @param {number} level
- * @param {farmhand.item} seedItem
- * @param {farmhand.item} cropItem
+ * @param level
+ * @param seedItem
+ * @param cropItem
  */
 const getCropRow = (level, seedItem, cropItem) => {
   return [

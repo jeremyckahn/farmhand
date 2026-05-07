@@ -21,14 +21,14 @@ export class WineService {
   maturityDayMultiplier = 3
 
   /**
-   * @param {grapeVarietyEnum} grapeVariety
+   * @param grapeVariety
    */
   getDaysToMature = grapeVariety => {
     return wineVarietyValueMap[grapeVariety] * this.maturityDayMultiplier
   }
 
   /**
-   * @param {item} recipe
+   * @param recipe
    * @returns {recipe is wine}
    */
   isWineRecipe = recipe => {
@@ -36,11 +36,11 @@ export class WineService {
   }
 
   /**
-   * @param {Object} props
-   * @param {grape} props.grape
+   * @param props
+   * @param props.grape
    * @param {{ id: string, quantity: number }[]} props.inventory
-   * @param {keg[]} props.cellarInventory
-   * @param {number} props.cellarSize
+   * @param props.cellarInventory
+   * @param props.cellarSize
    */
   getMaxWineYield = ({ grape, inventory, cellarInventory, cellarSize }) => {
     const {

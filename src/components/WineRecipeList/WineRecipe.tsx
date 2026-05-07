@@ -32,7 +32,7 @@ import { yeast } from '../../data/recipes.js'
  */
 
 /**
- * @param {WineRecipeProps} props
+ * @param props
  */
 export const WineRecipe = ({
   wineVariety,

@@ -9,7 +9,7 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 import { fieldHasScarecrow } from './helpers.js'
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @callback {forEachPlotCallback} callback
  */
 export function forEachPlot(state, callback) {
@@ -20,13 +20,13 @@ export function forEachPlot(state, callback) {
 
 /**
  * @callback forEachPlotCallback
- * @param {object} plotContents - the contents of the plot
- * @param {number} x - the X coordinate for the plot
- * @param {number} y - the Y coordinate for the plot
+ * @param plotContents - the contents of the plot
+ * @param x - the X coordinate for the plot
+ * @param y - the Y coordinate for the plot
  */
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const applyCrows = state => {

@@ -22,7 +22,7 @@ import './Plot.sass'
 import { SHOVELED_PLOT } from '../../templates.js'
 
 /**
- * @param {farmhand.plotContent?} plotContent
+ * @param plotContent
  * @returns {string | undefined}
  */
 export const getBackgroundStyles = plotContent => {
@@ -48,7 +48,7 @@ export const getBackgroundStyles = plotContent => {
 }
 
 /*!
- * @param {(farmhand.plotContent|farmhand.crop)?} plotContent
+ * @param plotContent
  * @returns {number?}
  */
 export const getDaysLeftToMature = plotContent =>

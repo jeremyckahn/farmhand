@@ -4,7 +4,7 @@ import { YEAST_REQUIREMENT_FOR_WINE_MULTIPLIER } from '../constants.js'
 import { grapeVariety as grapeVarietyEnum } from '../enums.js'
 
 /**
- * @param {grapeVarietyEnum} grapeVariety
+ * @param grapeVariety
  */
 export const getYeastRequiredForWine = grapeVariety => {
   return (

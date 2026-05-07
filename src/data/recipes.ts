@@ -81,7 +81,7 @@ export const yeast = convertToRecipe({
 })
 
 /**
- * @param {farmhand.grape} grape
+ * @param grape
  * @returns {farmhand.wine}
  */
 const getWineRecipeFromGrape = grape => {

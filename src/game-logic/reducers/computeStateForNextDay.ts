@@ -22,7 +22,7 @@ import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNex
 import { updatePriceEvents } from './updatePriceEvents.js'
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 const adjustItemValues = state => ({
@@ -35,7 +35,7 @@ const adjustItemValues = state => ({
 })
 
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const computeStateForNextDay = (state, isFirstDay = false) => {

@@ -15,9 +15,9 @@ import { removeFieldPlotAt } from './removeFieldPlotAt.js'
 const { GROWN } = cropLifeStage
 
 /**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
+ * @param state
+ * @param x
+ * @param y
  * @returns {farmhand.state}
  */
 export const clearPlot = (state, x, y) => {

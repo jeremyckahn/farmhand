@@ -1,7 +1,7 @@
 import { itemType } from '../../enums.js'
 
 /**
- * @param {Partial<farmhand.item>} overrides
+ * @param overrides
  * @returns {farmhand.item}
  */
 export const itemStub = overrides => ({

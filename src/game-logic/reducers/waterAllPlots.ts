@@ -2,7 +2,7 @@ import { waterField } from './waterField.js'
 
 // TODO: Remove this and just use waterField directly.
 /**
- * @param {farmhand.state} state
+ * @param state
  * @returns {farmhand.state}
  */
 export const waterAllPlots = state => waterField(state)
