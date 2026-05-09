@@ -6,7 +6,7 @@
  * @param keg
  * @returns {state}
  */
-export const addKegToCellarInventory = (state, keg) => {
+export const addKegToCellarInventory = (state: farmhand.state, keg: farmhand.keg): farmhand.state => {
   const { cellarInventory } = state
 
   return {
