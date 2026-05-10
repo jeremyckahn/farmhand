@@ -4,7 +4,7 @@
  * @param cow
  * @returns {farmhand.state}
  */
-export const addCowToInventory = (state: farmhand.state, cow: farmhand.cow): farmhand.state => {
+export const addCowToInventory = (state, cow) => {
   const { cowInventory } = state
 
   return {
