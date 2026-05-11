@@ -7,13 +7,11 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 const { OBSERVE, SET_SCARECROW } = fieldMode
 
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-export const setScarecrow = (state, x, y) => {
+export const setScarecrow = (
+  state: farmhand.state,
+  x: number,
+  y: number
+): farmhand.state => {
   const plot = state.field[y][x]
 
   // Only set scarecrows in empty plots

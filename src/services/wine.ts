@@ -1,12 +1,3 @@
-/**
- * @typedef {farmhand.item} item
- * @typedef {farmhand.recipe} recipe
- * @typedef {farmhand.wine} wine
- * @typedef {farmhand.grape} grape
- * @typedef {farmhand.grapeVariety} grapeVarietyEnum
- * @typedef {farmhand.keg} keg
- */
-
 import { GRAPES_REQUIRED_FOR_WINE } from '../constants.js'
 import { wineVarietyValueMap } from '../data/crops/grape.js'
 import { itemsMap } from '../data/maps.js'
@@ -20,28 +11,14 @@ export class WineService {
    */
   maturityDayMultiplier = 3
 
-  /**
-   * @param {grapeVarietyEnum} grapeVariety
-   */
   getDaysToMature = grapeVariety => {
     return wineVarietyValueMap[grapeVariety] * this.maturityDayMultiplier
   }
 
-  /**
-   * @param {item} recipe
-   * @returns {recipe is wine}
-   */
-  isWineRecipe = recipe => {
+  isWineRecipe = (recipe: any): recipe is farmhand.wine => {
     return 'recipeType' in recipe && recipe.recipeType === recipeType.WINE
   }
 
-  /**
-   * @param {Object} props
-   * @param {grape} props.grape
-   * @param {{ id: string, quantity: number }[]} props.inventory
-   * @param {keg[]} props.cellarInventory
-   * @param {number} props.cellarSize
-   */
   getMaxWineYield = ({ grape, inventory, cellarInventory, cellarSize }) => {
     const {
       [grape.id]: grapeQuantityInInventory = 0,

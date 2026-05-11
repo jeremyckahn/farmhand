@@ -28,10 +28,9 @@ export const testTree = (item = {}) => ({
   ...item,
 })
 
-/**
- * @param {Partial<farmhand.shoveledPlot>} plotProps
- */
-export const testShoveledPlot = plotProps => ({
+export const testShoveledPlot = (
+  plotProps: Partial<farmhand.shoveledPlot>
+) => ({
   isShoveled: true,
   daysUntilClear: 5,
   ...plotProps,
@@ -40,7 +39,7 @@ export const testShoveledPlot = plotProps => ({
 export const testItem = (item = {}) => ({
   id: '',
   name: '',
-  type: /** @type {farmhand.itemType} */ 'CRAFTED_ITEM',
+  type: 'CRAFTED_ITEM',
   value: 0,
   description: '',
   doesPriceFluctuate: false,
@@ -51,10 +50,11 @@ export const testItem = (item = {}) => ({
 
 /**
  * Creates a minimal but complete farmhand.recipe object for testing
- * @param {Partial<farmhand.recipe>} overrides - Properties to override in the test recipe
- * @returns {farmhand.recipe}
+ * @param overrides - Properties to override in the test recipe
  */
-export const testRecipe = (overrides = {}) => ({
+export const testRecipe = (
+  overrides: Partial<farmhand.recipe> = {}
+): farmhand.recipe => ({
   id: 'sample-recipe-1',
   name: 'Test Recipe',
   description: 'A test recipe',
@@ -62,16 +62,15 @@ export const testRecipe = (overrides = {}) => ({
     'sample-item-1': 1,
   },
   condition: () => true,
-  recipeType: /** @type {farmhand.recipeType} */ 'KITCHEN',
-  type: /** @type {farmhand.itemType} */ 'CRAFTED_ITEM',
+  recipeType: 'KITCHEN',
+  type: 'CRAFTED_ITEM',
   value: 100,
   ...overrides,
 })
 
 /**
  * Creates a minimal but complete farmhand.state object for testing
- * @param  overrides - Properties to override in the test state
- * @returns
+ * @param overrides - Properties to override in the test state
  */
 export const testState = (
   overrides: Partial<farmhand.state> = {}

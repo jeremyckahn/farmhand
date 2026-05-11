@@ -14,11 +14,7 @@ import { createPriceEvent } from './createPriceEvent.js'
 const TYPE_CRASH = 'priceCrashes'
 const TYPE_SURGE = 'priceSurges'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const generatePriceEvents = state => {
+export const generatePriceEvents = (state: farmhand.state): farmhand.state => {
   const priceCrashes = { ...state.priceCrashes }
   const priceSurges = { ...state.priceSurges }
   let newDayNotifications = [...state.newDayNotifications]

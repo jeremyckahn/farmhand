@@ -4,6 +4,6 @@ import { getCropLifecycleDuration } from './getCropLifecycleDuration.js'
 
 describe('getCropLifecycleDuration', () => {
   test('computes lifecycle duration', () => {
-    expect(getCropLifecycleDuration(carrot)).toEqual(5)
+    expect(getCropLifecycleDuration(carrot as any)).toEqual(5)
   })
 })

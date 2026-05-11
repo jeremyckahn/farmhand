@@ -7,15 +7,13 @@ import { FERTILIZERS_PRODUCED } from '../../templates.js'
 
 import { addItemToInventory } from './addItemToInventory.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processCowFertilizerProduction = state => {
+export const processCowFertilizerProduction = (
+  state: farmhand.state
+): farmhand.state => {
   const cowInventory = [...state.cowInventory]
   const newDayNotifications = [...state.newDayNotifications]
   const { length: cowInventoryLength } = cowInventory
-  const fertilizersProduced = {}
+  const fertilizersProduced: Record<string, number> = {}
 
   for (let i = 0; i < cowInventoryLength; i++) {
     const cow = cowInventory[i]
@@ -28,7 +26,7 @@ export const processCowFertilizerProduction = state => {
     ) {
       cowInventory[i] = { ...cow, daysSinceProducingFertilizer: 0 }
 
-      const fertilizer = getCowFertilizerItem(cow)
+      const fertilizer = getCowFertilizerItem(cow as any)
       const { name } = fertilizer
 
       if (!doesInventorySpaceRemain(state)) {
@@ -42,10 +40,7 @@ export const processCowFertilizerProduction = state => {
 
   if (Object.keys(fertilizersProduced).length) {
     newDayNotifications.push({
-      message: FERTILIZERS_PRODUCED(
-        '',
-        /** @type {Record<string, number>} */ fertilizersProduced
-      ),
+      message: FERTILIZERS_PRODUCED('', fertilizersProduced),
       severity: 'success',
     })
   }

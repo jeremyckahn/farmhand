@@ -25,10 +25,7 @@ const coalNeededForIngots = (ingotId, amount = 1) => {
 const { bronzeIngot, ironIngot, silverIngot, goldIngot } = recipes
 const { coal } = items
 
-/**
- * @type {farmhand.upgradesMetadata}
- */
-const upgrades = {
+const upgrades: farmhand.upgradesMetadata = {
   [toolType.HOE]: {
     [toolLevel.DEFAULT]: {
       id: 'hoe-default',

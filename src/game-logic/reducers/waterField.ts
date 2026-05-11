@@ -1,11 +1,7 @@
 import { setWasWatered, updateField } from './helpers.js'
 
 // TODO: Add tests for this reducer
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const waterField = state => ({
+export const waterField = (state: farmhand.state): farmhand.state => ({
   ...state,
-  field: updateField(state.field, setWasWatered),
+  field: updateField(state.field!, setWasWatered) as any,
 })

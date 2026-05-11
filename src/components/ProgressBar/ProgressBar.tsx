@@ -10,10 +10,10 @@ const completeColor = '#00e500'
 const ProgressBar = ({ percent }) => {
   const [displayedProgress, setDisplayedProgress] = useState(0)
   const [displayedColor, setDisplayedColor] = useState(incompleteColor)
-  /** @type {[import('shifty').Tweenable | undefined, React.Dispatch<React.SetStateAction<import('shifty').Tweenable | undefined>>]} */
-  const [currentTweenable, setCurrentTweenable] = useState<
-    import('shifty').Tweenable | undefined
-  >()
+  const [currentTweenable, setCurrentTweenable]: [
+    import('shifty').Tweenable | undefined,
+    React.Dispatch<React.SetStateAction<import('shifty').Tweenable | undefined>>
+  ] = useState<import('shifty').Tweenable | undefined>()
 
   useEffect(() => {
     if (!currentTweenable) {

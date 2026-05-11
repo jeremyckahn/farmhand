@@ -114,9 +114,6 @@ export const isInHoverRange = ({
 }
 
 export const MemoPlot = memo(
-  /**
-   * @param  props
-   */
   (props: MemoPlotProps) => {
     const { hoveredPlot, plotContent, setHoveredPlot, x, y } = props
 

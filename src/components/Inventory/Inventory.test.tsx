@@ -98,7 +98,7 @@ describe('Inventory Component', () => {
         }),
       ]
 
-      const categorizedItems = separateItemsIntoCategories(items)
+      const categorizedItems = separateItemsIntoCategories(items as any[])
 
       expect(categorizedItems).toEqual(
         new Map([
@@ -163,10 +163,10 @@ describe('Inventory Component', () => {
   describe('Item sorting and categorization', () => {
     test('sorts items by type and base value', () => {
       const sortedItems = sortItems([
-        testItem({ id: pumpkinSeed.id, value: 0.5 }),
-        testItem({ id: 'scarecrow' }),
-        testItem({ id: 'sprinkler' }),
-        testItem({ id: carrotSeed.id }),
+        testItem({ id: pumpkinSeed.id, value: 0.5 }) as farmhand.item,
+        testItem({ id: 'scarecrow' }) as farmhand.item,
+        testItem({ id: 'sprinkler' }) as farmhand.item,
+        testItem({ id: carrotSeed.id }) as farmhand.item,
       ])
 
       expect(sortedItems).toEqual([

@@ -18,8 +18,8 @@ describe('generatePriceEvents', () => {
       const inputState = testState({
         newDayNotifications: [],
         priceCrashes: {
-          [sampleCropItem1.id]: {
-            itemId: sampleCropItem1.id,
+          [(sampleCropItem1 as any).id]: {
+            itemId: (sampleCropItem1 as any).id,
             daysRemaining: 1,
           },
         },
@@ -63,7 +63,9 @@ describe('generatePriceEvents', () => {
 
     test('generates a price event', () => {
       const priceEvents = {
-        [sampleCropItem1.id]: getPriceEventForCrop(sampleCropItem1),
+        [(sampleCropItem1 as any).id]: getPriceEventForCrop(
+          sampleCropItem1 as any
+        ),
       }
 
       expect(state).toContainAnyEntries([
@@ -75,11 +77,11 @@ describe('generatePriceEvents', () => {
     test('shows notification', () => {
       expect(state.newDayNotifications).toIncludeAnyMembers([
         {
-          message: PRICE_CRASH('', sampleCropItem1),
+          message: PRICE_CRASH('', sampleCropItem1 as any),
           severity: 'warning',
         },
         {
-          message: PRICE_SURGE('', sampleCropItem1),
+          message: PRICE_SURGE('', sampleCropItem1 as any),
           severity: 'success',
         },
       ])

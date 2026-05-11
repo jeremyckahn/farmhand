@@ -1,11 +1,9 @@
 import { get7DayAverage, getProfit, moneyTotal } from '../../utils/index.js'
 import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const updateFinancialRecords = state => {
+export const updateFinancialRecords = (
+  state: farmhand.state
+): farmhand.state => {
   const {
     profitabilityStreak,
     todaysLosses,

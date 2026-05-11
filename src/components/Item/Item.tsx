@@ -49,13 +49,18 @@ const ValueIndicator = ({ poorValue }) => (
   </Tooltip>
 )
 
+type PurchaseValueIndicatorProps = Pick<farmhand.item, 'id' | 'value'> &
+  Pick<farmhand.state, 'valueAdjustments'> & {
+    poorValue?: boolean
+  }
+
 const PurchaseValueIndicator = ({
-  /** @type {farmhand.item['id']} */ id,
-  /** @type {farmhand.item['value']} */ value,
-  /** @type {farmhand.state['valueAdjustments']} */ valueAdjustments,
+  id,
+  value,
+  valueAdjustments,
 
   poorValue = value > itemsMap[id].value,
-}) => (
+}: PurchaseValueIndicatorProps) => (
   <ValueIndicator
     {...{
       id,
@@ -95,7 +100,7 @@ export const Item = ({
   isSelectView,
   isSelected,
   isSellView,
-  /** @type {farmhand.item} */ item,
+  item,
   item: {
     description,
     doesPriceFluctuate,
@@ -291,7 +296,9 @@ export const Item = ({
               {isPurchaseView && (item as farmhand.seedItem).growsInto && (
                 <p>
                   Days to mature:{' '}
-                  {getCropLifecycleDuration(getFinalCropItemFromSeedItem(item))}
+                  {getCropLifecycleDuration(
+                    getFinalCropItemFromSeedItem(item) as any
+                  )}
                 </p>
               )}
             </div>

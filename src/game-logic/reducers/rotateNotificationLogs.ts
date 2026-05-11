@@ -1,10 +1,8 @@
 import { NOTIFICATION_LOG_SIZE } from '../../constants.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const rotateNotificationLogs = state => {
+export const rotateNotificationLogs = (
+  state: farmhand.state
+): farmhand.state => {
   const notificationLog = [...state.notificationLog]
 
   const { dayCount, newDayNotifications } = state
@@ -17,7 +15,7 @@ export const rotateNotificationLogs = state => {
   }
 
   newDayNotifications.forEach(({ message, severity }) =>
-    notifications[/** @type {string} */ severity].push(message)
+    notifications[severity as any].push(message)
   )
 
   if (newDayNotifications.length) {

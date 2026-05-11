@@ -107,7 +107,7 @@ import Stage from '../Stage/index.js'
 import UpdateNotifier from '../UpdateNotifier/index.js'
 
 import FarmhandContext, { BoundHandlers } from './Farmhand.context.js'
-import { FarmhandReducers } from './FarmhandReducers.js'
+import { FarmhandProps, FarmhandReducers } from './FarmhandReducers.js'
 import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
@@ -116,12 +116,10 @@ const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 const emptyObject = Object.freeze({})
 
 export const computePlayerInventory = memoize(
-  /**
-   * @param {{ id: globalThis.farmhand.item['id'], quantity: number }[]} inventory
-   * @param {Record<string, number>} valueAdjustments
-   * @returns {globalThis.farmhand.item[]}
-   */
-  (inventory, valueAdjustments) =>
+  (
+    inventory: globalThis.farmhand.state['inventory'],
+    valueAdjustments: Record<string, number>
+  ): globalThis.farmhand.item[] =>
     inventory.map(({ quantity, id }) => ({
       quantity,
       ...itemsMap[id],
@@ -130,11 +128,9 @@ export const computePlayerInventory = memoize(
 )
 
 export const getFieldToolInventory = memoize(
-  /**
-   * @param {globalThis.farmhand.state['inventory']} inventory
-   * @returns {globalThis.farmhand.item[]}
-   */
-  inventory =>
+  (
+    inventory: globalThis.farmhand.state['inventory']
+  ): globalThis.farmhand.item[] =>
     inventory
       .filter(({ id }) => {
         const { enablesFieldMode } = itemsMap[id]
@@ -147,23 +143,19 @@ export const getFieldToolInventory = memoize(
 )
 
 export const getPlantableCropInventory = memoize(
-  /**
-   * @param {globalThis.farmhand.state['inventory']} inventory
-   * @returns {globalThis.farmhand.item[]}
-   */
-  inventory =>
+  (
+    inventory: globalThis.farmhand.state['inventory']
+  ): globalThis.farmhand.item[] =>
     inventory
       .filter(({ id }) => itemsMap[id].isPlantableCrop)
       .map(({ id, quantity }) => ({ ...itemsMap[id], quantity }))
 )
 
-/**
- * @param {Record<string, number>} valueAdjustments
- * @param {Partial<Record<string, globalThis.farmhand.priceEvent>>} priceCrashes
- * @param {Partial<Record<string, globalThis.farmhand.priceEvent>>} priceSurges
- * @returns {Record<string, number>}
- */
-const applyPriceEvents = (valueAdjustments, priceCrashes, priceSurges) => {
+const applyPriceEvents = (
+  valueAdjustments: Record<string, number>,
+  priceCrashes: Partial<Record<string, globalThis.farmhand.priceEvent>>,
+  priceSurges: Partial<Record<string, globalThis.farmhand.priceEvent>>
+): Record<string, number> => {
   const patchedValueAdjustments = { ...valueAdjustments }
 
   Object.keys(priceCrashes).forEach(itemId => {
@@ -192,15 +184,9 @@ export default class Farmhand extends FarmhandReducers {
     debounced: BoundHandlers<typeof eventHandlers>
   }
 
-  /**
-   * @type {Record<string, string>}
-   */
-  keyMap = {}
+  keyMap: Record<string, string> = {}
 
-  /**
-   * @type {Record<string, () => void>}
-   */
-  keyHandlers = {}
+  keyHandlers: Record<string, () => void> = {}
 
   static defaultProps = {
     localforage: localforage.createInstance({
@@ -211,10 +197,7 @@ export default class Farmhand extends FarmhandReducers {
     match: { path: '', params: {} },
   }
 
-  /**
-   * @param {typeof Farmhand.defaultProps} props
-   */
-  constructor(props) {
+  constructor(props: FarmhandProps) {
     super(props)
 
     this.initInputHandlers()
@@ -298,9 +281,6 @@ export default class Farmhand extends FarmhandReducers {
     return this.levelEntitlements.stageFocusType[stageFocusType.FOREST]
   }
 
-  /**
-   * @returns
-   */
   createInitialState(): farmhand.state {
     return {
       activePlayers: null,
@@ -453,23 +433,12 @@ export default class Farmhand extends FarmhandReducers {
       openSettings: () => this.openDialogView(dialogView.SETTINGS),
       openKeybindings: () => this.openDialogView(dialogView.KEYBINDINGS),
       previousView: this.focusPreviousView.bind(this),
-      selectHoe: () =>
-        this.handlers.handleFieldModeSelect(
-          /** @type {globalThis.farmhand.fieldMode} */ CLEANUP
-        ),
-      selectScythe: () =>
-        this.handlers.handleFieldModeSelect(
-          /** @type {globalThis.farmhand.fieldMode} */ HARVEST
-        ),
-      selectWateringCan: () =>
-        this.handlers.handleFieldModeSelect(
-          /** @type {globalThis.farmhand.fieldMode} */ WATER
-        ),
+      selectHoe: () => this.handlers.handleFieldModeSelect(CLEANUP),
+      selectScythe: () => this.handlers.handleFieldModeSelect(HARVEST),
+      selectWateringCan: () => this.handlers.handleFieldModeSelect(WATER),
       selectShovel: () => {
         if (this.state.toolLevels[toolType.SHOVEL] !== toolLevel.UNAVAILABLE) {
-          this.handlers.handleFieldModeSelect(
-            /** @type {globalThis.farmhand.fieldMode} */ MINE
-          )
+          this.handlers.handleFieldModeSelect(MINE)
         }
       },
       toggleMenu: () => this.handlers.handleMenuToggle(),
@@ -507,8 +476,7 @@ export default class Farmhand extends FarmhandReducers {
     if (state) {
       const sanitizedState = transformStateDataForImport({
         ...this.createInitialState(),
-        // eslint-disable-next-line
-        .../** @type {Partial<farmhand.state>} */ state,
+        ...state,
       })
       const { isCombineEnabled, newDayNotifications } = sanitizedState
 
@@ -633,33 +601,29 @@ export default class Farmhand extends FarmhandReducers {
           'peerMetadata'
         )
 
-        getPeerMetadataFunc((
-          /** @type {[object, string]} */
-          ...args
-        ) => handlePeerMetadataRequest(this, args[0], args[1]))
+        getPeerMetadataFunc((...args: any[]) =>
+          handlePeerMetadataRequest(this, args[0], args[1])
+        )
 
         const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
           'cowTrade'
         )
 
-        getCowTradeRequest((
-          /** @type {[object, string]} */
-          ...args
-        ) => handleCowTradeRequest(this, args[0], args[1]))
+        getCowTradeRequest((...args: any[]) =>
+          handleCowTradeRequest(this, args[0], args[1])
+        )
 
         const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
 
-        getCowAccept((
-          /** @type {[object, string]} */
-          ...args
-        ) => handleCowTradeRequestAccept(this, args[0], args[1]))
+        getCowAccept((...args: any[]) =>
+          handleCowTradeRequestAccept(this, args[0], args[1])
+        )
 
         const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
 
-        getCowReject((
-          /** @type {[object]} */
-          ...args
-        ) => handleCowTradeRequestReject(this, args[0]))
+        getCowReject((...args: any[]) =>
+          handleCowTradeRequestReject(this, args[0])
+        )
 
         this.setState({
           getCowAccept,
@@ -690,11 +654,10 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /**
-   * @param {Function} sendPeerMetadata Raw send action callback created by
-   * Trystero's makeAction function.
-   * @return {Function}
+   * @param sendPeerMetadata Raw send action callback created by
+Trystero's makeAction function.
    */
-  wrapSendPeerMetadata(sendPeerMetadata) {
+  wrapSendPeerMetadata(sendPeerMetadata: Function): Function {
     return throttle(
       (...args) => {
         sendPeerMetadata(...args)
@@ -710,10 +673,7 @@ export default class Farmhand extends FarmhandReducers {
     )
   }
 
-  /**
-   * @param {globalThis.farmhand.cow} peerPlayerCow
-   */
-  tradeForPeerCow(peerPlayerCow) {
+  tradeForPeerCow(peerPlayerCow: globalThis.farmhand.cow) {
     this.setState(state => {
       const {
         cowIdOfferedForTrade,
@@ -768,7 +728,10 @@ export default class Farmhand extends FarmhandReducers {
         peerId
       )
 
-      return { cowTradeTimeoutId, isAwaitingCowTradeRequest: true }
+      return {
+        cowTradeTimeoutId: cowTradeTimeoutId as any,
+        isAwaitingCowTradeRequest: true,
+      }
     }, noop)
   }
 
@@ -871,7 +834,7 @@ export default class Farmhand extends FarmhandReducers {
       heartbeatTimeoutId: (window.setTimeout(async () => {
         this.setState(({ money, activePlayers }) => ({
           activePlayers,
-          money: moneyTotal(money, activePlayers),
+          money: moneyTotal(money, activePlayers ?? 0),
         }))
 
         this.scheduleHeartbeat()
@@ -879,10 +842,7 @@ export default class Farmhand extends FarmhandReducers {
     }))
   }
 
-  /**
-   * @param {farmhand.state} prevState
-   */
-  showInventoryFullNotifications(prevState) {
+  showInventoryFullNotifications(prevState: farmhand.state) {
     if (
       inventorySpaceRemaining(prevState) > 0 &&
       inventorySpaceRemaining(this.state) <= 0
@@ -925,20 +885,13 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   async updateServerForNextDay() {
-    /** @type  */
     const serverMessages: { message: string; severity: string }[] = []
 
-    /**
-     * @type
-     */
     let broadcastedPositionMessage: string | null = null
 
     this.setState(() => ({ isAwaitingNetworkRequest: true }))
 
-    /**
-     * @type {Record<string, number> | undefined}
-     */
-    let serverValueAdjustments
+    let serverValueAdjustments: Record<string, number> | undefined
 
     if (this.state.isOnline) {
       const {
@@ -1005,7 +958,6 @@ export default class Farmhand extends FarmhandReducers {
       serverValueAdjustments,
     } = await this.updateServerForNextDay()
 
-    /** @type  */
     let pendingNotifications: { message: string; severity: string }[] = []
 
     // This would be cleaner if setState was called after localForage.setItem,
@@ -1013,11 +965,7 @@ export default class Farmhand extends FarmhandReducers {
     // experience. The persisted state is computed post-update and stored
     // asynchronously, thus avoiding state changes from being blocked.
     this.setState(
-      /**
-       * @param {farmhand.state} prev
-       * @return {Partial<farmhand.state>}
-       */
-      prev => {
+      (prev: farmhand.state): any => {
         const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
 
         pendingNotifications = [

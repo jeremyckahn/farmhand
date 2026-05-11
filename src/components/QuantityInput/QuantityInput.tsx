@@ -15,13 +15,6 @@ import './QuantityInput.sass'
 export const QUANTITY_INPUT_PLACEHOLDER_TEXT = '0'
 
 const QuantityNumberFormat = forwardRef(
-  /**
-   * @param {Object} props
-   * @param {number} props.min
-   * @param {number} props.max
-   * @param {(value: number) => void} props.onChange
-   * @param  ref
-   */
   (
     {
       min,
@@ -57,7 +50,7 @@ const QuantityTextInput = ({
   handleUpdateNumber,
   maxQuantity,
   value,
-}) => {
+}: any) => {
   return (
     <TextField
       variant="standard"
@@ -108,7 +101,7 @@ const QuantityInput = ({
   maxQuantity,
   setQuantity,
   value,
-}) => {
+}: any) => {
   const decrementQuantity = () => {
     let newValue = value - 1
     if (newValue === 0) {

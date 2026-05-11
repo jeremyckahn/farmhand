@@ -27,58 +27,29 @@ import './Subheader.sass'
 
 // The extra 0.5 is for rounding up to the next full heart. This allows a fully
 // happy cow to have full hearts on the beginning of a new day.
-/**
- * @param {number} heartIndex
- * @param {number} numberOfFullHearts
- */
-const isHeartFull = (heartIndex, numberOfFullHearts) =>
+const isHeartFull = (heartIndex: number, numberOfFullHearts: number) =>
   heartIndex + 0.5 < numberOfFullHearts
 
-const getCowMapById = memoize(
-  /**
-   * @param {farmhand.state['cowInventory']} cowInventory
-   */
-  cowInventory =>
-    cowInventory.reduce((acc, cow) => {
-      acc[cow.id] = cow
-      return acc
-    }, {})
+const getCowMapById = memoize((cowInventory: farmhand.state['cowInventory']) =>
+  cowInventory.reduce((acc, cow) => {
+    acc[cow.id] = cow
+    return acc
+  }, {})
 )
 
-/**
- * @typedef {Pick<
- *    import("../CowCard.js").CowCardProps,
- *    'cow' |
- *    'cowBreedingPen' |
- *    'cowIdOfferedForTrade' |
- *    'cowInventory' |
- *    'handleCowAutomaticHugChange' |
- *    'handleCowBreedChange' |
- *    'huggingMachinesRemain' |
- *    'playerId'
- *  > & {
- *    canCowBeTradedFor: boolean,
- *    cowValue: number,
- *    isCowPurchased: boolean,
- *  }} SubheaderProps
- */
-
-const Subheader = (
-  /** @type {SubheaderProps} */
-  {
-    canCowBeTradedFor,
-    cow,
-    cowBreedingPen,
-    cowIdOfferedForTrade,
-    cowInventory,
-    cowValue,
-    handleCowAutomaticHugChange,
-    handleCowBreedChange,
-    huggingMachinesRemain,
-    playerId,
-    isCowPurchased,
-  }
-) => {
+const Subheader = ({
+  canCowBeTradedFor,
+  cow,
+  cowBreedingPen,
+  cowIdOfferedForTrade,
+  cowInventory,
+  cowValue,
+  handleCowAutomaticHugChange,
+  handleCowBreedChange,
+  huggingMachinesRemain,
+  playerId,
+  isCowPurchased,
+}) => {
   const numberOfFullHearts = cow.happiness * 10
   const isInBreedingPen = isCowInBreedingPen(cow, cowBreedingPen)
   const isRoomInBreedingPen =

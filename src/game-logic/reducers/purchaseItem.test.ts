@@ -6,8 +6,7 @@ import { purchaseItem } from './purchaseItem.js'
 vitest.mock('../../data/maps.js')
 
 describe('purchaseItem', () => {
-  /** @type {farmhand.state} */
-  let state
+  let state: farmhand.state
 
   beforeEach(() => {
     state = testState({
@@ -24,7 +23,7 @@ describe('purchaseItem', () => {
     test('no-ops', () => {
       state.money = 0
       expect(
-        purchaseItem(state, testItem({ id: 'sample-item-1' }), 0)
+        purchaseItem(state, testItem({ id: 'sample-item-1' }) as any, 0)
       ).toMatchObject({
         inventory: [],
       })
@@ -35,7 +34,7 @@ describe('purchaseItem', () => {
     test('no-ops', () => {
       state.money = 0
       expect(
-        purchaseItem(state, testItem({ id: 'sample-item-1' }), 1)
+        purchaseItem(state, testItem({ id: 'sample-item-1' }) as any, 1)
       ).toMatchObject({
         inventory: [],
       })
@@ -45,7 +44,7 @@ describe('purchaseItem', () => {
   describe('user has enough money', () => {
     test('purchases item', () => {
       expect(
-        purchaseItem(state, testItem({ id: 'sample-item-1' }), 2)
+        purchaseItem(state, testItem({ id: 'sample-item-1' }) as any, 2)
       ).toMatchObject({
         inventory: [{ id: 'sample-item-1', quantity: 2 }],
         todaysPurchases: { 'sample-item-1': 2 },
@@ -59,7 +58,7 @@ describe('purchaseItem', () => {
         state.inventoryLimit = 3
 
         expect(
-          purchaseItem(state, testItem({ id: 'sample-item-1' }), 1)
+          purchaseItem(state, testItem({ id: 'sample-item-1' }) as any, 1)
         ).toMatchObject({
           inventory: [{ id: 'sample-item-1', quantity: 3 }],
           todaysPurchases: {},
@@ -74,7 +73,7 @@ describe('purchaseItem', () => {
         state.inventoryLimit = 3
 
         expect(
-          purchaseItem(state, testItem({ id: 'sample-item-1' }), 10)
+          purchaseItem(state, testItem({ id: 'sample-item-1' }) as any, 10)
         ).toMatchObject({
           inventory: [{ id: 'sample-item-1', quantity: 3 }],
           todaysPurchases: { 'sample-item-1': 1 },

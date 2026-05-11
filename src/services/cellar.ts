@@ -1,8 +1,3 @@
-/**
- * @typedef {farmhand.item} item
- * @typedef {farmhand.keg} keg
- */
-
 import { v4 as uuid } from 'uuid'
 
 import { fermentableItemsMap, itemsMap } from '../data/maps.js'
@@ -20,22 +15,14 @@ export class CellarService {
   _uuid = uuid
 
   getItemInstancesInCellar = memoize(
-    /**
-     * @param {keg[]} cellarInventory
-     * @param {item} item
-     */
-    (cellarInventory, item) => {
+    (cellarInventory: farmhand.keg[], item: farmhand.item) => {
       return cellarInventory.filter(keg => keg.itemId === item.id).length
     },
     { cacheSize: Object.keys(fermentableItemsMap).length }
   )
 
-  /**
-   * @param {item} item
-   */
   generateKeg = item => {
-    /** @type {keg} */
-    const keg = {
+    const keg: farmhand.keg = {
       id: this._uuid(),
       itemId: item.id,
       daysUntilMature: item.daysToFerment ?? 0,
@@ -48,10 +35,6 @@ export class CellarService {
     return keg
   }
 
-  /**
-   * @param {keg[]} cellarInventory
-   * @param {number} purchasedCellar
-   */
   doesCellarSpaceRemain = (cellarInventory, purchasedCellar) => {
     return (
       cellarInventory.length <
@@ -59,9 +42,6 @@ export class CellarService {
     )
   }
 
-  /**
-   * @param {keg} keg
-   */
   doesKegSpoil = keg => {
     const item = itemsMap[keg.itemId]
     const doesKegSpoil = !wineService.isWineRecipe(item)

@@ -4,8 +4,7 @@ import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
 import { purchaseField } from './purchaseField.js'
 
 describe('purchaseField', () => {
-  /** @type {farmhand.state} */
-  let state
+  let state: farmhand.state
 
   beforeEach(() => {
     state = testState({

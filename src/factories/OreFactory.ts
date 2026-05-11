@@ -24,18 +24,18 @@ export default class OreFactory extends Factory {
 
   /**
    * Generate resources
-   * @returns {Array.<farmhand.item>} an array of ore resources
+   * @returns an array of ore resources
    */
-  generate() {
+  generate(): Array<farmhand.item> {
     return [this.spawn()]
   }
 
   /**
    * Spawn a random ore
-   * @returns {Object} an object representing an ore
+   * @returns an object representing an ore
    * @private
-   **/
-  spawn() {
+   */
+  spawn(): any {
     const spawnedOption = randomChoice(this.oreOptions)
     return spawnedOption.ore
   }

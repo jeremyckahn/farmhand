@@ -16,17 +16,11 @@ export const RandomSeedInput = ({ search = globalWindow.location.search }) => {
     new URLSearchParams(search).get('seed') ?? ''
   )
 
-  /**
-   * @param {React.ChangeEvent<HTMLInputElement>} e
-   */
-  const handleChange = e => {
-    setSeed(/** @type {HTMLInputElement} */ e.target.value)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSeed(e.target.value)
   }
 
-  /**
-   * @param {React.SyntheticEvent<HTMLFormElement>} e
-   */
-  const handleSubmit = e => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     handleRNGSeedChange(seed)

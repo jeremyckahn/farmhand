@@ -12,8 +12,7 @@ import { scarecrow } from '../../data/items.js'
  * This is used for event handlers that are defined in standalone modules but are bound
  * to the `Farmhand` class instance at runtime. Once bound, the `this` context is
  * automatically handled, so the type should reflect that callers don't need to provide it.
- *
- * @template T - The type to transform (usually an object of event handler functions).
+ * @template - The type to transform (usually an object of event handler functions).
  */
 export type BoundHandlers<T> = {
   [K in keyof T]: T[K] extends (this: any, ...args: infer A) => infer R
@@ -196,9 +195,8 @@ export const createContextData = (): ContextData => {
   }
 }
 
-/**
- * @type {import('react').Context<ContextData>}
- */
-const FarmhandContext = createContext<ContextData>(createContextData())
+const FarmhandContext: import('react').Context<ContextData> = createContext<
+  ContextData
+>(createContextData())
 
 export default FarmhandContext

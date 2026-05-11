@@ -1,10 +1,7 @@
 import { crop, fromSeed } from '../crop.js'
 import { cropType } from '../../enums.js'
 
-/**
- * @type {farmhand.item}
- */
-export const carrotSeed = crop({
+export const carrotSeed: farmhand.item = crop({
   cropType: cropType.CARROT,
   cropTimeline: [2, 1, 1, 1],
   growsInto: 'carrot',
@@ -13,10 +10,7 @@ export const carrotSeed = crop({
   tier: 1,
 })
 
-/**
- * @type {farmhand.item}
- */
-export const carrot = crop({
+export const carrot: farmhand.item = crop({
   ...fromSeed(carrotSeed, {
     canBeFermented: true,
   }),

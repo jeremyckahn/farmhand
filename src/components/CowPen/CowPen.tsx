@@ -10,13 +10,6 @@ import { Tumbleweeds } from './Tumbleweeds.js'
 
 import './CowPen.sass'
 
-/**
- * @type {React.FC<
- *   Pick<
- *     farmhand.state, 'allowCustomPeerCowNames' | 'cowInventory' | 'playerId' | 'selectedCowId'>
- *   & Pick<uiEvents, 'handleCowPenUnmount' | 'handleCowClick'>
- * >}
- */
 export const CowPen = ({
   allowCustomPeerCowNames,
   cowInventory,

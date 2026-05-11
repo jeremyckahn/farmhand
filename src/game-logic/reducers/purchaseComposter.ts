@@ -6,12 +6,10 @@ import { addExperience } from './addExperience.js'
 import { showNotification } from './showNotification.js'
 import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 
-/**
- * @param {farmhand.state} state
- * @param {number} composterId
- * @returns {farmhand.state}
- */
-export const purchaseComposter = (state, composterId) => {
+export const purchaseComposter = (
+  state: farmhand.state,
+  composterId: number
+): farmhand.state => {
   const { money, purchasedComposter } = state
 
   if (purchasedComposter >= composterId) return state

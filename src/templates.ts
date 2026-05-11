@@ -1,11 +1,3 @@
-/**
- */
-
-/**
- * @module farmhand.templates
- * @ignore
- */
-
 import { FOREST_AVAILABLE_NOTIFICATION, SHOVEL_UNLOCKED } from './strings.js'
 import { itemUnlockLevels, levels } from './data/levels.js'
 import { itemsMap } from './data/maps.js'
@@ -18,38 +10,21 @@ import {
   integerString,
 } from './utils/index.js'
 
-/**
- * @param {string} _
- * @param {number} numCropsDestroyed
- * @returns {string}
- */
-export const CROWS_DESTROYED = (_, numCropsDestroyed) =>
+export const CROWS_DESTROYED = (_: any, numCropsDestroyed: number): string =>
   `Oh no! Crows destroyed ${numCropsDestroyed} crop${
     numCropsDestroyed > 1 ? 's' : ''
   }!`
 
-/**
- * @param {string} _
- * @param {number} cows
- * @returns {string}
- */
-export const COW_PEN_PURCHASED = (_, cows) =>
+export const COW_PEN_PURCHASED = (_: any, cows: number): string =>
   `Purchased a cow pen with capacity for ${cows} cows! You can visit your cow pen by going to the "Cows" page.`
 
-/**
- * @param {string} _
- * @param {number} kegCapacity
- * @returns {string}
- */
-export const CELLAR_PURCHASED = (_, kegCapacity) =>
+export const CELLAR_PURCHASED = (_: any, kegCapacity: number): string =>
   `Purchased a cellar with capacity for ${kegCapacity} kegs! View your keg inventory by going to the "Cellar" page.`
 
-/**
- * @param {string} _
- * @param {Object.<string, number>} milksProduced
- * @returns {string}
- */
-export const MILKS_PRODUCED = (_, milksProduced) => {
+export const MILKS_PRODUCED = (
+  _: any,
+  milksProduced: Record<string, number>
+): string => {
   let message = `Your cows produced milk:
 `
 
@@ -66,12 +41,10 @@ export const MILKS_PRODUCED = (_, milksProduced) => {
   return message
 }
 
-/**
- * @param {string} _
- * @param {Object.<string, number>} fertilizersProduced
- * @returns {string}
- */
-export const FERTILIZERS_PRODUCED = (_, fertilizersProduced) => {
+export const FERTILIZERS_PRODUCED = (
+  _: any,
+  fertilizersProduced: Record<string, number>
+): string => {
   let message = `Your cows produced fertilizer:
 `
 
@@ -88,33 +61,24 @@ export const FERTILIZERS_PRODUCED = (_, fertilizersProduced) => {
   return message
 }
 
-/**
- * @param {string} _
- * @param {farmhand.cow} cow
- * @returns {string}
- */
-export const COW_ATTRITION_MESSAGE = (_, cow) =>
+export const COW_ATTRITION_MESSAGE = (_: any, cow: farmhand.cow): string =>
   `${cow.name} got hungry from being underfed and ran away!`
 
-/**
- * @param {string} _
- * @param {farmhand.cow} parentCow1
- * @param {farmhand.cow} parentCow2
- * @param {farmhand.cow} offspringCow
- * @returns {string}
- */
-export const COW_BORN_MESSAGE = (_, parentCow1, parentCow2, offspringCow) =>
+export const COW_BORN_MESSAGE = (
+  _: any,
+  parentCow1: farmhand.cow,
+  parentCow2: farmhand.cow,
+  offspringCow: farmhand.cow
+): string =>
   `${parentCow1.name} and ${parentCow2.name} had a baby: ${offspringCow.name}! Welcome to the world, ${offspringCow.name}!`
 
-/**
- * @param {string} _
- * @param {farmhand.recipe} recipe
- * @returns {string}
- */
-export const RECIPE_LEARNED = (_, recipe) =>
+export const RECIPE_LEARNED = (_: any, recipe: farmhand.recipe): string =>
   `You learned a new recipe: **${recipe.name}**!`
 
-export const RECIPES_LEARNED = (_, learnedRecipes) => {
+export const RECIPES_LEARNED = (
+  _: any,
+  learnedRecipes: farmhand.recipe[]
+): string => {
   let recipesString = ''
   const learnedRecipeNames = learnedRecipes.map(({ name }) => name)
 
@@ -129,63 +93,38 @@ export const RECIPES_LEARNED = (_, learnedRecipes) => {
   return `You learned the recipes for ${recipesString}!`
 }
 
-/**
- * @param {string} _
- * @param {farmhand.item} item
- * @returns {string}
- */
-export const PRICE_CRASH = (_, { name }) =>
+export const PRICE_CRASH = (_: any, { name }: farmhand.item): string =>
   `${name} prices have bottomed out! Avoid selling them until prices return to normal.`
 
-/**
- * @param {string} _
- * @param {{ name: string }} item
- * @returns {string}
- */
-export const PRICE_SURGE = (_, { name }) =>
+export const PRICE_SURGE = (_: any, { name }: { name: string }): string =>
   `${name} prices are at their peak! Now is the time to sell!`
 
-/**
- * @param {string} _
- * @param {{ name: string, rewardDescription: string }} achievement
- * @returns {string}
- */
-export const ACHIEVEMENT_COMPLETED = (_, { name, rewardDescription }) =>
+export const ACHIEVEMENT_COMPLETED = (
+  _: any,
+  { name, rewardDescription }: { name: string; rewardDescription: string }
+): string =>
   `You achieved "${name}!" Way to go!
 
 You earned: ${rewardDescription}`
 
-/**
- * @returns {string}
- */
-export const LOAN_PAYOFF = () =>
+export const LOAN_PAYOFF = (_?: any): string =>
   `You paid off your loan to the bank! You're finally free!`
 
-/**
- * @param {string} _
- * @param {number} loanBalance
- * @returns {string}
- */
-export const LOAN_INCREASED = (_, loanBalance) =>
+export const LOAN_INCREASED = (_: any, loanBalance: number): string =>
   `You took out a new loan. Your current balance is ${moneyString(
     loanBalance
   )}.`
 
-/**
- * @param {string} _
- * @param {number} loanBalance
- * @returns {string}
- */
-export const LOAN_BALANCE_NOTIFICATION = (_, loanBalance) =>
-  `Your loan balance has grown to ${moneyString(loanBalance)}.`
+export const LOAN_BALANCE_NOTIFICATION = (
+  _: any,
+  loanBalance: number
+): string => `Your loan balance has grown to ${moneyString(loanBalance)}.`
 
-/**
- * @param {string} _
- * @param {number} newLevel
- * @param {farmhand.item} [randomCropSeed]
- * @returns {string}
- */
-export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
+export const LEVEL_GAINED_NOTIFICATION = (
+  _: any,
+  newLevel: number,
+  randomCropSeed?: farmhand.item
+): string => {
   let chunks = [
     `You reached **level ${newLevel}!** Way to go!
 
@@ -225,20 +164,14 @@ export const LEVEL_GAINED_NOTIFICATION = (_, newLevel, randomCropSeed) => {
   return chunks.join(' ')
 }
 
-/**
- * @param {string} _
- * @param {string} room
- * @returns {string}
- */
-export const CONNECTED_TO_ROOM = (_, room) => `Connected to room **${room}**!`
+export const CONNECTED_TO_ROOM = (_: any, room: string): string =>
+  `Connected to room **${room}**!`
 
-/**
- * @param {string} _
- * @param {string} who
- * @param {Object} positions
- * @returns {string}
- */
-export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
+export const POSITIONS_POSTED_NOTIFICATION = (
+  _: any,
+  who: string,
+  positions: Record<string, number>
+): string => {
   const positivePositions: string[] = []
   const negativePositions: string[] = []
   const positionKeys = Object.keys(positions)
@@ -273,146 +206,93 @@ export const POSITIONS_POSTED_NOTIFICATION = (_, who, positions) => {
   return chunks.join('\n')
 }
 
-/**
- * @param {string} _
- * @param {string} room
- * @param {string} nextRoom
- * @returns {string}
- */
-export const ROOM_FULL_NOTIFICATION = (_, room, nextRoom) =>
-  `Room **${room}** is full! Trying room **${nextRoom}**...`
+export const ROOM_FULL_NOTIFICATION = (
+  _: any,
+  room: string,
+  nextRoom: string
+): string => `Room **${room}** is full! Trying room **${nextRoom}**...`
 
-/**
- * @param {string} _
- * @param {number} quantity
- * @param {farmhand.item} item
- * @returns {string}
- */
-export const PURCHASED_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
+export const PURCHASED_ITEM_PEER_NOTIFICATION = (
+  _: any,
+  quantity: number,
+  { name }: farmhand.item
+): string =>
   `purchased ${integerString(quantity)} unit${
     quantity > 1 ? 's' : ''
   } of ${name}.`
 
-/**
- * @param {string} _
- * @param {number} quantity
- * @param {farmhand.item} item
- * @returns {string}
- */
-export const SOLD_ITEM_PEER_NOTIFICATION = (_, quantity, { name }) =>
+export const SOLD_ITEM_PEER_NOTIFICATION = (
+  _: any,
+  quantity: number,
+  { name }: farmhand.item
+): string =>
   `sold ${integerString(quantity)} unit${quantity > 1 ? 's' : ''} of ${name}.`
 
-/**
- * @param {string} _
- * @param {farmhand.item} item
- * @returns {string}
- */
-export const SOLD_FERMENTED_ITEM_PEER_NOTIFICATION = (_, item) =>
-  `sold one unit of ${FERMENTED_CROP_NAME(_, item)}.`
+export const SOLD_FERMENTED_ITEM_PEER_NOTIFICATION = (
+  _: any,
+  item: farmhand.item
+): string => `sold one unit of ${FERMENTED_CROP_NAME(_, item)}.`
 
-/**
- * @param {string} _
- * @param {string} toolName - the name of the tool being replaced
- * @param {string} upgradedName - the new name of the tool
- */
-export const TOOL_UPGRADED_NOTIFICATION = (_, toolName, upgradedName) =>
-  `Your ${toolName} has been upgraded to a **${upgradedName}**!`
+export const TOOL_UPGRADED_NOTIFICATION = (
+  _: any,
+  toolName: string,
+  upgradedName: string
+): string => `Your ${toolName} has been upgraded to a **${upgradedName}**!`
 
 export const INGREDIENTS_LIST_ITEM = (
-  _,
-  ingredientName,
-  quantityNeeded,
-  quantityAvailable
-) => `${ingredientName} x ${quantityNeeded} (On hand: ${quantityAvailable})`
+  _: any,
+  quantityNeeded: number,
+  ingredientName: string,
+  quantityAvailable: string | number
+): string =>
+  `${quantityNeeded} x ${ingredientName} (On hand: ${quantityAvailable})`
 
-/**
- * @param {string} _
- * @param {string} cowDisplayName
- * @returns {string}
- */
-export const OFFER_COW_FOR_TRADE = (_, cowDisplayName) =>
+export const OFFER_COW_FOR_TRADE = (_: any, cowDisplayName: string): string =>
   `Offer ${cowDisplayName} for trade with online players`
 
-/**
- * @param {string} _
- * @param {string} cowDisplayName
- * @returns {string}
- */
-export const WITHDRAW_COW_FROM_TRADE = (_, cowDisplayName) =>
-  `Keep ${cowDisplayName} from being traded`
+export const WITHDRAW_COW_FROM_TRADE = (
+  _: any,
+  cowDisplayName: string
+): string => `Keep ${cowDisplayName} from being traded`
 
-/**
- * @param {string} _
- * @param {farmhand.cow} cowTradedAway
- * @param {farmhand.cow} cowReceived
- * @param {string} playerId
- * @param {boolean} allowCustomPeerCowNames
- * @returns {string}
- */
 export const COW_TRADED_NOTIFICATION = (
-  _,
-  cowTradedAway,
-  cowReceived,
-  playerId,
-  allowCustomPeerCowNames
-) =>
+  _: any,
+  cowTradedAway: farmhand.cow,
+  cowReceived: farmhand.cow,
+  playerId: string,
+  allowCustomPeerCowNames: boolean
+): string =>
   `You traded ${getCowDisplayName(
     cowTradedAway,
     playerId,
     allowCustomPeerCowNames
   )} for ${getCowDisplayName(cowReceived, playerId, allowCustomPeerCowNames)}!`
 
-/**
- * @param {string} _
- * @param {farmhand.item} item
- * @returns {string}
- */
-export const SHOVELED_PLOT = (_, item) => `Shoveled plot of ${item.name}`
+export const SHOVELED_PLOT = (_: any, item: farmhand.item): string =>
+  `Shoveled plot of ${item.name}`
 
-/**
- * @param {string} _
- * @param {farmhand.item} item
- * @returns {string}
- */
-export const FERMENTED_CROP_NAME = (_, item) => `Fermented ${item.name}`
+export const FERMENTED_CROP_NAME = (_: any, item: farmhand.item): string =>
+  `Fermented ${item.name}`
 
-/**
- * @param {string} _
- * @param {farmhand.keg} keg
- * @returns {string}
- */
-export const KEG_SPOILED_MESSAGE = (_, keg) =>
+export const KEG_SPOILED_MESSAGE = (_: any, keg: farmhand.keg): string =>
   `Oh no! Your ${FERMENTED_CROP_NAME(_, itemsMap[keg.itemId])} has spoiled!`
 
-/**
- * @param {TemplateStringsArray} _
- * @param {farmhand.peerMetadata} peerMetadata
- * @returns {string}
- */
-export const NEW_COW_OFFERED_FOR_TRADE = (_, peerMetadata) =>
+export const NEW_COW_OFFERED_FOR_TRADE = (
+  _: any,
+  peerMetadata: farmhand.peerMetadata
+): string =>
   `A new cow is being offered for trade by ${getPlayerName(
     peerMetadata.playerId
   )}!`
 
-/**
- * @param {TemplateStringsArray} _
- * @param {number} numTrees
- * @returns {string}
- */
-export const FOREST_EXPANDED = (_, numTrees) =>
+export const FOREST_EXPANDED = (_: any, numTrees: number): string =>
   `The Forest has expanded! You can now plant up to ${numTrees} trees.`
 
-/**
- * @param {TemplateStringsArray} _
- * @param {number} experiencePointsToNextLevel
- * @param {number} nextLevel
- * @returns {string}
- */
 export const EXPERIENCE_GAUGE_TOOLTIP_LABEL = (
-  _,
-  experiencePointsToNextLevel,
-  nextLevel
-) => {
+  _: any,
+  experiencePointsToNextLevel: number,
+  nextLevel: number
+): string => {
   if (experiencePointsToNextLevel === 1) {
     return `Just 1 more experience point needed to reach level ${integerString(
       nextLevel

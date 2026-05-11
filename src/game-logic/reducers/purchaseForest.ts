@@ -6,12 +6,10 @@ import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.js'
 import { addExperience } from './addExperience.js'
 import { showNotification } from './showNotification.js'
 
-/**
- * @param {farmhand.state} state
- * @param {number} forestId
- * @returns {farmhand.state}
- */
-export const purchaseForest = (state, forestId) => {
+export const purchaseForest = (
+  state: farmhand.state,
+  forestId: number
+): farmhand.state => {
   const { forest, money, purchasedForest } = state
   if (purchasedForest >= forestId) {
     return state

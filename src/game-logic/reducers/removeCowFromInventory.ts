@@ -6,12 +6,10 @@ import { addItemToInventory } from './addItemToInventory.js'
 import { changeCowBreedingPenResident } from './changeCowBreedingPenResident.js'
 
 // TODO: Add tests for this reducer
-/**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @returns {farmhand.state}
- */
-export const removeCowFromInventory = (state, cow) => {
+export const removeCowFromInventory = (
+  state: farmhand.state,
+  cow: farmhand.cow
+): farmhand.state => {
   const cowInventory = [...state.cowInventory]
   const { isUsingHuggingMachine } = cow
 

@@ -1,25 +1,15 @@
-/** @typedef {farmhand.item} item */
-/** @typedef {farmhand.keg} keg */
-
 import { itemsMap } from '../data/maps.js'
 
 import { getInventoryQuantityMap } from './getInventoryQuantityMap.js'
 
 import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsForFermentationRecipe.js'
 
-/**
- * @param {item} fermentationRecipe
- * @param {{ id: string, quantity: number }[]} inventory
- * @param {Array.<keg>} cellarInventory
- * @param {number} cellarSize
- * @returns {number}
- */
 export const getMaxYieldOfFermentationRecipe = (
-  fermentationRecipe,
+  fermentationRecipe: farmhand.item,
   inventory,
-  cellarInventory,
-  cellarSize
-) => {
+  cellarInventory: Array<farmhand.keg>,
+  cellarSize: number
+): number => {
   const {
     [fermentationRecipe.id]: itemQuantityInInventory = 0,
     [(itemsMap as Record<string, farmhand.item>).salt

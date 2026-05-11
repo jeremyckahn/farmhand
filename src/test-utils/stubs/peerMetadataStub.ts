@@ -1,8 +1,7 @@
 import { v4 as uuid } from 'uuid'
 
 export const getPeerMetadataStub = () => {
-  /** @type farmhand.peerMetadata */
-  const peerMetadata = {
+  const peerMetadata: farmhand.peerMetadata = {
     cowsSold: {},
     cropsHarvested: {},
     dayCount: 0,

@@ -1,7 +1,3 @@
-/**
- * @module farmhand.items
- */
-
 import { fieldMode, itemType } from '../enums.js'
 import {
   COW_FEED_ITEM_ID,
@@ -100,15 +96,14 @@ export {
 
 /**
  * @property farmhand.module:items.rainbowFertilizer
- * @type {farmhand.item}
  */
-export const rainbowFertilizer = freeze({
+export const rainbowFertilizer: farmhand.item = freeze({
   description:
     'Helps crops grow a little faster and automatically replants them upon harvesting. Consumes seeds upon replanting and disappears if none are available. Also works for Scarecrows.',
   enablesFieldMode: fieldMode.FERTILIZE,
   id: 'rainbow-fertilizer',
   name: 'Rainbow Fertilizer',
-  type: /** @type {farmhand.itemType} */ FERTILIZER,
+  type: FERTILIZER,
   // Rainbow Fertilizer is worth less than regular Fertilizer because it is not
   // sold in the shop. Items that are sold in the shop have automatically
   // reduced resale value, but since that would not apply to Rainbow
@@ -118,9 +113,8 @@ export const rainbowFertilizer = freeze({
 
 /**
  * @property farmhand.module:items.sprinkler
- * @type {farmhand.item}
  */
-export const sprinkler = freeze({
+export const sprinkler: farmhand.item = freeze({
   description: 'Automatically waters adjacent plants every day.',
   enablesFieldMode: fieldMode.SET_SPRINKLER,
   // Note: The actual hoveredPlotRangeSize of sprinklers grows with the
@@ -129,15 +123,14 @@ export const sprinkler = freeze({
   id: 'sprinkler',
   isReplantable: true,
   name: 'Sprinkler',
-  type: /** @type {farmhand.itemType} */ SPRINKLER,
+  type: SPRINKLER,
   value: 120,
 })
 
 /**
  * @property farmhand.module:items.scarecrow
- * @type {farmhand.item}
  */
-export const scarecrow = freeze({
+export const scarecrow: farmhand.item = freeze({
   description:
     'Prevents crows from eating your crops. One scarecrow covers an entire field, but they are afraid of storms.',
   enablesFieldMode: fieldMode.SET_SCARECROW,
@@ -148,7 +141,7 @@ export const scarecrow = freeze({
   id: 'scarecrow',
   isReplantable: true,
   name: 'Scarecrow',
-  type: /** @type {farmhand.itemType} */ SCARECROW,
+  type: SCARECROW,
   value: 160,
 })
 
@@ -160,102 +153,93 @@ export const scarecrow = freeze({
 
 /**
  * @property farmhand.module:items.cowFeed
- * @type {farmhand.item}
  */
-export const cowFeed = freeze({
+export const cowFeed: farmhand.item = freeze({
   id: COW_FEED_ITEM_ID,
   description:
     'Each cow automatically consumes one unit of Cow Feed per day. Fed cows gain and maintain weight.',
   name: 'Cow Feed',
-  type: /** @type {farmhand.itemType} */ COW_FEED,
+  type: COW_FEED,
   value: 5,
 })
 
 /**
  * @property farmhand.module:items.huggingMachine
- * @type {farmhand.item}
  */
-export const huggingMachine = freeze({
+export const huggingMachine: farmhand.item = freeze({
   id: HUGGING_MACHINE_ITEM_ID,
   description: 'Automatically hugs one cow three times every day.',
   name: 'Hugging Machine',
-  type: /** @type {farmhand.itemType} */ HUGGING_MACHINE,
+  type: HUGGING_MACHINE,
   value: 500,
 })
 
 /**
  * @property farmhand.module:items.milk1
- * @type {farmhand.item}
  */
-export const milk1 = freeze({
+export const milk1: farmhand.item = freeze({
   id: 'milk-1',
   name: 'Grade C Milk',
-  type: /** @type {farmhand.itemType} */ MILK,
+  type: MILK,
   value: 40,
 })
 
 /**
  * @property farmhand.module:items.milk2
- * @type {farmhand.item}
  */
-export const milk2 = freeze({
+export const milk2: farmhand.item = freeze({
   id: 'milk-2',
   name: 'Grade B Milk',
-  type: /** @type {farmhand.itemType} */ MILK,
+  type: MILK,
   value: 80,
 })
 
 /**
  * @property farmhand.module:items.milk3
- * @type {farmhand.item}
  */
-export const milk3 = freeze({
+export const milk3: farmhand.item = freeze({
   id: 'milk-3',
   name: 'Grade A Milk',
-  type: /** @type {farmhand.itemType} */ MILK,
+  type: MILK,
   value: 120,
 })
 
 /**
  * @property farmhand.module:items.rainbowMilk1
- * @type {farmhand.item}
  */
-export const rainbowMilk1 = freeze({
+export const rainbowMilk1: farmhand.item = freeze({
   id: 'rainbow-milk-1',
   name: 'Grade C Rainbow Milk',
-  type: /** @type {farmhand.itemType} */ MILK,
+  type: MILK,
   value: 60,
 })
 
 /**
  * @property farmhand.module:items.rainbowMilk2
- * @type {farmhand.item}
  */
-export const rainbowMilk2 = freeze({
+export const rainbowMilk2: farmhand.item = freeze({
   id: 'rainbow-milk-2',
   name: 'Grade B Rainbow Milk',
-  type: /** @type {farmhand.itemType} */ MILK,
+  type: MILK,
   value: 120,
 })
 
 /**
  * @property farmhand.module:items.rainbowMilk3
- * @type {farmhand.item}
  */
-export const rainbowMilk3 = freeze({
+export const rainbowMilk3: farmhand.item = freeze({
   id: 'rainbow-milk-3',
   name: 'Grade A Rainbow Milk',
-  type: /** @type {farmhand.itemType} */ MILK,
+  type: MILK,
   value: 180,
 })
 
 /**
  * @property farmhand.module:items.chocolateMilk
- * @type {farmhand.item}
  */
-export const chocolateMilk = freeze({
+export const chocolateMilk: farmhand.item = freeze({
   id: 'chocolate-milk',
   name: 'Chocolate Milk',
-  type: /** @type {farmhand.itemType} */ MILK,
+  type: MILK,
   value: 80,
 })

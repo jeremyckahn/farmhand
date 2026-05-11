@@ -315,20 +315,30 @@ declare namespace farmhand {
     allowCustomPeerCowNames: boolean
     cellarInventory: keg[]
     currentDialogView: dialogView
-    /** Keys are achievement ids. */
+    /**
+     * Keys are achievement ids.
+     */
     completedAchievements: Partial<Record<string, boolean>>
     cowForSale: cow
     cowBreedingPen: cowBreedingPen
     cowInventory: cow[]
-    /** Keys are color enums, values are the number of that color of cow purchased. */
+    /**
+     * Keys are color enums, values are the number of that color of cow purchased.
+     */
     cowColorsPurchased: Partial<Record<cowColors, number>>
-    /** The ID of the cow that is currently set to be traded with online peers. */
+    /**
+     * The ID of the cow that is currently set to be traded with online peers.
+     */
     cowIdOfferedForTrade: string
-    /** Keys are items IDs, values are the id references of cow colors (rainbow-cow, etc.). */
+    /**
+     * Keys are items IDs, values are the id references of cow colors (rainbow-cow, etc.).
+     */
     cowsSold: Partial<Record<string, number>>
     cowsTraded: number
     cowTradeTimeoutId?: number | null
-    /** A map of totals of crops harvested. Keys are crop type IDs, values are the number of that crop harvested. */
+    /**
+     * A map of totals of crops harvested. Keys are crop type IDs, values are the number of that crop harvested.
+     */
     cropsHarvested: Partial<Record<cropType, number>>
     dayCount: number
     experience: number
@@ -336,40 +346,62 @@ declare namespace farmhand {
     field: (plotContent | null)[][]
     forest: (plantedTree | forestForageable | null)[][]
     fieldMode: fieldMode
-    /** https://github.com/dmotz/trystero#receiver */
+    /**
+     * https://github.com/dmotz/trystero#receiver
+     */
     getCowAccept?: Function | null
-    /** https://github.com/dmotz/trystero#receiver */
+    /**
+     * https://github.com/dmotz/trystero#receiver
+     */
     getCowReject?: Function | null
-    /** https://github.com/dmotz/trystero#receiver */
+    /**
+     * https://github.com/dmotz/trystero#receiver
+     */
     getCowTradeRequest?: Function | null
-    /** https://github.com/dmotz/trystero#receiver */
+    /**
+     * https://github.com/dmotz/trystero#receiver
+     */
     getPeerMetadata?: Function | null
     hasBooted: boolean
     heartbeatTimeoutId: number | null
     historicalDailyLosses: number[]
     historicalDailyRevenue: number[]
-    /** Currently there is only one element in this array, but it will be used for more historical price data analysis in the future. It is an array for future-facing flexibility. */
+    /**
+     * Currently there is only one element in this array, but it will be used for more historical price data analysis in the future. It is an array for future-facing flexibility.
+     */
     historicalValueAdjustments: Record<string, number>[]
     hoveredPlotRangeSize: number
     playerId: string
     inventory: { id: item['id']; quantity: number }[]
-    /** Is -1 if inventory is unlimited. */
+    /**
+     * Is -1 if inventory is unlimited.
+     */
     inventoryLimit: number
     isAwaitingCowTradeRequest: boolean
     isAwaitingNetworkRequest: boolean
     isCombineEnabled: boolean
     isMenuOpen: boolean
-    /** Keys are items IDs, values are the number of that item sold. The numbers in this map are inclusive of the corresponding ones in cellarItemsSold and represent the grand total of each item sold. */
+    /**
+     * Keys are items IDs, values are the number of that item sold. The numbers in this map are inclusive of the corresponding ones in cellarItemsSold and represent the grand total of each item sold.
+     */
     itemsSold: Partial<Record<item['id'], number>>
-    /** Keys are items IDs, values are the number of that cellar item sold. The numbers in this map represent a subset of the corresponding ones in itemsSold. cellarItemsSold is intended to be used for internal bookkeeping. */
+    /**
+     * Keys are items IDs, values are the number of that cellar item sold. The numbers in this map represent a subset of the corresponding ones in itemsSold. cellarItemsSold is intended to be used for internal bookkeeping.
+     */
     cellarItemsSold: Partial<Record<item['id'], number>>
-    /** Whether the chat modal is open. */
+    /**
+     * Whether the chat modal is open.
+     */
     isChatOpen: boolean
     isDialogViewOpen: boolean
-    /** Whether the player is playing online. */
+    /**
+     * Whether the player is playing online.
+     */
     isOnline: boolean
     isWaitingForDayToCompleteIncrementing: boolean
-    /** Keys are recipe IDs, values are `true`. */
+    /**
+     * Keys are recipe IDs, values are `true`.
+     */
     learnedRecipes: Partial<Record<string, boolean>>
     loanBalance: number
     loansTakenOut: number
@@ -377,21 +409,35 @@ declare namespace farmhand {
     latestNotification?: notification | null
     newDayNotifications: notification[]
     notificationLog: notificationLogEntry[]
-    /** Keys are (Trystero) peer ids, values are their respective metadata or null. */
+    /**
+     * Keys are (Trystero) peer ids, values are their respective metadata or null.
+     */
     peers: Partial<Record<string, peerMetadata | null>>
-    /** See https://github.com/dmotz/trystero */
+    /**
+     * See https://github.com/dmotz/trystero
+     */
     peerRoom?: any
-    /** An array of messages to be sent to the Trystero peer room upon the next broadcast. */
+    /**
+     * An array of messages to be sent to the Trystero peer room upon the next broadcast.
+     */
     pendingPeerMessages: peerMessage[]
-    /** An array of messages that have been received from peers. */
+    /**
+     * An array of messages that have been received from peers.
+     */
     latestPeerMessages: peerMessage[]
-    /** See https://github.com/dmotz/trystero */
+    /**
+     * See https://github.com/dmotz/trystero
+     */
     sendPeerMetadata?: Function | null
     selectedCowId: string
     selectedItemId: string
-    /** Keys are itemIds. */
+    /**
+     * Keys are itemIds.
+     */
     priceCrashes: Partial<Record<string, priceEvent>>
-    /** Keys are itemIds. */
+    /**
+     * Keys are itemIds.
+     */
     priceSurges: Partial<Record<string, priceEvent>>
     purchasedCombine: number
     purchasedComposter: number
@@ -404,37 +450,65 @@ declare namespace farmhand {
     record7dayProfitAverage: number
     recordProfitabilityStreak: number
     recordSingleDayProfit: number
-    /** The amount of money the player has generated in */
+    /**
+     * The amount of money the player has generated in
+     */
     revenue: number
-    /** Transient value used to drive router redirection. */
+    /**
+     * Transient value used to drive router redirection.
+     */
     redirect: string
-    /** What online room the player is in. */
+    /**
+     * What online room the player is in.
+     */
     room: string
-    /** https://github.com/dmotz/trystero#sender */
+    /**
+     * https://github.com/dmotz/trystero#sender
+     */
     sendCowAccept?: Function | null
-    /** https://github.com/dmotz/trystero#sender */
+    /**
+     * https://github.com/dmotz/trystero#sender
+     */
     sendCowReject?: Function | null
-    /** https://github.com/dmotz/trystero#sender */
+    /**
+     * https://github.com/dmotz/trystero#sender
+     */
     sendCowTradeRequest?: Function | null
-    /** Option to show the Home Screen */
+    /**
+     * Option to show the Home Screen
+     */
     showHomeScreen: boolean
     showNotifications: boolean
-    /** indicating if the stage has been unlocked */
+    /**
+     * indicating if the stage has been unlocked
+     */
     stageFocus: stageFocusType
     todaysNotifications: notification[]
-    /** Should always be a negative number. */
+    /**
+     * Should always be a negative number.
+     */
     todaysLosses: number
-    /** Keys are item names, values are their respective quantities. */
+    /**
+     * Keys are item names, values are their respective quantities.
+     */
     todaysPurchases: Partial<Record<string, number>>
-    /** Should always be a positive number. */
+    /**
+     * Should always be a positive number.
+     */
     todaysRevenue: number
-    /** Keys are item names, values are their respective quantities. */
+    /**
+     * Keys are item names, values are their respective quantities.
+     */
     todaysStartingInventory: Partial<Record<item['id'], number>>
     toolLevels: Record<toolType, toolLevel>
-    /** Option to display the Bed button on the left side of the screen. */
+    /**
+     * Option to display the Bed button on the left side of the screen.
+     */
     useAlternateEndDayButtonPosition: boolean
     valueAdjustments: Record<string, number>
-    /** Comes from the `version` property in package.json. */
+    /**
+     * Comes from the `version` property in package.json.
+     */
     version: string
   }
 }

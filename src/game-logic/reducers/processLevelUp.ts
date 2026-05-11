@@ -12,12 +12,10 @@ import { addItemToInventory } from './addItemToInventory.js'
 import { showNotification } from './showNotification.js'
 import { unlockTool } from './unlockTool.js'
 
-/**
- * @param {farmhand.state} state
- * @param {number} oldLevel
- * @returns {farmhand.state}
- */
-export const processLevelUp = (state, oldLevel) => {
+export const processLevelUp = (
+  state: farmhand.state,
+  oldLevel: number
+): farmhand.state => {
   const { experience, selectedItemId } = state
   const newLevel = levelAchieved(experience)
 

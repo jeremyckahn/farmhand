@@ -3,13 +3,11 @@ import { itemType } from '../../enums.js'
 
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-export const waterPlot = (state, x, y) => {
+export const waterPlot = (
+  state: farmhand.state,
+  x: number,
+  y: number
+): farmhand.state => {
   const plotContent = state.field[y][x]
 
   const canBeWatered =

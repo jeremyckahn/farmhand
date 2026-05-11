@@ -11,10 +11,9 @@ import './ContextPane.sass'
 export const PlayerInventory = memo<{ playerInventory: farmhand.item[] }>(
   /**
    * Renders an Inventory component with player's items and sell view enabled.
-   *
    * @param props - The component props.
    * @param props.playerInventory - The array of items in the
-   * player's inventory.
+player's inventory.
    */
   ({ playerInventory }) => (
     <Inventory

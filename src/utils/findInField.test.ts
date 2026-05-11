@@ -9,8 +9,7 @@ const carrotPlot = {
 }
 
 describe('findInField', () => {
-  /** @type {farmhand.state['field']} */
-  const field = [[null, carrotPlot, null]]
+  const field: farmhand.state['field'] = [[null, carrotPlot, null]]
 
   test('returns the desired plot from the field', () => {
     const foundPlot = findInField(field, plot => {

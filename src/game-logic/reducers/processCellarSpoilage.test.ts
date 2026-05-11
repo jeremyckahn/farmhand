@@ -18,7 +18,7 @@ describe('processCellarSpoilage', () => {
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
-    })
+    } as any)
 
     expect(expectedState.cellarInventory).toHaveLength(1)
   })
@@ -35,7 +35,7 @@ describe('processCellarSpoilage', () => {
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
-    })
+    } as any)
 
     expect(expectedState.cellarInventory).toHaveLength(0)
   })
@@ -52,7 +52,7 @@ describe('processCellarSpoilage', () => {
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
-    })
+    } as any)
 
     expect(expectedState.cellarInventory).toHaveLength(1)
   })
@@ -69,7 +69,7 @@ describe('processCellarSpoilage', () => {
     const expectedState = processCellarSpoilage({
       cellarInventory,
       newDayNotifications,
-    })
+    } as any)
 
     expect(expectedState.newDayNotifications).toEqual([
       {

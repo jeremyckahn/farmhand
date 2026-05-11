@@ -1,12 +1,10 @@
 import { COW_GESTATION_PERIOD_DAYS } from '../../constants.js'
 
-/**
- * @param {farmhand.cow} cow
- * @param {farmhand.cowBreedingPen} cowBreedingPen
- * @param {Array.<farmhand.cow>} cowInventory
- * @return {boolean}
- */
-const cowCanBeAdded = (cow, cowBreedingPen, cowInventory) => {
+const cowCanBeAdded = (
+  cow: farmhand.cow,
+  cowBreedingPen: farmhand.cowBreedingPen,
+  cowInventory: Array<farmhand.cow>
+): boolean => {
   const { cowId1, cowId2 } = cowBreedingPen
   const isBreedingPenFull = cowId1 !== null && cowId2 !== null
   const isCowInBreedingPen = cowId1 === cow.id || cowId2 === cow.id
@@ -19,13 +17,14 @@ const cowCanBeAdded = (cow, cowBreedingPen, cowInventory) => {
 }
 
 /**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @param {boolean} isAdding If true, cow will be added to the breeding pen. If
- * false, they will be removed.
- * @returns {farmhand.state}
+ * @param isAdding If true, cow will be added to the breeding pen. If
+false, they will be removed.
  */
-export const changeCowBreedingPenResident = (state, cow, isAdding) => {
+export const changeCowBreedingPenResident = (
+  state: farmhand.state,
+  cow: farmhand.cow,
+  isAdding: boolean
+): farmhand.state => {
   const { cowBreedingPen, cowInventory } = state
   const { cowId1, cowId2 } = cowBreedingPen
   const isCowInBreedingPen = cowId1 === cow.id || cowId2 === cow.id

@@ -21,11 +21,9 @@ import { SHOVELED } from '../../strings.js'
 import './Plot.sass'
 import { SHOVELED_PLOT } from '../../templates.js'
 
-/**
- * @param {farmhand.plotContent?} plotContent
- * @returns {string | undefined}
- */
-export const getBackgroundStyles = plotContent => {
+export const getBackgroundStyles = (
+  plotContent: farmhand.plotContent | null
+): string | undefined => {
   if (!plotContent) {
     return undefined
   }
@@ -48,22 +46,22 @@ export const getBackgroundStyles = plotContent => {
 }
 
 /*!
- * @param {(farmhand.plotContent|farmhand.crop)?} plotContent
- * @returns {number?}
  */
-export const getDaysLeftToMature = plotContent =>
+export const getDaysLeftToMature = (
+  plotContent: farmhand.plotContent | farmhand.crop | null
+): number | null =>
   // Need to check that daysWatered is > -1 here because it may be NaN (in the
   // case of non-crop items).
   plotContent &&
-  plotContent.daysWatered > -1 &&
+  (plotContent as any).daysWatered > -1 &&
   getPlotContentType(plotContent) === itemType.CROP
     ? Math.max(
         0,
         Math.ceil(
           (getCropLifecycleDuration(
-            plotContent ? itemsMap[plotContent.itemId] : null
+            plotContent ? (itemsMap[plotContent.itemId] as any) : null
           ) -
-            plotContent.daysWatered) /
+            (plotContent as any).daysWatered) /
             (1 +
               (plotContent.fertilizerType === fertilizerType.NONE
                 ? 0
@@ -71,6 +69,19 @@ export const getDaysLeftToMature = plotContent =>
         )
       )
     : null
+
+export interface PlotProps {
+  handlePlotClick: (x: number, y: number) => void
+  isInHoverRange: boolean
+  plotContent: farmhand.plotContent | null
+  selectedItemId: string
+  setHoveredPlot: (coords: { x: number; y: number } | null) => void
+  x: number
+  y: number
+  image?: string
+  lifeStage?: string
+  canBeHarvested?: boolean
+}
 
 export const Plot = ({
   handlePlotClick,
@@ -87,7 +98,7 @@ export const Plot = ({
     getCropLifeStage(plotContent),
   canBeHarvested = lifeStage === cropLifeStage.GROWN ||
     (plotContent && getPlotContentType(plotContent) === itemType.WEED),
-}) => {
+}: any) => {
   const item = plotContent ? itemsMap[plotContent.itemId] : null
   const daysLeftToMature = getDaysLeftToMature(plotContent)
   const isCrop =
@@ -218,18 +229,7 @@ export const Plot = ({
   )
 }
 
-Plot.propTypes = {
-  handlePlotClick: func.isRequired,
-  isInHoverRange: bool.isRequired,
-  lifeStage: string,
-  plotContent: object,
-  selectedItemId: string.isRequired,
-  setHoveredPlot: func.isRequired,
-  x: number.isRequired,
-  y: number.isRequired,
-}
-
-export default function Consumer(props) {
+export default function Consumer(props: any) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

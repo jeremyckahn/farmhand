@@ -1,5 +1,3 @@
-/** @typedef {farmhand.state} state */
-
 import { randomNumberService } from '../../common/services/randomNumber.js'
 import { itemsMap } from '../../data/maps.js'
 import { wineService } from '../../services/wine.js'
@@ -8,11 +6,9 @@ import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
 
 import { removeKegFromCellar } from './removeKegFromCellar.js'
 
-/**
- * @param {state} state
- * @returns {state}
- */
-export const processCellarSpoilage = state => {
+export const processCellarSpoilage = (
+  state: farmhand.state
+): farmhand.state => {
   const { cellarInventory } = state
 
   const newCellarInventory = [...cellarInventory]

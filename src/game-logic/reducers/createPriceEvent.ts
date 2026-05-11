@@ -1,10 +1,11 @@
 /**
- * @param {farmhand.state} state
- * @param {farmhand.priceEvent} priceEvent
- * @param {string} priceEventKey Either 'priceCrashes' or 'priceSurges'
- * @returns {farmhand.state}
+ * @param priceEventKey Either 'priceCrashes' or 'priceSurges'
  */
-export const createPriceEvent = (state, priceEvent, priceEventKey) => ({
+export const createPriceEvent = (
+  state: farmhand.state,
+  priceEvent: farmhand.priceEvent,
+  priceEventKey: string
+): farmhand.state => ({
   ...state,
   [priceEventKey]: {
     ...state[priceEventKey],

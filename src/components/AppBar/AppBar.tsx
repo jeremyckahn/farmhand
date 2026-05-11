@@ -12,13 +12,7 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { moneyString } from '../../utils/moneyString.js'
 import './AppBar.sass'
 
-/**
- * Displays formatted monetary value.
- *
- * @param {Object} props - The component props.
- * @param {number} props.money - The amount of money to display.
- */
-const MoneyDisplay = ({ money }) => {
+const MoneyDisplay = ({ money }: { money: number }) => {
   const idleColor = 'rgb(255, 255, 255)'
   const [displayedMoney, setDisplayedMoney] = useState(money)
   const [textColor, setTextColor] = useState(idleColor)

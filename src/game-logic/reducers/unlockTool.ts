@@ -1,11 +1,9 @@
 import { toolLevel } from '../../enums.js'
 
-/**
- * @param {farmhand.state} state
- * @param {farmhand.toolType} toolType
- * @returns {farmhand.state}
- */
-export const unlockTool = (state, toolType) => {
+export const unlockTool = (
+  state: farmhand.state,
+  toolType: farmhand.toolType
+): farmhand.state => {
   const { toolLevels } = state
 
   if (toolLevels[toolType] === toolLevel.UNAVAILABLE) {

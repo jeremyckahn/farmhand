@@ -116,7 +116,7 @@ export default {
 
   handleCowNameInputChange(
     this: Farmhand,
-    { target }: React.ChangeEvent<HTMLInputElement>,
+    { target }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     cow: farmhand.cow
   ) {
     const { value } = target

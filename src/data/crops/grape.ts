@@ -1,18 +1,12 @@
 import { cropFamily, cropType, grapeVariety } from '../../enums.js'
 import { crop, cropVariety, fromSeed } from '../crop.js'
 
-/**
- * @param {farmhand.item | farmhand.cropVariety} item
- * @returns {item is farmhand.grape}
- */
-export const isGrape = item => {
+export const isGrape = (
+  item: farmhand.item | farmhand.cropVariety
+): item is farmhand.grape => {
   return 'cropFamily' in item && item.cropFamily === cropFamily.GRAPE
 }
 
-/**
- * @param  grapeProps
- * @returns
- */
 const grape = (
   grapeProps: Partial<farmhand.grape> & {
     imageId: string
@@ -31,9 +25,8 @@ const grape = (
 
 /**
  * @property farmhand.module:items.grapeSeed
- * @type {farmhand.item}
  */
-export const grapeSeed = crop({
+export const grapeSeed: farmhand.item = crop({
   cropType: cropType.GRAPE,
   cropTimeline: [3, 4],
   growsInto: [
@@ -53,10 +46,7 @@ export const grapeSeed = crop({
   tier: 7,
 })
 
-/**
- * @type {Record<grapeVariety, string>}
- */
-export const grapeVarietyNameMap = {
+export const grapeVarietyNameMap: Record<farmhand.grapeVariety, string> = {
   [grapeVariety.CHARDONNAY]: 'Chardonnay',
   [grapeVariety.SAUVIGNON_BLANC]: 'Sauvignon Blanc',
   //[grapeVariety.PINOT_BLANC]: 'Pinot Blanc',
@@ -70,10 +60,10 @@ export const grapeVarietyNameMap = {
 }
 
 /**
- * @type {Record<grapeVariety, number>} The number value represents a wine's
- * value relative to a baseline of 1. Must be an integer.
+ * @type The number value represents a wine's
+value relative to a baseline of 1. Must be an integer.
  */
-export const wineVarietyValueMap = {
+export const wineVarietyValueMap: Record<farmhand.grapeVariety, number> = {
   [grapeVariety.CHARDONNAY]: 1,
   [grapeVariety.SAUVIGNON_BLANC]: 8,
   //[grapeVariety.PINOT_BLANC]: 2,
@@ -88,35 +78,32 @@ export const wineVarietyValueMap = {
 
 /**
  * @property farmhand.module:items.grapeChardonnay
- * @type {farmhand.grape}
  */
-export const grapeChardonnay = grape({
+export const grapeChardonnay: farmhand.grape = grape({
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-chardonnay'),
   }),
   name: 'Chardonnay Grape',
   imageId: 'grape-green',
-  variety: /** @type {'CHARDONNAY'} */ grapeVariety.CHARDONNAY,
+  variety: grapeVariety.CHARDONNAY,
   wineId: 'wine-chardonnay',
 })
 
 /**
  * @property farmhand.module:items.grapeSauvignonBlanc
- * @type {farmhand.grape}
  */
-export const grapeSauvignonBlanc = grape({
+export const grapeSauvignonBlanc: farmhand.grape = grape({
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-sauvignon-blanc'),
   }),
   name: 'Sauvignon Blanc Grape',
   imageId: 'grape-green',
-  variety: /** @type {'SAUVIGNON_BLANC'} */ grapeVariety.SAUVIGNON_BLANC,
+  variety: grapeVariety.SAUVIGNON_BLANC,
   wineId: 'wine-sauvignon-blanc',
 })
 
 /**
  * @property farmhand.module:items.grapePinotBlanc
- * @type {farmhand.grape}
  */
 // export const grapePinotBlanc = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-pinot-blanc') }),
@@ -128,7 +115,6 @@ export const grapeSauvignonBlanc = grape({
 
 /**
  * @property farmhand.module:items.grapeMuscat
- * @type {farmhand.grape}
  */
 // export const grapeMuscat = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-muscat') }),
@@ -140,7 +126,6 @@ export const grapeSauvignonBlanc = grape({
 
 /**
  * @property farmhand.module:items.grapeRiesling
- * @type {farmhand.grape}
  */
 // export const grapeRiesling = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-riesling') }),
@@ -152,7 +137,6 @@ export const grapeSauvignonBlanc = grape({
 
 /**
  * @property farmhand.module:items.grapeMerlot
- * @type {farmhand.grape}
  */
 // export const grapeMerlot = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-merlot') }),
@@ -164,21 +148,19 @@ export const grapeSauvignonBlanc = grape({
 
 /**
  * @property farmhand.module:items.grapeCabernetSauvignon
- * @type {farmhand.grape}
  */
-export const grapeCabernetSauvignon = grape({
+export const grapeCabernetSauvignon: farmhand.grape = grape({
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-cabernet-sauvignon'),
   }),
   name: 'Cabernet Sauvignon Grape',
   imageId: 'grape-purple',
-  variety: /** @type {'CABERNET_SAUVIGNON'} */ grapeVariety.CABERNET_SAUVIGNON,
+  variety: grapeVariety.CABERNET_SAUVIGNON,
   wineId: 'wine-cabernet-sauvignon',
 })
 
 /**
  * @property farmhand.module:items.grapeSyrah
- * @type {farmhand.grape}
  */
 // export const grapeSyrah = grape({
 // ...fromSeed(grapeSeed, { variantIdx: grapeSeed.growsInto?.indexOf('grape-syrah') }),
@@ -190,36 +172,34 @@ export const grapeCabernetSauvignon = grape({
 
 /**
  * @property farmhand.module:items.grapeTempranillo
- * @type {farmhand.grape}
  */
-export const grapeTempranillo = grape({
+export const grapeTempranillo: farmhand.grape = grape({
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-tempranillo'),
   }),
   name: 'Tempranillo Grape',
   imageId: 'grape-purple',
-  variety: /** @type {'TEMPRANILLO'} */ grapeVariety.TEMPRANILLO,
+  variety: grapeVariety.TEMPRANILLO,
   wineId: 'wine-tempranillo',
 })
 
 /**
  * @property farmhand.module:items.grapeNebbiolo
- * @type {farmhand.grape}
  */
-export const grapeNebbiolo = grape({
+export const grapeNebbiolo: farmhand.grape = grape({
   ...fromSeed(grapeSeed, {
     variantIdx: grapeSeed.growsInto?.indexOf('grape-nebbiolo'),
   }),
   name: 'Nebbiolo Grape',
   imageId: 'grape-purple',
-  variety: /** @type {'NEBBIOLO'} */ grapeVariety.NEBBIOLO,
+  variety: grapeVariety.NEBBIOLO,
   wineId: 'wine-nebbiolo',
 })
 
-/**
- * @type {Record<grapeVariety, farmhand.grape>}
- */
-export const grapeVarietyToGrapeItemMap = {
+export const grapeVarietyToGrapeItemMap: Record<
+  farmhand.grapeVariety,
+  farmhand.grape
+> = {
   [grapeVariety.CHARDONNAY]: grapeChardonnay,
   [grapeVariety.SAUVIGNON_BLANC]: grapeSauvignonBlanc,
   //[grapeVariety.PINOT_BLANC]: grapePinotBlanc,

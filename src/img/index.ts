@@ -431,10 +431,7 @@ export const items = {
   ...craftedItems,
 }
 
-/**
- * @type {Record<grapeVariety, string>}
- */
-export const wines = {
+export const wines: Record<farmhand.grapeVariety, string> = {
   [grapeVariety.CHARDONNAY]: wineGreen,
   [grapeVariety.SAUVIGNON_BLANC]: wineGreen,
   //[grapeVariety.PINOT_BLANC]: wineGreen,

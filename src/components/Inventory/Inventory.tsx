@@ -46,15 +46,9 @@ const itemTypeCategoryMap = new Map([
 const getItemCategories = () =>
   new Map(Array.from(categoryIds.keys()).map(key => [key, []]))
 
-export const separateItemsIntoCategories = (
-  /** @type {farmhand.item[]} */ items
-) =>
+export const separateItemsIntoCategories = (items: farmhand.item[]) =>
   sortItems(items).reduce(
-    /**
-     * @param {Map<string, farmhand.item[]>} categories
-     * @param {farmhand.item} item
-     */
-    (categories, item) => {
+    (categories: Map<string, farmhand.item[]>, item: farmhand.item) => {
       const { type } = itemsMap[item.id]
       const category = itemTypeCategoryMap.get(type)
 
@@ -77,7 +71,7 @@ const formatCategoryName = key =>
     .replace(/\b\w/g, char => char.toUpperCase())
 
 const Inventory = ({
-  /** @type {farmhand.item[]} */ items,
+  items,
   playerInventory,
   shopInventory,
   isPurchaseView = false,

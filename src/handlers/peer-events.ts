@@ -1,4 +1,3 @@
-/** @typedef {import('../components/Farmhand/Farmhand.js').default} Farmhand */
 import { cowTradeRejectionReason } from '../enums.js'
 import { EXPERIENCE_VALUES } from '../constants.js'
 import { COW_TRADED_NOTIFICATION } from '../templates.js'
@@ -18,27 +17,21 @@ import {
 
 import { addExperience } from '../game-logic/reducers/addExperience.js'
 
-/**
- * @param {import('../components/Farmhand/Farmhand.js').default} farmhand
- * @param {farmhand.peerMetadata} peerMetadata
- * @param {string} peerId
- */
-export const handlePeerMetadataRequest = (farmhand, peerMetadata, peerId) => {
+export const handlePeerMetadataRequest = (
+  farmhand: any,
+  peerMetadata: farmhand.peerMetadata,
+  peerId: string
+) => {
   farmhand.updatePeer(farmhand, peerMetadata, peerId)
 }
 
 /**
  * Handles another player's initiation of a cow trade request.
- * @param {Farmhand} farmhand
- * @param {Object} cowTradeRequestPayload
- * @param {farmhand.cow} cowTradeRequestPayload.cowOffered
- * @param {farmhand.cow} cowTradeRequestPayload.cowRequested
- * @param {string} peerId
  */
 export const handleCowTradeRequest = async (
-  farmhand,
+  farmhand: any,
   { cowOffered, cowRequested },
-  peerId
+  peerId: string
 ) => {
   let wasTradeSuccessful = false
 
@@ -158,12 +151,11 @@ export const handleCowTradeRequest = async (
   )
 }
 
-/**
- * @param {Farmhand} farmhand
- * @param {farmhand.cow} cowReceived
- * @param {string} peerId
- */
-export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
+export const handleCowTradeRequestAccept = (
+  farmhand: any,
+  cowReceived: farmhand.cow,
+  peerId: string
+) => {
   let wasTradeSuccessful = false
 
   farmhand.setState(
@@ -268,12 +260,7 @@ export const handleCowTradeRequestAccept = (farmhand, cowReceived, peerId) => {
   )
 }
 
-/**
- * @param {Farmhand} farmhand
- * @param {Object} cowTradeRejectionPayload
- * @param {string} cowTradeRejectionPayload.reason
- */
-export const handleCowTradeRequestReject = (farmhand, { reason }) => {
+export const handleCowTradeRequestReject = (farmhand: any, { reason }) => {
   const { cowTradeTimeoutId } = farmhand.state
 
   if (typeof cowTradeTimeoutId === 'number') {

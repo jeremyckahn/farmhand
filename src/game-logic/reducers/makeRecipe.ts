@@ -11,13 +11,11 @@ const EXPERIENCE_FOR_RECIPE = {
   [recipeType.RECYCLING]: EXPERIENCE_VALUES.RECYCLING_RECIPE_MADE,
 }
 
-/**
- * @param {farmhand.state} state
- * @param {farmhand.recipe} recipe
- * @param {number} [howMany=1]
- * @returns {farmhand.state}
- */
-export const makeRecipe = (state, recipe, howMany = 1) => {
+export const makeRecipe = (
+  state: farmhand.state,
+  recipe: farmhand.recipe,
+  howMany: number = 1
+): farmhand.state => {
   const originalState = state
   state = consumeIngredients(
     state,

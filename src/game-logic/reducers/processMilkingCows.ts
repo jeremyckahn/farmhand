@@ -7,15 +7,11 @@ import { MILKS_PRODUCED } from '../../templates.js'
 
 import { addItemToInventory } from './addItemToInventory.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processMilkingCows = state => {
+export const processMilkingCows = (state: farmhand.state): farmhand.state => {
   const cowInventory = [...state.cowInventory]
   const newDayNotifications = [...state.newDayNotifications]
   const { length: cowInventoryLength } = cowInventory
-  /** @type {Record<string, number>} */ const milksProduced = {}
+  const milksProduced: Record<string, number> = {}
 
   for (let i = 0; i < cowInventoryLength; i++) {
     const cow = cowInventory[i]
@@ -23,7 +19,7 @@ export const processMilkingCows = state => {
     if (cow.daysSinceMilking > getCowMilkRate(cow)) {
       cowInventory[i] = { ...cow, daysSinceMilking: 0 }
 
-      const milk = getCowMilkItem(cow)
+      const milk = getCowMilkItem(cow as any)
       const { name } = milk
 
       if (!doesInventorySpaceRemain(state)) {
