@@ -10,7 +10,7 @@
  * @param {string} message
  * @param {alertSeverity} [severity] Corresponds to the `severity` prop here:
  * https://material-ui.com/api/alert/
- * @param {import('@mui/material/Alert').AlertProps['onClick']} onClick
+ * @param  onClick
  * @returns {state}
  * @see https://material-ui.com/api/alert/
  */

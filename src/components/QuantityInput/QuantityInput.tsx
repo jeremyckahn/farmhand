@@ -20,7 +20,7 @@ const QuantityNumberFormat = forwardRef(
    * @param {number} props.min
    * @param {number} props.max
    * @param {(value: number) => void} props.onChange
-   * @param {React.ForwardedRef<any>} ref
+   * @param  ref
    */
   (
     {

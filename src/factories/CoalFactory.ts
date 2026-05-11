@@ -9,7 +9,7 @@ import { chooseRandom } from '../utils/index.js'
 export default class CoalFactory extends Factory {
   /**
    * Generate resources
-   * @returns {Array.<farmhand.item>} an array of coal and stone resources
+   * @returns  an array of coal and stone resources
    */
   generate(): farmhand.item[] {
     const spawns: farmhand.item[] = []

@@ -70,8 +70,8 @@ export const testRecipe = (overrides = {}) => ({
 
 /**
  * Creates a minimal but complete farmhand.state object for testing
- * @param {Partial<farmhand.state>} overrides - Properties to override in the test state
- * @returns {farmhand.state}
+ * @param  overrides - Properties to override in the test state
+ * @returns
  */
 export const testState = (
   overrides: Partial<farmhand.state> = {}

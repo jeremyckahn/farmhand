@@ -3,7 +3,7 @@
  */
 export class Factory {
   /**
-   * @returns {farmhand.item | farmhand.item[]}
+   * @returns
    * @abstract
    */
   generate(): farmhand.item | farmhand.item[] {
