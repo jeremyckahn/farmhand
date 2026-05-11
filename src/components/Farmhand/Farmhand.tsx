@@ -299,7 +299,7 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   /**
-   * @returns {farmhand.state}
+   * @returns
    */
   createInitialState(): farmhand.state {
     return {
@@ -925,12 +925,11 @@ export default class Farmhand extends FarmhandReducers {
   }
 
   async updateServerForNextDay() {
-    /** @type {globalThis.farmhand.notification[]} */
+    /** */
     const serverMessages: { message: string; severity: string }[] = []
 
     /**
-     * @type {string | null}
-     */
+     * */
     let broadcastedPositionMessage: string | null = null
 
     this.setState(() => ({ isAwaitingNetworkRequest: true }))
@@ -1005,7 +1004,7 @@ export default class Farmhand extends FarmhandReducers {
       serverValueAdjustments,
     } = await this.updateServerForNextDay()
 
-    /** @type {globalThis.farmhand.notification[]} */
+    /** */
     let pendingNotifications: { message: string; severity: string }[] = []
 
     // This would be cleaner if setState was called after localForage.setItem,
