@@ -27,7 +27,7 @@ const MoneyNumberFormat = forwardRef(
    * @param {number} props.min - Minimum value allowed for the input
    * @param {(value: number) => void} props.onChange - Callback function to handle changes in the input value
    * @param {React.Dispatch<React.SetStateAction<number>>} props.setLoanInputValue - Function to set the loan input value
-   * @param {React.ForwardedRef<unknown>} [ref] - Forwarded ref for the component
+   * @param  [ref] - Forwarded ref for the component
    */
   (
     {

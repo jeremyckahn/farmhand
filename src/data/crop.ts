@@ -13,7 +13,7 @@ interface CropArgs extends Partial<farmhand.item> {
 
 /**
  * @param {CropArgs} item
- * @returns {farmhand.item}
+ * @returns
  */
 export const crop = ({
   cropTimeline = [],
@@ -49,7 +49,7 @@ interface FromSeedConfig {
 /**
  * @param {farmhand.item} item
  * @param {FromSeedConfig} [config]
- * @returns {Partial<farmhand.item>}
+ * @returns
  */
 export const fromSeed = (
   { cropTimeline, cropType, growsInto, tier = 1 }: farmhand.item,
@@ -73,7 +73,7 @@ export const fromSeed = (
 
 /**
  * @param {farmhand.cropVariety} cropVarietyArgs
- * @returns {farmhand.cropVariety}
+ * @returns
  */
 export const cropVariety = ({
   imageId,

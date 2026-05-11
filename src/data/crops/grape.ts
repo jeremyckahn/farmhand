@@ -10,8 +10,8 @@ export const isGrape = item => {
 }
 
 /**
- * @param {Partial<farmhand.grape> & { imageId: string; variety: farmhand.grapeVariety; wineId: string }} grapeProps
- * @returns {farmhand.grape}
+ * @param  grapeProps
+ * @returns
  */
 const grape = (
   grapeProps: Partial<farmhand.grape> & {

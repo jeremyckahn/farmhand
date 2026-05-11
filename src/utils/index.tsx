@@ -490,8 +490,8 @@ export const getCowDisplayName = (cow, playerId, allowCustomPeerCowNames) => {
 
 /**
  * Generates a friendly cow.
- * @param {Object} [options]
- * @returns {farmhand.cow}
+ * @param  [options]
+ * @returns
  */
 export const generateCow = (
   options: {
@@ -786,7 +786,7 @@ export const sortItems = items => {
 
 export const inventorySpaceConsumed = memoize(
   /**
-   * @param {farmhand.state['inventory']} inventory
+   * @param  inventory
    * @returns {number}
    */
   (inventory: Array<{ quantity?: number }>) =>
@@ -1124,8 +1124,8 @@ const isPlotContentACrop = plotContents =>
 
 /**
  * @template T
- * @param {Array.<T & { weight: number }>} weightedOptions an array of objects each containing a `weight` property
- * @returns {T} one of the items from weightedOptions
+ * @param  weightedOptions an array of objects each containing a `weight` property
+ * @returns  one of the items from weightedOptions
  */
 export function randomChoice<T extends { weight: number }>(
   weightedOptions: T[]
