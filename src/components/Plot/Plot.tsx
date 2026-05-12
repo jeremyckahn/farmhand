@@ -247,7 +247,7 @@ export const Plot = ({
   )
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(props: Partial<PlotProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
