@@ -55,9 +55,11 @@ if (tools.shovel) {
 export interface MemoPlotProps {
   experience: number
   fieldMode: farmhand.fieldMode
+  handlePlotClick?: (x: number, y: number) => void
   hoveredPlot: { x: number | null; y: number | null }
   hoveredPlotRangeSize: number
   plotContent?: farmhand.plotContent | null
+  selectedItemId?: string
   setHoveredPlot?: (plot: { x: number | null; y: number | null }) => void
   x: number
   y: number
@@ -115,14 +117,24 @@ export const isInHoverRange = ({
 
 export const MemoPlot = memo(
   (props: MemoPlotProps) => {
-    const { hoveredPlot, plotContent, setHoveredPlot, x, y } = props
+    const {
+      handlePlotClick,
+      hoveredPlot,
+      plotContent,
+      selectedItemId,
+      setHoveredPlot,
+      x,
+      y,
+    } = props
 
     return (
       <Plot
         {...{
+          handlePlotClick,
           hoveredPlot,
           isInHoverRange: isInHoverRange(props),
           plotContent,
+          selectedItemId,
           setHoveredPlot,
           x,
           y,
@@ -453,7 +465,7 @@ Field.propTypes = {
   rows: number.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: any) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

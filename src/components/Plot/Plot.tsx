@@ -71,15 +71,15 @@ export const getDaysLeftToMature = (
     : null
 
 export interface PlotProps {
-  handlePlotClick: (x: number, y: number) => void
-  isInHoverRange: boolean
-  plotContent: farmhand.plotContent | null
+  handlePlotClick?: (x: number, y: number) => void
+  isInHoverRange?: boolean
+  plotContent?: farmhand.plotContent | null
   selectedItemId: string
-  setHoveredPlot: (coords: { x: number; y: number } | null) => void
-  x: number
-  y: number
+  setHoveredPlot?: (coords: { x: number | null; y: number | null }) => void
+  x?: number
+  y?: number
   image?: string
-  lifeStage?: string
+  lifeStage?: string | false | null
   canBeHarvested?: boolean
 }
 
@@ -92,18 +92,22 @@ export const Plot = ({
   x,
   y,
 
-  image = getPlotImage(plotContent, x, y),
-  lifeStage = plotContent &&
+  image = getPlotImage(plotContent ?? null, x ?? 0, y ?? 0) ?? '',
+  lifeStage = (plotContent &&
     getPlotContentType(plotContent) === itemType.CROP &&
-    getCropLifeStage(plotContent),
+    getCropLifeStage(plotContent)) ||
+    null,
   canBeHarvested = lifeStage === cropLifeStage.GROWN ||
-    (plotContent && getPlotContentType(plotContent) === itemType.WEED),
-}: any) => {
+    (plotContent && getPlotContentType(plotContent) === itemType.WEED) ||
+    false,
+}: PlotProps) => {
   const item = plotContent ? itemsMap[plotContent.itemId] : null
-  const daysLeftToMature = getDaysLeftToMature(plotContent)
+  const daysLeftToMature = getDaysLeftToMature(plotContent ?? null)
   const isCrop =
     plotContent && getPlotContentType(plotContent) === itemType.CROP
-  const isScarecow = itemsMap[plotContent?.itemId]?.type === itemType.SCARECROW
+  const isScarecow =
+    (plotContent?.itemId ? itemsMap[plotContent.itemId] : null)?.type ===
+    itemType.SCARECROW
   const [wasJustShoveled, setWasJustShoveled] = useState(false)
   const [initialIsShoveledState, setInitialIsShoveledState] = useState(
     Boolean(plotContent?.isShoveled)
@@ -129,20 +133,22 @@ export const Plot = ({
   const showPlotImage = Boolean(
     image &&
       (wasJustShoveled ||
-        plotContent.itemId ||
-        getPlotContentType(plotContent) === itemType.CROP)
+        plotContent?.itemId ||
+        (plotContent && getPlotContentType(plotContent) === itemType.CROP))
   )
 
   let plotLabelText: string | null = null
   if (item) {
     const isPlotContentACropSeed =
-      item.type === itemType.CROP &&
+      plotContent &&
+      getPlotContentType(plotContent) === itemType.CROP &&
       getCropLifeStage(plotContent) === cropLifeStage.SEED
 
     const seedItem = cropItemIdToSeedItemMap[item.id]
     plotLabelText = isPlotContentACropSeed ? seedItem.name : item.name
   } else if (wasJustShoveled || plotContent?.isShoveled) {
-    const oreItem = itemsMap[plotContent?.oreId]
+    const oreId = plotContent?.oreId
+    const oreItem = oreId ? itemsMap[oreId] : null
 
     plotLabelText = oreItem
       ? SHOVELED_PLOT('', oreItem as farmhand.item)
@@ -162,9 +168,9 @@ export const Plot = ({
 
           // For crops and scarecrows
           'can-be-fertilized':
-            (isCrop && plotContent.fertilizerType === fertilizerType.NONE) ||
+            (isCrop && plotContent?.fertilizerType === fertilizerType.NONE) ||
             (isScarecow &&
-              plotContent.fertilizerType === fertilizerType.NONE &&
+              plotContent?.fertilizerType === fertilizerType.NONE &&
               selectedItemId === 'rainbow-fertilizer'),
 
           'can-be-mined': !plotContent,
@@ -173,10 +179,10 @@ export const Plot = ({
           'is-replantable': plotContent && item?.isReplantable,
         }),
         style: {
-          backgroundImage: getBackgroundStyles(plotContent),
+          backgroundImage: getBackgroundStyles(plotContent ?? null),
         },
-        onClick: () => handlePlotClick(x, y),
-        onMouseOver: () => setHoveredPlot({ x, y }),
+        onClick: () => handlePlotClick?.(x ?? 0, y ?? 0),
+        onMouseOver: () => setHoveredPlot?.({ x: x ?? null, y: y ?? null }),
       }}
     >
       <img

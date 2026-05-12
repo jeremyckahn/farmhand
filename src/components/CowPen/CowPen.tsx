@@ -10,6 +10,15 @@ import { Tumbleweeds } from './Tumbleweeds.js'
 
 import './CowPen.sass'
 
+export interface CowPenProps
+  extends Pick<
+    farmhand.state,
+    'allowCustomPeerCowNames' | 'cowInventory' | 'playerId' | 'selectedCowId'
+  > {
+  handleCowPenUnmount: () => void
+  handleCowClick: (cow: farmhand.cow) => void
+}
+
 export const CowPen = ({
   allowCustomPeerCowNames,
   cowInventory,
@@ -17,7 +26,7 @@ export const CowPen = ({
   handleCowClick,
   playerId,
   selectedCowId,
-}) => {
+}: CowPenProps) => {
   useEffect(() => {
     return () => {
       handleCowPenUnmount()
@@ -53,7 +62,7 @@ CowPen.propTypes = {
   selectedCowId: string.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Partial<CowPenProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

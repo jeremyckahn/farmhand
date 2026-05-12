@@ -22,7 +22,11 @@ const tumbleweedSize = 48
 /**
  * A single tumbleweed that animates across the screen.
  */
-const Tumbleweed = ({ onAnimationComplete }) => {
+const Tumbleweed = ({
+  onAnimationComplete,
+}: {
+  onAnimationComplete: () => void
+}) => {
   // Randomize the vertical position of the tumbleweed.
   const [yPosition] = useState(randomNumberService.generateRandomNumber())
   const top = scaleNumber(yPosition, 0, 1, 0, 100)
@@ -61,7 +65,7 @@ const Tumbleweed = ({ onAnimationComplete }) => {
 /**
  * Manages the spawning of multiple Tumbleweed components.
  */
-export const Tumbleweeds = ({ doSpawn }) => {
+export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
   // A list of UUIDs, each representing a Tumbleweed component.
   const [tumbleweeds, setTumbleweeds] = useState<string[]>([])
   // The current interval between tumbleweed spawns.

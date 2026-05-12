@@ -35,6 +35,11 @@ const ElevatedPaper = props => (
   <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
 )
 
+export interface StatsViewProps extends farmhand.state {
+  totalFarmProductsSold?: number
+  currentLevel?: number
+}
+
 export const StatsView = ({
   cowsTraded,
   experience,
@@ -53,7 +58,7 @@ export const StatsView = ({
 
   totalFarmProductsSold = farmProductsSold(itemsSold),
   currentLevel = levelAchieved(experience),
-}: any) => (
+}: StatsViewProps) => (
   <div className="StatsView">
     <TableContainer {...{ component: ElevatedPaper }}>
       <Table aria-label="Farmer Stats">
@@ -265,7 +270,7 @@ StatsView.propTypes = {
   todaysRevenue: number.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Partial<StatsViewProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
