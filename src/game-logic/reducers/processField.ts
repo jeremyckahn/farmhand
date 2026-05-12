@@ -21,5 +21,5 @@ export const processField = (state: farmhand.state): farmhand.state => ({
   ...state,
   field: updateField(state.field, plotContent =>
     fieldUpdaters.reduce(fieldReducer, plotContent)
-  ) as any,
+  ),
 })

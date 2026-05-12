@@ -48,7 +48,7 @@ export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
         }
 
         return null
-      }) as any
+      })
     } else {
       notification = {
         message: STORM_MESSAGE,
