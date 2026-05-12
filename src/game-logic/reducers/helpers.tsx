@@ -57,25 +57,6 @@ export function updateField(
     arg1: number,
     arg2: number
   ) => farmhand.plotContent | null
-): Array<Array<farmhand.plotContent | null>>
-
-export function updateField(
-  field: null | undefined,
-  modifierFn: (
-    arg0: farmhand.plotContent | null,
-    arg1: number,
-    arg2: number
-  ) => farmhand.plotContent | null
-): null
-
-export function updateField(
-  field: Array<Array<farmhand.plotContent | null>> | null | undefined,
-  modifierFn: (
-    arg0: farmhand.plotContent | null,
-    arg1: number,
-    arg2: number
-  ) => farmhand.plotContent | null
-): Array<Array<farmhand.plotContent | null>> | null {
-  if (!field) return null
+): Array<Array<farmhand.plotContent | null>> {
   return field.map((row, y) => row.map((plot, x) => modifierFn(plot, x, y)))
 }

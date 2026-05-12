@@ -729,7 +729,7 @@ Trystero's makeAction function.
       )
 
       return {
-        cowTradeTimeoutId: cowTradeTimeoutId as any,
+        cowTradeTimeoutId: (cowTradeTimeoutId as unknown) as number,
         isAwaitingCowTradeRequest: true,
       }
     }, noop)

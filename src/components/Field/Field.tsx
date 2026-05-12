@@ -52,6 +52,27 @@ if (tools.shovel) {
   fieldKeyMap.selectShovel = tools.shovel.fieldKey
 }
 
+export interface FieldProps {
+  columns?: number
+  experience: number
+  field: Array<Array<farmhand.plotContent | null>>
+  fieldMode: farmhand.fieldMode
+  handleCombineEnabledChange: (e: any, checked: boolean) => void
+  handleFieldActionRangeChange: (range: number) => void
+  hoveredPlotRangeSize: number
+  inventory: farmhand.state['inventory']
+  inventoryLimit: farmhand.state['inventoryLimit']
+  isCombineEnabled: boolean
+  purchasedCombine: number
+  purchasedField: number
+  rows?: number
+}
+
+export interface FieldContentProps extends FieldProps {
+  hoveredPlot: { x: number | null; y: number | null }
+  setHoveredPlot: (coords: { x: number | null; y: number | null }) => void
+}
+
 export interface MemoPlotProps {
   experience: number
   fieldMode: farmhand.fieldMode
@@ -214,7 +235,7 @@ FieldContentWrapper.propTypes = {
 }
 
 export const FieldContent = ({
-  columns,
+  columns = 0,
   experience,
   field,
   fieldMode: propsFieldMode,
@@ -223,9 +244,9 @@ export const FieldContent = ({
   hoveredPlotRangeSize,
   isCombineEnabled,
   purchasedCombine,
-  rows,
+  rows = 0,
   setHoveredPlot,
-}) => (
+}: FieldContentProps) => (
   <>
     <div
       {...{
@@ -289,7 +310,7 @@ FieldContent.propTypes = {
   setHoveredPlot: func.isRequired,
 }
 
-const adjustableRangeFieldModes = new Set([
+const adjustableRangeFieldModes = new Set<string>([
   CLEANUP,
   FERTILIZE,
   HARVEST,
@@ -314,7 +335,7 @@ const RangeSliderValueLabelComponent = ({ children, open, value }) => (
   </Tooltip>
 )
 
-export const Field = props => {
+export const Field = (props: FieldProps) => {
   const {
     field,
     fieldMode: propsFieldMode,
@@ -325,7 +346,10 @@ export const Field = props => {
     purchasedField,
   } = props
 
-  const [hoveredPlot, setHoveredPlot] = useState({ x: null, y: null })
+  const [hoveredPlot, setHoveredPlot] = useState<{
+    x: number | null
+    y: number | null
+  }>({ x: null, y: null })
   const [currentScale, setCurrentScale] = useState(1)
   const [fieldActionRange, setFieldActionRange] = useState(hoveredPlotRangeSize)
 
@@ -356,7 +380,7 @@ export const Field = props => {
             'is-inventory-full': !doesInventorySpaceRemain({
               inventory,
               inventoryLimit,
-            }),
+            } as any),
             'plant-mode': propsFieldMode === PLANT,
             'set-scarecrow-mode': propsFieldMode === SET_SCARECROW,
             'set-sprinkler-mode': propsFieldMode === SET_SPRINKLER,
@@ -453,11 +477,11 @@ Field.propTypes = {
   rows: number.isRequired,
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(props: Partial<FieldProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Field {...{ ...gameState, ...handlers, ...props }} />
+        <Field {...({ ...gameState, ...handlers, ...props } as FieldProps)} />
       )}
     </FarmhandContext.Consumer>
   )
