@@ -13,16 +13,16 @@ export const shapeOf = object =>
     return acc
   }, {})
 
-export const testCrop = (item = {}) => ({
+export const testCrop = (item: any = {}): farmhand.plotContent => ({
   daysOld: 0,
   daysWatered: 0,
-  fertilizerType: fertilizerType.NONE,
+  fertilizerType: fertilizerType.NONE as farmhand.fertilizerType,
   itemId: 'sample-item-1',
   wasWateredToday: false,
   ...item,
 })
 
-export const testTree = (item = {}) => ({
+export const testTree = (item: any = {}): farmhand.plantedTree => ({
   daysOld: 0,
   itemId: 'test-tree',
   ...item,
@@ -36,10 +36,10 @@ export const testShoveledPlot = (
   ...plotProps,
 })
 
-export const testItem = (item = {}) => ({
+export const testItem = (item: any = {}): farmhand.item => ({
   id: '',
   name: '',
-  type: 'CRAFTED_ITEM',
+  type: 'CRAFTED_ITEM' as farmhand.itemType,
   value: 0,
   description: '',
   doesPriceFluctuate: false,

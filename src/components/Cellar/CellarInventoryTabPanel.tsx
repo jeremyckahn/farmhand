@@ -21,7 +21,13 @@ import { FERMENTED_CROP_NAME } from '../../templates.js'
 import { TabPanel } from './TabPanel/index.js'
 import { Keg } from './Keg.js'
 
-export const CellarInventoryTabPanel = ({ index, currentTab }) => {
+export const CellarInventoryTabPanel = ({
+  index,
+  currentTab,
+}: {
+  index: number
+  currentTab: number
+}) => {
   const [searchQuery, setSearchQuery] = useState('')
 
   const {

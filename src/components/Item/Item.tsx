@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography/index.js'
 import { array, bool, func, number, object } from 'prop-types'
 import classNames from 'classnames'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, { ContextData } from '../Farmhand/Farmhand.context.js'
 import { items } from '../../img/index.js'
 import { itemsMap } from '../../data/maps.js'
 import { itemIds as shopItemIds } from '../../data/shop-inventory.js'
@@ -88,7 +88,30 @@ const SellValueIndicator = ({
   />
 )
 
+export interface ItemProps {
+  item: farmhand.item
+  completedAchievements: ContextData['gameState']['completedAchievements']
+  handleItemPurchaseClick?: ContextData['handlers']['handleItemPurchaseClick']
+  handleItemSelectClick?: ContextData['handlers']['handleItemSelectClick']
+  handleItemSellClick?: ContextData['handlers']['handleItemSellClick']
+  historicalValueAdjustments: ContextData['gameState']['historicalValueAdjustments']
+  inventory: ContextData['gameState']['inventory']
+  inventoryLimit: ContextData['gameState']['inventoryLimit']
+  isPurchaseView?: boolean
+  isSelectView?: boolean
+  isSelected?: boolean
+  isSellView?: boolean
+  money: ContextData['gameState']['money']
+  playerInventoryQuantities: ContextData['gameState']['playerInventoryQuantities']
+  showQuantity?: boolean
+  valueAdjustments: ContextData['gameState']['valueAdjustments']
+  adjustedValue?: number
+  previousDayAdjustedValue?: number | null
+  maxQuantityPlayerCanPurchase?: number
+}
+
 export const Item = ({
+  item,
   completedAchievements,
   handleItemPurchaseClick,
   handleItemSelectClick,
@@ -100,7 +123,11 @@ export const Item = ({
   isSelectView,
   isSelected,
   isSellView,
-  item,
+  money,
+  playerInventoryQuantities,
+  showQuantity,
+  valueAdjustments,
+
   item: {
     description,
     doesPriceFluctuate,
@@ -110,10 +137,6 @@ export const Item = ({
     type,
     value,
   },
-  money,
-  playerInventoryQuantities,
-  showQuantity,
-  valueAdjustments,
 
   // Note: These props are defaulted to 0 in the tests.
   adjustedValue = isSellView && isItemSoldInShop(item)
@@ -133,7 +156,7 @@ export const Item = ({
       inventorySpaceRemaining({ inventory, inventoryLimit })
     )
   ),
-}) => {
+}: ItemProps) => {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1)
   const [sellQuantity, setSellQuantity] = useState(1)
 
@@ -150,11 +173,11 @@ export const Item = ({
   }, [id, playerInventoryQuantities, sellQuantity])
 
   const handleItemPurchase = () => {
-    handleItemPurchaseClick(item, purchaseQuantity)
+    handleItemPurchaseClick?.(item, purchaseQuantity)
     setPurchaseQuantity(Math.min(1, maxQuantityPlayerCanPurchase))
   }
   const handleItemSell = () => {
-    handleItemSellClick(item, sellQuantity)
+    handleItemSellClick?.(item, sellQuantity)
     setSellQuantity(Math.min(1, playerInventoryQuantities[id]))
   }
 
@@ -175,7 +198,7 @@ export const Item = ({
           'is-selectable': isSelectView,
           'is-selected': isSelected,
         }),
-        onClick: isSelectView ? () => handleItemSelectClick(item) : noop,
+        onClick: isSelectView ? () => handleItemSelectClick?.(item) : noop,
         raised: isSelected,
       }}
     >

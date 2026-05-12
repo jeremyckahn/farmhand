@@ -20,7 +20,7 @@ import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
 import { wineService } from '../../services/wine.js'
 import { cellarService } from '../../services/cellar.js'
 
-export function Keg({ keg }) {
+export function Keg({ keg }: { keg: farmhand.keg }) {
   const {
     handlers: { handleSellKegClick, handleThrowAwayKegClick },
     gameState: { completedAchievements },

@@ -20,7 +20,7 @@ import AnimatedNumber from '../AnimatedNumber/index.js'
 
 import './FermentationRecipe.sass'
 
-export const FermentationRecipe = ({ item }) => {
+export const FermentationRecipe = ({ item }: { item: farmhand.item }) => {
   const {
     gameState: { inventory, cellarInventory, purchasedCellar },
     handlers: { handleMakeFermentationRecipeClick },

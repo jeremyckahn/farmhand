@@ -7,7 +7,7 @@ describe('consumeIngredients', () => {
     test('returns state unchanged when recipe has no ingredients property', () => {
       const recipe = { id: 'test-recipe', name: 'Test Recipe' }
       const state = testState({
-        inventory: [testItem({ id: 'sample-item', quantity: 5 })],
+        inventory: [{ id: 'sample-item', quantity: 5 }],
         experience: 100,
       })
 
@@ -22,7 +22,7 @@ describe('consumeIngredients', () => {
     test('returns state unchanged when recipe has empty ingredients', () => {
       const recipe = { id: 'test-recipe', name: 'Test Recipe', ingredients: {} }
       const state = testState({
-        inventory: [testItem({ id: 'sample-item', quantity: 5 })],
+        inventory: [{ id: 'sample-item', quantity: 5 }],
         experience: 100,
       })
 
@@ -48,8 +48,8 @@ describe('consumeIngredients', () => {
         }
         const state = testState({
           inventory: [
-            testItem({ id: 'ingredient-1', quantity: 2 }),
-            testItem({ id: 'ingredient-2', quantity: 1 }),
+            { id: 'ingredient-1', quantity: 2 },
+            { id: 'ingredient-2', quantity: 1 },
           ],
           experience: 100,
         })
@@ -70,8 +70,8 @@ describe('consumeIngredients', () => {
         }
         const state = testState({
           inventory: [
-            testItem({ id: 'ingredient-1', quantity: 5 }),
-            testItem({ id: 'ingredient-2', quantity: 1 }),
+            { id: 'ingredient-1', quantity: 5 },
+            { id: 'ingredient-2', quantity: 1 },
           ],
           experience: 100,
         })
@@ -94,9 +94,9 @@ describe('consumeIngredients', () => {
         }
         const state = testState({
           inventory: [
-            testItem({ id: 'ingredient-1', quantity: 5 }),
-            testItem({ id: 'ingredient-2', quantity: 3 }),
-            testItem({ id: 'other-item', quantity: 2 }),
+            { id: 'ingredient-1', quantity: 5 },
+            { id: 'ingredient-2', quantity: 3 },
+            { id: 'other-item', quantity: 2 },
           ],
           experience: 100,
         })
@@ -106,9 +106,9 @@ describe('consumeIngredients', () => {
         expect(result).toEqual({
           ...state,
           inventory: [
-            testItem({ id: 'ingredient-1', quantity: 3 }),
-            testItem({ id: 'ingredient-2', quantity: 2 }),
-            testItem({ id: 'other-item', quantity: 2 }),
+            { id: 'ingredient-1', quantity: 3 },
+            { id: 'ingredient-2', quantity: 2 },
+            { id: 'other-item', quantity: 2 },
           ],
           experience: 150,
         })
@@ -125,8 +125,8 @@ describe('consumeIngredients', () => {
         }
         const state = testState({
           inventory: [
-            testItem({ id: 'ingredient-1', quantity: 8 }),
-            testItem({ id: 'ingredient-2', quantity: 5 }),
+            { id: 'ingredient-1', quantity: 8 },
+            { id: 'ingredient-2', quantity: 5 },
           ],
           experience: 100,
         })
@@ -136,8 +136,8 @@ describe('consumeIngredients', () => {
         expect(result).toEqual({
           ...state,
           inventory: [
-            testItem({ id: 'ingredient-1', quantity: 2 }),
-            testItem({ id: 'ingredient-2', quantity: 2 }),
+            { id: 'ingredient-1', quantity: 2 },
+            { id: 'ingredient-2', quantity: 2 },
           ],
           experience: 175,
         })
@@ -154,9 +154,9 @@ describe('consumeIngredients', () => {
         }
         const state = testState({
           inventory: [
-            testItem({ id: 'ingredient-1', quantity: 3 }),
-            testItem({ id: 'ingredient-2', quantity: 2 }),
-            testItem({ id: 'other-item', quantity: 1 }),
+            { id: 'ingredient-1', quantity: 3 },
+            { id: 'ingredient-2', quantity: 2 },
+            { id: 'other-item', quantity: 1 },
           ],
           experience: 100,
         })
@@ -165,7 +165,7 @@ describe('consumeIngredients', () => {
 
         expect(result).toEqual({
           ...state,
-          inventory: [testItem({ id: 'other-item', quantity: 1 })],
+          inventory: [{ id: 'other-item', quantity: 1 }],
           experience: 125,
         })
       })
@@ -180,8 +180,8 @@ describe('consumeIngredients', () => {
         }
         const state = testState({
           inventory: [
-            testItem({ id: 'ingredient-1', quantity: 10 }),
-            testItem({ id: 'other-item', quantity: 2 }),
+            { id: 'ingredient-1', quantity: 10 },
+            { id: 'other-item', quantity: 2 },
           ],
           experience: 10,
         })
@@ -191,8 +191,8 @@ describe('consumeIngredients', () => {
         expect(result).toEqual({
           ...state,
           inventory: [
-            testItem({ id: 'ingredient-1', quantity: 2 }),
-            testItem({ id: 'other-item', quantity: 2 }),
+            { id: 'ingredient-1', quantity: 2 },
+            { id: 'other-item', quantity: 2 },
           ],
           experience: 35,
         })
@@ -210,7 +210,7 @@ describe('consumeIngredients', () => {
         },
       }
       const state = testState({
-        inventory: [testItem({ id: 'ingredient-1', quantity: 5 })],
+        inventory: [{ id: 'ingredient-1', quantity: 5 }],
         experience: 100,
       })
 
@@ -218,7 +218,7 @@ describe('consumeIngredients', () => {
 
       expect(result).toEqual({
         ...state,
-        inventory: [testItem({ id: 'ingredient-1', quantity: 3 })],
+        inventory: [{ id: 'ingredient-1', quantity: 3 }],
         experience: 100,
       })
     })
@@ -232,7 +232,7 @@ describe('consumeIngredients', () => {
         },
       }
       const state = testState({
-        inventory: [testItem({ id: 'ingredient-1', quantity: 3 })],
+        inventory: [{ id: 'ingredient-1', quantity: 3 }],
         experience: 100,
       })
 
@@ -240,7 +240,7 @@ describe('consumeIngredients', () => {
 
       expect(result).toEqual({
         ...state,
-        inventory: [testItem({ id: 'ingredient-1', quantity: 1 })],
+        inventory: [{ id: 'ingredient-1', quantity: 1 }],
         experience: 100,
       })
     })
@@ -263,7 +263,7 @@ describe('consumeIngredients', () => {
         ingredients: { 'ingredient-1': 1 },
       }
       const state = testState({
-        inventory: [testItem({ id: 'ingredient-1', quantity: 2 })],
+        inventory: [{ id: 'ingredient-1', quantity: 2 }],
         experience: 50,
       })
 
@@ -279,7 +279,7 @@ describe('consumeIngredients', () => {
         ingredients: { 'ingredient-1': 5 },
       }
       const state = testState({
-        inventory: [testItem({ id: 'ingredient-1', quantity: 2 })],
+        inventory: [{ id: 'ingredient-1', quantity: 2 }],
         experience: 50,
       })
 
@@ -313,7 +313,7 @@ describe('consumeIngredients', () => {
         ingredients: { 'nonexistent-ingredient': 1 },
       }
       const state = testState({
-        inventory: [testItem({ id: 'other-item', quantity: 5 })],
+        inventory: [{ id: 'other-item', quantity: 5 }],
         experience: 100,
       })
 
@@ -329,7 +329,7 @@ describe('consumeIngredients', () => {
         ingredients: { 'ingredient-1': 2 },
       }
       const state = testState({
-        inventory: [testItem({ id: 'ingredient-1', quantity: 5 })],
+        inventory: [{ id: 'ingredient-1', quantity: 5 }],
         experience: 100,
       })
 
@@ -348,7 +348,7 @@ describe('consumeIngredients', () => {
         ingredients: { 'ingredient-1': 1 },
       }
       const state = testState({
-        inventory: [testItem({ id: 'ingredient-1', quantity: 2 })],
+        inventory: [{ id: 'ingredient-1', quantity: 2 }],
         experience: 100,
       })
 
@@ -356,7 +356,7 @@ describe('consumeIngredients', () => {
 
       expect(result).toEqual({
         ...state,
-        inventory: [testItem({ id: 'ingredient-1', quantity: 1 })],
+        inventory: [{ id: 'ingredient-1', quantity: 1 }],
         experience: 75,
       })
     })

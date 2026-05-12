@@ -26,7 +26,7 @@ export const setWasWatered = (
 
 export const fieldHasScarecrow = (
   field: Array<Array<farmhand.plotContent | null>> | null
-): boolean => !!findInField(field!, plotContainsScarecrow)
+): boolean => !!(field && findInField(field, plotContainsScarecrow))
 
 /**
  * @param chancesAndEvents An array of arrays in which the
@@ -54,7 +54,7 @@ export const updateField = (
     arg0: farmhand.plotContent | null,
     arg1: number,
     arg2: number
-  ) => any
+  ) => farmhand.plotContent | null
 ): Array<Array<farmhand.plotContent | null>> | null => {
   if (!field) return null
   return field.map((row, y) => row.map((plot, x) => modifierFn(plot, x, y)))

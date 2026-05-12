@@ -11,7 +11,7 @@ export class WineService {
    */
   maturityDayMultiplier = 3
 
-  getDaysToMature = grapeVariety => {
+  getDaysToMature = (grapeVariety: farmhand.grapeVariety) => {
     return wineVarietyValueMap[grapeVariety] * this.maturityDayMultiplier
   }
 

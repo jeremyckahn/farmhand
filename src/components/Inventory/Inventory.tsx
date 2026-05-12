@@ -7,7 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel/index.js'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
 import { array } from 'prop-types'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, { ContextData } from '../Farmhand/Farmhand.context.js'
 import Item from '../Item/index.js'
 import { itemsMap } from '../../data/maps.js'
 import { sortItems } from '../../utils/index.js'
@@ -70,15 +70,29 @@ const formatCategoryName = key =>
     .toLowerCase()
     .replace(/\b\w/g, char => char.toUpperCase())
 
+export interface InventoryProps {
+  items: farmhand.item[]
+  title: string
+  columns: number
+  playerInventory?: ContextData['gameState']['playerInventory']
+  shopInventory?: ContextData['gameState']['shopInventory']
+  isPurchaseView?: boolean
+  isSellView?: boolean
+  itemCategories?: Map<string, farmhand.item[]>
+  placeholder?: string
+}
+
 const Inventory = ({
   items,
+  title,
+  columns,
   playerInventory,
   shopInventory,
   isPurchaseView = false,
   isSellView = false,
   itemCategories = separateItemsIntoCategories(items),
   placeholder = 'Search inventory...',
-}) => {
+}: InventoryProps) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const toggleCategory = (category: string) => {

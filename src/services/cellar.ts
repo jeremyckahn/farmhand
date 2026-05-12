@@ -35,7 +35,10 @@ export class CellarService {
     return keg
   }
 
-  doesCellarSpaceRemain = (cellarInventory, purchasedCellar) => {
+  doesCellarSpaceRemain = (
+    cellarInventory: farmhand.keg[],
+    purchasedCellar: number
+  ) => {
     return (
       cellarInventory.length <
       (PURCHASEABLE_CELLARS.get(purchasedCellar)?.space ?? 0)
