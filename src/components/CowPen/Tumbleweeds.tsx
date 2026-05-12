@@ -129,7 +129,7 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
    * Removes a tumbleweed from the list after its animation is complete.
    */
   const handleTumbleweedAnimationComplete = useCallback(
-    tumbleweedUuid => {
+    (tumbleweedUuid: string) => {
       setTumbleweeds(prev => {
         return prev.filter(id => id !== tumbleweedUuid)
       })

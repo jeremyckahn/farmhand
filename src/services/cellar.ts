@@ -21,7 +21,7 @@ export class CellarService {
     { cacheSize: Object.keys(fermentableItemsMap).length }
   )
 
-  generateKeg = item => {
+  generateKeg = (item: farmhand.item): farmhand.keg => {
     const keg: farmhand.keg = {
       id: this._uuid(),
       itemId: item.id,
@@ -45,7 +45,7 @@ export class CellarService {
     )
   }
 
-  doesKegSpoil = keg => {
+  doesKegSpoil = (keg: farmhand.keg): boolean => {
     const item = itemsMap[keg.itemId]
     const doesKegSpoil = !wineService.isWineRecipe(item)
 

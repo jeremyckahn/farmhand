@@ -19,7 +19,17 @@ export class WineService {
     return 'recipeType' in recipe && recipe.recipeType === recipeType.WINE
   }
 
-  getMaxWineYield = ({ grape, inventory, cellarInventory, cellarSize }) => {
+  getMaxWineYield = ({
+    grape,
+    inventory,
+    cellarInventory,
+    cellarSize,
+  }: {
+    grape: farmhand.grape
+    inventory: farmhand.state['inventory']
+    cellarInventory: farmhand.keg[]
+    cellarSize: number
+  }): number => {
     const {
       [grape.id]: grapeQuantityInInventory = 0,
       [itemsMap['yeast']?.id ?? '']: yeastQuantityInInventory = 0,

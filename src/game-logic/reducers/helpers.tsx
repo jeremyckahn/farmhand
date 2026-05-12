@@ -34,7 +34,9 @@ first element is a function that determines whether to trigger an event, and
 the second function which is a reducer that implements the event.
  */
 export const applyChanceEvent = (
-  chancesAndEvents: Array<Array<Function>>,
+  chancesAndEvents: Array<
+    [() => boolean, (state: farmhand.state) => farmhand.state]
+  >,
   state: farmhand.state
 ): farmhand.state =>
   chancesAndEvents.reduce((acc, [chanceCalculator, fn]) => {

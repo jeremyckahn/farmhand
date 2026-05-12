@@ -19,20 +19,17 @@ import {
 
 import './AccountingView.sass'
 
+interface MoneyNumberFormatProps {
+  max: number
+  min: number
+  onChange: (v: number) => void
+  setLoanInputValue?: React.Dispatch<React.SetStateAction<number>>
+  [key: string]: any
+}
+
 const MoneyNumberFormat = forwardRef(
   (
-    {
-      max,
-      min,
-      onChange,
-      setLoanInputValue,
-      ...rest
-    }: {
-      max: number
-      min: number
-      onChange: (v: number) => void
-      setLoanInputValue?: React.Dispatch<React.SetStateAction<number>>
-    } & Record<string, unknown>,
+    { max, min, onChange, setLoanInputValue, ...rest }: MoneyNumberFormatProps,
     ref: React.ForwardedRef<HTMLInputElement>
   ) => (
     <NumberFormat
@@ -51,12 +48,19 @@ const MoneyNumberFormat = forwardRef(
   )
 )
 
+interface AccountingViewProps {
+  handleClickLoanPaydownButton: (amount: number) => void
+  handleClickTakeOutLoanButton: (amount: number) => void
+  loanBalance: number
+  money: number
+}
+
 const AccountingView = ({
   handleClickLoanPaydownButton,
   handleClickTakeOutLoanButton,
   loanBalance,
   money,
-}) => {
+}: AccountingViewProps) => {
   const [loanInputValue, setLoanInputValue] = useState(
     Math.min(loanBalance, money)
   )
@@ -153,7 +157,7 @@ AccountingView.propTypes = {
   money: number.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Partial<AccountingViewProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

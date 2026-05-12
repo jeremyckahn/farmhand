@@ -33,7 +33,11 @@ import AnimatedNumber from '../AnimatedNumber/index.js'
 
 import './Item.sass'
 
-const ValueIndicator = ({ poorValue }) => (
+interface ValueIndicatorProps {
+  poorValue: boolean
+}
+
+const ValueIndicator = ({ poorValue }: ValueIndicatorProps) => (
   <Tooltip
     {...{
       arrow: true,
@@ -77,7 +81,7 @@ const SellValueIndicator = ({
   valueAdjustments,
 
   poorValue = value < itemsMap[id].value,
-}) => (
+}: PurchaseValueIndicatorProps) => (
   <ValueIndicator
     {...{
       id,
@@ -89,8 +93,8 @@ const SellValueIndicator = ({
 )
 
 export interface ItemProps {
-  item: farmhand.item
-  completedAchievements: ContextData['gameState']['completedAchievements']
+  item?: farmhand.item
+  completedAchievements?: ContextData['gameState']['completedAchievements']
   handleItemPurchaseClick?: ContextData['handlers']['handleItemPurchaseClick']
   handleItemSelectClick?: ContextData['handlers']['handleItemSelectClick']
   handleItemSellClick?: ContextData['handlers']['handleItemSellClick']
@@ -136,18 +140,18 @@ export const Item = ({
     name,
     type,
     value,
-  },
+  } = {} as farmhand.item,
 
   // Note: These props are defaulted to 0 in the tests.
-  adjustedValue = isSellView && isItemSoldInShop(item)
-    ? getResaleValue(item)
-    : getItemCurrentValue(item, valueAdjustments),
+  adjustedValue = isSellView && isItemSoldInShop(item!)
+    ? getResaleValue(item!)
+    : getItemCurrentValue(item!, valueAdjustments),
 
-  previousDayAdjustedValue = (isSellView && isItemSoldInShop(item)) ||
+  previousDayAdjustedValue = (isSellView && isItemSoldInShop(item!)) ||
   historicalValueAdjustments.length === 0 ||
   !doesPriceFluctuate
     ? null
-    : getItemCurrentValue(item, historicalValueAdjustments[0]),
+    : getItemCurrentValue(item!, historicalValueAdjustments[0]),
 
   maxQuantityPlayerCanPurchase = Math.max(
     0,
@@ -173,11 +177,11 @@ export const Item = ({
   }, [id, playerInventoryQuantities, sellQuantity])
 
   const handleItemPurchase = () => {
-    handleItemPurchaseClick?.(item, purchaseQuantity)
+    handleItemPurchaseClick?.(item!, purchaseQuantity)
     setPurchaseQuantity(Math.min(1, maxQuantityPlayerCanPurchase))
   }
   const handleItemSell = () => {
-    handleItemSellClick?.(item, sellQuantity)
+    handleItemSellClick?.(item!, sellQuantity)
     setSellQuantity(Math.min(1, playerInventoryQuantities[id]))
   }
 
@@ -198,7 +202,7 @@ export const Item = ({
           'is-selectable': isSelectView,
           'is-selected': isSelected,
         }),
-        onClick: isSelectView ? () => handleItemSelectClick?.(item) : noop,
+        onClick: isSelectView ? () => handleItemSelectClick?.(item!) : noop,
         raised: isSelected,
       }}
     >
@@ -242,7 +246,7 @@ export const Item = ({
                       />
                     </span>
                   </Tooltip>
-                  {completedAchievements['unlock-crop-price-guide'] &&
+                  {completedAchievements?.['unlock-crop-price-guide'] &&
                     valueAdjustments[id] && (
                       <PurchaseValueIndicator
                         {...{ id, value: adjustedValue, valueAdjustments }}
@@ -284,7 +288,7 @@ export const Item = ({
                       />
                     </span>
                   </Tooltip>
-                  {completedAchievements['unlock-crop-price-guide'] &&
+                  {completedAchievements?.['unlock-crop-price-guide'] &&
                     valueAdjustments[id] && (
                       <SellValueIndicator
                         {...{ id, value: adjustedValue, valueAdjustments }}
@@ -320,7 +324,7 @@ export const Item = ({
                 <p>
                   Days to mature:{' '}
                   {getCropLifecycleDuration(
-                    getFinalCropItemFromSeedItem(item) as any
+                    getFinalCropItemFromSeedItem(item!) as any
                   )}
                 </p>
               )}
@@ -427,7 +431,7 @@ Item.propTypes = {
   valueAdjustments: object.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Partial<ItemProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
