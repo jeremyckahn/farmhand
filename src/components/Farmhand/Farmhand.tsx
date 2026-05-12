@@ -965,7 +965,7 @@ Trystero's makeAction function.
     // experience. The persisted state is computed post-update and stored
     // asynchronously, thus avoiding state changes from being blocked.
     this.setState(
-      (prev: farmhand.state): any => {
+      (prev: farmhand.state): farmhand.state => {
         const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
 
         pendingNotifications = [
