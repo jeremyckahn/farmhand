@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { bool, func, number, object, string } from 'prop-types'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
@@ -92,15 +91,28 @@ export const Plot = ({
   x,
   y,
 
-  image = getPlotImage(plotContent ?? null, x ?? 0, y ?? 0) ?? '',
-  lifeStage = (plotContent &&
-    getPlotContentType(plotContent) === itemType.CROP &&
-    getCropLifeStage(plotContent)) ||
-    null,
-  canBeHarvested = lifeStage === cropLifeStage.GROWN ||
-    (plotContent && getPlotContentType(plotContent) === itemType.WEED) ||
-    false,
+  image: propsImage,
+  lifeStage: propsLifeStage,
+  canBeHarvested: propsCanBeHarvested,
 }: PlotProps) => {
+  const image =
+    propsImage ?? getPlotImage(plotContent ?? null, x ?? 0, y ?? 0) ?? ''
+
+  const lifeStage =
+    propsLifeStage !== undefined
+      ? propsLifeStage
+      : (plotContent &&
+          getPlotContentType(plotContent) === itemType.CROP &&
+          getCropLifeStage(plotContent)) ||
+        null
+
+  const canBeHarvested =
+    propsCanBeHarvested !== undefined
+      ? propsCanBeHarvested
+      : lifeStage === cropLifeStage.GROWN ||
+        (plotContent && getPlotContentType(plotContent) === itemType.WEED) ||
+        false
+
   const item = plotContent ? itemsMap[plotContent.itemId] : null
   const daysLeftToMature = getDaysLeftToMature(plotContent ?? null)
   const isCrop =
