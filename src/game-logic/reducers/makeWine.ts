@@ -10,13 +10,11 @@ import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
 import { addKegToCellarInventory } from './addKegToCellarInventory.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
-/**
- * @param {farmhand.state} state
- * @param {farmhand.grape} grape
- * @param {number} [howMany=1]
- * @returns {farmhand.state}
- */
-export const makeWine = (state, grape, howMany = 1) => {
+export const makeWine = (
+  state: farmhand.state,
+  grape: farmhand.grape,
+  howMany: number = 1
+): farmhand.state => {
   const { inventory, cellarInventory, purchasedCellar } = state
 
   const { space: cellarSize } = PURCHASEABLE_CELLARS.get(purchasedCellar) ?? {

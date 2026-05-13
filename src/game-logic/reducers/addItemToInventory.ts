@@ -3,18 +3,13 @@ import { inventorySpaceRemaining } from '../../utils/index.js'
 /**
  * Only adds as many items as there is room in the inventory for unless
  * allowInventoryOverage is true.
- * @param {farmhand.state} state
- * @param {farmhand.item} item
- * @param {number} [howMany=1]
- * @param {boolean} [allowInventoryOverage=false]
- * @returns {farmhand.state}
  */
 export const addItemToInventory = (
-  state,
-  item,
-  howMany = 1,
-  allowInventoryOverage = false
-) => {
+  state: farmhand.state,
+  item: farmhand.item,
+  howMany: number = 1,
+  allowInventoryOverage: boolean = false
+): farmhand.state => {
   const { id } = item
   const inventory = [...state.inventory]
 

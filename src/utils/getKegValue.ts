@@ -1,5 +1,3 @@
-/** @typedef {farmhand.keg} keg */
-
 import {
   KEG_INTEREST_RATE,
   WINE_GROWTH_TIMELINE_CAP,
@@ -10,10 +8,7 @@ import { wineService } from '../services/wine.js'
 
 import { getItemBaseValue } from './getItemBaseValue.js'
 
-/**
- * @param {keg} keg
- */
-export const getKegValue = keg => {
+export const getKegValue = (keg: farmhand.keg) => {
   const { itemId, daysUntilMature } = keg
   const kegItem = itemsMap[itemId]
 

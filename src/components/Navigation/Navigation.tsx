@@ -105,10 +105,7 @@ const OnlineControls = ({
     handleRoomChange(displayedRoom)
   }
 
-  /**
-   * @param {boolean} checked
-   */
-  const handleSwitchChange = checked => {
+  const handleSwitchChange = (checked: boolean) => {
     submitRoomNameChange()
     handleOnlineToggleChange(checked)
   }

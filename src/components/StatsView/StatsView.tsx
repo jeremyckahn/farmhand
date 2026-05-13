@@ -35,32 +35,30 @@ const ElevatedPaper = props => (
   <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
 )
 
-export const StatsView = (
-  /**
-   * @type {farmhand.state &
-   *   {totalFarmProductsSold?: number, currentLevel?: number}
-   * }
-   */
-  {
-    cowsTraded,
-    experience,
-    farmName,
-    historicalDailyLosses,
-    historicalDailyRevenue,
-    itemsSold,
-    loansTakenOut,
-    profitabilityStreak,
-    record7dayProfitAverage,
-    recordProfitabilityStreak,
-    recordSingleDayProfit,
-    revenue,
-    todaysLosses,
-    todaysRevenue,
+export interface StatsViewProps extends farmhand.state {
+  totalFarmProductsSold?: number
+  currentLevel?: number
+}
 
-    totalFarmProductsSold = farmProductsSold(itemsSold),
-    currentLevel = levelAchieved(experience),
-  }
-) => (
+export const StatsView = ({
+  cowsTraded,
+  experience,
+  farmName,
+  historicalDailyLosses,
+  historicalDailyRevenue,
+  itemsSold,
+  loansTakenOut,
+  profitabilityStreak,
+  record7dayProfitAverage,
+  recordProfitabilityStreak,
+  recordSingleDayProfit,
+  revenue,
+  todaysLosses,
+  todaysRevenue,
+
+  totalFarmProductsSold = farmProductsSold(itemsSold),
+  currentLevel = levelAchieved(experience),
+}: StatsViewProps) => (
   <div className="StatsView">
     <TableContainer {...{ component: ElevatedPaper }}>
       <Table aria-label="Farmer Stats">
@@ -246,7 +244,7 @@ export const StatsView = (
                     {itemsMap[itemId].name}
                   </TableCell>
                   <TableCell align="right">
-                    {integerString(quantity || 0)}
+                    {integerString((quantity as number) || 0)}
                   </TableCell>
                 </TableRow>
               ))}
@@ -272,7 +270,7 @@ StatsView.propTypes = {
   todaysRevenue: number.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Partial<StatsViewProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

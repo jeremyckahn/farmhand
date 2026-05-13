@@ -1,8 +1,3 @@
-/**
- * @typedef {farmhand.item} item
- * @typedef {farmhand.keg} keg
- */
-
 import React, { useContext, useEffect, useState } from 'react'
 import { object } from 'prop-types'
 import Card from '@mui/material/Card/index.js'
@@ -25,11 +20,7 @@ import AnimatedNumber from '../AnimatedNumber/index.js'
 
 import './FermentationRecipe.sass'
 
-/**
- * @param {Object} props
- * @param {item} props.item
- */
-export const FermentationRecipe = ({ item }) => {
+export const FermentationRecipe = ({ item }: { item: farmhand.item }) => {
   const {
     gameState: { inventory, cellarInventory, purchasedCellar },
     handlers: { handleMakeFermentationRecipeClick },

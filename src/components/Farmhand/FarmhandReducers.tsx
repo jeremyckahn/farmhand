@@ -32,7 +32,6 @@ export type FarmhandState = farmhand.state
  * TODO: Replace this with a TypeScript interface
  */
 export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
-  /** @type BoundReducer */
   addCowToInventory(...args: any[]) {
     throw new Error('Unimplemented')
   }
@@ -169,10 +168,7 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
     throw new Error('Unimplemented')
   }
 
-  /**
-   * @param {Object} props
-   */
-  constructor(props) {
+  constructor(props: FarmhandProps) {
     super(props)
 
     const reducerNames = Object.getOwnPropertyNames(
@@ -192,10 +188,8 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
       }
 
       // Bind the reducer to this class instance
-      this[reducerName] = (/** @type any[] */ ...args) => {
-        this.setState((/** @type {farmhand.state} */ state) =>
-          reducer(state, ...args)
-        )
+      ;(this as any)[reducerName] = (...args: any[]) => {
+        this.setState((state: FarmhandState) => reducer(state, ...args))
       }
     }
   }

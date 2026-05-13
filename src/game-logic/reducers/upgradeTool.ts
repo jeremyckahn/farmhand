@@ -6,11 +6,10 @@ import { showNotification } from './showNotification.js'
 import { consumeIngredients } from './consumeIngredients.js'
 import { addItemToInventory } from './addItemToInventory.js'
 
-/**
- * @param {farmhand.state} state
- * @param {farmhand.upgradesMetadatum} upgrade
- */
-export const upgradeTool = (state, upgrade) => {
+export const upgradeTool = (
+  state: farmhand.state,
+  upgrade: farmhand.upgradesMetadatum
+) => {
   // Validate required properties
   if (!upgrade.toolType || !upgrade.level) {
     return state
@@ -19,7 +18,7 @@ export const upgradeTool = (state, upgrade) => {
   const originalState = state
   state = consumeIngredients(
     state,
-    upgrade,
+    { ...upgrade, ingredients: upgrade.ingredients || {} },
     1,
     EXPERIENCE_VALUES.FORGE_RECIPE_MADE
   )

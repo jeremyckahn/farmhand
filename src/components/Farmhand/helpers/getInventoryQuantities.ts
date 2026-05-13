@@ -2,12 +2,8 @@ import { itemsMap } from '../../../data/maps.js'
 
 const itemIds = Object.keys(itemsMap)
 
-/**
- * @param {Array.<{ id: farmhand.item['id'], quantity: number }>} inventory
- */
 export const getInventoryQuantities = inventory => {
-  /** @type {Record<string, number>} */
-  const quantities = {}
+  const quantities: Record<string, number> = {}
 
   for (const itemId of itemIds) {
     quantities[itemId] = 0

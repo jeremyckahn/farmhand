@@ -17,7 +17,7 @@ describe('updatePeer', () => {
         peers: { abc123: stubPeerMetadata },
       }),
       Farmhand,
-      { foo: false },
+      { foo: false } as any,
       'abc123'
     )
 
@@ -32,7 +32,7 @@ describe('updatePeer', () => {
         peers: { abc123: stubPeerMetadata },
       }),
       Farmhand,
-      { foo: false },
+      { foo: false } as any,
       'abc123'
     )
 

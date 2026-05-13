@@ -6,12 +6,10 @@ import { CELLAR_PURCHASED } from '../../templates.js'
 import { addExperience } from './addExperience.js'
 import { showNotification } from './showNotification.js'
 
-/**
- * @param {farmhand.state} state
- * @param {number} cellarId
- * @returns {farmhand.state}
- */
-export const purchaseCellar = (state, cellarId) => {
+export const purchaseCellar = (
+  state: farmhand.state,
+  cellarId: number
+): farmhand.state => {
   const { money, purchasedCellar } = state
 
   if (purchasedCellar >= cellarId) {

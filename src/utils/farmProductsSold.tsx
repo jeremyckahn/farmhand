@@ -4,11 +4,7 @@ import { memoize } from './memoize.js'
 import { isItemAFarmProduct } from './isItemAFarmProduct.js'
 
 export const farmProductsSold = memoize(
-  /**
-   * @param  itemsSold
-   * @returns {number}
-   */
-  (itemsSold: Partial<Record<string, number>>) =>
+  (itemsSold: Partial<Record<string, number>>): number =>
     Object.entries(itemsSold).reduce(
       (sum, [itemId, numberSold]) =>
         sum +

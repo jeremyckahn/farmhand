@@ -1,20 +1,14 @@
-/** @typedef {farmhand.levelEntitlements} levelEntitlements */
 import { levels } from '../data/levels.js'
 import { INITIAL_SPRINKLER_RANGE } from '../constants.js'
 
 import { memoize } from './memoize.js'
 
 /**
- * @param {number} levelNumber
- * @returns {levelEntitlements} Contains `sprinklerRange` and keys that correspond to
- * unlocked items.
+ * @returns Contains `sprinklerRange` and keys that correspond to
+unlocked items.
  */
 export const getLevelEntitlements = memoize(
-  /**
-   * @param {number} levelNumber
-   * @returns {levelEntitlements}
-   */
-  levelNumber => {
+  (levelNumber: number): farmhand.levelEntitlements => {
     const acc: farmhand.levelEntitlements = {
       sprinklerRange: INITIAL_SPRINKLER_RANGE,
       items: {},

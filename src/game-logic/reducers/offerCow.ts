@@ -1,9 +1,7 @@
-/**
- * @param {farmhand.state} state
- * @param {string} cowId
- * @returns {farmhand.state}
- */
-export const offerCow = (state, cowId) => {
+export const offerCow = (
+  state: farmhand.state,
+  cowId: string
+): farmhand.state => {
   state = { ...state, cowIdOfferedForTrade: cowId }
 
   return state

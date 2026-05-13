@@ -6,11 +6,7 @@ import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { setWasWatered } from './helpers.js'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processSprinklers = state => {
+export const processSprinklers = (state: farmhand.state): farmhand.state => {
   const { field, experience } = state
   const crops = new Map()
   let modifiedField = [...field]

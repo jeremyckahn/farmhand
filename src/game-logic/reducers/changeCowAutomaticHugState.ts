@@ -6,13 +6,11 @@ import { addItemToInventory } from './addItemToInventory.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { modifyCow } from './modifyCow.js'
 
-/**
- * @param {farmhand.state} state
- * @param {farmhand.cow} cow
- * @param {boolean} doUseHuggingMachine
- * @returns {farmhand.state}
- */
-export const changeCowAutomaticHugState = (state, cow, doUseHuggingMachine) => {
+export const changeCowAutomaticHugState = (
+  state: farmhand.state,
+  cow: farmhand.cow,
+  doUseHuggingMachine: boolean
+): farmhand.state => {
   if (doUseHuggingMachine) {
     if (
       cow.isUsingHuggingMachine ||

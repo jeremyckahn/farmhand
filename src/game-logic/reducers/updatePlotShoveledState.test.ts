@@ -31,7 +31,7 @@ describe('updatePlotShoveledState', () => {
   })
 
   test('will return the plot contents if it is anything else', () => {
-    const plotContents = updatePlotShoveledState('sprinkler')
+    const plotContents = updatePlotShoveledState('sprinkler' as any)
 
     expect(plotContents).toEqual('sprinkler')
   })

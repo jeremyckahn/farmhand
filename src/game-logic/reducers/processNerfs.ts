@@ -1,9 +1,5 @@
 import { applyChanceEvent } from './helpers.js'
 import { applyCrows } from './applyCrows.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const processNerfs = state =>
+export const processNerfs = (state: farmhand.state): farmhand.state =>
   applyChanceEvent([[() => true, applyCrows]], state)

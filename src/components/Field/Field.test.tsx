@@ -6,7 +6,14 @@ import { testItem, testCrop } from '../../test-utils/index.js'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { noop } from '../../utils/noop.js'
 
-import { Field, FieldContent, isInHoverRange, MemoPlot } from './Field.js'
+import {
+  Field,
+  FieldContent,
+  FieldContentProps,
+  FieldProps,
+  isInHoverRange,
+  MemoPlot,
+} from './Field.js'
 
 // Mock Plot component to test MemoPlot memoization behavior
 vitest.mock('../Plot/index.js', () => {
@@ -57,7 +64,7 @@ vitest.mock('react-zoom-pan-pinch', () => ({
   ),
 }))
 
-const defaultFieldProps = {
+const defaultFieldProps: FieldProps = {
   columns: 2,
   experience: 0,
   hoveredPlotRangeSize: 0,
@@ -70,34 +77,38 @@ const defaultFieldProps = {
     [null, null],
   ],
   fieldMode: fieldMode.OBSERVE,
-  inventory: [],
+  inventory: [] as any,
   inventoryLimit: INFINITE_STORAGE_LIMIT,
   isCombineEnabled: false,
   purchasedCombine: 0,
   purchasedField: 0,
 }
 
-const defaultFieldContentProps = {
+const defaultFieldContentProps: FieldContentProps = {
   columns: 2,
   experience: 1,
   handleCombineEnabledChange: noop,
+  handleFieldActionRangeChange: noop,
   field: [
     [null, null],
     [null, null],
     [null, null],
   ],
-  hoveredPlot: {},
+  hoveredPlot: { x: null, y: null },
   hoveredPlotRangeSize: 0,
   fieldMode: fieldMode.OBSERVE,
+  inventory: [] as any,
+  inventoryLimit: INFINITE_STORAGE_LIMIT,
   isCombineEnabled: false,
   purchasedCombine: 0,
+  purchasedField: 0,
   rows: 3,
   setHoveredPlot: noop,
 }
 
 describe('Field', () => {
   test('renders', () => {
-    render(<Field {...defaultFieldProps} />)
+    render(<Field {...(defaultFieldProps as any)} />)
     expect(document.querySelector('.Field')).toBeInTheDocument()
   })
 
@@ -109,7 +120,7 @@ describe('Field', () => {
       fieldMode: fieldMode.HARVEST,
     }
 
-    render(<Field {...fullInventoryProps} />)
+    render(<Field {...(fullInventoryProps as any)} />)
 
     expect(
       document.querySelector('.Field.is-inventory-full')
@@ -123,7 +134,7 @@ describe('Field', () => {
       inventory: [testItem({ quantity: 1 })],
     }
 
-    render(<Field {...props} />)
+    render(<Field {...(props as any)} />)
 
     expect(
       document.querySelector('.Field.is-inventory-full')
@@ -131,31 +142,33 @@ describe('Field', () => {
   })
 
   test('renders field content', () => {
-    render(<Field {...defaultFieldProps} />)
+    render(<Field {...(defaultFieldProps as any)} />)
     expect(document.querySelector('.row-wrapper')).toBeInTheDocument()
   })
 
   test('applies correct field mode class', () => {
-    render(<Field {...defaultFieldProps} fieldMode={fieldMode.PLANT} />)
+    render(
+      <Field {...(defaultFieldProps as any)} fieldMode={fieldMode.PLANT} />
+    )
     expect(document.querySelector('.Field')).toHaveClass('plant-mode')
   })
 })
 
 describe('FieldContent', () => {
   test('renders field grid', () => {
-    render(<FieldContent {...defaultFieldContentProps} />)
+    render(<FieldContent {...(defaultFieldContentProps as any)} />)
     expect(document.querySelector('.row-wrapper')).toBeInTheDocument()
   })
 
   test('renders correct number of rows', () => {
-    render(<FieldContent {...defaultFieldContentProps} />)
+    render(<FieldContent {...(defaultFieldContentProps as any)} />)
 
     const rows = document.querySelectorAll('.row')
     expect(rows).toHaveLength(3)
   })
 
   test('renders correct number of plots per row', () => {
-    render(<FieldContent {...defaultFieldContentProps} />)
+    render(<FieldContent {...(defaultFieldContentProps as any)} />)
 
     const firstRow = document.querySelector('.row')
     const plots = firstRow?.querySelectorAll('.Plot')
@@ -170,7 +183,10 @@ describe('FieldContent', () => {
     ]
 
     render(
-      <FieldContent {...defaultFieldContentProps} field={fieldWithCrops} />
+      <FieldContent
+        {...(defaultFieldContentProps as any)}
+        field={fieldWithCrops}
+      />
     )
 
     expect(document.querySelectorAll('.Plot')).toHaveLength(6) // 2 columns × 3 rows
@@ -178,7 +194,10 @@ describe('FieldContent', () => {
 
   test('handles different field modes', () => {
     render(
-      <FieldContent {...defaultFieldContentProps} fieldMode={fieldMode.WATER} />
+      <FieldContent
+        {...(defaultFieldContentProps as any)}
+        fieldMode={fieldMode.WATER}
+      />
     )
 
     expect(document.querySelector('.row-wrapper')).toBeInTheDocument()
@@ -187,7 +206,7 @@ describe('FieldContent', () => {
   test('handles combine mode when enabled', () => {
     render(
       <FieldContent
-        {...defaultFieldContentProps}
+        {...(defaultFieldContentProps as any)}
         isCombineEnabled={true}
         fieldMode={fieldMode.HARVEST}
       />

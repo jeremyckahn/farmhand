@@ -9,13 +9,11 @@ import { addItemToInventory } from './addItemToInventory.js'
 
 import { prependPendingPeerMessage } from './index.js'
 
-/**
- * @param {farmhand.state} state
- * @param {farmhand.item} item
- * @param {number} [howMany=1]
- * @returns {farmhand.state}
- */
-export const purchaseItem = (state, item, howMany = 1) => {
+export const purchaseItem = (
+  state: farmhand.state,
+  item: farmhand.item,
+  howMany: number = 1
+): farmhand.state => {
   const { money, todaysPurchases, valueAdjustments } = state
   const numberOfItemsToAdd = Math.min(howMany, inventorySpaceRemaining(state))
 

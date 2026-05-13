@@ -1,4 +1,3 @@
-/** @typedef {farmhand.keg} keg */
 import React, { useContext } from 'react'
 import { object } from 'prop-types'
 import Card from '@mui/material/Card/index.js'
@@ -21,22 +20,7 @@ import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
 import { wineService } from '../../services/wine.js'
 import { cellarService } from '../../services/cellar.js'
 
-/**
- * @param {Object} props
- * @param {keg} props.keg
- */
-export function Keg({ keg }) {
-  /**
-   * @type {{
-   *   handlers: {
-   *     handleSellKegClick: function(keg): void,
-   *     handleThrowAwayKegClick: function(keg): void
-   *   },
-   *   gameState: {
-   *     completedAchievements: Partial<Record<string, boolean>>
-   *   }
-   * }}
-   */
+export function Keg({ keg }: { keg: farmhand.keg }) {
   const {
     handlers: { handleSellKegClick, handleThrowAwayKegClick },
     gameState: { completedAchievements },

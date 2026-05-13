@@ -21,11 +21,7 @@ import { plantInPlot } from './plantInPlot.js'
 
 const { GROWN } = cropLifeStage
 
-/**
- * @param {farmhand.state} state
- * @returns {number}
- */
-function getHarvestedQuantity(state) {
+function getHarvestedQuantity(state: farmhand.state): number {
   let amount = 1
 
   switch (state.toolLevels[toolType.SCYTHE]) {
@@ -52,13 +48,11 @@ function getHarvestedQuantity(state) {
   return amount
 }
 
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-function harvestCrops(state, x, y) {
+function harvestCrops(
+  state: farmhand.state,
+  x: number,
+  y: number
+): farmhand.state {
   const row = state.field[y]
   const crop = row[x]
 
@@ -111,13 +105,11 @@ function harvestCrops(state, x, y) {
   }
 }
 
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-function harvestWeed(state, x, y) {
+function harvestWeed(
+  state: farmhand.state,
+  x: number,
+  y: number
+): farmhand.state {
   const row = state.field[y]
   const crop = row[x]
 
@@ -132,13 +124,11 @@ function harvestWeed(state, x, y) {
   return state
 }
 
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-export const harvestPlot = (state, x, y) => {
+export const harvestPlot = (
+  state: farmhand.state,
+  x: number,
+  y: number
+): farmhand.state => {
   const row = state.field[y]
   const crop = row[x]
 

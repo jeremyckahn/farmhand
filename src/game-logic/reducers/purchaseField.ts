@@ -3,12 +3,10 @@ import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
 
 import { addExperience } from './addExperience.js'
 
-/**
- * @param {farmhand.state} state
- * @param {number} fieldId
- * @returns {farmhand.state}
- */
-export const purchaseField = (state, fieldId) => {
+export const purchaseField = (
+  state: farmhand.state,
+  fieldId: number
+): farmhand.state => {
   const { field, money, purchasedField } = state
   if (purchasedField >= fieldId) {
     return state

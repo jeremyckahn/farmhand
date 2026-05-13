@@ -9,7 +9,7 @@ describe('decrementItemFromInventory', () => {
     beforeEach(() => {
       updatedState = decrementItemFromInventory(
         testState({
-          inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+          inventory: [{ id: 'sample-item-1', quantity: 1 }],
         }),
         'nonexistent-item'
       )
@@ -17,7 +17,7 @@ describe('decrementItemFromInventory', () => {
 
     test('no-ops', () => {
       expect(updatedState).toMatchObject({
-        inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+        inventory: [{ id: 'sample-item-1', quantity: 1 }],
       })
     })
   })
@@ -27,7 +27,7 @@ describe('decrementItemFromInventory', () => {
       beforeEach(() => {
         updatedState = decrementItemFromInventory(
           testState({
-            inventory: [testItem({ id: 'sample-item-1', quantity: 1 })],
+            inventory: [{ id: 'sample-item-1', quantity: 1 }],
           }),
           'sample-item-1'
         )
@@ -42,7 +42,7 @@ describe('decrementItemFromInventory', () => {
       beforeEach(() => {
         updatedState = decrementItemFromInventory(
           testState({
-            inventory: [testItem({ id: 'sample-item-1', quantity: 2 })],
+            inventory: [{ id: 'sample-item-1', quantity: 2 }],
           }),
           'sample-item-1'
         )
@@ -51,10 +51,10 @@ describe('decrementItemFromInventory', () => {
       test('decrements item', () => {
         expect(updatedState).toMatchObject({
           inventory: [
-            testItem({
+            {
               id: 'sample-item-1',
               quantity: 1,
-            }),
+            },
           ],
         })
       })

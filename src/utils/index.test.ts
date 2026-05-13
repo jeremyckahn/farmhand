@@ -703,21 +703,21 @@ describe('getSeedItemIdFromFinalStageCropItemId', () => {
 describe('maxYieldOfRecipe', () => {
   test('returns yield for no ingredients', () => {
     expect(
-      maxYieldOfRecipe({ ingredients: { 'sample-item-1': 2 } }, [])
+      maxYieldOfRecipe({ ingredients: { 'sample-item-1': 2 } } as any, [])
     ).toEqual(0)
   })
 
   test('returns yield for some ingredients', () => {
     expect(
       maxYieldOfRecipe(
-        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
+        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } } as any,
         [{ id: 'sample-item-1', quantity: 2 }]
       )
     ).toEqual(0)
 
     expect(
       maxYieldOfRecipe(
-        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
+        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } } as any,
         [
           { id: 'sample-item-1', quantity: 1 },
           { id: 'sample-item-2', quantity: 2 },
@@ -727,7 +727,7 @@ describe('maxYieldOfRecipe', () => {
 
     expect(
       maxYieldOfRecipe(
-        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
+        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } } as any,
         [
           { id: 'sample-item-1', quantity: 4 },
           { id: 'sample-item-2', quantity: 3 },
@@ -739,7 +739,7 @@ describe('maxYieldOfRecipe', () => {
   test('returns yield for all ingredients', () => {
     expect(
       maxYieldOfRecipe(
-        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
+        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } } as any,
         [
           { id: 'sample-item-1', quantity: 2 },
           { id: 'sample-item-2', quantity: 2 },
@@ -749,7 +749,7 @@ describe('maxYieldOfRecipe', () => {
 
     expect(
       maxYieldOfRecipe(
-        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } },
+        { ingredients: { 'sample-item-1': 2, 'sample-item-2': 2 } } as any,
         [
           { id: 'sample-item-1', quantity: 4 },
           { id: 'sample-item-2', quantity: 4 },
@@ -764,7 +764,7 @@ describe('canMakeRecipe', () => {
     test('evaluates inventory correctly', () => {
       expect(
         canMakeRecipe(
-          { ingredients: { 'sample-item-1': 2 } },
+          { ingredients: { 'sample-item-1': 2 } } as any,
           [{ id: 'sample-item-1', quantity: 1 }],
           1
         )
@@ -776,7 +776,7 @@ describe('canMakeRecipe', () => {
     test('evaluates inventory correctly', () => {
       expect(
         canMakeRecipe(
-          { ingredients: { 'sample-item-1': 2 } },
+          { ingredients: { 'sample-item-1': 2 } } as any,
           [{ id: 'sample-item-1', quantity: 2 }],
           1
         )
@@ -855,7 +855,7 @@ describe('getAvailableShopInventory', () => {
         sprinklerRange: 0,
         tools: {},
         stageFocusType: {},
-      })
+      } as any)
     ).toEqual([scarecrow])
   })
 })
@@ -1047,10 +1047,7 @@ describe('getCowImage', () => {
 })
 
 describe('transformStateDataForImport', () => {
-  /**
-   * @type Partial<farmhand.state>
-   */
-  let state
+  let state: Partial<farmhand.state>
 
   beforeEach(() => {
     state = {
@@ -1066,7 +1063,7 @@ describe('transformStateDataForImport', () => {
   })
 
   test('it returns a sanitized state without version', () => {
-    const sanitizedState = transformStateDataForImport(state)
+    const sanitizedState = transformStateDataForImport(state as any)
     const { version, ...stateWithoutVersion } = state
 
     expect(sanitizedState).toEqual(stateWithoutVersion)
@@ -1079,7 +1076,7 @@ describe('transformStateDataForImport', () => {
       'carrot-seed': 10,
     }
 
-    const sanitizedState = transformStateDataForImport(state)
+    const sanitizedState = transformStateDataForImport(state as any)
     const { version, ...stateWithoutVersion } = state
 
     expect(sanitizedState).toEqual({
@@ -1137,7 +1134,7 @@ describe('transformStateDataForImport', () => {
     ({ cowBreedingPen, cowInventory, expectedCowBreedingPen }) => {
       Object.assign(state, { cowBreedingPen, cowInventory })
 
-      const sanitizedState = transformStateDataForImport(state)
+      const sanitizedState = transformStateDataForImport(state as any)
       const { version, ...stateWithoutVersion } = state
 
       expect(sanitizedState).toEqual({
@@ -1157,6 +1154,6 @@ describe('getGrowingPhase', () => {
   ])('it returns phase %s when days watered is %s', (phase, daysWatered) => {
     const crop = { itemId: 'potato', daysWatered }
 
-    expect(getGrowingPhase(crop)).toEqual(phase)
+    expect(getGrowingPhase(crop as any)).toEqual(phase)
   })
 })

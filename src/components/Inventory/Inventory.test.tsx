@@ -43,11 +43,15 @@ const StubInventory = ({ gameState = {}, ...overrides }) => {
 describe('Inventory Component', () => {
   describe('Displaying items', () => {
     test('displays all items when no categories are selected', () => {
-      const items = [
-        testItem({ id: 'carrot', name: 'Carrot', type: 'CROP' }),
-        testItem({ id: 'pumpkin', name: 'Pumpkin', type: 'CROP' }),
-        testItem({ id: 'carrot-seed', name: 'Carrot Seed', type: 'SEEDS' }),
-      ]
+      const items = ([
+        testItem({ id: 'carrot', name: 'Carrot', type: 'CROP' as any }),
+        testItem({ id: 'pumpkin', name: 'Pumpkin', type: 'CROP' as any }),
+        testItem({
+          id: 'carrot-seed',
+          name: 'Carrot Seed',
+          type: 'SEEDS' as any,
+        }),
+      ] as unknown) as farmhand.item[]
       render(<StubInventory items={items} selectedCategories={[]} />)
       items.forEach(item => {
         expect(screen.getByText(item.name)).toBeInTheDocument()
@@ -55,14 +59,14 @@ describe('Inventory Component', () => {
     })
 
     test('filters items by search query', () => {
-      const items = [
-        testItem({ id: 'carrot', name: 'Carrot', type: 'CROP' }),
+      const items = ([
+        testItem({ id: 'carrot', name: 'Carrot', type: 'CROP' as any }),
         testItem({
           id: 'pumpkin-seed',
           name: 'Pumpkin Seed',
-          type: 'SEEDS',
+          type: 'SEEDS' as any,
         }),
-      ]
+      ] as unknown) as farmhand.item[]
 
       render(<StubInventory items={items} selectedCategories={[]} />)
 
@@ -98,7 +102,7 @@ describe('Inventory Component', () => {
         }),
       ]
 
-      const categorizedItems = separateItemsIntoCategories(items)
+      const categorizedItems = separateItemsIntoCategories(items as any[])
 
       expect(categorizedItems).toEqual(
         new Map([
@@ -163,10 +167,10 @@ describe('Inventory Component', () => {
   describe('Item sorting and categorization', () => {
     test('sorts items by type and base value', () => {
       const sortedItems = sortItems([
-        testItem({ id: pumpkinSeed.id, value: 0.5 }),
-        testItem({ id: 'scarecrow' }),
-        testItem({ id: 'sprinkler' }),
-        testItem({ id: carrotSeed.id }),
+        testItem({ id: pumpkinSeed.id, value: 0.5 }) as farmhand.item,
+        testItem({ id: 'scarecrow' }) as farmhand.item,
+        testItem({ id: 'sprinkler' }) as farmhand.item,
+        testItem({ id: carrotSeed.id }) as farmhand.item,
       ])
 
       expect(sortedItems).toEqual([

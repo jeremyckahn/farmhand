@@ -3,12 +3,10 @@ import { ACHIEVEMENT_COMPLETED } from '../../templates.js'
 
 import { showNotification } from './showNotification.js'
 
-/**
- * @param {farmhand.state} state
- * @param {farmhand.state} prevState
- * @returns {farmhand.state}
- */
-export const updateAchievements = (state, prevState) =>
+export const updateAchievements = (
+  state: farmhand.state,
+  prevState: farmhand.state
+): farmhand.state =>
   achievements.reduce(
     (
       reducerState: farmhand.state,

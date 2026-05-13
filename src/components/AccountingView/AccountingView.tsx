@@ -7,7 +7,6 @@ import TextField from '@mui/material/TextField/index.js'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance.js'
 import NumberFormat from 'react-number-format'
 import { func, number } from 'prop-types'
-/** @typedef {import('@mui/material/InputBase/index.js').InputBaseComponentProps} InputBaseComponentProps */
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { moneyString } from '../../utils/moneyString.js'
@@ -20,28 +19,17 @@ import {
 
 import './AccountingView.sass'
 
+interface MoneyNumberFormatProps {
+  max: number
+  min: number
+  onChange: (v: number) => void
+  setLoanInputValue?: React.Dispatch<React.SetStateAction<number>>
+  [key: string]: unknown
+}
+
 const MoneyNumberFormat = forwardRef(
-  /**
-   * @param {Object} props - Component properties
-   * @param {number} props.max - Maximum value allowed for the input
-   * @param {number} props.min - Minimum value allowed for the input
-   * @param {(value: number) => void} props.onChange - Callback function to handle changes in the input value
-   * @param {React.Dispatch<React.SetStateAction<number>>} props.setLoanInputValue - Function to set the loan input value
-   * @param  [ref] - Forwarded ref for the component
-   */
   (
-    {
-      max,
-      min,
-      onChange,
-      setLoanInputValue,
-      ...rest
-    }: {
-      max: number
-      min: number
-      onChange: (v: number) => void
-      setLoanInputValue?: React.Dispatch<React.SetStateAction<number>>
-    } & Record<string, unknown>,
+    { max, min, onChange, setLoanInputValue, ...rest }: MoneyNumberFormatProps,
     ref: React.ForwardedRef<HTMLInputElement>
   ) => (
     <NumberFormat
@@ -60,12 +48,19 @@ const MoneyNumberFormat = forwardRef(
   )
 )
 
+interface AccountingViewProps {
+  handleClickLoanPaydownButton: (amount: number) => void
+  handleClickTakeOutLoanButton: (amount: number) => void
+  loanBalance: number
+  money: number
+}
+
 const AccountingView = ({
   handleClickLoanPaydownButton,
   handleClickTakeOutLoanButton,
   loanBalance,
   money,
-}) => {
+}: AccountingViewProps) => {
   const [loanInputValue, setLoanInputValue] = useState(
     Math.min(loanBalance, money)
   )
@@ -162,7 +157,7 @@ AccountingView.propTypes = {
   money: number.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Partial<AccountingViewProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

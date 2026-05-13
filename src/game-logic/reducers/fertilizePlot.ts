@@ -15,12 +15,12 @@ const fertilizerItemIdToTypeMap = {
 /**
  * Assumes that state.selectedItemId references an item with type ===
  * itemType.FERTILIZER.
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
  */
-export const fertilizePlot = (state, x, y) => {
+export const fertilizePlot = (
+  state: farmhand.state,
+  x: number,
+  y: number
+): farmhand.state => {
   const { field, selectedItemId } = state
   const row = field[y]
   const plotContent = row[x]

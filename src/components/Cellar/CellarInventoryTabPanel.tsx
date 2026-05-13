@@ -1,4 +1,3 @@
-/** @typedef {farmhand.keg} keg */
 import React, { useContext, useState } from 'react'
 import { number } from 'prop-types'
 import Divider from '@mui/material/Divider/index.js'
@@ -22,22 +21,15 @@ import { FERMENTED_CROP_NAME } from '../../templates.js'
 import { TabPanel } from './TabPanel/index.js'
 import { Keg } from './Keg.js'
 
-/**
- * @param {Object} props
- * @param {number} props.index
- * @param {number} props.currentTab
- */
-export const CellarInventoryTabPanel = ({ index, currentTab }) => {
+export const CellarInventoryTabPanel = ({
+  index,
+  currentTab,
+}: {
+  index: number
+  currentTab: number
+}) => {
   const [searchQuery, setSearchQuery] = useState('')
 
-  /**
-   * @type {{
-   *   gameState: {
-   *     cellarInventory:Array.<keg>,
-   *     purchasedCellar: number
-   *   }
-   * }}
-   */
   const {
     gameState: { cellarInventory, purchasedCellar },
   } = useContext(FarmhandContext)

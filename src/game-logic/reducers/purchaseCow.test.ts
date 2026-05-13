@@ -8,8 +8,7 @@ import * as utils from '../../utils/index.js'
 import { purchaseCow } from './purchaseCow.js'
 
 describe('purchaseCow', () => {
-  /** @type {farmhand.state} */
-  let state
+  let state: farmhand.state
   const cow = Object.freeze(
     utils.generateCow({
       baseWeight: 1000,

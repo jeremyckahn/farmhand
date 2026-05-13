@@ -21,9 +21,12 @@ const tumbleweedSize = 48
 
 /**
  * A single tumbleweed that animates across the screen.
- * @type {React.FC<{onAnimationComplete: () => void}>}
  */
-const Tumbleweed = ({ onAnimationComplete }) => {
+const Tumbleweed = ({
+  onAnimationComplete,
+}: {
+  onAnimationComplete: () => void
+}) => {
   // Randomize the vertical position of the tumbleweed.
   const [yPosition] = useState(randomNumberService.generateRandomNumber())
   const top = scaleNumber(yPosition, 0, 1, 0, 100)
@@ -61,9 +64,8 @@ const Tumbleweed = ({ onAnimationComplete }) => {
 
 /**
  * Manages the spawning of multiple Tumbleweed components.
- * @type {React.FC<{doSpawn: boolean}>}
  */
-export const Tumbleweeds = ({ doSpawn }) => {
+export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
   // A list of UUIDs, each representing a Tumbleweed component.
   const [tumbleweeds, setTumbleweeds] = useState<string[]>([])
   // The current interval between tumbleweed spawns.
@@ -125,10 +127,9 @@ export const Tumbleweeds = ({ doSpawn }) => {
 
   /**
    * Removes a tumbleweed from the list after its animation is complete.
-   * @param {string} tumbleweedUuid
    */
   const handleTumbleweedAnimationComplete = useCallback(
-    tumbleweedUuid => {
+    (tumbleweedUuid: string) => {
       setTumbleweeds(prev => {
         return prev.filter(id => id !== tumbleweedUuid)
       })

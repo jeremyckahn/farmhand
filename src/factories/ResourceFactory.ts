@@ -47,10 +47,9 @@ export default class ResourceFactory {
 
   /**
    * Retrieve a reusable instance of ResourceFactory
-   * @returns {ResourceFactory}
    * @static
    */
-  static instance() {
+  static instance(): ResourceFactory {
     if (!instance) {
       instance = new ResourceFactory()
     }
@@ -60,10 +59,9 @@ export default class ResourceFactory {
 
   /**
    * Generate an instance for specific factory
-   * @param {farmhand.itemType} type
-   * @returns {?Factory} A factory if one exists for type, default return is null
+   * @returns A factory if one exists for type, default return is null
    */
-  static generateFactoryInstance(type) {
+  static generateFactoryInstance(type: farmhand.itemType): Factory | null {
     switch (type) {
       case itemType.STONE:
         return new StoneFactory()
@@ -82,7 +80,6 @@ export default class ResourceFactory {
   /**
    * Retrieve a specific factory for generating resources. Will create and cache
    * a factory instance for reuse.
-   * @returns {?Factory}
    */
   static getFactoryForItemType = type => {
     if (!factoryInstances[type]) {
@@ -94,9 +91,9 @@ export default class ResourceFactory {
 
   /**
    * Use dice roll and resource factories to generate resources at random
-   * @returns {Array.<farmhand.item>} array of resource objects
+   * @returns array of resource objects
    */
-  generateResources(shovelLevel) {
+  generateResources(shovelLevel): Array<farmhand.item> {
     let resources: farmhand.item[] = []
 
     let spawnChance = RESOURCE_SPAWN_CHANCE

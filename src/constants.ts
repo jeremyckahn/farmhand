@@ -1,8 +1,3 @@
-/**
- * @module farmhand.constants
- * @ignore
- */
-
 import { cowColors, fieldMode, stageFocusType, toolLevel } from './enums.js'
 
 const { freeze } = Object
@@ -34,10 +29,10 @@ export const STORAGE_EXPANSION_SCALE_PREMIUM = 50
 export const INITIAL_FIELD_WIDTH = 6
 export const INITIAL_FIELD_HEIGHT = 10
 
-/**
- * @type Map<number, farmhand.purchaseableFieldSize>
- */
-export const PURCHASEABLE_FIELD_SIZES = freeze(
+export const PURCHASEABLE_FIELD_SIZES: Map<
+  number,
+  farmhand.purchaseableFieldSize
+> = freeze(
   new Map([
     [1, { columns: 8, rows: 12, price: 1_000 }],
     [2, { columns: 10, rows: 16, price: 5_000 }],
@@ -48,10 +43,10 @@ export const PURCHASEABLE_FIELD_SIZES = freeze(
 export const INITIAL_FOREST_WIDTH = 4
 export const INITIAL_FOREST_HEIGHT = 1
 
-/**
- * @type Map<number, farmhand.purchaseableFieldSize>
- */
-export const PURCHASABLE_FOREST_SIZES = freeze(
+export const PURCHASABLE_FOREST_SIZES: Map<
+  number,
+  farmhand.purchaseableFieldSize
+> = freeze(
   new Map([
     [1, { columns: 4, rows: 2, price: 100_000 }],
     [2, { columns: 4, rows: 3, price: 200_000 }],
@@ -59,7 +54,7 @@ export const PURCHASABLE_FOREST_SIZES = freeze(
   ])
 )
 
-export const LARGEST_PURCHASABLE_FIELD_SIZE = /** @type {farmhand.purchaseableFieldSize} */ PURCHASEABLE_FIELD_SIZES.get(
+export const LARGEST_PURCHASABLE_FIELD_SIZE = PURCHASEABLE_FIELD_SIZES.get(
   PURCHASEABLE_FIELD_SIZES.size
 )
 

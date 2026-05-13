@@ -141,7 +141,7 @@ test('enables make button when recipe can be made', () => {
   const recipe = testRecipe({
     ingredients: { 'sample-item-1': 1 },
   })
-  const inventory = [testItem({ id: 'sample-item-1', quantity: 5 })]
+  const inventory = [{ id: 'sample-item-1', quantity: 5 }]
 
   render(<Recipe {...defaultProps} recipe={recipe} inventory={inventory} />)
 
@@ -155,7 +155,7 @@ test('calls handleMakeRecipeClick when make button is clicked', async () => {
   const recipe = testRecipe({
     ingredients: { 'sample-item-1': 1 },
   })
-  const inventory = [testItem({ id: 'sample-item-1', quantity: 5 })]
+  const inventory = [{ id: 'sample-item-1', quantity: 5 }]
 
   render(
     <Recipe
@@ -177,7 +177,7 @@ test('updates quantity when quantity input changes', async () => {
   const recipe = testRecipe({
     ingredients: { 'sample-item-1': 1 },
   })
-  const inventory = [testItem({ id: 'sample-item-1', quantity: 3 })]
+  const inventory = [{ id: 'sample-item-1', quantity: 3 }]
 
   render(<Recipe {...defaultProps} recipe={recipe} inventory={inventory} />)
 
@@ -192,7 +192,7 @@ test('indicates when recipe can be made', () => {
   const recipe = testRecipe({
     ingredients: { 'sample-item-1': 1 },
   })
-  const inventory = [testItem({ id: 'sample-item-1', quantity: 5 })]
+  const inventory = [{ id: 'sample-item-1', quantity: 5 }]
 
   render(<Recipe {...defaultProps} recipe={recipe} inventory={inventory} />)
 

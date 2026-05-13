@@ -18,11 +18,19 @@ describe('processLevelUp', () => {
 
     expect(todaysNotifications).toEqual([
       {
-        message: LEVEL_GAINED_NOTIFICATION('', 3, testItem({ id: 'carrot' })),
+        message: LEVEL_GAINED_NOTIFICATION(
+          '',
+          3,
+          testItem({ id: 'carrot' }) as any
+        ),
         severity: 'success',
       },
       {
-        message: LEVEL_GAINED_NOTIFICATION('', 2, testItem({ id: 'carrot' })),
+        message: LEVEL_GAINED_NOTIFICATION(
+          '',
+          2,
+          testItem({ id: 'carrot' }) as any
+        ),
         severity: 'success',
       },
     ])

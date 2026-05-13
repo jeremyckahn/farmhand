@@ -15,18 +15,14 @@ import {
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { waterField } from './waterField.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const applyPrecipitation = state => {
+export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
   let { field } = state
   let scarecrowsConsumedByReplanting = 0
-  let notification
+  let notification: farmhand.notification
 
   if (shouldStormToday()) {
     if (fieldHasScarecrow(field)) {
-      notification = /** @type {farmhand.notification} */ {
+      notification = {
         message: STORM_DESTROYS_SCARECROWS_MESSAGE,
         severity: 'error',
       }
@@ -54,13 +50,13 @@ export const applyPrecipitation = state => {
         return null
       })
     } else {
-      notification = /** @type {farmhand.notification} */ {
+      notification = {
         message: STORM_MESSAGE,
         severity: 'info',
       }
     }
   } else {
-    notification = /** @type {farmhand.notification} */ {
+    notification = {
       message: RAIN_MESSAGE,
       severity: 'info',
     }

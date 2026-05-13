@@ -5,14 +5,13 @@ const { freeze } = Object
 
 /**
  * @property farmhand.module:items.ironOre
- * @type {farmhand.item}
  */
-export const ironOre = freeze({
+export const ironOre: farmhand.item = freeze({
   description: 'A piece of iron ore.',
   doesPriceFluctuate: true,
   id: 'iron-ore',
   name: 'Iron Ore',
-  type: /** @type {farmhand.itemType} */ itemType.ORE,
+  type: itemType.ORE,
   value: 40,
   spawnChance: IRON_SPAWN_CHANCE,
 })

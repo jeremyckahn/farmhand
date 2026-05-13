@@ -114,12 +114,7 @@ export default {
     this.withdrawCow(cow.id)
   },
 
-  handleCowNameInputChange(
-    this: Farmhand,
-    { target }: React.ChangeEvent<HTMLInputElement>,
-    cow: farmhand.cow
-  ) {
-    const { value } = target
+  handleCowNameInputChange(this: Farmhand, value: string, cow: farmhand.cow) {
     this.changeCowName(cow.id, value)
   },
 

@@ -1,6 +1,3 @@
-/**
- */
-
 import {
   // Plantable crops
   asparagusSeed,
@@ -30,8 +27,7 @@ import {
 
 import { fertilizer } from './recipes.js'
 
-/** @type {farmhand.item[]} */
-const inventory = [
+const inventory: farmhand.item[] = [
   // Plantable crops
   asparagusSeed,
   carrotSeed,

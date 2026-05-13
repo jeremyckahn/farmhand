@@ -5,22 +5,21 @@ import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 /**
  * Consume ingredients - validate, add experience, and decrement ingredients
- * @param {farmhand.state} state
- * @param {object} recipe - Recipe or upgrade object with ingredients
- * @param {number} [recipeYield=1] - How many units of the recipe to consume ingredients for
- * @param {number} [experiencePoints=0] - Experience points to award
- * @returns {farmhand.state}
+ * @param recipe Recipe or upgrade object with ingredients
+ * @param recipeYield How many units of the recipe to consume ingredients for
+ * @param experiencePoints Experience points to award
+ * @returns
  */
 
 export const consumeIngredients = (
-  state,
-  recipe,
-  recipeYield = 1,
-  experiencePoints = 0
-) => {
+  state: farmhand.state,
+  recipe: { ingredients: Record<string, number> },
+  recipeYield: number = 1,
+  experiencePoints: number = 0
+): farmhand.state => {
   if (
     recipe.ingredients &&
-    !canMakeRecipe(recipe, state.inventory, recipeYield)
+    !canMakeRecipe(recipe as farmhand.recipe, state.inventory, recipeYield)
   ) {
     return state
   }

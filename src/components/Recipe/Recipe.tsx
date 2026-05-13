@@ -26,22 +26,20 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import './Recipe.sass'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
-/**
- * @param {object} props
- * @param {Function} props.handleMakeRecipeClick
- * @param {farmhand.state['inventory']} props.inventory
- * @param {number} props.inventoryLimit
- * @param {Record<string, number>} props.playerInventoryQuantities
- * @param {farmhand.recipe} props.recipe
- */
 const Recipe = ({
   handleMakeRecipeClick,
   inventory,
   inventoryLimit,
   playerInventoryQuantities,
   recipe,
-  recipe: { id, name, description },
+}: {
+  handleMakeRecipeClick: (recipeArg: farmhand.recipe, quantity: number) => void
+  inventory: { id: string; quantity: number }[]
+  inventoryLimit: number
+  playerInventoryQuantities: Record<string, number>
+  recipe: farmhand.recipe
 }) => {
+  const { id, name, description = '' } = recipe
   const [quantity, setQuantity] = useState(1)
 
   useEffect(() => {

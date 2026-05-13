@@ -1,8 +1,4 @@
 import { itemType } from '../enums.js'
 
-/**
- * @param {farmhand.item} item
- * @returns {boolean}
- */
-export const isItemAGrownCrop = item =>
+export const isItemAGrownCrop = (item: farmhand.item): boolean =>
   Boolean(item.type === itemType.CROP && !item.growsInto)

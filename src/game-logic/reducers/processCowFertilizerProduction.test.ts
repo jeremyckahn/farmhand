@@ -69,7 +69,7 @@ describe('processCowFertilizerProduction', () => {
         expect(newDayNotifications).toEqual([
           {
             message: FERTILIZERS_PRODUCED('', {
-              [getCowFertilizerItem(cow).name]: 1,
+              [getCowFertilizerItem(cow as any).name]: 1,
             }),
             severity: 'success',
           },
@@ -106,7 +106,7 @@ describe('processCowFertilizerProduction', () => {
         expect(newDayNotifications).toEqual([
           {
             message: FERTILIZERS_PRODUCED('', {
-              [getCowFertilizerItem(cow).name]: 1,
+              [getCowFertilizerItem(cow as any).name]: 1,
             }),
             severity: 'success',
           },

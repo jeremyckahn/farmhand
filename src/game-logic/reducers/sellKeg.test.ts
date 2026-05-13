@@ -1,6 +1,3 @@
-/**
- * @typedef {farmhand.keg} keg
- */
 import { LOAN_GARNISHMENT_RATE } from '../../constants.js'
 import { carrot } from '../../data/crops/index.js'
 import { LOAN_PAYOFF } from '../../templates.js'
@@ -10,8 +7,11 @@ import { testState } from '../../test-utils/index.js'
 
 import { sellKeg } from './sellKeg.js'
 
-/** @type keg */
-const stubKeg = { id: 'stub-keg', daysUntilMature: -4, itemId: carrot.id }
+const stubKeg: farmhand.keg = {
+  id: 'stub-keg',
+  daysUntilMature: -4,
+  itemId: carrot.id,
+}
 
 const stubKegValue = getKegValue(stubKeg)
 

@@ -25,15 +25,6 @@ import { cellarService } from '../../services/cellar.js'
 import QuantityInput from '../QuantityInput/index.js'
 import { yeast } from '../../data/recipes.js'
 
-/**
- * @typedef {{
- *   wineVariety: grapeVariety
- * }} WineRecipeProps
- */
-
-/**
- * @param {WineRecipeProps} props
- */
 export const WineRecipe = ({
   wineVariety,
 }: {

@@ -6,12 +6,10 @@ export const random = () => {
   return randomNumberService.generateRandomNumber()
 }
 
-/**
- * @param {Partial<Record<string, farmhand.priceEvent>>} priceCrashes
- * @param {Partial<Record<string, farmhand.priceEvent>>} priceSurges
- * @returns {Record<string, number>}
- */
-export const generateValueAdjustments = (priceCrashes = {}, priceSurges = {}) =>
+export const generateValueAdjustments = (
+  priceCrashes: Partial<Record<string, farmhand.priceEvent>> = {},
+  priceSurges: Partial<Record<string, farmhand.priceEvent>> = {}
+): Record<string, number> =>
   Object.keys(itemsMap).reduce((acc, key) => {
     if (itemsMap[key].doesPriceFluctuate) {
       if (priceCrashes[key]) {

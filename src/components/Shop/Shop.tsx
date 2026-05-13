@@ -38,21 +38,20 @@ import { TabPanel, a11yProps } from './TabPanel/index.js'
 
 import './Shop.sass'
 
-/**
- * @param {Array.<farmhand.item>} shopInventory
- * @returns {Object.<'seeds' | 'fieldTools', Array.<farmhand.item>>}
- */
-const categorizeShopInventory = memoize(shopInventory =>
-  shopInventory.reduce(
-    (acc, inventoryItem) => {
-      acc[inventoryItem.type === itemType.CROP ? 'seeds' : 'fieldTools'].push(
-        inventoryItem
-      )
+const categorizeShopInventory = memoize(
+  (
+    shopInventory: farmhand.item[]
+  ): Record<'seeds' | 'fieldTools', farmhand.item[]> =>
+    shopInventory.reduce(
+      (acc, inventoryItem) => {
+        acc[inventoryItem.type === itemType.CROP ? 'seeds' : 'fieldTools'].push(
+          inventoryItem
+        )
 
-      return acc
-    },
-    { seeds: [], fieldTools: [] }
-  )
+        return acc
+      },
+      { seeds: [] as farmhand.item[], fieldTools: [] as farmhand.item[] }
+    )
 )
 
 export const Shop = ({

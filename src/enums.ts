@@ -1,11 +1,6 @@
 /**
- * @module farmhand.enums
- * @ignore
- */
-
-/**
  * @property farmhand.module:enums.cropType
- * @enum {string}
+ * @enum
  */
 export const cropType = {
   ASPARAGUS: 'ASPARAGUS',
@@ -32,7 +27,7 @@ export const cropType = {
 
 /**
  * @property farmhand.module:enums.recipeType
- * @enum {string}
+ * @enum
  */
 export const recipeType = {
   FERMENTATION: 'FERMENTATION',
@@ -44,7 +39,7 @@ export const recipeType = {
 
 /**
  * @property farmhand.module:enums.fieldMode
- * @enum {string}
+ * @enum
  */
 export const fieldMode = {
   CLEANUP: 'CLEANUP',
@@ -60,7 +55,7 @@ export const fieldMode = {
 
 /**
  * @property farmhand.module:enums.stageFocusType
- * @enum {string}
+ * @enum
  */
 export const stageFocusType = {
   NONE: 'NONE', // Used for testing
@@ -76,7 +71,7 @@ export const stageFocusType = {
 
 /**
  * @property farmhand.module:enums.cropLifeStage
- * @enum {string}
+ * @enum
  */
 export const cropLifeStage = {
   SEED: 'SEED',
@@ -86,9 +81,9 @@ export const cropLifeStage = {
 
 /**
  * @property farmhand.module:enums.itemType
- * @enum {string}
+ * @enum
  */
-export const itemType = /** @type {const} */ {
+export const itemType = {
   COW_FEED: 'COW_FEED',
   CRAFTED_ITEM: 'CRAFTED_ITEM',
   CROP: 'CROP',
@@ -106,7 +101,7 @@ export const itemType = /** @type {const} */ {
 
 /**
  * @property farmhand.module:enums.fertilizerType
- * @enum {string}
+ * @enum
  */
 export const fertilizerType = {
   NONE: 'NONE',
@@ -116,18 +111,18 @@ export const fertilizerType = {
 
 /**
  * @property farmhand.module:enums.genders
- * @enum {string}
+ * @enum
  */
-export const genders = /** @type {const} */ {
+export const genders = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
 } as const
 
 /**
  * @property farmhand.module:enums.cowColors
- * @enum {string}
+ * @enum
  */
-export const cowColors = /** @type {const} */ {
+export const cowColors = {
   BLUE: 'BLUE',
   BROWN: 'BROWN',
   GREEN: 'GREEN',
@@ -143,7 +138,7 @@ export { standardCowColors }
 
 /**
  * @property farmhand.module:enums.dialogView
- * @enum {string}
+ * @enum
  */
 export const dialogView = {
   NONE: 'NONE',
@@ -159,7 +154,7 @@ export const dialogView = {
 
 /**
  * @property farmhand.module:enums.toolType
- * @enum {string}
+ * @enum
  */
 export const toolType = {
   SCYTHE: 'SCYTHE',
@@ -170,7 +165,7 @@ export const toolType = {
 
 /**
  * @property farmhand.module:enums.toolLevel
- * @enum {string}
+ * @enum
  */
 export const toolLevel = {
   UNAVAILABLE: 'UNAVAILABLE',
@@ -183,7 +178,7 @@ export const toolLevel = {
 
 /**
  * @property farmhand.module:enums.notificationSeverity
- * @enum {string}
+ * @enum
  */
 export const notificationSeverity = {
   INFO: 'INFO',
@@ -194,7 +189,7 @@ export const notificationSeverity = {
 
 /**
  * @property farmhand.module:enums.cowTradeRejectionReason
- * @enum {string}
+ * @enum
  */
 export const cowTradeRejectionReason = {
   REQUESTED_COW_UNAVAILABLE: 'REQUESTED_COW_UNAVAILABLE',
@@ -203,7 +198,7 @@ export const cowTradeRejectionReason = {
 /**
  * @property farmhand.module:enums.cropFamily
  * @readonly
- * @enum {string}
+ * @enum
  */
 export const cropFamily = {
   GRAPE: 'GRAPE',
@@ -212,7 +207,7 @@ export const cropFamily = {
 /**
  * @property farmhand.module:enums.grapeVariety
  * @readonly
- * @enum {string}
+ * @enum
  */
 export const grapeVariety = {
   CHARDONNAY: 'CHARDONNAY',

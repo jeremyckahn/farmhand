@@ -1,6 +1,3 @@
-/**
- * @module farmhand.recipes
- */
 import { itemType, fieldMode, recipeType } from '../enums.js'
 import {
   GRAPES_REQUIRED_FOR_WINE,
@@ -14,11 +11,7 @@ import { grapeVarietyNameMap } from './crops/grape.js'
 
 const itemsMap = { ...baseItemsMap }
 
-/**
- * @param {Omit<farmhand.recipe, 'type' | 'value'> & { type?: string, value?: number }} partialRecipe
- * @returns {farmhand.recipe}
- */
-const convertToRecipe = partialRecipe => {
+const convertToRecipe = (partialRecipe): farmhand.recipe => {
   const recipe = Object.freeze({
     type: itemType.CRAFTED_ITEM,
     value: Object.keys(partialRecipe.ingredients).reduce(
@@ -32,16 +25,15 @@ const convertToRecipe = partialRecipe => {
     ...partialRecipe,
   })
 
-  itemsMap[partialRecipe.id] = /** @type {farmhand.item} */ recipe
+  itemsMap[partialRecipe.id] = recipe
 
-  return /** @type {farmhand.recipe} */ recipe
+  return recipe
 }
 
 /**
  * @property farmhand.module:recipes.salt
- * @type {farmhand.recipe}
  */
-export const salt = convertToRecipe({
+export const salt: farmhand.recipe = convertToRecipe({
   id: 'salt',
   name: 'Salt',
   ingredients: {
@@ -49,42 +41,36 @@ export const salt = convertToRecipe({
   },
   condition: state => (state.itemsSold[items.saltRock.id] || 0) >= 30,
   description: 'Useful for seasoning food and fermentation.',
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.flour
- * @type {farmhand.recipe}
  */
-export const flour = convertToRecipe({
+export const flour: farmhand.recipe = convertToRecipe({
   id: 'flour',
   name: 'Flour',
   ingredients: {
     [items.wheat.id]: 10,
   },
   condition: state => (state.itemsSold[items.wheat.id] || 0) >= 20,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.yeast
- * @type {farmhand.recipe}
  */
-export const yeast = convertToRecipe({
+export const yeast: farmhand.recipe = convertToRecipe({
   id: 'yeast',
   name: 'Yeast',
   ingredients: {
     [flour.id]: 5,
   },
   condition: state => (state.itemsSold[flour.id] || 0) >= 25,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
-/**
- * @param {farmhand.grape} grape
- * @returns {farmhand.wine}
- */
-const getWineRecipeFromGrape = grape => {
+const getWineRecipeFromGrape = (grape: farmhand.grape): farmhand.wine => {
   return {
     ...convertToRecipe({
       id: grape.wineId,
@@ -94,7 +80,7 @@ const getWineRecipeFromGrape = grape => {
         [grape.id]: GRAPES_REQUIRED_FOR_WINE,
         [yeast.id]: getYeastRequiredForWine(grape.variety),
       },
-      recipeType: /** @type {farmhand.recipeType} */ recipeType.WINE,
+      recipeType: recipeType.WINE,
       // NOTE: This prevents wines from appearing in the Learned Recipes list in the Workshop
       condition: () => false,
     }),
@@ -104,9 +90,8 @@ const getWineRecipeFromGrape = grape => {
 
 /**
  * @property farmhand.module:recipes.bread
- * @type {farmhand.recipe}
  */
-export const bread = convertToRecipe({
+export const bread: farmhand.recipe = convertToRecipe({
   id: 'bread',
   name: 'Bread',
   ingredients: {
@@ -116,35 +101,33 @@ export const bread = convertToRecipe({
   condition: state =>
     (state.itemsSold[flour.id] || 0) >= 30 &&
     (state.itemsSold[yeast.id] || 0) >= 15,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.butter
- * @type {farmhand.recipe}
  */
-export const butter = convertToRecipe({
+export const butter: farmhand.recipe = convertToRecipe({
   id: 'butter',
   name: 'Butter',
   ingredients: {
     [items.milk3.id]: 5,
   },
   condition: state => (state.itemsSold[items.milk3.id] || 0) >= 30,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.sunButter
- * @type {farmhand.recipe}
  */
-export const sunButter = convertToRecipe({
+export const sunButter: farmhand.recipe = convertToRecipe({
   id: 'sun-butter',
   name: 'Sun Butter',
   ingredients: {
     [items.sunflower.id]: 25,
   },
   condition: state => (state.itemsSold[items.sunflower.id] || 0) >= 200,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /*
@@ -158,84 +141,78 @@ export const oliveOil = convertToRecipe({
     [items.olive.id]: 250,
   },
   condition: state => (state.itemsSold[items.olive.id] || 0) >= 500,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.cheese
- * @type {farmhand.recipe}
  */
-export const cheese = convertToRecipe({
+export const cheese: farmhand.recipe = convertToRecipe({
   id: 'cheese',
   name: 'Cheese',
   ingredients: {
     [items.milk3.id]: 8,
   },
   condition: state => (state.itemsSold[items.milk3.id] || 0) >= 20,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.rainbowCheese
- * @type {farmhand.recipe}
  */
-export const rainbowCheese = convertToRecipe({
+export const rainbowCheese: farmhand.recipe = convertToRecipe({
   id: 'rainbowCheese',
   name: 'Rainbow Cheese',
   ingredients: {
     [items.rainbowMilk3.id]: 10,
   },
   condition: state => (state.itemsSold[items.rainbowMilk3.id] || 0) >= 30,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.chocolate
- * @type {farmhand.recipe}
  */
-export const chocolate = convertToRecipe({
+export const chocolate: farmhand.recipe = convertToRecipe({
   id: 'chocolate',
   name: 'Chocolate',
   ingredients: {
     [items.chocolateMilk.id]: 10,
   },
   condition: state => (state.itemsSold[items.chocolateMilk.id] || 0) >= 25,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.carrotSoup
- * @type {farmhand.recipe}
  */
-export const carrotSoup = convertToRecipe({
+export const carrotSoup: farmhand.recipe = convertToRecipe({
   id: 'carrot-soup',
   name: 'Carrot Soup',
   ingredients: {
     [items.carrot.id]: 4,
   },
   condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.jackolantern
- * @type {farmhand.recipe}
  */
-export const jackolantern = convertToRecipe({
+export const jackolantern: farmhand.recipe = convertToRecipe({
   id: 'jackolantern',
   name: "Jack-o'-lantern",
   ingredients: {
     [items.pumpkin.id]: 1,
   },
   condition: state => (state.itemsSold[items.pumpkin.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.spaghetti
- * @type {farmhand.recipe}
  */
-export const spaghetti = convertToRecipe({
+export const spaghetti: farmhand.recipe = convertToRecipe({
   id: 'spaghetti',
   name: 'Spaghetti',
   ingredients: {
@@ -245,14 +222,13 @@ export const spaghetti = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.wheat.id] || 0) >= 20 &&
     (state.itemsSold[items.tomato.id] || 0) >= 5,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.frenchOnionSoup
- * @type {farmhand.recipe}
  */
-export const frenchOnionSoup = convertToRecipe({
+export const frenchOnionSoup: farmhand.recipe = convertToRecipe({
   id: 'french-onion-soup',
   name: 'French Onion Soup',
   ingredients: {
@@ -263,14 +239,13 @@ export const frenchOnionSoup = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.onion.id] || 0) >= 15 &&
     (state.itemsSold[cheese.id] || 0) >= 10,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.burger
- * @type {farmhand.recipe}
  */
-export const burger = convertToRecipe({
+export const burger: farmhand.recipe = convertToRecipe({
   id: 'burger',
   name: 'Burger',
   ingredients: {
@@ -288,14 +263,13 @@ export const burger = convertToRecipe({
     (state.itemsSold[items.soybean.id] || 0) >= 25 &&
     (state.itemsSold[items.spinach.id] || 0) >= 5 &&
     (state.itemsSold[items.tomato.id] || 0) >= 5,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.summerSalad
- * @type {farmhand.recipe}
  */
-export const summerSalad = convertToRecipe({
+export const summerSalad: farmhand.recipe = convertToRecipe({
   id: 'summer-salad',
   name: 'Summer Salad',
   ingredients: {
@@ -307,28 +281,26 @@ export const summerSalad = convertToRecipe({
     (state.itemsSold[items.spinach.id] || 0) >= 30 &&
     (state.itemsSold[items.corn.id] || 0) > 5 &&
     (state.itemsSold[items.carrot.id] || 0) > 5,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.soyMilk
- * @type {farmhand.recipe}
  */
-export const soyMilk = convertToRecipe({
+export const soyMilk: farmhand.recipe = convertToRecipe({
   id: 'soy-milk',
   name: 'Soy Milk',
   ingredients: {
     [items.soybean.id]: 20,
   },
   condition: state => (state.itemsSold[items.soybean.id] || 0) >= 100,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.chocolateSoyMilk
- * @type {farmhand.recipe}
  */
-export const chocolateSoyMilk = convertToRecipe({
+export const chocolateSoyMilk: farmhand.recipe = convertToRecipe({
   id: 'chocolate-soy-milk',
   name: 'Chocolate Soy Milk',
   ingredients: {
@@ -338,28 +310,26 @@ export const chocolateSoyMilk = convertToRecipe({
   condition: state =>
     (state.itemsSold[soyMilk.id] || 0) >= 5 &&
     (state.itemsSold[chocolate.id] || 0) >= 5,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.tofu
- * @type {farmhand.recipe}
  */
-export const tofu = convertToRecipe({
+export const tofu: farmhand.recipe = convertToRecipe({
   id: 'tofu',
   name: 'Tofu',
   ingredients: {
     [soyMilk.id]: 4,
   },
   condition: state => (state.itemsSold[soyMilk.id] || 0) >= 20,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.chicknPotPie
- * @type {farmhand.recipe}
  */
-export const chicknPotPie = convertToRecipe({
+export const chicknPotPie: farmhand.recipe = convertToRecipe({
   id: 'chickn-pot-pie',
   name: "Chick'n Pot Pie",
   ingredients: {
@@ -375,14 +345,13 @@ export const chicknPotPie = convertToRecipe({
     (state.itemsSold[items.carrot.id] || 0) >= 300 &&
     (state.itemsSold[items.wheat.id] || 0) >= 425 &&
     (state.itemsSold[soyMilk.id] || 0) >= 15,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.hotSauce
- * @type {farmhand.recipe}
  */
-export const hotSauce = convertToRecipe({
+export const hotSauce: farmhand.recipe = convertToRecipe({
   id: 'hot-sauce',
   name: 'Hot Sauce',
   ingredients: {
@@ -390,14 +359,13 @@ export const hotSauce = convertToRecipe({
     [salt.id]: 1,
   },
   condition: state => (state.itemsSold[items.jalapeno.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.salsa
- * @type {farmhand.recipe}
  */
-export const salsa = convertToRecipe({
+export const salsa: farmhand.recipe = convertToRecipe({
   id: 'salsa',
   name: 'Salsa',
   ingredients: {
@@ -411,14 +379,13 @@ export const salsa = convertToRecipe({
     (state.itemsSold[items.onion.id] || 0) >= 5 &&
     (state.itemsSold[items.tomato.id] || 0) >= 5 &&
     (state.itemsSold[items.corn.id] || 0) >= 5,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.spicyCheese
- * @type {farmhand.recipe}
  */
-export const spicyCheese = convertToRecipe({
+export const spicyCheese: farmhand.recipe = convertToRecipe({
   id: 'spicy-cheese',
   name: 'Spicy Cheese',
   ingredients: {
@@ -428,28 +395,26 @@ export const spicyCheese = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.jalapeno.id] || 0) >= 20 &&
     (state.itemsSold[items.milk3.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.vegetableOil
- * @type {farmhand.recipe}
  */
-export const vegetableOil = convertToRecipe({
+export const vegetableOil: farmhand.recipe = convertToRecipe({
   id: 'vegetable-oil',
   name: 'Vegetable Oil',
   ingredients: {
     [items.soybean.id]: 350,
   },
   condition: state => (state.itemsSold[items.soybean.id] || 0) >= 900,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.friedTofu
- * @type {farmhand.recipe}
  */
-export const friedTofu = convertToRecipe({
+export const friedTofu: farmhand.recipe = convertToRecipe({
   id: 'fried-tofu',
   name: 'Deep Fried Tofu',
   ingredients: {
@@ -459,14 +424,13 @@ export const friedTofu = convertToRecipe({
   condition: state =>
     (state.itemsSold[tofu.id] || 0) >= 50 &&
     (state.itemsSold[vegetableOil.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.spicyPickledGarlic
- * @type {farmhand.recipe}
  */
-export const spicyPickledGarlic = convertToRecipe({
+export const spicyPickledGarlic: farmhand.recipe = convertToRecipe({
   id: 'spicy-pickled-garlic',
   name: 'Spicy Pickled Garlic',
   ingredients: {
@@ -476,14 +440,13 @@ export const spicyPickledGarlic = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.jalapeno.id] || 0) >= 12 &&
     (state.itemsSold[items.garlic.id] || 0) >= 25,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.garlicFries
- * @type {farmhand.recipe}
  */
-export const garlicFries = convertToRecipe({
+export const garlicFries: farmhand.recipe = convertToRecipe({
   id: 'garlic-fries',
   name: 'Garlic Fries',
   ingredients: {
@@ -495,14 +458,13 @@ export const garlicFries = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.potato.id] || 0) >= 50 &&
     (state.itemsSold[items.garlic.id] || 0) >= 30,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.garlicBread
- * @type {farmhand.recipe}
  */
-export const garlicBread = convertToRecipe({
+export const garlicBread: farmhand.recipe = convertToRecipe({
   id: 'garlic-bread',
   name: 'Garlic Bread',
   ingredients: {
@@ -514,28 +476,26 @@ export const garlicBread = convertToRecipe({
     (state.itemsSold[bread.id] || 0) >= 30 &&
     (state.itemsSold[oliveOil.id] || 0) >= 20 &&
     (state.itemsSold[items.garlic.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.strawberryJam
- * @type {farmhand.recipe}
  */
-export const strawberryJam = convertToRecipe({
+export const strawberryJam: farmhand.recipe = convertToRecipe({
   id: 'strawberry-jam',
   name: 'Strawberry Jam',
   ingredients: {
     [items.strawberry.id]: 10,
   },
   condition: state => (state.itemsSold[items.strawberry.id] || 0) >= 60,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.popcorn
- * @type {farmhand.recipe}
  */
-export const popcorn = convertToRecipe({
+export const popcorn: farmhand.recipe = convertToRecipe({
   id: 'popcorn',
   name: 'Popcorn',
   ingredients: {
@@ -545,14 +505,13 @@ export const popcorn = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.corn.id] || 0) >= 12 &&
     (state.itemsSold[butter.id] || 0) >= 6,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.pumpkinPie
- * @type {farmhand.recipe}
  */
-export const pumpkinPie = convertToRecipe({
+export const pumpkinPie: farmhand.recipe = convertToRecipe({
   id: 'pumpkin-pie',
   name: 'Pumpkin Pie',
   ingredients: {
@@ -564,14 +523,13 @@ export const pumpkinPie = convertToRecipe({
     (state.itemsSold[items.pumpkin.id] || 0) >= 200 &&
     (state.itemsSold[items.wheat.id] || 0) >= 250 &&
     (state.itemsSold[butter.id] || 0) >= 75,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.sweetPotatoPie
- * @type {farmhand.recipe}
  */
-export const sweetPotatoPie = convertToRecipe({
+export const sweetPotatoPie: farmhand.recipe = convertToRecipe({
   id: 'sweet-potato-pie',
   name: 'Sweet Potato Pie',
   ingredients: {
@@ -583,14 +541,13 @@ export const sweetPotatoPie = convertToRecipe({
     (state.itemsSold[items.sweetPotato.id] || 0) >= 200 &&
     (state.itemsSold[items.wheat.id] || 0) >= 250 &&
     (state.itemsSold[butter.id] || 0) >= 75,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.sweetPotatoFries
- * @type {farmhand.recipe}
  */
-export const sweetPotatoFries = convertToRecipe({
+export const sweetPotatoFries: farmhand.recipe = convertToRecipe({
   id: 'sweet-potato-fries',
   name: 'Sweet Potato Fries',
   ingredients: {
@@ -599,14 +556,13 @@ export const sweetPotatoFries = convertToRecipe({
     [salt.id]: 1,
   },
   condition: state => (state.itemsSold[items.sweetPotato.id] || 0) >= 100,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.onionRings
- * @type {farmhand.recipe}
  */
-export const onionRings = convertToRecipe({
+export const onionRings: farmhand.recipe = convertToRecipe({
   id: 'onion-rings',
   name: 'Onion Rings',
   ingredients: {
@@ -621,14 +577,13 @@ export const onionRings = convertToRecipe({
     (state.itemsSold[vegetableOil.id] || 0) > 20 &&
     (state.itemsSold[soyMilk.id] || 0) > 20 &&
     (state.itemsSold[items.wheat.id] || 0) > 30,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.KITCHEN,
+  recipeType: recipeType.KITCHEN,
 })
 
 /**
  * @property farmhand.module:recipes.bronzeIngot
- * @type {farmhand.recipe}
  */
-export const bronzeIngot = convertToRecipe({
+export const bronzeIngot: farmhand.recipe = convertToRecipe({
   id: 'bronze-ingot',
   name: 'Bronze Ingot',
   ingredients: {
@@ -638,14 +593,13 @@ export const bronzeIngot = convertToRecipe({
   condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.bronzeOre.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.FORGE,
+  recipeType: recipeType.FORGE,
 })
 
 /**
  * @property farmhand.module:recipes.ironIngot
- * @type {farmhand.recipe}
  */
-export const ironIngot = convertToRecipe({
+export const ironIngot: farmhand.recipe = convertToRecipe({
   id: 'iron-ingot',
   name: 'Iron Ingot',
   ingredients: {
@@ -655,14 +609,13 @@ export const ironIngot = convertToRecipe({
   condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.ironOre.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.FORGE,
+  recipeType: recipeType.FORGE,
 })
 
 /**
  * @property farmhand.module:recipes.silverIngot
- * @type {farmhand.recipe}
  */
-export const silverIngot = convertToRecipe({
+export const silverIngot: farmhand.recipe = convertToRecipe({
   id: 'silver-ingot',
   name: 'Silver Ingot',
   ingredients: {
@@ -672,14 +625,13 @@ export const silverIngot = convertToRecipe({
   condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.silverOre.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.FORGE,
+  recipeType: recipeType.FORGE,
 })
 
 /**
  * @property farmhand.module:recipes.goldIngot
- * @type {farmhand.recipe}
  */
-export const goldIngot = convertToRecipe({
+export const goldIngot: farmhand.recipe = convertToRecipe({
   id: 'gold-ingot',
   name: 'Gold Ingot',
   ingredients: {
@@ -689,7 +641,7 @@ export const goldIngot = convertToRecipe({
   condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.goldOre.id] || 0) >= 50,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.FORGE,
+  recipeType: recipeType.FORGE,
 })
 
 export const compost = convertToRecipe({
@@ -702,15 +654,14 @@ export const compost = convertToRecipe({
     state.purchasedComposter > 0 &&
     (state.itemsSold[items.weed.id] || 0) >= 100,
   description: 'Can be used to make fertilizer.',
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.RECYCLING,
+  recipeType: recipeType.RECYCLING,
   type: itemType.CRAFTED_ITEM,
 })
 
 /**
  * @property farmhand.module:recipes.fertilizer
- * @type {farmhand.item}
  */
-export const fertilizer = convertToRecipe({
+export const fertilizer: farmhand.item = convertToRecipe({
   id: 'fertilizer',
   name: 'Fertilizer',
   ingredients: {
@@ -720,7 +671,7 @@ export const fertilizer = convertToRecipe({
     state.purchasedComposter > 0 && (state.itemsSold[compost.id] || 0) >= 10,
   description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,
-  recipeType: /** @type {farmhand.recipeType} */ recipeType.RECYCLING,
+  recipeType: recipeType.RECYCLING,
   type: itemType.FERTILIZER,
   value: 25,
 })

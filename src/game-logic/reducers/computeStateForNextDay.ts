@@ -21,11 +21,7 @@ import { updateFinancialRecords } from './updateFinancialRecords.js'
 import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay.js'
 import { updatePriceEvents } from './updatePriceEvents.js'
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-const adjustItemValues = state => ({
+const adjustItemValues = (state: farmhand.state): farmhand.state => ({
   ...state,
   historicalValueAdjustments: [state.valueAdjustments],
   valueAdjustments: generateValueAdjustments(
@@ -34,12 +30,11 @@ const adjustItemValues = state => ({
   ),
 })
 
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const computeStateForNextDay = (state, isFirstDay = false) => {
-  const reducers = isFirstDay
+export const computeStateForNextDay = (
+  state: farmhand.state,
+  isFirstDay: boolean = false
+): farmhand.state => {
+  const reducers: Array<(s: farmhand.state) => farmhand.state> = isFirstDay
     ? [processField]
     : [
         computeCowInventoryForNextDay,
@@ -61,15 +56,18 @@ export const computeStateForNextDay = (state, isFirstDay = false) => {
         rotateNotificationLogs,
       ]
 
-  state = reducers.concat([adjustItemValues]).reduce(
-    (acc, fn) => fn({ ...acc }),
-    /** @type {farmhand.state} */ {
-      ...state,
-      cowForSale: generateCow(),
-      dayCount: state.dayCount + 1,
-      todaysNotifications: [],
-    }
-  )
+  state = reducers
+    .concat([adjustItemValues])
+    .reduce(
+      (acc: farmhand.state, fn: (s: farmhand.state) => farmhand.state) =>
+        fn({ ...acc }),
+      {
+        ...state,
+        cowForSale: generateCow(),
+        dayCount: state.dayCount + 1,
+        todaysNotifications: [] as farmhand.notification[],
+      }
+    )
 
   if (state.dayCount % 365 === 0) {
     state = addExperience(state, EXPERIENCE_VALUES.NEW_YEAR)

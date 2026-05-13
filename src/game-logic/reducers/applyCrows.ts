@@ -8,28 +8,20 @@ import { randomNumberService } from '../../common/services/randomNumber.js'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 import { fieldHasScarecrow } from './helpers.js'
 
-/**
- * @param {farmhand.state} state
- * @callback {forEachPlotCallback} callback
- */
-export function forEachPlot(state, callback) {
+export function forEachPlot(
+  state: farmhand.state,
+  callback: (
+    plotContents: farmhand.plotContent | null,
+    x: number,
+    y: number
+  ) => void
+) {
   state.field.forEach((row, y) =>
     row.forEach((plotContents, x) => callback(plotContents, x, y))
   )
 }
 
-/**
- * @callback forEachPlotCallback
- * @param {object} plotContents - the contents of the plot
- * @param {number} x - the X coordinate for the plot
- * @param {number} y - the Y coordinate for the plot
- */
-
-/**
- * @param {farmhand.state} state
- * @returns {farmhand.state}
- */
-export const applyCrows = state => {
+export const applyCrows = (state: farmhand.state): farmhand.state => {
   const { field, purchasedField } = state
 
   if (

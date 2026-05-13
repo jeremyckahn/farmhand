@@ -1,12 +1,10 @@
 // TODO: Add tests for this reducer.
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @param {function(?farmhand.plotContent): ?farmhand.plotContent} modifierFn
- * @returns {farmhand.state}
- */
-export const modifyFieldPlotAt = (state, x, y, modifierFn) => {
+export const modifyFieldPlotAt = (
+  state: farmhand.state,
+  x: number,
+  y: number,
+  modifierFn: (arg0: farmhand.plotContent | null) => farmhand.plotContent | null
+): farmhand.state => {
   const { field } = state
   const row = [...field[y]]
   const plotContent = modifierFn(row[x])

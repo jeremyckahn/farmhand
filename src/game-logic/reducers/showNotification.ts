@@ -1,25 +1,16 @@
-/**
- * @typedef {farmhand.state} state
- * @typedef {farmhand.notificationSeverity} alertSeverity
- */
-
 // TODO: Change showNotification to accept a configuration object instead of so
 // many formal parameters.
 /**
- * @param {state} state
- * @param {string} message
- * @param {alertSeverity} [severity] Corresponds to the `severity` prop here:
- * https://material-ui.com/api/alert/
- * @param  onClick
- * @returns {state}
- * @see https://material-ui.com/api/alert/
+ * @param severity Corresponds to the `severity` prop here:
+https://material-ui.com/api/alert/
+ * @see ://material-ui.com/api/alert/
  */
 export const showNotification = (
-  state,
-  message,
-  severity = 'info',
+  state: farmhand.state,
+  message: string,
+  severity: farmhand.notificationSeverity = 'info',
   onClick: import('@mui/material/Alert').AlertProps['onClick'] = undefined
-) => {
+): farmhand.state => {
   const { showNotifications, todaysNotifications } = state
 
   return {

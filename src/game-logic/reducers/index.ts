@@ -1,8 +1,3 @@
-/**
- * @module farmhand.reducers
- * @ignore
- */
-
 export * from './addCowToInventory.js'
 export * from './addExperience.js'
 export * from './addItemToInventory.js'

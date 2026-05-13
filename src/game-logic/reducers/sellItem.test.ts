@@ -241,7 +241,7 @@ describe('sellItem', () => {
     'selling item of type %s gives experience',
     (_, item) => {
       // Cast item to ensure TypeScript recognizes it as an item object
-      const itemObj = item
+      const itemObj = item as any
       const state = sellItem(
         testState({
           experience: 0,

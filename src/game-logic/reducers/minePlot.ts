@@ -10,13 +10,11 @@ import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 
 const daysUntilClearPeriods = [1, 2, 2, 3]
 
-/**
- * @param {farmhand.state} state
- * @param {number} x
- * @param {number} y
- * @returns {farmhand.state}
- */
-export const minePlot = (state, x, y) => {
+export const minePlot = (
+  state: farmhand.state,
+  x: number,
+  y: number
+): farmhand.state => {
   const { field } = state
   const row = field[y]
 
@@ -33,7 +31,7 @@ export const minePlot = (state, x, y) => {
   const factory = (ResourceFactory.instance() as unknown) as {
     generateResources: (l: number) => farmhand.item[]
   }
-  const spawnedResources = factory.generateResources(shovelLevel)
+  const spawnedResources = factory.generateResources(shovelLevel as any)
   const [spawnedResource] = spawnedResources
   let daysUntilClear = chooseRandom(daysUntilClearPeriods)
 

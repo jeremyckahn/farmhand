@@ -44,7 +44,9 @@ export const recipeCategories: Record<
 export const recipesMap: Record<string, farmhand.recipe> = {}
 
 for (const recipeId of Object.keys(recipes)) {
-  const recipe = (recipes as Record<string, farmhand.recipe>)[recipeId]
+  const recipe = ((recipes as unknown) as Record<string, farmhand.recipe>)[
+    recipeId
+  ]
   recipeCategories[recipe.recipeType][recipe.id] = recipe
   recipesMap[recipe.id] = recipe
 }
@@ -62,19 +64,16 @@ for (let toolType of Object.keys(upgrades)) {
   }
 }
 
-/**
- * @type {Object.<string, farmhand.item>}
- */
-export const itemsMap = {
+export const itemsMap: Record<string, farmhand.item> = {
   ...baseItemsMap,
   ...recipesMap,
   ...upgradesMap,
 }
 
-/**
- * @type {Object.<string, farmhand.item>}
- */
-export const fermentableItemsMap = Object.fromEntries(
+export const fermentableItemsMap: Record<
+  string,
+  farmhand.item
+> = Object.fromEntries(
   Object.entries(itemsMap).filter(([itemId]) => {
     const item = itemsMap[itemId]
 
@@ -82,34 +81,28 @@ export const fermentableItemsMap = Object.fromEntries(
   })
 )
 
-/**
- * @type {Object.<string, farmhand.seedItem>}
- */
-export const cropItemIdToSeedItemMap = Object.entries(baseItemsMap).reduce(
-  (acc, [itemId, item]) => {
-    const { growsInto } = item as { growsInto?: string | string[] }
-    if (growsInto) {
-      const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
+export const cropItemIdToSeedItemMap: Record<
+  string,
+  farmhand.seedItem
+> = Object.entries(baseItemsMap).reduce((acc, [itemId, item]) => {
+  const { growsInto } = item as { growsInto?: string | string[] }
+  if (growsInto) {
+    const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 
-      for (const variantId of variants) {
-        acc[variantId] = baseItemsMap[itemId]
-      }
+    for (const variantId of variants) {
+      acc[variantId] = baseItemsMap[itemId]
     }
+  }
 
-    return acc
-  },
-  {}
-)
+  return acc
+}, {})
 
-/**
- * @type {Object.<string, string|Array.<string>>}
- */
-export const cropTypeToIdMap = {
+export const cropTypeToIdMap: Record<string, string | Array<string>> = {
   [ASPARAGUS]: 'asparagus',
   [CARROT]: 'carrot',
   [CORN]: 'corn',
   [GARLIC]: 'garlic',
-  [GRAPE /** @type {string | string[]} */]: grapeSeed.growsInto,
+  [GRAPE]: grapeSeed.growsInto as string | string[],
   [JALAPENO]: 'jalapeno',
   [OLIVE]: 'olive',
   [ONION]: 'onion',

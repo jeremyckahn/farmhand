@@ -1,8 +1,6 @@
-/**
- * @param {?farmhand.plotContent} plotContent
- * @returns {?farmhand.plotContent}
- */
-export const updatePlotShoveledState = plotContent => {
+export const updatePlotShoveledState = (
+  plotContent: farmhand.plotContent | null
+): farmhand.plotContent | null => {
   if (
     plotContent &&
     plotContent.isShoveled &&

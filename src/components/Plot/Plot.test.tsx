@@ -25,6 +25,7 @@ describe('Plot component', () => {
     handlePlotClick: noop,
     isInHoverRange: false,
     lifeStage: cropLifeStage.SEED,
+    plotContent: null,
     selectedItemId: '',
     setHoveredPlot: noop,
     x: 0,

@@ -66,7 +66,9 @@ describe('processMilkingCows', () => {
         expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
-            message: MILKS_PRODUCED('', { [getCowMilkItem(cow).name]: 1 }),
+            message: MILKS_PRODUCED('', {
+              [getCowMilkItem(cow as any).name]: 1,
+            }),
             severity: 'success',
           },
         ])
@@ -101,7 +103,9 @@ describe('processMilkingCows', () => {
         expect(inventory).toEqual([{ id: 'milk-1', quantity: 1 }])
         expect(newDayNotifications).toEqual([
           {
-            message: MILKS_PRODUCED('', { [getCowMilkItem(cow).name]: 1 }),
+            message: MILKS_PRODUCED('', {
+              [getCowMilkItem(cow as any).name]: 1,
+            }),
             severity: 'success',
           },
         ])

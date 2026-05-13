@@ -1,5 +1,3 @@
-/** @typedef {import("fast-memoize").Options} MemoizeOptions */
-
 import fastMemoize from 'fast-memoize'
 
 import { MEMOIZE_CACHE_CLEAR_THRESHOLD } from '../constants.js'
@@ -8,18 +6,14 @@ import { MEMOIZE_CACHE_CLEAR_THRESHOLD } from '../constants.js'
 // clears the cache once the size exceeds MEMOIZE_CACHE_CLEAR_THRESHOLD to
 // prevent memory bloat.
 // https://github.com/caiogondim/fast-memoize.js/blob/5cdfc8dde23d86b16e0104bae1b04cd447b98c63/src/index.js#L114-L128
-/**
- * @ignore
- */
 export class MemoizeCache {
   cache: Record<string, any> = {}
   cacheSize: number
 
   /**
-   * @param {Object} [config] Can also contain the config options used to
-   * configure fast-memoize.
-   * @param {number} [config.cacheSize]
-   * @see https://github.com/caiogondim/fast-memoize.js
+   * @param config Can also contain the config options used to
+configure fast-memoize.
+   * @see ://github.com/caiogondim/fast-memoize.js
    */
   constructor({ cacheSize = MEMOIZE_CACHE_CLEAR_THRESHOLD } = {}) {
     this.cacheSize = cacheSize
@@ -43,14 +37,15 @@ export class MemoizeCache {
 }
 
 /**
- * @template {(...args: any[]) => any} T Copied from https://github.com/caiogondim/fast-memoize.js/blob/5cdfc8dde23d86b16e0104bae1b04cd447b98c63/typings/fast-memoize.d.ts#L1
- * @param {T} fn
- * @param {MemoizeOptions & Partial<{ cacheSize: number }>} [config]
+ * @template Copied from https://github.com/caiogondim/fast-memoize.js/blob/5cdfc8dde23d86b16e0104bae1b04cd447b98c63/typings/fast-memoize.d.ts#L1
  * @returns T
- * @see https://github.com/caiogondim/fast-memoize.js
+ * @see ://github.com/caiogondim/fast-memoize.js
  */
-export const memoize = (fn, config = {}) =>
+export const memoize = <T extends (...args: any[]) => any>(
+  fn: T,
+  config: any = {}
+): T =>
   fastMemoize(fn, {
     cache: { create: () => new MemoizeCache(config) },
     ...config,
-  })
+  }) as T

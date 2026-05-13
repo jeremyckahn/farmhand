@@ -9,25 +9,21 @@ const getDaysToMature = seedItem => {
   return seedItem.cropTimeline.reduce((days, acc) => days + acc)
 }
 
-/**
- * @param {farmhand.item} seedItem
- * @param {(farmhand.item|farmhand.cropVariety)} cropItem
- */
-function getCropImage(seedItem, cropItem) {
+function getCropImage(
+  seedItem: farmhand.item,
+  cropItem: farmhand.item | farmhand.cropVariety
+) {
   if (Array.isArray(seedItem.growsInto)) {
     return `![${
       cropItem.name
-    }](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${cropItem.imageId ||
-      cropItem.id}.png)`
+    }](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${(cropItem as any)
+      .imageId || cropItem.id}.png)`
   } else {
     return `![${cropItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${cropItem.id}.png)`
   }
 }
 
-/**
- * @param {farmhand.item} seedItem
- */
-function getSeedImage(seedItem) {
+function getSeedImage(seedItem: farmhand.item) {
   return `![${seedItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${seedItem.id}.png)`
 }
 
@@ -42,12 +38,11 @@ const headers = [
 
 const rows: (string | number)[][] = []
 
-/**
- * @param {number} level
- * @param {farmhand.item} seedItem
- * @param {farmhand.item} cropItem
- */
-const getCropRow = (level, seedItem, cropItem) => {
+const getCropRow = (
+  level: number,
+  seedItem: farmhand.item,
+  cropItem: farmhand.item
+) => {
   return [
     `${getCropImage(seedItem, cropItem)} ${cropItem.name}`,
     `${getSeedImage(seedItem)} ${seedItem.name}`,
@@ -72,12 +67,12 @@ for (const level of levels) {
         for (const cropItemId of growsInto) {
           const cropItem = itemsMap[cropItemId]
 
-          rows.push(getCropRow(id, seedItem, cropItem))
+          rows.push(getCropRow(id!, seedItem!, cropItem!))
         }
       } else {
         const cropItem = itemsMap[growsInto]
 
-        rows.push(getCropRow(id, seedItem, cropItem))
+        rows.push(getCropRow(id!, seedItem!, cropItem!))
       }
     }
   }

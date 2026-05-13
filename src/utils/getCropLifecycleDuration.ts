@@ -1,9 +1,5 @@
 import { memoize } from './memoize.js'
 
-/**
- * @param {{ cropTimeline: number[] }} crop
- * @returns {number}
- */
 export const getCropLifecycleDuration = memoize(
   ({ cropTimeline }: { cropTimeline: number[] }) => {
     return cropTimeline.reduce((acc, value) => {
