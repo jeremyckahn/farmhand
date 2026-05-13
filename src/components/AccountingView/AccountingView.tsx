@@ -24,7 +24,7 @@ interface MoneyNumberFormatProps {
   min: number
   onChange: (v: number) => void
   setLoanInputValue?: React.Dispatch<React.SetStateAction<number>>
-  [key: string]: any
+  [key: string]: unknown
 }
 
 const MoneyNumberFormat = forwardRef(

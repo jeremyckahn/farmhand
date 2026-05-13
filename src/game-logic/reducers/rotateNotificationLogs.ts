@@ -7,7 +7,7 @@ export const rotateNotificationLogs = (
 
   const { dayCount, newDayNotifications } = state
 
-  const notifications = {
+  const notifications: farmhand.notificationLogEntry['notifications'] = {
     error: [],
     info: [],
     success: [],
@@ -15,7 +15,7 @@ export const rotateNotificationLogs = (
   }
 
   newDayNotifications.forEach(({ message, severity }) =>
-    notifications[severity as any].push(message)
+    notifications[severity].push(message)
   )
 
   if (newDayNotifications.length) {

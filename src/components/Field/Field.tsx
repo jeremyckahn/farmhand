@@ -380,7 +380,7 @@ export const Field = (props: FieldProps) => {
             'is-inventory-full': !doesInventorySpaceRemain({
               inventory,
               inventoryLimit,
-            } as any),
+            }),
             'plant-mode': propsFieldMode === PLANT,
             'set-scarecrow-mode': propsFieldMode === SET_SCARECROW,
             'set-sprinkler-mode': propsFieldMode === SET_SPRINKLER,
