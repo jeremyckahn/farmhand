@@ -9,13 +9,12 @@ test.describe('Forest unlock investigation', () => {
 
     // Set experience to just below level 15
     await page.evaluate(() => {
-        window.__TEST_STATE__.experience = 19599;
-        window.__UPDATE_STATE__();
+        window.farmhand.setState({ experience: 19599 });
     });
 
     // Sell something to gain 1 experience and reach level 15
     await page.getByRole('button', { name: 'View Inventory (i)' }).click()
-    await page.getByText('Carrot seed').first().click()
+    await page.getByText('Carrot Seed').first().click()
     await page.getByRole('button', { name: 'Sell' }).click()
 
     // Verify level 15 reached
@@ -48,11 +47,11 @@ test.describe('Forest unlock investigation', () => {
                 WATERING_CAN: 'DEFAULT'
             }
         };
-        window.__UPDATE_STATE__(state);
+        window.farmhand.setState(state);
     });
 
     await page.getByRole('button', { name: 'View Inventory (i)' }).click()
-    await page.getByText('Carrot seed').first().click()
+    await page.getByText('Carrot Seed').first().click()
     await page.getByRole('button', { name: 'Sell' }).click()
 
     await expect(page.getByText('level: 15')).toBeVisible()
