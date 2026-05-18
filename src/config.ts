@@ -41,11 +41,11 @@ export const features: Features = Object.keys(import.meta.env ?? {}).reduce(
 // this is running in a Node.js context.
 const searchParams = new URLSearchParams(globalWindow.location?.search)
 
-for (const key of searchParams.keys()) {
+for (const [key, value] of searchParams.entries()) {
   const matches = key.match(/enable_(.*)/)
 
   if (matches) {
-    features[matches[1]] = true
+    features[matches[1]] = value !== 'false'
   }
 }
 
