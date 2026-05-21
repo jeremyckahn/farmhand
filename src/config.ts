@@ -29,7 +29,7 @@ export const features: Features = Object.keys(import.meta.env ?? {}).reduce(
     const matches = key.match(/VITE_ENABLE_(.*)/)
 
     if (matches) {
-      acc[matches[1]] = true
+      acc[matches[1]] = String(import.meta.env[key]) !== 'false'
     }
 
     return acc
@@ -45,7 +45,7 @@ for (const key of searchParams.keys()) {
   const matches = key.match(/enable_(.*)/)
 
   if (matches) {
-    features[matches[1]] = true
+    features[matches[1]] = searchParams.get(key) !== 'false'
   }
 }
 
