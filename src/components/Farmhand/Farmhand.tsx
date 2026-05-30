@@ -522,7 +522,7 @@ export default class Farmhand extends FarmhandReducers {
 
     const match = this.props.match
     const path = match?.path ?? ''
-    const newRoom = match?.params?.room || room
+    const newRoom = match?.params?.room ?? room
 
     const decodedRoom = decodeURIComponent(newRoom)
 

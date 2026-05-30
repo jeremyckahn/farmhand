@@ -130,5 +130,28 @@ describe('<TierPurchase />', () => {
         'true'
       )
     })
+
+    test('the buy button is disabled if the player cannot afford the next tier', () => {
+      props.money = 0
+      render(<TierPurchase {...props} />)
+
+      expect(buyButton()).toBeDisabled()
+    })
+
+    test('the buy button is enabled if the player can afford the next tier', () => {
+      props.money = 1000
+      render(<TierPurchase {...props} />)
+
+      expect(buyButton()).not.toBeDisabled()
+    })
+
+    test('the buy button is disabled if the selected tier is already purchased', () => {
+      props.money = 0
+      props.purchasedTier = 1
+
+      render(<TierPurchase {...props} />)
+
+      expect(buyButton()).toBeDisabled()
+    })
   })
 })

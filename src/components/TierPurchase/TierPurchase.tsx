@@ -93,7 +93,7 @@ export function TierPurchase({
           <Button
             {...{
               color: 'primary',
-              disabled: !canPlayerBuySelectedTier,
+              disabled: !canPlayerBuySelectedTier(),
               onClick: handleBuyClick,
               variant: 'contained',
             }}
