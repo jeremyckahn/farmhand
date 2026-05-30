@@ -66,8 +66,12 @@ export function TierPurchase({
     }
   }
 
-  const handleTierSelected = ({ target: { value } }: any) => {
-    setSelectedTier(value)
+  const handleTierSelected = ({
+    target: { value },
+  }: {
+    target: { value: unknown }
+  }) => {
+    setSelectedTier(Number(value))
   }
 
   return (

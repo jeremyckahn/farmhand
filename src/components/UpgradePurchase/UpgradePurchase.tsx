@@ -33,11 +33,11 @@ export function UpgradePurchase({
   const { id, name, description } = upgrade
 
   const spaceFreedByIngredientsConsumed = totalIngredientsInRecipe(
-    upgrade as any
+    upgrade as farmhand.recipe
   )
 
   const canBeMade =
-    canMakeRecipe(upgrade as any, inventory, 1) &&
+    canMakeRecipe(upgrade as farmhand.recipe, inventory, 1) &&
     doesInventorySpaceRemain({
       inventory,
       // Without the Infinity coercion, this would break recipes for unlimited

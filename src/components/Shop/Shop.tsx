@@ -208,8 +208,13 @@ export const Shop = ({
                 maxedOutPlaceholder:
                   "You've purchased the largest cow pen available!",
                 purchasedTier: purchasedCowPen,
-                renderTierLabel: ({ cows, price }: any) =>
-                  `${dollarString(price)}: ${cows} cow pen`,
+                renderTierLabel: ({
+                  cows,
+                  price,
+                }: {
+                  cows: number
+                  price: number
+                }) => `${dollarString(price)}: ${cows} cow pen`,
                 tiers: PURCHASEABLE_COW_PENS,
                 title: 'Buy cow pen',
               }}
@@ -222,8 +227,13 @@ export const Shop = ({
                 maxedOutPlaceholder:
                   "You've purchased the largest cellar available!",
                 purchasedTier: purchasedCellar,
-                renderTierLabel: ({ space, price }: any) =>
-                  `${dollarString(price)}: Space for ${space} kegs`,
+                renderTierLabel: ({
+                  space,
+                  price,
+                }: {
+                  space: number
+                  price: number
+                }) => `${dollarString(price)}: Space for ${space} kegs`,
                 tiers: PURCHASEABLE_CELLARS,
                 title: 'Buy cellar',
               }}
@@ -258,8 +268,13 @@ export const Shop = ({
                 maxedOutPlaceholder:
                   "You've purchased the best combine harvester available!",
                 purchasedTier: purchasedCombine,
-                renderTierLabel: ({ type, price }: any) =>
-                  `${dollarString(price)}: ${type} combine harvester`,
+                renderTierLabel: ({
+                  type,
+                  price,
+                }: {
+                  type: string
+                  price: number
+                }) => `${dollarString(price)}: ${type} combine harvester`,
                 tiers: PURCHASEABLE_COMBINES,
                 title: 'Buy combine harvester',
               }}
@@ -274,8 +289,13 @@ export const Shop = ({
                   onBuyClick: handleSmelterPurchase,
                   maxedOutPlaceholder: "You've already purchased the smelter!",
                   purchasedTier: purchasedSmelter,
-                  renderTierLabel: ({ type, price }: any) =>
-                    `${dollarString(price)}: ${type} Smelter`,
+                  renderTierLabel: ({
+                    type,
+                    price,
+                  }: {
+                    type: string
+                    price: number
+                  }) => `${dollarString(price)}: ${type} Smelter`,
                   tiers: PURCHASEABLE_SMELTERS,
                   title: 'Buy smelter',
                 }}
@@ -290,8 +310,13 @@ export const Shop = ({
                 onBuyClick: handleComposterPurchase,
                 maxedOutPlaceholder: "You've already purchased the composter!",
                 purchasedTier: purchasedComposter,
-                renderTierLabel: ({ type, price }: any) =>
-                  `${dollarString(price)}: ${type} Composter`,
+                renderTierLabel: ({
+                  type,
+                  price,
+                }: {
+                  type: string
+                  price: number
+                }) => `${dollarString(price)}: ${type} Composter`,
                 tiers: PURCHASEABLE_COMPOSTERS,
                 title: 'Buy composter',
               }}
