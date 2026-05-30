@@ -6,8 +6,8 @@ import { fieldMode, toolLevel, toolType } from '../../enums.js'
 import { Toolbelt } from './Toolbelt.js'
 
 vitest.mock('../../utils/memoize.js', () => ({
-  memoize: vitest.fn(callback => {
-    return (...args) => {
+  memoize: vitest.fn((callback: any) => {
+    return (...args: any[]) => {
       return callback(...args)
     }
   }),
@@ -21,13 +21,13 @@ describe('<ToolBelt />', () => {
   }
 
   const getToolLevels = () => {
-    let toolLevels = []
+    let toolLevels: Record<string, farmhand.toolLevel> = {}
 
     for (let type in toolType) {
       toolLevels[type] = toolLevel.DEFAULT
     }
 
-    return toolLevels
+    return toolLevels as Record<farmhand.toolType, farmhand.toolLevel>
   }
 
   test('renders a button for each tool that has a level set', () => {

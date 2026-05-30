@@ -180,7 +180,7 @@ test('filters out empty peer objects', () => {
 })
 
 test('displays latest peer messages when present', () => {
-  const latestPeerMessages = [
+  const latestPeerMessages: farmhand.peerMessage[] = [
     {
       playerId: 'peer1',
       message: 'has joined the game',
@@ -214,7 +214,7 @@ test('does not display peer messages section when empty', () => {
 })
 
 test('uses default severity for peer messages when not specified', () => {
-  const latestPeerMessages = [
+  const latestPeerMessages: any[] = [
     {
       playerId: 'peer1',
       message: 'did something',
@@ -263,7 +263,7 @@ test('displays dividers between sections when content is present', () => {
     },
   }
 
-  const latestPeerMessages = [
+  const latestPeerMessages: farmhand.peerMessage[] = [
     {
       playerId: 'peer1',
       message: 'test message',

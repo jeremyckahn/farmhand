@@ -322,7 +322,9 @@ export default {
 
         if (
           Object.keys(state).some(
-            key => typeof this.state[key] !== typeof state[key]
+            key =>
+              typeof this.state[key as keyof farmhand.state] !==
+              typeof state[key as keyof farmhand.state]
           )
         ) {
           throw new Error(INVALID_DATA_PROVIDED)

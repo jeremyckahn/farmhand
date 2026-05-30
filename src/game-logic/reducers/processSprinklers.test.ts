@@ -6,7 +6,7 @@ import { processSprinklers } from './processSprinklers.js'
 vitest.mock('../../data/items.js')
 
 describe('processSprinklers', () => {
-  let computedState
+  let computedState: farmhand.state
 
   beforeEach(() => {
     const field = new Array(8).fill(null).map(() => new Array(8).fill(null))

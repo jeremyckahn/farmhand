@@ -11,20 +11,20 @@ export const recipeCategories = {
   [recipeType.WINE]: {},
 }
 
-export const recipesMap = {}
+export const recipesMap: Record<string, farmhand.recipe> = {}
 
 for (const recipeId of Object.keys(recipes)) {
-  const recipe = recipes[recipeId]
+  const recipe = (recipes as Record<string, farmhand.recipe>)[recipeId]
   // Only process objects that have recipe properties
   if (recipe && typeof recipe === 'object' && recipe.recipeType && recipe.id) {
-    recipeCategories[recipe.recipeType][recipe.id] = recipe
+    ;(recipeCategories as any)[recipe.recipeType][recipe.id] = recipe
     recipesMap[recipe.id] = recipe
   }
 }
 
-export const itemsMap = {
-  ...Object.keys(items).reduce((acc, itemName) => {
-    const item = items[itemName]
+export const itemsMap: Record<string, farmhand.item> = {
+  ...Object.keys(items).reduce((acc: Record<string, farmhand.item>, itemName) => {
+    const item = (items as Record<string, farmhand.item>)[itemName]
     acc[item.id] = item
     return acc
   }, {}),

@@ -81,7 +81,9 @@ const Recipe = ({
     >
       <CardHeader
         {...{
-          avatar: <img {...{ src: craftedItems[id], alt: name }} />,
+          avatar: (
+            <img {...{ src: (craftedItems as any)[id], alt: name }} />
+          ),
           title: name,
           subheader: (
             <>
@@ -140,7 +142,7 @@ Recipe.propTypes = {
 
 export { Recipe }
 
-export default function Consumer(props) {
+export default function Consumer(props: any) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

@@ -6,7 +6,7 @@ describe('totalIngredientsInRecipe', () => {
       ingredients: { carrot: 5 },
     }
 
-    expect(totalIngredientsInRecipe(upgrade)).toEqual(5)
+    expect(totalIngredientsInRecipe(upgrade as any)).toEqual(5)
   })
 
   test('it can total a multiple ingredient upgrade', () => {
@@ -14,6 +14,6 @@ describe('totalIngredientsInRecipe', () => {
       ingredients: { carrot: 5, potato: 8, chili: 2 },
     }
 
-    expect(totalIngredientsInRecipe(upgrade)).toEqual(15)
+    expect(totalIngredientsInRecipe(upgrade as any)).toEqual(15)
   })
 })

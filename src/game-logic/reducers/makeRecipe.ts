@@ -4,7 +4,7 @@ import { EXPERIENCE_VALUES } from '../../constants.js'
 import { addItemToInventory } from './addItemToInventory.js'
 import { consumeIngredients } from './consumeIngredients.js'
 
-const EXPERIENCE_FOR_RECIPE = {
+const EXPERIENCE_FOR_RECIPE: Partial<Record<farmhand.recipeType, number>> = {
   [recipeType.FERMENTATION]: EXPERIENCE_VALUES.FERMENTATION_RECIPE_MADE,
   [recipeType.FORGE]: EXPERIENCE_VALUES.FORGE_RECIPE_MADE,
   [recipeType.KITCHEN]: EXPERIENCE_VALUES.KITCHEN_RECIPE_MADE,

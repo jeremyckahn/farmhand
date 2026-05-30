@@ -23,7 +23,7 @@ import { itemsMap } from './maps.js'
 
 const { SEED } = cropLifeStage
 
-const addMoney = (state, reward) => ({
+const addMoney = (state: farmhand.state, reward: number) => ({
   ...state,
   money: moneyTotal(state.money, reward),
 })
@@ -348,8 +348,11 @@ const achievements: farmhand.achievement[] = [
 
 export default achievements
 
-export const achievementsMap = achievements.reduce((acc, achievement) => {
-  acc[achievement.id] = achievement
+export const achievementsMap = achievements.reduce(
+  (acc: Record<string, farmhand.achievement>, achievement) => {
+    acc[achievement.id] = achievement
 
-  return acc
-}, {})
+    return acc
+  },
+  {}
+)

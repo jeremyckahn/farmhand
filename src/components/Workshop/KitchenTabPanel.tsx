@@ -12,7 +12,15 @@ import { RecipeList } from '../RecipeList/RecipeList.js'
 
 import { TabPanel } from './TabPanel/index.js'
 
-export function KitchenTabPanel({ currentTab, index, learnedKitchenRecipes }) {
+export function KitchenTabPanel({
+  currentTab,
+  index,
+  learnedKitchenRecipes,
+}: {
+  currentTab: number
+  index: number
+  learnedKitchenRecipes: string[]
+}) {
   return (
     <TabPanel value={currentTab} index={index}>
       <RecipeList

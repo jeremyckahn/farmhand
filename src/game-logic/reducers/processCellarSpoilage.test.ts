@@ -13,7 +13,7 @@ describe('processCellarSpoilage', () => {
 
     const keg = getKegStub()
     const cellarInventory = [keg]
-    const newDayNotifications = []
+    const newDayNotifications: any[] = []
 
     const expectedState = processCellarSpoilage({
       cellarInventory,
@@ -30,7 +30,7 @@ describe('processCellarSpoilage', () => {
 
     const keg = getKegStub()
     const cellarInventory = [keg]
-    const newDayNotifications = []
+    const newDayNotifications: any[] = []
 
     const expectedState = processCellarSpoilage({
       cellarInventory,
@@ -47,7 +47,7 @@ describe('processCellarSpoilage', () => {
 
     const keg = getKegStub({ itemId: wineTempranillo.id })
     const cellarInventory = [keg]
-    const newDayNotifications = []
+    const newDayNotifications: any[] = []
 
     const expectedState = processCellarSpoilage({
       cellarInventory,
@@ -64,7 +64,7 @@ describe('processCellarSpoilage', () => {
 
     const keg = getKegStub()
     const cellarInventory = [keg]
-    const newDayNotifications = []
+    const newDayNotifications: any[] = []
 
     const expectedState = processCellarSpoilage({
       cellarInventory,

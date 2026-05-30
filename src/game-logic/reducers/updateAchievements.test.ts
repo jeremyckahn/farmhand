@@ -1,7 +1,7 @@
 import { ACHIEVEMENT_COMPLETED } from '../../templates.js'
 
 describe('updateAchievements', () => {
-  let updateAchievements
+  let updateAchievements: any
 
   beforeAll(async () => {
     vitest.resetModules()
@@ -13,8 +13,8 @@ describe('updateAchievements', () => {
             name: 'Test Achievement',
             description: '',
             rewardDescription: '',
-            condition: state => !state.conditionSatisfied,
-            reward: state => ({ ...state, conditionSatisfied: true }),
+            condition: (state: any) => !state.conditionSatisfied,
+            reward: (state: any) => ({ ...state, conditionSatisfied: true }),
           },
         ],
       }

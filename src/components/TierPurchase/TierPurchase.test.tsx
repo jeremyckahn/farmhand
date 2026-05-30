@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { TierPurchase } from './TierPurchase.js'
 
 describe('<TierPurchase />', () => {
-  let onBuyClick, props
+  let onBuyClick: any, props: any
 
   beforeEach(() => {
     onBuyClick = vitest.fn()
@@ -13,7 +13,7 @@ describe('<TierPurchase />', () => {
       onBuyClick,
       money: 0,
       purchasedTier: 0,
-      renderTierLabel: tier => tier.value,
+      renderTierLabel: (tier: any) => tier.value,
       description: 'describe yourself',
       maxedOutPlaceholder: 'at max',
       tiers: new Map([

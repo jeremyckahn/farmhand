@@ -204,7 +204,7 @@ export default class Farmhand extends FarmhandReducers {
 
     // This is an antipattern, but it's useful for debugging. The Farmhand
     // component assumes that it is a singleton.
-    window.farmhand = this
+    (window as any).farmhand = this
   }
 
   getData = getData
@@ -328,7 +328,7 @@ export default class Farmhand extends FarmhandReducers {
       cellarItemsSold: {},
       isChatOpen: false,
       isDialogViewOpen: false,
-      isOnline: this.props.match?.path.startsWith('/online') ?? false,
+      isOnline: (this.props.match as any)?.path?.startsWith('/online') ?? false,
       isWaitingForDayToCompleteIncrementing: false,
       learnedRecipes: {},
       loanBalance: STANDARD_LOAN_AMOUNT,
@@ -352,7 +352,7 @@ export default class Farmhand extends FarmhandReducers {
       recordSingleDayProfit: 0,
       revenue: 0,
       redirect: '',
-      room: decodeURIComponent(this.props.match?.params.room || DEFAULT_ROOM),
+      room: decodeURIComponent((this.props.match?.params as any)?.room || DEFAULT_ROOM),
       sendCowAccept: noop,
       sendCowReject: noop,
       purchasedCombine: 0,
@@ -520,12 +520,9 @@ export default class Farmhand extends FarmhandReducers {
       return
     }
 
-    const {
-      match: {
-        path,
-        params: { room: newRoom = room },
-      },
-    } = this.props
+    const match = this.props.match as any
+    const path = match?.path ?? ""
+    const newRoom = match?.params?.room || room
 
     const decodedRoom = decodeURIComponent(newRoom)
 

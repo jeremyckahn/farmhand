@@ -9,7 +9,7 @@ import { generateCow, getCowFertilizerItem } from '../../utils/index.js'
 import { processCowFertilizerProduction } from './processCowFertilizerProduction.js'
 
 describe('processCowFertilizerProduction', () => {
-  let state
+  let state: any
 
   beforeEach(() => {
     state = {

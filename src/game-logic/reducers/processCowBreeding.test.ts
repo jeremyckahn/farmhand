@@ -102,7 +102,7 @@ describe('processCowBreeding', () => {
 
         describe('daysUntilBirth === 1', () => {
           describe('there is space in cowInventory', () => {
-            let newState
+            let newState: farmhand.state
 
             beforeEach(() => {
               newState = processCowBreeding(

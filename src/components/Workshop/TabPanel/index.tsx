@@ -1,7 +1,7 @@
 import React from 'react'
 import { node, number } from 'prop-types'
 
-export const TabPanel = props => {
+export const TabPanel = (props: any) => {
   const { children, value, index, ...other } = props
 
   return (
@@ -23,7 +23,7 @@ TabPanel.propTypes = {
   value: number.isRequired,
 }
 
-export const a11yProps = index => ({
+export const a11yProps = (index: number) => ({
   id: `workshop-tab-${index}`,
   'aria-controls': `workshop-tabpanel-${index}`,
 })

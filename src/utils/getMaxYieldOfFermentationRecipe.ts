@@ -6,7 +6,7 @@ import { getSaltRequirementsForFermentationRecipe } from './getSaltRequirementsF
 
 export const getMaxYieldOfFermentationRecipe = (
   fermentationRecipe: farmhand.item,
-  inventory,
+  inventory: farmhand.state['inventory'],
   cellarInventory: Array<farmhand.keg>,
   cellarSize: number
 ): number => {

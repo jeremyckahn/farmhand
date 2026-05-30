@@ -4,7 +4,7 @@ import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings.js'
 import { purchaseComposter } from './purchaseComposter.js'
 
 describe('purchaseComposter', () => {
-  let gameState, newState
+  let gameState: any, newState: any
 
   beforeEach(() => {
     gameState = {

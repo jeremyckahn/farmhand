@@ -23,13 +23,21 @@ export function UpgradePurchase({
   inventoryLimit,
   playerInventoryQuantities,
   upgrade,
+}: {
+  handleUpgradeTool: (upgrade: farmhand.upgradesMetadatum) => void
+  inventory: farmhand.state['inventory']
+  inventoryLimit: number
+  playerInventoryQuantities: Record<string, number>
+  upgrade: farmhand.upgradesMetadatum
 }) {
   const { id, name, description } = upgrade
 
-  const spaceFreedByIngredientsConsumed = totalIngredientsInRecipe(upgrade)
+  const spaceFreedByIngredientsConsumed = totalIngredientsInRecipe(
+    upgrade as any
+  )
 
   const canBeMade =
-    canMakeRecipe(upgrade, inventory, 1) &&
+    canMakeRecipe(upgrade as any, inventory, 1) &&
     doesInventorySpaceRemain({
       inventory,
       // Without the Infinity coercion, this would break recipes for unlimited
@@ -50,13 +58,23 @@ export function UpgradePurchase({
     >
       <CardHeader
         {...{
-          avatar: <img {...{ src: craftedItems[id], alt: name }} />,
+          avatar: (
+            <img
+              {...{
+                src: (craftedItems as Record<string, string>)[id],
+                alt: name,
+              }}
+            />
+          ),
           title: name,
           subheader: (
             <>
               <p>{description}</p>
               <IngredientsList
-                {...{ playerInventoryQuantities, recipe: upgrade }}
+                {...{
+                  playerInventoryQuantities,
+                  recipe: upgrade as farmhand.recipe,
+                }}
               />
             </>
           ),
@@ -86,7 +104,7 @@ UpgradePurchase.propTypes = {
   upgrade: object,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: any) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

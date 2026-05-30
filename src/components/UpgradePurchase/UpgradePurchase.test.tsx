@@ -7,7 +7,7 @@ import { toolLevel, toolType } from '../../enums.js'
 import { UpgradePurchase } from './UpgradePurchase.js'
 
 describe('<UpgradePurchase />', () => {
-  let upgrade, props, toolLevels
+  let upgrade: any, props: any, toolLevels: any
 
   beforeEach(() => {
     upgrade = {

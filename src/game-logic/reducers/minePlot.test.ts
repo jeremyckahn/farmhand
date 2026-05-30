@@ -7,7 +7,7 @@ import { testState, testCrop } from '../../test-utils/index.js'
 import { minePlot } from './minePlot.js'
 
 describe('minePlot', () => {
-  let gameState
+  let gameState: any
 
   beforeAll(() => {
     vitest.spyOn(randomNumberService, 'generateRandomNumber').mockReturnValue(1)

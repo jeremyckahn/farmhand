@@ -3,6 +3,21 @@ declare module '*?dataUri' {
   export default content
 }
 
+declare module 'global/window.js' {
+  const window: Window
+  export default window
+}
+
+declare module 'process/browser' {
+  const process: any
+  export default process
+}
+
+declare module 'react-file-reader-input' {
+  const FileReaderInput: any
+  export default FileReaderInput
+}
+
 declare namespace farmhand {
   // Enums from src/enums.js
   type cropType =

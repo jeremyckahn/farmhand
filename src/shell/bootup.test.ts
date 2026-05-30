@@ -21,7 +21,7 @@ describe('bootup', () => {
     await farmhandStub({
       localforage: {
         getItem: () => Promise.resolve(loadedState),
-        setItem: (_key, data) => Promise.resolve(data),
+        setItem: (_key: string, data: any) => Promise.resolve(data),
       },
     })
 
@@ -43,7 +43,7 @@ describe('bootup', () => {
     await farmhandStub({
       localforage: {
         getItem: () => Promise.resolve(loadedState),
-        setItem: (_key, data) => Promise.resolve(data),
+        setItem: (_key: string, data: any) => Promise.resolve(data),
       },
     })
 
@@ -65,7 +65,7 @@ describe('bootup', () => {
     await farmhandStub({
       localforage: {
         getItem: () => Promise.resolve(loadedState),
-        setItem: (_key, data) => Promise.resolve(data),
+        setItem: (_key: string, data: any) => Promise.resolve(data),
       },
     })
 

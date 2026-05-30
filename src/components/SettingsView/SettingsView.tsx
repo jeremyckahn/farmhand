@@ -32,6 +32,27 @@ const SettingsView = ({
   showNotifications,
   useAlternateEndDayButtonPosition,
   showHomeScreen,
+}: {
+  allowCustomPeerCowNames: boolean
+  handleAllowCustomPeerCowNamesChange: (
+    e: any,
+    allowCustomPeerCowNames: boolean
+  ) => void
+  handleClearPersistedDataClick: () => void
+  handleExportDataClick: () => void
+  handleImportDataClick: (results: any) => void
+  handleSaveButtonClick: () => void
+  handleShowNotificationsChange: (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => void
+  handleUseAlternateEndDayButtonPositionChange: (
+    e: any,
+    useAlternateEndDayButtonPosition: boolean
+  ) => void
+  handleShowHomeScreenChange: (e: any, showHomeScreen: boolean) => void
+  showNotifications: boolean
+  useAlternateEndDayButtonPosition: boolean
+  showHomeScreen: boolean
 }) => {
   const [isClearDataDialogOpen, setIsClearDataDialogOpen] = useState(false)
 
@@ -214,7 +235,7 @@ SettingsView.propTypes = {
 
 export { SettingsView }
 
-export default function Consumer(props) {
+export default function Consumer(props: any) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

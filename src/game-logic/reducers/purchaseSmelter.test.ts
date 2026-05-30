@@ -4,7 +4,7 @@ import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings.js'
 import { purchaseSmelter } from './purchaseSmelter.js'
 
 describe('purchaseSmelter', () => {
-  let gameState, newState
+  let gameState: any, newState: any
 
   beforeEach(() => {
     gameState = {

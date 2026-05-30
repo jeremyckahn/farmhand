@@ -18,7 +18,7 @@ export const nextView = async () => {
   await userEvent.click(nextViewButton)
 }
 
-export const getItemByName = async itemName => {
+export const getItemByName = async (itemName: string) => {
   const header = await screen.findByText(itemName)
   const item = header.closest('.Item')
   if (!item) {
