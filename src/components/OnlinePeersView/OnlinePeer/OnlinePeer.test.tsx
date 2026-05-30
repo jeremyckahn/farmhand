@@ -5,7 +5,7 @@ import { levelAchieved } from '../../../utils/levelAchieved.js'
 
 import OnlinePeer from './OnlinePeer.js'
 
-const defaultPeer = {
+const defaultPeer: any = {
   cowOfferedForTrade: null,
   dayCount: 5,
   playerId: 'test-peer-123',

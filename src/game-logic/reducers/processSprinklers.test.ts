@@ -26,11 +26,11 @@ describe('processSprinklers', () => {
   })
 
   test('waters crops within range', () => {
-    expect(computedState.field[1][0].wasWateredToday).toBeTruthy()
-    expect(computedState.field[2][2].wasWateredToday).toBeTruthy()
+    expect(computedState.field[1][0]!.wasWateredToday).toBeTruthy()
+    expect(computedState.field[2][2]!.wasWateredToday).toBeTruthy()
   })
 
   test('does not water crops out of range', () => {
-    expect(computedState.field[3][3].wasWateredToday).toBeFalsy()
+    expect(computedState.field[3][3]!.wasWateredToday).toBeFalsy()
   })
 })

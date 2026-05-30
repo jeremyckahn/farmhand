@@ -4,7 +4,7 @@ declare module '*?dataUri' {
 }
 
 declare module 'global/window.js' {
-  const window: Window
+  const window: any
   export default window
 }
 
@@ -78,7 +78,7 @@ declare namespace farmhand {
     | 'TOOL_UPGRADE'
     | 'WEED'
   type fertilizerType = 'NONE' | 'STANDARD' | 'RAINBOW'
-  type genders = 'FEMALE' | 'MALE'
+  type genders = 'FEMALE' | 'MALE' | string
   type cowColors =
     | 'BLUE'
     | 'BROWN'
@@ -192,7 +192,7 @@ declare namespace farmhand {
   interface cow {
     baseWeight: number
     color: string
-    colorsInBloodline: Record<cowColors, boolean>
+    colorsInBloodline: Partial<Record<cowColors, boolean>>
     daysOld: number
     daysSinceMilking: number
     daysSinceProducingFertilizer: number
@@ -279,15 +279,15 @@ declare namespace farmhand {
   }
 
   interface peerMetadata {
-    cowsSold: Record<string, number>
-    cropsHarvested: Record<string, number>
+    cowsSold?: Record<string, number>
+    cropsHarvested?: Record<string, number>
     dayCount: number
     experience: number
     playerId: string
     money: number
-    pendingPeerMessages: peerMessage[]
-    version: string
-    cowOfferedForTrade?: offeredCow
+    pendingPeerMessages?: peerMessage[]
+    version?: string
+    cowOfferedForTrade?: offeredCow | null
   }
 
   interface upgradesMetadatum {

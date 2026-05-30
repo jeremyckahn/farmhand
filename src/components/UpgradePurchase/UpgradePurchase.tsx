@@ -24,7 +24,7 @@ export function UpgradePurchase({
   playerInventoryQuantities,
   upgrade,
 }: {
-  handleUpgradeTool: (upgrade: farmhand.upgradesMetadatum) => void
+  handleUpgradeTool: (toolUpgrade: farmhand.upgradesMetadatum) => void
   inventory: farmhand.state['inventory']
   inventoryLimit: number
   playerInventoryQuantities: Record<string, number>

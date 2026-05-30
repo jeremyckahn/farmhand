@@ -34,10 +34,7 @@ const SettingsView = ({
   showHomeScreen,
 }: {
   allowCustomPeerCowNames: boolean
-  handleAllowCustomPeerCowNamesChange: (
-    e: any,
-    allowCustomPeerCowNames: boolean
-  ) => void
+  handleAllowCustomPeerCowNamesChange: (e: any, allowCustom: boolean) => void
   handleClearPersistedDataClick: () => void
   handleExportDataClick: () => void
   handleImportDataClick: (results: any) => void
@@ -47,9 +44,9 @@ const SettingsView = ({
   ) => void
   handleUseAlternateEndDayButtonPositionChange: (
     e: any,
-    useAlternateEndDayButtonPosition: boolean
+    useAlternate: boolean
   ) => void
-  handleShowHomeScreenChange: (e: any, showHomeScreen: boolean) => void
+  handleShowHomeScreenChange: (e: any, show: boolean) => void
   showNotifications: boolean
   useAlternateEndDayButtonPosition: boolean
   showHomeScreen: boolean

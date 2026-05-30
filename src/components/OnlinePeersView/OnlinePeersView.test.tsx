@@ -35,7 +35,7 @@ test('displays player name', () => {
 })
 
 test('shows loading message when there are more active players than populated peers', () => {
-  const props = {
+  const props: any = {
     ...defaultProps,
     activePlayers: 3,
     peers: {
@@ -49,7 +49,7 @@ test('shows loading message when there are more active players than populated pe
 })
 
 test('does not show loading message when active players match populated peers', () => {
-  const props = {
+  const props: any = {
     ...defaultProps,
     activePlayers: 2, // 1 current player + 1 peer
     peers: {
@@ -65,7 +65,7 @@ test('does not show loading message when active players match populated peers', 
 })
 
 test('displays cow offered for trade when present', () => {
-  const cowOfferedForTrade = {
+  const cowOfferedForTrade: any = {
     id: 'test-cow',
     name: 'Test Cow',
     color: 'BROWN',
@@ -85,7 +85,7 @@ test('displays cow offered for trade when present', () => {
     timesTraded: 0,
   }
 
-  const props = {
+  const props: any = {
     ...defaultProps,
     cowIdOfferedForTrade: 'test-cow',
     cowInventory: [cowOfferedForTrade],
@@ -106,7 +106,7 @@ test('does not display trade section when no cow is offered', () => {
 })
 
 test('displays list of peers when present', () => {
-  const peers = {
+  const peers: any = {
     peer1: {
       playerId: 'peer1',
       dayCount: 5,
@@ -130,7 +130,7 @@ test('displays list of peers when present', () => {
 })
 
 test('sorts peers by experience level (highest first)', () => {
-  const peers = {
+  const peers: any = {
     'low-level': {
       playerId: 'low-level',
       dayCount: 1,
@@ -162,7 +162,7 @@ test('sorts peers by experience level (highest first)', () => {
 })
 
 test('filters out empty peer objects', () => {
-  const peers = {
+  const peers: any = {
     'valid-peer': {
       playerId: 'valid-peer',
       dayCount: 5,
@@ -233,7 +233,7 @@ test('uses default severity for peer messages when not specified', () => {
 })
 
 test('displays dividers between sections when content is present', () => {
-  const cowOfferedForTrade = {
+  const cowOfferedForTrade: any = {
     id: 'test-cow',
     name: 'Test Cow',
     color: 'BROWN',
@@ -253,7 +253,7 @@ test('displays dividers between sections when content is present', () => {
     timesTraded: 0,
   }
 
-  const peers = {
+  const peers: any = {
     peer1: {
       playerId: 'peer1',
       dayCount: 5,
