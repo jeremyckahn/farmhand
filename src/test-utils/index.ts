@@ -7,8 +7,8 @@ import {
   toolType,
 } from '../enums.js'
 
-export const shapeOf = (object: any) =>
-  Object.keys(object).reduce((acc: Record<string, string>, key) => {
+export const shapeOf = object =>
+  Object.keys(object).reduce((acc, key) => {
     acc[key] = typeof object[key]
     return acc
   }, {})

@@ -7,7 +7,7 @@ import './ProgressBar.sass'
 const incompleteColor = '#ff9f00'
 const completeColor = '#00e500'
 
-const ProgressBar = ({ percent }: { percent: number }) => {
+const ProgressBar = ({ percent }) => {
   const [displayedProgress, setDisplayedProgress] = useState(0)
   const [displayedColor, setDisplayedColor] = useState(incompleteColor)
   const [currentTweenable, setCurrentTweenable]: [

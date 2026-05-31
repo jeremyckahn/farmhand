@@ -6,7 +6,7 @@ import { getPlotContentFromItemId } from '../../utils/index.js'
 import { setSprinkler } from './setSprinkler.js'
 
 describe('setSprinkler', () => {
-  let state: any
+  let state
 
   beforeEach(() => {
     state = {

@@ -3,12 +3,7 @@ import { incrementPlotContentAge } from './incrementPlotContentAge.js'
 import { updatePlotShoveledState } from './updatePlotShoveledState.js'
 import { spawnWeeds } from './spawnWeeds.js'
 
-const fieldReducer = (
-  acc: farmhand.plotContent | null,
-  fn: (
-    plotContent: farmhand.plotContent | null
-  ) => farmhand.plotContent | null
-) => fn(acc)
+const fieldReducer = (acc, fn) => fn(acc)
 
 // TODO: Add tests for this reducer.
 const resetWasWatered = (

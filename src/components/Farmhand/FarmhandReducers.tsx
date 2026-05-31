@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import localforage from 'localforage'
-import { match, } from 'react-router-dom'; import { History, Location } from 'history'
+import { match, History, Location } from 'react-router-dom'
 
 import * as reducers from '../../game-logic/reducers/index.js'
 

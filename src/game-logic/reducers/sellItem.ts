@@ -21,7 +21,7 @@ import { prependPendingPeerMessage } from './index.js'
 
 export const sellItem = (
   state: farmhand.state,
-  { id }: { id: string },
+  { id },
   howMany: number = 1
 ): farmhand.state => {
   if (howMany === 0) {

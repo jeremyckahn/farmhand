@@ -20,11 +20,6 @@ export function ForgeTabPanel({
   index,
   learnedForgeRecipes,
   toolLevels,
-}: {
-  currentTab: number
-  index: number
-  learnedForgeRecipes: string[]
-  toolLevels: farmhand.state['toolLevels']
 }) {
   const upgradesAvailable = getUpgradesAvailable({
     toolLevels,

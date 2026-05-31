@@ -17,11 +17,11 @@ import { tools as toolImages, craftedItems, pixel } from '../../img/index.js'
 
 import './Toolbelt.sass'
 
-const getTools = memoize((toolLevels: farmhand.state['toolLevels']) => {
-  const tools: (typeof toolsData)[keyof typeof toolsData][] = []
+const getTools = memoize(toolLevels => {
+  const tools: typeof toolsData[keyof typeof toolsData][] = []
 
   for (let tool of Object.values(toolsData)) {
-    if (toolLevels[tool.type as farmhand.toolType] !== toolLevel.UNAVAILABLE) {
+    if (toolLevels[tool.type] !== toolLevel.UNAVAILABLE) {
       tools.push(tool)
     }
   }
@@ -29,23 +29,19 @@ const getTools = memoize((toolLevels: farmhand.state['toolLevels']) => {
   return tools.sort((a, b) => a.order - b.order)
 })
 
-const getToolImage = (tool: { level: farmhand.toolLevel; id: string }) => {
+const getToolImage = tool => {
   if (tool.level === toolLevel.DEFAULT) {
-    return (toolImages as Record<string, string>)[tool.id]
+    return toolImages[tool.id]
   }
 
   const id = `${tool.id}-${tool.level.toLowerCase()}`
-  return (craftedItems as Record<string, string>)[id]
+  return craftedItems[id]
 }
 
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
   toolLevels,
-}: {
-  fieldMode: farmhand.fieldMode
-  handleFieldModeSelect: (fieldMode: farmhand.fieldMode) => void
-  toolLevels: farmhand.state['toolLevels']
 }) => {
   const tools = getTools(toolLevels)
 
@@ -65,9 +61,7 @@ export const Toolbelt = ({
                     <ReactMarkdown
                       {...{
                         className: 'markdown',
-                        source: (levelInfo as any)[
-                          toolLevels[type as farmhand.toolType]
-                        ],
+                        source: levelInfo[toolLevels[type]],
                       }}
                     />
                     <p>({fieldKey})</p>
@@ -120,7 +114,7 @@ Toolbelt.defaultProps = {
   toolLevels: {},
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

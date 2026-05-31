@@ -12,15 +12,7 @@ import { RecipeList } from '../RecipeList/RecipeList.js'
 
 import { TabPanel } from './TabPanel/index.js'
 
-export function RecyclingTabPanel({
-  currentTab,
-  index,
-  learnedRecipes,
-}: {
-  currentTab: number
-  index: number
-  learnedRecipes: string[]
-}) {
+export function RecyclingTabPanel({ currentTab, index, learnedRecipes }) {
   return (
     <TabPanel value={currentTab} index={index}>
       <RecipeList

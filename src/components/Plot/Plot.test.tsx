@@ -277,7 +277,7 @@ describe('Plot component', () => {
 
     describe('ores', () => {
       test('renders bare plot classes and newly-mined ore classes', async () => {
-        const PlotTestHarness = ({ plotProps }: any) => {
+        const PlotTestHarness = ({ plotProps }) => {
           const [isShoveled, setIsShoveled] = useState(false)
 
           return (
@@ -378,7 +378,7 @@ describe('getBackgroundStyles', () => {
           fertilizerType: fertilizerType.RAINBOW,
         })
       )
-    ).toBe(`url(${(plotStates as any)['rainbow-fertilized-plot']})`)
+    ).toBe(`url(${plotStates['rianbow-fertilized-plot']})`)
   })
 
   test('constructs style for wasWateredToday', () => {

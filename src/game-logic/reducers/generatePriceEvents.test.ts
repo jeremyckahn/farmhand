@@ -33,7 +33,7 @@ describe('generatePriceEvents', () => {
   })
 
   describe('price event does not already exist', () => {
-    let state: farmhand.state
+    let state
 
     beforeEach(() => {
       vitest.spyOn(Math, 'random').mockReturnValue(0)

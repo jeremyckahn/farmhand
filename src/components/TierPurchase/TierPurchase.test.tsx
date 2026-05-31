@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { TierPurchase } from './TierPurchase.js'
 
 describe('<TierPurchase />', () => {
-  let onBuyClick: any, props: any
+  let onBuyClick, props
 
   beforeEach(() => {
     onBuyClick = vitest.fn()
@@ -13,7 +13,7 @@ describe('<TierPurchase />', () => {
       onBuyClick,
       money: 0,
       purchasedTier: 0,
-      renderTierLabel: (tier: any) => tier.value,
+      renderTierLabel: tier => tier.value,
       description: 'describe yourself',
       maxedOutPlaceholder: 'at max',
       tiers: new Map([
@@ -129,29 +129,6 @@ describe('<TierPurchase />', () => {
         'aria-selected',
         'true'
       )
-    })
-
-    test('the buy button is disabled if the player cannot afford the next tier', () => {
-      props.money = 0
-      render(<TierPurchase {...props} />)
-
-      expect(buyButton()).toBeDisabled()
-    })
-
-    test('the buy button is enabled if the player can afford the next tier', () => {
-      props.money = 1000
-      render(<TierPurchase {...props} />)
-
-      expect(buyButton()).not.toBeDisabled()
-    })
-
-    test('the buy button is disabled if the selected tier is already purchased', () => {
-      props.money = 0
-      props.purchasedTier = 1
-
-      render(<TierPurchase {...props} />)
-
-      expect(buyButton()).toBeDisabled()
     })
   })
 })

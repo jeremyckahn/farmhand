@@ -24,13 +24,6 @@ const OnlinePeersView = ({
   playerId,
   latestPeerMessages,
   peers,
-}: {
-  activePlayers: number
-  cowIdOfferedForTrade: string
-  cowInventory: farmhand.cow[]
-  playerId: string
-  latestPeerMessages: farmhand.peerMessage[]
-  peers: Partial<Record<string, farmhand.peerMetadata | null>>
 }) => {
   const peerKeys = Object.keys(peers)
 
@@ -72,10 +65,10 @@ const OnlinePeersView = ({
             {sortBy(populatedPeers, [
               peerId =>
                 // Use negative value to reverse sort order
-                -levelAchieved(peers[peerId]!.experience || 0),
+                -levelAchieved(peers[peerId].experience || 0),
             ]).map(peerId => (
               <BailOutErrorBoundary {...{ key: peerId }}>
-                <OnlinePeer {...{ peer: peers[peerId]! }} />
+                <OnlinePeer {...{ peer: peers[peerId] }} />
               </BailOutErrorBoundary>
             ))}
           </ul>
@@ -124,7 +117,7 @@ OnlinePeersView.propTypes = {
 
 export { OnlinePeersView }
 
-export default function Consumer(props: any) {
+export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

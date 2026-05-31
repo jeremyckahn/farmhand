@@ -8,7 +8,7 @@ import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { sellCow } from './sellCow.js'
 
 describe('sellCow', () => {
-  let cow: farmhand.cow
+  let cow
 
   beforeEach(() => {
     cow = generateCow({

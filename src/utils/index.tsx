@@ -315,25 +315,23 @@ export const getPlotImage = (
           itemImageId = seedItem.id
       }
 
-      return (itemImages as Record<string, string>)[itemImageId]
+      return itemImages[itemImageId]
     }
 
     if (getPlotContentType(plotContents) === itemType.WEED) {
       const weedColors = ['yellow', 'orange', 'pink']
       const color = weedColors[(x * y) % weedColors.length]
 
-      return (itemImages as Record<string, string>)[`weed-${color}`]
+      return itemImages[`weed-${color}`]
     }
 
     // Handle other plot content (non-crop, non-weed)
-    return (itemImages as Record<string, string>)[
-      (plotContents as farmhand.plotContent).itemId
-    ]
+    return itemImages[(plotContents as farmhand.plotContent).itemId]
   }
 
   if (isShoveledPlot(plotContents)) {
     if (plotContents?.oreId) {
-      return (itemImages as Record<string, string>)[plotContents.oreId]
+      return itemImages[plotContents.oreId]
     }
   }
 

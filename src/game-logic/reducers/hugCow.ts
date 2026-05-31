@@ -3,7 +3,7 @@ import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.js'
 import { modifyCow } from './modifyCow.js'
 
 export const hugCow = (state: farmhand.state, cowId: string): farmhand.state =>
-  modifyCow(state, cowId, (cow: farmhand.cow) =>
+  modifyCow(state, cowId, cow =>
     cow.happinessBoostsToday >= MAX_DAILY_COW_HUG_BENEFITS
       ? cow
       : {

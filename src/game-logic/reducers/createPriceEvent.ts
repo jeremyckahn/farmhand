@@ -4,7 +4,7 @@
 export const createPriceEvent = (
   state: farmhand.state,
   priceEvent: farmhand.priceEvent,
-  priceEventKey: 'priceCrashes' | 'priceSurges'
+  priceEventKey: string
 ): farmhand.state => ({
   ...state,
   [priceEventKey]: {

@@ -30,9 +30,7 @@ export const clearPlot = (
     getPlotContentType(plotContent) === itemType.CROP &&
     getCropLifeStage(plotContent) !== GROWN &&
     randomNumberService.isRandomNumberLessThan(
-      HOE_LEVEL_TO_SEED_RECLAIM_RATE[
-        hoeLevel as keyof typeof HOE_LEVEL_TO_SEED_RECLAIM_RATE
-      ]
+      HOE_LEVEL_TO_SEED_RECLAIM_RATE[hoeLevel]
     )
   ) {
     const seedId = getSeedItemIdFromFinalStageCropItemId(plotContent.itemId)

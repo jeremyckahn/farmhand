@@ -6,7 +6,7 @@ import { getPlotContentFromItemId } from '../../utils/index.js'
 import { setScarecrow } from './setScarecrow.js'
 
 describe('setScarecrow', () => {
-  let state: any
+  let state
 
   beforeEach(() => {
     state = {

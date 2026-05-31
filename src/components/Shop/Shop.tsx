@@ -77,28 +77,6 @@ export const Shop = ({
   toolLevels,
 
   storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit),
-}: {
-  handleCombinePurchase: (tier: number) => void
-  handleComposterPurchase: (tier: number) => void
-  handleCowPenPurchase: (tier: number) => void
-  handleCellarPurchase: (tier: number) => void
-  handleFieldPurchase: (tier: number) => void
-  handleForestPurchase: (tier: number) => void
-  handleSmelterPurchase: (tier: number) => void
-  handleStorageExpansionPurchase: () => void
-  inventoryLimit: number
-  levelEntitlements: farmhand.levelEntitlements
-  money: number
-  purchasedCombine: number
-  purchasedComposter: number
-  purchasedCowPen: number
-  purchasedCellar: number
-  purchasedField: number
-  purchasedForest: number
-  purchasedSmelter: number
-  shopInventory: farmhand.item[]
-  toolLevels: farmhand.state['toolLevels']
-  storageUpgradeCost?: number
 }) => {
   const [currentTab, setCurrentTab] = useState(0)
 
@@ -190,11 +168,7 @@ export const Shop = ({
                 maxedOutPlaceholder:
                   "You've purchased the largest field available!",
                 purchasedTier: purchasedField,
-                renderTierLabel: ({
-                  columns,
-                  price,
-                  rows,
-                }: farmhand.purchaseableFieldSize) =>
+                renderTierLabel: ({ columns, price, rows }) =>
                   `${dollarString(price)}: ${columns} x ${rows}`,
                 tiers: PURCHASEABLE_FIELD_SIZES,
                 title: 'Expand field',
@@ -208,13 +182,8 @@ export const Shop = ({
                 maxedOutPlaceholder:
                   "You've purchased the largest cow pen available!",
                 purchasedTier: purchasedCowPen,
-                renderTierLabel: ({
-                  cows,
-                  price,
-                }: {
-                  cows: number
-                  price: number
-                }) => `${dollarString(price)}: ${cows} cow pen`,
+                renderTierLabel: ({ cows, price }) =>
+                  `${dollarString(price)}: ${cows} cow pen`,
                 tiers: PURCHASEABLE_COW_PENS,
                 title: 'Buy cow pen',
               }}
@@ -227,13 +196,8 @@ export const Shop = ({
                 maxedOutPlaceholder:
                   "You've purchased the largest cellar available!",
                 purchasedTier: purchasedCellar,
-                renderTierLabel: ({
-                  space,
-                  price,
-                }: {
-                  space: number
-                  price: number
-                }) => `${dollarString(price)}: Space for ${space} kegs`,
+                renderTierLabel: ({ space, price }) =>
+                  `${dollarString(price)}: Space for ${space} kegs`,
                 tiers: PURCHASEABLE_CELLARS,
                 title: 'Buy cellar',
               }}
@@ -247,11 +211,7 @@ export const Shop = ({
                   maxedOutPlaceholder:
                     "You've purchased the largest forest available!",
                   purchasedTier: purchasedForest,
-                  renderTierLabel: ({
-                    columns,
-                    price,
-                    rows,
-                  }: farmhand.purchaseableFieldSize) =>
+                  renderTierLabel: ({ columns, price, rows }) =>
                     `${dollarString(price)}: ${columns} x ${rows}`,
                   tiers: PURCHASABLE_FOREST_SIZES,
                   title: 'Expand Forest',
@@ -268,13 +228,8 @@ export const Shop = ({
                 maxedOutPlaceholder:
                   "You've purchased the best combine harvester available!",
                 purchasedTier: purchasedCombine,
-                renderTierLabel: ({
-                  type,
-                  price,
-                }: {
-                  type: string
-                  price: number
-                }) => `${dollarString(price)}: ${type} combine harvester`,
+                renderTierLabel: ({ type, price }) =>
+                  `${dollarString(price)}: ${type} combine harvester`,
                 tiers: PURCHASEABLE_COMBINES,
                 title: 'Buy combine harvester',
               }}
@@ -289,13 +244,8 @@ export const Shop = ({
                   onBuyClick: handleSmelterPurchase,
                   maxedOutPlaceholder: "You've already purchased the smelter!",
                   purchasedTier: purchasedSmelter,
-                  renderTierLabel: ({
-                    type,
-                    price,
-                  }: {
-                    type: string
-                    price: number
-                  }) => `${dollarString(price)}: ${type} Smelter`,
+                  renderTierLabel: ({ type, price }) =>
+                    `${dollarString(price)}: ${type} Smelter`,
                   tiers: PURCHASEABLE_SMELTERS,
                   title: 'Buy smelter',
                 }}
@@ -310,13 +260,8 @@ export const Shop = ({
                 onBuyClick: handleComposterPurchase,
                 maxedOutPlaceholder: "You've already purchased the composter!",
                 purchasedTier: purchasedComposter,
-                renderTierLabel: ({
-                  type,
-                  price,
-                }: {
-                  type: string
-                  price: number
-                }) => `${dollarString(price)}: ${type} Composter`,
+                renderTierLabel: ({ type, price }) =>
+                  `${dollarString(price)}: ${type} Composter`,
                 tiers: PURCHASEABLE_COMPOSTERS,
                 title: 'Buy composter',
               }}
@@ -346,7 +291,7 @@ Shop.propTypes = {
   valueAdjustments: object.isRequired,
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

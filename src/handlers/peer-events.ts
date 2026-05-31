@@ -30,16 +30,13 @@ export const handlePeerMetadataRequest = (
  */
 export const handleCowTradeRequest = async (
   farmhand: any,
-  {
-    cowOffered,
-    cowRequested,
-  }: { cowOffered: farmhand.cow; cowRequested: farmhand.cow },
+  { cowOffered, cowRequested },
   peerId: string
 ) => {
   let wasTradeSuccessful = false
 
   farmhand.setState(
-    (state: farmhand.state) => {
+    state => {
       const {
         allowCustomPeerCowNames,
         cowIdOfferedForTrade,
@@ -85,7 +82,7 @@ export const handleCowTradeRequest = async (
       }
 
       const [, peerMetadata] =
-        Object.entries(peers).find(
+        Object.entries(peers as Record<string, { playerId?: string }>).find(
           ([, peer]) => peer?.playerId === updatedCowOffered.ownerId
         ) ?? []
 
@@ -162,7 +159,7 @@ export const handleCowTradeRequestAccept = (
   let wasTradeSuccessful = false
 
   farmhand.setState(
-    (state: farmhand.state) => {
+    state => {
       const {
         allowCustomPeerCowNames,
         cowIdOfferedForTrade,
@@ -190,9 +187,10 @@ export const handleCowTradeRequestAccept = (
         }
       }
 
-      const peerEntry = Object.entries(peers).find(
-        ([, peer]) => peer?.playerId === cowReceived.ownerId
-      )
+      const peerEntry = Object.entries(peers).find(([, peer]) => {
+        const { playerId: peerPlayerId } = peer as { playerId?: string }
+        return peerPlayerId === cowReceived.ownerId
+      })
       const [, peerMetadata] = peerEntry || []
 
       const didOriginallyOwnReceivedCow =
@@ -226,9 +224,7 @@ export const handleCowTradeRequestAccept = (
         state = addExperience(state, EXPERIENCE_VALUES.COW_TRADED)
       }
 
-      if (cowTradeTimeoutId) {
-        clearTimeout(cowTradeTimeoutId)
-      }
+      clearTimeout(cowTradeTimeoutId)
 
       wasTradeSuccessful = true
 
@@ -264,10 +260,7 @@ export const handleCowTradeRequestAccept = (
   )
 }
 
-export const handleCowTradeRequestReject = (
-  farmhand: any,
-  { reason }: { reason: farmhand.cowTradeRejectionReason }
-) => {
+export const handleCowTradeRequestReject = (farmhand: any, { reason }) => {
   const { cowTradeTimeoutId } = farmhand.state
 
   if (typeof cowTradeTimeoutId === 'number') {

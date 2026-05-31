@@ -1,7 +1,7 @@
 const decrementPriceEventDays = (
   priceEvents: Partial<Record<string, farmhand.priceEvent>>
 ): Partial<Record<string, farmhand.priceEvent>> =>
-  Object.keys(priceEvents).reduce((acc: any, key) => {
+  Object.keys(priceEvents).reduce((acc, key) => {
     const priceEvent = priceEvents[key]
     if (!priceEvent) return acc
 

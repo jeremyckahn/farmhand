@@ -3,21 +3,6 @@ declare module '*?dataUri' {
   export default content
 }
 
-declare module 'global/window.js' {
-  const window: any
-  export default window
-}
-
-declare module 'process/browser' {
-  const process: any
-  export default process
-}
-
-declare module 'react-file-reader-input' {
-  const FileReaderInput: any
-  export default FileReaderInput
-}
-
 declare namespace farmhand {
   // Enums from src/enums.js
   type cropType =
@@ -78,7 +63,7 @@ declare namespace farmhand {
     | 'TOOL_UPGRADE'
     | 'WEED'
   type fertilizerType = 'NONE' | 'STANDARD' | 'RAINBOW'
-  type genders = 'FEMALE' | 'MALE' | string
+  type genders = 'FEMALE' | 'MALE'
   type cowColors =
     | 'BLUE'
     | 'BROWN'
@@ -192,7 +177,7 @@ declare namespace farmhand {
   interface cow {
     baseWeight: number
     color: string
-    colorsInBloodline: Partial<Record<cowColors, boolean>>
+    colorsInBloodline: Record<cowColors, boolean>
     daysOld: number
     daysSinceMilking: number
     daysSinceProducingFertilizer: number
@@ -279,15 +264,15 @@ declare namespace farmhand {
   }
 
   interface peerMetadata {
-    cowsSold?: Record<string, number>
-    cropsHarvested?: Record<string, number>
+    cowsSold: Record<string, number>
+    cropsHarvested: Record<string, number>
     dayCount: number
     experience: number
     playerId: string
     money: number
-    pendingPeerMessages?: peerMessage[]
-    version?: string
-    cowOfferedForTrade?: offeredCow | null
+    pendingPeerMessages: peerMessage[]
+    version: string
+    cowOfferedForTrade?: offeredCow
   }
 
   interface upgradesMetadatum {

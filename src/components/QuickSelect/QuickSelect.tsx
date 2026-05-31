@@ -20,11 +20,6 @@ const ItemList = ({
   items,
   playerInventoryQuantities,
   selectedItemId,
-}: {
-  handleItemSelectClick: (item: farmhand.item) => void
-  items: farmhand.item[]
-  playerInventoryQuantities: Record<string, number>
-  selectedItemId: string
 }) => (
   <div {...{ className: 'button-array' }}>
     {sortItems(items).map(item => (
@@ -51,11 +46,7 @@ const ItemList = ({
             {...{
               className: 'square',
               src: pixel,
-              style: {
-                backgroundImage: `url(${(itemImages as Record<string, string>)[
-                  item.id
-                ]}`,
-              },
+              style: { backgroundImage: `url(${itemImages[item.id]}` },
             }}
           />
           <p {...{ className: 'quantity' }}>
@@ -80,12 +71,6 @@ const QuickSelect = ({
   playerInventoryQuantities,
   plantableCropInventory,
   selectedItemId,
-}: {
-  fieldToolInventory: farmhand.item[]
-  handleItemSelectClick: (item: farmhand.item) => void
-  playerInventoryQuantities: Record<string, number>
-  plantableCropInventory: farmhand.item[]
-  selectedItemId: string
 }) => (
   <Paper {...{ className: 'QuickSelect', elevation: 10 }}>
     <Grid {...{ container: true, alignItems: 'center', wrap: 'nowrap' }}>
@@ -129,7 +114,7 @@ QuickSelect.propTypes = {
   selectedItemId: string.isRequired,
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

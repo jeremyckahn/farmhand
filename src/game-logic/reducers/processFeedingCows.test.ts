@@ -10,7 +10,7 @@ import { generateCow } from '../../utils/index.js'
 import { processFeedingCows } from './processFeedingCows.js'
 
 describe('processFeedingCows', () => {
-  let state: any
+  let state
 
   beforeEach(() => {
     state = {

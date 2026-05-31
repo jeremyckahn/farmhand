@@ -6,13 +6,7 @@ import { itemsMap } from '../../data/maps.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import Item from '../Item/index.js'
 
-const PriceEventView = ({
-  priceCrashes,
-  priceSurges,
-}: {
-  priceCrashes: Record<string, farmhand.priceEvent>
-  priceSurges: Record<string, farmhand.priceEvent>
-}) => (
+const PriceEventView = ({ priceCrashes, priceSurges }) => (
   <div className="PriceEventView">
     <h3>Price Surges</h3>
     <ul className="card-list">
@@ -51,7 +45,7 @@ PriceEventView.propTypes = {
 
 export { PriceEventView }
 
-export default function Consumer(props: any) {
+export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

@@ -171,17 +171,14 @@ const upgrades: farmhand.upgradesMetadata = {
 
 // add some defaults to each upgrade object
 for (let currentToolType in upgrades) {
-  const toolUpgrades = upgrades[currentToolType as farmhand.toolType]
-  if (toolUpgrades) {
-    for (let i in toolUpgrades) {
-      Object.assign(toolUpgrades[i as farmhand.toolLevel]!, {
-        toolType: currentToolType as farmhand.toolType,
-        value: 0,
-        doesPriceFluctuate: false,
-        type: itemType.TOOL_UPGRADE,
-        level: i as farmhand.toolLevel,
-      })
-    }
+  for (let i in upgrades[currentToolType]) {
+    Object.assign(upgrades[currentToolType][i], {
+      toolType: currentToolType,
+      value: 0,
+      doesPriceFluctuate: false,
+      type: itemType.TOOL_UPGRADE,
+      level: i,
+    })
   }
 }
 

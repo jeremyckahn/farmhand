@@ -128,7 +128,7 @@ describe('isItemAFarmProduct', () => {
 })
 
 describe('getItemCurrentValue', () => {
-  let valueAdjustments: Record<string, number>
+  let valueAdjustments
 
   beforeEach(() => {
     valueAdjustments = {
@@ -223,7 +223,7 @@ describe('generateCow', () => {
 })
 
 describe('generateOffspringCow', () => {
-  let maleCow: farmhand.cow, femaleCow: farmhand.cow
+  let maleCow, femaleCow
 
   beforeEach(() => {
     vitest.spyOn(Math, 'random').mockReturnValue(1)
@@ -569,7 +569,7 @@ describe('getPlotImage', () => {
         0,
         0
       )
-    ).toBe((itemImages as Record<string, string>)['carrot-seed'])
+    ).toBe(itemImages['carrot-seed'])
     expect(
       getPlotImage(
         (testCrop({
@@ -579,7 +579,7 @@ describe('getPlotImage', () => {
         0,
         0
       )
-    ).toBe((itemImages as Record<string, string>)['carrot-seed'])
+    ).toBe(itemImages['carrot-seed'])
     expect(
       getPlotImage(
         (testCrop({
@@ -589,7 +589,7 @@ describe('getPlotImage', () => {
         0,
         0
       )
-    ).toBe((itemImages as Record<string, string>)['carrot-growing-2'])
+    ).toBe(itemImages['carrot-growing-2'])
     expect(
       getPlotImage(
         (testCrop({
@@ -599,7 +599,7 @@ describe('getPlotImage', () => {
         0,
         0
       )
-    ).toBe((itemImages as Record<string, string>)['carrot'])
+    ).toBe(itemImages['carrot'])
   })
 
   test('returns item image for oreId', () => {
@@ -611,7 +611,7 @@ describe('getPlotImage', () => {
         0,
         0
       )
-    ).toBe((itemImages as Record<string, string>)[silverOre.id])
+    ).toBe(itemImages[silverOre.id])
   })
 
   test('returns item image for other content', () => {
@@ -623,7 +623,7 @@ describe('getPlotImage', () => {
         0,
         0
       )
-    ).toBe((itemImages as Record<string, string>)['sprinkler'])
+    ).toBe(itemImages['sprinkler'])
   })
 })
 

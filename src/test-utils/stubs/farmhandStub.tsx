@@ -9,7 +9,7 @@ import Farmhand from '../../components/Farmhand/index.js'
 testing.
  */
 export const farmhandStub = async (props: any = {}) => {
-  const FarmhandRoute = (routeProps: any) => (
+  const FarmhandRoute = routeProps => (
     <Farmhand {...{ ...routeProps, ...props }} />
   )
 

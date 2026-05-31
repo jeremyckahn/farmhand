@@ -126,7 +126,7 @@ describe('sellItem', () => {
   })
 
   describe('there is an outstanding loan', () => {
-    let state: farmhand.state
+    let state
 
     describe('item is not a farm product', () => {
       beforeEach(() => {

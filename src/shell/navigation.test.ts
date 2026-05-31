@@ -33,7 +33,7 @@ describe('navigation', () => {
     await farmhandStub({
       localforage: {
         getItem: () => Promise.resolve(loadedState),
-        setItem: (_key: string, data: any) => Promise.resolve(data),
+        setItem: (_key, data) => Promise.resolve(data),
       },
     })
 
@@ -53,7 +53,7 @@ describe('navigation', () => {
     await farmhandStub({
       localforage: {
         getItem: () => Promise.resolve(loadedState),
-        setItem: (_key: string, data: any) => Promise.resolve(data),
+        setItem: (_key, data) => Promise.resolve(data),
       },
     })
 

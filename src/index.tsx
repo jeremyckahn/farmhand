@@ -16,7 +16,7 @@ import '@fontsource/public-sans'
 // eslint-disable-next-line no-unused-vars
 import { cropFamily, grapeVariety } from './enums.js'
 
-const FarmhandRoute = (props: any) => <Farmhand {...{ ...props, features }} />
+const FarmhandRoute = props => <Farmhand {...{ ...props, features }} />
 
 ReactDOM.render(
   <Router

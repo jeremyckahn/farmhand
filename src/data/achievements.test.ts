@@ -10,7 +10,7 @@ import { carrot } from './crops/index.js'
 
 describe('harvest-crop', () => {
   describe('condition', () => {
-    let inputState: any
+    let inputState
 
     beforeEach(() => {
       inputState = {
@@ -73,11 +73,8 @@ describe.each(iAmRichVariants)(
         const state = {
           revenue: goal,
         }
-        const prevState = state
 
-        expect(achievement.condition(state as any, prevState as any)).toEqual(
-          true
-        )
+        expect(achievement.condition(state)).toEqual(true)
       })
 
       test(`is not achieved when revenue is less than ${goal}`, () => {
@@ -85,11 +82,8 @@ describe.each(iAmRichVariants)(
         const state = {
           revenue: Number(goal) - 1,
         }
-        const prevState = state
 
-        expect(achievement.condition(state as any, prevState as any)).toEqual(
-          false
-        )
+        expect(achievement.condition(state)).toEqual(false)
       })
     })
   }
@@ -97,7 +91,7 @@ describe.each(iAmRichVariants)(
 
 describe('gold-digger', () => {
   const achievement = achievementsMap['gold-digger']
-  let state: any
+  let state
 
   beforeEach(() => {
     state = {
@@ -107,14 +101,13 @@ describe('gold-digger', () => {
   })
 
   test('is achieved when the player acquires a piece of gold ore', () => {
-    const prevState = state
-    expect(achievement.condition(state, prevState)).toEqual(true)
+    expect(achievement.condition(state)).toEqual(true)
   })
 
   test('it rewards the player with a gold ingot', () => {
     state = achievement.reward(state)
 
-    const ingot = state.inventory.find((item: any) => item.id === 'gold-ingot')
+    const ingot = state.inventory.find(item => item.id === 'gold-ingot')
 
     expect(ingot).toEqual({ id: 'gold-ingot', quantity: 1 })
   })
@@ -122,7 +115,7 @@ describe('gold-digger', () => {
 
 describe('financial-freedom', () => {
   const achievement = achievementsMap['financial-freedom']
-  let state: any
+  let state
 
   beforeEach(() => {
     state = {
@@ -131,14 +124,12 @@ describe('financial-freedom', () => {
   })
 
   test('is not achievemed when loan balance is greater than 0', () => {
-    const prevState = state
-    expect(achievement.condition(state, prevState)).toEqual(false)
+    expect(achievement.condition(state)).toEqual(false)
   })
 
   test('is achievemented when the loan balance is at 0', () => {
     state.loanBalance = 0
-    const prevState = state
 
-    expect(achievement.condition(state, prevState)).toEqual(true)
+    expect(achievement.condition(state)).toEqual(true)
   })
 })

@@ -19,15 +19,15 @@ configure fast-memoize.
     this.cacheSize = cacheSize
   }
 
-  has(key: string) {
+  has(key) {
     return key in this.cache
   }
 
-  get(key: string) {
+  get(key) {
     return this.cache[key]
   }
 
-  set(key: string, value: any) {
+  set(key, value) {
     if (Object.keys(this.cache).length > this.cacheSize) {
       this.cache = {}
     }

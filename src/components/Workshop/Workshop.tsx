@@ -22,11 +22,6 @@ const Workshop = ({
   purchasedComposter,
   purchasedSmelter,
   toolLevels,
-}: {
-  learnedRecipes: farmhand.state['learnedRecipes']
-  purchasedComposter: number
-  purchasedSmelter: number
-  toolLevels: farmhand.state['toolLevels']
 }) => {
   const [currentTab, setCurrentTab] = useState(0)
 
@@ -90,7 +85,7 @@ Workshop.propTypes = {
   toolLevels: object.isRequired,
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(props) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

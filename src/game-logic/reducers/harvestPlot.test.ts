@@ -66,7 +66,7 @@ describe('harvestPlot', () => {
     })
 
     describe('bronze scythe', () => {
-      let farmhandState: farmhand.state
+      let farmhandState
 
       beforeEach(() => {
         farmhandState = testState({
@@ -175,7 +175,7 @@ describe('harvestPlot', () => {
   })
 
   describe('weed', () => {
-    let harvest: farmhand.state
+    let harvest
 
     beforeEach(() => {
       harvest = harvestPlot(

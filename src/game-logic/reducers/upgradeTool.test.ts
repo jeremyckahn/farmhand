@@ -6,7 +6,7 @@ import upgrades from '../../data/upgrades.js'
 import { upgradeTool } from './upgradeTool.js'
 
 describe('upgradeTool', () => {
-  let state: farmhand.state
+  let state
 
   beforeEach(() => {
     state = testState({

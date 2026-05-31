@@ -39,7 +39,7 @@ export const salt: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.saltRock.id]: 1,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.saltRock.id] || 0) >= 30,
+  condition: state => (state.itemsSold[items.saltRock.id] || 0) >= 30,
   description: 'Useful for seasoning food and fermentation.',
   recipeType: recipeType.KITCHEN,
 })
@@ -53,7 +53,7 @@ export const flour: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.wheat.id]: 10,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.wheat.id] || 0) >= 20,
+  condition: state => (state.itemsSold[items.wheat.id] || 0) >= 20,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -66,7 +66,7 @@ export const yeast: farmhand.recipe = convertToRecipe({
   ingredients: {
     [flour.id]: 5,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[flour.id] || 0) >= 25,
+  condition: state => (state.itemsSold[flour.id] || 0) >= 25,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -98,7 +98,7 @@ export const bread: farmhand.recipe = convertToRecipe({
     [flour.id]: 10,
     [yeast.id]: 5,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[flour.id] || 0) >= 30 &&
     (state.itemsSold[yeast.id] || 0) >= 15,
   recipeType: recipeType.KITCHEN,
@@ -113,7 +113,7 @@ export const butter: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.milk3.id]: 5,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.milk3.id] || 0) >= 30,
+  condition: state => (state.itemsSold[items.milk3.id] || 0) >= 30,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -126,7 +126,7 @@ export const sunButter: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.sunflower.id]: 25,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.sunflower.id] || 0) >= 200,
+  condition: state => (state.itemsSold[items.sunflower.id] || 0) >= 200,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -140,7 +140,7 @@ export const oliveOil = convertToRecipe({
   ingredients: {
     [items.olive.id]: 250,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.olive.id] || 0) >= 500,
+  condition: state => (state.itemsSold[items.olive.id] || 0) >= 500,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -153,7 +153,7 @@ export const cheese: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.milk3.id]: 8,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.milk3.id] || 0) >= 20,
+  condition: state => (state.itemsSold[items.milk3.id] || 0) >= 20,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -166,7 +166,7 @@ export const rainbowCheese: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.rainbowMilk3.id]: 10,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.rainbowMilk3.id] || 0) >= 30,
+  condition: state => (state.itemsSold[items.rainbowMilk3.id] || 0) >= 30,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -179,7 +179,7 @@ export const chocolate: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.chocolateMilk.id]: 10,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.chocolateMilk.id] || 0) >= 25,
+  condition: state => (state.itemsSold[items.chocolateMilk.id] || 0) >= 25,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -192,7 +192,7 @@ export const carrotSoup: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.carrot.id]: 4,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.carrot.id] || 0) >= 10,
+  condition: state => (state.itemsSold[items.carrot.id] || 0) >= 10,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -205,7 +205,7 @@ export const jackolantern: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.pumpkin.id]: 1,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.pumpkin.id] || 0) >= 50,
+  condition: state => (state.itemsSold[items.pumpkin.id] || 0) >= 50,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -219,7 +219,7 @@ export const spaghetti: farmhand.recipe = convertToRecipe({
     [items.wheat.id]: 10,
     [items.tomato.id]: 2,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.wheat.id] || 0) >= 20 &&
     (state.itemsSold[items.tomato.id] || 0) >= 5,
   recipeType: recipeType.KITCHEN,
@@ -236,7 +236,7 @@ export const frenchOnionSoup: farmhand.recipe = convertToRecipe({
     [cheese.id]: 2,
     [salt.id]: 2,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.onion.id] || 0) >= 15 &&
     (state.itemsSold[cheese.id] || 0) >= 10,
   recipeType: recipeType.KITCHEN,
@@ -256,7 +256,7 @@ export const burger: farmhand.recipe = convertToRecipe({
     [items.spinach.id]: 1,
     [items.tomato.id]: 1,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[bread.id] || 0) >= 5 &&
     (state.itemsSold[cheese.id] || 0) >= 5 &&
     (state.itemsSold[items.onion.id] || 0) >= 5 &&
@@ -277,7 +277,7 @@ export const summerSalad: farmhand.recipe = convertToRecipe({
     [items.corn.id]: 1,
     [items.carrot.id]: 1,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.spinach.id] || 0) >= 30 &&
     (state.itemsSold[items.corn.id] || 0) > 5 &&
     (state.itemsSold[items.carrot.id] || 0) > 5,
@@ -293,7 +293,7 @@ export const soyMilk: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.soybean.id]: 20,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.soybean.id] || 0) >= 100,
+  condition: state => (state.itemsSold[items.soybean.id] || 0) >= 100,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -307,7 +307,7 @@ export const chocolateSoyMilk: farmhand.recipe = convertToRecipe({
     [soyMilk.id]: 1,
     [chocolate.id]: 1,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[soyMilk.id] || 0) >= 5 &&
     (state.itemsSold[chocolate.id] || 0) >= 5,
   recipeType: recipeType.KITCHEN,
@@ -322,7 +322,7 @@ export const tofu: farmhand.recipe = convertToRecipe({
   ingredients: {
     [soyMilk.id]: 4,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[soyMilk.id] || 0) >= 20,
+  condition: state => (state.itemsSold[soyMilk.id] || 0) >= 20,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -339,7 +339,7 @@ export const chicknPotPie: farmhand.recipe = convertToRecipe({
     [items.wheat.id]: 12,
     [soyMilk.id]: 3,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[tofu.id] || 0) >= 30 &&
     (state.itemsSold[items.pea.id] || 0) >= 225 &&
     (state.itemsSold[items.carrot.id] || 0) >= 300 &&
@@ -358,7 +358,7 @@ export const hotSauce: farmhand.recipe = convertToRecipe({
     [items.jalapeno.id]: 10,
     [salt.id]: 1,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.jalapeno.id] || 0) >= 50,
+  condition: state => (state.itemsSold[items.jalapeno.id] || 0) >= 50,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -374,7 +374,7 @@ export const salsa: farmhand.recipe = convertToRecipe({
     [items.tomato.id]: 1,
     [items.corn.id]: 1,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.jalapeno.id] || 0) >= 5 &&
     (state.itemsSold[items.onion.id] || 0) >= 5 &&
     (state.itemsSold[items.tomato.id] || 0) >= 5 &&
@@ -392,7 +392,7 @@ export const spicyCheese: farmhand.recipe = convertToRecipe({
     [items.jalapeno.id]: 4,
     [items.milk3.id]: 10,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.jalapeno.id] || 0) >= 20 &&
     (state.itemsSold[items.milk3.id] || 0) >= 50,
   recipeType: recipeType.KITCHEN,
@@ -407,7 +407,7 @@ export const vegetableOil: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.soybean.id]: 350,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.soybean.id] || 0) >= 900,
+  condition: state => (state.itemsSold[items.soybean.id] || 0) >= 900,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -421,7 +421,7 @@ export const friedTofu: farmhand.recipe = convertToRecipe({
     [tofu.id]: 1,
     [vegetableOil.id]: 2,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[tofu.id] || 0) >= 50 &&
     (state.itemsSold[vegetableOil.id] || 0) >= 50,
   recipeType: recipeType.KITCHEN,
@@ -437,7 +437,7 @@ export const spicyPickledGarlic: farmhand.recipe = convertToRecipe({
     [items.jalapeno.id]: 2,
     [items.garlic.id]: 5,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.jalapeno.id] || 0) >= 12 &&
     (state.itemsSold[items.garlic.id] || 0) >= 25,
   recipeType: recipeType.KITCHEN,
@@ -455,7 +455,7 @@ export const garlicFries: farmhand.recipe = convertToRecipe({
     [vegetableOil.id]: 1,
     [salt.id]: 2,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.potato.id] || 0) >= 50 &&
     (state.itemsSold[items.garlic.id] || 0) >= 30,
   recipeType: recipeType.KITCHEN,
@@ -472,7 +472,7 @@ export const garlicBread: farmhand.recipe = convertToRecipe({
     [items.garlic.id]: 5,
     [oliveOil.id]: 1,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[bread.id] || 0) >= 30 &&
     (state.itemsSold[oliveOil.id] || 0) >= 20 &&
     (state.itemsSold[items.garlic.id] || 0) >= 50,
@@ -488,7 +488,7 @@ export const strawberryJam: farmhand.recipe = convertToRecipe({
   ingredients: {
     [items.strawberry.id]: 10,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.strawberry.id] || 0) >= 60,
+  condition: state => (state.itemsSold[items.strawberry.id] || 0) >= 60,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -502,7 +502,7 @@ export const popcorn: farmhand.recipe = convertToRecipe({
     [items.corn.id]: 2,
     [butter.id]: 1,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.corn.id] || 0) >= 12 &&
     (state.itemsSold[butter.id] || 0) >= 6,
   recipeType: recipeType.KITCHEN,
@@ -519,7 +519,7 @@ export const pumpkinPie: farmhand.recipe = convertToRecipe({
     [items.wheat.id]: 10,
     [butter.id]: 2,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.pumpkin.id] || 0) >= 200 &&
     (state.itemsSold[items.wheat.id] || 0) >= 250 &&
     (state.itemsSold[butter.id] || 0) >= 75,
@@ -537,7 +537,7 @@ export const sweetPotatoPie: farmhand.recipe = convertToRecipe({
     [items.wheat.id]: 10,
     [butter.id]: 2,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.sweetPotato.id] || 0) >= 200 &&
     (state.itemsSold[items.wheat.id] || 0) >= 250 &&
     (state.itemsSold[butter.id] || 0) >= 75,
@@ -555,7 +555,7 @@ export const sweetPotatoFries: farmhand.recipe = convertToRecipe({
     [vegetableOil.id]: 1,
     [salt.id]: 1,
   },
-  condition: (state: farmhand.state) => (state.itemsSold[items.sweetPotato.id] || 0) >= 100,
+  condition: state => (state.itemsSold[items.sweetPotato.id] || 0) >= 100,
   recipeType: recipeType.KITCHEN,
 })
 
@@ -572,7 +572,7 @@ export const onionRings: farmhand.recipe = convertToRecipe({
     [soyMilk.id]: 1,
     [salt.id]: 3,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     (state.itemsSold[items.onion.id] || 0) >= 50 &&
     (state.itemsSold[vegetableOil.id] || 0) > 20 &&
     (state.itemsSold[soyMilk.id] || 0) > 20 &&
@@ -590,7 +590,7 @@ export const bronzeIngot: farmhand.recipe = convertToRecipe({
     [items.bronzeOre.id]: 5,
     [items.coal.id]: 5,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.bronzeOre.id] || 0) >= 50,
   recipeType: recipeType.FORGE,
@@ -606,7 +606,7 @@ export const ironIngot: farmhand.recipe = convertToRecipe({
     [items.ironOre.id]: 5,
     [items.coal.id]: 12,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.ironOre.id] || 0) >= 50,
   recipeType: recipeType.FORGE,
@@ -622,7 +622,7 @@ export const silverIngot: farmhand.recipe = convertToRecipe({
     [items.silverOre.id]: 5,
     [items.coal.id]: 8,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.silverOre.id] || 0) >= 50,
   recipeType: recipeType.FORGE,
@@ -638,7 +638,7 @@ export const goldIngot: farmhand.recipe = convertToRecipe({
     [items.goldOre.id]: 5,
     [items.coal.id]: 10,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     state.purchasedSmelter > 0 &&
     (state.itemsSold[items.goldOre.id] || 0) >= 50,
   recipeType: recipeType.FORGE,
@@ -650,7 +650,7 @@ export const compost = convertToRecipe({
   ingredients: {
     [items.weed.id]: 25,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     state.purchasedComposter > 0 &&
     (state.itemsSold[items.weed.id] || 0) >= 100,
   description: 'Can be used to make fertilizer.',
@@ -667,7 +667,7 @@ export const fertilizer: farmhand.item = convertToRecipe({
   ingredients: {
     [compost.id]: 10,
   },
-  condition: (state: farmhand.state) =>
+  condition: state =>
     state.purchasedComposter > 0 && (state.itemsSold[compost.id] || 0) >= 10,
   description: 'Helps crops grow and mature a little faster.',
   enablesFieldMode: fieldMode.FERTILIZE,

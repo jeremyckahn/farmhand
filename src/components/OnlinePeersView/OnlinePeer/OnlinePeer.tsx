@@ -12,8 +12,6 @@ import { getPlayerName, integerString } from '../../../utils/index.js'
 
 const OnlinePeer = ({
   peer: { cowOfferedForTrade, dayCount, playerId, experience, money },
-}: {
-  peer: farmhand.peerMetadata
 }) => {
   return (
     <li>
