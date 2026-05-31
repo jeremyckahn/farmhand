@@ -125,7 +125,7 @@ const OnlineControls = ({
                 onChange={(_, checked) => {
                   handleSwitchChange(checked)
                 }}
-                name="use-alternate-end-day-button-position"
+                name="play-online"
               />
             }
             label="Play online"
