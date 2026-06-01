@@ -20,7 +20,7 @@ export const changeCowAutomaticHugState = (
     }
   }
 
-  state = modifyCow(state, cow.id, updatedCow => ({
+  state = modifyCow(state, cow.id, (updatedCow: farmhand.cow) => ({
     ...updatedCow,
     isUsingHuggingMachine: doUseHuggingMachine,
   }))

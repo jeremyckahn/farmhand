@@ -3,6 +3,8 @@ import { findInField } from '../../utils/findInField.js'
 
 import { randomNumberService } from '../../common/services/randomNumber.js'
 
+import { testState, testCrop } from '../../test-utils/index.js'
+
 import { applyCrows, forEachPlot } from './applyCrows.js'
 
 const CARROT = 'carrot'
@@ -12,17 +14,17 @@ beforeEach(() => {
 })
 
 describe('applyCrows', () => {
-  let state
+  let state: farmhand.state
 
-  const addToField = itemId => state.field[0].push({ itemId })
-  const findCarrot = plot => plot?.itemId === CARROT
+  const addToField = (itemId: string) => state.field[0].push(testCrop({ itemId }))
+  const findCarrot = (plot: farmhand.plotContent | null) => plot?.itemId === CARROT
 
   beforeEach(() => {
-    state = {
+    state = testState({
       field: [[]],
       purchasedField: 0,
       newDayNotifications: [],
-    }
+    })
 
     addToField(CARROT)
 

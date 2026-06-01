@@ -176,7 +176,7 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
     ).filter(key => key !== 'constructor')
 
     for (const reducerName of reducerNames) {
-      const reducer = reducers[reducerName]
+      const reducer = reducers[reducerName as keyof typeof reducers] as any
 
       if (
         import.meta.env?.MODE === 'development' &&

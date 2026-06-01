@@ -32,8 +32,9 @@ export const upgradeTool = (
   state = addItemToInventory(state, upgrade, 1)
 
   const currentName =
-    upgrades[upgrade.toolType][state.toolLevels[upgrade.toolType]].name
-  state.toolLevels[upgrade.toolType] = upgrade.level
+    // @ts-expect-error - implicit any, fix behavior if needed
+    upgrades[upgrade.toolType as keyof typeof upgrades][state.toolLevels[upgrade.toolType] as keyof typeof upgrades[keyof typeof upgrades]].name
+  state.toolLevels[upgrade.toolType] = upgrade.level as farmhand.toolLevel
 
   state = showNotification(
     state,

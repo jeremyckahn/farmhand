@@ -1,17 +1,19 @@
 import { experienceNeededForLevel } from '../../utils/index.js'
 
+import { testState } from '../../test-utils/index.js'
+
 import { addExperience } from './addExperience.js'
 
 describe('addExperience', () => {
-  let gameState
+  let gameState: farmhand.state
 
   beforeEach(() => {
-    gameState = {
+    gameState = testState({
       experience: 0,
       inventory: [],
       showNotifications: true,
       todaysNotifications: [],
-    }
+    })
   })
 
   it('adds experience to current experience', () => {

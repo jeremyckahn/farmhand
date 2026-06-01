@@ -21,7 +21,7 @@ export const makeRecipe = (
     state,
     recipe,
     howMany,
-    EXPERIENCE_FOR_RECIPE[recipe.recipeType] || 0
+    EXPERIENCE_FOR_RECIPE[recipe.recipeType as keyof typeof EXPERIENCE_FOR_RECIPE] || 0
   )
 
   // Only add to inventory if ingredient processing was successful

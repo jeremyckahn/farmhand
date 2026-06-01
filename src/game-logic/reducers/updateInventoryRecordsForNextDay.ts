@@ -3,7 +3,7 @@ export const updateInventoryRecordsForNextDay = (
 ): farmhand.state => ({
   ...state,
   todaysPurchases: {},
-  todaysStartingInventory: state.inventory.reduce((acc, { id, quantity }) => {
+  todaysStartingInventory: state.inventory.reduce((acc: Record<string, number>, { id, quantity }) => {
     acc[id] = quantity
     return acc
   }, {}),

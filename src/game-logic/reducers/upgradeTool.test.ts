@@ -6,7 +6,7 @@ import upgrades from '../../data/upgrades.js'
 import { upgradeTool } from './upgradeTool.js'
 
 describe('upgradeTool', () => {
-  let state
+  let state: farmhand.state
 
   beforeEach(() => {
     state = testState({
@@ -34,7 +34,7 @@ describe('upgradeTool', () => {
         value: 0,
         doesPriceFluctuate: false,
       }
-      const result = upgradeTool(state, upgrade)
+      const result = upgradeTool(state, upgrade as farmhand.upgradesMetadatum)
       expect(result).toBe(state)
     })
 
@@ -47,7 +47,7 @@ describe('upgradeTool', () => {
         value: 0,
         doesPriceFluctuate: false,
       }
-      const result = upgradeTool(state, upgrade)
+      const result = upgradeTool(state, upgrade as farmhand.upgradesMetadatum)
       expect(result).toBe(state)
     })
 
@@ -136,7 +136,7 @@ describe('upgradeTool', () => {
         doesPriceFluctuate: false,
       }
 
-      const result = upgradeTool(state, upgradeWithoutIngredients)
+      const result = upgradeTool(state, upgradeWithoutIngredients as farmhand.upgradesMetadatum)
 
       expect(result.toolLevels[toolType.HOE]).toBe(toolLevel.BRONZE)
       expect(result.experience).toBe(EXPERIENCE_VALUES.FORGE_RECIPE_MADE)
