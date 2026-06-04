@@ -136,7 +136,10 @@ describe('upgradeTool', () => {
         doesPriceFluctuate: false,
       }
 
-      const result = upgradeTool(state, upgradeWithoutIngredients as farmhand.upgradesMetadatum)
+      const result = upgradeTool(
+        state,
+        upgradeWithoutIngredients as farmhand.upgradesMetadatum
+      )
 
       expect(result.toolLevels[toolType.HOE]).toBe(toolLevel.BRONZE)
       expect(result.experience).toBe(EXPERIENCE_VALUES.FORGE_RECIPE_MADE)

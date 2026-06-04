@@ -1,18 +1,21 @@
 const decrementPriceEventDays = (
   priceEvents: Partial<Record<string, farmhand.priceEvent>>
 ): Partial<Record<string, farmhand.priceEvent>> =>
-  Object.keys(priceEvents).reduce((acc: Partial<Record<string, farmhand.priceEvent>>, key) => {
-    const priceEvent = priceEvents[key]
-    if (!priceEvent) return acc
+  Object.keys(priceEvents).reduce(
+    (acc: Partial<Record<string, farmhand.priceEvent>>, key) => {
+      const priceEvent = priceEvents[key]
+      if (!priceEvent) return acc
 
-    const { itemId, daysRemaining } = priceEvent
+      const { itemId, daysRemaining } = priceEvent
 
-    if (daysRemaining > 1) {
-      acc[key] = { itemId, daysRemaining: daysRemaining - 1 }
-    }
+      if (daysRemaining > 1) {
+        acc[key] = { itemId, daysRemaining: daysRemaining - 1 }
+      }
 
-    return acc
-  }, {})
+      return acc
+    },
+    {}
+  )
 
 export const updatePriceEvents = (state: farmhand.state): farmhand.state => {
   const { priceCrashes, priceSurges } = state

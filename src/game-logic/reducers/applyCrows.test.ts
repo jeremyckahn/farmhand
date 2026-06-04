@@ -16,8 +16,10 @@ beforeEach(() => {
 describe('applyCrows', () => {
   let state: farmhand.state
 
-  const addToField = (itemId: string) => state.field[0].push(testCrop({ itemId }))
-  const findCarrot = (plot: farmhand.plotContent | null) => plot?.itemId === CARROT
+  const addToField = (itemId: string) =>
+    state.field[0].push(testCrop({ itemId }))
+  const findCarrot = (plot: farmhand.plotContent | null) =>
+    plot?.itemId === CARROT
 
   beforeEach(() => {
     state = testState({
