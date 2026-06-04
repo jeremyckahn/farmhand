@@ -176,15 +176,18 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
     ).filter(key => key !== 'constructor')
 
     for (const reducerName of reducerNames) {
-      const reducer = reducers[reducerName as keyof typeof reducers] as any
+      const reducer = reducers[reducerName as keyof typeof reducers] as
+        | ((state: farmhand.state, ...args: any[]) => farmhand.state)
+        | undefined
 
-      if (
-        import.meta.env?.MODE === 'development' &&
-        typeof reducer === 'undefined'
-      ) {
-        throw new Error(
-          `Reducer ${reducerName} is not exported from reducers/index.js`
-        )
+      if (!reducer) {
+        if (import.meta.env?.MODE === 'development') {
+          throw new Error(
+            `Reducer ${reducerName} is not exported from reducers/index.js`
+          )
+        }
+
+        continue
       }
 
       // Bind the reducer to this class instance

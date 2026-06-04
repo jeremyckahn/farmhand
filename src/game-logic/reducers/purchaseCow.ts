@@ -36,7 +36,7 @@ export const purchaseCow = (
     ...state,
     cowColorsPurchased: {
       ...cowColorsPurchased,
-      [color as farmhand.cowColors]: (cowColorsPurchased[color as farmhand.cowColors] || 0) + 1,
+      [color]: (cowColorsPurchased[color] || 0) + 1,
     },
     money: moneyTotal(money, -cowValue),
     cowForSale: generateCow(),
