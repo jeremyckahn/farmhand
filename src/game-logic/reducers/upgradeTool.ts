@@ -35,7 +35,7 @@ export const upgradeTool = (
   const currentLevel = state.toolLevels[upgrade.toolType]
   const currentUpgrade = toolUpgrades?.[currentLevel]
   const currentName = currentUpgrade?.name || ''
-  state.toolLevels[upgrade.toolType] = upgrade.level as farmhand.toolLevel
+  state.toolLevels[upgrade.toolType] = upgrade.level
 
   state = showNotification(
     state,

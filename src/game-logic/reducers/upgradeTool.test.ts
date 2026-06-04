@@ -39,7 +39,7 @@ describe('upgradeTool', () => {
     })
 
     test('returns state unchanged when upgrade lacks level', () => {
-      const upgrade = {
+      const upgrade: farmhand.upgradesMetadatum = {
         id: 'test',
         name: 'Test',
         toolType: toolType.HOE,
@@ -47,7 +47,7 @@ describe('upgradeTool', () => {
         value: 0,
         doesPriceFluctuate: false,
       }
-      const result = upgradeTool(state, upgrade as farmhand.upgradesMetadatum)
+      const result = upgradeTool(state, upgrade)
       expect(result).toBe(state)
     })
 
@@ -126,7 +126,7 @@ describe('upgradeTool', () => {
 
     test('handles upgrade with no ingredients', () => {
       // Create a mock upgrade with no ingredients
-      const upgradeWithoutIngredients = {
+      const upgradeWithoutIngredients: farmhand.upgradesMetadatum = {
         id: 'test-upgrade',
         toolType: toolType.HOE,
         level: toolLevel.BRONZE,
@@ -136,10 +136,7 @@ describe('upgradeTool', () => {
         doesPriceFluctuate: false,
       }
 
-      const result = upgradeTool(
-        state,
-        upgradeWithoutIngredients as farmhand.upgradesMetadatum
-      )
+      const result = upgradeTool(state, upgradeWithoutIngredients)
 
       expect(result.toolLevels[toolType.HOE]).toBe(toolLevel.BRONZE)
       expect(result.experience).toBe(EXPERIENCE_VALUES.FORGE_RECIPE_MADE)
