@@ -1,4 +1,12 @@
 {
   "extends": "../../../tsconfig.json",
-  "compilerOptions": { "noImplicitAny": true }
+  "compilerOptions": { "noImplicitAny": false },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "../../farmhand.d.ts",
+    "../../fontsource.d.ts",
+    "../../react-app-env.d.ts",
+    "../../setupTests.ts"
+  ]
 }
