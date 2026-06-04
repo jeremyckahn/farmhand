@@ -6,7 +6,7 @@ import upgrades from '../../data/upgrades.js'
 import { upgradeTool } from './upgradeTool.js'
 
 describe('upgradeTool', () => {
-  let state
+  let state: farmhand.state
 
   beforeEach(() => {
     state = testState({
@@ -26,7 +26,7 @@ describe('upgradeTool', () => {
 
   describe('validation', () => {
     test('returns state unchanged when upgrade lacks toolType', () => {
-      const upgrade = {
+      const upgrade: farmhand.upgradesMetadatum = {
         id: 'test',
         name: 'Test',
         level: toolLevel.BRONZE,
@@ -39,7 +39,7 @@ describe('upgradeTool', () => {
     })
 
     test('returns state unchanged when upgrade lacks level', () => {
-      const upgrade = {
+      const upgrade: farmhand.upgradesMetadatum = {
         id: 'test',
         name: 'Test',
         toolType: toolType.HOE,
@@ -126,7 +126,7 @@ describe('upgradeTool', () => {
 
     test('handles upgrade with no ingredients', () => {
       // Create a mock upgrade with no ingredients
-      const upgradeWithoutIngredients = {
+      const upgradeWithoutIngredients: farmhand.upgradesMetadatum = {
         id: 'test-upgrade',
         toolType: toolType.HOE,
         level: toolLevel.BRONZE,

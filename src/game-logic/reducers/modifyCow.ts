@@ -5,7 +5,7 @@
 export const modifyCow = (
   state: farmhand.state,
   cowId: string,
-  fn: Function
+  fn: (cow: farmhand.cow) => Partial<farmhand.cow>
 ): farmhand.state => {
   const cowInventory = [...state.cowInventory]
 

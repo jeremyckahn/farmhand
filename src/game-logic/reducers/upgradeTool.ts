@@ -31,8 +31,10 @@ export const upgradeTool = (
   // Add the upgrade object to inventory
   state = addItemToInventory(state, upgrade, 1)
 
-  const currentName =
-    upgrades[upgrade.toolType][state.toolLevels[upgrade.toolType]].name
+  const toolUpgrades = upgrades[upgrade.toolType]
+  const currentLevel = state.toolLevels[upgrade.toolType]
+  const currentUpgrade = toolUpgrades?.[currentLevel]
+  const currentName = currentUpgrade?.name || ''
   state.toolLevels[upgrade.toolType] = upgrade.level
 
   state = showNotification(

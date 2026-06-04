@@ -1,9 +1,9 @@
-import { testItem, testState } from '../../test-utils/index.js'
+import { testState } from '../../test-utils/index.js'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 
 describe('decrementItemFromInventory', () => {
-  let updatedState
+  let updatedState: farmhand.state
 
   describe('item is not in inventory', () => {
     beforeEach(() => {

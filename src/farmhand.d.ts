@@ -176,7 +176,7 @@ declare namespace farmhand {
 
   interface cow {
     baseWeight: number
-    color: string
+    color: cowColors
     colorsInBloodline: Record<cowColors, boolean>
     daysOld: number
     daysSinceMilking: number
