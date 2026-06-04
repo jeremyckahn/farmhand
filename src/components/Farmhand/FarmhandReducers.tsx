@@ -191,7 +191,7 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
       }
 
       // Bind the reducer to this class instance
-      ;(this as any)[reducerName] = (...args: any[]) => {
+      this[reducerName] = (...args: any[]) => {
         this.setState((state: FarmhandState) => reducer(state, ...args))
       }
     }

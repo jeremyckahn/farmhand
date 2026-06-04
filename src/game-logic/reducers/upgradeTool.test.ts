@@ -26,7 +26,7 @@ describe('upgradeTool', () => {
 
   describe('validation', () => {
     test('returns state unchanged when upgrade lacks toolType', () => {
-      const upgrade = {
+      const upgrade: farmhand.upgradesMetadatum = {
         id: 'test',
         name: 'Test',
         level: toolLevel.BRONZE,
@@ -34,7 +34,7 @@ describe('upgradeTool', () => {
         value: 0,
         doesPriceFluctuate: false,
       }
-      const result = upgradeTool(state, upgrade as farmhand.upgradesMetadatum)
+      const result = upgradeTool(state, upgrade)
       expect(result).toBe(state)
     })
 
