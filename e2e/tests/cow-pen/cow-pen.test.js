@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 import { loadFixture } from '../../test-utils/load-fixture.js'
 
-test('should purchase a cow pen and a cow', async ({ page }) => {
+test('should purchase a cow pen and a cow, and verify hugging works', async ({ page }) => {
   // The crops-mature fixture has > $100k
   await loadFixture(page, 'crops-mature')
 
@@ -21,10 +21,22 @@ test('should purchase a cow pen and a cow', async ({ page }) => {
   await page.getByRole('option', { name: ': Cows' }).click()
 
   // Buy the cow for sale
-  // We expect a cow card "For sale" with a "Buy" button
   await page.getByRole('button', { name: 'Buy' }).first().click()
 
   // Assert that we can Hug and Sell the purchased cow in the context menu
-  await expect(page.getByRole('button', { name: 'Hug' })).toBeVisible()
+  const hugButton = page.getByRole('button', { name: 'Hug' })
+  await expect(hugButton).toBeVisible()
   await expect(page.getByRole('button', { name: 'Sell' })).toBeVisible()
+
+  // In CowPen.sass, the animation heart has the class `.fa-heart.animation`.
+  // When a cow is hugged, the class `.is-animating` is added to it: `.fa-heart.animation.is-animating`
+  // We can just verify this element exists in the DOM after clicking "Hug".
+  const animatingHeart = page.locator('.fa-heart.animation.is-animating').first()
+
+  // Click hug
+  await hugButton.click()
+
+  // Wait for the animation heart to show up
+  await animatingHeart.waitFor({ state: 'attached' })
+  await expect(animatingHeart).toBeAttached()
 })
