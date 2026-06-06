@@ -13,7 +13,9 @@ describe('updateAchievements', () => {
             name: 'Test Achievement',
             description: '',
             rewardDescription: '',
+            // TODO: Avoid using explicit any here in the future
             condition: (state: any) => !state.conditionSatisfied,
+            // TODO: Avoid using explicit any here in the future
             reward: (state: any) => ({ ...state, conditionSatisfied: true }),
           },
         ],
