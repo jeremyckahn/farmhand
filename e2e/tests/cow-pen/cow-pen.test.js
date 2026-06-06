@@ -21,7 +21,7 @@ test('should purchase a cow pen and a cow, and verify hugging works', async ({ p
   await page.getByRole('option', { name: ': Cows' }).click()
 
   // Buy the cow for sale
-  await page.getByRole('button', { name: 'Buy' }).first().click()
+  await page.locator('.CowPenContextMenu').getByRole('button', { name: 'Buy' }).first().click()
 
   // Assert that we can Hug and Sell the purchased cow in the context menu
   const hugButton = page.getByRole('button', { name: 'Hug' })
