@@ -2,18 +2,19 @@ import { EXPERIENCE_VALUES, PURCHASEABLE_COMPOSTERS } from '../../constants.js'
 import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings.js'
 
 import { purchaseComposter } from './purchaseComposter.js'
+import { testState } from '../../test-utils/index.js'
 
 describe('purchaseComposter', () => {
-  let gameState, newState
+  let gameState: farmhand.state, newState: farmhand.state
 
   beforeEach(() => {
-    gameState = {
+    gameState = testState({
       experience: 0,
       money: PURCHASEABLE_COMPOSTERS.get(1)?.price ?? 0,
       purchasedComposter: 0,
       todaysNotifications: [],
-      itemsSold: [],
-    }
+      itemsSold: {},
+    })
   })
 
   describe('successful purchase', () => {

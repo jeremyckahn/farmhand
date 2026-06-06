@@ -4,18 +4,19 @@ import { fieldMode } from '../../enums.js'
 import { getPlotContentFromItemId } from '../../utils/index.js'
 
 import { setSprinkler } from './setSprinkler.js'
+import { testState } from '../../test-utils/index.js'
 
 describe('setSprinkler', () => {
-  let state
+  let state: farmhand.state
 
   beforeEach(() => {
-    state = {
+    state = testState({
       field: [[null]],
       fieldMode: fieldMode.SET_SPRINKLER,
-      inventory: [testItem({ id: 'sprinkler', quantity: 1 })],
+      inventory: [{ id: 'sprinkler', quantity: 1 }],
       itemsSold: {},
       selectedItemId: SPRINKLER_ITEM_ID,
-    }
+    })
   })
 
   describe('plot is not empty', () => {
@@ -37,7 +38,7 @@ describe('setSprinkler', () => {
     describe('multiple sprinkler units remaining', () => {
       test('updates state', () => {
         const { fieldMode: newFieldMode, selectedItemId } = setSprinkler(
-          { ...state, inventory: [testItem({ id: 'sprinkler', quantity: 2 })] },
+          { ...state, inventory: [{ id: 'sprinkler', quantity: 2 }] },
           0,
           0
         )

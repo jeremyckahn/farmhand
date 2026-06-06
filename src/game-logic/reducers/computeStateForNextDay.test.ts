@@ -7,7 +7,7 @@ import { computeStateForNextDay } from './computeStateForNextDay.js'
 vitest.mock('../../data/maps.js')
 
 describe('computeStateForNextDay', () => {
-  let state
+  let state: farmhand.state
 
   beforeEach(() => {
     vitest.spyOn(Math, 'random').mockReturnValue(0.75)
@@ -39,7 +39,7 @@ describe('computeStateForNextDay', () => {
       record7dayProfitAverage: 0,
       recordProfitabilityStreak: 0,
       todaysNotifications: [{ message: 'some message', severity: 'info' }],
-    }
+    } as unknown as farmhand.state
   })
 
   test('computes state for next day', () => {

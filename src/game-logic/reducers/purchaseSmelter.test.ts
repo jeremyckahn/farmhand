@@ -2,18 +2,19 @@ import { EXPERIENCE_VALUES, PURCHASEABLE_SMELTERS } from '../../constants.js'
 import { FORGE_AVAILABLE_NOTIFICATION } from '../../strings.js'
 
 import { purchaseSmelter } from './purchaseSmelter.js'
+import { testState } from '../../test-utils/index.js'
 
 describe('purchaseSmelter', () => {
-  let gameState, newState
+  let gameState: farmhand.state, newState: farmhand.state
 
   beforeEach(() => {
-    gameState = {
+    gameState = testState({
       experience: 0,
       money: PURCHASEABLE_SMELTERS.get(1)?.price ?? 0,
       purchasedSmelter: 0,
       todaysNotifications: [],
-      itemsSold: [],
-    }
+      itemsSold: {},
+    })
   })
 
   describe('successful purchase', () => {

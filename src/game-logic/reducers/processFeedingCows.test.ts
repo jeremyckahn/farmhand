@@ -6,17 +6,18 @@ import {
 } from '../../constants.js'
 
 import { generateCow } from '../../utils/index.js'
+import { testState } from '../../test-utils/index.js'
 
 import { processFeedingCows } from './processFeedingCows.js'
 
 describe('processFeedingCows', () => {
-  let state
+  let state: farmhand.state
 
   beforeEach(() => {
-    state = {
+    state = testState({
       cowInventory: [],
       inventory: [],
-    }
+    })
   })
 
   describe('player has no cow feed', () => {

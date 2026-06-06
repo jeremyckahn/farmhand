@@ -7,7 +7,7 @@ import { testState, testCrop } from '../../test-utils/index.js'
 import { minePlot } from './minePlot.js'
 
 describe('minePlot', () => {
-  let gameState
+  let gameState: farmhand.state
 
   beforeAll(() => {
     vitest.spyOn(randomNumberService, 'generateRandomNumber').mockReturnValue(1)
@@ -33,15 +33,15 @@ describe('minePlot', () => {
   })
 
   test('updates the plot to be shoveled if the plot is empty', () => {
-    expect(gameState.field[0][0].isShoveled).toEqual(true)
+    expect(gameState.field[0][0]?.isShoveled).toEqual(true)
   })
 
   test('sets the oreId on the plot if ore was spawned', () => {
-    expect(gameState.field[0][0].oreId).toEqual(goldOre.id)
+    expect(gameState.field[0][0]?.oreId).toEqual(goldOre.id)
   })
 
   test('sets the days until clear', () => {
-    expect(gameState.field[0][0].daysUntilClear).toEqual(12)
+    expect(gameState.field[0][0]?.daysUntilClear).toEqual(12)
   })
 
   test('adds the spawned ore to the inventory', () => {
