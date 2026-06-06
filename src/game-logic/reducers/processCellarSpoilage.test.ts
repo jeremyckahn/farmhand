@@ -2,6 +2,7 @@ import { randomNumberService } from '../../common/services/randomNumber.js'
 import { wineTempranillo } from '../../data/recipes.js'
 import { KEG_SPOILED_MESSAGE } from '../../templates.js'
 import { getKegStub } from '../../test-utils/stubs/getKegStub.js'
+import { testState } from '../../test-utils/index.js'
 
 import { processCellarSpoilage } from './processCellarSpoilage.js'
 
@@ -15,10 +16,12 @@ describe('processCellarSpoilage', () => {
     const cellarInventory = [keg]
     const newDayNotifications: farmhand.notification[] = []
 
-    const expectedState = processCellarSpoilage({
-      cellarInventory,
-      newDayNotifications,
-    } as any)
+    const expectedState = processCellarSpoilage(
+      testState({
+        cellarInventory,
+        newDayNotifications,
+      })
+    )
 
     expect(expectedState.cellarInventory).toHaveLength(1)
   })
@@ -32,10 +35,12 @@ describe('processCellarSpoilage', () => {
     const cellarInventory = [keg]
     const newDayNotifications: farmhand.notification[] = []
 
-    const expectedState = processCellarSpoilage({
-      cellarInventory,
-      newDayNotifications,
-    } as any)
+    const expectedState = processCellarSpoilage(
+      testState({
+        cellarInventory,
+        newDayNotifications,
+      })
+    )
 
     expect(expectedState.cellarInventory).toHaveLength(0)
   })
@@ -49,10 +54,12 @@ describe('processCellarSpoilage', () => {
     const cellarInventory = [keg]
     const newDayNotifications: farmhand.notification[] = []
 
-    const expectedState = processCellarSpoilage({
-      cellarInventory,
-      newDayNotifications,
-    } as any)
+    const expectedState = processCellarSpoilage(
+      testState({
+        cellarInventory,
+        newDayNotifications,
+      })
+    )
 
     expect(expectedState.cellarInventory).toHaveLength(1)
   })
@@ -66,10 +73,12 @@ describe('processCellarSpoilage', () => {
     const cellarInventory = [keg]
     const newDayNotifications: farmhand.notification[] = []
 
-    const expectedState = processCellarSpoilage({
-      cellarInventory,
-      newDayNotifications,
-    } as any)
+    const expectedState = processCellarSpoilage(
+      testState({
+        cellarInventory,
+        newDayNotifications,
+      })
+    )
 
     expect(expectedState.newDayNotifications).toEqual([
       {
