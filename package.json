@@ -12,7 +12,7 @@
   "scripts": {
     "build": "npm run build:api && vite build",
     "build:native": "npm run build -- --base='./' && electron-builder --publish=always",
-    "check:types": "tsc && tsc -p src/game-logic/reducers/tsconfig.json",
+    "check:types": "tsc",
     "dev": "mprocs \"cross-env VITE_TRACKER_URL='ws://localhost:8000' npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run start:tracker\"",
     "dev:native": "mprocs \"BROWSER=none npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run electron\"",
     "e2e": "gh act --secret GITHUB_TOKEN=\"$(gh auth token)\" --secret VERCEL_TOKEN=\"${VERCEL_TOKEN:-$(jq .token ~/.local/share/com.vercel.cli/auth.json)}\" -j e2e",
