@@ -1,18 +1,22 @@
-import { shapeOf, testCrop } from '../../test-utils/index.js'
+import { shapeOf, testCrop, testState } from '../../test-utils/index.js'
 import { generateCow } from '../../utils/index.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'
+import { randomNumberService } from '../../common/services/randomNumber.js'
 
 import { computeStateForNextDay } from './computeStateForNextDay.js'
 
 vitest.mock('../../data/maps.js')
 
 describe('computeStateForNextDay', () => {
-  let state
+  let state: farmhand.state
 
   beforeEach(() => {
     vitest.spyOn(Math, 'random').mockReturnValue(0.75)
+    vitest
+      .spyOn(randomNumberService, 'isRandomNumberLessThan')
+      .mockReturnValue(true)
 
-    state = {
+    state = testState({
       cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       dayCount: 1,
       field: [
@@ -23,23 +27,8 @@ describe('computeStateForNextDay', () => {
           }),
         ],
       ],
-      cellarInventory: [],
-      cowInventory: [],
-      experience: 0,
-      historicalDailyLosses: [],
-      historicalDailyRevenue: [],
-      inventory: [],
-      itemsSold: {},
-      loanBalance: 0,
-      newDayNotifications: [],
-      notificationLog: [],
-      priceCrashes: {},
-      priceSurges: {},
-      profitabilityStreak: 0,
-      record7dayProfitAverage: 0,
-      recordProfitabilityStreak: 0,
       todaysNotifications: [{ message: 'some message', severity: 'info' }],
-    }
+    })
   })
 
   test('computes state for next day', () => {

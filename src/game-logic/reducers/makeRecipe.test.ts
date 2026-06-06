@@ -41,7 +41,7 @@ describe('makeRecipe', () => {
   })
 
   describe('experience', () => {
-    let state
+    let state: farmhand.state
 
     beforeEach(() => {
       state = testState({

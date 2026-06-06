@@ -5,19 +5,20 @@ import {
 } from '../../constants.js'
 import { genders, standardCowColors } from '../../enums.js'
 import { generateCow, getCowFertilizerItem } from '../../utils/index.js'
+import { testState } from '../../test-utils/index.js'
 
 import { processCowFertilizerProduction } from './processCowFertilizerProduction.js'
 
 describe('processCowFertilizerProduction', () => {
-  let state
+  let state: farmhand.state
 
   beforeEach(() => {
-    state = {
+    state = testState({
       cowInventory: [],
       inventory: [],
       inventoryLimit: INFINITE_STORAGE_LIMIT,
       newDayNotifications: [],
-    }
+    })
   })
 
   describe('cow should not produce fertilizer', () => {

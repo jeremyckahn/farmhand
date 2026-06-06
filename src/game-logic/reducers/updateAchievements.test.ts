@@ -13,8 +13,12 @@ describe('updateAchievements', () => {
             name: 'Test Achievement',
             description: '',
             rewardDescription: '',
-            condition: state => !state.conditionSatisfied,
-            reward: state => ({ ...state, conditionSatisfied: true }),
+            condition: (
+              state: farmhand.state & { conditionSatisfied?: boolean }
+            ) => !state.conditionSatisfied,
+            reward: (
+              state: farmhand.state & { conditionSatisfied?: boolean }
+            ) => ({ ...state, conditionSatisfied: true }),
           },
         ],
       }

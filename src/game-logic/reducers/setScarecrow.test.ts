@@ -3,18 +3,20 @@ import { SCARECROW_ITEM_ID } from '../../constants.js'
 import { fieldMode } from '../../enums.js'
 import { getPlotContentFromItemId } from '../../utils/index.js'
 
+import { testState } from '../../test-utils/index.js'
+
 import { setScarecrow } from './setScarecrow.js'
 
 describe('setScarecrow', () => {
-  let state
+  let state: farmhand.state
 
   beforeEach(() => {
-    state = {
+    state = testState({
       field: [[null]],
       fieldMode: fieldMode.SET_SCARECROW,
-      inventory: [testItem({ id: 'scarecrow', quantity: 1 })],
+      inventory: [{ id: 'scarecrow', quantity: 1 }],
       selectedItemId: SCARECROW_ITEM_ID,
-    }
+    })
   })
 
   describe('plot is not empty', () => {
@@ -35,7 +37,7 @@ describe('setScarecrow', () => {
     describe('multiple scarecrow units remaining', () => {
       test('updates state', () => {
         const { fieldMode: newFieldMode, selectedItemId } = setScarecrow(
-          { ...state, inventory: [testItem({ id: 'scarecrow', quantity: 2 })] },
+          { ...state, inventory: [{ id: 'scarecrow', quantity: 2 }] },
           0,
           0
         )
