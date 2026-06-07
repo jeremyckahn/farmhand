@@ -71,10 +71,30 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
   const [spawnIntervalMs, setSpawnIntervalMs] = useState(initialSpawnIntervalMs)
   // The timestamp of the last scheduled tumbleweed spawn.
   const [lastSpawnScheduledTs, setLastSpawnScheduledTs] = useState(0)
+  // Forces a re-render once the current spawn interval elapses to check for next spawn.
+  const [tick, setTick] = useState(0)
 
   const activeTimeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(
     new Set()
   )
+
+  // Trigger a re-render when the next spawn interval has elapsed.
+  useEffect(() => {
+    if (!doSpawn) {
+      return
+    }
+
+    const timeUntilNextSpawn = Math.max(
+      0,
+      spawnIntervalMs - (Date.now() - lastSpawnScheduledTs)
+    )
+
+    const timer = setTimeout(() => {
+      setTick(t => t + 1)
+    }, timeUntilNextSpawn)
+
+    return () => clearTimeout(timer)
+  }, [doSpawn, lastSpawnScheduledTs, spawnIntervalMs])
 
   // Adds a new tumbleweed to the list.
   const spawnTumbleweed = useCallback(() => {
@@ -132,7 +152,7 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
     setSpawnIntervalMs(
       oldSpawnIntervalMs => oldSpawnIntervalMs - spawnIntervalDecrementAmountMs
     )
-  }, [doSpawn, lastSpawnScheduledTs, scheduleSpawn, spawnIntervalMs])
+  }, [doSpawn, lastSpawnScheduledTs, scheduleSpawn, spawnIntervalMs, tick])
 
   useEffect(() => {
     const activeTimeouts = activeTimeoutsRef.current
