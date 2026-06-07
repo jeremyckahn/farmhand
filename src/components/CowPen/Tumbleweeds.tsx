@@ -1,6 +1,5 @@
 import { Box } from '@mui/material'
-import { useCallback, useEffect, useState } from 'react'
-import { useDebounceCallback } from 'usehooks-ts'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import { v4 } from 'uuid'
 
 import { items } from '../../img/index.js'
@@ -73,32 +72,42 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
   // The timestamp of the last scheduled tumbleweed spawn.
   const [lastSpawnScheduledTs, setLastSpawnScheduledTs] = useState(0)
 
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   // Adds a new tumbleweed to the list.
-  const spawnTumbleweed = () => {
+  const spawnTumbleweed = useCallback(() => {
     setTumbleweeds(oldTumbleweeds => [...oldTumbleweeds, v4()])
-  }
+  }, [])
 
   // Randomize the spawn time a bit to prevent unnatural bunching of
   // tumbleweeds that can occur when the page loses focus due the behavior of
   // CSS animation timers in unfocused pages:
   // https://g.co/gemini/share/ff1ee997e30c
-  const scheduleSpawnMs = scaleNumber(
-    randomNumberService.generateRandomNumber(),
-    0,
-    1,
-    0,
-    spawnIntervalMs
-  )
+  const scheduleSpawn = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
 
-  const scheduleSpawn = useDebounceCallback(spawnTumbleweed, scheduleSpawnMs, {
-    trailing: true,
-  })
+    const scheduleSpawnMs = scaleNumber(
+      randomNumberService.generateRandomNumber(),
+      0,
+      1,
+      0,
+      spawnIntervalMs
+    )
+
+    timeoutRef.current = setTimeout(() => {
+      spawnTumbleweed()
+    }, scheduleSpawnMs)
+  }, [spawnIntervalMs, spawnTumbleweed])
 
   // This effect manages the spawning logic.
   useEffect(() => {
     if (!doSpawn) {
       setSpawnIntervalMs(initialSpawnIntervalMs)
-      scheduleSpawn.cancel()
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
 
       return
     }
@@ -126,8 +135,12 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
   }, [doSpawn, lastSpawnScheduledTs, scheduleSpawn, spawnIntervalMs])
 
   useEffect(() => {
-    return () => scheduleSpawn.cancel()
-  }, [scheduleSpawn])
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   /**
    * Removes a tumbleweed from the list after its animation is complete.

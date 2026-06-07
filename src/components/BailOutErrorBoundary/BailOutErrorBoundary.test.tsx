@@ -20,14 +20,15 @@ test('renders children when there is no error', () => {
 })
 
 // Suppress JSDOM uncaught error logs for intentionally thrown errors in the test boundary
-let originalReportException: any;
+const errorHandler = (e: Event) => {
+  e.preventDefault()
+}
 beforeAll(() => {
-  originalReportException = window.addEventListener;
-  window.addEventListener('error', (e) => { e.preventDefault(); });
-});
+  window.addEventListener('error', errorHandler)
+})
 afterAll(() => {
-  window.addEventListener = originalReportException;
-});
+  window.removeEventListener('error', errorHandler)
+})
 
 test('renders nothing when there is an error', () => {
   // Suppress console.error for this test
