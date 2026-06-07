@@ -242,7 +242,9 @@ describe('Plot component', () => {
         />
       )
       const img = screen.getByRole('img')
-      expect(img.style.backgroundImage).toBe(`url(${image})`)
+      expect(img.style.backgroundImage).toMatch(
+        /^url\(["']?data:image\/png;base64,some-other-image["']?\)$/
+      )
     })
   })
 
@@ -251,8 +253,8 @@ describe('Plot component', () => {
       test('renders no background image', () => {
         render(<Plot {...defaultProps} />)
         const img = screen.getByRole('img')
-        const plotElement = img.closest('.Plot')
-        expect(plotElement).toHaveStyle('background-image: ""')
+        const plotElement = img.closest('.Plot') as HTMLElement | null
+        expect(plotElement?.style.backgroundImage).toBe('')
       })
     })
 
