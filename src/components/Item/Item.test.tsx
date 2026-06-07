@@ -81,7 +81,7 @@ describe('Item', () => {
 
         test('displays total price', async () => {
           const increment = screen.getByRole('button', { name: 'Increment' })
-          userEvent.click(increment)
+          await userEvent.click(increment)
           const total = screen.getByText('Total:')
           await waitFor(() =>
             expect(within(total).getByText('$20.84')).toBeInTheDocument()
@@ -118,9 +118,9 @@ describe('Item', () => {
 
         test('displays total price', async () => {
           const increment = screen.getByRole('button', { name: 'Increment' })
-          userEvent.click(increment)
-          userEvent.click(increment)
-          userEvent.click(increment)
+          await userEvent.click(increment)
+          await userEvent.click(increment)
+          await userEvent.click(increment)
           const total = screen.getByText('Total:')
           await waitFor(() =>
             expect(within(total).getByText('$41.68')).toBeInTheDocument()

@@ -1,6 +1,5 @@
 import { Box } from '@mui/material'
-import { useCallback, useEffect, useState } from 'react'
-import { useDebounceCallback } from 'usehooks-ts'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import { v4 } from 'uuid'
 
 import { items } from '../../img/index.js'
@@ -63,6 +62,40 @@ const Tumbleweed = ({
 }
 
 /**
+ * A custom hook that allows scheduling multiple concurrent timeouts
+ * and guarantees they are all cleaned up when the component unmounts.
+ */
+const useConcurrentTimeout = () => {
+  const activeTimeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(
+    new Set()
+  )
+
+  const schedule = useCallback((callback: () => void, delay: number) => {
+    const timeoutId = setTimeout(() => {
+      callback()
+      activeTimeoutsRef.current.delete(timeoutId)
+    }, delay)
+
+    activeTimeoutsRef.current.add(timeoutId)
+  }, [])
+
+  const cancelAll = useCallback(() => {
+    activeTimeoutsRef.current.forEach(id => clearTimeout(id))
+    activeTimeoutsRef.current.clear()
+  }, [])
+
+  useEffect(() => {
+    const activeTimeouts = activeTimeoutsRef.current
+    return () => {
+      activeTimeouts.forEach(id => clearTimeout(id))
+      activeTimeouts.clear()
+    }
+  }, [])
+
+  return { schedule, cancelAll }
+}
+
+/**
  * Manages the spawning of multiple Tumbleweed components.
  */
 export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
@@ -72,33 +105,55 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
   const [spawnIntervalMs, setSpawnIntervalMs] = useState(initialSpawnIntervalMs)
   // The timestamp of the last scheduled tumbleweed spawn.
   const [lastSpawnScheduledTs, setLastSpawnScheduledTs] = useState(0)
+  // Forces a re-render once the current spawn interval elapses to check for next spawn.
+  const [tick, setTick] = useState(0)
+
+  const { schedule, cancelAll } = useConcurrentTimeout()
+
+  // Trigger a re-render when the next spawn interval has elapsed.
+  useEffect(() => {
+    if (!doSpawn) {
+      return
+    }
+
+    const timeUntilNextSpawn = Math.max(
+      0,
+      spawnIntervalMs - (Date.now() - lastSpawnScheduledTs)
+    )
+
+    const timer = setTimeout(() => {
+      setTick(t => t + 1)
+    }, timeUntilNextSpawn)
+
+    return () => clearTimeout(timer)
+  }, [doSpawn, lastSpawnScheduledTs, spawnIntervalMs])
 
   // Adds a new tumbleweed to the list.
-  const spawnTumbleweed = () => {
+  const spawnTumbleweed = useCallback(() => {
     setTumbleweeds(oldTumbleweeds => [...oldTumbleweeds, v4()])
-  }
+  }, [])
 
   // Randomize the spawn time a bit to prevent unnatural bunching of
   // tumbleweeds that can occur when the page loses focus due the behavior of
   // CSS animation timers in unfocused pages:
   // https://g.co/gemini/share/ff1ee997e30c
-  const scheduleSpawnMs = scaleNumber(
-    randomNumberService.generateRandomNumber(),
-    0,
-    1,
-    0,
-    spawnIntervalMs
-  )
+  const scheduleSpawn = useCallback(() => {
+    const scheduleSpawnMs = scaleNumber(
+      randomNumberService.generateRandomNumber(),
+      0,
+      1,
+      0,
+      spawnIntervalMs
+    )
 
-  const scheduleSpawn = useDebounceCallback(spawnTumbleweed, scheduleSpawnMs, {
-    trailing: true,
-  })
+    schedule(spawnTumbleweed, scheduleSpawnMs)
+  }, [schedule, spawnIntervalMs, spawnTumbleweed])
 
   // This effect manages the spawning logic.
   useEffect(() => {
     if (!doSpawn) {
       setSpawnIntervalMs(initialSpawnIntervalMs)
-      scheduleSpawn.cancel()
+      cancelAll()
 
       return
     }
@@ -123,7 +178,14 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
     setSpawnIntervalMs(
       oldSpawnIntervalMs => oldSpawnIntervalMs - spawnIntervalDecrementAmountMs
     )
-  }, [doSpawn, lastSpawnScheduledTs, scheduleSpawn, spawnIntervalMs])
+  }, [
+    cancelAll,
+    doSpawn,
+    lastSpawnScheduledTs,
+    scheduleSpawn,
+    spawnIntervalMs,
+    tick,
+  ])
 
   /**
    * Removes a tumbleweed from the list after its animation is complete.

@@ -1,29 +1,28 @@
 import { ACHIEVEMENT_COMPLETED } from '../../templates.js'
 
+vitest.mock('../../data/achievements.js', () => {
+  return {
+    default: [
+      {
+        id: 'test-achievement',
+        name: 'Test Achievement',
+        description: '',
+        rewardDescription: '',
+        condition: (
+          state: farmhand.state & { conditionSatisfied?: boolean }
+        ) => !state.conditionSatisfied,
+        reward: (
+          state: farmhand.state & { conditionSatisfied?: boolean }
+        ) => ({ ...state, conditionSatisfied: true }),
+      },
+    ],
+  }
+})
+
 describe('updateAchievements', () => {
   let updateAchievements
 
   beforeAll(async () => {
-    vitest.resetModules()
-    vitest.mock('../../data/achievements.js', () => {
-      return {
-        default: [
-          {
-            id: 'test-achievement',
-            name: 'Test Achievement',
-            description: '',
-            rewardDescription: '',
-            condition: (
-              state: farmhand.state & { conditionSatisfied?: boolean }
-            ) => !state.conditionSatisfied,
-            reward: (
-              state: farmhand.state & { conditionSatisfied?: boolean }
-            ) => ({ ...state, conditionSatisfied: true }),
-          },
-        ],
-      }
-    })
-
     updateAchievements = (await vitest.importActual('./updateAchievements.js'))
       .updateAchievements
   })
