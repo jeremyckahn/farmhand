@@ -188,37 +188,6 @@ The Playwright configuration is in `playwright.config.js` and includes:
 - `APP_URL` - The base URL for the application (default: `http://localhost:3000`)
 - `CI` - Enables CI-specific settings when set
 
-### Running E2E Tests with Docker (Advanced)
-
-For a more comprehensive testing setup that matches the CI environment, you can run the E2E tests locally with the following additional tools installed and set up in your environment:
-
-- [Docker](https://docs.docker.com/engine/install/)
-- [GitHub CLI](https://cli.github.com/)
-  - You MUST [be authenticated](https://cli.github.com/manual/gh_auth_login)
-- [nektos/act](https://github.com/nektos/act)
-  - This MUST [be installed as a GitHub CLI extension](https://nektosact.com/installation/gh.html)
-- [jq](https://jqlang.org/download/)
-
-Additionally, you MUST have a Vercel account and be logged into it locally. You can do that with:
-
-```bash
-npx vercel login
-```
-
-Once that's all set up, you can run the E2E tests with:
-
-```bash
-# From the project root
-npm run e2e
-```
-
-Note that running tests locally involves downloading Docker images to your system. These images can accrue and take up space over time, but you can clear them out with:
-
-```bash
-# From the project root
-npm run e2e:cleanup
-```
-
 ## Debugging Tests
 
 ### Debug Mode
@@ -278,7 +247,6 @@ test('slow operation', async ({ page }) => {
 
 Tests run automatically in GitHub Actions on every push. The CI environment:
 
-- Uses Docker containers for consistency
 - Runs tests with retries enabled
 - Generates test reports and artifacts
 

@@ -53,18 +53,6 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
-    env:
-      # Define image name and tag based on repository and full SHA
-      PLAYWRIGHT_IMAGE_NAME: ghcr.io/${{ github.repository }}/playwright-tests
-      PLAYWRIGHT_IMAGE_TAG: ${{ github.sha }}
-      # Define Farmhand image name and tag based on repository and full SHA
-      FARMHAND_IMAGE_NAME: ghcr.io/${{ github.repository }}/farmhand
-      FARMHAND_IMAGE_TAG: ${{ github.sha }}
-
     steps:
       - uses: actions/checkout@v3
 
@@ -72,110 +60,37 @@ jobs:
         run: >
           git config --global url."https://github.com/".insteadOf ssh://git@github.com/
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+      - uses: actions/setup-node@v4
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 22
 
-      - name: Check if Playwright image exists
-        id: check_playwright_image
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install E2E dependencies and browsers
         run: |
-          FULL_IMAGE_REF="${{ env.PLAYWRIGHT_IMAGE_NAME }}:${{ env.PLAYWRIGHT_IMAGE_TAG }}"
-          echo "Checking for Playwright image: ${FULL_IMAGE_REF}"
+          cd e2e
+          npm ci
+          npx playwright install --with-deps
 
-          if docker manifest inspect ${FULL_IMAGE_REF} > /dev/null 2>&1; then
-            echo "image_exists=true" >> "$GITHUB_OUTPUT"
-            echo "Playwright image found. Skipping build."
-          else
-            echo "image_exists=false" >> "$GITHUB_OUTPUT"
-            echo "Playwright image not found. Will build."
-          fi
-
-      # Build and push Playwright Docker image to GHCR only if it does not exist
-      - name: Build and push Playwright Docker image to GHCR
-        if: steps.check_playwright_image.outputs.image_exists == 'false'
-        run: |
-          FULL_IMAGE_REF="${{ env.PLAYWRIGHT_IMAGE_NAME }}:${{ env.PLAYWRIGHT_IMAGE_TAG }}"
-          echo "Building and pushing ${FULL_IMAGE_REF}"
-
-          docker buildx build --push \
-            --tag "${FULL_IMAGE_REF}" \
-            --cache-from type=registry,ref=${{ env.PLAYWRIGHT_IMAGE_NAME }}:latest \
-            --cache-to type=inline \
-            -f e2e/Dockerfile.playwright e2e
-
-      - name: Check if Farmhand image exists
-        id: check_farmhand_image
-        run: |
-          FULL_IMAGE_REF="${{ env.FARMHAND_IMAGE_NAME }}:${{ env.FARMHAND_IMAGE_TAG }}"
-          echo "Checking for Farmhand image: ${FULL_IMAGE_REF}"
-          if docker manifest inspect ${FULL_IMAGE_REF} > /dev/null 2>&1; then
-            echo "image_exists=true" >> "$GITHUB_OUTPUT"
-            echo "Farmhand image found. Skipping build."
-          else
-            echo "image_exists=false" >> "$GITHUB_OUTPUT"
-            echo "Farmhand image not found. Will build."
-          fi
-
-      # Build and push Farmhand Docker image to GHCR only if it does not exist
-      - name: Build and push Farmhand Docker image to GHCR
-        if: steps.check_farmhand_image.outputs.image_exists == 'false'
-        run: |
-          FULL_IMAGE_REF="${{ env.FARMHAND_IMAGE_NAME }}:${{ env.FARMHAND_IMAGE_TAG }}"
-          echo "Building and pushing ${FULL_IMAGE_REF}"
-          # Set context to the project root directory
-          docker buildx build --push \
-            --tag "${FULL_IMAGE_REF}" \
-            --cache-from type=registry,ref=${{ env.FARMHAND_IMAGE_NAME }}:latest \
-            --cache-to type=inline \
-            -f e2e/Dockerfile.farmhand . # Build context is the project root
-
-      - name: 'Run e2e tests using cached Docker images'
-        run: |
-          export GITHUB_REPOSITORY=${{ github.repository }}
-          export PLAYWRIGHT_IMAGE_TAG=${{ env.PLAYWRIGHT_IMAGE_TAG }}
-          export FARMHAND_IMAGE_TAG=${{ env.FARMHAND_IMAGE_TAG }}
-
-          echo "Pulling Playwright image: ${{ env.PLAYWRIGHT_IMAGE_NAME }}:${{ env.PLAYWRIGHT_IMAGE_TAG }}"
-          docker pull ${{ env.PLAYWRIGHT_IMAGE_NAME }}:${{ env.PLAYWRIGHT_IMAGE_TAG }}
-          echo "Pulling Farmhand image: ${{ env.FARMHAND_IMAGE_NAME }}:${{ env.FARMHAND_IMAGE_TAG }}"
-          docker pull ${{ env.FARMHAND_IMAGE_NAME }}:${{ env.FARMHAND_IMAGE_TAG }}
-
-          # Create the .env file for docker-compose
-          echo 'VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}' > e2e/.env
-
-          # Run docker compose, using the images defined in docker-compose.yml
-          # Has --abort-on-container-exit and --exit-code-from to correctly report test results
-          docker compose -f e2e/docker-compose.yml up \
-            --no-build \
-            --abort-on-container-exit \
-            --exit-code-from playwright-tests \
-            playwright-tests
-          docker compose -f e2e/docker-compose.yml down
-
-          # Clean up the generated .env file
-          rm e2e/.env
-
+      - name: Start backend Redis services
+        run: docker compose up -d
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Prune Farmhand images
-        uses: actions/delete-package-versions@v5
-        with:
-          package-name: 'farmhand/farmhand'
-          package-type: 'container'
-          # Effectively retains 4 images because each image is represented by 3 versioned files
-          min-versions-to-keep: 12
+      - name: Start services
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          # Start api
+          npm run start:api &
+          # Start tracker
+          npm run start:tracker &
+          # Start frontend
+          VITE_TRACKER_URL='ws://localhost:8000' npm run start &
 
-      - name: Prune Playwright images
-        uses: actions/delete-package-versions@v5
-        with:
-          package-name: farmhand/playwright-tests
-          package-type: 'container'
-          # Effectively retains 4 images because each image is represented by 3 versioned files
-          min-versions-to-keep: 12
+          # Wait for services to be ready
+          npx wait-on tcp:3000 tcp:3001 tcp:8000 -t 60000
+
+      - name: Run E2E tests
+        run: npm run e2e
