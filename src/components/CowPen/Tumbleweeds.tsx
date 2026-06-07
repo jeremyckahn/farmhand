@@ -62,6 +62,40 @@ const Tumbleweed = ({
 }
 
 /**
+ * A custom hook that allows scheduling multiple concurrent timeouts
+ * and guarantees they are all cleaned up when the component unmounts.
+ */
+const useConcurrentTimeout = () => {
+  const activeTimeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(
+    new Set()
+  )
+
+  const schedule = useCallback((callback: () => void, delay: number) => {
+    const timeoutId = setTimeout(() => {
+      callback()
+      activeTimeoutsRef.current.delete(timeoutId)
+    }, delay)
+
+    activeTimeoutsRef.current.add(timeoutId)
+  }, [])
+
+  const cancelAll = useCallback(() => {
+    activeTimeoutsRef.current.forEach(id => clearTimeout(id))
+    activeTimeoutsRef.current.clear()
+  }, [])
+
+  useEffect(() => {
+    const activeTimeouts = activeTimeoutsRef.current
+    return () => {
+      activeTimeouts.forEach(id => clearTimeout(id))
+      activeTimeouts.clear()
+    }
+  }, [])
+
+  return { schedule, cancelAll }
+}
+
+/**
  * Manages the spawning of multiple Tumbleweed components.
  */
 export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
@@ -74,9 +108,7 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
   // Forces a re-render once the current spawn interval elapses to check for next spawn.
   const [tick, setTick] = useState(0)
 
-  const activeTimeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(
-    new Set()
-  )
+  const { schedule, cancelAll } = useConcurrentTimeout()
 
   // Trigger a re-render when the next spawn interval has elapsed.
   useEffect(() => {
@@ -114,20 +146,14 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
       spawnIntervalMs
     )
 
-    const timeoutId = setTimeout(() => {
-      spawnTumbleweed()
-      activeTimeoutsRef.current.delete(timeoutId)
-    }, scheduleSpawnMs)
-
-    activeTimeoutsRef.current.add(timeoutId)
-  }, [spawnIntervalMs, spawnTumbleweed])
+    schedule(spawnTumbleweed, scheduleSpawnMs)
+  }, [schedule, spawnIntervalMs, spawnTumbleweed])
 
   // This effect manages the spawning logic.
   useEffect(() => {
     if (!doSpawn) {
       setSpawnIntervalMs(initialSpawnIntervalMs)
-      activeTimeoutsRef.current.forEach(id => clearTimeout(id))
-      activeTimeoutsRef.current.clear()
+      cancelAll()
 
       return
     }
@@ -152,15 +178,14 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
     setSpawnIntervalMs(
       oldSpawnIntervalMs => oldSpawnIntervalMs - spawnIntervalDecrementAmountMs
     )
-  }, [doSpawn, lastSpawnScheduledTs, scheduleSpawn, spawnIntervalMs, tick])
-
-  useEffect(() => {
-    const activeTimeouts = activeTimeoutsRef.current
-    return () => {
-      activeTimeouts.forEach(id => clearTimeout(id))
-      activeTimeouts.clear()
-    }
-  }, [])
+  }, [
+    cancelAll,
+    doSpawn,
+    lastSpawnScheduledTs,
+    scheduleSpawn,
+    spawnIntervalMs,
+    tick,
+  ])
 
   /**
    * Removes a tumbleweed from the list after its animation is complete.
