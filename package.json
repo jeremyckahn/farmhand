@@ -15,7 +15,7 @@
     "check:types": "tsc",
     "dev": "mprocs \"cross-env VITE_TRACKER_URL='ws://localhost:8000' npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run start:tracker\"",
     "dev:native": "mprocs \"BROWSER=none npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run electron\"",
-    "e2e": "npx --prefix e2e playwright test",
+    "e2e": "cd e2e && npx playwright test",
     "e2e:create": "npx playwright codegen localhost:3000?seed=0.5",
     "electron": "wait-on tcp:3000 && electron .",
     "print:crops": "vite-node src/scripts/generate-crop-table.ts",
