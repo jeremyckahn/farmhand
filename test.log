@@ -1,0 +1,190 @@
+npm warn Unknown project config "no-optional". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> @jeremyckahn/farmhand@1.19.24 test
+> NODE_OPTIONS=--disable-warning=DEP0040 vitest --run
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.8 [39m[90m/app[39m
+
+ [32m✓[39m src/shell/bootup.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 4986[2mms[22m[39m
+     [33m[2m✓[22m[39m boots a fresh game when there is no save file [33m 1762[2mms[22m[39m
+     [33m[2m✓[22m[39m boots from save file if there is one [33m 626[2mms[22m[39m
+     [33m[2m✓[22m[39m shows pending notification for loaded day [33m 696[2mms[22m[39m
+     [33m[2m✓[22m[39m pending notifications for the loaded day are not shown again the next day [33m 1899[2mms[22m[39m
+ [32m✓[39m src/shell/navigation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 7658[2mms[22m[39m
+     [33m[2m✓[22m[39m cycles forwards through the standard views [33m 3277[2mms[22m[39m
+     [33m[2m✓[22m[39m cycles backwards through the standard views [33m 1315[2mms[22m[39m
+     [33m[2m✓[22m[39m cycles forwards through the unlocked views [33m 1580[2mms[22m[39m
+     [33m[2m✓[22m[39m cycles backwards through the unlocked views [33m 1483[2mms[22m[39m
+ [32m✓[39m src/shell/field.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 8849[2mms[22m[39m
+     [33m[2m✓[22m[39m can enable water mode [33m 2549[2mms[22m[39m
+     [33m[2m✓[22m[39m can enable cleanup mode [33m 1723[2mms[22m[39m
+     [33m[2m✓[22m[39m can enable harvest mode [33m 1512[2mms[22m[39m
+     [33m[2m✓[22m[39m can enable plant mode [33m 1614[2mms[22m[39m
+     [33m[2m✓[22m[39m can enable fertilize mode [33m 1447[2mms[22m[39m
+ [32m✓[39m src/components/Navigation/Navigation.test.tsx [2m([22m[2m20 tests[22m[2m)[22m[33m 3841[2mms[22m[39m
+     [33m[2m✓[22m[39m renders [33m 415[2mms[22m[39m
+     [33m[2m✓[22m[39m displays navigation menu items [33m 345[2mms[22m[39m
+     [33m[2m✓[22m[39m calls handleViewChange when menu item is clicked [33m 349[2mms[22m[39m
+     [33m[2m✓[22m[39m handles view change for all available views [33m 721[2mms[22m[39m
+ [32m✓[39m src/shell/notifications.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 3986[2mms[22m[39m
+     [33m[2m✓[22m[39m notification is shown when recipe is learned [33m 2071[2mms[22m[39m
+     [33m[2m✓[22m[39m multiple notifications are shown when multiple recipes are learned [33m 1911[2mms[22m[39m
+ [32m✓[39m src/game-logic/field-purchase.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 3087[2mms[22m[39m
+     [33m[2m✓[22m[39m field expansion can be purchased [33m 3083[2mms[22m[39m
+ [32m✓[39m src/components/SettingsView/SettingsView.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 2894[2mms[22m[39m
+   [33m[2m✓[22m[39m handles switch toggling [33m 394[2mms[22m[39m
+   [33m[2m✓[22m[39m closes delete confirmation dialog when cancel is clicked [33m 410[2mms[22m[39m
+   [33m[2m✓[22m[39m handles game data deletion confirmation from user [33m 420[2mms[22m[39m
+   [33m[2m✓[22m[39m displays tooltips for export and import buttons [33m 555[2mms[22m[39m
+ [32m✓[39m src/components/Item/Item.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 2437[2mms[22m[39m
+           [33m[2m✓[22m[39m displays total price [33m 889[2mms[22m[39m
+           [33m[2m✓[22m[39m displays total price [33m 965[2mms[22m[39m
+ [32m✓[39m src/game-logic/item-purchase.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2209[2mms[22m[39m
+     [33m[2m✓[22m[39m item can be purchased and added to the inventory [33m 2206[2mms[22m[39m
+ [32m✓[39m src/shell/pending-notifications.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2336[2mms[22m[39m
+     [33m[2m✓[22m[39m are shown when a day starts [33m 2332[2mms[22m[39m
+ [32m✓[39m src/components/CowCard/CowCard.test.tsx [2m([22m[2m12 tests[22m[2m)[22m[33m 1394[2mms[22m[39m
+       [33m[2m✓[22m[39m cows orignally owned by the player can be renamed [33m 727[2mms[22m[39m
+ [32m✓[39m src/game-logic/item-sell.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1692[2mms[22m[39m
+     [33m[2m✓[22m[39m item in inventory can be sold [33m 1689[2mms[22m[39m
+ [32m✓[39m src/shell/game-saving.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2533[2mms[22m[39m
+     [33m[2m✓[22m[39m saves the game when the day is ended [33m 2526[2mms[22m[39m
+ [32m✓[39m src/components/TierPurchase/TierPurchase.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 1361[2mms[22m[39m
+ [32m✓[39m src/components/CowPen/CowPen.test.tsx [2m([22m[2m15 tests[22m[2m)[22m[33m 1230[2mms[22m[39m
+ [32m✓[39m src/components/WineRecipeList/WineRecipe.test.tsx [2m([22m[2m18 tests[22m[2m)[22m[33m 951[2mms[22m[39m
+ [32m✓[39m src/components/QuickSelect/QuickSelect.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 958[2mms[22m[39m
+ [32m✓[39m src/components/Recipe/Recipe.test.tsx [2m([22m[2m13 tests[22m[2m)[22m[33m 932[2mms[22m[39m
+ [32m✓[39m src/components/Field/Field.test.tsx [2m([22m[2m32 tests[22m[2m)[22m[33m 875[2mms[22m[39m
+ [32m✓[39m src/components/StatsView/StatsView.test.tsx [2m([22m[2m20 tests[22m[2m)[22m[33m 940[2mms[22m[39m
+ [32m✓[39m src/components/Workshop/Workshop.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 723[2mms[22m[39m
+ [32m✓[39m src/components/QuantityInput/QuantityInput.test.tsx [2m([22m[2m12 tests[22m[2m)[22m[33m 686[2mms[22m[39m
+ [32m✓[39m src/components/AccountingView/AccountingView.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 638[2mms[22m[39m
+ [32m✓[39m src/components/SearchBar/SearchBar.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 596[2mms[22m[39m
+     [33m[2m✓[22m[39m calls onSearch with correct value when typing [33m 463[2mms[22m[39m
+ [32m✓[39m src/components/Home/Home.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 598[2mms[22m[39m
+ [32m✓[39m src/components/CowCard/Bloodline/Bloodline.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[33m 533[2mms[22m[39m
+ [32m✓[39m src/components/Inventory/Inventory.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 449[2mms[22m[39m
+ [32m✓[39m src/components/Toolbelt/Toolbelt.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 520[2mms[22m[39m
+ [32m✓[39m src/components/Plot/Plot.test.tsx [2m([22m[2m32 tests[22m[2m)[22m[33m 312[2mms[22m[39m
+ [32m✓[39m src/components/CowCard/Subheader/Subheader.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 394[2mms[22m[39m
+ [32m✓[39m src/components/SettingsView/RandomSeedInput.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 313[2mms[22m[39m
+ [32m✓[39m src/components/FermentationRecipeList/FermentationRecipeList.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 416[2mms[22m[39m
+ [32m✓[39m src/components/AppBar/AppBar.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[32m 248[2mms[22m[39m
+ [32m✓[39m src/components/OnlinePeersView/OnlinePeersView.test.tsx [2m([22m[2m13 tests[22m[2m)[22m[33m 335[2mms[22m[39m
+ [32m✓[39m src/components/UpgradePurchase/UpgradePurchase.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[32m 247[2mms[22m[39m
+ [32m✓[39m src/components/AchievementsView/AchievementsView.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 268[2mms[22m[39m
+ [32m✓[39m src/components/ContextPane/ContextPane.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[32m 235[2mms[22m[39m
+ [32m✓[39m src/components/Shop/Shop.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 232[2mms[22m[39m
+ [32m✓[39m src/components/KeybindingsView/KeybindingsView.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 172[2mms[22m[39m
+ [32m✓[39m src/components/OnlinePeersView/OnlinePeer/OnlinePeer.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[32m 199[2mms[22m[39m
+ [32m✓[39m src/components/ProgressBar/ProgressBar.test.tsx [2m([22m[2m12 tests[22m[2m)[22m[32m 181[2mms[22m[39m
+ [32m✓[39m src/components/Stage/Stage.test.tsx [2m([22m[2m12 tests[22m[2m)[22m[32m 107[2mms[22m[39m
+ [32m✓[39m src/components/LogView/LogView.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[32m 161[2mms[22m[39m
+ [32m✓[39m src/components/CowPenContextMenu/CowPenContextMenu.test.tsx [2m([22m[2m1 test[22m[2m)[22m[32m 103[2mms[22m[39m
+ [32m✓[39m src/handlers/ui-events.test.ts [2m([22m[2m35 tests[22m[2m)[22m[32m 74[2mms[22m[39m
+ [32m✓[39m src/components/Achievement/Achievement.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 85[2mms[22m[39m
+ [32m✓[39m src/components/PriceEventView/PriceEventView.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 75[2mms[22m[39m
+ [32m✓[39m src/utils/index.test.ts [2m([22m[2m93 tests[22m[2m)[22m[32m 75[2mms[22m[39m
+ [32m✓[39m src/components/BailOutErrorBoundary/BailOutErrorBoundary.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 75[2mms[22m[39m
+ [32m✓[39m src/components/IngredientsList/IngredientsList.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 68[2mms[22m[39m
+ [32m✓[39m src/components/AnimatedNumber/AnimatedNumber.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 62[2mms[22m[39m
+ [32m✓[39m src/components/NotificationSystem/NotificationSystem.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 43[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/adjustLoan.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/applyLoanInterest.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m src/utils/moneyString.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/sellCow.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/sellItem.test.ts [2m([22m[2m18 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/computeStateForNextDay.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/purchaseField.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/changeCowAutomaticHugState.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/consumeIngredients.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/sellKeg.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/upgradeTool.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m src/game-logic/cows/cow-selection.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processFeedingCows.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/harvestPlot.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m src/factories/OreFactory.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/unlockTool.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/clearPlot.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m src/utils/getLevelEntitlements.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m src/data/achievements.test.ts [2m([22m[2m18 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/applyPrecipitation.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/changeCowBreedingPenResident.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processCowBreeding.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/updateAchievements.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/fertilizePlot.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/applyCrows.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m src/utils/getKegValue.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/addItemToInventory.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/purchaseCow.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/purchaseSmelter.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/setSprinkler.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/purchaseItem.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/minePlot.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/makeFermentationRecipe.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/makeRecipe.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processCellarSpoilage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/generatePriceEvents.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/plantInPlot.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processMilkingCows.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/updatePeer.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/purchaseComposter.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/purchaseForest.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/setScarecrow.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/computeCowInventoryForNextDay.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processCowFertilizerProduction.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/changeCowName.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/common/utils.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/services/wine.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/makeWine.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/purchaseCowPen.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/updatePlotShoveledState.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/utils/getKegSpoilageRate.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/decrementItemFromInventory.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/purchaseCellar.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/updateFinancialRecords.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/rotateNotificationLogs.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/services/cellar.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/utils/getCropsAvailableToFerment.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processLevelUp.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/components/Farmhand/Farmhand.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/factories/ResourceFactory.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processCowAttrition.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/hugCow.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/factories/CoalFactory.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/prependPendingPeerMessage.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/incrementPlotContentAge.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/purchaseStorageExpansion.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m src/factories/StoneFactory.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/updateLearnedRecipes.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/spawnWeeds.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/common/services/randomNumber.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/createPriceEvent.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processSprinklers.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/utils/getMaxYieldOfFermentationRecipe.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/purchaseCombine.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/showNotification.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/addExperience.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processCellar.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/waterPlot.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/utils/findInField.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/utils/getWineVarietiesAvailableToMake.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/components/Workshop/getUpgradesAvailable.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processWeather.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/utils/totalIngredientsInRecipe.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/updatePriceEvents.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/updateInventoryRecordsForNextDay.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/selectCow.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/components/Farmhand/helpers/getInventoryQuantities.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/withdrawCow.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/offerCow.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/utils/getCropLifecycleDuration.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/forRange.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/waterAllPlots.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/game-logic/reducers/processNerfs.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 6[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m145 passed[39m[22m[90m (145)[39m
+[2m      Tests [22m [1m[32m928 passed[39m[22m[90m (928)[39m
+[2m   Start at [22m 00:13:57
+[2m   Duration [22m 110.94s[2m (transform 14.91s, setup 43.48s, import 106.00s, tests 65.54s, environment 87.67s)[22m

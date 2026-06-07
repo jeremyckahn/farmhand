@@ -6,7 +6,15 @@ import { testState } from '../../test-utils/index.js'
 import { generatePriceEvents } from './generatePriceEvents.js'
 
 vitest.mock('../../data/levels.js', () => ({
-  levels: [],
+  levels: [
+    {
+      id: 0,
+    },
+    {
+      id: 1,
+      unlocksShopItem: 'sample-crop-1-seed',
+    },
+  ],
   itemUnlockLevels: {},
 }))
 vitest.mock('../../data/items.js')
@@ -38,19 +46,6 @@ describe('generatePriceEvents', () => {
     beforeEach(() => {
       vitest.spyOn(Math, 'random').mockReturnValue(0)
 
-      vitest.resetModules()
-      vitest.mock('../../data/levels.js', () => ({
-        levels: [
-          {
-            id: 0,
-          },
-          {
-            id: 1,
-            unlocksShopItem: 'sample-crop-1-seed',
-          },
-        ],
-        itemUnlockLevels: {},
-      }))
       state = generatePriceEvents(
         testState({
           newDayNotifications: [],

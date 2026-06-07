@@ -19,16 +19,6 @@ test('renders children when there is no error', () => {
   expect(screen.getByText('Child component')).toBeInTheDocument()
 })
 
-// Suppress JSDOM uncaught error logs for intentionally thrown errors in the test boundary
-let originalReportException: any;
-beforeAll(() => {
-  originalReportException = window.addEventListener;
-  window.addEventListener('error', (e) => { e.preventDefault(); });
-});
-afterAll(() => {
-  window.addEventListener = originalReportException;
-});
-
 test('renders nothing when there is an error', () => {
   // Suppress console.error for this test
   const consoleSpy = vitest.spyOn(console, 'error').mockImplementation(() => {})

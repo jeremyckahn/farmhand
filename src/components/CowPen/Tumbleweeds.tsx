@@ -125,6 +125,10 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
     )
   }, [doSpawn, lastSpawnScheduledTs, scheduleSpawn, spawnIntervalMs])
 
+  useEffect(() => {
+    return () => scheduleSpawn.cancel()
+  }, [scheduleSpawn])
+
   /**
    * Removes a tumbleweed from the list after its animation is complete.
    */
