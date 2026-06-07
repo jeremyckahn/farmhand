@@ -135,10 +135,7 @@ async function setupE2E() {
   console.log('   npm run test:ui             # Interactive UI')
   console.log('')
   console.log('3. Or run from the main project directory:')
-  console.log('   npm run e2e:test            # Run all tests')
-  console.log('   npm run e2e:test:headed     # Run with browser UI')
-  console.log('   npm run e2e:test:debug      # Debug mode')
-  console.log('   npm run e2e:test:ui         # Interactive UI')
+  console.log('   npm run e2e                   # Run all tests')
   console.log('')
   console.log('For more information, see the README.md file.')
 }
