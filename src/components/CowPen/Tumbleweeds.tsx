@@ -72,7 +72,9 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
   // The timestamp of the last scheduled tumbleweed spawn.
   const [lastSpawnScheduledTs, setLastSpawnScheduledTs] = useState(0)
 
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const activeTimeoutsRef = useRef<Set<ReturnType<typeof setTimeout>>>(
+    new Set()
+  )
 
   // Adds a new tumbleweed to the list.
   const spawnTumbleweed = useCallback(() => {
@@ -84,10 +86,6 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
   // CSS animation timers in unfocused pages:
   // https://g.co/gemini/share/ff1ee997e30c
   const scheduleSpawn = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-    }
-
     const scheduleSpawnMs = scaleNumber(
       randomNumberService.generateRandomNumber(),
       0,
@@ -96,18 +94,20 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
       spawnIntervalMs
     )
 
-    timeoutRef.current = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       spawnTumbleweed()
+      activeTimeoutsRef.current.delete(timeoutId)
     }, scheduleSpawnMs)
+
+    activeTimeoutsRef.current.add(timeoutId)
   }, [spawnIntervalMs, spawnTumbleweed])
 
   // This effect manages the spawning logic.
   useEffect(() => {
     if (!doSpawn) {
       setSpawnIntervalMs(initialSpawnIntervalMs)
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
-      }
+      activeTimeoutsRef.current.forEach(id => clearTimeout(id))
+      activeTimeoutsRef.current.clear()
 
       return
     }
@@ -135,10 +135,10 @@ export const Tumbleweeds = ({ doSpawn }: { doSpawn: boolean }) => {
   }, [doSpawn, lastSpawnScheduledTs, scheduleSpawn, spawnIntervalMs])
 
   useEffect(() => {
+    const activeTimeouts = activeTimeoutsRef.current
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
-      }
+      activeTimeouts.forEach(id => clearTimeout(id))
+      activeTimeouts.clear()
     }
   }, [])
 
