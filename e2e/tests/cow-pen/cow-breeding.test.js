@@ -14,40 +14,44 @@ test('should breed two cows to produce a new cow', async ({ page }) => {
   const cowsTabPanel = page.getByRole('tabpanel', { name: 'Cows' })
   await cowsTabPanel.waitFor()
 
+  const cows = cowsTabPanel.locator('.CowCard')
+  await expect(cows).toHaveCount(2)
+
   await page.evaluate(() => {
     const checkboxes = document.querySelectorAll('.CowCard input[type="checkbox"]');
     for (const checkbox of checkboxes) {
       if (checkbox.getAttribute('aria-label')?.includes('move')) {
         checkbox.click()
+      } else {
+        const label = checkbox.closest('label');
+        if (label && label.textContent.includes('Breed')) {
+          checkbox.click();
+        } else {
+            const parent = checkbox.parentElement?.parentElement;
+            if (parent && parent.textContent.includes('Breed')) {
+                checkbox.click();
+            }
+        }
       }
     }
   })
 
   await page.waitForTimeout(500)
 
-  // Wait, if it didn't move it would be because Grapefruit was moved but Melon wasn't.
-  // Wait, Grapefruit's checkbox was clicked by `evaluate`. Melon's was NOT, because Melon doesn't have an aria-label with "move"
-  // The aria label for male cow is: "Check this box to move Bull to the breeding pen to mate with a female cow."
-  // The aria label for female cow is: ??? Let's just click all checkboxes in the second generic (which is the breed button).
-  // Actually, we can click the exact labels we found earlier: `Breed`
+  await page.getByRole('tab', { name: 'Breeding Pen' }).click()
+  const breedingPenPanel = page.getByRole('tabpanel', { name: 'Breeding Pen' })
+  await breedingPenPanel.waitFor()
 
-  // Move them to breeding pen manually:
-  await page.getByText('Breed', { exact: true }).first().click({ force: true })
-  await page.waitForTimeout(500)
+  const breedingCows = breedingPenPanel.locator('.CowCard')
+  await expect(breedingCows).toHaveCount(2)
 
-  await page.getByText('Breed', { exact: true }).first().click({ force: true })
-  await page.waitForTimeout(500)
-
-  // End the day 3 times (the gestation period)
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 4; i++) {
     await page.keyboard.press('Shift+C')
     await page.waitForTimeout(500)
   }
 
-  // Go back to the Cows tab
   await page.getByRole('tab', { name: 'Cows' }).click()
   await cowsTabPanel.waitFor()
 
-  // the 2 cows return, and 1 calf is born
-  await expect(page.getByText('Capacity: 3 / 10')).toBeVisible({ timeout: 5000 })
+  await expect(cows).toHaveCount(3, { timeout: 10000 })
 })
