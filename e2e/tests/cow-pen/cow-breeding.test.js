@@ -23,7 +23,9 @@ test('should breed two cows to produce a new cow', async ({ page }) => {
 
     for (const checkbox of Array.from(checkboxes)) {
       if (checkbox.getAttribute('aria-label')?.includes('move')) {
-        checkbox.click()
+        if (checkbox instanceof HTMLInputElement) {
+          checkbox.click()
+        }
       }
     }
   })
