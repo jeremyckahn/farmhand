@@ -8,17 +8,19 @@
     "noEmit": true,
     "strict": true,
     "noImplicitAny": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "ignoreDeprecations": "6.0",
     "types": [
       "vitest/globals",
       "vite-plugin-pwa/client",
       "vite/client",
+      "node",
       "@playwright/test"
     ],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["**/*.js"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }
