@@ -5,7 +5,9 @@ test('should breed two cows to produce a new cow', async ({ page }) => {
   await loadFixture(page, 'cow-breeding')
 
   await expect(page.getByText('Data loaded!')).toBeHidden({ timeout: 10000 })
-  await expect(page.getByText('You achieved "Purchase a Cow Pen!"')).toBeHidden({ timeout: 10000 })
+  await expect(
+    page.getByText('You achieved "Purchase a Cow Pen!"')
+  ).toBeHidden({ timeout: 10000 })
 
   const navCombo = page.getByRole('combobox').first()
   await navCombo.click()
@@ -15,8 +17,11 @@ test('should breed two cows to produce a new cow', async ({ page }) => {
   await cowsTabPanel.waitFor()
 
   await page.evaluate(() => {
-    const checkboxes = document.querySelectorAll('.CowCard input[type="checkbox"]');
-    for (const checkbox of checkboxes) {
+    const checkboxes = document.querySelectorAll(
+      '.CowCard input[type="checkbox"]'
+    )
+
+    for (const checkbox of Array.from(checkboxes)) {
       if (checkbox.getAttribute('aria-label')?.includes('move')) {
         checkbox.click()
       }
@@ -32,10 +37,16 @@ test('should breed two cows to produce a new cow', async ({ page }) => {
   // Actually, we can click the exact labels we found earlier: `Breed`
 
   // Move them to breeding pen manually:
-  await page.getByText('Breed', { exact: true }).first().click({ force: true })
+  await page
+    .getByText('Breed', { exact: true })
+    .first()
+    .click({ force: true })
   await page.waitForTimeout(500)
 
-  await page.getByText('Breed', { exact: true }).first().click({ force: true })
+  await page
+    .getByText('Breed', { exact: true })
+    .first()
+    .click({ force: true })
   await page.waitForTimeout(500)
 
   // End the day 3 times (the gestation period)
@@ -49,5 +60,7 @@ test('should breed two cows to produce a new cow', async ({ page }) => {
   await cowsTabPanel.waitFor()
 
   // the 2 cows return, and 1 calf is born
-  await expect(page.getByText('Capacity: 3 / 10')).toBeVisible({ timeout: 5000 })
+  await expect(page.getByText('Capacity: 3 / 10')).toBeVisible({
+    timeout: 5000,
+  })
 })
