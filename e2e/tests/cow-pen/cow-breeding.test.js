@@ -32,12 +32,6 @@ test('should breed two cows to produce a new cow', async ({ page }) => {
 
   await page.waitForTimeout(500)
 
-  // Wait, if it didn't move it would be because Grapefruit was moved but Melon wasn't.
-  // Wait, Grapefruit's checkbox was clicked by `evaluate`. Melon's was NOT, because Melon doesn't have an aria-label with "move"
-  // The aria label for male cow is: "Check this box to move Bull to the breeding pen to mate with a female cow."
-  // The aria label for female cow is: ??? Let's just click all checkboxes in the second generic (which is the breed button).
-  // Actually, we can click the exact labels we found earlier: `Breed`
-
   // Move them to breeding pen manually:
   await page
     .getByText('Breed', { exact: true })
