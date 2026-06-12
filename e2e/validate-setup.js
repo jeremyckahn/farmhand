@@ -46,7 +46,9 @@ async function validateSetup() {
     const testDir = join(__dirname, 'tests')
     const testFiles = await readdir(testDir, { withFileTypes: true })
     const testCount = testFiles.filter(
-      file => file.isFile() && file.name.endsWith('.test.js')
+      file =>
+        file.isFile() &&
+        (file.name.endsWith('.test.ts') || file.name.endsWith('.test.tsx'))
     ).length
 
     if (testCount > 0) {
@@ -61,7 +63,7 @@ async function validateSetup() {
 
   // Check if test utilities exist
   try {
-    const utilsPath = join(__dirname, 'test-utils', 'open-page.js')
+    const utilsPath = join(__dirname, 'test-utils', 'open-page.ts')
     readFileSync(utilsPath, 'utf8')
     console.log('✅ Test utilities found')
   } catch (error) {
