@@ -19,7 +19,11 @@ test('uses server-based price values', async ({ page }) => {
   )
   await page.getByRole('checkbox', { name: 'Play online' }).check()
 
-  const serverResponse = await new Promise<any>((resolve, reject) => {
+  const serverResponse = await new Promise<{
+    valueAdjustments: {
+      carrot: number
+    }
+  }>((resolve, reject) => {
     page.on('response', async response => {
       try {
         resolve(await response.json())
