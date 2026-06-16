@@ -32,6 +32,12 @@ const dataUriLoader = {
 }
 
 const viteConfig = defineConfig({
+  legacy: {
+    // NOTE: Restores Vite 7 CJS/ESM interop behavior for file extension imports from MUI/icons
+    // (e.g. `@mui/icons-material/*.js` or `@mui/material/*/index.js`) to prevent them from
+    // being imported as `{ default: Component }` namespace objects in Vite 8.
+    inconsistentCjsInterop: true,
+  },
   build: {
     sourcemap: true,
   },
