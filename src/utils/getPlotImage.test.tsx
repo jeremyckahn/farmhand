@@ -5,13 +5,11 @@ import {
     cropLifeStage
 } from '../enums.js'
 import { items as itemImages } from '../img/index.js'
-import { testCrop } from '../test-utils/index.js'
-
 import {
     getPlotContentFromItemId,
     getPlotImage
 } from './index.js'
-
+import { testCrop } from "../test-utils/testCrop.js";
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 

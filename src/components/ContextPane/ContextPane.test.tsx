@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import { stageFocusType } from '../../../src/enums.js'
-import { testItem } from '../../test-utils/index.js'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
 import { ContextPane, PlayerInventory } from './ContextPane.js'
+import { testItem } from "../../test-utils/testItem.js";
 
 // Mock the Inventory component to avoid complex Item rendering
 vi.mock('../Inventory/index.js', () => ({

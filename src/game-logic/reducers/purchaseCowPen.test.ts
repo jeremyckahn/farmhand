@@ -1,7 +1,6 @@
 import { EXPERIENCE_VALUES, PURCHASEABLE_COW_PENS } from '../../constants.js'
-import { testState } from '../../test-utils/index.js'
-
 import { purchaseCowPen } from './purchaseCowPen.js'
+import { testState } from "../../test-utils/testState.js";
 
 describe('purchaseCowPen', () => {
   test('updates purchasedCowPen', () => {

@@ -20,9 +20,8 @@ import { getKegStub } from '../../test-utils/stubs/getKegStub.js'
 
 import { QUANTITY_INPUT_PLACEHOLDER_TEXT } from '../QuantityInput/QuantityInput.js'
 
-import { integerString } from "../../utils/integerString.js";
-
 import { WineRecipe } from './WineRecipe.js'
+import { integerString } from "../../utils/integerString.js";
 
 const stubGameState: Pick<
   farmhand.state,

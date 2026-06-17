@@ -1,8 +1,6 @@
-import { testState } from '../../test-utils/index.js'
-
-import { experienceNeededForLevel } from "../../utils/experienceNeededForLevel.js";
-
 import { addExperience } from './addExperience.js'
+import { experienceNeededForLevel } from "../../utils/experienceNeededForLevel.js";
+import { testState } from "../../test-utils/testState.js";
 
 describe('addExperience', () => {
   let gameState: farmhand.state

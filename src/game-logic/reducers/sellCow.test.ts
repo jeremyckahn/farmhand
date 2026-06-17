@@ -1,13 +1,11 @@
 import { huggingMachine } from '../../data/items.js'
 import { standardCowColors } from '../../enums.js'
-import { testState } from '../../test-utils/index.js'
-
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
+import { sellCow } from './sellCow.js'
 import { getCowValue } from "../../utils/getCowValue.js";
 import { generateCow } from "../../utils/generateCow.js";
-
-import { sellCow } from './sellCow.js'
+import { testState } from "../../test-utils/testState.js";
 
 describe('sellCow', () => {
   let cow: farmhand.cow

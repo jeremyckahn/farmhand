@@ -6,9 +6,8 @@ import {
 } from '../../constants.js'
 import { OUT_OF_COW_FEED_NOTIFICATION } from '../../strings.js'
 
-import { clampNumber } from "../../utils/clampNumber.js";
-
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
+import { clampNumber } from "../../utils/clampNumber.js";
 
 export const processFeedingCows = (state: farmhand.state): farmhand.state => {
   const cowInventory = [...state.cowInventory]

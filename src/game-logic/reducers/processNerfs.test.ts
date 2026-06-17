@@ -1,8 +1,7 @@
-import { testState } from '../../test-utils/index.js'
-
 import { applyCrows } from './applyCrows.js'
 
 import { processNerfs } from './processNerfs.js'
+import { testState } from "../../test-utils/testState.js";
 
 vitest.mock('./applyCrows.js')
 

@@ -3,15 +3,15 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { cropLifeStage, fertilizerType } from '../../enums.js'
-import { testCrop, testShoveledPlot } from '../../test-utils/index.js'
 import { noop } from '../../utils/noop.js'
 import { items, pixel, plotStates } from '../../img/index.js'
 import { FERTILIZER_BONUS } from '../../constants.js'
 
+import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot.js'
+import { testCrop } from "../../test-utils/testCrop.js";
+import { testShoveledPlot } from "../../test-utils/testShoveledPlot.js";
 import { getCropFromItemId } from "../../utils/getCropFromItemId.js";
 import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
-
-import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot.js'
 
 vitest.mock('../../data/maps.js')
 vitest.mock('../../data/items.js')

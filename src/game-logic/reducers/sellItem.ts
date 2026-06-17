@@ -3,18 +3,6 @@ import { isItemAFarmProduct } from '../../utils/isItemAFarmProduct.js'
 import { LOAN_GARNISHMENT_RATE, EXPERIENCE_VALUES } from '../../constants.js'
 import { SOLD_ITEM_PEER_NOTIFICATION } from '../../templates.js'
 
-import { castToMoney } from "../../utils/castToMoney.js";
-
-import { getAdjustedItemValue } from "../../utils/getAdjustedItemValue.js";
-
-import { getResaleValue } from "../../utils/getResaleValue.js";
-
-import { getSalePriceMultiplier } from "../../utils/getSalePriceMultiplier.js";
-
-import { isItemSoldInShop } from "../../utils/isItemSoldInShop.js";
-
-import { moneyTotal } from "../../utils/moneyTotal.js";
-
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { addExperience } from './addExperience.js'
 import { addRevenue } from './addRevenue.js'
@@ -22,6 +10,12 @@ import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 import { adjustLoan } from './adjustLoan.js'
 
 import { prependPendingPeerMessage } from './index.js'
+import { castToMoney } from "../../utils/castToMoney.js";
+import { getAdjustedItemValue } from "../../utils/getAdjustedItemValue.js";
+import { getResaleValue } from "../../utils/getResaleValue.js";
+import { getSalePriceMultiplier } from "../../utils/getSalePriceMultiplier.js";
+import { isItemSoldInShop } from "../../utils/isItemSoldInShop.js";
+import { moneyTotal } from "../../utils/moneyTotal.js";
 
 export const sellItem = (
   state: farmhand.state,

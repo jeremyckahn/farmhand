@@ -1,8 +1,8 @@
 import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.js'
 import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.js'
-import { testState, testTree } from '../../test-utils/index.js'
-
 import { purchaseForest } from './purchaseForest.js'
+import { testState } from "../../test-utils/testState.js";
+import { testTree } from "../../test-utils/testTree.js";
 
 describe('purchaseForest', () => {
   test('updates purchasedForest', () => {

@@ -4,10 +4,9 @@ import { CROWS_DESTROYED } from '../../templates.js'
 
 import { randomNumberService } from '../../common/services/randomNumber.js'
 
-import { doesPlotContainCrop } from "../../utils/doesPlotContainCrop.js";
-
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 import { fieldHasScarecrow } from './helpers.js'
+import { doesPlotContainCrop } from "../../utils/doesPlotContainCrop.js";
 
 export function forEachPlot(
   state: farmhand.state,

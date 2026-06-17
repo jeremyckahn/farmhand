@@ -1,7 +1,6 @@
 import { randomNumberService } from '../../common/services/randomNumber.js'
-import { testCrop } from '../../test-utils/index.js'
-
 import { spawnWeeds } from './spawnWeeds.js'
+import { testCrop } from "../../test-utils/testCrop.js";
 
 beforeEach(() => {
   vitest.spyOn(randomNumberService, 'isRandomNumberLessThan')

@@ -1,6 +1,6 @@
-import { testState } from '../../test-utils/index.js'
 import { selectCow } from '../reducers/selectCow.js'
 import { stageFocusType } from '../../enums.js'
+import { testState } from "../../test-utils/testState.js";
 import { generateCow } from "../../utils/generateCow.js";
 import { getCowDisplayName } from "../../utils/getCowDisplayName.js";
 

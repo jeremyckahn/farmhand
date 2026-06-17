@@ -2,12 +2,10 @@ import { itemType } from '../../enums.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 
-import { getPlotContentType } from "../../utils/getPlotContentType.js";
-
-import { getRangeCoords } from "../../utils/getRangeCoords.js";
-
 import { setWasWatered } from './helpers.js'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
+import { getPlotContentType } from "../../utils/getPlotContentType.js";
+import { getRangeCoords } from "../../utils/getRangeCoords.js";
 
 export const processSprinklers = (state: farmhand.state): farmhand.state => {
   const { field, experience } = state

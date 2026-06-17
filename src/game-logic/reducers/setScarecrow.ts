@@ -1,10 +1,9 @@
 import { fieldMode } from '../../enums.js'
 import { SCARECROW_ITEM_ID } from '../../constants.js'
 
-import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
-
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
+import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
 
 const { OBSERVE, SET_SCARECROW } = fieldMode
 

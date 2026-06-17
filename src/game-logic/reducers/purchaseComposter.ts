@@ -1,11 +1,10 @@
 import { EXPERIENCE_VALUES, PURCHASEABLE_COMPOSTERS } from '../../constants.js'
 import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings.js'
 
-import { moneyTotal } from "../../utils/moneyTotal.js";
-
 import { addExperience } from './addExperience.js'
 import { showNotification } from './showNotification.js'
 import { updateLearnedRecipes } from './updateLearnedRecipes.js'
+import { moneyTotal } from "../../utils/moneyTotal.js";
 
 export const purchaseComposter = (
   state: farmhand.state,

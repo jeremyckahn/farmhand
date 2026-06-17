@@ -1,8 +1,7 @@
 import { itemType } from '../../enums.js'
 
-import { getPlotContentType } from "../../utils/getPlotContentType.js";
-
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
+import { getPlotContentType } from "../../utils/getPlotContentType.js";
 
 export const waterPlot = (
   state: farmhand.state,

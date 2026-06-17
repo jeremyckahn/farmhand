@@ -1,12 +1,10 @@
 import {
     cropLifeStage
 } from '../enums.js'
-import { testCrop } from '../test-utils/index.js'
-
 import {
     getCropLifeStage
 } from './index.js'
-
+import { testCrop } from "../test-utils/testCrop.js";
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 

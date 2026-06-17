@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
-import { testItem, testRecipe } from '../../test-utils/index.js'
-
 import { Recipe } from './Recipe.js'
+import { testItem } from "../../test-utils/testItem.js";
+import { testRecipe } from "../../test-utils/testRecipe.js";
 
 vitest.mock('../../data/maps.js', async importOriginal => {
   const actual = await importOriginal()

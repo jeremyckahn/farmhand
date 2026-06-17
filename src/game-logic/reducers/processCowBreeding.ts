@@ -7,10 +7,9 @@ import {
 } from '../../constants.js'
 import { COW_BORN_MESSAGE } from '../../templates.js'
 
+import { addExperience } from './addExperience.js'
 import { findCowById } from "../../utils/findCowById.js";
 import { generateOffspringCow } from "../../utils/generateOffspringCow.js";
-
-import { addExperience } from './addExperience.js'
 
 export const processCowBreeding = (state: farmhand.state): farmhand.state => {
   const {

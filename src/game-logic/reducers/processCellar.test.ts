@@ -1,7 +1,7 @@
-import { testState } from '../../test-utils/index.js'
 import { carrot, garlic } from '../../data/items.js'
 
 import { processCellar } from './processCellar.js'
+import { testState } from "../../test-utils/testState.js";
 
 describe('processCellar', () => {
   test('kegs are updated', () => {

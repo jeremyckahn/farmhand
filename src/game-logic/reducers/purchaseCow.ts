@@ -1,10 +1,9 @@
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 
+import { addCowToInventory } from './addCowToInventory.js'
 import { generateCow } from "../../utils/generateCow.js";
 import { getCowValue } from "../../utils/getCowValue.js";
 import { moneyTotal } from "../../utils/moneyTotal.js";
-
-import { addCowToInventory } from './addCowToInventory.js'
 
 export const purchaseCow = (
   state: farmhand.state,

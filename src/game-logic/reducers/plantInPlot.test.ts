@@ -1,8 +1,6 @@
-import { testState } from '../../test-utils/index.js'
-
-import { getCropFromItemId } from "../../utils/getCropFromItemId.js";
-
 import { plantInPlot } from './plantInPlot.js'
+import { testState } from "../../test-utils/testState.js";
+import { getCropFromItemId } from "../../utils/getCropFromItemId.js";
 
 vitest.mock('../../data/items.js')
 

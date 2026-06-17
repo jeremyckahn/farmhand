@@ -4,11 +4,10 @@ import { PRICE_EVENT_CHANCE } from '../../constants.js'
 import { PRICE_CRASH, PRICE_SURGE } from '../../templates.js'
 import { random } from '../../common/utils.js'
 
+import { createPriceEvent } from './createPriceEvent.js'
 import { filterItemIdsToSeeds } from "../../utils/filterItemIdsToSeeds.js";
 import { getPriceEventForCrop } from "../../utils/getPriceEventForCrop.js";
 import { getRandomUnlockedCrop } from "../../utils/getRandomUnlockedCrop.js";
-
-import { createPriceEvent } from './createPriceEvent.js'
 
 const TYPE_CRASH = 'priceCrashes'
 const TYPE_SURGE = 'priceSurges'

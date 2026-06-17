@@ -1,9 +1,8 @@
-import { testCrop, testState } from '../../test-utils/index.js'
 import { fertilizerType, fieldMode } from '../../enums.js'
-
-import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
-
 import { fertilizePlot } from './fertilizePlot.js'
+import { testCrop } from "../../test-utils/testCrop.js";
+import { testState } from "../../test-utils/testState.js";
+import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
 
 vitest.mock('../../data/maps.js')
 

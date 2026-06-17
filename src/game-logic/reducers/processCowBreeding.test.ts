@@ -4,11 +4,9 @@ import {
   PURCHASEABLE_COW_PENS,
 } from '../../constants.js'
 import { genders } from '../../enums.js'
-import { testState } from '../../test-utils/index.js'
-
-import { generateCow } from "../../utils/generateCow.js";
-
 import { processCowBreeding } from './processCowBreeding.js'
+import { generateCow } from "../../utils/generateCow.js";
+import { testState } from "../../test-utils/testState.js";
 
 describe('processCowBreeding', () => {
   const maleCow1 = generateCow({ gender: genders.MALE, happiness: 1 })

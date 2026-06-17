@@ -4,9 +4,8 @@ import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
 import { noop } from '../../utils/noop.js'
-import { testItem } from '../../test-utils/index.js'
-
 import QuickSelect from './QuickSelect.js'
+import { testItem } from "../../test-utils/testItem.js";
 
 // Mock sortItems to avoid itemsMap dependency issues
 vi.mock('../../utils/index.js', async () => {

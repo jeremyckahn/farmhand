@@ -4,11 +4,9 @@ import {
   INFINITE_STORAGE_LIMIT,
 } from '../../constants.js'
 import { huggingMachine } from '../../data/items.js'
-import { testState } from '../../test-utils/index.js'
-
-import { generateCow } from "../../utils/generateCow.js";
-
 import { processCowAttrition } from './processCowAttrition.js'
+import { generateCow } from "../../utils/generateCow.js";
+import { testState } from "../../test-utils/testState.js";
 
 describe('processCowAttrition', () => {
   test('unfed cows leave', () => {

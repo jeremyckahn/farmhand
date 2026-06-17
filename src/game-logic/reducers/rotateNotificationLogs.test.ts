@@ -1,7 +1,6 @@
 import { NOTIFICATION_LOG_SIZE } from '../../constants.js'
-import { testState } from '../../test-utils/index.js'
-
 import { rotateNotificationLogs } from './rotateNotificationLogs.js'
+import { testState } from "../../test-utils/testState.js";
 
 describe('rotateNotificationLogs', () => {
   test('rotates logs', () => {

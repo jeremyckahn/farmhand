@@ -9,6 +9,7 @@ import {
   I_AM_RICH_BONUSES,
 } from '../constants.js'
 
+import { itemsMap } from './maps.js'
 import { doesPlotContainCrop } from "../utils/doesPlotContainCrop.js";
 import { dollarString } from "../utils/dollarString.js";
 import { getCropLifeStage } from "../utils/getCropLifeStage.js";
@@ -17,8 +18,6 @@ import { integerString } from "../utils/integerString.js";
 import { isOctober } from "../utils/isOctober.js";
 import { moneyTotal } from "../utils/moneyTotal.js";
 import { percentageString } from "../utils/percentageString.js";
-
-import { itemsMap } from './maps.js'
 
 const { SEED } = cropLifeStage
 

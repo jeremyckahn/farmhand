@@ -90,6 +90,9 @@ import NotificationSystem, {
 import Stage from '../Stage/index.js'
 import UpdateNotifier from '../UpdateNotifier/index.js'
 
+import FarmhandContext, { BoundHandlers } from './Farmhand.context.js'
+import { FarmhandProps, FarmhandReducers } from './FarmhandReducers.js'
+import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
 import { computeMarketPositions } from "../../utils/computeMarketPositions.js";
 import { createNewField } from "../../utils/createNewField.js";
 import { createNewForest } from "../../utils/createNewForest.js";
@@ -104,10 +107,6 @@ import { nullArray } from "../../utils/nullArray.js";
 import { reduceByPersistedKeys } from "../../utils/reduceByPersistedKeys.js";
 import { sleep } from "../../utils/sleep.js";
 import { transformStateDataForImport } from "../../utils/transformStateDataForImport.js";
-
-import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
-import { FarmhandProps, FarmhandReducers } from './FarmhandReducers.js'
-import FarmhandContext, { BoundHandlers } from './Farmhand.context.js'
 
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 

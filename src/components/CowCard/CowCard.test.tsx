@@ -1,16 +1,14 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-
 import { noop } from '../../utils/noop.js'
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import { cowColors, genders } from '../../enums.js'
 
 import uiEvents from '../../handlers/ui-events.js'
 
-import { generateCow } from "../../utils/generateCow.js";
-
 import { CowCard } from './CowCard.js'
+import { generateCow } from "../../utils/generateCow.js";
 
 describe('CowCard', () => {
   const cow = generateCow({

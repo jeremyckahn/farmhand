@@ -5,7 +5,6 @@ import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp.js'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown.js'
 import NumberFormat from 'react-number-format'
 import TextField from '@mui/material/TextField/index.js'
-
 import AnimatedNumber from '../AnimatedNumber/index.js'
 import { Span } from '../Elements/index.js'
 

@@ -1,4 +1,3 @@
-import { testCrop } from '../../test-utils/index.js'
 import {
   RAIN_MESSAGE,
   STORM_MESSAGE,
@@ -8,9 +7,9 @@ import { SCARECROW_ITEM_ID } from '../../constants.js'
 import { fertilizerType } from '../../enums.js'
 import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
-import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
-
 import { applyPrecipitation } from './applyPrecipitation.js'
+import { testCrop } from "../../test-utils/testCrop.js";
+import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
 
 vitest.mock('../../data/maps.js')
 vitest.mock('../../data/items.js')

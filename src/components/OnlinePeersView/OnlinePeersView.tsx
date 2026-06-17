@@ -14,9 +14,8 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import CowCard from '../CowCard/index.js'
 
-import { getPlayerName } from "../../utils/getPlayerName.js";
-
 import OnlinePeer from './OnlinePeer/index.js'
+import { getPlayerName } from "../../utils/getPlayerName.js";
 
 const OnlinePeersView = ({
   activePlayers,

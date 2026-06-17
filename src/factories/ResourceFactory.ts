@@ -9,11 +9,10 @@ import { randomNumberService } from '../common/services/randomNumber.js'
 // eslint-disable-next-line no-unused-vars
 import { Factory } from '../interfaces/Factory.js'
 
-import { randomChoice } from "../utils/randomChoice.js";
-
 import OreFactory from './OreFactory.js'
 import CoalFactory from './CoalFactory.js'
 import StoneFactory from './StoneFactory.js'
+import { randomChoice } from "../utils/randomChoice.js";
 
 /**
  * Object for private cache of factory instances

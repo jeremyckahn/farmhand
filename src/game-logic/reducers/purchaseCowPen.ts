@@ -1,10 +1,9 @@
 import { EXPERIENCE_VALUES, PURCHASEABLE_COW_PENS } from '../../constants.js'
 import { COW_PEN_PURCHASED } from '../../templates.js'
 
-import { moneyTotal } from "../../utils/moneyTotal.js";
-
 import { addExperience } from './addExperience.js'
 import { showNotification } from './showNotification.js'
+import { moneyTotal } from "../../utils/moneyTotal.js";
 
 export const purchaseCowPen = (
   state: farmhand.state,

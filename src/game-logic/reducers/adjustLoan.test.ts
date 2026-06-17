@@ -1,7 +1,7 @@
-import { testState } from '../../test-utils/index.js'
 import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates.js'
 
 import { adjustLoan } from './adjustLoan.js'
+import { testState } from "../../test-utils/testState.js";
 
 describe('adjustLoan', () => {
   test('updates state', () => {

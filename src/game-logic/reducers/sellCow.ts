@@ -1,10 +1,8 @@
-import { getCowColorId } from "../../utils/getCowColorId.js";
-
-import { getCowValue } from "../../utils/getCowValue.js";
-
 import { addRevenue } from './addRevenue.js'
 
 import { removeCowFromInventory } from './removeCowFromInventory.js'
+import { getCowColorId } from "../../utils/getCowColorId.js";
+import { getCowValue } from "../../utils/getCowValue.js";
 
 export const sellCow = (
   state: farmhand.state,

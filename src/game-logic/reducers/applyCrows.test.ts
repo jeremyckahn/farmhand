@@ -1,9 +1,9 @@
 import { MAX_CROWS, SCARECROW_ITEM_ID } from '../../constants.js'
 import { findInField } from '../../utils/findInField.js'
 import { randomNumberService } from '../../common/services/randomNumber.js'
-import { testState, testCrop } from '../../test-utils/index.js'
-
 import { applyCrows, forEachPlot } from './applyCrows.js'
+import { testState } from "../../test-utils/testState.js";
+import { testCrop } from "../../test-utils/testCrop.js";
 
 const CARROT = 'carrot'
 

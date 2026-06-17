@@ -22,7 +22,6 @@ import { memoize } from '../../utils/memoize.js'
 import Achievement from '../Achievement/index.js'
 
 import { SnowBackground } from './SnowBackground.js'
-
 import './Home.sass'
 import { isDecember } from "../../utils/isDecember.js";
 

@@ -1,7 +1,6 @@
 import { toolLevel, toolType } from '../../enums.js'
-import { testState } from '../../test-utils/index.js'
-
 import { unlockTool } from './unlockTool.js'
+import { testState } from "../../test-utils/testState.js";
 
 describe('unlockTool', () => {
   it('unlocks the specified tool', () => {

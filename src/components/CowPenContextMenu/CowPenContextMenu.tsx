@@ -18,7 +18,6 @@ import CowCard from '../CowCard/index.js'
 import SearchBar from '../SearchBar/index.js'
 
 import { TabPanel, a11yProps } from './TabPanel/index.js'
-
 import './CowPenContextMenu.sass'
 import { findCowById } from "../../utils/findCowById.js";
 import { getCowSellValue } from "../../utils/getCowSellValue.js";

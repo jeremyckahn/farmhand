@@ -2,10 +2,8 @@ import { vi } from 'vitest'
 
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import { genders, standardCowColors } from '../../enums.js'
-import { testState } from '../../test-utils/index.js'
-import * as utils from '../../utils/index.js'
-
 import { purchaseCow } from './purchaseCow.js'
+import { testState } from "../../test-utils/testState.js";
 
 describe('purchaseCow', () => {
   let state: farmhand.state

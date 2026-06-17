@@ -1,8 +1,7 @@
 import { carrot } from '../../data/crops/index.js'
 import { salt } from '../../data/recipes.js'
-import { testState } from '../../test-utils/index.js'
-
 import { makeFermentationRecipe } from './makeFermentationRecipe.js'
+import { testState } from "../../test-utils/testState.js";
 
 describe('makeFermentationRecipe', () => {
   test.each([

@@ -2,9 +2,9 @@ import { randomNumberService } from '../../common/services/randomNumber.js'
 import { goldOre } from '../../data/ores/index.js'
 import { ResourceFactory } from '../../factories/index.js'
 import { toolType, toolLevel } from '../../enums.js'
-import { testState, testCrop } from '../../test-utils/index.js'
-
 import { minePlot } from './minePlot.js'
+import { testState } from "../../test-utils/testState.js";
+import { testCrop } from "../../test-utils/testCrop.js";
 
 describe('minePlot', () => {
   let gameState: farmhand.state

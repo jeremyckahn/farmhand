@@ -1,8 +1,7 @@
-import { testCrop, testState } from '../../test-utils/index.js'
-
-import { shouldPrecipitateToday } from "../../utils/shouldPrecipitateToday.js";
-
 import { processWeather } from './processWeather.js'
+import { testCrop } from "../../test-utils/testCrop.js";
+import { testState } from "../../test-utils/testState.js";
+import { shouldPrecipitateToday } from "../../utils/shouldPrecipitateToday.js";
 
 vitest.mock('../../data/maps.js')
 vitest.mock('../../utils/index.js', async () => ({

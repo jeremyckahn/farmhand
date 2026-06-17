@@ -3,12 +3,12 @@ import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import { stageFocusType } from '../../../src/enums.js'
-import { testState } from '../../test-utils/index.js'
 import FarmhandContext, {
   createContextData,
 } from '../Farmhand/Farmhand.context.js'
 
 import { Stage } from './Stage.js'
+import { testState } from "../../test-utils/testState.js";
 
 // Mock child components to avoid their complex dependencies
 vi.mock('../Field/index.js', () => ({

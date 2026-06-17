@@ -1,13 +1,11 @@
 import { PURCHASED_ITEM_PEER_NOTIFICATION } from '../../templates.js'
 
-
-import { getAdjustedItemValue } from "../../utils/getAdjustedItemValue.js";
-import { inventorySpaceRemaining } from "../../utils/inventorySpaceRemaining.js";
-import { moneyTotal } from "../../utils/moneyTotal.js";
-
 import { addItemToInventory } from './addItemToInventory.js'
 
 import { prependPendingPeerMessage } from './index.js'
+import { getAdjustedItemValue } from "../../utils/getAdjustedItemValue.js";
+import { inventorySpaceRemaining } from "../../utils/inventorySpaceRemaining.js";
+import { moneyTotal } from "../../utils/moneyTotal.js";
 
 export const purchaseItem = (
   state: farmhand.state,
