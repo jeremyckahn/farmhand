@@ -13,10 +13,10 @@ import {
   WINE_GROWTH_TIMELINE_CAP,
   WINE_INTEREST_RATE,
 } from '../../constants.js'
-
-import { integerString } from '../../utils/index.js'
 import { itemsMap } from '../../data/maps.js'
 import { FERMENTED_CROP_NAME } from '../../templates.js'
+
+import { integerString } from "../../utils/integerString.js";
 
 import { TabPanel } from './TabPanel/index.js'
 import { Keg } from './Keg.js'

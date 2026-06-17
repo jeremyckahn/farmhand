@@ -1,6 +1,6 @@
 import { testCrop, testState } from '../../test-utils/index.js'
 
-import { shouldPrecipitateToday } from '../../utils/index.js'
+import { shouldPrecipitateToday } from "../../utils/shouldPrecipitateToday.js";
 
 import { processWeather } from './processWeather.js'
 

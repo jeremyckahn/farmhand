@@ -1,9 +1,9 @@
 import { testCrop, testItem } from '../../test-utils/index.js'
 import { SPRINKLER_ITEM_ID } from '../../constants.js'
 import { fieldMode } from '../../enums.js'
-import { getPlotContentFromItemId } from '../../utils/index.js'
-
 import { testState } from '../../test-utils/index.js'
+
+import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
 
 import { setSprinkler } from './setSprinkler.js'
 

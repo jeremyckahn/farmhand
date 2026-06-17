@@ -25,11 +25,6 @@ import Typography from '@mui/material/Typography/index.js'
 import { array, bool, func, number, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import {
-  doesInventorySpaceRemain,
-  integerString,
-  inventorySpaceConsumed,
-} from '../../utils/index.js'
 import { dialogView } from '../../enums.js'
 import {
   DEFAULT_ROOM,
@@ -50,6 +45,9 @@ import KeybindingsView from '../KeybindingsView/index.js'
 import DayAndProgressContainer from './DayAndProgressContainer.js'
 
 import './Navigation.sass'
+import { doesInventorySpaceRemain } from "../../utils/doesInventorySpaceRemain.js";
+import { integerString } from "../../utils/integerString.js";
+import { inventorySpaceConsumed } from "../../utils/inventorySpaceConsumed.js";
 
 const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
   const [displayedFarmName, setDisplayedFarmName] = useState(farmName)

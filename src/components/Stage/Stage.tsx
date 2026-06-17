@@ -11,9 +11,9 @@ import Shop from '../Shop/index.js'
 import Workshop from '../Workshop/index.js'
 import { Cellar } from '../Cellar/index.js'
 import { stageFocusType } from '../../enums.js'
-import { isOctober, isDecember } from '../../utils/index.js'
-
 import './Stage.sass'
+import { isOctober } from "../../utils/isOctober.js";
+import { isDecember } from "../../utils/isDecember.js";
 
 export const Stage = ({ field, stageFocus, viewTitle }) => {
   const ref = /** @type {React.MutableRefObject<HTMLDivElement | null>} */ useRef(

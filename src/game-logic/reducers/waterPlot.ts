@@ -1,5 +1,6 @@
-import { getPlotContentType } from '../../utils/index.js'
 import { itemType } from '../../enums.js'
+
+import { getPlotContentType } from "../../utils/getPlotContentType.js";
 
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
 

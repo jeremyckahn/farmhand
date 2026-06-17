@@ -8,7 +8,8 @@ import CowCard from '../../CowCard/index.js'
 
 import { moneyString } from '../../../utils/moneyString.js'
 import { levelAchieved } from '../../../utils/levelAchieved.js'
-import { getPlayerName, integerString } from '../../../utils/index.js'
+import { getPlayerName } from "../../../utils/getPlayerName.js";
+import { integerString } from "../../../utils/integerString.js";
 
 const OnlinePeer = ({
   peer: { cowOfferedForTrade, dayCount, playerId, experience, money },

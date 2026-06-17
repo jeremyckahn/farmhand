@@ -13,7 +13,6 @@ import { itemsMap } from '../../data/maps.js'
 import { wineService } from '../../services/wine.js'
 import { grapeVariety } from '../../enums.js'
 import { wines } from '../../img/index.js'
-import { integerString } from '../../utils/index.js'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
 import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
@@ -24,6 +23,7 @@ import {
 import { cellarService } from '../../services/cellar.js'
 import QuantityInput from '../QuantityInput/index.js'
 import { yeast } from '../../data/recipes.js'
+import { integerString } from "../../utils/integerString.js";
 
 export const WineRecipe = ({
   wineVariety,

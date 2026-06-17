@@ -1,8 +1,9 @@
 import { huggingMachine } from '../../data/items.js'
-import { generateCow } from '../../utils/index.js'
 import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+
+import { generateCow } from "../../utils/generateCow.js";
 
 import { changeCowAutomaticHugState } from './changeCowAutomaticHugState.js'
 

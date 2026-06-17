@@ -1,6 +1,6 @@
 import { goldOre, ironOre, bronzeOre, silverOre } from '../data/ores/index.js'
 import { Factory } from '../interfaces/Factory.js'
-import { randomChoice } from '../utils/index.js'
+import { randomChoice } from "../utils/randomChoice.js";
 
 const SPAWNABLE_ORES = [goldOre, ironOre, bronzeOre, silverOre]
 

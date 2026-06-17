@@ -1,12 +1,12 @@
 import { levels } from '../../data/levels.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
-import {
-  getRandomLevelUpReward,
-  getRandomLevelUpRewardQuantity,
-} from '../../utils/index.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { SPRINKLER_ITEM_ID } from '../../constants.js'
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates.js'
+
+import { getRandomLevelUpReward } from "../../utils/getRandomLevelUpReward.js";
+
+import { getRandomLevelUpRewardQuantity } from "../../utils/getRandomLevelUpRewardQuantity.js";
 
 import { addItemToInventory } from './addItemToInventory.js'
 import { showNotification } from './showNotification.js'

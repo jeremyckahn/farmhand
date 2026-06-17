@@ -1,6 +1,7 @@
 import { itemsMap } from '../../data/maps.js'
-import { areHuggingMachinesInInventory } from '../../utils/index.js'
 import { HUGGING_MACHINE_ITEM_ID } from '../../constants.js'
+
+import { areHuggingMachinesInInventory } from "../../utils/areHuggingMachinesInInventory.js";
 
 import { addItemToInventory } from './addItemToInventory.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'

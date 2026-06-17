@@ -3,9 +3,10 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
-import { generateCow } from '../../utils/index.js'
 import { cowColors } from '../../enums.js'
 import { noop } from '../../utils/noop.js'
+
+import { generateCow } from "../../utils/generateCow.js";
 
 import { Cow } from './Cow.js'
 

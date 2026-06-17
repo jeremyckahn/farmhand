@@ -1,8 +1,9 @@
-import { getCostOfNextStorageExpansion, moneyTotal } from '../../utils/index.js'
 import {
   INFINITE_STORAGE_LIMIT,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants.js'
+import { getCostOfNextStorageExpansion } from "../../utils/getCostOfNextStorageExpansion.js";
+import { moneyTotal } from "../../utils/moneyTotal.js";
 
 export const purchaseStorageExpansion = (
   state: farmhand.state

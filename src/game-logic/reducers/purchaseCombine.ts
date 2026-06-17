@@ -1,5 +1,5 @@
-import { moneyTotal } from '../../utils/index.js'
 import { PURCHASEABLE_COMBINES } from '../../constants.js'
+import { moneyTotal } from "../../utils/moneyTotal.js";
 
 export const purchaseCombine = (
   state: farmhand.state,

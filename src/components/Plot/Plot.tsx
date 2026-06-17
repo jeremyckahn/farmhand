@@ -4,11 +4,6 @@ import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import {
-  getCropLifeStage,
-  getPlotContentType,
-  getPlotImage,
-} from '../../utils/index.js'
 import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
 import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps.js'
 import { pixel, plotStates } from '../../img/index.js'
@@ -19,6 +14,9 @@ import { SHOVELED } from '../../strings.js'
 
 import './Plot.sass'
 import { SHOVELED_PLOT } from '../../templates.js'
+import { getCropLifeStage } from "../../utils/getCropLifeStage.js";
+import { getPlotContentType } from "../../utils/getPlotContentType.js";
+import { getPlotImage } from "../../utils/getPlotImage.js";
 
 export const getBackgroundStyles = (
   plotContent: farmhand.plotContent | null

@@ -11,14 +11,6 @@ import sortBy from 'lodash.sortby'
 
 import Item from '../Item/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-
-import {
-  findCowById,
-  getCowSellValue,
-  getCowWeight,
-  isCowInBreedingPen,
-  nullArray,
-} from '../../utils/index.js'
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import cowShopInventory from '../../data/shop-inventory-cow.js'
 
@@ -26,7 +18,13 @@ import CowCard from '../CowCard/index.js'
 import SearchBar from '../SearchBar/index.js'
 
 import { TabPanel, a11yProps } from './TabPanel/index.js'
+
 import './CowPenContextMenu.sass'
+import { findCowById } from "../../utils/findCowById.js";
+import { getCowSellValue } from "../../utils/getCowSellValue.js";
+import { getCowWeight } from "../../utils/getCowWeight.js";
+import { isCowInBreedingPen } from "../../utils/isCowInBreedingPen.js";
+import { nullArray } from "../../utils/nullArray.js";
 
 const { AGE, COLOR, GENDER, HAPPINESS, VALUE, WEIGHT } = {
   AGE: 'AGE',

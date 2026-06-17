@@ -1,9 +1,8 @@
-import {
-  doesInventorySpaceRemain,
-  getCowMilkItem,
-  getCowMilkRate,
-} from '../../utils/index.js'
 import { MILKS_PRODUCED } from '../../templates.js'
+
+import { doesInventorySpaceRemain } from "../../utils/doesInventorySpaceRemain.js";
+import { getCowMilkItem } from "../../utils/getCowMilkItem.js";
+import { getCowMilkRate } from "../../utils/getCowMilkRate.js";
 
 import { addItemToInventory } from './addItemToInventory.js'
 

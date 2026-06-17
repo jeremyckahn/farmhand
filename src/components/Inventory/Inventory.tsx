@@ -10,9 +10,9 @@ import { array } from 'prop-types'
 import FarmhandContext, { ContextData } from '../Farmhand/Farmhand.context.js'
 import Item from '../Item/index.js'
 import { itemsMap } from '../../data/maps.js'
-import { sortItems } from '../../utils/index.js'
 import SearchBar from '../SearchBar/index.js'
 import './Inventory.sass'
+import { sortItems } from "../../utils/sortItems.js";
 
 // Using Map for categories to preserve key order and enable Map methods
 export const categoryIds = new Map([

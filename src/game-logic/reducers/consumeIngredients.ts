@@ -1,4 +1,4 @@
-import { canMakeRecipe } from '../../utils/index.js'
+import { canMakeRecipe } from "../../utils/canMakeRecipe.js";
 
 import { addExperience } from './addExperience.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'

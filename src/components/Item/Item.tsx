@@ -18,20 +18,18 @@ import { itemsMap } from '../../data/maps.js'
 import { itemIds as shopItemIds } from '../../data/shop-inventory.js'
 import { noop } from '../../utils/noop.js'
 import { moneyString } from '../../utils/moneyString.js'
-import {
-  inventorySpaceRemaining,
-  isItemSoldInShop,
-  getFinalCropItemFromSeedItem,
-  getItemCurrentValue,
-  getResaleValue,
-  getSalePriceMultiplier,
-  integerString,
-} from '../../utils/index.js'
 import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
 import QuantityInput from '../QuantityInput/index.js'
 import AnimatedNumber from '../AnimatedNumber/index.js'
 
 import './Item.sass'
+import { inventorySpaceRemaining } from "../../utils/inventorySpaceRemaining.js";
+import { isItemSoldInShop } from "../../utils/isItemSoldInShop.js";
+import { getFinalCropItemFromSeedItem } from "../../utils/getFinalCropItemFromSeedItem.js";
+import { getItemCurrentValue } from "../../utils/getItemCurrentValue.js";
+import { getResaleValue } from "../../utils/getResaleValue.js";
+import { getSalePriceMultiplier } from "../../utils/getSalePriceMultiplier.js";
+import { integerString } from "../../utils/integerString.js";
 
 interface ValueIndicatorProps {
   poorValue: boolean

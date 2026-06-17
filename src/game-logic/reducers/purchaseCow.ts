@@ -1,5 +1,8 @@
-import { generateCow, getCowValue, moneyTotal } from '../../utils/index.js'
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
+
+import { generateCow } from "../../utils/generateCow.js";
+import { getCowValue } from "../../utils/getCowValue.js";
+import { moneyTotal } from "../../utils/moneyTotal.js";
 
 import { addCowToInventory } from './addCowToInventory.js'
 

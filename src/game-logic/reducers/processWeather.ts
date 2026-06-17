@@ -1,4 +1,4 @@
-import { shouldPrecipitateToday } from '../../utils/index.js'
+import { shouldPrecipitateToday } from "../../utils/shouldPrecipitateToday.js";
 
 import { applyChanceEvent } from './helpers.js'
 import { applyPrecipitation } from './applyPrecipitation.js'

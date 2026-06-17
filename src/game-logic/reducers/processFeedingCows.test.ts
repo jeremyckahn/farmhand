@@ -4,9 +4,9 @@ import {
   COW_WEIGHT_MULTIPLIER_MAXIMUM,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
 } from '../../constants.js'
-
-import { generateCow } from '../../utils/index.js'
 import { testState } from '../../test-utils/index.js'
+
+import { generateCow } from "../../utils/generateCow.js";
 
 import { processFeedingCows } from './processFeedingCows.js'
 

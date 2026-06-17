@@ -1,6 +1,6 @@
 import { fertilizerType, itemType } from '../../enums.js'
-import { getPlotContentType } from '../../utils/index.js'
 import { FERTILIZER_BONUS } from '../../constants.js'
+import { getPlotContentType } from "../../utils/getPlotContentType.js";
 
 export const incrementPlotContentAge = (
   crop: farmhand.crop | null

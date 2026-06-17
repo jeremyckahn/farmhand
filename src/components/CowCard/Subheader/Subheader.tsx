@@ -13,18 +13,16 @@ import { CowCardProps } from '../CowCard.js'
 import { huggingMachine } from '../../../data/items.js'
 import { genders } from '../../../enums.js'
 import { COW_COLOR_NAMES } from '../../../strings.js'
-import {
-  getCowWeight,
-  getPlayerName,
-  integerString,
-  isCowInBreedingPen,
-  nullArray,
-} from '../../../utils/index.js'
 import { memoize } from '../../../utils/memoize.js'
 import { moneyString } from '../../../utils/moneyString.js'
 import Bloodline from '../Bloodline/index.js'
 
 import './Subheader.sass'
+import { getCowWeight } from "../../../utils/getCowWeight.js";
+import { getPlayerName } from "../../../utils/getPlayerName.js";
+import { integerString } from "../../../utils/integerString.js";
+import { isCowInBreedingPen } from "../../../utils/isCowInBreedingPen.js";
+import { nullArray } from "../../../utils/nullArray.js";
 
 // The extra 0.5 is for rounding up to the next full heart. This allows a fully
 // happy cow to have full hearts on the beginning of a new day.

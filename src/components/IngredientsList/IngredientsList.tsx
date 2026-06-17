@@ -3,9 +3,8 @@ import classNames from 'classnames'
 import { object, shape, string } from 'prop-types'
 
 import { INGREDIENTS_LIST_ITEM } from '../../templates.js'
-
-import { integerString } from '../../utils/index.js'
 import { itemsMap } from '../../data/maps.js'
+import { integerString } from "../../utils/integerString.js";
 
 export default function IngredientsList({
   playerInventoryQuantities,

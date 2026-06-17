@@ -1,6 +1,7 @@
 import { COW_HUG_BENEFIT, MAX_DAILY_COW_HUG_BENEFITS } from '../../constants.js'
-import { generateCow } from '../../utils/index.js'
 import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
+
+import { generateCow } from "../../utils/generateCow.js";
 
 import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay.js'
 

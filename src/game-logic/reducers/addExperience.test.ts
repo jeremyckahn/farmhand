@@ -1,5 +1,6 @@
-import { experienceNeededForLevel } from '../../utils/index.js'
 import { testState } from '../../test-utils/index.js'
+
+import { experienceNeededForLevel } from "../../utils/experienceNeededForLevel.js";
 
 import { addExperience } from './addExperience.js'
 

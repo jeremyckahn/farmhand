@@ -1,4 +1,4 @@
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from "../../utils/generateCow.js";
 
 export const getCowStub = (overrides = {}) => {
   const cow = generateCow({

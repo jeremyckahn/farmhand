@@ -12,11 +12,6 @@ import Typography from '@mui/material/Typography/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { features } from '../../config.js'
 import { moneyString } from '../../utils/moneyString.js'
-import {
-  dollarString,
-  getCostOfNextStorageExpansion,
-  integerString,
-} from '../../utils/index.js'
 import { memoize } from '../../utils/memoize.js'
 import { items } from '../../img/index.js'
 import { itemType, stageFocusType, toolType } from '../../enums.js'
@@ -37,6 +32,9 @@ import TierPurchase from '../TierPurchase/index.js'
 import { TabPanel, a11yProps } from './TabPanel/index.js'
 
 import './Shop.sass'
+import { dollarString } from "../../utils/dollarString.js";
+import { getCostOfNextStorageExpansion } from "../../utils/getCostOfNextStorageExpansion.js";
+import { integerString } from "../../utils/integerString.js";
 
 const categorizeShopInventory = memoize(
   (

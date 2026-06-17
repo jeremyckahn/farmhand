@@ -1,6 +1,7 @@
-import { generateCow } from '../../utils/index.js'
 import { generateValueAdjustments } from '../../common/utils.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'
+
+import { generateCow } from "../../utils/generateCow.js";
 
 import { addExperience } from './addExperience.js'
 import { applyLoanInterest } from './applyLoanInterest.js'

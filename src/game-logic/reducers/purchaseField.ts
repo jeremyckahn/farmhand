@@ -1,5 +1,7 @@
-import { moneyTotal, nullArray } from '../../utils/index.js'
 import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
+
+import { moneyTotal } from "../../utils/moneyTotal.js";
+import { nullArray } from "../../utils/nullArray.js";
 
 import { addExperience } from './addExperience.js'
 

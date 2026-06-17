@@ -10,7 +10,6 @@ import { func, number } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { moneyString } from '../../utils/moneyString.js'
-import { dollarString, moneyTotal } from '../../utils/index.js'
 import {
   STANDARD_LOAN_AMOUNT,
   LOAN_INTEREST_RATE,
@@ -18,6 +17,8 @@ import {
 } from '../../constants.js'
 
 import './AccountingView.sass'
+import { dollarString } from "../../utils/dollarString.js";
+import { moneyTotal } from "../../utils/moneyTotal.js";
 
 interface MoneyNumberFormatProps {
   max: number

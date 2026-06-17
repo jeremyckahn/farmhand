@@ -1,5 +1,6 @@
-import { moneyTotal } from '../../utils/index.js'
 import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates.js'
+
+import { moneyTotal } from "../../utils/moneyTotal.js";
 
 import { showNotification } from './showNotification.js'
 

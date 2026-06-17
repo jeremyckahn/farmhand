@@ -1,6 +1,7 @@
 import { COW_GESTATION_PERIOD_DAYS } from '../../constants.js'
-import { generateCow } from '../../utils/index.js'
 import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
+
+import { generateCow } from "../../utils/generateCow.js";
 
 import { changeCowBreedingPenResident } from './changeCowBreedingPenResident.js'
 

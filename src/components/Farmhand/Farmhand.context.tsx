@@ -2,8 +2,8 @@ import { createContext } from 'react'
 
 // eslint-disable-next-line no-unused-vars
 import uiEventHandlers from '../../handlers/ui-events.js'
-import { generateCow } from '../../utils/index.js'
 import { scarecrow } from '../../data/items.js'
+import { generateCow } from "../../utils/generateCow.js";
 
 /**
  * A utility type that transforms a type containing functions with an explicit `this` parameter

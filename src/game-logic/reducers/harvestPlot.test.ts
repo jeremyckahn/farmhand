@@ -1,8 +1,8 @@
 import { testCrop, testState } from '../../test-utils/index.js'
 import { fertilizerType, toolType, toolLevel } from '../../enums.js'
-import { getPlotContentFromItemId } from '../../utils/index.js'
-
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+
+import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
 
 import { harvestPlot } from './harvestPlot.js'
 

@@ -1,6 +1,7 @@
 import { STORAGE_EXPANSION_AMOUNT } from '../../constants.js'
-import { getCostOfNextStorageExpansion } from '../../utils/index.js'
 import { testState } from '../../test-utils/index.js'
+
+import { getCostOfNextStorageExpansion } from "../../utils/getCostOfNextStorageExpansion.js";
 
 import { purchaseStorageExpansion } from './purchaseStorageExpansion.js'
 

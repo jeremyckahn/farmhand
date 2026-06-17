@@ -11,7 +11,6 @@ import { items, wines } from '../../img/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { getKegValue } from '../../utils/getKegValue.js'
 import { moneyString } from '../../utils/moneyString.js'
-import { getSalePriceMultiplier } from '../../utils/index.js'
 import { FERMENTED_CROP_NAME } from '../../templates.js'
 import AnimatedNumber from '../AnimatedNumber/index.js'
 
@@ -19,6 +18,7 @@ import './Keg.sass'
 import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
 import { wineService } from '../../services/wine.js'
 import { cellarService } from '../../services/cellar.js'
+import { getSalePriceMultiplier } from "../../utils/getSalePriceMultiplier.js";
 
 export function Keg({ keg }: { keg: farmhand.keg }) {
   const {

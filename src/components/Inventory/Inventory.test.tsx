@@ -2,12 +2,13 @@ import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 
 import { testItem } from '../../test-utils/index.js'
-import { sortItems } from '../../utils/index.js'
 import { generateValueAdjustments } from '../../common/utils.js'
 import { pumpkinSeed, carrotSeed } from '../../data/crops/index.js'
 import FarmhandContext, {
   createContextData,
 } from '../Farmhand/Farmhand.context.js'
+
+import { sortItems } from "../../utils/sortItems.js";
 
 import { separateItemsIntoCategories } from './Inventory.js'
 

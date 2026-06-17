@@ -20,10 +20,11 @@ import QuickSelect from '../QuickSelect/index.js'
 import { fieldMode } from '../../enums.js'
 import tools from '../../data/tools.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
-import { doesInventorySpaceRemain, nullArray } from '../../utils/index.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 
 import './Field.sass'
+import { doesInventorySpaceRemain } from "../../utils/doesInventorySpaceRemain.js";
+import { nullArray } from "../../utils/nullArray.js";
 
 const {
   CLEANUP,

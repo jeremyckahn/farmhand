@@ -1,6 +1,7 @@
-import { castToMoney, moneyTotal } from '../../utils/index.js'
 import { LOAN_INTEREST_RATE } from '../../constants.js'
 import { LOAN_BALANCE_NOTIFICATION } from '../../templates.js'
+import { castToMoney } from "../../utils/castToMoney.js";
+import { moneyTotal } from "../../utils/moneyTotal.js";
 
 export const applyLoanInterest = (state: farmhand.state): farmhand.state => {
   const newLoanBalance = moneyTotal(

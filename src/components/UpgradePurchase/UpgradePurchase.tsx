@@ -9,13 +9,13 @@ import { array, func, number, object } from 'prop-types'
 import IngredientsList from '../IngredientsList/index.js'
 
 import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe.js'
-import { canMakeRecipe, doesInventorySpaceRemain } from '../../utils/index.js'
-
 import { craftedItems } from '../../img/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import './UpgradePurchase.sass'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { canMakeRecipe } from "../../utils/canMakeRecipe.js";
+import { doesInventorySpaceRemain } from "../../utils/doesInventorySpaceRemain.js";
 
 export function UpgradePurchase({
   handleUpgradeTool,

@@ -1,4 +1,3 @@
-import { clampNumber } from '../../utils/index.js'
 import {
   COW_FEED_ITEM_ID,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,
@@ -6,6 +5,8 @@ import {
   COW_WEIGHT_MULTIPLIER_MINIMUM,
 } from '../../constants.js'
 import { OUT_OF_COW_FEED_NOTIFICATION } from '../../strings.js'
+
+import { clampNumber } from "../../utils/clampNumber.js";
 
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 

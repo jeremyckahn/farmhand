@@ -1,6 +1,7 @@
 import { MAX_ANIMAL_NAME_LENGTH } from '../../constants.js'
-import { generateCow } from '../../utils/index.js'
 import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
+
+import { generateCow } from "../../utils/generateCow.js";
 
 import { changeCowName } from './changeCowName.js'
 
