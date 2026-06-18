@@ -73,16 +73,17 @@ export const Shop = ({
   purchasedSmelter,
   shopInventory,
   toolLevels,
+  valueAdjustments,
 
   storageUpgradeCost = getCostOfNextStorageExpansion(inventoryLimit),
 }: {
-  handleCombinePurchase: () => void
-  handleComposterPurchase: () => void
-  handleCowPenPurchase: () => void
-  handleCellarPurchase: () => void
-  handleFieldPurchase: () => void
-  handleForestPurchase: () => void
-  handleSmelterPurchase: () => void
+  handleCombinePurchase: (id: number) => void
+  handleComposterPurchase: (id: number) => void
+  handleCowPenPurchase: (id: number) => void
+  handleCellarPurchase: (id: number) => void
+  handleFieldPurchase: (id: number) => void
+  handleForestPurchase: (id: number) => void
+  handleSmelterPurchase: (id: number) => void
   handleStorageExpansionPurchase: () => void
   inventoryLimit: number
   levelEntitlements: farmhand.levelEntitlements
@@ -96,6 +97,7 @@ export const Shop = ({
   purchasedSmelter: number
   shopInventory: farmhand.item[]
   toolLevels: Record<string, string>
+  valueAdjustments: Record<string, number>
   storageUpgradeCost?: number
 }) => {
   const [currentTab, setCurrentTab] = useState(0)
@@ -350,11 +352,17 @@ Shop.propTypes = {
   valueAdjustments: object.isRequired,
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(props: Partial<Parameters<typeof Shop>[0]>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Shop {...{ ...gameState, ...handlers, ...props }} />
+        <Shop
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof Shop>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

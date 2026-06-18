@@ -141,11 +141,19 @@ TierPurchase.propTypes = {
   title: string.isRequired,
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(
+  props: Partial<Parameters<typeof TierPurchase>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <TierPurchase {...{ ...gameState, ...handlers, ...props }} />
+        <TierPurchase
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof TierPurchase>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

@@ -10,7 +10,8 @@ import Tabs from '@mui/material/Tabs/index.js'
 import sortBy from 'lodash.sortby'
 
 import Item from '../Item/index.js'
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, { BoundHandlers } from '../Farmhand/Farmhand.context.js'
+import uiEventHandlers from '../../handlers/ui-events.js'
 
 import { findCowById } from '../../utils/findCowById.js'
 import { getCowSellValue } from '../../utils/getCowSellValue.js'
@@ -88,8 +89,12 @@ export const CowPenContextMenu = ({
   cowBreedingPen: farmhand.state['cowBreedingPen']
   cowForSale: farmhand.cow
   cowInventory: farmhand.cow[]
-  handleCowAutomaticHugChange: (cow: farmhand.cow, autoHug: boolean) => void
-  handleCowBreedChange: (cow: farmhand.cow, isBreeding: boolean) => void
+  handleCowAutomaticHugChange: BoundHandlers<
+    typeof uiEventHandlers
+  >['handleCowAutomaticHugChange']
+  handleCowBreedChange: BoundHandlers<
+    typeof uiEventHandlers
+  >['handleCowBreedChange']
   handleCowHugClick: (cow: farmhand.cow) => void
   handleCowNameInputChange: (value: string, cow: farmhand.cow) => void
   handleCowOfferClick: (cow: farmhand.cow) => void
@@ -328,7 +333,11 @@ export default function Consumer() {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <CowPenContextMenu {...({ ...gameState, ...handlers } as any)} />
+        <CowPenContextMenu
+          {...({ ...gameState, ...handlers } as Parameters<
+            typeof CowPenContextMenu
+          >[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

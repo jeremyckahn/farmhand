@@ -145,11 +145,17 @@ Recipe.propTypes = {
 
 export { Recipe }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(props: Partial<Parameters<typeof Recipe>[0]>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Recipe {...({ ...gameState, ...handlers, ...props } as any)} />
+        <Recipe
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof Recipe>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

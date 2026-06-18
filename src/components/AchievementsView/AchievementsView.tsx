@@ -83,11 +83,19 @@ AchievementsView.propTypes = {
   completedAchievements: object.isRequired,
 }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(
+  props: Partial<Parameters<typeof AchievementsView>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <AchievementsView {...{ ...gameState, ...handlers, ...props }} />
+        <AchievementsView
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof AchievementsView>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

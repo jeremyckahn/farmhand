@@ -68,12 +68,18 @@ DayAndProgressContainer.propTypes = {
   itemsSold: object.isRequired,
 }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(
+  props: Partial<Parameters<typeof DayAndProgressContainer>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
         <DayAndProgressContainer
-          {...({ ...gameState, ...handlers, ...props } as any)}
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof DayAndProgressContainer>[0])}
         />
       )}
     </FarmhandContext.Consumer>

@@ -200,11 +200,19 @@ Inventory.propTypes = {
   shopInventory: array,
 }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(
+  props: Partial<Parameters<typeof Inventory>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Inventory {...({ ...gameState, ...handlers, ...props } as any)} />
+        <Inventory
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof Inventory>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

@@ -434,7 +434,9 @@ Navigation.propTypes = {
   viewList: array.isRequired,
 }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(
+  props: Partial<Parameters<typeof Navigation>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
@@ -443,7 +445,7 @@ export default function Consumer(props: Record<string, unknown>) {
             ...gameState,
             ...handlers,
             ...props,
-          } as any)}
+          } as Parameters<typeof Navigation>[0])}
         />
       )}
     </FarmhandContext.Consumer>

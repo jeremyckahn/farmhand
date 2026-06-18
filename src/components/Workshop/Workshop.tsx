@@ -92,11 +92,19 @@ Workshop.propTypes = {
   toolLevels: object.isRequired,
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(
+  props: Partial<Parameters<typeof Workshop>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Workshop {...{ ...gameState, ...handlers, ...props }} />
+        <Workshop
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof Workshop>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

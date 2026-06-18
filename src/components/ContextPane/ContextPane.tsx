@@ -63,7 +63,11 @@ export default function Consumer() {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <ContextPane {...{ ...gameState, ...handlers }} />
+        <ContextPane
+          {...({ ...gameState, ...handlers } as Parameters<
+            typeof ContextPane
+          >[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

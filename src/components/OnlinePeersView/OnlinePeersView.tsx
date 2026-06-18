@@ -128,12 +128,18 @@ OnlinePeersView.propTypes = {
 
 export { OnlinePeersView }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(
+  props: Partial<Parameters<typeof OnlinePeersView>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
         <OnlinePeersView
-          {...({ ...gameState, ...handlers, ...props } as any)}
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof OnlinePeersView>[0])}
         />
       )}
     </FarmhandContext.Consumer>

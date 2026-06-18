@@ -380,7 +380,13 @@ export default function Consumer(
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <CowCard {...{ ...gameState, ...handlers, ...props }} />
+        <CowCard
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as CowCardProps)}
+        />
       )}
     </FarmhandContext.Consumer>
   )

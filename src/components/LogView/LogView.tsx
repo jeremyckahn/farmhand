@@ -88,11 +88,19 @@ LogView.propTypes = {
   todaysNotifications: array.isRequired,
 }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(
+  props: Partial<Parameters<typeof LogView>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <LogView {...({ ...gameState, ...handlers, ...props } as any)} />
+        <LogView
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof LogView>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

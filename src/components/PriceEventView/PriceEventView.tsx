@@ -51,11 +51,19 @@ PriceEventView.propTypes = {
 
 export { PriceEventView }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(
+  props: Partial<Parameters<typeof PriceEventView>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <PriceEventView {...({ ...gameState, ...handlers, ...props } as any)} />
+        <PriceEventView
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof PriceEventView>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

@@ -130,11 +130,19 @@ QuickSelect.propTypes = {
   selectedItemId: string.isRequired,
 }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(
+  props: Partial<Parameters<typeof QuickSelect>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <QuickSelect {...({ ...gameState, ...handlers, ...props } as any)} />
+        <QuickSelect
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof QuickSelect>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

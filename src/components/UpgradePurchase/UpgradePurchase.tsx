@@ -95,11 +95,19 @@ UpgradePurchase.propTypes = {
   upgrade: object,
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(
+  props: Partial<Parameters<typeof UpgradePurchase>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <UpgradePurchase {...{ ...gameState, ...handlers, ...props }} />
+        <UpgradePurchase
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof UpgradePurchase>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

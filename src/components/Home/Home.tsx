@@ -285,11 +285,17 @@ Home.propTypes = {
   handleViewChangeButtonClick: func.isRequired,
 }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(props: Partial<Parameters<typeof Home>[0]>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Home {...({ ...gameState, ...handlers, ...props } as any)} />
+        <Home
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof Home>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

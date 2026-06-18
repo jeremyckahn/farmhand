@@ -235,11 +235,19 @@ SettingsView.propTypes = {
 
 export { SettingsView }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(
+  props: Partial<Parameters<typeof SettingsView>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <SettingsView {...({ ...gameState, ...handlers, ...props } as any)} />
+        <SettingsView
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof SettingsView>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

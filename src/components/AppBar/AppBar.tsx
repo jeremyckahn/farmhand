@@ -142,11 +142,17 @@ AppBar.propTypes = {
   viewTitle: string.isRequired,
 }
 
-export default function Consumer(props: Record<string, unknown>) {
+export default function Consumer(props: Partial<Parameters<typeof AppBar>[0]>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <AppBar {...({ ...gameState, ...handlers, ...props } as any)} />
+        <AppBar
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof AppBar>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

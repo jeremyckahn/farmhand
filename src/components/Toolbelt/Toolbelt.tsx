@@ -122,11 +122,19 @@ Toolbelt.defaultProps = {
   toolLevels: {},
 }
 
-export default function Consumer(props: any) {
+export default function Consumer(
+  props: Partial<Parameters<typeof Toolbelt>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Toolbelt {...{ ...gameState, ...handlers, ...props }} />
+        <Toolbelt
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof Toolbelt>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )
