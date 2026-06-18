@@ -31,6 +31,9 @@ export const transformStateDataForImport = (
   // cowInventory, but at least one player's game somehow got into that state.
   // This block detects such an invalid state and corrects it.
   {
+    // TODO: Add defensive check safeguards for sanitizedState.cowBreedingPen
+    // and sanitizedState.cowInventory to prevent TypeError crashes during
+    // corrupt/legacy state imports.
     const { cowId1, cowId2 } = sanitizedState.cowBreedingPen
 
     const cowPenIdMap = (sanitizedState.cowInventory as farmhand.cow[]).reduce(

@@ -47,6 +47,8 @@ export const getPlotImage = (
 
     if (getPlotContentType(plotContents) === itemType.WEED) {
       const weedColors = ['yellow', 'orange', 'pink']
+      // TODO: Handle negative coordinates by using Math.abs(x * y) to avoid
+      // negative modulo index.
       const color = weedColors[(x * y) % weedColors.length]
 
       return itemImages[`weed-${color}`]

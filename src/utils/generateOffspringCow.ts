@@ -19,6 +19,8 @@ export const generateOffspringCow = (
 
   const maleCow = cow1.gender === genders.MALE ? cow1 : cow2
   const femaleCow = cow1.gender === genders.MALE ? cow2 : cow1
+  // TODO: Clean up the following legacy color mapping code which is no longer
+  // needed (scheduled for removal on 11/1/2020).
   const colorsInBloodline: Partial<Record<farmhand.cowColors, boolean>> = {
     // These lines are for backwards compatibility and can be removed on 11/1/2020
     [maleCow.color]: true,

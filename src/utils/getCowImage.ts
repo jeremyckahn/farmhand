@@ -17,6 +17,10 @@ const Jimp = configureJimp({
 })
 
 const colorizeCowTemplate = (() => {
+  // TODO: Remove unused cowImageWidth, cowImageHeight, and
+  // cowImageFactoryCanvas variables.
+  // Instantiating a canvas directly in the module scope also poses runtime
+  // risks in non-browser/SSR environments.
   const cowImageWidth = 48
   const cowImageHeight = 48
   const cowImageFactoryCanvas = document.createElement('canvas')
