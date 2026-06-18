@@ -3,8 +3,10 @@ import { MAX_LATEST_PEER_MESSAGES } from '../../constants.js'
 import { NEW_COW_OFFERED_FOR_TRADE } from '../../templates.js'
 import { getCowStub } from '../../test-utils/stubs/cowStub.js'
 import { getPeerMetadataStub } from '../../test-utils/stubs/peerMetadataStub.js'
+
+import { testState } from '../../test-utils/testState.js'
+
 import { updatePeer } from './updatePeer.js'
-import { testState } from "../../test-utils/testState.js";
 
 const stubPeerMetadata = getPeerMetadataStub()
 

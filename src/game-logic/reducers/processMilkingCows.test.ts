@@ -4,10 +4,12 @@ import {
   INFINITE_STORAGE_LIMIT,
 } from '../../constants.js'
 import { genders, standardCowColors } from '../../enums.js'
+
+import { generateCow } from '../../utils/generateCow.js'
+import { getCowMilkItem } from '../../utils/getCowMilkItem.js'
+import { testState } from '../../test-utils/testState.js'
+
 import { processMilkingCows } from './processMilkingCows.js'
-import { generateCow } from "../../utils/generateCow.js";
-import { getCowMilkItem } from "../../utils/getCowMilkItem.js";
-import { testState } from "../../test-utils/testState.js";
 
 describe('processMilkingCows', () => {
   let state: farmhand.state

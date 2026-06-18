@@ -16,9 +16,10 @@ import {
 import { itemsMap } from '../../data/maps.js'
 import { FERMENTED_CROP_NAME } from '../../templates.js'
 
+import { integerString } from '../../utils/integerString.js'
+
 import { TabPanel } from './TabPanel/index.js'
 import { Keg } from './Keg.js'
-import { integerString } from "../../utils/integerString.js";
 
 export const CellarInventoryTabPanel = ({
   index,

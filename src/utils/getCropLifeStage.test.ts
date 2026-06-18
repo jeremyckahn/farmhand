@@ -1,10 +1,8 @@
-import {
-    cropLifeStage
-} from '../enums.js'
-import {
-    getCropLifeStage
-} from './index.js'
-import { testCrop } from "../test-utils/testCrop.js";
+import { cropLifeStage } from '../enums.js'
+
+import { testCrop } from '../test-utils/testCrop.js'
+
+import { getCropLifeStage } from './index.js'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
@@ -31,7 +29,6 @@ const integerStringTests = [
   [1.5, '2'],
   [2, '2'],
 ]
-
 
 describe('getCropLifeStage', () => {
   test('maps a life cycle label to an image name chunk', () => {

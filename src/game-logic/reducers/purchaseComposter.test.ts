@@ -1,7 +1,9 @@
 import { EXPERIENCE_VALUES, PURCHASEABLE_COMPOSTERS } from '../../constants.js'
 import { RECYCLING_AVAILABLE_NOTIFICATION } from '../../strings.js'
+
+import { testState } from '../../test-utils/testState.js'
+
 import { purchaseComposter } from './purchaseComposter.js'
-import { testState } from "../../test-utils/testState.js";
 
 describe('purchaseComposter', () => {
   let gameState: farmhand.state, newState: farmhand.state

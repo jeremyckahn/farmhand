@@ -29,12 +29,12 @@ import {
 import Inventory from '../Inventory/index.js'
 import TierPurchase from '../TierPurchase/index.js'
 
-import { TabPanel, a11yProps } from './TabPanel/index.js'
-
 import './Shop.sass'
-import { dollarString } from "../../utils/dollarString.js";
-import { getCostOfNextStorageExpansion } from "../../utils/getCostOfNextStorageExpansion.js";
-import { integerString } from "../../utils/integerString.js";
+import { dollarString } from '../../utils/dollarString.js'
+import { getCostOfNextStorageExpansion } from '../../utils/getCostOfNextStorageExpansion.js'
+import { integerString } from '../../utils/integerString.js'
+
+import { TabPanel, a11yProps } from './TabPanel/index.js'
 
 const categorizeShopInventory = memoize(
   (

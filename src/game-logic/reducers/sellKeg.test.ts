@@ -2,9 +2,11 @@ import { LOAN_GARNISHMENT_RATE } from '../../constants.js'
 import { carrot } from '../../data/crops/index.js'
 import { LOAN_PAYOFF } from '../../templates.js'
 import { getKegValue } from '../../utils/getKegValue.js'
+
+import { castToMoney } from '../../utils/castToMoney.js'
+import { testState } from '../../test-utils/testState.js'
+
 import { sellKeg } from './sellKeg.js'
-import { castToMoney } from "../../utils/castToMoney.js";
-import { testState } from "../../test-utils/testState.js";
 
 const stubKeg: farmhand.keg = {
   id: 'stub-keg',

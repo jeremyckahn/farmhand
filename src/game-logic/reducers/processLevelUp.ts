@@ -4,11 +4,13 @@ import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { SPRINKLER_ITEM_ID } from '../../constants.js'
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates.js'
 
+import { getRandomLevelUpReward } from '../../utils/getRandomLevelUpReward.js'
+
+import { getRandomLevelUpRewardQuantity } from '../../utils/getRandomLevelUpRewardQuantity.js'
+
 import { addItemToInventory } from './addItemToInventory.js'
 import { showNotification } from './showNotification.js'
 import { unlockTool } from './unlockTool.js'
-import { getRandomLevelUpReward } from "../../utils/getRandomLevelUpReward.js";
-import { getRandomLevelUpRewardQuantity } from "../../utils/getRandomLevelUpRewardQuantity.js";
 
 export const processLevelUp = (
   state: farmhand.state,

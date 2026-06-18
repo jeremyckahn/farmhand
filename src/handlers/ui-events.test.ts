@@ -1,10 +1,12 @@
 import { vi } from 'vitest'
 
 import { dialogView, fieldMode, stageFocusType } from '../enums.js'
+
+import { testItem } from '../test-utils/testItem.js'
+import { testRecipe } from '../test-utils/testRecipe.js'
+import { testState } from '../test-utils/testState.js'
+
 import uiEventHandlers from './ui-events.js'
-import { testItem } from "../test-utils/testItem.js";
-import { testRecipe } from "../test-utils/testRecipe.js";
-import { testState } from "../test-utils/testState.js";
 
 // Mock external dependencies
 vi.mock('file-saver', () => ({

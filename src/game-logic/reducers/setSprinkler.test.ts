@@ -1,10 +1,12 @@
 import { SPRINKLER_ITEM_ID } from '../../constants.js'
 import { fieldMode } from '../../enums.js'
+
+import { testCrop } from '../../test-utils/testCrop.js'
+import { testItem } from '../../test-utils/testItem.js'
+import { getPlotContentFromItemId } from '../../utils/getPlotContentFromItemId.js'
+import { testState } from '../../test-utils/testState.js'
+
 import { setSprinkler } from './setSprinkler.js'
-import { testCrop } from "../../test-utils/testCrop.js";
-import { testItem } from "../../test-utils/testItem.js";
-import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
-import { testState } from "../../test-utils/testState.js";
 
 describe('setSprinkler', () => {
   let state: farmhand.state

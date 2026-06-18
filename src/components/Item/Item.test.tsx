@@ -1,10 +1,12 @@
 import React from 'react'
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
+import { testItem } from '../../test-utils/testItem.js'
+
 import { Item } from './Item.js'
-import { testItem } from "../../test-utils/testItem.js";
 
 vitest.mock('../../data/maps.js')
 

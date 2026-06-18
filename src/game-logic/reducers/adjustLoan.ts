@@ -1,7 +1,8 @@
 import { LOAN_INCREASED, LOAN_PAYOFF } from '../../templates.js'
 
+import { moneyTotal } from '../../utils/moneyTotal.js'
+
 import { showNotification } from './showNotification.js'
-import { moneyTotal } from "../../utils/moneyTotal.js";
 
 /**
  * @param adjustmentAmount This should be a negative number if the

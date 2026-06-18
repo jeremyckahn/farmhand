@@ -5,13 +5,9 @@ import { vi } from 'vitest'
 import { OnlinePeersView } from './OnlinePeersView.js'
 
 // Mock getPlayerName to return predictable values
-vi.mock('../../utils/index.js', async () => {
-  const actual = await vi.importActual('../../utils/index.js')
-  return {
-    ...actual,
-    getPlayerName: vi.fn(id => id), // Return the ID as-is for testing
-  }
-})
+vi.mock('../../utils/getPlayerName.js', () => ({
+  getPlayerName: vi.fn(id => id), // Return the ID as-is for testing
+}))
 
 const defaultProps = {
   activePlayers: 1,

@@ -1,15 +1,10 @@
-import {
-    silverOre
-} from '../data/items.js'
-import {
-    cropLifeStage
-} from '../enums.js'
+import { silverOre } from '../data/items.js'
+import { cropLifeStage } from '../enums.js'
 import { items as itemImages } from '../img/index.js'
-import {
-    getPlotContentFromItemId,
-    getPlotImage
-} from './index.js'
-import { testCrop } from "../test-utils/testCrop.js";
+
+import { testCrop } from '../test-utils/testCrop.js'
+
+import { getPlotContentFromItemId, getPlotImage } from './index.js'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
@@ -36,7 +31,6 @@ const integerStringTests = [
   [1.5, '2'],
   [2, '2'],
 ]
-
 
 describe('getPlotImage', () => {
   test('returns null when no plotContent is provided', () => {

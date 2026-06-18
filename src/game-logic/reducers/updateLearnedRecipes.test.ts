@@ -1,5 +1,6 @@
+import { testState } from '../../test-utils/testState.js'
+
 import { updateLearnedRecipes } from './updateLearnedRecipes.js'
-import { testState } from "../../test-utils/testState.js";
 
 describe('updateLearnedRecipes', () => {
   describe('recipe condition is not met', () => {

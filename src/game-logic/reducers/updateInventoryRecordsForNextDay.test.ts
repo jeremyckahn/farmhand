@@ -1,5 +1,6 @@
+import { testState } from '../../test-utils/testState.js'
+
 import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay.js'
-import { testState } from "../../test-utils/testState.js";
 
 describe('updateInventoryRecordsForNextDay', () => {
   test('records inventory records for next day', () => {

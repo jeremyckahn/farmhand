@@ -1,8 +1,10 @@
 import { fieldMode, fertilizerType, itemType } from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
+
+import { getPlotContentType } from '../../utils/getPlotContentType.js'
+
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
-import { getPlotContentType } from "../../utils/getPlotContentType.js";
 
 const { FERTILIZE, OBSERVE } = fieldMode
 

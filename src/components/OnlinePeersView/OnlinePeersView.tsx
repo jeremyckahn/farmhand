@@ -8,14 +8,14 @@ import sortBy from 'lodash.sortby'
 import { array, number, object, string } from 'prop-types'
 
 import BailOutErrorBoundary from '../BailOutErrorBoundary/index.js'
-
 import { levelAchieved } from '../../utils/levelAchieved.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import CowCard from '../CowCard/index.js'
 
+import { getPlayerName } from '../../utils/getPlayerName.js'
+
 import OnlinePeer from './OnlinePeer/index.js'
-import { getPlayerName } from "../../utils/getPlayerName.js";
 
 const OnlinePeersView = ({
   activePlayers,

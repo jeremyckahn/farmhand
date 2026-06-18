@@ -1,8 +1,9 @@
 import { FERTILIZER_BONUS } from '../../constants.js'
 import { fertilizerType } from '../../enums.js'
 
+import { testCrop } from '../../test-utils/testCrop.js'
+
 import { incrementPlotContentAge } from './incrementPlotContentAge.js'
-import { testCrop } from "../../test-utils/testCrop.js";
 
 vitest.mock('../../data/maps.js')
 vitest.mock('../../data/items.js')

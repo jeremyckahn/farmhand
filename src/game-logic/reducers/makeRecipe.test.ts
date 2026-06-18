@@ -4,8 +4,9 @@ import { EXPERIENCE_VALUES, INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
 import { recipeType } from '../../enums.js'
 
+import { testState } from '../../test-utils/testState.js'
+
 import { makeRecipe } from './makeRecipe.js'
-import { testState } from "../../test-utils/testState.js";
 
 describe('makeRecipe', () => {
   describe('there are insufficient ingredients for recipe', () => {

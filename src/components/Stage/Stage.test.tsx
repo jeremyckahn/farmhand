@@ -7,8 +7,9 @@ import FarmhandContext, {
   createContextData,
 } from '../Farmhand/Farmhand.context.js'
 
+import { testState } from '../../test-utils/testState.js'
+
 import { Stage } from './Stage.js'
-import { testState } from "../../test-utils/testState.js";
 
 // Mock child components to avoid their complex dependencies
 vi.mock('../Field/index.js', () => ({

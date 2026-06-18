@@ -1,11 +1,12 @@
 import { EXPERIENCE_VALUES } from '../../constants.js'
 import { randomNumberService } from '../../common/services/randomNumber.js'
 
+import { shapeOf } from '../../test-utils/shapeOf.js'
+import { testCrop } from '../../test-utils/testCrop.js'
+import { testState } from '../../test-utils/testState.js'
+import { generateCow } from '../../utils/generateCow.js'
+
 import { computeStateForNextDay } from './computeStateForNextDay.js'
-import { shapeOf } from "../../test-utils/shapeOf.js";
-import { testCrop } from "../../test-utils/testCrop.js";
-import { testState } from "../../test-utils/testState.js";
-import { generateCow } from "../../utils/generateCow.js";
 
 vitest.mock('../../data/maps.js')
 

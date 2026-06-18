@@ -3,11 +3,13 @@ import { INVENTORY_FULL_NOTIFICATION } from '../../strings.js'
 import { ResourceFactory } from '../../factories/index.js'
 import { random } from '../../common/utils.js'
 
+import { chooseRandom } from '../../utils/chooseRandom.js'
+
+import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+
 import { addItemToInventory } from './addItemToInventory.js'
 import { showNotification } from './showNotification.js'
 import { modifyFieldPlotAt } from './modifyFieldPlotAt.js'
-import { chooseRandom } from "../../utils/chooseRandom.js";
-import { doesInventorySpaceRemain } from "../../utils/doesInventorySpaceRemain.js";
 
 const daysUntilClearPeriods = [1, 2, 2, 3]
 

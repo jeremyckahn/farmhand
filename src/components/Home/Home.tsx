@@ -19,11 +19,12 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { STANDARD_LOAN_AMOUNT } from '../../constants.js'
 import { stageFocusType } from '../../enums.js'
 import { memoize } from '../../utils/memoize.js'
+import { isDecember } from '../../utils/isDecember.js'
 import Achievement from '../Achievement/index.js'
 
 import { SnowBackground } from './SnowBackground.js'
+
 import './Home.sass'
-import { isDecember } from "../../utils/isDecember.js";
 
 const onboardingAchievements = [
   achievementsMap['plant-crop'],

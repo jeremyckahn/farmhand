@@ -1,8 +1,9 @@
 import { EXPERIENCE_VALUES, PURCHASEABLE_FIELD_SIZES } from '../../constants.js'
 
+import { testCrop } from '../../test-utils/testCrop.js'
+import { testState } from '../../test-utils/testState.js'
+
 import { purchaseField } from './purchaseField.js'
-import { testCrop } from "../../test-utils/testCrop.js";
-import { testState } from "../../test-utils/testState.js";
 
 describe('purchaseField', () => {
   let state: farmhand.state

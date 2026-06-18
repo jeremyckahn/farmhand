@@ -3,9 +3,10 @@ import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { randomNumberService } from '../../common/services/randomNumber.js'
 import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
+import { testCrop } from '../../test-utils/testCrop.js'
+import { getPlotContentFromItemId } from '../../utils/getPlotContentFromItemId.js'
+
 import { clearPlot } from './clearPlot.js'
-import { testCrop } from "../../test-utils/testCrop.js";
-import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
 
 vitest.mock('../../data/maps.js')
 

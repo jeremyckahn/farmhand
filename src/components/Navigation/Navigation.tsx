@@ -42,12 +42,12 @@ import SettingsView from '../SettingsView/index.js'
 import StatsView from '../StatsView/index.js'
 import KeybindingsView from '../KeybindingsView/index.js'
 
-import DayAndProgressContainer from './DayAndProgressContainer.js'
+import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+import { integerString } from '../../utils/integerString.js'
+import { inventorySpaceConsumed } from '../../utils/inventorySpaceConsumed.js'
 
+import DayAndProgressContainer from './DayAndProgressContainer.js'
 import './Navigation.sass'
-import { doesInventorySpaceRemain } from "../../utils/doesInventorySpaceRemain.js";
-import { integerString } from "../../utils/integerString.js";
-import { inventorySpaceConsumed } from "../../utils/inventorySpaceConsumed.js";
 
 const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
   const [displayedFarmName, setDisplayedFarmName] = useState(farmName)

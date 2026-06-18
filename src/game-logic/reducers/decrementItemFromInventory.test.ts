@@ -1,5 +1,6 @@
+import { testState } from '../../test-utils/testState.js'
+
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
-import { testState } from "../../test-utils/testState.js";
 
 describe('decrementItemFromInventory', () => {
   let updatedState: farmhand.state

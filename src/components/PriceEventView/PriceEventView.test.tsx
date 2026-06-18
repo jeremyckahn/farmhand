@@ -1,12 +1,14 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
+
 import FarmhandContext, {
   createContextData,
 } from '../Farmhand/Farmhand.context.js'
 
+import { testState } from '../../test-utils/testState.js'
+
 import { PriceEventView } from './PriceEventView.js'
-import { testState } from "../../test-utils/testState.js";
 
 // Mock Item component to avoid complex dependencies
 vi.mock('../Item/index.js', () => ({

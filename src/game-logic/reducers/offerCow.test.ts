@@ -1,5 +1,6 @@
+import { testState } from '../../test-utils/testState.js'
+
 import { offerCow } from './offerCow.js'
-import { testState } from "../../test-utils/testState.js";
 
 describe('offerCow', () => {
   test('makes specified cow available for trade', () => {

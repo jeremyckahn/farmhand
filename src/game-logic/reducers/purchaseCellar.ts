@@ -2,9 +2,10 @@ import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants.js'
 
 import { CELLAR_PURCHASED } from '../../templates.js'
 
+import { moneyTotal } from '../../utils/moneyTotal.js'
+
 import { addExperience } from './addExperience.js'
 import { showNotification } from './showNotification.js'
-import { moneyTotal } from "../../utils/moneyTotal.js";
 
 export const purchaseCellar = (
   state: farmhand.state,

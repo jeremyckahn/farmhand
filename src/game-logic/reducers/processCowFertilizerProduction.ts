@@ -1,9 +1,10 @@
 import { FERTILIZERS_PRODUCED } from '../../templates.js'
 
+import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+import { getCowFertilizerItem } from '../../utils/getCowFertilizerItem.js'
+import { getCowFertilizerProductionRate } from '../../utils/getCowFertilizerProductionRate.js'
+
 import { addItemToInventory } from './addItemToInventory.js'
-import { doesInventorySpaceRemain } from "../../utils/doesInventorySpaceRemain.js";
-import { getCowFertilizerItem } from "../../utils/getCowFertilizerItem.js";
-import { getCowFertilizerProductionRate } from "../../utils/getCowFertilizerProductionRate.js";
 
 export const processCowFertilizerProduction = (
   state: farmhand.state

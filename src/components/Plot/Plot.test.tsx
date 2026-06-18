@@ -7,11 +7,12 @@ import { noop } from '../../utils/noop.js'
 import { items, pixel, plotStates } from '../../img/index.js'
 import { FERTILIZER_BONUS } from '../../constants.js'
 
+import { testCrop } from '../../test-utils/testCrop.js'
+import { testShoveledPlot } from '../../test-utils/testShoveledPlot.js'
+import { getCropFromItemId } from '../../utils/getCropFromItemId.js'
+import { getPlotContentFromItemId } from '../../utils/getPlotContentFromItemId.js'
+
 import { Plot, getBackgroundStyles, getDaysLeftToMature } from './Plot.js'
-import { testCrop } from "../../test-utils/testCrop.js";
-import { testShoveledPlot } from "../../test-utils/testShoveledPlot.js";
-import { getCropFromItemId } from "../../utils/getCropFromItemId.js";
-import { getPlotContentFromItemId } from "../../utils/getPlotContentFromItemId.js";
 
 vitest.mock('../../data/maps.js')
 vitest.mock('../../data/items.js')

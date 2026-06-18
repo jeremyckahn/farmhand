@@ -1,6 +1,7 @@
+import { canMakeRecipe } from '../../utils/canMakeRecipe.js'
+
 import { addExperience } from './addExperience.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
-import { canMakeRecipe } from "../../utils/canMakeRecipe.js";
 
 /**
  * Consume ingredients - validate, add experience, and decrement ingredients

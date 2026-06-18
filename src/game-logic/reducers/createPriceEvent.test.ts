@@ -1,5 +1,6 @@
+import { testState } from '../../test-utils/testState.js'
+
 import { createPriceEvent } from './createPriceEvent.js'
-import { testState } from "../../test-utils/testState.js";
 
 vitest.mock('../../data/items.js')
 

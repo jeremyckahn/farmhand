@@ -5,6 +5,9 @@ import { fieldMode } from '../../enums.js'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { noop } from '../../utils/noop.js'
 
+import { testItem } from '../../test-utils/testItem.js'
+import { testCrop } from '../../test-utils/testCrop.js'
+
 import {
   Field,
   FieldContent,
@@ -13,8 +16,6 @@ import {
   isInHoverRange,
   MemoPlot,
 } from './Field.js'
-import { testItem } from "../../test-utils/testItem.js";
-import { testCrop } from "../../test-utils/testCrop.js";
 
 // Mock Plot component to test MemoPlot memoization behavior
 vitest.mock('../Plot/index.js', () => {

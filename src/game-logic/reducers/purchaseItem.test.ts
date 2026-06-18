@@ -1,7 +1,9 @@
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+
+import { testItem } from '../../test-utils/testItem.js'
+import { testState } from '../../test-utils/testState.js'
+
 import { purchaseItem } from './purchaseItem.js'
-import { testItem } from "../../test-utils/testItem.js";
-import { testState } from "../../test-utils/testState.js";
 
 vitest.mock('../../data/maps.js')
 

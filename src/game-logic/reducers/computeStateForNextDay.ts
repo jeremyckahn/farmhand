@@ -1,6 +1,8 @@
 import { generateValueAdjustments } from '../../common/utils.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'
 
+import { generateCow } from '../../utils/generateCow.js'
+
 import { addExperience } from './addExperience.js'
 import { applyLoanInterest } from './applyLoanInterest.js'
 import { computeCowInventoryForNextDay } from './computeCowInventoryForNextDay.js'
@@ -19,7 +21,6 @@ import { rotateNotificationLogs } from './rotateNotificationLogs.js'
 import { updateFinancialRecords } from './updateFinancialRecords.js'
 import { updateInventoryRecordsForNextDay } from './updateInventoryRecordsForNextDay.js'
 import { updatePriceEvents } from './updatePriceEvents.js'
-import { generateCow } from "../../utils/generateCow.js";
 
 const adjustItemValues = (state: farmhand.state): farmhand.state => ({
   ...state,

@@ -5,6 +5,9 @@ import {
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
 } from '../../strings.js'
+
+import { shouldStormToday } from '../../utils/shouldStormToday.js'
+
 import {
   fieldHasScarecrow,
   plotContainsScarecrow,
@@ -12,7 +15,6 @@ import {
 } from './helpers.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { waterField } from './waterField.js'
-import { shouldStormToday } from "../../utils/shouldStormToday.js";
 
 export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
   let { field } = state

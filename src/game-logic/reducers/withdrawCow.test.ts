@@ -1,5 +1,6 @@
+import { testState } from '../../test-utils/testState.js'
+
 import { withdrawCow } from './withdrawCow.js'
-import { testState } from "../../test-utils/testState.js";
 
 describe('withdrawCow', () => {
   test('makes specified cow unavailable for trade', () => {

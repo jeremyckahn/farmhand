@@ -3,8 +3,9 @@ import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
+import { generateCow } from '../../utils/generateCow.js'
+
 import { changeCowAutomaticHugState } from './changeCowAutomaticHugState.js'
-import { generateCow } from "../../utils/generateCow.js";
 
 describe('changeCowAutomaticHugState', () => {
   describe('setting isUsingHuggingMachine to true', () => {

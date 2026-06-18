@@ -2,8 +2,10 @@ import { vi } from 'vitest'
 
 import { randomNumberService } from '../common/services/randomNumber.js'
 import { itemType, toolLevel } from '../enums.js'
+
+import { randomChoice } from '../utils/randomChoice.js'
+
 import ResourceFactory from './ResourceFactory.js'
-import { randomChoice } from "../utils/randomChoice.js";
 
 type ResourceOption = { weight: number; itemType: farmhand.itemType }
 vitest.mock('./CoalFactory.js')

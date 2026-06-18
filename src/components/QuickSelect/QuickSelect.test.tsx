@@ -4,17 +4,15 @@ import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
 import { noop } from '../../utils/noop.js'
+
+import { testItem } from '../../test-utils/testItem.js'
+
 import QuickSelect from './QuickSelect.js'
-import { testItem } from "../../test-utils/testItem.js";
 
 // Mock sortItems to avoid itemsMap dependency issues
-vi.mock('../../utils/index.js', async () => {
-  const actual = await vi.importActual('../../utils/index.js')
-  return {
-    ...actual,
-    sortItems: items => items, // Just return items as-is for testing
-  }
-})
+vi.mock('../../utils/sortItems.js', () => ({
+  sortItems: items => items,
+}))
 
 const defaultProps = {
   fieldToolInventory: [],

@@ -1,6 +1,8 @@
 import { vi } from 'vitest'
 
 import { coal, stone } from '../data/ores/index.js'
+import * as utils from '../utils/index.js'
+
 import CoalFactory from './CoalFactory.js'
 
 describe('CoalFactory', () => {

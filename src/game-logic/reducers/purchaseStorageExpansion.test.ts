@@ -1,7 +1,9 @@
 import { STORAGE_EXPANSION_AMOUNT } from '../../constants.js'
+
+import { getCostOfNextStorageExpansion } from '../../utils/getCostOfNextStorageExpansion.js'
+import { testState } from '../../test-utils/testState.js'
+
 import { purchaseStorageExpansion } from './purchaseStorageExpansion.js'
-import { getCostOfNextStorageExpansion } from "../../utils/getCostOfNextStorageExpansion.js";
-import { testState } from "../../test-utils/testState.js";
 
 describe('purchaseStorageExpansion', () => {
   describe('player does not have enough money', () => {

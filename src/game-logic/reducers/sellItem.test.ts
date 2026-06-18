@@ -3,8 +3,9 @@ import { carrot, carrotSeed } from '../../data/crops/index.js'
 import { bronzeOre, coal, milk1, saltRock } from '../../data/items.js'
 import { carrotSoup } from '../../data/recipes.js'
 
+import { testState } from '../../test-utils/testState.js'
+
 import { sellItem } from './sellItem.js'
-import { testState } from "../../test-utils/testState.js";
 
 describe('sellItem', () => {
   test('sells item', () => {

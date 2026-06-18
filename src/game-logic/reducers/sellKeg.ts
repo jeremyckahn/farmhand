@@ -3,6 +3,12 @@ import { EXPERIENCE_VALUES, LOAN_GARNISHMENT_RATE } from '../../constants.js'
 import { SOLD_FERMENTED_ITEM_PEER_NOTIFICATION } from '../../templates.js'
 import { getKegValue } from '../../utils/getKegValue.js'
 
+import { castToMoney } from '../../utils/castToMoney.js'
+
+import { getSalePriceMultiplier } from '../../utils/getSalePriceMultiplier.js'
+
+import { moneyTotal } from '../../utils/moneyTotal.js'
+
 import { addExperience } from './addExperience.js'
 import { addRevenue } from './addRevenue.js'
 import { adjustLoan } from './adjustLoan.js'
@@ -10,9 +16,6 @@ import { removeKegFromCellar } from './removeKegFromCellar.js'
 import { updateLearnedRecipes } from './updateLearnedRecipes.js'
 
 import { prependPendingPeerMessage } from './index.js'
-import { castToMoney } from "../../utils/castToMoney.js";
-import { getSalePriceMultiplier } from "../../utils/getSalePriceMultiplier.js";
-import { moneyTotal } from "../../utils/moneyTotal.js";
 
 export const sellKeg = (
   state: farmhand.state,
