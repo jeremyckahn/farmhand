@@ -15,7 +15,7 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { itemsMap } from '../../data/maps.js'
 import { cellarService } from '../../services/cellar.js'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
-import { integerString } from '../../utils/index.js'
+import { integerString } from '../../utils/integerString.js'
 import AnimatedNumber from '../AnimatedNumber/index.js'
 
 import './FermentationRecipe.sass'

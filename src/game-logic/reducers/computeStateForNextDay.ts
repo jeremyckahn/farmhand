@@ -1,4 +1,4 @@
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from '../../utils/generateCow.js'
 import { generateValueAdjustments } from '../../common/utils.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'
 

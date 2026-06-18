@@ -1,4 +1,5 @@
-import { castToMoney, moneyTotal } from '../../utils/index.js'
+import { castToMoney } from '../../utils/castToMoney.js'
+import { moneyTotal } from '../../utils/moneyTotal.js'
 import { LOAN_INTEREST_RATE } from '../../constants.js'
 import { LOAN_BALANCE_NOTIFICATION } from '../../templates.js'
 

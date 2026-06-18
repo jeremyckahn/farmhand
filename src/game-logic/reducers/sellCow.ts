@@ -1,4 +1,5 @@
-import { getCowColorId, getCowValue } from '../../utils/index.js'
+import { getCowColorId } from '../../utils/getCowColorId.js'
+import { getCowValue } from '../../utils/getCowValue.js'
 
 import { addRevenue } from './addRevenue.js'
 

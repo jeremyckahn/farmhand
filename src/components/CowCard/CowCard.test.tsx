@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from '../../utils/generateCow.js'
 import { noop } from '../../utils/noop.js'
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import { cowColors, genders } from '../../enums.js'

@@ -13,13 +13,11 @@ import { CowCardProps } from '../CowCard.js'
 import { huggingMachine } from '../../../data/items.js'
 import { genders } from '../../../enums.js'
 import { COW_COLOR_NAMES } from '../../../strings.js'
-import {
-  getCowWeight,
-  getPlayerName,
-  integerString,
-  isCowInBreedingPen,
-  nullArray,
-} from '../../../utils/index.js'
+import { getCowWeight } from '../../../utils/getCowWeight.js'
+import { getPlayerName } from '../../../utils/getPlayerName.js'
+import { integerString } from '../../../utils/integerString.js'
+import { isCowInBreedingPen } from '../../../utils/isCowInBreedingPen.js'
+import { nullArray } from '../../../utils/nullArray.js'
 import { memoize } from '../../../utils/memoize.js'
 import { moneyString } from '../../../utils/moneyString.js'
 import Bloodline from '../Bloodline/index.js'

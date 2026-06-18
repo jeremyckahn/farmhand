@@ -4,7 +4,7 @@ import {
   PURCHASEABLE_COW_PENS,
 } from '../../constants.js'
 import { genders } from '../../enums.js'
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from '../../utils/generateCow.js'
 import { testState } from '../../test-utils/index.js'
 
 import { processCowBreeding } from './processCowBreeding.js'

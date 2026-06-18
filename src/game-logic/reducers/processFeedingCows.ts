@@ -1,4 +1,4 @@
-import { clampNumber } from '../../utils/index.js'
+import { clampNumber } from '../../utils/clampNumber.js'
 import {
   COW_FEED_ITEM_ID,
   COW_WEIGHT_MULTIPLIER_FEED_BENEFIT,

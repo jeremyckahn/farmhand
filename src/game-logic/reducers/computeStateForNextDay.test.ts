@@ -1,5 +1,5 @@
 import { shapeOf, testCrop, testState } from '../../test-utils/index.js'
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from '../../utils/generateCow.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'
 import { randomNumberService } from '../../common/services/randomNumber.js'
 

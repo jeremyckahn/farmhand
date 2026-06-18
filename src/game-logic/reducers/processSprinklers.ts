@@ -1,6 +1,7 @@
 import { itemType } from '../../enums.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
-import { getPlotContentType, getRangeCoords } from '../../utils/index.js'
+import { getPlotContentType } from '../../utils/getPlotContentType.js'
+import { getRangeCoords } from '../../utils/getRangeCoords.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 
 import { setWasWatered } from './helpers.js'

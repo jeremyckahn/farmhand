@@ -1,4 +1,5 @@
-import { findCowById, generateOffspringCow } from '../../utils/index.js'
+import { findCowById } from '../../utils/findCowById.js'
+import { generateOffspringCow } from '../../utils/generateOffspringCow.js'
 import { cowColors } from '../../enums.js'
 import {
   EXPERIENCE_VALUES,

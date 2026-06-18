@@ -1,7 +1,7 @@
 import { LOAN_GARNISHMENT_RATE } from '../../constants.js'
 import { carrot } from '../../data/crops/index.js'
 import { LOAN_PAYOFF } from '../../templates.js'
-import { castToMoney } from '../../utils/index.js'
+import { castToMoney } from '../../utils/castToMoney.js'
 import { getKegValue } from '../../utils/getKegValue.js'
 import { testState } from '../../test-utils/index.js'
 

@@ -1,4 +1,6 @@
-import { get7DayAverage, getProfit, moneyTotal } from '../../utils/index.js'
+import { get7DayAverage } from '../../utils/get7DayAverage.js'
+import { getProfit } from '../../utils/getProfit.js'
+import { moneyTotal } from '../../utils/moneyTotal.js'
 import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants.js'
 
 export const updateFinancialRecords = (

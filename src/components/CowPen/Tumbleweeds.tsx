@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState, useRef } from 'react'
 import { v4 } from 'uuid'
 
 import { items } from '../../img/index.js'
-import { scaleNumber } from '../../utils/index.js'
+import { scaleNumber } from '../../utils/scaleNumber.js'
 import { randomNumberService } from '../../common/services/randomNumber.js'
 
 // The initial interval between tumbleweed spawns.

@@ -3,12 +3,10 @@ import { itemUnlockLevels, levels } from './data/levels.js'
 import { itemsMap } from './data/maps.js'
 import { moneyString } from './utils/moneyString.js'
 import { stageFocusType, toolType } from './enums.js'
-import {
-  getCowDisplayName,
-  getPlayerName,
-  getRandomLevelUpRewardQuantity,
-  integerString,
-} from './utils/index.js'
+import { getCowDisplayName } from './utils/getCowDisplayName.js'
+import { getPlayerName } from './utils/getPlayerName.js'
+import { getRandomLevelUpRewardQuantity } from './utils/getRandomLevelUpRewardQuantity.js'
+import { integerString } from './utils/integerString.js'
 
 export const CROWS_DESTROYED = (_: any, numCropsDestroyed: number): string =>
   `Oh no! Crows destroyed ${numCropsDestroyed} crop${

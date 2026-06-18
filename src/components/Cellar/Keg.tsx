@@ -11,7 +11,7 @@ import { items, wines } from '../../img/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { getKegValue } from '../../utils/getKegValue.js'
 import { moneyString } from '../../utils/moneyString.js'
-import { getSalePriceMultiplier } from '../../utils/index.js'
+import { getSalePriceMultiplier } from '../../utils/getSalePriceMultiplier.js'
 import { FERMENTED_CROP_NAME } from '../../templates.js'
 import AnimatedNumber from '../AnimatedNumber/index.js'
 

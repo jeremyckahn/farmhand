@@ -1,5 +1,5 @@
 import { testState } from '../../test-utils/index.js'
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from '../../utils/generateCow.js'
 
 import { selectCow } from './selectCow.js'
 

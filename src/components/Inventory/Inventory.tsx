@@ -10,7 +10,7 @@ import { array } from 'prop-types'
 import FarmhandContext, { ContextData } from '../Farmhand/Farmhand.context.js'
 import Item from '../Item/index.js'
 import { itemsMap } from '../../data/maps.js'
-import { sortItems } from '../../utils/index.js'
+import { sortItems } from '../../utils/sortItems.js'
 import SearchBar from '../SearchBar/index.js'
 import './Inventory.sass'
 

@@ -15,14 +15,12 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { moneyString } from '../../utils/moneyString.js'
 import { farmProductsSold } from '../../utils/farmProductsSold.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
-import {
-  experienceNeededForLevel,
-  get7DayAverage,
-  getProfit,
-  getProfitRecord,
-  integerString,
-  moneyTotal,
-} from '../../utils/index.js'
+import { experienceNeededForLevel } from '../../utils/experienceNeededForLevel.js'
+import { get7DayAverage } from '../../utils/get7DayAverage.js'
+import { getProfit } from '../../utils/getProfit.js'
+import { getProfitRecord } from '../../utils/getProfitRecord.js'
+import { integerString } from '../../utils/integerString.js'
+import { moneyTotal } from '../../utils/moneyTotal.js'
 import {
   COW_SOLD_TOOLTIP_TEXT,
   FARM_PRODUCTS_TOOLTIP_TEXT,

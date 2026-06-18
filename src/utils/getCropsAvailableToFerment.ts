@@ -1,6 +1,6 @@
 import { itemsMap } from '../data/maps.js'
 
-import { getFinalCropItemFromSeedItem } from './index.js'
+import { getFinalCropItemFromSeedItem } from './getFinalCropItemFromSeedItem.js'
 
 export function getCropsAvailableToFerment(
   levelEntitlements: farmhand.levelEntitlements

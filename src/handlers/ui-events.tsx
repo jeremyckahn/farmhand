@@ -9,11 +9,9 @@ import {
   PROGRESS_SAVED_MESSAGE,
   UPDATE_AVAILABLE,
 } from '../strings.js'
-import {
-  moneyTotal,
-  reduceByPersistedKeys,
-  transformStateDataForImport,
-} from '../utils/index.js'
+import { moneyTotal } from '../utils/moneyTotal.js'
+import { reduceByPersistedKeys } from '../utils/reduceByPersistedKeys.js'
+import { transformStateDataForImport } from '../utils/transformStateDataForImport.js'
 
 import { randomNumberService } from '../common/services/randomNumber.js'
 import Farmhand from '../components/Farmhand/Farmhand.js'

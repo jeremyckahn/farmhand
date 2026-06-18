@@ -14,7 +14,7 @@ import {
   WINE_INTEREST_RATE,
 } from '../../constants.js'
 
-import { integerString } from '../../utils/index.js'
+import { integerString } from '../../utils/integerString.js'
 import { itemsMap } from '../../data/maps.js'
 import { FERMENTED_CROP_NAME } from '../../templates.js'
 

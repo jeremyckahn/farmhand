@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from '../../utils/generateCow.js'
 import { noop } from '../../utils/noop.js'
 
 import { CowPenContextMenu } from './CowPenContextMenu.js'

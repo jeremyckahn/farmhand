@@ -1,4 +1,5 @@
-import { moneyTotal, nullArray } from '../../utils/index.js'
+import { moneyTotal } from '../../utils/moneyTotal.js'
+import { nullArray } from '../../utils/nullArray.js'
 import { EXPERIENCE_VALUES, PURCHASABLE_FOREST_SIZES } from '../../constants.js'
 import { FOREST_EXPANDED } from '../../templates.js'
 import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.js'

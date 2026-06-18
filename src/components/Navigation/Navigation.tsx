@@ -25,11 +25,9 @@ import Typography from '@mui/material/Typography/index.js'
 import { array, bool, func, number, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import {
-  doesInventorySpaceRemain,
-  integerString,
-  inventorySpaceConsumed,
-} from '../../utils/index.js'
+import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+import { integerString } from '../../utils/integerString.js'
+import { inventorySpaceConsumed } from '../../utils/inventorySpaceConsumed.js'
 import { dialogView } from '../../enums.js'
 import {
   DEFAULT_ROOM,

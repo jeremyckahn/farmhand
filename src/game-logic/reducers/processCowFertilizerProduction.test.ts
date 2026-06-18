@@ -4,7 +4,8 @@ import {
   INFINITE_STORAGE_LIMIT,
 } from '../../constants.js'
 import { genders, standardCowColors } from '../../enums.js'
-import { generateCow, getCowFertilizerItem } from '../../utils/index.js'
+import { generateCow } from '../../utils/generateCow.js'
+import { getCowFertilizerItem } from '../../utils/getCowFertilizerItem.js'
 import { testState } from '../../test-utils/index.js'
 
 import { processCowFertilizerProduction } from './processCowFertilizerProduction.js'

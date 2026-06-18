@@ -12,13 +12,11 @@ import sortBy from 'lodash.sortby'
 import Item from '../Item/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import {
-  findCowById,
-  getCowSellValue,
-  getCowWeight,
-  isCowInBreedingPen,
-  nullArray,
-} from '../../utils/index.js'
+import { findCowById } from '../../utils/findCowById.js'
+import { getCowSellValue } from '../../utils/getCowSellValue.js'
+import { getCowWeight } from '../../utils/getCowWeight.js'
+import { isCowInBreedingPen } from '../../utils/isCowInBreedingPen.js'
+import { nullArray } from '../../utils/nullArray.js'
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import cowShopInventory from '../../data/shop-inventory-cow.js'
 

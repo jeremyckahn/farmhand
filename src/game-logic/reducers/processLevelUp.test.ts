@@ -1,6 +1,6 @@
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates.js'
 import { toolLevel, toolType } from '../../enums.js'
-import { experienceNeededForLevel } from '../../utils/index.js'
+import { experienceNeededForLevel } from '../../utils/experienceNeededForLevel.js'
 import { testItem, testState } from '../../test-utils/index.js'
 
 import { processLevelUp } from './processLevelUp.js'

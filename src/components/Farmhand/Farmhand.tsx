@@ -71,22 +71,20 @@ import {
   RECIPES_LEARNED,
 } from '../../templates.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
-import {
-  computeMarketPositions,
-  createNewField,
-  createNewForest,
-  doesMenuObstructStage,
-  generateCow,
-  getAvailableShopInventory,
-  getItemCurrentValue,
-  getPeerMetadata,
-  inventorySpaceRemaining,
-  moneyTotal,
-  nullArray,
-  reduceByPersistedKeys,
-  sleep,
-  transformStateDataForImport,
-} from '../../utils/index.js'
+import { computeMarketPositions } from '../../utils/computeMarketPositions.js'
+import { createNewField } from '../../utils/createNewField.js'
+import { createNewForest } from '../../utils/createNewForest.js'
+import { doesMenuObstructStage } from '../../utils/doesMenuObstructStage.js'
+import { generateCow } from '../../utils/generateCow.js'
+import { getAvailableShopInventory } from '../../utils/getAvailableShopInventory.js'
+import { getItemCurrentValue } from '../../utils/getItemCurrentValue.js'
+import { getPeerMetadata } from '../../utils/getPeerMetadata.js'
+import { inventorySpaceRemaining } from '../../utils/inventorySpaceRemaining.js'
+import { moneyTotal } from '../../utils/moneyTotal.js'
+import { nullArray } from '../../utils/nullArray.js'
+import { reduceByPersistedKeys } from '../../utils/reduceByPersistedKeys.js'
+import { sleep } from '../../utils/sleep.js'
+import { transformStateDataForImport } from '../../utils/transformStateDataForImport.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
 import { memoize } from '../../utils/memoize.js'
 import { noop } from '../../utils/noop.js'

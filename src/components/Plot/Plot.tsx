@@ -4,11 +4,9 @@ import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import {
-  getCropLifeStage,
-  getPlotContentType,
-  getPlotImage,
-} from '../../utils/index.js'
+import { getCropLifeStage } from '../../utils/getCropLifeStage.js'
+import { getPlotContentType } from '../../utils/getPlotContentType.js'
+import { getPlotImage } from '../../utils/getPlotImage.js'
 import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
 import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps.js'
 import { pixel, plotStates } from '../../img/index.js'
