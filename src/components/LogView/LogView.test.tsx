@@ -26,7 +26,10 @@ test("displays today's notifications", () => {
   ]
 
   render(
-    <LogView {...defaultProps} todaysNotifications={todaysNotifications} />
+    <LogView
+      {...defaultProps}
+      todaysNotifications={todaysNotifications as farmhand.notification[]}
+    />
   )
 
   expect(screen.getByText('Test success message')).toBeInTheDocument()
@@ -55,7 +58,12 @@ test('displays notification log for past days', () => {
     },
   ]
 
-  render(<LogView {...defaultProps} notificationLog={notificationLog} />)
+  render(
+    <LogView
+      {...defaultProps}
+      notificationLog={notificationLog as farmhand.notificationLogEntry[]}
+    />
+  )
 
   expect(screen.getByText('Day 1')).toBeInTheDocument()
   expect(screen.getByText('Day 2')).toBeInTheDocument()
@@ -79,7 +87,12 @@ describe('severity grouping', () => {
       },
     ]
 
-    render(<LogView {...defaultProps} notificationLog={notificationLog} />)
+    render(
+      <LogView
+        {...defaultProps}
+        notificationLog={notificationLog as farmhand.notificationLogEntry[]}
+      />
+    )
 
     const alerts = document.querySelectorAll('[role="alert"]')
     expect(alerts).toHaveLength(2)
@@ -101,7 +114,12 @@ describe('severity grouping', () => {
       },
     ]
 
-    render(<LogView {...defaultProps} notificationLog={notificationLog} />)
+    render(
+      <LogView
+        {...defaultProps}
+        notificationLog={notificationLog as farmhand.notificationLogEntry[]}
+      />
+    )
 
     // Only one alert should be rendered (for info message)
     const alerts = document.querySelectorAll('[role="alert"]')
@@ -123,7 +141,12 @@ test('renders multiple messages within same severity group', () => {
     },
   ]
 
-  render(<LogView {...defaultProps} notificationLog={notificationLog} />)
+  render(
+    <LogView
+      {...defaultProps}
+      notificationLog={notificationLog as farmhand.notificationLogEntry[]}
+    />
+  )
 
   expect(screen.getByText('First info')).toBeInTheDocument()
   expect(screen.getByText('Second info')).toBeInTheDocument()

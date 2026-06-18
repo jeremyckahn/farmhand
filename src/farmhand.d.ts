@@ -3,6 +3,21 @@ declare module '*?dataUri' {
   export default content
 }
 
+declare module 'seedrandom'
+declare module 'global/window.js'
+declare module 'file-saver'
+declare module 'react-helmet'
+declare module 'lodash.debounce'
+declare module 'lodash.throttle'
+declare module 'react-router-dom'
+declare module 'react-file-reader-input'
+
+declare namespace JSX {
+  interface IntrinsicElements {
+    'chat-room': any
+  }
+}
+
 declare namespace farmhand {
   // Enums from src/enums.js
   type cropType =
@@ -177,7 +192,7 @@ declare namespace farmhand {
   interface cow {
     baseWeight: number
     color: cowColors
-    colorsInBloodline: Record<cowColors, boolean>
+    colorsInBloodline: Partial<Record<cowColors, boolean>>
     daysOld: number
     daysSinceMilking: number
     daysSinceProducingFertilizer: number
@@ -219,7 +234,7 @@ declare namespace farmhand {
     daysRemaining: number
   }
 
-  type achievementCondition = (state: state, prevState: state) => boolean
+  type achievementCondition = (state: state, prevState?: state) => boolean
   type achievementReward = (state: state) => state
 
   interface achievement {
@@ -289,7 +304,7 @@ declare namespace farmhand {
     doesPriceFluctuate: boolean
   }
 
-  interface upgradesMetadata {
+  type upgradesMetadata = {
     [key in toolType]?: Record<toolLevel, upgradesMetadatum>
   }
 

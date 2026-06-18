@@ -72,7 +72,7 @@ describe.each(iAmRichVariants)(
         const achievement = achievementsMap[id]
         const state = {
           revenue: goal,
-        }
+        } as any
 
         expect(achievement.condition(state)).toEqual(true)
       })
@@ -81,7 +81,7 @@ describe.each(iAmRichVariants)(
         const achievement = achievementsMap[id]
         const state = {
           revenue: Number(goal) - 1,
-        }
+        } as any
 
         expect(achievement.condition(state)).toEqual(false)
       })
@@ -91,7 +91,7 @@ describe.each(iAmRichVariants)(
 
 describe('gold-digger', () => {
   const achievement = achievementsMap['gold-digger']
-  let state
+  let state: any
 
   beforeEach(() => {
     state = {
@@ -115,7 +115,7 @@ describe('gold-digger', () => {
 
 describe('financial-freedom', () => {
   const achievement = achievementsMap['financial-freedom']
-  let state
+  let state: any
 
   beforeEach(() => {
     state = {

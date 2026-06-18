@@ -64,11 +64,11 @@ export const separateItemsIntoCategories = (items: farmhand.item[]) =>
     getItemCategories()
   )
 
-const formatCategoryName = key =>
+const formatCategoryName = (key: string) =>
   key
     .replace(/_/g, ' ')
     .toLowerCase()
-    .replace(/\b\w/g, char => char.toUpperCase())
+    .replace(/\b\w/g, (char: string) => char.toUpperCase())
 
 export interface InventoryProps {
   items: farmhand.item[]
@@ -200,11 +200,11 @@ Inventory.propTypes = {
   shopInventory: array,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Record<string, unknown>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Inventory {...{ ...gameState, ...handlers, ...props }} />
+        <Inventory {...({ ...gameState, ...handlers, ...props } as any)} />
       )}
     </FarmhandContext.Consumer>
   )

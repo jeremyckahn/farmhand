@@ -26,7 +26,13 @@ player's inventory.
   (prev, next) => prev.playerInventory === next.playerInventory
 )
 
-export const ContextPane = ({ playerInventory, stageFocus }) => {
+export const ContextPane = ({
+  playerInventory,
+  stageFocus,
+}: {
+  playerInventory: farmhand.item[]
+  stageFocus: string
+}) => {
   return (
     <div className="ContextPane">
       {stageFocus === stageFocusType.COW_PEN ? (

@@ -183,7 +183,9 @@ export const Item = ({
     setSellQuantity(Math.min(1, playerInventoryQuantities[id]))
   }
 
-  const avatar = <img {...{ src: items[id] }} alt={name} />
+  const avatar = (
+    <img {...{ src: items[id as keyof typeof items] }} alt={name} />
+  )
 
   let sellPrice = adjustedValue
 

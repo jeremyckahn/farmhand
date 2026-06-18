@@ -15,7 +15,9 @@ import { FermentationRecipeList } from './FermentationRecipeList.js'
 const totalFermentableItems = Object.keys(fermentableItemsMap).length
 
 vitest.mock('./FermentationRecipe.js', () => ({
-  FermentationRecipe: ({ item }) => <div>{item.name}</div>,
+  FermentationRecipe: ({ item }: { item: farmhand.item }) => (
+    <div>{item.name}</div>
+  ),
 }))
 
 const FermentationRecipeListStub = ({

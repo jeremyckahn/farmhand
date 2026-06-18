@@ -15,12 +15,19 @@ import { TabPanel } from './TabPanel/index.js'
 
 import { getUpgradesAvailable } from './getUpgradesAvailable.js'
 
+interface ForgeTabPanelProps {
+  currentTab: number
+  index: number
+  learnedForgeRecipes: string[]
+  toolLevels: Record<farmhand.toolType, farmhand.toolLevel>
+}
+
 export function ForgeTabPanel({
   currentTab,
   index,
   learnedForgeRecipes,
   toolLevels,
-}) {
+}: ForgeTabPanelProps) {
   const upgradesAvailable = getUpgradesAvailable({
     toolLevels,
     learnedForgeRecipes,

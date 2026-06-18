@@ -1,9 +1,14 @@
 import { EXPERIENCE_VALUES } from '../../constants.js'
 import { itemType, toolLevel, toolType } from '../../enums.js'
 import { testState } from '../../test-utils/index.js'
-import upgrades from '../../data/upgrades.js'
+import upgradesRaw from '../../data/upgrades.js'
 
 import { upgradeTool } from './upgradeTool.js'
+
+const upgrades = upgradesRaw as Record<
+  farmhand.toolType,
+  Record<farmhand.toolLevel, farmhand.upgradesMetadatum>
+>
 
 describe('upgradeTool', () => {
   let state: farmhand.state

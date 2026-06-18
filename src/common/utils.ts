@@ -22,4 +22,4 @@ export const generateValueAdjustments = (
     }
 
     return acc
-  }, {})
+  }, {} as Record<string, number>)

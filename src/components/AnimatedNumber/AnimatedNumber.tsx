@@ -34,7 +34,7 @@ const AnimatedNumber = ({
       const tweenable = tween({
         easing: 'easeOutQuad',
         duration: 750,
-        render: ({ number: tweenedNumber }) => {
+        render: ({ number: tweenedNumber }: any) => {
           setDisplayedNumber(Number(tweenedNumber))
         },
         from: {

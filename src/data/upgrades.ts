@@ -3,7 +3,7 @@ import { itemType, toolType, toolLevel } from '../enums.js'
 import * as items from './items.js'
 import * as recipes from './recipes.js'
 
-const coalNeededForIngots = (ingotId, amount = 1) => {
+const coalNeededForIngots = (ingotId: string, amount = 1) => {
   switch (ingotId) {
     case recipes.bronzeIngot.id:
       return amount * 2
@@ -25,7 +25,7 @@ const coalNeededForIngots = (ingotId, amount = 1) => {
 const { bronzeIngot, ironIngot, silverIngot, goldIngot } = recipes
 const { coal } = items
 
-const upgrades: farmhand.upgradesMetadata = {
+const upgrades: any = {
   [toolType.HOE]: {
     [toolLevel.DEFAULT]: {
       id: 'hoe-default',
@@ -171,8 +171,9 @@ const upgrades: farmhand.upgradesMetadata = {
 
 // add some defaults to each upgrade object
 for (let currentToolType in upgrades) {
-  for (let i in upgrades[currentToolType]) {
-    Object.assign(upgrades[currentToolType][i], {
+  const toolUpgrades = (upgrades as any)[currentToolType]
+  for (let i in toolUpgrades) {
+    Object.assign(toolUpgrades[i], {
       toolType: currentToolType,
       value: 0,
       doesPriceFluctuate: false,
@@ -182,4 +183,4 @@ for (let currentToolType in upgrades) {
   }
 }
 
-export default upgrades
+export default upgrades as farmhand.upgradesMetadata

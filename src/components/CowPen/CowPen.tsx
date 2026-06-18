@@ -36,7 +36,7 @@ export const CowPen = ({
   return (
     <div className="CowPen fill">
       <Tumbleweeds doSpawn={cowInventory.length === 0} />
-      {cowInventory.map(cow => (
+      {cowInventory.map((cow: farmhand.cow) => (
         <Cow
           {...{
             allowCustomPeerCowNames,

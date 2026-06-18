@@ -9,8 +9,12 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import './NotificationSystem.sass'
 
 export const snackbarProviderContentCallback = (
-  key,
-  { message, onClick, severity }
+  key: string | number,
+  {
+    message,
+    onClick,
+    severity,
+  }: farmhand.notification & { onClick?: () => void }
 ) => (
   <Alert
     {...{
@@ -31,6 +35,10 @@ export const NotificationSystem = ({
   closeSnackbar,
   enqueueSnackbar,
   latestNotification,
+}: {
+  closeSnackbar: () => void
+  enqueueSnackbar: (notification: farmhand.notification, options: any) => void
+  latestNotification: farmhand.notification | null
 }) => {
   useEffect(() => {
     if (latestNotification) {
@@ -53,7 +61,7 @@ NotificationSystem.propTypes = {
   }),
 }
 
-export default withSnackbar(function Consumer(props) {
+export default withSnackbar(function Consumer(props: any) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => {

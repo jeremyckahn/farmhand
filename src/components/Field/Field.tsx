@@ -172,6 +172,13 @@ export const FieldContentWrapper = ({
   scale,
   zoomIn,
   zoomOut,
+}: {
+  fieldContent: React.ReactNode
+  previousScale: number
+  resetTransform: () => void
+  scale: number
+  zoomIn: () => void
+  zoomOut: () => void
 }) => {
   useEffect(() => {
     if (scale === 1 && previousScale !== 1) {
@@ -255,10 +262,11 @@ export const FieldContent = ({
         onMouseLeave: () => setHoveredPlot({ x: null, y: null }),
       }}
     >
-      {nullArray(rows).map((_rowIndex, y) => (
+      {nullArray(rows).map((_rowIndex: null, y: number) => (
         <div className="row" key={y}>
-          {nullArray(columns).map(
-            (_colIndex, x, arr, plotContent = field[y][x]) => (
+          {nullArray(columns).map((_colIndex: null, x: number) => {
+            const plotContent = field[y][x]
+            return (
               <MemoPlot
                 key={x}
                 {...{
@@ -273,7 +281,7 @@ export const FieldContent = ({
                 }}
               />
             )
-          )}
+          })}
         </div>
       ))}
     </div>
@@ -320,7 +328,15 @@ const adjustableRangeFieldModes = new Set<string>([
   WATER,
 ])
 
-const RangeSliderValueLabelComponent = ({ children, open, value }) => (
+const RangeSliderValueLabelComponent = ({
+  children,
+  open,
+  value,
+}: {
+  children: React.ReactElement
+  open: boolean
+  value: number
+}) => (
   <Tooltip
     {...{
       open,
@@ -358,7 +374,7 @@ export const Field = (props: FieldProps) => {
     setFieldActionRange(hoveredPlotRangeSize)
   }, [hoveredPlotRangeSize])
 
-  const handleFieldActionRangeSliderChange = value => {
+  const handleFieldActionRangeSliderChange = (value: number) => {
     setFieldActionRange(value)
     handleFieldActionRangeChange(value)
   }
@@ -410,7 +426,7 @@ export const Field = (props: FieldProps) => {
             zoomOut: {
               animationTime: 0,
             },
-            onZoomChange: ({ scale }) => {
+            onZoomChange: ({ scale }: { scale: number }) => {
               // If setCurrentScale with scale < 1 is called here, it causes a
               // reference error within react-zoom-pan-pinch.
               if (scale >= 1) {
@@ -423,7 +439,7 @@ export const Field = (props: FieldProps) => {
             doubleClick: { disabled: true },
           }}
         >
-          {transformProps => (
+          {(transformProps: any) => (
             <FieldContentWrapper
               {...{
                 ...transformProps,
@@ -443,12 +459,12 @@ export const Field = (props: FieldProps) => {
                 marks: true,
                 max: field.length - 1,
                 min: 0,
-                onChange: (e, value) =>
+                onChange: (e: any, value: any) =>
                   handleFieldActionRangeSliderChange(value),
                 step: 1,
                 value: fieldActionRange,
                 valueLabelDisplay: 'auto',
-                valueLabelFormat: value => `${value * 2 + 1}`,
+                valueLabelFormat: (value: number) => `${value * 2 + 1}`,
                 components: {
                   ValueLabel: RangeSliderValueLabelComponent,
                 },

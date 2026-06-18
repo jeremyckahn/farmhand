@@ -39,7 +39,7 @@ export const CellarInventoryTabPanel = ({
     .split(' ')
     .filter(term => term.length > 0)
 
-  const filteredKegs = cellarInventory.filter(keg => {
+  const filteredKegs = cellarInventory.filter((keg: farmhand.keg) => {
     const item = itemsMap[keg.itemId]
     const itemName = item.name.toLowerCase()
     const fermentationRecipeName = `${FERMENTED_CROP_NAME}${itemName}`
@@ -65,7 +65,7 @@ export const CellarInventoryTabPanel = ({
         <SearchBar placeholder="Search kegs..." onSearch={setSearchQuery} />
       )}
       <ul className="card-list">
-        {filteredKegs.map(keg => (
+        {filteredKegs.map((keg: farmhand.keg) => (
           <li key={keg.id}>
             <Keg keg={keg} />
           </li>

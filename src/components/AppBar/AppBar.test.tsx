@@ -35,7 +35,7 @@ test('displays money amount', () => {
 test('shows notification indicator when notifications are hidden', () => {
   const todaysNotifications = [
     { severity: 'info', message: 'Test notification' },
-  ]
+  ] as farmhand.notification[]
 
   render(
     <AppBar
@@ -51,7 +51,7 @@ test('shows notification indicator when notifications are hidden', () => {
 test('hides notification indicator when notifications are shown', () => {
   const todaysNotifications = [
     { severity: 'info', message: 'Test notification' },
-  ]
+  ] as farmhand.notification[]
   render(
     <AppBar
       {...defaultProps}
@@ -66,7 +66,7 @@ test('hides notification indicator when notifications are shown', () => {
 test('shows error indicator when there are error notifications', () => {
   const todaysNotifications = [
     { severity: 'error', message: 'Error notification' },
-  ]
+  ] as farmhand.notification[]
   render(
     <AppBar
       {...defaultProps}
@@ -84,7 +84,7 @@ test('calls handleClickNotificationIndicator when notification indicator is clic
   const handleClick = vitest.fn()
   const todaysNotifications = [
     { severity: 'info', message: 'Test notification' },
-  ]
+  ] as farmhand.notification[]
 
   render(
     <AppBar

@@ -29,7 +29,7 @@ import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants.js'
 
 import './StatsView.sass'
 
-const ElevatedPaper = props => (
+const ElevatedPaper = (props: any) => (
   <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
 )
 

@@ -9,7 +9,7 @@ import { testItem } from '../../test-utils/index.js'
 import QuickSelect from './QuickSelect.js'
 
 vi.mock('../../utils/sortItems.js', () => ({
-  sortItems: items => items,
+  sortItems: (items: any) => items,
 }))
 
 const defaultProps = {

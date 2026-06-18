@@ -4,11 +4,17 @@ import PropTypes from 'prop-types'
 import SearchBar from '../SearchBar/index.js'
 import Recipe from '../Recipe/index.js'
 
-export function RecipeList({ allRecipes, learnedRecipes }) {
+export function RecipeList({
+  allRecipes,
+  learnedRecipes,
+}: {
+  allRecipes: Record<string, farmhand.recipe>
+  learnedRecipes: string[]
+}) {
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredRecipes = searchQuery
-    ? learnedRecipes.filter(recipeId =>
+    ? learnedRecipes.filter((recipeId: string) =>
         allRecipes[recipeId]?.name
           ?.toLowerCase()
           .includes(searchQuery.toLowerCase())
@@ -28,7 +34,7 @@ export function RecipeList({ allRecipes, learnedRecipes }) {
       )}
       {filteredRecipes.length > 0 && (
         <ul className="card-list">
-          {filteredRecipes.map(recipeId => (
+          {filteredRecipes.map((recipeId: string) => (
             <li key={recipeId}>
               <Recipe
                 {...{

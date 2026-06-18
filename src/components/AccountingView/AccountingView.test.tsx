@@ -12,7 +12,8 @@ import { STANDARD_LOAN_AMOUNT } from '../../constants.js'
 import AccountingView from './AccountingView.js'
 
 describe('<AccountView />', () => {
-  let handleClickLoanPaydownButton, handleClickTakeOutLoanButton
+  let handleClickLoanPaydownButton: ReturnType<typeof vi.fn>
+  let handleClickTakeOutLoanButton: ReturnType<typeof vi.fn>
 
   beforeEach(() => {
     const contextValue = createContextData()
@@ -24,8 +25,8 @@ describe('<AccountView />', () => {
       <FarmhandContext.Provider value={contextValue}>
         <AccountingView
           {...{
-            handleClickLoanPaydownButton,
-            handleClickTakeOutLoanButton,
+            handleClickLoanPaydownButton: handleClickLoanPaydownButton as any,
+            handleClickTakeOutLoanButton: handleClickTakeOutLoanButton as any,
             loanBalance: 1000,
             money: 1,
           }}

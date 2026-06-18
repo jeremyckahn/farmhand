@@ -17,6 +17,10 @@ const Achievement = ({
   completedAchievements,
 
   isComplete = Boolean(completedAchievements[id]),
+}: {
+  achievement: farmhand.achievement
+  completedAchievements: Partial<Record<string, boolean>>
+  isComplete?: boolean
 }) => (
   <Card
     {...{ className: classNames('Achievement', { 'is-complete': isComplete }) }}
@@ -45,7 +49,11 @@ Achievement.propTypes = {
   isComplete: bool,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: {
+  achievement: farmhand.achievement
+  completedAchievements?: Partial<Record<string, boolean>>
+  isComplete?: boolean
+}) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

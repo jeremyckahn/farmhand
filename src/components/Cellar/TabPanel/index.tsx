@@ -1,7 +1,11 @@
 import React from 'react'
 import { node, number } from 'prop-types'
 
-export const TabPanel = props => {
+export const TabPanel = (
+  props: React.PropsWithChildren<
+    { value: number; index: number } & Record<string, unknown>
+  >
+) => {
   const { children, value, index, ...other } = props
 
   return (
@@ -23,7 +27,7 @@ TabPanel.propTypes = {
   value: number.isRequired,
 }
 
-export const a11yProps = index => ({
+export const a11yProps = (index: number) => ({
   id: `cellar-tab-${index}`,
   'aria-controls': `cellar-tabpanel-${index}`,
 })

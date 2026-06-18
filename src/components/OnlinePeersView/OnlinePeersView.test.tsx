@@ -60,7 +60,7 @@ test('does not show loading message when active players match populated peers', 
 })
 
 test('displays cow offered for trade when present', () => {
-  const cowOfferedForTrade = {
+  const cowOfferedForTrade: farmhand.cow = {
     id: 'test-cow',
     name: 'Test Cow',
     color: 'BROWN',
@@ -228,7 +228,7 @@ test('uses default severity for peer messages when not specified', () => {
 })
 
 test('displays dividers between sections when content is present', () => {
-  const cowOfferedForTrade = {
+  const cowOfferedForTrade: farmhand.cow = {
     id: 'test-cow',
     name: 'Test Cow',
     color: 'BROWN',

@@ -28,7 +28,7 @@ export function Keg({ keg }: { keg: farmhand.keg }) {
 
   const item = itemsMap[keg.itemId]
 
-  let imageSrc = items[item.id]
+  let imageSrc = items[item.id as keyof typeof items]
 
   let recipeName = FERMENTED_CROP_NAME`${item}`
 

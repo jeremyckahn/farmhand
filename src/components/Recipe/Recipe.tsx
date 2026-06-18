@@ -79,7 +79,14 @@ const Recipe = ({
     >
       <CardHeader
         {...{
-          avatar: <img {...{ src: craftedItems[id], alt: name }} />,
+          avatar: (
+            <img
+              {...{
+                src: craftedItems[id as keyof typeof craftedItems],
+                alt: name,
+              }}
+            />
+          ),
           title: name,
           subheader: (
             <>
@@ -138,11 +145,11 @@ Recipe.propTypes = {
 
 export { Recipe }
 
-export default function Consumer(props) {
+export default function Consumer(props: Record<string, unknown>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Recipe {...{ ...gameState, ...handlers, ...props }} />
+        <Recipe {...({ ...gameState, ...handlers, ...props } as any)} />
       )}
     </FarmhandContext.Consumer>
   )

@@ -32,6 +32,27 @@ const SettingsView = ({
   showNotifications,
   useAlternateEndDayButtonPosition,
   showHomeScreen,
+}: {
+  allowCustomPeerCowNames: boolean
+  handleAllowCustomPeerCowNamesChange: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void
+  handleClearPersistedDataClick: () => void
+  handleExportDataClick: () => void
+  handleImportDataClick: (results: any) => void
+  handleSaveButtonClick: () => void
+  handleShowNotificationsChange: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void
+  handleUseAlternateEndDayButtonPositionChange: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void
+  handleShowHomeScreenChange: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void
+  showNotifications: boolean
+  useAlternateEndDayButtonPosition: boolean
+  showHomeScreen: boolean
 }) => {
   const [isClearDataDialogOpen, setIsClearDataDialogOpen] = useState(false)
 
@@ -124,7 +145,7 @@ const SettingsView = ({
         <FileReaderInput
           {...{
             as: 'text',
-            onChange: (e, results) => {
+            onChange: (e: any, results: any) => {
               handleImportDataClick(results)
             },
           }}
@@ -214,11 +235,11 @@ SettingsView.propTypes = {
 
 export { SettingsView }
 
-export default function Consumer(props) {
+export default function Consumer(props: Record<string, unknown>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <SettingsView {...{ ...gameState, ...handlers, ...props }} />
+        <SettingsView {...({ ...gameState, ...handlers, ...props } as any)} />
       )}
     </FarmhandContext.Consumer>
   )

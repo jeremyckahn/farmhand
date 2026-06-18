@@ -13,26 +13,31 @@ import { memoize } from '../../utils/memoize.js'
 
 import './AchievementsView.sass'
 
-const partitionAchievements = memoize(completedAchievements =>
-  achievements.reduce(
-    (acc, achievement) => {
-      acc[
-        completedAchievements[achievement.id] ? 'complete' : 'incomplete'
-      ].push(achievement)
+const partitionAchievements = memoize(
+  (completedAchievements: Partial<Record<string, boolean>>) =>
+    achievements.reduce(
+      (acc, achievement) => {
+        acc[
+          completedAchievements[achievement.id] ? 'complete' : 'incomplete'
+        ].push(achievement)
 
-      return acc
-    },
-    {
-      complete: [] as typeof achievements[number][],
-      incomplete: [] as typeof achievements[number][],
-    }
-  )
+        return acc
+      },
+      {
+        complete: [] as typeof achievements[number][],
+        incomplete: [] as typeof achievements[number][],
+      }
+    )
 )
 
-const AchievementsList = ({ unpartitionedAchievements }) => (
+const AchievementsList = ({
+  unpartitionedAchievements,
+}: {
+  unpartitionedAchievements: farmhand.achievement[]
+}) => (
   <AccordionDetails>
     <ul className="card-list">
-      {unpartitionedAchievements.map(achievement => (
+      {unpartitionedAchievements.map((achievement: farmhand.achievement) => (
         <li {...{ key: achievement.id }}>
           <Achievement {...{ achievement }} />
         </li>
@@ -46,6 +51,9 @@ const AchievementsView = ({
   partitionedAchievements: { complete, incomplete } = partitionAchievements(
     completedAchievements
   ),
+}: {
+  completedAchievements: Partial<Record<string, boolean>>
+  partitionedAchievements?: ReturnType<typeof partitionAchievements>
 }) => (
   <div className="AchievementsView">
     <ProgressBar
@@ -75,7 +83,7 @@ AchievementsView.propTypes = {
   completedAchievements: object.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Record<string, unknown>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (

@@ -68,7 +68,7 @@ describe('ProgressBar', () => {
   })
 
   test('animates progress from 0 to target percentage', () => {
-    let renderCallback
+    let renderCallback: any
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
@@ -97,7 +97,7 @@ describe('ProgressBar', () => {
   })
 
   test('rounds progress percentage to 2 decimal places', () => {
-    let renderCallback
+    let renderCallback: any
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
@@ -117,7 +117,7 @@ describe('ProgressBar', () => {
   })
 
   test('interpolates color during animation', () => {
-    let renderCallback
+    let renderCallback: any
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
@@ -190,7 +190,7 @@ describe('ProgressBar', () => {
   })
 
   test('maintains proper color interpolation at different progress points', () => {
-    let renderCallback
+    let renderCallback: any
     const mockTweenInstance = {
       cancel: vi.fn(),
     }

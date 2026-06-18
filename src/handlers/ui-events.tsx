@@ -320,7 +320,8 @@ export default {
 
         if (
           Object.keys(state).some(
-            key => typeof this.state[key] !== typeof state[key]
+            key =>
+              typeof (this.state as any)[key] !== typeof (state as any)[key]
           )
         ) {
           throw new Error(INVALID_DATA_PROVIDED)

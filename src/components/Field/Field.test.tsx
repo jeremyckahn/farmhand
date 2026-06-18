@@ -17,14 +17,24 @@ import {
 
 // Mock Plot component to test MemoPlot memoization behavior
 vitest.mock('../Plot/index.js', () => {
-  const mockPlot = vitest.fn(({ x, y, isInHoverRange: isInRange }) => (
-    <div
-      className="Plot"
-      data-x={x}
-      data-y={y}
-      data-in-hover-range={isInRange}
-    />
-  ))
+  const mockPlot = vitest.fn(
+    ({
+      x,
+      y,
+      isInHoverRange: isInRange,
+    }: {
+      x: number
+      y: number
+      isInHoverRange: boolean
+    }) => (
+      <div
+        className="Plot"
+        data-x={x}
+        data-y={y}
+        data-in-hover-range={isInRange}
+      />
+    )
+  )
   return { default: mockPlot }
 })
 
@@ -48,7 +58,11 @@ vitest.mock('../../img/index.js', () => ({
   pixel: 'mock-pixel.png',
 }))
 vitest.mock('react-zoom-pan-pinch', () => ({
-  TransformWrapper: ({ children }) => (
+  TransformWrapper: ({
+    children,
+  }: {
+    children: (args: any) => React.ReactNode
+  }) => (
     <div className="transform-wrapper">
       {children({
         scale: 1,
@@ -59,7 +73,7 @@ vitest.mock('react-zoom-pan-pinch', () => ({
       })}
     </div>
   ),
-  TransformComponent: ({ children }) => (
+  TransformComponent: ({ children }: { children: React.ReactNode }) => (
     <div className="transform-component">{children}</div>
   ),
 }))
@@ -218,7 +232,7 @@ describe('FieldContent', () => {
 
 describe('MemoPlot', () => {
   // Import the mocked Plot component to access its call count
-  let MockedPlot
+  let MockedPlot: any
   beforeEach(async () => {
     const PlotModule = await import('../Plot/index.js')
     MockedPlot = PlotModule.default

@@ -10,7 +10,7 @@ import FarmhandContext, {
 import Home from './Home.js'
 
 describe('<Home />', () => {
-  let handleViewChangeButtonClick
+  let handleViewChangeButtonClick: any
 
   beforeEach(() => {
     const contextValue = createContextData()

@@ -32,10 +32,11 @@ const onboardingAchievements = [
   achievementsMap['purchase-cow-pen'],
 ]
 
-const getRemainingOnboardingAchievements = memoize(completedAchievements =>
-  onboardingAchievements.filter(
-    achievement => achievement && !completedAchievements[achievement.id]
-  )
+const getRemainingOnboardingAchievements = memoize(
+  (completedAchievements: Partial<Record<string, boolean>>) =>
+    onboardingAchievements.filter(
+      achievement => achievement && !completedAchievements[achievement.id]
+    )
 )
 
 const environmentAllowsInstall = ['production', 'development'].includes(
@@ -61,6 +62,10 @@ const Home = ({
   remainingOnboardingAchievements = getRemainingOnboardingAchievements(
     completedAchievements
   ),
+}: {
+  completedAchievements: Partial<Record<string, boolean>>
+  handleViewChangeButtonClick: (view: string) => void
+  remainingOnboardingAchievements?: farmhand.achievement[]
 }) => (
   <div className="Home">
     {isDecember() ? (
@@ -280,11 +285,11 @@ Home.propTypes = {
   handleViewChangeButtonClick: func.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Record<string, unknown>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Home {...{ ...gameState, ...handlers, ...props }} />
+        <Home {...({ ...gameState, ...handlers, ...props } as any)} />
       )}
     </FarmhandContext.Consumer>
   )

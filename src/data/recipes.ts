@@ -11,7 +11,18 @@ import { grapeVarietyNameMap } from './crops/grape.js'
 
 const itemsMap = { ...baseItemsMap }
 
-const convertToRecipe = (partialRecipe): farmhand.recipe => {
+interface PartialRecipe {
+  id: string
+  name: string
+  ingredients: Record<string, number>
+  condition: (state: farmhand.state) => boolean
+  description?: string
+  recipeType: any
+  type?: any
+  [key: string]: any
+}
+
+const convertToRecipe = (partialRecipe: PartialRecipe): farmhand.recipe => {
   const recipe = Object.freeze({
     type: itemType.CRAFTED_ITEM,
     value: Object.keys(partialRecipe.ingredients).reduce(
@@ -23,7 +34,7 @@ const convertToRecipe = (partialRecipe): farmhand.recipe => {
       0
     ),
     ...partialRecipe,
-  })
+  }) as farmhand.recipe
 
   itemsMap[partialRecipe.id] = recipe
 

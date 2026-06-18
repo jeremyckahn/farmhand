@@ -115,38 +115,46 @@ const emptyObject = Object.freeze({})
 
 export const computePlayerInventory = memoize(
   (
-    inventory: globalThis.farmhand.state['inventory'],
+    inventory: farmhand.state['inventory'],
     valueAdjustments: Record<string, number>
-  ): globalThis.farmhand.item[] =>
-    inventory.map(({ quantity, id }) => ({
+  ): farmhand.item[] =>
+    inventory.map(({ quantity, id }: { quantity: number; id: string }) => ({
       quantity,
-      ...itemsMap[id],
-      value: getItemCurrentValue(itemsMap[id], valueAdjustments),
+      ...itemsMap[id as keyof typeof itemsMap],
+      value: getItemCurrentValue(
+        itemsMap[id as keyof typeof itemsMap],
+        valueAdjustments
+      ),
     }))
 )
 
 export const getFieldToolInventory = memoize(
-  (
-    inventory: globalThis.farmhand.state['inventory']
-  ): globalThis.farmhand.item[] =>
+  (inventory: farmhand.state['inventory']): farmhand.item[] =>
     inventory
-      .filter(({ id }) => {
-        const { enablesFieldMode } = itemsMap[id]
+      .filter(({ id }: { id: string }) => {
+        const { enablesFieldMode } = itemsMap[id as keyof typeof itemsMap]
 
         return (
           typeof enablesFieldMode === 'string' && enablesFieldMode !== PLANT
         )
       })
-      .map(({ id, quantity }) => ({ ...itemsMap[id], quantity }))
+      .map(({ id, quantity }: { id: string; quantity: number }) => ({
+        ...itemsMap[id as keyof typeof itemsMap],
+        quantity,
+      }))
 )
 
 export const getPlantableCropInventory = memoize(
-  (
-    inventory: globalThis.farmhand.state['inventory']
-  ): globalThis.farmhand.item[] =>
+  (inventory: farmhand.state['inventory']): farmhand.item[] =>
     inventory
-      .filter(({ id }) => itemsMap[id].isPlantableCrop)
-      .map(({ id, quantity }) => ({ ...itemsMap[id], quantity }))
+      .filter(
+        ({ id }: { id: string }) =>
+          itemsMap[id as keyof typeof itemsMap].isPlantableCrop
+      )
+      .map(({ id, quantity }: { id: string; quantity: number }) => ({
+        ...itemsMap[id as keyof typeof itemsMap],
+        quantity,
+      }))
 )
 
 const applyPriceEvents = (
@@ -209,7 +217,9 @@ export default class Farmhand extends FarmhandReducers {
   postData = postData
 
   get viewTitle() {
-    return STAGE_TITLE_MAP[this.state.stageFocus]
+    return STAGE_TITLE_MAP[
+      this.state.stageFocus as keyof typeof STAGE_TITLE_MAP
+    ]
   }
 
   get fieldToolInventory() {
@@ -227,14 +237,16 @@ export default class Farmhand extends FarmhandReducers {
 
   get viewList() {
     const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
-    const viewList: farmhand.stageFocusType[] = [...STANDARD_VIEW_LIST]
+    const viewList: farmhand.stageFocusType[] = [
+      ...STANDARD_VIEW_LIST,
+    ] as farmhand.stageFocusType[]
 
     if (this.state.showHomeScreen) {
-      viewList.unshift(HOME)
+      viewList.unshift(HOME as farmhand.stageFocusType)
     }
 
     if (this.isForestUnlocked && features.FOREST) {
-      viewList.push(FOREST)
+      viewList.push(FOREST as farmhand.stageFocusType)
     }
 
     if (this.state.purchasedCowPen) {
@@ -394,13 +406,14 @@ export default class Farmhand extends FarmhandReducers {
   initInputHandlers() {
     const debouncedInputRate = 50
 
-    Object.keys(eventHandlers).forEach(method => {
-      this.handlers[method] = eventHandlers[method].bind(this)
+    Object.keys(eventHandlers).forEach(methodStr => {
+      const method = methodStr as keyof typeof eventHandlers
+      this.handlers[method] = (eventHandlers[method] as any).bind(this)
 
       this.handlers.debounced[method] = debounce(
         this.handlers[method],
         debouncedInputRate
-      )
+      ) as any
     })
 
     // NOTE: The dialog view mappings here MUST be kept in sync with the
@@ -442,7 +455,7 @@ export default class Farmhand extends FarmhandReducers {
       toggleMenu: () => this.handlers.handleMenuToggle(),
     }
 
-    nullArray(9).forEach((_, i) => {
+    nullArray(9).forEach((_: null, i: number) => {
       const index = i + 1
       const key = `numberKey${index}`
       this.keyMap[key] = String(index)
@@ -450,7 +463,9 @@ export default class Farmhand extends FarmhandReducers {
         const viewName = this.viewList[i]
 
         if (typeof viewName === 'string') {
-          this.setState({ stageFocus: stageFocusType[viewName] })
+          this.setState({
+            stageFocus: stageFocusType[viewName as keyof typeof stageFocusType],
+          })
         }
       }
     })
@@ -479,15 +494,17 @@ export default class Farmhand extends FarmhandReducers {
       const { isCombineEnabled, newDayNotifications } = sanitizedState
 
       this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {
-        newDayNotifications.forEach(({ message, severity }) => {
-          // Defer these notifications so that notistack doesn't swallow all
-          // but the last one.
-          setTimeout(() => this.showNotification(message, severity), 0)
+        newDayNotifications.forEach(
+          ({ message, severity }: farmhand.notification) => {
+            // Defer these notifications so that notistack doesn't swallow all
+            // but the last one.
+            setTimeout(() => this.showNotification(message, severity), 0)
 
-          if (isCombineEnabled) {
-            this.forRange(reducers.harvestPlot, Infinity, 0, 0)
+            if (isCombineEnabled) {
+              this.forRange(reducers.harvestPlot, Infinity, 0, 0)
+            }
           }
-        })
+        )
       })
     } else {
       await this.initializeNewGame()
@@ -498,7 +515,7 @@ export default class Farmhand extends FarmhandReducers {
     this.setState({ hasBooted: true })
   }
 
-  componentDidUpdate(_prevProps, prevState) {
+  componentDidUpdate(_prevProps: FarmhandProps, prevState: farmhand.state) {
     const {
       hasBooted,
       heartbeatTimeoutId,
@@ -580,18 +597,18 @@ export default class Farmhand extends FarmhandReducers {
     }
 
     if (money < prevState.money) {
-      this.setState(({ todaysLosses }) => ({
+      this.setState(({ todaysLosses }: farmhand.state) => ({
         todaysLosses: moneyTotal(todaysLosses, money - prevState.money),
       }))
     }
 
     if (peerRoom !== prevState.peerRoom) {
       if (peerRoom) {
-        peerRoom.onPeerJoin(id => {
+        peerRoom.onPeerJoin((id: string) => {
           this.addPeer(id)
         })
 
-        peerRoom.onPeerLeave(id => {
+        peerRoom.onPeerLeave((id: string) => {
           this.removePeer(id)
         })
 
@@ -646,7 +663,7 @@ export default class Farmhand extends FarmhandReducers {
     ;[
       'showInventoryFullNotifications',
       'showRecipeLearnedNotifications',
-    ].forEach(fn => this[fn](prevState))
+    ].forEach(fn => (this as any)[fn](prevState))
 
     this.state.sendPeerMetadata?.(this.peerMetadata)
   }
@@ -657,7 +674,7 @@ Trystero's makeAction function.
    */
   wrapSendPeerMetadata(sendPeerMetadata: Function): Function {
     return throttle(
-      (...args) => {
+      (...args: any[]) => {
         sendPeerMetadata(...args)
 
         this.setState(() => ({
@@ -671,8 +688,8 @@ Trystero's makeAction function.
     )
   }
 
-  tradeForPeerCow(peerPlayerCow: globalThis.farmhand.cow) {
-    this.setState(state => {
+  tradeForPeerCow(peerPlayerCow: farmhand.cow) {
+    this.setState((state: farmhand.state) => {
       const {
         cowIdOfferedForTrade,
         cowInventory,
@@ -685,8 +702,9 @@ Trystero's makeAction function.
       const { ownerId } = peerPlayerCow
 
       const [peerId] =
-        Object.entries(peers).find(([, peer]) => peer?.playerId === ownerId) ??
-        []
+        Object.entries(peers).find(
+          ([, peer]: [string, any]) => peer?.playerId === ownerId
+        ) ?? []
 
       if (!peerId) {
         console.error(
@@ -696,7 +714,7 @@ Trystero's makeAction function.
       }
 
       const playerAlreadyOwnsRequestedCow = cowInventory.find(
-        ({ id }) => id === peerPlayerCow.id
+        ({ id }: farmhand.cow) => id === peerPlayerCow.id
       )
 
       if (playerAlreadyOwnsRequestedCow) {
@@ -705,7 +723,7 @@ Trystero's makeAction function.
       }
 
       const cowToTradeAway = cowInventory.find(
-        ({ id }) => id === cowIdOfferedForTrade
+        ({ id }: farmhand.cow) => id === cowIdOfferedForTrade
       )
 
       if (!cowToTradeAway) {
@@ -830,7 +848,7 @@ Trystero's makeAction function.
 
     this.setState(() => ({
       heartbeatTimeoutId: (window.setTimeout(async () => {
-        this.setState(({ money, activePlayers }) => ({
+        this.setState(({ money, activePlayers }: farmhand.state) => ({
           activePlayers,
           money: moneyTotal(money, activePlayers ?? 0),
         }))
@@ -852,7 +870,9 @@ Trystero's makeAction function.
   /*!
    * @param {farmhand.state} prevState
    */
-  showRecipeLearnedNotifications({ learnedRecipes: previousLearnedRecipes }) {
+  showRecipeLearnedNotifications({
+    learnedRecipes: previousLearnedRecipes,
+  }: farmhand.state) {
     let learnedRecipes: farmhand.recipe[] = []
 
     Object.keys(this.state.learnedRecipes).forEach(recipeId => {
@@ -1034,7 +1054,7 @@ Trystero's makeAction function.
   /*!
    * @param {farmhand.module:enums.dialogView} dialogViewName
    */
-  openDialogView(dialogViewName) {
+  openDialogView(dialogViewName: farmhand.dialogView) {
     this.setState({ currentDialogView: dialogViewName, isDialogViewOpen: true })
   }
 
@@ -1047,7 +1067,7 @@ Trystero's makeAction function.
 
     const { viewList } = this
 
-    this.setState(({ stageFocus }) => {
+    this.setState(({ stageFocus }: farmhand.state) => {
       const currentViewIndex = viewList.indexOf(stageFocus)
 
       return { stageFocus: viewList[(currentViewIndex + 1) % viewList.length] }
@@ -1059,7 +1079,7 @@ Trystero's makeAction function.
 
     const { viewList } = this
 
-    this.setState(({ stageFocus }) => {
+    this.setState(({ stageFocus }: farmhand.state) => {
       const currentViewIndex = viewList.indexOf(stageFocus)
 
       return {

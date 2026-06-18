@@ -84,18 +84,21 @@ export const fermentableItemsMap: Record<
 export const cropItemIdToSeedItemMap: Record<
   string,
   farmhand.seedItem
-> = Object.entries(baseItemsMap).reduce((acc, [itemId, item]) => {
-  const { growsInto } = item as { growsInto?: string | string[] }
-  if (growsInto) {
-    const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
+> = Object.entries(baseItemsMap).reduce<Record<string, farmhand.seedItem>>(
+  (acc, [itemId, item]) => {
+    const { growsInto } = item as { growsInto?: string | string[] }
+    if (growsInto) {
+      const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 
-    for (const variantId of variants) {
-      acc[variantId] = baseItemsMap[itemId]
+      for (const variantId of variants) {
+        acc[variantId] = baseItemsMap[itemId] as farmhand.seedItem
+      }
     }
-  }
 
-  return acc
-}, {})
+    return acc
+  },
+  {}
+)
 
 export const cropTypeToIdMap: Record<string, string | Array<string>> = {
   [ASPARAGUS]: 'asparagus',

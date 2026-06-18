@@ -30,13 +30,16 @@ export const handlePeerMetadataRequest = (
  */
 export const handleCowTradeRequest = async (
   farmhand: any,
-  { cowOffered, cowRequested },
+  {
+    cowOffered,
+    cowRequested,
+  }: { cowOffered: farmhand.cow; cowRequested: farmhand.cow },
   peerId: string
 ) => {
   let wasTradeSuccessful = false
 
   farmhand.setState(
-    state => {
+    (state: farmhand.state) => {
       const {
         allowCustomPeerCowNames,
         cowIdOfferedForTrade,
@@ -55,7 +58,7 @@ export const handleCowTradeRequest = async (
       }
 
       const cowToTradeAway = cowInventory.find(
-        ({ id }) => id === cowIdOfferedForTrade
+        ({ id }: farmhand.cow) => id === cowIdOfferedForTrade
       )
 
       if (
@@ -159,7 +162,7 @@ export const handleCowTradeRequestAccept = (
   let wasTradeSuccessful = false
 
   farmhand.setState(
-    state => {
+    (state: farmhand.state) => {
       const {
         allowCustomPeerCowNames,
         cowIdOfferedForTrade,
@@ -171,7 +174,7 @@ export const handleCowTradeRequestAccept = (
       } = state
 
       const cowTradedAway = cowInventory.find(
-        ({ id }) => id === cowIdOfferedForTrade
+        ({ id }: farmhand.cow) => id === cowIdOfferedForTrade
       )
 
       if (!cowTradedAway) {
@@ -224,7 +227,7 @@ export const handleCowTradeRequestAccept = (
         state = addExperience(state, EXPERIENCE_VALUES.COW_TRADED)
       }
 
-      clearTimeout(cowTradeTimeoutId)
+      if (cowTradeTimeoutId) clearTimeout(cowTradeTimeoutId)
 
       wasTradeSuccessful = true
 
@@ -260,7 +263,10 @@ export const handleCowTradeRequestAccept = (
   )
 }
 
-export const handleCowTradeRequestReject = (farmhand: any, { reason }) => {
+export const handleCowTradeRequestReject = (
+  farmhand: any,
+  { reason }: { reason: farmhand.cowTradeRejectionReason }
+) => {
   const { cowTradeTimeoutId } = farmhand.state
 
   if (typeof cowTradeTimeoutId === 'number') {
