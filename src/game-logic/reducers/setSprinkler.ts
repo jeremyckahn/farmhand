@@ -1,5 +1,5 @@
 import { fieldMode } from '../../enums.js'
-import { getPlotContentFromItemId } from '../../utils/index.js'
+import { getPlotContentFromItemId } from '../../utils/getPlotContentFromItemId.js'
 import { SPRINKLER_ITEM_ID } from '../../constants.js'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'

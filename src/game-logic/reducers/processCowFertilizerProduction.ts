@@ -1,8 +1,6 @@
-import {
-  doesInventorySpaceRemain,
-  getCowFertilizerItem,
-  getCowFertilizerProductionRate,
-} from '../../utils/index.js'
+import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+import { getCowFertilizerItem } from '../../utils/getCowFertilizerItem.js'
+import { getCowFertilizerProductionRate } from '../../utils/getCowFertilizerProductionRate.js'
 import { FERTILIZERS_PRODUCED } from '../../templates.js'
 
 import { addItemToInventory } from './addItemToInventory.js'

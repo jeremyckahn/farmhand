@@ -6,7 +6,7 @@ import {
   REQUESTED_COW_TRADE_UNAVAILABLE,
   UNKNOWN_COW_TRADE_FAILURE,
 } from '../strings.js'
-import { sleep } from '../utils/index.js'
+import { sleep } from '../utils/sleep.js'
 
 import {
   addCowToInventory,

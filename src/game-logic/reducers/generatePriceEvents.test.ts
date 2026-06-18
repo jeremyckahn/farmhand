@@ -1,6 +1,6 @@
 import { PRICE_CRASH, PRICE_SURGE } from '../../templates.js'
 import { sampleCropItem1 } from '../../data/__mocks__/items.js'
-import { getPriceEventForCrop } from '../../utils/index.js'
+import { getPriceEventForCrop } from '../../utils/getPriceEventForCrop.js'
 import { testState } from '../../test-utils/index.js'
 
 import { generatePriceEvents } from './generatePriceEvents.js'

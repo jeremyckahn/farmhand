@@ -5,7 +5,7 @@ import {
   COAL_SPAWN_CHANCE,
   STONE_SPAWN_CHANCE,
 } from '../constants.js'
-import { randomChoice } from '../utils/index.js'
+import { randomChoice } from '../utils/randomChoice.js'
 import { randomNumberService } from '../common/services/randomNumber.js'
 // eslint-disable-next-line no-unused-vars
 import { Factory } from '../interfaces/Factory.js'

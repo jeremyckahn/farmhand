@@ -1,6 +1,7 @@
 import { huggingMachine } from '../../data/items.js'
 import { standardCowColors } from '../../enums.js'
-import { getCowValue, generateCow } from '../../utils/index.js'
+import { getCowValue } from '../../utils/getCowValue.js'
+import { generateCow } from '../../utils/generateCow.js'
 import { testState } from '../../test-utils/index.js'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'

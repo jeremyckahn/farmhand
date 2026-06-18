@@ -4,7 +4,7 @@ import { object, shape, string } from 'prop-types'
 
 import { INGREDIENTS_LIST_ITEM } from '../../templates.js'
 
-import { integerString } from '../../utils/index.js'
+import { integerString } from '../../utils/integerString.js'
 import { itemsMap } from '../../data/maps.js'
 
 export default function IngredientsList({

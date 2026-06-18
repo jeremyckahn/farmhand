@@ -3,14 +3,15 @@ import { vi } from 'vitest'
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import { genders, standardCowColors } from '../../enums.js'
 import { testState } from '../../test-utils/index.js'
-import * as utils from '../../utils/index.js'
+import * as generateCowModule from '../../utils/generateCow.js'
+import { getCowValue } from '../../utils/getCowValue.js'
 
 import { purchaseCow } from './purchaseCow.js'
 
 describe('purchaseCow', () => {
   let state: farmhand.state
   const cow = Object.freeze(
-    utils.generateCow({
+    generateCowModule.generateCow({
       baseWeight: 1000,
       color: standardCowColors.WHITE,
       daysOld: 1,
@@ -22,13 +23,15 @@ describe('purchaseCow', () => {
 
   beforeEach(() => {
     state = testState({
-      cowForSale: utils.generateCow(),
+      cowForSale: generateCowModule.generateCow(),
       cowInventory: [],
       playerId: 'abc123',
       money: 5000,
       purchasedCowPen: 1,
     })
-    vi.spyOn(utils, 'generateCow').mockReturnValue(utils.generateCow())
+    vi.spyOn(generateCowModule, 'generateCow').mockReturnValue(
+      generateCowModule.generateCow()
+    )
   })
 
   test('purchases a cow', () => {
@@ -36,7 +39,7 @@ describe('purchaseCow', () => {
 
     expect(newState).toMatchObject({
       cowInventory: [{ ...cow, ownerId: 'abc123', originalOwnerId: 'abc123' }],
-      money: 5000 - utils.getCowValue(cow, false),
+      money: 5000 - getCowValue(cow, false),
     })
 
     expect(newState.cowForSale).not.toBe(state.cowForSale)
@@ -48,7 +51,7 @@ describe('purchaseCow', () => {
       const cowCapacity = PURCHASEABLE_COW_PENS.get(1)?.cows || 0
       state.cowInventory = Array(cowCapacity)
         .fill(null)
-        .map(() => utils.generateCow())
+        .map(() => generateCowModule.generateCow())
 
       const { cowInventory, cowForSale, money } = purchaseCow(state, cow)
 

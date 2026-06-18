@@ -9,7 +9,8 @@ import { Tweenable } from 'shifty'
 import { random } from '../../common/utils.js'
 import { LEFT, RIGHT } from '../../constants.js'
 import { pixel } from '../../img/index.js'
-import { getCowDisplayName, getCowImage } from '../../utils/index.js'
+import { getCowDisplayName } from '../../utils/getCowDisplayName.js'
+import { getCowImage } from '../../utils/getCowImage.js'
 
 // Only moves the cow within the middle 80% of the pen
 const randomPosition = () => 10 + random() * 80

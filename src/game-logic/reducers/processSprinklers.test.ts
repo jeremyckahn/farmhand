@@ -1,5 +1,5 @@
 import { testCrop, testState } from '../../test-utils/index.js'
-import { getPlotContentFromItemId } from '../../utils/index.js'
+import { getPlotContentFromItemId } from '../../utils/getPlotContentFromItemId.js'
 
 import { processSprinklers } from './processSprinklers.js'
 

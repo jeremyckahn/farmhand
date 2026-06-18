@@ -10,7 +10,8 @@ import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { items as itemImages, pixel } from '../../img/index.js'
-import { integerString, sortItems } from '../../utils/index.js'
+import { integerString } from '../../utils/integerString.js'
+import { sortItems } from '../../utils/sortItems.js'
 import Toolbelt from '../Toolbelt/index.js'
 
 import './QuickSelect.sass'

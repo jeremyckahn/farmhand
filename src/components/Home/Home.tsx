@@ -18,7 +18,7 @@ import { achievementsMap } from '../../data/achievements.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { STANDARD_LOAN_AMOUNT } from '../../constants.js'
 import { stageFocusType } from '../../enums.js'
-import { isDecember } from '../../utils/index.js'
+import { isDecember } from '../../utils/isDecember.js'
 import { memoize } from '../../utils/memoize.js'
 import Achievement from '../Achievement/index.js'
 

@@ -18,14 +18,12 @@ import uiEventHandlers from '../../handlers/ui-events.js'
 
 import { pixel } from '../../img/index.js'
 import { genders } from '../../enums.js'
-import {
-  areHuggingMachinesInInventory,
-  getCowDisplayName,
-  getCowImage,
-  getCowValue,
-  isCowInBreedingPen,
-  isInViewport,
-} from '../../utils/index.js'
+import { areHuggingMachinesInInventory } from '../../utils/areHuggingMachinesInInventory.js'
+import { getCowDisplayName } from '../../utils/getCowDisplayName.js'
+import { getCowImage } from '../../utils/getCowImage.js'
+import { getCowValue } from '../../utils/getCowValue.js'
+import { isCowInBreedingPen } from '../../utils/isCowInBreedingPen.js'
+import { isInViewport } from '../../utils/isInViewport.js'
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import {
   OFFER_COW_FOR_TRADE,

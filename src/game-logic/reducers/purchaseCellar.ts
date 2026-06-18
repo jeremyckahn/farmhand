@@ -1,4 +1,4 @@
-import { moneyTotal } from '../../utils/index.js'
+import { moneyTotal } from '../../utils/moneyTotal.js'
 import { EXPERIENCE_VALUES, PURCHASEABLE_CELLARS } from '../../constants.js'
 
 import { CELLAR_PURCHASED } from '../../templates.js'

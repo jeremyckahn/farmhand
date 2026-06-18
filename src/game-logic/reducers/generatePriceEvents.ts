@@ -1,9 +1,7 @@
 import { levelAchieved } from '../../utils/levelAchieved.js'
-import {
-  filterItemIdsToSeeds,
-  getPriceEventForCrop,
-  getRandomUnlockedCrop,
-} from '../../utils/index.js'
+import { filterItemIdsToSeeds } from '../../utils/filterItemIdsToSeeds.js'
+import { getPriceEventForCrop } from '../../utils/getPriceEventForCrop.js'
+import { getRandomUnlockedCrop } from '../../utils/getRandomUnlockedCrop.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { PRICE_EVENT_CHANCE } from '../../constants.js'
 import { PRICE_CRASH, PRICE_SURGE } from '../../templates.js'

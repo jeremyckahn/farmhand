@@ -4,7 +4,7 @@ import {
   INFINITE_STORAGE_LIMIT,
 } from '../../constants.js'
 import { huggingMachine } from '../../data/items.js'
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from '../../utils/generateCow.js'
 import { testState } from '../../test-utils/index.js'
 
 import { processCowAttrition } from './processCowAttrition.js'

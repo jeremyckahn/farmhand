@@ -1,4 +1,4 @@
-import { moneyTotal } from '../../utils/index.js'
+import { moneyTotal } from '../../utils/moneyTotal.js'
 
 // TODO: Add tests for this reducer
 export const addRevenue = (

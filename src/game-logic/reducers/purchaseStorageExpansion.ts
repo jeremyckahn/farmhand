@@ -1,4 +1,5 @@
-import { getCostOfNextStorageExpansion, moneyTotal } from '../../utils/index.js'
+import { getCostOfNextStorageExpansion } from '../../utils/getCostOfNextStorageExpansion.js'
+import { moneyTotal } from '../../utils/moneyTotal.js'
 import {
   INFINITE_STORAGE_LIMIT,
   STORAGE_EXPANSION_AMOUNT,

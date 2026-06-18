@@ -8,11 +8,9 @@ import Tooltip from '@mui/material/Tooltip/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import { levelAchieved } from '../../utils/levelAchieved.js'
-import {
-  experienceNeededForLevel,
-  integerString,
-  scaleNumber,
-} from '../../utils/index.js'
+import { experienceNeededForLevel } from '../../utils/experienceNeededForLevel.js'
+import { integerString } from '../../utils/integerString.js'
+import { scaleNumber } from '../../utils/scaleNumber.js'
 import { EXPERIENCE_GAUGE_TOOLTIP_LABEL } from '../../templates.js'
 
 export function DayAndProgressContainer({ dayCount, experience, itemsSold }) {

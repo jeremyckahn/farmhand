@@ -11,7 +11,8 @@ import Shop from '../Shop/index.js'
 import Workshop from '../Workshop/index.js'
 import { Cellar } from '../Cellar/index.js'
 import { stageFocusType } from '../../enums.js'
-import { isOctober, isDecember } from '../../utils/index.js'
+import { isOctober } from '../../utils/isOctober.js'
+import { isDecember } from '../../utils/isDecember.js'
 
 import './Stage.sass'
 

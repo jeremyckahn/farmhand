@@ -5,7 +5,7 @@ import {
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
 } from '../../strings.js'
-import { shouldStormToday } from '../../utils/index.js'
+import { shouldStormToday } from '../../utils/shouldStormToday.js'
 
 import {
   fieldHasScarecrow,

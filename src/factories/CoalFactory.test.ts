@@ -1,13 +1,13 @@
 import { vi } from 'vitest'
 
 import { coal, stone } from '../data/ores/index.js'
-import * as utils from '../utils/index.js'
+import * as chooseRandomModule from '../utils/chooseRandom.js'
 
 import CoalFactory from './CoalFactory.js'
 
 describe('CoalFactory', () => {
   beforeEach(() => {
-    vitest.spyOn(utils, 'chooseRandom')
+    vitest.spyOn(chooseRandomModule, 'chooseRandom')
   })
 
   describe('generate', () => {
@@ -18,14 +18,14 @@ describe('CoalFactory', () => {
     })
 
     test('it produces at least one coal and one stone', () => {
-      vi.mocked(utils.chooseRandom).mockReturnValueOnce(1)
+      vi.mocked(chooseRandomModule.chooseRandom).mockReturnValueOnce(1)
       const resources = coalFactory.generate()
 
       expect(resources).toEqual([coal, stone])
     })
 
     test('can produce more than one coal and stone', () => {
-      vi.mocked(utils.chooseRandom).mockReturnValueOnce(3)
+      vi.mocked(chooseRandomModule.chooseRandom).mockReturnValueOnce(3)
       const resources = coalFactory.generate()
 
       expect(resources.length > 2).toEqual(true)

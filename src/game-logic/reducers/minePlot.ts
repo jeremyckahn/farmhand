@@ -1,5 +1,6 @@
 import { toolType, fertilizerType } from '../../enums.js'
-import { chooseRandom, doesInventorySpaceRemain } from '../../utils/index.js'
+import { chooseRandom } from '../../utils/chooseRandom.js'
+import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
 import { INVENTORY_FULL_NOTIFICATION } from '../../strings.js'
 import { ResourceFactory } from '../../factories/index.js'
 import { random } from '../../common/utils.js'

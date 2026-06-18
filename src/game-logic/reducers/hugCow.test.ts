@@ -1,5 +1,5 @@
 import { COW_HUG_BENEFIT } from '../../constants.js'
-import { generateCow } from '../../utils/index.js'
+import { generateCow } from '../../utils/generateCow.js'
 import { testState } from '../../test-utils/index.js'
 
 import { hugCow } from './hugCow.js'

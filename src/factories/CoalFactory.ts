@@ -1,6 +1,6 @@
 import { coal, stone } from '../data/ores/index.js'
 import { Factory } from '../interfaces/Factory.js'
-import { chooseRandom } from '../utils/index.js'
+import { chooseRandom } from '../utils/chooseRandom.js'
 
 /**
  * Resource factory used for spawning coal

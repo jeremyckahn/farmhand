@@ -9,13 +9,11 @@ import Typography from '@mui/material/Typography/index.js'
 import { array, func, number, object } from 'prop-types'
 
 import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe.js'
-import {
-  canMakeRecipe,
-  doesInventorySpaceRemain,
-  dollarString,
-  maxYieldOfRecipe,
-  integerString,
-} from '../../utils/index.js'
+import { canMakeRecipe } from '../../utils/canMakeRecipe.js'
+import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+import { dollarString } from '../../utils/dollarString.js'
+import { maxYieldOfRecipe } from '../../utils/maxYieldOfRecipe.js'
+import { integerString } from '../../utils/integerString.js'
 import { itemsMap } from '../../data/maps.js'
 import { craftedItems } from '../../img/index.js'
 import QuantityInput from '../QuantityInput/index.js'

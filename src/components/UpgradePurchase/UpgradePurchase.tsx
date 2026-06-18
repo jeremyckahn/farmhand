@@ -9,7 +9,8 @@ import { array, func, number, object } from 'prop-types'
 import IngredientsList from '../IngredientsList/index.js'
 
 import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe.js'
-import { canMakeRecipe, doesInventorySpaceRemain } from '../../utils/index.js'
+import { canMakeRecipe } from '../../utils/canMakeRecipe.js'
+import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
 
 import { craftedItems } from '../../img/index.js'
 

@@ -1,14 +1,12 @@
 import { addItemToInventory } from '../game-logic/reducers/index.js'
-import {
-  doesPlotContainCrop,
-  dollarString,
-  getCropLifeStage,
-  getProfitRecord,
-  integerString,
-  isOctober,
-  moneyTotal,
-  percentageString,
-} from '../utils/index.js'
+import { doesPlotContainCrop } from '../utils/doesPlotContainCrop.js'
+import { dollarString } from '../utils/dollarString.js'
+import { getCropLifeStage } from '../utils/getCropLifeStage.js'
+import { getProfitRecord } from '../utils/getProfitRecord.js'
+import { integerString } from '../utils/integerString.js'
+import { isOctober } from '../utils/isOctober.js'
+import { moneyTotal } from '../utils/moneyTotal.js'
+import { percentageString } from '../utils/percentageString.js'
 import { memoize } from '../utils/memoize.js'
 import { findInField } from '../utils/findInField.js'
 import { addExperience } from '../game-logic/reducers/index.js'

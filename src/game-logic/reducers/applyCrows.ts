@@ -1,5 +1,5 @@
 import { random } from '../../common/utils.js'
-import { doesPlotContainCrop } from '../../utils/index.js'
+import { doesPlotContainCrop } from '../../utils/doesPlotContainCrop.js'
 import { CROW_CHANCE, MAX_CROWS } from '../../constants.js'
 import { CROWS_DESTROYED } from '../../templates.js'
 

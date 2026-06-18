@@ -6,7 +6,7 @@ import {
 } from '../../strings.js'
 import { SCARECROW_ITEM_ID } from '../../constants.js'
 import { fertilizerType } from '../../enums.js'
-import { getPlotContentFromItemId } from '../../utils/index.js'
+import { getPlotContentFromItemId } from '../../utils/getPlotContentFromItemId.js'
 import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
 import { applyPrecipitation } from './applyPrecipitation.js'

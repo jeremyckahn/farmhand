@@ -1,8 +1,6 @@
-import {
-  chooseRandomIndex,
-  getCropFromItemId,
-  getFinalCropItemIdFromSeedItemId,
-} from '../../utils/index.js'
+import { chooseRandomIndex } from '../../utils/chooseRandomIndex.js'
+import { getCropFromItemId } from '../../utils/getCropFromItemId.js'
+import { getFinalCropItemIdFromSeedItemId } from '../../utils/getFinalCropItemIdFromSeedItemId.js'
 import { itemsMap } from '../../data/maps.js'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'

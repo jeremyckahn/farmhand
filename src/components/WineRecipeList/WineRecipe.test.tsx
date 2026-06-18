@@ -14,7 +14,7 @@ import {
 } from '../../data/crops/index.js'
 import { yeast } from '../../data/recipes.js'
 import { GRAPES_REQUIRED_FOR_WINE } from '../../constants.js'
-import { integerString } from '../../utils/index.js'
+import { integerString } from '../../utils/integerString.js'
 import { getYeastRequiredForWine } from '../../utils/getYeastRequiredForWine.js'
 
 import { getKegStub } from '../../test-utils/stubs/getKegStub.js'

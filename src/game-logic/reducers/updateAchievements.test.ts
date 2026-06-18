@@ -8,12 +8,12 @@ vitest.mock('../../data/achievements.js', () => {
         name: 'Test Achievement',
         description: '',
         rewardDescription: '',
-        condition: (
-          state: farmhand.state & { conditionSatisfied?: boolean }
-        ) => !state.conditionSatisfied,
-        reward: (
-          state: farmhand.state & { conditionSatisfied?: boolean }
-        ) => ({ ...state, conditionSatisfied: true }),
+        condition: (state: farmhand.state & { conditionSatisfied?: boolean }) =>
+          !state.conditionSatisfied,
+        reward: (state: farmhand.state & { conditionSatisfied?: boolean }) => ({
+          ...state,
+          conditionSatisfied: true,
+        }),
       },
     ],
   }

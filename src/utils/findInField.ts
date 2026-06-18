@@ -1,6 +1,6 @@
 import { memoize } from './memoize.js'
 
-import { memoizationSerializer } from './index.js'
+import { memoizationSerializer } from './memoizationSerializer.js'
 
 export const findInField = memoize(
   (

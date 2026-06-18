@@ -6,12 +6,10 @@ import {
   toolType,
 } from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
-import {
-  doesInventorySpaceRemain,
-  getCropLifeStage,
-  getPlotContentType,
-  getSeedItemIdFromFinalStageCropItemId,
-} from '../../utils/index.js'
+import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+import { getCropLifeStage } from '../../utils/getCropLifeStage.js'
+import { getPlotContentType } from '../../utils/getPlotContentType.js'
+import { getSeedItemIdFromFinalStageCropItemId } from '../../utils/getSeedItemIdFromFinalStageCropItemId.js'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
 
 import { addItemToInventory } from './addItemToInventory.js'
