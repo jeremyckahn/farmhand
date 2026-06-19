@@ -15,7 +15,7 @@ describe('field expansion purchasing', () => {
     await farmhandStub({
       localforage: {
         getItem: () => Promise.resolve(loadedState),
-        setItem: (_key, data) => Promise.resolve(data),
+        setItem: (_key: string, data: unknown) => Promise.resolve(data),
       },
     })
 

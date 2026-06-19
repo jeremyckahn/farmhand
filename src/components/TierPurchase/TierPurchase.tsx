@@ -11,6 +11,17 @@ import { func, instanceOf, node, number, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
+interface TierPurchaseProps {
+  description?: string
+  onBuyClick: (tier: number) => void
+  maxedOutPlaceholder?: React.ReactNode
+  money: number
+  purchasedTier: number
+  renderTierLabel: (tier: any) => React.ReactNode
+  tiers: Map<number, { price: number; [key: string]: any }>
+  title: string
+}
+
 export function TierPurchase({
   description,
   onBuyClick,
@@ -20,17 +31,19 @@ export function TierPurchase({
   renderTierLabel,
   tiers,
   title,
-}) {
-  const [selectedTier, setSelectedTier] = useState(purchasedTier)
+}: TierPurchaseProps) {
+  const [selectedTier, setSelectedTier] = useState<number | string>(
+    purchasedTier
+  )
 
   const tierValues = [...tiers.entries()]
 
   const selectedTierNumber = Number(selectedTier)
 
-  const hasPurchasedTier = tierLevel => tierLevel <= purchasedTier
+  const hasPurchasedTier = (tierLevel: number) => tierLevel <= purchasedTier
   const hasPurchasedHighestTier = hasPurchasedTier(tierValues.slice(-1)[0][0])
 
-  if (hasPurchasedTier(selectedTier)) {
+  if (hasPurchasedTier(Number(selectedTier))) {
     const nextTierNumber = selectedTierNumber + 1
     const nextTierToPurchase = tiers.get(nextTierNumber)
 
@@ -50,14 +63,15 @@ export function TierPurchase({
   }
 
   const handleBuyClick = () => {
-    const canAfford = tiers.get(selectedTierNumber).price <= money
+    const canAfford =
+      (tiers.get(selectedTierNumber)?.price ?? Infinity) <= money
 
     if (canAfford) {
       onBuyClick(selectedTierNumber)
     }
   }
 
-  const handleTierSelected = ({ target: { value } }) => {
+  const handleTierSelected = ({ target: { value } }: any) => {
     setSelectedTier(value)
   }
 
@@ -80,7 +94,7 @@ export function TierPurchase({
           <Button
             {...{
               color: 'primary',
-              disabled: !canPlayerBuySelectedTier,
+              disabled: !canPlayerBuySelectedTier(),
               onClick: handleBuyClick,
               variant: 'contained',
             }}
@@ -97,7 +111,7 @@ export function TierPurchase({
             }}
             {...{
               onChange: handleTierSelected,
-              value: selectedTier > 0 ? selectedTier : '',
+              value: Number(selectedTier) > 0 ? selectedTier : '',
             }}
           >
             {tierValues.map(([id, tier]) => (
@@ -127,11 +141,19 @@ TierPurchase.propTypes = {
   title: string.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(
+  props: Partial<Parameters<typeof TierPurchase>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <TierPurchase {...{ ...gameState, ...handlers, ...props }} />
+        <TierPurchase
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof TierPurchase>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

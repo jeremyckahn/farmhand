@@ -4,7 +4,7 @@ import Confetti from 'react-confetti'
 
 import { random } from '../../common/utils.js'
 
-const randomInt = (min, max) => {
+const randomInt = (min: number, max: number) => {
   return Math.floor(min + random() * (max - min + 1))
 }
 

@@ -11,7 +11,7 @@ describe('CoalFactory', () => {
   })
 
   describe('generate', () => {
-    let coalFactory
+    let coalFactory: CoalFactory
 
     beforeEach(() => {
       coalFactory = new CoalFactory()

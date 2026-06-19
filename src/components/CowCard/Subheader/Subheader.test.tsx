@@ -9,7 +9,7 @@ import Subheader from './Subheader.js'
 const COW_VALUE = 1000
 
 describe('Subheader', () => {
-  let baseProps
+  let baseProps: any
 
   beforeEach(() => {
     vitest.spyOn(Math, 'random').mockReturnValue(0)

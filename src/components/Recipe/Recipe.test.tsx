@@ -7,7 +7,7 @@ import { testItem, testRecipe } from '../../test-utils/index.js'
 
 import { Recipe } from './Recipe.js'
 
-vitest.mock('../../data/maps.js', async importOriginal => {
+vitest.mock('../../data/maps.js', async (importOriginal: any) => {
   const actual = await importOriginal()
   return {
     // @ts-ignore - vitest mock typing issue

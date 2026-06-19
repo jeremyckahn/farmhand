@@ -60,7 +60,7 @@ vitest.mock('../UpgradePurchase', () => {
 })
 
 describe('<Workshop />', () => {
-  let gameState
+  let gameState: any
 
   beforeEach(() => {
     gameState = {
@@ -71,7 +71,7 @@ describe('<Workshop />', () => {
     }
   })
 
-  const renderWorkshop = gameStateParam => {
+  const renderWorkshop = (gameStateParam: any) => {
     const contextValue = createContextData()
     contextValue.gameState = { ...contextValue.gameState, ...gameStateParam }
 

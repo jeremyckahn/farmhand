@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 
 import BailOutErrorBoundary from './BailOutErrorBoundary.js'
 
-const ThrowError = ({ shouldThrow }) => {
+const ThrowError = ({ shouldThrow }: { shouldThrow?: boolean }) => {
   if (shouldThrow) {
     throw new Error('Test error')
   }

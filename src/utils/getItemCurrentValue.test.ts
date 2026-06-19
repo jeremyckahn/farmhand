@@ -3,7 +3,7 @@ import { carrot, rainbowFertilizer } from '../data/items.js'
 import { getItemCurrentValue } from './getItemCurrentValue.js'
 
 describe('getItemCurrentValue', () => {
-  let valueAdjustments
+  let valueAdjustments: Record<string, number>
 
   beforeEach(() => {
     valueAdjustments = {

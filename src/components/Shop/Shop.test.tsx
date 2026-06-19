@@ -46,7 +46,7 @@ beforeEach(() => {
 describe('<Shop />', () => {
   test.each(['Seeds', 'Supplies', 'Upgrades'])(
     'the %s tab exists',
-    tabLabel => {
+    (tabLabel: string) => {
       expect(screen.getByText(tabLabel)).toBeInTheDocument()
     }
   )

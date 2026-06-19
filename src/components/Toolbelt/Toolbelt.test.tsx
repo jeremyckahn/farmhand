@@ -7,7 +7,7 @@ import { Toolbelt } from './Toolbelt.js'
 
 vitest.mock('../../utils/memoize.js', () => ({
   memoize: vitest.fn(callback => {
-    return (...args) => {
+    return (...args: any[]) => {
       return callback(...args)
     }
   }),
@@ -21,13 +21,13 @@ describe('<ToolBelt />', () => {
   }
 
   const getToolLevels = () => {
-    let toolLevels = []
+    let toolLevels: Record<string, string> = {}
 
     for (let type in toolType) {
       toolLevels[type] = toolLevel.DEFAULT
     }
 
-    return toolLevels
+    return toolLevels as any
   }
 
   test('renders a button for each tool that has a level set', () => {

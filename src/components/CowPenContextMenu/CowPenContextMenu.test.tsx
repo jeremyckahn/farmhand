@@ -17,7 +17,7 @@ vitest.mock('../Item', () => ({
 }))
 
 describe('CowPenContextMenu', () => {
-  let baseProps
+  let baseProps: any
 
   beforeEach(() => {
     baseProps = {

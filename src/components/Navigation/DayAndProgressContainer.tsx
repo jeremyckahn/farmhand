@@ -13,7 +13,15 @@ import { integerString } from '../../utils/integerString.js'
 import { scaleNumber } from '../../utils/scaleNumber.js'
 import { EXPERIENCE_GAUGE_TOOLTIP_LABEL } from '../../templates.js'
 
-export function DayAndProgressContainer({ dayCount, experience, itemsSold }) {
+export function DayAndProgressContainer({
+  dayCount,
+  experience,
+  itemsSold,
+}: {
+  dayCount: number
+  experience: number
+  itemsSold: Record<string, number>
+}) {
   const currentLevel = levelAchieved(experience)
 
   const levelPercent = scaleNumber(
@@ -60,11 +68,19 @@ DayAndProgressContainer.propTypes = {
   itemsSold: object.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(
+  props: Partial<Parameters<typeof DayAndProgressContainer>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <DayAndProgressContainer {...{ ...gameState, ...handlers, ...props }} />
+        <DayAndProgressContainer
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof DayAndProgressContainer>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

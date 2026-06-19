@@ -9,7 +9,13 @@ import { FermentationRecipeList } from '../FermentationRecipeList/FermentationRe
 
 import { TabPanel } from './TabPanel/index.js'
 
-export const FermentationTabPanel = ({ index, currentTab }) => (
+export const FermentationTabPanel = ({
+  index,
+  currentTab,
+}: {
+  index: number
+  currentTab: number
+}) => (
   <TabPanel value={currentTab} index={index}>
     <FermentationRecipeList />
     <Divider />

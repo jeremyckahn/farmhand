@@ -6,9 +6,9 @@ import TableCell from '@mui/material/TableCell/index.js'
 import TableContainer from '@mui/material/TableContainer/index.js'
 import TableRow from '@mui/material/TableRow/index.js'
 
-const ElevatedPaper = props => (
-  <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
-)
+const ElevatedPaper = (
+  props: React.PropsWithChildren<Record<string, unknown>>
+) => <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
 
 const KeybindingsView = () => (
   <div className="KeybindingsView">

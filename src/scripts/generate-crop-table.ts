@@ -5,8 +5,10 @@ import { levels } from '../data/levels.js'
 import { itemsMap } from '../data/maps.js'
 import { moneyString } from '../utils/moneyString.js'
 
-const getDaysToMature = seedItem => {
-  return seedItem.cropTimeline.reduce((days, acc) => days + acc)
+const getDaysToMature = (seedItem: farmhand.item) => {
+  return seedItem.cropTimeline
+    ? seedItem.cropTimeline.reduce((days: number, acc: number) => days + acc, 0)
+    : 0
 }
 
 function getCropImage(
@@ -49,7 +51,7 @@ const getCropRow = (
     level,
     moneyString(seedItem.value),
     getDaysToMature(seedItem),
-    seedItem.tier,
+    seedItem.tier ?? '',
   ]
 }
 

@@ -10,7 +10,8 @@ import Tabs from '@mui/material/Tabs/index.js'
 import sortBy from 'lodash.sortby'
 
 import Item from '../Item/index.js'
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import FarmhandContext, { BoundHandlers } from '../Farmhand/Farmhand.context.js'
+import uiEventHandlers from '../../handlers/ui-events.js'
 
 import { findCowById } from '../../utils/findCowById.js'
 import { getCowSellValue } from '../../utils/getCowSellValue.js'
@@ -35,21 +36,25 @@ const { AGE, COLOR, GENDER, HAPPINESS, VALUE, WEIGHT } = {
   WEIGHT: 'WEIGHT',
 }
 
-const sortCows = (cows, sortType, isAscending) => {
-  let sorter = _ => _
+const sortCows = (
+  cows: farmhand.cow[],
+  sortType: string,
+  isAscending: boolean
+) => {
+  let sorter: any = (_: any) => _
 
   if (sortType === VALUE) {
     sorter = getCowSellValue
   } else if (sortType === WEIGHT) {
     sorter = getCowWeight
   } else if (sortType === AGE) {
-    sorter = ({ daysOld }) => daysOld
+    sorter = ({ daysOld }: farmhand.cow) => daysOld
   } else if (sortType === COLOR) {
-    sorter = ({ color }) => color
+    sorter = ({ color }: farmhand.cow) => color
   } else if (sortType === GENDER) {
-    sorter = ({ gender }) => gender
+    sorter = ({ gender }: farmhand.cow) => gender
   } else if (sortType === HAPPINESS) {
-    sorter = ({ happiness }) => happiness
+    sorter = ({ happiness }: farmhand.cow) => happiness
   }
 
   const sortedCows = sortBy(cows, sorter)
@@ -61,8 +66,10 @@ const sortCows = (cows, sortType, isAscending) => {
  * @param {farmhand.cowBreedingPen} cowBreedingPen
  * @returns {number}
  */
-const numberOfCowsBreeding = ({ cowId1, cowId2 }) =>
-  cowId1 ? (cowId2 ? 2 : 1) : 0
+const numberOfCowsBreeding = ({
+  cowId1,
+  cowId2,
+}: farmhand.state['cowBreedingPen']) => (cowId1 ? (cowId2 ? 2 : 1) : 0)
 
 export const CowPenContextMenu = ({
   cowBreedingPen,
@@ -78,6 +85,24 @@ export const CowPenContextMenu = ({
   handleCowWithdrawClick,
   purchasedCowPen,
   selectedCowId,
+}: {
+  cowBreedingPen: farmhand.state['cowBreedingPen']
+  cowForSale: farmhand.cow
+  cowInventory: farmhand.cow[]
+  handleCowAutomaticHugChange: BoundHandlers<
+    typeof uiEventHandlers
+  >['handleCowAutomaticHugChange']
+  handleCowBreedChange: BoundHandlers<
+    typeof uiEventHandlers
+  >['handleCowBreedChange']
+  handleCowHugClick: (cow: farmhand.cow) => void
+  handleCowNameInputChange: (value: string, cow: farmhand.cow) => void
+  handleCowOfferClick: (cow: farmhand.cow) => void
+  handleCowSelect: (cow: farmhand.cow) => void
+  handleCowSellClick: (cow: farmhand.cow) => void
+  handleCowWithdrawClick: (cow: farmhand.cow) => void
+  purchasedCowPen: farmhand.state['purchasedCowPen']
+  selectedCowId: string
 }) => {
   const [sortType, setSortType] = useState(AGE)
   const [isAscending, setIsAscending] = useState(false)
@@ -203,9 +228,15 @@ export const CowPenContextMenu = ({
       <TabPanel value={currentTab} index={1}>
         {(() => {
           const filteredCows = nullArray(numberOfCowsBreeding(cowBreedingPen))
-            .map((_null, i) => {
-              const cowId = cowBreedingPen[`cowId${i + 1}`]
-              const cow = findCowById(cowInventory, cowId)
+            .map((_null: null, i: number) => {
+              const cowId =
+                cowBreedingPen[
+                  `cowId${i + 1}` as keyof farmhand.state['cowBreedingPen']
+                ]
+              const cow =
+                typeof cowId === 'string'
+                  ? findCowById(cowInventory, cowId)
+                  : null
 
               if (
                 !cow ||
@@ -228,7 +259,7 @@ export const CowPenContextMenu = ({
                 />
               )}
               <ul className="card-list purchased-cows breeding-cows">
-                {filteredCows.map(cow => {
+                {filteredCows.map((cow: farmhand.cow | null) => {
                   if (!cow) {
                     throw new TypeError('cow is undefined')
                   }
@@ -302,7 +333,11 @@ export default function Consumer() {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <CowPenContextMenu {...{ ...gameState, ...handlers }} />
+        <CowPenContextMenu
+          {...({ ...gameState, ...handlers } as Parameters<
+            typeof CowPenContextMenu
+          >[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

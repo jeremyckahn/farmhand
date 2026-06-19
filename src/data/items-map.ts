@@ -8,11 +8,14 @@ make it more obvious during development that this should generally not be
 used directly.
  */
 const itemsMap: Record<string, farmhand.item> = {
-  ...Object.keys(items).reduce((acc, itemName) => {
-    const item = items[itemName]
-    acc[item.id] = item
-    return acc
-  }, {}),
+  ...Object.keys(items).reduce<Record<string, farmhand.item>>(
+    (acc, itemName) => {
+      const item = (items as any)[itemName]
+      acc[item.id] = item
+      return acc
+    },
+    {}
+  ),
 }
 
 export default itemsMap

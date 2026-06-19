@@ -15,14 +15,16 @@ import { getCowImage } from '../../utils/getCowImage.js'
 // Only moves the cow within the middle 80% of the pen
 const randomPosition = () => 10 + random() * 80
 
-export class Cow extends Component<{
+export interface CowProps {
   allowCustomPeerCowNames: boolean
   cow: farmhand.cow
   cowInventory: farmhand.cow[]
   handleCowClick: (cow: farmhand.cow) => void
   playerId: string
   isSelected: boolean
-}> {
+}
+
+export class Cow extends Component<CowProps> {
   state = {
     cowImage: pixel,
     isTransitioning: false,
@@ -48,7 +50,7 @@ export class Cow extends Component<{
     return 2000 * this.props.cowInventory.length
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: CowProps) {
     if (
       this.props.isSelected &&
       !prevProps.isSelected &&
@@ -141,7 +143,7 @@ export class Cow extends Component<{
         from: { x, y },
         to: { x: newX, y: randomPosition() },
         duration: Cow.transitionAnimationDuration,
-        render: ({ x: newXValue, y: newYValue }) => {
+        render: ({ x: newXValue, y: newYValue }: any) => {
           if (this.isComponentMounted) {
             this.setState({ x: newXValue, y: newYValue })
           }

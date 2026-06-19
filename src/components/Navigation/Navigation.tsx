@@ -49,7 +49,13 @@ import DayAndProgressContainer from './DayAndProgressContainer.js'
 
 import './Navigation.sass'
 
-const FarmNameDisplay = ({ farmName, handleFarmNameUpdate }) => {
+const FarmNameDisplay = ({
+  farmName,
+  handleFarmNameUpdate,
+}: {
+  farmName: string
+  handleFarmNameUpdate: (name: string) => void
+}) => {
   const [displayedFarmName, setDisplayedFarmName] = useState(farmName)
 
   useEffect(() => {
@@ -88,6 +94,15 @@ const OnlineControls = ({
   isChatAvailable,
   isOnline,
   room,
+}: {
+  activePlayers: number | null
+  handleActivePlayerButtonClick: () => void
+  handleChatRoomOpenStateChange: (open: boolean) => void
+  handleOnlineToggleChange: (checked: boolean) => void
+  handleRoomChange: (newRoom: string) => void
+  isChatAvailable: boolean
+  isOnline: boolean
+  room: string
 }) => {
   const [displayedRoom, setDisplayedRoom] = useState(room)
 
@@ -203,7 +218,7 @@ const dialogTriggerTextMap = {
   [SETTINGS]: 'View Settings (comma)',
 }
 
-const dialogTitleMap = {
+const dialogTitleMap: Partial<Record<farmhand.dialogView, string>> = {
   [FARMERS_LOG]: "Farmer's Log",
   [PRICE_EVENTS]: 'Price Events',
   [STATS]: 'Farm Stats',
@@ -216,7 +231,10 @@ const dialogTitleMap = {
   [KEYBINDINGS]: 'Keyboard Shortcuts',
 }
 
-const dialogContentMap = {
+const dialogContentMap: Partial<Record<
+  farmhand.dialogView,
+  React.ReactNode
+>> = {
   [FARMERS_LOG]: <LogView />,
   [PRICE_EVENTS]: <PriceEventView />,
   [STATS]: <StatsView />,
@@ -252,9 +270,34 @@ export const Navigation = ({
   stageFocus,
   viewList,
 
-  currentDialogViewLowerCase = currentDialogView.toLowerCase(),
+  currentDialogViewLowerCase = (currentDialogView || '').toLowerCase(),
   modalTitleId = `${currentDialogViewLowerCase}-modal-title`,
   modalContentId = `${currentDialogViewLowerCase}-modal-content`,
+}: {
+  activePlayers: number | null
+  blockInput: boolean
+  currentDialogView: farmhand.dialogView | null
+  farmName: string
+  handleActivePlayerButtonClick: () => void
+  handleChatRoomOpenStateChange: (open: boolean) => void
+  handleClickDialogViewButton: (view: farmhand.dialogView) => void
+  handleCloseDialogView: () => void
+  handleDialogViewExited: () => void
+  handleFarmNameUpdate: (name: string) => void
+  handleOnlineToggleChange: (checked: boolean) => void
+  handleRoomChange: (newRoom: string) => void
+  handleViewChange: (event: any) => void
+  inventory: farmhand.state['inventory']
+  inventoryLimit: number
+  isChatAvailable: boolean
+  isDialogViewOpen: boolean
+  isOnline: boolean
+  room: string
+  stageFocus: string
+  viewList: string[]
+  currentDialogViewLowerCase?: string
+  modalTitleId?: string
+  modalContentId?: string
 }) => {
   return (
     <header className="Navigation">
@@ -302,7 +345,7 @@ export const Navigation = ({
       >
         {viewList.map((view, i) => (
           <MenuItem {...{ key: view, value: view }}>
-            {i + 1}: {STAGE_TITLE_MAP[view]}
+            {i + 1}: {STAGE_TITLE_MAP[view as keyof typeof STAGE_TITLE_MAP]}
           </MenuItem>
         ))}
       </Select>
@@ -354,10 +397,10 @@ export const Navigation = ({
         aria-labelledby={modalContentId}
       >
         <DialogTitle {...{ id: modalTitleId }}>
-          {dialogTitleMap[currentDialogView]}
+          {currentDialogView ? dialogTitleMap[currentDialogView] : ''}
         </DialogTitle>
         <DialogContent {...{ id: modalContentId }}>
-          {dialogContentMap[currentDialogView]}
+          {currentDialogView ? dialogContentMap[currentDialogView] : null}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialogView} color="primary" autoFocus>
@@ -391,16 +434,18 @@ Navigation.propTypes = {
   viewList: array.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(
+  props: Partial<Parameters<typeof Navigation>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
         <Navigation
-          {...{
+          {...({
             ...gameState,
             ...handlers,
             ...props,
-          }}
+          } as Parameters<typeof Navigation>[0])}
         />
       )}
     </FarmhandContext.Consumer>

@@ -16,7 +16,13 @@ import { isDecember } from '../../utils/isDecember.js'
 
 import './Stage.sass'
 
-export const Stage = ({ field, stageFocus, viewTitle }) => {
+interface StageProps {
+  field: farmhand.plotContent[][]
+  stageFocus: farmhand.stageFocusType
+  viewTitle: string
+}
+
+export const Stage = ({ field, stageFocus, viewTitle }: StageProps) => {
   const ref = /** @type {React.MutableRefObject<HTMLDivElement | null>} */ useRef(
     null
   )
@@ -72,11 +78,17 @@ Stage.propTypes = {
   viewTitle: string.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Partial<Parameters<typeof Stage>[0]>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Stage {...{ ...gameState, ...handlers, ...props }} />
+        <Stage
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof Stage>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

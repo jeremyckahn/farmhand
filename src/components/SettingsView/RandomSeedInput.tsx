@@ -7,7 +7,11 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import './RandomSeedInput.sass'
 
-export const RandomSeedInput = ({ search = globalWindow.location.search }) => {
+export const RandomSeedInput = ({
+  search = globalWindow.location.search,
+}: {
+  search?: string
+}) => {
   const {
     handlers: { handleRNGSeedChange },
   } = useContext(FarmhandContext)

@@ -29,7 +29,7 @@ import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants.js'
 
 import './StatsView.sass'
 
-const ElevatedPaper = props => (
+const ElevatedPaper = (props: any) => (
   <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
 )
 
@@ -272,7 +272,13 @@ export default function Consumer(props: Partial<StatsViewProps>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <StatsView {...{ ...gameState, ...handlers, ...props }} />
+        <StatsView
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as StatsViewProps)}
+        />
       )}
     </FarmhandContext.Consumer>
   )

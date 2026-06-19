@@ -2,7 +2,9 @@ import { itemsMap } from '../../../data/maps.js'
 
 const itemIds = Object.keys(itemsMap)
 
-export const getInventoryQuantities = inventory => {
+export const getInventoryQuantities = (
+  inventory: farmhand.state['inventory']
+) => {
   const quantities: Record<string, number> = {}
 
   for (const itemId of itemIds) {

@@ -30,10 +30,13 @@ const isHeartFull = (heartIndex: number, numberOfFullHearts: number) =>
   heartIndex + 0.5 < numberOfFullHearts
 
 const getCowMapById = memoize((cowInventory: farmhand.state['cowInventory']) =>
-  cowInventory.reduce((acc, cow) => {
-    acc[cow.id] = cow
-    return acc
-  }, {})
+  cowInventory.reduce(
+    (acc: Record<string, farmhand.cow>, cow: farmhand.cow) => {
+      acc[cow.id] = cow
+      return acc
+    },
+    {}
+  )
 )
 
 export interface SubheaderProps
@@ -95,7 +98,7 @@ const Subheader = ({
           {cow.daysOld} {cow.daysOld === 1 ? 'day' : 'days'} old
         </p>
       )}
-      <p>Color: {COW_COLOR_NAMES[cow.color]}</p>
+      <p>Color: {COW_COLOR_NAMES[cow.color as keyof typeof COW_COLOR_NAMES]}</p>
       <p>
         {/* cow.originalOwnerId is only an empty string when it is for sale. */}
         {cow.originalOwnerId === '' ? 'Price' : 'Value'}:{' '}
@@ -113,7 +116,7 @@ const Subheader = ({
       {isCowPurchased && (
         <>
           <ol className="hearts">
-            {nullArray(10).map((_null, i) => (
+            {nullArray(10).map((_null: null, i: number) => (
               <li key={`${cow.id}_${i}`}>
                 <FontAwesomeIcon
                   {...{

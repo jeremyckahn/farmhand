@@ -10,9 +10,9 @@ import { ContextPane, PlayerInventory } from './ContextPane.js'
 
 // Mock the Inventory component to avoid complex Item rendering
 vi.mock('../Inventory/index.js', () => ({
-  default: ({ items }) => (
+  default: ({ items }: { items: farmhand.item[] }) => (
     <div className="Inventory" data-testid="mocked-inventory">
-      {items.map(item => (
+      {items.map((item: farmhand.item) => (
         <div key={item.id} data-testid={`inventory-item-${item.id}`}>
           {item.name}
         </div>

@@ -10,6 +10,9 @@ import { itemsMap } from '../../data/maps.js'
 export default function IngredientsList({
   playerInventoryQuantities,
   recipe: { ingredients, name },
+}: {
+  playerInventoryQuantities: Record<string, number>
+  recipe: { ingredients: Record<string, number>; name: string }
 }) {
   return (
     <ul {...{ className: 'card-list', title: `Ingredients for ${name}` }}>

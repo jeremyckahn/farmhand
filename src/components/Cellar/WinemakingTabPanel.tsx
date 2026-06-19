@@ -9,7 +9,13 @@ import { WineRecipeList } from '../WineRecipeList/WineRecipeList.js'
 
 import { TabPanel } from './TabPanel/index.js'
 
-export const WinemakingTabPanel = ({ index, currentTab }) => (
+export const WinemakingTabPanel = ({
+  index,
+  currentTab,
+}: {
+  index: number
+  currentTab: number
+}) => (
   <TabPanel value={currentTab} index={index}>
     <WineRecipeList />
     <Divider />

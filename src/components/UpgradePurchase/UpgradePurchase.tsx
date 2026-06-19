@@ -18,13 +18,21 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import './UpgradePurchase.sass'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
+interface UpgradePurchaseProps {
+  handleUpgradeTool: (upgrade: any) => void
+  inventory: farmhand.state['inventory']
+  inventoryLimit: number
+  playerInventoryQuantities: Record<string, number>
+  upgrade: any
+}
+
 export function UpgradePurchase({
   handleUpgradeTool,
   inventory,
   inventoryLimit,
   playerInventoryQuantities,
   upgrade,
-}) {
+}: UpgradePurchaseProps) {
   const { id, name, description } = upgrade
 
   const spaceFreedByIngredientsConsumed = totalIngredientsInRecipe(upgrade)
@@ -51,7 +59,7 @@ export function UpgradePurchase({
     >
       <CardHeader
         {...{
-          avatar: <img {...{ src: craftedItems[id], alt: name }} />,
+          avatar: <img {...{ src: (craftedItems as any)[id], alt: name }} />,
           title: name,
           subheader: (
             <>
@@ -87,11 +95,19 @@ UpgradePurchase.propTypes = {
   upgrade: object,
 }
 
-export default function Consumer(props) {
+export default function Consumer(
+  props: Partial<Parameters<typeof UpgradePurchase>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <UpgradePurchase {...{ ...gameState, ...handlers, ...props }} />
+        <UpgradePurchase
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof UpgradePurchase>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

@@ -11,7 +11,7 @@ import { PriceEventView } from './PriceEventView.js'
 
 // Mock Item component to avoid complex dependencies
 vi.mock('../Item/index.js', () => ({
-  default: ({ item }) => (
+  default: ({ item }: { item: farmhand.item }) => (
     <div data-testid="item">{item?.name || 'Mock Item'}</div>
   ),
 }))

@@ -20,7 +20,7 @@ vitest.mock('../../data/achievements.js', () => {
 })
 
 describe('updateAchievements', () => {
-  let updateAchievements
+  let updateAchievements: any
 
   beforeAll(async () => {
     updateAchievements = (await vitest.importActual('./updateAchievements.js'))

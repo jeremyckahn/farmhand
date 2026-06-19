@@ -10,7 +10,7 @@ const defaultProps = {
   latestNotification: null,
 }
 
-const renderWithSnackbar = component => {
+const renderWithSnackbar = (component: React.ReactElement) => {
   return render(<SnackbarProvider>{component}</SnackbarProvider>)
 }
 
@@ -21,7 +21,7 @@ test('renders', () => {
 
 test('calls enqueueSnackbar when latestNotification is provided', () => {
   const enqueueSnackbar = vitest.fn()
-  const latestNotification = {
+  const latestNotification: farmhand.notification = {
     message: 'Test notification',
     severity: 'info',
   }
@@ -58,7 +58,7 @@ test('does not call enqueueSnackbar when latestNotification is null', () => {
 test('calls closeSnackbar when onClose is triggered', () => {
   const closeSnackbar = vitest.fn()
   const enqueueSnackbar = vitest.fn()
-  const latestNotification = {
+  const latestNotification: farmhand.notification = {
     message: 'Test notification',
     severity: 'info',
   }
@@ -81,11 +81,11 @@ test('calls closeSnackbar when onClose is triggered', () => {
 
 test('re-enqueues notification when latestNotification changes', () => {
   const enqueueSnackbar = vitest.fn()
-  const initialNotification = {
+  const initialNotification: farmhand.notification = {
     message: 'First notification',
     severity: 'info',
   }
-  const newNotification = {
+  const newNotification: farmhand.notification = {
     message: 'Second notification',
     severity: 'success',
   }

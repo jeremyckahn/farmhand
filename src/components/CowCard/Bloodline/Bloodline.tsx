@@ -6,7 +6,11 @@ import { COW_COLOR_NAMES } from '../../../strings.js'
 
 import './Bloodline.sass'
 
-const Bloodline = ({ colorsInBloodline }) => (
+const Bloodline = ({
+  colorsInBloodline,
+}: {
+  colorsInBloodline: Partial<Record<farmhand.cowColors, boolean>>
+}) => (
   <ul {...{ className: 'Bloodline' }}>
     {Object.keys(colorsInBloodline)
       .sort()
@@ -16,7 +20,7 @@ const Bloodline = ({ colorsInBloodline }) => (
             key: color,
             arrow: true,
             placement: 'top',
-            title: COW_COLOR_NAMES[color],
+            title: COW_COLOR_NAMES[color as keyof typeof COW_COLOR_NAMES],
           }}
         >
           <li {...{ className: color.toLowerCase() }} />

@@ -24,11 +24,18 @@ const OnlinePeersView = ({
   playerId,
   latestPeerMessages,
   peers,
+}: {
+  activePlayers: number
+  cowIdOfferedForTrade: string
+  cowInventory: farmhand.cow[]
+  playerId: string
+  latestPeerMessages: { playerId: string; message: string; severity?: string }[]
+  peers: Record<string, any>
 }) => {
   const peerKeys = Object.keys(peers)
 
   const cowOfferedForTrade = cowInventory.find(
-    ({ id }) => id === cowIdOfferedForTrade
+    ({ id }: farmhand.cow) => id === cowIdOfferedForTrade
   )
 
   // Filter out peers that may have connected but not sent data yet.
@@ -80,8 +87,12 @@ const OnlinePeersView = ({
           <ul>
             {latestPeerMessages.map(
               (
-                { playerId: peerPlayerId, message, severity = 'info' },
-                messageIndex
+                {
+                  playerId: peerPlayerId,
+                  message,
+                  severity = 'info',
+                }: { playerId: string; message: string; severity?: string },
+                messageIndex: number
               ) => (
                 <li {...{ key: messageIndex }}>
                   <Alert
@@ -117,11 +128,19 @@ OnlinePeersView.propTypes = {
 
 export { OnlinePeersView }
 
-export default function Consumer(props) {
+export default function Consumer(
+  props: Partial<Parameters<typeof OnlinePeersView>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <OnlinePeersView {...{ ...gameState, ...handlers, ...props }} />
+        <OnlinePeersView
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof OnlinePeersView>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

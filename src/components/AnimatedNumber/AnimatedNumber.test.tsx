@@ -14,7 +14,7 @@ test('displays the provided number', () => {
 })
 
 test('uses custom formatter when provided', () => {
-  const formatter = number => `$${number.toFixed(2)}`
+  const formatter = (number: number) => `$${number.toFixed(2)}`
   render(<AnimatedNumber {...{ number: 123.45, formatter }} />)
   expect(screen.getByText('$123.45')).toBeInTheDocument()
 })

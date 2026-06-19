@@ -8,7 +8,7 @@ import FarmhandContext, {
 import Achievement from './Achievement.js'
 
 describe('<Achievement />', () => {
-  let achievementObject
+  let achievementObject: farmhand.achievement
 
   beforeEach(() => {
     achievementObject = {
@@ -16,7 +16,7 @@ describe('<Achievement />', () => {
       id: 'achievement-1',
       name: 'achievement one',
       rewardDescription: 'the greatest reward',
-    }
+    } as farmhand.achievement
 
     const farmhandContextValue = createContextData()
 

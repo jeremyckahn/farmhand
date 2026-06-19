@@ -35,9 +35,9 @@ import Subheader from './Subheader/index.js'
 import './CowCard.sass'
 
 const genderIcons = {
-  [genders.FEMALE]: faVenus,
-  [genders.MALE]: faMars,
-}
+  [genders.FEMALE as string]: faVenus,
+  [genders.MALE as string]: faMars,
+} as Record<string, typeof faVenus>
 
 export interface CowCardProps {
   allowCustomPeerCowNames: farmhand.state['allowCustomPeerCowNames']
@@ -120,7 +120,7 @@ export const CowCard = ({
   const scrollAnchorRef = useRef<HTMLAnchorElement>(null)
 
   const isCowPurchased =
-    !!cowInventory.find(({ id }) => id === cow.id) &&
+    !!cowInventory.find(({ id }: { id: string }) => id === cow.id) &&
     !isCowOfferedForTradeByPeer
 
   // cow.originalOwnerId is only an empty string when it is for sale.
@@ -380,7 +380,13 @@ export default function Consumer(
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <CowCard {...{ ...gameState, ...handlers, ...props }} />
+        <CowCard
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as CowCardProps)}
+        />
       )}
     </FarmhandContext.Consumer>
   )

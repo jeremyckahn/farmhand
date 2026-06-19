@@ -10,7 +10,7 @@ import { carrot } from './crops/index.js'
 
 describe('harvest-crop', () => {
   describe('condition', () => {
-    let inputState
+    let inputState: any
 
     beforeEach(() => {
       inputState = {
@@ -72,7 +72,7 @@ describe.each(iAmRichVariants)(
         const achievement = achievementsMap[id]
         const state = {
           revenue: goal,
-        }
+        } as any
 
         expect(achievement.condition(state)).toEqual(true)
       })
@@ -81,7 +81,7 @@ describe.each(iAmRichVariants)(
         const achievement = achievementsMap[id]
         const state = {
           revenue: Number(goal) - 1,
-        }
+        } as any
 
         expect(achievement.condition(state)).toEqual(false)
       })
@@ -91,7 +91,7 @@ describe.each(iAmRichVariants)(
 
 describe('gold-digger', () => {
   const achievement = achievementsMap['gold-digger']
-  let state
+  let state: any
 
   beforeEach(() => {
     state = {
@@ -107,7 +107,9 @@ describe('gold-digger', () => {
   test('it rewards the player with a gold ingot', () => {
     state = achievement.reward(state)
 
-    const ingot = state.inventory.find(item => item.id === 'gold-ingot')
+    const ingot = state.inventory.find(
+      (item: { id: string }) => item.id === 'gold-ingot'
+    )
 
     expect(ingot).toEqual({ id: 'gold-ingot', quantity: 1 })
   })
@@ -115,7 +117,7 @@ describe('gold-digger', () => {
 
 describe('financial-freedom', () => {
   const achievement = achievementsMap['financial-freedom']
-  let state
+  let state: any
 
   beforeEach(() => {
     state = {

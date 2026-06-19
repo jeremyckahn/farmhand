@@ -7,7 +7,7 @@ import { generateOffspringCow } from './generateOffspringCow.js'
 import { chooseRandom } from './chooseRandom.js'
 
 describe('generateOffspringCow', () => {
-  let maleCow, femaleCow
+  let maleCow: farmhand.cow, femaleCow: farmhand.cow
 
   beforeEach(() => {
     vitest.spyOn(Math, 'random').mockReturnValue(1)

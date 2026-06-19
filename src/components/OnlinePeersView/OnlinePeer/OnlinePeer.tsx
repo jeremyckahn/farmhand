@@ -13,6 +13,14 @@ import { integerString } from '../../../utils/integerString.js'
 
 const OnlinePeer = ({
   peer: { cowOfferedForTrade, dayCount, playerId, experience, money },
+}: {
+  peer: {
+    cowOfferedForTrade: farmhand.cow | null
+    dayCount: number
+    playerId: string
+    experience: number
+    money: number
+  }
 }) => {
   return (
     <li>

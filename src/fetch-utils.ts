@@ -10,7 +10,7 @@ const commonFetchConfig: RequestInit = {
   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 }
 
-export async function getData(url = '', data = {}) {
+export async function getData(url = '', data: Record<string, any> = {}) {
   const params = new URLSearchParams()
 
   Object.keys(data).forEach(key =>

@@ -10,7 +10,9 @@ import { RandomSeedInput } from './RandomSeedInput.js'
 
 const mockHandleRNGSeedChange = vitest.fn()
 
-const MockRandomSeedInput = props => {
+const MockRandomSeedInput = (
+  props: React.PropsWithChildren<Record<string, unknown>>
+) => {
   const contextValue = createContextData()
   contextValue.handlers.handleRNGSeedChange = mockHandleRNGSeedChange
 

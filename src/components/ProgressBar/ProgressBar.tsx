@@ -7,13 +7,13 @@ import './ProgressBar.sass'
 const incompleteColor = '#ff9f00'
 const completeColor = '#00e500'
 
-const ProgressBar = ({ percent }) => {
+const ProgressBar = ({ percent }: { percent: number }) => {
   const [displayedProgress, setDisplayedProgress] = useState(0)
   const [displayedColor, setDisplayedColor] = useState(incompleteColor)
   const [currentTweenable, setCurrentTweenable]: [
-    import('shifty').Tweenable | undefined,
-    React.Dispatch<React.SetStateAction<import('shifty').Tweenable | undefined>>
-  ] = useState<import('shifty').Tweenable | undefined>()
+    any | undefined,
+    React.Dispatch<React.SetStateAction<any | undefined>>
+  ] = useState<any | undefined>()
 
   useEffect(() => {
     if (!currentTweenable) {
@@ -23,7 +23,7 @@ const ProgressBar = ({ percent }) => {
         duration: 1500,
         from: { currentPercent: 0 },
         to: { currentPercent: percent },
-        render: ({ currentPercent }) => {
+        render: ({ currentPercent }: any) => {
           const currentPercentNumber = Number(currentPercent)
 
           setDisplayedProgress(Number(currentPercentNumber.toFixed(2)))

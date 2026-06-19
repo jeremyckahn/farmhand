@@ -32,7 +32,7 @@ const MoneyDisplay = ({ money }: { money: number }) => {
       const tweenable = tween({
         easing: 'easeOutQuad',
         duration: 750,
-        render: ({ color, money: currentMoney }) => {
+        render: ({ color, money: currentMoney }: any) => {
           setTextColor(String(color))
           setDisplayedMoney(Number(currentMoney))
         },
@@ -74,6 +74,13 @@ export const AppBar = ({
   areAnyNotificationsErrors = todaysNotifications.some(
     ({ severity }) => severity === 'error'
   ),
+}: {
+  handleClickNotificationIndicator: () => void
+  money: number
+  showNotifications: boolean
+  todaysNotifications: farmhand.notification[]
+  viewTitle: string
+  areAnyNotificationsErrors?: boolean
 }) => (
   <MuiAppBar
     {...{
@@ -135,11 +142,17 @@ AppBar.propTypes = {
   viewTitle: string.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(props: Partial<Parameters<typeof AppBar>[0]>) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <AppBar {...{ ...gameState, ...handlers, ...props }} />
+        <AppBar
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof AppBar>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

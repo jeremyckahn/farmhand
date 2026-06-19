@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import localforage from 'localforage'
-import { match, History, Location } from 'react-router-dom'
 
 import * as reducers from '../../game-logic/reducers/index.js'
 
@@ -12,9 +11,9 @@ interface Features {
 export interface FarmhandProps {
   features?: Features
   localforage?: typeof localforage
-  match?: match<{ room?: string }>
-  history?: History
-  location?: Location
+  match?: any
+  history?: any
+  location?: any
 }
 
 export type FarmhandState = farmhand.state
@@ -191,7 +190,7 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
       }
 
       // Bind the reducer to this class instance
-      this[reducerName] = (...args: any[]) => {
+      ;(this as any)[reducerName] = (...args: any[]) => {
         this.setState((state: FarmhandState) => reducer(state, ...args))
       }
     }

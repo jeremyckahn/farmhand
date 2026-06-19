@@ -17,12 +17,19 @@ import { RecyclingTabPanel } from './RecyclingTabPanel.js'
 
 import './Workshop.sass'
 
+interface WorkshopProps {
+  learnedRecipes: Record<string, boolean>
+  purchasedComposter?: number | null
+  purchasedSmelter?: number | null
+  toolLevels: Record<farmhand.toolType, farmhand.toolLevel>
+}
+
 const Workshop = ({
   learnedRecipes,
   purchasedComposter,
   purchasedSmelter,
   toolLevels,
-}) => {
+}: WorkshopProps) => {
   const [currentTab, setCurrentTab] = useState(0)
 
   const learnedKitchenRecipes = Object.keys(learnedRecipes).filter(
@@ -85,11 +92,19 @@ Workshop.propTypes = {
   toolLevels: object.isRequired,
 }
 
-export default function Consumer(props) {
+export default function Consumer(
+  props: Partial<Parameters<typeof Workshop>[0]>
+) {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Workshop {...{ ...gameState, ...handlers, ...props }} />
+        <Workshop
+          {...({
+            ...gameState,
+            ...handlers,
+            ...props,
+          } as Parameters<typeof Workshop>[0])}
+        />
       )}
     </FarmhandContext.Consumer>
   )

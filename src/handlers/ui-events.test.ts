@@ -32,7 +32,7 @@ vi.mock('../common/services/randomNumber.js', () => ({
 }))
 
 describe('UI Event Handlers', () => {
-  let mockContext
+  let mockContext: any
 
   beforeEach(() => {
     // Create a mock context that simulates the Farmhand component
