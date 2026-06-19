@@ -95,6 +95,7 @@ describe('severity grouping', () => {
     )
 
     const alerts = document.querySelectorAll('[role="alert"]')
+
     expect(alerts).toHaveLength(2)
 
     expect(screen.getByText('yay')).toBeInTheDocument()
@@ -123,6 +124,7 @@ describe('severity grouping', () => {
 
     // Only one alert should be rendered (for info message)
     const alerts = document.querySelectorAll('[role="alert"]')
+
     expect(alerts).toHaveLength(1)
     expect(screen.getByText('info message')).toBeInTheDocument()
   })

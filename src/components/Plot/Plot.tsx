@@ -148,6 +148,7 @@ export const Plot = ({
   )
 
   let plotLabelText: string | null = null
+
   if (item) {
     const isPlotContentACropSeed =
       plotContent &&
@@ -155,6 +156,7 @@ export const Plot = ({
       getCropLifeStage(plotContent) === cropLifeStage.SEED
 
     const seedItem = cropItemIdToSeedItemMap[item.id]
+
     plotLabelText = isPlotContentACropSeed ? seedItem.name : item.name
   } else if (wasJustShoveled || plotContent?.isShoveled) {
     const oreId = plotContent?.oreId

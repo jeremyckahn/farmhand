@@ -24,6 +24,7 @@ const colorizeCowTemplate = (() => {
   const cowImageWidth = 48
   const cowImageHeight = 48
   const cowImageFactoryCanvas = document.createElement('canvas')
+
   cowImageFactoryCanvas.setAttribute('height', String(cowImageHeight))
   cowImageFactoryCanvas.setAttribute('width', String(cowImageWidth))
 

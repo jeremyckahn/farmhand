@@ -40,6 +40,7 @@ describe('upgradeTool', () => {
         doesPriceFluctuate: false,
       }
       const result = upgradeTool(state, upgrade)
+
       expect(result).toBe(state)
     })
 
@@ -53,6 +54,7 @@ describe('upgradeTool', () => {
         doesPriceFluctuate: false,
       }
       const result = upgradeTool(state, upgrade)
+
       expect(result).toBe(state)
     })
 
@@ -69,6 +71,7 @@ describe('upgradeTool', () => {
       })
 
       const result = upgradeTool(stateWithoutIngredients, upgrade)
+
       expect(result).toBe(stateWithoutIngredients)
     })
 
@@ -88,6 +91,7 @@ describe('upgradeTool', () => {
       })
 
       const result = upgradeTool(stateWithInsufficientIngredients, upgrade)
+
       expect(result).toBe(stateWithInsufficientIngredients)
     })
   })
@@ -155,6 +159,7 @@ describe('upgradeTool', () => {
       const upgradeInInventory = result.inventory.find(
         item => item.id === upgrade.id
       )
+
       expect(upgradeInInventory).toBeDefined()
       expect(upgradeInInventory?.quantity).toBe(1)
     })

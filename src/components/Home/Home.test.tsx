@@ -14,6 +14,7 @@ describe('<Home />', () => {
 
   beforeEach(() => {
     const contextValue = createContextData()
+
     contextValue.gameState.completedAchievements = {}
 
     handleViewChangeButtonClick = vitest.fn()

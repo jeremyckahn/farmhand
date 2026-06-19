@@ -25,6 +25,7 @@ export const processLevelUp = (
     }
 
     let randomCropSeed
+
     // There is no predefined reward for this level up.
     if (Object.keys(levelObject).length < 2) {
       randomCropSeed = getRandomLevelUpReward(i)

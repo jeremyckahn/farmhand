@@ -25,6 +25,7 @@ describe('item selling', () => {
     const sellButton = within(carrotSeedMenuItem as HTMLElement).getByText(
       'Sell'
     )
+
     await userEvent.click(sellButton)
 
     expect(within(menu).queryByText('Carrot Seed')).not.toBeInTheDocument()

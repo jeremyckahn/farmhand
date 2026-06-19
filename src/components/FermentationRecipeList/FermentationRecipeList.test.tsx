@@ -29,6 +29,7 @@ const FermentationRecipeListStub = ({
   },
 } = {}) => {
   const contextValue = createContextData()
+
   contextValue.gameState.levelEntitlements = levelEntitlements as farmhand.levelEntitlements
   return (
     <FarmhandContext.Provider value={contextValue}>
@@ -76,6 +77,7 @@ describe('FermentationRecipeList', () => {
     const searchBar = screen.getByPlaceholderText(
       'Search fermentation recipes...'
     )
+
     expect(searchBar).toBeInTheDocument()
 
     await userEvent.type(searchBar, 'apple')
@@ -83,6 +85,7 @@ describe('FermentationRecipeList', () => {
     const filteredCrops = cropsAvailableToFerment.filter(item => {
       const itemWithName = item as farmhand.item & { name: string }
       const fermentationRecipeName = `Fermented ${itemWithName.name}`.toLowerCase()
+
       return (
         fermentationRecipeName.includes('apple') ||
         itemWithName.name.toLowerCase().includes('apple')
@@ -103,6 +106,7 @@ describe('FermentationRecipeList', () => {
       const nonMatchingElements = screen.queryAllByText(
         (crop as farmhand.item & { name: string }).name
       )
+
       expect(nonMatchingElements).toHaveLength(1)
     })
   })
@@ -118,6 +122,7 @@ describe('FermentationRecipeList', () => {
     const searchBar = screen.getByPlaceholderText(
       'Search fermentation recipes...'
     )
+
     expect(searchBar).toBeInTheDocument()
 
     await userEvent.clear(searchBar)

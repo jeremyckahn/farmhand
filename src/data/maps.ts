@@ -47,6 +47,7 @@ for (const recipeId of Object.keys(recipes)) {
   const recipe = ((recipes as unknown) as Record<string, farmhand.recipe>)[
     recipeId
   ]
+
   recipeCategories[recipe.recipeType][recipe.id] = recipe
   recipesMap[recipe.id] = recipe
 }
@@ -87,6 +88,7 @@ export const cropItemIdToSeedItemMap: Record<
 > = Object.entries(baseItemsMap).reduce<Record<string, farmhand.seedItem>>(
   (acc, [itemId, item]) => {
     const { growsInto } = item as { growsInto?: string | string[] }
+
     if (growsInto) {
       const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
 

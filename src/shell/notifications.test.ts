@@ -21,8 +21,10 @@ describe('notifications', () => {
 
     const carrotItem = await getItemByName('Carrot')
     const carrotInput = within(carrotItem as HTMLElement).getByDisplayValue('1')
+
     await userEvent.type(carrotInput, '10')
     const carrotSellButton = within(carrotItem as HTMLElement).getByText('Sell')
+
     await userEvent.click(carrotSellButton)
     const notification = await screen.findByRole('alert')
 
@@ -76,6 +78,7 @@ describe('notifications', () => {
     await userEvent.click(carrotSellButton)
 
     const notification = await screen.findByRole('alert')
+
     expect(
       within(notification as HTMLElement).getByText('Carrot Soup')
     ).toBeInTheDocument()

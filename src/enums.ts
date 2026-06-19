@@ -134,6 +134,7 @@ export const cowColors = {
 } as const
 
 const { RAINBOW, ...standardCowColors } = cowColors
+
 export { standardCowColors }
 
 /**

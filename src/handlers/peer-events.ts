@@ -192,6 +192,7 @@ export const handleCowTradeRequestAccept = (
 
       const peerEntry = Object.entries(peers).find(([, peer]) => {
         const { playerId: peerPlayerId } = peer as { playerId?: string }
+
         return peerPlayerId === cowReceived.ownerId
       })
       const [, peerMetadata] = peerEntry || []

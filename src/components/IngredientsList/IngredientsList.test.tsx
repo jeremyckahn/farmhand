@@ -17,6 +17,7 @@ describe('<IngredientsList />', () => {
 
     render(<IngredientsList {...props} />)
     const ingredients = screen.getAllByTestId('ingredient')
+
     ingredientsString = ingredients[0].textContent || ''
   })
 

@@ -22,6 +22,7 @@ describe('pending notifications', () => {
     await endDay()
 
     const stormNotification = await screen.findByText(STORM_MESSAGE)
+
     expect(stormNotification).toBeInTheDocument()
   })
 })

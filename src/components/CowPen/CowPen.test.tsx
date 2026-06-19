@@ -48,6 +48,7 @@ describe('Cow', () => {
     render(<Cow {...defaultCowProps} />)
 
     const cowImage = document.querySelector('.cow img')
+
     expect(cowImage).toBeInTheDocument()
     expect(cowImage).toHaveAttribute('alt', 'Test Cow')
   })
@@ -71,6 +72,7 @@ describe('Cow', () => {
     render(<Cow {...defaultCowProps} handleCowClick={handleCowClick} />)
 
     const cowElement = document.querySelector('.cow')
+
     expect(cowElement).toBeInTheDocument()
     await user.click(cowElement!)
 
@@ -153,6 +155,7 @@ describe('Cow', () => {
     render(<Cow {...defaultCowProps} />)
 
     const cowElement = document.querySelector('.cow')
+
     expect(cowElement).toBeInTheDocument()
 
     // Cow should have positioning styles applied
@@ -168,6 +171,7 @@ describe('Cow', () => {
     render(<Cow {...defaultCowProps} />)
 
     const cowElement = document.querySelector('.cow')
+
     expect(cowElement).toBeInTheDocument()
 
     // Fast-forward time to trigger animations
@@ -185,6 +189,7 @@ describe('Cow', () => {
     rerender(<Cow {...defaultCowProps} isSelected={true} />)
 
     const cowElement = document.querySelector('.cow')
+
     expect(cowElement).toBeInTheDocument()
     expect(cowElement).toHaveClass('is-selected')
   })
@@ -196,6 +201,7 @@ describe('Cow', () => {
     rerender(<Cow {...defaultCowProps} isSelected={false} />)
 
     const cowElement = document.querySelector('.cow')
+
     expect(cowElement).toBeInTheDocument()
     expect(cowElement).not.toHaveClass('is-selected')
   })

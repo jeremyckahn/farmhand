@@ -30,6 +30,7 @@ describe('harvestPlot', () => {
         toolLevels: toolLevelsDefault,
       })
       const state = harvestPlot(inputState, 0, 0)
+
       expect(state).toEqual(inputState)
     })
   })
@@ -41,6 +42,7 @@ describe('harvestPlot', () => {
         toolLevels: toolLevelsDefault,
       })
       const state = harvestPlot(inputState, 0, 0)
+
       expect(state).toEqual(inputState)
     })
   })

@@ -12,6 +12,8 @@ import { getUpgradesAvailable } from './getUpgradesAvailable.js'
 
 import Workshop from './Workshop.js'
 
+const getUpgradesAvailableMock = getUpgradesAvailable as Mock
+
 vitest.mock('./getUpgradesAvailable.js')
 
 vitest.mock('../../data/maps.js', async importOriginal => ({
@@ -73,6 +75,7 @@ describe('<Workshop />', () => {
 
   const renderWorkshop = (gameStateParam: any) => {
     const contextValue = createContextData()
+
     contextValue.gameState = { ...contextValue.gameState, ...gameStateParam }
 
     render(
@@ -125,7 +128,7 @@ describe('<Workshop />', () => {
 
     describe('player has purchased the smelter', () => {
       beforeEach(async () => {
-        ;(getUpgradesAvailable as Mock).mockReturnValue([])
+        getUpgradesAvailableMock.mockReturnValue([])
 
         gameState.purchasedSmelter = 1
         gameState.learnedRecipes = {
@@ -154,7 +157,8 @@ describe('<Workshop />', () => {
     describe('has upgrades available', () => {
       beforeEach(async () => {
         const availableUpgrades = [{ id: 'upgrade-1' }, { id: 'upgrade-2' }]
-        ;(getUpgradesAvailable as Mock).mockReturnValue(availableUpgrades)
+
+        getUpgradesAvailableMock.mockReturnValue(availableUpgrades)
         gameState.purchasedSmelter = 1
 
         renderWorkshop(gameState)

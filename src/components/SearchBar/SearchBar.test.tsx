@@ -10,6 +10,7 @@ describe('SearchBar Component', () => {
     render(<SearchBar placeholder="Search for items" onSearch={() => {}} />)
 
     const inputElement = screen.getByPlaceholderText('Search for items')
+
     expect(inputElement).toBeInTheDocument()
   })
 
@@ -17,14 +18,17 @@ describe('SearchBar Component', () => {
     render(<SearchBar onSearch={() => {}} />)
 
     const inputElement = screen.getByPlaceholderText('Search...')
+
     expect(inputElement).toBeInTheDocument()
   })
 
   it('calls onSearch with correct value when typing', async () => {
     const onSearchMock = vi.fn()
+
     render(<SearchBar placeholder="Type here" onSearch={onSearchMock} />)
 
     const inputElement = screen.getByPlaceholderText('Type here')
+
     await userEvent.type(inputElement, 'test query')
 
     await waitFor(() => {

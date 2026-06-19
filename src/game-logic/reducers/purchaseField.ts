@@ -9,6 +9,7 @@ export const purchaseField = (
   fieldId: number
 ): farmhand.state => {
   const { field, money, purchasedField } = state
+
   if (purchasedField >= fieldId) {
     return state
   }
@@ -16,6 +17,7 @@ export const purchaseField = (
   state = addExperience(state, EXPERIENCE_VALUES.FIELD_EXPANDED)
 
   const fieldSize = PURCHASEABLE_FIELD_SIZES.get(fieldId)
+
   if (!fieldSize) {
     return state
   }

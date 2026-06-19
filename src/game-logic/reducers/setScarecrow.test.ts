@@ -22,6 +22,7 @@ describe('setScarecrow', () => {
   describe('plot is not empty', () => {
     test('does nothing', () => {
       const inputState = { ...state, field: [[testCrop()]] }
+
       state = setScarecrow(inputState, 0, 0)
       expect(state).toEqual(inputState)
     })
@@ -30,6 +31,7 @@ describe('setScarecrow', () => {
   describe('plot is empty', () => {
     test('sets scarecrow', () => {
       const { inventory, field } = setScarecrow(state, 0, 0)
+
       expect(inventory).toHaveLength(0)
       expect(field[0][0]).toEqual(getPlotContentFromItemId('scarecrow'))
     })

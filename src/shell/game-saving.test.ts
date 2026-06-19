@@ -10,6 +10,7 @@ describe('game saving', () => {
     await endDay()
 
     const savedNotification = await screen.findByText(PROGRESS_SAVED_MESSAGE)
+
     expect(savedNotification).toBeInTheDocument()
   })
 })

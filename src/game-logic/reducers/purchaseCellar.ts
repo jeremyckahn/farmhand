@@ -30,6 +30,7 @@ export const purchaseCellar = (
     cellarId > 1
       ? EXPERIENCE_VALUES.CELLAR_EXPANDED
       : EXPERIENCE_VALUES.CELLAR_ACQUIRED
+
   state = addExperience(state, experienceEarned)
 
   return {

@@ -124,6 +124,7 @@ export default class ResourceFactory {
 
       if (factory) {
         const generated = factory.generate()
+
         resources = Array.isArray(generated) ? generated : [generated]
       }
     }

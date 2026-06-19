@@ -67,6 +67,7 @@ test('handles save button click', async () => {
   )
 
   const saveButton = screen.getByText('Save Game')
+
   await user.click(saveButton)
 
   expect(handleSaveButtonClick).toHaveBeenCalledTimes(1)
@@ -84,6 +85,7 @@ test('handles export button click', async () => {
   )
 
   const exportButton = screen.getByText('Export Game Data')
+
   await user.click(exportButton)
 
   expect(handleExportDataClick).toHaveBeenCalledTimes(1)
@@ -101,6 +103,7 @@ test('shows correct switch states based on props', () => {
   )
 
   const switches = screen.getAllByRole('checkbox')
+
   expect(switches[0]).toBeChecked() // useAlternateEndDayButtonPosition
   expect(switches[1]).not.toBeChecked() // showNotifications
   expect(switches[2]).toBeChecked() // showHomeScreen
@@ -147,6 +150,7 @@ test('opens delete confirmation dialog when delete button is clicked', async () 
   render(<SettingsView {...defaultProps} />)
 
   const deleteButton = screen.getByText('Delete Game Data')
+
   await user.click(deleteButton)
 
   expect(await screen.findByText('Delete game data?')).toBeInTheDocument()
@@ -163,12 +167,14 @@ test('closes delete confirmation dialog when cancel is clicked', async () => {
   render(<SettingsView {...defaultProps} />)
 
   const deleteButton = screen.getByText('Delete Game Data')
+
   await user.click(deleteButton)
 
   // Wait for dialog to open
   await screen.findByText('Delete game data?')
 
   const cancelButton = screen.getByText('Cancel')
+
   await user.click(cancelButton)
 
   // Wait for dialog to close
@@ -188,12 +194,14 @@ test('handles game data deletion confirmation from user', async () => {
   )
 
   const deleteButton = screen.getByText('Delete Game Data')
+
   await user.click(deleteButton)
 
   // Wait for dialog to open
   await screen.findByText('Delete game data?')
 
   const doItButton = screen.getByText('Do it')
+
   await user.click(doItButton)
 
   expect(handleClearPersistedDataClick).toHaveBeenCalledTimes(1)
@@ -208,6 +216,7 @@ test('displays tooltips for export and import buttons', async () => {
   render(<SettingsView {...defaultProps} />)
 
   const exportButton = screen.getByText('Export Game Data')
+
   await user.hover(exportButton)
 
   expect(
@@ -215,6 +224,7 @@ test('displays tooltips for export and import buttons', async () => {
   ).toBeInTheDocument()
 
   const importButton = screen.getByText('Import Game Data')
+
   await user.hover(importButton)
 
   expect(

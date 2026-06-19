@@ -37,6 +37,7 @@ export default class OreFactory extends Factory {
    */
   spawn(): any {
     const spawnedOption = randomChoice(this.oreOptions)
+
     return spawnedOption.ore
   }
 }

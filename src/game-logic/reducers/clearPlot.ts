@@ -32,6 +32,7 @@ export const clearPlot = (
     )
   ) {
     const seedId = getSeedItemIdFromFinalStageCropItemId(plotContent.itemId)
+
     state = addItemToInventory(state, itemsMap[seedId])
   }
 

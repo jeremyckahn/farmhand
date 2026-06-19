@@ -34,6 +34,7 @@ describe('Plot component', () => {
     test('defaults to rendering a pixel', () => {
       render(<Plot {...defaultProps} />)
       const img = screen.getByAltText('Empty plot')
+
       expect(img).toHaveAttribute('src', pixel)
     })
 
@@ -57,6 +58,7 @@ describe('Plot component', () => {
       )
       const img = screen.getByRole('img')
       const plotElement = img.closest('.Plot')
+
       expect(plotElement).toHaveClass('crop')
     })
 
@@ -69,6 +71,7 @@ describe('Plot component', () => {
       )
       const img = screen.getByRole('img')
       const plotElement = img.closest('.Plot')
+
       expect(plotElement).toHaveClass('is-replantable')
     })
 
@@ -82,6 +85,7 @@ describe('Plot component', () => {
       )
       const img = screen.getByRole('img')
       const plotElement = img.closest('.Plot')
+
       expect(plotElement).toHaveClass('can-be-harvested')
     })
 
@@ -94,6 +98,7 @@ describe('Plot component', () => {
         />
       )
       const img = screen.getByAltText('Carrot Seed')
+
       expect(img).toHaveClass('animated')
       expect(img).toHaveClass('heartBeat')
     })
@@ -105,6 +110,7 @@ describe('Plot component', () => {
         render(<Plot {...defaultProps} plotContent={null} />)
         const img = screen.getByRole('img')
         const plotElement = img.closest('.Plot')
+
         expect(plotElement).not.toHaveClass('can-be-fertilized')
       })
     })
@@ -122,6 +128,7 @@ describe('Plot component', () => {
         )
         const img = screen.getByRole('img')
         const plotElement = img.closest('.Plot')
+
         expect(plotElement).toHaveClass('can-be-fertilized')
       })
     })
@@ -139,6 +146,7 @@ describe('Plot component', () => {
         )
         const img = screen.getByRole('img')
         const plotElement = img.closest('.Plot')
+
         expect(plotElement).not.toHaveClass('can-be-fertilized')
       })
     })
@@ -156,6 +164,7 @@ describe('Plot component', () => {
           render(<Plot {...scarecrowProps} selectedItemId="fertilizer" />)
           const img = screen.getByRole('img')
           const plotElement = img.closest('.Plot')
+
           expect(plotElement).not.toHaveClass('can-be-fertilized')
         })
       })
@@ -168,6 +177,7 @@ describe('Plot component', () => {
             )
             const img = screen.getByRole('img')
             const plotElement = img.closest('.Plot')
+
             expect(plotElement).toHaveClass('can-be-fertilized')
           })
         })
@@ -186,6 +196,7 @@ describe('Plot component', () => {
             )
             const img = screen.getByRole('img')
             const plotElement = img.closest('.Plot')
+
             expect(plotElement).not.toHaveClass('can-be-fertilized')
           })
         })
@@ -199,6 +210,7 @@ describe('Plot component', () => {
         <Plot {...defaultProps} plotContent={getCropFromItemId('carrot')} />
       )
       const plantedCrop = screen.getByAltText('Carrot Seed')
+
       expect(plantedCrop).toBeInTheDocument()
     })
 
@@ -210,6 +222,7 @@ describe('Plot component', () => {
         />
       )
       const plantedCrop = screen.getByAltText('Grape Seed')
+
       expect(plantedCrop).toBeInTheDocument()
     })
 
@@ -225,6 +238,7 @@ describe('Plot component', () => {
         />
       )
       const plantedCrop = screen.getByAltText('Carrot')
+
       expect(plantedCrop).toBeInTheDocument()
     })
   })
@@ -232,6 +246,7 @@ describe('Plot component', () => {
   describe('image rendering', () => {
     test('renders provided image data', () => {
       const image = 'data:image/png;base64,some-other-image'
+
       render(
         <Plot
           {...defaultProps}
@@ -240,6 +255,7 @@ describe('Plot component', () => {
         />
       )
       const img = screen.getByRole('img')
+
       expect(img.style.backgroundImage).toMatch(
         /^url\(["']?data:image\/png;base64,some-other-image["']?\)$/
       )
@@ -252,6 +268,7 @@ describe('Plot component', () => {
         render(<Plot {...defaultProps} />)
         const img = screen.getByRole('img')
         const plotElement = img.closest('.Plot') as HTMLElement | null
+
         expect(plotElement?.style.backgroundImage).toBe('')
       })
     })
@@ -269,6 +286,7 @@ describe('Plot component', () => {
         )
         const img = screen.getByRole('img')
         const plotElement = img.closest('.Plot')
+
         expect(plotElement).toHaveStyle(
           `background-image: url(${plotStates['watered-plot']})`
         )
@@ -310,6 +328,7 @@ describe('Plot component', () => {
         )
 
         const img = screen.getByAltText('Empty plot')
+
         expect(img).not.toHaveClass('animated')
         expect(img).not.toHaveClass('was-just-shoveled')
 
@@ -318,6 +337,7 @@ describe('Plot component', () => {
         // Verify that the classes are applied correctly after clicking
         await waitFor(() => {
           const updatedImg = screen.getByAltText('Empty plot')
+
           expect(updatedImg).toHaveClass('animated')
           expect(updatedImg).toHaveClass('was-just-shoveled')
         })
@@ -335,6 +355,7 @@ describe('Plot component', () => {
           />
         )
         const img = await screen.findByAltText('Scarecrow')
+
         expect(img.style.backgroundImage).toMatch(items.scarecrow)
       })
     })
@@ -350,6 +371,7 @@ describe('Plot component', () => {
           />
         )
         const img = await screen.findByAltText('Sprinkler')
+
         expect(img.style.backgroundImage).toMatch(items.sprinkler)
       })
     })

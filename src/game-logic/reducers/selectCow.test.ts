@@ -7,6 +7,7 @@ describe('selectCow', () => {
   test('updates selectedCowId', () => {
     const cow = generateCow({ id: 'abc' })
     const { selectedCowId } = selectCow(testState(), cow)
+
     expect(selectedCowId).toEqual('abc')
   })
 })

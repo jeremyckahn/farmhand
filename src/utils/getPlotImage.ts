@@ -27,6 +27,7 @@ export const getPlotImage = (
   if (isPlotContent(plotContents)) {
     if (isPlotContentACrop(plotContents)) {
       let itemImageId
+
       switch (getCropLifeStage(plotContents)) {
         case GROWN:
           itemImageId = plotContents.itemId
@@ -34,11 +35,13 @@ export const getPlotImage = (
 
         case GROWING:
           const phase = getGrowingPhase(plotContents)
+
           itemImageId = `${plotContents.itemId}-growing-${phase}`
           break
 
         default:
           const seedItem = cropItemIdToSeedItemMap[plotContents.itemId]
+
           itemImageId = seedItem.id
       }
 

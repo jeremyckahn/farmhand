@@ -231,6 +231,7 @@ export default class Farmhand extends FarmhandReducers {
 
   get playerInventory() {
     const { inventory, valueAdjustments } = this.state
+
     return computePlayerInventory(inventory, valueAdjustments)
   }
 
@@ -287,6 +288,7 @@ export default class Farmhand extends FarmhandReducers {
 
   get isChatAvailable() {
     const { isOnline, room } = this.state
+
     return isOnline && room !== DEFAULT_ROOM
   }
 
@@ -411,6 +413,7 @@ export default class Farmhand extends FarmhandReducers {
 
     Object.keys(eventHandlers).forEach(methodStr => {
       const method = methodStr as keyof typeof eventHandlers
+
       this.handlers[method] = (eventHandlers[method] as any).bind(this)
 
       this.handlers.debounced[method] = debounce(
@@ -461,6 +464,7 @@ export default class Farmhand extends FarmhandReducers {
     nullArray(9).forEach((_: null, i: number) => {
       const index = i + 1
       const key = `numberKey${index}`
+
       this.keyMap[key] = String(index)
       this.keyHandlers[key] = () => {
         const viewName = this.viewList[i]
@@ -847,6 +851,7 @@ Trystero's makeAction function.
 
   scheduleHeartbeat() {
     const { heartbeatTimeoutId } = this.state
+
     clearTimeout(heartbeatTimeoutId ?? -1)
 
     this.setState(() => ({

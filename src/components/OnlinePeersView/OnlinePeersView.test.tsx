@@ -205,6 +205,7 @@ test('does not display peer messages section when empty', () => {
   render(<OnlinePeersView {...defaultProps} />)
 
   const alerts = document.querySelectorAll('[role="alert"]')
+
   expect(alerts).toHaveLength(0)
 })
 
@@ -224,6 +225,7 @@ test('uses default severity for peer messages when not specified', () => {
   )
 
   const alert = document.querySelector('[role="alert"]')
+
   expect(alert).toBeInTheDocument()
 })
 
@@ -278,6 +280,7 @@ test('displays dividers between sections when content is present', () => {
 
   // Should have exactly 3 dividers: one before cow trade, one before peers, one before messages
   const dividers = document.querySelectorAll('.MuiDivider-root')
+
   expect(dividers).toHaveLength(3)
 
   // Get section elements to verify positioning
@@ -299,6 +302,7 @@ test('displays dividers between sections when content is present', () => {
 
   // Verify dividers are positioned between sections by checking specific elements
   const mainContainer = document.querySelector('.OnlinePeersView')
+
   expect(mainContainer).toBeInTheDocument()
   const children = Array.from(mainContainer?.children || [])
 

@@ -18,6 +18,7 @@ export const recipesMap: Record<string, farmhand.recipe> = {}
 
 for (const recipeId of Object.keys(recipes)) {
   const recipe = (recipes as Record<string, farmhand.recipe>)[recipeId]
+
   // Only process objects that have recipe properties
   if (recipe && typeof recipe === 'object' && recipe.recipeType && recipe.id) {
     recipeCategories[recipe.recipeType][recipe.id] = recipe
@@ -29,6 +30,7 @@ export const itemsMap = {
   ...Object.keys(items).reduce(
     (acc: Record<string, farmhand.item>, itemName) => {
       const item = (items as Record<string, farmhand.item>)[itemName]
+
       acc[item.id] = item
       return acc
     },

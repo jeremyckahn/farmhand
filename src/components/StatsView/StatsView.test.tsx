@@ -64,6 +64,7 @@ test('calculates and displays correct profit', () => {
   // Today's profit should be revenue - losses = 400 - (-150) = 250
   // Find the row with "Today's Profit" and check its value
   const profitRow = screen.getByText("Today's Profit").closest('tr')
+
   expect(profitRow).toHaveTextContent('$250.00')
 })
 
@@ -144,6 +145,7 @@ test('applies danger text styling when losses exceed revenue', () => {
   )
 
   const profitCell = screen.getByText('-$100.00').closest('td')
+
   expect(profitCell).toHaveClass('danger-text')
 })
 
@@ -159,6 +161,7 @@ test('does not apply danger text styling when revenue exceeds losses', () => {
   )
 
   const profitCell = screen.getByText('$400.00').closest('td')
+
   expect(profitCell).not.toHaveClass('danger-text')
 })
 
@@ -183,6 +186,7 @@ test('displays record 7-day profit average', () => {
   const recordProfitRow = screen
     .getByText('Record 7-day Profit Average')
     .closest('tr')
+
   expect(recordProfitRow).toHaveTextContent('$250.00')
 })
 

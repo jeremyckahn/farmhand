@@ -72,6 +72,7 @@ test('displays field tool inventory when available', () => {
 
   // Look for both quantity indicators for the field tools
   const quantities = screen.getAllByText('1')
+
   expect(quantities.length).toBeGreaterThanOrEqual(2)
 })
 
@@ -95,6 +96,7 @@ test('shows selected item with contained variant', () => {
   )
 
   const selectedButton = document.querySelector('.is-selected')
+
   expect(selectedButton).toBeInTheDocument()
 })
 
@@ -115,6 +117,7 @@ test('handles item clicking', async () => {
   )
 
   const carrotButton = screen.getByRole('button', { name: /carrot seed/i })
+
   await user.click(carrotButton)
 
   expect(handleItemSelectClick).toHaveBeenCalledWith(carrotSeed)
@@ -140,6 +143,7 @@ test('displays dividers between sections when multiple sections are present', ()
   )
 
   const dividers = document.querySelectorAll('.MuiDivider-root')
+
   expect(dividers).toHaveLength(2)
 
   // Verify structural elements are present
@@ -200,6 +204,7 @@ test('shows tooltips on hover', async () => {
   )
 
   const carrotButton = screen.getByRole('button', { name: /carrot seed/i })
+
   await user.hover(carrotButton)
 
   expect(await screen.findByText('Carrot Seed')).toBeInTheDocument()

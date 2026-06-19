@@ -15,18 +15,21 @@ describe('randomChoice', () => {
 
   test('it returns a choice at random', () => {
     const choice = randomChoice(choices)
+
     expect(choices.includes(choice)).toEqual(true)
   })
 
   test('it can handle the lower bound of Math.random', () => {
     ;(global.Math.random as import('vitest').Mock).mockReturnValueOnce(0)
     const choice = randomChoice(choices)
+
     expect(choice).toEqual(choices[0])
   })
 
   test('it can handle the upper bound of Math.random', () => {
     ;(global.Math.random as import('vitest').Mock).mockReturnValueOnce(0.99)
     const choice = randomChoice(choices)
+
     expect(choice).toEqual(choices[1])
   })
 })

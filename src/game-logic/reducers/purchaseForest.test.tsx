@@ -10,6 +10,7 @@ describe('purchaseForest', () => {
       testState({ purchasedForest: 0 }),
       0
     )
+
     expect(purchasedForest).toEqual(0)
   })
 
@@ -18,6 +19,7 @@ describe('purchaseForest', () => {
       testState({ purchasedForest: 2 }),
       1
     )
+
     expect(purchasedForest).toEqual(2)
   })
 
@@ -30,6 +32,7 @@ describe('purchaseForest', () => {
       }),
       1
     )
+
     expect(money).toEqual(1_000)
   })
 
@@ -71,6 +74,7 @@ describe('purchaseForest', () => {
 
       for (let y = 0; y < forestSize.rows; y++) {
         const row: Array<unknown> = []
+
         for (let x = 0; x < forestSize.columns; x++) {
           row.push(null)
         }

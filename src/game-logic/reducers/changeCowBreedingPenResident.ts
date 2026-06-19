@@ -40,6 +40,7 @@ export const changeCowBreedingPenResident = (
 
   if (isAdding) {
     const breedingPenCowId = cowId1 === null ? 'cowId1' : 'cowId2'
+
     newCowBreedingPen = { ...newCowBreedingPen, [breedingPenCowId]: cow.id }
   } else {
     if (cowId1 === cow.id) {
