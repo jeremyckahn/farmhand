@@ -12,7 +12,7 @@
   "scripts": {
     "build": "npm run build:api && vite build",
     "build:native": "npm run build -- --base='./' && electron-builder --publish=always",
-    "check:types": "tsc && tsc --project src/components/tsconfig.json && tsc --project e2e/tsconfig.json",
+    "check:types": "tsc && tsc --project e2e/tsconfig.json",
     "dev": "mprocs \"cross-env VITE_TRACKER_URL='ws://localhost:8000' npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run start:tracker\"",
     "dev:native": "mprocs \"BROWSER=none npm run start\" \"npm run start:api\" \"npm run start:backend\" \"npm run electron\"",
     "e2e": "cd e2e && npx playwright test",

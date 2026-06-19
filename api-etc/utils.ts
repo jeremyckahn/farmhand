@@ -17,7 +17,7 @@ export const getRedisClient = () => {
     })
   )
 
-  client.on('error', function(error) {
+  client.on('error', function(error: Error) {
     console.log('[REDIS] error')
     console.error(error)
   })
@@ -25,8 +25,12 @@ export const getRedisClient = () => {
   return client
 }
 
-export const getRoomData = async (roomKey, get, set) => {
-  let roomData = JSON.parse(await get(roomKey)) || {}
+export const getRoomData = async (
+  roomKey: string,
+  get: (key: string) => Promise<string | null> | string | null,
+  set: (key: string, value: string) => any
+) => {
+  let roomData = JSON.parse((await get(roomKey)) || '{}') || {}
   let { valueAdjustments } = roomData
 
   if (!valueAdjustments) {
@@ -38,20 +42,38 @@ export const getRoomData = async (roomKey, get, set) => {
   return roomData
 }
 
-export const getRoomName = req =>
+export const getRoomName = (req: {
+  query?: Record<string, string | string[]>
+  body?: Record<string, any>
+}) =>
   `room-${(req.query?.room || req.body?.room || GLOBAL_ROOM_KEY).slice(
     0,
     MAX_ROOM_NAME_LENGTH
   )}`
 
 // https://vercel.com/support/articles/how-to-enable-cors
-export const allowCors = fn => async (req, res) => {
+export const allowCors = (
+  fn: (req: any, res: any) => Promise<any> | any
+) => async (
+  req: {
+    headers: Record<string, string | string[] | undefined>
+    method?: string
+    query?: Record<string, string | string[]>
+    body?: Record<string, any>
+  },
+  res: {
+    setHeader(key: string, value: string | boolean): void
+    status(code: number): { end(): void }
+  }
+) => {
   res.setHeader('Access-Control-Allow-Credentials', true)
 
   // origin is not defined when the request is from the same domain as the
   // server (as it is in the local development environment).
-  // https://stackoverflow.com/a/63684532
-  const { origin = '' } = req.headers
+  const originHeader = req.headers.origin
+  const origin = Array.isArray(originHeader)
+    ? originHeader[0]
+    : originHeader || ''
 
   if (
     ACCEPTED_ORIGINS.has(origin) ||

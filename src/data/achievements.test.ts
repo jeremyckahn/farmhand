@@ -10,7 +10,7 @@ import { carrot } from './crops/index.js'
 
 describe('harvest-crop', () => {
   describe('condition', () => {
-    let inputState
+    let inputState: any
 
     beforeEach(() => {
       inputState = {
@@ -107,7 +107,9 @@ describe('gold-digger', () => {
   test('it rewards the player with a gold ingot', () => {
     state = achievement.reward(state)
 
-    const ingot = state.inventory.find(item => item.id === 'gold-ingot')
+    const ingot = state.inventory.find(
+      (item: { id: string }) => item.id === 'gold-ingot'
+    )
 
     expect(ingot).toEqual({ id: 'gold-ingot', quantity: 1 })
   })

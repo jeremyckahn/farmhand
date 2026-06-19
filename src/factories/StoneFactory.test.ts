@@ -9,7 +9,7 @@ beforeEach(() => {
 
 describe('StoneFactory', () => {
   describe('generate', () => {
-    let stoneFactory
+    let stoneFactory: StoneFactory
 
     beforeEach(() => {
       stoneFactory = new StoneFactory()

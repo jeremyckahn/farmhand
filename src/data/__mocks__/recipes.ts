@@ -11,7 +11,8 @@ export const sampleRecipe1 = {
   ingredients: {
     [items.sampleItem1.id]: 2,
   },
-  condition: state => (state.itemsSold[items.sampleItem1.id] || 0) > 2,
+  condition: (state: farmhand.state) =>
+    (state.itemsSold[items.sampleItem1.id] || 0) > 2,
   value: items.sampleItem1.value * 2 + 10,
   type: itemType.CRAFTED_ITEM,
   recipeType: recipeType.KITCHEN,
@@ -23,7 +24,8 @@ export const sampleRecipe2 = {
   ingredients: {
     [items.sampleItem1.id]: 2,
   },
-  condition: state => (state.itemsSold[items.sampleItem1.id] || 0) > 2,
+  condition: (state: farmhand.state) =>
+    (state.itemsSold[items.sampleItem1.id] || 0) > 2,
   value: items.sampleItem1.value * 2 + 10,
   type: itemType.CRAFTED_ITEM,
   recipeType: recipeType.KITCHEN,
@@ -35,7 +37,8 @@ export const sampleRecipe3 = {
   ingredients: {
     [items.sampleItem1.id]: 2,
   },
-  condition: state => (state.itemsSold[items.sampleItem1.id] || 0) > 2,
+  condition: (state: farmhand.state) =>
+    (state.itemsSold[items.sampleItem1.id] || 0) > 2,
   value: items.sampleItem1.value * 2 + 10,
   type: itemType.CRAFTED_ITEM,
   recipeType: recipeType.KITCHEN,

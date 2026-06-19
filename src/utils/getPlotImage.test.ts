@@ -66,7 +66,7 @@ describe('getPlotImage', () => {
         0,
         0
       )
-    ).toBe(itemImages[silverOre.id])
+    ).toBe((itemImages as Record<string, string>)[silverOre.id])
   })
 
   test('returns item image for other content', () => {

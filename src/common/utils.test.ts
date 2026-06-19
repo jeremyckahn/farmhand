@@ -4,7 +4,7 @@ vitest.mock('../data/maps.js')
 vitest.mock('../data/items.js')
 
 describe('generateValueAdjustments', () => {
-  let valueAdjustments
+  let valueAdjustments: Record<string, number>
 
   beforeEach(() => {
     vitest.spyOn(Math, 'random').mockReturnValue(1)

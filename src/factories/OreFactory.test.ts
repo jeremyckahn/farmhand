@@ -12,7 +12,7 @@ describe('OreFactory', () => {
   })
 
   describe('generate', () => {
-    let oreFactory
+    let oreFactory: OreFactory
 
     beforeEach(() => {
       oreFactory = new OreFactory()
