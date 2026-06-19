@@ -46,6 +46,7 @@ export const getRoomName = (req: {
   query?: Record<string, string | string[]>
   body?: Record<string, any>
 }) =>
+  // TODO: Safe guard if req.query?.room is an array. Extract the first element if array, or convert to string before slicing.
   `room-${(req.query?.room || req.body?.room || GLOBAL_ROOM_KEY).slice(
     0,
     MAX_ROOM_NAME_LENGTH
