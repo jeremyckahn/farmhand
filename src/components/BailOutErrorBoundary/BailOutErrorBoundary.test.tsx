@@ -23,6 +23,7 @@ test('renders children when there is no error', () => {
 const errorHandler = (e: Event) => {
   e.preventDefault()
 }
+
 beforeAll(() => {
   window.addEventListener('error', errorHandler)
 })

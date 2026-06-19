@@ -40,6 +40,7 @@ const defaultProps = {
 
 const renderWithContext = (props = {}, gameState = {}) => {
   const contextValue = createContextData()
+
   contextValue.gameState = {
     ...contextValue.gameState,
     dayCount: 0,
@@ -63,10 +64,12 @@ describe('Navigation', () => {
 
   test('displays navigation menu items', async () => {
     const user = userEvent.setup()
+
     renderWithContext()
 
     // Open the dropdown to access menu items
     const selectElement = screen.getByRole('combobox')
+
     await user.click(selectElement)
 
     expect(screen.getAllByText('1: Home')[0]).toBeInTheDocument()
@@ -83,9 +86,11 @@ describe('Navigation', () => {
 
     // First open the dropdown
     const selectElement = screen.getByRole('combobox')
+
     await user.click(selectElement)
 
     const shopMenuItem = screen.getByRole('option', { name: '3: Shop' })
+
     await user.click(shopMenuItem)
 
     expect(handleViewChange).toHaveBeenCalledWith(
@@ -106,10 +111,12 @@ describe('Navigation', () => {
   describe('cow pen option', () => {
     test('does not show if player has not bought a cow pen', async () => {
       const user = userEvent.setup()
+
       renderWithContext()
 
       // Open dropdown to check available options
       const selectElement = screen.getByRole('combobox')
+
       await user.click(selectElement)
 
       expect(screen.queryByText(/Cows/)).not.toBeInTheDocument()
@@ -126,6 +133,7 @@ describe('Navigation', () => {
 
       // Open dropdown to see all options
       const selectElement = screen.getByRole('combobox')
+
       await user.click(selectElement)
 
       expect(screen.getByText('4: Cows')).toBeInTheDocument()
@@ -144,9 +152,11 @@ describe('Navigation', () => {
 
       // Open dropdown first
       const selectElement = screen.getByRole('combobox')
+
       await user.click(selectElement)
 
       const cowPenMenuItem = screen.getByRole('option', { name: '4: Cows' })
+
       await user.click(cowPenMenuItem)
 
       expect(handleViewChange).toHaveBeenCalledWith(
@@ -161,10 +171,12 @@ describe('Navigation', () => {
   describe('forest option', () => {
     test('does not show if player has not bought forest access', async () => {
       const user = userEvent.setup()
+
       renderWithContext()
 
       // Open dropdown to check available options
       const selectElement = screen.getByRole('combobox')
+
       await user.click(selectElement)
 
       expect(screen.queryByText(/Forest/)).not.toBeInTheDocument()
@@ -181,6 +193,7 @@ describe('Navigation', () => {
 
       // Open dropdown to see all options
       const selectElement = screen.getByRole('combobox')
+
       await user.click(selectElement)
 
       expect(screen.getByText('4: Forest')).toBeInTheDocument()
@@ -190,10 +203,12 @@ describe('Navigation', () => {
   describe('cellar option', () => {
     test('does not show if player has not bought cellar access', async () => {
       const user = userEvent.setup()
+
       render(<Navigation {...defaultProps} />)
 
       // Open dropdown to check available options
       const selectElement = screen.getByRole('combobox')
+
       await user.click(selectElement)
 
       expect(screen.queryByText(/Cellar/)).not.toBeInTheDocument()
@@ -210,6 +225,7 @@ describe('Navigation', () => {
 
       // Open dropdown to see all options
       const selectElement = screen.getByRole('combobox')
+
       await user.click(selectElement)
 
       expect(screen.getByText('4: Cellar')).toBeInTheDocument()
@@ -220,6 +236,7 @@ describe('Navigation', () => {
     render(<Navigation {...defaultProps} farmName="My Test Farm" />)
 
     const farmNameInput = document.querySelector('.farm-name input')
+
     expect(farmNameInput).toHaveValue('My Test Farm')
   })
 
@@ -242,6 +259,7 @@ describe('Navigation', () => {
 
     // Open dropdown to access menu items
     const selectElement = screen.getByRole('combobox')
+
     await user.click(selectElement)
 
     // Test each view - just verify handleViewChange is called for each option
@@ -267,6 +285,7 @@ describe('Navigation', () => {
     renderWithContext({ blockInput: true, isDialogViewOpen: true })
 
     const dialogElement = document.querySelector('.Farmhand')
+
     expect(dialogElement).toHaveClass('block-input')
   })
 
@@ -274,6 +293,7 @@ describe('Navigation', () => {
     renderWithContext({ blockInput: false })
 
     const navigation = document.querySelector('.Navigation')
+
     expect(navigation).not.toHaveClass('block-input')
   })
 
@@ -288,6 +308,7 @@ describe('Navigation', () => {
 
     // Look for online toggle switch or button
     const onlineToggle = document.querySelector('[role="switch"]')
+
     if (onlineToggle) {
       await user.click(onlineToggle)
       expect(handleOnlineToggleChange).toHaveBeenCalled()

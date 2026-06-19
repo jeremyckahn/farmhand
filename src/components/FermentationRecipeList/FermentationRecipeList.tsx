@@ -29,6 +29,7 @@ export const FermentationRecipeList = () => {
   const filteredCrops = cropsAvailableToFerment.filter(item => {
     const itemWithName = item as farmhand.item & { name: string }
     const fermentationRecipeName = `${FERMENTED_CROP_NAME}${itemWithName.name}`.toLowerCase()
+
     return searchTerms.every(
       term =>
         fermentationRecipeName.includes(term) ||

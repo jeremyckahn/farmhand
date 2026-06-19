@@ -17,6 +17,7 @@ test('renders empty bloodline when no colors provided', () => {
   render(<Bloodline {...defaultProps} />)
 
   const bloodlineList = document.querySelector('.Bloodline')
+
   expect(bloodlineList).toBeInTheDocument()
   expect(bloodlineList?.children).toHaveLength(0)
 })
@@ -31,6 +32,7 @@ test('renders color indicators for each color in bloodline', () => {
   render(<Bloodline colorsInBloodline={colorsInBloodline} />)
 
   const colorElements = document.querySelectorAll('.Bloodline li')
+
   expect(colorElements).toHaveLength(3)
 })
 
@@ -56,6 +58,7 @@ test('sorts colors alphabetically', () => {
   render(<Bloodline colorsInBloodline={colorsInBloodline} />)
 
   const colorElements = document.querySelectorAll('.Bloodline li')
+
   expect(colorElements[0]).toHaveClass('blue')
   expect(colorElements[1]).toHaveClass('brown')
   expect(colorElements[2]).toHaveClass('white')
@@ -69,6 +72,7 @@ test('displays tooltips on hover', async () => {
   render(<Bloodline colorsInBloodline={colorsInBloodline} />)
 
   const brownElement = document.querySelector('.brown')
+
   expect(brownElement).toBeInTheDocument()
   await userEvent.hover(brownElement!)
 
@@ -85,11 +89,13 @@ test('handles multiple color tooltips', async () => {
   render(<Bloodline colorsInBloodline={colorsInBloodline} />)
 
   const blueElement = document.querySelector('.blue')
+
   expect(blueElement).toBeInTheDocument()
   await userEvent.hover(blueElement!)
   expect(await screen.findByText('Blue')).toBeInTheDocument()
 
   const whiteElement = document.querySelector('.white')
+
   expect(whiteElement).toBeInTheDocument()
   await userEvent.hover(whiteElement!)
   expect(await screen.findByText('White')).toBeInTheDocument()
@@ -104,8 +110,10 @@ test('renders correct structure with list and list items', () => {
   render(<Bloodline colorsInBloodline={colorsInBloodline} />)
 
   const bloodlineList = document.querySelector('ul.Bloodline')
+
   expect(bloodlineList).toBeInTheDocument()
 
   const listItems = bloodlineList?.querySelectorAll('li')
+
   expect(listItems).toHaveLength(2)
 })

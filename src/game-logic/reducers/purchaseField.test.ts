@@ -17,17 +17,20 @@ describe('purchaseField', () => {
 
   test('updates purchasedField', () => {
     const { purchasedField } = purchaseField(state, 0)
+
     expect(purchasedField).toEqual(0)
   })
 
   test('prevents repurchasing options', () => {
     state.purchasedField = 2
     const { purchasedField } = purchaseField(state, 1)
+
     expect(purchasedField).toEqual(2)
   })
 
   test('deducts money', () => {
     const { money } = purchaseField(state, 1)
+
     expect(money).toEqual(500)
   })
 
@@ -48,6 +51,7 @@ describe('purchaseField', () => {
 
       for (let y = 0; y < fieldSize.rows; y++) {
         const row: Array<unknown> = []
+
         for (let x = 0; x < fieldSize.columns; x++) {
           row.push(null)
         }

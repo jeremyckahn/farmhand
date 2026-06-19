@@ -159,6 +159,7 @@ describe('CowCard', () => {
         .getByText('Breed')
         .closest('label')
         ?.querySelector('[type=checkbox]')
+
       expect(button).not.toHaveAttribute('disabled')
     })
 
@@ -196,6 +197,7 @@ describe('CowCard', () => {
         .getByText('Breed')
         .closest('label')
         ?.querySelector('[type=checkbox]')
+
       expect(button).not.toHaveAttribute('disabled')
     })
 
@@ -233,6 +235,7 @@ describe('CowCard', () => {
         .getByText('Breed')
         .closest('label')
         ?.querySelector('[type=checkbox]')
+
       expect(button).not.toHaveAttribute('disabled')
     })
 
@@ -270,6 +273,7 @@ describe('CowCard', () => {
         .getByText('Breed')
         .closest('label')
         ?.querySelector('[type=checkbox]')
+
       expect(button).toHaveAttribute('disabled')
     })
 
@@ -312,6 +316,7 @@ describe('CowCard', () => {
         .getByText('Breed')
         .closest('label')
         ?.querySelector('[type=checkbox]')
+
       expect(button).toHaveAttribute('disabled')
     })
   })
@@ -330,6 +335,7 @@ describe('CowCard', () => {
         )
 
         const selectedText = screen.queryByText(/is currently selected/)
+
         expect(selectedText).toBeNull()
       })
     })
@@ -347,6 +353,7 @@ describe('CowCard', () => {
         )
 
         const selectedText = screen.queryByText(/is currently selected/)
+
         expect(selectedText).not.toBeNull()
       })
     })
@@ -386,6 +393,7 @@ describe('CowCard', () => {
       const nameInput = screen.getByPlaceholderText('Name')
 
       const customName = 'Custom'
+
       await user.clear(nameInput)
       await user.type(nameInput, customName)
 

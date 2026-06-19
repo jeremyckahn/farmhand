@@ -17,6 +17,7 @@ export const makeRecipe = (
   howMany: number = 1
 ): farmhand.state => {
   const originalState = state
+
   state = consumeIngredients(
     state,
     recipe,

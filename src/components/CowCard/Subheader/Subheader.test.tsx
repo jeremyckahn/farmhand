@@ -85,6 +85,7 @@ describe('Subheader', () => {
       )
 
       const price = screen.getByText(`Price: ${moneyString(COW_VALUE)}`)
+
       expect(price).toBeInTheDocument()
     })
 
@@ -97,16 +98,19 @@ describe('Subheader', () => {
       )
 
       const value = screen.getByText(`Value: ${moneyString(COW_VALUE)}`)
+
       expect(value).toBeInTheDocument()
     })
   })
 
   describe('cow age display', () => {
     const ageRegex = /days? old/
+
     test('displays when purchased', () => {
       render(<Subheader {...baseProps} isCowPurchased={true} />)
 
       const age = screen.queryByText(ageRegex)
+
       expect(age).not.toBeNull()
     })
 
@@ -120,6 +124,7 @@ describe('Subheader', () => {
       )
 
       const age = screen.queryByText(ageRegex)
+
       expect(age).not.toBeNull()
     })
 
@@ -127,6 +132,7 @@ describe('Subheader', () => {
       render(<Subheader {...baseProps} isCowPurchased={false} />)
 
       const age = screen.queryByText(ageRegex)
+
       expect(age).toBeNull()
     })
   })

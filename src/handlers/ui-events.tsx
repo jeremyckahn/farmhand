@@ -97,6 +97,7 @@ export default {
     cow: farmhand.cow
   ) {
     const { checked } = target
+
     this.changeCowBreedingPenResident(cow, checked)
   },
 
@@ -125,6 +126,7 @@ export default {
     { target }: React.ChangeEvent<HTMLSelectElement>
   ) {
     const { value } = target
+
     this.setState({
       stageFocus: value as farmhand.stageFocusType,
     })
@@ -194,6 +196,7 @@ export default {
     // Prevent the player from spamming the End Day button
     // https://www.reddit.com/r/incremental_games/comments/jusn9i/farmhand_updates_for_November_2020/gcmi6x6/?context=3
     const activeElement = document.activeElement as HTMLElement
+
     activeElement?.blur()
   },
 
@@ -443,6 +446,7 @@ export default {
     const newSearch = newQueryParams.length > 0 ? `?${newQueryParams}` : ''
 
     const newUrl = `${origin}${pathname}${newSearch}${hash}`
+
     globalWindow.history.replaceState({}, '', newUrl)
   },
 

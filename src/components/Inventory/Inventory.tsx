@@ -54,6 +54,7 @@ export const separateItemsIntoCategories = (items: farmhand.item[]) =>
 
       if (category === 'CROPS') {
         const targetCategory = item.isPlantableCrop ? 'SEEDS' : 'CROPS'
+
         categories.get(targetCategory)?.push(item)
       } else if (category != null && categories.has(category)) {
         categories.get(category)?.push(item)
@@ -113,6 +114,7 @@ const Inventory = ({
     ) => {
       const matchingItems = categoryItems.filter(item => {
         const mappedItem = itemsMap[item.id]
+
         return (
           mappedItem &&
           mappedItem.name &&

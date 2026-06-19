@@ -35,6 +35,7 @@ vitest.mock('../Plot/index.js', () => {
       />
     )
   )
+
   return { default: mockPlot }
 })
 
@@ -178,6 +179,7 @@ describe('FieldContent', () => {
     render(<FieldContent {...(defaultFieldContentProps as any)} />)
 
     const rows = document.querySelectorAll('.row')
+
     expect(rows).toHaveLength(3)
   })
 
@@ -186,6 +188,7 @@ describe('FieldContent', () => {
 
     const firstRow = document.querySelector('.row')
     const plots = firstRow?.querySelectorAll('.Plot')
+
     expect(plots).toHaveLength(2)
   })
 
@@ -233,8 +236,10 @@ describe('FieldContent', () => {
 describe('MemoPlot', () => {
   // Import the mocked Plot component to access its call count
   let MockedPlot: any
+
   beforeEach(async () => {
     const PlotModule = await import('../Plot/index.js')
+
     MockedPlot = PlotModule.default
     MockedPlot.mockClear()
   })
@@ -316,6 +321,7 @@ describe('MemoPlot', () => {
       ...defaultPlotProps,
       plotContent: testCrop({ itemId: 'carrot' }),
     }
+
     rerender(<MemoPlot {...newProps} />)
 
     expect(MockedPlot).toHaveBeenCalledTimes(2)
@@ -331,6 +337,7 @@ describe('MemoPlot', () => {
       ...defaultPlotProps,
       hoveredPlotRangeSize: 2,
     }
+
     rerender(<MemoPlot {...newProps} />)
 
     expect(MockedPlot).toHaveBeenCalledTimes(2)
@@ -360,6 +367,7 @@ describe('MemoPlot', () => {
       x: 5,
       y: 5, // Out of range now
     }
+
     rerender(<MemoPlot {...newProps} />)
 
     expect(MockedPlot).toHaveBeenCalledTimes(2)
@@ -390,6 +398,7 @@ describe('MemoPlot', () => {
       ...initialProps,
       experience: 100,
     }
+
     rerender(<MemoPlot {...newProps} />)
 
     // Should still only be called once due to memoization
@@ -439,6 +448,7 @@ describe('MemoPlot', () => {
       ...initialProps,
       hoveredPlot: { x: 1, y: 1 },
     }
+
     rerender(<MemoPlot {...newProps} />)
 
     expect(MockedPlot).toHaveBeenCalledTimes(2)
@@ -468,6 +478,7 @@ describe('MemoPlot', () => {
       ...initialProps,
       hoveredPlot: { x: 2, y: 2 },
     }
+
     rerender(<MemoPlot {...newProps} />)
 
     expect(MockedPlot).toHaveBeenCalledTimes(1)

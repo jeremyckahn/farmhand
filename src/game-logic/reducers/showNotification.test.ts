@@ -9,6 +9,7 @@ describe('showNotification', () => {
       'foo'
     )
     const notificationObject = { message: 'foo', severity: 'info' }
+
     expect(latestNotification).toEqual(notificationObject)
     expect(todaysNotifications).toEqual([{ ...notificationObject }])
   })
@@ -20,6 +21,7 @@ describe('showNotification', () => {
     )
 
     const { todaysNotifications } = showNotification(state, 'foo')
+
     expect(todaysNotifications).toEqual([{ message: 'foo', severity: 'info' }])
   })
 })

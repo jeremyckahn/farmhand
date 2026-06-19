@@ -12,6 +12,7 @@ export const purchaseForest = (
   forestId: number
 ): farmhand.state => {
   const { forest, money, purchasedForest } = state
+
   if (purchasedForest >= forestId) {
     return state
   }
@@ -19,6 +20,7 @@ export const purchaseForest = (
   state = addExperience(state, EXPERIENCE_VALUES.FOREST_EXPANDED)
 
   const forestSize = PURCHASABLE_FOREST_SIZES.get(forestId)
+
   if (!forestSize) {
     return state
   }
@@ -33,6 +35,7 @@ export const purchaseForest = (
     forestId === 1
       ? FOREST_AVAILABLE_NOTIFICATION
       : FOREST_EXPANDED`${rows * columns}`
+
   state = showNotification(state, notificationText, 'success')
 
   return {

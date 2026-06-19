@@ -149,6 +149,7 @@ export const CowCard = ({
     if (isSelected) {
       const { current: scrollAnchor } = scrollAnchorRef
       const { current: card } = cardRef
+
       if (!scrollAnchor || !card) return
 
       // scrollIntoView is not defined in the unit test environment.

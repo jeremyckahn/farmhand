@@ -23,6 +23,7 @@ const defaultProps = {
 
 const renderWithContext = (props = {}, gameState = {}, handlers = {}) => {
   const contextValue = createContextData()
+
   contextValue.gameState = {
     ...contextValue.gameState,
     ...testState(gameState),
@@ -51,6 +52,7 @@ test('displays price surges when present', () => {
   renderWithContext({ priceSurges })
 
   const surgeLists = document.querySelectorAll('.card-list')
+
   expect(surgeLists[0].children).toHaveLength(2)
 })
 
@@ -63,6 +65,7 @@ test('displays price crashes when present', () => {
   renderWithContext({ priceCrashes })
 
   const crashLists = document.querySelectorAll('.card-list')
+
   expect(crashLists[1].children).toHaveLength(2)
 })
 
@@ -70,6 +73,7 @@ test('renders empty lists when no price events', () => {
   renderWithContext()
 
   const cardLists = document.querySelectorAll('.card-list')
+
   expect(cardLists[0].children).toHaveLength(0) // Price surges list
   expect(cardLists[1].children).toHaveLength(0) // Price crashes list
 })
@@ -78,5 +82,6 @@ test('renders divider between sections', () => {
   renderWithContext()
 
   const divider = document.querySelector('.MuiDivider-root')
+
   expect(divider).toBeInTheDocument()
 })

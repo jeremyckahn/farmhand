@@ -58,6 +58,7 @@ export const processCowBreeding = (state: farmhand.state): farmhand.state => {
       offspringCow.color === cowColors.RAINBOW
         ? EXPERIENCE_VALUES.RAINBOW_COW_BRED
         : EXPERIENCE_VALUES.COW_BRED
+
     state = addExperience(state, experienceGained)
   }
 

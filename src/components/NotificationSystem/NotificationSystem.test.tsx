@@ -74,6 +74,7 @@ test('calls closeSnackbar when onClose is triggered', () => {
 
   // Get the onClose function from the enqueueSnackbar call
   const onCloseCallback = enqueueSnackbar.mock.calls[0][1].onClose
+
   onCloseCallback()
 
   expect(closeSnackbar).toHaveBeenCalledTimes(1)

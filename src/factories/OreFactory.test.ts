@@ -20,6 +20,7 @@ describe('OreFactory', () => {
 
     test('it generates an ore', () => {
       const resources = oreFactory.generate()
+
       expect(resources[0].type).toEqual(itemType.ORE)
     })
   })

@@ -13,6 +13,7 @@ describe('purchaseStorageExpansion', () => {
       })
 
       const state = purchaseStorageExpansion(inputState)
+
       expect(state).toEqual(inputState)
     })
   })

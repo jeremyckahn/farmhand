@@ -4,6 +4,7 @@ const decrementPriceEventDays = (
   Object.keys(priceEvents).reduce(
     (acc: Record<string, farmhand.priceEvent>, key) => {
       const priceEvent = priceEvents[key]
+
       if (!priceEvent) return acc
 
       const { itemId, daysRemaining } = priceEvent

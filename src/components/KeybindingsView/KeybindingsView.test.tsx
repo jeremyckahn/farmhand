@@ -36,5 +36,6 @@ test('renders tables with proper accessibility labels', () => {
   render(<KeybindingsView />)
 
   const tables = screen.getAllByLabelText('Keyboard Shortcuts')
+
   expect(tables).toHaveLength(2)
 })

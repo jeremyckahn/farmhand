@@ -86,6 +86,7 @@ const useConcurrentTimeout = () => {
 
   useEffect(() => {
     const activeTimeouts = activeTimeoutsRef.current
+
     return () => {
       activeTimeouts.forEach(id => clearTimeout(id))
       activeTimeouts.clear()

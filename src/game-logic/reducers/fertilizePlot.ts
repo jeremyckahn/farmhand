@@ -50,6 +50,7 @@ export const fertilizePlot = (
   }
 
   const { quantity: initialFertilizerQuantity } = fertilizerInventory
+
   state = decrementItemFromInventory(state, fertilizerItemId)
   const doFertilizersRemain = initialFertilizerQuantity > 1
 

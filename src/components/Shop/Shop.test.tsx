@@ -33,6 +33,7 @@ beforeEach(() => {
   }
 
   const contextValue = createContextData()
+
   contextValue.gameState = { ...contextValue.gameState, ...gameState }
   contextValue.handlers = { ...contextValue.handlers, ...handlers }
 

@@ -27,6 +27,7 @@ vitest.useFakeTimers()
 
 const StubInventory = ({ gameState = {}, ...overrides }) => {
   const contextValue = createContextData()
+
   contextValue.gameState = { ...contextValue.gameState, ...gameState }
 
   return (
@@ -40,6 +41,7 @@ const StubInventory = ({ gameState = {}, ...overrides }) => {
     </FarmhandContext.Provider>
   )
 }
+
 describe('Inventory Component', () => {
   describe('Displaying items', () => {
     test('displays all items when no categories are selected', () => {
@@ -52,6 +54,7 @@ describe('Inventory Component', () => {
           type: 'SEEDS' as any,
         }),
       ] as unknown) as farmhand.item[]
+
       render(<StubInventory items={items} selectedCategories={[]} />)
       items.forEach(item => {
         expect(screen.getByText(item.name)).toBeInTheDocument()
@@ -71,6 +74,7 @@ describe('Inventory Component', () => {
       render(<StubInventory items={items} selectedCategories={[]} />)
 
       const searchInput = screen.getByPlaceholderText('Search inventory...')
+
       fireEvent.change(searchInput, { target: { value: 'Carrot' } })
 
       vitest.advanceTimersByTime(1000)
@@ -160,6 +164,7 @@ describe('Inventory Component', () => {
       )
 
       const searchBar = screen.getByPlaceholderText('Search inventory...')
+
       expect(searchBar).toBeInTheDocument()
     })
   })

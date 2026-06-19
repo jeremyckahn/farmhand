@@ -27,6 +27,7 @@ describe('Item', () => {
   describe('static UI', () => {
     test('renders the name', () => {
       const itemName = 'Cool Item'
+
       render(<Item {...{ ...baseProps, item: testItem({ name: itemName }) }} />)
       expect(screen.getByText(itemName)).toBeInTheDocument()
     })
@@ -38,6 +39,7 @@ describe('Item', () => {
         const { container } = render(
           <Item {...{ ...baseProps, isSelected: true }} />
         )
+
         expect(container.firstChild).toHaveClass('is-selected')
       })
     })
@@ -76,13 +78,16 @@ describe('Item', () => {
 
         test('displays item price', () => {
           const buyPrice = screen.getByText('Price:')
+
           expect(within(buyPrice).getByText('$10.42')).toBeInTheDocument()
         })
 
         test('displays total price', async () => {
           const increment = screen.getByRole('button', { name: 'Increment' })
+
           await userEvent.click(increment)
           const total = screen.getByText('Total:')
+
           await waitFor(() =>
             expect(within(total).getByText('$20.84')).toBeInTheDocument()
           )
@@ -93,6 +98,7 @@ describe('Item', () => {
     describe('isSellView', () => {
       beforeEach(() => {
         const id = 'an-item'
+
         render(
           <Item
             {...{
@@ -113,15 +119,18 @@ describe('Item', () => {
       describe('prices', () => {
         test('displays item price', () => {
           const sellPrice = screen.getByText('Sell price:')
+
           expect(within(sellPrice).getByText('$10.42')).toBeInTheDocument()
         })
 
         test('displays total price', async () => {
           const increment = screen.getByRole('button', { name: 'Increment' })
+
           await userEvent.click(increment)
           await userEvent.click(increment)
           await userEvent.click(increment)
           const total = screen.getByText('Total:')
+
           await waitFor(() =>
             expect(within(total).getByText('$41.68')).toBeInTheDocument()
           )

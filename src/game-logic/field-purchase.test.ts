@@ -22,6 +22,7 @@ describe('field expansion purchasing', () => {
     await nextView()
 
     const upgradesTab = screen.getByText('Upgrades')
+
     await userEvent.click(upgradesTab)
 
     const expandFieldContainer = screen
@@ -45,6 +46,7 @@ describe('field expansion purchasing', () => {
     await nextView()
 
     const emptyPlots = screen.getAllByAltText('Empty plot')
+
     expect(emptyPlots).toHaveLength(96)
   })
 })

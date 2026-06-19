@@ -47,6 +47,7 @@ const defaultProps = {
 
 const renderWithContext = (props = {}, gameState = {}, handlers = {}) => {
   const contextValue = createContextData()
+
   contextValue.gameState = {
     ...contextValue.gameState,
     ...testState(gameState),
@@ -142,6 +143,7 @@ describe('Stage', () => {
     renderWithContext({ stageFocus: stageFocusType.SHOP })
 
     const stage = document.querySelector('.Stage')
+
     expect(stage).toHaveAttribute('data-stage-focus', stageFocusType.SHOP)
   })
 

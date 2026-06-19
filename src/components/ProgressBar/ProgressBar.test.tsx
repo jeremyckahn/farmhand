@@ -13,6 +13,8 @@ vi.mock('shifty', () => ({
 }))
 
 const { tween, interpolate } = await import('shifty')
+const tweenMock = tween as Mock
+const interpolateMock = interpolate as Mock
 
 describe('ProgressBar', () => {
   beforeEach(() => {
@@ -39,6 +41,7 @@ describe('ProgressBar', () => {
     render(<ProgressBar {...{ percent: 75 }} />)
 
     const progressBar = document.querySelector('.ProgressBar')
+
     expect(progressBar).toBeInTheDocument()
   })
 
@@ -46,6 +49,7 @@ describe('ProgressBar', () => {
     render(<ProgressBar {...{ percent: 100 }} />)
 
     const progress = document.querySelector('.progress')
+
     expect(progress).toHaveStyle('width: 0%')
   })
 
@@ -53,7 +57,8 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    ;(tween as Mock).mockReturnValue(mockTweenInstance)
+
+    tweenMock.mockReturnValue(mockTweenInstance)
 
     render(<ProgressBar {...{ percent: 75 }} />)
 
@@ -72,7 +77,8 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    ;(tween as Mock).mockImplementation(config => {
+
+    tweenMock.mockImplementation(config => {
       renderCallback = config.render
       return mockTweenInstance
     })
@@ -101,7 +107,8 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    ;(tween as Mock).mockImplementation(config => {
+
+    tweenMock.mockImplementation(config => {
       renderCallback = config.render
       return mockTweenInstance
     })
@@ -121,13 +128,15 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    ;(tween as Mock).mockImplementation(config => {
+
+    tweenMock.mockImplementation(config => {
       renderCallback = config.render
       return mockTweenInstance
     })
 
     const mockInterpolatedColor = '#7fa200'
-    ;(interpolate as Mock).mockReturnValue({ color: mockInterpolatedColor })
+
+    interpolateMock.mockReturnValue({ color: mockInterpolatedColor })
 
     render(<ProgressBar {...{ percent: 50 }} />)
 
@@ -150,7 +159,8 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    ;(tween as Mock).mockReturnValue(mockTweenInstance)
+
+    tweenMock.mockReturnValue(mockTweenInstance)
 
     const { unmount } = render(<ProgressBar {...{ percent: 50 }} />)
 
@@ -163,7 +173,8 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    ;(tween as Mock).mockReturnValue(mockTweenInstance)
+
+    tweenMock.mockReturnValue(mockTweenInstance)
 
     const { rerender } = render(<ProgressBar {...{ percent: 25 }} />)
 
@@ -186,6 +197,7 @@ describe('ProgressBar', () => {
     render(<ProgressBar {...{ percent: 100 }} />)
 
     const progress = document.querySelector('.progress')
+
     expect(progress).toHaveStyle('background: #ff9f00')
   })
 
@@ -194,7 +206,8 @@ describe('ProgressBar', () => {
     const mockTweenInstance = {
       cancel: vi.fn(),
     }
-    ;(tween as Mock).mockImplementation(config => {
+
+    tweenMock.mockImplementation(config => {
       renderCallback = config.render
       return mockTweenInstance
     })
@@ -202,7 +215,7 @@ describe('ProgressBar', () => {
     render(<ProgressBar {...{ percent: 100 }} />)
 
     // Test at 0% progress
-    ;(interpolate as Mock).mockReturnValue({ color: '#ff9f00' })
+    interpolateMock.mockReturnValue({ color: '#ff9f00' })
     act(() => {
       renderCallback({ currentPercent: 0 })
     })
@@ -213,7 +226,7 @@ describe('ProgressBar', () => {
     )
 
     // Test at 100% progress
-    ;(interpolate as Mock).mockReturnValue({ color: '#00e500' })
+    interpolateMock.mockReturnValue({ color: '#00e500' })
     act(() => {
       renderCallback({ currentPercent: 100 })
     })

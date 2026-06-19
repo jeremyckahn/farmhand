@@ -115,6 +115,7 @@ const QuantityInput = ({
 }: QuantityInputProps) => {
   const decrementQuantity = () => {
     let newValue = value - 1
+
     if (newValue === 0) {
       newValue = maxQuantity
     }
@@ -123,6 +124,7 @@ const QuantityInput = ({
 
   const incrementQuantity = () => {
     let newValue = value + 1
+
     if (newValue > maxQuantity) {
       newValue = 1
     }

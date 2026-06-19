@@ -15,9 +15,11 @@ describe('item purchasing', () => {
       .getByText('Carrot Seed')
       .closest('.Item')
     const buyButton = within(carrotSeedShopItem as HTMLElement).getByText('Buy')
+
     await userEvent.click(buyButton)
 
     const menu = screen.getByRole('complementary')
+
     expect(within(menu).getByText('Carrot Seed')).toBeInTheDocument()
   })
 })

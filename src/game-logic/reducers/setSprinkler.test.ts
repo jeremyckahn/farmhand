@@ -23,6 +23,7 @@ describe('setSprinkler', () => {
   describe('plot is not empty', () => {
     test('does nothing', () => {
       const inputState = { ...state, field: [[testCrop()]] }
+
       state = setSprinkler(inputState, 0, 0)
       expect(state).toEqual(inputState)
     })
@@ -43,6 +44,7 @@ describe('setSprinkler', () => {
           0,
           0
         )
+
         expect(newFieldMode).toBe(fieldMode.SET_SPRINKLER)
         expect(selectedItemId).toBe(SPRINKLER_ITEM_ID)
       })

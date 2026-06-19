@@ -65,6 +65,7 @@ for (const level of levels) {
 
     if (growsInto) {
       const seedItem = item
+
       if (Array.isArray(growsInto)) {
         for (const cropItemId of growsInto) {
           const cropItem = itemsMap[cropItemId]

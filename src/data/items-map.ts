@@ -11,6 +11,7 @@ const itemsMap: Record<string, farmhand.item> = {
   ...Object.keys(items).reduce<Record<string, farmhand.item>>(
     (acc, itemName) => {
       const item = (items as any)[itemName]
+
       acc[item.id] = item
       return acc
     },

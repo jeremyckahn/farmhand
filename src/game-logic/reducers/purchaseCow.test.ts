@@ -49,6 +49,7 @@ describe('purchaseCow', () => {
   describe('is unsufficient room in cow pen', () => {
     test('cow is not purchased', () => {
       const cowCapacity = PURCHASEABLE_COW_PENS.get(1)?.cows || 0
+
       state.cowInventory = Array(cowCapacity)
         .fill(null)
         .map(() => generateCowModule.generateCow())

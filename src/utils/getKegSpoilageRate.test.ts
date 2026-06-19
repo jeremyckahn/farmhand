@@ -7,6 +7,7 @@ import { getKegSpoilageRate } from './getKegSpoilageRate.js'
 describe('getKegSpoilageRate', () => {
   test('handles kegs that are not mature', () => {
     const keg = getKegStub()
+
     expect(getKegSpoilageRate(keg)).toEqual(0)
   })
 
@@ -41,6 +42,7 @@ describe('getKegSpoilageRate', () => {
     'handles kegs that are beyond mature',
     (daysUntilMature, expectedSpoilageRate) => {
       const keg = getKegStub({ daysUntilMature })
+
       expect(getKegSpoilageRate(keg)).toEqual(expectedSpoilageRate)
     }
   )

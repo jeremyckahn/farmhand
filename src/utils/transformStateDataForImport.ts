@@ -9,6 +9,7 @@ export const transformStateDataForImport = (
   let sanitizedState: any = { ...state }
 
   const rejectedKeys = ['version']
+
   rejectedKeys.forEach(rejectedKey => delete sanitizedState[rejectedKey])
 
   if (sanitizedState.experience === 0) {

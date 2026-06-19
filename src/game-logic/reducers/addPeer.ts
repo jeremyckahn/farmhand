@@ -7,6 +7,7 @@ export const addPeer = (
   peerId: string
 ): farmhand.state => {
   const peers = { ...state.peers }
+
   peers[peerId] = null
 
   return { ...state, peers, activePlayers: (state.activePlayers ?? 1) + 1 }

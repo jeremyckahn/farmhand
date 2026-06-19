@@ -12,6 +12,7 @@ describe('waterPlot', () => {
         field: [[getPlotContentFromItemId('sprinkler')]],
       })
       const state = waterPlot(inputState, 0, 0)
+
       expect(state).toEqual(inputState)
     })
   })

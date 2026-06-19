@@ -9,6 +9,7 @@ import { Recipe } from './Recipe.js'
 
 vitest.mock('../../data/maps.js', async (importOriginal: any) => {
   const actual = await importOriginal()
+
   return {
     // @ts-ignore - vitest mock typing issue
     ...actual,
@@ -117,6 +118,7 @@ test('displays make button', () => {
   render(<Recipe {...defaultProps} />)
 
   const makeButton = screen.getByRole('button', { name: 'Make' })
+
   expect(makeButton).toBeInTheDocument()
 })
 
@@ -134,6 +136,7 @@ test('disables make button when recipe cannot be made', () => {
   render(<Recipe {...defaultProps} recipe={recipe} />)
 
   const makeButton = screen.getByRole('button', { name: 'Make' })
+
   expect(makeButton).toBeDisabled()
 })
 
@@ -146,6 +149,7 @@ test('enables make button when recipe can be made', () => {
   render(<Recipe {...defaultProps} recipe={recipe} inventory={inventory} />)
 
   const makeButton = screen.getByRole('button', { name: 'Make' })
+
   expect(makeButton).not.toBeDisabled()
 })
 
@@ -167,6 +171,7 @@ test('calls handleMakeRecipeClick when make button is clicked', async () => {
   )
 
   const makeButton = screen.getByRole('button', { name: 'Make' })
+
   await user.click(makeButton)
 
   expect(handleMakeRecipeClick).toHaveBeenCalledWith(recipe, 1)
@@ -182,6 +187,7 @@ test('updates quantity when quantity input changes', async () => {
   render(<Recipe {...defaultProps} recipe={recipe} inventory={inventory} />)
 
   const quantityInput = screen.getByDisplayValue('1')
+
   await user.clear(quantityInput)
   await user.type(quantityInput, '3')
 
@@ -197,6 +203,7 @@ test('indicates when recipe can be made', () => {
   render(<Recipe {...defaultProps} recipe={recipe} inventory={inventory} />)
 
   const recipeCard = document.querySelector('.Recipe')
+
   expect(recipeCard).toHaveClass('can-be-made')
 })
 
@@ -208,6 +215,7 @@ test('indicates when recipe cannot be made', () => {
   render(<Recipe {...defaultProps} recipe={recipe} />)
 
   const recipeCard = document.querySelector('.Recipe')
+
   expect(recipeCard).not.toHaveClass('can-be-made')
 })
 

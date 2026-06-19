@@ -266,6 +266,7 @@ export const FieldContent = ({
         <div className="row" key={y}>
           {nullArray(columns).map((_colIndex: null, x: number) => {
             const plotContent = field[y][x]
+
             return (
               <MemoPlot
                 key={x}

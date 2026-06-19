@@ -15,6 +15,7 @@ describe('fertilizePlot', () => {
         selectedItemId: 'fertilizer',
       })
       const state = fertilizePlot(oldState, 0, 0)
+
       expect(state).toBe(oldState)
     })
   })
@@ -28,6 +29,7 @@ describe('fertilizePlot', () => {
           selectedItemId: 'fertilizer',
         })
         const state = fertilizePlot(oldState, 0, 0)
+
         expect(state).toBe(oldState)
       })
 
@@ -38,6 +40,7 @@ describe('fertilizePlot', () => {
           selectedItemId: 'rainbow-fertilizer',
         })
         const state = fertilizePlot(oldState, 0, 0)
+
         expect(state).toBe(oldState)
       })
     })
@@ -50,6 +53,7 @@ describe('fertilizePlot', () => {
           selectedItemId: 'fertilizer',
         })
         const state = fertilizePlot(oldState, 0, 0)
+
         expect(state).toBe(oldState)
       })
 

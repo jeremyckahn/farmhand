@@ -29,6 +29,7 @@ export const purchaseCowPen = (
     cowPenId > 1
       ? EXPERIENCE_VALUES.COW_PEN_EXPANDED
       : EXPERIENCE_VALUES.COW_PEN_ACQUIRED
+
   state = addExperience(state, experienceEarned)
 
   return {

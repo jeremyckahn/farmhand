@@ -10,6 +10,7 @@ describe('processSprinklers', () => {
 
   beforeEach(() => {
     const field = new Array(8).fill(null).map(() => new Array(8).fill(null))
+
     field[0][0] = getPlotContentFromItemId('sprinkler')
     field[1][1] = getPlotContentFromItemId('sprinkler')
     field[6][5] = getPlotContentFromItemId('sprinkler')

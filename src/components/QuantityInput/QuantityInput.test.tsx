@@ -38,6 +38,7 @@ test('calls handleUpdateNumber when input value changes', async () => {
   )
 
   const input = screen.getByDisplayValue('1')
+
   await user.clear(input)
   await user.type(input, '7')
 
@@ -50,6 +51,7 @@ test('calls handleSubmit when Enter key is pressed', async () => {
   render(<QuantityInput {...defaultProps} handleSubmit={handleSubmit} />)
 
   const input = screen.getByDisplayValue('1')
+
   fireEvent.keyUp(input, { key: 'Enter', keyCode: 13, which: 13 })
 
   expect(handleSubmit).toHaveBeenCalledTimes(1)
@@ -64,6 +66,7 @@ test('calls setQuantity with incremented value when increment button is clicked'
   )
 
   const incrementButton = screen.getByLabelText('Increment')
+
   await user.click(incrementButton)
 
   expect(setQuantity).toHaveBeenCalledWith(4)
@@ -78,6 +81,7 @@ test('calls setQuantity with decremented value when decrement button is clicked'
   )
 
   const decrementButton = screen.getByLabelText('Decrement')
+
   await user.click(decrementButton)
 
   expect(setQuantity).toHaveBeenCalledWith(2)
@@ -97,6 +101,7 @@ test('wraps to maxQuantity when decrementing from 1', async () => {
   )
 
   const decrementButton = screen.getByLabelText('Decrement')
+
   await user.click(decrementButton)
 
   expect(setQuantity).toHaveBeenCalledWith(5)
@@ -116,6 +121,7 @@ test('wraps to 1 when incrementing beyond maxQuantity', async () => {
   )
 
   const incrementButton = screen.getByLabelText('Increment')
+
   await user.click(incrementButton)
 
   expect(setQuantity).toHaveBeenCalledWith(1)
@@ -147,6 +153,7 @@ test('selects input text on focus', async () => {
   render(<QuantityInput {...defaultProps} value={123} />)
 
   const input = screen.getByDisplayValue('123')
+
   await user.click(input)
 
   // After clicking, the text should be selected

@@ -37,6 +37,7 @@ const getToolImage = (tool: { level: farmhand.toolLevel; id: string }) => {
   }
 
   const id = `${tool.id}-${tool.level.toLowerCase()}`
+
   return (craftedItems as any)[id]
 }
 

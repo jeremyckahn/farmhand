@@ -36,6 +36,7 @@ test('displays peer with experience level', () => {
   render(<OnlinePeer peer={peer} />)
 
   const expectedLevel = levelAchieved(peer.experience)
+
   expect(screen.getByText(`Level: ${expectedLevel}`)).toBeInTheDocument()
 })
 

@@ -31,6 +31,7 @@ export const Stage = ({ field, stageFocus, viewTitle }: StageProps) => {
     if (ref.current) {
       const current = ref.current as HTMLDivElement
       const { style } = current
+
       // Set scroll position to the top
       current.scrollTop = 0
 
