@@ -98,8 +98,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@fontsource/francois-one": "^5.2.6",
-    "@fontsource/public-sans": "^5.1.1",
+    "@fontsource/jersey-10": "^5.2.8",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-regular-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",

@@ -4,6 +4,9 @@ export default createTheme({
   palette: {
     mode: 'light',
   },
+  typography: {
+    fontFamily: '"Jersey 10", sans-serif',
+  },
   shape: {},
   components: {
     MuiTabs: {
