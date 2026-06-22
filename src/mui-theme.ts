@@ -5,10 +5,17 @@ export default createTheme({
     mode: 'light',
   },
   typography: {
-    fontFamily: '"Bitcount Prop Single", sans-serif',
+    fontFamily: '"Bitcount Prop Single Variable", sans-serif',
   },
   shape: {},
   components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontVariationSettings: '"ELSH" 50',
+        },
+      },
+    },
     MuiTabs: {
       styleOverrides: {
         root: ({ theme }) => ({
