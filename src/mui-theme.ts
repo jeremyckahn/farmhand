@@ -5,7 +5,7 @@ export default createTheme({
     mode: 'light',
   },
   typography: {
-    fontFamily: '"Jersey 10", sans-serif',
+    fontFamily: '"Bitcount Prop Single", sans-serif',
   },
   shape: {},
   components: {

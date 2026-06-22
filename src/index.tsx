@@ -10,7 +10,7 @@ import { HashRouter as Router, Route } from 'react-router-dom'
 import './index.sass'
 import Farmhand from './components/Farmhand/index.js'
 import { features } from './config.js'
-import '@fontsource/jersey-10'
+import '@fontsource/bitcount-prop-single'
 
 // eslint-disable-next-line no-unused-vars
 import { cropFamily, grapeVariety } from './enums.js'
