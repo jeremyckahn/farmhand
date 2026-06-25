@@ -9,6 +9,9 @@ test('should make wine, mature it and sell it', async ({ page }) => {
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Cellar' }).click()
 
+  // Verify initial cellar capacity
+  await expect(page.getByText('Capacity: 0 / 10')).toBeVisible()
+
   // Switch to Winemaking tab
   await page.getByRole('tab', { name: 'Winemaking' }).click()
 
