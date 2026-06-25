@@ -13,7 +13,10 @@ test('should make wine, mature it and sell it', async ({ page }) => {
   await page.getByRole('tab', { name: 'Winemaking' }).click()
 
   // Find Chardonnay wine recipe and make it
-  const makeButton = page.locator('.WineRecipe').filter({ hasText: 'Chardonnay' }).getByRole('button', { name: 'Make' })
+  const makeButton = page
+    .locator('.WineRecipe')
+    .filter({ hasText: 'Chardonnay' })
+    .getByRole('button', { name: 'Make' })
   await expect(makeButton).toBeVisible()
   await makeButton.click()
 
@@ -27,20 +30,24 @@ test('should make wine, mature it and sell it', async ({ page }) => {
   await expect(page.getByText('Days until ready: 5')).toBeVisible()
 
   // Advance 5 days
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 4; i++) {
     await page.keyboard.press('Shift+C')
-    await page.waitForTimeout(500)
+    await expect(page.getByText(`Days until ready: ${4 - i}`)).toBeVisible()
   }
+  await page.keyboard.press('Shift+C')
 
   // Check it is mature
   await expect(page.getByText('Days since ready: 0')).toBeVisible()
 
   // Advance 1 more day to check value increase
   await page.keyboard.press('Shift+C')
-  await page.waitForTimeout(500)
+  await expect(page.getByText('Days since ready: 1')).toBeVisible()
 
   // Sell it
-  const sellButton = page.locator('.Keg').filter({ hasText: 'Chardonnay Wine' }).getByRole('button', { name: 'Sell' })
+  const sellButton = page
+    .locator('.Keg')
+    .filter({ hasText: 'Chardonnay Wine' })
+    .getByRole('button', { name: 'Sell' })
   await expect(sellButton).toBeVisible()
   await sellButton.click()
 
