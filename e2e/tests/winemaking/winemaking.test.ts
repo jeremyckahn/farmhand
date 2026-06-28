@@ -36,14 +36,17 @@ test('should make wine, mature it and sell it', async ({ page }) => {
   for (let i = 0; i < 4; i++) {
     await page.keyboard.press('Shift+C')
     await expect(page.getByText(`Days until ready: ${4 - i}`)).toBeVisible()
+    await expect(page.locator('.farmhand-root')).not.toHaveClass(/block-input/)
   }
   await page.keyboard.press('Shift+C')
+  await expect(page.locator('.farmhand-root')).not.toHaveClass(/block-input/)
 
   // Check it is mature
   await expect(page.getByText('Days since ready: 0')).toBeVisible()
 
   // Advance 1 more day to check value increase
   await page.keyboard.press('Shift+C')
+  await expect(page.locator('.farmhand-root')).not.toHaveClass(/block-input/)
   await expect(page.getByText('Days since ready: 1')).toBeVisible()
 
   // Sell it
