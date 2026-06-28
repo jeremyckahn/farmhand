@@ -109,7 +109,6 @@ import FarmhandContext, { BoundHandlers } from './Farmhand.context.js'
 import { FarmhandProps, FarmhandReducers } from './FarmhandReducers.js'
 import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
 
-
 import { useFarmhandReducers } from './useFarmhandReducers.js'
 import { usePrevious } from './usePrevious.js'
 
@@ -182,12 +181,22 @@ const applyPriceEvents = (
   return patchedValueAdjustments
 }
 
-export type FarmhandInstance = any;
+export type FarmhandInstance = any
 
 export default function Farmhand(props: FarmhandProps) {
   // Extract props properly
-  const { features: propsFeatures, match: { path = '', params: { room: newRoom = decodeURIComponent(props.match?.params?.room || DEFAULT_ROOM) } = {} } = {} } = props;
-  
+  const {
+    features: propsFeatures,
+    match: {
+      path = '',
+      params: {
+        room: newRoom = decodeURIComponent(
+          props.match?.params?.room || DEFAULT_ROOM
+        ),
+      } = {},
+    } = {},
+  } = props
+
   const createInitialState = useCallback((): farmhand.state => {
     return {
       activePlayers: null,
@@ -284,32 +293,45 @@ export default function Farmhand(props: FarmhandProps) {
       valueAdjustments: {},
       version: import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION ?? '',
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [state, setState] = useState<farmhand.state>(createInitialState)
-  
+
   const boundReducers = useFarmhandReducers(state, setState)
   const boundReducersRef = useRef<any>(boundReducers)
 
   boundReducersRef.current = boundReducers as any
-  
+
   const prevState = usePrevious(state)
 
-  const viewTitle = STAGE_TITLE_MAP[state.stageFocus as keyof typeof STAGE_TITLE_MAP]
+  const viewTitle =
+    STAGE_TITLE_MAP[state.stageFocus as keyof typeof STAGE_TITLE_MAP]
   const fieldToolInventory = getFieldToolInventory(state.inventory)
-  const playerInventory = computePlayerInventory(state.inventory, state.valueAdjustments)
+  const playerInventory = computePlayerInventory(
+    state.inventory,
+    state.valueAdjustments
+  )
   const plantableCropInventory = getPlantableCropInventory(state.inventory)
 
-  const levelEntitlements = useMemo(() => getLevelEntitlements(levelAchieved(state.experience)), [state.experience])
-  const shopInventory = useMemo(() => getAvailableShopInventory(levelEntitlements), [levelEntitlements])
-  
-  const isForestUnlocked = levelEntitlements.stageFocusType[stageFocusType.FOREST]
+  const levelEntitlements = useMemo(
+    () => getLevelEntitlements(levelAchieved(state.experience)),
+    [state.experience]
+  )
+  const shopInventory = useMemo(
+    () => getAvailableShopInventory(levelEntitlements),
+    [levelEntitlements]
+  )
+
+  const isForestUnlocked =
+    levelEntitlements.stageFocusType[stageFocusType.FOREST]
   const isChatAvailable = state.isOnline && state.room !== DEFAULT_ROOM
-  
+
   const viewList = useMemo(() => {
     const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
-    const list: farmhand.stageFocusType[] = [...STANDARD_VIEW_LIST] as farmhand.stageFocusType[]
+    const list: farmhand.stageFocusType[] = [
+      ...STANDARD_VIEW_LIST,
+    ] as farmhand.stageFocusType[]
 
     if (state.showHomeScreen) {
       list.unshift(HOME as farmhand.stageFocusType)
@@ -325,17 +347,25 @@ export default function Farmhand(props: FarmhandProps) {
       list.push(CELLAR)
     }
     return list
-  }, [state.showHomeScreen, isForestUnlocked, state.purchasedCowPen, state.purchasedCellar])
+  }, [
+    state.showHomeScreen,
+    isForestUnlocked,
+    state.purchasedCowPen,
+    state.purchasedCellar,
+  ])
 
   const peerMetadata = useMemo(() => getPeerMetadata(state), [state])
-  
-  const isInputBlocked = state.isAwaitingNetworkRequest || state.isAwaitingCowTradeRequest || state.isWaitingForDayToCompleteIncrementing
+
+  const isInputBlocked =
+    state.isAwaitingNetworkRequest ||
+    state.isAwaitingCowTradeRequest ||
+    state.isWaitingForDayToCompleteIncrementing
 
   const wrapSendPeerMetadata = useCallback((sendPeerMetadata: Function) => {
     return throttle(
       (...args: any[]) => {
         sendPeerMetadata(...args)
-        setState((s) => ({ ...s, pendingPeerMessages: [] }))
+        setState(s => ({ ...s, pendingPeerMessages: [] }))
       },
       5000,
       { trailing: true }
@@ -343,62 +373,100 @@ export default function Farmhand(props: FarmhandProps) {
   }, [])
 
   const handleCowTradeTimeout = useCallback(() => {
-    setState((s) => {
+    setState(s => {
       if (typeof s.cowTradeTimeoutId === 'number') {
-        setTimeout(() => boundReducersRef.current.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error'), 0)
+        setTimeout(
+          () =>
+            boundReducersRef.current.showNotification(
+              REQUESTED_COW_TRADE_UNAVAILABLE,
+              'error'
+            ),
+          0
+        )
         console.error('Cow trade request timed out')
-        return { ...s, cowTradeTimeoutId: null, isAwaitingCowTradeRequest: false }
+        return {
+          ...s,
+          cowTradeTimeoutId: null,
+          isAwaitingCowTradeRequest: false,
+        }
       }
       return s
     })
   }, [])
 
-  const tradeForPeerCow = useCallback((peerPlayerCow: farmhand.cow) => {
-    setState((s: farmhand.state) => {
-      const { cowIdOfferedForTrade, cowInventory, peers, sendCowTradeRequest } = s
+  const tradeForPeerCow = useCallback(
+    (peerPlayerCow: farmhand.cow) => {
+      setState((s: farmhand.state) => {
+        const {
+          cowIdOfferedForTrade,
+          cowInventory,
+          peers,
+          sendCowTradeRequest,
+        } = s
 
-      if (!sendCowTradeRequest) return s
+        if (!sendCowTradeRequest) return s
 
-      const { ownerId } = peerPlayerCow
-      const [peerId] = Object.entries(peers).find(([, peer]: [string, any]) => peer?.playerId === ownerId) ?? []
+        const { ownerId } = peerPlayerCow
+        const [peerId] =
+          Object.entries(peers).find(
+            ([, peer]: [string, any]) => peer?.playerId === ownerId
+          ) ?? []
 
-      if (!peerId) {
-        console.error(`Owner not found for cow ${JSON.stringify(peerPlayerCow)}`)
-        return s
-      }
+        if (!peerId) {
+          console.error(
+            `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
+          )
+          return s
+        }
 
-      const playerAlreadyOwnsRequestedCow = cowInventory.find(({ id }: farmhand.cow) => id === peerPlayerCow.id)
+        const playerAlreadyOwnsRequestedCow = cowInventory.find(
+          ({ id }: farmhand.cow) => id === peerPlayerCow.id
+        )
 
-      if (playerAlreadyOwnsRequestedCow) {
-        console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
-        setTimeout(() => boundReducersRef.current.showNotification(COW_ALREADY_OWNED, 'error'), 0)
-        return s
-      }
+        if (playerAlreadyOwnsRequestedCow) {
+          console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
+          setTimeout(
+            () =>
+              boundReducersRef.current.showNotification(
+                COW_ALREADY_OWNED,
+                'error'
+              ),
+            0
+          )
+          return s
+        }
 
-      const cowToTradeAway = cowInventory.find(({ id }: farmhand.cow) => id === cowIdOfferedForTrade)
+        const cowToTradeAway = cowInventory.find(
+          ({ id }: farmhand.cow) => id === cowIdOfferedForTrade
+        )
 
-      if (!cowToTradeAway) {
-        console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
-        return s
-      }
+        if (!cowToTradeAway) {
+          console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
+          return s
+        }
 
-      const cowTradeTimeoutId = setTimeout(handleCowTradeTimeout, COW_TRADE_TIMEOUT)
+        const cowTradeTimeoutId = setTimeout(
+          handleCowTradeTimeout,
+          COW_TRADE_TIMEOUT
+        )
 
-      sendCowTradeRequest(
-        {
-          cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
-          cowRequested: peerPlayerCow,
-        },
-        peerId
-      )
+        sendCowTradeRequest(
+          {
+            cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
+            cowRequested: peerPlayerCow,
+          },
+          peerId
+        )
 
-      return {
-        ...s,
-        cowTradeTimeoutId: cowTradeTimeoutId as unknown as number,
-        isAwaitingCowTradeRequest: true,
-      }
-    })
-  }, [handleCowTradeTimeout])
+        return {
+          ...s,
+          cowTradeTimeoutId: (cowTradeTimeoutId as unknown) as number,
+          isAwaitingCowTradeRequest: true,
+        }
+      })
+    },
+    [handleCowTradeTimeout]
+  )
 
   const clearPersistedData = useCallback(async () => {
     await props.localforage?.clear()
@@ -406,16 +474,16 @@ export default function Farmhand(props: FarmhandProps) {
   }, [props.localforage])
 
   const scheduleHeartbeat = useCallback(() => {
-    setState((s) => {
+    setState(s => {
       clearTimeout(s.heartbeatTimeoutId ?? -1)
-      const heartbeatTimeoutId = window.setTimeout(() => {
+      const heartbeatTimeoutId = (window.setTimeout(() => {
         setState((s2: farmhand.state) => ({
           ...s2,
           money: moneyTotal(s2.money, s2.activePlayers ?? 0),
         }))
         scheduleHeartbeat()
-      }, HEARTBEAT_INTERVAL_PERIOD) as unknown as number
-      
+      }, HEARTBEAT_INTERVAL_PERIOD) as unknown) as number
+
       return { ...s, heartbeatTimeoutId }
     })
   }, [])
@@ -428,40 +496,56 @@ export default function Farmhand(props: FarmhandProps) {
     boundReducersRef.current.showNotification(CONNECTING_TO_SERVER, 'info')
 
     try {
-      setState((s) => ({ ...s, isAwaitingNetworkRequest: true, peers: {} }))
+      setState(s => ({ ...s, isAwaitingNetworkRequest: true, peers: {} }))
       state.peerRoom?.leave()
 
-      const { valueAdjustments } = await getData(endpoints.getMarketData, { farmId: state.playerId, room })
+      const { valueAdjustments } = await getData(endpoints.getMarketData, {
+        farmId: state.playerId,
+        room,
+      })
 
       scheduleHeartbeat()
-      
+
       const relayRedundancy = 4
 
-      setState((s) => ({
+      setState(s => ({
         ...s,
         activePlayers: 1,
         peerRoom: joinRoom(
           {
             appId: import.meta.env?.VITE_NAME,
             rtcConfig,
-            ...(relayUrls && { relayConfig: { urls: relayUrls, redundancy: relayRedundancy } }),
+            ...(relayUrls && {
+              relayConfig: { urls: relayUrls, redundancy: relayRedundancy },
+            }),
           },
           room
         ),
-        valueAdjustments: applyPriceEvents(valueAdjustments, priceCrashes, priceSurges),
+        valueAdjustments: applyPriceEvents(
+          valueAdjustments,
+          priceCrashes,
+          priceSurges
+        ),
       }))
 
-      boundReducersRef.current.showNotification(CONNECTED_TO_ROOM('', room), 'success')
+      boundReducersRef.current.showNotification(
+        CONNECTED_TO_ROOM('', room),
+        'success'
+      )
       console.log('SYNC TO ROOM SUCCESS')
     } catch (e) {
       boundReducersRef.current.showNotification(SERVER_ERROR, 'error')
-      console.log('SYNC TO ROOM ERROR', e, "STATE:", state)
+      console.log('SYNC TO ROOM ERROR', e, 'STATE:', state)
       console.error(e)
-      setState((s) => ({ ...s, redirect: '/', cowIdOfferedForTrade: '' }))
+      setState(s => ({ ...s, redirect: '/', cowIdOfferedForTrade: '' }))
     }
 
-    setState((s) => ({ ...s, isAwaitingNetworkRequest: false, isAwaitingCowTradeRequest: false }))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setState(s => ({
+      ...s,
+      isAwaitingNetworkRequest: false,
+      isAwaitingCowTradeRequest: false,
+    }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isOnline, state.room, scheduleHeartbeat])
 
   const initializeNewGame = useCallback(async () => {
@@ -469,145 +553,223 @@ export default function Farmhand(props: FarmhandProps) {
     // For now, we stub it until we define it
   }, [])
 
-  const showInventoryFullNotifications = useCallback((prev: farmhand.state, currentState: farmhand.state) => {
-    if (inventorySpaceRemaining(prev) > 0 && inventorySpaceRemaining(currentState) <= 0) {
-      boundReducersRef.current.showNotification(INVENTORY_FULL_NOTIFICATION, 'warning')
-    }
-  }, [])
-
-  const showRecipeLearnedNotifications = useCallback(({ learnedRecipes: previousLearnedRecipes }: farmhand.state) => {
-    let learnedRecipes: farmhand.recipe[] = []
-
-    Object.keys(state.learnedRecipes).forEach(recipeId => {
-      if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
-        learnedRecipes.push(recipesMap[recipeId])
+  const showInventoryFullNotifications = useCallback(
+    (prev: farmhand.state, currentState: farmhand.state) => {
+      if (
+        inventorySpaceRemaining(prev) > 0 &&
+        inventorySpaceRemaining(currentState) <= 0
+      ) {
+        boundReducersRef.current.showNotification(
+          INVENTORY_FULL_NOTIFICATION,
+          'warning'
+        )
       }
-    })
+    },
+    []
+  )
 
-    if (learnedRecipes.length > 1) {
-      boundReducersRef.current.showNotification(RECIPES_LEARNED('', learnedRecipes))
-    } else if (learnedRecipes.length === 1) {
-      boundReducersRef.current.showNotification(RECIPE_LEARNED('', learnedRecipes[0]))
-    }
-  }, [state.learnedRecipes])
+  const showRecipeLearnedNotifications = useCallback(
+    ({ learnedRecipes: previousLearnedRecipes }: farmhand.state) => {
+      let learnedRecipes: farmhand.recipe[] = []
 
-  const persistState = useCallback((currentState: farmhand.state, overrides = {}) => {
-    return props.localforage?.setItem(
-      'state',
-      reduceByPersistedKeys({ ...currentState, ...overrides })
-    )
-  }, [props.localforage])
+      Object.keys(state.learnedRecipes).forEach(recipeId => {
+        if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
+          learnedRecipes.push(recipesMap[recipeId])
+        }
+      })
+
+      if (learnedRecipes.length > 1) {
+        boundReducersRef.current.showNotification(
+          RECIPES_LEARNED('', learnedRecipes)
+        )
+      } else if (learnedRecipes.length === 1) {
+        boundReducersRef.current.showNotification(
+          RECIPE_LEARNED('', learnedRecipes[0])
+        )
+      }
+    },
+    [state.learnedRecipes]
+  )
+
+  const persistState = useCallback(
+    (currentState: farmhand.state, overrides = {}) => {
+      return props.localforage?.setItem(
+        'state',
+        reduceByPersistedKeys({ ...currentState, ...overrides })
+      )
+    },
+    [props.localforage]
+  )
 
   const updateServerForNextDay = useCallback(async () => {
     const serverMessages: farmhand.notification[] = []
     let broadcastedPositionMessage: string | null = null
 
-    setState((s) => ({ ...s, isAwaitingNetworkRequest: true }))
+    setState(s => ({ ...s, isAwaitingNetworkRequest: true }))
 
     let serverValueAdjustments: Record<string, number> | undefined
 
     if (state.isOnline) {
-      const { inventory, room, todaysPurchases, todaysStartingInventory } = state
-      const positions = computeMarketPositions(todaysStartingInventory, todaysPurchases, inventory)
+      const {
+        inventory,
+        room,
+        todaysPurchases,
+        todaysStartingInventory,
+      } = state
+      const positions = computeMarketPositions(
+        todaysStartingInventory,
+        todaysPurchases,
+        inventory
+      )
 
       try {
-        serverValueAdjustments = (await postData(endpoints.postDayResults, { positions, room })).valueAdjustments
+        serverValueAdjustments = (
+          await postData(endpoints.postDayResults, { positions, room })
+        ).valueAdjustments
         if (Object.keys(positions).length) {
-          serverMessages.push({ message: POSITIONS_POSTED_NOTIFICATION('', 'You', positions), severity: 'info' })
-          broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION('', '', positions)
+          serverMessages.push({
+            message: POSITIONS_POSTED_NOTIFICATION('', 'You', positions),
+            severity: 'info',
+          })
+          broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION(
+            '',
+            '',
+            positions
+          )
         }
       } catch (e) {
         serverMessages.push({ message: SERVER_ERROR, severity: 'error' })
-        setState((s) => ({ ...s, redirect: '/', cowIdOfferedForTrade: '', isAwaitingNetworkRequest: false }))
+        setState(s => ({
+          ...s,
+          redirect: '/',
+          cowIdOfferedForTrade: '',
+          isAwaitingNetworkRequest: false,
+        }))
         console.error(e)
       }
     }
-    return { broadcastedPositionMessage, serverMessages, serverValueAdjustments }
+    return {
+      broadcastedPositionMessage,
+      serverMessages,
+      serverValueAdjustments,
+    }
   }, [state])
 
-  const incrementDay = useCallback(async (isFirstDay = false) => {
-    let shouldBlock = false;
+  const incrementDay = useCallback(
+    async (isFirstDay = false) => {
+      let shouldBlock = false
 
-    setState(prev => {
-       if (prev.isWaitingForDayToCompleteIncrementing && !isFirstDay) {
-           shouldBlock = true;
-       }
-       return prev;
-    });
+      setState(prev => {
+        if (prev.isWaitingForDayToCompleteIncrementing && !isFirstDay) {
+          shouldBlock = true
+        }
+        return prev
+      })
 
-    if (shouldBlock) return;
+      if (shouldBlock) return
 
-    if (!isFirstDay) {
-      setState((prev) => ({ ...prev, isWaitingForDayToCompleteIncrementing: true }))
-    }
+      if (!isFirstDay) {
+        setState(prev => ({
+          ...prev,
+          isWaitingForDayToCompleteIncrementing: true,
+        }))
+      }
 
-    // Wait until network operations are done.
-    const { broadcastedPositionMessage, serverMessages, serverValueAdjustments } = await updateServerForNextDay()
+      // Wait until network operations are done.
+      const {
+        broadcastedPositionMessage,
+        serverMessages,
+        serverValueAdjustments,
+      } = await updateServerForNextDay()
 
-    
-    // Using functional updater to ensure we always compute based on the absolute latest state
-    let resolvedNextDayState: any = null;
-    let pendingNotifications: any = [];
+      // Using functional updater to ensure we always compute based on the absolute latest state
+      let resolvedNextDayState: any = null
+      let pendingNotifications: any = []
 
-    setState(prev => {
-      const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
+      setState(prev => {
+        const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
 
-      pendingNotifications = [...serverMessages, ...nextDayState.newDayNotifications]
-      nextDayState.valueAdjustments = applyPriceEvents(
-        serverValueAdjustments ?? nextDayState.valueAdjustments,
-        nextDayState.priceCrashes,
-        nextDayState.priceSurges
-      )
-      nextDayState.isAwaitingNetworkRequest = false
-      nextDayState.isWaitingForDayToCompleteIncrementing = false // UNLOCK UI IMMEDIATELY
-      nextDayState.newDayNotifications = []
-      nextDayState.todaysNotifications = []
-      
-      resolvedNextDayState = nextDayState;
-      return nextDayState;
-    })
-    
-    // We defer the async stuff until the state update is queued
-    setTimeout(async () => {
-      try {
-        if (resolvedNextDayState) {
-          console.log("INCREMENT DAY SUCCESS", resolvedNextDayState.day);
-          await props.localforage?.setItem(
-            'state',
-            reduceByPersistedKeys({ ...resolvedNextDayState, newDayNotifications: pendingNotifications })
-          )
+        pendingNotifications = [
+          ...serverMessages,
+          ...nextDayState.newDayNotifications,
+        ]
+        nextDayState.valueAdjustments = applyPriceEvents(
+          serverValueAdjustments ?? nextDayState.valueAdjustments,
+          nextDayState.priceCrashes,
+          nextDayState.priceSurges
+        )
+        nextDayState.isAwaitingNetworkRequest = false
+        nextDayState.isWaitingForDayToCompleteIncrementing = false // UNLOCK UI IMMEDIATELY
+        nextDayState.newDayNotifications = []
+        nextDayState.todaysNotifications = []
 
-          const notifications = [...pendingNotifications]
+        resolvedNextDayState = nextDayState
+        return nextDayState
+      })
 
-          notifications
-            .concat(isFirstDay ? [] : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }])
-            .forEach(({ message, severity }) => boundReducersRef.current.showNotification(message, severity))
+      // We defer the async stuff until the state update is queued
+      setTimeout(async () => {
+        try {
+          if (resolvedNextDayState) {
+            console.log('INCREMENT DAY SUCCESS', resolvedNextDayState.day)
+            await props.localforage?.setItem(
+              'state',
+              reduceByPersistedKeys({
+                ...resolvedNextDayState,
+                newDayNotifications: pendingNotifications,
+              })
+            )
 
-          if (resolvedNextDayState.isCombineEnabled) {
-            if (resolvedNextDayState.stageFocus === stageFocusType.FIELD) {
-              await sleep(1000)
+            const notifications = [...pendingNotifications]
+
+            notifications
+              .concat(
+                isFirstDay
+                  ? []
+                  : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
+              )
+              .forEach(({ message, severity }) =>
+                boundReducersRef.current.showNotification(message, severity)
+              )
+
+            if (resolvedNextDayState.isCombineEnabled) {
+              if (resolvedNextDayState.stageFocus === stageFocusType.FIELD) {
+                await sleep(1000)
+              }
+              boundReducersRef.current.forRange(
+                reducers.harvestPlot,
+                Infinity,
+                0,
+                0
+              )
             }
-            boundReducersRef.current.forRange(reducers.harvestPlot, Infinity, 0, 0)
+          }
+        } catch (e) {
+          console.error(e)
+          boundReducersRef.current.showNotification(JSON.stringify(e), 'error')
+        } finally {
+          if (broadcastedPositionMessage) {
+            boundReducersRef.current.prependPendingPeerMessage(
+              broadcastedPositionMessage
+            )
           }
         }
-      } catch (e) {
-        console.error(e)
-        boundReducersRef.current.showNotification(JSON.stringify(e), 'error')
-      } finally {
-        if (broadcastedPositionMessage) {
-          boundReducersRef.current.prependPendingPeerMessage(broadcastedPositionMessage)
-        }
-      }
-    }, 0)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateServerForNextDay, props.localforage])
+      }, 0)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [updateServerForNextDay, props.localforage]
+  )
 
   const openDialogView = useCallback((dialogViewName: farmhand.dialogView) => {
-    setState((s) => ({ ...s, currentDialogView: dialogViewName, isDialogViewOpen: true }))
+    setState(s => ({
+      ...s,
+      currentDialogView: dialogViewName,
+      isDialogViewOpen: true,
+    }))
   }, [])
 
   const closeDialogView = useCallback(() => {
-    setState((s) => ({ ...s, isDialogViewOpen: false }))
+    setState(s => ({ ...s, isDialogViewOpen: false }))
   }, [])
 
   const focusNextView = useCallback(() => {
@@ -615,7 +777,10 @@ export default function Farmhand(props: FarmhandProps) {
     setState((s: farmhand.state) => {
       const currentViewIndex = viewList.indexOf(s.stageFocus)
 
-      return { ...s, stageFocus: viewList[(currentViewIndex + 1) % viewList.length] }
+      return {
+        ...s,
+        stageFocus: viewList[(currentViewIndex + 1) % viewList.length],
+      }
     })
   }, [viewList])
 
@@ -626,7 +791,12 @@ export default function Farmhand(props: FarmhandProps) {
 
       return {
         ...s,
-        stageFocus: viewList[currentViewIndex === 0 ? viewList.length - 1 : (currentViewIndex - 1) % viewList.length],
+        stageFocus:
+          viewList[
+            currentViewIndex === 0
+              ? viewList.length - 1
+              : (currentViewIndex - 1) % viewList.length
+          ],
       }
     })
   }, [viewList])
@@ -634,67 +804,109 @@ export default function Farmhand(props: FarmhandProps) {
   const messagePeers = useCallback((message: string, severity?: string) => {
     boundReducersRef.current.prependPendingPeerMessage(message, severity)
   }, [])
-  
+
   // Instance proxy to mimic the legacy class "this" so ui-events.tsx can run unmodified
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const instanceProxy = useMemo(() => ({
-    state,
-    props,
-    viewTitle,
-    fieldToolInventory,
-    playerInventory,
-    plantableCropInventory,
-    viewList,
-    levelEntitlements,
-    shopInventory,
-    peerMetadata,
-    isInputBlocked,
-    isChatAvailable,
-    isForestUnlocked,
-    setState: (updater: any, callback?: () => void) => {
-      setState((prev) => {
-        const next = typeof updater === 'function' ? updater(prev) : updater
+  const instanceProxy = useMemo(
+    () => ({
+      state,
+      props,
+      viewTitle,
+      fieldToolInventory,
+      playerInventory,
+      plantableCropInventory,
+      viewList,
+      levelEntitlements,
+      shopInventory,
+      peerMetadata,
+      isInputBlocked,
+      isChatAvailable,
+      isForestUnlocked,
+      setState: (updater: any, callback?: () => void) => {
+        setState(prev => {
+          const next = typeof updater === 'function' ? updater(prev) : updater
 
-        if (next === null || next === undefined) return prev
-        const newState = { ...prev, ...next }
+          if (next === null || next === undefined) return prev
+          const newState = { ...prev, ...next }
 
-        if (callback) setTimeout(callback, 0)
-        return newState
-      })
-    },
-    ...boundReducersRef.current,
-    purchaseItem: (item: any, quantity: number) => boundReducersRef.current.purchaseItem(item, quantity),
-    sellItem: (item: any, quantity: number) => boundReducersRef.current.sellItem(item, quantity),
-    showNotification: (msg: string, sev?: string) => boundReducersRef.current.showNotification(msg, sev),
-    prependPendingPeerMessage: (msg: string, sev?: string) => boundReducersRef.current.prependPendingPeerMessage(msg, sev),
-    forRange: (fn: any, limit: number, arg1: number, arg2: number, arg3?: any) => boundReducersRef.current.forRange(fn, limit, arg1, arg2, arg3),
-    createInitialState,
-    getData,
-    postData,
-    initializeNewGame,
-    tradeForPeerCow,
-    handleCowTradeTimeout,
-    clearPersistedData,
-    syncToRoom,
-    scheduleHeartbeat,
-    showInventoryFullNotifications,
-    showRecipeLearnedNotifications,
-    persistState: (overrides = {}) => persistState(state, overrides),
-    updateServerForNextDay,
-    incrementDay,
-    openDialogView,
-    closeDialogView,
-    focusNextView,
-    focusPreviousView,
-    messagePeers,
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [
-    state, props, viewTitle, fieldToolInventory, playerInventory, plantableCropInventory, viewList, levelEntitlements, shopInventory, peerMetadata, isInputBlocked, isChatAvailable, isForestUnlocked,
-    initializeNewGame, tradeForPeerCow, handleCowTradeTimeout, clearPersistedData, syncToRoom, scheduleHeartbeat, showInventoryFullNotifications, showRecipeLearnedNotifications, persistState, updateServerForNextDay, incrementDay, openDialogView, closeDialogView, focusNextView, focusPreviousView, messagePeers, createInitialState
-  ])
+          if (callback) setTimeout(callback, 0)
+          return newState
+        })
+      },
+      ...boundReducersRef.current,
+      purchaseItem: (item: any, quantity: number) =>
+        boundReducersRef.current.purchaseItem(item, quantity),
+      sellItem: (item: any, quantity: number) =>
+        boundReducersRef.current.sellItem(item, quantity),
+      showNotification: (msg: string, sev?: string) =>
+        boundReducersRef.current.showNotification(msg, sev),
+      prependPendingPeerMessage: (msg: string, sev?: string) =>
+        boundReducersRef.current.prependPendingPeerMessage(msg, sev),
+      forRange: (
+        fn: any,
+        limit: number,
+        arg1: number,
+        arg2: number,
+        arg3?: any
+      ) => boundReducersRef.current.forRange(fn, limit, arg1, arg2, arg3),
+      createInitialState,
+      getData,
+      postData,
+      initializeNewGame,
+      tradeForPeerCow,
+      handleCowTradeTimeout,
+      clearPersistedData,
+      syncToRoom,
+      scheduleHeartbeat,
+      showInventoryFullNotifications,
+      showRecipeLearnedNotifications,
+      persistState: (overrides = {}) => persistState(state, overrides),
+      updateServerForNextDay,
+      incrementDay,
+      openDialogView,
+      closeDialogView,
+      focusNextView,
+      focusPreviousView,
+      messagePeers,
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }),
+    [
+      state,
+      props,
+      viewTitle,
+      fieldToolInventory,
+      playerInventory,
+      plantableCropInventory,
+      viewList,
+      levelEntitlements,
+      shopInventory,
+      peerMetadata,
+      isInputBlocked,
+      isChatAvailable,
+      isForestUnlocked,
+      initializeNewGame,
+      tradeForPeerCow,
+      handleCowTradeTimeout,
+      clearPersistedData,
+      syncToRoom,
+      scheduleHeartbeat,
+      showInventoryFullNotifications,
+      showRecipeLearnedNotifications,
+      persistState,
+      updateServerForNextDay,
+      incrementDay,
+      openDialogView,
+      closeDialogView,
+      focusNextView,
+      focusPreviousView,
+      messagePeers,
+      createInitialState,
+    ]
+  )
 
-  const instanceProxyRef = useRef<any>(null);
-  instanceProxyRef.current = instanceProxy;
+  const instanceProxyRef = useRef<any>(null)
+
+  instanceProxyRef.current = instanceProxy
 
   const handlers = useMemo(() => {
     const bound: any = { debounced: {} }
@@ -702,11 +914,14 @@ export default function Farmhand(props: FarmhandProps) {
     Object.keys(eventHandlers).forEach(methodStr => {
       const method = methodStr as keyof typeof eventHandlers
 
-      bound[method] = (...args: any[]) => (eventHandlers[method] as any).apply(instanceProxyRef.current, args)
+      bound[method] = (...args: any[]) =>
+        (eventHandlers[method] as any).apply(instanceProxyRef.current, args)
       bound.debounced[method] = debounce(bound[method], 50)
     })
-    return bound as BoundHandlers<typeof eventHandlers> & { debounced: BoundHandlers<typeof eventHandlers> }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    return bound as BoundHandlers<typeof eventHandlers> & {
+      debounced: BoundHandlers<typeof eventHandlers>
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const keyMap = useMemo(() => {
@@ -761,7 +976,10 @@ export default function Farmhand(props: FarmhandProps) {
         const viewName = viewList[i]
 
         if (typeof viewName === 'string') {
-          setState((s) => ({ ...s, stageFocus: stageFocusType[viewName as keyof typeof stageFocusType] }))
+          setState(s => ({
+            ...s,
+            stageFocus: stageFocusType[viewName as keyof typeof stageFocusType],
+          }))
         }
       }
     })
@@ -772,19 +990,26 @@ export default function Farmhand(props: FarmhandProps) {
       })
     }
     return map
-  }, [incrementDay, focusNextView, openDialogView, focusPreviousView, handlers, state.toolLevels, viewList, clearPersistedData])
+  }, [
+    incrementDay,
+    focusNextView,
+    openDialogView,
+    focusPreviousView,
+    handlers,
+    state.toolLevels,
+    viewList,
+    clearPersistedData,
+  ])
 
   // ComponentDidMount
   useEffect(() => {
-    
-    
     window.farmhand = instanceProxy // Legacy debug hook
-    let isMounted = true;
+    let isMounted = true
 
-    (async () => {
+    ;(async () => {
       const persistedState = await props.localforage?.getItem('state')
 
-      if (!isMounted) return;
+      if (!isMounted) return
 
       if (persistedState) {
         const sanitizedState = transformStateDataForImport({
@@ -793,26 +1018,47 @@ export default function Farmhand(props: FarmhandProps) {
         })
         const { isCombineEnabled, newDayNotifications } = sanitizedState
 
-        setState((s) => ({ ...s, ...sanitizedState, newDayNotifications: [], hasBooted: true }))
+        setState(s => ({
+          ...s,
+          ...sanitizedState,
+          newDayNotifications: [],
+          hasBooted: true,
+        }))
 
-        newDayNotifications.forEach(({ message, severity }: farmhand.notification) => {
-          setTimeout(() => boundReducersRef.current.showNotification(message, severity), 0)
-          if (isCombineEnabled) {
-            boundReducersRef.current.forRange(reducers.harvestPlot, Infinity, 0, 0)
+        newDayNotifications.forEach(
+          ({ message, severity }: farmhand.notification) => {
+            setTimeout(
+              () =>
+                boundReducersRef.current.showNotification(message, severity),
+              0
+            )
+            if (isCombineEnabled) {
+              boundReducersRef.current.forRange(
+                reducers.harvestPlot,
+                Infinity,
+                0,
+                0
+              )
+            }
           }
-        })
+        )
       } else {
         await incrementDay(true)
-        setState((s) => ({ ...s, historicalValueAdjustments: [] }))
-        boundReducersRef.current.showNotification(LOAN_INCREASED('', STANDARD_LOAN_AMOUNT), 'info')
-        setState((s) => ({ ...s, hasBooted: true }))
+        setState(s => ({ ...s, historicalValueAdjustments: [] }))
+        boundReducersRef.current.showNotification(
+          LOAN_INCREASED('', STANDARD_LOAN_AMOUNT),
+          'info'
+        )
+        setState(s => ({ ...s, hasBooted: true }))
       }
 
       syncToRoom()
     })()
-    
-    return () => { isMounted = false }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return () => {
+      isMounted = false
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // ComponentDidUpdate
@@ -823,74 +1069,125 @@ export default function Farmhand(props: FarmhandProps) {
     const newIsOnline = path.startsWith('/online')
 
     if (newIsOnline !== state.isOnline || decodedRoom !== state.room) {
-      setState((s) => ({ ...s, isOnline: newIsOnline, redirect: '', room: decodedRoom }))
+      setState(s => ({
+        ...s,
+        isOnline: newIsOnline,
+        redirect: '',
+        room: decodedRoom,
+      }))
     }
 
-    if (state.isOnline !== prevState.isOnline || state.room !== prevState.room) {
+    if (
+      state.isOnline !== prevState.isOnline ||
+      state.room !== prevState.room
+    ) {
       if (newIsOnline) syncToRoom()
 
       if (!state.isOnline && typeof state.heartbeatTimeoutId === 'number') {
         clearTimeout(state.heartbeatTimeoutId)
-        setState((s) => ({ ...s, activePlayers: null, heartbeatTimeoutId: null, peerRoom: null }))
+        setState(s => ({
+          ...s,
+          activePlayers: null,
+          heartbeatTimeoutId: null,
+          peerRoom: null,
+        }))
       }
     }
 
     if (state.isOnline === false && prevState.isOnline === true) {
-      boundReducersRef.current.showNotification(DISCONNECTED_FROM_SERVER, 'info')
+      boundReducersRef.current.showNotification(
+        DISCONNECTED_FROM_SERVER,
+        'info'
+      )
     }
 
-    const updatedAchievementsState = reducers.updateAchievements(state, prevState)
+    const updatedAchievementsState = reducers.updateAchievements(
+      state,
+      prevState
+    )
 
     if (updatedAchievementsState !== state) {
       setState(() => updatedAchievementsState)
     }
 
-    if (state.stageFocus === stageFocusType.COW_PEN && prevState.stageFocus !== stageFocusType.COW_PEN) {
-      setState((s) => ({ ...s, selectedCowId: '' }))
+    if (
+      state.stageFocus === stageFocusType.COW_PEN &&
+      prevState.stageFocus !== stageFocusType.COW_PEN
+    ) {
+      setState(s => ({ ...s, selectedCowId: '' }))
     }
 
     if (state.stageFocus !== prevState.stageFocus && state.isMenuOpen) {
-      setState((s) => ({ ...s, isMenuOpen: !doesMenuObstructStage() }))
+      setState(s => ({ ...s, isMenuOpen: !doesMenuObstructStage() }))
     }
 
     if (state.money < prevState.money) {
-      setState((s) => ({ ...s, todaysLosses: moneyTotal(s.todaysLosses, state.money - prevState.money) }))
+      setState(s => ({
+        ...s,
+        todaysLosses: moneyTotal(s.todaysLosses, state.money - prevState.money),
+      }))
     }
 
     if (state.peerRoom !== prevState.peerRoom) {
       if (state.peerRoom) {
-        state.peerRoom.onPeerJoin((id: string) => boundReducersRef.current.addPeer(id))
-        state.peerRoom.onPeerLeave((id: string) => boundReducersRef.current.removePeer(id))
+        state.peerRoom.onPeerJoin((id: string) =>
+          boundReducersRef.current.addPeer(id)
+        )
+        state.peerRoom.onPeerLeave((id: string) =>
+          boundReducersRef.current.removePeer(id)
+        )
 
-        const [sendPeerMetadata, getPeerMetadataFunc] = state.peerRoom.makeAction('peerMetadata')
+        const [
+          sendPeerMetadata,
+          getPeerMetadataFunc,
+        ] = state.peerRoom.makeAction('peerMetadata')
 
-        getPeerMetadataFunc((...args: any[]) => handlePeerMetadataRequest(instanceProxy, args[0], args[1]))
+        getPeerMetadataFunc((...args: any[]) =>
+          handlePeerMetadataRequest(instanceProxy, args[0], args[1])
+        )
 
-        const [sendCowTradeRequest, getCowTradeRequest] = state.peerRoom.makeAction('cowTrade')
+        const [
+          sendCowTradeRequest,
+          getCowTradeRequest,
+        ] = state.peerRoom.makeAction('cowTrade')
 
-        getCowTradeRequest((...args: any[]) => handleCowTradeRequest(instanceProxy, args[0], args[1]))
+        getCowTradeRequest((...args: any[]) =>
+          handleCowTradeRequest(instanceProxy, args[0], args[1])
+        )
 
-        const [sendCowAccept, getCowAccept] = state.peerRoom.makeAction('cowAccept')
+        const [sendCowAccept, getCowAccept] = state.peerRoom.makeAction(
+          'cowAccept'
+        )
 
-        getCowAccept((...args: any[]) => handleCowTradeRequestAccept(instanceProxy, args[0], args[1]))
+        getCowAccept((...args: any[]) =>
+          handleCowTradeRequestAccept(instanceProxy, args[0], args[1])
+        )
 
-        const [sendCowReject, getCowReject] = state.peerRoom.makeAction('cowReject')
+        const [sendCowReject, getCowReject] = state.peerRoom.makeAction(
+          'cowReject'
+        )
 
-        getCowReject((...args: any[]) => handleCowTradeRequestReject(instanceProxy, args[0]))
+        getCowReject((...args: any[]) =>
+          handleCowTradeRequestReject(instanceProxy, args[0])
+        )
 
-        setState((s) => ({
+        setState(s => ({
           ...s,
-          getCowAccept, getCowReject, getCowTradeRequest,
+          getCowAccept,
+          getCowReject,
+          getCowTradeRequest,
           getPeerMetadata: getPeerMetadataFunc,
           pendingPeerMessages: [],
-          sendCowAccept, sendCowReject, sendCowTradeRequest,
+          sendCowAccept,
+          sendCowReject,
+          sendCowTradeRequest,
           sendPeerMetadata: wrapSendPeerMetadata(sendPeerMetadata),
         }))
 
         sendPeerMetadata(peerMetadata)
       } else {
         prevState.peerRoom?.leave()
-        setState((s) => ({ ...s, peers: {}, sendPeerMetadata: null }))
+        setState(s => ({ ...s, peers: {}, sendPeerMetadata: null }))
       }
     }
 
@@ -898,8 +1195,19 @@ export default function Farmhand(props: FarmhandProps) {
     showRecipeLearnedNotifications(prevState)
 
     state.sendPeerMetadata?.(peerMetadata)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state, prevState, newRoom, path, syncToRoom, instanceProxy, wrapSendPeerMetadata, peerMetadata, showInventoryFullNotifications, showRecipeLearnedNotifications])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    state,
+    prevState,
+    newRoom,
+    path,
+    syncToRoom,
+    instanceProxy,
+    wrapSendPeerMetadata,
+    peerMetadata,
+    showInventoryFullNotifications,
+    showRecipeLearnedNotifications,
+  ])
 
   const redirect = state.redirect
   const gameState = {
@@ -918,31 +1226,104 @@ export default function Farmhand(props: FarmhandProps) {
   }
 
   return (
-    <GlobalHotKeys allowChanges={true} keyMap={isInputBlocked ? emptyObject : keyMap} handlers={isInputBlocked ? emptyObject : keyHandlers}>
+    <GlobalHotKeys
+      allowChanges={true}
+      keyMap={isInputBlocked ? emptyObject : keyMap}
+      handlers={isInputBlocked ? emptyObject : keyHandlers}
+    >
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
-          <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'right' }} classes={{ containerRoot: 'Farmhand notification-container' }} content={snackbarProviderContentCallback} maxSnack={4}>
+          <SnackbarProvider
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            classes={{ containerRoot: 'Farmhand notification-container' }}
+            content={snackbarProviderContentCallback}
+            maxSnack={4}
+          >
             {redirect && <Redirect to={redirect} />}
             <FarmhandContext.Provider value={{ gameState, handlers }}>
-              <div className={classNames('Farmhand farmhand-root fill', state.isMenuOpen ? 'menu-open' : 'menu-closed', { 'use-alternate-end-day-button-position': state.useAlternateEndDayButtonPosition, 'block-input': isInputBlocked, 'has-booted': state.hasBooted })}>
+              <div
+                className={classNames(
+                  'Farmhand farmhand-root fill',
+                  state.isMenuOpen ? 'menu-open' : 'menu-closed',
+                  {
+                    'use-alternate-end-day-button-position':
+                      state.useAlternateEndDayButtonPosition,
+                    'block-input': isInputBlocked,
+                    'has-booted': state.hasBooted,
+                  }
+                )}
+              >
                 <UpdateNotifier />
                 <AppBar />
-                <Drawer className="sidebar-wrapper" open={gameState.isMenuOpen} variant="persistent" role="complementary" PaperProps={{ className: 'sidebar' }}>
+                <Drawer
+                  className="sidebar-wrapper"
+                  open={gameState.isMenuOpen}
+                  variant="persistent"
+                  role="complementary"
+                  PaperProps={{ className: 'sidebar' }}
+                >
                   <Navigation />
                   <ContextPane />
                   <div className="spacer" />
                 </Drawer>
                 <Stage />
                 <div className="bottom-controls">
-                  <MobileStepper variant="dots" steps={viewList.length} position="static" activeStep={viewList.indexOf(state.stageFocus)} className="" backButton={null} nextButton={null} />
+                  <MobileStepper
+                    variant="dots"
+                    steps={viewList.length}
+                    position="static"
+                    activeStep={viewList.indexOf(state.stageFocus)}
+                    className=""
+                    backButton={null}
+                    nextButton={null}
+                  />
                   <div className="fab-buttons buttons">
-                    <Fab aria-label="Previous view" color="primary" onClick={focusPreviousView}><KeyboardArrowLeft /></Fab>
-                    <Fab className={classNames('menu-button', { 'is-open': state.isMenuOpen })} color="primary" aria-label="Open drawer" onClick={() => handlers.handleMenuToggle()}><MenuIcon /></Fab>
-                    <Fab aria-label="Next view" color="primary" onClick={focusNextView}><KeyboardArrowRight /></Fab>
+                    <Fab
+                      aria-label="Previous view"
+                      color="primary"
+                      onClick={focusPreviousView}
+                    >
+                      <KeyboardArrowLeft />
+                    </Fab>
+                    <Fab
+                      className={classNames('menu-button', {
+                        'is-open': state.isMenuOpen,
+                      })}
+                      color="primary"
+                      aria-label="Open drawer"
+                      onClick={() => handlers.handleMenuToggle()}
+                    >
+                      <MenuIcon />
+                    </Fab>
+                    <Fab
+                      aria-label="Next view"
+                      color="primary"
+                      onClick={focusNextView}
+                    >
+                      <KeyboardArrowRight />
+                    </Fab>
                   </div>
                 </div>
-                <Tooltip placement="left" title={<><p>End the day to save your progress and advance the game.</p><p>(shift + c)</p></>}>
-                  <Fab aria-label="End the day to save your progress and advance the game." className="end-day" color="error" onClick={handlers.handleClickEndDayButton} sx={{ zIndex: Z_INDEX.END_DAY_BUTTON }}><HotelIcon /></Fab>
+                <Tooltip
+                  placement="left"
+                  title={
+                    <>
+                      <p>
+                        End the day to save your progress and advance the game.
+                      </p>
+                      <p>(shift + c)</p>
+                    </>
+                  }
+                >
+                  <Fab
+                    aria-label="End the day to save your progress and advance the game."
+                    className="end-day"
+                    color="error"
+                    onClick={handlers.handleClickEndDayButton}
+                    sx={{ zIndex: Z_INDEX.END_DAY_BUTTON }}
+                  >
+                    <HotelIcon />
+                  </Fab>
                 </Tooltip>
               </div>
               {isChatAvailable ? <ChatRoom /> : null}

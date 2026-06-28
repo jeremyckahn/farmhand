@@ -8,7 +8,7 @@ test('shows network error when attempting to end day in multiplayer while offlin
 }) => {
   await openPage(page)
 
-  await page.getByRole('checkbox', { name: 'Play online' }).click({ force: true })
+  await page.getByRole('checkbox', { name: 'Play online' }).check()
 
   await expect(page.getByText('Connected to room global!')).toBeInViewport({
     timeout: 10_000,

@@ -17,7 +17,7 @@ test('uses server-based price values', async ({ page }) => {
   await expect(page.getByRole('complementary')).toContainText(
     'CarrotSell price: $28.72Total: $28.72'
   )
-  await page.getByRole('checkbox', { name: 'Play online' }).click({ force: true })
+  await page.getByRole('checkbox', { name: 'Play online' }).check()
 
   const serverResponse = await new Promise<{
     valueAdjustments: {

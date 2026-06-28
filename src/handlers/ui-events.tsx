@@ -14,7 +14,7 @@ import { reduceByPersistedKeys } from '../utils/reduceByPersistedKeys.js'
 import { transformStateDataForImport } from '../utils/transformStateDataForImport.js'
 
 import { randomNumberService } from '../common/services/randomNumber.js'
-import type { FarmhandInstance as Farmhand } from '../components/Farmhand/Farmhand.js'
+import { FarmhandInstance as Farmhand } from '../components/Farmhand/Farmhand.js'
 import {
   clearPlot,
   fertilizePlot,
@@ -98,7 +98,7 @@ export default {
   ) {
     const { checked } = target
 
-    // console.log("NOOP BREED");
+    this.changeCowBreedingPenResident(cow, checked)
   },
 
   handleCowHugClick(this: Farmhand, cow: farmhand.cow) {

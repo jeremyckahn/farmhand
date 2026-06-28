@@ -12,14 +12,36 @@ export const openPage = async (page, seed = 0.5) => {
   // don't interfere with the tests
   await page.clock.install({ time: gameStartTime })
 
-      await page.route('**/api/*', async route => {
-    if (route.request().url().includes('get-market-data')) {
-      return route.fulfill({ json: { valueAdjustments: { carrot: 1.25 } } });
+  await page.route('**/api/*', async route => {
+    const isOnline = await page
+      .evaluate(() => navigator.onLine)
+      .catch(() => true)
+    if (!isOnline) {
+      await route.abort('internetdisconnected')
+      return
     }
-    if (route.request().url().includes('post-day-results')) {
-      return route.fulfill({ json: { valueAdjustments: {} } });
+    if (
+      route
+        .request()
+        .url()
+        .includes('get-market-data')
+    ) {
+      return route.fulfill({ json: { valueAdjustments: { carrot: 1.25 } } })
     }
-    return route.continue();
-  });
-return page.goto(`${appUrl}?seed=${seed}`, { waitUntil: 'domcontentloaded' })
+    if (
+      route
+        .request()
+        .url()
+        .includes('post-day-results')
+    ) {
+      return route.fulfill({ json: { valueAdjustments: {} } })
+    }
+    return route.continue()
+  })
+
+  const response = await page.goto(`${appUrl}?seed=${seed}`, {
+    waitUntil: 'domcontentloaded',
+  })
+  await page.waitForSelector('.farmhand-root.has-booted')
+  return response
 }
