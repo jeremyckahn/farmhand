@@ -189,6 +189,7 @@ const Subheader = ({
                     {...{
                       color: 'primary',
                       checked: isInBreedingPen,
+                      inputProps: { 'aria-label': 'move cow to breeding pen' } as any,
                       onChange: e =>
                         handleCowBreedChange && handleCowBreedChange(e, cow),
                     }}

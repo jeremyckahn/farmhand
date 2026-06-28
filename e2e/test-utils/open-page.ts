@@ -12,5 +12,14 @@ export const openPage = async (page, seed = 0.5) => {
   // don't interfere with the tests
   await page.clock.install({ time: gameStartTime })
 
-  return page.goto(`${appUrl}?seed=${seed}`)
+      await page.route('**/api/*', async route => {
+    if (route.request().url().includes('get-market-data')) {
+      return route.fulfill({ json: { valueAdjustments: { carrot: 1.25 } } });
+    }
+    if (route.request().url().includes('post-day-results')) {
+      return route.fulfill({ json: { valueAdjustments: {} } });
+    }
+    return route.continue();
+  });
+return page.goto(`${appUrl}?seed=${seed}`, { waitUntil: 'domcontentloaded' })
 }

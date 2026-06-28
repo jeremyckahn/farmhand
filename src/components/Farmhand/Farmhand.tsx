@@ -1,3 +1,4 @@
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import HotelIcon from '@mui/icons-material/Hotel.js'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft.js'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight.js'
@@ -108,6 +109,10 @@ import FarmhandContext, { BoundHandlers } from './Farmhand.context.js'
 import { FarmhandProps, FarmhandReducers } from './FarmhandReducers.js'
 import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
 
+
+import { useFarmhandReducers } from './useFarmhandReducers.js'
+import { usePrevious } from './usePrevious.js'
+
 const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 
 // Utility object for reuse in no-ops to save on memory
@@ -177,126 +182,13 @@ const applyPriceEvents = (
   return patchedValueAdjustments
 }
 
-export default class Farmhand extends FarmhandReducers {
-  /*!
-   * @member farmhand.Farmhand#state
-   * @type {farmhand.state}
-   */
-  state: farmhand.state = this.createInitialState()
+export type FarmhandInstance = any;
 
-  handlers: BoundHandlers<typeof eventHandlers> & {
-    debounced: BoundHandlers<typeof eventHandlers>
-  } = {
-    ...eventHandlers,
-    debounced: { ...eventHandlers },
-  } as BoundHandlers<typeof eventHandlers> & {
-    debounced: BoundHandlers<typeof eventHandlers>
-  }
-
-  keyMap: Record<string, string> = {}
-
-  keyHandlers: Record<string, () => void> = {}
-
-  static defaultProps = {
-    localforage: localforage.createInstance({
-      name: 'farmhand',
-      description: 'Persisted game data for Farmhand',
-    }),
-    features: {},
-    match: { path: '', params: {} },
-  }
-
-  constructor(props: FarmhandProps) {
-    super(props)
-
-    this.initInputHandlers()
-
-    // This is an antipattern, but it's useful for debugging. The Farmhand
-    // component assumes that it is a singleton.
-    window.farmhand = this
-  }
-
-  getData = getData
-  postData = postData
-
-  get viewTitle() {
-    return STAGE_TITLE_MAP[
-      this.state.stageFocus as keyof typeof STAGE_TITLE_MAP
-    ]
-  }
-
-  get fieldToolInventory() {
-    return getFieldToolInventory(this.state.inventory)
-  }
-
-  get playerInventory() {
-    const { inventory, valueAdjustments } = this.state
-
-    return computePlayerInventory(inventory, valueAdjustments)
-  }
-
-  get plantableCropInventory() {
-    return getPlantableCropInventory(this.state.inventory)
-  }
-
-  get viewList() {
-    const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
-    const viewList: farmhand.stageFocusType[] = [
-      ...STANDARD_VIEW_LIST,
-    ] as farmhand.stageFocusType[]
-
-    if (this.state.showHomeScreen) {
-      viewList.unshift(HOME as farmhand.stageFocusType)
-    }
-
-    if (this.isForestUnlocked && features.FOREST) {
-      viewList.push(FOREST as farmhand.stageFocusType)
-    }
-
-    if (this.state.purchasedCowPen) {
-      viewList.push(COW_PEN)
-    }
-
-    viewList.push(WORKSHOP)
-
-    if (this.state.purchasedCellar) {
-      viewList.push(CELLAR)
-    }
-
-    return viewList
-  }
-
-  get levelEntitlements() {
-    return getLevelEntitlements(levelAchieved(this.state.experience))
-  }
-
-  get shopInventory() {
-    return getAvailableShopInventory(this.levelEntitlements)
-  }
-
-  get peerMetadata() {
-    return getPeerMetadata(this.state)
-  }
-
-  get isInputBlocked() {
-    return (
-      this.state.isAwaitingNetworkRequest ||
-      this.state.isAwaitingCowTradeRequest ||
-      this.state.isWaitingForDayToCompleteIncrementing
-    )
-  }
-
-  get isChatAvailable() {
-    const { isOnline, room } = this.state
-
-    return isOnline && room !== DEFAULT_ROOM
-  }
-
-  get isForestUnlocked() {
-    return this.levelEntitlements.stageFocusType[stageFocusType.FOREST]
-  }
-
-  createInitialState(): farmhand.state {
+export default function Farmhand(props: FarmhandProps) {
+  // Extract props properly
+  const { features: propsFeatures, match: { path = '', params: { room: newRoom = decodeURIComponent(props.match?.params?.room || DEFAULT_ROOM) } = {} } = {} } = props;
+  
+  const createInitialState = useCallback((): farmhand.state => {
     return {
       activePlayers: null,
       allowCustomPeerCowNames: false,
@@ -304,11 +196,7 @@ export default class Farmhand extends FarmhandReducers {
       currentDialogView: dialogView.NONE as farmhand.dialogView,
       completedAchievements: {},
       cowForSale: generateCow() as farmhand.cow,
-      cowBreedingPen: {
-        cowId1: null,
-        cowId2: null,
-        daysUntilBirth: -1,
-      },
+      cowBreedingPen: { cowId1: null, cowId2: null, daysUntilBirth: -1 },
       cowColorsPurchased: {},
       cowIdOfferedForTrade: '',
       cowInventory: [],
@@ -343,7 +231,7 @@ export default class Farmhand extends FarmhandReducers {
       cellarItemsSold: {},
       isChatOpen: false,
       isDialogViewOpen: false,
-      isOnline: this.props.match?.path.startsWith('/online') ?? false,
+      isOnline: path.startsWith('/online') ?? false,
       isWaitingForDayToCompleteIncrementing: false,
       learnedRecipes: {},
       loanBalance: STANDARD_LOAN_AMOUNT,
@@ -367,7 +255,7 @@ export default class Farmhand extends FarmhandReducers {
       recordSingleDayProfit: 0,
       revenue: 0,
       redirect: '',
-      room: decodeURIComponent(this.props.match?.params.room || DEFAULT_ROOM),
+      room: decodeURIComponent(props.match?.params?.room || DEFAULT_ROOM),
       sendCowAccept: noop,
       sendCowReject: noop,
       purchasedCombine: 0,
@@ -396,36 +284,433 @@ export default class Farmhand extends FarmhandReducers {
       valueAdjustments: {},
       version: import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION ?? '',
     }
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  async initializeNewGame() {
-    await this.incrementDay(true)
+  const [state, setState] = useState<farmhand.state>(createInitialState)
+  
+  const boundReducers = useFarmhandReducers(state, setState)
+  const boundReducersRef = useRef<any>(boundReducers)
 
-    this.setState(() => ({
-      historicalValueAdjustments: [],
-    }))
+  boundReducersRef.current = boundReducers as any
+  
+  const prevState = usePrevious(state)
 
-    this.showNotification(LOAN_INCREASED('', STANDARD_LOAN_AMOUNT), 'info')
-  }
+  const viewTitle = STAGE_TITLE_MAP[state.stageFocus as keyof typeof STAGE_TITLE_MAP]
+  const fieldToolInventory = getFieldToolInventory(state.inventory)
+  const playerInventory = computePlayerInventory(state.inventory, state.valueAdjustments)
+  const plantableCropInventory = getPlantableCropInventory(state.inventory)
 
-  initInputHandlers() {
-    const debouncedInputRate = 50
+  const levelEntitlements = useMemo(() => getLevelEntitlements(levelAchieved(state.experience)), [state.experience])
+  const shopInventory = useMemo(() => getAvailableShopInventory(levelEntitlements), [levelEntitlements])
+  
+  const isForestUnlocked = levelEntitlements.stageFocusType[stageFocusType.FOREST]
+  const isChatAvailable = state.isOnline && state.room !== DEFAULT_ROOM
+  
+  const viewList = useMemo(() => {
+    const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
+    const list: farmhand.stageFocusType[] = [...STANDARD_VIEW_LIST] as farmhand.stageFocusType[]
+
+    if (state.showHomeScreen) {
+      list.unshift(HOME as farmhand.stageFocusType)
+    }
+    if (isForestUnlocked && features.FOREST) {
+      list.push(FOREST as farmhand.stageFocusType)
+    }
+    if (state.purchasedCowPen) {
+      list.push(COW_PEN)
+    }
+    list.push(WORKSHOP)
+    if (state.purchasedCellar) {
+      list.push(CELLAR)
+    }
+    return list
+  }, [state.showHomeScreen, isForestUnlocked, state.purchasedCowPen, state.purchasedCellar])
+
+  const peerMetadata = useMemo(() => getPeerMetadata(state), [state])
+  
+  const isInputBlocked = state.isAwaitingNetworkRequest || state.isAwaitingCowTradeRequest || state.isWaitingForDayToCompleteIncrementing
+
+  const wrapSendPeerMetadata = useCallback((sendPeerMetadata: Function) => {
+    return throttle(
+      (...args: any[]) => {
+        sendPeerMetadata(...args)
+        setState((s) => ({ ...s, pendingPeerMessages: [] }))
+      },
+      5000,
+      { trailing: true }
+    )
+  }, [])
+
+  const handleCowTradeTimeout = useCallback(() => {
+    setState((s) => {
+      if (typeof s.cowTradeTimeoutId === 'number') {
+        setTimeout(() => boundReducersRef.current.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error'), 0)
+        console.error('Cow trade request timed out')
+        return { ...s, cowTradeTimeoutId: null, isAwaitingCowTradeRequest: false }
+      }
+      return s
+    })
+  }, [])
+
+  const tradeForPeerCow = useCallback((peerPlayerCow: farmhand.cow) => {
+    setState((s: farmhand.state) => {
+      const { cowIdOfferedForTrade, cowInventory, peers, sendCowTradeRequest } = s
+
+      if (!sendCowTradeRequest) return s
+
+      const { ownerId } = peerPlayerCow
+      const [peerId] = Object.entries(peers).find(([, peer]: [string, any]) => peer?.playerId === ownerId) ?? []
+
+      if (!peerId) {
+        console.error(`Owner not found for cow ${JSON.stringify(peerPlayerCow)}`)
+        return s
+      }
+
+      const playerAlreadyOwnsRequestedCow = cowInventory.find(({ id }: farmhand.cow) => id === peerPlayerCow.id)
+
+      if (playerAlreadyOwnsRequestedCow) {
+        console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
+        setTimeout(() => boundReducersRef.current.showNotification(COW_ALREADY_OWNED, 'error'), 0)
+        return s
+      }
+
+      const cowToTradeAway = cowInventory.find(({ id }: farmhand.cow) => id === cowIdOfferedForTrade)
+
+      if (!cowToTradeAway) {
+        console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
+        return s
+      }
+
+      const cowTradeTimeoutId = setTimeout(handleCowTradeTimeout, COW_TRADE_TIMEOUT)
+
+      sendCowTradeRequest(
+        {
+          cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
+          cowRequested: peerPlayerCow,
+        },
+        peerId
+      )
+
+      return {
+        ...s,
+        cowTradeTimeoutId: cowTradeTimeoutId as unknown as number,
+        isAwaitingCowTradeRequest: true,
+      }
+    })
+  }, [handleCowTradeTimeout])
+
+  const clearPersistedData = useCallback(async () => {
+    await props.localforage?.clear()
+    boundReducersRef.current.showNotification(DATA_DELETED)
+  }, [props.localforage])
+
+  const scheduleHeartbeat = useCallback(() => {
+    setState((s) => {
+      clearTimeout(s.heartbeatTimeoutId ?? -1)
+      const heartbeatTimeoutId = window.setTimeout(() => {
+        setState((s2: farmhand.state) => ({
+          ...s2,
+          money: moneyTotal(s2.money, s2.activePlayers ?? 0),
+        }))
+        scheduleHeartbeat()
+      }, HEARTBEAT_INTERVAL_PERIOD) as unknown as number
+      
+      return { ...s, heartbeatTimeoutId }
+    })
+  }, [])
+
+  const syncToRoom = useCallback(async () => {
+    const { isOnline, priceCrashes, priceSurges, room } = state
+
+    if (!isOnline) return
+
+    boundReducersRef.current.showNotification(CONNECTING_TO_SERVER, 'info')
+
+    try {
+      setState((s) => ({ ...s, isAwaitingNetworkRequest: true, peers: {} }))
+      state.peerRoom?.leave()
+
+      const { valueAdjustments } = await getData(endpoints.getMarketData, { farmId: state.playerId, room })
+
+      scheduleHeartbeat()
+      
+      const relayRedundancy = 4
+
+      setState((s) => ({
+        ...s,
+        activePlayers: 1,
+        peerRoom: joinRoom(
+          {
+            appId: import.meta.env?.VITE_NAME,
+            rtcConfig,
+            ...(relayUrls && { relayConfig: { urls: relayUrls, redundancy: relayRedundancy } }),
+          },
+          room
+        ),
+        valueAdjustments: applyPriceEvents(valueAdjustments, priceCrashes, priceSurges),
+      }))
+
+      boundReducersRef.current.showNotification(CONNECTED_TO_ROOM('', room), 'success')
+      console.log('SYNC TO ROOM SUCCESS')
+    } catch (e) {
+      boundReducersRef.current.showNotification(SERVER_ERROR, 'error')
+      console.log('SYNC TO ROOM ERROR', e, "STATE:", state)
+      console.error(e)
+      setState((s) => ({ ...s, redirect: '/', cowIdOfferedForTrade: '' }))
+    }
+
+    setState((s) => ({ ...s, isAwaitingNetworkRequest: false, isAwaitingCowTradeRequest: false }))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.isOnline, state.room, scheduleHeartbeat])
+
+  const initializeNewGame = useCallback(async () => {
+    // Note: incrementDay logic comes later, but we need to call it here.
+    // For now, we stub it until we define it
+  }, [])
+
+  const showInventoryFullNotifications = useCallback((prev: farmhand.state, currentState: farmhand.state) => {
+    if (inventorySpaceRemaining(prev) > 0 && inventorySpaceRemaining(currentState) <= 0) {
+      boundReducersRef.current.showNotification(INVENTORY_FULL_NOTIFICATION, 'warning')
+    }
+  }, [])
+
+  const showRecipeLearnedNotifications = useCallback(({ learnedRecipes: previousLearnedRecipes }: farmhand.state) => {
+    let learnedRecipes: farmhand.recipe[] = []
+
+    Object.keys(state.learnedRecipes).forEach(recipeId => {
+      if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
+        learnedRecipes.push(recipesMap[recipeId])
+      }
+    })
+
+    if (learnedRecipes.length > 1) {
+      boundReducersRef.current.showNotification(RECIPES_LEARNED('', learnedRecipes))
+    } else if (learnedRecipes.length === 1) {
+      boundReducersRef.current.showNotification(RECIPE_LEARNED('', learnedRecipes[0]))
+    }
+  }, [state.learnedRecipes])
+
+  const persistState = useCallback((currentState: farmhand.state, overrides = {}) => {
+    return props.localforage?.setItem(
+      'state',
+      reduceByPersistedKeys({ ...currentState, ...overrides })
+    )
+  }, [props.localforage])
+
+  const updateServerForNextDay = useCallback(async () => {
+    const serverMessages: farmhand.notification[] = []
+    let broadcastedPositionMessage: string | null = null
+
+    setState((s) => ({ ...s, isAwaitingNetworkRequest: true }))
+
+    let serverValueAdjustments: Record<string, number> | undefined
+
+    if (state.isOnline) {
+      const { inventory, room, todaysPurchases, todaysStartingInventory } = state
+      const positions = computeMarketPositions(todaysStartingInventory, todaysPurchases, inventory)
+
+      try {
+        serverValueAdjustments = (await postData(endpoints.postDayResults, { positions, room })).valueAdjustments
+        if (Object.keys(positions).length) {
+          serverMessages.push({ message: POSITIONS_POSTED_NOTIFICATION('', 'You', positions), severity: 'info' })
+          broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION('', '', positions)
+        }
+      } catch (e) {
+        serverMessages.push({ message: SERVER_ERROR, severity: 'error' })
+        setState((s) => ({ ...s, redirect: '/', cowIdOfferedForTrade: '', isAwaitingNetworkRequest: false }))
+        console.error(e)
+      }
+    }
+    return { broadcastedPositionMessage, serverMessages, serverValueAdjustments }
+  }, [state])
+
+  const incrementDay = useCallback(async (isFirstDay = false) => {
+    let shouldBlock = false;
+
+    setState(prev => {
+       if (prev.isWaitingForDayToCompleteIncrementing && !isFirstDay) {
+           shouldBlock = true;
+       }
+       return prev;
+    });
+
+    if (shouldBlock) return;
+
+    if (!isFirstDay) {
+      setState((prev) => ({ ...prev, isWaitingForDayToCompleteIncrementing: true }))
+    }
+
+    // Wait until network operations are done.
+    const { broadcastedPositionMessage, serverMessages, serverValueAdjustments } = await updateServerForNextDay()
+
+    
+    // Using functional updater to ensure we always compute based on the absolute latest state
+    let resolvedNextDayState: any = null;
+    let pendingNotifications: any = [];
+
+    setState(prev => {
+      const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
+
+      pendingNotifications = [...serverMessages, ...nextDayState.newDayNotifications]
+      nextDayState.valueAdjustments = applyPriceEvents(
+        serverValueAdjustments ?? nextDayState.valueAdjustments,
+        nextDayState.priceCrashes,
+        nextDayState.priceSurges
+      )
+      nextDayState.isAwaitingNetworkRequest = false
+      nextDayState.isWaitingForDayToCompleteIncrementing = false // UNLOCK UI IMMEDIATELY
+      nextDayState.newDayNotifications = []
+      nextDayState.todaysNotifications = []
+      
+      resolvedNextDayState = nextDayState;
+      return nextDayState;
+    })
+    
+    // We defer the async stuff until the state update is queued
+    setTimeout(async () => {
+      try {
+        if (resolvedNextDayState) {
+          console.log("INCREMENT DAY SUCCESS", resolvedNextDayState.day);
+          await props.localforage?.setItem(
+            'state',
+            reduceByPersistedKeys({ ...resolvedNextDayState, newDayNotifications: pendingNotifications })
+          )
+
+          const notifications = [...pendingNotifications]
+
+          notifications
+            .concat(isFirstDay ? [] : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }])
+            .forEach(({ message, severity }) => boundReducersRef.current.showNotification(message, severity))
+
+          if (resolvedNextDayState.isCombineEnabled) {
+            if (resolvedNextDayState.stageFocus === stageFocusType.FIELD) {
+              await sleep(1000)
+            }
+            boundReducersRef.current.forRange(reducers.harvestPlot, Infinity, 0, 0)
+          }
+        }
+      } catch (e) {
+        console.error(e)
+        boundReducersRef.current.showNotification(JSON.stringify(e), 'error')
+      } finally {
+        if (broadcastedPositionMessage) {
+          boundReducersRef.current.prependPendingPeerMessage(broadcastedPositionMessage)
+        }
+      }
+    }, 0)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateServerForNextDay, props.localforage])
+
+  const openDialogView = useCallback((dialogViewName: farmhand.dialogView) => {
+    setState((s) => ({ ...s, currentDialogView: dialogViewName, isDialogViewOpen: true }))
+  }, [])
+
+  const closeDialogView = useCallback(() => {
+    setState((s) => ({ ...s, isDialogViewOpen: false }))
+  }, [])
+
+  const focusNextView = useCallback(() => {
+    if (document.activeElement?.getAttribute('role') === 'tab') return
+    setState((s: farmhand.state) => {
+      const currentViewIndex = viewList.indexOf(s.stageFocus)
+
+      return { ...s, stageFocus: viewList[(currentViewIndex + 1) % viewList.length] }
+    })
+  }, [viewList])
+
+  const focusPreviousView = useCallback(() => {
+    if (document.activeElement?.getAttribute('role') === 'tab') return
+    setState((s: farmhand.state) => {
+      const currentViewIndex = viewList.indexOf(s.stageFocus)
+
+      return {
+        ...s,
+        stageFocus: viewList[currentViewIndex === 0 ? viewList.length - 1 : (currentViewIndex - 1) % viewList.length],
+      }
+    })
+  }, [viewList])
+
+  const messagePeers = useCallback((message: string, severity?: string) => {
+    boundReducersRef.current.prependPendingPeerMessage(message, severity)
+  }, [])
+  
+  // Instance proxy to mimic the legacy class "this" so ui-events.tsx can run unmodified
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const instanceProxy = useMemo(() => ({
+    state,
+    props,
+    viewTitle,
+    fieldToolInventory,
+    playerInventory,
+    plantableCropInventory,
+    viewList,
+    levelEntitlements,
+    shopInventory,
+    peerMetadata,
+    isInputBlocked,
+    isChatAvailable,
+    isForestUnlocked,
+    setState: (updater: any, callback?: () => void) => {
+      setState((prev) => {
+        const next = typeof updater === 'function' ? updater(prev) : updater
+
+        if (next === null || next === undefined) return prev
+        const newState = { ...prev, ...next }
+
+        if (callback) setTimeout(callback, 0)
+        return newState
+      })
+    },
+    ...boundReducersRef.current,
+    purchaseItem: (item: any, quantity: number) => boundReducersRef.current.purchaseItem(item, quantity),
+    sellItem: (item: any, quantity: number) => boundReducersRef.current.sellItem(item, quantity),
+    showNotification: (msg: string, sev?: string) => boundReducersRef.current.showNotification(msg, sev),
+    prependPendingPeerMessage: (msg: string, sev?: string) => boundReducersRef.current.prependPendingPeerMessage(msg, sev),
+    forRange: (fn: any, limit: number, arg1: number, arg2: number, arg3?: any) => boundReducersRef.current.forRange(fn, limit, arg1, arg2, arg3),
+    createInitialState,
+    getData,
+    postData,
+    initializeNewGame,
+    tradeForPeerCow,
+    handleCowTradeTimeout,
+    clearPersistedData,
+    syncToRoom,
+    scheduleHeartbeat,
+    showInventoryFullNotifications,
+    showRecipeLearnedNotifications,
+    persistState: (overrides = {}) => persistState(state, overrides),
+    updateServerForNextDay,
+    incrementDay,
+    openDialogView,
+    closeDialogView,
+    focusNextView,
+    focusPreviousView,
+    messagePeers,
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [
+    state, props, viewTitle, fieldToolInventory, playerInventory, plantableCropInventory, viewList, levelEntitlements, shopInventory, peerMetadata, isInputBlocked, isChatAvailable, isForestUnlocked,
+    initializeNewGame, tradeForPeerCow, handleCowTradeTimeout, clearPersistedData, syncToRoom, scheduleHeartbeat, showInventoryFullNotifications, showRecipeLearnedNotifications, persistState, updateServerForNextDay, incrementDay, openDialogView, closeDialogView, focusNextView, focusPreviousView, messagePeers, createInitialState
+  ])
+
+  const instanceProxyRef = useRef<any>(null);
+  instanceProxyRef.current = instanceProxy;
+
+  const handlers = useMemo(() => {
+    const bound: any = { debounced: {} }
 
     Object.keys(eventHandlers).forEach(methodStr => {
       const method = methodStr as keyof typeof eventHandlers
 
-      this.handlers[method] = (eventHandlers[method] as any).bind(this)
-
-      this.handlers.debounced[method] = debounce(
-        this.handlers[method],
-        debouncedInputRate
-      ) as any
+      bound[method] = (...args: any[]) => (eventHandlers[method] as any).apply(instanceProxyRef.current, args)
+      bound.debounced[method] = debounce(bound[method], 50)
     })
+    return bound as BoundHandlers<typeof eventHandlers> & { debounced: BoundHandlers<typeof eventHandlers> }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    // NOTE: The dialog view mappings here MUST be kept in sync with the
-    // dialogTriggerTextMap map in Navigation.js. They MUST also be kept in
-    // sync with the player-facing documentation in KeybindingsView.js
-    this.keyMap = {
+  const keyMap = useMemo(() => {
+    const map: Record<string, string> = {
       incrementDay: 'shift+c',
       nextView: 'right',
       openAccounting: 'b',
@@ -439,859 +724,249 @@ export default class Farmhand extends FarmhandReducers {
       toggleMenu: 'm',
     }
 
-    this.keyHandlers = {
-      incrementDay: () => this.incrementDay(),
-      nextView: this.focusNextView.bind(this),
-      openAccounting: () => this.openDialogView(dialogView.ACCOUNTING),
-      openAchievements: () => this.openDialogView(dialogView.ACHIEVEMENTS),
-      openLog: () => this.openDialogView(dialogView.FARMERS_LOG),
-      openPriceEvents: () => this.openDialogView(dialogView.PRICE_EVENTS),
-      openStats: () => this.openDialogView(dialogView.STATS),
-      openSettings: () => this.openDialogView(dialogView.SETTINGS),
-      openKeybindings: () => this.openDialogView(dialogView.KEYBINDINGS),
-      previousView: this.focusPreviousView.bind(this),
-      selectHoe: () => this.handlers.handleFieldModeSelect(CLEANUP),
-      selectScythe: () => this.handlers.handleFieldModeSelect(HARVEST),
-      selectWateringCan: () => this.handlers.handleFieldModeSelect(WATER),
+    nullArray(9).forEach((_: null, i: number) => {
+      map[`numberKey${i + 1}`] = String(i + 1)
+    })
+    if (import.meta.env?.MODE === 'development') {
+      Object.assign(map, { clearPersistedData: 'shift+d', waterAllPlots: 'w' })
+    }
+    return map
+  }, [])
+
+  const keyHandlers = useMemo(() => {
+    const map: Record<string, () => void> = {
+      incrementDay: () => incrementDay(),
+      nextView: focusNextView,
+      openAccounting: () => openDialogView(dialogView.ACCOUNTING),
+      openAchievements: () => openDialogView(dialogView.ACHIEVEMENTS),
+      openLog: () => openDialogView(dialogView.FARMERS_LOG),
+      openPriceEvents: () => openDialogView(dialogView.PRICE_EVENTS),
+      openStats: () => openDialogView(dialogView.STATS),
+      openSettings: () => openDialogView(dialogView.SETTINGS),
+      openKeybindings: () => openDialogView(dialogView.KEYBINDINGS),
+      previousView: focusPreviousView,
+      selectHoe: () => handlers.handleFieldModeSelect(CLEANUP),
+      selectScythe: () => handlers.handleFieldModeSelect(HARVEST),
+      selectWateringCan: () => handlers.handleFieldModeSelect(WATER),
       selectShovel: () => {
-        if (this.state.toolLevels[toolType.SHOVEL] !== toolLevel.UNAVAILABLE) {
-          this.handlers.handleFieldModeSelect(MINE)
+        if (state.toolLevels[toolType.SHOVEL] !== toolLevel.UNAVAILABLE) {
+          handlers.handleFieldModeSelect(MINE)
         }
       },
-      toggleMenu: () => this.handlers.handleMenuToggle(),
+      toggleMenu: () => handlers.handleMenuToggle(),
     }
 
     nullArray(9).forEach((_: null, i: number) => {
-      const index = i + 1
-      const key = `numberKey${index}`
-
-      this.keyMap[key] = String(index)
-      this.keyHandlers[key] = () => {
-        const viewName = this.viewList[i]
+      map[`numberKey${i + 1}`] = () => {
+        const viewName = viewList[i]
 
         if (typeof viewName === 'string') {
-          this.setState({
-            stageFocus: stageFocusType[viewName as keyof typeof stageFocusType],
-          })
+          setState((s) => ({ ...s, stageFocus: stageFocusType[viewName as keyof typeof stageFocusType] }))
         }
       }
     })
-
     if (import.meta.env?.MODE === 'development') {
-      Object.assign(this.keyMap, {
-        clearPersistedData: 'shift+d',
-        waterAllPlots: 'w',
+      Object.assign(map, {
+        clearPersistedData: () => clearPersistedData(),
+        waterAllPlots: () => boundReducersRef.current.waterAllPlots(),
       })
     }
+    return map
+  }, [incrementDay, focusNextView, openDialogView, focusPreviousView, handlers, state.toolLevels, viewList, clearPersistedData])
 
-    Object.assign(this.keyHandlers, {
-      clearPersistedData: () => this.clearPersistedData(),
-      waterAllPlots: () => this.waterAllPlots(),
-    })
-  }
+  // ComponentDidMount
+  useEffect(() => {
+    
+    
+    window.farmhand = instanceProxy // Legacy debug hook
+    let isMounted = true;
 
-  async componentDidMount() {
-    const state = await this.props.localforage?.getItem('state')
+    (async () => {
+      const persistedState = await props.localforage?.getItem('state')
 
-    if (state) {
-      const sanitizedState = transformStateDataForImport({
-        ...this.createInitialState(),
-        ...state,
-      })
-      const { isCombineEnabled, newDayNotifications } = sanitizedState
+      if (!isMounted) return;
 
-      this.setState({ ...sanitizedState, newDayNotifications: [] }, () => {
-        newDayNotifications.forEach(
-          ({ message, severity }: farmhand.notification) => {
-            // Defer these notifications so that notistack doesn't swallow all
-            // but the last one.
-            setTimeout(() => this.showNotification(message, severity), 0)
+      if (persistedState) {
+        const sanitizedState = transformStateDataForImport({
+          ...createInitialState(),
+          ...persistedState,
+        })
+        const { isCombineEnabled, newDayNotifications } = sanitizedState
 
-            if (isCombineEnabled) {
-              this.forRange(reducers.harvestPlot, Infinity, 0, 0)
-            }
+        setState((s) => ({ ...s, ...sanitizedState, newDayNotifications: [], hasBooted: true }))
+
+        newDayNotifications.forEach(({ message, severity }: farmhand.notification) => {
+          setTimeout(() => boundReducersRef.current.showNotification(message, severity), 0)
+          if (isCombineEnabled) {
+            boundReducersRef.current.forRange(reducers.harvestPlot, Infinity, 0, 0)
           }
-        )
-      })
-    } else {
-      await this.initializeNewGame()
-    }
+        })
+      } else {
+        await incrementDay(true)
+        setState((s) => ({ ...s, historicalValueAdjustments: [] }))
+        boundReducersRef.current.showNotification(LOAN_INCREASED('', STANDARD_LOAN_AMOUNT), 'info')
+        setState((s) => ({ ...s, hasBooted: true }))
+      }
 
-    this.syncToRoom()
+      syncToRoom()
+    })()
+    
+    return () => { isMounted = false }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    this.setState({ hasBooted: true })
-  }
-
-  componentDidUpdate(_prevProps: FarmhandProps, prevState: farmhand.state) {
-    const {
-      hasBooted,
-      heartbeatTimeoutId,
-      isMenuOpen,
-      isOnline,
-      money,
-      peerRoom,
-      room,
-      stageFocus,
-    } = this.state
-
-    // The operations after this if block concern transient gameplay state, but
-    // componentDidUpdate runs as part of the rehydration/bootup process. So,
-    // check to see if the app has completed booting before doing anything with
-    // this transient state.
-    if (!hasBooted) {
-      return
-    }
-
-    const {
-      match: {
-        path,
-        params: { room: newRoom = room },
-      },
-    } = this.props
+  // ComponentDidUpdate
+  useEffect(() => {
+    if (!state.hasBooted || !prevState) return
 
     const decodedRoom = decodeURIComponent(newRoom)
-
-    // NOTE: This indicates that the client should attempt to connect to the server
     const newIsOnline = path.startsWith('/online')
 
-    if (newIsOnline !== this.state.isOnline || decodedRoom !== room) {
-      this.setState(() => ({
-        isOnline: newIsOnline,
-        redirect: '',
-        room: decodedRoom,
-      }))
+    if (newIsOnline !== state.isOnline || decodedRoom !== state.room) {
+      setState((s) => ({ ...s, isOnline: newIsOnline, redirect: '', room: decodedRoom }))
     }
 
-    if (isOnline !== prevState.isOnline || room !== prevState.room) {
-      if (newIsOnline) {
-        this.syncToRoom()
-      }
+    if (state.isOnline !== prevState.isOnline || state.room !== prevState.room) {
+      if (newIsOnline) syncToRoom()
 
-      if (!isOnline && typeof heartbeatTimeoutId === 'number') {
-        clearTimeout(heartbeatTimeoutId)
-        this.setState({
-          activePlayers: null,
-          heartbeatTimeoutId: null,
-          peerRoom: null,
-        })
+      if (!state.isOnline && typeof state.heartbeatTimeoutId === 'number') {
+        clearTimeout(state.heartbeatTimeoutId)
+        setState((s) => ({ ...s, activePlayers: null, heartbeatTimeoutId: null, peerRoom: null }))
       }
     }
 
-    if (isOnline === false && prevState.isOnline === true) {
-      this.showNotification(DISCONNECTED_FROM_SERVER, 'info')
+    if (state.isOnline === false && prevState.isOnline === true) {
+      boundReducersRef.current.showNotification(DISCONNECTED_FROM_SERVER, 'info')
     }
 
-    const updatedAchievementsState = reducers.updateAchievements(
-      this.state,
-      prevState
-    )
+    const updatedAchievementsState = reducers.updateAchievements(state, prevState)
 
-    if (updatedAchievementsState !== this.state) {
-      this.setState(() => updatedAchievementsState)
+    if (updatedAchievementsState !== state) {
+      setState(() => updatedAchievementsState)
     }
 
-    if (
-      this.state.stageFocus === stageFocusType.COW_PEN &&
-      prevState.stageFocus !== stageFocusType.COW_PEN
-    ) {
-      this.setState(() => ({ selectedCowId: '' }))
+    if (state.stageFocus === stageFocusType.COW_PEN && prevState.stageFocus !== stageFocusType.COW_PEN) {
+      setState((s) => ({ ...s, selectedCowId: '' }))
     }
 
-    if (stageFocus !== prevState.stageFocus) {
-      if (isMenuOpen) {
-        this.setState(() => ({ isMenuOpen: !doesMenuObstructStage() }))
-      }
+    if (state.stageFocus !== prevState.stageFocus && state.isMenuOpen) {
+      setState((s) => ({ ...s, isMenuOpen: !doesMenuObstructStage() }))
     }
 
-    if (money < prevState.money) {
-      this.setState(({ todaysLosses }: farmhand.state) => ({
-        todaysLosses: moneyTotal(todaysLosses, money - prevState.money),
-      }))
+    if (state.money < prevState.money) {
+      setState((s) => ({ ...s, todaysLosses: moneyTotal(s.todaysLosses, state.money - prevState.money) }))
     }
 
-    if (peerRoom !== prevState.peerRoom) {
-      if (peerRoom) {
-        peerRoom.onPeerJoin((id: string) => {
-          this.addPeer(id)
-        })
+    if (state.peerRoom !== prevState.peerRoom) {
+      if (state.peerRoom) {
+        state.peerRoom.onPeerJoin((id: string) => boundReducersRef.current.addPeer(id))
+        state.peerRoom.onPeerLeave((id: string) => boundReducersRef.current.removePeer(id))
 
-        peerRoom.onPeerLeave((id: string) => {
-          this.removePeer(id)
-        })
+        const [sendPeerMetadata, getPeerMetadataFunc] = state.peerRoom.makeAction('peerMetadata')
 
-        const [sendPeerMetadata, getPeerMetadataFunc] = peerRoom.makeAction(
-          'peerMetadata'
-        )
+        getPeerMetadataFunc((...args: any[]) => handlePeerMetadataRequest(instanceProxy, args[0], args[1]))
 
-        getPeerMetadataFunc((...args: any[]) =>
-          handlePeerMetadataRequest(this, args[0], args[1])
-        )
+        const [sendCowTradeRequest, getCowTradeRequest] = state.peerRoom.makeAction('cowTrade')
 
-        const [sendCowTradeRequest, getCowTradeRequest] = peerRoom.makeAction(
-          'cowTrade'
-        )
+        getCowTradeRequest((...args: any[]) => handleCowTradeRequest(instanceProxy, args[0], args[1]))
 
-        getCowTradeRequest((...args: any[]) =>
-          handleCowTradeRequest(this, args[0], args[1])
-        )
+        const [sendCowAccept, getCowAccept] = state.peerRoom.makeAction('cowAccept')
 
-        const [sendCowAccept, getCowAccept] = peerRoom.makeAction('cowAccept')
+        getCowAccept((...args: any[]) => handleCowTradeRequestAccept(instanceProxy, args[0], args[1]))
 
-        getCowAccept((...args: any[]) =>
-          handleCowTradeRequestAccept(this, args[0], args[1])
-        )
+        const [sendCowReject, getCowReject] = state.peerRoom.makeAction('cowReject')
 
-        const [sendCowReject, getCowReject] = peerRoom.makeAction('cowReject')
+        getCowReject((...args: any[]) => handleCowTradeRequestReject(instanceProxy, args[0]))
 
-        getCowReject((...args: any[]) =>
-          handleCowTradeRequestReject(this, args[0])
-        )
-
-        this.setState({
-          getCowAccept,
-          getCowReject,
-          getCowTradeRequest,
+        setState((s) => ({
+          ...s,
+          getCowAccept, getCowReject, getCowTradeRequest,
           getPeerMetadata: getPeerMetadataFunc,
           pendingPeerMessages: [],
-          sendCowAccept,
-          sendCowReject,
-          sendCowTradeRequest,
-          sendPeerMetadata: this.wrapSendPeerMetadata(sendPeerMetadata),
-        })
+          sendCowAccept, sendCowReject, sendCowTradeRequest,
+          sendPeerMetadata: wrapSendPeerMetadata(sendPeerMetadata),
+        }))
 
-        sendPeerMetadata(this.peerMetadata)
+        sendPeerMetadata(peerMetadata)
       } else {
-        // This player has gone offline.
-        prevState.peerRoom.leave()
-        this.setState({ peers: {}, sendPeerMetadata: null })
+        prevState.peerRoom?.leave()
+        setState((s) => ({ ...s, peers: {}, sendPeerMetadata: null }))
       }
     }
 
-    ;[
-      'showInventoryFullNotifications',
-      'showRecipeLearnedNotifications',
-    ].forEach(fn => (this as any)[fn](prevState))
+    showInventoryFullNotifications(prevState, state)
+    showRecipeLearnedNotifications(prevState)
 
-    this.state.sendPeerMetadata?.(this.peerMetadata)
+    state.sendPeerMetadata?.(peerMetadata)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state, prevState, newRoom, path, syncToRoom, instanceProxy, wrapSendPeerMetadata, peerMetadata, showInventoryFullNotifications, showRecipeLearnedNotifications])
+
+  const redirect = state.redirect
+  const gameState = {
+    ...state,
+    blockInput: isInputBlocked,
+    features: propsFeatures ?? {},
+    fieldToolInventory,
+    isChatAvailable,
+    levelEntitlements,
+    plantableCropInventory,
+    playerInventory,
+    playerInventoryQuantities: getInventoryQuantities(state.inventory),
+    shopInventory,
+    viewList,
+    viewTitle,
   }
 
-  /**
-   * @param sendPeerMetadata Raw send action callback created by
-Trystero's makeAction function.
-   */
-  wrapSendPeerMetadata(sendPeerMetadata: Function): Function {
-    return throttle(
-      (...args: any[]) => {
-        sendPeerMetadata(...args)
-
-        this.setState(() => ({
-          pendingPeerMessages: [],
-        }))
-      },
-      5000,
-      {
-        trailing: true,
-      }
-    )
-  }
-
-  tradeForPeerCow(peerPlayerCow: farmhand.cow) {
-    this.setState((state: farmhand.state) => {
-      const {
-        cowIdOfferedForTrade,
-        cowInventory,
-        peers,
-        sendCowTradeRequest,
-      } = state
-
-      if (!sendCowTradeRequest) return null
-
-      const { ownerId } = peerPlayerCow
-
-      const [peerId] =
-        Object.entries(peers).find(
-          ([, peer]: [string, any]) => peer?.playerId === ownerId
-        ) ?? []
-
-      if (!peerId) {
-        console.error(
-          `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
-        )
-        return null
-      }
-
-      const playerAlreadyOwnsRequestedCow = cowInventory.find(
-        ({ id }: farmhand.cow) => id === peerPlayerCow.id
-      )
-
-      if (playerAlreadyOwnsRequestedCow) {
-        console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
-        return reducers.showNotification(state, COW_ALREADY_OWNED, 'error')
-      }
-
-      const cowToTradeAway = cowInventory.find(
-        ({ id }: farmhand.cow) => id === cowIdOfferedForTrade
-      )
-
-      if (!cowToTradeAway) {
-        console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
-        return null
-      }
-
-      const cowTradeTimeoutId = setTimeout(
-        this.handleCowTradeTimeout,
-        COW_TRADE_TIMEOUT
-      )
-
-      sendCowTradeRequest(
-        {
-          cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
-          cowRequested: peerPlayerCow,
-        },
-        peerId
-      )
-
-      return {
-        cowTradeTimeoutId: (cowTradeTimeoutId as unknown) as number,
-        isAwaitingCowTradeRequest: true,
-      }
-    }, noop)
-  }
-
-  handleCowTradeTimeout = () => {
-    if (typeof this.state.cowTradeTimeoutId === 'number') {
-      this.showNotification(REQUESTED_COW_TRADE_UNAVAILABLE, 'error')
-      this.setState({
-        cowTradeTimeoutId: null,
-        isAwaitingCowTradeRequest: false,
-      })
-
-      console.error('Cow trade request timed out')
-    }
-  }
-
-  async clearPersistedData() {
-    await this.props.localforage?.clear()
-
-    this.showNotification(DATA_DELETED)
-  }
-
-  async syncToRoom() {
-    const { isOnline, priceCrashes, priceSurges, room } = this.state
-
-    if (!isOnline) {
-      return
-    }
-
-    this.showNotification(CONNECTING_TO_SERVER, 'info')
-
-    try {
-      this.setState({
-        isAwaitingNetworkRequest: true,
-        peers: {},
-      })
-
-      this.state.peerRoom?.leave()
-
-      const { valueAdjustments } = await getData(endpoints.getMarketData, {
-        farmId: this.state.playerId,
-        room: room,
-      })
-
-      this.scheduleHeartbeat()
-
-      const relayRedundancy = 4
-
-      this.setState({
-        activePlayers: 1,
-        peerRoom: joinRoom(
-          {
-            appId: import.meta.env?.VITE_NAME,
-            rtcConfig,
-            ...(relayUrls && {
-              relayConfig: {
-                urls: relayUrls,
-                redundancy: relayRedundancy,
-              },
-            }),
-          },
-          room
-        ),
-        valueAdjustments: applyPriceEvents(
-          valueAdjustments,
-          priceCrashes,
-          priceSurges
-        ),
-      })
-
-      this.showNotification(CONNECTED_TO_ROOM('', room), 'success')
-    } catch (e) {
-      // TODO: Add some reasonable fallback behavior in case the server request
-      // fails. Possibility: Regenerate valueAdjustments and notify the user
-      // they are offline.
-
-      this.showNotification(SERVER_ERROR, 'error')
-
-      console.error(e)
-
-      // NOTE: Syncing failed, so take the user offline
-      this.setState(() => {
-        return {
-          redirect: '/',
-          cowIdOfferedForTrade: '',
-        }
-      })
-    }
-
-    this.setState({
-      isAwaitingNetworkRequest: false,
-      isAwaitingCowTradeRequest: false,
-    })
-  }
-
-  scheduleHeartbeat() {
-    const { heartbeatTimeoutId } = this.state
-
-    clearTimeout(heartbeatTimeoutId ?? -1)
-
-    this.setState(() => ({
-      heartbeatTimeoutId: (window.setTimeout(async () => {
-        this.setState(({ money, activePlayers }: farmhand.state) => ({
-          activePlayers,
-          money: moneyTotal(money, activePlayers ?? 0),
-        }))
-
-        this.scheduleHeartbeat()
-      }, HEARTBEAT_INTERVAL_PERIOD) as unknown) as number,
-    }))
-  }
-
-  showInventoryFullNotifications(prevState: farmhand.state) {
-    if (
-      inventorySpaceRemaining(prevState) > 0 &&
-      inventorySpaceRemaining(this.state) <= 0
-    ) {
-      this.showNotification(INVENTORY_FULL_NOTIFICATION, 'warning')
-    }
-  }
-
-  /*!
-   * @param {farmhand.state} prevState
-   */
-  showRecipeLearnedNotifications({
-    learnedRecipes: previousLearnedRecipes,
-  }: farmhand.state) {
-    let learnedRecipes: farmhand.recipe[] = []
-
-    Object.keys(this.state.learnedRecipes).forEach(recipeId => {
-      if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
-        learnedRecipes.push(recipesMap[recipeId])
-      }
-    })
-
-    if (learnedRecipes.length > 1) {
-      this.showNotification(RECIPES_LEARNED('', learnedRecipes))
-    } else if (learnedRecipes.length === 1) {
-      this.showNotification(RECIPE_LEARNED('', learnedRecipes[0]))
-    }
-  }
-
-  /*!
-   * @param {Object} [overrides] Data to patch into this.state when persisting.
-   * @return {Promise}
-   */
-  persistState(overrides = {}) {
-    return this.props.localforage?.setItem(
-      'state',
-      reduceByPersistedKeys({
-        ...this.state,
-        ...overrides,
-      })
-    )
-  }
-
-  async updateServerForNextDay() {
-    const serverMessages: { message: string; severity: string }[] = []
-
-    let broadcastedPositionMessage: string | null = null
-
-    this.setState(() => ({ isAwaitingNetworkRequest: true }))
-
-    let serverValueAdjustments: Record<string, number> | undefined
-
-    if (this.state.isOnline) {
-      const {
-        inventory,
-        room,
-        todaysPurchases,
-        todaysStartingInventory,
-      } = this.state
-
-      const positions = computeMarketPositions(
-        todaysStartingInventory,
-        todaysPurchases,
-        inventory
-      )
-
-      try {
-        serverValueAdjustments = (
-          await postData(endpoints.postDayResults, {
-            positions,
-            room,
-          })
-        ).valueAdjustments
-
-        if (Object.keys(positions).length) {
-          serverMessages.push({
-            message: POSITIONS_POSTED_NOTIFICATION('', 'You', positions),
-            severity: 'info',
-          })
-
-          broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION(
-            '',
-            '',
-            positions
-          )
-        }
-      } catch (e) {
-        // NOTE: This will get reached when there's an issue posting data to the server.
-        serverMessages.push({
-          message: SERVER_ERROR,
-          severity: 'error',
-        })
-
-        this.setState(() => ({
-          redirect: '/',
-          cowIdOfferedForTrade: '',
-          isAwaitingNetworkRequest: false,
-        }))
-
-        console.error(e)
-      }
-    }
-
-    return {
-      broadcastedPositionMessage,
-      serverMessages,
-      serverValueAdjustments,
-    }
-  }
-
-  async incrementDay(isFirstDay = false) {
-    const {
-      broadcastedPositionMessage,
-      serverMessages,
-      serverValueAdjustments,
-    } = await this.updateServerForNextDay()
-
-    let pendingNotifications: { message: string; severity: string }[] = []
-
-    // This would be cleaner if setState was called after localForage.setItem,
-    // but updating the state first makes for a more responsive user
-    // experience. The persisted state is computed post-update and stored
-    // asynchronously, thus avoiding state changes from being blocked.
-    this.setState(
-      (prev: farmhand.state): farmhand.state => {
-        const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
-
-        pendingNotifications = [
-          ...serverMessages,
-          ...nextDayState.newDayNotifications,
-        ]
-
-        nextDayState.valueAdjustments = applyPriceEvents(
-          serverValueAdjustments ?? nextDayState.valueAdjustments,
-          nextDayState.priceCrashes,
-          nextDayState.priceSurges
-        )
-
-        nextDayState.isAwaitingNetworkRequest = false
-
-        return {
-          ...nextDayState,
-          isWaitingForDayToCompleteIncrementing: true,
-          newDayNotifications: [],
-          todaysNotifications: [],
-        }
-      },
-      async () => {
-        try {
-          await this.persistState({
-            // Old pendingNotifications are persisted so that they can be
-            // shown to the player when the app reloads.
-            newDayNotifications: pendingNotifications,
-          })
-
-          const notifications = [...pendingNotifications]
-
-          notifications
-            .concat(
-              isFirstDay
-                ? []
-                : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
-            )
-            .forEach(({ message, severity }) =>
-              this.showNotification(message, severity)
-            )
-
-          if (this.state.isCombineEnabled) {
-            if (this.state.stageFocus === stageFocusType.FIELD) {
-              // Allow the mature crops' animation to complete.
-              await sleep(1000)
-            }
-
-            this.forRange(reducers.harvestPlot, Infinity, 0, 0)
-          }
-        } catch (e) {
-          console.error(e)
-
-          this.showNotification(JSON.stringify(e), 'error')
-        } finally {
-          this.setState(() => ({
-            isWaitingForDayToCompleteIncrementing: false,
-          }))
-
-          if (broadcastedPositionMessage) {
-            this.messagePeers(broadcastedPositionMessage)
-          }
-        }
-      }
-    )
-  }
-
-  /*!
-   * @param {farmhand.module:enums.dialogView} dialogViewName
-   */
-  openDialogView(dialogViewName: farmhand.dialogView) {
-    this.setState({ currentDialogView: dialogViewName, isDialogViewOpen: true })
-  }
-
-  closeDialogView() {
-    this.setState({ isDialogViewOpen: false })
-  }
-
-  focusNextView() {
-    if (document.activeElement?.getAttribute('role') === 'tab') return
-
-    const { viewList } = this
-
-    this.setState(({ stageFocus }: farmhand.state) => {
-      const currentViewIndex = viewList.indexOf(stageFocus)
-
-      return { stageFocus: viewList[(currentViewIndex + 1) % viewList.length] }
-    })
-  }
-
-  focusPreviousView() {
-    if (document.activeElement?.getAttribute('role') === 'tab') return
-
-    const { viewList } = this
-
-    this.setState(({ stageFocus }: farmhand.state) => {
-      const currentViewIndex = viewList.indexOf(stageFocus)
-
-      return {
-        stageFocus:
-          viewList[
-            currentViewIndex === 0
-              ? viewList.length - 1
-              : (currentViewIndex - 1) % viewList.length
-          ],
-      }
-    })
-  }
-
-  messagePeers(message: string, severity?: string) {
-    this.prependPendingPeerMessage(message, severity)
-  }
-
-  render() {
-    const {
-      props: { features: propsFeatures },
-      state: { redirect },
-      fieldToolInventory,
-      handlers,
-      isChatAvailable,
-      keyHandlers,
-      keyMap,
-      levelEntitlements,
-      plantableCropInventory,
-      playerInventory,
-      shopInventory,
-      viewList,
-      viewTitle,
-    } = this
-
-    const blockInput = this.isInputBlocked
-
-    // Bundle up the raw state and the computed state into one object to be
-    // passed down through the component tree.
-    const gameState = {
-      ...this.state,
-      blockInput,
-      features: propsFeatures ?? {},
-      fieldToolInventory,
-      isChatAvailable,
-      levelEntitlements,
-      plantableCropInventory,
-      playerInventory,
-      playerInventoryQuantities: getInventoryQuantities(this.state.inventory),
-      shopInventory,
-      viewList,
-      viewTitle,
-    }
-
-    return (
-      <GlobalHotKeys
-        {...{
-          allowChanges: true,
-          keyMap: blockInput ? emptyObject : keyMap,
-          handlers: blockInput ? emptyObject : keyHandlers,
-        }}
-      >
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={theme}>
-            <SnackbarProvider
-              {...{
-                anchorOrigin: { vertical: 'top', horizontal: 'right' },
-                classes: {
-                  containerRoot: 'Farmhand notification-container',
-                },
-                content: snackbarProviderContentCallback,
-                maxSnack: 4,
-              }}
-            >
-              {redirect && <Redirect {...{ to: redirect }} />}
-              <FarmhandContext.Provider
-                value={{
-                  gameState,
-                  handlers,
-                }}
-              >
-                <div
-                  {...{
-                    className: classNames(
-                      'Farmhand farmhand-root fill',
-                      this.state.isMenuOpen ? 'menu-open' : 'menu-closed',
-                      {
-                        'use-alternate-end-day-button-position': this.state
-                          .useAlternateEndDayButtonPosition,
-                        'block-input': blockInput,
-                        'has-booted': this.state.hasBooted,
-                      }
-                    ),
-                  }}
-                >
-                  <UpdateNotifier />
-                  <AppBar />
-                  <Drawer
-                    {...{
-                      className: 'sidebar-wrapper',
-                      open: gameState.isMenuOpen,
-                      variant: 'persistent',
-                      role: 'complementary',
-                      PaperProps: {
-                        className: 'sidebar',
-                      },
-                    }}
-                  >
-                    <Navigation />
-                    <ContextPane />
-                    <div {...{ className: 'spacer' }} />
-                  </Drawer>
-                  <Stage />
-
-                  {/*
-                These controls need to be at this top level instead of the Stage
-                because of scrolling issues in iOS.
-                */}
-                  <div className="bottom-controls">
-                    <MobileStepper
-                      variant="dots"
-                      steps={viewList.length}
-                      position="static"
-                      activeStep={viewList.indexOf(this.state.stageFocus)}
-                      className=""
-                      backButton={null}
-                      nextButton={null}
-                    />
-                    <div className="fab-buttons buttons">
-                      <Fab
-                        {...{
-                          'aria-label': 'Previous view',
-                          color: 'primary',
-                          onClick: () => this.focusPreviousView(),
-                        }}
-                      >
-                        <KeyboardArrowLeft />
-                      </Fab>
-                      <Fab
-                        {...{
-                          className: classNames('menu-button', {
-                            'is-open': this.state.isMenuOpen,
-                          }),
-                          color: 'primary',
-                          'aria-label': 'Open drawer',
-                          onClick: () => handlers.handleMenuToggle(),
-                        }}
-                      >
-                        <MenuIcon />
-                      </Fab>
-                      <Fab
-                        {...{
-                          'aria-label': 'Next view',
-                          color: 'primary',
-                          onClick: () => this.focusNextView(),
-                        }}
-                      >
-                        <KeyboardArrowRight />
-                      </Fab>
-                    </div>
+  return (
+    <GlobalHotKeys allowChanges={true} keyMap={isInputBlocked ? emptyObject : keyMap} handlers={isInputBlocked ? emptyObject : keyHandlers}>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'right' }} classes={{ containerRoot: 'Farmhand notification-container' }} content={snackbarProviderContentCallback} maxSnack={4}>
+            {redirect && <Redirect to={redirect} />}
+            <FarmhandContext.Provider value={{ gameState, handlers }}>
+              <div className={classNames('Farmhand farmhand-root fill', state.isMenuOpen ? 'menu-open' : 'menu-closed', { 'use-alternate-end-day-button-position': state.useAlternateEndDayButtonPosition, 'block-input': isInputBlocked, 'has-booted': state.hasBooted })}>
+                <UpdateNotifier />
+                <AppBar />
+                <Drawer className="sidebar-wrapper" open={gameState.isMenuOpen} variant="persistent" role="complementary" PaperProps={{ className: 'sidebar' }}>
+                  <Navigation />
+                  <ContextPane />
+                  <div className="spacer" />
+                </Drawer>
+                <Stage />
+                <div className="bottom-controls">
+                  <MobileStepper variant="dots" steps={viewList.length} position="static" activeStep={viewList.indexOf(state.stageFocus)} className="" backButton={null} nextButton={null} />
+                  <div className="fab-buttons buttons">
+                    <Fab aria-label="Previous view" color="primary" onClick={focusPreviousView}><KeyboardArrowLeft /></Fab>
+                    <Fab className={classNames('menu-button', { 'is-open': state.isMenuOpen })} color="primary" aria-label="Open drawer" onClick={() => handlers.handleMenuToggle()}><MenuIcon /></Fab>
+                    <Fab aria-label="Next view" color="primary" onClick={focusNextView}><KeyboardArrowRight /></Fab>
                   </div>
-                  <Tooltip
-                    {...{
-                      placement: 'left',
-                      title: (
-                        <>
-                          <p>
-                            End the day to save your progress and advance the
-                            game.
-                          </p>
-                          <p>(shift + c)</p>
-                        </>
-                      ),
-                    }}
-                  >
-                    <Fab
-                      {...{
-                        'aria-label':
-                          'End the day to save your progress and advance the game.',
-                        className: 'end-day',
-                        color: 'error',
-                        onClick: handlers.handleClickEndDayButton,
-                        sx: {
-                          zIndex: Z_INDEX.END_DAY_BUTTON,
-                        },
-                      }}
-                    >
-                      <HotelIcon />
-                    </Fab>
-                  </Tooltip>
                 </div>
-                {isChatAvailable ? <ChatRoom /> : null}
-                <NotificationSystem />
-              </FarmhandContext.Provider>
-            </SnackbarProvider>
-          </ThemeProvider>
-        </StyledEngineProvider>
-      </GlobalHotKeys>
-    )
-  }
+                <Tooltip placement="left" title={<><p>End the day to save your progress and advance the game.</p><p>(shift + c)</p></>}>
+                  <Fab aria-label="End the day to save your progress and advance the game." className="end-day" color="error" onClick={handlers.handleClickEndDayButton} sx={{ zIndex: Z_INDEX.END_DAY_BUTTON }}><HotelIcon /></Fab>
+                </Tooltip>
+              </div>
+              {isChatAvailable ? <ChatRoom /> : null}
+              <NotificationSystem />
+            </FarmhandContext.Provider>
+          </SnackbarProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </GlobalHotKeys>
+  )
+}
 
-  static propTypes = {
-    features: object,
-    history: object,
-    location: object,
-    match: object.isRequired,
-  }
+Farmhand.defaultProps = {
+  localforage: localforage.createInstance({
+    name: 'farmhand',
+    description: 'Persisted game data for Farmhand',
+  }),
+  features: {},
+  match: { path: '', params: {} },
+}
+
+Farmhand.propTypes = {
+  features: object,
+  history: object,
+  location: object,
+  match: object.isRequired,
 }

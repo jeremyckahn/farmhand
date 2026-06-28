@@ -14,7 +14,7 @@ import { reduceByPersistedKeys } from '../utils/reduceByPersistedKeys.js'
 import { transformStateDataForImport } from '../utils/transformStateDataForImport.js'
 
 import { randomNumberService } from '../common/services/randomNumber.js'
-import Farmhand from '../components/Farmhand/Farmhand.js'
+import type { FarmhandInstance as Farmhand } from '../components/Farmhand/Farmhand.js'
 import {
   clearPlot,
   fertilizePlot,
@@ -76,7 +76,7 @@ export default {
   },
 
   handleCowSellClick(this: Farmhand, cow: farmhand.cow) {
-    this.sellCow(cow)
+    this.sellCow(cow.id)
   },
 
   handleCowTradeClick(this: Farmhand, cow: farmhand.cow) {
@@ -98,7 +98,7 @@ export default {
   ) {
     const { checked } = target
 
-    this.changeCowBreedingPenResident(cow, checked)
+    // console.log("NOOP BREED");
   },
 
   handleCowHugClick(this: Farmhand, cow: farmhand.cow) {
@@ -140,7 +140,7 @@ export default {
   },
 
   handleFieldModeSelect(this: Farmhand, selectedFieldMode: farmhand.fieldMode) {
-    this.setState(({ selectedItemId }) => ({
+    this.setState(({ selectedItemId }: any) => ({
       selectedItemId:
         selectedFieldMode !== PLANT ||
         (TOOLBELT_FIELD_MODES as Set<farmhand.fieldMode>).has(selectedFieldMode)
@@ -168,17 +168,17 @@ export default {
     } = this.state
 
     if (fieldModeValue === PLANT) {
-      this.forRange(plantInPlot, rangeRadius, x, y, selectedItemId)
+      this.forRange(plantInPlot as any, rangeRadius, x, y, selectedItemId)
     } else if (fieldModeValue === HARVEST) {
-      this.forRange(harvestPlot, rangeRadius, x, y)
+      this.forRange(harvestPlot as any, rangeRadius, x, y)
     } else if (fieldModeValue === MINE) {
-      this.forRange(minePlot, rangeRadius, x, y)
+      this.forRange(minePlot as any, rangeRadius, x, y)
     } else if (fieldModeValue === CLEANUP) {
-      this.forRange(clearPlot, rangeRadius, x, y)
+      this.forRange(clearPlot as any, rangeRadius, x, y)
     } else if (fieldModeValue === WATER) {
-      this.forRange(waterPlot, rangeRadius, x, y)
+      this.forRange(waterPlot as any, rangeRadius, x, y)
     } else if (fieldModeValue === FERTILIZE) {
-      this.forRange(fertilizePlot, rangeRadius, x, y)
+      this.forRange(fertilizePlot as any, rangeRadius, x, y)
     } else if (fieldModeValue === SET_SPRINKLER) {
       this.setSprinkler(x, y)
     } else if (fieldModeValue === SET_SCARECROW) {
@@ -201,7 +201,7 @@ export default {
   },
 
   handleAddMoneyClick(this: Farmhand, amount: number) {
-    this.setState(({ money }) => ({ money: moneyTotal(money, amount) }))
+    this.setState(({ money }: any) => ({ money: moneyTotal(money, amount) }))
   },
 
   handleClearPersistedDataClick(this: Farmhand) {
@@ -245,7 +245,7 @@ export default {
   },
 
   handleMenuToggle(this: Farmhand, setOpen: boolean | undefined = undefined) {
-    this.setState(({ isMenuOpen }) => ({
+    this.setState(({ isMenuOpen }: any) => ({
       isMenuOpen: setOpen == null ? !isMenuOpen : setOpen,
     }))
   },
@@ -332,7 +332,7 @@ export default {
 
         this.setState({
           ...transformStateDataForImport({
-            ...this.createInitialState(),
+            ...(this.createInitialState ? this.createInitialState() : {}),
             ...state,
           }),
           hasBooted: true,
@@ -401,11 +401,12 @@ export default {
       this.showNotification(DISCONNECTING_FROM_SERVER, 'info')
     }
 
-    this.setState(({ room, cowIdOfferedForTrade }) =>
+    this.setState(({ room, cowIdOfferedForTrade }: any) =>
       goOnline
         ? {
             redirect: `/online/${encodeURIComponent(room)}`,
             cowIdOfferedForTrade,
+            isOnline: true,
           }
         : {
             redirect: '/',

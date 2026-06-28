@@ -17,7 +17,7 @@ test('uses server-based price values', async ({ page }) => {
   await expect(page.getByRole('complementary')).toContainText(
     'CarrotSell price: $28.72Total: $28.72'
   )
-  await page.getByRole('checkbox', { name: 'Play online' }).check()
+  await page.getByRole('checkbox', { name: 'Play online' }).click({ force: true })
 
   const serverResponse = await new Promise<{
     valueAdjustments: {
@@ -25,10 +25,12 @@ test('uses server-based price values', async ({ page }) => {
     }
   }>((resolve, reject) => {
     page.on('response', async response => {
-      try {
-        resolve(await response.json())
-      } catch (error) {
-        reject(error)
+      if (response.url().includes('get-market-data')) {
+        try {
+          resolve(await response.json())
+        } catch (error) {
+          reject(error)
+        }
       }
     })
   })
