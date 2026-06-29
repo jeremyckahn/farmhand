@@ -2,11 +2,6 @@ import { test, expect } from '@playwright/test'
 import { loadFixture } from '../../test-utils/load-fixture.js'
 
 test('should breed two cows to produce a new cow', async ({ page }) => {
-  page.on('console', msg =>
-    console.log('BROWSER CONSOLE:', msg.type(), msg.text())
-  )
-  page.on('pageerror', error => console.log('BROWSER ERROR:', error.message))
-
   await loadFixture(page, 'cow-breeding')
 
   await expect(page.getByText('Data loaded!')).toBeHidden({ timeout: 10000 })
@@ -46,13 +41,10 @@ test('should breed two cows to produce a new cow', async ({ page }) => {
   // Wait for network idle to ensure the day completes properly
   await page.waitForTimeout(5000)
 
-  console.log('WAITING TO CLICK TAB')
-
   // Go back to the Cows tab
   await page
     .getByRole('tab', { name: 'Cows', exact: true })
     .click({ force: true })
-  console.log('CLICKED TAB')
   await cowsTabPanel.waitFor()
 
   // the 2 cows return, and 1 calf is born
