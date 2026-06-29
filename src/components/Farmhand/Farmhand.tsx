@@ -1006,7 +1006,7 @@ export default function Farmhand(props: FarmhandProps) {
     window.farmhand = instanceProxy // Legacy debug hook
     let isMounted = true
 
-    ;(async () => {
+    void (async () => {
       const persistedState = await props.localforage?.getItem('state')
 
       if (!isMounted) return

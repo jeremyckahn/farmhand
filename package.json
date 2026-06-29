@@ -20,7 +20,7 @@
     "electron": "wait-on tcp:3000 && electron .",
     "print:crops": "vite-node src/scripts/generate-crop-table.ts",
     "lint": "eslint src --max-warnings=0",
-    "prettier": "prettier 'src/**/*.{js,ts,tsx}' --write",
+    "prettier": "prettier '{src,e2e}/**/*.{js,ts,tsx}' --write",
     "preversion": "npm test",
     "postversion": "git push && git push --tags",
     "postinstall": "npm run build:api",

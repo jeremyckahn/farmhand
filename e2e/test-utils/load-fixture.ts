@@ -19,7 +19,9 @@ export async function loadFixture(page, fixtureName) {
   await page.getByRole('button', { name: 'Load game data that was' }).click()
   await page
     .locator('input[type=file]')
-    .setInputFiles(path.join(__dirname, '..', 'fixtures', `${fixtureName}.json`))
+    .setInputFiles(
+      path.join(__dirname, '..', 'fixtures', `${fixtureName}.json`)
+    )
 
   await expect(page.getByText('Data loaded!')).toBeVisible()
 }
