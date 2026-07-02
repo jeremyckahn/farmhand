@@ -78,7 +78,6 @@ import { createNewForest } from '../../utils/createNewForest.js'
 import { doesMenuObstructStage } from '../../utils/doesMenuObstructStage.js'
 import { generateCow } from '../../utils/generateCow.js'
 import { getAvailableShopInventory } from '../../utils/getAvailableShopInventory.js'
-import { getItemCurrentValue } from '../../utils/getItemCurrentValue.js'
 import { getPeerMetadata } from '../../utils/getPeerMetadata.js'
 import { inventorySpaceRemaining } from '../../utils/inventorySpaceRemaining.js'
 import { moneyTotal } from '../../utils/moneyTotal.js'
@@ -87,7 +86,6 @@ import { reduceByPersistedKeys } from '../../utils/reduceByPersistedKeys.js'
 import { sleep } from '../../utils/sleep.js'
 import { transformStateDataForImport } from '../../utils/transformStateDataForImport.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
-import { memoize } from '../../utils/memoize.js'
 import { noop } from '../../utils/noop.js'
 
 // NOTE: This must be imported here so that it can be overridden by component
@@ -107,6 +105,7 @@ import UpdateNotifier from '../UpdateNotifier/index.js'
 
 import FarmhandContext, { BoundHandlers } from './Farmhand.context.js'
 import { FarmhandProps, FarmhandReducers } from './FarmhandReducers.js'
+import { FarmhandService } from './FarmhandService.js'
 import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
 
 import { useFarmhandReducers } from './useFarmhandReducers.js'
@@ -116,70 +115,6 @@ const { CLEANUP, HARVEST, MINE, OBSERVE, WATER, PLANT } = fieldMode
 
 // Utility object for reuse in no-ops to save on memory
 const emptyObject = Object.freeze({})
-
-export const computePlayerInventory = memoize(
-  (
-    inventory: farmhand.state['inventory'],
-    valueAdjustments: Record<string, number>
-  ): farmhand.item[] =>
-    // TODO: Add a defensive check if itemsMap[id] is undefined to prevent runtime crash on invalid items
-    inventory.map(({ quantity, id }: { quantity: number; id: string }) => ({
-      quantity,
-      ...itemsMap[id as keyof typeof itemsMap],
-      value: getItemCurrentValue(
-        itemsMap[id as keyof typeof itemsMap],
-        valueAdjustments
-      ),
-    }))
-)
-
-export const getFieldToolInventory = memoize(
-  (inventory: farmhand.state['inventory']): farmhand.item[] =>
-    inventory
-      .filter(({ id }: { id: string }) => {
-        // TODO: Defensive check if item exists in itemsMap to prevent crashes on undefined itemsMap[id]
-        const { enablesFieldMode } = itemsMap[id as keyof typeof itemsMap]
-
-        return (
-          typeof enablesFieldMode === 'string' && enablesFieldMode !== PLANT
-        )
-      })
-      .map(({ id, quantity }: { id: string; quantity: number }) => ({
-        ...itemsMap[id as keyof typeof itemsMap],
-        quantity,
-      }))
-)
-
-export const getPlantableCropInventory = memoize(
-  (inventory: farmhand.state['inventory']): farmhand.item[] =>
-    inventory
-      .filter(
-        ({ id }: { id: string }) =>
-          // TODO: Add a defensive check to verify itemsMap[id] exists before accessing isPlantableCrop
-          itemsMap[id as keyof typeof itemsMap].isPlantableCrop
-      )
-      .map(({ id, quantity }: { id: string; quantity: number }) => ({
-        ...itemsMap[id as keyof typeof itemsMap],
-        quantity,
-      }))
-)
-
-const applyPriceEvents = (
-  valueAdjustments: Record<string, number>,
-  priceCrashes: Partial<Record<string, globalThis.farmhand.priceEvent>>,
-  priceSurges: Partial<Record<string, globalThis.farmhand.priceEvent>>
-): Record<string, number> => {
-  const patchedValueAdjustments = { ...valueAdjustments }
-
-  Object.keys(priceCrashes).forEach(itemId => {
-    patchedValueAdjustments[itemId] = 0.5
-  })
-  Object.keys(priceSurges).forEach(itemId => {
-    patchedValueAdjustments[itemId] = 1.5
-  })
-
-  return patchedValueAdjustments
-}
 
 export type FarmhandInstance = any
 
@@ -307,12 +242,16 @@ export default function Farmhand(props: FarmhandProps) {
 
   const viewTitle =
     STAGE_TITLE_MAP[state.stageFocus as keyof typeof STAGE_TITLE_MAP]
-  const fieldToolInventory = getFieldToolInventory(state.inventory)
-  const playerInventory = computePlayerInventory(
+  const fieldToolInventory = FarmhandService.getFieldToolInventory(
+    state.inventory
+  )
+  const playerInventory = FarmhandService.computePlayerInventory(
     state.inventory,
     state.valueAdjustments
   )
-  const plantableCropInventory = getPlantableCropInventory(state.inventory)
+  const plantableCropInventory = FarmhandService.getPlantableCropInventory(
+    state.inventory
+  )
 
   const levelEntitlements = useMemo(
     () => getLevelEntitlements(levelAchieved(state.experience)),
@@ -521,7 +460,7 @@ export default function Farmhand(props: FarmhandProps) {
           },
           room
         ),
-        valueAdjustments: applyPriceEvents(
+        valueAdjustments: FarmhandService.applyPriceEvents(
           valueAdjustments,
           priceCrashes,
           priceSurges
@@ -693,7 +632,7 @@ export default function Farmhand(props: FarmhandProps) {
           ...serverMessages,
           ...nextDayState.newDayNotifications,
         ]
-        nextDayState.valueAdjustments = applyPriceEvents(
+        nextDayState.valueAdjustments = FarmhandService.applyPriceEvents(
           serverValueAdjustments ?? nextDayState.valueAdjustments,
           nextDayState.priceCrashes,
           nextDayState.priceSurges
