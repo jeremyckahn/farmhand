@@ -16,12 +16,12 @@ import { sleep } from '../../../utils/sleep.js'
 import { FarmhandProps } from '../FarmhandReducers.js'
 import { FarmhandService } from '../FarmhandService.js'
 
-export function useFarmhandDayAdvancement(
+export const useFarmhandDayAdvancement = (
   state: farmhand.state,
   setState: React.Dispatch<React.SetStateAction<farmhand.state>>,
   props: FarmhandProps,
   boundReducersRef: React.MutableRefObject<any>
-) {
+) => {
   const clearPersistedData = useCallback(async () => {
     await props.localforage?.clear()
     boundReducersRef.current.showNotification(DATA_DELETED)

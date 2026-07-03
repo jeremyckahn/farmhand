@@ -5,10 +5,10 @@ import { INVENTORY_FULL_NOTIFICATION } from '../../../strings.js'
 import { RECIPE_LEARNED, RECIPES_LEARNED } from '../../../templates.js'
 import { inventorySpaceRemaining } from '../../../utils/inventorySpaceRemaining.js'
 
-export function useFarmhandNotifications(
+export const useFarmhandNotifications = (
   state: farmhand.state,
   boundReducersRef: React.MutableRefObject<any>
-) {
+) => {
   const showInventoryFullNotifications = useCallback(
     (prev: farmhand.state, currentState: farmhand.state) => {
       if (

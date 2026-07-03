@@ -29,7 +29,7 @@ import { moneyTotal } from '../../../utils/moneyTotal.js'
 import { FarmhandProps } from '../FarmhandReducers.js'
 import { FarmhandService } from '../FarmhandService.js'
 
-export function useFarmhandNetwork(
+export const useFarmhandNetwork = (
   state: farmhand.state,
   setState: React.Dispatch<React.SetStateAction<farmhand.state>>,
   props: FarmhandProps,
@@ -39,7 +39,7 @@ export function useFarmhandNetwork(
   newRoom: string,
   path: string,
   peerMetadata: any
-) {
+) => {
   const wrapSendPeerMetadata = useCallback(
     (sendPeerMetadata: Function) => {
       return throttle(

@@ -44,7 +44,7 @@ const emptyObject = Object.freeze({})
 
 export type FarmhandInstance = any
 
-export default function Farmhand(props: FarmhandProps) {
+const Farmhand = (props: FarmhandProps) => {
   const {
     gameState,
     handlers,
@@ -185,3 +185,5 @@ Farmhand.propTypes = {
   location: object,
   match: object.isRequired,
 }
+
+export default Farmhand

@@ -52,7 +52,7 @@ import { useFarmhandNotifications } from './hooks/useFarmhandNotifications.js'
 
 const { CLEANUP, HARVEST, MINE, WATER } = fieldMode
 
-export function useFarmhand(props: FarmhandProps) {
+export const useFarmhand = (props: FarmhandProps) => {
   // Extract props properly
   const {
     features: propsFeatures,

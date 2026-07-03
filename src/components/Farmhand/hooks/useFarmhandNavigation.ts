@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 
-export function useFarmhandNavigation(
+export const useFarmhandNavigation = (
   setState: React.Dispatch<React.SetStateAction<farmhand.state>>,
   viewList: farmhand.stageFocusType[]
-) {
+) => {
   const openDialogView = useCallback(
     (dialogViewName: farmhand.dialogView) => {
       setState(s => ({
