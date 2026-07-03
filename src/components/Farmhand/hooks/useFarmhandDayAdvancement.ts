@@ -24,6 +24,7 @@ export const useFarmhandDayAdvancement = (
 ) => {
   const clearPersistedData = useCallback(async () => {
     await props.localforage?.clear()
+
     boundReducersRef.current.showNotification(DATA_DELETED)
   }, [props.localforage, boundReducersRef])
 
@@ -41,7 +42,7 @@ export const useFarmhandDayAdvancement = (
     const serverMessages: farmhand.notification[] = []
     let broadcastedPositionMessage: string | null = null
 
-    setState(s => ({ ...s, isAwaitingNetworkRequest: true }))
+    setState(previous => ({ ...previous, isAwaitingNetworkRequest: true }))
 
     let serverValueAdjustments: Record<string, number> | undefined
 
@@ -52,6 +53,7 @@ export const useFarmhandDayAdvancement = (
         todaysPurchases,
         todaysStartingInventory,
       } = state
+
       const positions = computeMarketPositions(
         todaysStartingInventory,
         todaysPurchases,
@@ -62,11 +64,13 @@ export const useFarmhandDayAdvancement = (
         serverValueAdjustments = (
           await postData(endpoints.postDayResults, { positions, room })
         ).valueAdjustments
+
         if (Object.keys(positions).length) {
           serverMessages.push({
             message: POSITIONS_POSTED_NOTIFICATION('', 'You', positions),
             severity: 'info',
           })
+
           broadcastedPositionMessage = POSITIONS_POSTED_NOTIFICATION(
             '',
             '',
@@ -75,12 +79,14 @@ export const useFarmhandDayAdvancement = (
         }
       } catch (e) {
         serverMessages.push({ message: SERVER_ERROR, severity: 'error' })
-        setState(s => ({
-          ...s,
+
+        setState(previous => ({
+          ...previous,
           redirect: '/',
           cowIdOfferedForTrade: '',
           isAwaitingNetworkRequest: false,
         }))
+
         console.error(e)
       }
     }
@@ -95,18 +101,19 @@ export const useFarmhandDayAdvancement = (
     async (isFirstDay = false) => {
       let shouldBlock = false
 
-      setState(prev => {
-        if (prev.isWaitingForDayToCompleteIncrementing && !isFirstDay) {
+      setState(previous => {
+        if (previous.isWaitingForDayToCompleteIncrementing && !isFirstDay) {
           shouldBlock = true
         }
-        return prev
+
+        return previous
       })
 
       if (shouldBlock) return
 
       if (!isFirstDay) {
-        setState(prev => ({
-          ...prev,
+        setState(previous => ({
+          ...previous,
           isWaitingForDayToCompleteIncrementing: true,
         }))
       }
@@ -119,35 +126,41 @@ export const useFarmhandDayAdvancement = (
       } = await updateServerForNextDay()
 
       // Using functional updater to ensure we always compute based on the absolute latest state
-      let resolvedNextDayState: any = null
-      let pendingNotifications: any = []
+      let resolvedNextDayState: farmhand.state | null = null
+      let pendingNotifications: farmhand.notification[] = []
 
-      setState(prev => {
-        const nextDayState = reducers.computeStateForNextDay(prev, isFirstDay)
+      setState(previous => {
+        const nextDayState = reducers.computeStateForNextDay(
+          previous,
+          isFirstDay
+        )
 
         pendingNotifications = [
           ...serverMessages,
           ...nextDayState.newDayNotifications,
         ]
+
         nextDayState.valueAdjustments = FarmhandService.applyPriceEvents(
           serverValueAdjustments ?? nextDayState.valueAdjustments,
           nextDayState.priceCrashes,
           nextDayState.priceSurges
         )
+
         nextDayState.isAwaitingNetworkRequest = false
         nextDayState.isWaitingForDayToCompleteIncrementing = false // UNLOCK UI IMMEDIATELY
         nextDayState.newDayNotifications = []
         nextDayState.todaysNotifications = []
 
         resolvedNextDayState = nextDayState
+
         return nextDayState
       })
 
       // We defer the async stuff until the state update is queued
       setTimeout(async () => {
         try {
+          // FIXME: Determine if resolvedNextDayState can would ever be defined here. It looks like it might not be. It may be a porting bug.
           if (resolvedNextDayState) {
-            console.log('INCREMENT DAY SUCCESS', resolvedNextDayState.day)
             await props.localforage?.setItem(
               'state',
               reduceByPersistedKeys({
@@ -172,6 +185,7 @@ export const useFarmhandDayAdvancement = (
               if (resolvedNextDayState.stageFocus === stageFocusType.FIELD) {
                 await sleep(1000)
               }
+
               boundReducersRef.current.forRange(
                 reducers.harvestPlot,
                 Infinity,
@@ -196,6 +210,7 @@ export const useFarmhandDayAdvancement = (
   )
 
   const initializeNewGame = useCallback(async () => {
+    // FIXME: Why would this be empty? This seems like an error when porting from the class-based component to functional.
     // Stub
   }, [])
 

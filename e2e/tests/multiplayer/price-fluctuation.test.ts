@@ -25,12 +25,10 @@ test('uses server-based price values', async ({ page }) => {
     }
   }>((resolve, reject) => {
     page.on('response', async response => {
-      if (response.url().includes('get-market-data')) {
-        try {
-          resolve(await response.json())
-        } catch (error) {
-          reject(error)
-        }
+      try {
+        resolve(await response.json())
+      } catch (error) {
+        reject(error)
       }
     })
   })
