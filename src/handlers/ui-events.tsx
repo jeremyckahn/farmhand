@@ -140,7 +140,7 @@ export default {
   },
 
   handleFieldModeSelect(this: Farmhand, selectedFieldMode: farmhand.fieldMode) {
-    this.setState(({ selectedItemId }: any) => ({
+    this.setState(({ selectedItemId }: farmhand.state) => ({
       selectedItemId:
         selectedFieldMode !== PLANT ||
         (TOOLBELT_FIELD_MODES as Set<farmhand.fieldMode>).has(selectedFieldMode)
@@ -168,17 +168,17 @@ export default {
     } = this.state
 
     if (fieldModeValue === PLANT) {
-      this.forRange(plantInPlot as any, rangeRadius, x, y, selectedItemId)
+      this.forRange(plantInPlot, rangeRadius, x, y, selectedItemId)
     } else if (fieldModeValue === HARVEST) {
-      this.forRange(harvestPlot as any, rangeRadius, x, y)
+      this.forRange(harvestPlot, rangeRadius, x, y)
     } else if (fieldModeValue === MINE) {
-      this.forRange(minePlot as any, rangeRadius, x, y)
+      this.forRange(minePlot, rangeRadius, x, y)
     } else if (fieldModeValue === CLEANUP) {
-      this.forRange(clearPlot as any, rangeRadius, x, y)
+      this.forRange(clearPlot, rangeRadius, x, y)
     } else if (fieldModeValue === WATER) {
-      this.forRange(waterPlot as any, rangeRadius, x, y)
+      this.forRange(waterPlot, rangeRadius, x, y)
     } else if (fieldModeValue === FERTILIZE) {
-      this.forRange(fertilizePlot as any, rangeRadius, x, y)
+      this.forRange(fertilizePlot, rangeRadius, x, y)
     } else if (fieldModeValue === SET_SPRINKLER) {
       this.setSprinkler(x, y)
     } else if (fieldModeValue === SET_SCARECROW) {
@@ -201,7 +201,9 @@ export default {
   },
 
   handleAddMoneyClick(this: Farmhand, amount: number) {
-    this.setState(({ money }: any) => ({ money: moneyTotal(money, amount) }))
+    this.setState(({ money }: farmhand.state) => ({
+      money: moneyTotal(money, amount),
+    }))
   },
 
   handleClearPersistedDataClick(this: Farmhand) {
@@ -401,7 +403,7 @@ export default {
       this.showNotification(DISCONNECTING_FROM_SERVER, 'info')
     }
 
-    this.setState(({ room, cowIdOfferedForTrade }: any) =>
+    this.setState(({ room, cowIdOfferedForTrade }: farmhand.state) =>
       goOnline
         ? {
             redirect: `/online/${encodeURIComponent(room)}`,
