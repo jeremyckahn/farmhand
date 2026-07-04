@@ -340,7 +340,8 @@ export const useFarmhand = (props: FarmhandProps) => {
       scheduleHeartbeat,
       showInventoryFullNotifications,
       showRecipeLearnedNotifications,
-      persistState: (overrides = {}) => persistState(state, overrides),
+      persistState: (overrides = {}) =>
+        persistState(instanceProxyRef.current?.state ?? state, overrides),
       updateServerForNextDay,
       incrementDay,
       openDialogView,
@@ -560,6 +561,7 @@ export const useFarmhand = (props: FarmhandProps) => {
           'state',
           reduceByPersistedKeys({
             ...resolvedNextDayState,
+            ...(isFirstDay && { historicalValueAdjustments: [] }),
             newDayNotifications: pendingNotifications,
           })
         )

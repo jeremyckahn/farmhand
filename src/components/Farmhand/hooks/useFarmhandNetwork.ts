@@ -55,7 +55,9 @@ export const useFarmhandNetwork = (
   )
 
   const handleCowTradeTimeout = useCallback(() => {
-    if (typeof state.cowTradeTimeoutId === 'number') {
+    if (
+      typeof instanceProxyRef.current?.state?.cowTradeTimeoutId === 'number'
+    ) {
       boundReducersRef.current.showNotification(
         REQUESTED_COW_TRADE_UNAVAILABLE,
         'error'
@@ -67,7 +69,7 @@ export const useFarmhandNetwork = (
         isAwaitingCowTradeRequest: false,
       }))
     }
-  }, [state.cowTradeTimeoutId, setState, boundReducersRef])
+  }, [setState, boundReducersRef, instanceProxyRef])
 
   const tradeForPeerCow = useCallback(
     (peerPlayerCow: farmhand.cow) => {
