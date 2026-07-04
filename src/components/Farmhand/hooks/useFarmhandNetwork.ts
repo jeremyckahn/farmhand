@@ -1,7 +1,7 @@
-import { useCallback, useEffect } from 'react'
 import { joinRoom } from '@trystero-p2p/torrent'
 import window from 'global/window.js'
 import throttle from 'lodash.throttle'
+import { useCallback, useEffect } from 'react'
 
 import {
   handleCowTradeRequest,
@@ -13,7 +13,6 @@ import {
 import { endpoints, relayUrls, rtcConfig } from '../../../config.js'
 import {
   COW_TRADE_TIMEOUT,
-  DEFAULT_ROOM,
   HEARTBEAT_INTERVAL_PERIOD,
 } from '../../../constants.js'
 import { getData } from '../../../fetch-utils.js'

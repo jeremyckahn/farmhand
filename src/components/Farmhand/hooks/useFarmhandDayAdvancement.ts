@@ -2,17 +2,11 @@ import { useCallback } from 'react'
 
 import * as reducers from '../../../game-logic/reducers/index.js'
 import { endpoints } from '../../../config.js'
-import { stageFocusType } from '../../../enums.js'
 import { postData } from '../../../fetch-utils.js'
-import {
-  DATA_DELETED,
-  PROGRESS_SAVED_MESSAGE,
-  SERVER_ERROR,
-} from '../../../strings.js'
+import { DATA_DELETED, SERVER_ERROR } from '../../../strings.js'
 import { POSITIONS_POSTED_NOTIFICATION } from '../../../templates.js'
 import { computeMarketPositions } from '../../../utils/computeMarketPositions.js'
 import { reduceByPersistedKeys } from '../../../utils/reduceByPersistedKeys.js'
-import { sleep } from '../../../utils/sleep.js'
 import { FarmhandProps } from '../FarmhandReducers.js'
 import { FarmhandService } from '../FarmhandService.js'
 
