@@ -1,5 +1,5 @@
 {
-  "allowCustomPeerCowNames": false,
+  "allowCustomPeerCowNames": true,
   "cellarInventory": [],
   "completedAchievements": {
     "plant-crop": true,
@@ -190,14 +190,7 @@
       },
       null
     ],
-    [
-      null,
-      null,
-      null,
-      null,
-      null,
-      null
-    ],
+    [null, null, null, null, null, null],
     [
       {
         "itemId": "weed",
@@ -285,28 +278,9 @@
       }
     ]
   ],
-  "forest": [
-    [
-      null,
-      null,
-      null,
-      null
-    ]
-  ],
-  "historicalDailyLosses": [
-    0,
-    0,
-    0,
-    0,
-    -143.7
-  ],
-  "historicalDailyRevenue": [
-    0,
-    0,
-    0,
-    0,
-    0
-  ],
+  "forest": [[null, null, null, null]],
+  "historicalDailyLosses": [0, 0, 0, 0, -143.7],
+  "historicalDailyRevenue": [0, 0, 0, 0, 0],
   "historicalValueAdjustments": [
     {
       "asparagus": 1.254561372610583,
@@ -359,7 +333,6 @@
     }
   ],
   "hoveredPlotRangeSize": 7,
-  "id": "d7a1db57-f021-4ce5-b632-ad382789f4f1",
   "inventory": [
     {
       "id": "carrot-seed",
@@ -384,13 +357,9 @@
       "day": 6,
       "notifications": {
         "error": [],
-        "info": [
-          "It rained in the night!"
-        ],
+        "info": ["It rained in the night!"],
         "success": [],
-        "warning": [
-          "Your loan balance has grown to $552.03."
-        ]
+        "warning": ["Your loan balance has grown to $552.03."]
       }
     },
     {
@@ -399,9 +368,7 @@
         "error": [],
         "info": [],
         "success": [],
-        "warning": [
-          "Your loan balance has grown to $541.21."
-        ]
+        "warning": ["Your loan balance has grown to $541.21."]
       }
     },
     {
@@ -410,9 +377,7 @@
         "error": [],
         "info": [],
         "success": [],
-        "warning": [
-          "Your loan balance has grown to $530.60."
-        ]
+        "warning": ["Your loan balance has grown to $530.60."]
       }
     },
     {
@@ -421,22 +386,16 @@
         "error": [],
         "info": [],
         "success": [],
-        "warning": [
-          "Your loan balance has grown to $520.20."
-        ]
+        "warning": ["Your loan balance has grown to $520.20."]
       }
     },
     {
       "day": 2,
       "notifications": {
         "error": [],
-        "info": [
-          "It rained in the night!"
-        ],
+        "info": ["It rained in the night!"],
         "success": [],
-        "warning": [
-          "Your loan balance has grown to $510.00."
-        ]
+        "warning": ["Your loan balance has grown to $510.00."]
       }
     }
   ],
