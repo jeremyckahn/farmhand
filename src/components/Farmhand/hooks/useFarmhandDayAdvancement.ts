@@ -16,11 +16,19 @@ import { sleep } from '../../../utils/sleep.js'
 import { FarmhandProps } from '../FarmhandReducers.js'
 import { FarmhandService } from '../FarmhandService.js'
 
+export interface NextDayStateRecord {
+  state: farmhand.state
+  pendingNotifications: farmhand.notification[]
+  broadcastedPositionMessage: string | null
+  isFirstDay: boolean
+}
+
 export const useFarmhandDayAdvancement = (
   state: farmhand.state,
   setState: React.Dispatch<React.SetStateAction<farmhand.state>>,
   props: FarmhandProps,
-  boundReducersRef: React.MutableRefObject<any>
+  boundReducersRef: React.MutableRefObject<any>,
+  nextDayStateRef: React.MutableRefObject<NextDayStateRecord | null>
 ) => {
   const clearPersistedData = useCallback(async () => {
     await props.localforage?.clear()
@@ -126,16 +134,13 @@ export const useFarmhandDayAdvancement = (
       } = await updateServerForNextDay()
 
       // Using functional updater to ensure we always compute based on the absolute latest state
-      let resolvedNextDayState: farmhand.state | null = null
-      let pendingNotifications: farmhand.notification[] = []
-
       setState(previous => {
         const nextDayState = reducers.computeStateForNextDay(
           previous,
           isFirstDay
         )
 
-        pendingNotifications = [
+        const pendingNotifications = [
           ...serverMessages,
           ...nextDayState.newDayNotifications,
         ]
@@ -151,67 +156,17 @@ export const useFarmhandDayAdvancement = (
         nextDayState.newDayNotifications = []
         nextDayState.todaysNotifications = []
 
-        resolvedNextDayState = nextDayState
+        nextDayStateRef.current = {
+          state: nextDayState,
+          pendingNotifications,
+          broadcastedPositionMessage,
+          isFirstDay,
+        }
 
         return nextDayState
       })
-
-      // We defer the async stuff until the state update is queued
-      setTimeout(async () => {
-        try {
-          // FIXME: Determine if resolvedNextDayState can would ever be defined here. It looks like it might not be. It may be a porting bug.
-          if (resolvedNextDayState) {
-            await props.localforage?.setItem(
-              'state',
-              reduceByPersistedKeys({
-                ...resolvedNextDayState,
-                newDayNotifications: pendingNotifications,
-              })
-            )
-
-            const notifications = [...pendingNotifications]
-
-            notifications
-              .concat(
-                isFirstDay
-                  ? []
-                  : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
-              )
-              .forEach(({ message, severity }) =>
-                boundReducersRef.current.showNotification(message, severity)
-              )
-
-            if (resolvedNextDayState.isCombineEnabled) {
-              if (resolvedNextDayState.stageFocus === stageFocusType.FIELD) {
-                await sleep(1000)
-              }
-
-              boundReducersRef.current.forRange(
-                reducers.harvestPlot,
-                Infinity,
-                0,
-                0
-              )
-            }
-          }
-        } catch (e) {
-          console.error(e)
-          boundReducersRef.current.showNotification(JSON.stringify(e), 'error')
-        } finally {
-          setState(previous => ({
-            ...previous,
-            isWaitingForDayToCompleteIncrementing: false,
-          }))
-
-          if (broadcastedPositionMessage) {
-            boundReducersRef.current.prependPendingPeerMessage(
-              broadcastedPositionMessage
-            )
-          }
-        }
-      }, 0)
     },
-    [updateServerForNextDay, props.localforage, setState, boundReducersRef]
+    [updateServerForNextDay, setState, nextDayStateRef]
   )
 
   return {

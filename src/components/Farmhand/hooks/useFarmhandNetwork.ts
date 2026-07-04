@@ -166,7 +166,14 @@ export const useFarmhandNetwork = (
   }, [setState])
 
   const syncToRoom = useCallback(async () => {
-    const { isOnline, priceCrashes, priceSurges, room } = state
+    const {
+      isOnline,
+      priceCrashes,
+      priceSurges,
+      room,
+      playerId,
+      peerRoom,
+    } = instanceProxyRef.current.state
 
     if (!isOnline) return
 
@@ -174,10 +181,10 @@ export const useFarmhandNetwork = (
 
     try {
       setState(s => ({ ...s, isAwaitingNetworkRequest: true, peers: {} }))
-      state.peerRoom?.leave()
+      peerRoom?.leave()
 
       const { valueAdjustments } = await getData(endpoints.getMarketData, {
-        farmId: state.playerId,
+        farmId: playerId,
         room,
       })
 
@@ -212,7 +219,12 @@ export const useFarmhandNetwork = (
       console.log('SYNC TO ROOM SUCCESS')
     } catch (e) {
       boundReducersRef.current.showNotification(SERVER_ERROR, 'error')
-      console.log('SYNC TO ROOM ERROR', e, 'STATE:', state)
+      console.log(
+        'SYNC TO ROOM ERROR',
+        e,
+        'STATE:',
+        instanceProxyRef.current.state
+      )
       console.error(e)
       setState(s => ({ ...s, redirect: '/', cowIdOfferedForTrade: '' }))
     }
@@ -223,54 +235,13 @@ export const useFarmhandNetwork = (
       isAwaitingCowTradeRequest: false,
     }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.isOnline, state.room, scheduleHeartbeat, boundReducersRef])
+  }, [scheduleHeartbeat, boundReducersRef])
 
   const messagePeers = useCallback(
     (message: string, severity?: string) => {
       boundReducersRef.current.prependPendingPeerMessage(message, severity)
     },
     [boundReducersRef]
-  )
-
-  const handleOnlineToggleChange = useCallback(
-    (goOnline: boolean) => {
-      if (!goOnline) {
-        boundReducersRef.current.showNotification(
-          DISCONNECTED_FROM_SERVER,
-          'info'
-        )
-      }
-
-      setState((s: farmhand.state) => {
-        const { room, cowIdOfferedForTrade } = s
-
-        return goOnline
-          ? {
-              ...s,
-              redirect: `/online/${encodeURIComponent(room)}`,
-              cowIdOfferedForTrade,
-              isOnline: true,
-            }
-          : {
-              ...s,
-              redirect: '/',
-              cowIdOfferedForTrade: '',
-              isOnline: false,
-            }
-      })
-    },
-    [setState, boundReducersRef]
-  )
-
-  const handleRoomChange = useCallback(
-    (room: string) => {
-      setState((s: farmhand.state) => ({
-        ...s,
-        room,
-        redirect: `/online/${encodeURIComponent(room.trim() || DEFAULT_ROOM)}`,
-      }))
-    },
-    [setState]
   )
 
   // ComponentDidUpdate for online status and sync
@@ -403,7 +374,5 @@ export const useFarmhandNetwork = (
     tradeForPeerCow,
     handleCowTradeTimeout,
     messagePeers,
-    handleOnlineToggleChange,
-    handleRoomChange,
   }
 }

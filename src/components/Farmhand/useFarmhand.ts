@@ -23,32 +23,37 @@ import {
   toolType,
 } from '../../enums.js'
 import { getData, postData } from '../../fetch-utils.js'
+import { PROGRESS_SAVED_MESSAGE } from '../../strings.js'
 import { LOAN_INCREASED } from '../../templates.js'
-import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { createNewField } from '../../utils/createNewField.js'
 import { createNewForest } from '../../utils/createNewForest.js'
 import { doesMenuObstructStage } from '../../utils/doesMenuObstructStage.js'
 import { generateCow } from '../../utils/generateCow.js'
 import { getAvailableShopInventory } from '../../utils/getAvailableShopInventory.js'
+import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { getPeerMetadata } from '../../utils/getPeerMetadata.js'
-import { moneyTotal } from '../../utils/moneyTotal.js'
-import { nullArray } from '../../utils/nullArray.js'
-import { transformStateDataForImport } from '../../utils/transformStateDataForImport.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
+import { moneyTotal } from '../../utils/moneyTotal.js'
 import { noop } from '../../utils/noop.js'
+import { nullArray } from '../../utils/nullArray.js'
+import { reduceByPersistedKeys } from '../../utils/reduceByPersistedKeys.js'
+import { sleep } from '../../utils/sleep.js'
+import { transformStateDataForImport } from '../../utils/transformStateDataForImport.js'
 
 import { BoundHandlers } from './Farmhand.context.js'
 import { FarmhandProps } from './FarmhandReducers.js'
-import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
 import { FarmhandService } from './FarmhandService.js'
-
-import { useFarmhandReducers } from './useFarmhandReducers.js'
-import { usePrevious } from './usePrevious.js'
+import { getInventoryQuantities } from './helpers/getInventoryQuantities.js'
 
 import { useFarmhandNavigation } from './hooks/useFarmhandNavigation.js'
 import { useFarmhandNetwork } from './hooks/useFarmhandNetwork.js'
-import { useFarmhandDayAdvancement } from './hooks/useFarmhandDayAdvancement.js'
+import {
+  useFarmhandDayAdvancement,
+  NextDayStateRecord,
+} from './hooks/useFarmhandDayAdvancement.js'
 import { useFarmhandNotifications } from './hooks/useFarmhandNotifications.js'
+import { useFarmhandReducers } from './useFarmhandReducers.js'
+import { usePrevious } from './usePrevious.js'
 
 const { CLEANUP, HARVEST, MINE, WATER } = fieldMode
 
@@ -166,8 +171,9 @@ export const useFarmhand = (props: FarmhandProps) => {
   }, [])
 
   const [state, setState] = useState<farmhand.state>(createInitialState)
+  const nextDayStateRef = useRef<NextDayStateRecord | null>(null)
 
-  const boundReducers = useFarmhandReducers(state, setState)
+  const boundReducers = useFarmhandReducers(setState)
   const boundReducersRef = useRef<any>(boundReducers)
 
   boundReducersRef.current = boundReducers as any
@@ -250,8 +256,6 @@ export const useFarmhand = (props: FarmhandProps) => {
     tradeForPeerCow,
     handleCowTradeTimeout,
     messagePeers,
-    handleOnlineToggleChange,
-    handleRoomChange,
   } = useFarmhandNetwork(
     state,
     setState,
@@ -269,7 +273,13 @@ export const useFarmhand = (props: FarmhandProps) => {
     persistState,
     updateServerForNextDay,
     incrementDay,
-  } = useFarmhandDayAdvancement(state, setState, props, boundReducersRef)
+  } = useFarmhandDayAdvancement(
+    state,
+    setState,
+    props,
+    boundReducersRef,
+    nextDayStateRef
+  )
 
   const {
     showInventoryFullNotifications,
@@ -470,7 +480,10 @@ export const useFarmhand = (props: FarmhandProps) => {
 
   // ComponentDidMount
   useEffect(() => {
-    window.farmhand = instanceProxy // Legacy debug hook
+    Object.defineProperty(window, 'farmhand', {
+      get: () => instanceProxyRef.current,
+      configurable: true,
+    })
     let isMounted = true
 
     void (async () => {
@@ -527,6 +540,81 @@ export const useFarmhand = (props: FarmhandProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Post-increment day side effects
+  useEffect(() => {
+    if (!state.hasBooted || !nextDayStateRef.current) return
+
+    const {
+      state: resolvedNextDayState,
+      pendingNotifications,
+      broadcastedPositionMessage,
+      isFirstDay,
+    } = nextDayStateRef.current
+
+    nextDayStateRef.current = null
+
+    void (async () => {
+      try {
+        await props.localforage?.setItem(
+          'state',
+          reduceByPersistedKeys({
+            ...resolvedNextDayState,
+            newDayNotifications: pendingNotifications,
+          })
+        )
+
+        const notifications = [...pendingNotifications]
+
+        notifications
+          .concat(
+            isFirstDay
+              ? []
+              : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
+          )
+          .forEach(({ message, severity }) =>
+            boundReducersRef.current.showNotification(message, severity)
+          )
+
+        if (resolvedNextDayState.isCombineEnabled) {
+          if (resolvedNextDayState.stageFocus === stageFocusType.FIELD) {
+            await sleep(1000)
+          }
+
+          boundReducersRef.current.forRange(
+            reducers.harvestPlot,
+            Infinity,
+            0,
+            0
+          )
+        }
+      } catch (e) {
+        console.error(e)
+        boundReducersRef.current.showNotification(JSON.stringify(e), 'error')
+      } finally {
+        setState(previous => ({
+          ...previous,
+          isWaitingForDayToCompleteIncrementing: false,
+        }))
+
+        if (broadcastedPositionMessage) {
+          boundReducersRef.current.prependPendingPeerMessage(
+            broadcastedPositionMessage
+          )
+        }
+      }
+    })()
+  }, [state.dayCount, state.hasBooted, props.localforage, setState])
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (state.heartbeatTimeoutId) {
+        clearTimeout(state.heartbeatTimeoutId)
+      }
+      state.peerRoom?.leave()
+    }
+  }, [state.heartbeatTimeoutId, state.peerRoom])
 
   // ComponentDidUpdate for non-network effects (achievements, cow selection, menu menu, money)
   useEffect(() => {
