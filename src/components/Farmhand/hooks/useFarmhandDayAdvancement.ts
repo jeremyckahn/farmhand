@@ -147,7 +147,7 @@ export const useFarmhandDayAdvancement = (
         )
 
         nextDayState.isAwaitingNetworkRequest = false
-        nextDayState.isWaitingForDayToCompleteIncrementing = false // UNLOCK UI IMMEDIATELY
+        nextDayState.isWaitingForDayToCompleteIncrementing = true
         nextDayState.newDayNotifications = []
         nextDayState.todaysNotifications = []
 
@@ -198,6 +198,11 @@ export const useFarmhandDayAdvancement = (
           console.error(e)
           boundReducersRef.current.showNotification(JSON.stringify(e), 'error')
         } finally {
+          setState(previous => ({
+            ...previous,
+            isWaitingForDayToCompleteIncrementing: false,
+          }))
+
           if (broadcastedPositionMessage) {
             boundReducersRef.current.prependPendingPeerMessage(
               broadcastedPositionMessage
@@ -209,16 +214,10 @@ export const useFarmhandDayAdvancement = (
     [updateServerForNextDay, props.localforage, setState, boundReducersRef]
   )
 
-  const initializeNewGame = useCallback(async () => {
-    // FIXME: Why would this be empty? This seems like an error when porting from the class-based component to functional.
-    // Stub
-  }, [])
-
   return {
     clearPersistedData,
     persistState,
     updateServerForNextDay,
     incrementDay,
-    initializeNewGame,
   }
 }

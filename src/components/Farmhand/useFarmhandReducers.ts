@@ -4,10 +4,10 @@ import * as reducers from '../../game-logic/reducers/index.js'
 
 import { FarmhandReducers } from './FarmhandReducers.js'
 
-export function useFarmhandReducers(
+export const useFarmhandReducers = (
   state: any,
   setState: (updater: any) => void
-) {
+) => {
   return useMemo(() => {
     const boundReducers: Record<string, Function> = {}
 

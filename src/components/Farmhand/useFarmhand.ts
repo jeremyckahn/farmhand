@@ -269,7 +269,6 @@ export const useFarmhand = (props: FarmhandProps) => {
     persistState,
     updateServerForNextDay,
     incrementDay,
-    initializeNewGame,
   } = useFarmhandDayAdvancement(state, setState, props, boundReducersRef)
 
   const {
@@ -324,7 +323,6 @@ export const useFarmhand = (props: FarmhandProps) => {
       createInitialState,
       getData,
       postData,
-      initializeNewGame,
       tradeForPeerCow,
       handleCowTradeTimeout,
       clearPersistedData,
@@ -356,7 +354,6 @@ export const useFarmhand = (props: FarmhandProps) => {
       isInputBlocked,
       isChatAvailable,
       isForestUnlocked,
-      initializeNewGame,
       tradeForPeerCow,
       handleCowTradeTimeout,
       clearPersistedData,

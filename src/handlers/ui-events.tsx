@@ -76,7 +76,7 @@ export default {
   },
 
   handleCowSellClick(this: Farmhand, cow: farmhand.cow) {
-    this.sellCow(cow.id)
+    this.sellCow(cow)
   },
 
   handleCowTradeClick(this: Farmhand, cow: farmhand.cow) {
