@@ -107,17 +107,9 @@ export const useFarmhandDayAdvancement = (
 
   const incrementDay = useCallback(
     async (isFirstDay = false) => {
-      let shouldBlock = false
-
-      setState(previous => {
-        if (previous.isWaitingForDayToCompleteIncrementing && !isFirstDay) {
-          shouldBlock = true
-        }
-
-        return previous
-      })
-
-      if (shouldBlock) return
+      if (state.isWaitingForDayToCompleteIncrementing && !isFirstDay) {
+        return
+      }
 
       if (!isFirstDay) {
         setState(previous => ({
@@ -166,7 +158,12 @@ export const useFarmhandDayAdvancement = (
         return nextDayState
       })
     },
-    [updateServerForNextDay, setState, nextDayStateRef]
+    [
+      state.isWaitingForDayToCompleteIncrementing,
+      updateServerForNextDay,
+      setState,
+      nextDayStateRef,
+    ]
   )
 
   return {

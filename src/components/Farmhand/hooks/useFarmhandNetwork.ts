@@ -55,114 +55,100 @@ export const useFarmhandNetwork = (
   )
 
   const handleCowTradeTimeout = useCallback(() => {
-    setState(s => {
-      if (typeof s.cowTradeTimeoutId === 'number') {
-        setTimeout(
-          () =>
-            boundReducersRef.current.showNotification(
-              REQUESTED_COW_TRADE_UNAVAILABLE,
-              'error'
-            ),
-          0
-        )
-        console.error('Cow trade request timed out')
-        return {
-          ...s,
-          cowTradeTimeoutId: null,
-          isAwaitingCowTradeRequest: false,
-        }
-      }
-      return s
-    })
-  }, [setState, boundReducersRef])
+    if (typeof state.cowTradeTimeoutId === 'number') {
+      boundReducersRef.current.showNotification(
+        REQUESTED_COW_TRADE_UNAVAILABLE,
+        'error'
+      )
+      console.error('Cow trade request timed out')
+      setState(s => ({
+        ...s,
+        cowTradeTimeoutId: null,
+        isAwaitingCowTradeRequest: false,
+      }))
+    }
+  }, [state.cowTradeTimeoutId, setState, boundReducersRef])
 
   const tradeForPeerCow = useCallback(
     (peerPlayerCow: farmhand.cow) => {
-      setState((s: farmhand.state) => {
-        const {
-          cowIdOfferedForTrade,
-          cowInventory,
-          peers,
-          sendCowTradeRequest,
-        } = s
+      const {
+        cowIdOfferedForTrade,
+        cowInventory,
+        peers,
+        sendCowTradeRequest,
+      } = state
 
-        if (!sendCowTradeRequest) return s
+      if (!sendCowTradeRequest) return
 
-        const { ownerId } = peerPlayerCow
-        const [peerId] =
-          Object.entries(peers).find(
-            ([, peer]: [string, any]) => peer?.playerId === ownerId
-          ) ?? []
+      const { ownerId } = peerPlayerCow
+      const [peerId] =
+        Object.entries(peers).find(
+          ([, peer]: [string, any]) => peer?.playerId === ownerId
+        ) ?? []
 
-        if (!peerId) {
-          console.error(
-            `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
-          )
-          return s
-        }
-
-        const playerAlreadyOwnsRequestedCow = cowInventory.find(
-          ({ id }: farmhand.cow) => id === peerPlayerCow.id
+      if (!peerId) {
+        console.error(
+          `Owner not found for cow ${JSON.stringify(peerPlayerCow)}`
         )
+        return
+      }
 
-        if (playerAlreadyOwnsRequestedCow) {
-          console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
-          setTimeout(
-            () =>
-              boundReducersRef.current.showNotification(
-                COW_ALREADY_OWNED,
-                'error'
-              ),
-            0
-          )
-          return s
-        }
+      const playerAlreadyOwnsRequestedCow = cowInventory.find(
+        ({ id }: farmhand.cow) => id === peerPlayerCow.id
+      )
 
-        const cowToTradeAway = cowInventory.find(
-          ({ id }: farmhand.cow) => id === cowIdOfferedForTrade
-        )
+      if (playerAlreadyOwnsRequestedCow) {
+        console.error(`Cow ID ${peerPlayerCow.id} is already in inventory`)
+        boundReducersRef.current.showNotification(COW_ALREADY_OWNED, 'error')
+        return
+      }
 
-        if (!cowToTradeAway) {
-          console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
-          return s
-        }
+      const cowToTradeAway = cowInventory.find(
+        ({ id }: farmhand.cow) => id === cowIdOfferedForTrade
+      )
 
-        const cowTradeTimeoutId = setTimeout(
-          handleCowTradeTimeout,
-          COW_TRADE_TIMEOUT
-        )
+      if (!cowToTradeAway) {
+        console.error(`Cow ID ${cowIdOfferedForTrade} not found`)
+        return
+      }
 
-        sendCowTradeRequest(
-          {
-            cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
-            cowRequested: peerPlayerCow,
-          },
-          peerId
-        )
+      const cowTradeTimeoutId = setTimeout(
+        handleCowTradeTimeout,
+        COW_TRADE_TIMEOUT
+      )
 
-        return {
-          ...s,
-          cowTradeTimeoutId: (cowTradeTimeoutId as unknown) as number,
-          isAwaitingCowTradeRequest: true,
-        }
-      })
+      sendCowTradeRequest(
+        {
+          cowOffered: { ...cowToTradeAway, isUsingHuggingMachine: false },
+          cowRequested: peerPlayerCow,
+        },
+        peerId
+      )
+
+      setState(s => ({
+        ...s,
+        cowTradeTimeoutId: (cowTradeTimeoutId as unknown) as number,
+        isAwaitingCowTradeRequest: true,
+      }))
     },
-    [setState, handleCowTradeTimeout, boundReducersRef]
+    [state, setState, handleCowTradeTimeout, boundReducersRef]
   )
 
   const scheduleHeartbeat = useCallback(() => {
     setState(s => {
       clearTimeout(s.heartbeatTimeoutId ?? -1)
-      const heartbeatTimeoutId = (window.setTimeout(() => {
-        setState((s2: farmhand.state) => ({
-          ...s2,
-          money: moneyTotal(s2.money, s2.activePlayers ?? 0),
-        }))
-        scheduleHeartbeat()
-      }, HEARTBEAT_INTERVAL_PERIOD) as unknown) as number
-
-      return { ...s, heartbeatTimeoutId }
+      return s
     })
+
+    const timeoutId = (window.setTimeout(() => {
+      setState((s2: farmhand.state) => ({
+        ...s2,
+        money: moneyTotal(s2.money, s2.activePlayers ?? 0),
+      }))
+      scheduleHeartbeat()
+    }, HEARTBEAT_INTERVAL_PERIOD) as unknown) as number
+
+    setState(s => ({ ...s, heartbeatTimeoutId: timeoutId }))
   }, [setState])
 
   const syncToRoom = useCallback(async () => {
