@@ -170,7 +170,11 @@ export const useFarmhand = (props: FarmhandProps) => {
   }, [path, props.match?.params?.room])
 
   const [state, setState] = useState<farmhand.state>(createInitialState)
+  const stateRef = useRef<farmhand.state>(state)
+
+  stateRef.current = state
   const nextDayStateRef = useRef<NextDayStateRecord | null>(null)
+  const hasStartedBootRef = useRef(false)
 
   const boundReducers = useFarmhandReducers(setState)
   const boundReducersRef = useRef(boundReducers)
@@ -275,7 +279,7 @@ export const useFarmhand = (props: FarmhandProps) => {
     updateServerForNextDay,
     incrementDay,
   } = useFarmhandDayAdvancement(
-    state,
+    stateRef,
     setState,
     props,
     boundReducersRef,
@@ -479,6 +483,9 @@ export const useFarmhand = (props: FarmhandProps) => {
   ])
 
   useEffect(() => {
+    if (hasStartedBootRef.current) return
+    hasStartedBootRef.current = true
+
     Object.defineProperty(window, 'farmhand', {
       get: () => instanceProxyRef.current,
       configurable: true,
@@ -540,8 +547,7 @@ export const useFarmhand = (props: FarmhandProps) => {
     return () => {
       isMounted = false
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [createInitialState, incrementDay, props.localforage, syncToRoom])
 
   // Post-increment day side effects
   useEffect(() => {

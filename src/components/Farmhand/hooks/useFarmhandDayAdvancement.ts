@@ -18,7 +18,7 @@ export interface NextDayStateRecord {
 }
 
 export const useFarmhandDayAdvancement = (
-  state: farmhand.state,
+  stateRef: React.MutableRefObject<farmhand.state>,
   setState: React.Dispatch<React.SetStateAction<farmhand.state>>,
   props: FarmhandProps,
   boundReducersRef: React.MutableRefObject<any>,
@@ -48,13 +48,13 @@ export const useFarmhandDayAdvancement = (
 
     let serverValueAdjustments: Record<string, number> | undefined
 
-    if (state.isOnline) {
+    if (stateRef.current.isOnline) {
       const {
         inventory,
         room,
         todaysPurchases,
         todaysStartingInventory,
-      } = state
+      } = stateRef.current
 
       const positions = computeMarketPositions(
         todaysStartingInventory,
@@ -97,11 +97,14 @@ export const useFarmhandDayAdvancement = (
       serverMessages,
       serverValueAdjustments,
     }
-  }, [state, setState])
+  }, [stateRef, setState])
 
   const incrementDay = useCallback(
     async (isFirstDay = false) => {
-      if (state.isWaitingForDayToCompleteIncrementing && !isFirstDay) {
+      if (
+        stateRef.current.isWaitingForDayToCompleteIncrementing &&
+        !isFirstDay
+      ) {
         return
       }
 
@@ -152,12 +155,7 @@ export const useFarmhandDayAdvancement = (
         return nextDayState
       })
     },
-    [
-      state.isWaitingForDayToCompleteIncrementing,
-      updateServerForNextDay,
-      setState,
-      nextDayStateRef,
-    ]
+    [stateRef, updateServerForNextDay, setState, nextDayStateRef]
   )
 
   return {
