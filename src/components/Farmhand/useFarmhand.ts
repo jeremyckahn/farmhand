@@ -167,16 +167,15 @@ export const useFarmhand = (props: FarmhandProps) => {
       valueAdjustments: {},
       version: import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION ?? '',
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [path, props.match?.params?.room])
 
   const [state, setState] = useState<farmhand.state>(createInitialState)
   const nextDayStateRef = useRef<NextDayStateRecord | null>(null)
 
   const boundReducers = useFarmhandReducers(setState)
-  const boundReducersRef = useRef<any>(boundReducers)
+  const boundReducersRef = useRef(boundReducers)
 
-  boundReducersRef.current = boundReducers as any
+  boundReducersRef.current = boundReducers
 
   const prevState = usePrevious(state)
 
@@ -208,23 +207,26 @@ export const useFarmhand = (props: FarmhandProps) => {
 
   const viewList = useMemo(() => {
     const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
-    const list: farmhand.stageFocusType[] = [
-      ...STANDARD_VIEW_LIST,
-    ] as farmhand.stageFocusType[]
+    const list: farmhand.stageFocusType[] = [...STANDARD_VIEW_LIST]
 
     if (state.showHomeScreen) {
-      list.unshift(HOME as farmhand.stageFocusType)
+      list.unshift(HOME)
     }
+
     if (isForestUnlocked && features.FOREST) {
-      list.push(FOREST as farmhand.stageFocusType)
+      list.push(FOREST)
     }
+
     if (state.purchasedCowPen) {
       list.push(COW_PEN)
     }
+
     list.push(WORKSHOP)
+
     if (state.purchasedCellar) {
       list.push(CELLAR)
     }
+
     return list
   }, [
     state.showHomeScreen,
@@ -348,7 +350,6 @@ export const useFarmhand = (props: FarmhandProps) => {
       focusNextView,
       focusPreviousView,
       messagePeers,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }),
     [
       state,
@@ -398,7 +399,6 @@ export const useFarmhand = (props: FarmhandProps) => {
     return bound as BoundHandlers<typeof eventHandlers> & {
       debounced: BoundHandlers<typeof eventHandlers>
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const keyMap = useMemo(() => {
@@ -453,8 +453,8 @@ export const useFarmhand = (props: FarmhandProps) => {
         const viewName = viewList[i]
 
         if (typeof viewName === 'string') {
-          setState(s => ({
-            ...s,
+          setState(previous => ({
+            ...previous,
             stageFocus: stageFocusType[viewName as keyof typeof stageFocusType],
           }))
         }
@@ -478,12 +478,12 @@ export const useFarmhand = (props: FarmhandProps) => {
     clearPersistedData,
   ])
 
-  // ComponentDidMount
   useEffect(() => {
     Object.defineProperty(window, 'farmhand', {
       get: () => instanceProxyRef.current,
       configurable: true,
     })
+
     let isMounted = true
 
     void (async () => {
@@ -498,8 +498,8 @@ export const useFarmhand = (props: FarmhandProps) => {
         })
         const { isCombineEnabled, newDayNotifications } = sanitizedState
 
-        setState(s => ({
-          ...s,
+        setState(previous => ({
+          ...previous,
           ...sanitizedState,
           newDayNotifications: [],
           hasBooted: true,
@@ -524,7 +524,9 @@ export const useFarmhand = (props: FarmhandProps) => {
         )
       } else {
         await incrementDay(true)
-        setState(s => ({ ...s, historicalValueAdjustments: [] }))
+
+        setState(previous => ({ ...previous, historicalValueAdjustments: [] }))
+
         boundReducersRef.current.showNotification(
           LOAN_INCREASED('', STANDARD_LOAN_AMOUNT),
           'info'
