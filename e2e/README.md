@@ -37,11 +37,11 @@ The E2E tests verify that the game works correctly from a user's perspective by 
 # 1. Run the automated setup (installs dependencies and browsers)
 npm run setup
 
-# 2. Start the dev server (in one terminal, from the project root)
+# 2. Start the Redis services (from the project root directory)
 cd ..
-npm run dev
+docker compose up -d
 
-# 3. Run the tests (in another terminal, from the e2e directory)
+# 3. Run the tests (from the e2e directory)
 cd e2e
 npm run test
 ```
@@ -54,26 +54,27 @@ If you prefer to set things up manually:
 # 1. Validate the setup (optional but recommended)
 npm run validate
 
-# 2. Start the dev server (in one terminal, from the project root)
+# 2. Start the Redis services (from the project root directory)
 cd ..
-npm run dev
+docker compose up -d
 
-# 3. Install Playwright browsers (in another terminal, from the e2e directory, only needed once)
+# 3. Install Playwright browsers (in the e2e directory, only needed once)
 cd e2e
 npm run test:install
 
-# 4. Run the tests (from the e2e directory)
+# 4. Run the tests
 npm run test
 ```
 
 ### Running Tests Locally with Playwright
 
-The recommended way to run E2E tests locally is using the Playwright test runner directly. This approach requires that the dev server is already running.
+The E2E tests run on a dedicated stack with dedicated ports (3002 for frontend, 3003 for API, and 8002 for tracker). Playwright automatically spins up and tears down this stack between test runs, so you do not need to manually start the development servers.
 
 **Prerequisites:**
 
 - Node.js and npm installed
 - The main Farmhand dependencies installed (`npm ci --legacy-peer-deps`)
+- Redis services running (`docker compose up -d` in the root project directory)
 
 **Steps:**
 
@@ -83,20 +84,13 @@ The recommended way to run E2E tests locally is using the Playwright test runner
    npm run validate
    ```
 
-2. **Start the development server** (from the project root):
-
-   ```bash
-   cd ..
-   npm run dev
-   ```
-
-3. **Install Playwright browsers** (only needed the first time):
+2. **Install Playwright browsers** (only needed the first time):
 
    ```bash
    npm run test:install
    ```
 
-4. **Run the E2E tests**:
+3. **Run the E2E tests**:
 
    ```bash
    npm run test
@@ -153,7 +147,7 @@ test('describe what the test does', async ({ page }) => {
 
 - `openPage(page, seed)` - Opens the game with an optional seed for deterministic testing
 - `loadFixture(page, fixtureName)` - Loads the game with a deterministic, predefined state to test against
-- The game URL is configurable via the `APP_URL` environment variable (defaults to `http://localhost:3000`)
+- The game URL is configurable via the `APP_URL` environment variable (defaults to `http://localhost:3002`)
 
 ### Test Organization
 
@@ -185,7 +179,7 @@ The Playwright configuration is in `playwright.config.js` and includes:
 
 ### Environment Variables
 
-- `APP_URL` - The base URL for the application (default: `http://localhost:3000`)
+- `APP_URL` - The base URL for the application (default: `http://localhost:3002`)
 - `CI` - Enables CI-specific settings when set
 
 ## Debugging Tests
@@ -222,7 +216,7 @@ npx playwright show-trace test-results/path-to-trace.zip
 
 ### Port Already in Use
 
-If you get port errors, make sure the dev server is running on the correct port (3000 by default).
+If you get port errors, make sure the ports (3002, 3003, and 8002) are not occupied by other processes.
 
 ### Browser Installation
 
@@ -256,20 +250,15 @@ For more details, see the main project's CI workflow configuration.
 
 ### Common Issues and Solutions
 
-#### "Port 3000 is already in use"
+#### "Port 3002 is already in use"
 
-Make sure the development server is running on port 3000:
+Make sure the ports 3002, 3003, and 8002 are not occupied by other processes.
 
-```bash
-# In the main project directory
-npm run dev
-```
-
-If port 3000 is occupied by another process, you can change the port:
+If port 3002 is occupied by another process, you can change the port:
 
 ```bash
 # Set a different port
-APP_URL=http://localhost:3001 npm run test
+APP_URL=http://localhost:3005 npm run test
 ```
 
 #### "Playwright browsers not found"
@@ -280,10 +269,10 @@ Install the browsers:
 npm run test:install
 ```
 
-#### "Cannot connect to <http://localhost:3000>"
+#### "Cannot connect to <http://localhost:3002>"
 
-- Ensure the development server is running and accessible
-- Check that the server is listening on the correct port
+- Ensure the E2E services are starting successfully
+- Check that the servers are listening on the correct ports
 - Verify no firewall is blocking the connection
 - Try accessing the URL manually in your browser
 
@@ -333,7 +322,7 @@ chmod -R 755 playwright-report/
 
 #### "Tests run but nothing happens"
 
-- Verify the game loads correctly at <http://localhost:3000>
+- Verify the game loads correctly at <http://localhost:3002>
 - Check browser console for JavaScript errors
 - Ensure the test selectors match the current UI
 
