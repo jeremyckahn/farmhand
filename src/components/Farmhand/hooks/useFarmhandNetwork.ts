@@ -221,8 +221,7 @@ export const useFarmhandNetwork = (
       isAwaitingNetworkRequest: false,
       isAwaitingCowTradeRequest: false,
     }))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scheduleHeartbeat, boundReducersRef])
+  }, [scheduleHeartbeat, boundReducersRef, instanceProxyRef, setState])
 
   const messagePeers = useCallback(
     (message: string, severity?: string) => {
