@@ -90,8 +90,8 @@ const viteConfig = defineConfig({
   // NOTE: This makes Vite treat .js files as .jsx (for legacy support)
   // See: https://stackoverflow.com/a/76458411/470685
   optimizeDeps: {
-    esbuildOptions: {
-      loader: {
+    rolldownOptions: {
+      moduleTypes: {
         '.js': 'jsx',
       },
     },
