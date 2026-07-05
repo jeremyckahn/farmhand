@@ -31,7 +31,7 @@ export const useFarmhandDayAdvancement = (
   }, [props.localforage, boundReducersRef])
 
   const persistState = useCallback(
-    (currentState: farmhand.state, overrides = {}) => {
+    (currentState: farmhand.state, overrides: Partial<farmhand.state> = {}) => {
       return props.localforage?.setItem(
         'state',
         reduceByPersistedKeys({ ...currentState, ...overrides })

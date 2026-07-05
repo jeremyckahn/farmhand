@@ -44,7 +44,7 @@ export const useFarmhandNetwork = (
       return throttle(
         (...args: any[]) => {
           sendPeerMetadata(...args)
-          setState(s => ({ ...s, pendingPeerMessages: [] }))
+          setState(previous => ({ ...previous, pendingPeerMessages: [] }))
         },
         5000,
         { trailing: true }
@@ -62,8 +62,8 @@ export const useFarmhandNetwork = (
         'error'
       )
       console.error('Cow trade request timed out')
-      setState(s => ({
-        ...s,
+      setState(previous => ({
+        ...previous,
         cowTradeTimeoutId: null,
         isAwaitingCowTradeRequest: false,
       }))
@@ -126,8 +126,8 @@ export const useFarmhandNetwork = (
         peerId
       )
 
-      setState(s => ({
-        ...s,
+      setState(previous => ({
+        ...previous,
         cowTradeTimeoutId: (cowTradeTimeoutId as unknown) as number,
         isAwaitingCowTradeRequest: true,
       }))
@@ -136,20 +136,20 @@ export const useFarmhandNetwork = (
   )
 
   const scheduleHeartbeat = useCallback(() => {
-    setState(s => {
-      clearTimeout(s.heartbeatTimeoutId ?? -1)
-      return s
+    setState(previous => {
+      clearTimeout(previous.heartbeatTimeoutId ?? -1)
+      return previous
     })
 
     const timeoutId = (window.setTimeout(() => {
-      setState((s2: farmhand.state) => ({
-        ...s2,
-        money: moneyTotal(s2.money, s2.activePlayers ?? 0),
+      setState((previous: farmhand.state) => ({
+        ...previous,
+        money: moneyTotal(previous.money, previous.activePlayers ?? 0),
       }))
       scheduleHeartbeat()
     }, HEARTBEAT_INTERVAL_PERIOD) as unknown) as number
 
-    setState(s => ({ ...s, heartbeatTimeoutId: timeoutId }))
+    setState(previous => ({ ...previous, heartbeatTimeoutId: timeoutId }))
   }, [setState])
 
   const syncToRoom = useCallback(async () => {
@@ -167,7 +167,11 @@ export const useFarmhandNetwork = (
     boundReducersRef.current.showNotification(CONNECTING_TO_SERVER, 'info')
 
     try {
-      setState(s => ({ ...s, isAwaitingNetworkRequest: true, peers: {} }))
+      setState(previous => ({
+        ...previous,
+        isAwaitingNetworkRequest: true,
+        peers: {},
+      }))
       peerRoom?.leave()
 
       const { valueAdjustments } = await getData(endpoints.getMarketData, {
@@ -179,8 +183,8 @@ export const useFarmhandNetwork = (
 
       const relayRedundancy = 4
 
-      setState(s => ({
-        ...s,
+      setState(previous => ({
+        ...previous,
         activePlayers: 1,
         peerRoom: joinRoom(
           {
@@ -213,11 +217,15 @@ export const useFarmhandNetwork = (
         instanceProxyRef.current.state
       )
       console.error(e)
-      setState(s => ({ ...s, redirect: '/', cowIdOfferedForTrade: '' }))
+      setState(previous => ({
+        ...previous,
+        redirect: '/',
+        cowIdOfferedForTrade: '',
+      }))
     }
 
-    setState(s => ({
-      ...s,
+    setState(previous => ({
+      ...previous,
       isAwaitingNetworkRequest: false,
       isAwaitingCowTradeRequest: false,
     }))
@@ -239,8 +247,8 @@ export const useFarmhandNetwork = (
     const newIsOnline = path.startsWith('/online')
 
     if (newIsOnline !== state.isOnline || decodedRoom !== state.room) {
-      setState(s => ({
-        ...s,
+      setState(previous => ({
+        ...previous,
         isOnline: newIsOnline,
         redirect: '',
         room: decodedRoom,
@@ -255,8 +263,8 @@ export const useFarmhandNetwork = (
 
       if (!state.isOnline && typeof state.heartbeatTimeoutId === 'number') {
         clearTimeout(state.heartbeatTimeoutId)
-        setState(s => ({
-          ...s,
+        setState(previous => ({
+          ...previous,
           activePlayers: null,
           heartbeatTimeoutId: null,
           peerRoom: null,
@@ -318,8 +326,8 @@ export const useFarmhandNetwork = (
           handleCowTradeRequestReject(instanceProxyRef.current, args[0])
         )
 
-        setState(s => ({
-          ...s,
+        setState(previous => ({
+          ...previous,
           getCowAccept,
           getCowReject,
           getCowTradeRequest,
@@ -334,7 +342,11 @@ export const useFarmhandNetwork = (
         sendPeerMetadata(peerMetadata)
       } else {
         prevState.peerRoom?.leave()
-        setState(s => ({ ...s, peers: {}, sendPeerMetadata: null }))
+        setState(previous => ({
+          ...previous,
+          peers: {},
+          sendPeerMetadata: null,
+        }))
       }
     }
 

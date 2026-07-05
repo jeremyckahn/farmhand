@@ -6,8 +6,8 @@ export const useFarmhandNavigation = (
 ) => {
   const openDialogView = useCallback(
     (dialogViewName: farmhand.dialogView) => {
-      setState(s => ({
-        ...s,
+      setState(previous => ({
+        ...previous,
         currentDialogView: dialogViewName,
         isDialogViewOpen: true,
       }))
@@ -16,16 +16,16 @@ export const useFarmhandNavigation = (
   )
 
   const closeDialogView = useCallback(() => {
-    setState(s => ({ ...s, isDialogViewOpen: false }))
+    setState(previous => ({ ...previous, isDialogViewOpen: false }))
   }, [setState])
 
   const focusNextView = useCallback(() => {
     if (document.activeElement?.getAttribute('role') === 'tab') return
-    setState((s: farmhand.state) => {
-      const currentViewIndex = viewList.indexOf(s.stageFocus)
+    setState((previous: farmhand.state) => {
+      const currentViewIndex = viewList.indexOf(previous.stageFocus)
 
       return {
-        ...s,
+        ...previous,
         stageFocus: viewList[(currentViewIndex + 1) % viewList.length],
       }
     })
@@ -33,11 +33,11 @@ export const useFarmhandNavigation = (
 
   const focusPreviousView = useCallback(() => {
     if (document.activeElement?.getAttribute('role') === 'tab') return
-    setState((s: farmhand.state) => {
-      const currentViewIndex = viewList.indexOf(s.stageFocus)
+    setState((previous: farmhand.state) => {
+      const currentViewIndex = viewList.indexOf(previous.stageFocus)
 
       return {
-        ...s,
+        ...previous,
         stageFocus:
           viewList[
             currentViewIndex === 0
