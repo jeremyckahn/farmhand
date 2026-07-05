@@ -38,6 +38,15 @@ export const useFarmhandNetwork = (
   path: string,
   peerMetadata: farmhand.peerMetadata
 ) => {
+  const {
+    hasBooted: stateHasBooted,
+    isOnline: stateIsOnline,
+    room: stateRoom,
+    heartbeatTimeoutId: stateHeartbeatTimeoutId,
+    peerRoom: statePeerRoom,
+    sendPeerMetadata: sendPeerMetadataFromState,
+  } = state
+
   const wrapSendPeerMetadata = useCallback(
     (sendPeerMetadata: Function) => {
       return throttle(
@@ -232,12 +241,12 @@ export const useFarmhandNetwork = (
 
   // ComponentDidUpdate for online status and sync
   useEffect(() => {
-    if (!state.hasBooted || !prevState) return
+    if (!stateHasBooted || !prevState) return
 
     const decodedRoom = decodeURIComponent(newRoom)
     const newIsOnline = path.startsWith('/online')
 
-    if (newIsOnline !== state.isOnline || decodedRoom !== state.room) {
+    if (newIsOnline !== stateIsOnline || decodedRoom !== stateRoom) {
       setState(previous => ({
         ...previous,
         isOnline: newIsOnline,
@@ -246,14 +255,12 @@ export const useFarmhandNetwork = (
       }))
     }
 
-    if (
-      state.isOnline !== prevState.isOnline ||
-      state.room !== prevState.room
-    ) {
+    if (stateIsOnline !== prevState.isOnline || stateRoom !== prevState.room) {
       if (newIsOnline) syncToRoom()
 
-      if (!state.isOnline && typeof state.heartbeatTimeoutId === 'number') {
-        clearTimeout(state.heartbeatTimeoutId)
+      if (!stateIsOnline && typeof stateHeartbeatTimeoutId === 'number') {
+        clearTimeout(stateHeartbeatTimeoutId)
+
         setState(previous => ({
           ...previous,
           activePlayers: null,
@@ -263,26 +270,26 @@ export const useFarmhandNetwork = (
       }
     }
 
-    if (state.isOnline === false && prevState.isOnline === true) {
+    if (stateIsOnline === false && prevState.isOnline === true) {
       boundReducersRef.current.showNotification(
         DISCONNECTED_FROM_SERVER,
         'info'
       )
     }
 
-    if (state.peerRoom !== prevState.peerRoom) {
-      if (state.peerRoom) {
-        state.peerRoom.onPeerJoin((id: string) =>
+    if (statePeerRoom !== prevState.peerRoom) {
+      if (statePeerRoom) {
+        statePeerRoom.onPeerJoin((id: string) =>
           boundReducersRef.current.addPeer(id)
         )
-        state.peerRoom.onPeerLeave((id: string) =>
+        statePeerRoom.onPeerLeave((id: string) =>
           boundReducersRef.current.removePeer(id)
         )
 
         const [
           sendPeerMetadata,
           getPeerMetadataFunc,
-        ] = state.peerRoom.makeAction('peerMetadata')
+        ] = statePeerRoom.makeAction('peerMetadata')
 
         getPeerMetadataFunc((...args: any[]) =>
           handlePeerMetadataRequest(instanceProxyRef.current, args[0], args[1])
@@ -291,13 +298,13 @@ export const useFarmhandNetwork = (
         const [
           sendCowTradeRequest,
           getCowTradeRequest,
-        ] = state.peerRoom.makeAction('cowTrade')
+        ] = statePeerRoom.makeAction('cowTrade')
 
         getCowTradeRequest((...args: any[]) =>
           handleCowTradeRequest(instanceProxyRef.current, args[0], args[1])
         )
 
-        const [sendCowAccept, getCowAccept] = state.peerRoom.makeAction(
+        const [sendCowAccept, getCowAccept] = statePeerRoom.makeAction(
           'cowAccept'
         )
 
@@ -309,7 +316,7 @@ export const useFarmhandNetwork = (
           )
         )
 
-        const [sendCowReject, getCowReject] = state.peerRoom.makeAction(
+        const [sendCowReject, getCowReject] = statePeerRoom.makeAction(
           'cowReject'
         )
 
@@ -341,20 +348,23 @@ export const useFarmhandNetwork = (
       }
     }
 
-    state.sendPeerMetadata?.(peerMetadata)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    sendPeerMetadataFromState?.(peerMetadata)
   }, [
-    state.isOnline,
-    state.room,
-    state.peerRoom,
-    state.hasBooted,
-    state.sendPeerMetadata,
+    stateHasBooted,
+    stateIsOnline,
+    stateRoom,
+    stateHeartbeatTimeoutId,
+    statePeerRoom,
+    sendPeerMetadataFromState,
     prevState,
     newRoom,
     path,
     syncToRoom,
     wrapSendPeerMetadata,
     peerMetadata,
+    boundReducersRef,
+    instanceProxyRef,
+    setState,
   ])
 
   return {
