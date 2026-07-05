@@ -81,14 +81,13 @@ async function validateSetup() {
   }
 
   // Check environment configuration
-  const appUrl = process.env.APP_URL || 'http://localhost:3000'
+  const appUrl = process.env.APP_URL || 'http://localhost:3002'
   console.log(`✅ App URL configured: ${appUrl}`)
 
   console.log('\n🎉 Playwright E2E setup validation complete!')
   console.log('\nNext steps:')
-  console.log('1. Start the development server: npm run dev')
-  console.log('2. Install browsers: npm run e2e:install')
-  console.log('3. Run tests: npm run e2e:test')
+  console.log('1. Install browsers: npm run e2e:install')
+  console.log('2. Run tests: npm run e2e:test')
 
   return true
 }

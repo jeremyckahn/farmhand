@@ -37,12 +37,7 @@ The E2E tests verify that the game works correctly from a user's perspective by 
 # 1. Run the automated setup (installs dependencies and browsers)
 npm run setup
 
-# 2. Start the dev server (in one terminal, from the project root)
-cd ..
-npm run dev
-
-# 3. Run the tests (in another terminal, from the e2e directory)
-cd e2e
+# 2. Run the tests (from the e2e directory)
 npm run test
 ```
 
@@ -54,21 +49,16 @@ If you prefer to set things up manually:
 # 1. Validate the setup (optional but recommended)
 npm run validate
 
-# 2. Start the dev server (in one terminal, from the project root)
-cd ..
-npm run dev
-
-# 3. Install Playwright browsers (in another terminal, from the e2e directory, only needed once)
-cd e2e
+# 2. Install Playwright browsers (only needed once)
 npm run test:install
 
-# 4. Run the tests (from the e2e directory)
+# 3. Run the tests (from the e2e directory)
 npm run test
 ```
 
 ### Running Tests Locally with Playwright
 
-The recommended way to run E2E tests locally is using the Playwright test runner directly. This approach requires that the dev server is already running.
+The recommended way to run E2E tests locally is using the Playwright test runner directly.
 
 **Prerequisites:**
 
@@ -83,20 +73,13 @@ The recommended way to run E2E tests locally is using the Playwright test runner
    npm run validate
    ```
 
-2. **Start the development server** (from the project root):
-
-   ```bash
-   cd ..
-   npm run dev
-   ```
-
-3. **Install Playwright browsers** (only needed the first time):
+2. **Install Playwright browsers** (only needed the first time):
 
    ```bash
    npm run test:install
    ```
 
-4. **Run the E2E tests**:
+3. **Run the E2E tests** (Playwright will automatically spin up a dedicated server stack on custom ports):
 
    ```bash
    npm run test
@@ -153,7 +136,7 @@ test('describe what the test does', async ({ page }) => {
 
 - `openPage(page, seed)` - Opens the game with an optional seed for deterministic testing
 - `loadFixture(page, fixtureName)` - Loads the game with a deterministic, predefined state to test against
-- The game URL is configurable via the `APP_URL` environment variable (defaults to `http://localhost:3000`)
+- The game URL is configurable via the `APP_URL` environment variable (defaults to `http://localhost:3002`)
 
 ### Test Organization
 
@@ -164,12 +147,14 @@ test('describe what the test does', async ({ page }) => {
 
 ### Authoring New E2E Tests
 
-Run this script to launch the [Playwright codegen tools](https://playwright.dev/docs/codegen-intro):
+Run this script to launch the [Playwright codegen tools](https://playwright.dev/docs/codegen-intro). Because tests use a dedicated server, you must run it yourself for codegen:
 
 ```bash
-# Assumes you already have `npm run dev` running (from the project root)
-# Run this from the e2e directory
-npx playwright codegen localhost:3000?seed=0.5
+# Run this from the project root in a separate terminal:
+npm run dev:e2e
+
+# Run this from the root directory:
+npm run e2e:create
 ```
 
 ## Configuration
@@ -185,7 +170,7 @@ The Playwright configuration is in `playwright.config.js` and includes:
 
 ### Environment Variables
 
-- `APP_URL` - The base URL for the application (default: `http://localhost:3000`)
+- `APP_URL` - The base URL for the application (default: `http://localhost:3002`)
 - `CI` - Enables CI-specific settings when set
 
 ## Debugging Tests
@@ -222,7 +207,7 @@ npx playwright show-trace test-results/path-to-trace.zip
 
 ### Port Already in Use
 
-If you get port errors, make sure the dev server is running on the correct port (3000 by default).
+If you get port errors, make sure the dev server is running on the correct port (3002 by default).
 
 ### Browser Installation
 
@@ -256,21 +241,9 @@ For more details, see the main project's CI workflow configuration.
 
 ### Common Issues and Solutions
 
-#### "Port 3000 is already in use"
+#### "Port 3002 is already in use"
 
-Make sure the development server is running on port 3000:
-
-```bash
-# In the main project directory
-npm run dev
-```
-
-If port 3000 is occupied by another process, you can change the port:
-
-```bash
-# Set a different port
-APP_URL=http://localhost:3001 npm run test
-```
+The E2E tests automatically spin up their own development server on port 3002 (with API on 3003). Ensure no other process is using these ports.
 
 #### "Playwright browsers not found"
 
@@ -280,36 +253,34 @@ Install the browsers:
 npm run test:install
 ```
 
-#### "Cannot connect to <http://localhost:3000>"
+#### "Cannot connect to <http://localhost:3002>"
 
-- Ensure the development server is running and accessible
 - Check that the server is listening on the correct port
 - Verify no firewall is blocking the connection
 - Try accessing the URL manually in your browser
 
 #### "Tests are failing unexpectedly"
 
-1. **Check the development server logs** for errors
-2. **Run tests with headed mode** to see what's happening:
+1. **Run tests with headed mode** to see what's happening:
 
    ```bash
    npm run test:headed
    ```
 
-3. **Use debug mode** to step through the test:
+2. **Use debug mode** to step through the test:
 
    ```bash
    npm run test:debug
    ```
 
-4. **Check for timing issues** - the game might need more time to load:
+3. **Check for timing issues** - the game might need more time to load:
 
    ```javascript
    // In your test, add explicit waits
    await page.waitForLoadState('networkidle')
    ```
 
-5. **Ensure Vercel is set up properly** - at this time, you need to have the local Farmhand project properly linked to a Vercel project. This will be improved in a future iteration.
+4. **Ensure Vercel is set up properly** - at this time, you need to have the local Farmhand project properly linked to a Vercel project. This will be improved in a future iteration.
 
 #### "Permission denied" errors
 
@@ -333,7 +304,7 @@ chmod -R 755 playwright-report/
 
 #### "Tests run but nothing happens"
 
-- Verify the game loads correctly at <http://localhost:3000>
+- Verify the game loads correctly at <http://localhost:3002>
 - Check browser console for JavaScript errors
 - Ensure the test selectors match the current UI
 

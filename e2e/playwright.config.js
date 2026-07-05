@@ -19,10 +19,19 @@ export default defineConfig({
     ['json', { outputFile: 'reports/results.json' }],
     ['list'],
   ],
+  /* Configure the webServer for E2E testing */
+  webServer: {
+    command: 'cd .. && npm run dev:e2e',
+    port: 3002,
+    reuseExistingServer: !process.env.CI,
+    stdout: 'pipe',
+    stderr: 'pipe',
+  },
+
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: process.env.APP_URL || 'http://localhost:3000',
+    baseURL: process.env.APP_URL || 'http://localhost:3002',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

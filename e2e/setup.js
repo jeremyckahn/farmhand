@@ -125,17 +125,14 @@ async function setupE2E() {
 
   // Next steps
   console.log('Next steps:')
-  console.log('1. Start the development server in the main project:')
-  console.log('   cd .. && npm run dev')
-  console.log('')
-  console.log('2. In a separate terminal, run the E2E tests:')
+  console.log('1. Run the E2E tests (this automatically spins up a dedicated backend):')
   console.log('   npm test                    # Run all tests')
   console.log('   npm run test:headed         # Run with browser UI')
   console.log('   npm run test:debug          # Debug mode')
   console.log('   npm run test:ui             # Interactive UI')
   console.log('')
-  console.log('3. Or run from the main project directory:')
-  console.log('   npm run e2e                   # Run all tests')
+  console.log('2. Or run from the main project directory:')
+  console.log('   npm run e2e                 # Run all tests')
   console.log('')
   console.log('For more information, see the README.md file.')
 }
