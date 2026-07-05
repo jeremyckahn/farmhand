@@ -6,7 +6,7 @@ const gameStartTime = '2025-01-01T09:00:00'
  * @returns {Promise<import('@playwright/test').Response | null>}
  */
 export const openPage = async (page, seed = 0.5) => {
-  const appUrl = process.env.APP_URL || 'http://localhost:3000'
+  const appUrl = process.env.APP_URL || 'http://localhost:3002'
 
   // NOTE: A consistent date for the game is set so that time-based events
   // don't interfere with the tests
