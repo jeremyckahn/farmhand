@@ -3,19 +3,18 @@ import window from 'global/window.js'
 import throttle from 'lodash.throttle'
 import { useCallback, useEffect } from 'react'
 
-import {
-  handleCowTradeRequest,
-  handleCowTradeRequestAccept,
-  handleCowTradeRequestReject,
-  handlePeerMetadataRequest,
-} from '../../../handlers/peer-events.js'
-
 import { endpoints, relayUrls, rtcConfig } from '../../../config.js'
 import {
   COW_TRADE_TIMEOUT,
   HEARTBEAT_INTERVAL_PERIOD,
 } from '../../../constants.js'
 import { getData } from '../../../fetch-utils.js'
+import {
+  handleCowTradeRequest,
+  handleCowTradeRequestAccept,
+  handleCowTradeRequestReject,
+  handlePeerMetadataRequest,
+} from '../../../handlers/peer-events.js'
 import {
   CONNECTING_TO_SERVER,
   COW_ALREADY_OWNED,
@@ -25,19 +24,19 @@ import {
 } from '../../../strings.js'
 import { CONNECTED_TO_ROOM } from '../../../templates.js'
 import { moneyTotal } from '../../../utils/moneyTotal.js'
-import { FarmhandProps } from '../FarmhandReducers.js'
 import { FarmhandService } from '../FarmhandService.js'
+
+const relayRedundancy = 4
 
 export const useFarmhandNetwork = (
   state: farmhand.state,
   setState: React.Dispatch<React.SetStateAction<farmhand.state>>,
-  props: FarmhandProps,
   boundReducersRef: React.MutableRefObject<any>,
   instanceProxyRef: React.MutableRefObject<any>,
   prevState: farmhand.state | undefined,
   newRoom: string,
   path: string,
-  peerMetadata: any
+  peerMetadata: farmhand.peerMetadata
 ) => {
   const wrapSendPeerMetadata = useCallback(
     (sendPeerMetadata: Function) => {
@@ -172,6 +171,7 @@ export const useFarmhandNetwork = (
         isAwaitingNetworkRequest: true,
         peers: {},
       }))
+
       peerRoom?.leave()
 
       const { valueAdjustments } = await getData(endpoints.getMarketData, {
@@ -180,8 +180,6 @@ export const useFarmhandNetwork = (
       })
 
       scheduleHeartbeat()
-
-      const relayRedundancy = 4
 
       setState(previous => ({
         ...previous,
@@ -207,16 +205,10 @@ export const useFarmhandNetwork = (
         CONNECTED_TO_ROOM('', room),
         'success'
       )
-      console.log('SYNC TO ROOM SUCCESS')
     } catch (e) {
       boundReducersRef.current.showNotification(SERVER_ERROR, 'error')
-      console.log(
-        'SYNC TO ROOM ERROR',
-        e,
-        'STATE:',
-        instanceProxyRef.current.state
-      )
       console.error(e)
+
       setState(previous => ({
         ...previous,
         redirect: '/',

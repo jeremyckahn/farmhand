@@ -33,17 +33,18 @@ export const useFarmhandNavigation = (
 
   const focusPreviousView = useCallback(() => {
     if (document.activeElement?.getAttribute('role') === 'tab') return
+
     setState((previous: farmhand.state) => {
       const currentViewIndex = viewList.indexOf(previous.stageFocus)
 
+      const viewIdx =
+        currentViewIndex === 0
+          ? viewList.length - 1
+          : (currentViewIndex - 1) % viewList.length
+
       return {
         ...previous,
-        stageFocus:
-          viewList[
-            currentViewIndex === 0
-              ? viewList.length - 1
-              : (currentViewIndex - 1) % viewList.length
-          ],
+        stageFocus: viewList[viewIdx],
       }
     })
   }, [setState, viewList])

@@ -259,7 +259,6 @@ export const useFarmhand = (props: FarmhandProps) => {
   } = useFarmhandNetwork(
     state,
     setState,
-    props,
     boundReducersRef,
     instanceProxyRef,
     prevState,
