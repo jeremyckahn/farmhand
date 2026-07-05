@@ -26,7 +26,7 @@ export const useFarmhandNotifications = (
 
   const showRecipeLearnedNotifications = useCallback(
     ({ learnedRecipes: previousLearnedRecipes }: farmhand.state) => {
-      let learnedRecipes: farmhand.recipe[] = []
+      const learnedRecipes: farmhand.recipe[] = []
 
       Object.keys(state.learnedRecipes).forEach(recipeId => {
         if (!previousLearnedRecipes.hasOwnProperty(recipeId)) {
