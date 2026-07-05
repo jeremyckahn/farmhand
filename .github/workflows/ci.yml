@@ -76,24 +76,7 @@ jobs:
           npm ci
           npx playwright install --with-deps
 
-      - name: Start backend Redis services
-        run: docker compose up -d
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-
-      - name: Start services
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          # Start api
-          npm run start:api &
-          # Start tracker
-          npm run start:tracker &
-          # Start frontend
-          VITE_TRACKER_URL='ws://localhost:8000' npm run start &
-
-          # Wait for services to be ready
-          npx wait-on tcp:3000 tcp:3001 tcp:8000 -t 60000
-
       - name: Run E2E tests
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: npm run e2e
