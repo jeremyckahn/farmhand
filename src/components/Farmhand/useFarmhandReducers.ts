@@ -10,23 +10,24 @@ export const useFarmhandReducers = (setState: (updater: any) => void) => {
 
     Object.assign(boundReducers, reducers) // Ensure all pure reducers are accessible as fallbacks
 
-    for (const key of Object.getOwnPropertyNames(
+    const reducerNames = Object.getOwnPropertyNames(
       FarmhandReducers.prototype
-    ).filter(k => k !== 'constructor') as Array<
-      keyof typeof FarmhandReducers
-    >) {
-      const reducer = (reducers as any)[key] as Function
+    ).filter(k => k !== 'constructor') as Array<keyof typeof FarmhandReducers>
+
+    for (const reducerName of reducerNames) {
+      const reducer = (reducers as any)[reducerName] as Function
 
       if (typeof reducer !== 'function') continue
 
       // Bound version triggers setState
-      boundReducers[key as string] = (...args: any[]) => {
+      boundReducers[reducerName as string] = (...args: any[]) => {
         setState((prevState: any) => {
           const nextState = reducer(prevState, ...args)
 
           if (!nextState || nextState === prevState) {
             return prevState
           }
+
           return { ...nextState }
         })
       }
