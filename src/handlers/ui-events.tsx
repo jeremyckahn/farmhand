@@ -247,7 +247,7 @@ export default {
   },
 
   handleMenuToggle(this: Farmhand, setOpen: boolean | undefined = undefined) {
-    this.setState(({ isMenuOpen }: any) => ({
+    this.setState(({ isMenuOpen }: farmhand.state) => ({
       isMenuOpen: setOpen == null ? !isMenuOpen : setOpen,
     }))
   },
