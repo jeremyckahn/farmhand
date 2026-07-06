@@ -80,12 +80,13 @@ export const useFarmhandNetwork = (
 
   const tradeForPeerCow = useCallback(
     (peerPlayerCow: farmhand.cow) => {
+      const latestState = instanceProxyRef.current?.state ?? state
       const {
         cowIdOfferedForTrade,
         cowInventory,
         peers,
         sendCowTradeRequest,
-      } = state
+      } = latestState
 
       if (!sendCowTradeRequest) return
 
@@ -140,7 +141,8 @@ export const useFarmhandNetwork = (
         isAwaitingCowTradeRequest: true,
       }))
     },
-    [state, setState, handleCowTradeTimeout, boundReducersRef]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [setState, handleCowTradeTimeout, boundReducersRef, instanceProxyRef]
   )
 
   const scheduleHeartbeat = useCallback(() => {

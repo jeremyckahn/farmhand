@@ -528,16 +528,17 @@ export const useFarmhand = (props: FarmhandProps) => {
                 boundReducersRef.current.showNotification(message, severity),
               0
             )
-            if (isCombineEnabled) {
-              boundReducersRef.current.forRange(
-                reducers.harvestPlot,
-                Infinity,
-                0,
-                0
-              )
-            }
           }
         )
+
+        if (isCombineEnabled) {
+          boundReducersRef.current.forRange(
+            reducers.harvestPlot,
+            Infinity,
+            0,
+            0
+          )
+        }
       } else {
         await incrementDay(true)
 
@@ -562,6 +563,8 @@ export const useFarmhand = (props: FarmhandProps) => {
   useEffect(() => {
     if (!state.hasBooted || !nextDayStateRef.current) return
 
+    let isMounted = true
+
     const {
       state: resolvedNextDayState,
       pendingNotifications,
@@ -582,6 +585,8 @@ export const useFarmhand = (props: FarmhandProps) => {
           })
         )
 
+        if (!isMounted) return
+
         const notifications = [...pendingNotifications]
 
         notifications
@@ -599,6 +604,8 @@ export const useFarmhand = (props: FarmhandProps) => {
             await sleep(1000)
           }
 
+          if (!isMounted) return
+
           boundReducersRef.current.forRange(
             reducers.harvestPlot,
             Infinity,
@@ -608,20 +615,28 @@ export const useFarmhand = (props: FarmhandProps) => {
         }
       } catch (e) {
         console.error(e)
-        boundReducersRef.current.showNotification(JSON.stringify(e), 'error')
+        if (isMounted) {
+          boundReducersRef.current.showNotification(JSON.stringify(e), 'error')
+        }
       } finally {
-        setState(previous => ({
-          ...previous,
-          isWaitingForDayToCompleteIncrementing: false,
-        }))
+        if (isMounted) {
+          setState(previous => ({
+            ...previous,
+            isWaitingForDayToCompleteIncrementing: false,
+          }))
 
-        if (broadcastedPositionMessage) {
-          boundReducersRef.current.prependPendingPeerMessage(
-            broadcastedPositionMessage
-          )
+          if (broadcastedPositionMessage) {
+            boundReducersRef.current.prependPendingPeerMessage(
+              broadcastedPositionMessage
+            )
+          }
         }
       }
     })()
+
+    return () => {
+      isMounted = false
+    }
   }, [state.dayCount, state.hasBooted, props.localforage, setState])
 
   // Cleanup on unmount
@@ -645,7 +660,11 @@ export const useFarmhand = (props: FarmhandProps) => {
     )
 
     if (updatedAchievementsState !== state) {
-      setState(() => updatedAchievementsState)
+      setState(previous => {
+        const next = reducers.updateAchievements(previous, prevState)
+
+        return next !== previous ? next : previous
+      })
     }
 
     if (
