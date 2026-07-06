@@ -61,14 +61,7 @@ export const useFarmhand = (props: FarmhandProps) => {
   // Extract props properly
   const {
     features: propsFeatures,
-    match: {
-      path = '',
-      params: {
-        room: newRoom = decodeURIComponent(
-          props.match?.params?.room || DEFAULT_ROOM
-        ),
-      } = {},
-    } = {},
+    match: { path = '', params: { room: paramRoom } = {} } = {},
   } = props
 
   const createInitialState = useCallback((): farmhand.state => {
@@ -173,6 +166,12 @@ export const useFarmhand = (props: FarmhandProps) => {
   const stateRef = useRef<farmhand.state>(state)
 
   stateRef.current = state
+
+  // Falls back to the current room in state when the URL doesn't specify one,
+  // mirroring the legacy class's componentDidUpdate default of
+  // `params: { room: newRoom = room } = this.props.match`.
+  const newRoom = paramRoom !== undefined ? paramRoom : state.room
+
   const nextDayStateRef = useRef<NextDayStateRecord | null>(null)
   const hasStartedBootRef = useRef(false)
 
@@ -531,6 +530,10 @@ export const useFarmhand = (props: FarmhandProps) => {
           }
         )
 
+        // NOTE: Intentional behavior change from the legacy class component:
+        // this used to run once per queued newDayNotifications entry (and
+        // not at all when there were none). It now runs unconditionally,
+        // exactly once, whenever isCombineEnabled is true on boot.
         if (isCombineEnabled) {
           boundReducersRef.current.forRange(
             reducers.harvestPlot,
@@ -639,16 +642,19 @@ export const useFarmhand = (props: FarmhandProps) => {
     }
   }, [state.dayCount, state.hasBooted, props.localforage, setState])
 
-  // Cleanup on unmount
+  // Cleanup on unmount. Uses stateRef (rather than depending on
+  // state.heartbeatTimeoutId/state.peerRoom directly) so this only runs once,
+  // on unmount — depending on those values re-fires this cleanup on every
+  // heartbeat tick, which leaves the peer room every ~10s while online.
   useEffect(() => {
     return () => {
-      if (state.heartbeatTimeoutId) {
-        clearTimeout(state.heartbeatTimeoutId)
+      if (stateRef.current.heartbeatTimeoutId) {
+        clearTimeout(stateRef.current.heartbeatTimeoutId)
       }
 
-      state.peerRoom?.leave()
+      stateRef.current.peerRoom?.leave()
     }
-  }, [state.heartbeatTimeoutId, state.peerRoom])
+  }, [])
 
   // ComponentDidUpdate for non-network effects (achievements, cow selection, menu menu, money)
   useEffect(() => {
