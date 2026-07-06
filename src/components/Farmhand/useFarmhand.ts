@@ -309,13 +309,16 @@ export const useFarmhand = (props: FarmhandProps) => {
       isChatAvailable,
       isForestUnlocked,
       setState: (updater: any, callback?: () => void) => {
-        setState(prev => {
-          const next = typeof updater === 'function' ? updater(prev) : updater
+        setState(previous => {
+          const next =
+            typeof updater === 'function' ? updater(previous) : updater
 
-          if (next === null || next === undefined) return prev
-          const newState = { ...prev, ...next }
+          if (next === null || next === undefined) return previous
+
+          const newState = { ...previous, ...next }
 
           if (callback) setTimeout(callback, 0)
+
           return newState
         })
       },
@@ -400,6 +403,7 @@ export const useFarmhand = (props: FarmhandProps) => {
         (eventHandlers[method] as any).apply(instanceProxyRef.current, args)
       bound.debounced[method] = debounce(bound[method], 50)
     })
+
     return bound as BoundHandlers<typeof eventHandlers> & {
       debounced: BoundHandlers<typeof eventHandlers>
     }
@@ -423,9 +427,11 @@ export const useFarmhand = (props: FarmhandProps) => {
     nullArray(9).forEach((_: null, i: number) => {
       map[`numberKey${i + 1}`] = String(i + 1)
     })
+
     if (import.meta.env?.MODE === 'development') {
       Object.assign(map, { clearPersistedData: 'shift+d', waterAllPlots: 'w' })
     }
+
     return map
   }, [])
 
@@ -464,12 +470,14 @@ export const useFarmhand = (props: FarmhandProps) => {
         }
       }
     })
+
     if (import.meta.env?.MODE === 'development') {
       Object.assign(map, {
         clearPersistedData: () => clearPersistedData(),
         waterAllPlots: () => boundReducersRef.current.waterAllPlots(),
       })
     }
+
     return map
   }, [
     incrementDay,
@@ -484,6 +492,7 @@ export const useFarmhand = (props: FarmhandProps) => {
 
   useEffect(() => {
     if (hasStartedBootRef.current) return
+
     hasStartedBootRef.current = true
 
     Object.defineProperty(window, 'farmhand', {
@@ -621,6 +630,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       if (state.heartbeatTimeoutId) {
         clearTimeout(state.heartbeatTimeoutId)
       }
+
       state.peerRoom?.leave()
     }
   }, [state.heartbeatTimeoutId, state.peerRoom])
@@ -642,23 +652,28 @@ export const useFarmhand = (props: FarmhandProps) => {
       state.stageFocus === stageFocusType.COW_PEN &&
       prevState.stageFocus !== stageFocusType.COW_PEN
     ) {
-      setState(s => ({ ...s, selectedCowId: '' }))
+      setState(previous => ({ ...previous, selectedCowId: '' }))
     }
 
     if (state.stageFocus !== prevState.stageFocus && state.isMenuOpen) {
-      setState(s => ({ ...s, isMenuOpen: !doesMenuObstructStage() }))
+      setState(previous => ({
+        ...previous,
+        isMenuOpen: !doesMenuObstructStage(),
+      }))
     }
 
     if (state.money < prevState.money) {
-      setState(s => ({
-        ...s,
-        todaysLosses: moneyTotal(s.todaysLosses, state.money - prevState.money),
+      setState(previous => ({
+        ...previous,
+        todaysLosses: moneyTotal(
+          previous.todaysLosses,
+          state.money - prevState.money
+        ),
       }))
     }
 
     showInventoryFullNotifications(prevState, state)
     showRecipeLearnedNotifications(prevState)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     state,
     prevState,
