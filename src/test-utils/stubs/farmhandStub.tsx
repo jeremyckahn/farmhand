@@ -13,7 +13,7 @@ export const farmhandStub = async (props: any = {}) => {
     <Farmhand {...{ ...routeProps, ...props }} />
   )
 
-  render(
+  return render(
     <MemoryRouter>
       <Route
         {...{
