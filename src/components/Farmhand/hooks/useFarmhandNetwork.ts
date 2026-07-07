@@ -42,6 +42,7 @@ export const useFarmhandNetwork = (
     hasBooted: stateHasBooted,
     isOnline: stateIsOnline,
     room: stateRoom,
+    redirect: stateRedirect,
     heartbeatTimeoutId: stateHeartbeatTimeoutId,
     peerRoom: statePeerRoom,
     sendPeerMetadata: sendPeerMetadataFromState,
@@ -248,17 +249,35 @@ export const useFarmhandNetwork = (
     const decodedRoom = decodeURIComponent(newRoom)
     const newIsOnline = path.startsWith('/online')
 
-    if (newIsOnline !== stateIsOnline || decodedRoom !== stateRoom) {
+    // A redirect that was just requested (e.g. by toggling online/offline)
+    // hasn't been picked up by the router yet, so `path` still reflects the
+    // route we're navigating away from. Reconciling isOnline/room against
+    // that stale path would immediately stomp on the change we just made.
+    const redirectJustRequested =
+      Boolean(stateRedirect) && stateRedirect !== prevState.redirect
+
+    if (
+      !redirectJustRequested &&
+      (newIsOnline !== stateIsOnline || decodedRoom !== stateRoom)
+    ) {
       setState(previous => ({
         ...previous,
         isOnline: newIsOnline,
         redirect: '',
         room: decodedRoom,
       }))
+    } else if (
+      stateRedirect &&
+      !redirectJustRequested &&
+      newIsOnline === stateIsOnline &&
+      decodedRoom === stateRoom
+    ) {
+      // The router has caught up to the redirect we requested; clear it.
+      setState(previous => ({ ...previous, redirect: '' }))
     }
 
     if (stateIsOnline !== prevState.isOnline || stateRoom !== prevState.room) {
-      if (newIsOnline) syncToRoom()
+      if (stateIsOnline) syncToRoom()
 
       if (!stateIsOnline && typeof stateHeartbeatTimeoutId === 'number') {
         clearTimeout(stateHeartbeatTimeoutId)
@@ -355,6 +374,7 @@ export const useFarmhandNetwork = (
     stateHasBooted,
     stateIsOnline,
     stateRoom,
+    stateRedirect,
     stateHeartbeatTimeoutId,
     statePeerRoom,
     sendPeerMetadataFromState,
