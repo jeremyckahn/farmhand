@@ -1,5 +1,4 @@
 import { expect, test } from '@playwright/test'
-
 import { openPage } from '../../test-utils/open-page.js'
 
 test('can go online', async ({ page }) => {

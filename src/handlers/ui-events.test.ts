@@ -352,6 +352,8 @@ describe('UI Event Handlers', () => {
 
       expect(newState).toEqual({
         redirect: '/online/test-room',
+        cowIdOfferedForTrade: undefined,
+        isOnline: true,
       })
     })
 

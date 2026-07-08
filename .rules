@@ -178,6 +178,23 @@ test('calls waterAllPlots', () => {})
 - Use domain language (farm, crop, money) rather than technical terms (state, props, functions)
 - Focus on intent and purpose rather than implementation details
 - Make descriptions readable as feature specifications
+## Coding Style Guidelines
+
+### 1. Function Declaration Pattern
+
+Always use `const` variable assignment with arrow functions (`=>`) rather than the `function` keyword for declaring functions (including React components, hooks, utilities, and helper functions).
+
+```javascript
+// ✅ CORRECT - const with arrow function
+const useMyHook = () => {
+  // ...
+}
+
+// ❌ WRONG - function keyword
+function useMyHook() {
+  // ...
+}
+```
 
 ## Code Validation
 

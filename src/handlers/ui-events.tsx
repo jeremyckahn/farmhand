@@ -14,7 +14,7 @@ import { reduceByPersistedKeys } from '../utils/reduceByPersistedKeys.js'
 import { transformStateDataForImport } from '../utils/transformStateDataForImport.js'
 
 import { randomNumberService } from '../common/services/randomNumber.js'
-import Farmhand from '../components/Farmhand/Farmhand.js'
+import { FarmhandInstance as Farmhand } from '../components/Farmhand/Farmhand.js'
 import {
   clearPlot,
   fertilizePlot,
@@ -140,7 +140,7 @@ export default {
   },
 
   handleFieldModeSelect(this: Farmhand, selectedFieldMode: farmhand.fieldMode) {
-    this.setState(({ selectedItemId }) => ({
+    this.setState(({ selectedItemId }: farmhand.state) => ({
       selectedItemId:
         selectedFieldMode !== PLANT ||
         (TOOLBELT_FIELD_MODES as Set<farmhand.fieldMode>).has(selectedFieldMode)
@@ -201,7 +201,9 @@ export default {
   },
 
   handleAddMoneyClick(this: Farmhand, amount: number) {
-    this.setState(({ money }) => ({ money: moneyTotal(money, amount) }))
+    this.setState(({ money }: farmhand.state) => ({
+      money: moneyTotal(money, amount),
+    }))
   },
 
   handleClearPersistedDataClick(this: Farmhand) {
@@ -245,7 +247,7 @@ export default {
   },
 
   handleMenuToggle(this: Farmhand, setOpen: boolean | undefined = undefined) {
-    this.setState(({ isMenuOpen }) => ({
+    this.setState(({ isMenuOpen }: farmhand.state) => ({
       isMenuOpen: setOpen == null ? !isMenuOpen : setOpen,
     }))
   },
@@ -332,7 +334,7 @@ export default {
 
         this.setState({
           ...transformStateDataForImport({
-            ...this.createInitialState(),
+            ...(this.createInitialState ? this.createInitialState() : {}),
             ...state,
           }),
           hasBooted: true,
@@ -401,11 +403,12 @@ export default {
       this.showNotification(DISCONNECTING_FROM_SERVER, 'info')
     }
 
-    this.setState(({ room, cowIdOfferedForTrade }) =>
+    this.setState(({ room, cowIdOfferedForTrade }: farmhand.state) =>
       goOnline
         ? {
             redirect: `/online/${encodeURIComponent(room)}`,
             cowIdOfferedForTrade,
+            isOnline: true,
           }
         : {
             redirect: '/',

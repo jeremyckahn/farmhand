@@ -32,27 +32,19 @@ test('should breed two cows to produce a new cow', async ({ page }) => {
 
   await page.waitForTimeout(500)
 
-  // Move them to breeding pen manually:
-  await page
-    .getByText('Breed', { exact: true })
-    .first()
-    .click({ force: true })
-  await page.waitForTimeout(500)
-
-  await page
-    .getByText('Breed', { exact: true })
-    .first()
-    .click({ force: true })
-  await page.waitForTimeout(500)
-
   // End the day 3 times (the gestation period)
   for (let i = 0; i < 3; i++) {
     await page.keyboard.press('Shift+C')
     await page.waitForTimeout(500)
   }
 
+  // Wait for network idle to ensure the day completes properly
+  await page.waitForTimeout(5000)
+
   // Go back to the Cows tab
-  await page.getByRole('tab', { name: 'Cows' }).click()
+  await page
+    .getByRole('tab', { name: 'Cows', exact: true })
+    .click({ force: true })
   await cowsTabPanel.waitFor()
 
   // the 2 cows return, and 1 calf is born
