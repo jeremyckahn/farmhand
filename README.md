@@ -59,6 +59,17 @@ Farmhand uses a [SemVer](https://semver.org/)-like versioning system. It differs
 - This project uses [Vite](https://vitejs.dev/), so please refer to the documentation of that project to learn about the development toolchain.
 - Farmhand uses [Piskel](https://www.piskelapp.com/) for the art assets.
 
+## Debugging
+
+Farmhand exposes its live game state on `window.farmhand` in the browser console, for ad hoc inspection and manipulation during development. This mirrors the game's internal state-management API:
+
+```js
+window.farmhand.state // read the current game state
+window.farmhand.setState({ money: 999999 }) // merge a partial update into state
+```
+
+Prefer this over editing `useState` values directly in the React DevTools components panel — DevTools' hook editor overwrites the rendered value without updating the hook's underlying update queue, so the edit gets silently discarded the next time any real `setState` call fires (which happens frequently, e.g. via the heartbeat timer or day-advancement effects). `window.farmhand.setState()` goes through the real state dispatch, so it persists.
+
 ## Running locally
 
 Requires:
