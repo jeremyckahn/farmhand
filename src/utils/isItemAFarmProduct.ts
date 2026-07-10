@@ -2,7 +2,7 @@ import { itemType } from '../enums.js'
 
 import { isItemAGrownCrop } from './isItemAGrownCrop.js'
 
-const FARM_PRODUCT_TYPES = [
+const FARM_PRODUCT_TYPES: farmhand.itemType[] = [
   itemType.CRAFTED_ITEM,
   itemType.FUEL,
   itemType.MILK,
@@ -11,6 +11,4 @@ const FARM_PRODUCT_TYPES = [
 ]
 
 export const isItemAFarmProduct = (item: farmhand.item): boolean =>
-  Boolean(
-    isItemAGrownCrop(item) || FARM_PRODUCT_TYPES.includes(item.type as any)
-  )
+  Boolean(isItemAGrownCrop(item) || FARM_PRODUCT_TYPES.includes(item.type))

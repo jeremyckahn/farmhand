@@ -6,8 +6,8 @@ import { MEMOIZE_CACHE_CLEAR_THRESHOLD } from '../constants.js'
 // clears the cache once the size exceeds MEMOIZE_CACHE_CLEAR_THRESHOLD to
 // prevent memory bloat.
 // https://github.com/caiogondim/fast-memoize.js/blob/5cdfc8dde23d86b16e0104bae1b04cd447b98c63/src/index.js#L114-L128
-export class MemoizeCache {
-  cache: Record<string, any> = {}
+export class MemoizeCache<TValue = unknown> {
+  cache: Record<string, TValue> = {}
   cacheSize: number
 
   /**
@@ -23,11 +23,11 @@ configure fast-memoize.
     return key in this.cache
   }
 
-  get(key: string) {
+  get(key: string): TValue {
     return this.cache[key]
   }
 
-  set(key: string, value: any) {
+  set(key: string, value: TValue) {
     if (Object.keys(this.cache).length > this.cacheSize) {
       this.cache = {}
     }
@@ -41,11 +41,11 @@ configure fast-memoize.
  * @returns T
  * @see ://github.com/caiogondim/fast-memoize.js
  */
-export const memoize = <T extends (...args: any[]) => any>(
+export const memoize = <T extends (...args: never[]) => unknown>(
   fn: T,
-  config: any = {}
+  config: Record<string, unknown> = {}
 ): T =>
   fastMemoize(fn, {
-    cache: { create: () => new MemoizeCache(config) },
+    cache: { create: () => new MemoizeCache<ReturnType<T>>(config) },
     ...config,
   }) as T

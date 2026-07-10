@@ -16,7 +16,7 @@ export const generateCow = (
     gender?: farmhand.cow['gender']
     color?: farmhand.cow['color']
     id?: farmhand.cow['id']
-    [key: string]: any
+    [key: string]: unknown
   } = {}
 ): farmhand.cow => {
   const gender =
