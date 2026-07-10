@@ -41,6 +41,11 @@ configure fast-memoize.
  * @returns T
  * @see ://github.com/caiogondim/fast-memoize.js
  */
+// `never[]` (rather than `any[]`) as the rest-parameter type is intentional:
+// `never` is assignable to any parameter type, so this constrains T to "any
+// function type" without introducing `any`, while inference still preserves
+// fn's real parameter list — calling the memoized function with the wrong
+// argument types still errors as expected.
 export const memoize = <T extends (...args: never[]) => unknown>(
   fn: T,
   config: Record<string, unknown> = {}
