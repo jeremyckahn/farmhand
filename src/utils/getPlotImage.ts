@@ -8,11 +8,25 @@ import { getPlotContentType } from './getPlotContentType.js'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
-const isPlotContent = (obj: any = {}): obj is farmhand.plotContent =>
-  Boolean(obj && obj['itemId'] && obj['fertilizerType'])
+const isPlotContent = (obj: unknown = {}): obj is farmhand.plotContent =>
+  Boolean(
+    obj &&
+      typeof obj === 'object' &&
+      'itemId' in obj &&
+      'fertilizerType' in obj &&
+      obj.itemId &&
+      obj.fertilizerType
+  )
 
-const isShoveledPlot = (obj: any = {}): obj is farmhand.shoveledPlot =>
-  Boolean(obj && obj['isShoveled'] && obj['daysUntilClear'])
+const isShoveledPlot = (obj: unknown = {}): obj is farmhand.shoveledPlot =>
+  Boolean(
+    obj &&
+      typeof obj === 'object' &&
+      'isShoveled' in obj &&
+      'daysUntilClear' in obj &&
+      obj.isShoveled &&
+      obj.daysUntilClear
+  )
 
 const isPlotContentACrop = (
   plotContents: farmhand.plotContent
@@ -45,7 +59,7 @@ export const getPlotImage = (
           itemImageId = seedItem.id
       }
 
-      return (itemImages as any)[itemImageId]
+      return (itemImages as Record<string, string>)[itemImageId]
     }
 
     if (getPlotContentType(plotContents) === itemType.WEED) {
@@ -54,16 +68,18 @@ export const getPlotImage = (
       // negative modulo index.
       const color = weedColors[(x * y) % weedColors.length]
 
-      return (itemImages as any)[`weed-${color}`]
+      return (itemImages as Record<string, string>)[`weed-${color}`]
     }
 
     // Handle other plot content (non-crop, non-weed)
-    return (itemImages as any)[(plotContents as farmhand.plotContent).itemId]
+    return (itemImages as Record<string, string>)[
+      (plotContents as farmhand.plotContent).itemId
+    ]
   }
 
   if (isShoveledPlot(plotContents)) {
     if (plotContents?.oreId) {
-      return (itemImages as any)[plotContents.oreId]
+      return (itemImages as Record<string, string>)[plotContents.oreId]
     }
   }
 

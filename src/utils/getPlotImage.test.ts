@@ -1,6 +1,7 @@
 import { testCrop } from '../test-utils/index.js'
 import { items as itemImages } from '../img/index.js'
 import { silverOre } from '../data/items.js'
+import { fertilizerType } from '../enums.js'
 
 import { getPlotImage } from './getPlotImage.js'
 import { getPlotContentFromItemId } from './getPlotContentFromItemId.js'
@@ -66,6 +67,23 @@ describe('getPlotImage', () => {
         0,
         0
       )
+    ).toBe((itemImages as Record<string, string>)[silverOre.id])
+  })
+
+  test('returns ore image for a freshly-shoveled plot', () => {
+    // Mirrors the shape minePlot() produces: itemId is an empty string
+    // while the plot is shoveled, so isPlotContent() must not mistake it
+    // for real plot content based on itemId's mere presence.
+    const shoveledPlot = {
+      itemId: '',
+      fertilizerType: fertilizerType.NONE,
+      isShoveled: true,
+      daysUntilClear: 3,
+      oreId: silverOre.id,
+    }
+
+    expect(
+      getPlotImage((shoveledPlot as unknown) as farmhand.shoveledPlot, 0, 0)
     ).toBe((itemImages as Record<string, string>)[silverOre.id])
   })
 

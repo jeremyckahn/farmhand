@@ -3,11 +3,14 @@ import { PEER_METADATA_STATE_KEYS } from '../constants.js'
 export const getPeerMetadata = (
   state: farmhand.state
 ): farmhand.peerMetadata => {
-  const reducedState = PEER_METADATA_STATE_KEYS.reduce((acc: any, key) => {
-    acc[key] = state[key as keyof farmhand.state]
+  const reducedState = PEER_METADATA_STATE_KEYS.reduce(
+    (acc: Record<string, unknown>, key) => {
+      acc[key] = state[key as keyof farmhand.state]
 
-    return acc
-  }, {})
+      return acc
+    },
+    {}
+  )
 
   Object.assign(reducedState, {
     cowOfferedForTrade: state.cowInventory.find(
@@ -15,5 +18,5 @@ export const getPeerMetadata = (
     ),
   })
 
-  return reducedState as farmhand.peerMetadata
+  return (reducedState as unknown) as farmhand.peerMetadata
 }

@@ -7,6 +7,6 @@ export const getPriceEventForCrop = (
 ): farmhand.priceEvent => ({
   itemId: cropItem.id,
   daysRemaining:
-    getCropLifecycleDuration(cropItem as any) -
+    getCropLifecycleDuration(cropItem as { cropTimeline: number[] }) -
     PRICE_EVENT_STANDARD_DURATION_DECREASE,
 })

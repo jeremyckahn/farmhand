@@ -1,7 +1,10 @@
-export function totalIngredientsInRecipe(recipe: any, amount = 1) {
+export function totalIngredientsInRecipe(
+  recipe: { ingredients: Record<string, number> },
+  amount = 1
+) {
   return (
     amount *
-    Object.values(recipe.ingredients as Record<string, number>).reduce(
+    Object.values(recipe.ingredients).reduce(
       (acc: number, quantity: number) => acc + quantity,
       0
     )
