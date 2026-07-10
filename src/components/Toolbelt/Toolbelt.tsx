@@ -14,8 +14,8 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import toolsData from '../../data/tools.js'
 
 import { tools as toolImages, craftedItems, pixel } from '../../img/index.js'
-
-import './Toolbelt.sass'
+import { Div, Img } from '../Elements/index.js'
+import { squareImgSx } from '../../styles/sx.js'
 
 const getTools = memoize(
   (toolLevels: Record<farmhand.toolType, farmhand.toolLevel>) => {
@@ -55,61 +55,75 @@ export const Toolbelt = ({
   const tools = getTools(toolLevels)
 
   return (
-    <div className="Toolbelt">
-      <div className="button-array">
+    <Div className="Toolbelt">
+      <Div
+        className="button-array"
+        sx={{ '& button': { flexGrow: 1, margin: '0 0.5em' } }}
+      >
         {tools.map(
-          ({ alt, fieldMode, fieldKey, hiddenText, id, levelInfo, type }) => (
-            <Tooltip
-              followCursor
-              {...{
-                key: fieldMode,
-                placement: 'top',
-                title: (
-                  <Typography component="div">
-                    <p>{alt}</p>
-                    <ReactMarkdown
-                      {...{
-                        className: 'markdown',
-                        source: (levelInfo as any)[toolLevels[type]],
-                      }}
-                    />
-                    <p>({fieldKey})</p>
-                  </Typography>
-                ),
-              }}
-            >
-              <Button
+          ({ alt, fieldMode, fieldKey, hiddenText, id, levelInfo, type }) => {
+            const isSelected = fieldMode === currentFieldMode
+
+            return (
+              <Tooltip
+                followCursor
                 {...{
-                  className: classNames({
-                    selected: fieldMode === currentFieldMode,
-                  }),
-                  color: 'primary',
-                  onClick: () => handleFieldModeSelect(fieldMode),
-                  variant:
-                    fieldMode === currentFieldMode ? 'contained' : 'text',
+                  key: fieldMode,
+                  placement: 'top',
+                  title: (
+                    <Typography component="div">
+                      <p>{alt}</p>
+                      <ReactMarkdown
+                        {...{
+                          className: 'markdown',
+                          source: (levelInfo as any)[toolLevels[type]],
+                        }}
+                      />
+                      <p>({fieldKey})</p>
+                    </Typography>
+                  ),
                 }}
               >
-                {/* alt is in a different format here because of linter weirdness. */}
-                <img
+                <Button
                   {...{
-                    className: `square ${id}`,
-                    src: pixel,
-                    style: {
-                      backgroundImage: `url(${getToolImage({
-                        level: toolLevels[type],
-                        id,
-                      })})`,
-                    },
+                    className: classNames({ selected: isSelected }),
+                    color: 'primary',
+                    onClick: () => handleFieldModeSelect(fieldMode),
+                    variant: isSelected ? 'contained' : 'text',
                   }}
-                  alt={alt}
-                />
-                <span className="visually_hidden">{hiddenText}</span>
-              </Button>
-            </Tooltip>
-          )
+                  sx={
+                    isSelected
+                      ? {
+                          border: '1px solid #000',
+                          backgroundColor: 'transparent',
+                          '&:hover': { backgroundColor: '#ffffb3' },
+                        }
+                      : undefined
+                  }
+                >
+                  {/* alt is in a different format here because of linter weirdness. */}
+                  <Img
+                    {...{
+                      className: `square ${id}`,
+                      src: pixel,
+                      style: {
+                        backgroundImage: `url(${getToolImage({
+                          level: toolLevels[type],
+                          id,
+                        })})`,
+                      },
+                    }}
+                    sx={squareImgSx}
+                    alt={alt}
+                  />
+                  <span className="visually_hidden">{hiddenText}</span>
+                </Button>
+              </Tooltip>
+            )
+          }
         )}
-      </div>
-    </div>
+      </Div>
+    </Div>
   )
 }
 

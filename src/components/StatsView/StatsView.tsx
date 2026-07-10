@@ -26,8 +26,7 @@ import {
   FARM_PRODUCTS_TOOLTIP_TEXT,
 } from '../../strings.js'
 import { DAILY_FINANCIAL_HISTORY_RECORD_LENGTH } from '../../constants.js'
-
-import './StatsView.sass'
+import { Div } from '../Elements/index.js'
 
 const ElevatedPaper = (props: any) => (
   <Paper {...{ ...props, elevation: 6 }}>{props.children}</Paper>
@@ -57,7 +56,16 @@ export const StatsView = ({
   totalFarmProductsSold = farmProductsSold(itemsSold),
   currentLevel = levelAchieved(experience),
 }: StatsViewProps) => (
-  <div className="StatsView">
+  <Div
+    className="StatsView"
+    sx={{
+      '& h3, & .MuiTableContainer-root': {
+        margin: '0 auto 1em',
+        maxWidth: 400,
+      },
+      '& h3': { marginTop: '2em' },
+    }}
+  >
     <TableContainer {...{ component: ElevatedPaper }}>
       <Table aria-label="Farmer Stats">
         <TableBody>
@@ -251,7 +259,7 @@ export const StatsView = ({
         </TableContainer>
       </>
     )}
-  </div>
+  </Div>
 )
 
 StatsView.propTypes = {

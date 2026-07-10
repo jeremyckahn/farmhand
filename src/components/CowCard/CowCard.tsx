@@ -30,9 +30,9 @@ import {
   WITHDRAW_COW_FROM_TRADE,
 } from '../../templates.js'
 
-import Subheader from './Subheader/index.js'
+import { A } from '../Elements/index.js'
 
-import './CowCard.sass'
+import Subheader from './Subheader/index.js'
 
 const genderIcons = {
   [genders.FEMALE as string]: faVenus,
@@ -161,15 +161,22 @@ export const CowCard = ({
 
   return (
     <>
-      <a
+      <A
         {...{
           className: 'CowCard-scroll-anchor',
           href: `#cow-${cow.id}`,
           ref: scrollAnchorRef,
         }}
+        sx={{
+          display: 'block',
+          height: 0,
+          position: 'relative',
+          top: '-0.75em',
+          visibility: 'hidden',
+        }}
       >
         &nbsp;
-      </a>
+      </A>
       <Card
         {...{
           className: classNames('CowCard', {
@@ -178,6 +185,25 @@ export const CowCard = ({
           }),
           raised: isSelected,
           ref: cardRef,
+        }}
+        sx={{
+          '& .hearts': {
+            marginTop: '0.5em',
+            '& li': {
+              display: 'inline',
+              margin: '0 0.25em 0 0',
+            },
+          },
+          ...(isCowPurchased
+            ? {
+                '& .MuiCardHeader-root': { paddingTop: 0 },
+                '& .MuiCardHeader-title': {
+                  alignItems: 'baseline',
+                  display: 'flex',
+                },
+                '& .Bloodline': { margin: '0 0 1em' },
+              }
+            : {}),
         }}
       >
         {isSelected && (

@@ -14,6 +14,8 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import { GlobalHotKeys } from 'react-hotkeys'
 import classNames from 'classnames'
 
+import { Theme } from '@mui/material/styles/index.js'
+
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import Plot from '../Plot/index.js'
 import QuickSelect from '../QuickSelect/index.js'
@@ -23,8 +25,23 @@ import { levelAchieved } from '../../utils/levelAchieved.js'
 import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
 import { nullArray } from '../../utils/nullArray.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
+import { Div } from '../Elements/index.js'
+import { breakpoints, layout } from '../../styles/tokens.js'
 
-import './Field.sass'
+import dirtBg from '../../img/ui/dirt.png'
+import sprinklerImg from '../../img/items/sprinkler.png'
+import scarecrowImg from '../../img/items/scarecrow.png'
+
+const colorRedDanger = 'rgba(255, 0, 0, 0.5)'
+const colorBlueWater = 'rgba(125, 245, 255, 0.6)'
+const colorBrownFertilize = 'rgba(125, 56, 0, 0.75)'
+const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
+const colorYellow = 'rgba(255, 255, 0, 0.75)'
+
+// $appBarOffset (135px) + $horizontalQuickSelectOffest (80px)
+const obscuringPortraitUiVerticalOffset = 215
+// $appBarOffset (135px) + $bottomControlsOffset (260px)
+const obscuringLandscapeUiVerticalOffset = 395
 
 const {
   CLEANUP,
@@ -64,6 +81,7 @@ export interface FieldProps {
   inventory: farmhand.state['inventory']
   inventoryLimit: farmhand.state['inventoryLimit']
   isCombineEnabled: boolean
+  isMenuOpen?: boolean
   purchasedCombine: number
   purchasedField: number
   rows?: number
@@ -361,6 +379,7 @@ export const Field = (props: FieldProps) => {
     hoveredPlotRangeSize,
     inventory,
     inventoryLimit,
+    isMenuOpen = true,
     purchasedField,
   } = props
 
@@ -388,7 +407,7 @@ export const Field = (props: FieldProps) => {
           // Handlers are defined in Farmhand.js's initInputHandlers.
         }}
       />
-      <div
+      <Div
         {...{
           className: classNames('Field', {
             'cleanup-mode': propsFieldMode === CLEANUP,
@@ -407,6 +426,182 @@ export const Field = (props: FieldProps) => {
           'data-purchased-field': purchasedField,
           'data-testid': 'field',
         }}
+        sx={(theme: Theme) => ({
+          margin: '0 auto',
+          '@media (orientation: portrait)': {
+            marginBottom: '10.5em',
+            [`@media (min-width: ${breakpoints.sm}px)`]: {
+              '&[data-purchased-field="0"]': {
+                maxWidth: `calc(100vh * (6/10) - ${obscuringPortraitUiVerticalOffset}px)`,
+              },
+              '&[data-purchased-field="1"]': {
+                maxWidth: `calc(100vh * (8/12) - ${obscuringPortraitUiVerticalOffset}px)`,
+              },
+              '&[data-purchased-field="2"]': {
+                maxWidth: `calc(100vh * (10/16) - ${obscuringPortraitUiVerticalOffset}px)`,
+              },
+              '&[data-purchased-field="3"]': {
+                maxWidth: `calc(100vh * (12/18) - ${obscuringPortraitUiVerticalOffset}px)`,
+              },
+            },
+          },
+          '@media (orientation: landscape)': {
+            margin: '5em auto',
+            [`@media (min-height: ${breakpoints.largePhone}px)`]: {
+              marginTop: 'auto',
+            },
+            [`@media (min-height: ${breakpoints.sm}px)`]: {
+              '&[data-purchased-field="0"]': {
+                maxWidth: `calc(100vh * (10/6) - ${obscuringLandscapeUiVerticalOffset}px)`,
+              },
+              '&[data-purchased-field="1"]': {
+                maxWidth: `calc(100vh * (12/8) - ${obscuringLandscapeUiVerticalOffset}px)`,
+              },
+              '&[data-purchased-field="2"]': {
+                maxWidth: `calc(100vh * (16/10) - ${obscuringLandscapeUiVerticalOffset}px)`,
+              },
+              '&[data-purchased-field="3"]': {
+                maxWidth: `calc(100vh * (18/12) - ${obscuringLandscapeUiVerticalOffset}px)`,
+              },
+            },
+          },
+          '& .row': {
+            display: 'flex',
+            flexDirection: 'row',
+            width: '100%',
+            '@media (orientation: landscape)': {
+              flexDirection: 'column-reverse',
+            },
+          },
+          '& .react-transform-component': {
+            overflow: 'visible',
+            width: 'auto',
+          },
+          '& .react-transform-element': {
+            display: 'block',
+            height: 'auto',
+            width: 'auto',
+            '& .row-wrapper': {
+              backgroundImage: `url(${dirtBg})`,
+              border: 'solid 1px #000',
+              backgroundRepeat: 'repeat',
+              backgroundSize: 'calc(100% * (1 / 6) * 1.5)',
+              imageRendering: 'pixelated',
+              display: 'flex',
+              flexDirection: 'column',
+              '@media (orientation: landscape)': {
+                flexDirection: 'row',
+                marginRight: layout.fieldSpaceForRightSideControls,
+              },
+            },
+          },
+          '&[data-purchased-field="1"] .react-transform-element': {
+            backgroundSize: 'calc(100% * (1 / 8) * 1.5)',
+          },
+          '&[data-purchased-field="2"] .react-transform-element': {
+            backgroundSize: 'calc(100% * (1 / 10) * 1.5)',
+          },
+          '&[data-purchased-field="3"] .react-transform-element': {
+            backgroundSize: 'calc(100% * (1 / 12) * 1.5)',
+          },
+          '& .slider-wrapper': {
+            background: 'rgba(128, 128, 128, 0.5)',
+            borderRadius: '2em',
+            bottom: '7.5em',
+            left: isMenuOpen
+              ? `calc(50vw + ${layout.sidebarWidth} / 2)`
+              : '50%',
+            padding: '0 1em',
+            position: 'fixed',
+            transform: 'translateX(-50%)',
+            transition: theme.transitions.create('left', {
+              duration: theme.transitions.duration.enteringScreen,
+              easing: theme.transitions.easing.easeOut,
+            }),
+            width: '250px',
+            '@media (orientation: portrait)': {
+              bottom: '13.5em',
+              display: isMenuOpen ? 'none' : undefined,
+            },
+          },
+          '& .zoom-controls': {
+            position: 'fixed',
+            display: 'flex',
+            flexDirection: 'column',
+            bottom: '1em',
+            '@media (orientation: portrait)': {
+              display: isMenuOpen ? 'none' : undefined,
+            },
+            '&.zoom-in-wrapper': {
+              right: '0.5em',
+              '@media (orientation: portrait)': { right: '0.25em' },
+              '@media (orientation: landscape)': { bottom: '5.5em' },
+            },
+            '&.zoom-out-wrapper': {
+              '@media (orientation: portrait)': { left: '0.5em' },
+              '@media (orientation: landscape)': { right: '0.5em' },
+            },
+            [`@media (max-width: ${breakpoints.mediumPhone}px)`]: {
+              bottom: '0.25em',
+            },
+            '& button': { margin: '0.5em' },
+          },
+          '& .MuiFormControl-root': {
+            alignItems: 'center',
+            display: 'flex',
+            padding: '1em 0 0',
+          },
+          '&.water-mode .Plot.crop:hover': {
+            backgroundColor: colorBlueWater,
+            cursor: 'pointer',
+          },
+          '&.water-mode .Plot.is-in-hover-range': {
+            backgroundColor: colorBlueWater,
+          },
+          '&.fertilize-mode .Plot.can-be-fertilized': {
+            backgroundColor: colorBrownFertilize,
+            '&:hover': { cursor: 'pointer' },
+          },
+          '&.harvest-mode .Plot.can-be-harvested': {
+            backgroundColor: colorGreenOk,
+            '&:hover': { cursor: 'pointer' },
+          },
+          '&.mine-mode .Plot.can-be-mined': {
+            backgroundColor: colorGreenOk,
+            '&:hover': { cursor: 'pointer', borderColor: colorYellow },
+            '&.is-in-hover-range': { borderColor: colorYellow },
+          },
+          '&.cleanup-mode .Plot.crop': {
+            backgroundColor: colorYellow,
+            cursor: 'pointer',
+          },
+          '&.harvest-mode.is-inventory-full .Plot.crop.can-be-harvested, &.cleanup-mode.is-inventory-full .Plot.is-replantable': {
+            backgroundColor: colorRedDanger,
+            cursor: 'not-allowed',
+          },
+          '&.cleanup-mode .Plot.is-replantable': {
+            backgroundColor: colorGreenOk,
+            cursor: 'pointer',
+          },
+          '&.cleanup-mode .Plot.can-be-harvested': {
+            backgroundColor: colorGreenOk,
+            cursor: 'auto',
+          },
+          '&.set-sprinkler-mode:hover .Plot:hover, &.set-scarecrow-mode:hover .Plot:hover': {
+            '&.is-empty img': { cursor: 'pointer', opacity: 0.5 },
+            '&:not(.is-empty)': {
+              backgroundColor: colorRedDanger,
+              backgroundImage: 'none',
+              cursor: 'not-allowed',
+            },
+          },
+          '&.set-sprinkler-mode:hover .Plot:hover.is-empty img': {
+            backgroundImage: `url(${sprinklerImg})`,
+          },
+          '&.set-scarecrow-mode:hover .Plot:hover.is-empty img': {
+            backgroundImage: `url(${scarecrowImg})`,
+          },
+        })}
       >
         <TransformWrapper
           {...{
@@ -474,7 +669,7 @@ export const Field = (props: FieldProps) => {
           </div>
         )}
         <QuickSelect />
-      </div>
+      </Div>
     </>
   )
 }
@@ -490,6 +685,7 @@ Field.propTypes = {
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
   isCombineEnabled: bool.isRequired,
+  isMenuOpen: bool,
   purchasedCombine: number.isRequired,
   purchasedField: number.isRequired,
   rows: number.isRequired,

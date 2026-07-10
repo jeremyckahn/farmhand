@@ -21,8 +21,7 @@ import { nullArray } from '../../../utils/nullArray.js'
 import { memoize } from '../../../utils/memoize.js'
 import { moneyString } from '../../../utils/moneyString.js'
 import Bloodline from '../Bloodline/index.js'
-
-import './Subheader.sass'
+import { colors } from '../../../styles/tokens.js'
 
 // The extra 0.5 is for rounding up to the next full heart. This allows a fully
 // happy cow to have full hearts on the beginning of a new day.
@@ -123,6 +122,9 @@ const Subheader = ({
                     icon: isHeartFull(i, numberOfFullHearts)
                       ? faFullHeart
                       : faEmptyHeart,
+                    color: isHeartFull(i, numberOfFullHearts)
+                      ? colors.heart
+                      : undefined,
                     className: classNames('heart', {
                       'is-full': isHeartFull(i, numberOfFullHearts),
                     }),

@@ -15,7 +15,6 @@ import { getSalePriceMultiplier } from '../../utils/getSalePriceMultiplier.js'
 import { FERMENTED_CROP_NAME } from '../../templates.js'
 import AnimatedNumber from '../AnimatedNumber/index.js'
 
-import './Keg.sass'
 import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
 import { wineService } from '../../services/wine.js'
 import { cellarService } from '../../services/cellar.js'
@@ -54,7 +53,16 @@ export function Keg({ keg }: { keg: farmhand.keg }) {
   const spoilageRateDisplayValue = Number((spoilageRate * 100).toPrecision(2))
 
   return (
-    <Card className="Keg">
+    <Card
+      className="Keg"
+      sx={{
+        position: 'relative',
+        '& .MuiCardHeader-avatar img': {
+          width: '3em',
+          filter: 'drop-shadow(1px 1px 2px rgba(255, 0, 131, 0.63))',
+        },
+      }}
+    >
       <CardHeader
         title={recipeName}
         avatar={

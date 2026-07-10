@@ -21,7 +21,6 @@ import IngredientsList from '../IngredientsList/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import './Recipe.sass'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
 const Recipe = ({
@@ -75,6 +74,15 @@ const Recipe = ({
     <Card
       {...{
         className: classNames('Recipe', { 'can-be-made': canBeMade }),
+      }}
+      sx={{
+        position: 'relative',
+        cursor: canBeMade ? 'pointer' : undefined,
+        '& img': { width: '3em' },
+        '& ul.card-list li': {
+          margin: 0,
+          '& p': { margin: 0 },
+        },
       }}
     >
       <CardHeader

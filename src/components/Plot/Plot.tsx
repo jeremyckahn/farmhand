@@ -15,8 +15,11 @@ import { FERTILIZER_BONUS } from '../../constants.js'
 
 import { SHOVELED } from '../../strings.js'
 
-import './Plot.sass'
 import { SHOVELED_PLOT } from '../../templates.js'
+import { Div, Img } from '../Elements/index.js'
+import { squareImgSx } from '../../styles/sx.js'
+
+const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
 
 export const getBackgroundStyles = (
   plotContent: farmhand.plotContent | null
@@ -168,7 +171,7 @@ export const Plot = ({
   }
 
   const plot = (
-    <div
+    <Div
       {...{
         className: classNames('Plot', {
           'is-empty': !plotContent,
@@ -196,8 +199,22 @@ export const Plot = ({
         onClick: () => handlePlotClick?.(x ?? 0, y ?? 0),
         onMouseOver: () => setHoveredPlot?.({ x: x ?? null, y: y ?? null }),
       }}
+      sx={{
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        border: 'solid 1px #000',
+        flexGrow: 1,
+        imageRendering: 'pixelated',
+        '&:hover': {
+          backgroundColor: colorGenericHighlight,
+          cursor: 'pointer',
+        },
+        '&.is-in-hover-range': {
+          borderColor: colorGenericHighlight,
+        },
+      }}
     >
-      <img
+      <Img
         {...{
           className: classNames('square', {
             ...(isCrop && {
@@ -215,8 +232,25 @@ export const Plot = ({
           src: pixel,
           alt: plotLabelText ?? 'Empty plot',
         }}
+        sx={{
+          ...squareImgSx,
+          '&.was-just-shoveled': {
+            animationName: 'fadeAwayShoveledContent',
+          },
+          '@keyframes fadeAwayShoveledContent': {
+            from: {
+              opacity: 1,
+              transform: 'translate3d(0, 0, 0) scale(1)',
+            },
+            to: {
+              opacity: 0,
+              visibility: 'hidden',
+              transform: 'translate3d(0, -100%, 0) scale(0.75)',
+            },
+          },
+        }}
       />
-    </div>
+    </Div>
   )
 
   if (!plotContent) {

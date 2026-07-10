@@ -4,8 +4,7 @@ import globalWindow from 'global/window.js'
 import TextField from '@mui/material/TextField/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-
-import './RandomSeedInput.sass'
+import { Form } from '../Elements/index.js'
 
 export const RandomSeedInput = ({
   search = globalWindow.location.search,
@@ -31,7 +30,11 @@ export const RandomSeedInput = ({
   }
 
   return (
-    <form className="RandomSeedInput" onSubmit={handleSubmit}>
+    <Form
+      className="RandomSeedInput"
+      onSubmit={handleSubmit}
+      sx={{ display: 'flex', justifyContent: 'center' }}
+    >
       <TextField
         value={seed}
         variant="outlined"
@@ -41,7 +44,7 @@ export const RandomSeedInput = ({
           maxLength: 30,
         }}
       />
-    </form>
+    </Form>
   )
 }
 

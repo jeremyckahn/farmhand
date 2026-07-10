@@ -22,8 +22,9 @@ import { isDecember } from '../../utils/isDecember.js'
 import { memoize } from '../../utils/memoize.js'
 import Achievement from '../Achievement/index.js'
 
+import { Div } from '../Elements/index.js'
+
 import { SnowBackground } from './SnowBackground.js'
-import './Home.sass'
 
 const onboardingAchievements = [
   achievementsMap['plant-crop'],
@@ -67,11 +68,24 @@ const Home = ({
   handleViewChangeButtonClick: (view: string) => void
   remainingOnboardingAchievements?: farmhand.achievement[]
 }) => (
-  <div className="Home">
+  <Div
+    className="Home"
+    sx={{
+      margin: '0 auto',
+      maxWidth: 650,
+      '& h1': { fontSize: '3em', marginBottom: '1em', textAlign: 'center' },
+      '& p': { fontSize: '1.2em', lineHeight: '1.3em', marginBottom: '1em' },
+      '& a': { fontWeight: 'bold' },
+      '& .MuiButton-containedPrimary': { display: 'block', margin: '0 auto' },
+    }}
+  >
     {isDecember() ? (
       <>
         <SnowBackground />
-        <h1 className="holiday-greeting">
+        <h1
+          className="holiday-greeting"
+          style={{ lineHeight: '1.25em', color: '#fffafa' }}
+        >
           Happy holidays!{' '}
           <span role="img" aria-label="Snowman">
             ⛄️
@@ -277,7 +291,7 @@ If you're playing on a mobile device, all you need to do is [add it to your home
         />
       </CardContent>
     </Card>
-  </div>
+  </Div>
 )
 
 Home.propTypes = {

@@ -5,8 +5,8 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import Inventory from '../Inventory/index.js'
 import CowPenContextMenu from '../CowPenContextMenu/index.js'
 import { stageFocusType } from '../../enums.js'
-
-import './ContextPane.sass'
+import { Div } from '../Elements/index.js'
+import { centerTabsSx } from '../../styles/sx.js'
 
 export const PlayerInventory = memo<{ playerInventory: farmhand.item[] }>(
   /**
@@ -34,7 +34,14 @@ export const ContextPane = ({
   stageFocus: string
 }) => {
   return (
-    <div className="ContextPane">
+    <Div
+      className="ContextPane"
+      sx={{
+        ...centerTabsSx,
+        margin: 0,
+        '& h2': { margin: '0.5em 0 1em', textAlign: 'center' },
+      }}
+    >
       {stageFocus === stageFocusType.COW_PEN ? (
         <CowPenContextMenu />
       ) : (
@@ -50,7 +57,7 @@ export const ContextPane = ({
           />
         </>
       )}
-    </div>
+    </Div>
   )
 }
 

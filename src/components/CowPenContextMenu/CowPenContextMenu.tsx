@@ -24,8 +24,9 @@ import cowShopInventory from '../../data/shop-inventory-cow.js'
 import CowCard from '../CowCard/index.js'
 import SearchBar from '../SearchBar/index.js'
 
+import { Div } from '../Elements/index.js'
+
 import { TabPanel, a11yProps } from './TabPanel/index.js'
-import './CowPenContextMenu.sass'
 
 const { AGE, COLOR, GENDER, HAPPINESS, VALUE, WEIGHT } = {
   AGE: 'AGE',
@@ -126,7 +127,22 @@ export const CowPenContextMenu = ({
     : cowShopInventory
 
   return (
-    <div className="CowPenContextMenu">
+    <Div
+      className="CowPenContextMenu"
+      sx={{
+        display: 'flex',
+        flexFlow: 'column',
+        '& h3': { textAlign: 'center' },
+        '& .MuiTab-root': { minWidth: 'unset' },
+        '& .sort-wrapper': {
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          '& .MuiFab-root': { margin: '0 1em' },
+          '& .sort-select': { flexGrow: 1 },
+        },
+      }}
+    >
       <h3>For sale</h3>
       <CowCard
         {...{
@@ -310,7 +326,7 @@ export const CowPenContextMenu = ({
           ))}
         </ul>
       </TabPanel>
-    </div>
+    </Div>
   )
 }
 

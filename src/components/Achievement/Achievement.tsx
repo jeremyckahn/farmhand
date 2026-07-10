@@ -10,8 +10,6 @@ import { bool, object, shape, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import './Achievement.sass'
-
 const Achievement = ({
   achievement: { description, id, name, rewardDescription },
   completedAchievements,
@@ -24,6 +22,9 @@ const Achievement = ({
 }) => (
   <Card
     {...{ className: classNames('Achievement', { 'is-complete': isComplete }) }}
+    sx={{
+      '& .MuiSvgIcon-root': { color: isComplete ? '#13b747' : '#666' },
+    }}
   >
     <CardHeader
       {...{

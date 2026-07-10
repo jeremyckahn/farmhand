@@ -17,8 +17,7 @@ import {
   LOAN_INTEREST_RATE,
   LOAN_GARNISHMENT_RATE,
 } from '../../constants.js'
-
-import './AccountingView.sass'
+import { Div } from '../Elements/index.js'
 
 interface MoneyNumberFormatProps {
   max: number
@@ -72,8 +71,8 @@ const AccountingView = ({
   ])
 
   return (
-    <div className="AccountingView">
-      <Card>
+    <Div className="AccountingView">
+      <Card sx={{ '& .MuiCardContent-root': { paddingTop: 0 } }}>
         <CardHeader
           {...{
             avatar: <AccountBalanceIcon />,
@@ -82,7 +81,13 @@ const AccountingView = ({
           }}
         />
         <CardContent>
-          <div className="loan-container">
+          <Div
+            className="loan-container"
+            sx={{
+              '& p': { margin: '1em 0' },
+              '& button': { margin: '1em' },
+            }}
+          >
             <TextField
               variant="standard"
               {...{
@@ -126,7 +131,7 @@ const AccountingView = ({
               interest rate is {LOAN_INTEREST_RATE * 100}% per day, compounded
               daily.
             </p>
-          </div>
+          </Div>
           <Button
             {...{
               color: 'error',
@@ -147,7 +152,7 @@ const AccountingView = ({
           </Button>
         </CardContent>
       </Card>
-    </div>
+    </Div>
   )
 }
 

@@ -6,7 +6,6 @@ import { withSnackbar } from 'notistack'
 
 import { NOTIFICATION_DURATION } from '../../constants.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import './NotificationSystem.sass'
 
 export const snackbarProviderContentCallback = (
   key: string | number,

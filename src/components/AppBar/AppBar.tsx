@@ -10,7 +10,7 @@ import StepIcon from '@mui/material/StepIcon/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { moneyString } from '../../utils/moneyString.js'
-import './AppBar.sass'
+import { breakpoints } from '../../styles/tokens.js'
 
 const MoneyDisplay = ({ money }: { money: number }) => {
   const idleColor = 'rgb(255, 255, 255)'
@@ -86,6 +86,31 @@ export const AppBar = ({
     {...{
       className: 'AppBar top-level',
       position: 'fixed',
+    }}
+    sx={{
+      '& .toolbar': {
+        display: 'flex',
+        '& h2': {
+          color: '#fff',
+          fontFamily: '"Francois One", monospace',
+          fontSize: '1.2em',
+        },
+        '& .stage-header': {
+          display: 'none',
+          marginLeft: '1em',
+          [`@media (min-width: ${breakpoints.mediumPhone}px)`]: {
+            display: 'block',
+          },
+        },
+        '& .money-display': {
+          position: 'absolute',
+          right: '1em',
+        },
+        '& .notification-indicator-container': {
+          display: 'flex',
+          '& .error-indicator': { marginLeft: '1em' },
+        },
+      },
     }}
   >
     <Toolbar
