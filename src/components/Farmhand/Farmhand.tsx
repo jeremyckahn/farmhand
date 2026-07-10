@@ -18,6 +18,7 @@ import { Redirect } from 'react-router-dom'
 import { Z_INDEX } from '../../constants.js'
 import theme, { blueStripeBg } from '../../mui-theme.js'
 import { Div } from '../Elements/index.js'
+import { fillSx } from '../../styles/sx.js'
 import { breakpoints, layout } from '../../styles/tokens.js'
 
 import 'animate.css/source/_vars.css'
@@ -86,6 +87,7 @@ const Farmhand = (props: FarmhandProps) => {
                 }
               )}
               sx={(t: Theme) => ({
+                ...fillSx,
                 // padding-top and breakpoints correspond to AppBar dimensions
                 // https://material-ui.com/demos/app-bar/
                 display: 'flex',
