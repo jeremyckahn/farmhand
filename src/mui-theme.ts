@@ -86,6 +86,12 @@ export default createTheme({
       fontFamily: '"Francois One", sans-serif',
       textTransform: 'none',
     },
+    // DialogTitle (used by every modal header, e.g. Farmer's Log, Price
+    // Events) renders variant="h6". Same cascade issue as `button` above.
+    h6: {
+      fontFamily: '"Francois One", sans-serif',
+      fontSize: '1.4em',
+    },
   },
   components: {
     MuiCssBaseline: {
