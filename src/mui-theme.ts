@@ -1,5 +1,4 @@
 import createTheme from '@mui/material/styles/createTheme.js'
-import { darken } from '@mui/material/styles/index.js'
 
 import {
   cardStyleSelectedSx,
@@ -79,6 +78,13 @@ export default createTheme({
   shape: {},
   typography: {
     fontFamily: '"Public Sans", sans-serif',
+    // Buttons and Tabs derive their default styles from this rather than
+    // the `.MuiButtonBase-root` CssBaseline override below, which loses the
+    // cascade to their own emotion-generated styles.
+    button: {
+      fontFamily: '"Francois One", sans-serif',
+      textTransform: 'none',
+    },
   },
   components: {
     MuiCssBaseline: {
@@ -108,7 +114,7 @@ export default createTheme({
           ...cardStyleSx(theme),
           '&.is-selected': cardStyleSelectedSx,
           '& .MuiCard-root': {
-            background: darken(colors.cardBackground, 0.1),
+            background: colors.cardBackgroundNested,
           },
         }),
       },
