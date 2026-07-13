@@ -71,6 +71,7 @@ const Home = ({
       margin: '0 auto',
       maxWidth: 650,
       '& h1': { fontSize: '3em', marginBottom: '1em', textAlign: 'center' },
+      '& h1.holiday-greeting': { lineHeight: '1.25em', color: '#fffafa' },
       '& p': { fontSize: '1.2em', lineHeight: '1.3em', marginBottom: '1em' },
       '& a': { fontWeight: 'bold' },
       '& .MuiButton-containedPrimary': { display: 'block', margin: '0 auto' },
@@ -79,10 +80,7 @@ const Home = ({
     {isDecember() ? (
       <>
         <SnowBackground />
-        <h1
-          className="holiday-greeting"
-          style={{ lineHeight: '1.25em', color: '#fffafa' }}
-        >
+        <h1 className="holiday-greeting">
           Happy holidays!{' '}
           <span role="img" aria-label="Snowman">
             ⛄️
