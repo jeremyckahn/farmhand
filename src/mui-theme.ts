@@ -18,6 +18,7 @@ import lightBlueStripeBg from './img/ui/light-blue-stripe-bg.png'
 const globalStyleOverrides = {
   body: { overscrollBehavior: 'contain' },
   'ul, ol': { listStyle: 'none', margin: 0, padding: 0 },
+  p: { margin: 0 },
   '.markdown': {
     '& p': { margin: '1em 0' },
     '& ul li': { listStyle: 'disc', marginLeft: '1em' },
