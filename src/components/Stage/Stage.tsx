@@ -156,7 +156,11 @@ export const Stage = ({
                 easing: theme.transitions.easing.sharp,
               }),
               [`@media (max-width: ${breakpoints.smallPhone}px)`]: {
-                marginLeft: -layout.narrowSidebarWidth,
+                // NOTE: This must be a unit string, not a bare number - MUI's
+                // sx prop treats numeric values for margin* keys as
+                // multiples of theme.spacing() (8px by default) rather than
+                // raw pixels.
+                marginLeft: `-${layout.narrowSidebarWidth}px`,
               },
             }),
       })}
