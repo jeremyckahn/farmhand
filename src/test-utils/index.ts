@@ -223,6 +223,7 @@ export const testState = (
   todaysRevenue: 0,
   todaysStartingInventory: {},
   toolLevels: {
+    AXE: toolLevel.UNAVAILABLE as farmhand.toolLevel,
     HOE: toolLevel.DEFAULT as farmhand.toolLevel,
     SCYTHE: toolLevel.DEFAULT as farmhand.toolLevel,
     SHOVEL: toolLevel.UNAVAILABLE as farmhand.toolLevel,

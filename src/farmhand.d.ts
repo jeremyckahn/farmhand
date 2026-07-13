@@ -47,6 +47,7 @@ declare namespace farmhand {
   type treeType = 'APPLE'
   type recipeType = 'FERMENTATION' | 'FORGE' | 'KITCHEN' | 'RECYCLING' | 'WINE'
   type fieldMode =
+    | 'CHOP'
     | 'CLEANUP'
     | 'FERTILIZE'
     | 'HARVEST'
@@ -82,6 +83,7 @@ declare namespace farmhand {
     | 'TOOL_UPGRADE'
     | 'TREE'
     | 'WEED'
+    | 'WOOD'
   type fertilizerType = 'NONE' | 'STANDARD' | 'RAINBOW'
   type genders = 'FEMALE' | 'MALE'
   type cowColors =
@@ -103,7 +105,7 @@ declare namespace farmhand {
     | 'PRICE_EVENTS'
     | 'SETTINGS'
     | 'STATS'
-  type toolType = 'SCYTHE' | 'SHOVEL' | 'HOE' | 'WATERING_CAN'
+  type toolType = 'AXE' | 'SCYTHE' | 'SHOVEL' | 'HOE' | 'WATERING_CAN'
   type toolLevel =
     | 'UNAVAILABLE'
     | 'DEFAULT'

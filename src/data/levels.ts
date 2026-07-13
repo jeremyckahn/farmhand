@@ -56,6 +56,7 @@ if ((features as { FOREST?: boolean }).FOREST) {
   levels[15] = {
     unlocksStageFocusType: stageFocusType.FOREST,
     unlocksShopItem: items.appleSapling.id,
+    unlocksTool: toolType.AXE,
   }
 }
 

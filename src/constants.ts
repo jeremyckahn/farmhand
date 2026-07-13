@@ -262,6 +262,20 @@ export const HOE_LEVEL_TO_SEED_RECLAIM_RATE: Partial<Record<
   [toolLevel.GOLD]: 1,
 }
 
+// [min, max] wood yield (inclusive) for chopping down a fully grown tree,
+// keyed by the axe's tool level. An immature tree yields half of this
+// range instead (see chopForestPlot.ts).
+export const AXE_WOOD_YIELD_RANGE: Partial<Record<
+  farmhand.toolLevel,
+  [number, number]
+>> = {
+  [toolLevel.DEFAULT]: [1, 2],
+  [toolLevel.BRONZE]: [2, 4],
+  [toolLevel.IRON]: [4, 6],
+  [toolLevel.SILVER]: [6, 8],
+  [toolLevel.GOLD]: [8, 10],
+}
+
 export const COW_COLORS_HEX_MAP = {
   [cowColors.BLUE]: '#8ff0f9',
   [cowColors.BROWN]: '#b45f28',

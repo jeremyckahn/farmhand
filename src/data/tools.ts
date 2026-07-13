@@ -1,6 +1,8 @@
 import { fieldMode, toolType } from '../enums.js'
 
 import {
+  AXE_ALT_TEXT,
+  AXE_HIDDEN_TEXT,
   HOE_ALT_TEXT,
   HOE_HIDDEN_TEXT,
   SCYTHE_ALT_TEXT,
@@ -12,7 +14,7 @@ import {
   WATERING_CAN_HIDDEN_TEXT,
 } from '../strings.js'
 
-const { CLEANUP, HARVEST, MINE, WATER } = fieldMode
+const { CHOP, CLEANUP, HARVEST, MINE, WATER } = fieldMode
 
 const tools = {
   wateringCan: {
@@ -54,6 +56,16 @@ const tools = {
     levelInfo: TOOL_LEVEL_INFO.SHOVEL,
     order: 4,
     type: toolType.SHOVEL,
+  },
+  axe: {
+    alt: AXE_ALT_TEXT,
+    fieldKey: 'shift+5',
+    fieldMode: CHOP,
+    hiddenText: AXE_HIDDEN_TEXT,
+    id: 'axe',
+    levelInfo: TOOL_LEVEL_INFO.AXE,
+    order: 5,
+    type: toolType.AXE,
   },
 }
 

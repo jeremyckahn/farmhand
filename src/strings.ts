@@ -40,6 +40,9 @@ export const HOE_HIDDEN_TEXT =
   'Select the hoe to clear crops, or replantable field items'
 export const SHOVEL_ALT_TEXT = 'A shovel for digging up rocks.'
 export const SHOVEL_HIDDEN_TEXT = 'Select the shovel to dig for ore'
+export const AXE_ALT_TEXT = 'An axe for chopping down trees.'
+export const AXE_HIDDEN_TEXT =
+  'Select the axe to chop down trees in the forest for wood'
 
 // TODO: Implement all of these upgrades
 export const TOOL_LEVEL_INFO = {
@@ -70,6 +73,13 @@ export const TOOL_LEVEL_INFO = {
     IRON: '**Iron**: 50% chance to retrieve seeds when digging up crops.',
     SILVER: '**Silver**: 75% chance to retrieve seeds when digging up crops.',
     GOLD: '**Gold**: 100% chance to retrieve seeds when digging up crops.',
+  },
+  AXE: {
+    DEFAULT: '**Basic**: Chops down trees for 1-2 wood.',
+    BRONZE: '**Bronze**: Chops down trees for 2-4 wood.',
+    IRON: '**Iron**: Chops down trees for 4-6 wood.',
+    SILVER: '**Silver**: Chops down trees for 6-8 wood.',
+    GOLD: '**Gold**: Chops down trees for 8-10 wood.',
   },
 }
 

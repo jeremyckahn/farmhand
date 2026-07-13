@@ -179,6 +179,7 @@ export const createContextData = (): ContextData => {
       todaysRevenue: 0,
       todaysStartingInventory: {},
       toolLevels: {
+        AXE: 'UNAVAILABLE',
         SCYTHE: 'DEFAULT',
         SHOVEL: 'DEFAULT',
         HOE: 'DEFAULT',

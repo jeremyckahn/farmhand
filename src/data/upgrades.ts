@@ -167,6 +167,53 @@ const upgrades: any = {
       isMaxLevel: true,
     },
   },
+  [toolType.AXE]: {
+    [toolLevel.DEFAULT]: {
+      id: 'axe-default',
+      name: 'Basic Axe',
+      nextLevel: toolLevel.BRONZE,
+    },
+    [toolLevel.BRONZE]: {
+      id: 'axe-bronze',
+      description: 'Increases wood yield when chopping down trees',
+      name: 'Bronze Axe',
+      ingredients: {
+        [bronzeIngot.id]: 12,
+        [coal.id]: coalNeededForIngots(bronzeIngot.id, 12),
+      },
+      nextLevel: toolLevel.IRON,
+    },
+    [toolLevel.IRON]: {
+      id: 'axe-iron',
+      description: 'Increases wood yield when chopping down trees',
+      name: 'Iron Axe',
+      ingredients: {
+        [ironIngot.id]: 12,
+        [coal.id]: coalNeededForIngots(ironIngot.id, 12),
+      },
+      nextLevel: toolLevel.SILVER,
+    },
+    [toolLevel.SILVER]: {
+      id: 'axe-silver',
+      description: 'Increases wood yield when chopping down trees',
+      name: 'Silver Axe',
+      ingredients: {
+        [silverIngot.id]: 12,
+        [coal.id]: coalNeededForIngots(silverIngot.id, 12),
+      },
+      nextLevel: toolLevel.GOLD,
+    },
+    [toolLevel.GOLD]: {
+      id: 'axe-gold',
+      description: 'Increases wood yield when chopping down trees',
+      name: 'Gold Axe',
+      ingredients: {
+        [goldIngot.id]: 12,
+        [coal.id]: coalNeededForIngots(goldIngot.id, 12),
+      },
+      isMaxLevel: true,
+    },
+  },
 }
 
 // add some defaults to each upgrade object

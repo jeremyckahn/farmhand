@@ -42,6 +42,7 @@ export const recipeType = {
  * @enum
  */
 export const fieldMode = {
+  CHOP: 'CHOP',
   CLEANUP: 'CLEANUP',
   FERTILIZE: 'FERTILIZE',
   HARVEST: 'HARVEST',
@@ -98,6 +99,7 @@ export const itemType = {
   TOOL_UPGRADE: 'TOOL_UPGRADE',
   TREE: 'TREE',
   WEED: 'WEED',
+  WOOD: 'WOOD',
 } as const
 
 /**
@@ -167,6 +169,7 @@ export const dialogView = {
  * @enum
  */
 export const toolType = {
+  AXE: 'AXE',
   SCYTHE: 'SCYTHE',
   SHOVEL: 'SHOVEL',
   HOE: 'HOE',

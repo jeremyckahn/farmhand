@@ -45,6 +45,7 @@ describe('processLevelUp', () => {
         todaysNotifications: [],
         inventory: [],
         toolLevels: {
+          [toolType.AXE]: toolLevel.UNAVAILABLE,
           [toolType.HOE]: toolLevel.DEFAULT,
           [toolType.SCYTHE]: toolLevel.DEFAULT,
           [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
@@ -65,6 +66,7 @@ describe('processLevelUp', () => {
         inventory: [],
         todaysNotifications: [],
         toolLevels: {
+          [toolType.AXE]: toolLevel.UNAVAILABLE,
           [toolType.HOE]: toolLevel.DEFAULT,
           [toolType.SCYTHE]: toolLevel.DEFAULT,
           [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
