@@ -92,6 +92,12 @@ export default createTheme({
       fontFamily: '"Francois One", sans-serif',
       fontSize: '1.4em',
     },
+    // CardHeader titles default to variant="h5" when no avatar is passed
+    // (e.g. the peer name headers in the Active Players modal). Same
+    // cascade issue as `button`/`h6` above.
+    h5: {
+      fontFamily: '"Francois One", sans-serif',
+    },
   },
   components: {
     MuiCssBaseline: {
