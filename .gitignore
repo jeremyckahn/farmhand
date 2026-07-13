@@ -10,4 +10,3 @@ e2e/test-results
 e2e/.env
 api/
 test-results/.last-run.json
-.env*
