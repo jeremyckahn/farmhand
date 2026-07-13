@@ -16,6 +16,7 @@ import toolsData from '../../data/tools.js'
 import { tools as toolImages, craftedItems, pixel } from '../../img/index.js'
 import { Div, Img } from '../Elements/index.js'
 import { squareImgSx } from '../../styles/sx.js'
+import { breakpoints } from '../../styles/tokens.js'
 
 const getTools = memoize(
   (toolLevels: Record<farmhand.toolType, farmhand.toolLevel>) => {
@@ -58,7 +59,14 @@ export const Toolbelt = ({
     <Div className="Toolbelt">
       <Div
         className="button-array"
-        sx={{ '& button': { flexGrow: 1, margin: '0 0.5em' } }}
+        sx={{
+          display: 'flex',
+          flexFlow: 'row',
+          [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+            flexFlow: 'column',
+          },
+          '& button': { flexGrow: 1, margin: '0 0.5em' },
+        }}
       >
         {tools.map(
           ({ alt, fieldMode, fieldKey, hiddenText, id, levelInfo, type }) => {
