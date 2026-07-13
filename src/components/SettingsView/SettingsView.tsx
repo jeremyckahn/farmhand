@@ -15,7 +15,6 @@ import Tooltip from '@mui/material/Tooltip/index.js'
 import FileReaderInput from 'react-file-reader-input'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-
 import { Div } from '../Elements/index.js'
 
 import { RandomSeedInput } from './RandomSeedInput.js'

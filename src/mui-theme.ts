@@ -1,14 +1,13 @@
 import createTheme from '@mui/material/styles/createTheme.js'
 
+import blueStripeBg from './img/ui/blue-stripe-bg.png'
+import lightBlueStripeBg from './img/ui/light-blue-stripe-bg.png'
 import {
   cardStyleSelectedSx,
   cardStyleSx,
   spriteShadowSx,
 } from './styles/sx.js'
 import { breakpoints, colors, layout } from './styles/tokens.js'
-
-import blueStripeBg from './img/ui/blue-stripe-bg.png'
-import lightBlueStripeBg from './img/ui/light-blue-stripe-bg.png'
 
 // These global styles used to live in Farmhand.sass, scoped by a `.Farmhand`
 // class applied to many DOM roots across the app (including MUI Dialogs,

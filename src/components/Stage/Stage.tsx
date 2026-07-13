@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import { array, arrayOf, bool, string } from 'prop-types'
-
 import { Theme } from '@mui/material/styles/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'

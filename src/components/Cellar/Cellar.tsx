@@ -1,15 +1,14 @@
-import React, { useState } from 'react'
 import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'
-
-import { Div } from '../Elements/index.js'
+import { useState } from 'react'
 
 import { centerTabsSx } from '../../styles/sx.js'
+import { Div } from '../Elements/index.js'
 
 import { CellarInventoryTabPanel } from './CellarInventoryTabPanel.js'
 import { FermentationTabPanel } from './FermentationTabPanel.js'
-import { WinemakingTabPanel } from './WinemakingTabPanel.js'
 import { a11yProps } from './TabPanel/index.js'
+import { WinemakingTabPanel } from './WinemakingTabPanel.js'
 
 export const Cellar = () => {
   const [currentTab, setCurrentTab] = useState(0)

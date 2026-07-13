@@ -1,24 +1,21 @@
-import React from 'react'
-import { array, bool, func, object, string } from 'prop-types'
 import Button from '@mui/material/Button/index.js'
 import Divider from '@mui/material/Divider/index.js'
 import Grid from '@mui/material/Grid/index.js'
 import Paper from '@mui/material/Paper/index.js'
+import { Theme } from '@mui/material/styles/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
+import { array, bool, func, object, string } from 'prop-types'
 
-import { Theme } from '@mui/material/styles/index.js'
-
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { items as itemImages, pixel } from '../../img/index.js'
-import { integerString } from '../../utils/integerString.js'
-import { sortItems } from '../../utils/sortItems.js'
-import Toolbelt from '../Toolbelt/index.js'
-
-import { Div, Img, P } from '../Elements/index.js'
 import { cardStyleSx, spriteShadowSx, squareImgSx } from '../../styles/sx.js'
 import { breakpoints, layout } from '../../styles/tokens.js'
+import { integerString } from '../../utils/integerString.js'
+import { sortItems } from '../../utils/sortItems.js'
+import { Div, Img, P } from '../Elements/index.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import Toolbelt from '../Toolbelt/index.js'
 
 const ItemList = ({
   handleItemSelectClick,

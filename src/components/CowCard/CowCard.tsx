@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { array, bool, func, number, object, string } from 'prop-types'
+import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from '@mui/material/Button/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
@@ -8,29 +9,26 @@ import CardHeader from '@mui/material/CardHeader/index.js'
 import TextField from '@mui/material/TextField/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
-import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
+import { array, bool, func, number, object, string } from 'prop-types'
 import { useIsMounted } from 'usehooks-ts'
 
-import FarmhandContext, { BoundHandlers } from '../Farmhand/Farmhand.context.js'
-import uiEventHandlers from '../../handlers/ui-events.js'
-
-import { pixel } from '../../img/index.js'
+import { PURCHASEABLE_COW_PENS } from '../../constants.js'
 import { genders } from '../../enums.js'
+import uiEventHandlers from '../../handlers/ui-events.js'
+import { pixel } from '../../img/index.js'
+import {
+  OFFER_COW_FOR_TRADE,
+  WITHDRAW_COW_FROM_TRADE,
+} from '../../templates.js'
 import { areHuggingMachinesInInventory } from '../../utils/areHuggingMachinesInInventory.js'
 import { getCowDisplayName } from '../../utils/getCowDisplayName.js'
 import { getCowImage } from '../../utils/getCowImage.js'
 import { getCowValue } from '../../utils/getCowValue.js'
 import { isCowInBreedingPen } from '../../utils/isCowInBreedingPen.js'
 import { isInViewport } from '../../utils/isInViewport.js'
-import { PURCHASEABLE_COW_PENS } from '../../constants.js'
-import {
-  OFFER_COW_FOR_TRADE,
-  WITHDRAW_COW_FROM_TRADE,
-} from '../../templates.js'
-
 import { A } from '../Elements/index.js'
+import FarmhandContext, { BoundHandlers } from '../Farmhand/Farmhand.context.js'
 
 import Subheader from './Subheader/index.js'
 

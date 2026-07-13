@@ -1,13 +1,11 @@
-import React from 'react'
 import classNames from 'classnames'
 import { object, shape, string } from 'prop-types'
 
-import { INGREDIENTS_LIST_ITEM } from '../../templates.js'
-
-import { integerString } from '../../utils/integerString.js'
 import { itemsMap } from '../../data/maps.js'
-import { P } from '../Elements/index.js'
 import { colors } from '../../styles/tokens.js'
+import { INGREDIENTS_LIST_ITEM } from '../../templates.js'
+import { integerString } from '../../utils/integerString.js'
+import { P } from '../Elements/index.js'
 
 export default function IngredientsList({
   playerInventoryQuantities,

@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
+import { useEffect, useState } from 'react'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { FERTILIZER_BONUS } from '../../constants.js'
+import { cropItemIdToSeedItemMap, itemsMap } from '../../data/maps.js'
+import { cropLifeStage, fertilizerType, itemType } from '../../enums.js'
+import { pixel, plotStates } from '../../img/index.js'
+import { SHOVELED } from '../../strings.js'
+import { squareImgSx } from '../../styles/sx.js'
+import { SHOVELED_PLOT } from '../../templates.js'
+import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
 import { getCropLifeStage } from '../../utils/getCropLifeStage.js'
 import { getPlotContentType } from '../../utils/getPlotContentType.js'
 import { getPlotImage } from '../../utils/getPlotImage.js'
-import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
-import { itemsMap, cropItemIdToSeedItemMap } from '../../data/maps.js'
-import { pixel, plotStates } from '../../img/index.js'
-import { cropLifeStage, fertilizerType, itemType } from '../../enums.js'
-import { FERTILIZER_BONUS } from '../../constants.js'
-
-import { SHOVELED } from '../../strings.js'
-
-import { SHOVELED_PLOT } from '../../templates.js'
 import { Div, Img } from '../Elements/index.js'
-import { squareImgSx } from '../../styles/sx.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
 

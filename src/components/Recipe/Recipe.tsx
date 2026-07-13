@@ -18,9 +18,7 @@ import { itemsMap } from '../../data/maps.js'
 import { craftedItems } from '../../img/index.js'
 import QuantityInput from '../QuantityInput/index.js'
 import IngredientsList from '../IngredientsList/index.js'
-
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
 const Recipe = ({

@@ -1,17 +1,14 @@
-import { array, bool, func, string } from 'prop-types'
-import React, { useEffect } from 'react'
-
 import { Theme } from '@mui/material/styles/index.js'
+import { array, bool, func, string } from 'prop-types'
+import { useEffect } from 'react'
 
-import uiEvents from '../../handlers/ui-events.js'
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
-
-import { Div } from '../Elements/index.js'
 import { fillSx } from '../../styles/sx.js'
 import { colors } from '../../styles/tokens.js'
+import { Div } from '../Elements/index.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import { Tumbleweeds } from './Tumbleweeds.js'
 import { Cow } from './Cow.js'
+import { Tumbleweeds } from './Tumbleweeds.js'
 
 export interface CowPenProps
   extends Pick<

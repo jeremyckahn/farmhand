@@ -1,28 +1,25 @@
-import React from 'react'
-
-import { func, object } from 'prop-types'
-import ReactMarkdown from 'react-markdown'
-import globalWindow from 'global/window.js'
-import Button from '@mui/material/Button/index.js'
-import Divider from '@mui/material/Divider/index.js'
-import Accordion from '@mui/material/Accordion/index.js'
-import AccordionSummary from '@mui/material/AccordionSummary/index.js'
-import AccordionDetails from '@mui/material/AccordionDetails/index.js'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
+import Accordion from '@mui/material/Accordion/index.js'
+import AccordionDetails from '@mui/material/AccordionDetails/index.js'
+import AccordionSummary from '@mui/material/AccordionSummary/index.js'
+import Button from '@mui/material/Button/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
+import Divider from '@mui/material/Divider/index.js'
+import globalWindow from 'global/window.js'
+import { func, object } from 'prop-types'
+import ReactMarkdown from 'react-markdown'
 
 import { items } from '../../img/index.js'
 
-import { achievementsMap } from '../../data/achievements.js'
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { STANDARD_LOAN_AMOUNT } from '../../constants.js'
+import { achievementsMap } from '../../data/achievements.js'
 import { stageFocusType } from '../../enums.js'
 import { isDecember } from '../../utils/isDecember.js'
 import { memoize } from '../../utils/memoize.js'
 import Achievement from '../Achievement/index.js'
-
 import { Div } from '../Elements/index.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 import { SnowBackground } from './SnowBackground.js'
 

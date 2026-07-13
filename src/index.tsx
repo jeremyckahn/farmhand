@@ -12,9 +12,6 @@ import { features } from './config.js'
 import '@fontsource/francois-one'
 import '@fontsource/public-sans'
 
-// eslint-disable-next-line no-unused-vars
-import { cropFamily, grapeVariety } from './enums.js'
-
 const FarmhandRoute = (props: any) => <Farmhand {...{ ...props, features }} />
 
 ReactDOM.render(

@@ -31,7 +31,6 @@ import {
 } from '../../constants.js'
 import Inventory from '../Inventory/index.js'
 import TierPurchase from '../TierPurchase/index.js'
-
 import { Div } from '../Elements/index.js'
 import { centerTabsSx } from '../../styles/sx.js'
 
