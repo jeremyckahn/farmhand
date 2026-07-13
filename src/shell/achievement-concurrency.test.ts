@@ -14,6 +14,11 @@ import { nextView } from '../test-utils/ui.js'
 // that both completes an achievement and spends money exercises both effect
 // branches in a single state transition.
 describe('achievement concurrency', () => {
+  // NOTE: This test drives more sequential UI interactions (tab switch,
+  // purchase, achievement wait, drawer, stats navigation) than most other
+  // tests in this file, which has made it prone to exceeding the default
+  // 5000ms timeout under CI load even though it consistently finishes in
+  // well under 1s locally.
   test('completing an achievement does not clobber a same-transition money update', async () => {
     const loadedState = saveDataStubFactory({
       money: 100_000,
@@ -58,5 +63,5 @@ describe('achievement concurrency', () => {
     const statsContent = document.querySelector('#stats-modal-content')
 
     expect(statsContent).toHaveTextContent('-$1,500.00')
-  })
+  }, 15_000)
 })
