@@ -10,13 +10,15 @@ import { getForestPlotImage } from '../../utils/getForestPlotImage.js'
 import { getFruitLifeStage } from '../../utils/getFruitLifeStage.js'
 import { getTreeLifeStage } from '../../utils/getTreeLifeStage.js'
 import { isPlantedTree } from '../../utils/isPlantedTree.js'
-import { cropLifeStage } from '../../enums.js'
+import { cropLifeStage, fieldMode as fieldModeEnum } from '../../enums.js'
 import { Div } from '../Elements/index.js'
 
 const { GROWN } = cropLifeStage
+const { CHOP } = fieldModeEnum
 
 const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
 const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
+const colorRedDestructive = 'rgba(255, 0, 0, 0.5)'
 
 const getTreeTooltipText = (
   treeLifeStage: farmhand.cropLifeStage,
@@ -30,6 +32,7 @@ const getTreeTooltipText = (
 }
 
 export interface ForestPlotProps {
+  fieldMode: farmhand.fieldMode
   plotContent: farmhand.plantedTree | farmhand.forestForageable | null
   handleForestPlotClick: (x: number, y: number) => void
   x: number
@@ -37,6 +40,7 @@ export interface ForestPlotProps {
 }
 
 export const ForestPlot = ({
+  fieldMode,
   plotContent,
   handleForestPlotClick,
   x,
@@ -46,6 +50,7 @@ export const ForestPlot = ({
   const treeLifeStage = isTree ? getTreeLifeStage(plotContent) : null
   const fruitLifeStage = isTree ? getFruitLifeStage(plotContent) : null
   const canBeHarvested = fruitLifeStage === GROWN
+  const canBeChopped = isTree && fieldMode === CHOP
   const item = isTree ? itemsMap[plotContent.itemId] : null
   const treeImage = isTree ? getForestPlotImage(plotContent) : null
   const fruitImage = isTree ? getForestFruitImage(plotContent) : null
@@ -56,6 +61,7 @@ export const ForestPlot = ({
         className: classNames('ForestPlot', {
           'is-empty': !plotContent,
           'can-be-harvested': canBeHarvested,
+          'can-be-chopped': canBeChopped,
         }),
         style: { gridColumn: x + 1, gridRow: y + 1 },
         onClick: () => handleForestPlotClick(x, y),
@@ -77,6 +83,12 @@ export const ForestPlot = ({
         },
         '&.can-be-harvested:hover': {
           backgroundColor: colorGreenOk,
+        },
+        // The axe is destructive - it removes the tree regardless of its
+        // growth stage - so this takes priority over the (potentially also
+        // true) can-be-harvested green hover.
+        '&.can-be-chopped:hover': {
+          backgroundColor: colorRedDestructive,
         },
       }}
     >
