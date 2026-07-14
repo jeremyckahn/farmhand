@@ -77,7 +77,7 @@ const ItemList = ({
               style: {
                 backgroundImage: `url(${
                   itemImages[item.id as keyof typeof itemImages]
-                }`,
+                })`,
               },
             }}
             sx={{ ...squareImgSx, ...spriteShadowSx }}
