@@ -53,6 +53,20 @@ export class FarmhandService {
         }))
   )
 
+  static getPlantableTreeInventory = memoize(
+    (inventory: farmhand.state['inventory']): farmhand.item[] =>
+      inventory
+        .filter(({ id }: { id: string }) => {
+          const item = itemsMap[id as keyof typeof itemsMap]
+
+          return item?.isPlantableTree
+        })
+        .map(({ id, quantity }: { id: string; quantity: number }) => ({
+          ...itemsMap[id as keyof typeof itemsMap],
+          quantity,
+        }))
+  )
+
   static applyPriceEvents = (
     valueAdjustments: Record<string, number>,
     priceCrashes: Partial<Record<string, globalThis.farmhand.priceEvent>>,

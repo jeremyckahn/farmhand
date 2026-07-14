@@ -47,6 +47,17 @@ import wineGreen from './wines/wine-green.png'
 import winePurple from './wines/wine-purple.png'
 
 // Crops
+import apple from './items/apple.png'
+import appleFruitGrowing1 from './items/apple-fruit-growing-1.png'
+import appleFruitGrowing2 from './items/apple-fruit-growing-2.png'
+import appleFruitGrown from './items/apple-fruit-grown.png'
+import appleGrowing1 from './items/apple-growing-1.png'
+import appleGrowing2 from './items/apple-growing-2.png'
+import appleGrowing3 from './items/apple-growing-3.png'
+import appleGrowing4 from './items/apple-growing-4.png'
+import appleGrown from './items/apple-grown.png'
+import appleSapling from './items/apple-sapling.png'
+import appleSaplingPlanted from './items/apple-sapling-planted.png'
 import asparagus from './items/asparagus.png'
 import asparagusGrowing1 from './items/asparagus-growing1.png'
 import asparagusGrowing2 from './items/asparagus-growing2.png'
@@ -275,6 +286,18 @@ export const craftedItems = {
 }
 
 export const items = {
+  // Trees
+  apple,
+  'apple-fruit-growing-1': appleFruitGrowing1,
+  'apple-fruit-growing-2': appleFruitGrowing2,
+  'apple-fruit-grown': appleFruitGrown,
+  'apple-growing-1': appleGrowing1,
+  'apple-growing-2': appleGrowing2,
+  'apple-growing-3': appleGrowing3,
+  'apple-growing-4': appleGrowing4,
+  'apple-grown': appleGrown,
+  'apple-sapling': appleSapling,
+  'apple-sapling-planted': appleSaplingPlanted,
   // Crops
   asparagus,
   'asparagus-growing-1': asparagusGrowing1,

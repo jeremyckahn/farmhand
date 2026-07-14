@@ -96,7 +96,16 @@ export const itemType = {
   SPRINKLER: 'SPRINKLER',
   STONE: 'STONE',
   TOOL_UPGRADE: 'TOOL_UPGRADE',
+  TREE: 'TREE',
   WEED: 'WEED',
+} as const
+
+/**
+ * @property farmhand.module:enums.treeType
+ * @enum
+ */
+export const treeType = {
+  APPLE: 'APPLE',
 } as const
 
 /**

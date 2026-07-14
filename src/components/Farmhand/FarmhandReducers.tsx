@@ -61,6 +61,9 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
   forRange(...args: any[]) {
     throw new Error('Unimplemented')
   }
+  harvestForestPlot(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
   harvestPlot(...args: any[]) {
     throw new Error('Unimplemented')
   }
@@ -83,6 +86,9 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
     throw new Error('Unimplemented')
   }
   plantInPlot(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
+  plantTreeInPlot(...args: any[]) {
     throw new Error('Unimplemented')
   }
   prependPendingPeerMessage(...args: any[]) {

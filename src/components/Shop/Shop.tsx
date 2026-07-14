@@ -36,13 +36,16 @@ import { centerTabsSx } from '../../styles/sx.js'
 
 import { TabPanel, a11yProps } from './TabPanel/index.js'
 
+const isPlantable = (item: farmhand.item) =>
+  item.type === itemType.CROP || item.type === itemType.TREE
+
 const categorizeShopInventory = memoize(
   (
     shopInventory: farmhand.item[]
   ): Record<'seeds' | 'fieldTools', farmhand.item[]> =>
     shopInventory.reduce(
       (acc, inventoryItem) => {
-        acc[inventoryItem.type === itemType.CROP ? 'seeds' : 'fieldTools'].push(
+        acc[isPlantable(inventoryItem) ? 'seeds' : 'fieldTools'].push(
           inventoryItem
         )
 

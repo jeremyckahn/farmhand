@@ -332,9 +332,12 @@ export const Item = ({
               {isPurchaseView && (item as farmhand.seedItem).growsInto && (
                 <p>
                   Days to mature:{' '}
-                  {getCropLifecycleDuration(
-                    getFinalCropItemFromSeedItem(item!) as any
-                  )}
+                  {getCropLifecycleDuration({
+                    cropTimeline:
+                      getFinalCropItemFromSeedItem(item!)?.cropTimeline ??
+                      getFinalCropItemFromSeedItem(item!)?.treeTimeline ??
+                      [],
+                  })}
                 </p>
               )}
             </div>

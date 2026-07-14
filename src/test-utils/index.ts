@@ -24,6 +24,7 @@ export const testCrop = (item: any = {}): farmhand.plotContent => ({
 
 export const testTree = (item: any = {}): farmhand.plantedTree => ({
   daysOld: 0,
+  daysSinceLastHarvest: 0,
   itemId: 'test-tree',
   ...item,
 })
@@ -192,6 +193,7 @@ export const testState = (
   latestPeerMessages: [],
   sendPeerMetadata: null,
   selectedCowId: '',
+  selectedForestItemId: '',
   selectedItemId: '',
   priceCrashes: {},
   priceSurges: {},

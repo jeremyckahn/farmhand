@@ -24,6 +24,7 @@ import yellowDotBg from '../../img/ui/yellow-dot-bg.png'
 import lavenderDotBg from '../../img/ui/lavender-dot-bg.png'
 import greenDotBg from '../../img/ui/green-dot-bg.png'
 import grassBg from '../../img/ui/grass.png'
+import forestFloorBg from '../../img/ui/forest-floor.png'
 
 interface StageProps {
   field: farmhand.plotContent[][]
@@ -69,6 +70,7 @@ export const Stage = ({
     [stageFocusType.CELLAR]: greenDotBg,
     [stageFocusType.FIELD]: grassBg,
     [stageFocusType.COW_PEN]: grassBg,
+    [stageFocusType.FOREST]: forestFloorBg,
   }[stageFocus as string]
 
   return (
@@ -100,6 +102,7 @@ export const Stage = ({
         ...(([
           stageFocusType.FIELD,
           stageFocusType.COW_PEN,
+          stageFocusType.FOREST,
         ] as string[]).includes(stageFocus)
           ? {
               backgroundSize: '30%',
