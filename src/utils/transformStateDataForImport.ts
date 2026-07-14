@@ -1,4 +1,4 @@
-import { stageFocusType } from '../enums.js'
+import { stageFocusType, toolLevel, toolType } from '../enums.js'
 import { STANDARD_VIEW_LIST } from '../constants.js'
 
 import { farmProductsSold } from './farmProductsSold.js'
@@ -69,6 +69,21 @@ export const transformStateDataForImport = (
   if (sanitizedState.id) {
     sanitizedState.playerId = sanitizedState.id
     delete sanitizedState.id
+  }
+
+  // NOTE: Legacy data transformation for saves persisted before the AXE
+  // tool was added. toolLevels is merged as a whole object on import (see
+  // useFarmhand.ts), so an old save's toolLevels has no AXE key at all
+  // rather than an explicit UNAVAILABLE - leaving Toolbelt.tsx unable to
+  // resolve a tool image for it and crashing on tool.level.toLowerCase().
+  if (
+    sanitizedState.toolLevels &&
+    !(sanitizedState.toolLevels as farmhand.state['toolLevels'])[toolType.AXE]
+  ) {
+    sanitizedState.toolLevels = {
+      ...(sanitizedState.toolLevels as farmhand.state['toolLevels']),
+      [toolType.AXE]: toolLevel.UNAVAILABLE,
+    }
   }
 
   return (sanitizedState as unknown) as farmhand.state

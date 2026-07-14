@@ -1,4 +1,5 @@
 import { carrot } from '../data/items.js'
+import { toolLevel, toolType } from '../enums.js'
 import { getCowStub } from '../test-utils/stubs/cowStub.js'
 
 import { transformStateDataForImport } from './transformStateDataForImport.js'
@@ -100,4 +101,37 @@ describe('transformStateDataForImport', () => {
       })
     }
   )
+
+  test('backfills a missing AXE toolLevel for saves persisted before the axe existed', () => {
+    state.toolLevels = {
+      SCYTHE: toolLevel.DEFAULT,
+      SHOVEL: toolLevel.DEFAULT,
+      HOE: toolLevel.DEFAULT,
+      WATERING_CAN: toolLevel.DEFAULT,
+    } as farmhand.state['toolLevels']
+
+    const sanitizedState = transformStateDataForImport(state as any)
+
+    expect(sanitizedState.toolLevels).toEqual({
+      SCYTHE: toolLevel.DEFAULT,
+      SHOVEL: toolLevel.DEFAULT,
+      HOE: toolLevel.DEFAULT,
+      WATERING_CAN: toolLevel.DEFAULT,
+      [toolType.AXE]: toolLevel.UNAVAILABLE,
+    })
+  })
+
+  test('leaves an already-present AXE toolLevel untouched', () => {
+    state.toolLevels = {
+      AXE: toolLevel.BRONZE,
+      SCYTHE: toolLevel.DEFAULT,
+      SHOVEL: toolLevel.DEFAULT,
+      HOE: toolLevel.DEFAULT,
+      WATERING_CAN: toolLevel.DEFAULT,
+    } as farmhand.state['toolLevels']
+
+    const sanitizedState = transformStateDataForImport(state as any)
+
+    expect(sanitizedState.toolLevels).toEqual(state.toolLevels)
+  })
 })
