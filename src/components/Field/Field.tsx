@@ -503,9 +503,11 @@ export const Field = (props: FieldProps) => {
             backgroundSize: 'calc(100% * (1 / 12) * 1.5)',
           },
           '& .slider-wrapper': {
+            alignItems: 'center',
             background: 'rgba(128, 128, 128, 0.5)',
             borderRadius: '2em',
             bottom: '7.5em',
+            display: 'flex',
             left: isMenuOpen
               ? `calc(50vw + ${layout.sidebarWidth} / 2)`
               : '50%',
