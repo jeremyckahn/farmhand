@@ -28,6 +28,7 @@ export interface ContextData {
     isChatAvailable: boolean
     levelEntitlements: farmhand.levelEntitlements
     plantableCropInventory: farmhand.item[]
+    plantableTreeInventory: farmhand.item[]
     playerInventory: farmhand.item[]
     playerInventoryQuantities: Record<string, number>
     shopInventory: farmhand.item[]
@@ -57,6 +58,7 @@ export const createContextData = (): ContextData => {
       },
       fieldToolInventory: [] as farmhand.item[],
       plantableCropInventory: [] as farmhand.item[],
+      plantableTreeInventory: [] as farmhand.item[],
       playerInventoryQuantities: {},
       activePlayers: null,
       allowCustomPeerCowNames: false,
@@ -151,6 +153,7 @@ export const createContextData = (): ContextData => {
       sendCowTradeRequest: () => {},
       sendPeerMetadata: () => {},
       selectedCowId: '',
+      selectedForestItemId: '',
       selectedItemId: '',
       priceCrashes: {},
       priceSurges: {},

@@ -39,6 +39,7 @@ const itemTypeCategoryMap = new Map([
   ['SCARECROW', 'FIELD_TOOLS'],
   ['SPRINKLER', 'FIELD_TOOLS'],
   ['STONE', 'MINED_RESOURCES'],
+  ['TREE', 'CROPS'],
   ['WEED', 'FORAGED_ITEMS'],
 ])
 
@@ -53,7 +54,8 @@ export const separateItemsIntoCategories = (items: farmhand.item[]) =>
       const category = itemTypeCategoryMap.get(type)
 
       if (category === 'CROPS') {
-        const targetCategory = item.isPlantableCrop ? 'SEEDS' : 'CROPS'
+        const targetCategory =
+          item.isPlantableCrop || item.isPlantableTree ? 'SEEDS' : 'CROPS'
 
         categories.get(targetCategory)?.push(item)
       } else if (category != null && categories.has(category)) {

@@ -122,6 +122,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       latestPeerMessages: [],
       sendPeerMetadata: null,
       selectedCowId: '',
+      selectedForestItemId: '',
       selectedItemId: '',
       priceCrashes: {},
       priceSurges: {},
@@ -192,6 +193,9 @@ export const useFarmhand = (props: FarmhandProps) => {
     state.valueAdjustments
   )
   const plantableCropInventory = FarmhandService.getPlantableCropInventory(
+    state.inventory
+  )
+  const plantableTreeInventory = FarmhandService.getPlantableTreeInventory(
     state.inventory
   )
 
@@ -300,6 +304,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       fieldToolInventory,
       playerInventory,
       plantableCropInventory,
+      plantableTreeInventory,
       viewList,
       levelEntitlements,
       shopInventory,
@@ -364,6 +369,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       fieldToolInventory,
       playerInventory,
       plantableCropInventory,
+      plantableTreeInventory,
       viewList,
       levelEntitlements,
       shopInventory,
@@ -715,6 +721,7 @@ export const useFarmhand = (props: FarmhandProps) => {
     isChatAvailable,
     levelEntitlements,
     plantableCropInventory,
+    plantableTreeInventory,
     playerInventory,
     playerInventoryQuantities: getInventoryQuantities(state.inventory),
     shopInventory,

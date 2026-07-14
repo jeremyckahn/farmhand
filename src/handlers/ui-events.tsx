@@ -2,13 +2,20 @@ import { saveAs } from 'file-saver'
 import globalWindow from 'global/window.js'
 
 import { DEFAULT_ROOM, TOOLBELT_FIELD_MODES } from '../constants.js'
-import { dialogView, fieldMode, stageFocusType } from '../enums.js'
+import {
+  cropLifeStage,
+  dialogView,
+  fieldMode,
+  stageFocusType,
+} from '../enums.js'
 import {
   DISCONNECTING_FROM_SERVER,
   INVALID_DATA_PROVIDED,
   PROGRESS_SAVED_MESSAGE,
   UPDATE_AVAILABLE,
 } from '../strings.js'
+import { getTreeLifeStage } from '../utils/getTreeLifeStage.js'
+import { isPlantedTree } from '../utils/isPlantedTree.js'
 import { moneyTotal } from '../utils/moneyTotal.js'
 import { reduceByPersistedKeys } from '../utils/reduceByPersistedKeys.js'
 import { transformStateDataForImport } from '../utils/transformStateDataForImport.js'
@@ -34,6 +41,8 @@ const {
   SET_SPRINKLER,
   WATER,
 } = fieldMode
+
+const { GROWN } = cropLifeStage
 
 // All of the functions exported here are bound to the Farmhand component
 // class. See the definition of initInputHandlers:
@@ -160,6 +169,10 @@ export default {
     })
   },
 
+  handleForestItemSelectClick(this: Farmhand, { id }: farmhand.item) {
+    this.setState({ selectedForestItemId: id })
+  },
+
   handlePlotClick(this: Farmhand, x: number, y: number) {
     const {
       fieldMode: fieldModeValue,
@@ -220,6 +233,27 @@ export default {
 
   handleForestPurchase(this: Farmhand, forestId: number) {
     this.purchaseForest(forestId)
+  },
+
+  handleForestPlotClick(this: Farmhand, x: number, y: number) {
+    const plotContent = this.state.forest[y]?.[x]
+
+    if (!plotContent) {
+      const { selectedForestItemId, inventory } = this.state as farmhand.state
+
+      if (
+        selectedForestItemId &&
+        inventory.some(({ id }) => id === selectedForestItemId)
+      ) {
+        this.plantTreeInPlot(x, y, selectedForestItemId)
+      }
+
+      return
+    }
+
+    if (isPlantedTree(plotContent) && getTreeLifeStage(plotContent) === GROWN) {
+      this.harvestForestPlot(x, y)
+    }
   },
 
   handleCombinePurchase(this: Farmhand, combineId: number) {

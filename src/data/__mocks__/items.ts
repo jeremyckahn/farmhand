@@ -66,6 +66,29 @@ export const craftedItem1 = testItem({
   value: 100,
 })
 
+// Tree items
+export const sampleTreeSaplingItem1 = testItem({
+  treeType: 'SAMPLE_TREE_TYPE_1',
+  doesPriceFluctuate: true,
+  growsInto: 'sample-tree-1',
+  id: 'sample-tree-1-sapling',
+  name: 'Sample Tree Sapling 1',
+  isPlantableTree: true,
+  type: itemType.TREE,
+  value: 1,
+})
+
+export const sampleTreeItem1 = testItem({
+  treeType: 'SAMPLE_TREE_TYPE_1',
+  doesPriceFluctuate: true,
+  id: 'sample-tree-1',
+  name: 'Sample Tree Item 1',
+  type: itemType.TREE,
+  value: 2,
+  treeTimeline: [1, 2],
+  fruitTimeline: [1, 1],
+})
+
 // Crop items
 export const sampleCropSeedsItem1 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_1',

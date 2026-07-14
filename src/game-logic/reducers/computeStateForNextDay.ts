@@ -12,6 +12,7 @@ import { processCowBreeding } from './processCowBreeding.js'
 import { processCowFertilizerProduction } from './processCowFertilizerProduction.js'
 import { processFeedingCows } from './processFeedingCows.js'
 import { processField } from './processField.js'
+import { processForest } from './processForest.js'
 import { processMilkingCows } from './processMilkingCows.js'
 import { processNerfs } from './processNerfs.js'
 import { processSprinklers } from './processSprinklers.js'
@@ -40,6 +41,7 @@ export const computeStateForNextDay = (
         computeCowInventoryForNextDay,
         processCowBreeding,
         processField,
+        processForest,
         processNerfs,
         processWeather,
         processSprinklers,

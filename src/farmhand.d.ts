@@ -44,6 +44,7 @@ declare namespace farmhand {
     | 'WATERMELON'
     | 'WHEAT'
     | 'WEED'
+  type treeType = 'APPLE'
   type recipeType = 'FERMENTATION' | 'FORGE' | 'KITCHEN' | 'RECYCLING' | 'WINE'
   type fieldMode =
     | 'CLEANUP'
@@ -79,6 +80,7 @@ declare namespace farmhand {
     | 'SPRINKLER'
     | 'STONE'
     | 'TOOL_UPGRADE'
+    | 'TREE'
     | 'WEED'
   type fertilizerType = 'NONE' | 'STANDARD' | 'RAINBOW'
   type genders = 'FEMALE' | 'MALE'
@@ -134,6 +136,7 @@ declare namespace farmhand {
     doesPriceFluctuate?: boolean
     hoveredPlotRange?: number
     isPlantableCrop?: boolean
+    isPlantableTree?: boolean
     isReplantable?: boolean
     quantity?: number
     tier?: number
@@ -141,6 +144,9 @@ declare namespace farmhand {
     daysToFerment?: number | null
     isSeed?: boolean
     cropLifecycleDuration?: number
+    treeTimeline?: number[]
+    fruitTimeline?: number[]
+    treeType?: treeType
   }
 
   interface seedItem extends item {
@@ -178,6 +184,7 @@ declare namespace farmhand {
 
   interface plantedTree {
     daysOld: number
+    daysSinceLastHarvest: number
     itemId: string
   }
 
@@ -448,6 +455,7 @@ declare namespace farmhand {
      */
     sendPeerMetadata?: Function | null
     selectedCowId: string
+    selectedForestItemId: string
     selectedItemId: string
     /**
      * Keys are itemIds.

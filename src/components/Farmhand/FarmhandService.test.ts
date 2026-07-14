@@ -1,4 +1,4 @@
-import { sprinkler } from '../../data/items.js'
+import { sprinkler, appleSapling } from '../../data/items.js'
 import { carrotSeed } from '../../data/crops/carrot.js'
 
 import { FarmhandService } from './FarmhandService.js'
@@ -55,6 +55,32 @@ describe('FarmhandService', () => {
       )
 
       expect(plantableCropInventory).toEqual([{ ...carrotSeed, quantity: 1 }])
+    })
+  })
+
+  describe('getPlantableTreeInventory', () => {
+    test('selects plantable tree items from inventory', () => {
+      const inventory = [
+        { id: 'apple-sapling', quantity: 1 },
+        { id: 'weed', quantity: 1 },
+      ]
+      const plantableTreeInventory = FarmhandService.getPlantableTreeInventory(
+        inventory
+      )
+
+      expect(plantableTreeInventory).toEqual([{ ...appleSapling, quantity: 1 }])
+    })
+
+    test('ignores inventory entries with no corresponding item', () => {
+      const inventory = [
+        { id: 'apple-sapling', quantity: 1 },
+        { id: 'not-a-real-item-id', quantity: 1 },
+      ]
+      const plantableTreeInventory = FarmhandService.getPlantableTreeInventory(
+        inventory
+      )
+
+      expect(plantableTreeInventory).toEqual([{ ...appleSapling, quantity: 1 }])
     })
   })
 })

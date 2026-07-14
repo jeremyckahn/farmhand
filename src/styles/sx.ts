@@ -1,6 +1,6 @@
 import { lighten, Theme } from '@mui/material/styles/index.js'
 
-import { colors } from './tokens.js'
+import { breakpoints, colors, layout } from './tokens.js'
 
 // NOTE: These are plain object literals (not typed as SxProps<Theme>) so
 // they can be freely spread together into other sx objects — SxProps<Theme>
@@ -63,3 +63,69 @@ export const centerTabsSx = {
 export const spriteShadowSx = {
   filter: 'drop-shadow(2px 2px 2px rgba(100, 100, 100, 0.4))',
 } as const
+
+// Shared by QuickSelect and ForestQuickSelect: both render the same fixed
+// toolbelt chrome (Toolbelt + one or more ItemLists), just backed by
+// different inventories.
+export const quickSelectSx = (theme: Theme, isMenuOpen: boolean) => ({
+  ...cardStyleSx(theme),
+  bottom: '7.5em',
+  left: '50%',
+  maxWidth: 'calc(100% - 2em)',
+  position: 'fixed',
+  transform: 'translateX(-50%)',
+  '@media (orientation: landscape)': {
+    bottom: 'auto',
+    [`@media (max-height: ${breakpoints.largePhone}px)`]: {
+      top: '5em',
+      maxWidth: 'calc(100% - 12em)',
+      left: `calc(50% - (${layout.fieldSpaceForRightSideControls} / 2))`,
+    },
+    [`@media (max-width: ${breakpoints.md}px)`]: {
+      display: isMenuOpen ? 'none' : undefined,
+    },
+  },
+  [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+    left: 'auto',
+    maxHeight: 'calc(100vh - 20em)',
+    minWidth: '4em',
+    overflow: 'auto',
+    right: '0.75em',
+    top: '9em',
+    transform: 'none',
+    bottom: '8em',
+  },
+  '@media (orientation: portrait)': {
+    display: isMenuOpen ? 'none' : undefined,
+  },
+  '& .MuiGrid-root': {
+    borderRadius: '0.25em',
+    overflowX: 'scroll',
+    overflowY: 'hidden',
+    padding: '0.5em',
+    position: 'relative',
+    [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+      overflowX: 'hidden',
+      flexDirection: 'column',
+    },
+    '& > *': {
+      [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+        alignItems: 'center',
+        width: '3em',
+      },
+    },
+  },
+  '& .Toolbelt': {
+    display: 'flex',
+    flexFlow: 'column',
+    justifyContent: 'center',
+  },
+  '& .MuiDivider-root': {
+    margin: '0 0.5em',
+    [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+      margin: '0 0 1em 0',
+      height: '1px',
+      width: '100%',
+    },
+  },
+})
