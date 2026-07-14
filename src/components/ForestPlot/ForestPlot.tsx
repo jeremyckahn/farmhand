@@ -39,20 +39,21 @@ const getTreeTooltipText = (
 const formatWoodRange = ([min, max]: [number, number]): string =>
   min === max ? `${min}` : `${min}-${max}`
 
-const getChopTooltipText = (
+const getChopActionText = (willAlsoPickFruit: boolean): string =>
+  willAlsoPickFruit ? 'Pick and Chop (destroy)' : 'Chop (destroy)'
+
+const getChopYieldText = (
   woodRange: [number, number] | null,
   fruitBonusItemName: string | null
 ): string => {
   if (!woodRange) {
-    return 'Chop down'
+    return ''
   }
 
-  const woodItemName = itemsMap.wood?.name ?? 'Wood'
-  const woodText = `Chop down for ${formatWoodRange(woodRange)} ${woodItemName}`
+  const woodItemName = (itemsMap.wood?.name ?? 'Wood').toLowerCase()
+  const woodText = `${formatWoodRange(woodRange)} ${woodItemName}`
 
-  return fruitBonusItemName
-    ? `${woodText} (+1 ${fruitBonusItemName})`
-    : woodText
+  return fruitBonusItemName ? `${woodText}, 1 ${fruitBonusItemName}` : woodText
 }
 
 export interface ForestPlotProps {
@@ -199,17 +200,25 @@ export const ForestPlot = ({
         placement: 'top',
         title: (
           <>
-            {item ? <Typography>{item.name}</Typography> : null}
-            {isTree && treeLifeStage && fruitLifeStage && (
-              <Typography>
-                {canBeChopped
-                  ? getChopTooltipText(
+            {item ? <Typography>{item.name} Tree</Typography> : null}
+            {isTree &&
+              treeLifeStage &&
+              fruitLifeStage &&
+              (canBeChopped ? (
+                <>
+                  <Typography>{getChopActionText(canBeHarvested)}</Typography>
+                  <Typography>
+                    {getChopYieldText(
                       chopWoodRange,
                       canBeHarvested ? item?.name ?? null : null
-                    )
-                  : getTreeTooltipText(treeLifeStage, fruitLifeStage)}
-              </Typography>
-            )}
+                    )}
+                  </Typography>
+                </>
+              ) : (
+                <Typography>
+                  {getTreeTooltipText(treeLifeStage, fruitLifeStage)}
+                </Typography>
+              ))}
           </>
         ),
       }}
