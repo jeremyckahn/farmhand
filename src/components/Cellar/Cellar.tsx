@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
 import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'
+import { useState } from 'react'
+
+import { centerTabsSx } from '../../styles/sx.js'
+import { Div } from '../Elements/index.js'
 
 import { CellarInventoryTabPanel } from './CellarInventoryTabPanel.js'
 import { FermentationTabPanel } from './FermentationTabPanel.js'
-import { WinemakingTabPanel } from './WinemakingTabPanel.js'
 import { a11yProps } from './TabPanel/index.js'
-
-import './Cellar.sass'
+import { WinemakingTabPanel } from './WinemakingTabPanel.js'
 
 export const Cellar = () => {
   const [currentTab, setCurrentTab] = useState(0)
 
   return (
-    <div className="Cellar">
+    <Div className="Cellar" sx={centerTabsSx}>
       <Tabs
         value={currentTab}
         onChange={(_e, newTab) => setCurrentTab(newTab)}
@@ -26,7 +27,7 @@ export const Cellar = () => {
       <CellarInventoryTabPanel index={0} currentTab={currentTab} />
       <FermentationTabPanel index={1} currentTab={currentTab} />
       <WinemakingTabPanel index={2} currentTab={currentTab} />
-    </div>
+    </Div>
   )
 }
 

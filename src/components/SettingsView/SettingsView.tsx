@@ -15,9 +15,9 @@ import Tooltip from '@mui/material/Tooltip/index.js'
 import FileReaderInput from 'react-file-reader-input'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { Div } from '../Elements/index.js'
 
 import { RandomSeedInput } from './RandomSeedInput.js'
-import './SettingsView.sass'
 
 const SettingsView = ({
   allowCustomPeerCowNames,
@@ -57,7 +57,19 @@ const SettingsView = ({
   const [isClearDataDialogOpen, setIsClearDataDialogOpen] = useState(false)
 
   return (
-    <div className="SettingsView">
+    <Div
+      className="SettingsView"
+      sx={{
+        '& button': { margin: '0.5em' },
+        '& fieldset': { display: 'block', margin: '0 auto', maxWidth: 400 },
+        '& .button-row': {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        },
+        '& .MuiFormControlLabel-root': { margin: '0.5em 0' },
+      }}
+    >
       <div className="button-row">
         <Button
           {...{
@@ -214,7 +226,7 @@ const SettingsView = ({
           </DialogActions>
         </DialogContent>
       </Dialog>
-    </div>
+    </Div>
   )
 }
 

@@ -8,21 +8,19 @@ import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 import { array, bool, func, object, string } from 'prop-types'
 
-import { CowCardProps } from '../CowCard.js'
-
 import { huggingMachine } from '../../../data/items.js'
 import { genders } from '../../../enums.js'
 import { COW_COLOR_NAMES } from '../../../strings.js'
+import { colors } from '../../../styles/tokens.js'
 import { getCowWeight } from '../../../utils/getCowWeight.js'
 import { getPlayerName } from '../../../utils/getPlayerName.js'
 import { integerString } from '../../../utils/integerString.js'
 import { isCowInBreedingPen } from '../../../utils/isCowInBreedingPen.js'
-import { nullArray } from '../../../utils/nullArray.js'
 import { memoize } from '../../../utils/memoize.js'
 import { moneyString } from '../../../utils/moneyString.js'
+import { nullArray } from '../../../utils/nullArray.js'
 import Bloodline from '../Bloodline/index.js'
-
-import './Subheader.sass'
+import { CowCardProps } from '../CowCard.js'
 
 // The extra 0.5 is for rounding up to the next full heart. This allows a fully
 // happy cow to have full hearts on the beginning of a new day.
@@ -123,6 +121,9 @@ const Subheader = ({
                     icon: isHeartFull(i, numberOfFullHearts)
                       ? faFullHeart
                       : faEmptyHeart,
+                    color: isHeartFull(i, numberOfFullHearts)
+                      ? colors.heart
+                      : undefined,
                     className: classNames('heart', {
                       'is-full': isHeartFull(i, numberOfFullHearts),
                     }),

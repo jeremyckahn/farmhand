@@ -29,8 +29,6 @@ import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.j
 import QuantityInput from '../QuantityInput/index.js'
 import AnimatedNumber from '../AnimatedNumber/index.js'
 
-import './Item.sass'
-
 interface ValueIndicatorProps {
   poorValue: boolean
 }
@@ -204,6 +202,17 @@ export const Item = ({
         }),
         onClick: isSelectView ? () => handleItemSelectClick?.(item!) : noop,
         raised: isSelected,
+      }}
+      sx={{
+        position: 'relative',
+        cursor: isSelectView ? 'pointer' : undefined,
+        '& img': { width: '3em' },
+        '& svg': { marginBottom: '-0.25em' },
+        '& .MuiCardContent-root': {
+          paddingTop: 0,
+          '& p': { paddingTop: '1em' },
+        },
+        '& .MuiCardHeader-subheader': { userSelect: 'none' },
       }}
     >
       <CardHeader

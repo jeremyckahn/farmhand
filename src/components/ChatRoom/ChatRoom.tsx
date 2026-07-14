@@ -9,8 +9,6 @@ import DialogActions from '@mui/material/DialogActions/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-import './ChatRoom.sass'
-
 const chitchatterDomain = 'https://chitchatter.im'
 
 export const ChatRoom = () => {
@@ -49,6 +47,12 @@ export const ChatRoom = () => {
           fullScreen: true,
           open: isChatOpen,
           onClose: handleChatRoomClose,
+        }}
+        sx={{
+          '& .MuiDialog-container': {
+            padding: '1em',
+            height: 'calc(100% - 2em)',
+          },
         }}
         aria-describedby={dialogTitleId}
         aria-labelledby={dialogContentId}

@@ -6,8 +6,7 @@ import ReactMarkdown from 'react-markdown'
 import Divider from '@mui/material/Divider/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-
-import './LogView.sass'
+import { Div } from '../Elements/index.js'
 
 export const LogView = ({
   notificationLog,
@@ -16,7 +15,13 @@ export const LogView = ({
   notificationLog: farmhand.notificationLogEntry[]
   todaysNotifications: farmhand.notification[]
 }) => (
-  <div className="LogView notification-container">
+  <Div
+    className="LogView notification-container"
+    sx={{
+      '& h3': { marginBottom: '1em' },
+      '& .MuiAlert-root p:last-child': { marginBottom: 0 },
+    }}
+  >
     <h3>Today</h3>
     <ul>
       {todaysNotifications.map(
@@ -80,7 +85,7 @@ export const LogView = ({
         )
       )}
     </ul>
-  </div>
+  </Div>
 )
 
 LogView.propTypes = {

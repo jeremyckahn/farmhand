@@ -18,8 +18,6 @@ import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
 import { integerString } from '../../utils/integerString.js'
 import AnimatedNumber from '../AnimatedNumber/index.js'
 
-import './FermentationRecipe.sass'
-
 export const FermentationRecipe = ({ item }: { item: farmhand.item }) => {
   const {
     gameState: { inventory, cellarInventory, purchasedCellar },
@@ -71,7 +69,16 @@ export const FermentationRecipe = ({ item }: { item: farmhand.item }) => {
   )
 
   return (
-    <Card className="FermentationRecipe">
+    <Card
+      className="FermentationRecipe"
+      sx={{
+        position: 'relative',
+        '& .MuiCardHeader-avatar img': {
+          width: '3em',
+          filter: 'drop-shadow(1px 1px 2px rgba(255, 0, 131, 0.63))',
+        },
+      }}
+    >
       <CardHeader
         title={fermentationRecipeName}
         avatar={

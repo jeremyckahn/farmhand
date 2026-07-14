@@ -9,13 +9,15 @@ import { recipesMap } from '../../data/maps.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
+import { Div } from '../Elements/index.js'
+
+import { centerTabsSx } from '../../styles/sx.js'
+
 import { a11yProps } from './TabPanel/index.js'
 
 import { ForgeTabPanel } from './ForgeTabPanel.js'
 import { KitchenTabPanel } from './KitchenTabPanel.js'
 import { RecyclingTabPanel } from './RecyclingTabPanel.js'
-
-import './Workshop.sass'
 
 interface WorkshopProps {
   learnedRecipes: Record<string, boolean>
@@ -49,7 +51,7 @@ const Workshop = ({
   const recyclingTabIndex = showForge ? 2 : 1
 
   return (
-    <div className="Workshop">
+    <Div className="Workshop" sx={centerTabsSx}>
       <Tabs
         value={currentTab}
         onChange={(_e, newTab) => setCurrentTab(newTab)}
@@ -81,7 +83,7 @@ const Workshop = ({
           learnedRecipes={learnedRecyclingRecipes}
         />
       ) : null}
-    </div>
+    </Div>
   )
 }
 

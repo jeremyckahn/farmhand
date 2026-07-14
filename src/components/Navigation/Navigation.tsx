@@ -1,53 +1,53 @@
-import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
+import React, { useEffect, useState } from 'react'
 
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance.js'
 import AssessmentIcon from '@mui/icons-material/Assessment.js'
 import BeenhereIcon from '@mui/icons-material/Beenhere.js'
 import BookIcon from '@mui/icons-material/Book.js'
+import FlashOnIcon from '@mui/icons-material/FlashOn.js'
+import SettingsIcon from '@mui/icons-material/Settings.js'
 import Button from '@mui/material/Button/index.js'
 import Dialog from '@mui/material/Dialog/index.js'
 import DialogActions from '@mui/material/DialogActions/index.js'
 import DialogContent from '@mui/material/DialogContent/index.js'
 import DialogTitle from '@mui/material/DialogTitle/index.js'
 import Fab from '@mui/material/Fab/index.js'
-import FlashOnIcon from '@mui/icons-material/FlashOn.js'
 import FormControl from '@mui/material/FormControl/index.js'
 import FormControlLabel from '@mui/material/FormControlLabel/index.js'
 import FormGroup from '@mui/material/FormGroup/index.js'
 import MenuItem from '@mui/material/MenuItem/index.js'
 import Select from '@mui/material/Select/index.js'
-import SettingsIcon from '@mui/icons-material/Settings.js'
 import Switch from '@mui/material/Switch/index.js'
 import TextField from '@mui/material/TextField/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import { array, bool, func, number, string } from 'prop-types'
 
-import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
-import { integerString } from '../../utils/integerString.js'
-import { inventorySpaceConsumed } from '../../utils/inventorySpaceConsumed.js'
-import { dialogView } from '../../enums.js'
+import { MAX_ROOM_NAME_LENGTH } from '../../common/constants.js'
 import {
   DEFAULT_ROOM,
   INFINITE_STORAGE_LIMIT,
   STAGE_TITLE_MAP,
 } from '../../constants.js'
-import { MAX_ROOM_NAME_LENGTH } from '../../common/constants.js'
+import { dialogView } from '../../enums.js'
+import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+import { integerString } from '../../utils/integerString.js'
+import { inventorySpaceConsumed } from '../../utils/inventorySpaceConsumed.js'
+import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
+import { breakpoints, colors } from '../../styles/tokens.js'
 import AccountingView from '../AccountingView/index.js'
 import AchievementsView from '../AchievementsView/index.js'
+import { H3, Header } from '../Elements/index.js'
+import KeybindingsView from '../KeybindingsView/index.js'
 import LogView from '../LogView/index.js'
 import OnlinePeersView from '../OnlinePeersView/index.js'
 import PriceEventView from '../PriceEventView/index.js'
 import SettingsView from '../SettingsView/index.js'
 import StatsView from '../StatsView/index.js'
-import KeybindingsView from '../KeybindingsView/index.js'
 
 import DayAndProgressContainer from './DayAndProgressContainer.js'
-
-import './Navigation.sass'
 
 const FarmNameDisplay = ({
   farmName,
@@ -300,7 +300,85 @@ export const Navigation = ({
   modalContentId?: string
 }) => {
   return (
-    <header className="Navigation">
+    <Header
+      className="Navigation"
+      sx={{
+        flexDirection: 'column',
+        flexShrink: 0,
+        display: 'flex',
+        '& .version': {
+          fontFamily: '"Francois One", sans-serif',
+          textAlign: 'center',
+        },
+        '& .farm-name': {
+          lineHeight: '1.3em',
+          margin: '0.25em 0',
+          '& .MuiInput-root': {
+            background: 'none',
+            margin: 0,
+            '& input': {
+              fontFamily: '"Francois One"',
+              paddingLeft: '0.5em',
+              paddingRight: '0.5em',
+              textAlign: 'center',
+            },
+          },
+        },
+        '& .online-control-container': {
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'row',
+          margin: '1em 0',
+          '& .toggle-container': { minWidth: '155px' },
+        },
+        '& .button-array': {
+          marginLeft: '3em',
+          marginRight: '3em',
+          [`@media (max-width: ${breakpoints.smallPhone}px)`]: {
+            marginLeft: '2em',
+            marginRight: '2em',
+          },
+        },
+        '& .current-level': {
+          alignItems: 'center',
+          bottom: 0,
+          display: 'flex',
+          justifyContent: 'center',
+          left: 0,
+          position: 'absolute',
+          right: 0,
+          top: 0,
+          userSelect: 'none',
+        },
+        '& h1': {
+          fontSize: '3em',
+          fontWeight: 'bold',
+          [`@media (max-width: ${breakpoints.smallPhone}px)`]: {
+            fontSize: '2.5em',
+          },
+        },
+        '& button': { fontSize: '1.3em', margin: '0.3em', minWidth: '56px' },
+        '& h1, & h2, & h3': { textAlign: 'center' },
+        '& .day-and-progress-container': {
+          alignItems: 'center',
+          display: 'flex',
+          fontSize: '1.5em',
+          margin: '0.5em auto',
+          '& .MuiBox-root': {
+            display: 'inline-flex',
+            marginLeft: '0.5em',
+            position: 'relative',
+          },
+        },
+        '& .inventory-info': { fontSize: '1em' },
+        '& .MuiSelect-select': { padding: '1em' },
+        '& .chat-placeholder': {
+          fontSize: '0.75em',
+          padding: '0.5em 0',
+          textAlign: 'center',
+        },
+      }}
+    >
       <h1>Farmhand</h1>
       <p className="version">
         v{import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION}
@@ -320,7 +398,7 @@ export const Navigation = ({
         }}
       />
       {inventoryLimit > INFINITE_STORAGE_LIMIT && (
-        <h3
+        <H3
           {...{
             className: classNames('inventory-info', {
               'is-inventory-full': !doesInventorySpaceRemain({
@@ -329,10 +407,15 @@ export const Navigation = ({
               }),
             }),
           }}
+          sx={{
+            color: !doesInventorySpaceRemain({ inventory, inventoryLimit })
+              ? colors.error
+              : undefined,
+          }}
         >
           Inventory: {integerString(inventorySpaceConsumed(inventory))} /{' '}
           {integerString(inventoryLimit)}
-        </h3>
+        </H3>
       )}
 
       <Select
@@ -408,7 +491,7 @@ export const Navigation = ({
           </Button>
         </DialogActions>
       </Dialog>
-    </header>
+    </Header>
   )
 }
 

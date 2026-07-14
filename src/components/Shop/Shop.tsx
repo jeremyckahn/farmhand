@@ -31,10 +31,10 @@ import {
 } from '../../constants.js'
 import Inventory from '../Inventory/index.js'
 import TierPurchase from '../TierPurchase/index.js'
+import { Div } from '../Elements/index.js'
+import { centerTabsSx } from '../../styles/sx.js'
 
 import { TabPanel, a11yProps } from './TabPanel/index.js'
-
-import './Shop.sass'
 
 const categorizeShopInventory = memoize(
   (
@@ -108,7 +108,7 @@ export const Shop = ({
     levelEntitlements.stageFocusType[stageFocusType.FOREST]
 
   return (
-    <div className="Shop">
+    <Div className="Shop" sx={centerTabsSx}>
       <Tabs
         value={currentTab}
         onChange={(_e, newTab) => setCurrentTab(newTab)}
@@ -330,7 +330,7 @@ export const Shop = ({
           </li>
         </ul>
       </TabPanel>
-    </div>
+    </Div>
   )
 }
 

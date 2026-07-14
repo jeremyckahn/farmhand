@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { number } from 'prop-types'
 import { interpolate, tween } from 'shifty'
 
-import './ProgressBar.sass'
+import { Div, P } from '../Elements/index.js'
 
 const incompleteColor = '#ff9f00'
 const completeColor = '#00e500'
@@ -48,9 +48,17 @@ const ProgressBar = ({ percent }: { percent: number }) => {
   }, [currentTweenable, percent])
 
   return (
-    <div className="ProgressBar">
-      <div {...{ className: 'progress-wrapper' }}>
-        <div
+    <Div className="ProgressBar" sx={{ margin: '0 auto' }}>
+      <Div
+        className="progress-wrapper"
+        sx={{
+          height: '1em',
+          background: '#ddd',
+          borderRadius: '0.5em',
+          overflow: 'hidden',
+        }}
+      >
+        <Div
           {...{
             className: 'progress',
             style: {
@@ -58,12 +66,13 @@ const ProgressBar = ({ percent }: { percent: number }) => {
               width: `${displayedProgress}%`,
             },
           }}
-        ></div>
-      </div>
-      <p>
+          sx={{ height: '100%' }}
+        ></Div>
+      </Div>
+      <P sx={{ lineHeight: '2em', textAlign: 'center' }}>
         <span>{displayedProgress}%</span>
-      </p>
-    </div>
+      </P>
+    </Div>
   )
 }
 

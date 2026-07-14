@@ -15,7 +15,6 @@ import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.j
 import { craftedItems } from '../../img/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import './UpgradePurchase.sass'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
 interface UpgradePurchaseProps {

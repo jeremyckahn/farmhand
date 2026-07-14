@@ -74,15 +74,6 @@ const viteConfig = defineConfig({
     },
     dataUriLoader,
   ],
-  resolve: {
-    alias: [
-      {
-        // NOTE: This is required for the SCSS modules
-        find: /^~(.*)$/,
-        replacement: '$1',
-      },
-    ],
-  },
   define: {
     // NOTE: By default, Vite doesn't include shims for NodeJS.
     global: {},
@@ -93,13 +84,6 @@ const viteConfig = defineConfig({
     rolldownOptions: {
       moduleTypes: {
         '.js': 'jsx',
-      },
-    },
-  },
-  css: {
-    preprocessorOptions: {
-      sass: {
-        api: 'modern-compiler', // or "modern"
       },
     },
   },

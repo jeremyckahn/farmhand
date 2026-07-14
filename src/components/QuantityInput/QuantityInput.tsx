@@ -8,9 +8,8 @@ import TextField from '@mui/material/TextField/index.js'
 
 import { integerString } from '../../utils/integerString.js'
 import AnimatedNumber from '../AnimatedNumber/index.js'
-import { Span } from '../Elements/index.js'
-
-import './QuantityInput.sass'
+import { Div, Span } from '../Elements/index.js'
+import { breakpoints } from '../../styles/tokens.js'
 
 export const QUANTITY_INPUT_PLACEHOLDER_TEXT = '0'
 
@@ -132,11 +131,35 @@ const QuantityInput = ({
   }
 
   return (
-    <div className="QuantityInput">
+    <Div
+      className="QuantityInput"
+      sx={{
+        '& .MuiInput-root': {
+          margin: '1px 0.25em 0',
+          [`@media (max-width: ${breakpoints.mediumPhone}px)`]: {
+            margin: '0 0.25em 0 0.5em',
+          },
+          '& input': { textAlign: 'right' },
+        },
+      }}
+    >
       <QuantityTextInput
         {...{ handleSubmit, handleUpdateNumber, maxQuantity, value }}
       />
-      <div className="number-nudger-container">
+      <Div
+        className="number-nudger-container"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'absolute',
+          top: '0.25em',
+          right: 0,
+          '& button': {
+            margin: '0.25em 0.5em',
+            '& svg': { marginBottom: 0 },
+          },
+        }}
+      >
         <Fab
           disabled={!value}
           {...{
@@ -159,8 +182,8 @@ const QuantityInput = ({
         >
           <KeyboardArrowDown />
         </Fab>
-      </div>
-    </div>
+      </Div>
+    </Div>
   )
 }
 

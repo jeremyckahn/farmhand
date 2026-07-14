@@ -1,11 +1,11 @@
-import React from 'react'
 import classNames from 'classnames'
 import { object, shape, string } from 'prop-types'
 
-import { INGREDIENTS_LIST_ITEM } from '../../templates.js'
-
-import { integerString } from '../../utils/integerString.js'
 import { itemsMap } from '../../data/maps.js'
+import { colors } from '../../styles/tokens.js'
+import { INGREDIENTS_LIST_ITEM } from '../../templates.js'
+import { integerString } from '../../utils/integerString.js'
+import { P } from '../Elements/index.js'
 
 export default function IngredientsList({
   playerInventoryQuantities,
@@ -21,7 +21,7 @@ export default function IngredientsList({
       </li>
       {Object.keys(ingredients).map(itemId => (
         <li {...{ key: itemId }} data-testid="ingredient">
-          <p
+          <P
             {...{
               className: classNames(
                 (playerInventoryQuantities[itemId] || 0) >= ingredients[itemId]
@@ -29,12 +29,18 @@ export default function IngredientsList({
                   : 'out-of-stock'
               ),
             }}
+            sx={{
+              color:
+                (playerInventoryQuantities[itemId] || 0) >= ingredients[itemId]
+                  ? undefined
+                  : colors.error,
+            }}
           >
             {INGREDIENTS_LIST_ITEM`${ingredients[itemId]}${
               itemsMap[itemId].name
             }${integerString(playerInventoryQuantities[itemId] || 0)}
             `}
-          </p>
+          </P>
         </li>
       ))}
     </ul>

@@ -10,8 +10,7 @@ import ProgressBar from '../ProgressBar/index.js'
 import Achievement from '../Achievement/index.js'
 import achievements from '../../data/achievements.js'
 import { memoize } from '../../utils/memoize.js'
-
-import './AchievementsView.sass'
+import { Div } from '../Elements/index.js'
 
 const partitionAchievements = memoize(
   (completedAchievements: Partial<Record<string, boolean>>) =>
@@ -55,7 +54,13 @@ const AchievementsView = ({
   completedAchievements: Partial<Record<string, boolean>>
   partitionedAchievements?: ReturnType<typeof partitionAchievements>
 }) => (
-  <div className="AchievementsView">
+  <Div
+    className="AchievementsView"
+    sx={{
+      '& h3': { margin: 0 },
+      '& .ProgressBar': { maxWidth: 500 },
+    }}
+  >
     <ProgressBar
       {...{ percent: (complete.length / achievements.length) * 100 }}
     />
@@ -76,7 +81,7 @@ const AchievementsView = ({
       </AccordionSummary>
       <AchievementsList {...{ unpartitionedAchievements: incomplete }} />
     </Accordion>
-  </div>
+  </Div>
 )
 
 AchievementsView.propTypes = {

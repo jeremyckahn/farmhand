@@ -12,7 +12,7 @@ import Item from '../Item/index.js'
 import { itemsMap } from '../../data/maps.js'
 import { sortItems } from '../../utils/sortItems.js'
 import SearchBar from '../SearchBar/index.js'
-import './Inventory.sass'
+import { Div } from '../Elements/index.js'
 
 // Using Map for categories to preserve key order and enable Map methods
 export const categoryIds = new Map([
@@ -134,7 +134,7 @@ const Inventory = ({
   )
 
   return (
-    <div className="Inventory">
+    <Div className="Inventory">
       <SearchBar placeholder={placeholder} onSearch={setSearchQuery} />
       {!isPurchaseView && (
         <Accordion>
@@ -146,7 +146,21 @@ const Inventory = ({
             <h4>Filter by category</h4>
           </AccordionSummary>
           <AccordionDetails>
-            <div className="filter-section">
+            <Div
+              className="filter-section"
+              sx={{
+                marginBottom: '20px',
+                padding: '10px',
+                border: '1px solid #ccc',
+                borderRadius: '5px',
+                backgroundColor: '#f7f7f7',
+                '& h4': {
+                  marginBottom: '10px',
+                  fontSize: '16px',
+                  color: '#555',
+                },
+              }}
+            >
               {Array.from(categoryIds.keys()).map(key => (
                 <FormControlLabel
                   key={key}
@@ -163,7 +177,7 @@ const Inventory = ({
                   label={formatCategoryName(key)}
                 />
               ))}
-            </div>
+            </Div>
           </AccordionDetails>
         </Accordion>
       )}
@@ -192,7 +206,7 @@ const Inventory = ({
           </Fragment>
         ) : null
       )}
-    </div>
+    </Div>
   )
 }
 

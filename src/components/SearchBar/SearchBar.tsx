@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useDebounceCallback } from 'usehooks-ts'
 import TextField from '@mui/material/TextField/index.js'
-import './SearchBar.sass'
+
+import { Div } from '../Elements/index.js'
 
 const SearchBar = ({
   placeholder,
@@ -20,7 +21,52 @@ const SearchBar = ({
   }
 
   return (
-    <div className="search-bar">
+    <Div
+      className="search-bar"
+      sx={{
+        position: 'relative',
+        maxWidth: '100%',
+        padding: '0.5em',
+        margin: '1em 0',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderRadius: '1em',
+        boxShadow: '0 0.25em 0.5em rgba(0, 0, 0, 0.1)',
+        '& .MuiOutlinedInput-root': {
+          width: '100%',
+          fontSize: '1em',
+          backgroundColor: 'transparent',
+          borderRadius: '0.5em',
+          transition: 'all 0.3s ease',
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#ffd24d',
+          },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#ffb913',
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            transition: 'border-color 0.3s ease',
+          },
+          '& input': {
+            color: '#333',
+            caretColor: '#333',
+            transition: 'background-color 0.3s ease',
+            '&:focus': { backgroundColor: '#fff' },
+          },
+          '& input::placeholder': {
+            color: '#999',
+            transition: 'color 0.3s ease',
+          },
+        },
+        '@media (max-width: 768px)': {
+          padding: '1em',
+          margin: '0.5em 0',
+          '& .MuiOutlinedInput-root': { fontSize: '0.9em' },
+        },
+      }}
+    >
       <TextField
         variant="outlined"
         fullWidth
@@ -30,7 +76,7 @@ const SearchBar = ({
           'aria-label': 'search',
         }}
       />
-    </div>
+    </Div>
   )
 }
 
