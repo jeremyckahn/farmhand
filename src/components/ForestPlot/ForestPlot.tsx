@@ -5,12 +5,17 @@ import classNames from 'classnames'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { itemsMap } from '../../data/maps.js'
 import forestPlotDefaultImg from '../../img/plot-states/forest-plot-default.png'
+import { getChopWoodYieldRange } from '../../utils/getChopWoodYieldRange.js'
 import { getForestFruitImage } from '../../utils/getForestFruitImage.js'
 import { getForestPlotImage } from '../../utils/getForestPlotImage.js'
 import { getFruitLifeStage } from '../../utils/getFruitLifeStage.js'
 import { getTreeLifeStage } from '../../utils/getTreeLifeStage.js'
 import { isPlantedTree } from '../../utils/isPlantedTree.js'
-import { cropLifeStage, fieldMode as fieldModeEnum } from '../../enums.js'
+import {
+  cropLifeStage,
+  fieldMode as fieldModeEnum,
+  toolType,
+} from '../../enums.js'
 import { Div } from '../Elements/index.js'
 
 const { GROWN } = cropLifeStage
@@ -31,10 +36,30 @@ const getTreeTooltipText = (
   return fruitLifeStage === GROWN ? 'Ready to pick!' : 'Fruiting...'
 }
 
+const formatWoodRange = ([min, max]: [number, number]): string =>
+  min === max ? `${min}` : `${min}-${max}`
+
+const getChopTooltipText = (
+  woodRange: [number, number] | null,
+  fruitBonusItemName: string | null
+): string => {
+  if (!woodRange) {
+    return 'Chop down'
+  }
+
+  const woodItemName = itemsMap.wood?.name ?? 'Wood'
+  const woodText = `Chop down for ${formatWoodRange(woodRange)} ${woodItemName}`
+
+  return fruitBonusItemName
+    ? `${woodText} (+1 ${fruitBonusItemName})`
+    : woodText
+}
+
 export interface ForestPlotProps {
   fieldMode: farmhand.fieldMode
   plotContent: farmhand.plantedTree | farmhand.forestForageable | null
   handleForestPlotClick: (x: number, y: number) => void
+  toolLevels: Record<farmhand.toolType, farmhand.toolLevel>
   x: number
   y: number
 }
@@ -43,6 +68,7 @@ export const ForestPlot = ({
   fieldMode,
   plotContent,
   handleForestPlotClick,
+  toolLevels,
   x,
   y,
 }: ForestPlotProps) => {
@@ -54,6 +80,9 @@ export const ForestPlot = ({
   const item = isTree ? itemsMap[plotContent.itemId] : null
   const treeImage = isTree ? getForestPlotImage(plotContent) : null
   const fruitImage = isTree ? getForestFruitImage(plotContent) : null
+  const chopWoodRange = canBeChopped
+    ? getChopWoodYieldRange(toolLevels?.[toolType.AXE], treeLifeStage === GROWN)
+    : null
 
   const plot = (
     <Div
@@ -173,7 +202,12 @@ export const ForestPlot = ({
             {item ? <Typography>{item.name}</Typography> : null}
             {isTree && treeLifeStage && fruitLifeStage && (
               <Typography>
-                {getTreeTooltipText(treeLifeStage, fruitLifeStage)}
+                {canBeChopped
+                  ? getChopTooltipText(
+                      chopWoodRange,
+                      canBeHarvested ? item?.name ?? null : null
+                    )
+                  : getTreeTooltipText(treeLifeStage, fruitLifeStage)}
               </Typography>
             )}
           </>

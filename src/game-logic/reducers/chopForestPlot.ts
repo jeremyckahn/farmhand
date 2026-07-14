@@ -1,8 +1,8 @@
 import { cropLifeStage, toolType } from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
 import { random } from '../../common/utils.js'
-import { AXE_WOOD_YIELD_RANGE } from '../../constants.js'
 import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
+import { getChopWoodYieldRange } from '../../utils/getChopWoodYieldRange.js'
 import { getFruitLifeStage } from '../../utils/getFruitLifeStage.js'
 import { getTreeLifeStage } from '../../utils/getTreeLifeStage.js'
 import { isPlantedTree } from '../../utils/isPlantedTree.js'
@@ -16,18 +16,11 @@ const getWoodYield = (
   toolLevel: farmhand.toolLevel,
   isFullyGrown: boolean
 ): number => {
-  const range = AXE_WOOD_YIELD_RANGE[toolLevel]
+  const range = getChopWoodYieldRange(toolLevel, isFullyGrown)
 
   if (!range) return 0
 
-  let [min, max] = range
-
-  // An immature tree yields less wood than a fully grown one, from the
-  // same axe tier's range.
-  if (!isFullyGrown) {
-    min = Math.max(1, Math.floor(min / 2))
-    max = Math.max(1, Math.floor(max / 2))
-  }
+  const [min, max] = range
 
   return min + Math.floor(random() * (max - min + 1))
 }
