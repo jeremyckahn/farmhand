@@ -4,6 +4,11 @@ import { getCowStub } from '../test-utils/stubs/cowStub.js'
 
 import { transformStateDataForImport } from './transformStateDataForImport.js'
 
+// The axe unlocks alongside the forest, which is gated behind this feature
+// flag (see data/levels.ts) - force it on so getLevelEntitlements actually
+// reports the axe as unlocked at high enough levels in these tests.
+vitest.mock('../config.js', () => ({ features: { FOREST: true } }))
+
 describe('transformStateDataForImport', () => {
   let state: Partial<farmhand.state>
 
@@ -102,7 +107,8 @@ describe('transformStateDataForImport', () => {
     }
   )
 
-  test('backfills a missing AXE toolLevel for saves persisted before the axe existed', () => {
+  test('backfills a missing AXE toolLevel to UNAVAILABLE when the player has not reached the unlock level yet', () => {
+    state.experience = 10 // well below the level that unlocks the axe
     state.toolLevels = {
       SCYTHE: toolLevel.DEFAULT,
       SHOVEL: toolLevel.DEFAULT,
@@ -118,6 +124,30 @@ describe('transformStateDataForImport', () => {
       HOE: toolLevel.DEFAULT,
       WATERING_CAN: toolLevel.DEFAULT,
       [toolType.AXE]: toolLevel.UNAVAILABLE,
+    })
+  })
+
+  test('backfills a missing AXE toolLevel to DEFAULT when the player has already passed the unlock level', () => {
+    // A save this far along never gets another chance to unlock the axe
+    // retroactively - processLevelUp only fires on a new level-up crossing
+    // the threshold, not on load - so it should come back unlocked rather
+    // than staying UNAVAILABLE forever.
+    state.experience = 20000 // level 15+, past the axe's unlock level
+    state.toolLevels = {
+      SCYTHE: toolLevel.DEFAULT,
+      SHOVEL: toolLevel.DEFAULT,
+      HOE: toolLevel.DEFAULT,
+      WATERING_CAN: toolLevel.DEFAULT,
+    } as farmhand.state['toolLevels']
+
+    const sanitizedState = transformStateDataForImport(state as any)
+
+    expect(sanitizedState.toolLevels).toEqual({
+      SCYTHE: toolLevel.DEFAULT,
+      SHOVEL: toolLevel.DEFAULT,
+      HOE: toolLevel.DEFAULT,
+      WATERING_CAN: toolLevel.DEFAULT,
+      [toolType.AXE]: toolLevel.DEFAULT,
     })
   })
 
