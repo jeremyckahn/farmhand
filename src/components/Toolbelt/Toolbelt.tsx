@@ -97,7 +97,14 @@ export const Toolbelt = ({
                     className: classNames({ selected: isSelected }),
                     color: 'primary',
                     onClick: () => handleFieldModeSelect(fieldMode),
-                    variant: isSelected ? 'contained' : 'text',
+                    // Deliberately always 'text', never 'contained': the
+                    // selected look is fully defined by the sx below, and
+                    // 'contained' has more horizontal padding by default,
+                    // which shrinks the button's content box and (since the
+                    // icon sizes itself as 100% of that box, height
+                    // following its intrinsic 1:1 aspect ratio) visibly
+                    // shrinks the icon whenever a tool is selected.
+                    variant: 'text',
                   }}
                   sx={
                     isSelected
