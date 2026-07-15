@@ -1,4 +1,4 @@
-import { cropLifeStage } from '../enums.js'
+import { cropLifeStage, treeLifeStage as treeLifeStageEnum } from '../enums.js'
 
 import { getFruitLifeStage } from './getFruitLifeStage.js'
 
@@ -37,5 +37,20 @@ describe('getFruitLifeStage', () => {
     expect(
       getFruitLifeStage({ itemId, daysOld, daysSinceLastHarvest: 6 })
     ).toBe(SEED)
+  })
+
+  test('trusts a caller-provided treeLifeStage instead of recomputing it', () => {
+    // daysOld: 0 would normally compute to SEED internally (the tree
+    // itself hasn't grown at all yet), but a caller that already knows the
+    // tree is GROWN (e.g. ForestPlot.tsx, chopForestPlot.ts) can pass that
+    // along to skip the redundant getTreeLifeStage call.
+    const itemId = 'apple'
+
+    expect(
+      getFruitLifeStage(
+        { itemId, daysOld: 0, daysSinceLastHarvest: 6 },
+        treeLifeStageEnum.GROWN
+      )
+    ).toBe(GROWN)
   })
 })

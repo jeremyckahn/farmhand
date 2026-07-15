@@ -81,7 +81,9 @@ export const ForestPlot = ({
 }: ForestPlotProps) => {
   const isTree = isPlantedTree(plotContent)
   const treeLifeStage = isTree ? getTreeLifeStage(plotContent) : null
-  const fruitLifeStage = isTree ? getFruitLifeStage(plotContent) : null
+  const fruitLifeStage = isTree
+    ? getFruitLifeStage(plotContent, treeLifeStage ?? undefined)
+    : null
   const canBeHarvested = fruitLifeStage === GROWN
   const canBeChopped = isTree && fieldMode === CHOP
   const item = isTree ? itemsMap[plotContent.itemId] : null

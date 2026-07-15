@@ -44,9 +44,11 @@ export const chopForestPlot = (
   if (state.toolLevels[toolType.AXE] === UNAVAILABLE) return state
   if (!doesInventorySpaceRemain(state)) return state
 
+  const treeStage = getTreeLifeStage(plotContent)
+
   // Chopping down a tree that still has ripe fruit on it harvests that
   // fruit as a bonus before the tree itself comes down.
-  if (getFruitLifeStage(plotContent) === GROWN) {
+  if (getFruitLifeStage(plotContent, treeStage) === GROWN) {
     const fruitItem = itemsMap[plotContent.itemId]
 
     if (fruitItem) {
@@ -57,8 +59,6 @@ export const chopForestPlot = (
   const wood = itemsMap.wood
 
   if (wood) {
-    const treeStage = getTreeLifeStage(plotContent)
-
     // A dead tree yields the same full range as a living grown one - only
     // a sapling/still-growing tree gets the halved range.
     const woodAmount = getWoodYield(

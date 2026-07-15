@@ -13,11 +13,13 @@ const { SEED, GROWN } = cropLifeStage
 export const getForestFruitImage = (
   tree: farmhand.plantedTree
 ): string | null => {
-  if (getTreeLifeStage(tree) !== GROWN) {
+  const treeLifeStage = getTreeLifeStage(tree)
+
+  if (treeLifeStage !== GROWN) {
     return null
   }
 
-  const fruitLifeStage = getFruitLifeStage(tree)
+  const fruitLifeStage = getFruitLifeStage(tree, treeLifeStage)
 
   if (fruitLifeStage === SEED) {
     return null
