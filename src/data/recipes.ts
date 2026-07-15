@@ -69,6 +69,19 @@ export const flour: farmhand.recipe = convertToRecipe({
 })
 
 /**
+ * @property farmhand.module:recipes.sugar
+ */
+export const sugar: farmhand.recipe = convertToRecipe({
+  id: 'sugar',
+  name: 'Sugar',
+  ingredients: {
+    [items.sugarcane.id]: 5,
+  },
+  condition: state => (state.itemsSold[items.sugarcane.id] || 0) >= 25,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.yeast
  */
 export const yeast: farmhand.recipe = convertToRecipe({

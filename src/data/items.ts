@@ -61,6 +61,8 @@ export {
   sunflowerSeed,
   strawberry,
   strawberrySeed,
+  sugarcane,
+  sugarcaneSeed,
   sweetPotato,
   sweetPotatoSeed,
   tomato,

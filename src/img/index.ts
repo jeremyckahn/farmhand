@@ -38,6 +38,7 @@ import sweetPotatoFries from './dishes/sweet-potato-fries.png'
 import sweetPotatoPie from './dishes/sweet-potato-pie.png'
 import spaghetti from './dishes/spaghetti.png'
 import strawberryJam from './dishes/strawberry-jam.png'
+import sugar from './dishes/sugar.png'
 import tofu from './dishes/tofu.png'
 import vegetableOil from './dishes/vegetable-oil.png'
 import yeast from './dishes/yeast.png'
@@ -99,6 +100,10 @@ import spinachSeed from './items/spinach-seed.png'
 import strawberry from './items/strawberry.png'
 import strawberryGrowing1 from './items/strawberry-growing1.png'
 import strawberrySeed from './items/strawberry-seed.png'
+import sugarcane from './items/sugarcane.png'
+import sugarcaneGrowing1 from './items/sugarcane-growing1.png'
+import sugarcaneGrowing2 from './items/sugarcane-growing2.png'
+import sugarcaneSeed from './items/sugarcane-seed.png'
 import compost from './items/compost.png'
 import corn from './items/corn.png'
 import cornGrowing1 from './items/corn-growing1.png'
@@ -291,6 +296,7 @@ export const craftedItems = {
   'spicy-pickled-garlic': spicyPickledGarlic,
   spaghetti,
   'strawberry-jam': strawberryJam,
+  sugar,
   salt,
   'summer-salad': summerSalad,
   'sun-butter': sunButter,
@@ -423,6 +429,10 @@ export const items = {
   strawberry,
   'strawberry-growing-1': strawberryGrowing1,
   'strawberry-seed': strawberrySeed,
+  sugarcane,
+  'sugarcane-growing-1': sugarcaneGrowing1,
+  'sugarcane-growing-2': sugarcaneGrowing2,
+  'sugarcane-seed': sugarcaneSeed,
   sunflower,
   'sunflower-growing-1': sunflowerGrowing1,
   'sunflower-growing-2': sunflowerGrowing2,
