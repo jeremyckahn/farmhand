@@ -20,9 +20,9 @@ describe('getTreeLifeStage', () => {
     ).toBe(GROWN)
   })
 
-  // apple's treeTimeline (src/data/trees/apple.ts) is [5, 5, 5, 5, 5, 200]:
-  // GROWN from daysOld 25 (sum of the first 5 entries), then DEAD once
-  // daysOld reaches the full sum, 225.
+  // apple's treeTimeline (src/data/trees/apple.ts) is [5, 5, 5, 5, 5]
+  // (GROWN from daysOld 25) with a separate lifespan of 200, so it becomes
+  // DEAD once daysOld reaches 25 + 200 = 225.
   describe('a tree that has been GROWN long enough to die', () => {
     test('is still GROWN right up until the full timeline sum', () => {
       const itemId = 'apple'

@@ -14,9 +14,9 @@ const toolLevelsWithAxe = (level: farmhand.toolLevel) => ({
   [toolType.WATERING_CAN]: toolLevel.DEFAULT,
 })
 
-// sample-tree-1's treeTimeline is [1, 2, 100] (GROWN from daysOld 3, DEAD
-// from daysOld 103) and fruitTimeline is [1, 1] (fruit GROWN from
-// daysSinceLastHarvest 2).
+// sample-tree-1's treeTimeline is [1, 2] (GROWN from daysOld 3) with a
+// lifespan of 100 (DEAD from daysOld 103), and fruitTimeline is [1, 1]
+// (fruit GROWN from daysSinceLastHarvest 2).
 describe('chopForestPlot', () => {
   beforeEach(() => {
     vitest.spyOn(Math, 'random').mockReturnValue(0)
@@ -165,7 +165,7 @@ describe('chopForestPlot', () => {
             [
               {
                 itemId: 'sample-tree-1',
-                // Past the full treeTimeline sum (103) - dead.
+                // Past growthDuration + lifespan (3 + 100 = 103) - dead.
                 daysOld: 103,
                 // Would read as ripe (GROWN) fruit if the tree were alive.
                 daysSinceLastHarvest: 2,

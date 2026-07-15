@@ -53,7 +53,14 @@ interface FromSaplingConfig {
 }
 
 export const fromSapling = (
-  { treeTimeline, fruitTimeline, treeType, growsInto, tier = 1 }: farmhand.item,
+  {
+    treeTimeline,
+    fruitTimeline,
+    treeType,
+    growsInto,
+    tier = 1,
+    lifespan,
+  }: farmhand.item,
   { variantIdx = 0 }: FromSaplingConfig = {}
 ): Partial<farmhand.item> => {
   const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
@@ -66,5 +73,6 @@ export const fromSapling = (
     doesPriceFluctuate: true,
     tier,
     type: itemType.TREE,
+    lifespan,
   }
 }

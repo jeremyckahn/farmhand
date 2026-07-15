@@ -29,8 +29,9 @@ describe('getForestPlotImage', () => {
     const itemId = 'apple'
     const daysSinceLastHarvest = 0
 
-    // apple's full treeTimeline sum (src/data/trees/apple.ts) is 225 - DEAD
-    // from that point on (see getTreeLifeStage.test.ts).
+    // apple's treeTimeline sums to 25 and its lifespan is 200
+    // (src/data/trees/apple.ts) - DEAD from daysOld 225 on (see
+    // getTreeLifeStage.test.ts).
     expect(
       getForestPlotImage({ itemId, daysOld: 225, daysSinceLastHarvest })
     ).toBe(itemImages['apple-tree-dead'])

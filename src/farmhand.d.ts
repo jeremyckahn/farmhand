@@ -151,6 +151,9 @@ declare namespace farmhand {
     treeTimeline?: number[]
     fruitTimeline?: number[]
     treeType?: treeType
+    // How many days a tree stays GROWN before dying (becoming DEAD) - see
+    // getTreeLifeStage.ts. Undefined means the tree never dies.
+    lifespan?: number
   }
 
   interface seedItem extends item {

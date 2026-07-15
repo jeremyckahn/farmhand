@@ -15,25 +15,21 @@ export const getTreeLifeStage = (
     throw new Error(`${itemId} is not a valid item`)
   }
 
-  const { treeTimeline } = item
+  const { treeTimeline, lifespan } = item
 
   if (!treeTimeline) {
     throw new Error(`${itemId} has no treeTimeline`)
   }
 
-  // treeTimeline's last entry is how many days the tree stays GROWN before
-  // dying - it's not a growth-stage frame, so it's excluded when
-  // classifying SEED/GROWING/GROWN via the shared, tree-and-crop-generic
-  // getLifeStageForTimeline (which has no notion of a terminal segment and
-  // would otherwise just keep counting it as more GROWING days).
-  const growthTimeline = treeTimeline.slice(0, -1)
-  const stage = getLifeStageForTimeline(growthTimeline, daysOld)
+  const stage = getLifeStageForTimeline(treeTimeline, daysOld)
 
-  if (stage !== GROWN) {
+  // lifespan is a separate, optional property (see farmhand.d.ts) rather
+  // than folded into treeTimeline - a tree with no lifespan set never dies.
+  if (stage !== GROWN || lifespan === undefined) {
     return stage
   }
 
-  const lifespan = treeTimeline.reduce((sum, days) => sum + days, 0)
+  const growthDuration = treeTimeline.reduce((sum, days) => sum + days, 0)
 
-  return daysOld >= lifespan ? DEAD : GROWN
+  return daysOld >= growthDuration + lifespan ? DEAD : GROWN
 }
