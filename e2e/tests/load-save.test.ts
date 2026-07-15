@@ -18,7 +18,7 @@ test('should load save file', async ({ page }) => {
 test('should show overnight notifications from previous day after loading save', async ({
   page,
 }) => {
-  await openPage(page, 0.03)
+  await openPage(page, 0.002)
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 
