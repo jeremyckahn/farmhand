@@ -32,6 +32,7 @@ import {
 } from '../game-logic/reducers/index.js'
 
 const {
+  CHOP,
   CLEANUP,
   FERTILIZE,
   HARVEST,
@@ -237,6 +238,14 @@ export default {
 
   handleForestPlotClick(this: Farmhand, x: number, y: number) {
     const plotContent = this.state.forest[y]?.[x]
+
+    if (this.state.fieldMode === CHOP) {
+      if (isPlantedTree(plotContent)) {
+        this.chopForestPlot(x, y)
+      }
+
+      return
+    }
 
     if (!plotContent) {
       const { selectedForestItemId, inventory } = this.state as farmhand.state

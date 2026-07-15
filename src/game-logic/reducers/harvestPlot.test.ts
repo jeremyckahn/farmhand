@@ -10,6 +10,7 @@ vitest.mock('../../data/maps.js')
 
 describe('harvestPlot', () => {
   const toolLevelsDefault = {
+    [toolType.AXE]: toolLevel.UNAVAILABLE,
     [toolType.HOE]: toolLevel.DEFAULT,
     [toolType.SCYTHE]: toolLevel.DEFAULT,
     [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
@@ -17,6 +18,7 @@ describe('harvestPlot', () => {
   }
 
   const toolLevelsBronze = {
+    [toolType.AXE]: toolLevel.UNAVAILABLE,
     [toolType.HOE]: toolLevel.DEFAULT,
     [toolType.SCYTHE]: toolLevel.BRONZE,
     [toolType.SHOVEL]: toolLevel.UNAVAILABLE,

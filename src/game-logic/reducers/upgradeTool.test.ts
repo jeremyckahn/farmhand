@@ -20,6 +20,7 @@ describe('upgradeTool', () => {
         { id: 'coal', quantity: 50 },
       ],
       toolLevels: {
+        [toolType.AXE]: toolLevel.UNAVAILABLE,
         [toolType.HOE]: toolLevel.DEFAULT,
         [toolType.SCYTHE]: toolLevel.DEFAULT,
         [toolType.SHOVEL]: toolLevel.DEFAULT,
@@ -63,6 +64,7 @@ describe('upgradeTool', () => {
       const stateWithoutIngredients = testState({
         inventory: [],
         toolLevels: {
+          [toolType.AXE]: toolLevel.UNAVAILABLE,
           [toolType.HOE]: toolLevel.DEFAULT,
           [toolType.SCYTHE]: toolLevel.DEFAULT,
           [toolType.SHOVEL]: toolLevel.DEFAULT,
@@ -83,6 +85,7 @@ describe('upgradeTool', () => {
           { id: 'coal', quantity: 1 }, // needs 16
         ],
         toolLevels: {
+          [toolType.AXE]: toolLevel.UNAVAILABLE,
           [toolType.HOE]: toolLevel.DEFAULT,
           [toolType.SCYTHE]: toolLevel.DEFAULT,
           [toolType.SHOVEL]: toolLevel.DEFAULT,

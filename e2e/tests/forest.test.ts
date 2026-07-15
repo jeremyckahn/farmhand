@@ -78,3 +78,30 @@ test('should regrow fruit after harvesting and be harvestable again', async ({
 
   await expect(appleCard).toContainText('/2')
 })
+
+test('should chop down a tree for wood, harvesting any ripe fruit as a bonus', async ({
+  page,
+}) => {
+  await loadFixture(page, 'forest-tree-grown')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  const treePlot = page.locator('.ForestPlot').first()
+  await expect(treePlot).toHaveClass(/can-be-harvested/)
+
+  await page.getByRole('button', { name: /Select the axe/ }).click()
+  await treePlot.click()
+
+  // The tree is gone entirely, not just its fruit.
+  await expect(treePlot).toHaveClass(/is-empty/)
+  await expect(treePlot.locator('.ForestTreeSprite')).toHaveCount(0)
+
+  // The bonus fruit and the wood both landed in inventory.
+  await expect(
+    page.locator('.ContextPane').getByText('Apple', { exact: true })
+  ).toBeVisible()
+  await expect(
+    page.locator('.ContextPane').getByText('Wood', { exact: true })
+  ).toBeVisible()
+})

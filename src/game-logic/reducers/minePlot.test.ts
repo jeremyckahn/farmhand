@@ -21,6 +21,7 @@ describe('minePlot', () => {
         inventory: [],
         inventoryLimit: 50,
         toolLevels: {
+          [toolType.AXE]: toolLevel.UNAVAILABLE,
           [toolType.HOE]: toolLevel.DEFAULT,
           [toolType.SCYTHE]: toolLevel.DEFAULT,
           [toolType.SHOVEL]: toolLevel.DEFAULT,

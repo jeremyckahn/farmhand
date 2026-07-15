@@ -104,6 +104,11 @@ describe('Inventory Component', () => {
           type: 'FIELD_TOOLS',
           name: 'Fertilizer',
         }),
+        testItem({
+          id: 'wood',
+          type: 'WOOD',
+          name: 'Wood',
+        }),
       ]
 
       const categorizedItems = separateItemsIntoCategories(items as any[])
@@ -146,7 +151,16 @@ describe('Inventory Component', () => {
           ['ANIMAL_PRODUCTS', []],
           ['ANIMAL_SUPPLIES', []],
           ['CRAFTED_ITEMS', []],
-          ['MINED_RESOURCES', []],
+          [
+            'MINED_RESOURCES',
+            [
+              testItem({
+                id: 'wood',
+                type: 'WOOD',
+                name: 'Wood',
+              }),
+            ],
+          ],
         ])
       )
     })

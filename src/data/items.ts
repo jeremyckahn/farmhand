@@ -14,6 +14,7 @@ const {
   SCARECROW,
   SPRINKLER,
   WEED,
+  WOOD,
 } = itemType
 
 export {
@@ -89,6 +90,24 @@ export {
   stone,
   saltRock,
 } from './ores/index.js'
+
+////////////////////////////////////////
+//
+// FOREST RESOURCES
+//
+////////////////////////////////////////
+
+/**
+ * @property farmhand.module:items.wood
+ */
+export const wood: farmhand.item = freeze({
+  description: 'A sturdy piece of wood, chopped from a tree.',
+  doesPriceFluctuate: false,
+  id: 'wood',
+  name: 'Wood',
+  type: WOOD,
+  value: 10,
+})
 
 ////////////////////////////////////////
 //

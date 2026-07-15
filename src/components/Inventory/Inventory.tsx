@@ -41,6 +41,7 @@ const itemTypeCategoryMap = new Map([
   ['STONE', 'MINED_RESOURCES'],
   ['TREE', 'CROPS'],
   ['WEED', 'FORAGED_ITEMS'],
+  ['WOOD', 'MINED_RESOURCES'],
 ])
 
 // Initialize Map to group items into categories

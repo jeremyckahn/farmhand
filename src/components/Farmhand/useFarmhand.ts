@@ -152,6 +152,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       todaysRevenue: 0,
       todaysStartingInventory: {},
       toolLevels: {
+        [toolType.AXE as farmhand.toolType]: toolLevel.UNAVAILABLE as farmhand.toolLevel,
         [toolType.HOE as farmhand.toolType]: toolLevel.DEFAULT as farmhand.toolLevel,
         [toolType.SCYTHE as farmhand.toolType]: toolLevel.DEFAULT as farmhand.toolLevel,
         [toolType.SHOVEL as farmhand.toolType]: toolLevel.UNAVAILABLE as farmhand.toolLevel,

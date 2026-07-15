@@ -173,6 +173,11 @@ import scarecrowAnimated from './items/scarecrow-animated.gif'
 import tumbleweed from './items/tumbleweed.gif'
 
 // Tools
+import axe from './tools/axe.png'
+import axeBronze from './tools/axe-bronze.png'
+import axeIron from './tools/axe-iron.png'
+import axeSilver from './tools/axe-silver.png'
+import axeGold from './tools/axe-gold.png'
 import hoe from './tools/hoe.png'
 import hoeBronze from './tools/hoe-bronze.png'
 import hoeIron from './tools/hoe-iron.png'
@@ -189,6 +194,14 @@ import shovelIron from './tools/shovel-iron.png'
 import shovelSilver from './tools/shovel-silver.png'
 import shovelGold from './tools/shovel-gold.png'
 import wateringCan from './tools/watering-can.png'
+
+// Forest resources
+//
+// NOTE: source art is per-species-named (apple-tree-wood.png) even though
+// there's currently just one generic "wood" item covering every tree
+// species - the artist left it named that way in case wood gets split by
+// tree type later.
+import wood from './items/apple-tree-wood.png'
 
 // Mined resources
 import coal from './ores/coal.png'
@@ -231,6 +244,10 @@ const smeltedItems = {
   'gold-ingot': goldIngot,
 
   // tool upgrades
+  'axe-bronze': axeBronze,
+  'axe-iron': axeIron,
+  'axe-silver': axeSilver,
+  'axe-gold': axeGold,
   'hoe-bronze': hoeBronze,
   'hoe-iron': hoeIron,
   'hoe-silver': hoeSilver,
@@ -421,6 +438,9 @@ export const items = {
   'weed-orange': weedOrange,
   'weed-pink': weedPink,
 
+  // Forest resources
+  wood,
+
   // Ores
   coal,
   stone,
@@ -468,6 +488,7 @@ export const wines: Record<farmhand.grapeVariety, string> = {
 }
 
 export const tools = {
+  axe,
   hoe,
   scythe,
   shovel,
