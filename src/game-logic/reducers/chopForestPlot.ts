@@ -1,4 +1,8 @@
-import { cropLifeStage, toolType } from '../../enums.js'
+import {
+  cropLifeStage,
+  toolLevel as toolLevelEnum,
+  toolType,
+} from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
 import { random } from '../../common/utils.js'
 import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
@@ -11,6 +15,7 @@ import { addItemToInventory } from './addItemToInventory.js'
 import { modifyForestPlotAt } from './modifyForestPlotAt.js'
 
 const { GROWN } = cropLifeStage
+const { UNAVAILABLE } = toolLevelEnum
 
 const getWoodYield = (
   toolLevel: farmhand.toolLevel,
@@ -34,6 +39,7 @@ export const chopForestPlot = (
   const plotContent = row?.[x]
 
   if (!isPlantedTree(plotContent)) return state
+  if (state.toolLevels[toolType.AXE] === UNAVAILABLE) return state
   if (!doesInventorySpaceRemain(state)) return state
 
   // Chopping down a tree that still has ripe fruit on it harvests that
@@ -54,7 +60,9 @@ export const chopForestPlot = (
       getTreeLifeStage(plotContent) === GROWN
     )
 
-    state = addItemToInventory(state, wood, woodAmount)
+    if (woodAmount > 0) {
+      state = addItemToInventory(state, wood, woodAmount)
+    }
   }
 
   return modifyForestPlotAt(state, x, y, () => null)

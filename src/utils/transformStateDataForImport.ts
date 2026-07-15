@@ -90,8 +90,9 @@ export const transformStateDataForImport = (
     !(sanitizedState.toolLevels as farmhand.state['toolLevels'])[toolType.AXE]
   ) {
     const hasUnlockedAxe = Boolean(
-      getLevelEntitlements(levelAchieved(sanitizedState.experience as number))
-        .tools[toolType.AXE]
+      getLevelEntitlements(
+        levelAchieved((sanitizedState.experience ?? 0) as number)
+      ).tools[toolType.AXE]
     )
 
     sanitizedState.toolLevels = {

@@ -35,6 +35,23 @@ describe('chopForestPlot', () => {
     })
   })
 
+  describe('axe is unavailable', () => {
+    test('no-ops', () => {
+      const inputState = testState({
+        forest: [
+          [{ itemId: 'sample-tree-1', daysOld: 3, daysSinceLastHarvest: 2 }],
+        ],
+        inventory: [],
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
+        toolLevels: toolLevelsWithAxe(toolLevel.UNAVAILABLE),
+      })
+
+      const state = chopForestPlot(inputState, 0, 0)
+
+      expect(state).toEqual(inputState)
+    })
+  })
+
   describe('non-tree plot content', () => {
     test('no-ops', () => {
       const inputState = testState({
