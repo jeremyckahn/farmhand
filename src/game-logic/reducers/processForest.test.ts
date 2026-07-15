@@ -1,6 +1,9 @@
 import { testState } from '../../test-utils/index.js'
+import { fertilizerType } from '../../enums.js'
 
 import { processForest } from './processForest.js'
+
+const { NONE, STANDARD, RAINBOW } = fertilizerType
 
 describe('processForest', () => {
   test('increments daysOld and does not advance the fruit cycle while the tree is not yet grown', () => {
@@ -15,6 +18,7 @@ describe('processForest', () => {
     expect(forest[0][0]).toEqual({
       itemId: 'apple',
       daysOld: 3,
+      daysGrown: 3,
       daysSinceLastHarvest: 0,
     })
   })
@@ -31,6 +35,7 @@ describe('processForest', () => {
     expect(forest[0][0]).toEqual({
       itemId: 'apple',
       daysOld: 31,
+      daysGrown: 31,
       daysSinceLastHarvest: 2,
     })
   })
@@ -43,5 +48,77 @@ describe('processForest', () => {
     )
 
     expect(forest[0][0]).toEqual(null)
+  })
+
+  describe('fertilizer', () => {
+    test('an unfertilized tree advances daysGrown at the same rate as daysOld', () => {
+      const { forest } = processForest(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'apple',
+                daysOld: 2,
+                daysGrown: 2,
+                daysSinceLastHarvest: 0,
+                fertilizerType: NONE,
+              },
+            ],
+          ],
+        })
+      )
+
+      expect(forest[0][0]).toMatchObject({ daysOld: 3, daysGrown: 3 })
+    })
+
+    test('a standard-fertilized tree advances daysGrown faster than daysOld, but not the fruit cycle', () => {
+      const { forest } = processForest(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'apple',
+                // Past GROWN (25) so the fruit-cycle gate is open.
+                daysOld: 30,
+                daysGrown: 30,
+                daysSinceLastHarvest: 1,
+                fertilizerType: STANDARD,
+              },
+            ],
+          ],
+        })
+      )
+
+      expect(forest[0][0]).toMatchObject({
+        daysOld: 31,
+        daysGrown: 31.5,
+        // No fruit bonus for standard fertilizer - only rainbow gets one.
+        daysSinceLastHarvest: 2,
+      })
+    })
+
+    test('a rainbow-fertilized tree advances both daysGrown and the fruit cycle faster', () => {
+      const { forest } = processForest(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'apple',
+                daysOld: 30,
+                daysGrown: 30,
+                daysSinceLastHarvest: 1,
+                fertilizerType: RAINBOW,
+              },
+            ],
+          ],
+        })
+      )
+
+      expect(forest[0][0]).toMatchObject({
+        daysOld: 31,
+        daysGrown: 31.5,
+        daysSinceLastHarvest: 2.5,
+      })
+    })
   })
 })

@@ -25,6 +25,7 @@ export interface ContextData {
     blockInput: boolean
     features: Record<string, boolean | undefined>
     fieldToolInventory: farmhand.item[]
+    fertilizerInventory: farmhand.item[]
     isChatAvailable: boolean
     levelEntitlements: farmhand.levelEntitlements
     plantableCropInventory: farmhand.item[]
@@ -57,6 +58,7 @@ export const createContextData = (): ContextData => {
         stageFocusType: {},
       },
       fieldToolInventory: [] as farmhand.item[],
+      fertilizerInventory: [] as farmhand.item[],
       plantableCropInventory: [] as farmhand.item[],
       plantableTreeInventory: [] as farmhand.item[],
       playerInventoryQuantities: {},

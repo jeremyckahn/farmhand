@@ -1,9 +1,10 @@
 import { itemsMap } from '../../data/maps.js'
-import { fieldMode } from '../../enums.js'
+import { fieldMode, itemType } from '../../enums.js'
 import { getItemCurrentValue } from '../../utils/getItemCurrentValue.js'
 import { memoize } from '../../utils/memoize.js'
 
 const { PLANT } = fieldMode
+const { FERTILIZER } = itemType
 
 export class FarmhandService {
   static computePlayerInventory = memoize(
@@ -47,6 +48,20 @@ export class FarmhandService {
             // TODO: Add a defensive check to verify itemsMap[id] exists before accessing isPlantableCrop
             itemsMap[id as keyof typeof itemsMap].isPlantableCrop
         )
+        .map(({ id, quantity }: { id: string; quantity: number }) => ({
+          ...itemsMap[id as keyof typeof itemsMap],
+          quantity,
+        }))
+  )
+
+  static getFertilizerInventory = memoize(
+    (inventory: farmhand.state['inventory']): farmhand.item[] =>
+      inventory
+        .filter(({ id }: { id: string }) => {
+          const item = itemsMap[id as keyof typeof itemsMap]
+
+          return item?.type === FERTILIZER
+        })
         .map(({ id, quantity }: { id: string; quantity: number }) => ({
           ...itemsMap[id as keyof typeof itemsMap],
           quantity,

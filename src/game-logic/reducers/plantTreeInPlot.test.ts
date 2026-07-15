@@ -26,6 +26,8 @@ describe('plantTreeInPlot', () => {
         itemId: 'sample-tree-1',
         daysOld: 0,
         daysSinceLastHarvest: 0,
+        daysGrown: 0,
+        fertilizerType: 'NONE',
         lifespan: 100,
       })
     })

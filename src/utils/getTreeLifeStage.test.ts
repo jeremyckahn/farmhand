@@ -69,4 +69,38 @@ describe('getTreeLifeStage', () => {
       )
     })
   })
+
+  describe('a tree with an accelerated (fertilized) daysGrown counter', () => {
+    test('classifies by daysGrown instead of daysOld when present', () => {
+      const itemId = 'apple'
+      const daysSinceLastHarvest = 0
+
+      // daysOld alone (7) would be GROWING, but a fertilized daysGrown of
+      // 25 has already reached GROWN.
+      expect(
+        getTreeLifeStage({
+          itemId,
+          daysOld: 7,
+          daysGrown: 25,
+          daysSinceLastHarvest,
+        })
+      ).toBe(GROWN)
+    })
+
+    test('does not affect death timing, which stays keyed on raw daysOld', () => {
+      const itemId = 'apple'
+      const daysSinceLastHarvest = 0
+
+      // daysGrown alone (well past 25) doesn't matter for DEAD - only raw
+      // daysOld (200, short of the 225 default) does, so this is GROWN.
+      expect(
+        getTreeLifeStage({
+          itemId,
+          daysOld: 200,
+          daysGrown: 1000,
+          daysSinceLastHarvest,
+        })
+      ).toBe(GROWN)
+    })
+  })
 })

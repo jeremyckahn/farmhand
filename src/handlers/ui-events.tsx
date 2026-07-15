@@ -247,6 +247,14 @@ export default {
       return
     }
 
+    if (this.state.fieldMode === FERTILIZE) {
+      if (isPlantedTree(plotContent)) {
+        this.fertilizeForestPlot(x, y)
+      }
+
+      return
+    }
+
     if (!plotContent) {
       const { selectedForestItemId, inventory } = this.state as farmhand.state
 

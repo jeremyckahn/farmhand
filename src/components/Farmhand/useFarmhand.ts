@@ -199,6 +199,9 @@ export const useFarmhand = (props: FarmhandProps) => {
   const plantableTreeInventory = FarmhandService.getPlantableTreeInventory(
     state.inventory
   )
+  const fertilizerInventory = FarmhandService.getFertilizerInventory(
+    state.inventory
+  )
 
   const levelEntitlements = useMemo(
     () => getLevelEntitlements(levelAchieved(state.experience)),
@@ -303,6 +306,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       props,
       viewTitle,
       fieldToolInventory,
+      fertilizerInventory,
       playerInventory,
       plantableCropInventory,
       plantableTreeInventory,
@@ -368,6 +372,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       props,
       viewTitle,
       fieldToolInventory,
+      fertilizerInventory,
       playerInventory,
       plantableCropInventory,
       plantableTreeInventory,
@@ -719,6 +724,7 @@ export const useFarmhand = (props: FarmhandProps) => {
     blockInput: isInputBlocked,
     features: propsFeatures ?? {},
     fieldToolInventory,
+    fertilizerInventory,
     isChatAvailable,
     levelEntitlements,
     plantableCropInventory,

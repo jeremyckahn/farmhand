@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { itemsMap } from '../../data/maps.js'
+import { items as itemImages } from '../../img/index.js'
 import forestPlotDefaultImg from '../../img/plot-states/forest-plot-default.png'
 import { getChopWoodYieldRange } from '../../utils/getChopWoodYieldRange.js'
 import { getForestFruitImage } from '../../utils/getForestFruitImage.js'
@@ -13,6 +14,7 @@ import { getTreeLifeStage } from '../../utils/getTreeLifeStage.js'
 import { isPlantedTree } from '../../utils/isPlantedTree.js'
 import {
   cropLifeStage,
+  fertilizerType as fertilizerTypeEnum,
   fieldMode as fieldModeEnum,
   toolType,
   treeLifeStage as treeLifeStageEnum,
@@ -22,25 +24,37 @@ import { Div } from '../Elements/index.js'
 const { GROWN } = cropLifeStage
 const { DEAD } = treeLifeStageEnum
 const { CHOP } = fieldModeEnum
-
-const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
-const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
-const colorRedDestructive = 'rgba(255, 0, 0, 0.5)'
+const { NONE, RAINBOW } = fertilizerTypeEnum
 
 const getTreeTooltipText = (
   treeLifeStage: farmhand.treeLifeStage,
-  fruitLifeStage: farmhand.cropLifeStage
+  fruitLifeStage: farmhand.cropLifeStage,
+  fertilizerType: farmhand.fertilizerType | undefined
 ): string => {
   if (treeLifeStage === DEAD) {
     return 'Dead'
   }
 
-  if (treeLifeStage !== GROWN) {
-    return 'Growing...'
+  const growthText =
+    treeLifeStage !== GROWN
+      ? 'Growing...'
+      : fruitLifeStage === GROWN
+        ? 'Ready to pick!'
+        : 'Fruiting...'
+
+  if (!fertilizerType || fertilizerType === NONE) {
+    return growthText
   }
 
-  return fruitLifeStage === GROWN ? 'Ready to pick!' : 'Fruiting...'
+  const fertilizerLabel =
+    fertilizerType === RAINBOW ? 'Rainbow Fertilized' : 'Fertilized'
+
+  return `${growthText} (${fertilizerLabel})`
 }
+
+const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
+const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
+const colorRedDestructive = 'rgba(255, 0, 0, 0.5)'
 
 const formatWoodRange = ([min, max]: [number, number]): string =>
   min === max ? `${min}` : `${min}-${max}`
@@ -89,6 +103,13 @@ export const ForestPlot = ({
   const item = isTree ? itemsMap[plotContent.itemId] : null
   const treeImage = isTree ? getForestPlotImage(plotContent) : null
   const fruitImage = isTree ? getForestFruitImage(plotContent) : null
+  const treeFertilizerType = isTree ? plotContent.fertilizerType : undefined
+  const fertilizerBadgeImage =
+    treeFertilizerType && treeFertilizerType !== NONE
+      ? (itemImages as Record<string, string>)[
+          treeFertilizerType === RAINBOW ? 'rainbow-fertilizer' : 'fertilizer'
+        ]
+      : null
   // A dead tree yields the same full range as a living grown one - only a
   // sapling/still-growing tree gets the halved range (see chopForestPlot.ts).
   const chopWoodRange = canBeChopped
@@ -205,6 +226,27 @@ export const ForestPlot = ({
               }}
             />
           )}
+          {fertilizerBadgeImage && (
+            <Div
+              {...{
+                'aria-hidden': true,
+                className: 'ForestFertilizerBadge',
+                style: { backgroundImage: `url(${fertilizerBadgeImage})` },
+              }}
+              sx={{
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'contain',
+                bottom: '55%',
+                height: '25%',
+                imageRendering: 'pixelated',
+                pointerEvents: 'none',
+                position: 'absolute',
+                right: 0,
+                width: '25%',
+              }}
+            />
+          )}
         </>
       )}
     </Div>
@@ -237,7 +279,11 @@ export const ForestPlot = ({
                 </>
               ) : (
                 <Typography>
-                  {getTreeTooltipText(treeLifeStage, fruitLifeStage)}
+                  {getTreeTooltipText(
+                    treeLifeStage,
+                    fruitLifeStage,
+                    treeFertilizerType
+                  )}
                 </Typography>
               ))}
           </>

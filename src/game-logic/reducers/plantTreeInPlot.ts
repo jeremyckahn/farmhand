@@ -1,9 +1,12 @@
 import { itemsMap } from '../../data/maps.js'
+import { fertilizerType } from '../../enums.js'
 import { getFinalCropItemIdFromSeedItemId } from '../../utils/getFinalCropItemIdFromSeedItemId.js'
 import { getRandomizedLifespan } from '../../utils/getRandomizedLifespan.js'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { modifyForestPlotAt } from './modifyForestPlotAt.js'
+
+const { NONE } = fertilizerType
 
 export const plantTreeInPlot = (
   state: farmhand.state,
@@ -41,6 +44,8 @@ export const plantTreeInPlot = (
     itemId: finalTreeItemId,
     daysOld: 0,
     daysSinceLastHarvest: 0,
+    daysGrown: 0,
+    fertilizerType: NONE,
     ...(lifespan !== undefined && { lifespan }),
   }))
 

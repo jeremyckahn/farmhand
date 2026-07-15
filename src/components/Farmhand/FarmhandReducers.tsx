@@ -58,6 +58,9 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
   computeStateForNextDay(...args: any[]) {
     throw new Error('Unimplemented')
   }
+  fertilizeForestPlot(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
   fertilizePlot(...args: any[]) {
     throw new Error('Unimplemented')
   }

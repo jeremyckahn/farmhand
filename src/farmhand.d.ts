@@ -200,6 +200,12 @@ declare namespace farmhand {
     // it falls back to item.lifespan (e.g. saves from before this field
     // existed).
     lifespan?: number
+    fertilizerType?: fertilizerType
+    // Growth progress, separate from daysOld - mirrors how crops track
+    // daysWatered separately from their own daysOld. Fertilizer
+    // accelerates this counter without touching daysOld (see
+    // processForest.ts).
+    daysGrown?: number
   }
 
   interface forestForageable {
