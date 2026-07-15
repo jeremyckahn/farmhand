@@ -51,13 +51,14 @@ import apple from './items/apple.png'
 import appleFruitGrowing1 from './items/apple-fruit-growing-1.png'
 import appleFruitGrowing2 from './items/apple-fruit-growing-2.png'
 import appleFruitGrown from './items/apple-fruit-grown.png'
-import appleGrowing1 from './items/apple-growing-1.png'
-import appleGrowing2 from './items/apple-growing-2.png'
-import appleGrowing3 from './items/apple-growing-3.png'
-import appleGrowing4 from './items/apple-growing-4.png'
-import appleGrown from './items/apple-grown.png'
+import appleTreeDead from './items/apple-tree-dead.png'
+import appleTreeGrowing1 from './items/apple-tree-growing-1.png'
+import appleTreeGrowing2 from './items/apple-tree-growing-2.png'
+import appleTreeGrowing3 from './items/apple-tree-growing-3.png'
+import appleTreeGrowing4 from './items/apple-tree-growing-4.png'
+import appleTreeGrown from './items/apple-tree-grown.png'
 import appleSapling from './items/apple-sapling.png'
-import appleSaplingPlanted from './items/apple-sapling-planted.png'
+import appleTreeSaplingPlanted from './items/apple-tree-sapling-planted.png'
 import asparagus from './items/asparagus.png'
 import asparagusGrowing1 from './items/asparagus-growing1.png'
 import asparagusGrowing2 from './items/asparagus-growing2.png'
@@ -308,13 +309,14 @@ export const items = {
   'apple-fruit-growing-1': appleFruitGrowing1,
   'apple-fruit-growing-2': appleFruitGrowing2,
   'apple-fruit-grown': appleFruitGrown,
-  'apple-growing-1': appleGrowing1,
-  'apple-growing-2': appleGrowing2,
-  'apple-growing-3': appleGrowing3,
-  'apple-growing-4': appleGrowing4,
-  'apple-grown': appleGrown,
+  'apple-tree-dead': appleTreeDead,
+  'apple-tree-growing-1': appleTreeGrowing1,
+  'apple-tree-growing-2': appleTreeGrowing2,
+  'apple-tree-growing-3': appleTreeGrowing3,
+  'apple-tree-growing-4': appleTreeGrowing4,
+  'apple-tree-grown': appleTreeGrown,
   'apple-sapling': appleSapling,
-  'apple-sapling-planted': appleSaplingPlanted,
+  'apple-tree-sapling-planted': appleTreeSaplingPlanted,
   // Crops
   asparagus,
   'asparagus-growing-1': asparagusGrowing1,

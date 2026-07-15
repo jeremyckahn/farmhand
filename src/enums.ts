@@ -81,6 +81,18 @@ export const cropLifeStage = {
 } as const
 
 /**
+ * Tree-only extension of cropLifeStage. DEAD is deliberately not part of
+ * cropLifeStage itself (shared by crop, fruit, and tree code) since only
+ * trees can ever reach it.
+ * @property farmhand.module:enums.treeLifeStage
+ * @enum
+ */
+export const treeLifeStage = {
+  ...cropLifeStage,
+  DEAD: 'DEAD',
+} as const
+
+/**
  * @property farmhand.module:enums.itemType
  * @enum
  */

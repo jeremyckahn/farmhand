@@ -68,6 +68,8 @@ declare namespace farmhand {
     | 'WORKSHOP'
     | 'CELLAR'
   type cropLifeStage = 'SEED' | 'GROWING' | 'GROWN'
+  // Tree-only extension of cropLifeStage - see enums.ts's treeLifeStage.
+  type treeLifeStage = cropLifeStage | 'DEAD'
   type itemType =
     | 'COW_FEED'
     | 'CRAFTED_ITEM'

@@ -85,7 +85,12 @@ export const sampleTreeItem1 = testItem({
   name: 'Sample Tree Item 1',
   type: itemType.TREE,
   value: 2,
-  treeTimeline: [1, 2],
+  // First two entries unchanged from before treeTimeline grew a trailing
+  // "days spent GROWN before dying" entry: SEED for 1 day, GROWING for 2
+  // more (GROWN from daysOld 3, matching existing test comments/fixtures).
+  // The trailing 100 keeps it safely GROWN (not DEAD) at every daysOld
+  // used by existing tests (max 3) - dead-tree tests use daysOld >= 103.
+  treeTimeline: [1, 2, 100],
   fruitTimeline: [1, 1],
 })
 

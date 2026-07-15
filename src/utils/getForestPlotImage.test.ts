@@ -13,15 +13,26 @@ describe('getForestPlotImage', () => {
 
     expect(
       getForestPlotImage({ itemId, daysOld: 0, daysSinceLastHarvest })
-    ).toBe(itemImages['apple-sapling-planted'])
+    ).toBe(itemImages['apple-tree-sapling-planted'])
     expect(
       getForestPlotImage({ itemId, daysOld: 7, daysSinceLastHarvest })
-    ).toBe(itemImages['apple-growing-1'])
+    ).toBe(itemImages['apple-tree-growing-1'])
     expect(
       getForestPlotImage({ itemId, daysOld: 12, daysSinceLastHarvest })
-    ).toBe(itemImages['apple-growing-2'])
+    ).toBe(itemImages['apple-tree-growing-2'])
     expect(
       getForestPlotImage({ itemId, daysOld: 25, daysSinceLastHarvest })
-    ).toBe(itemImages['apple-grown'])
+    ).toBe(itemImages['apple-tree-grown'])
+  })
+
+  test('resolves the dead-tree art key once a tree has died', () => {
+    const itemId = 'apple'
+    const daysSinceLastHarvest = 0
+
+    // apple's full treeTimeline sum (src/data/trees/apple.ts) is 225 - DEAD
+    // from that point on (see getTreeLifeStage.test.ts).
+    expect(
+      getForestPlotImage({ itemId, daysOld: 225, daysSinceLastHarvest })
+    ).toBe(itemImages['apple-tree-dead'])
   })
 })
