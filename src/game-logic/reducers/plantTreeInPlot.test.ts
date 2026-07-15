@@ -7,6 +7,11 @@ vitest.mock('../../data/items.js')
 describe('plantTreeInPlot', () => {
   describe('plot is empty', () => {
     test('plants the tree', () => {
+      // sample-tree-1's lifespan is 100 (src/data/__mocks__/items.ts). A
+      // roll of 0 throughout means no early-death shortfall and an
+      // immediately-beaten extension roll, landing on exactly 100.
+      vitest.spyOn(Math, 'random').mockReturnValue(0)
+
       const state = plantTreeInPlot(
         testState({
           forest: [[null]],
@@ -21,7 +26,31 @@ describe('plantTreeInPlot', () => {
         itemId: 'sample-tree-1',
         daysOld: 0,
         daysSinceLastHarvest: 0,
+        lifespan: 100,
       })
+    })
+
+    test('rolls a randomized lifespan around the species default', () => {
+      // First call: floor roll (max variance -> 100 * 0.95 = 95). Next two
+      // calls: extension survives day 0 (0.06 >= 0.05) then is beaten on
+      // day 1 (0.06 < 0.07), landing on a 1-day extension - 95 + 1 = 96.
+      vitest
+        .spyOn(Math, 'random')
+        .mockReturnValueOnce(1)
+        .mockReturnValueOnce(0.06)
+        .mockReturnValueOnce(0.06)
+
+      const state = plantTreeInPlot(
+        testState({
+          forest: [[null]],
+          inventory: [{ id: 'sample-tree-1-sapling', quantity: 2 }],
+        }),
+        0,
+        0,
+        'sample-tree-1-sapling'
+      )
+
+      expect((state.forest[0][0] as farmhand.plantedTree).lifespan).toBe(96)
     })
 
     test('decrements the sapling from inventory', () => {

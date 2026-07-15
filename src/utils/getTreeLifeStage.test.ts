@@ -45,4 +45,28 @@ describe('getTreeLifeStage', () => {
       ).toBe(DEAD)
     })
   })
+
+  describe('a tree instance with its own randomized lifespan', () => {
+    test('uses tree.lifespan instead of the species default', () => {
+      const itemId = 'apple'
+      const daysSinceLastHarvest = 0
+      const daysOld = 210 // Past a shortened lifespan, not the 225 default.
+
+      expect(
+        getTreeLifeStage({
+          itemId,
+          daysOld,
+          daysSinceLastHarvest,
+          // 25 (growth) + 185 (this tree's own, shorter lifespan) = 210.
+          lifespan: 185,
+        })
+      ).toBe(DEAD)
+
+      // Same daysOld, but no override - falls back to the 225-day default,
+      // so it's still GROWN.
+      expect(getTreeLifeStage({ itemId, daysOld, daysSinceLastHarvest })).toBe(
+        GROWN
+      )
+    })
+  })
 })

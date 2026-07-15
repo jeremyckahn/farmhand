@@ -15,7 +15,7 @@ export const getTreeLifeStage = (
     throw new Error(`${itemId} is not a valid item`)
   }
 
-  const { treeTimeline, lifespan } = item
+  const { treeTimeline } = item
 
   if (!treeTimeline) {
     throw new Error(`${itemId} has no treeTimeline`)
@@ -23,8 +23,11 @@ export const getTreeLifeStage = (
 
   const stage = getLifeStageForTimeline(treeTimeline, daysOld)
 
-  // lifespan is a separate, optional property (see farmhand.d.ts) rather
-  // than folded into treeTimeline - a tree with no lifespan set never dies.
+  // A tree instance's own randomized lifespan (rolled once at plant time -
+  // see getRandomizedLifespan.ts) takes priority over the species' flat
+  // default; a tree with neither set never dies.
+  const lifespan = tree.lifespan ?? item.lifespan
+
   if (stage !== GROWN || lifespan === undefined) {
     return stage
   }
