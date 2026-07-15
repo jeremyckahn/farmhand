@@ -1,8 +1,6 @@
 import { crop, fromSeed } from '../crop.js'
 import { cropType } from '../../enums.js'
 
-// TODO: Ask Jeremy about reshuffling crop unlock order — sugar is used in
-// enough recipes that sugarcane may be worth introducing earlier than level 44.
 /**
  * @property farmhand.module:items.sugarcaneSeed
  */
