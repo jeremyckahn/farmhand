@@ -39,6 +39,7 @@ declare namespace farmhand {
     | 'SPINACH'
     | 'SUNFLOWER'
     | 'STRAWBERRY'
+    | 'SUGARCANE'
     | 'SWEET_POTATO'
     | 'TOMATO'
     | 'WATERMELON'
