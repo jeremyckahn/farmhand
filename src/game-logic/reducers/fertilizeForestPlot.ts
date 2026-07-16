@@ -7,9 +7,9 @@ import { modifyForestPlotAt } from './modifyForestPlotAt.js'
 
 const { FERTILIZE, OBSERVE } = fieldMode
 
-const fertilizerItemIdToTypeMap = {
-  [itemsMap['fertilizer'].id]: fertilizerType.STANDARD,
-  [itemsMap['rainbow-fertilizer'].id]: fertilizerType.RAINBOW,
+const fertilizerItemIdToTypeMap: Record<string, farmhand.fertilizerType> = {
+  fertilizer: fertilizerType.STANDARD,
+  'rainbow-fertilizer': fertilizerType.RAINBOW,
 }
 
 /**
@@ -33,7 +33,7 @@ export const fertilizeForestPlot = (
     return state
   }
 
-  const { id: fertilizerItemId } = itemsMap[selectedItemId]
+  const fertilizerItemId = selectedItemId
 
   const fertilizerInventory = state.inventory.find(
     item => item.id === fertilizerItemId
