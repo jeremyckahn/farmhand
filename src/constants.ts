@@ -276,6 +276,21 @@ export const AXE_WOOD_YIELD_RANGE: Partial<Record<
   [toolLevel.GOLD]: [8, 10],
 }
 
+// A planted tree's actual lifespan varies per-instance, rolled once at
+// plant time (see getRandomizedLifespan.ts) rather than every species
+// sharing one fixed value.
+// Max fraction a tree's rolled lifespan can undershoot its species'
+// default by (e.g. 0.05 means it can die up to 5% early).
+export const TREE_LIFESPAN_VARIANCE_MAX = 0.05
+// Chance a tree dies on the first day past its (possibly early-shortened)
+// lifespan.
+export const TREE_DEATH_CHANCE_BASE = 0.05
+// How much that chance climbs per additional day survived past its
+// lifespan.
+export const TREE_DEATH_CHANCE_INCREMENT_PER_DAY = 0.02
+// Ceiling the daily death chance never exceeds.
+export const TREE_DEATH_CHANCE_MAX = 0.85
+
 export const COW_COLORS_HEX_MAP = {
   [cowColors.BLUE]: '#8ff0f9',
   [cowColors.BROWN]: '#b45f28',

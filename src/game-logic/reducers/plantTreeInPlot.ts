@@ -1,4 +1,6 @@
+import { itemsMap } from '../../data/maps.js'
 import { getFinalCropItemIdFromSeedItemId } from '../../utils/getFinalCropItemIdFromSeedItemId.js'
+import { getRandomizedLifespan } from '../../utils/getRandomizedLifespan.js'
 
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { modifyForestPlotAt } from './modifyForestPlotAt.js'
@@ -29,10 +31,17 @@ export const plantTreeInPlot = (
     return state
   }
 
+  const defaultLifespan = itemsMap[finalTreeItemId]?.lifespan
+  const lifespan =
+    defaultLifespan !== undefined
+      ? getRandomizedLifespan(defaultLifespan)
+      : undefined
+
   state = modifyForestPlotAt(state, x, y, () => ({
     itemId: finalTreeItemId,
     daysOld: 0,
     daysSinceLastHarvest: 0,
+    ...(lifespan !== undefined && { lifespan }),
   }))
 
   state = decrementItemFromInventory(state, saplingItemId)

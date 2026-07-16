@@ -14,8 +14,9 @@ const toolLevelsWithAxe = (level: farmhand.toolLevel) => ({
   [toolType.WATERING_CAN]: toolLevel.DEFAULT,
 })
 
-// sample-tree-1's treeTimeline is [1, 2] (GROWN from daysOld 3) and
-// fruitTimeline is [1, 1] (fruit GROWN from daysSinceLastHarvest 2).
+// sample-tree-1's treeTimeline is [1, 2] (GROWN from daysOld 3) with a
+// lifespan of 100 (DEAD from daysOld 103), and fruitTimeline is [1, 1]
+// (fruit GROWN from daysSinceLastHarvest 2).
 describe('chopForestPlot', () => {
   beforeEach(() => {
     vitest.spyOn(Math, 'random').mockReturnValue(0)
@@ -153,6 +154,62 @@ describe('chopForestPlot', () => {
 
       expect(inventory).toEqual([{ id: 'wood', quantity: 1 }])
       expect(forest[0][0]).toBeNull()
+    })
+  })
+
+  describe('dead tree', () => {
+    test('yields the full (not halved) wood range and no fruit bonus, even with ripe-looking fruit', () => {
+      const { forest, inventory } = chopForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-1',
+                // Past growthDuration + lifespan (3 + 100 = 103) - dead.
+                daysOld: 103,
+                // Would read as ripe (GROWN) fruit if the tree were alive.
+                daysSinceLastHarvest: 2,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          // DEFAULT axe tier's full range is [1, 2]; a dead tree gets the
+          // full range, not the halved immature-tree range of [1, 1].
+          toolLevels: toolLevelsWithAxe(toolLevel.DEFAULT),
+        }),
+        0,
+        0
+      )
+
+      expect(inventory).toEqual([{ id: 'wood', quantity: 1 }])
+      expect(forest[0][0]).toBeNull()
+    })
+
+    test('rolls the full range up to its maximum, distinguishing it from a halved range', () => {
+      vitest.mocked(Math.random).mockReturnValue(0.999)
+
+      const { inventory } = chopForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-1',
+                daysOld: 103,
+                daysSinceLastHarvest: 0,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          toolLevels: toolLevelsWithAxe(toolLevel.GOLD),
+        }),
+        0,
+        0
+      )
+
+      // GOLD tier's full range is [8, 10]; a halved range would cap at 5.
+      expect(inventory).toEqual([{ id: 'wood', quantity: 10 }])
     })
   })
 

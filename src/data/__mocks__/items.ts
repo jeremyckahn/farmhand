@@ -85,7 +85,12 @@ export const sampleTreeItem1 = testItem({
   name: 'Sample Tree Item 1',
   type: itemType.TREE,
   value: 2,
+  // SEED for 1 day, GROWING for 2 more (GROWN from daysOld 3, matching
+  // existing test comments/fixtures). lifespan of 100 keeps it safely
+  // GROWN (not DEAD) at every daysOld used by existing tests (max 3) -
+  // dead-tree tests use daysOld >= 103 (growthDuration 3 + lifespan 100).
   treeTimeline: [1, 2],
+  lifespan: 100,
   fruitTimeline: [1, 1],
 })
 

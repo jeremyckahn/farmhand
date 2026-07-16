@@ -15,10 +15,12 @@ import {
   cropLifeStage,
   fieldMode as fieldModeEnum,
   toolType,
+  treeLifeStage as treeLifeStageEnum,
 } from '../../enums.js'
 import { Div } from '../Elements/index.js'
 
 const { GROWN } = cropLifeStage
+const { DEAD } = treeLifeStageEnum
 const { CHOP } = fieldModeEnum
 
 const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
@@ -26,9 +28,13 @@ const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
 const colorRedDestructive = 'rgba(255, 0, 0, 0.5)'
 
 const getTreeTooltipText = (
-  treeLifeStage: farmhand.cropLifeStage,
+  treeLifeStage: farmhand.treeLifeStage,
   fruitLifeStage: farmhand.cropLifeStage
 ): string => {
+  if (treeLifeStage === DEAD) {
+    return 'Dead'
+  }
+
   if (treeLifeStage !== GROWN) {
     return 'Growing...'
   }
@@ -75,14 +81,21 @@ export const ForestPlot = ({
 }: ForestPlotProps) => {
   const isTree = isPlantedTree(plotContent)
   const treeLifeStage = isTree ? getTreeLifeStage(plotContent) : null
-  const fruitLifeStage = isTree ? getFruitLifeStage(plotContent) : null
+  const fruitLifeStage = isTree
+    ? getFruitLifeStage(plotContent, treeLifeStage ?? undefined)
+    : null
   const canBeHarvested = fruitLifeStage === GROWN
   const canBeChopped = isTree && fieldMode === CHOP
   const item = isTree ? itemsMap[plotContent.itemId] : null
   const treeImage = isTree ? getForestPlotImage(plotContent) : null
   const fruitImage = isTree ? getForestFruitImage(plotContent) : null
+  // A dead tree yields the same full range as a living grown one - only a
+  // sapling/still-growing tree gets the halved range (see chopForestPlot.ts).
   const chopWoodRange = canBeChopped
-    ? getChopWoodYieldRange(toolLevels?.[toolType.AXE], treeLifeStage === GROWN)
+    ? getChopWoodYieldRange(
+        toolLevels?.[toolType.AXE],
+        treeLifeStage === GROWN || treeLifeStage === DEAD
+      )
     : null
 
   const plot = (

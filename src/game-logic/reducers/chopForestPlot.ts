@@ -2,6 +2,7 @@ import {
   cropLifeStage,
   toolLevel as toolLevelEnum,
   toolType,
+  treeLifeStage as treeLifeStageEnum,
 } from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
 import { random } from '../../common/utils.js'
@@ -15,6 +16,7 @@ import { addItemToInventory } from './addItemToInventory.js'
 import { modifyForestPlotAt } from './modifyForestPlotAt.js'
 
 const { GROWN } = cropLifeStage
+const { DEAD } = treeLifeStageEnum
 const { UNAVAILABLE } = toolLevelEnum
 
 const getWoodYield = (
@@ -42,9 +44,11 @@ export const chopForestPlot = (
   if (state.toolLevels[toolType.AXE] === UNAVAILABLE) return state
   if (!doesInventorySpaceRemain(state)) return state
 
+  const treeStage = getTreeLifeStage(plotContent)
+
   // Chopping down a tree that still has ripe fruit on it harvests that
   // fruit as a bonus before the tree itself comes down.
-  if (getFruitLifeStage(plotContent) === GROWN) {
+  if (getFruitLifeStage(plotContent, treeStage) === GROWN) {
     const fruitItem = itemsMap[plotContent.itemId]
 
     if (fruitItem) {
@@ -55,9 +59,11 @@ export const chopForestPlot = (
   const wood = itemsMap.wood
 
   if (wood) {
+    // A dead tree yields the same full range as a living grown one - only
+    // a sapling/still-growing tree gets the halved range.
     const woodAmount = getWoodYield(
       state.toolLevels[toolType.AXE],
-      getTreeLifeStage(plotContent) === GROWN
+      treeStage === GROWN || treeStage === DEAD
     )
 
     if (woodAmount > 0) {

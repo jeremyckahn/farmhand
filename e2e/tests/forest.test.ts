@@ -105,3 +105,53 @@ test('should chop down a tree for wood, harvesting any ripe fruit as a bonus', a
     page.locator('.ContextPane').getByText('Wood', { exact: true })
   ).toBeVisible()
 })
+
+test('should not treat a dead tree as harvestable, even with frozen ripe-looking fruit', async ({
+  page,
+}) => {
+  // forest-tree-dead's tree is past apple's full treeTimeline sum (225
+  // days) and was frozen with a daysSinceLastHarvest that would read as
+  // ripe on a living tree.
+  await loadFixture(page, 'forest-tree-dead')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  const treePlot = page.locator('.ForestPlot').first()
+  await expect(treePlot).not.toHaveClass(/can-be-harvested/)
+
+  await treePlot.click()
+
+  // No fruit was picked - the tree, and its frozen fruit, are unaffected.
+  await expect(treePlot).not.toHaveClass(/is-empty/)
+  await expect(
+    page.locator('.ContextPane').getByText('Apple', { exact: true })
+  ).not.toBeVisible()
+})
+
+test('should chop down a dead tree for the full wood yield, with no fruit bonus', async ({
+  page,
+}) => {
+  await loadFixture(page, 'forest-tree-dead')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  const treePlot = page.locator('.ForestPlot').first()
+
+  await page.getByRole('button', { name: /Select the axe/ }).click()
+  await treePlot.click()
+
+  // The dead tree is gone entirely, same as a chopped living one.
+  await expect(treePlot).toHaveClass(/is-empty/)
+  await expect(treePlot.locator('.ForestTreeSprite')).toHaveCount(0)
+
+  // Wood was collected, but the frozen ripe-looking fruit was not - a dead
+  // tree's fruit never grows, so there's nothing left to bonus-harvest.
+  await expect(
+    page.locator('.ContextPane').getByText('Wood', { exact: true })
+  ).toBeVisible()
+  await expect(
+    page.locator('.ContextPane').getByText('Apple', { exact: true })
+  ).not.toBeVisible()
+})

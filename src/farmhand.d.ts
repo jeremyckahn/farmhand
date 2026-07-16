@@ -69,6 +69,8 @@ declare namespace farmhand {
     | 'WORKSHOP'
     | 'CELLAR'
   type cropLifeStage = 'SEED' | 'GROWING' | 'GROWN'
+  // Tree-only extension of cropLifeStage - see enums.ts's treeLifeStage.
+  type treeLifeStage = cropLifeStage | 'DEAD'
   type itemType =
     | 'COW_FEED'
     | 'CRAFTED_ITEM'
@@ -150,6 +152,9 @@ declare namespace farmhand {
     treeTimeline?: number[]
     fruitTimeline?: number[]
     treeType?: treeType
+    // How many days a tree stays GROWN before dying (becoming DEAD) - see
+    // getTreeLifeStage.ts. Undefined means the tree never dies.
+    lifespan?: number
   }
 
   interface seedItem extends item {
@@ -189,6 +194,12 @@ declare namespace farmhand {
     daysOld: number
     daysSinceLastHarvest: number
     itemId: string
+    // This tree instance's own randomized lifespan (see
+    // getRandomizedLifespan.ts), rolled once at plant time. Overrides
+    // item.lifespan for this specific tree when present; undefined means
+    // it falls back to item.lifespan (e.g. saves from before this field
+    // existed).
+    lifespan?: number
   }
 
   interface forestForageable {

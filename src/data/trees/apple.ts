@@ -4,9 +4,13 @@ import { treeType } from '../../enums.js'
 export const appleSapling: farmhand.item = tree({
   treeType: treeType.APPLE,
   // First entry is the sapling stage; the remaining 4 map to the 4
-  // apple-growing-N art frames before the tree reaches apple-grown, which
-  // it then stays at permanently.
+  // apple-tree-growing-N art frames before the tree reaches
+  // apple-tree-grown.
   treeTimeline: [5, 5, 5, 5, 5],
+  // How many days the tree stays at apple-tree-grown before it dies
+  // (becomes apple-tree-dead) - fruit stops growing at that point, but the
+  // tree can still be chopped down for wood.
+  lifespan: 200,
   // First entry is a fruit-less period right after planting/picking; the
   // remaining 2 map to the apple-fruit-growing-N frames before the fruit
   // is ready to pick (apple-fruit-grown). Doesn't start advancing until

@@ -1,11 +1,11 @@
 import { items as itemImages } from '../img/index.js'
-import { cropLifeStage } from '../enums.js'
+import { treeLifeStage } from '../enums.js'
 
 import { getTreeGrowingPhase } from './getTreeGrowingPhase.js'
 import { getTreeLifeStage } from './getTreeLifeStage.js'
 import { isPlantedTree } from './isPlantedTree.js'
 
-const { SEED, GROWING, GROWN } = cropLifeStage
+const { SEED, GROWING, GROWN, DEAD } = treeLifeStage
 
 export const getForestPlotImage = (
   plotContents: farmhand.plantedTree | farmhand.forestForageable | null
@@ -18,14 +18,18 @@ export const getForestPlotImage = (
     let itemImageId
 
     switch (getTreeLifeStage(plotContents)) {
+      case DEAD:
+        itemImageId = `${plotContents.itemId}-tree-dead`
+        break
+
       case GROWN:
-        itemImageId = `${plotContents.itemId}-grown`
+        itemImageId = `${plotContents.itemId}-tree-grown`
         break
 
       case GROWING:
-        itemImageId = `${plotContents.itemId}-growing-${getTreeGrowingPhase(
-          plotContents
-        )}`
+        itemImageId = `${
+          plotContents.itemId
+        }-tree-growing-${getTreeGrowingPhase(plotContents)}`
         break
 
       case SEED:
@@ -35,8 +39,12 @@ export const getForestPlotImage = (
         // ItemList.tsx, which looks images up by item.id for every item
         // type), which needs a compact square image. The on-plot sapling
         // art is a tall canvas matching the rest of the tree's growth
-        // frames, so it's kept under its own suffixed key.
-        itemImageId = `${plotContents.itemId}-sapling-planted`
+        // frames, so it's kept under its own suffixed key. The "-tree-"
+        // infix throughout this switch (also on -grown/-growing/-dead)
+        // keeps these on-plot tree sprite keys visually distinct from the
+        // similarly-named harvested-fruit keys (e.g. 'apple-fruit-grown',
+        // or the bare 'apple' fruit item image).
+        itemImageId = `${plotContents.itemId}-tree-sapling-planted`
     }
 
     return (itemImages as Record<string, string>)[itemImageId] ?? null
