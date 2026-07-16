@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { itemsMap } from '../../data/maps.js'
-import { items as itemImages } from '../../img/index.js'
+import { plotStates } from '../../img/index.js'
 import forestPlotDefaultImg from '../../img/plot-states/forest-plot-default.png'
 import { getChopWoodYieldRange } from '../../utils/getChopWoodYieldRange.js'
 import { getForestFruitImage } from '../../utils/getForestFruitImage.js'
@@ -24,7 +24,27 @@ import { Div } from '../Elements/index.js'
 const { GROWN } = cropLifeStage
 const { DEAD } = treeLifeStageEnum
 const { CHOP } = fieldModeEnum
-const { NONE, RAINBOW } = fertilizerTypeEnum
+const { NONE, STANDARD, RAINBOW } = fertilizerTypeEnum
+
+// Mirrors Plot.tsx's getBackgroundStyles - a fertilized tree gets the same
+// plot-tile overlay a fertilized crop does, layered under the plot's own
+// default background image (CSS multi-background: earlier entries paint on
+// top).
+const getForestPlotBackgroundImage = (
+  fertilizerType: farmhand.fertilizerType | undefined
+): string => {
+  const overlay =
+    fertilizerType === STANDARD
+      ? plotStates['fertilized-plot']
+      : fertilizerType === RAINBOW
+      ? plotStates['rainbow-fertilized-plot']
+      : null
+
+  return [
+    ...(overlay ? [`url(${overlay})`] : []),
+    `url(${forestPlotDefaultImg})`,
+  ].join(', ')
+}
 
 const getTreeTooltipText = (
   treeLifeStage: farmhand.treeLifeStage,
@@ -39,8 +59,8 @@ const getTreeTooltipText = (
     treeLifeStage !== GROWN
       ? 'Growing...'
       : fruitLifeStage === GROWN
-        ? 'Ready to pick!'
-        : 'Fruiting...'
+      ? 'Ready to pick!'
+      : 'Fruiting...'
 
   if (!fertilizerType || fertilizerType === NONE) {
     return growthText
@@ -104,12 +124,6 @@ export const ForestPlot = ({
   const treeImage = isTree ? getForestPlotImage(plotContent) : null
   const fruitImage = isTree ? getForestFruitImage(plotContent) : null
   const treeFertilizerType = isTree ? plotContent.fertilizerType : undefined
-  const fertilizerBadgeImage =
-    treeFertilizerType && treeFertilizerType !== NONE
-      ? (itemImages as Record<string, string>)[
-          treeFertilizerType === RAINBOW ? 'rainbow-fertilizer' : 'fertilizer'
-        ]
-      : null
   // A dead tree yields the same full range as a living grown one - only a
   // sapling/still-growing tree gets the halved range (see chopForestPlot.ts).
   const chopWoodRange = canBeChopped
@@ -131,7 +145,7 @@ export const ForestPlot = ({
         onClick: () => handleForestPlotClick(x, y),
       }}
       sx={{
-        backgroundImage: `url(${forestPlotDefaultImg})`,
+        backgroundImage: getForestPlotBackgroundImage(treeFertilizerType),
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         border: 'solid 1px #000',
@@ -223,27 +237,6 @@ export const ForestPlot = ({
                 position: 'absolute',
                 width: '100%',
                 aspectRatio: '1 / 2',
-              }}
-            />
-          )}
-          {fertilizerBadgeImage && (
-            <Div
-              {...{
-                'aria-hidden': true,
-                className: 'ForestFertilizerBadge',
-                style: { backgroundImage: `url(${fertilizerBadgeImage})` },
-              }}
-              sx={{
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'contain',
-                bottom: '55%',
-                height: '25%',
-                imageRendering: 'pixelated',
-                pointerEvents: 'none',
-                position: 'absolute',
-                right: 0,
-                width: '25%',
               }}
             />
           )}
