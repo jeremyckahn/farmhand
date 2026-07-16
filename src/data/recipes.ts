@@ -517,6 +517,22 @@ export const strawberryJam: farmhand.recipe = convertToRecipe({
 })
 
 /**
+ * @property farmhand.module:recipes.spicyAppleJam
+ */
+export const spicyAppleJam: farmhand.recipe = convertToRecipe({
+  id: 'spicy-apple-jam',
+  name: 'Spicy Apple Jam',
+  ingredients: {
+    [items.apple.id]: 10,
+    [items.jalapeno.id]: 3,
+  },
+  condition: state =>
+    (state.itemsSold[items.apple.id] || 0) >= 60 &&
+    (state.itemsSold[items.jalapeno.id] || 0) >= 15,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.popcorn
  */
 export const popcorn: farmhand.recipe = convertToRecipe({
@@ -546,6 +562,24 @@ export const pumpkinPie: farmhand.recipe = convertToRecipe({
   condition: state =>
     (state.itemsSold[items.pumpkin.id] || 0) >= 200 &&
     (state.itemsSold[items.wheat.id] || 0) >= 250 &&
+    (state.itemsSold[butter.id] || 0) >= 75,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.applePie
+ */
+export const applePie: farmhand.recipe = convertToRecipe({
+  id: 'apple-pie',
+  name: 'Apple Pie',
+  ingredients: {
+    [items.apple.id]: 4,
+    [flour.id]: 2,
+    [butter.id]: 2,
+  },
+  condition: state =>
+    (state.itemsSold[items.apple.id] || 0) >= 60 &&
+    (state.itemsSold[flour.id] || 0) >= 15 &&
     (state.itemsSold[butter.id] || 0) >= 75,
   recipeType: recipeType.KITCHEN,
 })

@@ -7,6 +7,7 @@ import rainbowFertilizedPlot from './plot-states/rainbow-fertilized-plot.png'
 import shoveledPlot from './plot-states/shoveled-plot.png'
 
 // Recipes
+import applePie from './dishes/apple-pie.png'
 import bread from './dishes/bread.png'
 import burger from './dishes/burger.png'
 import butter from './dishes/butter.png'
@@ -24,6 +25,7 @@ import hotSauce from './dishes/hot-sauce.png'
 import rainbowCheese from './dishes/rainbow-cheese.png'
 import salsa from './dishes/salsa.png'
 import soyMilk from './dishes/soy-milk.png'
+import spicyAppleJam from './dishes/spicy-apple-jam.png'
 import spicyCheese from './dishes/spicy-cheese.png'
 import spicyPickledGarlic from './dishes/spicy-pickled-garlic.png'
 import sunButter from './dishes/sun-butter.png'
@@ -268,6 +270,7 @@ const smeltedItems = {
 }
 
 export const craftedItems = {
+  'apple-pie': applePie,
   'carrot-soup': carrotSoup,
   cheese,
   'chickn-pot-pie': chicknPotPie,
@@ -292,6 +295,7 @@ export const craftedItems = {
   rainbowCheese,
   salsa,
   'soy-milk': soyMilk,
+  'spicy-apple-jam': spicyAppleJam,
   'spicy-cheese': spicyCheese,
   'spicy-pickled-garlic': spicyPickledGarlic,
   spaghetti,
