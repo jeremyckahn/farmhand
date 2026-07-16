@@ -10,7 +10,7 @@ import { ItemList } from '../ItemList/index.js'
 import Toolbelt from '../Toolbelt/index.js'
 
 const ForestQuickSelect = ({
-  fertilizerInventory,
+  mulchInventory,
   handleForestItemSelectClick,
   handleItemSelectClick,
   isMenuOpen = true,
@@ -19,7 +19,7 @@ const ForestQuickSelect = ({
   selectedForestItemId,
   selectedItemId,
 }: {
-  fertilizerInventory: farmhand.item[]
+  mulchInventory: farmhand.item[]
   handleForestItemSelectClick: (item: farmhand.item) => void
   handleItemSelectClick: (item: farmhand.item) => void
   isMenuOpen?: boolean
@@ -47,13 +47,13 @@ const ForestQuickSelect = ({
           />
         </>
       )}
-      {fertilizerInventory.length > 0 && (
+      {mulchInventory.length > 0 && (
         <>
           <Divider orientation="vertical" flexItem />
           <ItemList
             {...{
               handleItemSelectClick,
-              items: fertilizerInventory,
+              items: mulchInventory,
               playerInventoryQuantities,
               selectedItemId,
             }}
@@ -65,7 +65,7 @@ const ForestQuickSelect = ({
 )
 
 ForestQuickSelect.propTypes = {
-  fertilizerInventory: array.isRequired,
+  mulchInventory: array.isRequired,
   handleForestItemSelectClick: func,
   handleItemSelectClick: func,
   isMenuOpen: bool,

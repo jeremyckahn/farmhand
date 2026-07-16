@@ -156,27 +156,25 @@ test('should chop down a dead tree for the full wood yield, with no fruit bonus'
   ).not.toBeVisible()
 })
 
-test('should apply fertilizer to a tree and consume it from inventory', async ({
+test('should apply mulch to a tree and consume it from inventory', async ({
   page,
 }) => {
-  await loadFixture(page, 'forest-tree-fertilizer')
+  await loadFixture(page, 'forest-tree-mulch')
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Forest' }).click()
 
   const treePlot = page.locator('.ForestPlot').first()
 
-  await page.getByRole('button', { name: 'Fertilizer' }).click()
+  await page.getByRole('button', { name: 'Mulch' }).click()
   await treePlot.click()
 
-  // The fertilizer was the player's only one, so it's gone from inventory
+  // The mulch was the player's only one, so it's gone from inventory
   // and the toolbelt no longer offers it.
-  await expect(
-    page.getByRole('button', { name: 'Fertilizer' })
-  ).not.toBeVisible()
+  await expect(page.getByRole('button', { name: 'Mulch' })).not.toBeVisible()
 
-  // A second click on the same (already-fertilized) plot while fertilizer
-  // mode was still active - now a no-op since there's none left to select -
+  // A second click on the same (already-mulched) plot while mulch mode was
+  // still active - now a no-op since there's none left to select -
   // shouldn't do anything odd like harvesting or chopping.
   await treePlot.click()
   await expect(treePlot).not.toHaveClass(/is-empty/)

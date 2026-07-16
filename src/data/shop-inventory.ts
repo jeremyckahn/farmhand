@@ -31,11 +31,14 @@ import {
   sprinkler,
 } from './items.js'
 
-import { fertilizer } from './recipes.js'
+import { fertilizer, mulch } from './recipes.js'
 
 const inventory: farmhand.item[] = [
   // Plantable trees
   ...((features as { FOREST?: boolean }).FOREST ? [appleSapling] : []),
+
+  // Forest items
+  ...((features as { FOREST?: boolean }).FOREST ? [mulch] : []),
 
   // Plantable crops
   asparagusSeed,

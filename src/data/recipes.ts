@@ -735,6 +735,64 @@ export const fertilizer: farmhand.item = convertToRecipe({
 })
 
 /**
+ * @property farmhand.module:recipes.woodChips
+ */
+export const woodChips: farmhand.recipe = convertToRecipe({
+  id: 'wood-chips',
+  name: 'Wood Chips',
+  ingredients: { [items.wood.id]: 1 },
+  condition: state =>
+    state.purchasedWoodChipper > 0 &&
+    (state.itemsSold[items.wood.id] || 0) >= 20,
+  description: 'Chipped wood, useful for making mulch.',
+  recipeType: recipeType.WOOD_CHIPPER,
+  type: itemType.CRAFTED_ITEM,
+})
+
+/**
+ * @property farmhand.module:recipes.mulch
+ */
+export const mulch: farmhand.recipe = convertToRecipe({
+  id: 'mulch',
+  name: 'Mulch',
+  ingredients: { [woodChips.id]: 3, [compost.id]: 1 },
+  condition: state =>
+    state.purchasedWoodChipper > 0 &&
+    (state.itemsSold[woodChips.id] || 0) >= 10,
+  description: 'Helps trees grow a little faster.',
+  enablesFieldMode: fieldMode.FERTILIZE,
+  recipeType: recipeType.WOOD_CHIPPER,
+  type: itemType.MULCH,
+  // Also directly purchasable in the Shop's Supplies tab - mirrors how
+  // fertilizer's value (25) doubles as both its sell price and its Shop
+  // purchase price (purchaseItem.ts prices off an item's own `value`,
+  // adjusted by daily fluctuation - there's no separate "shop price"
+  // field).
+  value: 50,
+})
+
+/**
+ * @property farmhand.module:recipes.rainbowMulch
+ */
+export const rainbowMulch: farmhand.recipe = convertToRecipe({
+  id: 'rainbow-mulch',
+  name: 'Rainbow Mulch',
+  ingredients: {
+    [woodChips.id]: 3,
+    [items.rainbowFertilizer.id]: 1,
+  },
+  // No itemsSold gate, unlike the other two above - rainbow-fertilizer is
+  // already rare (a cow-breeding byproduct), so requiring players to also
+  // sell it away first would work against its own scarcity.
+  condition: state => state.purchasedWoodChipper > 0,
+  description:
+    'Helps trees grow a little faster and speeds up fruit regrowth too.',
+  enablesFieldMode: fieldMode.FERTILIZE,
+  recipeType: recipeType.WOOD_CHIPPER,
+  type: itemType.MULCH,
+})
+
+/**
  * @property farmhand.module:recipes.wineChardonnay
  */
 export const wineChardonnay = getWineRecipeFromGrape({

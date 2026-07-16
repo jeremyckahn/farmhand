@@ -213,6 +213,7 @@ export const testState = (
   purchasedField: 0,
   purchasedForest: 0,
   purchasedSmelter: 0,
+  purchasedWoodChipper: 0,
   sendCowTradeRequest: null,
   showHomeScreen: true,
   showNotifications: true,

@@ -249,7 +249,7 @@ export default {
 
     if (this.state.fieldMode === FERTILIZE) {
       if (isPlantedTree(plotContent)) {
-        this.fertilizeForestPlot(x, y)
+        this.mulchForestPlot(x, y)
       }
 
       return
@@ -283,6 +283,10 @@ export default {
 
   handleSmelterPurchase(this: Farmhand, smelterId: number) {
     this.purchaseSmelter(smelterId)
+  },
+
+  handleWoodChipperPurchase(this: Farmhand, woodChipperId: number) {
+    this.purchaseWoodChipper(woodChipperId)
   },
 
   handleCowPenPurchase(this: Farmhand, cowPenId: number) {

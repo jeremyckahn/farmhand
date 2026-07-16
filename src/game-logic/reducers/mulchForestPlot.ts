@@ -7,16 +7,16 @@ import { modifyForestPlotAt } from './modifyForestPlotAt.js'
 
 const { FERTILIZE, OBSERVE } = fieldMode
 
-const fertilizerItemIdToTypeMap: Record<string, farmhand.fertilizerType> = {
-  fertilizer: fertilizerType.STANDARD,
-  'rainbow-fertilizer': fertilizerType.RAINBOW,
+const mulchItemIdToTypeMap: Record<string, farmhand.fertilizerType> = {
+  mulch: fertilizerType.STANDARD,
+  'rainbow-mulch': fertilizerType.RAINBOW,
 }
 
 /**
  * Assumes that state.selectedItemId references an item with type ===
- * itemType.FERTILIZER.
+ * itemType.MULCH.
  */
-export const fertilizeForestPlot = (
+export const mulchForestPlot = (
   state: farmhand.state,
   x: number,
   y: number
@@ -28,28 +28,26 @@ export const fertilizeForestPlot = (
   if (
     !plotContent ||
     !isPlantedTree(plotContent) ||
-    itemsMap[selectedItemId]?.type !== itemType.FERTILIZER
+    itemsMap[selectedItemId]?.type !== itemType.MULCH
   ) {
     return state
   }
 
-  const fertilizerItemId = selectedItemId
+  const mulchItemId = selectedItemId
 
-  const fertilizerInventory = state.inventory.find(
-    item => item.id === fertilizerItemId
-  )
+  const mulchInventory = state.inventory.find(item => item.id === mulchItemId)
 
   if (
-    !fertilizerInventory ||
+    !mulchInventory ||
     (plotContent.fertilizerType ?? fertilizerType.NONE) !== fertilizerType.NONE
   ) {
     return state
   }
 
-  const { quantity: initialFertilizerQuantity } = fertilizerInventory
+  const { quantity: initialMulchQuantity } = mulchInventory
 
-  state = decrementItemFromInventory(state, fertilizerItemId)
-  const doFertilizersRemain = initialFertilizerQuantity > 1
+  state = decrementItemFromInventory(state, mulchItemId)
+  const doesMulchRemain = initialMulchQuantity > 1
 
   state = modifyForestPlotAt(state, x, y, tree => {
     if (!tree || !isPlantedTree(tree)) {
@@ -58,13 +56,13 @@ export const fertilizeForestPlot = (
 
     return {
       ...tree,
-      fertilizerType: fertilizerItemIdToTypeMap[fertilizerItemId],
+      fertilizerType: mulchItemIdToTypeMap[mulchItemId],
     }
   })
 
   return {
     ...state,
-    fieldMode: doFertilizersRemain ? FERTILIZE : OBSERVE,
-    selectedItemId: doFertilizersRemain ? fertilizerItemId : '',
+    fieldMode: doesMulchRemain ? FERTILIZE : OBSERVE,
+    selectedItemId: doesMulchRemain ? mulchItemId : '',
   }
 }

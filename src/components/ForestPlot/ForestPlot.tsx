@@ -26,18 +26,18 @@ const { DEAD } = treeLifeStageEnum
 const { CHOP } = fieldModeEnum
 const { NONE, STANDARD, RAINBOW } = fertilizerTypeEnum
 
-// Mirrors Plot.tsx's getBackgroundStyles - a fertilized tree gets the same
-// plot-tile overlay a fertilized crop does, layered under the plot's own
-// default background image (CSS multi-background: earlier entries paint on
-// top).
+// Mirrors Plot.tsx's getBackgroundStyles - a mulched tree gets a plot-tile
+// overlay the same way a fertilized crop does, layered under the plot's
+// own default background image (CSS multi-background: earlier entries
+// paint on top).
 const getForestPlotBackgroundImage = (
   fertilizerType: farmhand.fertilizerType | undefined
 ): string => {
   const overlay =
     fertilizerType === STANDARD
-      ? plotStates['fertilized-plot']
+      ? plotStates['mulched-plot']
       : fertilizerType === RAINBOW
-      ? plotStates['rainbow-fertilized-plot']
+      ? plotStates['rainbow-mulched-plot']
       : null
 
   return [
@@ -67,7 +67,7 @@ const getTreeTooltipText = (
   }
 
   const fertilizerLabel =
-    fertilizerType === RAINBOW ? 'Rainbow Fertilized' : 'Fertilized'
+    fertilizerType === RAINBOW ? 'Rainbow Mulched' : 'Mulched'
 
   return `${growthText} (${fertilizerLabel})`
 }

@@ -4,6 +4,8 @@ import { grapeVariety } from '../enums.js'
 import wateredPlot from './plot-states/watered-plot.png'
 import fertilizedPlot from './plot-states/fertilized-plot.png'
 import rainbowFertilizedPlot from './plot-states/rainbow-fertilized-plot.png'
+import mulchedPlot from './plot-states/mulched-plot.png'
+import rainbowMulchedPlot from './plot-states/rainbow-mulched-plot.png'
 import shoveledPlot from './plot-states/shoveled-plot.png'
 
 // Recipes
@@ -160,6 +162,9 @@ import tomatoGrowing6 from './items/tomato-growing6.png'
 import tomatoSeed from './items/tomato-seed.png'
 import fertilizer from './items/fertilizer.png'
 import rainbowFertilizer from './items/rainbow-fertilizer.png'
+import mulch from './items/mulch.png'
+import rainbowMulch from './items/rainbow-mulch.png'
+import woodChips from './items/wood-chips.png'
 import scarecrow from './items/scarecrow.png'
 import sprinkler from './items/sprinkler.png'
 import cowFeed from './items/cow-feed.png'
@@ -242,6 +247,8 @@ export const plotStates = {
   'watered-plot': wateredPlot,
   'fertilized-plot': fertilizedPlot,
   'rainbow-fertilized-plot': rainbowFertilizedPlot,
+  'mulched-plot': mulchedPlot,
+  'rainbow-mulched-plot': rainbowMulchedPlot,
   'shoveled-plot': shoveledPlot,
 }
 
@@ -289,11 +296,13 @@ export const craftedItems = {
   flour,
   jackolantern,
   'hot-sauce': hotSauce,
+  mulch,
   'olive-oil': oliveOil,
   'onion-rings': onionRings,
   popcorn,
   'pumpkin-pie': pumpkinPie,
   rainbowCheese,
+  'rainbow-mulch': rainbowMulch,
   salsa,
   'soy-milk': soyMilk,
   'spicy-apple-jam': spicyAppleJam,
@@ -309,6 +318,7 @@ export const craftedItems = {
   'sweet-potato-pie': sweetPotatoPie,
   tofu,
   'vegetable-oil': vegetableOil,
+  'wood-chips': woodChips,
   yeast,
   ...smeltedItems,
 }

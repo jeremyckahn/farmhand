@@ -1,21 +1,21 @@
 import { testState } from '../../test-utils/index.js'
 import { fertilizerType, fieldMode } from '../../enums.js'
 
-import { fertilizeForestPlot } from './fertilizeForestPlot.js'
+import { mulchForestPlot } from './mulchForestPlot.js'
 
 vitest.mock('../../data/maps.js')
 
-describe('fertilizeForestPlot', () => {
-  describe('no fertilizer in inventory', () => {
+describe('mulchForestPlot', () => {
+  describe('no mulch in inventory', () => {
     test('no-ops', () => {
       const oldState = testState({
         forest: [
           [{ itemId: 'sample-tree-1', daysOld: 3, daysSinceLastHarvest: 0 }],
         ],
         inventory: [],
-        selectedItemId: 'fertilizer',
+        selectedItemId: 'mulch',
       })
-      const state = fertilizeForestPlot(oldState, 0, 0)
+      const state = mulchForestPlot(oldState, 0, 0)
 
       expect(state).toBe(oldState)
     })
@@ -25,10 +25,10 @@ describe('fertilizeForestPlot', () => {
     test('no-ops', () => {
       const oldState = testState({
         forest: [[null]],
-        inventory: [{ id: 'fertilizer', quantity: 1 }],
-        selectedItemId: 'fertilizer',
+        inventory: [{ id: 'mulch', quantity: 1 }],
+        selectedItemId: 'mulch',
       })
-      const state = fertilizeForestPlot(oldState, 0, 0)
+      const state = mulchForestPlot(oldState, 0, 0)
 
       expect(state).toBe(oldState)
     })
@@ -38,16 +38,16 @@ describe('fertilizeForestPlot', () => {
     test('no-ops', () => {
       const oldState = testState({
         forest: [[{ forageableId: 'mushroom', daysOld: 0 }]],
-        inventory: [{ id: 'fertilizer', quantity: 1 }],
-        selectedItemId: 'fertilizer',
+        inventory: [{ id: 'mulch', quantity: 1 }],
+        selectedItemId: 'mulch',
       })
-      const state = fertilizeForestPlot(oldState, 0, 0)
+      const state = mulchForestPlot(oldState, 0, 0)
 
       expect(state).toBe(oldState)
     })
   })
 
-  describe('already-fertilized tree', () => {
+  describe('already-mulched tree', () => {
     test('no-ops', () => {
       const oldState = testState({
         forest: [
@@ -60,19 +60,19 @@ describe('fertilizeForestPlot', () => {
             },
           ],
         ],
-        inventory: [{ id: 'fertilizer', quantity: 1 }],
-        selectedItemId: 'fertilizer',
+        inventory: [{ id: 'mulch', quantity: 1 }],
+        selectedItemId: 'mulch',
       })
-      const state = fertilizeForestPlot(oldState, 0, 0)
+      const state = mulchForestPlot(oldState, 0, 0)
 
       expect(state).toBe(oldState)
     })
   })
 
-  describe('unfertilized tree', () => {
+  describe('unmulched tree', () => {
     describe('happy path', () => {
-      test('fertilizes the tree with standard fertilizer', () => {
-        const state = fertilizeForestPlot(
+      test('mulches the tree with standard mulch', () => {
+        const state = mulchForestPlot(
           testState({
             forest: [
               [
@@ -83,8 +83,8 @@ describe('fertilizeForestPlot', () => {
                 },
               ],
             ],
-            inventory: [{ id: 'fertilizer', quantity: 1 }],
-            selectedItemId: 'fertilizer',
+            inventory: [{ id: 'mulch', quantity: 1 }],
+            selectedItemId: 'mulch',
           }),
           0,
           0
@@ -99,8 +99,8 @@ describe('fertilizeForestPlot', () => {
         expect(state.inventory).toEqual([])
       })
 
-      test('fertilizes the tree with rainbow fertilizer', () => {
-        const state = fertilizeForestPlot(
+      test('mulches the tree with rainbow mulch', () => {
+        const state = mulchForestPlot(
           testState({
             forest: [
               [
@@ -111,8 +111,8 @@ describe('fertilizeForestPlot', () => {
                 },
               ],
             ],
-            inventory: [{ id: 'rainbow-fertilizer', quantity: 1 }],
-            selectedItemId: 'rainbow-fertilizer',
+            inventory: [{ id: 'rainbow-mulch', quantity: 1 }],
+            selectedItemId: 'rainbow-mulch',
           }),
           0,
           0
@@ -129,9 +129,9 @@ describe('fertilizeForestPlot', () => {
     })
 
     describe('FERTILIZE field mode updating', () => {
-      describe('multiple fertilizer units remaining', () => {
+      describe('multiple mulch units remaining', () => {
         test('does not change fieldMode', () => {
-          const state = fertilizeForestPlot(
+          const state = mulchForestPlot(
             testState({
               forest: [
                 [
@@ -142,21 +142,21 @@ describe('fertilizeForestPlot', () => {
                   },
                 ],
               ],
-              inventory: [{ id: 'fertilizer', quantity: 2 }],
-              selectedItemId: 'fertilizer',
+              inventory: [{ id: 'mulch', quantity: 2 }],
+              selectedItemId: 'mulch',
             }),
             0,
             0
           )
 
           expect(state.fieldMode).toBe(fieldMode.FERTILIZE)
-          expect(state.selectedItemId).toBe('fertilizer')
+          expect(state.selectedItemId).toBe('mulch')
         })
       })
 
-      describe('one fertilizer unit remaining', () => {
+      describe('one mulch unit remaining', () => {
         test('changes fieldMode to OBSERVE', () => {
-          const state = fertilizeForestPlot(
+          const state = mulchForestPlot(
             testState({
               forest: [
                 [
@@ -167,8 +167,8 @@ describe('fertilizeForestPlot', () => {
                   },
                 ],
               ],
-              inventory: [{ id: 'fertilizer', quantity: 1 }],
-              selectedItemId: 'fertilizer',
+              inventory: [{ id: 'mulch', quantity: 1 }],
+              selectedItemId: 'mulch',
             }),
             0,
             0

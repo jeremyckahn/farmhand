@@ -50,8 +50,8 @@ describe('processForest', () => {
     expect(forest[0][0]).toEqual(null)
   })
 
-  describe('fertilizer', () => {
-    test('an unfertilized tree advances daysGrown at the same rate as daysOld', () => {
+  describe('mulch', () => {
+    test('an unmulched tree advances daysGrown at the same rate as daysOld', () => {
       const { forest } = processForest(
         testState({
           forest: [
@@ -71,7 +71,7 @@ describe('processForest', () => {
       expect(forest[0][0]).toMatchObject({ daysOld: 3, daysGrown: 3 })
     })
 
-    test('a standard-fertilized tree advances daysGrown faster than daysOld, but not the fruit cycle', () => {
+    test('a standard-mulched tree advances daysGrown faster than daysOld, but not the fruit cycle', () => {
       const { forest } = processForest(
         testState({
           forest: [
@@ -92,12 +92,12 @@ describe('processForest', () => {
       expect(forest[0][0]).toMatchObject({
         daysOld: 31,
         daysGrown: 31.5,
-        // No fruit bonus for standard fertilizer - only rainbow gets one.
+        // No fruit bonus for standard mulch - only rainbow gets one.
         daysSinceLastHarvest: 2,
       })
     })
 
-    test('a rainbow-fertilized tree advances both daysGrown and the fruit cycle faster', () => {
+    test('a rainbow-mulched tree advances both daysGrown and the fruit cycle faster', () => {
       const { forest } = processForest(
         testState({
           forest: [

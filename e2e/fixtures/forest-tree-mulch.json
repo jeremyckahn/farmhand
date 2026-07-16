@@ -121,7 +121,7 @@
   "id": "d7a1db57-f021-4ce5-b632-ad382789f4f1",
   "inventory": [
     {
-      "id": "fertilizer",
+      "id": "mulch",
       "quantity": 1
     }
   ],
@@ -201,7 +201,7 @@
   "todaysPurchases": {},
   "todaysRevenue": 0,
   "todaysStartingInventory": {
-    "fertilizer": 1
+    "mulch": 1
   },
   "toolLevels": {
     "HOE": "DEFAULT",

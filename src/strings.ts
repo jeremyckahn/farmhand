@@ -91,6 +91,9 @@ export const RECYCLING_AVAILABLE_NOTIFICATION =
 
 export const FOREST_AVAILABLE_NOTIFICATION = 'The **Forest** is now available!'
 
+export const WOOD_CHIPPER_AVAILABLE_NOTIFICATION =
+  '**Wood Chipper** recipes are now available in the Workshop!'
+
 export const COW_COLOR_NAMES = {
   [cowColors.BLUE]: 'Blue',
   [cowColors.BROWN]: 'Brown',

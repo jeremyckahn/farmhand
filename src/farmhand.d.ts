@@ -46,7 +46,13 @@ declare namespace farmhand {
     | 'WHEAT'
     | 'WEED'
   type treeType = 'APPLE'
-  type recipeType = 'FERMENTATION' | 'FORGE' | 'KITCHEN' | 'RECYCLING' | 'WINE'
+  type recipeType =
+    | 'FERMENTATION'
+    | 'FORGE'
+    | 'KITCHEN'
+    | 'RECYCLING'
+    | 'WINE'
+    | 'WOOD_CHIPPER'
   type fieldMode =
     | 'CHOP'
     | 'CLEANUP'
@@ -79,6 +85,7 @@ declare namespace farmhand {
     | 'FUEL'
     | 'HUGGING_MACHINE'
     | 'MILK'
+    | 'MULCH'
     | 'ORE'
     | 'SCARECROW'
     | 'SPRINKLER'
@@ -492,6 +499,7 @@ declare namespace farmhand {
     purchasedField: number
     purchasedForest: number
     purchasedSmelter: number
+    purchasedWoodChipper: number
     profitabilityStreak: number
     record7dayProfitAverage: number
     recordProfitabilityStreak: number
