@@ -179,3 +179,77 @@ test('should apply mulch to a tree and consume it from inventory', async ({
   await treePlot.click()
   await expect(treePlot).not.toHaveClass(/is-empty/)
 })
+
+test('should purchase a Wood Chipper and craft the Wood Chips -> Mulch recipe chain', async ({
+  page,
+}) => {
+  await loadFixture(page, 'forest-wood-chipper')
+
+  // Buy the Wood Chipper from the Shop's Upgrades tab.
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Shop' }).click()
+  await page.getByRole('tab', { name: 'Upgrades' }).click()
+
+  const woodChipperCard = page
+    .locator('.TierPurchase')
+    .filter({ hasText: 'Buy wood chipper' })
+  await woodChipperCard.getByRole('button', { name: 'Buy' }).click()
+
+  await expect(
+    woodChipperCard.getByText("You've already purchased the wood chipper!")
+  ).toBeVisible()
+
+  // Craft Wood Chips from Wood, then Mulch from Wood Chips + Compost, in
+  // the newly-unlocked Wood Chipper Workshop tab.
+  await page.getByText(': Shop').click()
+  await page.getByRole('option', { name: ': Workshop' }).click()
+  await page.getByRole('tab', { name: 'Wood Chipper' }).click()
+
+  // Ingredient lists inside other recipe cards (e.g. Mulch lists "Wood
+  // Chips" as an ingredient) also contain this text, so scope to the
+  // card's own title rather than any text in the card.
+  const woodChipsCard = page
+    .locator('.Recipe')
+    .filter({
+      has: page.locator('.MuiCardHeader-title', { hasText: /^Wood Chips$/ }),
+    })
+
+  // Mulch needs 3 Wood Chips - craft more than the default quantity of 1.
+  await woodChipsCard.locator('input').dblclick()
+  await woodChipsCard.locator('input').fill('3')
+  await woodChipsCard.getByRole('button', { name: 'Make' }).click()
+
+  await expect(
+    page.locator('.ContextPane').getByText('Wood Chips', { exact: true })
+  ).toBeVisible()
+
+  const mulchCard = page
+    .locator('.Recipe')
+    .filter({
+      has: page.locator('.MuiCardHeader-title', { hasText: /^Mulch$/ }),
+    })
+  await mulchCard.getByRole('button', { name: 'Make' }).click()
+
+  await expect(
+    page.locator('.ContextPane').getByText('Mulch', { exact: true })
+  ).toBeVisible()
+})
+
+test("should be able to buy Mulch directly from the Shop's Supplies tab", async ({
+  page,
+}) => {
+  await loadFixture(page, 'forest-wood-chipper')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Shop' }).click()
+  await page.getByRole('tab', { name: 'Supplies' }).click()
+
+  const mulchCard = page.locator('.Item').filter({ hasText: 'Mulch' })
+  await mulchCard.getByPlaceholder('0').dblclick()
+  await mulchCard.getByPlaceholder('0').fill('1')
+  await mulchCard.getByRole('button', { name: 'Buy' }).click()
+
+  await expect(
+    page.locator('.ContextPane').getByText('Mulch', { exact: true })
+  ).toBeVisible()
+})
