@@ -123,9 +123,11 @@ export const quickSelectSx = (theme: Theme, isMenuOpen: boolean) => ({
   '& .MuiDivider-root': {
     margin: '0 0.5em',
     [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
-      margin: '0 0 1em 0',
+      margin: '0.5em 0',
       height: '1px',
       width: '100%',
+      borderRightWidth: 0,
+      borderBottomWidth: 'thin',
     },
   },
 })
