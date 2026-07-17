@@ -1,11 +1,45 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, forwardRef } from 'react'
 import { func, shape, string } from 'prop-types'
 import Alert from '@mui/material/Alert/index.js'
 import ReactMarkdown from 'react-markdown'
-import { withSnackbar } from 'notistack'
+import { withSnackbar, SnackbarContent } from 'notistack'
 
 import { NOTIFICATION_DURATION } from '../../constants.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+
+export const CustomContent = forwardRef<
+  HTMLDivElement,
+  farmhand.notification & { id: string | number; onClick?: () => void }
+>(({ id, message, onClick, severity }, ref) => (
+  <SnackbarContent ref={ref}>
+    <Alert
+      {...{
+        elevation: 3,
+        severity,
+        onClick: onClick ? () => onClick() : undefined,
+        style: {
+          cursor: onClick ? 'pointer' : 'default',
+          width: '100%',
+          pointerEvents: 'auto',
+        },
+      }}
+    >
+      <div
+        style={{ width: '100%' }}
+        onClick={(e) => {
+          if (onClick) {
+            e.stopPropagation();
+            onClick();
+          }
+        }}
+      >
+        <ReactMarkdown {...{ source: message }} />
+      </div>
+    </Alert>
+  </SnackbarContent>
+))
+
+CustomContent.displayName = 'CustomContent'
 
 export const snackbarProviderContentCallback = (
   key: string | number,
@@ -15,19 +49,12 @@ export const snackbarProviderContentCallback = (
     severity,
   }: farmhand.notification & { onClick?: () => void }
 ) => (
-  <Alert
-    {...{
-      elevation: 3,
-      key,
-      onClick,
-      severity,
-      style: {
-        cursor: onClick ? 'pointer' : 'default',
-      },
-    }}
-  >
-    <ReactMarkdown {...{ source: message }} />
-  </Alert>
+  <CustomContent
+    id={key}
+    message={message}
+    onClick={onClick}
+    severity={severity}
+  />
 )
 
 export const NotificationSystem = ({
@@ -36,15 +63,23 @@ export const NotificationSystem = ({
   latestNotification,
 }: {
   closeSnackbar: () => void
-  enqueueSnackbar: (notification: farmhand.notification, options: any) => void
+  enqueueSnackbar: (message: string, options: any) => void
   latestNotification: farmhand.notification | null
 }) => {
   useEffect(() => {
     if (latestNotification) {
-      enqueueSnackbar(latestNotification, {
+      enqueueSnackbar(latestNotification.message, {
         autoHideDuration: NOTIFICATION_DURATION,
         onClose: () => closeSnackbar(),
         preventDuplicate: true,
+        content: (key: string | number, message: string | React.ReactNode) => (
+          <CustomContent
+            id={key}
+            message={message as string}
+            onClick={latestNotification.onClick}
+            severity={latestNotification.severity}
+          />
+        )
       })
     }
   }, [closeSnackbar, enqueueSnackbar, latestNotification])
