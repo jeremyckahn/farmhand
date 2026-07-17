@@ -91,6 +91,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       getCowTradeRequest: noop,
       getPeerMetadata: noop,
       hasBooted: false,
+      hasProducedRainbowFertilizer: false,
       heartbeatTimeoutId: null,
       historicalDailyLosses: [],
       historicalDailyRevenue: [],

@@ -121,6 +121,7 @@ export const createContextData = (): ContextData => {
       getCowTradeRequest: () => {},
       getPeerMetadata: () => {},
       hasBooted: true,
+      hasProducedRainbowFertilizer: false,
       heartbeatTimeoutId: -1,
       historicalDailyLosses: [],
       historicalDailyRevenue: [],

@@ -12,6 +12,7 @@ export const processCowFertilizerProduction = (
   const newDayNotifications = [...state.newDayNotifications]
   const { length: cowInventoryLength } = cowInventory
   const fertilizersProduced: Record<string, number> = {}
+  let hasProducedRainbowFertilizer = state.hasProducedRainbowFertilizer
 
   for (let i = 0; i < cowInventoryLength; i++) {
     const cow = cowInventory[i]
@@ -33,6 +34,13 @@ export const processCowFertilizerProduction = (
 
       fertilizersProduced[name] = (fertilizersProduced[name] || 0) + 1
       state = addItemToInventory(state, fertilizer)
+
+      // Sticky - the rainbow-mulch recipe gates on this to confirm the
+      // player has ever gotten rainbow-fertilizer at all, since it's rare
+      // and would otherwise be spent crafting the very recipe it unlocks.
+      if (fertilizer.id === 'rainbow-fertilizer') {
+        hasProducedRainbowFertilizer = true
+      }
     }
   }
 
@@ -43,5 +51,10 @@ export const processCowFertilizerProduction = (
     })
   }
 
-  return { ...state, cowInventory, newDayNotifications }
+  return {
+    ...state,
+    cowInventory,
+    hasProducedRainbowFertilizer,
+    newDayNotifications,
+  }
 }

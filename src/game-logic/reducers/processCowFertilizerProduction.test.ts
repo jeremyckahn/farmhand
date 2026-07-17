@@ -3,7 +3,7 @@ import {
   COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
   INFINITE_STORAGE_LIMIT,
 } from '../../constants.js'
-import { genders, standardCowColors } from '../../enums.js'
+import { cowColors, genders, standardCowColors } from '../../enums.js'
 import { generateCow } from '../../utils/generateCow.js'
 import { getCowFertilizerItem } from '../../utils/getCowFertilizerItem.js'
 import { testState } from '../../test-utils/index.js'
@@ -113,6 +113,57 @@ describe('processCowFertilizerProduction', () => {
             severity: 'success',
           },
         ])
+      })
+    })
+
+    describe('a RAINBOW cow produces rainbow-fertilizer', () => {
+      test('sets hasProducedRainbowFertilizer', () => {
+        state.hasProducedRainbowFertilizer = false
+        state.cowInventory = [
+          generateCow({
+            color: cowColors.RAINBOW,
+            daysSinceProducingFertilizer: COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+            gender: genders.MALE,
+          }),
+        ]
+
+        const { hasProducedRainbowFertilizer } = processCowFertilizerProduction(
+          state
+        )
+
+        expect(hasProducedRainbowFertilizer).toBe(true)
+      })
+    })
+
+    describe('a non-RAINBOW cow produces fertilizer', () => {
+      test('does not set hasProducedRainbowFertilizer', () => {
+        state.hasProducedRainbowFertilizer = false
+        state.cowInventory = [
+          generateCow({
+            color: standardCowColors.WHITE,
+            daysSinceProducingFertilizer: COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+            gender: genders.MALE,
+          }),
+        ]
+
+        const { hasProducedRainbowFertilizer } = processCowFertilizerProduction(
+          state
+        )
+
+        expect(hasProducedRainbowFertilizer).toBe(false)
+      })
+    })
+
+    describe('hasProducedRainbowFertilizer is already true', () => {
+      test('stays true even without any cows in inventory', () => {
+        state.hasProducedRainbowFertilizer = true
+        state.cowInventory = []
+
+        const { hasProducedRainbowFertilizer } = processCowFertilizerProduction(
+          state
+        )
+
+        expect(hasProducedRainbowFertilizer).toBe(true)
       })
     })
   })

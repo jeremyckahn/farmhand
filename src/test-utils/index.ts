@@ -162,6 +162,7 @@ export const testState = (
   getCowTradeRequest: null,
   getPeerMetadata: null,
   hasBooted: false,
+  hasProducedRainbowFertilizer: false,
   heartbeatTimeoutId: null,
   historicalDailyLosses: [],
   historicalDailyRevenue: [],

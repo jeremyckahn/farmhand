@@ -168,6 +168,7 @@ export const PERSISTED_STATE_KEYS = [
   'farmName',
   'field',
   'forest',
+  'hasProducedRainbowFertilizer',
   'historicalDailyLosses',
   'historicalDailyRevenue',
   'historicalValueAdjustments',

@@ -781,10 +781,18 @@ export const rainbowMulch: farmhand.recipe = convertToRecipe({
     [woodChips.id]: 3,
     [items.rainbowFertilizer.id]: 1,
   },
-  // No itemsSold gate, unlike the other two above - rainbow-fertilizer is
-  // already rare (a cow-breeding byproduct), so requiring players to also
-  // sell it away first would work against its own scarcity.
-  condition: state => state.purchasedWoodChipper > 0,
+  // Mirrors mulch's own condition (rather than checking
+  // state.learnedRecipes['mulch'], which reflects the *previous*
+  // updateLearnedRecipes pass, not this one) - held back until the same
+  // point mulch itself unlocks, plus proof the player has actually gotten
+  // rainbow-fertilizer at least once (no itemsSold-style "sell some of
+  // it first" gate, unlike wood-chips/mulch above - rainbow-fertilizer is
+  // already rare, and the player needs it to make rainbow-mulch, not to
+  // sell it away).
+  condition: state =>
+    state.purchasedWoodChipper > 0 &&
+    (state.itemsSold[woodChips.id] || 0) >= 10 &&
+    state.hasProducedRainbowFertilizer,
   description:
     'Helps trees grow a little faster and speeds up fruit regrowth too.',
   enablesFieldMode: fieldMode.FERTILIZE,

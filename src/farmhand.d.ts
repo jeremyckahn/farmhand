@@ -415,6 +415,11 @@ declare namespace farmhand {
      */
     getPeerMetadata?: Function | null
     hasBooted: boolean
+    // Set permanently the first time a RAINBOW-colored cow produces
+    // rainbow-fertilizer - rainbow-fertilizer's only acquisition path
+    // today. Used to gate the rainbow-mulch recipe so it doesn't show up
+    // before the player has ever actually gotten one.
+    hasProducedRainbowFertilizer: boolean
     heartbeatTimeoutId: number | null
     historicalDailyLosses: number[]
     historicalDailyRevenue: number[]
