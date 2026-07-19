@@ -265,6 +265,12 @@ export const ForestPlot = ({
         title: (
           <>
             {item ? <Typography>{item.name} Tree</Typography> : null}
+            {isTree && (
+              <Typography>
+                {plotContent.daysOld}{' '}
+                {plotContent.daysOld === 1 ? 'day' : 'days'} old
+              </Typography>
+            )}
             {isTree &&
               treeLifeStage &&
               fruitLifeStage &&
