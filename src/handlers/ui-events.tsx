@@ -157,6 +157,12 @@ export default {
         (TOOLBELT_FIELD_MODES as Set<farmhand.fieldMode>).has(selectedFieldMode)
           ? ''
           : selectedItemId,
+      // Unlike Field's selectedItemId, selecting a sapling never sets
+      // fieldMode itself (see handleForestItemSelectClick) - so there's no
+      // PLANT-mode exemption to preserve here. This handler only fires
+      // when an actual Toolbelt tool is clicked, so a selected sapling
+      // should always be deselected when that happens.
+      selectedForestItemId: '',
       fieldMode: selectedFieldMode,
     }))
   },

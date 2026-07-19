@@ -115,6 +115,7 @@ describe('UI Event Handlers', () => {
 
       expect(newState).toEqual({
         selectedItemId: '',
+        selectedForestItemId: '',
         fieldMode: fieldMode.WATER,
       })
     })
@@ -129,8 +130,23 @@ describe('UI Event Handlers', () => {
 
       expect(newState).toEqual({
         selectedItemId: 'crop-seed',
+        selectedForestItemId: '',
         fieldMode: fieldMode.PLANT,
       })
+    })
+
+    test('clears a selected sapling when a Forest tool is selected', () => {
+      const handler = uiEventHandlers.handleFieldModeSelect.bind(mockContext)
+
+      handler(fieldMode.CHOP)
+
+      const stateUpdater = mockContext.setState.mock.calls[0][0]
+      const newState = stateUpdater({
+        selectedItemId: '',
+        selectedForestItemId: 'apple-sapling',
+      })
+
+      expect(newState.selectedForestItemId).toEqual('')
     })
   })
 
