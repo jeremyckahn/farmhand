@@ -235,6 +235,28 @@ test('should purchase a Wood Chipper and craft the Wood Chips -> Mulch recipe ch
   ).toBeVisible()
 })
 
+test('should apply rainbow mulch to a tree and consume it from inventory', async ({
+  page,
+}) => {
+  await loadFixture(page, 'forest-tree-rainbow-mulch')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  const treePlot = page.locator('.ForestPlot').first()
+
+  await page.getByRole('button', { name: 'Rainbow Mulch' }).click()
+  await treePlot.click()
+
+  // The rainbow mulch was the player's only one, so it's gone from inventory
+  // and the toolbelt no longer offers it.
+  await expect(page.getByRole('button', { name: 'Rainbow Mulch' })).not.toBeVisible()
+
+  // Verify tooltip reflects Rainbow Mulch status
+  await treePlot.hover()
+  await expect(page.getByRole('tooltip')).toContainText('Rainbow Mulched')
+})
+
 test("should be able to buy Mulch directly from the Shop's Supplies tab", async ({
   page,
 }) => {
