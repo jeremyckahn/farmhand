@@ -297,7 +297,7 @@ export const Shop = ({
                     rows: number
                   }) => `${dollarString(price)}: ${columns} x ${rows}`,
                   tiers: PURCHASABLE_FOREST_SIZES,
-                  title: 'Expand Forest',
+                  title: 'Expand forest',
                 }}
               />
             </li>
