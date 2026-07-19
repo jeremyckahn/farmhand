@@ -4,6 +4,7 @@ import { Div } from '../Elements/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import ForestPlot from '../ForestPlot/index.js'
 import ForestQuickSelect from '../ForestQuickSelect/index.js'
+import { breakpoints, layout } from '../../styles/tokens.js'
 
 export const Forest = () => {
   const {
@@ -32,21 +33,19 @@ export const Forest = () => {
   // same fixed vertical budget applies here.
   const CHROME_HEIGHT_PX = 395
 
-  // Below this, plots stop shrinking further and the grid scrolls
-  // horizontally instead (Stage already has overflow: auto) - keeps trees
-  // legible/tappable on very narrow screens with many columns.
+  // Floor below which the grid scrolls horizontally (Stage: overflow auto)
+  // instead of shrinking plots further.
   const MIN_PLOT_SIZE = '48px'
 
-  // columnGap and paddingLeft/Right below are set to this same value, so it
-  // has to account for available width too, not just the 160px design max
-  // and the vertical budget - otherwise minmax(0, maxPlotSize) lets the
-  // columns shrink to fit the viewport while the gap between them stays at
-  // the old, too-large size. Splitting the container into 2 * columns
-  // equal-size slots (each column, each of the columns - 1 internal gaps,
-  // and one full slot split into the two half-plot side paddings) keeps a
-  // plot's gap equal to its own size at any width.
+  // Also caps by available width (2 * columns "slots": each column, each
+  // gap, and one slot split across the two side paddings) so columnGap and
+  // padding below - set to this same value - shrink along with the columns.
   const maxPlotSize = `max(${MIN_PLOT_SIZE}, min(160px, calc((100vh - ${CHROME_HEIGHT_PX}px) / ${rows +
     OVERHANG_ROW_MULTIPLE}), calc(100% / ${2 * Math.max(columns, 1)})))`
+
+  // Tightens the row stagger below maxPlotSize so a shifted canopy overlaps
+  // the plot above it slightly rather than just clearing it - looks better.
+  const ROW_STAGGER_OVERLAP_PX = 16
 
   // The reserve itself, in the same unit as a plot. Applying this as
   // one-sided paddingTop on .Forest (below) shifts the flexbox
@@ -76,19 +75,24 @@ export const Forest = () => {
         sx={{
           display: 'grid',
           rowGap: '2%',
-          // Must equal a plot's width: the +/-50% row stagger below
+          // Must roughly equal a plot's width: the +/-50% row stagger below
           // (ForestPlot.tsx) nets a 1-plot offset between adjacent rows,
-          // which only lands a shifted canopy in the gap between two
-          // plots above - instead of still fully overlapping one - if the
-          // gap is that wide too.
-          columnGap: maxPlotSize,
+          // which lands a shifted canopy next to (rather than fully
+          // overlapping) the plot above it once the gap is about that wide
+          // too. Trimmed by ROW_STAGGER_OVERLAP_PX for a slight, deliberate
+          // overlap instead of an exact match.
+          columnGap: `calc(${maxPlotSize} - ${ROW_STAGGER_OVERLAP_PX}px)`,
           justifyContent: 'center',
           width: '100%',
-          // The lower bound has to be MIN_PLOT_SIZE, not 0 - otherwise the
-          // grid happily shrinks columns past that floor to still fit
-          // within the container's own width, defeating it. Once columns
-          // can't shrink any further, the grid overflows and Stage's
-          // overflow: auto turns that into a horizontal scrollbar instead.
+          // ForestQuickSelect switches to a fixed right-side sidebar at this
+          // breakpoint (see quickSelectSx) - reserve its width so centering
+          // doesn't run the grid into it. Below this breakpoint the toolbelt
+          // is a bottom bar instead, so no reservation is needed there.
+          [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+            width: `calc(100% - ${layout.fieldSpaceForRightSideControls})`,
+          },
+          // Lower bound must be MIN_PLOT_SIZE, not 0, or columns shrink past
+          // it to still fit the container.
           gridTemplateColumns: `repeat(${columns}, minmax(${MIN_PLOT_SIZE}, ${maxPlotSize}))`,
           // Reserves the same half-plot on each side so the outermost
           // staggered plots don't get clipped by Stage's overflow: auto.
