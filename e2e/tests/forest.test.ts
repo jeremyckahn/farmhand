@@ -250,23 +250,45 @@ test('should apply rainbow mulch to one tree and leave another unmulched, advanc
   await page.getByRole('button', { name: 'Rainbow Mulch' }).click()
   await firstPlot.click()
 
-  // Verify the mulch is consumed
+  // Verify the rainbow mulch is consumed
   await expect(page.getByRole('button', { name: 'Rainbow Mulch' })).not.toBeVisible()
+
+  // Apply regular mulch to the second tree
+  await page.getByRole('button', { name: 'Mulch' }).click()
+  await secondPlot.click()
+
+  // Verify the regular mulch is consumed
+  await expect(page.getByRole('button', { name: 'Mulch' })).not.toBeVisible()
 
   // Verify tooltip reflects Rainbow Mulch status on the first tree
   await firstPlot.hover()
-  await expect(page.getByRole('tooltip')).toContainText('Rainbow Mulched')
+  await expect(page.getByRole('tooltip').filter({ hasText: 'Rainbow Mulched' })).toContainText('Rainbow Mulched')
+
+  await page.mouse.move(0, 0)
+  await page.waitForTimeout(100)
+
+  // Verify tooltip reflects regular Mulch status on the second tree
+  await secondPlot.hover()
+  await expect(page.getByRole('tooltip').filter({ hasText: 'Growing... (Mulched)' })).toContainText('Mulched')
 
   // Advance the days so the rainbow mulched tree grows faster than the other
   // The trees in the fixture are 3 days old.
-  // We want to advance time so one tree reaches GROWN (and begins fruiting)
-  // while the other stays in the Growing stage.
-  // Apple tree timeline is 25 days. FERTILIZER_BONUS gives an extra 0.5 days per day (so 1 day = 1.5 days grown).
-  // Advancing 15 days:
-  // - unmulched tree: 3 + 15 = 18 days old (still Growing...)
-  // - rainbow mulched tree: 3 + (15 * 1.5) = 25.5 days grown (reaches GROWN at 25, starts fruiting)
+  // We want to advance time so the rainbow mulched tree reaches fruit growth
+  // while the regular mulched tree does not.
+  // Standard mulch speeds up initial tree growth, but not the fruit cycle.
+  // Rainbow mulch speeds up BOTH initial tree growth AND the fruit cycle.
+  // Apple tree timeline is 25 days to GROWN. FERTILIZER_BONUS gives an extra 0.5 days per day (so 1 day = 1.5 days grown).
+  // Advancing 15 days gets both trees to GROWN state: 3 + (15 * 1.5) = 25.5 days grown.
+  // Apple fruit timeline is [2, 2, 2], meaning it takes 6 days to be "Ready to pick!".
+  // After reaching GROWN (day 15 for both), the fruit cycle starts:
+  // - Standard mulched tree: Fruit cycle progresses at normal speed (1 day/day).
+  // - Rainbow mulched tree: Fruit cycle progresses at accelerated speed (1.5 days/day).
+  // Let's advance a total of 19 days.
+  // At day 15, both are GROWN. 4 more days pass:
+  // - Standard mulched tree: 4 days of fruit growth. 4 < 6, so it's still "Fruiting...".
+  // - Rainbow mulched tree: 4 * 1.5 = 6 days of fruit growth. 6 >= 6, so it's "Ready to pick!".
 
-  for (let day = 0; day < 15; day++) {
+  for (let day = 0; day < 19; day++) {
     await page.getByRole('button', { name: 'End the day to save your' }).click()
   }
 
@@ -276,12 +298,12 @@ test('should apply rainbow mulch to one tree and leave another unmulched, advanc
   await page.waitForTimeout(100)
 
   await firstPlot.hover()
-  await expect(page.getByRole('tooltip').filter({ hasText: 'Rainbow Mulched' })).toContainText('Fruiting... (Rainbow Mulched)')
+  await expect(page.getByRole('tooltip').filter({ hasText: 'Rainbow Mulched' })).toContainText('Ready to pick! (Rainbow Mulched)')
 
   await page.mouse.move(0, 0)
   await page.waitForTimeout(100)
   await secondPlot.hover()
-  await expect(page.getByRole('tooltip').filter({ hasText: 'Apple Tree' }).first()).toContainText('Growing...')
+  await expect(page.getByRole('tooltip').filter({ hasText: 'Mulched' }).first()).toContainText('Fruiting... (Mulched)')
 })
 
 test("should be able to buy Mulch directly from the Shop's Supplies tab", async ({

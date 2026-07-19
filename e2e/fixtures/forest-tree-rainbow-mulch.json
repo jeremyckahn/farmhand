@@ -127,6 +127,10 @@
     {
       "id": "rainbow-mulch",
       "quantity": 1
+    },
+    {
+      "id": "mulch",
+      "quantity": 1
     }
   ],
   "inventoryLimit": 100,
