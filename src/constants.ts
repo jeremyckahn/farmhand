@@ -43,6 +43,11 @@ export const PURCHASEABLE_FIELD_SIZES: Map<
 export const INITIAL_FOREST_WIDTH = 4
 export const INITIAL_FOREST_HEIGHT = 1
 
+// How far a staggered row's canopy should overlap the row above it on each
+// side (Forest.tsx's columnGap and ForestPlot.tsx's translateX both derive
+// from this, so the overlap stays symmetric - see their comments).
+export const FOREST_ROW_STAGGER_OVERLAP_PX = 16
+
 export const PURCHASABLE_FOREST_SIZES: Map<
   number,
   farmhand.purchaseableFieldSize

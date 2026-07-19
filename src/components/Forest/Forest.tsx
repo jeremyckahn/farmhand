@@ -4,6 +4,7 @@ import { Div } from '../Elements/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import ForestPlot from '../ForestPlot/index.js'
 import ForestQuickSelect from '../ForestQuickSelect/index.js'
+import { FOREST_ROW_STAGGER_OVERLAP_PX } from '../../constants.js'
 import { breakpoints, layout } from '../../styles/tokens.js'
 
 export const Forest = () => {
@@ -43,10 +44,6 @@ export const Forest = () => {
   const maxPlotSize = `max(${MIN_PLOT_SIZE}, min(160px, calc((100vh - ${CHROME_HEIGHT_PX}px) / ${rows +
     OVERHANG_ROW_MULTIPLE}), calc(100% / ${2 * Math.max(columns, 1)})))`
 
-  // Tightens the row stagger below maxPlotSize so a shifted canopy overlaps
-  // the plot above it slightly rather than just clearing it - looks better.
-  const ROW_STAGGER_OVERLAP_PX = 16
-
   // The reserve itself, in the same unit as a plot. Applying this as
   // one-sided paddingTop on .Forest (below) shifts the flexbox
   // justify-content: center midpoint of its content down by half this
@@ -75,13 +72,11 @@ export const Forest = () => {
         sx={{
           display: 'grid',
           rowGap: '2%',
-          // Must roughly equal a plot's width: the +/-50% row stagger below
-          // (ForestPlot.tsx) nets a 1-plot offset between adjacent rows,
-          // which lands a shifted canopy next to (rather than fully
-          // overlapping) the plot above it once the gap is about that wide
-          // too. Trimmed by ROW_STAGGER_OVERLAP_PX for a slight, deliberate
-          // overlap instead of an exact match.
-          columnGap: `calc(${maxPlotSize} - ${ROW_STAGGER_OVERLAP_PX}px)`,
+          // Paired with ForestPlot.tsx's translateX to give staggered rows a
+          // symmetric FOREST_ROW_STAGGER_OVERLAP_PX overlap on both sides -
+          // see that file's comment for the shared derivation.
+          columnGap: `calc(${maxPlotSize} - ${2 *
+            FOREST_ROW_STAGGER_OVERLAP_PX}px)`,
           justifyContent: 'center',
           width: '100%',
           // ForestQuickSelect switches to a fixed right-side sidebar at this

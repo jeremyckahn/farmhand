@@ -3,7 +3,10 @@ import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import { PICKER_POLE_LEVEL_TO_FRUIT_YIELD } from '../../constants.js'
+import {
+  FOREST_ROW_STAGGER_OVERLAP_PX,
+  PICKER_POLE_LEVEL_TO_FRUIT_YIELD,
+} from '../../constants.js'
 import { itemsMap } from '../../data/maps.js'
 import { plotStates } from '../../img/index.js'
 import forestPlotDefaultImg from '../../img/plot-states/forest-plot-default.png'
@@ -176,13 +179,15 @@ export const ForestPlot = ({
         position: 'relative',
         width: '100%',
         aspectRatio: '1',
-        // Staggers alternating rows by half a plot-width so a tree's
-        // overhanging canopy (see .ForestTreeSprite below) grows into a
-        // different visual slot than "directly above," rather than
-        // colliding with whatever's planted in the same column one row up.
-        // A percentage translateX resolves against this element's own
-        // width, so this needs no coordination with the grid's own sizing.
-        transform: `translateX(${y % 2 === 0 ? '-50%' : '50%'})`,
+        // Staggers alternating rows by ~half a plot-width so a tree's
+        // overhanging canopy grows into a different visual slot than
+        // "directly above." Trimmed toward center by half of
+        // FOREST_ROW_STAGGER_OVERLAP_PX, paired with Forest.tsx's matching
+        // columnGap - at exactly +/-50% one side is always flush regardless
+        // of gap, so both need trimming for a symmetric overlap.
+        transform: `translateX(calc(${y % 2 === 0 ? '-50%' : '50%'} ${
+          y % 2 === 0 ? '+' : '-'
+        } ${FOREST_ROW_STAGGER_OVERLAP_PX / 2}px))`,
         '&:hover': {
           backgroundColor: colorGenericHighlight,
           cursor: 'pointer',
