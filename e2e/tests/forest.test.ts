@@ -258,20 +258,18 @@ test('should apply rainbow mulch to one tree and leave another unmulched, advanc
   await expect(page.getByRole('tooltip')).toContainText('Rainbow Mulched')
 
   // Advance the days so the rainbow mulched tree grows faster than the other
-  // FERTILIZER_BONUS is 0.5. So 1 day = 1.5 days of growth.
-  // Apple sapling stages are [5, 5, 5, 5, 5]. It takes 25 days to fully grow.
-  // The trees in the fixture are 3 days old. Let's advance 14 days.
-  // The unmulched tree will be 17 days old (17 < 25), so still Growing.
-  // The rainbow mulched tree will be 3 + (14 * 1.5) = 24 days grown (24 < 25), still Growing...
-  // Wait, 15 days: unmulched = 18 days, mulched = 3 + 22.5 = 25.5 (Grown!).
+  // The trees in the fixture are 3 days old.
+  // We want to advance time so one tree reaches GROWN (and begins fruiting)
+  // while the other stays in the Growing stage.
+  // Apple tree timeline is 25 days. FERTILIZER_BONUS gives an extra 0.5 days per day (so 1 day = 1.5 days grown).
+  // Advancing 15 days:
+  // - unmulched tree: 3 + 15 = 18 days old (still Growing...)
+  // - rainbow mulched tree: 3 + (15 * 1.5) = 25.5 days grown (reaches GROWN at 25, starts fruiting)
 
   for (let day = 0; day < 15; day++) {
     await page.getByRole('button', { name: 'End the day to save your' }).click()
   }
 
-  // After 15 days:
-  // Unmulched tree is 18 days old, so it's still "Growing..."
-  // Rainbow-mulched tree is 25.5 days grown, so it reaches GROWN stage and starts fruiting ("Fruiting... (Rainbow Mulched)")
   // Wait a small bit before hovering to allow the end-day tooltip to disappear,
   // or use the tooltip filter if there's multiple
   await page.mouse.move(0, 0)
@@ -283,7 +281,7 @@ test('should apply rainbow mulch to one tree and leave another unmulched, advanc
   await page.mouse.move(0, 0)
   await page.waitForTimeout(100)
   await secondPlot.hover()
-  await expect(page.getByRole('tooltip').filter({ hasText: 'Apple Tree' })).toContainText('Growing...')
+  await expect(page.getByRole('tooltip').filter({ hasText: 'Apple Tree' }).first()).toContainText('Growing...')
 })
 
 test("should be able to buy Mulch directly from the Shop's Supplies tab", async ({
