@@ -46,6 +46,10 @@ const getForestPlotBackgroundImage = (
   ].join(', ')
 }
 
+const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
+const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
+const colorYellowCaution = 'rgba(255, 220, 0, 0.5)'
+
 const getTreeTooltipText = (
   treeLifeStage: farmhand.treeLifeStage,
   fruitLifeStage: farmhand.cropLifeStage,
@@ -71,10 +75,6 @@ const getTreeTooltipText = (
 
   return `${growthText} (${fertilizerLabel})`
 }
-
-const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
-const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
-const colorRedDestructive = 'rgba(255, 0, 0, 0.5)'
 
 const formatWoodRange = ([min, max]: [number, number]): string =>
   min === max ? `${min}` : `${min}-${max}`
@@ -179,7 +179,7 @@ export const ForestPlot = ({
         // the (potentially also true) can-be-harvested green hover since
         // it's unconditional rather than hover-gated.
         '&.can-be-chopped': {
-          backgroundColor: colorRedDestructive,
+          backgroundColor: colorYellowCaution,
           '&:hover': {
             cursor: 'pointer',
           },
