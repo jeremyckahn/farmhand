@@ -211,11 +211,11 @@ import wateringCan from './tools/watering-can.png'
 
 // Forest resources
 //
-// NOTE: source art is per-species-named (apple-tree-wood.png) even though
+// NOTE: source art is per-species-named (applewood.png) even though
 // there's currently just one generic "wood" item covering every tree
 // species - the artist left it named that way in case wood gets split by
 // tree type later.
-import wood from './items/apple-tree-wood.png'
+import wood from './items/applewood.png'
 
 // Mined resources
 import coal from './ores/coal.png'
