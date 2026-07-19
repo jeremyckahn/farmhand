@@ -167,17 +167,19 @@ export const ForestPlot = ({
           backgroundColor: colorGenericHighlight,
           cursor: 'pointer',
         },
-        '&.can-be-harvested:hover': {
-          backgroundColor: colorGreenOk,
-        },
         // Matches how Field tools highlight every applicable plot at once
         // while a tool is selected (see Field.tsx's "&.harvest-mode
-        // .Plot.can-be-harvested" etc.), rather than only on hover: the axe
-        // is destructive - it removes the tree regardless of its growth
-        // stage - so every choppable plot should read as such persistently,
-        // not just the one currently under the cursor. Takes priority over
-        // the (potentially also true) can-be-harvested green hover since
-        // it's unconditional rather than hover-gated.
+        // .Plot.can-be-harvested" etc.), rather than only on hover: both
+        // canBeHarvested and canBeChopped are already gated on the matching
+        // tool being the active one (see their definitions above), so every
+        // plot that tool applies to should read as such persistently, not
+        // just the one currently under the cursor.
+        '&.can-be-harvested': {
+          backgroundColor: colorGreenOk,
+          '&:hover': {
+            cursor: 'pointer',
+          },
+        },
         '&.can-be-chopped': {
           backgroundColor: colorYellowCaution,
           '&:hover': {
