@@ -575,6 +575,26 @@ export const useFarmhand = (props: FarmhandProps) => {
     }
   }, [createInitialState, incrementDay, props.localforage, syncToRoom])
 
+  // isMenuOpen is otherwise only synced to the viewport at boot and on
+  // stageFocus changes - without this, resizing the window (or rotating a
+  // device) never opens/closes the sidebar until the next of those, which
+  // in practice meant a full page reload.
+  useEffect(() => {
+    const handleResize = () => {
+      setState(previous => {
+        const isMenuOpen = !doesMenuObstructStage()
+
+        return previous.isMenuOpen === isMenuOpen
+          ? previous
+          : { ...previous, isMenuOpen }
+      })
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   // Post-increment day side effects
   useEffect(() => {
     if (!state.hasBooted || !nextDayStateRef.current) return
