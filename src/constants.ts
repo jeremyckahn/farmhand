@@ -282,6 +282,20 @@ export const AXE_WOOD_YIELD_RANGE: Partial<Record<
   [toolLevel.GOLD]: [8, 10],
 }
 
+// Flat +1 fruit per tool tier when picking with the Picker Pole (see
+// harvestForestPlot.ts) - unlike AXE_WOOD_YIELD_RANGE this isn't a random
+// range, just a per-tier constant.
+export const PICKER_POLE_LEVEL_TO_FRUIT_YIELD: Partial<Record<
+  farmhand.toolLevel,
+  number
+>> = {
+  [toolLevel.DEFAULT]: 1,
+  [toolLevel.BRONZE]: 2,
+  [toolLevel.IRON]: 3,
+  [toolLevel.SILVER]: 4,
+  [toolLevel.GOLD]: 5,
+}
+
 // A planted tree's actual lifespan varies per-instance, rolled once at
 // plant time (see getRandomizedLifespan.ts) rather than every species
 // sharing one fixed value.

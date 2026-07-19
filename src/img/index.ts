@@ -276,6 +276,12 @@ const smeltedItems = {
   'shovel-iron': shovelIron,
   'shovel-silver': shovelSilver,
   'shovel-gold': shovelGold,
+
+  // TODO: replace with real per-tier art once it's provided
+  'picker-pole-bronze': pickerPole,
+  'picker-pole-iron': pickerPole,
+  'picker-pole-silver': pickerPole,
+  'picker-pole-gold': pickerPole,
 }
 
 export const craftedItems = {

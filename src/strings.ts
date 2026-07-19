@@ -85,7 +85,11 @@ export const TOOL_LEVEL_INFO = {
     GOLD: '**Gold**: Chops down trees for 8-10 wood.',
   },
   PICKER_POLE: {
-    DEFAULT: '**Basic**: Picks ripe fruit from trees.',
+    DEFAULT: '**Basic**: Picks 1 fruit per harvest.',
+    BRONZE: '**Bronze**: Picks 2 fruit per harvest.',
+    IRON: '**Iron**: Picks 3 fruit per harvest.',
+    SILVER: '**Silver**: Picks 4 fruit per harvest.',
+    GOLD: '**Gold**: Picks 5 fruit per harvest.',
   },
 }
 

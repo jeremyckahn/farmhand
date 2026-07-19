@@ -124,6 +124,43 @@ describe('harvestForestPlot', () => {
 
       expect(state).toEqual(inputState)
     })
+
+    test.each([
+      [toolLevel.DEFAULT, 1],
+      [toolLevel.BRONZE, 2],
+      [toolLevel.IRON, 3],
+      [toolLevel.SILVER, 4],
+      [toolLevel.GOLD, 5],
+    ])(
+      'adds %s fruit yield tier as %i fruit to inventory',
+      (pickerPoleLevel, expectedQuantity) => {
+        const { inventory } = harvestForestPlot(
+          testState({
+            forest: [
+              [
+                {
+                  itemId: 'sample-tree-1',
+                  daysOld: 3,
+                  daysSinceLastHarvest: 2,
+                },
+              ],
+            ],
+            inventory: [],
+            inventoryLimit: INFINITE_STORAGE_LIMIT,
+            toolLevels: {
+              ...toolLevelsWithPickerPole,
+              PICKER_POLE: pickerPoleLevel,
+            },
+          }),
+          0,
+          0
+        )
+
+        expect(inventory).toEqual([
+          { id: 'sample-tree-1', quantity: expectedQuantity },
+        ])
+      }
+    )
   })
 
   describe('inventory is full', () => {

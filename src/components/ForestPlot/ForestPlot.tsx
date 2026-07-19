@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { PICKER_POLE_LEVEL_TO_FRUIT_YIELD } from '../../constants.js'
 import { itemsMap } from '../../data/maps.js'
 import { plotStates } from '../../img/index.js'
 import forestPlotDefaultImg from '../../img/plot-states/forest-plot-default.png'
@@ -53,7 +54,9 @@ const colorYellowCaution = 'rgba(255, 220, 0, 0.5)'
 const getTreeTooltipText = (
   treeLifeStage: farmhand.treeLifeStage,
   fruitLifeStage: farmhand.cropLifeStage,
-  fertilizerType: farmhand.fertilizerType | undefined
+  fertilizerType: farmhand.fertilizerType | undefined,
+  fruitYield: number,
+  fruitItemName: string | null
 ): string => {
   if (treeLifeStage === DEAD) {
     return 'Dead'
@@ -63,7 +66,7 @@ const getTreeTooltipText = (
     treeLifeStage !== GROWN
       ? 'Growing...'
       : fruitLifeStage === GROWN
-      ? 'Ready to pick!'
+      ? `Ready to pick! (${fruitYield} ${fruitItemName ?? 'fruit'})`
       : 'Fruiting...'
 
   if (!fertilizerType || fertilizerType === NONE) {
@@ -132,6 +135,8 @@ export const ForestPlot = ({
   const treeImage = isTree ? getForestPlotImage(plotContent) : null
   const fruitImage = isTree ? getForestFruitImage(plotContent) : null
   const treeFertilizerType = isTree ? plotContent.fertilizerType : undefined
+  const fruitYield =
+    PICKER_POLE_LEVEL_TO_FRUIT_YIELD[toolLevels?.[toolType.PICKER_POLE]] ?? 1
   // A dead tree yields the same full range as a living grown one - only a
   // sapling/still-growing tree gets the halved range (see chopForestPlot.ts).
   const chopWoodRange = canBeChopped
@@ -308,7 +313,9 @@ export const ForestPlot = ({
                   {getTreeTooltipText(
                     treeLifeStage,
                     fruitLifeStage,
-                    treeFertilizerType
+                    treeFertilizerType,
+                    fruitYield,
+                    item?.name ?? null
                   )}
                 </Typography>
               ))}

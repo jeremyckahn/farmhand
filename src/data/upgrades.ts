@@ -214,6 +214,53 @@ const upgrades: any = {
       isMaxLevel: true,
     },
   },
+  [toolType.PICKER_POLE]: {
+    [toolLevel.DEFAULT]: {
+      id: 'picker-pole-default',
+      name: 'Basic Picker Pole',
+      nextLevel: toolLevel.BRONZE,
+    },
+    [toolLevel.BRONZE]: {
+      id: 'picker-pole-bronze',
+      description: 'Picks 2 fruit per harvest',
+      name: 'Bronze Picker Pole',
+      ingredients: {
+        [bronzeIngot.id]: 12,
+        [coal.id]: coalNeededForIngots(bronzeIngot.id, 12),
+      },
+      nextLevel: toolLevel.IRON,
+    },
+    [toolLevel.IRON]: {
+      id: 'picker-pole-iron',
+      description: 'Picks 3 fruit per harvest',
+      name: 'Iron Picker Pole',
+      ingredients: {
+        [ironIngot.id]: 12,
+        [coal.id]: coalNeededForIngots(ironIngot.id, 12),
+      },
+      nextLevel: toolLevel.SILVER,
+    },
+    [toolLevel.SILVER]: {
+      id: 'picker-pole-silver',
+      description: 'Picks 4 fruit per harvest',
+      name: 'Silver Picker Pole',
+      ingredients: {
+        [silverIngot.id]: 12,
+        [coal.id]: coalNeededForIngots(silverIngot.id, 12),
+      },
+      nextLevel: toolLevel.GOLD,
+    },
+    [toolLevel.GOLD]: {
+      id: 'picker-pole-gold',
+      description: 'Picks 5 fruit per harvest',
+      name: 'Gold Picker Pole',
+      ingredients: {
+        [goldIngot.id]: 12,
+        [coal.id]: coalNeededForIngots(goldIngot.id, 12),
+      },
+      isMaxLevel: true,
+    },
+  },
 }
 
 // add some defaults to each upgrade object
