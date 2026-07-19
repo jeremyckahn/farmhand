@@ -235,7 +235,7 @@ test('should purchase a Wood Chipper and craft the Wood Chips -> Mulch recipe ch
   ).toBeVisible()
 })
 
-test('should apply rainbow mulch to a tree and consume it from inventory', async ({
+test('should apply rainbow mulch to one tree and leave another unmulched, advancing time to assert growth differences', async ({
   page,
 }) => {
   await loadFixture(page, 'forest-tree-rainbow-mulch')
@@ -243,18 +243,47 @@ test('should apply rainbow mulch to a tree and consume it from inventory', async
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Forest' }).click()
 
-  const treePlot = page.locator('.ForestPlot').first()
+  const firstPlot = page.locator('.ForestPlot').nth(0)
+  const secondPlot = page.locator('.ForestPlot').nth(1)
 
+  // Apply rainbow mulch to the first tree
   await page.getByRole('button', { name: 'Rainbow Mulch' }).click()
-  await treePlot.click()
+  await firstPlot.click()
 
-  // The rainbow mulch was the player's only one, so it's gone from inventory
-  // and the toolbelt no longer offers it.
+  // Verify the mulch is consumed
   await expect(page.getByRole('button', { name: 'Rainbow Mulch' })).not.toBeVisible()
 
-  // Verify tooltip reflects Rainbow Mulch status
-  await treePlot.hover()
+  // Verify tooltip reflects Rainbow Mulch status on the first tree
+  await firstPlot.hover()
   await expect(page.getByRole('tooltip')).toContainText('Rainbow Mulched')
+
+  // Advance the days so the rainbow mulched tree grows faster than the other
+  // FERTILIZER_BONUS is 0.5. So 1 day = 1.5 days of growth.
+  // Apple sapling stages are [5, 5, 5, 5, 5]. It takes 25 days to fully grow.
+  // The trees in the fixture are 3 days old. Let's advance 14 days.
+  // The unmulched tree will be 17 days old (17 < 25), so still Growing.
+  // The rainbow mulched tree will be 3 + (14 * 1.5) = 24 days grown (24 < 25), still Growing...
+  // Wait, 15 days: unmulched = 18 days, mulched = 3 + 22.5 = 25.5 (Grown!).
+
+  for (let day = 0; day < 15; day++) {
+    await page.getByRole('button', { name: 'End the day to save your' }).click()
+  }
+
+  // After 15 days:
+  // Unmulched tree is 18 days old, so it's still "Growing..."
+  // Rainbow-mulched tree is 25.5 days grown, so it reaches GROWN stage and starts fruiting ("Fruiting... (Rainbow Mulched)")
+  // Wait a small bit before hovering to allow the end-day tooltip to disappear,
+  // or use the tooltip filter if there's multiple
+  await page.mouse.move(0, 0)
+  await page.waitForTimeout(100)
+
+  await firstPlot.hover()
+  await expect(page.getByRole('tooltip').filter({ hasText: 'Rainbow Mulched' })).toContainText('Fruiting... (Rainbow Mulched)')
+
+  await page.mouse.move(0, 0)
+  await page.waitForTimeout(100)
+  await secondPlot.hover()
+  await expect(page.getByRole('tooltip').filter({ hasText: 'Apple Tree' })).toContainText('Growing...')
 })
 
 test("should be able to buy Mulch directly from the Shop's Supplies tab", async ({

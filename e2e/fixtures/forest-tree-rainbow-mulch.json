@@ -58,7 +58,11 @@
         "daysOld": 3,
         "daysSinceLastHarvest": 0
       },
-      null,
+      {
+        "itemId": "apple",
+        "daysOld": 3,
+        "daysSinceLastHarvest": 0
+      },
       null,
       null
     ],
