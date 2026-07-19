@@ -37,22 +37,29 @@ import { centerTabsSx } from '../../styles/sx.js'
 
 import { TabPanel, a11yProps } from './TabPanel/index.js'
 
-const isPlantable = (item: farmhand.item) =>
-  item.type === itemType.CROP || item.type === itemType.TREE
+const getShopCategory = (
+  item: farmhand.item
+): 'seeds' | 'saplings' | 'fieldTools' => {
+  if (item.type === itemType.CROP) return 'seeds'
+  if (item.type === itemType.TREE && item.isPlantableTree) return 'saplings'
+  return 'fieldTools'
+}
 
 const categorizeShopInventory = memoize(
   (
     shopInventory: farmhand.item[]
-  ): Record<'seeds' | 'fieldTools', farmhand.item[]> =>
+  ): Record<'seeds' | 'saplings' | 'fieldTools', farmhand.item[]> =>
     shopInventory.reduce(
       (acc, inventoryItem) => {
-        acc[isPlantable(inventoryItem) ? 'seeds' : 'fieldTools'].push(
-          inventoryItem
-        )
+        acc[getShopCategory(inventoryItem)].push(inventoryItem)
 
         return acc
       },
-      { seeds: [] as farmhand.item[], fieldTools: [] as farmhand.item[] }
+      {
+        seeds: [] as farmhand.item[],
+        saplings: [] as farmhand.item[],
+        fieldTools: [] as farmhand.item[],
+      }
     )
 )
 
@@ -110,10 +117,18 @@ export const Shop = ({
 }) => {
   const [currentTab, setCurrentTab] = useState(0)
 
-  const { seeds, fieldTools } = categorizeShopInventory(shopInventory)
+  const { seeds, saplings, fieldTools } = categorizeShopInventory(shopInventory)
 
   const isForestUnlocked =
     levelEntitlements.stageFocusType[stageFocusType.FOREST]
+
+  // Saplings only ever land in the shop's inventory when the Forest feature
+  // is on (see data/shop-inventory.ts), so there's no point showing an
+  // always-empty tab when it's off.
+  const showSaplings = (features as any).FOREST && saplings.length > 0
+
+  const suppliesTabIndex = showSaplings ? 2 : 1
+  const upgradesTabIndex = showSaplings ? 3 : 2
 
   return (
     <Div className="Shop" sx={centerTabsSx}>
@@ -123,8 +138,11 @@ export const Shop = ({
         aria-label="Shop tabs"
       >
         <Tab {...{ label: 'Seeds', ...a11yProps(0) }} />
-        <Tab {...{ label: 'Supplies', ...a11yProps(1) }} />
-        <Tab {...{ label: 'Upgrades', ...a11yProps(2) }} />
+        {showSaplings ? (
+          <Tab {...{ label: 'Saplings', ...a11yProps(1) }} />
+        ) : null}
+        <Tab {...{ label: 'Supplies', ...a11yProps(suppliesTabIndex) }} />
+        <Tab {...{ label: 'Upgrades', ...a11yProps(upgradesTabIndex) }} />
       </Tabs>
       <TabPanel value={currentTab} index={0}>
         <Inventory
@@ -135,7 +153,18 @@ export const Shop = ({
           }}
         />
       </TabPanel>
-      <TabPanel value={currentTab} index={1}>
+      {showSaplings ? (
+        <TabPanel value={currentTab} index={1}>
+          <Inventory
+            {...{
+              items: saplings,
+              isPurchaseView: true,
+              placeholder: 'Search saplings...',
+            }}
+          />
+        </TabPanel>
+      ) : null}
+      <TabPanel value={currentTab} index={suppliesTabIndex}>
         <Inventory
           {...{
             items: fieldTools,
@@ -144,7 +173,7 @@ export const Shop = ({
           }}
         />
       </TabPanel>
-      <TabPanel value={currentTab} index={2}>
+      <TabPanel value={currentTab} index={upgradesTabIndex}>
         <ul className="card-list">
           {inventoryLimit > INFINITE_STORAGE_LIMIT && (
             <li>
