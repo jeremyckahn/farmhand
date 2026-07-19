@@ -39,6 +39,26 @@ export const MILKS_PRODUCED = (
   return message
 }
 
+export const FRUIT_READY_TO_HARVEST = (
+  _: any,
+  fruitReady: Record<string, number>
+): string => {
+  let message = `Fruit is ready to pick in the forest:
+`
+
+  Object.keys(fruitReady)
+    .sort()
+    .forEach(
+      treeName =>
+        (message += `  - ${fruitReady[treeName]} ${treeName} tree${
+          fruitReady[treeName] > 1 ? 's' : ''
+        }
+`)
+    )
+
+  return message
+}
+
 export const FERTILIZERS_PRODUCED = (
   _: any,
   fertilizersProduced: Record<string, number>
