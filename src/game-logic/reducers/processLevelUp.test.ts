@@ -1,4 +1,5 @@
 import { LEVEL_GAINED_NOTIFICATION } from '../../templates.js'
+import { FOREST_AVAILABLE_NOTIFICATION } from '../../strings.js'
 import { toolLevel, toolType } from '../../enums.js'
 import { experienceNeededForLevel } from '../../utils/experienceNeededForLevel.js'
 import { testItem, testState } from '../../test-utils/index.js'
@@ -107,5 +108,30 @@ describe('processLevelUp', () => {
 
     expect(newState.toolLevels[toolType.AXE]).toEqual(toolLevel.DEFAULT)
     expect(newState.toolLevels[toolType.PICKER_POLE]).toEqual(toolLevel.DEFAULT)
+  })
+
+  test('a level with multiple simultaneous rewards notifies about all of them', async () => {
+    const { todaysNotifications } = processLevelUp(
+      testState({
+        experience: experienceNeededForLevel(15),
+        itemsSold: {},
+        inventory: [],
+        todaysNotifications: [],
+        toolLevels: {
+          [toolType.AXE]: toolLevel.UNAVAILABLE,
+          [toolType.HOE]: toolLevel.DEFAULT,
+          [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
+          [toolType.SCYTHE]: toolLevel.DEFAULT,
+          [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
+          [toolType.WATERING_CAN]: toolLevel.DEFAULT,
+        },
+      }),
+      14
+    )
+
+    const [{ message }] = todaysNotifications
+
+    expect(message).toContain('Apple Sapling')
+    expect(message).toContain(FOREST_AVAILABLE_NOTIFICATION)
   })
 })
