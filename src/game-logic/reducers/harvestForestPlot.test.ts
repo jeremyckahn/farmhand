@@ -1,9 +1,19 @@
 import { testState } from '../../test-utils/index.js'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
+import { toolLevel } from '../../enums.js'
 
 import { harvestForestPlot } from './harvestForestPlot.js'
 
 vitest.mock('../../data/items.js')
+
+const toolLevelsWithPickerPole = {
+  AXE: toolLevel.UNAVAILABLE,
+  HOE: toolLevel.DEFAULT,
+  PICKER_POLE: toolLevel.DEFAULT,
+  SCYTHE: toolLevel.DEFAULT,
+  SHOVEL: toolLevel.UNAVAILABLE,
+  WATERING_CAN: toolLevel.DEFAULT,
+} as farmhand.state['toolLevels']
 
 // sample-tree-1's treeTimeline is [1, 2] (GROWN from daysOld 3) and
 // fruitTimeline is [1, 1] (fruit GROWN from daysSinceLastHarvest 2).
@@ -66,6 +76,7 @@ describe('harvestForestPlot', () => {
           ],
           inventory: [],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
+          toolLevels: toolLevelsWithPickerPole,
         }),
         0,
         0
@@ -87,6 +98,7 @@ describe('harvestForestPlot', () => {
             ],
           ],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
+          toolLevels: toolLevelsWithPickerPole,
         }),
         0,
         0
@@ -98,6 +110,20 @@ describe('harvestForestPlot', () => {
         daysSinceLastHarvest: 0,
       })
     })
+
+    test('no-ops if the picker pole is not equipped', () => {
+      const inputState = testState({
+        forest: [
+          [{ itemId: 'sample-tree-1', daysOld: 3, daysSinceLastHarvest: 2 }],
+        ],
+        inventory: [],
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
+      })
+
+      const state = harvestForestPlot(inputState, 0, 0)
+
+      expect(state).toEqual(inputState)
+    })
   })
 
   describe('inventory is full', () => {
@@ -108,6 +134,7 @@ describe('harvestForestPlot', () => {
         ],
         inventory: [],
         inventoryLimit: 0,
+        toolLevels: toolLevelsWithPickerPole,
       })
 
       const state = harvestForestPlot(inputState, 0, 0)

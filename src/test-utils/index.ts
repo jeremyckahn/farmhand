@@ -227,6 +227,7 @@ export const testState = (
   toolLevels: {
     AXE: toolLevel.UNAVAILABLE as farmhand.toolLevel,
     HOE: toolLevel.DEFAULT as farmhand.toolLevel,
+    PICKER_POLE: toolLevel.UNAVAILABLE as farmhand.toolLevel,
     SCYTHE: toolLevel.DEFAULT as farmhand.toolLevel,
     SHOVEL: toolLevel.UNAVAILABLE as farmhand.toolLevel,
     WATERING_CAN: toolLevel.DEFAULT as farmhand.toolLevel,

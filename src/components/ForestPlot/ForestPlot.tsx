@@ -23,7 +23,7 @@ import { Div } from '../Elements/index.js'
 
 const { GROWN } = cropLifeStage
 const { DEAD } = treeLifeStageEnum
-const { CHOP } = fieldModeEnum
+const { CHOP, HARVEST_FRUIT } = fieldModeEnum
 const { NONE, STANDARD, RAINBOW } = fertilizerTypeEnum
 
 // Mirrors Plot.tsx's getBackgroundStyles - a mulched tree gets a plot-tile
@@ -118,8 +118,16 @@ export const ForestPlot = ({
   const fruitLifeStage = isTree
     ? getFruitLifeStage(plotContent, treeLifeStage ?? undefined)
     : null
-  const canBeHarvested = fruitLifeStage === GROWN
+  // Whether the tree's fruit is ripe at all, independent of which tool is
+  // currently selected - used for the "ready to pick" tooltip/animation and
+  // for the axe's bonus-fruit chop text, neither of which care about the
+  // picker pole being equipped.
+  const isFruitRipe = fruitLifeStage === GROWN
   const canBeChopped = isTree && fieldMode === CHOP
+  // Unlike ripeness itself, actually being able to click-to-harvest requires
+  // the picker pole to be the active tool, mirroring how canBeChopped
+  // requires the axe's CHOP mode to be active.
+  const canBeHarvested = isFruitRipe && fieldMode === HARVEST_FRUIT
   const item = isTree ? itemsMap[plotContent.itemId] : null
   const treeImage = isTree ? getForestPlotImage(plotContent) : null
   const fruitImage = isTree ? getForestFruitImage(plotContent) : null
@@ -222,7 +230,7 @@ export const ForestPlot = ({
               {...{
                 'aria-hidden': true,
                 className: classNames('ForestTreeSprite', {
-                  ...(canBeHarvested && { animated: true, heartBeat: true }),
+                  ...(isFruitRipe && { animated: true, heartBeat: true }),
                 }),
                 style: { backgroundImage: `url(${fruitImage})` },
               }}
@@ -262,11 +270,11 @@ export const ForestPlot = ({
               fruitLifeStage &&
               (canBeChopped ? (
                 <>
-                  <Typography>{getChopActionText(canBeHarvested)}</Typography>
+                  <Typography>{getChopActionText(isFruitRipe)}</Typography>
                   <Typography>
                     {getChopYieldText(
                       chopWoodRange,
-                      canBeHarvested ? item?.name ?? null : null
+                      isFruitRipe ? item?.name ?? null : null
                     )}
                   </Typography>
                 </>

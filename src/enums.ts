@@ -48,6 +48,7 @@ export const fieldMode = {
   CLEANUP: 'CLEANUP',
   FERTILIZE: 'FERTILIZE',
   HARVEST: 'HARVEST',
+  HARVEST_FRUIT: 'HARVEST_FRUIT',
   MINE: 'MINE',
   OBSERVE: 'OBSERVE',
   PLANT: 'PLANT',
@@ -185,6 +186,7 @@ export const dialogView = {
  */
 export const toolType = {
   AXE: 'AXE',
+  PICKER_POLE: 'PICKER_POLE',
   SCYTHE: 'SCYTHE',
   SHOVEL: 'SHOVEL',
   HOE: 'HOE',

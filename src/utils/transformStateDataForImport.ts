@@ -73,33 +73,38 @@ export const transformStateDataForImport = (
     delete sanitizedState.id
   }
 
-  // NOTE: Legacy data transformation for saves persisted before the AXE
-  // tool was added. toolLevels is merged as a whole object on import (see
-  // useFarmhand.ts), so an old save's toolLevels has no AXE key at all
-  // rather than an explicit UNAVAILABLE - leaving Toolbelt.tsx unable to
-  // resolve a tool image for it and crashing on tool.level.toLowerCase().
+  // NOTE: Legacy data transformation for saves persisted before the AXE and
+  // PICKER_POLE tools were added. toolLevels is merged as a whole object on
+  // import (see useFarmhand.ts), so an old save's toolLevels has no key at
+  // all for a newly-added tool rather than an explicit UNAVAILABLE -
+  // leaving Toolbelt.tsx unable to resolve a tool image for it and
+  // crashing on tool.level.toLowerCase().
   //
-  // A save whose player is already past the level that unlocks the axe
-  // (see levels.ts) never gets another chance to unlock it retroactively -
+  // A save whose player is already past the level that unlocks a tool (see
+  // levels.ts) never gets another chance to unlock it retroactively -
   // processLevelUp only fires on a *new* level-up crossing that threshold,
   // not on load - so backfill straight to DEFAULT for those players rather
   // than leaving them permanently locked out of a tool they should already
   // have.
-  if (
-    sanitizedState.toolLevels &&
-    !(sanitizedState.toolLevels as farmhand.state['toolLevels'])[toolType.AXE]
-  ) {
-    const hasUnlockedAxe = Boolean(
-      getLevelEntitlements(
-        levelAchieved((sanitizedState.experience ?? 0) as number)
-      ).tools[toolType.AXE]
-    )
+  for (const backfilledToolType of [toolType.AXE, toolType.PICKER_POLE]) {
+    if (
+      sanitizedState.toolLevels &&
+      !(sanitizedState.toolLevels as farmhand.state['toolLevels'])[
+        backfilledToolType
+      ]
+    ) {
+      const hasUnlockedTool = Boolean(
+        getLevelEntitlements(
+          levelAchieved((sanitizedState.experience ?? 0) as number)
+        ).tools[backfilledToolType]
+      )
 
-    sanitizedState.toolLevels = {
-      ...(sanitizedState.toolLevels as farmhand.state['toolLevels']),
-      [toolType.AXE]: hasUnlockedAxe
-        ? toolLevel.DEFAULT
-        : toolLevel.UNAVAILABLE,
+      sanitizedState.toolLevels = {
+        ...(sanitizedState.toolLevels as farmhand.state['toolLevels']),
+        [backfilledToolType]: hasUnlockedTool
+          ? toolLevel.DEFAULT
+          : toolLevel.UNAVAILABLE,
+      }
     }
   }
 

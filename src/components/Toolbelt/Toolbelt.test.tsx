@@ -34,7 +34,7 @@ describe('<ToolBelt />', () => {
     render(
       <Toolbelt fieldMode={fieldMode.OBSERVE} toolLevels={getToolLevels()} />
     )
-    expect(screen.getAllByRole('button')).toHaveLength(5)
+    expect(screen.getAllByRole('button')).toHaveLength(6)
   })
 
   test('does not render a tool that does not have a level set', () => {
@@ -44,7 +44,7 @@ describe('<ToolBelt />', () => {
 
     render(<Toolbelt fieldMode={fieldMode.OBSERVE} toolLevels={toolLevels} />)
 
-    expect(screen.getAllByRole('button')).toHaveLength(4)
+    expect(screen.getAllByRole('button')).toHaveLength(5)
   })
 
   describe('tool selection', () => {

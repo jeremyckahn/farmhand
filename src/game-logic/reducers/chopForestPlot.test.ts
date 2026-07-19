@@ -9,6 +9,7 @@ vitest.mock('../../data/items.js')
 const toolLevelsWithAxe = (level: farmhand.toolLevel) => ({
   [toolType.AXE]: level,
   [toolType.HOE]: toolLevel.DEFAULT,
+  [toolType.PICKER_POLE]: toolLevel.DEFAULT,
   [toolType.SCYTHE]: toolLevel.DEFAULT,
   [toolType.SHOVEL]: toolLevel.DEFAULT,
   [toolType.WATERING_CAN]: toolLevel.DEFAULT,

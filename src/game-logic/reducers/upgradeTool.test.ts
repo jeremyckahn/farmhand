@@ -22,6 +22,7 @@ describe('upgradeTool', () => {
       toolLevels: {
         [toolType.AXE]: toolLevel.UNAVAILABLE,
         [toolType.HOE]: toolLevel.DEFAULT,
+        [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
         [toolType.SCYTHE]: toolLevel.DEFAULT,
         [toolType.SHOVEL]: toolLevel.DEFAULT,
         [toolType.WATERING_CAN]: toolLevel.DEFAULT,
@@ -66,6 +67,7 @@ describe('upgradeTool', () => {
         toolLevels: {
           [toolType.AXE]: toolLevel.UNAVAILABLE,
           [toolType.HOE]: toolLevel.DEFAULT,
+          [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
           [toolType.SCYTHE]: toolLevel.DEFAULT,
           [toolType.SHOVEL]: toolLevel.DEFAULT,
           [toolType.WATERING_CAN]: toolLevel.DEFAULT,
@@ -87,6 +89,7 @@ describe('upgradeTool', () => {
         toolLevels: {
           [toolType.AXE]: toolLevel.UNAVAILABLE,
           [toolType.HOE]: toolLevel.DEFAULT,
+          [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
           [toolType.SCYTHE]: toolLevel.DEFAULT,
           [toolType.SHOVEL]: toolLevel.DEFAULT,
           [toolType.WATERING_CAN]: toolLevel.DEFAULT,

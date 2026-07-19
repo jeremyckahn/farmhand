@@ -206,6 +206,7 @@ import shovelBronze from './tools/shovel-bronze.png'
 import shovelIron from './tools/shovel-iron.png'
 import shovelSilver from './tools/shovel-silver.png'
 import shovelGold from './tools/shovel-gold.png'
+import pickerPole from './tools/picker-pole.png'
 import wateringCan from './tools/watering-can.png'
 
 // Forest resources
@@ -516,6 +517,7 @@ export const wines: Record<farmhand.grapeVariety, string> = {
 export const tools = {
   axe,
   hoe,
+  'picker-pole': pickerPole,
   scythe,
   shovel,
   'watering-can': wateringCan,

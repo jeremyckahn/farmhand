@@ -34,7 +34,9 @@ export const getLevelEntitlements = memoize(
         }
 
         if (unlocksTool) {
-          acc.tools[unlocksTool as keyof typeof acc.tools] = true
+          for (const tool of unlocksTool) {
+            acc.tools[tool as keyof typeof acc.tools] = true
+          }
         }
 
         if (unlocksStageFocusType) {

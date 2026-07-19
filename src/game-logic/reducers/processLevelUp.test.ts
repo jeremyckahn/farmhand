@@ -5,6 +5,11 @@ import { testItem, testState } from '../../test-utils/index.js'
 
 import { processLevelUp } from './processLevelUp.js'
 
+// The Forest, and its Axe/Picker Pole unlocks, are gated behind this
+// feature flag (see data/levels.ts) - force it on so level 15 actually
+// carries its unlocksTool payload in these tests.
+vitest.mock('../../config.js', () => ({ features: { FOREST: true } }))
+
 describe('processLevelUp', () => {
   test('shows notifications for each level gained in the sale', async () => {
     const { todaysNotifications } = processLevelUp(
@@ -47,6 +52,7 @@ describe('processLevelUp', () => {
         toolLevels: {
           [toolType.AXE]: toolLevel.UNAVAILABLE,
           [toolType.HOE]: toolLevel.DEFAULT,
+          [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
           [toolType.SCYTHE]: toolLevel.DEFAULT,
           [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
           [toolType.WATERING_CAN]: toolLevel.DEFAULT,
@@ -68,6 +74,7 @@ describe('processLevelUp', () => {
         toolLevels: {
           [toolType.AXE]: toolLevel.UNAVAILABLE,
           [toolType.HOE]: toolLevel.DEFAULT,
+          [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
           [toolType.SCYTHE]: toolLevel.DEFAULT,
           [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
           [toolType.WATERING_CAN]: toolLevel.DEFAULT,
@@ -77,5 +84,28 @@ describe('processLevelUp', () => {
     )
 
     expect(newState.toolLevels['SHOVEL']).toEqual(toolLevel.DEFAULT)
+  })
+
+  test('a single level can unlock multiple tools at once', async () => {
+    const newState = processLevelUp(
+      testState({
+        experience: experienceNeededForLevel(15),
+        itemsSold: {},
+        inventory: [],
+        todaysNotifications: [],
+        toolLevels: {
+          [toolType.AXE]: toolLevel.UNAVAILABLE,
+          [toolType.HOE]: toolLevel.DEFAULT,
+          [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
+          [toolType.SCYTHE]: toolLevel.DEFAULT,
+          [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
+          [toolType.WATERING_CAN]: toolLevel.DEFAULT,
+        },
+      }),
+      14
+    )
+
+    expect(newState.toolLevels[toolType.AXE]).toEqual(toolLevel.DEFAULT)
+    expect(newState.toolLevels[toolType.PICKER_POLE]).toEqual(toolLevel.DEFAULT)
   })
 })

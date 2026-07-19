@@ -5,6 +5,8 @@ import {
   AXE_HIDDEN_TEXT,
   HOE_ALT_TEXT,
   HOE_HIDDEN_TEXT,
+  PICKER_POLE_ALT_TEXT,
+  PICKER_POLE_HIDDEN_TEXT,
   SCYTHE_ALT_TEXT,
   SCYTHE_HIDDEN_TEXT,
   SHOVEL_ALT_TEXT,
@@ -14,7 +16,7 @@ import {
   WATERING_CAN_HIDDEN_TEXT,
 } from '../strings.js'
 
-const { CHOP, CLEANUP, HARVEST, MINE, WATER } = fieldMode
+const { CHOP, CLEANUP, HARVEST, HARVEST_FRUIT, MINE, WATER } = fieldMode
 
 const tools = {
   wateringCan: {
@@ -66,6 +68,16 @@ const tools = {
     levelInfo: TOOL_LEVEL_INFO.AXE,
     order: 5,
     type: toolType.AXE,
+  },
+  pickerPole: {
+    alt: PICKER_POLE_ALT_TEXT,
+    fieldKey: 'shift+6',
+    fieldMode: HARVEST_FRUIT,
+    hiddenText: PICKER_POLE_HIDDEN_TEXT,
+    id: 'picker-pole',
+    levelInfo: TOOL_LEVEL_INFO.PICKER_POLE,
+    order: 6,
+    type: toolType.PICKER_POLE,
   },
 }
 

@@ -131,7 +131,7 @@ export const LEVEL_GAINED_NOTIFICATION = (
 
   const levelObject = levels[newLevel] as {
     increasesSprinklerRange?: boolean
-    unlocksTool?: farmhand.toolType
+    unlocksTool?: farmhand.toolType[]
     unlocksStageFocusType?: farmhand.stageFocusType
   }
 
@@ -150,7 +150,7 @@ export const LEVEL_GAINED_NOTIFICATION = (
       }** as a reward!`
     )
   } else if (levelObject && levelObject.unlocksTool) {
-    if (levelObject.unlocksTool === toolType.SHOVEL) {
+    if (levelObject.unlocksTool.includes(toolType.SHOVEL)) {
       chunks.push(SHOVEL_UNLOCKED)
     }
   } else if (levelObject && levelObject.unlocksStageFocusType) {

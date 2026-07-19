@@ -36,6 +36,7 @@ const {
   CLEANUP,
   FERTILIZE,
   HARVEST,
+  HARVEST_FRUIT,
   MINE,
   PLANT,
   SET_SCARECROW,
@@ -268,7 +269,11 @@ export default {
       return
     }
 
-    if (isPlantedTree(plotContent) && getTreeLifeStage(plotContent) === GROWN) {
+    if (
+      this.state.fieldMode === HARVEST_FRUIT &&
+      isPlantedTree(plotContent) &&
+      getTreeLifeStage(plotContent) === GROWN
+    ) {
       this.harvestForestPlot(x, y)
     }
   },

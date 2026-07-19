@@ -124,6 +124,7 @@ describe('transformStateDataForImport', () => {
       HOE: toolLevel.DEFAULT,
       WATERING_CAN: toolLevel.DEFAULT,
       [toolType.AXE]: toolLevel.UNAVAILABLE,
+      [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
     })
   })
 
@@ -148,12 +149,73 @@ describe('transformStateDataForImport', () => {
       HOE: toolLevel.DEFAULT,
       WATERING_CAN: toolLevel.DEFAULT,
       [toolType.AXE]: toolLevel.DEFAULT,
+      [toolType.PICKER_POLE]: toolLevel.DEFAULT,
     })
   })
 
   test('leaves an already-present AXE toolLevel untouched', () => {
     state.toolLevels = {
       AXE: toolLevel.BRONZE,
+      PICKER_POLE: toolLevel.BRONZE,
+      SCYTHE: toolLevel.DEFAULT,
+      SHOVEL: toolLevel.DEFAULT,
+      HOE: toolLevel.DEFAULT,
+      WATERING_CAN: toolLevel.DEFAULT,
+    } as farmhand.state['toolLevels']
+
+    const sanitizedState = transformStateDataForImport(state as any)
+
+    expect(sanitizedState.toolLevels).toEqual(state.toolLevels)
+  })
+
+  test('backfills a missing PICKER_POLE toolLevel to UNAVAILABLE when the player has not reached the unlock level yet', () => {
+    state.experience = 10 // well below the level that unlocks the picker pole
+    state.toolLevels = {
+      AXE: toolLevel.UNAVAILABLE,
+      SCYTHE: toolLevel.DEFAULT,
+      SHOVEL: toolLevel.DEFAULT,
+      HOE: toolLevel.DEFAULT,
+      WATERING_CAN: toolLevel.DEFAULT,
+    } as farmhand.state['toolLevels']
+
+    const sanitizedState = transformStateDataForImport(state as any)
+
+    expect(sanitizedState.toolLevels).toEqual({
+      AXE: toolLevel.UNAVAILABLE,
+      SCYTHE: toolLevel.DEFAULT,
+      SHOVEL: toolLevel.DEFAULT,
+      HOE: toolLevel.DEFAULT,
+      WATERING_CAN: toolLevel.DEFAULT,
+      [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
+    })
+  })
+
+  test('backfills a missing PICKER_POLE toolLevel to DEFAULT when the player has already passed the unlock level', () => {
+    state.experience = 20000 // level 15+, past the picker pole's unlock level
+    state.toolLevels = {
+      AXE: toolLevel.DEFAULT,
+      SCYTHE: toolLevel.DEFAULT,
+      SHOVEL: toolLevel.DEFAULT,
+      HOE: toolLevel.DEFAULT,
+      WATERING_CAN: toolLevel.DEFAULT,
+    } as farmhand.state['toolLevels']
+
+    const sanitizedState = transformStateDataForImport(state as any)
+
+    expect(sanitizedState.toolLevels).toEqual({
+      AXE: toolLevel.DEFAULT,
+      SCYTHE: toolLevel.DEFAULT,
+      SHOVEL: toolLevel.DEFAULT,
+      HOE: toolLevel.DEFAULT,
+      WATERING_CAN: toolLevel.DEFAULT,
+      [toolType.PICKER_POLE]: toolLevel.DEFAULT,
+    })
+  })
+
+  test('leaves an already-present PICKER_POLE toolLevel untouched', () => {
+    state.toolLevels = {
+      AXE: toolLevel.DEFAULT,
+      PICKER_POLE: toolLevel.BRONZE,
       SCYTHE: toolLevel.DEFAULT,
       SHOVEL: toolLevel.DEFAULT,
       HOE: toolLevel.DEFAULT,

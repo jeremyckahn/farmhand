@@ -58,6 +58,7 @@ declare namespace farmhand {
     | 'CLEANUP'
     | 'FERTILIZE'
     | 'HARVEST'
+    | 'HARVEST_FRUIT'
     | 'MINE'
     | 'OBSERVE'
     | 'PLANT'
@@ -115,7 +116,13 @@ declare namespace farmhand {
     | 'PRICE_EVENTS'
     | 'SETTINGS'
     | 'STATS'
-  type toolType = 'AXE' | 'SCYTHE' | 'SHOVEL' | 'HOE' | 'WATERING_CAN'
+  type toolType =
+    | 'AXE'
+    | 'PICKER_POLE'
+    | 'SCYTHE'
+    | 'SHOVEL'
+    | 'HOE'
+    | 'WATERING_CAN'
   type toolLevel =
     | 'UNAVAILABLE'
     | 'DEFAULT'

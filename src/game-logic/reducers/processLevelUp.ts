@@ -20,7 +20,7 @@ export const processLevelUp = (
   // Loop backwards so that the notifications appear in descending order.
   for (let i = newLevel; i > oldLevel; i--) {
     const levelObject = (levels[i] || {}) as {
-      unlocksTool?: farmhand.toolType
+      unlocksTool?: farmhand.toolType[]
       increasesSprinklerRange?: boolean
     }
 
@@ -36,7 +36,9 @@ export const processLevelUp = (
         true
       )
     } else if (levelObject?.unlocksTool) {
-      state = unlockTool(state, levelObject.unlocksTool)
+      for (const tool of levelObject.unlocksTool) {
+        state = unlockTool(state, tool)
+      }
     }
     // This handles an edge case where the player levels up to level that
     // unlocks greater sprinkler range, but the sprinkler item is already
