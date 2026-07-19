@@ -52,6 +52,11 @@ export const Forest = () => {
   // forest-plots instead (see below).
   const topOverhangReserve = `calc(${OVERHANG_ROW_MULTIPLE} * ${maxPlotSize})`
 
+  // Extra upward nudge in portrait mode, on top of the translateY below -
+  // ForestQuickSelect's bottom bar there ends up with more clearance below
+  // the grid than the grid has above it otherwise.
+  const PORTRAIT_UPWARD_NUDGE_PX = 90
+
   return (
     <Div
       {...{ className: 'Forest' }}
@@ -102,6 +107,9 @@ export const Forest = () => {
           // ancestor of the fixed-positioned ForestQuickSelect, and a
           // transform on it would break that fixed positioning.
           transform: `translateY(calc(${topOverhangReserve} / -2))`,
+          '@media (orientation: portrait)': {
+            transform: `translateY(calc(${topOverhangReserve} / -2 - ${PORTRAIT_UPWARD_NUDGE_PX}px))`,
+          },
         }}
       >
         {forest.map((row, y) =>
