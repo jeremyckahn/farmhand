@@ -122,10 +122,8 @@ export const Shop = ({
   const isForestUnlocked =
     levelEntitlements.stageFocusType[stageFocusType.FOREST]
 
-  // Saplings only ever land in the shop's inventory when the Forest feature
-  // is on (see data/shop-inventory.ts), so there's no point showing an
-  // always-empty tab when it's off.
-  const showSaplings = (features as any).FOREST && saplings.length > 0
+  const showSaplings =
+    (features as any).FOREST && isForestUnlocked && saplings.length > 0
 
   const suppliesTabIndex = showSaplings ? 2 : 1
   const upgradesTabIndex = showSaplings ? 3 : 2
