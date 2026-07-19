@@ -207,6 +207,10 @@ import shovelIron from './tools/shovel-iron.png'
 import shovelSilver from './tools/shovel-silver.png'
 import shovelGold from './tools/shovel-gold.png'
 import pickerPole from './tools/picker-pole.png'
+import pickerPoleBronze from './tools/picker-pole-bronze.png'
+import pickerPoleIron from './tools/picker-pole-iron.png'
+import pickerPoleSilver from './tools/picker-pole-silver.png'
+import pickerPoleGold from './tools/picker-pole-gold.png'
 import wateringCan from './tools/watering-can.png'
 
 // Forest resources
@@ -277,11 +281,10 @@ const smeltedItems = {
   'shovel-silver': shovelSilver,
   'shovel-gold': shovelGold,
 
-  // TODO: replace with real per-tier art once it's provided
-  'picker-pole-bronze': pickerPole,
-  'picker-pole-iron': pickerPole,
-  'picker-pole-silver': pickerPole,
-  'picker-pole-gold': pickerPole,
+  'picker-pole-bronze': pickerPoleBronze,
+  'picker-pole-iron': pickerPoleIron,
+  'picker-pole-silver': pickerPoleSilver,
+  'picker-pole-gold': pickerPoleGold,
 }
 
 export const craftedItems = {
