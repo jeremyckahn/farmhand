@@ -181,6 +181,26 @@ describe('UI Event Handlers', () => {
     })
   })
 
+  describe('handleForestItemSelectClick', () => {
+    test('selects the sapling and switches to PLANT mode', () => {
+      const handler = uiEventHandlers.handleForestItemSelectClick.bind(
+        mockContext
+      )
+      const mockItem = testItem({ id: 'test-sapling' })
+
+      handler((mockItem as unknown) as Parameters<typeof handler>[0])
+
+      // Regression: selecting a sapling must back out of whatever field
+      // mode (e.g. CHOP, FERTILIZE) was previously active, or clicking an
+      // empty plot afterward silently no-ops instead of planting - see
+      // handleForestPlotClick's early-return branches for those modes.
+      expect(mockContext.setState).toHaveBeenCalledWith({
+        fieldMode: fieldMode.PLANT,
+        selectedForestItemId: 'test-sapling',
+      })
+    })
+  })
+
   describe('handleMenuToggle', () => {
     test('opens menu when closed', () => {
       const handler = uiEventHandlers.handleMenuToggle.bind(mockContext)

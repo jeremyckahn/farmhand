@@ -157,11 +157,9 @@ export default {
         (TOOLBELT_FIELD_MODES as Set<farmhand.fieldMode>).has(selectedFieldMode)
           ? ''
           : selectedItemId,
-      // Unlike Field's selectedItemId, selecting a sapling never sets
-      // fieldMode itself (see handleForestItemSelectClick) - so there's no
-      // PLANT-mode exemption to preserve here. This handler only fires
-      // when an actual Toolbelt tool is clicked, so a selected sapling
-      // should always be deselected when that happens.
+      // This handler only fires when an actual Toolbelt tool is clicked,
+      // so a selected sapling should always be deselected when that
+      // happens.
       selectedForestItemId: '',
       fieldMode: selectedFieldMode,
     }))
@@ -178,7 +176,11 @@ export default {
   },
 
   handleForestItemSelectClick(this: Farmhand, { id }: farmhand.item) {
-    this.setState({ selectedForestItemId: id })
+    // Selecting a sapling must back out of CHOP/FERTILIZE mode - otherwise
+    // handleForestPlotClick's early-return branches for those modes see a
+    // plain empty plot (not a tree) and silently no-op, even though a
+    // sapling is now selected and ready to plant.
+    this.setState({ fieldMode: PLANT, selectedForestItemId: id })
   },
 
   handlePlotClick(this: Farmhand, x: number, y: number) {

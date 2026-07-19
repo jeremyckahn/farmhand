@@ -114,6 +114,30 @@ test('should chop down a tree for wood, harvesting any ripe fruit as a bonus', a
   ).toBeVisible()
 })
 
+test('should be able to plant a sapling in a plot right after chopping it with the axe', async ({
+  page,
+}) => {
+  // Regression: selecting a sapling right after chopping (without first
+  // deselecting the axe) used to leave fieldMode stuck on CHOP, silently
+  // no-oping the plant click instead of planting.
+  await loadFixture(page, 'forest-tree-grown')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  const treePlot = page.locator('.ForestPlot').first()
+
+  await page.getByRole('button', { name: /Select the axe/ }).click()
+  await treePlot.click()
+  await expect(treePlot).toHaveClass(/is-empty/)
+
+  await page.getByRole('button', { name: 'Apple Sapling' }).click()
+  await treePlot.click()
+
+  await expect(treePlot).not.toHaveClass(/is-empty/)
+  await expect(treePlot.locator('.ForestTreeSprite')).toHaveCount(1)
+})
+
 test('should not treat a dead tree as harvestable, even with frozen ripe-looking fruit', async ({
   page,
 }) => {
@@ -226,6 +250,9 @@ test('should grow a rainbow-mulched tree faster than a mulched tree, and a mulch
   // inventory and the toolbelt no longer offers either.
   await expect(mulchButton).not.toBeVisible()
   await expect(rainbowMulchButton).not.toBeVisible()
+
+  // can-be-harvested requires the picker pole to be the active tool.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
 
   const endDay = () =>
     page.getByRole('button', { name: 'End the day to save your' }).click()
