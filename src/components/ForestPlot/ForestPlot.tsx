@@ -140,6 +140,14 @@ export const ForestPlot = ({
         treeLifeStage === GROWN || treeLifeStage === DEAD
       )
     : null
+  // The tree/fruit sprites are DOM descendants of the plot Div below, which
+  // has its own onClick calling the same handler - stopPropagation prevents
+  // a click on the sprite from also bubbling up and firing it a second
+  // time, which would double-chop/double-harvest a single click.
+  const handleTreeSpriteClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    handleForestPlotClick(x, y)
+  }
 
   const plot = (
     <Div
@@ -163,6 +171,13 @@ export const ForestPlot = ({
         position: 'relative',
         width: '100%',
         aspectRatio: '1',
+        // Staggers alternating rows by half a plot-width so a tree's
+        // overhanging canopy (see .ForestTreeSprite below) grows into a
+        // different visual slot than "directly above," rather than
+        // colliding with whatever's planted in the same column one row up.
+        // A percentage translateX resolves against this element's own
+        // width, so this needs no coordination with the grid's own sizing.
+        transform: `translateX(${y % 2 === 0 ? '-50%' : '50%'})`,
         '&:hover': {
           backgroundColor: colorGenericHighlight,
           cursor: 'pointer',
@@ -210,6 +225,7 @@ export const ForestPlot = ({
             {...{
               'aria-hidden': true,
               className: 'ForestTreeSprite',
+              onClick: handleTreeSpriteClick,
               style: {
                 backgroundImage: treeImage ? `url(${treeImage})` : undefined,
               },
@@ -219,9 +235,9 @@ export const ForestPlot = ({
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'contain',
               bottom: '50%',
+              cursor: 'pointer',
               imageRendering: 'pixelated',
               left: 0,
-              pointerEvents: 'none',
               position: 'absolute',
               width: '100%',
               aspectRatio: '1 / 2',
@@ -234,6 +250,7 @@ export const ForestPlot = ({
                 className: classNames('ForestTreeSprite', {
                   ...(isFruitRipe && { animated: true, heartBeat: true }),
                 }),
+                onClick: handleTreeSpriteClick,
                 style: { backgroundImage: `url(${fruitImage})` },
               }}
               sx={{
@@ -241,9 +258,9 @@ export const ForestPlot = ({
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain',
                 bottom: '50%',
+                cursor: 'pointer',
                 imageRendering: 'pixelated',
                 left: 0,
-                pointerEvents: 'none',
                 position: 'absolute',
                 width: '100%',
                 aspectRatio: '1 / 2',

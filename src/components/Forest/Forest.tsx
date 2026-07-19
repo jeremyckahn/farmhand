@@ -38,12 +38,12 @@ export const Forest = () => {
   const maxPlotSize = `min(160px, calc((100vh - ${CHROME_HEIGHT_PX}px) / ${rows +
     OVERHANG_ROW_MULTIPLE}))`
 
-  // The reserve itself, in the same unit as a plot - kept on the Forest
-  // wrapper (not on forest-plots) so it isn't part of what .Forest's own
-  // flexbox justify-content: center treats as content to center. Otherwise
-  // this reserve - which is invisible, decorative space, not real content -
-  // would get centered right along with the actual rows, visually pushing
-  // them below true center by half the reserve's height.
+  // The reserve itself, in the same unit as a plot. Applying this as
+  // one-sided paddingTop on .Forest (below) shifts the flexbox
+  // justify-content: center midpoint of its content down by half this
+  // amount, regardless of which of .Forest/forest-plots actually holds the
+  // padding - it's counteracted by an equal-and-opposite translateY on
+  // forest-plots instead (see below).
   const topOverhangReserve = `calc(${OVERHANG_ROW_MULTIPLE} * ${maxPlotSize})`
 
   return (
@@ -65,10 +65,29 @@ export const Forest = () => {
         {...{ className: 'forest-plots' }}
         sx={{
           display: 'grid',
-          gap: '2%',
+          rowGap: '2%',
+          // Must equal a plot's width: the +/-50% row stagger below
+          // (ForestPlot.tsx) nets a 1-plot offset between adjacent rows,
+          // which only lands a shifted canopy in the gap between two
+          // plots above - instead of still fully overlapping one - if the
+          // gap is that wide too.
+          columnGap: maxPlotSize,
           justifyContent: 'center',
           width: '100%',
           gridTemplateColumns: `repeat(${columns}, minmax(0, ${maxPlotSize}))`,
+          // Reserves the same half-plot on each side so the outermost
+          // staggered plots don't get clipped by Stage's overflow: auto.
+          paddingLeft: `calc(${maxPlotSize} / 2)`,
+          paddingRight: `calc(${maxPlotSize} / 2)`,
+          // Counteracts a structural bias in the flex centering below: with
+          // topOverhangReserve applied as paddingTop on .Forest, the
+          // one-sided reserved space shifts the centered content's
+          // midpoint down by half that reserve (verified algebraically),
+          // regardless of which box actually holds the padding. This
+          // transform must live here, not on .Forest - .Forest is an
+          // ancestor of the fixed-positioned ForestQuickSelect, and a
+          // transform on it would break that fixed positioning.
+          transform: `translateY(calc(${topOverhangReserve} / -2))`,
         }}
       >
         {forest.map((row, y) =>
