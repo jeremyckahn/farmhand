@@ -36,6 +36,7 @@ export const recipeType = {
   KITCHEN: 'KITCHEN',
   RECYCLING: 'RECYCLING',
   WINE: 'WINE',
+  WOOD_CHIPPER: 'WOOD_CHIPPER',
 } as const
 
 /**
@@ -105,6 +106,7 @@ export const itemType = {
   FUEL: 'FUEL',
   HUGGING_MACHINE: 'HUGGING_MACHINE',
   MILK: 'MILK',
+  MULCH: 'MULCH',
   ORE: 'ORE',
   SCARECROW: 'SCARECROW',
   SPRINKLER: 'SPRINKLER',

@@ -46,7 +46,13 @@ declare namespace farmhand {
     | 'WHEAT'
     | 'WEED'
   type treeType = 'APPLE'
-  type recipeType = 'FERMENTATION' | 'FORGE' | 'KITCHEN' | 'RECYCLING' | 'WINE'
+  type recipeType =
+    | 'FERMENTATION'
+    | 'FORGE'
+    | 'KITCHEN'
+    | 'RECYCLING'
+    | 'WINE'
+    | 'WOOD_CHIPPER'
   type fieldMode =
     | 'CHOP'
     | 'CLEANUP'
@@ -79,6 +85,7 @@ declare namespace farmhand {
     | 'FUEL'
     | 'HUGGING_MACHINE'
     | 'MILK'
+    | 'MULCH'
     | 'ORE'
     | 'SCARECROW'
     | 'SPRINKLER'
@@ -200,6 +207,12 @@ declare namespace farmhand {
     // it falls back to item.lifespan (e.g. saves from before this field
     // existed).
     lifespan?: number
+    fertilizerType?: fertilizerType
+    // Growth progress, separate from daysOld - mirrors how crops track
+    // daysWatered separately from their own daysOld. Fertilizer
+    // accelerates this counter without touching daysOld (see
+    // processForest.ts).
+    daysGrown?: number
   }
 
   interface forestForageable {
@@ -402,6 +415,11 @@ declare namespace farmhand {
      */
     getPeerMetadata?: Function | null
     hasBooted: boolean
+    // Set permanently the first time a RAINBOW-colored cow produces
+    // rainbow-fertilizer - rainbow-fertilizer's only acquisition path
+    // today. Used to gate the rainbow-mulch recipe so it doesn't show up
+    // before the player has ever actually gotten one.
+    hasProducedRainbowFertilizer: boolean
     heartbeatTimeoutId: number | null
     historicalDailyLosses: number[]
     historicalDailyRevenue: number[]
@@ -486,6 +504,7 @@ declare namespace farmhand {
     purchasedField: number
     purchasedForest: number
     purchasedSmelter: number
+    purchasedWoodChipper: number
     profitabilityStreak: number
     record7dayProfitAverage: number
     recordProfitabilityStreak: number

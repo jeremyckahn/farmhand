@@ -70,6 +70,10 @@ export const PURCHASEABLE_SMELTERS = freeze(
   new Map([[1, { type: 'Basic', price: 250_000 }]])
 )
 
+export const PURCHASEABLE_WOOD_CHIPPERS = freeze(
+  new Map([[1, { type: 'Basic', price: 50_000 }]])
+)
+
 export const PURCHASEABLE_COW_PENS = freeze(
   new Map([
     [1, { cows: 10, price: 1_500 }],
@@ -164,6 +168,7 @@ export const PERSISTED_STATE_KEYS = [
   'farmName',
   'field',
   'forest',
+  'hasProducedRainbowFertilizer',
   'historicalDailyLosses',
   'historicalDailyRevenue',
   'historicalValueAdjustments',
@@ -190,6 +195,7 @@ export const PERSISTED_STATE_KEYS = [
   'purchasedField',
   'purchasedForest',
   'purchasedSmelter',
+  'purchasedWoodChipper',
   'record7dayProfitAverage',
   'recordProfitabilityStreak',
   'recordSingleDayProfit',
@@ -332,6 +338,8 @@ export const EXPERIENCE_VALUES = {
   RAINBOW_COW_BRED: 2,
   RECYCLING_RECIPE_MADE: 1,
   SMELTER_ACQUIRED: 10,
+  WOOD_CHIPPER_ACQUIRED: 10,
+  WOOD_CHIPPER_RECIPE_MADE: 1,
 }
 
 export const STANDARD_VIEW_LIST = [stageFocusType.SHOP, stageFocusType.FIELD]

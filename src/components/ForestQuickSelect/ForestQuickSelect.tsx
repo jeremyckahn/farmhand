@@ -10,17 +10,23 @@ import { ItemList } from '../ItemList/index.js'
 import Toolbelt from '../Toolbelt/index.js'
 
 const ForestQuickSelect = ({
+  mulchInventory,
   handleForestItemSelectClick,
+  handleItemSelectClick,
   isMenuOpen = true,
   playerInventoryQuantities,
   plantableTreeInventory,
   selectedForestItemId,
+  selectedItemId,
 }: {
+  mulchInventory: farmhand.item[]
   handleForestItemSelectClick: (item: farmhand.item) => void
+  handleItemSelectClick: (item: farmhand.item) => void
   isMenuOpen?: boolean
   playerInventoryQuantities: Record<string, number>
   plantableTreeInventory: farmhand.item[]
   selectedForestItemId: string
+  selectedItemId: string
 }) => (
   <Paper
     {...{ className: 'QuickSelect', elevation: 10 }}
@@ -41,16 +47,32 @@ const ForestQuickSelect = ({
           />
         </>
       )}
+      {mulchInventory.length > 0 && (
+        <>
+          <Divider orientation="vertical" flexItem />
+          <ItemList
+            {...{
+              handleItemSelectClick,
+              items: mulchInventory,
+              playerInventoryQuantities,
+              selectedItemId,
+            }}
+          />
+        </>
+      )}
     </Grid>
   </Paper>
 )
 
 ForestQuickSelect.propTypes = {
+  mulchInventory: array.isRequired,
   handleForestItemSelectClick: func,
+  handleItemSelectClick: func,
   isMenuOpen: bool,
   plantableTreeInventory: array.isRequired,
   playerInventoryQuantities: object.isRequired,
   selectedForestItemId: string.isRequired,
+  selectedItemId: string.isRequired,
 }
 
 export default function Consumer(

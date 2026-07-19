@@ -85,6 +85,9 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
   modifyCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
+  mulchForestPlot(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
   offerCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
@@ -125,6 +128,9 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
     throw new Error('Unimplemented')
   }
   purchaseStorageExpansion(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
+  purchaseWoodChipper(...args: any[]) {
     throw new Error('Unimplemented')
   }
   removeCowFromInventory(...args: any[]) {

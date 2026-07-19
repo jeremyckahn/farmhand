@@ -25,6 +25,7 @@ export interface ContextData {
     blockInput: boolean
     features: Record<string, boolean | undefined>
     fieldToolInventory: farmhand.item[]
+    mulchInventory: farmhand.item[]
     isChatAvailable: boolean
     levelEntitlements: farmhand.levelEntitlements
     plantableCropInventory: farmhand.item[]
@@ -57,6 +58,7 @@ export const createContextData = (): ContextData => {
         stageFocusType: {},
       },
       fieldToolInventory: [] as farmhand.item[],
+      mulchInventory: [] as farmhand.item[],
       plantableCropInventory: [] as farmhand.item[],
       plantableTreeInventory: [] as farmhand.item[],
       playerInventoryQuantities: {},
@@ -119,6 +121,7 @@ export const createContextData = (): ContextData => {
       getCowTradeRequest: () => {},
       getPeerMetadata: () => {},
       hasBooted: true,
+      hasProducedRainbowFertilizer: false,
       heartbeatTimeoutId: -1,
       historicalDailyLosses: [],
       historicalDailyRevenue: [],
@@ -164,6 +167,7 @@ export const createContextData = (): ContextData => {
       purchasedField: 0,
       purchasedForest: 0,
       purchasedSmelter: 0,
+      purchasedWoodChipper: 0,
       profitabilityStreak: 0,
       record7dayProfitAverage: 0,
       recordProfitabilityStreak: 0,

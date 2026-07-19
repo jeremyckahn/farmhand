@@ -27,6 +27,7 @@ import {
   PURCHASEABLE_FIELD_SIZES,
   PURCHASABLE_FOREST_SIZES,
   PURCHASEABLE_SMELTERS,
+  PURCHASEABLE_WOOD_CHIPPERS,
   STORAGE_EXPANSION_AMOUNT,
 } from '../../constants.js'
 import Inventory from '../Inventory/index.js'
@@ -64,6 +65,7 @@ export const Shop = ({
   handleForestPurchase,
   handleSmelterPurchase,
   handleStorageExpansionPurchase,
+  handleWoodChipperPurchase,
   inventoryLimit,
   levelEntitlements,
   money,
@@ -74,6 +76,7 @@ export const Shop = ({
   purchasedField,
   purchasedForest,
   purchasedSmelter,
+  purchasedWoodChipper,
   shopInventory,
   toolLevels,
   valueAdjustments,
@@ -88,6 +91,7 @@ export const Shop = ({
   handleForestPurchase: (id: number) => void
   handleSmelterPurchase: (id: number) => void
   handleStorageExpansionPurchase: () => void
+  handleWoodChipperPurchase: (id: number) => void
   inventoryLimit: number
   levelEntitlements: farmhand.levelEntitlements
   money: number
@@ -98,6 +102,7 @@ export const Shop = ({
   purchasedField: number
   purchasedForest: number
   purchasedSmelter: number
+  purchasedWoodChipper: number
   shopInventory: farmhand.item[]
   toolLevels: Record<string, string>
   valueAdjustments: Record<string, number>
@@ -331,6 +336,29 @@ export const Shop = ({
               }}
             />
           </li>
+          {(features as any).FOREST && isForestUnlocked ? (
+            <li>
+              <TierPurchase
+                {...{
+                  description:
+                    'You can purchase a Wood Chipper to turn wood into wood chips for making mulch.',
+                  onBuyClick: handleWoodChipperPurchase,
+                  maxedOutPlaceholder:
+                    "You've already purchased the wood chipper!",
+                  purchasedTier: purchasedWoodChipper,
+                  renderTierLabel: ({
+                    type,
+                    price,
+                  }: {
+                    type: string
+                    price: number
+                  }) => `${dollarString(price)}: ${type} Wood Chipper`,
+                  tiers: PURCHASEABLE_WOOD_CHIPPERS,
+                  title: 'Buy wood chipper',
+                }}
+              />
+            </li>
+          ) : null}
         </ul>
       </TabPanel>
     </Div>
@@ -349,6 +377,7 @@ Shop.propTypes = {
   purchasedCellar: number.isRequired,
   purchasedField: number.isRequired,
   purchasedSmelter: number.isRequired,
+  purchasedWoodChipper: number.isRequired,
   purchasedCombine: number.isRequired,
   shopInventory: array.isRequired,
   toolLevels: object.isRequired,

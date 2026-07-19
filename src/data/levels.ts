@@ -64,6 +64,12 @@ levels[16] = {
   unlocksShopItem: items.onionSeed.id,
 }
 
+if ((features as { FOREST?: boolean }).FOREST) {
+  levels[17] = {
+    unlocksShopItem: recipes.mulch.id,
+  }
+}
+
 levels[18] = {
   unlocksShopItem: items.soybeanSeed.id,
 }

@@ -1,9 +1,10 @@
 import { itemsMap } from '../../data/maps.js'
-import { fieldMode } from '../../enums.js'
+import { fieldMode, itemType } from '../../enums.js'
 import { getItemCurrentValue } from '../../utils/getItemCurrentValue.js'
 import { memoize } from '../../utils/memoize.js'
 
 const { PLANT } = fieldMode
+const { MULCH } = itemType
 
 export class FarmhandService {
   static computePlayerInventory = memoize(
@@ -27,10 +28,15 @@ export class FarmhandService {
       inventory
         .filter(({ id }: { id: string }) => {
           // TODO: Defensive check if item exists in itemsMap to prevent crashes on undefined itemsMap[id]
-          const { enablesFieldMode } = itemsMap[id as keyof typeof itemsMap]
+          const item = itemsMap[id as keyof typeof itemsMap]
 
           return (
-            typeof enablesFieldMode === 'string' && enablesFieldMode !== PLANT
+            typeof item.enablesFieldMode === 'string' &&
+            item.enablesFieldMode !== PLANT &&
+            // Mulch is Forest-only - it must never show up in the Field's
+            // toolbelt even though it shares the FERTILIZE field mode with
+            // fertilizer (see getMulchInventory).
+            item.type !== MULCH
           )
         })
         .map(({ id, quantity }: { id: string; quantity: number }) => ({
@@ -47,6 +53,20 @@ export class FarmhandService {
             // TODO: Add a defensive check to verify itemsMap[id] exists before accessing isPlantableCrop
             itemsMap[id as keyof typeof itemsMap].isPlantableCrop
         )
+        .map(({ id, quantity }: { id: string; quantity: number }) => ({
+          ...itemsMap[id as keyof typeof itemsMap],
+          quantity,
+        }))
+  )
+
+  static getMulchInventory = memoize(
+    (inventory: farmhand.state['inventory']): farmhand.item[] =>
+      inventory
+        .filter(({ id }: { id: string }) => {
+          const item = itemsMap[id as keyof typeof itemsMap]
+
+          return item?.type === MULCH
+        })
         .map(({ id, quantity }: { id: string; quantity: number }) => ({
           ...itemsMap[id as keyof typeof itemsMap],
           quantity,

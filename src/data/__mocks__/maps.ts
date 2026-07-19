@@ -12,6 +12,7 @@ export const recipeCategories: Record<
   [recipeType.FORGE]: {},
   [recipeType.RECYCLING]: {},
   [recipeType.WINE]: {},
+  [recipeType.WOOD_CHIPPER]: {},
 }
 
 export const recipesMap: Record<string, farmhand.recipe> = {}

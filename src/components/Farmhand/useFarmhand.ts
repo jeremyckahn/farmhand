@@ -91,6 +91,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       getCowTradeRequest: noop,
       getPeerMetadata: noop,
       hasBooted: false,
+      hasProducedRainbowFertilizer: false,
       heartbeatTimeoutId: null,
       historicalDailyLosses: [],
       historicalDailyRevenue: [],
@@ -142,6 +143,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       purchasedField: 0,
       purchasedForest: 0,
       purchasedSmelter: 0,
+      purchasedWoodChipper: 0,
       sendCowTradeRequest: noop,
       showHomeScreen: true,
       showNotifications: true,
@@ -199,6 +201,7 @@ export const useFarmhand = (props: FarmhandProps) => {
   const plantableTreeInventory = FarmhandService.getPlantableTreeInventory(
     state.inventory
   )
+  const mulchInventory = FarmhandService.getMulchInventory(state.inventory)
 
   const levelEntitlements = useMemo(
     () => getLevelEntitlements(levelAchieved(state.experience)),
@@ -303,6 +306,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       props,
       viewTitle,
       fieldToolInventory,
+      mulchInventory,
       playerInventory,
       plantableCropInventory,
       plantableTreeInventory,
@@ -368,6 +372,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       props,
       viewTitle,
       fieldToolInventory,
+      mulchInventory,
       playerInventory,
       plantableCropInventory,
       plantableTreeInventory,
@@ -719,6 +724,7 @@ export const useFarmhand = (props: FarmhandProps) => {
     blockInput: isInputBlocked,
     features: propsFeatures ?? {},
     fieldToolInventory,
+    mulchInventory,
     isChatAvailable,
     levelEntitlements,
     plantableCropInventory,

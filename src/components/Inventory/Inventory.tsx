@@ -35,6 +35,7 @@ const itemTypeCategoryMap = new Map([
   ['FUEL', 'MINED_RESOURCES'],
   ['HUGGING_MACHINE', 'ANIMAL_SUPPLIES'],
   ['MILK', 'ANIMAL_PRODUCTS'],
+  ['MULCH', 'FIELD_TOOLS'],
   ['ORE', 'MINED_RESOURCES'],
   ['SCARECROW', 'FIELD_TOOLS'],
   ['SPRINKLER', 'FIELD_TOOLS'],

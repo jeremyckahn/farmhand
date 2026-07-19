@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { itemsMap } from '../../data/maps.js'
+import { plotStates } from '../../img/index.js'
 import forestPlotDefaultImg from '../../img/plot-states/forest-plot-default.png'
 import { getChopWoodYieldRange } from '../../utils/getChopWoodYieldRange.js'
 import { getForestFruitImage } from '../../utils/getForestFruitImage.js'
@@ -13,6 +14,7 @@ import { getTreeLifeStage } from '../../utils/getTreeLifeStage.js'
 import { isPlantedTree } from '../../utils/isPlantedTree.js'
 import {
   cropLifeStage,
+  fertilizerType as fertilizerTypeEnum,
   fieldMode as fieldModeEnum,
   toolType,
   treeLifeStage as treeLifeStageEnum,
@@ -22,25 +24,57 @@ import { Div } from '../Elements/index.js'
 const { GROWN } = cropLifeStage
 const { DEAD } = treeLifeStageEnum
 const { CHOP } = fieldModeEnum
+const { NONE, STANDARD, RAINBOW } = fertilizerTypeEnum
 
-const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
-const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
-const colorRedDestructive = 'rgba(255, 0, 0, 0.5)'
+// Mirrors Plot.tsx's getBackgroundStyles - a mulched tree gets a plot-tile
+// overlay the same way a fertilized crop does, layered under the plot's
+// own default background image (CSS multi-background: earlier entries
+// paint on top).
+const getForestPlotBackgroundImage = (
+  fertilizerType: farmhand.fertilizerType | undefined
+): string => {
+  const overlay =
+    fertilizerType === STANDARD
+      ? plotStates['mulched-plot']
+      : fertilizerType === RAINBOW
+      ? plotStates['rainbow-mulched-plot']
+      : null
+
+  return [
+    ...(overlay ? [`url(${overlay})`] : []),
+    `url(${forestPlotDefaultImg})`,
+  ].join(', ')
+}
 
 const getTreeTooltipText = (
   treeLifeStage: farmhand.treeLifeStage,
-  fruitLifeStage: farmhand.cropLifeStage
+  fruitLifeStage: farmhand.cropLifeStage,
+  fertilizerType: farmhand.fertilizerType | undefined
 ): string => {
   if (treeLifeStage === DEAD) {
     return 'Dead'
   }
 
-  if (treeLifeStage !== GROWN) {
-    return 'Growing...'
+  const growthText =
+    treeLifeStage !== GROWN
+      ? 'Growing...'
+      : fruitLifeStage === GROWN
+      ? 'Ready to pick!'
+      : 'Fruiting...'
+
+  if (!fertilizerType || fertilizerType === NONE) {
+    return growthText
   }
 
-  return fruitLifeStage === GROWN ? 'Ready to pick!' : 'Fruiting...'
+  const fertilizerLabel =
+    fertilizerType === RAINBOW ? 'Rainbow Mulched' : 'Mulched'
+
+  return `${growthText} (${fertilizerLabel})`
 }
+
+const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
+const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
+const colorRedDestructive = 'rgba(255, 0, 0, 0.5)'
 
 const formatWoodRange = ([min, max]: [number, number]): string =>
   min === max ? `${min}` : `${min}-${max}`
@@ -89,6 +123,7 @@ export const ForestPlot = ({
   const item = isTree ? itemsMap[plotContent.itemId] : null
   const treeImage = isTree ? getForestPlotImage(plotContent) : null
   const fruitImage = isTree ? getForestFruitImage(plotContent) : null
+  const treeFertilizerType = isTree ? plotContent.fertilizerType : undefined
   // A dead tree yields the same full range as a living grown one - only a
   // sapling/still-growing tree gets the halved range (see chopForestPlot.ts).
   const chopWoodRange = canBeChopped
@@ -110,7 +145,7 @@ export const ForestPlot = ({
         onClick: () => handleForestPlotClick(x, y),
       }}
       sx={{
-        backgroundImage: `url(${forestPlotDefaultImg})`,
+        backgroundImage: getForestPlotBackgroundImage(treeFertilizerType),
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         border: 'solid 1px #000',
@@ -237,7 +272,11 @@ export const ForestPlot = ({
                 </>
               ) : (
                 <Typography>
-                  {getTreeTooltipText(treeLifeStage, fruitLifeStage)}
+                  {getTreeTooltipText(
+                    treeLifeStage,
+                    fruitLifeStage,
+                    treeFertilizerType
+                  )}
                 </Typography>
               ))}
           </>
