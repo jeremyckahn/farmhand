@@ -1,4 +1,4 @@
-import { fieldMode, toolType } from '../enums.js'
+import { fieldMode, stageFocusType, toolType } from '../enums.js'
 
 import {
   AXE_ALT_TEXT,
@@ -17,6 +17,7 @@ import {
 } from '../strings.js'
 
 const { CHOP, CLEANUP, HARVEST, HARVEST_FRUIT, MINE, WATER } = fieldMode
+const { FIELD, FOREST } = stageFocusType
 
 const tools = {
   wateringCan: {
@@ -27,6 +28,7 @@ const tools = {
     id: 'watering-can',
     levelInfo: TOOL_LEVEL_INFO.WATERING_CAN,
     order: 1,
+    screens: [FIELD],
     type: toolType.WATERING_CAN,
   },
   scythe: {
@@ -37,6 +39,7 @@ const tools = {
     id: 'scythe',
     levelInfo: TOOL_LEVEL_INFO.SCYTHE,
     order: 2,
+    screens: [FIELD],
     type: toolType.SCYTHE,
   },
   hoe: {
@@ -47,6 +50,7 @@ const tools = {
     id: 'hoe',
     levelInfo: TOOL_LEVEL_INFO.HOE,
     order: 3,
+    screens: [FIELD],
     type: toolType.HOE,
   },
   shovel: {
@@ -57,6 +61,7 @@ const tools = {
     id: 'shovel',
     levelInfo: TOOL_LEVEL_INFO.SHOVEL,
     order: 4,
+    screens: [FIELD],
     type: toolType.SHOVEL,
   },
   axe: {
@@ -67,6 +72,7 @@ const tools = {
     id: 'axe',
     levelInfo: TOOL_LEVEL_INFO.AXE,
     order: 5,
+    screens: [FOREST],
     type: toolType.AXE,
   },
   pickerPole: {
@@ -77,6 +83,7 @@ const tools = {
     id: 'picker-pole',
     levelInfo: TOOL_LEVEL_INFO.PICKER_POLE,
     order: 6,
+    screens: [FOREST],
     type: toolType.PICKER_POLE,
   },
 }
