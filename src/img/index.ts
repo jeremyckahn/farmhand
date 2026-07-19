@@ -64,6 +64,19 @@ import appleTreeGrowing4 from './items/apple-tree-growing-4.png'
 import appleTreeGrown from './items/apple-tree-grown.png'
 import appleSapling from './items/apple-sapling.png'
 import appleTreeSaplingPlanted from './items/apple-tree-sapling-planted.png'
+import banana from './items/banana.png'
+import bananaFruitGrowing1 from './items/banana-fruit-growing-1.png'
+import bananaFruitGrowing2 from './items/banana-fruit-growing-2.png'
+import bananaFruitGrowing3 from './items/banana-fruit-growing-3.png'
+import bananaFruitGrown from './items/banana-fruit-grown.png'
+import bananaTreeDead from './items/banana-tree-dead.png'
+import bananaTreeGrowing1 from './items/banana-tree-growing-1.png'
+import bananaTreeGrowing2 from './items/banana-tree-growing-2.png'
+import bananaTreeGrowing3 from './items/banana-tree-growing-3.png'
+import bananaTreeGrowing4 from './items/banana-tree-growing-4.png'
+import bananaTreeGrown from './items/banana-tree-grown.png'
+import bananaSapling from './items/banana-sapling.png'
+import bananaTreeSaplingPlanted from './items/banana-tree-sapling-planted.png'
 import asparagus from './items/asparagus.png'
 import asparagusGrowing1 from './items/asparagus-growing1.png'
 import asparagusGrowing2 from './items/asparagus-growing2.png'
@@ -347,6 +360,19 @@ export const items = {
   'apple-tree-grown': appleTreeGrown,
   'apple-sapling': appleSapling,
   'apple-tree-sapling-planted': appleTreeSaplingPlanted,
+  banana,
+  'banana-fruit-growing-1': bananaFruitGrowing1,
+  'banana-fruit-growing-2': bananaFruitGrowing2,
+  'banana-fruit-growing-3': bananaFruitGrowing3,
+  'banana-fruit-grown': bananaFruitGrown,
+  'banana-tree-dead': bananaTreeDead,
+  'banana-tree-growing-1': bananaTreeGrowing1,
+  'banana-tree-growing-2': bananaTreeGrowing2,
+  'banana-tree-growing-3': bananaTreeGrowing3,
+  'banana-tree-growing-4': bananaTreeGrowing4,
+  'banana-tree-grown': bananaTreeGrown,
+  'banana-sapling': bananaSapling,
+  'banana-tree-sapling-planted': bananaTreeSaplingPlanted,
   // Crops
   asparagus,
   'asparagus-growing-1': asparagusGrowing1,

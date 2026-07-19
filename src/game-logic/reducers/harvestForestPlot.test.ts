@@ -85,6 +85,54 @@ describe('harvestForestPlot', () => {
       expect(inventory).toEqual([{ id: 'sample-tree-1', quantity: 1 }])
     })
 
+    test('rolls the minimum of a ranged fruitYieldRange when random() is 0', () => {
+      vitest.spyOn(Math, 'random').mockReturnValue(0)
+
+      const { inventory } = harvestForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-2',
+                daysOld: 3,
+                daysSinceLastHarvest: 2,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+        }),
+        0,
+        0
+      )
+
+      expect(inventory).toEqual([{ id: 'sample-tree-2', quantity: 2 }])
+    })
+
+    test('rolls the maximum of a ranged fruitYieldRange when random() is just under 1', () => {
+      vitest.spyOn(Math, 'random').mockReturnValue(0.999)
+
+      const { inventory } = harvestForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-2',
+                daysOld: 3,
+                daysSinceLastHarvest: 2,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+        }),
+        0,
+        0
+      )
+
+      expect(inventory).toEqual([{ id: 'sample-tree-2', quantity: 4 }])
+    })
+
     test('resets only the fruit cycle, leaving the tree at its grown age', () => {
       const { forest } = harvestForestPlot(
         testState({

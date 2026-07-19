@@ -45,7 +45,7 @@ declare namespace farmhand {
     | 'WATERMELON'
     | 'WHEAT'
     | 'WEED'
-  type treeType = 'APPLE'
+  type treeType = 'APPLE' | 'BANANA'
   type recipeType =
     | 'FERMENTATION'
     | 'FORGE'
@@ -165,6 +165,9 @@ declare namespace farmhand {
     cropLifecycleDuration?: number
     treeTimeline?: number[]
     fruitTimeline?: number[]
+    // [min, max] fruit count rolled per harvest (see harvestForestPlot.ts /
+    // chopForestPlot.ts). Undefined means exactly 1, today's universal default.
+    fruitYieldRange?: [number, number]
     treeType?: treeType
     // How many days a tree stays GROWN before dying (becoming DEAD) - see
     // getTreeLifeStage.ts. Undefined means the tree never dies.

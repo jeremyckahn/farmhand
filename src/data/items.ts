@@ -73,7 +73,7 @@ export {
   wheatSeed,
 } from './crops/index.js'
 
-export { apple, appleSapling } from './trees/index.js'
+export { apple, appleSapling, banana, bananaSapling } from './trees/index.js'
 
 export const weed = freeze({
   id: 'weed',
