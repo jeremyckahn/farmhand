@@ -34,6 +34,9 @@ test('should harvest ripe fruit from a grown apple tree', async ({ page }) => {
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Forest' }).click()
 
+  // Picking fruit requires the Picker Pole to be the selected tool.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
+
   const treePlot = page.locator('.ForestPlot').first()
   await expect(treePlot).toHaveClass(/can-be-harvested/)
 
@@ -52,6 +55,9 @@ test('should regrow fruit after harvesting and be harvestable again', async ({
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Forest' }).click()
+
+  // Picking fruit requires the Picker Pole to be the selected tool.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
 
   const treePlot = page.locator('.ForestPlot').first()
 
@@ -88,7 +94,9 @@ test('should chop down a tree for wood, harvesting any ripe fruit as a bonus', a
   await page.getByRole('option', { name: ': Forest' }).click()
 
   const treePlot = page.locator('.ForestPlot').first()
-  await expect(treePlot).toHaveClass(/can-be-harvested/)
+  // Ripeness itself (unlike can-be-harvested) doesn't depend on which tool
+  // is selected - confirms there's fruit for the axe to bonus-harvest below.
+  await expect(treePlot.locator('.ForestTreeSprite.heartBeat')).toBeVisible()
 
   await page.getByRole('button', { name: /Select the axe/ }).click()
   await treePlot.click()
@@ -116,6 +124,10 @@ test('should not treat a dead tree as harvestable, even with frozen ripe-looking
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Forest' }).click()
+
+  // Select the Picker Pole so the click below actually attempts a harvest -
+  // otherwise this would trivially pass regardless of the dead-tree check.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
 
   const treePlot = page.locator('.ForestPlot').first()
   await expect(treePlot).not.toHaveClass(/can-be-harvested/)
