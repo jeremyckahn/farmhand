@@ -180,6 +180,94 @@ test('should apply mulch to a tree and consume it from inventory', async ({
   await expect(treePlot).not.toHaveClass(/is-empty/)
 })
 
+test('should grow a rainbow-mulched tree faster than a mulched tree, and a mulched tree faster than an unmulched one', async ({
+  page,
+}) => {
+  await loadFixture(page, 'forest-tree-mulch-comparison')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  // forest[0] is three same-age apple trees followed by an empty plot, so
+  // the first three .ForestPlot elements in DOM order are the trees under
+  // test.
+  const mulchedPlot = page.locator('.ForestPlot').nth(0)
+  const rainbowMulchedPlot = page.locator('.ForestPlot').nth(1)
+  const unmulchedPlot = page.locator('.ForestPlot').nth(2)
+
+  // Each button's accessible name is "<item name> <quantity>" (see
+  // ItemList.tsx), and "Mulch" is otherwise a substring match of "Rainbow
+  // Mulch 1" - both buttons are in the toolbelt at once here, so the plain
+  // mulch button needs an anchored regex to avoid matching both.
+  const mulchButton = page.getByRole('button', { name: /^Mulch\s/ })
+  const rainbowMulchButton = page.getByRole('button', {
+    name: 'Rainbow Mulch',
+  })
+
+  await mulchButton.click()
+  await mulchedPlot.click()
+
+  await rainbowMulchButton.click()
+  await rainbowMulchedPlot.click()
+
+  // Both mulches were the player's only ones, so they're gone from
+  // inventory and the toolbelt no longer offers either.
+  await expect(mulchButton).not.toBeVisible()
+  await expect(rainbowMulchButton).not.toBeVisible()
+
+  const endDay = () =>
+    page.getByRole('button', { name: 'End the day to save your' }).click()
+
+  // All three trees start this test 5 daysGrown short of apple's 25-day
+  // growth timeline (treeTimeline in src/data/trees/apple.ts), and fruit
+  // hasn't started growing on any of them yet.
+  await expect(mulchedPlot).not.toHaveClass(/can-be-harvested/)
+  await expect(rainbowMulchedPlot).not.toHaveClass(/can-be-harvested/)
+  await expect(unmulchedPlot).not.toHaveClass(/can-be-harvested/)
+
+  // Mulch and Rainbow Mulch both speed up the initial growth phase
+  // equally (FERTILIZER_BONUS applies to daysGrown regardless of tier),
+  // finishing it on day 4 while the unmulched tree needs a 5th day.
+  // Fruit (fruitTimeline sums to 6 days, src/data/trees/apple.ts) only
+  // starts growing once a tree reaches its permanent grown state, and
+  // only Rainbow Mulch accelerates fruit regrowth - so by day 6 none of
+  // the three have ripe fruit yet.
+  for (let day = 0; day < 6; day++) {
+    await endDay()
+  }
+
+  await expect(mulchedPlot).not.toHaveClass(/can-be-harvested/)
+  await expect(rainbowMulchedPlot).not.toHaveClass(/can-be-harvested/)
+  await expect(unmulchedPlot).not.toHaveClass(/can-be-harvested/)
+
+  // Day 7: the rainbow-mulched tree's accelerated fruit regrowth crosses
+  // the 6-day fruit timeline first - it's the only one with ripe fruit.
+  await endDay()
+
+  await expect(mulchedPlot).not.toHaveClass(/can-be-harvested/)
+  await expect(rainbowMulchedPlot).toHaveClass(/can-be-harvested/)
+  await expect(unmulchedPlot).not.toHaveClass(/can-be-harvested/)
+
+  // Day 9: the mulched (non-rainbow) tree catches up next - it regrows
+  // fruit at the normal rate, but got a one-day head start finishing its
+  // growth phase. The unmulched tree, which finished its growth phase a
+  // day later than the mulched trees and also regrows fruit at the
+  // normal rate, is still lagging.
+  await endDay()
+  await endDay()
+
+  await expect(mulchedPlot).toHaveClass(/can-be-harvested/)
+  await expect(rainbowMulchedPlot).toHaveClass(/can-be-harvested/)
+  await expect(unmulchedPlot).not.toHaveClass(/can-be-harvested/)
+
+  // Day 10: the unmulched tree finally catches up too.
+  await endDay()
+
+  await expect(mulchedPlot).toHaveClass(/can-be-harvested/)
+  await expect(rainbowMulchedPlot).toHaveClass(/can-be-harvested/)
+  await expect(unmulchedPlot).toHaveClass(/can-be-harvested/)
+})
+
 test('should purchase a Wood Chipper and craft the Wood Chips -> Mulch recipe chain', async ({
   page,
 }) => {
@@ -208,11 +296,9 @@ test('should purchase a Wood Chipper and craft the Wood Chips -> Mulch recipe ch
   // Ingredient lists inside other recipe cards (e.g. Mulch lists "Wood
   // Chips" as an ingredient) also contain this text, so scope to the
   // card's own title rather than any text in the card.
-  const woodChipsCard = page
-    .locator('.Recipe')
-    .filter({
-      has: page.locator('.MuiCardHeader-title', { hasText: /^Wood Chips$/ }),
-    })
+  const woodChipsCard = page.locator('.Recipe').filter({
+    has: page.locator('.MuiCardHeader-title', { hasText: /^Wood Chips$/ }),
+  })
 
   // Mulch needs 3 Wood Chips - craft more than the default quantity of 1.
   await woodChipsCard.locator('input').dblclick()
@@ -223,11 +309,9 @@ test('should purchase a Wood Chipper and craft the Wood Chips -> Mulch recipe ch
     page.locator('.ContextPane').getByText('Wood Chips', { exact: true })
   ).toBeVisible()
 
-  const mulchCard = page
-    .locator('.Recipe')
-    .filter({
-      has: page.locator('.MuiCardHeader-title', { hasText: /^Mulch$/ }),
-    })
+  const mulchCard = page.locator('.Recipe').filter({
+    has: page.locator('.MuiCardHeader-title', { hasText: /^Mulch$/ }),
+  })
   await mulchCard.getByRole('button', { name: 'Make' }).click()
 
   await expect(
