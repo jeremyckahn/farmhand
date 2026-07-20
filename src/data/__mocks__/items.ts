@@ -94,21 +94,6 @@ export const sampleTreeItem1 = testItem({
   fruitTimeline: [1, 1],
 })
 
-// Same shape as sample-tree-1, but with a ranged fruitYieldRange, for
-// testing multi-fruit harvests (e.g. banana's [2, 4]).
-export const sampleTreeItem2 = testItem({
-  treeType: 'SAMPLE_TREE_TYPE_2',
-  doesPriceFluctuate: true,
-  id: 'sample-tree-2',
-  name: 'Sample Tree Item 2',
-  type: itemType.TREE,
-  value: 2,
-  treeTimeline: [1, 2],
-  lifespan: 100,
-  fruitTimeline: [1, 1],
-  fruitYieldRange: [2, 4],
-})
-
 // Crop items
 export const sampleCropSeedsItem1 = testItem({
   cropType: 'SAMPLE_CROP_TYPE_1',

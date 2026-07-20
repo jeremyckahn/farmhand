@@ -56,7 +56,6 @@ export const fromSapling = (
   {
     treeTimeline,
     fruitTimeline,
-    fruitYieldRange,
     treeType,
     growsInto,
     tier = 1,
@@ -70,7 +69,6 @@ export const fromSapling = (
     id: variants[variantIdx] || '',
     treeTimeline: treeTimeline || [],
     fruitTimeline: fruitTimeline || [],
-    fruitYieldRange,
     treeType,
     doesPriceFluctuate: true,
     tier,

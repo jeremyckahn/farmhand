@@ -214,64 +214,6 @@ describe('chopForestPlot', () => {
     })
   })
 
-  describe('grown tree with ripe fruit and a ranged fruitYieldRange', () => {
-    test('rolls the minimum of the fruit range when random() is 0', () => {
-      vitest.mocked(Math.random).mockReturnValue(0)
-
-      const { inventory } = chopForestPlot(
-        testState({
-          forest: [
-            [
-              {
-                itemId: 'sample-tree-2',
-                daysOld: 3,
-                daysSinceLastHarvest: 2,
-              },
-            ],
-          ],
-          inventory: [],
-          inventoryLimit: INFINITE_STORAGE_LIMIT,
-          toolLevels: toolLevelsWithAxe(toolLevel.DEFAULT),
-        }),
-        0,
-        0
-      )
-
-      expect(inventory).toEqual([
-        { id: 'sample-tree-2', quantity: 2 },
-        { id: 'wood', quantity: 1 },
-      ])
-    })
-
-    test('rolls the maximum of the fruit range when random() is just under 1', () => {
-      vitest.mocked(Math.random).mockReturnValue(0.999)
-
-      const { inventory } = chopForestPlot(
-        testState({
-          forest: [
-            [
-              {
-                itemId: 'sample-tree-2',
-                daysOld: 3,
-                daysSinceLastHarvest: 2,
-              },
-            ],
-          ],
-          inventory: [],
-          inventoryLimit: INFINITE_STORAGE_LIMIT,
-          toolLevels: toolLevelsWithAxe(toolLevel.DEFAULT),
-        }),
-        0,
-        0
-      )
-
-      expect(inventory).toEqual([
-        { id: 'sample-tree-2', quantity: 4 },
-        { id: 'wood', quantity: 2 },
-      ])
-    })
-  })
-
   describe('wood yield range per axe tier', () => {
     test('rolls the minimum of the tier range when random() is 0', () => {
       vitest.mocked(Math.random).mockReturnValue(0)

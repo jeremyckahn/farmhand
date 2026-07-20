@@ -18,7 +18,6 @@ export const bananaSapling: farmhand.item = tree({
   // the tree itself reaches its permanent grown state. Sums to 12 days
   // (vs. apple's 6) - banana fruits twice as slowly once grown.
   fruitTimeline: [3, 3, 3, 3],
-  fruitYieldRange: [2, 4],
   growsInto: 'banana',
   id: 'banana-sapling',
   name: 'Banana Sapling',

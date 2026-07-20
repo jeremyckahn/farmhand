@@ -8,7 +8,6 @@ import { itemsMap } from '../../data/maps.js'
 import { random } from '../../common/utils.js'
 import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
 import { getChopWoodYieldRange } from '../../utils/getChopWoodYieldRange.js'
-import { getForestFruitYieldRange } from '../../utils/getForestFruitYieldRange.js'
 import { getFruitLifeStage } from '../../utils/getFruitLifeStage.js'
 import { getTreeLifeStage } from '../../utils/getTreeLifeStage.js'
 import { isPlantedTree } from '../../utils/isPlantedTree.js'
@@ -33,12 +32,6 @@ const getWoodYield = (
   return min + Math.floor(random() * (max - min + 1))
 }
 
-const getFruitYield = (item: farmhand.item): number => {
-  const [min, max] = getForestFruitYieldRange(item)
-
-  return min + Math.floor(random() * (max - min + 1))
-}
-
 export const chopForestPlot = (
   state: farmhand.state,
   x: number,
@@ -59,7 +52,7 @@ export const chopForestPlot = (
     const fruitItem = itemsMap[plotContent.itemId]
 
     if (fruitItem) {
-      state = addItemToInventory(state, fruitItem, getFruitYield(fruitItem))
+      state = addItemToInventory(state, fruitItem)
     }
   }
 
