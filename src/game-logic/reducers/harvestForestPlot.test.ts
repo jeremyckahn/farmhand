@@ -99,6 +99,7 @@ describe('harvestForestPlot', () => {
           ],
           inventory: [],
           inventoryLimit: INFINITE_STORAGE_LIMIT,
+          toolLevels: toolLevelsWithPickerPole,
           treeFruitsHarvested: {},
         }),
         0,
@@ -106,6 +107,33 @@ describe('harvestForestPlot', () => {
       )
 
       expect(treeFruitsHarvested).toEqual({ 'sample-tree-1': 1 })
+    })
+
+    test('increments treeFruitsHarvested by the picker pole fruit yield', () => {
+      const { treeFruitsHarvested } = harvestForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-1',
+                daysOld: 3,
+                daysSinceLastHarvest: 2,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          toolLevels: {
+            ...toolLevelsWithPickerPole,
+            PICKER_POLE: toolLevel.GOLD,
+          },
+          treeFruitsHarvested: {},
+        }),
+        0,
+        0
+      )
+
+      expect(treeFruitsHarvested).toEqual({ 'sample-tree-1': 5 })
     })
 
     test('resets only the fruit cycle, leaving the tree at its grown age', () => {
