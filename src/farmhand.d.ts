@@ -413,6 +413,11 @@ declare namespace farmhand {
      * values are the number of that fruit picked.
      */
     treeFruitsHarvested: Partial<Record<item['id'], number>>
+    /**
+     * A map of totals of mulch applied to Forest trees. Keys are mulch item
+     * IDs, values are the number of times that mulch type has been applied.
+     */
+    mulchApplied: Partial<Record<item['id'], number>>
     fieldMode: fieldMode
     /**
      * https://github.com/dmotz/trystero#receiver

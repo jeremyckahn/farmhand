@@ -128,6 +128,31 @@ describe('mulchForestPlot', () => {
       })
     })
 
+    describe('mulchApplied', () => {
+      test('increments the count for the applied mulch type', () => {
+        const state = mulchForestPlot(
+          testState({
+            forest: [
+              [
+                {
+                  itemId: 'sample-tree-1',
+                  daysOld: 3,
+                  daysSinceLastHarvest: 0,
+                },
+              ],
+            ],
+            inventory: [{ id: 'mulch', quantity: 1 }],
+            selectedItemId: 'mulch',
+            mulchApplied: { mulch: 1 },
+          }),
+          0,
+          0
+        )
+
+        expect(state.mulchApplied).toEqual({ mulch: 2 })
+      })
+    })
+
     describe('FERTILIZE field mode updating', () => {
       describe('multiple mulch units remaining', () => {
         test('does not change fieldMode', () => {

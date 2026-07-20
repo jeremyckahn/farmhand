@@ -188,6 +188,7 @@ export const PERSISTED_STATE_KEYS = [
   'loanBalance',
   'loansTakenOut',
   'money',
+  'mulchApplied',
   'newDayNotifications',
   'notificationLog',
   'priceCrashes',

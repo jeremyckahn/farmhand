@@ -35,11 +35,10 @@ const sumOfCropsHarvested = memoize(
   {}
 )
 
-const sumOfTreeFruitsHarvested = memoize(
-  (treeFruitsHarvested: Partial<Record<string, number>>) =>
-    Object.values(treeFruitsHarvested).reduce(
-      (sum: number, fruitHarvested: number | undefined) =>
-        sum + (fruitHarvested || 0),
+const sumOfPartialRecordValues = memoize(
+  (record: Partial<Record<string, number>>) =>
+    Object.values(record).reduce(
+      (sum: number, value: number | undefined) => sum + (value || 0),
       0
     ),
   {}
@@ -369,7 +368,7 @@ const achievements: farmhand.achievement[] = [
     description: `Pick ${integerString(goal)} fruits from trees in the Forest.`,
     rewardDescription: `${reward} units of ${itemsMap['apple-sapling'].name}`,
     condition: state =>
-      sumOfTreeFruitsHarvested(state.treeFruitsHarvested) >= goal,
+      sumOfPartialRecordValues(state.treeFruitsHarvested) >= goal,
     reward: state =>
       addItemToInventory(state, itemsMap['apple-sapling'], reward, true),
   }))(),
@@ -390,6 +389,18 @@ const achievements: farmhand.achievement[] = [
     rewardDescription: `${reward} units of ${itemsMap['wood'].name}`,
     condition: state => state.treesChopped >= goal,
     reward: state => addItemToInventory(state, itemsMap['wood'], reward, true),
+  }))(),
+
+  ((goal = 100, reward = 10) => ({
+    id: 'landscaper',
+    name: 'Landscaper',
+    description: `Spread ${integerString(
+      goal
+    )} bags of mulch (of any type) on trees in the Forest.`,
+    rewardDescription: `${reward} units of ${itemsMap['rainbow-mulch'].name}`,
+    condition: state => sumOfPartialRecordValues(state.mulchApplied) >= goal,
+    reward: state =>
+      addItemToInventory(state, itemsMap['rainbow-mulch'], reward, true),
   }))(),
 ]
 

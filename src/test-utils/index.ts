@@ -159,6 +159,7 @@ export const testState = (
   forest: [[]],
   treesChopped: 0,
   treeFruitsHarvested: {},
+  mulchApplied: {},
   getCowAccept: null,
   getCowReject: null,
   getCowTradeRequest: null,

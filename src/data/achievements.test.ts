@@ -252,3 +252,42 @@ describe('deforestation', () => {
     expect(wood).toEqual({ id: 'wood', quantity: 500 })
   })
 })
+
+describe('landscaper', () => {
+  const achievement = achievementsMap['landscaper']
+  let state: any
+
+  beforeEach(() => {
+    state = {
+      mulchApplied: { mulch: 99 },
+      inventory: [],
+      inventoryLimit: INFINITE_STORAGE_LIMIT,
+    }
+  })
+
+  test('is not achieved when fewer than 100 bags of mulch have been applied', () => {
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
+  test('is achieved when 100 or more bags of mulch have been applied', () => {
+    state.mulchApplied.mulch = 100
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('sums mulch applications across mulch types', () => {
+    state.mulchApplied = { mulch: 50, 'rainbow-mulch': 50 }
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('rewards the player with rainbow mulch', () => {
+    state = achievement.reward(state)
+
+    const rainbowMulch = state.inventory.find(
+      (item: { id: string }) => item.id === 'rainbow-mulch'
+    )
+
+    expect(rainbowMulch).toEqual({ id: 'rainbow-mulch', quantity: 10 })
+  })
+})

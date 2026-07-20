@@ -117,6 +117,7 @@ export const createContextData = (): ContextData => {
       forest: [[]],
       treesChopped: 0,
       treeFruitsHarvested: {},
+      mulchApplied: {},
       fieldMode: 'OBSERVE' as farmhand.fieldMode,
       getCowAccept: () => {},
       getCowReject: () => {},

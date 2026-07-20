@@ -88,6 +88,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       forest: createNewForest(),
       treesChopped: 0,
       treeFruitsHarvested: {},
+      mulchApplied: {},
       getCowAccept: noop,
       getCowReject: noop,
       getCowTradeRequest: noop,
