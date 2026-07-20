@@ -171,7 +171,7 @@ describe('orchardist', () => {
       (item: { id: string }) => item.id === 'apple-sapling'
     )
 
-    expect(saplings).toEqual({ id: 'apple-sapling', quantity: 15 })
+    expect(saplings).toEqual({ id: 'apple-sapling', quantity: 50 })
   })
 })
 
@@ -216,7 +216,7 @@ describe('piemaker', () => {
   test('rewards the player with money', () => {
     state = achievement.reward(state)
 
-    expect(state.money).toEqual(5000)
+    expect(state.money).toEqual(100_000)
   })
 })
 
@@ -288,6 +288,6 @@ describe('landscaper', () => {
       (item: { id: string }) => item.id === 'rainbow-mulch'
     )
 
-    expect(rainbowMulch).toEqual({ id: 'rainbow-mulch', quantity: 10 })
+    expect(rainbowMulch).toEqual({ id: 'rainbow-mulch', quantity: 25 })
   })
 })

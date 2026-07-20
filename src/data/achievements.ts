@@ -362,7 +362,7 @@ const achievements: farmhand.achievement[] = [
     },
   }))(),
 
-  ((goal = 1000, reward = 15) => ({
+  ((goal = 1000, reward = 50) => ({
     id: 'orchardist',
     name: 'Orchardist',
     description: `Pick ${integerString(goal)} fruits from trees in the Forest.`,
@@ -373,7 +373,7 @@ const achievements: farmhand.achievement[] = [
       addItemToInventory(state, itemsMap['apple-sapling'], reward, true),
   }))(),
 
-  ((goal = 100, reward = 5000) => ({
+  ((goal = 100, reward = 100_000) => ({
     id: 'piemaker',
     name: 'Piemaker',
     description: `Make ${integerString(goal)} pies.`,
@@ -391,7 +391,7 @@ const achievements: farmhand.achievement[] = [
     reward: state => addItemToInventory(state, itemsMap['wood'], reward, true),
   }))(),
 
-  ((goal = 100, reward = 10) => ({
+  ((goal = 100, reward = 25) => ({
     id: 'landscaper',
     name: 'Landscaper',
     description: `Spread ${integerString(
