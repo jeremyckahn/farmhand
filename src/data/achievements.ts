@@ -35,6 +35,26 @@ const sumOfCropsHarvested = memoize(
   {}
 )
 
+const sumOfTreeFruitsHarvested = memoize(
+  (treeFruitsHarvested: Partial<Record<string, number>>) =>
+    Object.values(treeFruitsHarvested).reduce(
+      (sum: number, fruitHarvested: number | undefined) =>
+        sum + (fruitHarvested || 0),
+      0
+    ),
+  {}
+)
+
+const PIE_RECIPE_IDS = [
+  'chickn-pot-pie',
+  'pumpkin-pie',
+  'apple-pie',
+  'sweet-potato-pie',
+]
+
+const sumOfPiesMade = (recipesMade: Partial<Record<string, number>>) =>
+  PIE_RECIPE_IDS.reduce((sum, id) => sum + (recipesMade[id] || 0), 0)
+
 const cowFeed = itemsMap[COW_FEED_ITEM_ID]
 
 const achievements: farmhand.achievement[] = [
@@ -341,6 +361,35 @@ const achievements: farmhand.achievement[] = [
     reward: state => {
       return addItemToInventory(state, itemsMap['gold-ingot'], 1, true)
     },
+  }))(),
+
+  ((goal = 1000, reward = 15) => ({
+    id: 'orchardist',
+    name: 'Orchardist',
+    description: `Pick ${integerString(goal)} fruits from trees in the Forest.`,
+    rewardDescription: `${reward} units of ${itemsMap['apple-sapling'].name}`,
+    condition: state =>
+      sumOfTreeFruitsHarvested(state.treeFruitsHarvested) >= goal,
+    reward: state =>
+      addItemToInventory(state, itemsMap['apple-sapling'], reward, true),
+  }))(),
+
+  ((goal = 100, reward = 5000) => ({
+    id: 'piemaker',
+    name: 'Piemaker',
+    description: `Make ${integerString(goal)} pies.`,
+    rewardDescription: dollarString(reward),
+    condition: state => sumOfPiesMade(state.recipesMade) >= goal,
+    reward: state => addMoney(state, reward),
+  }))(),
+
+  ((goal = 250, reward = 500) => ({
+    id: 'deforestation',
+    name: 'Deforestation',
+    description: `Chop down ${integerString(goal)} trees in the Forest.`,
+    rewardDescription: `${reward} units of ${itemsMap['wood'].name}`,
+    condition: state => state.treesChopped >= goal,
+    reward: state => addItemToInventory(state, itemsMap['wood'], reward, true),
   }))(),
 ]
 

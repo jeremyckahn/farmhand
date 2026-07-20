@@ -85,6 +85,29 @@ describe('harvestForestPlot', () => {
       expect(inventory).toEqual([{ id: 'sample-tree-1', quantity: 1 }])
     })
 
+    test('increments treeFruitsHarvested', () => {
+      const { treeFruitsHarvested } = harvestForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-1',
+                daysOld: 3,
+                daysSinceLastHarvest: 2,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          treeFruitsHarvested: {},
+        }),
+        0,
+        0
+      )
+
+      expect(treeFruitsHarvested).toEqual({ 'sample-tree-1': 1 })
+    })
+
     test('resets only the fruit cycle, leaving the tree at its grown age', () => {
       const { forest } = harvestForestPlot(
         testState({

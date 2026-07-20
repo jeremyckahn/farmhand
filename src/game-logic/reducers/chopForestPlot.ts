@@ -53,6 +53,13 @@ export const chopForestPlot = (
 
     if (fruitItem) {
       state = addItemToInventory(state, fruitItem)
+      state = {
+        ...state,
+        treeFruitsHarvested: {
+          ...state.treeFruitsHarvested,
+          [fruitItem.id]: (state.treeFruitsHarvested[fruitItem.id] || 0) + 1,
+        },
+      }
     }
   }
 
@@ -70,6 +77,8 @@ export const chopForestPlot = (
       state = addItemToInventory(state, wood, woodAmount)
     }
   }
+
+  state = { ...state, treesChopped: state.treesChopped + 1 }
 
   return modifyForestPlotAt(state, x, y, () => null)
 }

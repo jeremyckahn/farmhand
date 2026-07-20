@@ -37,6 +37,14 @@ export const harvestForestPlot = (
 
   state = addItemToInventory(state, item, fruitYield)
 
+  state = {
+    ...state,
+    treeFruitsHarvested: {
+      ...state.treeFruitsHarvested,
+      [item.id]: (state.treeFruitsHarvested[item.id] || 0) + 1,
+    },
+  }
+
   // Picking fruit only resets the fruit cycle — the tree itself stays at
   // its permanent grown state. Chopping the tree down entirely is a
   // separate axe interaction (see chopForestPlot.ts).
