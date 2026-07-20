@@ -124,6 +124,20 @@ In this case, the local app will be using the Production API, database, and pair
   - Any pre-existing code that does not adhere to this convention should be updated to do so.
 - Regarding automated tests: [Write tests. Not too many. Mostly integration.](https://kentcdodds.com/blog/write-tests)
 
+### Art conventions
+
+- Art assets are typically 24x24 pixels. Notable exceptions:
+  - Forest tree sprites (e.g. `apple-tree-grown.png`) are 36x72.
+  - Forest saplings and plot-state tiles (e.g. `apple-sapling.png`, `mulched-plot.png`) are 36x36.
+  - Field plot-state tiles (e.g. `fertilized-plot.png`) are 32x32.
+  - UI backgrounds and other one-off assets (e.g. `winter-bg.png`) don't follow this convention at all.
+- It's fine to create art in a program other than Piskel (e.g. Aseprite), but every PNG under `src/img` should still have a matching `.piskel` source file:
+  - `npm run create-piskels` generates a `.piskel` file for any PNG under `src/img` that's missing one.
+  - Conversely, after editing a `.piskel` file directly, regenerate its PNG with `npm run update-images`.
+  - `.piskel` and `.png` files live side by side with matching basenames (e.g. `src/img/items/apple.piskel` / `apple.png`).
+- Art style is inherently subjective, but new assets should stay visually consistent with the game's existing art - bold outlines, minimal/simple shading, and a transparent (not filled) background.
+- Filenames should match the identifier used for that item/tile in the game data (e.g. the `apple` item ID backs `apple.png`/`apple.piskel`, and its `growsInto`/growth-stage IDs back `apple-tree-grown.png`, etc.), so an asset can be traced back to the code that references it.
+
 ### Testing Guidelines
 
 When writing tests for Farmhand, please follow the guidelines documented in [`.rules`](.rules). Key points:
