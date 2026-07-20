@@ -10,6 +10,8 @@ import shoveledPlot from './plot-states/shoveled-plot.png'
 
 // Recipes
 import applePie from './dishes/apple-pie.png'
+import bananaBread from './dishes/banana-bread.png'
+import bananaCreamPie from './dishes/banana-cream-pie.png'
 import bread from './dishes/bread.png'
 import burger from './dishes/burger.png'
 import butter from './dishes/butter.png'
@@ -302,6 +304,8 @@ const smeltedItems = {
 
 export const craftedItems = {
   'apple-pie': applePie,
+  'banana-bread': bananaBread,
+  'banana-cream-pie': bananaCreamPie,
   'carrot-soup': carrotSoup,
   cheese,
   'chickn-pot-pie': chicknPotPie,
