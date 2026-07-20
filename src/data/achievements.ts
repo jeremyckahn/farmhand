@@ -17,7 +17,7 @@ import {
   I_AM_RICH_BONUSES,
 } from '../constants.js'
 
-import { itemsMap } from './maps.js'
+import { itemsMap, recipesMap } from './maps.js'
 
 const { SEED } = cropLifeStage
 
@@ -44,12 +44,9 @@ const sumOfPartialRecordValues = memoize(
   {}
 )
 
-const PIE_RECIPE_IDS = [
-  'chickn-pot-pie',
-  'pumpkin-pie',
-  'apple-pie',
-  'sweet-potato-pie',
-]
+const PIE_RECIPE_IDS = Object.values(recipesMap)
+  .filter(recipe => recipe.isPie)
+  .map(recipe => recipe.id)
 
 const sumOfPiesMade = (recipesMade: Partial<Record<string, number>>) =>
   PIE_RECIPE_IDS.reduce((sum, id) => sum + (recipesMade[id] || 0), 0)

@@ -265,6 +265,7 @@ declare namespace farmhand {
     recipeType: recipeType
     ingredients: Record<string, number>
     condition: recipeCondition
+    isPie?: boolean
   }
 
   interface keg {
