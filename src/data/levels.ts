@@ -7,7 +7,7 @@ import * as recipes from './recipes.js'
 export const levels: Array<{
   id?: number
   unlocksShopItem?: string
-  unlocksTool?: string
+  unlocksTool?: string[]
   increasesSprinklerRange?: boolean
   unlocksStageFocusType?: string
 }> = []
@@ -33,7 +33,7 @@ levels[5] = {
 }
 
 levels[6] = {
-  unlocksTool: toolType.SHOVEL,
+  unlocksTool: [toolType.SHOVEL],
 }
 
 levels[8] = {
@@ -56,7 +56,7 @@ if ((features as { FOREST?: boolean }).FOREST) {
   levels[15] = {
     unlocksStageFocusType: stageFocusType.FOREST,
     unlocksShopItem: items.appleSapling.id,
-    unlocksTool: toolType.AXE,
+    unlocksTool: [toolType.AXE, toolType.PICKER_POLE],
   }
 }
 

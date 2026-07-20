@@ -4,6 +4,8 @@ import { Div } from '../Elements/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import ForestPlot from '../ForestPlot/index.js'
 import ForestQuickSelect from '../ForestQuickSelect/index.js'
+import { FOREST_ROW_STAGGER_OVERLAP_PX } from '../../constants.js'
+import { breakpoints, layout } from '../../styles/tokens.js'
 
 export const Forest = () => {
   const {
@@ -32,19 +34,28 @@ export const Forest = () => {
   // same fixed vertical budget applies here.
   const CHROME_HEIGHT_PX = 395
 
-  // Cap each column at whichever is smaller: the usual 160px design max, or
-  // an equal share of the vertical space left after that chrome and the
-  // overhang reserve are subtracted.
-  const maxPlotSize = `min(160px, calc((100vh - ${CHROME_HEIGHT_PX}px) / ${rows +
-    OVERHANG_ROW_MULTIPLE}))`
+  // Floor below which the grid scrolls horizontally (Stage: overflow auto)
+  // instead of shrinking plots further.
+  const MIN_PLOT_SIZE = '48px'
 
-  // The reserve itself, in the same unit as a plot - kept on the Forest
-  // wrapper (not on forest-plots) so it isn't part of what .Forest's own
-  // flexbox justify-content: center treats as content to center. Otherwise
-  // this reserve - which is invisible, decorative space, not real content -
-  // would get centered right along with the actual rows, visually pushing
-  // them below true center by half the reserve's height.
+  // Also caps by available width (2 * columns "slots": each column, each
+  // gap, and one slot split across the two side paddings) so columnGap and
+  // padding below - set to this same value - shrink along with the columns.
+  const maxPlotSize = `max(${MIN_PLOT_SIZE}, min(160px, calc((100vh - ${CHROME_HEIGHT_PX}px) / ${rows +
+    OVERHANG_ROW_MULTIPLE}), calc(100% / ${2 * Math.max(columns, 1)})))`
+
+  // The reserve itself, in the same unit as a plot. Applying this as
+  // one-sided paddingTop on .Forest (below) shifts the flexbox
+  // justify-content: center midpoint of its content down by half this
+  // amount, regardless of which of .Forest/forest-plots actually holds the
+  // padding - it's counteracted by an equal-and-opposite translateY on
+  // forest-plots instead (see below).
   const topOverhangReserve = `calc(${OVERHANG_ROW_MULTIPLE} * ${maxPlotSize})`
+
+  // Extra upward nudge in portrait mode, on top of the translateY below -
+  // ForestQuickSelect's bottom bar there ends up with more clearance below
+  // the grid than the grid has above it otherwise.
+  const PORTRAIT_UPWARD_NUDGE_PX = 90
 
   return (
     <Div
@@ -65,10 +76,40 @@ export const Forest = () => {
         {...{ className: 'forest-plots' }}
         sx={{
           display: 'grid',
-          gap: '2%',
+          rowGap: '2%',
+          // Paired with ForestPlot.tsx's translateX to give staggered rows a
+          // symmetric FOREST_ROW_STAGGER_OVERLAP_PX overlap on both sides -
+          // see that file's comment for the shared derivation.
+          columnGap: `calc(${maxPlotSize} - ${2 *
+            FOREST_ROW_STAGGER_OVERLAP_PX}px)`,
           justifyContent: 'center',
           width: '100%',
-          gridTemplateColumns: `repeat(${columns}, minmax(0, ${maxPlotSize}))`,
+          // ForestQuickSelect switches to a fixed right-side sidebar at this
+          // breakpoint (see quickSelectSx) - reserve its width so centering
+          // doesn't run the grid into it. Below this breakpoint the toolbelt
+          // is a bottom bar instead, so no reservation is needed there.
+          [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+            width: `calc(100% - ${layout.fieldSpaceForRightSideControls})`,
+          },
+          // Lower bound must be MIN_PLOT_SIZE, not 0, or columns shrink past
+          // it to still fit the container.
+          gridTemplateColumns: `repeat(${columns}, minmax(${MIN_PLOT_SIZE}, ${maxPlotSize}))`,
+          // Reserves the same half-plot on each side so the outermost
+          // staggered plots don't get clipped by Stage's overflow: auto.
+          paddingLeft: `calc(${maxPlotSize} / 2)`,
+          paddingRight: `calc(${maxPlotSize} / 2)`,
+          // Counteracts a structural bias in the flex centering below: with
+          // topOverhangReserve applied as paddingTop on .Forest, the
+          // one-sided reserved space shifts the centered content's
+          // midpoint down by half that reserve (verified algebraically),
+          // regardless of which box actually holds the padding. This
+          // transform must live here, not on .Forest - .Forest is an
+          // ancestor of the fixed-positioned ForestQuickSelect, and a
+          // transform on it would break that fixed positioning.
+          transform: `translateY(calc(${topOverhangReserve} / -2))`,
+          '@media (orientation: portrait)': {
+            transform: `translateY(calc(${topOverhangReserve} / -2 - ${PORTRAIT_UPWARD_NUDGE_PX}px))`,
+          },
         }}
       >
         {forest.map((row, y) =>

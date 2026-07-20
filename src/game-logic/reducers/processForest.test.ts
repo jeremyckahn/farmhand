@@ -1,5 +1,6 @@
 import { testState } from '../../test-utils/index.js'
 import { fertilizerType } from '../../enums.js'
+import { FRUIT_READY_TO_HARVEST } from '../../templates.js'
 
 import { processForest } from './processForest.js'
 
@@ -119,6 +120,71 @@ describe('processForest', () => {
         daysGrown: 31.5,
         daysSinceLastHarvest: 2.5,
       })
+    })
+  })
+
+  describe('fruit-ready notifications', () => {
+    test("notifies when a tree's fruit newly becomes ripe", () => {
+      const { newDayNotifications } = processForest(
+        testState({
+          // apple's fruitTimeline is [2, 2, 2] (ripe from daysSinceLastHarvest
+          // 6); daysSinceLastHarvest 5 -> 6 crosses that threshold this tick.
+          forest: [[{ itemId: 'apple', daysOld: 30, daysSinceLastHarvest: 5 }]],
+          newDayNotifications: [],
+        })
+      )
+
+      expect(newDayNotifications).toEqual([
+        {
+          message: FRUIT_READY_TO_HARVEST('', { Apple: 1 }),
+          severity: 'success',
+        },
+      ])
+    })
+
+    test('does not notify again once the fruit is already ripe', () => {
+      const { newDayNotifications } = processForest(
+        testState({
+          forest: [
+            [{ itemId: 'apple', daysOld: 30, daysSinceLastHarvest: 10 }],
+          ],
+          newDayNotifications: [],
+        })
+      )
+
+      expect(newDayNotifications).toEqual([])
+    })
+
+    test('does not notify while the tree itself is not yet grown', () => {
+      const { newDayNotifications } = processForest(
+        testState({
+          forest: [[{ itemId: 'apple', daysOld: 2, daysSinceLastHarvest: 0 }]],
+          newDayNotifications: [],
+        })
+      )
+
+      expect(newDayNotifications).toEqual([])
+    })
+
+    test('aggregates multiple trees of the same species newly ripening', () => {
+      const { newDayNotifications } = processForest(
+        testState({
+          forest: [
+            [
+              { itemId: 'apple', daysOld: 30, daysSinceLastHarvest: 5 },
+              { itemId: 'apple', daysOld: 40, daysSinceLastHarvest: 5 },
+            ],
+          ],
+          newDayNotifications: [],
+        })
+      )
+
+      expect(newDayNotifications).toEqual([
+        {
+          message: FRUIT_READY_TO_HARVEST('', { Apple: 2 }),
+          severity: 'success',
+        },
+      ])
     })
   })
 })

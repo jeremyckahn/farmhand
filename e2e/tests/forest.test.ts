@@ -34,6 +34,9 @@ test('should harvest ripe fruit from a grown apple tree', async ({ page }) => {
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Forest' }).click()
 
+  // Picking fruit requires the Picker Pole to be the selected tool.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
+
   const treePlot = page.locator('.ForestPlot').first()
   await expect(treePlot).toHaveClass(/can-be-harvested/)
 
@@ -52,6 +55,9 @@ test('should regrow fruit after harvesting and be harvestable again', async ({
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Forest' }).click()
+
+  // Picking fruit requires the Picker Pole to be the selected tool.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
 
   const treePlot = page.locator('.ForestPlot').first()
 
@@ -88,7 +94,9 @@ test('should chop down a tree for wood, harvesting any ripe fruit as a bonus', a
   await page.getByRole('option', { name: ': Forest' }).click()
 
   const treePlot = page.locator('.ForestPlot').first()
-  await expect(treePlot).toHaveClass(/can-be-harvested/)
+  // Ripeness itself (unlike can-be-harvested) doesn't depend on which tool
+  // is selected - confirms there's fruit for the axe to bonus-harvest below.
+  await expect(treePlot.locator('.ForestTreeSprite.heartBeat')).toBeVisible()
 
   await page.getByRole('button', { name: /Select the axe/ }).click()
   await treePlot.click()
@@ -106,6 +114,30 @@ test('should chop down a tree for wood, harvesting any ripe fruit as a bonus', a
   ).toBeVisible()
 })
 
+test('should be able to plant a sapling in a plot right after chopping it with the axe', async ({
+  page,
+}) => {
+  // Regression: selecting a sapling right after chopping (without first
+  // deselecting the axe) used to leave fieldMode stuck on CHOP, silently
+  // no-oping the plant click instead of planting.
+  await loadFixture(page, 'forest-tree-grown')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  const treePlot = page.locator('.ForestPlot').first()
+
+  await page.getByRole('button', { name: /Select the axe/ }).click()
+  await treePlot.click()
+  await expect(treePlot).toHaveClass(/is-empty/)
+
+  await page.getByRole('button', { name: 'Apple Sapling' }).click()
+  await treePlot.click()
+
+  await expect(treePlot).not.toHaveClass(/is-empty/)
+  await expect(treePlot.locator('.ForestTreeSprite')).toHaveCount(1)
+})
+
 test('should not treat a dead tree as harvestable, even with frozen ripe-looking fruit', async ({
   page,
 }) => {
@@ -116,6 +148,10 @@ test('should not treat a dead tree as harvestable, even with frozen ripe-looking
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Forest' }).click()
+
+  // Select the Picker Pole so the click below actually attempts a harvest -
+  // otherwise this would trivially pass regardless of the dead-tree check.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
 
   const treePlot = page.locator('.ForestPlot').first()
   await expect(treePlot).not.toHaveClass(/can-be-harvested/)
@@ -154,6 +190,53 @@ test('should chop down a dead tree for the full wood yield, with no fruit bonus'
   await expect(
     page.locator('.ContextPane').getByText('Apple', { exact: true })
   ).not.toBeVisible()
+})
+
+test('should apply the correct highlight class to plots based on which toolbelt tool is selected', async ({
+  page,
+}) => {
+  await loadFixture(page, 'forest-tree-grown')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  // forest[0] is [<grown apple tree with ripe fruit>, null, null, null].
+  const treePlot = page.locator('.ForestPlot').first()
+  const emptyPlot = page.locator('.ForestPlot').nth(1)
+
+  // No tool is selected yet (fieldMode defaults to OBSERVE) - neither
+  // highlight class should be present on either plot.
+  await expect(treePlot).not.toHaveClass(/can-be-chopped/)
+  await expect(treePlot).not.toHaveClass(/can-be-harvested/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-chopped/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-harvested/)
+
+  // Selecting the axe highlights every choppable (i.e. every tree) plot
+  // with can-be-chopped, not can-be-harvested - regardless of the tree's
+  // fruit being ripe.
+  await page.getByRole('button', { name: /Select the axe/ }).click()
+
+  await expect(treePlot).toHaveClass(/can-be-chopped/)
+  await expect(treePlot).not.toHaveClass(/can-be-harvested/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-chopped/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-harvested/)
+
+  // Selecting the picker pole instead highlights only plots with ripe
+  // fruit with can-be-harvested, not can-be-chopped.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
+
+  await expect(treePlot).not.toHaveClass(/can-be-chopped/)
+  await expect(treePlot).toHaveClass(/can-be-harvested/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-chopped/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-harvested/)
+
+  // Switching back to the axe swaps the highlight back too, confirming
+  // it's driven by the currently selected tool rather than latching once
+  // ripe fruit has been seen.
+  await page.getByRole('button', { name: /Select the axe/ }).click()
+
+  await expect(treePlot).toHaveClass(/can-be-chopped/)
+  await expect(treePlot).not.toHaveClass(/can-be-harvested/)
 })
 
 test('should apply mulch to a tree and consume it from inventory', async ({
@@ -214,6 +297,9 @@ test('should grow a rainbow-mulched tree faster than a mulched tree, and a mulch
   // inventory and the toolbelt no longer offers either.
   await expect(mulchButton).not.toBeVisible()
   await expect(rainbowMulchButton).not.toBeVisible()
+
+  // can-be-harvested requires the picker pole to be the active tool.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
 
   const endDay = () =>
     page.getByRole('button', { name: 'End the day to save your' }).click()

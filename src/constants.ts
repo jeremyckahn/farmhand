@@ -43,6 +43,11 @@ export const PURCHASEABLE_FIELD_SIZES: Map<
 export const INITIAL_FOREST_WIDTH = 4
 export const INITIAL_FOREST_HEIGHT = 1
 
+// How far a staggered row's canopy should overlap the row above it on each
+// side (Forest.tsx's columnGap and ForestPlot.tsx's translateX both derive
+// from this, so the overlap stays symmetric - see their comments).
+export const FOREST_ROW_STAGGER_OVERLAP_PX = 16
+
 export const PURCHASABLE_FOREST_SIZES: Map<
   number,
   farmhand.purchaseableFieldSize
@@ -280,6 +285,20 @@ export const AXE_WOOD_YIELD_RANGE: Partial<Record<
   [toolLevel.IRON]: [4, 6],
   [toolLevel.SILVER]: [6, 8],
   [toolLevel.GOLD]: [8, 10],
+}
+
+// Flat +1 fruit per tool tier when picking with the Picker Pole (see
+// harvestForestPlot.ts) - unlike AXE_WOOD_YIELD_RANGE this isn't a random
+// range, just a per-tier constant.
+export const PICKER_POLE_LEVEL_TO_FRUIT_YIELD: Partial<Record<
+  farmhand.toolLevel,
+  number
+>> = {
+  [toolLevel.DEFAULT]: 1,
+  [toolLevel.BRONZE]: 2,
+  [toolLevel.IRON]: 3,
+  [toolLevel.SILVER]: 4,
+  [toolLevel.GOLD]: 5,
 }
 
 // A planted tree's actual lifespan varies per-instance, rolled once at

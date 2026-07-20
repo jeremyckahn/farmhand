@@ -115,6 +115,7 @@ describe('UI Event Handlers', () => {
 
       expect(newState).toEqual({
         selectedItemId: '',
+        selectedForestItemId: '',
         fieldMode: fieldMode.WATER,
       })
     })
@@ -129,8 +130,23 @@ describe('UI Event Handlers', () => {
 
       expect(newState).toEqual({
         selectedItemId: 'crop-seed',
+        selectedForestItemId: '',
         fieldMode: fieldMode.PLANT,
       })
+    })
+
+    test('clears a selected sapling when a Forest tool is selected', () => {
+      const handler = uiEventHandlers.handleFieldModeSelect.bind(mockContext)
+
+      handler(fieldMode.CHOP)
+
+      const stateUpdater = mockContext.setState.mock.calls[0][0]
+      const newState = stateUpdater({
+        selectedItemId: '',
+        selectedForestItemId: 'apple-sapling',
+      })
+
+      expect(newState.selectedForestItemId).toEqual('')
     })
   })
 
@@ -161,6 +177,26 @@ describe('UI Event Handlers', () => {
       expect(mockContext.setState).toHaveBeenCalledWith({
         fieldMode: fieldMode.PLANT,
         selectedItemId: 'test-item',
+      })
+    })
+  })
+
+  describe('handleForestItemSelectClick', () => {
+    test('selects the sapling and switches to PLANT mode', () => {
+      const handler = uiEventHandlers.handleForestItemSelectClick.bind(
+        mockContext
+      )
+      const mockItem = testItem({ id: 'test-sapling' })
+
+      handler((mockItem as unknown) as Parameters<typeof handler>[0])
+
+      // Regression: selecting a sapling must back out of whatever field
+      // mode (e.g. CHOP, FERTILIZE) was previously active, or clicking an
+      // empty plot afterward silently no-ops instead of planting - see
+      // handleForestPlotClick's early-return branches for those modes.
+      expect(mockContext.setState).toHaveBeenCalledWith({
+        fieldMode: fieldMode.PLANT,
+        selectedForestItemId: 'test-sapling',
       })
     })
   })

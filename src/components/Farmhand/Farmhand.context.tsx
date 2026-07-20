@@ -184,6 +184,7 @@ export const createContextData = (): ContextData => {
       todaysStartingInventory: {},
       toolLevels: {
         AXE: 'UNAVAILABLE',
+        PICKER_POLE: 'UNAVAILABLE',
         SCYTHE: 'DEFAULT',
         SHOVEL: 'DEFAULT',
         HOE: 'DEFAULT',

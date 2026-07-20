@@ -43,6 +43,9 @@ export const SHOVEL_HIDDEN_TEXT = 'Select the shovel to dig for ore'
 export const AXE_ALT_TEXT = 'An axe for chopping down trees.'
 export const AXE_HIDDEN_TEXT =
   'Select the axe to chop down trees in the forest for wood'
+export const PICKER_POLE_ALT_TEXT = 'A picker pole for gathering tree fruit.'
+export const PICKER_POLE_HIDDEN_TEXT =
+  'Select the picker pole to pick ripe fruit from trees in the forest'
 
 // TODO: Implement all of these upgrades
 export const TOOL_LEVEL_INFO = {
@@ -80,6 +83,13 @@ export const TOOL_LEVEL_INFO = {
     IRON: '**Iron**: Chops down trees for 4-6 wood.',
     SILVER: '**Silver**: Chops down trees for 6-8 wood.',
     GOLD: '**Gold**: Chops down trees for 8-10 wood.',
+  },
+  PICKER_POLE: {
+    DEFAULT: '**Basic**: Picks 1 fruit per harvest.',
+    BRONZE: '**Bronze**: Picks 2 fruit per harvest.',
+    IRON: '**Iron**: Picks 3 fruit per harvest.',
+    SILVER: '**Silver**: Picks 4 fruit per harvest.',
+    GOLD: '**Gold**: Picks 5 fruit per harvest.',
   },
 }
 

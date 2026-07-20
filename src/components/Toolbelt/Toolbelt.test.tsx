@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import { fieldMode, toolLevel, toolType } from '../../enums.js'
+import { fieldMode, stageFocusType, toolLevel, toolType } from '../../enums.js'
 
 import { Toolbelt } from './Toolbelt.js'
 
@@ -34,7 +34,7 @@ describe('<ToolBelt />', () => {
     render(
       <Toolbelt fieldMode={fieldMode.OBSERVE} toolLevels={getToolLevels()} />
     )
-    expect(screen.getAllByRole('button')).toHaveLength(5)
+    expect(screen.getAllByRole('button')).toHaveLength(6)
   })
 
   test('does not render a tool that does not have a level set', () => {
@@ -44,7 +44,46 @@ describe('<ToolBelt />', () => {
 
     render(<Toolbelt fieldMode={fieldMode.OBSERVE} toolLevels={toolLevels} />)
 
-    expect(screen.getAllByRole('button')).toHaveLength(4)
+    expect(screen.getAllByRole('button')).toHaveLength(5)
+  })
+
+  describe('stageFocus filtering', () => {
+    test('only shows Field tools when stageFocus is FIELD', () => {
+      render(
+        <Toolbelt
+          fieldMode={fieldMode.OBSERVE}
+          stageFocus={stageFocusType.FIELD}
+          toolLevels={getToolLevels()}
+        />
+      )
+
+      expect(screen.getAllByRole('button')).toHaveLength(4)
+      expect(screen.getByText(/Select the watering can/)).toBeInTheDocument()
+      expect(screen.getByText(/Select the scythe/)).toBeInTheDocument()
+      expect(screen.getByText(/Select the hoe/)).toBeInTheDocument()
+      expect(screen.getByText(/Select the shovel/)).toBeInTheDocument()
+      expect(screen.queryByText(/Select the axe/)).not.toBeInTheDocument()
+      expect(
+        screen.queryByText(/Select the picker pole/)
+      ).not.toBeInTheDocument()
+    })
+
+    test('only shows Forest tools when stageFocus is FOREST', () => {
+      render(
+        <Toolbelt
+          fieldMode={fieldMode.OBSERVE}
+          stageFocus={stageFocusType.FOREST}
+          toolLevels={getToolLevels()}
+        />
+      )
+
+      expect(screen.getAllByRole('button')).toHaveLength(2)
+      expect(screen.getByText(/Select the axe/)).toBeInTheDocument()
+      expect(screen.getByText(/Select the picker pole/)).toBeInTheDocument()
+      expect(
+        screen.queryByText(/Select the watering can/)
+      ).not.toBeInTheDocument()
+    })
   })
 
   describe('tool selection', () => {

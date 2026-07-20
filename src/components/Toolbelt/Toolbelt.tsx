@@ -19,13 +19,18 @@ import { squareImgSx } from '../../styles/sx.js'
 import { breakpoints } from '../../styles/tokens.js'
 
 const getTools = memoize(
-  (toolLevels: Record<farmhand.toolType, farmhand.toolLevel>) => {
+  (
+    toolLevels: Record<farmhand.toolType, farmhand.toolLevel>,
+    stageFocus?: farmhand.stageFocusType
+  ) => {
     const tools: typeof toolsData[keyof typeof toolsData][] = []
 
     for (let tool of Object.values(toolsData)) {
-      if (toolLevels[tool.type] !== toolLevel.UNAVAILABLE) {
-        tools.push(tool)
-      }
+      if (toolLevels[tool.type] === toolLevel.UNAVAILABLE) continue
+      if (stageFocus && !(tool.screens as string[]).includes(stageFocus))
+        continue
+
+      tools.push(tool)
     }
 
     return tools.sort((a, b) => a.order - b.order)
@@ -45,15 +50,17 @@ const getToolImage = (tool: { level: farmhand.toolLevel; id: string }) => {
 interface ToolbeltProps {
   fieldMode: string
   handleFieldModeSelect: (mode: string) => void
+  stageFocus?: farmhand.stageFocusType
   toolLevels: Record<farmhand.toolType, farmhand.toolLevel>
 }
 
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
   handleFieldModeSelect,
+  stageFocus,
   toolLevels,
 }: ToolbeltProps) => {
-  const tools = getTools(toolLevels)
+  const tools = getTools(toolLevels, stageFocus)
 
   return (
     <Div className="Toolbelt">

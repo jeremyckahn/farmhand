@@ -156,6 +156,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       toolLevels: {
         [toolType.AXE as farmhand.toolType]: toolLevel.UNAVAILABLE as farmhand.toolLevel,
         [toolType.HOE as farmhand.toolType]: toolLevel.DEFAULT as farmhand.toolLevel,
+        [toolType.PICKER_POLE as farmhand.toolType]: toolLevel.UNAVAILABLE as farmhand.toolLevel,
         [toolType.SCYTHE as farmhand.toolType]: toolLevel.DEFAULT as farmhand.toolLevel,
         [toolType.SHOVEL as farmhand.toolType]: toolLevel.UNAVAILABLE as farmhand.toolLevel,
         [toolType.WATERING_CAN as farmhand.toolType]: toolLevel.DEFAULT as farmhand.toolLevel,
@@ -573,6 +574,26 @@ export const useFarmhand = (props: FarmhandProps) => {
       isMounted = false
     }
   }, [createInitialState, incrementDay, props.localforage, syncToRoom])
+
+  // isMenuOpen is otherwise only synced to the viewport at boot and on
+  // stageFocus changes - without this, resizing the window (or rotating a
+  // device) never opens/closes the sidebar until the next of those, which
+  // in practice meant a full page reload.
+  useEffect(() => {
+    const handleResize = () => {
+      setState(previous => {
+        const isMenuOpen = !doesMenuObstructStage()
+
+        return previous.isMenuOpen === isMenuOpen
+          ? previous
+          : { ...previous, isMenuOpen }
+      })
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   // Post-increment day side effects
   useEffect(() => {

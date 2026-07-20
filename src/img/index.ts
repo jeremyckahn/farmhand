@@ -206,15 +206,20 @@ import shovelBronze from './tools/shovel-bronze.png'
 import shovelIron from './tools/shovel-iron.png'
 import shovelSilver from './tools/shovel-silver.png'
 import shovelGold from './tools/shovel-gold.png'
+import pickerPole from './tools/picker-pole.png'
+import pickerPoleBronze from './tools/picker-pole-bronze.png'
+import pickerPoleIron from './tools/picker-pole-iron.png'
+import pickerPoleSilver from './tools/picker-pole-silver.png'
+import pickerPoleGold from './tools/picker-pole-gold.png'
 import wateringCan from './tools/watering-can.png'
 
 // Forest resources
 //
-// NOTE: source art is per-species-named (apple-tree-wood.png) even though
+// NOTE: source art is per-species-named (applewood.png) even though
 // there's currently just one generic "wood" item covering every tree
 // species - the artist left it named that way in case wood gets split by
 // tree type later.
-import wood from './items/apple-tree-wood.png'
+import wood from './items/applewood.png'
 
 // Mined resources
 import coal from './ores/coal.png'
@@ -275,6 +280,11 @@ const smeltedItems = {
   'shovel-iron': shovelIron,
   'shovel-silver': shovelSilver,
   'shovel-gold': shovelGold,
+
+  'picker-pole-bronze': pickerPoleBronze,
+  'picker-pole-iron': pickerPoleIron,
+  'picker-pole-silver': pickerPoleSilver,
+  'picker-pole-gold': pickerPoleGold,
 }
 
 export const craftedItems = {
@@ -516,6 +526,7 @@ export const wines: Record<farmhand.grapeVariety, string> = {
 export const tools = {
   axe,
   hoe,
+  'picker-pole': pickerPole,
   scythe,
   shovel,
   'watering-can': wateringCan,

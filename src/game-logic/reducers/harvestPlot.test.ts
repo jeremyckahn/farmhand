@@ -12,6 +12,7 @@ describe('harvestPlot', () => {
   const toolLevelsDefault = {
     [toolType.AXE]: toolLevel.UNAVAILABLE,
     [toolType.HOE]: toolLevel.DEFAULT,
+    [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
     [toolType.SCYTHE]: toolLevel.DEFAULT,
     [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
     [toolType.WATERING_CAN]: toolLevel.DEFAULT,
@@ -20,6 +21,7 @@ describe('harvestPlot', () => {
   const toolLevelsBronze = {
     [toolType.AXE]: toolLevel.UNAVAILABLE,
     [toolType.HOE]: toolLevel.DEFAULT,
+    [toolType.PICKER_POLE]: toolLevel.UNAVAILABLE,
     [toolType.SCYTHE]: toolLevel.BRONZE,
     [toolType.SHOVEL]: toolLevel.UNAVAILABLE,
     [toolType.WATERING_CAN]: toolLevel.DEFAULT,

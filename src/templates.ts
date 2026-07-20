@@ -39,6 +39,26 @@ export const MILKS_PRODUCED = (
   return message
 }
 
+export const FRUIT_READY_TO_HARVEST = (
+  _: any,
+  fruitReady: Record<string, number>
+): string => {
+  let message = `Fruit is ready to pick in the forest:
+`
+
+  Object.keys(fruitReady)
+    .sort()
+    .forEach(
+      treeName =>
+        (message += `  - ${fruitReady[treeName]} ${treeName} tree${
+          fruitReady[treeName] > 1 ? 's' : ''
+        }
+`)
+    )
+
+  return message
+}
+
 export const FERTILIZERS_PRODUCED = (
   _: any,
   fertilizersProduced: Record<string, number>
@@ -131,32 +151,47 @@ export const LEVEL_GAINED_NOTIFICATION = (
 
   const levelObject = levels[newLevel] as {
     increasesSprinklerRange?: boolean
-    unlocksTool?: farmhand.toolType
+    unlocksTool?: farmhand.toolType[]
     unlocksStageFocusType?: farmhand.stageFocusType
   }
 
+  // These scripted rewards aren't mutually exclusive - a single level (e.g.
+  // the one that unlocks the Forest) can carry more than one of them at
+  // once, so each gets its own independent check rather than an else-if
+  // chain, which would silently drop every reward but the first.
   if (itemUnlockLevels[newLevel]) {
     chunks.push(
       `Now available in the shop: **${
         itemsMap[itemUnlockLevels[newLevel]].name
       }**.`
     )
-  } else if (levelObject && levelObject.increasesSprinklerRange) {
+  }
+
+  if (levelObject && levelObject.increasesSprinklerRange) {
     chunks.push(`Sprinkler range has increased.`)
-  } else if (randomCropSeed) {
+  }
+
+  if (levelObject && levelObject.unlocksTool) {
+    if (levelObject.unlocksTool.includes(toolType.SHOVEL)) {
+      chunks.push(SHOVEL_UNLOCKED)
+    }
+  }
+
+  if (levelObject && levelObject.unlocksStageFocusType) {
+    if (levelObject.unlocksStageFocusType === stageFocusType.FOREST) {
+      chunks.push(FOREST_AVAILABLE_NOTIFICATION)
+    }
+  }
+
+  // A random crop seed reward only ever applies to levels with no other
+  // scripted reward (see processLevelUp.ts) - chunks.length is still 1
+  // (just the level-up header) if none of the checks above matched.
+  if (chunks.length === 1 && randomCropSeed) {
     chunks.push(
       `You got **${getRandomLevelUpRewardQuantity(newLevel)} units of ${
         randomCropSeed.name
       }** as a reward!`
     )
-  } else if (levelObject && levelObject.unlocksTool) {
-    if (levelObject.unlocksTool === toolType.SHOVEL) {
-      chunks.push(SHOVEL_UNLOCKED)
-    }
-  } else if (levelObject && levelObject.unlocksStageFocusType) {
-    if (levelObject.unlocksStageFocusType === stageFocusType.FOREST) {
-      chunks.push(FOREST_AVAILABLE_NOTIFICATION)
-    }
   }
 
   return chunks.join(' ')

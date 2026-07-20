@@ -3,6 +3,10 @@ import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import {
+  FOREST_ROW_STAGGER_OVERLAP_PX,
+  PICKER_POLE_LEVEL_TO_FRUIT_YIELD,
+} from '../../constants.js'
 import { itemsMap } from '../../data/maps.js'
 import { plotStates } from '../../img/index.js'
 import forestPlotDefaultImg from '../../img/plot-states/forest-plot-default.png'
@@ -23,7 +27,7 @@ import { Div } from '../Elements/index.js'
 
 const { GROWN } = cropLifeStage
 const { DEAD } = treeLifeStageEnum
-const { CHOP } = fieldModeEnum
+const { CHOP, HARVEST_FRUIT } = fieldModeEnum
 const { NONE, STANDARD, RAINBOW } = fertilizerTypeEnum
 
 // Mirrors Plot.tsx's getBackgroundStyles - a mulched tree gets a plot-tile
@@ -46,10 +50,16 @@ const getForestPlotBackgroundImage = (
   ].join(', ')
 }
 
+const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
+const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
+const colorYellowCaution = 'rgba(255, 220, 0, 0.5)'
+
 const getTreeTooltipText = (
   treeLifeStage: farmhand.treeLifeStage,
   fruitLifeStage: farmhand.cropLifeStage,
-  fertilizerType: farmhand.fertilizerType | undefined
+  fertilizerType: farmhand.fertilizerType | undefined,
+  fruitYield: number,
+  fruitItemName: string | null
 ): string => {
   if (treeLifeStage === DEAD) {
     return 'Dead'
@@ -59,7 +69,7 @@ const getTreeTooltipText = (
     treeLifeStage !== GROWN
       ? 'Growing...'
       : fruitLifeStage === GROWN
-      ? 'Ready to pick!'
+      ? `Ready to pick! (${fruitYield} ${fruitItemName ?? 'fruit'})`
       : 'Fruiting...'
 
   if (!fertilizerType || fertilizerType === NONE) {
@@ -71,10 +81,6 @@ const getTreeTooltipText = (
 
   return `${growthText} (${fertilizerLabel})`
 }
-
-const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
-const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
-const colorRedDestructive = 'rgba(255, 0, 0, 0.5)'
 
 const formatWoodRange = ([min, max]: [number, number]): string =>
   min === max ? `${min}` : `${min}-${max}`
@@ -118,12 +124,22 @@ export const ForestPlot = ({
   const fruitLifeStage = isTree
     ? getFruitLifeStage(plotContent, treeLifeStage ?? undefined)
     : null
-  const canBeHarvested = fruitLifeStage === GROWN
+  // Whether the tree's fruit is ripe at all, independent of which tool is
+  // currently selected - used for the "ready to pick" tooltip/animation and
+  // for the axe's bonus-fruit chop text, neither of which care about the
+  // picker pole being equipped.
+  const isFruitRipe = fruitLifeStage === GROWN
   const canBeChopped = isTree && fieldMode === CHOP
+  // Unlike ripeness itself, actually being able to click-to-harvest requires
+  // the picker pole to be the active tool, mirroring how canBeChopped
+  // requires the axe's CHOP mode to be active.
+  const canBeHarvested = isFruitRipe && fieldMode === HARVEST_FRUIT
   const item = isTree ? itemsMap[plotContent.itemId] : null
   const treeImage = isTree ? getForestPlotImage(plotContent) : null
   const fruitImage = isTree ? getForestFruitImage(plotContent) : null
   const treeFertilizerType = isTree ? plotContent.fertilizerType : undefined
+  const fruitYield =
+    PICKER_POLE_LEVEL_TO_FRUIT_YIELD[toolLevels?.[toolType.PICKER_POLE]] ?? 1
   // A dead tree yields the same full range as a living grown one - only a
   // sapling/still-growing tree gets the halved range (see chopForestPlot.ts).
   const chopWoodRange = canBeChopped
@@ -132,6 +148,14 @@ export const ForestPlot = ({
         treeLifeStage === GROWN || treeLifeStage === DEAD
       )
     : null
+  // The tree/fruit sprites are DOM descendants of the plot Div below, which
+  // has its own onClick calling the same handler - stopPropagation prevents
+  // a click on the sprite from also bubbling up and firing it a second
+  // time, which would double-chop/double-harvest a single click.
+  const handleTreeSpriteClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    handleForestPlotClick(x, y)
+  }
 
   const plot = (
     <Div
@@ -155,23 +179,34 @@ export const ForestPlot = ({
         position: 'relative',
         width: '100%',
         aspectRatio: '1',
+        // Staggers alternating rows by ~half a plot-width so a tree's
+        // overhanging canopy grows into a different visual slot than
+        // "directly above." Trimmed toward center by half of
+        // FOREST_ROW_STAGGER_OVERLAP_PX, paired with Forest.tsx's matching
+        // columnGap - at exactly +/-50% one side is always flush regardless
+        // of gap, so both need trimming for a symmetric overlap.
+        transform: `translateX(calc(${y % 2 === 0 ? '-50%' : '50%'} ${
+          y % 2 === 0 ? '+' : '-'
+        } ${FOREST_ROW_STAGGER_OVERLAP_PX / 2}px))`,
         '&:hover': {
           backgroundColor: colorGenericHighlight,
           cursor: 'pointer',
         },
-        '&.can-be-harvested:hover': {
-          backgroundColor: colorGreenOk,
-        },
         // Matches how Field tools highlight every applicable plot at once
         // while a tool is selected (see Field.tsx's "&.harvest-mode
-        // .Plot.can-be-harvested" etc.), rather than only on hover: the axe
-        // is destructive - it removes the tree regardless of its growth
-        // stage - so every choppable plot should read as such persistently,
-        // not just the one currently under the cursor. Takes priority over
-        // the (potentially also true) can-be-harvested green hover since
-        // it's unconditional rather than hover-gated.
+        // .Plot.can-be-harvested" etc.), rather than only on hover: both
+        // canBeHarvested and canBeChopped are already gated on the matching
+        // tool being the active one (see their definitions above), so every
+        // plot that tool applies to should read as such persistently, not
+        // just the one currently under the cursor.
+        '&.can-be-harvested': {
+          backgroundColor: colorGreenOk,
+          '&:hover': {
+            cursor: 'pointer',
+          },
+        },
         '&.can-be-chopped': {
-          backgroundColor: colorRedDestructive,
+          backgroundColor: colorYellowCaution,
           '&:hover': {
             cursor: 'pointer',
           },
@@ -200,6 +235,7 @@ export const ForestPlot = ({
             {...{
               'aria-hidden': true,
               className: 'ForestTreeSprite',
+              onClick: handleTreeSpriteClick,
               style: {
                 backgroundImage: treeImage ? `url(${treeImage})` : undefined,
               },
@@ -209,9 +245,9 @@ export const ForestPlot = ({
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'contain',
               bottom: '50%',
+              cursor: 'pointer',
               imageRendering: 'pixelated',
               left: 0,
-              pointerEvents: 'none',
               position: 'absolute',
               width: '100%',
               aspectRatio: '1 / 2',
@@ -222,8 +258,9 @@ export const ForestPlot = ({
               {...{
                 'aria-hidden': true,
                 className: classNames('ForestTreeSprite', {
-                  ...(canBeHarvested && { animated: true, heartBeat: true }),
+                  ...(isFruitRipe && { animated: true, heartBeat: true }),
                 }),
+                onClick: handleTreeSpriteClick,
                 style: { backgroundImage: `url(${fruitImage})` },
               }}
               sx={{
@@ -231,9 +268,9 @@ export const ForestPlot = ({
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain',
                 bottom: '50%',
+                cursor: 'pointer',
                 imageRendering: 'pixelated',
                 left: 0,
-                pointerEvents: 'none',
                 position: 'absolute',
                 width: '100%',
                 aspectRatio: '1 / 2',
@@ -257,16 +294,22 @@ export const ForestPlot = ({
         title: (
           <>
             {item ? <Typography>{item.name} Tree</Typography> : null}
+            {isTree && (
+              <Typography>
+                {plotContent.daysOld}{' '}
+                {plotContent.daysOld === 1 ? 'day' : 'days'} old
+              </Typography>
+            )}
             {isTree &&
               treeLifeStage &&
               fruitLifeStage &&
               (canBeChopped ? (
                 <>
-                  <Typography>{getChopActionText(canBeHarvested)}</Typography>
+                  <Typography>{getChopActionText(isFruitRipe)}</Typography>
                   <Typography>
                     {getChopYieldText(
                       chopWoodRange,
-                      canBeHarvested ? item?.name ?? null : null
+                      isFruitRipe ? item?.name ?? null : null
                     )}
                   </Typography>
                 </>
@@ -275,7 +318,9 @@ export const ForestPlot = ({
                   {getTreeTooltipText(
                     treeLifeStage,
                     fruitLifeStage,
-                    treeFertilizerType
+                    treeFertilizerType,
+                    fruitYield,
+                    item?.name ?? null
                   )}
                 </Typography>
               ))}
