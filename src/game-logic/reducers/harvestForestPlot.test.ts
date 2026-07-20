@@ -230,4 +230,34 @@ describe('harvestForestPlot', () => {
       expect(state).toEqual(inputState)
     })
   })
+
+  describe('inventory has less space than the picker pole fruit yield', () => {
+    test('increments treeFruitsHarvested by only the fruit that fit in the inventory', () => {
+      const { inventory, treeFruitsHarvested } = harvestForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-1',
+                daysOld: 3,
+                daysSinceLastHarvest: 2,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: 1,
+          toolLevels: {
+            ...toolLevelsWithPickerPole,
+            PICKER_POLE: toolLevel.GOLD,
+          },
+          treeFruitsHarvested: {},
+        }),
+        0,
+        0
+      )
+
+      expect(inventory).toEqual([{ id: 'sample-tree-1', quantity: 1 }])
+      expect(treeFruitsHarvested).toEqual({ 'sample-tree-1': 1 })
+    })
+  })
 })

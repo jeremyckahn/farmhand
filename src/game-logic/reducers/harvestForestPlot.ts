@@ -7,6 +7,7 @@ import { PICKER_POLE_LEVEL_TO_FRUIT_YIELD } from '../../constants.js'
 import { itemsMap } from '../../data/maps.js'
 import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
 import { getFruitLifeStage } from '../../utils/getFruitLifeStage.js'
+import { inventorySpaceRemaining } from '../../utils/inventorySpaceRemaining.js'
 
 import { addItemToInventory } from './addItemToInventory.js'
 import { modifyForestPlotAt } from './modifyForestPlotAt.js'
@@ -35,13 +36,22 @@ export const harvestForestPlot = (
     PICKER_POLE_LEVEL_TO_FRUIT_YIELD[state.toolLevels[toolType.PICKER_POLE]] ??
     1
 
+  // Cap the counted yield to the space actually available so
+  // treeFruitsHarvested reflects fruit the player received, not fruit that
+  // addItemToInventory silently dropped because the inventory was nearly full.
+  const receivedFruitYield = Math.min(
+    fruitYield,
+    inventorySpaceRemaining(state)
+  )
+
   state = addItemToInventory(state, item, fruitYield)
 
   state = {
     ...state,
     treeFruitsHarvested: {
       ...state.treeFruitsHarvested,
-      [item.id]: (state.treeFruitsHarvested[item.id] || 0) + fruitYield,
+      [item.id]:
+        (state.treeFruitsHarvested[item.id] || 0) + receivedFruitYield,
     },
   }
 
