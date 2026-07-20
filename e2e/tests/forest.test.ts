@@ -192,6 +192,53 @@ test('should chop down a dead tree for the full wood yield, with no fruit bonus'
   ).not.toBeVisible()
 })
 
+test('should apply the correct highlight class to plots based on which toolbelt tool is selected', async ({
+  page,
+}) => {
+  await loadFixture(page, 'forest-tree-grown')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  // forest[0] is [<grown apple tree with ripe fruit>, null, null, null].
+  const treePlot = page.locator('.ForestPlot').first()
+  const emptyPlot = page.locator('.ForestPlot').nth(1)
+
+  // No tool is selected yet (fieldMode defaults to OBSERVE) - neither
+  // highlight class should be present on either plot.
+  await expect(treePlot).not.toHaveClass(/can-be-chopped/)
+  await expect(treePlot).not.toHaveClass(/can-be-harvested/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-chopped/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-harvested/)
+
+  // Selecting the axe highlights every choppable (i.e. every tree) plot
+  // with can-be-chopped, not can-be-harvested - regardless of the tree's
+  // fruit being ripe.
+  await page.getByRole('button', { name: /Select the axe/ }).click()
+
+  await expect(treePlot).toHaveClass(/can-be-chopped/)
+  await expect(treePlot).not.toHaveClass(/can-be-harvested/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-chopped/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-harvested/)
+
+  // Selecting the picker pole instead highlights only plots with ripe
+  // fruit with can-be-harvested, not can-be-chopped.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
+
+  await expect(treePlot).not.toHaveClass(/can-be-chopped/)
+  await expect(treePlot).toHaveClass(/can-be-harvested/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-chopped/)
+  await expect(emptyPlot).not.toHaveClass(/can-be-harvested/)
+
+  // Switching back to the axe swaps the highlight back too, confirming
+  // it's driven by the currently selected tool rather than latching once
+  // ripe fruit has been seen.
+  await page.getByRole('button', { name: /Select the axe/ }).click()
+
+  await expect(treePlot).toHaveClass(/can-be-chopped/)
+  await expect(treePlot).not.toHaveClass(/can-be-harvested/)
+})
+
 test('should apply mulch to a tree and consume it from inventory', async ({
   page,
 }) => {
