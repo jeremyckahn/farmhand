@@ -3,7 +3,12 @@ import localforage from 'localforage'
 
 import * as reducers from '../../game-logic/reducers/index.js'
 
+interface Features {
+  [key: string]: boolean | undefined
+}
+
 export interface FarmhandProps {
+  features?: Features
   localforage?: typeof localforage
   match?: any
   history?: any

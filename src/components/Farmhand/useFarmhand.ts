@@ -59,6 +59,7 @@ const { CLEANUP, HARVEST, MINE, WATER } = fieldMode
 export const useFarmhand = (props: FarmhandProps) => {
   // Extract props properly
   const {
+    features: propsFeatures,
     match: { path = '', params: { room: paramRoom } = {} } = {},
   } = props
 
@@ -745,6 +746,7 @@ export const useFarmhand = (props: FarmhandProps) => {
   const gameState = {
     ...state,
     blockInput: isInputBlocked,
+    features: propsFeatures ?? {},
     fieldToolInventory,
     mulchInventory,
     isChatAvailable,

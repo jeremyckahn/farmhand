@@ -23,6 +23,7 @@ export type BoundHandlers<T> = {
 export interface ContextData {
   gameState: farmhand.state & {
     blockInput: boolean
+    features: Record<string, boolean | undefined>
     fieldToolInventory: farmhand.item[]
     mulchInventory: farmhand.item[]
     isChatAvailable: boolean
@@ -45,6 +46,7 @@ export const createContextData = (): ContextData => {
     gameState: {
       viewTitle: '',
       viewList: [] as farmhand.stageFocusType[],
+      features: {},
       blockInput: false,
       shopInventory: [] as farmhand.item[],
       isChatAvailable: false,

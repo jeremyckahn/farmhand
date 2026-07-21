@@ -274,6 +274,7 @@ const Farmhand = (props: FarmhandProps) => {
 }
 
 Farmhand.defaultProps = {
+  features: {},
   localforage: localforage.createInstance({
     name: 'farmhand',
     description: 'Persisted game data for Farmhand',
@@ -282,6 +283,7 @@ Farmhand.defaultProps = {
 }
 
 Farmhand.propTypes = {
+  features: object,
   history: object,
   location: object,
   match: object.isRequired,
