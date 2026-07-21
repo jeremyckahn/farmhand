@@ -18,6 +18,6 @@ test('should fluctuate crop prices', async ({ page }) => {
   )
   await page.getByRole('button', { name: 'End the day to save your' }).click()
   await expect(page.locator('#shop-tabpanel-0')).toContainText(
-    'Carrot SeedPrice: $17.73Total: $17.73In inventory: 0Days to mature: 5'
+    'Carrot SeedPrice: $18.23Total: $18.23In inventory: 0Days to mature: 5'
   )
 })

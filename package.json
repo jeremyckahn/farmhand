@@ -25,7 +25,7 @@
     "postversion": "git push && git push --tags",
     "postinstall": "npm run build:api",
     "start": "vite --port=3000",
-    "start:e2e": "cross-env VITE_API_ROOT=http://localhost:3003/ VITE_TRACKER_URL=ws://localhost:8002 vite --port=3002",
+    "start:e2e": "cross-env VITE_ENABLE_SKIP_ANIMATIONS=true VITE_API_ROOT=http://localhost:3003/ VITE_TRACKER_URL=ws://localhost:8002 vite --port=3002",
     "start:api": "NODE_OPTIONS=--openssl-legacy-provider vercel dev --token=$VERCEL_TOKEN --listen=0.0.0.0:3001 --yes",
     "start:api:e2e": "NODE_OPTIONS=--openssl-legacy-provider vercel dev --token=$VERCEL_TOKEN --listen=0.0.0.0:3003 --yes",
     "start:backend": "docker compose up",
