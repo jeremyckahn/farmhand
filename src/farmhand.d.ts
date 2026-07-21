@@ -45,7 +45,7 @@ declare namespace farmhand {
     | 'WATERMELON'
     | 'WHEAT'
     | 'WEED'
-  type treeType = 'APPLE'
+  type treeType = 'APPLE' | 'BANANA'
   type recipeType =
     | 'FERMENTATION'
     | 'FORGE'

@@ -9,7 +9,7 @@ import { openPage } from '../test-utils/open-page.js'
 // draw, including this one, and a new seed producing the same event will
 // need to be found.
 test('should have random price events upon ending day', async ({ page }) => {
-  await openPage(page, 0.003)
+  await openPage(page, 0.053)
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 

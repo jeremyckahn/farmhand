@@ -192,6 +192,108 @@ test('should chop down a dead tree for the full wood yield, with no fruit bonus'
   ).not.toBeVisible()
 })
 
+test('should plant a banana sapling in an empty forest plot', async ({
+  page,
+}) => {
+  await loadFixture(page, 'forest-tree-banana-grown')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  // forest[0] is [<grown banana tree>, null, null, null], so the second
+  // .ForestPlot in DOM order (row-major) is the first empty plot.
+  const targetPlot = page.locator('.ForestPlot').nth(1)
+  await expect(targetPlot).toHaveClass(/is-empty/)
+
+  await page.getByRole('button', { name: 'Banana Sapling' }).click()
+  await targetPlot.click()
+
+  await expect(targetPlot).not.toHaveClass(/is-empty/)
+  await expect(targetPlot.locator('.ForestTreeSprite')).toHaveCount(1)
+
+  // The sapling was the player's only one, so it's gone from inventory and
+  // the toolbelt no longer offers it.
+  await expect(
+    page.getByRole('button', { name: 'Banana Sapling' })
+  ).not.toBeVisible()
+})
+
+test('should harvest ripe fruit from a grown banana tree', async ({ page }) => {
+  await loadFixture(page, 'forest-tree-banana-grown')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  // Picking fruit requires the Picker Pole to be the selected tool.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
+
+  const treePlot = page.locator('.ForestPlot').first()
+  await expect(treePlot).toHaveClass(/can-be-harvested/)
+
+  await treePlot.click()
+
+  await expect(treePlot).not.toHaveClass(/can-be-harvested/)
+  await expect(
+    page.locator('.ContextPane').getByText('Banana', { exact: true })
+  ).toBeVisible()
+})
+
+test('should chop down a banana tree for wood, harvesting any ripe fruit as a bonus', async ({
+  page,
+}) => {
+  await loadFixture(page, 'forest-tree-banana-grown')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  const treePlot = page.locator('.ForestPlot').first()
+  // Ripeness itself (unlike can-be-harvested) doesn't depend on which tool
+  // is selected - confirms there's fruit for the axe to bonus-harvest below.
+  await expect(treePlot.locator('.ForestTreeSprite.heartBeat')).toBeVisible()
+
+  await page.getByRole('button', { name: /Select the axe/ }).click()
+  await treePlot.click()
+
+  // The tree is gone entirely, not just its fruit.
+  await expect(treePlot).toHaveClass(/is-empty/)
+  await expect(treePlot.locator('.ForestTreeSprite')).toHaveCount(0)
+
+  // The bonus fruit and the wood both landed in inventory.
+  await expect(
+    page.locator('.ContextPane').getByText('Banana', { exact: true })
+  ).toBeVisible()
+  await expect(
+    page.locator('.ContextPane').getByText('Wood', { exact: true })
+  ).toBeVisible()
+})
+
+test('should not treat a dead banana tree as harvestable, even with frozen ripe-looking fruit', async ({
+  page,
+}) => {
+  // forest-tree-banana-dead's tree is past banana's lifespan (same 200-day
+  // default as apple - see src/data/trees/banana.ts) and was frozen with a
+  // daysSinceLastHarvest that would read as ripe on a living tree.
+  await loadFixture(page, 'forest-tree-banana-dead')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Forest' }).click()
+
+  // Select the Picker Pole so the click below actually attempts a harvest -
+  // otherwise this would trivially pass regardless of the dead-tree check.
+  await page.getByRole('button', { name: /Select the picker pole/ }).click()
+
+  const treePlot = page.locator('.ForestPlot').first()
+  await expect(treePlot).not.toHaveClass(/can-be-harvested/)
+
+  await treePlot.click()
+
+  // No fruit was picked - the tree, and its frozen fruit, are unaffected.
+  await expect(treePlot).not.toHaveClass(/is-empty/)
+  await expect(
+    page.locator('.ContextPane').getByText('Banana', { exact: true })
+  ).not.toBeVisible()
+})
+
 test('should apply the correct highlight class to plots based on which toolbelt tool is selected', async ({
   page,
 }) => {

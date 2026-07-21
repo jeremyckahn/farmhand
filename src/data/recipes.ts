@@ -585,6 +585,46 @@ export const applePie: farmhand.recipe = convertToRecipe({
 })
 
 /**
+ * @property farmhand.module:recipes.bananaBread
+ */
+export const bananaBread: farmhand.recipe = convertToRecipe({
+  id: 'banana-bread',
+  name: 'Banana Bread',
+  ingredients: {
+    [items.banana.id]: 4,
+    [flour.id]: 3,
+    [oliveOil.id]: 1,
+  },
+  condition: state =>
+    (state.itemsSold[items.banana.id] || 0) >= 60 &&
+    (state.itemsSold[flour.id] || 0) >= 20 &&
+    (state.itemsSold[oliveOil.id] || 0) >= 20,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.bananaCreamPie
+ */
+export const bananaCreamPie: farmhand.recipe = convertToRecipe({
+  id: 'banana-cream-pie',
+  name: 'Banana Cream Pie',
+  ingredients: {
+    [items.banana.id]: 4,
+    [flour.id]: 2,
+    [butter.id]: 2,
+    [sugar.id]: 2,
+    [items.milk3.id]: 5,
+  },
+  condition: state =>
+    (state.itemsSold[items.banana.id] || 0) >= 60 &&
+    (state.itemsSold[flour.id] || 0) >= 15 &&
+    (state.itemsSold[butter.id] || 0) >= 75 &&
+    (state.itemsSold[sugar.id] || 0) >= 10 &&
+    (state.itemsSold[items.milk3.id] || 0) >= 30,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.sweetPotatoPie
  */
 export const sweetPotatoPie: farmhand.recipe = convertToRecipe({

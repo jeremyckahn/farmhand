@@ -124,6 +124,7 @@ export const itemType = {
  */
 export const treeType = {
   APPLE: 'APPLE',
+  BANANA: 'BANANA',
 } as const
 
 /**
