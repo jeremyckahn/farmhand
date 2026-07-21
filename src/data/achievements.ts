@@ -17,7 +17,7 @@ import {
   I_AM_RICH_BONUSES,
 } from '../constants.js'
 
-import { itemsMap } from './maps.js'
+import { itemsMap, recipesMap } from './maps.js'
 
 const { SEED } = cropLifeStage
 
@@ -34,6 +34,22 @@ const sumOfCropsHarvested = memoize(
     ),
   {}
 )
+
+const sumOfPartialRecordValues = memoize(
+  (record: Partial<Record<string, number>>) =>
+    Object.values(record).reduce(
+      (sum: number, value: number | undefined) => sum + (value || 0),
+      0
+    ),
+  {}
+)
+
+const PIE_RECIPE_IDS = Object.values(recipesMap)
+  .filter(recipe => recipe.isPie)
+  .map(recipe => recipe.id)
+
+const sumOfPiesMade = (recipesMade: Partial<Record<string, number>>) =>
+  PIE_RECIPE_IDS.reduce((sum, id) => sum + (recipesMade[id] || 0), 0)
 
 const cowFeed = itemsMap[COW_FEED_ITEM_ID]
 
@@ -341,6 +357,47 @@ const achievements: farmhand.achievement[] = [
     reward: state => {
       return addItemToInventory(state, itemsMap['gold-ingot'], 1, true)
     },
+  }))(),
+
+  ((goal = 1000, reward = 50) => ({
+    id: 'orchardist',
+    name: 'Orchardist',
+    description: `Pick ${integerString(goal)} fruits from trees in the Forest.`,
+    rewardDescription: `${reward} units of ${itemsMap['apple-sapling'].name}`,
+    condition: state =>
+      sumOfPartialRecordValues(state.treeFruitsHarvested) >= goal,
+    reward: state =>
+      addItemToInventory(state, itemsMap['apple-sapling'], reward, true),
+  }))(),
+
+  ((goal = 100, reward = 100_000) => ({
+    id: 'piemaker',
+    name: 'Piemaker',
+    description: `Make ${integerString(goal)} pies.`,
+    rewardDescription: dollarString(reward),
+    condition: state => sumOfPiesMade(state.recipesMade) >= goal,
+    reward: state => addMoney(state, reward),
+  }))(),
+
+  ((goal = 250, reward = 500) => ({
+    id: 'deforestation',
+    name: 'Deforestation',
+    description: `Chop down ${integerString(goal)} trees in the Forest.`,
+    rewardDescription: `${reward} units of ${itemsMap['wood'].name}`,
+    condition: state => state.treesChopped >= goal,
+    reward: state => addItemToInventory(state, itemsMap['wood'], reward, true),
+  }))(),
+
+  ((goal = 100, reward = 25) => ({
+    id: 'landscaper',
+    name: 'Landscaper',
+    description: `Spread ${integerString(
+      goal
+    )} bags of mulch (of any type) on trees in the Forest.`,
+    rewardDescription: `${reward} units of ${itemsMap['rainbow-mulch'].name}`,
+    condition: state => sumOfPartialRecordValues(state.mulchApplied) >= goal,
+    reward: state =>
+      addItemToInventory(state, itemsMap['rainbow-mulch'], reward, true),
   }))(),
 ]
 

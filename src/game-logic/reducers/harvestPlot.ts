@@ -94,6 +94,11 @@ function harvestCrops(
 
   const { cropsHarvested } = state
 
+  // TODO: cropsHarvested is incremented by the full harvestedQuantity even
+  // when addItemToInventory silently caps how much is actually added because
+  // the inventory is nearly full, so this counter can over-count relative to
+  // what the player actually received. See the equivalent fix applied to
+  // treeFruitsHarvested in harvestForestPlot.ts for the pattern to follow.
   return {
     ...state,
     cropsHarvested: {

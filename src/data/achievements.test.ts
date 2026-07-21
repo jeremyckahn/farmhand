@@ -135,3 +135,159 @@ describe('financial-freedom', () => {
     expect(achievement.condition(state)).toEqual(true)
   })
 })
+
+describe('orchardist', () => {
+  const achievement = achievementsMap['orchardist']
+  let state: any
+
+  beforeEach(() => {
+    state = {
+      treeFruitsHarvested: { apple: 999 },
+      inventory: [],
+      inventoryLimit: INFINITE_STORAGE_LIMIT,
+    }
+  })
+
+  test('is not achieved when fewer than 1000 fruits have been picked', () => {
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
+  test('is achieved when 1000 or more fruits have been picked', () => {
+    state.treeFruitsHarvested.apple = 1000
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('sums fruits across multiple tree species', () => {
+    state.treeFruitsHarvested = { apple: 500, pear: 500 }
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('rewards the player with apple saplings', () => {
+    state = achievement.reward(state)
+
+    const saplings = state.inventory.find(
+      (item: { id: string }) => item.id === 'apple-sapling'
+    )
+
+    expect(saplings).toEqual({ id: 'apple-sapling', quantity: 50 })
+  })
+})
+
+describe('piemaker', () => {
+  const achievement = achievementsMap['piemaker']
+  let state: any
+
+  beforeEach(() => {
+    state = {
+      recipesMade: { 'apple-pie': 99 },
+      money: 0,
+    }
+  })
+
+  test('is not achieved when fewer than 100 pies have been made', () => {
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
+  test('is achieved when 100 or more pies have been made', () => {
+    state.recipesMade['apple-pie'] = 100
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('sums pies across all pie recipes', () => {
+    state.recipesMade = {
+      'chickn-pot-pie': 25,
+      'pumpkin-pie': 25,
+      'apple-pie': 25,
+      'sweet-potato-pie': 25,
+    }
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('does not count non-pie recipes', () => {
+    state.recipesMade = { mulch: 1000 }
+
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
+  test('rewards the player with money', () => {
+    state = achievement.reward(state)
+
+    expect(state.money).toEqual(100_000)
+  })
+})
+
+describe('deforestation', () => {
+  const achievement = achievementsMap['deforestation']
+  let state: any
+
+  beforeEach(() => {
+    state = {
+      treesChopped: 249,
+      inventory: [],
+      inventoryLimit: INFINITE_STORAGE_LIMIT,
+    }
+  })
+
+  test('is not achieved when fewer than 250 trees have been chopped', () => {
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
+  test('is achieved when 250 or more trees have been chopped', () => {
+    state.treesChopped = 250
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('rewards the player with wood', () => {
+    state = achievement.reward(state)
+
+    const wood = state.inventory.find(
+      (item: { id: string }) => item.id === 'wood'
+    )
+
+    expect(wood).toEqual({ id: 'wood', quantity: 500 })
+  })
+})
+
+describe('landscaper', () => {
+  const achievement = achievementsMap['landscaper']
+  let state: any
+
+  beforeEach(() => {
+    state = {
+      mulchApplied: { mulch: 99 },
+      inventory: [],
+      inventoryLimit: INFINITE_STORAGE_LIMIT,
+    }
+  })
+
+  test('is not achieved when fewer than 100 bags of mulch have been applied', () => {
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
+  test('is achieved when 100 or more bags of mulch have been applied', () => {
+    state.mulchApplied.mulch = 100
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('sums mulch applications across mulch types', () => {
+    state.mulchApplied = { mulch: 50, 'rainbow-mulch': 50 }
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('rewards the player with rainbow mulch', () => {
+    state = achievement.reward(state)
+
+    const rainbowMulch = state.inventory.find(
+      (item: { id: string }) => item.id === 'rainbow-mulch'
+    )
+
+    expect(rainbowMulch).toEqual({ id: 'rainbow-mulch', quantity: 25 })
+  })
+})

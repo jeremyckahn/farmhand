@@ -49,6 +49,14 @@ export const mulchForestPlot = (
   state = decrementItemFromInventory(state, mulchItemId)
   const doesMulchRemain = initialMulchQuantity > 1
 
+  state = {
+    ...state,
+    mulchApplied: {
+      ...state.mulchApplied,
+      [mulchItemId]: (state.mulchApplied[mulchItemId] || 0) + 1,
+    },
+  }
+
   state = modifyForestPlotAt(state, x, y, tree => {
     if (!tree || !isPlantedTree(tree)) {
       return tree

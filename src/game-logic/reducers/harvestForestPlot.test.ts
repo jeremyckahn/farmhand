@@ -85,6 +85,57 @@ describe('harvestForestPlot', () => {
       expect(inventory).toEqual([{ id: 'sample-tree-1', quantity: 1 }])
     })
 
+    test('increments treeFruitsHarvested', () => {
+      const { treeFruitsHarvested } = harvestForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-1',
+                daysOld: 3,
+                daysSinceLastHarvest: 2,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          toolLevels: toolLevelsWithPickerPole,
+          treeFruitsHarvested: {},
+        }),
+        0,
+        0
+      )
+
+      expect(treeFruitsHarvested).toEqual({ 'sample-tree-1': 1 })
+    })
+
+    test('increments treeFruitsHarvested by the picker pole fruit yield', () => {
+      const { treeFruitsHarvested } = harvestForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-1',
+                daysOld: 3,
+                daysSinceLastHarvest: 2,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          toolLevels: {
+            ...toolLevelsWithPickerPole,
+            PICKER_POLE: toolLevel.GOLD,
+          },
+          treeFruitsHarvested: {},
+        }),
+        0,
+        0
+      )
+
+      expect(treeFruitsHarvested).toEqual({ 'sample-tree-1': 5 })
+    })
+
     test('resets only the fruit cycle, leaving the tree at its grown age', () => {
       const { forest } = harvestForestPlot(
         testState({
@@ -177,6 +228,36 @@ describe('harvestForestPlot', () => {
       const state = harvestForestPlot(inputState, 0, 0)
 
       expect(state).toEqual(inputState)
+    })
+  })
+
+  describe('inventory has less space than the picker pole fruit yield', () => {
+    test('increments treeFruitsHarvested by only the fruit that fit in the inventory', () => {
+      const { inventory, treeFruitsHarvested } = harvestForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-1',
+                daysOld: 3,
+                daysSinceLastHarvest: 2,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: 1,
+          toolLevels: {
+            ...toolLevelsWithPickerPole,
+            PICKER_POLE: toolLevel.GOLD,
+          },
+          treeFruitsHarvested: {},
+        }),
+        0,
+        0
+      )
+
+      expect(inventory).toEqual([{ id: 'sample-tree-1', quantity: 1 }])
+      expect(treeFruitsHarvested).toEqual({ 'sample-tree-1': 1 })
     })
   })
 })

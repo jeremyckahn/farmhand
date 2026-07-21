@@ -40,6 +40,35 @@ describe('makeRecipe', () => {
     })
   })
 
+  describe('recipesMade', () => {
+    test('is not incremented when ingredients are insufficient', () => {
+      const { recipesMade } = makeRecipe(
+        testState({
+          inventory: [{ id: 'carrot', quantity: 1 }],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          recipesMade: {},
+        }),
+        carrotSoup
+      )
+
+      expect(recipesMade).toEqual({})
+    })
+
+    test('is incremented by howMany when the recipe is made', () => {
+      const { recipesMade } = makeRecipe(
+        testState({
+          inventory: [{ id: carrot.id, quantity: 15 }],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          recipesMade: {},
+        }),
+        carrotSoup,
+        3
+      )
+
+      expect(recipesMade).toEqual({ [carrotSoup.id]: 3 })
+    })
+  })
+
   describe('experience', () => {
     let state: farmhand.state
 

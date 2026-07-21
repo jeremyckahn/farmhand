@@ -265,6 +265,7 @@ declare namespace farmhand {
     recipeType: recipeType
     ingredients: Record<string, number>
     condition: recipeCondition
+    isPie?: boolean
   }
 
   interface keg {
@@ -404,6 +405,20 @@ declare namespace farmhand {
     farmName: string
     field: (plotContent | null)[][]
     forest: (plantedTree | forestForageable | null)[][]
+    /**
+     * Total number of trees chopped down in the Forest.
+     */
+    treesChopped: number
+    /**
+     * A map of totals of fruit picked from Forest trees. Keys are item IDs,
+     * values are the number of that fruit picked.
+     */
+    treeFruitsHarvested: Partial<Record<item['id'], number>>
+    /**
+     * A map of totals of mulch applied to Forest trees. Keys are mulch item
+     * IDs, values are the number of times that mulch type has been applied.
+     */
+    mulchApplied: Partial<Record<item['id'], number>>
     fieldMode: fieldMode
     /**
      * https://github.com/dmotz/trystero#receiver
@@ -453,6 +468,11 @@ declare namespace farmhand {
      * Keys are items IDs, values are the number of that cellar item sold. The numbers in this map represent a subset of the corresponding ones in itemsSold. cellarItemsSold is intended to be used for internal bookkeeping.
      */
     cellarItemsSold: Partial<Record<item['id'], number>>
+    /**
+     * A map of totals of recipes crafted via the Workshop. Keys are recipe
+     * (item) IDs, values are the number of that recipe made.
+     */
+    recipesMade: Partial<Record<item['id'], number>>
     /**
      * Whether the chat modal is open.
      */

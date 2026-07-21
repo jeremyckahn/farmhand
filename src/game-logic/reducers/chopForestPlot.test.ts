@@ -112,6 +112,32 @@ describe('chopForestPlot', () => {
       ])
       expect(forest[0][0]).toBeNull()
     })
+
+    test('increments treesChopped and treeFruitsHarvested', () => {
+      const { treesChopped, treeFruitsHarvested } = chopForestPlot(
+        testState({
+          forest: [
+            [
+              {
+                itemId: 'sample-tree-1',
+                daysOld: 3,
+                daysSinceLastHarvest: 2,
+              },
+            ],
+          ],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          toolLevels: toolLevelsWithAxe(toolLevel.DEFAULT),
+          treesChopped: 0,
+          treeFruitsHarvested: {},
+        }),
+        0,
+        0
+      )
+
+      expect(treesChopped).toEqual(1)
+      expect(treeFruitsHarvested).toEqual({ 'sample-tree-1': 1 })
+    })
   })
 
   describe('grown tree, fruit not yet ripe', () => {
@@ -131,6 +157,26 @@ describe('chopForestPlot', () => {
 
       expect(inventory).toEqual([{ id: 'wood', quantity: 1 }])
       expect(forest[0][0]).toBeNull()
+    })
+
+    test('increments treesChopped without incrementing treeFruitsHarvested', () => {
+      const { treesChopped, treeFruitsHarvested } = chopForestPlot(
+        testState({
+          forest: [
+            [{ itemId: 'sample-tree-1', daysOld: 3, daysSinceLastHarvest: 0 }],
+          ],
+          inventory: [],
+          inventoryLimit: INFINITE_STORAGE_LIMIT,
+          toolLevels: toolLevelsWithAxe(toolLevel.DEFAULT),
+          treesChopped: 0,
+          treeFruitsHarvested: {},
+        }),
+        0,
+        0
+      )
+
+      expect(treesChopped).toEqual(1)
+      expect(treeFruitsHarvested).toEqual({})
     })
   })
 

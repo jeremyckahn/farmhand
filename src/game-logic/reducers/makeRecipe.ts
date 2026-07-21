@@ -31,5 +31,13 @@ export const makeRecipe = (
     return state
   }
 
+  state = {
+    ...state,
+    recipesMade: {
+      ...state.recipesMade,
+      [recipe.id]: (state.recipesMade[recipe.id] || 0) + howMany,
+    },
+  }
+
   return addItemToInventory(state, recipe, howMany)
 }

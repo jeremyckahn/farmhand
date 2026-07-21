@@ -370,6 +370,7 @@ export const chicknPotPie: farmhand.recipe = convertToRecipe({
     (state.itemsSold[items.wheat.id] || 0) >= 425 &&
     (state.itemsSold[soyMilk.id] || 0) >= 15,
   recipeType: recipeType.KITCHEN,
+  isPie: true,
 })
 
 /**
@@ -564,6 +565,7 @@ export const pumpkinPie: farmhand.recipe = convertToRecipe({
     (state.itemsSold[items.wheat.id] || 0) >= 250 &&
     (state.itemsSold[butter.id] || 0) >= 75,
   recipeType: recipeType.KITCHEN,
+  isPie: true,
 })
 
 /**
@@ -582,6 +584,7 @@ export const applePie: farmhand.recipe = convertToRecipe({
     (state.itemsSold[flour.id] || 0) >= 15 &&
     (state.itemsSold[butter.id] || 0) >= 75,
   recipeType: recipeType.KITCHEN,
+  isPie: true,
 })
 
 /**
@@ -640,6 +643,7 @@ export const sweetPotatoPie: farmhand.recipe = convertToRecipe({
     (state.itemsSold[items.wheat.id] || 0) >= 250 &&
     (state.itemsSold[butter.id] || 0) >= 75,
   recipeType: recipeType.KITCHEN,
+  isPie: true,
 })
 
 /**
