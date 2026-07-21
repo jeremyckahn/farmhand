@@ -10,7 +10,6 @@ import Tabs from '@mui/material/Tabs/index.js'
 import Typography from '@mui/material/Typography/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
-import { features } from '../../config.js'
 import { moneyString } from '../../utils/moneyString.js'
 import { dollarString } from '../../utils/dollarString.js'
 import { getCostOfNextStorageExpansion } from '../../utils/getCostOfNextStorageExpansion.js'
@@ -122,8 +121,7 @@ export const Shop = ({
   const isForestUnlocked =
     levelEntitlements.stageFocusType[stageFocusType.FOREST]
 
-  const showSaplings =
-    (features as any).FOREST && isForestUnlocked && saplings.length > 0
+  const showSaplings = isForestUnlocked && saplings.length > 0
 
   const suppliesTabIndex = showSaplings ? 2 : 1
   const upgradesTabIndex = showSaplings ? 3 : 2
@@ -277,7 +275,7 @@ export const Shop = ({
               }}
             />
           </li>
-          {(features as any).FOREST && isForestUnlocked ? (
+          {isForestUnlocked ? (
             <li>
               <TierPurchase
                 {...{
@@ -363,7 +361,7 @@ export const Shop = ({
               }}
             />
           </li>
-          {(features as any).FOREST && isForestUnlocked ? (
+          {isForestUnlocked ? (
             <li>
               <TierPurchase
                 {...{

@@ -6,7 +6,6 @@ import { v4 as uuid } from 'uuid'
 import * as reducers from '../../game-logic/reducers/index.js'
 import eventHandlers from '../../handlers/ui-events.js'
 
-import { features } from '../../config.js'
 import {
   DEFAULT_ROOM,
   INITIAL_STORAGE_LIMIT,
@@ -60,7 +59,6 @@ const { CLEANUP, HARVEST, MINE, WATER } = fieldMode
 export const useFarmhand = (props: FarmhandProps) => {
   // Extract props properly
   const {
-    features: propsFeatures,
     match: { path = '', params: { room: paramRoom } = {} } = {},
   } = props
 
@@ -229,7 +227,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       list.unshift(HOME)
     }
 
-    if (isForestUnlocked && features.FOREST) {
+    if (isForestUnlocked) {
       list.push(FOREST)
     }
 
@@ -747,7 +745,6 @@ export const useFarmhand = (props: FarmhandProps) => {
   const gameState = {
     ...state,
     blockInput: isInputBlocked,
-    features: propsFeatures ?? {},
     fieldToolInventory,
     mulchInventory,
     isChatAvailable,

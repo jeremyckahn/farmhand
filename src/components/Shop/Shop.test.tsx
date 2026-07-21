@@ -11,11 +11,6 @@ import FarmhandContext, {
 
 import Shop from './Shop.js'
 
-// The Saplings tab only ever has content when the Forest feature is on
-// (see data/shop-inventory.ts) - force it on so tests can populate the
-// sample sapling item below.
-vitest.mock('../../config.js', () => ({ features: { FOREST: true } }))
-
 const baseGameState = {
   inventoryLimit: INFINITE_STORAGE_LIMIT,
 

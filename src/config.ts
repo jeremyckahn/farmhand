@@ -18,9 +18,8 @@ export const endpoints = {
 // them via URL query parameters. This can be done by constructing a query
 // parameter that looks like:
 //
-//   ?enable_FOREST=true
+//   ?enable_MINING=true
 interface Features {
-  FOREST?: boolean
   [key: string]: boolean | undefined
 }
 

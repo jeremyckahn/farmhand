@@ -6,11 +6,6 @@ import { testItem, testState } from '../../test-utils/index.js'
 
 import { processLevelUp } from './processLevelUp.js'
 
-// The Forest, and its Axe/Picker Pole unlocks, are gated behind this
-// feature flag (see data/levels.ts) - force it on so level 15 actually
-// carries its unlocksTool payload in these tests.
-vitest.mock('../../config.js', () => ({ features: { FOREST: true } }))
-
 describe('processLevelUp', () => {
   test('shows notifications for each level gained in the sale', async () => {
     const { todaysNotifications } = processLevelUp(

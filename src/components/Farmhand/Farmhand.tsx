@@ -278,12 +278,10 @@ Farmhand.defaultProps = {
     name: 'farmhand',
     description: 'Persisted game data for Farmhand',
   }),
-  features: {},
   match: { path: '', params: {} },
 }
 
 Farmhand.propTypes = {
-  features: object,
   history: object,
   location: object,
   match: object.isRequired,

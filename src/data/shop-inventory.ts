@@ -1,5 +1,3 @@
-import { features } from '../config.js'
-
 import {
   // Plantable trees
   appleSapling,
@@ -36,12 +34,11 @@ import { fertilizer, mulch } from './recipes.js'
 
 const inventory: farmhand.item[] = [
   // Plantable trees
-  ...((features as { FOREST?: boolean }).FOREST
-    ? [appleSapling, bananaSapling]
-    : []),
+  appleSapling,
+  bananaSapling,
 
   // Forest items
-  ...((features as { FOREST?: boolean }).FOREST ? [mulch] : []),
+  mulch,
 
   // Plantable crops
   asparagusSeed,
