@@ -17,7 +17,14 @@ test('should fluctuate crop prices', async ({ page }) => {
     'Carrot SeedPrice: $17.73Total: $17.73In inventory: 0Days to mature: 5'
   )
   await page.getByRole('button', { name: 'End the day to save your' }).click()
+
+  // NOTE: A short timeout is used here (well under AnimatedNumber's 750ms
+  // tween duration) so that this assertion only passes if the price updates
+  // synchronously. Without this, Playwright's web-first assertion retry
+  // behavior would mask a reintroduced animation by waiting for the tween to
+  // finish before re-checking the text.
   await expect(page.locator('#shop-tabpanel-0')).toContainText(
-    'Carrot SeedPrice: $17.73Total: $17.73In inventory: 0Days to mature: 5'
+    'Carrot SeedPrice: $18.23Total: $18.23In inventory: 0Days to mature: 5',
+    { timeout: 200 }
   )
 })
