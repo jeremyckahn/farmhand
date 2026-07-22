@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import AnimatedNumber from './AnimatedNumber.js'
@@ -48,7 +48,7 @@ test('skips animation and updates synchronously when prefers-reduced-motion is r
   window.matchMedia = originalMatchMedia
 })
 
-test('animates when prefers-reduced-motion is no-preference', () => {
+test('animates when prefers-reduced-motion is no-preference', async () => {
   const originalMatchMedia = window.matchMedia
 
   window.matchMedia = vi.fn().mockImplementation((query) => ({
@@ -71,7 +71,13 @@ test('animates when prefers-reduced-motion is no-preference', () => {
 
   // Because it animates, it should NOT immediately be 100
   // It should still be 0 (the initial frame of the animation)
-  expect(screen.getByText('0')).toBeInTheDocument()
+  // Since the environment is jsdom and doesn't exactly tick rAF frame by frame on our schedule,
+  // the intermediate state '0' might have already ticked to '0.266...'.
+  // We mainly care that it didn't immediately jump to 100:
+  expect(screen.queryByText('100')).not.toBeInTheDocument()
+
+  // Use vitest waitFor to wait for Shifty to finish without relying on fake timers
+  await waitFor(() => expect(screen.getByText('100')).toBeInTheDocument(), { timeout: 2000 });
 
   window.matchMedia = originalMatchMedia
 })
