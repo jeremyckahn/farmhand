@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { tween, Tweenable } from 'shifty'
 import { func as funcProp, number as numberProp } from 'prop-types'
 
-import { features } from '../../config.js'
-
 const defaultFormatter = (num: number) => `${num}`
 
 /**
@@ -29,7 +27,7 @@ const AnimatedNumber = ({
 
   useEffect(() => {
     if (number !== previousNumber) {
-      if (features.SKIP_ANIMATIONS) {
+      if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
         setDisplayedNumber(number)
         return
       }

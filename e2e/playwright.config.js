@@ -32,6 +32,9 @@ export default defineConfig({
 
     /* Record video on failure */
     video: 'retain-on-failure',
+
+    /* Skip animations */
+    reducedMotion: 'reduce',
   },
 
   /* Configure projects for major browsers */
