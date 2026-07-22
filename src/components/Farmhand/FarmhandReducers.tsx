@@ -79,6 +79,9 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
   makeFermentationRecipe(...args: any[]) {
     throw new Error('Unimplemented')
   }
+  makeVinegar(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
   makeWine(...args: any[]) {
     throw new Error('Unimplemented')
   }

@@ -39,6 +39,7 @@ export const recipeCategories: Record<
   [recipeType.FORGE]: {},
   [recipeType.FERMENTATION]: {},
   [recipeType.RECYCLING]: {},
+  [recipeType.VINEGAR]: {},
   [recipeType.WINE]: {},
   [recipeType.WOOD_CHIPPER]: {},
 }

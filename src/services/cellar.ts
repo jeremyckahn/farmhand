@@ -6,6 +6,7 @@ import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
 
 import { PURCHASEABLE_CELLARS } from '../constants.js'
 
+import { vinegarService } from './vinegar.js'
 import { wineService } from './wine.js'
 
 export class CellarService {
@@ -30,6 +31,8 @@ export class CellarService {
 
     if (wineService.isWineRecipe(item)) {
       keg.daysUntilMature = getYeastRequiredForWine(item.variety)
+    } else if (vinegarService.isVinegarRecipe(item)) {
+      keg.daysUntilMature = item.daysToMature
     }
 
     return keg
@@ -47,7 +50,8 @@ export class CellarService {
 
   doesKegSpoil = (keg: farmhand.keg): boolean => {
     const item = itemsMap[keg.itemId]
-    const doesKegSpoil = !wineService.isWineRecipe(item)
+    const doesKegSpoil =
+      !wineService.isWineRecipe(item) && !vinegarService.isVinegarRecipe(item)
 
     return doesKegSpoil
   }

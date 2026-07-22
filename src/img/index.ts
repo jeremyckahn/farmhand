@@ -9,8 +9,10 @@ import rainbowMulchedPlot from './plot-states/rainbow-mulched-plot.png'
 import shoveledPlot from './plot-states/shoveled-plot.png'
 
 // Recipes
+import appleCiderVinegar from './dishes/apple-cider-vinegar.png'
 import appleJuice from './dishes/apple-juice.png'
 import applePie from './dishes/apple-pie.png'
+import balsamicVinegar from './dishes/balsamic-vinegar.png'
 import bananaBread from './dishes/banana-bread.png'
 import bananaCreamPie from './dishes/banana-cream-pie.png'
 import bread from './dishes/bread.png'
@@ -329,7 +331,9 @@ export const craftedItems = {
   'olive-oil': oliveOil,
   'onion-rings': onionRings,
   popcorn,
+  'apple-cider-vinegar': appleCiderVinegar,
   'apple-juice': appleJuice,
+  'balsamic-vinegar': balsamicVinegar,
   'grape-syrup': grapeSyrup,
   'pumpkin-pie': pumpkinPie,
   rainbowCheese,

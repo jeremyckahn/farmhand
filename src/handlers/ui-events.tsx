@@ -66,6 +66,14 @@ export default {
     this.makeFermentationRecipe(fermentationRecipe, howMany)
   },
 
+  handleMakeVinegarClick(
+    this: Farmhand,
+    recipe: farmhand.vinegar,
+    howMany = 1
+  ) {
+    this.makeVinegar(recipe, howMany)
+  },
+
   handleMakeWineClick(this: Farmhand, grape: farmhand.grape, howMany = 1) {
     this.makeWine(grape, howMany)
   },

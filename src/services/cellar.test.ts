@@ -1,4 +1,4 @@
-import { wineChardonnay } from '../data/recipes.js'
+import { appleCiderVinegar, wineChardonnay } from '../data/recipes.js'
 import { pumpkin } from '../data/crops/index.js'
 
 import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
@@ -33,12 +33,23 @@ describe('CellarService', () => {
         id: mockUuid,
       })
     })
+
+    test('generates a vinegar keg', () => {
+      const keg = cellarService.generateKeg(appleCiderVinegar)
+
+      expect(keg).toEqual({
+        daysUntilMature: appleCiderVinegar.daysToMature,
+        itemId: appleCiderVinegar.id,
+        id: mockUuid,
+      })
+    })
   })
 
   describe('doesKegSpoil', () => {
     test.each([
       { keg: cellarService.generateKeg(pumpkin), expected: true },
       { keg: cellarService.generateKeg(wineChardonnay), expected: false },
+      { keg: cellarService.generateKeg(appleCiderVinegar), expected: false },
     ])('$keg.itemId spoils -> $expected', ({ keg, expected }) => {
       const result = cellarService.doesKegSpoil(keg)
 

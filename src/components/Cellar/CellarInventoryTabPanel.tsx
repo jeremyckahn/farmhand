@@ -10,6 +10,8 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import {
   KEG_INTEREST_RATE,
   PURCHASEABLE_CELLARS,
+  VINEGAR_GROWTH_TIMELINE_CAP,
+  VINEGAR_INTEREST_RATE,
   WINE_GROWTH_TIMELINE_CAP,
   WINE_INTEREST_RATE,
 } from '../../constants.js'
@@ -88,6 +90,10 @@ Kegs that contain fermented crops compound in value at a rate of ${KEG_INTEREST_
 
 Kegs that contain wine compound in value at a rate of ${WINE_INTEREST_RATE}% for up to ${integerString(
                     WINE_GROWTH_TIMELINE_CAP
+                  )} days and never spoil.
+
+Kegs that contain vinegar compound in value at a rate of ${VINEGAR_INTEREST_RATE}% for up to ${integerString(
+                    VINEGAR_GROWTH_TIMELINE_CAP
                   )} days and never spoil.`,
                 }}
               />

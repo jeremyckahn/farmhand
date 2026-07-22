@@ -1,5 +1,6 @@
 import { randomNumberService } from '../../common/services/randomNumber.js'
 import { itemsMap } from '../../data/maps.js'
+import { vinegarService } from '../../services/vinegar.js'
 import { wineService } from '../../services/wine.js'
 import { KEG_SPOILED_MESSAGE } from '../../templates.js'
 import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
@@ -20,6 +21,7 @@ export const processCellarSpoilage = (
 
     if (
       !wineService.isWineRecipe(kegItem) &&
+      !vinegarService.isVinegarRecipe(kegItem) &&
       randomNumberService.isRandomNumberLessThan(spoilageRate)
     ) {
       state = removeKegFromCellar(state, keg.id)

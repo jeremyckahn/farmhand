@@ -51,6 +51,7 @@ declare namespace farmhand {
     | 'FORGE'
     | 'KITCHEN'
     | 'RECYCLING'
+    | 'VINEGAR'
     | 'WINE'
     | 'WOOD_CHIPPER'
   type fieldMode =
@@ -189,6 +190,11 @@ declare namespace farmhand {
 
   interface wine extends recipe {
     variety: grapeVariety
+  }
+
+  interface vinegar extends recipe {
+    unlockItemId: string
+    daysToMature: number
   }
 
   interface plotContent {

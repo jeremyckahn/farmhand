@@ -1,5 +1,10 @@
 import { carrot, sunflower } from '../data/crops/index.js'
-import { wineChardonnay, wineNebbiolo } from '../data/recipes.js'
+import {
+  appleCiderVinegar,
+  balsamicVinegar,
+  wineChardonnay,
+  wineNebbiolo,
+} from '../data/recipes.js'
 import { getKegStub } from '../test-utils/stubs/getKegStub.js'
 
 import { getKegValue } from './getKegValue.js'
@@ -91,6 +96,34 @@ describe('getKegValue', () => {
       const result = Number(rawResult.toFixed(2))
 
       expect(result).toEqual(expected)
+    }
+  )
+
+  test.each([
+    {
+      keg: getKegStub({ itemId: appleCiderVinegar.id, daysUntilMature: 5 }),
+      expected: 0,
+    },
+    {
+      keg: getKegStub({ itemId: appleCiderVinegar.id, daysUntilMature: 0 }),
+      expected: appleCiderVinegar.value * 1.015,
+    },
+    // NOTE: Vinegar value maxes out at VINEGAR_GROWTH_TIMELINE_CAP days
+    {
+      keg: getKegStub({ itemId: appleCiderVinegar.id, daysUntilMature: -1000 }),
+      expected: appleCiderVinegar.value * 1.015 ** 100,
+    },
+    {
+      keg: getKegStub({ itemId: balsamicVinegar.id, daysUntilMature: 0 }),
+      expected: balsamicVinegar.value * 1.015,
+    },
+  ])(
+    'calculates vinegar keg value (itemId: $keg.itemId, daysUntilMature: $keg.daysUntilMature) -> $expected',
+    ({ keg, expected }) => {
+      const rawResult = getKegValue(keg)
+      const result = Number(rawResult.toFixed(2))
+
+      expect(result).toEqual(Number(expected.toFixed(2)))
     }
   )
 })

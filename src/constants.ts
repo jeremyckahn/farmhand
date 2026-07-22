@@ -338,6 +338,8 @@ export const KEG_INTEREST_RATE = 0.02
 export const KEG_SPOILAGE_RATE_MULTIPLIER = 0.001
 export const WINE_INTEREST_RATE = 0.015
 export const WINE_GROWTH_TIMELINE_CAP = 100
+export const VINEGAR_INTEREST_RATE = 0.015
+export const VINEGAR_GROWTH_TIMELINE_CAP = 100
 
 // NOTE: not all of these are implemented yet, these are for all the currently
 // planned experience rewards

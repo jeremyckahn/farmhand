@@ -8,6 +8,7 @@ import { useContext } from 'react'
 import { itemsMap } from '../../data/maps.js'
 import { items, wines } from '../../img/index.js'
 import { cellarService } from '../../services/cellar.js'
+import { vinegarService } from '../../services/vinegar.js'
 import { wineService } from '../../services/wine.js'
 import { FERMENTED_CROP_NAME } from '../../templates.js'
 import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
@@ -44,6 +45,8 @@ export function Keg({ keg }: { keg: farmhand.keg }) {
 
   if (wineService.isWineRecipe(item)) {
     imageSrc = wines[item.variety]
+    recipeName = item.name
+  } else if (vinegarService.isVinegarRecipe(item)) {
     recipeName = item.name
   }
 

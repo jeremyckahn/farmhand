@@ -943,3 +943,56 @@ export const wineTempranillo = getWineRecipeFromGrape({
 export const wineNebbiolo = getWineRecipeFromGrape({
   ...items.grapeNebbiolo,
 })
+
+interface PartialVinegarRecipe {
+  id: string
+  name: string
+  ingredients: Record<string, number>
+  unlockItemId: string
+  daysToMature: number
+}
+
+const convertToVinegarRecipe = (
+  partialRecipe: PartialVinegarRecipe
+): farmhand.vinegar => {
+  return {
+    ...convertToRecipe({
+      ...partialRecipe,
+      recipeType: recipeType.VINEGAR,
+      // NOTE: This prevents vinegar recipes from appearing in the Learned
+      // Recipes list in the Workshop, mirroring wine's own recipes - they're
+      // only surfaced via the dedicated Cellar UI.
+      condition: () => false,
+    }),
+    unlockItemId: partialRecipe.unlockItemId,
+    daysToMature: partialRecipe.daysToMature,
+  } as farmhand.vinegar
+}
+
+/**
+ * @property farmhand.module:recipes.appleCiderVinegar
+ */
+export const appleCiderVinegar: farmhand.vinegar = convertToVinegarRecipe({
+  id: 'apple-cider-vinegar',
+  name: 'Apple Cider Vinegar',
+  ingredients: {
+    [appleJuice.id]: 10,
+    [yeast.id]: 5,
+  },
+  unlockItemId: appleJuice.id,
+  daysToMature: 14,
+})
+
+/**
+ * @property farmhand.module:recipes.balsamicVinegar
+ */
+export const balsamicVinegar: farmhand.vinegar = convertToVinegarRecipe({
+  id: 'balsamic-vinegar',
+  name: 'Balsamic Vinegar',
+  ingredients: {
+    [grapeSyrup.id]: 10,
+    [yeast.id]: 5,
+  },
+  unlockItemId: grapeSyrup.id,
+  daysToMature: 21,
+})

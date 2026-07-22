@@ -1,9 +1,12 @@
 import {
   KEG_INTEREST_RATE,
+  VINEGAR_GROWTH_TIMELINE_CAP,
+  VINEGAR_INTEREST_RATE,
   WINE_GROWTH_TIMELINE_CAP,
   WINE_INTEREST_RATE,
 } from '../constants.js'
 import { itemsMap } from '../data/maps.js'
+import { vinegarService } from '../services/vinegar.js'
 import { wineService } from '../services/wine.js'
 
 import { getItemBaseValue } from './getItemBaseValue.js'
@@ -22,6 +25,13 @@ export const getKegValue = (keg: farmhand.keg) => {
     principalValue = kegItem.value
     interestRate = WINE_INTEREST_RATE
     exponent = Math.min(Math.max(-daysUntilMature, 1), WINE_GROWTH_TIMELINE_CAP)
+  } else if (vinegarService.isVinegarRecipe(kegItem)) {
+    principalValue = kegItem.value
+    interestRate = VINEGAR_INTEREST_RATE
+    exponent = Math.min(
+      Math.max(-daysUntilMature, 1),
+      VINEGAR_GROWTH_TIMELINE_CAP
+    )
   } else {
     principalValue = (kegItem.tier ?? 1) * getItemBaseValue(itemId)
     interestRate = KEG_INTEREST_RATE

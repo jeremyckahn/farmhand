@@ -35,6 +35,7 @@ export const recipeType = {
   FORGE: 'FORGE',
   KITCHEN: 'KITCHEN',
   RECYCLING: 'RECYCLING',
+  VINEGAR: 'VINEGAR',
   WINE: 'WINE',
   WOOD_CHIPPER: 'WOOD_CHIPPER',
 } as const
