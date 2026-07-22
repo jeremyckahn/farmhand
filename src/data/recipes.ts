@@ -588,6 +588,36 @@ export const applePie: farmhand.recipe = convertToRecipe({
 })
 
 /**
+ * @property farmhand.module:recipes.appleJuice
+ */
+export const appleJuice: farmhand.recipe = convertToRecipe({
+  id: 'apple-juice',
+  name: 'Apple Juice',
+  ingredients: {
+    [items.apple.id]: 6,
+    [sugar.id]: 2,
+  },
+  condition: state =>
+    (state.itemsSold[items.apple.id] || 0) >= 60 &&
+    (state.itemsSold[sugar.id] || 0) >= 10,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
+ * @property farmhand.module:recipes.grapeSyrup
+ */
+export const grapeSyrup: farmhand.recipe = convertToRecipe({
+  id: 'grape-syrup',
+  name: 'Grape Syrup',
+  ingredients: {
+    [items.grapeCabernetSauvignon.id]: 8,
+  },
+  condition: state =>
+    (state.itemsSold[items.grapeCabernetSauvignon.id] || 0) >= 25,
+  recipeType: recipeType.KITCHEN,
+})
+
+/**
  * @property farmhand.module:recipes.bananaBread
  */
 export const bananaBread: farmhand.recipe = convertToRecipe({
