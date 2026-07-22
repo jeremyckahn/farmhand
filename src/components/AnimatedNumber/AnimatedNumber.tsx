@@ -27,6 +27,11 @@ const AnimatedNumber = ({
 
   useEffect(() => {
     if (number !== previousNumber) {
+      if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+        setDisplayedNumber(number)
+        return
+      }
+
       if (currentTweenable) {
         currentTweenable.cancel()
       }
