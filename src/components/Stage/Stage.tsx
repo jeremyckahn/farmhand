@@ -18,11 +18,11 @@ import { Div } from '../Elements/index.js'
 import { breakpoints, layout } from '../../styles/tokens.js'
 
 import brownDotBg from '../../img/ui/brown-dot-bg.png'
+import floorboardBg from '../../img/ui/floorboard.png'
 import jackOLanternBg from '../../img/ui/jack-o-lantern-bg.png'
 import winterBg from '../../img/ui/winter-bg.png'
 import yellowDotBg from '../../img/ui/yellow-dot-bg.png'
 import lavenderDotBg from '../../img/ui/lavender-dot-bg.png'
-import greenDotBg from '../../img/ui/green-dot-bg.png'
 import grassBg from '../../img/ui/grass.png'
 import forestFloorBg from '../../img/ui/forest-floor.png'
 
@@ -67,7 +67,7 @@ export const Stage = ({
       : brownDotBg,
     [stageFocusType.SHOP]: yellowDotBg,
     [stageFocusType.WORKSHOP]: lavenderDotBg,
-    [stageFocusType.CELLAR]: greenDotBg,
+    [stageFocusType.CELLAR]: floorboardBg,
     [stageFocusType.FIELD]: grassBg,
     [stageFocusType.COW_PEN]: grassBg,
     [stageFocusType.FOREST]: forestFloorBg,
@@ -110,6 +110,13 @@ export const Stage = ({
                 backgroundSize: '10%',
               },
             }
+          : {}),
+        // floorboard.png is a 144x48 (3:1) tile, unlike every other
+        // background image here which is square - keep it at the same 2x
+        // pixel-art scale as the rest (48px source -> 96px displayed) by
+        // matching that same ratio instead of the shared square size.
+        ...(stageFocus === stageFocusType.CELLAR
+          ? { backgroundSize: '288px 96px' }
           : {}),
         '& h3': { textAlign: 'center' },
         '& h2': { fontSize: '1.2em' },
