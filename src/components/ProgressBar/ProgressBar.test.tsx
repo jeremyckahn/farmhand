@@ -181,6 +181,7 @@ describe('ProgressBar', () => {
     expect(tween).toHaveBeenCalledTimes(1)
     expect(tween).toHaveBeenLastCalledWith(
       expect.objectContaining({
+        from: { currentPercent: 0 },
         to: { currentPercent: 25 },
       })
     )
@@ -192,6 +193,7 @@ describe('ProgressBar', () => {
     expect(tween).toHaveBeenCalledTimes(2)
     expect(tween).toHaveBeenLastCalledWith(
       expect.objectContaining({
+        from: { currentPercent: 25 },
         to: { currentPercent: 75 },
       })
     )

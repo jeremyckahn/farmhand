@@ -23,6 +23,7 @@ const ProgressBar = ({ percent }: { percent: number }) => {
       : incompleteColor
   )
   const tweenableRef = useRef<any | null>(null)
+  const previousPercentRef = useRef(prefersReducedMotion ? percent : 0)
 
   useEffect(() => {
     const finalColor = interpolate(
@@ -34,6 +35,7 @@ const ProgressBar = ({ percent }: { percent: number }) => {
     if (prefersReducedMotion) {
       setDisplayedProgress(percent)
       setDisplayedColor(finalColor)
+      previousPercentRef.current = percent
 
       if (tweenableRef.current) {
         tweenableRef.current.cancel()
@@ -48,7 +50,7 @@ const ProgressBar = ({ percent }: { percent: number }) => {
         delay: 750,
         easing: 'easeInOutQuad',
         duration: 1500,
-        from: { currentPercent: 0 },
+        from: { currentPercent: previousPercentRef.current },
         to: { currentPercent: percent },
         render: ({ currentPercent }: any) => {
           const currentPercentNumber = Number(currentPercent)
@@ -65,6 +67,7 @@ const ProgressBar = ({ percent }: { percent: number }) => {
       })
 
       tweenableRef.current = tweenable
+      previousPercentRef.current = percent
     }
 
     return () => {

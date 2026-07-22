@@ -30,6 +30,7 @@ const AnimatedNumber = ({
       }
 
       previousNumberRef.current = number
+      setDisplayedNumber(number)
       return
     }
 

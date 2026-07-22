@@ -29,6 +29,8 @@ const MoneyDisplay = ({ money }: { money: number }) => {
       }
 
       previousMoneyRef.current = money
+      setDisplayedMoney(money)
+      setTextColor(idleColor)
       return
     }
 
