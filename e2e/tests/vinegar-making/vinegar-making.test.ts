@@ -41,6 +41,12 @@ test('should make vinegar, mature it and sell it', async ({ page }) => {
   await page.keyboard.press('Shift+C')
   await expect(page.locator('.farmhand-root')).not.toHaveClass(/block-input/)
 
+  // Verify the "kegs ready to sell" notification appears on the day the
+  // keg matures
+  await expect(
+    page.getByText('Kegs are ready to sell in the cellar:')
+  ).toBeVisible()
+
   // Check it is mature
   await expect(page.getByText('Days since ready: 0')).toBeVisible()
 
