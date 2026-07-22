@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { tween, Tweenable } from 'shifty'
 import { array, bool, func, number, string } from 'prop-types'
@@ -11,23 +11,31 @@ import StepIcon from '@mui/material/StepIcon/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { moneyString } from '../../utils/moneyString.js'
 import { breakpoints } from '../../styles/tokens.js'
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.js'
 
 const MoneyDisplay = ({ money }: { money: number }) => {
   const idleColor = 'rgb(255, 255, 255)'
+  const prefersReducedMotion = usePrefersReducedMotion()
   const [displayedMoney, setDisplayedMoney] = useState(money)
   const [textColor, setTextColor] = useState(idleColor)
-  const [previousMoney, setPreviousMoney] = useState(money)
-  const [currentTweenable, setCurrentTweenable] = useState<
-    Tweenable | undefined
-  >()
+  const previousMoneyRef = useRef(money)
+  const tweenableRef = useRef<Tweenable | null>(null)
 
   useEffect(() => {
-    setPreviousMoney(money)
-  }, [money, setPreviousMoney])
+    if (prefersReducedMotion) {
+      if (tweenableRef.current) {
+        tweenableRef.current.cancel()
+        tweenableRef.current = null
+      }
 
-  useEffect(() => {
-    if (money !== previousMoney) {
-      currentTweenable?.cancel()
+      previousMoneyRef.current = money
+      return
+    }
+
+    if (previousMoneyRef.current !== money) {
+      if (tweenableRef.current) {
+        tweenableRef.current.cancel()
+      }
 
       const tweenable = tween({
         easing: 'easeOutQuad',
@@ -37,29 +45,39 @@ const MoneyDisplay = ({ money }: { money: number }) => {
           setDisplayedMoney(Number(currentMoney))
         },
         from: {
-          color: money > previousMoney ? 'rgb(0, 255, 0)' : 'rgb(255, 0, 0)',
-          money: previousMoney,
+          color:
+            money > previousMoneyRef.current
+              ? 'rgb(0, 255, 0)'
+              : 'rgb(255, 0, 0)',
+          money: previousMoneyRef.current,
         },
         to: { color: idleColor, money },
       })
 
-      setCurrentTweenable(tweenable)
+      tweenableRef.current = tweenable
+      previousMoneyRef.current = money
     }
 
     return () => {
-      currentTweenable?.cancel()
+      if (tweenableRef.current) {
+        tweenableRef.current.cancel()
+        tweenableRef.current = null
+      }
     }
-  }, [currentTweenable, money, previousMoney])
+  }, [money, prefersReducedMotion])
+
+  const amountToDisplay = prefersReducedMotion ? money : displayedMoney
+  const colorToDisplay = prefersReducedMotion ? idleColor : textColor
 
   return (
     <span
       {...{
         style: {
-          color: textColor,
+          color: colorToDisplay,
         },
       }}
     >
-      {moneyString(displayedMoney)}
+      {moneyString(amountToDisplay)}
     </span>
   )
 }

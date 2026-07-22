@@ -185,12 +185,16 @@ describe('ProgressBar', () => {
       })
     )
 
-    // Update percent prop - this won't create a new tween since currentTweenable already exists
+    // Update percent prop - this cancels previous tween and creates a new tween for 75
     rerender(<ProgressBar {...{ percent: 75 }} />)
 
-    // Should still only have one tween call since the component only creates
-    // a new tween when currentTweenable is falsy
-    expect(tween).toHaveBeenCalledTimes(1)
+    expect(mockTweenInstance.cancel).toHaveBeenCalled()
+    expect(tween).toHaveBeenCalledTimes(2)
+    expect(tween).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        to: { currentPercent: 75 },
+      })
+    )
   })
 
   test('starts with incomplete color initially', () => {

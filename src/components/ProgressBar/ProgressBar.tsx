@@ -1,22 +1,49 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { number } from 'prop-types'
 import { interpolate, tween } from 'shifty'
 
 import { Div, P } from '../Elements/index.js'
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.js'
 
 const incompleteColor = '#ff9f00'
 const completeColor = '#00e500'
 
 const ProgressBar = ({ percent }: { percent: number }) => {
-  const [displayedProgress, setDisplayedProgress] = useState(0)
-  const [displayedColor, setDisplayedColor] = useState(incompleteColor)
-  const [currentTweenable, setCurrentTweenable]: [
-    any | undefined,
-    React.Dispatch<React.SetStateAction<any | undefined>>
-  ] = useState<any | undefined>()
+  const prefersReducedMotion = usePrefersReducedMotion()
+  const [displayedProgress, setDisplayedProgress] = useState(
+    prefersReducedMotion ? percent : 0
+  )
+  const [displayedColor, setDisplayedColor] = useState(
+    prefersReducedMotion
+      ? interpolate(
+          { color: incompleteColor },
+          { color: completeColor },
+          percent / 100
+        ).color
+      : incompleteColor
+  )
+  const tweenableRef = useRef<any | null>(null)
 
   useEffect(() => {
-    if (!currentTweenable) {
+    const finalColor = interpolate(
+      { color: incompleteColor },
+      { color: completeColor },
+      percent / 100
+    ).color
+
+    if (prefersReducedMotion) {
+      setDisplayedProgress(percent)
+      setDisplayedColor(finalColor)
+
+      if (tweenableRef.current) {
+        tweenableRef.current.cancel()
+        tweenableRef.current = null
+      }
+
+      return
+    }
+
+    if (!tweenableRef.current) {
       const tweenable = tween({
         delay: 750,
         easing: 'easeInOutQuad',
@@ -37,15 +64,16 @@ const ProgressBar = ({ percent }: { percent: number }) => {
         },
       })
 
-      setCurrentTweenable(tweenable)
+      tweenableRef.current = tweenable
     }
 
     return () => {
-      if (currentTweenable) {
-        currentTweenable.cancel()
+      if (tweenableRef.current) {
+        tweenableRef.current.cancel()
+        tweenableRef.current = null
       }
     }
-  }, [currentTweenable, percent])
+  }, [percent, prefersReducedMotion])
 
   return (
     <Div className="ProgressBar" sx={{ margin: '0 auto' }}>
