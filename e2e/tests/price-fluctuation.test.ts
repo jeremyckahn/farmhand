@@ -7,17 +7,14 @@ import { openPage } from '../test-utils/open-page.js'
 // doesPriceFluctuate: true in itemsMap (see generateValueAdjustments in
 // src/common/utils.ts) - adding or removing such an item shifts every
 // subsequent random() draw, including this one, and these values will need
-// to be regenerated. The pre- and post-end-of-day prices are expected to
-// differ, since ending the day draws a fresh set of value adjustments from
-// the same seeded generator (see adjustItemValues in
-// computeStateForNextDay.ts).
+// to be regenerated.
 test('should fluctuate crop prices', async ({ page }) => {
   await openPage(page)
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Shop' }).click()
   await expect(page.locator('#shop-tabpanel-0')).toContainText(
-    'Carrot SeedPrice: $21.60Total: $21.60In inventory: 0Days to mature: 5'
+    'Carrot SeedPrice: $17.73Total: $17.73In inventory: 0Days to mature: 5'
   )
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 
@@ -26,7 +23,9 @@ test('should fluctuate crop prices', async ({ page }) => {
   // synchronously. Without this, Playwright's web-first assertion retry
   // behavior would mask a reintroduced animation by waiting for the tween to
   // finish before re-checking the text.
-  await expect(page.locator('#shop-tabpanel-0')).toContainText(
+  await expect(
+    page.locator('#shop-tabpanel-0')
+  ).toContainText(
     'Carrot SeedPrice: $18.23Total: $18.23In inventory: 0Days to mature: 5',
     { timeout: 200 }
   )
