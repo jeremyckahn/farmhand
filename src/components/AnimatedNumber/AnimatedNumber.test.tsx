@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import AnimatedNumber from './AnimatedNumber.js'
@@ -24,7 +24,7 @@ test('uses custom formatter when provided', () => {
 test('skips animation and updates synchronously when prefers-reduced-motion is reduce', () => {
   const originalMatchMedia = window.matchMedia
 
-  window.matchMedia = vi.fn().mockImplementation((query) => ({
+  window.matchMedia = vi.fn().mockImplementation(query => ({
     matches: query === '(prefers-reduced-motion: reduce)',
     media: query,
     onchange: null,
@@ -35,23 +35,25 @@ test('skips animation and updates synchronously when prefers-reduced-motion is r
     dispatchEvent: vi.fn(),
   }))
 
-  const { rerender } = render(<AnimatedNumber number={0} />)
+  try {
+    const { rerender } = render(<AnimatedNumber number={0} />)
 
-  expect(screen.getByText('0')).toBeInTheDocument()
+    expect(screen.getByText('0')).toBeInTheDocument()
 
-  // Re-render with a new number
-  rerender(<AnimatedNumber number={100} />)
+    // Re-render with a new number
+    rerender(<AnimatedNumber number={100} />)
 
-  // Should update immediately without tweening
-  expect(screen.getByText('100')).toBeInTheDocument()
-
-  window.matchMedia = originalMatchMedia
+    // Should update immediately without tweening
+    expect(screen.getByText('100')).toBeInTheDocument()
+  } finally {
+    window.matchMedia = originalMatchMedia
+  }
 })
 
-test('animates when prefers-reduced-motion is no-preference', () => {
+test('animates when prefers-reduced-motion is no-preference', async () => {
   const originalMatchMedia = window.matchMedia
 
-  window.matchMedia = vi.fn().mockImplementation((query) => ({
+  window.matchMedia = vi.fn().mockImplementation(query => ({
     matches: false,
     media: query,
     onchange: null,
@@ -62,16 +64,26 @@ test('animates when prefers-reduced-motion is no-preference', () => {
     dispatchEvent: vi.fn(),
   }))
 
-  const { rerender } = render(<AnimatedNumber number={0} />)
+  try {
+    const { rerender } = render(<AnimatedNumber number={0} />)
 
-  expect(screen.getByText('0')).toBeInTheDocument()
+    expect(screen.getByText('0')).toBeInTheDocument()
 
-  // Re-render with a new number
-  rerender(<AnimatedNumber number={100} />)
+    // Re-render with a new number
+    rerender(<AnimatedNumber number={100} />)
 
-  // Because it animates, it should NOT immediately be 100
-  // It should still be 0 (the initial frame of the animation)
-  expect(screen.getByText('0')).toBeInTheDocument()
+    // Because it animates, it should NOT immediately be 100
+    // It should still be 0 (the initial frame of the animation)
+    // Since the environment is jsdom and doesn't exactly tick rAF frame by frame on our schedule,
+    // the intermediate state '0' might have already ticked to '0.266...'.
+    // We mainly care that it didn't immediately jump to 100:
+    expect(screen.queryByText('100')).not.toBeInTheDocument()
 
-  window.matchMedia = originalMatchMedia
+    // Use vitest waitFor to wait for Shifty to finish without relying on fake timers
+    await waitFor(() => expect(screen.getByText('100')).toBeInTheDocument(), {
+      timeout: 2000,
+    })
+  } finally {
+    window.matchMedia = originalMatchMedia
+  }
 })
