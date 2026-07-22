@@ -117,8 +117,8 @@ describe('VinegarRecipe', () => {
         props={{ recipe: balsamicVinegar }}
         state={{
           inventory: [
-            { id: grapeSyrup.id, quantity: 10 },
-            { id: yeast.id, quantity: 5 },
+            { id: grapeSyrup.id, quantity: 24 },
+            { id: yeast.id, quantity: 6 },
           ],
         }}
       />
@@ -127,8 +127,8 @@ describe('VinegarRecipe', () => {
     expect(
       screen.getByText(
         `Units of ${grapeSyrup.name} required: ${integerString(
-          10
-        )} (available: ${integerString(10)})`
+          24
+        )} (available: ${integerString(24)})`
       )
     ).toBeInTheDocument()
   })

@@ -990,8 +990,8 @@ export const balsamicVinegar: farmhand.vinegar = convertToVinegarRecipe({
   id: 'balsamic-vinegar',
   name: 'Balsamic Vinegar',
   ingredients: {
-    [grapeSyrup.id]: 10,
-    [yeast.id]: 5,
+    [grapeSyrup.id]: 24,
+    [yeast.id]: 6,
   },
   unlockItemId: grapeSyrup.id,
   daysToMature: 21,
