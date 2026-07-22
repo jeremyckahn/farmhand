@@ -23,6 +23,7 @@ test('uses custom formatter when provided', () => {
 
 test('skips animation and updates synchronously when prefers-reduced-motion is reduce', () => {
   const originalMatchMedia = window.matchMedia
+
   window.matchMedia = vi.fn().mockImplementation((query) => ({
     matches: query === '(prefers-reduced-motion: reduce)',
     media: query,
@@ -49,6 +50,7 @@ test('skips animation and updates synchronously when prefers-reduced-motion is r
 
 test('animates when prefers-reduced-motion is no-preference', () => {
   const originalMatchMedia = window.matchMedia
+
   window.matchMedia = vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
