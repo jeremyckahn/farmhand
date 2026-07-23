@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 
+import { NOTIFICATION_DURATION } from '../../src/constants.js'
 import { openPage } from '../test-utils/open-page.js'
 
 // window.farmhand is a real, supported debug hook (documented in
@@ -68,11 +69,11 @@ test('clears a notification after its display duration elapses without crashing 
   await showNotification(page, 'Progress saved!')
   await expect(page.getByText('Progress saved!')).toBeVisible()
 
-  // NOTIFICATION_DURATION (src/constants.ts) is 6000ms outside of unit
-  // tests. The page's clock is virtualized (see openPage), so this jumps
-  // the notification's own auto-hide timer forward instead of a real
-  // multi-second wait.
-  await page.clock.fastForward(7000)
+  // The page's clock is virtualized (see openPage), so this jumps the
+  // notification's own auto-hide timer forward instead of a real
+  // multi-second wait. The extra 1000ms is just a margin past the
+  // notification's actual configured duration.
+  await page.clock.fastForward(NOTIFICATION_DURATION + 1000)
 
   await expect(page.getByText('Progress saved!')).toBeHidden()
   expect(pageErrors).toEqual([])
