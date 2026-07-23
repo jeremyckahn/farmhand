@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { tween, Tweenable } from 'shifty'
 import { func as funcProp, number as numberProp } from 'prop-types'
+
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.js'
 
 const defaultFormatter = (num: number) => `${num}`
 
@@ -15,48 +17,40 @@ const AnimatedNumber = ({
   number: number
   formatter?: typeof defaultFormatter
 }): JSX.Element => {
+  const prefersReducedMotion = usePrefersReducedMotion()
   const [displayedNumber, setDisplayedNumber] = useState(number)
-  const [previousNumber, setPreviousNumber] = useState(number)
-  const [currentTweenable, setCurrentTweenable] = useState<
-    Tweenable | undefined
-  >()
+  const previousNumberRef = useRef(number)
+  const tweenableRef = useRef<Tweenable | null>(null)
 
   useEffect(() => {
-    setPreviousNumber(number)
-  }, [number, setPreviousNumber])
+    tweenableRef.current?.cancel()
+    tweenableRef.current = null
 
-  useEffect(() => {
-    if (number !== previousNumber) {
-      if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
-        setDisplayedNumber(number)
-        return
-      }
-
-      if (currentTweenable) {
-        currentTweenable.cancel()
-      }
-
-      const tweenable = tween({
-        easing: 'easeOutQuad',
-        duration: 750,
-        render: ({ number: tweenedNumber }: any) => {
-          setDisplayedNumber(Number(tweenedNumber))
-        },
-        from: {
-          number: previousNumber,
-        },
-        to: { number },
-      })
-
-      setCurrentTweenable(tweenable)
+    if (prefersReducedMotion || previousNumberRef.current === number) {
+      previousNumberRef.current = number
+      setDisplayedNumber(number)
+      return
     }
+
+    tweenableRef.current = tween({
+      easing: 'easeOutQuad',
+      duration: 750,
+      render: ({ number: tweenedNumber }: any) => {
+        setDisplayedNumber(Number(tweenedNumber))
+      },
+      from: {
+        number: previousNumberRef.current,
+      },
+      to: { number },
+    })
+
+    previousNumberRef.current = number
 
     return () => {
-      if (currentTweenable) {
-        currentTweenable.cancel()
-      }
+      tweenableRef.current?.cancel()
+      tweenableRef.current = null
     }
-  }, [currentTweenable, number, previousNumber])
+  }, [number, prefersReducedMotion])
 
   return <span className="AnimatedNumber">{formatter(displayedNumber)}</span>
 }
