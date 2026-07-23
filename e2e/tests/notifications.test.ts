@@ -16,13 +16,14 @@ declare global {
   }
 }
 
-// These tests drive the notification system directly through the
-// window.farmhand.setState debug hook (documented in README.md's
-// "Debugging" section) rather than through repeated real End Day clicks.
-// That keeps them focused on NotificationSystem's own behavior and fast/
-// deterministic, without unrelated game-economy side effects (loan
-// interest, bankruptcy, price events, day-transition timing) that a real
-// end-of-day flow would introduce.
+// The "Test notification A/B" and display-duration tests below drive the
+// notification system directly through the window.farmhand.setState debug
+// hook (documented in README.md's "Debugging" section) rather than through
+// real game actions. That keeps them focused on NotificationSystem's own
+// generic dedup/lifecycle behavior and fast/deterministic, without
+// unrelated game-economy side effects (loan interest, bankruptcy, price
+// events, day-transition timing) that a real end-of-day flow would
+// introduce.
 const showNotification = (
   page: import('@playwright/test').Page,
   message: string,
@@ -34,13 +35,28 @@ const showNotification = (
     { message, severity }
   )
 
+const endDay = (page: import('@playwright/test').Page) =>
+  page.getByRole('button', { name: 'End the day to save your' }).click()
+
 test('does not stack duplicate toasts when the same notification is triggered rapidly', async ({
   page,
 }) => {
   await openPage(page)
 
+  // Unlike the other tests in this file, this one drives the real
+  // showNotification reducer (src/game-logic/reducers/showNotification.ts)
+  // through repeated "End the day" clicks instead of the debug hook. That
+  // reducer is the actual root cause this fix addresses: it always builds
+  // a brand new `latestNotification` object on every call, so this test
+  // needs the real object-identity churn a live day-advancement cycle
+  // produces (handleClickEndDayButton -> incrementDay -> the reducer) -
+  // injecting an equivalent-looking object via setState wouldn't exercise
+  // that. Clicking End Day back-to-back without waiting reproduces the
+  // rapid-clicking bug report, where each cycle's "Progress saved!" call
+  // could re-fire while an identical toast from a prior cycle was still
+  // visible.
   for (let i = 0; i < 5; i++) {
-    await showNotification(page, 'Progress saved!')
+    await endDay(page)
   }
 
   await expect(page.getByText('Progress saved!')).toHaveCount(1)
