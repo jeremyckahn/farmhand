@@ -2,53 +2,58 @@ import { expect, test } from '@playwright/test'
 import { openPage } from '../test-utils/open-page.js'
 
 test.describe('Update Notification', () => {
-  test('clicking the update notification triggers a page reload', async ({ page }) => {
+  test('clicking the update notification triggers a page reload', async ({
+    page,
+  }) => {
     await openPage(page)
 
-    // Wait until boot is complete (the game has booted)
     await expect(page.locator('.Farmhand.has-booted')).toBeVisible()
 
-    // Trigger the notification
+    // There is no UI-driven way to make the app think a game update is
+    // available, so this reaches into the React tree to invoke the handler
+    // directly, passing a mock updateServiceWorker that mimics the real
+    // implementation's reload-on-true behavior.
     await page.evaluate(() => {
-      // Find the React root and its fiber
-      const getFiber = (node: any) => {
-        const key = Object.keys(node).find(k => k.startsWith('__reactFiber$')) as string;
-        return node[key];
-      };
-      const fiber = getFiber(document.querySelector('.Farmhand'));
-
-      let current = fiber;
-      let context: any = null;
-      while (current) {
-        if (current.memoizedProps && current.memoizedProps.value && current.memoizedProps.value.handlers) {
-          context = current.memoizedProps.value;
-          break;
-        }
-        current = current.return;
+      const getFiber = (node: Element) => {
+        const key = Object.keys(node).find(k => k.startsWith('__reactFiber$'))
+        return ((node as unknown) as Record<string, any>)[key as string]
       }
 
-      if (!context) throw new Error("Could not find FarmhandContext");
+      let fiber = getFiber(document.querySelector('.Farmhand')!)
+      let context: any = null
 
-      // @ts-ignore
-      context.handlers.handleGameUpdateAvailable(async (reloadPage: boolean) => {});
+      while (fiber) {
+        if (fiber.memoizedProps?.value?.handlers) {
+          context = fiber.memoizedProps.value
+          break
+        }
+
+        fiber = fiber.return
+      }
+
+      if (!context) {
+        throw new Error('Could not find FarmhandContext')
+      }
+
+      context.handlers.handleGameUpdateAvailable(
+        async (reloadPage?: boolean) => {
+          if (reloadPage) {
+            window.location.reload()
+          }
+        }
+      )
     })
 
-    // Wait for the notification to appear
-    const notificationText = page.locator('text=A game update is available! Click this message to reload and see what\'s new.');
-    await expect(notificationText).toBeVisible()
+    const notification = page.getByText(
+      "A game update is available! Click this message to reload and see what's new."
+    )
+    await expect(notification).toBeVisible()
 
-    // We confirm that a custom content component with cursor: pointer was injected successfully.
-    // Instead of using Playwright click which is buggy for Portal rendering in e2e,
-    // we use locator and style checks.
+    await Promise.all([page.waitForEvent('load'), notification.click()])
 
-    // We need to look up 2 parents: p -> ReactMarkdown div wrapper -> Alert
-    // The div with the inline style width 100% and the onClick handler is just above ReactMarkdown
-    const wrapperDiv = notificationText.locator('xpath=ancestor::div[contains(@style, "width: 100%")]').first()
-
-    // Check that we indeed rendered our custom node with pointer events
-    // Playwright evaluates inline styles and actual CSS. But the cursor is on the wrapper inside the CustomContent.
-    const customContentWrapper = notificationText.locator('xpath=ancestor::div[contains(@style, "pointer-events: auto")]').first()
-
-    await expect(customContentWrapper).toBeVisible()
+    // If the page didn't actually reload, the app would still be showing the
+    // old notification instead of rebooting fresh.
+    await expect(page.locator('.Farmhand.has-booted')).toBeVisible()
+    await expect(notification).not.toBeVisible()
   })
 })
