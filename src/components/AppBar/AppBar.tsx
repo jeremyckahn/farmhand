@@ -22,64 +22,50 @@ const MoneyDisplay = ({ money }: { money: number }) => {
   const tweenableRef = useRef<Tweenable | null>(null)
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      if (tweenableRef.current) {
-        tweenableRef.current.cancel()
-        tweenableRef.current = null
-      }
+    tweenableRef.current?.cancel()
+    tweenableRef.current = null
 
+    if (prefersReducedMotion || previousMoneyRef.current === money) {
       previousMoneyRef.current = money
       setDisplayedMoney(money)
       setTextColor(idleColor)
       return
     }
 
-    if (previousMoneyRef.current !== money) {
-      if (tweenableRef.current) {
-        tweenableRef.current.cancel()
-      }
+    const startColor =
+      money > previousMoneyRef.current ? 'rgb(0, 255, 0)' : 'rgb(255, 0, 0)'
 
-      const tweenable = tween({
-        easing: 'easeOutQuad',
-        duration: 750,
-        render: ({ color, money: currentMoney }: any) => {
-          setTextColor(String(color))
-          setDisplayedMoney(Number(currentMoney))
-        },
-        from: {
-          color:
-            money > previousMoneyRef.current
-              ? 'rgb(0, 255, 0)'
-              : 'rgb(255, 0, 0)',
-          money: previousMoneyRef.current,
-        },
-        to: { color: idleColor, money },
-      })
+    tweenableRef.current = tween({
+      easing: 'easeOutQuad',
+      duration: 750,
+      render: ({ color, money: currentMoney }: any) => {
+        setTextColor(String(color))
+        setDisplayedMoney(Number(currentMoney))
+      },
+      from: {
+        color: startColor,
+        money: previousMoneyRef.current,
+      },
+      to: { color: idleColor, money },
+    })
 
-      tweenableRef.current = tweenable
-      previousMoneyRef.current = money
-    }
+    previousMoneyRef.current = money
 
     return () => {
-      if (tweenableRef.current) {
-        tweenableRef.current.cancel()
-        tweenableRef.current = null
-      }
+      tweenableRef.current?.cancel()
+      tweenableRef.current = null
     }
   }, [money, prefersReducedMotion])
-
-  const amountToDisplay = prefersReducedMotion ? money : displayedMoney
-  const colorToDisplay = prefersReducedMotion ? idleColor : textColor
 
   return (
     <span
       {...{
         style: {
-          color: colorToDisplay,
+          color: textColor,
         },
       }}
     >
-      {moneyString(amountToDisplay)}
+      {moneyString(displayedMoney)}
     </span>
   )
 }

@@ -23,49 +23,36 @@ const AnimatedNumber = ({
   const tweenableRef = useRef<Tweenable | null>(null)
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      if (tweenableRef.current) {
-        tweenableRef.current.cancel()
-        tweenableRef.current = null
-      }
+    tweenableRef.current?.cancel()
+    tweenableRef.current = null
 
+    if (prefersReducedMotion || previousNumberRef.current === number) {
       previousNumberRef.current = number
       setDisplayedNumber(number)
       return
     }
 
-    if (previousNumberRef.current !== number) {
-      if (tweenableRef.current) {
-        tweenableRef.current.cancel()
-      }
+    tweenableRef.current = tween({
+      easing: 'easeOutQuad',
+      duration: 750,
+      render: ({ number: tweenedNumber }: any) => {
+        setDisplayedNumber(Number(tweenedNumber))
+      },
+      from: {
+        number: previousNumberRef.current,
+      },
+      to: { number },
+    })
 
-      const tweenable = tween({
-        easing: 'easeOutQuad',
-        duration: 750,
-        render: ({ number: tweenedNumber }: any) => {
-          setDisplayedNumber(Number(tweenedNumber))
-        },
-        from: {
-          number: previousNumberRef.current,
-        },
-        to: { number },
-      })
-
-      tweenableRef.current = tweenable
-      previousNumberRef.current = number
-    }
+    previousNumberRef.current = number
 
     return () => {
-      if (tweenableRef.current) {
-        tweenableRef.current.cancel()
-        tweenableRef.current = null
-      }
+      tweenableRef.current?.cancel()
+      tweenableRef.current = null
     }
   }, [number, prefersReducedMotion])
 
-  const valueToDisplay = prefersReducedMotion ? number : displayedNumber
-
-  return <span className="AnimatedNumber">{formatter(valueToDisplay)}</span>
+  return <span className="AnimatedNumber">{formatter(displayedNumber)}</span>
 }
 
 AnimatedNumber.propTypes = {
