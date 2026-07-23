@@ -34,11 +34,11 @@ test('calls enqueueSnackbar when latestNotification is provided', () => {
     />
   )
 
-  expect(enqueueSnackbar).toHaveBeenCalledWith(latestNotification.message, expect.objectContaining({
+  expect(enqueueSnackbar).toHaveBeenCalledWith(latestNotification, {
     autoHideDuration: 1, // NOTIFICATION_DURATION in test mode
     onClose: expect.any(Function),
     preventDuplicate: true,
-  }))
+  })
 })
 
 test('does not call enqueueSnackbar when latestNotification is null', () => {
@@ -100,11 +100,11 @@ test('re-enqueues notification when latestNotification changes', () => {
   )
 
   expect(enqueueSnackbar).toHaveBeenCalledTimes(1)
-  expect(enqueueSnackbar).toHaveBeenCalledWith(initialNotification.message, expect.objectContaining({
+  expect(enqueueSnackbar).toHaveBeenCalledWith(initialNotification, {
     autoHideDuration: 1,
     onClose: expect.any(Function),
     preventDuplicate: true,
-  }))
+  })
 
   // Change the notification
   rerender(
@@ -118,9 +118,9 @@ test('re-enqueues notification when latestNotification changes', () => {
   )
 
   expect(enqueueSnackbar).toHaveBeenCalledTimes(2)
-  expect(enqueueSnackbar).toHaveBeenLastCalledWith(newNotification.message, expect.objectContaining({
+  expect(enqueueSnackbar).toHaveBeenLastCalledWith(newNotification, {
     autoHideDuration: 1,
     onClose: expect.any(Function),
     preventDuplicate: true,
-  }))
+  })
 })
