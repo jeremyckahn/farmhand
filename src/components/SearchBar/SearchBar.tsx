@@ -4,6 +4,7 @@ import { useDebounceCallback } from 'usehooks-ts'
 import TextField from '@mui/material/TextField/index.js'
 
 import { Div } from '../Elements/index.js'
+import { layout } from '../../styles/tokens.js'
 
 const SearchBar = ({
   placeholder,
@@ -25,9 +26,9 @@ const SearchBar = ({
       className="search-bar"
       sx={{
         position: 'relative',
-        maxWidth: '100%',
+        maxWidth: layout.cardMaxWidth,
         padding: '0.5em',
-        margin: '1em 0',
+        margin: '1em auto',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -62,7 +63,7 @@ const SearchBar = ({
         },
         '@media (max-width: 768px)': {
           padding: '1em',
-          margin: '0.5em 0',
+          margin: '0.5em auto',
           '& .MuiOutlinedInput-root': { fontSize: '0.9em' },
         },
       }}
