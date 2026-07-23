@@ -5,7 +5,6 @@ import { SnackbarProvider } from 'notistack'
 import { NotificationSystem } from './NotificationSystem.js'
 
 const defaultProps = {
-  closeSnackbar: vitest.fn(),
   enqueueSnackbar: vitest.fn(),
   latestNotification: null,
 }
@@ -19,7 +18,7 @@ test('renders', () => {
   // NotificationSystem renders null, so we just verify it doesn't crash
 })
 
-test('calls enqueueSnackbar when latestNotification is provided', () => {
+test('calls enqueueSnackbar with a content-derived key when latestNotification is provided', () => {
   const enqueueSnackbar = vitest.fn()
   const latestNotification: farmhand.notification = {
     message: 'Test notification',
@@ -35,10 +34,35 @@ test('calls enqueueSnackbar when latestNotification is provided', () => {
   )
 
   expect(enqueueSnackbar).toHaveBeenCalledWith(latestNotification, {
+    key: 'info:Test notification',
     autoHideDuration: 1, // NOTIFICATION_DURATION in test mode
-    onClose: expect.any(Function),
     preventDuplicate: true,
   })
+})
+
+test("does not pass an onClose handler that calls closeSnackbar with this notification's own key", () => {
+  // Regression test: notistack's closeSnackbar(key) invokes the matching
+  // snack's own `onClose` before removing it from state. An onClose
+  // handler here that calls closeSnackbar with its own key recurses
+  // infinitely the moment the snack naturally auto-hides (stack overflow
+  // after the first "Progress saved!" toast expires). No onClose handler
+  // should be passed at all - notistack manages the snack's lifecycle
+  // (auto-hide, then removal) on its own once autoHideDuration/key are set.
+  const enqueueSnackbar = vitest.fn()
+  const latestNotification: farmhand.notification = {
+    message: 'Test notification',
+    severity: 'info',
+  }
+
+  renderWithSnackbar(
+    <NotificationSystem
+      {...defaultProps}
+      enqueueSnackbar={enqueueSnackbar}
+      latestNotification={latestNotification}
+    />
+  )
+
+  expect(enqueueSnackbar.mock.calls[0][1]).not.toHaveProperty('onClose')
 })
 
 test('does not call enqueueSnackbar when latestNotification is null', () => {
@@ -55,32 +79,7 @@ test('does not call enqueueSnackbar when latestNotification is null', () => {
   expect(enqueueSnackbar).not.toHaveBeenCalled()
 })
 
-test('calls closeSnackbar when onClose is triggered', () => {
-  const closeSnackbar = vitest.fn()
-  const enqueueSnackbar = vitest.fn()
-  const latestNotification: farmhand.notification = {
-    message: 'Test notification',
-    severity: 'info',
-  }
-
-  renderWithSnackbar(
-    <NotificationSystem
-      {...defaultProps}
-      closeSnackbar={closeSnackbar}
-      enqueueSnackbar={enqueueSnackbar}
-      latestNotification={latestNotification}
-    />
-  )
-
-  // Get the onClose function from the enqueueSnackbar call
-  const onCloseCallback = enqueueSnackbar.mock.calls[0][1].onClose
-
-  onCloseCallback()
-
-  expect(closeSnackbar).toHaveBeenCalledTimes(1)
-})
-
-test('re-enqueues notification when latestNotification changes', () => {
+test('re-enqueues notification when latestNotification changes to a different message', () => {
   const enqueueSnackbar = vitest.fn()
   const initialNotification: farmhand.notification = {
     message: 'First notification',
@@ -101,8 +100,8 @@ test('re-enqueues notification when latestNotification changes', () => {
 
   expect(enqueueSnackbar).toHaveBeenCalledTimes(1)
   expect(enqueueSnackbar).toHaveBeenCalledWith(initialNotification, {
+    key: 'info:First notification',
     autoHideDuration: 1,
-    onClose: expect.any(Function),
     preventDuplicate: true,
   })
 
@@ -119,8 +118,46 @@ test('re-enqueues notification when latestNotification changes', () => {
 
   expect(enqueueSnackbar).toHaveBeenCalledTimes(2)
   expect(enqueueSnackbar).toHaveBeenLastCalledWith(newNotification, {
+    key: 'success:Second notification',
     autoHideDuration: 1,
-    onClose: expect.any(Function),
     preventDuplicate: true,
   })
+})
+
+test('uses the same key for repeated notifications with identical message and severity, letting notistack dedupe them', () => {
+  const enqueueSnackbar = vitest.fn()
+  const firstNotification: farmhand.notification = {
+    message: 'Progress saved!',
+    severity: 'info',
+  }
+  const secondNotification: farmhand.notification = {
+    message: 'Progress saved!',
+    severity: 'info',
+  }
+
+  const { rerender } = renderWithSnackbar(
+    <NotificationSystem
+      {...defaultProps}
+      enqueueSnackbar={enqueueSnackbar}
+      latestNotification={firstNotification}
+    />
+  )
+
+  rerender(
+    <SnackbarProvider>
+      <NotificationSystem
+        {...defaultProps}
+        enqueueSnackbar={enqueueSnackbar}
+        latestNotification={secondNotification}
+      />
+    </SnackbarProvider>
+  )
+
+  expect(enqueueSnackbar).toHaveBeenCalledTimes(2)
+
+  // Identical key is what allows notistack's own preventDuplicate to skip
+  // showing a second toast while the first is still visible or queued.
+  expect(enqueueSnackbar.mock.calls[0][1].key).toBe(
+    enqueueSnackbar.mock.calls[1][1].key
+  )
 })
