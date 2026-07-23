@@ -29,9 +29,7 @@ import AppBar from '../AppBar/index.js'
 import { ChatRoom } from '../ChatRoom/index.js'
 import ContextPane from '../ContextPane/index.js'
 import Navigation from '../Navigation/index.js'
-import NotificationSystem, {
-  snackbarProviderContentCallback,
-} from '../NotificationSystem/index.js'
+import NotificationSystem from '../NotificationSystem/index.js'
 import Stage from '../Stage/index.js'
 import UpdateNotifier from '../UpdateNotifier/index.js'
 
@@ -70,7 +68,6 @@ const Farmhand = (props: FarmhandProps) => {
         <SnackbarProvider
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           classes={{ containerRoot: 'Farmhand notification-container' }}
-          content={snackbarProviderContentCallback}
           maxSnack={4}
         >
           {redirect && <Redirect to={redirect} />}

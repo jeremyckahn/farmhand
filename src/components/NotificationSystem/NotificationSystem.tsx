@@ -24,12 +24,18 @@ export const CustomContent = forwardRef<
         },
       }}
     >
+      {/*
+        onClick is bound here too (in addition to Alert above) because a
+        click on Alert doesn't reliably reach native listeners through
+        notistack's SnackbarContent wrapper. stopPropagation prevents this
+        handler and Alert's handler from both firing for the same click.
+      */}
       <div
         style={{ width: '100%' }}
-        onClick={(e) => {
+        onClick={e => {
           if (onClick) {
-            e.stopPropagation();
-            onClick();
+            e.stopPropagation()
+            onClick()
           }
         }}
       >
@@ -40,22 +46,6 @@ export const CustomContent = forwardRef<
 ))
 
 CustomContent.displayName = 'CustomContent'
-
-export const snackbarProviderContentCallback = (
-  key: string | number,
-  {
-    message,
-    onClick,
-    severity,
-  }: farmhand.notification & { onClick?: () => void }
-) => (
-  <CustomContent
-    id={key}
-    message={message}
-    onClick={onClick}
-    severity={severity}
-  />
-)
 
 export const NotificationSystem = ({
   closeSnackbar,
@@ -79,7 +69,7 @@ export const NotificationSystem = ({
             onClick={latestNotification.onClick}
             severity={latestNotification.severity}
           />
-        )
+        ),
       })
     }
   }, [closeSnackbar, enqueueSnackbar, latestNotification])
