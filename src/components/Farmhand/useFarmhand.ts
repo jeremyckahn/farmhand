@@ -341,8 +341,8 @@ export const useFarmhand = (props: FarmhandProps) => {
         boundReducersRef.current.purchaseItem(item, quantity),
       sellItem: (item: any, quantity: number) =>
         boundReducersRef.current.sellItem(item, quantity),
-      showNotification: (msg: string, sev?: string) =>
-        boundReducersRef.current.showNotification(msg, sev),
+      showNotification: (msg: string, sev?: string, onClick?: () => void) =>
+        boundReducersRef.current.showNotification(msg, sev, onClick),
       prependPendingPeerMessage: (msg: string, sev?: string) =>
         boundReducersRef.current.prependPendingPeerMessage(msg, sev),
       forRange: (
