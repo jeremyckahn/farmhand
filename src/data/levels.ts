@@ -1,5 +1,4 @@
 import { stageFocusType, toolType } from '../enums.js'
-import { features } from '../config.js'
 
 import * as items from './items.js'
 import * as recipes from './recipes.js'
@@ -52,22 +51,18 @@ levels[14] = {
   unlocksShopItem: items.potatoSeed.id,
 }
 
-if ((features as { FOREST?: boolean }).FOREST) {
-  levels[15] = {
-    unlocksStageFocusType: stageFocusType.FOREST,
-    unlocksShopItem: items.appleSapling.id,
-    unlocksTool: [toolType.AXE, toolType.PICKER_POLE],
-  }
+levels[15] = {
+  unlocksStageFocusType: stageFocusType.FOREST,
+  unlocksShopItem: items.appleSapling.id,
+  unlocksTool: [toolType.AXE, toolType.PICKER_POLE],
 }
 
 levels[16] = {
   unlocksShopItem: items.onionSeed.id,
 }
 
-if ((features as { FOREST?: boolean }).FOREST) {
-  levels[17] = {
-    unlocksShopItem: recipes.mulch.id,
-  }
+levels[17] = {
+  unlocksShopItem: recipes.mulch.id,
 }
 
 levels[18] = {
@@ -78,10 +73,8 @@ levels[20] = {
   unlocksShopItem: items.wheatSeed.id,
 }
 
-if ((features as { FOREST?: boolean }).FOREST) {
-  levels[21] = {
-    unlocksShopItem: items.bananaSapling.id,
-  }
+levels[21] = {
+  unlocksShopItem: items.bananaSapling.id,
 }
 
 levels[22] = {

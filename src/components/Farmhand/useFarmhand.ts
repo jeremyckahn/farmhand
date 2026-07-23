@@ -6,7 +6,6 @@ import { v4 as uuid } from 'uuid'
 import * as reducers from '../../game-logic/reducers/index.js'
 import eventHandlers from '../../handlers/ui-events.js'
 
-import { features } from '../../config.js'
 import {
   DEFAULT_ROOM,
   INITIAL_STORAGE_LIMIT,
@@ -229,7 +228,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       list.unshift(HOME)
     }
 
-    if (isForestUnlocked && features.FOREST) {
+    if (isForestUnlocked) {
       list.push(FOREST)
     }
 

@@ -274,11 +274,11 @@ const Farmhand = (props: FarmhandProps) => {
 }
 
 Farmhand.defaultProps = {
+  features: {},
   localforage: localforage.createInstance({
     name: 'farmhand',
     description: 'Persisted game data for Farmhand',
   }),
-  features: {},
   match: { path: '', params: {} },
 }
 

@@ -4,11 +4,6 @@ import { getCowStub } from '../test-utils/stubs/cowStub.js'
 
 import { transformStateDataForImport } from './transformStateDataForImport.js'
 
-// The axe unlocks alongside the forest, which is gated behind this feature
-// flag (see data/levels.ts) - force it on so getLevelEntitlements actually
-// reports the axe as unlocked at high enough levels in these tests.
-vitest.mock('../config.js', () => ({ features: { FOREST: true } }))
-
 describe('transformStateDataForImport', () => {
   let state: Partial<farmhand.state>
 
