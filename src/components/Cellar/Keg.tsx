@@ -9,7 +9,7 @@ import { itemsMap } from '../../data/maps.js'
 import { items, wines } from '../../img/index.js'
 import { cellarService } from '../../services/cellar.js'
 import { wineService } from '../../services/wine.js'
-import { FERMENTED_CROP_NAME } from '../../templates.js'
+import { getKegDisplayName } from '../../utils/getKegDisplayName.js'
 import { getKegSpoilageRate } from '../../utils/getKegSpoilageRate.js'
 import { getKegValue } from '../../utils/getKegValue.js'
 import { getSalePriceMultiplier } from '../../utils/getSalePriceMultiplier.js'
@@ -28,7 +28,7 @@ export function Keg({ keg }: { keg: farmhand.keg }) {
   // TODO: Add a defensive check in case item is undefined (e.g. keg.itemId is invalid) to prevent runtime crash when accessing item.id
   let imageSrc = items[item.id as keyof typeof items]
 
-  let recipeName = FERMENTED_CROP_NAME`${item}`
+  const recipeName = getKegDisplayName(item)
 
   const handleSellClick = () => {
     handleSellKegClick(keg)
@@ -44,7 +44,6 @@ export function Keg({ keg }: { keg: farmhand.keg }) {
 
   if (wineService.isWineRecipe(item)) {
     imageSrc = wines[item.variety]
-    recipeName = item.name
   }
 
   const spoilageRate = getKegSpoilageRate(keg)
