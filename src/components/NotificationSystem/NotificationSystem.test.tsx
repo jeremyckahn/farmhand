@@ -19,6 +19,15 @@ test('renders', () => {
 })
 
 test('calls enqueueSnackbar with a content-derived key when latestNotification is provided', () => {
+  // Regression test: notistack's closeSnackbar(key) invokes the matching
+  // snack's own `onClose` before removing it from state. An onClose
+  // handler here that calls closeSnackbar with its own key recurses
+  // infinitely the moment the snack naturally auto-hides (stack overflow
+  // after the first "Progress saved!" toast expires). No onClose handler
+  // should be passed at all - notistack manages the snack's lifecycle
+  // (auto-hide, then removal) on its own once autoHideDuration/key are set.
+  // The exact-match assertion below guards against onClose (or any other
+  // unexpected option) being reintroduced.
   const enqueueSnackbar = vitest.fn()
   const latestNotification: farmhand.notification = {
     message: 'Test notification',
@@ -38,31 +47,6 @@ test('calls enqueueSnackbar with a content-derived key when latestNotification i
     autoHideDuration: 1, // NOTIFICATION_DURATION in test mode
     preventDuplicate: true,
   })
-})
-
-test("does not pass an onClose handler that calls closeSnackbar with this notification's own key", () => {
-  // Regression test: notistack's closeSnackbar(key) invokes the matching
-  // snack's own `onClose` before removing it from state. An onClose
-  // handler here that calls closeSnackbar with its own key recurses
-  // infinitely the moment the snack naturally auto-hides (stack overflow
-  // after the first "Progress saved!" toast expires). No onClose handler
-  // should be passed at all - notistack manages the snack's lifecycle
-  // (auto-hide, then removal) on its own once autoHideDuration/key are set.
-  const enqueueSnackbar = vitest.fn()
-  const latestNotification: farmhand.notification = {
-    message: 'Test notification',
-    severity: 'info',
-  }
-
-  renderWithSnackbar(
-    <NotificationSystem
-      {...defaultProps}
-      enqueueSnackbar={enqueueSnackbar}
-      latestNotification={latestNotification}
-    />
-  )
-
-  expect(enqueueSnackbar.mock.calls[0][1]).not.toHaveProperty('onClose')
 })
 
 test('does not call enqueueSnackbar when latestNotification is null', () => {
