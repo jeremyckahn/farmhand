@@ -310,6 +310,26 @@ export const FERMENTED_CROP_NAME = (_: any, item: farmhand.item): string =>
 export const KEG_SPOILED_MESSAGE = (_: any, keg: farmhand.keg): string =>
   `Oh no! Your ${FERMENTED_CROP_NAME(_, itemsMap[keg.itemId])} has spoiled!`
 
+export const KEGS_READY_TO_SELL = (
+  _: any,
+  kegsReady: Record<string, number>
+): string => {
+  let message = `Kegs are ready to sell in the cellar:
+`
+
+  Object.keys(kegsReady)
+    .sort()
+    .forEach(
+      name =>
+        (message += `  - ${kegsReady[name]} ${name}${
+          kegsReady[name] > 1 ? 's' : ''
+        }
+`)
+    )
+
+  return message
+}
+
 export const NEW_COW_OFFERED_FOR_TRADE = (
   _: any,
   peerMetadata: farmhand.peerMetadata
