@@ -7,6 +7,11 @@ import { withSnackbar } from 'notistack'
 import { NOTIFICATION_DURATION } from '../../constants.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
+export const getNotificationKey = ({
+  message,
+  severity,
+}: farmhand.notification): string => `${severity}:${message}`
+
 export const snackbarProviderContentCallback = (
   key: string | number,
   {
@@ -31,23 +36,29 @@ export const snackbarProviderContentCallback = (
 )
 
 export const NotificationSystem = ({
-  closeSnackbar,
   enqueueSnackbar,
   latestNotification,
 }: {
-  closeSnackbar: () => void
   enqueueSnackbar: (notification: farmhand.notification, options: any) => void
   latestNotification: farmhand.notification | null
 }) => {
   useEffect(() => {
-    if (latestNotification) {
-      enqueueSnackbar(latestNotification, {
-        autoHideDuration: NOTIFICATION_DURATION,
-        onClose: () => closeSnackbar(),
-        preventDuplicate: true,
-      })
+    if (!latestNotification) {
+      return
     }
-  }, [closeSnackbar, enqueueSnackbar, latestNotification])
+
+    // A stable, content-derived key (rather than a fresh object identity
+    // every call) is what lets preventDuplicate below actually do
+    // something - it skips enqueueing when a snack with this key is
+    // already shown or queued, instead of stacking a duplicate. notistack
+    // handles the rest of the lifecycle itself (auto-hide, then removal)
+    // once autoHideDuration and a key are set - no onClose needed here.
+    enqueueSnackbar(latestNotification, {
+      key: getNotificationKey(latestNotification),
+      autoHideDuration: NOTIFICATION_DURATION,
+      preventDuplicate: true,
+    })
+  }, [enqueueSnackbar, latestNotification])
 
   return null
 }
