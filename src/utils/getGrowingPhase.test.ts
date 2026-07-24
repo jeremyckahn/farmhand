@@ -11,4 +11,10 @@ describe('getGrowingPhase', () => {
 
     expect(getGrowingPhase(crop as any)).toEqual(phase)
   })
+
+  test('handles fractional daysWatered correctly (fertilized crops)', () => {
+    // pumpkin cropTimeline: [3, 1, 1, 1, 1, 1]
+    const crop = { itemId: 'pumpkin', daysWatered: 7.5 }
+    expect(getGrowingPhase(crop as any)).toEqual(5)
+  })
 })
