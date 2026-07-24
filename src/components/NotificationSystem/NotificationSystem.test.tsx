@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { SnackbarProvider } from 'notistack'
 
-import { NotificationSystem } from './NotificationSystem.js'
+import { NotificationSystem, getNotificationKey } from './NotificationSystem.js'
 
 const defaultProps = {
   enqueueSnackbar: vitest.fn(),
@@ -84,7 +84,7 @@ test('re-enqueues notification when latestNotification changes to a different me
 
   expect(enqueueSnackbar).toHaveBeenCalledTimes(1)
   expect(enqueueSnackbar).toHaveBeenCalledWith(initialNotification, {
-    key: 'info:First notification',
+    key: getNotificationKey(initialNotification),
     autoHideDuration: 1,
     preventDuplicate: true,
   })
@@ -102,7 +102,7 @@ test('re-enqueues notification when latestNotification changes to a different me
 
   expect(enqueueSnackbar).toHaveBeenCalledTimes(2)
   expect(enqueueSnackbar).toHaveBeenLastCalledWith(newNotification, {
-    key: 'success:Second notification',
+    key: getNotificationKey(newNotification),
     autoHideDuration: 1,
     preventDuplicate: true,
   })

@@ -7,7 +7,7 @@ import { withSnackbar } from 'notistack'
 import { NOTIFICATION_DURATION } from '../../constants.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
-const getNotificationKey = ({
+export const getNotificationKey = ({
   message,
   severity,
 }: farmhand.notification): string => `${severity}:${message}`
