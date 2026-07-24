@@ -69,4 +69,28 @@ describe('processCellar', () => {
 
     expect(result.newDayNotifications).toEqual([])
   })
+
+  test('does not re-notify for a wine keg that is already ready', () => {
+    const result = processCellar(
+      testState({
+        cellarInventory: [
+          { itemId: wineChardonnay.id, daysUntilMature: 0, id: 'wine-id' },
+        ],
+      })
+    )
+
+    expect(result.newDayNotifications).toEqual([])
+  })
+
+  test('does not notify for a wine keg that is not yet ready', () => {
+    const result = processCellar(
+      testState({
+        cellarInventory: [
+          { itemId: wineChardonnay.id, daysUntilMature: 5, id: 'wine-id' },
+        ],
+      })
+    )
+
+    expect(result.newDayNotifications).toEqual([])
+  })
 })
