@@ -21,6 +21,12 @@ export const nextView = async () => {
   await userEvent.click(nextViewButton)
 }
 
+export const goToView = async (viewLabel: string) => {
+  const viewButton = await screen.findByLabelText(`Go to ${viewLabel}`)
+
+  await userEvent.click(viewButton)
+}
+
 export const getItemByName = async (itemName: string) => {
   const header = await screen.findByText(itemName)
   const item = header.closest('.Item')
