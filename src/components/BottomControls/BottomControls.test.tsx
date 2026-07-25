@@ -99,4 +99,14 @@ describe('<BottomControls />', () => {
     expect(handleMenuToggle).toHaveBeenCalled()
     expect(focusNextView).toHaveBeenCalled()
   })
+
+  test('shows a tooltip naming the view when a button is hovered', async () => {
+    renderBottomControls({ viewList: [SHOP, FIELD, WORKSHOP] })
+
+    await userEvent.hover(screen.getByRole('button', { name: 'Go to Field' }))
+
+    expect(
+      await screen.findByRole('tooltip', { name: 'Field' })
+    ).toBeInTheDocument()
+  })
 })

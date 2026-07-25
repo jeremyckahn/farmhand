@@ -6,6 +6,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft.js'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight.js'
 import MenuIcon from '@mui/icons-material/Menu.js'
 import Fab from '@mui/material/Fab/index.js'
+import Tooltip from '@mui/material/Tooltip/index.js'
 import { Theme } from '@mui/material/styles/index.js'
 
 import { STAGE_ICON_MAP, STAGE_TITLE_MAP } from '../../constants.js'
@@ -111,18 +112,24 @@ export const BottomControls = ({
         const viewKey = view as keyof typeof STAGE_TITLE_MAP
 
         return (
-          <Fab
+          <Tooltip
             key={view}
-            aria-label={`Go to ${STAGE_TITLE_MAP[viewKey]}`}
-            aria-current={isActive ? 'true' : undefined}
-            className={classNames('view-button', { selected: isActive })}
-            size="small"
-            onClick={() => handleViewChangeButtonClick(view)}
+            arrow={true}
+            placement="top"
+            title={STAGE_TITLE_MAP[viewKey]}
           >
-            <span className="view-icon" role="img" aria-hidden="true">
-              {STAGE_ICON_MAP[viewKey]}
-            </span>
-          </Fab>
+            <Fab
+              aria-label={`Go to ${STAGE_TITLE_MAP[viewKey]}`}
+              aria-current={isActive ? 'true' : undefined}
+              className={classNames('view-button', { selected: isActive })}
+              size="small"
+              onClick={() => handleViewChangeButtonClick(view)}
+            >
+              <span className="view-icon" role="img" aria-hidden="true">
+                {STAGE_ICON_MAP[viewKey]}
+              </span>
+            </Fab>
+          </Tooltip>
         )
       })}
     </div>
