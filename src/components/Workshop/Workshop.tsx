@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { number, object } from 'prop-types'
 import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'
@@ -12,6 +12,7 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { Div } from '../Elements/index.js'
 
 import { centerTabsSx } from '../../styles/sx.js'
+import { useTabQueryParam } from '../../hooks/useTabQueryParam.js'
 
 import { a11yProps } from './TabPanel/index.js'
 
@@ -35,8 +36,6 @@ const Workshop = ({
   purchasedWoodChipper,
   toolLevels,
 }: WorkshopProps) => {
-  const [currentTab, setCurrentTab] = useState(0)
-
   const learnedKitchenRecipes = Object.keys(learnedRecipes).filter(
     recipeId => recipesMap[recipeId].recipeType === recipeType.KITCHEN
   )
@@ -57,6 +56,15 @@ const Workshop = ({
 
   const recyclingTabIndex = showForge ? 2 : 1
   const woodChipperTabIndex = recyclingTabIndex + (purchasedComposter ? 1 : 0)
+
+  const [currentTab, setCurrentTab] = useTabQueryParam(
+    [
+      'Kitchen',
+      showForge ? 'Forge' : '',
+      purchasedComposter ? 'Recycling' : '',
+      purchasedWoodChipper ? 'Wood Chipper' : '',
+    ].filter(Boolean)
+  )
 
   return (
     <Div className="Workshop" sx={centerTabsSx}>

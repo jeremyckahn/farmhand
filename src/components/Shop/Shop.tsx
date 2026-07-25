@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { array, func, number, object } from 'prop-types'
 import Button from '@mui/material/Button/index.js'
 import Card from '@mui/material/Card/index.js'
@@ -33,6 +33,7 @@ import Inventory from '../Inventory/index.js'
 import TierPurchase from '../TierPurchase/index.js'
 import { Div } from '../Elements/index.js'
 import { centerTabsSx } from '../../styles/sx.js'
+import { useTabQueryParam } from '../../hooks/useTabQueryParam.js'
 
 import { TabPanel, a11yProps } from './TabPanel/index.js'
 
@@ -114,8 +115,6 @@ export const Shop = ({
   valueAdjustments: Record<string, number>
   storageUpgradeCost?: number
 }) => {
-  const [currentTab, setCurrentTab] = useState(0)
-
   const { seeds, saplings, fieldTools } = categorizeShopInventory(shopInventory)
 
   const isForestUnlocked =
@@ -125,6 +124,12 @@ export const Shop = ({
 
   const suppliesTabIndex = showSaplings ? 2 : 1
   const upgradesTabIndex = showSaplings ? 3 : 2
+
+  const [currentTab, setCurrentTab] = useTabQueryParam(
+    ['Seeds', showSaplings ? 'Saplings' : '', 'Supplies', 'Upgrades'].filter(
+      Boolean
+    )
+  )
 
   return (
     <Div className="Shop" sx={centerTabsSx}>

@@ -31,6 +31,10 @@ import { generateCow } from '../../utils/generateCow.js'
 import { getAvailableShopInventory } from '../../utils/getAvailableShopInventory.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { getPeerMetadata } from '../../utils/getPeerMetadata.js'
+import {
+  getHashQueryParams,
+  setHashQueryParam,
+} from '../../utils/hashQueryParams.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
 import { moneyTotal } from '../../utils/moneyTotal.js'
 import { noop } from '../../utils/noop.js'
@@ -62,6 +66,13 @@ export const useFarmhand = (props: FarmhandProps) => {
     features: propsFeatures,
     match: { path = '', params: { room: paramRoom } = {} } = {},
   } = props
+
+  const stageFocusFromUrl = getHashQueryParams().get('view')
+  const initialStageFocus = Object.keys(STAGE_TITLE_MAP).includes(
+    stageFocusFromUrl || ''
+  )
+    ? (stageFocusFromUrl as farmhand.stageFocusType)
+    : (stageFocusType.HOME as farmhand.stageFocusType)
 
   const createInitialState = useCallback((): farmhand.state => {
     return {
@@ -150,7 +161,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       sendCowTradeRequest: noop,
       showHomeScreen: true,
       showNotifications: true,
-      stageFocus: stageFocusType.HOME as farmhand.stageFocusType,
+      stageFocus: initialStageFocus,
       todaysNotifications: [],
       todaysLosses: 0,
       todaysPurchases: {},
@@ -168,7 +179,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       valueAdjustments: {},
       version: import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION ?? '',
     }
-  }, [path, props.match?.params?.room])
+  }, [path, props.match?.params?.room, initialStageFocus])
 
   const [state, setState] = useState<farmhand.state>(createInitialState)
   const stateRef = useRef<farmhand.state>(state)
@@ -266,6 +277,13 @@ export const useFarmhand = (props: FarmhandProps) => {
     focusNextView,
     focusPreviousView,
   } = useFarmhandNavigation(setState, viewList)
+
+  // Mirrors the current view into the URL hash's `view` query param
+  // (leaving other params, e.g. a tabbed screen's `tab`, untouched) so a
+  // page reload restores the same view.
+  useEffect(() => {
+    setHashQueryParam('view', state.stageFocus)
+  }, [state.stageFocus])
 
   const {
     syncToRoom,

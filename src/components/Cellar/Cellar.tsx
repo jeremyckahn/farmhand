@@ -1,17 +1,19 @@
 import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'
-import { useState } from 'react'
 
 import { centerTabsSx } from '../../styles/sx.js'
 import { Div } from '../Elements/index.js'
+import { useTabQueryParam } from '../../hooks/useTabQueryParam.js'
 
 import { CellarInventoryTabPanel } from './CellarInventoryTabPanel.js'
 import { FermentationTabPanel } from './FermentationTabPanel.js'
 import { a11yProps } from './TabPanel/index.js'
 import { WinemakingTabPanel } from './WinemakingTabPanel.js'
 
+const CELLAR_TAB_LABELS = ['Cellar Inventory', 'Fermentation', 'Winemaking']
+
 export const Cellar = () => {
-  const [currentTab, setCurrentTab] = useState(0)
+  const [currentTab, setCurrentTab] = useTabQueryParam(CELLAR_TAB_LABELS)
 
   return (
     <Div className="Cellar" sx={centerTabsSx}>
