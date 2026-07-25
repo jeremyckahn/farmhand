@@ -11,7 +11,6 @@ import {
   INITIAL_STORAGE_LIMIT,
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
-  STANDARD_VIEW_LIST,
 } from '../../constants.js'
 import { scarecrow } from '../../data/items.js'
 import {
@@ -31,6 +30,7 @@ import { generateCow } from '../../utils/generateCow.js'
 import { getAvailableShopInventory } from '../../utils/getAvailableShopInventory.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { getPeerMetadata } from '../../utils/getPeerMetadata.js'
+import { getViewList } from '../../utils/getViewList.js'
 import {
   getHashQueryParams,
   removeHashQueryParam,
@@ -67,13 +67,6 @@ export const useFarmhand = (props: FarmhandProps) => {
     features: propsFeatures,
     match: { path = '', params: { room: paramRoom } = {} } = {},
   } = props
-
-  const stageFocusFromUrl = getHashQueryParams().get('view')
-  const initialStageFocus = Object.keys(STAGE_TITLE_MAP).includes(
-    stageFocusFromUrl || ''
-  )
-    ? (stageFocusFromUrl as farmhand.stageFocusType)
-    : (stageFocusType.HOME as farmhand.stageFocusType)
 
   const createInitialState = useCallback((): farmhand.state => {
     return {
@@ -162,7 +155,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       sendCowTradeRequest: noop,
       showHomeScreen: true,
       showNotifications: true,
-      stageFocus: initialStageFocus,
+      stageFocus: stageFocusType.HOME as farmhand.stageFocusType,
       todaysNotifications: [],
       todaysLosses: 0,
       todaysPurchases: {},
@@ -180,7 +173,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       valueAdjustments: {},
       version: import.meta.env?.VITE_FARMHAND_PACKAGE_VERSION ?? '',
     }
-  }, [path, props.match?.params?.room, initialStageFocus])
+  }, [path, props.match?.params?.room])
 
   const [state, setState] = useState<farmhand.state>(createInitialState)
   const stateRef = useRef<farmhand.state>(state)
@@ -232,35 +225,21 @@ export const useFarmhand = (props: FarmhandProps) => {
     levelEntitlements.stageFocusType[stageFocusType.FOREST]
   const isChatAvailable = state.isOnline && state.room !== DEFAULT_ROOM
 
-  const viewList = useMemo(() => {
-    const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
-    const list: farmhand.stageFocusType[] = [...STANDARD_VIEW_LIST]
-
-    if (state.showHomeScreen) {
-      list.unshift(HOME)
-    }
-
-    if (isForestUnlocked) {
-      list.push(FOREST)
-    }
-
-    if (state.purchasedCowPen) {
-      list.push(COW_PEN)
-    }
-
-    list.push(WORKSHOP)
-
-    if (state.purchasedCellar) {
-      list.push(CELLAR)
-    }
-
-    return list
-  }, [
-    state.showHomeScreen,
-    isForestUnlocked,
-    state.purchasedCowPen,
-    state.purchasedCellar,
-  ])
+  const viewList = useMemo(
+    () =>
+      getViewList({
+        isForestUnlocked,
+        purchasedCellar: state.purchasedCellar,
+        purchasedCowPen: state.purchasedCowPen,
+        showHomeScreen: state.showHomeScreen,
+      }),
+    [
+      state.showHomeScreen,
+      isForestUnlocked,
+      state.purchasedCowPen,
+      state.purchasedCellar,
+    ]
+  )
 
   const peerMetadata = useMemo(() => getPeerMetadata(state), [state])
 
@@ -287,6 +266,13 @@ export const useFarmhand = (props: FarmhandProps) => {
   const isInitialStageFocusSyncRef = useRef(true)
 
   useEffect(() => {
+    // Boot (see the effect below) is responsible for the URL's initial
+    // `view` value: it validates it against what's actually unlocked
+    // before applying it. Mirroring state.stageFocus here before that
+    // finishes would immediately overwrite an as-yet-unread bookmarked/
+    // shared URL with the pre-boot default.
+    if (!state.hasBooted) return
+
     setHashQueryParam('view', state.stageFocus)
 
     if (isInitialStageFocusSyncRef.current) {
@@ -295,7 +281,7 @@ export const useFarmhand = (props: FarmhandProps) => {
     }
 
     removeHashQueryParam('tab')
-  }, [state.stageFocus])
+  }, [state.stageFocus, state.hasBooted])
 
   const {
     syncToRoom,
@@ -547,6 +533,38 @@ export const useFarmhand = (props: FarmhandProps) => {
 
     let isMounted = true
 
+    // Applies the URL hash's `view` param (see useTabQueryParam/the
+    // stageFocus-sync effect below) only if it names a view that's
+    // actually unlocked for the given state - guards against a
+    // bookmarked/shared URL (or a stale hash left over from a previous
+    // save) pointing at a screen the current save hasn't unlocked, since
+    // Stage.tsx renders whichever view stageFocus names with no unlock
+    // check of its own.
+    const restoreStageFocusFromUrl = (
+      candidateState: farmhand.state
+    ): farmhand.stageFocusType | undefined => {
+      const stageFocusFromUrl = getHashQueryParams().get('view')
+
+      if (!stageFocusFromUrl) return undefined
+
+      const isForestUnlockedForState = getLevelEntitlements(
+        levelAchieved(candidateState.experience)
+      ).stageFocusType[stageFocusType.FOREST]
+
+      const availableViews = getViewList({
+        isForestUnlocked: isForestUnlockedForState,
+        purchasedCellar: candidateState.purchasedCellar,
+        purchasedCowPen: candidateState.purchasedCowPen,
+        showHomeScreen: candidateState.showHomeScreen,
+      })
+
+      return availableViews.includes(
+        stageFocusFromUrl as farmhand.stageFocusType
+      )
+        ? (stageFocusFromUrl as farmhand.stageFocusType)
+        : undefined
+    }
+
     void (async () => {
       const persistedState = await props.localforage?.getItem('state')
 
@@ -558,10 +576,12 @@ export const useFarmhand = (props: FarmhandProps) => {
           ...persistedState,
         })
         const { isCombineEnabled, newDayNotifications } = sanitizedState
+        const restoredStageFocus = restoreStageFocusFromUrl(sanitizedState)
 
         setState(previous => ({
           ...previous,
           ...sanitizedState,
+          ...(restoredStageFocus && { stageFocus: restoredStageFocus }),
           newDayNotifications: [],
           hasBooted: true,
         }))
@@ -597,7 +617,16 @@ export const useFarmhand = (props: FarmhandProps) => {
           LOAN_INCREASED('', STANDARD_LOAN_AMOUNT),
           'info'
         )
-        setState(s => ({ ...s, hasBooted: true }))
+
+        const restoredStageFocus = restoreStageFocusFromUrl(
+          createInitialState()
+        )
+
+        setState(s => ({
+          ...s,
+          ...(restoredStageFocus && { stageFocus: restoredStageFocus }),
+          hasBooted: true,
+        }))
       }
 
       syncToRoom()

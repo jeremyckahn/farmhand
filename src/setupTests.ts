@@ -52,4 +52,10 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup()
+  // Farmhand mirrors navigation state (current view, tabbed screens' active
+  // tab) into the real window.location.hash (see src/utils/hashQueryParams.ts),
+  // which - unlike React/component state - isn't reset between tests on its
+  // own and would otherwise leak into whichever test runs next in the same
+  // file.
+  window.history.replaceState({}, '', window.location.pathname)
 })

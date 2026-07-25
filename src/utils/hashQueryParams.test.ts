@@ -5,10 +5,6 @@ import {
 } from './hashQueryParams.js'
 
 describe('hashQueryParams', () => {
-  afterEach(() => {
-    window.history.replaceState({}, '', `${window.location.pathname}`)
-  })
-
   describe('getHashQueryParams', () => {
     test('returns an empty URLSearchParams when there is no hash', () => {
       window.history.replaceState({}, '', `${window.location.pathname}`)

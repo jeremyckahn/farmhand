@@ -22,9 +22,9 @@ export const Cellar = () => {
         onChange={(_e, newTab) => setCurrentTab(newTab)}
         aria-label="Cellar tabs"
       >
-        <Tab {...{ label: 'Cellar Inventory', ...a11yProps(0) }} />
-        <Tab {...{ label: 'Fermentation', ...a11yProps(1) }} />
-        <Tab {...{ label: 'Winemaking', ...a11yProps(2) }} />
+        {CELLAR_TAB_LABELS.map((label, index) => (
+          <Tab key={label} {...{ label, ...a11yProps(index) }} />
+        ))}
       </Tabs>
       <CellarInventoryTabPanel index={0} currentTab={currentTab} />
       <FermentationTabPanel index={1} currentTab={currentTab} />

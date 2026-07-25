@@ -20,10 +20,6 @@ const TestComponent = ({ tabLabels }: { tabLabels: string[] }) => {
 }
 
 describe('useTabQueryParam', () => {
-  afterEach(() => {
-    window.history.replaceState({}, '', `${window.location.pathname}`)
-  })
-
   test('defaults to tab 0 when the hash has no tab param', () => {
     render(<TestComponent tabLabels={['Seeds', 'Supplies', 'Upgrades']} />)
 
