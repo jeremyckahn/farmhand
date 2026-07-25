@@ -1,4 +1,8 @@
-import { getHashQueryParams, setHashQueryParam } from './hashQueryParams.js'
+import {
+  getHashQueryParams,
+  removeHashQueryParam,
+  setHashQueryParam,
+} from './hashQueryParams.js'
 
 describe('hashQueryParams', () => {
   afterEach(() => {
@@ -82,6 +86,47 @@ describe('hashQueryParams', () => {
       setHashQueryParam('view', 'FIELD')
 
       expect(getHashQueryParams().get('view')).toEqual('FIELD')
+    })
+  })
+
+  describe('removeHashQueryParam', () => {
+    test('removes the given key, leaving other params intact', () => {
+      window.history.replaceState(
+        {},
+        '',
+        `${window.location.pathname}#?view=SHOP&tab=Upgrades`
+      )
+
+      removeHashQueryParam('tab')
+
+      const params = getHashQueryParams()
+
+      expect(params.get('view')).toEqual('SHOP')
+      expect(params.has('tab')).toEqual(false)
+    })
+
+    test('drops the "?" entirely when removing the last param', () => {
+      window.history.replaceState(
+        {},
+        '',
+        `${window.location.pathname}#online/my-room?tab=Upgrades`
+      )
+
+      removeHashQueryParam('tab')
+
+      expect(window.location.hash).toEqual('#online/my-room')
+    })
+
+    test('is a no-op when the key is not present', () => {
+      window.history.replaceState(
+        {},
+        '',
+        `${window.location.pathname}#?view=SHOP`
+      )
+
+      removeHashQueryParam('tab')
+
+      expect(window.location.hash).toEqual('#?view=SHOP')
     })
   })
 })

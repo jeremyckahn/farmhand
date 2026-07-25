@@ -62,4 +62,29 @@ describe('useTabQueryParam', () => {
     expect(screen.getByTestId('current-tab')).toHaveTextContent('2')
     expect(window.location.hash).toEqual('#?tab=Upgrades')
   })
+
+  test('re-derives the tab index when a tab is inserted after mount (e.g. save data loading asynchronously adds a tab)', () => {
+    window.history.replaceState(
+      {},
+      '',
+      `${window.location.pathname}#?tab=Upgrades`
+    )
+
+    const { rerender } = render(
+      <TestComponent tabLabels={['Seeds', 'Supplies', 'Upgrades']} />
+    )
+
+    // Upgrades starts at index 2, matching the initial (pre-load) label list.
+    expect(screen.getByTestId('current-tab')).toHaveTextContent('2')
+
+    // A "Saplings" tab appears after unlock-dependent save data loads,
+    // shifting Upgrades from index 2 to index 3.
+    rerender(
+      <TestComponent
+        tabLabels={['Seeds', 'Saplings', 'Supplies', 'Upgrades']}
+      />
+    )
+
+    expect(screen.getByTestId('current-tab')).toHaveTextContent('3')
+  })
 })

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   getHashQueryParams,
@@ -7,6 +7,13 @@ import {
 
 const TAB_QUERY_PARAM_NAME = 'tab'
 
+const getTabIndexFromHash = (tabLabels: readonly string[]): number => {
+  const tabLabelFromUrl = getHashQueryParams().get(TAB_QUERY_PARAM_NAME)
+  const tabIndexFromUrl = tabLabels.indexOf(tabLabelFromUrl ?? '')
+
+  return tabIndexFromUrl === -1 ? 0 : tabIndexFromUrl
+}
+
 /**
  * Drop-in replacement for `useState(0)` for a MUI `Tabs`/`Tab` `value`,
  * that also mirrors the active tab's label into the URL hash's `tab`
@@ -14,16 +21,27 @@ const TAB_QUERY_PARAM_NAME = 'tab'
  * label rather than raw index, since some screens conditionally omit tabs
  * (e.g. Shop's Saplings tab), which shifts indices around depending on
  * what's unlocked.
+ *
+ * `tabLabels` can legitimately change shape after the initial render (e.g.
+ * a screen mounts before its unlock-dependent tabs are known, then a
+ * persisted save loads a moment later and adds one) - re-deriving the
+ * index whenever the label list itself changes keeps the restored tab
+ * pointing at the right label instead of freezing on its first-render
+ * position.
  */
 export const useTabQueryParam = (
   tabLabels: readonly string[]
 ): [number, (tabIndex: number) => void] => {
-  const [currentTab, setCurrentTabState] = useState(() => {
-    const tabLabelFromUrl = getHashQueryParams().get(TAB_QUERY_PARAM_NAME)
-    const tabIndexFromUrl = tabLabels.indexOf(tabLabelFromUrl ?? '')
+  const [currentTab, setCurrentTabState] = useState(() =>
+    getTabIndexFromHash(tabLabels)
+  )
 
-    return tabIndexFromUrl === -1 ? 0 : tabIndexFromUrl
-  })
+  const tabLabelsKey = tabLabels.join('|')
+
+  useEffect(() => {
+    setCurrentTabState(getTabIndexFromHash(tabLabels))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tabLabelsKey])
 
   const setCurrentTab = (tabIndex: number) => {
     setCurrentTabState(tabIndex)

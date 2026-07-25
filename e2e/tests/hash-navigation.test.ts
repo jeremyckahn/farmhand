@@ -32,6 +32,46 @@ test('reloading the page keeps the current tab on a tabbed screen', async ({
   ).toBeVisible()
 })
 
+test('the correct tab is still restored after a real reload where a save loads asynchronously and adds a tab', async ({
+  page,
+}) => {
+  // Regression: on a genuine reload, the current screen mounts once with
+  // pre-load default state (e.g. Forest not yet unlocked, hiding Shop's
+  // Saplings tab) before the persisted save applies a moment later and
+  // Saplings appears - shifting every tab after it over by one. The
+  // restored tab needs to track its label through that shift, not freeze
+  // at its pre-load index. `loadFixture` alone doesn't persist to
+  // localforage, so "End the day" is used here to actually save, making
+  // the reload below exercise this race for real.
+  await loadFixture(page, 'bottom-navigation-all-views')
+
+  await page.getByRole('button', { name: 'Go to Shop' }).click()
+  await page.getByRole('tab', { name: 'Upgrades' }).click()
+  await page.getByRole('button', { name: 'End the day to save your' }).click()
+
+  await page.reload()
+
+  await expect(page.locator('.Shop')).toBeVisible()
+  await expect(page.getByRole('tab', { name: 'Saplings' })).toBeVisible()
+  await expect(
+    page.getByRole('tab', { name: 'Upgrades', selected: true })
+  ).toBeVisible()
+})
+
+test('tab= clears from the URL when navigating to a different view', async ({
+  page,
+}) => {
+  await loadFixture(page, 'bottom-navigation-all-views')
+
+  await page.getByRole('button', { name: 'Go to Shop' }).click()
+  await page.getByRole('tab', { name: 'Upgrades' }).click()
+  expect(page.url()).toContain('tab=Upgrades')
+
+  await page.getByRole('button', { name: 'Go to Field' }).click()
+
+  expect(page.url()).not.toContain('tab=')
+})
+
 test('navigating to a different view preserves an existing online-room hash path', async ({
   page,
 }) => {

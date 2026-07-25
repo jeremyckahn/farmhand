@@ -16,15 +16,8 @@ const splitHash = () => {
     : { path: hash.slice(0, queryIndex), query: hash.slice(queryIndex + 1) }
 }
 
-export const getHashQueryParams = (): URLSearchParams =>
-  new URLSearchParams(splitHash().query)
-
-export const setHashQueryParam = (key: string, value: string): void => {
+const writeHashQueryParams = (params: URLSearchParams): void => {
   const { path } = splitHash()
-  const params = getHashQueryParams()
-
-  params.set(key, value)
-
   const queryString = params.toString()
   const newHash = `${path}${queryString ? `?${queryString}` : ''}`
   const { origin, pathname, search } = globalWindow.location
@@ -34,4 +27,21 @@ export const setHashQueryParam = (key: string, value: string): void => {
     '',
     `${origin}${pathname}${search}#${newHash}`
   )
+}
+
+export const getHashQueryParams = (): URLSearchParams =>
+  new URLSearchParams(splitHash().query)
+
+export const setHashQueryParam = (key: string, value: string): void => {
+  const params = getHashQueryParams()
+
+  params.set(key, value)
+  writeHashQueryParams(params)
+}
+
+export const removeHashQueryParam = (key: string): void => {
+  const params = getHashQueryParams()
+
+  params.delete(key)
+  writeHashQueryParams(params)
 }

@@ -33,6 +33,7 @@ import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { getPeerMetadata } from '../../utils/getPeerMetadata.js'
 import {
   getHashQueryParams,
+  removeHashQueryParam,
   setHashQueryParam,
 } from '../../utils/hashQueryParams.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
@@ -278,11 +279,22 @@ export const useFarmhand = (props: FarmhandProps) => {
     focusPreviousView,
   } = useFarmhandNavigation(setState, viewList)
 
-  // Mirrors the current view into the URL hash's `view` query param
-  // (leaving other params, e.g. a tabbed screen's `tab`, untouched) so a
-  // page reload restores the same view.
+  // Mirrors the current view into the URL hash's `view` query param so a
+  // page reload restores the same view. The `tab` param (a tabbed screen's
+  // active tab, see useTabQueryParam) is left alone on the very first run
+  // (so a reload can still restore it), but cleared on every subsequent
+  // view change, since it belongs to whichever screen was just left.
+  const isInitialStageFocusSyncRef = useRef(true)
+
   useEffect(() => {
     setHashQueryParam('view', state.stageFocus)
+
+    if (isInitialStageFocusSyncRef.current) {
+      isInitialStageFocusSyncRef.current = false
+      return
+    }
+
+    removeHashQueryParam('tab')
   }, [state.stageFocus])
 
   const {
