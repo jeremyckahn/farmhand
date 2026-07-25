@@ -2,7 +2,7 @@ export const getGrowingPhaseForTimeline = (
   timeline: number[],
   daysElapsed: number
 ): number => {
-  let daysGrowing = daysElapsed + 1
+  let daysGrowing = Math.floor(daysElapsed) + 1
   let phase = 0
 
   for (const value of timeline) {

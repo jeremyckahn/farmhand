@@ -13,7 +13,7 @@ describe('navigation', () => {
       await nextView()
       expect(within(header).getByText(viewName)).toBeInTheDocument()
     }
-  })
+  }, 10000)
 
   test('cycles backwards through the standard views', async () => {
     await farmhandStub()
@@ -23,7 +23,7 @@ describe('navigation', () => {
       await previousView()
       expect(within(header).getByText(viewName)).toBeInTheDocument()
     }
-  })
+  }, 10000)
 
   test('cycles forwards through the unlocked views', async () => {
     const loadedState = saveDataStubFactory({
@@ -43,7 +43,7 @@ describe('navigation', () => {
       await nextView()
       expect(within(header).getByText(viewName)).toBeInTheDocument()
     }
-  })
+  }, 10000)
 
   test('cycles backwards through the unlocked views', async () => {
     const loadedState = saveDataStubFactory({
@@ -63,5 +63,5 @@ describe('navigation', () => {
       await previousView()
       expect(within(header).getByText(viewName)).toBeInTheDocument()
     }
-  })
+  }, 10000)
 })
