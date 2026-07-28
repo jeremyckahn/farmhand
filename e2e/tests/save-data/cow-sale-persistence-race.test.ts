@@ -41,9 +41,8 @@ test('a cow sale immediately followed by ending the day is persisted correctly',
 
   await page.reload()
 
-  await page.getByText(': Home').click()
-  await page.getByRole('option', { name: ': Cows' }).click()
-
+  // The current view (Cows) is restored automatically from the URL hash on
+  // reload, so no need to navigate there again.
   await expect(page.getByRole('button', { name: 'Sell' })).not.toBeVisible()
 })
 
@@ -91,8 +90,7 @@ test('a cow sale immediately followed by an end-of-day server error is still per
 
   await page.reload()
 
-  await page.getByText(': Home').click()
-  await page.getByRole('option', { name: ': Cows' }).click()
-
+  // The current view (Cows) is restored automatically from the URL hash on
+  // reload, so no need to navigate there again.
   await expect(page.getByRole('button', { name: 'Sell' })).not.toBeVisible()
 })

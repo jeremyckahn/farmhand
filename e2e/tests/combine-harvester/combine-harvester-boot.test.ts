@@ -31,11 +31,8 @@ test('auto-harvests on boot even with no pending day notifications', async ({
 
   await page.reload()
 
-  // stageFocus isn't a persisted key, so boot lands back on Home - navigate
-  // to Field again to check the plot.
-  await page.getByText(': Home').click()
-  await page.getByRole('option', { name: ': Field' }).click()
-
+  // The current view (Field) is restored automatically from the URL hash
+  // on reload, so no need to navigate there again.
   await expect(page.locator('.Plot').first()).toMatchAriaSnapshot(`
     - img "Empty plot"
   `)

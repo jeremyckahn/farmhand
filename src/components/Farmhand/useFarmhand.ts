@@ -541,7 +541,10 @@ export const useFarmhand = (props: FarmhandProps) => {
     // Stage.tsx renders whichever view stageFocus names with no unlock
     // check of its own.
     const restoreStageFocusFromUrl = (
-      candidateState: farmhand.state
+      candidateState: Pick<
+        farmhand.state,
+        'experience' | 'purchasedCellar' | 'purchasedCowPen' | 'showHomeScreen'
+      >
     ): farmhand.stageFocusType | undefined => {
       const stageFocusFromUrl = getHashQueryParams().get('view')
 
@@ -618,9 +621,12 @@ export const useFarmhand = (props: FarmhandProps) => {
           'info'
         )
 
-        const restoredStageFocus = restoreStageFocusFromUrl(
-          createInitialState()
-        )
+        // Reads the unlock-relevant fields off the current (fresh-game)
+        // state rather than calling createInitialState() again - that
+        // would re-run generateCow()/uuid(), consuming extra draws from
+        // the seeded RNG sequence that other code (and e2e fixtures tied
+        // to specific seeds) depends on staying stable.
+        const restoredStageFocus = restoreStageFocusFromUrl(stateRef.current)
 
         setState(s => ({
           ...s,
