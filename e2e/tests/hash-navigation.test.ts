@@ -1,11 +1,19 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, Page } from '@playwright/test'
 
 import { loadFixture } from '../test-utils/load-fixture.js'
+
+// Uses the sidebar's view-select dropdown (rather than the bottom nav's
+// per-view icon buttons, which live in a separate PR) so these tests don't
+// depend on that other feature to navigate.
+const goToView = async (page: Page, viewName: string) => {
+  await page.locator('.view-select').click()
+  await page.getByRole('option', { name: `: ${viewName}` }).click()
+}
 
 test('reloading the page keeps the current view', async ({ page }) => {
   await loadFixture(page, 'bottom-navigation-all-views')
 
-  await page.getByRole('button', { name: 'Go to Workshop' }).click()
+  await goToView(page, 'Workshop')
   await expect(page.locator('.Workshop')).toBeVisible()
 
   await page.reload()
@@ -18,7 +26,7 @@ test('reloading the page keeps the current tab on a tabbed screen', async ({
 }) => {
   await loadFixture(page, 'bottom-navigation-all-views')
 
-  await page.getByRole('button', { name: 'Go to Shop' }).click()
+  await goToView(page, 'Shop')
   await page.getByRole('tab', { name: 'Upgrades' }).click()
   await expect(
     page.getByRole('tab', { name: 'Upgrades', selected: true })
@@ -45,7 +53,7 @@ test('the correct tab is still restored after a real reload where a save loads a
   // the reload below exercise this race for real.
   await loadFixture(page, 'bottom-navigation-all-views')
 
-  await page.getByRole('button', { name: 'Go to Shop' }).click()
+  await goToView(page, 'Shop')
   await page.getByRole('tab', { name: 'Upgrades' }).click()
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 
@@ -63,11 +71,11 @@ test('tab= clears from the URL when navigating to a different view', async ({
 }) => {
   await loadFixture(page, 'bottom-navigation-all-views')
 
-  await page.getByRole('button', { name: 'Go to Shop' }).click()
+  await goToView(page, 'Shop')
   await page.getByRole('tab', { name: 'Upgrades' }).click()
   expect(page.url()).toContain('tab=Upgrades')
 
-  await page.getByRole('button', { name: 'Go to Field' }).click()
+  await goToView(page, 'Field')
 
   expect(page.url()).not.toContain('tab=')
 })
@@ -89,7 +97,7 @@ test('navigating to a different view preserves an existing online-room hash path
     )
   })
 
-  await page.getByRole('button', { name: 'Go to Shop' }).click()
+  await goToView(page, 'Shop')
   await page.getByRole('tab', { name: 'Upgrades' }).click()
 
   const url = new URL(page.url())
