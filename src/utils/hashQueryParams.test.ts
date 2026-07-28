@@ -2,6 +2,7 @@ import {
   getHashQueryParams,
   removeHashQueryParam,
   setHashQueryParam,
+  withCurrentHashQuery,
 } from './hashQueryParams.js'
 
 describe('hashQueryParams', () => {
@@ -123,6 +124,30 @@ describe('hashQueryParams', () => {
       removeHashQueryParam('tab')
 
       expect(window.location.hash).toEqual('#?view=SHOP')
+    })
+  })
+
+  describe('withCurrentHashQuery', () => {
+    test('returns the path unchanged when the hash has no query params', () => {
+      window.history.replaceState(
+        {},
+        '',
+        `${window.location.pathname}#online/my-room`
+      )
+
+      expect(withCurrentHashQuery('/')).toEqual('/')
+    })
+
+    test('appends the current hash query params to the given path', () => {
+      window.history.replaceState(
+        {},
+        '',
+        `${window.location.pathname}#?view=SHOP&tab=Upgrades`
+      )
+
+      expect(withCurrentHashQuery('/online/my-room')).toEqual(
+        '/online/my-room?view=SHOP&tab=Upgrades'
+      )
     })
   })
 })

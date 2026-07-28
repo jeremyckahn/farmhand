@@ -23,6 +23,7 @@ import {
   SERVER_ERROR,
 } from '../../../strings.js'
 import { CONNECTED_TO_ROOM } from '../../../templates.js'
+import { withCurrentHashQuery } from '../../../utils/hashQueryParams.js'
 import { moneyTotal } from '../../../utils/moneyTotal.js'
 import { FarmhandService } from '../FarmhandService.js'
 
@@ -223,7 +224,7 @@ export const useFarmhandNetwork = (
 
       setState(previous => ({
         ...previous,
-        redirect: '/',
+        redirect: withCurrentHashQuery('/'),
         cowIdOfferedForTrade: '',
       }))
     }

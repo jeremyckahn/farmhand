@@ -45,3 +45,13 @@ export const removeHashQueryParam = (key: string): void => {
   params.delete(key)
   writeHashQueryParams(params)
 }
+
+// react-router's <Redirect to={path}> replaces the whole hash with `path`,
+// dropping whatever query params (view/tab) were already on it - this
+// carries them over onto a new redirect target (e.g. going online/offline,
+// switching rooms) so navigating doesn't lose your place.
+export const withCurrentHashQuery = (path: string): string => {
+  const queryString = getHashQueryParams().toString()
+
+  return queryString ? `${path}?${queryString}` : path
+}

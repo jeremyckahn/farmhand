@@ -15,6 +15,7 @@ import {
   UPDATE_AVAILABLE,
 } from '../strings.js'
 import { getTreeLifeStage } from '../utils/getTreeLifeStage.js'
+import { withCurrentHashQuery } from '../utils/hashQueryParams.js'
 import { isPlantedTree } from '../utils/isPlantedTree.js'
 import { moneyTotal } from '../utils/moneyTotal.js'
 import { reduceByPersistedKeys } from '../utils/reduceByPersistedKeys.js'
@@ -474,12 +475,14 @@ export default {
     this.setState(({ room, cowIdOfferedForTrade }: farmhand.state) =>
       goOnline
         ? {
-            redirect: `/online/${encodeURIComponent(room)}`,
+            redirect: withCurrentHashQuery(
+              `/online/${encodeURIComponent(room)}`
+            ),
             cowIdOfferedForTrade,
             isOnline: true,
           }
         : {
-            redirect: '/',
+            redirect: withCurrentHashQuery('/'),
             cowIdOfferedForTrade: '',
           }
     )
@@ -488,7 +491,9 @@ export default {
   handleRoomChange(this: Farmhand, room: string) {
     this.setState(() => ({
       room,
-      redirect: `/online/${encodeURIComponent(room.trim() || DEFAULT_ROOM)}`,
+      redirect: withCurrentHashQuery(
+        `/online/${encodeURIComponent(room.trim() || DEFAULT_ROOM)}`
+      ),
     }))
   },
 

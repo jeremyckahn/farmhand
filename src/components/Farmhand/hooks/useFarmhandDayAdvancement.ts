@@ -6,6 +6,7 @@ import { postData } from '../../../fetch-utils.js'
 import { DATA_DELETED, SERVER_ERROR } from '../../../strings.js'
 import { POSITIONS_POSTED_NOTIFICATION } from '../../../templates.js'
 import { computeMarketPositions } from '../../../utils/computeMarketPositions.js'
+import { withCurrentHashQuery } from '../../../utils/hashQueryParams.js'
 import { reduceByPersistedKeys } from '../../../utils/reduceByPersistedKeys.js'
 import { FarmhandProps } from '../FarmhandReducers.js'
 import { FarmhandService } from '../FarmhandService.js'
@@ -84,7 +85,7 @@ export const useFarmhandDayAdvancement = (
 
         setState(previous => ({
           ...previous,
-          redirect: '/',
+          redirect: withCurrentHashQuery('/'),
           cowIdOfferedForTrade: '',
           isAwaitingNetworkRequest: false,
         }))
