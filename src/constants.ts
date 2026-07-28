@@ -151,16 +151,6 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.CELLAR]: 'Cellar',
 }
 
-export const STAGE_ICON_MAP = {
-  [stageFocusType.HOME]: '🏠',
-  [stageFocusType.FIELD]: '🥕',
-  [stageFocusType.FOREST]: '🌲',
-  [stageFocusType.SHOP]: '🛒',
-  [stageFocusType.COW_PEN]: '🐮',
-  [stageFocusType.WORKSHOP]: '🛠️',
-  [stageFocusType.CELLAR]: '🍷',
-}
-
 export const DAILY_FINANCIAL_HISTORY_RECORD_LENGTH = 7
 
 export const RECIPE_INGREDIENT_VALUE_MULTIPLIER = 1.25

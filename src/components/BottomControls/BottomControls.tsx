@@ -9,10 +9,27 @@ import Fab from '@mui/material/Fab/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import { Theme } from '@mui/material/styles/index.js'
 
-import { STAGE_ICON_MAP, STAGE_TITLE_MAP } from '../../constants.js'
+import { STAGE_TITLE_MAP } from '../../constants.js'
+import { stageFocusType } from '../../enums.js'
+import { animals, items } from '../../img/index.js'
+import winePurple from '../../img/wines/wine-purple.png'
 import { breakpoints, layout } from '../../styles/tokens.js'
 import { Div } from '../Elements/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+
+// Chosen from existing game art rather than drawn specifically for this
+// row - Home and Shop in particular have no literal "house"/"storefront"
+// sprite in the game, so the scarecrow (the farm's default fixture, and
+// every player's starting item) and the storage crate stand in for them.
+const STAGE_ICON_MAP = {
+  [stageFocusType.HOME]: items.scarecrow,
+  [stageFocusType.FIELD]: items.carrot,
+  [stageFocusType.FOREST]: items['apple-tree-grown'],
+  [stageFocusType.SHOP]: items['inventory-box'],
+  [stageFocusType.COW_PEN]: animals.cow.variations[0],
+  [stageFocusType.WORKSHOP]: items.bread,
+  [stageFocusType.CELLAR]: winePurple,
+}
 
 export const BottomControls = ({
   focusNextView,
@@ -58,7 +75,9 @@ export const BottomControls = ({
           margin: '0 0.25em',
           position: 'relative',
           '& .view-icon': {
-            fontSize: '1.3em',
+            height: '1.5em',
+            objectFit: 'contain',
+            width: '1.5em',
           },
           '&:hover': {
             backgroundColor: t.palette.grey[500],
@@ -125,9 +144,7 @@ export const BottomControls = ({
               size="small"
               onClick={() => handleViewChangeButtonClick(view)}
             >
-              <span className="view-icon" role="img" aria-hidden="true">
-                {STAGE_ICON_MAP[viewKey]}
-              </span>
+              <img className="view-icon" src={STAGE_ICON_MAP[viewKey]} alt="" />
             </Fab>
           </Tooltip>
         )
