@@ -16,34 +16,47 @@ const splitHash = () => {
     : { path: hash.slice(0, queryIndex), query: hash.slice(queryIndex + 1) }
 }
 
-const writeHashQueryParams = (params: URLSearchParams): void => {
+export type HashHistoryMode = 'push' | 'replace'
+
+const writeHashQueryParams = (
+  params: URLSearchParams,
+  mode: HashHistoryMode = 'replace'
+): void => {
   const { path } = splitHash()
   const queryString = params.toString()
   const newHash = `${path}${queryString ? `?${queryString}` : ''}`
   const { origin, pathname, search } = globalWindow.location
+  const url = `${origin}${pathname}${search}#${newHash}`
 
-  globalWindow.history.replaceState(
-    {},
-    '',
-    `${origin}${pathname}${search}#${newHash}`
-  )
+  if (mode === 'push') {
+    globalWindow.history.pushState({}, '', url)
+  } else {
+    globalWindow.history.replaceState({}, '', url)
+  }
 }
 
 export const getHashQueryParams = (): URLSearchParams =>
   new URLSearchParams(splitHash().query)
 
-export const setHashQueryParam = (key: string, value: string): void => {
+export const setHashQueryParam = (
+  key: string,
+  value: string,
+  mode: HashHistoryMode = 'replace'
+): void => {
   const params = getHashQueryParams()
 
   params.set(key, value)
-  writeHashQueryParams(params)
+  writeHashQueryParams(params, mode)
 }
 
-export const removeHashQueryParam = (key: string): void => {
+export const removeHashQueryParam = (
+  key: string,
+  mode: HashHistoryMode = 'replace'
+): void => {
   const params = getHashQueryParams()
 
   params.delete(key)
-  writeHashQueryParams(params)
+  writeHashQueryParams(params, mode)
 }
 
 // react-router's <Redirect to={path}> replaces the whole hash with `path`,

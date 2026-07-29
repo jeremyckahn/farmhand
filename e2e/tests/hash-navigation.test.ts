@@ -80,6 +80,42 @@ test('tab= clears from the URL when navigating to a different view', async ({
   expect(page.url()).not.toContain('tab=')
 })
 
+test('the browser back button returns to the previous view instead of leaving the app', async ({
+  page,
+}) => {
+  await loadFixture(page, 'bottom-navigation-all-views')
+
+  await goToView(page, 'Shop')
+  await expect(page.locator('.Shop')).toBeVisible()
+
+  await goToView(page, 'Workshop')
+  await expect(page.locator('.Workshop')).toBeVisible()
+
+  await page.goBack()
+  await expect(page.locator('.Shop')).toBeVisible()
+
+  // The very first view (Home, from loadFixture) is also a real,
+  // back-navigable entry - going back all the way stays inside the app.
+  await page.goBack()
+  await expect(page.locator('.Home')).toBeVisible()
+  expect(page.url()).toContain('localhost')
+})
+
+test('the browser forward button re-applies a view that was backed away from', async ({
+  page,
+}) => {
+  await loadFixture(page, 'bottom-navigation-all-views')
+
+  await goToView(page, 'Shop')
+  await goToView(page, 'Workshop')
+
+  await page.goBack()
+  await expect(page.locator('.Shop')).toBeVisible()
+
+  await page.goForward()
+  await expect(page.locator('.Workshop')).toBeVisible()
+})
+
 test('navigating to a different view preserves an existing online-room hash path', async ({
   page,
 }) => {
