@@ -11,7 +11,6 @@ import {
   INITIAL_STORAGE_LIMIT,
   STAGE_TITLE_MAP,
   STANDARD_LOAN_AMOUNT,
-  STANDARD_VIEW_LIST,
 } from '../../constants.js'
 import { scarecrow } from '../../data/items.js'
 import {
@@ -31,6 +30,13 @@ import { generateCow } from '../../utils/generateCow.js'
 import { getAvailableShopInventory } from '../../utils/getAvailableShopInventory.js'
 import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { getPeerMetadata } from '../../utils/getPeerMetadata.js'
+import { getValidatedStageFocusFromHash } from '../../utils/getValidatedStageFocusFromHash.js'
+import { getViewList } from '../../utils/getViewList.js'
+import {
+  removeHashQueryParam,
+  setHashQueryParam,
+  VIEW_QUERY_PARAM_NAME,
+} from '../../utils/hashQueryParams.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
 import { moneyTotal } from '../../utils/moneyTotal.js'
 import { noop } from '../../utils/noop.js'
@@ -220,35 +226,21 @@ export const useFarmhand = (props: FarmhandProps) => {
     levelEntitlements.stageFocusType[stageFocusType.FOREST]
   const isChatAvailable = state.isOnline && state.room !== DEFAULT_ROOM
 
-  const viewList = useMemo(() => {
-    const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
-    const list: farmhand.stageFocusType[] = [...STANDARD_VIEW_LIST]
-
-    if (state.showHomeScreen) {
-      list.unshift(HOME)
-    }
-
-    if (isForestUnlocked) {
-      list.push(FOREST)
-    }
-
-    if (state.purchasedCowPen) {
-      list.push(COW_PEN)
-    }
-
-    list.push(WORKSHOP)
-
-    if (state.purchasedCellar) {
-      list.push(CELLAR)
-    }
-
-    return list
-  }, [
-    state.showHomeScreen,
-    isForestUnlocked,
-    state.purchasedCowPen,
-    state.purchasedCellar,
-  ])
+  const viewList = useMemo(
+    () =>
+      getViewList({
+        isForestUnlocked,
+        purchasedCellar: state.purchasedCellar,
+        purchasedCowPen: state.purchasedCowPen,
+        showHomeScreen: state.showHomeScreen,
+      }),
+    [
+      state.showHomeScreen,
+      isForestUnlocked,
+      state.purchasedCowPen,
+      state.purchasedCellar,
+    ]
+  )
 
   const peerMetadata = useMemo(() => getPeerMetadata(state), [state])
 
@@ -266,6 +258,68 @@ export const useFarmhand = (props: FarmhandProps) => {
     focusNextView,
     focusPreviousView,
   } = useFarmhandNavigation(setState, viewList)
+
+  // Mirrors the current view into the URL hash's `view` query param, using
+  // pushState (not replaceState) so each in-app view change is a real,
+  // back/forward-navigable browser history entry - otherwise every
+  // navigation just overwrites the one entry the page loaded with, and a
+  // single "back" press takes the player out of the app entirely. The
+  // `tab` param (a tabbed screen's active tab, see useTabQueryParam) is
+  // left alone on the very first run (so a reload can still restore it),
+  // but cleared on every subsequent view change, since it belongs to
+  // whichever screen was just left.
+  const isInitialStageFocusSyncRef = useRef(true)
+  // Set by the popstate handler below immediately before it updates
+  // stageFocus, so this effect's next run corrects/confirms the hash in
+  // place (replace) instead of pushing a new entry for a change that was
+  // itself a back/forward navigation.
+  const isPopstateStageFocusSyncRef = useRef(false)
+
+  useEffect(() => {
+    // Boot (see the effect below) is responsible for the URL's initial
+    // `view` value: it validates it against what's actually unlocked
+    // before applying it. Mirroring state.stageFocus here before that
+    // finishes would immediately overwrite an as-yet-unread bookmarked/
+    // shared URL with the pre-boot default.
+    if (!state.hasBooted) return
+
+    if (isPopstateStageFocusSyncRef.current) {
+      isPopstateStageFocusSyncRef.current = false
+      setHashQueryParam(VIEW_QUERY_PARAM_NAME, state.stageFocus)
+      return
+    }
+
+    if (isInitialStageFocusSyncRef.current) {
+      isInitialStageFocusSyncRef.current = false
+      setHashQueryParam(VIEW_QUERY_PARAM_NAME, state.stageFocus)
+      return
+    }
+
+    setHashQueryParam(VIEW_QUERY_PARAM_NAME, state.stageFocus, 'push')
+    removeHashQueryParam('tab')
+  }, [state.stageFocus, state.hasBooted])
+
+  // Reacts to the browser's back/forward buttons, since pushState above
+  // now creates real history entries to navigate between. Re-validates
+  // the target view against current unlocks (the same guard boot uses)
+  // rather than trusting the history entry outright, since it could be
+  // stale relative to what's since become unlocked - or not - in this
+  // save.
+  useEffect(() => {
+    const handlePopState = () => {
+      const validatedStageFocus =
+        getValidatedStageFocusFromHash(stateRef.current) ?? stageFocusType.HOME
+
+      if (validatedStageFocus === stateRef.current.stageFocus) return
+
+      isPopstateStageFocusSyncRef.current = true
+      setState(previous => ({ ...previous, stageFocus: validatedStageFocus }))
+    }
+
+    window.addEventListener('popstate', handlePopState)
+
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
 
   const {
     syncToRoom,
@@ -528,10 +582,14 @@ export const useFarmhand = (props: FarmhandProps) => {
           ...persistedState,
         })
         const { isCombineEnabled, newDayNotifications } = sanitizedState
+        const restoredStageFocus = getValidatedStageFocusFromHash(
+          sanitizedState
+        )
 
         setState(previous => ({
           ...previous,
           ...sanitizedState,
+          ...(restoredStageFocus && { stageFocus: restoredStageFocus }),
           newDayNotifications: [],
           hasBooted: true,
         }))
@@ -567,7 +625,21 @@ export const useFarmhand = (props: FarmhandProps) => {
           LOAN_INCREASED('', STANDARD_LOAN_AMOUNT),
           'info'
         )
-        setState(s => ({ ...s, hasBooted: true }))
+
+        // Reads the unlock-relevant fields off the current (fresh-game)
+        // state rather than calling createInitialState() again - that
+        // would re-run generateCow()/uuid(), consuming extra draws from
+        // the seeded RNG sequence that other code (and e2e fixtures tied
+        // to specific seeds) depends on staying stable.
+        const restoredStageFocus = getValidatedStageFocusFromHash(
+          stateRef.current
+        )
+
+        setState(prev => ({
+          ...prev,
+          ...(restoredStageFocus && { stageFocus: restoredStageFocus }),
+          hasBooted: true,
+        }))
       }
 
       syncToRoom()
