@@ -634,8 +634,8 @@ export const useFarmhand = (props: FarmhandProps) => {
           stateRef.current
         )
 
-        setState(s => ({
-          ...s,
+        setState(prev => ({
+          ...prev,
           ...(restoredStageFocus && { stageFocus: restoredStageFocus }),
           hasBooted: true,
         }))
