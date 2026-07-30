@@ -34,7 +34,7 @@ export const getValidatedStageFocusFromHash = (
     showHomeScreen: candidateState.showHomeScreen,
   })
 
-  return availableViews.includes(stageFocusFromUrl as farmhand.stageFocusType)
-    ? (stageFocusFromUrl as farmhand.stageFocusType)
-    : undefined
+  return availableViews.find(
+    availableView => availableView === stageFocusFromUrl
+  )
 }
