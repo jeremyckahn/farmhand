@@ -25,6 +25,7 @@ const Achievement = ({
   isComplete?: boolean
 }) => {
   const { description, name, rewardDescription } = achievement
+  const progress = achievement.getProgress?.(gameState)
 
   return (
     <Card
@@ -44,15 +45,13 @@ const Achievement = ({
       />
       <CardContent>
         <p>{description}</p>
-        {!isComplete && achievement.getProgress && (
+        {!isComplete && progress && (
           <Div sx={{ marginTop: '1em' }}>
             <ProgressBar
               {...{
                 percent: Math.min(
                   100,
-                  (achievement.getProgress(gameState).currentValue /
-                    achievement.getProgress(gameState).goal) *
-                    100
+                  (progress.currentValue / progress.goal) * 100
                 ),
               }}
             />
