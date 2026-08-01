@@ -780,7 +780,7 @@ export const compost = convertToRecipe({
   id: 'compost',
   name: 'Compost',
   ingredients: {
-    [items.weed.id]: 25,
+    [items.weed.id]: 10,
   },
   condition: state =>
     state.purchasedComposter > 0 &&
@@ -797,7 +797,7 @@ export const fertilizer: farmhand.item = convertToRecipe({
   id: 'fertilizer',
   name: 'Fertilizer',
   ingredients: {
-    [compost.id]: 10,
+    [compost.id]: 3,
   },
   condition: state =>
     state.purchasedComposter > 0 && (state.itemsSold[compost.id] || 0) >= 10,
