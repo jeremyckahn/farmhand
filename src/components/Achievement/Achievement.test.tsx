@@ -43,4 +43,70 @@ describe('<Achievement />', () => {
       screen.getByText(new RegExp(achievementObject.rewardDescription))
     ).toBeInTheDocument()
   })
+
+  test('does not render a progress bar when the achievement has no getProgress', () => {
+    expect(document.querySelector('.ProgressBar')).not.toBeInTheDocument()
+  })
+})
+
+describe('<Achievement /> with getProgress', () => {
+  let achievementObject: farmhand.achievement
+
+  beforeEach(() => {
+    achievementObject = {
+      description: 'the best achievement',
+      id: 'achievement-1',
+      name: 'achievement one',
+      rewardDescription: 'the greatest reward',
+      condition: () => false,
+      reward: state => state,
+      getProgress: () => ({ currentValue: 25, goal: 100 }),
+    }
+
+    const farmhandContextValue = createContextData()
+
+    render(
+      <FarmhandContext.Provider value={farmhandContextValue}>
+        <Achievement
+          achievement={achievementObject}
+          completedAchievements={{}}
+        />
+      </FarmhandContext.Provider>
+    )
+  })
+
+  test('renders a progress bar', () => {
+    expect(document.querySelector('.ProgressBar')).toBeInTheDocument()
+  })
+})
+
+describe('<Achievement /> with getProgress and isComplete', () => {
+  let achievementObject: farmhand.achievement
+
+  beforeEach(() => {
+    achievementObject = {
+      description: 'the best achievement',
+      id: 'achievement-1',
+      name: 'achievement one',
+      rewardDescription: 'the greatest reward',
+      condition: () => false,
+      reward: state => state,
+      getProgress: () => ({ currentValue: 100, goal: 100 }),
+    }
+
+    const farmhandContextValue = createContextData()
+
+    render(
+      <FarmhandContext.Provider value={farmhandContextValue}>
+        <Achievement
+          achievement={achievementObject}
+          completedAchievements={{ 'achievement-1': true }}
+        />
+      </FarmhandContext.Provider>
+    )
+  })
+
+  test('does not render a progress bar once the achievement is complete', () => {
+    expect(document.querySelector('.ProgressBar')).not.toBeInTheDocument()
+  })
 })

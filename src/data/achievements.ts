@@ -48,10 +48,23 @@ const PIE_RECIPE_IDS = Object.values(recipesMap)
   .filter(recipe => recipe.isPie)
   .map(recipe => recipe.id)
 
-const sumOfPiesMade = (recipesMade: Partial<Record<string, number>>) =>
-  PIE_RECIPE_IDS.reduce((sum, id) => sum + (recipesMade[id] || 0), 0)
+const sumOfPiesMade = memoize(
+  (recipesMade: Partial<Record<string, number>>) =>
+    PIE_RECIPE_IDS.reduce((sum, id) => sum + (recipesMade[id] || 0), 0),
+  {}
+)
 
 const cowFeed = itemsMap[COW_FEED_ITEM_ID]
+
+// Derives condition and getProgress from a single source of truth so that an
+// achievement's "complete" state and its progress bar can never disagree.
+export const progressAchievement = (
+  goal: number,
+  getCurrentValue: (state: farmhand.state) => number
+): Pick<farmhand.achievement, 'condition' | 'getProgress'> => ({
+  condition: state => getCurrentValue(state) >= goal,
+  getProgress: state => ({ currentValue: getCurrentValue(state), goal }),
+})
 
 const achievements: farmhand.achievement[] = [
   ((reward = 100) => ({
@@ -112,7 +125,7 @@ const achievements: farmhand.achievement[] = [
       goal
     )}. Proven farmers get access to the Crop Price Guide, an invaluable tool for making better buying and selling decisions!`,
     rewardDescription: 'Crop Price Guide',
-    condition: state => state.revenue >= goal,
+    ...progressAchievement(goal, state => state.revenue),
     // Reward is a no-op for this achievement. The value of
     // state.completedAchievements['unlock-crop-price-guide'] (which is
     // automatically set to `true` in the achievement processing logic) is used
@@ -130,15 +143,18 @@ const achievements: farmhand.achievement[] = [
     reward: state => addItemToInventory(state, cowFeed, reward, true),
   }))(),
 
-  ((reward = 100) => ({
+  ((reward = 100, goal = Object.keys(standardCowColors).length) => ({
     id: 'purchase-all-cow-colors',
     name: 'Cows of Many Colors',
     description: 'Show that you love all cows and purchase one of every color.',
     rewardDescription: `${reward} units of ${cowFeed.name}`,
-    condition: state =>
-      Object.values(standardCowColors).every(
-        color => (state.cowColorsPurchased[color] || 0) > 0
-      ),
+    ...progressAchievement(
+      goal,
+      state =>
+        Object.values(standardCowColors).filter(
+          color => (state.cowColorsPurchased[color] || 0) > 0
+        ).length
+    ),
     reward: state => addItemToInventory(state, cowFeed, reward, true),
   }))(),
 
@@ -159,7 +175,7 @@ const achievements: farmhand.achievement[] = [
       itemsMap['jackolantern'].name
     }. That's enough to fill a whole pumpkin patch!`,
     rewardDescription: `${reward} units of ${itemsMap['scarecrow'].name}`,
-    condition: state => (state.itemsSold.jackolantern || 0) >= goal,
+    ...progressAchievement(goal, state => state.itemsSold.jackolantern || 0),
     reward: state =>
       addItemToInventory(state, itemsMap['scarecrow'], reward, true),
   }))(),
@@ -169,12 +185,13 @@ const achievements: farmhand.achievement[] = [
     name: `Daily profit: ${dollarString(goal)}`,
     description: `Earn ${dollarString(goal)} of profit in a single day.`,
     rewardDescription: `${reward} units of ${itemsMap['fertilizer'].name}`,
-    condition: state =>
+    ...progressAchievement(goal, state =>
       getProfitRecord(
         state.recordSingleDayProfit,
         state.todaysRevenue,
         state.todaysLosses
-      ) >= goal,
+      )
+    ),
     reward: state =>
       addItemToInventory(state, itemsMap['fertilizer'], reward, true),
   }))(),
@@ -184,12 +201,13 @@ const achievements: farmhand.achievement[] = [
     name: `Daily profit: ${dollarString(goal)}`,
     description: `Earn ${dollarString(goal)} of profit in a single day.`,
     rewardDescription: `${reward} units of ${itemsMap['onion-seed'].name}`,
-    condition: state =>
+    ...progressAchievement(goal, state =>
       getProfitRecord(
         state.recordSingleDayProfit,
         state.todaysRevenue,
         state.todaysLosses
-      ) >= goal,
+      )
+    ),
     reward: state =>
       addItemToInventory(state, itemsMap['onion-seed'], reward, true),
   }))(),
@@ -199,12 +217,13 @@ const achievements: farmhand.achievement[] = [
     name: `Daily profit: ${dollarString(goal)}`,
     description: `Earn ${dollarString(goal)} of profit in a single day.`,
     rewardDescription: `${reward} units of ${itemsMap['tomato-seed'].name}`,
-    condition: state =>
+    ...progressAchievement(goal, state =>
       getProfitRecord(
         state.recordSingleDayProfit,
         state.todaysRevenue,
         state.todaysLosses
-      ) >= goal,
+      )
+    ),
     reward: state =>
       addItemToInventory(state, itemsMap['tomato-seed'], reward, true),
   }))(),
@@ -214,7 +233,7 @@ const achievements: farmhand.achievement[] = [
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
-    condition: state => state.record7dayProfitAverage >= goal,
+    ...progressAchievement(goal, state => state.record7dayProfitAverage),
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -223,7 +242,7 @@ const achievements: farmhand.achievement[] = [
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
-    condition: state => state.record7dayProfitAverage >= goal,
+    ...progressAchievement(goal, state => state.record7dayProfitAverage),
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -232,7 +251,7 @@ const achievements: farmhand.achievement[] = [
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
-    condition: state => state.record7dayProfitAverage >= goal,
+    ...progressAchievement(goal, state => state.record7dayProfitAverage),
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -241,7 +260,7 @@ const achievements: farmhand.achievement[] = [
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
-    condition: state => state.record7dayProfitAverage >= goal,
+    ...progressAchievement(goal, state => state.record7dayProfitAverage),
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -250,7 +269,7 @@ const achievements: farmhand.achievement[] = [
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
-    condition: state => state.record7dayProfitAverage >= goal,
+    ...progressAchievement(goal, state => state.record7dayProfitAverage),
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -259,7 +278,7 @@ const achievements: farmhand.achievement[] = [
     name: `7-day profit average: ${dollarString(goal)}`,
     description: `Reach a 7-day profit average of ${dollarString(goal)}.`,
     rewardDescription: `${reward} units of ${rewardItem.name}`,
-    condition: state => state.record7dayProfitAverage >= goal,
+    ...progressAchievement(goal, state => state.record7dayProfitAverage),
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -273,7 +292,7 @@ const achievements: farmhand.achievement[] = [
     name: `Dairy Master`,
     description: `Sell ${integerString(goal)} units of ${goalItem.name}.`,
     rewardDescription: `${integerString(reward)} ${rewardItem.name} units`,
-    condition: state => (state.itemsSold[goalItem.id] || 0) >= goal,
+    ...progressAchievement(goal, state => state.itemsSold[goalItem.id] || 0),
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -287,7 +306,7 @@ const achievements: farmhand.achievement[] = [
     name: `A Big Average Rainbow`,
     description: `Sell ${integerString(goal)} units of ${goalItem.name}.`,
     rewardDescription: `${integerString(reward)} ${rewardItem.name} units`,
-    condition: state => (state.itemsSold[goalItem.id] || 0) >= goal,
+    ...progressAchievement(goal, state => state.itemsSold[goalItem.id] || 0),
     reward: state => addItemToInventory(state, rewardItem, reward, true),
   }))(),
 
@@ -296,7 +315,7 @@ const achievements: farmhand.achievement[] = [
     name: `Burger Master`,
     description: `Sell ${integerString(goal)} ${goalItem.name} units.`,
     rewardDescription: `${integerString(reward)} additional inventory spaces`,
-    condition: state => (state.itemsSold[goalItem.id] || 0) >= goal,
+    ...progressAchievement(goal, state => state.itemsSold[goalItem.id] || 0),
     reward: state => ({
       ...state,
       inventoryLimit: state.inventoryLimit + reward,
@@ -310,7 +329,7 @@ const achievements: farmhand.achievement[] = [
     rewardDescription: `All sales receive a ${percentageString(
       I_AM_RICH_BONUSES[0]
     )} bonus`,
-    condition: state => state.revenue >= goal,
+    ...progressAchievement(goal, state => state.revenue),
     reward: state => state,
   }))(),
 
@@ -321,7 +340,7 @@ const achievements: farmhand.achievement[] = [
     rewardDescription: `All sales receive a ${percentageString(
       I_AM_RICH_BONUSES[1]
     )} bonus`,
-    condition: state => state.revenue >= goal,
+    ...progressAchievement(goal, state => state.revenue),
     reward: state => state,
   }))(),
 
@@ -332,7 +351,7 @@ const achievements: farmhand.achievement[] = [
     rewardDescription: `All sales receive a ${percentageString(
       I_AM_RICH_BONUSES[2]
     )} bonus`,
-    condition: state => state.revenue >= goal,
+    ...progressAchievement(goal, state => state.revenue),
     reward: state => state,
   }))(),
 
@@ -364,8 +383,9 @@ const achievements: farmhand.achievement[] = [
     name: 'Orchardist',
     description: `Pick ${integerString(goal)} fruits from trees in the Forest.`,
     rewardDescription: `${reward} units of ${itemsMap['apple-sapling'].name}`,
-    condition: state =>
-      sumOfPartialRecordValues(state.treeFruitsHarvested) >= goal,
+    ...progressAchievement(goal, state =>
+      sumOfPartialRecordValues(state.treeFruitsHarvested)
+    ),
     reward: state =>
       addItemToInventory(state, itemsMap['apple-sapling'], reward, true),
   }))(),
@@ -375,7 +395,7 @@ const achievements: farmhand.achievement[] = [
     name: 'Piemaker',
     description: `Make ${integerString(goal)} pies.`,
     rewardDescription: dollarString(reward),
-    condition: state => sumOfPiesMade(state.recipesMade) >= goal,
+    ...progressAchievement(goal, state => sumOfPiesMade(state.recipesMade)),
     reward: state => addMoney(state, reward),
   }))(),
 
@@ -384,7 +404,7 @@ const achievements: farmhand.achievement[] = [
     name: 'Deforestation',
     description: `Chop down ${integerString(goal)} trees in the Forest.`,
     rewardDescription: `${reward} units of ${itemsMap['wood'].name}`,
-    condition: state => state.treesChopped >= goal,
+    ...progressAchievement(goal, state => state.treesChopped),
     reward: state => addItemToInventory(state, itemsMap['wood'], reward, true),
   }))(),
 
@@ -395,7 +415,9 @@ const achievements: farmhand.achievement[] = [
       goal
     )} bags of mulch (of any type) on trees in the Forest.`,
     rewardDescription: `${reward} units of ${itemsMap['rainbow-mulch'].name}`,
-    condition: state => sumOfPartialRecordValues(state.mulchApplied) >= goal,
+    ...progressAchievement(goal, state =>
+      sumOfPartialRecordValues(state.mulchApplied)
+    ),
     reward: state =>
       addItemToInventory(state, itemsMap['rainbow-mulch'], reward, true),
   }))(),

@@ -5,8 +5,31 @@ import { toolLevel, toolType } from '../enums.js'
 
 import { INFINITE_STORAGE_LIMIT } from '../constants.js'
 
-import { achievementsMap } from './achievements.js'
+import { achievementsMap, progressAchievement } from './achievements.js'
 import { carrot } from './crops/index.js'
+
+describe('progressAchievement', () => {
+  test('condition is false and getProgress reflects currentValue below goal', () => {
+    const { condition, getProgress } = progressAchievement(10, () => 9)
+
+    expect(condition({} as any)).toEqual(false)
+    expect(getProgress?.({} as any)).toEqual({ currentValue: 9, goal: 10 })
+  })
+
+  test('condition is true and getProgress reflects currentValue at goal', () => {
+    const { condition, getProgress } = progressAchievement(10, () => 10)
+
+    expect(condition({} as any)).toEqual(true)
+    expect(getProgress?.({} as any)).toEqual({ currentValue: 10, goal: 10 })
+  })
+
+  test('condition is true and getProgress reflects currentValue above goal', () => {
+    const { condition, getProgress } = progressAchievement(10, () => 11)
+
+    expect(condition({} as any)).toEqual(true)
+    expect(getProgress?.({} as any)).toEqual({ currentValue: 11, goal: 10 })
+  })
+})
 
 describe('harvest-crop', () => {
   describe('condition', () => {
@@ -84,6 +107,18 @@ describe.each(iAmRichVariants)(
         } as any
 
         expect(achievement.condition(state)).toEqual(false)
+      })
+
+      test('reports progress toward the revenue goal', () => {
+        const achievement = achievementsMap[id]
+        const state = {
+          revenue: Number(goal) - 1,
+        } as any
+
+        expect(achievement.getProgress?.(state)).toEqual({
+          currentValue: Number(goal) - 1,
+          goal: Number(goal),
+        })
       })
     })
   }
@@ -173,6 +208,13 @@ describe('orchardist', () => {
 
     expect(saplings).toEqual({ id: 'apple-sapling', quantity: 50 })
   })
+
+  test('reports progress toward the fruits-picked goal', () => {
+    expect(achievement.getProgress?.(state)).toEqual({
+      currentValue: 999,
+      goal: 1000,
+    })
+  })
 })
 
 describe('piemaker', () => {
@@ -218,6 +260,13 @@ describe('piemaker', () => {
 
     expect(state.money).toEqual(100_000)
   })
+
+  test('reports progress toward the pies-made goal', () => {
+    expect(achievement.getProgress?.(state)).toEqual({
+      currentValue: 99,
+      goal: 100,
+    })
+  })
 })
 
 describe('deforestation', () => {
@@ -250,6 +299,13 @@ describe('deforestation', () => {
     )
 
     expect(wood).toEqual({ id: 'wood', quantity: 500 })
+  })
+
+  test('reports progress toward the trees-chopped goal', () => {
+    expect(achievement.getProgress?.(state)).toEqual({
+      currentValue: 249,
+      goal: 250,
+    })
   })
 })
 
@@ -289,5 +345,12 @@ describe('landscaper', () => {
     )
 
     expect(rainbowMulch).toEqual({ id: 'rainbow-mulch', quantity: 25 })
+  })
+
+  test('reports progress toward the mulch-applied goal', () => {
+    expect(achievement.getProgress?.(state)).toEqual({
+      currentValue: 99,
+      goal: 100,
+    })
   })
 })
