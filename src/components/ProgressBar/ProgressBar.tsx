@@ -79,12 +79,21 @@ const ProgressBar = ({ percent }: { percent: number }) => {
   }, [percent, prefersReducedMotion])
 
   return (
-    <Div className="ProgressBar" sx={{ margin: '0 auto' }}>
+    <Div
+      className="ProgressBar"
+      sx={{
+        margin: '0 auto',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5em',
+      }}
+    >
       <Div
         className="progress-wrapper"
         sx={{
+          flexGrow: 1,
           height: '1em',
-          background: '#ddd',
+          background: 'rgba(0, 0, 0, 0.15)',
           borderRadius: '0.5em',
           overflow: 'hidden',
         }}
@@ -100,7 +109,7 @@ const ProgressBar = ({ percent }: { percent: number }) => {
           sx={{ height: '100%' }}
         ></Div>
       </Div>
-      <P sx={{ lineHeight: '2em', textAlign: 'center' }}>
+      <P sx={{ lineHeight: '1em', minWidth: '3em', textAlign: 'right' }}>
         <span>{displayedProgress}%</span>
       </P>
     </Div>

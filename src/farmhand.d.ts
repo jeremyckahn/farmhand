@@ -281,6 +281,12 @@ declare namespace farmhand {
 
   type achievementCondition = (state: state, prevState?: state) => boolean
   type achievementReward = (state: state) => state
+  type achievementProgress = (
+    state: state
+  ) => {
+    currentValue: number
+    goal: number
+  }
 
   interface achievement {
     id: string
@@ -289,6 +295,7 @@ declare namespace farmhand {
     rewardDescription: string
     condition: achievementCondition
     reward: achievementReward
+    getProgress?: achievementProgress
   }
 
   interface level {

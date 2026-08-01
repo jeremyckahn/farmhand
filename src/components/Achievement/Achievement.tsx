@@ -9,35 +9,59 @@ import BeenhereIcon from '@mui/icons-material/Beenhere.js'
 import { bool, object, shape, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { Div } from '../Elements/index.js'
+import ProgressBar from '../ProgressBar/index.js'
 
 const Achievement = ({
-  achievement: { description, id, name, rewardDescription },
+  achievement,
   completedAchievements,
+  gameState,
 
-  isComplete = Boolean(completedAchievements[id]),
+  isComplete = Boolean(completedAchievements[achievement.id]),
 }: {
   achievement: farmhand.achievement
   completedAchievements: Partial<Record<string, boolean>>
+  gameState: farmhand.state
   isComplete?: boolean
-}) => (
-  <Card
-    {...{ className: classNames('Achievement', { 'is-complete': isComplete }) }}
-    sx={{
-      '& .MuiSvgIcon-root': { color: isComplete ? '#13b747' : '#666' },
-    }}
-  >
-    <CardHeader
+}) => {
+  const { description, name, rewardDescription } = achievement
+
+  return (
+    <Card
       {...{
-        avatar: isComplete ? <BeenhereIcon /> : <AssignmentLateIcon />,
-        title: name,
-        subheader: <p>Reward: {rewardDescription}</p>,
+        className: classNames('Achievement', { 'is-complete': isComplete }),
       }}
-    />
-    <CardContent>
-      <p>{description}</p>
-    </CardContent>
-  </Card>
-)
+      sx={{
+        '& .MuiSvgIcon-root': { color: isComplete ? '#13b747' : '#666' },
+      }}
+    >
+      <CardHeader
+        {...{
+          avatar: isComplete ? <BeenhereIcon /> : <AssignmentLateIcon />,
+          title: name,
+          subheader: <p>Reward: {rewardDescription}</p>,
+        }}
+      />
+      <CardContent>
+        <p>{description}</p>
+        {!isComplete && achievement.getProgress && (
+          <Div sx={{ marginTop: '1em' }}>
+            <ProgressBar
+              {...{
+                percent: Math.min(
+                  100,
+                  (achievement.getProgress(gameState).currentValue /
+                    achievement.getProgress(gameState).goal) *
+                    100
+                ),
+              }}
+            />
+          </Div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
 
 Achievement.propTypes = {
   achievement: shape({
@@ -47,6 +71,7 @@ Achievement.propTypes = {
     rewardDescription: string.isRequired,
   }).isRequired,
   completedAchievements: object.isRequired,
+  gameState: object.isRequired,
   isComplete: bool,
 }
 
@@ -58,7 +83,7 @@ export default function Consumer(props: {
   return (
     <FarmhandContext.Consumer>
       {({ gameState, handlers }) => (
-        <Achievement {...{ ...gameState, ...handlers, ...props }} />
+        <Achievement {...{ ...gameState, ...handlers, ...props, gameState }} />
       )}
     </FarmhandContext.Consumer>
   )
