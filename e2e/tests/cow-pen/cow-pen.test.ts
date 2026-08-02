@@ -59,3 +59,23 @@ test('should purchase a cow pen and a cow, verify hugging and selling works', as
   await expect(hugButton).not.toBeVisible()
   await expect(sellButton).not.toBeVisible()
 })
+
+test("should be able to buy Cow Feed directly from the Shop's Supplies tab", async ({
+  page,
+}) => {
+  // The crops-mature fixture has > $100k
+  await loadFixture(page, 'crops-mature')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Shop' }).click()
+  await page.getByRole('tab', { name: 'Supplies' }).click()
+
+  const cowFeedCard = page.locator('.Item').filter({ hasText: 'Cow Feed' })
+  await cowFeedCard.getByPlaceholder('0').dblclick()
+  await cowFeedCard.getByPlaceholder('0').fill('1')
+  await cowFeedCard.getByRole('button', { name: 'Buy' }).click()
+
+  await expect(
+    page.locator('.ContextPane').getByText('Cow Feed', { exact: true })
+  ).toBeVisible()
+})

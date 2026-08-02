@@ -1,4 +1,4 @@
-import { scarecrow } from '../data/items.js'
+import { cowFeed, huggingMachine, scarecrow } from '../data/items.js'
 
 import { getAvailableShopInventory } from './getAvailableShopInventory.js'
 
@@ -11,6 +11,6 @@ describe('getAvailableShopInventory', () => {
         tools: {},
         stageFocusType: {},
       } as any)
-    ).toEqual([scarecrow])
+    ).toEqual([scarecrow, cowFeed, huggingMachine])
   })
 })
