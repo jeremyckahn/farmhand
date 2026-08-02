@@ -28,6 +28,10 @@ import {
   // Field items
   scarecrow,
   sprinkler,
+
+  // Cow items
+  cowFeed,
+  huggingMachine,
 } from './items.js'
 
 import { fertilizer, mulch } from './recipes.js'
@@ -66,6 +70,10 @@ const inventory: farmhand.item[] = [
   fertilizer,
   scarecrow,
   sprinkler,
+
+  // Cow items
+  cowFeed,
+  huggingMachine,
 ]
 
 export default inventory
