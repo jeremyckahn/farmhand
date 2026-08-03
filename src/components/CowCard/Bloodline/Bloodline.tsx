@@ -13,7 +13,7 @@ const Bloodline = ({
 }: {
   colorsInBloodline: Partial<Record<farmhand.cowColors, boolean>>
 }) => (
-  <Ul className="Bloodline" sx={{ display: 'flex', margin: '1em 0' }}>
+  <Ul className="Bloodline" sx={{ display: 'flex', gap: '0.5em', margin: '1em 0' }}>
     {Object.keys(colorsInBloodline)
       .sort()
       .map(color => (
@@ -35,7 +35,6 @@ const Bloodline = ({
               height: dotSize,
               width: dotSize,
               marginBottom: 0,
-              marginRight: '0.5em',
               marginTop: 0,
             }}
           />
