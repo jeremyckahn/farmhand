@@ -802,10 +802,13 @@ export const useFarmhand = (props: FarmhandProps) => {
     }
 
     if (state.stageFocus !== prevState.stageFocus && state.isMenuOpen) {
-      setState(previous => ({
-        ...previous,
-        isMenuOpen: !doesMenuObstructStage(),
-      }))
+      setState(previous => {
+        const isMenuOpen = !doesMenuObstructStage()
+
+        return previous.isMenuOpen === isMenuOpen
+          ? previous
+          : { ...previous, isMenuOpen }
+      })
     }
 
     if (state.money < prevState.money) {
