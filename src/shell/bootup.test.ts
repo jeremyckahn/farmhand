@@ -2,15 +2,12 @@ import { screen, waitFor } from '@testing-library/react'
 
 import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory.js'
 import { farmhandStub } from '../test-utils/stubs/farmhandStub.js'
-import { endDay } from '../test-utils/ui.js'
+import { endDay, waitForBoot } from '../test-utils/ui.js'
 
 describe('bootup', () => {
   test('boots a fresh game when there is no save file', async () => {
     await farmhandStub()
-
-    await waitFor(() => {
-      expect(screen.getByText('Day 1', { exact: false })).toBeInTheDocument()
-    })
+    await waitForBoot()
   })
 
   test('boots from save file if there is one', async () => {

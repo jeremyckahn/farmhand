@@ -1,7 +1,8 @@
-import { screen, waitFor, fireEvent } from '@testing-library/react'
+import { fireEvent, waitFor } from '@testing-library/react'
 
 import { BREAKPOINTS } from '../../constants.js'
 import { farmhandStub } from '../../test-utils/stubs/farmhandStub.js'
+import { waitForBoot } from '../../test-utils/ui.js'
 
 const setWindowWidth = (width: number) => {
   Object.defineProperty(window, 'innerWidth', {
@@ -15,8 +16,17 @@ const getIsMenuOpen = () =>
   ((window as unknown) as { farmhand: { state: farmhand.state } }).farmhand
     .state.isMenuOpen
 
+const setIsMenuOpen = (isMenuOpen: boolean) =>
+  ((window as unknown) as {
+    farmhand: { setState: (state: Partial<farmhand.state>) => void }
+  }).farmhand.setState({ isMenuOpen })
+
 // Simulates a sidebar input having focus, e.g. mid-typing, without depending
 // on any particular Farmhand-rendered input existing in the current view.
+// Note: the resize guard under test is purely width-based and never checks
+// focus - this just documents the real-world trigger (a focused input is
+// what causes a mobile on-screen keyboard to open/close and fire a
+// height-only resize).
 const focusAnInput = () => {
   const input = document.createElement('input')
 
@@ -27,14 +37,19 @@ const focusAnInput = () => {
 
 describe('sidebar resize handling', () => {
   test('a height-only resize while a field is focused (e.g. a mobile on-screen keyboard) does not touch the sidebar', async () => {
-    setWindowWidth(BREAKPOINTS.MD + 100)
+    // A width below the breakpoint means the sidebar would naturally be
+    // closed. It's forced open below to simulate a player having manually
+    // opened it - that's what makes this test able to detect a regression:
+    // without the width-change guard, the resize handler recomputes
+    // isMenuOpen from the viewport and would clobber this manually-opened
+    // state even though the width hasn't changed.
+    setWindowWidth(BREAKPOINTS.MD - 100)
 
     await farmhandStub()
 
-    await waitFor(() => {
-      expect(screen.getByText('Day 1', { exact: false })).toBeInTheDocument()
-    })
+    await waitForBoot()
 
+    setIsMenuOpen(true)
     focusAnInput()
     expect(getIsMenuOpen()).toBe(true)
 
@@ -50,9 +65,7 @@ describe('sidebar resize handling', () => {
 
     await farmhandStub()
 
-    await waitFor(() => {
-      expect(screen.getByText('Day 1', { exact: false })).toBeInTheDocument()
-    })
+    await waitForBoot()
 
     focusAnInput()
     expect(getIsMenuOpen()).toBe(true)
