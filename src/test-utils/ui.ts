@@ -1,5 +1,10 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+
+export const waitForBoot = () =>
+  waitFor(() => {
+    expect(screen.getByText('Day 1', { exact: false })).toBeInTheDocument()
+  })
 
 export const endDay = async () => {
   const endDayButton = await screen.findByLabelText(

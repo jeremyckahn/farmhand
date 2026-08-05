@@ -1,6 +1,5 @@
-import { screen, waitFor } from '@testing-library/react'
-
 import { farmhandStub } from '../test-utils/stubs/farmhandStub.js'
+import { waitForBoot } from '../test-utils/ui.js'
 
 // Regression coverage for the isMounted guard added to the post-increment-day
 // effect in useFarmhand.ts. Before that guard existed, unmounting while an
@@ -27,9 +26,7 @@ describe('unmount safety', () => {
     // post-increment-day effect. By the time "Day 1" renders, that effect's
     // async continuation is already awaiting localforage.setItem (the mock
     // above), i.e. it's suspended exactly where the isMounted guard matters.
-    await waitFor(() => {
-      expect(screen.getByText('Day 1', { exact: false })).toBeInTheDocument()
-    })
+    await waitForBoot()
 
     const consoleError = vitest
       .spyOn(console, 'error')
