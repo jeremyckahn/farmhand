@@ -12,6 +12,14 @@ const setWindowWidth = (width: number) => {
   })
 }
 
+const setWindowHeight = (height: number) => {
+  Object.defineProperty(window, 'innerHeight', {
+    writable: true,
+    configurable: true,
+    value: height,
+  })
+}
+
 const getIsMenuOpen = () =>
   ((window as unknown) as { farmhand: { state: farmhand.state } }).farmhand
     .state.isMenuOpen
@@ -44,17 +52,18 @@ describe('sidebar resize handling', () => {
     // isMenuOpen from the viewport and would clobber this manually-opened
     // state even though the width hasn't changed.
     setWindowWidth(BREAKPOINTS.MD - 100)
+    setWindowHeight(800)
 
     await farmhandStub()
-
     await waitForBoot()
 
     setIsMenuOpen(true)
     focusAnInput()
     expect(getIsMenuOpen()).toBe(true)
 
-    // Width is unchanged, simulating a resize caused only by the on-screen
-    // keyboard opening/closing.
+    // Height shrinks, as when a mobile on-screen keyboard opens, while
+    // width stays the same.
+    setWindowHeight(500)
     fireEvent(window, new Event('resize'))
 
     expect(getIsMenuOpen()).toBe(true)
@@ -64,7 +73,6 @@ describe('sidebar resize handling', () => {
     setWindowWidth(BREAKPOINTS.MD + 100)
 
     await farmhandStub()
-
     await waitForBoot()
 
     focusAnInput()

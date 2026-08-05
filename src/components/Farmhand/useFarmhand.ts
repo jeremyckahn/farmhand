@@ -664,9 +664,9 @@ export const useFarmhand = (props: FarmhandProps) => {
       previousWindowWidthRef.current = innerWidth
 
       // doesMenuObstructStage is width-based, so a resize that only changed
-      // height (e.g. a mobile on-screen keyboard opening/closing) has
-      // nothing to update here. Without this guard, that kind of resize was
-      // closing the sidebar out from under the player mid-typing.
+      // height (e.g. a mobile on-screen keyboard opening/closing) has nothing
+      // to update here. Without this guard, that kind of resize closes the
+      // sidebar out from under the player mid-typing.
       if (!hasWidthChanged) return
 
       setState(previous => {
