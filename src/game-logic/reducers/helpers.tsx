@@ -1,6 +1,7 @@
 import { itemType } from '../../enums.js'
 
 import { SCARECROW_ITEM_ID } from '../../constants.js'
+import { itemsMap } from '../../data/maps.js'
 import { getPlotContentType } from '../../utils/getPlotContentType.js'
 import { findInField } from '../../utils/findInField.js'
 
@@ -46,6 +47,14 @@ export const applyChanceEvent = (
 export const plotContainsScarecrow = (
   plot: farmhand.plotContent | null
 ): boolean => !!(plot && plot.itemId === SCARECROW_ITEM_ID)
+
+export const plotContainsLightningRod = (
+  plot: farmhand.plotContent | null
+): boolean => !!(plot && itemsMap[plot.itemId]?.type === itemType.LIGHTNING_ROD)
+
+export const fieldHasLightningRod = (
+  field: Array<Array<farmhand.plotContent | null>> | null
+): boolean => !!(field && findInField(field, plotContainsLightningRod))
 
 /**
  * Invokes a function on every plot in a field.

@@ -1,5 +1,5 @@
 import { testCrop } from '../../test-utils/index.js'
-import { toolType, toolLevel } from '../../enums.js'
+import { fertilizerType, toolType, toolLevel } from '../../enums.js'
 import { getPlotContentFromItemId } from '../../utils/getPlotContentFromItemId.js'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { randomNumberService } from '../../common/services/randomNumber.js'
@@ -99,6 +99,28 @@ describe('clearPlot', () => {
 
         expect(state).toEqual(inputState)
       })
+    })
+  })
+
+  describe('plotContent is a lightning rod', () => {
+    test('the Hoe cannot remove it', () => {
+      const inputState = saveDataStubFactory({
+        field: [
+          [
+            {
+              itemId: 'sample-lightning-rod-1',
+              fertilizerType: fertilizerType.NONE,
+              lightningStrikesSustained: 1,
+            },
+          ],
+        ],
+        toolLevels,
+        inventory: [],
+        inventoryLimit: INFINITE_STORAGE_LIMIT,
+      })
+      const state = clearPlot(inputState, 0, 0)
+
+      expect(state).toEqual(inputState)
     })
   })
 

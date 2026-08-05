@@ -119,6 +119,12 @@ export const Plot = ({
   const isScarecow =
     (plotContent?.itemId ? itemsMap[plotContent.itemId] : null)?.type ===
     itemType.SCARECROW
+  const isLightningRod = item?.type === itemType.LIGHTNING_ROD
+  const lightningRodStrikeRatio =
+    isLightningRod && item?.lightningStrikeCapacity
+      ? (plotContent?.lightningStrikesSustained ?? 0) /
+        item.lightningStrikeCapacity
+      : 0
   const [wasJustShoveled, setWasJustShoveled] = useState(false)
   const [initialIsShoveledState, setInitialIsShoveledState] = useState(
     Boolean(plotContent?.isShoveled)
@@ -223,6 +229,11 @@ export const Plot = ({
               animated: true,
               'was-just-shoveled': true,
             }),
+            ...(isLightningRod && {
+              'lightning-rod-damaged':
+                lightningRodStrikeRatio >= 0.5 && lightningRodStrikeRatio < 0.8,
+              'lightning-rod-critical': lightningRodStrikeRatio >= 0.8,
+            }),
           }),
           style: {
             backgroundImage: showPlotImage ? `url(${image})` : undefined,
@@ -234,6 +245,12 @@ export const Plot = ({
           ...squareImgSx,
           '&.was-just-shoveled': {
             animationName: 'fadeAwayShoveledContent',
+          },
+          '&.lightning-rod-damaged': {
+            filter: 'saturate(0.6) brightness(0.85)',
+          },
+          '&.lightning-rod-critical': {
+            filter: 'saturate(0.3) brightness(0.7)',
           },
           '@keyframes fadeAwayShoveledContent': {
             from: {
@@ -268,6 +285,13 @@ export const Plot = ({
                 {daysLeftToMature
                   ? `Days of watering to mature: ${daysLeftToMature}`
                   : 'Ready to harvest!'}
+              </Typography>
+            )}
+            {isLightningRod && item?.lightningStrikeCapacity && (
+              <Typography>
+                Lightning strikes sustained:{' '}
+                {plotContent?.lightningStrikesSustained ?? 0} /{' '}
+                {item.lightningStrikeCapacity}
               </Typography>
             )}
           </>

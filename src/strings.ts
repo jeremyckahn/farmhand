@@ -5,6 +5,10 @@ export const RAIN_MESSAGE = 'It rained in the night!'
 export const STORM_MESSAGE = 'There was a storm in the night!'
 export const STORM_DESTROYS_SCARECROWS_MESSAGE =
   'There was a storm in the night! No scarecrows survived!'
+export const LIGHTNING_ROD_STRUCK_MESSAGE =
+  'There was a storm in the night! Your lightning rod took a hit protecting the field.'
+export const LIGHTNING_ROD_DESTROYED_MESSAGE =
+  'There was a storm in the night! Your lightning rod was destroyed protecting the field.'
 export const FARM_PRODUCTS_TOOLTIP_TEXT =
   'This figure only includes sales of grown crops, crafted items, and animal products.'
 export const COW_SOLD_TOOLTIP_TEXT =

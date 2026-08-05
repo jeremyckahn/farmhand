@@ -1,17 +1,23 @@
 import { fertilizerType } from '../../enums.js'
+import { itemsMap } from '../../data/maps.js'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
 import {
   RAIN_MESSAGE,
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
+  LIGHTNING_ROD_STRUCK_MESSAGE,
+  LIGHTNING_ROD_DESTROYED_MESSAGE,
 } from '../../strings.js'
 import { shouldStormToday } from '../../utils/shouldStormToday.js'
 
 import {
+  fieldHasLightningRod,
   fieldHasScarecrow,
+  plotContainsLightningRod,
   plotContainsScarecrow,
   updateField,
 } from './helpers.js'
+import { addItemToInventory } from './addItemToInventory.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
 import { waterField } from './waterField.js'
 
@@ -19,9 +25,44 @@ export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
   let { field } = state
   let scarecrowsConsumedByReplanting = 0
   let notification: farmhand.notification
+  let lightningRodOreRefund: { itemId: string; quantity: number } | null = null
 
   if (shouldStormToday()) {
-    if (fieldHasScarecrow(field)) {
+    if (fieldHasLightningRod(field)) {
+      // A placed Lightning Rod intercepts the strike that would otherwise
+      // destroy a Scarecrow (see the branch below), absorbing the damage
+      // itself instead. Only the first rod found takes the strike - a
+      // storm is a single daily event, not one strike per rod.
+      let strikeApplied = false
+      let lightningRodWasDestroyed = false
+
+      field = updateField(field, plot => {
+        if (strikeApplied || !plot || !plotContainsLightningRod(plot)) {
+          return plot
+        }
+
+        strikeApplied = true
+
+        const item = itemsMap[plot.itemId]
+        const strikesSustained = (plot.lightningStrikesSustained ?? 0) + 1
+
+        if (strikesSustained >= (item.lightningStrikeCapacity ?? Infinity)) {
+          lightningRodWasDestroyed = true
+          lightningRodOreRefund = item.destructionOreRefund ?? null
+
+          return null
+        }
+
+        return { ...plot, lightningStrikesSustained: strikesSustained }
+      })
+
+      notification = {
+        message: lightningRodWasDestroyed
+          ? LIGHTNING_ROD_DESTROYED_MESSAGE
+          : LIGHTNING_ROD_STRUCK_MESSAGE,
+        severity: lightningRodWasDestroyed ? 'error' : 'info',
+      }
+    } else if (fieldHasScarecrow(field)) {
       notification = {
         message: STORM_DESTROYS_SCARECROWS_MESSAGE,
         severity: 'error',
@@ -67,6 +108,12 @@ export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
     'scarecrow',
     scarecrowsConsumedByReplanting
   )
+
+  if (lightningRodOreRefund) {
+    const { itemId, quantity } = lightningRodOreRefund
+
+    state = addItemToInventory(state, itemsMap[itemId], quantity)
+  }
 
   state = {
     ...state,

@@ -182,6 +182,16 @@ export const scarecrow = testItem({
   value: 160,
 })
 
+export const sampleLightningRod1 = testItem({
+  enablesFieldMode: 'SET_LIGHTNING_ROD',
+  id: 'sample-lightning-rod-1',
+  name: 'Sample Lightning Rod 1',
+  type: itemType.LIGHTNING_ROD,
+  lightningStrikeCapacity: 2,
+  destructionOreRefund: { itemId: 'sample-ore-1', quantity: 2 },
+  value: 100,
+})
+
 export const milk1 = testItem({
   id: 'milk-1',
   name: 'Milk 1',

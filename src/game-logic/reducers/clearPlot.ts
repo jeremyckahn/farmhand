@@ -24,6 +24,14 @@ export const clearPlot = (
     return state
   }
 
+  // Lightning rods are a non-removable fixture - the only way to lose one
+  // is by it exhausting its strike capacity (see applyPrecipitation.ts).
+  // Without this guard the Hoe would delete it for no refund, since it's
+  // neither replantable nor a crop/weed.
+  if (getPlotContentType(plotContent) === itemType.LIGHTNING_ROD) {
+    return state
+  }
+
   if (
     getPlotContentType(plotContent) === itemType.CROP &&
     getCropLifeStage(plotContent) !== GROWN &&
