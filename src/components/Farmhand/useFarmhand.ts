@@ -654,8 +654,21 @@ export const useFarmhand = (props: FarmhandProps) => {
   // stageFocus changes - without this, resizing the window (or rotating a
   // device) never opens/closes the sidebar until the next of those, which
   // in practice meant a full page reload.
+  const previousWindowWidthRef = useRef(window.innerWidth)
+
   useEffect(() => {
     const handleResize = () => {
+      const { innerWidth } = window
+      const hasWidthChanged = innerWidth !== previousWindowWidthRef.current
+
+      previousWindowWidthRef.current = innerWidth
+
+      // doesMenuObstructStage is width-based, so a resize that only changed
+      // height (e.g. a mobile on-screen keyboard opening/closing) has
+      // nothing to update here. Without this guard, that kind of resize was
+      // closing the sidebar out from under the player mid-typing.
+      if (!hasWidthChanged) return
+
       setState(previous => {
         const isMenuOpen = !doesMenuObstructStage()
 
