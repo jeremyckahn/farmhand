@@ -1,5 +1,6 @@
 import { fertilizerType } from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
+import { random } from '../../common/utils.js'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
 import {
   RAIN_MESSAGE,
@@ -19,6 +20,7 @@ import {
 } from './helpers.js'
 import { addItemToInventory } from './addItemToInventory.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
+import { forEachPlot } from './applyCrows.js'
 import { waterField } from './waterField.js'
 
 export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
@@ -31,17 +33,27 @@ export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
     if (fieldHasLightningRod(field)) {
       // A placed Lightning Rod intercepts the strike that would otherwise
       // destroy a Scarecrow (see the branch below), absorbing the damage
-      // itself instead. Only the first rod found takes the strike - a
-      // storm is a single daily event, not one strike per rod.
-      let strikeApplied = false
+      // itself instead. A storm is a single daily event - it delivers one
+      // strike total, randomly targeting one of the placed rods (matching
+      // how applyCrows.ts picks a random plot to target).
+      const lightningRodCoords: Array<{ x: number; y: number }> = []
+
+      forEachPlot(state, (plot, x, y) => {
+        if (plotContainsLightningRod(plot)) {
+          lightningRodCoords.push({ x, y })
+        }
+      })
+
+      const { x: strikeX, y: strikeY } = lightningRodCoords[
+        Math.floor(random() * lightningRodCoords.length)
+      ]
+
       let lightningRodWasDestroyed = false
 
-      field = updateField(field, plot => {
-        if (strikeApplied || !plot || !plotContainsLightningRod(plot)) {
+      field = updateField(field, (plot, x, y) => {
+        if (x !== strikeX || y !== strikeY || !plot) {
           return plot
         }
-
-        strikeApplied = true
 
         const item = itemsMap[plot.itemId]
         const strikesSustained = (plot.lightningStrikesSustained ?? 0) + 1
