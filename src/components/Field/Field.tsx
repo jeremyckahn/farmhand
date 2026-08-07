@@ -15,10 +15,18 @@ import React, { memo, useEffect, useState } from 'react'
 import { GlobalHotKeys } from 'react-hotkeys'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 
+import {
+  basicLightningRod,
+  superiorLightningRod,
+  ultimateLightningRod,
+} from '../../data/recipes.js'
 import tools from '../../data/tools.js'
 import { fieldMode } from '../../enums.js'
 import scarecrowImg from '../../img/items/scarecrow.png'
 import sprinklerImg from '../../img/items/sprinkler.png'
+import basicLightningRodImg from '../../img/items/lightning-rod-basic.png'
+import superiorLightningRodImg from '../../img/items/lightning-rod-superior.png'
+import ultimateLightningRodImg from '../../img/items/lightning-rod-ultimate.png'
 import dirtBg from '../../img/ui/dirt.png'
 import { breakpoints, layout } from '../../styles/tokens.js'
 import { doesInventorySpaceRemain } from '../../utils/doesInventorySpaceRemain.js'
@@ -36,6 +44,12 @@ const colorBrownFertilize = 'rgba(125, 56, 0, 0.75)'
 const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
 const colorYellow = 'rgba(255, 255, 0, 0.75)'
 
+const lightningRodImagesByItemId: Record<string, string> = {
+  [basicLightningRod.id]: basicLightningRodImg,
+  [superiorLightningRod.id]: superiorLightningRodImg,
+  [ultimateLightningRod.id]: ultimateLightningRodImg,
+}
+
 // $appBarOffset (135px) + $horizontalQuickSelectOffest (80px)
 const obscuringPortraitUiVerticalOffset = 215
 // $appBarOffset (135px) + $bottomControlsOffset (260px)
@@ -48,6 +62,7 @@ const {
   MINE,
   OBSERVE,
   PLANT,
+  SET_LIGHTNING_ROD,
   SET_SCARECROW,
   SET_SPRINKLER,
   WATER,
@@ -83,6 +98,7 @@ export interface FieldProps {
   purchasedCombine: number
   purchasedField: number
   rows?: number
+  selectedItemId: string
 }
 
 export interface FieldContentProps extends FieldProps {
@@ -130,6 +146,7 @@ export const isInHoverRange = ({
       break
 
     case SET_SCARECROW:
+    case SET_LIGHTNING_ROD:
       hoveredPlotRangeSizeToRender = Number.MAX_SAFE_INTEGER
 
       break
@@ -379,7 +396,11 @@ export const Field = (props: FieldProps) => {
     inventoryLimit,
     isMenuOpen = true,
     purchasedField,
+    selectedItemId,
   } = props
+
+  const lightningRodGhostImg =
+    lightningRodImagesByItemId[selectedItemId] ?? basicLightningRodImg
 
   const [hoveredPlot, setHoveredPlot] = useState<{
     x: number | null
@@ -417,6 +438,7 @@ export const Field = (props: FieldProps) => {
               inventoryLimit,
             }),
             'plant-mode': propsFieldMode === PLANT,
+            'set-lightning-rod-mode': propsFieldMode === SET_LIGHTNING_ROD,
             'set-scarecrow-mode': propsFieldMode === SET_SCARECROW,
             'set-sprinkler-mode': propsFieldMode === SET_SPRINKLER,
             'water-mode': propsFieldMode === WATER,
@@ -587,7 +609,7 @@ export const Field = (props: FieldProps) => {
             backgroundColor: colorGreenOk,
             cursor: 'auto',
           },
-          '&.set-sprinkler-mode:hover .Plot:hover, &.set-scarecrow-mode:hover .Plot:hover': {
+          '&.set-sprinkler-mode:hover .Plot:hover, &.set-scarecrow-mode:hover .Plot:hover, &.set-lightning-rod-mode:hover .Plot:hover': {
             '&.is-empty img': { cursor: 'pointer', opacity: 0.5 },
             '&:not(.is-empty)': {
               backgroundColor: colorRedDanger,
@@ -600,6 +622,9 @@ export const Field = (props: FieldProps) => {
           },
           '&.set-scarecrow-mode:hover .Plot:hover.is-empty img': {
             backgroundImage: `url(${scarecrowImg})`,
+          },
+          '&.set-lightning-rod-mode:hover .Plot:hover.is-empty img': {
+            backgroundImage: `url(${lightningRodGhostImg})`,
           },
         })}
       >
@@ -689,6 +714,7 @@ Field.propTypes = {
   purchasedCombine: number.isRequired,
   purchasedField: number.isRequired,
   rows: number.isRequired,
+  selectedItemId: string.isRequired,
 }
 
 export default function Consumer(props: Partial<FieldProps>) {

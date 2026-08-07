@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { cropLifeStage, fertilizerType } from '../../enums.js'
+import { cropLifeStage, fertilizerType, fieldMode } from '../../enums.js'
 import { testCrop, testShoveledPlot } from '../../test-utils/index.js'
 import { getCropFromItemId } from '../../utils/getCropFromItemId.js'
 import { getPlotContentFromItemId } from '../../utils/getPlotContentFromItemId.js'
@@ -373,6 +373,67 @@ describe('Plot component', () => {
         const img = await screen.findByAltText('Sprinkler')
 
         expect(img.style.backgroundImage).toMatch(items.sprinkler)
+      })
+    })
+  })
+
+  describe('lightning rod Hoe tooltip', () => {
+    const cleanupProps = {
+      ...defaultProps,
+      fieldMode: fieldMode.CLEANUP,
+    }
+
+    describe('rod has not sustained any strikes', () => {
+      test('indicates the scrap reward', async () => {
+        render(
+          <Plot
+            {...cleanupProps}
+            plotContent={{
+              itemId: 'sample-lightning-rod-1',
+              fertilizerType: fertilizerType.NONE,
+              lightningStrikesSustained: 0,
+            }}
+          />
+        )
+
+        const plotElement = screen
+          .getByAltText('Sample Lightning Rod 1')
+          .closest('.Plot') as HTMLElement
+
+        await userEvent.hover(plotElement)
+
+        expect(
+          await screen.findByText(
+            'Using the Hoe will scrap this for 2 Sample Ore 1.'
+          )
+        ).toBeInTheDocument()
+      })
+    })
+
+    describe('rod has sustained strikes', () => {
+      test('indicates no reward will be given', async () => {
+        render(
+          <Plot
+            {...cleanupProps}
+            plotContent={{
+              itemId: 'sample-lightning-rod-1',
+              fertilizerType: fertilizerType.NONE,
+              lightningStrikesSustained: 1,
+            }}
+          />
+        )
+
+        const plotElement = screen
+          .getByAltText('Sample Lightning Rod 1')
+          .closest('.Plot') as HTMLElement
+
+        await userEvent.hover(plotElement)
+
+        expect(
+          await screen.findByText(
+            'Using the Hoe will remove this - since it has taken damage, no materials will be recovered.'
+          )
+        ).toBeInTheDocument()
       })
     })
   })

@@ -97,6 +97,7 @@ const defaultFieldProps: FieldProps = {
   isCombineEnabled: false,
   purchasedCombine: 0,
   purchasedField: 0,
+  selectedItemId: '',
 }
 
 const defaultFieldContentProps: FieldContentProps = {
@@ -118,6 +119,7 @@ const defaultFieldContentProps: FieldContentProps = {
   purchasedCombine: 0,
   purchasedField: 0,
   rows: 3,
+  selectedItemId: '',
   setHoveredPlot: noop,
 }
 

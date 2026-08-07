@@ -184,6 +184,9 @@ import rainbowMulch from './items/rainbow-mulch.png'
 import woodChips from './items/wood-chips.png'
 import scarecrow from './items/scarecrow.png'
 import sprinkler from './items/sprinkler.png'
+import basicLightningRod from './items/lightning-rod-basic.png'
+import superiorLightningRod from './items/lightning-rod-superior.png'
+import ultimateLightningRod from './items/lightning-rod-ultimate.png'
 import cowFeed from './items/cow-feed.png'
 import huggingMachine from './items/hugging-machine.png'
 import milk1 from './items/milk-1.png'
@@ -351,6 +354,9 @@ export const craftedItems = {
   'vegetable-oil': vegetableOil,
   'wood-chips': woodChips,
   yeast,
+  'basic-lightning-rod': basicLightningRod,
+  'superior-lightning-rod': superiorLightningRod,
+  'ultimate-lightning-rod': ultimateLightningRod,
   ...smeltedItems,
 }
 
