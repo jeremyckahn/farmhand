@@ -175,9 +175,11 @@ declare namespace farmhand {
     // being destroyed - see plotContent.lightningStrikesSustained and
     // applyPrecipitation.ts.
     lightningStrikeCapacity?: number
-    // What gets added back to inventory when this item is destroyed by a
-    // lightning strike (see applyPrecipitation.ts).
-    destructionOreRefund?: { itemId: string; quantity: number }
+    // What gets added back to inventory when a placed instance of this item
+    // is destroyed/scrapped. Generic - not specific to Lightning Rods or to
+    // ore - see applyDestructionYield in reducers/helpers.tsx for the
+    // shared logic that applies it.
+    destructionYield?: { itemId: string; quantity: number }
   }
 
   interface seedItem extends item {

@@ -60,7 +60,7 @@ export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
 
         if (strikesSustained >= (item.lightningStrikeCapacity ?? Infinity)) {
           lightningRodWasDestroyed = true
-          lightningRodOreRefund = item.destructionOreRefund ?? null
+          lightningRodOreRefund = item.destructionYield ?? null
 
           return null
         }

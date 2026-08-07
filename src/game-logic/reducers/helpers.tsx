@@ -5,6 +5,8 @@ import { itemsMap } from '../../data/maps.js'
 import { getPlotContentType } from '../../utils/getPlotContentType.js'
 import { findInField } from '../../utils/findInField.js'
 
+import { addItemToInventory } from './addItemToInventory.js'
+
 // This file is designed to contain common logic that is needed across multiple
 // reducers.
 
@@ -47,6 +49,23 @@ export const applyChanceEvent = (
 export const plotContainsScarecrow = (
   plot: farmhand.plotContent | null
 ): boolean => !!(plot && plot.itemId === SCARECROW_ITEM_ID)
+
+/**
+ * Applies an item's destructionYield (if any) to inventory. Generic -
+ * usable by any reducer that destroys/scraps a placed instance of an item,
+ * not just Lightning Rods.
+ */
+export const applyDestructionYield = (
+  state: farmhand.state,
+  item: farmhand.item | null
+): farmhand.state =>
+  item?.destructionYield
+    ? addItemToInventory(
+        state,
+        itemsMap[item.destructionYield.itemId],
+        item.destructionYield.quantity
+      )
+    : state
 
 export const plotContainsLightningRod = (
   plot: farmhand.plotContent | null

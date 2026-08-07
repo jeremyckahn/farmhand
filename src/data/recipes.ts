@@ -788,7 +788,7 @@ export const basicLightningRod: farmhand.recipe = convertToRecipe({
   enablesFieldMode: fieldMode.SET_LIGHTNING_ROD,
   hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
   lightningStrikeCapacity: 10,
-  destructionOreRefund: { itemId: items.ironOre.id, quantity: 4 },
+  destructionYield: { itemId: items.ironOre.id, quantity: 4 },
   ingredients: {
     [ironIngot.id]: 5,
   },
@@ -809,7 +809,7 @@ export const superiorLightningRod: farmhand.recipe = convertToRecipe({
   enablesFieldMode: fieldMode.SET_LIGHTNING_ROD,
   hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
   lightningStrikeCapacity: 25,
-  destructionOreRefund: { itemId: items.silverOre.id, quantity: 4 },
+  destructionYield: { itemId: items.silverOre.id, quantity: 4 },
   ingredients: {
     [ironIngot.id]: 4,
     [silverIngot.id]: 3,
@@ -831,7 +831,7 @@ export const ultimateLightningRod: farmhand.recipe = convertToRecipe({
   enablesFieldMode: fieldMode.SET_LIGHTNING_ROD,
   hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
   lightningStrikeCapacity: 100,
-  destructionOreRefund: { itemId: items.goldOre.id, quantity: 4 },
+  destructionYield: { itemId: items.goldOre.id, quantity: 4 },
   ingredients: {
     [ironIngot.id]: 4,
     [goldIngot.id]: 3,

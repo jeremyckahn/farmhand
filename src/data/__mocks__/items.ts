@@ -188,7 +188,7 @@ export const sampleLightningRod1 = testItem({
   name: 'Sample Lightning Rod 1',
   type: itemType.LIGHTNING_ROD,
   lightningStrikeCapacity: 2,
-  destructionOreRefund: { itemId: 'sample-ore-1', quantity: 2 },
+  destructionYield: { itemId: 'sample-ore-1', quantity: 2 },
   value: 100,
 })
 
