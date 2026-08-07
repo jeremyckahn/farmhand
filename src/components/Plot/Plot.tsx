@@ -310,8 +310,8 @@ export const Plot = ({
             {isLightningRod && propsFieldMode === CLEANUP && (
               <Typography>
                 {lightningRodIsUndamaged && lightningRodDestructionYieldItem
-                  ? `Using the Hoe will scrap this for ${item?.destructionYield?.quantity} ${lightningRodDestructionYieldItem.name}.`
-                  : 'Using the Hoe will remove this - since it has taken damage, no materials will be recovered.'}
+                  ? `Destroy and recoup ${item?.destructionYield?.quantity} units of ${lightningRodDestructionYieldItem.name}`
+                  : 'Will be destroyed'}
               </Typography>
             )}
           </>

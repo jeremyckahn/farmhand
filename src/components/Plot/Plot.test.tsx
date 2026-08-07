@@ -403,9 +403,7 @@ describe('Plot component', () => {
         await userEvent.hover(plotElement)
 
         expect(
-          await screen.findByText(
-            'Using the Hoe will scrap this for 2 Sample Ore 1.'
-          )
+          await screen.findByText('Destroy and recoup 2 units of Sample Ore 1')
         ).toBeInTheDocument()
       })
     })
@@ -429,11 +427,7 @@ describe('Plot component', () => {
 
         await userEvent.hover(plotElement)
 
-        expect(
-          await screen.findByText(
-            'Using the Hoe will remove this - since it has taken damage, no materials will be recovered.'
-          )
-        ).toBeInTheDocument()
+        expect(await screen.findByText('Will be destroyed')).toBeInTheDocument()
       })
     })
   })
