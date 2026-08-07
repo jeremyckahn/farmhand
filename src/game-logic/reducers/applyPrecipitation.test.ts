@@ -5,6 +5,7 @@ import {
   STORM_DESTROYS_SCARECROWS_MESSAGE,
   LIGHTNING_ROD_STRUCK_MESSAGE,
   LIGHTNING_ROD_DESTROYED_MESSAGE,
+  LIGHTNING_ROD_REPLANTED_MESSAGE,
 } from '../../strings.js'
 import { SCARECROW_ITEM_ID } from '../../constants.js'
 import { fertilizerType } from '../../enums.js'
@@ -118,6 +119,66 @@ describe('applyPrecipitation', () => {
           expect(state.newDayNotifications[0]).toEqual({
             message: LIGHTNING_ROD_DESTROYED_MESSAGE,
             severity: 'error',
+          })
+        })
+
+        describe('rod is rainbow fertilized', () => {
+          test('is replanted from inventory instead of being destroyed', () => {
+            const state = applyPrecipitation(
+              saveDataStubFactory({
+                field: [
+                  [
+                    {
+                      itemId: LIGHTNING_ROD_ITEM_ID,
+                      fertilizerType: fertilizerType.RAINBOW,
+                      lightningStrikesSustained: 1,
+                    },
+                  ],
+                ],
+                inventory: [{ id: LIGHTNING_ROD_ITEM_ID, quantity: 1 }],
+                newDayNotifications: [],
+              })
+            )
+
+            expect(state.field[0][0]).toEqual({
+              itemId: LIGHTNING_ROD_ITEM_ID,
+              fertilizerType: fertilizerType.RAINBOW,
+              lightningStrikesSustained: 0,
+            })
+            expect(state.inventory).toEqual([])
+            expect(state.newDayNotifications[0]).toEqual({
+              message: LIGHTNING_ROD_REPLANTED_MESSAGE,
+              severity: 'success',
+            })
+          })
+
+          describe('no spare rod is available in inventory', () => {
+            test('is destroyed and refunds ore as usual', () => {
+              const state = applyPrecipitation(
+                saveDataStubFactory({
+                  field: [
+                    [
+                      {
+                        itemId: LIGHTNING_ROD_ITEM_ID,
+                        fertilizerType: fertilizerType.RAINBOW,
+                        lightningStrikesSustained: 1,
+                      },
+                    ],
+                  ],
+                  inventory: [],
+                  newDayNotifications: [],
+                })
+              )
+
+              expect(state.field[0][0]).toBe(null)
+              expect(state.inventory).toEqual([
+                { id: 'sample-ore-1', quantity: 2 },
+              ])
+              expect(state.newDayNotifications[0]).toEqual({
+                message: LIGHTNING_ROD_DESTROYED_MESSAGE,
+                severity: 'error',
+              })
+            })
           })
         })
       })

@@ -9,6 +9,8 @@ export const LIGHTNING_ROD_STRUCK_MESSAGE =
   'There was a storm in the night! Your lightning rod took a hit protecting the field.'
 export const LIGHTNING_ROD_DESTROYED_MESSAGE =
   'There was a storm in the night! Your lightning rod was destroyed protecting the field.'
+export const LIGHTNING_ROD_REPLANTED_MESSAGE =
+  'There was a storm in the night! Your lightning rod took a lethal hit, but a rainbow-fertilized replacement was instantly planted in its place!'
 export const FARM_PRODUCTS_TOOLTIP_TEXT =
   'This figure only includes sales of grown crops, crafted items, and animal products.'
 export const COW_SOLD_TOOLTIP_TEXT =
