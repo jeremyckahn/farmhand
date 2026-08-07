@@ -15,6 +15,11 @@ import React, { memo, useEffect, useState } from 'react'
 import { GlobalHotKeys } from 'react-hotkeys'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 
+import {
+  basicLightningRod,
+  superiorLightningRod,
+  ultimateLightningRod,
+} from '../../data/recipes.js'
 import tools from '../../data/tools.js'
 import { fieldMode } from '../../enums.js'
 import scarecrowImg from '../../img/items/scarecrow.png'
@@ -40,9 +45,9 @@ const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
 const colorYellow = 'rgba(255, 255, 0, 0.75)'
 
 const lightningRodImagesByItemId: Record<string, string> = {
-  'basic-lightning-rod': basicLightningRodImg,
-  'superior-lightning-rod': superiorLightningRodImg,
-  'ultimate-lightning-rod': ultimateLightningRodImg,
+  [basicLightningRod.id]: basicLightningRodImg,
+  [superiorLightningRod.id]: superiorLightningRodImg,
+  [ultimateLightningRod.id]: ultimateLightningRodImg,
 }
 
 // $appBarOffset (135px) + $horizontalQuickSelectOffest (80px)
