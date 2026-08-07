@@ -788,9 +788,9 @@ export const basicLightningRod: farmhand.recipe = convertToRecipe({
   enablesFieldMode: fieldMode.SET_LIGHTNING_ROD,
   hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
   lightningStrikeCapacity: 10,
-  destructionOreRefund: { itemId: items.ironOre.id, quantity: 2 },
+  destructionOreRefund: { itemId: items.ironOre.id, quantity: 4 },
   ingredients: {
-    [ironIngot.id]: 3,
+    [ironIngot.id]: 5,
   },
   condition: state =>
     state.purchasedSmelter > 0 && (state.itemsSold[ironIngot.id] || 0) >= 10,
@@ -809,9 +809,9 @@ export const superiorLightningRod: farmhand.recipe = convertToRecipe({
   enablesFieldMode: fieldMode.SET_LIGHTNING_ROD,
   hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
   lightningStrikeCapacity: 25,
-  destructionOreRefund: { itemId: items.silverOre.id, quantity: 2 },
+  destructionOreRefund: { itemId: items.silverOre.id, quantity: 4 },
   ingredients: {
-    [ironIngot.id]: 5,
+    [ironIngot.id]: 4,
     [silverIngot.id]: 3,
   },
   condition: state =>
@@ -831,9 +831,9 @@ export const ultimateLightningRod: farmhand.recipe = convertToRecipe({
   enablesFieldMode: fieldMode.SET_LIGHTNING_ROD,
   hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
   lightningStrikeCapacity: 100,
-  destructionOreRefund: { itemId: items.goldOre.id, quantity: 2 },
+  destructionOreRefund: { itemId: items.goldOre.id, quantity: 4 },
   ingredients: {
-    [ironIngot.id]: 5,
+    [ironIngot.id]: 4,
     [goldIngot.id]: 3,
   },
   condition: state =>
