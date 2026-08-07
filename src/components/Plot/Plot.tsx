@@ -5,7 +5,12 @@ import { useEffect, useState } from 'react'
 
 import { FERTILIZER_BONUS } from '../../constants.js'
 import { cropItemIdToSeedItemMap, itemsMap } from '../../data/maps.js'
-import { cropLifeStage, fertilizerType, itemType } from '../../enums.js'
+import {
+  cropLifeStage,
+  fertilizerType,
+  fieldMode,
+  itemType,
+} from '../../enums.js'
 import { pixel, plotStates } from '../../img/index.js'
 import { SHOVELED } from '../../strings.js'
 import { squareImgSx } from '../../styles/sx.js'
@@ -18,6 +23,8 @@ import { Div, Img } from '../Elements/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 const colorGenericHighlight = 'rgba(255, 255, 255, 0.8)'
+
+const { CLEANUP } = fieldMode
 
 export const getBackgroundStyles = (
   plotContent: farmhand.plotContent | null
@@ -69,6 +76,7 @@ export const getDaysLeftToMature = (
     : null
 
 export interface PlotProps {
+  fieldMode?: farmhand.fieldMode
   handlePlotClick?: (x: number, y: number) => void
   isInHoverRange?: boolean
   plotContent?: farmhand.plotContent | null
@@ -82,6 +90,7 @@ export interface PlotProps {
 }
 
 export const Plot = ({
+  fieldMode: propsFieldMode,
   handlePlotClick,
   isInHoverRange,
   plotContent,
@@ -125,6 +134,10 @@ export const Plot = ({
       ? (plotContent?.lightningStrikesSustained ?? 0) /
         item.lightningStrikeCapacity
       : 0
+  const lightningRodIsUndamaged = !plotContent?.lightningStrikesSustained
+  const lightningRodDestructionYieldItem = item?.destructionYield
+    ? itemsMap[item.destructionYield.itemId]
+    : null
   const [wasJustShoveled, setWasJustShoveled] = useState(false)
   const [initialIsShoveledState, setInitialIsShoveledState] = useState(
     Boolean(plotContent?.isShoveled)
@@ -292,6 +305,13 @@ export const Plot = ({
                 Lightning strikes sustained:{' '}
                 {plotContent?.lightningStrikesSustained ?? 0} /{' '}
                 {item.lightningStrikeCapacity}
+              </Typography>
+            )}
+            {isLightningRod && propsFieldMode === CLEANUP && (
+              <Typography>
+                {lightningRodIsUndamaged && lightningRodDestructionYieldItem
+                  ? `Using the Hoe will scrap this for ${item?.destructionYield?.quantity} ${lightningRodDestructionYieldItem.name}.`
+                  : 'Using the Hoe will remove this - since it has taken damage, no materials will be recovered.'}
               </Typography>
             )}
           </>

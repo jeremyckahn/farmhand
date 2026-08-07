@@ -67,34 +67,46 @@ test('should place a Lightning Rod in an empty field plot', async ({
   ).not.toBeVisible()
 })
 
-test('should not allow a placed Lightning Rod to be removed with the Hoe', async ({
+test('should scrap an undamaged Lightning Rod with the Hoe for its destructionYield', async ({
   page,
 }) => {
-  await loadFixture(page, 'lightning-rod-craftable')
+  await loadFixture(page, 'lightning-rod-placed')
 
   await page.getByText(': Home').click()
-  await page.getByRole('option', { name: ': Workshop' }).click()
-  await page.getByRole('tab', { name: 'Forge' }).click()
-
-  const basicLightningRodCard = page.locator('.Recipe').filter({
-    has: page.locator('.MuiCardHeader-title', {
-      hasText: /^Basic Lightning Rod$/,
-    }),
-  })
-  await basicLightningRodCard.getByRole('button', { name: 'Make' }).click()
-
-  await page.getByText(': Workshop').click()
   await page.getByRole('option', { name: ': Field' }).click()
 
+  // field[0][0] in the fixture is an undamaged rod
+  // (lightningStrikesSustained: 0).
   const targetPlot = page.locator('.Plot').first()
-  await page.getByRole('button', { name: /Basic Lightning Rod/ }).click()
-  await targetPlot.click()
   await expect(targetPlot).not.toHaveClass(/is-empty/)
 
   await page.getByRole('button', { name: /Select the hoe/ }).click()
   await targetPlot.click()
 
-  // The Hoe cannot clear a Lightning Rod plot - it's a non-removable
-  // fixture until it's destroyed by a lightning strike.
+  await expect(targetPlot).toHaveClass(/is-empty/)
+  await expect(
+    page.locator('.ContextPane').getByText('Iron Ore', { exact: true })
+  ).toBeVisible()
+})
+
+test('should remove a damaged Lightning Rod with the Hoe with no reward', async ({
+  page,
+}) => {
+  await loadFixture(page, 'lightning-rod-placed-damaged')
+
+  await page.getByText(': Home').click()
+  await page.getByRole('option', { name: ': Field' }).click()
+
+  // field[0][0] in this fixture is a damaged rod
+  // (lightningStrikesSustained: 5).
+  const targetPlot = page.locator('.Plot').first()
   await expect(targetPlot).not.toHaveClass(/is-empty/)
+
+  await page.getByRole('button', { name: /Select the hoe/ }).click()
+  await targetPlot.click()
+
+  await expect(targetPlot).toHaveClass(/is-empty/)
+  await expect(
+    page.locator('.ContextPane').getByText('Iron Ore', { exact: true })
+  ).not.toBeVisible()
 })

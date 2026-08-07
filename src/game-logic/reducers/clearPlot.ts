@@ -8,6 +8,7 @@ import { HOE_LEVEL_TO_SEED_RECLAIM_RATE } from '../../constants.js'
 import { randomNumberService } from '../../common/services/randomNumber.js'
 
 import { addItemToInventory } from './addItemToInventory.js'
+import { applyDestructionYield } from './helpers.js'
 import { removeFieldPlotAt } from './removeFieldPlotAt.js'
 
 const { GROWN } = cropLifeStage
@@ -24,12 +25,20 @@ export const clearPlot = (
     return state
   }
 
-  // Lightning rods are a non-removable fixture - the only way to lose one
-  // is by it exhausting its strike capacity (see applyPrecipitation.ts).
-  // Without this guard the Hoe would delete it for no refund, since it's
-  // neither replantable nor a crop/weed.
+  // The Hoe can scrap a Lightning Rod, but it's never returned to
+  // inventory intact (it isn't isReplantable, unlike Scarecrows) - its
+  // accumulated damage lives on the plot itself, not the item, so there's
+  // no sane inventory representation for a "used" rod. An undamaged rod
+  // yields its destructionYield (the same materials a lightning strike
+  // would refund); a damaged one is scrapped for nothing.
   if (getPlotContentType(plotContent) === itemType.LIGHTNING_ROD) {
-    return state
+    const item = itemsMap[plotContent.itemId]
+
+    state = removeFieldPlotAt(state, x, y)
+
+    return plotContent.lightningStrikesSustained
+      ? state
+      : applyDestructionYield(state, item)
   }
 
   if (
