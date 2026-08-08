@@ -19,6 +19,7 @@ import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.j
 import { getCropLifeStage } from '../../utils/getCropLifeStage.js'
 import { getPlotContentType } from '../../utils/getPlotContentType.js'
 import { getPlotImage } from '../../utils/getPlotImage.js'
+import { pluralize } from '../../utils/pluralize.js'
 import { Div, Img } from '../Elements/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
@@ -138,6 +139,8 @@ export const Plot = ({
   const lightningRodDestructionYieldItem = item?.destructionYield
     ? itemsMap[item.destructionYield.itemId]
     : null
+  const lightningRodDestructionYieldQuantity =
+    item?.destructionYield?.quantity ?? 0
   const [wasJustShoveled, setWasJustShoveled] = useState(false)
   const [initialIsShoveledState, setInitialIsShoveledState] = useState(
     Boolean(plotContent?.isShoveled)
@@ -310,7 +313,10 @@ export const Plot = ({
             {isLightningRod && propsFieldMode === CLEANUP && (
               <Typography>
                 {lightningRodIsUndamaged && lightningRodDestructionYieldItem
-                  ? `Destroy and recoup ${item?.destructionYield?.quantity} units of ${lightningRodDestructionYieldItem.name}`
+                  ? `Destroy and recoup ${lightningRodDestructionYieldQuantity} ${pluralize(
+                      'unit',
+                      lightningRodDestructionYieldQuantity
+                    )} of ${lightningRodDestructionYieldItem.name}`
                   : 'Will be destroyed'}
               </Typography>
             )}
