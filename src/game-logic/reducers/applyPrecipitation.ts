@@ -1,6 +1,5 @@
 import { fertilizerType } from '../../enums.js'
 import { itemsMap } from '../../data/maps.js'
-import { random } from '../../common/utils.js'
 import { getInventoryQuantityMap } from '../../utils/getInventoryQuantityMap.js'
 import {
   RAIN_MESSAGE,
@@ -21,39 +20,30 @@ import {
   updateField,
 } from './helpers.js'
 import { decrementItemFromInventory } from './decrementItemFromInventory.js'
-import { forEachPlot } from './applyCrows.js'
 import { waterField } from './waterField.js'
 
 export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
   let { field } = state
   let scarecrowsConsumedByReplanting = 0
   let notification: farmhand.notification
-  let destroyedLightningRodItem: farmhand.item | null = null
+  let destroyedLightningRodItems: farmhand.item[] = []
+  let lightningRodItemIdsConsumedByReplanting: string[] = []
 
   if (shouldStormToday()) {
     if (fieldHasLightningRod(field)) {
-      // A placed Lightning Rod intercepts the strike that would otherwise
-      // destroy a Scarecrow (see the branch below), absorbing the damage
-      // itself instead. A storm is a single daily event - it delivers one
-      // strike total, randomly targeting one of the placed rods (matching
-      // how applyCrows.ts picks a random plot to target).
-      const lightningRodCoords: Array<{ x: number; y: number }> = []
+      // Every placed Lightning Rod intercepts the strike that would
+      // otherwise destroy a Scarecrow (see the branch below), absorbing
+      // the damage itself instead. A storm strikes every rod on the
+      // field at once, not just one of them.
+      const rodsAvailableForReplanting: Record<string, number> = {
+        ...getInventoryQuantityMap(state.inventory),
+      }
 
-      forEachPlot(state, (plot, x, y) => {
-        if (plotContainsLightningRod(plot)) {
-          lightningRodCoords.push({ x, y })
-        }
-      })
+      let anyRodWasDestroyed = false
+      let anyRodWasReplanted = false
 
-      const { x: strikeX, y: strikeY } = lightningRodCoords[
-        Math.floor(random() * lightningRodCoords.length)
-      ]
-
-      let lightningRodWasDestroyed = false
-      let lightningRodItemIdConsumedByReplanting: string | null = null
-
-      field = updateField(field, (plot, x, y) => {
-        if (x !== strikeX || y !== strikeY || !plot) {
+      field = updateField(field, plot => {
+        if (!plot || !plotContainsLightningRod(plot)) {
           return plot
         }
 
@@ -61,23 +51,27 @@ export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
         const strikesSustained = (plot.lightningStrikesSustained ?? 0) + 1
 
         if (strikesSustained >= (item.lightningStrikeCapacity ?? Infinity)) {
-          const rodsInInventory =
-            getInventoryQuantityMap(state.inventory)[plot.itemId] || 0
+          const spareRodsAvailable =
+            rodsAvailableForReplanting[plot.itemId] || 0
 
           // Same escape hatch Rainbow Fertilizer gives Scarecrows: a spare
           // rod of the same tier in inventory instantly replaces the one
-          // that would've been destroyed, resetting its strike count.
+          // that would've been destroyed, resetting its strike count. The
+          // spare pool is shared and decremented across every rod struck
+          // this storm, not re-read fresh per rod.
           if (
             plot.fertilizerType === fertilizerType.RAINBOW &&
-            rodsInInventory > 0
+            spareRodsAvailable > 0
           ) {
-            lightningRodItemIdConsumedByReplanting = plot.itemId
+            rodsAvailableForReplanting[plot.itemId] = spareRodsAvailable - 1
+            lightningRodItemIdsConsumedByReplanting.push(plot.itemId)
+            anyRodWasReplanted = true
 
             return { ...plot, lightningStrikesSustained: 0 }
           }
 
-          lightningRodWasDestroyed = true
-          destroyedLightningRodItem = item
+          anyRodWasDestroyed = true
+          destroyedLightningRodItems.push(item)
 
           return null
         }
@@ -85,22 +79,15 @@ export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
         return { ...plot, lightningStrikesSustained: strikesSustained }
       })
 
-      if (lightningRodItemIdConsumedByReplanting) {
-        state = decrementItemFromInventory(
-          state,
-          lightningRodItemIdConsumedByReplanting
-        )
-      }
-
       notification = {
-        message: lightningRodWasDestroyed
+        message: anyRodWasDestroyed
           ? LIGHTNING_ROD_DESTROYED_MESSAGE
-          : lightningRodItemIdConsumedByReplanting
+          : anyRodWasReplanted
           ? LIGHTNING_ROD_REPLANTED_MESSAGE
           : LIGHTNING_ROD_STRUCK_MESSAGE,
-        severity: lightningRodWasDestroyed
+        severity: anyRodWasDestroyed
           ? 'error'
-          : lightningRodItemIdConsumedByReplanting
+          : anyRodWasReplanted
           ? 'success'
           : 'info',
       }
@@ -151,7 +138,13 @@ export const applyPrecipitation = (state: farmhand.state): farmhand.state => {
     scarecrowsConsumedByReplanting
   )
 
-  state = applyDestructionYield(state, destroyedLightningRodItem)
+  for (const itemId of lightningRodItemIdsConsumedByReplanting) {
+    state = decrementItemFromInventory(state, itemId)
+  }
+
+  for (const item of destroyedLightningRodItems) {
+    state = applyDestructionYield(state, item)
+  }
 
   state = {
     ...state,
