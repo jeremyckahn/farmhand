@@ -64,6 +64,7 @@ declare namespace farmhand {
     | 'PLANT'
     | 'SET_SPRINKLER'
     | 'SET_SCARECROW'
+    | 'SET_LIGHTNING_ROD'
     | 'WATER'
   type stageFocusType =
     | 'NONE'
@@ -85,6 +86,7 @@ declare namespace farmhand {
     | 'FERTILIZER'
     | 'FUEL'
     | 'HUGGING_MACHINE'
+    | 'LIGHTNING_ROD'
     | 'MILK'
     | 'MULCH'
     | 'ORE'
@@ -169,6 +171,15 @@ declare namespace farmhand {
     // How many days a tree stays GROWN before dying (becoming DEAD) - see
     // getTreeLifeStage.ts. Undefined means the tree never dies.
     lifespan?: number
+    // How many lightning strikes a placed Lightning Rod can sustain before
+    // being destroyed - see plotContent.lightningStrikesSustained and
+    // applyPrecipitation.ts.
+    lightningStrikeCapacity?: number
+    // What gets added back to inventory when a placed instance of this item
+    // is destroyed/scrapped. Generic - not specific to Lightning Rods or to
+    // ore - see applyDestructionYield in reducers/helpers.tsx for the
+    // shared logic that applies it.
+    destructionYield?: { itemId: string; quantity: number }
   }
 
   interface seedItem extends item {
@@ -200,6 +211,11 @@ declare namespace farmhand {
     isShoveled?: boolean
     daysUntilClear?: number
     oreId?: string | null
+    // How many lightning strikes this specific placed Lightning Rod has
+    // sustained so far - see item.lightningStrikeCapacity and
+    // applyPrecipitation.ts. Lives on the plot (not inventory) since a
+    // rod is a non-removable fixture once placed.
+    lightningStrikesSustained?: number
   }
 
   interface crop extends plotContent {}

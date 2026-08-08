@@ -776,6 +776,71 @@ export const goldIngot: farmhand.recipe = convertToRecipe({
   recipeType: recipeType.FORGE,
 })
 
+/**
+ * @property farmhand.module:recipes.basicLightningRod
+ */
+export const basicLightningRod: farmhand.recipe = convertToRecipe({
+  id: 'basic-lightning-rod',
+  name: 'Basic Lightning Rod',
+  type: itemType.LIGHTNING_ROD,
+  description:
+    'Place in the field to protect it from lightning during storms. Can withstand 10 strikes before being destroyed.',
+  enablesFieldMode: fieldMode.SET_LIGHTNING_ROD,
+  hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
+  lightningStrikeCapacity: 10,
+  destructionYield: { itemId: items.ironOre.id, quantity: 4 },
+  ingredients: {
+    [ironIngot.id]: 5,
+  },
+  condition: state =>
+    state.purchasedSmelter > 0 && (state.itemsSold[ironIngot.id] || 0) >= 10,
+  recipeType: recipeType.FORGE,
+})
+
+/**
+ * @property farmhand.module:recipes.superiorLightningRod
+ */
+export const superiorLightningRod: farmhand.recipe = convertToRecipe({
+  id: 'superior-lightning-rod',
+  name: 'Superior Lightning Rod',
+  type: itemType.LIGHTNING_ROD,
+  description:
+    'Place in the field to protect it from lightning during storms. Can withstand 25 strikes before being destroyed.',
+  enablesFieldMode: fieldMode.SET_LIGHTNING_ROD,
+  hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
+  lightningStrikeCapacity: 25,
+  destructionYield: { itemId: items.silverOre.id, quantity: 4 },
+  ingredients: {
+    [ironIngot.id]: 4,
+    [silverIngot.id]: 3,
+  },
+  condition: state =>
+    state.purchasedSmelter > 0 && (state.itemsSold[silverIngot.id] || 0) >= 10,
+  recipeType: recipeType.FORGE,
+})
+
+/**
+ * @property farmhand.module:recipes.ultimateLightningRod
+ */
+export const ultimateLightningRod: farmhand.recipe = convertToRecipe({
+  id: 'ultimate-lightning-rod',
+  name: 'Ultimate Lightning Rod',
+  type: itemType.LIGHTNING_ROD,
+  description:
+    'Place in the field to protect it from lightning during storms. Can withstand 100 strikes before being destroyed.',
+  enablesFieldMode: fieldMode.SET_LIGHTNING_ROD,
+  hoveredPlotRangeSize: Number.MAX_SAFE_INTEGER,
+  lightningStrikeCapacity: 100,
+  destructionYield: { itemId: items.goldOre.id, quantity: 4 },
+  ingredients: {
+    [ironIngot.id]: 4,
+    [goldIngot.id]: 3,
+  },
+  condition: state =>
+    state.purchasedSmelter > 0 && (state.itemsSold[goldIngot.id] || 0) >= 10,
+  recipeType: recipeType.FORGE,
+})
+
 export const compost = convertToRecipe({
   id: 'compost',
   name: 'Compost',

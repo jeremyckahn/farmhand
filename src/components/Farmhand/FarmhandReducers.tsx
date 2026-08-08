@@ -153,6 +153,9 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
   sellKeg(...args: any[]) {
     throw new Error('Unimplemented')
   }
+  setLightningRod(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
   setScarecrow(...args: any[]) {
     throw new Error('Unimplemented')
   }

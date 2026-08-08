@@ -40,6 +40,7 @@ const {
   HARVEST_FRUIT,
   MINE,
   PLANT,
+  SET_LIGHTNING_ROD,
   SET_SCARECROW,
   SET_SPRINKLER,
   WATER,
@@ -207,6 +208,8 @@ export default {
       this.setSprinkler(x, y)
     } else if (fieldModeValue === SET_SCARECROW) {
       this.setScarecrow(x, y)
+    } else if (fieldModeValue === SET_LIGHTNING_ROD) {
+      this.setLightningRod(x, y)
     }
   },
 

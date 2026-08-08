@@ -1,5 +1,5 @@
 import { testCrop } from '../../test-utils/index.js'
-import { toolType, toolLevel } from '../../enums.js'
+import { fertilizerType, toolType, toolLevel } from '../../enums.js'
 import { getPlotContentFromItemId } from '../../utils/getPlotContentFromItemId.js'
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 import { randomNumberService } from '../../common/services/randomNumber.js'
@@ -98,6 +98,60 @@ describe('clearPlot', () => {
         const state = clearPlot(inputState, 0, 0)
 
         expect(state).toEqual(inputState)
+      })
+    })
+  })
+
+  describe('plotContent is a lightning rod', () => {
+    describe('it has not sustained any strikes', () => {
+      test('the Hoe scraps it for its destructionYield', () => {
+        const { field, inventory } = clearPlot(
+          saveDataStubFactory({
+            field: [
+              [
+                {
+                  itemId: 'sample-lightning-rod-1',
+                  fertilizerType: fertilizerType.NONE,
+                  lightningStrikesSustained: 0,
+                },
+              ],
+            ],
+            toolLevels,
+            inventory: [],
+            inventoryLimit: INFINITE_STORAGE_LIMIT,
+          }),
+          0,
+          0
+        )
+
+        expect(field[0][0]).toBe(null)
+        expect(inventory).toEqual([{ id: 'sample-ore-1', quantity: 2 }])
+      })
+    })
+
+    describe('it has sustained strikes', () => {
+      test('the Hoe removes it with no reward', () => {
+        const { field, inventory } = clearPlot(
+          saveDataStubFactory({
+            field: [
+              [
+                {
+                  itemId: 'sample-lightning-rod-1',
+                  fertilizerType: fertilizerType.NONE,
+                  lightningStrikesSustained: 1,
+                },
+              ],
+            ],
+            toolLevels,
+            inventory: [],
+            inventoryLimit: INFINITE_STORAGE_LIMIT,
+          }),
+          0,
+          0
+        )
+
+        expect(field[0][0]).toBe(null)
+        expect(inventory).toEqual([])
       })
     })
   })

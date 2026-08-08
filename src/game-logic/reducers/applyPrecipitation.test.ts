@@ -3,6 +3,9 @@ import {
   RAIN_MESSAGE,
   STORM_MESSAGE,
   STORM_DESTROYS_SCARECROWS_MESSAGE,
+  LIGHTNING_ROD_STRUCK_MESSAGE,
+  LIGHTNING_ROD_DESTROYED_MESSAGE,
+  LIGHTNING_ROD_REPLANTED_MESSAGE,
 } from '../../strings.js'
 import { SCARECROW_ITEM_ID } from '../../constants.js'
 import { fertilizerType } from '../../enums.js'
@@ -10,6 +13,8 @@ import { getPlotContentFromItemId } from '../../utils/getPlotContentFromItemId.j
 import { saveDataStubFactory } from '../../test-utils/stubs/saveDataStubFactory.js'
 
 import { applyPrecipitation } from './applyPrecipitation.js'
+
+const LIGHTNING_ROD_ITEM_ID = 'sample-lightning-rod-1'
 
 vitest.mock('../../data/maps.js')
 vitest.mock('../../data/items.js')
@@ -58,6 +63,229 @@ describe('applyPrecipitation', () => {
   describe('storm', () => {
     beforeEach(() => {
       vitest.spyOn(Math, 'random').mockReturnValue(0)
+    })
+
+    describe('lightning rod is planted', () => {
+      describe('rod has not reached its strike capacity', () => {
+        test('accumulates a strike and survives', () => {
+          const state = applyPrecipitation(
+            saveDataStubFactory({
+              field: [
+                [
+                  {
+                    itemId: LIGHTNING_ROD_ITEM_ID,
+                    fertilizerType: fertilizerType.NONE,
+                    lightningStrikesSustained: 0,
+                  },
+                ],
+              ],
+              inventory: [],
+              newDayNotifications: [],
+            })
+          )
+
+          expect(state.field[0][0]).toEqual({
+            itemId: LIGHTNING_ROD_ITEM_ID,
+            fertilizerType: fertilizerType.NONE,
+            lightningStrikesSustained: 1,
+          })
+          expect(state.newDayNotifications[0]).toEqual({
+            message: LIGHTNING_ROD_STRUCK_MESSAGE,
+            severity: 'info',
+          })
+        })
+      })
+
+      describe('rod reaches its strike capacity', () => {
+        test('is destroyed and refunds ore', () => {
+          const state = applyPrecipitation(
+            saveDataStubFactory({
+              field: [
+                [
+                  {
+                    itemId: LIGHTNING_ROD_ITEM_ID,
+                    fertilizerType: fertilizerType.NONE,
+                    lightningStrikesSustained: 1,
+                  },
+                ],
+              ],
+              inventory: [],
+              newDayNotifications: [],
+            })
+          )
+
+          expect(state.field[0][0]).toBe(null)
+          expect(state.inventory).toEqual([{ id: 'sample-ore-1', quantity: 2 }])
+          expect(state.newDayNotifications[0]).toEqual({
+            message: LIGHTNING_ROD_DESTROYED_MESSAGE,
+            severity: 'error',
+          })
+        })
+
+        describe('rod is rainbow fertilized', () => {
+          test('is replanted from inventory instead of being destroyed', () => {
+            const state = applyPrecipitation(
+              saveDataStubFactory({
+                field: [
+                  [
+                    {
+                      itemId: LIGHTNING_ROD_ITEM_ID,
+                      fertilizerType: fertilizerType.RAINBOW,
+                      lightningStrikesSustained: 1,
+                    },
+                  ],
+                ],
+                inventory: [{ id: LIGHTNING_ROD_ITEM_ID, quantity: 1 }],
+                newDayNotifications: [],
+              })
+            )
+
+            expect(state.field[0][0]).toEqual({
+              itemId: LIGHTNING_ROD_ITEM_ID,
+              fertilizerType: fertilizerType.RAINBOW,
+              lightningStrikesSustained: 0,
+            })
+            expect(state.inventory).toEqual([])
+            expect(state.newDayNotifications[0]).toEqual({
+              message: LIGHTNING_ROD_REPLANTED_MESSAGE,
+              severity: 'success',
+            })
+          })
+
+          describe('no spare rod is available in inventory', () => {
+            test('is destroyed and refunds ore as usual', () => {
+              const state = applyPrecipitation(
+                saveDataStubFactory({
+                  field: [
+                    [
+                      {
+                        itemId: LIGHTNING_ROD_ITEM_ID,
+                        fertilizerType: fertilizerType.RAINBOW,
+                        lightningStrikesSustained: 1,
+                      },
+                    ],
+                  ],
+                  inventory: [],
+                  newDayNotifications: [],
+                })
+              )
+
+              expect(state.field[0][0]).toBe(null)
+              expect(state.inventory).toEqual([
+                { id: 'sample-ore-1', quantity: 2 },
+              ])
+              expect(state.newDayNotifications[0]).toEqual({
+                message: LIGHTNING_ROD_DESTROYED_MESSAGE,
+                severity: 'error',
+              })
+            })
+          })
+        })
+      })
+
+      describe('multiple rods are planted', () => {
+        test('every rod is struck, not just one', () => {
+          const state = applyPrecipitation(
+            saveDataStubFactory({
+              field: [
+                [
+                  {
+                    itemId: LIGHTNING_ROD_ITEM_ID,
+                    fertilizerType: fertilizerType.NONE,
+                    lightningStrikesSustained: 0,
+                  },
+                  {
+                    itemId: LIGHTNING_ROD_ITEM_ID,
+                    fertilizerType: fertilizerType.NONE,
+                    lightningStrikesSustained: 0,
+                  },
+                ],
+              ],
+              inventory: [],
+              newDayNotifications: [],
+            })
+          )
+
+          expect(state.field[0][0]).toEqual({
+            itemId: LIGHTNING_ROD_ITEM_ID,
+            fertilizerType: fertilizerType.NONE,
+            lightningStrikesSustained: 1,
+          })
+          expect(state.field[0][1]).toEqual({
+            itemId: LIGHTNING_ROD_ITEM_ID,
+            fertilizerType: fertilizerType.NONE,
+            lightningStrikesSustained: 1,
+          })
+        })
+
+        describe('more rods reach capacity than there are spares to replant them', () => {
+          test('the shared spare pool is only consumed once per available unit', () => {
+            const state = applyPrecipitation(
+              saveDataStubFactory({
+                field: [
+                  [
+                    {
+                      itemId: LIGHTNING_ROD_ITEM_ID,
+                      fertilizerType: fertilizerType.RAINBOW,
+                      lightningStrikesSustained: 1,
+                    },
+                    {
+                      itemId: LIGHTNING_ROD_ITEM_ID,
+                      fertilizerType: fertilizerType.RAINBOW,
+                      lightningStrikesSustained: 1,
+                    },
+                  ],
+                ],
+                inventory: [{ id: LIGHTNING_ROD_ITEM_ID, quantity: 1 }],
+                newDayNotifications: [],
+              })
+            )
+
+            // One rod is replanted using the single spare in inventory...
+            expect(state.field[0][0]).toEqual({
+              itemId: LIGHTNING_ROD_ITEM_ID,
+              fertilizerType: fertilizerType.RAINBOW,
+              lightningStrikesSustained: 0,
+            })
+
+            // ...but the other has no spare left, so it's destroyed normally.
+            expect(state.field[0][1]).toBe(null)
+
+            expect(state.inventory).toEqual([
+              { id: 'sample-ore-1', quantity: 2 },
+            ])
+          })
+        })
+      })
+
+      describe('a scarecrow is also planted', () => {
+        test('the scarecrow is protected instead of being destroyed', () => {
+          const state = applyPrecipitation(
+            saveDataStubFactory({
+              field: [
+                [
+                  {
+                    itemId: LIGHTNING_ROD_ITEM_ID,
+                    fertilizerType: fertilizerType.NONE,
+                    lightningStrikesSustained: 0,
+                  },
+                  getPlotContentFromItemId(SCARECROW_ITEM_ID),
+                ],
+              ],
+              inventory: [],
+              newDayNotifications: [],
+            })
+          )
+
+          expect(state.field[0][1]).toEqual(
+            getPlotContentFromItemId(SCARECROW_ITEM_ID)
+          )
+          expect(state.newDayNotifications[0]).toEqual({
+            message: LIGHTNING_ROD_STRUCK_MESSAGE,
+            severity: 'info',
+          })
+        })
+      })
     })
 
     describe('scarecrows are planted', () => {
