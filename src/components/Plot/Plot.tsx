@@ -77,7 +77,7 @@ export const getDaysLeftToMature = (
     : null
 
 export interface PlotProps {
-  fieldMode?: farmhand.fieldMode
+  fieldMode?: fieldMode
   handlePlotClick?: (x: number, y: number) => void
   isInHoverRange?: boolean
   plotContent?: farmhand.plotContent | null

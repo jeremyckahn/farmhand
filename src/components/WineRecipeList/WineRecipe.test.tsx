@@ -2,6 +2,8 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
+import { grapeVariety } from '../../enums.js'
+
 // eslint-disable-next-line no-unused-vars
 import uiHandlers from '../../handlers/ui-events.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
@@ -37,7 +39,7 @@ const stubHandlers: Pick<typeof uiHandlers, 'handleMakeWineClick'> = {
 }
 
 interface WineRecipeStubArgs {
-  props?: Partial<{ wineVariety: farmhand.grapeVariety }>
+  props?: Partial<{ wineVariety: grapeVariety }>
   state?: Partial<
     Pick<farmhand.state, 'cellarInventory' | 'inventory' | 'purchasedCellar'>
   >

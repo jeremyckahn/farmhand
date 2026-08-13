@@ -1,3 +1,4 @@
+import { toolType } from '../../enums.js'
 import { levels } from '../../data/levels.js'
 import { levelAchieved } from '../../utils/levelAchieved.js'
 import { getRandomLevelUpReward } from '../../utils/getRandomLevelUpReward.js'
@@ -20,7 +21,7 @@ export const processLevelUp = (
   // Loop backwards so that the notifications appear in descending order.
   for (let i = newLevel; i > oldLevel; i--) {
     const levelObject = (levels[i] || {}) as {
-      unlocksTool?: farmhand.toolType[]
+      unlocksTool?: toolType[]
       increasesSprinklerRange?: boolean
     }
 

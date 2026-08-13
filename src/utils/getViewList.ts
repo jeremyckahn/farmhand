@@ -20,9 +20,9 @@ export const getViewList = ({
   purchasedCellar: number
   purchasedCowPen: number
   showHomeScreen: boolean
-}): farmhand.stageFocusType[] => {
+}): stageFocusType[] => {
   const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
-  const list: farmhand.stageFocusType[] = [...STANDARD_VIEW_LIST]
+  const list: stageFocusType[] = [...STANDARD_VIEW_LIST]
 
   if (showHomeScreen) {
     list.unshift(HOME)

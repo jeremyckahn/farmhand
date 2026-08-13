@@ -6,8 +6,8 @@ import upgradesRaw from '../../data/upgrades.js'
 import { upgradeTool } from './upgradeTool.js'
 
 const upgrades = upgradesRaw as Record<
-  farmhand.toolType,
-  Record<farmhand.toolLevel, farmhand.upgradesMetadatum>
+  toolType,
+  Record<toolLevel, farmhand.upgradesMetadatum>
 >
 
 describe('upgradeTool', () => {

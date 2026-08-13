@@ -25,11 +25,7 @@ import { cellarService } from '../../services/cellar.js'
 import QuantityInput from '../QuantityInput/index.js'
 import { yeast } from '../../data/recipes.js'
 
-export const WineRecipe = ({
-  wineVariety,
-}: {
-  wineVariety: farmhand.grapeVariety
-}) => {
+export const WineRecipe = ({ wineVariety }: { wineVariety: grapeVariety }) => {
   const {
     gameState: { cellarInventory, inventory, purchasedCellar },
     handlers: { handleMakeWineClick },

@@ -267,7 +267,7 @@ export const IRON_SPAWN_CHANCE = 0.33
 export const SILVER_SPAWN_CHANCE = 0.2
 
 export const HOE_LEVEL_TO_SEED_RECLAIM_RATE: Partial<Record<
-  farmhand.toolLevel,
+  toolLevel,
   number
 >> = {
   [toolLevel.DEFAULT]: 0,
@@ -281,7 +281,7 @@ export const HOE_LEVEL_TO_SEED_RECLAIM_RATE: Partial<Record<
 // keyed by the axe's tool level. An immature tree yields half of this
 // range instead (see chopForestPlot.ts).
 export const AXE_WOOD_YIELD_RANGE: Partial<Record<
-  farmhand.toolLevel,
+  toolLevel,
   [number, number]
 >> = {
   [toolLevel.DEFAULT]: [1, 2],
@@ -295,7 +295,7 @@ export const AXE_WOOD_YIELD_RANGE: Partial<Record<
 // harvestForestPlot.ts) - unlike AXE_WOOD_YIELD_RANGE this isn't a random
 // range, just a per-tier constant.
 export const PICKER_POLE_LEVEL_TO_FRUIT_YIELD: Partial<Record<
-  farmhand.toolLevel,
+  toolLevel,
   number
 >> = {
   [toolLevel.DEFAULT]: 1,

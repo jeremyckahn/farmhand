@@ -1,11 +1,13 @@
 import { useCallback } from 'react'
 
+import { dialogView, stageFocusType } from '../../../enums.js'
+
 export const useFarmhandNavigation = (
   setState: React.Dispatch<React.SetStateAction<farmhand.state>>,
-  viewList: farmhand.stageFocusType[]
+  viewList: stageFocusType[]
 ) => {
   const openDialogView = useCallback(
-    (dialogViewName: farmhand.dialogView) => {
+    (dialogViewName: dialogView) => {
       setState(previous => ({
         ...previous,
         currentDialogView: dialogViewName,

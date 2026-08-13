@@ -2,6 +2,8 @@ import React, { memo } from 'react'
 import { object } from 'prop-types'
 import Tooltip from '@mui/material/Tooltip/index.js'
 
+import { cowColors } from '../../../enums.js'
+
 import { COW_COLOR_NAMES } from '../../../strings.js'
 import { Li, Ul } from '../../Elements/index.js'
 import { colors } from '../../../styles/tokens.js'
@@ -11,9 +13,12 @@ const dotSize = '1.25em'
 const Bloodline = ({
   colorsInBloodline,
 }: {
-  colorsInBloodline: Partial<Record<farmhand.cowColors, boolean>>
+  colorsInBloodline: Partial<Record<cowColors, boolean>>
 }) => (
-  <Ul className="Bloodline" sx={{ display: 'flex', gap: '0.5em', margin: '1em 0' }}>
+  <Ul
+    className="Bloodline"
+    sx={{ display: 'flex', gap: '0.5em', margin: '1em 0' }}
+  >
     {Object.keys(colorsInBloodline)
       .sort()
       .map(color => (

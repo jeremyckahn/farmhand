@@ -6,9 +6,7 @@ import { itemsMap } from '../data/maps.js'
 
 import { memoize } from './memoize.js'
 
-const itemTypesToShowInReverse: Set<farmhand.itemType> = new Set([
-  itemType.MILK,
-])
+const itemTypesToShowInReverse: Set<itemType> = new Set([itemType.MILK])
 
 const sortItemIdsByTypeAndValue = memoize(
   (itemIds: string[]) =>

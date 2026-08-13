@@ -1,9 +1,10 @@
+import { notificationSeverity } from '../../enums.js'
 import { MAX_PENDING_PEER_MESSAGES } from '../../constants.js'
 
 export const prependPendingPeerMessage = (
   state: farmhand.state,
   message: string,
-  severity: farmhand.notificationSeverity = 'info'
+  severity: notificationSeverity = 'info'
 ): farmhand.state => {
   return {
     ...state,

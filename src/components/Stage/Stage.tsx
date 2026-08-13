@@ -29,7 +29,7 @@ import forestFloorBg from '../../img/ui/forest-floor.png'
 interface StageProps {
   field: farmhand.plotContent[][]
   isMenuOpen?: boolean
-  stageFocus: farmhand.stageFocusType
+  stageFocus: stageFocusType
   useAlternateEndDayButtonPosition?: boolean
   viewTitle: string
 }

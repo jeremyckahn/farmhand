@@ -7,7 +7,7 @@ import { modifyForestPlotAt } from './modifyForestPlotAt.js'
 
 const { FERTILIZE, OBSERVE } = fieldMode
 
-const mulchItemIdToTypeMap: Record<string, farmhand.fertilizerType> = {
+const mulchItemIdToTypeMap: Record<string, fertilizerType> = {
   mulch: fertilizerType.STANDARD,
   'rainbow-mulch': fertilizerType.RAINBOW,
 }

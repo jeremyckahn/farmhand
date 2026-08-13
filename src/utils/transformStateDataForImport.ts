@@ -24,7 +24,7 @@ export const transformStateDataForImport = (
   ) {
     sanitizedState = {
       ...sanitizedState,
-      stageFocus: STANDARD_VIEW_LIST[0] as farmhand.stageFocusType,
+      stageFocus: STANDARD_VIEW_LIST[0] as stageFocusType,
     }
   }
 

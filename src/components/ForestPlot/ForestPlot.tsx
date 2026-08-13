@@ -22,6 +22,7 @@ import {
   fieldMode as fieldModeEnum,
   toolType,
   treeLifeStage as treeLifeStageEnum,
+  toolLevel,
 } from '../../enums.js'
 import { Div } from '../Elements/index.js'
 
@@ -35,7 +36,7 @@ const { NONE, STANDARD, RAINBOW } = fertilizerTypeEnum
 // own default background image (CSS multi-background: earlier entries
 // paint on top).
 const getForestPlotBackgroundImage = (
-  fertilizerType: farmhand.fertilizerType | undefined
+  fertilizerType: fertilizerTypeEnum | undefined
 ): string => {
   const overlay =
     fertilizerType === STANDARD
@@ -55,9 +56,9 @@ const colorGreenOk = 'rgba(0, 255, 0, 0.5)'
 const colorYellowCaution = 'rgba(255, 220, 0, 0.5)'
 
 const getTreeTooltipText = (
-  treeLifeStage: farmhand.treeLifeStage,
-  fruitLifeStage: farmhand.cropLifeStage,
-  fertilizerType: farmhand.fertilizerType | undefined,
+  treeLifeStage: treeLifeStageEnum,
+  fruitLifeStage: cropLifeStage,
+  fertilizerType: fertilizerTypeEnum | undefined,
   fruitYield: number,
   fruitItemName: string | null
 ): string => {
@@ -103,10 +104,10 @@ const getChopYieldText = (
 }
 
 export interface ForestPlotProps {
-  fieldMode: farmhand.fieldMode
+  fieldMode: fieldModeEnum
   plotContent: farmhand.plantedTree | farmhand.forestForageable | null
   handleForestPlotClick: (x: number, y: number) => void
-  toolLevels: Record<farmhand.toolType, farmhand.toolLevel>
+  toolLevels: Record<toolType, toolLevel>
   x: number
   y: number
 }

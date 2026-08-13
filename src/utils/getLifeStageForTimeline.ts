@@ -7,5 +7,5 @@ const { GROWN } = cropLifeStage
 export const getLifeStageForTimeline = (
   timeline: number[],
   daysElapsed: number
-): farmhand.cropLifeStage =>
+): cropLifeStage =>
   getLifeStageRange(timeline)[Math.floor(daysElapsed)] || GROWN

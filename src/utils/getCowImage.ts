@@ -48,7 +48,7 @@ const colorizeCowTemplate = (() => {
    * @param color
    * @returns Base64 representation of an image
    */
-  return async (cowTemplate: string, color: farmhand.cowColors) => {
+  return async (cowTemplate: string, color: cowColors) => {
     if (color === cowColors.RAINBOW) return animals.cow.rainbow
 
     const imageKey = `${color}_${cowTemplate}`
@@ -103,5 +103,5 @@ export const getCowImage = async (cow: farmhand.cow): Promise<string> => {
   const { variations } = animals.cow
   const cowTemplate = variations[cowIdNumber % variations.length]
 
-  return await colorizeCowTemplate(cowTemplate, cow.color as farmhand.cowColors)
+  return await colorizeCowTemplate(cowTemplate, cow.color as cowColors)
 }

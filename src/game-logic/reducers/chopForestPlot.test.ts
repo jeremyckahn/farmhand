@@ -6,7 +6,7 @@ import { chopForestPlot } from './chopForestPlot.js'
 
 vitest.mock('../../data/items.js')
 
-const toolLevelsWithAxe = (level: farmhand.toolLevel) => ({
+const toolLevelsWithAxe = (level: toolLevel) => ({
   [toolType.AXE]: level,
   [toolType.HOE]: toolLevel.DEFAULT,
   [toolType.PICKER_POLE]: toolLevel.DEFAULT,

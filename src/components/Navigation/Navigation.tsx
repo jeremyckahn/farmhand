@@ -218,7 +218,7 @@ const dialogTriggerTextMap = {
   [SETTINGS]: 'View Settings (comma)',
 }
 
-const dialogTitleMap: Partial<Record<farmhand.dialogView, string>> = {
+const dialogTitleMap: Partial<Record<dialogView, string>> = {
   [FARMERS_LOG]: "Farmer's Log",
   [PRICE_EVENTS]: 'Price Events',
   [STATS]: 'Farm Stats',
@@ -231,10 +231,7 @@ const dialogTitleMap: Partial<Record<farmhand.dialogView, string>> = {
   [KEYBINDINGS]: 'Keyboard Shortcuts',
 }
 
-const dialogContentMap: Partial<Record<
-  farmhand.dialogView,
-  React.ReactNode
->> = {
+const dialogContentMap: Partial<Record<dialogView, React.ReactNode>> = {
   [FARMERS_LOG]: <LogView />,
   [PRICE_EVENTS]: <PriceEventView />,
   [STATS]: <StatsView />,
@@ -276,11 +273,11 @@ export const Navigation = ({
 }: {
   activePlayers: number | null
   blockInput: boolean
-  currentDialogView: farmhand.dialogView | null
+  currentDialogView: dialogView | null
   farmName: string
   handleActivePlayerButtonClick: () => void
   handleChatRoomOpenStateChange: (open: boolean) => void
-  handleClickDialogViewButton: (view: farmhand.dialogView) => void
+  handleClickDialogViewButton: (view: dialogView) => void
   handleCloseDialogView: () => void
   handleDialogViewExited: () => void
   handleFarmNameUpdate: (name: string) => void

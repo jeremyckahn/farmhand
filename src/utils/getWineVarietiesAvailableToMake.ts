@@ -1,3 +1,4 @@
+import { grapeVariety } from '../enums.js'
 import { isGrape } from '../data/crops/grape.js'
 import { itemsMap } from '../data/maps.js'
 
@@ -22,7 +23,7 @@ const getGrapesSold = (
 
 export function getWineVarietiesAvailableToMake(
   itemsSold: farmhand.state['itemsSold']
-): farmhand.grapeVariety[] {
+): grapeVariety[] {
   const grapesSold = getGrapesSold(itemsSold)
 
   const winesVarietiesAvailableToMake = grapesSold.map(({ variety }) => variety)

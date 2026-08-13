@@ -12,7 +12,7 @@ const toolLevels = {
   SCYTHE: toolLevel.DEFAULT,
   SHOVEL: toolLevel.DEFAULT,
   WATERING_CAN: toolLevel.DEFAULT,
-} as Record<farmhand.toolType, farmhand.toolLevel>
+} as Record<toolType, toolLevel>
 
 describe('<ForestPlot />', () => {
   test('clicking the tree sprite calls handleForestPlotClick exactly once', () => {

@@ -1,3 +1,4 @@
+import { toolLevel as ToolLevel } from '../enums.js'
 import { AXE_WOOD_YIELD_RANGE } from '../constants.js'
 
 // The [min, max] (inclusive) wood range a chop would yield, without rolling
@@ -5,7 +6,7 @@ import { AXE_WOOD_YIELD_RANGE } from '../constants.js'
 // number in this range) and the forest plot tooltip (which just displays
 // the range, so it doesn't need to be recomputed on every hover).
 export const getChopWoodYieldRange = (
-  toolLevel: farmhand.toolLevel,
+  toolLevel: ToolLevel,
   isFullyGrown: boolean
 ): [number, number] | null => {
   const range = AXE_WOOD_YIELD_RANGE[toolLevel]

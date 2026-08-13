@@ -141,22 +141,19 @@ export default {
     const { value } = target
 
     this.setState({
-      stageFocus: value as farmhand.stageFocusType,
+      stageFocus: value as stageFocusType,
     })
   },
 
-  handleViewChangeButtonClick(
-    this: Farmhand,
-    stageFocus: farmhand.stageFocusType
-  ) {
+  handleViewChangeButtonClick(this: Farmhand, stageFocus: stageFocusType) {
     this.setState({ stageFocus })
   },
 
-  handleFieldModeSelect(this: Farmhand, selectedFieldMode: farmhand.fieldMode) {
+  handleFieldModeSelect(this: Farmhand, selectedFieldMode: fieldMode) {
     this.setState(({ selectedItemId }: farmhand.state) => ({
       selectedItemId:
         selectedFieldMode !== PLANT ||
-        (TOOLBELT_FIELD_MODES as Set<farmhand.fieldMode>).has(selectedFieldMode)
+        (TOOLBELT_FIELD_MODES as Set<fieldMode>).has(selectedFieldMode)
           ? ''
           : selectedItemId,
       // This handler only fires when an actual Toolbelt tool is clicked,
@@ -172,7 +169,7 @@ export default {
     { id, enablesFieldMode }: farmhand.item
   ) {
     this.setState({
-      fieldMode: enablesFieldMode as farmhand.fieldMode,
+      fieldMode: enablesFieldMode as fieldMode,
       selectedItemId: id,
     })
   },
@@ -345,10 +342,7 @@ export default {
     this.setState({ selectedCowId: '' })
   },
 
-  handleClickDialogViewButton(
-    this: Farmhand,
-    selectedDialogView: farmhand.dialogView
-  ) {
+  handleClickDialogViewButton(this: Farmhand, selectedDialogView: dialogView) {
     this.openDialogView(selectedDialogView)
   },
 
