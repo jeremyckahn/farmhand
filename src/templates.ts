@@ -151,8 +151,8 @@ export const LEVEL_GAINED_NOTIFICATION = (
 
   const levelObject = levels[newLevel] as {
     increasesSprinklerRange?: boolean
-    unlocksTool?: farmhand.toolType[]
-    unlocksStageFocusType?: farmhand.stageFocusType
+    unlocksTool?: toolType[]
+    unlocksStageFocusType?: stageFocusType
   }
 
   // These scripted rewards aren't mutually exclusive - a single level (e.g.

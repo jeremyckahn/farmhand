@@ -22,135 +22,14 @@ declare namespace JSX {
 }
 
 declare namespace farmhand {
-  // Enums from src/enums.js
-  type cropType =
-    | 'ASPARAGUS'
-    | 'CARROT'
-    | 'CORN'
-    | 'GARLIC'
-    | 'GRAPE'
-    | 'JALAPENO'
-    | 'OLIVE'
-    | 'ONION'
-    | 'PEA'
-    | 'POTATO'
-    | 'PUMPKIN'
-    | 'SOYBEAN'
-    | 'SPINACH'
-    | 'SUNFLOWER'
-    | 'STRAWBERRY'
-    | 'SUGARCANE'
-    | 'SWEET_POTATO'
-    | 'TOMATO'
-    | 'WATERMELON'
-    | 'WHEAT'
-    | 'WEED'
-  type treeType = 'APPLE' | 'BANANA'
-  type recipeType =
-    | 'FERMENTATION'
-    | 'FORGE'
-    | 'KITCHEN'
-    | 'RECYCLING'
-    | 'WINE'
-    | 'WOOD_CHIPPER'
-  type fieldMode =
-    | 'CHOP'
-    | 'CLEANUP'
-    | 'FERTILIZE'
-    | 'HARVEST'
-    | 'HARVEST_FRUIT'
-    | 'MINE'
-    | 'OBSERVE'
-    | 'PLANT'
-    | 'SET_SPRINKLER'
-    | 'SET_SCARECROW'
-    | 'SET_LIGHTNING_ROD'
-    | 'WATER'
-  type stageFocusType =
-    | 'NONE'
-    | 'HOME'
-    | 'FIELD'
-    | 'FOREST'
-    | 'SHOP'
-    | 'COW_PEN'
-    | 'INVENTORY'
-    | 'WORKSHOP'
-    | 'CELLAR'
-  type cropLifeStage = 'SEED' | 'GROWING' | 'GROWN'
-  // Tree-only extension of cropLifeStage - see enums.ts's treeLifeStage.
-  type treeLifeStage = cropLifeStage | 'DEAD'
-  type itemType =
-    | 'COW_FEED'
-    | 'CRAFTED_ITEM'
-    | 'CROP'
-    | 'FERTILIZER'
-    | 'FUEL'
-    | 'HUGGING_MACHINE'
-    | 'LIGHTNING_ROD'
-    | 'MILK'
-    | 'MULCH'
-    | 'ORE'
-    | 'SCARECROW'
-    | 'SPRINKLER'
-    | 'STONE'
-    | 'TOOL_UPGRADE'
-    | 'TREE'
-    | 'WEED'
-    | 'WOOD'
-  type fertilizerType = 'NONE' | 'STANDARD' | 'RAINBOW'
-  type genders = 'FEMALE' | 'MALE'
-  type cowColors =
-    | 'BLUE'
-    | 'BROWN'
-    | 'GREEN'
-    | 'ORANGE'
-    | 'PURPLE'
-    | 'RAINBOW'
-    | 'WHITE'
-    | 'YELLOW'
-  type dialogView =
-    | 'NONE'
-    | 'ACCOUNTING'
-    | 'ACHIEVEMENTS'
-    | 'FARMERS_LOG'
-    | 'KEYBINDINGS'
-    | 'ONLINE_PEERS'
-    | 'PRICE_EVENTS'
-    | 'SETTINGS'
-    | 'STATS'
-  type toolType =
-    | 'AXE'
-    | 'PICKER_POLE'
-    | 'SCYTHE'
-    | 'SHOVEL'
-    | 'HOE'
-    | 'WATERING_CAN'
-  type toolLevel =
-    | 'UNAVAILABLE'
-    | 'DEFAULT'
-    | 'BRONZE'
-    | 'IRON'
-    | 'SILVER'
-    | 'GOLD'
-  type cowTradeRejectionReason = 'REQUESTED_COW_UNAVAILABLE'
-  type cropFamily = 'GRAPE'
-  type grapeVariety =
-    | 'CHARDONNAY'
-    | 'SAUVIGNON_BLANC'
-    | 'CABERNET_SAUVIGNON'
-    | 'TEMPRANILLO'
-    | 'NEBBIOLO'
-
-  type notificationSeverity = 'error' | 'info' | 'success' | 'warning'
-
   // Interfaces from src/index.js and src/components/Farmhand/Farmhand.js
   interface item {
     id: string
     name: string
-    type: itemType
+    type: import('./enums.js').itemType
     value: number
     cropTimeline?: number[]
-    cropType?: cropType
+    cropType?: import('./enums.js').cropType
     description?: string
     enablesFieldMode?: string
     growsInto?: string | string[]
@@ -167,7 +46,7 @@ declare namespace farmhand {
     cropLifecycleDuration?: number
     treeTimeline?: number[]
     fruitTimeline?: number[]
-    treeType?: treeType
+    treeType?: import('./enums.js').treeType
     // How many days a tree stays GROWN before dying (becoming DEAD) - see
     // getTreeLifeStage.ts. Undefined means the tree never dies.
     lifespan?: number
@@ -188,23 +67,23 @@ declare namespace farmhand {
 
   interface cropVariety extends item {
     imageId: string
-    cropFamily: cropFamily
-    variety: grapeVariety
+    cropFamily: import('./enums.js').cropFamily
+    variety: import('./enums.js').grapeVariety
   }
 
   interface grape extends cropVariety {
     cropFamily: 'GRAPE'
-    variety: grapeVariety
+    variety: import('./enums.js').grapeVariety
     wineId: string
   }
 
   interface wine extends recipe {
-    variety: grapeVariety
+    variety: import('./enums.js').grapeVariety
   }
 
   interface plotContent {
     itemId: string
-    fertilizerType: fertilizerType
+    fertilizerType: import('./enums.js').fertilizerType
     daysOld?: number
     daysWatered?: number
     wasWateredToday?: boolean
@@ -230,7 +109,7 @@ declare namespace farmhand {
     // it falls back to item.lifespan (e.g. saves from before this field
     // existed).
     lifespan?: number
-    fertilizerType?: fertilizerType
+    fertilizerType?: import('./enums.js').fertilizerType
     // Growth progress, separate from daysOld - mirrors how crops track
     // daysWatered separately from their own daysOld. Fertilizer
     // accelerates this counter without touching daysOld (see
@@ -251,12 +130,12 @@ declare namespace farmhand {
 
   interface cow {
     baseWeight: number
-    color: cowColors
-    colorsInBloodline: Partial<Record<cowColors, boolean>>
+    color: import('./enums.js').cowColors
+    colorsInBloodline: Partial<Record<import('./enums.js').cowColors, boolean>>
     daysOld: number
     daysSinceMilking: number
     daysSinceProducingFertilizer: number
-    gender: genders
+    gender: import('./enums.js').genders
     happiness: number
     happinessBoostsToday: number
     id: string
@@ -278,7 +157,7 @@ declare namespace farmhand {
   type recipeCondition = (state: state) => boolean
 
   interface recipe extends item {
-    recipeType: recipeType
+    recipeType: import('./enums.js').recipeType
     ingredients: Record<string, number>
     condition: recipeCondition
     isPie?: boolean
@@ -321,7 +200,7 @@ declare namespace farmhand {
   }
 
   interface notification {
-    severity: notificationSeverity
+    severity: import('./enums.js').notificationSeverity
     onClick?: (...args: any[]) => any
     message: string
   }
@@ -338,7 +217,7 @@ declare namespace farmhand {
 
   interface peerMessage {
     playerId: string
-    severity: notificationSeverity
+    severity: import('./enums.js').notificationSeverity
     message: string
   }
 
@@ -363,17 +242,20 @@ declare namespace farmhand {
     description?: string
     name: string
     ingredients?: Record<item['id'], number>
-    nextLevel?: toolLevel
+    nextLevel?: import('./enums.js').toolLevel
     isMaxLevel?: boolean
-    toolType?: toolType
-    level?: toolLevel
-    type: itemType
+    toolType?: import('./enums.js').toolType
+    level?: import('./enums.js').toolLevel
+    type: import('./enums.js').itemType
     value: number
     doesPriceFluctuate: boolean
   }
 
   type upgradesMetadata = {
-    [key in toolType]?: Record<toolLevel, upgradesMetadatum>
+    [key in import('./enums.js').toolType]?: Record<
+      import('./enums.js').toolLevel,
+      upgradesMetadatum
+    >
   }
 
   interface levelEntitlements {
@@ -397,7 +279,7 @@ declare namespace farmhand {
     activePlayers?: number | null
     allowCustomPeerCowNames: boolean
     cellarInventory: keg[]
-    currentDialogView: dialogView
+    currentDialogView: import('./enums.js').dialogView
     /**
      * Keys are achievement ids.
      */
@@ -408,7 +290,7 @@ declare namespace farmhand {
     /**
      * Keys are color enums, values are the number of that color of cow purchased.
      */
-    cowColorsPurchased: Partial<Record<cowColors, number>>
+    cowColorsPurchased: Partial<Record<import('./enums.js').cowColors, number>>
     /**
      * The ID of the cow that is currently set to be traded with online peers.
      */
@@ -422,7 +304,7 @@ declare namespace farmhand {
     /**
      * A map of totals of crops harvested. Keys are crop type IDs, values are the number of that crop harvested.
      */
-    cropsHarvested: Partial<Record<cropType, number>>
+    cropsHarvested: Partial<Record<import('./enums.js').cropType, number>>
     dayCount: number
     experience: number
     farmName: string
@@ -442,7 +324,7 @@ declare namespace farmhand {
      * IDs, values are the number of times that mulch type has been applied.
      */
     mulchApplied: Partial<Record<item['id'], number>>
-    fieldMode: fieldMode
+    fieldMode: import('./enums.js').fieldMode
     /**
      * https://github.com/dmotz/trystero#receiver
      */
@@ -591,7 +473,7 @@ declare namespace farmhand {
     /**
      * indicating if the stage has been unlocked
      */
-    stageFocus: stageFocusType
+    stageFocus: import('./enums.js').stageFocusType
     todaysNotifications: notification[]
     /**
      * Should always be a negative number.
@@ -609,7 +491,10 @@ declare namespace farmhand {
      * Keys are item names, values are their respective quantities.
      */
     todaysStartingInventory: Partial<Record<item['id'], number>>
-    toolLevels: Record<toolType, toolLevel>
+    toolLevels: Record<
+      import('./enums.js').toolType,
+      import('./enums.js').toolLevel
+    >
     /**
      * Option to display the Bed button on the left side of the screen.
      */

@@ -5,9 +5,7 @@ import { getLifeStageForTimeline } from './getLifeStageForTimeline.js'
 
 const { GROWN, DEAD } = treeLifeStage
 
-export const getTreeLifeStage = (
-  tree: farmhand.plantedTree
-): farmhand.treeLifeStage => {
+export const getTreeLifeStage = (tree: farmhand.plantedTree): treeLifeStage => {
   const { itemId, daysOld = 0, daysGrown = daysOld } = tree
   const item = itemsMap[itemId]
 

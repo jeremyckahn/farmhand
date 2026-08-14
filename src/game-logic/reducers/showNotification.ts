@@ -1,3 +1,4 @@
+import { notificationSeverity } from '../../enums.js'
 // TODO: Change showNotification to accept a configuration object instead of so
 // many formal parameters.
 /**
@@ -8,7 +9,7 @@ https://material-ui.com/api/alert/
 export const showNotification = (
   state: farmhand.state,
   message: string,
-  severity: farmhand.notificationSeverity = 'info',
+  severity: notificationSeverity = 'info',
   onClick: import('@mui/material/Alert').AlertProps['onClick'] = undefined
 ): farmhand.state => {
   const { showNotifications, todaysNotifications } = state

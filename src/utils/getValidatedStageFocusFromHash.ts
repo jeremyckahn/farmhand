@@ -2,10 +2,7 @@ import { stageFocusType } from '../enums.js'
 
 import { getLevelEntitlements } from './getLevelEntitlements.js'
 import { getViewList } from './getViewList.js'
-import {
-  getHashQueryParams,
-  VIEW_QUERY_PARAM_NAME,
-} from './hashQueryParams.js'
+import { getHashQueryParams, VIEW_QUERY_PARAM_NAME } from './hashQueryParams.js'
 import { levelAchieved } from './levelAchieved.js'
 
 /**
@@ -21,7 +18,7 @@ export const getValidatedStageFocusFromHash = (
     farmhand.state,
     'experience' | 'purchasedCellar' | 'purchasedCowPen' | 'showHomeScreen'
   >
-): farmhand.stageFocusType | undefined => {
+): stageFocusType | undefined => {
   const stageFocusFromUrl = getHashQueryParams().get(VIEW_QUERY_PARAM_NAME)
 
   if (!stageFocusFromUrl) return undefined

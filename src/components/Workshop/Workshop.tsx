@@ -3,7 +3,7 @@ import { number, object } from 'prop-types'
 import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'
 
-import { recipeType } from '../../enums.js'
+import { recipeType, toolLevel, toolType } from '../../enums.js'
 
 import { recipesMap } from '../../data/maps.js'
 
@@ -26,7 +26,7 @@ interface WorkshopProps {
   purchasedComposter?: number | null
   purchasedSmelter?: number | null
   purchasedWoodChipper?: number | null
-  toolLevels: Record<farmhand.toolType, farmhand.toolLevel>
+  toolLevels: Record<toolType, toolLevel>
 }
 
 const Workshop = ({

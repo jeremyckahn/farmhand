@@ -26,6 +26,8 @@ export const cropType = {
   WEED: 'WEED',
 } as const
 
+export type cropType = typeof cropType[keyof typeof cropType]
+
 /**
  * @property farmhand.module:enums.recipeType
  * @enum
@@ -38,6 +40,8 @@ export const recipeType = {
   WINE: 'WINE',
   WOOD_CHIPPER: 'WOOD_CHIPPER',
 } as const
+
+export type recipeType = typeof recipeType[keyof typeof recipeType]
 
 /**
  * @property farmhand.module:enums.fieldMode
@@ -58,6 +62,8 @@ export const fieldMode = {
   WATER: 'WATER',
 } as const
 
+export type fieldMode = typeof fieldMode[keyof typeof fieldMode]
+
 /**
  * @property farmhand.module:enums.stageFocusType
  * @enum
@@ -74,6 +80,8 @@ export const stageFocusType = {
   CELLAR: 'CELLAR',
 } as const
 
+export type stageFocusType = typeof stageFocusType[keyof typeof stageFocusType]
+
 /**
  * @property farmhand.module:enums.cropLifeStage
  * @enum
@@ -83,6 +91,8 @@ export const cropLifeStage = {
   GROWING: 'GROWING',
   GROWN: 'GROWN',
 } as const
+
+export type cropLifeStage = typeof cropLifeStage[keyof typeof cropLifeStage]
 
 /**
  * Tree-only extension of cropLifeStage. DEAD is deliberately not part of
@@ -95,6 +105,8 @@ export const treeLifeStage = {
   ...cropLifeStage,
   DEAD: 'DEAD',
 } as const
+
+export type treeLifeStage = typeof treeLifeStage[keyof typeof treeLifeStage]
 
 /**
  * @property farmhand.module:enums.itemType
@@ -120,6 +132,8 @@ export const itemType = {
   WOOD: 'WOOD',
 } as const
 
+export type itemType = typeof itemType[keyof typeof itemType]
+
 /**
  * @property farmhand.module:enums.treeType
  * @enum
@@ -128,6 +142,8 @@ export const treeType = {
   APPLE: 'APPLE',
   BANANA: 'BANANA',
 } as const
+
+export type treeType = typeof treeType[keyof typeof treeType]
 
 /**
  * @property farmhand.module:enums.fertilizerType
@@ -139,6 +155,8 @@ export const fertilizerType = {
   RAINBOW: 'RAINBOW',
 } as const
 
+export type fertilizerType = typeof fertilizerType[keyof typeof fertilizerType]
+
 /**
  * @property farmhand.module:enums.genders
  * @enum
@@ -147,6 +165,8 @@ export const genders = {
   FEMALE: 'FEMALE',
   MALE: 'MALE',
 } as const
+
+export type genders = typeof genders[keyof typeof genders]
 
 /**
  * @property farmhand.module:enums.cowColors
@@ -162,6 +182,8 @@ export const cowColors = {
   WHITE: 'WHITE',
   YELLOW: 'YELLOW',
 } as const
+
+export type cowColors = typeof cowColors[keyof typeof cowColors]
 
 const { RAINBOW, ...standardCowColors } = cowColors
 
@@ -183,6 +205,8 @@ export const dialogView = {
   STATS: 'STATS',
 } as const
 
+export type dialogView = typeof dialogView[keyof typeof dialogView]
+
 /**
  * @property farmhand.module:enums.toolType
  * @enum
@@ -195,6 +219,8 @@ export const toolType = {
   HOE: 'HOE',
   WATERING_CAN: 'WATERING_CAN',
 } as const
+
+export type toolType = typeof toolType[keyof typeof toolType]
 
 /**
  * @property farmhand.module:enums.toolLevel
@@ -209,16 +235,20 @@ export const toolLevel = {
   GOLD: 'GOLD',
 } as const
 
+export type toolLevel = typeof toolLevel[keyof typeof toolLevel]
+
 /**
  * @property farmhand.module:enums.notificationSeverity
  * @enum
  */
 export const notificationSeverity = {
-  INFO: 'INFO',
-  SUCCESS: 'SUCCESS',
-  WARNING: 'WARNING',
-  ERROR: 'ERROR',
+  INFO: 'info',
+  SUCCESS: 'success',
+  WARNING: 'warning',
+  ERROR: 'error',
 } as const
+
+export type notificationSeverity = typeof notificationSeverity[keyof typeof notificationSeverity]
 
 /**
  * @property farmhand.module:enums.cowTradeRejectionReason
@@ -228,6 +258,8 @@ export const cowTradeRejectionReason = {
   REQUESTED_COW_UNAVAILABLE: 'REQUESTED_COW_UNAVAILABLE',
 } as const
 
+export type cowTradeRejectionReason = typeof cowTradeRejectionReason[keyof typeof cowTradeRejectionReason]
+
 /**
  * @property farmhand.module:enums.cropFamily
  * @readonly
@@ -236,6 +268,8 @@ export const cowTradeRejectionReason = {
 export const cropFamily = {
   GRAPE: 'GRAPE',
 } as const
+
+export type cropFamily = typeof cropFamily[keyof typeof cropFamily]
 
 /**
  * @property farmhand.module:enums.grapeVariety
@@ -254,3 +288,5 @@ export const grapeVariety = {
   TEMPRANILLO: 'TEMPRANILLO',
   NEBBIOLO: 'NEBBIOLO',
 } as const
+
+export type grapeVariety = typeof grapeVariety[keyof typeof grapeVariety]

@@ -13,7 +13,7 @@ export const getCowMilkItem = ({
   color,
   happiness,
 }: {
-  color: farmhand.cowColors
+  color: cowColors
   happiness: number
 }): farmhand.item => {
   if (color === cowColors.BROWN) {

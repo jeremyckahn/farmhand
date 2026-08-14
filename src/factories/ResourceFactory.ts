@@ -29,18 +29,18 @@ let instance: ResourceFactory | null = null
  * @constructor
  */
 export default class ResourceFactory {
-  resourceOptions: { weight: number; itemType: farmhand.itemType }[]
+  resourceOptions: { weight: number; itemType: itemType }[]
 
   constructor() {
     this.resourceOptions = [
-      { weight: ORE_SPAWN_CHANCE, itemType: itemType.ORE as farmhand.itemType },
+      { weight: ORE_SPAWN_CHANCE, itemType: itemType.ORE as itemType },
       {
         weight: COAL_SPAWN_CHANCE,
-        itemType: itemType.FUEL as farmhand.itemType,
+        itemType: itemType.FUEL as itemType,
       },
       {
         weight: STONE_SPAWN_CHANCE,
-        itemType: itemType.STONE as farmhand.itemType,
+        itemType: itemType.STONE as itemType,
       },
     ]
   }
@@ -61,7 +61,7 @@ export default class ResourceFactory {
    * Generate an instance for specific factory
    * @returns A factory if one exists for type, default return is null
    */
-  static generateFactoryInstance(type: farmhand.itemType): Factory | null {
+  static generateFactoryInstance(type: itemType): Factory | null {
     switch (type) {
       case itemType.STONE:
         return new StoneFactory()
@@ -81,7 +81,7 @@ export default class ResourceFactory {
    * Retrieve a specific factory for generating resources. Will create and cache
    * a factory instance for reuse.
    */
-  static getFactoryForItemType = (type: farmhand.itemType) => {
+  static getFactoryForItemType = (type: itemType) => {
     if (!factoryInstances[type]) {
       factoryInstances[type] = ResourceFactory.generateFactoryInstance(type)
     }
@@ -93,7 +93,7 @@ export default class ResourceFactory {
    * Use dice roll and resource factories to generate resources at random
    * @returns array of resource objects
    */
-  generateResources(shovelLevel: farmhand.toolLevel): Array<farmhand.item> {
+  generateResources(shovelLevel: toolLevel): Array<farmhand.item> {
     let resources: farmhand.item[] = []
 
     let spawnChance = RESOURCE_SPAWN_CHANCE

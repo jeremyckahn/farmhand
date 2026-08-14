@@ -1,4 +1,9 @@
-import { fieldMode, itemType } from '../enums.js'
+import {
+  fieldMode,
+  itemType,
+  cropFamily as cropFamilyType,
+  grapeVariety,
+} from '../enums.js'
 import { getCropLifecycleDuration } from '../utils/getCropLifecycleDuration.js'
 
 const { freeze } = Object
@@ -65,8 +70,8 @@ export const cropVariety = ({
   ...cropVarietyProperties
 }: {
   imageId: string
-  cropFamily: farmhand.cropFamily
-  variety: farmhand.grapeVariety
+  cropFamily: cropFamilyType
+  variety: grapeVariety
 } & Partial<farmhand.item>): farmhand.cropVariety => {
   return {
     imageId,

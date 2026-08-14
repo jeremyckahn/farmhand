@@ -266,7 +266,7 @@ export const handleCowTradeRequestAccept = (
 
 export const handleCowTradeRequestReject = (
   farmhand: any,
-  { reason }: { reason: farmhand.cowTradeRejectionReason }
+  { reason }: { reason: cowTradeRejectionReason }
 ) => {
   const { cowTradeTimeoutId } = farmhand.state
 

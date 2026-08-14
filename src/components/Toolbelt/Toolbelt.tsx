@@ -7,7 +7,7 @@ import Button from '@mui/material/Button/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 
-import { toolLevel } from '../../enums.js'
+import { toolLevel, stageFocusType, toolType } from '../../enums.js'
 import { memoize } from '../../utils/memoize.js'
 import { noop } from '../../utils/noop.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
@@ -19,10 +19,7 @@ import { squareImgSx } from '../../styles/sx.js'
 import { breakpoints } from '../../styles/tokens.js'
 
 const getTools = memoize(
-  (
-    toolLevels: Record<farmhand.toolType, farmhand.toolLevel>,
-    stageFocus?: farmhand.stageFocusType
-  ) => {
+  (toolLevels: Record<toolType, toolLevel>, stageFocus?: stageFocusType) => {
     const tools: typeof toolsData[keyof typeof toolsData][] = []
 
     for (let tool of Object.values(toolsData)) {
@@ -37,7 +34,7 @@ const getTools = memoize(
   }
 )
 
-const getToolImage = (tool: { level: farmhand.toolLevel; id: string }) => {
+const getToolImage = (tool: { level: toolLevel; id: string }) => {
   if (tool.level === toolLevel.DEFAULT) {
     return (toolImages as any)[tool.id]
   }
@@ -50,8 +47,8 @@ const getToolImage = (tool: { level: farmhand.toolLevel; id: string }) => {
 interface ToolbeltProps {
   fieldMode: string
   handleFieldModeSelect: (mode: string) => void
-  stageFocus?: farmhand.stageFocusType
-  toolLevels: Record<farmhand.toolType, farmhand.toolLevel>
+  stageFocus?: stageFocusType
+  toolLevels: Record<toolType, toolLevel>
 }
 
 export const Toolbelt = ({

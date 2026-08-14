@@ -6,7 +6,7 @@ import { randomChoice } from '../utils/randomChoice.js'
 
 import ResourceFactory from './ResourceFactory.js'
 
-type ResourceOption = { weight: number; itemType: farmhand.itemType }
+type ResourceOption = { weight: number; itemType: itemType }
 vitest.mock('./CoalFactory.js')
 vitest.mock('./OreFactory.js')
 vitest.mock('./StoneFactory.js')
@@ -38,7 +38,7 @@ describe('ResourceFactory', () => {
         true
       )
       vi.mocked(randomChoice).mockReturnValueOnce({
-        itemType: itemType.ORE as farmhand.itemType,
+        itemType: itemType.ORE as itemType,
         weight: 0,
       } as ResourceOption)
 
@@ -54,7 +54,7 @@ describe('ResourceFactory', () => {
         true
       )
       vi.mocked(randomChoice).mockReturnValueOnce({
-        itemType: itemType.FUEL as farmhand.itemType,
+        itemType: itemType.FUEL as itemType,
         weight: 0,
       } as ResourceOption)
 
@@ -70,7 +70,7 @@ describe('ResourceFactory', () => {
         true
       )
       vi.mocked(randomChoice).mockReturnValueOnce({
-        itemType: itemType.STONE as farmhand.itemType,
+        itemType: itemType.STONE as itemType,
         weight: 0,
       } as ResourceOption)
 

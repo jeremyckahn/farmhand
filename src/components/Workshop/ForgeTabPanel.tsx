@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent/index.js'
 import Divider from '@mui/material/Divider/index.js'
 import ReactMarkdown from 'react-markdown'
 
-import { recipeType } from '../../enums.js'
+import { recipeType, toolLevel, toolType } from '../../enums.js'
 import { recipeCategories } from '../../data/maps.js'
 import UpgradePurchase from '../UpgradePurchase/index.js'
 import { RecipeList } from '../RecipeList/RecipeList.js'
@@ -19,7 +19,7 @@ interface ForgeTabPanelProps {
   currentTab: number
   index: number
   learnedForgeRecipes: string[]
-  toolLevels: Record<farmhand.toolType, farmhand.toolLevel>
+  toolLevels: Record<toolType, toolLevel>
 }
 
 export function ForgeTabPanel({

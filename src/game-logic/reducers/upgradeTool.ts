@@ -1,3 +1,4 @@
+import { toolType } from '../../enums.js'
 import upgrades from '../../data/upgrades.js'
 import { TOOL_UPGRADED_NOTIFICATION } from '../../templates.js'
 import { EXPERIENCE_VALUES } from '../../constants.js'
@@ -32,7 +33,7 @@ export const upgradeTool = (
   // Add the upgrade object to inventory
   state = addItemToInventory(state, upgrade, 1)
 
-  const toolUpgrades = upgrades[upgrade.toolType as farmhand.toolType]
+  const toolUpgrades = upgrades[upgrade.toolType as toolType]
   const currentLevel = state.toolLevels[upgrade.toolType]
   const currentUpgrade = toolUpgrades?.[currentLevel]
   const currentName = currentUpgrade?.name || ''

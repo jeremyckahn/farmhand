@@ -1,3 +1,4 @@
+import { notificationSeverity } from '../../enums.js'
 import { castToMoney } from '../../utils/castToMoney.js'
 import { moneyTotal } from '../../utils/moneyTotal.js'
 import { LOAN_INTEREST_RATE } from '../../constants.js'
@@ -14,7 +15,7 @@ export const applyLoanInterest = (state: farmhand.state): farmhand.state => {
       ? [
           ...state.newDayNotifications,
           {
-            severity: 'warning' as farmhand.notificationSeverity,
+            severity: 'warning' as notificationSeverity,
             message: LOAN_BALANCE_NOTIFICATION('', newLoanBalance),
           },
         ]

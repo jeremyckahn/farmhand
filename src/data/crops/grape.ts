@@ -10,7 +10,7 @@ export const isGrape = (
 const grape = (
   grapeProps: Partial<farmhand.grape> & {
     imageId: string
-    variety: farmhand.grapeVariety
+    variety: grapeVariety
     wineId: string
   }
 ): farmhand.grape => {
@@ -46,7 +46,7 @@ export const grapeSeed: farmhand.item = crop({
   tier: 7,
 })
 
-export const grapeVarietyNameMap: Record<farmhand.grapeVariety, string> = {
+export const grapeVarietyNameMap: Record<grapeVariety, string> = {
   [grapeVariety.CHARDONNAY]: 'Chardonnay',
   [grapeVariety.SAUVIGNON_BLANC]: 'Sauvignon Blanc',
   //[grapeVariety.PINOT_BLANC]: 'Pinot Blanc',
@@ -63,7 +63,7 @@ export const grapeVarietyNameMap: Record<farmhand.grapeVariety, string> = {
  * @type The number value represents a wine's
 value relative to a baseline of 1. Must be an integer.
  */
-export const wineVarietyValueMap: Record<farmhand.grapeVariety, number> = {
+export const wineVarietyValueMap: Record<grapeVariety, number> = {
   [grapeVariety.CHARDONNAY]: 1,
   [grapeVariety.SAUVIGNON_BLANC]: 8,
   //[grapeVariety.PINOT_BLANC]: 2,
@@ -197,7 +197,7 @@ export const grapeNebbiolo: farmhand.grape = grape({
 })
 
 export const grapeVarietyToGrapeItemMap: Record<
-  farmhand.grapeVariety,
+  grapeVariety,
   farmhand.grape
 > = {
   [grapeVariety.CHARDONNAY]: grapeChardonnay,

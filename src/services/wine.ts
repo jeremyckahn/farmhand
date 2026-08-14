@@ -1,7 +1,7 @@
 import { GRAPES_REQUIRED_FOR_WINE } from '../constants.js'
 import { wineVarietyValueMap } from '../data/crops/grape.js'
 import { itemsMap } from '../data/maps.js'
-import { recipeType } from '../enums.js'
+import { recipeType, grapeVariety as GrapeVariety } from '../enums.js'
 import { getInventoryQuantityMap } from '../utils/getInventoryQuantityMap.js'
 import { getYeastRequiredForWine } from '../utils/getYeastRequiredForWine.js'
 
@@ -11,7 +11,7 @@ export class WineService {
    */
   maturityDayMultiplier = 3
 
-  getDaysToMature = (grapeVariety: farmhand.grapeVariety) => {
+  getDaysToMature = (grapeVariety: GrapeVariety) => {
     return wineVarietyValueMap[grapeVariety] * this.maturityDayMultiplier
   }
 

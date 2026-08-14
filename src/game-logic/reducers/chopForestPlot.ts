@@ -20,7 +20,7 @@ const { DEAD } = treeLifeStageEnum
 const { UNAVAILABLE } = toolLevelEnum
 
 const getWoodYield = (
-  toolLevel: farmhand.toolLevel,
+  toolLevel: toolLevelEnum,
   isFullyGrown: boolean
 ): number => {
   const range = getChopWoodYieldRange(toolLevel, isFullyGrown)

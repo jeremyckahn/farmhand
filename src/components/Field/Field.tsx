@@ -87,7 +87,7 @@ export interface FieldProps {
   columns?: number
   experience: number
   field: Array<Array<farmhand.plotContent | null>>
-  fieldMode: farmhand.fieldMode
+  fieldMode: fieldMode
   handleCombineEnabledChange: (e: any, checked: boolean) => void
   handleFieldActionRangeChange: (range: number) => void
   hoveredPlotRangeSize: number
@@ -108,7 +108,7 @@ export interface FieldContentProps extends FieldProps {
 
 export interface MemoPlotProps {
   experience: number
-  fieldMode: farmhand.fieldMode
+  fieldMode: fieldMode
   hoveredPlot: { x: number | null; y: number | null }
   hoveredPlotRangeSize: number
   plotContent?: farmhand.plotContent | null

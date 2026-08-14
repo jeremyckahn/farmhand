@@ -39,7 +39,7 @@ export const generateCow = (
     color,
     colorsInBloodline: {
       [color]: true,
-    } as Record<farmhand.cowColors, boolean>,
+    } as Record<cowColors, boolean>,
     daysOld: 1,
     daysSinceMilking: 0,
     daysSinceProducingFertilizer: 0,

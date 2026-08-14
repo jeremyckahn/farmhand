@@ -1,6 +1,6 @@
 import { cowColors } from '../enums.js'
 
-const cowColorToIdMap: Record<farmhand.cowColors, string> = {
+const cowColorToIdMap: Record<cowColors, string> = {
   [cowColors.BLUE]: 'blue',
   [cowColors.BROWN]: 'brown',
   [cowColors.GREEN]: 'green',
@@ -11,5 +11,5 @@ const cowColorToIdMap: Record<farmhand.cowColors, string> = {
   [cowColors.YELLOW]: 'yellow',
 }
 
-export const getCowColorId = ({ color }: { color: farmhand.cowColors }) =>
+export const getCowColorId = ({ color }: { color: cowColors }) =>
   `${cowColorToIdMap[color]}-cow`

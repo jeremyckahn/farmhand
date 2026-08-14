@@ -5,9 +5,7 @@ import { getLifeStageRange } from './getLifeStageRange.js'
 
 const { SEED, GROWING, GROWN } = cropLifeStage
 
-export const getCropLifeStage = (
-  crop: farmhand.crop
-): farmhand.cropLifeStage => {
+export const getCropLifeStage = (crop: farmhand.crop): cropLifeStage => {
   const { itemId, daysWatered = 0 } = crop
   const { cropTimeline } = itemsMap[itemId]
 
