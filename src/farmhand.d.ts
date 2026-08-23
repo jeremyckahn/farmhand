@@ -271,10 +271,6 @@ declare namespace farmhand {
     price: number
   }
 
-  interface Factory {
-    generate(): item | item[] | null
-  }
-
   interface state {
     activePlayers?: number | null
     allowCustomPeerCowNames: boolean

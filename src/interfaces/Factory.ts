@@ -1,11 +1,18 @@
 /**
  * @interface
  */
-export class Factory {
+export abstract class Factory implements farmhand.Factory {
   /**
    * @abstract
    */
-  generate(): farmhand.item | farmhand.item[] {
-    throw new Error('generate() must be implemented by subclass')
+  abstract generate(): farmhand.item | farmhand.item[] | null
+}
+
+declare global {
+  namespace farmhand {
+    // eslint-disable-next-line no-shadow
+    interface Factory {
+      generate(): item | item[] | null
+    }
   }
 }
