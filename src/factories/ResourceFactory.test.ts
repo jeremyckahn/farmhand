@@ -2,7 +2,6 @@ import { vi } from 'vitest'
 
 import { randomNumberService } from '../common/services/randomNumber.js'
 import { itemType, toolLevel } from '../enums.js'
-// eslint-disable-next-line no-unused-vars
 import { Factory } from '../interfaces/Factory.js'
 import { randomChoice } from '../utils/randomChoice.js'
 
