@@ -2,6 +2,7 @@ import { vi } from 'vitest'
 
 import { randomNumberService } from '../common/services/randomNumber.js'
 import { itemType, toolLevel } from '../enums.js'
+import { Factory } from '../interfaces/Factory.js'
 import { randomChoice } from '../utils/randomChoice.js'
 
 import ResourceFactory from './ResourceFactory.js'
@@ -79,6 +80,26 @@ describe('ResourceFactory', () => {
 
       expect(factory).toBeTruthy()
       expect(factory?.generate).toHaveBeenCalledTimes(1)
+    })
+
+    test('does not include resources when a factory generate returns null', () => {
+      vi.mocked(randomNumberService.isRandomNumberLessThan).mockReturnValue(
+        true
+      )
+      vi.mocked(randomChoice).mockReturnValueOnce({
+        itemType: itemType.ORE as itemType,
+        weight: 0,
+      } as ResourceOption)
+
+      const oreFactory = ResourceFactory.getFactoryForItemType(
+        itemType.ORE
+      ) as Factory
+
+      vi.mocked(oreFactory.generate).mockReturnValueOnce(null)
+
+      expect(ResourceFactory.instance().generateResources(shovelLevel)).toEqual(
+        []
+      )
     })
   })
 })
