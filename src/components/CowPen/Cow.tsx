@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
-import React, { Component } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Tweenable } from 'shifty'
 
 import { random } from '../../common/utils.js'
@@ -15,6 +15,12 @@ import { getCowImage } from '../../utils/getCowImage.js'
 // Only moves the cow within the middle 80% of the pen
 const randomPosition = () => 10 + random() * 80
 
+const flipAnimationDuration = 1000
+const transitionAnimationDuration = 3000
+
+// This MUST be kept in sync with $hug-animation-duration in CowPen.sass.
+const hugAnimationDuration = 750
+
 export interface CowProps {
   allowCustomPeerCowNames: boolean
   cow: farmhand.cow
@@ -24,85 +30,76 @@ export interface CowProps {
   isSelected: boolean
 }
 
-export class Cow extends Component<CowProps> {
-  state = {
-    cowImage: pixel,
-    isTransitioning: false,
-    moveDirection: RIGHT,
-    rotate: 0,
-    showHugAnimation: false,
+export const Cow = ({
+  allowCustomPeerCowNames,
+  cow,
+  cowInventory,
+  handleCowClick,
+  playerId,
+  isSelected,
+}: CowProps) => {
+  const [cowImage, setCowImage] = useState(pixel)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [moveDirection, setMoveDirection] = useState(RIGHT)
+  const [rotate, setRotate] = useState(0)
+  const [showHugAnimation, setShowHugAnimation] = useState(false)
+  const [position, setPosition] = useState(() => ({
     x: randomPosition(),
     y: randomPosition(),
+  }))
+  const { x, y } = position
+
+  const isComponentMountedRef = useRef(false)
+  const repositionTimeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  )
+  const animateHugTimeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  )
+  const tweenableRef = useRef<Tweenable | null>(null)
+  const prevIsSelectedRef = useRef(isSelected)
+  const prevHappinessBoostsTodayRef = useRef(cow.happinessBoostsToday)
+  const cowInventoryRef = useRef(cowInventory)
+  const isSelectedRef = useRef(isSelected)
+  const positionRef = useRef(position)
+  const moveDirectionRef = useRef(moveDirection)
+
+  cowInventoryRef.current = cowInventory
+  isSelectedRef.current = isSelected
+  positionRef.current = position
+  moveDirectionRef.current = moveDirection
+
+  if (tweenableRef.current === null) {
+    tweenableRef.current = new Tweenable()
   }
 
-  repositionTimeoutId: number | NodeJS.Timeout | null = null
-  animateHugTimeoutId: number | NodeJS.Timeout | null = null
-  tweenable = new Tweenable()
-  isComponentMounted = false
+  const tweenable = tweenableRef.current
 
-  static flipAnimationDuration = 1000
-  static transitionAnimationDuration = 3000
-
-  // This MUST be kept in sync with $hug-animation-duration in CowPen.sass.
-  static hugAnimationDuration = 750
-
-  get waitVariance() {
-    return 2000 * this.props.cowInventory.length
-  }
-
-  componentDidUpdate(prevProps: CowProps) {
-    if (
-      this.props.isSelected &&
-      !prevProps.isSelected &&
-      this.repositionTimeoutId !== null
-    ) {
-      clearTimeout(this.repositionTimeoutId)
-    }
-
-    if (!this.props.isSelected && prevProps.isSelected) {
-      this.scheduleMove()
-    }
-
-    if (
-      this.props.cow.happinessBoostsToday >
-        prevProps.cow.happinessBoostsToday &&
-      !this.state.showHugAnimation
-    ) {
-      this.setState({ showHugAnimation: true })
-
-      this.animateHugTimeoutId = setTimeout(() => {
-        if (this.isComponentMounted) {
-          this.setState({ showHugAnimation: false })
-        }
-      }, Cow.hugAnimationDuration)
-    }
-  }
-
-  move = async () => {
+  const move = async () => {
     const newX = randomPosition()
 
-    const { moveDirection: oldDirection, x, y } = this.state
-    const newDirection = newX < this.state.x ? LEFT : RIGHT
+    const oldDirection = moveDirectionRef.current
+    const oldX = positionRef.current.x
+    const oldY = positionRef.current.y
+    const newDirection = newX < oldX ? LEFT : RIGHT
 
-    if (this.isComponentMounted) {
-      this.setState({
-        moveDirection: newDirection,
-      })
+    if (isComponentMountedRef.current) {
+      setMoveDirection(newDirection)
     }
 
     if (oldDirection !== newDirection) {
-      const render = ({ rotate }: { rotate?: number | string }) => {
-        if (this.isComponentMounted) {
-          this.setState({ rotate })
+      const render = (tweenState: { rotate?: number | string }) => {
+        if (isComponentMountedRef.current) {
+          setRotate(tweenState.rotate as number)
         }
       }
 
       try {
-        const duration = Cow.flipAnimationDuration
+        const duration = flipAnimationDuration
         const easing = 'swingTo'
 
         if (newDirection === LEFT) {
-          await this.tweenable.tween({
+          await tweenable.tween({
             from: {
               rotate: 0,
             },
@@ -114,7 +111,7 @@ export class Cow extends Component<CowProps> {
             render,
           })
         } else {
-          await this.tweenable.tween({
+          await tweenable.tween({
             from: {
               rotate: 180,
             },
@@ -132,20 +129,18 @@ export class Cow extends Component<CowProps> {
       }
     }
 
-    if (this.isComponentMounted) {
-      this.setState({
-        isTransitioning: true,
-      })
+    if (isComponentMountedRef.current) {
+      setIsTransitioning(true)
     }
 
     try {
-      await this.tweenable.tween({
-        from: { x, y },
+      await tweenable.tween({
+        from: { x: oldX, y: oldY },
         to: { x: newX, y: randomPosition() },
-        duration: Cow.transitionAnimationDuration,
+        duration: transitionAnimationDuration,
         render: ({ x: newXValue, y: newYValue }: any) => {
-          if (this.isComponentMounted) {
-            this.setState({ x: newXValue, y: newYValue })
+          if (isComponentMountedRef.current) {
+            setPosition({ x: newXValue, y: newYValue })
           }
         },
         easing: 'linear',
@@ -155,125 +150,151 @@ export class Cow extends Component<CowProps> {
       return
     }
 
-    if (this.isComponentMounted) {
-      this.setState({ isTransitioning: false })
+    if (isComponentMountedRef.current) {
+      setIsTransitioning(false)
     }
-    this.scheduleMove()
+
+    scheduleMove()
   }
 
-  repositionTimeoutHandler = () => {
-    this.repositionTimeoutId = null
-    this.move()
+  const repositionTimeoutHandler = () => {
+    repositionTimeoutIdRef.current = null
+
+    move()
   }
 
-  scheduleMove = () => {
-    if (this.props.isSelected) {
+  const scheduleMove = () => {
+    if (isSelectedRef.current) {
       return
     }
 
-    this.repositionTimeoutId = setTimeout(
-      this.repositionTimeoutHandler,
-      random() * this.waitVariance
+    const waitVariance = 2000 * cowInventoryRef.current.length
+
+    repositionTimeoutIdRef.current = setTimeout(
+      repositionTimeoutHandler,
+      random() * waitVariance
     )
   }
 
-  componentDidMount() {
-    this.isComponentMounted = true
-    this.scheduleMove()
+  useEffect(() => {
+    if (
+      isSelected &&
+      !prevIsSelectedRef.current &&
+      repositionTimeoutIdRef.current !== null
+    ) {
+      clearTimeout(repositionTimeoutIdRef.current)
+    }
+
+    if (!isSelected && prevIsSelectedRef.current) {
+      scheduleMove()
+    }
+
+    prevIsSelectedRef.current = isSelected
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSelected])
+
+  useEffect(() => {
+    if (
+      cow.happinessBoostsToday > prevHappinessBoostsTodayRef.current &&
+      !showHugAnimation
+    ) {
+      setShowHugAnimation(true)
+
+      animateHugTimeoutIdRef.current = setTimeout(() => {
+        if (isComponentMountedRef.current) {
+          setShowHugAnimation(false)
+        }
+      }, hugAnimationDuration)
+    }
+
+    prevHappinessBoostsTodayRef.current = cow.happinessBoostsToday
+  }, [cow.happinessBoostsToday, showHugAnimation])
+
+  useEffect(() => {
+    isComponentMountedRef.current = true
+
+    scheduleMove()
     ;(async () => {
-      const cowImage = await getCowImage(this.props.cow)
+      const loadedCowImage = await getCowImage(cow)
 
-      if (!this.isComponentMounted) return
+      if (!isComponentMountedRef.current) return
 
-      this.setState({ cowImage: cowImage })
+      setCowImage(loadedCowImage)
     })()
-  }
 
-  componentWillUnmount() {
-    ;[this.repositionTimeoutId, this.animateHugTimeoutId].forEach(
-      id => typeof id === 'number' && clearTimeout(id)
-    )
+    return () => {
+      ;[repositionTimeoutIdRef.current, animateHugTimeoutIdRef.current].forEach(
+        id => typeof id === 'number' && clearTimeout(id)
+      )
 
-    this.isComponentMounted = false
-    this.tweenable.cancel()
-  }
+      isComponentMountedRef.current = false
 
-  render() {
-    const {
-      props: {
-        allowCustomPeerCowNames,
-        cow,
-        handleCowClick,
-        playerId,
-        isSelected,
-      },
-      state: { cowImage, isTransitioning, rotate, showHugAnimation, x, y },
-    } = this
+      tweenableRef.current?.cancel()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    const cowDisplayName = getCowDisplayName(
-      cow,
-      playerId,
-      allowCustomPeerCowNames
-    )
+  const cowDisplayName = getCowDisplayName(
+    cow,
+    playerId,
+    allowCustomPeerCowNames
+  )
 
-    return (
-      <div
-        className={classNames('cow', {
-          'is-transitioning': isTransitioning,
-          'is-selected': isSelected,
-          'is-loaded': cowImage !== pixel,
-        })}
-        onClick={() => handleCowClick(cow)}
-        style={{
-          left: `${x}%`,
-          top: `${y}%`,
+  return (
+    <div
+      className={classNames('cow', {
+        'is-transitioning': isTransitioning,
+        'is-selected': isSelected,
+        'is-loaded': cowImage !== pixel,
+      })}
+      onClick={() => handleCowClick(cow)}
+      style={{
+        left: `${x}%`,
+        top: `${y}%`,
+      }}
+    >
+      {isSelected && (
+        <p className="visually_hidden">{cowDisplayName} is selected</p>
+      )}
+      <Tooltip
+        {...{
+          arrow: true,
+          placement: 'top',
+          title: <Typography>{cowDisplayName}</Typography>,
+          open: isSelected,
+          PopperProps: {
+            disablePortal: true,
+          },
         }}
       >
-        {isSelected && (
-          <p className="visually_hidden">{cowDisplayName} is selected</p>
-        )}
-        <Tooltip
-          {...{
-            arrow: true,
-            placement: 'top',
-            title: <Typography>{cowDisplayName}</Typography>,
-            open: isSelected,
-            PopperProps: {
-              disablePortal: true,
-            },
-          }}
-        >
-          <div {...{ style: { transform: `rotateY(${rotate}deg)` } }}>
-            <img
-              {...{
-                src: cowImage,
-              }}
-              alt={cowDisplayName}
-            />
+        <div {...{ style: { transform: `rotateY(${rotate}deg)` } }}>
+          <img
+            {...{
+              src: cowImage,
+            }}
+            alt={cowDisplayName}
+          />
+          <FontAwesomeIcon
+            {...{
+              className: classNames('animation', {
+                'is-animating': showHugAnimation,
+              }),
+              icon: faHeart,
+            }}
+          />
+        </div>
+      </Tooltip>
+      <ol {...{ className: 'happiness-boosts-today' }}>
+        {new Array(cow.happinessBoostsToday).fill(undefined).map((_, i) => (
+          <li {...{ key: i }}>
             <FontAwesomeIcon
               {...{
-                className: classNames('animation', {
-                  'is-animating': showHugAnimation,
-                }),
                 icon: faHeart,
               }}
             />
-          </div>
-        </Tooltip>
-        <ol {...{ className: 'happiness-boosts-today' }}>
-          {new Array(this.props.cow.happinessBoostsToday)
-            .fill(undefined)
-            .map((_, i) => (
-              <li {...{ key: i }}>
-                <FontAwesomeIcon
-                  {...{
-                    icon: faHeart,
-                  }}
-                />
-              </li>
-            ))}
-        </ol>
-      </div>
-    )
-  }
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
 }
