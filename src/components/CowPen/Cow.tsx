@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Tweenable } from 'shifty'
 
 import { random } from '../../common/utils.js'
@@ -63,6 +63,7 @@ export const Cow = ({
   const isSelectedRef = useRef(isSelected)
   const positionRef = useRef(position)
   const moveDirectionRef = useRef(moveDirection)
+  const scheduleMoveRef = useRef<() => void>(() => {})
 
   cowInventoryRef.current = cowInventory
   isSelectedRef.current = isSelected
@@ -75,7 +76,7 @@ export const Cow = ({
 
   const tweenable = tweenableRef.current
 
-  const move = async () => {
+  const move = useCallback(async () => {
     const newX = randomPosition()
 
     const oldDirection = moveDirectionRef.current
@@ -154,16 +155,16 @@ export const Cow = ({
       setIsTransitioning(false)
     }
 
-    scheduleMove()
-  }
+    scheduleMoveRef.current()
+  }, [tweenable])
 
-  const repositionTimeoutHandler = () => {
+  const repositionTimeoutHandler = useCallback(() => {
     repositionTimeoutIdRef.current = null
 
     move()
-  }
+  }, [move])
 
-  const scheduleMove = () => {
+  const scheduleMove = useCallback(() => {
     if (isSelectedRef.current) {
       return
     }
@@ -174,7 +175,9 @@ export const Cow = ({
       repositionTimeoutHandler,
       random() * waitVariance
     )
-  }
+  }, [repositionTimeoutHandler])
+
+  scheduleMoveRef.current = scheduleMove
 
   useEffect(() => {
     if (
@@ -190,8 +193,7 @@ export const Cow = ({
     }
 
     prevIsSelectedRef.current = isSelected
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSelected])
+  }, [isSelected, scheduleMove])
 
   useEffect(() => {
     if (
@@ -231,6 +233,9 @@ export const Cow = ({
 
       tweenableRef.current?.cancel()
     }
+    // Mount-only effect (the function-component equivalent of
+    // componentDidMount): it must run exactly once, so `cow` and `scheduleMove`
+    // are intentionally omitted from the dependency array.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
