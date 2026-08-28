@@ -18,7 +18,8 @@ const randomPosition = () => 10 + random() * 80
 const flipAnimationDuration = 1000
 const transitionAnimationDuration = 3000
 
-// This MUST be kept in sync with $hug-animation-duration in CowPen.sass.
+// This MUST be kept in sync with the `animationDuration` of the `.is-animating`
+// rule in CowPen.tsx.
 const hugAnimationDuration = 750
 
 export interface CowProps {
