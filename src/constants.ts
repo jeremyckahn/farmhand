@@ -154,6 +154,7 @@ export const STAGE_TITLE_MAP = {
   [stageFocusType.COW_PEN]: 'Cows',
   [stageFocusType.WORKSHOP]: 'Workshop',
   [stageFocusType.CELLAR]: 'Cellar',
+  [stageFocusType.FARMHAND_SHUFFLE]: 'Farmhand Shuffle',
 }
 
 export const DAILY_FINANCIAL_HISTORY_RECORD_LENGTH = 7
@@ -176,6 +177,7 @@ export const PERSISTED_STATE_KEYS = [
   'dayCount',
   'experience',
   'farmName',
+  'farmhandShuffle',
   'field',
   'forest',
   'hasProducedRainbowFertilizer',

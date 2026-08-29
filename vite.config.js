@@ -105,6 +105,18 @@ const vitestConfig = vitestDefineConfig({
     setupFiles: './src/setupTests.ts',
     restoreMocks: true,
     dir: 'src',
+    server: {
+      deps: {
+        // @jeremyckahn/farmhand-shuffle's dist-lib bundle uses deep,
+        // extensionless MUI import paths (e.g. `@mui/material/Button`),
+        // which are valid for a bundler's resolution but not for Node's
+        // native ESM loader. Vitest externalizes node_modules packages by
+        // default (loading them via Node directly instead of through
+        // Vite's transform pipeline), which breaks on those imports.
+        // Inlining this package routes it through Vite's resolver instead.
+        inline: [/@jeremyckahn\/farmhand-shuffle/],
+      },
+    },
     coverage: {
       reporter: ['text', 'html'],
       exclude: ['node_modules', 'src/setupTests.ts', 'dist', 'src/__mocks__'],

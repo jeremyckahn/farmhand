@@ -88,6 +88,16 @@ export const useFarmhand = (props: FarmhandProps) => {
       dayCount: 0,
       experience: 0,
       farmName: 'Unnamed',
+      farmhandShuffle: {
+        isMatchInProgress: false,
+        wager: 0,
+        serializedMatch: null,
+        totalMatchesPlayed: 0,
+        totalWins: 0,
+        totalLosses: 0,
+        currentWinStreak: 0,
+        longestWinStreak: 0,
+      },
       field: createNewField(),
       fieldMode: fieldMode.OBSERVE as fieldMode,
       forest: createNewForest(),
@@ -224,11 +234,14 @@ export const useFarmhand = (props: FarmhandProps) => {
 
   const isForestUnlocked =
     levelEntitlements.stageFocusType[stageFocusType.FOREST]
+  const isFarmhandShuffleUnlocked =
+    levelEntitlements.stageFocusType[stageFocusType.FARMHAND_SHUFFLE]
   const isChatAvailable = state.isOnline && state.room !== DEFAULT_ROOM
 
   const viewList = useMemo(
     () =>
       getViewList({
+        isFarmhandShuffleUnlocked,
         isForestUnlocked,
         purchasedCellar: state.purchasedCellar,
         purchasedCowPen: state.purchasedCowPen,
@@ -236,6 +249,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       }),
     [
       state.showHomeScreen,
+      isFarmhandShuffleUnlocked,
       isForestUnlocked,
       state.purchasedCowPen,
       state.purchasedCellar,
@@ -374,6 +388,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       peerMetadata,
       isInputBlocked,
       isChatAvailable,
+      isFarmhandShuffleUnlocked,
       isForestUnlocked,
       setState: (updater: any, callback?: () => void) => {
         setState(previous => {
@@ -440,6 +455,7 @@ export const useFarmhand = (props: FarmhandProps) => {
       peerMetadata,
       isInputBlocked,
       isChatAvailable,
+      isFarmhandShuffleUnlocked,
       isForestUnlocked,
       tradeForPeerCow,
       handleCowTradeTimeout,

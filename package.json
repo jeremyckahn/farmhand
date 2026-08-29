@@ -108,6 +108,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/react-fontawesome": "^0.1.9",
+    "@jeremyckahn/farmhand-shuffle": "^0.0.1",
     "@mui/icons-material": "^5.15.0",
     "@mui/lab": "^5.0.0-alpha.156",
     "@mui/material": "^5.15.0",

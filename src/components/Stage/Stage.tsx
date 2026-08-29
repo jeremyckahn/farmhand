@@ -11,6 +11,7 @@ import CowPen from '../CowPen/index.js'
 import Shop from '../Shop/index.js'
 import Workshop from '../Workshop/index.js'
 import { Cellar } from '../Cellar/index.js'
+import { FarmhandShuffleView } from '../FarmhandShuffleView/index.js'
 import { stageFocusType } from '../../enums.js'
 import { isOctober } from '../../utils/isOctober.js'
 import { isDecember } from '../../utils/isDecember.js'
@@ -71,6 +72,10 @@ export const Stage = ({
     [stageFocusType.FIELD]: grassBg,
     [stageFocusType.COW_PEN]: grassBg,
     [stageFocusType.FOREST]: forestFloorBg,
+    // No dedicated art yet - reuse the floorboard texture as a placeholder
+    // (see the Farmhand Shuffle integration plan's "Visual asset" decision).
+    // Commissioning real art is a follow-up, not a blocker for the unlock.
+    [stageFocusType.FARMHAND_SHUFFLE]: floorboardBg,
   }[stageFocus as string]
 
   return (
@@ -190,6 +195,9 @@ export const Stage = ({
       {stageFocus === stageFocusType.COW_PEN && <CowPen />}
       {stageFocus === stageFocusType.WORKSHOP && <Workshop />}
       {stageFocus === stageFocusType.CELLAR && <Cellar />}
+      {stageFocus === stageFocusType.FARMHAND_SHUFFLE && (
+        <FarmhandShuffleView />
+      )}
       <div {...{ className: 'spacer' }} />
     </Div>
   )

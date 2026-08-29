@@ -23,11 +23,16 @@ export const getValidatedStageFocusFromHash = (
 
   if (!stageFocusFromUrl) return undefined
 
-  const isForestUnlockedForState = getLevelEntitlements(
+  const levelEntitlementsForState = getLevelEntitlements(
     levelAchieved(candidateState.experience)
-  ).stageFocusType[stageFocusType.FOREST]
+  )
+  const isForestUnlockedForState =
+    levelEntitlementsForState.stageFocusType[stageFocusType.FOREST]
+  const isFarmhandShuffleUnlockedForState =
+    levelEntitlementsForState.stageFocusType[stageFocusType.FARMHAND_SHUFFLE]
 
   const availableViews = getViewList({
+    isFarmhandShuffleUnlocked: isFarmhandShuffleUnlockedForState,
     isForestUnlocked: isForestUnlockedForState,
     purchasedCellar: candidateState.purchasedCellar,
     purchasedCowPen: candidateState.purchasedCowPen,
