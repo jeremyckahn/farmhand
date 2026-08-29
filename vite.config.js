@@ -57,9 +57,11 @@ const viteConfig = defineConfig({
       workbox: {
         // The main bundle crossed workbox's default 2 MiB precache limit
         // after upgrading to React 18 and react-markdown v10 (whose
-        // unified/remark-based dependency tree is much larger than v4's).
-        // Raise the limit rather than leave the asset stale/un-precached;
-        // revisit with code-splitting if the bundle keeps growing.
+        // unified/remark-based dependency tree is much larger than v4's),
+        // and again after adding @jeremyckahn/farmhand-shuffle (which pulls
+        // in its own react-router-dom/xstate/etc. dependency tree). Raise
+        // the limit rather than leave the asset stale/un-precached; revisit
+        // with code-splitting if the bundle keeps growing.
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       },
     }),
