@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Tweenable } from 'shifty'
 
 import { random } from '../../common/utils.js'
@@ -21,6 +21,10 @@ const transitionAnimationDuration = 3000
 // This MUST be kept in sync with the `animationDuration` of the `.is-animating`
 // rule in CowPen.tsx.
 const hugAnimationDuration = 750
+
+type CowPosition = { x: number; y: number }
+
+type CowMoveDirection = typeof LEFT | typeof RIGHT
 
 export interface CowProps {
   allowCustomPeerCowNames: boolean
@@ -41,204 +45,174 @@ export const Cow = ({
 }: CowProps) => {
   const [cowImage, setCowImage] = useState(pixel)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const [moveDirection, setMoveDirection] = useState(RIGHT)
+  const [moveDirection, setMoveDirection] = useState<CowMoveDirection>(RIGHT)
   const [rotate, setRotate] = useState(0)
   const [showHugAnimation, setShowHugAnimation] = useState(false)
-  const [position, setPosition] = useState(() => ({
+  const [position, setPosition] = useState<CowPosition>(() => ({
     x: randomPosition(),
     y: randomPosition(),
   }))
+  const [tweenable] = useState(() => new Tweenable())
+  const [prevHappinessBoostsToday, setPrevHappinessBoostsToday] = useState(
+    cow.happinessBoostsToday
+  )
   const { x, y } = position
 
-  const isComponentMountedRef = useRef(false)
-  const repositionTimeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null
-  )
-  const animateHugTimeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null
-  )
-  const tweenableRef = useRef<Tweenable | null>(null)
-  const prevIsSelectedRef = useRef(isSelected)
-  const prevHappinessBoostsTodayRef = useRef(cow.happinessBoostsToday)
-  const cowInventoryRef = useRef(cowInventory)
-  const isSelectedRef = useRef(isSelected)
-  const positionRef = useRef(position)
-  const moveDirectionRef = useRef(moveDirection)
-  const scheduleMoveRef = useRef<() => void>(() => {})
+  const move = useCallback(
+    async (from: CowPosition, fromDirection: CowMoveDirection) => {
+      const newX = randomPosition()
+      const newY = randomPosition()
+      const newDirection = newX < from.x ? LEFT : RIGHT
 
-  cowInventoryRef.current = cowInventory
-  isSelectedRef.current = isSelected
-  positionRef.current = position
-  moveDirectionRef.current = moveDirection
-
-  if (tweenableRef.current === null) {
-    tweenableRef.current = new Tweenable()
-  }
-
-  const tweenable = tweenableRef.current
-
-  const move = useCallback(async () => {
-    const newX = randomPosition()
-
-    const oldDirection = moveDirectionRef.current
-    const oldX = positionRef.current.x
-    const oldY = positionRef.current.y
-    const newDirection = newX < oldX ? LEFT : RIGHT
-
-    if (isComponentMountedRef.current) {
       setMoveDirection(newDirection)
-    }
 
-    if (oldDirection !== newDirection) {
-      const render = (tweenState: { rotate?: number | string }) => {
-        if (isComponentMountedRef.current) {
+      if (fromDirection !== newDirection) {
+        const render = (tweenState: { rotate?: number | string }) => {
           setRotate(tweenState.rotate as number)
+        }
+
+        try {
+          const duration = flipAnimationDuration
+          const easing = 'swingTo'
+
+          if (newDirection === LEFT) {
+            await tweenable.tween({
+              from: {
+                rotate: 0,
+              },
+              to: {
+                rotate: 180,
+              },
+              easing,
+              duration,
+              render,
+            })
+          } else {
+            await tweenable.tween({
+              from: {
+                rotate: 180,
+              },
+              to: {
+                rotate: 0,
+              },
+              easing,
+              duration,
+              render,
+            })
+          }
+        } catch {
+          // The tween was cancelled by the component unmounting
+          return
         }
       }
 
-      try {
-        const duration = flipAnimationDuration
-        const easing = 'swingTo'
+      setIsTransitioning(true)
 
-        if (newDirection === LEFT) {
-          await tweenable.tween({
-            from: {
-              rotate: 0,
-            },
-            to: {
-              rotate: 180,
-            },
-            easing,
-            duration,
-            render,
-          })
-        } else {
-          await tweenable.tween({
-            from: {
-              rotate: 180,
-            },
-            to: {
-              rotate: 0,
-            },
-            easing,
-            duration,
-            render,
-          })
-        }
-      } catch (e) {
+      try {
+        await tweenable.tween({
+          from: { x: from.x, y: from.y },
+          to: { x: newX, y: newY },
+          duration: transitionAnimationDuration,
+          render: ({ x: newXValue, y: newYValue }: any) => {
+            setPosition({ x: newXValue, y: newYValue })
+          },
+          easing: 'linear',
+        })
+      } catch {
         // The tween was cancelled by the component unmounting
         return
       }
-    }
 
-    if (isComponentMountedRef.current) {
-      setIsTransitioning(true)
-    }
-
-    try {
-      await tweenable.tween({
-        from: { x: oldX, y: oldY },
-        to: { x: newX, y: randomPosition() },
-        duration: transitionAnimationDuration,
-        render: ({ x: newXValue, y: newYValue }: any) => {
-          if (isComponentMountedRef.current) {
-            setPosition({ x: newXValue, y: newYValue })
-          }
-        },
-        easing: 'linear',
-      })
-    } catch (e) {
-      // The tween was cancelled by the component unmounting
-      return
-    }
-
-    if (isComponentMountedRef.current) {
       setIsTransitioning(false)
-    }
+      // The next move is scheduled by the movement effect below, which
+      // re-runs when `isTransitioning` flips back to false.
+    },
+    [tweenable]
+  )
 
-    scheduleMoveRef.current()
-  }, [tweenable])
-
-  const repositionTimeoutHandler = useCallback(() => {
-    repositionTimeoutIdRef.current = null
-
-    move()
-  }, [move])
-
-  const scheduleMove = useCallback(() => {
-    if (isSelectedRef.current) {
-      return
-    }
-
-    const waitVariance = 2000 * cowInventoryRef.current.length
-
-    repositionTimeoutIdRef.current = setTimeout(
-      repositionTimeoutHandler,
-      random() * waitVariance
-    )
-  }, [repositionTimeoutHandler])
-
-  scheduleMoveRef.current = scheduleMove
-
+  // Loads the cow's image on mount.
   useEffect(() => {
-    if (
-      isSelected &&
-      !prevIsSelectedRef.current &&
-      repositionTimeoutIdRef.current !== null
-    ) {
-      clearTimeout(repositionTimeoutIdRef.current)
-    }
+    let isUnmounted = false
 
-    if (!isSelected && prevIsSelectedRef.current) {
-      scheduleMove()
-    }
-
-    prevIsSelectedRef.current = isSelected
-  }, [isSelected, scheduleMove])
-
-  useEffect(() => {
-    if (
-      cow.happinessBoostsToday > prevHappinessBoostsTodayRef.current &&
-      !showHugAnimation
-    ) {
-      setShowHugAnimation(true)
-
-      animateHugTimeoutIdRef.current = setTimeout(() => {
-        if (isComponentMountedRef.current) {
-          setShowHugAnimation(false)
-        }
-      }, hugAnimationDuration)
-    }
-
-    prevHappinessBoostsTodayRef.current = cow.happinessBoostsToday
-  }, [cow.happinessBoostsToday, showHugAnimation])
-
-  useEffect(() => {
-    isComponentMountedRef.current = true
-
-    scheduleMove()
-    ;(async () => {
-      const loadedCowImage = await getCowImage(cow)
-
-      if (!isComponentMountedRef.current) return
-
-      setCowImage(loadedCowImage)
-    })()
+    void getCowImage(cow).then(loadedCowImage => {
+      if (!isUnmounted) {
+        setCowImage(loadedCowImage)
+      }
+    })
 
     return () => {
-      ;[repositionTimeoutIdRef.current, animateHugTimeoutIdRef.current].forEach(
-        id => typeof id === 'number' && clearTimeout(id)
-      )
-
-      isComponentMountedRef.current = false
-
-      tweenableRef.current?.cancel()
+      isUnmounted = true
     }
     // Mount-only effect (the function-component equivalent of
-    // componentDidMount): it must run exactly once, so `cow` and `scheduleMove`
-    // are intentionally omitted from the dependency array.
+    // `componentDidMount`): it must run exactly once, so `cow` is
+    // intentionally omitted from the dependency array.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Cancels any in-flight tween on unmount; `move` handles the resulting
+  // rejection in its `catch` blocks.
+  useEffect(() => {
+    return () => {
+      tweenable.cancel()
+    }
+  }, [tweenable])
+
+  // The cow walks whenever it is stationary and not selected. This effect
+  // runs on mount, whenever `isSelected` changes, and whenever a move
+  // completes (`isTransitioning` flipping back to false), and its cleanup
+  // cancels the pending move whenever the cow gets selected or unmounted.
+  // At most one move is ever in flight: a move can only start from the
+  // timer this effect sets, and no timer is pending while a move is
+  // in flight.
+  useEffect(() => {
+    if (isSelected || isTransitioning) {
+      return
+    }
+
+    const waitVariance = 2000 * cowInventory.length
+
+    const repositionTimeoutId = setTimeout(() => {
+      void move(position, moveDirection)
+    }, random() * waitVariance)
+
+    return () => {
+      clearTimeout(repositionTimeoutId)
+    }
+    // `position` and `moveDirection` are intentionally omitted: they only
+    // ever change while a move is in flight, at which point this effect
+    // early-returns and no timer is pending, so the closure values are
+    // always current whenever a timer is actually set.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSelected, isTransitioning, cowInventory.length, move])
+
+  // Shows the hug animation whenever `happinessBoostsToday` increases.
+  useEffect(() => {
+    if (cow.happinessBoostsToday <= prevHappinessBoostsToday) {
+      return
+    }
+
+    setPrevHappinessBoostsToday(cow.happinessBoostsToday)
+
+    if (showHugAnimation) {
+      return
+    }
+
+    setShowHugAnimation(true)
+  }, [cow.happinessBoostsToday, prevHappinessBoostsToday, showHugAnimation])
+
+  useEffect(() => {
+    if (!showHugAnimation) {
+      return
+    }
+
+    const animateHugTimeoutId = setTimeout(() => {
+      setShowHugAnimation(false)
+    }, hugAnimationDuration)
+
+    return () => {
+      clearTimeout(animateHugTimeoutId)
+    }
+  }, [showHugAnimation])
 
   const cowDisplayName = getCowDisplayName(
     cow,
