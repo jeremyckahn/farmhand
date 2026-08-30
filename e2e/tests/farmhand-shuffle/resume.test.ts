@@ -7,6 +7,24 @@ const goToFarmhandShuffle = async (page: Page) => {
   await page.getByRole('option', { name: ': Farmhand Shuffle' }).click()
 }
 
+// The wager field always displays a real "0" digit (it's a fixedDecimalScale
+// money input starting at $0.00, never empty) - `.fill()` doesn't work on
+// it at all, and typing into it without clearing that "0" first inserts
+// new digits *before* it rather than replacing it: typing just "5" lands
+// on "$50.00", not "$5.00". Selecting all first makes the first keystroke
+// replace the selection, which is native browser behavior that happens
+// before any of react-number-format's own caret handling runs, so it's
+// reliable regardless of that library's quirks.
+const typeWager = async (page: Page, digits: string) => {
+  const wagerInput = page.getByLabel('Wager')
+  await wagerInput.click()
+  await wagerInput.press('Control+a')
+  // `.fill()` doesn't trigger react-number-format's controlled-input
+  // handling at all - it sets the DOM value directly, bypassing it
+  // entirely. Only real keystrokes, via pressSequentially, do.
+  await wagerInput.pressSequentially(digits, { delay: 50 })
+}
+
 test('reloading mid-match resumes the same hand instead of dealing a fresh one, and does not re-deduct the wager', async ({
   page,
 }) => {
@@ -14,14 +32,7 @@ test('reloading mid-match resumes the same hand instead of dealing a fresh one, 
 
   await goToFarmhandShuffle(page)
 
-  // `.fill()` doesn't trigger react-number-format's controlled-input
-  // handling at all (it sets the DOM value directly, bypassing it
-  // entirely) - only real keystrokes, via pressSequentially, do. A
-  // single keystroke (rather than a multi-digit amount) sidesteps
-  // react-number-format v4's caret-continuity timing issues across
-  // successive keystrokes.
-  const wagerInput = page.getByLabel('Wager')
-  await wagerInput.pressSequentially('5', { delay: 50 })
+  await typeWager(page, '5')
   await page.getByRole('button', { name: 'Start Match' }).click()
 
   await expect(page.getByTestId('match')).toBeVisible()
