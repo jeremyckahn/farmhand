@@ -14,8 +14,11 @@ test('reloading mid-match resumes the same hand instead of dealing a fresh one, 
 
   await goToFarmhandShuffle(page)
 
+  // `.fill()` doesn't trigger react-number-format's controlled-input
+  // handling at all (it sets the DOM value directly, bypassing it
+  // entirely) - only real keystrokes, via pressSequentially, do.
   const wagerInput = page.getByLabel('Wager')
-  await wagerInput.fill('50')
+  await wagerInput.pressSequentially('50')
   await page.getByRole('button', { name: 'Start Match' }).click()
 
   await expect(page.getByTestId('match')).toBeVisible()
