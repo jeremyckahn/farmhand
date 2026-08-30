@@ -4,7 +4,7 @@ import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 import { useCallback, useEffect, useState } from 'react'
-import { Tweenable } from 'shifty'
+import { TweenState, Tweenable } from 'shifty'
 
 import { random } from '../../common/utils.js'
 import { LEFT, RIGHT } from '../../constants.js'
@@ -67,8 +67,10 @@ export const Cow = ({
       setMoveDirection(newDirection)
 
       if (fromDirection !== newDirection) {
-        const render = (tweenState: { rotate?: number | string }) => {
-          setRotate(tweenState.rotate as number)
+        const render = (tweenState: TweenState) => {
+          if (typeof tweenState.rotate === 'number') {
+            setRotate(tweenState.rotate)
+          }
         }
 
         try {
