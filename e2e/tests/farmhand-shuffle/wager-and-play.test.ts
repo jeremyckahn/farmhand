@@ -36,9 +36,12 @@ test('the wager field refuses to accept more than the player currently has', asy
   // via pressSequentially, exercise its controlled-input logic). Typing
   // "999999999" digit by digit is rejected as soon as the running value
   // would exceed $500 (at the third "9"), leaving "99" as the last
-  // accepted value.
+  // accepted value. The delay between keystrokes matters too: firing
+  // them faster than React can reconcile the controlled input's
+  // re-formatted value races with react-number-format's own internal
+  // state and garbles the result.
   const wagerInput = page.getByLabel('Wager')
-  await wagerInput.pressSequentially('999999999')
+  await wagerInput.pressSequentially('999999999', { delay: 50 })
 
   await expect(wagerInput).toHaveValue('$99.00')
   await expect(page.getByRole('button', { name: 'Start Match' })).toBeEnabled()
@@ -54,9 +57,12 @@ test('placing a valid wager deducts it from the displayed money and mounts the e
   await goToFarmhandShuffle(page)
 
   // `.fill()` doesn't work here - see the comment on the field-clamping
-  // test above.
+  // test above. A delay between keystrokes is needed too: firing them
+  // faster than React can reconcile the controlled input's re-formatted
+  // value races with react-number-format's own internal state and
+  // garbles the result.
   const wagerInput = page.getByLabel('Wager')
-  await wagerInput.pressSequentially('50')
+  await wagerInput.pressSequentially('50', { delay: 50 })
   await page.getByRole('button', { name: 'Start Match' }).click()
 
   await expect(page.locator('.money-display')).toHaveText('$450.00')

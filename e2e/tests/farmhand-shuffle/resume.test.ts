@@ -16,9 +16,12 @@ test('reloading mid-match resumes the same hand instead of dealing a fresh one, 
 
   // `.fill()` doesn't trigger react-number-format's controlled-input
   // handling at all (it sets the DOM value directly, bypassing it
-  // entirely) - only real keystrokes, via pressSequentially, do.
+  // entirely) - only real keystrokes, via pressSequentially, do. The
+  // delay between keystrokes matters too: firing them faster than React
+  // can reconcile the controlled input's re-formatted value races with
+  // react-number-format's own internal state and garbles the result.
   const wagerInput = page.getByLabel('Wager')
-  await wagerInput.pressSequentially('50')
+  await wagerInput.pressSequentially('50', { delay: 50 })
   await page.getByRole('button', { name: 'Start Match' }).click()
 
   await expect(page.getByTestId('match')).toBeVisible()
