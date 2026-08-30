@@ -52,25 +52,32 @@ interface WagerNumberFormatProps {
 
 // Mirrors AccountingView.tsx's MoneyNumberFormat (the loan-paydown field)
 // so every money input in the app looks and behaves the same way.
-const WagerNumberFormat = forwardRef(
-  (
-    { max, onChange, ...rest }: WagerNumberFormatProps,
-    ref: React.ForwardedRef<HTMLInputElement>
-  ) => (
-    <NumberFormat
-      fixedDecimalScale
-      thousandSeparator
-      getInputRef={ref}
-      {...{
-        ...rest,
-        allowNegative: false,
-        decimalScale: 2,
-        prefix: '$',
-        isAllowed: ({ floatValue = 0 }) => floatValue <= max,
-        onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
-      }}
-    />
-  )
+//
+// forwardRef<T, any> at the outer boundary, with the concrete prop shape
+// destructured inside the function body instead of the parameter list: a
+// prop type combining named properties with an index-signature intersection
+// loses its specific property types when TypeScript computes
+// Omit<P, 'ref'> for forwardRef under React 18's @types/react.
+const WagerNumberFormat = forwardRef<HTMLInputElement, any>(
+  (props: any, ref) => {
+    const { max, onChange, ...rest }: WagerNumberFormatProps = props
+
+    return (
+      <NumberFormat
+        fixedDecimalScale
+        thousandSeparator
+        getInputRef={ref}
+        {...{
+          ...rest,
+          allowNegative: false,
+          decimalScale: 2,
+          prefix: '$',
+          isAllowed: ({ floatValue = 0 }) => floatValue <= max,
+          onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
+        }}
+      />
+    )
+  }
 )
 
 const WagerStatusBadge = ({ wager }: { wager: number }) => (
