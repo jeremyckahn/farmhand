@@ -8,7 +8,8 @@ import CardContent from '@mui/material/CardContent/index.js'
 import Divider from '@mui/material/Divider/index.js'
 import globalWindow from 'global/window.js'
 import { func, object } from 'prop-types'
-import ReactMarkdown from 'react-markdown'
+
+import { Markdown } from '../Markdown/index.js'
 
 import { items } from '../../img/index.js'
 
@@ -95,11 +96,9 @@ const Home = ({
         <h2>Click to read a note from the developer</h2>
       </AccordionSummary>
       <AccordionDetails>
-        <ReactMarkdown
+        <Markdown
           {...{
-            linkTarget: '_blank',
-            className: 'markdown',
-            source: `
+            children: `
 Hi, you're playing **Farmhand**! This is an open source game project created by [Jeremy Kahn](https://github.com/jeremyckahn). The project has evolved over time and is now developed with the support of [a community of contributors](https://github.com/jeremyckahn/farmhand/blob/develop/CONTRIBUTORS.md).
 
 [![Source code](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/jeremyckahn/farmhand) [![Discord](https://img.shields.io/discord/714539345050075176?label=farmhand+discord)](https://discord.gg/6cHEZ9H) [![r/FarmhandGame](https://img.shields.io/reddit/subreddit-subscribers/FarmhandGame?style=social)](https://www.reddit.com/r/FarmhandGame/) [![@FarmhandGame](https://img.shields.io/badge/@farmhandgame-E4405F?style=flat-square&logo=Instagram&logoColor=white)](https://www.instagram.com/farmhandgame/)
@@ -119,11 +118,9 @@ Happy farming! 🐮
     <Divider />
     <Card>
       <CardContent>
-        <ReactMarkdown
+        <Markdown
           {...{
-            className: 'markdown',
-            linkTarget: '_blank',
-            source: `
+            children: `
 ### How to play
 
 The goal of Farmhand is to make money by buying, growing, harvesting, and then selling crops. Keep an eye on prices though, because they go up and down every day! The best farmers buy seeds for a low price and sell them for a high price.
@@ -134,11 +131,9 @@ If you can master the art of the harvest, there's no limit to how profitable you
         />
         {remainingOnboardingAchievements.length ? (
           <>
-            <ReactMarkdown
+            <Markdown
               {...{
-                className: 'markdown',
-                linkTarget: '_blank',
-                source: `
+                children: `
 ### Getting started
 
 It looks like you're new here. Thanks for stopping by! Here are some goals to help you get familiar with the game.
@@ -168,11 +163,9 @@ It looks like you're new here. Thanks for stopping by! Here are some goals to he
     <Divider />
     <Card>
       <CardContent>
-        <ReactMarkdown
+        <Markdown
           {...{
-            className: 'markdown',
-            linkTarget: '_blank',
-            source: `
+            children: `
 ### ![Animated Scarecrow](${items['scarecrow-animated']}) Looking for more farming fun? ![Animated Scarecrow](${items['scarecrow-animated']})
 
 The Farmhand team has another game for you to play: **Farmhand Go!** You can [try it for free online](https://rainbowcow-studio.itch.io/farmhand-go) and support the developers by [purchasing it on Steam](https://store.steampowered.com/app/2080880/Farmhand_Go/).
@@ -188,11 +181,9 @@ The Farmhand game you're playing now is still under active development, so don't
     <Divider />
     <Card>
       <CardContent>
-        <ReactMarkdown
+        <Markdown
           {...{
-            className: 'markdown',
-            linkTarget: '_blank',
-            source: `
+            children: `
 ### Official merchandise
 
 You can support Farmhand's ongoing development by purchasing [official merchandise](https://www.zazzle.com/store/farmhandgame/products)! This also spreads awareness of the game and makes every day a little brighter.
@@ -204,11 +195,9 @@ You can support Farmhand's ongoing development by purchasing [official merchandi
     <Divider />
     <Card>
       <CardContent>
-        <ReactMarkdown
+        <Markdown
           {...{
-            className: 'markdown',
-            linkTarget: '_blank',
-            source: `
+            children: `
 ### Online multiplayer
 
 You can play Farmhand online with others! Online play is totally free and anonymous.
@@ -234,11 +223,9 @@ As an added bonus for playing online, **you'll get free money** a few times ever
       <>
         <Card>
           <CardContent>
-            <ReactMarkdown
+            <Markdown
               {...{
-                className: 'markdown',
-                linkTarget: '_blank',
-                source: `
+                children: `
 ### Installation
 
 Farmhand can be installed to your device right from this web page! Once installed, the game can be played with or without an internet connection.
@@ -254,11 +241,9 @@ If you're playing on a mobile device, all you need to do is [add it to your home
     )}
     <Card>
       <CardContent>
-        <ReactMarkdown
+        <Markdown
           {...{
-            className: 'markdown',
-            linkTarget: '_blank',
-            source: `
+            children: `
 ### A few other tips
 
 * Press the bed button in the top-right of the screen to end the farm day and advance the game. This also saves your progress.

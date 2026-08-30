@@ -135,7 +135,12 @@ export const COW_MAXIMUM_VALUE_MULTIPLIER = 1
 export const COW_GESTATION_PERIOD_DAYS = 3
 export const COW_MINIMUM_HAPPINESS_TO_BREED = 0.8
 
-export const NOTIFICATION_DURATION = import.meta.env?.MODE === 'test' ? 1 : 6000
+// The test-mode value must stay well clear of 0: it's a real race against
+// findBy*'s default polling/timeout window (assertions need the snackbar to
+// still be mounted when they check), and React 18's different effect/
+// batching timing narrows that window further than it was under React 17.
+export const NOTIFICATION_DURATION =
+  import.meta.env?.MODE === 'test' ? 5000 : 6000
 export const NOTIFICATION_LOG_SIZE = 14
 
 export const PRICE_EVENT_CHANCE = 0.2

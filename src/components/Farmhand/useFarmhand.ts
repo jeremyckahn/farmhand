@@ -720,7 +720,16 @@ export const useFarmhand = (props: FarmhandProps) => {
               : [{ message: PROGRESS_SAVED_MESSAGE, severity: 'info' }]
           )
           .forEach(({ message, severity }) =>
-            boundReducersRef.current.showNotification(message, severity)
+            // NOTE: Deferred via setTimeout (matching the boot-restore
+            // notification path above) so each call lands in its own task
+            // and gets its own render, rather than being collapsed into a
+            // single React 18 automatic-batching update that would only
+            // ever show the last notification in the list.
+            setTimeout(
+              () =>
+                boundReducersRef.current.showNotification(message, severity),
+              0
+            )
           )
 
         if (resolvedNextDayState.isCombineEnabled) {
