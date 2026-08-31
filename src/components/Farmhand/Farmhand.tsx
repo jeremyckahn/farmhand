@@ -242,27 +242,29 @@ const Farmhand = (props: FarmhandProps) => {
                   </Fab>
                 </div>
               </div>
-              <Tooltip
-                placement="left"
-                title={
-                  <>
-                    <p>
-                      End the day to save your progress and advance the game.
-                    </p>
-                    <p>(shift + c)</p>
-                  </>
-                }
-              >
-                <Fab
-                  aria-label="End the day to save your progress and advance the game."
-                  className="end-day"
-                  color="error"
-                  onClick={handlers.handleClickEndDayButton}
-                  sx={{ zIndex: Z_INDEX.END_DAY_BUTTON }}
+              {!gameState.farmhandShuffle.isMatchInProgress && (
+                <Tooltip
+                  placement="left"
+                  title={
+                    <>
+                      <p>
+                        End the day to save your progress and advance the game.
+                      </p>
+                      <p>(shift + c)</p>
+                    </>
+                  }
                 >
-                  <HotelIcon />
-                </Fab>
-              </Tooltip>
+                  <Fab
+                    aria-label="End the day to save your progress and advance the game."
+                    className="end-day"
+                    color="error"
+                    onClick={handlers.handleClickEndDayButton}
+                    sx={{ zIndex: Z_INDEX.END_DAY_BUTTON }}
+                  >
+                    <HotelIcon />
+                  </Fab>
+                </Tooltip>
+              )}
             </Div>
             {isChatAvailable ? <ChatRoom /> : null}
             <NotificationSystem />
