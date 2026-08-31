@@ -234,6 +234,22 @@ export const FarmhandShuffleView = () => {
         return
       }
 
+      // Farmhand's own persistent chrome - the sidebar drawer and its
+      // toggle button, and the top bar's dialog-opening buttons (log,
+      // price events, stats, achievements, bank, settings) - doesn't
+      // navigate away from this stage at all; it opens an overlay on top
+      // of it. Confirming "leave your match?" for these is a false
+      // positive that made them appear broken (every click here got
+      // silently swallowed by a declined confirm).
+      if (
+        e.target instanceof Element &&
+        e.target.closest(
+          '.sidebar-wrapper, [aria-label="Open drawer"], .AppBar'
+        )
+      ) {
+        return
+      }
+
       if (!window.confirm('Leave your Farmhand Shuffle match?')) {
         e.preventDefault()
         e.stopImmediatePropagation()

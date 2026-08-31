@@ -124,7 +124,14 @@ const Farmhand = (props: FarmhandProps) => {
                     easing: t.transitions.easing.easeOut,
                   }),
                   width: 0,
-                  zIndex: 20,
+                  // Was 20: the embedded Farmhand Shuffle view can render
+                  // its own fixed-position controls (e.g. the hide/show
+                  // Hand button) near the same screen area on narrow
+                  // viewports. This is Farmhand's own primary navigation -
+                  // it should never be visually contested by any embedded
+                  // view's content, so it gets the same z-index tier as
+                  // the end-day button rather than an arbitrary low value.
+                  zIndex: Z_INDEX.END_DAY_BUTTON,
                   [`@media (max-width: ${breakpoints.mediumPhone}px)`]: {
                     bottom: '0.5em',
                   },
