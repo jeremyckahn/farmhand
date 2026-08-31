@@ -293,7 +293,11 @@ export const FarmhandShuffleView = () => {
   }
 
   return (
-    <Div className="FarmhandShuffleView" ref={containerRef}>
+    <Div
+      className="FarmhandShuffleView"
+      ref={containerRef}
+      sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+    >
       {matchPhase === 'wager' && (
         <Card sx={{ maxWidth: '30em', margin: '2em auto' }}>
           <CardHeader
@@ -340,13 +344,31 @@ export const FarmhandShuffleView = () => {
       {matchPhase === 'playing' && initialMatch !== 'error' && (
         <Match
           {...{
-            fullHeight: true,
             playerSeeds,
             userPlayerId,
             initialMatch,
             onMatchEnd: handleMatchEnd,
             onCheckpoint: handleCheckpoint,
             hideDefaultGameOverActions: true,
+            // Not fullHeight (100vh): FarmhandShuffleView's own root div
+            // already fills the exact space Stage makes available (see
+            // its sx above), which is shorter than the full viewport
+            // (the AppBar and Stage's own layout already consume some of
+            // it) - 100vh would overflow that and force Stage itself to
+            // scroll too. height: '100%' fills the real available space
+            // instead, and Match's own overflow: auto (untouched by this
+            // override) is what actually scrolls.
+            //
+            // The background overrides replace Match's own default
+            // treatment (a solid color plus a repeating dot pattern) with
+            // nothing, letting Stage's own Farmhand Shuffle background
+            // (see Stage.tsx) show through instead - consistent with
+            // every other stage's own background export.
+            sx: {
+              height: '100%',
+              backgroundColor: 'transparent',
+              backgroundImage: 'none',
+            },
             renderStatusBarContent: () => (
               <WagerStatusBadge wager={farmhandShuffle.wager} />
             ),

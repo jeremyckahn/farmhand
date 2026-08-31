@@ -178,6 +178,16 @@ export const Stage = ({
                 marginLeft: `-${layout.narrowSidebarWidth}px`,
               },
             }),
+        // The embedded Farmhand Shuffle game manages its own internal
+        // scrolling (see Match's own overflow handling in
+        // FarmhandShuffleView.tsx) and fills this container edge-to-edge -
+        // letting Stage's own padding/overflow apply on top would produce
+        // a second, redundant scrollbar and a visible gap around it. Last
+        // in this object so it wins over the padding/paddingTop set by the
+        // conditionals above, regardless of their own flags.
+        ...(stageFocus === stageFocusType.FARMHAND_SHUFFLE
+          ? { overflow: 'hidden', padding: 0, paddingTop: 0 }
+          : {}),
       })}
     >
       <h2 className="view-title">{viewTitle}</h2>
