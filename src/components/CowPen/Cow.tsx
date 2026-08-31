@@ -187,19 +187,20 @@ export const Cow = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSelected, isTransitioning, cowInventory.length, move])
 
-  // Shows the hug animation whenever `happinessBoostsToday` increases.
+  // Shows the hug animation whenever `happinessBoostsToday` increases. The
+  // previous value is always synced to the current value (even when it
+  // decreases, e.g. by the daily reset in `computeCowInventoryForNextDay`)
+  // so that the first hug of a new day still animates, matching the
+  // class-component behavior of comparing against the previous render's
+  // props.
   useEffect(() => {
-    if (cow.happinessBoostsToday <= prevHappinessBoostsToday) {
-      return
-    }
+    const increased = cow.happinessBoostsToday > prevHappinessBoostsToday
 
     setPrevHappinessBoostsToday(cow.happinessBoostsToday)
 
-    if (showHugAnimation) {
-      return
+    if (increased && !showHugAnimation) {
+      setShowHugAnimation(true)
     }
-
-    setShowHugAnimation(true)
   }, [cow.happinessBoostsToday, prevHappinessBoostsToday, showHugAnimation])
 
   useEffect(() => {
