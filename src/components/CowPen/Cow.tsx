@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
 import { useCallback, useEffect, useState } from 'react'
 import { TweenState, Tweenable } from 'shifty'
+import { useIsMounted } from 'usehooks-ts'
 
 import { random } from '../../common/utils.js'
 import { LEFT, RIGHT } from '../../constants.js'
@@ -56,6 +57,7 @@ export const Cow = ({
   const [prevHappinessBoostsToday, setPrevHappinessBoostsToday] = useState(
     cow.happinessBoostsToday
   )
+  const isMounted = useIsMounted()
   const { x, y } = position
 
   const move = useCallback(
@@ -134,17 +136,13 @@ export const Cow = ({
 
   // Loads the cow's image on mount.
   useEffect(() => {
-    let isUnmounted = false
+    ;(async () => {
+      const loadedCowImage = await getCowImage(cow)
 
-    void getCowImage(cow).then(loadedCowImage => {
-      if (!isUnmounted) {
-        setCowImage(loadedCowImage)
-      }
-    })
+      if (isMounted() === false) return
 
-    return () => {
-      isUnmounted = true
-    }
+      setCowImage(loadedCowImage)
+    })()
     // Mount-only effect (the function-component equivalent of
     // `componentDidMount`): it must run exactly once, so `cow` is
     // intentionally omitted from the dependency array.
