@@ -63,7 +63,6 @@ export const Cow = ({
   const move = useCallback(
     async (from: CowPosition, fromDirection: CowMoveDirection) => {
       const newX = randomPosition()
-      const newY = randomPosition()
       const newDirection = newX < from.x ? LEFT : RIGHT
 
       setMoveDirection(newDirection)
@@ -113,12 +112,23 @@ export const Cow = ({
       setIsTransitioning(true)
 
       try {
+        // Drawn lazily (not alongside `newX`) to preserve the original
+        // `random()` call order across the optional flip await; the draw
+        // order matters because `random()` reads from a shared,
+        // optionally-seeded global PRNG.
+        const newY = randomPosition()
+
         await tweenable.tween({
           from: { x: from.x, y: from.y },
           to: { x: newX, y: newY },
           duration: transitionAnimationDuration,
-          render: ({ x: newXValue, y: newYValue }: any) => {
-            setPosition({ x: newXValue, y: newYValue })
+          render: (tweenState: TweenState) => {
+            if (
+              typeof tweenState.x === 'number' &&
+              typeof tweenState.y === 'number'
+            ) {
+              setPosition({ x: tweenState.x, y: tweenState.y })
+            }
           },
           easing: 'linear',
         })
