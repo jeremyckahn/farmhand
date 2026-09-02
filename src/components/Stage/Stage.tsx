@@ -132,6 +132,14 @@ export const Stage = ({
           [`@media (min-width: ${breakpoints.largePhone}px)`]: {
             display: 'none',
           },
+          // Farmhand Shuffle's own embedded UI (TurnControl) already
+          // provides page-level context, so this generic mobile-only
+          // title would just be redundant chrome eating into its
+          // limited vertical space - unlike every other view, which
+          // relies on it as their only heading on narrow screens.
+          ...(stageFocus === stageFocusType.FARMHAND_SHUFFLE && {
+            display: 'none',
+          }),
         },
         '& section': {
           padding: '0.5em 0',
