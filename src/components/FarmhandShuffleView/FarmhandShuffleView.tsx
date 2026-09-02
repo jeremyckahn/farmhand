@@ -379,11 +379,15 @@ export const FarmhandShuffleView = () => {
             // treatment (a solid color plus a repeating dot pattern) with
             // nothing, letting Stage's own Farmhand Shuffle background
             // (see Stage.tsx) show through instead - consistent with
-            // every other stage's own background export.
+            // every other stage's own background export. Match's default
+            // text color (white, meant to read against its own orange
+            // background) is overridden the same way now that Stage's
+            // own lighter background is showing through instead.
             sx: {
               height: '100%',
               backgroundColor: 'transparent',
               backgroundImage: 'none',
+              color: 'black',
             },
             renderStatusBarContent: () => (
               <WagerStatusBadge wager={farmhandShuffle.wager} />
