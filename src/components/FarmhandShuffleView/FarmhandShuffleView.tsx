@@ -10,6 +10,10 @@ import Button from '@mui/material/Button/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
+import Dialog from '@mui/material/Dialog/index.js'
+import DialogActions from '@mui/material/DialogActions/index.js'
+import DialogContent from '@mui/material/DialogContent/index.js'
+import DialogTitle from '@mui/material/DialogTitle/index.js'
 import TextField from '@mui/material/TextField/index.js'
 import NumberFormat from 'react-number-format'
 import {
@@ -161,6 +165,19 @@ export const FarmhandShuffleView = () => {
 
   const containerRef = useRef<HTMLDivElement | null>(null)
 
+  // The element the user clicked outside the match while it was still in
+  // progress, captured so its click can be re-dispatched (see
+  // bypassNextClickRef below) if they confirm they want to leave.
+  const [
+    pendingLeaveTarget,
+    setPendingLeaveTarget,
+  ] = useState<HTMLElement | null>(null)
+
+  // Set immediately before programmatically re-clicking pendingLeaveTarget,
+  // so handleClickCapture recognizes that replayed click as already-
+  // confirmed and lets it through instead of intercepting it again.
+  const bypassNextClickRef = useRef(false)
+
   // The wager is cleared from farmhand.state as soon as the match settles
   // (settleFarmhandShuffleMatch.ts), but the result screen still needs to
   // show what was actually at stake - so capture it locally while the match
@@ -226,6 +243,11 @@ export const FarmhandShuffleView = () => {
     }
 
     const handleClickCapture = (e: MouseEvent) => {
+      if (bypassNextClickRef.current) {
+        bypassNextClickRef.current = false
+        return
+      }
+
       if (
         containerRef.current &&
         e.target instanceof Node &&
@@ -241,18 +263,45 @@ export const FarmhandShuffleView = () => {
       // of it. Confirming "leave your match?" for these is a false
       // positive that made them appear broken (every click here got
       // silently swallowed by a declined confirm).
+      //
+      // .MuiModal-root covers every MUI Dialog/Modal in the app, not just
+      // this component's own leave-confirmation Dialog below - without
+      // it, that Dialog's own Cancel/Leave buttons (rendered outside
+      // containerRef, via a portal) would re-trigger this same guard on
+      // click, along with the interior content of any of Farmhand's other
+      // top-bar dialogs (achievements, stats, etc.) opened while a match
+      // is in progress. None of these navigate away from this stage
+      // either - they're overlays on top of it, same as the drawer.
       if (
         e.target instanceof Element &&
         e.target.closest(
-          '.sidebar-wrapper, [aria-label="Open drawer"], .AppBar'
+          '.sidebar-wrapper, [aria-label="Open drawer"], .AppBar, .MuiModal-root'
         )
       ) {
         return
       }
 
-      if (!window.confirm('Leave your Farmhand Shuffle match?')) {
+      // Not window.confirm(): a blocking native dialog triggered from a
+      // capture-phase document listener is silently suppressed in some
+      // browser/embedding contexts (observed here - it returns falsy
+      // immediately without ever presenting anything to the user),
+      // permanently blocking Previous/Next view navigation with no
+      // visible cause. A Dialog this component fully controls doesn't
+      // depend on the host allowing native dialogs at all.
+      if (e.target instanceof Element) {
+        // Click targets an icon (e.g. an <svg>/<path> inside a Fab) more
+        // often than the button itself, and SVG elements aren't
+        // HTMLElements - re-clicking one directly on confirm wouldn't
+        // reliably re-trigger the button's own handler. Resolving to the
+        // nearest actual interactive ancestor makes the later replay
+        // click() land on an element that's guaranteed to have one.
+        const interactiveTarget = (e.target.closest(
+          'button, a, [role="button"]'
+        ) ?? e.target) as HTMLElement
+
         e.preventDefault()
         e.stopImmediatePropagation()
+        setPendingLeaveTarget(interactiveTarget)
       }
     }
 
@@ -269,6 +318,21 @@ export const FarmhandShuffleView = () => {
       window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   }, [farmhandShuffle.isMatchInProgress, matchPhase])
+
+  const handleConfirmLeaveMatch = () => {
+    const target = pendingLeaveTarget
+
+    setPendingLeaveTarget(null)
+
+    if (target) {
+      bypassNextClickRef.current = true
+      target.click()
+    }
+  }
+
+  const handleCancelLeaveMatch = () => {
+    setPendingLeaveTarget(null)
+  }
 
   const handleSubmitWager = () => {
     handlers.handlePlaceFarmhandShuffleWager(wagerInputValue)
@@ -407,6 +471,21 @@ export const FarmhandShuffleView = () => {
           }}
         />
       )}
+      <Dialog
+        open={pendingLeaveTarget !== null}
+        onClose={handleCancelLeaveMatch}
+      >
+        <DialogTitle>Leave your Farmhand Shuffle match?</DialogTitle>
+        <DialogContent>
+          Progress since your last completed turn will be lost.
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelLeaveMatch}>Cancel</Button>
+          <Button onClick={handleConfirmLeaveMatch} color="warning">
+            Leave
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Div>
   )
 }
