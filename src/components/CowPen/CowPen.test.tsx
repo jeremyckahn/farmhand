@@ -205,4 +205,78 @@ describe('Cow', () => {
     expect(cowElement).toBeInTheDocument()
     expect(cowElement).not.toHaveClass('is-selected')
   })
+
+  test('shows the hug animation when happinessBoostsToday increases', () => {
+    const { rerender, container } = render(
+      <Cow
+        {...defaultCowProps}
+        cow={{ ...defaultCowProps.cow, happinessBoostsToday: 0 }}
+      />
+    )
+
+    const heart = () => container.querySelector('.fa-heart.animation')
+
+    rerender(
+      <Cow
+        {...defaultCowProps}
+        cow={{ ...defaultCowProps.cow, happinessBoostsToday: 1 }}
+      />
+    )
+
+    expect(heart()?.getAttribute('class')).toContain('is-animating')
+  })
+
+  test('stops the hug animation after it completes', () => {
+    const { rerender, container } = render(
+      <Cow
+        {...defaultCowProps}
+        cow={{ ...defaultCowProps.cow, happinessBoostsToday: 0 }}
+      />
+    )
+
+    const heart = () => container.querySelector('.fa-heart.animation')
+
+    rerender(
+      <Cow
+        {...defaultCowProps}
+        cow={{ ...defaultCowProps.cow, happinessBoostsToday: 1 }}
+      />
+    )
+    expect(heart()?.getAttribute('class')).toContain('is-animating')
+
+    vi.advanceTimersByTime(750)
+
+    expect(heart()?.getAttribute('class')).not.toContain('is-animating')
+  })
+
+  test('shows the hug animation after the daily reset of happinessBoostsToday', () => {
+    // The cow was hugged the maximum number of times today.
+    const { rerender, container } = render(
+      <Cow
+        {...defaultCowProps}
+        cow={{ ...defaultCowProps.cow, happinessBoostsToday: 3 }}
+      />
+    )
+
+    const heart = () => container.querySelector('.fa-heart.animation')
+
+    // Midnight: the daily reset brings the boost count back down.
+    rerender(
+      <Cow
+        {...defaultCowProps}
+        cow={{ ...defaultCowProps.cow, happinessBoostsToday: 0 }}
+      />
+    )
+    vi.advanceTimersByTime(100)
+
+    // The first hug of the new day still animates.
+    rerender(
+      <Cow
+        {...defaultCowProps}
+        cow={{ ...defaultCowProps.cow, happinessBoostsToday: 1 }}
+      />
+    )
+
+    expect(heart()?.getAttribute('class')).toContain('is-animating')
+  })
 })
