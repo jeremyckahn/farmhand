@@ -23,7 +23,7 @@ test('forfeiting an in-progress match counts it as a loss and returns to the wag
 
   await goToFarmhandShuffle(page)
 
-  await typeWager(page, '5')
+  await typeWager(page, '50')
   await page.getByRole('button', { name: 'Start Match' }).click()
 
   await expect(page.getByTestId('match')).toBeVisible()
@@ -66,7 +66,7 @@ test('cancelling the forfeit confirmation leaves the match in progress', async (
 
   await goToFarmhandShuffle(page)
 
-  await typeWager(page, '5')
+  await typeWager(page, '50')
   await page.getByRole('button', { name: 'Start Match' }).click()
 
   await expect(page.getByTestId('match')).toBeVisible()
