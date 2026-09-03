@@ -331,6 +331,11 @@ export const FarmhandShuffleView = () => {
             onMatchEnd: handleMatchEnd,
             onCheckpoint: handleCheckpoint,
             hideDefaultGameOverActions: true,
+            // The bot opponent is always the same fixed id (BOT_PLAYER_ID) -
+            // a generated animal name for it would be out of place inside
+            // Farmhand, which has no other concept of naming NPCs. See
+            // farmhand-shuffle's MatchProps.useGenericPlayerLabels.
+            useGenericPlayerLabels: true,
             // Not fullHeight (100vh): FarmhandShuffleView's own root div
             // already fills the exact space Stage makes available (see
             // its sx above), which is shorter than the full viewport
