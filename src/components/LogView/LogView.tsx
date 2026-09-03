@@ -2,8 +2,10 @@ import React from 'react'
 import { array } from 'prop-types'
 import Alert from '@mui/material/Alert/index.js'
 import { AlertColor } from '@mui/material'
-import ReactMarkdown from 'react-markdown'
+
 import Divider from '@mui/material/Divider/index.js'
+
+import { Markdown } from '../Markdown/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { Div } from '../Elements/index.js'
@@ -41,7 +43,7 @@ export const LogView = ({
                 },
               }}
             >
-              <ReactMarkdown {...{ source: message }} />
+              <Markdown {...{ children: message }} />
             </Alert>
           </li>
         )
@@ -71,10 +73,10 @@ export const LogView = ({
                     {notifications[
                       severityLevel as keyof farmhand.notificationLogEntry['notifications']
                     ].map((message: string, messageIndex: number) => (
-                      <ReactMarkdown
+                      <Markdown
                         {...{
                           key: `${messageIndex}_${message}`,
-                          source: message,
+                          children: message,
                         }}
                       />
                     ))}

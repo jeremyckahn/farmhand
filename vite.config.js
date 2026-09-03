@@ -54,6 +54,16 @@ const viteConfig = defineConfig({
       injectRegister: 'auto',
       filename: 'service-worker.js',
       manifest,
+      workbox: {
+        // The main bundle crossed workbox's default 2 MiB precache limit
+        // after upgrading to React 18 and react-markdown v10 (whose
+        // unified/remark-based dependency tree is much larger than v4's),
+        // and again after adding @jeremyckahn/farmhand-shuffle (which pulls
+        // in its own react-router-dom/xstate/etc. dependency tree). Raise
+        // the limit rather than leave the asset stale/un-precached; revisit
+        // with code-splitting if the bundle keeps growing.
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+      },
     }),
     // NOTE: This makes Vite treat .js files as .jsx (for legacy support)
     // See: https://stackoverflow.com/a/76458411/470685
@@ -97,6 +107,18 @@ const vitestConfig = vitestDefineConfig({
     setupFiles: './src/setupTests.ts',
     restoreMocks: true,
     dir: 'src',
+    server: {
+      deps: {
+        // @jeremyckahn/farmhand-shuffle's dist-lib bundle uses deep,
+        // extensionless MUI import paths (e.g. `@mui/material/Button`),
+        // which are valid for a bundler's resolution but not for Node's
+        // native ESM loader. Vitest externalizes node_modules packages by
+        // default (loading them via Node directly instead of through
+        // Vite's transform pipeline), which breaks on those imports.
+        // Inlining this package routes it through Vite's resolver instead.
+        inline: [/@jeremyckahn\/farmhand-shuffle/],
+      },
+    },
     coverage: {
       reporter: ['text', 'html'],
       exclude: ['node_modules', 'src/setupTests.ts', 'dist', 'src/__mocks__'],

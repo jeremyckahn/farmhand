@@ -1,0 +1,806 @@
+{
+  "allowCustomPeerCowNames": false,
+  "cellarInventory": [],
+  "completedAchievements": {
+    "plant-crop": true,
+    "water-crop": true
+  },
+  "cowBreedingPen": {
+    "cowId1": null,
+    "cowId2": null,
+    "daysUntilBirth": -1
+  },
+  "cowColorsPurchased": {},
+  "cowForSale": {
+    "baseWeight": 1601,
+    "color": "GREEN",
+    "colorsInBloodline": {
+      "GREEN": true
+    },
+    "daysOld": 1,
+    "daysSinceMilking": 0,
+    "daysSinceProducingFertilizer": 0,
+    "gender": "FEMALE",
+    "happiness": 0,
+    "happinessBoostsToday": 0,
+    "id": "b93a9c59-f73f-4986-b44e-ffb422bcd4c2",
+    "isBred": false,
+    "isUsingHuggingMachine": false,
+    "name": "Guava",
+    "ownerId": "",
+    "originalOwnerId": "",
+    "timesTraded": 0,
+    "weightMultiplier": 1
+  },
+  "cowInventory": [],
+  "cowsSold": {},
+  "cowsTraded": 0,
+  "cropsHarvested": {},
+  "dayCount": 6,
+  "experience": 130000,
+  "farmName": "Unnamed",
+  "field": [
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null]
+  ],
+  "forest": [
+    [
+      {
+        "itemId": "apple",
+        "daysOld": 25,
+        "daysSinceLastHarvest": 6
+      },
+      null,
+      null,
+      null
+    ],
+    [null, null, null, null]
+  ],
+  "historicalDailyLosses": [0, 0, 0, 0, -143.7],
+  "historicalDailyRevenue": [0, 0, 0, 0, 0],
+  "historicalValueAdjustments": [
+    {
+      "asparagus": 1.254561372610583,
+      "asparagus-seed": 0.8845336867381606,
+      "bronze-ore": 0.8820993693168143,
+      "carrot": 0.5151057244898383,
+      "carrot-seed": 0.8007552689761459,
+      "corn": 1.0577673788621866,
+      "corn-seed": 0.8492871019468962,
+      "garlic": 0.6502095798811709,
+      "garlic-seed": 0.6776417342031218,
+      "gold-ore": 1.1584127926987628,
+      "grape-cabernet-sauvignon": 1.0811524144134221,
+      "grape-chardonnay": 0.9566018874265536,
+      "grape-nebbiolo": 1.038616184743502,
+      "grape-sauvignon-blanc": 0.8420890144753135,
+      "grape-seed": 0.8711888712889699,
+      "grape-tempranillo": 0.8417473069445603,
+      "iron-ore": 0.8565852787467081,
+      "jalapeno": 0.8938267219202933,
+      "jalapeno-seed": 1.2806755799922187,
+      "olive": 0.894838025775234,
+      "olive-seed": 0.5819676400592492,
+      "onion": 1.388841964280044,
+      "onion-seed": 0.5548354705668044,
+      "pea": 1.4270874498629684,
+      "pea-seed": 1.3014170459989431,
+      "potato": 1.198063016021274,
+      "potato-seed": 1.1227007201477113,
+      "pumpkin": 1.256866505382895,
+      "pumpkin-seed": 0.9762702998744324,
+      "salt-rock": 1.318355654482557,
+      "silver-ore": 0.8675044285411415,
+      "soybean": 0.5974111121058051,
+      "soybean-seed": 1.2994025472815358,
+      "spinach": 1.3888914334365705,
+      "spinach-seed": 0.6511206276246511,
+      "strawberry": 0.6648639912973919,
+      "strawberry-seed": 1.2151617642366415,
+      "sunflower": 0.6441195107880303,
+      "sunflower-seed": 1.088430125646544,
+      "sweet-potato": 0.6854892825193449,
+      "sweet-potato-seed": 0.993009857740943,
+      "tomato": 1.287432200495485,
+      "tomato-seed": 1.1243978023384449,
+      "watermelon": 1.0980278225758555,
+      "watermelon-seed": 1.1400979011983594,
+      "wheat": 0.8063919814881977,
+      "wheat-seed": 0.9399986471778438
+    }
+  ],
+  "hoveredPlotRangeSize": 7,
+  "inventory": [
+    {
+      "id": "apple-sapling",
+      "quantity": 1
+    }
+  ],
+  "inventoryLimit": 100,
+  "isCombineEnabled": false,
+  "itemsSold": {},
+  "cellarItemsSold": {},
+  "learnedRecipes": {},
+  "loanBalance": 552.03,
+  "loansTakenOut": 1,
+  "money": 500,
+  "newDayNotifications": [],
+  "notificationLog": [
+    {
+      "day": 6,
+      "notifications": {
+        "error": [],
+        "info": ["It rained in the night!"],
+        "success": [],
+        "warning": ["Your loan balance has grown to $552.03."]
+      }
+    },
+    {
+      "day": 5,
+      "notifications": {
+        "error": [],
+        "info": [],
+        "success": [],
+        "warning": ["Your loan balance has grown to $541.21."]
+      }
+    },
+    {
+      "day": 4,
+      "notifications": {
+        "error": [],
+        "info": [],
+        "success": [],
+        "warning": ["Your loan balance has grown to $530.60."]
+      }
+    },
+    {
+      "day": 3,
+      "notifications": {
+        "error": [],
+        "info": [],
+        "success": [],
+        "warning": ["Your loan balance has grown to $520.20."]
+      }
+    },
+    {
+      "day": 2,
+      "notifications": {
+        "error": [],
+        "info": ["It rained in the night!"],
+        "success": [],
+        "warning": ["Your loan balance has grown to $510.00."]
+      }
+    }
+  ],
+  "priceCrashes": {},
+  "priceSurges": {},
+  "profitabilityStreak": 0,
+  "purchasedCombine": 0,
+  "purchasedComposter": 0,
+  "purchasedCowPen": 1,
+  "purchasedCellar": 1,
+  "purchasedField": 0,
+  "purchasedForest": 1,
+  "purchasedSmelter": 0,
+  "record7dayProfitAverage": 0,
+  "recordProfitabilityStreak": 0,
+  "recordSingleDayProfit": 0,
+  "revenue": 0,
+  "showHomeScreen": true,
+  "showNotifications": true,
+  "todaysLosses": -250000,
+  "todaysPurchases": {},
+  "todaysRevenue": 0,
+  "todaysStartingInventory": {
+    "apple-sapling": 1
+  },
+  "toolLevels": {
+    "HOE": "DEFAULT",
+    "SCYTHE": "DEFAULT",
+    "SHOVEL": "UNAVAILABLE",
+    "WATERING_CAN": "DEFAULT"
+  },
+  "useAlternateEndDayButtonPosition": false,
+  "valueAdjustments": {
+    "asparagus": 0.7710329471429687,
+    "asparagus-seed": 0.6047945736371781,
+    "bronze-ore": 0.6523314669735881,
+    "carrot": 1.148946183956264,
+    "carrot-seed": 1.150865016558905,
+    "corn": 1.2916975621660312,
+    "corn-seed": 0.8194585108692283,
+    "garlic": 0.5890389828828759,
+    "garlic-seed": 1.0461378148234952,
+    "gold-ore": 1.1866263486101722,
+    "grape-cabernet-sauvignon": 0.9051176034381517,
+    "grape-chardonnay": 1.0449007660226393,
+    "grape-nebbiolo": 0.8715697232156476,
+    "grape-sauvignon-blanc": 0.6310523029050967,
+    "grape-seed": 0.9253596435820454,
+    "grape-tempranillo": 0.6756200431464858,
+    "iron-ore": 1.1565063783102898,
+    "jalapeno": 0.7091052379238315,
+    "jalapeno-seed": 1.132727916247675,
+    "olive": 1.311369163510936,
+    "olive-seed": 0.9192617853490546,
+    "onion": 0.7145057442803753,
+    "onion-seed": 0.6384400392400458,
+    "pea": 1.3438668707129882,
+    "pea-seed": 0.947899535167928,
+    "potato": 0.9114908865313538,
+    "potato-seed": 1.1068364751179312,
+    "pumpkin": 0.8377832985809028,
+    "pumpkin-seed": 1.4440859731959748,
+    "salt-rock": 1.3505767817681624,
+    "silver-ore": 0.9160677427267769,
+    "soybean": 0.7877249923876428,
+    "soybean-seed": 1.062021364573846,
+    "spinach": 1.2699413150967442,
+    "spinach-seed": 0.8490869162420625,
+    "strawberry": 1.41618172037454,
+    "strawberry-seed": 0.8777549220278436,
+    "sunflower": 0.5903344778618149,
+    "sunflower-seed": 0.974090939308244,
+    "sweet-potato": 0.5906894671175695,
+    "sweet-potato-seed": 0.6012857315253939,
+    "tomato": 1.1936926336320215,
+    "tomato-seed": 0.7109397222579946,
+    "watermelon": 0.666622692558885,
+    "watermelon-seed": 1.0104982645951823,
+    "wheat": 0.8632829757532291,
+    "wheat-seed": 0.7821587302079209
+  },
+  "version": "1.18.26",
+  "playerId": "3ecf9f86-f94d-4810-9505-0b890cc71fcc",
+  "farmhandShuffle": {
+    "isMatchInProgress": true,
+    "wager": 50,
+    "serializedMatch": {
+      "libraryVersion": "0.0.1",
+      "matchState": "WAITING_FOR_PLAYER_TURN_ACTION",
+      "match": {
+        "sessionOwnerPlayerId": "3ecf9f86-f94d-4810-9505-0b890cc71fcc",
+        "table": {
+          "players": {
+            "3ecf9f86-f94d-4810-9505-0b890cc71fcc": {
+              "id": "3ecf9f86-f94d-4810-9505-0b890cc71fcc",
+              "funds": 4,
+              "deck": [
+                {
+                  "id": "water",
+                  "instanceId": "0902d4b7-f5b9-486b-9896-3580758f6be8"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "9093a19b-a41a-4b2d-9b7e-98eb5ab4c26d"
+                },
+                {
+                  "id": "potato",
+                  "instanceId": "04a71486-62a8-4a73-b8e4-2ed426215749"
+                },
+                {
+                  "id": "garlic",
+                  "instanceId": "396790a9-f337-4c46-90f4-b22dfd8857f0"
+                },
+                {
+                  "id": "carrot",
+                  "instanceId": "8bf03653-1d2f-4e45-babe-2220c90d18de"
+                },
+                {
+                  "id": "pumpkin",
+                  "instanceId": "4791cccd-9424-4531-acc9-bc83c9c0bc7c"
+                },
+                {
+                  "id": "sprinkler",
+                  "instanceId": "942b3456-e84f-412e-86e1-832ed2102654"
+                },
+                {
+                  "id": "shovel",
+                  "instanceId": "3a5460d9-fc4e-4301-8741-21761946640f"
+                },
+                {
+                  "id": "pumpkin",
+                  "instanceId": "cc0e568c-45ed-4ca8-a6ca-d1ff427a2b82"
+                },
+                {
+                  "id": "garlic",
+                  "instanceId": "cce28e30-5a1c-4148-90e5-58f179da67a9"
+                },
+                {
+                  "id": "tomato",
+                  "instanceId": "92d75996-4ce6-4179-94be-560237cae192"
+                },
+                {
+                  "id": "tomato",
+                  "instanceId": "ecc18537-a983-4ae8-ba3b-6ce3e79dbd92"
+                },
+                {
+                  "id": "shovel",
+                  "instanceId": "b76d1797-eebd-4a44-989e-5a39418762fd"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "07e9e3ee-30c4-452a-9730-c6a9d141061b"
+                },
+                {
+                  "id": "pea",
+                  "instanceId": "a1989838-91a5-4041-a42a-2ebea2f02868"
+                },
+                {
+                  "id": "sprinkler",
+                  "instanceId": "e1f48131-dbdc-409c-81f0-d00a0d93236c"
+                },
+                {
+                  "id": "corn",
+                  "instanceId": "966a15d3-e09b-48eb-b629-1c61c8b00c51"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "6d0f621d-dfc8-4a4d-9f09-9ddedfd40161"
+                },
+                {
+                  "id": "sprinkler",
+                  "instanceId": "f9c29504-9b88-40af-9574-25678e88ee0a"
+                },
+                {
+                  "id": "pea",
+                  "instanceId": "73c4b355-d02d-4ee8-9b2c-b5ca1a24392b"
+                },
+                {
+                  "id": "corn",
+                  "instanceId": "6a7e96e0-661e-4c29-9771-a66f227392e8"
+                },
+                {
+                  "id": "corn",
+                  "instanceId": "6cc97d3b-e2a4-44df-a280-3dd5f2677cf0"
+                },
+                {
+                  "id": "potato",
+                  "instanceId": "ec9766ae-4c4f-401f-a33f-94cfa4515212"
+                },
+                {
+                  "id": "garlic",
+                  "instanceId": "60849597-e308-4858-a270-bb60746dc078"
+                },
+                {
+                  "id": "rain",
+                  "instanceId": "bdb6156f-baee-4f3c-a604-d28be7831607"
+                },
+                {
+                  "id": "rain",
+                  "instanceId": "d48ddd60-9ff3-4f38-b86a-d39613ba781b"
+                },
+                {
+                  "id": "pea",
+                  "instanceId": "429f4aec-2319-40fe-b442-ee3b2aba1c69"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "8abd39d6-72dc-4a15-b556-520ae0f11b85"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "7182261a-9f71-4a9e-8183-e0b50d9a930c"
+                },
+                {
+                  "id": "potato",
+                  "instanceId": "a1aa9ed2-8efe-4ae9-82af-2a63246b9858"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "fc4e41a0-9ca8-4aea-acea-b38f5af6c123"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "c74874f8-963c-45c2-a223-c48c7024c43e"
+                },
+                {
+                  "id": "carrot",
+                  "instanceId": "7d08f5e8-5277-4606-b974-85c1e0f6705e"
+                },
+                {
+                  "id": "carrot",
+                  "instanceId": "e74954b7-e99f-462d-9538-3bf936bd2013"
+                },
+                {
+                  "id": "garlic",
+                  "instanceId": "604fc877-01a9-44d5-a785-c339aa039816"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "586d5402-b4d6-4c43-8ca0-9d4f79ad0c88"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "eb964deb-f17d-40ef-890c-33b9e8eb448a"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "38dfdcbf-5098-4b1c-9823-82a0221ffea3"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "7040c3aa-19d7-422b-8842-fe0a7ee57379"
+                },
+                {
+                  "id": "sprinkler",
+                  "instanceId": "4722e171-c1e1-4cf1-ab02-bbc9dc126ce0"
+                },
+                {
+                  "id": "shovel",
+                  "instanceId": "6bb2dcd9-d54c-4053-9639-615c5fe7bd8d"
+                },
+                {
+                  "id": "rain",
+                  "instanceId": "b2b85d3e-9dfd-415a-8d87-1760bbef2347"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "6469a1f4-1b16-49b3-976e-9964fe024762"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "eb6965cb-75c1-46f4-b93e-0ffaa9586dbc"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "88fb3e7f-ecfd-4104-9efe-8bda16c1bed5"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "6059649c-9fb8-48db-a11f-41abb4d6306e"
+                },
+                {
+                  "id": "tomato",
+                  "instanceId": "f116b1d7-f4a0-4493-b5ca-6de5dc931657"
+                },
+                {
+                  "id": "rain",
+                  "instanceId": "61a0f206-f7de-4959-a629-271330bd65b5"
+                },
+                {
+                  "id": "tomato",
+                  "instanceId": "67dd010a-99dc-4efd-b74e-3e7553ef7610"
+                },
+                {
+                  "id": "shovel",
+                  "instanceId": "dab1f93b-ab9b-4868-a8e5-0b98d0bf845f"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "8ce6f4a0-35b9-4385-8aa8-7c2688b74a35"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "4d13eb7d-1132-43a2-b828-78d9ed19b442"
+                },
+                {
+                  "id": "pea",
+                  "instanceId": "8f886f21-9714-45ee-b9ae-79604fa8f0c1"
+                }
+              ],
+              "hand": [
+                {
+                  "id": "potato",
+                  "instanceId": "5e67d3d3-a971-47eb-b108-21e756c8a17e"
+                },
+                {
+                  "id": "pumpkin",
+                  "instanceId": "7dac4120-babd-4fa3-83f4-d9d58ca122e7"
+                },
+                {
+                  "id": "carrot",
+                  "instanceId": "37aa81ee-175e-4480-b034-9870b1580e9b"
+                },
+                {
+                  "id": "corn",
+                  "instanceId": "06ababf5-c878-411d-95e5-ebce4846c701"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "06234e42-6997-435d-835a-e6e80113a77f"
+                },
+                {
+                  "id": "pumpkin",
+                  "instanceId": "ae5f236b-3703-4b19-9e03-ef5447001aa4"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "bfa27562-b063-4961-bb1f-aaf97bbf29aa"
+                }
+              ],
+              "discardPile": [],
+              "field": {
+                "cards": []
+              },
+              "cardsPlayedDuringTurn": []
+            },
+            "farmhand-shuffle-bot": {
+              "id": "farmhand-shuffle-bot",
+              "funds": 50,
+              "deck": [
+                {
+                  "id": "water",
+                  "instanceId": "d748fac6-3fc0-49bf-9cec-02481e7759ad"
+                },
+                {
+                  "id": "carrot",
+                  "instanceId": "95c2b6de-fadb-406e-ad54-ce4e14df4dc0"
+                },
+                {
+                  "id": "tomato",
+                  "instanceId": "39d55209-6ffa-4add-a20e-012bdc3e1828"
+                },
+                {
+                  "id": "garlic",
+                  "instanceId": "2d652aa5-7209-4394-b2a4-338f7ba3e80f"
+                },
+                {
+                  "id": "corn",
+                  "instanceId": "b69d4f90-a2b4-4699-b2ed-dbff19b8cde4"
+                },
+                {
+                  "id": "rain",
+                  "instanceId": "2508a747-c5fc-4b03-b9bb-08f4021ed1f9"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "81bc78eb-7cfa-4701-bef0-d095204ea670"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "af46304d-accd-4371-8e28-b585dd04a42f"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "8099a873-1a07-44c1-9677-13593ca71d86"
+                },
+                {
+                  "id": "potato",
+                  "instanceId": "7cc7574d-9bce-44a0-8aa3-e0d91376c79c"
+                },
+                {
+                  "id": "shovel",
+                  "instanceId": "91180ef1-a316-4ef9-949c-88891b67674f"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "5c8b4bae-0374-4aeb-a95d-307de9d84f3d"
+                },
+                {
+                  "id": "rain",
+                  "instanceId": "65fb8526-9eae-4de8-aad4-367b6317051a"
+                },
+                {
+                  "id": "garlic",
+                  "instanceId": "57f730e3-3768-4904-ab06-9154db9e8140"
+                },
+                {
+                  "id": "rain",
+                  "instanceId": "1880ac10-b34f-43e5-a6ca-498dcb8df4fd"
+                },
+                {
+                  "id": "sprinkler",
+                  "instanceId": "201e3657-ed32-4fff-8136-36a5e7239d69"
+                },
+                {
+                  "id": "corn",
+                  "instanceId": "8d2118b0-3c6a-4708-94cb-6290408c805f"
+                },
+                {
+                  "id": "rain",
+                  "instanceId": "9a34afc0-c884-4c66-aa0a-0d142df1890b"
+                },
+                {
+                  "id": "potato",
+                  "instanceId": "d066b6aa-3737-4960-9b9d-e84b3de5fa7c"
+                },
+                {
+                  "id": "sprinkler",
+                  "instanceId": "99804896-e212-4528-bf49-0fbf2dfea0ec"
+                },
+                {
+                  "id": "carrot",
+                  "instanceId": "e6591f82-42e7-4bfa-918e-55443a1e2834"
+                },
+                {
+                  "id": "corn",
+                  "instanceId": "15197a9d-2081-4b20-a1e6-0dde98d76dc3"
+                },
+                {
+                  "id": "tomato",
+                  "instanceId": "c93fe275-68bc-4855-9629-32ca5354ddb6"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "4fea07a0-5e88-4f53-a1b6-1f0d0a4e8eaa"
+                },
+                {
+                  "id": "tomato",
+                  "instanceId": "b160d9d5-e919-497a-8ecd-73b29b71cf66"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "2841d06f-b16d-496c-8a86-330dbc8db84f"
+                },
+                {
+                  "id": "corn",
+                  "instanceId": "b0011762-d871-4e29-994a-5e8f2ac76e15"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "2f206a29-5094-43de-83f8-0a69d4e1ceff"
+                },
+                {
+                  "id": "shovel",
+                  "instanceId": "242a058f-d1e5-4878-9fa9-e0c8a053b6f3"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "c4ad9187-b064-413c-945e-6559b888fa9f"
+                },
+                {
+                  "id": "pumpkin",
+                  "instanceId": "0c52ef79-1526-4a9d-b652-f5a67ef61239"
+                },
+                {
+                  "id": "garlic",
+                  "instanceId": "5b7b9e9f-fcd7-4257-a3b6-132ed8eff9d7"
+                },
+                {
+                  "id": "shovel",
+                  "instanceId": "d2fa0d42-47a6-4327-8eec-475c8767c5d1"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "98c63aaf-0887-4799-8d18-383564ddc62f"
+                },
+                {
+                  "id": "pea",
+                  "instanceId": "3176544e-a4f9-4230-9340-f191801ee6d4"
+                },
+                {
+                  "id": "potato",
+                  "instanceId": "1b21f059-34f0-41d5-b685-82898e801a79"
+                },
+                {
+                  "id": "shovel",
+                  "instanceId": "ba3c744c-af77-441b-ad82-3c099a5b8cfd"
+                },
+                {
+                  "id": "pea",
+                  "instanceId": "8b09cc42-a8af-4fe1-a371-28dde3fa4483"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "6b28d2ea-633f-46f2-ba25-01bc59574aa6"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "df0e8ee1-a0e0-4753-8af1-6e89ebc417bb"
+                },
+                {
+                  "id": "garlic",
+                  "instanceId": "78202239-c3fa-415b-b12c-9f99560713fd"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "3ab3ebe0-407e-48c9-a222-c830948e1f50"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "6621933f-7a4d-4083-9e28-40e8747ee354"
+                },
+                {
+                  "id": "sprinkler",
+                  "instanceId": "00314edb-4f15-4f14-b5c1-961e16efdf9d"
+                },
+                {
+                  "id": "pea",
+                  "instanceId": "f40ffe1e-2cde-46eb-81e3-92bb927e53d1"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "1b0fad3e-d00e-40e8-b9d6-745208724e08"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "47119396-6f81-4bd6-a910-621cb3fdabd3"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "1f67d67b-bdeb-4471-8b9b-587967aa9e8e"
+                },
+                {
+                  "id": "carrot",
+                  "instanceId": "7deef308-197c-48d0-b20a-a8671d451317"
+                },
+                {
+                  "id": "potato",
+                  "instanceId": "beb7bb4c-6b4c-449d-b2d7-0df2a822cb70"
+                },
+                {
+                  "id": "carrot",
+                  "instanceId": "aa1b6c55-4077-4199-9779-80f96640c253"
+                },
+                {
+                  "id": "pumpkin",
+                  "instanceId": "4fe74390-0556-450c-bdcc-31934d3533bb"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "1d725fae-4618-42d9-bc3c-9f0e44c0f40a"
+                }
+              ],
+              "hand": [
+                {
+                  "id": "pumpkin",
+                  "instanceId": "db37007a-240f-4cd3-9f6c-c293ce1ffbe8"
+                },
+                {
+                  "id": "pea",
+                  "instanceId": "d07f0bbc-1bae-4f78-936f-8dfd2cffa87e"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "2cda4d36-3d97-4dc2-90fc-5d0c2c6272bb"
+                },
+                {
+                  "id": "water",
+                  "instanceId": "df7c5e20-d004-4388-8799-42adf0d800c5"
+                },
+                {
+                  "id": "pumpkin",
+                  "instanceId": "3a434d92-2548-45ca-928b-fc3d09a5e0c7"
+                },
+                {
+                  "id": "tomato",
+                  "instanceId": "f9c8d2eb-2408-48c8-840e-6262cdadcd97"
+                },
+                {
+                  "id": "sprinkler",
+                  "instanceId": "191e3687-1dc9-4e06-84db-1214b2175107"
+                }
+              ],
+              "discardPile": [],
+              "field": {
+                "cards": []
+              },
+              "cardsPlayedDuringTurn": []
+            }
+          },
+          "communityFund": 0
+        },
+        "turn": 0,
+        "currentPlayerId": "3ecf9f86-f94d-4810-9505-0b890cc71fcc",
+        "buffedCrop": null,
+        "nerfedCrop": null,
+        "cardsToDrawAtTurnStart": 1,
+        "eventCardsThatCanBePlayed": 1,
+        "winner": null,
+        "selectedWaterCardInHandIdx": -1
+      },
+      "botState": {
+        "cropCardIndicesToHarvest": [],
+        "cropsToPlayDuringTurn": 0,
+        "fieldCropIndicesToWaterDuringTurn": [],
+        "toolCardsThatCanBePlayed": 0
+      },
+      "userPlayerId": "3ecf9f86-f94d-4810-9505-0b890cc71fcc",
+      "opponentPlayerId": "farmhand-shuffle-bot"
+    },
+    "totalMatchesPlayed": 0,
+    "totalWins": 0,
+    "totalLosses": 0,
+    "currentWinStreak": 0,
+    "longestWinStreak": 0
+  }
+}

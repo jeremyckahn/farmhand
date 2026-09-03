@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
@@ -177,9 +177,11 @@ describe('Cow', () => {
     // Fast-forward time to trigger animations
     vitest.advanceTimersByTime(5000)
 
-    await waitFor(() => {
-      expect(cowElement).toBeInTheDocument()
-    })
+    // Not wrapped in waitFor: with fake timers active, waitFor's polling
+    // interval never fires again after this point (nothing advances the
+    // fake clock further), so it would hang until the outer test timeout
+    // instead of re-checking. The assertion is already true synchronously.
+    expect(cowElement).toBeInTheDocument()
   })
 
   test('stops movement when cow is selected', () => {

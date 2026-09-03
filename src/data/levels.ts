@@ -105,6 +105,10 @@ levels[34] = {
   unlocksShopItem: items.garlicSeed.id,
 }
 
+levels[35] = {
+  unlocksStageFocusType: stageFocusType.FARMHAND_SHUFFLE,
+}
+
 levels[36] = {
   unlocksShopItem: items.sweetPotatoSeed.id,
 }

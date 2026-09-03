@@ -124,7 +124,14 @@ const Farmhand = (props: FarmhandProps) => {
                     easing: t.transitions.easing.easeOut,
                   }),
                   width: 0,
-                  zIndex: 20,
+                  // Was 20: the embedded Farmhand Shuffle view can render
+                  // its own fixed-position controls (e.g. the hide/show
+                  // Hand button) near the same screen area on narrow
+                  // viewports. This is Farmhand's own primary navigation -
+                  // it should never be visually contested by any embedded
+                  // view's content, so it gets the same z-index tier as
+                  // the end-day button rather than an arbitrary low value.
+                  zIndex: Z_INDEX.END_DAY_BUTTON,
                   [`@media (max-width: ${breakpoints.mediumPhone}px)`]: {
                     bottom: '0.5em',
                   },
@@ -242,27 +249,29 @@ const Farmhand = (props: FarmhandProps) => {
                   </Fab>
                 </div>
               </div>
-              <Tooltip
-                placement="left"
-                title={
-                  <>
-                    <p>
-                      End the day to save your progress and advance the game.
-                    </p>
-                    <p>(shift + c)</p>
-                  </>
-                }
-              >
-                <Fab
-                  aria-label="End the day to save your progress and advance the game."
-                  className="end-day"
-                  color="error"
-                  onClick={handlers.handleClickEndDayButton}
-                  sx={{ zIndex: Z_INDEX.END_DAY_BUTTON }}
+              {!gameState.farmhandShuffle.isMatchInProgress && (
+                <Tooltip
+                  placement="left"
+                  title={
+                    <>
+                      <p>
+                        End the day to save your progress and advance the game.
+                      </p>
+                      <p>(shift + c)</p>
+                    </>
+                  }
                 >
-                  <HotelIcon />
-                </Fab>
-              </Tooltip>
+                  <Fab
+                    aria-label="End the day to save your progress and advance the game."
+                    className="end-day"
+                    color="error"
+                    onClick={handlers.handleClickEndDayButton}
+                    sx={{ zIndex: Z_INDEX.END_DAY_BUTTON }}
+                  >
+                    <HotelIcon />
+                  </Fab>
+                </Tooltip>
+              )}
             </Div>
             {isChatAvailable ? <ChatRoom /> : null}
             <NotificationSystem />
