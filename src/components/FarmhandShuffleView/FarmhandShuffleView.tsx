@@ -34,8 +34,9 @@ const FARMHAND_SHUFFLE_LIBRARY_VERSION = farmhandShufflePackageJson.version
 
 // v1 uses one fixed, symmetric starter deck for both sides (see the
 // integration plan's locked-in "Deck" decision) and a stable id for the
-// (only) bot opponent.
-const BOT_PLAYER_ID = 'farmhand-shuffle-bot'
+// (only) bot opponent. Exported for FarmhandShuffleContextMenu, which needs
+// it to settle a forfeited match as a loss (winnerId = the opponent).
+export const BOT_PLAYER_ID = 'farmhand-shuffle-bot'
 
 const CHECKPOINT_STATES = [
   MatchState.WAITING_FOR_PLAYER_SETUP_ACTION,
@@ -78,20 +79,6 @@ const WagerNumberFormat = forwardRef<HTMLInputElement, any>(
       />
     )
   }
-)
-
-const WagerStatusBadge = ({ wager }: { wager: number }) => (
-  <P
-    sx={{
-      textAlign: 'center',
-      fontWeight: 'bold',
-      margin: '0.5em 0',
-    }}
-  >
-    {wager > 0
-      ? `Wager: ${moneyString(wager)} · win pays ${moneyString(wager * 2)}`
-      : 'No wager placed · playing for fun'}
-  </P>
 )
 
 interface ShuffleResultSummaryProps {
@@ -241,9 +228,35 @@ export const FarmhandShuffleView = () => {
     setMatchPhase('playing')
   }
 
+  // Set just before handleMatchEnd's own call to
+  // handleSettleFarmhandShuffleMatch, so the effect below can tell "Match's
+  // own onMatchEnd just cleared isMatchInProgress" (its GAME_OVER dialog is
+  // showing - stay put) apart from "isMatchInProgress was cleared by
+  // something else" (e.g. FarmhandShuffleContextMenu's Forfeit button,
+  // which settles the match directly since it isn't a descendant of this
+  // component and has no dialog of its own to route through - snap back to
+  // the wager screen instead).
+  const settledViaMatchEndRef = useRef(false)
+
   const handleMatchEnd = (winnerId: string | null) => {
+    settledViaMatchEndRef.current = true
     handlers.handleSettleFarmhandShuffleMatch(winnerId, userPlayerId)
   }
+
+  useEffect(() => {
+    if (farmhandShuffle.isMatchInProgress || matchPhase !== 'playing') {
+      return
+    }
+
+    if (settledViaMatchEndRef.current) {
+      settledViaMatchEndRef.current = false
+      return
+    }
+
+    setMatchPhase('wager')
+    setWagerInputValue(0)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [farmhandShuffle.isMatchInProgress])
 
   const handleCheckpoint = ({
     matchState,
@@ -359,9 +372,6 @@ export const FarmhandShuffleView = () => {
               backgroundImage: 'none',
               color: 'black',
             },
-            renderStatusBarContent: () => (
-              <WagerStatusBadge wager={farmhandShuffle.wager} />
-            ),
             renderGameOverContent: (winnerId: string | null) => (
               <ShuffleResultSummary
                 {...{

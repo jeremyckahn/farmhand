@@ -233,6 +233,61 @@ describe('<FarmhandShuffleView />', () => {
       expect(screen.getByText('No wager was placed.')).toBeInTheDocument()
     })
 
+    test('returns to the wager form when isMatchInProgress is cleared externally (e.g. a forfeit) without onMatchEnd firing', () => {
+      const farmhandShuffleInProgress = {
+        isMatchInProgress: true,
+        wager: 50,
+        serializedMatch: null,
+        totalMatchesPlayed: 0,
+        totalWins: 0,
+        totalLosses: 0,
+        currentWinStreak: 0,
+        longestWinStreak: 0,
+      }
+
+      const { rerender } = renderWithContext({
+        farmhandShuffle: farmhandShuffleInProgress,
+      })
+
+      expect(screen.getByTestId('match')).toBeInTheDocument()
+
+      const contextValue = createContextData()
+
+      contextValue.gameState = {
+        ...contextValue.gameState,
+        ...testState({
+          playerId: 'test-player-id',
+          money: 500,
+          farmhandShuffle: {
+            ...farmhandShuffleInProgress,
+            isMatchInProgress: false,
+            wager: 0,
+            totalMatchesPlayed: 1,
+            totalLosses: 1,
+          },
+        }),
+      }
+
+      contextValue.handlers = {
+        ...contextValue.handlers,
+        handlePlaceFarmhandShuffleWager,
+        handleSettleFarmhandShuffleMatch,
+        handleSaveFarmhandShuffleMatch,
+        handleRefundUnresumableFarmhandShuffleMatch,
+      } as any
+
+      rerender(
+        <FarmhandContext.Provider value={contextValue}>
+          <FarmhandShuffleView />
+        </FarmhandContext.Provider>
+      )
+
+      expect(screen.queryByTestId('match')).not.toBeInTheDocument()
+      expect(
+        screen.getByRole('button', { name: 'Start Match' })
+      ).toBeInTheDocument()
+    })
+
     test('sets hideDefaultGameOverActions', () => {
       renderWithContext({
         farmhandShuffle: {
