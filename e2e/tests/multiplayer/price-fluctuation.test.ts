@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 import { loadFixture } from '../../test-utils/load-fixture.js'
+import { SEASON_HIGH_DEMAND_BONUS } from '../../../src/constants.js'
 
 test('uses server-based price values', async ({ page }) => {
   await loadFixture(page, 'crops-mature')
@@ -14,8 +15,11 @@ test('uses server-based price values', async ({ page }) => {
     .locator('.Plot')
     .first()
     .click()
+  // crops-mature's dayCount (6) falls within Spring, carrot's configured
+  // high demand season, so the base fluctuation-adjusted price ($28.72) is
+  // boosted by SEASON_HIGH_DEMAND_BONUS.
   await expect(page.getByRole('complementary')).toContainText(
-    'CarrotSell price: $28.72Total: $28.72'
+    'CarrotSell price: $34.46Total: $34.46'
   )
   await page.getByRole('checkbox', { name: 'Play online' }).check()
 
@@ -35,8 +39,13 @@ test('uses server-based price values', async ({ page }) => {
 
   const { carrot: carrotValueAdjustment } = serverResponse.valueAdjustments
   const baseCarrotValue = 25
-  const adjustedCarrotPrice = (
+  const fluctuationAdjustedCarrotPrice =
     Math.round(baseCarrotValue * carrotValueAdjustment * 100) / 100
+  // Still Spring (see note above), so the seasonal bonus still applies to
+  // the server-supplied price.
+  const adjustedCarrotPrice = (
+    fluctuationAdjustedCarrotPrice *
+    (1 + SEASON_HIGH_DEMAND_BONUS)
   ).toFixed(2)
 
   await expect(page.getByRole('complementary')).toContainText(

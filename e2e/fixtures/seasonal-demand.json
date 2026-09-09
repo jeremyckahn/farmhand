@@ -126,9 +126,9 @@
   "itemsSold": {},
   "cellarItemsSold": {},
   "learnedRecipes": {},
-  "loanBalance": 552.03,
+  "loanBalance": 0,
   "loansTakenOut": 1,
-  "money": 100106.3,
+  "money": 100,
   "newDayNotifications": [],
   "notificationLog": [
     {
@@ -212,9 +212,9 @@
     "asparagus": 0.7710329471429687,
     "asparagus-seed": 0.6047945736371781,
     "bronze-ore": 0.6523314669735881,
-    "carrot": 1.148946183956264,
+    "carrot": 1,
     "carrot-seed": 1.150865016558905,
-    "corn": 1.2916975621660312,
+    "corn": 1,
     "corn-seed": 0.8194585108692283,
     "garlic": 0.5890389828828759,
     "garlic-seed": 1.0461378148234952,
@@ -254,7 +254,7 @@
     "tomato-seed": 0.7109397222579946,
     "watermelon": 0.666622692558885,
     "watermelon-seed": 1.0104982645951823,
-    "wheat": 0.8632829757532291,
+    "wheat": 1,
     "wheat-seed": 0.7821587302079209
   },
   "version": "1.18.26"
