@@ -7,6 +7,7 @@ import { noop } from '../../utils/noop.js'
 import { AppBar } from './AppBar.js'
 
 const defaultProps = {
+  dayCount: 0,
   handleClickNotificationIndicator: noop,
   money: 0,
   showNotifications: false,
@@ -30,6 +31,18 @@ test('displays money amount', () => {
   render(<AppBar {...defaultProps} money={1500} />)
 
   expect(screen.getByText('$1,500.00')).toBeInTheDocument()
+})
+
+test('displays the current season', () => {
+  render(<AppBar {...defaultProps} dayCount={0} />)
+
+  expect(screen.getByText('Spring')).toBeInTheDocument()
+})
+
+test('displays the correct season after the season boundary', () => {
+  render(<AppBar {...defaultProps} dayCount={10} />)
+
+  expect(screen.getByText('Summer')).toBeInTheDocument()
 })
 
 test('shows notification indicator when notifications are hidden', () => {

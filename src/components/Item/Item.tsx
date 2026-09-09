@@ -20,10 +20,13 @@ import { noop } from '../../utils/noop.js'
 import { moneyString } from '../../utils/moneyString.js'
 import { inventorySpaceRemaining } from '../../utils/inventorySpaceRemaining.js'
 import { isItemSoldInShop } from '../../utils/isItemSoldInShop.js'
+import { getCurrentSeason } from '../../utils/getCurrentSeason.js'
 import { getFinalCropItemFromSeedItem } from '../../utils/getFinalCropItemFromSeedItem.js'
 import { getItemCurrentValue } from '../../utils/getItemCurrentValue.js'
 import { getResaleValue } from '../../utils/getResaleValue.js'
 import { getSalePriceMultiplier } from '../../utils/getSalePriceMultiplier.js'
+import { getSeasonalDemandMultiplier } from '../../utils/getSeasonalDemandMultiplier.js'
+import { getSeasonalDemandStatus } from '../../utils/getSeasonalDemandStatus.js'
 import { integerString } from '../../utils/integerString.js'
 import { getCropLifecycleDuration } from '../../utils/getCropLifecycleDuration.js'
 import QuantityInput from '../QuantityInput/index.js'
@@ -91,6 +94,7 @@ const SellValueIndicator = ({
 export interface ItemProps {
   item?: farmhand.item
   completedAchievements?: ContextData['gameState']['completedAchievements']
+  dayCount: ContextData['gameState']['dayCount']
   handleItemPurchaseClick?: ContextData['handlers']['handleItemPurchaseClick']
   handleItemSelectClick?: ContextData['handlers']['handleItemSelectClick']
   handleItemSellClick?: ContextData['handlers']['handleItemSellClick']
@@ -113,6 +117,7 @@ export interface ItemProps {
 export const Item = ({
   item,
   completedAchievements,
+  dayCount,
   handleItemPurchaseClick,
   handleItemSelectClick,
   handleItemSellClick,
@@ -185,12 +190,15 @@ export const Item = ({
     <img {...{ src: items[id as keyof typeof items] }} alt={name} />
   )
 
+  const currentSeason = getCurrentSeason(dayCount)
+
   let sellPrice = adjustedValue
 
   // #140 - never increase the value of items the shop sells otherwise they
   // can be bought and instantly resold for a profit to game the.. game
   if (!shopItemIds.has(id)) {
     sellPrice *= getSalePriceMultiplier(completedAchievements)
+    sellPrice *= getSeasonalDemandMultiplier(item!, currentSeason)
   }
 
   return (
@@ -318,6 +326,21 @@ export const Item = ({
                   ) : null}
                 </p>
               )}
+              {isSellView &&
+                (() => {
+                  const seasonalDemandStatus = getSeasonalDemandStatus(
+                    item!,
+                    currentSeason
+                  )
+
+                  return seasonalDemandStatus ? (
+                    <p>
+                      {seasonalDemandStatus === 'HIGH'
+                        ? 'High Demand'
+                        : 'Low Demand'}
+                    </p>
+                  ) : null
+                })()}
               {showQuantity && (
                 <p>
                   <strong>In inventory:</strong>{' '}

@@ -3,6 +3,7 @@ import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { testItem } from '../../test-utils/index.js'
+import { season } from '../../enums.js'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
@@ -13,6 +14,7 @@ vitest.mock('../../data/maps.js')
 describe('Item', () => {
   const baseProps = {
     completedAchievements: {},
+    dayCount: 0,
     historicalValueAdjustments: [],
     inventory: [],
     inventoryLimit: INFINITE_STORAGE_LIMIT,
@@ -134,6 +136,63 @@ describe('Item', () => {
           await waitFor(() =>
             expect(within(total).getByText('$41.68')).toBeInTheDocument()
           )
+        })
+      })
+
+      describe('seasonal demand indicator', () => {
+        test('shows High Demand during a high demand season', () => {
+          const id = 'high-demand-item'
+
+          render(
+            <Item
+              {...{
+                ...baseProps,
+                dayCount: 0,
+                isSellView: true,
+                item: testItem({ id, highDemandSeasons: [season.SPRING] }),
+                playerInventoryQuantities: { [id]: 4 },
+              }}
+            />
+          )
+
+          expect(screen.getByText('High Demand')).toBeInTheDocument()
+        })
+
+        test('shows Low Demand during a low demand season', () => {
+          const id = 'low-demand-item'
+
+          render(
+            <Item
+              {...{
+                ...baseProps,
+                dayCount: 0,
+                isSellView: true,
+                item: testItem({ id, lowDemandSeasons: [season.SPRING] }),
+                playerInventoryQuantities: { [id]: 4 },
+              }}
+            />
+          )
+
+          expect(screen.getByText('Low Demand')).toBeInTheDocument()
+        })
+
+        test('shows no indicator outside of configured demand seasons', () => {
+          const id = 'neutral-item'
+
+          render(
+            <Item
+              {...{
+                ...baseProps,
+                dayCount: 0,
+                isSellView: true,
+                item: testItem({ id, highDemandSeasons: [season.SUMMER] }),
+                playerInventoryQuantities: { [id]: 4 },
+              }}
+            />
+          )
+
+          expect(screen.queryByText('High Demand')).not.toBeInTheDocument()
+          expect(screen.queryByText('Low Demand')).not.toBeInTheDocument()
         })
       })
     })

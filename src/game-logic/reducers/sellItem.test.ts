@@ -1,6 +1,6 @@
 import { testState } from '../../test-utils/index.js'
 import { LOAN_PAYOFF } from '../../templates.js'
-import { carrot, carrotSeed } from '../../data/crops/index.js'
+import { carrot, carrotSeed, corn } from '../../data/crops/index.js'
 import { apple, bronzeOre, coal, milk1, saltRock } from '../../data/items.js'
 import { carrotSoup } from '../../data/recipes.js'
 
@@ -10,6 +10,8 @@ describe('sellItem', () => {
   test('sells item', () => {
     const state = sellItem(
       testState({
+        // Chosen so carrot's SPRING high-demand seasonal bonus doesn't apply.
+        dayCount: 15,
         inventory: [{ id: carrot.id, quantity: 1 }],
         itemsSold: {},
         loanBalance: 0,
@@ -56,6 +58,8 @@ describe('sellItem', () => {
   test('applies achievement bonus to farm products', () => {
     const state = sellItem(
       testState({
+        // Chosen so carrot's SPRING high-demand seasonal bonus doesn't apply.
+        dayCount: 15,
         inventory: [{ id: carrot.id, quantity: 1 }],
         itemsSold: {},
         loanBalance: 0,
@@ -108,6 +112,8 @@ describe('sellItem', () => {
   test('updates learnedRecipes', () => {
     const { learnedRecipes } = sellItem(
       testState({
+        // Chosen so carrot's SPRING high-demand seasonal bonus doesn't apply.
+        dayCount: 15,
         inventory: [{ id: carrot.id, quantity: 2 }],
         itemsSold: {},
         loanBalance: 0,
@@ -165,6 +171,8 @@ describe('sellItem', () => {
         test('sale is garnished', () => {
           state = sellItem(
             testState({
+              // Chosen so carrot's SPRING high-demand seasonal bonus doesn't apply.
+              dayCount: 15,
               inventory: [{ id: carrot.id, quantity: 3 }],
               itemsSold: {},
               loanBalance: 100,
@@ -190,6 +198,8 @@ describe('sellItem', () => {
         beforeEach(() => {
           state = sellItem(
             testState({
+              // Chosen so carrot's SPRING high-demand seasonal bonus doesn't apply.
+              dayCount: 15,
               experience: 0,
               inventory: [{ id: carrot.id, quantity: 3 }],
               itemsSold: {},
@@ -263,4 +273,72 @@ describe('sellItem', () => {
       expect(state.experience).toEqual(1)
     }
   )
+
+  describe('seasonal demand', () => {
+    test('applies a high demand bonus during a crop high demand season', () => {
+      // dayCount 0 is SPRING, carrot's configured high demand season.
+      const state = sellItem(
+        testState({
+          dayCount: 0,
+          inventory: [{ id: carrot.id, quantity: 1 }],
+          itemsSold: {},
+          loanBalance: 0,
+          money: 100,
+          pendingPeerMessages: [],
+          todaysNotifications: [],
+          revenue: 0,
+          todaysRevenue: 0,
+          valueAdjustments: { [carrot.id]: 1 },
+        }),
+        carrot
+      )
+
+      expect(state.money).toEqual(130)
+      expect(state.revenue).toEqual(30)
+    })
+
+    test('applies a low demand penalty during a crop low demand season', () => {
+      // dayCount 0 is SPRING, corn's configured low demand season.
+      const state = sellItem(
+        testState({
+          dayCount: 0,
+          inventory: [{ id: corn.id, quantity: 1 }],
+          itemsSold: {},
+          loanBalance: 0,
+          money: 100,
+          pendingPeerMessages: [],
+          todaysNotifications: [],
+          revenue: 0,
+          todaysRevenue: 0,
+          valueAdjustments: { [corn.id]: 1 },
+        }),
+        corn
+      )
+
+      expect(state.money).toEqual(156)
+      expect(state.revenue).toEqual(56)
+    })
+
+    test('does not apply the seasonal multiplier to seed sales', () => {
+      // dayCount 0 is SPRING, which is carrot's high demand season, but this
+      // must not apply to selling the seed - see the #140 guard in Item.tsx.
+      const state = sellItem(
+        testState({
+          dayCount: 0,
+          inventory: [{ id: carrotSeed.id, quantity: 1 }],
+          itemsSold: {},
+          loanBalance: 0,
+          money: 100,
+          pendingPeerMessages: [],
+          todaysNotifications: [],
+          revenue: 0,
+          todaysRevenue: 0,
+          valueAdjustments: { [carrotSeed.id]: 1 },
+        }),
+        carrotSeed
+      )
+
+      expect(state.money).toEqual(107.5)
+    })
+  })
 })

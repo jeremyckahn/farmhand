@@ -2,8 +2,10 @@ import { itemsMap } from '../../data/maps.js'
 import { isItemAFarmProduct } from '../../utils/isItemAFarmProduct.js'
 import { castToMoney } from '../../utils/castToMoney.js'
 import { getAdjustedItemValue } from '../../utils/getAdjustedItemValue.js'
+import { getCurrentSeason } from '../../utils/getCurrentSeason.js'
 import { getResaleValue } from '../../utils/getResaleValue.js'
 import { getSalePriceMultiplier } from '../../utils/getSalePriceMultiplier.js'
+import { getSeasonalDemandMultiplier } from '../../utils/getSeasonalDemandMultiplier.js'
 import { isItemSoldInShop } from '../../utils/isItemSoldInShop.js'
 import { moneyTotal } from '../../utils/moneyTotal.js'
 import { LOAN_GARNISHMENT_RATE, EXPERIENCE_VALUES } from '../../constants.js'
@@ -29,15 +31,24 @@ export const sellItem = (
   const item = itemsMap[id]
   const {
     completedAchievements,
+    dayCount,
     itemsSold,
     money: initialMoney,
     valueAdjustments,
   } = state
   let { loanBalance } = state
 
-  const adjustedItemValue = isItemSoldInShop(item)
+  const itemIsSoldInShop = isItemSoldInShop(item)
+
+  const adjustedItemValue = itemIsSoldInShop
     ? getResaleValue(item)
     : getAdjustedItemValue(valueAdjustments, id)
+
+  // Seasonal demand only affects harvested crops sold by the player, not
+  // seeds bought and instantly resold - see the #140 comment in Item.tsx.
+  const seasonalDemandMultiplier = itemIsSoldInShop
+    ? 1
+    : getSeasonalDemandMultiplier(item, getCurrentSeason(dayCount))
 
   const saleIsGarnished = isItemAFarmProduct(item)
   let saleValue = 0,
@@ -58,7 +69,8 @@ export const sellItem = (
     }
 
     const garnishedProfit =
-      adjustedItemValue * salePriceMultiplier - loanGarnishment
+      adjustedItemValue * salePriceMultiplier * seasonalDemandMultiplier -
+      loanGarnishment
 
     loanBalance = moneyTotal(loanBalance, -loanGarnishment)
     saleValue = moneyTotal(saleValue, garnishedProfit)
