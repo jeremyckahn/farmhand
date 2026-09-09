@@ -327,6 +327,10 @@ export const Item = ({
                 </p>
               )}
               {isSellView &&
+                // #140 - only show the demand label when the seasonal
+                // multiplier is actually reflected in sellPrice; shop-sold
+                // items (seeds) are excluded from that multiplier.
+                !shopItemIds.has(id) &&
                 (() => {
                   const seasonalDemandStatus = getSeasonalDemandStatus(
                     item!,

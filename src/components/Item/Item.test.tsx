@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 
 import { testItem } from '../../test-utils/index.js'
 import { season } from '../../enums.js'
+import { carrotSeed } from '../../data/crops/index.js'
 
 import { INFINITE_STORAGE_LIMIT } from '../../constants.js'
 
@@ -187,6 +188,26 @@ describe('Item', () => {
                 isSellView: true,
                 item: testItem({ id, highDemandSeasons: [season.SUMMER] }),
                 playerInventoryQuantities: { [id]: 4 },
+              }}
+            />
+          )
+
+          expect(screen.queryByText('High Demand')).not.toBeInTheDocument()
+          expect(screen.queryByText('Low Demand')).not.toBeInTheDocument()
+        })
+
+        test('shows no indicator for a seed sold in the shop, even during its high demand season', () => {
+          // dayCount 0 is SPRING, carrotSeed's configured high demand season,
+          // but the seasonal price bonus never applies to shop-sold items
+          // (see the #140 guard), so the label must not appear either.
+          render(
+            <Item
+              {...{
+                ...baseProps,
+                dayCount: 0,
+                isSellView: true,
+                item: carrotSeed,
+                playerInventoryQuantities: { [carrotSeed.id]: 4 },
               }}
             />
           )
