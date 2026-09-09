@@ -20,7 +20,7 @@ export const LOAN_INTEREST_RATE = 0.02
 
 export const FERTILIZER_BONUS = 0.5
 
-export const SEASON_LENGTH_DAYS = 10
+export const SEASON_LENGTH_DAYS = 15
 export const SEASON_HIGH_DEMAND_BONUS = 0.2
 export const SEASON_LOW_DEMAND_PENALTY = 0.2
 

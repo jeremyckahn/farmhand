@@ -338,10 +338,15 @@ export const Item = ({
                   )
 
                   return seasonalDemandStatus ? (
-                    <p>
+                    <p
+                      className={classNames({
+                        'success-text': seasonalDemandStatus === 'HIGH',
+                        'danger-text': seasonalDemandStatus === 'LOW',
+                      })}
+                    >
                       {seasonalDemandStatus === 'HIGH'
-                        ? 'High Demand'
-                        : 'Low Demand'}
+                        ? 'In Season'
+                        : 'Out of Season'}
                     </p>
                   ) : null
                 })()}

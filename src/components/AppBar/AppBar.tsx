@@ -11,6 +11,7 @@ import StepIcon from '@mui/material/StepIcon/index.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { seasonNameMap } from '../../data/seasons.js'
 import { getCurrentSeason } from '../../utils/getCurrentSeason.js'
+import { getDayOfSeason } from '../../utils/getDayOfSeason.js'
 import { moneyString } from '../../utils/moneyString.js'
 import { breakpoints } from '../../styles/tokens.js'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.js'
@@ -168,7 +169,9 @@ export const AppBar = ({
           variant: 'h2',
         }}
       >
-        {seasonNameMap[getCurrentSeason(dayCount)]}
+        {`Day ${getDayOfSeason(dayCount)} of ${
+          seasonNameMap[getCurrentSeason(dayCount)]
+        }`}
       </Typography>
       <Typography
         {...{

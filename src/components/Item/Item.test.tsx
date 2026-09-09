@@ -141,7 +141,7 @@ describe('Item', () => {
       })
 
       describe('seasonal demand indicator', () => {
-        test('shows High Demand during a high demand season', () => {
+        test('shows In Season, styled with success-text, during a high demand season', () => {
           const id = 'high-demand-item'
 
           render(
@@ -156,10 +156,10 @@ describe('Item', () => {
             />
           )
 
-          expect(screen.getByText('High Demand')).toBeInTheDocument()
+          expect(screen.getByText('In Season')).toHaveClass('success-text')
         })
 
-        test('shows Low Demand during a low demand season', () => {
+        test('shows Out of Season, styled with danger-text, during a low demand season', () => {
           const id = 'low-demand-item'
 
           render(
@@ -174,7 +174,7 @@ describe('Item', () => {
             />
           )
 
-          expect(screen.getByText('Low Demand')).toBeInTheDocument()
+          expect(screen.getByText('Out of Season')).toHaveClass('danger-text')
         })
 
         test('shows no indicator outside of configured demand seasons', () => {
@@ -192,8 +192,8 @@ describe('Item', () => {
             />
           )
 
-          expect(screen.queryByText('High Demand')).not.toBeInTheDocument()
-          expect(screen.queryByText('Low Demand')).not.toBeInTheDocument()
+          expect(screen.queryByText('In Season')).not.toBeInTheDocument()
+          expect(screen.queryByText('Out of Season')).not.toBeInTheDocument()
         })
 
         test('shows no indicator for a seed sold in the shop, even during its high demand season', () => {
@@ -212,8 +212,8 @@ describe('Item', () => {
             />
           )
 
-          expect(screen.queryByText('High Demand')).not.toBeInTheDocument()
-          expect(screen.queryByText('Low Demand')).not.toBeInTheDocument()
+          expect(screen.queryByText('In Season')).not.toBeInTheDocument()
+          expect(screen.queryByText('Out of Season')).not.toBeInTheDocument()
         })
       })
     })

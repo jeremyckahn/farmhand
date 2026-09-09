@@ -33,16 +33,22 @@ test('displays money amount', () => {
   expect(screen.getByText('$1,500.00')).toBeInTheDocument()
 })
 
-test('displays the current season', () => {
+test('displays the current day and season', () => {
   render(<AppBar {...defaultProps} dayCount={0} />)
 
-  expect(screen.getByText('Spring')).toBeInTheDocument()
+  expect(screen.getByText('Day 1 of Spring')).toBeInTheDocument()
 })
 
-test('displays the correct season after the season boundary', () => {
-  render(<AppBar {...defaultProps} dayCount={10} />)
+test('displays the correct day and season after the season boundary', () => {
+  render(<AppBar {...defaultProps} dayCount={15} />)
 
-  expect(screen.getByText('Summer')).toBeInTheDocument()
+  expect(screen.getByText('Day 1 of Summer')).toBeInTheDocument()
+})
+
+test('displays the correct day count partway through a season', () => {
+  render(<AppBar {...defaultProps} dayCount={5} />)
+
+  expect(screen.getByText('Day 6 of Spring')).toBeInTheDocument()
 })
 
 test('shows notification indicator when notifications are hidden', () => {
