@@ -1,10 +1,30 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { within } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 
 import { getItemByName } from '../test-utils/ui.js'
 import { farmhandStub } from '../test-utils/stubs/farmhandStub.js'
 import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory.js'
+
+// Other notifications (e.g. an achievement) can legitimately be showing
+// alongside the one under test, each in its own alert - this finds the
+// specific one containing the given text rather than assuming there's
+// only one alert on screen. Wrapped in waitFor (rather than a single
+// findAllByRole check) because findAllByRole resolves as soon as *any*
+// alert exists, which can be before the specific one being looked for has
+// mounted - this keeps retrying until a match actually shows up.
+const findAlertContainingText = async (text: string) => {
+  return waitFor(() => {
+    const alerts = screen.getAllByRole('alert')
+    const match = alerts.find(alert => within(alert).queryByText(text))
+
+    if (!match) {
+      throw new Error(`No alert found containing text: ${text}`)
+    }
+
+    return match
+  })
+}
 
 describe('notifications', () => {
   test('notification is shown when recipe is learned', async () => {
@@ -26,11 +46,9 @@ describe('notifications', () => {
     const carrotSellButton = within(carrotItem as HTMLElement).getByText('Sell')
 
     await userEvent.click(carrotSellButton)
-    const notification = await screen.findByRole('alert')
+    const notification = await findAlertContainingText('Carrot Soup')
 
-    expect(
-      within(notification as HTMLElement).getByText('Carrot Soup')
-    ).toBeInTheDocument()
+    expect(within(notification).getByText('Carrot Soup')).toBeInTheDocument()
   })
 
   test('multiple notifications are shown when multiple recipes are learned', async () => {
@@ -77,13 +95,9 @@ describe('notifications', () => {
     await userEvent.type(carrotInput, '10')
     await userEvent.click(carrotSellButton)
 
-    const notification = await screen.findByRole('alert')
+    const notification = await findAlertContainingText('Carrot Soup')
 
-    expect(
-      within(notification as HTMLElement).getByText('Carrot Soup')
-    ).toBeInTheDocument()
-    expect(
-      within(notification as HTMLElement).getByText('Summer Salad')
-    ).toBeInTheDocument()
+    expect(within(notification).getByText('Carrot Soup')).toBeInTheDocument()
+    expect(within(notification).getByText('Summer Salad')).toBeInTheDocument()
   })
 })

@@ -354,3 +354,91 @@ describe('landscaper', () => {
     })
   })
 })
+
+describe('farmhand-shuffle-first-match', () => {
+  const achievement = achievementsMap['farmhand-shuffle-first-match']
+  let state: any
+
+  beforeEach(() => {
+    state = {
+      farmhandShuffle: { totalMatchesPlayed: 0 },
+      money: 0,
+    }
+  })
+
+  test('is not achieved when no matches have been played', () => {
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
+  test('is achieved once a match has been played', () => {
+    state.farmhandShuffle.totalMatchesPlayed = 1
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('is achieved even when the played match was a draw (no wins or losses)', () => {
+    // A draw only increments totalMatchesPlayed, not totalWins/totalLosses -
+    // this achievement must not require those to be truthy.
+    state.farmhandShuffle.totalMatchesPlayed = 1
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('rewards the player with money', () => {
+    const nextState = achievement.reward(state)
+
+    expect(nextState.money).toBeGreaterThan(state.money)
+  })
+})
+
+const winStreakVariants = [
+  ['farmhand-shuffle-win-streak-1', 3],
+  ['farmhand-shuffle-win-streak-2', 5],
+  ['farmhand-shuffle-win-streak-3', 10],
+]
+
+describe.each(winStreakVariants)(
+  'Farmhand Shuffle win-streak variants',
+  (id, goal) => {
+    describe(id as string, () => {
+      const achievement = achievementsMap[id as string]
+      let state: any
+
+      beforeEach(() => {
+        state = {
+          farmhandShuffle: { currentWinStreak: 0 },
+          money: 0,
+        }
+      })
+
+      test(`is not achieved when the current win streak is below ${goal}`, () => {
+        state.farmhandShuffle.currentWinStreak = (goal as number) - 1
+
+        expect(achievement.condition(state)).toEqual(false)
+      })
+
+      test(`is achieved when the current win streak reaches ${goal}`, () => {
+        state.farmhandShuffle.currentWinStreak = goal
+
+        expect(achievement.condition(state)).toEqual(true)
+      })
+
+      test('reports progress toward the win-streak goal', () => {
+        state.farmhandShuffle.currentWinStreak = 1
+
+        expect(achievement.getProgress?.(state)).toEqual({
+          currentValue: 1,
+          goal,
+        })
+      })
+
+      test('rewards the player with money', () => {
+        state.farmhandShuffle.currentWinStreak = goal
+
+        const nextState = achievement.reward(state)
+
+        expect(nextState.money).toBeGreaterThan(state.money)
+      })
+    })
+  }
+)

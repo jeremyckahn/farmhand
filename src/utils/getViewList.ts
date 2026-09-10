@@ -11,17 +11,26 @@ import { stageFocusType } from '../enums.js'
  * such as a save being loaded during boot or import.
  */
 export const getViewList = ({
+  isFarmhandShuffleUnlocked,
   isForestUnlocked,
   purchasedCellar,
   purchasedCowPen,
   showHomeScreen,
 }: {
+  isFarmhandShuffleUnlocked: boolean
   isForestUnlocked: boolean
   purchasedCellar: number
   purchasedCowPen: number
   showHomeScreen: boolean
 }): stageFocusType[] => {
-  const { CELLAR, COW_PEN, HOME, WORKSHOP, FOREST } = stageFocusType
+  const {
+    CELLAR,
+    COW_PEN,
+    HOME,
+    WORKSHOP,
+    FOREST,
+    FARMHAND_SHUFFLE,
+  } = stageFocusType
   const list: stageFocusType[] = [...STANDARD_VIEW_LIST]
 
   if (showHomeScreen) {
@@ -40,6 +49,10 @@ export const getViewList = ({
 
   if (purchasedCellar) {
     list.push(CELLAR)
+  }
+
+  if (isFarmhandShuffleUnlocked) {
+    list.push(FARMHAND_SHUFFLE)
   }
 
   return list

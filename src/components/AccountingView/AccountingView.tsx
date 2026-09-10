@@ -19,33 +19,39 @@ import {
 } from '../../constants.js'
 import { Div } from '../Elements/index.js'
 
-interface MoneyNumberFormatProps {
+type MoneyNumberFormatProps = {
   max: number
   min: number
   onChange: (v: number) => void
   setLoanInputValue?: React.Dispatch<React.SetStateAction<number>>
-  [key: string]: unknown
-}
+} & Record<string, unknown>
 
-const MoneyNumberFormat = forwardRef(
-  (
-    { max, min, onChange, setLoanInputValue, ...rest }: MoneyNumberFormatProps,
-    ref: React.ForwardedRef<HTMLInputElement>
-  ) => (
-    <NumberFormat
-      fixedDecimalScale
-      thousandSeparator
-      getInputRef={ref}
-      {...{
-        ...rest,
-        allowNegative: false,
-        decimalScale: 2,
-        prefix: '$',
-        isAllowed: ({ floatValue = 0 }) => min >= 0 && floatValue <= max,
-        onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
-      }}
-    />
-  )
+const MoneyNumberFormat = forwardRef<HTMLInputElement, any>(
+  (props: any, ref) => {
+    const {
+      max,
+      min,
+      onChange,
+      setLoanInputValue,
+      ...rest
+    }: MoneyNumberFormatProps = props
+
+    return (
+      <NumberFormat
+        fixedDecimalScale
+        thousandSeparator
+        getInputRef={ref}
+        {...{
+          ...rest,
+          allowNegative: false,
+          decimalScale: 2,
+          prefix: '$',
+          isAllowed: ({ floatValue = 0 }) => min >= 0 && floatValue <= max,
+          onValueChange: ({ floatValue = 0 }) => onChange(floatValue),
+        }}
+      />
+    )
+  }
 )
 
 interface AccountingViewProps {

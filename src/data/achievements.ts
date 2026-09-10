@@ -408,6 +408,60 @@ const achievements: farmhand.achievement[] = [
     reward: state => addItemToInventory(state, itemsMap['wood'], reward, true),
   }))(),
 
+  ((reward = 100) => ({
+    id: 'farmhand-shuffle-first-match',
+    name: 'Shuffle Up and Deal',
+    description: 'Play your first match of Farmhand Shuffle.',
+    rewardDescription: dollarString(reward),
+    // Keyed off totalMatchesPlayed (incremented on every settled match -
+    // win, loss, or draw) rather than totalWins + totalLosses, so a
+    // player's first-ever match still unlocks this even if it's a draw.
+    condition: state => state.farmhandShuffle.totalMatchesPlayed > 0,
+    reward: state => addMoney(state, reward),
+  }))(),
+
+  ((goal = 3, reward = 150) => ({
+    id: 'farmhand-shuffle-win-streak-1',
+    name: 'Hot Streak',
+    description: `Win ${integerString(
+      goal
+    )} Farmhand Shuffle matches in a row.`,
+    rewardDescription: dollarString(reward),
+    ...progressAchievement(
+      goal,
+      state => state.farmhandShuffle.currentWinStreak
+    ),
+    reward: state => addMoney(state, reward),
+  }))(),
+
+  ((goal = 5, reward = 300) => ({
+    id: 'farmhand-shuffle-win-streak-2',
+    name: 'On a Roll',
+    description: `Win ${integerString(
+      goal
+    )} Farmhand Shuffle matches in a row.`,
+    rewardDescription: dollarString(reward),
+    ...progressAchievement(
+      goal,
+      state => state.farmhandShuffle.currentWinStreak
+    ),
+    reward: state => addMoney(state, reward),
+  }))(),
+
+  ((goal = 10, reward = 750) => ({
+    id: 'farmhand-shuffle-win-streak-3',
+    name: 'Unstoppable',
+    description: `Win ${integerString(
+      goal
+    )} Farmhand Shuffle matches in a row.`,
+    rewardDescription: dollarString(reward),
+    ...progressAchievement(
+      goal,
+      state => state.farmhandShuffle.currentWinStreak
+    ),
+    reward: state => addMoney(state, reward),
+  }))(),
+
   ((goal = 100, reward = 25) => ({
     id: 'landscaper',
     name: 'Landscaper',

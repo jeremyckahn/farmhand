@@ -275,6 +275,29 @@ declare namespace farmhand {
     generate(): item | item[] | null
   }
 
+  type FarmhandShuffleSerializedMatch = import('@jeremyckahn/farmhand-shuffle').SerializedMatch
+  type FarmhandShuffleMatchState = import('@jeremyckahn/farmhand-shuffle').MatchState
+  type FarmhandShuffleBotState = import('@jeremyckahn/farmhand-shuffle').BotState
+
+  /**
+   * A checkpointed Farmhand Shuffle match, captured at one of the two
+   * "idle, waiting on the human player" machine states (see the
+   * farmhand-shuffle resume design). Tagged with the
+   * `@jeremyckahn/farmhand-shuffle` package version it was captured under so
+   * a later library update that changes the match's internal shape can be
+   * detected on resume (deserialization/version mismatch is handled by
+   * refunding the wager and clearing these fields rather than crashing -
+   * see settleFarmhandShuffleMatch.ts).
+   */
+  interface SerializedFarmhandShuffleMatch {
+    libraryVersion: string
+    matchState: FarmhandShuffleMatchState
+    match: FarmhandShuffleSerializedMatch
+    botState: FarmhandShuffleBotState
+    userPlayerId: string
+    opponentPlayerId: string
+  }
+
   interface state {
     activePlayers?: number | null
     allowCustomPeerCowNames: boolean
@@ -308,6 +331,24 @@ declare namespace farmhand {
     dayCount: number
     experience: number
     farmName: string
+    /**
+     * Persisted state for the Farmhand Shuffle minigame (unlocked at level
+     * 35 - see levels.ts). `totalMatchesPlayed` is incremented on every
+     * settled match (win, loss, *and* draw) so the "first match" achievement
+     * can key off it directly rather than reconstructing it from
+     * totalWins + totalLosses, which would never be true if a player's
+     * first-ever match happens to be a draw.
+     */
+    farmhandShuffle: {
+      isMatchInProgress: boolean
+      wager: number
+      serializedMatch: farmhand.SerializedFarmhandShuffleMatch | null
+      totalMatchesPlayed: number
+      totalWins: number
+      totalLosses: number
+      currentWinStreak: number
+      longestWinStreak: number
+    }
     field: (plotContent | null)[][]
     forest: (plantedTree | forestForageable | null)[][]
     /**

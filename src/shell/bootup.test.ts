@@ -1,5 +1,6 @@
 import { screen, waitFor } from '@testing-library/react'
 
+import { NOTIFICATION_DURATION } from '../constants.js'
 import { saveDataStubFactory } from '../test-utils/stubs/saveDataStubFactory.js'
 import { farmhandStub } from '../test-utils/stubs/farmhandStub.js'
 import { endDay, waitForBoot } from '../test-utils/ui.js'
@@ -49,34 +50,45 @@ describe('bootup', () => {
     })
   })
 
-  test('pending notifications for the loaded day are not shown again the next day', async () => {
-    const loadedState = saveDataStubFactory({
-      newDayNotifications: [
-        {
-          message: 'Pending notification',
-          severity: 'info',
+  test(
+    'pending notifications for the loaded day are not shown again the next day',
+    async () => {
+      const loadedState = saveDataStubFactory({
+        newDayNotifications: [
+          {
+            message: 'Pending notification',
+            severity: 'info',
+          },
+        ],
+      })
+
+      await farmhandStub({
+        localforage: {
+          getItem: () => Promise.resolve(loadedState),
+          setItem: (_key: string, data: unknown) => Promise.resolve(data),
         },
-      ],
-    })
+      })
 
-    await farmhandStub({
-      localforage: {
-        getItem: () => Promise.resolve(loadedState),
-        setItem: (_key: string, data: unknown) => Promise.resolve(data),
-      },
-    })
+      await waitFor(() => {
+        expect(screen.getByText('Pending notification')).toBeInTheDocument()
+      })
 
-    await waitFor(() => {
-      expect(screen.getByText('Pending notification')).toBeInTheDocument()
-    })
+      // The notification auto-hides after NOTIFICATION_DURATION; give waitFor
+      // a timeout comfortably past that instead of its default 1000ms.
+      await waitFor(
+        () => {
+          expect(
+            screen.queryByText('Pending notification')
+          ).not.toBeInTheDocument()
+        },
+        { timeout: NOTIFICATION_DURATION + 2000 }
+      )
 
-    await waitFor(() => {
+      await endDay()
+
+      // The notification was not shown again
       expect(screen.queryByText('Pending notification')).not.toBeInTheDocument()
-    })
-
-    await endDay()
-
-    // The notification was not shown again
-    expect(screen.queryByText('Pending notification')).not.toBeInTheDocument()
-  })
+    },
+    NOTIFICATION_DURATION + 5000
+  )
 })

@@ -535,4 +535,28 @@ export default {
       updateServiceWorker(true)
     })
   },
+
+  handlePlaceFarmhandShuffleWager(this: Farmhand, wager: number) {
+    this.placeFarmhandShuffleWager(wager)
+  },
+
+  handleSettleFarmhandShuffleMatch(
+    this: Farmhand,
+    winnerId: string | null,
+    userPlayerId: string
+  ) {
+    this.settleFarmhandShuffleMatch(winnerId, userPlayerId)
+  },
+
+  async handleSaveFarmhandShuffleMatch(
+    this: Farmhand,
+    serializedMatch: farmhand.SerializedFarmhandShuffleMatch
+  ) {
+    this.saveFarmhandShuffleMatch(serializedMatch)
+    await this.persistState()
+  },
+
+  handleRefundUnresumableFarmhandShuffleMatch(this: Farmhand) {
+    this.refundUnresumableFarmhandShuffleMatch()
+  },
 }

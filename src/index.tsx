@@ -4,7 +4,8 @@
 
 import './polyfills.js'
 import React from 'react'
-import ReactDOM from 'react-dom'
+// eslint-disable-next-line import/extensions -- react-dom's package.json exports map only exposes this subpath as "./client", not "./client.js"
+import { createRoot } from 'react-dom/client'
 import { HashRouter as Router, Route } from 'react-router-dom'
 
 import Farmhand from './components/Farmhand/index.js'
@@ -14,7 +15,9 @@ import '@fontsource/public-sans'
 
 const FarmhandRoute = (props: any) => <Farmhand {...{ ...props, features }} />
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root')!)
+
+root.render(
   <Router
     {...{
       hashType: 'noslash',
@@ -26,6 +29,5 @@ ReactDOM.render(
         component: FarmhandRoute,
       }}
     />
-  </Router>,
-  document.getElementById('root')
+  </Router>
 )
