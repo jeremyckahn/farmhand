@@ -109,14 +109,21 @@ export const AppBar = ({
         '& .stage-header': {
           display: 'none',
           marginLeft: '1em',
-          [`@media (min-width: ${breakpoints.mediumPhone}px)`]: {
+          // Matches Stage.tsx's own `.view-title` breakpoint, which hides
+          // at the same width this shows at - otherwise there's a range
+          // where both are visible at once, showing the view title twice.
+          [`@media (min-width: ${breakpoints.largePhone}px)`]: {
             display: 'block',
           },
         },
         '& .season-display': {
-          position: 'absolute',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          marginLeft: '1em',
+          [`@media (min-width: ${breakpoints.largePhone}px)`]: {
+            position: 'absolute',
+            left: '50%',
+            marginLeft: 0,
+            transform: 'translateX(-50%)',
+          },
         },
         '& .money-display': {
           position: 'absolute',
