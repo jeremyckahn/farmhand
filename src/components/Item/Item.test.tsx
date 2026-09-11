@@ -216,6 +216,71 @@ describe('Item', () => {
           expect(screen.queryByText('Out of Season')).not.toBeInTheDocument()
         })
       })
+
+      describe('seasonal demand pricing', () => {
+        test('applies the high demand bonus to the displayed sell price', () => {
+          const id = 'high-demand-item'
+
+          const { container } = render(
+            <Item
+              {...{
+                ...baseProps,
+                dayCount: 0,
+                isSellView: true,
+                adjustedValue: 10,
+                item: testItem({ id, highDemandSeasons: [season.SPRING] }),
+                playerInventoryQuantities: { [id]: 4 },
+              }}
+            />
+          )
+
+          const sellPrice = within(container).getByText('Sell price:')
+
+          expect(within(sellPrice).getByText('$12.00')).toBeInTheDocument()
+        })
+
+        test('applies the low demand penalty to the displayed sell price', () => {
+          const id = 'low-demand-item'
+
+          const { container } = render(
+            <Item
+              {...{
+                ...baseProps,
+                dayCount: 0,
+                isSellView: true,
+                adjustedValue: 10,
+                item: testItem({ id, lowDemandSeasons: [season.SPRING] }),
+                playerInventoryQuantities: { [id]: 4 },
+              }}
+            />
+          )
+
+          const sellPrice = within(container).getByText('Sell price:')
+
+          expect(within(sellPrice).getByText('$8.00')).toBeInTheDocument()
+        })
+
+        test('does not adjust the displayed sell price outside of the configured demand season', () => {
+          const id = 'neutral-item'
+
+          const { container } = render(
+            <Item
+              {...{
+                ...baseProps,
+                dayCount: 0,
+                isSellView: true,
+                adjustedValue: 10,
+                item: testItem({ id, highDemandSeasons: [season.SUMMER] }),
+                playerInventoryQuantities: { [id]: 4 },
+              }}
+            />
+          )
+
+          const sellPrice = within(container).getByText('Sell price:')
+
+          expect(within(sellPrice).getByText('$10.00')).toBeInTheDocument()
+        })
+      })
     })
   })
 })
