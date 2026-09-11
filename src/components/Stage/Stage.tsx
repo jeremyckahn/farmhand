@@ -18,6 +18,9 @@ import { isOctober } from '../../utils/isOctober.js'
 import { isDecember } from '../../utils/isDecember.js'
 import { Div } from '../Elements/index.js'
 import { breakpoints, layout } from '../../styles/tokens.js'
+// TEMPORARY - see SeasonFilterTuner.tsx. Remove this import and its render
+// below once the seasonal filter values are finalized.
+import { SeasonFilterTuner } from '../SeasonFilterTuner/SeasonFilterTuner.js'
 
 import brownDotBg from '../../img/ui/brown-dot-bg.png'
 import floorboardBg from '../../img/ui/floorboard.png'
@@ -216,6 +219,7 @@ export const Stage = ({
       {stageFocus === stageFocusType.WORKSHOP && <Workshop />}
       {stageFocus === stageFocusType.CELLAR && <Cellar />}
       <div {...{ className: 'spacer' }} />
+      {isFieldCowPenOrForest && <SeasonFilterTuner dayCount={dayCount} />}
     </Div>
   )
 }
