@@ -297,6 +297,33 @@ describe('sellItem', () => {
       expect(state.revenue).toEqual(30)
     })
 
+    test('bases loan garnishment on the seasonally-adjusted sale price, not the base price', () => {
+      // dayCount 0 is SPRING, carrot's configured high demand season, so the
+      // $25 base value sells for $30. Garnishment is 5% of that $30 (=
+      // $1.50), not 5% of the un-boosted $25 (= $1.25) - otherwise the
+      // effective garnishment rate would drift with the season instead of
+      // staying at a flat LOAN_GARNISHMENT_RATE.
+      const state = sellItem(
+        testState({
+          dayCount: 0,
+          inventory: [{ id: carrot.id, quantity: 1 }],
+          itemsSold: {},
+          loanBalance: 100,
+          money: 100,
+          pendingPeerMessages: [],
+          todaysNotifications: [],
+          revenue: 0,
+          todaysRevenue: 0,
+          valueAdjustments: { [carrot.id]: 1 },
+        }),
+        carrot
+      )
+
+      expect(state.loanBalance).toEqual(98.5)
+      expect(state.money).toEqual(128.5)
+      expect(state.revenue).toEqual(28.5)
+    })
+
     test('applies a low demand penalty during a crop low demand season', () => {
       // dayCount 0 is SPRING, corn's configured low demand season.
       const state = sellItem(
