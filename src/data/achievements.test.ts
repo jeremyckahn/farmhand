@@ -217,6 +217,77 @@ describe('orchardist', () => {
   })
 })
 
+const storageAchievementVariants = [
+  [
+    'hoarder',
+    1000,
+    100,
+    'Expand your storage capacity to 1,000 units.',
+    '100 additional inventory spaces',
+  ],
+  [
+    'storage-facility',
+    10000,
+    1000,
+    'Expand your storage capacity to 10,000 units.',
+    '1,000 additional inventory spaces',
+  ],
+  [
+    'storage-king',
+    100000,
+    10000,
+    'Expand your storage capacity to 100,000 units.',
+    '10,000 additional inventory spaces',
+  ],
+]
+
+describe.each(storageAchievementVariants)(
+  'storage achievement variants',
+  (id, goal, reward, description, rewardDescription) => {
+    describe(id, () => {
+      const achievement = achievementsMap[id as string]
+      let state: any
+
+      beforeEach(() => {
+        state = {
+          inventoryLimit: Number(goal) - 1,
+        }
+      })
+
+      test('has the expected description', () => {
+        expect(achievement.description).toEqual(description)
+      })
+
+      test('has the expected rewardDescription', () => {
+        expect(achievement.rewardDescription).toEqual(rewardDescription)
+      })
+
+      test(`is not achieved when storage capacity is less than ${goal}`, () => {
+        expect(achievement.condition(state)).toEqual(false)
+      })
+
+      test(`is achieved when storage capacity is ${goal} or more`, () => {
+        state.inventoryLimit = goal
+
+        expect(achievement.condition(state)).toEqual(true)
+      })
+
+      test(`rewards the player with ${reward} additional inventory spaces`, () => {
+        state = achievement.reward(state)
+
+        expect(state.inventoryLimit).toEqual(Number(goal) - 1 + Number(reward))
+      })
+
+      test('reports progress toward the storage capacity goal', () => {
+        expect(achievement.getProgress?.(state)).toEqual({
+          currentValue: Number(goal) - 1,
+          goal: Number(goal),
+        })
+      })
+    })
+  }
+)
+
 describe('piemaker', () => {
   const achievement = achievementsMap['piemaker']
   let state: any
