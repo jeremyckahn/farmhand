@@ -217,6 +217,40 @@ describe('orchardist', () => {
   })
 })
 
+describe('hoarder', () => {
+  const achievement = achievementsMap['hoarder']
+  let state: any
+
+  beforeEach(() => {
+    state = {
+      inventoryLimit: 999,
+    }
+  })
+
+  test('is not achieved when storage capacity is less than 1000', () => {
+    expect(achievement.condition(state)).toEqual(false)
+  })
+
+  test('is achieved when storage capacity is 1000 or more', () => {
+    state.inventoryLimit = 1000
+
+    expect(achievement.condition(state)).toEqual(true)
+  })
+
+  test('rewards the player with 100 additional inventory spaces', () => {
+    state = achievement.reward(state)
+
+    expect(state.inventoryLimit).toEqual(1099)
+  })
+
+  test('reports progress toward the storage capacity goal', () => {
+    expect(achievement.getProgress?.(state)).toEqual({
+      currentValue: 999,
+      goal: 1000,
+    })
+  })
+})
+
 describe('piemaker', () => {
   const achievement = achievementsMap['piemaker']
   let state: any
