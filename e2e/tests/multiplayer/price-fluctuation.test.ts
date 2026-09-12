@@ -1,10 +1,30 @@
 import { expect, test } from '@playwright/test'
 
 import { loadFixture } from '../../test-utils/load-fixture.js'
-import { SEASON_HIGH_DEMAND_BONUS } from '../../../src/constants.js'
+
+// window.farmhand is a real, supported debug hook (documented in
+// README.md's "Debugging" section) but its ambient type declaration lives
+// in src/react-app-env.d.ts, which isn't part of this project's
+// TypeScript scope - so it's redeclared locally here with the shape this
+// file actually relies on.
+declare global {
+  interface Window {
+    farmhand?: {
+      setState: (partialState: Record<string, unknown>) => void
+    }
+  }
+}
 
 test('uses server-based price values', async ({ page }) => {
   await loadFixture(page, 'crops-mature')
+
+  // crops-mature's dayCount (6) falls within Spring, carrot's configured
+  // high demand season, which would apply a seasonal bonus on top of the
+  // fluctuation-adjusted price this test is actually about. Move to a day
+  // that's season-neutral for carrot so this test only exercises price
+  // fluctuation, not seasonal demand (which has its own dedicated coverage
+  // in e2e/tests/seasons.test.ts).
+  await page.evaluate(() => window.farmhand?.setState({ dayCount: 20 }))
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Field' }).click()
@@ -15,11 +35,8 @@ test('uses server-based price values', async ({ page }) => {
     .locator('.Plot')
     .first()
     .click()
-  // crops-mature's dayCount (6) falls within Spring, carrot's configured
-  // high demand season, so the base fluctuation-adjusted price ($28.72) is
-  // boosted by SEASON_HIGH_DEMAND_BONUS.
   await expect(page.getByRole('complementary')).toContainText(
-    'CarrotSell price: $34.46Total: $34.46'
+    'CarrotSell price: $28.72Total: $28.72'
   )
   await page.getByRole('checkbox', { name: 'Play online' }).check()
 
@@ -39,13 +56,8 @@ test('uses server-based price values', async ({ page }) => {
 
   const { carrot: carrotValueAdjustment } = serverResponse.valueAdjustments
   const baseCarrotValue = 25
-  const fluctuationAdjustedCarrotPrice =
-    Math.round(baseCarrotValue * carrotValueAdjustment * 100) / 100
-  // Still Spring (see note above), so the seasonal bonus still applies to
-  // the server-supplied price.
   const adjustedCarrotPrice = (
-    fluctuationAdjustedCarrotPrice *
-    (1 + SEASON_HIGH_DEMAND_BONUS)
+    Math.round(baseCarrotValue * carrotValueAdjustment * 100) / 100
   ).toFixed(2)
 
   await expect(page.getByRole('complementary')).toContainText(
