@@ -84,7 +84,7 @@ export const Stage = ({
   // filter (see seasonFilterMap) applied via the `.stage-background` layer
   // below - scoped to just the background, not the crop/cow/tree sprites
   // rendered on top of it.
-  const isFieldCowPenOrForest = ([
+  const hasSeasonalColorShift = ([
     stageFocusType.FIELD,
     stageFocusType.COW_PEN,
     stageFocusType.FOREST,
@@ -128,7 +128,7 @@ export const Stage = ({
           ...(backgroundImage
             ? { backgroundImage: `url(${backgroundImage})` }
             : {}),
-          ...(isFieldCowPenOrForest
+          ...(hasSeasonalColorShift
             ? {
                 backgroundSize: '30%',
                 filter: seasonFilterMap[getCurrentSeason(dayCount)],
@@ -219,7 +219,7 @@ export const Stage = ({
       {stageFocus === stageFocusType.WORKSHOP && <Workshop />}
       {stageFocus === stageFocusType.CELLAR && <Cellar />}
       <div {...{ className: 'spacer' }} />
-      {isFieldCowPenOrForest && <SeasonFilterTuner dayCount={dayCount} />}
+      {hasSeasonalColorShift && <SeasonFilterTuner dayCount={dayCount} />}
     </Div>
   )
 }
