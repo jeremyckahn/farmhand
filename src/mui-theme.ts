@@ -53,6 +53,7 @@ const globalStyleOverrides = {
     fontFamily: '"Francois One", sans-serif',
   },
   '.danger-text': { color: colors.error },
+  '.success-text': { color: colors.success },
   hr: { background: 'none' },
   '.MuiDivider-vertical': { width: 'auto' },
   '.Farmhand.notification-container': {

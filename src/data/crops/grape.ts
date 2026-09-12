@@ -1,4 +1,4 @@
-import { cropFamily, cropType, grapeVariety } from '../../enums.js'
+import { cropFamily, cropType, grapeVariety, season } from '../../enums.js'
 import { crop, cropVariety, fromSeed } from '../crop.js'
 
 export const isGrape = (
@@ -41,7 +41,9 @@ export const grapeSeed: farmhand.item = crop({
     'grape-tempranillo',
     'grape-nebbiolo',
   ],
+  highDemandSeasons: [season.SPRING, season.FALL],
   id: 'grape-seed',
+  lowDemandSeasons: [season.WINTER],
   name: 'Grape Seed',
   tier: 7,
 })

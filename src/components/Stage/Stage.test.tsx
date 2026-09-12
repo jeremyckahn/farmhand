@@ -40,6 +40,7 @@ vi.mock('../Cellar/index.js', () => ({
 }))
 
 const defaultProps = {
+  dayCount: 0,
   field: [[]],
   stageFocus: stageFocusType.FIELD,
   viewTitle: 'Test View',
@@ -151,6 +152,60 @@ describe('Stage', () => {
     renderWithContext({ stageFocus: 'UNKNOWN_STAGE' })
 
     expect(document.querySelector('.Stage')).toBeInTheDocument()
+  })
+
+  describe('seasonal visual filter', () => {
+    test('applies no filter during spring on the Field screen', () => {
+      renderWithContext({ stageFocus: stageFocusType.FIELD, dayCount: 0 })
+
+      expect(document.querySelector('.stage-background')).toHaveStyle(
+        'filter: none'
+      )
+    })
+
+    test('applies a filter during summer on the Field screen', () => {
+      renderWithContext({ stageFocus: stageFocusType.FIELD, dayCount: 20 })
+
+      expect(document.querySelector('.stage-background')).not.toHaveStyle(
+        'filter: none'
+      )
+    })
+
+    test('applies a filter during summer on the Cow Pen screen', () => {
+      renderWithContext(
+        { stageFocus: stageFocusType.COW_PEN, dayCount: 20 },
+        { purchasedCowPen: 1 }
+      )
+
+      expect(document.querySelector('.stage-background')).not.toHaveStyle(
+        'filter: none'
+      )
+    })
+
+    test('applies a filter during summer on the Forest screen', () => {
+      renderWithContext(
+        { stageFocus: stageFocusType.FOREST, dayCount: 20 },
+        {
+          purchasedForest: 1,
+          forest: [
+            [null, null],
+            [null, null],
+          ],
+        }
+      )
+
+      expect(document.querySelector('.stage-background')).not.toHaveStyle(
+        'filter: none'
+      )
+    })
+
+    test('does not apply a seasonal filter to screens other than Field, Cow Pen, or Forest', () => {
+      renderWithContext({ stageFocus: stageFocusType.SHOP, dayCount: 20 })
+
+      expect(document.querySelector('.stage-background')).not.toHaveStyle(
+        'filter: sepia(0.25) saturate(1.3) hue-rotate(-8deg) brightness(1.05)'
+      )
+    })
   })
 
   test('passes props to child components', () => {

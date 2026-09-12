@@ -290,3 +290,16 @@ export const grapeVariety = {
 } as const
 
 export type grapeVariety = typeof grapeVariety[keyof typeof grapeVariety]
+
+/**
+ * @property farmhand.module:enums.season
+ * @enum
+ */
+export const season = {
+  SPRING: 'SPRING',
+  SUMMER: 'SUMMER',
+  FALL: 'FALL',
+  WINTER: 'WINTER',
+} as const
+
+export type season = typeof season[keyof typeof season]

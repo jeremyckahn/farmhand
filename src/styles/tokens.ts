@@ -9,6 +9,7 @@ export const colors = {
   itemBackground: '#f7b459',
   heart: '#ff4040',
   error: '#ce0000',
+  success: '#2e7d32',
   cardBackground: '#ffe3a1',
   // Matches the legacy Sass `color.adjust($card-background, $lightness: -10%)`
   // for cards nested inside other cards. MUI's `darken()` helper uses a
