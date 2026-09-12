@@ -217,48 +217,33 @@ describe('orchardist', () => {
   })
 })
 
-describe('hoarder', () => {
-  const achievement = achievementsMap['hoarder']
-  let state: any
-
-  beforeEach(() => {
-    state = {
-      inventoryLimit: 999,
-    }
-  })
-
-  test('is not achieved when storage capacity is less than 1000', () => {
-    expect(achievement.condition(state)).toEqual(false)
-  })
-
-  test('is achieved when storage capacity is 1000 or more', () => {
-    state.inventoryLimit = 1000
-
-    expect(achievement.condition(state)).toEqual(true)
-  })
-
-  test('rewards the player with 100 additional inventory spaces', () => {
-    state = achievement.reward(state)
-
-    expect(state.inventoryLimit).toEqual(1099)
-  })
-
-  test('reports progress toward the storage capacity goal', () => {
-    expect(achievement.getProgress?.(state)).toEqual({
-      currentValue: 999,
-      goal: 1000,
-    })
-  })
-})
-
 const storageAchievementVariants = [
-  ['storage-facility', 10000, 1000],
-  ['storage-king', 100000, 10000],
+  [
+    'hoarder',
+    1000,
+    100,
+    'Expand your storage capacity to 1,000 units.',
+    '100 additional inventory spaces',
+  ],
+  [
+    'storage-facility',
+    10000,
+    1000,
+    'Expand your storage capacity to 10,000 units.',
+    '1,000 additional inventory spaces',
+  ],
+  [
+    'storage-king',
+    100000,
+    10000,
+    'Expand your storage capacity to 100,000 units.',
+    '10,000 additional inventory spaces',
+  ],
 ]
 
 describe.each(storageAchievementVariants)(
   'storage achievement variants',
-  (id, goal, reward) => {
+  (id, goal, reward, description, rewardDescription) => {
     describe(id, () => {
       const achievement = achievementsMap[id as string]
       let state: any
@@ -267,6 +252,14 @@ describe.each(storageAchievementVariants)(
         state = {
           inventoryLimit: Number(goal) - 1,
         }
+      })
+
+      test('has the expected description', () => {
+        expect(achievement.description).toEqual(description)
+      })
+
+      test('has the expected rewardDescription', () => {
+        expect(achievement.rewardDescription).toEqual(rewardDescription)
       })
 
       test(`is not achieved when storage capacity is less than ${goal}`, () => {
