@@ -251,6 +251,50 @@ describe('hoarder', () => {
   })
 })
 
+const storageAchievementVariants = [
+  ['storage-facility', 10000, 1000],
+  ['storage-king', 100000, 10000],
+]
+
+describe.each(storageAchievementVariants)(
+  'storage achievement variants',
+  (id, goal, reward) => {
+    describe(id, () => {
+      const achievement = achievementsMap[id as string]
+      let state: any
+
+      beforeEach(() => {
+        state = {
+          inventoryLimit: Number(goal) - 1,
+        }
+      })
+
+      test(`is not achieved when storage capacity is less than ${goal}`, () => {
+        expect(achievement.condition(state)).toEqual(false)
+      })
+
+      test(`is achieved when storage capacity is ${goal} or more`, () => {
+        state.inventoryLimit = goal
+
+        expect(achievement.condition(state)).toEqual(true)
+      })
+
+      test(`rewards the player with ${reward} additional inventory spaces`, () => {
+        state = achievement.reward(state)
+
+        expect(state.inventoryLimit).toEqual(Number(goal) - 1 + Number(reward))
+      })
+
+      test('reports progress toward the storage capacity goal', () => {
+        expect(achievement.getProgress?.(state)).toEqual({
+          currentValue: Number(goal) - 1,
+          goal: Number(goal),
+        })
+      })
+    })
+  }
+)
+
 describe('piemaker', () => {
   const achievement = achievementsMap['piemaker']
   let state: any
