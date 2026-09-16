@@ -219,21 +219,21 @@ describe('orchardist', () => {
 
 const storageAchievementVariants = [
   [
-    'hoarder',
+    'steady-stasher',
     1000,
     100,
     'Expand your storage capacity to 1,000 units.',
     '100 additional inventory spaces',
   ],
   [
-    'storage-facility',
+    'heavy-hoarder',
     10000,
     1000,
     'Expand your storage capacity to 10,000 units.',
     '1,000 additional inventory spaces',
   ],
   [
-    'storage-king',
+    'pro-prepper',
     100000,
     10000,
     'Expand your storage capacity to 100,000 units.',

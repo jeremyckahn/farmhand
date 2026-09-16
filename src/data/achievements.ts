@@ -323,8 +323,8 @@ const achievements: farmhand.achievement[] = [
   }))(),
 
   ((goal = 1000, reward = 100) => ({
-    id: 'hoarder',
-    name: 'Hoarder',
+    id: 'steady-stasher',
+    name: 'Steady Stasher',
     description: `Expand your storage capacity to ${integerString(
       goal
     )} units.`,
@@ -337,8 +337,8 @@ const achievements: farmhand.achievement[] = [
   }))(),
 
   ((goal = 10000, reward = 1000) => ({
-    id: 'storage-facility',
-    name: 'Storage Facility',
+    id: 'heavy-hoarder',
+    name: 'Heavy Hoarder',
     description: `Expand your storage capacity to ${integerString(
       goal
     )} units.`,
@@ -351,8 +351,8 @@ const achievements: farmhand.achievement[] = [
   }))(),
 
   ((goal = 100000, reward = 10000) => ({
-    id: 'storage-king',
-    name: 'Storage King',
+    id: 'pro-prepper',
+    name: 'Pro Prepper',
     description: `Expand your storage capacity to ${integerString(
       goal
     )} units.`,
