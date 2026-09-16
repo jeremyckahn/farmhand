@@ -1,6 +1,6 @@
 import { shapeOf, testCrop, testState } from '../../test-utils/index.js'
 import { generateCow } from '../../utils/generateCow.js'
-import { EXPERIENCE_VALUES } from '../../constants.js'
+import { EXPERIENCE_VALUES, ONE_YEAR_LENGTH_DAYS } from '../../constants.js'
 import { randomNumberService } from '../../common/services/randomNumber.js'
 
 import { computeStateForNextDay } from './computeStateForNextDay.js'
@@ -51,9 +51,13 @@ describe('computeStateForNextDay', () => {
   })
 
   describe('new year experience', () => {
-    const ONE_YEAR = 365
+    const ONE_YEAR = ONE_YEAR_LENGTH_DAYS
+    const TWO_YEARS = ONE_YEAR_LENGTH_DAYS * 2
+    const THREE_YEARS = ONE_YEAR_LENGTH_DAYS * 3
+    const FOUR_YEARS = ONE_YEAR_LENGTH_DAYS * 4
+    const TEN_YEARS = ONE_YEAR_LENGTH_DAYS * 10
 
-    test.each([1, 5, 100, 363, 365, 730])(
+    test.each([0, 4, ONE_YEAR - 2, ONE_YEAR, TWO_YEARS - 2, TEN_YEARS])(
       'it does not add any experience on day %s',
       dayCount => {
         const { experience } = computeStateForNextDay({ ...state, dayCount })
@@ -62,15 +66,13 @@ describe('computeStateForNextDay', () => {
       }
     )
 
-    test.each([
-      ONE_YEAR - 1,
-      ONE_YEAR * 2 - 1,
-      ONE_YEAR * 3 - 1,
-      ONE_YEAR * 4 - 1,
-    ])('it adds experience on day %s', dayCount => {
-      const { experience } = computeStateForNextDay({ ...state, dayCount })
+    test.each([ONE_YEAR - 1, TWO_YEARS - 1, THREE_YEARS - 1, FOUR_YEARS - 1])(
+      'it adds experience on day %s',
+      dayCount => {
+        const { experience } = computeStateForNextDay({ ...state, dayCount })
 
-      expect(experience).toEqual(EXPERIENCE_VALUES.NEW_YEAR)
-    })
+        expect(experience).toEqual(EXPERIENCE_VALUES.NEW_YEAR)
+      }
+    )
   })
 })
