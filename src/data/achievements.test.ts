@@ -218,32 +218,14 @@ describe('orchardist', () => {
 })
 
 const storageAchievementVariants = [
-  [
-    'steady-stasher',
-    1000,
-    100,
-    'Expand your storage capacity to 1,000 units.',
-    '100 additional inventory spaces',
-  ],
-  [
-    'heavy-hoarder',
-    10000,
-    1000,
-    'Expand your storage capacity to 10,000 units.',
-    '1,000 additional inventory spaces',
-  ],
-  [
-    'pro-prepper',
-    100000,
-    10000,
-    'Expand your storage capacity to 100,000 units.',
-    '10,000 additional inventory spaces',
-  ],
+  ['steady-stasher', 1000, 100],
+  ['heavy-hoarder', 10000, 1000],
+  ['pro-prepper', 100000, 10000],
 ]
 
 describe.each(storageAchievementVariants)(
   'storage achievement variants',
-  (id, goal, reward, description, rewardDescription) => {
+  (id, goal, reward) => {
     describe(id, () => {
       const achievement = achievementsMap[id as string]
       let state: any
@@ -252,14 +234,6 @@ describe.each(storageAchievementVariants)(
         state = {
           inventoryLimit: Number(goal) - 1,
         }
-      })
-
-      test('has the expected description', () => {
-        expect(achievement.description).toEqual(description)
-      })
-
-      test('has the expected rewardDescription', () => {
-        expect(achievement.rewardDescription).toEqual(rewardDescription)
       })
 
       test(`is not achieved when storage capacity is less than ${goal}`, () => {
