@@ -118,7 +118,14 @@ export const Stage = ({
           bottom: 0,
           left: 0,
           pointerEvents: 'none',
-          position: 'absolute',
+          // `fixed` (not `absolute`) so this stays pinned to the viewport
+          // as `.Stage` scrolls, rather than scrolling away with the rest
+          // of its content - see the "backgrounds scroll out of view"
+          // regression this fixes. It ends up bounded to just `.Stage`'s
+          // own area because the AppBar and sidebar have higher z-index
+          // and fully opaque backgrounds, occluding the rest of this
+          // otherwise full-window layer.
+          position: 'fixed',
           right: 0,
           top: 0,
           zIndex: -1,
