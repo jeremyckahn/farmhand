@@ -1,19 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 import { loadFixture } from '../../test-utils/load-fixture.js'
-
-// window.farmhand is a real, supported debug hook (documented in
-// README.md's "Debugging" section) but its ambient type declaration lives
-// in src/react-app-env.d.ts, which isn't part of this project's
-// TypeScript scope - so it's redeclared locally here with the shape this
-// file actually relies on.
-declare global {
-  interface Window {
-    farmhand?: {
-      setState: (partialState: Record<string, unknown>) => void
-    }
-  }
-}
+import { setFarmhandState } from '../../test-utils/farmhand-debug-hook.js'
 
 test('uses server-based price values', async ({ page }) => {
   await loadFixture(page, 'crops-mature')
@@ -24,7 +12,7 @@ test('uses server-based price values', async ({ page }) => {
   // that's season-neutral for carrot so this test only exercises price
   // fluctuation, not seasonal demand (which has its own dedicated coverage
   // in e2e/tests/seasons.test.ts).
-  await page.evaluate(() => window.farmhand?.setState({ dayCount: 20 }))
+  await setFarmhandState(page, { dayCount: 20 })
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Field' }).click()
