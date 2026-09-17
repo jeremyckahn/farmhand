@@ -23,7 +23,12 @@ describe('bootup', () => {
     })
 
     await waitFor(() => {
-      expect(screen.getByText('Day 10', { exact: false })).toBeInTheDocument()
+      expect(
+        screen.getByText('Day 10', {
+          exact: false,
+          selector: '.day-and-progress-container span',
+        })
+      ).toBeInTheDocument()
     })
   })
 
