@@ -30,6 +30,11 @@ declare namespace farmhand {
     value: number
     cropTimeline?: number[]
     cropType?: import('./enums.js').cropType
+    // Seasons during which this crop sells for more/less than its base
+    // value - see getSeasonalDemandMultiplier.ts. Both optional and
+    // independent; a crop with neither stays at 1x value year-round.
+    highDemandSeasons?: import('./enums.js').season[]
+    lowDemandSeasons?: import('./enums.js').season[]
     description?: string
     enablesFieldMode?: string
     growsInto?: string | string[]

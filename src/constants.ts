@@ -20,6 +20,14 @@ export const LOAN_INTEREST_RATE = 0.02
 
 export const FERTILIZER_BONUS = 0.5
 
+export const SEASON_LENGTH_DAYS = 15
+export const SEASON_HIGH_DEMAND_BONUS = 0.2
+export const SEASON_LOW_DEMAND_PENALTY = 0.2
+
+// 4 = the number of seasons (see the `season` enum in enums.ts) - a year
+// is one full rotation through all of them.
+export const ONE_YEAR_LENGTH_DAYS = SEASON_LENGTH_DAYS * 4
+
 export const INITIAL_STORAGE_LIMIT = 100
 export const INFINITE_STORAGE_LIMIT = -1
 export const STORAGE_EXPANSION_AMOUNT = 100

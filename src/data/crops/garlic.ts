@@ -1,5 +1,5 @@
 import { crop, fromSeed } from '../crop.js'
-import { cropType } from '../../enums.js'
+import { cropType, season } from '../../enums.js'
 
 /**
  * @property farmhand.module:items.garlicSeed
@@ -8,7 +8,9 @@ export const garlicSeed: farmhand.item = crop({
   cropType: cropType.GARLIC,
   cropTimeline: [2, 1, 1, 1],
   growsInto: 'garlic',
+  highDemandSeasons: [season.FALL, season.WINTER],
   id: 'garlic-seed',
+  lowDemandSeasons: [season.SPRING],
   name: 'Garlic Bulb',
   tier: 5,
 })

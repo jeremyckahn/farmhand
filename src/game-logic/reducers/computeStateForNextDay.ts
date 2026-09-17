@@ -1,6 +1,6 @@
 import { generateCow } from '../../utils/generateCow.js'
 import { generateValueAdjustments } from '../../common/utils.js'
-import { EXPERIENCE_VALUES } from '../../constants.js'
+import { EXPERIENCE_VALUES, ONE_YEAR_LENGTH_DAYS } from '../../constants.js'
 
 import { addExperience } from './addExperience.js'
 import { applyLoanInterest } from './applyLoanInterest.js'
@@ -71,7 +71,7 @@ export const computeStateForNextDay = (
       }
     )
 
-  if (state.dayCount % 365 === 0) {
+  if (state.dayCount % ONE_YEAR_LENGTH_DAYS === 0) {
     state = addExperience(state, EXPERIENCE_VALUES.NEW_YEAR)
   }
 

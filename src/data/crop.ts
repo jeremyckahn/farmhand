@@ -44,7 +44,14 @@ interface FromSeedConfig {
 }
 
 export const fromSeed = (
-  { cropTimeline, cropType, growsInto, tier = 1 }: farmhand.item,
+  {
+    cropTimeline,
+    cropType,
+    growsInto,
+    tier = 1,
+    highDemandSeasons,
+    lowDemandSeasons,
+  }: farmhand.item,
   { variantIdx = 0, canBeFermented = false }: FromSeedConfig = {}
 ): Partial<farmhand.item> => {
   const variants = Array.isArray(growsInto) ? growsInto : [growsInto]
@@ -56,6 +63,8 @@ export const fromSeed = (
     doesPriceFluctuate: true,
     tier,
     type: itemType.CROP,
+    highDemandSeasons,
+    lowDemandSeasons,
     ...(canBeFermented &&
       cropTimeline && {
         daysToFerment: getCropLifecycleDuration({ cropTimeline }) * tier,

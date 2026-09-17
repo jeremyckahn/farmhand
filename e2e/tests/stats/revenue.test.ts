@@ -1,9 +1,18 @@
 import { test, expect } from '@playwright/test'
 
 import { loadFixture } from '../../test-utils/load-fixture.js'
+import { setFarmhandState } from '../../test-utils/farmhand-debug-hook.js'
 
 test('should track and manage revenue records', async ({ page }) => {
   await loadFixture(page, 'crops-mature')
+
+  // crops-mature's dayCount (6) falls within Spring, carrot's configured
+  // high demand season, which would apply a seasonal bonus on top of the
+  // revenue values this test is actually about. Move to a day that's
+  // season-neutral for carrot so this test only exercises revenue
+  // tracking, not seasonal demand (which has its own dedicated coverage in
+  // e2e/tests/seasons.test.ts).
+  await setFarmhandState(page, { dayCount: 20 })
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Field' }).click()
