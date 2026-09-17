@@ -15,7 +15,7 @@ vitest.mock('../../data/maps.js')
 describe('Item', () => {
   const baseProps = {
     completedAchievements: {},
-    dayCount: 0,
+    dayCount: 1,
     historicalValueAdjustments: [],
     inventory: [],
     inventoryLimit: INFINITE_STORAGE_LIMIT,
@@ -148,7 +148,7 @@ describe('Item', () => {
             <Item
               {...{
                 ...baseProps,
-                dayCount: 0,
+                dayCount: 1,
                 isSellView: true,
                 item: testItem({ id, highDemandSeasons: [season.SPRING] }),
                 playerInventoryQuantities: { [id]: 4 },
@@ -166,7 +166,7 @@ describe('Item', () => {
             <Item
               {...{
                 ...baseProps,
-                dayCount: 0,
+                dayCount: 1,
                 isSellView: true,
                 item: testItem({ id, lowDemandSeasons: [season.SPRING] }),
                 playerInventoryQuantities: { [id]: 4 },
@@ -184,7 +184,7 @@ describe('Item', () => {
             <Item
               {...{
                 ...baseProps,
-                dayCount: 0,
+                dayCount: 1,
                 isSellView: true,
                 item: testItem({ id, highDemandSeasons: [season.SUMMER] }),
                 playerInventoryQuantities: { [id]: 4 },
@@ -197,14 +197,14 @@ describe('Item', () => {
         })
 
         test('shows no indicator for a seed sold in the shop, even during its high demand season', () => {
-          // dayCount 0 is SPRING, carrotSeed's configured high demand season,
+          // dayCount 1 is SPRING, carrotSeed's configured high demand season,
           // but the seasonal price bonus never applies to shop-sold items
           // (see the #140 guard), so the label must not appear either.
           render(
             <Item
               {...{
                 ...baseProps,
-                dayCount: 0,
+                dayCount: 1,
                 isSellView: true,
                 item: carrotSeed,
                 playerInventoryQuantities: { [carrotSeed.id]: 4 },
@@ -225,7 +225,7 @@ describe('Item', () => {
             <Item
               {...{
                 ...baseProps,
-                dayCount: 0,
+                dayCount: 1,
                 isSellView: true,
                 adjustedValue: 10,
                 item: testItem({ id, highDemandSeasons: [season.SPRING] }),
@@ -246,7 +246,7 @@ describe('Item', () => {
             <Item
               {...{
                 ...baseProps,
-                dayCount: 0,
+                dayCount: 1,
                 isSellView: true,
                 adjustedValue: 10,
                 item: testItem({ id, lowDemandSeasons: [season.SPRING] }),
@@ -267,7 +267,7 @@ describe('Item', () => {
             <Item
               {...{
                 ...baseProps,
-                dayCount: 0,
+                dayCount: 1,
                 isSellView: true,
                 adjustedValue: 10,
                 item: testItem({ id, highDemandSeasons: [season.SUMMER] }),

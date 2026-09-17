@@ -40,7 +40,7 @@ vi.mock('../Cellar/index.js', () => ({
 }))
 
 const defaultProps = {
-  dayCount: 0,
+  dayCount: 1,
   field: [[]],
   stageFocus: stageFocusType.FIELD,
   viewTitle: 'Test View',
@@ -156,7 +156,7 @@ describe('Stage', () => {
 
   describe('seasonal visual filter', () => {
     test('applies no filter during spring on the Field screen', () => {
-      renderWithContext({ stageFocus: stageFocusType.FIELD, dayCount: 0 })
+      renderWithContext({ stageFocus: stageFocusType.FIELD, dayCount: 1 })
 
       expect(document.querySelector('.stage-background')).toHaveStyle(
         'filter: none'

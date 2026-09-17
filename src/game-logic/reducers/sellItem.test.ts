@@ -11,7 +11,7 @@ describe('sellItem', () => {
     const state = sellItem(
       testState({
         // Chosen so carrot's SPRING high-demand seasonal bonus doesn't apply.
-        dayCount: 15,
+        dayCount: 16,
         inventory: [{ id: carrot.id, quantity: 1 }],
         itemsSold: {},
         loanBalance: 0,
@@ -59,7 +59,7 @@ describe('sellItem', () => {
     const state = sellItem(
       testState({
         // Chosen so carrot's SPRING high-demand seasonal bonus doesn't apply.
-        dayCount: 15,
+        dayCount: 16,
         inventory: [{ id: carrot.id, quantity: 1 }],
         itemsSold: {},
         loanBalance: 0,
@@ -113,7 +113,7 @@ describe('sellItem', () => {
     const { learnedRecipes } = sellItem(
       testState({
         // Chosen so carrot's SPRING high-demand seasonal bonus doesn't apply.
-        dayCount: 15,
+        dayCount: 16,
         inventory: [{ id: carrot.id, quantity: 2 }],
         itemsSold: {},
         loanBalance: 0,
@@ -172,7 +172,7 @@ describe('sellItem', () => {
           state = sellItem(
             testState({
               // Chosen so carrot's SPRING high-demand seasonal bonus doesn't apply.
-              dayCount: 15,
+              dayCount: 16,
               inventory: [{ id: carrot.id, quantity: 3 }],
               itemsSold: {},
               loanBalance: 100,
@@ -199,7 +199,7 @@ describe('sellItem', () => {
           state = sellItem(
             testState({
               // Chosen so carrot's SPRING high-demand seasonal bonus doesn't apply.
-              dayCount: 15,
+              dayCount: 16,
               experience: 0,
               inventory: [{ id: carrot.id, quantity: 3 }],
               itemsSold: {},
@@ -276,10 +276,10 @@ describe('sellItem', () => {
 
   describe('seasonal demand', () => {
     test('applies a high demand bonus during a crop high demand season', () => {
-      // dayCount 0 is SPRING, carrot's configured high demand season.
+      // dayCount 1 is SPRING, carrot's configured high demand season.
       const state = sellItem(
         testState({
-          dayCount: 0,
+          dayCount: 1,
           inventory: [{ id: carrot.id, quantity: 1 }],
           itemsSold: {},
           loanBalance: 0,
@@ -298,14 +298,14 @@ describe('sellItem', () => {
     })
 
     test('bases loan garnishment on the seasonally-adjusted sale price, not the base price', () => {
-      // dayCount 0 is SPRING, carrot's configured high demand season, so the
+      // dayCount 1 is SPRING, carrot's configured high demand season, so the
       // $25 base value sells for $30. Garnishment is 5% of that $30 (=
       // $1.50), not 5% of the un-boosted $25 (= $1.25) - otherwise the
       // effective garnishment rate would drift with the season instead of
       // staying at a flat LOAN_GARNISHMENT_RATE.
       const state = sellItem(
         testState({
-          dayCount: 0,
+          dayCount: 1,
           inventory: [{ id: carrot.id, quantity: 1 }],
           itemsSold: {},
           loanBalance: 100,
@@ -325,10 +325,10 @@ describe('sellItem', () => {
     })
 
     test('applies a low demand penalty during a crop low demand season', () => {
-      // dayCount 0 is SPRING, corn's configured low demand season.
+      // dayCount 1 is SPRING, corn's configured low demand season.
       const state = sellItem(
         testState({
-          dayCount: 0,
+          dayCount: 1,
           inventory: [{ id: corn.id, quantity: 1 }],
           itemsSold: {},
           loanBalance: 0,
@@ -347,11 +347,11 @@ describe('sellItem', () => {
     })
 
     test('does not apply the seasonal multiplier to seed sales', () => {
-      // dayCount 0 is SPRING, which is carrot's high demand season, but this
+      // dayCount 1 is SPRING, which is carrot's high demand season, but this
       // must not apply to selling the seed - see the #140 guard in Item.tsx.
       const state = sellItem(
         testState({
-          dayCount: 0,
+          dayCount: 1,
           inventory: [{ id: carrotSeed.id, quantity: 1 }],
           itemsSold: {},
           loanBalance: 0,

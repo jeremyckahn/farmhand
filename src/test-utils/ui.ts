@@ -3,7 +3,12 @@ import userEvent from '@testing-library/user-event'
 
 export const waitForBoot = () =>
   waitFor(() => {
-    expect(screen.getByText('Day 1', { exact: false })).toBeInTheDocument()
+    // Both the AppBar's season display ("Day 1 of Spring") and the sidebar's
+    // day-and-progress-container ("Day 1, level:") match this substring, so
+    // assert on the (possibly plural) match rather than a single element.
+    expect(
+      screen.getAllByText('Day 1', { exact: false })[0]
+    ).toBeInTheDocument()
   })
 
 export const endDay = async () => {
