@@ -23,11 +23,11 @@ describe('bootup', () => {
     })
 
     await waitFor(() => {
-      // Both the AppBar's season display ("Day 10 of Spring") and the
-      // sidebar's day-and-progress-container ("Day 10, level:") match this
-      // substring, so assert on the match set rather than a single element.
       expect(
-        screen.getAllByText('Day 10', { exact: false })[0]
+        screen.getByText('Day 10', {
+          exact: false,
+          selector: '.day-and-progress-container span',
+        })
       ).toBeInTheDocument()
     })
   })
