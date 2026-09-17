@@ -13,6 +13,11 @@ on:
           - patch
           - minor
           - major
+          - other
+      customVersion:
+        description: 'Custom version (used only when Release type is "other")'
+        required: false
+        default: ''
 
 permissions:
   id-token: write
@@ -59,8 +64,26 @@ jobs:
 
       - run: npm ci
 
+      - name: Validate custom version input
+        if: ${{ github.event.inputs.releaseType == 'other' }}
+        env:
+          CUSTOM_VERSION: ${{ github.event.inputs.customVersion }}
+        run: |
+          if [ -z "$CUSTOM_VERSION" ]; then
+            echo "::error::Release type is 'other' but no customVersion was provided."
+            exit 1
+          fi
+
       - name: Tag release
-        run: npm version ${{ github.event.inputs.releaseType }}
+        env:
+          RELEASE_TYPE: ${{ github.event.inputs.releaseType }}
+          CUSTOM_VERSION: ${{ github.event.inputs.customVersion }}
+        run: |
+          if [ "$RELEASE_TYPE" = "other" ]; then
+            npm version "$CUSTOM_VERSION"
+          else
+            npm version "$RELEASE_TYPE"
+          fi
 
         # Get new package version from package.json
       - name: Get package version
@@ -76,7 +99,7 @@ jobs:
           ref: main
 
       - name: Sync branches
-        run: git merge -m "Merge ${{ github.event.inputs.releaseType }} commit" origin/develop
+        run: git merge -m "Merge release ${{ steps.package_version.outputs.version }} commit" origin/develop
 
       # Push merge commit back to main and trigger downstream workflows
       # https://github.community/t/push-from-action-does-not-trigger-subsequent-action/16854/2
