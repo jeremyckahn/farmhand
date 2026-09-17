@@ -8,6 +8,11 @@ on:
         description: 'Release type'
         required: true
         default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 permissions:
   id-token: write
