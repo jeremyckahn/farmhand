@@ -4,6 +4,7 @@ import { array, string } from 'prop-types'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import Inventory from '../Inventory/index.js'
 import CowPenContextMenu from '../CowPenContextMenu/index.js'
+import FarmhandShuffleContextMenu from '../FarmhandShuffleContextMenu/index.js'
 import { stageFocusType } from '../../enums.js'
 import { Div } from '../Elements/index.js'
 import { centerTabsSx } from '../../styles/sx.js'
@@ -44,6 +45,8 @@ export const ContextPane = ({
     >
       {stageFocus === stageFocusType.COW_PEN ? (
         <CowPenContextMenu />
+      ) : stageFocus === stageFocusType.FARMHAND_SHUFFLE ? (
+        <FarmhandShuffleContextMenu />
       ) : (
         <>
           <h2>Inventory</h2>

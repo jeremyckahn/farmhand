@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, act } from '@testing-library/react'
 
 import { testItem } from '../../test-utils/index.js'
 import { sortItems } from '../../utils/sortItems.js'
@@ -77,7 +77,12 @@ describe('Inventory Component', () => {
 
       fireEvent.change(searchInput, { target: { value: 'Carrot' } })
 
-      vitest.advanceTimersByTime(1000)
+      // The debounced onSearch callback's setState needs to be wrapped in
+      // act(): React 18's createRoot batches/defers this update, unlike
+      // React 17's synchronous legacy-mode flushing outside act().
+      act(() => {
+        vitest.advanceTimersByTime(1000)
+      })
 
       expect(screen.getByText('Carrot')).toBeInTheDocument()
       expect(screen.queryByText('Pumpkin Seed')).not.toBeInTheDocument()

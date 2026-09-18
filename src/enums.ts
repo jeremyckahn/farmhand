@@ -78,6 +78,7 @@ export const stageFocusType = {
   INVENTORY: 'INVENTORY',
   WORKSHOP: 'WORKSHOP',
   CELLAR: 'CELLAR',
+  FARMHAND_SHUFFLE: 'FARMHAND_SHUFFLE',
 } as const
 
 export type stageFocusType = typeof stageFocusType[keyof typeof stageFocusType]

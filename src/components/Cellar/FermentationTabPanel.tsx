@@ -3,7 +3,8 @@ import { number } from 'prop-types'
 import Divider from '@mui/material/Divider/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
-import ReactMarkdown from 'react-markdown'
+
+import { Markdown } from '../Markdown/index.js'
 
 import { FermentationRecipeList } from '../FermentationRecipeList/FermentationRecipeList.js'
 
@@ -23,11 +24,9 @@ export const FermentationTabPanel = ({
       <li>
         <Card>
           <CardContent>
-            <ReactMarkdown
+            <Markdown
               {...{
-                linkTarget: '_blank',
-                className: 'markdown',
-                source:
+                children:
                   'Some items can be fermented and become much more valuable over time.',
               }}
             />
