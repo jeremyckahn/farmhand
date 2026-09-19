@@ -36,6 +36,10 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
           ref: develop
+          # PERSONAL_ACCESS_TOKEN is required here (not the default GITHUB_TOKEN) because
+          # `npm version`'s postversion hook pushes directly to develop, which is covered
+          # by a repository ruleset that only admins/bypass actors can push through.
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       # https://stackoverflow.com/a/69634516
       - name: Reconfigure git to use HTTP authentication
