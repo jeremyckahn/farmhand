@@ -107,6 +107,7 @@ export const cropItemIdToSeedItemMap: Record<
 
 export const cropTypeToIdMap: Record<string, string | Array<string>> = {
   [ASPARAGUS]: 'asparagus',
+  [BLUEBERRY]: 'blueberry',
   [CARROT]: 'carrot',
   [CORN]: 'corn',
   [GARLIC]: 'garlic',
