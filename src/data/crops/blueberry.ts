@@ -12,7 +12,7 @@ export const blueberrySeed: farmhand.item = crop({
   id: 'blueberry-seed',
   lowDemandSeasons: [season.SPRING],
   name: 'Blueberry Seed',
-  tier: 1,
+  tier: 7,
 })
 
 /**
