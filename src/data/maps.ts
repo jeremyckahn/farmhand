@@ -9,6 +9,7 @@ import { grapeSeed } from './crops/index.js'
 
 const {
   ASPARAGUS,
+  BLUEBERRY,
   CARROT,
   CORN,
   GARLIC,
