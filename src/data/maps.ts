@@ -9,6 +9,7 @@ import { grapeSeed } from './crops/index.js'
 
 const {
   ASPARAGUS,
+  BLUEBERRY,
   CARROT,
   CORN,
   GARLIC,
@@ -106,6 +107,7 @@ export const cropItemIdToSeedItemMap: Record<
 
 export const cropTypeToIdMap: Record<string, string | Array<string>> = {
   [ASPARAGUS]: 'asparagus',
+  [BLUEBERRY]: 'blueberry',
   [CARROT]: 'carrot',
   [CORN]: 'corn',
   [GARLIC]: 'garlic',

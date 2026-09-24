@@ -1,4 +1,5 @@
 export { asparagus, asparagusSeed } from './asparagus.js'
+export { blueberry, blueberrySeed } from './blueberry.js'
 export { carrot, carrotSeed } from './carrot.js'
 export { corn, cornSeed } from './corn.js'
 export {

@@ -4,6 +4,7 @@
  */
 export const cropType = {
   ASPARAGUS: 'ASPARAGUS',
+  BLUEBERRY: 'BLUEBERRY',
   CARROT: 'CARROT',
   CORN: 'CORN',
   GARLIC: 'GARLIC',

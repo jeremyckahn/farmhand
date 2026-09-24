@@ -20,6 +20,8 @@ const {
 export {
   asparagus,
   asparagusSeed,
+  blueberry,
+  blueberrySeed,
   carrot,
   carrotSeed,
   corn,
