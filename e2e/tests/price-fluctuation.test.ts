@@ -3,18 +3,16 @@ import { expect, test } from '@playwright/test'
 import { openPage } from '../test-utils/open-page.js'
 
 // NOTE: These hardcoded prices are derived from the seeded RNG at the
-// default seed. They're sensitive to the number and order of items with
-// doesPriceFluctuate: true in itemsMap (see generateValueAdjustments in
-// src/common/utils.ts) - adding or removing such an item shifts every
-// subsequent random() draw, including this one, and these values will need
-// to be regenerated.
+// default seed. Each item's price adjustment draws from its own seeded
+// stream (see generateValueAdjustments in src/common/utils.ts), so these only
+// need to be regenerated if Carrot Seed's own value changes.
 test('should fluctuate crop prices', async ({ page }) => {
   await openPage(page)
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Shop' }).click()
   await expect(page.locator('#shop-tabpanel-0')).toContainText(
-    'Carrot SeedPrice: $12.73Total: $12.73In inventory: 0Days to mature: 5'
+    'Carrot SeedPrice: $8.92Total: $8.92In inventory: 0Days to mature: 5'
   )
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 
@@ -26,7 +24,7 @@ test('should fluctuate crop prices', async ({ page }) => {
   await expect(
     page.locator('#shop-tabpanel-0')
   ).toContainText(
-    'Carrot SeedPrice: $8.76Total: $8.76In inventory: 0Days to mature: 5',
+    'Carrot SeedPrice: $8.41Total: $8.41In inventory: 0Days to mature: 5',
     { timeout: 200 }
   )
 })

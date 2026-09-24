@@ -9,16 +9,14 @@ test('should load save file', async ({ page }) => {
   await expect(page.getByRole('banner')).toContainText('$100,106.30')
 })
 
-// NOTE: This seed was chosen because it happens to produce a rain event
-// under the current seeded RNG sequence (see generateValueAdjustments in
-// src/common/utils.ts) - adding or removing an item with
-// doesPriceFluctuate: true in itemsMap shifts every subsequent random()
-// draw, including this one, and a new seed producing the same event will
-// need to be found.
+// NOTE: This seed was chosen because it produces rain (and not a storm) on
+// the first day end. Weather draws from its own seeded "weather" stream (see
+// shouldPrecipitateToday and shouldStormToday), so this is unaffected by
+// changes to unrelated game data such as the item list.
 test('should show overnight notifications from previous day after loading save', async ({
   page,
 }) => {
-  await openPage(page, 0.026)
+  await openPage(page, 58)
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 

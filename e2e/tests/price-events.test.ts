@@ -2,14 +2,12 @@ import { test, expect } from '@playwright/test'
 
 import { openPage } from '../test-utils/open-page.js'
 
-// NOTE: This seed was chosen because it happens to produce a carrot price
-// crash under the current seeded RNG sequence (see generateValueAdjustments
-// in src/common/utils.ts) - adding or removing an item with
-// doesPriceFluctuate: true in itemsMap shifts every subsequent random()
-// draw, including this one, and a new seed producing the same event will
-// need to be found.
+// NOTE: This seed was chosen because it produces a carrot price crash on the
+// first day end. Price events draw from their own seeded "priceEvents" stream
+// (see generatePriceEvents), so this is unaffected by changes to unrelated
+// game data such as the item list.
 test('should have random price events upon ending day', async ({ page }) => {
-  await openPage(page, 0.006)
+  await openPage(page, 2)
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 

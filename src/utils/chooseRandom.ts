@@ -1,3 +1,4 @@
 import { chooseRandomIndex } from './chooseRandomIndex.js'
 
-export const chooseRandom = <T>(list: T[]): T => list[chooseRandomIndex(list)]
+export const chooseRandom = <T>(list: T[], stream?: string): T =>
+  list[chooseRandomIndex(list, stream)]

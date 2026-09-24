@@ -2,8 +2,12 @@ import { itemsMap } from '../data/maps.js'
 
 import { randomNumberService } from './services/randomNumber.ts'
 
-export const random = () => {
-  return randomNumberService.generateRandomNumber()
+/**
+ * @param stream Optional name of an independent seeded random number stream.
+ * See RandomNumberService#generateRandomNumber.
+ */
+export const random = (stream?: string) => {
+  return randomNumberService.generateRandomNumber(stream)
 }
 
 export const generateValueAdjustments = (
@@ -17,7 +21,7 @@ export const generateValueAdjustments = (
       } else if (priceSurges[key]) {
         acc[key] = 1.5
       } else {
-        acc[key] = random() + 0.5
+        acc[key] = random(`valueAdjustment:${key}`) + 0.5
       }
     }
 

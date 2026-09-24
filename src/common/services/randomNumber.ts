@@ -2,7 +2,17 @@ import seedrandom from 'seedrandom'
 import globalWindow from 'global/window.js'
 
 export class RandomNumberService {
+  seed: string | null = null
+
   seededRandom: (() => number) | null = null
+
+  /**
+   * Independent seeded RNGs keyed by stream name. Each is derived from the
+   * base seed, so draws made from one stream never shift the sequence of
+   * another. This keeps seeded outcomes (e.g. weather or a given item's
+   * price) stable when unrelated game data such as the item list changes.
+   */
+  seededStreams: Map<string, () => number> = new Map()
 
   constructor() {
     // The availability of window.location needs to be checked before accessing
@@ -18,15 +28,42 @@ export class RandomNumberService {
   }
 
   seedRandomNumber(seed: string) {
+    this.seed = seed
     this.seededRandom = seedrandom(seed)
+    this.seededStreams.clear()
   }
 
-  generateRandomNumber(): number {
-    return this.seededRandom ? this.seededRandom() : Math.random()
+  /**
+   * @param stream Optional name of an independent random number stream. When
+   * the service is seeded, each named stream has its own sequence derived
+   * from the seed. When unseeded, the stream name has no effect.
+   */
+  generateRandomNumber(stream?: string): number {
+    if (this.seed === null || this.seededRandom === null) {
+      return Math.random()
+    }
+
+    if (stream === undefined) {
+      return this.seededRandom()
+    }
+
+    const existingStreamRandom = this.seededStreams.get(stream)
+
+    if (existingStreamRandom) {
+      return existingStreamRandom()
+    }
+
+    const streamRandom = seedrandom(`${this.seed}:${stream}`)
+
+    this.seededStreams.set(stream, streamRandom)
+
+    return streamRandom()
   }
 
   unseedRandomNumber() {
+    this.seed = null
     this.seededRandom = null
+    this.seededStreams.clear()
   }
 
   /**
