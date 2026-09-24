@@ -13,6 +13,8 @@ on:
 jobs:
   lint_test_type:
     runs-on: ubuntu-latest
+    # Skip pull_request runs for same-repo PRs (already covered by the push
+    # trigger), but run for fork PRs, where push never fires in this repo.
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - uses: actions/checkout@v4
@@ -41,6 +43,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    # Same gating as lint_test_type: avoid duplicate runs on same-repo PRs.
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - uses: actions/checkout@v4
