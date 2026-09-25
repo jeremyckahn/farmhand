@@ -17,10 +17,12 @@ const defaultProps = {
   handleExportDataClick: noop,
   handleImportDataClick: noop,
   handleSaveButtonClick: noop,
+  handleNotificationDurationChange: noop,
   handleShowNotificationsChange: noop,
   handleUseAlternateEndDayButtonPositionChange: noop,
   handleShowHomeScreenChange: noop,
   showNotifications: true,
+  notificationDuration: 6,
   useAlternateEndDayButtonPosition: false,
   showHomeScreen: false,
 }
@@ -142,6 +144,25 @@ test('handles switch toggling', async () => {
 
   await user.click(switches[3])
   expect(handleAllowCustomPeerCowNamesChange).toHaveBeenCalledTimes(1)
+})
+
+test('handles notification duration changes', async () => {
+  const user = userEvent.setup()
+  const handleNotificationDurationChange = vitest.fn()
+
+  render(
+    <SettingsView
+      {...defaultProps}
+      handleNotificationDurationChange={handleNotificationDurationChange}
+    />
+  )
+
+  const slider = screen.getByRole('slider')
+
+  await user.click(slider)
+  await user.keyboard('{ArrowRight}')
+
+  expect(handleNotificationDurationChange).toHaveBeenCalled()
 })
 
 test('opens delete confirmation dialog when delete button is clicked', async () => {

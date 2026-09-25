@@ -193,6 +193,7 @@ export const testState = (
   latestNotification: null,
   newDayNotifications: [],
   notificationLog: [],
+  notificationDuration: 6,
   peers: {},
   peerRoom: null,
   pendingPeerMessages: [],

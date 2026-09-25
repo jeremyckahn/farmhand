@@ -7,6 +7,7 @@ import { NotificationSystem, getNotificationKey } from './NotificationSystem.js'
 const defaultProps = {
   enqueueSnackbar: vitest.fn(),
   latestNotification: null,
+  notificationDuration: 6,
 }
 
 const renderWithSnackbar = (component: React.ReactElement) => {

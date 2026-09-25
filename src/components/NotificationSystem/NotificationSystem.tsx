@@ -3,7 +3,6 @@ import Alert from '@mui/material/Alert/index.js'
 import ReactMarkdown from 'react-markdown'
 import { withSnackbar } from 'notistack'
 
-import { NOTIFICATION_DURATION } from '../../constants.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
 export const getNotificationKey = ({
@@ -37,9 +36,11 @@ export const snackbarProviderContentCallback = (
 export const NotificationSystem = ({
   enqueueSnackbar,
   latestNotification,
+  notificationDuration,
 }: {
   enqueueSnackbar: (notification: farmhand.notification, options: any) => void
   latestNotification: farmhand.notification | null
+  notificationDuration: number
 }) => {
   useEffect(() => {
     if (!latestNotification) {
@@ -54,10 +55,11 @@ export const NotificationSystem = ({
     // once autoHideDuration and a key are set - no onClose needed here.
     enqueueSnackbar(latestNotification, {
       key: getNotificationKey(latestNotification),
-      autoHideDuration: NOTIFICATION_DURATION,
+      autoHideDuration:
+        import.meta.env?.MODE === 'test' ? 1 : notificationDuration * 1000,
       preventDuplicate: true,
     })
-  }, [enqueueSnackbar, latestNotification])
+  }, [enqueueSnackbar, latestNotification, notificationDuration])
 
   return null
 }
