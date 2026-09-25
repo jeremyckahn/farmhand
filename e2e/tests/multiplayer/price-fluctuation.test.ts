@@ -26,21 +26,18 @@ test('uses server-based price values', async ({ page }) => {
   await expect(page.getByRole('complementary')).toContainText(
     'CarrotSell price: $28.72Total: $28.72'
   )
+  // Register the response listener before triggering the request. Otherwise a
+  // fast API server can respond before the listener exists, and the test hangs.
+  const marketDataResponse = page.waitForResponse(response =>
+    response.url().includes('/api/get-market-data')
+  )
   await page.getByRole('checkbox', { name: 'Play online' }).check()
 
-  const serverResponse = await new Promise<{
+  const serverResponse: {
     valueAdjustments: {
       carrot: number
     }
-  }>((resolve, reject) => {
-    page.on('response', async response => {
-      try {
-        resolve(await response.json())
-      } catch (error) {
-        reject(error)
-      }
-    })
-  })
+  } = await (await marketDataResponse).json()
 
   const { carrot: carrotValueAdjustment } = serverResponse.valueAdjustments
   const baseCarrotValue = 25
