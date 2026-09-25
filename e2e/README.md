@@ -298,7 +298,7 @@ npm run test:install
    await page.waitForLoadState('networkidle')
    ```
 
-5. **Ensure Vercel is set up properly** - at this time, you need to have the local Farmhand project properly linked to a Vercel project. This will be improved in a future iteration.
+5. **Ensure Redis is running** - the API server used by the tests needs the Redis container from `docker compose up` (or `npm run start:backend`). No Vercel account or token is needed.
 
 #### "Permission denied" errors
 
