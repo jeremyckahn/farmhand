@@ -298,7 +298,7 @@ npm run test:install
    await page.waitForLoadState('networkidle')
    ```
 
-5. **Ensure Redis is running** - the API server used by the tests needs the Redis container from `docker compose up` (or `npm run start:backend`). No Vercel account or token is needed.
+5. **Ensure Redis is running** - the API server used by the tests needs the Redis container from `docker compose up` (or `npm run start:backend`).
 
 #### "Permission denied" errors
 

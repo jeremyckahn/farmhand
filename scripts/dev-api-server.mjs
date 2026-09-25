@@ -1,7 +1,5 @@
-// A minimal local stand-in for `vercel dev` that serves the serverless
-// functions built into /api by `npm run build:api`. It exists so that the API
-// can be run for local development and E2E tests without a Vercel account,
-// login, or token.
+// A minimal local server for development and E2E tests that serves the
+// serverless functions built into /api by `npm run build:api`.
 //
 // It emulates just the parts of the Vercel Node.js runtime helpers that the
 // functions in /api-src use: `req.query`, a parsed `req.body`,

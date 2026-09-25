@@ -109,7 +109,7 @@ To run the native app locally, run:
 npm run dev:native
 ```
 
-The local API is served by `scripts/dev-api-server.mjs`, a small Node server that runs the serverless functions from `api-src`. No Vercel account or login is required, but `npm run start:backend` (Docker) needs to be running for the Redis database. Alternatively, if you just want to run the front end with no API or backend, you can run:
+The local API is served by `scripts/dev-api-server.mjs`, a small Node server that runs the serverless functions from `api-src`. `npm run start:backend` (Docker) needs to be running for the Redis database. Alternatively, if you just want to run the front end with no API or backend, you can run:
 
 ```sh
 npm start
