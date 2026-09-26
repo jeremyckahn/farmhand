@@ -9,8 +9,14 @@ test('should fluctuate crop prices', async ({ page }) => {
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Shop' }).click()
-  await expect(page.locator('#shop-tabpanel-0')).toContainText('Carrot Seed')
-  await expect(page.locator('#shop-tabpanel-0')).not.toContainText('$21.00')
+
+  const carrotSeedPrice = page
+    .locator('#shop-tabpanel-0 .Item')
+    .filter({ hasText: 'Carrot Seed' })
+    .getByText(/^Price:/)
+
+  await expect(carrotSeedPrice).toBeVisible()
+  const dayOnePrice = await carrotSeedPrice.textContent()
 
   // Force Carrot Seed's next price adjustment to 0.9 + 0.5 = 1.4x its $15
   // base value (see generateValueAdjustments in src/common/utils.ts).
@@ -29,4 +35,8 @@ test('should fluctuate crop prices', async ({ page }) => {
     'Carrot SeedPrice: $21.00Total: $21.00In inventory: 0Days to mature: 5',
     { timeout: 200 }
   )
+
+  // Guard against the price already being $21.00 before the day ended, in
+  // which case the assertion above wouldn't show that it changed.
+  expect(await carrotSeedPrice.textContent()).not.toEqual(dayOnePrice)
 })
