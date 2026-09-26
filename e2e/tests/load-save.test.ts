@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 
+import { queueRandomNumbers } from '../test-utils/farmhand-debug-hook.js'
 import { loadFixture } from '../test-utils/load-fixture.js'
 import { openPage } from '../test-utils/open-page.js'
 
@@ -9,16 +10,15 @@ test('should load save file', async ({ page }) => {
   await expect(page.getByRole('banner')).toContainText('$100,106.30')
 })
 
-// NOTE: This seed was chosen because it happens to produce a rain event
-// under the current seeded RNG sequence (see generateValueAdjustments in
-// src/common/utils.ts) - adding or removing an item with
-// doesPriceFluctuate: true in itemsMap shifts every subsequent random()
-// draw, including this one, and a new seed producing the same event will
-// need to be found.
 test('should show overnight notifications from previous day after loading save', async ({
   page,
 }) => {
-  await openPage(page, 0.026)
+  await openPage(page)
+
+  // Force rain on the next day end: the first weather draw is below
+  // PRECIPITATION_CHANCE (so it precipitates) and the second is not below
+  // STORM_CHANCE (so it rains rather than storms).
+  await queueRandomNumbers(page, 'weather', [0, 0.99])
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 

@@ -5,12 +5,13 @@ import { chooseRandomIndex } from './chooseRandomIndex.js'
 import { getFinalCropItemIdFromSeedItemId } from './getFinalCropItemIdFromSeedItemId.js'
 
 export const getRandomUnlockedCrop = (
-  unlockedSeedItemIds: Array<string>
+  unlockedSeedItemIds: Array<string>,
+  stream?: string
 ): farmhand.item => {
-  const seedItemId = chooseRandom(unlockedSeedItemIds)
+  const seedItemId = chooseRandom(unlockedSeedItemIds, stream)
   const seedItem = itemsMap[seedItemId]
   const variationIdx = Array.isArray(seedItem.growsInto)
-    ? chooseRandomIndex(seedItem.growsInto)
+    ? chooseRandomIndex(seedItem.growsInto, stream)
     : 0
 
   const finalCropItemId = getFinalCropItemIdFromSeedItemId(

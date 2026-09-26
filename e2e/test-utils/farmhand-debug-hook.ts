@@ -9,6 +9,7 @@ declare global {
   interface Window {
     farmhand?: {
       setState: (partialState: Record<string, unknown>) => void
+      queueRandomNumbers: (stream: string, numbers: number[]) => void
     }
   }
 }
@@ -16,4 +17,21 @@ declare global {
 export const setFarmhandState = (
   page: Page,
   partialState: Record<string, unknown>
-) => page.evaluate(state => window.farmhand?.setState(state), partialState)
+) => page.evaluate(state => window.farmhand!.setState(state), partialState)
+
+/**
+ * Forces the next values drawn from a named random number stream (see
+ * RandomNumberService in src/common/services/randomNumber.ts), so a test
+ * can make a random outcome happen without relying on a particular seed.
+ */
+export const queueRandomNumbers = async (
+  page: Page,
+  stream: string,
+  numbers: number[]
+) => {
+  await page.waitForFunction(() => window.farmhand !== undefined)
+  await page.evaluate(
+    ([stream, numbers]) => window.farmhand!.queueRandomNumbers(stream, numbers),
+    [stream, numbers] as const
+  )
+}

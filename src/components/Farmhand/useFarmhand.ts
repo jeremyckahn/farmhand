@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid'
 
 import * as reducers from '../../game-logic/reducers/index.js'
 import eventHandlers from '../../handlers/ui-events.js'
+import { randomNumberService } from '../../common/services/randomNumber.js'
 
 import {
   DEFAULT_ROOM,
@@ -360,6 +361,8 @@ export const useFarmhand = (props: FarmhandProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const instanceProxy = useMemo(
     () => ({
+      queueRandomNumbers: (stream: string, numbers: number[]) =>
+        randomNumberService.queueRandomNumbers(stream, numbers),
       state,
       props,
       viewTitle,
