@@ -13,14 +13,18 @@ describe('RandomNumberService', () => {
     })
 
     test('returns queued numbers for a stream before random ones', () => {
-      service.seedRandomNumber('123')
-      const firstSeeded = service.generateRandomNumber(randomStream.WEATHER)
+      const reference = new RandomNumberService()
+
+      reference.seedRandomNumber('123')
+      const firstSeeded = reference.generateRandomNumber()
 
       service.seedRandomNumber('123')
       service.queueRandomNumbers(randomStream.WEATHER, [0.1, 0.2])
 
       expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(0.1)
       expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(0.2)
+      // Queued numbers don't consume seeded draws, so the seeded sequence
+      // resumes from its start
       expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(
         firstSeeded
       )
@@ -38,10 +42,12 @@ describe('RandomNumberService', () => {
     })
 
     test('unqueued stream draws come from the shared seeded sequence', () => {
-      service.seedRandomNumber('123')
+      const reference = new RandomNumberService()
+
+      reference.seedRandomNumber('123')
       const shared = [
-        service.generateRandomNumber(),
-        service.generateRandomNumber(),
+        reference.generateRandomNumber(),
+        reference.generateRandomNumber(),
       ]
 
       service.seedRandomNumber('123')
