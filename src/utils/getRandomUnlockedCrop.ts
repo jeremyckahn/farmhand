@@ -1,4 +1,5 @@
 import { itemsMap } from '../data/maps.js'
+import { randomStream } from '../enums.js'
 
 import { chooseRandom } from './chooseRandom.js'
 import { chooseRandomIndex } from './chooseRandomIndex.js'
@@ -6,7 +7,7 @@ import { getFinalCropItemIdFromSeedItemId } from './getFinalCropItemIdFromSeedIt
 
 export const getRandomUnlockedCrop = (
   unlockedSeedItemIds: Array<string>,
-  stream?: string
+  stream?: randomStream
 ): farmhand.item => {
   const seedItemId = chooseRandom(unlockedSeedItemIds, stream)
   const seedItem = itemsMap[seedItemId]

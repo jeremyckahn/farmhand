@@ -1,6 +1,8 @@
 import seedrandom from 'seedrandom'
 import globalWindow from 'global/window.js'
 
+import { randomStream } from '../../enums.js'
+
 export class RandomNumberService {
   seededRandom: (() => number) | null = null
 
@@ -10,7 +12,7 @@ export class RandomNumberService {
    * (e.g. rain tonight) without searching for a seed that happens to produce
    * it. Exposed via the window.farmhand debug hook.
    */
-  queuedNumbers: Map<string, number[]> = new Map()
+  queuedNumbers: Map<randomStream, number[]> = new Map()
 
   constructor() {
     // The availability of window.location needs to be checked before accessing
@@ -34,7 +36,7 @@ export class RandomNumberService {
    * from, which lets queueRandomNumbers target it. Values that aren't queued
    * come from the same seeded (or Math.random) sequence regardless of stream.
    */
-  generateRandomNumber(stream?: string): number {
+  generateRandomNumber(stream?: randomStream): number {
     if (stream !== undefined) {
       const queuedNumber = this.queuedNumbers.get(stream)?.shift()
 
@@ -51,7 +53,7 @@ export class RandomNumberService {
    * @param numbers Values to return from the stream, in order, before it
    * resumes producing random numbers.
    */
-  queueRandomNumbers(stream: string, numbers: number[]) {
+  queueRandomNumbers(stream: randomStream, numbers: number[]) {
     this.queuedNumbers.set(stream, [
       ...(this.queuedNumbers.get(stream) ?? []),
       ...numbers,

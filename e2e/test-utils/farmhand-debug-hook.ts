@@ -1,5 +1,7 @@
 import { Page } from '@playwright/test'
 
+import { randomStream } from '../../src/enums.js'
+
 // window.farmhand is a real, supported debug hook (documented in
 // README.md's "Debugging" section) but its ambient type declaration lives
 // in src/react-app-env.d.ts, which isn't part of this project's
@@ -9,7 +11,7 @@ declare global {
   interface Window {
     farmhand?: {
       setState: (partialState: Record<string, unknown>) => void
-      queueRandomNumbers: (stream: string, numbers: number[]) => void
+      queueRandomNumbers: (stream: randomStream, numbers: number[]) => void
     }
   }
 }
@@ -26,7 +28,7 @@ export const setFarmhandState = (
  */
 export const queueRandomNumbers = async (
   page: Page,
-  stream: string,
+  stream: randomStream,
   numbers: number[]
 ) => {
   await page.waitForFunction(() => window.farmhand !== undefined)

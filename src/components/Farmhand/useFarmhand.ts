@@ -17,6 +17,7 @@ import { scarecrow } from '../../data/items.js'
 import {
   dialogView,
   fieldMode,
+  randomStream,
   stageFocusType,
   toolLevel,
   toolType,
@@ -361,7 +362,7 @@ export const useFarmhand = (props: FarmhandProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const instanceProxy = useMemo(
     () => ({
-      queueRandomNumbers: (stream: string, numbers: number[]) =>
+      queueRandomNumbers: (stream: randomStream, numbers: number[]) =>
         randomNumberService.queueRandomNumbers(stream, numbers),
       state,
       props,

@@ -1,3 +1,5 @@
+import { randomStream } from '../../enums.js'
+
 import { RandomNumberService, randomNumberService } from './randomNumber.js'
 
 const chance = 0.6
@@ -12,23 +14,27 @@ describe('RandomNumberService', () => {
 
     test('returns queued numbers for a stream before random ones', () => {
       service.seedRandomNumber('123')
-      const firstSeeded = service.generateRandomNumber('a')
+      const firstSeeded = service.generateRandomNumber(randomStream.WEATHER)
 
       service.seedRandomNumber('123')
-      service.queueRandomNumbers('a', [0.1, 0.2])
+      service.queueRandomNumbers(randomStream.WEATHER, [0.1, 0.2])
 
-      expect(service.generateRandomNumber('a')).toEqual(0.1)
-      expect(service.generateRandomNumber('a')).toEqual(0.2)
-      expect(service.generateRandomNumber('a')).toEqual(firstSeeded)
+      expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(0.1)
+      expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(0.2)
+      expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(
+        firstSeeded
+      )
     })
 
     test('queued numbers only affect their own stream', () => {
       vitest.spyOn(Math, 'random').mockReturnValue(0.42)
-      service.queueRandomNumbers('a', [0.1])
+      service.queueRandomNumbers(randomStream.WEATHER, [0.1])
 
-      expect(service.generateRandomNumber('b')).toEqual(0.42)
+      expect(service.generateRandomNumber(randomStream.PRICE_EVENTS)).toEqual(
+        0.42
+      )
       expect(service.generateRandomNumber()).toEqual(0.42)
-      expect(service.generateRandomNumber('a')).toEqual(0.1)
+      expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(0.1)
     })
 
     test('unqueued stream draws come from the shared seeded sequence', () => {
@@ -41,8 +47,8 @@ describe('RandomNumberService', () => {
       service.seedRandomNumber('123')
 
       expect([
-        service.generateRandomNumber('a'),
-        service.generateRandomNumber('b'),
+        service.generateRandomNumber(randomStream.WEATHER),
+        service.generateRandomNumber(randomStream.PRICE_EVENTS),
       ]).toEqual(shared)
     })
   })

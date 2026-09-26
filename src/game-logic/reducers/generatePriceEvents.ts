@@ -6,12 +6,12 @@ import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { PRICE_EVENT_CHANCE } from '../../constants.js'
 import { PRICE_CRASH, PRICE_SURGE } from '../../templates.js'
 import { random } from '../../common/utils.js'
+import { randomStream } from '../../enums.js'
 
 import { createPriceEvent } from './createPriceEvent.js'
 
 const TYPE_CRASH = 'priceCrashes'
 const TYPE_SURGE = 'priceSurges'
-const RANDOM_STREAM = 'priceEvents'
 
 export const generatePriceEvents = (state: farmhand.state): farmhand.state => {
   const priceCrashes = { ...state.priceCrashes }
@@ -21,14 +21,14 @@ export const generatePriceEvents = (state: farmhand.state): farmhand.state => {
 
   // TODO: Use isRandomNumberLessThan here once it supports an exclusive
   // less-than check.
-  if (random(RANDOM_STREAM) < PRICE_EVENT_CHANCE) {
+  if (random(randomStream.PRICE_EVENTS) < PRICE_EVENT_CHANCE) {
     const { items: unlockedItems } = getLevelEntitlements(
       levelAchieved(state.experience)
     )
 
     const cropItem = getRandomUnlockedCrop(
       filterItemIdsToSeeds(Object.keys(unlockedItems)),
-      RANDOM_STREAM
+      randomStream.PRICE_EVENTS
     )
     const { id } = cropItem
 
@@ -38,7 +38,7 @@ export const generatePriceEvents = (state: farmhand.state): farmhand.state => {
 
     if (!doesPriceEventAlreadyExist) {
       const priceEventType =
-        random(RANDOM_STREAM) < 0.5 ? TYPE_CRASH : TYPE_SURGE
+        random(randomStream.PRICE_EVENTS) < 0.5 ? TYPE_CRASH : TYPE_SURGE
 
       priceEvent = createPriceEvent(
         state,

@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 
+import { getValueAdjustmentStream } from '../../src/utils/getValueAdjustmentStream.js'
 import { queueRandomNumbers } from '../test-utils/farmhand-debug-hook.js'
 import { openPage } from '../test-utils/open-page.js'
 
@@ -13,7 +14,7 @@ test('should fluctuate crop prices', async ({ page }) => {
 
   // Force Carrot Seed's next price adjustment to 0.9 + 0.5 = 1.4x its $15
   // base value (see generateValueAdjustments in src/common/utils.ts).
-  await queueRandomNumbers(page, 'valueAdjustment:carrot-seed', [0.9])
+  await queueRandomNumbers(page, getValueAdjustmentStream('carrot-seed'), [0.9])
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 

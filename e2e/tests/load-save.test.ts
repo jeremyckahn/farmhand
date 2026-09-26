@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 
+import { randomStream } from '../../src/enums.js'
 import { queueRandomNumbers } from '../test-utils/farmhand-debug-hook.js'
 import { loadFixture } from '../test-utils/load-fixture.js'
 import { openPage } from '../test-utils/open-page.js'
@@ -18,7 +19,7 @@ test('should show overnight notifications from previous day after loading save',
   // Force rain on the next day end: the first weather draw is below
   // PRECIPITATION_CHANCE (so it precipitates) and the second is not below
   // STORM_CHANCE (so it rains rather than storms).
-  await queueRandomNumbers(page, 'weather', [0, 0.99])
+  await queueRandomNumbers(page, randomStream.WEATHER, [0, 0.99])
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 
