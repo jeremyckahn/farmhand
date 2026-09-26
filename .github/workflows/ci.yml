@@ -65,9 +65,8 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
-    # Requires VERCEL_TOKEN, which GitHub does not expose to pull_request
-    # workflow runs triggered from forks, so this only runs on push.
-    if: github.event_name == 'push'
+    # Same gating as lint_test_type: avoid duplicate runs on same-repo PRs.
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - uses: actions/checkout@v4
 
@@ -92,6 +91,4 @@ jobs:
         run: docker compose up -d
 
       - name: Run E2E tests
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: npm run e2e

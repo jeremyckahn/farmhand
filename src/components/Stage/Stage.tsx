@@ -179,7 +179,10 @@ export const Stage = ({
               [`@media (max-width: ${breakpoints.sm}px)`]: {
                 padding: 0,
               },
-              '& > *': {
+              // `.stage-background` is excluded so the background stays
+              // visible in the sliver of Stage next to the open menu on
+              // narrow viewports - only the foreground content fades out.
+              '& > *:not(.stage-background)': {
                 opacity: 1,
                 transition: theme.transitions.create('opacity', {
                   duration: theme.transitions.duration.enteringScreen,
