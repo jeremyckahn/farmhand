@@ -39,6 +39,12 @@ vi.mock('../Cellar/index.js', () => ({
   Cellar: () => <div className="Cellar">Cellar</div>,
 }))
 
+vi.mock('../FarmhandShuffleView/index.js', () => ({
+  FarmhandShuffleView: () => (
+    <div className="FarmhandShuffleView">FarmhandShuffleView</div>
+  ),
+}))
+
 const defaultProps = {
   dayCount: 1,
   field: [[]],
@@ -137,6 +143,12 @@ describe('Stage', () => {
       renderWithContext({ stageFocus: stageFocusType.HOME })
 
       expect(screen.getByText('Home')).toBeInTheDocument()
+    })
+
+    test('shows FarmhandShuffleView when stageFocus is FARMHAND_SHUFFLE', () => {
+      renderWithContext({ stageFocus: stageFocusType.FARMHAND_SHUFFLE })
+
+      expect(screen.getByText('FarmhandShuffleView')).toBeInTheDocument()
     })
   })
 

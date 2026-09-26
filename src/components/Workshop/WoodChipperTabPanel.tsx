@@ -4,7 +4,8 @@ import { number, array } from 'prop-types'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import Divider from '@mui/material/Divider/index.js'
-import ReactMarkdown from 'react-markdown'
+
+import { Markdown } from '../Markdown/index.js'
 
 import { recipeType } from '../../enums.js'
 import { recipeCategories } from '../../data/maps.js'
@@ -34,11 +35,9 @@ export function WoodChipperTabPanel({
         <li>
           <Card>
             <CardContent>
-              <ReactMarkdown
+              <Markdown
                 {...{
-                  linkTarget: '_blank',
-                  className: 'markdown',
-                  source: `Wood Chipper recipes are learned by selling wood chopped from trees.`,
+                  children: `Wood Chipper recipes are learned by selling wood chopped from trees.`,
                 }}
               />
             </CardContent>

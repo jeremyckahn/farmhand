@@ -2,7 +2,7 @@ import { stageFocusType } from '../enums.js'
 
 import { getValidatedStageFocusFromHash } from './getValidatedStageFocusFromHash.js'
 
-const { FIELD, FOREST, HOME } = stageFocusType
+const { FARMHAND_SHUFFLE, FIELD, FOREST, HOME } = stageFocusType
 
 const defaultState = {
   experience: 0,
@@ -58,6 +58,28 @@ describe('getValidatedStageFocusFromHash', () => {
     )
 
     expect(getValidatedStageFocusFromHash(defaultState)).toBeUndefined()
+  })
+
+  test('returns undefined when Farmhand Shuffle is not unlocked for the given state', () => {
+    window.history.replaceState(
+      {},
+      '',
+      `${window.location.pathname}#?view=FARMHAND_SHUFFLE`
+    )
+
+    expect(getValidatedStageFocusFromHash(defaultState)).toBeUndefined()
+  })
+
+  test('returns FARMHAND_SHUFFLE once its unlock requirement (level 35) is met', () => {
+    window.history.replaceState(
+      {},
+      '',
+      `${window.location.pathname}#?view=FARMHAND_SHUFFLE`
+    )
+
+    expect(
+      getValidatedStageFocusFromHash({ ...defaultState, experience: 120_000 })
+    ).toEqual(FARMHAND_SHUFFLE)
   })
 
   test('returns HOME when showHomeScreen is true, matching the default view list', () => {

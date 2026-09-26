@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import ReactMarkdown from 'react-markdown'
 
 import Button from '@mui/material/Button/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
+
+import { Markdown } from '../Markdown/index.js'
 
 import { toolLevel, stageFocusType, toolType } from '../../enums.js'
 import { memoize } from '../../utils/memoize.js'
@@ -85,10 +86,9 @@ export const Toolbelt = ({
                   title: (
                     <Typography component="div">
                       <p>{alt}</p>
-                      <ReactMarkdown
+                      <Markdown
                         {...{
-                          className: 'markdown',
-                          source: (levelInfo as any)[toolLevels[type]],
+                          children: (levelInfo as any)[toolLevels[type]],
                         }}
                       />
                       <p>({fieldKey})</p>

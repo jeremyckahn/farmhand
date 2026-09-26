@@ -1,11 +1,13 @@
 import React from 'react'
-import ReactMarkdown from 'react-markdown'
+
 import Alert from '@mui/material/Alert/index.js'
 import Divider from '@mui/material/Divider/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import sortBy from 'lodash.sortby'
 import { array, number, object, string } from 'prop-types'
+
+import { Markdown } from '../Markdown/index.js'
 
 import BailOutErrorBoundary from '../BailOutErrorBoundary/index.js'
 
@@ -101,9 +103,11 @@ const OnlinePeersView = ({
                       severity: severity as any,
                     }}
                   >
-                    <ReactMarkdown
+                    <Markdown
                       {...{
-                        source: `**${getPlayerName(peerPlayerId)}** ${message}`,
+                        children: `**${getPlayerName(
+                          peerPlayerId
+                        )}** ${message}`,
                       }}
                     />
                   </Alert>

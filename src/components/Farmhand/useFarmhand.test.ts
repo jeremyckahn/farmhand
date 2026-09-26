@@ -1,4 +1,4 @@
-import { fireEvent, waitFor } from '@testing-library/react'
+import { act, fireEvent, waitFor } from '@testing-library/react'
 
 import { BREAKPOINTS } from '../../constants.js'
 import { farmhandStub } from '../../test-utils/stubs/farmhandStub.js'
@@ -25,9 +25,11 @@ const getIsMenuOpen = () =>
     .state.isMenuOpen
 
 const setIsMenuOpen = (isMenuOpen: boolean) =>
-  ((window as unknown) as {
-    farmhand: { setState: (state: Partial<farmhand.state>) => void }
-  }).farmhand.setState({ isMenuOpen })
+  act(() => {
+    ;((window as unknown) as {
+      farmhand: { setState: (state: Partial<farmhand.state>) => void }
+    }).farmhand.setState({ isMenuOpen })
+  })
 
 // Simulates a sidebar input having focus, e.g. mid-typing, without depending
 // on any particular Farmhand-rendered input existing in the current view.

@@ -90,6 +90,9 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
   offerCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
+  placeFarmhandShuffleWager(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
   plantInPlot(...args: any[]) {
     throw new Error('Unimplemented')
   }
@@ -141,6 +144,12 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
   removePeer(...args: any[]) {
     throw new Error('Unimplemented')
   }
+  refundUnresumableFarmhandShuffleMatch(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
+  saveFarmhandShuffleMatch(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
   selectCow(...args: any[]) {
     throw new Error('Unimplemented')
   }
@@ -151,6 +160,9 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
     throw new Error('Unimplemented')
   }
   sellKeg(...args: any[]) {
+    throw new Error('Unimplemented')
+  }
+  settleFarmhandShuffleMatch(...args: any[]) {
     throw new Error('Unimplemented')
   }
   setLightningRod(...args: any[]) {

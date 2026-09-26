@@ -660,18 +660,23 @@ export const Field = (props: FieldProps) => {
             doubleClick: { disabled: true },
           }}
         >
-          {(transformProps: any) => (
-            <FieldContentWrapper
-              {...{
-                ...transformProps,
-                fieldContent: (
-                  <FieldContent
-                    {...{ ...props, hoveredPlot, setHoveredPlot }}
-                  />
-                ),
-              }}
-            />
-          )}
+          {
+            // react-zoom-pan-pinch's own types declare `children` as
+            // `ReactNode`, but it actually implements the common
+            // function-as-children render-prop pattern at runtime.
+            (((transformProps: any) => (
+              <FieldContentWrapper
+                {...{
+                  ...transformProps,
+                  fieldContent: (
+                    <FieldContent
+                      {...{ ...props, hoveredPlot, setHoveredPlot }}
+                    />
+                  ),
+                }}
+              />
+            )) as unknown) as React.ReactNode
+          }
         </TransformWrapper>
         {adjustableRangeFieldModes.has(propsFieldMode) && (
           <div className="slider-wrapper">
