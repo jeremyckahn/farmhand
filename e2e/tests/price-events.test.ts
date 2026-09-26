@@ -7,10 +7,12 @@ import { openPage } from '../test-utils/open-page.js'
 test('should have random price events upon ending day', async ({ page }) => {
   await openPage(page)
 
-  // Force a price event on the next day end: the first draw is below
-  // PRICE_EVENT_CHANCE (so an event happens), the second picks the first
-  // unlocked crop (carrot), and the third is below 0.5 (so it's a crash).
-  await queueRandomNumbers(page, randomStream.PRICE_EVENTS, [0, 0, 0])
+  // Force a price event on the next day end: an event happens (below
+  // PRICE_EVENT_CHANCE), it's for the first unlocked crop (carrot), and it's a
+  // crash (below 0.5).
+  await queueRandomNumbers(page, randomStream.PRICE_EVENT_CHANCE, [0])
+  await queueRandomNumbers(page, randomStream.PRICE_EVENT_CROP, [0])
+  await queueRandomNumbers(page, randomStream.PRICE_EVENT_TYPE, [0])
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 

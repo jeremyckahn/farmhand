@@ -313,8 +313,11 @@ export type season = typeof season[keyof typeof season]
  * @enum
  */
 export const randomStream = {
-  WEATHER: 'weather',
-  PRICE_EVENTS: 'priceEvents',
+  PRECIPITATION: 'precipitation',
+  STORM: 'storm',
+  PRICE_EVENT_CHANCE: 'priceEventChance',
+  PRICE_EVENT_CROP: 'priceEventCrop',
+  PRICE_EVENT_TYPE: 'priceEventType',
 } as const
 
 /**

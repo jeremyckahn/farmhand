@@ -3,4 +3,4 @@ import { PRECIPITATION_CHANCE } from '../constants.js'
 import { randomStream } from '../enums.js'
 
 export const shouldPrecipitateToday = () =>
-  random(randomStream.WEATHER) < PRECIPITATION_CHANCE
+  random(randomStream.PRECIPITATION) < PRECIPITATION_CHANCE

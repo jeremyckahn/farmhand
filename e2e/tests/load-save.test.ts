@@ -16,10 +16,10 @@ test('should show overnight notifications from previous day after loading save',
 }) => {
   await openPage(page)
 
-  // Force rain on the next day end: the first weather draw is below
-  // PRECIPITATION_CHANCE (so it precipitates) and the second is not below
-  // STORM_CHANCE (so it rains rather than storms).
-  await queueRandomNumbers(page, randomStream.WEATHER, [0, 0.99])
+  // Force rain on the next day end: it precipitates (below
+  // PRECIPITATION_CHANCE) but doesn't storm (not below STORM_CHANCE).
+  await queueRandomNumbers(page, randomStream.PRECIPITATION, [0])
+  await queueRandomNumbers(page, randomStream.STORM, [0.99])
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 

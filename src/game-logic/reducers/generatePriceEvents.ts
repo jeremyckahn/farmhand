@@ -21,14 +21,14 @@ export const generatePriceEvents = (state: farmhand.state): farmhand.state => {
 
   // TODO: Use isRandomNumberLessThan here once it supports an exclusive
   // less-than check.
-  if (random(randomStream.PRICE_EVENTS) < PRICE_EVENT_CHANCE) {
+  if (random(randomStream.PRICE_EVENT_CHANCE) < PRICE_EVENT_CHANCE) {
     const { items: unlockedItems } = getLevelEntitlements(
       levelAchieved(state.experience)
     )
 
     const cropItem = getRandomUnlockedCrop(
       filterItemIdsToSeeds(Object.keys(unlockedItems)),
-      randomStream.PRICE_EVENTS
+      randomStream.PRICE_EVENT_CROP
     )
     const { id } = cropItem
 
@@ -38,7 +38,7 @@ export const generatePriceEvents = (state: farmhand.state): farmhand.state => {
 
     if (!doesPriceEventAlreadyExist) {
       const priceEventType =
-        random(randomStream.PRICE_EVENTS) < 0.5 ? TYPE_CRASH : TYPE_SURGE
+        random(randomStream.PRICE_EVENT_TYPE) < 0.5 ? TYPE_CRASH : TYPE_SURGE
 
       priceEvent = createPriceEvent(
         state,

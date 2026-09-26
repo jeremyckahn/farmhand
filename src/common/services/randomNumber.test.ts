@@ -19,26 +19,30 @@ describe('RandomNumberService', () => {
       const firstSeeded = reference.generateRandomNumber()
 
       service.seedRandomNumber('123')
-      service.queueRandomNumbers(randomStream.WEATHER, [0.1, 0.2])
+      service.queueRandomNumbers(randomStream.PRECIPITATION, [0.1, 0.2])
 
-      expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(0.1)
-      expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(0.2)
+      expect(service.generateRandomNumber(randomStream.PRECIPITATION)).toEqual(
+        0.1
+      )
+      expect(service.generateRandomNumber(randomStream.PRECIPITATION)).toEqual(
+        0.2
+      )
       // Queued numbers don't consume seeded draws, so the seeded sequence
       // resumes from its start
-      expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(
+      expect(service.generateRandomNumber(randomStream.PRECIPITATION)).toEqual(
         firstSeeded
       )
     })
 
     test('queued numbers only affect their own stream', () => {
       vitest.spyOn(Math, 'random').mockReturnValue(0.42)
-      service.queueRandomNumbers(randomStream.WEATHER, [0.1])
+      service.queueRandomNumbers(randomStream.PRECIPITATION, [0.1])
 
-      expect(service.generateRandomNumber(randomStream.PRICE_EVENTS)).toEqual(
-        0.42
-      )
+      expect(service.generateRandomNumber(randomStream.STORM)).toEqual(0.42)
       expect(service.generateRandomNumber()).toEqual(0.42)
-      expect(service.generateRandomNumber(randomStream.WEATHER)).toEqual(0.1)
+      expect(service.generateRandomNumber(randomStream.PRECIPITATION)).toEqual(
+        0.1
+      )
     })
 
     test('unqueued stream draws come from the shared seeded sequence', () => {
@@ -53,8 +57,8 @@ describe('RandomNumberService', () => {
       service.seedRandomNumber('123')
 
       expect([
-        service.generateRandomNumber(randomStream.WEATHER),
-        service.generateRandomNumber(randomStream.PRICE_EVENTS),
+        service.generateRandomNumber(randomStream.PRECIPITATION),
+        service.generateRandomNumber(randomStream.STORM),
       ]).toEqual(shared)
     })
   })
