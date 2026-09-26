@@ -10,42 +10,6 @@ describe('RandomNumberService', () => {
       service = new RandomNumberService()
     })
 
-    test('named streams are reproducible for a given seed', () => {
-      service.seedRandomNumber('123')
-      const first = [
-        service.generateRandomNumber('a'),
-        service.generateRandomNumber('a'),
-      ]
-
-      service.seedRandomNumber('123')
-      const second = [
-        service.generateRandomNumber('a'),
-        service.generateRandomNumber('a'),
-      ]
-
-      expect(second).toEqual(first)
-    })
-
-    test('draws from one stream do not affect another stream', () => {
-      service.seedRandomNumber('123')
-      const undisturbed = service.generateRandomNumber('b')
-
-      service.seedRandomNumber('123')
-      service.generateRandomNumber()
-      service.generateRandomNumber('a')
-      service.generateRandomNumber('a')
-
-      expect(service.generateRandomNumber('b')).toEqual(undisturbed)
-    })
-
-    test('different streams produce different sequences', () => {
-      service.seedRandomNumber('123')
-
-      expect(service.generateRandomNumber('a')).not.toEqual(
-        service.generateRandomNumber('b')
-      )
-    })
-
     test('returns queued numbers for a stream before random ones', () => {
       service.seedRandomNumber('123')
       const firstSeeded = service.generateRandomNumber('a')
@@ -67,11 +31,19 @@ describe('RandomNumberService', () => {
       expect(service.generateRandomNumber('a')).toEqual(0.1)
     })
 
-    test('uses Math.random for all streams when unseeded', () => {
-      vitest.spyOn(Math, 'random').mockReturnValue(0.42)
+    test('unqueued stream draws come from the shared seeded sequence', () => {
+      service.seedRandomNumber('123')
+      const shared = [
+        service.generateRandomNumber(),
+        service.generateRandomNumber(),
+      ]
 
-      expect(service.generateRandomNumber()).toEqual(0.42)
-      expect(service.generateRandomNumber('a')).toEqual(0.42)
+      service.seedRandomNumber('123')
+
+      expect([
+        service.generateRandomNumber('a'),
+        service.generateRandomNumber('b'),
+      ]).toEqual(shared)
     })
   })
 

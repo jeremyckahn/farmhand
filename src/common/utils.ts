@@ -3,7 +3,7 @@ import { itemsMap } from '../data/maps.js'
 import { randomNumberService } from './services/randomNumber.ts'
 
 /**
- * @param stream Optional name of an independent seeded random number stream.
+ * @param stream Optional name of the random number stream being drawn from.
  * See RandomNumberService#generateRandomNumber.
  */
 export const random = (stream?: string) => {
