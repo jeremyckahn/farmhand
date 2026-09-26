@@ -24,10 +24,7 @@ test('a cow sale immediately followed by ending the day is persisted correctly',
 
   await page.getByText(': Shop').click()
   await page.getByRole('option', { name: ': Cows' }).click()
-  await page
-    .getByRole('button', { name: 'Buy' })
-    .first()
-    .click()
+  await page.getByRole('button', { name: 'Buy' }).first().click()
 
   const sellButton = page.getByRole('button', { name: 'Sell' })
   await expect(sellButton).toBeVisible()
@@ -67,10 +64,7 @@ test('a cow sale immediately followed by an end-of-day server error is still per
 
   await page.getByText(': Shop').click()
   await page.getByRole('option', { name: ': Cows' }).click()
-  await page
-    .getByRole('button', { name: 'Buy' })
-    .first()
-    .click()
+  await page.getByRole('button', { name: 'Buy' }).first().click()
 
   const sellButton = page.getByRole('button', { name: 'Sell' })
   await expect(sellButton).toBeVisible()
@@ -81,9 +75,7 @@ test('a cow sale immediately followed by an end-of-day server error is still per
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 
   await page.getByRole('button', { name: "Open Farmer's Log (l)" }).click()
-  await expect(
-    page.locator('#root')
-  ).toContainText(
+  await expect(page.locator('#root')).toContainText(
     'There was an issue connecting to the server. Please try again in a moment.',
     { timeout: 10_000 }
   )

@@ -30,7 +30,8 @@ const FermentationRecipeListStub = ({
 } = {}) => {
   const contextValue = createContextData()
 
-  contextValue.gameState.levelEntitlements = levelEntitlements as farmhand.levelEntitlements
+  contextValue.gameState.levelEntitlements =
+    levelEntitlements as farmhand.levelEntitlements
   return (
     <FarmhandContext.Provider value={contextValue}>
       <FermentationRecipeList />
@@ -55,9 +56,8 @@ describe('FermentationRecipeList', () => {
 
     render(<FermentationRecipeListStub levelEntitlements={levelEntitlements} />)
 
-    const cropsAvailableToFerment = getCropsAvailableToFerment(
-      levelEntitlements
-    )
+    const cropsAvailableToFerment =
+      getCropsAvailableToFerment(levelEntitlements)
 
     const header = screen.getByText(
       `Available Fermentation Recipes (${cropsAvailableToFerment.length} / ${totalFermentableItems})`
@@ -68,9 +68,8 @@ describe('FermentationRecipeList', () => {
 
   test('filters recipes based on search query', async () => {
     const levelEntitlements = getLevelEntitlements(100)
-    const cropsAvailableToFerment = getCropsAvailableToFerment(
-      levelEntitlements
-    )
+    const cropsAvailableToFerment =
+      getCropsAvailableToFerment(levelEntitlements)
 
     render(<FermentationRecipeListStub levelEntitlements={levelEntitlements} />)
 
@@ -84,7 +83,8 @@ describe('FermentationRecipeList', () => {
 
     const filteredCrops = cropsAvailableToFerment.filter(item => {
       const itemWithName = item as farmhand.item & { name: string }
-      const fermentationRecipeName = `Fermented ${itemWithName.name}`.toLowerCase()
+      const fermentationRecipeName =
+        `Fermented ${itemWithName.name}`.toLowerCase()
 
       return (
         fermentationRecipeName.includes('apple') ||
@@ -113,9 +113,8 @@ describe('FermentationRecipeList', () => {
 
   test('handles empty search query', async () => {
     const levelEntitlements = getLevelEntitlements(100)
-    const cropsAvailableToFerment = getCropsAvailableToFerment(
-      levelEntitlements
-    )
+    const cropsAvailableToFerment =
+      getCropsAvailableToFerment(levelEntitlements)
 
     render(<FermentationRecipeListStub levelEntitlements={levelEntitlements} />)
 

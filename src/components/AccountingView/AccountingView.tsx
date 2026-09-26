@@ -65,10 +65,10 @@ const AccountingView = ({
     Math.min(loanBalance, money)
   )
 
-  useEffect(() => setLoanInputValue(Math.min(loanBalance, money)), [
-    loanBalance,
-    money,
-  ])
+  useEffect(
+    () => setLoanInputValue(Math.min(loanBalance, money)),
+    [loanBalance, money]
+  )
 
   return (
     <Div className="AccountingView">

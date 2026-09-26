@@ -10,11 +10,10 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { Cow } from './Cow.js'
 import { Tumbleweeds } from './Tumbleweeds.js'
 
-export interface CowPenProps
-  extends Pick<
-    farmhand.state,
-    'allowCustomPeerCowNames' | 'cowInventory' | 'playerId' | 'selectedCowId'
-  > {
+export interface CowPenProps extends Pick<
+  farmhand.state,
+  'allowCustomPeerCowNames' | 'cowInventory' | 'playerId' | 'selectedCowId'
+> {
   handleCowPenUnmount: () => void
   handleCowClick: (cow: farmhand.cow) => void
 }

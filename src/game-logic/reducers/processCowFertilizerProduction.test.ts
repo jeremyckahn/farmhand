@@ -53,7 +53,8 @@ describe('processCowFertilizerProduction', () => {
         state.cowInventory = [
           generateCow({
             color: standardCowColors.WHITE,
-            daysSinceProducingFertilizer: COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+            daysSinceProducingFertilizer:
+              COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
             gender: genders.MALE,
           }),
         ]
@@ -85,12 +86,14 @@ describe('processCowFertilizerProduction', () => {
         state.cowInventory = [
           generateCow({
             color: standardCowColors.WHITE,
-            daysSinceProducingFertilizer: COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+            daysSinceProducingFertilizer:
+              COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
             gender: genders.MALE,
           }),
           generateCow({
             color: standardCowColors.WHITE,
-            daysSinceProducingFertilizer: COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+            daysSinceProducingFertilizer:
+              COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
             gender: genders.MALE,
           }),
         ]
@@ -122,14 +125,14 @@ describe('processCowFertilizerProduction', () => {
         state.cowInventory = [
           generateCow({
             color: cowColors.RAINBOW,
-            daysSinceProducingFertilizer: COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+            daysSinceProducingFertilizer:
+              COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
             gender: genders.MALE,
           }),
         ]
 
-        const { hasProducedRainbowFertilizer } = processCowFertilizerProduction(
-          state
-        )
+        const { hasProducedRainbowFertilizer } =
+          processCowFertilizerProduction(state)
 
         expect(hasProducedRainbowFertilizer).toBe(true)
       })
@@ -141,14 +144,14 @@ describe('processCowFertilizerProduction', () => {
         state.cowInventory = [
           generateCow({
             color: standardCowColors.WHITE,
-            daysSinceProducingFertilizer: COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
+            daysSinceProducingFertilizer:
+              COW_FERTILIZER_PRODUCTION_RATE_SLOWEST,
             gender: genders.MALE,
           }),
         ]
 
-        const { hasProducedRainbowFertilizer } = processCowFertilizerProduction(
-          state
-        )
+        const { hasProducedRainbowFertilizer } =
+          processCowFertilizerProduction(state)
 
         expect(hasProducedRainbowFertilizer).toBe(false)
       })
@@ -159,9 +162,8 @@ describe('processCowFertilizerProduction', () => {
         state.hasProducedRainbowFertilizer = true
         state.cowInventory = []
 
-        const { hasProducedRainbowFertilizer } = processCowFertilizerProduction(
-          state
-        )
+        const { hasProducedRainbowFertilizer } =
+          processCowFertilizerProduction(state)
 
         expect(hasProducedRainbowFertilizer).toBe(true)
       })

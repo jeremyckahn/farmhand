@@ -11,21 +11,21 @@ const { SEED, GROWING, GROWN } = cropLifeStage
 const isPlotContent = (obj: unknown = {}): obj is farmhand.plotContent =>
   Boolean(
     obj &&
-      typeof obj === 'object' &&
-      'itemId' in obj &&
-      'fertilizerType' in obj &&
-      obj.itemId &&
-      obj.fertilizerType
+    typeof obj === 'object' &&
+    'itemId' in obj &&
+    'fertilizerType' in obj &&
+    obj.itemId &&
+    obj.fertilizerType
   )
 
 const isShoveledPlot = (obj: unknown = {}): obj is farmhand.shoveledPlot =>
   Boolean(
     obj &&
-      typeof obj === 'object' &&
-      'isShoveled' in obj &&
-      'daysUntilClear' in obj &&
-      obj.isShoveled &&
-      obj.daysUntilClear
+    typeof obj === 'object' &&
+    'isShoveled' in obj &&
+    'daysUntilClear' in obj &&
+    obj.isShoveled &&
+    obj.daysUntilClear
   )
 
 const isPlotContentACrop = (

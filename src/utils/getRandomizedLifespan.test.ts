@@ -5,19 +5,13 @@ describe('getRandomizedLifespan', () => {
     // First call: floor roll (max variance -> 200 * (1 - 1 * 0.05) = 190).
     // All subsequent calls: extension roll of 0, which is immediately
     // beaten by getTreeDeathChance(0) (0.05), so the extension is 0.
-    vitest
-      .spyOn(Math, 'random')
-      .mockReturnValueOnce(1)
-      .mockReturnValue(0)
+    vitest.spyOn(Math, 'random').mockReturnValueOnce(1).mockReturnValue(0)
 
     expect(getRandomizedLifespan(200)).toBe(190)
   })
 
   test('floors at exactly the default when the first roll is 0', () => {
-    vitest
-      .spyOn(Math, 'random')
-      .mockReturnValueOnce(0)
-      .mockReturnValue(0)
+    vitest.spyOn(Math, 'random').mockReturnValueOnce(0).mockReturnValue(0)
 
     expect(getRandomizedLifespan(200)).toBe(200)
   })

@@ -18,5 +18,5 @@ export const getPeerMetadata = (
     ),
   })
 
-  return (reducedState as unknown) as farmhand.peerMetadata
+  return reducedState as unknown as farmhand.peerMetadata
 }
