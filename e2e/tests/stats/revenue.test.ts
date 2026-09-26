@@ -19,14 +19,8 @@ test('should track and manage revenue records', async ({ page }) => {
   await page
     .getByRole('button', { name: 'A scythe for crop harvesting' })
     .click()
-  await page
-    .locator('.Plot')
-    .first()
-    .click()
-  await page
-    .getByRole('button', { name: 'Sell' })
-    .first()
-    .click()
+  await page.locator('.Plot').first().click()
+  await page.getByRole('button', { name: 'Sell' }).first().click()
   await page.getByRole('button', { name: 'View your stats (s)' }).click()
   await expect(page.locator('#stats-modal-content')).toContainText(
     "Today's Revenue$27.28Today's Losses$0.00Today's Profit$27.28Record Single Day Profit$27.28Current Profitability Streak0 daysRecord Profitability Streak0 days7-day Profit Average-$20.53Record 7-day Profit Average$0.00All-Time Total Revenue$27.28"

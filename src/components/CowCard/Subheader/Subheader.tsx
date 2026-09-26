@@ -37,18 +37,17 @@ const getCowMapById = memoize((cowInventory: farmhand.state['cowInventory']) =>
   )
 )
 
-export interface SubheaderProps
-  extends Pick<
-    CowCardProps,
-    | 'cow'
-    | 'cowBreedingPen'
-    | 'cowIdOfferedForTrade'
-    | 'cowInventory'
-    | 'handleCowAutomaticHugChange'
-    | 'handleCowBreedChange'
-    | 'huggingMachinesRemain'
-    | 'playerId'
-  > {
+export interface SubheaderProps extends Pick<
+  CowCardProps,
+  | 'cow'
+  | 'cowBreedingPen'
+  | 'cowIdOfferedForTrade'
+  | 'cowInventory'
+  | 'handleCowAutomaticHugChange'
+  | 'handleCowBreedChange'
+  | 'huggingMachinesRemain'
+  | 'playerId'
+> {
   canCowBeTradedFor: boolean
   cowValue: number
   isCowPurchased: boolean

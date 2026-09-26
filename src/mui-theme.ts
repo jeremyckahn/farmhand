@@ -49,9 +49,10 @@ const globalStyleOverrides = {
   },
   'input[type="number"]': { minWidth: '140px' },
   th: { fontWeight: 'bold' },
-  'h1, h2, h3, h4, h5, h6, legend, td, th, .MuiTypography-h1, .MuiTypography-h2, .MuiTypography-h3, .MuiTypography-h4, .MuiTypography-h5, .MuiTypography-h6, .MuiButtonBase-root': {
-    fontFamily: '"Francois One", sans-serif',
-  },
+  'h1, h2, h3, h4, h5, h6, legend, td, th, .MuiTypography-h1, .MuiTypography-h2, .MuiTypography-h3, .MuiTypography-h4, .MuiTypography-h5, .MuiTypography-h6, .MuiButtonBase-root':
+    {
+      fontFamily: '"Francois One", sans-serif',
+    },
   '.danger-text': { color: colors.error },
   '.success-text': { color: colors.success },
   hr: { background: 'none' },

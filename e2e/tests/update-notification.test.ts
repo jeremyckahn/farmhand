@@ -16,7 +16,7 @@ test.describe('Update Notification', () => {
     await page.evaluate(() => {
       const getFiber = (node: Element) => {
         const key = Object.keys(node).find(k => k.startsWith('__reactFiber$'))
-        return ((node as unknown) as Record<string, any>)[key as string]
+        return (node as unknown as Record<string, any>)[key as string]
       }
 
       let fiber = getFiber(document.querySelector('.Farmhand')!)

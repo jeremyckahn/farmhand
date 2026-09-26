@@ -50,8 +50,7 @@ export const harvestForestPlot = (
     ...state,
     treeFruitsHarvested: {
       ...state.treeFruitsHarvested,
-      [item.id]:
-        (state.treeFruitsHarvested[item.id] || 0) + receivedFruitYield,
+      [item.id]: (state.treeFruitsHarvested[item.id] || 0) + receivedFruitYield,
     },
   }
 

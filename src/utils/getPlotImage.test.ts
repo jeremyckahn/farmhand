@@ -8,7 +8,7 @@ import { getPlotContentFromItemId } from './getPlotContentFromItemId.js'
 
 describe('getPlotImage', () => {
   test('returns null when no plotContent is provided', () => {
-    expect(getPlotImage((null as unknown) as farmhand.plotContent, 0, 0)).toBe(
+    expect(getPlotImage(null as unknown as farmhand.plotContent, 0, 0)).toBe(
       null
     )
   })
@@ -18,40 +18,40 @@ describe('getPlotImage', () => {
 
     expect(
       getPlotImage(
-        (testCrop({
+        testCrop({
           itemId,
           daysWatered: 0,
-        }) as unknown) as farmhand.plotContent,
+        }) as unknown as farmhand.plotContent,
         0,
         0
       )
     ).toBe(itemImages['carrot-seed'])
     expect(
       getPlotImage(
-        (testCrop({
+        testCrop({
           itemId,
           daysWatered: 1,
-        }) as unknown) as farmhand.plotContent,
+        }) as unknown as farmhand.plotContent,
         0,
         0
       )
     ).toBe(itemImages['carrot-seed'])
     expect(
       getPlotImage(
-        (testCrop({
+        testCrop({
           itemId,
           daysWatered: 3,
-        }) as unknown) as farmhand.plotContent,
+        }) as unknown as farmhand.plotContent,
         0,
         0
       )
     ).toBe(itemImages['carrot-growing-2'])
     expect(
       getPlotImage(
-        (testCrop({
+        testCrop({
           itemId,
           daysWatered: 5,
-        }) as unknown) as farmhand.plotContent,
+        }) as unknown as farmhand.plotContent,
         0,
         0
       )
@@ -61,9 +61,9 @@ describe('getPlotImage', () => {
   test('returns item image for oreId', () => {
     expect(
       getPlotImage(
-        (getPlotContentFromItemId(
+        getPlotContentFromItemId(
           silverOre.id
-        ) as unknown) as farmhand.plotContent,
+        ) as unknown as farmhand.plotContent,
         0,
         0
       )
@@ -83,16 +83,16 @@ describe('getPlotImage', () => {
     }
 
     expect(
-      getPlotImage((shoveledPlot as unknown) as farmhand.shoveledPlot, 0, 0)
+      getPlotImage(shoveledPlot as unknown as farmhand.shoveledPlot, 0, 0)
     ).toBe((itemImages as Record<string, string>)[silverOre.id])
   })
 
   test('returns item image for other content', () => {
     expect(
       getPlotImage(
-        (getPlotContentFromItemId(
+        getPlotContentFromItemId(
           'sprinkler'
-        ) as unknown) as farmhand.plotContent,
+        ) as unknown as farmhand.plotContent,
         0,
         0
       )

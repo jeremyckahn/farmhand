@@ -181,9 +181,7 @@ declare namespace farmhand {
 
   type achievementCondition = (state: state, prevState?: state) => boolean
   type achievementReward = (state: state) => state
-  type achievementProgress = (
-    state: state
-  ) => {
+  type achievementProgress = (state: state) => {
     currentValue: number
     goal: number
   }
