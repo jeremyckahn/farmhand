@@ -45,9 +45,8 @@ export const Stage = ({
   useAlternateEndDayButtonPosition = false,
   viewTitle,
 }: StageProps) => {
-  const ref = /** @type {React.MutableRefObject<HTMLDivElement | null>} */ useRef(
-    null
-  )
+  const ref =
+    /** @type {React.MutableRefObject<HTMLDivElement | null>} */ useRef(null)
 
   useEffect(() => {
     if (ref.current) {
@@ -67,8 +66,8 @@ export const Stage = ({
     [stageFocusType.HOME]: isOctober()
       ? jackOLanternBg
       : isDecember()
-      ? winterBg
-      : brownDotBg,
+        ? winterBg
+        : brownDotBg,
     [stageFocusType.SHOP]: yellowDotBg,
     [stageFocusType.WORKSHOP]: lavenderDotBg,
     [stageFocusType.CELLAR]: floorboardBg,
@@ -81,11 +80,13 @@ export const Stage = ({
   // filter (see seasonFilterMap) applied via the `.stage-background` layer
   // below - scoped to just the background, not the crop/cow/tree sprites
   // rendered on top of it.
-  const hasSeasonalColorShift = ([
-    stageFocusType.FIELD,
-    stageFocusType.COW_PEN,
-    stageFocusType.FOREST,
-  ] as string[]).includes(stageFocus)
+  const hasSeasonalColorShift = (
+    [
+      stageFocusType.FIELD,
+      stageFocusType.COW_PEN,
+      stageFocusType.FOREST,
+    ] as string[]
+  ).includes(stageFocus)
 
   return (
     <Div

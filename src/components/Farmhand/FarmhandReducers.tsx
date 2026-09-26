@@ -193,8 +193,7 @@ export class FarmhandReducers extends Component<FarmhandProps, FarmhandState> {
 
     for (const reducerName of reducerNames) {
       const reducer = reducers[reducerName as keyof typeof reducers] as
-        | ((state: farmhand.state, ...args: any[]) => farmhand.state)
-        | undefined
+        ((state: farmhand.state, ...args: any[]) => farmhand.state) | undefined
 
       if (!reducer) {
         if (import.meta.env?.MODE === 'development') {

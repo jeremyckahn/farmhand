@@ -217,8 +217,7 @@ export const createContextData = (): ContextData => {
   }
 }
 
-const FarmhandContext: import('react').Context<ContextData> = createContext<
-  ContextData
->(createContextData())
+const FarmhandContext: import('react').Context<ContextData> =
+  createContext<ContextData>(createContextData())
 
 export default FarmhandContext

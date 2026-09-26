@@ -14,6 +14,6 @@ const FARM_PRODUCT_TYPES: itemType[] = [
 export const isItemAFarmProduct = (item: farmhand.item): boolean =>
   Boolean(
     isItemAGrownCrop(item) ||
-      isItemAGrownFruit(item) ||
-      FARM_PRODUCT_TYPES.includes(item.type)
+    isItemAGrownFruit(item) ||
+    FARM_PRODUCT_TYPES.includes(item.type)
   )

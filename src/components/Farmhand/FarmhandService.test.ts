@@ -50,9 +50,8 @@ describe('FarmhandService', () => {
         { id: 'carrot-seed', quantity: 1 },
         { id: 'weed', quantity: 1 },
       ]
-      const plantableCropInventory = FarmhandService.getPlantableCropInventory(
-        inventory
-      )
+      const plantableCropInventory =
+        FarmhandService.getPlantableCropInventory(inventory)
 
       expect(plantableCropInventory).toEqual([{ ...carrotSeed, quantity: 1 }])
     })
@@ -64,9 +63,8 @@ describe('FarmhandService', () => {
         { id: 'apple-sapling', quantity: 1 },
         { id: 'weed', quantity: 1 },
       ]
-      const plantableTreeInventory = FarmhandService.getPlantableTreeInventory(
-        inventory
-      )
+      const plantableTreeInventory =
+        FarmhandService.getPlantableTreeInventory(inventory)
 
       expect(plantableTreeInventory).toEqual([{ ...appleSapling, quantity: 1 }])
     })
@@ -76,9 +74,8 @@ describe('FarmhandService', () => {
         { id: 'apple-sapling', quantity: 1 },
         { id: 'not-a-real-item-id', quantity: 1 },
       ]
-      const plantableTreeInventory = FarmhandService.getPlantableTreeInventory(
-        inventory
-      )
+      const plantableTreeInventory =
+        FarmhandService.getPlantableTreeInventory(inventory)
 
       expect(plantableTreeInventory).toEqual([{ ...appleSapling, quantity: 1 }])
     })
