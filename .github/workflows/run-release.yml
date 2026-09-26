@@ -114,6 +114,9 @@ jobs:
           branch: main
 
       - run: npm run build -- --base="./"
+        env:
+          VITE_TURN_USERNAME: ${{ secrets.VITE_TURN_USERNAME }}
+          VITE_TURN_CREDENTIAL: ${{ secrets.VITE_TURN_CREDENTIAL }}
       # --provenance and --access public are required triggers for OIDC/Trusted Publishing.
       # NPM_CONFIG_PROVENANCE is an additional hint to the CLI to use OIDC.
       - run: npm publish --provenance --access public
@@ -153,6 +156,9 @@ jobs:
 
       - run: |
           npm run build -- --base='/farmhand'
+        env:
+          VITE_TURN_USERNAME: ${{ secrets.VITE_TURN_USERNAME }}
+          VITE_TURN_CREDENTIAL: ${{ secrets.VITE_TURN_CREDENTIAL }}
 
       # https://github.com/marketplace/actions/deploy-to-github-pages
       - name: Deploy to jeremyckahn.github.io/farmhand
@@ -186,4 +192,6 @@ jobs:
       - name: 'Build and Release Electron App'
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          VITE_TURN_USERNAME: ${{ secrets.VITE_TURN_USERNAME }}
+          VITE_TURN_CREDENTIAL: ${{ secrets.VITE_TURN_CREDENTIAL }}
         run: npm run build:native
