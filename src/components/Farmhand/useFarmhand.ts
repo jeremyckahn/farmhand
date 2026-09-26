@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid'
 
 import * as reducers from '../../game-logic/reducers/index.js'
 import eventHandlers from '../../handlers/ui-events.js'
+import { randomNumberService } from '../../common/services/randomNumber.js'
 
 import {
   DEFAULT_ROOM,
@@ -16,6 +17,7 @@ import { scarecrow } from '../../data/items.js'
 import {
   dialogView,
   fieldMode,
+  randomStream,
   stageFocusType,
   toolLevel,
   toolType,
@@ -360,6 +362,8 @@ export const useFarmhand = (props: FarmhandProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const instanceProxy = useMemo(
     () => ({
+      queueRandomNumbers: (stream: randomStream, numbers: number[]) =>
+        randomNumberService.queueRandomNumbers(stream, numbers),
       state,
       props,
       viewTitle,

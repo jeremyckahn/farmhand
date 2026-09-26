@@ -6,6 +6,7 @@ import { getLevelEntitlements } from '../../utils/getLevelEntitlements.js'
 import { PRICE_EVENT_CHANCE } from '../../constants.js'
 import { PRICE_CRASH, PRICE_SURGE } from '../../templates.js'
 import { random } from '../../common/utils.js'
+import { randomStream } from '../../enums.js'
 
 import { createPriceEvent } from './createPriceEvent.js'
 
@@ -20,13 +21,14 @@ export const generatePriceEvents = (state: farmhand.state): farmhand.state => {
 
   // TODO: Use isRandomNumberLessThan here once it supports an exclusive
   // less-than check.
-  if (random() < PRICE_EVENT_CHANCE) {
+  if (random(randomStream.PRICE_EVENT_CHANCE) < PRICE_EVENT_CHANCE) {
     const { items: unlockedItems } = getLevelEntitlements(
       levelAchieved(state.experience)
     )
 
     const cropItem = getRandomUnlockedCrop(
-      filterItemIdsToSeeds(Object.keys(unlockedItems))
+      filterItemIdsToSeeds(Object.keys(unlockedItems)),
+      randomStream.PRICE_EVENT_CROP
     )
     const { id } = cropItem
 
@@ -35,7 +37,8 @@ export const generatePriceEvents = (state: farmhand.state): farmhand.state => {
     )
 
     if (!doesPriceEventAlreadyExist) {
-      const priceEventType = random() < 0.5 ? TYPE_CRASH : TYPE_SURGE
+      const priceEventType =
+        random(randomStream.PRICE_EVENT_TYPE) < 0.5 ? TYPE_CRASH : TYPE_SURGE
 
       priceEvent = createPriceEvent(
         state,

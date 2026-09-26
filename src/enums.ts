@@ -304,3 +304,30 @@ export const season = {
 } as const
 
 export type season = typeof season[keyof typeof season]
+
+/**
+ * Names of the random number streams that game logic draws from. A stream
+ * name identifies where a value is drawn so that it can be forced with
+ * RandomNumberService#queueRandomNumbers (e.g. in E2E tests).
+ * @property farmhand.module:enums.randomStream
+ * @enum
+ */
+export const randomStream = {
+  PRECIPITATION: 'precipitation',
+  STORM: 'storm',
+  PRICE_EVENT_CHANCE: 'priceEventChance',
+  PRICE_EVENT_CROP: 'priceEventCrop',
+  PRICE_EVENT_TYPE: 'priceEventType',
+} as const
+
+/**
+ * The stream for an item's price adjustment (see generateValueAdjustments in
+ * src/common/utils.ts). Create one with getValueAdjustmentStream.
+ */
+export type valueAdjustmentStream = string & {
+  readonly __brand: 'valueAdjustmentStream'
+}
+
+export type randomStream =
+  | typeof randomStream[keyof typeof randomStream]
+  | valueAdjustmentStream
