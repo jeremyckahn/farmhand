@@ -66,6 +66,7 @@ Farmhand exposes its live game state on `window.farmhand` in the browser console
 ```js
 window.farmhand.state // read the current game state
 window.farmhand.setState({ money: 999999 }) // merge a partial update into state
+window.farmhand.queueRandomNumbers('weather', [0, 0.99]) // force the next values drawn from a random number stream (here: rain tonight)
 ```
 
 Prefer this over editing `useState` values directly in the React DevTools components panel — DevTools' hook editor overwrites the rendered value without updating the hook's underlying update queue, so the edit gets silently discarded the next time any real `setState` call fires (which happens frequently, e.g. via the heartbeat timer or day-advancement effects). `window.farmhand.setState()` goes through the real state dispatch, so it persists.

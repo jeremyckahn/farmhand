@@ -1,19 +1,20 @@
 import { expect, test } from '@playwright/test'
 
+import { queueRandomNumbers } from '../test-utils/farmhand-debug-hook.js'
 import { openPage } from '../test-utils/open-page.js'
 
-// NOTE: These hardcoded prices are derived from the seeded RNG at the
-// default seed. Each item's price adjustment draws from its own seeded
-// stream (see generateValueAdjustments in src/common/utils.ts), so these only
-// need to be regenerated if Carrot Seed's own value changes.
 test('should fluctuate crop prices', async ({ page }) => {
   await openPage(page)
 
   await page.getByText(': Home').click()
   await page.getByRole('option', { name: ': Shop' }).click()
-  await expect(page.locator('#shop-tabpanel-0')).toContainText(
-    'Carrot SeedPrice: $8.92Total: $8.92In inventory: 0Days to mature: 5'
-  )
+  await expect(page.locator('#shop-tabpanel-0')).toContainText('Carrot Seed')
+  await expect(page.locator('#shop-tabpanel-0')).not.toContainText('$21.00')
+
+  // Force Carrot Seed's next price adjustment to 0.9 + 0.5 = 1.4x its $15
+  // base value (see generateValueAdjustments in src/common/utils.ts).
+  await queueRandomNumbers(page, 'valueAdjustment:carrot-seed', [0.9])
+
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 
   // NOTE: A short timeout is used here (well under AnimatedNumber's 750ms
@@ -24,7 +25,7 @@ test('should fluctuate crop prices', async ({ page }) => {
   await expect(
     page.locator('#shop-tabpanel-0')
   ).toContainText(
-    'Carrot SeedPrice: $8.41Total: $8.41In inventory: 0Days to mature: 5',
+    'Carrot SeedPrice: $21.00Total: $21.00In inventory: 0Days to mature: 5',
     { timeout: 200 }
   )
 })

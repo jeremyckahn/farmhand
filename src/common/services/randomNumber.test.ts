@@ -46,6 +46,27 @@ describe('RandomNumberService', () => {
       )
     })
 
+    test('returns queued numbers for a stream before random ones', () => {
+      service.seedRandomNumber('123')
+      const firstSeeded = service.generateRandomNumber('a')
+
+      service.seedRandomNumber('123')
+      service.queueRandomNumbers('a', [0.1, 0.2])
+
+      expect(service.generateRandomNumber('a')).toEqual(0.1)
+      expect(service.generateRandomNumber('a')).toEqual(0.2)
+      expect(service.generateRandomNumber('a')).toEqual(firstSeeded)
+    })
+
+    test('queued numbers only affect their own stream', () => {
+      vitest.spyOn(Math, 'random').mockReturnValue(0.42)
+      service.queueRandomNumbers('a', [0.1])
+
+      expect(service.generateRandomNumber('b')).toEqual(0.42)
+      expect(service.generateRandomNumber()).toEqual(0.42)
+      expect(service.generateRandomNumber('a')).toEqual(0.1)
+    })
+
     test('uses Math.random for all streams when unseeded', () => {
       vitest.spyOn(Math, 'random').mockReturnValue(0.42)
 

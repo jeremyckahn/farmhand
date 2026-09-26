@@ -1,13 +1,15 @@
 import { test, expect } from '@playwright/test'
 
+import { queueRandomNumbers } from '../test-utils/farmhand-debug-hook.js'
 import { openPage } from '../test-utils/open-page.js'
 
-// NOTE: This seed was chosen because it produces a carrot price crash on the
-// first day end. Price events draw from their own seeded "priceEvents" stream
-// (see generatePriceEvents), so this is unaffected by changes to unrelated
-// game data such as the item list.
 test('should have random price events upon ending day', async ({ page }) => {
-  await openPage(page, 2)
+  await openPage(page)
+
+  // Force a price event on the next day end: the first draw is below
+  // PRICE_EVENT_CHANCE (so an event happens), the second picks the first
+  // unlocked crop (carrot), and the third is below 0.5 (so it's a crash).
+  await queueRandomNumbers(page, 'priceEvents', [0, 0, 0])
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 

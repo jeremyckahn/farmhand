@@ -14,6 +14,14 @@ export class RandomNumberService {
    */
   seededStreams: Map<string, () => number> = new Map()
 
+  /**
+   * Values queued per stream name that are returned, in order, before any
+   * seeded or Math.random value. This lets tests force a specific outcome
+   * (e.g. rain tonight) without searching for a seed that happens to produce
+   * it. Exposed via the window.farmhand debug hook.
+   */
+  queuedNumbers: Map<string, number[]> = new Map()
+
   constructor() {
     // The availability of window.location needs to be checked before accessing
     // its .search property. This code runs in both a browser and Node.js
@@ -39,6 +47,14 @@ export class RandomNumberService {
    * from the seed. When unseeded, the stream name has no effect.
    */
   generateRandomNumber(stream?: string): number {
+    if (stream !== undefined) {
+      const queuedNumber = this.queuedNumbers.get(stream)?.shift()
+
+      if (queuedNumber !== undefined) {
+        return queuedNumber
+      }
+    }
+
     if (this.seed === null || this.seededRandom === null) {
       return Math.random()
     }
@@ -58,6 +74,18 @@ export class RandomNumberService {
     this.seededStreams.set(stream, streamRandom)
 
     return streamRandom()
+  }
+
+  /**
+   * @param stream Name of the random number stream to queue values for.
+   * @param numbers Values to return from the stream, in order, before it
+   * resumes producing random numbers.
+   */
+  queueRandomNumbers(stream: string, numbers: number[]) {
+    this.queuedNumbers.set(stream, [
+      ...(this.queuedNumbers.get(stream) ?? []),
+      ...numbers,
+    ])
   }
 
   unseedRandomNumber() {
