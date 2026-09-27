@@ -322,6 +322,48 @@ const achievements: farmhand.achievement[] = [
     }),
   }))(),
 
+  ((goal = 1000, reward = 100) => ({
+    id: 'steady-stasher',
+    name: 'Steady Stasher',
+    description: `Expand your storage capacity to ${integerString(
+      goal
+    )} units.`,
+    rewardDescription: `${integerString(reward)} additional inventory spaces`,
+    ...progressAchievement(goal, state => state.inventoryLimit),
+    reward: state => ({
+      ...state,
+      inventoryLimit: state.inventoryLimit + reward,
+    }),
+  }))(),
+
+  ((goal = 10000, reward = 1000) => ({
+    id: 'heavy-hoarder',
+    name: 'Heavy Hoarder',
+    description: `Expand your storage capacity to ${integerString(
+      goal
+    )} units.`,
+    rewardDescription: `${integerString(reward)} additional inventory spaces`,
+    ...progressAchievement(goal, state => state.inventoryLimit),
+    reward: state => ({
+      ...state,
+      inventoryLimit: state.inventoryLimit + reward,
+    }),
+  }))(),
+
+  ((goal = 100000, reward = 10000) => ({
+    id: 'pro-prepper',
+    name: 'Pro Prepper',
+    description: `Expand your storage capacity to ${integerString(
+      goal
+    )} units.`,
+    rewardDescription: `${integerString(reward)} additional inventory spaces`,
+    ...progressAchievement(goal, state => state.inventoryLimit),
+    reward: state => ({
+      ...state,
+      inventoryLimit: state.inventoryLimit + reward,
+    }),
+  }))(),
+
   ((goal = 500000) => ({
     id: 'i-am-rich-1',
     name: 'I am Rich!',

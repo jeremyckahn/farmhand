@@ -132,6 +132,7 @@ export const testState = (
   cowTradeTimeoutId: null,
   cropsHarvested: {
     ASPARAGUS: 0,
+    BLUEBERRY: 0,
     CARROT: 0,
     CORN: 0,
     GARLIC: 0,

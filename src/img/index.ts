@@ -86,6 +86,9 @@ import asparagusGrowing1 from './items/asparagus-growing1.png'
 import asparagusGrowing2 from './items/asparagus-growing2.png'
 import asparagusGrowing3 from './items/asparagus-growing3.png'
 import asparagusSeed from './items/asparagus-seed.png'
+import blueberry from './items/blueberry.png'
+import blueberryGrowing1 from './items/blueberry-growing1.png'
+import blueberrySeed from './items/blueberry-seed.png'
 import carrot from './items/carrot.png'
 import carrotGrowing1 from './items/carrot-growing1.png'
 import carrotGrowing2 from './items/carrot-growing2.png'
@@ -393,6 +396,9 @@ export const items = {
   'asparagus-growing-2': asparagusGrowing2,
   'asparagus-growing-3': asparagusGrowing3,
   'asparagus-seed': asparagusSeed,
+  blueberry,
+  'blueberry-growing-1': blueberryGrowing1,
+  'blueberry-seed': blueberrySeed,
   carrot,
   'carrot-growing-1': carrotGrowing1,
   'carrot-growing-2': carrotGrowing2,

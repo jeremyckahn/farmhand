@@ -2,19 +2,7 @@ import { expect, test } from '@playwright/test'
 
 import { NOTIFICATION_DURATION } from '../../src/constants.js'
 import { openPage } from '../test-utils/open-page.js'
-
-// window.farmhand is a real, supported debug hook (documented in
-// README.md's "Debugging" section) but its ambient type declaration lives
-// in src/react-app-env.d.ts, which isn't part of this project's
-// TypeScript scope - so it's redeclared locally here with the shape this
-// file actually relies on.
-declare global {
-  interface Window {
-    farmhand?: {
-      setState: (partialState: Record<string, unknown>) => void
-    }
-  }
-}
+import { setFarmhandState } from '../test-utils/farmhand-debug-hook.js'
 
 // The "Test notification A/B" and display-duration tests below drive the
 // notification system directly through the window.farmhand.setState debug
@@ -28,12 +16,7 @@ const showNotification = (
   page: import('@playwright/test').Page,
   message: string,
   severity: 'info' | 'success' | 'warning' | 'error' = 'info'
-) =>
-  page.evaluate(
-    ({ message, severity }) =>
-      window.farmhand?.setState({ latestNotification: { message, severity } }),
-    { message, severity }
-  )
+) => setFarmhandState(page, { latestNotification: { message, severity } })
 
 const endDay = (page: import('@playwright/test').Page) =>
   page.getByRole('button', { name: 'End the day to save your' }).click()

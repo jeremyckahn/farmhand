@@ -27,9 +27,10 @@ export const ItemList = ({
     sx={{
       display: 'flex',
       flexFlow: 'row',
-      [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
-        flexFlow: 'column',
-      },
+      [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]:
+        {
+          flexFlow: 'column',
+        },
     }}
   >
     {sortItems(items).map((item: farmhand.item) => (

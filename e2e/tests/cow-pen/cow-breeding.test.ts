@@ -5,9 +5,9 @@ test('should breed two cows to produce a new cow', async ({ page }) => {
   await loadFixture(page, 'cow-breeding')
 
   await expect(page.getByText('Data loaded!')).toBeHidden({ timeout: 10000 })
-  await expect(
-    page.getByText('You achieved "Purchase a Cow Pen!"')
-  ).toBeHidden({ timeout: 10000 })
+  await expect(page.getByText('You achieved "Purchase a Cow Pen!"')).toBeHidden(
+    { timeout: 10000 }
+  )
 
   const navCombo = page.getByRole('combobox').first()
   await navCombo.click()

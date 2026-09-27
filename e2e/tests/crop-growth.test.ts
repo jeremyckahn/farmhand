@@ -25,26 +25,17 @@ test('should grow watered crops', async ({ page }) => {
 
   // Plant Scarecrow
   await page.getByRole('button', { name: 'Scarecrow' }).click()
-  await page
-    .locator('.Plot')
-    .first()
-    .click()
+  await page.locator('.Plot').first().click()
 
   // Plant Carrot Seed
   await page.getByRole('button', { name: 'Carrot Seed' }).click()
-  await page
-    .locator('.row > div:nth-child(2)')
-    .first()
-    .click()
+  await page.locator('.row > div:nth-child(2)').first().click()
 
   // Water Carrot Seed
   await page
     .getByRole('button', { name: 'A watering can for hydrating' })
     .click()
-  await page
-    .locator('.row > div:nth-child(2)')
-    .first()
-    .click()
+  await page.locator('.row > div:nth-child(2)').first().click()
 
   await expect(page.locator('.row > div:nth-child(2)').first())
     .toMatchAriaSnapshot(`
@@ -57,10 +48,7 @@ test('should grow watered crops', async ({ page }) => {
   await page
     .getByRole('button', { name: 'A watering can for hydrating' })
     .click()
-  await page
-    .locator('.row > div:nth-child(2)')
-    .first()
-    .click()
+  await page.locator('.row > div:nth-child(2)').first().click()
 
   await page.getByRole('button', { name: 'End the day to save your' }).click()
 

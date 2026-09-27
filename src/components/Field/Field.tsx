@@ -597,10 +597,11 @@ export const Field = (props: FieldProps) => {
             backgroundColor: colorYellow,
             cursor: 'pointer',
           },
-          '&.harvest-mode.is-inventory-full .Plot.crop.can-be-harvested, &.cleanup-mode.is-inventory-full .Plot.is-replantable': {
-            backgroundColor: colorRedDanger,
-            cursor: 'not-allowed',
-          },
+          '&.harvest-mode.is-inventory-full .Plot.crop.can-be-harvested, &.cleanup-mode.is-inventory-full .Plot.is-replantable':
+            {
+              backgroundColor: colorRedDanger,
+              cursor: 'not-allowed',
+            },
           '&.cleanup-mode .Plot.is-replantable': {
             backgroundColor: colorGreenOk,
             cursor: 'pointer',
@@ -609,14 +610,15 @@ export const Field = (props: FieldProps) => {
             backgroundColor: colorGreenOk,
             cursor: 'auto',
           },
-          '&.set-sprinkler-mode:hover .Plot:hover, &.set-scarecrow-mode:hover .Plot:hover, &.set-lightning-rod-mode:hover .Plot:hover': {
-            '&.is-empty img': { cursor: 'pointer', opacity: 0.5 },
-            '&:not(.is-empty)': {
-              backgroundColor: colorRedDanger,
-              backgroundImage: 'none',
-              cursor: 'not-allowed',
+          '&.set-sprinkler-mode:hover .Plot:hover, &.set-scarecrow-mode:hover .Plot:hover, &.set-lightning-rod-mode:hover .Plot:hover':
+            {
+              '&.is-empty img': { cursor: 'pointer', opacity: 0.5 },
+              '&:not(.is-empty)': {
+                backgroundColor: colorRedDanger,
+                backgroundImage: 'none',
+                cursor: 'not-allowed',
+              },
             },
-          },
           '&.set-sprinkler-mode:hover .Plot:hover.is-empty img': {
             backgroundImage: `url(${sprinklerImg})`,
           },
@@ -664,7 +666,7 @@ export const Field = (props: FieldProps) => {
             // react-zoom-pan-pinch's own types declare `children` as
             // `ReactNode`, but it actually implements the common
             // function-as-children render-prop pattern at runtime.
-            (((transformProps: any) => (
+            ((transformProps: any) => (
               <FieldContentWrapper
                 {...{
                   ...transformProps,
@@ -675,7 +677,7 @@ export const Field = (props: FieldProps) => {
                   ),
                 }}
               />
-            )) as unknown) as React.ReactNode
+            )) as unknown as React.ReactNode
           }
         </TransformWrapper>
         {adjustableRangeFieldModes.has(propsFieldMode) && (

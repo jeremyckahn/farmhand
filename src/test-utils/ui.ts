@@ -3,7 +3,12 @@ import userEvent from '@testing-library/user-event'
 
 export const waitForBoot = () =>
   waitFor(() => {
-    expect(screen.getByText('Day 1', { exact: false })).toBeInTheDocument()
+    expect(
+      screen.getByText('Day 1', {
+        exact: false,
+        selector: '.day-and-progress-container span',
+      })
+    ).toBeInTheDocument()
   })
 
 export const endDay = async () => {

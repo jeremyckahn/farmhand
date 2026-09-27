@@ -2,8 +2,10 @@ import { itemsMap } from '../../data/maps.js'
 import { isItemAFarmProduct } from '../../utils/isItemAFarmProduct.js'
 import { castToMoney } from '../../utils/castToMoney.js'
 import { getAdjustedItemValue } from '../../utils/getAdjustedItemValue.js'
+import { getCurrentSeason } from '../../utils/getCurrentSeason.js'
 import { getResaleValue } from '../../utils/getResaleValue.js'
 import { getSalePriceMultiplier } from '../../utils/getSalePriceMultiplier.js'
+import { getSeasonalDemandMultiplier } from '../../utils/getSeasonalDemandMultiplier.js'
 import { isItemSoldInShop } from '../../utils/isItemSoldInShop.js'
 import { moneyTotal } from '../../utils/moneyTotal.js'
 import { LOAN_GARNISHMENT_RATE, EXPERIENCE_VALUES } from '../../constants.js'
@@ -29,36 +31,54 @@ export const sellItem = (
   const item = itemsMap[id]
   const {
     completedAchievements,
+    dayCount,
     itemsSold,
     money: initialMoney,
     valueAdjustments,
   } = state
   let { loanBalance } = state
 
-  const adjustedItemValue = isItemSoldInShop(item)
+  const itemIsSoldInShop = isItemSoldInShop(item)
+
+  const adjustedItemValue = itemIsSoldInShop
     ? getResaleValue(item)
     : getAdjustedItemValue(valueAdjustments, id)
 
+  // Seasonal demand only affects harvested crops sold by the player, not
+  // seeds bought and instantly resold - see the #140 comment in Item.tsx.
+  const seasonalDemandMultiplier = itemIsSoldInShop
+    ? 1
+    : getSeasonalDemandMultiplier(item, getCurrentSeason(dayCount))
+
   const saleIsGarnished = isItemAFarmProduct(item)
+  const salePriceMultiplier = saleIsGarnished
+    ? getSalePriceMultiplier(completedAchievements)
+    : 1
+
+  // Garnishment is a percentage of what the player actually receives per
+  // unit, so it's based on the fully adjusted value (after the achievement
+  // and seasonal multipliers) rather than the pre-multiplier base price -
+  // otherwise the effective garnishment rate would drift with the season
+  // instead of staying at a flat LOAN_GARNISHMENT_RATE.
+  const fullyAdjustedItemValue =
+    adjustedItemValue * salePriceMultiplier * seasonalDemandMultiplier
+
   let saleValue = 0,
-    experienceGained = 0,
-    salePriceMultiplier = 1
+    experienceGained = 0
 
   for (let i = 0; i < howMany; i++) {
     const loanGarnishment = saleIsGarnished
       ? Math.min(
           loanBalance,
-          castToMoney(adjustedItemValue * LOAN_GARNISHMENT_RATE)
+          castToMoney(fullyAdjustedItemValue * LOAN_GARNISHMENT_RATE)
         )
       : 0
 
-    if (isItemAFarmProduct(item)) {
-      salePriceMultiplier = getSalePriceMultiplier(completedAchievements)
+    if (saleIsGarnished) {
       experienceGained += EXPERIENCE_VALUES.ITEM_SOLD
     }
 
-    const garnishedProfit =
-      adjustedItemValue * salePriceMultiplier - loanGarnishment
+    const garnishedProfit = fullyAdjustedItemValue - loanGarnishment
 
     loanBalance = moneyTotal(loanBalance, -loanGarnishment)
     saleValue = moneyTotal(saleValue, garnishedProfit)

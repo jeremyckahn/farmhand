@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
-import { array, arrayOf, bool, string } from 'prop-types'
+import { array, arrayOf, bool, number, string } from 'prop-types'
 import { Theme } from '@mui/material/styles/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
@@ -13,6 +13,8 @@ import Workshop from '../Workshop/index.js'
 import { Cellar } from '../Cellar/index.js'
 import { FarmhandShuffleView } from '../FarmhandShuffleView/index.js'
 import { stageFocusType } from '../../enums.js'
+import { seasonFilterMap } from '../../data/seasons.js'
+import { getCurrentSeason } from '../../utils/getCurrentSeason.js'
 import { isOctober } from '../../utils/isOctober.js'
 import { isDecember } from '../../utils/isDecember.js'
 import { Div } from '../Elements/index.js'
@@ -28,6 +30,7 @@ import grassBg from '../../img/ui/grass.png'
 import forestFloorBg from '../../img/ui/forest-floor.png'
 
 interface StageProps {
+  dayCount: number
   field: farmhand.plotContent[][]
   isMenuOpen?: boolean
   stageFocus: stageFocusType
@@ -36,15 +39,15 @@ interface StageProps {
 }
 
 export const Stage = ({
+  dayCount,
   field,
   isMenuOpen = true,
   stageFocus,
   useAlternateEndDayButtonPosition = false,
   viewTitle,
 }: StageProps) => {
-  const ref = /** @type {React.MutableRefObject<HTMLDivElement | null>} */ useRef(
-    null
-  )
+  const ref =
+    /** @type {React.MutableRefObject<HTMLDivElement | null>} */ useRef(null)
 
   useEffect(() => {
     if (ref.current) {
@@ -64,8 +67,8 @@ export const Stage = ({
     [stageFocusType.HOME]: isOctober()
       ? jackOLanternBg
       : isDecember()
-      ? winterBg
-      : brownDotBg,
+        ? winterBg
+        : brownDotBg,
     [stageFocusType.SHOP]: yellowDotBg,
     [stageFocusType.WORKSHOP]: lavenderDotBg,
     [stageFocusType.CELLAR]: floorboardBg,
@@ -77,6 +80,18 @@ export const Stage = ({
     // Commissioning real art is a follow-up, not a blocker for the unlock.
     [stageFocusType.FARMHAND_SHUFFLE]: floorboardBg,
   }[stageFocus as string]
+
+  // The Field, Cow Pen, and Forest screens get a season-specific visual
+  // filter (see seasonFilterMap) applied via the `.stage-background` layer
+  // below - scoped to just the background, not the crop/cow/tree sprites
+  // rendered on top of it.
+  const hasSeasonalColorShift = (
+    [
+      stageFocusType.FIELD,
+      stageFocusType.COW_PEN,
+      stageFocusType.FOREST,
+    ] as string[]
+  ).includes(stageFocus)
 
   return (
     <Div
@@ -90,39 +105,56 @@ export const Stage = ({
         ref,
       }}
       sx={(theme: Theme) => ({
-        backgroundSize: '96px',
         flex: 2,
         imageRendering: 'pixelated',
         marginLeft: 0,
         overflow: 'auto',
         padding: '1.5em 1.5em 0',
         position: 'relative',
+        // Establishes a stacking context so `.stage-background`'s
+        // `zIndex: -1` is contained here rather than escaping behind
+        // everything else on the page.
+        zIndex: 0,
         transition: theme.transitions.create('margin-left', {
           duration: theme.transitions.duration.enteringScreen,
           easing: theme.transitions.easing.easeOut,
         }),
-        ...(backgroundImage
-          ? { backgroundImage: `url(${backgroundImage})` }
-          : {}),
-        ...(([
-          stageFocusType.FIELD,
-          stageFocusType.COW_PEN,
-          stageFocusType.FOREST,
-        ] as string[]).includes(stageFocus)
-          ? {
-              backgroundSize: '30%',
-              [`@media (min-width: ${breakpoints.md}px)`]: {
-                backgroundSize: '10%',
-              },
-            }
-          : {}),
-        // floorboard.png is a 144x48 (3:1) tile, unlike every other
-        // background image here which is square - keep it at the same 2x
-        // pixel-art scale as the rest (48px source -> 96px displayed) by
-        // matching that same ratio instead of the shared square size.
-        ...(stageFocus === stageFocusType.CELLAR
-          ? { backgroundSize: '288px 96px' }
-          : {}),
+        '& .stage-background': {
+          backgroundSize: '96px',
+          bottom: 0,
+          left: 0,
+          pointerEvents: 'none',
+          // `fixed` (not `absolute`) so this stays pinned to the viewport
+          // as `.Stage` scrolls, rather than scrolling away with the rest
+          // of its content - see the "backgrounds scroll out of view"
+          // regression this fixes. It ends up bounded to just `.Stage`'s
+          // own area because the AppBar and sidebar have higher z-index
+          // and fully opaque backgrounds, occluding the rest of this
+          // otherwise full-window layer.
+          position: 'fixed',
+          right: 0,
+          top: 0,
+          zIndex: -1,
+          ...(backgroundImage
+            ? { backgroundImage: `url(${backgroundImage})` }
+            : {}),
+          ...(hasSeasonalColorShift
+            ? {
+                backgroundSize: '30%',
+                filter: seasonFilterMap[getCurrentSeason(dayCount)],
+                [`@media (min-width: ${breakpoints.md}px)`]: {
+                  backgroundSize: '10%',
+                },
+              }
+            : {}),
+          // floorboard.png is a 144x48 (3:1) tile, unlike every other
+          // background image here which is square - keep it at the same 2x
+          // pixel-art scale as the rest (48px source -> 96px displayed) by
+          // matching that same ratio instead of the shared square size.
+          ...(stageFocus === stageFocusType.CELLAR
+            ? { backgroundSize: '288px 96px' }
+            : {}),
+        },
         '& h3': { textAlign: 'center' },
         '& h2': { fontSize: '1.2em' },
         '& .view-title': {
@@ -161,7 +193,10 @@ export const Stage = ({
               [`@media (max-width: ${breakpoints.sm}px)`]: {
                 padding: 0,
               },
-              '& > *': {
+              // `.stage-background` is excluded so the background stays
+              // visible in the sliver of Stage next to the open menu on
+              // narrow viewports - only the foreground content fades out.
+              '& > *:not(.stage-background)': {
                 opacity: 1,
                 transition: theme.transitions.create('opacity', {
                   duration: theme.transitions.duration.enteringScreen,
@@ -198,6 +233,7 @@ export const Stage = ({
           : {}),
       })}
     >
+      <div className="stage-background" />
       <h2 className="view-title">{viewTitle}</h2>
       {stageFocus === stageFocusType.HOME && <Home />}
       {stageFocus === stageFocusType.FIELD && (
@@ -222,6 +258,7 @@ export const Stage = ({
 }
 
 Stage.propTypes = {
+  dayCount: number.isRequired,
   field: arrayOf(array).isRequired,
   isMenuOpen: bool,
   stageFocus: string.isRequired,

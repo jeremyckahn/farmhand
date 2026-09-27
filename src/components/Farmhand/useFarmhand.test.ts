@@ -21,14 +21,21 @@ const setWindowHeight = (height: number) => {
 }
 
 const getIsMenuOpen = () =>
-  ((window as unknown) as { farmhand: { state: farmhand.state } }).farmhand
-    .state.isMenuOpen
+  (window as unknown as { farmhand: { state: farmhand.state } }).farmhand.state
+    .isMenuOpen
 
+// Wrapped in act(): this is a direct, synchronous mutation of the Farmhand
+// class instance's own state outside of any RTL event simulation, so unlike
+// fireEvent/userEvent it isn't automatically act()-wrapped - without this,
+// the resulting re-render can still be in flight when a caller reads
+// getIsMenuOpen() right after, observing the pre-update value.
 const setIsMenuOpen = (isMenuOpen: boolean) =>
   act(() => {
-    ;((window as unknown) as {
-      farmhand: { setState: (state: Partial<farmhand.state>) => void }
-    }).farmhand.setState({ isMenuOpen })
+    ;(
+      window as unknown as {
+        farmhand: { setState: (state: Partial<farmhand.state>) => void }
+      }
+    ).farmhand.setState({ isMenuOpen })
   })
 
 // Simulates a sidebar input having focus, e.g. mid-typing, without depending

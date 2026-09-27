@@ -41,8 +41,9 @@ export const Forest = () => {
   // Also caps by available width (2 * columns "slots": each column, each
   // gap, and one slot split across the two side paddings) so columnGap and
   // padding below - set to this same value - shrink along with the columns.
-  const maxPlotSize = `max(${MIN_PLOT_SIZE}, min(160px, calc((100vh - ${CHROME_HEIGHT_PX}px) / ${rows +
-    OVERHANG_ROW_MULTIPLE}), calc(100% / ${2 * Math.max(columns, 1)})))`
+  const maxPlotSize = `max(${MIN_PLOT_SIZE}, min(160px, calc((100vh - ${CHROME_HEIGHT_PX}px) / ${
+    rows + OVERHANG_ROW_MULTIPLE
+  }), calc(100% / ${2 * Math.max(columns, 1)})))`
 
   // The reserve itself, in the same unit as a plot. Applying this as
   // one-sided paddingTop on .Forest (below) shifts the flexbox
@@ -80,17 +81,19 @@ export const Forest = () => {
           // Paired with ForestPlot.tsx's translateX to give staggered rows a
           // symmetric FOREST_ROW_STAGGER_OVERLAP_PX overlap on both sides -
           // see that file's comment for the shared derivation.
-          columnGap: `calc(${maxPlotSize} - ${2 *
-            FOREST_ROW_STAGGER_OVERLAP_PX}px)`,
+          columnGap: `calc(${maxPlotSize} - ${
+            2 * FOREST_ROW_STAGGER_OVERLAP_PX
+          }px)`,
           justifyContent: 'center',
           width: '100%',
           // ForestQuickSelect switches to a fixed right-side sidebar at this
           // breakpoint (see quickSelectSx) - reserve its width so centering
           // doesn't run the grid into it. Below this breakpoint the toolbelt
           // is a bottom bar instead, so no reservation is needed there.
-          [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
-            width: `calc(100% - ${layout.fieldSpaceForRightSideControls})`,
-          },
+          [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]:
+            {
+              width: `calc(100% - ${layout.fieldSpaceForRightSideControls})`,
+            },
           // Lower bound must be MIN_PLOT_SIZE, not 0, or columns shrink past
           // it to still fit the container.
           gridTemplateColumns: `repeat(${columns}, minmax(${MIN_PLOT_SIZE}, ${maxPlotSize}))`,

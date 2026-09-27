@@ -66,6 +66,7 @@ Farmhand exposes its live game state on `window.farmhand` in the browser console
 ```js
 window.farmhand.state // read the current game state
 window.farmhand.setState({ money: 999999 }) // merge a partial update into state
+window.farmhand.queueRandomNumbers('precipitation', [0]) // force the next values drawn from a random number stream (here: precipitation tonight)
 ```
 
 Prefer this over editing `useState` values directly in the React DevTools components panel — DevTools' hook editor overwrites the rendered value without updating the hook's underlying update queue, so the edit gets silently discarded the next time any real `setState` call fires (which happens frequently, e.g. via the heartbeat timer or day-advancement effects). `window.farmhand.setState()` goes through the real state dispatch, so it persists.
@@ -109,7 +110,7 @@ To run the native app locally, run:
 npm run dev:native
 ```
 
-Note that you will need a Vercel account and be logged into locally for this to work (at least until [Vercel fixes this](https://github.com/vercel/vercel/discussions/4925)). Alternatively, if you just want to run the front end with no API or backend, you can run:
+The local API is served by `scripts/dev-api-server.mjs`, a small Node server that runs the serverless functions from `api-src`. `npm run start:backend` (Docker) needs to be running for the Redis database. Alternatively, if you just want to run the front end with no API or backend, you can run:
 
 ```sh
 npm start

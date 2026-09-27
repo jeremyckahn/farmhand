@@ -35,9 +35,8 @@ export const makeFermentationRecipe = (
     state = addKegToCellarInventory(state, keg)
   }
 
-  const saltRequirements = getSaltRequirementsForFermentationRecipe(
-    fermentationRecipe
-  )
+  const saltRequirements =
+    getSaltRequirementsForFermentationRecipe(fermentationRecipe)
 
   state = decrementItemFromInventory(state, fermentationRecipe.id, howMany)
 

@@ -45,7 +45,7 @@ const StubInventory = ({ gameState = {}, ...overrides }) => {
 describe('Inventory Component', () => {
   describe('Displaying items', () => {
     test('displays all items when no categories are selected', () => {
-      const items = ([
+      const items = [
         testItem({ id: 'carrot', name: 'Carrot', type: 'CROP' as any }),
         testItem({ id: 'pumpkin', name: 'Pumpkin', type: 'CROP' as any }),
         testItem({
@@ -53,7 +53,7 @@ describe('Inventory Component', () => {
           name: 'Carrot Seed',
           type: 'SEEDS' as any,
         }),
-      ] as unknown) as farmhand.item[]
+      ] as unknown as farmhand.item[]
 
       render(<StubInventory items={items} selectedCategories={[]} />)
       items.forEach(item => {
@@ -62,14 +62,14 @@ describe('Inventory Component', () => {
     })
 
     test('filters items by search query', () => {
-      const items = ([
+      const items = [
         testItem({ id: 'carrot', name: 'Carrot', type: 'CROP' as any }),
         testItem({
           id: 'pumpkin-seed',
           name: 'Pumpkin Seed',
           type: 'SEEDS' as any,
         }),
-      ] as unknown) as farmhand.item[]
+      ] as unknown as farmhand.item[]
 
       render(<StubInventory items={items} selectedCategories={[]} />)
 

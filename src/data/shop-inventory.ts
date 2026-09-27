@@ -5,6 +5,7 @@ import {
 
   // Plantable crops
   asparagusSeed,
+  blueberrySeed,
   carrotSeed,
   cornSeed,
   grapeSeed,
@@ -46,6 +47,7 @@ const inventory: farmhand.item[] = [
 
   // Plantable crops
   asparagusSeed,
+  blueberrySeed,
   carrotSeed,
   cornSeed,
   grapeSeed,

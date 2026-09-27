@@ -30,6 +30,11 @@ declare namespace farmhand {
     value: number
     cropTimeline?: number[]
     cropType?: import('./enums.js').cropType
+    // Seasons during which this crop sells for more/less than its base
+    // value - see getSeasonalDemandMultiplier.ts. Both optional and
+    // independent; a crop with neither stays at 1x value year-round.
+    highDemandSeasons?: import('./enums.js').season[]
+    lowDemandSeasons?: import('./enums.js').season[]
     description?: string
     enablesFieldMode?: string
     growsInto?: string | string[]
@@ -176,9 +181,7 @@ declare namespace farmhand {
 
   type achievementCondition = (state: state, prevState?: state) => boolean
   type achievementReward = (state: state) => state
-  type achievementProgress = (
-    state: state
-  ) => {
+  type achievementProgress = (state: state) => {
     currentValue: number
     goal: number
   }
@@ -275,9 +278,12 @@ declare namespace farmhand {
     generate(): item | item[] | null
   }
 
-  type FarmhandShuffleSerializedMatch = import('@jeremyckahn/farmhand-shuffle').SerializedMatch
-  type FarmhandShuffleMatchState = import('@jeremyckahn/farmhand-shuffle').MatchState
-  type FarmhandShuffleBotState = import('@jeremyckahn/farmhand-shuffle').BotState
+  type FarmhandShuffleSerializedMatch =
+    import('@jeremyckahn/farmhand-shuffle').SerializedMatch
+  type FarmhandShuffleMatchState =
+    import('@jeremyckahn/farmhand-shuffle').MatchState
+  type FarmhandShuffleBotState =
+    import('@jeremyckahn/farmhand-shuffle').BotState
 
   /**
    * A checkpointed Farmhand Shuffle match, captured at one of the two

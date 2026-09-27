@@ -23,8 +23,8 @@ const partitionAchievements = memoize(
         return acc
       },
       {
-        complete: [] as typeof achievements[number][],
-        incomplete: [] as typeof achievements[number][],
+        complete: [] as (typeof achievements)[number][],
+        incomplete: [] as (typeof achievements)[number][],
       }
     )
 )

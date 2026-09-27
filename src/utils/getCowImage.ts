@@ -65,23 +65,29 @@ const colorizeCowTemplate = (() => {
       )
       const image = await Jimp.read(cowTemplateBuffer)
 
-      image.scan(0, 0, image.bitmap.width, image.bitmap.height, function(x, y) {
-        const { r, g, b } = Jimp.intToRGBA(image.getPixelColor(x, y))
+      image.scan(
+        0,
+        0,
+        image.bitmap.width,
+        image.bitmap.height,
+        function (x, y) {
+          const { r, g, b } = Jimp.intToRGBA(image.getPixelColor(x, y))
 
-        // rgb(102, 102, 102) represents the color to replace in the template
-        // source images (#666).
-        if (r === 102 && g === 102 && b === 102) {
-          const cowColorRgb = hexToRgb(COW_COLORS_HEX_MAP[color])
-          const colorNumber = Jimp.rgbaToInt(
-            cowColorRgb.r,
-            cowColorRgb.g,
-            cowColorRgb.b,
-            255
-          )
+          // rgb(102, 102, 102) represents the color to replace in the template
+          // source images (#666).
+          if (r === 102 && g === 102 && b === 102) {
+            const cowColorRgb = hexToRgb(COW_COLORS_HEX_MAP[color])
+            const colorNumber = Jimp.rgbaToInt(
+              cowColorRgb.r,
+              cowColorRgb.g,
+              cowColorRgb.b,
+              255
+            )
 
-          image.setPixelColor(colorNumber, x, y)
+            image.setPixelColor(colorNumber, x, y)
+          }
         }
-      })
+      )
 
       cachedCowImages[imageKey] = await image.getBase64Async(Jimp.MIME_PNG)
 

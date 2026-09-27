@@ -1,4 +1,4 @@
-import { cropFamily, cropType, grapeVariety } from '../../enums.js'
+import { cropFamily, cropType, grapeVariety, season } from '../../enums.js'
 import { crop, cropVariety, fromSeed } from '../crop.js'
 
 export const isGrape = (
@@ -41,7 +41,9 @@ export const grapeSeed: farmhand.item = crop({
     'grape-tempranillo',
     'grape-nebbiolo',
   ],
+  highDemandSeasons: [season.SPRING, season.FALL],
   id: 'grape-seed',
+  lowDemandSeasons: [season.WINTER],
   name: 'Grape Seed',
   tier: 7,
 })
@@ -196,18 +198,16 @@ export const grapeNebbiolo: farmhand.grape = grape({
   wineId: 'wine-nebbiolo',
 })
 
-export const grapeVarietyToGrapeItemMap: Record<
-  grapeVariety,
-  farmhand.grape
-> = {
-  [grapeVariety.CHARDONNAY]: grapeChardonnay,
-  [grapeVariety.SAUVIGNON_BLANC]: grapeSauvignonBlanc,
-  //[grapeVariety.PINOT_BLANC]: grapePinotBlanc,
-  //[grapeVariety.MUSCAT]: grapeMuscat,
-  //[grapeVariety.RIESLING]: grapeRiesling,
-  //[grapeVariety.MERLOT]: grapeMerlot,
-  [grapeVariety.CABERNET_SAUVIGNON]: grapeCabernetSauvignon,
-  //[grapeVariety.SYRAH]: grapeSyrah,
-  [grapeVariety.TEMPRANILLO]: grapeTempranillo,
-  [grapeVariety.NEBBIOLO]: grapeNebbiolo,
-}
+export const grapeVarietyToGrapeItemMap: Record<grapeVariety, farmhand.grape> =
+  {
+    [grapeVariety.CHARDONNAY]: grapeChardonnay,
+    [grapeVariety.SAUVIGNON_BLANC]: grapeSauvignonBlanc,
+    //[grapeVariety.PINOT_BLANC]: grapePinotBlanc,
+    //[grapeVariety.MUSCAT]: grapeMuscat,
+    //[grapeVariety.RIESLING]: grapeRiesling,
+    //[grapeVariety.MERLOT]: grapeMerlot,
+    [grapeVariety.CABERNET_SAUVIGNON]: grapeCabernetSauvignon,
+    //[grapeVariety.SYRAH]: grapeSyrah,
+    [grapeVariety.TEMPRANILLO]: grapeTempranillo,
+    [grapeVariety.NEBBIOLO]: grapeNebbiolo,
+  }

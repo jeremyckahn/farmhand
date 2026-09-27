@@ -4,6 +4,7 @@
  */
 export const cropType = {
   ASPARAGUS: 'ASPARAGUS',
+  BLUEBERRY: 'BLUEBERRY',
   CARROT: 'CARROT',
   CORN: 'CORN',
   GARLIC: 'GARLIC',
@@ -26,7 +27,7 @@ export const cropType = {
   WEED: 'WEED',
 } as const
 
-export type cropType = typeof cropType[keyof typeof cropType]
+export type cropType = (typeof cropType)[keyof typeof cropType]
 
 /**
  * @property farmhand.module:enums.recipeType
@@ -41,7 +42,7 @@ export const recipeType = {
   WOOD_CHIPPER: 'WOOD_CHIPPER',
 } as const
 
-export type recipeType = typeof recipeType[keyof typeof recipeType]
+export type recipeType = (typeof recipeType)[keyof typeof recipeType]
 
 /**
  * @property farmhand.module:enums.fieldMode
@@ -62,7 +63,7 @@ export const fieldMode = {
   WATER: 'WATER',
 } as const
 
-export type fieldMode = typeof fieldMode[keyof typeof fieldMode]
+export type fieldMode = (typeof fieldMode)[keyof typeof fieldMode]
 
 /**
  * @property farmhand.module:enums.stageFocusType
@@ -81,7 +82,8 @@ export const stageFocusType = {
   FARMHAND_SHUFFLE: 'FARMHAND_SHUFFLE',
 } as const
 
-export type stageFocusType = typeof stageFocusType[keyof typeof stageFocusType]
+export type stageFocusType =
+  (typeof stageFocusType)[keyof typeof stageFocusType]
 
 /**
  * @property farmhand.module:enums.cropLifeStage
@@ -93,7 +95,7 @@ export const cropLifeStage = {
   GROWN: 'GROWN',
 } as const
 
-export type cropLifeStage = typeof cropLifeStage[keyof typeof cropLifeStage]
+export type cropLifeStage = (typeof cropLifeStage)[keyof typeof cropLifeStage]
 
 /**
  * Tree-only extension of cropLifeStage. DEAD is deliberately not part of
@@ -107,7 +109,7 @@ export const treeLifeStage = {
   DEAD: 'DEAD',
 } as const
 
-export type treeLifeStage = typeof treeLifeStage[keyof typeof treeLifeStage]
+export type treeLifeStage = (typeof treeLifeStage)[keyof typeof treeLifeStage]
 
 /**
  * @property farmhand.module:enums.itemType
@@ -133,7 +135,7 @@ export const itemType = {
   WOOD: 'WOOD',
 } as const
 
-export type itemType = typeof itemType[keyof typeof itemType]
+export type itemType = (typeof itemType)[keyof typeof itemType]
 
 /**
  * @property farmhand.module:enums.treeType
@@ -144,7 +146,7 @@ export const treeType = {
   BANANA: 'BANANA',
 } as const
 
-export type treeType = typeof treeType[keyof typeof treeType]
+export type treeType = (typeof treeType)[keyof typeof treeType]
 
 /**
  * @property farmhand.module:enums.fertilizerType
@@ -156,7 +158,8 @@ export const fertilizerType = {
   RAINBOW: 'RAINBOW',
 } as const
 
-export type fertilizerType = typeof fertilizerType[keyof typeof fertilizerType]
+export type fertilizerType =
+  (typeof fertilizerType)[keyof typeof fertilizerType]
 
 /**
  * @property farmhand.module:enums.genders
@@ -167,7 +170,7 @@ export const genders = {
   MALE: 'MALE',
 } as const
 
-export type genders = typeof genders[keyof typeof genders]
+export type genders = (typeof genders)[keyof typeof genders]
 
 /**
  * @property farmhand.module:enums.cowColors
@@ -184,7 +187,7 @@ export const cowColors = {
   YELLOW: 'YELLOW',
 } as const
 
-export type cowColors = typeof cowColors[keyof typeof cowColors]
+export type cowColors = (typeof cowColors)[keyof typeof cowColors]
 
 const { RAINBOW, ...standardCowColors } = cowColors
 
@@ -206,7 +209,7 @@ export const dialogView = {
   STATS: 'STATS',
 } as const
 
-export type dialogView = typeof dialogView[keyof typeof dialogView]
+export type dialogView = (typeof dialogView)[keyof typeof dialogView]
 
 /**
  * @property farmhand.module:enums.toolType
@@ -221,7 +224,7 @@ export const toolType = {
   WATERING_CAN: 'WATERING_CAN',
 } as const
 
-export type toolType = typeof toolType[keyof typeof toolType]
+export type toolType = (typeof toolType)[keyof typeof toolType]
 
 /**
  * @property farmhand.module:enums.toolLevel
@@ -236,7 +239,7 @@ export const toolLevel = {
   GOLD: 'GOLD',
 } as const
 
-export type toolLevel = typeof toolLevel[keyof typeof toolLevel]
+export type toolLevel = (typeof toolLevel)[keyof typeof toolLevel]
 
 /**
  * @property farmhand.module:enums.notificationSeverity
@@ -249,7 +252,8 @@ export const notificationSeverity = {
   ERROR: 'error',
 } as const
 
-export type notificationSeverity = typeof notificationSeverity[keyof typeof notificationSeverity]
+export type notificationSeverity =
+  (typeof notificationSeverity)[keyof typeof notificationSeverity]
 
 /**
  * @property farmhand.module:enums.cowTradeRejectionReason
@@ -259,7 +263,8 @@ export const cowTradeRejectionReason = {
   REQUESTED_COW_UNAVAILABLE: 'REQUESTED_COW_UNAVAILABLE',
 } as const
 
-export type cowTradeRejectionReason = typeof cowTradeRejectionReason[keyof typeof cowTradeRejectionReason]
+export type cowTradeRejectionReason =
+  (typeof cowTradeRejectionReason)[keyof typeof cowTradeRejectionReason]
 
 /**
  * @property farmhand.module:enums.cropFamily
@@ -270,7 +275,7 @@ export const cropFamily = {
   GRAPE: 'GRAPE',
 } as const
 
-export type cropFamily = typeof cropFamily[keyof typeof cropFamily]
+export type cropFamily = (typeof cropFamily)[keyof typeof cropFamily]
 
 /**
  * @property farmhand.module:enums.grapeVariety
@@ -290,4 +295,41 @@ export const grapeVariety = {
   NEBBIOLO: 'NEBBIOLO',
 } as const
 
-export type grapeVariety = typeof grapeVariety[keyof typeof grapeVariety]
+export type grapeVariety = (typeof grapeVariety)[keyof typeof grapeVariety]
+
+/**
+ * @property farmhand.module:enums.season
+ * @enum
+ */
+export const season = {
+  SPRING: 'SPRING',
+  SUMMER: 'SUMMER',
+  FALL: 'FALL',
+  WINTER: 'WINTER',
+} as const
+
+export type season = (typeof season)[keyof typeof season]
+
+/**
+ * Names of the random number streams that game logic draws from. A stream
+ * name identifies where a value is drawn so that it can be forced with
+ * RandomNumberService#queueRandomNumbers (e.g. in E2E tests).
+ * @property farmhand.module:enums.randomStream
+ * @enum
+ */
+export const randomStream = {
+  PRECIPITATION: 'precipitation',
+  STORM: 'storm',
+  PRICE_EVENT_CHANCE: 'priceEventChance',
+  PRICE_EVENT_CROP: 'priceEventCrop',
+  PRICE_EVENT_TYPE: 'priceEventType',
+} as const
+
+/**
+ * The stream for an item's price adjustment (see generateValueAdjustments in
+ * src/common/utils.ts). Create one with getValueAdjustmentStream.
+ */
+export type valueAdjustmentStream = `valueAdjustment:${string}`
+
+export type randomStream =
+  (typeof randomStream)[keyof typeof randomStream] | valueAdjustmentStream

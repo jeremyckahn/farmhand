@@ -129,6 +129,10 @@ levels[44] = {
   unlocksShopItem: items.sugarcaneSeed.id,
 }
 
+levels[46] = {
+  unlocksShopItem: items.blueberrySeed.id,
+}
+
 for (let i = 0; i < levels.length; i++) {
   levels[i] = { id: i, ...levels[i] }
 }

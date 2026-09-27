@@ -1,10 +1,11 @@
 import { crop, fromSeed } from '../crop.js'
-import { cropType } from '../../enums.js'
+import { cropType, season } from '../../enums.js'
 
 export const carrotSeed: farmhand.item = crop({
   cropType: cropType.CARROT,
   cropTimeline: [2, 1, 1, 1],
   growsInto: 'carrot',
+  highDemandSeasons: [season.SPRING],
   id: 'carrot-seed',
   name: 'Carrot Seed',
   tier: 1,

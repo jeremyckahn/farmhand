@@ -9,6 +9,9 @@ import Typography from '@mui/material/Typography/index.js'
 import StepIcon from '@mui/material/StepIcon/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { seasonNameMap } from '../../data/seasons.js'
+import { getCurrentSeason } from '../../utils/getCurrentSeason.js'
+import { getDayOfSeason } from '../../utils/getDayOfSeason.js'
 import { moneyString } from '../../utils/moneyString.js'
 import { breakpoints } from '../../styles/tokens.js'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.js'
@@ -71,6 +74,7 @@ const MoneyDisplay = ({ money }: { money: number }) => {
 }
 
 export const AppBar = ({
+  dayCount,
   handleClickNotificationIndicator,
   money,
   showNotifications,
@@ -81,6 +85,7 @@ export const AppBar = ({
     ({ severity }) => severity === 'error'
   ),
 }: {
+  dayCount: number
   handleClickNotificationIndicator: () => void
   money: number
   showNotifications: boolean
@@ -104,8 +109,20 @@ export const AppBar = ({
         '& .stage-header': {
           display: 'none',
           marginLeft: '1em',
-          [`@media (min-width: ${breakpoints.mediumPhone}px)`]: {
+          // Matches Stage.tsx's own `.view-title` breakpoint, which hides
+          // at the same width this shows at - otherwise there's a range
+          // where both are visible at once, showing the view title twice.
+          [`@media (min-width: ${breakpoints.largePhone}px)`]: {
             display: 'block',
+          },
+        },
+        '& .season-display': {
+          marginLeft: '1em',
+          [`@media (min-width: ${breakpoints.largePhone}px)`]: {
+            position: 'absolute',
+            left: '50%',
+            marginLeft: 0,
+            transform: 'translateX(-50%)',
           },
         },
         '& .money-display': {
@@ -155,6 +172,16 @@ export const AppBar = ({
       </Typography>
       <Typography
         {...{
+          className: 'season-display',
+          variant: 'h2',
+        }}
+      >
+        {`Day ${getDayOfSeason(dayCount)} of ${
+          seasonNameMap[getCurrentSeason(dayCount)]
+        }`}
+      </Typography>
+      <Typography
+        {...{
           className: 'money-display',
           variant: 'h2',
         }}
@@ -166,6 +193,7 @@ export const AppBar = ({
 )
 
 AppBar.propTypes = {
+  dayCount: number.isRequired,
   handleClickNotificationIndicator: func.isRequired,
   money: number.isRequired,
   showNotifications: bool.isRequired,

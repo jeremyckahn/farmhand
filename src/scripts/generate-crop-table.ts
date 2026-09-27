@@ -18,8 +18,9 @@ function getCropImage(
   if (Array.isArray(seedItem.growsInto)) {
     return `![${
       cropItem.name
-    }](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${(cropItem as any)
-      .imageId || cropItem.id}.png)`
+    }](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${
+      (cropItem as any).imageId || cropItem.id
+    }.png)`
   } else {
     return `![${cropItem.name}](https://raw.githubusercontent.com/jeremyckahn/farmhand/main/src/img/items/${cropItem.id}.png)`
   }
