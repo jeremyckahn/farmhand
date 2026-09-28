@@ -61,8 +61,8 @@ describe('forRangeWithUndo', () => {
 
   test('keeps the existing snapshot if nothing changed', () => {
     const existingSnapshot = {
-      before: { cropsHarvested: {}, field: [[null]], inventory: [] },
-      after: { cropsHarvested: {}, field: [[null]], inventory: [] },
+      before: { field: [[null]], inventory: [] },
+      after: { field: [[null]], inventory: [] },
     }
 
     // Set after the stub factory, since it runs computeStateForNextDay (which

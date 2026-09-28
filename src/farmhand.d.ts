@@ -280,7 +280,7 @@ declare namespace farmhand {
     generate(): item | item[] | null
   }
 
-  type fieldUndoSlices = Pick<state, 'cropsHarvested' | 'field' | 'inventory'>
+  type fieldUndoSlices = Pick<state, 'field' | 'inventory'>
 
   interface fieldUndoSnapshot {
     /**

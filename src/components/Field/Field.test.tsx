@@ -173,8 +173,8 @@ describe('Field', () => {
 
   describe('undo button', () => {
     const undoSnapshot = {
-      before: { cropsHarvested: {}, field: [[null]], inventory: [] },
-      after: { cropsHarvested: {}, field: [[null]], inventory: [] },
+      before: { field: [[null]], inventory: [] },
+      after: { field: [[null]], inventory: [] },
     }
 
     test('is not shown when there is nothing to undo', () => {
