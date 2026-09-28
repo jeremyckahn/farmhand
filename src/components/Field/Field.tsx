@@ -575,14 +575,14 @@ export const Field = (props: FieldProps) => {
           },
           // Stacked above the Zoom In button in both orientations.
           '& .undo-controls': {
-            position: 'fixed',
-            right: '0.5em',
-            bottom: '5.5em',
+            position: 'absolute',
+            left: '1em',
+            top: '0.5em',
             '@media (orientation: portrait)': {
               display: isMenuOpen ? 'none' : undefined,
-              right: '0.25em',
+              left: '0.25em',
             },
-            '@media (orientation: landscape)': { bottom: '10em' },
+            '@media (orientation: landscape)': { bottom: '1em' },
             '& button': { margin: '0.5em' },
           },
           '& .MuiFormControl-root': {
