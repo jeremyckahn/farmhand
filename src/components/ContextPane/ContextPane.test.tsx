@@ -24,6 +24,8 @@ vi.mock('../Inventory/index.js', () => ({
 const defaultProps = {
   playerInventory: [],
   stageFocus: stageFocusType.NONE,
+  inventory: [],
+  inventoryLimit: INFINITE_STORAGE_LIMIT,
 }
 
 const baseItemProps = {
@@ -67,6 +69,45 @@ describe('ContextPane', () => {
     expect(screen.getByTestId('inventory-item-corn')).toBeInTheDocument()
     expect(screen.getByText('Carrot')).toBeInTheDocument()
     expect(screen.getByText('Corn')).toBeInTheDocument()
+  })
+
+  test('displays inventory capacity for a limited inventory', () => {
+    const inventory = ([
+      testItem({ id: 'carrot', name: 'Carrot', quantity: 5 }),
+      testItem({ id: 'corn', name: 'Corn', quantity: 3 }),
+    ] as unknown) as farmhand.state['inventory']
+
+    render(
+      <ContextPane
+        {...defaultProps}
+        inventory={inventory}
+        inventoryLimit={10}
+      />
+    )
+
+    expect(screen.getByText('Capacity: 8 / 10')).toBeInTheDocument()
+    expect(document.querySelector('.inventory-info')).toBeInTheDocument()
+    expect(document.querySelector('.is-inventory-full')).not.toBeInTheDocument()
+  })
+
+  test('marks inventory capacity as full when the limit is reached', () => {
+    const inventory = ([
+      testItem({ id: 'carrot', name: 'Carrot', quantity: 5 }),
+      testItem({ id: 'corn', name: 'Corn', quantity: 5 }),
+    ] as unknown) as farmhand.state['inventory']
+
+    render(
+      <ContextPane
+        {...defaultProps}
+        inventory={inventory}
+        inventoryLimit={10}
+      />
+    )
+
+    expect(screen.getByText('Capacity: 10 / 10')).toBeInTheDocument()
+    expect(
+      document.querySelector('.inventory-info.is-inventory-full')
+    ).toBeInTheDocument()
   })
 
   describe('conditional UI based on stageFocus', () => {
