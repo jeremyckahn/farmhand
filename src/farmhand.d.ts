@@ -11,7 +11,6 @@ declare module 'react-helmet'
 declare module 'lodash.debounce'
 declare module 'lodash.throttle'
 declare module 'react-router-dom'
-declare module 'react-file-reader-input'
 declare module 'process/browser'
 declare module 'redis'
 

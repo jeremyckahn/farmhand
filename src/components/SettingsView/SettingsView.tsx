@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { bool, func } from 'prop-types'
 import Button from '@mui/material/Button/index.js'
 import Dialog from '@mui/material/Dialog/index.js'
@@ -12,7 +12,6 @@ import FormGroup from '@mui/material/FormGroup/index.js'
 import FormLabel from '@mui/material/FormLabel/index.js'
 import Switch from '@mui/material/Switch/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
-import FileReaderInput from 'react-file-reader-input'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { Div } from '../Elements/index.js'
@@ -55,6 +54,22 @@ const SettingsView = ({
   showHomeScreen: boolean
 }) => {
   const [isClearDataDialogOpen, setIsClearDataDialogOpen] = useState(false)
+  const importFileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleImportFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const [file] = Array.from(event.target.files ?? [])
+
+    // Cleared so that re-selecting the same file still fires onChange.
+    event.target.value = ''
+
+    if (file) {
+      // handleImportDataClick expects [[readResult, file]] tuples (the shape
+      // react-file-reader-input used to provide), but only uses the file.
+      handleImportDataClick([[null, file]])
+    }
+  }
 
   return (
     <Div
@@ -154,26 +169,29 @@ const SettingsView = ({
             Export Game Data
           </Button>
         </Tooltip>
-        <FileReaderInput
+        <input
+          ref={importFileInputRef}
+          type="file"
+          hidden
+          onChange={handleImportFileChange}
+        />
+        <Tooltip
           {...{
-            as: 'text',
-            onChange: (e: any, results: any) => {
-              handleImportDataClick(results)
-            },
+            arrow: true,
+            placement: 'top',
+            title: 'Load game data that was previously saved',
           }}
         >
-          <Tooltip
+          <Button
             {...{
-              arrow: true,
-              placement: 'top',
-              title: 'Load game data that was previously saved',
+              color: 'primary',
+              onClick: () => importFileInputRef.current?.click(),
+              variant: 'contained',
             }}
           >
-            <Button {...{ color: 'primary', variant: 'contained' }}>
-              Import Game Data
-            </Button>
-          </Tooltip>
-        </FileReaderInput>
+            Import Game Data
+          </Button>
+        </Tooltip>
       </div>
       <Divider />
       <div className="button-row">
