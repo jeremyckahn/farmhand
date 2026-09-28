@@ -194,7 +194,9 @@ export default {
     } else if (fieldModeValue === HARVEST) {
       this.forRangeWithUndo(harvestPlot, rangeRadius, x, y)
     } else if (fieldModeValue === MINE) {
-      this.forRangeWithUndo(minePlot, rangeRadius, x, y)
+      // Deliberately not undoable: minePlot's ore and cooldown are random, so
+      // undoing and mining again would let players reroll for better ore.
+      this.forRange(minePlot, rangeRadius, x, y)
     } else if (fieldModeValue === CLEANUP) {
       this.forRangeWithUndo(clearPlot, rangeRadius, x, y)
     } else if (fieldModeValue === WATER) {

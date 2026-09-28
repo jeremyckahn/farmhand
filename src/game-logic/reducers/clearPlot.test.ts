@@ -177,7 +177,7 @@ describe('clearPlot', () => {
   describe('hoe upgrades', () => {
     beforeEach(() => {
       vitest
-        .spyOn(randomNumberService, 'isRandomNumberLessThan')
+        .spyOn(randomNumberService, 'isKeyedRandomNumberLessThan')
         .mockReturnValue(true)
     })
 
@@ -197,6 +197,44 @@ describe('clearPlot', () => {
         expect(field[0][0]).toBe(null)
         expect(inventory).toEqual([{ id: 'sample-crop-1-seed', quantity: 1 }])
       })
+
+      test('rolls with a key unique to the player, day, and plot', () => {
+        clearPlot(
+          saveDataStubFactory({
+            dayCount: 5,
+            field: [[null, null, testCrop({ itemId: 'sample-crop-1' })]],
+            playerId: 'player-1',
+            toolLevels: { ...toolLevels, [toolType.HOE]: toolLevel.BRONZE },
+            inventory: [],
+            inventoryLimit: 10,
+          }),
+          2,
+          0
+        )
+
+        expect(
+          randomNumberService.isKeyedRandomNumberLessThan
+        ).toHaveBeenCalledWith(0.25, 'seed-reclaim:player-1:5:2:0')
+      })
+    })
+  })
+
+  describe('seed reclaim cannot be rerolled', () => {
+    test('clearing the same plot again on the same day gives the same result', () => {
+      const state = saveDataStubFactory({
+        field: [[testCrop({ itemId: 'sample-crop-1' })]],
+        toolLevels: { ...toolLevels, [toolType.HOE]: toolLevel.IRON },
+        inventory: [],
+        inventoryLimit: 10,
+      })
+
+      const firstResult = clearPlot(state, 0, 0).inventory
+
+      // Undoing restores the original state, so clearing it again is
+      // equivalent to calling clearPlot on the same state a second time.
+      for (let i = 0; i < 20; i++) {
+        expect(clearPlot(state, 0, 0).inventory).toEqual(firstResult)
+      }
     })
   })
 })

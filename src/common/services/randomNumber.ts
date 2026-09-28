@@ -38,6 +38,18 @@ given chance, false otherwise.
   isRandomNumberLessThan(chance: number): boolean {
     return this.generateRandomNumber() <= chance
   }
+
+  /**
+   * Like isRandomNumberLessThan, but the dice roll is derived from the given
+   * key, so the same key always produces the same result. Use this for rolls
+   * that players must not be able to retry (e.g. by undoing an action and
+   * performing it again).
+   * @param chance Float between 0-1 to compare dice roll against.
+   * @param key Identifies the roll, e.g. the player, day and plot.
+   */
+  isKeyedRandomNumberLessThan(chance: number, key: string): boolean {
+    return seedrandom(key)() <= chance
+  }
 }
 
 export const randomNumberService = new RandomNumberService()
