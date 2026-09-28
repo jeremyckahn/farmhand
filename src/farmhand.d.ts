@@ -280,6 +280,21 @@ declare namespace farmhand {
     generate(): item | item[] | null
   }
 
+  type fieldUndoSlices = Pick<state, 'cropsHarvested' | 'field' | 'inventory'>
+
+  interface fieldUndoSnapshot {
+    /**
+     * The slices as they were before the action.
+     */
+    before: fieldUndoSlices
+    /**
+     * The slices as the action left them. If the live state no longer
+     * matches these (by reference), something else has changed them since
+     * and the undo is no longer valid.
+     */
+    after: fieldUndoSlices
+  }
+
   interface state {
     activePlayers?: number | null
     allowCustomPeerCowNames: boolean
@@ -500,6 +515,11 @@ declare namespace farmhand {
       import('./enums.js').toolType,
       import('./enums.js').toolLevel
     >
+    /**
+     * Transient copy of the state slices a destructive field action changed,
+     * used to undo that action. Never persisted. See forRangeWithUndo.
+     */
+    undoSnapshot?: fieldUndoSnapshot | null
     /**
      * Option to display the Bed button on the left side of the screen.
      */

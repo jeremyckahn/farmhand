@@ -68,6 +68,8 @@ export const computeStateForNextDay = (
         cowForSale: generateCow(),
         dayCount: state.dayCount + 1,
         todaysNotifications: [] as farmhand.notification[],
+        // Field actions from the previous day can't be undone.
+        undoSnapshot: null,
       }
     )
 

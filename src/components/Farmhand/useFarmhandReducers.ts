@@ -4,6 +4,22 @@ import * as reducers from '../../game-logic/reducers/index.js'
 
 import { FarmhandReducers } from './FarmhandReducers.js'
 
+/**
+ * Reducers that don't invalidate a pending field undo. forRangeWithUndo sets
+ * the snapshot itself, and the rest are bookkeeping that fires alongside or
+ * independently of field actions (e.g. inventory-full notifications, online
+ * peer updates). Every other reducer clears the snapshot. undoFieldAction
+ * also re-checks the snapshot against live state before restoring it.
+ */
+const reducersPreservingUndo = new Set<string>([
+  'addPeer',
+  'forRangeWithUndo',
+  'prependPendingPeerMessage',
+  'removePeer',
+  'showNotification',
+  'updatePeer',
+])
+
 export const useFarmhandReducers = (setState: (updater: any) => void) => {
   return useMemo(() => {
     const boundReducers: Record<string, Function> = {}
@@ -19,6 +35,8 @@ export const useFarmhandReducers = (setState: (updater: any) => void) => {
 
       if (typeof reducer !== 'function') continue
 
+      const preservesUndo = reducersPreservingUndo.has(reducerName as string)
+
       // Bound version triggers setState
       boundReducers[reducerName as string] = (...args: any[]) => {
         setState((prevState: any) => {
@@ -28,7 +46,9 @@ export const useFarmhandReducers = (setState: (updater: any) => void) => {
             return prevState
           }
 
-          return { ...nextState }
+          return preservesUndo
+            ? { ...nextState }
+            : { ...nextState, undoSnapshot: null }
         })
       }
     }

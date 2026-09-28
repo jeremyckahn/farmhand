@@ -1,5 +1,6 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { fieldMode } from '../../enums.js'
 import { testItem, testCrop } from '../../test-utils/index.js'
@@ -168,6 +169,55 @@ describe('Field', () => {
       <Field {...(defaultFieldProps as any)} fieldMode={fieldMode.PLANT} />
     )
     expect(document.querySelector('.Field')).toHaveClass('plant-mode')
+  })
+
+  describe('undo button', () => {
+    const undoSnapshot = {
+      before: { cropsHarvested: {}, field: [[null]], inventory: [] },
+      after: { cropsHarvested: {}, field: [[null]], inventory: [] },
+    }
+
+    test('is not shown when there is nothing to undo', () => {
+      render(
+        <Field
+          {...defaultFieldProps}
+          handleUndoFieldActionClick={noop}
+          undoSnapshot={null}
+        />
+      )
+
+      expect(
+        screen.queryByRole('button', { name: 'Undo' })
+      ).not.toBeInTheDocument()
+    })
+
+    test('is shown when there is an action to undo', () => {
+      render(
+        <Field
+          {...defaultFieldProps}
+          handleUndoFieldActionClick={noop}
+          undoSnapshot={undoSnapshot}
+        />
+      )
+
+      expect(screen.getByRole('button', { name: 'Undo' })).toBeInTheDocument()
+    })
+
+    test('calls handleUndoFieldActionClick when clicked', async () => {
+      const handleUndoFieldActionClick = vitest.fn()
+
+      render(
+        <Field
+          {...defaultFieldProps}
+          handleUndoFieldActionClick={handleUndoFieldActionClick}
+          undoSnapshot={undoSnapshot}
+        />
+      )
+
+      await userEvent.click(screen.getByRole('button', { name: 'Undo' }))
+
+      expect(handleUndoFieldActionClick).toHaveBeenCalledTimes(1)
+    })
   })
 })
 

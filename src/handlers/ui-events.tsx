@@ -192,11 +192,11 @@ export default {
     if (fieldModeValue === PLANT) {
       this.forRange(plantInPlot, rangeRadius, x, y, selectedItemId)
     } else if (fieldModeValue === HARVEST) {
-      this.forRange(harvestPlot, rangeRadius, x, y)
+      this.forRangeWithUndo(harvestPlot, rangeRadius, x, y)
     } else if (fieldModeValue === MINE) {
-      this.forRange(minePlot, rangeRadius, x, y)
+      this.forRangeWithUndo(minePlot, rangeRadius, x, y)
     } else if (fieldModeValue === CLEANUP) {
-      this.forRange(clearPlot, rangeRadius, x, y)
+      this.forRangeWithUndo(clearPlot, rangeRadius, x, y)
     } else if (fieldModeValue === WATER) {
       this.forRange(waterPlot, rangeRadius, x, y)
     } else if (fieldModeValue === FERTILIZE) {
@@ -208,6 +208,10 @@ export default {
     } else if (fieldModeValue === SET_LIGHTNING_ROD) {
       this.setLightningRod(x, y)
     }
+  },
+
+  handleUndoFieldActionClick(this: Farmhand) {
+    this.undoFieldAction()
   },
 
   handleFieldActionRangeChange(this: Farmhand, range: number) {

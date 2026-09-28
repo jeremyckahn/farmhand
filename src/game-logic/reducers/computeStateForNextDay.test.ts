@@ -8,6 +8,20 @@ import { computeStateForNextDay } from './computeStateForNextDay.js'
 vitest.mock('../../data/maps.js')
 
 describe('computeStateForNextDay', () => {
+  test('clears any pending field undo', () => {
+    const { undoSnapshot } = computeStateForNextDay(
+      testState({
+        undoSnapshot: {
+          before: { cropsHarvested: {}, field: [[]], inventory: [] },
+          after: { cropsHarvested: {}, field: [[]], inventory: [] },
+        },
+      }),
+      true
+    )
+
+    expect(undoSnapshot).toBe(null)
+  })
+
   let state: farmhand.state
 
   beforeEach(() => {

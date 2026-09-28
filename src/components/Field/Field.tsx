@@ -1,3 +1,4 @@
+import UndoIcon from '@mui/icons-material/Undo.js'
 import ZoomInIcon from '@mui/icons-material/ZoomIn.js'
 import ZoomOutIcon from '@mui/icons-material/ZoomOut.js'
 import Fab from '@mui/material/Fab/index.js'
@@ -90,6 +91,7 @@ export interface FieldProps {
   fieldMode: fieldMode
   handleCombineEnabledChange: (e: any, checked: boolean) => void
   handleFieldActionRangeChange: (range: number) => void
+  handleUndoFieldActionClick?: () => void
   hoveredPlotRangeSize: number
   inventory: farmhand.state['inventory']
   inventoryLimit: farmhand.state['inventoryLimit']
@@ -99,6 +101,7 @@ export interface FieldProps {
   purchasedField: number
   rows?: number
   selectedItemId: string
+  undoSnapshot?: farmhand.state['undoSnapshot']
 }
 
 export interface FieldContentProps extends FieldProps {
@@ -391,12 +394,14 @@ export const Field = (props: FieldProps) => {
     field,
     fieldMode: propsFieldMode,
     handleFieldActionRangeChange,
+    handleUndoFieldActionClick,
     hoveredPlotRangeSize,
     inventory,
     inventoryLimit,
     isMenuOpen = true,
     purchasedField,
     selectedItemId,
+    undoSnapshot,
   } = props
 
   const lightningRodGhostImg =
@@ -568,6 +573,18 @@ export const Field = (props: FieldProps) => {
             },
             '& button': { margin: '0.5em' },
           },
+          // Stacked above the Zoom In button in both orientations.
+          '& .undo-controls': {
+            position: 'fixed',
+            right: '0.5em',
+            bottom: '5.5em',
+            '@media (orientation: portrait)': {
+              display: isMenuOpen ? 'none' : undefined,
+              right: '0.25em',
+            },
+            '@media (orientation: landscape)': { bottom: '10em' },
+            '& button': { margin: '0.5em' },
+          },
           '& .MuiFormControl-root': {
             alignItems: 'center',
             display: 'flex',
@@ -693,6 +710,26 @@ export const Field = (props: FieldProps) => {
             />
           </div>
         )}
+        {undoSnapshot && handleUndoFieldActionClick && (
+          <div className="fab-buttons undo-controls">
+            <Tooltip
+              {...{
+                placement: 'top',
+                title: 'Undo',
+              }}
+            >
+              <Fab
+                {...{
+                  'aria-label': 'Undo',
+                  color: 'primary',
+                  onClick: handleUndoFieldActionClick,
+                }}
+              >
+                <UndoIcon />
+              </Fab>
+            </Tooltip>
+          </div>
+        )}
         <QuickSelect />
       </Div>
     </>
@@ -706,6 +743,7 @@ Field.propTypes = {
   fieldMode: string.isRequired,
   handleCombineEnabledChange: func.isRequired,
   handleFieldActionRangeChange: func.isRequired,
+  handleUndoFieldActionClick: func,
   hoveredPlotRangeSize: number.isRequired,
   inventory: array.isRequired,
   inventoryLimit: number.isRequired,
@@ -715,6 +753,7 @@ Field.propTypes = {
   purchasedField: number.isRequired,
   rows: number.isRequired,
   selectedItemId: string.isRequired,
+  undoSnapshot: object,
 }
 
 export default function Consumer(props: Partial<FieldProps>) {
