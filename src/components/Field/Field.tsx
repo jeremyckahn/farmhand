@@ -727,6 +727,10 @@ export const Field = (props: FieldProps) => {
                   sx: {
                     opacity: undoSnapshot ? 1 : 0.35,
                     transition: 'opacity 200ms ease-in-out',
+                    '&.Mui-disabled': {
+                      backgroundColor: 'primary.main',
+                      color: 'primary.contrastText',
+                    },
                   },
                 }}
               >
