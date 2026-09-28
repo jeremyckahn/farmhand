@@ -192,10 +192,12 @@ export default {
     if (fieldModeValue === PLANT) {
       this.forRange(plantInPlot, rangeRadius, x, y, selectedItemId)
     } else if (fieldModeValue === HARVEST) {
-      this.forRangeWithUndo(harvestPlot, rangeRadius, x, y)
+      this.forRange(harvestPlot, rangeRadius, x, y)
     } else if (fieldModeValue === MINE) {
-      this.forRangeWithUndo(minePlot, rangeRadius, x, y)
+      this.forRange(minePlot, rangeRadius, x, y)
     } else if (fieldModeValue === CLEANUP) {
+      // Clearing with the Hoe is the only undoable field action, since it's
+      // the one that can destroy something the player didn't mean to.
       this.forRangeWithUndo(clearPlot, rangeRadius, x, y)
     } else if (fieldModeValue === WATER) {
       this.forRange(waterPlot, rangeRadius, x, y)

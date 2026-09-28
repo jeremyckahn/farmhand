@@ -28,4 +28,41 @@ describe('RandomNumberService', () => {
       expect(randomNumberService.isRandomNumberLessThan(chance)).toEqual(false)
     })
   })
+
+  describe('isKeyedRandomNumberLessThan', () => {
+    test('it always returns the same result for the same key', () => {
+      const firstResult = randomNumberService.isKeyedRandomNumberLessThan(
+        0.5,
+        'some-key'
+      )
+
+      for (let i = 0; i < 20; i++) {
+        expect(
+          randomNumberService.isKeyedRandomNumberLessThan(0.5, 'some-key')
+        ).toEqual(firstResult)
+      }
+    })
+
+    test('it returns different results for different keys', () => {
+      const results = new Set(
+        Array.from({ length: 50 }, (_, i) =>
+          randomNumberService.isKeyedRandomNumberLessThan(0.5, `key-${i}`)
+        )
+      )
+
+      expect(results).toEqual(new Set([true, false]))
+    })
+
+    test('it always returns true when chance is 1', () => {
+      expect(
+        randomNumberService.isKeyedRandomNumberLessThan(1, 'some-key')
+      ).toEqual(true)
+    })
+
+    test('it always returns false when chance is 0', () => {
+      expect(
+        randomNumberService.isKeyedRandomNumberLessThan(0, 'some-key')
+      ).toEqual(false)
+    })
+  })
 })

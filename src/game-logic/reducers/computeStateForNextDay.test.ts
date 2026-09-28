@@ -12,8 +12,8 @@ describe('computeStateForNextDay', () => {
     const { undoSnapshot } = computeStateForNextDay(
       testState({
         undoSnapshot: {
-          before: { cropsHarvested: {}, field: [[]], inventory: [] },
-          after: { cropsHarvested: {}, field: [[]], inventory: [] },
+          before: { field: [[]], inventory: [] },
+          after: { field: [[]], inventory: [] },
         },
       }),
       true

@@ -41,11 +41,15 @@ export const clearPlot = (
       : applyDestructionYield(state, item)
   }
 
+  // The seed reclaim roll is keyed to the player, day and plot so that it
+  // can't be rerolled by undoing the clear (see undoFieldAction) and
+  // clearing again.
   if (
     getPlotContentType(plotContent) === itemType.CROP &&
     getCropLifeStage(plotContent) !== GROWN &&
-    randomNumberService.isRandomNumberLessThan(
-      HOE_LEVEL_TO_SEED_RECLAIM_RATE[hoeLevel] || 0
+    randomNumberService.isKeyedRandomNumberLessThan(
+      HOE_LEVEL_TO_SEED_RECLAIM_RATE[hoeLevel] || 0,
+      `seed-reclaim:${state.playerId}:${state.dayCount}:${x}:${y}`
     )
   ) {
     const seedId = getSeedItemIdFromFinalStageCropItemId(plotContent.itemId)

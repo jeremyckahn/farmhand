@@ -1,11 +1,9 @@
 import { forRange } from './forRange.js'
 
 const getUndoSlices = ({
-  cropsHarvested,
   field,
   inventory,
 }: farmhand.state): farmhand.fieldUndoSlices => ({
-  cropsHarvested,
   field,
   inventory,
 })
