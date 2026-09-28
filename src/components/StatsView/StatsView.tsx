@@ -245,7 +245,7 @@ export const StatsView = ({
                 Object.entries(itemsSold),
                 ([itemId]) => itemsMap[itemId].name
               ).map(([itemId, quantity]) => (
-                <TableRow {...{ key: itemId }}>
+                <TableRow key={itemId}>
                   <TableCell {...{ component: 'th', scope: 'row' }}>
                     {itemsMap[itemId].name}
                   </TableCell>

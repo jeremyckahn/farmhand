@@ -9,7 +9,7 @@ import MobileStepper from '@mui/material/MobileStepper/index.js'
 import { Theme, ThemeProvider } from '@mui/material/styles/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import classNames from 'classnames'
-import localforage from 'localforage'
+import localforageLib from 'localforage'
 import { SnackbarProvider } from 'notistack'
 import { object } from 'prop-types'
 import { GlobalHotKeys } from 'react-hotkeys'
@@ -44,7 +44,23 @@ const emptyObject = Object.freeze({})
 
 export type FarmhandInstance = any
 
-const Farmhand = (props: FarmhandProps) => {
+// Module-level (rather than inline default parameter values) so each default
+// keeps a stable identity across renders, as the defaultProps they replace did.
+const defaultFeatures = {}
+const defaultLocalforage = localforageLib.createInstance({
+  name: 'farmhand',
+  description: 'Persisted game data for Farmhand',
+})
+const defaultMatch = { path: '', params: {} }
+
+const Farmhand = ({
+  features = defaultFeatures,
+  localforage = defaultLocalforage,
+  match = defaultMatch,
+  ...rest
+}: FarmhandProps) => {
+  const props = { ...rest, features, localforage, match }
+
   const {
     gameState,
     handlers,
@@ -281,15 +297,6 @@ const Farmhand = (props: FarmhandProps) => {
       </ThemeProvider>
     </GlobalHotKeys>
   )
-}
-
-Farmhand.defaultProps = {
-  features: {},
-  localforage: localforage.createInstance({
-    name: 'farmhand',
-    description: 'Persisted game data for Farmhand',
-  }),
-  match: { path: '', params: {} },
 }
 
 Farmhand.propTypes = {

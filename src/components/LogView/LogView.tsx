@@ -32,7 +32,7 @@ export const LogView = ({
           onClick,
           severity,
         }: farmhand.notification & { onClick?: () => void }) => (
-          <li {...{ key: message }}>
+          <li key={message}>
             <Alert
               {...{
                 elevation: 3,
@@ -64,9 +64,9 @@ export const LogView = ({
                   severityLevel as keyof farmhand.notificationLogEntry['notifications']
                 ].length ? (
                   <Alert
+                    key={`${severityLevel}_${severityIndex}`}
                     {...{
                       elevation: 3,
-                      key: `${severityLevel}_${severityIndex}`,
                       severity: severityLevel as AlertColor,
                     }}
                   >
@@ -74,8 +74,8 @@ export const LogView = ({
                       severityLevel as keyof farmhand.notificationLogEntry['notifications']
                     ].map((message: string, messageIndex: number) => (
                       <Markdown
+                        key={`${messageIndex}_${message}`}
                         {...{
-                          key: `${messageIndex}_${message}`,
                           children: message,
                         }}
                       />

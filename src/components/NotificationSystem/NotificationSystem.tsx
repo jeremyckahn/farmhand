@@ -18,17 +18,14 @@ export const snackbarProviderContentCallback = (
   key: string | number,
   notification: unknown
 ) => {
-  const {
-    message,
-    onClick,
-    severity,
-  } = notification as farmhand.notification & { onClick?: () => void }
+  const { message, onClick, severity } =
+    notification as farmhand.notification & { onClick?: () => void }
 
   return (
     <Alert
+      key={key}
       {...{
         elevation: 3,
-        key,
         onClick,
         severity,
         style: {

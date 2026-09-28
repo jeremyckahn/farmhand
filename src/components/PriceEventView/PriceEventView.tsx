@@ -17,7 +17,7 @@ const PriceEventView = ({
     <h3>Price Surges</h3>
     <ul className="card-list">
       {Object.keys(priceSurges).map(itemId => (
-        <li {...{ key: itemId }}>
+        <li key={itemId}>
           <Item
             {...{
               isSellView: true,
@@ -32,7 +32,7 @@ const PriceEventView = ({
     <h3>Price Crashes</h3>
     <ul className="card-list">
       {Object.keys(priceCrashes).map(itemId => (
-        <li {...{ key: itemId }}>
+        <li key={itemId}>
           <Item
             {...{
               item: itemsMap[itemId],

@@ -18,7 +18,7 @@ export interface QuantityInputProps {
   handleUpdateNumber: (e: any) => void
   maxQuantity: number
   setQuantity: (quantity: number) => void
-  value: number
+  value?: number
 }
 
 const QuantityNumberFormat = forwardRef<HTMLInputElement, any>(
@@ -111,7 +111,7 @@ const QuantityInput = ({
   handleUpdateNumber,
   maxQuantity,
   setQuantity,
-  value,
+  value = 1,
 }: QuantityInputProps) => {
   const decrementQuantity = () => {
     let newValue = value - 1
@@ -194,10 +194,6 @@ QuantityInput.propTypes = {
   maxQuantity: number.isRequired,
   setQuantity: func.isRequired,
   value: number,
-}
-
-QuantityInput.defaultProps = {
-  value: 1,
 }
 
 export default QuantityInput

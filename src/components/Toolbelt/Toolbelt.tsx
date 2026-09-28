@@ -47,16 +47,18 @@ const getToolImage = (tool: { level: toolLevel; id: string }) => {
 
 interface ToolbeltProps {
   fieldMode: string
-  handleFieldModeSelect: (mode: string) => void
+  handleFieldModeSelect?: (mode: string) => void
   stageFocus?: stageFocusType
-  toolLevels: Record<toolType, toolLevel>
+  toolLevels?: Record<toolType, toolLevel>
 }
+
+const defaultToolLevels = {} as Record<toolType, toolLevel>
 
 export const Toolbelt = ({
   fieldMode: currentFieldMode,
-  handleFieldModeSelect,
+  handleFieldModeSelect = noop,
   stageFocus,
-  toolLevels,
+  toolLevels = defaultToolLevels,
 }: ToolbeltProps) => {
   const tools = getTools(toolLevels, stageFocus)
 
@@ -81,8 +83,8 @@ export const Toolbelt = ({
             return (
               <Tooltip
                 followCursor
+                key={fieldMode}
                 {...{
-                  key: fieldMode,
                   placement: 'top',
                   title: (
                     <Typography component="div">
@@ -150,11 +152,6 @@ export const Toolbelt = ({
 Toolbelt.propTypes = {
   fieldMode: PropTypes.string.isRequired,
   handleFieldModeSelect: PropTypes.func,
-}
-
-Toolbelt.defaultProps = {
-  handleFieldModeSelect: noop,
-  toolLevels: {},
 }
 
 export default function Consumer(

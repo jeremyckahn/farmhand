@@ -424,7 +424,7 @@ export const Navigation = ({
         }}
       >
         {viewList.map((view, i) => (
-          <MenuItem {...{ key: view, value: view }}>
+          <MenuItem key={view} {...{ value: view }}>
             {i + 1}: {STAGE_TITLE_MAP[view as keyof typeof STAGE_TITLE_MAP]}
           </MenuItem>
         ))}
@@ -439,9 +439,9 @@ export const Navigation = ({
           { dialogView: SETTINGS, Icon: SettingsIcon },
         ].map(({ dialogView: dialogViewType, Icon }) => (
           <Tooltip
+            key={dialogViewType}
             {...{
               arrow: true,
-              key: dialogViewType,
               placement: 'top',
               title: dialogTriggerTextMap[dialogViewType],
             }}

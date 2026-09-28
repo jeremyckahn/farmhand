@@ -76,7 +76,7 @@ const OnlinePeersView = ({
                 // Use negative value to reverse sort order
                 -levelAchieved(peers[peerId].experience || 0),
             ]).map(peerId => (
-              <BailOutErrorBoundary {...{ key: peerId }}>
+              <BailOutErrorBoundary key={peerId}>
                 <OnlinePeer {...{ peer: peers[peerId] }} />
               </BailOutErrorBoundary>
             ))}
@@ -96,7 +96,7 @@ const OnlinePeersView = ({
                 }: { playerId: string; message: string; severity?: string },
                 messageIndex: number
               ) => (
-                <li {...{ key: messageIndex }}>
+                <li key={messageIndex}>
                   <Alert
                     {...{
                       elevation: 3,
