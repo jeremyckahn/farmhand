@@ -710,7 +710,7 @@ export const Field = (props: FieldProps) => {
             />
           </div>
         )}
-        {undoSnapshot && handleUndoFieldActionClick && (
+        {handleUndoFieldActionClick && (
           <div className="fab-buttons undo-controls">
             <Tooltip
               {...{
@@ -722,7 +722,12 @@ export const Field = (props: FieldProps) => {
                 {...{
                   'aria-label': 'Undo',
                   color: 'primary',
+                  disabled: !undoSnapshot,
                   onClick: handleUndoFieldActionClick,
+                  sx: {
+                    opacity: undoSnapshot ? 1 : 0.35,
+                    transition: 'opacity 200ms ease-in-out',
+                  },
                 }}
               >
                 <UndoIcon />

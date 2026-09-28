@@ -177,7 +177,7 @@ describe('Field', () => {
       after: { cropsHarvested: {}, field: [[null]], inventory: [] },
     }
 
-    test('is not shown when there is nothing to undo', () => {
+    test('is shown but disabled when there is nothing to undo', () => {
       render(
         <Field
           {...defaultFieldProps}
@@ -186,9 +186,7 @@ describe('Field', () => {
         />
       )
 
-      expect(
-        screen.queryByRole('button', { name: 'Undo' })
-      ).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Undo' })).toBeDisabled()
     })
 
     test('is shown when there is an action to undo', () => {
