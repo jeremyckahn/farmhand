@@ -20,7 +20,7 @@ import { breakpoints } from '../../styles/tokens.js'
 
 const getTools = memoize(
   (toolLevels: Record<toolType, toolLevel>, stageFocus?: stageFocusType) => {
-    const tools: (typeof toolsData)[keyof typeof toolsData][] = []
+    const tools: typeof toolsData[keyof typeof toolsData][] = []
 
     for (let tool of Object.values(toolsData)) {
       if (toolLevels[tool.type] === toolLevel.UNAVAILABLE) continue
@@ -66,10 +66,9 @@ export const Toolbelt = ({
         sx={{
           display: 'flex',
           flexFlow: 'row',
-          [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]:
-            {
-              flexFlow: 'column',
-            },
+          [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+            flexFlow: 'column',
+          },
           '& button': { flexGrow: 1, margin: '0 0.5em' },
         }}
       >
@@ -174,3 +173,5 @@ export default function Consumer(
     </FarmhandContext.Consumer>
   )
 }
+
+// Initial commit in branch
