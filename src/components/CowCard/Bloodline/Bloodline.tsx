@@ -1,5 +1,4 @@
 import React, { memo } from 'react'
-import { object } from 'prop-types'
 import Tooltip from '@mui/material/Tooltip/index.js'
 
 import { cowColors } from '../../../enums.js'
@@ -47,9 +46,5 @@ const Bloodline = ({
       ))}
   </Ul>
 )
-
-Bloodline.propTypes = {
-  colorsInBloodline: object.isRequired,
-}
 
 export default memo(Bloodline)

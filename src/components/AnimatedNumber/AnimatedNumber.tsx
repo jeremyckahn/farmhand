@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { tween, Tweenable } from 'shifty'
-import { func as funcProp, number as numberProp } from 'prop-types'
 
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.js'
 
@@ -53,11 +52,6 @@ const AnimatedNumber = ({
   }, [number, prefersReducedMotion])
 
   return <span className="AnimatedNumber">{formatter(displayedNumber)}</span>
-}
-
-AnimatedNumber.propTypes = {
-  formatter: funcProp,
-  number: numberProp.isRequired,
 }
 
 export default AnimatedNumber

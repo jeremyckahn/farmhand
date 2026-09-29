@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { object } from 'prop-types'
 import Card from '@mui/material/Card/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
@@ -140,8 +139,4 @@ export const FermentationRecipe = ({ item }: { item: farmhand.item }) => {
       </CardActions>
     </Card>
   )
-}
-
-FermentationRecipe.propTypes = {
-  item: object.isRequired,
 }

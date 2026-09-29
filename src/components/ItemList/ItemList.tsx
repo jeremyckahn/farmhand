@@ -2,7 +2,6 @@ import Button from '@mui/material/Button/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
-import { array, func, object, string } from 'prop-types'
 
 import { items as itemImages, pixel } from '../../img/index.js'
 import { spriteShadowSx, squareImgSx } from '../../styles/sx.js'
@@ -27,10 +26,9 @@ export const ItemList = ({
     sx={{
       display: 'flex',
       flexFlow: 'row',
-      [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]:
-        {
-          flexFlow: 'column',
-        },
+      [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+        flexFlow: 'column',
+      },
     }}
   >
     {sortItems(items).map((item: farmhand.item) => (
@@ -99,10 +97,3 @@ export const ItemList = ({
     ))}
   </Div>
 )
-
-ItemList.propTypes = {
-  handleItemSelectClick: func,
-  items: array.isRequired,
-  playerInventoryQuantities: object.isRequired,
-  selectedItemId: string.isRequired,
-}

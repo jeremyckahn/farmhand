@@ -1,5 +1,4 @@
 import React from 'react'
-import { number, object, shape, string } from 'prop-types'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
@@ -52,16 +51,6 @@ const OnlinePeer = ({
       </Card>
     </li>
   )
-}
-
-OnlinePeer.propTypes = {
-  peer: shape({
-    cowOfferedForTrade: object,
-    dayCount: number.isRequired,
-    experience: number.isRequired,
-    playerId: string.isRequired,
-    money: number.isRequired,
-  }).isRequired,
 }
 
 export default OnlinePeer

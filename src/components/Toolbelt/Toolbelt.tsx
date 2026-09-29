@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import ReactMarkdown from 'react-markdown'
 
@@ -20,7 +19,7 @@ import { breakpoints } from '../../styles/tokens.js'
 
 const getTools = memoize(
   (toolLevels: Record<toolType, toolLevel>, stageFocus?: stageFocusType) => {
-    const tools: (typeof toolsData)[keyof typeof toolsData][] = []
+    const tools: typeof toolsData[keyof typeof toolsData][] = []
 
     for (let tool of Object.values(toolsData)) {
       if (toolLevels[tool.type] === toolLevel.UNAVAILABLE) continue
@@ -66,10 +65,9 @@ export const Toolbelt = ({
         sx={{
           display: 'flex',
           flexFlow: 'row',
-          [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]:
-            {
-              flexFlow: 'column',
-            },
+          [`@media (orientation: landscape) and (min-height: ${breakpoints.largePhone}px)`]: {
+            flexFlow: 'column',
+          },
           '& button': { flexGrow: 1, margin: '0 0.5em' },
         }}
       >
@@ -145,11 +143,6 @@ export const Toolbelt = ({
       </Div>
     </Div>
   )
-}
-
-Toolbelt.propTypes = {
-  fieldMode: PropTypes.string.isRequired,
-  handleFieldModeSelect: PropTypes.func,
 }
 
 Toolbelt.defaultProps = {

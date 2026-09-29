@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { useDebounceCallback } from 'usehooks-ts'
 import TextField from '@mui/material/TextField/index.js'
 
@@ -79,11 +78,6 @@ const SearchBar = ({
       />
     </Div>
   )
-}
-
-SearchBar.propTypes = {
-  placeholder: PropTypes.string,
-  onSearch: PropTypes.func.isRequired,
 }
 
 export default SearchBar

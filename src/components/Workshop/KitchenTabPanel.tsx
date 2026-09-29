@@ -1,5 +1,4 @@
 import React from 'react'
-import { number, array } from 'prop-types'
 
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
@@ -47,10 +46,4 @@ export function KitchenTabPanel({
       </ul>
     </TabPanel>
   )
-}
-
-KitchenTabPanel.propTypes = {
-  currentTab: number.isRequired,
-  index: number.isRequired,
-  learnedKitchenRecipes: array.isRequired,
 }

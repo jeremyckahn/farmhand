@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
-import { array, arrayOf, bool, number, string } from 'prop-types'
 import { Theme } from '@mui/material/styles/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
@@ -45,8 +44,9 @@ export const Stage = ({
   useAlternateEndDayButtonPosition = false,
   viewTitle,
 }: StageProps) => {
-  const ref =
-    /** @type {React.MutableRefObject<HTMLDivElement | null>} */ useRef(null)
+  const ref = /** @type {React.MutableRefObject<HTMLDivElement | null>} */ useRef(
+    null
+  )
 
   useEffect(() => {
     if (ref.current) {
@@ -66,8 +66,8 @@ export const Stage = ({
     [stageFocusType.HOME]: isOctober()
       ? jackOLanternBg
       : isDecember()
-        ? winterBg
-        : brownDotBg,
+      ? winterBg
+      : brownDotBg,
     [stageFocusType.SHOP]: yellowDotBg,
     [stageFocusType.WORKSHOP]: lavenderDotBg,
     [stageFocusType.CELLAR]: floorboardBg,
@@ -80,13 +80,11 @@ export const Stage = ({
   // filter (see seasonFilterMap) applied via the `.stage-background` layer
   // below - scoped to just the background, not the crop/cow/tree sprites
   // rendered on top of it.
-  const hasSeasonalColorShift = (
-    [
-      stageFocusType.FIELD,
-      stageFocusType.COW_PEN,
-      stageFocusType.FOREST,
-    ] as string[]
-  ).includes(stageFocus)
+  const hasSeasonalColorShift = ([
+    stageFocusType.FIELD,
+    stageFocusType.COW_PEN,
+    stageFocusType.FOREST,
+  ] as string[]).includes(stageFocus)
 
   return (
     <Div
@@ -229,15 +227,6 @@ export const Stage = ({
       <div {...{ className: 'spacer' }} />
     </Div>
   )
-}
-
-Stage.propTypes = {
-  dayCount: number.isRequired,
-  field: arrayOf(array).isRequired,
-  isMenuOpen: bool,
-  stageFocus: string.isRequired,
-  useAlternateEndDayButtonPosition: bool,
-  viewTitle: string.isRequired,
 }
 
 export default function Consumer(props: Partial<Parameters<typeof Stage>[0]>) {

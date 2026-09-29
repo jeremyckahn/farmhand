@@ -7,7 +7,6 @@ import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import Divider from '@mui/material/Divider/index.js'
 import globalWindow from 'global/window.js'
-import { func, object } from 'prop-types'
 import ReactMarkdown from 'react-markdown'
 
 import { items } from '../../img/index.js'
@@ -288,11 +287,6 @@ If you're playing on a mobile device, all you need to do is [add it to your home
     </Card>
   </Div>
 )
-
-Home.propTypes = {
-  completedAchievements: object.isRequired,
-  handleViewChangeButtonClick: func.isRequired,
-}
 
 export default function Consumer(props: Partial<Parameters<typeof Home>[0]>) {
   return (

@@ -4,7 +4,6 @@ import Button from '@mui/material/Button/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
-import { array, func, number, object } from 'prop-types'
 
 import IngredientsList from '../IngredientsList/index.js'
 
@@ -83,15 +82,6 @@ export function UpgradePurchase({
       </CardActions>
     </Card>
   )
-}
-
-UpgradePurchase.propTypes = {
-  handleUpgradeTool: func.isRequired,
-  inventory: array.isRequired,
-  inventoryLimit: number.isRequired,
-  playerInventoryQuantities: object.isRequired,
-  toolLevels: object,
-  upgrade: object,
 }
 
 export default function Consumer(

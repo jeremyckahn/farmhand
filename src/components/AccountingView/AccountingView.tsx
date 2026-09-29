@@ -6,7 +6,6 @@ import Button from '@mui/material/Button/index.js'
 import TextField from '@mui/material/TextField/index.js'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance.js'
 import NumberFormat from 'react-number-format'
-import { func, number } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { moneyString } from '../../utils/moneyString.js'
@@ -65,10 +64,10 @@ const AccountingView = ({
     Math.min(loanBalance, money)
   )
 
-  useEffect(
-    () => setLoanInputValue(Math.min(loanBalance, money)),
-    [loanBalance, money]
-  )
+  useEffect(() => setLoanInputValue(Math.min(loanBalance, money)), [
+    loanBalance,
+    money,
+  ])
 
   return (
     <Div className="AccountingView">
@@ -154,13 +153,6 @@ const AccountingView = ({
       </Card>
     </Div>
   )
-}
-
-AccountingView.propTypes = {
-  handleClickTakeOutLoanButton: func.isRequired,
-  handleClickLoanPaydownButton: func.isRequired,
-  loanBalance: number.isRequired,
-  money: number.isRequired,
 }
 
 export default function Consumer(props: Partial<AccountingViewProps>) {

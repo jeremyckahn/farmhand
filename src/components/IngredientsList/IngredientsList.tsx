@@ -1,5 +1,4 @@
 import classNames from 'classnames'
-import { object, shape, string } from 'prop-types'
 
 import { itemsMap } from '../../data/maps.js'
 import { colors } from '../../styles/tokens.js'
@@ -45,10 +44,4 @@ export default function IngredientsList({
       ))}
     </ul>
   )
-}
-
-IngredientsList.propTypes = {
-  playerInventoryQuantities: object.isRequired,
-  recipe: shape({ ingredients: object.isRequired, name: string.isRequired })
-    .isRequired,
 }

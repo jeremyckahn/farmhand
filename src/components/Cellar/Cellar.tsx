@@ -32,5 +32,3 @@ export const Cellar = () => {
     </Div>
   )
 }
-
-Cellar.propTypes = {}
