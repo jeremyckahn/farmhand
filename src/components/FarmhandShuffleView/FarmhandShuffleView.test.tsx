@@ -25,6 +25,7 @@ vi.mock('@jeremyckahn/farmhand-shuffle', () => ({
     UNINITIALIZED: 'UNINITIALIZED',
   },
   starterDeck: () => [],
+  placeholderOutlineColorVar: '--farmhand-shuffle-placeholder-outline-color',
   serializeMatch: (match: any) => match,
   deserializeMatch: (data: any) => data,
 }))
@@ -201,9 +202,8 @@ describe('<FarmhandShuffleView />', () => {
         },
       })
 
-      const content = matchPropsRef.current.renderGameOverContent(
-        'test-player-id'
-      )
+      const content =
+        matchPropsRef.current.renderGameOverContent('test-player-id')
 
       render(<>{content}</>)
 
@@ -224,9 +224,8 @@ describe('<FarmhandShuffleView />', () => {
         },
       })
 
-      const content = matchPropsRef.current.renderGameOverContent(
-        'test-player-id'
-      )
+      const content =
+        matchPropsRef.current.renderGameOverContent('test-player-id')
 
       render(<>{content}</>)
 
@@ -303,6 +302,25 @@ describe('<FarmhandShuffleView />', () => {
       })
 
       expect(matchPropsRef.current.hideDefaultGameOverActions).toBe(true)
+    })
+
+    test('darkens the placeholder outlines via Match sx', () => {
+      renderWithContext({
+        farmhandShuffle: {
+          isMatchInProgress: true,
+          wager: 50,
+          serializedMatch: null,
+          totalMatchesPlayed: 0,
+          totalWins: 0,
+          totalLosses: 0,
+          currentWinStreak: 0,
+          longestWinStreak: 0,
+        },
+      })
+
+      expect(matchPropsRef.current.sx).toMatchObject({
+        '--farmhand-shuffle-placeholder-outline-color': 'rgba(0, 0, 0, 0.35)',
+      })
     })
   })
 

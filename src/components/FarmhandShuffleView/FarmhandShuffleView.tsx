@@ -16,6 +16,7 @@ import {
   Match,
   MatchState,
   deserializeMatch,
+  placeholderOutlineColorVar,
   serializeMatch,
   starterDeck,
 } from '@jeremyckahn/farmhand-shuffle'
@@ -43,7 +44,7 @@ const CHECKPOINT_STATES = [
   MatchState.WAITING_FOR_PLAYER_TURN_ACTION,
 ] as const
 
-type CheckpointMatchState = typeof CHECKPOINT_STATES[number]
+type CheckpointMatchState = (typeof CHECKPOINT_STATES)[number]
 
 interface WagerNumberFormatProps {
   max: number
@@ -107,10 +108,10 @@ const ShuffleResultSummary = ({
     wager === 0
       ? 'No wager was placed.'
       : isDraw
-      ? `It's a draw — your ${moneyString(wager)} wager was refunded.`
-      : isWin
-      ? `You won ${moneyString(wager * 2)}!`
-      : `You lost your ${moneyString(wager)} wager.`
+        ? `It's a draw — your ${moneyString(wager)} wager was refunded.`
+        : isWin
+          ? `You won ${moneyString(wager * 2)}!`
+          : `You lost your ${moneyString(wager)} wager.`
 
   return (
     <Div sx={{ marginTop: '1em', textAlign: 'center' }}>
@@ -365,12 +366,16 @@ export const FarmhandShuffleView = () => {
             // every other stage's own background export. Match's default
             // text color (white, meant to read against its own orange
             // background) is overridden the same way now that Stage's
-            // own lighter background is showing through instead.
+            // own lighter background is showing through instead. The empty
+            // Field plot and discard pile placeholder outlines are darkened
+            // for the same reason - Match's default is too faint to stand
+            // out against Stage's background.
             sx: {
               height: '100%',
               backgroundColor: 'transparent',
               backgroundImage: 'none',
               color: 'black',
+              [placeholderOutlineColorVar]: 'rgba(0, 0, 0, 0.35)',
             },
             renderGameOverContent: (winnerId: string | null) => (
               <ShuffleResultSummary
