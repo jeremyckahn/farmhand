@@ -143,11 +143,14 @@ export const COW_MAXIMUM_VALUE_MULTIPLIER = 1
 export const COW_GESTATION_PERIOD_DAYS = 3
 export const COW_MINIMUM_HAPPINESS_TO_BREED = 0.8
 
-export const NOTIFICATION_DURATION_MIN = 4
-export const NOTIFICATION_DURATION_MAX = 12
-export const NOTIFICATION_DURATION_DEFAULT = 6
-export const NOTIFICATION_DURATION =
-  import.meta.env?.MODE === 'test' ? 1 : NOTIFICATION_DURATION_DEFAULT * 1000
+export const NOTIFICATION_DURATION_MIN = 4000
+export const NOTIFICATION_DURATION_MAX = 12000
+export const NOTIFICATION_DURATION_DEFAULT = 6000
+export const getNotificationDuration = (duration: number) =>
+  import.meta.env?.MODE === 'test' ? 1 : duration
+export const NOTIFICATION_DURATION = getNotificationDuration(
+  NOTIFICATION_DURATION_DEFAULT
+)
 export const NOTIFICATION_LOG_SIZE = 14
 
 export const PRICE_EVENT_CHANCE = 0.2
@@ -279,9 +282,10 @@ export const GOLD_SPAWN_CHANCE = 0.07
 export const IRON_SPAWN_CHANCE = 0.33
 export const SILVER_SPAWN_CHANCE = 0.2
 
-export const HOE_LEVEL_TO_SEED_RECLAIM_RATE: Partial<
-  Record<toolLevel, number>
-> = {
+export const HOE_LEVEL_TO_SEED_RECLAIM_RATE: Partial<Record<
+  toolLevel,
+  number
+>> = {
   [toolLevel.DEFAULT]: 0,
   [toolLevel.BRONZE]: 0.25,
   [toolLevel.IRON]: 0.5,
@@ -292,9 +296,10 @@ export const HOE_LEVEL_TO_SEED_RECLAIM_RATE: Partial<
 // [min, max] wood yield (inclusive) for chopping down a fully grown tree,
 // keyed by the axe's tool level. An immature tree yields half of this
 // range instead (see chopForestPlot.ts).
-export const AXE_WOOD_YIELD_RANGE: Partial<
-  Record<toolLevel, [number, number]>
-> = {
+export const AXE_WOOD_YIELD_RANGE: Partial<Record<
+  toolLevel,
+  [number, number]
+>> = {
   [toolLevel.DEFAULT]: [1, 2],
   [toolLevel.BRONZE]: [2, 4],
   [toolLevel.IRON]: [4, 6],
@@ -305,9 +310,10 @@ export const AXE_WOOD_YIELD_RANGE: Partial<
 // Flat +1 fruit per tool tier when picking with the Picker Pole (see
 // harvestForestPlot.ts) - unlike AXE_WOOD_YIELD_RANGE this isn't a random
 // range, just a per-tier constant.
-export const PICKER_POLE_LEVEL_TO_FRUIT_YIELD: Partial<
-  Record<toolLevel, number>
-> = {
+export const PICKER_POLE_LEVEL_TO_FRUIT_YIELD: Partial<Record<
+  toolLevel,
+  number
+>> = {
   [toolLevel.DEFAULT]: 1,
   [toolLevel.BRONZE]: 2,
   [toolLevel.IRON]: 3,

@@ -22,7 +22,7 @@ const defaultProps = {
   handleUseAlternateEndDayButtonPositionChange: noop,
   handleShowHomeScreenChange: noop,
   showNotifications: true,
-  notificationDuration: 6,
+  notificationDuration: 6000,
   useAlternateEndDayButtonPosition: false,
   showHomeScreen: false,
 }

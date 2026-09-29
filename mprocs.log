@@ -1,0 +1,3 @@
+ERROR [lib::logging] Got panic. @info:panicked at src/term/grid.rs:556:10:
+called `Option::unwrap()` on a `None` value
+@stackTrace:disabled backtrace

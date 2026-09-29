@@ -125,12 +125,12 @@ const SettingsView = ({
           <Slider
             aria-label="Notification display time"
             marks
-            min={NOTIFICATION_DURATION_MIN}
-            max={NOTIFICATION_DURATION_MAX}
+            min={NOTIFICATION_DURATION_MIN / 1000}
+            max={NOTIFICATION_DURATION_MAX / 1000}
             onChange={handleNotificationDurationChange}
             sx={{ margin: '0 auto', width: '90%' }}
-            value={notificationDuration}
-            valueLabelDisplay="on"
+            value={notificationDuration / 1000}
+            valueLabelDisplay="auto"
             valueLabelFormat={value => `${value} seconds`}
           />
           <FormControlLabel

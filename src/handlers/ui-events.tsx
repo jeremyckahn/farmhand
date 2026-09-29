@@ -460,19 +460,28 @@ export default {
     this.setState({ showNotifications: checked })
   },
 
-  async handleNotificationDurationChange(
+  handleNotificationDurationChange(
     this: Farmhand,
     _event: React.SyntheticEvent | Event,
     value: number | number[]
   ) {
     if (typeof value === 'number') {
-      const newState = { notificationDuration: value }
+      this.setState({ notificationDuration: value * 1000 })
+    }
+  },
 
-      this.setState(newState)
-
-      await (this.props.localforage as any)?.setItem(
+  async handleNotificationDurationChangeCommitted(
+    this: Farmhand,
+    _event: React.SyntheticEvent | Event,
+    value: number | number[]
+  ) {
+    if (typeof value === 'number') {
+      await this.props.localforage?.setItem(
         'state',
-        reduceByPersistedKeys({ ...this.state, ...newState })
+        reduceByPersistedKeys({
+          ...this.state,
+          notificationDuration: value * 1000,
+        })
       )
     }
   },
