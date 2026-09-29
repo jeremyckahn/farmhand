@@ -6,13 +6,11 @@ import FarmhandContext, {
   createContextData,
 } from '../Farmhand/Farmhand.context.js'
 
-import { RandomSeedInput } from './RandomSeedInput.js'
+import { RandomSeedInput, RandomSeedInputProps } from './RandomSeedInput.js'
 
 const mockHandleRNGSeedChange = vitest.fn()
 
-const MockRandomSeedInput = (
-  props: React.PropsWithChildren<Record<string, unknown>>
-) => {
+const MockRandomSeedInput = (props: RandomSeedInputProps) => {
   const contextValue = createContextData()
 
   contextValue.handlers.handleRNGSeedChange = mockHandleRNGSeedChange
