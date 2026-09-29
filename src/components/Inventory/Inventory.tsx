@@ -5,7 +5,6 @@ import AccordionDetails from '@mui/material/AccordionDetails/index.js'
 import Checkbox from '@mui/material/Checkbox/index.js'
 import FormControlLabel from '@mui/material/FormControlLabel/index.js'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore.js'
-import { array } from 'prop-types'
 
 import FarmhandContext, { ContextData } from '../Farmhand/Farmhand.context.js'
 import Item from '../Item/index.js'
@@ -212,12 +211,6 @@ const Inventory = ({
       )}
     </Div>
   )
-}
-
-Inventory.propTypes = {
-  items: array.isRequired,
-  playerInventory: array,
-  shopInventory: array,
 }
 
 export default function Consumer(

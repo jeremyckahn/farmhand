@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import { bool, func } from 'prop-types'
 import Button from '@mui/material/Button/index.js'
 import Dialog from '@mui/material/Dialog/index.js'
 import DialogActions from '@mui/material/DialogActions/index.js'
@@ -246,21 +245,6 @@ const SettingsView = ({
       </Dialog>
     </Div>
   )
-}
-
-SettingsView.propTypes = {
-  allowCustomPeerCowNames: bool.isRequired,
-  handleAllowCustomPeerCowNamesChange: func.isRequired,
-  handleClearPersistedDataClick: func.isRequired,
-  handleExportDataClick: func.isRequired,
-  handleImportDataClick: func.isRequired,
-  handleSaveButtonClick: func.isRequired,
-  handleShowHomeScreenChange: func.isRequired,
-  handleShowNotificationsChange: func.isRequired,
-  handleUseAlternateEndDayButtonPositionChange: func.isRequired,
-  showHomeScreen: bool.isRequired,
-  showNotifications: bool.isRequired,
-  useAlternateEndDayButtonPosition: bool.isRequired,
 }
 
 export { SettingsView }

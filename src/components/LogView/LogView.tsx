@@ -1,5 +1,4 @@
 import React from 'react'
-import { array } from 'prop-types'
 import Alert from '@mui/material/Alert/index.js'
 import { AlertColor } from '@mui/material'
 
@@ -89,11 +88,6 @@ export const LogView = ({
     </ul>
   </Div>
 )
-
-LogView.propTypes = {
-  notificationLog: array.isRequired,
-  todaysNotifications: array.isRequired,
-}
 
 export default function Consumer(
   props: Partial<Parameters<typeof LogView>[0]>

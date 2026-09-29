@@ -6,7 +6,6 @@ import Select from '@mui/material/Select/index.js'
 import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'
 import sortBy from 'lodash.sortby'
-import { array, func, number, object, string } from 'prop-types'
 import { useEffect, useState } from 'react'
 
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
@@ -325,21 +324,6 @@ export const CowPenContextMenu = ({
       </TabPanel>
     </Div>
   )
-}
-
-CowPenContextMenu.propTypes = {
-  cowForSale: object.isRequired,
-  cowInventory: array.isRequired,
-  handleCowAutomaticHugChange: func.isRequired,
-  handleCowBreedChange: func.isRequired,
-  handleCowHugClick: func.isRequired,
-  handleCowNameInputChange: func.isRequired,
-  handleCowOfferClick: func.isRequired,
-  handleCowSelect: func.isRequired,
-  handleCowSellClick: func.isRequired,
-  handleCowWithdrawClick: func.isRequired,
-  purchasedCowPen: number.isRequired,
-  selectedCowId: string.isRequired,
 }
 
 export default function Consumer() {

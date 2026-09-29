@@ -22,7 +22,6 @@ import Switch from '@mui/material/Switch/index.js'
 import TextField from '@mui/material/TextField/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
-import { array, bool, func, number, string } from 'prop-types'
 
 import { MAX_ROOM_NAME_LENGTH } from '../../common/constants.js'
 import {
@@ -490,28 +489,6 @@ export const Navigation = ({
       </Dialog>
     </Header>
   )
-}
-
-Navigation.propTypes = {
-  activePlayers: number,
-  blockInput: bool.isRequired,
-  farmName: string.isRequired,
-  handleClickDialogViewButton: func.isRequired,
-  handleChatRoomOpenStateChange: func.isRequired,
-  handleActivePlayerButtonClick: func.isRequired,
-  handleCloseDialogView: func.isRequired,
-  handleDialogViewExited: func.isRequired,
-  handleFarmNameUpdate: func.isRequired,
-  handleOnlineToggleChange: func.isRequired,
-  handleRoomChange: func.isRequired,
-  handleViewChange: func.isRequired,
-  inventory: array.isRequired,
-  inventoryLimit: number.isRequired,
-  isChatAvailable: bool.isRequired,
-  isDialogViewOpen: bool.isRequired,
-  isOnline: bool.isRequired,
-  stageFocus: string.isRequired,
-  viewList: array.isRequired,
 }
 
 export default function Consumer(

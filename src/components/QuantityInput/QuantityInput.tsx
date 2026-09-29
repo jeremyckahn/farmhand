@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react'
-import { func, number } from 'prop-types'
 import Fab from '@mui/material/Fab/index.js'
 import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp.js'
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown.js'
@@ -186,14 +185,6 @@ const QuantityInput = ({
       </Div>
     </Div>
   )
-}
-
-QuantityInput.propTypes = {
-  handleSubmit: func.isRequired,
-  handleUpdateNumber: func.isRequired,
-  maxQuantity: number.isRequired,
-  setQuantity: func.isRequired,
-  value: number,
 }
 
 export default QuantityInput

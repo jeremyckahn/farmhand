@@ -1,5 +1,4 @@
 import { Theme } from '@mui/material/styles/index.js'
-import { array, bool, func, string } from 'prop-types'
 import { useEffect } from 'react'
 
 import { fillSx } from '../../styles/sx.js'
@@ -167,15 +166,6 @@ export const CowPen = ({
       ))}
     </Div>
   )
-}
-
-CowPen.propTypes = {
-  allowCustomPeerCowNames: bool.isRequired,
-  cowInventory: array.isRequired,
-  handleCowClick: func.isRequired,
-  handleCowPenUnmount: func.isRequired,
-  playerId: string.isRequired,
-  selectedCowId: string.isRequired,
 }
 
 export default function Consumer(props: Partial<CowPenProps>) {

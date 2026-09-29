@@ -9,7 +9,6 @@ import CardContent from '@mui/material/CardContent/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
-import { array, bool, func, number, object } from 'prop-types'
 import classNames from 'classnames'
 
 import FarmhandContext, { ContextData } from '../Farmhand/Farmhand.context.js'
@@ -453,26 +452,6 @@ export const Item = ({
       </CardActions>
     </Card>
   )
-}
-
-Item.propTypes = {
-  adjustedValue: number,
-  completedAchievements: object.isRequired,
-  handleItemPurchaseClick: func,
-  handleItemSelectClick: func,
-  handleItemSellClick: func,
-  historicalValueAdjustments: array.isRequired,
-  inventory: array.isRequired,
-  inventoryLimit: number.isRequired,
-  isPurchaseView: bool,
-  isSelectView: bool,
-  isSelected: bool,
-  isSellView: bool,
-  item: object.isRequired,
-  money: number.isRequired,
-  playerInventoryQuantities: object.isRequired,
-  showQuantity: bool,
-  valueAdjustments: object.isRequired,
 }
 
 export default function Consumer(props: Partial<ItemProps>) {

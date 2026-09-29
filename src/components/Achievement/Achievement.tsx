@@ -6,7 +6,6 @@ import Card from '@mui/material/Card/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import BeenhereIcon from '@mui/icons-material/Beenhere.js'
-import { bool, object, shape, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { Div } from '../Elements/index.js'
@@ -60,18 +59,6 @@ const Achievement = ({
       </CardContent>
     </Card>
   )
-}
-
-Achievement.propTypes = {
-  achievement: shape({
-    description: string.isRequired,
-    id: string.isRequired,
-    name: string.isRequired,
-    rewardDescription: string.isRequired,
-  }).isRequired,
-  completedAchievements: object.isRequired,
-  gameState: object.isRequired,
-  isComplete: bool,
 }
 
 export default function Consumer(props: {

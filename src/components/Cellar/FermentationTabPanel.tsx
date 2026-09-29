@@ -1,5 +1,4 @@
 import React from 'react'
-import { number } from 'prop-types'
 import Divider from '@mui/material/Divider/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
@@ -36,8 +35,3 @@ export const FermentationTabPanel = ({
     </ul>
   </TabPanel>
 )
-
-FermentationTabPanel.propTypes = {
-  currentTab: number.isRequired,
-  index: number.isRequired,
-}

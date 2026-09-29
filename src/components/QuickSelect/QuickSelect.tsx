@@ -2,7 +2,6 @@ import Divider from '@mui/material/Divider/index.js'
 import Grid from '@mui/material/Grid/index.js'
 import Paper from '@mui/material/Paper/index.js'
 import { Theme } from '@mui/material/styles/index.js'
-import { array, bool, func, object, string } from 'prop-types'
 
 import { quickSelectSx } from '../../styles/sx.js'
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
@@ -60,15 +59,6 @@ const QuickSelect = ({
     </Grid>
   </Paper>
 )
-
-QuickSelect.propTypes = {
-  fieldToolInventory: array.isRequired,
-  handleItemSelectClick: func,
-  isMenuOpen: bool,
-  plantableCropInventory: array.isRequired,
-  playerInventoryQuantities: object.isRequired,
-  selectedItemId: string.isRequired,
-}
 
 export default function Consumer(
   props: Partial<Parameters<typeof QuickSelect>[0]>

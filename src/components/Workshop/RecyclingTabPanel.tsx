@@ -1,5 +1,4 @@
 import React from 'react'
-import { number, array } from 'prop-types'
 
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
@@ -46,10 +45,4 @@ export function RecyclingTabPanel({
       </ul>
     </TabPanel>
   )
-}
-
-RecyclingTabPanel.propTypes = {
-  currentTab: number.isRequired,
-  index: number.isRequired,
-  learnedRecipes: array.isRequired,
 }

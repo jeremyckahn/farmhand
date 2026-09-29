@@ -1,5 +1,4 @@
 import React from 'react'
-import { number, object } from 'prop-types'
 
 import Box from '@mui/material/Box/index.js'
 import CircularProgress from '@mui/material/CircularProgress/index.js'
@@ -60,12 +59,6 @@ export function DayAndProgressContainer({
       </Tooltip>
     </h2>
   )
-}
-
-DayAndProgressContainer.propTypes = {
-  dayCount: number.isRequired,
-  experience: number.isRequired,
-  itemsSold: object.isRequired,
 }
 
 export default function Consumer(

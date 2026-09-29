@@ -2,7 +2,6 @@ import Button from '@mui/material/Button/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
-import { object } from 'prop-types'
 import { useContext } from 'react'
 
 import { itemsMap } from '../../data/maps.js'
@@ -118,8 +117,4 @@ export function Keg({ keg }: { keg: farmhand.keg }) {
       </CardActions>
     </Card>
   )
-}
-
-Keg.propTypes = {
-  keg: object.isRequired,
 }

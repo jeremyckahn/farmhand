@@ -10,7 +10,6 @@ import Switch from '@mui/material/Switch/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
-import { array, bool, element, func, number, object, string } from 'prop-types'
 import React, { memo, useEffect, useState } from 'react'
 import { GlobalHotKeys } from 'react-hotkeys'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
@@ -271,10 +270,6 @@ export const FieldContentWrapper = ({
   )
 }
 
-FieldContentWrapper.propTypes = {
-  fieldContent: element.isRequired,
-}
-
 export const FieldContent = ({
   columns = 0,
   experience,
@@ -338,20 +333,6 @@ export const FieldContent = ({
     ) : null}
   </>
 )
-
-FieldContent.propTypes = {
-  columns: number.isRequired,
-  experience: number.isRequired,
-  field: array.isRequired,
-  fieldMode: string.isRequired,
-  handleCombineEnabledChange: func.isRequired,
-  hoveredPlot: object.isRequired,
-  hoveredPlotRangeSize: number.isRequired,
-  isCombineEnabled: bool.isRequired,
-  purchasedCombine: number.isRequired,
-  rows: number.isRequired,
-  setHoveredPlot: func.isRequired,
-}
 
 const adjustableRangeFieldModes = new Set<string>([
   CLEANUP,
@@ -704,24 +685,6 @@ export const Field = (props: FieldProps) => {
       </Div>
     </>
   )
-}
-
-Field.propTypes = {
-  columns: number.isRequired,
-  experience: number.isRequired,
-  field: array.isRequired,
-  fieldMode: string.isRequired,
-  handleCombineEnabledChange: func.isRequired,
-  handleFieldActionRangeChange: func.isRequired,
-  hoveredPlotRangeSize: number.isRequired,
-  inventory: array.isRequired,
-  inventoryLimit: number.isRequired,
-  isCombineEnabled: bool.isRequired,
-  isMenuOpen: bool,
-  purchasedCombine: number.isRequired,
-  purchasedField: number.isRequired,
-  rows: number.isRequired,
-  selectedItemId: string.isRequired,
 }
 
 export default function Consumer(props: Partial<FieldProps>) {

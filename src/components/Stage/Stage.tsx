@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
-import { array, arrayOf, bool, number, string } from 'prop-types'
 import { Theme } from '@mui/material/styles/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
@@ -257,15 +256,6 @@ export const Stage = ({
       <div {...{ className: 'spacer' }} />
     </Div>
   )
-}
-
-Stage.propTypes = {
-  dayCount: number.isRequired,
-  field: arrayOf(array).isRequired,
-  isMenuOpen: bool,
-  stageFocus: string.isRequired,
-  useAlternateEndDayButtonPosition: bool,
-  viewTitle: string.isRequired,
 }
 
 export default function Consumer(props: Partial<Parameters<typeof Stage>[0]>) {

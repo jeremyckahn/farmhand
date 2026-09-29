@@ -10,7 +10,6 @@ import TextField from '@mui/material/TextField/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
-import { array, bool, func, number, object, string } from 'prop-types'
 import { useIsMounted } from 'usehooks-ts'
 
 import { PURCHASEABLE_COW_PENS } from '../../constants.js'
@@ -372,31 +371,6 @@ export const CowCard = ({
       </Card>
     </>
   )
-}
-
-CowCard.propTypes = {
-  allowCustomPeerCowNames: bool.isRequired,
-  cow: object.isRequired,
-  cowBreedingPen: object.isRequired,
-  cowIdOfferedForTrade: string.isRequired,
-  cowInventory: array.isRequired,
-  debounced: object,
-  handleCowAutomaticHugChange: func,
-  handleCowBreedChange: func,
-  handleCowHugClick: func,
-  handleCowNameInputChange: func,
-  handleCowOfferClick: func,
-  handleCowPurchaseClick: func,
-  handleCowWithdrawClick: func,
-  handleCowSellClick: func,
-  handleCowTradeClick: func,
-  playerId: string.isRequired,
-  inventory: array.isRequired,
-  isCowOfferedForTradeByPeer: bool,
-  isOnline: bool.isRequired,
-  isSelected: bool,
-  money: number.isRequired,
-  purchasedCowPen: number.isRequired,
 }
 
 export default function Consumer(

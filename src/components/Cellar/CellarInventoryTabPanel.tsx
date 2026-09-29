@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import { number } from 'prop-types'
 import Divider from '@mui/material/Divider/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
@@ -96,9 +95,4 @@ Kegs that contain wine compound in value at a rate of ${WINE_INTEREST_RATE}% for
       </ul>
     </TabPanel>
   )
-}
-
-CellarInventoryTabPanel.propTypes = {
-  currentTab: number.isRequired,
-  index: number.isRequired,
 }

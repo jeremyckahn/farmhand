@@ -1,5 +1,4 @@
 import React, { memo } from 'react'
-import { array, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import Inventory from '../Inventory/index.js'
@@ -62,11 +61,6 @@ export const ContextPane = ({
       )}
     </Div>
   )
-}
-
-ContextPane.propTypes = {
-  playerInventory: array.isRequired,
-  stageFocus: string.isRequired,
 }
 
 export default function Consumer() {

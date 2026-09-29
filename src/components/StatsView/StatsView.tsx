@@ -1,5 +1,4 @@
 import React from 'react'
-import { array, object, number, string } from 'prop-types'
 import classNames from 'classnames'
 import Table from '@mui/material/Table/index.js'
 import TableBody from '@mui/material/TableBody/index.js'
@@ -261,20 +260,6 @@ export const StatsView = ({
     )}
   </Div>
 )
-
-StatsView.propTypes = {
-  cowsTraded: number.isRequired,
-  farmName: string.isRequired,
-  historicalDailyLosses: array.isRequired,
-  historicalDailyRevenue: array.isRequired,
-  itemsSold: object.isRequired,
-  profitabilityStreak: number.isRequired,
-  record7dayProfitAverage: number.isRequired,
-  recordProfitabilityStreak: number.isRequired,
-  revenue: number.isRequired,
-  todaysLosses: number.isRequired,
-  todaysRevenue: number.isRequired,
-}
 
 export default function Consumer(props: Partial<StatsViewProps>) {
   return (

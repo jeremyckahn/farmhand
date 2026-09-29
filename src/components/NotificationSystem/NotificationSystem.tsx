@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react'
-import { func, shape, string } from 'prop-types'
 import Alert from '@mui/material/Alert/index.js'
 
 import { withSnackbar } from 'notistack'
@@ -99,14 +98,6 @@ export const NotificationSystem = ({
   }, [enqueueSnackbar, todaysNotifications])
 
   return null
-}
-
-NotificationSystem.propTypes = {
-  latestNotification: shape({
-    message: string.isRequired,
-    onClick: func,
-    severity: string.isRequired,
-  }),
 }
 
 export default withSnackbar(function Consumer(props: any) {

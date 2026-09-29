@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import Button from '@mui/material/Button/index.js'
@@ -147,11 +146,6 @@ export const Toolbelt = ({
       </Div>
     </Div>
   )
-}
-
-Toolbelt.propTypes = {
-  fieldMode: PropTypes.string.isRequired,
-  handleFieldModeSelect: PropTypes.func,
 }
 
 export default function Consumer(

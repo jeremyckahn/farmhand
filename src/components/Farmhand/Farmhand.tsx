@@ -11,7 +11,6 @@ import Tooltip from '@mui/material/Tooltip/index.js'
 import classNames from 'classnames'
 import localforageLib from 'localforage'
 import { SnackbarProvider } from 'notistack'
-import { object } from 'prop-types'
 import { GlobalHotKeys } from 'react-hotkeys'
 import { Redirect } from 'react-router-dom'
 
@@ -297,13 +296,6 @@ const Farmhand = ({
       </ThemeProvider>
     </GlobalHotKeys>
   )
-}
-
-Farmhand.propTypes = {
-  features: object,
-  history: object,
-  location: object,
-  match: object.isRequired,
 }
 
 export default Farmhand

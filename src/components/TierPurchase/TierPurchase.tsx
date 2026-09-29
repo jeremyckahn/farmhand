@@ -7,7 +7,6 @@ import CardContent from '@mui/material/CardContent/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
 import Typography from '@mui/material/Typography/index.js'
-import { func, instanceOf, node, number, string } from 'prop-types'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
 
@@ -128,17 +127,6 @@ export function TierPurchase({
       )}
     </Card>
   )
-}
-
-TierPurchase.propTypes = {
-  description: string,
-  onBuyClick: func.isRequired,
-  maxedOutPlaceholder: node,
-  money: number.isRequired,
-  purchasedTier: number.isRequired,
-  renderTierLabel: func.isRequired,
-  tiers: instanceOf(Map),
-  title: string.isRequired,
 }
 
 export default function Consumer(

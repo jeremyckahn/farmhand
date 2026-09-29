@@ -63,6 +63,4 @@ const KeybindingsView = () => (
   </div>
 )
 
-KeybindingsView.propTypes = {}
-
 export default KeybindingsView

@@ -1,5 +1,4 @@
 import React from 'react'
-import { object } from 'prop-types'
 import Divider from '@mui/material/Divider/index.js'
 
 import { itemsMap } from '../../data/maps.js'
@@ -43,11 +42,6 @@ const PriceEventView = ({
     </ul>
   </div>
 )
-
-PriceEventView.propTypes = {
-  priceCrashes: object.isRequired,
-  priceSurges: object.isRequired,
-}
 
 export { PriceEventView }
 
