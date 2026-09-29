@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-
 import SearchBar from '../SearchBar/index.js'
 import Recipe from '../Recipe/index.js'
 
@@ -47,9 +45,4 @@ export function RecipeList({
       )}
     </>
   )
-}
-
-RecipeList.propTypes = {
-  allRecipes: PropTypes.object.isRequired,
-  learnedRecipes: PropTypes.array.isRequired,
 }
