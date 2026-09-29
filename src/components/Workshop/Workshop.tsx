@@ -1,5 +1,4 @@
 import React from 'react'
-import { number, object } from 'prop-types'
 import Tab from '@mui/material/Tab/index.js'
 import Tabs from '@mui/material/Tabs/index.js'
 
@@ -113,14 +112,6 @@ const Workshop = ({
       ) : null}
     </Div>
   )
-}
-
-Workshop.propTypes = {
-  learnedRecipes: object.isRequired,
-  purchasedComposter: number,
-  purchasedSmelter: number,
-  purchasedWoodChipper: number,
-  toolLevels: object.isRequired,
 }
 
 export default function Consumer(

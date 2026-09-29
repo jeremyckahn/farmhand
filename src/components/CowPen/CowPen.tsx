@@ -1,5 +1,4 @@
 import { Theme } from '@mui/material/styles/index.js'
-import { array, bool, func, string } from 'prop-types'
 import { useEffect } from 'react'
 
 import { fillSx } from '../../styles/sx.js'
@@ -10,10 +9,11 @@ import FarmhandContext from '../Farmhand/Farmhand.context.js'
 import { Cow } from './Cow.js'
 import { Tumbleweeds } from './Tumbleweeds.js'
 
-export interface CowPenProps extends Pick<
-  farmhand.state,
-  'allowCustomPeerCowNames' | 'cowInventory' | 'playerId' | 'selectedCowId'
-> {
+export interface CowPenProps
+  extends Pick<
+    farmhand.state,
+    'allowCustomPeerCowNames' | 'cowInventory' | 'playerId' | 'selectedCowId'
+  > {
   handleCowPenUnmount: () => void
   handleCowClick: (cow: farmhand.cow) => void
 }
@@ -167,15 +167,6 @@ export const CowPen = ({
       ))}
     </Div>
   )
-}
-
-CowPen.propTypes = {
-  allowCustomPeerCowNames: bool.isRequired,
-  cowInventory: array.isRequired,
-  handleCowClick: func.isRequired,
-  handleCowPenUnmount: func.isRequired,
-  playerId: string.isRequired,
-  selectedCowId: string.isRequired,
 }
 
 export default function Consumer(props: Partial<CowPenProps>) {

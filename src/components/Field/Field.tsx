@@ -10,7 +10,6 @@ import Switch from '@mui/material/Switch/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
-import { array, bool, element, func, number, object, string } from 'prop-types'
 import React, { memo, useEffect, useState } from 'react'
 import { GlobalHotKeys } from 'react-hotkeys'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
@@ -271,10 +270,6 @@ export const FieldContentWrapper = ({
   )
 }
 
-FieldContentWrapper.propTypes = {
-  fieldContent: element.isRequired,
-}
-
 export const FieldContent = ({
   columns = 0,
   experience,
@@ -338,20 +333,6 @@ export const FieldContent = ({
     ) : null}
   </>
 )
-
-FieldContent.propTypes = {
-  columns: number.isRequired,
-  experience: number.isRequired,
-  field: array.isRequired,
-  fieldMode: string.isRequired,
-  handleCombineEnabledChange: func.isRequired,
-  hoveredPlot: object.isRequired,
-  hoveredPlotRangeSize: number.isRequired,
-  isCombineEnabled: bool.isRequired,
-  purchasedCombine: number.isRequired,
-  rows: number.isRequired,
-  setHoveredPlot: func.isRequired,
-}
 
 const adjustableRangeFieldModes = new Set<string>([
   CLEANUP,
@@ -597,11 +578,10 @@ export const Field = (props: FieldProps) => {
             backgroundColor: colorYellow,
             cursor: 'pointer',
           },
-          '&.harvest-mode.is-inventory-full .Plot.crop.can-be-harvested, &.cleanup-mode.is-inventory-full .Plot.is-replantable':
-            {
-              backgroundColor: colorRedDanger,
-              cursor: 'not-allowed',
-            },
+          '&.harvest-mode.is-inventory-full .Plot.crop.can-be-harvested, &.cleanup-mode.is-inventory-full .Plot.is-replantable': {
+            backgroundColor: colorRedDanger,
+            cursor: 'not-allowed',
+          },
           '&.cleanup-mode .Plot.is-replantable': {
             backgroundColor: colorGreenOk,
             cursor: 'pointer',
@@ -610,15 +590,14 @@ export const Field = (props: FieldProps) => {
             backgroundColor: colorGreenOk,
             cursor: 'auto',
           },
-          '&.set-sprinkler-mode:hover .Plot:hover, &.set-scarecrow-mode:hover .Plot:hover, &.set-lightning-rod-mode:hover .Plot:hover':
-            {
-              '&.is-empty img': { cursor: 'pointer', opacity: 0.5 },
-              '&:not(.is-empty)': {
-                backgroundColor: colorRedDanger,
-                backgroundImage: 'none',
-                cursor: 'not-allowed',
-              },
+          '&.set-sprinkler-mode:hover .Plot:hover, &.set-scarecrow-mode:hover .Plot:hover, &.set-lightning-rod-mode:hover .Plot:hover': {
+            '&.is-empty img': { cursor: 'pointer', opacity: 0.5 },
+            '&:not(.is-empty)': {
+              backgroundColor: colorRedDanger,
+              backgroundImage: 'none',
+              cursor: 'not-allowed',
             },
+          },
           '&.set-sprinkler-mode:hover .Plot:hover.is-empty img': {
             backgroundImage: `url(${sprinklerImg})`,
           },
@@ -699,24 +678,6 @@ export const Field = (props: FieldProps) => {
       </Div>
     </>
   )
-}
-
-Field.propTypes = {
-  columns: number.isRequired,
-  experience: number.isRequired,
-  field: array.isRequired,
-  fieldMode: string.isRequired,
-  handleCombineEnabledChange: func.isRequired,
-  handleFieldActionRangeChange: func.isRequired,
-  hoveredPlotRangeSize: number.isRequired,
-  inventory: array.isRequired,
-  inventoryLimit: number.isRequired,
-  isCombineEnabled: bool.isRequired,
-  isMenuOpen: bool,
-  purchasedCombine: number.isRequired,
-  purchasedField: number.isRequired,
-  rows: number.isRequired,
-  selectedItemId: string.isRequired,
 }
 
 export default function Consumer(props: Partial<FieldProps>) {

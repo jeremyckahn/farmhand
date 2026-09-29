@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { tween, Tweenable } from 'shifty'
-import { array, bool, func, number, string } from 'prop-types'
 
 import { default as MuiAppBar } from '@mui/material/AppBar/index.js'
 import Toolbar from '@mui/material/Toolbar/index.js'
@@ -191,15 +190,6 @@ export const AppBar = ({
     </Toolbar>
   </MuiAppBar>
 )
-
-AppBar.propTypes = {
-  dayCount: number.isRequired,
-  handleClickNotificationIndicator: func.isRequired,
-  money: number.isRequired,
-  showNotifications: bool.isRequired,
-  todaysNotifications: array.isRequired,
-  viewTitle: string.isRequired,
-}
 
 export default function Consumer(props: Partial<Parameters<typeof AppBar>[0]>) {
   return (

@@ -1,5 +1,4 @@
 import React from 'react'
-import { node, number } from 'prop-types'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -22,12 +21,6 @@ export const TabPanel = (props: TabPanelProps) => {
       {value === index ? children : null}
     </section>
   )
-}
-
-TabPanel.propTypes = {
-  children: node,
-  index: number.isRequired,
-  value: number.isRequired,
 }
 
 export const a11yProps = (index: number) => ({

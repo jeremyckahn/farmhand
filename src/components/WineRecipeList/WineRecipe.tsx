@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { oneOf } from 'prop-types'
 import Card from '@mui/material/Card/index.js'
 import CardHeader from '@mui/material/CardHeader/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
@@ -141,8 +140,4 @@ export const WineRecipe = ({ wineVariety }: { wineVariety: grapeVariety }) => {
       </CardActions>
     </Card>
   )
-}
-
-WineRecipe.propTypes = {
-  wineVariety: oneOf(Object.keys(grapeVariety)),
 }

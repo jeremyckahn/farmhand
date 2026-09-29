@@ -6,7 +6,6 @@ import FormControlLabel from '@mui/material/FormControlLabel/index.js'
 import Tooltip from '@mui/material/Tooltip/index.js'
 import Typography from '@mui/material/Typography/index.js'
 import classNames from 'classnames'
-import { array, bool, func, object, string } from 'prop-types'
 
 import { huggingMachine } from '../../../data/items.js'
 import { genders } from '../../../enums.js'
@@ -37,17 +36,18 @@ const getCowMapById = memoize((cowInventory: farmhand.state['cowInventory']) =>
   )
 )
 
-export interface SubheaderProps extends Pick<
-  CowCardProps,
-  | 'cow'
-  | 'cowBreedingPen'
-  | 'cowIdOfferedForTrade'
-  | 'cowInventory'
-  | 'handleCowAutomaticHugChange'
-  | 'handleCowBreedChange'
-  | 'huggingMachinesRemain'
-  | 'playerId'
-> {
+export interface SubheaderProps
+  extends Pick<
+    CowCardProps,
+    | 'cow'
+    | 'cowBreedingPen'
+    | 'cowIdOfferedForTrade'
+    | 'cowInventory'
+    | 'handleCowAutomaticHugChange'
+    | 'handleCowBreedChange'
+    | 'huggingMachinesRemain'
+    | 'playerId'
+  > {
   canCowBeTradedFor: boolean
   cowValue: number
   isCowPurchased: boolean
@@ -209,16 +209,3 @@ const Subheader = ({
 }
 
 export default Subheader
-
-Subheader.propTypes = {
-  canCowBeTradedFor: bool.isRequired,
-  cow: object.isRequired,
-  cowBreedingPen: object.isRequired,
-  cowIdOfferedForTrade: string.isRequired,
-  cowInventory: array.isRequired,
-  handleCowAutomaticHugChange: func,
-  handleCowBreedChange: func,
-  huggingMachinesRemain: bool.isRequired,
-  playerId: string.isRequired,
-  isCowPurchased: bool,
-}

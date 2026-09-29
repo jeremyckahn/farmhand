@@ -2,7 +2,6 @@ import React from 'react'
 import Accordion from '@mui/material/Accordion/index.js'
 import AccordionSummary from '@mui/material/AccordionSummary/index.js'
 import AccordionDetails from '@mui/material/AccordionDetails/index.js'
-import { object } from 'prop-types'
 import Divider from '@mui/material/Divider/index.js'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
@@ -23,8 +22,8 @@ const partitionAchievements = memoize(
         return acc
       },
       {
-        complete: [] as (typeof achievements)[number][],
-        incomplete: [] as (typeof achievements)[number][],
+        complete: [] as typeof achievements[number][],
+        incomplete: [] as typeof achievements[number][],
       }
     )
 )
@@ -83,10 +82,6 @@ const AchievementsView = ({
     </Accordion>
   </Div>
 )
-
-AchievementsView.propTypes = {
-  completedAchievements: object.isRequired,
-}
 
 export default function Consumer(
   props: Partial<Parameters<typeof AchievementsView>[0]>

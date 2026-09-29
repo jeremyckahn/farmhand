@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { number } from 'prop-types'
 import { interpolate, tween } from 'shifty'
 
 import { Div, P } from '../Elements/index.js'
@@ -114,10 +113,6 @@ const ProgressBar = ({ percent }: { percent: number }) => {
       </P>
     </Div>
   )
-}
-
-ProgressBar.propTypes = {
-  percent: number.isRequired,
 }
 
 export default ProgressBar

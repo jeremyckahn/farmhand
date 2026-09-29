@@ -5,7 +5,6 @@ import Divider from '@mui/material/Divider/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import sortBy from 'lodash.sortby'
-import { array, number, object, string } from 'prop-types'
 
 import BailOutErrorBoundary from '../BailOutErrorBoundary/index.js'
 
@@ -115,15 +114,6 @@ const OnlinePeersView = ({
       )}
     </div>
   )
-}
-
-OnlinePeersView.propTypes = {
-  activePlayers: number.isRequired,
-  cowIdOfferedForTrade: string.isRequired,
-  cowInventory: array.isRequired,
-  playerId: string.isRequired,
-  latestPeerMessages: array.isRequired,
-  peers: object.isRequired,
 }
 
 export { OnlinePeersView }

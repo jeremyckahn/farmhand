@@ -1,5 +1,4 @@
 import React from 'react'
-import { array, func, number, object } from 'prop-types'
 import Button from '@mui/material/Button/index.js'
 import Card from '@mui/material/Card/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
@@ -393,25 +392,6 @@ export const Shop = ({
       </TabPanel>
     </Div>
   )
-}
-
-Shop.propTypes = {
-  handleCombinePurchase: func.isRequired,
-  handleCowPenPurchase: func.isRequired,
-  handleCellarPurchase: func.isRequired,
-  handleFieldPurchase: func.isRequired,
-  handleStorageExpansionPurchase: func.isRequired,
-  inventoryLimit: number.isRequired,
-  money: number.isRequired,
-  purchasedCowPen: number.isRequired,
-  purchasedCellar: number.isRequired,
-  purchasedField: number.isRequired,
-  purchasedSmelter: number.isRequired,
-  purchasedWoodChipper: number.isRequired,
-  purchasedCombine: number.isRequired,
-  shopInventory: array.isRequired,
-  toolLevels: object.isRequired,
-  valueAdjustments: object.isRequired,
 }
 
 export default function Consumer(props: Partial<Parameters<typeof Shop>[0]>) {

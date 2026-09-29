@@ -6,7 +6,6 @@ import CardHeader from '@mui/material/CardHeader/index.js'
 import CardContent from '@mui/material/CardContent/index.js'
 import CardActions from '@mui/material/CardActions/index.js'
 import Typography from '@mui/material/Typography/index.js'
-import { array, func, number, object } from 'prop-types'
 
 import { totalIngredientsInRecipe } from '../../utils/totalIngredientsInRecipe.js'
 import { canMakeRecipe } from '../../utils/canMakeRecipe.js'
@@ -139,14 +138,6 @@ const Recipe = ({
       </CardActions>
     </Card>
   )
-}
-
-Recipe.propTypes = {
-  handleMakeRecipeClick: func.isRequired,
-  inventory: array.isRequired,
-  inventoryLimit: number.isRequired,
-  playerInventoryQuantities: object.isRequired,
-  recipe: object.isRequired,
 }
 
 export { Recipe }
