@@ -306,6 +306,23 @@ describe('<FarmhandShuffleView />', () => {
       expect(matchPropsRef.current.hideDefaultGameOverActions).toBe(true)
     })
 
+    test("hides Match's scrollbar", () => {
+      renderWithContext({
+        farmhandShuffle: {
+          isMatchInProgress: true,
+          wager: 50,
+          serializedMatch: null,
+          totalMatchesPlayed: 0,
+          totalWins: 0,
+          totalLosses: 0,
+          currentWinStreak: 0,
+          longestWinStreak: 0,
+        },
+      })
+
+      expect(matchPropsRef.current.hideScrollbar).toBe(true)
+    })
+
     test('darkens the placeholder outlines via Match sx', () => {
       renderWithContext({
         farmhandShuffle: {

@@ -352,6 +352,12 @@ export const FarmhandShuffleView = () => {
             // Farmhand, which has no other concept of naming NPCs. See
             // farmhand-shuffle's MatchProps.useGenericPlayerLabels.
             useGenericPlayerLabels: true,
+            // Match scrolls its own content when the Stage is shorter than
+            // the table (see farmhand-shuffle's MatchProps.hideScrollbar).
+            // A classic scrollbar there sits on top of the right edge of
+            // the game's UI, so it's hidden - wheel, touch, and keyboard
+            // scrolling still work.
+            hideScrollbar: true,
             // Not fullHeight (100vh): FarmhandShuffleView's own root div
             // already fills the exact space Stage makes available (see
             // its sx above), which is shorter than the full viewport
