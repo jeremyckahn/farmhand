@@ -204,28 +204,6 @@ export const FarmhandShuffleView = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialMatch])
 
-  // Warn only on an actual tab close/reload, not in-app navigation:
-  // checkpoints (see handleCheckpoint below) already let the player
-  // navigate away via Farmhand's own nav buttons and back with minimal
-  // friction, resuming from the last idle checkpoint - a losable-work
-  // warning on every such click would fight that, not protect it.
-  useEffect(() => {
-    if (!farmhandShuffle.isMatchInProgress || matchPhase !== 'playing') {
-      return
-    }
-
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      e.preventDefault()
-      e.returnValue = ''
-    }
-
-    window.addEventListener('beforeunload', handleBeforeUnload)
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-    }
-  }, [farmhandShuffle.isMatchInProgress, matchPhase])
-
   const handleSubmitWager = () => {
     handlers.handlePlaceFarmhandShuffleWager(wagerInputValue)
     setMatchPhase('playing')
