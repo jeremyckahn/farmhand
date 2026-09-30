@@ -25,6 +25,7 @@ import {
 import farmhandShufflePackageJson from '@jeremyckahn/farmhand-shuffle/package.json'
 
 import FarmhandContext from '../Farmhand/Farmhand.context.js'
+import { breakpoints } from '../../styles/tokens.js'
 import { Div, P } from '../Elements/index.js'
 import { moneyString } from '../../utils/moneyString.js'
 
@@ -274,7 +275,23 @@ export const FarmhandShuffleView = () => {
       sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
     >
       {matchPhase === 'wager' && (
-        <Card sx={{ maxWidth: '30em', margin: '2em auto' }}>
+        <Card
+          sx={{
+            maxWidth: '30em',
+            // Farmhand's fixed End Day button (`.end-day` in Farmhand.tsx)
+            // sits at the top right of the Stage and would cover this card's
+            // corner, so the card starts below it, with the same gap under
+            // the button as there is above it (between the AppBar and the
+            // button). Measured in the browser: 4.75em below `sm` (56px
+            // AppBar, button at 70-126px) and 4.625em from `sm` up (64px
+            // AppBar, button at 77-133px), net of the Stage's own 0.5rem top
+            // padding (see Stage.tsx).
+            margin: '4.75em auto 2em',
+            [`@media (min-width: ${breakpoints.sm}px)`]: {
+              marginTop: '4.625em',
+            },
+          }}
+        >
           <CardHeader
             {...{
               title: 'Farmhand Shuffle',
