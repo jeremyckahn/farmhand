@@ -225,12 +225,13 @@ export const Stage = ({
         // FarmhandShuffleView.tsx) and fills this container's full height -
         // letting Stage's own padding/overflow apply on top would produce
         // a second, redundant scrollbar and a visible gap around it. Only a
-        // small horizontal inset is kept, so the game doesn't run right up
-        // against the Stage's left and right edges. Last in this object so
-        // it wins over the padding/paddingTop set by the conditionals above,
-        // regardless of their own flags.
+        // small inset is kept on the left, right, and top, so the game
+        // doesn't run right up against the Stage's edges (or the AppBar
+        // above it). Last in this object so it wins over the
+        // padding/paddingTop set by the conditionals above, regardless of
+        // their own flags.
         ...(stageFocus === stageFocusType.FARMHAND_SHUFFLE
-          ? { overflow: 'hidden', padding: '0 0.5rem', paddingTop: 0 }
+          ? { overflow: 'hidden', padding: '0.5rem 0.5rem 0' }
           : {}),
       })}
     >
