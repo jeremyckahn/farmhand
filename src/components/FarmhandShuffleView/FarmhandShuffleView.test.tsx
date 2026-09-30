@@ -26,6 +26,8 @@ vi.mock('@jeremyckahn/farmhand-shuffle', () => ({
   },
   starterDeck: () => [],
   placeholderOutlineColorVar: '--farmhand-shuffle-placeholder-outline-color',
+  handToggleBottomVar: '--farmhand-shuffle-hand-toggle-bottom',
+  handToggleLeftVar: '--farmhand-shuffle-hand-toggle-left',
   serializeMatch: (match: any) => match,
   deserializeMatch: (data: any) => data,
 }))

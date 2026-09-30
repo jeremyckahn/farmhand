@@ -16,6 +16,8 @@ import {
   Match,
   MatchState,
   deserializeMatch,
+  handToggleBottomVar,
+  handToggleLeftVar,
   placeholderOutlineColorVar,
   serializeMatch,
   starterDeck,
@@ -376,6 +378,16 @@ export const FarmhandShuffleView = () => {
               backgroundImage: 'none',
               color: 'black',
               [placeholderOutlineColorVar]: 'rgba(0, 0, 0, 0.35)',
+              // Lines the hide/show Hand button up with Farmhand's own
+              // bottom nav buttons (`.bottom-controls` in Farmhand.tsx):
+              // their bottom edge sits 1.4375rem (measured in the browser)
+              // above the screen's bottom, so the button matches that, and
+              // is the same distance from the Stage's left edge. Match
+              // itself starts 0.5rem inside the Stage (see Stage.tsx), so
+              // that inset comes off the left offset. Only applies on
+              // large viewports; narrow ones don't render this button.
+              [handToggleBottomVar]: '1.4375rem',
+              [handToggleLeftVar]: 'calc(1.4375rem - 0.5rem)',
             },
             renderGameOverContent: (winnerId: string | null) => (
               <ShuffleResultSummary
